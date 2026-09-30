@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0953624BF;
-	Wed, 30 Sep 2026 16:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C494CA784;
+	Wed, 30 Sep 2026 16:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787233; cv=none; b=lyFjRlZXIsGSuKa9tL2Jf0RCGDXC3BlsUuNzmTnoFeg/iVe/cDWxFbydpRLjVhd8s7mQpWzLeXd8oZ9iGjHH93x9SKoQVH03xNT6edotFw45Ob97qAtYI9i5HlnLUYTlhm9jO4RoxBwZJkRMV6ARLxyVt1tWcry89VgZlEKggpQ=
+	t=1790787236; cv=none; b=WrmvG7TsV07DF4OJjUUK6dWHqRp0+G5gj9iIFkmGE18lNNt/E7pqp1Y0txjN8WpR8s35z0ZbZRgTrkRPhy255AKVL0jkKfYW5fv6a83J4UyO2O1ZF3ECfZYVIM1cw+zScgJyHlZgStLWuh+IxJTo0++KC0YcSwHdrQnp1tG1IQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787233; c=relaxed/simple;
-	bh=+cJ8DQDfmZ7fZ33J4mPWEgix239UEbaD9N+k/TeW7Ms=;
+	s=arc-20240116; t=1790787236; c=relaxed/simple;
+	bh=5VPBVV38IpLv6vdW0f0PihT1KT/PGVhkBKS1m2uhvXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYS80XQq8INeRC76HLNgHJnfWRVoc1Jcbp/FVD9PJY6DNYfwipKbARKoZxq74m3vSyQkwUdpRciUyWqi56u7tmbfP8f94TXHW9Gv7kiDGIweZuq38qK5o1Ltj79dAwFmD5N6pYxD24ILiU+YBG1p4NWHeeOZakc+X0IGchCC+Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8i/ztY8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kw6tUHP8+p1Pz2cAsA9O0F6R9d7kZKngaf/p9km6mwhRRT24g8oi8oDhX0Ow0cGx4ATzz39IV40Zcyu44qF2Ic9SfRZI4797quKLXLxSoG5z+XkODlH5+/W+NbEZc21LPMPRCDeN8vIoJOxXsUpfEV2HUjva+1ekHDhQOV+aVLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4etHFhF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8i/ztY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272EC1F000FF;
-	Wed, 30 Sep 2026 16:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4etHFhF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0172A1F000FF;
+	Wed, 30 Sep 2026 16:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787231;
-	bh=/FcJ1a41p75duNbZGkCOj27mRwvr5QqzuQN5lNIXvpY=;
+	s=korg; t=1790787234;
+	bh=KogmBLLXTLTNw5SU+ixGo3EUoV3ytgcs0PPb5GBeyL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o8i/ztY8ohPoPjGz2ylSqYqA7n8StqRNoK4qqBXpLInuCOAvWFtbFHzMWCFh1P+Mb
-	 MvuKEQC1RBY/QsgTrAZh7yJuGyjUcQ855HomvHGlLWgPWv840iQSbautsUY8279qTc
-	 O9ZDVE0tecYDjtEU1jw+bRlxsr8ROaWH0zEbIg7Q=
+	b=L4etHFhF1aC9qAC9PeyHRIRTs9a5VGKewCjExlpnUptJvi+M30zO2bI3Bh3N2Ie6C
+	 YPD0+MwSXjvfCXf/tFpOQ2LXAah5xaUh4JCOaDU9RueU8KsnWjCvuwknTYJOSwAgZw
+	 BebqonCBQ6IfmQaHGQNV4ALQGOfPtPC6ot0vArZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Benjamin Leggett <benjamin@edera.io>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Prathamesh Shete <pshete@nvidia.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 113/457] drm/virtio: sync shmem backing on guest-bound transfers
-Date: Wed, 30 Sep 2026 17:23:38 +0200
-Message-ID: <20260930152348.490229241@linuxfoundation.org>
+Subject: [PATCH 7.2 114/457] pinctrl: tegra238: Fix register bank for AON pin groups
+Date: Wed, 30 Sep 2026 17:23:39 +0200
+Message-ID: <20260930152348.513409574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,257 +51,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Leggett <benjamin@edera.io>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 598c1c3e895590f845e04455d5580ea28ffde666 ]
+[ Upstream commit ae2c5bf969573708cd5b6bb6393631255d83c3fe ]
 
-virtio_gpu_cmd_transfer_to_host_{2d,3d}() sync the shmem backing for the
-device before the transfer, but nothing syncs for the CPU when a transfer
-runs the other way. That breaks two ways. Where the DMA layer bounces, the
-device writes into the bounce buffer while the guest keeps reading the
-original pages. Where DMA is not coherent, the device writes memory while
-the CPU keeps stale cache lines, because nothing reaches
-arch_sync_dma_for_cpu(). Either way DRM_IOCTL_VIRTGPU_TRANSFER_FROM_HOST
-hands back stale data.
+The AON pin controller has a single register region and therefore,
+the bank defined in the tegra238_functions[] and tegra238_aon_groups[]
+for the AON pin groups must be 0. However, commit 25cac7292d49
+("pinctrl: tegra: Add Tegra238 pinmux driver") incorrectly specified the
+bank for these pins as 1 and not 0. This means that in the
+tegra_pinctrl_probe() function we use an invalid index when accessing
+the pmx->regs[] array which causes an incorrect address to be used for
+accessing the pinmux registers.
 
-Sashiko originally found this in
-https://lore.kernel.org/dri-devel/20260806231002.27B4D1F000E9@smtp.kernel.org
-but the suggestion there to fix this with dma_sync_sgtable_for_cpu()
-isn't a sufficient fix, for two reasons.
+Fix this by correcting the bank for the AON pin groups.
 
-- The transfer is asynchronous. virtio_gpu_cmd_transfer_from_host_3d() only
-queues the command, so a sync there would run before the device had written
-anything. It belongs on completion, and ahead of any fence signalling.
-A waiter woken by the fence would otherwise race the sync and read the
-backing pages regardless. It needs its own pass over the reclaim list
-rather than a step inside the existing one, because
-virtio_gpu_fence_event_process() also signals every earlier fence in the
-same context, so any entry in that loop may signal an earlier entry's
-fence.
-
-- The transfer is also partial, carrying an offset, a level and a box.
-Where the mapping bounces, a sync for the CPU copies the whole mapping
-back, so unless the mapping is primed first the regions the device did not
-write come back holding whatever the bounce buffer contained, discarding
-data the guest owned.
-
-So the fix: Prime the mapping before queueing, tag the vbuffer, and sync
-for the CPU on completion before the fence is signalled.
-
-A second transfer must not snapshot the mapping while an earlier one is
-still in flight, or the snapshot would predate whatever the CPU wrote once
-the earlier fence signalled and the later sync would discard it.
-
-To mitigate this, wait for outstanding fences under the reservation before
-priming.
-
-Neither sync copies anything unless the mapping genuinely bounces:
-swiotlb_sync_single_for_cpu() and its Xen counterpart look the address up
-in the bounce pool and return early when it is absent. On a platform with
-non-coherent DMA they still perform the necessary cache maintenance.
-
-The range cannot be narrowed to the box, since for a non-blob resource
-virtio_gpu_transfer_from_host_ioctl() rejects a caller-supplied stride and
-layer_stride, leaving the layout to the host and the guest with no way to
-work out which bytes the device writes. A host3d guest blob does carry
-both, so its extent could be bounded, but the sync is left whole there too
-rather than special-cased: priming makes the untouched regions round-trip
-unchanged either way.
-
-Behaviour changes worth noting:
-
-- TRANSFER_FROM_HOST can now block, where before it returned as soon as the
-command was queued. Repeated readbacks of one resource serialise, and a
-readback can wait behind an earlier queued command that touched it, since
-virtio_gpu_array_add_fence() tags uploads, execbufs and plane flushes
-alike with DMA_RESV_USAGE_WRITE. -ERESTARTSYS was already possible here
-via dma_resv_lock_interruptible().
-
-- A CPU write racing an in-flight transfer to the same resource is now
-lost, where before it survived and the transfer was lost instead. Priming
-captures the pages as of queueing, so a write landing before completion is
-overwritten by the sync.
-
-- TRANSFER_TO_HOST can also block now, but only while a guest-bound
-transfer on the same resource is outstanding, which happens only for
-callers that issue both without waiting.
-
-- Where a batch of completions contains a guest-bound transfer, the sync
-pass delays fence signalling for the whole batch. Only bounced pages are
-copied and the swiotlb pool bounds it. A batch with no such transfer is
-unaffected.
-
-Tested under QEMU on x86 with swiotlb=force and virtio-vga-gl
-iommu_platform=on, which forces both preconditions required to hit the
-original bug.
-
-Fixes: a3b815f09bb8 ("drm/virtio: add iommu support.")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260806231002.27B4D1F000E9@smtp.kernel.org/
-Signed-off-by: Benjamin Leggett <benjamin@edera.io>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260814-virtgpu-from-host-sync-v4-1-64dd736b1779@edera.io
+Fixes: 25cac7292d49 ("pinctrl: tegra: Add Tegra238 pinmux driver")
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h   |  5 +++
- drivers/gpu/drm/virtio/virtgpu_ioctl.c | 43 ++++++++++++++++++++++++
- drivers/gpu/drm/virtio/virtgpu_vq.c    | 46 ++++++++++++++++++++++++++
- 3 files changed, 94 insertions(+)
+ drivers/pinctrl/tegra/pinctrl-tegra238.c | 204 +++++++++++------------
+ 1 file changed, 102 insertions(+), 102 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
-index 88fb4be92cf3e..5610add1da470 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -114,6 +114,8 @@ struct virtio_gpu_object {
- 	bool dumb;
- 	bool created;
- 	bool attached;
-+	/* a guest-bound transfer is queued and its mapping not yet synced */
-+	bool from_host_pending;
- 	bool host3d_blob, guest_blob;
- 	uint32_t blob_mem, blob_flags;
+diff --git a/drivers/pinctrl/tegra/pinctrl-tegra238.c b/drivers/pinctrl/tegra/pinctrl-tegra238.c
+index ec482365f14f2..40aba285944eb 100644
+--- a/drivers/pinctrl/tegra/pinctrl-tegra238.c
++++ b/drivers/pinctrl/tegra/pinctrl-tegra238.c
+@@ -1744,57 +1744,57 @@ static const char * const tegra238_functions[] = {
+ #define drive_sdmmc1_dat0_pu2		DRV_PINGROUP_ENTRY_Y(0x8034,	28,	2,	30,	2,	-1,	-1,	-1,	-1,	0)
+ #define drive_ufs0_rst_n_pv1		DRV_PINGROUP_ENTRY_Y(0x11004,	12,	5,	24,	5,	-1,	-1,	-1,	-1,	0)
+ #define drive_ufs0_ref_clk_pv0		DRV_PINGROUP_ENTRY_Y(0x1100c,	12,	5,	24,	5,	-1,	-1,	-1,	-1,	0)
+-#define drive_batt_oc_paa4		    DRV_PINGROUP_ENTRY_Y(0x1024,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_bootv_ctl_n_paa0		DRV_PINGROUP_ENTRY_Y(0x102c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_vcomp_alert_paa2		DRV_PINGROUP_ENTRY_Y(0x105c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_hdmi_cec_pbb0		    DRV_PINGROUP_ENTRY_Y(0x1064,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_touch_clk_pdd3		DRV_PINGROUP_ENTRY_Y(0x106c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart3_rx_pcc6		    DRV_PINGROUP_ENTRY_Y(0x1074,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart3_tx_pcc5		    DRV_PINGROUP_ENTRY_Y(0x107c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_gen8_i2c_sda_pdd2		DRV_PINGROUP_ENTRY_Y(0x1084,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_gen8_i2c_scl_pdd1		DRV_PINGROUP_ENTRY_Y(0x108c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_spi2_mosi_pcc2		DRV_PINGROUP_ENTRY_Y(0x1094,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_gen2_i2c_scl_pcc7		DRV_PINGROUP_ENTRY_Y(0x109c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_spi2_cs0_pcc3		    DRV_PINGROUP_ENTRY_Y(0x10a4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_gen2_i2c_sda_pdd0		DRV_PINGROUP_ENTRY_Y(0x10ac,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_spi2_sck_pcc0		    DRV_PINGROUP_ENTRY_Y(0x10b4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_spi2_miso_pcc1		DRV_PINGROUP_ENTRY_Y(0x10bc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio49_pee2		DRV_PINGROUP_ENTRY_Y(0x10c4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio50_pee4		DRV_PINGROUP_ENTRY_Y(0x10cc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio82_pee3		DRV_PINGROUP_ENTRY_Y(0x10d4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio71_pff2		DRV_PINGROUP_ENTRY_Y(0x10dc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio76_pff7		DRV_PINGROUP_ENTRY_Y(0x10e4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio74_pff5		DRV_PINGROUP_ENTRY_Y(0x10ec,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio00_paa1		DRV_PINGROUP_ENTRY_Y(0x10f4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio19_pdd6		DRV_PINGROUP_ENTRY_Y(0x10fc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio86_phh3		DRV_PINGROUP_ENTRY_Y(0x1104,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio72_pff3		DRV_PINGROUP_ENTRY_Y(0x110c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio77_pgg0		DRV_PINGROUP_ENTRY_Y(0x1114,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio80_pff6		DRV_PINGROUP_ENTRY_Y(0x111c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio84_pgg1		DRV_PINGROUP_ENTRY_Y(0x1124,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio83_pee5		DRV_PINGROUP_ENTRY_Y(0x112c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio73_pff4		DRV_PINGROUP_ENTRY_Y(0x1134,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio70_pff1		DRV_PINGROUP_ENTRY_Y(0x113c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio04_paa5		DRV_PINGROUP_ENTRY_Y(0x1144,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio85_pgg6		DRV_PINGROUP_ENTRY_Y(0x114c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio69_pff0		DRV_PINGROUP_ENTRY_Y(0x1154,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio25_paa6		DRV_PINGROUP_ENTRY_Y(0x115c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_soc_gpio26_paa7		DRV_PINGROUP_ENTRY_Y(0x1164,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart5_tx_pgg7		    DRV_PINGROUP_ENTRY_Y(0x116c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart5_rx_phh0		    DRV_PINGROUP_ENTRY_Y(0x1174,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart2_tx_pgg2		    DRV_PINGROUP_ENTRY_Y(0x117c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart2_rx_pgg3		    DRV_PINGROUP_ENTRY_Y(0x1184,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart2_cts_pgg5		DRV_PINGROUP_ENTRY_Y(0x118c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart2_rts_pgg4		DRV_PINGROUP_ENTRY_Y(0x1194,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart5_cts_phh2		DRV_PINGROUP_ENTRY_Y(0x119c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_uart5_rts_phh1		DRV_PINGROUP_ENTRY_Y(0x11a4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_pwm7_pee1			    DRV_PINGROUP_ENTRY_Y(0x11ac,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_pwm2_pdd7			    DRV_PINGROUP_ENTRY_Y(0x11b4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_pwm3_pee0			    DRV_PINGROUP_ENTRY_Y(0x11bc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_pwm1_paa3			    DRV_PINGROUP_ENTRY_Y(0x11c4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_spi2_cs1_pcc4		    DRV_PINGROUP_ENTRY_Y(0x11cc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_dmic1_clk_pdd4		DRV_PINGROUP_ENTRY_Y(0x11d4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
+-#define drive_dmic1_dat_pdd5		DRV_PINGROUP_ENTRY_Y(0x11dc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	1)
++#define drive_batt_oc_paa4		    DRV_PINGROUP_ENTRY_Y(0x1024,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_bootv_ctl_n_paa0		DRV_PINGROUP_ENTRY_Y(0x102c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_vcomp_alert_paa2		DRV_PINGROUP_ENTRY_Y(0x105c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_hdmi_cec_pbb0		    DRV_PINGROUP_ENTRY_Y(0x1064,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_touch_clk_pdd3		DRV_PINGROUP_ENTRY_Y(0x106c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart3_rx_pcc6		    DRV_PINGROUP_ENTRY_Y(0x1074,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart3_tx_pcc5		    DRV_PINGROUP_ENTRY_Y(0x107c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_gen8_i2c_sda_pdd2		DRV_PINGROUP_ENTRY_Y(0x1084,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_gen8_i2c_scl_pdd1		DRV_PINGROUP_ENTRY_Y(0x108c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_spi2_mosi_pcc2		DRV_PINGROUP_ENTRY_Y(0x1094,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_gen2_i2c_scl_pcc7		DRV_PINGROUP_ENTRY_Y(0x109c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_spi2_cs0_pcc3		    DRV_PINGROUP_ENTRY_Y(0x10a4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_gen2_i2c_sda_pdd0		DRV_PINGROUP_ENTRY_Y(0x10ac,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_spi2_sck_pcc0		    DRV_PINGROUP_ENTRY_Y(0x10b4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_spi2_miso_pcc1		DRV_PINGROUP_ENTRY_Y(0x10bc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio49_pee2		DRV_PINGROUP_ENTRY_Y(0x10c4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio50_pee4		DRV_PINGROUP_ENTRY_Y(0x10cc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio82_pee3		DRV_PINGROUP_ENTRY_Y(0x10d4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio71_pff2		DRV_PINGROUP_ENTRY_Y(0x10dc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio76_pff7		DRV_PINGROUP_ENTRY_Y(0x10e4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio74_pff5		DRV_PINGROUP_ENTRY_Y(0x10ec,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio00_paa1		DRV_PINGROUP_ENTRY_Y(0x10f4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio19_pdd6		DRV_PINGROUP_ENTRY_Y(0x10fc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio86_phh3		DRV_PINGROUP_ENTRY_Y(0x1104,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio72_pff3		DRV_PINGROUP_ENTRY_Y(0x110c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio77_pgg0		DRV_PINGROUP_ENTRY_Y(0x1114,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio80_pff6		DRV_PINGROUP_ENTRY_Y(0x111c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio84_pgg1		DRV_PINGROUP_ENTRY_Y(0x1124,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio83_pee5		DRV_PINGROUP_ENTRY_Y(0x112c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio73_pff4		DRV_PINGROUP_ENTRY_Y(0x1134,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio70_pff1		DRV_PINGROUP_ENTRY_Y(0x113c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio04_paa5		DRV_PINGROUP_ENTRY_Y(0x1144,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio85_pgg6		DRV_PINGROUP_ENTRY_Y(0x114c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio69_pff0		DRV_PINGROUP_ENTRY_Y(0x1154,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio25_paa6		DRV_PINGROUP_ENTRY_Y(0x115c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_soc_gpio26_paa7		DRV_PINGROUP_ENTRY_Y(0x1164,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart5_tx_pgg7		    DRV_PINGROUP_ENTRY_Y(0x116c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart5_rx_phh0		    DRV_PINGROUP_ENTRY_Y(0x1174,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart2_tx_pgg2		    DRV_PINGROUP_ENTRY_Y(0x117c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart2_rx_pgg3		    DRV_PINGROUP_ENTRY_Y(0x1184,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart2_cts_pgg5		DRV_PINGROUP_ENTRY_Y(0x118c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart2_rts_pgg4		DRV_PINGROUP_ENTRY_Y(0x1194,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart5_cts_phh2		DRV_PINGROUP_ENTRY_Y(0x119c,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_uart5_rts_phh1		DRV_PINGROUP_ENTRY_Y(0x11a4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_pwm7_pee1			    DRV_PINGROUP_ENTRY_Y(0x11ac,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_pwm2_pdd7			    DRV_PINGROUP_ENTRY_Y(0x11b4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_pwm3_pee0			    DRV_PINGROUP_ENTRY_Y(0x11bc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_pwm1_paa3			    DRV_PINGROUP_ENTRY_Y(0x11c4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_spi2_cs1_pcc4		    DRV_PINGROUP_ENTRY_Y(0x11cc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_dmic1_clk_pdd4		DRV_PINGROUP_ENTRY_Y(0x11d4,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
++#define drive_dmic1_dat_pdd5		DRV_PINGROUP_ENTRY_Y(0x11dc,	12,	5,	20,	5,	-1,	-1,	-1,	-1,	0)
  
-@@ -192,6 +194,9 @@ struct virtio_gpu_vbuffer {
- 	struct list_head list;
+ #define drive_sdmmc1_comp		DRV_PINGROUP_ENTRY_N
  
- 	uint32_t seqno;
-+
-+	/* guest-bound transfer whose shmem backing needs a CPU sync */
-+	bool sync_for_cpu;
+@@ -1961,57 +1961,57 @@ static const struct tegra_pingroup tegra238_groups[] = {
  };
  
- struct virtio_gpu_output {
-diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-index fcdb07a37972c..81e70a12b3569 100644
---- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-@@ -261,6 +261,27 @@ static int virtio_gpu_transfer_from_host_ioctl(struct drm_device *dev,
- 	if (ret != 0)
- 		goto err_put_free;
+ static const struct tegra_pingroup tegra238_aon_groups[] = {
+-	PINGROUP(bootv_ctl_n_paa0,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1028,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio00_paa1,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10f0,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(vcomp_alert_paa2,	SOC_THERM_OC1,	RSVD1,			RSVD2,		RSVD3,		0x1058,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(pwm1_paa3,		GP_PWM1,	RSVD1,			RSVD2,		RSVD3,		0x11c0,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(batt_oc_paa4,		SOC_THERM_OC2,	RSVD1,			RSVD2,		RSVD3,		0x1020,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio04_paa5,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1140,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio25_paa6,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1158,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio26_paa7,	RSVD0,		SOC_THERM_OC3,		RSVD2,		RSVD3,		0x1160,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(hdmi_cec_pbb0,		HDMI_CEC,	RSVD1,			RSVD2,		RSVD3,		0x1060,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(spi2_sck_pcc0,		SPI2_SCK,	RSVD1,			RSVD2,		RSVD3,		0x10b0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(spi2_miso_pcc1,	SPI2_DIN,	RSVD1,			RSVD2,		RSVD3,		0x10b8,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(spi2_mosi_pcc2,	SPI2_DOUT,	RSVD1,			RSVD2,		RSVD3,		0x1090,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(spi2_cs0_pcc3,		SPI2_CS0,	RSVD1,			RSVD2,		RSVD3,		0x10a0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(spi2_cs1_pcc4,		SPI2_CS1,	RSVD1,			RSVD2,		RSVD3,		0x11c8,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart3_tx_pcc5,		UARTC_TXD,	RSVD1,			RSVD2,		RSVD3,		0x1078,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart3_rx_pcc6,		UARTC_RXD,	RSVD1,			RSVD2,		RSVD3,		0x1070,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(gen2_i2c_scl_pcc7,	I2C2_CLK,	RSVD1,			RSVD2,		RSVD3,		0x1098,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(gen2_i2c_sda_pdd0,	I2C2_DAT,	RSVD1,			RSVD2,		RSVD3,		0x10a8,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(gen8_i2c_scl_pdd1,	I2C8_CLK,	RSVD1,			RSVD2,		RSVD3,		0x1088,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(gen8_i2c_sda_pdd2,	I2C8_DAT,	RSVD1,			RSVD2,		RSVD3,		0x1080,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(touch_clk_pdd3,	GP_PWM4,	TOUCH_CLK,		RSVD2,		RSVD3,		0x1068,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(dmic1_clk_pdd4,	DMIC1_CLK,	RSVD1,			DMIC5_CLK,	RSVD3,		0x11d0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(dmic1_dat_pdd5,	DMIC1_DAT,	RSVD1,			DMIC5_DAT,	RSVD3,		0x11d8,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio19_pdd6,	RSVD0,		WDT_RESET_OUTB,		RSVD2,		RSVD3,		0x10f8,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio49_pee2,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10c0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio50_pee4,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10c8,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio82_pee3,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10d0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio71_pff2,	PPC_MODE_1,	RSVD1,			RSVD2,		RSVD3,		0x10d8,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio76_pff7,	RSVD0,		RSVD1,			TSC_EDGE_OUT0,	TSC_EDGE_OUT0A,	0x10e0,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio74_pff5,	PPC_READY,	PPC_I2C_DAT,		RSVD2,		RSVD3,		0x10e8,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio86_phh3,	RSVD0,		SPI5_CS1,		TSC_EDGE_OUT3,	TSC_EDGE_OUT0D,	0x1100,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio72_pff3,	PPC_MODE_2,	RSVD1,			RSVD2,		RSVD3,		0x1108,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio77_pgg0,	RSVD0,		RSVD1,			TSC_EDGE_OUT1,	TSC_EDGE_OUT0B,	0x1110,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio80_pff6,	RSVD0,		PPC_RST_N,		RSVD2,		RSVD3,		0x1118,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio84_pgg1,	RSVD0,		RSVD1,			TSC_EDGE_OUT2,	TSC_EDGE_OUT0C,	0x1120,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio83_pee5,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1128,		1,	Y,	-1,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio73_pff4,	PPC_CC,		PPC_I2C_CLK,		RSVD2,		RSVD3,		0x1130,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio70_pff1,	PPC_MODE_0,	RSVD1,			RSVD2,		RSVD3,		0x1138,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio85_pgg6,	RSVD0,		SPI4_CS1,		RSVD2,		RSVD3,		0x1148,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(soc_gpio69_pff0,	PPC_INT_N,	RSVD1,			RSVD2,		RSVD3,		0x1150,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart5_tx_pgg7,		UARTE_TXD,	SPI5_SCK,		RSVD2,		RSVD3,		0x1168,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart5_rx_phh0,		UARTE_RXD,	SPI5_MISO,		RSVD2,		RSVD3,		0x1170,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart2_tx_pgg2,		UARTB_TXD,	SPI4_SCK,		RSVD2,		RSVD3,		0x1178,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart2_rx_pgg3,		UARTB_RXD,	SPI4_MISO,		RSVD2,		RSVD3,		0x1180,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart2_cts_pgg5,	UARTB_CTS,	SPI4_CS0,		RSVD2,		RSVD3,		0x1188,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart2_rts_pgg4,	UARTB_RTS,	SPI4_MOSI,		RSVD2,		RSVD3,		0x1190,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart5_cts_phh2,	UARTE_CTS,	SPI5_CS0,		RSVD2,		RSVD3,		0x1198,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(uart5_rts_phh1,	UARTE_RTS,	SPI5_MOSI,		RSVD2,		RSVD3,		0x11a0,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(pwm2_pdd7,		GP_PWM2,	LED_BLINK,		RSVD2,		RSVD3,		0x11b0,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(pwm3_pee0,		GP_PWM3,	RSVD1,			RSVD2,		RSVD3,		0x11b8,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
+-	PINGROUP(pwm7_pee1,		GP_PWM7,	RSVD1,			RSVD2,		RSVD3,		0x11a8,		1,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(bootv_ctl_n_paa0,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1028,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio00_paa1,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10f0,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(vcomp_alert_paa2,	SOC_THERM_OC1,	RSVD1,			RSVD2,		RSVD3,		0x1058,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(pwm1_paa3,		GP_PWM1,	RSVD1,			RSVD2,		RSVD3,		0x11c0,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(batt_oc_paa4,		SOC_THERM_OC2,	RSVD1,			RSVD2,		RSVD3,		0x1020,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio04_paa5,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1140,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio25_paa6,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1158,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio26_paa7,	RSVD0,		SOC_THERM_OC3,		RSVD2,		RSVD3,		0x1160,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(hdmi_cec_pbb0,		HDMI_CEC,	RSVD1,			RSVD2,		RSVD3,		0x1060,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(spi2_sck_pcc0,		SPI2_SCK,	RSVD1,			RSVD2,		RSVD3,		0x10b0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(spi2_miso_pcc1,	SPI2_DIN,	RSVD1,			RSVD2,		RSVD3,		0x10b8,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(spi2_mosi_pcc2,	SPI2_DOUT,	RSVD1,			RSVD2,		RSVD3,		0x1090,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(spi2_cs0_pcc3,		SPI2_CS0,	RSVD1,			RSVD2,		RSVD3,		0x10a0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(spi2_cs1_pcc4,		SPI2_CS1,	RSVD1,			RSVD2,		RSVD3,		0x11c8,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart3_tx_pcc5,		UARTC_TXD,	RSVD1,			RSVD2,		RSVD3,		0x1078,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart3_rx_pcc6,		UARTC_RXD,	RSVD1,			RSVD2,		RSVD3,		0x1070,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(gen2_i2c_scl_pcc7,	I2C2_CLK,	RSVD1,			RSVD2,		RSVD3,		0x1098,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(gen2_i2c_sda_pdd0,	I2C2_DAT,	RSVD1,			RSVD2,		RSVD3,		0x10a8,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(gen8_i2c_scl_pdd1,	I2C8_CLK,	RSVD1,			RSVD2,		RSVD3,		0x1088,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(gen8_i2c_sda_pdd2,	I2C8_DAT,	RSVD1,			RSVD2,		RSVD3,		0x1080,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(touch_clk_pdd3,	GP_PWM4,	TOUCH_CLK,		RSVD2,		RSVD3,		0x1068,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(dmic1_clk_pdd4,	DMIC1_CLK,	RSVD1,			DMIC5_CLK,	RSVD3,		0x11d0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(dmic1_dat_pdd5,	DMIC1_DAT,	RSVD1,			DMIC5_DAT,	RSVD3,		0x11d8,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio19_pdd6,	RSVD0,		WDT_RESET_OUTB,		RSVD2,		RSVD3,		0x10f8,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio49_pee2,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10c0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio50_pee4,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10c8,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio82_pee3,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x10d0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio71_pff2,	PPC_MODE_1,	RSVD1,			RSVD2,		RSVD3,		0x10d8,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio76_pff7,	RSVD0,		RSVD1,			TSC_EDGE_OUT0,	TSC_EDGE_OUT0A,	0x10e0,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio74_pff5,	PPC_READY,	PPC_I2C_DAT,		RSVD2,		RSVD3,		0x10e8,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio86_phh3,	RSVD0,		SPI5_CS1,		TSC_EDGE_OUT3,	TSC_EDGE_OUT0D,	0x1100,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio72_pff3,	PPC_MODE_2,	RSVD1,			RSVD2,		RSVD3,		0x1108,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio77_pgg0,	RSVD0,		RSVD1,			TSC_EDGE_OUT1,	TSC_EDGE_OUT0B,	0x1110,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio80_pff6,	RSVD0,		PPC_RST_N,		RSVD2,		RSVD3,		0x1118,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio84_pgg1,	RSVD0,		RSVD1,			TSC_EDGE_OUT2,	TSC_EDGE_OUT0C,	0x1120,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio83_pee5,	RSVD0,		RSVD1,			RSVD2,		RSVD3,		0x1128,		0,	Y,	-1,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio73_pff4,	PPC_CC,		PPC_I2C_CLK,		RSVD2,		RSVD3,		0x1130,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio70_pff1,	PPC_MODE_0,	RSVD1,			RSVD2,		RSVD3,		0x1138,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio85_pgg6,	RSVD0,		SPI4_CS1,		RSVD2,		RSVD3,		0x1148,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(soc_gpio69_pff0,	PPC_INT_N,	RSVD1,			RSVD2,		RSVD3,		0x1150,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart5_tx_pgg7,		UARTE_TXD,	SPI5_SCK,		RSVD2,		RSVD3,		0x1168,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart5_rx_phh0,		UARTE_RXD,	SPI5_MISO,		RSVD2,		RSVD3,		0x1170,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart2_tx_pgg2,		UARTB_TXD,	SPI4_SCK,		RSVD2,		RSVD3,		0x1178,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart2_rx_pgg3,		UARTB_RXD,	SPI4_MISO,		RSVD2,		RSVD3,		0x1180,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart2_cts_pgg5,	UARTB_CTS,	SPI4_CS0,		RSVD2,		RSVD3,		0x1188,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart2_rts_pgg4,	UARTB_RTS,	SPI4_MOSI,		RSVD2,		RSVD3,		0x1190,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart5_cts_phh2,	UARTE_CTS,	SPI5_CS0,		RSVD2,		RSVD3,		0x1198,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(uart5_rts_phh1,	UARTE_RTS,	SPI5_MOSI,		RSVD2,		RSVD3,		0x11a0,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(pwm2_pdd7,		GP_PWM2,	LED_BLINK,		RSVD2,		RSVD3,		0x11b0,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(pwm3_pee0,		GP_PWM3,	RSVD1,			RSVD2,		RSVD3,		0x11b8,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
++	PINGROUP(pwm7_pee1,		GP_PWM7,	RSVD1,			RSVD2,		RSVD3,		0x11a8,		0,	Y,	5,	7,	6,	8,	-1,	10,	12),
+ };
  
-+	if (virtio_gpu_is_shmem(bo) && virtio_gpu_use_dma_api(vgdev->vdev)) {
-+		/*
-+		 * The sync on completion restores the whole mapping, so an
-+		 * earlier transfer has to be done before this one snapshots it.
-+		 * Otherwise the snapshot predates anything the CPU wrote once
-+		 * that transfer's fence signalled, and the later sync would
-+		 * discard it. Nothing can add a fence behind our back here,
-+		 * since doing so takes the reservation we already hold.
-+		 * This writes the pages, so it waits as a writer does. READ
-+		 * usage covers existing readers.
-+		 */
-+		long wait = dma_resv_wait_timeout(objs->objs[0]->resv,
-+						  DMA_RESV_USAGE_READ, true,
-+						  MAX_SCHEDULE_TIMEOUT);
-+
-+		if (wait < 0) {
-+			ret = wait;
-+			goto err_unlock;
-+		}
-+	}
-+
- 	fence = virtio_gpu_fence_alloc(vgdev, vgdev->fence_drv.context, 0);
- 	if (!fence) {
- 		ret = -ENOMEM;
-@@ -320,6 +341,28 @@ static int virtio_gpu_transfer_to_host_ioctl(struct drm_device *dev, void *data,
- 		if (ret != 0)
- 			goto err_put_free;
- 
-+		/*
-+		 * A transfer the other way may have queued without yet syncing
-+		 * its mapping. Pushing the guest pages into it now would
-+		 * discard what the device wrote there, so wait for that sync:
-+		 * it runs before the fence it belongs to is signalled. The
-+		 * flag is only set under this reservation, so it cannot appear
-+		 * behind our back, and the acquire pairs with the release in
-+		 * that sync, so finding it clear means the pages it wrote are
-+		 * visible here too.
-+		 */
-+		if (smp_load_acquire(&bo->from_host_pending)) {
-+			long wait = dma_resv_wait_timeout(objs->objs[0]->resv,
-+							  DMA_RESV_USAGE_WRITE,
-+							  true,
-+							  MAX_SCHEDULE_TIMEOUT);
-+
-+			if (wait < 0) {
-+				ret = wait;
-+				goto err_unlock;
-+			}
-+		}
-+
- 		ret = -ENOMEM;
- 		fence = virtio_gpu_fence_alloc(vgdev, vgdev->fence_drv.context,
- 					       0);
-diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
-index 2b7af8e4e9e61..28682a6d5937d 100644
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -241,6 +241,33 @@ void virtio_gpu_dequeue_ctrl_func(struct work_struct *work)
- 	} while (!virtqueue_enable_cb(vgdev->ctrlq.vq));
- 	spin_unlock(&vgdev->ctrlq.qlock);
- 
-+	/*
-+	 * Sync guest-bound transfers before signalling anything, so that a
-+	 * waiter cannot read the backing pages while what the device wrote is
-+	 * still in a bounce buffer. This cannot be folded into the loop below:
-+	 * virtio_gpu_fence_event_process() also signals every earlier fence in
-+	 * the same context, so any entry there may signal this entry's fence.
-+	 */
-+	list_for_each_entry(entry, &reclaim_list, list) {
-+		if (entry->sync_for_cpu) {
-+			struct virtio_gpu_object *bo =
-+				gem_to_virtio_gpu_obj(entry->objs->objs[0]);
-+
-+			dma_sync_sgtable_for_cpu(vgdev->vdev->dev.parent,
-+						 bo->base.sgt, DMA_FROM_DEVICE);
-+			/*
-+			 * Release, so a transfer the other way that skips its
-+			 * wait on the strength of this cannot go on to read
-+			 * the backing pages before the sync above is visible.
-+			 * Nothing orders the two otherwise: where the mapping
-+			 * bounces on a coherent device the sync is a plain
-+			 * copy, and dma_direct_sync_sg_for_cpu() emits its
-+			 * barrier only for the non-coherent case.
-+			 */
-+			smp_store_release(&bo->from_host_pending, false);
-+		}
-+	}
-+
- 	list_for_each_entry(entry, &reclaim_list, list) {
- 		resp = (struct virtio_gpu_ctrl_hdr *)entry->resp_buf;
- 
-@@ -1223,12 +1250,31 @@ void virtio_gpu_cmd_transfer_from_host_3d(struct virtio_gpu_device *vgdev,
- 	struct virtio_gpu_object *bo = gem_to_virtio_gpu_obj(objs->objs[0]);
- 	struct virtio_gpu_transfer_host_3d *cmd_p;
- 	struct virtio_gpu_vbuffer *vbuf;
-+	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
- 
- 	cmd_p = virtio_gpu_alloc_cmd(vgdev, &vbuf, sizeof(*cmd_p));
- 	memset(cmd_p, 0, sizeof(*cmd_p));
- 
- 	vbuf->objs = objs;
- 
-+	if (virtio_gpu_is_shmem(bo) && use_dma_api) {
-+		/*
-+		 * The device writes only the requested box, so prime the
-+		 * mapping with the current contents: otherwise the sync on
-+		 * completion would hand back whatever a bounce buffer held for
-+		 * the regions the device does not touch.
-+		 */
-+		dma_sync_sgtable_for_device(vgdev->vdev->dev.parent,
-+					    bo->base.sgt, DMA_TO_DEVICE);
-+		vbuf->sync_for_cpu = true;
-+		/*
-+		 * Set under the reservation the caller holds, so a transfer
-+		 * the other way cannot miss it and push the guest pages into
-+		 * the mapping while the device still owns it.
-+		 */
-+		WRITE_ONCE(bo->from_host_pending, true);
-+	}
-+
- 	cmd_p->hdr.type = cpu_to_le32(VIRTIO_GPU_CMD_TRANSFER_FROM_HOST_3D);
- 	cmd_p->hdr.ctx_id = cpu_to_le32(ctx_id);
- 	cmd_p->resource_id = cpu_to_le32(bo->hw_res_handle);
+ static const struct tegra_pinctrl_soc_data tegra238_pinctrl_aon = {
 -- 
 2.53.0
 
