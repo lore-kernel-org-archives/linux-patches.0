@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682834FECCF;
-	Wed, 30 Sep 2026 17:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45022515961;
+	Wed, 30 Sep 2026 17:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788002; cv=none; b=ie/d7VmlkI/wMeM/ZTG3n5+nGeR9CMLyvCF34a7THmiRj+zB2iPNm8eFACnjSLCQ9S6QyB+74s+ojZhBe6jZ445oliMCI7agIRPfT2th70inliIfhOto5CybDAToUEnh0VWo/mbubXjx6kA9++ZROny5me0+l8s+PtFwQBIKDT8=
+	t=1790788005; cv=none; b=C4nv0+w+/J/kUhRBSEPV/i6BJU2z4Lft+HBxK/AHWr79wSm3eu4J/4Q3DYupTpyXlOlFPVulGTnnUwVlFBt7TWiYBV+maF1m5jdVZynh9wFoPSfztaPZ0KXOlmaZRN3sbZxIxJIkV4vamKKSTIGQgskOiMIllbpmlw4dAn6jvwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788002; c=relaxed/simple;
-	bh=AgK5Hz1c7ygZsgYNVZ9RIpFK0ADc564T931ZWRPxdG0=;
+	s=arc-20240116; t=1790788005; c=relaxed/simple;
+	bh=yVl/qyQykh3Qzz0qsjOsHZbuRqMBjMa58EoRsgXbJps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mooXRyUjmpjZCk0hp4rSgMsBLQpZyvSUB40fOhidoONv0OzkDD/41zRKvliL3se9KuabJd1kXQfE6MEB8oJy9CKgrGyJVHIuefkgFSMV5Ej6FU/dFA8knL2DepbM66eC+G33Oya1TDlOLQBEm9f43miiGCKKNB9TAOt6Na91kyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXv/HbCa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eY+WXJyehf98H59XmQ2qXrFVDBBx4zyUz5OHUbVl+e6nWtBua4Ukx8Cd83bkEJAVRxDHPZ4iyizTGoefvU3rPbKvVaynaKPPVqYpsAKZp7krN16cZE5IRslMhl68NsrKSrsbg8ihhECvsY/hq6I8nygH9lbCaitAtX+cTHKR6AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHKrcJHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXv/HbCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FF91F000FF;
-	Wed, 30 Sep 2026 17:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHKrcJHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF421F00898;
+	Wed, 30 Sep 2026 17:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788001;
-	bh=c25rGtR11GPLGyrRnboON5VfYuipbTitUD0AKzJ1S+I=;
+	s=korg; t=1790788004;
+	bh=qnAr9//3mw1YY0uRUHfTbxVhWXo6ut2RQkkKSW7b5Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BXv/HbCaEWo5+NANlB2poYbg8wn0xpmZRCpWVvbdWlxo3SblsI6yK8GfU37p4L36y
-	 00e8b0L75crhfyEDmLZAFuItJ/pG6seQ88nNj95eC3xJ0OF81XwNiRtduuaSZYZYBb
-	 fVB/vZiHA/N8Ro7rgWi0WllkBCIk5pJgpbPawL58=
+	b=iHKrcJHjE6lSXgR/ha8w/9FKabbh6RBrTMBrMb3C3ufUW1MCBqKtABG8qPV5N/gDv
+	 ygCk3darl/16omtVefdYiPYjMdfQh/pOP5J4BoFFuW5vxtLheKMTY7r2szGO3trXx1
+	 MxAM/hlTHBHXfFttANggzgJ4nFL12ZTba4McEtYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 428/457] xfs: dont let hidden_space go negative in xfs_metafile_resv_init
-Date: Wed, 30 Sep 2026 17:28:53 +0200
-Message-ID: <20260930152355.226448451@linuxfoundation.org>
+Subject: [PATCH 7.2 429/457] xfs: dont let memory failures leak blocks and kill repairs
+Date: Wed, 30 Sep 2026 17:28:54 +0200
+Message-ID: <20260930152355.249853071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,48 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 476582d754cdc5110f806001417fea6c77824c13 upstream.
+commit ab1c416d2377cdc16123ef521aac4da1c468c3d4 upstream.
 
-LOLLM points out that if the amount of fdblocks that we can reserve for
-a metadata btree file goes below the space already used by that file,
-then the hidden_space subtraction can underflow, causing
-xfs_dec_fdblocks to subtract a huge amount of space.  We never want the
-target to be less than the used sapce, so fix the logic that adjusts
-dblocks_avail downwards.
+LOLLM complains that a memory allocation failure in
+xrep_newbt_add_blocks results in online repair leaking blocks that were
+previously allocated to write a new btree, but the problem is worse than
+that -- a limitation of the codebase is that the callers cannot undo the
+transaction /and/ return the error -- either you undo all changes and
+commit the transaction, or you error out and the filesystem goes down.
 
-Also fix an error in the adjacent comment.
+However, the new btree space reservation object isn't that big (~48
+bytes).  Let's just do a NOFAIL allocation and the problem goes away.
 
-Cc: stable@vger.kernel.org # v6.15
-Fixes: 1df8d75030b787 ("xfs: make metabtree reservations global")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: be408417630427 ("xfs: implement block reservation accounting for btrees we're staging")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_metafile.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/newbt.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_metafile.c
-+++ b/fs/xfs/libxfs/xfs_metafile.c
-@@ -297,14 +297,14 @@ xfs_metafile_resv_init(
- 		goto out_unlock;
+--- a/fs/xfs/scrub/newbt.c
++++ b/fs/xfs/scrub/newbt.c
+@@ -193,9 +193,11 @@ xrep_newbt_add_blocks(
+ 	struct xrep_newbt_resv		*resv;
+ 	int				error;
  
- 	/*
--	 * Space taken by the per-AG metadata btrees are accounted on-disk as
--	 * used space.  We therefore only hide the space that is reserved but
--	 * not used by the trees.
-+	 * Space taken by metadata btrees are accounted on-disk as used space.
-+	 * We therefore only hide the space that is reserved but not used by
-+	 * the trees.
- 	 */
- 	if (used > target)
- 		target = used;
- 	else if (target > dblocks_avail)
--		target = dblocks_avail;
-+		target = max(dblocks_avail, used);
- 	hidden_space = target - used;
+-	resv = kmalloc_obj(struct xrep_newbt_resv, XCHK_GFP_FLAGS);
+-	if (!resv)
+-		return -ENOMEM;
++	/*
++	 * We have no way to clean up the allocated space *and* return an
++	 * ENOMEM if we fail to allocate this control structure.
++	 */
++	resv = kmalloc_obj(struct xrep_newbt_resv, GFP_KERNEL | __GFP_NOFAIL);
  
- 	error = xfs_dec_fdblocks(mp, hidden_space, true);
+ 	INIT_LIST_HEAD(&resv->list);
+ 	resv->agbno = XFS_FSB_TO_AGBNO(mp, args->fsbno);
 
 
