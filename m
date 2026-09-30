@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59A05208B0;
-	Wed, 30 Sep 2026 17:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C4951FCDA;
+	Wed, 30 Sep 2026 17:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789525; cv=none; b=M8sH22InWPbOurC/ZqJAtmcorv8auQEj7QFy1Y7wMBgmRTeZD9lM2Z3sJIxrbpRbCY4capMWLSQOQAJtUALpgtYFW9kRX8oYWrDHe7YuCceTfBUcJ/SYEIPdmtXK1XJ3n/ZOnytic8vrjsmRMFkfqPHCQkmTcunKO5OikQS/9y0=
+	t=1790789528; cv=none; b=Sz7gb027/qy0PX232wBexLsdcB8j4mIRAad9Dni0NKOfWdaTr6SceI4kpJZToWo5tKh3GaXZKptuJ9tGqlrXOxqRFvGgo8beRumfD/9Mes5pAjLyrXgYlZEKcLTJs8X2eJPokH6o4sUY8F4xKWBkTP+38kNASIPXAe60Oc1+sQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789525; c=relaxed/simple;
-	bh=pVag87shgoAQEMCk0SVkHV0R7ZLhDXpSDN2hq0j2KB0=;
+	s=arc-20240116; t=1790789528; c=relaxed/simple;
+	bh=0JaGbJbqjVBUdx4DFC0zFeoQVlXvjYjO7VH2NB0RYfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PR93tEIoPBYPerjWKSt69vPIK6W9hzKE3upLl54XPkPJDPTJPjm45sKCqlr1Mg64XEcyRY+I8Sl7q4fC0SOVA5/y3KwPxQw/N7PufPhGn3sRc8O5ekGNEfuIgYBUDtCSSX4Wuj9K2ioSo9gpreYm0n7gscZ0d5MoiORxvvSl9vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/JSNh2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jSrowz64tZV3i4O5mGHVMid41f3G9XETWMqw1MnkueMKrhU1uGE4agDQxYhH7qg2foNT6rKkQw9ORyGqJNUoh3MKrKpsDDD47OKF6T6SfywjbN4VaiIOm2iirHBae77HaqGXgP/SN84wHBbCtBZx+x+hygmYZYGOYB4ggvLHHVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG+7Ckus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/JSNh2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE921F000FF;
-	Wed, 30 Sep 2026 17:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG+7Ckus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB1D1F000FF;
+	Wed, 30 Sep 2026 17:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789524;
-	bh=d1ThOb9yaMRtqNieM8LN76d46pEadkyvfFd2bxPtQoA=;
+	s=korg; t=1790789527;
+	bh=FllXecsp0aqref8Lne7Hc9k58hbXs1oOS1oL6zOuJwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/JSNh2zs7EIdPgLccspkM8soYXdIDCRAqihbTRGYSoe/B39sHy9Xm8KP4vYKorvV
-	 LsuAcikLUB2WASEkRAk2+rOsnv3YubSyTF2TOOkcgQqPsjo1JzkZouK6tTaQAT5ThJ
-	 LA5k3mnvCheW+dZk77MJcO8uHMtlLQMRxyqDiw4I=
+	b=OG+7CkusI34azAnM+i8GgnBl6in/WwQqTzqJ1EsLVgtc6+g3BxZQgE/wlQ6EABy4P
+	 x0l+BqurXhPtjuPqkCykiKoR/YkJrEjHU7SDZYcTCqA9jBoSq8oGEsPrJYrNeJ2tIi
+	 z0oJLBZrcd8Z7sH3gla9zyNV0LTXtBPw2/FrsGR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 509/877] net: hisilicon: hns_dsaf_mac: fix mdio device leak in hns_mac_register_phy()
-Date: Wed, 30 Sep 2026 17:23:40 +0200
-Message-ID: <20260930152425.642861737@linuxfoundation.org>
+	Axel Mierczuk <axel.mierczuk@1password.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 510/877] net: openvswitch: conntrack: avoid modifying shared unconfirmed ct entry
+Date: Wed, 30 Sep 2026 17:23:41 +0200
+Message-ID: <20260930152425.663076300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,45 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 999e8295bc41d6ce45b8e54f88150efa96f3f01e upstream.
+commit 26b2bd70d22457556e2fa01cbf1192cb1a94d619 upstream.
 
-hns_dsaf_find_platform_device() returns the mdio platform device with its
-reference count incremented. hns_mac_register_phy() never drops that
-reference, so the mdio device can not be released.
+In a case where skb with an unconfirmed ct entry gets cloned, we may
+end up committing both but with different sets of extensions.
 
-Release the reference on both the deferred probe and the normal path.
+The series of events:
 
-Fixes: 1d1afa2ebf82 ("net: hns: register phy device in each mac initial sequence")
+ 1. The first clone wants to commit and runs the helpers wiring up
+    the extension pointer into the expectation list.
+ 2. Then it looses the confirmation keeping the entry unconfirmed.
+ 3. Second clone now wants to commit labels and adds the new extension
+    for that breaking the pointer in the expectation list causing
+    UAF on the destruction path later.
+
+While this is possible to trigger, there should be no practical
+network pipeline where committing both clones without modifications
+into the same zone is needed.  So, let's just reset the entry in case
+for some reason we got an skb with a shared one during commit.  This
+doesn't affect any known use cases, but avoids any potential problems
+with sharing and modification of the unconfirmed ct entry.
+
+The fixes tag points to the introduction of helpers, since that's the
+main UAF trigger for the sharing.
+
+Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260917110828.2148390-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260921145655.3167436-2-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/net/netfilter/nf_conntrack.h |    5 +++++
+ net/openvswitch/conntrack.c          |   12 ++++++++++++
+ 2 files changed, 17 insertions(+)
 
---- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-@@ -793,6 +793,7 @@ static int hns_mac_register_phy(struct h
- 		dev_err(mac_cb->dev,
- 			"mac%d mdio is NULL, dsaf will probe again later\n",
- 			mac_cb->mac_id);
-+		put_device(&pdev->dev);
- 		return -EPROBE_DEFER;
- 	}
- 
-@@ -801,6 +802,8 @@ static int hns_mac_register_phy(struct h
- 		dev_dbg(mac_cb->dev, "mac%d register phy addr:%d\n",
- 			mac_cb->mac_id, addr);
- 
-+	put_device(&pdev->dev);
-+
- 	return rc;
+--- a/include/net/netfilter/nf_conntrack.h
++++ b/include/net/netfilter/nf_conntrack.h
+@@ -186,6 +186,11 @@ static inline void nf_ct_put(struct nf_c
+ 		nf_ct_destroy(&ct->ct_general);
  }
  
++static inline bool nf_ct_shared(const struct nf_conn *ct)
++{
++	return refcount_read(&ct->ct_general.use) > 1;
++}
++
+ /* load module; enable/disable conntrack in this namespace */
+ int nf_ct_netns_get(struct net *net, u8 nfproto);
+ void nf_ct_netns_put(struct net *net, u8 nfproto);
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -734,6 +734,18 @@ static int __ovs_ct_lookup(struct net *n
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct;
+ 
++	/* If the ct entry is not confirmed and shared with some other skb,
++	 * e.g., a cloned one, we can't just modify it with the commit as we
++	 * must not modify the extension set.  Reset.
++	 */
++	if (cached && info->commit) {
++		ct = nf_ct_get(skb, &ctinfo);
++		if (ct && !nf_ct_is_confirmed(ct) && nf_ct_shared(ct)) {
++			nf_reset_ct(skb);
++			cached = false;
++		}
++	}
++
+ 	if (!cached) {
+ 		struct nf_hook_state state = {
+ 			.hook = NF_INET_PRE_ROUTING,
 
 
