@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C03D4FDE56;
-	Wed, 30 Sep 2026 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F3F4ED196;
+	Wed, 30 Sep 2026 16:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786999; cv=none; b=hUOytjEAOBdDxLWbP3Ud8u04pTRhf5dluwYBrrAQRwIMFyqCqjtUrS7dkrXTHXAd4upxa5H6215A80A3CyT+3XgWkVQOo0Cs+eQVp8rqTc8FnereznfVW7EKOZew0QjaMMnNtoyP2tNikNzzjWiuou9jhEsUxW4kohBzCnGxPuA=
+	t=1790787002; cv=none; b=JI6CwdNDd9BJu2RHW47CmMk4Lty5el3gAj4HdWohxK3GahFfF+QBT5R6QAG3qCj6beCMjrWjJoIiZcy8aMT+t1lJM0t5DIoDxsXV96vru6L7IB3gERnOEaH7TbPcixPzSvEu4LdzdGoPlTe5MIFSXk0QmjHOgTeIYdiv4pI4kNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786999; c=relaxed/simple;
-	bh=1lTQFtKaSopGo9eSNdvlGAcIOFQptlPBASR4KJ7HyNQ=;
+	s=arc-20240116; t=1790787002; c=relaxed/simple;
+	bh=06khQTLxPhgwd5w1p9dZ7S10RIesHt4V7DkHadfnZng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ad+QZevmSqOjwLdpWG8czce69zxkMOcmeDXqOoPkAr9M4uJYdcolnCZwMsGsLXrCxFyUGovViY8p5QdtWOlnyWC9yPGaWulwE2LOzOea02TnVvXvVN1tCAAAx+tqHp+eN5/3LcpK/hLWGYvSt6wqmSe3elTtD6X+Me0pdFkyoJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwiOpW/M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FNIiOCt96DbEfJaNb0GbzkhDpUFFNnaWqVJRdoNdeV7w/8kDrJp+cg+MD9XRArty2LZBLzkgY9fnPS5CiP0FWc6q9HG9HJl6Fpnz9xhvWuSVeucaEz0/gBU9vgnx4y/+3/w9BanHKZpEKL8DO75AXurJ3h82NPqAzbBcXxjcJjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRVZBKxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwiOpW/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02401F00893;
-	Wed, 30 Sep 2026 16:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRVZBKxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDB11F000FF;
+	Wed, 30 Sep 2026 16:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786998;
-	bh=M3fAGQ5zUjKrC/TLXGHv5W2znVJAc8kDC7shh7kCJOE=;
+	s=korg; t=1790787001;
+	bh=HrUlEQUVTn5PtjyHmDwR9k3TQJOOejGckNKGz8dA0TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JwiOpW/MnOHILe3TR+UAv/dhaUZxVHmlcBEgOx/2VNNM5nxRKEGcZX4QT9z5povus
-	 DqwNU/aM5ko5nOEn6JLHcyjf0XFBiBIV5vG9/Mh+LwBzK780OSvgBHQGYZSQRnZb/G
-	 Tl+GTRGUO1qMeopMC/ykrqCxJrb26rZ5JTKyhB7g=
+	b=QRVZBKxlKcZM9jb3cF8aFoYSt8szGWogOw/i3zpv1qXYFYW5KaeU92cDy3lSPwKBC
+	 9FGBzz9Lk5E+zqrQZeCxhXcM4/Lv7gEWmuFzsmzTHyBHLGO2ASmMnX4V6LVKRwTk6V
+	 kZCaAyzBJ/lQgeoIVr1U3GOsi4PWSX4o8yg+Fw+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	William Bezenah <wbezenah@linux.ibm.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 077/457] bpf: Restrict CO-RE poisoning to relocatable instructions
-Date: Wed, 30 Sep 2026 17:23:02 +0200
-Message-ID: <20260930152347.712916528@linuxfoundation.org>
+Subject: [PATCH 7.2 060/457] s390/cio: Fix cio_update_schib() to not cache invalid schib
+Date: Wed, 30 Sep 2026 17:22:45 +0200
+Message-ID: <20260930152347.334110233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,157 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 394ae398337c5f87e567f6cd63b937fc2b2f6ddc ]
+[ Upstream commit 29d9e5835d89223aa913dcf7b942cc1c148bdd25 ]
 
-CO-RE relocation records can name any instruction offset. When a
-relocation cannot be resolved, bpf_core_patch_insn() currently poisons its
-target before checking whether that instruction is a valid relocation
-target. Malformed metadata can therefore replace jumps, calls, exits,
-register-source arithmetic, or non-immediate loads instead of failing at
-the relocation step.
+When pmcw.dnv is 0, the contents of all SCHIB fields are unpredictable.
+Zero sch->schib in that case to prevent subsequent code from making
+decisions based on unpredictable data.
 
-Handle poisoning only after the instruction has passed the same class and
-operand-form checks used for a resolved relocation. Route invalid forms
-through the existing diagnostic and return a hard error. Keep poisoning
-supported instructions, including both halves of a plain ldimm64, so an
-unresolved relocation in dead code remains valid.
-
-Extend bpf_core_poison_insn() to poison both halves of ldimm64, and return
-its status directly from each validated instruction case. This avoids
-routing the success path through a common label and leaves the helper free
-to report errors.
-
-The shared relocation code applies this restriction to both libbpf and
-in-kernel CO-RE.
-
-Fixes: d7a252708dbc ("libbpf: Improve handling of failed CO-RE relocations")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260917233222.2542500-7-memxor@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Reported-by: William Bezenah <wbezenah@linux.ibm.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/relo_core.c | 58 +++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 27 deletions(-)
+ drivers/s390/cio/cio.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
-index 6ae3f2a15ad0c..4755de3f99957 100644
---- a/tools/lib/bpf/relo_core.c
-+++ b/tools/lib/bpf/relo_core.c
-@@ -980,23 +980,30 @@ static int bpf_core_calc_relo(const char *prog_name,
- }
- 
- /*
-- * Turn instruction for which CO_RE relocation failed into invalid one with
-+ * Turn instruction for which CO-RE relocation failed into invalid one with
-  * distinct signature.
+diff --git a/drivers/s390/cio/cio.c b/drivers/s390/cio/cio.c
+index 70dc8cc765948..e1c62eb60cca7 100644
+--- a/drivers/s390/cio/cio.c
++++ b/drivers/s390/cio/cio.c
+@@ -453,7 +453,8 @@ EXPORT_SYMBOL_GPL(cio_commit_config);
+ /**
+  * cio_update_schib - Perform stsch and update schib if subchannel is valid.
+  * @sch: subchannel on which to perform stsch
+- * Return zero on success, -ENODEV otherwise.
++ * Return zero on success, -ENODEV if the subchannel is not operational,
++ * -EACCES if the subchannel has no valid device.
   */
--static void bpf_core_poison_insn(const char *prog_name, int relo_idx,
--				 int insn_idx, struct bpf_insn *insn)
-+static int bpf_core_poison_insn(const char *prog_name, int relo_idx,
-+				struct bpf_insn *insn, int insn_idx)
+ int cio_update_schib(struct subchannel *sch)
  {
--	pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
--		 prog_name, relo_idx, insn_idx);
--	insn->code = BPF_JMP | BPF_CALL;
--	insn->dst_reg = 0;
--	insn->src_reg = 0;
--	insn->off = 0;
--	/* if this instruction is reachable (not a dead code),
--	 * verifier will complain with the following message:
--	 * invalid func unknown#195896080
--	 */
--	insn->imm = 195896080; /* => 0xbad2310 => "bad relo" */
-+	int insn_cnt = is_ldimm64_insn(insn) ? 2 : 1;
-+	int i;
-+
-+	for (i = 0; i < insn_cnt; i++) {
-+		pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
-+			 prog_name, relo_idx, insn_idx + i);
-+		insn[i].code = BPF_JMP | BPF_CALL;
-+		insn[i].dst_reg = 0;
-+		insn[i].src_reg = 0;
-+		insn[i].off = 0;
-+		/*
-+		 * If this instruction is reachable (not dead code), the verifier
-+		 * will complain with "invalid func unknown#195896080".
-+		 */
-+		insn[i].imm = 195896080; /* => 0xbad2310 => "bad relo" */
+@@ -462,10 +463,12 @@ int cio_update_schib(struct subchannel *sch)
+ 	if (stsch(sch->schid, &schib))
+ 		return -ENODEV;
+ 
+-	memcpy(&sch->schib, &schib, sizeof(schib));
+-
+-	if (!css_sch_is_valid(&schib))
++	if (!css_sch_is_valid(&schib)) {
++		memset(&sch->schib, 0, sizeof(sch->schib));
+ 		return -EACCES;
 +	}
 +
-+	return 0;
++	memcpy(&sch->schib, &schib, sizeof(schib));
+ 
+ 	return 0;
  }
- 
- static int insn_bpf_size_to_bytes(struct bpf_insn *insn)
-@@ -1047,17 +1054,6 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 
- 	class = BPF_CLASS(insn->code);
- 
--	if (res->poison) {
--poison:
--		/* poison second part of ldimm64 to avoid confusing error from
--		 * verifier about "unknown opcode 00"
--		 */
--		if (is_ldimm64_insn(insn))
--			bpf_core_poison_insn(prog_name, relo_idx, insn_idx + 1, insn + 1);
--		bpf_core_poison_insn(prog_name, relo_idx, insn_idx, insn);
--		return 0;
--	}
--
- 	orig_val = res->orig_val;
- 	new_val = res->new_val;
- 
-@@ -1065,7 +1061,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 	case BPF_ALU:
- 	case BPF_ALU64:
- 		if (BPF_SRC(insn->code) != BPF_K)
--			return -EINVAL;
-+			goto bad_insn;
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		if (res->validate && insn->imm != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (ALU/ALU64) value: got %u, exp %llu -> %llu\n",
- 				prog_name, relo_idx,
-@@ -1082,6 +1080,8 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 	case BPF_LDX:
- 	case BPF_ST:
- 	case BPF_STX:
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		if (res->validate && insn->off != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDX/ST/STX) value: got %u, exp %llu -> %llu\n",
- 				prog_name, relo_idx, insn_idx, insn->off, (unsigned long long)orig_val,
-@@ -1097,7 +1097,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 			pr_warn("prog '%s': relo #%d: insn #%d (LDX/ST/STX) accesses field incorrectly. "
- 				"Make sure you are accessing pointers, unsigned integers, or fields of matching type and size.\n",
- 				prog_name, relo_idx, insn_idx);
--			goto poison;
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		}
- 
- 		orig_val = insn->off;
-@@ -1140,6 +1140,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 			return -EINVAL;
- 		}
- 
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
-+
- 		imm = (__u32)insn[0].imm | ((__u64)insn[1].imm << 32);
- 		if (res->validate && imm != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDIMM64) value: got %llu, exp %llu -> %llu\n",
-@@ -1157,6 +1160,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 		break;
- 	}
- 	default:
-+bad_insn:
- 		pr_warn("prog '%s': relo #%d: trying to relocate unrecognized insn #%d, code:0x%x, src:0x%x, dst:0x%x, off:0x%x, imm:0x%x\n",
- 			prog_name, relo_idx, insn_idx, insn->code,
- 			insn->src_reg, insn->dst_reg, insn->off, insn->imm);
 -- 
 2.53.0
 
