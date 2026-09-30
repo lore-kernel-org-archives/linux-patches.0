@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4644FE2F2;
-	Wed, 30 Sep 2026 15:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45A502554;
+	Wed, 30 Sep 2026 15:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782672; cv=none; b=Q8sp/XJZvvHobmT4yKp9/wUK4SO3xFth6Pqu5cmHGyndqVjKrBOAJ/fRIknw3CeVWrJREPLehFU2QeSK2fEOmNULobpu+RjJgROhjYPJI5oTyzRkQGEZl3wF0eSaIlSiIxKhdjSu76/6ViZaFS4YKCiti2wKvaYJEMHMTKfw36k=
+	t=1790782673; cv=none; b=djAz0lCs2eZjzQbyJQPwpxh0OcWdVCcfZZvUqlJXs3iqd+zUzJsYR1Zg8YxiGe4wmbkApLaWNzE4EoXgeAvH3mOrAM95mv0ICisPuuUWKdfuMM0Buc4vxo3iIax7qpIAcydZh8l7k9PnvZOHMdKmvJkgQHXWVjfz/yUNzir6DcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782672; c=relaxed/simple;
-	bh=6aF2WKVRRu1aSwNG92CPKjzN9cselWmBgaFJflFy0uU=;
+	s=arc-20240116; t=1790782673; c=relaxed/simple;
+	bh=pXaR+pXxigscULlfbD0CFr8Pj/xPbXxKSMkpdylfb+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXnrut/xMGkCUSwIHIhort++INOlPqLmjPT+9kc7LbXcNLd6TV7VyLSx+AU1TTOsmtW8R16h/6FL4o3u5a+Jk9aR4YUHr3/TMU559hj/RVZipSkAmvZCbqLtC41mRedIJ6rLnaOQTiMKj96+ARzUI99yKjWdWhlk53yTsaz/pbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaQ9PWc3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HvmU+95VRtjyyRpiIlS0iGQ+wB+xHPzQVh/wrZvFezwiwaBQyqHfyUt6sgOawm0rLodIbmQ/AP9Z4Gglfx8uE2KGtMxdGRxabcPMcBfaZCdkm8RHNiYM4Y04ZYmoXy78sLTDtLmoFKcUanxAfvgbTk+1Gj4tJH7LY/3rEaft+d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0ehtTEV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaQ9PWc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC231F00899;
-	Wed, 30 Sep 2026 15:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0ehtTEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A631F00898;
+	Wed, 30 Sep 2026 15:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782663;
-	bh=8HNMwz+s/C+iYu1K05BS3WiwJ/JMAZ8wcS2ppvZWP1c=;
+	s=korg; t=1790782660;
+	bh=M8Lbropj7gG2ll2A7wnTP/kJgPhBSWpvHaKDRazHsbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YaQ9PWc3mQ09/LnAqwRFMa+JEGwxqJKt7CY92kD+wZgrNSx4CVBLUsMKHauoKAdoV
-	 2Ew3wXzGlZFZVvSCaAkV2cYfaijY48rDYw4rlzPzY56LCagDdRqUm5Xxu6rS8aLFgi
-	 nYOHqcM7r56XVnIR9IqFE3ISAkG0zOsnDTjtmi+o=
+	b=E0ehtTEVW+Gl1Vf/+ACVimZTCekhQLrNIYdOqpIdCf6uzL+shGa+ClgMXCVKw0jL0
+	 Kj2+jiMMh7oHZPSexsS4MSH6kpTHC0mO2p2+z18XESBFzdsVeQodj5yLLVo1gCdOVV
+	 2x1GypBGF1AR6sbQ7FL+4RB92PdiYkvFabwlAAOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iskhakov Daniil <dish@amicon.ru>,
-	Agalakov Daniil <ade@amicon.ru>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Raf Dickson <rafdog35@gmail.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/595] e1000e: limit endianness conversion to boundary words
-Date: Wed, 30 Sep 2026 17:20:20 +0200
-Message-ID: <20260930152350.470164964@linuxfoundation.org>
+Subject: [PATCH 5.10 126/595] vsock: use sk_acceptq_is_full() helper in all transports
+Date: Wed, 30 Sep 2026 17:20:19 +0200
+Message-ID: <20260930152350.449087366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,75 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Agalakov Daniil <ade@amicon.ru>
+From: Raf Dickson <rafdog35@gmail.com>
 
-[ Upstream commit a5ecafcfb27baf2dba766c4fd99dbb947f4e85d8 ]
+[ Upstream commit 4ff2e84ff1b33d79fa0e3ae355ce4a334908ef9a ]
 
-[Why]
-In e1000_set_eeprom(), the eeprom_buff is allocated to hold a range of
-words. However, only the boundary words (the first and the last) are
-populated from the EEPROM if the write request is not word-aligned.
-The words in the middle of the buffer remain uninitialized because they
-are intended to be completely overwritten by the new data via memcpy().
+Replace the open-coded backlog check with sk_acceptq_is_full().
+The helper uses > instead of >=, which is the correct comparison
+per commit 64a146513f8f ("[NET]: Revert incorrect accept queue
+backlog changes."), and adds READ_ONCE() for proper memory ordering.
 
-The previous implementation had a loop that performed le16_to_cpus()
-on the entire buffer. This resulted in endianness conversion being
-performed on uninitialized memory for all interior words.
-
-Fix this by converting the endianness only for the boundary words
-immediately after they are successfully read from the EEPROM.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Agalakov Daniil <ade@amicon.ru>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260609213559.178657-14-anthony.l.nguyen@intel.com
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Raf Dickson <rafdog35@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20260612045842.122207-1-rafdog35@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ethtool.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/vmw_vsock/hyperv_transport.c | 2 +-
+ net/vmw_vsock/vmci_transport.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ethtool.c b/drivers/net/ethernet/intel/e1000e/ethtool.c
-index 4aca854783e2d..fe2e0ba7d434a 100644
---- a/drivers/net/ethernet/intel/e1000e/ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
-@@ -597,20 +597,25 @@ static int e1000_set_eeprom(struct net_device *netdev,
- 		/* need read/modify/write of first changed EEPROM word */
- 		/* only the second byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, first_word, 1, &eeprom_buff[0]);
-+		if (ret_val)
-+			goto out;
-+
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[0]);
-+
- 		ptr++;
+diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
+index 974a33015f37c..f0c6291d39243 100644
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -314,7 +314,7 @@ static void hvs_open_connection(struct vmbus_channel *chan)
+ 		goto out;
+ 
+ 	if (conn_from_host) {
+-		if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog)
++		if (sk_acceptq_is_full(sk))
+ 			goto out;
+ 
+ 		new = vsock_create_connected(sk);
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index aa6f2a1429666..4085163bb92dd 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1004,7 +1004,7 @@ static int vmci_transport_recv_listen(struct sock *sk,
+ 	 * reset.  Otherwise we create and initialize a child socket and reply
+ 	 * with a connection negotiation.
+ 	 */
+-	if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog) {
++	if (sk_acceptq_is_full(sk)) {
+ 		vmci_transport_reply_reset(pkt);
+ 		return -ECONNREFUSED;
  	}
--	if (((eeprom->offset + eeprom->len) & 1) && (!ret_val))
-+	if ((eeprom->offset + eeprom->len) & 1) {
- 		/* need read/modify/write of last changed EEPROM word */
- 		/* only the first byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, last_word, 1,
- 					 &eeprom_buff[last_word - first_word]);
-+		if (ret_val)
-+			goto out;
- 
--	if (ret_val)
--		goto out;
--
--	/* Device's eeprom is always little-endian, word addressable */
--	for (i = 0; i < last_word - first_word + 1; i++)
--		le16_to_cpus(&eeprom_buff[i]);
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[last_word - first_word]);
-+	}
- 
- 	memcpy(ptr, bytes, eeprom->len);
- 
 -- 
 2.53.0
 
