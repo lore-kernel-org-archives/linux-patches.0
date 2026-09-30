@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9363D093A;
-	Wed, 30 Sep 2026 18:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FF63C063A;
+	Wed, 30 Sep 2026 18:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794684; cv=none; b=Txys1Aby/JkyV8bKKBt26787D8195OHsF+ciZhyH8g2RyTannPLaS754sh9xzQo+6+2TUZLOyW9mrOf8qcIxqb6hztYHdwHGGFpgtzGJ/z8lucLu1hgXTi+KN/yQGppMl4IZgZ6jDvEJPKIJdhFQyl+D/jiOoDOuu06jAhctX9Q=
+	t=1790794686; cv=none; b=m41hNneO/1Quc0sTkgVGEK9ojgAW2RPY1W0sqPcOAv2PAHETCLRUkVP7EHGG5JTU2r81g3VMkN2OV/bw8nKeuur1FFnYu980j7QVsVcUbHLcty9gopTReiX2kPzJ7SvYCEydtPQ33Exa8Zf8f41YcQdBITa7OOhTPCEc6rXbA5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794684; c=relaxed/simple;
-	bh=1t6V3HlgU8k8qQ6p+r9FK44cBw/NNz7Y/5xEnAT+NPE=;
+	s=arc-20240116; t=1790794686; c=relaxed/simple;
+	bh=ehXpfh9GClxMUNGoIXRFV2sOtWLrMfIV2x7n3iHoMgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1gLhFbRcjr36djKZ9m4BUKs93CDF/7OeVUW30O+8GVEqFeafFNeW2eMVXfYAfb6dMl2ARaMyWujxVvml2IVmMJNHc2ZY++aNwDyWsjlpeMcfSHThlsGjvR7gAsRdlEIOdkmceodsHFAN87U10Pu+ufC/pNrOu5miQzy7u1d7Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6QnrDBu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g/qSsVVvA7+H3TlMlVeveMWxLWdmBWbAaA39lkmaGFfhYBdpU4bx+Wn2eXD8j8Pqb3XaIfpfRtPbtGS5CAMVDwoGZ4fYsOPnia7+YWsBkmilC/tuZat9AfqDvtSBEfCOPQlHA1SGh0jYMCvkZiOkXGgRfbAoKRCz1KFdlNbl8Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaI06HQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6QnrDBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456391F000FF;
-	Wed, 30 Sep 2026 18:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaI06HQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E47B1F000FF;
+	Wed, 30 Sep 2026 18:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794682;
-	bh=WtUJxb3H96wWwiLUBvMmGYtLhlmA15lRqWYop+yDOh4=;
+	s=korg; t=1790794685;
+	bh=thGkumMGCKttTd5Q0TClOWs1/9mBtcWFookQyxiCq4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q6QnrDBuVDvJnCwK0m2mmRoiKoMBpwU9AYX3AvktmrmIGmz3ozld7mkuBseCP/Kg4
-	 0kl4NGTlGLdRGD5eNzeYRZ7CVem2azseEaZuv9TMCa3YK59bh7pir5Pl4Tg+JJA7/x
-	 pTmXnkyt3Ag55WzqUpHI72H33xnOnn6zMHrVE6V8=
+	b=YaI06HQlJ/UxEv05VWDleMCCkFRvNJnMz2U1KjytZ0+D22n9I0+HNjJVYq8lHnith
+	 go2A85zHRUgYMpVyr4A0fjHLTGrn4h15yc34XZwJbRXOxBD020yC1yuih3Q2eJhc89
+	 w/L5ZFCWhO9GZVjJjXGr+Ltwka9jO3123f9ddUiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0297/1193] netfilter: ipset: mark the rcu locked areas properly
-Date: Wed, 30 Sep 2026 17:16:21 +0200
-Message-ID: <20260930152440.757404839@linuxfoundation.org>
+Subject: [PATCH 6.6 0298/1193] wifi: rsi: validate beacon length before fixed buffer copy
+Date: Wed, 30 Sep 2026 17:16:22 +0200
+Message-ID: <20260930152440.777889116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,73 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 5d0c22e73656d050daffad10a2ba8765ce8441c8 ]
+[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
 
-When we bump the uref counter, there's no need to keep
-the rcu lock because the referred hash table can't
-disappear. Also, from the same reason in mtype_gc we
-need the rcu lock and not a spinlock.
+rsi_prepare_beacon() copies the mac80211 beacon frame after
+FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
+than MAX_MGMT_PKT_SIZE after alignment.
 
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Validate the beacon length against the actual tailroom before the copy
+and skb_put(). Leave ownership of the management skb with the caller on
+error, matching the existing rsi_send_beacon() cleanup path.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 53b65f013594a..754631e068039 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -568,9 +568,10 @@ mtype_gc(struct work_struct *work)
- 	set = gc->set;
- 	h = set->data;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index 2cebe562a1f4b..5873c0bac520d 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	struct ieee80211_vif *vif;
+ 	struct sk_buff *mac_bcn;
+ 	u8 vap_id = 0, i;
++	unsigned int tailroom;
+ 	u16 tim_offset = 0;
  
--	spin_lock_bh(&set->lock);
--	t = ipset_dereference_set(h->table, set);
-+	rcu_read_lock_bh();
-+	t = rcu_dereference_bh(h->table);
- 	atomic_inc(&t->uref);
-+	rcu_read_unlock_bh();
- 	numof_locks = ahash_numof_locks(t->htable_bits);
- 	r = gc->region++;
- 	if (r >= numof_locks) {
-@@ -579,7 +580,6 @@ mtype_gc(struct work_struct *work)
- 	next_run = (IPSET_GC_PERIOD(set->timeout) * HZ) / numof_locks;
- 	if (next_run < HZ/10)
- 		next_run = HZ/10;
--	spin_unlock_bh(&set->lock);
+ 	for (i = 0; i < RSI_MAX_VIFS; i++) {
+@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	if (mac_bcn->data[tim_offset + 2] == 0)
+ 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
  
- 	mtype_gc_do(set, h, t, r);
++	tailroom = skb_tailroom(skb);
++	if (tailroom < FRAME_DESC_SZ ||
++	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
++		dev_kfree_skb(mac_bcn);
++		return -EMSGSIZE;
++	}
++
+ 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
+ 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
  
-@@ -859,15 +859,13 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	key = HKEY(value, h->initval, t->htable_bits);
- 	r = ahash_region(key);
- 	atomic_inc(&t->uref);
-+	rcu_read_unlock_bh();
- 	elements = t->hregion[r].elements;
- 	maxelem = t->maxelem;
- 	if (elements >= maxelem) {
- 		u32 e;
--		if (SET_WITH_TIMEOUT(set)) {
--			rcu_read_unlock_bh();
-+		if (SET_WITH_TIMEOUT(set))
- 			mtype_gc_do(set, h, t, r);
--			rcu_read_lock_bh();
--		}
- 		maxelem = h->maxelem;
- 		elements = 0;
- 		for (e = 0; e < ahash_numof_locks(t->htable_bits); e++)
-@@ -875,7 +873,6 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 		if (elements >= maxelem && SET_WITH_FORCEADD(set))
- 			forceadd = true;
- 	}
--	rcu_read_unlock_bh();
- 
- 	spin_lock_bh(&t->hregion[r].lock);
- 	n = rcu_dereference_bh(hbucket(t, key));
 -- 
 2.53.0
 
