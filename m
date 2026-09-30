@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA3950B43C;
-	Wed, 30 Sep 2026 15:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9187C4EA39A;
+	Wed, 30 Sep 2026 15:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783187; cv=none; b=gRuEgTarnhSwklmwOtzlK109KECvVidRYvfo5UWzADDlX06n3qV8bKdHWowtl/VVlO8y1Yk4xpk/Qzxxfu3zYuQj/4DZ+hKGyrzkCbXkVjW4rt+5hX6kLpZU2GjPJPjvRTCvnBeO9nUCEBwRGMVYR3qrFrvR0FgAUfDtVUmI7Ow=
+	t=1790783191; cv=none; b=C2TuAp0B+T2WmbGyLRHhHm6SqmqvHpjXiWm7W0c/p3wbFofhPBTNmpywR7undFSl44Rl6p79c0U5IhplrsCHUJy8bINdkbLNw3+xuPT4cD9wlzOr6HPx2MODclduVnP1A8AmFlbh+voSFx/lS25tjwMrFnIhVhhq7UV9mE1FxVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783187; c=relaxed/simple;
-	bh=1iJQw4bi0OIQyufpMtYKu0+PmgD8r5CdmdBASHyOSSI=;
+	s=arc-20240116; t=1790783191; c=relaxed/simple;
+	bh=5Id1ku92l8c4xMEeWESgPNdI5nmPDZB+Bfy9AdGtAWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6w1FyrlXnL/6a5SXrZ31JDc1G6ueoDvSqX2Ci5S40CRo7JrJuwBoUJD6SrWD47YwfaQhj51DVYBLrDJpouYbUqVKwyag6hGTQffRjtctL4pl3WOiR7xVqzio5ulMSr+QFYcfl/RcsLW31/GkVVzzXn8Ayh06NR3jz0cELACiEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z94dmhbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lJy7QfX0BII+DTLuM+MbuwrsAhaOHGj4iQA28s0tfQ7l8oZ6uFhLSARV2ZPcenAkyjbNs9jR88QUfHn60jH2D5TXp757qJj03DFuBwSYyI80fYmZC2pG/6k5AOoc9RAwmlE/ux1pJlAQQ/qWrLbFmLHI8N05EUPnU9ZtAvmGOEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QpajBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z94dmhbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEA71F000FF;
-	Wed, 30 Sep 2026 15:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QpajBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0561F00893;
+	Wed, 30 Sep 2026 15:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783182;
-	bh=Kwy4bsUQ4FMNu5ukNTFRukn9stojy8pNgDno7vwPJ/k=;
+	s=korg; t=1790783185;
+	bh=Vqa8fe6hqyOWygkxmxG4aZYaV9ierh08Il8YYUyXkPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z94dmhbO9YKW7OPPR7DHviGQN0o93naTvRy6Fwbx4Tsut2oD77vjjkRI3HLjhpN+w
-	 lQWU+Uiu5mf0vakCQbJcqXHbluwF9Gpf0tBlT5Gt0PrfYhPN60cfvOGyMkyUC4q1p3
-	 5dvJk7S+ybZHwrRY7GRitzqv26A9y5UHw47cRBDE=
+	b=t+QpajBfMkmHIu3ScO35Qv9rhmh522C/lLRSVyWgbJ196qdz2zDllVD62QqwT1sak
+	 f/cTIyJgJk0FRMmO5ghoM94Bf3/Ii25FfbJseaQ2VCd8Z343YGSA13ytd5sK/OFFhH
+	 HA2uGteBnFUfJYN57gAOzVss83RPx8IXMx5QzmT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yuz08559@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/595] vhost-vdpa: dont install the eventfd_ctx_fdget() error in config_ctx
-Date: Wed, 30 Sep 2026 17:22:37 +0200
-Message-ID: <20260930152353.387218133@linuxfoundation.org>
+Subject: [PATCH 5.10 255/595] net/sched: ets: clamp quantum in parse and fallback paths
+Date: Wed, 30 Sep 2026 17:22:28 +0200
+Message-ID: <20260930152353.196739632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,86 +48,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit e74a9fa50749b9940b4fb13199652325e08d3c4a ]
+[ Upstream commit 1c38487f46b243bfeefec0c0c86023a3904f2214 ]
 
-vhost_vdpa_set_config_call() swaps the eventfd_ctx_fdget() return value
-into v->config_ctx before checking it, so on failure the field briefly
-holds an ERR_PTR:
+ets_qdisc_change() falls back to psched_mtu() with no floor for bands
+without an explicit quantum. With a crafted size table qdisc_pkt_len
+reaches ~2 GiB, so a zero psched_mtu on a headerless device makes the
+deficit-refill loop spin under the qdisc lock.
 
-	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
-	swap(ctx, v->config_ctx);
+Move the floor into ets_quantum_parse() so explicitly configured quanta
+are also clamped to [256, 1<<20], not just the fallback path.
 
-	if (!IS_ERR_OR_NULL(ctx))
-		eventfd_ctx_put(ctx);
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_ETS=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
 
-	if (IS_ERR(v->config_ctx)) {
-		long ret = PTR_ERR(v->config_ctx);
+  tc qdisc add dev dummy0 root ets bands 3 strict 2 quanta 1 1
 
-		v->config_ctx = NULL;
-		return ret;
-	}
-
-Commit 0bde59c1723a ("vhost-vdpa: set v->config_ctx to NULL if
-eventfd_ctx_fdget() fails") added that clearing, and spelled out the
-invariant the rest of the file relies on: "we consider 'v->config_ctx'
-valid if it is not NULL".  The window between the swap and the clearing
-still breaks it.  vhost_vdpa_config_cb() only tests for NULL, so a config
-interrupt delivered inside the window hands the ERR_PTR to
-eventfd_signal().
-
-Check the fd before installing it instead.  That closes the window and
-matches how vhost_vring_ioctl() handles the same failure for the vq call
-fd.
-
-It also stops a rejected fd from tearing down a config interrupt that was
-working: until now the swap replaced the live context and put it, so
-after an EBADF the device silently stopped delivering config interrupts
-until userspace installed a new fd.
-
-Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807100025.19750-2-yuz08559@gmail.com>
+Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.9
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/sched/sch_ets.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index c1fb70f840340..db488b98cc9f9 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -331,18 +331,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
- 		return  -EFAULT;
- 
- 	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
-+	if (IS_ERR(ctx))
-+		return PTR_ERR(ctx);
-+
- 	swap(ctx, v->config_ctx);
- 
--	if (!IS_ERR_OR_NULL(ctx))
-+	if (ctx)
- 		eventfd_ctx_put(ctx);
- 
--	if (IS_ERR(v->config_ctx)) {
--		long ret = PTR_ERR(v->config_ctx);
--
--		v->config_ctx = NULL;
--		return ret;
+diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
+index cecd7209a86c9..0c2349c08f8c2 100644
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -83,11 +83,7 @@ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
+ 			     unsigned int *quantum,
+ 			     struct netlink_ext_ack *extack)
+ {
+-	*quantum = nla_get_u32(attr);
+-	if (!*quantum) {
+-		NL_SET_ERR_MSG(extack, "ETS quantum cannot be zero");
+-		return -EINVAL;
 -	}
--
- 	v->vdpa->config->set_config_cb(v->vdpa, &cb);
- 
++	*quantum = clamp_t(u32, nla_get_u32(attr), 256, 1 << 20);
  	return 0;
+ }
+ 
+@@ -647,11 +643,13 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
+ 			return err;
+ 	}
+ 	/* If there are more bands than strict + quanta provided, the remaining
+-	 * ones are ETS with quantum of MTU. Initialize the missing values here.
++	 * ones are ETS with quantum of max(MTU, 256). Initialize the missing
++	 * values here.
+ 	 */
+ 	for (i = nstrict; i < nbands; i++) {
+ 		if (!quanta[i])
+-			quanta[i] = psched_mtu(qdisc_dev(sch));
++			quanta[i] = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)),
++					    256, 1 << 20);
+ 	}
+ 
+ 	/* Before commit, make sure we can allocate all new qdiscs */
 -- 
 2.53.0
 
