@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF5515989;
-	Wed, 30 Sep 2026 17:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCB54BFE95;
+	Wed, 30 Sep 2026 17:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788278; cv=none; b=NPuZa385grrOxSyOihR8Z1qqxneJMuCBwaC7O88VpmLvtD5eAzESCnBNNhEGiVDpJexyLZ+QSjAVQwJ6IbWE4TaWALN1Qec0HSZYpZAKtMsfNgDIwz6bohvI4sd249nM9MHnC51kWGI7COptzd4yT46c6epAc30JT4YzLVdEQ2I=
+	t=1790788281; cv=none; b=CaVgDivTXHvYdqD+nNdQcNALTHaxqdZwkQizFmBnoM8VPksCPJyE0vYpXS7dh9NUTUxuOfc5DS9STk5sViCCJErbEZZAwe5/CefnK9+nb6G+hFFIJOC/mJBp+HQ3j8Jlu31GbqEXA4d9Sr/csumg0/cwh87abmU6iYtyLTLxrsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788278; c=relaxed/simple;
-	bh=icO/J7owmbREgGlcUS14vWrT2iLHjJLu30nMsyClfEE=;
+	s=arc-20240116; t=1790788281; c=relaxed/simple;
+	bh=MQfmGyYZfMCWjDTTh3FLg1CHBIMMRKxU5+VH720n1xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1eAQURLezkeVRbzSLVsQHvTx/Z4hQefSIzI2CB5Or1d4PxG5G9DIjpP7dmdeO4Ln7hdi0TEIq2HaKcyKv6IYbmgXXmABk8hLl/6HWuPOsY7GRzCHcLFXqyHibZ2jzcNF0vlho+RCdFQnZq1Da80eGBY4ornXytfzam3MMfLy7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGrjY6Th; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fBFWl1MBp/gVfcS0eD+hQrpcPC5BUxm0ltiF2quIMPgaeioDVjXEuhPoPlmoZJ/hijnU9GScHT8iROhtMLhQGeAXWLRgO84UKEdPYauk/wUGSoasqEPNTMVDy7g+DY0s/AyNw5+k8SmZzcFWPR5ld+ppZR5INMyo7FXhf9YDiIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njt77hU0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGrjY6Th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAA71F000FF;
-	Wed, 30 Sep 2026 17:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njt77hU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFD71F000FF;
+	Wed, 30 Sep 2026 17:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788277;
-	bh=G21W6zyW6Xwo5uQBWzm3oj3uQbCTUMxpJdU8AAh3gdQ=;
+	s=korg; t=1790788280;
+	bh=fCo7LX5Qsi4NSdoBJXUQ3HYktlNSJuDpNiYadwx2z+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TGrjY6Thb7w6noyNwwLYaxaHlqPCUotHgqoEb6kD0RgXavoZLl2B+7pWRuTJ8XMfq
-	 SiWXSToxEt7+du3+UN4n7ooaoMD6eLutXVeaq5U1LZ9sFBI+AtHHAncuNSNkgOFjHg
-	 jMfTrVO+BNg5yT6y6i6s/zvvPmUUVHm39bWCmIbc=
+	b=njt77hU0t2Ovph5Vi2cAMPWGInqjYUv8JANL0GN79QnGWJd5Wy8opXeNkNOAPWana
+	 5TiXIhIQxlAR6vajVdd/XutemvLr/TDts4OIAhPDOPPIYk6qSfNUBmrXrn01/nYY62
+	 V4I57XgBmon/hX78Rti16JW5asiBtBZAyrvPZm1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/877] xfrm: avoid RCU warnings around the per-netns netlink socket
-Date: Wed, 30 Sep 2026 17:15:34 +0200
-Message-ID: <20260930152415.244305115@linuxfoundation.org>
+Subject: [PATCH 6.12 014/877] ipv6: mcast: Use in6_dev_get() in ipv6_dev_mc_dec().
+Date: Wed, 30 Sep 2026 17:15:25 +0200
+Message-ID: <20260930152415.053324791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,137 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d87f8bc47fbf012a7f115e311d0603d97e47c34c ]
+[ Upstream commit e01b193e0b50ae849bf60067e111446f19ee2f20 ]
 
-net->xfrm.nlsk is used in 2 types of contexts:
- - fully under RCU, with rcu_read_lock + rcu_dereference and a NULL check
- - in the netlink handlers, with requests coming from a userspace socket
+As well as __ipv6_dev_mc_inc(), all code in __ipv6_dev_mc_dec() are
+protected by inet6_dev->mc_lock, and RTNL is not needed.
 
-In the 2nd case, net->xfrm.nlsk is guaranteed to stay non-NULL and the
-object is alive, since we can't enter the netns destruction path while
-the user socket holds a reference on the netns.
+Let's use in6_dev_get() in ipv6_dev_mc_dec() and remove ASSERT_RTNL()
+in __ipv6_dev_mc_dec().
 
-After adding the __rcu annotation to netns_xfrm.nlsk (which silences
-sparse warnings in the RCU users and __net_init code), we need to tell
-sparse that the 2nd case is safe. Add a helper for that.
+Now, we can remove the RTNL comment above addrconf_leave_solict() too.
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250702230210.3115355-6-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/xfrm.h |  2 +-
- net/xfrm/xfrm_user.c     | 25 +++++++++++++++++--------
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ net/ipv6/addrconf.c |  3 +--
+ net/ipv6/mcast.c    | 14 ++++++--------
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
-index 23dd647fe0248..b73983a17e088 100644
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -59,7 +59,7 @@ struct netns_xfrm {
- 	struct list_head	inexact_bins;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index ef938fb1d7549..fb239e8f83593 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -2255,12 +2255,11 @@ void addrconf_join_solict(struct net_device *dev, const struct in6_addr *addr)
+ 	ipv6_dev_mc_inc(dev, &maddr);
+ }
  
- 
--	struct sock		*nlsk;
-+	struct sock		__rcu *nlsk;
- 	struct sock		*nlsk_stash;
- 
- 	u32			sysctl_aevent_etime;
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 904c9328852f0..c37f8e518f1e3 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -35,6 +35,15 @@
- #endif
- #include <linux/unaligned.h>
- 
-+static struct sock *xfrm_net_nlsk(const struct net *net, const struct sk_buff *skb)
-+{
-+	/* get the source of this request, see netlink_unicast_kernel */
-+	const struct sock *sk = NETLINK_CB(skb).sk;
-+
-+	/* sk is refcounted, the netns stays alive and nlsk with it */
-+	return rcu_dereference_protected(net->xfrm.nlsk, sk->sk_net_refcnt);
-+}
-+
- static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type,
- 			  struct netlink_ext_ack *extack)
+-/* caller must hold RTNL */
+ void addrconf_leave_solict(struct inet6_dev *idev, const struct in6_addr *addr)
  {
-@@ -1662,7 +1671,7 @@ static int xfrm_get_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	err = build_spdinfo(r_skb, net, sportid, seq, *flags);
- 	BUG_ON(err < 0);
+ 	struct in6_addr maddr;
  
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
- }
+-	if (idev->dev->flags&(IFF_LOOPBACK|IFF_NOARP))
++	if (READ_ONCE(idev->dev->flags) & (IFF_LOOPBACK | IFF_NOARP))
+ 		return;
  
- static inline unsigned int xfrm_sadinfo_msgsize(void)
-@@ -1722,7 +1731,7 @@ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	err = build_sadinfo(r_skb, net, sportid, seq, *flags);
- 	BUG_ON(err < 0);
+ 	addrconf_addr_solict_mult(addr, &maddr);
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index c060954c52757..212c2d8efe0f5 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -972,9 +972,8 @@ int __ipv6_dev_mc_dec(struct inet6_dev *idev, const struct in6_addr *addr)
+ {
+ 	struct ifmcaddr6 *ma, __rcu **map;
  
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
- }
+-	ASSERT_RTNL();
+-
+ 	mutex_lock(&idev->mc_lock);
++
+ 	for (map = &idev->mc_list;
+ 	     (ma = mc_dereference(*map, idev));
+ 	     map = &ma->next) {
+@@ -1003,13 +1002,12 @@ int ipv6_dev_mc_dec(struct net_device *dev, const struct in6_addr *addr)
+ 	struct inet6_dev *idev;
+ 	int err;
  
- static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
-@@ -1742,7 +1751,7 @@ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (IS_ERR(resp_skb)) {
- 		err = PTR_ERR(resp_skb);
- 	} else {
--		err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
-+		err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
- 	}
- 	xfrm_state_put(x);
- out_noput:
-@@ -1833,7 +1842,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
- 	}
+-	ASSERT_RTNL();
+-
+-	idev = __in6_dev_get(dev);
++	idev = in6_dev_get(dev);
+ 	if (!idev)
+-		err = -ENODEV;
+-	else
+-		err = __ipv6_dev_mc_dec(idev, addr);
++		return -ENODEV;
++
++	err = __ipv6_dev_mc_dec(idev, addr);
++	in6_dev_put(idev);
  
--	err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
-+	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
- 
- out:
- 	xfrm_state_put(x);
-@@ -2476,7 +2485,7 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
- 	nlmsg_end(r_skb, r_nlh);
- 
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, portid);
- }
- 
- static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
-@@ -2542,7 +2551,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		if (IS_ERR(resp_skb)) {
- 			err = PTR_ERR(resp_skb);
- 		} else {
--			err = nlmsg_unicast(net->xfrm.nlsk, resp_skb,
-+			err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb,
- 					    NETLINK_CB(skb).portid);
- 		}
- 	} else {
-@@ -2721,7 +2730,7 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		return err;
- 	}
- 
--	err = nlmsg_unicast(net->xfrm.nlsk, r_skb, NETLINK_CB(skb).portid);
-+	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
- 	spin_unlock_bh(&x->lock);
- 	xfrm_state_put(x);
  	return err;
-@@ -3393,7 +3402,7 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			goto err;
- 		}
- 
--		err = netlink_dump_start(net->xfrm.nlsk, skb, nlh, &c);
-+		err = netlink_dump_start(xfrm_net_nlsk(net, skb), skb, nlh, &c);
- 		goto err;
- 	}
- 
+ }
 -- 
 2.53.0
 
