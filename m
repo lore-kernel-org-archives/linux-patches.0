@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EA64E021A;
-	Wed, 30 Sep 2026 16:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7705357D11;
+	Wed, 30 Sep 2026 16:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786920; cv=none; b=qHFX+o/Jw7T4GcF/9P3inIfjUYRD5HblFFiQtHYvZpACmo+n9a2omNLBrgKvaNScL6uuywzy+XL3aEdtde7rrQJNwqiX+4DGYZ1Ub8IuCdu554EeAoha4mhoUAKM1T9NxIUtbFXfnMuFV5197yqk1c8XhekNHX1oQy6dYqQ6hB4=
+	t=1790786922; cv=none; b=DBNUVZ3DgBsno0TPU5N0yTVipcW8iqK35CUb3l7Rds+Z0rEwe5uO8mpLvO0hT42LrxbPHTtTRkfwcoo+Xbw05SCfDXYKNF5C8PG1qVT1mxGM5CwnviP9VKqLnkMMKdrZlbF6A0B1Gk25FfHKFKjDDDwOUSv0EJBi7uQkil+UkbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786920; c=relaxed/simple;
-	bh=KfLLucBRSHG40DKIrC/zp9GatmyQZIqkkBGQdQH5xNM=;
+	s=arc-20240116; t=1790786922; c=relaxed/simple;
+	bh=4NIdRP/qJVHC3Zi+BCs1uPZNGxnX9ZGhnNQVda4Df6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ql/rn6VGSuRzdl3CYSCLR+OWtnnl5jk8YDCwbiU71ZCYMSUTqDGaM+L/tvTmwRwQRX9mQ2l4V1+lKFOHM2QvBpKejTYF3sDSmKhllhmLwp0LQKo3kJM/k6bqr2+R9cLLz7ChlI1X8gTIv8eS4YZBMSrDgYS4seIDoLOoJeg46Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBDpoFYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLw8hWquQif9WQFoTp6aB5Ev7sRoMHtmGkw4MwDM6P1nnm/dfRfpOJqu/Oqn9hjYpW9nbGWS5AX1tPx8zieHOoMBs98zKxrjvwAXoHjQIa5a9fqDv3Cob6MqCOjLSHNq5rxT+EVXT3OsnjbAvGO3PQVTDGjUeuylRe4yZBElUcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7N4H7oG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBDpoFYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404BC1F000FF;
-	Wed, 30 Sep 2026 16:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7N4H7oG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0A51F000FF;
+	Wed, 30 Sep 2026 16:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786918;
-	bh=m/rsfo07LuvwGxuKKLJNzdD4BO0WHhaJc9f7JSuFib8=;
+	s=korg; t=1790786921;
+	bh=qbFvpuyiG53KgrLKVhtc0dalmdhuU86iYJeitAFtD5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VBDpoFYtHXmIhmI26jrPI8V6Y/nU8LWTQRRiEd7P2ASFjxtpyP6tILnkOxpkjeKWl
-	 6RanfKsGVhXZ0X996ikV2dhIP6O1gBGr5S2xLJpaB4VzK5E/ul0D6/0ebcP9mmMng3
-	 8nEW7slYZ3dR7PAkgvNlCTbQL479Wp0TyVnY2c9c=
+	b=u7N4H7oGDmWlmRRmX09dokNNmhV2wGmx8Yu04oLejAQ21yZ5Zs18avApAECqDdcm0
+	 h/VStqWvHg/bBGsYAmCfmFHkhz/CzoNn7WZhg8CCfasmozF2cbYbrAGDMhkYLxkUNg
+	 Bs1jf6eyLx5FmY89HwQHu/MyPjXjCOyDKqw4+Ib0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Sebastian Ott <sebott@redhat.com>,
 	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 047/457] KVM: arm64: Match hyp text by physical address in fix_host_ownership()
-Date: Wed, 30 Sep 2026 17:22:32 +0200
-Message-ID: <20260930152347.049816948@linuxfoundation.org>
+Subject: [PATCH 7.2 048/457] KVM: selftests: fix steal_time for arm64 with host page size > 4K
+Date: Wed, 30 Sep 2026 17:22:33 +0200
+Message-ID: <20260930152347.071079012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,78 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Sebastian Ott <sebott@redhat.com>
 
-[ Upstream commit 5a8b505ede133fb30ca3b3a19d0db00c08237615 ]
+[ Upstream commit 96e6757cb0674acb86ee8b558ee6bffe0eec0bb0 ]
 
-On a non-hVHE host, fix_host_ownership_walker()'s test for PAGE_HYP_EXEC
-never matches: KVM_PGTABLE_PROT_UX is cleared at map time and only PX is
-reported on read-back. Hyp text is therefore donated rather than left
-read-only in the host stage-2, and the instruction dump in
-nvhe_hyp_panic_handler() reads a page the host has no access to.
+Fix the following failure when running with 16K host page size:
+==== Test Assertion Failure ====
+  lib/kvm_util.c:991: vm_adjust_num_guest_pages(vm->mode, npages) == npages
+  pid=873 tid=873 errno=0 - Success
+     1  0x0000000000405a27: vm_mem_add at kvm_util.c:991
+     2  0x000000000040241f: check_steal_time_uapi at steal_time.c:223 (discriminator 7)
+     3   (inlined by) main at steal_time.c:539 (discriminator 7)
+     4  0x00007fff8b57af3b: ?? ??:0
+     5  0x00007fff8b57b007: ?? ??:0
+     6  0x0000000000402b6f: _start at ??:?
+  Number of guest pages is not compatible with the host. Try npages=4
 
-Match the text by physical address instead, in a helper a later patch
-reuses. A test on the permissions would leave any other executable
-mapping host-readable too.
-
-Fixes: 80cbfd7174f31 ("KVM: arm64: Honor UX/PX attributes for EL2 S1 mappings")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260908110713.1540304-3-fuad.tabba@linux.dev
+Fixes: fc240715fc50 ("KVM: selftests: arm64: Fix steal_time test after UAPI refactoring")
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Link: https://lore.kernel.org/kvmarm/7575a845-a542-4b16-b512-aec3126f97f3@linux.dev/T/#u
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Link: https://patch.msgid.link/20260914131013.60334-1-sebott@redhat.com
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/nvhe/mem_protect.h | 1 +
- arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 8 ++++++++
- arch/arm64/kvm/hyp/nvhe/setup.c               | 2 +-
- 3 files changed, 10 insertions(+), 1 deletion(-)
+ tools/testing/selftests/kvm/steal_time.c | 30 ++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-index 29935c7da1dec..cab27f7bd423a 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-@@ -52,6 +52,7 @@ int __pkvm_host_test_clear_young_guest(u64 gfn, u64 nr_pages, bool mkold, struct
- int __pkvm_host_mkyoung_guest(u64 gfn, struct pkvm_hyp_vcpu *vcpu);
+diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
+index 76fcdd1fd3cb4..c00cb17f9e40b 100644
+--- a/tools/testing/selftests/kvm/steal_time.c
++++ b/tools/testing/selftests/kvm/steal_time.c
+@@ -27,6 +27,9 @@
+ static void *st_gva[NR_VCPUS];
+ static u64 guest_stolen_time[NR_VCPUS];
  
- bool addr_is_memory(phys_addr_t phys);
-+bool addr_is_hyp_text(phys_addr_t phys);
- int host_stage2_idmap_locked(phys_addr_t addr, u64 size, enum kvm_pgtable_prot prot);
- int host_stage2_set_owner_locked(phys_addr_t addr, u64 size, u8 owner_id);
- int kvm_host_prepare_stage2(void *pgt_pool_base);
-diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-index 4e329e39a695a..7a99361306426 100644
---- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-+++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-@@ -443,6 +443,14 @@ bool addr_is_memory(phys_addr_t phys)
- 	return !!find_mem_range(phys, &range);
++static struct kvm_vm *vm_create_steal_time(u32 nr_vcpus, void *guest_code,
++					   struct kvm_vcpu *vcpus[]);
++
+ #if defined(__x86_64__)
+ 
+ /* steal_time must have 64-byte alignment */
+@@ -211,17 +214,14 @@ static void check_steal_time_uapi(void)
+ 	u64 st_ipa;
+ 	int ret;
+ 
+-	vm = vm_create_with_one_vcpu(&vcpu, NULL);
+-
+ 	struct kvm_device_attr dev = {
+ 		.group = KVM_ARM_VCPU_PVTIME_CTRL,
+ 		.attr = KVM_ARM_VCPU_PVTIME_IPA,
+ 		.addr = (u64)&st_ipa,
+ 	};
+ 
++	vm = vm_create_steal_time(1, NULL, &vcpu);
+ 	vcpu_ioctl(vcpu, KVM_HAS_DEVICE_ATTR, &dev);
+-	vm_userspace_mem_region_add(vm, VM_MEM_SRC_ANONYMOUS, ST_GPA_BASE, 1, 1, 0);
+-	virt_map(vm, ST_GPA_BASE, ST_GPA_BASE, 1);
+ 
+ 	st_ipa = (ulong)ST_GPA_BASE | 1;
+ 	ret = __vcpu_ioctl(vcpu, KVM_SET_DEVICE_ATTR, &dev);
+@@ -504,6 +504,21 @@ static void run_vcpu(struct kvm_vcpu *vcpu)
+ 	}
  }
  
-+bool addr_is_hyp_text(phys_addr_t phys)
++static struct kvm_vm *vm_create_steal_time(u32 nr_vcpus, void *guest_code,
++					   struct kvm_vcpu *vcpus[])
 +{
-+	phys_addr_t start = ALIGN_DOWN(__hyp_pa(__hyp_text_start), PAGE_SIZE);
-+	phys_addr_t end = PAGE_ALIGN(__hyp_pa(__hyp_text_end));
++	unsigned int gpages;
++	struct kvm_vm *vm;
 +
-+	return phys >= start && phys < end;
++	/* Create a VM and an identity mapped memslot for the steal time structure */
++	vm = vm_create_with_vcpus(nr_vcpus, guest_code, vcpus);
++	gpages = vm_calc_num_guest_pages(VM_MODE_DEFAULT, STEAL_TIME_SIZE * nr_vcpus);
++	vm_userspace_mem_region_add(vm, VM_MEM_SRC_ANONYMOUS, ST_GPA_BASE, 1, gpages, 0);
++	virt_map(vm, ST_GPA_BASE, ST_GPA_BASE, gpages);
++
++	return vm;
 +}
 +
- static bool is_in_mem_range(u64 addr, struct kvm_mem_range *range)
+ int main(int ac, char **av)
  {
- 	return range->start <= addr && addr < range->end;
-diff --git a/arch/arm64/kvm/hyp/nvhe/setup.c b/arch/arm64/kvm/hyp/nvhe/setup.c
-index 75b00c3233102..1bdb952c662b1 100644
---- a/arch/arm64/kvm/hyp/nvhe/setup.c
-+++ b/arch/arm64/kvm/hyp/nvhe/setup.c
-@@ -217,7 +217,7 @@ static int fix_host_ownership_walker(const struct kvm_pgtable_visit_ctx *ctx,
- 	case PKVM_PAGE_OWNED:
- 		set_hyp_state(page, PKVM_PAGE_OWNED);
- 		/* hyp text is RO in the host stage-2 to be inspected on panic. */
--		if (prot == PAGE_HYP_EXEC) {
-+		if (addr_is_hyp_text(phys)) {
- 			set_host_state(page, PKVM_NOPAGE);
- 			return host_stage2_idmap_locked(phys, PAGE_SIZE, KVM_PGTABLE_PROT_R);
- 		} else {
+ 	struct kvm_vcpu *vcpus[NR_VCPUS];
+@@ -511,7 +526,6 @@ int main(int ac, char **av)
+ 	pthread_attr_t attr;
+ 	pthread_t thread;
+ 	cpu_set_t cpuset;
+-	unsigned int gpages;
+ 	long stolen_time;
+ 	long run_delay;
+ 	bool verbose;
+@@ -526,11 +540,7 @@ int main(int ac, char **av)
+ 	pthread_attr_setaffinity_np(&attr, sizeof(cpu_set_t), &cpuset);
+ 	pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+ 
+-	/* Create a VM and an identity mapped memslot for the steal time structure */
+-	vm = vm_create_with_vcpus(NR_VCPUS, guest_code, vcpus);
+-	gpages = vm_calc_num_guest_pages(VM_MODE_DEFAULT, STEAL_TIME_SIZE * NR_VCPUS);
+-	vm_userspace_mem_region_add(vm, VM_MEM_SRC_ANONYMOUS, ST_GPA_BASE, 1, gpages, 0);
+-	virt_map(vm, ST_GPA_BASE, ST_GPA_BASE, gpages);
++	vm = vm_create_steal_time(NR_VCPUS, guest_code, vcpus);
+ 
+ 	ksft_print_header();
+ 	TEST_REQUIRE(is_steal_time_supported(vcpus[0]));
 -- 
 2.53.0
 
