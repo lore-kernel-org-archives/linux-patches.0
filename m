@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942984E0B70;
-	Wed, 30 Sep 2026 16:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E6936A033;
+	Wed, 30 Sep 2026 16:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784959; cv=none; b=B4+bDGYI2VpkySBMpy1qwm2X9QanWWRyolAqmaBBk7X+VteDuga4F2woQfr60iFZQF050OTg9s+5eR16Ry4zoIl9yR+7DJUhp1J4kP3+zPmqIWBx0xrVcrocJbZTqPUB0yCNS7YBgVzJg3iiIEGVkvMxwmqt6nTjz/R/XtNjwlI=
+	t=1790784964; cv=none; b=ATBbDCdkvT17UZlxYj9nIQWrGVHt9YlPzPhdNEkLSREyIoQwACMQnc4d5wDnVfIODYycDUQoUd93bzRMv9vI/PkiZ8cB8fDoiGeFPnZYwxjAbL/WXxSbx8nAx6ibuHjLt8Bfzg8GOTdL3bCPGxPcrlYU3A0RMbNGllMKV8NHabM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784959; c=relaxed/simple;
-	bh=ANZCBEujKI6tDdnzr3iGoq1V793PxZhsGnzqSbDA18Y=;
+	s=arc-20240116; t=1790784964; c=relaxed/simple;
+	bh=aYBThXzPgY5dwaDYhx4L+fWRTA5EW10bd+4XoWv21+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuu3ulv2tLHi9lJL0KSMUFs4HCWQsjI6MYWPxdNflwxx8oSgEcy8bAwvv7pl7KGuPiUr2HKQSuV4iBJy9P5YHEo3g9utE2j4jvWqeCfyu2HXWu4h2zWLX+/I24VmjbHSfB8qXVRn+6iEiNv+aEEaj5a10CSnhlb1kAfxu3+Szog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j72jg54q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PyUYvtP50UtNy596cYbyFzm3M8dRkWV/WtEfJ8Rdj96WpKF5XSSvvv2VJIeD9rCeIQH8P8JrcMuWZMputW3a8ll/zWYB8IKQgrb6Z2VzRSL0ToRlrTQYJiYyqQP5bkQWkiip0hWXaXjBKaGHKz4tTbLmXL7GQX75UyXeBspX3II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwO7rH7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j72jg54q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EE91F000FF;
-	Wed, 30 Sep 2026 16:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwO7rH7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F391F000FF;
+	Wed, 30 Sep 2026 16:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784952;
-	bh=si4wTbgT1+f45QbonRHkdrIrOF4iRrmAvPlr4jLPxQk=;
+	s=korg; t=1790784960;
+	bh=CtPR0B/jM8k6lug3s5rRAQ7Ibu9hVG8XEEbyHPJMRYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j72jg54q2AJnC6CV/UTT5tDHLz6tP+UFawhiw+Y1W2cnYUpguyAOEN+MjINNXPiAL
-	 RaLB9azCE8cZXbtd18A3qEbQa9VXKldO2JJHxBNRc+XP77aenNIdSoVRtwEZCamrSz
-	 1EocJVekvWQTfGBUYdTn44hpSN4Tq3hJ+UZ4nsCk=
+	b=BwO7rH7XfUOjWk/caf0EwRuvefO119T32s2oaooI4+Ry3w++dQIyfZ4iHFCBWSVPN
+	 2x3WHQvdPt8x5W5Aca8kmuM46+g5JvA1P72+29QxeleZ5lsiZaGqNzg9oUF/UAMyIT
+	 bwRypgzmNzTl80aOcIQb82rnOtuHgEXTrL26Tf2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Milan P. Gandhi" <mgandhi@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 336/982] scsi: mpi3mr: Fix target device refcount leak in mpi3mr_sas_port_add()
-Date: Wed, 30 Sep 2026 17:17:52 +0200
-Message-ID: <20260930152424.037261371@linuxfoundation.org>
+Subject: [PATCH 6.1 339/982] sctp: fix soft lockup from unpadded ASCONF-ACK parameter iteration
+Date: Wed, 30 Sep 2026 17:17:55 +0200
+Message-ID: <20260930152424.099691811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,43 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan P. Gandhi <mgandhi@redhat.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 419d129f970aaa6567dbac366b0c93784bf9ec97 ]
+[ Upstream commit 2cb0b0b1ed69430bf73740377ea0a1c44c50db63 ]
 
-mpi3mr_get_tgtdev_by_addr() increments the target device kref when it
-returns a device. If a subsequent error triggers a goto out_fail after
-the tgtdev reference is acquired, the reference is never released
-because the out_fail path does not call mpi3mr_tgtdev_put(). This
-prevents the target device structure from ever being freed.
+sctp_verify_asconf() walks ASCONF-ACK parameters with
+sctp_walk_params(), which advances by SCTP_PAD4(length), while the
+consumer sctp_get_asconf_response() iterates the same parameters
+advancing by the raw length, without padding. A single odd-length
+parameter desynchronises the two walks and makes the consumer
+interpret attacker-controlled bytes at a misaligned offset.
 
-Add a tgtdev put in the out_fail path, guarded by a NULL check since
-tgtdev is only acquired for SAS_END_DEVICE types and the same cleanup
-path is shared by earlier error cases where tgtdev is still NULL.
+When those bytes yield a length of zero, the while loop over
+asconf_ack_len makes no progress, spinning forever in softirq
+context, and the watchdog reports a soft lockup. All reads stay
+within the received skb, so the lockup is a pure remote denial of
+service. A remote peer can trigger it with a crafted ASCONF-ACK on
+an ADD-IP enabled association with an outstanding ASCONF (RFC 5061
+section 4.1.2 requires the chunk to be authenticated, but the
+predefined empty key id 0 allows the peer to compute the same
+association HMAC from publicly exchanged parameters, so the gate
+does not help).
 
-Fixes: e22bae30667a ("scsi: mpi3mr: Add expander devices to STL")
-Signed-off-by: Milan P. Gandhi <mgandhi@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260812103344.174247-3-mgandhi@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+The SCTP_PARAM_ERR_CAUSE case of sctp_verify_asconf() also performs
+no length check, letting a parameter without a complete error
+header reach the consumer, which reads errhdr.cause past the end of
+the parameter, an out-of-bounds read.
+
+Reject SCTP_PARAM_ERR_CAUSE parameters shorter than
+sizeof(struct sctp_addip_param) + sizeof(struct sctp_errhdr) at the
+verifier, and advance the consumer iterator with the same padding
+rule as the verifier to keep the two walks in lockstep. The verifier
+change guarantees a complete error header in every ERR_CAUSE
+parameter the consumer can see, so the consumer's asconf_ack_len
+check is dropped and it returns err_param->cause directly. The
+consumer padding fix is still required because odd lengths remain
+valid for SCTP_PARAM_ERR_CAUSE per RFC 5061.
+
+The issue was found by ZeroHive, a vulnerability hunting agent at
+Tencent Yunding Lab.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260828042431.3873725-1-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sctp/sm_make_chunk.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index b56fa01894f46..9a25d819b417a 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1483,6 +1483,8 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
- 	list_for_each_entry_safe(mr_sas_phy, next, &mr_sas_port->phy_list,
- 	    port_siblings)
- 		list_del(&mr_sas_phy->port_siblings);
-+	if (tgtdev)
-+		mpi3mr_tgtdev_put(tgtdev);
- 	kfree(mr_sas_port);
- 	return NULL;
- }
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 6d738f95aff1d..649384ff0e547 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3238,6 +3238,9 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
+ 		*errp = param.p;
+ 		switch (param.p->type) {
+ 		case SCTP_PARAM_ERR_CAUSE:
++			if (length < sizeof(struct sctp_addip_param) +
++				     sizeof(struct sctp_errhdr))
++				return false;
+ 			break;
+ 		case SCTP_PARAM_IPV4_ADDRESS:
+ 			if (length != sizeof(struct sctp_ipv4addr_param))
+@@ -3471,20 +3474,15 @@ static __be16 sctp_get_asconf_response(struct sctp_chunk *asconf_ack,
+ 			case SCTP_PARAM_ERR_CAUSE:
+ 				length = sizeof(*asconf_ack_param);
+ 				err_param = (void *)asconf_ack_param + length;
+-				asconf_ack_len -= length;
+-				if (asconf_ack_len > 0)
+-					return err_param->cause;
+-				else
+-					return SCTP_ERROR_INV_PARAM;
+-				break;
++				return err_param->cause;
+ 			default:
+ 				return SCTP_ERROR_INV_PARAM;
+ 			}
+ 		}
+ 
+ 		length = ntohs(asconf_ack_param->param_hdr.length);
+-		asconf_ack_param = (void *)asconf_ack_param + length;
+-		asconf_ack_len -= length;
++		asconf_ack_param = (void *)asconf_ack_param + SCTP_PAD4(length);
++		asconf_ack_len -= SCTP_PAD4(length);
+ 	}
+ 
+ 	return err_code;
 -- 
 2.53.0
 
