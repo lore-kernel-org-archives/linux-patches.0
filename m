@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78773ED13E;
-	Wed, 30 Sep 2026 19:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E15F405C3F;
+	Wed, 30 Sep 2026 19:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796843; cv=none; b=QWaq6NFGCF1zJs+BOdzGalOZxoRTcVFuMVfdibiPEW+xTLakGNY2PRNOr2/YxMwnTI5B+M6st+38DZlQ+CjBaBX73GG49D3fdYK0jFjODnnHljkhuLn47ClCyD1sSTyR/T7Nyp5r/WXglpsKxVvIpk1Nt4aDKsUa+TlHcHFBpaE=
+	t=1790796846; cv=none; b=JQIIlEzAJi67cs4CyaW9uanJyTjNki0Y0DcWZ2oLahHKJHnunKCUxxXFUqmSoGxwpK1EvCZ6rJNO9iz6Ir5vR41c1bV5cCAolXoCas7PTVCc7K11kDLaXpUdS314ojOufFbQt77kidnPJ0v5X4CIqwowjcW9+0a2kWxWVVSLXeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796843; c=relaxed/simple;
-	bh=MVtk64EBy8fbfbebdWLTZSVkS+WYAwdKi0w5DHjTAQQ=;
+	s=arc-20240116; t=1790796846; c=relaxed/simple;
+	bh=fU/yUvDQG9DEh7HtnDiobi7LD/gvc4iWq4zKFGOCUhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oh6UH2KtP5lEZs2pOeYR/mP0tTiR87A8l1d0PKBo7OSlraXa93kINoQvL40k/mneQxe3jQTBU8x8HXplNGIDgunPjKJ2hqTPACMApfbJRXJgIg6TkTUP8L0JrEIvUaEM7YBDhyKsEiNK+80BycO4nWHH7MYA3mwhvdvfnfHsxtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsSli+uQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pkamOpjeW6NyUXBJ9YsaowqEnotEQtaEWK3j6DNrPtJ1YpiULgy2ebgKU+irGJUajHeSpEfU+yundV4+FZIIiabi0jaxfvNhnEWarfc9ObQaeaIp6QMTy2/MWatL+piYf/FnC9lHjsnvGNM8h0puIDqe2cYqW3OxWU/W68FYbSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7tS0O9E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsSli+uQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E261F000FF;
-	Wed, 30 Sep 2026 19:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7tS0O9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93111F000FF;
+	Wed, 30 Sep 2026 19:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796842;
-	bh=jJfkv2zpjuCsqb8bLCDVRHfm2u+2UXFE792lECtprsY=;
+	s=korg; t=1790796845;
+	bh=t9RnVqyYZ2bbljFcCCdg0sxftZRSusU9iajaRGfNGBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UsSli+uQGAzpZiXr+HQ4G57LYWkjgl/uOI75wiHDG6w6ukm6lp7iFIA4XDUvY8evQ
-	 FhrQl3A7V3p2Itbe8VaLY/N40xlrr/lx8Of5r6VchZNfRrdtih0a2y36y3hr8HfGj+
-	 9+/wuctrQQhtnHFHOA7QAhbEdac5vx7tb5ABu3I0=
+	b=h7tS0O9EPgEXbdX3c6sQvJASfzh5Kk+aILXA8Rrym0eT4tXlIKHvzcaBo6OpsZS8n
+	 iVeQUwHlQ4FB5jAOHgQx417HmljYPltqF89d85Fvd3bcj6htG7k8osPNsByh87+Dpw
+	 U7Q9lIZYGDoU3PwF23ICkrwx8W5xiMHiSz8/NvDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1057/1193] driver core: Better advertise dev_err_probe()
-Date: Wed, 30 Sep 2026 17:29:01 +0200
-Message-ID: <20260930152457.711688574@linuxfoundation.org>
+Subject: [PATCH 6.6 1058/1193] driver core: Make dev_err_probe() silent for -ENOMEM
+Date: Wed, 30 Sep 2026 17:29:02 +0200
+Message-ID: <20260930152457.732962246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,54 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 532888a59505da2a3fbb4abac6adad381cedb374 ]
+[ Upstream commit 2f3cfd2f4b7cf3026fe6b9b2a5320cc18f4c184e ]
 
-Describing the usage of dev_err_probe() as being (only?) "deemed
-acceptable" has a bad connotation. In fact dev_err_probe() fulfills
-three tasks:
+For an out-of-memory error there should be no additional output. Adapt
+dev_err_probe() to not emit the error message when err is -ENOMEM.
+This simplifies handling errors that might among others be -ENOMEM.
 
- - handling of EPROBE_DEFER (even more than degrading to dev_dbg())
- - symbolic output of the error code
- - return err for compact error code paths
-
-Advertise these better and claim the usage to be "fine" to get rid of
-the bad connotation.
-
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231215174540.2438601-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/3d1e308d45cddf67749522ca42d83f5b4f0b9634.1718311756.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 4eb3f195ef08 ("tg3: use random MAC address when tg3_get_device_address fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/base/core.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 72ca11da6986f..8e17aeabd6e80 100644
+index 8e17aeabd6e80..c00e48c68a801 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -5131,13 +5131,14 @@ define_dev_printk_level(_dev_info, KERN_INFO);
-  *
-  * 	return dev_err_probe(dev, err, ...);
-  *
-- * Note that it is deemed acceptable to use this function for error
-- * prints during probe even if the @err is known to never be -EPROBE_DEFER.
-+ * Using this helper in your probe function is totally fine even if @err is
-+ * known to never be -EPROBE_DEFER.
-  * The benefit compared to a normal dev_err() is the standardized format
-- * of the error code and the fact that the error code is returned.
-+ * of the error code, it being emitted symbolically (i.e. you get "EAGAIN"
-+ * instead of "-35") and the fact that the error code is returned which allows
-+ * more compact error paths.
-  *
-  * Returns @err.
-- *
-  */
- int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
- {
+@@ -5149,11 +5149,22 @@ int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
+ 	vaf.fmt = fmt;
+ 	vaf.va = &args;
+ 
+-	if (err != -EPROBE_DEFER) {
+-		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+-	} else {
++	switch (err) {
++	case -EPROBE_DEFER:
+ 		device_set_deferred_probe_reason(dev, &vaf);
+ 		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		break;
++
++	case -ENOMEM:
++		/*
++		 * We don't print anything on -ENOMEM, there is already enough
++		 * output.
++		 */
++		break;
++
++	default:
++		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		break;
+ 	}
+ 
+ 	va_end(args);
 -- 
 2.53.0
 
