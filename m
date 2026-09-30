@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D71509F0B;
-	Wed, 30 Sep 2026 15:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417724F93B9;
+	Wed, 30 Sep 2026 15:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782851; cv=none; b=ouzxtpt2N87nveLGB+D+X3LzuCx6ybeN1WMb4W5t44bPbpaH2j9CK4Lnf/5ZuniF2i4zMB2bX72YKZIaraYfFfMH8GiBhicfzjUFOK20pfVheoh0ew9l/LJ3fPgRh62akHz97C7KBnrEMwfFoZ4fgM6PaOJ6cfEpDuABe+sC0Fo=
+	t=1790782856; cv=none; b=oQKtmGf+HvTPjKraSem8xHBkDkGd1qdDikVF1hTTAaT9RRbtu92krv4QHpj3vCoYqQbDl3ItG3Ttuxaknb5E26oe5w61RyQmpk/pV01XNvH/TKAlNYmhlDqN/wvg+8dfYzHRO4G0pFruMOW/mQiqq4vMqmRmbqZQqYbnKdqnsDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782851; c=relaxed/simple;
-	bh=2F6wL1kMiWfVsD0Zxv5XMIu7onMXw6SDnRFuMophoxQ=;
+	s=arc-20240116; t=1790782856; c=relaxed/simple;
+	bh=BynhcvMOKI2mUnViRhX1aPVJcjfcO9NJWczHmD//SgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnpVGxQvhwu8R6R4nCJq1M0Q+TTBr4oxgY6CWrcVwj1PnXI3leL0hqzC8RANcjryaA3JYFM7kdR/qZF2AJN58SBXPzsGDPccexzVv4ZA86VqHL/WyuC1eZGJvdVKZ1ou+pM2YUvqkBT4APDe39IWfTVwyDRUIyTDT6KKMJNp/GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eM9L/wmD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WiLizTNTbwafrRbEDgSLNx4hTds65Mn+MmzEdIID+lTLWAoUOoiVGMQ/WZJVMURH+bOFUFeissvzTC5G+Qz4lFgtP/AoZcE+h+fXMY1DFgup4adDGWT871XceObwKj4Sij8O4i6SK1s5SJSdRZCegLL4t7+ItEQ+KVQL1J559t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlBSSh1p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM9L/wmD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB1A1F00898;
-	Wed, 30 Sep 2026 15:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlBSSh1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307891F000FF;
+	Wed, 30 Sep 2026 15:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782845;
-	bh=iVrDlOgSMVAJ7HxCYlFRR0Mw/5GztM8cVN9oj/R5gvk=;
+	s=korg; t=1790782848;
+	bh=zY1MmYXC+/PziZoDwkCz7wUAY1d0J4PUPNM3Av36w88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eM9L/wmDjSBai+TyXPW/QxDTsaSgqU9vUvbD8zpfzqprBTRLc/8ifVQTkQPaNNyQY
-	 pktkUff986fXYnSJVkjcnF76DHv44DfGiJb3EK7UXnKCuLqUrIFdUqstq82EQAirZc
-	 ANBpYryuT3S4kpHRIZEFsbO3SO2/GKgkVREkCFFE=
+	b=dlBSSh1pSpfQfOjMiynX1yCR2Tkb36MxIZdc0MFK17l+NU4D2/xrcrW4b+T9waHRc
+	 vDiOQeufHxNIqF+HdD+WbblVPpJ4eZ9Slz7BBKO/z/r46zJ+Wy6FeTjRWEA+KgALUO
+	 C2wxyvIeaDM7gAc1dlbsBxt6c/7T+GBzw2v0vQ+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Linus Walleij <linusw@kernel.org>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Jad Keskes <inasj268@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/595] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
-Date: Wed, 30 Sep 2026 17:21:22 +0200
-Message-ID: <20260930152351.807223310@linuxfoundation.org>
+Subject: [PATCH 5.10 190/595] EDAC/device_sysfs: Use kstrtouint() for poll_msec to prevent truncation
+Date: Wed, 30 Sep 2026 17:21:23 +0200
+Message-ID: <20260930152351.827699986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,59 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Jad Keskes <inasj268@gmail.com>
 
-[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
+[ Upstream commit 66cc9dec919dd63d8e4b3d386f7aed3ae684e645 ]
 
-PREEMPT_RT requires interrupts to be enabled when sending signals.
+The poll_msec sysfs store file uses simple_strtoul() which accepts an unsigned
+long, but the target field (poll_msec) is unsigned int. On 64-bit systems,
+a value > UINT_MAX is silently truncated when stored.
 
-When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
-that is `inf->fn()` return a non-zero value, and the interrupts are not
-enabled within the hook function, force_sig_fault() will be called
-with interrupts disabled.
+Fix the mismatch by using kstrtouint() instead. This rejects values larger
+than UINT_MAX at parse time, making truncation impossible. Also add a check
+for value < 1 to reject the 0-delay case, which would cause the poll work to
+spin without delay and consume 100% CPU.
 
-This can be triggered by user programs executing the bkpt instruction,
-with kernel config CONFIG_PERF_EVENTS=n.
-
-Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
-user faults are triggered to fix the issue.
-
-Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
-Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
-Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Signed-off-by: Jad Keskes <inasj268@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260730145549.148229-1-inasj268@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/edac/edac_device_sysfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index c16d6a293b97c..622fa99e138f6 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -533,6 +533,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
- 		return;
+diff --git a/drivers/edac/edac_device_sysfs.c b/drivers/edac/edac_device_sysfs.c
+index 5e75937537997..b943223691164 100644
+--- a/drivers/edac/edac_device_sysfs.c
++++ b/drivers/edac/edac_device_sysfs.c
+@@ -90,14 +90,21 @@ static ssize_t edac_device_ctl_poll_msec_store(struct edac_device_ctl_info
+ 					*ctl_info, const char *data,
+ 					size_t count)
+ {
+-	unsigned long value;
++	unsigned int value;
++	int ret;
  
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
+ 	/* get the value and enforce that it is non-zero, must be at least
+ 	 * one millisecond for the delay period, between scans
+ 	 * Then cancel last outstanding delay for the work request
+ 	 * and set a new one.
+ 	 */
+-	value = simple_strtoul(data, NULL, 0);
++	ret = kstrtouint(data, 0, &value);
++	if (ret < 0)
++		return ret;
 +
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
-@@ -571,6 +574,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
- 		return;
++	if (value < 1)
++		return -EINVAL;
++
+ 	edac_device_reset_delay_period(ctl_info, value);
  
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, ifsr, addr);
+ 	return count;
 -- 
 2.53.0
 
