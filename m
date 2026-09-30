@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419D04CA784;
-	Wed, 30 Sep 2026 16:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA2A3624BF;
+	Wed, 30 Sep 2026 16:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787225; cv=none; b=mc4bpFojwZTu9gto6iENGvUg2kldfRZ50cU+/HbfY3/kH4wyxpDCPsp1SxlgSVqryUU2ExFHhYdAEuaF3rtpEhBrfBxD7oIj297CAh3bQOqVM8INq8oZP+TXhDnUZzjueRkgWR6fY3ttmOGTOcLVH6jYdE19TqPTWu6Qr5to344=
+	t=1790787227; cv=none; b=l+1FX+Vs1Yr0X7UnvFUkyo8xmVLz+a0m8CLlteprS8lYmdTmnmA8s0A5fk44cTxN+tLD2LsHCw6/n+z18yDSp09EXlIimrN3yVzc1FuXzg6dUSfoCc36SshrXOkEHqEBszLxAAX/LQ6rTl16qDFXnnV0RIMYkwrwb1E/j8Rf5lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787225; c=relaxed/simple;
-	bh=T2bEzJWCi2ZN4KgCmfs7gK81lVPzX4wilGmaihTAad0=;
+	s=arc-20240116; t=1790787227; c=relaxed/simple;
+	bh=wAkq6Y/sj+/seaCLNuyadaeX4GJhjSf0xw/R4wKQIgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DiMcFNDvbSdscRXK1DCO1JAFtstV5I3c1kfDSe0Vix9eOxedwV++s5SxzPPO6ym4wMdu1A+uit14p/FK7amXa0Z5q6Der3lIoJ8uucwryzhwrbTr5MRtANAxA8+JK2RZgZDxLAeTAC6jVCchx6T9YO01iiW/feTa74SJCOJJ0sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnWbHMU8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByRAhErEtSusXOmb+URRMGZtRYr4ZoFUK+VFESzfoU6TydvUlhVfZV5GRwiLZgSpZBChsZS35PprAfAOS6A+zmkw3qKS6xO2B3PnKDvCti1XpftictU4m4D6l48B/LW2nSlsc5AwAZqBkhvBgq+EeJcQULpAn8Y3fHDG2oxgl1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGfKJ42S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnWbHMU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9941F00898;
-	Wed, 30 Sep 2026 16:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGfKJ42S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758BC1F000FF;
+	Wed, 30 Sep 2026 16:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787223;
-	bh=s41pItIGk4clNWaWN6sOKWeCs5OT2TtDKAT0rfiRvX4=;
+	s=korg; t=1790787226;
+	bh=W7Rx+cihMnB6ObMqX/tpXgcR2knGSLbXQZMO3b0p4Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EnWbHMU8qUyCqPkNpQRelRpKA5K4uI/mkr5WJ10jxixgaYMXCbCrdwS1NsdiuPeRF
-	 4k9sV8N4XxnL9xKKh/DnVCztyz4mJrmEJxmKDjvASYSy4cYM5BDosFXdajxHiGV9+N
-	 leF3mYUERsZ1I+uQV+Xcp940cWHc0LJ0nmaHVB94=
+	b=KGfKJ42SB7J8xx4HYYvZELlN1X5aeW+p2Rfy/lYVE+eGDC5WPmErIiMhAsnx2UVHx
+	 hvsktBnhDd2aNC1pFt2je4c8gd2wt3Th9R/+VD6B0eXla6ta02qVfogRQVszN6dgjh
+	 uE3P5RX+KPeN07NY1vBQAwuBW9aI/A7nhgaTtmk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junrui Luo <moonafterrain@outlook.com>,
 	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 110/457] drm/virtio: fix object leaks in virtio_gpu_resource_create_blob_ioctl()
-Date: Wed, 30 Sep 2026 17:23:35 +0200
-Message-ID: <20260930152348.427943398@linuxfoundation.org>
+Subject: [PATCH 7.2 111/457] drm/virtio: release the GEM object on virtio_gpu_vram_create() errors
+Date: Wed, 30 Sep 2026 17:23:36 +0200
+Message-ID: <20260930152348.448287185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,47 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 24b6d5c7641412c9ebef0d4c8b888d49a0e6b880 ]
+[ Upstream commit 036d28db1818af2f9d80db771f5405da84d7732d ]
 
-virtio_gpu_resource_create_blob_ioctl() calls drm_gem_object_release() on
-both the virtio_gpu_resource_assign_uuid() and drm_gem_handle_create()
-error paths instead of dropping the reference it owns, so
-obj->funcs->free() never runs and the virtio_gpu_object, the resource id
-and the host-side resource are leaked.
+virtio_gpu_vram_create() frees the object with a bare kfree(vram) on
+both error paths after drm_gem_private_object_init() has run, and on the
+second one after drm_gem_create_mmap_offset() has linked obj->vma_node
+into the device's VMA offset manager. The freed object stays in that
+interval tree, so a later lookup or insertion walks freed memory, and
+the dma_resv and gpuva lock are never destroyed.
 
-Use drm_gem_object_put() instead.
+Call drm_gem_object_release() before kfree() on both paths.
 
-Fixes: 897b4d1acaf5 ("drm/virtio: implement blob resources: resource create blob ioctl")
+Fixes: 16845c5d5409 ("drm/virtio: implement blob resources: implement vram object")
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260915-fixes-v2-3-a0d799e4db66@outlook.com
+Link: https://patch.msgid.link/20260915-fixes-v2-4-a0d799e4db66@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_ioctl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_vram.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-index d16f07abb266a..fcdb07a37972c 100644
---- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-@@ -557,14 +557,14 @@ static int virtio_gpu_resource_create_blob_ioctl(struct drm_device *dev,
- 	if (params.blob_flags & VIRTGPU_BLOB_FLAG_USE_CROSS_DEVICE) {
- 		ret = virtio_gpu_resource_assign_uuid(vgdev, bo);
- 		if (ret) {
--			drm_gem_object_release(obj);
-+			drm_gem_object_put(obj);
- 			return ret;
- 		}
- 	}
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vram.c b/drivers/gpu/drm/virtio/virtgpu_vram.c
+index 4ae3cbc35dd36..683ea17454c2e 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vram.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vram.c
+@@ -212,16 +212,12 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
  
- 	ret = drm_gem_handle_create(file, obj, &handle);
- 	if (ret) {
--		drm_gem_object_release(obj);
-+		drm_gem_object_put(obj);
- 		return ret;
- 	}
+ 	/* Create fake offset */
+ 	ret = drm_gem_create_mmap_offset(obj);
+-	if (ret) {
+-		kfree(vram);
+-		return ret;
+-	}
++	if (ret)
++		goto err_release_obj;
  
+ 	ret = virtio_gpu_resource_id_get(vgdev, &vram->base.hw_res_handle);
+-	if (ret) {
+-		kfree(vram);
+-		return ret;
+-	}
++	if (ret)
++		goto err_release_obj;
+ 
+ 	virtio_gpu_cmd_resource_create_blob(vgdev, &vram->base, params, NULL,
+ 					    0);
+@@ -237,6 +233,11 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
+ 
+ 	*bo_ptr = &vram->base;
+ 	return 0;
++
++err_release_obj:
++	drm_gem_object_release(obj);
++	kfree(vram);
++	return ret;
+ }
+ 
+ void virtio_gpu_vram_map_deferred(struct virtio_gpu_object_vram *vram)
 -- 
 2.53.0
 
