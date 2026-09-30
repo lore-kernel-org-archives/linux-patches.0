@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D88F3515DC;
-	Wed, 30 Sep 2026 16:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E81936E467;
+	Wed, 30 Sep 2026 16:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785828; cv=none; b=Wk+5SFsEmFml0W7AF7zSVtYNLyVLd5h+xOusq/E575Yw7VXIUAa9Tpd1zhFddYuCc0bFS6Mcr15mvwlKMYkIEbMdCv6GYCY4DZalN/eZRmBf8PNeNM4eq8aXsWaQq8VNs1BvtM5jsAd41OXs+RdLk+8EksZS0VPP0BWGs4Bw+Ms=
+	t=1790785831; cv=none; b=L4qEWjtrm7Ws/4EgJU/Zlm5lW4G6+TMOnuN5SlZSQxa4rUG7DQ9qHFfRZaSg0WpLo115SVbJo9vGuz11TVU1nohth8tJQzwUmekWRLF/HFvS5TY5nbikrUN50BV/NZQ8a4CCufw0qkwSThRKYlXwS2GI2y+A6zwpCDXxgRXnHsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785828; c=relaxed/simple;
-	bh=3AuqhMhEAoRZ7bzIvI1iYs6DPrt3jBx7/X1Y3nO3ENs=;
+	s=arc-20240116; t=1790785831; c=relaxed/simple;
+	bh=fE/d9SAdc6ImBrPDANmtlWpY9CjNl12Meehxc9Mie3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J6lsvMiQf+xoGaszwjZ3zqMoYyZ05VeXr9pV3JW5SMlApA0L+BcGTmiuZ2GirFocDQETquW3J+bWHFEtkl+6QjCKckK1KrXC3Pg8+ioYsmyrHcSlY6mb5DxyIKSPdrhm3IevMBjWGgEUYJMp9oUxWGt7rwxC3R4FhkTkzEqXmJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHDOr5Wq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUExAt31u6jiOyh3m68270CQzU/nx840O9wru3GVmA/RmQsLFtvaZCkkgPCP+A0zQ8zsTjtbdfMs7W3XbYgv6+ErHmeeCV4DqXqRC7zfbnA/GZMNHl5fW0y3TevdFz0wq+MpGWe7MrfpTYKXGTZqV5uw1ZsPAJTn7TjKobGg/RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7zQoi60; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHDOr5Wq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0115A1F000FF;
-	Wed, 30 Sep 2026 16:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7zQoi60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DEC1F00893;
+	Wed, 30 Sep 2026 16:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785827;
-	bh=HpDws0HQU5H6KxllCe4zt6bNhBuHMNyzfC9OSxa7V7w=;
+	s=korg; t=1790785830;
+	bh=7vH76YAKJQ9NoviuzY2tX0VdhBNTFjiLCTC3tuDn3Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BHDOr5WqXni8Rth8eeyNN80uvZGDZFskalYyLmjwRjCxpqvlkKvwTp0gyZ0LTZncp
-	 vO15V1yAf6qpdPu1r1VHtWHL43pnRk6ySX8ICVnItoCFxZ7jk/pRbbOVcId2wi1VKI
-	 TewRBiCsjKcuBO0ew/oACy1Km/XiqlBhfUmu3uMs=
+	b=Z7zQoi609EaURrPwG0lqI3WNfHwErNZubiatV9CLX+89+oPmsZt8KVy1msoCDwunv
+	 HQv9MCK0pcYrZGpC9OtBKqoPkmZQ5xrczKrHETgrO06iq8eEyRQW4NmN2wWLKS7STl
+	 C0F69VeXljaxTpC0lGsWhFT8WqP3vW1EpISvU/YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 647/982] RDMA/siw: Bound fragmented header copies by the remaining length
-Date: Wed, 30 Sep 2026 17:23:03 +0200
-Message-ID: <20260930152430.664720392@linuxfoundation.org>
+Subject: [PATCH 6.1 648/982] netfilter: nft_nat: fully initialise new_addr in netmap setup
+Date: Wed, 30 Sep 2026 17:23:04 +0200
+Message-ID: <20260930152430.686591761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,52 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
 
-[ Upstream commit 9ff797e516dbc1ecb73701ec4c24055712d44411 ]
+[ Upstream commit d313499df66159b4b7971d760d16729598ab7e5a ]
 
-siw_get_hdr() can receive an extended DDP/RDMAP header across more than
-one TCP callback. The first callback may receive most of the header,
-while the next one still limits the copy to hdrlen - MIN_DDP_HDR instead
-of the number of missing bytes. This makes the destination move past the
-end of the header and overwrite the receive state, including
-fpdu_part_rcvd. A later callback can then use a negative fpdu_part_rcvd
-value as a copy offset, which creates an OOB write.
+nft_nat_setup_netmap() builds the mapped address in an on-stack
+union nf_inet_addr. For an IPv4 mapping it writes only the 4-byte .ip
+member and the loop runs a single 32-bit iteration, but it then copies
+the whole 16-byte union into range->min_addr and range->max_addr, so the
+upper 12 bytes reach nf_nat_setup_info() uninitialised.
 
-Use the number of header bytes already received when calculating the
-next copy length.
+KMSAN reports an uninit-value in nf_nat_setup_info() reached from
+nft_nat_eval(). The IPv6 path fills all 16 bytes and is not affected.
 
-Fixes: 754209850df8 ("RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260908085520.1746329-1-Jeremy.Jean@oss.cyber.gouv.fr
-Assisted-by: Codex:gpt-6
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Zero-initialise new_addr.
+
+Fixes: 3ff7ddb1353d ("netfilter: nft_nat: add netmap support")
+Signed-off-by: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c | 2 +-
+ net/netfilter/nft_nat.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
-index 743ffb3754e80..d608ecc67dd9d 100644
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1095,7 +1095,7 @@ static int siw_get_hdr(struct siw_rx_stream *srx)
- 	if (iwarp_pktinfo[opcode].hdr_len > sizeof(struct iwarp_ctrl_tagged)) {
- 		int hdrlen = iwarp_pktinfo[opcode].hdr_len;
+diff --git a/net/netfilter/nft_nat.c b/net/netfilter/nft_nat.c
+index 4b855c277f5cc..e1e2e46dbea74 100644
+--- a/net/netfilter/nft_nat.c
++++ b/net/netfilter/nft_nat.c
+@@ -64,8 +64,8 @@ static void nft_nat_setup_netmap(struct nf_nat_range2 *range,
+ 				 const struct nft_pktinfo *pkt,
+ 				 const struct nft_nat *priv)
+ {
++	union nf_inet_addr new_addr = {};
+ 	struct sk_buff *skb = pkt->skb;
+-	union nf_inet_addr new_addr;
+ 	__be32 netmask;
+ 	int i, len = 0;
  
--		bytes = min_t(int, hdrlen - MIN_DDP_HDR, srx->skb_new);
-+		bytes = min_t(int, hdrlen - srx->fpdu_part_rcvd, srx->skb_new);
- 
- 		skb_copy_bits(skb, srx->skb_offset,
- 			      (char *)c_hdr + srx->fpdu_part_rcvd, bytes);
 -- 
 2.53.0
 
