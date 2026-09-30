@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183945304B2;
-	Wed, 30 Sep 2026 17:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC27C5172F5;
+	Wed, 30 Sep 2026 17:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790663; cv=none; b=rAedVvAW0sQfKGKXgJDa0WpBK+YtEuICIslBY0iy+KvO6R/RVh2f20A66vaTjxF4h1D/G76Dzi2R+b7yYU/icJRa1U6TQOf6Cr1nwleeMA29zAgHBtM0TyR4YJ7stTxj6MkjGc2XxY7PDeYDzDbw8Q727swNKnraTpx9fMz/C2M=
+	t=1790790666; cv=none; b=cugA44CKBkwyaKRNvnumkKJLK86fyhrdOHGDnofElOtJQ4F81eSkZX12WP95BvpA9jP0RIzPXF5+XQED3CjaeowL+jdGxEF3RPTUWouSIhMXw5fhRf/ZFo5qH2ghL651jOGoKvS7c+oy5hPrAR4e/hzCUg5b4pJ3NcpTZAjiMME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790663; c=relaxed/simple;
-	bh=mB0OXHveAumeuO7sNqME+qNKrI0aQhhL263px1olaWc=;
+	s=arc-20240116; t=1790790666; c=relaxed/simple;
+	bh=2xPcUTuXaheh0/JJZ6OxRqqpO6voBQT7uSMCPrs6aVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llmncOK3BTaVP3IoqsMJpZTFW2s+3u71K20BMUJ1Pr7zThXgPLJmLJiYKAjHgYMJ9sdrPhYosHlYE6ajrbe+OmAUHXVT53mREwXJiX+jjcE8YPR+W+ekP4EENNi1yNbRanT3gQzO6++ZLiTVbgffkjwZpO8/RnBeVTy5rLtrDHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFULiC6a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WDprVe5MBbfggiY0fQU7ZVJh8E1612gjTB8bIQFemnO680D5P5vD8PxHQKHDU8fMaejMl5ePpc+beXJdowYBFxP3e7PiLRqZDzwuHHSNipKjxvdNoHLrKMhTFa5UPnyj1yablpUhTqxFFAnNzjDOR1QbQrCOJTPqhiHLoIZ0d/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3ZULBYV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFULiC6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F511F000FF;
-	Wed, 30 Sep 2026 17:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3ZULBYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229FE1F000FF;
+	Wed, 30 Sep 2026 17:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790661;
-	bh=3RHXZWllbXf9Iil9foU72+Q7Eji5JKDvIAghSXZ7HcA=;
+	s=korg; t=1790790664;
+	bh=23rgbSkQNxkLUqD/gN60YRwlVgmtOovoiV2Isq0LT8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kFULiC6aPogGI1gtuDb8tvGMoF+YxVtp8fHEXpTuwe+XhiJbFng8jlaNkVFD+U/qT
-	 wG8lyWMpcssQQco1p6PqxP557CxlC2QfcPQfTFHaZhjfwnYu5Kd15Hofsy85K4R1HG
-	 gQFuKg0+rGekiD53/uK509Rp5+4Ohe96VCwHplhU=
+	b=r3ZULBYVkUIDgz9jD81iNjq4nGPAHuS8yDEUvG/IABzgUA4A6oqBNUioWQaVmBC7X
+	 XtFxo0MAwAxKWiFse9SePSHE0ZIkbMqt3/lp43/jO+sje/rDyLvH+oB0pCoAV215dc
+	 2TyN73lIOg44Eu2+DJl1ILZo3nKTM2PqSk9zcAhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Jouni Malinen <j@w1.fi>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/752] hfsplus: fix issue of direct writes beyond end-of-file
-Date: Wed, 30 Sep 2026 17:17:56 +0200
-Message-ID: <20260930152358.280946483@linuxfoundation.org>
+Subject: [PATCH 5.15 007/752] wifi: mac80211: always allow transmitting null-data on TXQs
+Date: Wed, 30 Sep 2026 17:17:57 +0200
+Message-ID: <20260930152358.302208227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,113 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 5f63ac80aef2ee6bb58eab62e98c264774872da6 ]
+[ Upstream commit 51129a2ca0482b006d0e12a0aa025ff1e1cad2cb ]
 
-The xfstests' test-case generic/729 fails with error:
+Jouni reported that certain sequences of tests caused some
+WDS tests to fail after applying the upcoming hwsim changes
+for NAN. I bisected that down to converting hwsim to TXQs,
+and after a long debug session found that the 4-addr NDP was
+getting dropped, because it goes out via a (management) TXQ
+and is a data frame.
 
-sudo ./check generic/729
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #36 SMP PREEMPT_DYNAMIC Fri Apr 17 12:40:51 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+It's unclear to me now why this only happens in some test
+sequences (e.g. "sigma_dut_sae_h2e_ap_loop ap_wds_sta" and
+"sigma_dut_eap_ttls_all_akm_suites ap_wds_sta_open"), maybe
+that affects timing and the frame is otherwise delayed in
+some way.
 
-generic/729  23s ... [failed, exit status 1]- output mismatch
+Correct the check to only drop frames that actually carry
+data, not NDPs.
 
-mmap-rw-fault: /mnt/test/mmap-rw-fault.tmp: Input/output error
-
-The hfsplus_get_block() only allows creating the next
-sequential block. It returns -EIO for direct writes
-beyond EOF. This patch waits for any in-flight DIO on the inode
-to finish. Then, it extends the file by calling
-generic_cont_expand_simple() with the goal to guarantee
-that blockdev_direct_IO() finds all needed blocks
-already reachable sequentially. And, finally, it flushes and
-invalidates the DIO range again so the page cache is clean
-before the direct write begins.
-
-sudo ./check generic/729
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #40 SMP PREEMPT_DYNAMIC Thu Apr 16 15:41:03 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/729  23s ...  32s
-Ran: generic/729
-Passed all 1 tests
-
-Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/210
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260417214940.2735557-2-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: Jouni Malinen <j@w1.fi>
+Link: https://patch.msgid.link/20260417141601.851ddf4adb59.I3d668c0e1bdca9cd98f2fc46f84a066e68cc7a62@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/inode.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index 4310b9105d0fa..840729acb9bcc 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -129,9 +129,44 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 	struct file *file = iocb->ki_filp;
- 	struct address_space *mapping = file->f_mapping;
- 	struct inode *inode = mapping->host;
-+	loff_t isize;
- 	size_t count = iov_iter_count(iter);
-+	loff_t end = iocb->ki_pos + count;
- 	ssize_t ret;
- 
-+	/*
-+	 * The hfsplus_get_block() only allows creating the next sequential block.
-+	 * For direct writes beyond EOF, expand the file first.
-+	 */
-+	if (iov_iter_rw(iter) == WRITE && iocb->ki_pos > i_size_read(inode)) {
-+		loff_t start_off, end_off;
-+		loff_t start_page, end_page;
-+
-+		isize = i_size_read(inode);
-+
-+		/*
-+		 * Wait for any in-flight DIO on this inode to finish before
-+		 * calling generic_cont_expand_simple().
-+		 */
-+		inode_dio_wait(inode);
-+
-+		ret = generic_cont_expand_simple(inode, iocb->ki_pos);
-+		if (ret)
-+			return ret;
-+
-+		start_off = isize;
-+		end_off = (end > 0) ? end - 1 : end;
-+
-+		ret = filemap_write_and_wait_range(mapping, start_off, end_off);
-+		if (ret)
-+			return ret;
-+
-+		start_page = start_off >> PAGE_SHIFT;
-+		end_page = end_off >> PAGE_SHIFT;
-+
-+		invalidate_inode_pages2_range(mapping, start_page, end_page);
-+	}
-+
- 	ret = blockdev_direct_IO(iocb, inode, iter, hfsplus_get_block);
- 
- 	/*
-@@ -139,8 +174,7 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 	 * blocks outside i_size. Trim these off again.
- 	 */
- 	if (unlikely(iov_iter_rw(iter) == WRITE && ret < 0)) {
--		loff_t isize = i_size_read(inode);
--		loff_t end = iocb->ki_pos + count;
-+		isize = i_size_read(inode);
- 
- 		if (end > isize)
- 			hfsplus_write_failed(mapping, end);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 511bdb2e0aa29..b7865f3b97879 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3709,7 +3709,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 		 * injected frames or EAPOL frames from the local station.
+ 		 */
+ 		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data(hdr->frame_control) &&
++			     ieee80211_is_data_present(hdr->frame_control) &&
+ 			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+ 			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+ 			     !is_multicast_ether_addr(hdr->addr1) &&
 -- 
 2.53.0
 
