@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F5D4E4304;
-	Wed, 30 Sep 2026 16:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAD851C078;
+	Wed, 30 Sep 2026 16:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785042; cv=none; b=OJQz35cSw5aktJlFFyIuPydMpKhFiwhdkcGvvlvWIjQA1q5w5dBLw48YmHzTjZ1KBeXEnOpbAghR3hyJ/9xbCxHY6Sg9LYklHQ2uD+TsCcrNcddLeuHhKM3nA57+oQPnnsW+GOvmH9g4kC+lKnQRKcyozHW4cJT6nvdvEApC8P0=
+	t=1790785049; cv=none; b=LY5MKoxIcUu5ajY3T2k0HbBrD6elviUGaiWtNx428BmBisObvCvcp5lpof/Mav0UnVb6QHVmTq622SENkMCqiaGN4YvUWg95f3YyYJzL5zyq7yRKDAEvBshcG1JUMdWH68h+qIxijMzmRPlAkRXW4PPN3sPwAab69KIsVmWmCLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785042; c=relaxed/simple;
-	bh=dfnVWlyjxDuTuQ6rMoc1vph49A6hD66aFeL0P9yKn30=;
+	s=arc-20240116; t=1790785049; c=relaxed/simple;
+	bh=P8XPvbT2kb4X7m4vC11dcIOPLQXE4pvvy8pZ0jwEjCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVAsn1quAlBh2hRkgA/kYMgiHdxrs41BMvBWeUK3XBM1WThx+94ytM9WdRvNZQobE7WrOROOybEgpA+mFteAB4EB6pQrrc9IY8tnvpqHvj00cGjSzzIPgfG/4Ve0XgGo8Pq1gdvEJvXWI8b7Dd4aJwAwsChRQm8h5hoHVmblvGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qv02xes/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MqiJzpXDm9lJqad/xfnt3UAyPL8GlJu/TqW6ns0xp/jfalJ+MqKFBsEQAloXnf+ZUdg+9wAfuxxI/1Tgayf9wPxhaXTw7bc8UacDb68nhyT04erZkFwIpk2/zSKYLh2dYUo7hkN4fZ2ICnA87WGc6Kyucql12FPE4OgBHTw/mGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSxk/ufg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qv02xes/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B2E1F00893;
-	Wed, 30 Sep 2026 16:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSxk/ufg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64A21F00898;
+	Wed, 30 Sep 2026 16:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785039;
-	bh=qyJ7ccemA49Tky8F7xnjC7vqg+S5tLf1YFaHWIyU6SA=;
+	s=korg; t=1790785042;
+	bh=zDWzxtOmyTWyGZNSKm9nNymKmlotyGwUey9sZ/fkRAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qv02xes/6Vrj1rZhnnNaeGTsJ+hJ6x1kacw5BCCyLK46pSsmZt5R8W4SunfLGzNQj
-	 z0mgCme1dt/qmytueR/lRZ5U0HWYPAf6hVuGVfU/w+sBIapOHwccI5jHEAZNIT3GAF
-	 Xs6lOsRYI32xf6ePVbeYBFHj7atHpmwjVqSySAN8=
+	b=mSxk/ufg2MP+DnR7W1LchEhjk7zsdkgqBoAYyDO1g2rJZlO4eJa7x3yikPxx9PlhZ
+	 T3n24K9AxQ4mimMuCn+cduG4XH+N2K6LDxN0alpGkzdB+feZdndSLl7RhKo4f1ANfD
+	 QbWFIfWjBZ3LigEwpdoS0qWEyEHLu5/gY/+E2RRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Boqun Feng <boqun.feng@gmail.com>,
-	Waiman Long <longman@redhat.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 368/982] locking/lockdep: Introduce lock_sync()
-Date: Wed, 30 Sep 2026 17:18:24 +0200
-Message-ID: <20260930152424.716108652@linuxfoundation.org>
+Subject: [PATCH 6.1 369/982] locking/lockdep: Improve the deadlock scenario print for sync and read lock
+Date: Wed, 30 Sep 2026 17:18:25 +0200
+Message-ID: <20260930152424.738107513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,122 +54,207 @@ Content-Transfer-Encoding: 8bit
 
 From: Boqun Feng <boqun.feng@gmail.com>
 
-[ Upstream commit 2f1f043e7bea3fbf4c1869df2f7a0312bc8ca2bf ]
+[ Upstream commit 0471db447cb7de56bbe2fedd9256b4d2b8ef642a ]
 
-Currently, functions like synchronize_srcu() do not have lockdep
-annotations resembling those of other write-side locking primitives.
-Such annotations might look as follows:
+Lock scenario print is always a weak spot of lockdep splats. Improvement
+can be made if we rework the dependency search and the error printing.
 
-	lock_acquire();
-	lock_release();
+However without touching the graph search, we can improve a little for
+the circular deadlock case, since we have the to-be-added lock
+dependency, and know whether these two locks are read/write/sync.
 
-Such annotations would tell lockdep that synchronize_srcu() acts like
-an empty critical section that waits for other (read-side) critical
-sections to finish.  This would definitely catch some deadlock, but
-as pointed out by Paul Mckenney [1], this could also introduce false
-positives because of irq-safe/unsafe detection.  Of course, there are
-tricks could help with this:
+In order to know whether a held_lock is sync or not, a bit was
+"stolen" from ->references, which reduce our limit for the same lock
+class nesting from 2^12 to 2^11, and it should still be good enough.
 
-	might_sleep(); // Existing statement in __synchronize_srcu().
-	if (IS_ENABLED(CONFIG_PROVE_LOCKING)) {
-		local_irq_disable();
-		lock_acquire();
-		lock_release();
-		local_irq_enable();
-	}
+Besides, since we now have bit in held_lock for sync, we don't need the
+"hardirqoffs being 1" trick, and also we can avoid the __lock_release()
+if we jump out of __lock_acquire() before the held_lock stored.
 
-But it would be better for lockdep to provide a separate annonation for
-functions like synchronize_srcu(), so that people won't need to repeat
-the ugly tricks above.
+With these changes, a deadlock case evolved with read lock and sync gets
+a better print-out from:
 
-Therefore introduce lock_sync(), which is simply an lock+unlock
-pair with no irq safe/unsafe deadlock check.  This works because the
-to-be-annontated functions do not create real critical sections, and
-there is therefore no way that irq can create extra dependencies.
+	[...]  Possible unsafe locking scenario:
+	[...]
+	[...]        CPU0                    CPU1
+	[...]        ----                    ----
+	[...]   lock(srcuA);
+	[...]                                lock(srcuB);
+	[...]                                lock(srcuA);
+	[...]   lock(srcuB);
 
-[1]: https://lore.kernel.org/lkml/20180412021233.ewncg5jjuzjw3x62@tardis/
+to
+
+	[...]  Possible unsafe locking scenario:
+	[...]
+	[...]        CPU0                    CPU1
+	[...]        ----                    ----
+	[...]   rlock(srcuA);
+	[...]                                lock(srcuB);
+	[...]                                lock(srcuA);
+	[...]   sync(srcuB);
 
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Acked-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-[ boqun: Fix typos reported by Davidlohr Bueso and Paul E. Mckenney ]
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Stable-dep-of: 02c6be7d675b ("locking/lockdep: Invalidate stale class_cache entries for zapped classes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/lockdep.h  |  5 +++++
- kernel/locking/lockdep.c | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ include/linux/lockdep.h  |  3 ++-
+ kernel/locking/lockdep.c | 48 ++++++++++++++++++++++++++--------------
+ 2 files changed, 34 insertions(+), 17 deletions(-)
 
 diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
-index 90aa802a30669..9d8639c6ff21f 100644
+index 9d8639c6ff21f..c077aa9b16503 100644
 --- a/include/linux/lockdep.h
 +++ b/include/linux/lockdep.h
-@@ -268,6 +268,10 @@ extern void lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+@@ -134,7 +134,8 @@ struct held_lock {
+ 	unsigned int read:2;        /* see lock_acquire() comment */
+ 	unsigned int check:1;       /* see lock_acquire() comment */
+ 	unsigned int hardirqs_off:1;
+-	unsigned int references:12;					/* 32 bits */
++	unsigned int sync:1;
++	unsigned int references:11;					/* 32 bits */
+ 	unsigned int pin_count;
+ };
  
- extern void lock_release(struct lockdep_map *lock, unsigned long ip);
- 
-+extern void lock_sync(struct lockdep_map *lock, unsigned int subclass,
-+		      int read, int check, struct lockdep_map *nest_lock,
-+		      unsigned long ip);
-+
- /* lock_is_held_type() returns */
- #define LOCK_STATE_UNKNOWN	-1
- #define LOCK_STATE_NOT_HELD	0
-@@ -569,6 +573,7 @@ do {									\
- #define lock_map_acquire_read(l)		lock_acquire_shared_recursive(l, 0, 0, NULL, _THIS_IP_)
- #define lock_map_acquire_tryread(l)		lock_acquire_shared_recursive(l, 0, 1, NULL, _THIS_IP_)
- #define lock_map_release(l)			lock_release(l, _THIS_IP_)
-+#define lock_map_sync(l)			lock_sync(l, 0, 0, 1, NULL, _THIS_IP_)
- 
- #ifdef CONFIG_PROVE_LOCKING
- # define might_lock(lock)						\
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index a807773c84c3e..b50dc0b833872 100644
+index b50dc0b833872..2a5b17f855c8a 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
-@@ -5702,6 +5702,40 @@ void lock_release(struct lockdep_map *lock, unsigned long ip)
- }
- EXPORT_SYMBOL_GPL(lock_release);
+@@ -1873,6 +1873,8 @@ print_circular_lock_scenario(struct held_lock *src,
+ 	struct lock_class *source = hlock_class(src);
+ 	struct lock_class *target = hlock_class(tgt);
+ 	struct lock_class *parent = prt->class;
++	int src_read = src->read;
++	int tgt_read = tgt->read;
  
-+/*
-+ * lock_sync() - A special annotation for synchronize_{s,}rcu()-like API.
-+ *
-+ * No actual critical section is created by the APIs annotated with this: these
-+ * APIs are used to wait for one or multiple critical sections (on other CPUs
-+ * or threads), and it means that calling these APIs inside these critical
-+ * sections is potential deadlock.
-+ *
-+ * This annotation acts as an acquire+release annotation pair with hardirqoff
-+ * being 1. Since there's no critical section, no interrupt can create extra
-+ * dependencies "inside" the annotation, hardirqoff == 1 allows us to avoid
-+ * false positives.
-+ */
-+void lock_sync(struct lockdep_map *lock, unsigned subclass, int read,
-+	       int check, struct lockdep_map *nest_lock, unsigned long ip)
-+{
-+	unsigned long flags;
+ 	/*
+ 	 * A direct locking problem where unsafe_class lock is taken
+@@ -1900,7 +1902,10 @@ print_circular_lock_scenario(struct held_lock *src,
+ 	printk(" Possible unsafe locking scenario:\n\n");
+ 	printk("       CPU0                    CPU1\n");
+ 	printk("       ----                    ----\n");
+-	printk("  lock(");
++	if (tgt_read != 0)
++		printk("  rlock(");
++	else
++		printk("  lock(");
+ 	__print_lock_name(target);
+ 	printk(KERN_CONT ");\n");
+ 	printk("                               lock(");
+@@ -1909,7 +1914,12 @@ print_circular_lock_scenario(struct held_lock *src,
+ 	printk("                               lock(");
+ 	__print_lock_name(target);
+ 	printk(KERN_CONT ");\n");
+-	printk("  lock(");
++	if (src_read != 0)
++		printk("  rlock(");
++	else if (src->sync)
++		printk("  sync(");
++	else
++		printk("  lock(");
+ 	__print_lock_name(source);
+ 	printk(KERN_CONT ");\n");
+ 	printk("\n *** DEADLOCK ***\n\n");
+@@ -4529,7 +4539,13 @@ mark_usage(struct task_struct *curr, struct held_lock *hlock, int check)
+ 					return 0;
+ 		}
+ 	}
+-	if (!hlock->hardirqs_off) {
 +
-+	if (unlikely(!lockdep_enabled()))
-+		return;
-+
-+	raw_local_irq_save(flags);
-+	check_flags(flags);
-+
-+	lockdep_recursion_inc();
-+	__lock_acquire(lock, subclass, 0, read, check, 1, nest_lock, ip, 0, 0);
-+
-+	if (__lock_release(lock, ip))
-+		check_chain_key(current);
-+	lockdep_recursion_finish();
-+	raw_local_irq_restore(flags);
-+}
-+EXPORT_SYMBOL_GPL(lock_sync);
-+
- noinstr int lock_is_held_type(const struct lockdep_map *lock, int read)
++	/*
++	 * For lock_sync(), don't mark the ENABLED usage, since lock_sync()
++	 * creates no critical section and no extra dependency can be introduced
++	 * by interrupts
++	 */
++	if (!hlock->hardirqs_off && !hlock->sync) {
+ 		if (hlock->read) {
+ 			if (!mark_lock(curr, hlock,
+ 					LOCK_ENABLED_HARDIRQ_READ))
+@@ -4917,7 +4933,7 @@ static int __lock_is_held(const struct lockdep_map *lock, int read);
+ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 			  int trylock, int read, int check, int hardirqs_off,
+ 			  struct lockdep_map *nest_lock, unsigned long ip,
+-			  int references, int pin_count)
++			  int references, int pin_count, int sync)
  {
- 	unsigned long flags;
+ 	struct task_struct *curr = current;
+ 	struct lock_class *class = NULL;
+@@ -4968,7 +4984,8 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 
+ 	class_idx = class - lock_classes;
+ 
+-	if (depth) { /* we're holding locks */
++	if (depth && !sync) {
++		/* we're holding locks and the new held lock is not a sync */
+ 		hlock = curr->held_locks + depth - 1;
+ 		if (hlock->class_idx == class_idx && nest_lock) {
+ 			if (!references)
+@@ -5002,6 +5019,7 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 	hlock->trylock = trylock;
+ 	hlock->read = read;
+ 	hlock->check = check;
++	hlock->sync = !!sync;
+ 	hlock->hardirqs_off = !!hardirqs_off;
+ 	hlock->references = references;
+ #ifdef CONFIG_LOCK_STAT
+@@ -5063,6 +5081,10 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 	if (!validate_chain(curr, hlock, chain_head, chain_key))
+ 		return 0;
+ 
++	/* For lock_sync(), we are done here since no actual critical section */
++	if (hlock->sync)
++		return 1;
++
+ 	curr->curr_chain_key = chain_key;
+ 	curr->lockdep_depth++;
+ 	check_chain_key(curr);
+@@ -5204,7 +5226,7 @@ static int reacquire_held_locks(struct task_struct *curr, unsigned int depth,
+ 				    hlock->read, hlock->check,
+ 				    hlock->hardirqs_off,
+ 				    hlock->nest_lock, hlock->acquire_ip,
+-				    hlock->references, hlock->pin_count)) {
++				    hlock->references, hlock->pin_count, 0)) {
+ 		case 0:
+ 			return 1;
+ 		case 1:
+@@ -5676,7 +5698,7 @@ void lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 
+ 	lockdep_recursion_inc();
+ 	__lock_acquire(lock, subclass, trylock, read, check,
+-		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0);
++		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0, 0);
+ 	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+@@ -5709,11 +5731,6 @@ EXPORT_SYMBOL_GPL(lock_release);
+  * APIs are used to wait for one or multiple critical sections (on other CPUs
+  * or threads), and it means that calling these APIs inside these critical
+  * sections is potential deadlock.
+- *
+- * This annotation acts as an acquire+release annotation pair with hardirqoff
+- * being 1. Since there's no critical section, no interrupt can create extra
+- * dependencies "inside" the annotation, hardirqoff == 1 allows us to avoid
+- * false positives.
+  */
+ void lock_sync(struct lockdep_map *lock, unsigned subclass, int read,
+ 	       int check, struct lockdep_map *nest_lock, unsigned long ip)
+@@ -5727,10 +5744,9 @@ void lock_sync(struct lockdep_map *lock, unsigned subclass, int read,
+ 	check_flags(flags);
+ 
+ 	lockdep_recursion_inc();
+-	__lock_acquire(lock, subclass, 0, read, check, 1, nest_lock, ip, 0, 0);
+-
+-	if (__lock_release(lock, ip))
+-		check_chain_key(current);
++	__lock_acquire(lock, subclass, 0, read, check,
++		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0, 1);
++	check_chain_key(current);
+ 	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
 -- 
 2.53.0
 
