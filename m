@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DB53CB54E;
-	Wed, 30 Sep 2026 19:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202863CAA41;
+	Wed, 30 Sep 2026 19:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795681; cv=none; b=ScvO+p38nXwKmUnN389qW88LvsA/WTT93kdpLX/kYXFciW55akVZ2D5uLtaH1tKSlMyxr7f3KNcMZ7cWC4Y/JgahPtxQTv8FUr1abX8MWND21HvdDZTi2C/E7ThZaNDXnVd/fg564+qk9G0j08prY8MdDXfmls2Oj6CNAoXgOvg=
+	t=1790795685; cv=none; b=NgeTTKIXkJzjyrkZBT3v5dXBemaT2RcxXiAxzzcZEn63nckQ3xNdXCanaD/1+WxRijdNISwLc9pCgrWdhepMnn1E4HF7N2FzzNhr7yCSE+W1fUFzoHK8FPolWatqoj7BgXyTQo0tl4yKJzoGk/ZEOuQCRJQsEl8hsDECjd+M93w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795681; c=relaxed/simple;
-	bh=l/1S5zQ3BfmABuczQ7hbcn+BiAFKOsTFm87W6GGz7F4=;
+	s=arc-20240116; t=1790795685; c=relaxed/simple;
+	bh=8/+gw/8fFdjq4nPeW3UJDy6+1YFCwIlhrTvWR6DVDe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuiDDF/leCmKfZ8pT4aXHRCN6aHG8qNimEYoWWEPIOiMOYQeZxEbytFZrJ3jpaHOZ/cubwMDaxMftWEA+3qfOO1sQEAwgcTn0ssMbOMQ0zjTpKNTxvT4PDI8mDfyr2Zc7k40uH3tmpsjjo1/yzOg6WHNQNpI5k4C5xX3SlS043U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLPvP4IV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JNUkr0tqqV6kobtFVoEVrxR7t9fTXcB23/7xlNAKOhraWfkYp+IMmGnkK8DgBMzrh3jskMUlawlq+HFQ+u7bKiLN4XqE2a+yb2MjBbesY3qgaAsIs2V7yhMHlaH62UtPWcYMlHpb+pCL4icvIi9+n2ca9690DonaK3D29cCaXBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhiW8TIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLPvP4IV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EBE1F000FF;
-	Wed, 30 Sep 2026 19:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhiW8TIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1221F000FF;
+	Wed, 30 Sep 2026 19:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795680;
-	bh=qnVi5NdCxqStlujOEjQcUZ+PMmDiNHEAqtBI3zZQClo=;
+	s=korg; t=1790795683;
+	bh=CrVRyZea2XatVMWRNsmxi/J4HzhI73vMnCZ/yLjVhQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MLPvP4IVxcewtXuq2U41V7HSrCeRqVX7Wz4nnJMW82u1AU5Yq6p0HOwe4t2Mr+hik
-	 UNsO/6wE+yq6U7lmDOj0RuC7GDiAGqTgn7D2Ryw8SrpOcIDIyjRQeMpqa1po/8Byrx
-	 8ubN/Z5gzj8yVXCuSRwzFie5arW0gHDTv2MELmaA=
+	b=EhiW8TIjokvX+aU9IhIx2AEJ6yPeGBboA4/YNOolDkl20EVSiqNhn8UL4Iv2upR6t
+	 yDePVRNlCI9r8cRPjpdeCEPlhqX2U48MwIwaXRwjJSZXBxkesZ4FtIr7LnvjVHm3cm
+	 WSQhBAXcDxpIOS2J2p/3tGKbJ6d+C1XUuyRbFtLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 0645/1193] hwmon: (applesmc) fix key backlight workqueue leak on register failure
-Date: Wed, 30 Sep 2026 17:22:09 +0200
-Message-ID: <20260930152448.574883307@linuxfoundation.org>
+Subject: [PATCH 6.6 0646/1193] hwmon: (gpio-fan) Fix use-after-free in alarm work
+Date: Wed, 30 Sep 2026 17:22:10 +0200
+Message-ID: <20260930152448.597480064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,50 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5a0aacaa2d593d7582ecfe289529b937b6dc5d3c upstream.
+commit a2471ed17b0e6ff7bfb6b2ea8e6e5b04c309d293 upstream.
 
-applesmc_create_key_backlight() allocates applesmc_led_wq before calling
-led_classdev_register(). When register fails, the error is returned to
-applesmc_init(), which jumps to out_light_sysfs and skips
-applesmc_release_key_backlight(), leaking the workqueue.
+fan_alarm_irq_handler() queues fan_data->alarm_work, but nothing
+cancels it.  fan_alarm_notify() dereferences fan_data and its hwmon
+device.  On unbind, devres frees the interrupt, which only waits for
+the handler itself, and then releases the hwmon device and fan_data,
+so a pending fan_alarm_notify() can run after those frees.
 
-Destroy the workqueue on the register failure path. The bug was introduced
-when the inline init block was refactored into a helper that returns errors
-directly, dropping the old out_light_wq unwind label.
+Replace INIT_WORK() with devm_work_autocancel(), registered before
+devm_request_irq().  The devres cleanup then frees the interrupt
+first, so no new work can be queued, and cancels the work while
+fan_data and the hwmon device are still alive.
 
-Fixes: 0b0b5dff8967 ("hwmon: (applesmc) Simplify feature sysfs handling")
+This issue was found by an in-house static analysis tool.
+
+Fixes: d6fe1360f42e ("hwmon: add generic GPIO fan driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://patch.msgid.link/20260828105413.2401385-1-congnt264@gmail.com
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260819033317.446191-1-fanwu01@zju.edu.cn
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/applesmc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hwmon/gpio-fan.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/applesmc.c
-+++ b/drivers/hwmon/applesmc.c
-@@ -1249,12 +1249,17 @@ static void applesmc_release_light_senso
- 
- static int applesmc_create_key_backlight(void)
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -12,6 +12,7 @@
+ #include <linux/slab.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
++#include <linux/devm-helpers.h>
+ #include <linux/platform_device.h>
+ #include <linux/err.h>
+ #include <linux/kstrtox.h>
+@@ -80,6 +81,7 @@ static DEVICE_ATTR_RO(fan1_alarm);
+ static int fan_alarm_init(struct gpio_fan_data *fan_data)
  {
-+	int ret;
-+
- 	if (!smcreg.has_key_backlight)
- 		return 0;
- 	applesmc_led_wq = create_singlethread_workqueue("applesmc-led");
- 	if (!applesmc_led_wq)
- 		return -ENOMEM;
--	return led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	ret = led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	if (ret)
-+		destroy_workqueue(applesmc_led_wq);
-+	return ret;
- }
+ 	int alarm_irq;
++	int err;
+ 	struct device *dev = fan_data->dev;
  
- static void applesmc_release_key_backlight(void)
+ 	/*
+@@ -90,7 +92,11 @@ static int fan_alarm_init(struct gpio_fa
+ 	if (alarm_irq <= 0)
+ 		return 0;
+ 
+-	INIT_WORK(&fan_data->alarm_work, fan_alarm_notify);
++	err = devm_work_autocancel(dev, &fan_data->alarm_work,
++				   fan_alarm_notify);
++	if (err)
++		return err;
++
+ 	irq_set_irq_type(alarm_irq, IRQ_TYPE_EDGE_BOTH);
+ 	return devm_request_irq(dev, alarm_irq, fan_alarm_irq_handler,
+ 				IRQF_SHARED, "GPIO fan alarm", fan_data);
 
 
