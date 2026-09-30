@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81D74EA39A;
-	Wed, 30 Sep 2026 15:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1B64EA39A;
+	Wed, 30 Sep 2026 15:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783561; cv=none; b=tJcin+LRmwY/pEPDxfacVXdMBZWay1pqpqgjhPtSH17Aa2vO/HlJ2tE+G6fIzOXb+encFxwFAx6ZmD0KYWPKNPfzwVq9OX1lf/NrUln756qK1823G9xt4a3jD8uOBPY7GgOxmn0t3N68ah47xoU6wutcTSONKwfYHljmACMKviM=
+	t=1790783567; cv=none; b=pgEWrNeBg5YM6pa9kNXU5qJCRBQoW9u0brmJCmOxWdfNGBR8rbceO0VuT5ENmPrFEftYMHu4aX5zGSH6pRKTixxeq2F5RsV57gEcvVHrvd2ZGhGTuSa0qntok9LSCPkAJW/ngBFB4zsTWyZQBmFjaJ9zSa0LMwkOwOVmkNvNeyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783561; c=relaxed/simple;
-	bh=ESx0v9AgawtOoXG75vhkOiZWT3ZcuqgGO5+Ob4zaH/M=;
+	s=arc-20240116; t=1790783567; c=relaxed/simple;
+	bh=bXh1FdQmfljKeYvMqjSC9D3DGlL8kIQWipUP0TTplA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKMk0omxpMvg8sGhxJuzgO1h/Y/8hE1CCg83FYnI8OBNea8sGAwovqOKpjYPySWrVc2VxXokjenZ/4yV+xWDXL/8evxxNarAQ1Kgm9SA4LyYIA1ojGUhuBJHBo/K00HOdpMbOQ9Qn75dNzovD03YaAfqlwpQBNccJWrOJT6Q1dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rldd8JRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SRXuSoLl9XrcXa4NpqkLltpG1IRzTe+HiufnPoWewmmqv3un7VRIhlU122HkY/RV38cPdJfPs94mQOd5Ii5a9Zu2b8WurJ4i54XG9sGMDmgo6pfELrEmbe9RcW/eqLRXkdxv54cDL6lrcrq/E0yzaPCqzJdhgXa0CpKQ5LPHg7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrIRiL+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rldd8JRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A4D1F000FF;
-	Wed, 30 Sep 2026 15:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrIRiL+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7891F00898;
+	Wed, 30 Sep 2026 15:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783557;
-	bh=p6Psze/djEFTD1n/j6h+uLj+2LJa2w7USzWO6lcuMpU=;
+	s=korg; t=1790783560;
+	bh=mopD9kwHJ40NxDmzMkSRIr9bkZq+s3pn1AwxWnf41TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rldd8JREFYjzGj/kwkvrYAUbqrQFpRqTm0msLg9ZuhYzrYsB9RrV5lYJU9GJf+SKW
-	 UM4LvFNeQvSrppiyyE5osvYcsZJCN35KoicrPEvN/qoHGuBbU+A2J5vREaTy98PYtG
-	 sAHTO6tuTg33dfl5FKZKSy3SnTptFMEyPlGJFq24=
+	b=GrIRiL+zK7YO0w5EFoCCvMFeda1xZpgBQSY3/Sc6yZHweehj+csXOS/zQPOB5wYYA
+	 gC3HNexqD1UTEuEIDfFsrXHe9XazcbFZa3cwcmsCbATT8vKpZRpXmlhgpD0cMcFx+T
+	 lIdZBYRXisZwMtFZUvd9NFqpx7KkhXZlj/Dp8Dho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 439/595] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
-Date: Wed, 30 Sep 2026 17:25:32 +0200
-Message-ID: <20260930152357.122830608@linuxfoundation.org>
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 440/595] selinux: always fill AVC decision in avc_has_perm_noaudit()
+Date: Wed, 30 Sep 2026 17:25:33 +0200
+Message-ID: <20260930152357.145008667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -44,61 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
+commit 8861db305103107199b1426f25fde1fb6d465583 upstream.
 
-register_pkey_tree() ignores errors from register_one_pkey_tree() and
-continues registering the remaining slaves. The per-slave error path has
-already released the pkey parent kobjects, but their pointers remain
-stored in the device. A later device cleanup therefore passes the stale
-pointers to kobject_put(), causing a use-after-free.
+avc_has_perm_noaudit() is documented to return a copy of the access
+decision in @avd, but its early return for an empty requested permission
+set leaves the buffer untouched.  All callers pass an uninitialized
+stack variable and afterwards feed it to avc_audit(), and the inode hook
+even stores it in the per-task decision cache.
 
-Clear the parent pointers after releasing a failed slave tree and skip
-unregistered trees during device cleanup. This preserves the existing
-best-effort registration behavior while preventing a second cleanup of
-the failed tree.
+Fill in a deny-all, audit-all decision, similar to avd_init(), so every
+caller receives a defined value at no cost on the hot path.
 
-Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: e6f2f381e4015386 ("selinux: replace BUG_ONs with WARN_ONs in avc.c")
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ security/selinux/avc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/mlx4/sysfs.c
-+++ b/drivers/infiniband/hw/mlx4/sysfs.c
-@@ -763,11 +763,13 @@ err_add:
- 		kobject_put(p);
- 	}
- 	kobject_put(dev->dev_ports_parent[slave]);
-+	dev->dev_ports_parent[slave] = NULL;
+--- a/security/selinux/avc.c
++++ b/security/selinux/avc.c
+@@ -1145,8 +1145,11 @@ inline int avc_has_perm_noaudit(struct s
+ 	int rc = 0;
+ 	u32 denied;
  
- err_ports:
- 	kobject_put(dev->pkeys.device_parent[slave]);
- 	/* extra put for the device_parent create_and_add */
- 	kobject_put(dev->pkeys.device_parent[slave]);
-+	dev->pkeys.device_parent[slave] = NULL;
+-	if (WARN_ON(!requested))
++	if (WARN_ON(!requested)) {
++		/* Provide a deny-all, audit-all decision to the caller. */
++		*avd = (struct av_decision){ .auditdeny = 0xffffffff };
+ 		return -EACCES;
++	}
  
- fail_dev:
- 	kobject_put(dev->iov_parent);
-@@ -797,6 +799,8 @@ static void unregister_pkey_tree(struct
- 		return;
+ 	rcu_read_lock();
  
- 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
-+		if (!device->pkeys.device_parent[slave])
-+			continue;
- 		list_for_each_entry_safe(p, t,
- 					 &device->pkeys.pkey_port_list[slave],
- 					 entry) {
 
 
