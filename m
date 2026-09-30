@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881245111B5;
-	Wed, 30 Sep 2026 16:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569611E0DD8;
+	Wed, 30 Sep 2026 16:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786051; cv=none; b=qvrJHvw16NA98U4Z6ylFF33O12E1HmSIYPj7fjGEe1d1beVlFDftwVn4a55GEcoUCrU/Sr8ft7BnwKxOw2EgoA2JM04K1ihDBkeaq1qZpofuf4Wi3NtgoAL0krJljKe5lN9dTO9jTOK7oF8ozrGeLVv4AkPuTsy/AmGGXDf4vl4=
+	t=1790786054; cv=none; b=HyFS4cHeOt6DyUfHFjdqrAOo1Bqfr8jWaSNhksGImeBdwchX3d5mIUltY2U2e0xh+rfawEau4U8WFiMcSm+m84czUvWsSTYEwQbQIzRqy1HCqHfOQNQ10YcbyjwICH3nng3teMiKhK1eYAj3bjC7rrxqbb79Gwkzkllv6H7lvoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786051; c=relaxed/simple;
-	bh=4XHLEw1dZzxHrXdCHZw/JKkO75/UW+rRb9GxmEgcOuk=;
+	s=arc-20240116; t=1790786054; c=relaxed/simple;
+	bh=Y+MWJ8FAGrq5rluqPgPNRhBqhVjtQv+MukKdfKzmhyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZgbI9QqhA8vQuLxFTwis/7arr/q/fzeXlCkI7SbW55Km9cMzuiXdMPC6D+TAogoTUN4Gi77Ot6dnRo7ji6soFhfw2CQvVPp3nI7htmEJE65DFCtklqaubxQI0Ysr6TRRq5kzBVTTlMG6Uri9gRIaMl5ehyOdbdxiMQCKDEuSsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjOklqxw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KAiZ3i41jExcuVdjVdO6McqYhcDM4Dn44lJoIDsp4yLLvjbHSOHN4xkY7Z36xsXuRRCps/3bZsP665WnJfpBAcu+Nm7P1w/1gn+O0O+28WhNUyve8Pb7imjEC6rd/mdViiJecbBjLiva35HMyoRKOnSPRdoqF5a3qMVMHOx6WVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbP5o/hd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjOklqxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9AC1F000FF;
-	Wed, 30 Sep 2026 16:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbP5o/hd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EDD1F000FF;
+	Wed, 30 Sep 2026 16:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786050;
-	bh=dtLXOJXWG0PH4WQH2R1fVXe7CNsujcQRjDwQdr/9/cg=;
+	s=korg; t=1790786053;
+	bh=qBrhQc9W6khTWGDVwBJXbxy4Jh3F4au/3j33rMJuL2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qjOklqxwoNbA3mkAcCUJUFsHp9BYgVK7xmFhmUuo6Pv89VBu2+jVBm/N76fDym1fh
-	 0lPHuc/c0IONXNY5W53Yny+QohjySV0rDPhsOCAVMG5gmOopR2s6TGIezhd1U2zNiH
-	 N5NL+BA9gKm2yOwSUBY8pE5NmvGMH093h578JReY=
+	b=NbP5o/hdSOWuRSaRe4Rsethy5NlXnk1N26GBmSf/UUQcNNmicbvGBHUJ1d3PwuW+k
+	 XoyXbzojxmO/OCeQBo3eXHrxYqKfsOGUmZtARo0ZqUrigTS5yqwXpcAj0sSulHOcvG
+	 g1Ta3MUC4Ek0AYMgzku2s+Dm++VUmrP2EizlQRuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 724/982] keys: translate request_key_auth pid for the reading procfs instance
-Date: Wed, 30 Sep 2026 17:24:20 +0200
-Message-ID: <20260930152432.301428566@linuxfoundation.org>
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 689/982] net: mvpp2: prevent buffer overflow in page_pool allocation
+Date: Wed, 30 Sep 2026 17:23:45 +0200
+Message-ID: <20260930152431.561292819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -44,109 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
 
-commit 0d6a4268b06084baafd8ee5d66955c7e1c2e053b upstream.
+[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
 
-request_key_auth_describe() prints rka->pid into /proc/keys as a raw
-pid_t in the initial pid namespace. A reader can open /proc/keys through
-a mount in another pid namespace. That reader sees a number with no
-meaning there. The number can even name an unrelated task. The line
-needs VIEW on the key. So the reader either shares the key owner's uid
-or possesses the key.
+The per‑processor buffering scheme is supported only if the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
+This is already checked in mvpp2_probe() during the initial
+activation of percpu_pools.
 
-The fix keeps a struct pid. Commit 4f82f45730c6 ("net ip6 flowlabel:
-Make owner a union of struct pid * and kuid_t") gave
-/proc/net/ip6_flowlabel the same storage. The print goes through
-pid_nr_ns(). It renders against the pid namespace of the procfs instance
-the line is read through. Commit ad08978ab41c ("ipv6/flowlabel: simplify
-pid namespace lookup") moved that print to the same anchor. Output
-through an initial namespace /proc does not change. The line shows 0 for
-a requestor with no number in that namespace.
+However, mvpp2_change_mtu() may later call
+mvpp2_bm_switch_buffers(priv, true) without this check, which can
+lead to an out-of-bounds access in the priv->page_pool array in
+mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
+entries, and mvpp2_get_nrxqs() may return exactly that value. The
+per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
+bounds.
 
-Translating at read time was the alternative. find_pid_ns() can resolve
-a recycled number. The line would then name a live task with no
-connection to the key. A stored struct pid gives 0 instead when the
-requestor has no number there.
+Check that the hardware version is MVPP22 or newer and that the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
+before switching to per-CPU mode.
 
-Link: https://lore.kernel.org/keyrings/20260809110202.2180410-1-maoyixie.tju@gmail.com/
-Fixes: 78b7280cce23 ("KEYS: Improve /proc/keys")
-Cc: stable@vger.kernel.org # v5.10+
-Assisted-by: Claude:claude-opus-5 codeql
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://lore.kernel.org/r/20260821095935.1864998-1-maoyixie.tju@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/keys/request_key_auth-type.h |    2 +-
- security/keys/request_key_auth.c     |   12 +++++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/keys/request_key_auth-type.h
-+++ b/include/keys/request_key_auth-type.h
-@@ -22,7 +22,7 @@ struct request_key_auth {
- 	const struct cred	*cred;
- 	void			*callout_info;
- 	size_t			callout_len;
--	pid_t			pid;
-+	struct pid		*pid;
- 	char			op[8];
- } __randomize_layout;
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 675616142c4f4..d896d63682076 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5075,7 +5075,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
+ 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
+ 			mvpp2_bm_switch_buffers(priv, false);
+ 		}
+-	} else {
++	} else if (priv->hw_version >= MVPP22 &&
++		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
+ 		bool jumbo = false;
+ 		int i;
  
---- a/security/keys/request_key_auth.c
-+++ b/security/keys/request_key_auth.c
-@@ -9,6 +9,8 @@
- 
- #include <linux/sched.h>
- #include <linux/err.h>
-+#include <linux/pid.h>
-+#include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -73,7 +75,10 @@ static void request_key_auth_describe(co
- 	seq_puts(m, "key:");
- 	seq_puts(m, key->description);
- 	if (key_is_positive(key))
--		seq_printf(m, " pid:%d ci:%zu", rka->pid, rka->callout_len);
-+		seq_printf(m, " pid:%d ci:%zu",
-+			   pid_nr_ns(rka->pid,
-+				     proc_pid_ns(file_inode(m->file)->i_sb)),
-+			   rka->callout_len);
- }
- 
- /*
-@@ -113,6 +118,7 @@ static void free_request_key_auth(struct
- 	if (rka->cred)
- 		put_cred(rka->cred);
- 	kfree(rka->callout_info);
-+	put_pid(rka->pid);
- 	kfree(rka);
- }
- 
-@@ -226,14 +232,14 @@ struct key *request_key_auth_new(struct
- 
- 		irka = cred->request_key_auth->payload.data[0];
- 		rka->cred = get_cred(irka->cred);
--		rka->pid = irka->pid;
-+		rka->pid = get_pid(irka->pid);
- 
- 		up_read(&cred->request_key_auth->sem);
- 	}
- 	else {
- 		/* it isn't - use this process as the context */
- 		rka->cred = get_cred(cred);
--		rka->pid = current->pid;
-+		rka->pid = get_pid(task_pid(current));
- 	}
- 
- 	rka->target_key = key_get(target);
+-- 
+2.53.0
+
 
 
