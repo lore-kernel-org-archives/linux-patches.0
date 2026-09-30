@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F195B51357A;
-	Wed, 30 Sep 2026 17:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A9338944D;
+	Wed, 30 Sep 2026 17:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787838; cv=none; b=hWMXY7rBxObh5xmGy4yX4vhObT2Mmcw/DLbK0DoqAUMUyhxrXMWUxHuImsXUJaBqee6eoKhpwJHI7baYZJs7LFPtl6/CpNNbVpC+NM1R2CbT8GleKxOf5zcfnUqIwS1/WiAvUIcigPUtcPe6eyMhX7E4JdLApJIn7NcRC8u4iHo=
+	t=1790787840; cv=none; b=omZhjboh5nB+1cKZry0AC3wwoa/41/9u1YUjy3pxBcV1k0KCfDI6P+lt3Er9fOjXcf2EaL5st0WS+JWiQcpdJ0mZMxo+5b1JZU1uPEkEE/ZWDhguTmLYAseU7bsbhgWn+fuLHbp6t4KOQIzqO8hkrWLttDOiofGWu82abOm/m5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787838; c=relaxed/simple;
-	bh=ccBWHnekiFy7EHvH0pzPaXgNdq2a6m5OXDytOYrbcHQ=;
+	s=arc-20240116; t=1790787840; c=relaxed/simple;
+	bh=Rs/RjNDEF1eDjPIp9ob8woFMeor+gWqrzeLIlAybF0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBLHgcD9t+LoI6aOPk76oMWd/7EgyWnR8CHCA6rOv54L7cEa0S/c7LTbMLq8KauOmc3Tyhqv54VOok3VhvHSMDrql4bWTcKswIqVLlGWsOES8TsvI1O0xFUoKOrijNUOq+Em7SrWFNeS97fe+llmbIFItUez64+fsumL9FTny5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfYreTHT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iVMMrcSHT0PSA1+htOF3kat7PKNjhPTbGrePIqSTUbmwh/Y8csjzkCf7IkQdpHHLzrgBi4ay/fBeHisfRC50OfOtbMD++FkUNYayLf1a3AgPazVSSIwgEBLML+Uyjnldo3c23xhkV7St6EJcF4f0ZEqYaoplIrK01pkg2pRglVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1OnT/ay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfYreTHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584AD1F000FF;
-	Wed, 30 Sep 2026 17:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1OnT/ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F641F000FF;
+	Wed, 30 Sep 2026 17:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787836;
-	bh=Pbq6fFtXgya0iqdgP1y9AAM5S6dZsb+nYGR/XMyqK3I=;
+	s=korg; t=1790787839;
+	bh=zsTF7/VGY6mOkXiq1rcfGsBcRpINC9gg0GJrfQyyo6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfYreTHTh02ho7DvB9PL+tAsPkHT56MPIYq1AacMbpV/zgFyPR2xtKeNlsr2yE300
-	 BQ1mRyD8/6fHC/MFO0OzeC2IbsKMZO2TGGps9ocnGAyz9DnQ/N6VB/LDpg2mEZkm+A
-	 ssMkPvBBsKsI6z72SxPhJ5YPazrVXeVf+alMxnUQ=
+	b=k1OnT/ayiIYCDbxWuokFhiqh6xcZKSMie3rJ5/MkkOswz45evOfPVWk79F26ssJCL
+	 Umg0MCw0KD+rtJaEqnPQNvaUyqHVL4anYY0pLex0cjCk2rOx2010EBvRouDusHR0df
+	 DU48IJ+4IzXTrwNq6LzjZ1hREcA+c+KBirdlsdnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 7.2 371/457] pinctrl: mpfs-mssio: fix width of unused bank voltage setting
-Date: Wed, 30 Sep 2026 17:27:56 +0200
-Message-ID: <20260930152354.015000970@linuxfoundation.org>
+Subject: [PATCH 7.2 372/457] pinctrl: mpfs-mssio: use correct regmap function to set bank voltage
+Date: Wed, 30 Sep 2026 17:27:57 +0200
+Message-ID: <20260930152354.035225257@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,11 +52,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-commit e6c5d6c589764a41218cbd81bd7d6c9b906e2cf0 upstream.
+commit 8039b75af5808572ff3656eaed07d348aed3989a upstream.
 
-The bank voltages are only 4 bits wide, so when a pin was unused the
-driver was not correctly interpreting it as being at zero volts, because
-the driver's value for unused had two extra set bits.
+regmap_assign_bits() is not the correct function to use for an RMW
+operation, as it maps to regmap_set_bits() or regmap_clear_bits() and
+the former will never zero a bit. Use regmap_update_bits() instead,
+which will actually set the bank voltages to what have been requested.
 
 CC: stable@vger.kernel.org
 Fixes: 488d704ed7b7 ("pinctrl: add polarfire soc mssio pinctrl driver")
@@ -64,22 +65,26 @@ Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c b/drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c
-index ea1026a0d22c..dafca82f3e54 100644
+index dafca82f3e54..92d38e5336de 100644
 --- a/drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c
 +++ b/drivers/pinctrl/microchip/pinctrl-mpfs-mssio.c
-@@ -86,7 +86,7 @@ static struct mpfs_pinctrl_bank_voltage mpfs_pinctrl_bank_voltages[8] = {
- 	{ .uv = 1800000, .val = 4 },
- 	{ .uv = 2500000, .val = 6 },
- 	{ .uv = 3300000, .val = 8 },
--	{ .uv = 0, .val = 0x3f }, // pin unused
-+	{ .uv = 0, .val = 0xf }, // pin unused
- };
+@@ -156,10 +156,10 @@ static void mpfs_pinctrl_set_bank_voltage(struct mpfs_pinctrl *pctrl, unsigned i
+ 	u32 val = FIELD_PREP(MPFS_PINCTRL_BANK_VOLTAGE_MASK, bank_voltage);
  
- static int mpfs_pinctrl_get_drive_strength_ma(u32 drive_strength)
+ 	if (pin < MPFS_PINCTRL_BANK2_START)
+-		regmap_assign_bits(pctrl->sysreg_regmap, MPFS_PINCTRL_MSSIO_BANK4_CFG_CR,
++		regmap_update_bits(pctrl->sysreg_regmap, MPFS_PINCTRL_MSSIO_BANK4_CFG_CR,
+ 				   MPFS_PINCTRL_BANK_VOLTAGE_MASK, val);
+ 	else
+-		regmap_assign_bits(pctrl->sysreg_regmap, MPFS_PINCTRL_MSSIO_BANK2_CFG_CR,
++		regmap_update_bits(pctrl->sysreg_regmap, MPFS_PINCTRL_MSSIO_BANK2_CFG_CR,
+ 				   MPFS_PINCTRL_BANK_VOLTAGE_MASK, val);
+ }
+ 
 -- 
 2.55.0
 
