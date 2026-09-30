@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152BD515983;
-	Wed, 30 Sep 2026 16:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630E95172E5;
+	Wed, 30 Sep 2026 16:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785153; cv=none; b=hK3A42g9rz0NVRh/7/yQyHvkbaxZtDFFmWpsqEz8L7gUJEHhGLsXOmMQ4sMCloBMzKlYG7UEeJrFSe+R8vNml1b7qcaGDw4Mn38Dw2WRyqiS+BVBBA0AeXOmanvuiRD3mN7M5Vhj+bhBMz/SPlL32XGnLZgvI633GRUgXP8KGC8=
+	t=1790785155; cv=none; b=Ps0DTNtqyO+eY39o6+YbTH1jItClXH3Q/m/UBFctt8zQdE1wWin99sJi1aXUvTD4PaOw4fIENWrCK/yNtrVrz3YM87t4rF7I5kYwoQnFrynABrHwvL/A8kwq/DB41NS6S6eVAC5hv0twaFudTHOxVfeRTUZdmsfjdIyjQfDmcoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785153; c=relaxed/simple;
-	bh=FmVHcuzbauwDJyi3HwlJru1H/qi9EDNqYzQbPPNEMrE=;
+	s=arc-20240116; t=1790785155; c=relaxed/simple;
+	bh=XVAtfBlP1jSmWixkuKTBJMq0fDPaYt6eMFoJLAkJcCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dURKEK71s+trgIPt4mUWAEFcFZ32GtjQRFrGnYZxIcMZO2H6C+CbjoVvnXAhFQJI0xaLGn/ujenL3ZdeaKnzDqcyGXKox497Q+zYwjtW/1o29xZb674Vd99jzGEV/xL5YeJFxRrarQizrHB2X73F8ChByNUlSYQ0d4kYVlP6cDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vgii3zZP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzMq1lHGQZ6goHrdDt1o8p/HyHmExHXaQFpBI+goL4i61VdMpoulp1no289FOIlOjrV7uM75Fg8dbyEbwYiBJfDOn8E5nwYIVHuFgLrLi8P6COv/Igqy865JpjttRjFWfatJ3Or5Rgyyy172hMQEfzJ6v5AA8htKmYPbiagp/mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmKRV2mw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vgii3zZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DE91F000FF;
-	Wed, 30 Sep 2026 16:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmKRV2mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3823D1F00893;
+	Wed, 30 Sep 2026 16:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785141;
-	bh=I1eKKAZkthoO1gZd7VwN7HGCTGcxLxI10hFDg+xZQyY=;
+	s=korg; t=1790785149;
+	bh=23t9uFSbkFx0KTyy/I7sRMPBESvnlf8XIEK5KfEzXcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vgii3zZPyAIKe2raskZWSk9+BPDYNqe2sz8eOwToUcRWOfH65XW1IpuY6hq1mE/Sp
-	 RaZVW5An6cWLzQQkdmBJzUhBNWwDmCirpa6aLRK60qva5jt9vJ6WJPrlGjxo7ZzF0B
-	 G3pvrsNcVl6ryX38BWdjZdNmFoNkKqUV0xkK850k=
+	b=OmKRV2mwx45OKGusNF9zllJBhR0VTHQYSr/3HKD9MKKQkSqEiqpR6uX+tSCR/0tOm
+	 dtGqFyRdtDOWm2GF6/KWnxVsnSD2B89PZrg5wmB7divjVRBWZC59mVA5YKwo1qYowi
+	 l3x1Pqg+QmH+Hkz1vDtxzyzloGWOMV/nDrOBvStk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 397/982] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
-Date: Wed, 30 Sep 2026 17:18:53 +0200
-Message-ID: <20260930152425.335678835@linuxfoundation.org>
+Subject: [PATCH 6.1 408/982] nexthop: Initialize extack in remove_nh_grp_entry()
+Date: Wed, 30 Sep 2026 17:19:04 +0200
+Message-ID: <20260930152425.571729850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
+[ Upstream commit 5bd9e4e7cdaa03879e9b73b12ab52cceb1edd55b ]
 
-The core software reset issued in stmmac_init_dma_engine() during
-ndo_open() callback clears the MTL RX packet parser registers, but
-stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
-After an ifdown/ifup cycle the hardware therefore runs with the default
-all-pass table while priv->tc_entries still reports the filters as
-installed. Re-apply the RX packet parser table from priv->tc_entries in
-stmmac_hw_setup(), right after the software reset, so the filters are
-restored when the interface is brought up again.
+remove_nh_grp_entry() prints the extack message when a listener fails
+to replace the reduced nexthop group. However, extack is not
+initialized and listeners are not required to set a message when
+returning an error. Neither netdevsim nor mlxsw do so when an
+allocation fails, resulting in the dereference of an uninitialized
+stack pointer.
 
-Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix by zero-initializing extack, as was done in commit 6347c5314cee
+("nexthop: initialize extack in nh_res_bucket_migrate()").
+
+Fixes: 833a1065eeb1 ("nexthop: Emit a notification when a nexthop group is reduced")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260903080259.10378-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ipv4/nexthop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 16c4640e8e689..fb8c65c2bc0ef 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3349,6 +3349,14 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
- 	/* Initialize MTL*/
- 	stmmac_mtl_configuration(priv);
- 
-+	/* Apply the RX packet parser table */
-+	if (priv->tc_entries) {
-+		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
-+					priv->tc_entries_max);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Initialize Safety Features */
- 	stmmac_safety_feat_configuration(priv);
- 
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 13a798f9dc9cb..cd93dd74608ac 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1736,7 +1736,7 @@ static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
+ {
+ 	struct nh_grp_entry *nhges, *new_nhges;
+ 	struct nexthop *nhp = nhge->nh_parent;
+-	struct netlink_ext_ack extack;
++	struct netlink_ext_ack extack = {};
+ 	struct nexthop *nh = nhge->nh;
+ 	struct nh_group *nhg, *newg;
+ 	int i, j, err;
 -- 
 2.53.0
 
