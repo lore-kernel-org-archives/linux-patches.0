@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D6751815C;
-	Wed, 30 Sep 2026 16:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D853515886;
+	Wed, 30 Sep 2026 16:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784702; cv=none; b=JhLQ6WS8Ad7UjmAuizqSNign2XgJqbbaXGslkloIyQyM41erbeDsqIgeAYn/MvOFAcK9zQGqxNRd06yJDPIaBE6TtEgunqdzT7ILyNZ1udOPEE5NTQWFbx1pq1tBrJlIVTIcFiyu4dWQL71En+7GfiXDbbLBF6In3h27FUmZhzk=
+	t=1790784708; cv=none; b=pcjaCoFJMWga58vuRxHmZtHdeQhxkZc/bQAyauPrvOxJMd8R0BPQUwdK/pdzekowz9i9bArkiUfQHXj3iXeckR2VnhbfgpmLpPDaauIYOGz84L0fuxGAnNuZyYWUEgyqh61azamEeK3pNcjFfKU/+c76HnHcrdzBgf6LSDFxYUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784702; c=relaxed/simple;
-	bh=ga6gCAWbr1n0fu+a4HlOJHW0czNHSdRz44LqtGIMZKw=;
+	s=arc-20240116; t=1790784708; c=relaxed/simple;
+	bh=HiXwrDphb7O7j2tz1ehO0svrT5zDi7CJ2FCXjZzRhIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTnjhDAA+XRwwuW7tHQvTBF/V3gLHBvhwq/lITgNzPr2VYSVXOe2gYiKv0b++1hngCaB1KsKwuBDZU7gkCFJbh7qPqrsZdciWFDIcy1ki5NnBbQODETSZKcPPDPgImXxlt62uvLBpVMzOL7eS4Vs+If2ljVkaWWyKfqr0b58wEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zk/kkx6q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pGvHrVufEKEmj/U1e3nb8O3rCEnLc905inU04Eiu6y9DW51KxhKQvhUes6A5q23Q//Sav2EuRcx3/QG9SnmUJ9/T1s9OZ40kYOdZ9QvO9kTmFYgYGEE/cUjxmTdBnr6vNAc5eLkQExbqGqRwERnxWUtd7tMoK5CuUcVo8HQ2or4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6hsYDDc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zk/kkx6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39B31F0089A;
-	Wed, 30 Sep 2026 16:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6hsYDDc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5CD1F00893;
+	Wed, 30 Sep 2026 16:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784697;
-	bh=z3EP9uhYT6MeEn5icI2i/ZzDcZrfNr+ftQ+aD8BlrCc=;
+	s=korg; t=1790784703;
+	bh=N4zl8sYEhKOGbzTCYX7TaryFfGz/+04VLlcTZbHe5+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zk/kkx6qoVk7+xJHLQRBpY40Drla63mXskHhZwZi/ysWGw7XtMr0IqvCKwJEJQmuY
-	 bjL0RDjzEq5MaqzQarehF0jL22mbgubp5WyqpeihDDlMn24A7S6dbwufh52sXd0lzz
-	 /MyMjSc+CKOQrwaxTihlaTjvP7Ubqd9GedswSVr8=
+	b=K6hsYDDcP397xie9UJTVN8SUAIYNslxzrawCRlvp7f3+OlQeFQZcnNjx0pSn0ytD0
+	 59BrTRetcCA/B8xTuNNtFPKoRzp9bgcCH/wXB/rTCvu3nASl09T53ebjM3qmi2o4Ue
+	 j87v8ObgqxlrxC4k+CqyIYmB8JRKsVVXxGOj/IbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/982] ksmbd: fix credit charge calculation for SMB2 QUERY_INFO
-Date: Wed, 30 Sep 2026 17:16:21 +0200
-Message-ID: <20260930152422.057165478@linuxfoundation.org>
+Subject: [PATCH 6.1 247/982] wifi: ralink: RT2X00: init EEPROM properly
+Date: Wed, 30 Sep 2026 17:16:23 +0200
+Message-ID: <20260930152422.100172132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,61 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 284dc80ff529a0b454f11b6c2fea0d5daf6f315f ]
+[ Upstream commit 0a2581cbae9e442835f68d22044157db61cdf54d ]
 
-smb2_validate_credit_charge() computes the credit charge a request is
-allowed to consume from the payload size:
+I have an hostapd setup with a
+01:00.0 Network controller: Ralink corp. RT2790 Wireless 802.11n 1T/2R PCIe
 
-  CreditCharge = (max(SendPayloadSize, ResponsePayloadSize) - 1)/65536 + 1
+The setup work fine on 6.18.26-gentoo
+It breaks on 6.18.33-gentoo (and still broken on 6.18.37)
 
-For SMB2 QUERY_INFO, the server must validate CreditCharge based on the
-*maximum* of InputBufferLength and OutputBufferLength. ksmbd instead
-summed the two lengths, which overestimates the required charge.
+I found an hint in dmesg:
+On 6.18.26-gentoo I see:
+May 31 15:48:45 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0003 detected
+On 6.18.33-gentoo I see:
+May 31 15:22:57 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0006 detected
 
-As a result a single-credit QUERY_INFO whose InputBufferLength and
-OutputBufferLength each fit in 64KB but whose sum exceeds 64KB is
-rejected with STATUS_INVALID_PARAMETER, even though it is a valid
-request. IOCTL already uses max() of the request and response sizes;
-make QUERY_INFO consistent by feeding InputBufferLength as the request
-length and OutputBufferLength as the expected response length so that
-smb2_validate_credit_charge() takes their maximum.
+The RF chipset seems badly detected.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The problem was the EEPROM which was badly initialized.
+Probably the origin was in some PCI change but unfortunately I couldn't play
+to bisect/reboot often the board with this card to do it.
+
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260703134932.3786771-1-clabbe@baylibre.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2400pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2500pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2800pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt61pci.c   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index 8b56770f36ed8..5b6fb0ba83a54 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -262,8 +262,12 @@ static int smb2_calc_size(void *buf, unsigned int *len)
- 
- static inline int smb2_query_info_req_len(struct smb2_query_info_req *h)
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
+index ddfc16de1b26f..4eb12dbbdd8b0 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
+@@ -1429,7 +1429,7 @@ static irqreturn_t rt2400pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt2400pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
  {
--	return le32_to_cpu(h->InputBufferLength) +
--		le32_to_cpu(h->OutputBufferLength);
-+	return le32_to_cpu(h->InputBufferLength);
-+}
-+
-+static inline int smb2_query_info_resp_len(struct smb2_query_info_req *h)
-+{
-+	return le32_to_cpu(h->OutputBufferLength);
- }
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
+index cd6371e25062b..7efb96f1cc797 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
+@@ -1555,7 +1555,7 @@ static irqreturn_t rt2500pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt2500pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
+index 1fde0e767ce39..631e27d73729f 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
+@@ -108,7 +108,7 @@ static void rt2800pci_eepromregister_write(struct eeprom_93cx6 *eeprom)
  
- static inline int smb2_set_info_req_len(struct smb2_set_info_req *h)
-@@ -310,6 +314,7 @@ static int smb2_validate_credit_charge(struct ksmbd_work *work,
- 	switch (hdr->Command) {
- 	case SMB2_QUERY_INFO:
- 		req_len = smb2_query_info_req_len(__hdr);
-+		expect_resp_len = smb2_query_info_resp_len(__hdr);
- 		break;
- 	case SMB2_SET_INFO:
- 		req_len = smb2_set_info_req_len(__hdr);
+ static int rt2800pci_read_eeprom_pci(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 
+ 	reg = rt2x00mmio_register_read(rt2x00dev, E2PROM_CSR);
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt61pci.c b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
+index 81db7f57c7e42..9c713117b3f32 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt61pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
+@@ -2298,7 +2298,7 @@ static irqreturn_t rt61pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt61pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
 -- 
 2.53.0
 
