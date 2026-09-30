@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE7B4C10DD;
-	Wed, 30 Sep 2026 16:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B84F93B9;
+	Wed, 30 Sep 2026 16:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784089; cv=none; b=UZ7L7etV8j66wVIQQMor99ESOYcfX/ABJl7mtpUfnKfTRc+q4Ll/utd0hBZ2V8V/hjsx6PiGsRi+zo6YZuDYXxl7rsfWFj2hAARiCIIiZGulGZ/uRYGOIYQVptjxsaPsaje6YmfNOQA2tNWoHlzUFQ70oWL7P+e5x8g00zduJtk=
+	t=1790784089; cv=none; b=bqO+V31LM7NgxMsrHHM2LjhchKN0/9JCIA+FVFhuT9WbD7YsiQdtntDjeg9YRrKKIJKcquvawBdEghybsXh4g5SFlVuFTgdbly6L9zFFqo5Qw4OV70k7+zqN8TEEurzjH698fAOPD/lJQWk7xGkct+fHHdXUZUtSWAL3xYQqboc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784089; c=relaxed/simple;
-	bh=YdchVZ6iKfTHANI7YIGSTYhjkRkWKwij3IspCzhd3xg=;
+	bh=khQSi/WnZrQuOY4RiDi0yq03J4ursUVgrqOH9ZtPzXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y8fc6hzGNh6BV3BNoKfkOIs1dJhRWhssC3SrTW3zSM0Gi0eI76kgCxz6b7hndNMGNbi4rgt/MKBH1uC/FdwhRgxIVk5tcYAl4LGrHERpSoIQouSq8F+cIYeoJrASQ6dEpE6EvPISG1vLYEnr0dJLt3d8JiHoahuYsVLXsbVl5N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y31Kletl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lkUVb323OGbHz6i1pXT1xuY8asRBaMzibABhcjZSxEtZnxkzoigQaRxU+XUYltSrntqEWNZozpbpUHxcNU/vHxzLbtpr8qquZsCsuomam0xsQ9H8V0MAK4pWzsCsjbMd2XS80QgTOAW4NWyusVX/9+vzUDJpAFDvsoVxqCVVC+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpJswYpc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y31Kletl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6501F00898;
-	Wed, 30 Sep 2026 16:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpJswYpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B131F000FF;
+	Wed, 30 Sep 2026 16:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784082;
-	bh=NBUBoCHX3yN6N/FOUwKtj/vkHhoAxuy2gXiB95OLlrI=;
+	s=korg; t=1790784080;
+	bh=dmIfKUMNiLjwtc/PWLtxI1JdL9RNlvBF9AANkGdZUMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y31Kletlc2ZqrYmqwJRab7O1qvbwQWvWvllMJ+PiOtbJx04O918eXN7nq7dNHiavn
-	 KFs3tUkdsMn6q22l+d+8fiDk93HZHjs91Gb8Yv/0YMsCpDM/Q0BT3oIvXnsuxY4PCv
-	 y2KUO/Uj7uwNw83NG/cScKScLLTYjK4jfd+1iIbk=
+	b=tpJswYpcLm9+9owd2Rm3cOvQ3DpBS2yFqXcttQdH9Upd3Arrpivc14yaoDSvWoKoO
+	 JNJcE9JBSXAmOd70KPbqONslnY13QVVHZLrsfhEErwJJTmPPxZuF0/+P46WrazkRTZ
+	 /bhH09hHm/d4jWKu1qxMMSlQkrrSllxYYSVxMrc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <joao.goncalves@toradex.com>
-Subject: [PATCH 6.1 031/982] drm/bridge: tc358768: Set pre_enable_prev_first for reverse order
-Date: Wed, 30 Sep 2026 17:12:47 +0200
-Message-ID: <20260930152417.464182321@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 030/982] clk: renesas: cpg-mssr: Add number of clock cells check
+Date: Wed, 30 Sep 2026 17:12:46 +0200
+Message-ID: <20260930152417.443464723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -47,45 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Parth Pancholi <parth.pancholi@toradex.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 6b2bb5438bcfd7bad868665cd2aed1caf9ba3f2b ]
+[ Upstream commit 7f0c422c7fbfd9294ff9321ada0c63561e5c6ea0 ]
 
-Enable the pre_enable_prev_first flag on the tc358768 bridge to reverse
-the pre-enable order, calling bridge pre_enable before panel prepare.
-This ensures the bridge is ready before sending panel init commands in
-the case of panels sending init commands in panel prepare function.
+The number of clock cells is not validated in the clock provider's
+clk_src_get() callback.  Add the missing check.
 
-Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
-Tested-by: João Paulo Gonçalves <joao.goncalves@toradex.com> # Toradex Verdin AM62
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260311-tc358768-v2-2-e75a99131bd5@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patch.msgid.link/46e010659ffdffd5e3541369f3b65d43ebe236ec.1777562043.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index ed8094b2a7ff4..acbbf1e79fb78 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -449,6 +449,8 @@ static int tc358768_dsi_host_attach(struct mipi_dsi_host *host,
- 						    DRM_MODE_CONNECTOR_DSI);
- 		if (IS_ERR(bridge))
- 			return PTR_ERR(bridge);
-+
-+		bridge->pre_enable_prev_first = true;
- 	}
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index d6137379510c1..77365962a15a9 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -285,6 +285,9 @@ struct clk *cpg_mssr_clk_src_twocell_get(struct of_phandle_args *clkspec,
+ 	struct clk *clk;
+ 	int range_check;
  
- 	priv->output.dev = dev;
++	if (clkspec->args_count != 2)
++		return ERR_PTR(-EINVAL);
++
+ 	switch (clkspec->args[0]) {
+ 	case CPG_CORE:
+ 		type = "core";
 -- 
 2.53.0
 
