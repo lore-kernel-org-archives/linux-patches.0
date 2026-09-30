@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5341236CDE0;
-	Wed, 30 Sep 2026 16:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F024CDDC5;
+	Wed, 30 Sep 2026 16:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784174; cv=none; b=j20AjHach6Nal94Rb2kMqv3NJ/sUqUpH1w0mM61qy4YdCY8BlHeHEl8w6zKeo02OiweJb+4t+psaSjF1HPV+5AnO00K3bjgd7KVCePZG3t1X37uNyYubaBV/7GYwEC37Bm0hdRiiEDQrihshIvAH9gAG/cMCxtwEDqb1FHFVJko=
+	t=1790784176; cv=none; b=mrbM6aRlbWJy0U/bdP44I/OB5Dc0iYxU+2bfuPgcuG8/2PPb9yczrs32kqCmP06FOabAsNy7k/TpNClW2nHaLg6c0qP+H/bnKbFgT7hxboZYS7awzJ7zEbLzQMzrFrqoodjb5KIddd+mwwmjTmkZrOVbtszujRPrGrOE//N14U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784174; c=relaxed/simple;
-	bh=htHFbLoYRhg57oHJ7BoONjVCBB1GBCsV8vMjSufu6po=;
+	s=arc-20240116; t=1790784176; c=relaxed/simple;
+	bh=X2vINqQ8XIycAB0cri+fBWr7A2JnZ4Eus21FUGGUrCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHmcI47MWW3ooJ9WlzvETy/VOK0i1Q5gcHu+CauyOMrHy3tu8LNsaOUA0gT5mEt3HaFy8sPUa+lI6X6Mt6mQkbWJ6L4n021x0941ptmqTUJSZF/gxYUZg0gkEN6j/DaXcMNL75jVG7Q7c+e2qz5g2VZqVcWkUGScQTrDU0Z2Zx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWOeLxFw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VXSEd9u5mQjH4G7biM8IMvmNn2vu3CT/9sE+ecWAkoG0GHgo8emJOG3ZNduHc7n+q8OPghTwl6PlXSDsjUyyszTK/cr9x5DYbA+6/miZbM+P2buZKjIU5d/ed6LmmOO32gdowH0Rp2l5OX0kvHdV4xitVNN40VCG+xeJjYSJIg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOM+OJGA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWOeLxFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED38C1F000FF;
-	Wed, 30 Sep 2026 16:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOM+OJGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8A11F00898;
+	Wed, 30 Sep 2026 16:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784170;
-	bh=9hAdxYj0SDi3N7clXYLe/mNkzJ9YK0mcK/ND9L7oexY=;
+	s=korg; t=1790784173;
+	bh=bQxp+OfRhTbNwykj3Q3OaNWiZt4Z1W9+LHoh36BuJwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWOeLxFwCkxmcRcekI7TmdUSfFi5PiWVEcS4Igy03gAojpgr18JGt4Kqlth57yITA
-	 uWDvIMUIvlQeyEebcdxbPjoVwdL+/DJxPm0MGWuuOUGO0MPTvz9tf8Yd5VPW4DQ3Do
-	 IUEYKnMLUDtnY5wW01DS9PSIKKB+/D6YfeQgevCQ=
+	b=VOM+OJGA+4gBcGe/h79la+m+wpjYk/VbRo6ZISHWhiIri79OKcRLeOWgCm4dSblSH
+	 L4FtI7376eiMMU4ykqg/Wi60rsveF3KGxYZuGv1qFwe4bXuy/PDsYpjl5pLr7IxtyR
+	 bV7lKa141nkwOuGZ8yQUDeAkXSBa9SDa3S72s/no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/982] wifi: mac80211: dont call ieee80211_handle_reconfig_failure when not needed
-Date: Wed, 30 Sep 2026 17:13:15 +0200
-Message-ID: <20260930152418.063986884@linuxfoundation.org>
+Subject: [PATCH 6.1 060/982] bitfield: wire __bf_shf to __builtin_ctzll
+Date: Wed, 30 Sep 2026 17:13:16 +0200
+Message-ID: <20260930152418.085116671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,55 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Yury Norov <ynorov@nvidia.com>
 
-[ Upstream commit 7a8a3ff2815501f78f494808355ddf37e08647d0 ]
+[ Upstream commit 09472f591aa0b72c2dd6c693f48b2d6fea66c7ba ]
 
-In case reconfiguration of NAN fails, we call
-ieee80211_handle_reconfig_failure, that marks all interfaces as not in
-the driver.
-Then, at the error path of the reconfig, cfg80211_shutdown_all_interfaces
-is called to destroy all the interfaces.
+__bf_shf() is currently based on built-in ffsll. It's more
+straightforward to wire it to __builtin_ctzll, which makes it a pure
+rename.
 
-If we have any other interface but the NAN one, for example a BSS
-station, then when its state (links, stations) will be removed, we
-won't tell the driver about this, because we will think that the
-interfaces are not in the driver, and then drivers might remain with
-dangling pointers to objects like stations and links (at least for
-iwlwifi this is the case).
+Worth to notice that __builtin_ffsll() is buggy on GCC before 14.1:
 
-ieee80211_handle_reconfig_failure is meant to be called after we cleaned
-up the state in the driver, there is no reason to call it for NAN
-reconfiguration failure.
+  int main() {
+      sizeof(struct {
+          int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+      });
+  }
 
-Fix the code to just warn in such a case, as we do in other error paths
-in reconfig where it is too complicated to rewind.
+  test.c: In function 'main':
+  test.c:3:21: error: bit-field 't' width not an integer constant
+      3 |                 int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+        |                     ^
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260513182548.6a25f3a0a6ec.I83d1f2a7eed20200a78a62757c6b193e3bab892b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699
+Reported-by: Matt Coster <matt.coster@imgtec.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-lkp@intel.com/
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/bitfield.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 116a3e70582be..73116ed609e1f 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2617,11 +2617,7 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 			}
- 			break;
- 		case NL80211_IFTYPE_NAN:
--			res = ieee80211_reconfig_nan(sdata);
--			if (res < 0) {
--				ieee80211_handle_reconfig_failure(local);
--				return res;
--			}
-+			WARN_ON(ieee80211_reconfig_nan(sdata));
- 			break;
- 		case NL80211_IFTYPE_AP_VLAN:
- 		case NL80211_IFTYPE_MONITOR:
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 35622ff2c9951..65646d4917658 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -43,7 +43,7 @@
+  *  reg |= FIELD_PREP(REG_FIELD_C, c);
+  */
+ 
+-#define __bf_shf(x) (__builtin_ffsll(x) - 1)
++#define __bf_shf __builtin_ctzll
+ 
+ #define __scalar_type_to_unsigned_cases(type)				\
+ 		unsigned type:	(unsigned type)0,			\
 -- 
 2.53.0
 
