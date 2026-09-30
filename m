@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F0437CD22;
-	Wed, 30 Sep 2026 15:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D7937EFFE;
+	Wed, 30 Sep 2026 15:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783126; cv=none; b=Gox0piECX4yQxdknC/R3d2K0tUQJSqsOo8wM8QEHEsAJZGXRvwCyIQFbrF4oSs97DyK0TLFIC+eTGWipAWb2jyotBiJZam8D3d4e1v1CwEMNwsAH2W1kzH2YSHWW/ZsqaI3se5IKa9ce7D1xxLNHeDqafGNzr2MPtwP+1u9Xb6A=
+	t=1790783132; cv=none; b=d95Mx/D7NCJtnfV4bfSI9UI6piIm/CAKAkh0Q6E7K8saAnjwKsVjwwXoXZFBaAjRMTyR3diN+kqKNn6+MKoFGmXj5syJ5r6gMtjfTp/KhYUaqpIkw79s5kqJ4wbDkG/4heABCTsYhi/ZMZHrL+6qqJVYwlNl/k+tOlmEPlqiOyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783126; c=relaxed/simple;
-	bh=V+srchfj5X0suiaWZXTRX/juF1twut9pAVg5j7MiXv0=;
+	s=arc-20240116; t=1790783132; c=relaxed/simple;
+	bh=PN6U1qeoXJTwu47DcOcxHgIulM70GgW2f8CTH+Mo7BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSzHMoJfG7pSXP983B9dRBRZACm6JmG+Fa3Ylm9/085lRNAsb8PmgFrSdSLrQaZPykjLFQo6GtTheVS1tHeAnzVwfZlbLksqZ8ql+pBiYM6M3AbomZiOy/t5DQr0LImLCkAYm3DX2ZrndwYdjp7CdmFLxL0cH9KmAHn6BFvDX2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTQwMSv4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aCyeY5NBFOagdprEY/w2vZnAoqSIl7l0yHCmkkdUsBIkIfgd1HDQbliDl58uMAxF3t5Ml/38r2loJmQ8jQFI7F8n/5cjZiCXylx0gHAYgUGxVWv6y5ca/RoJJxsVz3aS0LTetBibE0BA3i2iEDusjM4ez1Gl0N2ACab5MwwUBDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mE8Prg6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTQwMSv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85ED1F000FF;
-	Wed, 30 Sep 2026 15:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mE8Prg6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A5F1F00899;
+	Wed, 30 Sep 2026 15:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783120;
-	bh=xUIFsZLyZQNguusbWXZylb/YpFhQgKNcZjUNoPAtV4U=;
+	s=korg; t=1790783126;
+	bh=2GXb31maeY8z/LDJ8jgxwu3wDrFAv1vrO+y1R+h1WLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTQwMSv4YXXx0K41G1A0lnJFz7gL5/1MROPeqBkOphQK3xQtDj2zQmo98eY2fbRKl
-	 oYAgwMC4Hv7jyMtimND1RioZ8FWvmpQaoMD5irXrvVbRKaoBrQZQELc54ARvP9gEhH
-	 yAJ7lWIuxzFZOw6VGZ0a+O5k1BN7GEjVEPTQ4Xpg=
+	b=mE8Prg6aY9mrhILwIXOom4+QYp0mLyZW+MP17xdEkF9WQe09C2H9aceRXdgoXHF0W
+	 EyoPpceNf4dQ50H1dfpr94GQR1GoY79XSANLJCL3iDIUagN+34j78eyX40/pay31dD
+	 hqYwSlj8xduAS52adnpX5AFc1n4jjXHXUjQYsUNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@h-partners.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
-Subject: [PATCH 5.10 286/595] macvlan: inherit needed_headroom and needed_tailroom from lowerdev
-Date: Wed, 30 Sep 2026 17:22:59 +0200
-Message-ID: <20260930152353.851248802@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 288/595] ipv6: fix fib6 walker UAF on seq stop
+Date: Wed, 30 Sep 2026 17:23:01 +0200
+Message-ID: <20260930152353.891837007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,65 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit cef51860becd9700217c81732ca1eb1ea6ed6fe1 ]
+commit 19b4ed644d68098cc62ab612727f40d30f43476c upstream.
 
-macvlan devices inherit hard_header_len from lowerdev during macvlan_init(),
-but leave needed_headroom and needed_tailroom set to 0.
+ipv6_route_iter_active() treats a walker in FWS_U at the table root as
+already unlinked. fib6_del_route() can move a still-linked walker into
+that same state when the current leaf is the last route at the root,
+so ipv6_route_native_seq_stop() skips fib6_walker_unlink(). The seq
+private object can then be freed while it remains on
+net->ipv6.fib6_walkers. A later route deletion walks the dangling list
+and uses the freed walker.
 
-When the underlying lowerdev requires extra headroom or tailroom for
-headers/trailers (e.g. macsec, ipsec, wireguard, tunnels, or veth with rx
-headroom), upper layers calculating packet headroom and tailroom fail to
-reserve sufficient space.
+Use the list head as membership state and reinitialize it when
+unlinking. Keep the existing w->node check so a never-started iterator
+with a zeroed private object is not treated as linked.
 
-This can result in reallocation overhead, skb headroom underflows, or KASAN
-slab-use-after-free crashes when dev_hard_header() / macvlan_hard_header()
-prepends header data or when lower devices append tailroom.
+The same stop helper is used by /proc/net/ipv6_route and by the BPF
+ipv6_route iterator. The BPF show path only widens the race.
 
-Fix this by:
-1. Inheriting needed_headroom and needed_tailroom from lowerdev in macvlan_init().
-2. Propagating needed_headroom and needed_tailroom updates to attached macvlans
-   in macvlan_device_event() when receiving NETDEV_FEAT_CHANGE events.
-
-Fixes: b863ceb7ddce ("[NET]: Add macvlan driver")
-Reported-by: Tangxin Xie <xietangxin@h-partners.com>
-Closes: https://lore.kernel.org/netdev/CANn89i+1EW-sFNK8xoq98gMbPCeLS7e=+rs9gHfLg5Wj+4x0sw@mail.gmail.com/T/#m16adf0ff972cbfd8066c3a8e656e75eaeb12d021
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260806141938.287660-1-edumazet@google.com
+Fixes: 8d2ca1d7b5c3 ("ipv6: avoid high order memory allocations for /proc/net/ipv6_route")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/89699735763f6c297584d7c2ff106239cc1e8ce0.1788837093.git.zihanx@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macvlan.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/ip6_fib.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 95ae47a7a69dd..f6ad599252d32 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -910,6 +910,8 @@ static int macvlan_init(struct net_device *dev)
- 	dev->gso_max_size	= lowerdev->gso_max_size;
- 	dev->gso_max_segs	= lowerdev->gso_max_segs;
- 	dev->hard_header_len	= lowerdev->hard_header_len;
-+	dev->needed_headroom	= lowerdev->needed_headroom;
-+	dev->needed_tailroom	= lowerdev->needed_tailroom;
- 	macvlan_set_lockdep_class(dev);
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -83,7 +83,7 @@ static void fib6_walker_link(struct net
+ static void fib6_walker_unlink(struct net *net, struct fib6_walker *w)
+ {
+ 	write_lock_bh(&net->ipv6.fib6_walker_lock);
+-	list_del(&w->lh);
++	list_del_init(&w->lh);
+ 	write_unlock_bh(&net->ipv6.fib6_walker_lock);
+ }
  
- 	vlan->pcpu_stats = netdev_alloc_pcpu_stats(struct vlan_pcpu_stats);
-@@ -1731,6 +1733,8 @@ static int macvlan_device_event(struct notifier_block *unused,
- 		list_for_each_entry(vlan, &port->vlans, list) {
- 			vlan->dev->gso_max_size = dev->gso_max_size;
- 			vlan->dev->gso_max_segs = dev->gso_max_segs;
-+			vlan->dev->needed_headroom = dev->needed_headroom;
-+			vlan->dev->needed_tailroom = dev->needed_tailroom;
- 			netdev_update_features(vlan->dev);
- 		}
- 		break;
--- 
-2.53.0
-
+@@ -2637,7 +2637,7 @@ static void *ipv6_route_seq_start(struct
+ static bool ipv6_route_iter_active(struct ipv6_route_iter *iter)
+ {
+ 	struct fib6_walker *w = &iter->w;
+-	return w->node && !(w->state == FWS_U && w->node == w->root);
++	return w->node && !list_empty(&w->lh);
+ }
+ 
+ static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
 
 
