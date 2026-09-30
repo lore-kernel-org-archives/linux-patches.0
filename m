@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797D351EE15;
-	Wed, 30 Sep 2026 18:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3804851FCCC;
+	Wed, 30 Sep 2026 18:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791427; cv=none; b=cOnTF6miiQy5WHxy8wHWhHi6eHyZW//i6x1fIoV5S8wc6WlLe0hKLiv4rGzB8SDqEBKgtOzDJiYSngVjqbsliPjT9ABv7edlD3e8vsfXkcNqSCahjKs1h8HqOQn2lw7/C9PK2fnHqTOzXUajnUjDtT1ijVB982SSwSMSQfkhJ7U=
+	t=1790791430; cv=none; b=XWRXODoJw6eHdKT5VVIDwWM4gZv0xMqosigMiJJf5OuLkIXzr9bRVX8g4HCX/K4OVRYawtprL8PqWoxmGP4j9yw4BS3X/6BEkwTI1VF9fK38FW6GvCo5How1GcGlrWgLkGm87y9ZoTRCjhhHys5tuwe+G9QMxxT56pc4imHAu+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791427; c=relaxed/simple;
-	bh=tkjq+Hpjrm9gnmOrLtRERenJBsBv2SmQQbhA41eLKBU=;
+	s=arc-20240116; t=1790791430; c=relaxed/simple;
+	bh=R3o0ZDXr1J7D0d7rSwJU5cSfMLlz5OfxzL1dIlqvnZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oULFSGT/8xVKcOqvjMBJEUOgpfKE7K0r9khXO6LDft4ztLKh/WzP8/cFMgmflDft+Gwj2BArmuQTC0r7Bet8RvTraOdtlKX8HXgQ6nm8NVXBhvzOGQmpNBbhuh2Wulj2qZ/BBVaRv9eCeGPj8K+AAB1TLQRq+dKCvokytgncDMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOaqB+sI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SmAVqqpTI5r85FYWMZVi8P6Jd3RMHBHFkYkUdOHKPokEO2Y3hHNe6PbtHJ+L1kf/2GUcnFoEqfh6BnjzDqNP5txTW8C/kdPwWlBFPuSmOLau40obWLibsMEtKWa4Sv92O7QglXGx1WsEwEDGMkIYYznOYoONyfzKmw/nCplWdnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wf5Gmbsv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOaqB+sI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D461F000FF;
-	Wed, 30 Sep 2026 18:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wf5Gmbsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515041F000FF;
+	Wed, 30 Sep 2026 18:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791426;
-	bh=Hvptnxy/WOMKVjyOTBqSiVEpT4pyjSMmE+GFspeTYZ4=;
+	s=korg; t=1790791428;
+	bh=DgF1CgYpiCSOqoue/ABrHf0C0N0Cj28EUbGw0GG8gjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aOaqB+sIy3YVgNlv8vK7BpU72CkM8BUimbTZdyFqQy63La2LkMSlR6cqWq6EoY9zl
-	 RWoo4ugZuEfRSsItz9VvXhWSgxcvMuNh4uF4bNzFqs99srGxGHnlQLQMlV6IoKPlyq
-	 B55L2ITW42y4s5vdzRFYDxBOLK9MSrUackyoQMy0=
+	b=Wf5Gmbsv+BJmahsJbCqm7c5S8a8sGKOCZ5e9e5GppLINOY1LJ5KLP6twN0i57gyk7
+	 G5X/l4XwBSRSYu+ceuOESBkberkItgyyvD33R2WTqIidFIn0RqkapNgjwS1DtB5wMk
+	 LOsmM1le6ldmPvfCRF2pKAueViZE8TLnEhuO7k2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tamas Petz <tamas.petz@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/752] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
-Date: Wed, 30 Sep 2026 17:22:48 +0200
-Message-ID: <20260930152404.737944729@linuxfoundation.org>
+Subject: [PATCH 5.15 272/752] perf/core: Skip empty AUX records with only format flags
+Date: Wed, 30 Sep 2026 17:22:22 +0200
+Message-ID: <20260930152404.171692842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,46 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
+[ Upstream commit 8a7f5b5e860b5c113ca99acd5b1e9074f5c5af3c ]
 
-The core software reset issued in stmmac_init_dma_engine() during
-ndo_open() callback clears the MTL RX packet parser registers, but
-stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
-After an ifdown/ifup cycle the hardware therefore runs with the default
-all-pass table while priv->tc_entries still reports the filters as
-installed. Re-apply the RX packet parser table from priv->tc_entries in
-stmmac_hw_setup(), right after the software reset, so the filters are
-restored when the interface is brought up again.
+perf_aux_output_end() emits a PERF_RECORD_AUX when the recorded size is
+nonzero or when any flag other than PERF_AUX_FLAG_OVERWRITE is set.
 
-Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+PMU format flags describe how an AUX payload is encoded. TRBE driver
+sets PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW for raw trace buffers, causing
+an AUX record to be emitted even when no trace data.
+
+This is noticeable when tracing a task with strace. Ptrace stops
+repeatedly end empty AUX transactions, producing many zero-sized
+PERF_RECORD_AUX records. For example:
+
+  perf record -e cs_etm//u -m,128M -- strace ls
+
+  perf script -D 2>&1 |
+     awk '/PERF_RECORD_AUX offset/ {
+        for (i = 1; i <= NF; i++)
+                if ($i == "size:" && $(i + 1) == "0")
+                        count++
+     }
+     END { print count }'
+  165
+
+This recording contains 165 zero-sized AUX records which provide no
+useful information to userspace.
+
+Ignore PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK, together with
+PERF_AUX_FLAG_OVERWRITE, when deciding whether an empty AUX record is
+useful. Zero-sized records carrying TRUNCATED, PARTIAL or COLLISION
+are still emitted.
+
+Fixes: 547b60988e63 ("perf: aux: Add flags for the buffer format")
+Reported-by: Tamas Petz <tamas.petz@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260825-perf_core_fix_zero_aux_records-v1-1-23b95e8d5df3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/events/ring_buffer.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index c9dda6cc2fa7a..496889d498832 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3317,6 +3317,14 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
- 	/* Initialize MTL*/
- 	stmmac_mtl_configuration(priv);
- 
-+	/* Apply the RX packet parser table */
-+	if (priv->tc_entries) {
-+		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
-+					priv->tc_entries_max);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Initialize Safety Features */
- 	stmmac_safety_feat_configuration(priv);
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 3e1655374c2ed..a6f0f8e175ec8 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -501,7 +501,10 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
+ 	/*
+ 	 * Only send RECORD_AUX if we have something useful to communicate
+ 	 *
+-	 * Note: the OVERWRITE records by themselves are not considered
++	 * PMU_FORMAT bits identify the PMU type rather than an AUX event
++	 * has occurred, so ignore them for zero-sized records.
++	 *
++	 * The OVERWRITE records by themselves are not considered
+ 	 * useful, as they don't communicate any *new* information,
+ 	 * aside from the short-lived offset, that becomes history at
+ 	 * the next event sched-in and therefore isn't useful.
+@@ -510,7 +513,9 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
+ 	 * offset. So, from now on we don't output AUX records that
+ 	 * have *only* OVERWRITE flag set.
+ 	 */
+-	if (size || (handle->aux_flags & ~(u64)PERF_AUX_FLAG_OVERWRITE))
++	if (size ||
++	    (handle->aux_flags & ~(u64)(PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK |
++					PERF_AUX_FLAG_OVERWRITE)))
+ 		perf_event_aux_event(handle->event, aux_head, size,
+ 				     handle->aux_flags);
  
 -- 
 2.53.0
