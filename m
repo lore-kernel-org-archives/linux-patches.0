@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB22036CDE0;
-	Wed, 30 Sep 2026 16:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55282501285;
+	Wed, 30 Sep 2026 16:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786803; cv=none; b=ROx+ePS/CHMoFtHuX/tnjgpUXATm4NxsR2O7y1cYcEBSAaw6XmC6LKDFtkkiMuaaMD6dR6wHoydU8ugo2OQ4k0hJI5NF3IEmtFU5h+lMbaCgpjnRwBqjt3Nv4XXV7u0POto7l9OVIaUn4pkbaOCu7O/u+89zmD63/9utHheyPvk=
+	t=1790786806; cv=none; b=Dz7bAECxL8oZGMtjlRPt1Av/EvuEEVUj8GvpubuFj1HefsMCN/XEcQ4YLNIKqFOjgU+g6D6SlGQP07IEQjQbcMfinqV5zEhtMjp3MXz0XrXcuEcSEJ1WdeWMd5NEy4zUvwRSfsD6VXoO4Cub08+fpnbzQK6PYrOtjjhoodPbKnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786803; c=relaxed/simple;
-	bh=xH3ZsjauZWZ+Wvswy1pf0eqrb9Uk+X2W+lJ+q1rTDc4=;
+	s=arc-20240116; t=1790786806; c=relaxed/simple;
+	bh=xOMQTlniJZv5HXTvWyzetAYhfwVQT15CUsqxuBbG4Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KMLQPKhPP3js77LpR0jeVMK0O/Ky593KPZxIEIMslGAPitrDn5IrIyXHN7IElGh3HHzY6tvkOHY8S+eNsnvrzIIaw95+LeJeaUltvKMTlivGsUvulL0gdzSr8hP/qe0x25CrUTw2xH1ms7J4xs1jf3U8xahi2kZDpbOSn1aEL0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsOXlYM5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WE2D+j1Ns3nPtkmNKjaph1Ue44tJGYyoRDJt5O1JNVWb2OSl+bnFpuxRwk3LH+b7iTkV244pER3k10KCoHO8mNOUHby2SLq/L07b1WkHQnLJU72GDI9G7IakekxakOZ/XLQf38/tCaol0LwHJqGZjvuGiYtW4TjPbmeXc1LUtjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IePaHAMm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsOXlYM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ECA1F000FF;
-	Wed, 30 Sep 2026 16:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IePaHAMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DF11F000FF;
+	Wed, 30 Sep 2026 16:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786798;
-	bh=2Sc1TWQAYDIur0ikwDWYNE9rC15XO1RSHXTDHp8tAA4=;
+	s=korg; t=1790786804;
+	bh=pzsqSP6cFfsKmChIfqE/x6I2f+UsLgq3UggmDomTpVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EsOXlYM5qawCK2S+3gvGca/uVdgjFl+KGLXi3uway/FBYvBekzTxPYgbs09swrUuL
-	 numUu9MdTf9NOFU4mU4HekRmqHV1C5m9JMJgEqqZsw5uyOhoA4EAacEZoF1/kIhhab
-	 vSkR/BLQMqPlJsBt5U80XrR17wPW4cY5xXRnCwSI=
+	b=IePaHAMmhe88PodPArModb/IXxIIeTp8FHr0E3Pmx4b/6fN9ngm12ssNOUM6hEb5F
+	 fmocrRjuDnrHwa3rR2OK+T/YUON2DgFYmU5zSHmg9J2LiZlnUna4Fz76ibLv2x5/nw
+	 RsMY8vWPqvuHvuSBXXguKmt5ZB3jGi1qeEg3+vcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Takashi Iwai <tiwai@suse.de>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 6.1 982/982] ALSA: hda: Fix missing pointer check in hda_component_manager_init function
-Date: Wed, 30 Sep 2026 17:28:38 +0200
-Message-ID: <20260930152437.837407121@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 001/457] drm/amd/display: Atomize IRQ register read/modify/write ops
+Date: Wed, 30 Sep 2026 17:21:46 +0200
+Message-ID: <20260930152346.060582277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
-References: <20260930152416.775402466@linuxfoundation.org>
+In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
+References: <20260930152346.024115587@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,62 +48,400 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 1cf11d80db5df805b538c942269e05a65bcaf5bc upstream.
+[ Upstream commit 63e19ef3ddab806c472748c825f4dc88dcd994e8 ]
 
-The __component_match_add function may assign the 'matchptr' pointer
-the value ERR_PTR(-ENOMEM), which will subsequently be dereferenced.
+[Why]
 
-The call stack leading to the error looks like this:
+The OTG_GLOBAL_SYNC_STATUS register controls various HW IRQ sources for
+the output timing generator (OTG). VUPDATE_NO_LOCK is one of them.
 
-hda_component_manager_init
-|-> component_match_add
-    |-> component_match_add_release
-        |-> __component_match_add ( ... ,**matchptr, ... )
-            |-> *matchptr = ERR_PTR(-ENOMEM);       // assign
-|-> component_master_add_with_match( ...  match)
-    |-> component_match_realloc(match, match->num); // dereference
+To enable the IRQ, driver sets the VUPDATE_NO_LOCK_EN bit in the
+GLOBAL_SYNC_STATUS register.
 
-Add IS_ERR() check to prevent the crash.
+To ack the IRQ after it fires, the driver sets the VUPDATE_NO_LOCK_CLEAR
+bit in the same GLOBAL_SYNC_STATUS register.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The bit sets are done through read/modify/write operations, which are
+not atomic. Thus, the following race is possible:
 
-Fixes: ae7abe36e352 ("ALSA: hda/realtek: Add CS35L41 support for Thinkpad laptops")
+    Thread A:                       IRQ handler:
+                                    *HW IRQ fires*
+    # IRQ disable
+    val = read(GLOBAL_SYNC_STATUS)
+    unset(val, VUPDATE_NO_LOCK_EN)
+    write(val, GLOBAL_SYNC_STATUS)
+                                    # ACK reads VUPDATE_NO_LOCK_EN unset
+                                    val1 = read(GLOBAL_SYNC_STATUS)
+                                    set(val1, VUPDATE_NO_LOCK_CLEAR)
+    # IRQ enable
+    val = read(GLOBAL_SYNC_STATUS)
+    set(val, VUPDATE_NO_LOCK_EN)
+    write(val, GLOBAL_SYNC_STATUS)
+                                    # BAD! clears VUPDATE_NO_LOCK_EN
+                                    write(val1, GLOBAL_SYNC_STATUS)
+
+Regarding the tagged Fixes: change, it appears the change made this race
+more likely to occur. Since VUPDATE_NO_LOCK is now the sole IRQ source
+for vblank handling, a single race on high refresh panels can lead to a
+time out.
+
+[How]
+
+The GLOBAL_SYNC_STATUS register is only one example, other IRQ control
+registers also share the same scheme. On top of GLOBAL_SYNC_STATUS,
+let's clean up those as well.
+
+To keep things simple, Let's atomize the IRQ rmw ops via a single
+driver-wide spinlock. Due to the small scope of this lock, it is
+unlikely to cause noticeable overhead on top of all the existing locking
+within the IRQ set/handle paths.
+
+Since DM is responsible for locking, wrap dc_interrupt_set/ack with the
+spinlock in the new amdgpu_dm_irq_set/ack functions. Migrate/drop all
+references in DM to dc_interrupt_set/ack to use amdgpu_dm_irq_set/ack
+instead.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5616
+Fixes: c87e6635d2db ("drm/amd/display: consolidate DCN vblank/flip handling onto vupdate_no_lock")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 70de0a0216583a53c946155f8c8adedfdca6b4e7)
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[Roman: Instead of modifying hda_component_manager_init() (which does not
-yet exist in version 6.1), a check needs to be added to the
-cs35l41_generic_fixup() function—the very function introduced by the
-offending commit, which calls component_match_add() without verifying its
-successful completion.]
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 63e19ef3ddab806c472748c825f4dc88dcd994e8)
+Modified for unit tests not present in 7.2.y
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  4 +-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h | 12 ++++
+ .../amd/display/amdgpu_dm/amdgpu_dm_crtc.c    |  3 +-
+ .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c |  3 +-
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c | 62 +++++++++++--------
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_irq.h | 28 +++++++++
+ 6 files changed, 82 insertions(+), 30 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7021,6 +7021,11 @@ static void cs35l41_generic_fixup(struct
- 			spec->comps[i].codec = cdc;
- 			component_match_add(dev, &spec->match,
- 					    comp_match_cs35l41_dev_name, rec);
-+			if (IS_ERR(spec->match)) {
-+				codec_err(cdc, "Fail to add component %ld\n",
-+					  PTR_ERR(spec->match));
-+				return;
-+			}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 5ba196dd9d7ad..bd78cfcc3477d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3344,7 +3344,7 @@ static void dm_gpureset_toggle_interrupts(struct amdgpu_device *adev,
+ 		if (acrtc && state->stream_status[i].plane_count != 0 &&
+ 		    amdgpu_ip_version(adev, DCE_HWIP, 0) == 0) {
+ 			irq_source = IRQ_TYPE_PFLIP + acrtc->otg_inst;
+-			rc = dc_interrupt_set(adev->dm.dc, irq_source, enable) ? 0 : -EBUSY;
++			rc = amdgpu_dm_irq_set(adev, irq_source, enable) ? 0 : -EBUSY;
+ 			if (rc)
+ 				drm_warn(adev_to_drm(adev), "Failed to %s pflip interrupts\n",
+ 					 enable ? "enable" : "disable");
+@@ -3368,7 +3368,7 @@ static void dm_gpureset_toggle_interrupts(struct amdgpu_device *adev,
+ 			/* During gpu-reset we disable and then enable vblank irq, so
+ 			 * don't use amdgpu_irq_get/put() to avoid refcount change.
+ 			 */
+-			if (!dc_interrupt_set(adev->dm.dc, irq_source, enable))
++			if (!amdgpu_dm_irq_set(adev, irq_source, enable))
+ 				drm_warn(adev_to_drm(adev), "Failed to %sable vblank interrupt\n", enable ? "en" : "dis");
+ 
+ 		} else if (acrtc && state->stream_status[i].plane_count != 0) {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 797f944718108..d2602c0310b20 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -550,6 +550,18 @@ struct amdgpu_display_manager {
+ 	struct common_irq_params
+ 	vupdate_params[DC_IRQ_SOURCE_VUPDATE6 - DC_IRQ_SOURCE_VUPDATE1 + 1];
+ 
++	/**
++	 * @irq_reg_lock:
++	 *
++	 * Serializes the read-modify-writes of the HW interrupt control
++	 * registers. Several interrupt sources share one register - e.g. the
++	 * enable and clear bits of both VSTARTUP (vblank) and VUPDATE_NO_LOCK
++	 * live in OTG_GLOBAL_SYNC_STATUS. Therefore, enabling one source must
++	 * not race with acking another. Held only across amdgpu_dm_irq_set()
++	 * and amdgpu_dm_irq_ack().
++	 */
++	spinlock_t irq_reg_lock;
++
+ 	/**
+ 	 * @dmub_trace_params:
+ 	 *
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+index f47ee9937adaa..7206439ea5d52 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -31,6 +31,7 @@
+ #include "amdgpu_dm_psr.h"
+ #include "amdgpu_dm_replay.h"
+ #include "amdgpu_dm_crtc.h"
++#include "amdgpu_dm_irq.h"
+ #include "amdgpu_dm_plane.h"
+ #include "amdgpu_dm_trace.h"
+ #include "amdgpu_dm_debugfs.h"
+@@ -87,7 +88,7 @@ int amdgpu_dm_crtc_set_vupdate_irq(struct drm_crtc *crtc, bool enable)
+ 
+ 	irq_source = IRQ_TYPE_VUPDATE + acrtc->otg_inst;
+ 
+-	rc = dc_interrupt_set(adev->dm.dc, irq_source, enable) ? 0 : -EBUSY;
++	rc = amdgpu_dm_irq_set(adev, irq_source, enable) ? 0 : -EBUSY;
+ 
+ 	DRM_DEBUG_VBL("crtc %d - vupdate irq %sabling: r=%d\n",
+ 		      acrtc->crtc_id, enable ? "en" : "dis", rc);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index fe5b97e6f9603..ee7140d8dda8b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -1378,12 +1378,13 @@ void dm_helpers_free_gpu_mem(
+ 
+ bool dm_helpers_dmub_outbox_interrupt_control(struct dc_context *ctx, bool enable)
+ {
++	struct amdgpu_device *adev = ctx->driver_context;
+ 	enum dc_irq_source irq_source;
+ 	bool ret;
+ 
+ 	irq_source = DC_IRQ_SOURCE_DMCUB_OUTBOX;
+ 
+-	ret = dc_interrupt_set(ctx->dc, irq_source, enable);
++	ret = amdgpu_dm_irq_set(adev, irq_source, enable);
+ 
+ 	DRM_DEBUG_DRIVER("Dmub trace irq %sabling: r=%d\n",
+ 			 enable ? "en" : "dis", ret);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+index e49803a90edad..d59434e01dfdb 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+@@ -424,6 +424,7 @@ int amdgpu_dm_irq_init(struct amdgpu_device *adev)
+ 	DRM_DEBUG_KMS("DM_IRQ\n");
+ 
+ 	spin_lock_init(&adev->dm.irq_handler_list_table_lock);
++	spin_lock_init(&adev->dm.irq_reg_lock);
+ 
+ 	for (src = 0; src < DAL_IRQ_SOURCES_NUMBER; src++) {
+ 		/* low context handler list init */
+@@ -496,7 +497,7 @@ void amdgpu_dm_irq_suspend(struct amdgpu_device *adev)
+ 		hnd_list_l = &adev->dm.irq_handler_list_low_tab[src];
+ 		hnd_list_h = &adev->dm.irq_handler_list_high_tab[src];
+ 		if (!list_empty(hnd_list_l) || !list_empty(hnd_list_h))
+-			dc_interrupt_set(adev->dm.dc, src, false);
++			amdgpu_dm_irq_set(adev, src, false);
+ 
+ 		DM_IRQ_TABLE_UNLOCK(adev, irq_table_flags);
+ 
+@@ -533,7 +534,7 @@ void amdgpu_dm_irq_resume_early(struct amdgpu_device *adev)
+ 		hnd_list_l = &adev->dm.irq_handler_list_low_tab[src];
+ 		hnd_list_h = &adev->dm.irq_handler_list_high_tab[src];
+ 		if (!list_empty(hnd_list_l) || !list_empty(hnd_list_h))
+-			dc_interrupt_set(adev->dm.dc, src, true);
++			amdgpu_dm_irq_set(adev, src, true);
+ 	}
+ 
+ 	DM_IRQ_TABLE_UNLOCK(adev, irq_table_flags);
+@@ -558,7 +559,7 @@ void amdgpu_dm_irq_resume_late(struct amdgpu_device *adev)
+ 		hnd_list_l = &adev->dm.irq_handler_list_low_tab[src];
+ 		hnd_list_h = &adev->dm.irq_handler_list_high_tab[src];
+ 		if (!list_empty(hnd_list_l) || !list_empty(hnd_list_h))
+-			dc_interrupt_set(adev->dm.dc, src, true);
++			amdgpu_dm_irq_set(adev, src, true);
+ 	}
+ 
+ 	DM_IRQ_TABLE_UNLOCK(adev, irq_table_flags);
+@@ -645,6 +646,21 @@ static void amdgpu_dm_irq_immediate_work(struct amdgpu_device *adev,
+ 	DM_IRQ_TABLE_UNLOCK(adev, irq_table_flags);
+ }
+ 
++bool amdgpu_dm_irq_set(struct amdgpu_device *adev, enum dc_irq_source src,
++		       bool enable)
++{
++	guard(spinlock_irqsave)(&adev->dm.irq_reg_lock);
++
++	return dc_interrupt_set(adev->dm.dc, src, enable);
++}
++
++void amdgpu_dm_irq_ack(struct amdgpu_device *adev, enum dc_irq_source src)
++{
++	guard(spinlock_irqsave)(&adev->dm.irq_reg_lock);
++
++	dc_interrupt_ack(adev->dm.dc, src);
++}
++
+ /**
+  * amdgpu_dm_irq_handler - Generic DM IRQ handler
+  * @adev: amdgpu base driver device containing the DM device
+@@ -665,7 +681,7 @@ static int amdgpu_dm_irq_handler(struct amdgpu_device *adev,
+ 			entry->src_id,
+ 			entry->src_data[0]);
+ 
+-	dc_interrupt_ack(adev->dm.dc, src);
++	amdgpu_dm_irq_ack(adev, src);
+ 
+ 	/* Call high irq work immediately */
+ 	amdgpu_dm_irq_immediate_work(adev, src);
+@@ -703,7 +719,7 @@ static int amdgpu_dm_set_hpd_irq_state(struct amdgpu_device *adev,
+ 	enum dc_irq_source src = amdgpu_dm_hpd_to_dal_irq_source(type);
+ 	bool st = (state == AMDGPU_IRQ_STATE_ENABLE);
+ 
+-	dc_interrupt_set(adev->dm.dc, src, st);
++	amdgpu_dm_irq_set(adev, src, st);
+ 	return 0;
+ }
+ 
+@@ -737,7 +753,7 @@ static inline int dm_irq_state(struct amdgpu_device *adev,
+ 	if (dc && dc->caps.ips_support && dc->idle_optimizations_allowed)
+ 		dc_allow_idle_optimizations(dc, false);
+ 
+-	dc_interrupt_set(adev->dm.dc, irq_source, st);
++	amdgpu_dm_irq_set(adev, irq_source, st);
+ 	return 0;
+ }
+ 
+@@ -791,7 +807,7 @@ static int amdgpu_dm_set_dmub_outbox_irq_state(struct amdgpu_device *adev,
+ 	enum dc_irq_source irq_source = DC_IRQ_SOURCE_DMCUB_OUTBOX;
+ 	bool st = (state == AMDGPU_IRQ_STATE_ENABLE);
+ 
+-	dc_interrupt_set(adev->dm.dc, irq_source, st);
++	amdgpu_dm_irq_set(adev, irq_source, st);
+ 	return 0;
+ }
+ 
+@@ -817,7 +833,7 @@ static int amdgpu_dm_set_dmub_trace_irq_state(struct amdgpu_device *adev,
+ 	enum dc_irq_source irq_source = DC_IRQ_SOURCE_DMCUB_OUTBOX0;
+ 	bool st = (state == AMDGPU_IRQ_STATE_ENABLE);
+ 
+-	dc_interrupt_set(adev->dm.dc, irq_source, st);
++	amdgpu_dm_irq_set(adev, irq_source, st);
+ 	return 0;
+ }
+ 
+@@ -881,9 +897,7 @@ void amdgpu_dm_set_irq_funcs(struct amdgpu_device *adev)
+ }
+ void amdgpu_dm_outbox_init(struct amdgpu_device *adev)
+ {
+-	dc_interrupt_set(adev->dm.dc,
+-		DC_IRQ_SOURCE_DMCUB_OUTBOX,
+-		true);
++	amdgpu_dm_irq_set(adev, DC_IRQ_SOURCE_DMCUB_OUTBOX, true);
+ }
+ 
+ /**
+@@ -905,7 +919,7 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
+ 
+ 	/* First, clear all hpd and hpdrx interrupts */
+ 	for (i = DC_IRQ_SOURCE_HPD1; i <= DC_IRQ_SOURCE_HPD6RX; i++) {
+-		if (!dc_interrupt_set(adev->dm.dc, i, false))
++		if (!amdgpu_dm_irq_set(adev, i, false))
+ 			drm_err(dev, "Failed to clear hpd(rx) source=%d on init\n",
+ 				i);
+ 	}
+@@ -934,7 +948,7 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
+ 		 * of dm. Note that only hpd interrupt types are registered with
+ 		 * base driver; hpd_rx types aren't. IOW, amdgpu_irq_get/put on
+ 		 * hpd_rx isn't available. DM currently controls hpd_rx
+-		 * explicitly with dc_interrupt_set()
++		 * explicitly with amdgpu_dm_irq_set()
+ 		 */
+ 		if (dc_link->irq_source_hpd != DC_IRQ_SOURCE_INVALID) {
+ 			irq_type = dc_link->irq_source_hpd - DC_IRQ_SOURCE_HPD1;
+@@ -943,23 +957,21 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
+ 			 * and what bios reports as the # of connectors with hpd
+ 			 * sources. Since the # of hpd source types registered
+ 			 * with base driver == mode_info.num_hpd, we have to
+-			 * fallback to dc_interrupt_set for the remaining types.
++			 * fallback to amdgpu_dm_irq_set for the remaining types.
+ 			 */
+ 			if (irq_type < adev->mode_info.num_hpd) {
+ 				if (amdgpu_irq_get(adev, &adev->hpd_irq, irq_type))
+ 					drm_err(dev, "DM_IRQ: Failed get HPD for source=%d)!\n",
+ 						dc_link->irq_source_hpd);
+ 			} else {
+-				dc_interrupt_set(adev->dm.dc,
+-						 dc_link->irq_source_hpd,
+-						 true);
++				amdgpu_dm_irq_set(adev, dc_link->irq_source_hpd,
++						  true);
+ 			}
  		}
- 		ret = component_master_add_with_match(dev, &comp_master_ops, spec->match);
- 		if (ret)
+ 
+ 		if (dc_link->irq_source_hpd_rx != DC_IRQ_SOURCE_INVALID) {
+-			dc_interrupt_set(adev->dm.dc,
+-					dc_link->irq_source_hpd_rx,
+-					true);
++			amdgpu_dm_irq_set(adev, dc_link->irq_source_hpd_rx,
++					  true);
+ 		}
+ 	}
+ 	drm_connector_list_iter_end(&iter);
+@@ -1003,16 +1015,14 @@ void amdgpu_dm_hpd_fini(struct amdgpu_device *adev)
+ 					drm_err(dev, "DM_IRQ: Failed put HPD for source=%d!\n",
+ 						dc_link->irq_source_hpd);
+ 			} else {
+-				dc_interrupt_set(adev->dm.dc,
+-						 dc_link->irq_source_hpd,
+-						 false);
++				amdgpu_dm_irq_set(adev, dc_link->irq_source_hpd,
++						  false);
+ 			}
+ 		}
+ 
+ 		if (dc_link->irq_source_hpd_rx != DC_IRQ_SOURCE_INVALID) {
+-			dc_interrupt_set(adev->dm.dc,
+-					dc_link->irq_source_hpd_rx,
+-					false);
++			amdgpu_dm_irq_set(adev, dc_link->irq_source_hpd_rx,
++					  false);
+ 		}
+ 	}
+ 	drm_connector_list_iter_end(&iter);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.h
+index 4f6b58f4f90d7..f0a4577848f35 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.h
+@@ -81,6 +81,34 @@ void amdgpu_dm_irq_unregister_interrupt(struct amdgpu_device *adev,
+ 					enum dc_irq_source irq_source,
+ 					void *ih_index);
+ 
++/**
++ * amdgpu_dm_irq_set - enable or disable a DC interrupt source.
++ *
++ * @adev: AMD DRM device
++ * @src: DC interrupt source to toggle
++ * @enable: true to enable the source, false to disable it
++ *
++ * DM-wide replacement for dc_interrupt_set(). As locking is DM's
++ * responsibility, this is a thin wrapper serializes the underlying
++ * read-modify-write against the other interrupt sources sharing HW control
++ * registers with @src, so DM must never call dc_interrupt_set() directly.
++ *
++ * Returns: true if the source was toggled.
++ */
++bool amdgpu_dm_irq_set(struct amdgpu_device *adev, enum dc_irq_source src,
++		       bool enable);
++
++/**
++ * amdgpu_dm_irq_ack - acknowledge a DC interrupt source.
++ *
++ * @adev: AMD DRM device
++ * @src: DC interrupt source to acknowledge
++ *
++ * DM-wide replacement for dc_interrupt_ack(), serialized the same way as
++ * amdgpu_dm_irq_set().
++ */
++void amdgpu_dm_irq_ack(struct amdgpu_device *adev, enum dc_irq_source src);
++
+ void amdgpu_dm_set_irq_funcs(struct amdgpu_device *adev);
+ 
+ void amdgpu_dm_outbox_init(struct amdgpu_device *adev);
+-- 
+2.53.0
+
 
 
