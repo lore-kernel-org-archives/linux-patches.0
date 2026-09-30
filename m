@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9540E50E5B0;
-	Wed, 30 Sep 2026 15:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85874F3EB8;
+	Wed, 30 Sep 2026 15:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782561; cv=none; b=sUauljq0wSBEzmT1OXV/mQ84qioNo5JyGQ1wZy030LUP9Bs1UmZKb4YuIJ6woh8WEcBA69PQXlAfjIyyeRvk/SsWqqUlJvsy3k+v/OGTw22EZ6gUrkagCoYwgKUuapmhmhHH42nRSnmZXTayUOD+AxSrFb46ii7tTp7M9he0V6Y=
+	t=1790782565; cv=none; b=d+GZ6ktMEkkbyVET80Is0aofhKIj8PdcZvK9pXJSmbuw3weRNr03Z+JwE9s3UZIXUj456facWJP7jWXPISmOcFOW3o2Xc/Sn5sm2ARBWhNGw/Xtr2P288TnCPFx40abluogjxUY13TkzEkiv07NbphHjNXSrIgouBYB9xuM4H+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782561; c=relaxed/simple;
-	bh=El5JXjVp5ppS+q5yZte8ZlXAFgrYdVfYEQ6DKhBT//Y=;
+	s=arc-20240116; t=1790782565; c=relaxed/simple;
+	bh=oJfohvgviaP7+9cUvCS26tjgLQqKmZPn+GIomzJJNZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ql2ujsKzhHJJ/I4PwDUSLVZMV/JhYZ1d1IX84N04818pIQK4DlRlqB/nwMQTUEXZU4yIjpFSOMHSGHa+mtg0wHOfm7K34zA4PwGrmu5tsKynImp/PJxL8PCfPc1kbQkm1wxZow0qRbQjtzcZrdc4AslfYkBLYRgO9wI1nqMsAGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bN7YECXg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iSlth1grbLYlyTM4AcMC0+h4fE3wV1GOzK9+tbmVeJ+kg5MudinmtD6RFmTzxNn17IFOHaLDvfsGdmMlbiCtdCgT+KkbDMLEFdD0cqKoaB62ZMtc458JWxexhx9LQjGStoUb1K2fD30Blc1vVpga1khmXD7bUEahAuDb5Cgjcu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pswH2JWB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bN7YECXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9131F000FF;
-	Wed, 30 Sep 2026 15:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pswH2JWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9671F00898;
+	Wed, 30 Sep 2026 15:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782550;
-	bh=0T+Kdk74DGzoBWlk9724p5veDaJAoKIHgKbqCpy53hY=;
+	s=korg; t=1790782555;
+	bh=Sjglv/JAgMqvmrk2eI9Fh8rEudvdyZ0pQ99//vQ3GRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bN7YECXg2uKV/8pAnNkUXAveAO8boyHr6Axv9NKC41WZjIOuvHC8+7KHhVIrmOljV
-	 dczA2I2ZAtYQg5kOMdwaUtuh6DCDdnOvol0XF0ccxVRXzMVp2zRz94mz1PwwVu4k8a
-	 zhLQuTUTfEqmAu58pqdTD5Gt/h5KlD5TGCSmNWs4=
+	b=pswH2JWBVhhjPTOQ8Hszx3uNRAnhS0IO1voQZ3T1s7Xn/zFNeqdEke3uglzZS8WcU
+	 nDiX/hc4ujaFtr+u0wr0sD86heBRScgz+/Pke/Zlh5wrNjrEjQMY8gJIhJDJRRLaI+
+	 uPrOWpR7feBnDIIB5DNnF6FA8FhcEs7Bo3D5SocA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/595] mmc: davinci: fix mmc_add_host order in probe
-Date: Wed, 30 Sep 2026 17:19:39 +0200
-Message-ID: <20260930152349.588278864@linuxfoundation.org>
+Subject: [PATCH 5.10 088/595] iio: accel: mma8452: switch to non-devm request_threaded_irq()
+Date: Wed, 30 Sep 2026 17:19:41 +0200
+Message-ID: <20260930152349.632534071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,61 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
+[ Upstream commit 0a6726ec20cd4c0101f2de0ca485a11676224dea ]
 
-mmc_add_host() makes the host visible to the MMC core. Register the
-interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
-core cannot start using the host before IRQ handling is set up.
+Avoid using devm_request_threaded_irq() as the driver requires explicit
+error-handling path(s). Using devm_* API together with goto-based
+unwinding breaks the expected LIFO resource release model.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Add explicit IRQ cleanup in the driver teardown paths to follow kernel
+resource management conventions.
+
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/iio/accel/mma8452.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index f026ffc4dc1af..887acabf96fb3 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1305,14 +1305,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 		goto cpu_freq_fail;
+diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+index b8ab2b0627a3c..a8a145f818d8a 100644
+--- a/drivers/iio/accel/mma8452.c
++++ b/drivers/iio/accel/mma8452.c
+@@ -1676,18 +1676,16 @@ static int mma8452_probe(struct i2c_client *client,
+ 		goto trigger_cleanup;
+ 
+ 	if (client->irq) {
+-		ret = devm_request_threaded_irq(&client->dev,
+-						client->irq,
+-						NULL, mma8452_interrupt,
+-						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+-						client->name, indio_dev);
++		ret = request_threaded_irq(client->irq, NULL, mma8452_interrupt,
++					   IRQF_TRIGGER_LOW | IRQF_ONESHOT,
++					   client->name, indio_dev);
+ 		if (ret)
+ 			goto buffer_cleanup;
  	}
  
--	ret = mmc_add_host(mmc);
--	if (ret < 0)
--		goto mmc_add_host_fail;
--
- 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
- 			       mmc_hostname(mmc), host);
- 	if (ret)
--		goto request_irq_fail;
-+		goto mmc_add_host_fail;
+ 	ret = pm_runtime_set_active(&client->dev);
+ 	if (ret < 0)
+-		goto buffer_cleanup;
++		goto free_irq;
  
- 	if (host->sdio_irq >= 0) {
- 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
-@@ -1322,6 +1318,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 			mmc->caps |= MMC_CAP_SDIO_IRQ;
- 	}
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_set_autosuspend_delay(&client->dev,
+@@ -1696,7 +1694,7 @@ static int mma8452_probe(struct i2c_client *client,
  
-+	ret = mmc_add_host(mmc);
-+	if (ret < 0)
-+		goto mmc_add_host_fail;
+ 	ret = iio_device_register(indio_dev);
+ 	if (ret < 0)
+-		goto buffer_cleanup;
++		goto free_irq;
+ 
+ 	ret = mma8452_set_freefall_mode(data, false);
+ 	if (ret < 0)
+@@ -1707,6 +1705,10 @@ static int mma8452_probe(struct i2c_client *client,
+ unregister_device:
+ 	iio_device_unregister(indio_dev);
+ 
++free_irq:
++	if (client->irq)
++		free_irq(client->irq, indio_dev);
 +
- 	rename_region(mem, mmc_hostname(mmc));
+ buffer_cleanup:
+ 	iio_triggered_buffer_cleanup(indio_dev);
  
- 	dev_info(mmc_dev(host->mmc), "Using %s, %d-bit mode\n",
-@@ -1330,8 +1330,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
+@@ -1733,6 +1735,9 @@ static int mma8452_remove(struct i2c_client *client)
+ 	pm_runtime_set_suspended(&client->dev);
+ 	pm_runtime_put_noidle(&client->dev);
  
- 	return 0;
- 
--request_irq_fail:
--	mmc_remove_host(mmc);
- mmc_add_host_fail:
- 	mmc_davinci_cpufreq_deregister(host);
- cpu_freq_fail:
++	if (client->irq)
++		free_irq(client->irq, indio_dev);
++
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	mma8452_trigger_cleanup(indio_dev);
+ 	mma8452_standby(iio_priv(indio_dev));
 -- 
 2.53.0
 
