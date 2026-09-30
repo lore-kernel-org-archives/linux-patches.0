@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5945013AB;
-	Wed, 30 Sep 2026 15:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E72247C0FA;
+	Wed, 30 Sep 2026 15:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783390; cv=none; b=tOMMM4XHSwpaA2RlfANL44v9gyGNPHy9hz2AnS+xB8ZamJDAvNFzXC40239ilhbizbdZmaxsavMfQC2ox+9tHxE/yMbiwHRKOsevigLhfeev+fLw4YSiXMR4fq2tlpyJoFRpTSl+dQD/xaDpcEUs/bGGXQ58gt/KyXo7ibfgRpw=
+	t=1790783392; cv=none; b=Vwo53/vRuvIBPAsCU6XwsO5rJPl5Fqc7BGP6AmOUjki/z0RX6Qz9+kkQS0/CCiKk0MCCEU8w9ga/kuMJwrswxS54ftyjjkUDMJUUv1EoileV5D6MjTUKVEcgxDNzGs5/sY3SAX3b9BYXMNXFXylKGQBIDHZ3EseFlf1SMRL6UrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783390; c=relaxed/simple;
-	bh=6fvwf/vYEG5E6KtFv+pGgm6JxTU+50HuX2oIUfPaYKc=;
+	s=arc-20240116; t=1790783392; c=relaxed/simple;
+	bh=+/OSipnw1wXPkUmaYP+ykWePW/MFEFxNEydsigZGAu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3w2TrWPNG03+nOxaJa0vnsVIie8pu8Vfn0/A5VNJ3lQ3n15l8VQ8AKaQ1NTOTVU/MhzRrVYUY6vT+rlSGFdAJ0fTsmGj5cDAnQCFt/KgyalFPTfumnNimG3jrFindmN8sqiBhr5O2qIMfLa8JetX2RV/j3wZRRFtKFVO9Xiiz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6RN3ffc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KnKIc08G3ipBSnSKsBWKcDHdOnFcRvelMXQH29cpUXjyN+IbswxoHqFtUf3Q7RjFuC8nR3HpoPRhh2V4iilNhBY6qui8IlOX9iHfHe5xof09B2l+xF9+ZudSH7sIqdLYdrUPgiloxu+lw94EZ0Fr+bR24EquMq3MnBlpfQf643w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztdoHQmN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6RN3ffc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5371F00893;
-	Wed, 30 Sep 2026 15:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztdoHQmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA58C1F00898;
+	Wed, 30 Sep 2026 15:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783384;
-	bh=oYCSXAOoIuWBzYzbLs9SvjkE64jzZqWlYt0i/kJaPNA=;
+	s=korg; t=1790783387;
+	bh=wqIX9iDY5mDIcligqCjRonRT7v5FWA310CFDX1y7m1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6RN3ffciLoZixFfmxkNzHsAXNIiyt/pxpy7xqHSPYFRGttVcOk8o90qOXlsn2dek
-	 MebRbFEp4AdWPBZI88320C9pChIvENb7ByHkvBXWa6JHh8DH3DPTP6v41N1xGxLY+e
-	 GvwNKVrFcJUOh2auAOPsFYSi07jbfHfFDQCVUemk=
+	b=ztdoHQmNrcx1MLYqaUfUJ2GiBLnOLpP3Imc24PyRI4poRLP1GqPbBFzZpKVOUAlDu
+	 uYuwmWJkkNvhGjxLA4v7l3rkmBI6hWRwUWXaynKwaZLbUrNDMd7kGyoevWy/ya7kff
+	 JzfQulanqttNLIwgr9CdaF/FEp6lY+5GMOo7Za7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Shivank Garg <shivankg@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/595] dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel()
-Date: Wed, 30 Sep 2026 17:24:33 +0200
-Message-ID: <20260930152355.851065357@linuxfoundation.org>
+Subject: [PATCH 5.10 354/595] RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept
+Date: Wed, 30 Sep 2026 17:24:07 +0200
+Message-ID: <20260930152355.292511802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,67 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit e873c74132f0c5f1452816cd9bb26208f0bba1e1 ]
+[ Upstream commit 32cd87f54dd1070020e664ccb0312a9f0fea79b4 ]
 
-When dma_device_put() drops the last reference on chan->device->ref,
-dma_device_release() runs and may free the dma_device along with its
-channels.
+We need to clear cep before release state_lock as siw_qp_llp_close and
+siw_qp_modify->siw_qp_llp_close did.
 
-dma_chan_put() then still reads chan->device->owner via
-dma_chan_to_owner() for the trailing module_put(). KASAN catches it:
+Otherwise if siw_qp_modify() fails in siw_accept(), the QP's state_lock
+is released before the error path cleanup. A concurrent ibv_modify_qp()
+transitioning the QP to ERROR can race in this window:
 
-	slab-use-after-free in dma_chan_put+0x3e6/0x4c0
-	Read of size 8 by task insmod/6319
-	Freed by task 6319:
-	  kfree+0x225/0x470
-	  dma_chan_put+0x395/0x4c0
-	  dmaengine_put+0xf8/0x160
+  siw_accept()                       ibv_modify_qp(ERROR)
+  ----------------------             ----------------------
+  siw_qp_modify() fails
+  up_write(&qp->state_lock)
+                                     down_write(&qp->state_lock)
+                                     nextstate_from_idle():
+				     if (qp->cep)
+                                       siw_cep_put(qp->cep) <- frees cep
+                                       qp->cep = NULL
+  goto error
+    cep->qp = NULL                   <- UAF
 
-Cache the module owner in dma_chan_put() before the put so the trailing
-module_put() does not need chan->device.
+Clear qp->cep and drop the association reference taken by siw_cep_get(),
+all under the write lock held from the initial down_write(&qp->state_lock).
+Thread B therefore sees qp->cep == NULL, skips its own put, and cannot free
+the cep before siw_accept() is done with it.
 
-Fixes: 8ad342a86359 ("dmaengine: Add reference counting to dma_device struct")
-Suggested-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-3-d4a4ee47d927@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://lore.kernel.org/linux-rdma/d6fbe475-a5c2-f975-99b0-a0bd6b6d10e8@linux.dev/T/#m5876c1ff2de8686a9a1173b8f1aa0ff5363a785c
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://patch.msgid.link/20260827125553.12831-1-guoqing.jiang@linux.dev
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 7eb3ec8323ccc..ae4121a26c651 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -493,10 +493,13 @@ static int dma_chan_get(struct dma_chan *chan)
-  */
- static void dma_chan_put(struct dma_chan *chan)
- {
-+	struct module *owner;
-+
- 	/* This channel is not in use, bail out */
- 	if (!chan->client_count)
- 		return;
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index f17dbb9237df7..5e1b577d1c92c 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1662,9 +1662,12 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			   SIW_QP_ATTR_STATE | SIW_QP_ATTR_LLP_HANDLE |
+ 				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
+ 				   SIW_QP_ATTR_MPA);
++	if (rv) {
++		qp->cep = NULL;
++		siw_cep_put(cep);
++		goto error_unlock;
++	}
+ 	up_write(&qp->state_lock);
+-	if (rv)
+-		goto error;
  
-+	owner = dma_chan_to_owner(chan);
- 	chan->client_count--;
- 
- 	/* This channel is not in use anymore, free it */
-@@ -516,7 +519,7 @@ static void dma_chan_put(struct dma_chan *chan)
- 	/* This channel is not in use anymore, drop the device ref */
- 	if (!chan->client_count)
- 		dma_device_put(chan->device);
--	module_put(dma_chan_to_owner(chan));
-+	module_put(owner);
- }
- 
- enum dma_status dma_sync_wait(struct dma_chan *chan, dma_cookie_t cookie)
+ 	siw_dbg_cep(cep, "[QP %u]: send mpa reply, %d byte pdata\n",
+ 		    qp_id(qp), params->private_data_len);
 -- 
 2.53.0
 
