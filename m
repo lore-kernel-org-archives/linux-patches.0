@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F875221D2;
-	Wed, 30 Sep 2026 17:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04C75632A4;
+	Wed, 30 Sep 2026 17:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789867; cv=none; b=Bumt4BHoSMrINg41E1xtS9rfb/wMWWik9fC6SCmX8ly9D7u/P00dq1wrmbTgCUkzw1tL6u+YQFw/URL4zrlo2DipdqN0O/kNlT9fklSeKn+DYZLTWRYJsQqptKVMGd9pwgEXSXh+FOCfy7/smUgXEC/Ig/RL7M6IOjd3RII7lTA=
+	t=1790789870; cv=none; b=Q70GFPu4hIASlF49IEWdtvvQ85OeSDQRxuQ46grqeJlNK9lc2W1ng5PGXQGnUh4rZaHwYEM/zjcgkIkeF92VuJXURWbEsn9EERuVPzplaoNKNb//ZitukDTdBzuRnXOjOCIYI88NnMk4CL9M5EHPC15BFniL8py7qBohpFVFFoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789867; c=relaxed/simple;
-	bh=Ur1TpkDl3QuzBNRnp9W0UN0MpcMS1pd1twuv3QpJngw=;
+	s=arc-20240116; t=1790789870; c=relaxed/simple;
+	bh=Rpd1OdW8ap5qafJhRfvpVyCaXrW503eHAbIcbUwHNw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JESFYyufeHXLAT02pvW2VcJRw4ftgPoad+wN2etLwEZQI2V1yrBoyXUvnXuoOUIHJooqruuUOrYP+YEPwowXw4KDllvmpmWT0w0oktq4R1Rx4fL3NWFLRjFBCH1MfF2TnQOtTboEICt9WMbp2OwWEIllZY7/BEP67mZXkVmXnUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5Cnb1bL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IGZ8yN1gKbE+gQ+yTUsRfKoHEoxBpy/mZqIG2zBGeaJWHQ+CVdB8EYV6rgL3YniRqpQ1Hb1iisf+tR69ZekB3MybNbs5WUWR8Zy71/eQyUQHCuYuvsCJ/AAP0+Lpq5bAmfRH34m0KeKZH+J0HPRu6BMgNHt5n0eR4kEB0enAeac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7NP+Tzh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5Cnb1bL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAF71F00898;
-	Wed, 30 Sep 2026 17:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7NP+Tzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055141F000FF;
+	Wed, 30 Sep 2026 17:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789865;
-	bh=KWO/XeHW1u3oHDgVdaHVyh/AlCRD/dOO0YHVhEewrqA=;
+	s=korg; t=1790789868;
+	bh=hlROBNWjYM52kOAM1mtRiD85h/gcTvlseItB0WmUT6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5Cnb1bL4YBgPjW//oy1jp3yHIvVysf29FTAg2GETj2AeRVhS6Lme5rcHj9B2HTgu
-	 oqpC/C+RO3eE6izh5MGJfK3AlFVPXxoRT1NPx0kQD0rZvrfLHWF0+nYLLbdYz2pI+q
-	 ey1lzTuvJtILoVKehMNREuO4BlPbd5kI0OXPzICU=
+	b=h7NP+TzhEbOlasio3nhFGhGJb/yvNDyM7RSw9gQMBxp9qX13ZSkKf0iDrSOy+BXVe
+	 ZLycHdGTTXD6BcMmY4UiThrZ08QLppbh3q7GgPsqFMz8k2scq7wOPUuhQ8POCLmxv3
+	 /PZYuQQ4D/eju2zjHTmi0tDkQRsW/ntPHj5mOOXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Sashiko <sashiko-bot@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 627/877] Documentation: tracing: Add documentation about eprobes
-Date: Wed, 30 Sep 2026 17:25:38 +0200
-Message-ID: <20260930152428.178375610@linuxfoundation.org>
+Subject: [PATCH 6.12 628/877] tracing/probes: Fix BTF kflag check for anonymous struct member access
+Date: Wed, 30 Sep 2026 17:25:39 +0200
+Message-ID: <20260930152428.199830484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -57,314 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 623526ba8984cafdffa0eba7ee424f2e40c8a219 ]
+[ Upstream commit 47e93045a2db80d24f5fef65adecc6b2b32efa23 ]
 
-Eprobes was added back in 5.15, but was never documented. It became a
-"secret" interface even though it has been a topic of several
-presentations. For some reason, when eprobes was added, documenting it
-never became a priority, until now.
+btf_find_struct_member() traverses into nested anonymous structures and
+unions to find a struct member. However, get_bitoffset_of_field() in
+trace_probe.c checked btf_type_kflag(type) using the outer parent type
+instead of the actual anonymous structure/union that directly contains
+the found member.
 
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/20250730140945.528135548@kernel.org
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 47e93045a2db ("tracing/probes: Fix BTF kflag check for anonymous struct member access")
+If the parent structure and anonymous structure have mismatched kflags
+(e.g., the parent has kflag=0 while the anonymous structure has kflag=1
+because it contains bitfields), the bitfield size encoded in the upper
+8 bits of member->offset is erroneously treated as part of the byte/bit
+offset, corrupting the resolved offset and failing to set last_bitsize.
+Similarly, btf_find_struct_member() pushed anonymous member offsets
+onto anon_stack without masking BTF_MEMBER_BIT_OFFSET() when kflag is set.
+
+To fix this problem, update btf_find_struct_member() to return actual
+containing structure/union type via member_type, use appropriate
+__btf_member_bit_offset() to get bit offset, and use member_type for
+btf_type_kflag() in get_bitoffset_of_field().
+
+Link: https://lore.kernel.org/all/178827250904.123716.17452648791331881284.stgit@devnote2/
+
+Fixes: c440adfbe302 ("tracing/probes: Support BTF based data structure field access")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260822095110.0772E1F000E9@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.7-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+[ Applied get_bitoffset_of_field() changes to the equivalent logic in parse_btf_field(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/trace/eprobetrace.rst |  269 ++++++++++++++++++++++++++++++++++++
- Documentation/trace/index.rst       |    1 
- 2 files changed, 270 insertions(+)
- create mode 100644 Documentation/trace/eprobetrace.rst
+ kernel/trace/trace_btf.c   |   19 +++++++++++--------
+ kernel/trace/trace_btf.h   |    3 ++-
+ kernel/trace/trace_probe.c |    5 +++--
+ 3 files changed, 16 insertions(+), 11 deletions(-)
 
---- /dev/null
-+++ b/Documentation/trace/eprobetrace.rst
-@@ -0,0 +1,269 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+==================================
-+Eprobe - Event-based Probe Tracing
-+==================================
-+
-+:Author: Steven Rostedt <rostedt@goodmis.org>
-+
-+- Written for v6.17
-+
-+Overview
-+========
-+
-+Eprobes are dynamic events that are placed on existing events to either
-+dereference a field that is a pointer, or simply to limit what fields are
-+recorded in the trace event.
-+
-+Eprobes depend on kprobe events so to enable this feature, build your kernel
-+with CONFIG_EPROBE_EVENTS=y.
-+
-+Eprobes are created via the /sys/kernel/tracing/dynamic_events file.
-+
-+Synopsis of eprobe_events
-+-------------------------
-+::
-+
-+  e[:[EGRP/][EEVENT]] GRP.EVENT [FETCHARGS]	: Set a probe
-+  -:[EGRP/][EEVENT]				: Clear a probe
-+
-+ EGRP		: Group name of the new event. If omitted, use "eprobes" for it.
-+ EEVENT		: Event name. If omitted, the event name is generated and will
-+		  be the same event name as the event it attached to.
-+ GRP		: Group name of the event to attach to.
-+ EVENT		: Event name of the event to attach to.
-+
-+ FETCHARGS	: Arguments. Each probe can have up to 128 args.
-+  $FIELD	: Fetch the value of the event field called FIELD.
-+  @ADDR		: Fetch memory at ADDR (ADDR should be in kernel)
-+  @SYM[+|-offs]	: Fetch memory at SYM +|- offs (SYM should be a data symbol)
-+  $comm		: Fetch current task comm.
-+  +|-[u]OFFS(FETCHARG) : Fetch memory at FETCHARG +|- OFFS address.(\*3)(\*4)
-+  \IMM		: Store an immediate value to the argument.
-+  NAME=FETCHARG : Set NAME as the argument name of FETCHARG.
-+  FETCHARG:TYPE : Set TYPE as the type of FETCHARG. Currently, basic types
-+		  (u8/u16/u32/u64/s8/s16/s32/s64), hexadecimal types
-+		  (x8/x16/x32/x64), VFS layer common type(%pd/%pD), "char",
-+                  "string", "ustring", "symbol", "symstr" and "bitfield" are
-+                  supported.
-+
-+Types
-+-----
-+The FETCHARGS above is very similar to the kprobe events as described in
-+Documentation/trace/kprobetrace.rst.
-+
-+The difference between eprobes and kprobes FETCHARGS is that eprobes has a
-+$FIELD command that returns the content of the event field of the event
-+that is attached. Eprobes do not have access to registers, stacks and function
-+arguments that kprobes has.
-+
-+If a field argument is a pointer, it may be dereferenced just like a memory
-+address using the FETCHARGS syntax.
-+
-+
-+Attaching to dynamic events
-+---------------------------
-+
-+Eprobes may attach to dynamic events as well as to normal events. It may
-+attach to a kprobe event, a synthetic event or a fprobe event. This is useful
-+if the type of a field needs to be changed. See Example 2 below.
-+
-+Usage examples
-+==============
-+
-+Example 1
-+---------
-+
-+The basic usage of eprobes is to limit the data that is being recorded into
-+the tracing buffer. For example, a common event to trace is the sched_switch
-+trace event. That has a format of::
-+
-+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
-+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
-+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
-+	field:int common_pid;	offset:4;	size:4;	signed:1;
-+
-+	field:char prev_comm[16];	offset:8;	size:16;	signed:0;
-+	field:pid_t prev_pid;	offset:24;	size:4;	signed:1;
-+	field:int prev_prio;	offset:28;	size:4;	signed:1;
-+	field:long prev_state;	offset:32;	size:8;	signed:1;
-+	field:char next_comm[16];	offset:40;	size:16;	signed:0;
-+	field:pid_t next_pid;	offset:56;	size:4;	signed:1;
-+	field:int next_prio;	offset:60;	size:4;	signed:1;
-+
-+The first four fields are common to all events and can not be limited. But the
-+rest of the event has 60 bytes of information. It records the names of the
-+previous and next tasks being scheduled out and in, as well as their pids and
-+priorities. It also records the state of the previous task. If only the pids
-+of the tasks are of interest, why waste the ring buffer with all the other
-+fields?
-+
-+An eprobe can limit what gets recorded. Note, it does not help in performance,
-+as all the fields are recorded in a temporary buffer to process the eprobe.
-+::
-+
-+ # echo 'e:sched/switch sched.sched_switch prev=$prev_pid:u32 next=$next_pid:u32' >> /sys/kernel/tracing/dynamic_events
-+ # echo 1 > /sys/kernel/tracing/events/sched/switch/enable
-+ # cat /sys/kernel/tracing/trace
-+
-+ # tracer: nop
-+ #
-+ # entries-in-buffer/entries-written: 2721/2721   #P:8
-+ #
-+ #                                _-----=> irqs-off/BH-disabled
-+ #                               / _----=> need-resched
-+ #                              | / _---=> hardirq/softirq
-+ #                              || / _--=> preempt-depth
-+ #                              ||| / _-=> migrate-disable
-+ #                              |||| /     delay
-+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
-+ #              | |         |   |||||     |         |
-+     sshd-session-1082    [004] d..4.  5041.239906: switch: (sched.sched_switch) prev=1082 next=0
-+             bash-1085    [001] d..4.  5041.240198: switch: (sched.sched_switch) prev=1085 next=141
-+    kworker/u34:5-141     [001] d..4.  5041.240259: switch: (sched.sched_switch) prev=141 next=1085
-+           <idle>-0       [004] d..4.  5041.240354: switch: (sched.sched_switch) prev=0 next=1082
-+             bash-1085    [001] d..4.  5041.240385: switch: (sched.sched_switch) prev=1085 next=141
-+    kworker/u34:5-141     [001] d..4.  5041.240410: switch: (sched.sched_switch) prev=141 next=1085
-+             bash-1085    [001] d..4.  5041.240478: switch: (sched.sched_switch) prev=1085 next=0
-+     sshd-session-1082    [004] d..4.  5041.240526: switch: (sched.sched_switch) prev=1082 next=0
-+           <idle>-0       [001] d..4.  5041.247524: switch: (sched.sched_switch) prev=0 next=90
-+           <idle>-0       [002] d..4.  5041.247545: switch: (sched.sched_switch) prev=0 next=16
-+      kworker/1:1-90      [001] d..4.  5041.247580: switch: (sched.sched_switch) prev=90 next=0
-+        rcu_sched-16      [002] d..4.  5041.247591: switch: (sched.sched_switch) prev=16 next=0
-+           <idle>-0       [002] d..4.  5041.257536: switch: (sched.sched_switch) prev=0 next=16
-+        rcu_sched-16      [002] d..4.  5041.257573: switch: (sched.sched_switch) prev=16 next=0
-+
-+Note, without adding the "u32" after the prev_pid and next_pid, the values
-+would default showing in hexadecimal.
-+
-+Example 2
-+---------
-+
-+If a specific system call is to be recorded but the syscalls events are not
-+enabled, the raw_syscalls can still be used (syscalls are system call
-+events are not normal events, but are created from the raw_syscalls events
-+within the kernel). In order to trace the openat system call, one can create
-+an event probe on top of the raw_syscalls event:
-+::
-+
-+ # cd /sys/kernel/tracing
-+ # cat events/raw_syscalls/sys_enter/format
-+ name: sys_enter
-+ ID: 395
-+ format:
-+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
-+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
-+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
-+	field:int common_pid;	offset:4;	size:4;	signed:1;
-+
-+	field:long id;	offset:8;	size:8;	signed:1;
-+	field:unsigned long args[6];	offset:16;	size:48;	signed:0;
-+
-+ print fmt: "NR %ld (%lx, %lx, %lx, %lx, %lx, %lx)", REC->id, REC->args[0], REC->args[1], REC->args[2], REC->args[3], REC->args[4], REC->args[5]
-+
-+From the source code, the sys_openat() has:
-+::
-+
-+ int sys_openat(int dirfd, const char *path, int flags, mode_t mode)
-+ {
-+	return my_syscall4(__NR_openat, dirfd, path, flags, mode);
-+ }
-+
-+The path is the second parameter, and that is what is wanted.
-+::
-+
-+ # echo 'e:openat raw_syscalls.sys_enter nr=$id filename=+8($args):ustring' >> dynamic_events
-+
-+This is being run on x86_64 where the word size is 8 bytes and the openat
-+system call __NR_openat is set at 257.
-+::
-+
-+ # echo 'nr == 257' > events/eprobes/openat/filter
-+
-+Now enable the event and look at the trace.
-+::
-+
-+ # echo 1 > events/eprobes/openat/enable
-+ # cat trace
-+
-+ # tracer: nop
-+ #
-+ # entries-in-buffer/entries-written: 4/4   #P:8
-+ #
-+ #                                _-----=> irqs-off/BH-disabled
-+ #                               / _----=> need-resched
-+ #                              | / _---=> hardirq/softirq
-+ #                              || / _--=> preempt-depth
-+ #                              ||| / _-=> migrate-disable
-+ #                              |||| /     delay
-+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
-+ #              | |         |   |||||     |         |
-+              cat-1298    [003] ...2.  2060.875970: openat: (raw_syscalls.sys_enter) nr=0x101 filename=(fault)
-+              cat-1298    [003] ...2.  2060.876197: openat: (raw_syscalls.sys_enter) nr=0x101 filename=(fault)
-+              cat-1298    [003] ...2.  2060.879126: openat: (raw_syscalls.sys_enter) nr=0x101 filename=(fault)
-+              cat-1298    [003] ...2.  2060.879639: openat: (raw_syscalls.sys_enter) nr=0x101 filename=(fault)
-+
-+The filename shows "(fault)". This is likely because the filename has not been
-+pulled into memory yet and currently trace events cannot fault in memory that
-+is not present. When an eprobe tries to read memory that has not been faulted
-+in yet, it will show the "(fault)" text.
-+
-+To get around this, as the kernel will likely pull in this filename and make
-+it present, attaching it to a synthetic event that can pass the address of the
-+filename from the entry of the event to the end of the event, this can be used
-+to show the filename when the system call returns.
-+
-+Remove the old eprobe::
-+
-+ # echo 1 > events/eprobes/openat/enable
-+ # echo '-:openat' >> dynamic_events
-+
-+This time make an eprobe where the address of the filename is saved::
-+
-+ # echo 'e:openat_start raw_syscalls.sys_enter nr=$id filename=+8($args):x64' >> dynamic_events
-+
-+Create a synthetic event that passes the address of the filename to the
-+end of the event::
-+
-+ # echo 's:filename u64 file' >> dynamic_events
-+ # echo 'hist:keys=common_pid:f=filename if nr == 257' > events/eprobes/openat_start/trigger
-+ # echo 'hist:keys=common_pid:file=$f:onmatch(eprobes.openat_start).trace(filename,$file) if id == 257' > events/raw_syscalls/sys_exit/trigger
-+
-+Now that the address of the filename has been passed to the end of the
-+system call, create another eprobe to attach to the exit event to show the
-+string::
-+
-+ # echo 'e:openat synthetic.filename filename=+0($file):ustring' >> dynamic_events
-+ # echo 1 > events/eprobes/openat/enable
-+ # cat trace
-+
-+ # tracer: nop
-+ #
-+ # entries-in-buffer/entries-written: 4/4   #P:8
-+ #
-+ #                                _-----=> irqs-off/BH-disabled
-+ #                               / _----=> need-resched
-+ #                              | / _---=> hardirq/softirq
-+ #                              || / _--=> preempt-depth
-+ #                              ||| / _-=> migrate-disable
-+ #                              |||| /     delay
-+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
-+ #              | |         |   |||||     |         |
-+              cat-1331    [001] ...5.  2944.787977: openat: (synthetic.filename) filename="/etc/ld.so.cache"
-+              cat-1331    [001] ...5.  2944.788480: openat: (synthetic.filename) filename="/lib/x86_64-linux-gnu/libc.so.6"
-+              cat-1331    [001] ...5.  2944.793426: openat: (synthetic.filename) filename="/usr/lib/locale/locale-archive"
-+              cat-1331    [001] ...5.  2944.831362: openat: (synthetic.filename) filename="trace"
-+
-+Example 3
-+---------
-+
-+If syscall trace events are available, the above would not need the first
-+eprobe, but it would still need the last one::
-+
-+ # echo 's:filename u64 file' >> dynamic_events
-+ # echo 'hist:keys=common_pid:f=filename' > events/syscalls/sys_enter_openat/trigger
-+ # echo 'hist:keys=common_pid:file=$f:onmatch(syscalls.sys_enter_openat).trace(filename,$file)' > events/syscalls/sys_exit_openat/trigger
-+ # echo 'e:openat synthetic.filename filename=+0($file):ustring' >> dynamic_events
-+ # echo 1 > events/eprobes/openat/enable
-+
-+And this would produce the same result as Example 2.
---- a/Documentation/trace/index.rst
-+++ b/Documentation/trace/index.rst
-@@ -36,6 +36,7 @@ the Linux kernel.
-    kprobes
-    kprobetrace
-    fprobetrace
-+   eprobetrace
-    fprobe
-    ring-buffer-design
+--- a/kernel/trace/trace_btf.c
++++ b/kernel/trace/trace_btf.c
+@@ -61,16 +61,17 @@ struct btf_anon_stack {
  
+ /*
+  * Find a member of data structure/union by name and return it.
+- * Return NULL if not found, or -EINVAL if parameter is invalid.
+- * If the member is an member of anonymous union/structure, the offset
+- * of that anonymous union/structure is stored into @anon_offset. Caller
+- * can calculate the correct offset from the root data structure by
+- * adding anon_offset to the member's offset.
++ * Return NULL if not found, or ERR_PTR(-EINVAL) if parameter is invalid.
++ * If the member is a member of an anonymous union/structure, the bit offset
++ * of that anonymous union/structure is stored into @anon_offset.
++ * If @member_type is non-NULL, the actual containing structure/union type
++ * of the found member is stored into @member_type.
+  */
+ const struct btf_member *btf_find_struct_member(struct btf *btf,
+ 						const struct btf_type *type,
+ 						const char *member_name,
+-						u32 *anon_offset)
++						u32 *anon_offset,
++						const struct btf_type **member_type)
+ {
+ 	struct btf_anon_stack *anon_stack;
+ 	const struct btf_member *member;
+@@ -94,14 +95,16 @@ retry:
+ 			if (mtype && btf_type_is_struct(mtype) &&
+ 			    top < BTF_ANON_STACK_MAX) {
+ 				anon_stack[top].tid = tid;
+-				anon_stack[top++].offset =
+-					cur_offset + member->offset;
++				anon_stack[top++].offset = cur_offset +
++					__btf_member_bit_offset(type, member);
+ 			}
+ 		} else {
+ 			name = btf_name_by_offset(btf, member->name_off);
+ 			if (name && !strcmp(member_name, name)) {
+ 				if (anon_offset)
+ 					*anon_offset = cur_offset;
++				if (member_type)
++					*member_type = type;
+ 				goto out;
+ 			}
+ 		}
+--- a/kernel/trace/trace_btf.h
++++ b/kernel/trace/trace_btf.h
+@@ -8,4 +8,5 @@ const struct btf_param *btf_get_func_par
+ const struct btf_member *btf_find_struct_member(struct btf *btf,
+ 						const struct btf_type *type,
+ 						const char *member_name,
+-						u32 *anon_offset);
++						u32 *anon_offset,
++						const struct btf_type **member_type);
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -534,6 +534,7 @@ static int parse_btf_field(char *fieldna
+ {
+ 	struct fetch_insn *code = *pcode;
+ 	const struct btf_member *field;
++	const struct btf_type *mtype;
+ 	u32 bitoffs, anon_offs;
+ 	char *next;
+ 	int is_ptr;
+@@ -562,7 +563,7 @@ static int parse_btf_field(char *fieldna
+ 
+ 			anon_offs = 0;
+ 			field = btf_find_struct_member(ctx->btf, type, fieldname,
+-						       &anon_offs);
++						       &anon_offs, &mtype);
+ 			if (IS_ERR(field)) {
+ 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
+ 				return PTR_ERR(field);
+@@ -575,7 +576,7 @@ static int parse_btf_field(char *fieldna
+ 			bitoffs += anon_offs;
+ 
+ 			/* Accumulate the bit-offsets of the dot-connected fields */
+-			if (btf_type_kflag(type)) {
++			if (btf_type_kflag(mtype)) {
+ 				bitoffs += BTF_MEMBER_BIT_OFFSET(field->offset);
+ 				ctx->last_bitsize = BTF_MEMBER_BITFIELD_SIZE(field->offset);
+ 			} else {
 
 
