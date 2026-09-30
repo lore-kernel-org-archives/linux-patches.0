@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE83509EFA;
-	Wed, 30 Sep 2026 16:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F76C34D916;
+	Wed, 30 Sep 2026 16:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785652; cv=none; b=nwXm0QZ6NlVyXbuQN9R1S8c5x1QzulvYi1S91JK8xaZGbmC2jvzXxWoFheZ1v2BdXEJI92ocqia+N+ovnYepPu6vNjPeTjY6SmTbO+3yO2j3SWFAOIKj8mIa26n3/g27pBriaJgWOCjZZke/dl/AK85MkTI2vtcwPXDzdX3Cmzs=
+	t=1790785655; cv=none; b=BwK/wGwLHJrGva6Nn1uy7JZUwEdrZTicgbqUjIGD7yvB68ibTbDW+A+/hkO2cfOCDx46DixGW0mBtoohQJGG6I+wnFmPGNP0p8bmyvNSJRlz0OKNenYwC30RLmYYPd2XSmeH2qsqeCa/ZhRgNsbkwiR3mqOyi/HdpExYbm4Rxks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785652; c=relaxed/simple;
-	bh=elXzayB1x45KFqRyaMYEP+HX3EU7ICdp+8sfdTFhN4M=;
+	s=arc-20240116; t=1790785655; c=relaxed/simple;
+	bh=vOSJd04Woejn4H7XWRmkyOKyJ1tm1S3dDbY9GlkVZYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCH9JWUyFvTk/pTSlOoDZCWfejqJ+WQR4oWWuNi5rwuDNEKkclNHBJf3DoIHeyvqpy+xckUAlamYn432I2vJPgCs0NZlmr6keMHG4SRs3wd21/aa853oKAcgbkGre93IA9/jhW5Jf2KH+kFxOT2h9jDJFTUPM9Cjn6dPGemJP30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwsBVJ2j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JGXQzby9idudbaRd4spYjN80krcE0OpSUObzh9oLkq7IjPGVs4qCEjZsjzMiLICwr5NS8c2IKOxUKAXyCT728Bphy1iLHBPiy+hsMRM8vBf2XVNTvdjqgK34LAZGeMmGp97KF6eMtO4twKS58V009fiYcyc3g0P0nLGP+Szgwmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sf3eXlJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwsBVJ2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F701F000FF;
-	Wed, 30 Sep 2026 16:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sf3eXlJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B361F00898;
+	Wed, 30 Sep 2026 16:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785648;
-	bh=PkR2WqyxdtuKlltoncwxnqwdVpO0BV9YxGnnA3EgmUs=;
+	s=korg; t=1790785651;
+	bh=K3QIGU5kldFCm1yBk5Wh85PBo52blO3Y2l0K12Glvss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zwsBVJ2jz+WcmodD0FgoGvIh0sgw6HjXLPn/DFZ6RVDLUEPJuJx6Hq8ubzOSc5jxN
-	 pdqrhI+NQEV16GjtsFpxxzpX15kclUBD1Os8IW2BfmB2ogYON91oRPqJeXRnpHPJhY
-	 2+SI0ICrTvY7WmpBbjJnBv5ru5Bjzx2DQ/0bqWzo=
+	b=sf3eXlJeo4MqzvBXRBFcbULbH4QXaH3DVerChe815seOrFF1bJJ7o+6G7bbaIWEYs
+	 DkTRv/Le3LW7H1AF+Nv7ELCgi6i4hmPMHra97RJyKIvQXmBEVg6h6jgb5nVO52/H32
+	 WrgWAzKO53Y3aqXyEa/K8aqYd5MDtgxuTorrkH/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Junjie Cao <junjie.cao@intel.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 581/982] net/smc: check v2_ext_offset/eid_cnt/ism_gid_cnt when receiving proposal msg
-Date: Wed, 30 Sep 2026 17:21:57 +0200
-Message-ID: <20260930152429.258240956@linuxfoundation.org>
+Subject: [PATCH 6.1 582/982] selftests/landlock: Add tests for whiteout object creation
+Date: Wed, 30 Sep 2026 17:21:58 +0200
+Message-ID: <20260930152429.280343632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -48,102 +45,304 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Günther Noack <gnoack@google.com>
 
-commit 7863c9f3d24ba49dbead7e03dfbe40deb5888fdf upstream.
+[ Upstream commit ee890889b30b22f9a21636061def7a04e4f89380 ]
 
-When receiving proposal msg in server, the fields v2_ext_offset/
-eid_cnt/ism_gid_cnt in proposal msg are from the remote client
-and can not be fully trusted. Especially the field v2_ext_offset,
-once exceed the max value, there has the chance to access wrong
-address, and crash may happen.
+Add tests to check that whiteout object creation is guarded by
+LANDLOCK_ACCESS_FS_MAKE_REG, in the cases where these are created from
+userspace:
 
-This patch checks the fields v2_ext_offset/eid_cnt/ism_gid_cnt
-before using them.
+* Conventional creation with mknod()
+* Linking or renaming an existing whiteout object
+* renameat2() with RENAME_WHITEOUT,
+  which creates a new whiteout object in the source location
+* renameat2() with RENAME_EXCHANGE,
+  with one of the renamed objects being a whiteout object
 
-Fixes: 8c3dca341aea ("net/smc: build and send V2 CLC proposal")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ jcao: SMCD_CLC_MAX_V2_GID_ENTRIES does not exist in 6.1;
-  SMC_MAX_ISM_DEVS is the same limit (8) under its pre-b40584d14570 name ]
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260813093157.1436894-4-gnoack@google.com
+[mic: Update commit message as requested]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adapt the tests to the older filesystem fixture and
+ruleset helper]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c  | 3 ++-
- net/smc/smc_clc.c | 8 +++++++-
- net/smc/smc_clc.h | 8 +++++++-
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c | 209 ++++++++++++++++++++-
+ 1 file changed, 207 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 6713296fffd99..89fa7295275ca 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -2225,7 +2225,8 @@ static void smc_find_rdma_v2_device_serv(struct smc_sock *new_smc,
- 		goto not_found;
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index 2a11c4a26d71..6885b5728e41 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -36,6 +36,10 @@ int renameat2(int olddirfd, const char *oldpath, int newdirfd,
+ #define RENAME_EXCHANGE (1 << 1)
+ #endif
  
- 	smc_v2_ext = smc_get_clc_v2_ext(pclc);
--	if (!smc_clc_match_eid(ini->negotiated_eid, smc_v2_ext, NULL, NULL))
-+	if (!smc_v2_ext ||
-+	    !smc_clc_match_eid(ini->negotiated_eid, smc_v2_ext, NULL, NULL))
- 		goto not_found;
- 
- 	/* prepare RDMA check */
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index ad1120a43dbd9..762e50354e11f 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -352,7 +352,6 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
- 	struct smc_clc_msg_hdr *hdr = &pclc->hdr;
- 	struct smc_clc_v2_extension *v2_ext;
- 
--	v2_ext = smc_get_clc_v2_ext(pclc);
- 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
- 	if (!pclc_prfx ||
- 	    pclc_prfx->ipv6_prefixes_cnt > SMC_CLC_MAX_V6_PREFIX)
-@@ -369,6 +368,13 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
- 			sizeof(struct smc_clc_msg_trail))
- 			return false;
- 	} else {
-+		v2_ext = smc_get_clc_v2_ext(pclc);
-+		if ((hdr->typev2 != SMC_TYPE_N &&
-+		     (!v2_ext || v2_ext->hdr.eid_cnt > SMC_CLC_MAX_UEID)) ||
-+		    (smcd_indicated(hdr->typev2) &&
-+		     v2_ext->hdr.ism_gid_cnt > SMC_MAX_ISM_DEVS))
-+			return false;
++#ifndef RENAME_WHITEOUT
++#define RENAME_WHITEOUT (1 << 2)
++#endif
 +
- 		if (ntohs(hdr->length) !=
- 			sizeof(*pclc) +
- 			sizeof(struct smc_clc_msg_smcd) +
-diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-index 0f6102cd5de17..cdba392b6ec9c 100644
---- a/net/smc/smc_clc.h
-+++ b/net/smc/smc_clc.h
-@@ -347,8 +347,14 @@ static inline struct smc_clc_v2_extension *
- smc_get_clc_v2_ext(struct smc_clc_msg_proposal *prop)
+ #define TMP_DIR "tmp"
+ #define BINARY_PATH "./true"
+ 
+@@ -62,6 +66,8 @@ static const char dir_s3d1[] = TMP_DIR "/s3d1";
+ /* dir_s3d2 is a mount point. */
+ static const char dir_s3d2[] = TMP_DIR "/s3d1/s3d2";
+ static const char dir_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3";
++static const char file1_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3/f1";
++static const char file1_s3d4[] = TMP_DIR "/s3d1/s3d2/s3d4/f1";
+ 
+ /*
+  * layout1 hierarchy:
+@@ -258,7 +264,8 @@ static void create_layout1(struct __test_metadata *const _metadata)
+ 	ASSERT_EQ(0, mount("tmp", dir_s3d2, "tmpfs", 0, "size=4m,mode=700"));
+ 	clear_cap(_metadata, CAP_SYS_ADMIN);
+ 
+-	ASSERT_EQ(0, mkdir(dir_s3d3, 0700));
++	create_file(_metadata, file1_s3d3);
++	create_file(_metadata, file1_s3d4);
+ }
+ 
+ static void remove_layout1(struct __test_metadata *const _metadata)
+@@ -275,7 +282,8 @@ static void remove_layout1(struct __test_metadata *const _metadata)
+ 	EXPECT_EQ(0, remove_path(file1_s2d2));
+ 	EXPECT_EQ(0, remove_path(file1_s2d1));
+ 
+-	EXPECT_EQ(0, remove_path(dir_s3d3));
++	EXPECT_EQ(0, remove_path(file1_s3d3));
++	EXPECT_EQ(0, remove_path(file1_s3d4));
+ 	set_cap(_metadata, CAP_SYS_ADMIN);
+ 	umount(dir_s3d2);
+ 	clear_cap(_metadata, CAP_SYS_ADMIN);
+@@ -616,6 +624,27 @@ static void enforce_ruleset(struct __test_metadata *const _metadata,
+ 	}
+ }
+ 
++static void enforce_fs(struct __test_metadata *const _metadata,
++		       const __u64 access_fs, const struct rule rules[])
++{
++	int ruleset_fd;
++
++	if (rules) {
++		ruleset_fd = create_ruleset(_metadata, access_fs, rules);
++	} else {
++		const struct landlock_ruleset_attr ruleset_attr = {
++			.handled_access_fs = access_fs,
++		};
++
++		ruleset_fd = landlock_create_ruleset(&ruleset_attr,
++						     sizeof(ruleset_attr), 0);
++		ASSERT_LE(0, ruleset_fd);
++	}
++
++	enforce_ruleset(_metadata, ruleset_fd);
++	EXPECT_EQ(0, close(ruleset_fd));
++}
++
+ TEST_F_FORK(layout1, proc_nsfs)
  {
- 	struct smc_clc_msg_smcd *prop_smcd = smc_get_clc_msg_smcd(prop);
-+	u16 max_offset;
+ 	const struct rule rules[] = {
+@@ -1992,6 +2021,170 @@ TEST_F_FORK(layout1, rename_file)
+ 			       RENAME_EXCHANGE));
+ }
  
--	if (!prop_smcd || !ntohs(prop_smcd->v2_ext_offset))
-+	max_offset = offsetof(struct smc_clc_msg_proposal_area, pclc_v2_ext) -
-+		     offsetof(struct smc_clc_msg_proposal_area, pclc_smcd) -
-+		     offsetofend(struct smc_clc_msg_smcd, v2_ext_offset);
++TEST_F_FORK(layout1, rename_whiteout_denied)
++{
++	/* The affected file is a FIFO. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
 +
-+	if (!prop_smcd || !ntohs(prop_smcd->v2_ext_offset) ||
-+	    ntohs(prop_smcd->v2_ext_offset) > max_offset)
- 		return NULL;
++	/* Deny MAKE_REG, but allow MAKE_FIFO. */
++	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, NULL);
++
++	/*
++	 * Try to rename a file with RENAME_WHITEOUT.
++	 * file1_s3d3 is in dir_s3d2 (tmpfs), so it supports RENAME_WHITEOUT.
++	 * Denied, because whiteout creation is guarded with MAKE_REG.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++	EXPECT_EQ(EACCES, errno);
++}
++
++static bool is_whiteout(const char *const path)
++{
++	struct stat st;
++
++	if (stat(path, &st) == -1)
++		return false;
++
++	return S_ISCHR(st.st_mode) && st.st_rdev == makedev(0, 0);
++}
++
++static bool is_fifo(const char *const path)
++{
++	struct stat st;
++
++	return stat(path, &st) == 0 && S_ISFIFO(st.st_mode);
++}
++
++TEST_F_FORK(layout1, rename_whiteout_allowed)
++{
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The affected file is a FIFO. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++
++	/* Allow MAKE_REG below dir_s3d3. */
++	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, rules);
++
++	/*
++	 * Rename a file with RENAME_WHITEOUT within the same directory.
++	 * Allowed, because MAKE_REG is granted for the whiteout object which
++	 * gets created in the source location.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++			       TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++
++	/* A whiteout object took the place of the moved FIFO. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d3/f2"));
++}
++
++TEST_F_FORK(layout1, rename_whiteout_reparenting)
++{
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d2,
++			.access = LANDLOCK_ACCESS_FS_REFER,
++		},
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The moved files are FIFOs. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++	ASSERT_EQ(0, unlink(file1_s3d4));
++	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
++
++	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
++	enforce_fs(_metadata,
++		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
++		   rules);
++
++	/*
++	 * The whiteout object is created in the source directory: Moving the
++	 * FIFO out of dir_s3d4 is denied because MAKE_REG is not granted
++	 * there, even though it is granted in the destination directory
++	 * dir_s3d3.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD,
++				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++	EXPECT_EQ(EACCES, errno);
++
++	/*
++	 * Moving the FIFO out of dir_s3d3 is allowed, because MAKE_REG is
++	 * granted there for the created whiteout object.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++			       TMP_DIR "/s3d1/s3d2/s3d4/f2", RENAME_WHITEOUT));
++
++	/* A whiteout object took the place of the moved FIFO. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d4/f2"));
++}
++
++TEST_F_FORK(layout1, rename_whiteout_exchange)
++{
++	const char *const whiteout_s3d3 = TMP_DIR "/s3d1/s3d2/s3d3/f2";
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d2,
++			.access = LANDLOCK_ACCESS_FS_REFER,
++		},
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The exchanged files are FIFOs and an existing whiteout object. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++	ASSERT_EQ(0, mknod(whiteout_s3d3, S_IFCHR | 0600, makedev(0, 0)));
++	ASSERT_EQ(0, unlink(file1_s3d4));
++	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
++
++	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
++	enforce_fs(_metadata,
++		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
++		   rules);
++
++	/*
++	 * With RENAME_EXCHANGE, the whiteout object moves into the source
++	 * directory of the rename: Exchanging the FIFO in dir_s3d4 with the
++	 * whiteout object is denied because MAKE_REG is not granted in
++	 * dir_s3d4, even though it is granted in the whiteout object's own
++	 * directory dir_s3d3.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD, whiteout_s3d3,
++				RENAME_EXCHANGE));
++	EXPECT_EQ(EACCES, errno);
++
++	/*
++	 * Exchanging the FIFO in dir_s3d3 with the whiteout object is
++	 * allowed, because MAKE_REG is granted in the directory into which
++	 * the whiteout object moves.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD, whiteout_s3d3,
++			       RENAME_EXCHANGE));
++
++	/* The FIFO and the whiteout object swapped places. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(whiteout_s3d3));
++}
++
+ TEST_F_FORK(layout1, rename_dir)
+ {
+ 	const struct rule rules[] = {
+@@ -3008,6 +3201,18 @@ TEST_F_FORK(layout1, make_char)
+ 		       makedev(1, 3));
+ }
  
- 	return (struct smc_clc_v2_extension *)
++TEST_F_FORK(layout1, make_whiteout)
++{
++	/*
++	 * Creates a whiteout object (creation guarded by MAKE_REG).
++	 *
++	 * Contrary to the other character devices, this does not require
++	 * CAP_MKNOD, cf. vfs_mknod().
++	 */
++	test_make_file(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, S_IFCHR,
++		       makedev(0, 0));
++}
++
+ TEST_F_FORK(layout1, make_block)
+ {
+ 	/* Creates a /dev/loop0 device. */
 -- 
-2.53.0
+2.51.0
 
 
 
