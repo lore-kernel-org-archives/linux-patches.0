@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D9E34CFDE;
-	Wed, 30 Sep 2026 18:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E18544A708;
+	Wed, 30 Sep 2026 18:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791625; cv=none; b=tGvV8LQ4hIgAA3nC5kb3ILDJkEDAsUXnvR84dbC51jlAMUJo8JVZHHpE2gotRu/PXWqdFTDF3KSOfWVyIWepO9GHU/jOE/mSQ56F93iO5M3fOiwjKOVXb1T3YWK0re1VzqU093ZQY/WhXYJXw7wra9ts3AdjXHTzkY2WKWa/h4k=
+	t=1790791628; cv=none; b=bHBMCYlsLE3cSA+OlvhRU3dkO3AyYER1oCwiLo6b0QWto6W4XhSqbNQgc5yvJF1Ex/Czm3rAT8rcngvaVqr/OmCcuATS5UKoEwK0uFhi9i6GPaX+0HHvDZH6dvrlLRdDaawMbNCME54JvV4Uky9iPQe5zTXoMaUVxVleeixSD0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791625; c=relaxed/simple;
-	bh=ePnhOrmt++cANKPL621ZeiINrTnBwFO6rtK5Y7MbOiw=;
+	s=arc-20240116; t=1790791628; c=relaxed/simple;
+	bh=3lle6m0oRGRNMzXr1GWznXd5pp0vcZ+7bt+/dQZJXrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TeU0R0K+6xVGAt/aFEWw7HNRhqCSrtQl7tR/D0OIsTpMHN1qsvBaE9Rk6EAduPX0FyGL1g4F2OSdbiIOs0YpP78eMqFQn4Fvnhq0+1eY2/+Wzb6IhMtsipzd/THPr1Q9RkdqomspsqudXd8fCfJ3K3NfmUU/0cIZeeRuX2E2J+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJMHzgGo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YMcM4S29M5T1gJFBvrTGhNFQkzUguovZOSlU4j9ZRLeHgtGabT/zhxR42pHQ8+ewAjjg8RniR/gf5wpLs3JZdMkfArow9Fo4B6ImIwSR2JUfT9EFH8Q1k3Gmgq2xqCD4PDvbJPNiRG+IFeuTImzic26H0P15F1XiDP2jhwcTBdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRYc0beA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJMHzgGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002401F000FF;
-	Wed, 30 Sep 2026 18:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRYc0beA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CD11F00899;
+	Wed, 30 Sep 2026 18:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791624;
-	bh=mAHQY4dJGMMjQeR8vDipBdgAdAUEnqDRJzVWH8J/0vo=;
+	s=korg; t=1790791627;
+	bh=ANiuQS7hhotrHnpG/bo8kZb7jtR7tcMTCs2MqWucQ4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJMHzgGofUYMkOwAdp63OjrCgqWbiqpIE8gnZpA0/twQvMQkrHwhojesX15xRQ0R5
-	 7l7fleDbzHMgnfccl1hJe27Owa3dSmJpj0qx3nPKmNGdbWL77QkWvARJKvOo8Vragk
-	 FE2Ne9b+0ieeYJrHEaH/dPTF8fUKuFmddXPCSFqg=
+	b=NRYc0beA/89fsu0L7JYPM60auv21cn11W8JjwjYy0ppHEShV7VyynuWfN9aqb8cen
+	 9ebzeFCvQp4OONPJ5xNeZvU9c8X5ZNF76lqq0KXDRjjt3Jz0q1C1YZjf/FqlzUAIHu
+	 2SAgjYEKbtRlh9AiqP0XHo7lpcprUB/rpIIk8sDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"hpp.iscas" <hppiscas@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 323/752] ASoC: bcm: bcm63xx: Publish the OF module aliases
-Date: Wed, 30 Sep 2026 17:23:13 +0200
-Message-ID: <20260930152405.285933130@linuxfoundation.org>
+Subject: [PATCH 5.15 324/752] ASoC: Intel: SST: Publish the PCI module aliases
+Date: Wed, 30 Sep 2026 17:23:14 +0200
+Message-ID: <20260930152405.307283577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,36 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit 32689f0fc54fd801f1cd11637666e534984cb04a ]
+[ Upstream commit d112159df5c6cc5ee6ab91cc32bf6ed29939df38 ]
 
-The BCM63xx I2S platform driver matches brcm,bcm63xx-i2s using
-snd_soc_bcm_audio_match. With SND_BCM63XX_I2S_WHISTLER=m, the platform
-bus emits an OF modalias but snd-soc-63xx does not publish that table.
+The legacy SST PCI driver matches Intel Tangier devices using
+intel_sst_ids, but its only explicit module alias is "sst". That alias
+does not match PCI modalias events when this driver is built as a module.
 
-Export the existing OF IDs for module autoloading. The PCM companion
-and the probe path remain unchanged.
+Publish its PCI table. The independently configurable SOF driver does
+not provide aliases for the legacy SST module.
 
-Fixes: 88eb404ccc3e ("ASoC: brcm: Add DSL/PON SoC audio driver")
+Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
 Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905133103.63432-1-hppiscas@163.com
+Link: https://patch.msgid.link/20260905133133.63661-1-hppiscas@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/bcm/bcm63xx-i2s-whistler.c | 1 +
+ sound/soc/intel/atom/sst/sst_pci.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/bcm/bcm63xx-i2s-whistler.c b/sound/soc/bcm/bcm63xx-i2s-whistler.c
-index 527caf430715b..a515be2c0db14 100644
---- a/sound/soc/bcm/bcm63xx-i2s-whistler.c
-+++ b/sound/soc/bcm/bcm63xx-i2s-whistler.c
-@@ -299,6 +299,7 @@ static const struct of_device_id snd_soc_bcm_audio_match[] = {
- 	{.compatible = "brcm,bcm63xx-i2s"},
- 	{ }
+diff --git a/sound/soc/intel/atom/sst/sst_pci.c b/sound/soc/intel/atom/sst/sst_pci.c
+index f7ad991bf04d5..900e3d42e3d5e 100644
+--- a/sound/soc/intel/atom/sst/sst_pci.c
++++ b/sound/soc/intel/atom/sst/sst_pci.c
+@@ -179,6 +179,7 @@ static const struct pci_device_id intel_sst_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, SST_MRFLD_PCI_ID), 0},
+ 	{ 0, }
  };
-+MODULE_DEVICE_TABLE(of, snd_soc_bcm_audio_match);
- #endif
++MODULE_DEVICE_TABLE(pci, intel_sst_ids);
  
- static struct platform_driver bcm63xx_i2s_driver = {
+ static struct pci_driver sst_driver = {
+ 	.name = SST_DRV_NAME,
 -- 
 2.53.0
 
