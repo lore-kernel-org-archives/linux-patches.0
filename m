@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562DE3D9526;
-	Wed, 30 Sep 2026 19:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307C93C0A06;
+	Wed, 30 Sep 2026 19:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795928; cv=none; b=e/pmLYOQummk4U1QIXmZygr6b4PaZ2dwTVy3vkRKC+hIUFAUJ4nf6AjVh1u/nynnWK9EWz/G8WzIlUZWKlS33vAvKKdpeHCuO5PzWbfFx+YU8y8WaotUzdeJelnlYGFS9S1154IMims6OCB/6TJhSV3AChcqvTZwxrvs2e2UiWc=
+	t=1790795931; cv=none; b=fneM3AIzuFtUd5yQz0Y2Ocu44XRdve2+HEOZtcHyVTxQI3+lrbqXiDUvB/vhvFttLT5zMGRYn17qHOD7w6rxz81u4Rs+VMxHtKD8RFHHhHclS0NRlmBiTJS3q0Ieb37XUFkykvIFsV8YVta3awNTXTLerye9+Bq46k09Hdek1tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795928; c=relaxed/simple;
-	bh=BqVlQGXvWj/+V6B4CcRFB9UFujXRRrjg8Ve87k/O5Vo=;
+	s=arc-20240116; t=1790795931; c=relaxed/simple;
+	bh=NSYPHI9LH08Ul4wx3zx+s/4wgeppZBl16W8vQWpfVU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cF3bRh0Ysjz7zdIKiiIXp2X9xqAeDlcx2d9E0eQrHc5ZkTkgSwvMQDveRgUB58hnWUgz6LbkgBNBfm2uskOEdxrOtbO8plDgGtJ04gqJreD5bLBEHuuE7TxDV/s2FHZfaLNT5KyWhF2AzbspiMxFrL27z6JQytv5KH+rFJcExQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqI6i/Bc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QqbelMrsbcCLkoZsPiHgGrbSSD/4BNDcjZGwxX4u85+ZdTkxvYpoiO+IPWwVRNcrb7+QK5Xdb5d9Xn6e6GML2lpfAAkJ4bMImQxkKKSAT2I7FkwAkSpW7qbOqo7GcOjJ0kS9rqWLBWPi6BUX9akSFhk1HQ/KpciQQ+TzvMjvtfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQuKOvp0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqI6i/Bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90E11F000FF;
-	Wed, 30 Sep 2026 19:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQuKOvp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1DB1F000FF;
+	Wed, 30 Sep 2026 19:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795927;
-	bh=sDeMD8fVSaEoY8VsCKcvVoG/UPeLUTq7AqNDBP1nvZg=;
+	s=korg; t=1790795930;
+	bh=wRtANn55zf+LU6Z62+2tWpeEkB5teZS4Peha8C1DL54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqI6i/BcympKdaoYNz/EoMTv6ooLpPJPux37yd7x3J9TyiRveefN0TJfOxbHr0ujf
-	 2RTc0axU+QHKSzt8Qinl0gj6CpEgCMyvFlhLehVszyZ0KxsshWc9/GgBznaMyMvUc5
-	 9jdjXegHzhZaSiKARhPUl8vT3hUTw8my5W1yfqHY=
+	b=cQuKOvp0YGvE0uvVqaiKcDpsaM0UBUXLX4OLHi+VC1rgKQxaqc60bXFlAIIp69mID
+	 2UGKsN/+fTiHCpolj5/vzbjWZCustj5ND4PHBTtZxPnh3cIStXUgdlzHlqVJRJNkfo
+	 QNxplcGcKAidHzXIc66L/Yb4CVl8U26UdlXZoQ2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com,
+	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0733/1193] net: convert dev->reg_state to u8
-Date: Wed, 30 Sep 2026 17:23:37 +0200
-Message-ID: <20260930152450.539214704@linuxfoundation.org>
+Subject: [PATCH 6.6 0734/1193] RDMA/core: Reject unregistering netdevs in ib_get_eth_speed
+Date: Wed, 30 Sep 2026 17:23:38 +0200
+Message-ID: <20260930152450.560036138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,119 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
 
-[ Upstream commit 4d42b37def70327b2bb19f823d42289aed2cd7c7 ]
+[ Upstream commit ef9fbe1b93f3b617b96e86d5cd76b3fa44514cb5 ]
 
-Prepares things so that dev->reg_state reads can be lockless,
-by adding WRITE_ONCE() on write side.
+ib_device_get_netdev() intentionally returns a referenced net_device even
+when it is unregistering, so matching and cleanup callers can still find
+the association. The reference keeps struct net_device allocated, but does
+not guarantee that the device remains operational.
 
-READ_ONCE()/WRITE_ONCE() do not support bitfields.
+ib_get_eth_speed() uses the returned device operationally by invoking its
+ethtool callback. Although that call is made under RTNL, the function does
+not verify the registration state first. An asynchronous RDMA port query
+can therefore call into a netdev after NETDEV_UNREGISTER and ndo_uninit
+have completed.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ef9fbe1b93f3 ("RDMA/core: Reject unregistering netdevs in ib_get_eth_speed")
+Check for NETREG_REGISTERED while holding RTNL and return -ENODEV for a
+device which is being unregistered. Keeping RTNL across the check and the
+ethtool operation prevents unregister from starting between them.
+
+Keep the speed fallback and warning under RTNL as well, so the warning can
+safely read netdev->name. Drop the netdev reference before releasing RTNL
+once all accesses to the device are complete.
+
+Fixes: d41861942fc5 ("IB/core: Add generic function to extract IB speed from netdev")
+Reported-by: syzbot+5fe14f2ff4ccbace9a26@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5fe14f2ff4ccbace9a26
+Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+Link: https://patch.msgid.link/20260812081708.32468-1-krystianmkaniewski@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 23 ++++++++++++++---------
- net/core/dev.c            |  8 ++++----
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ drivers/infiniband/core/verbs.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index b6e63bcfff30a..fdd3ae0a506ea 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1795,6 +1795,15 @@ enum netdev_stat_type {
- 	NETDEV_PCPU_STAT_DSTATS, /* struct pcpu_dstats */
- };
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index d08aa155a9cfa..55d985441a3c6 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -1988,11 +1988,13 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
+ 		return -ENODEV;
  
-+enum netdev_reg_state {
-+	NETREG_UNINITIALIZED = 0,
-+	NETREG_REGISTERED,	/* completed register_netdevice */
-+	NETREG_UNREGISTERING,	/* called unregister_netdevice */
-+	NETREG_UNREGISTERED,	/* completed unregister todo */
-+	NETREG_RELEASED,	/* called free_netdev */
-+	NETREG_DUMMY,		/* dummy device for NAPI poll */
-+};
-+
- /**
-  *	struct net_device - The DEVICE structure.
-  *
-@@ -2325,13 +2334,7 @@ struct net_device {
+ 	rtnl_lock();
+-	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
+-	rtnl_unlock();
+-
+-	dev_put(netdev);
++	if (READ_ONCE(netdev->reg_state) != NETREG_REGISTERED) {
++		dev_put(netdev);
++		rtnl_unlock();
++		return -ENODEV;
++	}
  
- 	struct list_head	link_watch_list;
- 
--	enum { NETREG_UNINITIALIZED=0,
--	       NETREG_REGISTERED,	/* completed register_netdevice */
--	       NETREG_UNREGISTERING,	/* called unregister_netdevice */
--	       NETREG_UNREGISTERED,	/* completed unregister todo */
--	       NETREG_RELEASED,		/* called free_netdev */
--	       NETREG_DUMMY,		/* dummy device for NAPI poll */
--	} reg_state:8;
-+	u8 reg_state;
- 
- 	bool dismantle;
- 
-@@ -5277,7 +5280,9 @@ static inline const char *netdev_name(const struct net_device *dev)
- 
- static inline const char *netdev_reg_state(const struct net_device *dev)
- {
--	switch (dev->reg_state) {
-+	u8 reg_state = READ_ONCE(dev->reg_state);
-+
-+	switch (reg_state) {
- 	case NETREG_UNINITIALIZED: return " (uninitialized)";
- 	case NETREG_REGISTERED: return "";
- 	case NETREG_UNREGISTERING: return " (unregistering)";
-@@ -5286,7 +5291,7 @@ static inline const char *netdev_reg_state(const struct net_device *dev)
- 	case NETREG_DUMMY: return " (dummy)";
++	rc = __ethtool_get_link_ksettings(netdev, &lksettings);
+ 	if (!rc && lksettings.base.speed != (u32)SPEED_UNKNOWN) {
+ 		netdev_speed = lksettings.base.speed;
+ 	} else {
+@@ -2001,6 +2003,8 @@ int ib_get_eth_speed(struct ib_device *dev, u32 port_num, u16 *speed, u8 *width)
+ 			pr_warn("%s speed is unknown, defaulting to %u\n",
+ 				netdev->name, netdev_speed);
  	}
++	dev_put(netdev);
++	rtnl_unlock();
  
--	WARN_ONCE(1, "%s: unknown reg_state %d\n", dev->name, dev->reg_state);
-+	WARN_ONCE(1, "%s: unknown reg_state %d\n", dev->name, reg_state);
- 	return " (unknown)";
- }
- 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 290fb19c5dd76..36a6d621c10a7 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10341,7 +10341,7 @@ int register_netdevice(struct net_device *dev)
- 
- 	ret = netdev_register_kobject(dev);
- 	write_lock(&dev_base_lock);
--	dev->reg_state = ret ? NETREG_UNREGISTERED : NETREG_REGISTERED;
-+	WRITE_ONCE(dev->reg_state, ret ? NETREG_UNREGISTERED : NETREG_REGISTERED);
- 	write_unlock(&dev_base_lock);
- 	if (ret)
- 		goto err_uninit_notify;
-@@ -10634,7 +10634,7 @@ void netdev_run_todo(void)
- 		}
- 
- 		write_lock(&dev_base_lock);
--		dev->reg_state = NETREG_UNREGISTERED;
-+		WRITE_ONCE(dev->reg_state, NETREG_UNREGISTERED);
- 		write_unlock(&dev_base_lock);
- 		linkwatch_forget_dev(dev);
- 	}
-@@ -11049,7 +11049,7 @@ void free_netdev(struct net_device *dev)
- 	}
- 
- 	BUG_ON(dev->reg_state != NETREG_UNREGISTERED);
--	dev->reg_state = NETREG_RELEASED;
-+	WRITE_ONCE(dev->reg_state, NETREG_RELEASED);
- 
- 	/* will free via device release */
- 	put_device(&dev->dev);
-@@ -11138,7 +11138,7 @@ void unregister_netdevice_many_notify(struct list_head *head,
- 		/* And unlink it from device chain. */
- 		write_lock(&dev_base_lock);
- 		unlist_netdevice(dev, false);
--		dev->reg_state = NETREG_UNREGISTERING;
-+		WRITE_ONCE(dev->reg_state, NETREG_UNREGISTERING);
- 		write_unlock(&dev_base_lock);
- 	}
- 	flush_all_backlogs();
+ 	ib_get_width_and_speed(netdev_speed, lksettings.lanes,
+ 			       speed, width);
 -- 
 2.53.0
 
