@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2C24C4F58;
-	Wed, 30 Sep 2026 15:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20F14E433F;
+	Wed, 30 Sep 2026 15:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783409; cv=none; b=RrxhHROmNJeRtxE+cwUVoY08SGMyUHRtUshuFDJ2oHnH+gYMlSs0flB0J0739qL3r5rSlgjpTWUN0lexlcYl6B9AlgL+GsrDvI873gnYy7zKz9fsZjaFjFfRcmAsUBTxPFSLLHBScxB9B+O1KH/BgIXdllUd4ufZejR7fPLmObI=
+	t=1790783412; cv=none; b=dGtZH/LnL3s1Izd8qa4uyyapdrloNqLSAd4tYuHIiSsq4og11cg8eO8r+LqpC8HI51g5pPHUTI9XBPkJj9WHrjgz+fsld/rkXja++nDPZXHP86cRfu4D+mnDOMJBOYXjOG+dKSJN3VnHn/EVWhMlTBJGtzUaNKbmMLBLuywnHxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783409; c=relaxed/simple;
-	bh=LFz0keq1ercnDrNMk6zD5Q6M1AVhxLbd/WljNJmMIic=;
+	s=arc-20240116; t=1790783412; c=relaxed/simple;
+	bh=GUVbxYLXW/raPQvF6Tl81hcggj792ZXB0rUWugWjaZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqQSkBR7ORrx7Oi+nWxM5S13386FUXIe8UXHQBsxR7gXS5cHqFLaPMIcYiXuJM3RTmOC89lITV1Es5hj17kC30aEXgU7hUao6A97J2e9veMbjTmyoE6tnm2zZNn98BKKF3rTgK6EfLXhG3JhUGW5gLbDQ/Tir3Zvu4Wvsd0tHYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOu60mxC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJ4eQGQKxXWo3jd05SsIeacM3Hd/fh8RKgDKof2AOJlP+gstdYXHla48eU+qgPolPTok/+bRGQkR0D8UY8BPNB98AI92QvB13VKj+xTBmme6reYpCTQ6fD/UDmINMj4kz3CXpOATejZpbuYu4IYpiDjmafRnHm/60BtOxyI7+/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRmt7xyu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOu60mxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33FE1F000FF;
-	Wed, 30 Sep 2026 15:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRmt7xyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA721F00893;
+	Wed, 30 Sep 2026 15:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783404;
-	bh=qNFD33eVy4YLZe2T8vAcp7QpTfduMSPZqgwEIRswHPA=;
+	s=korg; t=1790783407;
+	bh=dKWDI7lONgTgj4hLIA+3CaYqvhygw+2V8MRI9wV3PHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOu60mxCPl7eNJnlTrbg5PFTlOFE2GkqlWiIUtovurJF/8VddyG0qKTU8nHYgbLo0
-	 Qa6a31DjEQcUqDtYr/dd7eeZfr3pAp4jBHEcSmAi2RxttrdFsL2jZzah9e1STGrdI+
-	 bQKSrErFhhCXQ5/rdMUYdW2m5NTfnBintAsmuVlc=
+	b=PRmt7xyuK/2xRvbgPJa+VW13Va6O9FPwbzBZO040Kf8dfEeCJcBm4EKa5wal/ok/m
+	 xkwPyYtYJimE8DYAnqM/qoj0NJhBQMQdWEIpcXy60J4LpbYuYn0lCrKf+nOFO41BfR
+	 3NyQEAt58y5vl1OzUe9Zlmjp9DvEHzbrmLYFm0dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alex Bereza <alex@bereza.email>,
+	Frank Li <Frank.Li@nxp.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 386/595] wifi: mac80211: dont access the TSF of a down interface
-Date: Wed, 30 Sep 2026 17:24:39 +0200
-Message-ID: <20260930152355.977795261@linuxfoundation.org>
+Subject: [PATCH 5.10 387/595] dmaengine: xilinx_dma: Fix hardware buffer descriptor reuse order
+Date: Wed, 30 Sep 2026 17:24:40 +0200
+Message-ID: <20260930152355.998927350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,50 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alex Bereza <alex@bereza.email>
 
-[ Upstream commit 0b1de9feeb8651f7a3bb53ed7c9006e3b5298c01 ]
+[ Upstream commit cee9c863ee68cb27d66745eb03f60e357f4f8ad2 ]
 
-The tsf debugfs files call the driver even if the interface
-isn't up, tgriggering check-sdata-in-driver warnings.
+xilinx_dma_alloc_chan_resources() builds a static ring of hardware
+buffer descriptors once and the driver uses this ring throughout the
+lifetime of a channel. This requires the allocation order of hardware
+buffer descriptors from chan->free_seg_list to stay in sync with the
+hardware buffer descriptor ring built at channel allocation time by
+returning oldest descriptors to chan->free_seg_list first.
 
-Reject the access in that case.
+When chan->pending_list is not empty e.g. during
+xilinx_dma_terminate_all() the chan->free_seg_list and the order of the
+static hardware buffer descriptor ring get out of sync. Descriptors age
+in this order: pending -> active -> done. So freeing pending_list first
+returns the newest buffer descriptors to the chan->free_seg_list first
+and thus breaks the order required by the static hardware buffer
+descriptor ring. Then when the channel is reused, after a wrap around of
+the free_seg_list the DMA will find a hardware buffer descriptor with a
+length field that is still zeroed and stop with something like this:
 
-Assisted-by: LLM
-Fixes: 37a41b4affa3 ("mac80211: add ieee80211_vif param to tsf functions")
-Reported-by: syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1c8c45017f784e646b47
-Link: https://patch.msgid.link/20260908122838.201719-18-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  xilinx-vdma 86000000.dma: Channel 000000003a21d7b8 has errors 10, cdr 6de4c000 tdr 6de4c000
+
+After this no more descriptors are completed and a consumer potentially
+blocks and waits forever. The only way to get out of this error state is
+to rebuild the static hardware buffer descriptor ring and the
+free_seg_list by releasing and re-acquiring the channel.
+
+Fix the order in which hardware buffer descriptors are returned to
+free_seg_list to ensure the mentioned requirement holds.
+
+Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
+Signed-off-by: Alex Bereza <alex@bereza.email>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
+Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-reuse-v1-1-d79827a844c7@bereza.email
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index fe8a7a87e5133..0f79cb14763cf 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -522,6 +522,9 @@ static ssize_t ieee80211_if_fmt_tsf(
- 	struct ieee80211_local *local = sdata->local;
- 	u64 tsf;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 44d897f2b0f0b..b6fcb49ca9e5a 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -889,9 +889,9 @@ static void xilinx_dma_free_descriptors(struct xilinx_dma_chan *chan)
  
-+	if (!ieee80211_sdata_running((struct ieee80211_sub_if_data *)sdata))
-+		return -ENETDOWN;
-+
- 	tsf = drv_get_tsf(local, (struct ieee80211_sub_if_data *)sdata);
+ 	spin_lock_irqsave(&chan->lock, flags);
  
- 	return scnprintf(buf, buflen, "0x%016llx\n", (unsigned long long) tsf);
-@@ -535,6 +538,9 @@ static ssize_t ieee80211_if_parse_tsf(
- 	int ret;
- 	int tsf_is_delta = 0;
+-	xilinx_dma_free_desc_list(chan, &chan->pending_list);
+ 	xilinx_dma_free_desc_list(chan, &chan->done_list);
+ 	xilinx_dma_free_desc_list(chan, &chan->active_list);
++	xilinx_dma_free_desc_list(chan, &chan->pending_list);
  
-+	if (!ieee80211_sdata_running(sdata))
-+		return -ENETDOWN;
-+
- 	if (strncmp(buf, "reset", 5) == 0) {
- 		if (local->ops->reset_tsf) {
- 			drv_reset_tsf(local, sdata);
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+ }
 -- 
 2.53.0
 
