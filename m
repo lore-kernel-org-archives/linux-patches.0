@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1DD51A122;
-	Wed, 30 Sep 2026 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7CE51B17D;
+	Wed, 30 Sep 2026 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788363; cv=none; b=JKtnp2Rd8nzu47mKAYNAoKMDJmtowYpaNBt9AAfi1YCthrX5sChGaSEj8dshq0rJJGaAjHJTusnfCMWb9J/0WFmAO6LynbdRczVeEHjUHlj+pHu2+wOeHvLvCHcoawVUN7F/bpCWh3XuFGsZ9fiVrxt6ThcnbOSsQG9TyfS+TpA=
+	t=1790788366; cv=none; b=uz0Uq8wkuPhlB6JwNRvaBuVmVWMleSnGgLGPTGYYN/Dfd3OgQmEenigntcPbl53TE5LoF/CZwFvI7TuorvlCOfOzQ5knyfe0HT/mvMy/CsrGzRFEb6cLvd1NM9Ibwo6KGpNV9MGM94NfG3ksi8Vd5tM6R36NJLIP+dLVypsI9eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788363; c=relaxed/simple;
-	bh=79pAvz2IJlHj3Y0RV23vNVmACRVLEjnYXYwNrHmIAuo=;
+	s=arc-20240116; t=1790788366; c=relaxed/simple;
+	bh=687+7hboOnAcYifSaH+YxZj4LmZXve+NR4oRoI59Qqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SO8JtpXrQt5fWa1yu20UUbk8FrFMm5XAjxM6AdpIg71aqL01iuCtyeupgxa/3rHz1AOkbxuWN+1DU2lzkWbYnGLbvWzd7y3pTVU3rcbFluZhm7FCdhCoOe20KyoAz0e65kYm8Sg+U8/73P+U3gGsV8dtN/9T/JKviGkqmpWB7Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqP8Dpog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANqpZQ9OYhv9EtviqE4GmSDILV4x9JS2EcsNeo5P1W6r5k+JYxRd4hJdz58HvTSK1hVzoyyMoB+VHpjUdaWgV3AjSWRFJykE34mKc+2h1KcuOFEFgF2zXpuHBwXDvXeYBrjHbnjL/YMzwWt63qQNBuv7B+DFI+Rm/GWdmpxEsDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+RCVYkD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqP8Dpog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203C71F00899;
-	Wed, 30 Sep 2026 17:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+RCVYkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92AA1F000FF;
+	Wed, 30 Sep 2026 17:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788362;
-	bh=4rU8QWXhLZABf36AKdf1fZsewIvRxurmGsmZqrkM8hE=;
+	s=korg; t=1790788365;
+	bh=sx/YHLjCCl5eWJBTGpSEg9LnafsOXpR8lVqczhNxJ/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wqP8Dpog81SEbt57piiQ8JZo71et4uAURIIMTfxnCHHibpX5rI4vPN2IIqrfh1dYs
-	 Xw5nkcYQtGRDyj2eH3bEUx+awtZyv+YCa+iunRwqbU1Sb+nyeXlsETlk7+ntlLbGsp
-	 VUEOQMQdIa0TU0A4pmuOoiIAkyZTwefE9iyYoaO8=
+	b=z+RCVYkDQkEhmkd2k7qVuZFjLrV3T/0nNy4d5MSN2u3XvATmcJYFQeIY9DBMAkNEj
+	 QespvoRxx0XcgCAC3DQ6t7VWcD7AspvOi9OJ1wDgnEHJfVTXzhNSqL+Ar1fp7g3oKi
+	 tjr75YNA+0KIp105IgoJTJ6ok89Kowhrs6VWDaKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/877] neighbour: Convert RTM_GETNEIGH to RCU.
-Date: Wed, 30 Sep 2026 17:16:48 +0200
-Message-ID: <20260930152416.829602565@linuxfoundation.org>
+Subject: [PATCH 6.12 098/877] neighbour: Convert RTM_GETNEIGHTBL to RCU.
+Date: Wed, 30 Sep 2026 17:16:49 +0200
+Message-ID: <20260930152416.851103679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,106 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ed6e380d2d419a3e8ca73de7b4c7ccb522835f1e ]
+[ Upstream commit 4ae34be500649ec452ac1fc2748958683ad9b55d ]
 
-Only __dev_get_by_index() is the RTNL dependant in neigh_get().
+neightbl_dump_info() calls these functions for each neigh_tables[]
+entry:
 
-Let's replace it with dev_get_by_index_rcu() and convert RTM_GETNEIGH
-to RCU.
+  1. neightbl_fill_info() for tbl->parms
+  2. neightbl_fill_param_info() for tbl->parms_list (except tbl->parms)
+
+Both functions rely on the table lock (read_lock_bh(&tbl->lock))
+and RTNL is not needed.
+
+Let's fetch the table under RCU and convert RTM_GETNEIGHTBL to RCU.
+
+Note that the first entry of tbl->parms_list is tbl->parms.list and
+embedded in neigh_table, so list_next_entry() is safe.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250716221221.442239-10-kuniyu@google.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251022054004.2514876-4-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 979aabdad8dd ("neighbour: Skip default parms when resumed in neightbl_dump_info().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/core/neighbour.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 0dc0ba5cf7443..50a18ae55409e 100644
+index 50a18ae55409e..d38c309e7fa61 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -3010,27 +3010,29 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 	if (!skb)
+@@ -2131,7 +2131,7 @@ static int neightbl_fill_parms(struct sk_buff *skb, struct neigh_parms *parms)
  		return -ENOBUFS;
+ 
+ 	if ((parms->dev &&
+-	     nla_put_u32(skb, NDTPA_IFINDEX, parms->dev->ifindex)) ||
++	     nla_put_u32(skb, NDTPA_IFINDEX, READ_ONCE(parms->dev->ifindex))) ||
+ 	    nla_put_u32(skb, NDTPA_REFCNT, refcount_read(&parms->refcnt)) ||
+ 	    nla_put_u32(skb, NDTPA_QUEUE_LENBYTES,
+ 			NEIGH_VAR(parms, QUEUE_LEN_BYTES)) ||
+@@ -2183,8 +2183,6 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 		return -EMSGSIZE;
+ 
+ 	ndtmsg = nlmsg_data(nlh);
+-
+-	read_lock_bh(&tbl->lock);
+ 	ndtmsg->ndtm_family = tbl->family;
+ 	ndtmsg->ndtm_pad1   = 0;
+ 	ndtmsg->ndtm_pad2   = 0;
+@@ -2210,11 +2208,9 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			.ndtc_proxy_qlen	= READ_ONCE(tbl->proxy_queue.qlen),
+ 		};
+ 
+-		rcu_read_lock();
+ 		nht = rcu_dereference(tbl->nht);
+ 		ndc.ndtc_hash_rnd = nht->hash_rnd[0];
+ 		ndc.ndtc_hash_mask = ((1 << nht->hash_shift) - 1);
+-		rcu_read_unlock();
+ 
+ 		if (nla_put(skb, NDTA_CONFIG, sizeof(ndc), &ndc))
+ 			goto nla_put_failure;
+@@ -2252,12 +2248,10 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 	if (neightbl_fill_parms(skb, &tbl->parms) < 0)
+ 		goto nla_put_failure;
+ 
+-	read_unlock_bh(&tbl->lock);
+ 	nlmsg_end(skb, nlh);
+ 	return 0;
+ 
+ nla_put_failure:
+-	read_unlock_bh(&tbl->lock);
+ 	nlmsg_cancel(skb, nlh);
+ 	return -EMSGSIZE;
+ }
+@@ -2276,8 +2270,6 @@ static int neightbl_fill_param_info(struct sk_buff *skb,
+ 		return -EMSGSIZE;
+ 
+ 	ndtmsg = nlmsg_data(nlh);
+-
+-	read_lock_bh(&tbl->lock);
+ 	ndtmsg->ndtm_family = tbl->family;
+ 	ndtmsg->ndtm_pad1   = 0;
+ 	ndtmsg->ndtm_pad2   = 0;
+@@ -2286,11 +2278,9 @@ static int neightbl_fill_param_info(struct sk_buff *skb,
+ 	    neightbl_fill_parms(skb, parms) < 0)
+ 		goto errout;
+ 
+-	read_unlock_bh(&tbl->lock);
+ 	nlmsg_end(skb, nlh);
+ 	return 0;
+ errout:
+-	read_unlock_bh(&tbl->lock);
+ 	nlmsg_cancel(skb, nlh);
+ 	return -EMSGSIZE;
+ }
+@@ -2531,10 +2521,12 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 
+ 	family = ((struct rtgenmsg *)nlmsg_data(nlh))->rtgen_family;
  
 +	rcu_read_lock();
 +
- 	tbl = neigh_find_table(ndm->ndm_family);
- 	if (!tbl) {
- 		NL_SET_ERR_MSG(extack, "Unsupported family in header for neighbor get request");
- 		err = -EAFNOSUPPORT;
--		goto err_free_skb;
-+		goto err_unlock;
+ 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
+ 		struct neigh_parms *p;
+ 
+-		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
++		tbl = rcu_dereference(neigh_tables[tidx]);
+ 		if (!tbl)
+ 			continue;
+ 
+@@ -2548,7 +2540,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 
+ 		nidx = 0;
+ 		p = list_next_entry(&tbl->parms, list);
+-		list_for_each_entry_from(p, &tbl->parms_list, list) {
++		list_for_each_entry_from_rcu(p, &tbl->parms_list, list) {
+ 			if (!net_eq(neigh_parms_net(p), net))
+ 				continue;
+ 
+@@ -2568,6 +2560,8 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 		neigh_skip = 0;
  	}
- 
- 	if (nla_len(tb[NDA_DST]) != (int)tbl->key_len) {
- 		NL_SET_ERR_MSG(extack, "Invalid network address in neighbor get request");
- 		err = -EINVAL;
--		goto err_free_skb;
-+		goto err_unlock;
- 	}
- 
- 	dst = nla_data(tb[NDA_DST]);
- 
- 	if (ndm->ndm_ifindex) {
--		dev = __dev_get_by_index(net, ndm->ndm_ifindex);
-+		dev = dev_get_by_index_rcu(net, ndm->ndm_ifindex);
- 		if (!dev) {
- 			NL_SET_ERR_MSG(extack, "Unknown device ifindex");
- 			err = -ENODEV;
--			goto err_free_skb;
-+			goto err_unlock;
- 		}
- 	}
- 
-@@ -3041,28 +3043,31 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 		if (!pn) {
- 			NL_SET_ERR_MSG(extack, "Proxy neighbour entry not found");
- 			err = -ENOENT;
--			goto err_free_skb;
-+			goto err_unlock;
- 		}
- 
- 		err = pneigh_fill_info(skb, pn, pid, seq, RTM_NEWNEIGH, 0, tbl);
- 		if (err)
--			goto err_free_skb;
-+			goto err_unlock;
- 	} else {
- 		neigh = neigh_lookup(tbl, dst, dev);
- 		if (!neigh) {
- 			NL_SET_ERR_MSG(extack, "Neighbour entry not found");
- 			err = -ENOENT;
--			goto err_free_skb;
-+			goto err_unlock;
- 		}
- 
- 		err = neigh_fill_info(skb, neigh, pid, seq, RTM_NEWNEIGH, 0);
- 		neigh_release(neigh);
- 		if (err)
--			goto err_free_skb;
-+			goto err_unlock;
- 	}
- 
+ out:
 +	rcu_read_unlock();
 +
- 	return rtnl_unicast(skb, net, pid);
--err_free_skb:
-+err_unlock:
-+	rcu_read_unlock();
- 	kfree_skb(skb);
- 	return err;
- }
-@@ -3876,7 +3881,7 @@ static const struct rtnl_msg_handler neigh_rtnl_msg_handlers[] __initconst = {
- 	{.msgtype = RTM_NEWNEIGH, .doit = neigh_add},
+ 	cb->args[0] = tidx;
+ 	cb->args[1] = nidx;
+ 
+@@ -3882,7 +3876,8 @@ static const struct rtnl_msg_handler neigh_rtnl_msg_handlers[] __initconst = {
  	{.msgtype = RTM_DELNEIGH, .doit = neigh_delete},
  	{.msgtype = RTM_GETNEIGH, .doit = neigh_get, .dumpit = neigh_dump_info,
--	 .flags = RTNL_FLAG_DUMP_UNLOCKED},
-+	 .flags = RTNL_FLAG_DOIT_UNLOCKED | RTNL_FLAG_DUMP_UNLOCKED},
- 	{.msgtype = RTM_GETNEIGHTBL, .dumpit = neightbl_dump_info},
+ 	 .flags = RTNL_FLAG_DOIT_UNLOCKED | RTNL_FLAG_DUMP_UNLOCKED},
+-	{.msgtype = RTM_GETNEIGHTBL, .dumpit = neightbl_dump_info},
++	{.msgtype = RTM_GETNEIGHTBL, .dumpit = neightbl_dump_info,
++	 .flags = RTNL_FLAG_DUMP_UNLOCKED},
  	{.msgtype = RTM_SETNEIGHTBL, .doit = neightbl_set},
  };
+ 
 -- 
 2.53.0
 
