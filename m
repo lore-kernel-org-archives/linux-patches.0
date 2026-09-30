@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD7936D4E1;
-	Wed, 30 Sep 2026 18:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5791511E90;
+	Wed, 30 Sep 2026 18:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792122; cv=none; b=CPX9CohBPkKDTKgoKrowkWWj1CVeo7+27IhEAhkGQveyWskSiYPLAKwaRU0sgQNN4nQA85BvcIYeVntU/o+B+ZgWJ3eygMguWlWUDJ74K+Z2qhJtToY/DU8aoyfCLSy1iW6acBWk9GRlO5CdcpgrV9fln6kAnnTwmDg4Sfy426I=
+	t=1790792124; cv=none; b=kIBU7DBvgvyA45VQOaJ05TUTclC11BQ0j/+ccrxZB5mlYTHQ2dcYlBdJsNbZniR6dUtqB7BYs0ETo2ORs9Vz2YmEpl2S5ylHqSk01VVh5ksM5tTcJG/RapP4xts7ZE0Yol8oXUSZVyljaYuZdaaE3XxSgzccEwh0SEzIx3c3hLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792122; c=relaxed/simple;
-	bh=T866hrGGU1GyPGZiEbc1yWxmeaFDwD+BzD+U3Tt0SIk=;
+	s=arc-20240116; t=1790792124; c=relaxed/simple;
+	bh=E8XKkz/Itr1mKKW7YjMX/0NOoPumGe3foiyGiSFy+fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJnUbjKOksAS5aLwEe08NXGrvcoEf1HbYkWscXk9d5NMSSFvEcqfm3xneo0VNxUw3ET1KjfN4ZfeBaGFyp0gd1xlq+Nbkv+T/ERf4+6OxqEn8Kndg6Qq5nUSparr6KM+FLgPVPc6589lo52U6G19gz3ZAV5T2iIN977Ty8QM1X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgfJoD7b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pfpk7B2sZWWiqALTEEQd/YtGytjg5SSMRUFULdWy0qPyUfLOHaQrruAlp3O6Wi4285jJFiQu9Wh7//Kydctv9K1AbvXxrY0DlRiV5XNkzpoFtxMhCIZnwWIga5xkDynkz0aOZaA7P3NF1Hqu/00wQlL+tSmShJB+cFzQJ2c4rqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQuYWqLS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgfJoD7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ABE1F000FF;
-	Wed, 30 Sep 2026 18:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQuYWqLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565D61F000FF;
+	Wed, 30 Sep 2026 18:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792121;
-	bh=QEp6wcyrFRIVV8hqQs2mbKc3GdPkJN+0LTR8EN5epsY=;
+	s=korg; t=1790792123;
+	bh=yXhsAW54E+2kvtGjnOHEFcZQ3yeIJDm62F50q4RZIxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SgfJoD7bE5y3Q8rAA+sY7AOMPbGkMELDJ/Zvdzze9L7YeS3F9Ya8GMJZ0+U6WjLjq
-	 abbttv0CuX742YsUb/d/i7y+bqf4iSYmppSFTOjn8Twhx+jbgQvZvDBhAalJC+ScDU
-	 tzWQEDSGKaIx+aiWiy1c2CD2ljQsKMAk1BuUMfbA=
+	b=GQuYWqLSMD0HL8OyOn5raFMvqrN2Xa7ZVtO4hYHO+j2sYISRHofyExVNAfDk1La4W
+	 5noFChvqRilUYeN6tEqqjEj7oACbqU2c1eqrEzMAHvrWO52JyRu+cLaWVN73f1ypZu
+	 N5T/nm9Gj3EbjT5eRkfYh880DTWQRrJw9O46MzOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 542/752] i2c: imx: release DMA channels on probe error
-Date: Wed, 30 Sep 2026 17:26:52 +0200
-Message-ID: <20260930152409.975588018@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.15 543/752] IB/mlx4: Fix use-after-free on pkey sysfs registration failure
+Date: Wed, 30 Sep 2026 17:26:53 +0200
+Message-ID: <20260930152409.998168972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,42 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit e9f03b9625e2eeaca357b065c92d5b14064a1583 upstream.
+commit 1af874e9f4ce22ccf8b10ab5462f32c70d3be21a upstream.
 
-i2c_imx_dma_request() acquires exclusive tx/rx DMA channels and is
-optional: on errors other than -EPROBE_DEFER the driver falls back to
-PIO mode and probe continues. If i2c_add_numbered_adapter() then fails,
-probe returns through clk_notifier_unregister without releasing the
-channels, because the remove callback is not invoked after a failed
-probe.
+register_pkey_tree() ignores errors from register_one_pkey_tree() and
+continues registering the remaining slaves. The per-slave error path has
+already released the pkey parent kobjects, but their pointers remain
+stored in the device. A later device cleanup therefore passes the stale
+pointers to kobject_put(), causing a use-after-free.
 
-Release the channels on the probe error path, mirroring
-i2c_imx_remove().
+Clear the parent pointers after releasing a failed slave tree and skip
+unregistered trees during device cleanup. This preserves the existing
+best-effort registration behavior while preventing a second cleanup of
+the failed tree.
 
-Fixes: ce1a78840ff7 ("i2c: imx: add DMA support for freescale i2c driver")
-Assisted-by: GLM:5.3
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Cc: <stable@vger.kernel.org> # v3.19+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-2-271d4adc03a0@cherr.cc
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260816044510.3848996-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx4/sysfs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1581,6 +1581,8 @@ static int i2c_imx_probe(struct platform
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -753,11 +753,13 @@ err_add:
+ 		kobject_put(p);
+ 	}
+ 	kobject_put(dev->dev_ports_parent[slave]);
++	dev->dev_ports_parent[slave] = NULL;
  
- clk_notifier_unregister:
- 	clk_notifier_unregister(i2c_imx->clk, &i2c_imx->clk_change_nb);
-+	if (i2c_imx->dma)
-+		i2c_imx_dma_free(i2c_imx);
- 	free_irq(irq, i2c_imx);
- rpm_disable:
- 	pm_runtime_put_noidle(&pdev->dev);
+ err_ports:
+ 	kobject_put(dev->pkeys.device_parent[slave]);
+ 	/* extra put for the device_parent create_and_add */
+ 	kobject_put(dev->pkeys.device_parent[slave]);
++	dev->pkeys.device_parent[slave] = NULL;
+ 
+ fail_dev:
+ 	kobject_put(dev->iov_parent);
+@@ -787,6 +789,8 @@ static void unregister_pkey_tree(struct
+ 		return;
+ 
+ 	for (slave = device->dev->persist->num_vfs; slave >= 0; --slave) {
++		if (!device->pkeys.device_parent[slave])
++			continue;
+ 		list_for_each_entry_safe(p, t,
+ 					 &device->pkeys.pkey_port_list[slave],
+ 					 entry) {
 
 
