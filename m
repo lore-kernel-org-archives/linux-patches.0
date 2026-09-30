@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72903B71B6;
-	Wed, 30 Sep 2026 18:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC29C4CC63A;
+	Wed, 30 Sep 2026 18:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792003; cv=none; b=tkW2l0H9IQddLb14gFp757lC/1cZkY/FGkqc0Ou0wnFHzy+dDNIw9/YOpWrLjFX3De08sK3vRJ8u7YcecNpC88Afs1XC9BzQQFgkTwbxYIn8qGB+n7HMigzdo2ryh5ww0dpR9kZO4A7A+zlhvAXUa5cZ7GBs0wMhE8RRZZX3Cv4=
+	t=1790792006; cv=none; b=VvS+ZN1cs5DPzf6YUBb0ajrzBIBzgxaNoB9onSCHXVdNl1tHcrXsPk7HRS/DMXMV72mWmADxlhcoOmTyU7ORxTp1sNH7AaNQdM+w7sEQHmOGr48q0s5G0Vnds/hj8jTxlzyCEyT/xmE9VwNedBjJtfz0QR7Bt6sQHZd22OORGzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792003; c=relaxed/simple;
-	bh=ujvlDiRx7u1B+iHf2caNqXtuIgMcB7B+K5w+QHetpvs=;
+	s=arc-20240116; t=1790792006; c=relaxed/simple;
+	bh=XH5mWkZPheekQLm8371PrT6mASmkgDlpvF1WKOux9/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwV+RAyrF1xuL1/PldhgXSLfhmmzyZc5C9ah7wvUSGueHotM/0en3M6SN3w6rRgEA3PFO/4f96oRSCabZAY6EKO555qSSZBJt7Ta4xJylLaiDBdshWN+E05DKLQs2ShrSIpUmJCZvYxhu9j4syQQD1gen9ajt1bRazNwNo9EYAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2XkAhjv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uFgOEhunZuZ5S0Ppamy8IRQNP6FfLHTyD6xTcgar4NlHLfS/6HQZTd78glEoaHQktl7t1RkJivxS5h7wXJrKuH6FlccB7aiXj1u2uj1XbRg5P/ad6htRjl5ysHvpvNurBLD9aYdgd2IS1RGskYlHXPbMUAxlH/cWhasxQGn9sVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBZvb38k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2XkAhjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BC51F000FF;
-	Wed, 30 Sep 2026 18:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBZvb38k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296981F000FF;
+	Wed, 30 Sep 2026 18:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792001;
-	bh=IJiryDKPAZnZQZWLx+RefIr6YM6sZsNnSc9PYbZ8vNo=;
+	s=korg; t=1790792004;
+	bh=s2T3qXnQgT5dvZmpdNeQqFbnT9ET3WGX5MpAKtkHngs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2XkAhjvFx4cuvaj27G2jwXqmlsAecP4lrydv1f9LUZfO5XH8xh9baRSBmgcPlC/0
-	 momNuqirDFVf9pVO1B0NkXdk8aExVD8mjTKGvksSDI3qiKDL5p/mnYhPvv5a2eCeiR
-	 ZPzUo4T8wNsheOKmDUPCFK/tYwF3qKTz4RQiiiJk=
+	b=YBZvb38kyZ7d0o1qKeccoUYgv0TRpEZk4qkgz/f117VW+h3+WCHqdapVwlj6M10za
+	 OT+vpBO73W8TtxLqKlVikA6IlHFxKt1qpcFLHDt72/J4L5w5yy+P39G6qYoaNQtL8j
+	 xcYJSJCmS6LXg6mOYk0Oer+psYiDWG6zotHG4vt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Davies <ben.davies@gresearch.co.uk>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com,
+	Juan Perdomo <jcperdomo100@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 464/752] IB/IPoIB: Avoid restoring OPER_UP after multicast flush
-Date: Wed, 30 Sep 2026 17:25:34 +0200
-Message-ID: <20260930152408.316689637@linuxfoundation.org>
+Subject: [PATCH 5.15 500/752] Bluetooth: RFCOMM: avoid socket lock inversion in listener cleanup
+Date: Wed, 30 Sep 2026 17:26:10 +0200
+Message-ID: <20260930152409.080907280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,169 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Juan Perdomo <jcperdomo100@gmail.com>
 
-[ Upstream commit 9a141d3dc869d18b2eab35e999f4790a9b84e40f ]
+[ Upstream commit 801fb950cae7048eb7d83b18857d1ca37b8cd5a4 ]
 
-ipoib_ib_dev_flush_light() temporarily clears IPOIB_FLAG_OPER_UP to
-prevent multicast joins while ipoib_mcast_dev_flush() is running, and
-restores the flag afterwards if it was previously set.
+rfcomm_sock_cleanup_listen() closes unaccepted child sockets through
+rfcomm_sock_close(), which takes the child socket lock before
+rfcomm_dlc_close() acquires rfcomm_mutex. The RFCOMM worker takes these
+locks in reverse order while handling connections and DLC state changes,
+so lockdep reports a possible deadlock.
 
-This restore races with ipoib_ib_dev_down(). If the interface is brought
-down while the flush is in progress, ipoib_ib_dev_down() clears
-IPOIB_FLAG_OPER_UP, but the flush path may set it again after the device
-has already gone down.
+Close dequeued children without taking their socket lock. The accept queue
+owns a reference to each child, and bt_accept_dequeue() locks the child
+while unlinking it and clearing its parent pointer.
 
-Since commit 894021a75291 ("IB/ipoib: Make the carrier_on_task race
-aware"), ipoib_mcast_carrier_on_task() relies on IPOIB_FLAG_OPER_UP
-being cleared to terminate its rtnl_trylock() retry loop. If the flag is
-left set after shutdown, the workqueue retries forever, causing teardown
-to deadlock when ipoib_ndo_uninit() waits in destroy_workqueue() while
-holding RTNL.
+Dropping the child lock makes it important to prevent a concurrent
+rfcomm_connect_ind() from enqueueing a new child after cleanup observes an
+empty queue. Set a listening socket to BT_CLOSED while its lock is still
+held, before dropping the lock and draining the queue. The state check in
+rfcomm_connect_ind() then rejects new children once cleanup starts.
 
-Instead of overloading IPOIB_FLAG_OPER_UP to block multicast joins
-during a light flush, introduce a dedicated IPOIB_FLAG_MCAST_FLUSH flag.
-Use it together with IPOIB_FLAG_OPER_UP to determine whether multicast
-joins are allowed, avoiding the race with device shutdown.
-
-Fixes: 344bacca8cd8 ("IB/ipoib: Don't allow MC joins during light MC flush")
-Reported-by: Ben Davies <ben.davies@gresearch.co.uk>
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260902-avoid-rest-oper-up-v1-1-04fcd4916cae@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0cece8fa7d83523f47a3
+Fixes: b7ce436a5d79 ("Bluetooth: switch to lock_sock in RFCOMM")
+Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib.h           |  7 +++++++
- drivers/infiniband/ulp/ipoib/ipoib_ib.c        | 12 +++++++-----
- drivers/infiniband/ulp/ipoib/ipoib_multicast.c | 16 ++++++++--------
- 3 files changed, 22 insertions(+), 13 deletions(-)
+ net/bluetooth/rfcomm/sock.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib.h b/drivers/infiniband/ulp/ipoib/ipoib.h
-index 44d8d151ff904..e3d03b227ae09 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib.h
-+++ b/drivers/infiniband/ulp/ipoib/ipoib.h
-@@ -87,6 +87,7 @@ enum {
- 	IPOIB_FLAG_INITIALIZED	  = 1,
- 	IPOIB_FLAG_ADMIN_UP	  = 2,
- 	IPOIB_PKEY_ASSIGNED	  = 3,
-+	IPOIB_FLAG_MCAST_FLUSH	  = 4,
- 	IPOIB_FLAG_SUBINTERFACE	  = 5,
- 	IPOIB_STOP_REAPER	  = 7,
- 	IPOIB_FLAG_ADMIN_CM	  = 9,
-@@ -416,6 +417,12 @@ struct ipoib_dev_priv {
- 	const struct net_device_ops	*rn_ops;
- };
- 
-+static inline bool ipoib_mcast_allowed(struct ipoib_dev_priv *priv)
-+{
-+	return test_bit(IPOIB_FLAG_OPER_UP, &priv->flags) &&
-+	       !test_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
-+}
-+
- struct ipoib_ah {
- 	struct net_device *dev;
- 	struct ib_ah	  *ah;
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_ib.c b/drivers/infiniband/ulp/ipoib/ipoib_ib.c
-index ceabfb0b0a83c..78cfb5e638bf9 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_ib.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_ib.c
-@@ -1212,17 +1212,19 @@ static void __ipoib_ib_dev_flush(struct ipoib_dev_priv *priv,
- 	}
- 
- 	if (level == IPOIB_FLUSH_LIGHT) {
--		int oper_up;
- 		ipoib_mark_paths_invalid(dev);
--		/* Set IPoIB operation as down to prevent races between:
-+		/* Set MCAST_FLUSH to prevent races between:
- 		 * the flush flow which leaves MCG and on the fly joins
- 		 * which can happen during that time. mcast restart task
- 		 * should deal with join requests we missed.
-+		 *
-+		 * Do not clear OPER_UP for this; restoring it races with
-+		 * ipoib_ib_dev_down() and can leave OPER_UP set after the
-+		 * device is down.
- 		 */
--		oper_up = test_and_clear_bit(IPOIB_FLAG_OPER_UP, &priv->flags);
-+		set_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
- 		ipoib_mcast_dev_flush(dev);
--		if (oper_up)
--			set_bit(IPOIB_FLAG_OPER_UP, &priv->flags);
-+		clear_bit(IPOIB_FLAG_MCAST_FLUSH, &priv->flags);
- 		ipoib_reap_dead_ahs(priv);
- 	}
- 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-index 319d4288eddde..9c00426227ed5 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-@@ -74,7 +74,7 @@ static void __ipoib_mcast_schedule_join_thread(struct ipoib_dev_priv *priv,
- 					       struct ipoib_mcast *mcast,
- 					       bool delay)
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 31f62dfbb5a99..b0dc442ba5b43 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -243,9 +243,7 @@ static void __rfcomm_sock_close(struct sock *sk)
+  */
+ static void rfcomm_sock_close(struct sock *sk)
  {
--	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
-+	if (!ipoib_mcast_allowed(priv))
- 		return;
+-	lock_sock(sk);
+ 	__rfcomm_sock_close(sk);
+-	release_sock(sk);
+ }
  
- 	/*
-@@ -470,7 +470,7 @@ static int ipoib_mcast_join(struct net_device *dev, struct ipoib_mcast *mcast)
- 	int ret = 0;
+ static void rfcomm_sock_init(struct sock *sk, struct sock *parent)
+@@ -903,6 +901,7 @@ static int rfcomm_sock_compat_ioctl(struct socket *sock, unsigned int cmd, unsig
+ static int rfcomm_sock_shutdown(struct socket *sock, int how)
+ {
+ 	struct sock *sk = sock->sk;
++	bool cleanup_listen = false;
+ 	int err = 0;
  
- 	if (!priv->broadcast ||
--	    !test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
-+	    !ipoib_mcast_allowed(priv))
- 		return -EINVAL;
+ 	BT_DBG("sock %p, sk %p", sock, sk);
+@@ -913,9 +912,17 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
+ 	lock_sock(sk);
+ 	if (!sk->sk_shutdown) {
+ 		sk->sk_shutdown = SHUTDOWN_MASK;
++		if (sk->sk_state == BT_LISTEN) {
++			/* Block new children before cleaning up without sk lock. */
++			sk->sk_state = BT_CLOSED;
++			cleanup_listen = true;
++		}
  
- 	init_completion(&mcast->done);
-@@ -556,7 +556,7 @@ void ipoib_mcast_join_task(struct work_struct *work)
- 	unsigned long delay_until = 0;
- 	struct ipoib_mcast *mcast = NULL;
+ 		release_sock(sk);
+-		__rfcomm_sock_close(sk);
++		if (cleanup_listen)
++			rfcomm_sock_cleanup_listen(sk);
++		else
++			__rfcomm_sock_close(sk);
+ 		lock_sock(sk);
  
--	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
-+	if (!ipoib_mcast_allowed(priv))
- 		return;
- 
- 	if (ib_query_port(priv->ca, priv->port, &port_attr)) {
-@@ -578,7 +578,7 @@ void ipoib_mcast_join_task(struct work_struct *work)
- 	netif_addr_unlock_bh(dev);
- 
- 	spin_lock_irq(&priv->lock);
--	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
-+	if (!ipoib_mcast_allowed(priv))
- 		goto out;
- 
- 	if (!priv->broadcast) {
-@@ -750,7 +750,7 @@ void ipoib_mcast_send(struct net_device *dev, u8 *daddr, struct sk_buff *skb)
- 
- 	spin_lock_irqsave(&priv->lock, flags);
- 
--	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags)		||
-+	if (!ipoib_mcast_allowed(priv)				||
- 	    !priv->broadcast					||
- 	    !test_bit(IPOIB_MCAST_FLAG_ATTACHED, &priv->broadcast->flags)) {
- 		++dev->stats.tx_dropped;
-@@ -872,7 +872,7 @@ void ipoib_mcast_restart_task(struct work_struct *work)
- 	LIST_HEAD(remove_list);
- 	struct ib_sa_mcmember_rec rec;
- 
--	if (!test_bit(IPOIB_FLAG_OPER_UP, &priv->flags))
-+	if (!ipoib_mcast_allowed(priv))
- 		/*
- 		 * shortcut...on shutdown flush is called next, just
- 		 * let it do all the work
-@@ -966,9 +966,9 @@ void ipoib_mcast_restart_task(struct work_struct *work)
- 	ipoib_mcast_remove_list(&remove_list);
- 
- 	/*
--	 * Double check that we are still up
-+	 * Double check that we are still up and not flushing
- 	 */
--	if (test_bit(IPOIB_FLAG_OPER_UP, &priv->flags)) {
-+	if (ipoib_mcast_allowed(priv)) {
- 		spin_lock_irq(&priv->lock);
- 		__ipoib_mcast_schedule_join_thread(priv, NULL, 0);
- 		spin_unlock_irq(&priv->lock);
+ 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
 -- 
 2.53.0
 
