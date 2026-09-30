@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D2046D2B5;
-	Wed, 30 Sep 2026 15:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0190C481A8F;
+	Wed, 30 Sep 2026 15:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783135; cv=none; b=Nm9V27RkX9DahYeUQ05MIfHCijhTdseSg5MAIWqwdTFR78Ep3KYrQqfCS6aAYHDQC8ZLakEmAmn6oPZxy7vwMFID06rWFXr5+xuALgLXmFDCpsTdeqErWw13NxhdzCclQ/3S4kgQLjEEKbB4VSkQ0prA8jn2YMbh4O4XFAlDGfc=
+	t=1790783138; cv=none; b=cSbXyJC4fd8LcZzU01p1MIz93pAukVtUYBq+eYr2XQpRUkX1SjaL26TuGO0OQ4Tsg1HpNH5vpjyrEQqVzblJch716e4/ex+1XLot2gfoORj+/x1SW3I+7BjTrKaHeO6LQBRb2HUpSS8B5BSi/eqQB/63nRMf164k7pPf2IenT/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783135; c=relaxed/simple;
-	bh=hM4DWnZ2t+Bx/EfLkwzBSQaKmVgDmT0hF49OEBX/msI=;
+	s=arc-20240116; t=1790783138; c=relaxed/simple;
+	bh=TEj9GVCsBqyu0Hsp2yeKvJAlWmXnU++SSjleUAeQxsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1E+avE+w1UIV/RxPjcPun9sdQ9qGWRoZp7yDu5oW9a90b2R73daSUzL3h2WqEwar363VUManqBflvwZM1bE9gNpx8rQUgXp4cx9hcwo66TWcUc3a0T7sMDw4WFHL+wBHj+bBeeCaoFH9CWx4npGJG8+823k7GEOaFVTujOL+O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mD60HU2j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NB68uQZKXu4GMaOC+XpFoJOnUr5jc1GxqqKbC8qeET592jnlraGknfGrylq5JnZEnWNOfe+YbasE5YLFcTyU5wn6POZRxm/gLwR8Y74zXiEz0cTzHz1+g2FC8K6lPv/oPwwcr/GO0XhN+qYRKtXZfxEV7xaLjOHVu338h46zX6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWNwBmQi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mD60HU2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6E61F000FF;
-	Wed, 30 Sep 2026 15:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWNwBmQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAA81F00893;
+	Wed, 30 Sep 2026 15:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783128;
-	bh=pY3Y4VWQG4jHOZwTFDqMCSrlqmPG4GzEzkfywBAbIhI=;
+	s=korg; t=1790783131;
+	bh=mHv9Sm7dXku1S1irbXFSuNLsyrRC5o5HC7HmBZ7RU8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mD60HU2j+HjqV7Vq5egrAnzUvK/Rey5yAS5FRcEBfaembTCZKkWOgIxTQeHGHFsao
-	 lfgy7tMm0ka/+Jkf0XQGXpuvJgBW0I0FsX1TFAWABVqLOCw3cNXmKS5dcv+YAPgsGv
-	 lLYWvnV6QZOHRjLv03pOLG/k0Vf3iKYtzZwinjug=
+	b=sWNwBmQiB2t5Pki9YvcC/uJcdcwR8Y84mHuWUvRUnA1LUVs7lgCbApLo3FsxZ8Doe
+	 3ssDuUeqrMz57wK423ZMCTdQDJw2vUdd45ppNfWy6yhd0CYBiHf3v4lHil/b3KgZ8N
+	 xtQCMBOOWiJzcIR6lzZ1AOhXHX92gElI0shxEFVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Prucha <zorgan.roman@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 289/595] ALSA: ctxfi: Fix CA20K2 S/PDIF passthrough
-Date: Wed, 30 Sep 2026 17:23:02 +0200
-Message-ID: <20260930152353.913083648@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 290/595] dm/amdgpu: fix malformed link_settings debugfs output
+Date: Wed, 30 Sep 2026 17:23:03 +0200
+Message-ID: <20260930152353.934656880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,54 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Prucha <zorgan.roman@gmail.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit b26a7a80e6bbf8dd17dacb127d12435d79375cf2 upstream.
+commit 622b4e8505aa7453a53d17fa3a288871f270fc8b upstream.
 
-dao_rsc_init() encodes the DAIO configuration as
+[Why]
+dp_link_settings_read() passed strlen() of each format string as the size
+argument to snprintf() and then advanced rd_buf_ptr by that same fixed amount.
+The format-string length has no relation to the formatted output length, so
+snprintf() truncated each field at a NUL it wrote inside the buffer while the
+pointer was advanced past it. The result is a buffer peppered with embedded NUL
+bytes and fields that are silently cut short, so the data read back from the
+debugfs node does not reflect the actual link settings.
 
-    conf = (desc->msr & 0x7) | (desc->passthru << 3);
+[How]
+Use scnprintf() with the real remaining buffer size
+(rd_buf_size - (rd_buf_ptr - rd_buf)) and advance rd_buf_ptr by its return
+value, which is the number of characters actually written. This both bounds
+each write to the space left in rd_buf and keeps the output a single,
+properly terminated string. The now-unused str_len local is removed.
 
-S/PDIF passthrough uses msr=1 and passthru=1, resulting in
-conf=9.
-
-daio_mgr_dao_init() masks conf with 0xf, but handles only values
-1, 2, 4 and 8 when programming ATXCTL_NUC. As a result, conf=9
-falls through to the default case and leaves NUC at its previous
-setting.
-
-On a Creative X-Fi Titanium HD SB1270 (CA20K2), this breaks AC3
-IEC61937 passthrough when snd_ctxfi runs with
-reference_rate=48000,multiple=2. The receiver detects a non-audio
-stream but cannot decode the AC3 payload.
-
-With the unmodified driver, multiple=1 makes the same stream work.
-Handle conf=9 through the same NUC=0 path as conf=1.
-
-The change was runtime tested on the SB1270 with multiple=2 using
-IEC958 stereo PCM, pre-encoded AC3 IEC61937 passthrough and ALSA
-A52 live 5.1 encoding.
-
-Fixes: 26a9630c72eb ("ALSA: ctxfi: cthw20k2: fix mask on conf to allow 4 bits")
+Fixes: 41db5f1931ec ("drm/amd/display: set-read link rate and lane count through debugfs")
+Assisted-by: Copilot:claude-opus-4.8
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 43b9f0f18693c7f7b75613f3aeae25fa2b4e2f76)
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Roman Prucha <zorgan.roman@gmail.com>
-Link: https://patch.msgid.link/20260903-ctxfi-spdif-conf9-fix-v1-1-5e4e3e1f801c@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/cthw20k2.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   20 +++++---------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/sound/pci/ctxfi/cthw20k2.c
-+++ b/sound/pci/ctxfi/cthw20k2.c
-@@ -993,6 +993,7 @@ static int daio_mgr_dao_init(void *blk,
- 		/* S/PDIF output */
- 		switch ((conf & 0xf)) {
- 		case 1:
-+		case 9:
- 			set_field(&ctl->txctl[idx], ATXCTL_NUC, 0);
- 			break;
- 		case 2:
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -185,7 +185,6 @@ static ssize_t dp_link_settings_read(str
+ 	char *rd_buf_ptr = NULL;
+ 	const uint32_t rd_buf_size = 100;
+ 	uint32_t result = 0;
+-	uint8_t str_len = 0;
+ 	int r;
+ 
+ 	if (*pos & 3 || size & 3)
+@@ -197,29 +196,26 @@ static ssize_t dp_link_settings_read(str
+ 
+ 	rd_buf_ptr = rd_buf;
+ 
+-	str_len = strlen("Current:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Current:  %d  0x%x  %d  ",
+ 			link->cur_link_settings.lane_count,
+ 			link->cur_link_settings.link_rate,
+ 			link->cur_link_settings.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Verified:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Verified:  %d  0x%x  %d  ",
+ 			link->verified_link_cap.lane_count,
+ 			link->verified_link_cap.link_rate,
+ 			link->verified_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Reported:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Reported:  %d  0x%x  %d  ",
+ 			link->reported_link_cap.lane_count,
+ 			link->reported_link_cap.link_rate,
+ 			link->reported_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Preferred:  %d  0x%x  %d\n",
+ 			link->preferred_link_setting.lane_count,
+ 			link->preferred_link_setting.link_rate,
+ 			link->preferred_link_setting.link_spread);
 
 
