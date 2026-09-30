@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0D1357D09;
-	Wed, 30 Sep 2026 19:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDB43B3C18;
+	Wed, 30 Sep 2026 19:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795661; cv=none; b=Z03sFoX0Tdw+I/Rse3GCdmU1PWoxtdPvUzOaGGiVRsrfYR9Fnyyid+qXQxgLeiSzNLIpEWO0NC0zpe8sA/2I2nyQ2NxarQkC2uLqHUaFIOYcaDPaAJvZlNzvb53z8CAsZZAZ8cN+UihTyHsFmRtDorJxTR8Jfy+mpC4USkuIphg=
+	t=1790795664; cv=none; b=YgZAQgYWV4BzP372S/zVNfaQSgrU3fO0fDyYbwtjChYMag83pmZIOYSWLNZB7IApqJwPEVXQSrxeTG8hoEZuyP10a6bUCWCQ5cNkLH71YyXgZMN1XD64CCjxsZTn+BDZU0hkdPuDcS+X55//CQAjQ58MRVRwly6UxtMs6MdUoYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795661; c=relaxed/simple;
-	bh=5Sbo4AUfN9PiKoOwhIe5TLSrx6Wdgt2sS+KfRd9R5Yk=;
+	s=arc-20240116; t=1790795664; c=relaxed/simple;
+	bh=XsduWW+m2y9nlkCUF3+l1NESwEPBUmv1EY/su4VZ0j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZWOUiJ3Niz7fbuA+OZrs4Wf83+/hi7fcFmX1na/ORNM8W93YDA+YchMsan7vE/b+4DuY5JWo2qCJKFZD25Y5uC9A3LqcqypXGHJ8ATuv4q1VUfbV6FwYUAKTpZPWr34WmHjPcgbyaC8TMNUpFn7U/C40e4Dcd5f/CUkjg3Xikk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieS/QM6T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fMyq1TGELLCJ0iuP1Zrsg1BBCDigdE2xxTUtQnvcpjkGYFwBVWQ1QAqcZFmo/IOcgihF6dPNIZUeLySZKap5d3XUJEsh4NFTKyt1tzv7Z7JyjABmybqJ+vHVmO1Cv5APV3eVNqkYZZYnmOZ0m+7fVvVpXF1Xbubovmx3jKP8xe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJNEbMs+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieS/QM6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EBA1F000FF;
-	Wed, 30 Sep 2026 19:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJNEbMs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3641F000FF;
+	Wed, 30 Sep 2026 19:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795660;
-	bh=fZMsLzBgAL22JVFa/lb4PtzS+ROcvBfGFld18kxMAPQ=;
+	s=korg; t=1790795663;
+	bh=SsAxWALYdwCRH7fu8sWf+kg+SZLrkpjU7qE6mnejx5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ieS/QM6Tg0uAjyjaofWBZqVYjKY6j2ZFctYeGwTyTxbxPG1aTiR17dTnOQzvvPDyR
-	 rXoGso63jCzKKC9Bn9+uPWFJ/c46pg6PDY1b/HSI2uKJg4AgpuWMw/PXx4B5dr/rvq
-	 5PwEUSbGzyfUgEy52MZmaktISKUB7ytin0TBdyNQ=
+	b=qJNEbMs+xYWzh2eOV3HaOMQ25thajsGp815S5Mn0c1JC1S0YDebqJGEUjxFyDs+tZ
+	 2sc1E7/NN3slR9qLKOgGtrph7Sy3PgH6kukeG2GJJcZW11ye55txjH/Q3fWflvf+Xl
+	 Nqu1OEVkPJ8gkItuk/SS+Ko8Adb5Tt+pVqdWkeAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Petr Vorel <pvorel@suse.cz>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0639/1193] ipv4: fib: bound automatic table ID allocation
-Date: Wed, 30 Sep 2026 17:22:03 +0200
-Message-ID: <20260930152448.444267912@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 0640/1193] ipvs: reject invalid states in connection template sync records
+Date: Wed, 30 Sep 2026 17:22:04 +0200
+Message-ID: <20260930152448.465578119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,63 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit efdfb1e27a3328085b79540dfe781d537b576ea1 upstream.
+commit 74cb39735b6cd0aff4b5584158f09376fd97aadf upstream.
 
-fib_empty_table() probes every table ID from 1 until it finds a
-free one.  IPv4 tables are stored in a 256-bucket hash table, so a
-dense set of IDs makes each probe walk a growing hash chain while
-RTNL is held.
+IPVS sync receivers validate protocol states before creating or updating a
+connection. For connection templates, however, they only log states outside
+the template state range and still store the value in the connection.
 
-Automatic table assignment ("ip rule ... table 0") is an IPv4-only
-legacy path.  Bound the automatically allocated ID to 4096 so the
-RTNL hold stays bounded, without changing lookups of explicitly
-specified table IDs.
+A template can be returned by ordinary connection lookup. TCP and SCTP then
+use the invalid state as an index into their transition tables.
 
-This changes user-visible behavior.  A table-0 rule previously
-received the lowest free ID in 1..RT_TABLE_MAX (0xFFFFFFFF).  After
-this patch the search stops at 4096 and the rule add fails with
-ENOBUFS if that range is fully occupied.  Explicit table IDs above
-4096 remain usable.
+Reject invalid template states in both sync protocol versions before
+looking up or modifying a connection. The version 1 path handles both
+IPv4 and IPv6 records.
 
-The automatic path is unused in practice: it is IPv4-only, not
-documented by ip-rule, uncovered by kernel selftests, and both
-NetworkManager and systemd refuse table 0.
-
-Fixes: b801f54917b7 ("[NET]: Increate RT_TABLE_MAX to 2^32")
+Fixes: 275411430f89 ("ipvs: add assured state for conn templates")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Link: https://patch.msgid.link/6f2f2a7a136aee005512a2e1ac8ede62ac8c7bb6.1788258884.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_rules.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_sync.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/ipv4/fib_rules.c
-+++ b/net/ipv4/fib_rules.c
-@@ -203,6 +203,8 @@ INDIRECT_CALLABLE_SCOPE int fib4_rule_ma
- 	return 1;
- }
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -1000,10 +1000,10 @@ static void ip_vs_process_message_v0(str
+ 					pp->name, state);
+ 				continue;
+ 			}
+-		} else {
+-			if (state >= IP_VS_CTPL_S_LAST)
+-				IP_VS_DBG(7, "BACKUP v0, Invalid tpl state %u\n",
+-					  state);
++		} else if (state >= IP_VS_CTPL_S_LAST) {
++			IP_VS_DBG(7, "BACKUP v0, Invalid tpl state %u\n",
++				  state);
++			continue;
+ 		}
  
-+#define FIB_MAX_AUTO_TABLE_ID  4096
-+
- static struct fib_table *fib_empty_table(struct net *net)
- {
- 	u32 id = 1;
-@@ -211,7 +213,7 @@ static struct fib_table *fib_empty_table
- 		if (!fib_get_table(net, id))
- 			return fib_new_table(net, id);
- 
--		if (id++ == RT_TABLE_MAX)
-+		if (id++ == FIB_MAX_AUTO_TABLE_ID)
- 			break;
+ 		ip_vs_conn_fill_param(ipvs, AF_INET, s->protocol,
+@@ -1160,10 +1160,10 @@ static inline int ip_vs_proc_sync_conn(s
+ 			retc = 40;
+ 			goto out;
+ 		}
+-	} else {
+-		if (state >= IP_VS_CTPL_S_LAST)
+-			IP_VS_DBG(7, "BACKUP, Invalid tpl state %u\n",
+-				  state);
++	} else if (state >= IP_VS_CTPL_S_LAST) {
++		IP_VS_DBG(7, "BACKUP, Invalid tpl state %u\n", state);
++		retc = 40;
++		goto out;
  	}
- 	return NULL;
+ 	if (ip_vs_conn_fill_param_sync(ipvs, af, s, &param, pe_data,
+ 				       pe_data_len, pe_name, pe_name_len)) {
 
 
