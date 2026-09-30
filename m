@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C2951357A;
-	Wed, 30 Sep 2026 17:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CFF3750CF;
+	Wed, 30 Sep 2026 17:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787880; cv=none; b=bAGfIPoW4HK+lCEVQ/ioA4GCo7OAJxMht68eZQ+HyCDGzjZGRNAP+UX37FJiXrcbwicjZ9mBFkuP9Ko/C+Ypo95y9AwLeZINL5761cxlthkSt1kAcBzOtvC1zgeKX356Isv4cS/uBmTRKBSWw09nb3eUaK+NFRCm88VhrNCU/jQ=
+	t=1790787883; cv=none; b=YeGsSKN/FIP7tg0uIspo7+aaQlh+EwDLTk2XBTxa9k8YmntIEkdNyk7mObkVtL5PxBtcWHJ2mjBV7g+FwGBqV/+VRJ4ghK7d97DZunYq1MNHCg+rtDhdcfZzrJ4+eSxVZpzSDKyOR/vPHtEHjzomVMWQFadogTwLvKUU6RNCY8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787880; c=relaxed/simple;
-	bh=ppnno39wl5Zxn9JZG9JHg83M0o3U5hbQZm3eTS2hTis=;
+	s=arc-20240116; t=1790787883; c=relaxed/simple;
+	bh=+3HeP4eiVbITF5XXX4lVRTVfjgpCcR10hv3+mM+sHz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0WW7FHYrM+VwU7I1LS+iVa5gddiiLWjAlduBg3lGQ0WuLptaksTY+ol5mM3wTo/n3w5Ye/mPEvtIeKaeSXXLeFaPQGuy98uvF0oXUKVRIFQxJ76aqqng/SzbgybIsuERXGzfC9pB9vIS/YNTQBiuBzS/mJh0y2b1+lxWKqNqvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJda58c+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f//go95LiBMBMqfvcZXfn9sWUN1dAAJE271ooyuo6soDee6UHiFvc+bVvKqHWLuhnlhCFEUFQzYZeBmSSg0VryK0Js5pU3g//jNmAOmwNFncWVO/zzj12MvBGIQhzKuNnMYmGF6cIIchJnn1H2/L6bQInx+x+lkloTuKy8ies/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll9DPXAo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJda58c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C379F1F000FF;
-	Wed, 30 Sep 2026 17:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll9DPXAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9CB1F000FF;
+	Wed, 30 Sep 2026 17:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787879;
-	bh=EmIhcVtTr3GyybANw0xdJZLVFVQsnqal2XSITPhIDoY=;
+	s=korg; t=1790787882;
+	bh=XcoyxctK6u7VI8YKGQd0CmyEVqcUKl5+fpNZRY2ysL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oJda58c+CbCgmm3ih/NtRy3pBsB1/3nxUfD6IoVbyqJqa6kSbc1RP0kW6iDgXCoQK
-	 yyhHk19v5bprtx1oySY2yIrjBaHFISz+fZBoASx6TyoeHB+8nWZiX8IdETvK2rkfGe
-	 VxbfKYEoK0Bq3xuC/NlTaM0CApA9yfAvEvDXXFNk=
+	b=ll9DPXAox27lx/S6AZUbSHH4yNvFjLdI+1CFBSHbrGxIjV3GC7gBESFR08diMU4tu
+	 aOZqo6rNiEYFAuT3hDXDeEEeBiu6QFdlI3HuV+pzQwrvI2/RDfyO1MX3wsILRKQVw0
+	 6/e0T7tP3sOukH9LtP6u/hBoq1Wzqj5cfgZOvSF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 349/457] net: usb: lan78xx: Fix URB reference leak in lan78xx_submit_deferred_urbs()
-Date: Wed, 30 Sep 2026 17:27:34 +0200
-Message-ID: <20260930152353.544951129@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.2 385/457] KVM: SEV: Free have_run_cpus during VM destruction even if VM is no longer SEV
+Date: Wed, 30 Sep 2026 17:28:10 +0200
+Message-ID: <20260930152354.305485174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,41 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 17741334d00bf5ebd37f8c1c36bc9c146a351deb upstream.
+commit 12c1f6e03f944e399bd2c88441dca5dc702b95a5 upstream.
 
-usb_get_from_anchor() hands over a reference to the URB, which the caller
-must release. lan78xx_submit_deferred_urbs() never does, so every deferred
-Tx URB keeps an extra reference: the counter grows on each suspend/resume
-cycle and the URBs are never freed when the buffers are released. Drop
-the reference after submitting, and on the path that drops the packet
-instead of submitting it.
+Unconditionally free SEV's "have run CPUs" cpumask in the VM destroy path,
+i.e. even for what appear to be non-SEV VMs, as an SEV VM becomes a non-SEV
+VM if its state is intra-host migrated.  Alternatively, the mask could be
+freed in sev_migrate_from() when "converting" the source VM, but that gets
+annoying because ideally KVM would nullify the mask to guard against UAF,
+and nullifying the mask would need be conditioned on CPUMASK_OFFSTACK=y.
 
-Fixes: 5f4cc6e25148 ("lan78xx: Fix race conditions in suspend/resume handling")
+Freeing the mask during sev_migrate_from() is also not robust against other
+KVM bugs, though that's kind of a moot point since any such bugs would show
+up even if sev->active is never set.  I.e. KVM must get that side of things
+correct.  But, that's not a great reason to add more code just to make
+things marginally less robust.
+
+Fixes: 6f38f8c57464 ("KVM: SVM: Flush cache only on CPUs running SEV guest")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917115811.2150119-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260923163721.1584779-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/svm/sev.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -5239,10 +5239,12 @@ static bool lan78xx_submit_deferred_urbs
- 		    !netif_carrier_ok(dev->net) ||
- 		    pipe_halted) {
- 			lan78xx_release_tx_buf(dev, skb);
-+			usb_put_urb(urb);
- 			continue;
- 		}
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2981,13 +2981,17 @@ void sev_vm_destroy(struct kvm *kvm)
+ 	struct list_head *head = &sev->regions_list;
+ 	struct list_head *pos, *q;
  
- 		ret = usb_submit_urb(urb, GFP_ATOMIC);
-+		usb_put_urb(urb);
++	/*
++	 * Free the mask even if the VM is not *currently* an SEV VM, as it may
++	 * have been an SEV VM prior to intra-host migration.
++	 */
++	free_cpumask_var(sev->have_run_cpus);
++
+ 	if (!sev_guest(kvm))
+ 		return;
  
- 		if (ret == 0) {
- 			netif_trans_update(dev->net);
+ 	WARN_ON(!list_empty(&sev->mirror_vms));
+ 
+-	free_cpumask_var(sev->have_run_cpus);
+-
+ 	/*
+ 	 * If this is a mirror VM, remove it from the owner's list of a mirrors
+ 	 * and skip ASID cleanup (the ASID is tied to the lifetime of the owner).
 
 
