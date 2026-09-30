@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE382374A16;
-	Wed, 30 Sep 2026 16:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34314FB9C8;
+	Wed, 30 Sep 2026 16:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786683; cv=none; b=FEep+wqSVy5xlxgiPk1qmILGdBBtOAQLbam7IQgFwMIhBhlHVzvbb17oqfIq8S6nOZaKS5X1Q4HAxzG2fGvSCGWHjVZzd88T2QNE/QxSw7kplECydPEBFzeMKfXrdj9lgivQC+HoZ6rMkKv2RBmPxRYCyMxH0xPu9mu/2GQ+2tw=
+	t=1790786685; cv=none; b=nBENq4580WDVpHBX8phKznCmfPvWxlkQPECb6v1E3PruglsDKwaKCtKXUIBITYPmMn95hMcsNGps4FhhKbcqhAc0HzddTONalz5K3iDiy9Wdj3xTPvZHNju03IpWAl0DkyYHqAXiJ3kj1B3z/CoXi0LPn8DxcQhEbNn4/y7VMC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786683; c=relaxed/simple;
-	bh=RlEu/kJShZj4QVZgwWTl5CofSrT0NnhpQUfSwlhHNJQ=;
+	s=arc-20240116; t=1790786685; c=relaxed/simple;
+	bh=kqCneGwqmB54StsJ8MM0l6kf/83sT11R3gf7d0y7AQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRaVnqz0/gxSC9AV1DFHnazdPj0tgiTGZ0KqAghsXy5m1i9H63U3pTwl+8SZbihhWuahpsEwev9RqBPvjQcQRGSM6HhLrgLGCyyjrHlvsNRO8N4MEKQvRvCip7i3S6re14/KtgxnOCQ+lLQOO5mzUYJGKwJ6wd82p5GXJimtrxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5YmO2jE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bb2ERp5rWMtKaWO4XmOkOaQb1y8kUiXcUr88uSdlrGK67Xw3R9ur2iYozoj2sktv78jYU3qtdOKgKjW1fXFGQfpP9RqjqTRezx/G/Ffc/WgpRiqWVZgb0cKS6Yc7VtHqC+zBB5Y8z4c6bc/8Ijr+175KYTPPts96P/pIyoEPfIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPtzrRfD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5YmO2jE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563DE1F000FF;
-	Wed, 30 Sep 2026 16:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPtzrRfD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A07A1F00893;
+	Wed, 30 Sep 2026 16:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786681;
-	bh=/ERxf0f+MH632D7YfI7nEdsfG7lvEBAUjJHuvZFTIDI=;
+	s=korg; t=1790786684;
+	bh=XGvv7M16JKSb9hOEavGTiPUHyNO5LlscR1Al/3Gh9xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i5YmO2jEdIZwHaraxU+iFmNYRjSegnN02AiZ/6RihCgFI5I5l64/ihHvvS9P8kjgR
-	 NMSnua0aUAZvPoXKtxvlXJJk25Opy508LF/x30iSPZaeX7LbxoeXHt3Dw9NY0JwLqd
-	 7aLlgOgYi4kZHIedKSDm+6+bXZcHRG8h5shr7OcA=
+	b=lPtzrRfDSdFzDjae3pQRIW28KaucLIf34BFh/DN+FEUvnaslrXlDNfxdENkwaSQoJ
+	 Gkz+OL1OFzA3jTJlsHxMyC83Iue2FrJenO18JO8WLpbBwdtqNPomDw94AC/AFPztdw
+	 mjtb770HetINJWCfSr5ohlULUM+1cbXdqdeSVdok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 948/982] HID: alps: fix use-after-free on input2 registration failure
-Date: Wed, 30 Sep 2026 17:28:04 +0200
-Message-ID: <20260930152437.100183093@linuxfoundation.org>
+	Marco Carvalho <marcocarvalho.web@gmail.com>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 949/982] HID: quirks: add ALWAYS_POLL quirk for SDINNOVATION gaming keyboard
+Date: Wed, 30 Sep 2026 17:28:05 +0200
+Message-ID: <20260930152437.121134381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,62 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Junjie Cao <junjie.cao@intel.com>
 
-commit d3aba3442798ce4a4c8ce3104d7b286d61e605f9 upstream.
+commit cdb669a3b8f844aca71fc3224990157d61562165 upstream.
 
-alps_input_configured() stores data->input2 before calling
-input_register_device().  If registration fails, input_free_device()
-frees the input device but data->input2 still points to the freed memory.
-alps_input_configured() calls hid_hw_open() before allocating input2, so
-URBs are already active and raw_event can fire during the failure window.
-A U1_SP_ABSOLUTE_REPORT_ID report arriving then causes u1_raw_event()
-to dereference the freed data->input2 -> use-after-free.
+The SDINNOVATION gaming keyboard (USB ID 36ae:feab) stops reporting
+input events after its RGB lighting mode is switched about twice.
+Disabling USB autosuspend and unbinding the other HID interfaces make
+no difference; the issue does not occur on Windows.
 
-Fix by only storing input2 into drvdata after successful registration
-and adding a NULL guard in the raw_event path.
+HID_QUIRK_ALWAYS_POLL alone resolves it, verified on 7.1.8 via
+usbhid.quirks=0x36ae:0xfeab:0x400.
 
-Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+Reported-by: Marco Carvalho <marcocarvalho.web@gmail.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2514627
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-alps.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h    |    3 +++
+ drivers/hid/hid-quirks.c |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -407,6 +407,8 @@ static int u1_raw_event(struct alps_dev
- 		return 1;
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1155,6 +1155,9 @@
+ #define USB_DEVICE_ID_SAMSUNG_IR_REMOTE	0x0001
+ #define USB_DEVICE_ID_SAMSUNG_WIRELESS_KBD_MOUSE	0x0600
  
- 	case U1_SP_ABSOLUTE_REPORT_ID:
-+		if (!hdata->input2)
-+			return 0;
- 		sp_x = get_unaligned_le16(data+2);
- 		sp_y = get_unaligned_le16(data+4);
- 
-@@ -738,7 +740,6 @@ static int alps_input_configured(struct
- 			goto exit;
- 		}
- 
--		data->input2 = input2;
- 		input2->phys = input->phys;
- 		input2->name = "DualPoint Stick";
- 		input2->id.bustype = BUS_I2C;
-@@ -762,11 +763,12 @@ static int alps_input_configured(struct
- 		__set_bit(INPUT_PROP_POINTER, input2->propbit);
- 		__set_bit(INPUT_PROP_POINTING_STICK, input2->propbit);
- 
--		if (input_register_device(data->input2)) {
-+		if (input_register_device(input2)) {
- 			input_free_device(input2);
- 			ret = -ENOENT;
- 			goto exit;
- 		}
-+		data->input2 = input2;
- 	}
- 
- exit:
++#define USB_VENDOR_ID_SDINNOVATION		0x36ae
++#define USB_DEVICE_ID_SDINNOVATION_GAMING_KBD	0xfeab
++
+ #define USB_VENDOR_ID_SEMICO			0x1a2c
+ #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD	0x0023
+ #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD2	0x0027
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -171,6 +171,7 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_2), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_PRO), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X65), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_SDINNOVATION, USB_DEVICE_ID_SDINNOVATION_GAMING_KBD), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD2), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
 
 
