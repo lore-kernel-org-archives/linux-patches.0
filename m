@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D9D515976;
-	Wed, 30 Sep 2026 18:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B849E3F5BFC;
+	Wed, 30 Sep 2026 18:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791325; cv=none; b=l2GIaoDbcLJh6CZWWdkGFGMFG7lWsKZ98bLzleIXuf4UOTaNg6oHn5NxiTxYccwxw7n4MzYR12eQwhdyNBPwCRNKmuR57QTq0DIyFAZ4WP6h0MzyA41qLbYPUoLGSKzBzFOeMOGy8mZQL8B7iW/uIJiAvChbKkLaXVqUP/KfLyY=
+	t=1790791328; cv=none; b=LzMYXM43leiN9EPJmp9To/wewAaJPfeXThlKrba9lRpALE2bIZsh/5z0BIaEx7TSsXjUFcAUKxEZnAO7dergKQOGuXnC+rAMX0WNNGOQ58raRoFC5Y8KPDk87azhacnIpSZ4BSl9TKU4ZgeW4+N4bO7AJeKKDAHvqyJWdBqYLe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791325; c=relaxed/simple;
-	bh=61PT2sh400HOSQe/msr1dN6GUmxoRSMS2mkg80Y81uE=;
+	s=arc-20240116; t=1790791328; c=relaxed/simple;
+	bh=iS7mQWHfmikc7VNRqRUtLw2E+KfKGu1jMJriI+XkDQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6FrMc9dMJVZhLJKet8YT1HOOqTcc8bxmt96HtwWLuK7oPQSm13OInmzO8aATno+v9HFPUJNBievnvkZSWg0n20kjhIyLKRKouEBMjOLgHzEAT+2Lg3kupdRmo0s8FPYJmFEoRW16gVfJ1E0d4WSCKILMwcl4B1kWcKGAtsU0Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNsaOwgm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F7QMEOgEBWSs3DnC974lBDA5p+PEKh1ELyFL4dVijdVwmqIxKbHsoXbi15iG9Gmd4wbR8Mw2e9pd+YYpP++6UaCU4cqyPTxSIuj3zYFMHwIXEV1SH8bOh0q6GRWq2ARg/xxZo1Gp0DPSERMyItK0rrYhduPyH64djlBHhbdxeMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK3KPWP7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNsaOwgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C011F000FF;
-	Wed, 30 Sep 2026 18:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK3KPWP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1656C1F000FF;
+	Wed, 30 Sep 2026 18:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791323;
-	bh=NVO0k+6HYwrIeaI9C0YWW3/NhoKVBlpQG5Z06kn6LY4=;
+	s=korg; t=1790791326;
+	bh=SkNjKOcrmg6Z+YbfrmJ5BcuG/6gIbnstBoFTQ+W48bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNsaOwgmcA9eVzU8+tR6lKm9pEJrphiPpMLcR6LediRbFmcYE9lhNVmi+vDsuCaID
-	 1VDEgcfyP52CqXeBNuFKGtPabbLA1d08rHl/ng/ueFMhxLAVt1ayxgeyxmapnXMil1
-	 DMYuxZoFtGO0rA+Ej911JVsjh6HLev5Wbm9zHbXA=
+	b=eK3KPWP7aI3ikLTHqEnwVVbGbRfZ+HdhEf+PhwhtvAxqAyf5uvFOrbZoB0flDs5Gv
+	 FoU+d1A/DEig/hVPnBMZnkU4GpoPKR0UFgvlz5OTXAeZ/eFtmXU4sZt3qfwGpdU04t
+	 uiRlqe6naIT/Vzyu8qBuDbSSLUrwNJaO7OC+0+O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Abrahamse <denobyte2@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 225/752] ALSA: usb-audio: Add quirk for Corsair Virtuoso (later revision)
-Date: Wed, 30 Sep 2026 17:21:35 +0200
-Message-ID: <20260930152403.125011200@linuxfoundation.org>
+Subject: [PATCH 5.15 261/752] ppp: ppp_async: simplify tty disc_data access
+Date: Wed, 30 Sep 2026 17:22:11 +0200
+Message-ID: <20260930152403.931120353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,46 +53,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Abrahamse <denobyte2@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit cee046679655b4822f76efc9658f19efee9ac979 ]
+[ Upstream commit 9feb069e5ed03582fbf6272539f1caa2a17dc6d5 ]
 
-Add USB mixer mapping quirk for later revisions of the Corsair Virtuoso
-headset with USB IDs 0x1b1c:0x0a43 (wired) and 0x1b1c:0x0a44
-(wireless). These devices exhibit the same mixer label collision as
-earlier Virtuoso variants: all controls are labelled "Headset", causing
-applications like PulseAudio to move the sidetone control instead of
-the main playback volume.
+tty_ldisc_hangup() invokes the hangup callback while holding only a read
+lock on tty->ldisc_sem, so it can run concurrently with other line
+discipline callbacks. This currently forces async PPP to maintain
+separate lifetime protection around tty->disc_data.
 
-Signed-off-by: Robert Abrahamse <denobyte2@gmail.com>
-Link: https://patch.msgid.link/20260728140314.11601-1-denobyte2@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Line discipline close is called under the write lock during hangup
+processing. Remove the hangup callback and rely on close for teardown,
+as done for SLIP by commit 23c53269f2ba ("slip: remove slip_hangup() to
+fix use-after-free in slip_receive_buf()"). This serializes teardown
+with all other line discipline operations.
+
+disc_data_lock, refcount and completion are redundant with that
+serialization. Remove them and access tty->disc_data directly.
+
+This also eliminates a lockdep warning reported by syzbot. The warning
+does not indicate a real deadlock because the write side runs only in
+process context with hardirqs disabled.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000002fbad30611e25849@google.com/
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260828073245.126804-1-qingfang.deng@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ppp/ppp_async.c | 82 ++++---------------------------------
+ 1 file changed, 7 insertions(+), 75 deletions(-)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index c6fb2aa9f3702..dc2a5491e554c 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -581,6 +581,16 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x1b1c, 0x0a42),
- 		.map = corsair_virtuoso_map,
- 	},
-+	{
-+		/* Corsair Virtuoso (wired mode, later revision) */
-+		.id = USB_ID(0x1b1c, 0x0a43),
-+		.map = corsair_virtuoso_map,
-+	},
-+	{
-+		/* Corsair Virtuoso (wireless mode, later revision) */
-+		.id = USB_ID(0x1b1c, 0x0a44),
-+		.map = corsair_virtuoso_map,
-+	},
- 	{
- 		/* Corsair HS80 RGB Wireless (wired mode) */
- 		.id = USB_ID(0x1b1c, 0x0a6a),
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index ff3e71e2b0651..1774318d1a41e 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -65,8 +65,6 @@ struct asyncppp {
+ 
+ 	struct tasklet_struct tsk;
+ 
+-	refcount_t	refcnt;
+-	struct completion dead;
+ 	struct ppp_channel chan;	/* interface to generic ppp layer */
+ 	unsigned char	obuf[OBUFSIZE];
+ };
+@@ -115,38 +113,6 @@ static const struct ppp_channel_ops async_ops = {
+  * Routines implementing the PPP line discipline.
+  */
+ 
+-/*
+- * We have a potential race on dereferencing tty->disc_data,
+- * because the tty layer provides no locking at all - thus one
+- * cpu could be running ppp_asynctty_receive while another
+- * calls ppp_asynctty_close, which zeroes tty->disc_data and
+- * frees the memory that ppp_asynctty_receive is using.  The best
+- * way to fix this is to use a rwlock in the tty struct, but for now
+- * we use a single global rwlock for all ttys in ppp line discipline.
+- *
+- * FIXME: this is no longer true. The _close path for the ldisc is
+- * now guaranteed to be sane.
+- */
+-static DEFINE_RWLOCK(disc_data_lock);
+-
+-static struct asyncppp *ap_get(struct tty_struct *tty)
+-{
+-	struct asyncppp *ap;
+-
+-	read_lock(&disc_data_lock);
+-	ap = tty->disc_data;
+-	if (ap != NULL)
+-		refcount_inc(&ap->refcnt);
+-	read_unlock(&disc_data_lock);
+-	return ap;
+-}
+-
+-static void ap_put(struct asyncppp *ap)
+-{
+-	if (refcount_dec_and_test(&ap->refcnt))
+-		complete(&ap->dead);
+-}
+-
+ /*
+  * Called when a tty is put into PPP line discipline. Called in process
+  * context.
+@@ -181,9 +147,6 @@ ppp_asynctty_open(struct tty_struct *tty)
+ 	skb_queue_head_init(&ap->rqueue);
+ 	tasklet_setup(&ap->tsk, ppp_async_process);
+ 
+-	refcount_set(&ap->refcnt, 1);
+-	init_completion(&ap->dead);
+-
+ 	ap->chan.private = ap;
+ 	ap->chan.ops = &async_ops;
+ 	ap->chan.mtu = PPP_MRU;
+@@ -204,34 +167,18 @@ ppp_asynctty_open(struct tty_struct *tty)
+ }
+ 
+ /*
+- * Called when the tty is put into another line discipline
+- * or it hangs up.  We have to wait for any cpu currently
+- * executing in any of the other ppp_asynctty_* routines to
+- * finish before we can call ppp_unregister_channel and free
+- * the asyncppp struct.  This routine must be called from
+- * process context, not interrupt or softirq context.
++ * Called when the tty is put into another line discipline or it hangs up.
++ * This call is serialized against other ldisc functions.
+  */
+ static void
+ ppp_asynctty_close(struct tty_struct *tty)
+ {
+-	struct asyncppp *ap;
++	struct asyncppp *ap = tty->disc_data;
+ 
+-	write_lock_irq(&disc_data_lock);
+-	ap = tty->disc_data;
+-	tty->disc_data = NULL;
+-	write_unlock_irq(&disc_data_lock);
+ 	if (!ap)
+ 		return;
+ 
+-	/*
+-	 * We have now ensured that nobody can start using ap from now
+-	 * on, but we have to wait for all existing users to finish.
+-	 * Note that ppp_unregister_channel ensures that no calls to
+-	 * our channel ops (i.e. ppp_async_send/ioctl) are in progress
+-	 * by the time it returns.
+-	 */
+-	if (!refcount_dec_and_test(&ap->refcnt))
+-		wait_for_completion(&ap->dead);
++	tty->disc_data = NULL;
+ 	tasklet_kill(&ap->tsk);
+ 
+ 	ppp_unregister_channel(&ap->chan);
+@@ -241,17 +188,6 @@ ppp_asynctty_close(struct tty_struct *tty)
+ 	kfree(ap);
+ }
+ 
+-/*
+- * Called on tty hangup in process context.
+- *
+- * Wait for I/O to driver to complete and unregister PPP channel.
+- * This is already done by the close routine, so just call that.
+- */
+-static void ppp_asynctty_hangup(struct tty_struct *tty)
+-{
+-	ppp_asynctty_close(tty);
+-}
+-
+ /*
+  * Read does nothing - no data is ever available this way.
+  * Pppd reads and writes packets via /dev/ppp instead.
+@@ -284,7 +220,7 @@ static int
+ ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
+ 		   unsigned int cmd, unsigned long arg)
+ {
+-	struct asyncppp *ap = ap_get(tty);
++	struct asyncppp *ap = tty->disc_data;
+ 	int err, val;
+ 	int __user *p = (int __user *)arg;
+ 
+@@ -325,7 +261,6 @@ ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
+ 		err = tty_mode_ioctl(tty, file, cmd, arg);
+ 	}
+ 
+-	ap_put(ap);
+ 	return err;
+ }
+ 
+@@ -341,7 +276,7 @@ static void
+ ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
+ 		  const char *cflags, int count)
+ {
+-	struct asyncppp *ap = ap_get(tty);
++	struct asyncppp *ap = tty->disc_data;
+ 	unsigned long flags;
+ 
+ 	if (!ap)
+@@ -351,21 +286,19 @@ ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
+ 	spin_unlock_irqrestore(&ap->recv_lock, flags);
+ 	if (!skb_queue_empty(&ap->rqueue))
+ 		tasklet_schedule(&ap->tsk);
+-	ap_put(ap);
+ 	tty_unthrottle(tty);
+ }
+ 
+ static void
+ ppp_asynctty_wakeup(struct tty_struct *tty)
+ {
+-	struct asyncppp *ap = ap_get(tty);
++	struct asyncppp *ap = tty->disc_data;
+ 
+ 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
+ 	if (!ap)
+ 		return;
+ 	set_bit(XMIT_WAKEUP, &ap->xmit_flags);
+ 	tasklet_schedule(&ap->tsk);
+-	ap_put(ap);
+ }
+ 
+ 
+@@ -375,7 +308,6 @@ static struct tty_ldisc_ops ppp_ldisc = {
+ 	.name	= "ppp",
+ 	.open	= ppp_asynctty_open,
+ 	.close	= ppp_asynctty_close,
+-	.hangup	= ppp_asynctty_hangup,
+ 	.read	= ppp_asynctty_read,
+ 	.write	= ppp_asynctty_write,
+ 	.ioctl	= ppp_asynctty_ioctl,
 -- 
 2.53.0
 
