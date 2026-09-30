@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC8A53D9D2;
-	Wed, 30 Sep 2026 17:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD7553D9FC;
+	Wed, 30 Sep 2026 17:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790072; cv=none; b=kLjVY/06nJlQ1kN7fXAnst3IMOAsxh3yLN6BpB9dZHr0ektLqOD1OhL025+L7p0+OCBNzPg5aBF2SDxGC2BuZoxZUCP58e6jjUXgoKU1HkpxokeogZrDIWocBT47zCTC4TZvF65qt4Ltcv64r9KmLtEV9w6GWIiadv7kaWXYvK8=
+	t=1790790074; cv=none; b=ijPcq609HyGzF/RUO+msNyxAeXcu9FhEwuO4YAy976cIoeQ96hl0l75hAQWnHF+1mlTr9ZWYJiYUcJJIZw88bADxm3cfGA/Zedd7iKHm2PB0JRXL8rpBR5UDLgd/o0VD2K4GogSWg3Lrmm4T83SBOHDEcQ7whvKiz93tCv3sJPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790072; c=relaxed/simple;
-	bh=34vnZlKBLRsTep+8LevgA7xywmZVQppeh4GiET1MAV4=;
+	s=arc-20240116; t=1790790074; c=relaxed/simple;
+	bh=7bWwBJcyiWbbpryp8I5LsrT3v9fFl0h9uafH8p3nFQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fys4isW0puGZitB9brQ6u4j8s7BucFGhAQ7nx9QbEru5C3Rdd4ZKe3BSQ9yXBriM0LFEae1TmDzGTD7EH9iI44aJ0ILQ5zwEveS4swAKjlbxq4CaETb8ANs2ISQY6MecVsAet4PaRiifMYhof76jZOT7vSn3VP8HLQ4sjxGNJd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weZRuNhT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JRT/w/aOcoGenuKwrS/xFdQQmddwoEdWGnj5N/+LIQCK3JeJoeopRlupypP0ZjmErDhKhVXJf2Sj6daNeYD5WzbVvSYt6r8aQd4BX3BEwOs6tIjQpea9EE1vg1rs7XOTrpnITJxj4WXasWxH66d+/SLFEXJcTBVYPdKKW/DA/to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyhUdPYT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weZRuNhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B598B1F000FF;
-	Wed, 30 Sep 2026 17:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyhUdPYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921261F000FF;
+	Wed, 30 Sep 2026 17:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790070;
-	bh=RbeduSEVTw7KluR6GcAAzVosYWh2nb0zXfRk9xerzww=;
+	s=korg; t=1790790073;
+	bh=cm0SyyJcfMN+o3VW6eQoGsE2xsWqR8+p9XUHLW4z80E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weZRuNhTYfUwG0Cnq5/hsxj6r7Dm/dLcWtuTSe6pRGnsPzB8aNa8XsG5zDSTqSZZo
-	 N70cbRTTIWIkYvzCOvN0Np7CldCzNJ4mmwHOsMQc4EMyMdQjOSdYBXoO/Z7NwEUtuu
-	 MNRekmDo3Svh4brqnVl0+RIN0FE/7u97mSqULPS8=
+	b=hyhUdPYTmohVdV9EqwNzdwXpavPNc1ucnF8RboTisloyQZ0ayfSEBaj1MwEq4kCC9
+	 sQ1YDoAl90lN5qMbVoD9tK5MRvUn0JjDvi4uBNv6HUoj0UTgraBMPnEo3GXSxDYK2W
+	 x+7F4z/njbY3c4jZS0oTIKOKwyvgxpoIRyov+yVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	James Jones <jajones@nvidia.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Zhang Enpei <zhang.enpei@zte.com.cn>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 701/877] drm/nouveau/disp/r535: Add scanline position support + head state support
-Date: Wed, 30 Sep 2026 17:26:52 +0200
-Message-ID: <20260930152429.808310540@linuxfoundation.org>
+Subject: [PATCH 6.12 702/877] drm/amd/display: Set gpuvm min page size to 4K on dcn35/36
+Date: Wed, 30 Sep 2026 17:26:53 +0200
+Message-ID: <20260930152429.831481019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -60,99 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit 804cb093b245c752f15d17186e0d404f10303593 ]
+[ Upstream commit 9ce3169430f1db035d491481086e2fae2552569c ]
 
-That's right! It looks like this never actually got finished, something
-which I just noticed today when I saw this fun message spamming one of my
-test machine's kernel logs when enabling display debug output for nouveau:
+[WHY]
+Splash screen corruption on some 8K monitors.
 
-  [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : scanoutpos query failed.
+[HOW]
+Set GPUVM min page size to 4K for DCN35/36 to use the correct DML2
+calculations, avoiding the corruption path observed during splash.
 
-So it looks like we've been falling back to DRM's core fallback for a while
-now, whoops.
-
-So, while it seems that we do have the option of doing this through GSP -
-that doesn't seem like a great idea. Mainly because reading this from GSP
-would involve a lot more latency then we should have for vblank handling
-due to the RPC communication. So instead of implementing that, just use
-gv100_head_state and gv100_head_rgpos for implementing .state and .rgpos.
-It seems to work perfectly fine!
-
-Fixes: 9e9944449023 ("drm/nouveau/disp/r535: initial support")
-Cc: Ben Skeggs <bskeggs@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Timur Tabi <ttabi@nvidia.com>
-Cc: Ben Skeggs <bskeggs@nvidia.com>
-Cc: James Jones <jajones@nvidia.com>
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Aaron Kling <webgeek1234@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Zhang Enpei <zhang.enpei@zte.com.cn>
-Cc: <stable@vger.kernel.org> # v6.7+
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260429030348.3930866-1-lyude@redhat.com
+Fixes: 115009d11ccf ("drm/amd/display: Add DCN35 DML2 support")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2cbfb03dead5088a7bdfe2ce392a5caa3d1b3719)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c |    4 ++--
- drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h  |    2 ++
- drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c  |    8 ++------
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
-@@ -253,7 +253,7 @@ gv100_head_vblank_get(struct nvkm_head *
- 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000004, 0x00000004);
- }
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+@@ -297,6 +297,7 @@ void dml2_init_socbb_params(struct dml2_
+ 		out->smn_latency_us = 2;
+ 		out->dispclk_dppclk_vco_speed_mhz = 3600;
+ 		out->pct_ideal_dram_bw_after_urgent_pixel_only = 65.0;
++		out->gpuvm_min_page_size_kbytes = 4;
+ 		break;
  
--static void
-+void
- gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline)
- {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
-@@ -263,7 +263,7 @@ gv100_head_rgpos(struct nvkm_head *head,
- 	*hline = nvkm_rd32(device, 0x616334 + hoff) & 0x0000ffff;
- }
- 
--static void
-+void
- gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
- {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-@@ -53,6 +53,8 @@ void gf119_head_rgclk(struct nvkm_head *
- 
- int gv100_head_cnt(struct nvkm_disp *, unsigned long *);
- int gv100_head_new(struct nvkm_disp *, int id);
-+void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
-+void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
- 
- #define HEAD_MSG(h,l,f,a...) do {                                              \
- 	struct nvkm_head *_h = (h);                                            \
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c
-@@ -623,14 +623,10 @@ r535_head_vblank_get(struct nvkm_head *h
- 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
- }
- 
--static void
--r535_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
--{
--}
--
- static const struct nvkm_head_func
- r535_head = {
--	.state = r535_head_state,
-+	.state = gv100_head_state,
-+	.rgpos = gv100_head_rgpos,
- 	.vblank_get = r535_head_vblank_get,
- 	.vblank_put = r535_head_vblank_put,
- };
+ 	case dml_project_dcn401:
 
 
