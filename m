@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA6F33A6F1;
-	Wed, 30 Sep 2026 18:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814DE3A9852;
+	Wed, 30 Sep 2026 18:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794508; cv=none; b=XGTgtKwugTTOfpsaFvM1RD1sS0GBBFNFV1jjpCvxGKBpk9+gM14yLv5ALgrLmtVvvinHp3O0++VwL0rLBhsQWp4rLsPJ3xNEIryqqrTbBw9+p0SPmUjMCGRW0tptmAar2tgnmIAmGmczD5NHJxVJs+NOnj6xBlCOHO+U9NcHC/I=
+	t=1790794510; cv=none; b=fxMv8QdRMTCbcaT3KYIMnqGSAtkwV5yHpnYxD2Tuph5zRyGePUt1cOdTyXmdsb4ZTXzuWdIY8djlxlEE3bHBlDXVIHWlIjGG9lEYwXS9Se5TsZ93t5RWfuC6o+3Jz+5y5Av+WP8+oLcV3uP6WqrhjhWOOTBAyKMoAmbt9qBADBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794508; c=relaxed/simple;
-	bh=EQN/qO+fJ3aq12xse2P1WuBI+uQilrsa870fMXNzEO8=;
+	s=arc-20240116; t=1790794510; c=relaxed/simple;
+	bh=wCOcM5/ASSvqemVrXFS7CnPucXO3pwE4En2cjDWBEhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LW0qKOvvPTEbQ6ZbhXeE+Su0oPMrhbmA9p5wcXITLKAsWfNRav6nKJDD/EGPWvzXtXuhsdimECQ64/9no2yOTHC0HL5cbPNnNlSzpg/aNutxCYdv9g37ekxoghYNArRLkRBZX/r/LuCOKD7weih1S3aYsb+qbi6QnNY1Cuj8V7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tw+yAKsB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DODquKNdCSUUjofyUmqomrADiz1VS+AGPkMSP2GrBitNmcExGbYzymf1oI3UPCuHVq0Up7jxSiFZAoLkFJOBKfnfkHqQMJYXUMUeTe6eG7XuFW7/NmertzFUJmAMkwZbtppzXQsJrSV/fT08XeOVwLYyLujhnaVTvjc2hdjIV4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/OwvtDx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tw+yAKsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94D31F000FF;
-	Wed, 30 Sep 2026 18:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/OwvtDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51E11F000FF;
+	Wed, 30 Sep 2026 18:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794506;
-	bh=wJzvJeA2WSMWAKQbP5ATeR6V5Q2Jg5894IqOdMkVT5M=;
+	s=korg; t=1790794509;
+	bh=hFQ9oqRNfNunuNvwpFdhIn3nddAAhlXVHMiT7kOd9dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tw+yAKsBUUvg/ZZbIOQ8R7KZC55G1tynha58jJ8ygAanLmzJEyEfsFRi2Ahe2ETPE
-	 iiwh0wyoSvOdgrjs5elev3jQEEYjFTDyfbFfq0WyFpIrlB67l8hbCbgnYVo+NkGFCA
-	 OyxLgOth8x+nLFuQ7EyO8F4ZlcmHWOdiBpKiqryY=
+	b=L/OwvtDxk7N+Iros1CHPXpIwsHsDBphKXCJPobpCraOZi6xymvjsJLVzJjpfVi8hQ
+	 EQI9hyimEuqGEbfULeC/xDk0OInWVniD5TFMxErtVThKeclOWWPiS1yXxFIQH+av0g
+	 Mjla75gHHIIfwvKcWCyW/N2s1fI0XdsmkbEB4vUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Jiri Kosina <jkosina@suse.com>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0228/1193] HID: hidpp: fix potential UAF in hidpp_connect_event()
-Date: Wed, 30 Sep 2026 17:15:12 +0200
-Message-ID: <20260930152439.261521118@linuxfoundation.org>
+Subject: [PATCH 6.6 0237/1193] leds: pca9532: Dont stop blinking for non-zero brightness
+Date: Wed, 30 Sep 2026 17:15:21 +0200
+Message-ID: <20260930152439.456928555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,34 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Tobias Deiminger <tobias.deiminger@linutronix.de>
 
-[ Upstream commit 6df6b1f2c49678211f65647c300bc51dda02893b ]
+[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
 
-If input_register_device() fails, we call input_free_device(), but keep
-stale pointer to the old device in hidpp->input, which could potentially
-lead to UAF. Fix that by resetting it to NULL before returning from
-hidpp_connect_event().
+pca9532 unexpectedly stopped blinking when changing brightness to a
+non-zero value. To reproduce:
 
-Reported-by: zdi-disclosures@trendmicro.com
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+ echo timer > /sys/class/leds/led-1/trigger   # blinks
+ echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
+ cat /sys/class/leds/led-1/trigger            # still claims [timer]
+
+According to Documentation/leds/leds-class.rst, only brightness = 0
+shall be a stop condition:
+
+> You can change the brightness value of a LED independently of the
+> timer trigger. However, if you set the brightness value to LED_OFF it
+> will also disable the timer trigger.
+
+Therefore add a guard to continue blinking when brightness != LED_OFF,
+similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
+HW blink support").
+
+Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/leds/leds-pca9532.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index eba52b95ad1bd..a2cad1b33e4eb 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4313,6 +4313,7 @@ static void hidpp_connect_event(struct hidpp_device *hidpp)
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index 9f8a7511ec3fd..34eab5f547fc6 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -175,11 +175,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
+ 	int err = 0;
+ 	struct pca9532_led *led = ldev_to_led(led_cdev);
  
- 	ret = input_register_device(input);
- 	if (ret) {
-+		hidpp->input = NULL;
- 		input_free_device(input);
- 		return;
- 	}
+-	if (value == LED_OFF)
++	if (value == LED_OFF) {
+ 		led->state = PCA9532_OFF;
+-	else if (value == LED_FULL)
++	} else if (led->state == PCA9532_PWM1) {
++		return 0; /* Non-zero brightness shall not stop HW blinking */
++	} else if (value == LED_FULL) {
+ 		led->state = PCA9532_ON;
+-	else {
++	} else {
+ 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
+ 		err = pca9532_calcpwm(led->client, 0, 0, value);
+ 		if (err)
 -- 
 2.53.0
 
