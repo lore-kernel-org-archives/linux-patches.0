@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976EC33A6F1;
-	Wed, 30 Sep 2026 19:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476AF3BA246;
+	Wed, 30 Sep 2026 19:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795477; cv=none; b=jYUBG7Y20eWZfgQFVgWByKKdWwtzUqrCbN9Qa4s4bfEh1Has74z4H1yB8yqiGAqxglvHO7O2XWbbJM2GH15f/W4dUvcg7kth6SBMg6NZdf9h3DNBdbrkK7rb6A+0+heQcAN8KQyffK5pWj9fRqzwTK8OJjeaMuhlqvCRh9v1j/0=
+	t=1790795480; cv=none; b=ZytJm3dzW0KNP7DOKswzJTOB16GuiSTnOHmk+qAtEIs/v9fuGPbwBrq6MlpKUHiYOG/1wL7X/Y4VYvHTTvTEMvFTCcW3TqPr6NmkBqKye/hEuyem+EZhTAykW30vPWFDyf6saqLsSG8B/GuhFW8FqREqz8M17165nRt+sKV+kts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795477; c=relaxed/simple;
-	bh=jIbw8d8dDAzDl0ahFcw+s+T7qJ8r8QERx5mtLibYePs=;
+	s=arc-20240116; t=1790795480; c=relaxed/simple;
+	bh=98hd11ffxFLC+p8C3dOb54lRX6ahPcMcGVi4vwWg51Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCTpvJw3PII+lGAbtaO1fTzPForetgzEzp0l1V9Yd0s/4CJf3LC9Alw+iU77wbJLy0pqUFF35sSiHk4OaapcwaDXtWvPPBY0VwhffKPiPG8WKSzgZqayGBQo40sChXzz5UxHWOCBptp1aSX9bKagRVZLANpU9LHjuUe7QIACwjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVe6Lngo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=atnre4JmwN1iaSLp8O8pWdUOog50mcM+NFHjbuigZMYFVmL6SumNJtO29wNGuN5WoRzfFsvs+DcdZ5tn93hkKmOV2JCi1XrDUWyzrRg8qWl25lBwR0nkTOim2oVWmO0oqjckkyD6ZxI62eROXy3cXjC6GHsXqS8I0F3tanfD+LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiuBZuN5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVe6Lngo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDBC1F000FF;
-	Wed, 30 Sep 2026 19:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiuBZuN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3A81F000FF;
+	Wed, 30 Sep 2026 19:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795476;
-	bh=iqKbgRtz/R+mg8Aj3pdjWwvvyGVjphr5IrgBHLaZpf8=;
+	s=korg; t=1790795479;
+	bh=+eqcnATraBnFbpdCmqhXb406DJO2Ti/ZqGpnCXjzjDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVe6LngoRTdUiN7ZgPYpXpC6ka6jMjsB3d2LlXvLPW6HtltmN2OSDOBVcTJfjauWz
-	 7OzlrDUk62NLfkp78OagYvyPy2Qqu6oHXu+a7aUIN2uT68/Z5366wh3NuWfEm5sznl
-	 KdA7REKp5KZdywupnwJR7LhiCcnuNt25y4+uQKuM=
+	b=wiuBZuN5NyIvOMF135j/wEuwZzK4U1Deehbo4YQeWd4Wbw3kxNvmWCq9oiZ9TH2nz
+	 F9pMtTTN2jv3GuYXQJNr0vJ8ukQzlnwysO25im0cCmijusvry/uABePuNmz2h1nCtL
+	 Mym+DbxeLZtJ3dXG7+DvockF12kQMAQ95DbfWOKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thibault Ferrante <thibault.ferrante@canonical.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0576/1193] net: stmmac: initialize ptp_lock at probe time
-Date: Wed, 30 Sep 2026 17:21:00 +0200
-Message-ID: <20260930152447.037586564@linuxfoundation.org>
+Subject: [PATCH 6.6 0577/1193] selftests/powerpc/tm: Fix tcheck() reading uninitialised CR value
+Date: Wed, 30 Sep 2026 17:21:01 +0200
+Message-ID: <20260930152447.060818684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Thibault Ferrante <thibault.ferrante@canonical.com>
 
-[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
+[ Upstream commit ed28b16eab705071d28edaace47189c2eb3aa108 ]
 
-priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
-during __stmmac_open(). However, the lock is also used while the
-interface is down and has never been opened: tc_taprio_configure()
-invokes the PTP gettime64() callback to compute the EST base time when
-offloading a TAPRIO schedule, and stmmac_get_time() takes
-priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
-Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
-private locks, so that ptp_lock is always valid regardless of the
-interface state.
+tcheck() is used to check the current transaction state (active,
+suspended, doomed) via the "tcheck" instruction, which writes its
+result into CR field 0. The inline asm declared a GPR output operand
+for this result but never actually moved the CR into it.
 
-Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Every caller (tcheck_doomed(), tcheck_active(), tcheck_suspended(),
+tcheck_transactional()) has effectively been testing bits of an unrelated,
+arbitrary register value since this helper was introduced.
+The "& 4" mask discards the TDOOMED and TS_lsb (suspended) bits before
+they ever reach the callers, so tcheck_doomed() and tcheck_suspended()
+can never return true, and tcheck_transactional() degrades to being
+equivalent to tcheck_active().
+
+Fix tcheck() to actually move CR into the output register with mfcr,
+and widen the mask from "& 4" to "& 0xf" so the full CR0 nibble
+(TDOOMED | TS_msb | TS_lsb | reserved) is preserved for the callers.
+
+This bug has been present since tcheck() was introduced.
+
+Link: https://bugs.launchpad.net/bugs/2107442
+Fixes: 8e03bd4e70b6 ("selftests/powerpc: Add TM tcheck helpers in C")
+Signed-off-by: Thibault Ferrante <thibault.ferrante@canonical.com>
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/364996ce-aba2-4213-8d20-7dd481b43fe6@linux.ibm.com/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260907215420.1258678-1-thibault.ferrante@canonical.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/powerpc/tm/tm.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 2bdaa35a05282..435189e35b8ad 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7588,6 +7588,7 @@ int stmmac_dvr_probe(struct device *device,
- 	stmmac_napi_add(ndev);
+diff --git a/tools/testing/selftests/powerpc/tm/tm.h b/tools/testing/selftests/powerpc/tm/tm.h
+index c03c6e7788767..6024ce4ba6ffd 100644
+--- a/tools/testing/selftests/powerpc/tm/tm.h
++++ b/tools/testing/selftests/powerpc/tm/tm.h
+@@ -105,8 +105,12 @@ static inline bool failure_is_nesting(void)
+ static inline int tcheck(void)
+ {
+ 	long cr;
+-	asm volatile ("tcheck 0" : "=r"(cr) : : "cr0");
+-	return (cr >> 28) & 4;
++	asm volatile("tcheck 0;"
++		     "mfcr %0;"
++		     : "=r"(cr)
++		     :
++		     : "cr0");
++	return (cr >> 28) & 0xf;
+ }
  
- 	mutex_init(&priv->lock);
-+	rwlock_init(&priv->ptp_lock);
- 
- 	/* If a specific clk_csr value is passed from the platform
- 	 * this means that the CSR Clock Range selection cannot be
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index 80ecbd73333d9..86c67866d09fb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -301,7 +301,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
- 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
- 	stmmac_ptp_clock_ops.n_ext_ts = priv->dma_cap.aux_snapshot_n;
- 
--	rwlock_init(&priv->ptp_lock);
- 	mutex_init(&priv->aux_ts_lock);
- 	priv->ptp_clock_ops = stmmac_ptp_clock_ops;
- 
+ static inline bool tcheck_doomed(void)
 -- 
 2.53.0
 
