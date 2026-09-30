@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EAA4A8430;
-	Wed, 30 Sep 2026 18:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACA55187EB;
+	Wed, 30 Sep 2026 18:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792921; cv=none; b=OYj7V3+265kkz/OwF+kz4cAZi8Ea/4GAj3FFpxqRIqTetH6sQY5q40d26d4Kt0aV9ggrkGxm80PS1uBHLrtr4Y2kBNy1q1H3buuvF+yPZuG988P7VIowNCmgStUX0kqmFMetOKP4EVc4DYt35RmueSNbVoiYmCM6mAEhuiqiFq4=
+	t=1790792924; cv=none; b=OxYSmUQVqVMNRQx4sgX7uMFiPxutoYZ+YYXvEqEQdw6SvH47b/gshiYKTm7sTKdCs129Fj3uTJ4REbn9fsXEOwiT47hEJq18RssZ1t/JBFKz7ZmP/rbTgKK8S7fjIj/n4NXG7Xpux0vf1kG59OP8NynDydF3spUOVW7+Z2AOuBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792921; c=relaxed/simple;
-	bh=kpfQYmOXgVFrvsd17DNSAlcaST5VkVMslD828lpxyvI=;
+	s=arc-20240116; t=1790792924; c=relaxed/simple;
+	bh=9KldRNAxw6qkkB8Wrie4QNbiHpT7fOalJvpfiMbV6pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snbLQ6FDNs83+Dj+YD/bWJGuszrPGl/7GPsWVZMtSKKw/glz/BtkU2f4tK7VhzfS8jOpJNNvUNp4lMVvkixY87NJbmbta/rJAvxK0evjaZavShMDVEW3IU1zU2wQFvAmbaD2d/8OGb1b2bfv8S4QR8ANQAU4L5A7wGImweiGUWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0b89RGc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pqRPRMDBEKcbAx7yrpwGyvAoTydtLUflrupv4OqwBwyQqiBSAoxfjmk9JQ98XsUH8yyTUiTcGzV7+zxbufd7/ofHQFZrqR+n+lLrGT3Gc/KYLs8PSBah9+L942cZqPpqxXDiDVpHXRn0QSyzrejv4xExhf8Pn9gCDuJkrEk+x98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUuG7JzX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0b89RGc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467041F000FF;
-	Wed, 30 Sep 2026 18:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUuG7JzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE841F000FF;
+	Wed, 30 Sep 2026 18:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792919;
-	bh=+WjdnZuBzTH8J2SNCM2nN6HlxmsXG4CknZN+BPQ75ME=;
+	s=korg; t=1790792922;
+	bh=gyvkO+otZwZPs7A0wpfj2hThEzeQhEPAKvRQRzP4bqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0b89RGcHkg9ebekJMLyBnjZDmvi9SY/VEA69oaNGWeoAGEEiRz8Pbe+3XgKpYe65
-	 uzUpAZigmZ4jPiHQ0kDfT502/yfI7AnwpEm2GP9K7h7q2UuKfuFVhrGhEFeEe4IV+a
-	 kWLvZoAj7Fpo3FB2jkJr3dUO0A0OX5v4WE9h6TAk=
+	b=BUuG7JzX5dWTufupSwKzSn/1DYHsOTt1y1VcC7g8qFGa8yZhT2FqMRerC5IlvdnHA
+	 6vYcJSgRZw+v8UXKIO/kDpS3QuPOOLRQVCI28vrQ2nq3uc7qTjbXU8U802GKl70J3a
+	 lgJf0d7qqA3dFGm3bbTiePxJhHrcKu/BRGENYzvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com,
-	Naman Gulati <namangulati@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/395] netfilter: ctnetlink: fix suspicious RCU usage in expect_iter_name
-Date: Wed, 30 Sep 2026 17:25:32 +0200
-Message-ID: <20260930152342.157116491@linuxfoundation.org>
+Subject: [PATCH 6.18 071/395] arm64: io: Reject non-user protection in ioremap_prot()
+Date: Wed, 30 Sep 2026 17:25:33 +0200
+Message-ID: <20260930152342.177981309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,75 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Gulati <namangulati@google.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 207d591c353201f3bd3e0c89bb7d44a849c8fd59 ]
+[ Upstream commit bb756b11ad63832ebee58caf9e8f9381eaecff9f ]
 
-expect_iter_name() is invoked by nf_ct_expect_iterate_net() under
-spin_lock_bh(&nf_conntrack_expect_lock). It does not hold
-rcu_read_lock().
+Mapping a stack-top page via /dev/mem with PROT_NONE and then
+reading that process's /proc/<pid>/cmdline triggers a spurious WARN
+in ioremap_prot() through generic_access_phys():
 
-When accessing exp->helper with rcu_dereference() in syzbot's report,
-lockdep warns:
+  WARNING: ./arch/arm64/include/asm/io.h:275 at generic_access_phys
+  Call trace:
+    generic_access_phys+0x1c8/0x228 (P)
+    __access_remote_vm+0x2b4/0x398
+    access_remote_vm+0x14/0x30
+    get_mm_cmdline+0xf8/0x2a0
+    proc_pid_cmdline_read+0x68/0x120
 
-  =============================
-  WARNING: suspicious RCU usage
-  syzkaller #0 Not tainted
-  -----------------------------
-  net/netfilter/nf_conntrack_netlink.c:3393 suspicious rcu_dereference_check() usage!
+generic_access_phys() passes the protection derived from the user PTE
+to ioremap_prot(). On arm64, a PROT_NONE mapping is represented by a
+present-invalid PTE, so pte_present() still returns true and the
+protection reaches ioremap_prot().
 
-  locks held by syz-executor381/5628: 2, last CPU#1:
-   #0: ffffffff9aee42a0 (nfnl_subsys_ctnetlink_exp){+.+.}-{4:4},
-       at: nfnetlink_rcv_msg+0xa69/0x12b0
-   #1: ffffffff8ea74d58 (nf_conntrack_expect_lock){+...}-{3:3},
-       at: nf_ct_expect_iterate_net+0x38/0x180
+A PROT_NONE mapping does not have PTE_USER, causing the existing
+WARN_ON_ONCE() in ioremap_prot() to fire even though this is a valid
+user mapping. Execute-only mappings have the same issue and must not
+be readable through this path either.
 
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xe8/0x150
-   lockdep_rcu_suspicious+0x140/0x1d0
-   expect_iter_name+0xfb/0x100
-   nf_ct_expect_iterate_net+0xf2/0x180
-   ctnetlink_del_expect+0x45d/0x640
-   nfnetlink_rcv_msg+0xcc2/0x12b0
-   netlink_rcv_skb+0x226/0x4a0
-   nfnetlink_rcv+0x2b9/0x28c0
-   netlink_unicast+0x7bd/0x940
-   netlink_sendmsg+0x813/0xb40
-   ____sys_sendmsg+0x54e/0x850
-   ___sys_sendmsg+0x2a5/0x360
-   __sys_sendmsg+0x2a5/0x360
-   do_syscall_64+0x166/0x520
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ioremap_prot() should therefore reject protection values without
+PTE_USER without warning. This makes the access fail cleanly for
+PROT_NONE and execute-only mappings while retaining the existing
+user-protection contract.
 
-Use rcu_dereference_protected() with lockdep_is_held() on
-nf_conntrack_expect_lock instead, similar to expect_iter_me() in
-nf_conntrack_helper.c.
-
-Fixes: f01794106042 ("netfilter: nf_conntrack_expect: use expect->helper")
-Reported-by: syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6aa4a377.f81106d8.2ab401.0024.GAE@google.com/T/#u
-Signed-off-by: Naman Gulati <namangulati@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8f098037139b ("arm64: io: Extract user memory type in ioremap_prot()")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 3 ++-
+ arch/arm64/include/asm/io.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 48cf3dad61bdb..5211599357189 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3395,7 +3395,8 @@ static bool expect_iter_name(struct nf_conntrack_expect *exp, void *data)
- 	struct nf_conntrack_helper *helper;
- 	const char *name = data;
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index 8cbd1e96fd50b..a8507de4f84c3 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -272,7 +272,8 @@ static inline void __iomem *ioremap_prot(phys_addr_t phys, size_t size,
+ 	pgprot_t prot;
+ 	ptdesc_t user_prot_val = pgprot_val(user_prot);
  
--	helper = rcu_dereference(exp->helper);
-+	helper = rcu_dereference_protected(exp->helper,
-+					   lockdep_is_held(&nf_conntrack_expect_lock));
- 	if (!helper)
- 		return false;
+-	if (WARN_ON_ONCE(!(user_prot_val & PTE_USER)))
++	/* Reject PROT_NONE and exec-only */
++	if (!(user_prot_val & PTE_USER))
+ 		return NULL;
  
+ 	prot = __pgprot_modify(PAGE_KERNEL, PTE_ATTRINDX_MASK,
 -- 
 2.53.0
 
