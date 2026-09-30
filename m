@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCA45172E0;
-	Wed, 30 Sep 2026 17:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA643438A6;
+	Wed, 30 Sep 2026 17:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788094; cv=none; b=hnlEOYDLvHg91rWgw0BC9bmaM1kV0AFuIFWV2brrpGalwIJdHB5RZ8hX901kkViKFfygPAwiLIcRnGGxzNRaTSfx5iAlGjQ8R4k6Khzo8hreDK2Bsq/cN3Pf+81DBNVqNjdIgTqvliR3r5rFNalLkU5k6SQnf+HkVWFExR7DYSE=
+	t=1790788096; cv=none; b=nH1mxDy6XRl6/59cFNhJcSz2MVU1pFefgX/lUgqRmL6Zsyrgwdj1Ck4pYbR7F9K+GFB9MX0MZTfnH3MyVZ+hEcUhW5Va+tmsq62xIWyI4MS+p7tXy82TantcNkgX40Abb1p9Az1bPHEhqBv1kTkI7cq34UkYiuok5mojIhfE7JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788094; c=relaxed/simple;
-	bh=i3yDQ/z4+XaohToUUPZW5hZIFVjRArNUsW4cjiOjVJE=;
+	s=arc-20240116; t=1790788096; c=relaxed/simple;
+	bh=YtTzAtYDDLaRWsW+ubjyNmdCLs60m/ygdWuxFVWY7YA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkgWawcw+vv3mARS7skXef2NLzT7fmxAhGdrTA09r6KEdgp9tChgPnMaJ0116GrgO6BEAnZeSmzgQSdqv6Xge8Y7YKpitmZE4AotZQvXiXMIHyhjTEYeoG0oMMJrHRfqqs0QwjX07BPctw7PDN7Ab6iuJIBKZO+FWXVf0fL98Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmNi20p6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=drczjH4hAlV8yGXcYeFqZ487mfB/Cn3aGuvw11q/FkT+MJENO/xcilqBzT5SdjP51pYPFxpW0bMEoXHxi3RwMvcHQBq4vAj6RLM0rCg+Ae4yD/I1kUT53czKFEvWNq/fDQ/JaIg4VGWIs+Bq9VhFKPW0L9glIFw9Ywkq7C7+uTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6CieCPq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmNi20p6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BEA1F000FF;
-	Wed, 30 Sep 2026 17:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6CieCPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E9A1F000FF;
+	Wed, 30 Sep 2026 17:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788092;
-	bh=fx3srhoEX5qbnDb+UMl+2s2e6S/Q0KQlyZ0U7YW08Aw=;
+	s=korg; t=1790788094;
+	bh=ZTuEEVzda+ZIrqnYswDPA4OUynA9fA2er217I8py5tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmNi20p6zWroDiZ7TIhbtQagiNQ0vPG5OWdovnZd7mSeAVf4c22c+09ipB/7DvZSb
-	 0RkvwsaX+3KeFm4jAgUB+WVzLAQ99428Q/91GvUM1A7b/HTCD+82Za/84R4WCUbtUP
-	 b8n2vuhVTBtaSpwpJAbGC+DQaPi6v7FgOh9rfflY=
+	b=I6CieCPq71r64Y9z2RlInkJRwbm4NsJ1XrfiSbqcXGM6tTBSPw5LRPUcnW414mHmW
+	 3CLwO+2Y3U/AWoGylOMQafSdAGdFXzc/b7k21aTlDSWcQ2joy7wL/lRlkOqrz68S6N
+	 q1QCiuYkpXi/uL7Ka3k/AVctF9GGqQktty3mhVnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shen Yongchao <grayhat@foxmail.com>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
 	Wei-Lin Chang <weilin.chang@arm.com>,
 	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 448/457] KVM: arm64: nv: Fix life cycle of the nested_mmus array
-Date: Wed, 30 Sep 2026 17:29:13 +0200
-Message-ID: <20260930152355.672208404@linuxfoundation.org>
+Subject: [PATCH 7.2 449/457] KVM: arm64: nv: Delay freeing of shadow S2 structures until VM destruction
+Date: Wed, 30 Sep 2026 17:29:14 +0200
+Message-ID: <20260930152355.694790029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -57,305 +55,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 33346f8960c7bb6a3b4e273b5cfe25c5a8be349f ]
+[ Upstream commit e5843f4effaa2ffac3e789ecd4456403564961d4 ]
 
-The nested_mmus array holds the shadow page tables that are used when
-a guest is running a nested context. These structures are allocated on
-VCPU_INIT for whole guest, which implies that they may have to be
-relocated as the array grows.
+We free the shadow S2 structures from kvm_arch_flush_shadow_all(), which
+is a Bad Idea(tm). Freeing the page tables is fair game (this is what
+this callback is for), but freeing the container that could still be
+referenced by another part of the system is not great.
 
-Should a VCPU_INIT occur whilst a vcpu is actively running an L2 and
-that the allocation requires relocation, that vcpu will still be
-running with a pointer to the previous structure, which will have been
-freed.
+Instead, grow separate destructors that gets called when we tear the VM
+down for good. From there, we can nuke both the individual MMUs as well
+as the global array that points to them, safe in the knowledge that the
+vcpus themselves have been destroyed already.
 
-Fix this by turning the array of structures to an array of pointers,
-which is now allocated at VM creation, sized to the absolute maximum
-that KVM can handle.
-
-In turn, each VCPU_INIT contributes S2_MMU_PER_VCPU to the pool. No
-reallocation is ever performed, and the life cycle of each object is
-much clearer:
-
-- the nested_mmus array is allocated in kvm_init_nested(), and freed
-  in kvm_arch_destroy_vm()
-
-- s2_mmu structures are allocated in kvm_vcpu_init_nested(), and freed
-  on kvm_arch_flush_shadow_all()
-
-Finally, the freeing of vcpu->arch.vncr_array is made consistent
-rather than being done on some failure paths, but not others.
-
-Fixes: 4f128f8e1aaa ("KVM: arm64: nv: Support multiple nested Stage-2 mmu structures")
-Reported-by: Shen Yongchao <grayhat@foxmail.com>
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Suggested-by: Karl Mehltretter <kmehltretter@gmail.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Link: https://lore.kernel.org/r/20260803224405.41468-1-kmehltretter@gmail.com
+Fixes: 4f128f8e1aaac ("KVM: arm64: nv: Support multiple nested Stage-2 mmu structures")
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
 Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
-Link: https://patch.msgid.link/20260911162203.1919330-2-maz@kernel.org
+Link: https://patch.msgid.link/20260911162203.1919330-3-maz@kernel.org
 Signed-off-by: Oliver Upton <oupton@kernel.org>
-
-[ Backport to 7.2: omit vncr_tlb_count initialization because this tree
-  removed the counter in 87c2bbf189829 and does not have the subsequent
-  VNCR TLB tracking reintroduction. Retain kvcalloc() for the per-vCPU
-  MMU block, with the new fixed S2_MMU_PER_VCPU allocation size, because
-  this call site has not undergone the upstream allocator conversion.
-  Preserve the pointer-array lifetime changes required by e5843f4effaa2
-  ("KVM: arm64: nv: Delay freeing of shadow S2 structures until VM
-  destruction"). No functions are added. ]
-
-Stable-dep-of: e5843f4effaa ("KVM: arm64: nv: Delay freeing of shadow S2 structures until VM destruction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h   |    2 
- arch/arm64/include/asm/kvm_nested.h |    2 
- arch/arm64/kvm/arm.c                |    8 ++-
- arch/arm64/kvm/nested.c             |   89 ++++++++++++++++--------------------
- 4 files changed, 49 insertions(+), 52 deletions(-)
+ arch/arm64/include/asm/kvm_nested.h |    1 +
+ arch/arm64/kvm/arm.c                |    4 ++--
+ arch/arm64/kvm/nested.c             |   15 ++++++++++-----
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -322,7 +322,7 @@ struct kvm_arch {
- 	 * Stage 2 paging state for VMs with nested S2 using a virtual
- 	 * VMID.
- 	 */
--	struct kvm_s2_mmu *nested_mmus;
-+	struct kvm_s2_mmu **nested_mmus;
- 	size_t nested_mmus_size;
- 	int nested_mmus_next;
- 
 --- a/arch/arm64/include/asm/kvm_nested.h
 +++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -66,7 +66,7 @@ static inline u64 translate_ttbr0_el2_to
- 
+@@ -67,6 +67,7 @@ static inline u64 translate_ttbr0_el2_to
  extern bool forward_smc_trap(struct kvm_vcpu *vcpu);
  extern bool forward_debug_exception(struct kvm_vcpu *vcpu);
--extern void kvm_init_nested(struct kvm *kvm);
-+extern int kvm_init_nested(struct kvm *kvm);
+ extern int kvm_init_nested(struct kvm *kvm);
++extern void kvm_destroy_nested(struct kvm *kvm);
  extern int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu);
  extern void kvm_init_nested_s2_mmu(struct kvm_s2_mmu *mmu);
  extern struct kvm_s2_mmu *lookup_s2_mmu(struct kvm_vcpu *vcpu);
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -236,8 +236,6 @@ int kvm_arch_init_vm(struct kvm *kvm, un
- 	mutex_unlock(&kvm->lock);
- #endif
- 
--	kvm_init_nested(kvm);
--
- 	ret = kvm_share_hyp(kvm, kvm + 1);
- 	if (ret)
- 		return ret;
-@@ -252,6 +250,10 @@ int kvm_arch_init_vm(struct kvm *kvm, un
- 	if (ret)
- 		goto err_free_cpumask;
- 
-+	ret = kvm_init_nested(kvm);
-+	if (ret)
-+		goto err_uninit_mmu;
-+
- 	if (is_protected_kvm_enabled()) {
- 		/*
- 		 * If any failures occur after this is successful, make sure to
-@@ -280,6 +282,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
+@@ -282,7 +282,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
  
  err_uninit_mmu:
  	kvm_uninit_stage2_mmu(kvm);
-+	kvfree(kvm->arch.nested_mmus);
+-	kvfree(kvm->arch.nested_mmus);
++	kvm_destroy_nested(kvm);
  err_free_cpumask:
  	free_cpumask_var(kvm->arch.supported_cpus);
  err_unshare_kvm:
-@@ -337,6 +340,7 @@ void kvm_arch_destroy_vm(struct kvm *kvm
+@@ -340,7 +340,7 @@ void kvm_arch_destroy_vm(struct kvm *kvm
  
  	kvm_unshare_hyp(kvm, kvm + 1);
  
-+	kvfree(kvm->arch.nested_mmus);
+-	kvfree(kvm->arch.nested_mmus);
++	kvm_destroy_nested(kvm);
  	kvm_arm_teardown_hypercalls(kvm);
  }
  
 --- a/arch/arm64/kvm/nested.c
 +++ b/arch/arm64/kvm/nested.c
-@@ -44,10 +44,14 @@ struct vncr_tlb {
-  */
- #define S2_MMU_PER_VCPU		2
- 
--void kvm_init_nested(struct kvm *kvm)
-+int kvm_init_nested(struct kvm *kvm)
- {
--	kvm->arch.nested_mmus = NULL;
-+	kvm->arch.nested_mmus = kvmalloc_objs(struct kvm_s2_mmu *,
-+					      KVM_MAX_VCPUS * S2_MMU_PER_VCPU,
-+					      GFP_KERNEL_ACCOUNT);
- 	kvm->arch.nested_mmus_size = 0;
-+
-+	return kvm->arch.nested_mmus ? 0 : -ENOMEM;
+@@ -54,6 +54,15 @@ int kvm_init_nested(struct kvm *kvm)
+ 	return kvm->arch.nested_mmus ? 0 : -ENOMEM;
  }
  
++void kvm_destroy_nested(struct kvm *kvm)
++{
++	for (int i = 0; i < kvm->arch.nested_mmus_size; i+= S2_MMU_PER_VCPU)
++		kvfree(kvm->arch.nested_mmus[i]);
++
++	kvm->arch.nested_mmus_size = 0;
++	kvfree(kvm->arch.nested_mmus);
++}
++
  static int init_nested_s2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
-@@ -68,8 +72,9 @@ static int init_nested_s2_mmu(struct kvm
- int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
  {
- 	struct kvm *kvm = vcpu->kvm;
--	struct kvm_s2_mmu *tmp;
--	int num_mmus, ret = 0;
-+	int num_mmus;
-+
-+	lockdep_assert_held(&kvm->arch.config_lock);
- 
- 	if (test_bit(KVM_ARM_VCPU_HAS_EL2_E2H0, kvm->arch.vcpu_features) &&
- 	    !cpus_have_final_cap(ARM64_HAS_HCR_NV1))
-@@ -82,51 +87,40 @@ int kvm_vcpu_init_nested(struct kvm_vcpu
- 	if (!vcpu->arch.ctxt.vncr_array)
- 		return -ENOMEM;
- 
--	/*
--	 * Let's treat memory allocation failures as benign: If we fail to
--	 * allocate anything, return an error and keep the allocated array
--	 * alive. Userspace may try to recover by initializing the vcpu
--	 * again, and there is no reason to affect the whole VM for this.
--	 */
- 	num_mmus = atomic_read(&kvm->online_vcpus) * S2_MMU_PER_VCPU;
- 
- 	if (num_mmus > kvm->arch.nested_mmus_size) {
--		tmp = kvcalloc(num_mmus, sizeof(*tmp), GFP_KERNEL_ACCOUNT);
--		if (!tmp)
--			return -ENOMEM;
-+		struct kvm_s2_mmu *tmp;
-+		int i, ret = 0;
- 
--		write_lock(&kvm->mmu_lock);
--
--		if (kvm->arch.nested_mmus_size) {
--			memcpy(tmp, kvm->arch.nested_mmus,
--			       size_mul(sizeof(*tmp), kvm->arch.nested_mmus_size));
-+		tmp = kvcalloc(S2_MMU_PER_VCPU, sizeof(*tmp), GFP_KERNEL_ACCOUNT);
-+		if (!tmp)
-+			ret = -ENOMEM;
- 
--			for (int i = 0; i < kvm->arch.nested_mmus_size; i++)
--				tmp[i].pgt->mmu = &tmp[i];
-+		for (i = 0; !ret && i < S2_MMU_PER_VCPU; i++) {
-+			ret = init_nested_s2_mmu(kvm, &tmp[i]);
-+			if (ret)
-+				break;
- 		}
- 
--		swap(kvm->arch.nested_mmus, tmp);
--
--		write_unlock(&kvm->mmu_lock);
--
--		kvfree(tmp);
--	}
-+		if (ret) {
-+			while (--i >= 0)
-+				kvm_free_stage2_pgd(&tmp[i]);
- 
--	for (int i = kvm->arch.nested_mmus_size; !ret && i < num_mmus; i++)
--		ret = init_nested_s2_mmu(kvm, &kvm->arch.nested_mmus[i]);
-+			kvfree(tmp);
-+			free_page((unsigned long)vcpu->arch.ctxt.vncr_array);
-+			vcpu->arch.ctxt.vncr_array = NULL;
-+			return ret;
-+		}
- 
--	if (ret) {
--		for (int i = kvm->arch.nested_mmus_size; i < num_mmus; i++)
--			kvm_free_stage2_pgd(&kvm->arch.nested_mmus[i]);
-+		guard(write_lock)(&kvm->mmu_lock);
- 
--		free_page((unsigned long)vcpu->arch.ctxt.vncr_array);
--		vcpu->arch.ctxt.vncr_array = NULL;
-+		for (i = 0; i < S2_MMU_PER_VCPU; i++)
-+			kvm->arch.nested_mmus[i + kvm->arch.nested_mmus_size] = &tmp[i];
- 
--		return ret;
-+		kvm->arch.nested_mmus_size += S2_MMU_PER_VCPU;
- 	}
- 
--	kvm->arch.nested_mmus_size = num_mmus;
--
- 	return 0;
- }
- 
-@@ -740,7 +734,7 @@ void kvm_s2_mmu_iterate_by_vmid(struct k
- 	write_lock(&kvm->mmu_lock);
- 
- 	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (!kvm_s2_mmu_valid(mmu))
- 			continue;
-@@ -782,7 +776,7 @@ struct kvm_s2_mmu *lookup_s2_mmu(struct
- 	 *   if S2 translation is disabled.
- 	 */
- 	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (!kvm_s2_mmu_valid(mmu))
- 			continue;
-@@ -821,7 +815,7 @@ static struct kvm_s2_mmu *get_s2_mmu_nes
- 	for (i = kvm->arch.nested_mmus_next;
- 	     i < (kvm->arch.nested_mmus_size + kvm->arch.nested_mmus_next);
- 	     i++) {
--		s2_mmu = &kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
-+		s2_mmu = kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
- 
- 		if (atomic_read(&s2_mmu->refcnt) == 0)
- 			break;
-@@ -1277,7 +1271,7 @@ void kvm_nested_s2_wp(struct kvm *kvm)
- 		return;
- 
- 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (kvm_s2_mmu_valid(mmu))
- 			kvm_stage2_wp_range(mmu, 0, kvm_phys_size(mmu));
-@@ -1296,7 +1290,7 @@ void kvm_nested_s2_unmap(struct kvm *kvm
- 		return;
- 
- 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (kvm_s2_mmu_valid(mmu))
- 			kvm_stage2_unmap_range(mmu, 0, kvm_phys_size(mmu), may_block);
-@@ -1315,7 +1309,7 @@ void kvm_nested_s2_flush(struct kvm *kvm
- 		return;
- 
- 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (kvm_s2_mmu_valid(mmu))
- 			kvm_stage2_flush_range(mmu, 0, kvm_phys_size(mmu));
-@@ -1324,16 +1318,15 @@ void kvm_nested_s2_flush(struct kvm *kvm
+ 	/*
+@@ -1318,16 +1327,12 @@ void kvm_nested_s2_flush(struct kvm *kvm
  
  void kvm_arch_flush_shadow_all(struct kvm *kvm)
  {
--	int i;
--
--	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
--		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
-+	for (int i = kvm->arch.nested_mmus_size - 1; i >= 0; i--) {
-+		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+-	for (int i = kvm->arch.nested_mmus_size - 1; i >= 0; i--) {
++	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
+ 		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
  
  		if (!WARN_ON(atomic_read(&mmu->refcnt)))
  			kvm_free_stage2_pgd(mmu);
-+
-+		if ((i % S2_MMU_PER_VCPU) == 0)
-+			kvfree(mmu);
+-
+-		if ((i % S2_MMU_PER_VCPU) == 0)
+-			kvfree(mmu);
  	}
--	kvfree(kvm->arch.nested_mmus);
--	kvm->arch.nested_mmus = NULL;
- 	kvm->arch.nested_mmus_size = 0;
+-	kvm->arch.nested_mmus_size = 0;
  	kvm_uninit_stage2_mmu(kvm);
  }
+ 
 
 
