@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B74348896;
-	Wed, 30 Sep 2026 19:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2F53DA7DB;
+	Wed, 30 Sep 2026 19:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796005; cv=none; b=Nhw4oobe8IRk3LGzrO8IOLZveL6LcC4km8u2s5GWMh8C58rGv0bpgzstJECLTCD6XIYMcAZpJNjHl46B2rS9/7tIqxJT3JUXhuk/1Gmts8GpB4oy3i0R7D0FvV+PLUHLuG6N9clkrYv6XnReBz+Xox7bjbhI27gH+QPChG7c9ZI=
+	t=1790796008; cv=none; b=V9LnqkxBomrz4I+yV8VIOdB0y95bnfydAMaBnPdRE/3CxCw6/eOe+dQ2RiyxBVVaPiy8zZOCFgd5VXvb520Lj8Ous7Ca8MDX61XSLJxscBAMp9s2ucDBhJn8LU4oYOKCSYww7CeOIQ/GppnyJwUn5zCzq17pzNhKYlOLgczydIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796005; c=relaxed/simple;
-	bh=YP/lYiBzhqxRrP0nWFb+kbOXXM7QnmWwzLCLVgC/pHM=;
+	s=arc-20240116; t=1790796008; c=relaxed/simple;
+	bh=Ge7XdWY1hoHXB61sjrarJkYPci5dEmGV6OpOvLVwVk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HnyjE0b+5VKQFJIKMtuV1zgtDE1P6tNPVCBJNyQ1XO9XfXeSi/RsIsXsWUBTI52PUprZA6HNJZsk53JB/JBn/zF2giKWiv7yLA/l7tsgpxPHR2zAjfsinAdJLprL5tRj9k99Um3QkSAe0SzuIPcP9EGirHPGunK2k76HtoEVYa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4Pl1m/+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sh0hKQeM4yGQEbOC0/4Thji2cVmjKI1WNl+k7CiQkegactuMq334jPyLItv4gLOXGx58qNT0cuigUCfwlUR8SyLK9jTAINL3/HtiMVsMMZemdY0bFXU/n0lNL2CQCXy1Y7/9J3Dtot5EqemctZqFVDuGWBoyjft9W/fU12+0sD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xR3wRzmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4Pl1m/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4AE1F000FF;
-	Wed, 30 Sep 2026 19:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xR3wRzmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BC21F000FF;
+	Wed, 30 Sep 2026 19:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796003;
-	bh=wGokp/isEMi1i/C+z8/71HA5monpJmgEawSoB8akCX8=;
+	s=korg; t=1790796006;
+	bh=mkrY7KnbHW13tERDou3Rbh4qM2dA4tuKYYCb0WofR5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4Pl1m/+wGj7KC8Rn6+v5pKBQYPnscjFpA9KgsFFBhnqceBXMDC+8C5UVcBo7MXZh
-	 V8Z10vpjU93BgXMMpuAouSU4DF2KM7RAdRvUkDuaj7rxLTjklUJUvzuz/cAP+D2WB3
-	 nlOL6MNJfTwQ1Y4fxzW9wM5w4wxol+XPtizEjDss=
+	b=xR3wRzmIdkMa8GwrfF8gKXyaItQQXCMXEBumXals+a3NbCpWeNuT3hiaJJYa3IlfK
+	 JfS/2SA7GimUvpvt+E0Pi7hSpS0+DbYFih0VrMsOqK6l54DS4k3GxtYMQDjgGxZ9il
+	 J3LWoY8tnMEWRy4GDu2cTZjYjXR268TwIvwnbToo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Stian Halseth <stian@itx.no>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0715/1193] selftests/landlock: Add tests for whiteout object creation
-Date: Wed, 30 Sep 2026 17:23:19 +0200
-Message-ID: <20260930152450.135815656@linuxfoundation.org>
+Subject: [PATCH 6.6 0716/1193] sunvdc: fix -EIO issue due to lack of retries
+Date: Wed, 30 Sep 2026 17:23:20 +0200
+Message-ID: <20260930152450.157048897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,304 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ee890889b30b22f9a21636061def7a04e4f89380 ]
+[ Upstream commit 5067d4ba713961d8ccea1e06cd4c453793f3121e ]
 
-Add tests to check that whiteout object creation is guarded by
-LANDLOCK_ACCESS_FS_MAKE_REG, in the cases where these are created from
-userspace:
+John reports that since commit:
 
-* Conventional creation with mknod()
-* Linking or renaming an existing whiteout object
-* renameat2() with RENAME_WHITEOUT,
-  which creates a new whiteout object in the source location
-* renameat2() with RENAME_EXCHANGE,
-  with one of the renamed objects being a whiteout object
+a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
 
-Signed-off-by: Günther Noack <gnoack@google.com>
-Link: https://patch.msgid.link/20260813093157.1436894-4-gnoack@google.com
-[mic: Update commit message as requested]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[mic: Backport: adapt the tests to the older filesystem fixture and
-ruleset helper]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+users of Linux inside Solaris ldom see occasional -EIO errors because
+the request send loop now times out. The current loop does 10 retries,
+and inside vio_ldc_send() a further 1000 1usec retries are done as well.
+Even with 10.5 msec of busy loop retries that's apparently not enough to
+always succeed.
+
+Rather than introduce continued busy looping, requeue the request and
+have the delayed queue kicking retry the request after another 10ms.
+This obviously isn't ideal, but there's seemingly no way to wait for
+this type of event. And if 10ms of busy looping was not enough to make
+progress, then presumably this is an edge condition and we just need to
+guarantee to make forward progress at some later point in time. That's
+more suitably done through letting the CPU tend to other work, rather
+than sitting in a tight loop retrying.
+
+[stian: rebased on top of the cookie-unmap fix, without which every
+ requeued attempt leaks LDC map table entries; tested on an
+ UltraSPARC T4 LDOM where the vdc_tx_trigger failure condition was
+ reproduced and absorbed by the requeue with no I/O error]
+
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/all/20251006100226.4246-2-glaubitz@physik.fu-berlin.de/
+Link: https://lore.kernel.org/all/418310b3-2b77-4534-b2fd-27dcc11e333c@kernel.dk/
+Signed-off-by: Stian Halseth <stian@itx.no>
+Link: https://patch.msgid.link/20260901173947.3292110-3-stian@itx.no
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/fs_test.c | 209 ++++++++++++++++++++-
- 1 file changed, 207 insertions(+), 2 deletions(-)
+ drivers/block/sunvdc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index 29658ba7d6d9..b92597b8cd47 100644
---- a/tools/testing/selftests/landlock/fs_test.c
-+++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -38,6 +38,10 @@ int renameat2(int olddirfd, const char *oldpath, int newdirfd,
- #define RENAME_EXCHANGE (1 << 1)
- #endif
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index 829da2723fda4..3260b9f779937 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -557,6 +557,7 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	struct vdc_port *port = hctx->queue->queuedata;
+ 	struct vio_dring_state *dr;
+ 	unsigned long flags;
++	int ret;
  
-+#ifndef RENAME_WHITEOUT
-+#define RENAME_WHITEOUT (1 << 2)
-+#endif
-+
- #define TMP_DIR "tmp"
- #define BINARY_PATH "./true"
+ 	dr = &port->vio.drings[VIO_DRIVER_TX_RING];
  
-@@ -65,6 +69,8 @@ static const char file1_s3d1[] = TMP_DIR "/s3d1/f1";
- /* dir_s3d2 is a mount point. */
- static const char dir_s3d2[] = TMP_DIR "/s3d1/s3d2";
- static const char dir_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3";
-+static const char file1_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3/f1";
-+static const char file1_s3d4[] = TMP_DIR "/s3d1/s3d2/s3d4/f1";
- 
- /*
-  * layout1 hierarchy:
-@@ -340,7 +346,8 @@ static void create_layout1(struct __test_metadata *const _metadata)
- 	ASSERT_EQ(0, mount_opt(&mnt_tmp, dir_s3d2));
- 	clear_cap(_metadata, CAP_SYS_ADMIN);
- 
--	ASSERT_EQ(0, mkdir(dir_s3d3, 0700));
-+	create_file(_metadata, file1_s3d3);
-+	create_file(_metadata, file1_s3d4);
- }
- 
- static void remove_layout1(struct __test_metadata *const _metadata)
-@@ -360,7 +367,8 @@ static void remove_layout1(struct __test_metadata *const _metadata)
- 	EXPECT_EQ(0, remove_path(dir_s2d2));
- 
- 	EXPECT_EQ(0, remove_path(file1_s3d1));
--	EXPECT_EQ(0, remove_path(dir_s3d3));
-+	EXPECT_EQ(0, remove_path(file1_s3d3));
-+	EXPECT_EQ(0, remove_path(file1_s3d4));
- 	set_cap(_metadata, CAP_SYS_ADMIN);
- 	umount(dir_s3d2);
- 	clear_cap(_metadata, CAP_SYS_ADMIN);
-@@ -702,6 +710,27 @@ static void enforce_ruleset(struct __test_metadata *const _metadata,
+@@ -578,7 +579,13 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		return BLK_STS_DEV_RESOURCE;
  	}
- }
  
-+static void enforce_fs(struct __test_metadata *const _metadata,
-+		       const __u64 access_fs, const struct rule rules[])
-+{
-+	int ruleset_fd;
-+
-+	if (rules) {
-+		ruleset_fd = create_ruleset(_metadata, access_fs, rules);
-+	} else {
-+		const struct landlock_ruleset_attr ruleset_attr = {
-+			.handled_access_fs = access_fs,
-+		};
-+
-+		ruleset_fd = landlock_create_ruleset(&ruleset_attr,
-+						     sizeof(ruleset_attr), 0);
-+		ASSERT_LE(0, ruleset_fd);
-+	}
-+
-+	enforce_ruleset(_metadata, ruleset_fd);
-+	EXPECT_EQ(0, close(ruleset_fd));
-+}
-+
- TEST_F_FORK(layout0, proc_nsfs)
- {
- 	const struct rule rules[] = {
-@@ -2078,6 +2107,170 @@ TEST_F_FORK(layout1, rename_file)
- 			       RENAME_EXCHANGE));
- }
- 
-+TEST_F_FORK(layout1, rename_whiteout_denied)
-+{
-+	/* The affected file is a FIFO. */
-+	ASSERT_EQ(0, unlink(file1_s3d3));
-+	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
-+
-+	/* Deny MAKE_REG, but allow MAKE_FIFO. */
-+	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, NULL);
-+
-+	/*
-+	 * Try to rename a file with RENAME_WHITEOUT.
-+	 * file1_s3d3 is in dir_s3d2 (tmpfs), so it supports RENAME_WHITEOUT.
-+	 * Denied, because whiteout creation is guarded with MAKE_REG.
-+	 */
-+	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
-+				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
-+	EXPECT_EQ(EACCES, errno);
-+}
-+
-+static bool is_whiteout(const char *const path)
-+{
-+	struct stat st;
-+
-+	if (stat(path, &st) == -1)
-+		return false;
-+
-+	return S_ISCHR(st.st_mode) && st.st_rdev == makedev(0, 0);
-+}
-+
-+static bool is_fifo(const char *const path)
-+{
-+	struct stat st;
-+
-+	return stat(path, &st) == 0 && S_ISFIFO(st.st_mode);
-+}
-+
-+TEST_F_FORK(layout1, rename_whiteout_allowed)
-+{
-+	const struct rule rules[] = {
-+		{
-+			.path = dir_s3d3,
-+			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
-+		},
-+		{},
-+	};
-+
-+	/* The affected file is a FIFO. */
-+	ASSERT_EQ(0, unlink(file1_s3d3));
-+	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
-+
-+	/* Allow MAKE_REG below dir_s3d3. */
-+	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, rules);
-+
-+	/*
-+	 * Rename a file with RENAME_WHITEOUT within the same directory.
-+	 * Allowed, because MAKE_REG is granted for the whiteout object which
-+	 * gets created in the source location.
-+	 */
-+	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
-+			       TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
-+
-+	/* A whiteout object took the place of the moved FIFO. */
-+	EXPECT_TRUE(is_whiteout(file1_s3d3));
-+	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d3/f2"));
-+}
-+
-+TEST_F_FORK(layout1, rename_whiteout_reparenting)
-+{
-+	const struct rule rules[] = {
-+		{
-+			.path = dir_s3d2,
-+			.access = LANDLOCK_ACCESS_FS_REFER,
-+		},
-+		{
-+			.path = dir_s3d3,
-+			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
-+		},
-+		{},
-+	};
-+
-+	/* The moved files are FIFOs. */
-+	ASSERT_EQ(0, unlink(file1_s3d3));
-+	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
-+	ASSERT_EQ(0, unlink(file1_s3d4));
-+	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
-+
-+	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
-+	enforce_fs(_metadata,
-+		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
-+		   rules);
-+
-+	/*
-+	 * The whiteout object is created in the source directory: Moving the
-+	 * FIFO out of dir_s3d4 is denied because MAKE_REG is not granted
-+	 * there, even though it is granted in the destination directory
-+	 * dir_s3d3.
-+	 */
-+	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD,
-+				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
-+	EXPECT_EQ(EACCES, errno);
-+
-+	/*
-+	 * Moving the FIFO out of dir_s3d3 is allowed, because MAKE_REG is
-+	 * granted there for the created whiteout object.
-+	 */
-+	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
-+			       TMP_DIR "/s3d1/s3d2/s3d4/f2", RENAME_WHITEOUT));
-+
-+	/* A whiteout object took the place of the moved FIFO. */
-+	EXPECT_TRUE(is_whiteout(file1_s3d3));
-+	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d4/f2"));
-+}
-+
-+TEST_F_FORK(layout1, rename_whiteout_exchange)
-+{
-+	const char *const whiteout_s3d3 = TMP_DIR "/s3d1/s3d2/s3d3/f2";
-+	const struct rule rules[] = {
-+		{
-+			.path = dir_s3d2,
-+			.access = LANDLOCK_ACCESS_FS_REFER,
-+		},
-+		{
-+			.path = dir_s3d3,
-+			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
-+		},
-+		{},
-+	};
-+
-+	/* The exchanged files are FIFOs and an existing whiteout object. */
-+	ASSERT_EQ(0, unlink(file1_s3d3));
-+	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
-+	ASSERT_EQ(0, mknod(whiteout_s3d3, S_IFCHR | 0600, makedev(0, 0)));
-+	ASSERT_EQ(0, unlink(file1_s3d4));
-+	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
-+
-+	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
-+	enforce_fs(_metadata,
-+		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
-+		   rules);
-+
-+	/*
-+	 * With RENAME_EXCHANGE, the whiteout object moves into the source
-+	 * directory of the rename: Exchanging the FIFO in dir_s3d4 with the
-+	 * whiteout object is denied because MAKE_REG is not granted in
-+	 * dir_s3d4, even though it is granted in the whiteout object's own
-+	 * directory dir_s3d3.
-+	 */
-+	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD, whiteout_s3d3,
-+				RENAME_EXCHANGE));
-+	EXPECT_EQ(EACCES, errno);
-+
-+	/*
-+	 * Exchanging the FIFO in dir_s3d3 with the whiteout object is
-+	 * allowed, because MAKE_REG is granted in the directory into which
-+	 * the whiteout object moves.
-+	 */
-+	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD, whiteout_s3d3,
-+			       RENAME_EXCHANGE));
-+
-+	/* The FIFO and the whiteout object swapped places. */
-+	EXPECT_TRUE(is_whiteout(file1_s3d3));
-+	EXPECT_TRUE(is_fifo(whiteout_s3d3));
-+}
-+
- TEST_F_FORK(layout1, rename_dir)
- {
- 	const struct rule rules[] = {
-@@ -3094,6 +3287,18 @@ TEST_F_FORK(layout1, make_char)
- 		       makedev(1, 3));
- }
- 
-+TEST_F_FORK(layout1, make_whiteout)
-+{
-+	/*
-+	 * Creates a whiteout object (creation guarded by MAKE_REG).
-+	 *
-+	 * Contrary to the other character devices, this does not require
-+	 * CAP_MKNOD, cf. vfs_mknod().
-+	 */
-+	test_make_file(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, S_IFCHR,
-+		       makedev(0, 0));
-+}
-+
- TEST_F_FORK(layout1, make_block)
- {
- 	/* Creates a /dev/loop0 device. */
+-	if (__send_request(bd->rq) < 0) {
++	ret = __send_request(bd->rq);
++	if (ret == -EAGAIN) {
++		spin_unlock_irqrestore(&port->vio.lock, flags);
++		/* already spun for 10msec, defer 10msec and retry */
++		blk_mq_delay_kick_requeue_list(hctx->queue, 10);
++		return BLK_STS_DEV_RESOURCE;
++	} else if (ret < 0) {
+ 		spin_unlock_irqrestore(&port->vio.lock, flags);
+ 		return BLK_STS_IOERR;
+ 	}
 -- 
-2.51.0
+2.53.0
 
 
 
