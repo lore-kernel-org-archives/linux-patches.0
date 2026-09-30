@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F344E7802;
-	Wed, 30 Sep 2026 17:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9184E7802;
+	Wed, 30 Sep 2026 17:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788715; cv=none; b=leqhRZ/onAECU9wdDPn6JtATt6de88W5NgkbEYBQ71hUefqbS9fhy5P0rHIqm4reUXbw4s/YMuUoYzv8R0Kp0JvE2q1OouvgC9EnEaInyKJemuCQh+RWhxMnTahMA75GFCGinJRp0AMTYeSjQn0+sh3CcolA+oqaOo33B1Zoc3M=
+	t=1790788718; cv=none; b=BfJnVL0xmYWwtV8NHgqDMNLU8DVIiPHVXJvWFqveEMPU03vDSLbCshMIABQZinMdHYExoXb0bybO+aUV3NsVpO7DfvWUOqjr6Hwb1s34dxJHay70JFRJKzk4sW3J3FiuWeKUcq2rmJH2zZcoSQOTUfXf8pPfr9hhUIhoeyOq6ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788715; c=relaxed/simple;
-	bh=c6keMD3cmLgtOqNIy1oPWEteulEjm0tWIGCgRZuZltg=;
+	s=arc-20240116; t=1790788718; c=relaxed/simple;
+	bh=J0TjDFCFB7KEG2nBwKxiR0uegNd838w13zW9baO6YqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pikrdD/nUvArI5DTgp5I3+8PAGolez2ww5vw3ZITPbtveSTEsUvv7vR9dLJ3+xB1mXIT+qj2lJpWS8eZCZpxDn/t34q5CrR0ndxqFjA4qBympBT6/C8qnrJ9pxkXPlgX4zriEzntuhb0pkOhn74QipWNGNXHeGv86U3EYLlYLzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyluHuvB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n/4RfFciRVMraxqVKtgBGfWJNVLfINThSQ0Gu4t9tl2XFfgyPsA8AJu644O3UdfisQDKopzyAJbtC1y2GaKZ1xGsaFHjYFoOwsVTjf8snPP9HHAoOgUVLQAd1hkkATdkq7vyBnFbEkKTG6ACZKj0qhHa+1LIJq3CGB7OmwAjI94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSQ2NgY2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyluHuvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF6B1F000FF;
-	Wed, 30 Sep 2026 17:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSQ2NgY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E6D1F00898;
+	Wed, 30 Sep 2026 17:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788713;
-	bh=AqocXljMdBegDt1MBcAqihuNxv+mj7ZKMnxuihqfix4=;
+	s=korg; t=1790788716;
+	bh=0nPlcYxa75CO2uvhOnkBfD86/3LXw+rVV0ILMWlvgl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pyluHuvBoqjioU2E3gf8pM2bQ4tixoJrWRrLPI/gmKiLldGxZwphf9pfSanSfzbhF
-	 yNk/QxskcGG8Otif5bOw9Qh3bFFUr26cTSEmuhW8LQacqEqiUkTpDos11oidMpvVNU
-	 F5EaN2+4JYezX74OYERc8QcVwsTRmiAgsuiqH5sA=
+	b=oSQ2NgY2JebBsOwdMAHsFjNScffuWNNKk2D1th8+zzOtUBGlI8KpaatDCZLL3TBJQ
+	 G7BhLNpBdntxCasR/zfU7D3jmuFATM2zkun806Y6jIUzO8tZ7PkMkcseAcmU+Q2E+M
+	 b6zDMV/wSexX4jj684KX/gm3Pt2xzHL42i3gX9PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fan Wu <fanwu01@zju.edu.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 223/877] mmc: hsq: Fix use-after-free in retry work
-Date: Wed, 30 Sep 2026 17:18:54 +0200
-Message-ID: <20260930152419.540084956@linuxfoundation.org>
+Subject: [PATCH 6.12 224/877] mmc: mmci: Fix use-after-free in busy-timeout work
+Date: Wed, 30 Sep 2026 17:18:55 +0200
+Message-ID: <20260930152419.560487881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,62 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5d132990475f02cfa1debe03d50b479432864ebd upstream.
+commit 2b19cf3e50cddaff07b657dae1a8f30f06032852 upstream.
 
-mmc_hsq_pump_requests() queues retry_work when request_atomic() returns
--EBUSY; today sdhci-sprd is the only consumer that implements
-request_atomic(). The work is embedded in a devm-allocated mmc_hsq, but
-is never cancelled during driver removal. Work still pending at unbind
-can therefore run after the devm allocation has been released and
-dereference hsq->mmc and hsq->mrq.
+ux500_busy_complete() can queue ux500_busy_timeout_work for an R1b
+command, but mmci_remove() never cancels it. The work can subsequently
+dereference the devm-allocated mmci_host after it has been released.
 
-Use devm_work_autocancel() to cancel and drain retry_work before the devm
-allocation is released. By the time devres cleanup begins,
-mmc_remove_host() has already stopped the host, so no new requests can
-arm the work.
+Mask the controller interrupts and disable the delayed work during
+removal. This drains any queued instance and stops an IRQ handler that
+is still in progress from queueing the work again once it has been
+disabled.
 
 This issue was found by an in-house static analysis tool.
 
-Fixes: 6db96e5810e0 ("mmc: host: Introduce the request_atomic() for the host")
-Cc: stable@vger.kernel.org
+Fixes: b1a665932dc2 ("mmc: mmci: Add support for SW busy-end timeouts")
+Cc: stable@vger.kernel.org # v6.10+
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmc_hsq.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mmci.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/mmc_hsq.c
-+++ b/drivers/mmc/host/mmc_hsq.c
-@@ -7,6 +7,7 @@
-  * Author: Baolin Wang <baolin.wang@linaro.org>
-  */
+--- a/drivers/mmc/host/mmci.c
++++ b/drivers/mmc/host/mmci.c
+@@ -2520,6 +2520,9 @@ static void mmci_remove(struct amba_devi
+ 		writel(0, host->base + MMCICOMMAND);
+ 		writel(0, host->base + MMCIDATACTRL);
  
-+#include <linux/devm-helpers.h>
- #include <linux/mmc/card.h>
- #include <linux/mmc/host.h>
- #include <linux/module.h>
-@@ -345,6 +346,7 @@ static const struct mmc_cqe_ops mmc_hsq_
- 
- int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
- {
-+	int ret;
- 	int i;
- 	hsq->num_slots = HSQ_NUM_SLOTS;
- 	hsq->next_tag = HSQ_INVALID_TAG;
-@@ -363,7 +365,11 @@ int mmc_hsq_init(struct mmc_hsq *hsq, st
- 	for (i = 0; i < HSQ_NUM_SLOTS; i++)
- 		hsq->tag_slot[i] = HSQ_INVALID_TAG;
- 
--	INIT_WORK(&hsq->retry_work, mmc_hsq_retry_handler);
-+	ret = devm_work_autocancel(mmc_dev(mmc), &hsq->retry_work,
-+				   mmc_hsq_retry_handler);
-+	if (ret)
-+		return ret;
++		if (variant->busy_detect)
++			disable_delayed_work_sync(&host->ux500_busy_timeout_work);
 +
- 	spin_lock_init(&hsq->lock);
- 	init_waitqueue_head(&hsq->wait_queue);
- 
+ 		mmci_dma_release(host);
+ 		clk_disable_unprepare(host->clk);
+ 		mmc_free_host(mmc);
 
 
