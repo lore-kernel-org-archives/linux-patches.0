@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7F14F4036;
-	Wed, 30 Sep 2026 17:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ECA3624BF;
+	Wed, 30 Sep 2026 17:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787781; cv=none; b=VVc6QvtGWmadXQPXtZGsfVD5rX7bpmnJahiS0NJMTnRxfZ9XUSCOPWuAbRmuQsCkXxIWPpjPadSpDkm2uIsjnoFV9cOFC38eOKJjDF62Fx198nwk4H3r212pYOkUbRxwq10tVZuOgXCUu4rdvhYFmn2bo2PIAEP2dAJFEyk2ofs=
+	t=1790787784; cv=none; b=YqDBeGR4JvZjY3Fh+KC9341i4bdwt85BnxpsjJ2JbF7GzL+g9EHg3Fj5STooBvY9fFn3EXFNAQPBAJxTMCAwOBqSbCUxJmun7eZJ1xrW2MK03qLbDfeoW5mnMlaJ8+GsnZfJaHz2k4wJC98ujtCtAoPBIlq03XRAjmEM2Pte8mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787781; c=relaxed/simple;
-	bh=E0aNrKE8XftUhLj+dbnAXC4uzX29JSBRj1bq+7jKv3A=;
+	s=arc-20240116; t=1790787784; c=relaxed/simple;
+	bh=Y7KUeoek0dAhoy1W1e22om/5E4tOl8MAcLRDY+yMtak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDRP9lpjpUG2lMAVis/gMP/Ol/Mrgxr99I5IqlfqRtVCbS+QMdpqSDxqIMDYNrdF/RqKpLlSxw3N234KJbAwmupL56WIYajZ+dCV/n78ObbEYLrE475RdM2rheGmjjt+99pYdaCHaP4qK7UTMu26O0L5n4rx9/btOuAoxGN4Ldc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIaBdZDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hh7qB8t+uey1+b+1zGql6vCEn1rTgo415/vaOJIKPUMGl0FMDZ5ZOkBPSbG6WU26a3lcu0hl+sxtuXHzkXkj6Rm2KWwhi42jZ2w8gcTvvAkRS7rMax/zMPnaiXm5dKJAzChADarIodWKxeXBxc6G97xwXzXCnF/+C8JF/225/6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrMKMhGN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIaBdZDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56511F000FF;
-	Wed, 30 Sep 2026 17:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrMKMhGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837B51F000FF;
+	Wed, 30 Sep 2026 17:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787780;
-	bh=14pZSIaZxQhDydzZ0c2zg/cg8mg9+PMahsg6Ppe3FpA=;
+	s=korg; t=1790787783;
+	bh=PleoiAqFVvt3hlz//yL9d7vExrLl9KJCfYuKnzqXCLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yIaBdZDZ1baAzt+Yq6DzgZanYapv1WlNmHn1ss7V9Fu1mJAOwBu4rg2sTE+YbRyYd
-	 eIEwzT5rt1jWXZaKooZ5hKimceu48vahKRYa2/Sog6Hr5VrQ6ElbcFIrGI2Sjuza/a
-	 0Ot/9pMlLUYT6wFW/O9KkcZT6BNSwl1DXWsm8wnY=
+	b=lrMKMhGNLCWTsvcmrgKXJvwRbxmRYrFzF26dGd44RSkuLv5a6jJTp7Bo0g/LNWOWo
+	 ubPIqavz4TpU1Vfr2ZLKs6t4opv4katuinYwB96you8AMxE/YXZYLfF8TyzvAc5zZx
+	 FaSpRWccvjGqDjuIUYJX1EXgQV9lTmWEhoYm/xFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 7.2 306/457] drm/virtio: fix memory leak of fence event on execbuffer failure
-Date: Wed, 30 Sep 2026 17:26:51 +0200
-Message-ID: <20260930152352.633940767@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 7.2 297/457] drm/nouveau: fix double-free in nvif_vmm_dtor
+Date: Wed, 30 Sep 2026 17:26:42 +0200
+Message-ID: <20260930152352.443279431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,79 +52,211 @@ Content-Transfer-Encoding: 8bit
 
 From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit b74aad23d99b279bb34d135795f39a6d8ecdc075 upstream.
+commit 97077ac87afe9e91ec074ef0be64454e7ccbf344 upstream.
 
-virtio_gpu_execbuffer_ioctl() reserves a DRM event with
-drm_event_reserve_init() when VIRTGPU_EXECBUF_RING_IDX selects a ring that
-userspace has enabled polling for. virtio_gpu_init_submit() does this
-before the BO handles, the command buffer, the syncobj arrays and the
-in-fence are processed, so every later error path runs with the event
-already pending, including plain argument validation failures such as an
-invalid bo_handle or an in-syncobj that carries no fence.
+On failure, nouveau_cli_init() calls nouveau_cli_fini() to tear
+the client down. Then, nouveau_drm_open() also enters into its
+cleanup path and calls nouveau_cli_fini() AGAIN. nouveau_cli_fini()
+calls nouveau_vmm_fini():
 
-On those paths, virtio_gpu_cleanup_submit() drops the out-fence without
-cancelling the event. The fence is freed without ever having been emitted,
-taking the only driver-side pointer to the event with it. Closing the DRM
-file does not help. drm_events_release() unlinks pending events but
-deliberately leaves the freeing to the driver's later drm_send_event(),
-which never runs for an orphaned event, so the allocation is leaked
-permanently.
+	void
+	nouveau_vmm_fini(struct nouveau_vmm *vmm)
+	{
+		nouveau_svmm_fini(&vmm->svmm);
+		nvif_vmm_dtor(&vmm->vmm);
+		vmm->cli = NULL;
+	}
 
-Found when fuzzing the virtio driver with Syzkaller:
+Inside nvif_vmm_dtor(), vmm->page is freed unconditionally:
 
-	BUG: memory leak
-	unreferenced object 0xffff88802c176e80 (size 96):
-	comm "syz.1.367", pid 10561, jiffies 4294960122
-	hex dump (first 32 bytes):
-		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-		c8 6e 17 2c 80 88 ff ff 00 00 00 00 00 00 00 00  .n.,............
-	backtrace (crc e1973c6b):
-		kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-		slab_post_alloc_hook mm/slub.c:4597 [inline]
-		slab_alloc_node mm/slub.c:4917 [inline]
-		__kmalloc_cache_noprof+0x49d/0x6f0 mm/slub.c:5485
-		_kmalloc_noprof include/linux/slab.h:988 [inline]
-		_kzalloc_noprof include/linux/slab.h:1309 [inline]
-		virtio_gpu_fence_event_create drivers/gpu/drm/virtio/virtgpu_submit.c:282 [inline]
-		virtio_gpu_init_submit drivers/gpu/drm/virtio/virtgpu_submit.c:398 [inline]
-		virtio_gpu_execbuffer_ioctl+0xbbf/0x1aa0 drivers/gpu/drm/virtio/virtgpu_submit.c:505
-		drm_ioctl_kernel+0x1f4/0x3e0 drivers/gpu/drm/drm_ioctl.c:817
-		drm_ioctl+0x5f4/0xc70 drivers/gpu/drm/drm_ioctl.c:914
-		vfs_ioctl fs/ioctl.c:51 [inline]
-		__do_sys_ioctl fs/ioctl.c:597 [inline]
-		__se_sys_ioctl fs/ioctl.c:583 [inline]
-		__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
-		do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-		do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
-		entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	void
+	nvif_vmm_dtor(struct nvif_vmm *vmm)
+	{
+		kfree(vmm->page);
+		nvif_object_dtor(&vmm->object);
+	}
 
-Fix by cancelling and freeing the DRM event on the execbuffer error path
-before dropping the fence. Clear the fence's event pointer after
-cancellation so it does not retain a dangling pointer.
+vmm->page is never cleared after being freed, so the second call of
+nvif_vmm_dtor() will cause a double-free.
 
-Fixes: cd7f5ca33585 ("drm/virtio: implement context init: add virtio_gpu_fence_event")
+Found by fuzzing the nouveau driver with a modified Syzkaller:
+
+	BUG: KASAN: double-free in nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	Free of addr ffff888010fcdc30 by task syz.0.173/2567
+
+	CPU: 1 UID: 0 PID: 2567 Comm: syz.0.173 Not tainted 7.2.0 #24 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	<TASK>
+	__dump_stack lib/dump_stack.c:94 [inline]
+	dump_stack_lvl+0x95/0xe0 lib/dump_stack.c:120
+	print_address_description mm/kasan/report.c:378 [inline]
+	print_report+0xcb/0x5a0 mm/kasan/report.c:482
+	kasan_report_invalid_free+0xaa/0xd0 mm/kasan/report.c:557
+	check_slab_allocation+0xe4/0x110 mm/kasan/common.c:235
+	kasan_slab_pre_free include/linux/kasan.h:199 [inline]
+	slab_free_hook mm/slub.c:2622 [inline]
+	slab_free mm/slub.c:6377 [inline]
+	kfree+0x192/0x590 mm/slub.c:6692
+	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
+	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
+	nouveau_drm_open+0x24e/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1255
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7fc6d687594d
+	Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+	RSP: 002b:00007fc6d5295008 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+	RAX: ffffffffffffffda RBX: 00007fc6d6b06180 RCX: 00007fc6d687594d
+	RDX: 0000000000022501 RSI: 0000200000000000 RDI: ffffffffffffff9c
+	RBP: 00007fc6d691c303 R08: 0000000000000000 R09: 0000000000000000
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 00007fc6d6b06218 R14: 00007fc6d6b06180 R15: 00007ffd9451d760
+	</TASK>
+
+	Allocated by task 2567 on cpu 1 at 163.593900s:
+	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
+	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
+	poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+	__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
+	kasan_kmalloc include/linux/kasan.h:263 [inline]
+	__do_kmalloc_node mm/slub.c:5334 [inline]
+	__kmalloc_noprof+0x304/0x7c0 mm/slub.c:5359
+	_kmalloc_noprof include/linux/slab.h:992 [inline]
+	nvif_vmm_ctor+0x3c0/0x7e0 drivers/gpu/drm/nouveau/nvif/vmm.c:237
+	nouveau_vmm_init+0x40/0x90 drivers/gpu/drm/nouveau/nouveau_vmm.c:134
+	nouveau_cli_init+0x7b9/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:293
+	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+	Freed by task 2567 on cpu 1 at 163.601355s:
+	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
+	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
+	kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
+	poison_slab_object mm/kasan/common.c:253 [inline]
+	__kasan_slab_free+0x61/0x80 mm/kasan/common.c:285
+	kasan_slab_free include/linux/kasan.h:235 [inline]
+	slab_free_hook mm/slub.c:2677 [inline]
+	slab_free mm/slub.c:6377 [inline]
+	kfree+0x383/0x590 mm/slub.c:6692
+	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
+	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
+	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
+	nouveau_cli_init+0x593/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:324
+	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
+	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
+	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
+	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
+	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
+	chrdev_open+0x21c/0x660 fs/char_dev.c:411
+	do_dentry_open+0x59d/0x12b0 fs/open.c:947
+	vfs_open+0x82/0x390 fs/open.c:1052
+	do_open fs/namei.c:4700 [inline]
+	path_openat+0x2345/0x3420 fs/namei.c:4863
+	do_file_open+0x207/0x460 fs/namei.c:4892
+	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
+	do_sys_open fs/open.c:1374 [inline]
+	__do_sys_openat fs/open.c:1390 [inline]
+	__se_sys_openat fs/open.c:1385 [inline]
+	__x64_sys_openat+0x144/0x200 fs/open.c:1385
+	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+	The buggy address belongs to the object at ffff888010fcdc30
+	which belongs to the cache kmalloc-16 of size 16
+	The buggy address is located 0 bytes inside of
+	16-byte region [ffff888010fcdc30, ffff888010fcdc40)
+
+	The buggy address belongs to the physical page:
+	page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10fcd
+	flags: 0x100000000000000(node=0|zone=1)
+	page_type: f5(slab)
+	raw: 0100000000000000 ffff88800d441640 dead000000000100 dead000000000122
+	raw: 0000000000000000 0000000000550055 00000000f5000000 0000000000000000
+	page dumped because: kasan: bad access detected
+
+	Memory state around the buggy address:
+	ffff888010fcdb00: fc fc 00 04 fc fc fc fc fa fb fc fc fc fc fa fb
+	ffff888010fcdb80: fc fc fc fc fa fb fc fc fc fc 00 07 fc fc fc fc
+	>ffff888010fcdc00: fa fb fc fc fc fc fa fb fc fc fc fc fa fb fc fc
+										^
+	ffff888010fcdc80: fc fc fa fb fc fc fc fc 00 04 fc fc fc fc fa fb
+	ffff888010fcdd00: fc fc fc fc 00 00 fc fc fc fc fa fb fc fc fc fc
+
+Fix by removing the redundant teardown in nouveau_drm_open(),
+since nouveau_cli_init() already does the cleanup work.
+Also clear vmm->page after its freeing.
+
 Cc: stable@vger.kernel.org
+Fixes: 20d8a88e557a ("drm/nouveau: tidy up the client init/fini interfaces")
 Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.6-luna
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/D320EAB5680C1411+20260908121323.2405044-1-peiyang_he@smail.nju.edu.cn
+Assisted-by: LLM
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/03BA723D9E5FF725+20260916103138.2651605-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_submit.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |    4 +---
+ drivers/gpu/drm/nouveau/nvif/vmm.c    |    1 +
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_submit.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
-@@ -538,6 +538,10 @@ int virtio_gpu_execbuffer_ioctl(struct d
- 	virtio_gpu_process_post_deps(&submit);
- 	virtio_gpu_complete_submit(&submit);
- cleanup:
-+	if (ret && submit.out_fence && submit.out_fence->e) {
-+		drm_event_cancel_free(dev, &submit.out_fence->e->base);
-+		submit.out_fence->e = NULL;
-+	}
- 	virtio_gpu_cleanup_submit(&submit);
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -1252,10 +1252,8 @@ nouveau_drm_open(struct drm_device *dev,
+ 	mutex_unlock(&drm->clients_lock);
  
- 	return ret;
+ done:
+-	if (ret && cli) {
+-		nouveau_cli_fini(cli);
++	if (ret && cli)
+ 		kfree(cli);
+-	}
+ 
+ 	pm_runtime_mark_last_busy(dev->dev);
+ 	pm_runtime_put_autosuspend(dev->dev);
+--- a/drivers/gpu/drm/nouveau/nvif/vmm.c
++++ b/drivers/gpu/drm/nouveau/nvif/vmm.c
+@@ -192,6 +192,7 @@ void
+ nvif_vmm_dtor(struct nvif_vmm *vmm)
+ {
+ 	kfree(vmm->page);
++	vmm->page = NULL;
+ 	nvif_object_dtor(&vmm->object);
+ }
+ 
 
 
