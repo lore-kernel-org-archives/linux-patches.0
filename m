@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0B83438A6;
-	Wed, 30 Sep 2026 17:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E36052ED39;
+	Wed, 30 Sep 2026 17:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791089; cv=none; b=P7cmOUH7SGhI86D19xEjUaby/nyZF1ILyjDQlI5iyNZkdwaMv65gqL6SiAJ2mw88spPBb3Djkyk5MMTwhE0wJao7RqvBeVURMwLL6AFWvEfIjEKk9mmPacZOKJNcY25qKvB3nudSiWzhAGWMZo00EST2kKqvBCSx0VYlqb3h9bU=
+	t=1790791092; cv=none; b=R7hvM6dWVbJLxS7jJU+KFSUn8L2cx1sGKDH3ETNHyxp5NhAaKMem0dGQAMvEfKLRyTTraF/eLSkJb8VfeuVpMRNVUnJezpCiEO91Z39MhkTRJoaOLlklJ0ix3yf4dNI89NLCIr5WGcfifHmC7zr395o9lS//yV/UxhLmsrEFNXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791089; c=relaxed/simple;
-	bh=pckph+sDh+H0VdaXkR5z5KJLpAmq2EwDw2D4VC0wcwU=;
+	s=arc-20240116; t=1790791092; c=relaxed/simple;
+	bh=OMo/N3QpYXBP0BJjwT4eCP8yZJjbwH5BPK+J1B8jjB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdudkE86WzPAJuF9uyxXpUuVxgX2sojNuxKPlJCuyQzpHM8GSdUHdk8GYDH1f5XJ5T9rQJQ1/q1CPvX8kd9qlZU4o1t4qoiq6Hq3ixPBsCJDjX3ljzmyVA23p7bbHEcLROvV1O52t5RQoQJMtpfi8Gh+I1jMszmr3/S5ABLRYao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVOjrB++; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JmN5cc3bq9Xxd0ONTUAkNBl47groSZ/h9pe4Nex2G6hZtlC7SHQMV+kMZzA08GnXTDSU09eJxvotpvwWGXib06lpJx99bKHzxHlJg6RuGzCuck//rFEaFu3pFkCX9zzg0s7NUedBAthyn6ZmViBTJieuNn4hTYw4NqUZ1dQfheI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgUQ+02T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVOjrB++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CBB1F000FF;
-	Wed, 30 Sep 2026 17:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgUQ+02T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7D31F000FF;
+	Wed, 30 Sep 2026 17:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791088;
-	bh=p5M5CHdHTO6aNPZn5ziikQ/+n2hXAMWpHxzi3boBjBI=;
+	s=korg; t=1790791091;
+	bh=DOQaBfItIUmJcP8nskzzul2f/v7SFTyrfa0koznAwYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVOjrB++1PGssKJ1tkm5ILzT+0QveMjRXWQ9cIBD7+m7rN6sv+L3ZjjA/m8sQkluB
-	 UnzbWO7iKY4VxtZDOaYrjond5Djz271zFi7zkrEhjTBVe1pUI/jnQoLM63gm+mZz3s
-	 SWF5rhUDLHYcF3Ey0eU104gBju43BrIH167yeajc=
+	b=zgUQ+02TM7hb/MBfIww/tRCAjPBs7huSLmUoXvUQkP1pIki9y0J0WaAiTQYhJsvkr
+	 9/mrZHRv2jJT1BFAFOqTRZKC6AbskhiJ7YM9eKtsNGP3ONFDsPnBl2HRfCuld049Ad
+	 nZfDKjcW1wSjEbuTcKsknbk5yJv5r4EyJumKMbmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien DESBRIERES <aurelien@hackers.camp>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/752] RDMA/rtrs-srv: Fix integer underflow in process_read and process_write
-Date: Wed, 30 Sep 2026 17:19:58 +0200
-Message-ID: <20260930152400.948938174@linuxfoundation.org>
+Subject: [PATCH 5.15 174/752] ksmbd: break RH leases before delete-on-close
+Date: Wed, 30 Sep 2026 17:20:44 +0200
+Message-ID: <20260930152401.968396597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,77 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien DESBRIERES <aurelien@hackers.camp>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 54bf38b27afc08a0eb6b732f9c14eb8a4bcb66b5 ]
+[ Upstream commit 1f1083c36fa11c5d9011451c7b9ab380545c72ea ]
 
-usr_len is read from a network-supplied message field (le16_to_cpu)
-and used to compute data_len = off - usr_len without validating that
-usr_len <= off. A malicious RDMA client can send usr_len > off causing
-an integer underflow, resulting in data_len wrapping to a huge size_t
-value which is then passed to the rdma_ev callback as a memory length,
-leading to out-of-bounds memory access.
+The delete paths only marked the opened file delete pending or
+delete-on-close.  When another client still held a read/handle lease, no
+lease break was sent before the delete state changed.
 
-Fix by reading and validating usr_len <= off before rtrs_srv_get_ops_ids()
-in both process_read() and process_write(), ensuring the early return
-path acquires no reference and has no resource leak.
+smb2.lease.unlink uses a create request with FILE_DELETE_ON_CLOSE and
+expects the second client's unlink to break the first client's RH lease to
+R with ACK_REQUIRED set.  SetInfo(FileDispositionInformation) has the same
+lease-breaking requirement.
 
-Link: https://patch.msgid.link/r/20260608134802.5019-1-aurelien@hackers.camp
-Reported-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Assisted-by: Claude <claude-sonnet-4-6>
-Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Break level-II/read-handle leases before setting delete pending or
+delete-on-close so clients are notified before the file is removed.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index b7f7e24807dfb..455d315dcebf5 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1047,6 +1047,11 @@ static void process_read(struct rtrs_srv_con *con,
- 			    "Processing read request failed, invalid message\n");
- 		return;
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index a72ced80b5922..67f0a91530572 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3287,8 +3287,10 @@ int smb2_open(struct ksmbd_work *work)
+ 			goto err_out1;
  	}
-+	usr_len = le16_to_cpu(msg->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, READ);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1054,7 +1059,6 @@ static void process_read(struct rtrs_srv_con *con,
- 	id->dir		= READ;
- 	id->msg_id	= buf_id;
- 	id->rd_msg	= msg;
--	usr_len = le16_to_cpu(msg->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, READ, data, data_len,
-@@ -1100,6 +1104,11 @@ static void process_write(struct rtrs_srv_con *con,
- 			     rtrs_srv_state_str(srv_path->state));
- 		return;
- 	}
-+	usr_len = le16_to_cpu(req->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, WRITE);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1107,7 +1116,6 @@ static void process_write(struct rtrs_srv_con *con,
- 	id->dir    = WRITE;
- 	id->msg_id = buf_id;
  
--	usr_len = le16_to_cpu(req->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, WRITE, data, data_len,
+-	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)
++	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE) {
++		smb_break_all_levII_oplock(work, fp, 0);
+ 		ksmbd_fd_set_delete_on_close(fp, file_info);
++	}
+ 
+ 	if (need_truncate) {
+ 		rc = smb2_create_truncate(&fp->filp->f_path);
+@@ -5921,7 +5923,8 @@ static int set_rename_info(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 	return smb2_rename(work, fp, rename_info, work->conn->local_nls);
+ }
+ 
+-static int set_file_disposition_info(struct ksmbd_file *fp,
++static int set_file_disposition_info(struct ksmbd_work *work,
++				     struct ksmbd_file *fp,
+ 				     struct smb2_file_disposition_info *file_info)
+ {
+ 	struct inode *inode;
+@@ -5936,6 +5939,7 @@ static int set_file_disposition_info(struct ksmbd_file *fp,
+ 		if (S_ISDIR(inode->i_mode) &&
+ 		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
+ 			return -EBUSY;
++		smb_break_all_levII_oplock(work, fp, 0);
+ 		ksmbd_set_inode_pending_delete(fp);
+ 	} else {
+ 		ksmbd_clear_inode_pending_delete(fp);
+@@ -6054,7 +6058,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 		if (buf_len < sizeof(struct smb2_file_disposition_info))
+ 			return -EINVAL;
+ 
+-		return set_file_disposition_info(fp,
++		return set_file_disposition_info(work, fp,
+ 						 (struct smb2_file_disposition_info *)buffer);
+ 	}
+ 	case FILE_FULL_EA_INFORMATION:
 -- 
 2.53.0
 
