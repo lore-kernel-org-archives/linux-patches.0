@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B23519DE7;
-	Wed, 30 Sep 2026 16:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA095172FA;
+	Wed, 30 Sep 2026 16:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784913; cv=none; b=qGQtT2wh6XaDOaHDIdj3+nNSuW4LPXJfweT0xQbe5f5B5o7LaggvNEH2HI90UrWK+k9MPGW0EQHc8i6JewIk85gxqXrd6JngRZbnWLLLaObcyMnjO9bsVln/yBQAnRftwetDzijGJE0XWVT9juBz3iI9HqBQl+gS316UlizbY7s=
+	t=1790784918; cv=none; b=RJg9EJ6GtWhoKuGTht0nCLAvEW5STfmu4w/V8IFHnLRVne6IY00AhNSGrSPNn1+QLJXIsv/+gHepLX42KZ+liwCQ9P+vyW6C7mZzK3c7tXDalMfjdur/E/SqDl7f3G+mnpwctEqysw//FdlA/zIwgl9Ygc56UM3qev+7vcTKAWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784913; c=relaxed/simple;
-	bh=WWUYm2R4pCcDfsa4gSHHnXow8oGRi6DnxC87PY6hbfo=;
+	s=arc-20240116; t=1790784918; c=relaxed/simple;
+	bh=ArK2dm0RCcxC/PYAZPpWgErB9nMsq3Xm8HHWrneh3ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjJnkkZq2F5EbOazXy/cl6XnbK7eLP9ubiIf6p88wa+2EbCG4bEGh/RmvrbIeyW6YHynERv863rA+PMI/kzdg4sPc4lCb+1JfQnjTIYMq61Tpy8SIFl2Sbf0N+2boYxN/QM+cdMudULL5BsDWazbeeCOO0+JQxb5xMvs1crra/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiBD1dLN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jjuFsqKD/roQX8L3ngL+LAm/SYM0OH6mHtO+EyxP3w6UQ8EE8rBI6aXmkWqjA/OrnOFzOItkrF2Rka05xp5k2Eh8ju9xvDDz4Bva2K5JwoEkMzP/RhBQT4wK6HvOgZl42zfgdOfxTTXK994ImfUaKggU0XS6XtAa006Aw9UK/fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Znwc+KR6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiBD1dLN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D341F000FF;
-	Wed, 30 Sep 2026 16:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Znwc+KR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A03E1F00893;
+	Wed, 30 Sep 2026 16:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784909;
-	bh=UPAeYSdJ/J1Yqden3CE9PScs98QXlTUJ1FfjybRzTF4=;
+	s=korg; t=1790784912;
+	bh=tAyTCtzxkTyMtjDZX2KugopdDsmLWYuGtbaGRJflXlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AiBD1dLNL4J7Xz9nm9FfIyGECl2sFP2pn84VTowsmQeijed0yvZ/z8HmTm4kZqjw+
-	 LL57zssMYBEFdlnCUTw8di15MWkc4I02sZL1UU5dI4aeK6RVxcKDva7QBl3yAK76Ks
-	 h0TsBzYFZ8PR7NimeLmMOi5fVL6cnv5LayWGciVw=
+	b=Znwc+KR6b3JbVby7qGVJ3+UFDcoIXUpVyC1kfUTabJAUitEHsrm3Q29EpDKog+0cE
+	 8xM1mEH53itKJS5DcRRmNn7/SI8qABud4Ifg7cufc1UGNYIJGhPgNZ9srU60NcQlse
+	 tFT/7aqLkqorfN1hJAxFA4tX3ESKnX4Kw0ckYoUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Jad Keskes <inasj268@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 322/982] EDAC/igen6: Fix channel address decode for non-hash mode
-Date: Wed, 30 Sep 2026 17:17:38 +0200
-Message-ID: <20260930152423.736228007@linuxfoundation.org>
+Subject: [PATCH 6.1 323/982] EDAC/device_sysfs: Use kstrtouint() for poll_msec to prevent truncation
+Date: Wed, 30 Sep 2026 17:17:39 +0200
+Message-ID: <20260930152423.757007949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,48 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Jad Keskes <inasj268@gmail.com>
 
-[ Upstream commit 7b348d0d401d478f1923ba20a34a61681d1f7971 ]
+[ Upstream commit 66cc9dec919dd63d8e4b3d386f7aed3ae684e645 ]
 
-In non-hash mode, decode_channel_addr() and channel index extraction
-used a hardcoded interleave bit position 6 instead of the actual
-intlv_bit parameter, causing incorrect channel address decoding.
+The poll_msec sysfs store file uses simple_strtoul() which accepts an unsigned
+long, but the target field (poll_msec) is unsigned int. On 64-bit systems,
+a value > UINT_MAX is silently truncated when stored.
 
-Fix this by using intlv_bit consistently in both hash and non-hash modes.
+Fix the mismatch by using kstrtouint() instead. This rejects values larger
+than UINT_MAX at parse time, making truncation impossible. Also add a check
+for value < 1 to reject the 0-delay case, which would cause the poll work to
+spin without delay and consume 100% CPU.
 
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260730024238.4096623-5-qiuxu.zhuo@intel.com
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Signed-off-by: Jad Keskes <inasj268@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260730145549.148229-1-inasj268@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/edac/edac_device_sysfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index d91b775173621..97468fbf17b74 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -507,13 +507,12 @@ static void decode_addr(u64 addr, u32 hash, u64 s_size, int l_map,
- 		return;
- 	}
+diff --git a/drivers/edac/edac_device_sysfs.c b/drivers/edac/edac_device_sysfs.c
+index ac678b4a21fcb..e2ee5c6c56d3b 100644
+--- a/drivers/edac/edac_device_sysfs.c
++++ b/drivers/edac/edac_device_sysfs.c
+@@ -90,14 +90,21 @@ static ssize_t edac_device_ctl_poll_msec_store(struct edac_device_ctl_info
+ 					*ctl_info, const char *data,
+ 					size_t count)
+ {
+-	unsigned long value;
++	unsigned int value;
++	int ret;
  
--	if (CHANNEL_HASH_MODE(hash)) {
--		*sub_addr = decode_channel_addr(addr, intlv_bit);
-+	*sub_addr = decode_channel_addr(addr, intlv_bit);
+ 	/* get the value and enforce that it is non-zero, must be at least
+ 	 * one millisecond for the delay period, between scans
+ 	 * Then cancel last outstanding delay for the work request
+ 	 * and set a new one.
+ 	 */
+-	value = simple_strtoul(data, NULL, 0);
++	ret = kstrtouint(data, 0, &value);
++	if (ret < 0)
++		return ret;
 +
-+	if (CHANNEL_HASH_MODE(hash))
- 		*idx = decode_chan_idx(addr, CHANNEL_HASH_MASK(hash), intlv_bit);
--	} else {
--		*sub_addr = decode_channel_addr(addr, 6);
--		*idx = GET_BITFIELD(addr, 6, 6);
--	}
-+	else
-+		*idx = GET_BITFIELD(addr, intlv_bit, intlv_bit);
- }
++	if (value < 1)
++		return -EINVAL;
++
+ 	edac_device_reset_delay_period(ctl_info, value);
  
- static int igen6_decode(struct decoded_addr *res)
+ 	return count;
 -- 
 2.53.0
 
