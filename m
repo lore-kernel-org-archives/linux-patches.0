@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D553ACEFB;
-	Wed, 30 Sep 2026 15:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3AB50AC1D;
+	Wed, 30 Sep 2026 15:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783671; cv=none; b=mpnJu5RO76taEUAN7eGH7Xi6glrXVT6mVqMt9+ZP+5JiHQoHOUWdhSXVRRAV5RQqetKnrzwwKcPNPLMZeKncK9Fzj/788tF5cG0YG5rvgrPKUDe1Clz+Y3rdcAngS1UfV6OUKL6fANx6tTLH7xpH3q2aK/d2+hTF8CFYI2RX8BY=
+	t=1790783674; cv=none; b=KNItu+FhqcsDXsU8g6hARng/Y8UqhZ5s+DWiR0VAftmC9CO08kr/MGyveFcsLYe219rfDVfu5YyDcOv9QWSPM9zRZsQ3X5uXSVUp9+DtdRr1jtQw9cc1AHs+R8czkLLXDpKP3aHSEWIhEwPcK2Kpl6Jr0pE0UmQVnmMFSgT9P8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783671; c=relaxed/simple;
-	bh=zwwmY716cHZ7+kR/+51QuBtkaTpCGHweFhjTqtZcDdM=;
+	s=arc-20240116; t=1790783674; c=relaxed/simple;
+	bh=egHMyIdrzYdwF7cASP99UEqHqg4MInQEi9SB+E5MLIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aip14G5LOc7FwuJ7OxP75OokiTx6eTvJkdUUtRqSM/uqanKGWOFD1n2vzvKbVN4c+g8ATJdCX14GMspjatWpyQu+5Wp64/gKR+YWXOEzcp6nLYovJeh+tXIQ3aBZrZTcTiR8MEPBu5WJTyhJDg5UgmfzUSuxlBELiN2xU6GbFM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWYnanZ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOaG7IjwH679p6FIajowmtA8j3JPNuYBA1gm1x+JJ6zl+KQaEbQrn+9dLcO67rMz64BCKbqbs4e3Y/a9qA3oq3uBqSiBtcFzkzO7Sp5fnIIJEBS5YGY2qdcsAarc1rmwC6Cjc4/Mh0RXJ/Wl7cK/WnJ3tneAMw+XcCt7HrCB+iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWaVZZCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWYnanZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8121C1F000FF;
-	Wed, 30 Sep 2026 15:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWaVZZCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618951F00893;
+	Wed, 30 Sep 2026 15:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783668;
-	bh=vZroRU3e2yEUieRvzWszt10fjonK6E00TEe2jKIXRd4=;
+	s=korg; t=1790783670;
+	bh=Tb0ymzKW/2xNFaIYkxYYs9JZb0QbRL9i2ytp4g8LhOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWYnanZ7965rqi/eFprsI7V6r9OJPxFBOvqoldU8ZyT0Vwo8laAbygdpY9RlWd34z
-	 Yu7LtIxjz6fMt1qr2AaTI133wSXOhSm2KTSDskJOiegHYQ7pWq/AaQldg4MXVHg71n
-	 gSaafTLEwb3K4FHlMzhttQgfYjHIrPhSUBsSmaqE=
+	b=CWaVZZCGpKdrWmBrZaJE7/o/FzBhzaV9KCpCbDkuTdhAxQHB5GWOtIk5Kw3ztYXh/
+	 bRDQOEPjjNPjZi8/zvdN+sYEx0wYKUGfx5qHN74Ignfgwe8BNrYNF79fY91TdKSrFm
+	 GoiSaLvoLoVr5VPT/Ay9uObSU4SWN88+u6VfmlxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Robert Garcia <rob_garcia@163.com>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 479/595] SUNRPC: lock against ->sock changing during sysfs read
-Date: Wed, 30 Sep 2026 17:26:12 +0200
-Message-ID: <20260930152357.989465562@linuxfoundation.org>
+Subject: [PATCH 5.10 480/595] KVM: s390: Fix IRQ injection with SIGP Stop and Store Status
+Date: Wed, 30 Sep 2026 17:26:13 +0200
+Message-ID: <20260930152358.011279866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,50 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit b49ea673e119f59c71645e2f65b3ccad857c90ee ]
+[ Upstream commit d343407b728a80b74be3c24b59f15e60289ea527 ]
 
-->sock can be set to NULL asynchronously unless ->recv_mutex is held.
-So it is important to hold that mutex.  Otherwise a sysfs read can
-trigger an oops.
-Commit 17f09d3f619a ("SUNRPC: Check if the xprt is connected before
-handling sysfs reads") appears to attempt to fix this problem, but it
-only narrows the race window.
+When __inject_sigp_stop() is called for a Stop and Store Status
+operation, if the vCPU is running, the interrupt is marked as pending
+and the status is stored by the thread performing the KVM_RUN IOCTL.
 
-[ Removed the changes about net/sunrpc/sysfs.c, as this file doesn't
-exist in 5.10 ]
+If the vCPU is already stopped, the status is stored immediately.
 
-Fixes: 17f09d3f619a ("SUNRPC: Check if the xprt is connected before handling sysfs reads")
-Fixes: a8482488a7d6 ("SUNRPC query transport's source port")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Storing the status means writing into userspace, which might fault, and
+__inject_sigp_stop() is called from do_inject_vcpu() which in turn is
+always called holding a spinlock, which is obviously an issue.
+
+Fix this by returning -EWOULDBLOCK from __inject_sigp_stop(), and
+adding a bool flag to indicate whether a store status is needed. The
+callers of do_inject_vcpu() are modified to pass the pointer to the
+bool flag; whenever a Store Status operation is needed, the callers can
+now perform it outside the spinlock.
+
+Opportunistically refactor kvm_s390_set_irq_state() to use
+scoped_guard() and __free().
+
+Fixes: 6cddd432e3da ("KVM: s390: handle stop irqs without action_bits")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+[ Added Fixes tag while picking -- Claudio ]
+Message-ID: <20260812104436.109741-7-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/s390/kvm/interrupt.c | 70 +++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 5dccad3271fe5..4ec6516a53e09 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1666,7 +1666,12 @@ static int xs_get_srcport(struct sock_xprt *transport)
- unsigned short get_srcport(struct rpc_xprt *xprt)
- {
- 	struct sock_xprt *sock = container_of(xprt, struct sock_xprt, xprt);
--	return xs_sock_getport(sock->sock);
-+	unsigned short ret = 0;
-+	mutex_lock(&sock->recv_mutex);
-+	if (sock->sock)
-+		ret = xs_sock_getport(sock->sock);
-+	mutex_unlock(&sock->recv_mutex);
-+	return ret;
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 797b323ca7d4d..c8ce24839fbda 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -1579,23 +1579,21 @@ static int __inject_set_prefix(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
  }
- EXPORT_SYMBOL(get_srcport);
  
+ #define KVM_S390_STOP_SUPP_FLAGS (KVM_S390_STOP_FLAG_STORE_STATUS)
+-static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+ 	struct kvm_s390_stop_info *stop = &li->irq.stop;
+-	int rc = 0;
+ 
+ 	vcpu->stat.inject_stop_signal++;
+ 	trace_kvm_s390_inject_vcpu(vcpu->vcpu_id, KVM_S390_SIGP_STOP, 0, 0);
+ 
+ 	if (irq->u.stop.flags & ~KVM_S390_STOP_SUPP_FLAGS)
+ 		return -EINVAL;
+-
+ 	if (is_vcpu_stopped(vcpu)) {
+-		if (irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS)
+-			rc = kvm_s390_store_status_unloaded(vcpu,
+-						KVM_S390_STORE_STATUS_NOADDR);
+-		return rc;
++		if (!(irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS))
++			return 0;
++		*storestatus = true;
++		return -EWOULDBLOCK;
+ 	}
+ 
+ 	if (test_and_set_bit(IRQ_PEND_SIGP_STOP, &li->pending_irqs))
+@@ -2136,7 +2134,7 @@ void kvm_s390_clear_stop_irq(struct kvm_vcpu *vcpu)
+ 	spin_unlock(&li->lock);
+ }
+ 
+-static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	int rc;
+ 
+@@ -2148,7 +2146,7 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ 		rc = __inject_set_prefix(vcpu, irq);
+ 		break;
+ 	case KVM_S390_SIGP_STOP:
+-		rc = __inject_sigp_stop(vcpu, irq);
++		rc = __inject_sigp_stop(vcpu, irq, storestatus);
+ 		break;
+ 	case KVM_S390_RESTART:
+ 		rc = __inject_sigp_restart(vcpu);
+@@ -2184,11 +2182,16 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ int kvm_s390_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
++	bool storestatus = false;
+ 	int rc;
+ 
+ 	spin_lock(&li->lock);
+-	rc = do_inject_vcpu(vcpu, irq);
++	rc = do_inject_vcpu(vcpu, irq, &storestatus);
+ 	spin_unlock(&li->lock);
++
++	if (rc == -EWOULDBLOCK && storestatus)
++		rc = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++
+ 	if (!rc)
+ 		kvm_s390_vcpu_wakeup(vcpu);
+ 	return rc;
+@@ -2924,7 +2927,8 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e, struct kvm *kvm,
+ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+-	struct kvm_s390_irq *buf;
++	struct kvm_s390_irq *buf __free(kvfree) = NULL;
++	bool tmp, storestatus = false;
+ 	int r = 0;
+ 	int n;
+ 
+@@ -2932,31 +2936,33 @@ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	if (copy_from_user((void *) buf, irqstate, len)) {
+-		r = -EFAULT;
+-		goto out_free;
+-	}
++	if (copy_from_user((void *)buf, irqstate, len))
++		return -EFAULT;
+ 
+-	/*
+-	 * Don't allow setting the interrupt state
+-	 * when there are already interrupts pending
+-	 */
+-	spin_lock(&li->lock);
+-	if (li->pending_irqs) {
+-		r = -EBUSY;
+-		goto out_unlock;
+-	}
++	scoped_guard(spinlock, &li->lock) {
++		/*
++		 * Don't allow setting the interrupt state
++		 * when there are already interrupts pending
++		 */
++		if (li->pending_irqs)
++			return -EBUSY;
+ 
+-	for (n = 0; n < len / sizeof(*buf); n++) {
+-		r = do_inject_vcpu(vcpu, &buf[n]);
+-		if (r)
+-			break;
++		for (n = 0; n < len / sizeof(*buf); n++) {
++			tmp = false;
++			r = do_inject_vcpu(vcpu, &buf[n], &tmp);
++			if (r == -EWOULDBLOCK && tmp) {
++				storestatus = true;
++				r = 0;
++			}
++			if (r)
++				break;
++		}
+ 	}
+ 
+-out_unlock:
+-	spin_unlock(&li->lock);
+-out_free:
+-	vfree(buf);
++	if (storestatus) {
++		n = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++		return r ? r : n;
++	}
+ 
+ 	return r;
+ }
 -- 
 2.53.0
 
