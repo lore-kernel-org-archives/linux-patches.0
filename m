@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A52651C328;
-	Wed, 30 Sep 2026 16:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5ED4FD78D;
+	Wed, 30 Sep 2026 16:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785004; cv=none; b=Kg/vk8NWRUmQxwGjpVMJuCVIJslCRjuiNbq47qXBaM2K9c0fcnHnfpfS8v7u//4FUYuTUyQZU5eTsjKSWxKK5QcrmGdc1QfPU2tSevd1JHAvQdch4I2RF6pwCwjs2fZBntQAGcHOLcyy7W7lp3y2h435wyScDqVfU6UN9bZcc8U=
+	t=1790785008; cv=none; b=Ne6BTNW4rRfmaNIHeDjMLHJ3tryjGO1UW/3XjcHoP4LhLSvQjmUWLi2XLLjhjmcG43y0SdF/MTzDfwJgANI2yuETzC1QG4xcDjmmjAc3DQ7fWRsBswrfBeHa9q4J0DQ3IECSF9poxM4tc9/YNZCSONzSz+FjV2PnigNzwBF6yPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785004; c=relaxed/simple;
-	bh=dAR4ChGVTLp2yXw4iD6OEYaj5MQu3xw6LhKMD0R0HS0=;
+	s=arc-20240116; t=1790785008; c=relaxed/simple;
+	bh=SyooBOBJdOYge8MrthHH3Y4H8qSK4yya4BbNVkV6/P0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsjblisbNhF8NSOMl6GWI3MvwJfh7KnqgGsvcfRFCplojbnlEjSIr7RC6Cu6FL1q50aDmEt7H+Y6RhLQ6e4VORagv1qRL6SLyc+zii3szvDo9YqGVJ+6OJHTkcpqz+tTyrPIpU2YSU+f3D54AAFyfXQ5hD4KbBZ8I59wWyExdqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpPBtBut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EPIzmR4sM982anu77KrhHbQYKqp/lJT7YIJ5+Es3g/GBAxZSeJ6IbeoxiVnr2SGOutSTGo26UGcXmkGwm/Gf1vArm2x/5KnabaxV7yKp7pRRcd1WQic/546o/Md63Z6hSKUCNMKYyjxcIc2prP5IMBQx3e9HKBIEDS4hIV14isY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMklqR9k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpPBtBut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7901F00893;
-	Wed, 30 Sep 2026 16:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMklqR9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADECD1F00898;
+	Wed, 30 Sep 2026 16:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784997;
-	bh=zgMeRyksH83h7cGfMM87ZOAGD17oRcd1bmilv+gwiz0=;
+	s=korg; t=1790785000;
+	bh=kiXl//ZGMFq/yI5n5NauExYuczqJRn3CWMpalhXge94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpPBtButuDT019RYhJ+BJWkPQ4Unn4oAZQZJjxCqzgdaJ88XLN9ZnVaACXJ2SfaA9
-	 IjbFjVmCN+QzSAOD37dXuEl+kr8R+YFfUSqmMzK3pfq1HjbZ8F/D26nvlIxhixs6FY
-	 EdY2J61uQBdt+xoJNH70n13nib31BCoBHEMUqUrE=
+	b=BMklqR9k3Kv1rOhnswxrjJG3ClbjLuqK9QjV8Ozu7W3pfrd5EnYEIbOOsDOPybuVY
+	 foqXIeNiybEF/GJbRLonUtjcdnmHvvcyspO9Gq/JpmaGYRDathzZtz6ZUi6oc4Ngit
+	 g2CVbi4BwgXZtGY4dh4EDGBb4x0cAlwpF1gpAza8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/982] Bluetooth: ISO: fix malformed ISO_END/CONT handling
-Date: Wed, 30 Sep 2026 17:17:24 +0200
-Message-ID: <20260930152423.434885579@linuxfoundation.org>
+Subject: [PATCH 6.1 309/982] bpf: Mask pseudo pointer values in verifier logs
+Date: Wed, 30 Sep 2026 17:17:25 +0200
+Message-ID: <20260930152423.457323108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,101 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 
-[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
+[ Upstream commit 72a85e9464a5332fb2cd7efd26d9295275ceda2d ]
 
-Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
-ISO_CONT, ISO_END packets.  We currently reject them if they are last.
+print_bpf_insn() masks ldimm64 immediates for pointer-bearing pseudo
+sources when pointer leaks are not allowed, but the mask only covers
+BPF_PSEUDO_MAP_FD and BPF_PSEUDO_MAP_VALUE.
 
-If controller sends malformed sequence
+BPF_PSEUDO_MAP_IDX, BPF_PSEUDO_MAP_IDX_VALUE, and BPF_PSEUDO_BTF_ID can
+also be resolved to kernel pointer values before the verifier log prints
+the instruction. Include them in the existing pointer classification so
+the log prints 0x0 instead of the rewritten address.
 
-    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
-
-that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
-too long ISO_END, we panic on skb_put. If controller sends too short
-ISO_END we accept it.
-
-Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
-skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
-as they require the same initial checks. Reject too short ISO_END
-packets.
-
-Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 4976b718c355 ("bpf: Introduce pseudo_btf_id")
+Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
+Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+Link: https://lore.kernel.org/r/20260623-f01-13-pseudo-btf-id-cap-bpf-v2-1-a190ebb8f3e2@mails.tsinghua.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ kernel/bpf/disasm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index acaf99dbf7fec..7ffb47a12dd3d 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1702,7 +1702,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 	switch (pb) {
- 	case ISO_START:
- 	case ISO_SINGLE:
--		if (conn->rx_len) {
-+		if (conn->rx_skb || conn->rx_len) {
- 			BT_ERR("Unexpected start frame (len %d)", skb->len);
- 			kfree_skb(conn->rx_skb);
- 			conn->rx_skb = NULL;
-@@ -1767,12 +1767,14 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		break;
- 
- 	case ISO_CONT:
--		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
-+	case ISO_END:
-+		BT_DBG("%s: frag len %d (expecting %d)",
-+		       (pb == ISO_END) ? "End" : "Cont", skb->len,
- 		       conn->rx_len);
- 
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected continuation frame (len %d)",
--			       skb->len);
-+		if (!conn->rx_skb) {
-+			BT_ERR("Unexpected ISO %s frame (len %d)",
-+			       (pb == ISO_END) ? "End" : "Cont", skb->len);
- 			goto drop;
- 		}
- 
-@@ -1788,17 +1790,9 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
- 					  skb->len);
- 		conn->rx_len -= skb->len;
--		break;
- 
--	case ISO_END:
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected end frame (len %d)", skb->len);
--			goto drop;
--		}
--
--		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
--					  skb->len);
--		conn->rx_len -= skb->len;
-+		if (pb == ISO_CONT)
-+			break;
- 
- 		if (!conn->rx_len) {
- 			struct sk_buff *rx_skb = conn->rx_skb;
-@@ -1809,6 +1803,13 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+diff --git a/kernel/bpf/disasm.c b/kernel/bpf/disasm.c
+index 7b4afb7d96db1..9661cce10689a 100644
+--- a/kernel/bpf/disasm.c
++++ b/kernel/bpf/disasm.c
+@@ -244,7 +244,10 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
  			 */
- 			conn->rx_skb = NULL;
- 			iso_recv_frame(conn, rx_skb);
-+		} else {
-+			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
-+			       skb->len, conn->rx_len);
-+			kfree_skb(conn->rx_skb);
-+			conn->rx_skb = NULL;
-+			conn->rx_len = 0;
-+			goto drop;
- 		}
- 		break;
- 	}
+ 			u64 imm = ((u64)(insn + 1)->imm << 32) | (u32)insn->imm;
+ 			bool is_ptr = insn->src_reg == BPF_PSEUDO_MAP_FD ||
+-				      insn->src_reg == BPF_PSEUDO_MAP_VALUE;
++				      insn->src_reg == BPF_PSEUDO_MAP_VALUE ||
++				      insn->src_reg == BPF_PSEUDO_MAP_IDX ||
++				      insn->src_reg == BPF_PSEUDO_MAP_IDX_VALUE ||
++				      insn->src_reg == BPF_PSEUDO_BTF_ID;
+ 			char tmp[64];
+ 
+ 			if (is_ptr && !allow_ptr_leaks)
 -- 
 2.53.0
 
