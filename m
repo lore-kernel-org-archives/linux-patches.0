@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7956C314A86;
-	Wed, 30 Sep 2026 18:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD563B1029;
+	Wed, 30 Sep 2026 18:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791225; cv=none; b=YXU93Y2sE+FF49qub56qS6BQXVkwz/P9NFzxfZ2wDgv1yd5goIf/CndbqjCJVcInOGgjmNYEluxMR4TESZyPzsoaU4rnBtFPf0ICbGk0UR5gQZ4CZ22IMTbLmvnD2m4yUu+MSXPDrseNN/dRVg0uCqdVc3alnCSZHwmwmZhtY4A=
+	t=1790791228; cv=none; b=u85lGo7LIok4GJab4Yfbn8rbqbJSK1w8/S1IMaC3gCWCVp7fcnXRYHMiBbd2ZRCrjrsNxfOWyVYyIgPvna0hc/Dov2od9Bydms+iL62MmvmYzBm9I4aWNPKZ9z9P5o941Dpo/0sRwM6SiaX/JaMX/GlU5/VgmneCwA1aTedQTow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791225; c=relaxed/simple;
-	bh=GhBqsYIjf+WjwgwHTzTnku+cmyI7y/Nzd06OzPPEO3k=;
+	s=arc-20240116; t=1790791228; c=relaxed/simple;
+	bh=oTTLnV4jBI8ATNChb4B+Up2aPs+kEUjEoed7neiCBpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGjyq4RXy/5q/XMSll5Rc2KOR85qm9ogXZ3E6FZEZZtDhEI2u9jEvrmY4pNzXtKGFln0Q4616EM/DhUphrocw0mCLZdKuKmXMgvVdpn4INcgq4IOf7Wqzxk1YV6SnANWMwAglRDu5OxrQonFlx6UxB0a+zfsN9kdh+LLgKrckbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVvVQZO9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A6o4n9x4DRg1YdcwF7mUIzgv/Pa60KNq4eMakP/dEcN9BAQNd/jKc8jk3SUF9GrMbbO9cE06jA/5sBCBXFfXxgFZtHutAyKEXdytDO3WD22GbglbuLrEcMGroTqfIG8vvBv4JT3uUsl++p3j55rb7MMy5zNMQstNaR6t/QL1nVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKGKjrKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVvVQZO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4271F000FF;
-	Wed, 30 Sep 2026 18:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKGKjrKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688BF1F000FF;
+	Wed, 30 Sep 2026 18:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791224;
-	bh=ZSj7L8k4n0DXYnrtEtRmzeKUbBukRa2Zll0fFo3mUTs=;
+	s=korg; t=1790791227;
+	bh=zeF6rrGEjuBXvm2WtkXByd4Y3wawcX5AqvdoMp2QHn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gVvVQZO9DCEDOBnxhSBRWkoxL9IDGaRQ3+Zwo+b4lsyYdq6z8XSXaBdU4b35Wnt7u
-	 Q8lGcVL/AhfX/4x+2vE4vKE4jIKbj7n76Jbr9uVdlnNZFLT0mqBDOwzjXuAP4kgQRw
-	 +LGQDulpjylWsTAlj4AdmyeJsFC7QijGJzuZCt6A=
+	b=xKGKjrKQrhDlIUsiQaCQmSJyDpqtXFvWy8c1EAl4jikK3EZXLU3mLFu+r4GCED6ER
+	 QtZIoF68uUff2xVnN8Vnx94d9QqARLGc/XPfgG6t4B6HcCPVcoQI3DL8bWNZJXHVY3
+	 alzCMCHTe1sCzAThekTJldi+JrED4Q/dOYZQ2VE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Liu <liuqiang@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/752] ksmbd: fix sd_ndr.data memory leak in ksmbd_vfs_set_sd_xattr
-Date: Wed, 30 Sep 2026 17:20:52 +0200
-Message-ID: <20260930152402.142995881@linuxfoundation.org>
+Subject: [PATCH 5.15 173/752] ksmbd: apply create security descriptor first
+Date: Wed, 30 Sep 2026 17:20:43 +0200
+Message-ID: <20260930152401.946232099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,40 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Liu <liuqiang@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d4d56b00c7df88cd5751e7415bdfabc9fdbc82a7 ]
+[ Upstream commit ba3cf6ee4f0eacc1f8c607b80188e3b32ef5e0e3 ]
 
-ndr_encode_v4_ntacl() allocates sd_ndr.data via kzalloc() at entry.
-If any subsequent ndr_write_*() call returns error during encoding,
-the allocated sd_ndr.data won't be freed and causes memory leak.
+smb2.create.aclfile creates files with an SMB2_CREATE_SD_BUFFER create
+context and expects the resulting security descriptor to match
+the descriptor supplied by the client.
 
-Move kfree(sd_ndr.data) into out label to ensure the buffer gets
-released on all success and error return paths.
+ksmbd currently tries to inherit the parent DACL first and only parses
+the SMB2_CREATE_SD_BUFFER context when DACL inheritance fails.
+If inheritance succeeds, the explicit security descriptor supplied on
+create is ignored. This breaks create requests that include owner/group
+information in the security descriptor.
 
-Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Apply the create security descriptor first when the context is present.
+Fall back to the existing inherited/default ACL path only when no create
+security descriptor was supplied.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/vfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ksmbd/vfs.c b/fs/ksmbd/vfs.c
-index 4804976c0c13f..8da562b11b6f6 100644
---- a/fs/ksmbd/vfs.c
-+++ b/fs/ksmbd/vfs.c
-@@ -1510,8 +1510,8 @@ int ksmbd_vfs_set_sd_xattr(struct ksmbd_conn *conn,
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR ntacl :%d\n", rc);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 12ca40e0f8bcd..a72ced80b5922 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3143,14 +3143,16 @@ int smb2_open(struct ksmbd_work *work)
+ 		if (posix_acl_rc)
+ 			ksmbd_debug(SMB, "inherit posix acl failed : %d\n", posix_acl_rc);
  
--	kfree(sd_ndr.data);
- out:
-+	kfree(sd_ndr.data);
- 	kfree(acl_ndr.data);
- 	kfree(smb_acl);
- 	kfree(def_smb_acl);
+-		if (test_share_config_flag(work->tcon->share_conf,
+-					   KSMBD_SHARE_FLAG_ACL_XATTR)) {
+-			rc = smb_inherit_dacl(conn, &path, sess->user->uid,
+-					      sess->user->gid);
+-		}
++		rc = smb2_create_sd_buffer(work, req, &path);
++		if (rc && rc != -ENOENT)
++			goto err_out;
+ 
+-		if (rc) {
+-			rc = smb2_create_sd_buffer(work, req, &path);
++		if (rc == -ENOENT) {
++			if (test_share_config_flag(work->tcon->share_conf,
++						   KSMBD_SHARE_FLAG_ACL_XATTR)) {
++				rc = smb_inherit_dacl(conn, &path, sess->user->uid,
++						      sess->user->gid);
++			}
+ 			if (rc) {
+ 				if (posix_acl_rc)
+ 					ksmbd_vfs_set_init_posix_acl(user_ns,
 -- 
 2.53.0
 
