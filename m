@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3813C76AD;
-	Wed, 30 Sep 2026 19:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033EA3B3BF2;
+	Wed, 30 Sep 2026 19:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795550; cv=none; b=RiB4+S4fC2Us2f81CpKncZffRwImzb1RPcmjoN7hJZbKUTifigiQIDXZf2Fx8i/z+gByE7rxwlHCsXvGtfMoLYsTdpsdov+kxYQY1Ae4n8YpYMJ7DtoqYdpgnnuwDrn5j56fdM+F+4fadB4kVS3Iw19nw7BQeQXu2i30L6oWW5g=
+	t=1790795553; cv=none; b=mawhPSmdOKU0YxuNK7Xo2F+r8OfX1gsj+RuA//a7CKHSWAK9CxR7OxtxlyBXlnzE8FAvdrw2V9fV/hDckvSRE4BVo7tad4NS/z8YW6vIAU2zF5UnvDJDMNoQIvrLCxS/dvhfXZo9Ohrs7sEqiqveo+y05A3bl3PLYnYdDCCP36M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795550; c=relaxed/simple;
-	bh=y9YMJDbBV+gjdMigJeRhIbOtAONMg4igE4K6Y5g7r9A=;
+	s=arc-20240116; t=1790795553; c=relaxed/simple;
+	bh=/ZFvT0Ls3JbyeyYuub3mMwM/+ScIFG43wGGuWsidyow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8Jv4kb4BJsPNGiwmkVbnYc7BZRtT3kXhBnLOUkSaHGaJ95xPecxjYq+cuvBsAbPootzQTgepcrwQVsp1HZOtxkqZLkAO953as7n9/hLtwfMs7A7p1skTXmU6P15AxFGPUwsk6zmIjn+ewLgQAODDpwFxfbsD85kG3pKc5YVp1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9hxgpdf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cf6q29HtjnBk/oMC2Q+PnvBdeYmu+vpln5xYZcT0nODf7mSQTapKLaRjm1by/CeI83PG/dt+CQYDDGw93rTJmTAUyodI6hz7eu4Jxd647JS6aRGmRTRde9QD/RkTgfmNmJ3BRR9jEaAsjjm7PMJspL9AfWTsMK4iMMgJk0ExPyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeEmtk2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9hxgpdf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8319B1F000FF;
-	Wed, 30 Sep 2026 19:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeEmtk2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAF11F000FF;
+	Wed, 30 Sep 2026 19:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795549;
-	bh=keZ2t0CnwqhsZdTD9QtEQobLKRgG233SvhocWBu4bXc=;
+	s=korg; t=1790795551;
+	bh=qu0c/AQhhHIWPn279mAuwCOGL6ukb2evpWM4/m6uTBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9hxgpdfvy3eHtOqjDIY1CUCCq64O2pFvPTjSnMC4bNrTdNAW6zZL6dN4uZQFgKk9
-	 O076j6CvDHf6Rn6jXXf7CfNHQgKkuIo0r2+fKvXRgn1N6p6HdW3WBLtH2vSZspue39
-	 MP+TLUmRg8BEthgbXjAdfxFplZ4JwwPianwhYrDE=
+	b=eeEmtk2SPQJccWIfreRRNFXgL2lZng0EgUiXRgrrVwY5pkkUHcvYcLm826dOvflWs
+	 Mp2A936S4HE8dkKHJxxxmgNsOvwduwzCWOZKK71WHtb0mTF0dcf/mqZOZdZFs18UtD
+	 I6KUzQL9d5rvlFjd3raiWRsvLzmcVPwtM0RTFfog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 0599/1193] crypto: x86/aria - add missing vzeroupper in AVX-512 code
-Date: Wed, 30 Sep 2026 17:21:23 +0200
-Message-ID: <20260930152447.549441775@linuxfoundation.org>
+	Orson Peters <orsonpeters@gmail.com>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: [PATCH 6.6 0600/1193] x86/mm: Fix user-space data loss with MADV_FREE and THP
+Date: Wed, 30 Sep 2026 17:21:24 +0200
+Message-ID: <20260930152447.574449270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,49 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-commit 60892a384aa1e65d0e703e1c513417bdf0c80777 upstream.
+commit f7491d7c81db0e7c304a7bd757a76d2fbeaff80e upstream.
 
-Since the AVX-512 optimized ARIA code uses ZMM registers, execute
-vzeroupper before returning from it.  This is needed to avoid degrading
-the performance of any later SSE code that may happen to be executed.
+Some of users of Polars (a data analytics library) have lost production
+data from this bug. They seem to have just the right combination of
+huge pages, MADV_FREE and heavy reclaim pressure.
 
-Fixes: c970d42001f2 ("crypto: x86/aria - implement aria-avx512")
+pmd_modify() masks the old value with (_HPAGE_CHG_MASK & ~_PAGE_DIRTY),
+silently discarding the hardware dirty bit.  The subsequent
+pmd_mksaveddirty() call is supposed to transfer _PAGE_DIRTY into
+_PAGE_SAVED_DIRTY when write-protecting, but the dirty bit was already
+stripped from the value, so there is nothing left to transfer.
+
+Contrast with pte_modify(), which keeps _PAGE_DIRTY_BITS in its mask,
+and pud_modify(), which keeps _HPAGE_CHG_MASK untouched: pmd_modify()
+is the odd one out.  Any pmd_modify() on a writable, dirty PMD loses
+the dirty state.
+
+One visible consequence is data loss with MADV_FREE on PMD-mapped THP:
+
+    memset(buf, 0x5A, size);          // PMD-mapped THP, PMD dirty
+    madvise(buf, size, MADV_FREE);    // PMD cleaned but left writable,
+                                      // folio marked lazyfree
+    memset(buf, 0x5A, size);          // hardware sets _PAGE_DIRTY again
+    mprotect(buf, size, PROT_READ);   // pmd_modify() drops the dirty bit
+    mprotect(buf, size, PROT_READ|PROT_WRITE);
+    // ... memory pressure ...
+
+Reclaim (e.g. under memcg pressure) then finds the lazyfree folio with
+no dirty bit set anywhere and frees it in
+__discard_anon_folio_pmd_locked(), even though the data was rewritten
+after MADV_FREE; subsequent reads fault in fresh zero pages.  NUMA
+hinting alone can trigger the same loss, as do_huge_pmd_numa_page()
+restores the PMD through pmd_modify() as well.
+
+PMD-mapped file THPs are affected too: mprotect()/NUMA hinting dropping
+the dirty bit means rewritten data is never written back.
+
+Fix it by keeping _PAGE_DIRTY in the preserved mask, exactly like
+pte_modify() and pud_modify() do.  The existing
+pmd_mksaveddirty()/pmd_clear_saveddirty() pair then performs the
+hardware-dirty <-> saved-dirty transition based on the write bit,
+preserving the shadow-stack encoding rules.
+
+Fixes: bb3aadf7d446 ("x86/mm: Start actually marking _PAGE_SAVED_DIRTY")
+Closes: https://lore.kernel.org/r/CAJxLxMUGu1-L+O_nAONOwOXnS=cNbNApCWqdthRjd76LThtSPg@mail.gmail.com/
+Reported-by: Orson Peters <orsonpeters@gmail.com>
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Cc: stable@vger.kernel.org
-Cc: Taehee Yoo <ap420073@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://patch.msgid.link/20260903031608.1194238-1-vernon2gm@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/aria-gfni-avx512-asm_64.S |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/include/asm/pgtable.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/crypto/aria-gfni-avx512-asm_64.S
-+++ b/arch/x86/crypto/aria-gfni-avx512-asm_64.S
-@@ -800,6 +800,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_en
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %rax);
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -814,7 +814,7 @@ static inline pmd_t pmd_modify(pmd_t pmd
+ 	pmdval_t val = pmd_val(pmd), oldval = val;
+ 	pmd_t pmd_result;
  
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_encrypt_64way)
-@@ -825,6 +826,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_de
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %rax);
+-	val &= (_HPAGE_CHG_MASK & ~_PAGE_DIRTY);
++	val &= _HPAGE_CHG_MASK;
+ 	val |= check_pgprot(newprot) & ~_HPAGE_CHG_MASK;
+ 	val = flip_protnone_guard(oldval, val, PHYSICAL_PMD_PAGE_MASK);
  
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_decrypt_64way)
-@@ -966,6 +968,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_ct
- 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
- 		     %zmm15, %r10);
- 
-+	vzeroupper;
- 	FRAME_END
- 	RET;
- SYM_FUNC_END(aria_gfni_avx512_ctr_crypt_64way)
 
 
