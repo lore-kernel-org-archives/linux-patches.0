@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16AA50C28B;
-	Wed, 30 Sep 2026 18:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EED503BD3;
+	Wed, 30 Sep 2026 18:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791915; cv=none; b=Tn4P+F+Z9dD29xON7Vs2W4ZFztQaLMU2PkBnKn3MHYHNKQoL2FJU//qXhcVA6AyGGOmmXHmsZbYo2ntpmWYguIcIrteixCsNuMGSROb7DHOSO3ZGG10HUlB/XLJRI4SPZWYARA+nRptTfRV8ly142hRUhKFkUscMTCqBM94tIiA=
+	t=1790791918; cv=none; b=uOgAA0SZquEGgT/B3f8UcBQ1Qp8a+5ARUAEN5rYhlXT/r6TktgxgIC8a8xYvzBEey/LRkVMx0CcfLoUzCALsUBKX1CAebq8+KIRTq0vI4UgDgzPgSd9QnygucWYsd2c4AOV8UHNVS534iGZ8PJDH9zK2VXBGyYyOxvD33ptWiXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791915; c=relaxed/simple;
-	bh=1x36tL41utrSR77gAcfkHHkXQjKTg2+6C/oYyOjr5Q0=;
+	s=arc-20240116; t=1790791918; c=relaxed/simple;
+	bh=lMMfJV88KLpSCNAckkCjFuzGSOZHZ0iDjXweOQT4ab4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqM7TlrTzMdChw+cD1wFKL/nNQahSl9H4oMH7wkD+pwiGXKXrjdSVijDQCN7If+5cpBZ0hG5P4eSEGRsXwen6+lMGji3mDxtcbacML5olv35Cx6xDiG2uFEBo8GLJD+EjDSIdS/I0M9D5s+zPFsY33ih/AAy6i95i+KOilnILxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKqNpB9l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RUT4BDlSalfrA1Nm+U7znnmihanTxjyW0kdv99Ce/zPyIzBMMOHQQfXOrPjDQTHTbVMn/yBg9k6cEyabcd+yx5+9BHvJOFzjq1r4Q5XaL24cGF5wE8XxGD6v9/jv557Xo1FwtaPnMii32J/FDa6oM+JEFIkmrw172kQdfuvDW0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LirC9TaE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKqNpB9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8761F000FF;
-	Wed, 30 Sep 2026 18:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LirC9TaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8CD1F000FF;
+	Wed, 30 Sep 2026 18:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791913;
-	bh=WDOC6NVJKdDZzHdJrSszNVVqYFL5QhdollnhBtbesdM=;
+	s=korg; t=1790791916;
+	bh=Mc/woexOLNk34di0kdAFOv+TlmUKbU5K59Jv+JqDz1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKqNpB9limCUAsWB66k0qAxp+70WC7X/vwIqpVBwbIV/4EohTT4RufTVK505DZs8S
-	 YECRHXm+F2tbb8tGDJOOfdjPXbrg9h7iFKT4+YqPrZMcCKBLBX1qkIwI4zB/x/plxt
-	 ItfGZzjfKYYSx7jFqxfe9T0w63S82YN85DtlPFBs=
+	b=LirC9TaEKDK5h6sSm2EP0wf3wuop0CGNvqsM29fxUvvpaByPLjiWga1/rIRgM2c99
+	 W9ZEW4yk9k66hYBqJ0lCQB1OX7IoAy97uEdOpwRE8LJ9YiC3iXgXUXFNh3DlZrVt61
+	 vBVQzVXzW/wNmBwM0bG2zuPCIDeW1HW5tJeGbMd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shivank Garg <shivankg@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 471/752] dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel()
-Date: Wed, 30 Sep 2026 17:25:41 +0200
-Message-ID: <20260930152408.466497310@linuxfoundation.org>
+Subject: [PATCH 5.15 472/752] dmaengine: wait for RCU readers before releasing dma_device
+Date: Wed, 30 Sep 2026 17:25:42 +0200
+Message-ID: <20260930152408.487988368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -56,65 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Shivank Garg <shivankg@amd.com>
 
-[ Upstream commit e873c74132f0c5f1452816cd9bb26208f0bba1e1 ]
+[ Upstream commit dc750422170a563c7a81f6e49d36bb02c62ae37f ]
 
-When dma_device_put() drops the last reference on chan->device->ref,
-dma_device_release() runs and may free the dma_device along with its
-channels.
+dma_issue_pending_all() walks the dma_device_list with
+list_for_each_entry_rcu() under rcu_read_lock(). dma_device_release()
+unlinks the device with list_del_rcu() and then calls
+device->device_release() (which in many drivers, such as plx_dma.c,
+directly calls kfree()).
 
-dma_chan_put() then still reads chan->device->owner via
-dma_chan_to_owner() for the trailing module_put(). KASAN catches it:
+Because there is no grace period between unlinking the device and
+freeing it, concurrent RCU readers in dma_issue_pending_all() can
+access the device after it has been freed.
 
-	slab-use-after-free in dma_chan_put+0x3e6/0x4c0
-	Read of size 8 by task insmod/6319
-	Freed by task 6319:
-	  kfree+0x225/0x470
-	  dma_chan_put+0x395/0x4c0
-	  dmaengine_put+0xf8/0x160
+The lockless walk originally relied on clients holding a dmaengine
+reference to pin the provider module, and therefore the device, for as
+long as they might traverse the list. Commit 8ad342a86359 ("dmaengine:
+Add reference counting to dma_device struct") decoupled the dma_device
+lifetime from the module reference, so the device can now be released
+while a reader is still walking the list.
 
-Cache the module owner in dma_chan_put() before the put so the trailing
-module_put() does not need chan->device.
+Add synchronize_rcu() before the device is freed, so RCU readers are
+guaranteed to have finished. Keep it unconditional: providers that do
+not implement device_release() free the device themselves once
+dma_async_device_unregister() returns. This call will delay for a grace
+period with dma_list_mutex held, which is safe and only teardown path is
+delayed.
 
-Fixes: 8ad342a86359 ("dmaengine: Add reference counting to dma_device struct")
+Fixes: 2ba05622b8b1 ("dmaengine: provide a common 'issue_pending_all' implementation")
 Suggested-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com
+Link: https://sashiko.dev/#/patchset/20260526-dmaengine-kref-fix-v2-0-3df60afac01d@amd.com
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-3-d4a4ee47d927@amd.com
+Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-4-d4a4ee47d927@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/dmaengine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 7eb3ec8323ccc..ae4121a26c651 100644
+index ae4121a26c651..41a677a82ed41 100644
 --- a/drivers/dma/dmaengine.c
 +++ b/drivers/dma/dmaengine.c
-@@ -493,10 +493,13 @@ static int dma_chan_get(struct dma_chan *chan)
-  */
- static void dma_chan_put(struct dma_chan *chan)
- {
-+	struct module *owner;
-+
- 	/* This channel is not in use, bail out */
- 	if (!chan->client_count)
- 		return;
+@@ -426,6 +426,7 @@ static void dma_device_release(struct kref *ref)
  
-+	owner = dma_chan_to_owner(chan);
- 	chan->client_count--;
+ 	list_del_rcu(&device->global_node);
+ 	dma_channel_rebalance();
++	synchronize_rcu();
  
- 	/* This channel is not in use anymore, free it */
-@@ -516,7 +519,7 @@ static void dma_chan_put(struct dma_chan *chan)
- 	/* This channel is not in use anymore, drop the device ref */
- 	if (!chan->client_count)
- 		dma_device_put(chan->device);
--	module_put(dma_chan_to_owner(chan));
-+	module_put(owner);
- }
- 
- enum dma_status dma_sync_wait(struct dma_chan *chan, dma_cookie_t cookie)
+ 	if (device->device_release)
+ 		device->device_release(device);
 -- 
 2.53.0
 
