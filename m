@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AACC36A37E;
-	Wed, 30 Sep 2026 17:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7623F502554;
+	Wed, 30 Sep 2026 17:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788921; cv=none; b=AIQVeeZBM8Y5Tm8vw+Xzrwqvb6p8ekam2uCnIAlnS8iHHsDF0O9EVgVNIDGXRVg/DohMdx4k9zEIcqjljXoItXCpJm9jpncHF6YRNZAAUaivad4YWoshqwIm3o6HeQmmJv9yePIwJSEWGhybQ/t5HYOorBiwYZf+a8C5OBl4F0U=
+	t=1790788924; cv=none; b=dH69pxQoE6xFit7cXFwRSlYsiBf3AD+n9+N4QTvq2aYsJRl8Q4R/CphgQMen0NiGzo9DLk+t2HvaSEUfPUIpAjbieIiNo2eYZtZaZpPrxVFrVICsQCQfwPV+YAed0eVbVNmdRKtLyRmHI2cw9yc/VdIT4WQdh4VD7kqSUy8jXJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788921; c=relaxed/simple;
-	bh=jPe8Vfm+I6KmjACluiOJxQnPvXen2s0ZUvFoJEQX+EU=;
+	s=arc-20240116; t=1790788924; c=relaxed/simple;
+	bh=BAk+lHDuuoAvrGGNpLsxTSmQ0Tml37cF0LpbNksj9oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J95STGw3SPvF2n+K8JR4DLZ839rc4FBEpsAKwQBJmaK07isu41mkfY80gU+jvRQz8FC+jzwnT7B9zynpeUOEKMTiIf6aEVaWWqmiEbgRBBkDYjuzRmpaHKuQDMIHmlC8RbJA5I5rqKfL5Wr3ekimVNOHjpN2+emwwjeL5DMpCcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eS6msIco; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYiNSO98DzTE+r0GLNk+hVYA0ycIEYdlAF6NFmzjzP7p7LHH59PCRmsly0sawuHcZzoTAgYaAn9VrC1XNP7vjcQyIO6G3mqs1w9Hh7OdiinO/Sd8cslp7KK/h/pkoSica0p+jgsr+PFiLCfmyBtlC9W1iOEptwEF9WSPkcpEzbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPXwtBkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS6msIco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E453E1F000FF;
-	Wed, 30 Sep 2026 17:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPXwtBkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C788B1F000FF;
+	Wed, 30 Sep 2026 17:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788920;
-	bh=n15zB4eJGyWxzSsQydcfm/7KxAkNoXxlLdtlR8MEYzs=;
+	s=korg; t=1790788923;
+	bh=s86aXEO7dHCK+n36LmDbna9DBMWIs1XZt7EjTa528Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eS6msIcoDXNeTUUlEpwMKIhMmsyg5UbhkVjE62hLQsqcJaIVT3fD7Eb8hyGVpjq3a
-	 y6FP7p6jlXtUqAGRk7vCaHyxj3WRZ1xHKNc84o7RhHfV4oxnFUcpMoDsIrqVBRwf7F
-	 Q91i5yTMpCYcDvyq2EYl2EJH5jb3iEAYEucLvick=
+	b=yPXwtBkA1MWiKwxtr/t9OQMxoUFEzCl+RkvjFHOsWbV1zb0XeD89Fd/d3/GvEIcjF
+	 yQYqZKHcNG+LCgk/j2T4OGV1aqVi2Y+4VZtRGhRB+QURTLB/2UdHkExzq14c1RlLMn
+	 zJmVcVFldPc/P8DVFgryehjQM+9a+lhPPtE3gjlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/877] netfilter: nf_tables: Tolerate chains with no remaining hooks
-Date: Wed, 30 Sep 2026 17:20:05 +0200
-Message-ID: <20260930152421.052418290@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 259/877] wifi: brcmsmac: fix UAF in brcms_free_timer()
+Date: Wed, 30 Sep 2026 17:19:30 +0200
+Message-ID: <20260930152420.311043153@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,143 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit fc0133428e7ad65aa6b7c8e65ccfe86e469e4512 upstream.
+commit 1eeca1d5e0920fbdad6449768fd2d4364e714180 upstream.
 
-Do not drop a netdev-family chain if the last interface it is registered
-for vanishes. Users dumping and storing the ruleset upon shutdown to
-restore it upon next boot may otherwise lose the chain and all contained
-rules. They will still lose the list of devices, a later patch will fix
-that. For now, this aligns the event handler's behaviour with that for
-flowtables.
-The controversal situation at netns exit should be no problem here:
-event handler will unregister the hooks, core nftables cleanup code will
-drop the chain itself.
+brcms_free_timer() calls brcms_del_timer() which uses the non-synchronous
+cancel_delayed_work() to cancel the timer's underlying delayed work.  If
+the work callback (_brcms_timer) is already running, cancel_delayed_work()
+returns false without waiting, and brcms_free_timer() proceeds to kfree(t)
+while the callback still accesses t through container_of().
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add an explicit cancel_delayed_work_sync() after brcms_del_timer() to
+guarantee that any in-flight callback has completed before the timer
+structure is freed.
+
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260815121043.938414-1-yijiangshan@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |  2 --
- net/netfilter/nf_tables_api.c     | 41 -------------------------------
- net/netfilter/nft_chain_filter.c  | 29 ++++++----------------
- 3 files changed, 7 insertions(+), 65 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index f4b59915a49c5..923b2c0d6e844 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1238,8 +1238,6 @@ static inline bool nft_is_base_chain(const struct nft_chain *chain)
- 	return chain->flags & NFT_CHAIN_BASE;
- }
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1569,6 +1569,10 @@ void brcms_free_timer(struct brcms_timer
  
--int __nft_release_basechain(struct nft_ctx *ctx);
--
- unsigned int nft_do_chain(struct nft_pktinfo *pkt, void *priv);
+ 	/* delete the timer in case it is active */
+ 	brcms_del_timer(t);
++	/* Ensure the callback has finished before freeing the timer
++	 * structure, since brcms_del_timer() uses non-synchronous cancel.
++	 */
++	cancel_delayed_work_sync(&t->dly_wrk);
  
- static inline bool nft_use_inc(u32 *use)
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 2613ebfdc854e..af9df95ddf055 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -11362,47 +11362,6 @@ int nft_data_dump(struct sk_buff *skb, int attr, const struct nft_data *data,
- }
- EXPORT_SYMBOL_GPL(nft_data_dump);
- 
--static void __nft_release_basechain_now(struct nft_ctx *ctx)
--{
--	struct nft_rule *rule, *nr;
--
--	list_for_each_entry_safe(rule, nr, &ctx->chain->rules, list) {
--		list_del(&rule->list);
--		nf_tables_rule_release(ctx, rule);
--	}
--	nf_tables_chain_destroy(ctx->chain);
--}
--
--int __nft_release_basechain(struct nft_ctx *ctx)
--{
--	struct nft_rule *rule;
--
--	if (WARN_ON_ONCE(!nft_is_base_chain(ctx->chain)))
--		return 0;
--
--	nf_tables_unregister_hook(ctx->net, ctx->chain->table, ctx->chain);
--	list_for_each_entry(rule, &ctx->chain->rules, list)
--		nft_use_dec(&ctx->chain->use);
--
--	nft_chain_del(ctx->chain);
--	nft_use_dec(&ctx->table->use);
--
--	if (!maybe_get_net(ctx->net)) {
--		__nft_release_basechain_now(ctx);
--		return 0;
--	}
--
--	/* wait for ruleset dumps to complete.  Owning chain is no longer in
--	 * lists, so new dumps can't find any of these rules anymore.
--	 */
--	synchronize_rcu();
--
--	__nft_release_basechain_now(ctx);
--	put_net(ctx->net);
--	return 0;
--}
--EXPORT_SYMBOL_GPL(__nft_release_basechain);
--
- static void __nft_release_hook(struct net *net, struct nft_table *table)
- {
- 	struct nft_flowtable *flowtable;
-diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
-index 7010541fcca66..543f258b7c6ba 100644
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -322,34 +322,19 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
- 			     struct nft_ctx *ctx)
- {
- 	struct nft_base_chain *basechain = nft_base_chain(ctx->chain);
--	struct nft_hook *hook, *found = NULL;
--	int n = 0;
-+	struct nft_hook *hook;
- 
- 	list_for_each_entry(hook, &basechain->hook_list, list) {
--		if (hook->ops.dev == dev)
--			found = hook;
--
--		n++;
--	}
--	if (!found)
--		return;
-+		if (hook->ops.dev != dev)
-+			continue;
- 
--	if (n > 1) {
- 		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
--			nf_unregister_net_hook(ctx->net, &found->ops);
-+			nf_unregister_net_hook(ctx->net, &hook->ops);
- 
--		list_del_rcu(&found->list);
--		kfree_rcu(found, rcu);
--		return;
-+		list_del_rcu(&hook->list);
-+		kfree_rcu(hook, rcu);
-+		break;
- 	}
--
--	/* UNREGISTER events are also happening on netns exit.
--	 *
--	 * Although nf_tables core releases all tables/chains, only this event
--	 * handler provides guarantee that hook->ops.dev is still accessible,
--	 * so we cannot skip exiting net namespaces.
--	 */
--	__nft_release_basechain(ctx);
- }
- 
- static int nf_tables_netdev_event(struct notifier_block *this,
--- 
-2.53.0
-
+ 	if (wl->timers == t) {
+ 		wl->timers = wl->timers->next;
 
 
