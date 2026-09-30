@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532E755C1AC;
-	Wed, 30 Sep 2026 17:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFF55D882;
+	Wed, 30 Sep 2026 17:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789737; cv=none; b=tWOTPgx4lo4CTROb8U5CJV+2saBNk9vJZ/LNagYvVdzF4IgRG7JZ6Ekgxx96aDeMF4zfpAEDYbc/ouSw/cbcmBxAMCbRqgBjz/eY8Ve/jgrbxpaX/NTKVkMZz3qt8Q/7RKNc6+QUTSP1RrM2sd2MwZBtbIUXiQ4x6oWirwIodmg=
+	t=1790789739; cv=none; b=UePQpqPLfbqfhYDk1+MOUVZy+aqQsqUeWpQpw7Zvk4gOV81dKAYFJ3MF41o7YPg94F6RtvztKBQnMDjvxFObL3YLwDjzOCwik1wW4WryruS8QCJJGXrgBKyHn5LDUbTcMuHGfmu4s4YH5S111YhrBCfWCJHItjMF7n6pL5zs5E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789737; c=relaxed/simple;
-	bh=1rvQ9R4CuRwxmVrRGjSIf1ZDNxzfIdIVxGMG8HHNcKM=;
+	s=arc-20240116; t=1790789739; c=relaxed/simple;
+	bh=S30LetbxRegs2luX8prqgnEBFevUX0g0UIADelwz3ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9XDkKHmBmSP9eqHUr+T6BWidfg6Fem/7uV4q3sD/yAwJzt+PWjHFRXnAhyFdaVyPCwJrmgaqDPBqpWd9mrJENKcIU5gx5zMEc/Z+L0ZLhRrT+0gkr8NVrw9V0YWkiNmVxQISFk8yhNk8R4IA9MWaA6paJV1gKYWrmNxyhANoho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXaSCp7I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7qFvkJ7TGpLGiItFNXTRslUWfPBYFyFbzLBE/GPrrCB9bjgV+1ZQoF878kuK/+I7/v4ulnM0lti5siMTtSIe3p0s/KQBuDnze2IdwdH8uB5LkzRF6XMhb+Kr1Gplkfu1879TMti0ptQeqtXbZilxHRhytyuU3EcuSfUgBh5lTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uzt8i7Eo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXaSCp7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C10F1F008AB;
-	Wed, 30 Sep 2026 17:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uzt8i7Eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7194D1F0089A;
+	Wed, 30 Sep 2026 17:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789735;
-	bh=G9T0tjP3KHOTnQlqe+L/GOMd3u5uuTWYSd+SWwSCQJQ=;
+	s=korg; t=1790789738;
+	bh=lp4o2xHSbX0xg/MuINh5UfDSZW7FJvGG4LmBZLGhJMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xXaSCp7IzZIL1ZidTi9oDE+tm/P7LXBvtxUX8Y+E/wqksINNmGq9WY3IjJhdRMAEy
-	 ma4EJxaklqtfLU+v5DSI9q8OLxZURqHRl9rGgMAwGEah0oW6JesPGYBy3NIWw4KJS6
-	 t0ad7uRrp6wvB+uHCpgq9gIL9Ntyh0Cr80S7xBUs=
+	b=Uzt8i7EouKHxOfdB9M/F4uiSQJ4mDO3O16IhWvvOss2+bKaEiGFOjLtfIQjwx1zcQ
+	 0gjH/GZ/qBOeGIfZRgXBDS0VixTtBpTbcttpPE9yyg9tmRhRoDSfFiFMbzuQ+9uMxb
+	 MLQdCUMiPp/7kZXT5XdLEJDqpn1i0UxILVcrrras=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 581/877] mmc: via-sdmmc: cancel card-detect work on remove
-Date: Wed, 30 Sep 2026 17:24:52 +0200
-Message-ID: <20260930152427.181568706@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 546/877] smb: client: validate POSIX create context length
+Date: Wed, 30 Sep 2026 17:24:17 +0200
+Message-ID: <20260930152426.421879328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,48 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 ]
+commit fa2e9900dd2a3f5a1e7ef5a8c5e8d435feedbfcc upstream.
 
-Disabling the device interrupt and freeing the IRQ prevents new card-detect
-work from being queued, but carddet_work already queued by the handler can
-still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
-host through container_of() and dereferences its MMIO base; once remove()
-returns the host can be freed, so that work would touch freed memory.
+parse_posix_ctxt() reads the fixed nlink, reparse_tag, and mode fields
+before checking that the POSIX create context contains them.  A short
+context can pass the generic checks and still make these fixed-width
+reads run past its declared data.
 
-Cancel carddet_work after freeing the IRQ and before cancelling
-finish_bh_work, which the card-detect handler can also queue. carddet_work
-can re-enable the interrupt through via_reset_pcictrl(); mask it again
-afterwards.
+The current in-tree smb2_open_file() path passes a NULL posix pointer,
+so this handler is not reached on the ordinary open path.  Still require
+the POSIX data to cover all three fields before reading them because the
+helper performs those unguarded reads.  Keep the existing soft-failure
+behavior so malformed optional metadata does not fail the open.
 
-This issue was found by an in-house static analysis tool and confirmed by
-manual code review.
-
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
+Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-[ adjusted context to retain del_timer_sync() instead of timer_delete_sync(). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/via-sdmmc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/client/smb2pdu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1208,6 +1208,10 @@ static void via_sd_remove(struct pci_dev
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2313,12 +2313,15 @@ static void
+ parse_posix_ctxt(struct create_context *cc, struct smb2_file_all_info *info,
+ 		 struct create_posix_rsp *posix)
+ {
+-	int sid_len;
+ 	u8 *beg = (u8 *)cc + le16_to_cpu(cc->DataOffset);
+-	u8 *end = beg + le32_to_cpu(cc->DataLength);
++	u32 dlen = le32_to_cpu(cc->DataLength);
++	u8 *end = beg + dlen;
++	int sid_len;
+ 	u8 *sid;
  
- 	free_irq(pcidev->irq, sdhost);
+ 	memset(posix, 0, sizeof(*posix));
++	if (dlen < 3 * sizeof(__le32))
++		return;
  
-+	cancel_work_sync(&sdhost->carddet_work);
-+	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
-+
- 	del_timer_sync(&sdhost->timer);
- 
- 	cancel_work_sync(&sdhost->finish_bh_work);
+ 	posix->nlink = get_unaligned_le32(beg);
+ 	posix->reparse_tag = get_unaligned_le32(beg + 4);
 
 
