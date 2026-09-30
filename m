@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8950B36A033;
-	Wed, 30 Sep 2026 18:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A113515DC;
+	Wed, 30 Sep 2026 18:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793379; cv=none; b=ObsORxIMkfKGaBz7mhUNo0xeVF+Ikp0GHAQNpKzQv2AjYmyHoDztbdvphfNOO54aPmcacRmRwpHM608WdQjvpGI1ajGNCdzyyjqAubORS3CAHMOcTIguYSBiSWedVEfj7NBXGSaOtofkwSz5zgWwysDOrfFxgBsw65jjXQrsLfA=
+	t=1790793382; cv=none; b=iI9a5CxPzY1vKmLEQ3VovPCr3FrlipWqhg3u1l5KmFv8HLRqPLa4BZBA+81vhjoyOxbdj7sqfWe2vZkCotGCBr8Xqg8aBpmR82ZZwJ9KqsjIeGbY9Og1M9JZ3N/6d0avl5dZNJkT4JCikCwCpWf86tf5A+l/bn7dxnKv/2Xj+i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793379; c=relaxed/simple;
-	bh=CEALabd3XtjeMtPT3xJBBZQKhQS73ZVBfChKNPakSnE=;
+	s=arc-20240116; t=1790793382; c=relaxed/simple;
+	bh=2EvJ4ChOSWUXuJZ3H2d+901rSu8yUmYAh0eURURkeXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azAGmpGgq4cr4yoR3u3B9XRmT/o5a4VZpCTOnoJSjxzUcUtY6Vg5GWGHcYk7gsMUvU7FrH4GE6NKqcNasFEvah1doYGcP8fCthuegltYJ5kCe/6KfWjYlJTNkbktp9XLsAKvB6Nlj2u1w/uNUK/hDkqier91rD8DwSNGUkyN6mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iia6SH22; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AtX+DsAykhM2Z/W3nMsUffg2ScXmPKtq1xqkk7EZPUaIKSY6Qmweab/YeWOTJT2As/f2uhWibdbl9h+/10oScelo7+rxfIcJGl8cPKz2SMAvD7yJncxuCJGWjJMOM3vUjU/hksaHwZPVrtoOnHsU/feHzt2tJujox/9VD8PwWGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXsBA8Df; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iia6SH22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D7B1F000FF;
-	Wed, 30 Sep 2026 18:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXsBA8Df"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23091F000FF;
+	Wed, 30 Sep 2026 18:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793378;
-	bh=MZO+QdWC0RnTihRKmc8YFUc6vYzyE1L9ywxDQBPcCzw=;
+	s=korg; t=1790793381;
+	bh=+3tI5d9EhYRqwoyGjBFG4s99qT3N1Fzyg5UYddXaVPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iia6SH22ufzX54l8vrApnNc9HEX/DMPm73LS6B8EQMQdpMtaNCoVnq+AapiHMXrxm
-	 bal6xg9wTpT4bRI6iEh1FqQBRyQcwDPoE6sTVQlIuS7v7j7d9KUirLf1hVNnqFgFDD
-	 mQUnTUPgEeRgl9cK2roedw1L67npa4Dot11iI1XU=
+	b=rXsBA8DfpnhKD9wREkchZ0CIT0YrEWf4BkEASAAVRVLl+tm+X66yJtLfFgry6wmAu
+	 fQSHTLQtrSCVd8i0uElnU8a6ObCbR0tS6fiQbMlbJ3eXoNa4httJAktFvB3anzBou6
+	 Afr0n1dS9EUrN4MYwPAt5derLue6stgI38fJ6MP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Qin <cccccccccccc777777@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 235/395] rds: ib: Clear the sg list when mapping an MR fails
-Date: Wed, 30 Sep 2026 17:28:17 +0200
-Message-ID: <20260930152345.759093239@linuxfoundation.org>
+	Alexandru Dadu <alexandru.dadu@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>
+Subject: [PATCH 6.18 236/395] drm/imagination: Propagate map failures correctly from pvr_mmu_map_sgl()
+Date: Wed, 30 Sep 2026 17:28:18 +0200
+Message-ID: <20260930152345.780806801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,80 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Qin <cccccccccccc777777@gmail.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-commit 58eb1b3325edac42dc6df72c80962bd53a3c8ca7 upstream.
+commit 7b824c293a6b56de8285a97984c507cba56bc4c4 upstream.
 
-rds_ib_map_frmr() stores the caller's scatterlist in the MR before DMA
-mapping and registration can fail. On failure, __rds_rdma_map() unpins
-the pages and frees the scatterlist, but rds_ib_free_frmr() can still
-return the MR to the pool with the stale pointer set.
+Map failure from pvr_mmu_map_sgl() interface was not returned correctly
+to pvr_mmu_map() interface. This resulted in pvr_mmu_map() interface to
+continue instead of returning an error to caller.
+Fix it by returning a proper error code from pvr_mmu_map_sgl() interface.
 
-This leaves the pool with a dangling scatterlist and can lead to local
-privilege escalation. KASAN detects the resulting use-after-free when the
-MR is later torn down:
+Call stack for crash:
+[ 1179.286237] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+[ 1179.295067] Mem abort info:
+[ 1179.297877]   ESR = 0x0000000096000004
+[ 1179.301656]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 1179.306987]   SET = 0, FnV = 0
+[ 1179.310048]   EA = 0, S1PTW = 0
+[ 1179.313198]   FSC = 0x04: level 0 translation fault
+[ 1179.318096] Data abort info:
+[ 1179.320993]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[ 1179.326483]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[ 1179.331546]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[ 1179.336895] user pgtable: 4k pages, 48-bit VAs, pgdp=000000009822a000
+[ 1179.343402] [0000000000000008] pgd=0000000000000000, p4d=0000000000000000
+[ 1179.350243] Internal error: Oops: 0000000096000004 [#2]  SMP
+[ 1179.355908] Modules linked in: powervr gpu_sched drm_shmem_helper drm_gpuvm drm_exec xhci_plat_hcd xhci_hcd dwc3 usbcore usb_common snd_soc_simple_card snd_soc_simple_card_utils dwc3_am62 at24 sa2ul sha512 libsha512 sha256 authenc sch_fq_codel fuse dm_mod ipv6
+[ 1179.378992] CPU: 1 UID: 1000 PID: 680 Comm: deqp-vk Tainted: G      D             6.17.0 #1 PREEMPT
+[ 1179.388120] Tainted: [D]=DIE
+[ 1179.390994] Hardware name: Texas Instruments AM625 SK (DT)
+[ 1179.396467] pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 1179.403415] pc : pvr_mmu_op_context_unmap_curr_page+0x6c/0x134 [powervr]
+[ 1179.410140] lr : pvr_mmu_op_context_unmap_curr_page+0x58/0x134 [powervr]
+[ 1179.416848] sp : ffff8000839ab8c0
+[ 1179.420153] x29: ffff8000839ab8c0 x28: 0000000000000001 x27: 000000008f386000
+[ 1179.427283] x26: ffff000016d1df98 x25: 0000000000247000 x24: 00000000000001e6
+[ 1179.434413] x23: 0000000000000002 x22: 000000000000ffff x21: 0000000000000247
+[ 1179.441540] x20: 0000000000000245 x19: ffff000016d1df60 x18: 0000000000000002
+[ 1179.448668] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[ 1179.455793] x14: 0000000000060810 x13: ffff80007fffffff x12: ffff000004190480
+[ 1179.462921] x11: ffff8000853f7000 x10: ffff8000811ae000 x9 : ffff0000041900b8
+[ 1179.470051] x8 : 0000000000000000 x7 : 00000000990c4001 x6 : 0000000000000007
+[ 1179.477177] x5 : ffff000016d1df60 x4 : 0000000000000000 x3 : ffff00000a7d8000
+[ 1179.484306] x2 : 00000000000001ff x1 : 0000000000000000 x0 : 0000000000000000
+[ 1179.491433] Call trace:
+[ 1179.493872]  pvr_mmu_op_context_unmap_curr_page+0x6c/0x134 [powervr] (P)
+[ 1179.500582]  pvr_mmu_map+0x31c/0x388 [powervr]
+[ 1179.505027]  pvr_vm_gpuva_map+0x40/0x88 [powervr]
+[ 1179.509732]  __drm_gpuvm_sm_map+0x250/0x44c [drm_gpuvm]
+[ 1179.514952]  drm_gpuvm_sm_map+0x48/0x5c [drm_gpuvm]
+[ 1179.519822]  pvr_vm_bind_op_exec+0x64/0x70 [powervr]
+[ 1179.524785]  pvr_vm_map+0x1f8/0x2a8 [powervr]
+[ 1179.529142]  pvr_ioctl_vm_map+0x12c/0x188 [powervr]
+[ 1179.534018]  drm_ioctl_kernel+0xb8/0x128
+[ 1179.537941]  drm_ioctl+0x21c/0x4ec
+[ 1179.541337]  __arm64_sys_ioctl+0xac/0x108
+[ 1179.545344]  invoke_syscall+0x44/0x100
+[ 1179.549091]  el0_svc_common.constprop.0+0x40/0xe0
+[ 1179.553790]  do_el0_svc+0x1c/0x28
+[ 1179.557106]  el0_svc+0x34/0xf0
+[ 1179.560159]  el0t_64_sync_handler+0xd0/0xe4
+[ 1179.564334]  el0t_64_sync+0x198/0x19c
+[ 1179.567996] Code: 54000300 35000360 f9402261 79409a62 (f9400421)
+[ 1179.574081] ---[ end trace 0000000000000000 ]---
 
-BUG: KASAN: slab-use-after-free in __rds_ib_teardown_mr
-Read of size 8
-
-Call Trace:
- __rds_ib_teardown_mr
- rds_ib_unreg_frmr
- rds_ib_flush_mr_pool
- rds_ib_flush_mrs
- rds_free_mr
- rds_setsockopt
-
-Store the scatterlist in the MR only after DMA mapping succeeds. If DMA
-mapping fails, return directly while the MR fields remain clear; the caller
-keeps ownership of the scatterlist and its pinned pages. If a later
-registration step fails, unmap the scatterlist and clear the MR fields
-before returning.
-
-Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Reviewed-by: Alexandru Dadu <alexandru.dadu@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dongliang Qin <cccccccccccc777777@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260922031546.3874605-1-cccccccccccc777777@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260922-mmu_fix-v4-1-12f1a871456a@imgtec.com
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/ib_frmr.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/imagination/pvr_mmu.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/rds/ib_frmr.c
-+++ b/net/rds/ib_frmr.c
-@@ -204,19 +204,16 @@ static int rds_ib_map_frmr(struct rds_ib
- 	 */
- 	rds_ib_teardown_mr(ibmr);
+--- a/drivers/gpu/drm/imagination/pvr_mmu.c
++++ b/drivers/gpu/drm/imagination/pvr_mmu.c
+@@ -12,6 +12,7 @@
+ #include "pvr_rogue_mmu_defs.h"
  
--	ibmr->sg = sg;
--	ibmr->sg_len = sg_len;
--	ibmr->sg_dma_len = 0;
- 	frmr->sg_byte_len = 0;
--	WARN_ON(ibmr->sg_dma_len);
--	ibmr->sg_dma_len = ib_dma_map_sg(dev, ibmr->sg, ibmr->sg_len,
-+	ibmr->sg_dma_len = ib_dma_map_sg(dev, sg, sg_len,
- 					 DMA_BIDIRECTIONAL);
- 	if (unlikely(!ibmr->sg_dma_len)) {
- 		pr_warn("RDS/IB: %s failed!\n", __func__);
- 		return -EBUSY;
- 	}
+ #include <drm/drm_drv.h>
++#include <drm/drm_print.h>
+ #include <linux/atomic.h>
+ #include <linux/bitops.h>
+ #include <linux/dma-mapping.h>
+@@ -2556,7 +2557,9 @@ pvr_mmu_map_sgl(struct pvr_mmu_op_contex
  
--	frmr->sg_byte_len = 0;
-+	ibmr->sg = sg;
-+	ibmr->sg_len = sg_len;
- 	frmr->dma_npages = 0;
- 	len = 0;
+ err_destroy_pages:
+ 	memcpy(&op_ctx->curr_page, &ptr_copy, sizeof(op_ctx->curr_page));
+-	err = pvr_mmu_op_context_unmap_curr_page(op_ctx, page);
++	if (pvr_mmu_op_context_unmap_curr_page(op_ctx, page))
++		drm_err(from_pvr_device(op_ctx->mmu_ctx->pvr_dev),
++			"%s : Failure in unmapping pages\n", __func__);
  
-@@ -264,6 +261,8 @@ out_unmap:
- 	ib_dma_unmap_sg(rds_ibdev->dev, ibmr->sg, ibmr->sg_len,
- 			DMA_BIDIRECTIONAL);
- 	ibmr->sg_dma_len = 0;
-+	ibmr->sg = NULL;
-+	ibmr->sg_len = 0;
- 	return ret;
+ 	return err;
  }
- 
 
 
