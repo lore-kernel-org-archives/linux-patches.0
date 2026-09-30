@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CB35172E0;
-	Wed, 30 Sep 2026 17:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AED751617E;
+	Wed, 30 Sep 2026 17:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787753; cv=none; b=YjgD+LjrqtB9cMvo/o+jQcyPy3gwxRYC1PdzKECcG6sy51sFWnXrZrDhDR0wcPFRMdur4pACv+1NSRMb4rKOGejArFVLTyMROp+kr1eWW88sm4LY3CkbQBidpDMRTKhNVp181zvnxQQ5EvF5wV4KYsqwJ54f3Dg3w1Lhtst95D8=
+	t=1790787756; cv=none; b=VxxeClgXKwMxEsNLuPTM1wr4Sc/uEvD/gOjS4GpWduiDQ4nJEh+Vc257JB3nMruz7B5FtddWAqQ4MWpI0lDR7FWyMCKMGVTfJEAbYLp6tlWU3DAgEUleHG5xwd3JM7oBsPSe5Vql8XSIFogprGhN0qPhuHJYbIUD+TLad8mOFYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787753; c=relaxed/simple;
-	bh=jJtcv80MngCUvN4b7jIHur6hVsza9oZuuEvurWYVPsg=;
+	s=arc-20240116; t=1790787756; c=relaxed/simple;
+	bh=ONGizSMeIbDi7HkQ9XiwacaW1YDyaanpfVjg6tfCJrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO3ywtRUhxWNtciVcXcab42eRF/htRpv0A2IWRY18GiZLYqtTn5bLt9gxdnxNSbzPvR/cJv0bP58wVsoHIGroX2n7IgPCOwsmCAavYstlTeFwGzXq6dAA6QhEpDHY0uXrFvr668nscKCQzSXVSXwETdBDEZ9vDd0kRsHqw15EQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC68Z1Wg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qdYZSI2kEuSWX3TXKkEP0B9VuPlt8SRl1ipZiSepafFa1hJGuZLFK78L5I82xwREmFrR6NldaPRKV8//+OdYqTjQmbSbZjJf59LjVzTnnExSWGV3KwiiNdFckrjGyaLvDnSF0671dw0v1Cfk7bL0J43iu8LjJ+bujIXTsJbdEN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFTsR8SL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC68Z1Wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1611F000FF;
-	Wed, 30 Sep 2026 17:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFTsR8SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EB51F000FF;
+	Wed, 30 Sep 2026 17:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787751;
-	bh=g1yWFlKt9Ml/o1Mk8JEUuIipP2lZTSDxfK/CjqWlgdY=;
+	s=korg; t=1790787754;
+	bh=U0uc45N+J7VuXgGkZNiiTSfSPdLQN5wIJEPMgdCqiDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zC68Z1WgXvOUpLh6tDfagWO7TI1KMcoP7MBC4XQTkc0k5bIE1BCO/vHvjBqCqhZyx
-	 Se4Z5QM5iVUAK1BKAX4VkKiwwN+bWGadO6+ek2EyIwiaDeE9ybIOP3roTji2q7NAVk
-	 9KRlBhJjq+Xlp8qdJQgqDAafy/IL45WfHOpA0B+0=
+	b=MFTsR8SLYoUYU4DVRlY4w9c1jefiBbQ3cJ+QGLV1ZPBDwEkEwO7xIgcwf8UFEm9Rf
+	 tp2h2n6ofRxn5KXLDOS731m++0lDOuINvd4ivzIsmZat2xOj8PSG7DxGotlDpYL37e
+	 3VfX9oRGkTspwPyo1Zxh17m1kv4Sruof0KtVTi04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Mierczuk <axel.mierczuk@1password.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 339/457] net: openvswitch: conntrack: fix helper UAF due to extensions realloc
-Date: Wed, 30 Sep 2026 17:27:24 +0200
-Message-ID: <20260930152353.330573876@linuxfoundation.org>
+	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 340/457] net: atl1c: fix soft lockup on out-of-range tpd_cons read
+Date: Wed, 30 Sep 2026 17:27:25 +0200
+Message-ID: <20260930152353.351600798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -46,85 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Gajdos Tamás <tamas@rimpianto.com>
 
-commit 1a4151e6be57b098b7a5ebfbde58585e83200cdc upstream.
+commit 36c2009d90f2210ef92e6f4f2850e8b57b09e754 upstream.
 
-While calling the helpers, a raw pointer to the extensions area is
-wired into expectations list:
+The hardware can report an out-of-range tpd_cons (seen as 0xffff)
+while the PCIe link/MAC is resetting. An out-of-range value can
+never be reached and the loop below would spin forever. To avoid
+a soft lockup treat it as "nothing new to clean" instead.
 
-  -> nf_ct_helper()
-   -> helper->help()
-    -> nf_ct_expect_related_report()
-     -> nf_ct_expect_insert()
-      -> hlist_add_head_rcu(&exp->lnode, &master_help->expectations)
+Reproduced on two machines, same NIC (Qualcomm Atheros AR8151 v2.0,
+4-port), triggered by rebooting a Mikrotik CCR2004 PCIe card that
+the ports are directly linked to:
 
-In case the connection is not confirmed yet, more extensions can be
-added afterwards with *_ext_add() calls reallocating the extension
-space and leaving the now invalid pointer in the expectations list
-that is later accessed while removing the expectation.
+- Ubuntu 26.04.1 LTS, kernel 7.0.0-31-generic. The link-flap
+  precursor, before the lockup was captured with a full trace
+  elsewhere:
 
-Make sure that helpers are called at the end after all the other
-extensions are already added.
+    atl1c 0000:05:00.0 enp5s0f0: NETDEV WATCHDOG: CPU: 4: transmit queue 2 timed out 489984 ms
+    atl1c 0000:05:00.0: MAC state machine can't be idle since disabled for 10ms second
+    atl1c 0000:05:00.0: atl1c: enp5s0f0 NIC Link is Up<65535 Mbps Full Duplex>
 
-Note that the helper rejection now leaves the mark and labels set,
-but that's not different from how the NAT was handled before or how
-the mark and the labels were handled on confirmation failure.  And
-there are no atomicity guarantees provided by the API anyway.
+  65535 (0xffff) here is the same value tpd_cons reads back once the
+  loop below gets stuck.
 
-Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
+- Proxmox VE, kernel 7.0.14-11-pve. Same NIC/trigger, this time
+  caught by the soft lockup watchdog with a full stack trace:
+
+    watchdog: BUG: soft lockup - CPU#12 stuck for 354s! [napi/eth%d-0:329]
+    CPU: 12 UID: 0 PID: 329 Comm: napi/eth%d-0 Tainted: P O L 7.0.14-11-pve #1 PREEMPT(lazy)
+    RIP: 0010:atl1c_clean_tx+0x142/0x2d0 [atl1c]
+    Call Trace:
+     <TASK>
+     __napi_poll+0x32/0x1e0
+     napi_threaded_poll_loop+0x286/0x2e0
+     napi_threaded_poll+0xfd/0x140
+     kthread+0xf7/0x130
+     ret_from_fork+0x2da/0x3a0
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+
+Fixes: 43250ddd75a35d ("atl1c: Atheros L1C Gigabit Ethernet driver")
 Cc: stable@vger.kernel.org
-Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260921145655.3167436-4-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
+Link: https://patch.msgid.link/20260921091334.3571525-2-tamas@rimpianto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/atheros/atl1c/atl1c_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -818,11 +818,14 @@ static int __ovs_ct_lookup(struct net *n
- 			}
- 		}
+--- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
++++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+@@ -1602,6 +1602,9 @@ static int atl1c_clean_tx(struct napi_st
+ 	AT_READ_REGW(&adapter->hw, atl1c_qregs[tpd_ring->num].tpd_cons,
+ 		     &hw_next_to_clean);
  
--		/* Call the helper only if:
--		 * - nf_conntrack_in() was executed above ("!cached"), or
--		 * - When committing an unconfirmed connection.
-+		/* Call the helper only if nf_conntrack_in() was executed
-+		 * above ("!cached").
-+		 *
-+		 * For unconfirmed connections it will be called later during
-+		 * commit as we need to have all the other extensions allocated
-+		 * before the call.
- 		 */
--		if ((nf_ct_is_confirmed(ct) ? !cached : info->commit)) {
-+		if (nf_ct_is_confirmed(ct) && !cached) {
- 			int err = nf_ct_helper(skb, ct, ctinfo, info->family);
- 
- 			err = verdict_to_errno(err);
-@@ -1026,6 +1029,14 @@ static int ovs_ct_commit(struct net *net
- 			return err;
- 
- 		nf_conn_act_ct_ext_add(skb, ct, ctinfo);
++	if (unlikely(hw_next_to_clean >= tpd_ring->count))
++		hw_next_to_clean = next_to_clean;
 +
-+		/* Call the helpers now.  We couldn't do this before as
-+		 * all the extensions must be allocated before the call.
-+		 */
-+		err = nf_ct_helper(skb, ct, ctinfo, info->family);
-+		err = verdict_to_errno(err);
-+		if (err)
-+			return err;
- 	} else if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS) &&
- 		   labels_nonzero(&info->labels.mask)) {
- 		err = ovs_ct_set_labels(ct, key, &info->labels.value,
+ 	while (next_to_clean != hw_next_to_clean) {
+ 		buffer_info = &tpd_ring->buffer_info[next_to_clean];
+ 		if (buffer_info->skb) {
 
 
