@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4E73812F1;
-	Wed, 30 Sep 2026 15:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E0036493C;
+	Wed, 30 Sep 2026 15:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783868; cv=none; b=oF7bT4VRvd0wX/GNRXewXD0JbHacfzv1xeGRuy5JiRUOrsRmRi0Y0+Pfg8+hmfM3GqisX7NWnaU52KCqdTyDo0lUUjhefK3MhhiD/luKNq3yEXV87PFdeTAVv6tQCowZ7RCyo0T3L7jhbYrXKWaDSqHAYRCoiZVZvv7nh7Us164=
+	t=1790783873; cv=none; b=XhbwVt7us6xFWX46wuxMD2wSOvDhFf73t8DZV7wVytSJpzjAYlBfQ83P+DtUzF3ha6yuIgajh/wrP4RmquHt156Ip9/z9O2pfJD+ptWtmwRnJzyuh2MUzUSrVk9NBmyL5FwRsTVi3wtn3vfs1ksVwmZpkrTJsdCsR443OVaVNr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783868; c=relaxed/simple;
-	bh=bx0p7+/VUc5YWTl4bhNdGZC0hqldXyJyClcfeiyYIy0=;
+	s=arc-20240116; t=1790783873; c=relaxed/simple;
+	bh=JRmKDqtRkDVjjrqnuUKvjEB7asozbkZhpBA6IqZQi/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+aJJ7zeIsmB0QiEGeegvmBTQf94r/p4CpjR7ULI6yYc4nmY9IfqKDP5TG2PiqRcmtnrgR8WLcaYMtT8CbwPhl/BHcyrcvk6D2UqUFaPVZXo7wODmHP6BtKKBKOVZ0lx2oyXzyZ3Nx5iHJVS5cN+Kfob/dk6Gjrw6rSvVbIpiYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dcl5O5h4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUIpy5rbfJm+G6Tk+9/wtkox1n7s9UXq7ZrEDJo3DN7SJ4GUmYS2UZ3CFudjEPDxgcsg7xpNVau0jeeo+uw/eYYLauURMcLuYV3bGKMgudv62PMbEqF2Z5up6A15TsOqRn1XKm53Cb/UEtif+kECIeKp9xA1WE9fZrUHjDQGirM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka6O1mvo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dcl5O5h4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655D61F000FF;
-	Wed, 30 Sep 2026 15:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka6O1mvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F801F000FF;
+	Wed, 30 Sep 2026 15:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783863;
-	bh=8fxNjNI9eobUAbfn66jZS/ASS/xjEVFqJJvi6SW7T8Q=;
+	s=korg; t=1790783869;
+	bh=UgEOv1xFI0Ffp4+7igtzOGbmYUBcuav0pyabuRJ6L2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dcl5O5h439D8mW6IkVnzqbuXf2R7Iv7j80ttoE7VoLEn6YtnrOILoQWtwqUwwoHt0
-	 W1OfwENkkGSRnRW/fwJ4rYZCdL17s7DXR9EN/SiDEKXCIRjRkAZyo/d3gkXcmNujYF
-	 uuxPhvQLSONE7bgpTL51NTrEan7LdU1xw6Ah53oI=
+	b=Ka6O1mvoYBPX5gcZLYQbfV07wSktlAbL14Pqw3fqTFrUT6xb8gs3TxqM4JUYM+5ik
+	 Pd1/KG/VjlPgFSFVCuk06vvUd6kuXvm8pR9EMd6HQjpdJxQmCdPr5ISlIFG3dmhn1T
+	 ofqHQCydWzB/urLJJaEQxzsFUGjpTmR7SZlkcIXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 504/595] ip6_gre: Call ip6erspan_tunnel_unlink_md() in ip6erspan_changelink().
-Date: Wed, 30 Sep 2026 17:26:37 +0200
-Message-ID: <20260930152358.537641004@linuxfoundation.org>
+Subject: [PATCH 5.10 544/595] vlan: ensure sufficient headroom in vlan_dev_hard_header()
+Date: Wed, 30 Sep 2026 17:27:17 +0200
+Message-ID: <20260930152359.413955033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,39 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dd47bcf279f1083f09bf5266890b26263361022b ]
+[ Upstream commit cd5dd68267c4238795fadaf02b3575ca3f8a6500 ]
 
-The cited commit accidentally added ip6gre_tunnel_unlink_md()
-in ip6erspan_changelink().
+Callers that only reserve ETH_HLEN or less (such as llc_alloc_frame()),
+or skbs allocated before dynamic device/headroom changes (e.g. toggling
+VLAN_FLAG_REORDER_HDR or bonding/team switching slaves), can reach
+vlan_dev_hard_header() with insufficient headroom and trigger
+skb_under_panic().
 
-Let's correct it to ip6erspan_tunnel_unlink_md().
+Use skb_cow_head() in vlan_dev_hard_header() when VLAN_FLAG_REORDER_HDR
+is not set to ensure sufficient headroom for the VLAN header(s) and the
+underlying device hard header.
 
-Fixes: b80d0b93b991 ("net: ip6_gre: fix tunnel metadata device sharing.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260916230927.378957-1-kuniyu@google.com
+Use READ_ONCE() to read dev->hard_header_len and dev->needed_headroom as
+they can be updated concurrently under RTNL (e.g. in
+vlan_transfer_features()) while vlan_dev_hard_header() runs locklessly on
+the transmit path. Also avoid LL_RESERVED_SPACE(dev) here so that the
+extra HH_DATA_MOD alignment padding does not trigger unnecessary
+pskb_expand_head() reallocations on inner stacked VLAN devices after the
+outer VLAN header has been pushed.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Zixuan Chai <petalzu987@gmail.com>
+Closes: https://lore.kernel.org/netdev/cover.1789987105.git.petalzu987@gmail.com/
+Link: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Cc: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260924082951.1599377-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/8021q/vlan_dev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index ff4a205ae73fe..0c72115404022 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -2294,7 +2294,7 @@ static int ip6erspan_changelink(struct net_device *dev, struct nlattr *tb[],
- 		return PTR_ERR(t);
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index c134f8210b21b..9949369e3633b 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -53,6 +53,11 @@ static int vlan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
+ 	int rc;
  
- 	ip6erspan_set_version(data, &p);
--	ip6gre_tunnel_unlink_md(ign, t);
-+	ip6erspan_tunnel_unlink_md(ign, t);
- 	ip6gre_tunnel_unlink(ign, t);
- 	ip6erspan_tnl_change(t, &p, !tb[IFLA_MTU]);
- 	ip6erspan_tunnel_link_md(ign, t);
+ 	if (!(vlan->flags & VLAN_FLAG_REORDER_HDR)) {
++		unsigned int hlen = READ_ONCE(dev->hard_header_len) +
++				    READ_ONCE(dev->needed_headroom);
++
++		if (skb_cow_head(skb, hlen) < 0)
++			return -ENOMEM;
+ 		vhdr = skb_push(skb, VLAN_HLEN);
+ 
+ 		vlan_tci = vlan->vlan_id;
 -- 
 2.53.0
 
