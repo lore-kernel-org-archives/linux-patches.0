@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE684F7CDE;
-	Wed, 30 Sep 2026 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1673A3E9C18;
+	Wed, 30 Sep 2026 16:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785371; cv=none; b=WVzaeFr22cXH01Sd7hqlOekqqGyXZWQTpu5LZbLFLXA00OHIrog2L1M+pqfYBrFcoluRZuC1I6f3RtGMxdhkgJbZD1L9SlBhxlBhiaL3LOE6e8/kt+piIQX3JDIz3JUluALnrkhqi745l52QXpOi/Cs2RxDAmRQHD6U2wgqdpZA=
+	t=1790785375; cv=none; b=csg90/gRNBNE29xOKIAVIETd7P2MHerpCk4rJ+OoDNrrRxdR92Ei5lj4jfaLOvSdX4s6e/SYhpXt3GxViYhyd+z4vTsaZ/GL40NQplYW8WQvUlIrMmmdgeQukFwHUwSFNgJe5DcGqbCBXFLSPMh9ve2Mwe2W+g5z+YUTusFHj3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785371; c=relaxed/simple;
-	bh=5opB1qdawsdOLBoWPn6SoN/5zR6yeQVx3AT7CX/VSow=;
+	s=arc-20240116; t=1790785375; c=relaxed/simple;
+	bh=Q3+NYC/sxombaAWPhPvKiq9A4vN/LSXjuytoXgxJV3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdcKCuVN5pzlodsUj27sL1lhxXk3gqB3NPDOVK0mAJ9yHeQGRwXxy6xaLkqvSnDTTMRqbI+FKCXynKqetNK7zxnSl5O528/nmgAufePaORpSqfrkYV5j4hfvKdVoDozDB+NZe3mqKOiWBGO16Z3VZtzKMveGVo9u7Tx0Fp/FBdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvpNjgot; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P62454TmI2n/krgwWbPQXCQfiuJ1bRR9M/HXcWYALG3flBhyXhMtJARo0dtRH+HKCo5FVx1x31r9O0ElqaLx8YXroxn3UWPs94+seYIGO0dlZZIUmNC+fUGoerY52PF34j3/0ziu7H4Ie41eqNj9gWVoJoc7tgH+zfbvO07X2AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvTCfHxi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvpNjgot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F471F00893;
-	Wed, 30 Sep 2026 16:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvTCfHxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF551F000FF;
+	Wed, 30 Sep 2026 16:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785367;
-	bh=+bXmZJQhEb/x0HuBemQL5p07Q+WBmdPBZqErppiFDh8=;
+	s=korg; t=1790785370;
+	bh=Ypi/MJnE2LMjSPV+nAEGqr6hYfoJmm+9i6OmmmV6Nto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvpNjgottqrTFDiBlHEdRYGtMF052sAWtFf6AQaTZ3HmtwOgsaWATihqVsRFBVRnf
-	 aDLuntZKVukxTFF2XY5KadWXty9Jx/QhEsycurknp12v7Xh8bukMxiOXNvjsfOJ82f
-	 gE/ZtEaGsS3zUnTnfvMvIO6zI7qusq3usDib2whM=
+	b=WvTCfHxiyBmQJ35bCBuQsF+y0GM8bFkVG2ip8WtA5/rtz2nqfsax9Ldm8+ccpaxKx
+	 EeuInaVrdlz72WCij6xHNHiijhcBOxi1UC1tSTnb1gMYOIDmUKOoAtR3VwoH0+94hU
+	 ozAuHR/mWkkj/T8OAZ215yX/VEQNxg3mNRx2O/kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>,
-	Simon Horman <horms@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Linus Walleij <linusw@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 483/982] net: sun4i-emac: fix missing of_node_put() for phy_node
-Date: Wed, 30 Sep 2026 17:20:19 +0200
-Message-ID: <20260930152427.154347489@linuxfoundation.org>
+Subject: [PATCH 6.1 448/982] net: ethernet: cortina: Finish RX updates before NAPI completion
+Date: Wed, 30 Sep 2026 17:19:44 +0200
+Message-ID: <20260930152426.417632515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,44 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit af406abfecad2f48d8f1fc646d3994f0982bac62 ]
+[ Upstream commit baa26841cb9a2cdc7e0e99d6854a4e3359bf7393 ]
 
-of_parse_phandle() returns a node pointer with an elevated refcount.
-Add the missing of_node_put() on the probe error path after
-register_netdev() fails and in emac_remove().
+napi_complete_done() releases ownership of the NAPI instance, but the
+Gemini poll keeps the RX statistics writer section open and updates the
+free queue after calling it. A new poll can therefore start while the old
+writer is still active.
 
-Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904080758.2432748-1-dayou5941@163.com
+Finish the statistics and free queue updates before releasing ownership.
+Only re-enable RX interrupts when napi_complete_done() reports successful
+completion.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Suggested-by: Joe Damato <joe@dama.to>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-2-2bbbd598ca6e@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/allwinner/sun4i-emac.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
-index 9a6948cde2403..789a5008fe61e 100644
---- a/drivers/net/ethernet/allwinner/sun4i-emac.c
-+++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
-@@ -1067,6 +1067,7 @@ static int emac_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index b8e4045d9821c..1092f558bc34f 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1586,12 +1586,10 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 	u64_stats_update_begin(&port->rx_stats_syncp);
  
- out_release_sram:
-+	of_node_put(db->phy_node);
- 	sunxi_sram_release(&pdev->dev);
- out_clk_disable_unprepare:
- 	clk_disable_unprepare(db->clk);
-@@ -1094,6 +1095,7 @@ static int emac_remove(struct platform_device *pdev)
+ 	received = gmac_rx(napi->dev, budget);
+-	if (received < budget) {
+-		napi_gro_flush(napi, false);
+-		napi_complete_done(napi, received);
+-		gmac_enable_rx_irq(napi->dev, 1);
++	if (received < budget)
+ 		++port->rx_napi_exits;
+-	}
++
++	u64_stats_update_end(&port->rx_stats_syncp);
+ 
+ 	port->freeq_refill += received;
+ 	if (port->freeq_refill > freeq_threshold) {
+@@ -1599,7 +1597,9 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 		geth_fill_freeq(geth, true);
  	}
  
- 	unregister_netdev(ndev);
-+	of_node_put(db->phy_node);
- 	sunxi_sram_release(&pdev->dev);
- 	clk_disable_unprepare(db->clk);
- 	irq_dispose_mapping(ndev->irq);
+-	u64_stats_update_end(&port->rx_stats_syncp);
++	if (received < budget && napi_complete_done(napi, received))
++		gmac_enable_rx_irq(napi->dev, 1);
++
+ 	return received;
+ }
+ 
 -- 
 2.53.0
 
