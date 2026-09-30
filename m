@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE2A3E40E9;
-	Wed, 30 Sep 2026 19:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA563CD8B8;
+	Wed, 30 Sep 2026 19:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796560; cv=none; b=qqRavyXHawqU8wBbYdmRFdt+oC9XStrZ5g8xMpGrod/1BskRG567Q2O7nU4iDlHB0IBHeCc9ywy/rpxjhpR6r4J54gJqHSCeoJ1vW8m3JmbK/6YwadQXocVDAcDPCfX4MEZHhrqpbIXnUpdthXehOLte2HSvGQ24RUIUS/OCSj0=
+	t=1790796562; cv=none; b=oy7XFHIwfCjZaXBtGlQ4Zy8981EsVj/C/JyzB1LlqUNvV+gmlo0aT9tYJhTRhrFuijHoxoNHRbJSewGsSa/CbQiUdQFj9zoy5kItN1v4PUZvE23f/09imrdWfxII/dUd4cZrSB+ws8BY/RAQGr/DwA7YYGtws0B9sstEGCvqRS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796560; c=relaxed/simple;
-	bh=nFGo0OGyoIsTUQllSX8L3YuNQdsGu+i1tn0TaW84/jA=;
+	s=arc-20240116; t=1790796562; c=relaxed/simple;
+	bh=RHCg5JkzDF6b9QuwYjXNLr0pNsxpjUi0dP3aErJXFVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDVwEha69GptR7pFCuPo/hj/uv9FXCfuAN23DtTkgtkL6riDbnZwwvvGOAxpq2LILbyKUy39GMaS1FoPo74KI8PAqreq4ZprCmRqbriKLkGLxRE++s7g/ZoIlmPbVXZLd9slJuX+JuGfv7jV7khmR/EPy0pndWcJ68GNeJ73Cfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9FneuOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=toCggjmGA9XKmOEr6uV6lX+T5oOPHcfBZ4tMantSnw+kPx7AS3+qjVWH/BYOyXfLJ/VEPgV61HL2wxBKT3NTouVHikg7GRhajZqSGz1OwFwjZHjAMu2/yz+hWmMq8uLaDd+bXjc3MuttFjgVZBO+bnZVll8SfXvIQOX7zr/Piho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbzg5l2e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9FneuOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B241F000FF;
-	Wed, 30 Sep 2026 19:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbzg5l2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255BC1F000FF;
+	Wed, 30 Sep 2026 19:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796558;
-	bh=U6GLFeLH65V8LAcGNfbbFlyBMzHg97E67VhRdqywFdM=;
+	s=korg; t=1790796561;
+	bh=AXjwH3qnEsqQjFwZ1xq2db/I34e1CJbXNOu/arukbzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d9FneuOJ9o2htcRPfCrpfdZRmDAGcM7cuv2OLBPrBRpJP6lYWgDa8EbP5YYy/5s15
-	 Dk46v0AHK1oZ1NoDulfUJLSdbxpbCzsubsp0u7z9cGDlvR+dINDGap4GThrRdJURXI
-	 A+6HAu5pFRcYw+thmEyeBNuySFqPtmSsa8G2T2oA=
+	b=Cbzg5l2eTM/pjwnug3tIC424sdcLzKwOR2uFj3OPFHe7VQ2TxTbu851IPLeObcNHt
+	 tCrft3jjexTagZCWaTBdImuTc6KPVm/T1KHho9phceXHlYOEIZgZQ3uHsKU3L25ajS
+	 9y0IXIU71s/+Txr6xW7TGjFBqcY9HG9Lmx0qgs50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Itai Handler <itai.handler@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0949/1193] spi: spi-zynqmp-gqspi: stop the controller on shutdown
-Date: Wed, 30 Sep 2026 17:27:13 +0200
-Message-ID: <20260930152455.325558809@linuxfoundation.org>
+Subject: [PATCH 6.6 0958/1193] remoteproc: qcom_q6v5_adsp: Fix iommu_unmap() usage
+Date: Wed, 30 Sep 2026 17:27:22 +0200
+Message-ID: <20260930152455.527861803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,114 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Itai Handler <itai.handler@gmail.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-commit e922bad8b2d5028c51a096d083fea41cd0987154 upstream.
+[ Upstream commit 0d8e2195bce6f08c1c53c5ef4d7347fe46418101 ]
 
-The driver has no ->shutdown, and platform_drv_shutdown() has no
-fallback of its own.  Unlike pci_device_shutdown(), which clears bus
-mastering when kexec_in_progress, nothing on the platform bus disarms a
-device that can still write to memory.  The normal kexec path never
-calls ->suspend either, so the quiesce in zynqmp_qspi_suspend() is not
-reached.
+During adsp_map_carveout, the IOVA is computed by combining the
+physical address and the SID:
+    iova = adsp->mem_phys | (sid << 32);
 
-A controller that is still executing a DMA read may therefore keep
-writing to memory across a kexec.  QSPIDMA_DST_ADDR still points at
-memory owned by the kernel that called kexec, DST_SIZE is non-zero and
-the flash is still clocked, so data can keep landing in RAM while the
-new kernel is being relocated, and after it has started executing.
+However, adsp_unmap_carveout() uses the physical address and not
+the IOVA in iommu_unmap(), causing the unmap to fail or leak
+mappings because the address doesn't match the original IOVA.
 
-That destination is a physical address which means nothing to the new
-kernel, so the writes can corrupt whatever now occupies it: kernel text
-or data, page tables, or the initrd.  Nothing reports an error and the
-resulting behaviour is undefined.
+Cache the constructed IOVA within the qcom_adsp device struct
+during mapping and use it during unmapping.
 
-This can be observed by reading GQSPI_EN (offset 0x114) and
-QSPIDMA_DST_ADDR/SIZE/STS/CTRL (offsets 0x800 to 0x80c) early in the new
-kernel, before the driver probes: without this patch GQSPI_EN reads 1
-and QSPIDMA_DST_ADDR still points into the previous kernel's memory.
-
-Add a ->shutdown that stops the controller the way zynqmp_qspi_suspend()
-already does.  spi_controller_suspend() stops the queue, waits for a
-message that is already executing and makes any later transfer fail with
--ESHUTDOWN, so nothing can be cut short by the register write that
-follows.  It may sleep, which is fine here: device_shutdown() runs in
-process context.  Unlike ->suspend this cannot abort on error, because a
-controller left mastering the bus is worse than a truncated transfer, so
-a failure to drain is only logged.
-
-GQSPI_EN_OFST is then cleared, as zynqmp_qspi_remove() and
-zynqmp_qspi_suspend() already do.  Skip that write only when
-pm_runtime_get_if_in_use() returns 0, i.e. runtime suspended: the clocks
-are gated, so the registers are unreachable and the controller cannot be
-mastering the bus.  A negative return is not the same thing - it is what
-the CONFIG_PM=n stub always returns, and there probe() has enabled pclk
-and refclk for good, so the controller is running and must be stopped.
-
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
-Link: https://patch.msgid.link/20260910174832.873352-1-itai.handler@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ itai: context only - the platform_driver callback is still spelled
-  .remove_new in this tree, renamed back to .remove upstream by commit
-  494c3dc46776 ("spi: Switch back to struct platform_driver::remove()") ]
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Fixes: f22eedff28af ("remoteproc: qcom: Add support for memory sandbox")
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Link: https://lore.kernel.org/r/20260827203055.640116-1-smostafa@google.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ drivers/remoteproc/qcom_q6v5_adsp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index b9ed6d6824b2d..f0710f2924bda 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1377,11 +1377,45 @@ static void zynqmp_qspi_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(xqspi->pclk);
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 00a98de6d112e..6b1d7c32a44b1 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -105,6 +105,7 @@ struct qcom_adsp {
+ 	struct completion stop_done;
+ 
+ 	phys_addr_t mem_phys;
++	unsigned long iova;
+ 	phys_addr_t mem_reloc;
+ 	void *mem_region;
+ 	size_t mem_size;
+@@ -340,7 +341,7 @@ static void adsp_unmap_carveout(struct rproc *rproc)
+ 	struct qcom_adsp *adsp = rproc->priv;
+ 
+ 	if (adsp->has_iommu)
+-		iommu_unmap(rproc->domain, adsp->mem_phys, adsp->mem_size);
++		iommu_unmap(rproc->domain, adsp->iova, adsp->mem_size);
  }
  
-+static void zynqmp_qspi_shutdown(struct platform_device *pdev)
-+{
-+	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
-+	int ret;
-+
-+	/*
-+	 * Stop the queue and reject any later transfer first, so the write
-+	 * below cannot cut into a message that is still being executed.
-+	 * Unlike ->suspend this cannot abort on error: a controller left
-+	 * mastering the bus is worse than a truncated transfer.
-+	 */
-+	ret = spi_controller_suspend(xqspi->ctlr);
-+	if (ret)
-+		dev_warn(&pdev->dev, "could not stop the queue: %d\n", ret);
-+
-+	/*
-+	 * Only a runtime suspended controller can be left alone: its clocks
-+	 * are gated, so it cannot be mastering the bus, and its registers
-+	 * must not be accessed either.  Any other answer means it may be
-+	 * running and has to be stopped.  In particular, on a kernel built
-+	 * without runtime PM this returns -EINVAL, and there the clocks
-+	 * enabled in probe() are never gated at all.
-+	 */
-+	ret = pm_runtime_get_if_in_use(&pdev->dev);
-+	if (!ret)
-+		return;
-+
-+	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
-+
-+	if (ret > 0)
-+		pm_runtime_put_noidle(&pdev->dev);
-+}
-+
- MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+ static int adsp_map_carveout(struct rproc *rproc)
+@@ -348,7 +349,6 @@ static int adsp_map_carveout(struct rproc *rproc)
+ 	struct qcom_adsp *adsp = rproc->priv;
+ 	struct of_phandle_args args;
+ 	long long sid;
+-	unsigned long iova;
+ 	int ret;
  
- static struct platform_driver zynqmp_qspi_driver = {
- 	.probe = zynqmp_qspi_probe,
- 	.remove_new = zynqmp_qspi_remove,
-+	.shutdown = zynqmp_qspi_shutdown,
- 	.driver = {
- 		.name = "zynqmp-qspi",
- 		.of_match_table = zynqmp_qspi_of_match,
+ 	if (!adsp->has_iommu)
+@@ -365,9 +365,9 @@ static int adsp_map_carveout(struct rproc *rproc)
+ 	of_node_put(args.np);
+ 
+ 	/* Add SID configuration for ADSP Firmware to SMMU */
+-	iova =  adsp->mem_phys | (sid << 32);
++	adsp->iova = adsp->mem_phys | (sid << 32);
+ 
+-	ret = iommu_map(rproc->domain, iova, adsp->mem_phys,
++	ret = iommu_map(rproc->domain, adsp->iova, adsp->mem_phys,
+ 			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE,
+ 			GFP_KERNEL);
+ 	if (ret) {
 -- 
 2.53.0
 
