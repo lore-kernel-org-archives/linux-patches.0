@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FF63C063A;
-	Wed, 30 Sep 2026 18:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7C63C063A;
+	Wed, 30 Sep 2026 18:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794686; cv=none; b=m41hNneO/1Quc0sTkgVGEK9ojgAW2RPY1W0sqPcOAv2PAHETCLRUkVP7EHGG5JTU2r81g3VMkN2OV/bw8nKeuur1FFnYu980j7QVsVcUbHLcty9gopTReiX2kPzJ7SvYCEydtPQ33Exa8Zf8f41YcQdBITa7OOhTPCEc6rXbA5A=
+	t=1790794689; cv=none; b=bfVBGw2RJM6mqlGk4vAU+CVyilVebjEInwFLJC1NSVp/44InLnEI8+4vYXY0VI5Ms22hNFOXvq3yclUH3ZTQ+Kt6nlEnm5CJG6ovRE4prFCEXGFRzsCEdPKKZZXsWpiytp+K+mrpBrw2vBRMy2fl9rvLdl64SCKCoJ+mQu9AssE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794686; c=relaxed/simple;
-	bh=ehXpfh9GClxMUNGoIXRFV2sOtWLrMfIV2x7n3iHoMgk=;
+	s=arc-20240116; t=1790794689; c=relaxed/simple;
+	bh=MiCtGJ4obX3iIsiXLS0Uahg22C9QLgSU8aUJBHXqb4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/qSsVVvA7+H3TlMlVeveMWxLWdmBWbAaA39lkmaGFfhYBdpU4bx+Wn2eXD8j8Pqb3XaIfpfRtPbtGS5CAMVDwoGZ4fYsOPnia7+YWsBkmilC/tuZat9AfqDvtSBEfCOPQlHA1SGh0jYMCvkZiOkXGgRfbAoKRCz1KFdlNbl8Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaI06HQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ldmSShCDqyL0iSNolMJWaC73+qGJ13LdGjnqefDjTu/3eTjL8tN50c1MiZrDUf4RTLc009BV+UCoEQ7oX3xIrR5oUbkt2w765Pd20HXRqYhDhGsvLFVfuzxf077O//wkl4sfog+qeaOnXolJr+d/RENkFdGV2OIJgZcSFzrAjDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGPVP5/y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaI06HQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E47B1F000FF;
-	Wed, 30 Sep 2026 18:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGPVP5/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACB11F000FF;
+	Wed, 30 Sep 2026 18:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794685;
-	bh=thGkumMGCKttTd5Q0TClOWs1/9mBtcWFookQyxiCq4o=;
+	s=korg; t=1790794688;
+	bh=uoClNBGNGozD1OGFhNg3Ga1NrULuJKZPbUNWbwthWKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YaI06HQlJ/UxEv05VWDleMCCkFRvNJnMz2U1KjytZ0+D22n9I0+HNjJVYq8lHnith
-	 go2A85zHRUgYMpVyr4A0fjHLTGrn4h15yc34XZwJbRXOxBD020yC1yuih3Q2eJhc89
-	 w/L5ZFCWhO9GZVjJjXGr+Ltwka9jO3123f9ddUiA=
+	b=cGPVP5/yaDUbEhUPdXP8erd6s6KKk19Ew8Ic69lNpSu2FOD2W5Cr1oP/i19Ayblks
+	 qS2jHmuqoGILvrcjxiJya6DU62hHz1ZINFt+KKSkLPxofGf2ICSpH0N3vCGAvgOh9t
+	 +6LsfsMwG2C4dudySla5BQMZwvnfz3WwA931t/jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0298/1193] wifi: rsi: validate beacon length before fixed buffer copy
-Date: Wed, 30 Sep 2026 17:16:22 +0200
-Message-ID: <20260930152440.777889116@linuxfoundation.org>
+Subject: [PATCH 6.6 0299/1193] smb/client: reduce fallocate zero buffer allocation
+Date: Wed, 30 Sep 2026 17:16:23 +0200
+Message-ID: <20260930152440.799064491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,52 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
+[ Upstream commit 9e4ec3be67af41ab859302d7109b34976efd9258 ]
 
-rsi_prepare_beacon() copies the mac80211 beacon frame after
-FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
-than MAX_MGMT_PKT_SIZE after alignment.
+The fallocate emulation allocates a 1 MiB zero-filled buffer even
+though each SMB2_write request is limited to SMB2_MAX_BUFFER_SIZE,
+which is 64 KiB. A high-order 1 MiB allocation is more likely to
+fail on a fragmented system.
 
-Validate the beacon length against the actual tailroom before the copy
-and skb_put(). Leave ownership of the management skb with the caller on
-error, matching the existing rsi_send_beacon() cleanup path.
+Allocate only the smaller of the requested range and SMB2_MAX_BUFFER_SIZE,
+and reuse that zero-filled buffer for every write request. Also reject
+a successful write that makes no progress to avoid looping indefinitely.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This reduces the contiguous allocation required by fallocate emulation
+without changing the written data or range semantics.
+
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/smb/client/smb2ops.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index 2cebe562a1f4b..5873c0bac520d 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	struct ieee80211_vif *vif;
- 	struct sk_buff *mac_bcn;
- 	u8 vap_id = 0, i;
-+	unsigned int tailroom;
- 	u16 tim_offset = 0;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 8a15694c1bbb5..07ed4bfd40977 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3379,7 +3379,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
+ 					     char *buf)
+ {
+ 	struct cifs_io_parms io_parms = {0};
+-	int nbytes;
++	unsigned int nbytes;
+ 	int rc = 0;
+ 	struct kvec iov[2];
  
- 	for (i = 0; i < RSI_MAX_VIFS; i++) {
-@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	if (mac_bcn->data[tim_offset + 2] == 0)
- 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
+@@ -3400,9 +3400,10 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
+ 		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
+ 		if (rc)
+ 			break;
++		if (!nbytes)
++			return -EIO;
+ 		if (nbytes > len)
+ 			return -EINVAL;
+-		buf += nbytes;
+ 		off += nbytes;
+ 		len -= nbytes;
+ 	}
+@@ -3432,7 +3433,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	if (rc)
+ 		goto out;
  
-+	tailroom = skb_tailroom(skb);
-+	if (tailroom < FRAME_DESC_SZ ||
-+	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
-+		dev_kfree_skb(mac_bcn);
-+		return -EMSGSIZE;
-+	}
-+
- 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
- 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
- 
+-	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
 -- 
 2.53.0
 
