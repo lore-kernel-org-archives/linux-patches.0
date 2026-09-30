@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB6D25228D;
-	Wed, 30 Sep 2026 15:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E13E4E9C24;
+	Wed, 30 Sep 2026 15:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783080; cv=none; b=P9QJNE1tJUKdbzZ/ZVbfG/fCPwB+ImcSQupwyCWLN0hkfGgednqqrvA3dTaGoze4NspkY/0sC5U3BTBrvOSy+NTz+FcS3b/ZflwkjT7cDcsaZlCxySP36lyFvgrGmyuIyysTaXqNgntXGEedXu5maXdTstile7CB+WFvZTh+Oeg=
+	t=1790783085; cv=none; b=cXVyx58F6expBGIvz6D8XMIUjXg9UKVfvkPIySCU4pA40H3MgD2ulsZFr1Mogfz8Kv69Sbhe7rNwz+a41/b88nfGe0vuElc2Wg14eQ2Y9uAmNy4h6r9xxY5P2MMng6DTsV89eTC2ZMIAh9Mu6orQ6G+z6k4Gb11LVrOTU+i+Vf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783080; c=relaxed/simple;
-	bh=u4VhVZT0vTByt+VOeGklhuY6R8CqPaTmWNwFj2mpsvs=;
+	s=arc-20240116; t=1790783085; c=relaxed/simple;
+	bh=vjuYb+DIUADYCYzFzY0pIda6rpeBabLtuFR/edGqNbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNSPTJDJrmfbhGt7vvPJkCGUO2G4g9IO1a2LCTYBHBxvkBaFiuj2DSThmfdX9HwBWxsAEuH6BD8KeeYFp5qJE3W6U/0755sqjE1q/jbn64ykw62eVhMVHBx7N+LD2n2IC0hUG5IoBs/X4K/smBIkGJkvADw6bdLjwIjeabPjpMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyeueT/q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HiEA7fApfsF8nvOUIbi8UXTl3EH+OrkDbkQ4rF47iYIAkrIeaFvvzyycYaZ9GGuWi+PWRd/VtlV195P+XuUxSWEr5bGFWCodDEbxgunMQNXZuyttegOiep0oACUHYsXRsfg6kTwYpEAkQdr9DBtrNyUzoV5IpY3DuATQM9wteRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8Jj3fPX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyeueT/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BFB1F00893;
-	Wed, 30 Sep 2026 15:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8Jj3fPX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC9C1F000FF;
+	Wed, 30 Sep 2026 15:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783074;
-	bh=9dXBj7nskfHKkZFPYwDA0sJ3TxbEifCn+H7/b1ptvQM=;
+	s=korg; t=1790783080;
+	bh=ZKzEGXjZoLl5HmRNxwKiw4gr5LeyoxoN9Q5GFINlR+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QyeueT/qzbHoj0qIVJ92i+t6AXbERpUXNvqqZgelHatUaFbst2FgaaLA5CPQqFm4t
-	 oK4Yf79rEojiaq2lrl4S2G5GXeuzmv8MhfN7co3nHyx5Rqv2lSIkm3fYOXF6nMPA4V
-	 VQVJitoPDIpfeL+9bvR+UG8HFubz4/lieQt4gkqI=
+	b=H8Jj3fPXZysHvCYSD/kQM+APrBb+t52w75GIpLse5dF8kcAJDDhucTrpp1XEfPpH8
+	 DMx7l2KVK1A4uzcz0PJ433DlOh14f+IbPrhiFdFm+RMuYCfbt4IFt/R1SFE4jFv9BT
+	 dT9A1lGaDeFu7+U7EI+w6lic/Vr2GF2mYxeGq5TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Cong Nguyen <congnt264@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Thibault Ferrante <thibault.ferrante@canonical.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 272/595] hwmon: (gpio-fan) take fan_data->lock in gpio_fan_shutdown()
-Date: Wed, 30 Sep 2026 17:22:45 +0200
-Message-ID: <20260930152353.559662404@linuxfoundation.org>
+Subject: [PATCH 5.10 274/595] selftests/powerpc/tm: Fix tcheck() reading uninitialised CR value
+Date: Wed, 30 Sep 2026 17:22:47 +0200
+Message-ID: <20260930152353.601626503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,44 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Thibault Ferrante <thibault.ferrante@canonical.com>
 
-[ Upstream commit bb2424c3502cc72292eedade46960c331d5f28fb ]
+[ Upstream commit ed28b16eab705071d28edaace47189c2eb3aa108 ]
 
-set_fan_speed() writes the control GPIOs one bit at a time. Every
-other caller locks around it; gpio_fan_shutdown() doesn't. If it races
-a locked caller, the GPIO writes can interleave and leave the fan at a
-speed neither caller asked for.
+tcheck() is used to check the current transaction state (active,
+suspended, doomed) via the "tcheck" instruction, which writes its
+result into CR field 0. The inline asm declared a GPR output operand
+for this result but never actually moved the CR into it.
 
-Fixes: b95579cd8795 ("hwmon: (gpio-fan) Add a shutdown handler to poweroff the fans")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/r/20260830152150.27F5F1F000E9@smtp.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://patch.msgid.link/20260901155404.1532092-1-congnt264@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Every caller (tcheck_doomed(), tcheck_active(), tcheck_suspended(),
+tcheck_transactional()) has effectively been testing bits of an unrelated,
+arbitrary register value since this helper was introduced.
+The "& 4" mask discards the TDOOMED and TS_lsb (suspended) bits before
+they ever reach the callers, so tcheck_doomed() and tcheck_suspended()
+can never return true, and tcheck_transactional() degrades to being
+equivalent to tcheck_active().
+
+Fix tcheck() to actually move CR into the output register with mfcr,
+and widen the mask from "& 4" to "& 0xf" so the full CR0 nibble
+(TDOOMED | TS_msb | TS_lsb | reserved) is preserved for the callers.
+
+This bug has been present since tcheck() was introduced.
+
+Link: https://bugs.launchpad.net/bugs/2107442
+Fixes: 8e03bd4e70b6 ("selftests/powerpc: Add TM tcheck helpers in C")
+Signed-off-by: Thibault Ferrante <thibault.ferrante@canonical.com>
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/364996ce-aba2-4213-8d20-7dd481b43fe6@linux.ibm.com/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260907215420.1258678-1-thibault.ferrante@canonical.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gpio-fan.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/powerpc/tm/tm.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
-index e0b3917dfe6f9..cfcd254a5ed18 100644
---- a/drivers/hwmon/gpio-fan.c
-+++ b/drivers/hwmon/gpio-fan.c
-@@ -562,8 +562,11 @@ static void gpio_fan_shutdown(struct platform_device *pdev)
+diff --git a/tools/testing/selftests/powerpc/tm/tm.h b/tools/testing/selftests/powerpc/tm/tm.h
+index c5a1e5c163fcd..19d77c3a5706e 100644
+--- a/tools/testing/selftests/powerpc/tm/tm.h
++++ b/tools/testing/selftests/powerpc/tm/tm.h
+@@ -69,8 +69,12 @@ static inline bool failure_is_nesting(void)
+ static inline int tcheck(void)
  {
- 	struct gpio_fan_data *fan_data = platform_get_drvdata(pdev);
- 
--	if (fan_data->gpios)
-+	if (fan_data->gpios) {
-+		mutex_lock(&fan_data->lock);
- 		set_fan_speed(fan_data, 0);
-+		mutex_unlock(&fan_data->lock);
-+	}
+ 	long cr;
+-	asm volatile ("tcheck 0" : "=r"(cr) : : "cr0");
+-	return (cr >> 28) & 4;
++	asm volatile("tcheck 0;"
++		     "mfcr %0;"
++		     : "=r"(cr)
++		     :
++		     : "cr0");
++	return (cr >> 28) & 0xf;
  }
  
- #ifdef CONFIG_PM_SLEEP
+ static inline bool tcheck_doomed(void)
 -- 
 2.53.0
 
