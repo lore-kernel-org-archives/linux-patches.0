@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D62C4A92EF;
-	Wed, 30 Sep 2026 15:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB034FB9A6;
+	Wed, 30 Sep 2026 15:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783087; cv=none; b=ulZU8DX3isHWnuciRy1opHZn2maumUOkP9VMzE+dRJPo4voKGNnuTR2Q8U+tvmh/6wa4ltzr0SnpGvMZjs5hNQlj6QQTh+ZAvhSWVDGX5uD+XEfbyw4oxLYjbcwIy8e7GDSVT7wZk0BUwtD1u2UrgCd3XnGKrDabqFoKm1CThgA=
+	t=1790783092; cv=none; b=bfCtSQfNqmdhtjuuEn4vy5vurZdhRlzRHUWwg7IhxO2XFV7pt1B56O3QXHtvtqzlD5Z0R7Wy8uBoxXbfw0p2aBNvSLG9dpuXFA5mew8+0IhHZSjNKDc7PuvmvoXnM6zgGXQEjm4tqry5PMPqaFfz9lL+/H2CyoUpoC34e/ZpYGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783087; c=relaxed/simple;
-	bh=UUT2o2dhP+s1CXTO+T9YWlJjmqVChz1QM3DHIHVsC9Q=;
+	s=arc-20240116; t=1790783092; c=relaxed/simple;
+	bh=qh39BJsi3S1Jwg+Z6a2wK4sU5CKL4WIzLP+Zeeo+ck4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnbLUOn261UBKhTaRhTPhlD00cBMGoWNgb/4NETqqCYH4YXRUdZjNesy/VL/Nvm3E5QOsp8AIqaeKeSsgdjSQoAJ4CgAzi2JqJ5QlopoGnempQLzNXxfVJ/gBJb7iVJll2uJcT0DPimV4xWAMziwWb3wM+I5aUrKZUFfuvbx2PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGTh/G0H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bqa3BC42LiIQL4fb0Q9My7rT0Hpa886lPqWgXj/6LnspQT/du2DF/Wjl+q7XVhQ7cmyzBHluyDlcOWjb6Sibdn+AjRVufEOdiX5Iv3+v906p3e3c6pe9sSoLPpRPISMBoAi33Z50ehMOqMgMXBsUJHt2VFAGdB03uV+FK1vy1Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulDqv3kT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGTh/G0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429471F0089A;
-	Wed, 30 Sep 2026 15:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulDqv3kT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8851F00893;
+	Wed, 30 Sep 2026 15:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783077;
-	bh=r3IYzCX7LAsGbl7X9JLKJi+ody71KAQQS2bjB+U/LWY=;
+	s=korg; t=1790783083;
+	bh=3X5NPR2ssWh7pJKKXSq6mtOEPB1ID13wLZnt91FNTrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cGTh/G0HgBBByw5+3DFrLjx2L8YFOJYtVKyhmMO8S0MAVo2ECzzGcHD17HvfkZYuH
-	 c4ZZVzgoKLKRL7Lnqv2+yyq73M9ltNIuq6OvFurJZB3Psd3MXJZWM9DEbQWEkglnYR
-	 9f5HzPLiWz8t3jI1SEi0j5UAycIk8P33eJVM+z6o=
+	b=ulDqv3kTtvWBLlJENI2DHFqp9pySZ+xDxxY2bIlVKWuts+keedVS34peZm+FnE92V
+	 rWAmp9mEA54pfjql0xAwCJLpn6O+6NtY71cP+LpaMwqw6nWQ+CKExD+75VKp9R340U
+	 KpRX627L0e3R4dvZ/9SyFuTH68cMCLXfjfvSYifg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/595] hwmon: (aspeed-pwm-tacho) Propagate reset deassert errors
-Date: Wed, 30 Sep 2026 17:22:46 +0200
-Message-ID: <20260930152353.580844428@linuxfoundation.org>
+Subject: [PATCH 5.10 257/595] ASoC: bcm: bcm63xx: Publish the OF module aliases
+Date: Wed, 30 Sep 2026 17:22:30 +0200
+Message-ID: <20260930152353.237625403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit 09a9e1746a87845d7d8e2b4e23bb613306effdff ]
+[ Upstream commit 32689f0fc54fd801f1cd11637666e534984cb04a ]
 
-aspeed_pwm_tacho_probe() installs its reset cleanup action and configures
-the
-controller after an unchecked reset deassertion.
+The BCM63xx I2S platform driver matches brcm,bcm63xx-i2s using
+snd_soc_bcm_audio_match. With SND_BCM63XX_I2S_WHISTLER=m, the platform
+bus emits an OF modalias but snd-soc-63xx does not publish that table.
 
-Stop probing when the reset controller rejects the transition, before the
-hwmon device becomes visible.
+Export the existing OF IDs for module autoloading. The PCM companion
+and the probe path remain unchanged.
 
-Fixes: 18c514cc0e02 ("hwmon: (aspeed-pwm-tacho) Deassert reset in probe")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830125044.97718-1-pengpeng@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 88eb404ccc3e ("ASoC: brcm: Add DSL/PON SoC audio driver")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905133103.63432-1-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-pwm-tacho.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/bcm/bcm63xx-i2s-whistler.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
-index 3dc97041a704c..ed100c0428374 100644
---- a/drivers/hwmon/aspeed-pwm-tacho.c
-+++ b/drivers/hwmon/aspeed-pwm-tacho.c
-@@ -922,7 +922,9 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
- 			"missing or invalid reset controller device tree entry");
- 		return PTR_ERR(priv->rst);
- 	}
--	reset_control_deassert(priv->rst);
-+	ret = reset_control_deassert(priv->rst);
-+	if (ret)
-+		return ret;
+diff --git a/sound/soc/bcm/bcm63xx-i2s-whistler.c b/sound/soc/bcm/bcm63xx-i2s-whistler.c
+index 246a57ac66799..cf8a6cb47697d 100644
+--- a/sound/soc/bcm/bcm63xx-i2s-whistler.c
++++ b/sound/soc/bcm/bcm63xx-i2s-whistler.c
+@@ -299,6 +299,7 @@ static const struct of_device_id snd_soc_bcm_audio_match[] = {
+ 	{.compatible = "brcm,bcm63xx-i2s"},
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, snd_soc_bcm_audio_match);
+ #endif
  
- 	ret = devm_add_action_or_reset(dev, aspeed_pwm_tacho_remove, priv);
- 	if (ret)
+ static struct platform_driver bcm63xx_i2s_driver = {
 -- 
 2.53.0
 
