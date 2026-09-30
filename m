@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C2A511E96;
-	Wed, 30 Sep 2026 16:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12534D7D4C;
+	Wed, 30 Sep 2026 16:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786873; cv=none; b=TH6odFEB8IafnxqvrTROUGFMDQYaytosCAYBDrUwIxhBFSqAEYrfM49BOkvodKJsolCpdcp/YmPO7JahaZ20eJvFUXZq1/qjrKU+3gFpysAz9dOcxSnIBUxK1TRxLQ8+EK2Fi6UKhqXBoub0hIq3WnhOO/P3LNjOTOEAFRZajN8=
+	t=1790786876; cv=none; b=GTc26IRyrtWstOKeAAaB/GAqeCwWpFOQrh2fKJLy+WdQUucLQAXqSG3QX6y/b/BVKR0tUmgiPbzeL6twDA27C+YOPU7ign/WDVVWvPc9OjhsYPII4+klhHsrN9MUGCNfOpxarq5qVq6/BIzB7rUW/uo1isJPrb9sO37Gneaqc94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786873; c=relaxed/simple;
-	bh=/ICoE4zy0VRkt1IZVmvTYTLq3mL2OV7In1O/MRjDyhY=;
+	s=arc-20240116; t=1790786876; c=relaxed/simple;
+	bh=z0HaXqGQbYjyUHoQvtXWuF+WEMwQXSGUGwIsg+26aJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jycCl7FxZTrCIv5JkOCz2gXj9xzJllXBSA1IkTripLVFeVYkGO787aT1zeaTWqDc8v+kk9b4IHag4WxGwKkLJQw9MCk1xfEeiiiR4IMnilpj2+FQvhOR94VIsTHiErvTohDLMmCnpCixjBXuX1dYrgm/1NmOJo8BmSySUC1CjUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZHjJAF5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fRSOLiAGa3JSLbJ61KJfEac0lMt2a6mnuV0LFhqAUgNBh9G5N38ZCNi1hZud5UPz3juM5SA09JUvQXOrpeBknSW1b9NTOiejZEWVYKgCU90IP3FduEu9DcX9SowuTFqOLAhW5dkpV4PkMT/UB9EUYoWwPho9osbxn/FhsF2oAD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IE4id8fP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZHjJAF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0CB1F00893;
-	Wed, 30 Sep 2026 16:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IE4id8fP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1A61F000FF;
+	Wed, 30 Sep 2026 16:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786872;
-	bh=o6//4rD8fmwp5BdeztOZlLDF17lfC/wnrAFtzgGh8oA=;
+	s=korg; t=1790786875;
+	bh=b/6JVAPQof05vKqwHvzkQcxHolsnt/OUVYX9Ln7p8E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mZHjJAF5U/8jmbs0oxRf1az88RrRyvIy3Ey/DvVz6O48pS9ihAR0Qj4maQxux3JjC
-	 1Sw22lukkxkXlO1et1BSYuCl68i7chu9SvBLNUyT7SBCr1dxngTOwu6fHwY4eRdPIy
-	 AOsFfm/7xPkvlMRjTPIhByZ72HxD/GU8hlqWR4oc=
+	b=IE4id8fPjt7kWklAxaoVBWOkzWGZhPP9sO0hq8jFSgDvglJ9FwEnN5TjZcmfdM8M4
+	 RH+/VvueqbcXREiO3QutXu6R0A4JpXxzl50snJ3knt4/e2ky4Y93d2vcK9hApx6b46
+	 0gsj/2TAVhvCZ8Fsjp3v/ku7jN5kzn57084+IEtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sanderson@brivo.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sarah Emery <sarah.emery@canonical.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 032/457] pinctrl: meson: Fix typo in s4 group name
-Date: Wed, 30 Sep 2026 17:22:17 +0200
-Message-ID: <20260930152346.727581589@linuxfoundation.org>
+Subject: [PATCH 7.2 033/457] pinctrl: generic: serialise pinctrl_generic_dt_node_to_map()
+Date: Wed, 30 Sep 2026 17:22:18 +0200
+Message-ID: <20260930152346.748260038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,36 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sanderson@brivo.com>
+From: Sarah Emery <sarah.emery@canonical.com>
 
-[ Upstream commit 692f32609a30f75ca3401e25b504bfd06bd5662a ]
+[ Upstream commit 51ae99659469edba2e83931efa26b77d36ca02c2 ]
 
-One of the i2c pin groups has some junk at the end. The name should be
-i2c2_scl_h1, and indeed that's the name used by i2c2_pins3 in
-meson-s4.dtsi.
+pinctrl_generic_add_group() documents that the caller must take care of
+locking, and pinmux_generic_add_function() needs it too, but
+pinctrl_generic_dt_node_to_map() calls them without holding
+pctldev->mutex, and the core caller in create_pinctrl() does not take it
+either.
 
-Fixes: 775214d389c25 ("pinctrl: meson: add pinctrl driver support for Meson-S4 Soc")
-Signed-off-by: Sean Anderson <sanderson@brivo.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+The driver core calls pinctrl_bind_pins() before probing a device, so
+two devices that reference the same pin controller can run
+pinctrl_generic_dt_node_to_map() on one pctldev at the same time.
+
+Both `add` functions take the new selector from pctldev->num_groups or
+pctldev->num_functions, and radix_tree_insert() at that index.
+Two racing callers can read the same selector before either
+has inserted, so the second insert collides and fails:
+
+  k1-pinctrl d401e000.pinctrl:
+  error -EEXIST: error adding function pcie2-0-cfg
+  k1-pinctrl d401e000.pinctrl:
+  does not have pin group pcie0-0-cfg.pcie0-0-pins
+
+leaving one consumer without its pin configuration.
+
+This was hit on a SpacemiT K3 board, where PCIe devices probe in parallel
+against the single shared pin controller.
+
+Take pctldev->mutex across the whole function, so that the groups and the
+function referring are in a single critical section.
+
+Fixes: 43722575e5cd ("pinctrl: add generic functions + pins mapper")
+Signed-off-by: Sarah Emery <sarah.emery@canonical.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson-s4.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-generic.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-meson-s4.c b/drivers/pinctrl/meson/pinctrl-meson-s4.c
-index 872948699e9fe..365dafe457a9f 100644
---- a/drivers/pinctrl/meson/pinctrl-meson-s4.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson-s4.c
-@@ -854,7 +854,7 @@ static const char * const i2c1_groups[] = {
- static const char * const i2c2_groups[] = {
- 	"i2c2_sda_d", "i2c2_scl_d",
- 	"i2c2_sda_h8", "i2c2_scl_h9",
--	"i2c2_sda_h0", "i2c2_scl_h1l,"
-+	"i2c2_sda_h0", "i2c2_scl_h1",
- };
+diff --git a/drivers/pinctrl/pinctrl-generic.c b/drivers/pinctrl/pinctrl-generic.c
+index fd6bdb74028aa..4277c87485135 100644
+--- a/drivers/pinctrl/pinctrl-generic.c
++++ b/drivers/pinctrl/pinctrl-generic.c
+@@ -3,8 +3,10 @@
+ #define pr_fmt(fmt) "generic pinconfig core: " fmt
  
- static const char * const i2c3_groups[] = {
+ #include <linux/array_size.h>
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/slab.h>
+ 
+@@ -196,6 +198,8 @@ static int pinctrl_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	int ngroups = 0;
+ 	int ret;
+ 
++	guard(mutex)(&pctldev->mutex);
++
+ 	*maps = NULL;
+ 	*num_maps = 0;
+ 
 -- 
 2.53.0
 
