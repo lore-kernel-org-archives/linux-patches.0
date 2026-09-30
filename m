@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016CB3644C1;
-	Wed, 30 Sep 2026 17:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB4B4A441D;
+	Wed, 30 Sep 2026 17:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790220; cv=none; b=sngHYiQ5W8CvPPzsMzu6Ao9uIbNpLh4CTsiPpdiG36XIkxu5ZKzcDp+55mVcuGkyG4nd1rATRPo7i+sQsyUYQZV2OenjuNDES8aFQ9te8gv444Qc7LQCnw30Z7HGO6/UfkdFXhrvhZec/aTS1gs1PpmlhbyESp1n+madGfFK62Y=
+	t=1790790223; cv=none; b=PWkJK7HWkybUd3JC6I+FDxLX5omW7XyqpAR3B9JCHa41nPd5XWSUeNprVTnCH2OpwqkvlUeE4nrBTu7GwoSrGWDd74XhxyPp5Tolt4SGQuiHidzfOh9NAHyzdR6KE/IgbjcJ8j07F+Ijqg2Mn5r3V9q+CdTSRu+g950oKTYoAF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790220; c=relaxed/simple;
-	bh=ZRog7GlzZp9+GWr9fZjRBAebFyOrAVsV0pH17gTdzDg=;
+	s=arc-20240116; t=1790790223; c=relaxed/simple;
+	bh=l+P+Ht8CkC+36g+sS+IkAPH7+gz14vuHZzNW/Rm1fow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4ZZvjiVKZX5X/gTv5VLKSXd1txkHU9Kv8VrfNLG8EAOH/SrMPSE5lJ0F2vNd+WkY/20douNAzf/o3YlWr5729K9mPS+4ma7tY4YiXFo6Bk/TtUeudoXuNlPmMw5AAD8jkiRq86H1dJ0V8GvcRkeRzGownns7VQVyOaw3z+wfqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psGO1ef7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I2hS9JvJ3Qcz1jSO85kcviJa5oBt+Bgg6u1rMTPoXuByuYcaAEh/5U4W3/9dQOFg0kK4pPQusrylw8RQK9+2sqcBw3Gds212T/n2Hnbof8Ag+CFKSxhbkEkWuqbHY2xWVPJKP+XJ4O+zFW6GG8rL5hE4iLjptTU/k8zj3JQWWKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7WoSvTj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psGO1ef7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578C71F000FF;
-	Wed, 30 Sep 2026 17:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7WoSvTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326201F000FF;
+	Wed, 30 Sep 2026 17:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790218;
-	bh=WTyjUTa89Grhe2wGHWj88OOHE9P/Y0xCRjowKRqlQDY=;
+	s=korg; t=1790790221;
+	bh=T7Mry7ZYraT9AgStEC3SgwbDid6+V1HdZYHrQ3t41cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psGO1ef73W3Jnufps18NyGwaVU7H71Z+Qz3fJuFJdvT1g3+HD+d/+UIgY+5mVJGup
-	 AjkcQMyx1nEH3TspnOaO8FROcaU7g2t+AHATUCo/Qk8uamjHYmftt6A8Jp6LaxJ96q
-	 YNwAw1QYb/r0GkROPonD2HcxmnMOlTqbmScr06TI=
+	b=I7WoSvTjMEWuCiKXamyjGAphJs4p9H2px5Nz7QJcV9nczZnQlU1zv8veWe7Cib1X7
+	 el3jF+zeLNwg9kdjOzTjHKtG02bHZ0F+J/Uqj1RiDjjQRHy9HdexKsAs9z3+HKF9+8
+	 ib0w2jZqBLRyL5i1LB4IRTqh1AaWG/YUONUozBc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 752/877] ipv6: flowlabel: cap duplicate leases per socket
-Date: Wed, 30 Sep 2026 17:27:43 +0200
-Message-ID: <20260930152430.925255336@linuxfoundation.org>
+Subject: [PATCH 6.12 753/877] landlock: Clarify documentation for the IOCTL access right
+Date: Wed, 30 Sep 2026 17:27:44 +0200
+Message-ID: <20260930152430.945998923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -48,88 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Günther Noack <gnoack3000@gmail.com>
 
-[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
+[ Upstream commit 6abbb8703aeeb645a681ab6ad155e0b450413787 ]
 
-ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
-successful GET. The recheck path for a compatible existing flowlabel
-links another lease without applying any lease admission check. Repeated
-GET requests for one shareable label can therefore grow a socket's lease
-list without bound.
+Move the description of the LANDLOCK_ACCESS_FS_IOCTL_DEV access right
+together with the file access rights.
 
-Reject a new unprivileged lease once the socket already holds
-FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
-of a globally interned label, including the fl_intern() collision path,
-is covered as well. New-label admission remains under the existing
-mem_check() policy.
+This group of access rights applies to files (in this case device
+files), and they can be added to file or directory inodes using
+landlock_add_rule(2).  The check for that works the same for all file
+access rights, including LANDLOCK_ACCESS_FS_IOCTL_DEV.
 
-Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
-mem_check(). An unprivileged user must not bypass the cap by creating a
-user namespace and a netns where they have CAP_NET_ADMIN, which would
-still consume host memory.
+Invoking ioctl(2) on directory FDs can not currently be restricted
+with Landlock.  Having it grouped separately in the documentation is a
+remnant from earlier revisions of the LANDLOCK_ACCESS_FS_IOCTL_DEV
+patch set.
 
-Check the capability only when the socket reaches the limit, so
-successful unprivileged GET requests below the cap do not generate a
-capability audit. Do the admission check before updating linger and
-expires so a rejected GET does not refresh the shared label, matching
-the existing socket-list allocation failure path.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/all/20260108.Thaex5ruach2@digikod.net/
+Signed-off-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20260111175203.6545-2-gnoack3000@gmail.com
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Stable-dep-of: 2c6dc7925382 ("landlock: Fix use-after-free of the source's parent directory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_flowlabel.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/uapi/linux/landlock.h |   37 +++++++++++++++++--------------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -462,6 +462,21 @@ done:
- 	return NULL;
- }
- 
-+static bool fl_sock_at_lease_limit(const struct sock *sk)
-+{
-+	const struct ipv6_fl_socklist *sfl;
-+	int count = 0;
-+
-+	rcu_read_lock();
-+	for_each_sk_fl_rcu(sk, sfl) {
-+		if (++count >= FL_MAX_PER_SOCK)
-+			break;
-+	}
-+	rcu_read_unlock();
-+
-+	return count >= FL_MAX_PER_SOCK;
-+}
-+
- static int mem_check(struct sock *sk)
- {
- 	const int unpriv_total_limit = FL_MAX_SIZE - (FL_MAX_SIZE / 4);
-@@ -673,6 +688,10 @@ recheck:
- 			err = -ENOMEM;
- 			if (!sfl1)
- 				goto release;
-+			err = -ENOBUFS;
-+			if (fl_sock_at_lease_limit(sk) &&
-+			    !capable(CAP_NET_ADMIN))
-+				goto release;
- 			if (fl->linger > fl1->linger)
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
+--- a/include/uapi/linux/landlock.h
++++ b/include/uapi/linux/landlock.h
+@@ -156,6 +156,23 @@ struct landlock_net_port_attr {
+  *   :manpage:`ftruncate(2)`, :manpage:`creat(2)`, or :manpage:`open(2)` with
+  *   ``O_TRUNC``.  This access right is available since the third version of the
+  *   Landlock ABI.
++ * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
++ *   character or block device.
++ *
++ *   This access right applies to all `ioctl(2)` commands implemented by device
++ *   drivers.  However, the following common IOCTL commands continue to be
++ *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
++ *
++ *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
++ *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
++ *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
++ *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
++ *   * Some IOCTL commands which do not make sense when used with devices, but
++ *     whose implementations are safe and return the right error codes
++ *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
++ *
++ *   This access right is available since the fifth version of the Landlock
++ *   ABI.
+  *
+  * Whether an opened file can be truncated with :manpage:`ftruncate(2)` or used
+  * with `ioctl(2)` is determined during :manpage:`open(2)`, in the same way as
+@@ -216,26 +233,6 @@ struct landlock_net_port_attr {
+  *   If multiple requirements are not met, the ``EACCES`` error code takes
+  *   precedence over ``EXDEV``.
+  *
+- * The following access right applies both to files and directories:
+- *
+- * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
+- *   character or block device.
+- *
+- *   This access right applies to all `ioctl(2)` commands implemented by device
+- *   drivers.  However, the following common IOCTL commands continue to be
+- *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
+- *
+- *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
+- *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
+- *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
+- *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
+- *   * Some IOCTL commands which do not make sense when used with devices, but
+- *     whose implementations are safe and return the right error codes
+- *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
+- *
+- *   This access right is available since the fifth version of the Landlock
+- *   ABI.
+- *
+  * .. warning::
+  *
+  *   It is currently not possible to restrict some file-related actions
 
 
