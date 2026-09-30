@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89897257435;
-	Wed, 30 Sep 2026 18:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727F330E0FB;
+	Wed, 30 Sep 2026 18:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794044; cv=none; b=TCzr0JFWAz63u0b8KYbJh98Ug4m0NRVvnkN5C8H4vWKWxhy5IAvymyEACA71ZrwNW2UsqO3sjdo7cYfBOvWZo4VWT6SWm2WpWkGl5+jk60o7EV+N/MT0vbiMco9Sv9rF1yV67gAhlLELEw2aQDzBLO+10kqPaTg6BeCAjINCNps=
+	t=1790794047; cv=none; b=aRS5o53WDM56kCiiaXuL0CaIkJCfB2WFm9RXpnrldIHXChu7cMxHGPqRENZ3xaoVW8OqDlfgSM/gvFKR/gC2fScFZBKveYJ/KpQcniMsjoIWcBMd7IFFglKxY6ndxe/k0QpkFheL70nfzast4rjWBNrNjcayaedtKh0+aHko1dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794044; c=relaxed/simple;
-	bh=9wOm6XISmTliJE5bTsBsTWvk41csUbrxlaWW+z/mm/4=;
+	s=arc-20240116; t=1790794047; c=relaxed/simple;
+	bh=Wrxkd1Uca0JeZMnkXqdNijPsXBeoNom5umF2NHAM51A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZbiqgGxmX7jXQsPI/1W15PFqp+/9KWxnd6wRg5UBjKKOZQxSo5TgOkRkn0WQCcMiUGCNCYOo3CTVTy1+D84hMMgt4/R/xX0/IrZuu8W8lL7EH56b+au83p5ELLWU2zW/m3qV4wJl0r5pdRYI3l8Ddc7SSdXHJWc2q77qG/l4GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdZGQBq/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ax52sZkILAVkJZV3P7y1oO1BFeWQd4T7xdgtVBebQZ7cO/Rw3+qlLO/IL7VQtJ//t4+LjtLBS+YeuhvqueySxe2343J3eYISNRCOIlR3SLDqNhQD8fyrP7Ue/WQmiR0SnFh9k7ysHM5Thv7jYIwxKFDQIo8oqv0sMtdPqHk4GCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIgUSRtr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdZGQBq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EF51F000FF;
-	Wed, 30 Sep 2026 18:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIgUSRtr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA741F000FF;
+	Wed, 30 Sep 2026 18:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794043;
-	bh=4nyQ3pPObdxOMeCKTAN3DCx+PcbP5FVLs47NUYj7q/Y=;
+	s=korg; t=1790794046;
+	bh=9MbQcA6UgVujTZ3vNUMOLAWaACueWeGnWRJSKtjNXoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdZGQBq/gWDeSKZ0E/fhSkSnZw6lc91tZv92UbemXD96Ej+uFUrH2wc1xkf4wZ/1n
-	 DbG+QEa2koBMCXPP4+1SE4TI7g6abTU3lGmKtp2MV4O/CyKN3qx7Nm3+zfcKyvyDrj
-	 wIWpFold9jOe07gG0W4sXd0kd0tv8cj6YryMQwRg=
+	b=sIgUSRtri0ejXG2IBNaWQ4Svbe0hDKRsDpU7s1RV9pA7PDuTd78T5Ejtakat9oOWD
+	 E9nkzGpd/fLYUYL2WR9cco35+rhzXTi0XAh5cVMmrZY9PTSMT2vw1bTNptTfD3hqeJ
+	 gBMe+jFr/PFuTcv4xXn+dTMvAky2NwHIdPWNALBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0055/1193] crypto: ecc - Unbreak the build on arm with CONFIG_KASAN_STACK=y
-Date: Wed, 30 Sep 2026 17:12:19 +0200
-Message-ID: <20260930152435.503041841@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0073/1193] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
+Date: Wed, 30 Sep 2026 17:12:37 +0200
+Message-ID: <20260930152435.886464804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,78 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit c64ba13e2033c3c6dc1a097bf35f9f1fe457c3f7 ]
+[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
 
-Andrew reports build breakage of arm allmodconfig, reproducible with gcc
-14.2.0 and 15.2.0:
+BASE_ERROR_EVENT carries a variable number of message reports,
+with the count encoded in error_status. The notification parser used
+that count without checking whether the received payload contained all
+reported entries.
 
-  crypto/ecc.c: In function 'ecc_point_mult':
-  crypto/ecc.c:1380:1: error: the frame size of 1360 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+Reject truncated payloads before copying the report array.
 
-gcc aggressively inlines functions called by ecc_point_mult() (without
-there being any explicit inline declarations), which pushes stack usage
-close to the limit imposed by CONFIG_FRAME_WARN.  allmodconfig implies
-CONFIG_KASAN_STACK=y, which increases the stack above that limit.
-
-In the bugzilla entry linked below, gcc maintainers explain that gcc
-estimates extra stack usage caused by inlining, but ASAN instrumentation
-is added in post-IPA passes and thus the inlining heuristics cannot
-account for it.
-
-It could be argued that -Werror=frame-larger-than=1280 instructs the
-compiler to avoid inlining beyond that limit lest the build breaks,
-which would imply gcc behaves incorrectly.  But gcc maintainers reject
-this notion and believe that a warning switch should never affect code
-generation, even if it is promoted to an error.
-
-One way to unbreak the build is to limit inlining via -finline-limit=100
-or by explicitly declaring some functions noinline.  However while it
-does keep stack usage of individual functions below the limit, *total*
-stack usage increases.
-
-A longterm solution is to refactor ecc.c for reduced stack usage.  It
-currently performs ECC point multiplication with a Montgomery ladder
-which uses co-Z (conjugate) addition to trade off memory for speed.
-The algorithm is susceptible to timing attacks and needs to be replaced
-with a constant time Montgomery ladder, which should consume less memory
-and thus resolve the stack usage issue as a side effect.
-
-In the interim, raise the limit for ecc.c, as is already done for
-several other files in the source tree.
-
-Constrain to gcc because clang 19.1.7 does not exhibit the issue.  It
-makes do with a 724 bytes stack frame even though it inlines almost the
-same functions as gcc.
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
-Reported-by: Andrew Morton <akpm@linux-foundation.org> # off-list
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/Makefile b/crypto/Makefile
-index 953a7e105e58c..91afeded73efc 100644
---- a/crypto/Makefile
-+++ b/crypto/Makefile
-@@ -187,6 +187,11 @@ obj-$(CONFIG_CRYPTO_ECC) += ecc.o
- obj-$(CONFIG_CRYPTO_ESSIV) += essiv.o
- obj-$(CONFIG_CRYPTO_CURVE25519) += curve25519-generic.o
+diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
+index a52f084a6a87b..f455165a81bcd 100644
+--- a/drivers/firmware/arm_scmi/base.c
++++ b/drivers/firmware/arm_scmi/base.c
+@@ -324,6 +324,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 					  void *report, u32 *src_id)
+ {
+ 	int i;
++	u32 error_status;
++	size_t expected_sz;
+ 	const struct scmi_base_error_notify_payld *p = payld;
+ 	struct scmi_base_error_report *r = report;
  
-+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
-+ifeq ($(CONFIG_ARM)$(CONFIG_KASAN_STACK)$(CONFIG_CC_IS_GCC),yyy)
-+CFLAGS_ecc.o += $(call cc-option,-Wframe-larger-than=1536)
-+endif
+@@ -337,10 +339,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
+ 		return NULL;
+ 
++	expected_sz = offsetof(typeof(*p), msg_reports);
++	if (payld_sz < expected_sz)
++		return NULL;
 +
- ecdh_generic-y += ecdh.o
- ecdh_generic-y += ecdh_helper.o
- obj-$(CONFIG_CRYPTO_ECDH) += ecdh_generic.o
+ 	r->timestamp = timestamp;
+ 	r->agent_id = le32_to_cpu(p->agent_id);
+-	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
+-	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
++	error_status = le32_to_cpu(p->error_status);
++	r->fatal = IS_FATAL_ERROR(error_status);
++	r->cmd_count = ERROR_CMD_COUNT(error_status);
++	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
++	if (payld_sz < expected_sz)
++		return NULL;
++
+ 	for (i = 0; i < r->cmd_count; i++)
+ 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
+ 	*src_id = 0;
 -- 
 2.53.0
 
