@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C58651A15D;
-	Wed, 30 Sep 2026 17:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5447D5187DA;
+	Wed, 30 Sep 2026 17:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788437; cv=none; b=J5OK9SSIUPKbU3bFSMq5rZI7fEgnRfAKb/fcgl9LLZQr6VjsUOBD2c6+NGB2/9Sqn3zuBC4mc8fGBIJxusG3KmM9Ju5oNQR2ELUeANyIo4HIJQXnPa7xK1abt/z3l2vK6AWjbd0Cmpyig69v4aQFKzZKt/hlT9yljwNF15wm+V4=
+	t=1790788440; cv=none; b=Y9f/4OJvoQupnPxf+9JRWvbG4Y88jhM5KrI/bqI+MHjKq1j6QYsqtBI7AVH/7pspiNGJ8gHjVo14aUKeeoUdOPqcBEO88UWZXziDBfas9++Tsyx7uBY6++JGXuQBS0oEIPzGFJOefD+bIXaPUpX6+8JyGgWhhoomkSbf1ABVg1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788437; c=relaxed/simple;
-	bh=Jcck3lFWCx6gzti30v1vh9XqE3/ZrM4d1Vz75TwW8Kw=;
+	s=arc-20240116; t=1790788440; c=relaxed/simple;
+	bh=DNU2vfhCCN/AXkbIBW2VpDjX+7shgmPQQIG254rSQg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpsbexfBvBE3JVDdE23LDTe973GRg+xjJlJwkeZsl02JeAGRDaWLUXp9xn4HrngDcKNoja1Z2YmpL/PXea8BetCzhIMnBYgoOBxMTCxG+GsA9iyxvzWiZUHwEoLpK503dt5pIl7YbfcHBoVNSBU2fCw2kzi3Hay4LPzZMtTBnlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIDNFJ1G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffWuSlsTN/s6XFUiu+LkLT9IzITPmDX389P5kOw9UKBo4TY9akrE/xH4ppP1AQtTciSEISYTCQAwn7/rkpIPMBec+IBWszZNJgI1F+pKXu0UWeHnGp6mtw55aosxX06Wd0bSeumBxDmQMxsbLBiqDJ1cvsrNasvKzi2uQqPT6cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAFhbFjT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIDNFJ1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E461F000FF;
-	Wed, 30 Sep 2026 17:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAFhbFjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF62C1F000FF;
+	Wed, 30 Sep 2026 17:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788436;
-	bh=O+c5Sm+PxYSg0zvAIUID4GzFD6vpK4bw+Z7S0GckWao=;
+	s=korg; t=1790788439;
+	bh=QxUWnvbgGdFteB8hLSNEHtZCA3cUj6+mxE2d6s6j8Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FIDNFJ1GZaVfCvCY2eEOKpI76idMyjeHr3o8uLjQzTRaXCVlkVnwNnIgzRkWBC9a+
-	 p5sGp5vCgUvwAwy5+8le6jIzIXGdS7QSfGd+dSSRjG2B6kjar7uAAiGdrtAJt9NnN0
-	 NX4ak8kcl7w3ZTTe6g3Z7/etX8Zj6G5uHceZ7EJ4=
+	b=lAFhbFjTWfa4eIgAOUaWRPuPdrn4hzVxdDYd7YyXP6Jhki8lFjXhtIf9PB2ubRFRU
+	 2OsikhUdR21ykFChzmvDk3iPRWuaPivWUieeym23oOA5hXpDsozHcEpb9baAYwpt32
+	 oZtFwRJ1r0/CSuCRuxjx+X9piYhL8M6vrxZXRUPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/877] tcp: do not let tcp_rmem be set below 4096
-Date: Wed, 30 Sep 2026 17:17:16 +0200
-Message-ID: <20260930152417.436133492@linuxfoundation.org>
+Subject: [PATCH 6.12 126/877] ksmbd: return buffer overflow for partial filesystem info
+Date: Wed, 30 Sep 2026 17:17:17 +0200
+Message-ID: <20260930152417.457241536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,95 +50,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 83a945a529d6e002dd7339c532288a931f463dba ]
+[ Upstream commit 0ecd35fac4b4f2828490689b46039744d201dcb0 ]
 
-We can hit a division by zero crash in tcp_rcvbuf_grow()
-and tcp_rcv_space_adjust():
+The query-info buffer check returns STATUS_INFO_LENGTH_MISMATCH for
+every output buffer smaller than the complete response. Variable-length
+filesystem information instead requires STATUS_BUFFER_OVERFLOW when the
+fixed portion fits but the complete data does not.
 
-divide error: 0000 [#1] PREEMPT SMP
-RIP: 0010:tcp_rcvbuf_grow+0x187/0x450 net/ipv4/tcp_input.c:939
-...
-grow = div_u64(((u64)rcvwin << 1) * (newval - oldval), oldval);
+Pass the fixed size for each filesystem information class to the buffer
+checker. Keep INFO_LENGTH_MISMATCH for buffers below that size, and
+return BUFFER_OVERFLOW with a response truncated to the requested length
+for larger partial buffers.
 
-The division uses oldval = tp->rcvq_space.space as divisor.
-When tp->rcvq_space.space is zero, this leads to a divide-by-zero
-exception.
+This fixes smb2.getinfo.qfs_buffercheck.
 
-tp->rcvq_space.space is initialized in tcp_init_buffer_space():
-    tp->rcvq_space.space = min3(tp->rcv_ssthresh, tp->rcv_wnd,
-                                (u32)TCP_INIT_CWND * tp->advmss);
-
-If tcp_rmem[1] is configured to very small values (such as 1),
-sk->sk_rcvbuf is initialized to 1. Then tcp_full_space(sk), which
-computes (sk->sk_rcvbuf * scaling_ratio) >> 8, truncates to 0.
-This sets tp->window_clamp = 0, tp->rcv_ssthresh = 0, and
-tp->rcvq_space.space = 0. Later, when data arrives and DRS is invoked,
-tcp_rcvbuf_grow() divides by oldval == 0.
-
-Back in 2015, commit b1cb59cf2efe ("net: sysctl_net_core: check SNDBUF
-and RCVBUF for min length") ensured that net.core.rmem_default and
-net.core.rmem_max cannot be set below SOCK_MIN_RCVBUF. Similarly,
-SO_RCVBUF setsockopt enforces max_t(int, val * 2, SOCK_MIN_RCVBUF).
-
-However, net.ipv4.tcp_rmem still had .extra1 = SYSCTL_ONE, allowing
-arbitrarily small values.
-
-Because SOCK_MIN_RCVBUF depends on sizeof(struct sk_buff) and cacheline
-alignment, its value varies across architectures and configuration options.
-Using a fixed constant of 4096 ensures a predictable, architecture-
-independent lower bound that is safely above SOCK_MIN_RCVBUF everywhere
-and matches the documented 4K default.
-
-Fix this by setting tcp_rmem.extra1 to 4096 and updating the documentation.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260912144848.3448026-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 9fa26285ae70 ("ksmbd: keep compound responses on query info errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 2 ++
- net/ipv4/sysctl_net_ipv4.c             | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index dcbb6f6caf6de..eb2c136be63da 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -735,6 +735,8 @@ tcp_rmem - vector of 3 INTEGERs: min, default, max
- 	case this value is ignored.
- 	Default: between 131072 and 6MB, depending on RAM size.
- 
-+	Each of the three values cannot be set below 4096.
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 37d8db4bbbaec..b12dad36bb574 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4648,21 +4648,30 @@ int smb2_query_dir(struct ksmbd_work *work)
+ /**
+  * buffer_check_err() - helper function to check buffer errors
+  * @reqOutputBufferLength:	max buffer length expected in command response
++ * @fixed_len:			minimum fixed response length
+  * @rsp:		query info response buffer contains output buffer length
+  * @rsp_org:		base response buffer pointer in case of chained response
+  *
+  * Return:	0 on success, otherwise error
+  */
+ static int buffer_check_err(int reqOutputBufferLength,
++			    unsigned int fixed_len,
+ 			    struct smb2_query_info_rsp *rsp,
+ 			    void *rsp_org)
+ {
+-	if (reqOutputBufferLength < le32_to_cpu(rsp->OutputBufferLength)) {
++	unsigned int output_len = le32_to_cpu(rsp->OutputBufferLength);
 +
- tcp_sack - BOOLEAN
- 	Enable select acknowledgments (SACKS).
- 
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 63625a5038af4..00d3be968a53d 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -46,6 +46,8 @@ static unsigned int udp_child_hash_entries_max = UDP_HTABLE_SIZE_MAX;
- static int tcp_plb_max_rounds = 31;
- static int tcp_plb_max_cong_thresh = 256;
- 
-+static int tcp_min_rcvbuf = 4096;
++	if (reqOutputBufferLength < fixed_len) {
+ 		pr_err("Invalid Buffer Size Requested\n");
+ 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
+ 		*(__be32 *)rsp_org = cpu_to_be32(sizeof(struct smb2_hdr));
+ 		return -EINVAL;
+ 	}
 +
- /* obsolete */
- static int sysctl_tcp_low_latency __read_mostly;
++	if (reqOutputBufferLength < output_len) {
++		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
++		rsp->OutputBufferLength = cpu_to_le32(reqOutputBufferLength);
++	}
+ 	return 0;
+ }
  
-@@ -1405,7 +1407,7 @@ static struct ctl_table ipv4_net_table[] = {
- 		.maxlen		= sizeof(init_net.ipv4.sysctl_tcp_rmem),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ONE,
-+		.extra1		= &tcp_min_rcvbuf,
- 	},
- 	{
- 		.procname	= "tcp_comp_sack_delay_ns",
+@@ -4725,11 +4734,13 @@ static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
+ 	case FILE_STANDARD_INFORMATION:
+ 		get_standard_info_pipe(rsp, rsp_org);
+ 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++				      le32_to_cpu(rsp->OutputBufferLength),
+ 				      rsp, rsp_org);
+ 		break;
+ 	case FILE_INTERNAL_INFORMATION:
+ 		get_internal_info_pipe(rsp, id, rsp_org);
+ 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++				      le32_to_cpu(rsp->OutputBufferLength),
+ 				      rsp, rsp_org);
+ 		break;
+ 	default:
+@@ -5523,6 +5534,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 	}
+ 	if (!rc)
+ 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++				      le32_to_cpu(rsp->OutputBufferLength),
+ 				      rsp, work->response_buf);
+ 	ksmbd_fd_put(work, fp);
+ 
+@@ -5544,6 +5556,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 	struct kstatfs stfs;
+ 	struct path path;
+ 	int rc = 0, len;
++	unsigned int fixed_len = 0;
+ 
+ 	if (!share->path)
+ 		return -EIO;
+@@ -5578,6 +5591,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 			info->DeviceCharacteristics |=
+ 				cpu_to_le32(FILE_READ_ONLY_DEVICE);
+ 		rsp->OutputBufferLength = cpu_to_le32(8);
++		fixed_len = 8;
+ 		break;
+ 	}
+ 	case FS_ATTRIBUTE_INFORMATION:
+@@ -5606,6 +5620,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->FileSystemNameLen = cpu_to_le32(len);
+ 		sz = sizeof(struct filesystem_attribute_info) + len;
+ 		rsp->OutputBufferLength = cpu_to_le32(sz);
++		fixed_len = 16;
+ 		break;
+ 	}
+ 	case FS_VOLUME_INFORMATION:
+@@ -5632,6 +5647,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->Reserved = 0;
+ 		sz = sizeof(struct filesystem_vol_info) + len;
+ 		rsp->OutputBufferLength = cpu_to_le32(sz);
++		fixed_len = 24;
+ 		break;
+ 	}
+ 	case FS_SIZE_INFORMATION:
+@@ -5644,6 +5660,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
+ 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
+ 		rsp->OutputBufferLength = cpu_to_le32(24);
++		fixed_len = 24;
+ 		break;
+ 	}
+ 	case FS_FULL_SIZE_INFORMATION:
+@@ -5659,6 +5676,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
+ 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
+ 		rsp->OutputBufferLength = cpu_to_le32(32);
++		fixed_len = 32;
+ 		break;
+ 	}
+ 	case FS_OBJECT_ID_INFORMATION:
+@@ -5679,6 +5697,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->extended_info.rel_date = 0;
+ 		memcpy(info->extended_info.version_string, "1.1.0", strlen("1.1.0"));
+ 		rsp->OutputBufferLength = cpu_to_le32(64);
++		fixed_len = 64;
+ 		break;
+ 	}
+ 	case FS_SECTOR_SIZE_INFORMATION:
+@@ -5700,6 +5719,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->ByteOffsetForSectorAlignment = 0;
+ 		info->ByteOffsetForPartitionAlignment = 0;
+ 		rsp->OutputBufferLength = cpu_to_le32(28);
++		fixed_len = 28;
+ 		break;
+ 	}
+ 	case FS_CONTROL_INFORMATION:
+@@ -5720,6 +5740,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->DefaultQuotaLimit = cpu_to_le64(SMB2_NO_FID);
+ 		info->Padding = 0;
+ 		rsp->OutputBufferLength = cpu_to_le32(48);
++		fixed_len = 48;
+ 		break;
+ 	}
+ 	case FS_POSIX_INFORMATION:
+@@ -5740,6 +5761,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
+ 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
+ 			rsp->OutputBufferLength = cpu_to_le32(56);
++			fixed_len = 56;
+ 		}
+ 		break;
+ 	}
+@@ -5748,6 +5770,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		return -EOPNOTSUPP;
+ 	}
+ 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++			      fixed_len,
+ 			      rsp, work->response_buf);
+ 	path_put(&path);
+ 
+@@ -5862,6 +5885,7 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
+ iov_pin:
+ 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
+ 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++			      le32_to_cpu(rsp->OutputBufferLength),
+ 			      rsp, work->response_buf);
+ 	if (rc)
+ 		goto err_out;
 -- 
 2.53.0
 
