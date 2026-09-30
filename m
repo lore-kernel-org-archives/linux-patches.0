@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34633DC87B;
-	Wed, 30 Sep 2026 18:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3431D3DC4DD;
+	Wed, 30 Sep 2026 18:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793960; cv=none; b=MpQ/qTnyIA0mn1gfpWHuB0lIPf9G0PXknTbuzRWMwLlHXkIPtgRezYxXjamD/s32gv26JAtCLGfwnoyiNkC/L7jVRGiXHxPBgrl5k6kgHCYwWiRdx6zzdTjYomoRbUraZ6UGOyQ7/5UOg4hTRWaIRvaXESgSUh7LFvBlq7Q11P0=
+	t=1790793962; cv=none; b=mWSpLeLvvo8Sbu5x8fBJIXUe4fXjTLTuZ8+CM8QxqOrigE8sXCmT0E9pCTBuHodSAc0JworzE8Q343/E9y0nlHcAJ9W4X89b7YpuvB7IQSyGiTCuvqX1HapWOUgagisH9dDc4M6Eo6nV9CoxpgKGbs+LjUGOEHX24vwrjGzHU3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793960; c=relaxed/simple;
-	bh=W6QuWVgp8tr++jMH9fT/E18Yw96JtxWkcES6M9i43R8=;
+	s=arc-20240116; t=1790793962; c=relaxed/simple;
+	bh=DOBDrwnXkdl0PgwP55A9Pekd6k3YFbdNLqSZIBsTvyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGh17Us7+Qm3Guwv0N2qjV0cSbLNb8qXZ9/nIaYMM1Rthsyha7IvuIY64ZFPMBcpM15cSn0uQTLyD5hymAwrF/4jVeC78y62JclJOc2x7qeeTYpZ9VaVzeDz6RKrMvvVnH6FcrrBKH65/gbaVgFlvUoT2UkkayHaBYoZZKZ/3pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kp47DaXA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NNmeCMi0ks8CB1x1wQ4B0bpTFRcfbBIUo1jE5CFmj3YtUwPpZqAKi24CQWBf+64MKu1EBYS+oLPtzpOHwu+MPMu1W31j6mGG3uPE8HU/9+J5SmZakqaEbG3HIRGQHxnzCbXqaFXkZAiv71o/YHHK0l24ii9hbp3ZWTKxLlCRnPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn8yJpQQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kp47DaXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3CB1F000FF;
-	Wed, 30 Sep 2026 18:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn8yJpQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915551F00899;
+	Wed, 30 Sep 2026 18:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793958;
-	bh=AHUKVoq6Wp9FhOw5P7D/Giz7B90v2d0a24gWb3xev0k=;
+	s=korg; t=1790793960;
+	bh=TtM0F0rEgzZd6MZAR7wlhn79XxW8cp+UYgmQC3KjH3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kp47DaXAVo0wlMNWq2T2z4J4X1Pr8+3W56KuJNqAIAYV6obCB7+kTAdqRQu0cR179
-	 j2l2wYnlyqYWKMS9cvwihOeJ+3SOUHVF+vzpxr4T/DMmKlRUlbjS4pKiE9CLNtmjm9
-	 RJNWMYU5B2eZ6/LDIc2+kj6w7EIBAgsQcifEi/nI=
+	b=Dn8yJpQQIBoH1w1z/ihYrsLtp9s6PDAfQ1JiUCjy+vbesZ32J+/IC65OOQHdzQMal
+	 XQlJcog8TIH8jAqXlq6Uy01KdR8L5SuVObcOyr7jXu0Lhk3omPM8hrxlVNE4Fa56CB
+	 VK8hOA2Ngn3hW/1nX+EW7NqNo5NTzG7/kMS1qZ/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Wu <ray.wu@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	James Lin <pinglei.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Florian Eckert <fe@dev.tdt.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0041/1193] drm/amd/display: Fix CRC open failure during active rendering
-Date: Wed, 30 Sep 2026 17:12:05 +0200
-Message-ID: <20260930152435.196942545@linuxfoundation.org>
+Subject: [PATCH 6.6 0042/1193] PCI: intel-gw: Enable clock before PHY init
+Date: Wed, 30 Sep 2026 17:12:06 +0200
+Message-ID: <20260930152435.219530289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -48,54 +46,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Florian Eckert <fe@dev.tdt.de>
 
-[ Upstream commit 5eb2fdafeb6f4a442643b77a21a4c9e70586a146 ]
+[ Upstream commit febf9ed3c35e5eec7ea384ebbd55a5296e3ca5e9 ]
 
-[Why]
-Opening the CRC data file during active rendering can fail with -EINVAL.
-The wait for commit->hw_done returns remaining jiffies on success, but
-the CRC path was treating that as an error.
+To ensure that the boot sequence is correct, the DWC PCIe core clock must
+be switched on before PHY init call [1]. This changes are based on patched
+kernel sources of the MaxLinear SDK.
 
-[How]
-Handle wait_for_completion_interruptible_timeout() correctly:
-positive return as success, 0 as timeout, and negative as error.
+The reason why the MaxLinear SDK is used as a reference here is, that this
+PCIe DWC IP is used in the URX851 and URX850 SoC. This SoC was originally
+developed by Intel when they acquired Lantiq’s home networking division in
+2015 [2]. In 2020 the home network division was sold to MaxLinear [3].
+Since then, this SoC belongs to MaxLinear. They use their own SDK, which
+runs on kernel version '5.15.x'.
 
-Reviewed-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: James Lin <pinglei.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[1] https://github.com/maxlinear/linux/blob/updk_9.1.90/drivers/pci/controller/dwc/pcie-intel-gw.c#L544
+[2] https://www.intc.com/news-events/press-releases/detail/364/intel-to-acquire-lantiq-advancing-the-connected-home
+[3] https://investors.maxlinear.com/press-releases/detail/395/maxlinear-to-acquire-intels-home-gateway-platform
+
+Signed-off-by: Florian Eckert <fe@dev.tdt.de>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260417-pcie-intel-gw-v5-4-0a2b933fe04f@dev.tdt.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-intel-gw.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-index 52ecfa746b54d..00a8d97752f29 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-@@ -291,8 +291,13 @@ int amdgpu_dm_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
- 		 */
- 		ret = wait_for_completion_interruptible_timeout(
- 			&commit->hw_done, 10 * HZ);
--		if (ret)
-+		if (ret < 0)
-+			goto cleanup;
-+
-+		if (ret == 0) {
-+			ret = -ETIMEDOUT;
- 			goto cleanup;
-+		}
- 	}
+diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
+index c9c93524e01dc..f5e7c57ceae89 100644
+--- a/drivers/pci/controller/dwc/pcie-intel-gw.c
++++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
+@@ -286,13 +286,9 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
  
- 	enable = amdgpu_dm_is_valid_crc_source(source);
+ 	intel_pcie_core_rst_assert(pcie);
+ 	intel_pcie_device_rst_assert(pcie);
+-
+-	ret = phy_init(pcie->phy);
+-	if (ret)
+-		return ret;
+-
+ 	intel_pcie_core_rst_deassert(pcie);
+ 
++	/* Controller clock must be provided earlier than PHY */
+ 	ret = clk_prepare_enable(pcie->core_clk);
+ 	if (ret) {
+ 		dev_err(pcie->pci.dev, "Core clock enable failed: %d\n", ret);
+@@ -301,13 +297,17 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	pci->atu_base = pci->dbi_base + 0xC0000;
+ 
++	ret = phy_init(pcie->phy);
++	if (ret)
++		goto phy_err;
++
+ 	intel_pcie_ltssm_disable(pcie);
+ 	intel_pcie_link_setup(pcie);
+ 	intel_pcie_init_n_fts(pci);
+ 
+ 	ret = dw_pcie_setup_rc(&pci->pp);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	dw_pcie_upconfig_setup(pci);
+ 
+@@ -316,7 +316,7 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	ret = dw_pcie_wait_for_link(pci);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	/* Enable integrated interrupts */
+ 	pcie_app_wr_mask(pcie, PCIE_APP_IRNEN, PCIE_APP_IRN_INT,
+@@ -324,11 +324,12 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	return 0;
+ 
+-app_init_err:
++err:
++	phy_exit(pcie->phy);
++phy_err:
+ 	clk_disable_unprepare(pcie->core_clk);
+ clk_err:
+ 	intel_pcie_core_rst_assert(pcie);
+-	phy_exit(pcie->phy);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
