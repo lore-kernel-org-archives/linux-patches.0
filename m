@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A77F3C09F5;
-	Wed, 30 Sep 2026 19:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E4B3502A8;
+	Wed, 30 Sep 2026 19:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795007; cv=none; b=S7Ko81fn0kIcwymsrtyfkvfiWUWXFpj+ERkqhDkr2RvyVHGfW5XMAK4RIAcNQ+2u6kXSfaiLzaUSj+bLyqgvV18sP1rPsQMAEIHrw9yhqCEju++PbSIjUCyMLdvArj6sHTj93fDrYIa0JYvrxyRE4kWgQgyFxT5GFXYA/lkpGmg=
+	t=1790795010; cv=none; b=d4VEqS1vxijcJIHH6kKjEf1CubCr7NjEHJaSd5Oa6cUtCU74mS3iUUAdFXvJtaFmXPiNbs9okDyxzEkjSnpLmjSqQbbcid9VtsXqC3UUINn2U3q89s6RA1HC4Dr2xypAH5wF0T6dV0EhMIzbyQkUGtAYlb2oyfVGDKxo27N3kw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795007; c=relaxed/simple;
-	bh=Wp7DsJxP80LMtwKH7N+wNxY8k6dEFDLWM0ygfGXfV5I=;
+	s=arc-20240116; t=1790795010; c=relaxed/simple;
+	bh=CbmrwigMaMnIhj5TqGYme9pxua4viknlEBxkapG/KRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/HQlodxIw9NYgeCTqCyAPIDIhszTYUL/Ojj6Aleuv2YB8xRZ4oluIR5KRkihTpIZg7LUlDzQjsARmvyX78Y28C2m1jJFvedCzhZPimJxOjFGYxlNwDFBkCnllfUugK9/52q88RM39F5LCoosfLaIjlnV1+3RqKSVBAqxMrVvIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUa6VTbf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+Tr1GzV5PE8cEUSNBzAHw/v/HaXxEfFUPkgp4Vn4Wqho+b/EFnLr0JHtI8QQwQkjy57xOs0qfKX9yTPT92YQduSoenJHTugeB8lG4+ww2Aa4LmwDPi5fp8wlqtVJs7fPg9qjLePYmTyCX6sDyGtVrQv7h+7TlXUe1WsODmrsUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcrEex9P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUa6VTbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AED1F000FF;
-	Wed, 30 Sep 2026 19:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcrEex9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9831F000FF;
+	Wed, 30 Sep 2026 19:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795006;
-	bh=ODk4INuJIR0fxb0adNA4z5QezcR9TzlRSB3OOqz6bKw=;
+	s=korg; t=1790795009;
+	bh=GvU5IMZtUk1hJn5IngaD5I5tso2ftezqFWeRYTcrib8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUa6VTbfiVJg7GOKXdLlMVSzBZHXshW9/G9VVuvyLdI7kIl5negm3U9GevPQP/f5Y
-	 KHJPqHIYKTLDN2yISNv812Pps1BPbwatIwaGg+XZEOmLFdH2Fbku+MyikRf7E+h/dm
-	 E3y1Zj5+1HX3BMS5+BCZtuE432a8Xzz0tkvxs3/A=
+	b=FcrEex9PBZoUf+qBDr2bX2PHmUnS4SMTfRmPVhncn0L3ey3Gx3KduSz3XP6DM5ph8
+	 ImKdUyutgrLqbbFxi2KkS04vhSqSm3Sy3853dBuZK9avFpjyF37tq9W3PFsLn/3yf3
+	 W/AFquwpiyzk29Blw8Y1Dpxu0Zq9uhWxbImQ8XW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0409/1193] s390/os_info: Introduce value entries
-Date: Wed, 30 Sep 2026 17:18:13 +0200
-Message-ID: <20260930152443.287074532@linuxfoundation.org>
+Subject: [PATCH 6.6 0410/1193] s390/ipl: Fix NULL deref in kdump without re-IPL parm block
+Date: Wed, 30 Sep 2026 17:18:14 +0200
+Message-ID: <20260930152443.310507915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,139 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 88702793c5b4ef127a1f57d76920a80f70d081a7 ]
+[ Upstream commit 7f918871112e8e7c581e99eb8e545af4e59c8367 ]
 
-Introduce entries that do not reference any data in memory,
-but rather provide values. Set the size of such entries to
-zero and do not compute checksum for them, since there is no
-data which integrity needs to be checked. The integrity of
-the value entries itself is still covered by the os_info
-checksum.
+Some IPL types, like HMC FTP boot or QEMU direct kernel boot, might
+not provide an IPL parameter block. In this case, reipl_type_init()
+selects IPL_TYPE_UNKNOWN, and reipl_block_actual remains NULL.
 
-Reserve the lowest unused entry index OS_INFO_RESERVED for
-future use - presumably for the number of entries present.
-That could later be used by user level tools. The existing
-tools would not notice any difference.
+kdump passes the re-IPL parameter block to the dump kernel through
+os_info. Before commit 3b9678472bab ("s390/ipl: correct kdump reipl
+block checksum calculation"), the os_info entry was added only for
+IPL types which initialized reipl_block_actual. That commit moved the
+os_info update to machine_crash_shutdown(), making it unconditional. As
+a result, set_os_info_reipl_block() dereferences reipl_block_actual for
+IPL_TYPE_UNKNOWN. This may happen to work by chance when address zero
+contains readable lowcore data and the resulting empty os_info entry is
+ignored by the dump kernel.
 
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: 7f918871112e ("s390/ipl: Fix NULL deref in kdump without re-IPL parm block")
+Skip the os_info update when no re-IPL parameter block is available.
+Kdump then collect the dump and reboot without setting re-IPL parameter
+block.
+
+Fixes: 3b9678472bab ("s390/ipl: correct kdump reipl block checksum calculation")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/os_info.h | 19 +++++++++++++++----
- arch/s390/kernel/ipl.c          |  6 +++---
- arch/s390/kernel/os_info.c      | 15 +++++++++++++--
- 3 files changed, 31 insertions(+), 9 deletions(-)
+ arch/s390/kernel/ipl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/s390/include/asm/os_info.h b/arch/s390/include/asm/os_info.h
-index a4d2e103f1161..d2f4ba67c006f 100644
---- a/arch/s390/include/asm/os_info.h
-+++ b/arch/s390/include/asm/os_info.h
-@@ -17,11 +17,15 @@
- #define OS_INFO_VMCOREINFO	0
- #define OS_INFO_REIPL_BLOCK	1
- #define OS_INFO_FLAGS_ENTRY	2
-+#define OS_INFO_RESERVED	3
- 
- #define OS_INFO_FLAG_REIPL_CLEAR	(1UL << 0)
- 
- struct os_info_entry {
--	u64	addr;
-+	union {
-+		u64	addr;
-+		u64	val;
-+	};
- 	u64	size;
- 	u32	csum;
- } __packed;
-@@ -33,17 +37,24 @@ struct os_info {
- 	u16	version_minor;
- 	u64	crashkernel_addr;
- 	u64	crashkernel_size;
--	struct os_info_entry entry[3];
--	u8	reserved[4004];
-+	struct os_info_entry entry[4];
-+	u8	reserved[3984];
- } __packed;
- 
- void os_info_init(void);
--void os_info_entry_add(int nr, void *ptr, u64 len);
-+void os_info_entry_add_data(int nr, void *ptr, u64 len);
-+void os_info_entry_add_val(int nr, u64 val);
- void os_info_crashkernel_add(unsigned long base, unsigned long size);
- u32 os_info_csum(struct os_info *os_info);
- 
- #ifdef CONFIG_CRASH_DUMP
- void *os_info_old_entry(int nr, unsigned long *size);
-+static inline unsigned long os_info_old_value(int nr)
-+{
-+	unsigned long size;
-+
-+	return (unsigned long)os_info_old_entry(nr, &size);
-+}
- #else
- static inline void *os_info_old_entry(int nr, unsigned long *size)
- {
 diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
-index a8d20fb88a01c..739fe97720f5f 100644
+index 739fe97720f5f..806a32cb22a7b 100644
 --- a/arch/s390/kernel/ipl.c
 +++ b/arch/s390/kernel/ipl.c
-@@ -1230,8 +1230,8 @@ static struct attribute_group reipl_nss_attr_group = {
+@@ -1230,6 +1230,8 @@ static struct attribute_group reipl_nss_attr_group = {
  
  void set_os_info_reipl_block(void)
  {
--	os_info_entry_add(OS_INFO_REIPL_BLOCK, reipl_block_actual,
--			  reipl_block_actual->hdr.len);
-+	os_info_entry_add_data(OS_INFO_REIPL_BLOCK, reipl_block_actual,
-+			       reipl_block_actual->hdr.len);
++	if (!reipl_block_actual)
++		return;
+ 	os_info_entry_add_data(OS_INFO_REIPL_BLOCK, reipl_block_actual,
+ 			       reipl_block_actual->hdr.len);
  }
- 
- /* reipl type */
-@@ -1964,7 +1964,7 @@ static void dump_reipl_run(struct shutdown_trigger *trigger)
- 	    reipl_type == IPL_TYPE_NSS ||
- 	    reipl_type == IPL_TYPE_UNKNOWN)
- 		os_info_flags |= OS_INFO_FLAG_REIPL_CLEAR;
--	os_info_entry_add(OS_INFO_FLAGS_ENTRY, &os_info_flags, sizeof(os_info_flags));
-+	os_info_entry_add_data(OS_INFO_FLAGS_ENTRY, &os_info_flags, sizeof(os_info_flags));
- 	csum = (__force unsigned int)cksm(reipl_block_actual, reipl_block_actual->hdr.len, 0);
- 	abs_lc = get_abs_lowcore();
- 	abs_lc->ipib = __pa(reipl_block_actual);
-diff --git a/arch/s390/kernel/os_info.c b/arch/s390/kernel/os_info.c
-index a801e6bd53417..3800824f84669 100644
---- a/arch/s390/kernel/os_info.c
-+++ b/arch/s390/kernel/os_info.c
-@@ -43,9 +43,9 @@ void os_info_crashkernel_add(unsigned long base, unsigned long size)
- }
- 
- /*
-- * Add OS info entry and update checksum
-+ * Add OS info data entry and update checksum
-  */
--void os_info_entry_add(int nr, void *ptr, u64 size)
-+void os_info_entry_add_data(int nr, void *ptr, u64 size)
- {
- 	os_info.entry[nr].addr = __pa(ptr);
- 	os_info.entry[nr].size = size;
-@@ -53,6 +53,17 @@ void os_info_entry_add(int nr, void *ptr, u64 size)
- 	os_info.csum = os_info_csum(&os_info);
- }
- 
-+/*
-+ * Add OS info value entry and update checksum
-+ */
-+void os_info_entry_add_val(int nr, u64 value)
-+{
-+	os_info.entry[nr].val = value;
-+	os_info.entry[nr].size = 0;
-+	os_info.entry[nr].csum = 0;
-+	os_info.csum = os_info_csum(&os_info);
-+}
-+
- /*
-  * Initialize OS info structure and set lowcore pointer
-  */
 -- 
 2.53.0
 
