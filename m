@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C617840F74B;
-	Wed, 30 Sep 2026 19:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD80543B6ED;
+	Wed, 30 Sep 2026 19:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797192; cv=none; b=mXN8vWUITIIxZkN2YQGZCz4td89xGduqbEJFN6eUlcwTZiZjjgip/QcV86oa5aJTdIpyFXlThbDfY/YefW9LJm4tP4I4k7i2F/pJU7fMjy0pScG7PPjMxu92livMvhLKnrf5GAS2T3MAz68CX1P9aC8T3IEuDMDM6ueEIIGmCFU=
+	t=1790797194; cv=none; b=WOo01KTY4cH1igXZC6ApRMoKhfLgJM5FqHlW5QHDbGHHxZ4dbuXWpvAh3G6eoaV9toaJmFnh+a46P9mUS4fpXe7W6fmGWXBOlqXyDQcWqCqBPMUO/vNQeVG0oxQXeotXRQZsspVJjhfdU/XCZNdVXZKr1L3PwQdBbef8+1NTFBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797192; c=relaxed/simple;
-	bh=cHgqYLIFzeqiFFSY39nxF+bkKsiLwJp6+6QK6opctiE=;
+	s=arc-20240116; t=1790797194; c=relaxed/simple;
+	bh=PqH5Kr2zWe654P1LaAZt5iw4aaJBZ4T5O9RqLoQFdMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYb+xLXvuIJduUnRSb4kyPf4lzWE3s27x4r+3rkdLmHeAkgnb3MaimJd/nLaHJuAGDtogHXdwtL7i14hVOXDLpyUtwZYembCpJZ1VHNq7/q9nbaNgT47qIx4iBIygSEWic9rGi4k13S7Zy7Yj059J6GLs8Ip2dhdvICbTcfvz6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVhLRKFg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aS6gP5C/gti2jiXAPUNyBRNeOgMFnjujdyUVLLZADFZxr6vKooHV8sx1pOKoQXEmUlSldbKlxLkNKm1mw1zfeXWvPmObXa7/h7C6nEWJYvKSypjY2+rhLLUPcPT+7nuVECP9wL0HD0ePiKaj1jvExlhmt5+msxG7/VWEj/9Hwms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9UhGSDX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVhLRKFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE7D1F000FF;
-	Wed, 30 Sep 2026 19:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9UhGSDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129971F00898;
+	Wed, 30 Sep 2026 19:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797190;
-	bh=xmUUzejW5V5lns+Pw0kUSpz1ccocJzfsUiOXmNSd2FU=;
+	s=korg; t=1790797193;
+	bh=og6B3f7r+9VVU6jFsEFWYzTD41jZB792aRO95DL6hgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVhLRKFgmRfc5bJVAPbc4pa0BOmuTipmw42FaNOH3eQLp0CuImE5QuAcXXhSH+hsC
-	 8ntpEiHUG9ihLUiApnBeK95Z1rdlCWbGGHxJltfhBOouIkQvYUkWLceosQoi/v/W17
-	 J583i7Rx/GPPE336X84fsfKqnQFqmLFFi3w/ItsY=
+	b=x9UhGSDXH+s5/XehNArrI0iX60+tI37W//T9S9KwltLhLfslMSrHAkMprntd4rbJw
+	 oH5L5+Kvy6vf4Mswfm5WPK6XUA5RXe6C1ADHM5VRhDypD4+MchQ7XItwnNdPEYNF21
+	 IThrlKcQduV2D5yL1YEkawDz/tE0GB+u8NpNKyuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Breno Leitao <leitao@debian.org>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1178/1193] usb: xhci: simplify handling of Structural Parameters 1 values
-Date: Wed, 30 Sep 2026 17:31:02 +0200
-Message-ID: <20260930152500.412691991@linuxfoundation.org>
+Subject: [PATCH 6.6 1179/1193] usb: xhci: bail out of setup if the controller is inaccessible
+Date: Wed, 30 Sep 2026 17:31:03 +0200
+Message-ID: <20260930152500.434973756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,367 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit df08973556851b29bd78e79db696d992ed1b43f0 ]
+[ Upstream commit 78203d5b54a40f0e36196ebf31c9c7a380fc8811 ]
 
-The 32-bit read-only HCSPARAMS1 register contains the following fields:
- Bits  7:0   - Number of Device Slots (MaxSlots)
- Bits 18:8   - Number of Interrupters (MaxIntrs)
- Bits 23:19  - Reserved
- Bits 31:24  - Number of Ports (MaxPorts)
+xhci_gen_setup() locates the operational registers using the capability
+length read from the very first register:
 
-Since the register value is constant for the lifetime of the controller,
-it is cached in 'xhci->hcs_params1'. However, platform drivers may
-override the number of interrupters through a separate variable,
-'xhci->max_interrupters', leaving only the maximum slots and ports values
-still derived from the cached register.
+	xhci->op_regs = hcd->regs +
+		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
 
-To simplify the code and improve readability, replace 'xhci->hcs_params1'
-with two dedicated 'u8' fields: 'xhci->max_slots' and 'xhci->max_ports'.
-These values are initialized once and used directly instead of calling
-'HCS_MAX_SLOTS()' and 'HCS_MAX_PORTS()' macros.
+If the controller is dead or has dropped off the bus, that read returns
+~0, HC_LENGTH() truncates it to 0xff, and op_regs ends up 0xff bytes
+past the page-aligned MMIO base, i.e. unaligned. The first access
+through it, xhci_halt() -> xhci_handshake() reading op_regs->status, is
+then an unaligned readl() on device memory. arm64 faults on unaligned
+device accesses, so instead of xhci_handshake() catching the all-ones
+value and returning -ENODEV, setup oopses:
 
-This change reduces code clutter without increasing memory usage.
+  xhci-pci-renesas 0005:08:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  xhci-pci-renesas 0005:08:00.0: xHCI Host Controller
+  xhci-pci-renesas 0005:08:00.0: new USB bus registered, assigned bus number 1
+  Unable to handle kernel paging request at virtual address ffff80030a770103
+    ESR = 0x0000000096000021
+    FSC = 0x21: alignment fault
+  Internal error: Oops: 0000000096000021 [#1]  SMP
+  pc : xhci_halt [xhci_hcd]
+  Call trace:
+   xhci_halt
+   xhci_gen_setup
+   xhci_pci_setup
+   usb_add_hcd
+   usb_hcd_pci_probe
+   xhci_pci_common_probe
+   xhci_pci_renesas_probe
 
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+This was hit with a Renesas uPD720201 that failed to power up ("Unable
+to change power state from D3cold to D0, device inaccessible") yet still
+reached the HCD probe path.
+
+Read the capability register once, and if it reads back the all-ones
+value (as xhci_handshake() and xhci_reset() already test for), abort
+setup with -ENODEV before op_regs is derived from it. Reading it once
+also avoids re-reading a register that may change under a concurrent
+hot-removal.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251119142417.2820519-16-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20260806142113.2436238-11-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-[ Adjusted for this stable tree, which lacks several upstream prerequisites:
-
-  - drivers/usb/host/xhci-debugfs.c: dropped the hunk touching
-    xhci_port_bw_show() and the surrounding SS/HS/FS bandwidth debugfs
-    files, since this tree does not yet have the "port bandwidth"
-    debugfs feature (xhci_get_port_bandwidth() et al.) those hunks
-    apply against.
-
-  - drivers/usb/host/xhci.c: dropped the hunk adding
-    xhci_hcd_page_size(), xhci_enable_max_dev_slots(),
-    xhci_set_cmd_ring_deq(), xhci_set_doorbell_ptr() and
-    xhci_set_dev_notifications() helpers, since this tree does not have
-    the xhci_init()/xhci_gen_setup() refactor that split those out of
-    xhci_mem_init()/xhci_run() - xhci_set_cmd_ring_deq() already exists
-    here in its pre-refactor form, so adding the duplicate would fail
-    to build. The max-slot programming that xhci_enable_max_dev_slots()
-    would have simplified still exists here in its pre-refactor,
-    inlined form in xhci_mem_init() (drivers/usb/host/xhci-mem.c); that
-    site was updated the same way upstream updates the helper: it now
-    uses the cached 'xhci->max_slots' instead of re-deriving it via
-    HCS_MAX_SLOTS(readl(&xhci->cap_regs->hcs_params1)).
-
-  - drivers/usb/host/xhci.h: this tree already independently carries
-    'u8 max_slots' and 'u8 max_ports' fields (used only by other,
-    already-applied backports) plus 'u8 isoc_threshold', so the field
-    additions from this commit are not needed; kept this tree's
-    existing field list unchanged.
-
-  - Removing 'xhci->hcs_params1' also required converting two more
-    leftover open-coded users this backport's original hunks don't
-    cover: xhci-mem.c's real_port bounds checks in the TT-info cleanup
-    paths, and xhci-pci.c's xhci_setup_msix(), which computed the
-    MSI-X vector count from HCS_MAX_INTRS(xhci->hcs_params1) directly.
-    The former now use xhci->max_ports; the latter now uses
-    xhci->max_interrupters, which xhci_gen_setup() has already
-    initialized to HCS_MAX_INTRS(hcs_params1) (or a driver override)
-    by the time xhci_setup_msix() runs. ]
-
-Stable-dep-of: 78203d5b54a4 ("usb: xhci: bail out of setup if the controller is inaccessible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-debugfs.c |   10 +++-------
- drivers/usb/host/xhci-hub.c     |    2 +-
- drivers/usb/host/xhci-mem.c     |   37 ++++++++++++++++---------------------
- drivers/usb/host/xhci-pci.c     |    4 ++--
- drivers/usb/host/xhci-ring.c    |    6 ++----
- drivers/usb/host/xhci.c         |   15 ++++++++-------
- drivers/usb/host/xhci.h         |    1 -
- 7 files changed, 32 insertions(+), 43 deletions(-)
+ drivers/usb/host/xhci.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-debugfs.c
-+++ b/drivers/usb/host/xhci-debugfs.c
-@@ -632,20 +632,16 @@ void xhci_debugfs_remove_slot(struct xhc
- static void xhci_debugfs_create_ports(struct xhci_hcd *xhci,
- 				      struct dentry *parent)
- {
--	unsigned int		num_ports;
- 	char			port_name[8];
- 	struct xhci_port	*port;
- 	struct dentry		*dir;
- 
--	num_ports = HCS_MAX_PORTS(xhci->hcs_params1);
--
- 	parent = debugfs_create_dir("ports", parent);
- 
--	while (num_ports--) {
--		scnprintf(port_name, sizeof(port_name), "port%02d",
--			  num_ports + 1);
-+	for (int i = 0; i < xhci->max_ports; i++) {
-+		scnprintf(port_name, sizeof(port_name), "port%02d", i + 1);
- 		dir = debugfs_create_dir(port_name, parent);
--		port = &xhci->hw_ports[num_ports];
-+		port = &xhci->hw_ports[i];
- 		debugfs_create_file("portsc", 0644, dir, port, &port_fops);
- 	}
- }
---- a/drivers/usb/host/xhci-hub.c
-+++ b/drivers/usb/host/xhci-hub.c
-@@ -731,7 +731,7 @@ static int xhci_enter_test_mode(struct x
- 	/* Disable all Device Slots */
- 	xhci_dbg(xhci, "Disable all slots\n");
- 	spin_unlock_irqrestore(&xhci->lock, *flags);
--	for (i = 1; i <= HCS_MAX_SLOTS(xhci->hcs_params1); i++) {
-+	for (i = 1; i <= xhci->max_slots; i++) {
- 		if (!xhci->devs[i])
- 			continue;
- 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -780,7 +780,7 @@ static void xhci_free_tt_info(struct xhc
- 	 * it may not have the real_port set correctly.
- 	 */
- 	if (virt_dev->real_port == 0 ||
--			virt_dev->real_port > HCS_MAX_PORTS(xhci->hcs_params1)) {
-+			virt_dev->real_port > xhci->max_ports) {
- 		xhci_dbg(xhci, "Bad real port.\n");
- 		return;
- 	}
-@@ -918,7 +918,7 @@ static void xhci_free_virt_devices_depth
- 		return;
- 
- 	if (vdev->real_port == 0 ||
--			vdev->real_port > HCS_MAX_PORTS(xhci->hcs_params1)) {
-+			vdev->real_port > xhci->max_ports) {
- 		xhci_dbg(xhci, "Bad vdev->real_port.\n");
- 		goto out;
- 	}
-@@ -928,7 +928,7 @@ static void xhci_free_virt_devices_depth
- 		/* is this a hub device that added a tt_info to the tts list */
- 		if (tt_info->slot_id == slot_id) {
- 			/* are any devices using this tt_info? */
--			for (i = 1; i < HCS_MAX_SLOTS(xhci->hcs_params1); i++) {
-+			for (i = 1; i < xhci->max_slots; i++) {
- 				vdev = xhci->devs[i];
- 				if (vdev && (vdev->tt_info == tt_info))
- 					xhci_free_virt_devices_depth_first(
-@@ -1878,7 +1878,7 @@ EXPORT_SYMBOL_GPL(xhci_remove_secondary_
- void xhci_mem_cleanup(struct xhci_hcd *xhci)
- {
- 	struct device	*dev = xhci_to_hcd(xhci)->self.sysdev;
--	int i, j, num_ports;
-+	int i, j;
- 
- 	cancel_delayed_work_sync(&xhci->cmd_timer);
- 
-@@ -1897,8 +1897,7 @@ void xhci_mem_cleanup(struct xhci_hcd *x
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "Freed command ring");
- 	xhci_cleanup_command_queue(xhci);
- 
--	num_ports = HCS_MAX_PORTS(xhci->hcs_params1);
--	for (i = 0; i < num_ports && xhci->rh_bw; i++) {
-+	for (i = 0; i < xhci->max_ports && xhci->rh_bw; i++) {
- 		struct xhci_interval_bw_table *bwt = &xhci->rh_bw[i].bw_table;
- 		for (j = 0; j < XHCI_MAX_INTERVAL; j++) {
- 			struct list_head *ep = &bwt->interval_bw[j].endpoints;
-@@ -1907,7 +1906,7 @@ void xhci_mem_cleanup(struct xhci_hcd *x
- 		}
- 	}
- 
--	for (i = HCS_MAX_SLOTS(xhci->hcs_params1); i > 0; i--)
-+	for (i = xhci->max_slots; i > 0; i--)
- 		xhci_free_virt_devices_depth_first(xhci, i);
- 
- 	dma_pool_destroy(xhci->segment_pool);
-@@ -1938,7 +1937,7 @@ void xhci_mem_cleanup(struct xhci_hcd *x
- 	if (!xhci->rh_bw)
- 		goto no_bw;
- 
--	for (i = 0; i < num_ports; i++) {
-+	for (i = 0; i < xhci->max_ports; i++) {
- 		struct xhci_tt_bw_info *tt, *n;
- 		list_for_each_entry_safe(tt, n, &xhci->rh_bw[i].tts, tt_list) {
- 			list_del(&tt->tt_list);
-@@ -2146,7 +2145,7 @@ static void xhci_create_rhub_port_array(
- 	if (!rhub->ports)
- 		return;
- 
--	for (i = 0; i < HCS_MAX_PORTS(xhci->hcs_params1); i++) {
-+	for (i = 0; i < xhci->max_ports; i++) {
- 		if (xhci->hw_ports[i].rhub != rhub ||
- 		    xhci->hw_ports[i].hcd_portnum == DUPLICATE_ENTRY)
- 			continue;
-@@ -2169,19 +2168,17 @@ static int xhci_setup_port_arrays(struct
- {
- 	void __iomem *base;
- 	u32 offset;
--	unsigned int num_ports;
- 	int i, j;
- 	int cap_count = 0;
- 	u32 cap_start;
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 
--	num_ports = HCS_MAX_PORTS(xhci->hcs_params1);
--	xhci->hw_ports = kcalloc_node(num_ports, sizeof(*xhci->hw_ports),
--				flags, dev_to_node(dev));
-+	xhci->hw_ports = kcalloc_node(xhci->max_ports, sizeof(*xhci->hw_ports),
-+				      flags, dev_to_node(dev));
- 	if (!xhci->hw_ports)
- 		return -ENOMEM;
- 
--	for (i = 0; i < num_ports; i++) {
-+	for (i = 0; i < xhci->max_ports; i++) {
- 		xhci->hw_ports[i].port_reg = &xhci->op_regs->port_regs[i];
- 		xhci->hw_ports[i].hw_portnum = i;
- 
-@@ -2189,11 +2186,10 @@ static int xhci_setup_port_arrays(struct
- 		init_completion(&xhci->hw_ports[i].u3exit_done);
- 	}
- 
--	xhci->rh_bw = kcalloc_node(num_ports, sizeof(*xhci->rh_bw), flags,
--				   dev_to_node(dev));
-+	xhci->rh_bw = kcalloc_node(xhci->max_ports, sizeof(*xhci->rh_bw), flags, dev_to_node(dev));
- 	if (!xhci->rh_bw)
- 		return -ENOMEM;
--	for (i = 0; i < num_ports; i++) {
-+	for (i = 0; i < xhci->max_ports; i++) {
- 		struct xhci_interval_bw_table *bw_table;
- 
- 		INIT_LIST_HEAD(&xhci->rh_bw[i].tts);
-@@ -2230,9 +2226,8 @@ static int xhci_setup_port_arrays(struct
- 	offset = cap_start;
- 
- 	while (offset) {
--		xhci_add_in_port(xhci, num_ports, base + offset, cap_count);
--		if (xhci->usb2_rhub.num_ports + xhci->usb3_rhub.num_ports ==
--		    num_ports)
-+		xhci_add_in_port(xhci, xhci->max_ports, base + offset, cap_count);
-+		if (xhci->usb2_rhub.num_ports + xhci->usb3_rhub.num_ports == xhci->max_ports)
- 			break;
- 		offset = xhci_find_next_ext_cap(base, offset,
- 						XHCI_EXT_CAPS_PROTOCOL);
-@@ -2433,7 +2428,7 @@ int xhci_mem_init(struct xhci_hcd *xhci,
- 	 * Program the Number of Device Slots Enabled field in the CONFIG
- 	 * register with the max value of slots the HC can handle.
- 	 */
--	val = HCS_MAX_SLOTS(readl(&xhci->cap_regs->hcs_params1));
-+	val = xhci->max_slots;
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
- 			"// xHC can handle at most %d device slots.", val);
- 	val2 = readl(&xhci->op_regs->config_reg);
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -188,7 +188,7 @@ static int xhci_setup_msix(struct xhci_h
- 	 *   Add additional 1 vector to ensure always available interrupt.
- 	 */
- 	xhci->msix_count = min(num_online_cpus() + 1,
--				HCS_MAX_INTRS(xhci->hcs_params1));
-+				xhci->max_interrupters);
- 
- 	ret = pci_alloc_irq_vectors(pdev, xhci->msix_count, xhci->msix_count,
- 			PCI_IRQ_MSIX);
-@@ -940,7 +940,7 @@ static int xhci_pci_poweroff_late(struct
- 	if (!(xhci->quirks & XHCI_RESET_TO_DEFAULT))
- 		return 0;
- 
--	for (i = 0; i < HCS_MAX_PORTS(xhci->hcs_params1); i++) {
-+	for (i = 0; i < xhci->max_ports; i++) {
- 		port = &xhci->hw_ports[i];
- 		portsc = xhci_portsc_readl(port);
- 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1363,7 +1363,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
- 	xhci_cleanup_command_queue(xhci);
- 
- 	/* return any pending urbs, remove may be waiting for them */
--	for (i = 0; i <= HCS_MAX_SLOTS(xhci->hcs_params1); i++) {
-+	for (i = 0; i <= xhci->max_slots; i++) {
- 		if (!xhci->devs[i])
- 			continue;
- 		for (j = 0; j < 31; j++)
-@@ -1995,7 +1995,6 @@ static void handle_port_status(struct xh
- 	struct usb_hcd *hcd;
- 	u32 port_id;
- 	u32 portsc, cmd_reg;
--	int max_ports;
- 	int slot_id;
- 	unsigned int hcd_portnum;
- 	struct xhci_bus_state *bus_state;
-@@ -2008,9 +2007,8 @@ static void handle_port_status(struct xh
- 			  "WARN: xHC returned failed port status event\n");
- 
- 	port_id = GET_PORT_ID(le32_to_cpu(event->generic.field[0]));
--	max_ports = HCS_MAX_PORTS(xhci->hcs_params1);
- 
--	if ((port_id <= 0) || (port_id > max_ports)) {
-+	if ((port_id <= 0) || (port_id > xhci->max_ports)) {
- 		xhci_warn(xhci, "Port change event with invalid port ID %d\n",
- 			  port_id);
- 		inc_deq(xhci, ir->event_ring);
 --- a/drivers/usb/host/xhci.c
 +++ b/drivers/usb/host/xhci.c
-@@ -289,8 +289,7 @@ static void xhci_zero_64b_regs(struct xh
- 	if (upper_32_bits(val))
- 		xhci_write_64(xhci, 0, &xhci->op_regs->cmd_ring);
- 
--	intrs = min_t(u32, HCS_MAX_INTRS(xhci->hcs_params1),
--		      ARRAY_SIZE(xhci->run_regs->ir_set));
-+	intrs = min_t(u32, xhci->max_interrupters, ARRAY_SIZE(xhci->run_regs->ir_set));
- 
- 	for (i = 0; i < intrs; i++) {
- 		struct xhci_intr_reg __iomem *ir;
-@@ -4057,7 +4056,7 @@ int xhci_alloc_dev(struct usb_hcd *hcd,
- 		xhci_err(xhci, "Error while assigning device slot ID: %s\n",
- 			 xhci_trb_comp_code_string(command->status));
- 		xhci_err(xhci, "Max number of devices this xHCI host supports is %u.\n",
--			 HCS_MAX_SLOTS(xhci->hcs_params1));
-+			 xhci->max_slots);
- 		xhci_free_command(xhci, command);
- 		return 0;
- 	}
-@@ -5249,6 +5248,7 @@ int xhci_gen_setup(struct usb_hcd *hcd,
- 	 */
+@@ -5249,6 +5249,7 @@ int xhci_gen_setup(struct usb_hcd *hcd,
  	struct device		*dev = hcd->self.sysdev;
  	int			retval;
-+	u32			hcs_params1;
+ 	u32			hcs_params1;
++	u32			hc_capbase;
  
  	/* Accept arbitrarily long scatter-gather lists */
  	hcd->self.sg_tablesize = ~0;
-@@ -5274,7 +5274,7 @@ int xhci_gen_setup(struct usb_hcd *hcd,
+@@ -5269,15 +5270,19 @@ int xhci_gen_setup(struct usb_hcd *hcd,
+ 	mutex_init(&xhci->mutex);
+ 	xhci->main_hcd = hcd;
+ 	xhci->cap_regs = hcd->regs;
+-	xhci->op_regs = hcd->regs +
+-		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
++	hc_capbase = readl(&xhci->cap_regs->hc_capbase);
++	if (hc_capbase == U32_MAX) {
++		xhci_warn(xhci, "Host controller not accessible, removed?\n");
++		return -ENODEV;
++	}
++	xhci->op_regs = hcd->regs + HC_LENGTH(hc_capbase);
  	xhci->run_regs = hcd->regs +
  		(readl(&xhci->cap_regs->run_regs_off) & RTSOFF_MASK);
  	/* Cache read-only capability registers */
--	xhci->hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
-+	hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
+ 	hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
  	xhci->hcs_params2 = readl(&xhci->cap_regs->hcs_params2);
  	xhci->hcs_params3 = readl(&xhci->cap_regs->hcs_params3);
- 	xhci->hci_version = HC_VERSION(readl(&xhci->cap_regs->hc_capbase));
-@@ -5283,10 +5283,11 @@ int xhci_gen_setup(struct usb_hcd *hcd,
+-	xhci->hci_version = HC_VERSION(readl(&xhci->cap_regs->hc_capbase));
++	xhci->hci_version = HC_VERSION(hc_capbase);
+ 	xhci->hcc_params = readl(&xhci->cap_regs->hcc_params);
+ 	if (xhci->hci_version > 0x100)
  		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
- 
- 	xhci->dma_mask_bits = 64;
-+	xhci->max_slots = HCS_MAX_SLOTS(hcs_params1);
-+	xhci->max_ports = HCS_MAX_PORTS(hcs_params1);
- 	/* xhci-plat or xhci-pci might have set max_interrupters already */
--	if ((!xhci->max_interrupters) ||
--	    xhci->max_interrupters > HCS_MAX_INTRS(xhci->hcs_params1))
--		xhci->max_interrupters = HCS_MAX_INTRS(xhci->hcs_params1);
-+	if ((!xhci->max_interrupters) || xhci->max_interrupters > HCS_MAX_INTRS(hcs_params1))
-+		xhci->max_interrupters = HCS_MAX_INTRS(hcs_params1);
- 
- 	xhci->quirks |= quirks;
- 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1508,7 +1508,6 @@ struct xhci_hcd {
- 	struct xhci_doorbell_array __iomem *dba;
- 
- 	/* Cached register copies of read-only HC data */
--	__u32		hcs_params1;
- 	__u32		hcs_params2;
- 	__u32		hcs_params3;
- 	__u32		hcc_params;
 
 
