@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FC736A033;
-	Wed, 30 Sep 2026 17:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ABF51FCA3;
+	Wed, 30 Sep 2026 17:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789699; cv=none; b=HguUVTTz1S6lXlMgM1m7C57EHTIkoDx7xlEeTCCkoFAHDojP+nZ5oDfQhOHWRkIuSidpLzcIyuNXFqcVFQXVdpV7m/w2BhlGEF/JVR2LhlTRpyBIqnGjU8hegMiR8zMMS3rx3IJSWgecEJsfp3J2hQJo0hjLYtqmcAWjaxoOEYg=
+	t=1790789702; cv=none; b=rZQDoowKezFyeCfhEHrHiBVhNIrN9Y1aKmOs1latTtzzX6BMh8StC/jMnhWH01nRpBwIZOWW15AUTN80r+o+FO87YgEBNdftBg541ppZ1PBd0mMjDVss9rPfuoNRTN6fu25Z4tDsaxyJJQwlsJfrWW9MZ37FaQZznv7+qtkJ2A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789699; c=relaxed/simple;
-	bh=HgFUigBXJJCyDdreUZgg9pIjJTwuAMFfBt7JAyHfqTU=;
+	s=arc-20240116; t=1790789702; c=relaxed/simple;
+	bh=nJvaww99Z3iMgwb0cbmdN54LMDGJzjeNMdJtGYJMCLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMHWVpzXi1p2NgJHaQ9xllMP8Ipp762ASludw2YdJ/AjmK1vOJionrxmZzCpCtzfapROoBTBgZjr02Ex7l4AeBPb+1x63vC0GgUgbfdgzz8AqTbDU3Vqi7YGPjiwMOcjt1viuqqqgVx8/swG9y2ziiE/dcjnKT7G8v+oIytnxck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuQux8oY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbqk27N0YHflKQYELd6QFU5BE5zStgAF0rT3Ee7LLRbXRtC+In3DxHg2Ep11u9vpbSNSH4GrcmBio7RI14W952tBrYabIy80Kur5gVQcvbKLylSKbaq4otPJsIJHjnAFNvA9lv5ePcC4qWmxmRQWBjNMv8+FBO4RirSsAhbi3SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjG9GdEY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuQux8oY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACEE1F000FF;
-	Wed, 30 Sep 2026 17:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjG9GdEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDB01F00899;
+	Wed, 30 Sep 2026 17:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789698;
-	bh=balYaELiH5nrjBfSujOhMvtYWuW47xp0Sex7qAZ5upk=;
+	s=korg; t=1790789701;
+	bh=jrv9MRMWheg1ofooongatufC/nhERSqtoXZdK9TCUdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iuQux8oYD6+y5T+/8zijDzqUUqIJVRAiOPkprzlQOP145rhfCtcReTpuMEkKvjuzq
-	 HKHfmzY2GSQ7g8/ly0vVbc/mLaDL2zuj+NKmoRNwNhRPPDcJI9Z3GNx5Qy7tjfHu+T
-	 DZGbfbZngr5WsdoS73ccjL+oZhsf3gQX9OusmlAo=
+	b=vjG9GdEY/Sk00/mEyxY5EPhWsu+wL7DbgqZ9jWs40Vl0aTQkOVvdAHZTotb+8GPwb
+	 ljWNb0qaB2IDEZEChvzqKjWeNYYIsL/b3cF0zClANx3RhM4kalJiD4h+21Dyp/eOj1
+	 bwtxztDbOqXCB+tiL1cCmLxb/PJYVHZkYm0LrYPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 569/877] remoteproc: pas: Replace metadata context with PAS context structure
-Date: Wed, 30 Sep 2026 17:24:40 +0200
-Message-ID: <20260930152426.920188273@linuxfoundation.org>
+Subject: [PATCH 6.12 570/877] remoteproc: qcom: pas: Guard dtb metadata release with dtb_pas_id check
+Date: Wed, 30 Sep 2026 17:24:41 +0200
+Message-ID: <20260930152426.941807714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,319 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit b13d8baf56016e7eec29395b52d18b91df081d48 ]
+[ Upstream commit c06c5ab4945392d2c2aded6d832ab6b58cabe351 ]
 
-As a superset of the existing metadata context, the PAS context
-structure enables both remoteproc and non-remoteproc subsystems to
-better support scenarios where the SoC runs with or without the Gunyah
-hypervisor. To reflect this, relevant SCM and metadata functions are
-updated to incorporate PAS context awareness and remove metadata context
-data structure completely.
+All other call sites of qcom_scm_pas_metadata_release() for the DTB
+context are guarded by a check on pas->dtb_pas_id, but the call inside
+qcom_pas_load() was not. Fix this by moving the call to the guarded
+block.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 29814986b82e ("remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260105-kvmrprocv10-v10-5-022e96815380@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260724182858.1868271-3-mukesh.ojha@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-
-Stable adaptation for c06c5ab4945392d2c2aded6d832ab6b58cabe351:
-
-This tree has neither the PAS context allocator nor the later generic
-PAS service and context-aware MDT loader. Define the PAS context in the
-existing SCM header and allocate and initialize it in adsp_probe() using
-devm_kzalloc(), without adding any functions. Keep the stable MDT loader
-interfaces and update their existing context arguments and declarations.
-
-Rename the existing metadata release implementation and its callers to
-qcom_pas_metadata_release(), as used by the target fix. Keep the driver's
-adsp names except for the local PAS pointer in adsp_load(). Handle DTB
-initialization failure inline, preserving its existing cleanup behavior,
-so that the target can remove the shared load-failure cleanup label. The
-remaining load-failure path and its context now support a clean three-way
-cherry-pick of the target without importing the newer loader helper.
-
-Stable-dep-of: c06c5ab49453 ("remoteproc: qcom: pas: Guard dtb metadata release with dtb_pas_id check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/qcom/qcom_scm.c       |   14 ++---
- drivers/remoteproc/qcom_q6v5_pas.c     |   84 ++++++++++++++++++++-------------
- drivers/soc/qcom/mdt_loader.c          |    4 -
- include/linux/firmware/qcom/qcom_scm.h |   10 ++-
- include/linux/soc/qcom/mdt_loader.h    |    6 +-
- 5 files changed, 72 insertions(+), 46 deletions(-)
+ drivers/remoteproc/qcom_q6v5_pas.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -577,16 +577,16 @@ static void qcom_scm_set_download_mode(u
-  *		and optional blob of data used for authenticating the metadata
-  *		and the rest of the firmware
-  * @size:	size of the metadata
-- * @ctx:	optional metadata context
-+ * @ctx:	optional pas context
-  *
-  * Return: 0 on success.
-  *
-  * Upon successful return, the PAS metadata context (@ctx) will be used to
-  * track the metadata allocation, this needs to be released by invoking
-- * qcom_scm_pas_metadata_release() by the caller.
-+ * qcom_pas_metadata_release() by the caller.
-  */
- int qcom_scm_pas_init_image(u32 pas_id, const void *metadata, size_t size,
--			    struct qcom_scm_pas_metadata *ctx)
-+			    struct qcom_scm_pas_context *ctx)
- {
- 	dma_addr_t mdata_phys;
- 	void *mdata_buf;
-@@ -649,10 +649,10 @@ out:
- EXPORT_SYMBOL_GPL(qcom_scm_pas_init_image);
- 
- /**
-- * qcom_scm_pas_metadata_release() - release metadata context
-- * @ctx:	metadata context
-+ * qcom_pas_metadata_release() - release metadata context
-+ * @ctx:	pas context
-  */
--void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx)
-+void qcom_pas_metadata_release(struct qcom_scm_pas_context *ctx)
- {
- 	if (!ctx->ptr)
- 		return;
-@@ -663,7 +663,7 @@ void qcom_scm_pas_metadata_release(struc
- 	ctx->phys = 0;
- 	ctx->size = 0;
- }
--EXPORT_SYMBOL_GPL(qcom_scm_pas_metadata_release);
-+EXPORT_SYMBOL_GPL(qcom_pas_metadata_release);
- 
- /**
-  * qcom_scm_pas_mem_setup() - Prepare the memory related to a given peripheral
 --- a/drivers/remoteproc/qcom_q6v5_pas.c
 +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -115,8 +115,8 @@ struct qcom_adsp {
- 	struct qcom_rproc_ssr ssr_subdev;
- 	struct qcom_sysmon *sysmon;
- 
--	struct qcom_scm_pas_metadata pas_metadata;
--	struct qcom_scm_pas_metadata dtb_pas_metadata;
-+	struct qcom_scm_pas_context *pas_ctx;
-+	struct qcom_scm_pas_context *dtb_pas_ctx;
- };
- 
- static void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
-@@ -203,47 +203,50 @@ static int adsp_unprepare(struct rproc *
- 	struct qcom_adsp *adsp = rproc->priv;
- 
- 	/*
--	 * adsp_load() did pass pas_metadata to the SCM driver for storing
-+	 * adsp_load() did pass the PAS context to the SCM driver for storing
- 	 * metadata context. It might have been released already if
- 	 * auth_and_reset() was successful, but in other cases clean it up
- 	 * here.
- 	 */
--	qcom_scm_pas_metadata_release(&adsp->pas_metadata);
-+	qcom_pas_metadata_release(adsp->pas_ctx);
- 	if (adsp->dtb_pas_id)
--		qcom_scm_pas_metadata_release(&adsp->dtb_pas_metadata);
-+		qcom_pas_metadata_release(adsp->dtb_pas_ctx);
- 
- 	return 0;
- }
- 
- static int adsp_load(struct rproc *rproc, const struct firmware *fw)
- {
--	struct qcom_adsp *adsp = rproc->priv;
-+	struct qcom_adsp *pas = rproc->priv;
- 	int ret;
- 
- 	/* Store firmware handle to be used in adsp_start() */
--	adsp->firmware = fw;
-+	pas->firmware = fw;
- 
--	if (adsp->lite_pas_id)
--		ret = qcom_scm_pas_shutdown(adsp->lite_pas_id);
-+	if (pas->lite_pas_id)
-+		ret = qcom_scm_pas_shutdown(pas->lite_pas_id);
- 
--	if (adsp->dtb_pas_id) {
--		ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
-+	if (pas->dtb_pas_id) {
-+		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
- 		if (ret) {
--			dev_err(adsp->dev, "request_firmware failed for %s: %d\n",
--				adsp->dtb_firmware_name, ret);
-+			dev_err(pas->dev, "request_firmware failed for %s: %d\n",
-+				pas->dtb_firmware_name, ret);
- 			return ret;
- 		}
- 
--		ret = qcom_mdt_pas_init(adsp->dev, adsp->dtb_firmware, adsp->dtb_firmware_name,
--					adsp->dtb_pas_id, adsp->dtb_mem_phys,
--					&adsp->dtb_pas_metadata);
+@@ -247,17 +247,14 @@ static int adsp_load(struct rproc *rproc
+ 					pas->dtb_pas_id, pas->dtb_mem_region,
+ 					pas->dtb_mem_phys, pas->dtb_mem_size,
+ 					&pas->dtb_mem_reloc);
 -		if (ret)
--			goto release_dtb_firmware;
-+		ret = qcom_mdt_pas_init(pas->dev, pas->dtb_firmware, pas->dtb_firmware_name,
-+					pas->dtb_pas_id, pas->dtb_mem_phys,
-+					pas->dtb_pas_ctx);
+-			goto release_dtb_metadata;
 +		if (ret) {
++			qcom_pas_metadata_release(pas->dtb_pas_ctx);
 +			release_firmware(pas->dtb_firmware);
 +			return ret;
 +		}
- 
--		ret = qcom_mdt_load_no_init(adsp->dev, adsp->dtb_firmware, adsp->dtb_firmware_name,
--					    adsp->dtb_pas_id, adsp->dtb_mem_region,
--					    adsp->dtb_mem_phys, adsp->dtb_mem_size,
--					    &adsp->dtb_mem_reloc);
-+		ret = qcom_mdt_load_no_init(
-+					pas->dev, pas->dtb_firmware, pas->dtb_firmware_name,
-+					pas->dtb_pas_id, pas->dtb_mem_region,
-+					pas->dtb_mem_phys, pas->dtb_mem_size,
-+					&pas->dtb_mem_reloc);
- 		if (ret)
- 			goto release_dtb_metadata;
  	}
-@@ -251,10 +254,8 @@ static int adsp_load(struct rproc *rproc
- 	return 0;
  
- release_dtb_metadata:
--	qcom_scm_pas_metadata_release(&adsp->dtb_pas_metadata);
+ 	return 0;
 -
--release_dtb_firmware:
--	release_firmware(adsp->dtb_firmware);
-+	qcom_pas_metadata_release(pas->dtb_pas_ctx);
-+	release_firmware(pas->dtb_firmware);
- 
- 	return ret;
+-release_dtb_metadata:
+-	qcom_pas_metadata_release(pas->dtb_pas_ctx);
+-	release_firmware(pas->dtb_firmware);
+-
+-	return ret;
  }
-@@ -302,7 +303,7 @@ static int adsp_start(struct rproc *rpro
- 	}
  
- 	ret = qcom_mdt_pas_init(adsp->dev, adsp->firmware, rproc->firmware, adsp->pas_id,
--				adsp->mem_phys, &adsp->pas_metadata);
-+				adsp->mem_phys, adsp->pas_ctx);
- 	if (ret)
- 		goto disable_px_supply;
- 
-@@ -328,9 +329,9 @@ static int adsp_start(struct rproc *rpro
- 		goto release_pas_metadata;
- 	}
- 
--	qcom_scm_pas_metadata_release(&adsp->pas_metadata);
-+	qcom_pas_metadata_release(adsp->pas_ctx);
- 	if (adsp->dtb_pas_id)
--		qcom_scm_pas_metadata_release(&adsp->dtb_pas_metadata);
-+		qcom_pas_metadata_release(adsp->dtb_pas_ctx);
- 
- 	/* Remove pointer to the loaded firmware, only valid in adsp_load() & adsp_start() */
- 	adsp->firmware = NULL;
-@@ -338,9 +339,9 @@ static int adsp_start(struct rproc *rpro
- 	return 0;
- 
- release_pas_metadata:
--	qcom_scm_pas_metadata_release(&adsp->pas_metadata);
-+	qcom_pas_metadata_release(adsp->pas_ctx);
- 	if (adsp->dtb_pas_id)
--		qcom_scm_pas_metadata_release(&adsp->dtb_pas_metadata);
-+		qcom_pas_metadata_release(adsp->dtb_pas_ctx);
- disable_px_supply:
- 	if (adsp->px_supply)
- 		regulator_disable(adsp->px_supply);
-@@ -788,6 +789,27 @@ static int adsp_probe(struct platform_de
- 	}
- 
- 	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
-+
-+	adsp->pas_ctx = devm_kzalloc(adsp->dev, sizeof(*adsp->pas_ctx), GFP_KERNEL);
-+	if (!adsp->pas_ctx) {
-+		ret = -ENOMEM;
-+		goto remove_ssr_sysmon;
-+	}
-+	adsp->pas_ctx->dev = adsp->dev;
-+	adsp->pas_ctx->pas_id = adsp->pas_id;
-+	adsp->pas_ctx->mem_phys = adsp->mem_phys;
-+	adsp->pas_ctx->mem_size = adsp->mem_size;
-+
-+	adsp->dtb_pas_ctx = devm_kzalloc(adsp->dev, sizeof(*adsp->dtb_pas_ctx), GFP_KERNEL);
-+	if (!adsp->dtb_pas_ctx) {
-+		ret = -ENOMEM;
-+		goto remove_ssr_sysmon;
-+	}
-+	adsp->dtb_pas_ctx->dev = adsp->dev;
-+	adsp->dtb_pas_ctx->pas_id = adsp->dtb_pas_id;
-+	adsp->dtb_pas_ctx->mem_phys = adsp->dtb_mem_phys;
-+	adsp->dtb_pas_ctx->mem_size = adsp->dtb_mem_size;
-+
- 	ret = rproc_add(rproc);
- 	if (ret)
- 		goto remove_ssr_sysmon;
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -234,13 +234,13 @@ EXPORT_SYMBOL_GPL(qcom_mdt_read_metadata
-  * @fw_name:	name of the firmware, for construction of segment file names
-  * @pas_id:	PAS identifier
-  * @mem_phys:	physical address of allocated memory region
-- * @ctx:	PAS metadata context, to be released by caller
-+ * @ctx:	PAS context, metadata to be released by caller
-  *
-  * Returns 0 on success, negative errno otherwise.
-  */
- int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 		      const char *fw_name, int pas_id, phys_addr_t mem_phys,
--		      struct qcom_scm_pas_metadata *ctx)
-+		      struct qcom_scm_pas_context *ctx)
- {
- 	const struct elf32_phdr *phdrs;
- 	const struct elf32_phdr *phdr;
---- a/include/linux/firmware/qcom/qcom_scm.h
-+++ b/include/linux/firmware/qcom/qcom_scm.h
-@@ -66,15 +66,19 @@ int qcom_scm_set_warm_boot_addr(void *en
- void qcom_scm_cpu_power_down(u32 flags);
- int qcom_scm_set_remote_state(u32 state, u32 id);
- 
--struct qcom_scm_pas_metadata {
-+struct qcom_scm_pas_context {
-+	struct device *dev;
-+	u32 pas_id;
-+	phys_addr_t mem_phys;
-+	size_t mem_size;
- 	void *ptr;
- 	dma_addr_t phys;
- 	ssize_t size;
- };
- 
- int qcom_scm_pas_init_image(u32 pas_id, const void *metadata, size_t size,
--			    struct qcom_scm_pas_metadata *ctx);
--void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx);
-+			    struct qcom_scm_pas_context *ctx);
-+void qcom_pas_metadata_release(struct qcom_scm_pas_context *ctx);
- int qcom_scm_pas_mem_setup(u32 pas_id, phys_addr_t addr, phys_addr_t size);
- int qcom_scm_pas_auth_and_reset(u32 pas_id);
- int qcom_scm_pas_shutdown(u32 pas_id);
---- a/include/linux/soc/qcom/mdt_loader.h
-+++ b/include/linux/soc/qcom/mdt_loader.h
-@@ -10,14 +10,14 @@
- 
- struct device;
- struct firmware;
--struct qcom_scm_pas_metadata;
-+struct qcom_scm_pas_context;
- 
- #if IS_ENABLED(CONFIG_QCOM_MDT_LOADER)
- 
- ssize_t qcom_mdt_get_size(const struct firmware *fw);
- int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 		      const char *fw_name, int pas_id, phys_addr_t mem_phys,
--		      struct qcom_scm_pas_metadata *pas_metadata_ctx);
-+		      struct qcom_scm_pas_context *pas_ctx);
- int qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 		  const char *fw_name, int pas_id, void *mem_region,
- 		  phys_addr_t mem_phys, size_t mem_size,
-@@ -39,7 +39,7 @@ static inline ssize_t qcom_mdt_get_size(
- 
- static inline int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 				    const char *fw_name, int pas_id, phys_addr_t mem_phys,
--				    struct qcom_scm_pas_metadata *pas_metadata_ctx)
-+				    struct qcom_scm_pas_context *pas_ctx)
- {
- 	return -ENODEV;
- }
+ static int adsp_start(struct rproc *rproc)
 
 
