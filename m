@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738F24F3924;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723664E4305;
 	Wed, 30 Sep 2026 15:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783806; cv=none; b=JH+pH5jAm6js1nvQVd+2yo6zNvCH0XpKmzdbMddpZWKur5jkaJ/MqzeVUa4gRYU651XpMM21+7ZxLLVeCIYZpSCAJBFsszWLmvRx2Ol19ugQkUeS43F3z4oxPNymOqJNP2931d+YFMWQC22hfyiEIKVvR1nGntxOBQKpLCO1Dr8=
+	t=1790783806; cv=none; b=eUOfKOH93PLADPO5g1BoMoz0bgUY+He05JpT88ge6VJlUPGPg9mfPfci8DYweqOBDqfJRewWwvRDDCNrZ6BWXdh/3g9xraMipm2bPMksgJBmYHVdVKkI60P5vJ6hPvJNLmbS9hxIGP6PAbG/Vae+nDhxBLmJdCrOcVF7FRWV6Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790783806; c=relaxed/simple;
-	bh=TtjUYbV/7zJVlY1G/2cQUsIeyG/dY40OtFiMzmzb67U=;
+	bh=VQ1EGnFJzW7fUoBgcLoImYLuoBHJ4MLi7xMoCkTNX98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAK3H8SzBDljdLdjkG4PAiOA0UqXIucmZPjFMp/76EzSo9ZxrHtVOPkW4wOgHTv0emrFa0hyRo0aazXpIOCCXgIPuifk2famVTkdiebJF3BXMIDHQWYGL5UTmVrdjRJHCmgFl2a0ENo9YnkH+/p0sb6FrCyPEA1fQwRKF0BPe0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhRKytU4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kE1PYZMf6ThOjZmvfxpRQjkRyAepzKmmN8fFhvjtvr32xmQEkAHBBBBX3nnnBskDc4jd7IQG5aH/PSZ71PmegVdU524yIgy+Mel4n+qAJDsBOXTCvVlfssz0nIfawgkBUuu/2ZthEJvfS0a7aiubkGpVKmLaAhvTH/uWia30yhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/DKYqQp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhRKytU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B931F000FF;
-	Wed, 30 Sep 2026 15:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/DKYqQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F851F00893;
+	Wed, 30 Sep 2026 15:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783801;
-	bh=T0mJ2wUhwVVwszSrEWVcTnqdi8K90Fk/l1Kq9G1cmuQ=;
+	s=korg; t=1790783795;
+	bh=YmHMdABzioxcn6s8JPXAbaQ2oNa1Eu2ycB3hlLQwHtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhRKytU4dMooqINXiwEjIDPHOBVYy2nn5YC0Mg/DhvtOA8tmT4K8TA0OIEtEK5ieq
-	 fq4IMXhjOL6O78Pm7zcsghbU/wH1rJjxlSxng8OmrTFbsoCdHT7NuLoHOQb3VLtYQJ
-	 JPzT02gZQbMcyNC9xJUIIJRUjcmjTqssd94qKv8Y=
+	b=0/DKYqQpG4xcQnPx2FgjbMrzITHDfqj/ydkv366rxVqVGfSxP1Lfir3M0XHnNdVCG
+	 rDbpEXk9fLIZ93kPQZMjlYvtAT86pgPFijVuw6MvFp/ffKZs6kixXGMCVR8+1UR5/r
+	 r6PuCQK1hAn0na6YrS7ldNE+MbzMw6Zo6kIM1Ug0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 526/595] nfc: llcp: fix sdreq TLV list leak on parse/alloc/send failure
-Date: Wed, 30 Sep 2026 17:26:59 +0200
-Message-ID: <20260930152359.019853536@linuxfoundation.org>
+Subject: [PATCH 5.10 498/595] ipvs: revalidate ihl before icmp_send
+Date: Wed, 30 Sep 2026 17:26:31 +0200
+Message-ID: <20260930152358.407833132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,63 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 66f4300206b82b0b143ef0d9be90cd8d29f23a47 ]
+[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
 
-nfc_genl_llc_sdreq() builds a list of TLV nodes while walking nested
-netlink attrs, but 3 error paths (nested-attr parse failure, TLV alloc
-ENOMEM, nfc_llcp_send_snl_sdreq() failure) all skip freeing what was
-already queued.
+While the outer IP header is already pulled into the skb head, we must
+be careful and revalidate the embedded headers after reading them from
+the skb frags to prevent possible out-of-bounds access.
 
-Route them through a new free_list label, mirroring the SDRES path in
-the same file which already does this. Harmless on the success path
-too -- send_snl_sdreq() drains the list as it moves nodes, so it's
-already empty by the time free_list runs.
+One such place reported by Sashiko is ip_vs_in_icmp() where local
+process can change the ihl field and after pskb_may_pull() we can see
+larger value. Even if icmp_send() has checks to prevent out-of-bounds
+access, play safe and add check to drop the packet if the ihl field is
+changed.  As the outer headers are pulled, make sure the transport
+header is updated too, it was used before commit 7fcc2fe39fed ("net:
+icmp: avoid invalid transport header access in icmp_send tracepoint")
 
-Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260914121129.2098606-1-congnt264@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index 1c5b3ce1e8b16..9a503a8a43fbb 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1178,7 +1178,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
- 
- 		if (rc != 0) {
- 			rc = -EINVAL;
--			goto put_local;
-+			goto free_list;
- 		}
- 
- 		if (!sdp_attrs[NFC_SDP_ATTR_URI])
-@@ -1197,7 +1197,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
- 		sdreq = nfc_llcp_build_sdreq_tlv(tid, uri, uri_len);
- 		if (sdreq == NULL) {
- 			rc = -ENOMEM;
--			goto put_local;
-+			goto free_list;
- 		}
- 
- 		tlvs_len += sdreq->tlv_len;
-@@ -1212,6 +1212,9 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
- 
- 	rc = nfc_llcp_send_snl_sdreq(local, &sdreq_list, tlvs_len);
- 
-+free_list:
-+	nfc_llcp_free_sdp_tlv_list(&sdreq_list);
-+
- put_local:
- 	nfc_llcp_local_put(local);
- 
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index c3d2e70bb007b..a49dd1a2ed08e 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1841,6 +1841,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Ensure the IP header is present in headroom */
+ 		if (!pskb_may_pull(skb, hlen_orig))
+ 			goto ignore_tunnel;
++		skb_set_transport_header(skb, hlen_orig);
++		/* Before now we may used ihl from skb frag, revalidate it after
++		 * copying it into skb head to prevent out-of-bounds access
++		 */
++		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
++			goto ignore_tunnel;
+ 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+ 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+ 			type, code, ntohl(info));
 -- 
 2.53.0
 
