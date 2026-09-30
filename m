@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37234F93CC;
-	Wed, 30 Sep 2026 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8766250EBFC;
+	Wed, 30 Sep 2026 15:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782641; cv=none; b=ASr+Vd2v48zijZcmuYJPE9iYjXnB4PZE8kJ/QzJllM7Ea1XjHQNTDBPyLJvIR/kXYnrdy7S5dAtq507eUxT8oigVOxq4ZuKVR5Cg6WwsAzZit1/s6stCZHcp+hR0Nr6S0ZiyOBnnHbdAXmDbv5aBZ6yxE1qaSS5gTqDF7HskI+w=
+	t=1790782650; cv=none; b=cOz/CIbOWrup4oucDJt+x31fxiHtUvN3dglTn1VtnHk+MZp+sGr5w0bpyvpWW+vBo88YhoCiSIM46+jSgEArN6inYr1lWe/LLlesf2zpGhaZk5kZ63kRyAlf6gCuoe3Mgzdb6QIffOnHVPWjDeXMAZBmnCrw3GXyPJPyoLNe3VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782641; c=relaxed/simple;
-	bh=1mTRJiBixJSSo0Alo2QmxEJfi6Gi6FPuURRXb77Dkp4=;
+	s=arc-20240116; t=1790782650; c=relaxed/simple;
+	bh=SPJJ2BeHUQSkhJAbIGRHkjQe4qi+ZhU4Y7EWDwlDGjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKzjwc0HvOQAQrl47Lcf/wAiKZKMyBHLUgzyANurUxyyHwtFsrolhwQKBrxw2Blp5lgULv8us2up6ciVB3zBgL4PiQMLyCa0Kzg7h8nMxXSN59VDfdORLyfoag5//UNhe1J2mbbKzyU7cxvVJL48Z4Rz04anQvhRzjNszZ6YrA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BENt/8Ky; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2pZ9OJJB1J1be5Ji98zLznhUzKcfRwKfvXPMDWbwE1eLa1Crwgx0nE3pmUv9Qd5l+41CCJjYmf0e54Pn5Kg7nGV0+aQ45NnjVfgJVIYq/6YnZmjx/P/egGxv9KVYre4r3sdGljFFXOuIC11rEeVJ26yRpOyr4K8uDsx/ZaWnkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXfvzoj5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BENt/8Ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414A1F0089A;
-	Wed, 30 Sep 2026 15:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXfvzoj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988CA1F000FF;
+	Wed, 30 Sep 2026 15:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782632;
-	bh=rgFMiPzCAXvRb6css9DRH1C8ZHHkuEbgLh8LZi9waKw=;
+	s=korg; t=1790782641;
+	bh=wkIA9M9jsgCn5YDau5F/AnFepzICFmcUXTYn25S81Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BENt/8KyrVf1cP+rgCFT0odREeQiLI5hCsnszelkn/d5MyFJ+Bq4jITca7976mzkk
-	 GRT3pz5/kwZIL3jq1m9N7hM7wzA3zbGROsptq9Nc43JaSo452FuQLMFFuRTuSrrsLq
-	 jy7Oe9+NPVDToYYI2KqyMd5suLFwOQaIW8qJ1KiU=
+	b=RXfvzoj54uConPnmISrkF1r5knZ4uqZ3Dy0MfvrHb71Mav0MMGqgCG61VKOyJaqqQ
+	 xtVahJKXgkzgu24eo5dcCNrZ3I7TJggxRCqXqArfHAhBH8HC1YF2V4xEXIDeHWxBy0
+	 vkYr84Skqay514g7hlg2kQdRnf6pmiCQLg8trJX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/595] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
-Date: Wed, 30 Sep 2026 17:19:23 +0200
-Message-ID: <20260930152349.244862442@linuxfoundation.org>
+Subject: [PATCH 5.10 063/595] mips: cps: Assemble jr.hb with an R2 ISA level
+Date: Wed, 30 Sep 2026 17:19:16 +0200
+Message-ID: <20260930152349.092884212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,82 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
+[ Upstream commit e5d64f868e484da06f5c141c18c32c01c269625e ]
 
-Fix use-after-free issue in acpi_ds_terminate_control_method() by
-clearing references to method locals and arguments.
+A MIPS allmodconfig built with LLVM can select CPU_MIPS32_R1 together
+with MIPS_MT_SMP. In that configuration clang invokes the integrated
+assembler with -march=mips32, and the MIPS MT path in cps-vec.S fails
+to assemble two jr.hb instructions:
 
-Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
+  arch/mips/kernel/cps-vec.S:376:2: error: instruction requires
+  a CPU feature not currently enabled
+
+  arch/mips/kernel/cps-vec.S:490:4: error: instruction requires
+  a CPU feature not currently enabled
+
+The earlier jr.hb in the same file is already assembled inside a .set
+MIPS_ISA_LEVEL_RAW scope. The two failing sites are reached after
+popping back to the file's base ISA level, so LLVM correctly rejects
+them for an R1 target.
+
+Wrap those jr.hb instructions in the same ISA-level push/pop used by
+the working site. This keeps the MT code unchanged while making the
+required R2 hazard-branch encoding explicit to the assembler.
+
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ arch/mips/kernel/cps-vec.S | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index 0f4770a48912d..f77c7f5ab770a 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -698,6 +698,8 @@ void
- acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 				 struct acpi_walk_state *walk_state)
- {
-+	u32 i;
-+	struct acpi_namespace_node *ref_node;
+diff --git a/arch/mips/kernel/cps-vec.S b/arch/mips/kernel/cps-vec.S
+index 4db7ff055c9f7..1673c66e50c24 100644
+--- a/arch/mips/kernel/cps-vec.S
++++ b/arch/mips/kernel/cps-vec.S
+@@ -395,8 +395,11 @@ LEAF(mips_cps_boot_vpes)
+ 	.set	pop
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
+ 	PTR_LA	t1, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 	jr.hb	t1
+ 	 nop
++	.set	pop
+ 1:	mfc0	t1, CP0_MVPCONTROL
+ 	ori	t1, t1, MVPCONTROL_VPC
+ 	mtc0	t1, CP0_MVPCONTROL
+@@ -509,8 +512,11 @@ LEAF(mips_cps_boot_vpes)
+ 	li	t0, TCHALT_H
+ 	mtc0	t0, CP0_TCHALT
+ 	PTR_LA	t0, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 1:	jr.hb	t0
+ 	 nop
++	.set	pop
  
-@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 	}
- 
- 	if (walk_state) {
-+		/*
-+		 * Check if the return value is a ref_of reference to a method local
-+		 * or argument. If so, clear the reference to avoid use-after-free
-+		 * when the walk state is deleted.
-+		 */
-+		if (walk_state->return_desc &&
-+		    (walk_state->return_desc->common.type ==
-+		     ACPI_TYPE_LOCAL_REFERENCE)
-+		    && (walk_state->return_desc->reference.class ==
-+			ACPI_REFCLASS_REFOF)) {
-+			ref_node = walk_state->return_desc->reference.object;
-+			if (ref_node) {
-+
-+				/* Check against method locals */
-+				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
-+					if (ref_node ==
-+					    &walk_state->local_variables[i]) {
-+						acpi_ut_remove_reference
-+						    (walk_state->return_desc);
-+						walk_state->return_desc = NULL;
-+						break;
-+					}
-+				}
-+
-+				/* Check against method arguments if not already cleared */
-+				if (walk_state->return_desc) {
-+					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
-+					     i++) {
-+						if (ref_node ==
-+						    &walk_state->arguments[i]) {
-+							acpi_ut_remove_reference
-+							    (walk_state->
-+							     return_desc);
-+							walk_state->
-+							    return_desc = NULL;
-+							break;
-+						}
-+					}
-+				}
-+			}
-+		}
- 
- 		/* Delete all arguments and locals */
+ 2:
  
 -- 
 2.53.0
