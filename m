@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA1D503900;
-	Wed, 30 Sep 2026 15:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAED4FD27C;
+	Wed, 30 Sep 2026 15:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782730; cv=none; b=ugZxZrpUtLCDWrat7iwcoVB9xkqTGUtC9W6vkHBto74pKurY8B9FbvT/ZA5D+gsn+kry+1hmI4LkzqbFMP+fNDrUUifAidDAjtbLoOfvmCdRy1bj/WAFRr62PTK2LOxNUuhDYuxa9fl2ScnS5bJ5VXomWZbihS1SRHO51hmmKV0=
+	t=1790782734; cv=none; b=Hwq2vWVmvy8PY1tTjXdUv3t3NNC92DYcOjLEgIiA3lkUWSFxoSIamkxIm6HJxEHlx5raIap6aW3ZRE1eml5fUyfxcwVLQectU6VSVRS4AnFMjMvfO9x++KGszzYsyRYgafTLHwyBwvCFWQeH5VAx0rnwLyPichkfF3gWizKBCA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782730; c=relaxed/simple;
-	bh=kms/fOXmilRhaTL/KG67UD4R0Uu4DraxmWgWLCsIz6o=;
+	s=arc-20240116; t=1790782734; c=relaxed/simple;
+	bh=jmvdI2REYyxb9HEyVJmh4OtD5oE6gzTGUH/V/mF+W2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNjg0+QKfua41uGpnobFm7hCzAs3SwYkwJXUdg6Nks9R/6I11K4mQDm5VHu+m3ICYkW5SQ9ESN2v5/EjcC0BifvVWOa3hSbjdPbGRjxJ0ZN6mdDYLy+/a/rdLkkVKKvusr0VkTt7kjkwcXrEMy/XL14msdrndEBZDqt+nB94iP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAbp7xl2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uc+enllBHKkjfGFGHiVKxHn/1xVQVNR1hMPFSCPeE1g8GwZAp62E0mG6l+pHdFyAbxC4tWYpuQV2UwOICCfqcvekLJOns7e08loFQ5RujI8c4ZFF60ZDwcnxIVTbPMAEaXLSvtDrLMUESX9qxDooQVggAgYuOjqNVszPPtMbDuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQhugDNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAbp7xl2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C761F000FF;
-	Wed, 30 Sep 2026 15:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQhugDNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBC41F00898;
+	Wed, 30 Sep 2026 15:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782726;
-	bh=ICcTfNDNUJbMqn2SpV29IGQhcKvObhfPl68kSDKRDOg=;
+	s=korg; t=1790782729;
+	bh=4mJQ9k6j4njzoB+MRVs9UqfS+ELrNknojZPovNuO5EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gAbp7xl2C5Sh4mSbAKfRq8cpbe/UtRWhYBGV6mq9looH1lI89nDuiFl35+argMZ8Q
-	 VeQPQ+y1Cz4wz2wd5cswaiam6H+0Qvh/gtl0YsucgfGbtDGONC/ZAPCDUx9ATwtTvY
-	 xgHUSME8BdNoyanlMAV6ywDCz4wsfTOZUa68SmMM=
+	b=gQhugDNLNyKKpo3ePP9+ycwB2+EtNARwYtXE6YwJ0cEPf2GC+UevBkxL7dokjaDMH
+	 h58fPR8sCeSOSViJUwC/gz39xg8lCSSmQvhShPY//L90llhrbCINzrAZqB9u5eiIXd
+	 cbphlcGlwC1vYx8owg2h8nP3p67ydIKK0+QiAFnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Helge Deller <deller@gmx.de>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 147/595] fbdev: pm2fb: unwind WC setup on probe failure
-Date: Wed, 30 Sep 2026 17:20:40 +0200
-Message-ID: <20260930152350.895871966@linuxfoundation.org>
+Subject: [PATCH 5.10 148/595] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
+Date: Wed, 30 Sep 2026 17:20:41 +0200
+Message-ID: <20260930152350.919246140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,39 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 16eb19f0c90af03bda6ba66586d7bb0e9cf85b43 ]
+[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
 
-Add arch_phys_wc_del() on error path to keep the
-write-combining setup balanced when later probe
-steps fail.
+malidp_runtime_pm_resume() calls clk_prepare_enable() three times
+without checking the return value. If any clock fails to enable, the
+driver silently proceeds with unclocked hardware, leading to undefined
+behavior.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Convert both the resume and suspend paths to use the clk_bulk API:
+clk_bulk_prepare_enable() in resume checks the return value and rolls
+back any successfully enabled clocks on failure;
+clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
+
+This issue was found by code review without access to Mali DP hardware.
+
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pm2fb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
-index 87b6a929a6b39..d7145a6c73545 100644
---- a/drivers/video/fbdev/pm2fb.c
-+++ b/drivers/video/fbdev/pm2fb.c
-@@ -1706,6 +1706,7 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-  err_exit_both:
- 	kfree(info->pixmap.addr);
-  err_exit_pixmap:
-+	arch_phys_wc_del(default_par->wc_cookie);
- 	iounmap(info->screen_base);
- 	release_mem_region(pm2fb_fix.smem_start, pm2fb_fix.smem_len);
-  err_exit_mmio:
+diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+index 69fee05c256cb..c547d13002080 100644
+--- a/drivers/gpu/drm/arm/malidp_drv.c
++++ b/drivers/gpu/drm/arm/malidp_drv.c
+@@ -670,6 +670,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm->dev_private;
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
+ 
+ 	/* we can only suspend if the hardware is in config mode */
+ 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
+@@ -677,9 +682,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	malidp_se_irq_fini(hwdev);
+ 	malidp_de_irq_fini(hwdev);
+ 	hwdev->pm_suspended = true;
+-	clk_disable_unprepare(hwdev->mclk);
+-	clk_disable_unprepare(hwdev->aclk);
+-	clk_disable_unprepare(hwdev->pclk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
+ 
+ 	return 0;
+ }
+@@ -689,10 +692,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm->dev_private;
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
++	int err;
++
++	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
++	if (err)
++		return err;
+ 
+-	clk_prepare_enable(hwdev->pclk);
+-	clk_prepare_enable(hwdev->aclk);
+-	clk_prepare_enable(hwdev->mclk);
+ 	hwdev->pm_suspended = false;
+ 	malidp_de_irq_hw_init(hwdev);
+ 	malidp_se_irq_hw_init(hwdev);
 -- 
 2.53.0
 
