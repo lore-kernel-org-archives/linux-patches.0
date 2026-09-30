@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12534D7D4C;
-	Wed, 30 Sep 2026 16:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56B351596E;
+	Wed, 30 Sep 2026 16:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786876; cv=none; b=GTc26IRyrtWstOKeAAaB/GAqeCwWpFOQrh2fKJLy+WdQUucLQAXqSG3QX6y/b/BVKR0tUmgiPbzeL6twDA27C+YOPU7ign/WDVVWvPc9OjhsYPII4+klhHsrN9MUGCNfOpxarq5qVq6/BIzB7rUW/uo1isJPrb9sO37Gneaqc94=
+	t=1790786880; cv=none; b=EDouk/n2YT6GBy2zqC5uH2OL9cCYrbRQHU/7p01M7uxGjy4tEGYtKjAmxwbJf8z1uYK6VAadaUZA96uhm8qS296xuW1tNTHK5lsltOeA7rqilkB1e5JByc09CvotYoCleQDXTPR2Oeu4jACjleJaYruZMUQ5B/oNgA92RFuVuDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786876; c=relaxed/simple;
-	bh=z0HaXqGQbYjyUHoQvtXWuF+WEMwQXSGUGwIsg+26aJ4=;
+	s=arc-20240116; t=1790786880; c=relaxed/simple;
+	bh=gk3dldzjPf6Q93Q383xbrZkF7QEWc1io5ySmyTXXFQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRSOLiAGa3JSLbJ61KJfEac0lMt2a6mnuV0LFhqAUgNBh9G5N38ZCNi1hZud5UPz3juM5SA09JUvQXOrpeBknSW1b9NTOiejZEWVYKgCU90IP3FduEu9DcX9SowuTFqOLAhW5dkpV4PkMT/UB9EUYoWwPho9osbxn/FhsF2oAD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IE4id8fP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LpDtS54Gi6XmZ9DWmTGpA+XQ4iOyEBCSS3G7XDHnoyHIfUnfHIEebkxa8Dx5ioH2PjJ35vigIE/3yBpXt+6NuhK1pJJc1Wcu1t7KuEyPJ3UfKCDneuQqQ0iqfDvuhf6yX8XTweADobBCtlhjUmL0u9gcn6aQPIiOLtO/lbtilQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7b3dtQF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IE4id8fP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1A61F000FF;
-	Wed, 30 Sep 2026 16:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7b3dtQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9261F000FF;
+	Wed, 30 Sep 2026 16:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786875;
-	bh=b/6JVAPQof05vKqwHvzkQcxHolsnt/OUVYX9Ln7p8E4=;
+	s=korg; t=1790786878;
+	bh=e9FpuHzi8PpUd8QO8qF9yXFGYNhJZB76bfQfZYgrJLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IE4id8fPjt7kWklAxaoVBWOkzWGZhPP9sO0hq8jFSgDvglJ9FwEnN5TjZcmfdM8M4
-	 RH+/VvueqbcXREiO3QutXu6R0A4JpXxzl50snJ3knt4/e2ky4Y93d2vcK9hApx6b46
-	 0gsj/2TAVhvCZ8Fsjp3v/ku7jN5kzn57084+IEtk=
+	b=f7b3dtQFl0xbF2PLj6t7tivQEiQjFwRHLCRSRYheycA++/Ii6aEZu4Jh1twp7cdTT
+	 Q+mvgrZmlDNqgw4j/T5rz308q7t5zwDLULvIq9rXcruZvdvrxAv93zRJFdmKBUnQLq
+	 mFbl0ddOmQsfHcQ2oMImhGmlYbdLPj96360Wr2pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarah Emery <sarah.emery@canonical.com>,
-	Linus Walleij <linusw@kernel.org>,
+	syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 033/457] pinctrl: generic: serialise pinctrl_generic_dt_node_to_map()
-Date: Wed, 30 Sep 2026 17:22:18 +0200
-Message-ID: <20260930152346.748260038@linuxfoundation.org>
+Subject: [PATCH 7.2 034/457] HID: amd_sfh: Validate PCI BAR size before mapping
+Date: Wed, 30 Sep 2026 17:22:19 +0200
+Message-ID: <20260930152346.770210456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,70 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarah Emery <sarah.emery@canonical.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit 51ae99659469edba2e83931efa26b77d36ca02c2 ]
+[ Upstream commit 65bcc5f89704efe5b9d69d4ea2c1002d90c31382 ]
 
-pinctrl_generic_add_group() documents that the caller must take care of
-locking, and pinmux_generic_add_function() needs it too, but
-pinctrl_generic_dt_node_to_map() calls them without holding
-pctldev->mutex, and the core caller in create_pinctrl() does not take it
-either.
+The amd_sfh driver maps PCI BAR 2 using pcim_iomap_regions() and
+subsequently accesses MMIO registers at offsets up to 0x10958 (e.g.,
+AMD_P2C_MSG3 at 0x1068C). However, the driver never validates that the BAR
+size is large enough to cover these accesses. If the driver is bound to a
+device with a smaller BAR 2, this leads to an out-of-bounds memory access
+and a page fault during the probe function.
 
-The driver core calls pinctrl_bind_pins() before probing a device, so
-two devices that reference the same pin controller can run
-pinctrl_generic_dt_node_to_map() on one pctldev at the same time.
+For example, a page fault can occur when reading from privdata->mmio +
+AMD_P2C_MSG3 in mp2_select_ops():
 
-Both `add` functions take the new selector from pctldev->num_groups or
-pctldev->num_functions, and radix_tree_insert() at that index.
-Two racing callers can read the same selector before either
-has inserted, so the second insert collides and fails:
+  BUG: unable to handle page fault for address: ffffc9000390368c
+  PGD 100000067 P4D 100000067 PUD 1012c1067 PMD 105b64067 PTE 0
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:readl arch/x86/include/asm/io.h:59 [inline]
+  RIP: 0010:mp2_select_ops drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:282
+  [inline]
+  RIP: 0010:amd_mp2_pci_probe+0x337/0x5f0
+  drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:487
+  Call Trace:
+   <TASK>
+   local_pci_probe drivers/pci/pci-driver.c:332 [inline]
+   pci_call_probe drivers/pci/pci-driver.c:394 [inline]
+   __pci_device_probe drivers/pci/pci-driver.c:455 [inline]
+   pci_device_probe+0x431/0xc90 drivers/pci/pci-driver.c:489
 
-  k1-pinctrl d401e000.pinctrl:
-  error -EEXIST: error adding function pcie2-0-cfg
-  k1-pinctrl d401e000.pinctrl:
-  does not have pin group pcie0-0-cfg.pcie0-0-pins
+Fix this by verifying that the length of BAR 2 is at least 128KB before
+attempting to map it. Since the maximum accessed offset is 0x10958, and PCI
+BAR sizes are powers of 2, any legitimate hardware will have a BAR size of
+at least 128KB.
 
-leaving one consumer without its pin configuration.
-
-This was hit on a SpacemiT K3 board, where PCIe devices probe in parallel
-against the single shared pin controller.
-
-Take pctldev->mutex across the whole function, so that the groups and the
-function referring are in a single critical section.
-
-Fixes: 43722575e5cd ("pinctrl: add generic functions + pins mapper")
-Signed-off-by: Sarah Emery <sarah.emery@canonical.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
+Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
+Link: https://syzkaller.appspot.com/ai_job?id=3bc1c45c-548f-4ab5-8243-d2c8ec321d6c
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Link: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-generic.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/amd-sfh-hid/amd_sfh_common.h |  4 ++++
+ drivers/hid/amd-sfh-hid/amd_sfh_pcie.c   | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-generic.c b/drivers/pinctrl/pinctrl-generic.c
-index fd6bdb74028aa..4277c87485135 100644
---- a/drivers/pinctrl/pinctrl-generic.c
-+++ b/drivers/pinctrl/pinctrl-generic.c
-@@ -3,8 +3,10 @@
- #define pr_fmt(fmt) "generic pinconfig core: " fmt
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_common.h b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
+index 78f830c133e5c..bd8dc16feb614 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_common.h
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
+@@ -12,11 +12,15 @@
  
- #include <linux/array_size.h>
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/slab.h>
+ #include <linux/mutex.h>
+ #include <linux/pci.h>
++#include <linux/sizes.h>
+ #include "amd_sfh_hid.h"
  
-@@ -196,6 +198,8 @@ static int pinctrl_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	int ngroups = 0;
- 	int ret;
+ #define PCI_DEVICE_ID_AMD_MP2		0x15E4
+ #define PCI_DEVICE_ID_AMD_MP2_1_1	0x164A
  
-+	guard(mutex)(&pctldev->mutex);
++/* The BAR 2 size must cover the highest register offset (0x10958) */
++#define AMD_SFH_MIN_BAR_SIZE		SZ_128K
 +
- 	*maps = NULL;
- 	*num_maps = 0;
+ #define AMD_C2P_MSG(regno) (0x10500 + ((regno) * 4))
+ #define AMD_P2C_MSG(regno) (0x10680 + ((regno) * 4))
  
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+index 4b81cebdc3359..039b6ac327d3d 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+@@ -451,6 +451,16 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
+ 	if (rc)
+ 		return rc;
+ 
++	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_MEM)) {
++		dev_err(&pdev->dev, "BAR 2 is not IORESOURCE_MEM\n");
++		return -ENODEV;
++	}
++
++	if (pci_resource_len(pdev, 2) < AMD_SFH_MIN_BAR_SIZE) {
++		dev_err(&pdev->dev, "BAR 2 is too small\n");
++		return -EINVAL;
++	}
++
+ 	rc = pcim_iomap_regions(pdev, BIT(2), DRIVER_NAME);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
