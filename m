@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225684D1787;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A195385D97;
 	Wed, 30 Sep 2026 15:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783741; cv=none; b=brd8bbRf0lhPDINJd6Sfgxpbwwgw8xyu2kqG/JVVKE+pwlpnZTxSnmMPrZ8rdN0cnUd4fvFFr+tIPqdfxWhtWv+9VlvjbM52ban+7yBNyqBVGq0w8K28D1j6epIMA4l/S9nuejllFcm/J0rcUOweAjeLceQg8GUUaBlSOBroTLA=
+	t=1790783743; cv=none; b=si19FN9H5LQ+iRIjmsx/P+RMEpEhMBY+hAt7xnr6ekzVP/7vm1fZdOHdq3Q1kUClvuEtoUzvtQU+fVP2JZGFOdFnPOTSK7iZPxr0vLhD3SnRHHCRGrb0A1s95/eMGxMF6R91M4qybUDijunUny+NKNZuctwQzIqstrzf/RGApAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783741; c=relaxed/simple;
-	bh=LfF5Pkj7MAcxBFc2eacVCFMAedi6cNVq7DL3b9/21rQ=;
+	s=arc-20240116; t=1790783743; c=relaxed/simple;
+	bh=tcQz/wQdTkE4XdpVRySF5Xbk98v2FE4zDtjC1HrzijY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvkO3R8emx3L9xCIYdOntsWX2Nl4Dr60p4VtZL6uz7SQmeW19Hw6SNY+qf0E6WRw4PfeooZc60KaJuaVovSb3Hzrltg4QoYRlYVGnGFfvAeGsztHLA/ZVj9vZmdthnoU6qUTsdCAzKw4MdEs1E0hkEFmZnLbyVRXMU3QKEau6Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csnz5eFG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3bLzzpz/63DyGtij6GKLbLXexJn59ndbBEdm2L1Gb8MvMnlr9pRmgisoHPIZPTP8wWyCFGFn52vcFa4jCTaluDtYdHQHn0Ltmf1cL3cHzg7ngYb8/uKIGoNA18XVGKn/whfd7TzzT/UWezpZfRShi4oa3rNrDQaQ0dw79v/P1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqolRfpV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csnz5eFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EA51F00898;
-	Wed, 30 Sep 2026 15:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqolRfpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCE81F00899;
+	Wed, 30 Sep 2026 15:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783736;
-	bh=kjJ52cNpi0VRfKNqVFE1pCCKbvGgmtUIRLff10h659I=;
+	s=korg; t=1790783738;
+	bh=eT2WiuK+JUpXp4nLSndodu+SvoXjzPS3xFL5unhTJLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csnz5eFGholFewVqHeoDhVC19du7g2y1hxlUTzSYGPF1BCftPFLTdoo4t/Tw4+UQd
-	 EUsfwxrgB5kyMgD2KfC3dNrEDiYrpv2T5/rap4c+mmepCOeNE1agef+Zt5jGPQQ8uD
-	 WRNZshE4tfCcjEdrvLIy51Lv8m9fn+PxBPxMonZA=
+	b=hqolRfpV8m5ovoxTl1C6mOWvmfdINZQ/P3XgK31bsiEgXO8BehgFS1He0g5Wv6Emd
+	 fezZiMOleNFV1vdtqW0e17QPd6jXGwOXBdDiyxNZGMG2YDyl3+u2LxMY8SJHgsJfTS
+	 6XIrhvxjePuZ0t6zI3z1DaQm5Bwm3fp+QONZM/Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiqi Sun <sunyiqixm@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 505/595] sctp: avoid livelock while updating retransmit path
-Date: Wed, 30 Sep 2026 17:26:38 +0200
-Message-ID: <20260930152358.561772935@linuxfoundation.org>
+Subject: [PATCH 5.10 506/595] net: usb: catc: bound the RX packet length in catc_rx_done()
+Date: Wed, 30 Sep 2026 17:26:39 +0200
+Message-ID: <20260930152358.582390523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,66 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiqi Sun <sunyiqixm@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit d2c31b837406395e576afeb25958c98e9938f3f6 ]
+[ Upstream commit 9d565b6b72fe3f41fd43636e143072848105189f ]
 
-sctp_assoc_update_retran_path() can loop forever when every remaining
-transport, including retran_path, is SCTP_UNCONFIRMED: the state check
-runs before the wraparound test, so the loop cannot observe that it has
-completed a full pass.
+catc_rx_done() walks a multi-packet URB, reading a two-byte length from
+each packet header. Its bound, pkt_len > urb->actual_length, ignores the
+header offset and compares against the whole transfer rather than the
+bytes left from pkt_start, so a crafted packet header makes
+skb_copy_to_linear_data() read past the buffer.
 
-Fix this by considering a transport only when it is not UNCONFIRMED,
-then checking whether the walk has returned to retran_path. This makes
-the full-pass termination independent of the transport state while
-preserving the existing fallback selection semantics.
+A length below ETH_HLEN is also accepted, including zero, and
+eth_type_trans() then reads a MAC header from the uninitialised tailroom
+of a shorter skb. The is_f5u011 branch takes its length straight from
+the transfer, so a zero-length URB reaches the same path.
 
-Also restore the NULL guard around the retran_path assignment. In the
-all-UNCONFIRMED case there is no eligible replacement transport, and
-installing NULL would leave later retransmit-path users and the debug
-print with a NULL path.
+Track the bytes remaining from the current packet, and reject a header
+that does not fit, a length past what is left, and a length below an
+Ethernet header.
 
-Fixes: 4c47af4d5eb2 ("net: sctp: rework multihoming retransmission path selection to rfc4960")
-Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260915095017.942213-1-sunyiqixm@gmail.com
+A transfer shorter than an Ethernet header, including a zero-length one,
+previously became a runt skb passed to netif_rx() and counted as
+received; it is now counted in rx_length_errors and ends the walk.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/AS8P251MB00015FD7716F38C345619B56C8BB2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/usb/catc.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index 8fc11f06ab238..ad1a7368f6ab0 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -1295,18 +1295,19 @@ void sctp_assoc_update_retran_path(struct sctp_association *asoc)
- 		/* Manually skip the head element. */
- 		if (&trans->transports == &asoc->peer.transport_addr_list)
- 			continue;
--		if (trans->state == SCTP_UNCONFIRMED)
--			continue;
--		trans_next = sctp_trans_elect_best(trans, trans_next);
--		/* Active is good enough for immediate return. */
--		if (trans_next->state == SCTP_ACTIVE)
--			break;
-+		if (trans->state != SCTP_UNCONFIRMED) {
-+			trans_next = sctp_trans_elect_best(trans, trans_next);
-+			/* Active is good enough for immediate return. */
-+			if (trans_next->state == SCTP_ACTIVE)
-+				break;
-+		}
- 		/* We've reached the end, time to update path. */
- 		if (trans == asoc->peer.retran_path)
- 			break;
+diff --git a/drivers/net/usb/catc.c b/drivers/net/usb/catc.c
+index 38951608dc572..2983ea88a7614 100644
+--- a/drivers/net/usb/catc.c
++++ b/drivers/net/usb/catc.c
+@@ -239,17 +239,26 @@ static void catc_rx_done(struct urb *urb)
  	}
  
--	asoc->peer.retran_path = trans_next;
-+	if (trans_next)
-+		asoc->peer.retran_path = trans_next;
+ 	do {
+-		if(!catc->is_f5u011) {
+-			pkt_len = le16_to_cpup((__le16*)pkt_start);
+-			if (pkt_len > urb->actual_length) {
++		int remaining = urb->actual_length -
++				(pkt_start - (u8 *)urb->transfer_buffer);
++
++		if (!catc->is_f5u011) {
++			if (remaining < pkt_offset) {
+ 				catc->netdev->stats.rx_length_errors++;
+ 				catc->netdev->stats.rx_errors++;
+ 				break;
+ 			}
++			pkt_len = le16_to_cpup((__le16 *)pkt_start);
+ 		} else {
+ 			pkt_len = urb->actual_length;
+ 		}
  
- 	pr_debug("%s: association:%p updated new path to addr:%pISpc\n",
- 		 __func__, asoc, &asoc->peer.retran_path->ipaddr.sa);
++		if (pkt_len < ETH_HLEN || pkt_len + pkt_offset > remaining) {
++			catc->netdev->stats.rx_length_errors++;
++			catc->netdev->stats.rx_errors++;
++			break;
++		}
++
+ 		if (!(skb = dev_alloc_skb(pkt_len)))
+ 			return;
+ 
 -- 
 2.53.0
 
