@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3804851FCCC;
-	Wed, 30 Sep 2026 18:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62ED4EE877;
+	Wed, 30 Sep 2026 18:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791430; cv=none; b=XWRXODoJw6eHdKT5VVIDwWM4gZv0xMqosigMiJJf5OuLkIXzr9bRVX8g4HCX/K4OVRYawtprL8PqWoxmGP4j9yw4BS3X/6BEkwTI1VF9fK38FW6GvCo5How1GcGlrWgLkGm87y9ZoTRCjhhHys5tuwe+G9QMxxT56pc4imHAu+E=
+	t=1790791432; cv=none; b=YbxX5TJYEZKQzly0gDGhI0vSXB/2JnLiB0R0VXaKulSVs/Z4gVoZKjfua9Ce0bblA253C6YJ/wAPi24L8UgnpaRhOwMm54qO6tuJWaIiJK+CNmqA6DzW0zbJkTjPIN+uNUausnOELii6trYq29p7GfKU6b13nXGXWSeNX/Gg75M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791430; c=relaxed/simple;
-	bh=R3o0ZDXr1J7D0d7rSwJU5cSfMLlz5OfxzL1dIlqvnZw=;
+	s=arc-20240116; t=1790791432; c=relaxed/simple;
+	bh=ANyXOg+uDukqGdWNwFtGbmxJo0KRqFia0v0Q1rMOkPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmAVqqpTI5r85FYWMZVi8P6Jd3RMHBHFkYkUdOHKPokEO2Y3hHNe6PbtHJ+L1kf/2GUcnFoEqfh6BnjzDqNP5txTW8C/kdPwWlBFPuSmOLau40obWLibsMEtKWa4Sv92O7QglXGx1WsEwEDGMkIYYznOYoONyfzKmw/nCplWdnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wf5Gmbsv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MPs+w++fJR1j9Zk128XWm8LQEZHac5PVvF9KSI/+S0j0c1pMVnC4ZT6V3cs6dditfa89MCaGFiajsCN0yL4K3wAdmqNb1bXti8SbzCPq9ydFtD1XECxZ+Kc6oEGc0q+mheWcILqExaYEXuXcLnng78kpObVkmLR/eiTipMzN6aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm7CcBEO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wf5Gmbsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515041F000FF;
-	Wed, 30 Sep 2026 18:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm7CcBEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2586A1F000FF;
+	Wed, 30 Sep 2026 18:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791428;
-	bh=DgF1CgYpiCSOqoue/ABrHf0C0N0Cj28EUbGw0GG8gjQ=;
+	s=korg; t=1790791431;
+	bh=ItF9vleld4DOiJ2O4aXL83XaDrk4nU2QrOiPNSmkAyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wf5Gmbsv+BJmahsJbCqm7c5S8a8sGKOCZ5e9e5GppLINOY1LJ5KLP6twN0i57gyk7
-	 G5X/l4XwBSRSYu+ceuOESBkberkItgyyvD33R2WTqIidFIn0RqkapNgjwS1DtB5wMk
-	 LOsmM1le6ldmPvfCRF2pKAueViZE8TLnEhuO7k2U=
+	b=Qm7CcBEOdMUSJr6IwqM5n9EWpVTh17KwhjR/FjKAs0TI51Pkb1GAWEWkTgKu8zTap
+	 JuW7oX0M8Dg2OKzZurGPeuSPARM8qMhdFd6Q8LN7I0HGIstxm0LihSYLvO4JbSvPxA
+	 gWzFAO/eJ/6IMtcFQt635Aal97vkpKltlvGLHKUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Petz <tamas.petz@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/752] perf/core: Skip empty AUX records with only format flags
-Date: Wed, 30 Sep 2026 17:22:22 +0200
-Message-ID: <20260930152404.171692842@linuxfoundation.org>
+Subject: [PATCH 5.15 299/752] ALSA: caiaq: Fix potential double-free at error path
+Date: Wed, 30 Sep 2026 17:22:49 +0200
+Message-ID: <20260930152404.760198341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,77 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8a7f5b5e860b5c113ca99acd5b1e9074f5c5af3c ]
+[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
 
-perf_aux_output_end() emits a PERF_RECORD_AUX when the recorded size is
-nonzero or when any flag other than PERF_AUX_FLAG_OVERWRITE is set.
+The fix for caiaq driver's resource management to handle the errors
+tries to release the resources in a common destructor call, but as a
+sashiko review for another patch suggested, some of the audio
+resources such as URBs have been already freed, and this may lead to a
+double-free.
 
-PMU format flags describe how an AUX payload is encoded. TRBE driver
-sets PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW for raw trace buffers, causing
-an AUX record to be emitted even when no trace data.
+For addressing the double-free, call the common destructor function
+from each place, and assure that the resource pointers get cleared.
 
-This is noticeable when tracing a task with strace. Ptrace stops
-repeatedly end empty AUX transactions, producing many zero-sized
-PERF_RECORD_AUX records. For example:
-
-  perf record -e cs_etm//u -m,128M -- strace ls
-
-  perf script -D 2>&1 |
-     awk '/PERF_RECORD_AUX offset/ {
-        for (i = 1; i <= NF; i++)
-                if ($i == "size:" && $(i + 1) == "0")
-                        count++
-     }
-     END { print count }'
-  165
-
-This recording contains 165 zero-sized AUX records which provide no
-useful information to userspace.
-
-Ignore PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK, together with
-PERF_AUX_FLAG_OVERWRITE, when deciding whether an empty AUX record is
-useful. Zero-sized records carrying TRUNCATED, PARTIAL or COLLISION
-are still emitted.
-
-Fixes: 547b60988e63 ("perf: aux: Add flags for the buffer format")
-Reported-by: Tamas Petz <tamas.petz@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260825-perf_core_fix_zero_aux_records-v1-1-23b95e8d5df3@arm.com
+Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
+Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
+Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/usb/caiaq/audio.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index 3e1655374c2ed..a6f0f8e175ec8 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -501,7 +501,10 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	/*
- 	 * Only send RECORD_AUX if we have something useful to communicate
- 	 *
--	 * Note: the OVERWRITE records by themselves are not considered
-+	 * PMU_FORMAT bits identify the PMU type rather than an AUX event
-+	 * has occurred, so ignore them for zero-sized records.
-+	 *
-+	 * The OVERWRITE records by themselves are not considered
- 	 * useful, as they don't communicate any *new* information,
- 	 * aside from the short-lived offset, that becomes history at
- 	 * the next event sched-in and therefore isn't useful.
-@@ -510,7 +513,9 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	 * offset. So, from now on we don't output AUX records that
- 	 * have *only* OVERWRITE flag set.
- 	 */
--	if (size || (handle->aux_flags & ~(u64)PERF_AUX_FLAG_OVERWRITE))
-+	if (size ||
-+	    (handle->aux_flags & ~(u64)(PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK |
-+					PERF_AUX_FLAG_OVERWRITE)))
- 		perf_event_aux_event(handle->event, aux_head, size,
- 				     handle->aux_flags);
+diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
+index 7a89872aa0cbd..11d959887de56 100644
+--- a/sound/usb/caiaq/audio.c
++++ b/sound/usb/caiaq/audio.c
+@@ -853,16 +853,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
  
+ 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+ 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
+-		free_urbs(cdev->data_urbs_out);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+@@ -883,6 +880,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
+ 
+ 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
+ 	free_urbs(cdev->data_urbs_in);
++	cdev->data_urbs_in = NULL;
+ 	free_urbs(cdev->data_urbs_out);
++	cdev->data_urbs_out = NULL;
+ 	kfree(cdev->data_cb_info);
++	cdev->data_cb_info = NULL;
+ }
 -- 
 2.53.0
 
