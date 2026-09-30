@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D774E50CF;
-	Wed, 30 Sep 2026 15:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96EA4F4D08;
+	Wed, 30 Sep 2026 15:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783932; cv=none; b=NxfupJA5j0qZXBEC8uuk//ZDTABRnDBGhTF1stZq4sR6xR2mPSKGoh5wJfaIwQMTA3C1SO620blwhXBKOXVJy1C6fOqC5ml5K3xwEmHppnpjHRQ3/ArvzEdIGolcXb1tbndNpL7gRhxhYf9tWlMhzvcAn/2rl/G7gI8sPj0prk0=
+	t=1790783934; cv=none; b=aEFMHOAFHCr14Wl7PT199NKDx4cGqowozN2XEVcojJsmOP3ZFtGYCehwMDb7n6Va7LfDQPJgGEL6drdqq+aAFjmwDeXGnr/fgrFDQTNwMgVFETvV+R969l0yad/BqEW6CHDRAqOuzYEN3DhJvrejJYGNMZx18tLGm9RyjybaLl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783932; c=relaxed/simple;
-	bh=cEKi4P/rXp4v20GUYi2yFsRNa86TrvOB94OCB80ZjoI=;
+	s=arc-20240116; t=1790783934; c=relaxed/simple;
+	bh=k4OE1DwMc2srES8FqnrntyMAUV48jbWAZYNpZE+nUVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvKbU6nYbDufUHU/D0bmEbbhrH+wbkillE3EFHQJZzvtMUjtRML+E6WO6WgNNVHxZrzENtM1BUQmHbYvdGWFi8eSyuTg3hUtD+ev6h0i3ztxTbe5Jylr9aGPxq2S5OzVIWoF21QC76y9M64BbkH+Iw6IWgLsZvepq6YWVLiRDqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tETSFbp8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VG1pJ+3XPdFwPSU7D8l9Rujox/RFAfcsAzS7miXq1WuSSvNAjHDlCGIQHfHpOntnuMHooqUG6gecd8NuOH6L5MpKzaMDKubkjOgDssO2hBFE0RuxuEIfA/2OZfWMH8e6VcYlXmMoQPXXXAXASIPKZ8iBNauHV0pQkmIdaOGtVkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSxTGYF/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tETSFbp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A6E1F000FF;
-	Wed, 30 Sep 2026 15:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSxTGYF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57A21F00898;
+	Wed, 30 Sep 2026 15:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783923;
-	bh=KFp1VlLMb1/ZlMYMZcNmv1FN05ERxx0C8QJ+tMYavHk=;
+	s=korg; t=1790783929;
+	bh=kKGei2f2rfNPR7LGRYnRGMwjasLdvwKhKRtj26zv1o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tETSFbp8dqvaD4zq5/FEBhRRDqDnx0oLHQstH/75hoXudcTXajN+59snParBBM3w+
-	 bFIg3bLQR4KeFF1GXnWA3H0GCY93nXft7FTIipma9gGJPQtLfScmA0LToLJhM3YyY2
-	 agBBib1P4nPDygnbAe1heVzBqrogHUz3madYHENU=
+	b=vSxTGYF/PZJ+032Oq53G+563LyAjTU8XxNigputAgInHZoceOi6PgaSnh9PE7sfpk
+	 z0a2+5HEoVM3YPdz8N7dduf+/TnIeoAULKiGOUQEYns5oi0BX7+nmCJNoRplmyTD42
+	 SvNCjZqDiU0Qq49PDdwnIfsVi7zxnCXMtsJB+pBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <killertofu@gmail.com>,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 570/595] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
-Date: Wed, 30 Sep 2026 17:27:43 +0200
-Message-ID: <20260930152359.983955324@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 572/595] net/sched: reject IDR error pointers when deleting actions
+Date: Wed, 30 Sep 2026 17:27:45 +0200
+Message-ID: <20260930152400.034318486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,62 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie LAW <98lawweijie@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
+commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
 
-The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
-invalid offset to hid_field_extract(), resulting in memory reads at
-incorrect addresses -- possibly beyond the end of the report.  If a
-field in the HID descriptor lists more usages than its Report Count
-actually reserves space for, the function's inner 'j' will walk past
-the end of the field:
+tcf_action_delete() drops the reference held by its lookup before calling
+tcf_idr_delete_index() with the saved action index.  An unlocked
+classifier can remove that action and reserve the same IDR slot with
+ERR_PTR(-EBUSY) in between.
 
-	for (i = 0; i < report->maxfield; i++) {
-		for (j = 0; j < report->field[i]->maxusage; j++) {
-			...
-			value = hid_field_extract(hdev, raw_data + 1,
-						  offset + j * size, size);
+tcf_idr_delete_index() only checks the lookup result for NULL.  It
+therefore treats the reservation as a tc_action and dereferences
+tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
+interleaving without changing the kernel source.  KASAN reported this
+decoded trace:
 
-A descriptor listing 12288 usages against Report Count 1 has the loop
-extract the usage at index 12287 from bit offset 98296 -- about 12 KB
-past a 2-byte received report.  The value is stored in
-wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
-making this an information disclosure.
+  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
+  Read of size 4 at addr 0000000000000010 by task poc/150
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
+  RIP: tca_action_gd+0x5c0/0x1010:
+    arch_atomic_read at arch/x86/include/asm/atomic.h:23
+    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
+    atomic_read at include/linux/atomic/atomic-instrumented.h:33
+    tcf_idr_delete_index at net/sched/act_api.c:766
+    tcf_action_delete at net/sched/act_api.c:1859
+    tcf_del_notify at net/sched/act_api.c:2014
+    tca_action_gd at net/sched/act_api.c:2064
+  R13: 0000000000000010 R15: fffffffffffffff0
+  Kernel panic - not syncing: Fatal exception
 
-Clamp the loop to field->report_count, the number of value slots the
-report holds.  Value slots past the last declared usage are still
-scanned; they reuse that usage (HID 1.11, 6.2.2.8).
+R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
+the address in R13.  With the guard applied, the same reproducer returned
+-ENOENT without a KASAN report or panic.  Treat error pointers as absent
+and return -ENOENT.
 
-Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
-such a descriptor trips KASAN before the patch and not after it.
-
-Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
-Suggested-by: Jason Gerecke <killertofu@gmail.com>
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: GLM:glm-5.3
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/act_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -102,8 +102,9 @@ static int wacom_wac_pen_serial_enforce(
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -401,7 +401,7 @@ static int tcf_idr_delete_index(struct t
  
- 	/* Queue events which have invalid tool type or serial number */
- 	for (i = 0; i < report->maxfield; i++) {
--		for (j = 0; j < report->field[i]->maxusage; j++) {
--			struct hid_field *field = report->field[i];
-+		struct hid_field *field = report->field[i];
-+
-+		for (j = 0; j < field->report_count; j++) {
- 			struct hid_usage *usage = &field->usage[j];
- 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 			unsigned int offset;
+ 	mutex_lock(&idrinfo->lock);
+ 	p = idr_find(&idrinfo->action_idr, index);
+-	if (!p) {
++	if (IS_ERR_OR_NULL(p)) {
+ 		mutex_unlock(&idrinfo->lock);
+ 		return -ENOENT;
+ 	}
 
 
