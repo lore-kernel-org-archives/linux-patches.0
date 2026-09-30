@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80B4BD348;
-	Wed, 30 Sep 2026 16:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0469451614B;
+	Wed, 30 Sep 2026 16:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784799; cv=none; b=fCqcJP4Huu16KjAh915+C0zz1h5E8TO1G4pcCoJ6TQts/CihxNklcFu9V3zgjN2pF9FnGEsPHxcmZr2Nb/JGxEKgYp56as3qF9xAUyBqlAuO9A81mIYDh/h6qOE90BQPlYum+9pplg+7c05SmQrUi5OaXLalcWCAzl8VfzGnoS8=
+	t=1790784803; cv=none; b=A3BWRTHFlqHef0WDrMqGn6IXzAKs7XxjFJ0aGBrBCdm1LBMxAar8pkLKY4hSe2d6Du9MhGVTyrU2lvoXZZJYuH7avFooCShEMBRtIvD82IP1oOPfYXI41SOJp+neL69AWjfaeh6IhnjYd73XKHSNLrIHqPbGiEvtBuA2FUK0kLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784799; c=relaxed/simple;
-	bh=AOtSYjkguWQGZA5Uc61HxA456Ml3RO14CH/38xYz8b0=;
+	s=arc-20240116; t=1790784803; c=relaxed/simple;
+	bh=xwH6NHyWOYm3/+XwPaffOt8K6KxguMLtHaMCm+e+wtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8ZsDDpiqimGKoH1wz0BmiiPscc2DePoF8o4xNcK2CNtRG8N4lHTZU0nqWFc54qgCZHZ3X7E0h2lk557U5o0Kt/guhuGnNLEDdNEwblqNEvjrMBy6zRmyEA/rrEXd0QMs8iBMyddSBg+gF3x6TvFp2GievNOCn9k4DJfDo7M0pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siI1MCmL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZwPropgwmv7F1xzHpRHbapiRSh3IoJljbB1fyBHcJsf9maHNJzgWcDeeDs7GgLZz8O6I1PVnbrz0chlQGQe/pwggUQSd8FXWnRy0GftxtlQHT5lx+cMK6cj+Z6uqTdf/Q/ZFLkkr8xj/xdyLvMtUbfLlgxC3BH7PHXHXC09v0ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb3fu6o0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siI1MCmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135721F00893;
-	Wed, 30 Sep 2026 16:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb3fu6o0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6091F000FF;
+	Wed, 30 Sep 2026 16:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784793;
-	bh=9ZJBg+AhElXCRTn3k+3XLnKUvn0+4yM8M2X1GnfygZM=;
+	s=korg; t=1790784796;
+	bh=xr5Gu9aRcyqWCOnKYw6B4HLv9zWiAz97sVq3+Ra+OgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=siI1MCmLuIzxA6uUFtFZrxtsbq55g6oI0bFAy6MDTph6g1zD245n+wG1q+OmvL/iv
-	 AA9gTBsABYinIVo+GG6axmjKaYihrp2oksnjMEpPsTyP2HQBHntGvkxy9U+NNuRMi1
-	 S8VgWh0yIAlhsjqldqFwfsfFyKo9qDwr7UX4FSmA=
+	b=Cb3fu6o0/UAXh4cwpJgYKYNynm5WJfb8MPn+Xkn/fKtqA8CjWFBxahUsjn7TKd8HH
+	 56Ie1CuQaQiCel1u/1SgZ27g4XC5Hy6CKToiogpG7ad/VawtXh6kx64Th0yQev8VMB
+	 zNPTgMp9b8LVL/cDOizuh0M4ybR3dtbaipcsGHdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Lindner <lindner.markus@outlook.at>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 281/982] ALSA: usb-audio: Add dB map quirk for Razer Barracuda X 2.4
-Date: Wed, 30 Sep 2026 17:16:57 +0200
-Message-ID: <20260930152422.833534806@linuxfoundation.org>
+Subject: [PATCH 6.1 255/982] wifi: cfg80211: validate rx/tx MLME callback frame lengths before access
+Date: Wed, 30 Sep 2026 17:16:31 +0200
+Message-ID: <20260930152422.272963143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,64 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Lindner <lindner.markus@outlook.at>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit acd8aa3c4b91a38c8521000790890bc9d1083f1d ]
+[ Upstream commit d5e4586546974179feca305a94e07fac3e9727fe ]
 
-The Razer Barracuda X 2.4 GHz USB headset dongle (0x1532:0x0552)
-reports a minimum volume register value of cval->min = -16800.
+cfg80211_rx_mlme_mgmt() and cfg80211_tx_mlme_mgmt() call tracepoints
+before rejecting frames shorter than the frame-control field. After
+that, they only require len >= 2 before dispatching into subtype
+handlers that assume their fixed fields are present.
 
-In UAC 1/256 dB units, -16800 corresponds to -65.625 dB. However,
-stock ALSA misinterprets this raw integer as 1/100 dB units
-(-168.00 dB), causing user-space audio servers (PipeWire /
-PulseAudio) to map their volume curves against an incorrectly wide
-range.
+The frames that trip this are not shorter than 2 bytes; they are short
+relative to their subtype. mwifiex is a concrete in-tree example on the
+length side: mwifiex_process_mgmt_packet() only requires a 4-address
+ieee80211_hdr plus the 2-byte firmware length prefix before handing the
+frame to cfg80211_rx_mlme_mgmt(). After stripping the length prefix and
+removing addr4, pkt_len can be exactly 24: a bare 3-address management
+header with no reason-code body. The existing WARN_ON(len < 2) does not
+fire on such a frame, and cfg80211_process_deauth() then reads
+u.deauth.reason_code as a two-byte access starting at offset 24,
+immediately past the 24-byte buffer.
 
-Add an explicit usbmix_dB_map entry overriding Unit 2 to -6562
-(-65.62 dB) to accurately report the physical hardware
-attenuation bounds.
+Add a frame-control length gate, then validate each subtype's minimum
+frame size in an if/else-if chain that mirrors the dispatch logic. Trace
+only after the frame is known to be well-formed.
 
-Signed-off-by: Markus Lindner <lindner.markus@outlook.at>
-Link: https://patch.msgid.link/AS8P195MB2142F4EFF83980BD02BA6566E1C12@AS8P195MB2142.EURP195.PROD.OUTLOOK.COM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Side effects of this change:
+ - The WARN_ON(len < 2) is dropped. It only guarded the frame_control
+   read, never the subtype fixed fields, and it does not fire on the
+   frames that actually trigger the out-of-bounds read (which are >= 2).
+   The len >= 2 check is kept as the guard before dereferencing
+   frame_control, but without the warning: these are exported callbacks
+   and a malformed frame from a driver should be dropped silently rather
+   than backtraced.
+ - cfg80211_tx_mlme_mgmt() previously routed every non-deauth subtype
+   through disassociation handling; it now silently ignores unrecognised
+   subtypes.
+
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260707025336.22557-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/wireless/mlme.c | 45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index faac7df1fbcf0..4d8dca04f87d0 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -344,6 +344,16 @@ static const struct usbmix_name_map bose_soundlink_map[] = {
- 	{ 0 }	/* terminator */
- };
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index 4ba97fdbf724d..3cc0026f378be 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -158,19 +158,35 @@ void cfg80211_rx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len)
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	struct ieee80211_mgmt *mgmt = (void *)buf;
++	__le16 fc;
  
-+/*
-+ * Razer Barracuda X 2.4: Firmware reports cval->min = -16800 in 1/256 dB units
-+ * (-65.62 dB), which stock ALSA misinterprets as a -168 dB floor
-+ */
-+static const struct usbmix_dB_map razer_barracuda_x_2_4_dB = {-6562, 0};
-+static const struct usbmix_name_map razer_barracuda_x_2_4_map[] = {
-+	{ 2, NULL, .dB = &razer_barracuda_x_2_4_dB },
-+	{ 0 }   /* terminator */
-+};
+ 	ASSERT_WDEV_LOCK(wdev);
+ 
+-	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
++	if (len < sizeof(fc))
++		return;
 +
- /* Sennheiser Communications Headset [PC 8], the dB value is reported as -6 negative maximum  */
- static const struct usbmix_dB_map sennheiser_pc8_dB = {-9500, 0};
- static const struct usbmix_name_map sennheiser_pc8_map[] = {
-@@ -689,6 +699,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x17aa, 0x1046),
- 		.map = lenovo_p620_rear_map,
- 	},
-+	{
-+		/* Razer Barracuda X 2.4 */
-+		.id = USB_ID(0x1532, 0x0552),
-+		.map = razer_barracuda_x_2_4_map,
-+	},
- 	{
- 		/* Sennheiser Communications Headset [PC 8] */
- 		.id = USB_ID(0x1395, 0x0025),
++	fc = mgmt->frame_control;
+ 
+-	if (WARN_ON(len < 2))
++	if (ieee80211_is_auth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.auth.status_code))
++			return;
++	} else if (ieee80211_is_deauth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
++			return;
++	} else if (ieee80211_is_disassoc(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
++			return;
++	} else {
+ 		return;
++	}
++
++	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
+ 
+-	if (ieee80211_is_auth(mgmt->frame_control))
++	if (ieee80211_is_auth(fc))
+ 		cfg80211_process_auth(wdev, buf, len);
+-	else if (ieee80211_is_deauth(mgmt->frame_control))
++	else if (ieee80211_is_deauth(fc))
+ 		cfg80211_process_deauth(wdev, buf, len, false);
+-	else if (ieee80211_is_disassoc(mgmt->frame_control))
++	else
+ 		cfg80211_process_disassoc(wdev, buf, len, false);
+ }
+ EXPORT_SYMBOL(cfg80211_rx_mlme_mgmt);
+@@ -223,15 +239,28 @@ void cfg80211_tx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len,
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	struct ieee80211_mgmt *mgmt = (void *)buf;
++	__le16 fc;
+ 
+ 	ASSERT_WDEV_LOCK(wdev);
+ 
+-	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
++	if (len < sizeof(fc))
++		return;
+ 
+-	if (WARN_ON(len < 2))
++	fc = mgmt->frame_control;
++
++	if (ieee80211_is_deauth(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
++			return;
++	} else if (ieee80211_is_disassoc(fc)) {
++		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
++			return;
++	} else {
+ 		return;
++	}
++
++	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
+ 
+-	if (ieee80211_is_deauth(mgmt->frame_control))
++	if (ieee80211_is_deauth(fc))
+ 		cfg80211_process_deauth(wdev, buf, len, reconnect);
+ 	else
+ 		cfg80211_process_disassoc(wdev, buf, len, reconnect);
 -- 
 2.53.0
 
