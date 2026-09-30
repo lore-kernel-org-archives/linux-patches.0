@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E313A361DA8;
-	Wed, 30 Sep 2026 16:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27E94DE722;
+	Wed, 30 Sep 2026 16:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785449; cv=none; b=usG6Pi+tDMyfFT2yNfkrR/tWoh6tp84o/EpoLgFO5E4SaCS0YZDAjuJABdcGCymWDQ+bgQA37889nJ5U9GBm7B3jbvCBcyBRgujYPoihTCTZTdGH22CHVSagdRWZA7bh19X54p6/vAeiauJm+yrXcpQH+zeTs7ufqmQi5P1/1r4=
+	t=1790785451; cv=none; b=kd6WjBBk7AfriGBGDL8vy8JjPmqL18OhUucI2VAUzuoRQqI5okLgXdr92PWpFuPgWFHxmZar+pzJ7XHOtjEf3bQRhu28eIbvWDbP6Fg4IAZ6x1SM/wwuZp/LGcba0wNSsv4fV1UuD0gNnc9ANC9N6zjBrc9Mf1rYZOwqMIc2/RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785449; c=relaxed/simple;
-	bh=k/8KF0leY6FXMyiI9uIVwciZUqJgOoWs7pnUYFSDCh8=;
+	s=arc-20240116; t=1790785451; c=relaxed/simple;
+	bh=st0zgxgqkGUO82DqdVoZu3rWycNMuqMJfrihbsa8OXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/7FzxcM1YzWUV28EHSJ/pzi9QEsdRx+5wixyZZQgDmkrAd4tXW3Zhng4Ti2W5BEm4kuDHl0n7fsfSZRWKbMjN5SWQaQEHwMU+F/2hz4eXJESNU7XwEVIBs8X/4AYdc7Cx4/uAMxTB9+DRU+8aY+Wt2tU7KuCLHrtbc/ee/PxH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdp/c6rD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pOvW7FyhOE7uyJZX5xwg8kSSMEK8EkLY3XsTUHG8ET/a7qXQSpvE2CSFrMhRByph+VbYCEE0btxhhvyfYeMZbLTalGemmrAuvh9chQeXX38FCroKEywD0ebgc0KAuIKUMcjj0jXc5phD65IYdrb7W8gF5RYslcRLlkFStf6WOoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY0u4PxM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdp/c6rD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AC41F00893;
-	Wed, 30 Sep 2026 16:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY0u4PxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FFC1F000FF;
+	Wed, 30 Sep 2026 16:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785444;
-	bh=h5udVSGjpFUAMQCeIonU6s3yhSwPaxcm2CLx29hMVz8=;
+	s=korg; t=1790785446;
+	bh=5NBHVTM4m3OKIWwObQ+/2mwz7d6oDk5kQZbqsAeYx5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tdp/c6rDAVvoREhKDPffEqKtZtGiLuMAhW2DvAtAYI+SgCwGAr/20vGH0BpyY49ZE
-	 64uY8nTw+7uS9R1LyjJgvOGhRkDJcOPSnLGjJlRn6bCBqdxxMXJ/6jFSzrJexaakHl
-	 D10YQSsZvSmVqfiJxT/vxpVcsXFRH/Kk33UCbGVQ=
+	b=gY0u4PxMzoahH81fpcPyZNu0ie5icc7dY9GkhCjoj6nkt0DWHBb1VjYZ3GT5UXr1a
+	 qhKeKMmSNbka2cE/0C7guayzMer+dh59T9R2+nurzA4IYhcfOH0cDzMl0RZkY91/uM
+	 N/vDLdoHy82NAWK6OTC97jidm9QVITWd9Pq3aVlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Miguel Gazquez <miguel.gazquez@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 494/982] ipv4: adopt dst_dev, skb_dst_dev and skb_dst_dev_net[_rcu]
-Date: Wed, 30 Sep 2026 17:20:30 +0200
-Message-ID: <20260930152427.391235500@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 512/982] ASoC: sprd: validate compress buffer sizes against fixed allocations
+Date: Wed, 30 Sep 2026 17:20:48 +0200
+Message-ID: <20260930152427.774163501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,404 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit a74fc62eec155ca5a6da8ff3856f3dc87fe24558 ]
+commit 7a4ce92d150b9e7ecf1a710a34d8cdeb590d3751 upstream.
 
-Use the new helpers as a first step to deal with
-potential dst->dev races.
+sprd_platform_compr_open() allocates the stage 0 IRAM buffer (32K data
+area) and the stage 1 DDR buffer (2M data area) with fixed sizes, but
+sprd_platform_compr_copy() derives all copy lengths from the user
+controlled runtime->fragment_size and the write() count, never
+comparing them against the physical buffer sizes. The compress core
+only checks fragment_size * fragments for an u32 overflow in
+snd_compress_check_input(), so a local user can configure a logical
+buffer of up to ~4GB via SNDRV_COMPRESS_SET_PARAMS, far exceeding the
+fixed allocations.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ minor modifications to fix conflict ]
-Signed-off-by: Miguel Gazquez <miguel.gazquez@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A fragment_size larger than the 32K IRAM data area makes the stage 0
+copy_from_user() overflow past the IRAM allocation, and a buffer_size
+larger than the 2M DDR buffer makes the wrapping copy at the end of
+sprd_platform_compr_copy() write fully user controlled data past the
+buffer. No SNDRV_PCM_TRIGGER_START is needed, a write() in SETUP
+state reaches the copy callback directly.
+
+Reject parameters that do not fit into the fixed buffers in
+set_params(), and fix the advertised max fragment size: 128K never
+fitted into the 32K IRAM buffer. The caps values may have been carried over
+from the qdsp6 driver, which allocates its buffers according to the
+advertised maxima, unlike this driver. With 32K as max fragment size
+the advertised limits are self-consistent: 32K * 64 = 2M equals the
+DDR buffer size.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: cce1396936ef ("ASoC: sprd: Add Spreadtrum audio compress offload support")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/4386bc53631b052c1866a91061715b009d98b04f@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/inet_hashtables.h |  2 +-
- include/net/ip.h              | 11 ++++++-----
- include/net/route.h           |  2 +-
- net/ipv4/icmp.c               | 24 +++++++++++++-----------
- net/ipv4/igmp.c               |  2 +-
- net/ipv4/ip_fragment.c        |  2 +-
- net/ipv4/ip_output.c          |  4 ++--
- net/ipv4/ip_vti.c             |  4 ++--
- net/ipv4/netfilter.c          |  4 ++--
- net/ipv4/route.c              |  8 ++++----
- net/ipv4/tcp_fastopen.c       |  4 +++-
- net/ipv4/tcp_ipv4.c           |  3 ++-
- net/ipv4/tcp_metrics.c        |  8 ++++----
- net/ipv4/xfrm4_output.c       |  2 +-
- 14 files changed, 43 insertions(+), 37 deletions(-)
+ sound/soc/sprd/sprd-pcm-compress.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index ce58cf10ecb43..ac85405308c9c 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -470,7 +470,7 @@ static inline struct sock *__inet_lookup_skb(struct inet_hashinfo *hashinfo,
- 	if (sk)
- 		return sk;
+--- a/sound/soc/sprd/sprd-pcm-compress.c
++++ b/sound/soc/sprd/sprd-pcm-compress.c
+@@ -17,7 +17,7 @@
  
--	return __inet_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
-+	return __inet_lookup(skb_dst_dev_net(skb), hashinfo, skb,
- 			     doff, iph->saddr, sport,
- 			     iph->daddr, dport, inet_iif(skb), sdif,
- 			     refcounted);
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 05ce8b38e3dab..414772ca7bb77 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -452,7 +452,7 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- 						    bool forwarding)
- {
- 	const struct rtable *rt = container_of(dst, struct rtable, dst);
--	struct net *net = dev_net(dst->dev);
-+	struct net *net = dev_net(dst_dev(dst));
- 	unsigned int mtu;
+ /* Default values if userspace does not set */
+ #define SPRD_COMPR_MIN_FRAGMENT_SIZE	SZ_8K
+-#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_128K
++#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_32K
+ #define SPRD_COMPR_MIN_NUM_FRAGMENTS	4
+ #define SPRD_COMPR_MAX_NUM_FRAGMENTS	64
  
- 	if (READ_ONCE(net->ipv4.sysctl_ip_fwd_use_pmtu) ||
-@@ -468,7 +468,7 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- 	if (mtu)
- 		goto out;
- 
--	mtu = READ_ONCE(dst->dev->mtu);
-+	mtu = READ_ONCE(dst_dev(dst)->mtu);
- 
- 	if (unlikely(ip_mtu_locked(dst))) {
- 		if (rt->rt_uses_gateway && mtu > 576)
-@@ -484,16 +484,17 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
- 					  const struct sk_buff *skb)
- {
-+	const struct dst_entry *dst = skb_dst(skb);
- 	unsigned int mtu;
- 
- 	if (!sk || !sk_fullsock(sk) || ip_sk_use_pmtu(sk)) {
- 		bool forwarding = IPCB(skb)->flags & IPSKB_FORWARDED;
- 
--		return ip_dst_mtu_maybe_forward(skb_dst(skb), forwarding);
-+		return ip_dst_mtu_maybe_forward(dst, forwarding);
- 	}
- 
--	mtu = min(READ_ONCE(skb_dst(skb)->dev->mtu), IP_MAX_MTU);
--	return mtu - lwtunnel_headroom(skb_dst(skb)->lwtstate, mtu);
-+	mtu = min(READ_ONCE(dst_dev(dst)->mtu), IP_MAX_MTU);
-+	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
- }
- 
- struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
-diff --git a/include/net/route.h b/include/net/route.h
-index 4fa45dda2bb32..ce608f8830401 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -362,7 +362,7 @@ static inline int ip4_dst_hoplimit(const struct dst_entry *dst)
- 		const struct net *net;
- 
- 		rcu_read_lock();
--		net = dev_net_rcu(dst->dev);
-+		net = dev_net_rcu(dst_dev(dst));
- 		hoplimit = READ_ONCE(net->ipv4.sysctl_ip_default_ttl);
- 		rcu_read_unlock();
- 	}
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 7c4c7b7fe3846..f0c8c3366740a 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -313,18 +313,20 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
- {
- 	struct dst_entry *dst = &rt->dst;
- 	struct inet_peer *peer;
-+	struct net_device *dev;
- 	bool rc = true;
- 
- 	if (!apply_ratelimit)
- 		return true;
- 
- 	/* No rate limit on loopback */
--	if (dst->dev && (dst->dev->flags&IFF_LOOPBACK))
-+	dev = dst_dev(dst);
-+	if (dev && (dev->flags & IFF_LOOPBACK))
- 		goto out;
- 
- 	rcu_read_lock();
- 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
--			       l3mdev_master_ifindex_rcu(dst->dev));
-+			       l3mdev_master_ifindex_rcu(dev));
- 	rc = inet_peer_xrlim_allow(peer,
- 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
- 	rcu_read_unlock();
-@@ -472,13 +474,13 @@ static void icmp_reply(struct icmp_bxm *icmp_param, struct sk_buff *skb)
-  */
- static struct net_device *icmp_get_route_lookup_dev(struct sk_buff *skb)
- {
--	struct net_device *route_lookup_dev = NULL;
-+	struct net_device *dev = skb->dev;
-+	const struct dst_entry *dst;
- 
--	if (skb->dev)
--		route_lookup_dev = skb->dev;
--	else if (skb_dst(skb))
--		route_lookup_dev = skb_dst(skb)->dev;
--	return route_lookup_dev;
-+	if (dev)
-+		return dev;
-+	dst = skb_dst(skb);
-+	return dst ? dst_dev(dst) : NULL;
- }
- 
- static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
-@@ -911,7 +913,7 @@ static enum skb_drop_reason icmp_unreach(struct sk_buff *skb)
- 	struct net *net;
- 	u32 info = 0;
- 
--	net = dev_net_rcu(skb_dst(skb)->dev);
-+	net = skb_dst_dev_net_rcu(skb);
+@@ -272,6 +272,19 @@ static int sprd_platform_compr_set_param
+ 	int ret;
  
  	/*
- 	 *	Incomplete header ?
-@@ -1054,7 +1056,7 @@ static enum skb_drop_reason icmp_echo(struct sk_buff *skb)
- 	struct icmp_bxm icmp_param;
- 	struct net *net;
- 
--	net = dev_net_rcu(skb_dst(skb)->dev);
-+	net = skb_dst_dev_net_rcu(skb);
- 	/* should there be an ICMP stat for ignored echos? */
- 	if (READ_ONCE(net->ipv4.sysctl_icmp_echo_ignore_all))
- 		return SKB_NOT_DROPPED_YET;
-@@ -1231,7 +1233,7 @@ static enum skb_drop_reason icmp_timestamp(struct sk_buff *skb)
- 	return SKB_NOT_DROPPED_YET;
- 
- out_err:
--	__ICMP_INC_STATS(dev_net_rcu(skb_dst(skb)->dev), ICMP_MIB_INERRORS);
-+	__ICMP_INC_STATS(skb_dst_dev_net_rcu(skb), ICMP_MIB_INERRORS);
- 	return SKB_DROP_REASON_PKT_TOO_SMALL;
- }
- 
-diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index ede991885b1f8..1b8adf5fbf8a4 100644
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -428,7 +428,7 @@ static int igmpv3_sendpack(struct sk_buff *skb)
- 
- 	pig->csum = ip_compute_csum(igmp_hdr(skb), igmplen);
- 
--	return ip_local_out(dev_net(skb_dst(skb)->dev), skb->sk, skb);
-+	return ip_local_out(skb_dst_dev_net(skb), skb->sk, skb);
- }
- 
- static int grec_size(struct ip_mc_list *pmc, int type, int gdel, int sdel)
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 0ed999fdca2d7..a70ede523297c 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -481,7 +481,7 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
- /* Process an incoming IP datagram fragment. */
- int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
- {
--	struct net_device *dev = skb->dev ? : skb_dst(skb)->dev;
-+	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
- 	int vif = l3mdev_master_ifindex_rcu(dev);
- 	struct ipq *qp;
- 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 6fd7995ff8dd1..707c634c0305a 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -113,7 +113,7 @@ int __ip_local_out(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	skb->protocol = htons(ETH_P_IP);
- 
- 	return nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT,
--		       net, sk, skb, NULL, skb_dst(skb)->dev,
-+		       net, sk, skb, NULL, skb_dst_dev(skb),
- 		       dst_output);
- }
- 
-@@ -195,7 +195,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
- {
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct rtable *rt = (struct rtable *)dst;
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
- 	struct neighbour *neigh;
- 	bool is_v6gw = false;
-diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
-index 7daf01af6295a..2e07592d8b966 100644
---- a/net/ipv4/ip_vti.c
-+++ b/net/ipv4/ip_vti.c
-@@ -226,7 +226,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
- 		goto tx_error_icmp;
- 	}
- 
--	tdev = dst->dev;
-+	tdev = dst_dev(dst);
- 
- 	if (tdev == dev) {
- 		dst_release(dst);
-@@ -256,7 +256,7 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
- xmit:
- 	skb_scrub_packet(skb, !net_eq(tunnel->net, dev_net(dev)));
- 	skb_dst_set(skb, dst);
--	skb->dev = skb_dst(skb)->dev;
-+	skb->dev = skb_dst_dev(skb);
- 
- 	err = dst_output(tunnel->net, skb->sk, skb);
- 	if (net_xmit_eval(err) == 0)
-diff --git a/net/ipv4/netfilter.c b/net/ipv4/netfilter.c
-index bd135165482aa..c450509d6efde 100644
---- a/net/ipv4/netfilter.c
-+++ b/net/ipv4/netfilter.c
-@@ -19,12 +19,12 @@
- /* route_me_harder function, used by iptable_nat, iptable_mangle + ip_queue */
- int ip_route_me_harder(struct net *net, struct sock *sk, struct sk_buff *skb, unsigned int addr_type)
- {
-+	struct net_device *dev = skb_dst_dev(skb);
- 	const struct iphdr *iph = ip_hdr(skb);
- 	struct rtable *rt;
- 	struct flowi4 fl4 = {};
- 	__be32 saddr = iph->saddr;
- 	__u8 flags;
--	struct net_device *dev = skb_dst(skb)->dev;
- 	struct flow_keys flkeys;
- 	unsigned int hh_len;
- 
-@@ -73,7 +73,7 @@ int ip_route_me_harder(struct net *net, struct sock *sk, struct sk_buff *skb, un
- #endif
- 
- 	/* Change in oif may mean change in hh_len. */
--	hh_len = skb_dst(skb)->dev->hard_header_len;
-+	hh_len = skb_dst_dev(skb)->hard_header_len;
- 	if (skb_headroom(skb) < hh_len &&
- 	    pskb_expand_head(skb, HH_DATA_ALIGN(hh_len - skb_headroom(skb)),
- 				0, GFP_ATOMIC))
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 783460ebfc471..a2985265c7929 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -416,7 +416,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
- 					   const void *daddr)
- {
- 	const struct rtable *rt = container_of(dst, struct rtable, dst);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	struct neighbour *n;
- 
- 	rcu_read_lock();
-@@ -443,7 +443,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
- static void ipv4_confirm_neigh(const struct dst_entry *dst, const void *daddr)
- {
- 	const struct rtable *rt = container_of(dst, struct rtable, dst);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	const __be32 *pkey = daddr;
- 
- 	if (rt->rt_gw_family == AF_INET) {
-@@ -1069,7 +1069,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
- 		return;
- 
- 	rcu_read_lock();
--	net = dev_net_rcu(dst->dev);
-+	net = dev_net_rcu(dst_dev(dst));
- 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
- 		lock = true;
- 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
-@@ -1367,7 +1367,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
- 	struct net *net;
- 
- 	rcu_read_lock();
--	net = dev_net_rcu(dst->dev);
-+	net = dev_net_rcu(dst_dev(dst));
- 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
- 				   net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index c99f10786c1f9..156685b4ae68a 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -558,6 +558,7 @@ bool tcp_fastopen_active_should_disable(struct sock *sk)
- void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
- {
- 	struct tcp_sock *tp = tcp_sk(sk);
-+	struct net_device *dev;
- 	struct dst_entry *dst;
- 	struct sk_buff *skb;
- 
-@@ -575,7 +576,8 @@ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
- 	} else if (tp->syn_fastopen_ch &&
- 		   atomic_read(&sock_net(sk)->ipv4.tfo_active_disable_times)) {
- 		dst = sk_dst_get(sk);
--		if (!(dst && dst->dev && (dst->dev->flags & IFF_LOOPBACK)))
-+		dev = dst ? dst_dev(dst) : NULL;
-+		if (!(dev && (dev->flags & IFF_LOOPBACK)))
- 			atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);
- 		dst_release(dst);
- 	}
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index ec3b0aa0a6260..9c5d227b749c4 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -733,7 +733,8 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
- 	arg.iov[0].iov_base = (unsigned char *)&rep;
- 	arg.iov[0].iov_len  = sizeof(rep.th);
- 
--	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
-+	net = sk ? sock_net(sk) : skb_dst_dev_net(skb);
++	 * The stage 0 IRAM buffer and the stage 1 DDR buffer are allocated
++	 * with fixed sizes at open time, so the requested fragment size and
++	 * fragments must fit into them, otherwise sprd_platform_compr_copy()
++	 * would overflow the buffers. Note the compress core only checks the
++	 * fragment size and fragments against an u32 overflow, not against
++	 * the buffer sizes advertised by get_caps.
++	 */
++	if (params->buffer.fragment_size > SPRD_COMPR_IRAM_BUF_SIZE ||
++	    (u64)params->buffer.fragment_size * params->buffer.fragments >
++	    SPRD_COMPR_AREA_BUF_SIZE)
++		return -EINVAL;
 +
- #ifdef CONFIG_TCP_MD5SIG
- 	rcu_read_lock();
- 	hash_location = tcp_parse_md5sig_option(th);
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index a4e03a7a2c030..8bf1118e04c66 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -166,11 +166,11 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
- 					  unsigned int hash)
- {
- 	struct tcp_metrics_block *tm;
--	struct net *net;
- 	bool reclaim = false;
-+	struct net *net;
- 
- 	spin_lock_bh(&tcp_metrics_lock);
--	net = dev_net(dst->dev);
-+	net = dev_net(dst_dev(dst));
- 
- 	/* While waiting for the spin-lock the cache might have been populated
- 	 * with this entry and so we have to check again.
-@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
- 		return NULL;
- 	}
- 
--	net = dev_net(dst->dev);
-+	net = dev_net(dst_dev(dst));
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
- 	else
- 		return NULL;
- 
--	net = dev_net(dst->dev);
-+	net = dev_net(dst_dev(dst));
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-diff --git a/net/ipv4/xfrm4_output.c b/net/ipv4/xfrm4_output.c
-index 3cff51ba72bb0..0ae67d537499a 100644
---- a/net/ipv4/xfrm4_output.c
-+++ b/net/ipv4/xfrm4_output.c
-@@ -31,7 +31,7 @@ static int __xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- int xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
- 	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
--			    net, sk, skb, skb->dev, skb_dst(skb)->dev,
-+			    net, sk, skb, skb->dev, skb_dst_dev(skb),
- 			    __xfrm4_output,
- 			    !(IPCB(skb)->flags & IPSKB_REROUTED));
- }
--- 
-2.53.0
-
++	/*
+ 	 * Configure the DMA engine 2-stage transfer mode. Channel 1 set as the
+ 	 * destination channel, and channel 0 set as the source channel, that
+ 	 * means once the source channel's transaction is done, it will trigger
 
 
