@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74C5501285;
-	Wed, 30 Sep 2026 17:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8586651AEC1;
+	Wed, 30 Sep 2026 17:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789321; cv=none; b=sdwdc015pVg6CUEH7K2HXFUhMvfksEvFMXufWVqod/RT8NkWz6oly4US6TVi5a2CoxPglv+VXEe//8eTzvk8kkCxGdWUn5Dykk3+OQZZ9M5x278bvvykiC2nOMPADwdLjrvdH4RWBJdlFnRm1lhKUHsIYeKiAThCF3yPbjGyTCY=
+	t=1790789324; cv=none; b=gCVzhq0uMlGkUsbXqkljQXOo0oh7PXVQRQMLhrG9fYz7wqy/9cVxsfLjlTVFA9BIn7zdMFICvm9p8x7bdK/l7N53Jrp8a85LnUpPnPyueBNlAXEfqqRmbyIYjYOc0fi1mXkjVHzfZE7ZVdiV2lFexOIY1rp702SP+JPFTuwHAss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789321; c=relaxed/simple;
-	bh=ECrgZJgtu41CCHI0z7gphC15xiaaEhIuQE9d0qPD8Tk=;
+	s=arc-20240116; t=1790789324; c=relaxed/simple;
+	bh=6ShwQMrj94gcN8OslvSJ0JLpruxA0KbAHndcOGCbsOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdupaZu6P2PmXOzSP0drKs9bscHGhqnRIsJj50L3TFzQQkodxopMCoOnP4afDrvGDlCJ2ITxJVKH9rygZaZlAqd8me6QOLouBsFVaKgJE5I9RAIxQMdHkKmTZRuzL5jxiOg/25ndRtrj/wG/iYbUbsdmk6v/9Ahoa7IBIZSimUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8bgtfKV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ylou7taNH6pKHiMYOHwVgnPEUTsnoo98APJX4p96PZm/SL7RZvoKhX+v+brV5Vx+aSpEC1ponxWNGd1HUsfR5PFjhnJnmZ0oTsyLZF8LYc/Iaj14U5LiBlHXUG4BDyTQBrewu+hWVgrskwgAn/P6l5C2sWOrkEQIFZk5ark7Hqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIJc5S2T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8bgtfKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF111F00899;
-	Wed, 30 Sep 2026 17:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIJc5S2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED931F000FF;
+	Wed, 30 Sep 2026 17:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789320;
-	bh=cp0yXcKc0ABwS4tbV+VqX52ED2nNQ618h8gA56WHCwU=;
+	s=korg; t=1790789323;
+	bh=yWeCk0YmdxH2LLty7aubKMnfFJNMkkYE5xmbsBk8SNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8bgtfKV0G3oVzuQG7ACNkb1VcHN2BOCpQK2NqetXq/PE/YfVKVw+KsriBUwDU8gP
-	 MNc8gG2t0n1R9EkMFQP6tkjJqdmW/hFPq96tIwuaOw7CC1xWpHj2vSykTWEG923mH8
-	 0cZUA3NlLpSCMDo+Y1wiG2xRbFlCnkPEBnBvdyxA=
+	b=fIJc5S2TbeUsldvPAtr20AWQmzvWb23uH6FHJfnzCWetfg6FCqHjz30SvSJ71NZ0M
+	 xrui7vcmEvDa5IZUy+lFY/ocf2dMtw2zdOhp4RBY0AKTQPHm/Id3sJRQrcVyEsV6ZP
+	 RxOWR8W30Lb0j/z8XtZLwWgu21uTA1mFIwqWjzOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 435/877] macsec: add some of the lower devices features when offloading
-Date: Wed, 30 Sep 2026 17:22:26 +0200
-Message-ID: <20260930152424.072222142@linuxfoundation.org>
+Subject: [PATCH 6.12 436/877] macsec: inherit lower devices TSO limits when offloading
+Date: Wed, 30 Sep 2026 17:22:27 +0200
+Message-ID: <20260930152424.092713670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,84 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit bd97c29f7e9e45980417973d5e8b755bd71e10a9 ]
+[ Upstream commit de187a390838c0b3dfd00ae5399aa406d0a79f13 ]
 
-This commit extends the set of netdevice features supported by macsec
-devices when offload is enabled, which increases performance
-significantly (for a single TCP stream: 17.5Gbps to 38.5Gbps on my
-test machines).
+If macsec is offloaded, we need to follow the lower device's
+capabilities, like VLAN devices do.
 
-Commit c850240b6c41 ("net: macsec: report real_dev features when HW
-offloading is enabled") previously attempted something similar, but
-had to be reverted (commit 8bcd560ae878 ("Revert "net: macsec: report
-real_dev features when HW offloading is enabled"")) because the set of
-features it exposed was too large.
-
-During initialization, all features are set, and they're then removed
-via ndo_fix_features (macsec_fix_features). This allows the
-offloadable features to be automatically enabled if offloading is
-turned on after device creation.
+Leave the limits unchanged when the offload is disabled.
 
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/8b32c3011d269d6f149724e80c1ffe67c9534067.1730929545.git.sd@queasysnail.net
+Link: https://patch.msgid.link/8240c0181e851f169d815f59658a01fb9dfc5073.1730929545.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: c2de369c5c5b ("macsec: initialize SecY before registering the netdevice")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 66f7407a2b178..b1eb6b5dde0fe 100644
+index b1eb6b5dde0fe..ce4a08f77724f 100644
 --- a/drivers/net/macsec.c
 +++ b/drivers/net/macsec.c
-@@ -2695,6 +2695,8 @@ static int macsec_update_offload(struct net_device *dev, enum macsec_offload off
+@@ -2650,6 +2650,17 @@ static void macsec_set_head_tail_room(struct net_device *dev)
+ 	dev->needed_tailroom = real_dev->needed_tailroom + needed_tailroom;
+ }
+ 
++static void macsec_inherit_tso_max(struct net_device *dev)
++{
++	struct macsec_dev *macsec = macsec_priv(dev);
++
++	/* if macsec is offloaded, we need to follow the lower
++	 * device's capabilities. otherwise, we can ignore them.
++	 */
++	if (macsec_is_offloaded(macsec))
++		netif_inherit_tso_max(dev, macsec->real_dev);
++}
++
+ static int macsec_update_offload(struct net_device *dev, enum macsec_offload offload)
+ {
+ 	enum macsec_offload prev_offload;
+@@ -2695,6 +2706,8 @@ static int macsec_update_offload(struct net_device *dev, enum macsec_offload off
  	macsec_set_head_tail_room(dev);
  	macsec->insert_tx_tag = macsec_needs_tx_tag(macsec, ops);
  
-+	netdev_update_features(dev);
++	macsec_inherit_tso_max(dev);
 +
+ 	netdev_update_features(dev);
+ 
  	return ret;
- }
- 
-@@ -3550,6 +3552,10 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- #define MACSEC_FEATURES \
- 	(NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST)
- 
-+#define MACSEC_OFFLOAD_FEATURES \
-+	(MACSEC_FEATURES | NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES | \
-+	 NETIF_F_LRO | NETIF_F_RXHASH | NETIF_F_CSUM_MASK | NETIF_F_RXCSUM)
-+
- static int macsec_dev_init(struct net_device *dev)
- {
- 	struct macsec_dev *macsec = macsec_priv(dev);
-@@ -3560,7 +3566,10 @@ static int macsec_dev_init(struct net_device *dev)
+@@ -3566,6 +3579,8 @@ static int macsec_dev_init(struct net_device *dev)
  	if (err)
  		return err;
  
--	dev->features = real_dev->features & MACSEC_FEATURES;
-+	dev->hw_features = real_dev->hw_features & MACSEC_OFFLOAD_FEATURES;
-+	dev->hw_features |= NETIF_F_GSO_SOFTWARE;
++	macsec_inherit_tso_max(dev);
 +
-+	dev->features = real_dev->features & MACSEC_OFFLOAD_FEATURES;
- 	dev->features |= NETIF_F_GSO_SOFTWARE;
- 	dev->lltx = true;
- 	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
-@@ -3590,8 +3599,12 @@ static netdev_features_t macsec_fix_features(struct net_device *dev,
- {
- 	struct macsec_dev *macsec = macsec_priv(dev);
- 	struct net_device *real_dev = macsec->real_dev;
-+	netdev_features_t mask;
-+
-+	mask = macsec_is_offloaded(macsec) ? MACSEC_OFFLOAD_FEATURES
-+					   : MACSEC_FEATURES;
+ 	dev->hw_features = real_dev->hw_features & MACSEC_OFFLOAD_FEATURES;
+ 	dev->hw_features |= NETIF_F_GSO_SOFTWARE;
  
--	features &= (real_dev->features & MACSEC_FEATURES) |
-+	features &= (real_dev->features & mask) |
- 		    NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES;
+@@ -4521,6 +4536,13 @@ static int macsec_notify(struct notifier_block *this, unsigned long event,
+ 			if (dev->mtu > mtu)
+ 				dev_set_mtu(dev, mtu);
+ 		}
++		break;
++	case NETDEV_FEAT_CHANGE:
++		list_for_each_entry(m, &rxd->secys, secys) {
++			macsec_inherit_tso_max(m->secy.netdev);
++			netdev_update_features(m->secy.netdev);
++		}
++		break;
+ 	}
+ 	}
  
- 	return features;
 -- 
 2.53.0
 
