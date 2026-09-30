@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838414FD7BD;
-	Wed, 30 Sep 2026 17:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39DE51D53E;
+	Wed, 30 Sep 2026 17:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790262; cv=none; b=nCYqUkjMLlanhLIn6FqHP5wcJfK0ZlT/2ICbM/4O/wrlwcnyragA2RU0UfnS1zGGrTRHlGKd9WyznVyQ9ZZN4fcrIVD3f6Q159myf2CdtmoePNtDQfCeEFZEt9mHODSgd2FJNKyMOqSsNxsAL1Ucle8nJTWBN/XCCSXSLRV9QeY=
+	t=1790790265; cv=none; b=RHonlnBpgFCa5jTXrbpPiiOWkvbTnXLsvYmxU9VmsRCpUepOCZ/mC0eboZ1MtYPDavsLyN9o3bVQeXXkIIwJF1oKGtO/Qy3bN+5GgHuu/zQbWqnGBPUURgYs4X7Lz4A+RxJo6gakEa9+zsFIKI+pD9bPN4bo5cIY/7opnFnou4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790262; c=relaxed/simple;
-	bh=0Wi8uR3RIzGuVxWdpMF+w+6+BU4ttWhYqWG2D5Abero=;
+	s=arc-20240116; t=1790790265; c=relaxed/simple;
+	bh=hkaqip/1VrRvmhUHbZ97qPRDLaWg6wWS4fog3ceozuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fs9sBExrya1H5v9cpSsbRNuGgrhX9B+1xpE9y3WXjUQVrn/R6HneZDPxX1ZfGz/npRsUwTBwcaJpLOVuvDFC+yTNtha3L56WGsaxfr4lN0Bi+jhiQCjqYPKglNrnYSk7FV9xEFFyfhC23lpGXFyrzyo1AZojwWK9XFHI9cQmubU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLINSFhe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jq4qOCSoz2t50NX00sXMVZKc8KCqP6BYxM2eHNysUJstgyURZVHPWvy9uqtEowswFyOdk0j/2rWgFIDC0tbuJgP8JavHJhIc/6dkEHGOdscwQHkKEUSPK4r6zKhNUWrStu1+jvOsalm6XbWIGbJMdVFX9gjaI3zCMPzgFxwlqDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6a/c3pN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLINSFhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF70C1F00898;
-	Wed, 30 Sep 2026 17:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6a/c3pN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7B31F000FF;
+	Wed, 30 Sep 2026 17:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790261;
-	bh=nfNcvOVEI1ctrOEjZBthb2pMPX8hPnyjhzzDWvRlbQw=;
+	s=korg; t=1790790264;
+	bh=4KZsmXrLUwD0NTRcIrBUKahdiJttPzB72L1bSU2Hwb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLINSFhe7rjjRE46h0jYwyZuYyY7Lo5HDee9AQ5OKnbeSzjmkUwPt2RYgMJhMsV9s
-	 wotiof6jVUUfi3EfxR7adTZ9HxW6clppe2JR5odmZrohZ384nHi3UJ4txREsi5saaV
-	 /ziHf6x2TRvcuCZ9Vxi3+VjMrnYmsE4ea5jaiV7k=
+	b=o6a/c3pNiuZv1U1Fh7q+sAeAeSwtWPzsPtwHbwQcrax0ZSDbF1LA0R5cDI05MLw7z
+	 mkGj4reCO0vuygGA9FVFhd+vo1L7ib+f46RymXjVrQAPoyKx0bwQPejJXYbsMgfIn8
+	 H/JYNvcgKjOygzXhL60meVWjiYTfPBBMophyB9vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 766/877] bnxt_en: Dont free the live rings TPA state on queue restart failure
-Date: Wed, 30 Sep 2026 17:27:57 +0200
-Message-ID: <20260930152431.235833402@linuxfoundation.org>
+Subject: [PATCH 6.12 767/877] mptcp: pm: reset retrans_time when ADD_ADDR entry is reused
+Date: Wed, 30 Sep 2026 17:27:58 +0200
+Message-ID: <20260930152431.256866123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,47 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 5ce7f36c334d723954855ac769ede2fe0e8f89c8 ]
+[ Upstream commit f968190c0b42ea2004dc1426359a53ec365a7a37 ]
 
-bnxt_queue_mem_alloc() shallow copies the live RX ring into the clone:
+When an ADD_ADDR entry is reused, the timer is re-armed, because the
+goal is to re-announce an ADD_ADDR, and eventually retransmit it if
+needed.
 
-  memcpy(clone, rxr, sizeof(*rxr));
+In this case, the retransmission counter should be reset as well, so the
+re-announced address gets its retransmissions back instead of relying on
+what was left before, and possibly not being able to retransmit it.
 
-the code currently clears pointers that the clone owns (such as
-rx_agg_bmap), but rx_tpa and rx_tpa_idx_map are left pointing at memory
-of the live ring that was cloned.
-
-If an allocation failure happens later and the err_free_tpa_info label
-is taken, the live ring's memory can be freed while still in use.
-
-Fix this by initializing the clone's pointers to NULL to prevent live
-ring state from being freed inadvertently.
-
-Fixes: bd649c5cc958 ("bnxt_en: handle tpa_info in queue API implementation")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
+Fixes: 304ab97f4c7c ("mptcp: allow ADD_ADDR reissuance by userspace PMs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-3-joe@dama.to
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-0-b8f496d71664%40kernel.org?part=4
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-9-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted mptcp_pm_announced_alloc() in pm.c to mptcp_pm_alloc_anno_list() in pm_netlink.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/pm_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -15402,6 +15402,8 @@ static int bnxt_queue_mem_alloc(struct n
- 	clone->rx_sw_agg_prod = 0;
- 	clone->rx_next_cons = 0;
- 	clone->rx_agg_bmap = NULL;
-+	clone->rx_tpa = NULL;
-+	clone->rx_tpa_idx_map = NULL;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -417,10 +417,10 @@ bool mptcp_pm_alloc_anno_list(struct mpt
  
- 	rc = bnxt_alloc_rx_page_pool(bp, clone, rxr->page_pool->p.nid);
- 	if (rc)
+ 	add_entry->addr = *addr;
+ 	add_entry->sock = msk;
+-	add_entry->retrans_times = 0;
+ 
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
+ reset_timer:
++	add_entry->retrans_times = 0;
+ 	add_entry->timer_done = false;
+ 	timeout = mptcp_get_add_addr_timeout(net);
+ 	if (timeout)
 
 
