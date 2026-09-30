@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023F4F5E0E;
-	Wed, 30 Sep 2026 16:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6999B18C332;
+	Wed, 30 Sep 2026 16:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787309; cv=none; b=JXPSTRP/hgKuPlI4Wz10ZMzP5J9rtFwvcRXtJ0TZcGWPb9zPxIVjJeR2kSuMd4BJK8QO+N4kwJlOd4flKtRpzQUqxXRNFLATxIz2RYIIpOBqE+VYyYMgIOi3WfzILKhneWtCcDQHMc7lIKo4PkAdlZRKoYuWthVH62EWOO1LdcM=
+	t=1790787312; cv=none; b=DydytjClXwA5qRLF+MQ9MQqeewj8IO4yH0t5P6uDOTsbUNwFUzO/y+duN3cewkXLAFwfo9wKkD6AvOucKRb8xlI3re9FG6D3Z/2reL4QTzSritFvDH2/veFTBDVZNYLPGmlkjdVU+kvH8GAt+GsDFpv7hSmY2rwj+3kggz96hAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787309; c=relaxed/simple;
-	bh=GorUJDmiQVDOqlmO/VFkt5PkGU6Tw0Zc1z0/HuWESxE=;
+	s=arc-20240116; t=1790787312; c=relaxed/simple;
+	bh=FSg/yK/Jdxn0ntt1NLE7a0dRmijD+VzSaynxnx+k9BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBgUQ/33UGPgo/nNqe9gIcdDqwthdaN+rbR437DSgbOxlK9dlgs9f2ihVty+S+0zKyZQ6/N0KRynpyzvPavXf41R8NX34aUy+DlAWwaOh8KqXaqN+wqh/Qutao+lhl6gIoyV3LChsH1aGdsWlrbmSnFeezOtmd9vv/uOOUJJ4cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWORCxr7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VqAykVRSKsoXQrlYbbw3Li9Iwu4rGNEJvrgdO/tEjcZ7MYcpVWqPS2PAq5eiWd61il1U8aRM6FAcAXkjR0aIwSRwOQEd5ythCL1dBGX7OAkEPEOS3aVJ90Me8SRtSRtN1b9+kfVokFmaa8EQR4jdbczaVs2nzQbIeWsqtbjp6Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOpiba71; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWORCxr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF73C1F000FF;
-	Wed, 30 Sep 2026 16:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOpiba71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06F11F000FF;
+	Wed, 30 Sep 2026 16:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787308;
-	bh=bPkadys9UtudwW5dNN+LJRdEJj7s9sHeq2dTFwjoNMM=;
+	s=korg; t=1790787311;
+	bh=zQO0NkoiHESkhElaFqDidzYOSil16EUnTILd+3X9Cds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bWORCxr7KYtdMPGpQXRUlzLWK4pffTEmt4TjsM4UxbP5uWGbvK5tLDP3et4cM8PJz
-	 hvdvryR+2b7LnEZRwRDWwU8IwkQI+M0/srTsK11jG1sqXVvA/z/hj6hVfWqxPWiRxy
-	 zrbfbu6lk3CG1cCSaw6mH9/8eQtmQnvfdbOdPp2g=
+	b=pOpiba71ArwolElqACBR2Dg30ghsm4zCo0K63COl9icx5M2u4xkcnqHA1LwNYx032
+	 cPCnq6RdUq9DaXYVKJklAPWjeRO3Ezs6yMpazqI4ePf0Vysir784+rsRKUPCS5y0aH
+	 CoJfIfms3UMbF12fbxTlqw5IirydNgvWDmqNDwNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stefano Sasso <stesasso@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
-	Shihuang Liu <shlomojune6@gmail.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 184/457] net: skbuff: fix pull-bound underflow in skb_checksum_setup_ipv6()
-Date: Wed, 30 Sep 2026 17:24:49 +0200
-Message-ID: <20260930152350.023044189@linuxfoundation.org>
+Subject: [PATCH 7.2 185/457] vrf: Stop corrupting skb->csum when capturing CHECKSUM_COMPLETE packets
+Date: Wed, 30 Sep 2026 17:24:50 +0200
+Message-ID: <20260930152350.044080976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,67 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shihuang Liu <shlomojune6@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 3b4e0b0c008a8c1b474730248cd5b873026c74bd ]
+[ Upstream commit ab7aa05c06ae340e5c7530bb78fa8d23794e460b ]
 
-skb_maybe_pull_tail() subtracts skb_headlen(skb) from the unsigned max
-argument and passes the result to __pskb_pull_tail() as a signed int.  The
-function does not ensure that max is at least skb_headlen(skb).
+The VRF device is an Ethernet device but it can have non-Ethernet ports
+such as IP tunnels. Before the cited commit, capturing packets from such
+ports on the VRF device resulted in these packets being detected as
+malformed since they lack an Ethernet header.
 
-This can happen while parsing IPv6 extension headers when an skb already
-has a linear area larger than MAX_IPV6_HDR_LEN.  Once the parser needs data
-beyond the linear area, max - skb_headlen(skb) wraps and is converted to a
-negative delta.  __pskb_pull_tail() then passes that negative length to
-skb_copy_bits(), where it can become a very large copy length.
+The cited commit fixed it by pushing a dummy Ethernet header to such
+packets before the capture and pulling it afterwards. In the case of
+CHECKSUM_COMPLETE packets it also updated skb->csum with the checksum of
+the dummy Ethernet header. This is wrong as skb->csum should not include
+the checksum of the Ethernet header ("checksum of the _whole_ packet as
+seen by netif_rx()").
 
-Pass the requested length itself as the pull bound at the three
-extension-header call sites, so the delta can no longer go negative.
+This also means that L4 protocols receive a corrupted skb->csum and
+potentially drop the packet, as is the case with UDP packets whose
+checksum was completed by software.
 
-Fixes: 1431fb31ecba ("xen-netback: fix fragment detection in checksum setup")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
-Link: https://patch.msgid.link/20260919133604.50948-1-shlomojune6@gmail.com
+Fix by removing the unnecessary call to skb_postpush_rcsum().
+
+Fixes: 048939088220 ("vrf: add mac header for tunneled packets when sniffer is attached")
+Reported-by: Stefano Sasso <stesasso@gmail.com>
+Closes: https://lore.kernel.org/netdev/CALtE316UtL3x7LL6uxfXzx8rW6AbzYPeDOb478hqJCr_-dj=Wg@mail.gmail.com/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260922131239.2509494-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/vrf.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index c485be081aeaa..89ee7907e4996 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5965,7 +5965,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct ipv6_opt_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct ipv6_opt_hdr));
- 			if (err < 0)
- 				goto out;
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index 46209917ae4d6..bae0b69cf894c 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1175,8 +1175,6 @@ static int vrf_prepare_mac_header(struct sk_buff *skb,
+ 	skb->protocol = eth->h_proto;
+ 	skb->pkt_type = PACKET_HOST;
  
-@@ -5980,7 +5981,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct ip_auth_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct ip_auth_hdr));
- 			if (err < 0)
- 				goto out;
+-	skb_postpush_rcsum(skb, skb->data, ETH_HLEN);
+-
+ 	skb_pull_inline(skb, ETH_HLEN);
  
-@@ -5995,7 +5997,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct frag_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct frag_hdr));
- 			if (err < 0)
- 				goto out;
- 
+ 	return 0;
 -- 
 2.53.0
 
