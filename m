@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D414F68C9;
-	Wed, 30 Sep 2026 18:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C85187C6;
+	Wed, 30 Sep 2026 18:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793065; cv=none; b=LrT64vVcOhvh7tRcq3YKkMo5DLL2QfxRJ8LfK3mm3/rNpSvDMqn0PJHQR0QmFMzIqaPsK2Y5Yw+eJt63aVELiFLPcNDLRfPEgB3IsEsw3HnxM7aQXaEDkM4ONspbgJt5N2RcHjYTFaGlTv44xcI9N3F4PEghvSaYhZc50pyBanQ=
+	t=1790793068; cv=none; b=CSAGqVAk19zAsLkxD2Q5YW9JPbBA0Zc4FsACYW1HC5Qg8VOUhwEp4BCeuQuE37YCtLLBtz1ZfTU+fMbUPnCSX/YlbAuNMHyN6WekMIIU/7WXGg/jgh2eMPx4FQvrz9HceRFnGuJz3VH80N5Hz0heGRwCQdpN2oUGRfq/H2W+JgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793065; c=relaxed/simple;
-	bh=+YUoFwVbTDbvXxmF6RQcZUxLIiJ9q78LtS6OXQTkMUk=;
+	s=arc-20240116; t=1790793068; c=relaxed/simple;
+	bh=FLY0SUu99AkRTjylXq3MAQhdE2I4JqAO788BiYOYOdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMi8+O0mMGwG1UHEWFBJGoSEsN2QXVNNN/QCcP7sPi9tt3qIwRxfX1WtfgUAVNf2u3P5l7l9JA3GcdKzgIbcqqLrGHMNRxCajDSNtQsFZ0lwP6Y99eDsPaEfmIVzwZymaDFAI7XUXz7OP0Ieq5uIqqwh5IqKjBpzQyRDTzBmwh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TC/4Gy2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FW1rgPOtAq8OnIqXwMKvfax4oIMEljWP5Lq9gXnh/ZUzTGSEi+cj+hvf3CJ6wwPhmf1dzO0ltSMDksY+5y24E6yGOpMIOBYkp/RxoEhecG2FrD/3Mzb3SZ9+Ui47Lv0s+Z/fBsZwc6bQzuBBHORlAm+ybJDh/sI7PAW0XfgD7rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea6vDM2K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC/4Gy2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375031F000FF;
-	Wed, 30 Sep 2026 18:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea6vDM2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1318D1F000FF;
+	Wed, 30 Sep 2026 18:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793064;
-	bh=oHP86Cbw0tM+T86dmGw4cttlgOqmGNgj7UgXoymg6Xw=;
+	s=korg; t=1790793067;
+	bh=PzOXUvkNY2/PVyOMblN6ErDyR6WLfWSGYg4HNB9VRV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TC/4Gy2g4cI6XZXwSRF9coBmzyf8lt4oqHKDL+tJigSlazkg2+TRx0sM6pB6V4Ki/
-	 2TqQA9mr23QO/BhzZvvn5STY0u3ZF3YrT8HG3A5fBtpo+NJcRmKLa3mqC6lLabsauY
-	 d3kIAmGTbXO45ai8U1H+JP2Wto4sITr+2nif0rRQ=
+	b=Ea6vDM2K9oOlMrGBO/J3A0/u9w7A7M7JEWlHcC72tu5PMHA+G9y1UcO5idWaVjKdO
+	 D8hUozfRkqyLOH50w+UjzB5AY/lASV2YVkNItGc91N1X8bubh7j5DIb056hsIe+AxH
+	 hUDR0aYjKctwIWQ1EKJm0dKdAYIwFq5G4PYswGys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/395] s390/debug: Fix NULL pointer dereference in debug_info_copy()
-Date: Wed, 30 Sep 2026 17:26:23 +0200
-Message-ID: <20260930152343.266488393@linuxfoundation.org>
+Subject: [PATCH 6.18 079/395] ip6_gre: Call ip6erspan_tunnel_unlink_md() in ip6erspan_changelink().
+Date: Wed, 30 Sep 2026 17:25:41 +0200
+Message-ID: <20260930152342.355412333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,42 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Zaslonko <zaslonko@linux.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 012bfcd5a51082d5a65f096dfb9ca652b5267965 ]
+[ Upstream commit dd47bcf279f1083f09bf5266890b26263361022b ]
 
-When debug_register_static() fails, it clears areas, active_pages and
-active_entries but leaves the area bounds unchanged. Copying such an
-area, either by opening its view file or via debug_dump(), makes
-debug_info_copy() dereference the NULL pointers.
+The cited commit accidentally added ip6gre_tunnel_unlink_md()
+in ip6erspan_changelink().
 
-Skip the copy loop when the source has no areas.
+Let's correct it to ip6erspan_tunnel_unlink_md().
 
-Closes: https://lore.kernel.org/r/20260903132123.12F271F00A3F@smtp.kernel.org
-Fixes: d72541f94512 ("s390/debug: add early tracing support")
-Signed-off-by: Mikhail Zaslonko <zaslonko@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: b80d0b93b991 ("net: ip6_gre: fix tunnel metadata device sharing.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260916230927.378957-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_gre.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index 4cbad08453edc..c4db346688ed8 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -346,7 +346,8 @@ static debug_info_t *debug_info_copy(debug_info_t *in, int mode)
- 		debug_info_free(rc);
- 	} while (1);
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 81792c940d296..ebd0198458cd3 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -2279,7 +2279,7 @@ static int ip6erspan_changelink(struct net_device *dev, struct nlattr *tb[],
+ 		return PTR_ERR(t);
  
--	if (mode == NO_AREAS)
-+	/* debug_register_static() failure leaves areas NULL, bounds intact */
-+	if (mode == NO_AREAS || !in->areas)
- 		goto out;
- 
- 	for (i = 0; i < in->nr_areas; i++) {
+ 	ip6erspan_set_version(data, &p);
+-	ip6gre_tunnel_unlink_md(ign, t);
++	ip6erspan_tunnel_unlink_md(ign, t);
+ 	ip6gre_tunnel_unlink(ign, t);
+ 	ip6erspan_tnl_change(t, &p, !tb[IFLA_MTU]);
+ 	ip6erspan_tunnel_link_md(ign, t);
 -- 
 2.53.0
 
