@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6EA50C28B;
-	Wed, 30 Sep 2026 18:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C6436D4E1;
+	Wed, 30 Sep 2026 18:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791518; cv=none; b=SaqdDl39CFHhP3VHIwKDvcYcG2+xA+IamW8dfxV5IcPic3I/IbqWo6iwbhEXd3sjmj7mhIJSHScu6e41nDS+Ss+6hUuYXhH2vrgkNPHW5hhsaJmc7lCe/zb59LXbmKexkdDzVjCTWcJoandZPBqk4DoOeyuMtC1cuUm8foOi2XU=
+	t=1790791521; cv=none; b=Gr4gtQgzZIk4ITcpRHsno8T3tM5fVrsFFP8RNMljgCY5hBdW5HjbCMPKglNqWSQG7Gy6OiHm295+4frbt3jEuUiOP0Pm64knRbiS91VlwG01J1Wn+QMoCB3DitrVcec737G/j1zW6Dk8RY5luXdaVi8KLlmhUm49LyAHOe4+d2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791518; c=relaxed/simple;
-	bh=n29qzaFV9lJMmJj72zP7tcbwYfF9yL0dXrOm1eAArKE=;
+	s=arc-20240116; t=1790791521; c=relaxed/simple;
+	bh=vSpzkJjeHvtnB3HPmNHbs+3UJisJUaajUMmaPR3YLzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilebGPGY8072zUubVb0xHIKqe/AGq6GQhuvIEjMStQOgrKqjswQZ5wjgvMyab0SHSU1NL5X5ir7wj/LiLQpkamCBBfWlQnHmEw8JLW9oRfZf5cg4n13VU4P8nMbHGOIz2agoy4e2fywPE3AVfDC0RH3Dyrm9YqzjdFiuKeBGm+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orfLhHvo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZifuHqn9vg1I6n+3C/83llHCV3uYZXLe0TMiGJczn37IySqjzv1JCkX5mIQrqZblMj78qr58geYGIV/Z9+Mo2YxTyJFvOAE/NK9co1fqemJvTqYRUaR41hmbJsMHOQEr8h1ECkydTb5DcF0o3BWkOaUEe/ClmIR/ckMCC0Wwb9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvrrz5UM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orfLhHvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609B21F000FF;
-	Wed, 30 Sep 2026 18:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvrrz5UM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F671F000FF;
+	Wed, 30 Sep 2026 18:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791516;
-	bh=MQeY9GaAJsmcgpf7bqxUJx9SqC0N12CsmRHW8ZxAFJY=;
+	s=korg; t=1790791519;
+	bh=LciV1twpilZ/ZOjLrJj5bR890uwKFvcNjdqvor9TPmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=orfLhHvokMswR52FqpAW54cZ0lsXSnfixu3ehvpxQiUqN036R1tjpiiR7P0naIvop
-	 lZkpeTWMS8YfEEsFK0nlgO/1XY6P1fuz/dky5Uad5GLu1Yefacqp2z5+ffM76rc1J3
-	 FVueFrlYsCe68SoKTRvgP/34pmtuMpyFWWLAPCzE=
+	b=Lvrrz5UMVY0I4a3zwqlntsr7BY2G6RLtbZHmhJxQ6u6NdQ+gm+Sgxo6Qgarxtpmp5
+	 NGEj+KbY7lqE373wX3n80fVeWIJGUPhPzI55Jk82x2+kYuNFcvPTPUoSPgzYWx688l
+	 dPOq4ZEy/+SFaFWqdL+/6/ZNU9LJqwepxTdebjk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 331/752] vdpa_sim_blk: use dev_dbg() to print errors
-Date: Wed, 30 Sep 2026 17:23:21 +0200
-Message-ID: <20260930152405.458268006@linuxfoundation.org>
+Subject: [PATCH 5.15 332/752] vdpa_sim_blk: make vdpasim_blk_check_range usable by other requests
+Date: Wed, 30 Sep 2026 17:23:22 +0200
+Message-ID: <20260930152405.479650692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,109 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 42a84c09eff355d895723866b1a5ff48f093112a ]
+[ Upstream commit ac926e1b468e03818e31568f6e520390b945b038 ]
 
-Use dev_dbg() instead of dev_err()/dev_warn() to avoid flooding the
-host with prints, when the guest driver is misbehaving.
-In this way, prints can be dynamically enabled when the vDPA block
-simulator is used to validate a driver.
+Next patches will add handling of other requests, where will be
+useful to reuse vdpasim_blk_check_range().
+So let's make it more generic by adding the `max_sectors` parameter,
+since different requests allow different numbers of maximum sectors.
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Let's also print the messages directly in vdpasim_blk_check_range()
+to avoid duplicate prints.
+
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20220630153221.83371-2-sgarzare@redhat.com>
+Message-Id: <20220811083632.77525-3-sgarzare@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Stable-dep-of: 0a8693f00c40 ("vdpa_sim_blk: reject out-of-range sector starts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 38 +++++++++++++++++-----------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-index 22b812c32bee8..faaf9cac4aaac 100644
+index faaf9cac4aaac..1ee6e486f0bbe 100644
 --- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
 +++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-@@ -76,13 +76,13 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 		return false;
+@@ -38,18 +38,28 @@
  
- 	if (vq->out_iov.used < 1 || vq->in_iov.used < 1) {
--		dev_err(&vdpasim->vdpa.dev, "missing headers - out_iov: %u in_iov %u\n",
-+		dev_dbg(&vdpasim->vdpa.dev, "missing headers - out_iov: %u in_iov %u\n",
- 			vq->out_iov.used, vq->in_iov.used);
- 		return false;
- 	}
+ static char vdpasim_blk_id[VIRTIO_BLK_ID_BYTES] = "vdpa_blk_sim";
  
- 	if (vq->in_iov.iov[vq->in_iov.used - 1].iov_len < 1) {
--		dev_err(&vdpasim->vdpa.dev, "request in header too short\n");
-+		dev_dbg(&vdpasim->vdpa.dev, "request in header too short\n");
- 		return false;
- 	}
+-static bool vdpasim_blk_check_range(u64 start_sector, size_t range_size)
++static bool vdpasim_blk_check_range(struct vdpasim *vdpasim, u64 start_sector,
++				    u64 num_sectors, u64 max_sectors)
+ {
+-	u64 range_sectors = range_size >> SECTOR_SHIFT;
+-
+-	if (range_size > VDPASIM_BLK_SIZE_MAX * VDPASIM_BLK_SEG_MAX)
+-		return false;
++	if (start_sector > VDPASIM_BLK_CAPACITY) {
++		dev_dbg(&vdpasim->vdpa.dev,
++			"starting sector exceeds the capacity - start: 0x%llx capacity: 0x%x\n",
++			start_sector, VDPASIM_BLK_CAPACITY);
++	}
  
-@@ -96,7 +96,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 	bytes = vringh_iov_pull_iotlb(&vq->vring, &vq->out_iov, &hdr,
- 				      sizeof(hdr));
- 	if (bytes != sizeof(hdr)) {
--		dev_err(&vdpasim->vdpa.dev, "request out header too short\n");
-+		dev_dbg(&vdpasim->vdpa.dev, "request out header too short\n");
+-	if (start_sector > VDPASIM_BLK_CAPACITY)
++	if (num_sectors > max_sectors) {
++		dev_dbg(&vdpasim->vdpa.dev,
++			"number of sectors exceeds the max allowed in a request - num: 0x%llx max: 0x%llx\n",
++			num_sectors, max_sectors);
  		return false;
- 	}
++	}
  
-@@ -110,7 +110,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
+-	if (range_sectors > VDPASIM_BLK_CAPACITY - start_sector)
++	if (num_sectors > VDPASIM_BLK_CAPACITY - start_sector) {
++		dev_dbg(&vdpasim->vdpa.dev,
++			"request exceeds the capacity - start: 0x%llx num: 0x%llx capacity: 0x%x\n",
++			start_sector, num_sectors, VDPASIM_BLK_CAPACITY);
+ 		return false;
++	}
+ 
+ 	return true;
+ }
+@@ -109,10 +119,9 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
+ 
  	switch (type) {
  	case VIRTIO_BLK_T_IN:
- 		if (!vdpasim_blk_check_range(sector, to_push)) {
--			dev_err(&vdpasim->vdpa.dev,
-+			dev_dbg(&vdpasim->vdpa.dev,
- 				"reading over the capacity - offset: 0x%llx len: 0x%zx\n",
- 				offset, to_push);
- 			status = VIRTIO_BLK_S_IOERR;
-@@ -121,7 +121,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 					      vdpasim->buffer + offset,
- 					      to_push);
- 		if (bytes < 0) {
--			dev_err(&vdpasim->vdpa.dev,
-+			dev_dbg(&vdpasim->vdpa.dev,
- 				"vringh_iov_push_iotlb() error: %zd offset: 0x%llx len: 0x%zx\n",
- 				bytes, offset, to_push);
- 			status = VIRTIO_BLK_S_IOERR;
-@@ -133,7 +133,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 
- 	case VIRTIO_BLK_T_OUT:
- 		if (!vdpasim_blk_check_range(sector, to_pull)) {
--			dev_err(&vdpasim->vdpa.dev,
-+			dev_dbg(&vdpasim->vdpa.dev,
- 				"writing over the capacity - offset: 0x%llx len: 0x%zx\n",
- 				offset, to_pull);
- 			status = VIRTIO_BLK_S_IOERR;
-@@ -144,7 +144,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 					      vdpasim->buffer + offset,
- 					      to_pull);
- 		if (bytes < 0) {
--			dev_err(&vdpasim->vdpa.dev,
-+			dev_dbg(&vdpasim->vdpa.dev,
- 				"vringh_iov_pull_iotlb() error: %zd offset: 0x%llx len: 0x%zx\n",
- 				bytes, offset, to_pull);
- 			status = VIRTIO_BLK_S_IOERR;
-@@ -157,7 +157,7 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
- 					      vdpasim_blk_id,
- 					      VIRTIO_BLK_ID_BYTES);
- 		if (bytes < 0) {
--			dev_err(&vdpasim->vdpa.dev,
-+			dev_dbg(&vdpasim->vdpa.dev,
- 				"vringh_iov_push_iotlb() error: %zd\n", bytes);
+-		if (!vdpasim_blk_check_range(sector, to_push)) {
+-			dev_dbg(&vdpasim->vdpa.dev,
+-				"reading over the capacity - offset: 0x%llx len: 0x%zx\n",
+-				offset, to_push);
++		if (!vdpasim_blk_check_range(vdpasim, sector,
++					     to_push >> SECTOR_SHIFT,
++					     VDPASIM_BLK_SIZE_MAX * VDPASIM_BLK_SEG_MAX)) {
  			status = VIRTIO_BLK_S_IOERR;
  			break;
-@@ -167,8 +167,8 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
+ 		}
+@@ -132,10 +141,9 @@ static bool vdpasim_blk_handle_req(struct vdpasim *vdpasim,
  		break;
  
- 	default:
--		dev_warn(&vdpasim->vdpa.dev,
--			 "Unsupported request type %d\n", type);
-+		dev_dbg(&vdpasim->vdpa.dev,
-+			"Unsupported request type %d\n", type);
- 		status = VIRTIO_BLK_S_IOERR;
- 		break;
- 	}
+ 	case VIRTIO_BLK_T_OUT:
+-		if (!vdpasim_blk_check_range(sector, to_pull)) {
+-			dev_dbg(&vdpasim->vdpa.dev,
+-				"writing over the capacity - offset: 0x%llx len: 0x%zx\n",
+-				offset, to_pull);
++		if (!vdpasim_blk_check_range(vdpasim, sector,
++					     to_pull >> SECTOR_SHIFT,
++					     VDPASIM_BLK_SIZE_MAX * VDPASIM_BLK_SEG_MAX)) {
+ 			status = VIRTIO_BLK_S_IOERR;
+ 			break;
+ 		}
 -- 
 2.53.0
 
