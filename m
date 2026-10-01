@@ -1,91 +1,90 @@
 Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12AA49D5AF
-	for <patches@lists.linux.dev>; Thu,  1 Oct 2026 19:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E003D45F7;
+	Thu,  1 Oct 2026 20:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790884754; cv=fail; b=MXS77vV21YdTgEEwSqtDANjJUFE89g6RKA5xU5+/DJSwGGgzvUPh30xKZEaGlhJP5Y7lwGb1FzL+0rl3xERVI++E5UT5kuwWiiEEJ4eT2P7Ged0AkAR8IZteSFh93NVYFVIfsdO6ThOPLWcf6p2+3LvdRt9Mb8h2KXVnHufTzoE=
+	t=1790885382; cv=fail; b=OIi0pMIqaQlU5wD1hW470o+6hS7c9EfR5MI+6gIh/CSDTs9meY4dNHqg8NS291cUh0OF5fzSpgleo/+Qgv1idPCrXcvNPPazSJmtsG0IfpFD253EpHXVVrpdzHZ0gHxjODzrYpci0ihUqokPCozhnQZulNz9DX0cM209cpRGqyg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790884754; c=relaxed/simple;
-	bh=nFEWiAz5kpGKZhHgl5K2n5HHT4KegVBkOY9csry2YIs=;
+	s=arc-20240116; t=1790885382; c=relaxed/simple;
+	bh=qPbl9EAi/jBvA9XzHziNBsTO3mlNEky6bXCxEsm1Kz8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=t2DHWdZ1BlC0WRWDykgms3TDMmC2qmggZju3QqiQzwLrUckfZMaWn9qa+Psq1hV1iX6zcUOu+nL3MtY9kCyZD3q3sOSMk2L2ALfRNxvm4BGJ0J52JJvD7fUrjJf5YI5DyxpYPib1682huomxUoLxhguJ2D3KEw7BOKomn1g0YN4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=qvrLdeJR; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=EaMWWir0; arc=fail smtp.client-ip=205.220.177.32
+	 Content-Type:MIME-Version; b=kreImkpVN5lxRQkZefb6fNdfYaqoa2cZ1b1UFzmPjsz0E2N188G0BL3XERMYGIoOZYxBTWxgEoLqOSggve5RCuEjJrmmHnMDAUfCOfTYinjdHemFVANaAl+jgi4OFmbwRkdZDo+UfqiNDnrMXvVAOW2GBVkA0VOdvvXtbRHswS8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=rMZr82DU; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=q6mNavL1; arc=fail smtp.client-ip=205.220.177.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="qvrLdeJR";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="EaMWWir0"
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 691Ftjfa907922;
-	Thu, 1 Oct 2026 19:58:51 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="rMZr82DU";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="q6mNavL1"
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 691FtluB909610;
+	Thu, 1 Oct 2026 20:09:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=EU9RmAYE8GtvC5cmd5vKMm+iYrbCOGBofZ2H258oaaQ=; b=
-	qvrLdeJRal2FTaQuyDIsa3SYdv7P/HEbWKOPiDsVirRGkEXGbkS25GDeSdKa+Mj+
-	5lMTHGK/lBF2f2q+i7uGclH7xL4uomfM8jiM24dC6UC4yXDMQpnGQ8Zvm7JXatzD
-	P6/KJF5IgP7GVI086DUMDEABKMcMbcK22PECyeyoPiOOvqGNzSJLEuRNyFF1X/nM
-	B7kIc2vJz33hoTHxpPxRkNwoycKoHEpuKjwmlV4F5SSRL4yL3HYQucM74/aQZCsE
-	tatn3GbRrsulOAfQjykqky4kunOsIUzyUyVMPrDTgMGo7WrVeEp9tQISLHsCFmF1
-	K5rYYwAxpkbZha9RW+q1Hg==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gx4u2j2bg-1
+	corp-2025-04-25; bh=awmup36CLdt4Vuy2dkYf4Lfjk/tXREOlbsCHCW/JWPY=; b=
+	rMZr82DUyAPWNYt6/GxNh4/us5Jg4qhCGg5xVJjg3bepDHJiYO2bifFKlLTka/kb
+	ite8YeaoWWHkSwnSYdzwA5MxobmEbbf/0CPr0gKMir37DEzJM1WmxwZpVhW6G6np
+	1UqzinMaLcoMaqXQG/WMyiL0v80TGdZDgeZBJYr56yfGjuftnTpBMvB2DAaNNzBd
+	rdGl3VTiOIml2sumyYU7h/7HzwmM02hOc8kbHQR1739lEcG1rxKhav84plMjV7PS
+	QhN4v+0Uk8+85Hb58plWnd/hIU4Ha6cRfgDqFVFxTs6wFQ2ZceXUDXJtc0THd9rY
+	KRq7zqr8qpiUwbOtcVCDdw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gx5ns23r2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 01 Oct 2026 19:58:50 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 691Jp0Ph025280;
-	Thu, 1 Oct 2026 19:58:50 GMT
-Received: from bn1pr04cu002.outbound.protection.outlook.com (mail-eastus2azon11010023.outbound.protection.outlook.com [52.101.56.23])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4gx4gsr4wq-1
+	Thu, 01 Oct 2026 20:09:12 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 691K55Hq022225;
+	Thu, 1 Oct 2026 20:09:11 GMT
+Received: from sn4pr0501cu005.outbound.protection.outlook.com (mail-southcentralusazon11011028.outbound.protection.outlook.com [40.93.194.28])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4gx4gfahpe-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Thu, 01 Oct 2026 19:58:50 +0000 (GMT)
+	Thu, 01 Oct 2026 20:09:11 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UVmtEy9LDTo2ctJjdLRauZm8U76Vv5j9lERoC1vs9kdyXZ565KprG3zH/CXiuVx7UA100ITeY+rcUPVJjpntgHE+ER7h2rSsH2Jcp0p8otRjEvpsmi5Au6+G/EKzpAM9unEix+b7JxXR7tGo9qVf9bNpiVGpxg+d1K8JnkpRpC9Ze5m7dhsdJVvyt82kYezZHd3m87ot4vFTP3SSaXVJWboDnMftYV2gAbqx7eF5iw+A2Yn9UtiAe9IA4iGBQmvyBNulNi4EoU0Iipr01fTZTHs01PR1lDZfnJf7bRY/yNL9s1p1A8Mh/VmukpgP12XrXG9w5iKEQ2nQ4rekCmBdHw==
+ b=jz3EInnL/lg9TAeGwQ0h3KTgfrFtP3LO24OQQ4mmBOV68rM5Dj1ZdI9X68oKto77EBGJZJBFDL5fwyAzAXoOfox0y4OJxilXSlAMhNnOee5l6mfDzsvPS7DmYrgTPY2wPHi8KWK18s9dXGIlaqHoGzBJx8C4/FGxN2jt91stlZKn73pOU5r2n+GQqyE10d1zadbWUUtXoySE4pAM6Vfwsm3QusAfmBzNjFUXMOrg6EqSOaaPsVIWyGy3D/vfP+6HjRzLOIk8jWVcmUQwtgbqPylh/oobIhYVh+YgpHYd9/Hf4ZdJ4XH4eHaTIvEjyZsYN8ahAZjUpXxxvtcQZE/7/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EU9RmAYE8GtvC5cmd5vKMm+iYrbCOGBofZ2H258oaaQ=;
- b=V/7DqIdOfTwN3znU8OkiE+fvC0J92OHqYhE2VikfCeUDzSbFk90bRP8oU6N/BtHlm+whZiYH+EM4ESMkBCZ0a+xNY1zD+WcckoF3Z0glKL8+suyOMXfA0PrnM/TTKpIbvbwwUf+7HS5nCuztCnwe3yyaa3fMUOjgzTyxPVM8/or/nZ6lWefxfVPwWvbtdZ7CZjWhHiE4xyeaRfiwNPCRYztc3aKTESCvK4/p4/lkWOBdml0Zfe19IyXpFIhij92xBmFZEqbQXT4NM2rFa1saMe/cJz3BhgrJ2ReJu8ktjpHt7tJ26nMQkMbuJtxS6tnNJwrTEA56oFqAxMyR8Wxh4g==
+ bh=awmup36CLdt4Vuy2dkYf4Lfjk/tXREOlbsCHCW/JWPY=;
+ b=MMsLD49F4W9caH420JZH1dp4ke11Tq9GsH+D4s+HvcYgXxQdIO0TPtDeMKAIp+vCeMxbE5qlGHeiK6MeCXBd7Km8AQKvHCitD+HBUDWXMzD4//yVaMv57WP+xzez6pVpYNcuXNF3leWjWREEQNo4LIr8AwKCbGEXfLzxkAw/HmpeN9TrnVBkG+uRN2r3rB7pwsS5i4apuJ5iQf4GZRzWS1o2w7RslmBOr0GIzDyyW5JG9OWGhf+9zZz2q65fud6CD2dfNVkSjH3HyiawaqaTCJlgTPB7kEij03zrYkyS1iEKYhU86THtNtITuizWqX7Mv79DIwUuc72uBCmjTWOLIA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EU9RmAYE8GtvC5cmd5vKMm+iYrbCOGBofZ2H258oaaQ=;
- b=EaMWWir0ODDGTujLqBBXbGnbiSveboaDzz6bqHlCvhWjrf08N7wmLhSq1Fnu+7dG9lmQeCDQ5+/4toiVEP5DA9bWs8SB+YT8yGi7Ux5e2feVzd6OvQdcFa6TPBisk6vGK7XAFTuBmz89F8R5OEF3bqx77ljPK2pM/xLQhPnTOjU=
+ bh=awmup36CLdt4Vuy2dkYf4Lfjk/tXREOlbsCHCW/JWPY=;
+ b=q6mNavL1OHUhb5w8ShT1+5h3jk325+jRqaY6QFgTKP9GAvrP+U+bBW5ycrm+yyk5bSBVjUUn7oGJmsNOi1MZgSlr3sCbOqftmadW7ev/jmeGXvnvXUAGQ8U7IluvPo3dQbCSZLzNuxdwf6YI+HsmqkWWLKElapxNVi+n99KvmXk=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oracle.com;
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
- by SA2PR10MB4793.namprd10.prod.outlook.com (2603:10b6:806:110::24) with
+ by BN0PR10MB5176.namprd10.prod.outlook.com (2603:10b6:408:125::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.9; Thu, 1 Oct 2026
- 19:58:46 +0000
+ 20:09:08 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%7]) with mapi id 15.21.0496.008; Thu, 1 Oct 2026
- 19:58:45 +0000
-Message-ID: <0fee0444-1e42-4b1f-b7ac-234b5e19bb43@oracle.com>
-Date: Fri, 2 Oct 2026 01:28:39 +0530
+ 20:09:08 +0000
+Message-ID: <b3ccd2a3-a51d-41d9-9374-68a392d23ccb@oracle.com>
+Date: Fri, 2 Oct 2026 01:39:00 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 341/877] fs: avoid repeated scans in evict_inodes()
+Subject: Re: [PATCH 6.12 400/877] bpf: Reject dev-bound-only programs on other
+ devices
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Julian Sun <sunjunchao@bytedance.com>,
-        Jan Kara <jack@suse.cz>,
-        "Christian Brauner (Amutable)"
- <brauner@kernel.org>,
+Cc: patches@lists.linux.dev, co+ac0a8c41de69121d@bugs.sh,
+        Weiming Shi <bestswngs@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
         Sasha Levin <sashal@kernel.org>
 References: <20260930152414.738996857@linuxfoundation.org>
- <20260930152422.027976780@linuxfoundation.org>
+ <20260930152423.316713397@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20260930152422.027976780@linuxfoundation.org>
+In-Reply-To: <20260930152423.316713397@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0552.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:319::14) To SJ0PR10MB5834.namprd10.prod.outlook.com
+X-ClientProxiedBy: LO4P123CA0540.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:319::6) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -94,262 +93,198 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|SA2PR10MB4793:EE_
-X-MS-Office365-Filtering-Correlation-Id: 819fe1b2-86fe-4836-61db-08df1ff666b8
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|BN0PR10MB5176:EE_
+X-MS-Office365-Filtering-Correlation-Id: 18e2eb80-75df-4837-34b7-08df1ff7d915
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|18002099003|22082099003|4143699003|56012099006|5023799004|10067099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|4143699003|10067099003|56012099006|5023799004|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	iQyTimGGc7gL08NdrHKR6JSdMMHnk8bjhXeuR5ZFiXyFkvndKc+AmINoRrSG3X459x2yJ6Wjc3/i0p5ggZ0W91wIvL39NeszJjCnj9EPGAhezteOvHVhOC1AEfk4BAd5jfMWLJwNYREsghoYAMmrr+SURHY4R6cc6cFQMqQYqBul5BiGi2GzWOFTbQ2plyISJZ9gQu5NwkmaI2y3UDszy1mf6KD2RLyVlSC7U8nVjU4IrQZRNgGjigGrv1k1YPm89RaBoo7htOaaR/u4OAkfBv6Bxwxl18JXnYp9dnPWR1FHVINRKGcZ4Pau4JdHprDr9/Crrtg7wfdeGoJWJfE9tjAlWD5GwvKsAbNdqNM19X+mWV3e/0WVv36CDbHnCbRldGyjTSGpKeLHPbBunVwGuirWvWqtvgP7uff+WgMPv49FpjxrdhOXBvQBqrI2Pb5y66NjzfpCmfInkgSMzTXK1vPq8BpQeCAHJ/JVcsgqr7ltaiR/wJQStShejHBKltVlOOmfvcoek49eVGJWvMbl3MJsnWfCVdoJWM+W1pQj1vVr/P2+wyhW7XrMxz1gIP/fCfEk52Am3IzZ/3eEtqGHHiTEW32O2OMgaEoWoeVNv04wgA/LyldNoOWdTTTwzxFG
+	MeCEqoyjL/pGxL4cEb8q8nIiQIqh+qzrLJACKPyXjsdS9VJ04sT+9tLXcORoz3oBE00Z3Sx388Jr2ewskhA/YIFob1GssBVxS7QJElMeuS//BfySQJteXFoAhW5l39vLDWPeltHNPu8+VPj6IRVZZRG22UgZ6v+L7uory8VtkQ3ZFD+esRG9Vh/84Q2/Wx3kyWI+ILYrAA1g3eUmHxdQaCGBMozP/QFcqjz1XqOupMVAR35YMMdVlNNR2qbBXg/aSD/gFACIoo6bsi2U1MIryv3h2th3EIHZl5m96D73h0qE1OPIA1UxoRYSskkGOV26wX1Gt6WCmcYwxUMeh3x7ZG6INuxTX507XdopufFTm+5vnPnxHuwBPAMd4KXibzWqMIkzu5rG78XTa357BvB500oZfkhLu7BKZXsoRR3FIS08TWViRaf5dai459q484F6GGf6GWUZaWv9v1dBb0G8jTj05Aw6Cg1PZQm4mrJ/uTvTc4uUW3QVAd9nRIm/ian/XD2m/vcGloIvyAfNavjwgAb1y7rG4QAEgL0HfAehZZ6k3+Z5v8i53tnPs3FW+uIq+H/QIjQH673ZVrNcTey5S/B8qs0TX+rQ6FUQSoF5jwhUz0+MPxEIKS42XeNuNyco
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(22082099003)(4143699003)(56012099006)(5023799004)(10067099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(4143699003)(10067099003)(56012099006)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Z1JLc2pSUTRtQVhvd2UrcmZQQkdxb0ZFTTNxNitLTzNSODRRRDV3NTZuaitn?=
- =?utf-8?B?WVJuSmRYaU9TRFFwbHVha01mR2U1S2hLVm1EMHFkMi94MjNWMDdaVmF5d0NR?=
- =?utf-8?B?TGU1RkxJejU5TFRLMW9GUllHbDNhTTZhOUtkc2tUQlhDT3FkbWY0QWNqa1Vn?=
- =?utf-8?B?VFFCM0EwZ3FkNFFWSWhyOWRQU1pFQWVBQzdyL2xINHNDelFYS2t1cFQ4c2ln?=
- =?utf-8?B?UjMvNGxidXVPVHkxeWQweFYzTHFUK082bDZCVzNUeUNVWXdMZ1FobFFRTmtY?=
- =?utf-8?B?ZWJMclRkdnNJMkhOWEIzUFYyRVdJUHEzRHo0TmhPQVJpa0hqM3Uvc2kvbFU4?=
- =?utf-8?B?R0Q0cWdtNFAzUzF6TC94Z3NwTkxvWmx2UVM5TS9nWGJTSVRHaS9mQmUxdm5B?=
- =?utf-8?B?RHFJclV5YmtNOUw3ZWlWV2x2Q2hvalkyQTluOFhIVWdkaGRaMlRvcjdkUXlU?=
- =?utf-8?B?azFTd3BLRjRFQXpVUG9ubWV4cmFReXFEL29oSVRXSjVpOXIxWEhZMzd0RVdR?=
- =?utf-8?B?dlVTM2JCS0xZRi9uSFA3d3Y4bU4rUDMxWjdxSjZxcTJrWFVIVmVzUGY3KzY4?=
- =?utf-8?B?a2w4ODc5a3c5T2g0WU5NOWdIS2pKdkJBNGxmYkJuZS9YUzJIVGJaRlM4S2dR?=
- =?utf-8?B?cS9BTitINTZVU253WE9ubHFiU0kxcnVsZkN6dXRZL09QWGppcG5Md3JGNjRq?=
- =?utf-8?B?d0h6ZDZobVdmSEkxTHdMbkkxU3FMNjNrVE5uWEFPWlBvZ2t5eStMVlNCUXVi?=
- =?utf-8?B?aE9jQjlZdzJUSjk1WWJCZndtSzByOHhqb2dNS29QbSt1Q1VTMFU0ZWhoZ1dK?=
- =?utf-8?B?eXFwdXhoTTJEc2JIanhzY2ZJR2l1bFVETzFzaUdQWXF1ZjVEMEEwTFFSbnpC?=
- =?utf-8?B?aWhoYmIxb2JNaEI2aDVkMFozWm82bU9zd01vSHpoYStsZEZDQ1NVUm1YVzNw?=
- =?utf-8?B?YlJjdW1abFRiZGhBclM5V1BIaUtCZWIvSHdKVnNYWHppbWdMMkxWNG5MUURX?=
- =?utf-8?B?WmljTHArQzVrdVl6SW9HVG83QVVtenRVOXM3V09naWF5T3A5RnI4eEZnMFd2?=
- =?utf-8?B?TWdVUmFTakdzZ1NLdStJMmVXS1F2RUQ1ZGtnU0hoZ3g2ZUtqbytaaGRhZnBZ?=
- =?utf-8?B?N29ybDU5MUE3TFZESnlwQmxJQk5OQXp2SkxUNjhqNTVhSWdIYWR5bERQVFZo?=
- =?utf-8?B?VFBMZ044dnJlMHg5WTVKZkEzclRHQVM4NnFGRUdOcHdCZDFGd3hwenR3Zzhu?=
- =?utf-8?B?bEpCcUREUTJCRGtBZ04rUEFvZ0tHR1hnMzFUaUxVVFRCL1RKUjFjL3k2WUo2?=
- =?utf-8?B?QmhiTnZnbTk5NGJhZzltbjY0RmZLeW0xZENDcXk5TFpSNm5haGtjMVJqRmJv?=
- =?utf-8?B?M2tIVTBmbUpqcmNrazdKTWFnZmVUcW1zLzhxZ0RkbFB0cjFxNVRJdUtSZ1VC?=
- =?utf-8?B?OEMrMnBCbVBwd2xxem93UWowT0owYUgrZ2hFdk5meHRHR2RLVFNaS2VnNndl?=
- =?utf-8?B?QWVhaWQ5KzlnOFdwUURLUEp6OTA1bFM4RUtlZUNVcEp6NG5pM0JHQmlZRDlB?=
- =?utf-8?B?anprZUFqT1hmQUdvcFdGTDVKQ3FkbnhlcGQwUEVnOHVGaGRoSGlOcXhWeW11?=
- =?utf-8?B?ZmtUYVVmbHViNGtENjNWS2FkcVFyNlp1OS9YWDhtQkcwZEpXM240bVZwb2M0?=
- =?utf-8?B?R3BFVGRmZkVTbW5rdTdUUm8rVDBIY3RHM1dZQlBwa0ZVcUd6dy9wbEhIY20v?=
- =?utf-8?B?Rzh0TVprWDYzcnlNRGg5MTk4UjdKT01FZlU1MHl1c01Fa1ozbFVxWkd2QzI5?=
- =?utf-8?B?ZmI3bnhoT3luRUg3SkdIV280alBrYjJFdDQrajN2aTltR3NVM1V0dkFzRWdI?=
- =?utf-8?B?M2FpdU1CQnlkdkhzT0tMelo4WCsyaHpqNzFCS25GU054KzFUVXFFMU5ZN08v?=
- =?utf-8?B?R0VoMGpxNjZCUituQWc4b2t2NS9tMFhkZ05qVHA4elZCb0RLeTNQVnJJcVhz?=
- =?utf-8?B?NzJ6cnFGUitaN2pvWE8yenE4QzE0VmRWbjZKR0t2ck5SK3BoZUF0clpPNFJI?=
- =?utf-8?B?Y0tuYS9ZVmhUYlFQdURTSlVTd0xsMVVmdU55aWNEdXluRXI5bEhFc1Q2ZVd4?=
- =?utf-8?B?b2JUMGhvMHg1KzF0bEhlKzlpTW85VlU2Vm9ENCtYd3JIOGdCMncweFA3cVFm?=
- =?utf-8?B?M1N1U2QvbWRpNEQ4QVRPUm5VVzVFVFBxYTBxckdGMXJab2poT3grOHdGN2RD?=
- =?utf-8?B?aDhJeXZXazNVT3orNnc3RHRTQ21LODN2MWduNnVOTnpQWHZjaGpWMnZwOVk0?=
- =?utf-8?B?N2E3YVVwUE5kQzZlUENBS09Va004eXVoT1FGcVQ4aE16RDRydWhQSndDV1Qr?=
- =?utf-8?Q?MsCRaMwEVjlzNgHvlL6WBcCIfirjgnEK36Yuc?=
+	=?utf-8?B?L3JiNUFzeTJVUERoL1pBYkRDcmJCcUZBcm9oUlNNQjZDbXprSXZVSEZ2WlVS?=
+ =?utf-8?B?MWtOYzhtMzRSbkpxeXRlajhacmpRaGkrNlhGajNnSG83V1plRmpWeW5aeWJ5?=
+ =?utf-8?B?cnltV3ZPbzg3QzF4cnNadEZjcHl6cXdDRzJVNFJGK3Bub2FhZ0NJdGtrTEc5?=
+ =?utf-8?B?MExMbHZvWTE0by9vUTJoSFdoTGFrZlRsZ1BCUkFXa1FpQzM4QlVtYTB3cVc5?=
+ =?utf-8?B?dGwyc0tBdTBoRFhBRmh4TDF3RFBBcTVOM0FOSDQzdGc5Z0hPOTFCUzRwLzk5?=
+ =?utf-8?B?MTh4UFhNWWJRSWhpWThtVWZVdVhXcC9YMHJKdTl6OVBPanJvakxPZ3VOOFkx?=
+ =?utf-8?B?aUlMVSsxdHJrekZ6eHMwSG5QSkFDVk8xVTh3UC94bHdXcDk0aEVXbVJUSTV6?=
+ =?utf-8?B?bjQ5M2FoMjFHSm9GS1NIdjBYNE9IMEhSWTU5R1FzUjJESTVsaUpWMHNGTDJV?=
+ =?utf-8?B?YVVZNm9yRGNjMUYxbS9INEppUzlXWlpKdU5jbmV4L2J0eHVuVnVIaUsydGQ4?=
+ =?utf-8?B?QThLeDd1ZC9TaThZeW5Jb3I4bVN2VlgyNWY3Uk5WVnFFa1pSYlNhemdOVy9n?=
+ =?utf-8?B?M2NKZW9lRnN0Wk5jSHRhMVNuZWdNYU9DTUJWZ0lXR3VTd2lZV2Y2VnF2cE5l?=
+ =?utf-8?B?QjQ0SnRhbHlERDgrUlNwbGxlUkNwSk9uaFdKRElybnJpTmpHUFE5dndtUXBG?=
+ =?utf-8?B?SWRxUDlNNUlzTTgxb3Q4bi9LVjZ3dktLUFduckVEaWI2djA1cUNwczJBSjVH?=
+ =?utf-8?B?STBvKytXaytQdGEzWmRmeVhsTzlET1pRTFUrSFUwZDVOclFVVWFTaHk0cGtZ?=
+ =?utf-8?B?aERKRDg5QU95T2FKTUV4cERDWWtyU3hMdThxMWVYUVo5L1M5RjlRZEJmTlZr?=
+ =?utf-8?B?SjNBYmMxMGlheVp5RHlvWDlxR0F6dU8wUTFHeWFyRVQ2L2JscGtncnd6enZI?=
+ =?utf-8?B?TFpyMXc2cFRJMUlvTkNxR2dTYWFxcDRHR2R2OUdpNWF2RXhhdXNKZStjV0N4?=
+ =?utf-8?B?YkhNb1RkN24vWlg1b3NISE8ydFFwaWdwRFlIMlYvdXJQaytnc2pWUG8vTUpx?=
+ =?utf-8?B?ZnpSakFHL0UwQkpQc2hqWldXM2E5VEd0TXZrbDBHdFQwcEJObWl2OWdqaEdB?=
+ =?utf-8?B?UzdEWjJ5NXk4emhDbzZsZUJwNmJYOWdZY0UzdksvZUVnaExXY3ZoZTFtWGxK?=
+ =?utf-8?B?ZktGVkErdDljN04yVXNycFFoV2FjTmx0TTJFZ25tcDVPMHdYUm0wTERwTGVI?=
+ =?utf-8?B?Tlc0cWVRcHd2L3E5ekJsU0c5OHAvdzVJbG5wUFJqazdtazgvRWlwclRXMWMy?=
+ =?utf-8?B?MUF0Q05IT3F2bzV1TVltdUIzdlJXMXFMeDRMN0hZS0s5UGpWRk9ReEVuTEh4?=
+ =?utf-8?B?L1hLbkliaFhCYnFSdmxCTXBxY2tjUkQ2UFd0cU1uNGc5djdhbkErOEFWb0M3?=
+ =?utf-8?B?NllxMUVDY0VnaE1UZmJRQTlaaGVKcncwazdINlFRWnZzZURPbFRtM3ArVkdF?=
+ =?utf-8?B?MENvTWxSYlhwN0NuN3BFZHRIbWxubEdRZ1ZIeTFXcWNWQ0xmNXl5S2R6ZXZE?=
+ =?utf-8?B?ZEkzWDJSRW9KZWZiazVpQmVKcFk1VjdhMHRBRGZVWkJLYkRQUEdOdFhiMUFR?=
+ =?utf-8?B?SU0xWjl1eGc3SjFlbnlqNWE2U3o5cjhUcEZiNnhFQ3VvT1lvdEZsU01mWXlm?=
+ =?utf-8?B?RUs0cnB4QzY4VEhVd0NzQnhoemVCZVExVUZnVWtwVG4yTVUrOVNFOVpURHND?=
+ =?utf-8?B?T1N0Q1prbkk2VXFJaHpQbnRETzBCd3lhU2lFRE5weEFzd2U0YlBFY21vaFVB?=
+ =?utf-8?B?eWNTUXl3UUVCa2RwYUFKVHZFcFVJWWpKV3Zhd1I5VkVrQmtPbXZmbVFqbFp5?=
+ =?utf-8?B?ZFQ0SWVyNzgrbVFxODhNaXVqTUNETnJPakI5VkhZQWc4TGY5bC9YRlNheG5q?=
+ =?utf-8?B?dzF6cE10Ly91M3NDbVV4cTVrd0Q4T2g3NzNUSWtlb00yUjZOdmtRRDhHRVAz?=
+ =?utf-8?B?NXJUVGZMcTdrRXBGL21CQ1Z0OHVSV2ZtdEIyZHhRaVNxanhQVEhGTHdzNVA1?=
+ =?utf-8?B?M0NBN3QzY0RqblV1MzRYSi80MVBIcFd1NjBpTXQyNkgzSVVHdWltemhNV3lX?=
+ =?utf-8?B?VUlVeko1U2RZbEhOeUZqbkhGOXBHOVk3V0xicktQVjlOamlaWGkwWTVRQ0xP?=
+ =?utf-8?B?eGREekpYamVubXd4MmJrSlp2YmFHR2t5UDJWVFppREpRcWtvTFFXb1JpSSsr?=
+ =?utf-8?B?azB4bzFZaU1EYzN0ZWF2eDFtYTZLQUJLeFRzUkM2K0ptU3Z5ejYzWDhzNXl0?=
+ =?utf-8?B?b1ovVUhsWGNXZ1NjS1VrVXF2RUowZjZEZWNOckQ2bVhYRk5uYmhBY2RMa1Ba?=
+ =?utf-8?Q?SbiWTtqV6Mstp7vLPtOQH+hN4t3ZMkVLBo2F+?=
 X-Exchange-RoutingPolicyChecked:
-	HXKGPhzaW/K5XaSPGcSTr7BjQOjUa7gKDLbB/DziVE0rF+QumAE5rbbpfN25Idp/xnl1z1B69OGY0LMGnFWXHb1CMYQ84F5wID0AxEtmBR4oUNUSef77hXmmdzCsNoe1NSm5KmKFt2S3UIlkCLdMw0C4NmJnqM71r52K7a6CvTQWF6Go1RQXOeXI13WSqX9Tux700lKJEaZpZLr2OovAJ8yJcu9x2/PLpj996A644M5bwXcyC+eTn+PX1uOnIJfLaG1urufYRgrUjsCw4pN0eShjd4DkHzjj517MvX4XA2fgINIi8crTUUw4sHRXOzL/BXNNw+P961ZwdH1aKrfMzQ==
+	yuRwLZ2Hzm4PfEgghM8xkQbWOvDmmkC5HmORb83/qB8NjgLCWMvVhffCfaaufPFJGcwNkeTG113NVvm1H+X9bIqOYd/bK47Pf4gXNibqhHtwnyZh3r/pazQj6U2iGJXEXZjlz0wPyBywXkKudlJuq4GW9XNt4ONUxTgcm2eax7GNZhtMjoSBauZ3YoDci5PeJdM4Xp6uJzjLVz4VOKpX5ieL0+uVjJmIzqhLeKV1jozL5izxtNbJ1d4/XZ3drphkl0FTBdDkyPEv+dP9i2/qlIJ/4iDChZZSX54ZQm7HfnX9cfDtjvhJRslN1feBaI5tsnU+xYIkhCgEaxSezAVd+g==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	H1+OUsZLBVfQRTUQARJ6I4+uVImDQjeYwPqrJTQWUkp059wmcAvqcgllbi92RsUyDBZ/xg7yKTjon7vtGu3uI4yGamkDL2wRiyhQekRqWKRXl7dW5IVVNbTkFXpf0lYpRc5HbymddLT/uBZwPlpYJKcV1NUHjHomIDz4YpwHXb6Z9aDsTxmdT1Bcs/D6Qw20aGuYbi/EECQlCxHgNnPe0mMN1QCWauuGlw3EGMKZufVuuHymimtZ8HiLXcg8DbtCXwmhQFWFGBfnfQ9cxLnvyCTqeVWJnsjsWwjifbDbeTJo9vQvvMINqpQ1XAOREyN8UZLbZobO1ZJ89kt5oLA+b1H3oJEY7FFOkz+Dkpib968uGnv/IaXA4oyuTVD70hsu4dLPRyg7nlw1jb7wA+TTkDSHk+wlGXJn28+CzFoZQuEfufMoI2Y++fmwXbBn27z4ZfgqLYU4QY/9RfeDIN/JAF9OISLqhjD70tcaB0VBhWSfPL5GjGIrJmGW737uV2FNQpX3bb8F3QeY5C0LHVL6Drx1ysoSUC0fEbigY6MTosAbxWB8jsEq0ldYGESzi3OfjI0DJtuYH4m9kSkZN/KFysrrvpn2v8XdPwX5TJ/1W/4=
+	v89rjYrGX9nGfchhIB36mL/XmoQZyMP0m3TIft3RHC+bCK3OJHTQA6DAzfWky9KwCOhsvSw8Rzb3jEDrUi7q65TAitcQhjugOd/IKTgXYjT6+fqaFprv/7YDzOmF1Apo+hpa6/9kFJc91+CfhDbMwBtbKRFs6fSZjVrX8k11mcJ/PJHo00TYpWVcBcpy91dT7em3IeXJXsoW9sG6IlW+QYt0cbKZ34+kkd7daSuvlQ/eHXfEU27lDoZNWXRdgz/QVc6/IBfaMQ8++lLAtV1yAEWztu9uxFsHoNtqhZZIeJpao4Nkl6PbcACSRJJtMdmWfXuCoyHR1MmVnMyzjJVlDTEg4HMTRo1YzjMlb7XT7mgx6g+HSCX8GTPDgorI3ROqvYJgfH1t3Gv3CxKIUCh92KBnpR7erKqU2Xc5G9m3F/Vbh7q8cCmfNCh3OjFOitYd+9ERHZ5n4UdqJJv8ayzm+5kYKE6YVUlBykrey9gghhZ/zM/ePViTCEL3EeqYoBjWTurQz5pttzfS5154tfxrjywTEDKj8SYAzI72u9EzYV1RZSD/iKzS8DuogIVzz1ZPNDDSVDvzaX0KNL9Pe5XeHoJcLcWhm0M29tbI4CP09Pk=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 819fe1b2-86fe-4836-61db-08df1ff666b8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 18e2eb80-75df-4837-34b7-08df1ff7d915
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 19:58:45.8291
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 20:09:07.1958
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: frK3xSsfC7YTkYN/sqiBcyNidHxDJRUC3sAgoX89+nllXBPqJkflbYoWmTW+tGul8Wd6hR6DYoviWMo13j1JdKV7CxYz2JHQVbPobWs2tDABYcm394qTTYzfPcxKywSu
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4793
+X-MS-Exchange-CrossTenant-UserPrincipalName: MzycekaXUw97h77xbxh1AN/Kz8dPXdiuOkH3OjQOXtHKsixwYttX4VicsDQEtBOhM1nkh44XtNzDHgM68uW0s9gNgG3TmO0641eXH1zl+GS6J2queUTbj1A4ozXQix6e
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB5176
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- suspectscore=0 mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2609040000 definitions=main-2610010079
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3OSBTYWx0ZWRfX4EDQ+6FgO8bV
- QrwXXlWZiKxBvshc8/NjLM+Xmd5qX18uMaApFInerT0F2hh1/HgxJZRUPi3zTYRS4QJfwHm7Rmq
- liQbjZ0scx6UDTOVoGPpAz3VXxu0PlzcIsaZWTlSOc+gsiqUstZ2
-X-Authority-Analysis: v=2.4 cv=W9itxhWk c=1 sm=1 tr=0 ts=6abebb7b b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 suspectscore=0 mlxscore=0 bulkscore=0
+ spamscore=0 adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2609040000 definitions=main-2610010080
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA4MCBTYWx0ZWRfX06F33crNY6Vy
+ c0b8+Dw5StVaokSnSpnlbQg8k4VZcobOWFwi4iQ8/5qo1wKaG/omzIqdw4qATAAwi15xfzWJPpg
+ NvBU1r4iReus6UBLxjViu4Su39ah32NJeExXrHW8FkcflCCNNmz0vObcvUiqhA+RDOwnV+SdijU
+ l3Q51HNctQC4T5qcMHVW9Uq/8rSENG9LPhaNN6NOq6PPnlUq9o5GubomuFPy3tMAYq8eAx4a3sy
+ mJifdQzrIx+Z8iK21FqjFhFLD7Qknk1RNKdoq0Rxd7DUKbpayjk2ucJQH0NJ1zQc0GyPihYfx1T
+ FiA7vTzeF0mOyB67D/z+OHaBKWgvvuHIlwoiHsAaLAEOcAYt8rCwTt6gcCiQIS3vGyVAoUywPKl
+ 8BDhUxSrTTuQarUurN5t6z8aTdhSuiYT6gVy5cCoiZ54yY1rslBX2j3BI/43fIFc7Q58aOMrtxz
+ ucVT+2VjxvgcwxYR90A==
+X-Proofpoint-GUID: T-HjJB7sXt_7hlKICiFwnmXp1LLHn4e6
+X-Authority-Analysis: v=2.4 cv=T8QZ3PKQ c=1 sm=1 tr=0 ts=6abebde8 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=660iZSQnnn4A:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=o5oIOnhZENCTenyL_yNV:22 a=bC-a23v3AAAA:8
- a=968KyxNXAAAA:8 a=VwQbUJbxAAAA:8 a=pAki7EUCH4AlyACQweQA:9 a=QEXdDO2ut3YA:10
- a=FO4_E8m0qiDe52t0p3_H:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
- cc=ntf awl=host:13537
-X-Proofpoint-GUID: eD8_FA62nPSSA755HcgkYj8D10gZmvsr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3OSBTYWx0ZWRfX6yjMgCHVetpc
- cV1AYfKUefVgO/u9pf9MgP3U/TGN70uh2mZKAqTpD70IFHtzoueDVhUeUdOre59wEaYmIcQzuTy
- a7CJhhE987lpovVKP5MMDddrX7f+oYWUQIE2XAuta+yuI10Jfi7rs16uFG46ed8WO7zGABSvPCK
- 3lpOHfoUciUjgCEfYy0POt2hEuKtfASNXULHkKRtkOclpm48k+4do2q/ulWWV6p02DhBJXkBDUD
- Ge7wAEYIzAbx1S0nOM2+zMmu1mU76qoIUEX8SUHX44y6cN0heknvhiQ5l8H1b0M5F5z5RoXVaAG
- nIGzdi+OIBexiNAuSmZD1oxkzjIe4DE1oAMuhbprG0Rm4VmCSKECTKoPVWav8V7u7nQC0lXHqLx
- vV91DJuGE0x+XRdsA5zX11x6b1f259RZ9qIOB1Xudb4NC3lI6adh/6/o9K6k8A5adBmRQA5xl6H
- WJUXkx1x/K6Qobp4PcH3suXyRzdHT9CjlKPTRzaQ=
-X-Proofpoint-ORIG-GUID: eD8_FA62nPSSA755HcgkYj8D10gZmvsr
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=bC-a23v3AAAA:8 a=Cpjz6iqz7S70EilvLu0A:9 a=QEXdDO2ut3YA:10
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA4MCBTYWx0ZWRfX+/GO+/Wq1rYp
+ GmkxcYRq8ebnurwfr809r2SrAYTUW0ctAOGYHtMHAm5An67S7yKGPT29hgQKRtHe8BGESx7DNSi
+ 0ue5x8ThFUpPDBvumLTUAj9UmuBzkaCtjqmCUtY2vMvGlxRUaSDD
+X-Proofpoint-ORIG-GUID: T-HjJB7sXt_7hlKICiFwnmXp1LLHn4e6
 
 
 
-On 30/09/26 8:50 pm, Greg Kroah-Hartman wrote:
+On 30/09/26 8:51 pm, Greg Kroah-Hartman wrote:
 > 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Julian Sun <sunjunchao@bytedance.com>
+> From: Weiming Shi <bestswngs@gmail.com>
 > 
-> [ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
+> [ Upstream commit 6db1ce73e9853f533eb7f413f14ba00f8ec6f80d ]
 > 
-> We observed hung tasks when users attempted to unmount a filesystem
-> after its disk had been removed while still in use. During device
-> removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
+> __bpf_offload_dev_match() falls back to comparing offdev pointers after an
+> exact netdev mismatch. Bound-only programs normally have NULL offdevs, so
+> unrelated netdevs compare equal. A bound-only program on an
+> offload-registered netdev can instead inherit a real offdev and match a
+> sibling port. With CAP_BPF and CAP_NET_ADMIN, a caller can use
+> bpf(BPF_LINK_CREATE) with a different target ifindex to run metadata kfuncs
+> specialized for the bound driver on the target driver's xdp_buff. Running a
+> veth-bound program on tun reads beyond tun's bare stack xdp_buff as a
+> veth_xdp_buff.
 > 
-> Each time evict_inodes() drops s_inode_list_lock to reschedule, it
-> restarts the walk from the head of s_inodes. With many referenced inodes
-> at the head of the list, these restarts repeatedly scan the same inodes
-> without reclaiming them. This can keep s_umount held for a long time,
-> blocking concurrent umount attempts and triggering hung-task reports.
+>    Oops: general protection fault, probably for non-canonical address
+>    KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+>    RIP: 0010:veth_xdp_rx_timestamp (drivers/net/veth.c:1673)
+>    Call Trace:
+>     ...
+>     tun_build_skb (drivers/net/tun.c:1739)
+>     tun_get_user (drivers/net/tun.c:1856)
+>     tun_chr_write_iter (drivers/net/tun.c:2091)
+>     vfs_write (fs/read_write.c:595 fs/read_write.c:687)
+>     ksys_write (fs/read_write.c:739)
+>     do_syscall_64 (arch/x86/entry/syscall_64.c:84)
+>     entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+>    Kernel panic - not syncing: Fatal exception in interrupt
 > 
-> Keep the current inode, already marked I_FREEING, out of the disposal
-> batch until s_inode_list_lock is reacquired. Resume the walk from this
-> inode and dispose of it in a later batch or at the end of the walk.
+> Restrict non-offloaded programs to exact netdev matches and retain the
+> shared-offdev fallback only for genuinely offloaded multi-port programs.
 > 
-> The zero-refcount and state checks under i_lock allow this walker to
-> claim the inode by setting I_FREEING and removing it from the LRU.
-> Other reclaimers skip the inode, leaving this walker responsible for
-> eviction. Only evict() removes it from s_inodes, so keeping it out of
-> the disposal batch ensures that it remains on the list while the lock
-> is dropped. After reacquiring the lock, reading its current next pointer
-> accounts for concurrent removal of following inodes.
-> 
-> The existing inode lifetime rules prohibit acquiring a reference to an
-> inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
-> hold i_lock and establish that taking a reference is valid. Inode lookup
-> and igrab() check these flags under i_lock when acquiring a reference
-> from zero. ihold() requires an existing reference, which would keep
-> i_count nonzero and prevent this walker from claiming the inode. These
-> rules already allow iput_final() and the inode shrinker to release
-> i_lock after setting I_FREEING and before eviction completes.
-> 
-> A temporary __iget() reference would also keep the inode on the list,
-> but its release must preserve last-reference handling. Another user can
-> acquire a reference, update lazy timestamps and drop its reference while
-> the pin is held. If the pin becomes the last reference, dropping it with
-> atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
-> handling and can lose those timestamp updates.
-> 
-> Releasing the pin with iput() preserves that handling, but does not
-> guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
-> may retain the inode in cache, whereas evict_inodes() must evict eligible
-> zero-reference inodes. The inode may also have been freed when iput()
-> returns, so the walker cannot then use it to force eviction. Using
-> I_FREEING preserves the existing eviction behavior without introducing
-> an additional last-reference transition.
-> 
-> The xfstests auto group passed on ext4 and XFS with known unrelated
-> failures excluded. No new issues were observed, and the previously
-> reproducible hung task no longer occurs with this patch.
-> 
-> Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
-> Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-> Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
-> Reviewed-by: Jan Kara <jack@suse.cz>
-> Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+> Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
+> Reported-by: <co+ac0a8c41de69121d@bugs.sh>
+> Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+> Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+> Link: https://lore.kernel.org/bpf/20260917161335.1020405-2-bestswngs@gmail.com/
+> Link: https://patch.msgid.link/20260920132303.4109240-3-bestswngs@gmail.com
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   kernel/bpf/offload.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+> index 56115739fcfdd..1b6f9e7175666 100644
+> --- a/kernel/bpf/offload.c
+> +++ b/kernel/bpf/offload.c
+> @@ -703,6 +703,8 @@ static bool __bpf_offload_dev_match(struct bpf_prog *prog,
+>   		return false;
+>   	if (offload->netdev == netdev)
+>   		return true;
+> +	if (!bpf_prog_is_offloaded(prog->aux))
+> +		return false;
+
 
 Hi Greg/Sasha,
 
 An AI assisted backport review flagged this, and I checked the upstream
 code against the 6.12.y tip f4ffa8dc360b.
 
-Upstream 7459c0218742 uses the current inode's successor after
-relocking:
+Upstream 6db1ce73e985 checks device binding in dev_xdp_install():
 
-     struct inode *inode;
-     LIST_HEAD(dispose);
-
-     spin_lock(&sb->s_inode_list_lock);
-     list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
-         /* ... intervening source omitted ... */
-         if (need_resched()) {
-             spin_unlock(&sb->s_inode_list_lock);
-             cond_resched();
-             dispose_list(&dispose);
-             spin_lock(&sb->s_inode_list_lock);
+         if (bpf_prog_is_dev_bound(prog->aux) &&
+             !bpf_offload_dev_match(prog, dev)) {
+             NL_SET_ERR_MSG(extack, "Program bound to different device");
+             return -EINVAL;
          }
-         list_add(&inode->i_lru, &dispose);
 
-6.12.y retains the cached-successor iterator:
+6.12.y bpf_xdp_link_update() goes directly to that installer:
 
-     struct inode *inode, *next;
-     LIST_HEAD(dispose);
+     mode = dev_xdp_mode(xdp_link->dev, xdp_link->flags);
+     bpf_op = dev_xdp_bpf_op(xdp_link->dev, mode);
+     err = dev_xdp_install(xdp_link->dev, mode, bpf_op, NULL,
+                           xdp_link->flags, new_prog);
+     if (err)
+         goto out_unlock;
 
-     spin_lock(&sb->s_inode_list_lock);
-     list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
-         /* ... intervening source omitted ... */
-         if (need_resched()) {
-             spin_unlock(&sb->s_inode_list_lock);
-             cond_resched();
-             dispose_list(&dispose);
-             spin_lock(&sb->s_inode_list_lock);
-         }
-         list_add(&inode->i_lru, &dispose);
+Link update calls dev_xdp_install() directly, bypassing 6.12's binding
+check in dev_xdp_attach(). Type checks and tun's callback cannot prevent
+wrong-device installation, leaving metadata kfuncs with an incompatible
+context. The matcher fix is correct; this bypass predates it. No
+destination kernel crash was reproduced.
 
-I_FREEING protects inode, but the safe iterator's cached next can be
-detached or freed while the lock is dropped.  The 6.12's 
-invalidate_inodes() differs from upstream's disk-removal trigger.
-
-I think 6.12.y needs the two-line iterator change from
-3bc4e4410830d556b0f40dfa6671bfcaeacc1599 ("vfs: Remove unnecessary
-list_for_each_entry_safe() from evict_inodes()") before this backport,
-thoughts?
+I think 6.12.y needs ad27ed7d2309419a129078d781504f486b1b469a ("bpf,
+xdp: move offload check into dev_xdp_install()"), adapted to the 6.12
+installer, alongside this fix, thoughts?
 
 thanks,
-Harshit
-
-
-> ---
->   fs/inode.c | 11 +++++------
->   1 file changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/fs/inode.c b/fs/inode.c
-> index 8dabb224f941c..8592fd1a18526 100644
-> --- a/fs/inode.c
-> +++ b/fs/inode.c
-> @@ -790,7 +790,6 @@ void evict_inodes(struct super_block *sb)
->   	struct inode *inode, *next;
->   	LIST_HEAD(dispose);
->   
-> -again:
->   	spin_lock(&sb->s_inode_list_lock);
->   	list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
->   		if (atomic_read(&inode->i_count))
-> @@ -809,19 +808,19 @@ void evict_inodes(struct super_block *sb)
->   		inode->i_state |= I_FREEING;
->   		inode_lru_list_del(inode);
->   		spin_unlock(&inode->i_lock);
-> -		list_add(&inode->i_lru, &dispose);
->   
->   		/*
-> -		 * We can have a ton of inodes to evict at unmount time given
-> -		 * enough memory, check to see if we need to go to sleep for a
-> -		 * bit so we don't livelock.
-> +		 * Keep this inode out of dispose so it stays on s_inodes while
-> +		 * the list lock is dropped. I_FREEING prevents new references
-> +		 * and leaves eviction to us, so we can resume the walk from it.
->   		 */
->   		if (need_resched()) {
->   			spin_unlock(&sb->s_inode_list_lock);
->   			cond_resched();
->   			dispose_list(&dispose);
-> -			goto again;
-> +			spin_lock(&sb->s_inode_list_lock);
->   		}
-> +		list_add(&inode->i_lru, &dispose);
->   	}
->   	spin_unlock(&sb->s_inode_list_lock);
->   
+Harshit>
+>   	ondev1 = bpf_offload_find_netdev(offload->netdev);
+>   	ondev2 = bpf_offload_find_netdev(netdev);
 
