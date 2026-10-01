@@ -1,58 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A1F3D170E;
-	Thu,  1 Oct 2026 11:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C6E3F0750;
+	Thu,  1 Oct 2026 11:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790853090; cv=none; b=pErv55DvKL12iXbr3bBACRbXgNPhsNhw8xP7LWoq6Jk8Y1cM6MYC2ID4o22jrrbOtHkoX9u/X3B7+sDlZGrc2PczmcvPSBa730xq4GJ7wYEhpthdnfk9BSl1UH608kRXxPwgDVEhTEssp2DB02tnFE7ys3+64/TAped9cfeubgQ=
+	t=1790854286; cv=none; b=fOn5esYFig6AMKx6AqKlFWdSj/DY4mN1Mj+htYybUCbIuZzdhtDcYSGAiEX6Yhg/WDYOQyEPgDT8GNRa5QO2uA0/ZRXv9S4OswrMWLbDjho37kDFbvMBgUftidy8Jh9tiwQVQr0C8QgxwYDe0ZKpVyPq24wH6mUwWrf/G12AQMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790853090; c=relaxed/simple;
-	bh=flEK+IeJVkPacX1VndNFiZetnTzPLBS58+Y5ErBc/I8=;
+	s=arc-20240116; t=1790854286; c=relaxed/simple;
+	bh=4z7vCfJhl3N3SNHfAypfGl6dfJqZp8HGUdawqdVSjZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYsa/BNwXluxvheyAeBHRNi0RHQncMmd60uHTuMrgqsEaqZIlp6O8UkZLks/nj1NA4RWiDMfLBXEAKgT3k+VXadZjlRfdmqwdjqmKvL7fZiYvJCiRnG2rV62cti3eUzZ7rmFxGBzo6upgUJlqfRolE4brKDh8+xz3ab3MEKUWcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gUZze17i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KPNFP4Ch7BTJeSqSfL+Ggum+uFfYQ3B8WFPyWoI2v+B2VBXLCzbO0o1yiHimV/FOusshFTNhuA+rEaubaCEMSXsURmpdIb288EcrTxwDU60KlEVtaIxEsECLr0XO0SSrm/49hdpfPiikCTncVaa0N67/9ouqgGTz8ARsdETJ0po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3myM3IB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gUZze17i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EB11F000FF;
-	Thu,  1 Oct 2026 11:11:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3myM3IB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF2D1F000FF;
+	Thu,  1 Oct 2026 11:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790853089;
-	bh=CvfvUweryOppl7aK+oFZNP34x9vDH+YaR6jF7Qa5dm8=;
+	s=k20260515; t=1790854277;
+	bh=CUP+vnJsx85GMSEXaXf2bvVGRd8g6xL19BnPGJh6HGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUZze17ipvfMAVxXYTqm4JcaUyw32MqjIXBWw4MqPnfNfPq3iv516xd656CmSpkWm
-	 c80zfKU9mPOcXTAQaOBLXKnz3O6WCQS9g2Rcy2PGlWMOUMfKvsBWGDVTACCstoNhrP
-	 9o8k4gO1CRRkHjpZ1PXRn2qTYMzcUCuj1nkE3pdoLf67RyOR11jR/ggqRKSlTlK3+x
-	 JrpUJWrb7FmAuggFMQ+odMT7VdKmW5afdn6FgQ7kVK4uiu4n73HcVbRU2feTbDju75
-	 dgawTiBlJv3aF12mB70sa/dJrOMt1tF4KKu1zDeUdu0hh0K8jZpy7V4WcerFX/kBIb
-	 OAmQSS4wQbw9w==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
+	b=n3myM3IBtzOFkBdLM77m8vuGocKPOEp6ZiNt27yFJFJ7UxBrj3vH3e9mc9fo8fxiy
+	 YY0Owap7//JY+ulSQ4lnzEbLrprEzu47Do3RqWJyf5E+4vayBfSH89of5v4DvZbl1W
+	 UEv7uXXi/pyviN2KLR8bYJsnGQ44hqMjrQXZ3KbFoUY6QKeZ5tPncQGnesbmmpDR2W
+	 BCEKiIkX39HsGVNIQYSFDJ4tLMZzo1Fa6xryoLrprTrDYATfC7wgp39f4WkV3bQgaS
+	 wEknlbJkLDKg0BNjd6s+mtLmsiiLyHmQPwYmV6VisBt5gRCreF1+5x62TZcGuYmoQd
+	 3RYdagDK76K0w==
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.6 0000/1193] 6.6.158-rc1 review
-Date: Thu,  1 Oct 2026 13:11:19 +0200
-Message-ID: <20261001111119.60591-1-ojeda@kernel.org>
-In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
-References: <20260930152434.301151190@linuxfoundation.org>
+	patches@lists.linux.dev,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH 6.12 436/877] macsec: inherit lower devices TSO limits when offloading
+Date: Thu,  1 Oct 2026 07:31:12 -0400
+Message-ID: <20261001112559.b126c69eefb244ca@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261001052746.76669-1-kmehltretter@gmail.com>
+References: <20260930152414.738996857@linuxfoundation.org> <20260930152424.092713670@linuxfoundation.org> <20261001052746.76669-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,21 +49,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 30 Sep 2026 17:11:24 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.158 release.
-> There are 1193 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 02 Oct 2026 15:23:04 +0000.
-> Anything received after that time might be too late.
+On Thu, Oct 01, 2026 at 07:27:46AM +0200, Karl Mehltretter wrote:
+> I object to this patch as queued. The backport is missing prerequisite
+> f29d24a2106a ("macsec: clean up local variables in macsec_notify"), so
+> NETDEV_FEAT_CHANGE dereferences an uninitialized rxd.
 
-Boot-tested under QEMU for Rust x86_64:
+I've dropped it and the pre-reqs for now, thanks!
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-Thanks!
-
-Cheers,
-Miguel
+-- 
+Thanks,
+Sasha
