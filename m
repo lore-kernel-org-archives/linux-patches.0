@@ -1,47 +1,47 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012051.outbound.protection.outlook.com [40.107.209.51])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012058.outbound.protection.outlook.com [40.107.209.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302B937188B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE77368D76
 	for <patches@lists.linux.dev>; Fri,  2 Oct 2026 23:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.51
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.58
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790983942; cv=fail; b=iE3CldoQCLUVJEuciQHB0fOFii3pArYNDrAr0b4/JPa/bo5rtKgVKJ2qBp2nC2VCoKkakXtCpdsSQ4uvI11mgO/gXT/OmoNlit7Gh6+bYYOBojA3dtXw5nJIfIpWTpvVl+dVFxxfEmv9VvJ3RoQMCwRwKRIh5rF1Yy22H1iZSEg=
+	t=1790983942; cv=fail; b=HLq2iH+dLX4ZiiaEUTU7HvrG4kxsgmp42cb2aJ15gwXh41MhyQDflWQXC6mCieKZclly89FQosXY5BVCk4X7tcgLpHu/rEa4L4PvFHhBfiZ9wwAKCbDqx46dsR8u9gJlPPEiA+VhRaSkD3sWNRJhb7S/Y20/PI3wZzEqg7cwbMU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790983942; c=relaxed/simple;
-	bh=LdPOhEcfnzAaOKI5y2vOYN6txb82kZk7YKKv6eV0e40=;
+	bh=1kAkyL/Cc5xGsXCWCiyjShgS1seHnj2zjVv76bg8C6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=lpC5PbTypZCid+iEoKomN6Sa5pnRtZ1U+YaW21K9ywXregxa0S3e92Ve6lk08OQjONnNdbfpfrlr0wNmLKGzC/RzrTCuAg4m4TRg9gTDtZ/Ea3zlulaAl1dgQSx7DmhB8dLymejt77s75Ir1XVfyI1CPvZw3Fn8JDZhUDY2gWTw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=n3hbo23M; arc=fail smtp.client-ip=40.107.209.51
+	 Content-Type:MIME-Version; b=FtJvG+pXUJVEK+7sZGWQJB7G047RtnROaLrY7f7SQZ51AhOr1upT7A/nQGXze+MRaQItgeB3iMGWMXQ/4rWrJ33M0qPapYcki8tFdgkUtkBRC3rz2rnbKOk/wnGmhgiSso3bRRmoAe7OD6jXD6NFe5cWXQ6MkMAsiQpo9Vfwzr4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=D63ccrDl; arc=fail smtp.client-ip=40.107.209.58
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="n3hbo23M"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="D63ccrDl"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G/OSqByWLXCTUEogzpQZIX9UVBu/eXl5LYqpcujTajYy1d3dwttgRGrKMujCfBOeoq7if1NjrL/0/KB8xItuf+jMkuddgaQDSFc+RoWHO3zkQ5oqMxo8uk5yZQdF9Abb+46dHkZxIkpPHKseuRLQp1tPO2+HUHknZmUfnygw5wydDbETJRMZdQuOgvrxDgcrdWrzCSIE7ep6SHZ0ebHPCPam0DcM2TR/OZuQowOFACKvuz67nKJjKb7VS/cjzhnWZuEk1qyd0lbscs3cOJxYp+SLclU2/NLj6svFh8t+3KzacM5UTonXVHENY0LLwR+b7c8ukl/u8GbnVF6Eg4Y3xg==
+ b=JANWgWYZj1RgbuxkdO0sXqniJ7lufEzb2X28xjaCJ/h4de6fInibTJttWkZvw/905rg7l8Vskkq/Nbs6SS9iGAn61dUNpo+8uIBafSt43HHzEQLxecDy2uG3k9J4LcJ9YxGy5/VSFMyf35uJk9zAtEaYyqviBL/vhXDL1w2DTR5ih+UQUCIsRvrji6hi4cHq1Pw147fkr+wzImHB/w7l8DGNWzvjkqMTHqXrlZuZeOG+hvGQIACd9cRiBRaz17pkq8CN8TMTHZjYN7Ysys//sDGMCknwZCxCFAfAjBGEblrC4YcC7BbxRQOYPi83tL3EN1aR2xEsCs912fQEomw3Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nOmwcXedXGIt72UD40ZccH8EYZWiDHmAEOjgUeT6y14=;
- b=jZzp5e5kKhgYAzuzCJ9Kv3VyOxE0kqyY3TSKsX9XZKCGYMPiV1/Q3Tfsq/90n5sEMaajltGenqP8Qdf6jqkgvyd4ml+3iwolthQJUF6ccGN/uHsuDBa6ihFGRFXRC1BOUeglcYB5iiJbiDtZXm7XHhqrditMv6uc/dboAGn4D+j7eBKC9TVPORpKeHsSda0iciUre6TY0H7ro+5+xBzPXNUcY4qw5EVVth9KiKxlMkK4IJyaYnpFz6V6X13HC1IDbXm7mroMhXcLYwwR3PQ4WdZqCl3zXyGIOH49JXqWxywWYsnWwvPwid5wM/SbsA170oQFr1UsIP4ydmyoYqmXiA==
+ bh=ExBGJA4WQRHqCGMET97qrwsDxtRZ83mx1bcwfEPylwM=;
+ b=DOBGUvICxvmKIuEae4SlWX6Z40HznyJMywnk882G1HHkHgx/9hiP4pL0AgGoGfLnb4LyIkm71VJCBRAJF8LhphEc53cEfGRrcN0VAeYjwEEoYJYukTEsdrpND4t1PysYr8R0T7XmvmrfZ+3lMV7coW2RmaieUG55gTewcOmUfgaM1pEgaXjmDLFoxravEDVRvHvO0dDkSsmK1kyhAGfTZ6nyt6c0LoT1EiUByPIChk4SdWAKW/gJFlYlpScHoWTAt3yYOU5NKJ7clIawugEuQENDFZvO2kH3+cEm5cmO/vUmSxz5vioeTLzGEu0GRWBVOheyIKNbGyXV2Bj8haenGg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nOmwcXedXGIt72UD40ZccH8EYZWiDHmAEOjgUeT6y14=;
- b=n3hbo23MmbMJq5U23G+Hz21xAGDFIsMl2ujOoOB8+Efw2KYlK0+vatsUSUQDH4+91L/VwZ2KrTio73V0fS6qusMm0rh2w/opLCuhBiIInyxkpoSYnszB3RSjn3zPX4SSt9qC4AWg7wIqg9kAWheiYicaiJ3cZst7tD3TnEVEJ237yer57u+k/ZvU0NMY28c8CDJtkqg3ZBTB+yJmxmLzhjCKF/6ZuVvApnhIf7JrwMsAUQZ1BaztAOXwrkUsbzAAjqZjXGQofM9C4ErWSuJCb/C8I1G+Jrlv12DbT8NIw3dqLEVwwP/M37PjB5XYA+iEKHzrs/Kio+GImNshUiWI6Q==
+ bh=ExBGJA4WQRHqCGMET97qrwsDxtRZ83mx1bcwfEPylwM=;
+ b=D63ccrDl0udzuy8t4Qj9jjpsoC3SXCGp/24ddSXvqxAWu6DnmhpaWQSW67S52WamvHlVy4yZY6iLAAN5GxakTIGK7CP5HRZoPtqXGoV6VGbAU12uv4K2hZN4fKDAHzTERKt+s9OFER7ihnxjEskBlyBMzCFn1Z1IXBY/J+DpNe8jh8hKJmI2rPOFs5YVT/hPL6v+QktIMzvRxjlsijnY1WjH+Xj1urJRIhnX/6OpAqma5r5/h1o+8A7qaNApVdaYCbzxrHO5wNiAYitaJtAGzo2lJIfBS6x/lAwB9Oaf6x8wYMv3pTdXhEjDh/HmMkmBeTCkWXgEXRhQacyjJhON2A==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LY0PR12MB325698.namprd12.prod.outlook.com
- (2603:10b6:408:3bb::14) by PH7PR12MB5830.namprd12.prod.outlook.com
- (2603:10b6:510:1d5::15) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:408:3bb::14) by DM4PR12MB6303.namprd12.prod.outlook.com
+ (2603:10b6:8:a3::6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Fri, 2 Oct
- 2026 23:32:04 +0000
+ 2026 23:32:09 +0000
 Received: from LY0PR12MB325698.namprd12.prod.outlook.com
  ([fe80::b65f:1548:5b35:e2b5]) by LY0PR12MB325698.namprd12.prod.outlook.com
  ([fe80::b65f:1548:5b35:e2b5%5]) with mapi id 15.21.0472.016; Fri, 2 Oct 2026
- 23:32:04 +0000
+ 23:32:09 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Alexandre Ghiti <alex@ghiti.fr>,
 	Albert Ou <aou@eecs.berkeley.edu>,
@@ -74,15 +74,15 @@ Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Ross Philipson <ross.philipson@gmail.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Song Shuai <songshuaishuai@tinylab.org>
-Subject: [PATCH v2 08/15] efi/libstub: Have efi_kaslr_relocate_kernel() handle extra_size
-Date: Fri,  2 Oct 2026 20:31:45 -0300
-Message-ID: <8-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+Subject: [PATCH v2 05/15] arm64/efi: Use CONFIG_EFI_STUB_IMAGE_INFO for code_size
+Date: Fri,  2 Oct 2026 20:31:42 -0300
+Message-ID: <5-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 In-Reply-To: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH0P220CA0005.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:d3::25) To LY0PR12MB325698.namprd12.prod.outlook.com
+X-ClientProxiedBy: PH0P220CA0009.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:d3::13) To LY0PR12MB325698.namprd12.prod.outlook.com
  (2603:10b6:408:3bb::14)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -91,203 +91,259 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LY0PR12MB325698:EE_|PH7PR12MB5830:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25e0eedf-beaf-4da7-11b8-08df20dd5929
+X-MS-TrafficTypeDiagnostic: LY0PR12MB325698:EE_|DM4PR12MB6303:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5e1f2b7-bf48-4655-cbf5-08df20dd5a96
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|366016|1800799024|23010399003|376014|10067099003|11063799006|5023799004|6133799003|921020|56012099006|22082099003|18002099003;
+	BCL:0;ARA:13230040|23010399003|7416014|1800799024|366016|376014|10067099003|3023799007|11063799006|56012099006|22082099003|18002099003|921020;
 X-Microsoft-Antispam-Message-Info:
-	UGmfDSfPZbopnNzT8eBy+5C9WvF7GODrWwnXfznnkyg4C7t9TEYYlz69wtWVkO7zbeT6SL3SjKGUxzryC3sRiZwsQmjdpRqUxPfDw1vKsvlozzIWbsnRnW8CvYVGznKyzjDsfji+5NoaiTgLCvMAPt0P47YHSZ8xVFNreHcGayomk1dcR5OHTUxvpK21Qw/JrRFj3F1YssK/QLUzpo79FMwlpwGOLNdoPUu+DmgVM7GTOTlnwPKrLJorSPRzDRRMuJIPy+z/l4vSjsuZA/2lgnghKYYcQbB53Vx5MwweSrmXQPZ8Ag5HkhAIO8aNYqOYVaoyjnJOsCTEZgrvppysY4BcKLmeVgsgH+QyYozvs/qVmUU8kyqUGEyUDiChAeCS2/kCdOuT7nq5qUh9zXEP+5h+zEL+2dSSMHgsHl6oxv2zGI0ZCZRcbrUXQ/eNwAzIJZDHtpH3fR3Ofdsz7259S8wxzQbVWV6hm4zXmhlZHumqOIE5H6D0ZgJ0XmBJde6DSohCMT2ALl/1T+nfQXUyL9dJNfLZMX5KqsrseekiolRj8716DavYAWfKoJWNfvNjNtU7O1nAYM2yXMe3Gdm2YowMz5N1KlgA9wvwKeooyL21vlGr5JEfDg7O2gCkxhSmkAg6WmzMbYuoKqNo6CaAM/t6Yze12d4DsfBNIB9/lOc8gtB3l1hNMPGeGp5RKC+gs01yquia3gvhctYL5ghQXw==
+	coeGjkS/qCfnGO2GDHLz6LTRydTCspbuy0AGJ9KxuHiFyKtQWamEC2YDfmcn3+lkCSSWmXNBnxO2StxiA+gUHpybjvO9meZPT3shHSa5ikWWd6qd+vAnLOOYU/gdpMF3oEgWp+yMf13GlZvDxXl0I7AfTmOWSujflE+i+Z4wtrjElRrwEC2Pv2W9qiN+bWQnRcLdL0jr9LrGggV5z0aPrIjWAhhJIRad+ajOeQsesfu6BhU4TtXsy59v2+xPTeagXGjUtSxOS5tObF/jB04E5cZ1IZNp7Z7vlRf4RpPFa25YJmRdTTOItOuvestN0aXn5k+SN94mpnJr55602pfRu7Q5t36PMfeoT81iIY5jpB2LDKTPzFytqKdedFQRhk7oA1zuLSDDbz9EWgcg+jY7887yFqJvtj/jYFYs9tKmk7+WEzn3afHU3TTeLgkwcK33G7CgaieySaBTCpdJsujOLpVSow+marZlbAhPpDVIOiu93wSChJG/w4kaWE+QyPTn0bzNcMP5Llo02VJHdWr0l+Uh9XzXJEW7sePAF3Z4z7qwPkpBWoH1h/uXtqLjTbwgqUNU4+/XBe6orD+U6CBdD+HVjhfdptXDUkBf0aFMWW/iWPUaAbo4O8WXDiNYCSsWk/KUQgEOhzDRqCteepx09NBDirrGNjyg3BT+SSTnTcLfMQYx7MIVB00uVcEmWS35eHqpBJELtfhxbsnV45Z3pg==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LY0PR12MB325698.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(1800799024)(23010399003)(376014)(10067099003)(11063799006)(5023799004)(6133799003)(921020)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LY0PR12MB325698.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(1800799024)(366016)(376014)(10067099003)(3023799007)(11063799006)(56012099006)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?e1CVqpylt/7QsbugTOtQayANYeWsODs0mJWlXmjQ7S2XXuZSieaJ0Q4VFXKy?=
- =?us-ascii?Q?e8fSnMg0fFBfzw1Nh93WBZj/KtkG1Dap0h8jpOAN1a+gmj/CzQnQmPvqqIvT?=
- =?us-ascii?Q?c3rLXAYcWZW1HCCrZ58+VseBX3DLEGb1eRqs8jAQNXcPM5mjSaJlWoN6PwvP?=
- =?us-ascii?Q?00Omd/AXekFTKrMrCXYDbinHMdT8JlxLoSsiJpFRXtvXArV5UpN55Y50Rdc+?=
- =?us-ascii?Q?i2QBpEuXXctZiVNCJHXng38jbZA0KAOYXgsQtlM8thheuDIOrvPBQpyUc6Em?=
- =?us-ascii?Q?s7VrJ5EuPOpYBJ0kEnWic+ltixK9ez0llTKk1MQfUu5B+GXQ6tN/jRi18g04?=
- =?us-ascii?Q?5R38yodVhoC1MzGHxcRIacED4lYhEZ+9IlJehHCxUSP8vAxnj1+KETEDqT6c?=
- =?us-ascii?Q?LL6EqArDq55YEX7ACLPb9zZJE5wevZqRrKZzpoK7+C33EnQuoWiIHRTpmHUP?=
- =?us-ascii?Q?vF71LJMBYCOkWtBn9e87A2Wv+eGMsA0LBHbv0C+ZpqseOMQnDr3/ZoSOln8O?=
- =?us-ascii?Q?/NnQ84lJ1Gt1LQkRE6kOitk2WHiJGr7eRCGgoNUou/kth/tjVLc6nP93i/6F?=
- =?us-ascii?Q?02BWTGXTMyhujLCwHVApkct9j5tgba1WE2Eogx0JYNHf7InsYj+rGQWVe/6p?=
- =?us-ascii?Q?/7E5Gl5DifrlIAe8SLwpqJKnRnkMGIfMhupdjzwJ+1yShW1AF654BtuK2plj?=
- =?us-ascii?Q?mg0GHk8Cgjiab3v0CahFEhYSXpwt4YGlvd7HNg0YGsAfSC9ZDXKwDkznQRVW?=
- =?us-ascii?Q?GMalqZcT9sgCofAsbDsGXMKVE+cFkue1g7Saywjra9PIbVtaeUwEgpXTvjlT?=
- =?us-ascii?Q?skiZiFOaznWzIJCSem1g6iJIWhNM4DFFeJmEpVBbRCzAack35HxRzCwxHZVx?=
- =?us-ascii?Q?W+IiEjWhZWZgI/ocmWMyB/azYfHm0HkFdoRlkRwwFVNsBrOz7S+p3+cMG9og?=
- =?us-ascii?Q?ETQntwDrCqKESIm4rpIp+Bj8mTUD55CDEoIsRJfYCvVQrf02huLCkchBpnwl?=
- =?us-ascii?Q?9ady0nybBSb6jkKKw3sl16DKRazaeHLAiH0zbXYXitslVP6yShD0ZT2bNOse?=
- =?us-ascii?Q?iTSAc5tR/++29Uj+48aFYDQPLyXC5K6koFrrDAkxVjNMnYysrh3WcJpUGtyf?=
- =?us-ascii?Q?ccksEhE4YCbKY9RK4otOBA15Nmd/ENyHmthFRm8Jv6fdB1moFDz6FfD+/+WV?=
- =?us-ascii?Q?rFbNiZO/xegoO0Mt0jABSnghnZbIoXdc40KiSJbZaw8xA24y454gtyp6Iwat?=
- =?us-ascii?Q?y4Ss+1bW2WN29QYTR2cDtrcNHfuKcAUKJrtXyjDVAHzn34TEeUQ6Eo6vmLDi?=
- =?us-ascii?Q?5jQEPK4y/NdIQklKYauqRT6XBR62xCYJi7Syv5bruiTEna+b4DpYjHDdH7BT?=
- =?us-ascii?Q?znTgNZ0guuHy0Iaa76ImJSCRO7/xVSNZ5YzM6QSHR2xVsANoYhtauL7CpmA9?=
- =?us-ascii?Q?3K/29hyhsxSPQGRbWGcT0RHW1D7El6UDl3d6F6OqJSFsXLBF5mMmjZJTQ1Re?=
- =?us-ascii?Q?fh+wl9x9dRv8tnVPCtegKXmf33ySFqakiGRIJHmrvXqS0BcnODPRGl9DVAYD?=
- =?us-ascii?Q?hllqM66aK9hTcHSUglR5T2WoIsuuXn+REmrAQKygwjKyUCdOqeLFWVtB72aG?=
- =?us-ascii?Q?utVrNTQqUhOVJpjOET5tGh24zgguWfGVyvol5v6Yn948OM44/sU99SeXF62Z?=
- =?us-ascii?Q?chrksg1Rxoyh5a+ZHFwdEBwgWMmWR4VWvdYJkBs+1F/eGBaY?=
+	=?us-ascii?Q?8/ry0u+Pu4+z+MCnspdEzzKpPHExwm+2KZYXQ4PwG6TVjDjkfJ3mC9q2tECh?=
+ =?us-ascii?Q?/mLQZI0VXJ42TRk+OfCx29Zi/L2SDXVJ9IH1tX3gPLxncGpHEzwJqaNzJ5EG?=
+ =?us-ascii?Q?GwTV0qZo56IkhXTJ2lp6fD8O0DUjoP75yP4I3fjhTGduXaioWaCet/gX26+r?=
+ =?us-ascii?Q?eCG6Sc05QGhfwIIb2TEYwXqOQ8lY3qihLU4G6Mg1LCq3tPbGPrzRDyPZOoc6?=
+ =?us-ascii?Q?GJAblcOKVtmP7kKEDgyMrhtSsx4RfbQRMKqqJCQsoF7cuNtDSPvCS+f4u+Fd?=
+ =?us-ascii?Q?USciQN8njfFMMzps+SeYV1DPn5o7di1k6XR3pjc1kAOz/d8oVkOSYRr6lIlp?=
+ =?us-ascii?Q?XTvjAKDTt8jFfIXzvDpvXOpF8X09KZWLfH10dET7fRXXOG5jF25nGfJAgyis?=
+ =?us-ascii?Q?EHUU3TQHoHBEjjUSxXqeWu8ntvj6ugz+ZIkTj3MG2BXxgVeDD3Wq6gPx36OM?=
+ =?us-ascii?Q?7T8CzZ3Iz78oLBzO/QhnHAiDXLyUNYE5H6BLfM8ASosf/O7i0u3Q3pRIHjto?=
+ =?us-ascii?Q?GD2b7+3xmnxypX8UA4vSwP+gLSklusiGJIG4Ll8EUuPHkfsqJE/g2N+zDnKu?=
+ =?us-ascii?Q?DYog0bBbuOs0F0N9ASfmmvfLvNLJ0WL5WnEOyPLVkhhk07/5Hq5XMecAWcDL?=
+ =?us-ascii?Q?ohCqQeHjOJA8NxeKMXTUyP9QJgEyxnjKYkn9QCiL2iPE8ufrEwjyJJaCuTIf?=
+ =?us-ascii?Q?JOAwznuwyvk+fB93snvoDs0fZpA16oz3a2T5/SQi4cZ25ksbNDG8zosD3CTj?=
+ =?us-ascii?Q?uU88Cl3oWDTlMlpLnCphtN32Y/fr2S6XjPsgunUjKSktZRZx8JlNnXqr3re4?=
+ =?us-ascii?Q?wr4WXcYvDWzYz1ouXLLSdABNlxj++JJHp79mKx64sJDkourqs5R5lYKBtg0y?=
+ =?us-ascii?Q?7weM56qzrTKT7CRVkeeVmY9t6WmC+T1aHhnWgXIjI5Fx1+2vS3jOjhIfLc6I?=
+ =?us-ascii?Q?wd0ooXgUQXCapX7dLfeE78mCUA0mUiwoyy4ADW59WXcnXRRH901WjYBVf9W5?=
+ =?us-ascii?Q?LZPuggPat0ySnpEejQ2UJmDQzFbXQlzkP2/BPby4P570DfYa/K2JfPACQnHP?=
+ =?us-ascii?Q?XnR0lM/NocNVtEnxC90Kmxe7wUN9MfIbjLw1q5Guj0X9tOcMjgZ/Iv8z1Iq3?=
+ =?us-ascii?Q?W4lwRxcBbzR46U/U4x9kaLftrWnJCbPlq2xt5pf9SFYwtMqlJVU/z+FpeTwU?=
+ =?us-ascii?Q?9GTCFleiiZnbFdSxM3u+8DCnxZmSgJmMIhhNdNmF1OmWclt4I3gx7xXsWftX?=
+ =?us-ascii?Q?w0+Qkl5WEVD4vHG+qIWWp+S6F82brGp+CGbOnm8WzddLCupF5oM4NFhryFcJ?=
+ =?us-ascii?Q?S2K13SzExWVdcuT+TY2k0YrB5/c0fq79aRsy6UmGC4dvCVCZnlyVJo1y4cmC?=
+ =?us-ascii?Q?iFQbPHxbpuvLYfAIIGwROtGZqBTjVuMapGAOfT/t+k37FmMV6R6kA6WktUCh?=
+ =?us-ascii?Q?AJvSRqgOobUeNbWmDgo9pE6/0hYg7eyLxjvdNo/lUJ9txEtNJHYxjjw6pWiH?=
+ =?us-ascii?Q?jG1mifuK5NEeG3FFZwWEekC1mYzBNaGaMv5nSWiVeLspRmBAnQ4a9FA0gA39?=
+ =?us-ascii?Q?WA5pvYAN5h0mciPkmrdk1d9eppu+6Ga6KRVy8CT6N5VcBcP6g4Ttqy/gfF+D?=
+ =?us-ascii?Q?nDpzOeO1K9EvFtQDjEFJ4x/J0yyB41Hy9mxjt+kniT/Zu07Br+iE5vh9MXPM?=
+ =?us-ascii?Q?63jG6++UI3HU1qNWIkTG5dP1PEIIg+0enzfdQwm1BnetwKbU?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25e0eedf-beaf-4da7-11b8-08df20dd5929
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5e1f2b7-bf48-4655-cbf5-08df20dd5a96
 X-MS-Exchange-CrossTenant-AuthSource: LY0PR12MB325698.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 23:31:56.6447
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 23:31:59.2855
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qjAlIlOlv8i71At5Vu85f6XuWpKqnpGG6y/n0RhxQgB+sA7OOUTghLiTeazMa5+C
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5830
+X-MS-Exchange-CrossTenant-UserPrincipalName: TjGjlqRKA8G4A2TatadaKuBAYUzKe9b4txSvUMsutGBTG+tPI0mhbaCH6EL5ms6c
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6303
 
-There are three possibilities here, each a little different:
-- relocating for kaslr, just request extra_size like the zboot flow does
-  when allocating from EFI
-- in place, attempt to allocate from EFI precisely after Image to
-  confirm nothing weird is there, failing that
-- like any other error with the in place EFI location allocate
-  non-randomly with extra_size included
+Pass code_size to zboot through struct efi_image_info instead of the
+custom objcopy trick and remove the objcopy way.
 
-Remove the callers' assignments of reserve_size since
-efi_kaslr_relocate_kernel() now does it.
+The linker still computes code_size, it just gets placed into the struct.
+
+0-day found a randconfig where code_size would overflow a 32 bit number.
+Move everything to 64 bit. I doubt that anyone ever uses such a large
+vmlinux but u64 also fixes that silent corruption failure in the build.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/firmware/efi/libstub/arm64-stub.c |  1 -
- drivers/firmware/efi/libstub/kaslr.c      | 72 +++++++++++++++++++----
- drivers/firmware/efi/libstub/riscv-stub.c |  1 -
- 3 files changed, 62 insertions(+), 12 deletions(-)
+ arch/arm64/Kconfig                          |  1 +
+ arch/arm64/boot/Makefile                    |  3 ---
+ arch/arm64/include/asm/image.h              | 11 +++++++++++
+ arch/arm64/kernel/image-vars.h              |  8 +++-----
+ arch/arm64/kernel/vmlinux.lds.S             |  4 ++++
+ drivers/firmware/efi/libstub/Makefile.zboot |  2 +-
+ drivers/firmware/efi/libstub/arm64-stub.c   |  5 ++++-
+ drivers/firmware/efi/libstub/arm64.c        |  4 ++--
+ drivers/firmware/efi/libstub/zboot.lds      |  4 ----
+ 9 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/arm64-stub.c b/drivers/firmware/efi/libstub/arm64-stub.c
-index 1d10a166abf8d1..6226d83cfc35ea 100644
---- a/drivers/firmware/efi/libstub/arm64-stub.c
-+++ b/drivers/firmware/efi/libstub/arm64-stub.c
-@@ -38,7 +38,6 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 	info = efi_get_image_info((unsigned long)_text);
- 	kernel_codesize = info->code_size;
- 	kernel_memsize = kernel_size + (_end - _edata);
--	*reserve_size = kernel_memsize;
- 	*image_addr = (unsigned long)_text;
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index b5a51b0ef9440a..4a752835ce1116 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -2532,6 +2532,7 @@ config EFI
+ 	select EFI_PARAMS_FROM_FDT
+ 	select EFI_RUNTIME_WRAPPERS
+ 	select EFI_STUB
++	select EFI_STUB_IMAGE_INFO
+ 	select EFI_GENERIC_STUB
+ 	imply IMA_SECURE_AND_OR_TRUSTED_BOOT
+ 	default y
+diff --git a/arch/arm64/boot/Makefile b/arch/arm64/boot/Makefile
+index b5a08333bc57b5..cfbad0c210fa04 100644
+--- a/arch/arm64/boot/Makefile
++++ b/arch/arm64/boot/Makefile
+@@ -51,7 +51,4 @@ EFI_ZBOOT_BFD_TARGET	:= elf64-littleaarch64
+ EFI_ZBOOT_MACH_TYPE	:= ARM64
+ EFI_ZBOOT_FORWARD_CFI	:= $(CONFIG_ARM64_BTI_KERNEL)
  
- 	return efi_kaslr_relocate_kernel(image_addr, reserve_addr, reserve_size,
-diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
-index 4bc963e999eb97..e419f3800af517 100644
---- a/drivers/firmware/efi/libstub/kaslr.c
-+++ b/drivers/firmware/efi/libstub/kaslr.c
-@@ -83,11 +83,47 @@ static bool check_image_region(u64 base, u64 size)
- 	return ret;
- }
+-EFI_ZBOOT_OBJCOPY_FLAGS	= --add-symbol zboot_code_size=0x$$( \
+-				$(NM) vmlinux|grep _kernel_codesize|cut -d' ' -f1)
+-
+ include $(srctree)/drivers/firmware/efi/libstub/Makefile.zboot
+diff --git a/arch/arm64/include/asm/image.h b/arch/arm64/include/asm/image.h
+index 9ba85173f85765..b18ce23a2cba7f 100644
+--- a/arch/arm64/include/asm/image.h
++++ b/arch/arm64/include/asm/image.h
+@@ -5,6 +5,8 @@
+ 
+ #define ARM64_IMAGE_MAGIC	"ARM\x64"
+ 
++#define EFI_IMAGE_INFO_SIZE	8
++
+ #define ARM64_IMAGE_FLAG_BE_SHIFT		0
+ #define ARM64_IMAGE_FLAG_PAGE_SIZE_SHIFT	(ARM64_IMAGE_FLAG_BE_SHIFT + 1)
+ #define ARM64_IMAGE_FLAG_PHYS_BASE_SHIFT \
+@@ -54,6 +56,15 @@ struct arm64_image_header {
+ 	__le32 res5;
+ };
  
 +/*
-+ * The PE loader owns only kernel_memsize of the image.  Try to own the
-+ * requested tail separately at the exact adjacent address instead of
-+ * relocating the complete region.
++ * This struct is filled in by the linker, see EFI_IMAGE_INFO.
++ * Any change requires updating arch/arm64/kernel/vmlinux.lds.S
 + */
-+static efi_status_t allocate_image_tail(unsigned long image_addr,
-+					unsigned long kernel_memsize,
-+					unsigned long extra_size,
-+					unsigned long *reserve_addr,
-+					unsigned long *reserve_size)
-+{
-+	efi_physical_addr_t tail_addr;
-+	efi_status_t status;
++struct efi_image_info {
++	u64 code_size;
++};
++static_assert(sizeof(struct efi_image_info) == EFI_IMAGE_INFO_SIZE);
 +
-+	/*
-+	 * Since we intend to use efi_free() for reserve_addr it should be
-+	 * aligned to the higher alignment since efi_free() includes rounding.
-+	 * For ARM64 the kernel image is already aligned up to EFI_ALLOC_ALIGN
-+	 * by the linker.
-+	 */
-+	tail_addr = image_addr + kernel_memsize;
-+	if (!IS_ALIGNED(tail_addr, EFI_ALLOC_ALIGN))
-+		return EFI_OUT_OF_RESOURCES;
-+
-+	extra_size = round_up(extra_size, EFI_ALLOC_ALIGN);
-+	status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
-+			     EFI_LOADER_CODE, extra_size / EFI_PAGE_SIZE,
-+			     &tail_addr);
-+	if (status != EFI_SUCCESS)
-+		return status;
-+
-+	*reserve_addr = tail_addr;
-+	*reserve_size = extra_size;
-+	return EFI_SUCCESS;
-+}
-+
- /**
-  * efi_kaslr_relocate_kernel() - Relocate the kernel (random if KASLR enabled)
-  * @image_addr: Pointer to the current kernel location
-- * @reserve_addr:	Pointer to the relocated kernel location
-- * @reserve_size:	Size of the relocated kernel
-+ * @reserve_addr:	Pointer to any allocated memory
-+ * @reserve_size:	Size that was allocated
-  * @kernel_size:	Size of the text + data
-  * @kernel_codesize:	Size of the text
-  * @kernel_memsize:	Size of the text + data + bss
-@@ -109,6 +145,9 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *image_addr,
- {
- 	efi_status_t status;
- 	u64 min_kimg_align = efi_get_kimg_min_align();
-+	unsigned long extra_size = efi_drtm_get_extra_size();
-+
-+	*reserve_size = kernel_memsize + extra_size;
+ #endif /* __ASSEMBLER__ */
  
- 	if (IS_ENABLED(CONFIG_RANDOMIZE_BASE) && phys_seed != 0) {
- 		/*
-@@ -125,16 +164,29 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *image_addr,
+ #endif /* __ASM_IMAGE_H */
+diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
+index 14beb7b9d304c1..13c0b77627d82e 100644
+--- a/arch/arm64/kernel/image-vars.h
++++ b/arch/arm64/kernel/image-vars.h
+@@ -35,8 +35,10 @@ PROVIDE(__efistub_caches_clean_inval_pou = __pi_caches_clean_inval_pou);
+ 
+ PROVIDE(__efistub__text			= _text);
+ PROVIDE(__efistub__end			= _end);
+-PROVIDE(__efistub___inittext_end       	= __inittext_end);
+ PROVIDE(__efistub__edata		= _edata);
++#ifdef CONFIG_EFI_STUB_IMAGE_INFO
++PROVIDE(__efistub_efi_image_info_offset = __efi_image_info_offset);
++#endif
+ #if defined(CONFIG_EFI_EARLYCON) || defined(CONFIG_SYSFB)
+ PROVIDE(__efistub_sysfb_primary_display	= sysfb_primary_display);
+ #endif
+@@ -150,10 +152,6 @@ KVM_NVHE_ALIAS(kvm_protected_mode_initialized);
+ 
+ #endif /* CONFIG_KVM */
+ 
+-#ifdef CONFIG_EFI_ZBOOT
+-_kernel_codesize = ABSOLUTE(__inittext_end - _text);
+-#endif
+-
+ /*
+  * LLD will occasionally error out with a '__init_end does not converge' error
+  * if INIT_IDMAP_DIR_SIZE is defined in terms of _end, as this results in a
+diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+index af1d720209764f..8305b47995954b 100644
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -282,6 +282,10 @@ SECTIONS
+ 		CON_INITCALL
+ 		INIT_RAM_FS
+ 		*(.init.altinstructions .init.bss)	/* from the EFI stub */
++		EFI_IMAGE_INFO(
++			/* code_size */
++			EFI_IMAGE_INFO_OFFSET(__inittext_end);
++		)
  	}
+ 	.exit.data : {
+ 		EXIT_DATA
+diff --git a/drivers/firmware/efi/libstub/Makefile.zboot b/drivers/firmware/efi/libstub/Makefile.zboot
+index 42408132249ae7..fd4bfaaaaf0ab8 100644
+--- a/drivers/firmware/efi/libstub/Makefile.zboot
++++ b/drivers/firmware/efi/libstub/Makefile.zboot
+@@ -35,7 +35,7 @@ efi-zboot-objcopy-flags-$(CONFIG_EFI_STUB_IMAGE_INFO) = \
+ 		awk '$$3 == "_efi_image_info_offset_value" { print $$1 }')
  
- 	if (status != EFI_SUCCESS) {
--		if (!check_image_region(*image_addr, kernel_memsize)) {
-+		bool image_region_ok =
-+			check_image_region(*image_addr, kernel_memsize);
-+
-+		if (!image_region_ok) {
- 			efi_err("FIRMWARE BUG: Image BSS overlaps adjacent EFI memory region\n");
- 		} else if (IS_ALIGNED(*image_addr, min_kimg_align) &&
--			   (unsigned long)_end < EFI_ALLOC_LIMIT) {
--			/*
--			 * Just execute from wherever we were loaded by the
--			 * UEFI PE/COFF loader if the placement is suitable.
--			 */
--			*reserve_size = 0;
--			return EFI_SUCCESS;
-+			   (unsigned long)_end + extra_size < EFI_ALLOC_LIMIT) {
-+			if (!extra_size) {
-+				/*
-+				 * Just execute from wherever we were loaded by
-+				 * the UEFI PE/COFF loader if the placement is
-+				 * suitable.
-+				 */
-+				*reserve_size = 0;
-+				return EFI_SUCCESS;
-+			}
-+
-+			status = allocate_image_tail(*image_addr,
-+						     kernel_memsize, extra_size,
-+						     reserve_addr,
-+						     reserve_size);
-+			if (status == EFI_SUCCESS)
-+				return EFI_SUCCESS;
- 		}
+ # avoid eager evaluation to prevent references to non-existent build artifacts
+-OBJCOPYFLAGS_vmlinuz.o = -I binary -O $(EFI_ZBOOT_BFD_TARGET) $(EFI_ZBOOT_OBJCOPY_FLAGS) \
++OBJCOPYFLAGS_vmlinuz.o = -I binary -O $(EFI_ZBOOT_BFD_TARGET) \
+ 			  $(efi-zboot-objcopy-flags-y) \
+ 			  --rename-section .data=.gzdata,load,alloc,readonly,contents
+ $(obj)/vmlinuz.o: $(obj)/vmlinuz FORCE
+diff --git a/drivers/firmware/efi/libstub/arm64-stub.c b/drivers/firmware/efi/libstub/arm64-stub.c
+index 2c38693561475c..1d10a166abf8d1 100644
+--- a/drivers/firmware/efi/libstub/arm64-stub.c
++++ b/drivers/firmware/efi/libstub/arm64-stub.c
+@@ -9,6 +9,7 @@
  
- 		status = efi_allocate_pages_aligned(*reserve_size, reserve_addr,
-diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
-index 725b634c517919..a88b2d275e5bb0 100644
---- a/drivers/firmware/efi/libstub/riscv-stub.c
-+++ b/drivers/firmware/efi/libstub/riscv-stub.c
-@@ -37,7 +37,6 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
- 	kernel_codesize = __init_text_end - _start;
+ #include <linux/efi.h>
+ #include <asm/efi.h>
++#include <asm/image.h>
+ #include <asm/memory.h>
+ #include <asm/sections.h>
+ 
+@@ -21,6 +22,7 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 				 efi_loaded_image_t *image,
+ 				 efi_handle_t image_handle)
+ {
++	const struct efi_image_info *info;
+ 	unsigned long kernel_size, kernel_codesize, kernel_memsize;
+ 
+ 	if (image->image_base != _text) {
+@@ -33,7 +35,8 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 			SEGMENT_ALIGN >> 10);
+ 
+ 	kernel_size = _edata - _text;
+-	kernel_codesize = __inittext_end - _text;
++	info = efi_get_image_info((unsigned long)_text);
++	kernel_codesize = info->code_size;
  	kernel_memsize = kernel_size + (_end - _edata);
- 	*image_addr = (unsigned long)_start;
--	*reserve_size = kernel_memsize;
+ 	*reserve_size = kernel_memsize;
+ 	*image_addr = (unsigned long)_text;
+diff --git a/drivers/firmware/efi/libstub/arm64.c b/drivers/firmware/efi/libstub/arm64.c
+index e57cd3de0a00f4..f6c250711de8cc 100644
+--- a/drivers/firmware/efi/libstub/arm64.c
++++ b/drivers/firmware/efi/libstub/arm64.c
+@@ -88,11 +88,11 @@ efi_status_t check_platform_features(void)
+ #define DCTYPE	"cvau"
+ #endif
  
- 	status = efi_kaslr_relocate_kernel(image_addr,
- 					   reserve_addr, reserve_size,
+-u32 __weak code_size;
+-
+ void efi_cache_sync_image(unsigned long image_base,
+ 			  unsigned long alloc_size)
+ {
++	const struct efi_image_info *info = efi_get_image_info(image_base);
++	unsigned long code_size = info->code_size;
+ 	u32 ctr = read_cpuid_effective_cachetype();
+ 	u64 lsize = 4 << cpuid_feature_extract_unsigned_field(ctr,
+ 						CTR_EL0_DminLine_SHIFT);
+diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/efi/libstub/zboot.lds
+index f389aaadbe44bd..8d32be32931494 100644
+--- a/drivers/firmware/efi/libstub/zboot.lds
++++ b/drivers/firmware/efi/libstub/zboot.lds
+@@ -2,7 +2,6 @@
+ 
+ ENTRY(__efistub_efi_zboot_header);
+ 
+-PROVIDE(zboot_code_size = ABSOLUTE(0));
+ PROVIDE(efi_zboot_image_info_offset = ABSOLUTE(0));
+ 
+ SECTIONS
+@@ -22,9 +21,6 @@ SECTIONS
+ 		__efistub__gzdata_end = .;
+ 		*(.rodata* .init.rodata* .srodata*)
+ 
+-		. = ALIGN(4);
+-		__efistub_code_size = .;
+-		LONG(zboot_code_size);
+ 		. = ALIGN(8);
+ 		__efistub_efi_image_info_offset = .;
+ 		QUAD(efi_zboot_image_info_offset);
 -- 
 2.43.0
 
