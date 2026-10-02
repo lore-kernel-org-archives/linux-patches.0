@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C1C218E91;
-	Fri,  2 Oct 2026 12:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FE9488203;
+	Fri,  2 Oct 2026 12:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790942870; cv=none; b=I/jUdHklYkXmKJRhMiv+3dG3cCsx+RxPJXiEnug8QF2TyXyWMY20yOKS85wk2NNkfDy6GTdJpt64R4gagYtMeVIWXU9/QVu2N3f6kI4p++0Yi2vJhlOk9qH3vESeksABPEIduokDeQJlyyRui+ZvhLERG3hUSk8OSmdpRm8hT4k=
+	t=1790942968; cv=none; b=QvntvlLQeQplDlbzqHBRPy4cIMisDCPQLzgXMrfT6xmOF/0lgQmpNCcHn0NCiQP11ECr56vMoz9uVxQ+EKMdWfe8LwOuUm/ABelDX8eVBxtJSxVFs4jZFhKpfEgJSpkytB/bfKu3X6bBLSsmJf2l71Y7mPR01lqDpJIhNbsZ8LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790942870; c=relaxed/simple;
-	bh=JqGAdkby/jemI7ikYN7ouyEs/6SIHMjG/HalRqrDl2w=;
+	s=arc-20240116; t=1790942968; c=relaxed/simple;
+	bh=W8FeOYNlxGug5AhEUqFLkWZCjm4C8xEaDvrtB/9OcXc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pjXCv9YJTaK7k9FNaeB4FoKz4+wSF3rAohJw8Wi61S+sOyi1SgpzSLJr6oWzbPe2rrhVTe0F5Zub+00IwSGmxiNvYk4rXSba7qJdfKYGp/QSwnkqO8ghq2nSVjisDdXZnYwPV79/Kd7xVMqNfm0hl3LhGhmjAUzQleVACnKQcw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbNdKiiX; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=UwIsMPlJc0D1nvo4cU2V6N5rbT4uP2bDgtORkWy3CB60x6QLVrjL/dKkxFy6Od76Cnml4wdfSn3i266iCXK7QAvI/rfdbpIC2lADd7sDo+HCQPpCIXP0gYYKXMoxKQJU7yur5ZjrPFxBtVRRe/Nsdme+dLCHQx1cIudg7SLNmVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFVZV3u7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbNdKiiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CD91F000FF;
-	Fri,  2 Oct 2026 12:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFVZV3u7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A101F000FF;
+	Fri,  2 Oct 2026 12:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790942867;
-	bh=6rWRrSDf2psyCFgcd9EMY/QKrnORAyyizWrSQzqAUrk=;
+	s=korg; t=1790942965;
+	bh=Gq1j9BjnQVF0ss1314JH7djQYahfbsG5BcoE5F/CIV8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FbNdKiiXLPytlf+SD3bw+01UYJw+zzV/NfGq6dkEKID0UH/cKMbmOGr4k4BPqunob
-	 DpvtPnU1h+7mAbj5zlEp/z6IBabTewf9O7oic3s7fZq+fOAV5SHBNbLASo9BP3IgzW
-	 23g4EYTNVA3KquKigGWO5ohBoP1xUFMBoy5LTkSo=
-Date: Fri, 2 Oct 2026 14:07:40 +0200
+	b=cFVZV3u77WWt/n+qT9zL2+xzuDGdxsGZ1s6TSNxb5nNj0vabskmu8pRQiutePxlAH
+	 5LU7TYFGF7pDCAwbqCgpYeqvOT8QxsSkP8BQbdnnp2zs8IKGRPVQlhsaoNmHxc7c/N
+	 mxpLSlzq10k9sDjRdQmA1ortfEepw7gTU7eXCqfI=
+Date: Fri, 2 Oct 2026 14:09:19 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 107/877] ASoC: soc-pcm: Apply
- snd_soc_dai_link_ch_map.codec_ch_mask to codec params
-Message-ID: <2026100224-statutory-embolism-2b0f@gregkh>
+	Julian Sun <sunjunchao@bytedance.com>, Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 341/877] fs: avoid repeated scans in evict_inodes()
+Message-ID: <2026100223-idealist-eatery-53bc@gregkh>
 References: <20260930152414.738996857@linuxfoundation.org>
- <20260930152417.048647943@linuxfoundation.org>
- <73b99ddb-996b-4978-a801-69a825da9954@oracle.com>
+ <20260930152422.027976780@linuxfoundation.org>
+ <0fee0444-1e42-4b1f-b7ac-234b5e19bb43@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,84 +43,126 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <73b99ddb-996b-4978-a801-69a825da9954@oracle.com>
+In-Reply-To: <0fee0444-1e42-4b1f-b7ac-234b5e19bb43@oracle.com>
 
-On Fri, Oct 02, 2026 at 02:09:11AM +0530, Harshit Mogalapalli wrote:
+On Fri, Oct 02, 2026 at 01:28:39AM +0530, Harshit Mogalapalli wrote:
 > 
 > 
-> On 30/09/26 8:46 pm, Greg Kroah-Hartman wrote:
+> On 30/09/26 8:50 pm, Greg Kroah-Hartman wrote:
 > > 6.12-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
-> > From: Richard Fitzgerald <rf@opensource.cirrus.com>
+> > From: Julian Sun <sunjunchao@bytedance.com>
 > > 
-> > [ Upstream commit 6b382bdfe26a2232091bf743e454e6794295783e ]
+> > [ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
 > > 
-> > In __soc_pcm_hw_params() if there is a snd_soc_dai_link_ch_map with
-> > non-zero codec_ch_mask, use that channel mask to restrict which channels
-> > are enabled on the codec. But only if there isn't a TDM mask.
+> > We observed hung tasks when users attempted to unmount a filesystem
+> > after its disk had been removed while still in use. During device
+> > removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
 > > 
-> > It is possible that a snd_soc_dai_link_ch_map could include the same codec
-> > multiple times on different CPUs so the for_each_rtd_ch_maps() loop
-> > accumulates the channel masks for all entries of that codec.
+> > Each time evict_inodes() drops s_inode_list_lock to reschedule, it
+> > restarts the walk from the head of s_inodes. With many referenced inodes
+> > at the head of the list, these restarts repeatedly scan the same inodes
+> > without reclaiming them. This can keep s_umount held for a long time,
+> > blocking concurrent umount attempts and triggering hung-task reports.
 > > 
-> > If a TDM mask was also set, it takes priority and is used instead of any
-> > possible snd_soc_dai_link_ch_map entries. (They cannot be ANDed together
-> > because the bit positions are indicating different things: TDM is a bit
-> > for each TDM slot, codec_ch_mask is a bit for each codec channel.)
+> > Keep the current inode, already marked I_FREEING, out of the disposal
+> > batch until s_inode_list_lock is reacquired. Resume the walk from this
+> > inode and dispose of it in a later batch or at the end of the walk.
 > > 
-> > This fixes a problem of incorrect TX channels enabled on the codec when
-> > multiple codecs are aggregated on a single capture link. For example:
+> > The zero-refcount and state checks under i_lock allow this walker to
+> > claim the inode by setting I_FREEING and removing it from the LRU.
+> > Other reclaimers skip the inode, leaving this walker responsible for
+> > eviction. Only evict() removes it from s_inodes, so keeping it out of
+> > the disposal batch ensures that it remains on the list while the lock
+> > is dropped. After reacquiring the lock, reading its current next pointer
+> > accounts for concurrent removal of following inodes.
 > > 
-> > - Two CPUs with six 4-channel codecs.
-> > - The machine driver chooses to assign one channel from each codec to
-> >    one channel on the CPU
-> > - But the codec hw_params() would be passed a channel count of 6, which
-> >    (a) is more channels than the codec has and (b) allows enabling channels
-> >    that should not be driving the audio bus.
+> > The existing inode lifetime rules prohibit acquiring a reference to an
+> > inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
+> > hold i_lock and establish that taking a reference is valid. Inode lookup
+> > and igrab() check these flags under i_lock when acquiring a reference
+> > from zero. ihold() requires an existing reference, which would keep
+> > i_count nonzero and prevent this walker from claiming the inode. These
+> > rules already allow iput_final() and the inode shrinker to release
+> > i_lock after setting I_FREEING and before eviction completes.
 > > 
-> > Fixes: ac950278b087 ("ASoC: add N cpus to M codecs dai link support")
-> > Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-> > Link: https://patch.msgid.link/20260910114500.1586637-4-rf@opensource.cirrus.com
-> > Signed-off-by: Mark Brown <broonie@kernel.org>
+> > A temporary __iget() reference would also keep the inode on the list,
+> > but its release must preserve last-reference handling. Another user can
+> > acquire a reference, update lazy timestamps and drop its reference while
+> > the pin is held. If the pin becomes the last reference, dropping it with
+> > atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
+> > handling and can lose those timestamp updates.
+> > 
+> > Releasing the pin with iput() preserves that handling, but does not
+> > guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
+> > may retain the inode in cache, whereas evict_inodes() must evict eligible
+> > zero-reference inodes. The inode may also have been freed when iput()
+> > returns, so the walker cannot then use it to force eviction. Using
+> > I_FREEING preserves the existing eviction behavior without introducing
+> > an additional last-reference transition.
+> > 
+> > The xfstests auto group passed on ext4 and XFS with known unrelated
+> > failures excluded. No new issues were observed, and the previously
+> > reproducible hung task no longer occurs with this patch.
+> > 
+> > Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
+> > Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+> > Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
+> > Reviewed-by: Jan Kara <jack@suse.cz>
+> > Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 > > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > 
 > Hi Greg/Sasha,
 > 
-> An AI-assisted review flagged a possible omission. I independently
-> checked the core and SoundWire producer at 6.12.y f4ffa8dc360b.
+> An AI assisted backport review flagged this, and I checked the upstream
+> code against the 6.12.y tip f4ffa8dc360b.
 > 
-> The core backport correctly preserves TDM precedence and combines
-> codec_ch_mask entries for each codec. The question is its missing
-> SoundWire producer.
+> Upstream 7459c0218742 uses the current inode's successor after
+> relocking:
 > 
-> Upstream's companion has: 290845e151cd4e307cc1f25319583aaceb4eeb30,
-> sound/soc/sdw_utils/soc_sdw_utils.c:
+>     struct inode *inode;
+>     LIST_HEAD(dispose);
 > 
-> for_each_link_ch_maps(rtd->dai_link, i, ch_maps) {
->     ch_maps->cpu_ch_mask = cpu_ch_mask << (i * step);
->     ch_maps->codec_ch_mask = codec_ch_mask;
-> }
+>     spin_lock(&sb->s_inode_list_lock);
+>     list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
+>         /* ... intervening source omitted ... */
+>         if (need_resched()) {
+>             spin_unlock(&sb->s_inode_list_lock);
+>             cond_resched();
+>             dispose_list(&dispose);
+>             spin_lock(&sb->s_inode_list_lock);
+>         }
+>         list_add(&inode->i_lru, &dispose);
 > 
-> 6.12.y asoc_sdw_hw_params() at f4ffa8dc360bce834e6ea7b0148eab0118f4a42e,
-> sound/soc/sdw_utils/soc_sdw_utils.c:
+> 6.12.y retains the cached-successor iterator:
 > 
-> for_each_link_ch_maps(rtd->dai_link, i, ch_maps)
->     ch_maps->cpu_ch_mask = ch_mask << (i * step);
+>     struct inode *inode, *next;
+>     LIST_HEAD(dispose);
 > 
-> Only the declaration and core consumer use codec_ch_mask in include/ and
-> sound/. SoundWire leaves it zero, so without a TDM mask the codec keeps
-> the aggregate channel count and capture restriction stays inactive.
-> Hardware impact was not tested.
+>     spin_lock(&sb->s_inode_list_lock);
+>     list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
+>         /* ... intervening source omitted ... */
+>         if (need_resched()) {
+>             spin_unlock(&sb->s_inode_list_lock);
+>             cond_resched();
+>             dispose_list(&dispose);
+>             spin_lock(&sb->s_inode_list_lock);
+>         }
+>         list_add(&inode->i_lru, &dispose);
 > 
-> Could the ASoC maintainer confirm whether
-> 290845e151cd4e307cc1f25319583aaceb4eeb30 ("ASoC: sdw_utils: Set
-> snd_soc_dai_link_ch_map.codec_ch_mask for capture") should accompany
-> this 6.12 series to complete the SoundWire capture fix?
+> I_FREEING protects inode, but the safe iterator's cached next can be
+> detached or freed while the lock is dropped.  The 6.12's invalidate_inodes()
+> differs from upstream's disk-removal trigger.
+> 
+> I think 6.12.y needs the two-line iterator change from
+> 3bc4e4410830d556b0f40dfa6671bfcaeacc1599 ("vfs: Remove unnecessary
+> list_for_each_entry_safe() from evict_inodes()") before this backport,
+> thoughts?
 
-If that is true, then that needs to be backported to all stable kernel
-trees.
+If it's needed, it needs to be backported here and to older stable
+kernels, and it needs a manual backport as it doesn't apply cleanly.
 
 thanks,
 
