@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E2A36197E;
-	Sat,  3 Oct 2026 22:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C066522370A;
+	Sat,  3 Oct 2026 22:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791066994; cv=none; b=RKpBpRx5LN1xxFR3FN9oEZAhooCK6YzFXccKBGa6eLtY1L6dKRA2yUC81zHT+xlLS7vjGUGwEptBsl61S1ilIz2EbgcCyokjVG2lmIlJMkIoah6+G1CcP9AVmp7g/GHH13GJLFyC4GDb3wAfl2oxgBmwXdRV9seZ3Jy5Rnhz7Xc=
+	t=1791067003; cv=none; b=QaAuBMxqzQ0mFvqKUH563zR7KpZ4DAyPIiHlTTEYXX6HY3QaJT1iTbeNo4ahNkL5jCSblT1gLUvpbNEMlqGaakxGep81NRhA/ive4AGSFhP5yh1DPxtsnmilKjT+6WruamqEpFTeYjkK889Yzp9ztkHgGwHo5o6oC0N2NDxUmZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791066994; c=relaxed/simple;
-	bh=6uXQSVa80ue1ve+9qg9AIByLJluqzWQm2hgb88R2E74=;
+	s=arc-20240116; t=1791067003; c=relaxed/simple;
+	bh=rsuWKUlJyONSdlSCMs0Xjta9LLNv0x+Ys/DDYDv53gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKfCFIp95kmokh17UkjKZaX0CgqLOjgz8IqPg8JDtRXO6jtzf3fe+vLYs1XiyjRnGBuWrDTXiaoYTo7I24PLqCMCWA00maO3Olcjry140TpF6zd6foCwtQqqt87qIZVwLY+PVpQXjFZBC673TUeQJ5Y4G1fVP0tsGyGfS09J3E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ge5UU1kr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XQ+lx3NK3EUTAlgw4bvUNzTnWr9X9I4Gm7aR9+Pq8cEwHXnaopMzdTVX4vTMJb32B8xCiJG3xTCcOPbWwVMCawPxN0yiXD42bX+ioP+BTLJx4G7d+u876udXBbAfWfQ/VA7hd+fK6ixQKxbevxTP1o9bmxaSxMQ8jVdLAmgXdQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e3R8NyGb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ge5UU1kr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3F61F0089B;
-	Sat,  3 Oct 2026 22:36:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e3R8NyGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03F21F0089B;
+	Sat,  3 Oct 2026 22:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791066993;
-	bh=ZAh1+NUvcyhqmr0PfDJL3K1ygNoT235EjuzbmYaKAyo=;
+	s=k20260515; t=1791067002;
+	bh=WSQ3pUY+9rt++lBY+79P0Gbp6ltFF37R09j8+KkXvIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ge5UU1krYvuRbgi8ZYYGKXJscZ5Taf+aEIn5LIJOb82hOC6yVw9PgJpBCDh/Q6802
-	 0igI59B36nYHhLTnz7TG6jM3h/sfVxWKtkyZ4MHx038qVSz+kuMLCBuV5WM4IrLLbe
-	 H/W/r24tV0DEP5dQ9mzYrFRdZ3dNT0qMopb3w+S9L6nQMRobcWKgx7Slz+yI1HgzXy
-	 4bT80hDMNIPj4Dz++tEmDv6kvDCH9TMePhcuzfGi+RUuvl7L0MdiqKnonF4RHNuHRx
-	 QaR1CCxPyOzj4pbx28a0HM6vuAp88CwI49UTTgKfmLVKVCgsmBak4lF8UdS2yCGf8n
-	 NBFVqNZ7M8ncA==
+	b=e3R8NyGbGb/CDKEgs4HXOGqxs9ivcGkZ1Z6MHUlJROXr7kCHpt8vIGnflDRnHi+ET
+	 3eRSOx9KiQHlJjxR41HKNmUM8L4jE08GytIWrak346dsQmK/QluSVKIBZobw856Vm/
+	 YCiE9md0uvIaOsf4U7AeT4U4yU37VpRA5vAyTabIVP2khvosJLPXFwsQ7lx1+TVMKo
+	 0a5nTsFr+Z42owDFrATQNTMhzQxbHvsGMcPXbN6ROKv4lf2syRMYmDZl7AoLEuarAc
+	 LAlEjB2PIFSPpNCXXR5TNSAnegxsWW3EIJc7oaKYMBdj7pwMT2/4dU+GfvI5T42slT
+	 vw3dXGYeDJsOA==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 223/752] wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()
-Date: Sat,  3 Oct 2026 18:32:54 -0400
-Message-ID: <2026-10-03-1-daily-reply-0013-re-cfg80211-siwgenie-unlock-fixup-request@kernel.org>
+Subject: Re: [PATCH 5.15 474/752] wifi: cfg80211: dont filter by BSS type when removing stale entries
+Date: Sat,  3 Oct 2026 18:32:55 -0400
+Message-ID: <2026-10-03-1-daily-reply-0014-re-cfg80211-bss-double-free-followup@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <93db0eae-f479-4343-a126-59987ae0dc22@oracle.com>
-References: <20260930152358.131179731@linuxfoundation.org> <20260930152403.080560860@linuxfoundation.org> <93db0eae-f479-4343-a126-59987ae0dc22@oracle.com>
+In-Reply-To: <3da7c53c-7b2e-4aa6-80dc-2aa4fc5b60fd@oracle.com>
+References: <20260930152358.131179731@linuxfoundation.org> <20260930152408.530774330@linuxfoundation.org> <3da7c53c-7b2e-4aa6-80dc-2aa4fc5b60fd@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,15 +48,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I would suggest keeping the validation and replacing the direct return
-> with err = -EINVAL; goto out; so rejection reaches wdev_unlock().
+> I think 5.15.y needs acc44cbd7727115f9381c35c2898b1b5af665ec8 ("wifi:
+> cfg80211: avoid double free if updating BSS fails") before this
+> selection change, clearing both IE pointers regardless of the helper's
+> return value, thoughts?
 
-Agreed. This already shipped in 5.15.222, and the same bare return is in
-6.6.158 (where it also leaks the wiphy mutex), 6.1.189 and 5.10.271.  6.12 and
-newer use guard(wiphy) and are fine.
-
-Could you send that as a stable-only fix for 6.6.y, 6.1.y, 5.15.y and
-5.10.y, each with a Fixes: tag for that tree's commit?
+Agreed. The selection change already shipped in 5.15.222 (and in 6.6.158,
+6.1.189 and 5.10.271), so this goes in as a follow-up. Queued for 6.6, 6.1,
+5.15 and 5.10, thanks.
 
 -- 
 Thanks,
