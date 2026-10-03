@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C066522370A;
-	Sat,  3 Oct 2026 22:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C7A3806B6;
+	Sat,  3 Oct 2026 22:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791067003; cv=none; b=QaAuBMxqzQ0mFvqKUH563zR7KpZ4DAyPIiHlTTEYXX6HY3QaJT1iTbeNo4ahNkL5jCSblT1gLUvpbNEMlqGaakxGep81NRhA/ive4AGSFhP5yh1DPxtsnmilKjT+6WruamqEpFTeYjkK889Yzp9ztkHgGwHo5o6oC0N2NDxUmZw=
+	t=1791067014; cv=none; b=GjDq+ZEvqNL1gIqinjQQJ96hE47iuT+4OHTior57nfHqKUmm2PziWpgbpSRfnKex3jiLI826ax4VR4Bx/d4vDPe0tzATJnKbOv+MWFY5zjXxktFsOB75mOVjiFwZF1j1z0ombI9kM5wuC1syOAcUUMB1NkP9iZi+gs1uA1RbhJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791067003; c=relaxed/simple;
-	bh=rsuWKUlJyONSdlSCMs0Xjta9LLNv0x+Ys/DDYDv53gI=;
+	s=arc-20240116; t=1791067014; c=relaxed/simple;
+	bh=AMpFuYq3C8xtyCRvVQPrgAhN3noBgs1FU0fpFJSFsJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQ+lx3NK3EUTAlgw4bvUNzTnWr9X9I4Gm7aR9+Pq8cEwHXnaopMzdTVX4vTMJb32B8xCiJG3xTCcOPbWwVMCawPxN0yiXD42bX+ioP+BTLJx4G7d+u876udXBbAfWfQ/VA7hd+fK6ixQKxbevxTP1o9bmxaSxMQ8jVdLAmgXdQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e3R8NyGb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e7fXW62o33eX4qGnLjtJg+2sBojuRbydQbn/M/91FwWxeYlPj3KNndALlin1rC+hMho7B2XhSu27MYf+nz/w6BfvO9MI4+kilOC0D1/11a9frYDTNKe3/qx6ijTT3PmNCfS72zJKFMt+HXG1URFEcFMMkDNjfvvVX+oTxGOZHf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+/Tr7s0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e3R8NyGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03F21F0089B;
-	Sat,  3 Oct 2026 22:36:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+/Tr7s0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0F51F0089B;
+	Sat,  3 Oct 2026 22:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791067002;
-	bh=WSQ3pUY+9rt++lBY+79P0Gbp6ltFF37R09j8+KkXvIE=;
+	s=k20260515; t=1791067013;
+	bh=D+q/ygXBBkvcngPgORCK68+QrlMtaNhYb5v8i0xI/XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e3R8NyGbGb/CDKEgs4HXOGqxs9ivcGkZ1Z6MHUlJROXr7kCHpt8vIGnflDRnHi+ET
-	 3eRSOx9KiQHlJjxR41HKNmUM8L4jE08GytIWrak346dsQmK/QluSVKIBZobw856Vm/
-	 YCiE9md0uvIaOsf4U7AeT4U4yU37VpRA5vAyTabIVP2khvosJLPXFwsQ7lx1+TVMKo
-	 0a5nTsFr+Z42owDFrATQNTMhzQxbHvsGMcPXbN6ROKv4lf2syRMYmDZl7AoLEuarAc
-	 LAlEjB2PIFSPpNCXXR5TNSAnegxsWW3EIJc7oaKYMBdj7pwMT2/4dU+GfvI5T42slT
-	 vw3dXGYeDJsOA==
+	b=a+/Tr7s0zbUvPAzLTxfbLHO80x5v8/c+RbLyjM8ZClFXI/gOcuxgBghcWDESMSbtZ
+	 3Cyq5mO2vSB0tFOqtl1HBy0D3QUsymQ8NGgJVbOC9CP/ku6X3NSIk97ncTMeTJ8sIj
+	 DIuNbX+blTJE8A4tMFvdIh3kJLqLYRHetyDBjMtbYF+buqMjBaHPkKaine3PdSsaL7
+	 3Z5h1+4wqTc1x+vzJjMQmC8aOL3RB6AXPR7u/0542ptvzueYnc9tZjGF/fz0tlf7ls
+	 MjhMuPth6W4MXp67Z38VyeI59N9yCn2pSOvCQux/gBipniXNfMgKDaw+RP9SSBz8Cz
+	 E0J8qTYBrn4ZA==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 474/752] wifi: cfg80211: dont filter by BSS type when removing stale entries
-Date: Sat,  3 Oct 2026 18:32:55 -0400
-Message-ID: <2026-10-03-1-daily-reply-0014-re-cfg80211-bss-double-free-followup@kernel.org>
+Subject: Re: [PATCH 5.15 584/752] drm/msm/adreno: fix autosuspend cleanup during teardown
+Date: Sat,  3 Oct 2026 18:32:56 -0400
+Message-ID: <2026-10-03-1-daily-reply-0015-re-adreno-pdev-earlier-followup@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <3da7c53c-7b2e-4aa6-80dc-2aa4fc5b60fd@oracle.com>
-References: <20260930152358.131179731@linuxfoundation.org> <20260930152408.530774330@linuxfoundation.org> <3da7c53c-7b2e-4aa6-80dc-2aa4fc5b60fd@oracle.com>
+In-Reply-To: <dea57868-11b9-4061-8b6c-ee1e2c227610@oracle.com>
+References: <20260930152358.131179731@linuxfoundation.org> <20260930152410.929547718@linuxfoundation.org> <dea57868-11b9-4061-8b6c-ee1e2c227610@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,14 +48,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I think 5.15.y needs acc44cbd7727115f9381c35c2898b1b5af665ec8 ("wifi:
-> cfg80211: avoid double free if updating BSS fails") before this
-> selection change, clearing both IE pointers regardless of the helper's
-> return value, thoughts?
+> I think 5.15.y needs an adaptation of 16007768551d5b ("drm/msm/adreno:
+> Assign msm_gpu->pdev earlier to avoid nullptrs"), assigning it in
+> adreno_gpu_init() before fallible setup and removing the late
+> assignment, thoughts?
 
-Agreed. The selection change already shipped in 5.15.222 (and in 6.6.158,
-6.1.189 and 5.10.271), so this goes in as a follow-up. Queued for 6.6, 6.1,
-5.15 and 5.10, thanks.
+Agreed. The teardown change already shipped in 5.15.222, 6.1.189 and 5.10.271,
+so this goes in as a follow-up. Queued for 6.1, 5.15 and 5.10, thanks.
+
+5.15 also needed 46d4efcccc68 ("drm/msm/a6xx: Avoid a nullptr dereference when
+speedbin setting fails"): a6xx_gpu_init() calls a6xx_destroy() when
+a6xx_set_supported_hw() fails, before adreno_gpu_init() has set gpu->pdev. I've
+queued that for 5.15 as well.
 
 -- 
 Thanks,
