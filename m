@@ -1,159 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABB2199920;
-	Sun,  4 Oct 2026 13:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724A3CE4A3;
+	Sun,  4 Oct 2026 16:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791121422; cv=none; b=tW/bkI/jOsarJeWnz/SIzcljk6m4+UrXnI8O874Q8sfPuxvnqgpaGcdyhTzjPEf2HiMk9gaBB/CvDOSlsEyDhvQC9nSPNXxNBGcmYeTNaq82IuXN3CjvM2RILGOiUDMe5IGrgP9Hk3Hs8jtoG5X/O/AWX2TZ3c9CQ2WdFME1AY8=
+	t=1791132655; cv=none; b=YHnwc/uj6PzjBNZdPAM2TxOE+FvpOUo/eoy0xXTuW/u+oTKoCBKeBMZUamQMUa/ef6EHVVwR8zByd37/nHyp3K0bufra7i/bFpKqjiz54y0xTmQ6Nr7jT7Ibconj4UHK6G6vghg6K81hcOUmwv3XyGkZJbRvRF4uczIXs/1fGjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791121422; c=relaxed/simple;
-	bh=pnM8FL0ybhA47wliAPvpkvg/bQFuT8QP5JjHEhOeIRQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pc6c72LGclIyX+W0vU2D6bMD/WYEIhSzlwiu4Ez6cln656d2BsgtByQpi7IqPnJ043rW+vY6bADt9Q/qsP1KMl+gODnz29N9jA9sivV8eaM78XkhIFl/jPS4iEqpwWe7ikxcM3GisOg6vHuCZZ/5J4qroR5Ex5r9utx3pjDevJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RBhKWZwQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791132655; c=relaxed/simple;
+	bh=g2UOLsKpjHs+vwQ/G9/vKr58Vkwyj8qThrLz/+t1tnU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ev/iw9Wr+0ZgzzY4pRRc7u7ZdOg9Ya5o7vupONqubMiblHTrXcf9rsPPMn1xZPJYeRc3A2RSU/j8Ltrm8IkkvaH8abd+UKipMWfK+IoBUq6Wy/gVGrREEUdo/36q8w89eX6pVMR9vOKQ2K431pFo8VrGYxqcpALB0IHwREfrR/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qd7+JUc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RBhKWZwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237B1F000FF;
-	Sun,  4 Oct 2026 13:43:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qd7+JUc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87511F000FF;
+	Sun,  4 Oct 2026 16:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791121421;
-	bh=cart4aroCADpkmuYa0nf9U9evT/n9aZirEJ8Fg6h6N0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RBhKWZwQoqVRPgABpKUBw2m1iBnKwBRS8e4lwcs4mZ0ezvhFPwQ/qiagGCgYoJlvd
-	 jbPda7CHLgMQ9E0vt7Vz2PdBNP4zJ9xX+fjK3oAwJoYrB80I5MskYqFVKT1KrS5YG/
-	 LtktnVLfp6tIjGjVdaWULRbMUwRMH5uLhISHJPjVSMynmYWaOg2eOVU7gLrjhhUDRc
-	 oJeeraSRS1XQm3CstRdRDNMNrwEg32d9UZ99oWf2QmecCF/nloSpdoj8kdQ/XUtjb9
-	 5O7P6PZaup8SxVxeiK8b0YPlbbd+4RDjB87WoDT/AWpMhS7OdhQZxZuGmCjT4PcgI4
-	 j0J/6E/EoFkMg==
-Date: Sun, 4 Oct 2026 14:43:33 +0100
+	s=k20260515; t=1791132653;
+	bh=nuVSHKSsMcwtQfVcd+p5GkIpu47wINMtbXzXIQ+YSfU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Qd7+JUc5YcezLGcxNrrUt2ZGcbHq5Nnl64L9F7w6P081ics21AFO5Pi1EF+bficqF
+	 ILF5iCvM1+npNc3fNxjlt4vXiXjaSX1T5tWYDpS6ERnIb0GVU+ae/ed3g7fYvZ0ezT
+	 uoQxUmwhw8Asd6cGVT6eS66lx+0qdJFmTvVitZx92uWcH4QpBjmJlBiEaQ7nZsPYIu
+	 Pq+PQcM9ZkwFPWY0OvnJc1Pt/RNJ1upzv0GfWP5jQgKu0txcj8uB18EWzbF5+9AnjR
+	 CnYRjDnTf1hL4w8RP7EWM8IRWeXqWeKyNEVEuNMU/Qz8teax2q02PQlmNySu347aV8
+	 UDuMYzdaoy6uw==
 From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	iommu@lists.linux.dev,
 	"Joerg Roedel (AMD)" <joro@8bytes.org>,
 	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-doc@vger.kernel.org,
 	Mark Rutland <mark.rutland@arm.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Robin Murphy <robin.murphy@arm.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>
+Cc: kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
 	David Matlack <dmatlack@google.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Nicolin Chen <nicolinc@nvidia.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	patches@lists.linux.dev,
 	Pranjal Shrivastava <peaan@google.com>,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>,
 	Mostafa Saleh <smostafa@google.com>,
-	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-Subject: Re: [PATCH v8 8/9] iommu/arm-smmu-v3: Change how the tlbi describes
- the invalidation
-Message-ID: <asJYBfMe_qf5Nbn-@willie-the-truck>
+	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH v8 0/9] Organize the SMMUv3 invalidation flow so iommupt can use it
+Date: Sun,  4 Oct 2026 17:50:41 +0100
+Message-ID: <179112946237.2363163.15333874894190883676.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <0-v8-1eaaed5e0433+3d3d2d-smmu_tlbi_jgg@nvidia.com>
 References: <0-v8-1eaaed5e0433+3d3d2d-smmu_tlbi_jgg@nvidia.com>
- <8-v8-1eaaed5e0433+3d3d2d-smmu_tlbi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8-v8-1eaaed5e0433+3d3d2d-smmu_tlbi_jgg@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 02, 2026 at 10:23:27PM -0300, Jason Gunthorpe wrote:
->  /*
-> - * Generate up to two range TLBI command payloads covering [iova, iova+size).
-> - * Sets use_full_inv if the range is too large to represent.
-> + * Compute the TTL hint from leaf/table level bitmaps. 0 ttl means no hint
-> + * invalidate all levels.
-> + */
-> +static unsigned int arm_smmu_compute_ttl(u8 leaf_bitmap, u8 table_bitmap,
-> +					 u8 tgsz_lg2)
-> +{
-> +	int ttl;
-> +
-> +	if (leaf_bitmap) {
-> +		/* If TTL is used then only leaves at the TTL are invalidated */
-> +		if (!is_power_of_2(leaf_bitmap))
-> +			return 0;
-> +
-> +		ttl = arm_smmu_bitmap_to_level(leaf_bitmap);
-> +		if (table_bitmap) {
-> +			int table_ttl =
-> +				arm_smmu_bitmap_to_level(table_bitmap) + 1;
-> +
-> +			/*
-> +			 * A range invalidation with !leaf_only clears out all
-> +			 * table levels above the leaf level ttl only.
-> +			 */
-> +			if (table_ttl > ttl)
-> +				return 0;
-> +		}
-> +	} else if (table_bitmap) {
-> +		/*
-> +		 * Table-only invalidation. Spec says:
-> +		 *  For operations with Leaf=0, invalidation of cached Table
-> +		 *  descriptors for the address and scope additionally occurs at
-> +		 *  levels between the start of the walk and the level before
-> +		 *  the last level given by TTL.
-> +		 * Choose a TTL hint that covers the only target table
-> +		 * descriptor levels.
-> +		 */
-> +		ttl = arm_smmu_bitmap_to_level(table_bitmap) + 1;
-> +
-> +		/*
-> +		 * 16K granule, ARM TTL=1 is reserved (SMMUv3 H.a Section
-> +		 * 4.4.1.1) if DS=0, avoid it always for table invalidations
-> +		 * since we don't know what instance this will be applied to
-> +		 * yet.
-> +		 */
-> +		if (tgsz_lg2 == 14 && ttl == 1)
-> +			return 0;
-> +	} else {
-> +		/* Both bitmaps zero is not allowed */
-> +		WARN_ON(true);
-> +		return 0;
-> +	}
-> +
-> +	/*
-> +	 * Assumes the page table is formed properly and does not trigger the
-> +	 * 16k TTL=1 condition for leaf-only unless DS is enabled.
-> +	 *
-> +	 * ARM level -1 never has a leaf so something has gone wrong. ARM Level
-> +	 * 0 cannot be hinted because ttl=0 means no-hint.
-> +	 */
+On Fri, 02 Oct 2026 22:23:19 -0300, Jason Gunthorpe wrote:
+> [ This is part of the patch pile to move SMMUv3 over to the generic page
+> table, the precursor patches have been merged now. What's left:
+>  1) Organize the SMMUv3 invalidation flow so iommupt can use it
+>  2) Use the generic iommu page table for SMMUv3
+> 
+> The first patch should ideally go to -rc
+> 
+> [...]
 
-nit: This isn't strictly true for the non-range invalidation operations, so
-I think it would be handy to have a big note saying that this function only
-works for range invalidation or even stick "range" in the function name
-somewhere.
+Applied first seven to iommu (arm/smmu/updates), thanks!
 
-> @@ -2917,12 +2998,17 @@ static void arm_smmu_tlb_inv_walk(unsigned long iova, size_t size,
->  				  size_t granule, void *cookie)
->  {
->  	struct arm_smmu_domain *smmu_domain = cookie;
-> +	u8 tgsz_lg2 = smmu_domain->tgsz_lg2;
->  	struct arm_smmu_tlbi tlbi = {
->  		.tgsz_lg2 = smmu_domain->tgsz_lg2,
-> -		.iova = iova,
-> -		.size = size,
-> -		.iopte_size = 1 << smmu_domain->tgsz_lg2,
-> +		.start = iova,
-> +		.last = iova + size - 1,
->  	};
-> +	u8 table_levels =
-> +		BIT(arm_smmu_pt_lg2sz_to_level(tgsz_lg2, ilog2(size)));
-> +
-> +	tlbi.table_levels_bitmap = table_levels;
-> +	tlbi.leaf_levels_bitmap = table_levels - 1;
+[1/9] iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA
+      https://git.kernel.org/iommu/c/84c6089a365f
+[2/9] iommu/arm-smmu-v3: Pass the parameters for the invalidation in a struct
+      https://git.kernel.org/iommu/c/0a6cd4ac9252
+[3/9] iommu/arm-smmu-v3: Move pgsize out of arm_smmu_inv
+      https://git.kernel.org/iommu/c/a9573c2847e9
+[4/9] iommu/arm-smmu-v3: Optimize range invalidation for latency
+      https://git.kernel.org/iommu/c/5a158b29766c
+[5/9] iommu/arm-smmu-v3: Keep track in arm_smmu_invs if range invalidation is used
+      https://git.kernel.org/iommu/c/fc62cd069cf7
+[6/9] iommu/arm-smmu-v3: Precompute the invalidation commands
+      https://git.kernel.org/iommu/c/bc5c3475d63c
+[7/9] iommu/arm-smmu-v3: Populate the tlbi at the top of the call chain
+      https://git.kernel.org/iommu/c/d587faf66828
 
-I'm having a tough time understanding this part. Specifically, I'm trying
-to work out what happens if we end up doing a non-leaf invalidation at the
-PGD (1GiB) level with leaves at the PTE (4KiB) level. In that case, don't
-we need to have table_levels describing both PGD and PMD levels so that
-the TTL describes the 4k leaf entries?
-
+Cheers,
+-- 
 Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
