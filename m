@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7B547141D;
-	Fri,  9 Oct 2026 14:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6325E3B19DE;
+	Fri,  9 Oct 2026 14:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556766; cv=none; b=t1jj9Bz3DT6vxJkOiOVy8yRIWk/BATim5GkM9Lgyxlj59vGDljNK6RMuk3dsCFvU0GUXTn4ePSvVE2FMU0DyjjYgU+kjh3r8fksbQhNzZ0YEErEWEr+cP+mwiOR9/Q140to6p2c2vw6HbNFABwnkLM0VOEf5fE6RnTZGnVmQj4k=
+	t=1791556768; cv=none; b=mwKA5TOuOHEGwa83w/9Qoj3E/2nrhqQ683IpqtTYPj19K95jiOD9FoeMZCIAiHTR2EXG0pGxbQpxk49b3XjaloI2qJYUsaZnjSFVCkmYdTQCrJliE2NCeymgYiaJkHoXafMfoSRdQJRHWWiZCuo5GJ4vUwBl5aZYh4GNeI9aNos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556766; c=relaxed/simple;
-	bh=sPDR6w5cK+GoTw1rGq3g1/bb3qU04afxa44uShw6RMQ=;
+	s=arc-20240116; t=1791556768; c=relaxed/simple;
+	bh=FkN7FrYKezkmKLumljsAcdS7OeyRE+ISPUA7ZzOHL9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHX61L4TnLwR1o+xJ62pJ2eoqvRW73BGO3KwUweOX7rDqtjtNtEmIo0yb/u0Ug4wP7q0JV5rfIL4xxVUtNTfm5YXq/aWh+QXYjdvOl4I03zx2Rm6nzT7E+5+XpZJBjvLnWTrdt+WwRFZqnxraSIxVm+69jZDsyaHEN84KsEeFPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1K70AF9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i4pLLCGCNlxOSkZUALFI5Ht06PoxU3QWDhS/J9KI96XfCnnbUxR8axNowZlA/Z5XqUTF0kJfXFuyvpmIwLHOch7FlzxHAImLz9h3rkHbKjYR0HjZ/iO6Kp2/tSiOnZC786Dy4Ho/3FEvn4Neoo1qk0SFC3TCVUdMafvoavO1tAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0E787mVy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1K70AF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE041F000FF;
-	Fri,  9 Oct 2026 14:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0E787mVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750131F00893;
+	Fri,  9 Oct 2026 14:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556764;
-	bh=YYrvNTqTM3BcsevuRZmCzfNe/4FUCuoRw7SJ4ViekOc=;
+	s=korg; t=1791556767;
+	bh=hb2QWsOzUUWccqIofkD86kcSrP1Ot5Z6F931n0WVK94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1K70AF9uU1FjcQ38k9crahJ96L3t8ZqsSivu1VSMRFGyC8dEGwXGib3VLpT5NDd8
-	 NqtpdEMjmclFdCUgmbtO3BhihwRROUScjyS1VNBfiVyAjoimSswGX4RCBxRxoBqVDY
-	 SCtotxjtjTI6Kpelf3pGct78kpdHurNM4CPlr0cg=
+	b=0E787mVy2N2d7hrrpqEt5gYWmRnbk783vqIHnv4/EzxBjBU56muAo+YejUJkmix79
+	 /Dim7aeF0KHZGQqs2Jlf793iRCyeVKCQJAO1iaY4r1+JNC1l0aqrEfutdIGxTghqQI
+	 99rvFjFnslKLnHCuHusMM1h4TpniwC7hDOwB/U20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johan Hovold <johan@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 7.2 238/428] tty: amiserial: fix broken TIOCMIWAIT
-Date: Fri,  9 Oct 2026 16:09:35 +0200
-Message-ID: <20261009140951.339642566@linuxfoundation.org>
+	Sven Peter <sven@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.18 290/403] thunderbolt: Tear down inactive DP tunnels when the domain is stopped
+Date: Fri,  9 Oct 2026 16:10:51 +0200
+Message-ID: <20261009140958.983229160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sven Peter <sven@kernel.org>
 
-commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
+commit 0b457c6733f73421a3fb03786f13d67c618b5119 upstream.
 
-A change replacing interruptible_sleep_on() inadvertently broke the
-TIOCMIWAIT implementation which now immediately returns -EIO (unless
-there is a racing modem status update).
+tb_stop() only tears down DMA tunnels so a DP tunnel that is still
+waiting for dprx_work to complete keeps that work queued while the
+routers are removed and the control channel is stopped. The work only
+stops once the DPRX timeout has passed and because it requeues itself
+until then the flush_workqueue() in tb_domain_remove() won't wait for its
+final run. The callback then runs against a domain that is already torn
+down. A reference to that domain is kept so the completion waiting for
+that domain to disappear in unbind will block until the timeout is
+eventually reached.
 
-Replace the old hangup (and signal) detection with a check for the
-TTY_IO_ERROR flag which is set on hangup.
+Tear down DP tunnels that are not active yet as well which also cancels
+that work. Tunnels for displays that are already alive are untouched and
+keep working.
 
-Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
-Cc: stable@kernel.org	# 3.14
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
+Fixes: d6d458d42e1e ("thunderbolt: Handle DisplayPort tunnel activation asynchronously")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/amiserial.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/tb.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/amiserial.c
-+++ b/drivers/tty/amiserial.c
-@@ -1138,11 +1138,6 @@ static int rs_ioctl(struct tty_struct *t
- 				local_irq_save(flags);
- 				cnow = info->icount; /* atomic copy */
- 				local_irq_restore(flags);
--				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
--				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
--					ret = -EIO; /* no change => error */
--					break;
--				}
- 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
- 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
- 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
-@@ -1150,6 +1145,10 @@ static int rs_ioctl(struct tty_struct *t
- 					ret = 0;
- 					break;
- 				}
-+				if (tty_io_error(tty)) {
-+					ret = -EIO;
-+					break;
-+				}
- 				schedule();
- 				/* see if a signal did it */
- 				if (signal_pending(current)) {
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -2946,11 +2946,12 @@ static void tb_stop(struct tb *tb)
+ 	/* tunnels are only present after everything has been initialized */
+ 	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list) {
+ 		/*
+-		 * DMA tunnels require the driver to be functional so we
+-		 * tear them down. Other protocol tunnels can be left
+-		 * intact.
++		 * DMA tunnels and DP tunnels which are not yet active require
++		 * the driver to be functional so we tear them down.
++		 * Other protocol tunnels can be left intact.
+ 		 */
+-		if (tb_tunnel_is_dma(tunnel))
++		if (tb_tunnel_is_dma(tunnel) ||
++		    (tb_tunnel_is_dp(tunnel) && !tb_tunnel_is_active(tunnel)))
+ 			tb_tunnel_deactivate(tunnel);
+ 		tb_tunnel_put(tunnel);
+ 	}
 
 
