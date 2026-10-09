@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6774EA397;
-	Fri,  9 Oct 2026 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A4B2EBBAF;
+	Fri,  9 Oct 2026 14:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557304; cv=none; b=N480JnPHQlpekr7MIDVFxHxNMtZsqUYh7fEYKeUDlTzOb6GgUVPZnkrWvPZ6xqMn3kpAiwKHDe0cUfEHnvyFb6t2bChEa8c4KGwZIbGMZuuonFICpVIm0OBjIqqSNNaocfK+ZCQKwIRgNXl+yj7dn05qIGFjYV4m7JVl9wqZkiI=
+	t=1791557307; cv=none; b=sX/HC89vYYDgri2SUlSSYWN4WIryA8180FU9RxCc6XjEx1iikaw4kkQW0BZ9IAF4p+mjQgFteWPLmcqXpXRz9LQ00Sl/25pyhY1c9LpDPwImfvmkjKS1Shl3dyLcNLbj5dot2eZTMRaW2XAg1sf1u6lGhtw2jHOBSil8Deaz9aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557304; c=relaxed/simple;
-	bh=LwQTvmyYwddGaRpc53zCq+Y7nVA7+oHCy3dmK8STfhw=;
+	s=arc-20240116; t=1791557307; c=relaxed/simple;
+	bh=Ftlx4S268VmURYqd939/ncsU1gYxwKZjv0dnYp1RS/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWNHchxDwVFBB1pmPwjNBwJVMM5WHkYKe22cMQh+jDz3CT1ovgWlXRvbztjr8FhjVi4qMwK3sHkhyEamSAPh//Q6u3hvIRR6jUsSGxdMgDqoQf73/r+2t1lGA9BtpnIlfC865CfRc/bY4DVdX+HYZnr77Zc57cZS8Wvzkn+sseE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaC2+bBK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qyCALs8+vmljOHGCKy7RK0nQe+KtR+O2UwEo0J6Xa3m5C4HaWwOn+vlNXi2wBk9vz+vaf1CpH4at0Cu/ndPStVOf7KQLMe59+MHxMResum3Nyp7Igqx9Wt/6ECR+myi1VrD1RF4o/K6HuJLy5TezqnoDe8E+WGqXPaF1Bnsy9PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQjTgFAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaC2+bBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA4D1F00899;
-	Fri,  9 Oct 2026 14:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQjTgFAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718671F000FF;
+	Fri,  9 Oct 2026 14:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557303;
-	bh=CsbkOaWsAnwqM1QOyKnxSWvBNO1suUF0KEQJUtIlhcI=;
+	s=korg; t=1791557306;
+	bh=xDtUG6eZaqddG9jtwR3xRXIUnk/Erskn/TjTHe18dzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yaC2+bBKmEESQpCWi+gPnHMOgxQZAz7jI2HEjrMU2AJTI1ISUiC0m6CbTq1+Y8CJ8
-	 rmE75PMHrRLnOgys3ZQ/uxe+b0znnBi+VKRKP7qZBgVD/v0e+AYAYMc0oybew0KJjk
-	 lokg5QF+NANRkhJi/oM8j69gSPza/qBUu/q21yU8=
+	b=CQjTgFANt03A0pgbVMthyqBziLTvicUJNf2TCzc4+2Fht7Kp8vC6B4HxDiQ6DeXA8
+	 1POYQQHl4xARCfm2IoauDTDRjb2yGJc4O0u4HDZkuGLJMW4e+9dYJ2N1/43yX2Ghhx
+	 DVuCNWLtf06qRWee0rN7UIP83XsEDS+w/kLxjLr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 334/428] wifi: mac80211: reject invalid 320 MHz CSA bandwidth
-Date: Fri,  9 Oct 2026 16:11:11 +0200
-Message-ID: <20261009140953.479422737@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 379/403] usb: typec: ucsi: acpi: Assume UCSI 1.2 on Acer Nitro ANV15-41
+Date: Fri,  9 Oct 2026 16:12:20 +0200
+Message-ID: <20261009141001.184909901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +48,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
 
-commit 56e236759f0a8dc910c2ae7cd3c161f298ee5794 upstream.
+[ Upstream commit 8c51ea651d043c786c37668c51624bd6b338a0ef ]
 
-The HT/VHT channel definition validator can receive a 320 MHz
-bandwidth indication from a received CSA frame on a non-6 GHz link.
-It warns for this unsupported width but continues with an uninitialized
-vht_operation.chan_width, which is then read by
-ieee80211_chandef_vht_oper(). With panic_on_warn enabled, this lets a
-received frame panic the kernel.
+The Acer Nitro ANV15-41 exposes a functional UCSI ACPI PPM but
+reports a UCSI VERSION value of zero.
 
-Reject the channel definition before entering the VHT operation
-conversion. This preserves the existing CSA fallback while avoiding
-both the warning and the uninitialized read.
+ucsi_register() rejects a zero version with -ENODEV, leaving the
+system without registered USB Type-C connectors.
 
-Fixes: 21c3f8f95554 ("wifi: mac80211: refactor STA CSA parsing flows")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
+The PPM works correctly when using the UCSI 1.2 layout. With UCSI
+1.2 assumed, both Type-C connectors register correctly and USB Power
+Delivery negotiation works.
+
+Add a DMI-specific UCSI operation for the Acer Nitro ANV15-41 that
+substitutes UCSI 1.2 only when firmware reports a zero version.
+Preserve any valid non-zero firmware version.
+
+Tested on an Acer Nitro ANV15-41 with BIOS V1.51.
+
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
+Cc: stable <stable@kernel.org>
 Assisted-by: LLM
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/bd68e360e06135c750397cb6be003a01a834a179.1787222001.git.vega.cover-letter@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260910023338.31816-1-pannarat.wiriyaarritham@danielcorp.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Omitted the unsupported .write_message_out initializer from ucsi_acer_ops. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/spectmgmt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
---- a/net/mac80211/spectmgmt.c
-+++ b/net/mac80211/spectmgmt.c
-@@ -111,8 +111,8 @@ validate_chandef_by_ht_vht_oper(struct i
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -105,6 +105,32 @@ static const struct ucsi_operations ucsi
+ 	.async_control = ucsi_acpi_async_control
+ };
  
- 	switch (chan_width) {
- 	case NL80211_CHAN_WIDTH_320:
--		WARN_ON(1);
--		break;
-+		chandef->chan = NULL;
-+		return;
- 	case NL80211_CHAN_WIDTH_160:
- 		vht_oper.chan_width = IEEE80211_VHT_CHANWIDTH_80MHZ;
- 		vht_oper.center_freq_seg1_idx = vht_oper.center_freq_seg0_idx;
++static int ucsi_acer_read_version(struct ucsi *ucsi, u16 *version)
++{
++	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	int ret;
++
++	ret = ucsi_acpi_read_version(ucsi, version);
++	if (ret)
++		return ret;
++
++	if (!*version) {
++		dev_warn(ua->dev, "UCSI version is zero, assuming 1.2\n");
++		*version = UCSI_VERSION_1_2;
++	}
++
++	return 0;
++}
++
++static const struct ucsi_operations ucsi_acer_ops = {
++	.read_version = ucsi_acer_read_version,
++	.read_cci = ucsi_acpi_read_cci,
++	.poll_cci = ucsi_acpi_poll_cci,
++	.read_message_in = ucsi_acpi_read_message_in,
++	.sync_control = ucsi_sync_control_common,
++	.async_control = ucsi_acpi_async_control
++};
++
+ static int ucsi_gram_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
+ 				  void *val, size_t len)
+ {
+@@ -146,6 +172,13 @@ static const struct ucsi_operations ucsi
+ static const struct dmi_system_id ucsi_acpi_quirks[] = {
+ 	{
+ 		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
++		},
++		.driver_data = (void *)&ucsi_acer_ops,
++	},
++	{
++		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "LG gram PC"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "90Q"),
 
 
