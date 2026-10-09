@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC114E0B91;
-	Fri,  9 Oct 2026 14:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D88633A6EB;
+	Fri,  9 Oct 2026 14:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556462; cv=none; b=P4eS6MOtaiyxgnTjKquduP0yEXEZv9+m925Oruu9AhFY5nyaZCkiBUyNEX5NxuceObrOHNGitNckj+ICpxUWHxuyiCPGhbLSyXWzQ8Fvpbn1PWP/bQBxulOyCf8vFRFoBzZFrn/8T3yfEeM8KAdQivS6lLEYNMndfaMFugSDgBY=
+	t=1791556463; cv=none; b=LvPd1tpNBi7jfCgZJ3zFF5E7kk5DDu4m69EEBetdZmo5UHNblqg5xC0rd46J05YhZ4QLEpBCKi1VgXMD04f2EP0tgta/6vWVckWjtgL2Cdz37HJuAumnhg5OAD0AdITK4S9vXjjKwU6uvw8nemhMXz52ki6uqPAs45wTjSopRJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556462; c=relaxed/simple;
-	bh=PV289Uaafq6KJqtl4PCY59L9d2cnCL4h7Tm9RYyYWB8=;
+	s=arc-20240116; t=1791556463; c=relaxed/simple;
+	bh=q7B6G//ZoAVGfL29ulLVYt/7iwpfQjvFbqFur2/ejbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAq1O6TyE11KAYmCLYc4rvVixRGWMod7qeNnKphMk71a/Qy/t7SXhWnLFzBAu7Inl0l/AosBTtEzNAMWVUrTfqtBYTMR4u7iN3NWc6ls4kpl2uO0pea/S68j7FAecEoTCXBFlsLpo2cCThBQGde+8P8tOcSWxeOzzNvNiw5QzFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wItstuLM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SRUb7JX+6BbRkVZDWfFaNjDtbeYw9uiSzhVrmwNk0cbjkFkmmwG2eryOw9Dqp7AYMDodoL0RoLAgK4fTFIBADopo6HvnMJqjjAkxqGySRTmjaAaKVBRMorlVRXlSamyDOK/H3fsqsizFivd5K7ioj+ggSFXOXpr4efa4Q6JvwkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrCz5b0Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wItstuLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C791F000FF;
-	Fri,  9 Oct 2026 14:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrCz5b0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09BE1F00893;
+	Fri,  9 Oct 2026 14:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556459;
-	bh=Zq8JWaeskuYhYna9dIhTbkzvSl+MDHxCL59HR92882Y=;
+	s=korg; t=1791556462;
+	bh=pZj22Eche/Jg6dQ7wKZAENyW/bqMHtJzY310LMORym4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wItstuLMTvHRUqM6W/8ghtevO+BIWv5Io/q1nz9xXZHKJa3in4RKQs/VKXyhqrmIH
-	 LS2gUcTIZdxDFS8ui1tEgv52H3Q4Xa3jwEmMJBm1Vm3eCO20biiDpvHrEYIhtM4N9I
-	 Jv86jH7VLZhIJVcIxdQHyQrg4DWNBXn7WpyMmG0M=
+	b=HrCz5b0ZilkMsOjlixZ90Zogy0pzstk6dm6aUYv4wSq0tXjtEKGE70fOTcn6uJfv8
+	 Xo8IZ6HRI3oCkFMlmNf+sss9VgFDO6QRKzh5hgAxvmYjTOOxUGk02Yp+sozKF8uVHm
+	 FkV94j6FrkEH+ra+ZxBp8CJr2SPQa3hkrfwLHPgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 201/403] serial: revert guards in uart_wait_modem_status()
-Date: Fri,  9 Oct 2026 16:09:22 +0200
-Message-ID: <20261009140956.834629604@linuxfoundation.org>
+	Pedro Falcato <pfalcato@suse.de>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.18 237/403] x86/mm: Drop unnecessary PMD page copy when freeing
+Date: Fri,  9 Oct 2026 16:09:58 +0200
+Message-ID: <20261009140957.707465633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,50 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit f658e6bcd00a4eafaa9c98c0b7483cc2c5dac539 upstream.
+commit e3ee38c1bc0b11a8d3e63dce7050759b61864286 upstream.
 
-Mixing scope-based and regular cleanup is discouraged and
-uart_port_deref() used by uart_wait_modem_status() falls in the latter
-category.
+On a box with a discrete GPU, lockdep reports a possible deadlock as
+soon as kswapd shrinks the TTM page pool. The immediate cause is an
+x86 commit that added an mmap_read_lock() to kernel page protection
+munging code.
 
-Revert the guard conversion in preparation for fixing a hangup race.
+The huge vmap code holds the same lock over a GFP_KERNEL allocation,
+which is a no-no now that reclaim can take it. That allocation is in a
+page table *free* path and ends up being for dubious purposes[1].
+Basically, it tries to avoid hardware setting Accessed=1 in page table
+entries that are unreachable by the hardware, a non-issue.
 
-Fixes: 56609c050051 ("serial: serial_core: use guard()s")
-Cc: stable@kernel.org	# 6.18
-Cc: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910130816.642699-2-johan@kernel.org
+Remove the PMD copy. Detach the original PMD page at the PUD, flush
+the mid-level caches, and free the PTE tables straight from the
+detached PMD page. With no allocation left, the locking issue is gone.
+
+Lockdep splat/analysis:
+
+  WARNING: possible circular locking dependency detected
+  7.3.0-rc3-f6e7b42bf05b+ #183 Tainted: G     U
+  ------------------------------------------------------
+  kswapd0/269 is trying to acquire lock:
+  ((init_mm).mmap_lock){++++}-{4:4}, at: change_page_attr_set_clr+0x29a/0x4a0
+  but task is already holding lock:
+  (pool_shrink_rwsem){.+.+}-{4:4}, at: ttm_pool_shrink+0xb2/0x330 [ttm]
+  Chain exists of:
+    (init_mm).mmap_lock --> fs_reclaim --> pool_shrink_rwsem
+
+The cycle is built from three edges:
+
+  1) pool_shrink_rwsem -> (init_mm).mmap_lock
+
+     The TTM shrinker restores the caching attribute of every page it
+     frees, while holding pool_shrink_rwsem:
+
+       ttm_pool_shrink()
+       -> ttm_pool_dispose_list()
+       -> ttm_pool_free_page()
+       -> set_pages_wb()
+       -> change_page_attr_set_clr()   [ init_mm mmap read lock ]
+
+  2) fs_reclaim -> pool_shrink_rwsem
+
+     The same shrinker, called from reclaim.
+
+  3) (init_mm).mmap_lock -> fs_reclaim
+
+     ioremap() installing a huge PUD mapping over an existing PMD table:
+
+       ioremap_page_range()
+       -> vmap_range_noflush()
+       -> vmap_try_huge_pud()          [ init_mm mmap read lock ]
+       -> pud_free_pmd_page()
+       -> __get_free_page(GFP_KERNEL)  [ enters reclaim ]
+
+[ dhansen: Lots of changelog munging/trimming and merged comments from my
+	   version of the fix. ]
+
+Fixes: d5d8b8662e6e ("x86/mm/pat: Acquire init_mm read lock on attribute changes to avoid UAF")
+Suggested-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Link: https://lore.kernel.org/20260916062222.27347-1-mikhail.v.gavrilov@gmail.com
+Link: https://lore.kernel.org/all/e11449f0-d9ad-4d1b-ab21-2be7d71fe335@intel.com/ [1]
+Link: https://patch.msgid.link/20260923223116.20090-1-mikhail.v.gavrilov@gmail.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/x86/mm/pgtable.c |   38 ++++++++++++++------------------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1220,15 +1220,16 @@ static int uart_wait_modem_status(struct
- 	uport = uart_port_ref(state);
- 	if (!uport)
- 		return -EIO;
--	scoped_guard(uart_port_lock_irq, uport) {
--		memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
--		uart_enable_ms(uport);
+--- a/arch/x86/mm/pgtable.c
++++ b/arch/x86/mm/pgtable.c
+@@ -716,47 +716,37 @@ int pmd_clear_huge(pmd_t *pmd)
+ }
+ 
+ #ifdef CONFIG_X86_64
+-/**
+- * pud_free_pmd_page - Clear PUD entry and free PMD page
+- * @pud: Pointer to a PUD
+- * @addr: Virtual address associated with PUD
+- *
+- * Context: The PUD range has been unmapped and TLB purged.
+- * Return: 1 if clearing the entry succeeded. 0 otherwise.
+- *
+- * NOTE: Callers must allow a single page allocation.
++/*
++ * Given a PUD poitner, detach and free the pointed-to
++ * PMD page and any PTE page children. The entire range
++ * under the PUD must not have any valid translations
++ * and the TLB must have already been flushed.
+  */
+ int pud_free_pmd_page(pud_t *pud, unsigned long addr)
+ {
+-	pmd_t *pmd, *pmd_sv;
+ 	struct ptdesc *pt;
++	pmd_t *pmd;
+ 	int i;
+ 
+ 	pmd = pud_pgtable(*pud);
+-	pmd_sv = (pmd_t *)__get_free_page(GFP_KERNEL);
+-	if (!pmd_sv)
+-		return 0;
+-
+-	for (i = 0; i < PTRS_PER_PMD; i++) {
+-		pmd_sv[i] = pmd[i];
+-		if (!pmd_none(pmd[i]))
+-			pmd_clear(&pmd[i]);
 -	}
-+	uart_port_lock_irq(uport);
-+	memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
-+	uart_enable_ms(uport);
-+	uart_port_unlock_irq(uport);
  
- 	add_wait_queue(&port->delta_msr_wait, &wait);
- 	for (;;) {
--		scoped_guard(uart_port_lock_irq, uport)
--			memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
-+		uart_port_lock_irq(uport);
-+		memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
-+		uart_port_unlock_irq(uport);
++	/* Detach the PMD page: */
+ 	pud_clear(pud);
  
- 		set_current_state(TASK_INTERRUPTIBLE);
+-	/* INVLPG to clear all paging-structure caches */
++	/*
++	 * PMD and all its descendents are unreachable
++	 * via normal page walks. Make them unreachable
++	 * in cached mid-level walks too:
++	 */
+ 	flush_tlb_kernel_range(addr, addr + PAGE_SIZE-1);
  
+ 	for (i = 0; i < PTRS_PER_PMD; i++) {
+-		if (!pmd_none(pmd_sv[i])) {
+-			pt = page_ptdesc(pmd_page(pmd_sv[i]));
++		if (!pmd_none(pmd[i])) {
++			pt = page_ptdesc(pmd_page(pmd[i]));
+ 			pagetable_dtor_free(pt);
+ 		}
+ 	}
+ 
+-	free_page((unsigned long)pmd_sv);
+-
+ 	pmd_free(&init_mm, pmd);
+ 
+ 	return 1;
 
 
