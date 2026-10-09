@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8C5438011;
-	Fri,  9 Oct 2026 14:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFA43431F8;
+	Fri,  9 Oct 2026 14:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556506; cv=none; b=liDvJ+zyMr7xHQDiscvApJ4/kvH7O2LoLjf05MCsVw49d+/fMIYWrAT500fKsyJT5pru5vEWYK56pIlSFn6+mZBNZUI3jguNMn77A0cj2YK2sUmySq/MNr2RjMTFZnPjNhRHWmf79rE7lG2CBr48hMGgoK5JybRHc0sImRYc4Q0=
+	t=1791556509; cv=none; b=Vcbp6RpnZkGcioL1XuDtqUEEEPHcd98YzhAxzjfbiYTXaETXHzJtbCXyecYrvE/PNmnBbnELeUryXhrz5Aq2A6bDYqJU17YAVvQ3TPsz+qAJiCPGjOgJ7jnhkLSys+o0o4JEVNvPXSs2GB8LVMeCTFJvFqWQylioXpZB11BGpJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556506; c=relaxed/simple;
-	bh=XjeOoWThrdFQ30XACi0wIA3q8+NoNhcMH9E8jRU/3To=;
+	s=arc-20240116; t=1791556509; c=relaxed/simple;
+	bh=ugZQ9JtA1wveX58OBV9d8LWamwgPGdTUVoD7D1vOZlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yzue/btuWx4rMXD+ohk3poxrTn4z0AoaTfswVSCIGte2YBMh2DIiyF6VuazMUeCHEAnJtHXLiE0HICW5ywKZZBJlAuGOeh23mmJu2TDj1aXlxVzU4MxCF6/ZE9nkGJ7nOT9zpLGjKMLgwDeSIdB0rTE7rzw6e/e5gRkvFml20eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4s8wlL7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rjfmgwur4M7MtXqH99ts2ygKs8EWO4uHtbTmJm7ru6V47VLxkOYP5WyV2oUS9QZj9Gu+QmXE5zxsF7ow7YQClI7rds5vcENoxWSacSeE0fDvCkiW+UGkymHJ2FyQCIgthpflcZEQC81yns7jRsoPbWOfRQzuNp4fH+Jn/GSx31Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMixaSMh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4s8wlL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22CC1F000FF;
-	Fri,  9 Oct 2026 14:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMixaSMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9686A1F000FF;
+	Fri,  9 Oct 2026 14:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556505;
-	bh=GuzjZ63UlZTfJkvSRVtl0EA1ICJaENiBDkPw3LpmLcI=;
+	s=korg; t=1791556508;
+	bh=bQpOB9pfDI0IQaiP7tbp9FhfWiF/0ymTsLFDMjrhCfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4s8wlL7ke2PhB49hZ60lysWlXeHsBb3rSxpt+c5Yz9dRwunIpCMLIW0VdRXO2Oll
-	 rVVnfZWWSFRQ7VNgGhTmgarVizqQ6+lyiwK8nujOzr2zVXPl+uflAC0ETQaXa5/Cxc
-	 gtuDMlkq+M8kiUddw0+y1EKNN0estfbfPqeA6i+M=
+	b=CMixaSMhfl5XXE7+1oryoQLu/fa+IDf03uL/DyuewOtWPiawesBTmL8Pusja760vB
+	 MfaXZEKiX2e7eI3WngbI9yx3kB5xuXULT6pD9g2f3F6rsYKH52yEu1m34oMuaeYAnQ
+	 SrIkYC3dhbjYqQb3/pxZYCCjnbasmwlPYuSwUpWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Sinha <gsinha@micron.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 246/403] nvme-pci: add NVME_QUIRK_DMAPOOL_ALIGN_512 for Micron 4100AT
-Date: Fri,  9 Oct 2026 16:10:07 +0200
-Message-ID: <20261009140957.918937830@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 7.2 183/428] drm/mediatek: Fix ovl adaptor platform device leak
+Date: Fri,  9 Oct 2026 16:08:40 +0200
+Message-ID: <20261009140950.166589888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +46,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit c72f9f7bd23c91e944910d9bcbf12503d21a4a1f upstream.
+commit 048739be3e9cacae5301b68245668002fe6f0ce5 upstream.
 
-The Micron 4100AT fetches PRP Lists in 512 byte strides, but the driver
-allocates small PRP List descriptors in 256 byte strides.  A descriptor
-in the last 256 bytes of a dmapool page makes the controller read past
-the page: the access lands on an adjacent IOVA, the IOMMU faults the
-command. That last block only became reachable with commit da9619a30e73
-("dmapool: link blocks across pages"), so this affects v6.4 and later.
+mtk_drm_probe() creates an OVL adaptor platform device with
+platform_device_register_data() when the display pipeline requires the
+OVL adaptor.
 
-Align the small descriptor pool to 512 bytes, as commit ebefac564796
-("nvme-pci: 512 byte aligned dma pool segment quirk") already does for
-another controller with the same erratum.  The last block then starts
-at offset 0xE00 and the fetch stays inside the page.
+If a later initialization step fails, the probe error path releases
+the DRM resources without unregistering the already registered OVL
+adaptor device. The normal remove path likewise leaves the device
+registered after the DRM driver is unbound.
 
-Cc: <stable@vger.kernel.org> # 6.4.x: ebefac564796: nvme-pci: 512 byte aligned dma pool segment quirk
-Cc: <stable@vger.kernel.org> # 6.4.x
-Signed-off-by: Gaurav Sinha <gsinha@micron.com>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Keep track of whether the OVL adaptor was successfully registered and
+unregister it on probe failure. Also recover the platform device from
+the stored DDP component device and unregister it during normal
+removal.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260921131156.403652-1-lgs201920130244@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3917,6 +3917,8 @@ static const struct pci_device_id nvme_i
- 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
- 	 { PCI_DEVICE(0x1344, 0x6001),   /* Micron Nitro NVMe */
- 		 .driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1344, 0x6004),	/* Micron 4100AT */
-+		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
- 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
- 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
- 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -1060,7 +1060,7 @@ static int mtk_drm_probe(struct platform
+ 	struct mtk_mmsys_driver_data *mtk_drm_data;
+ 	struct device_node *node;
+ 	struct component_match *match = NULL;
+-	struct platform_device *ovl_adaptor;
++	struct platform_device *ovl_adaptor = NULL;
+ 	int ret;
+ 	int i;
+ 
+@@ -1208,6 +1208,8 @@ static int mtk_drm_probe(struct platform
+ err_pm:
+ 	pm_runtime_disable(dev);
+ err_node:
++	if (ovl_adaptor)
++		platform_device_unregister(ovl_adaptor);
+ 	of_node_put(private->mutex_node);
+ 	for (i = 0; i < DDP_COMPONENT_DRM_ID_MAX; i++)
+ 		of_node_put(private->comp_node[i]);
+@@ -1217,9 +1219,15 @@ err_node:
+ static void mtk_drm_remove(struct platform_device *pdev)
+ {
+ 	struct mtk_drm_private *private = platform_get_drvdata(pdev);
++	struct device *ovl_adaptor_dev;
+ 	int i;
+ 
++	ovl_adaptor_dev =
++		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev;
++
+ 	component_master_del(&pdev->dev, &mtk_drm_ops);
++	if (ovl_adaptor_dev)
++		platform_device_unregister(to_platform_device(ovl_adaptor_dev));
+ 	pm_runtime_disable(&pdev->dev);
+ 	of_node_put(private->mutex_node);
+ 	for (i = 0; i < DDP_COMPONENT_DRM_ID_MAX; i++)
 
 
