@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9644E36E5;
-	Fri,  9 Oct 2026 14:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5184E77EA;
+	Fri,  9 Oct 2026 14:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555630; cv=none; b=bIfWZ6ShnngtZVbUaWnwZre4sVxtQiXdzTHY+cJ65+4GQAcOyGv9tc1N4jCBeHCzREWAxBR1WZdL7BxDg2kUThSfFeANGyAQrgMApDK6mKe5B6hOfbbCjcV+RKQi/yoHJ+f7r3Epzazkj1JS2rKW9DerOykNk8AY3UTnDMwDAQg=
+	t=1791555632; cv=none; b=BqFdUQ4GnsyzZHqnxTUg+90u/bd2gcZVE4f9mgDhMmoIkGaj4VC1kpY4cQPhmRiuBSLCTzJScj6Mbd70yHp0bJht1UtKZ1lcTmeQn5b0NvSg5rr1Cm6uziXk/RlVKSGkuIdWPrurPNlTAletxGCId9i90QSRYSHtj0eblh8wzwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555630; c=relaxed/simple;
-	bh=vGXHXxyo5Tb1wXGx7sqtSy65SKwyuty7YL4TNqRCN1M=;
+	s=arc-20240116; t=1791555632; c=relaxed/simple;
+	bh=ee1vYGTFIg4qOZYxXfeRNG0C8II65UDoC6kXSWwg93w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RquAnKpma9X8L4UAoYXj4D7JaavHf1CdtxROpeDG64+J2TFwFS/kH0kVdFSaykyvamvbbnmWCB6f7InctHBCUQ36wwLkySiMeYgpEmsxHDCAdiT5o79id/RjBxWSRIhdr8k08NCxkj80rT9wmfp86zmclAuAkDIbyMc5KXAWUXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUwSEoEP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Y+8oYrMXA3zNfpJX0meSMnXWGV0B4XnyHLuA47RaBCg4onyH6/KpskSAgcI9f+FgPfs7RueJxdihvzyN2Fdqt2t72hm2CYAVZJRGrO7seU1/LeeXNyutAx6Jn7q08EaNL9lvRU/+NDkq4xGnjtmKPIKAHpcX25+opXfisoIp8GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYsLwEjV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUwSEoEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90101F0089A;
-	Fri,  9 Oct 2026 14:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYsLwEjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370DD1F000FF;
+	Fri,  9 Oct 2026 14:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555617;
-	bh=o/Yd98x0QZZ/VlhcWOe13piwsmLkelrJVwd5UUY8SYA=;
+	s=korg; t=1791555625;
+	bh=1NTM6SPDhHepmr39KHbr5KaKbnrx4zjEwZX+qYgr5qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xUwSEoEPvE15yRdP9qTNvrer1HQBfwNKqu1umqSsOJT0ehln1hNHRaxt5g8Z4VaRI
-	 lOK7YP+uDfd/Kh3yAwflco6JJrwBpUXqyc8PZz/3/jwFE/XDayhMFFicQp3ww2buSG
-	 IzfqdwMuVTpAH+39x+9TkVo3BOLkB3Ha8tndWFOk=
+	b=YYsLwEjVOjqJQ+nbVnQTSKxiXZwBkCVsH1fyJKNUTDjwkX08xYEXrxLqXpFmGgkVb
+	 AJ7gJ4CAl/PjHsQGChrmDY3mNMnFOBAL6oIW8OvQnZZjLB+x0ja3MGHfGBckNl90Om
+	 Bh5dJ2+XH9uCT/gtZJZjyMVSsgr/WPC6ttRaJGjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Vineet Gupta <vgupta@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/403] ARC: arch_cmpxchg_relaxed to use size of pointed type not pointer
-Date: Fri,  9 Oct 2026 16:07:29 +0200
-Message-ID: <20261009140954.150692309@linuxfoundation.org>
+	=?UTF-8?q?Ilkka=20Lappetel=C3=A4inen?= <ilkka.lappetelainen@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 039/428] net/packet: prevent TX_RING byte count overflow
+Date: Fri,  9 Oct 2026 16:06:16 +0200
+Message-ID: <20261009140946.952675617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vineet Gupta <vgupta@kernel.org>
+From: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
 
-[ Upstream commit f050c3e61d2a1aaece3170d459e4ce5fa2486c12 ]
+commit 2cf81fc9505b148b1b70068303ea6ea4b1212403 upstream.
 
-Bradley spotted this snafu when working on two-byte cmpxchg emulation.
-He originally folded this fix into his series but the fix itself
-uncovered a pre-existing issue, missing arch_atomic64_cmpxchg_relaxed
-which just needed to be wired up.
+tpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds
+each valid packet length to the signed int len_sum. Userspace can
+recycle completed frames concurrently, so a single blocking send call
+is not bounded by the ring size.
 
-Fixes: e188f3330a13 ("ARC: cmpxchg/xchg: rewrite as macros to make type safe")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609240539.AkulvjVe-lkp@intel.com/
-Suggested-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After enough successful transmissions len_sum wraps into the negative
+range. In particular, 65536 65535-byte frames followed by a 65007-byte
+frame produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats
+that as an impossible return and triggers a BUG. On systems configured
+to panic on oops, a CAP_NET_RAW holder can panic the host kernel.
+
+Stop before the next frame would make the byte count exceed INT_MAX.
+The positive short count leaves that frame pending for a later send
+call.
+
+A two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build
+of Linux 7.3-rc4. With this change, the same reproducer returned the
+expected positive short count without an oops.
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260925124829.6595-1-ilkka.lappetelainen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arc/include/asm/atomic64-arcv2.h | 6 ++++++
- arch/arc/include/asm/cmpxchg.h        | 4 ++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arc/include/asm/atomic64-arcv2.h b/arch/arc/include/asm/atomic64-arcv2.h
-index 73080a664369b..1ca4a1047fb37 100644
---- a/arch/arc/include/asm/atomic64-arcv2.h
-+++ b/arch/arc/include/asm/atomic64-arcv2.h
-@@ -156,6 +156,12 @@ static inline u64 __arch_cmpxchg64_relaxed(volatile void *ptr, u64 old, u64 new)
- }
- #define arch_cmpxchg64_relaxed __arch_cmpxchg64_relaxed
- 
-+static inline s64 arch_atomic64_cmpxchg_relaxed(atomic64_t *v, s64 old, s64 new)
-+{
-+	return arch_cmpxchg64_relaxed(&v->counter, old, new);
-+}
-+#define arch_atomic64_cmpxchg_relaxed arch_atomic64_cmpxchg_relaxed
-+
- static inline s64 arch_atomic64_xchg(atomic64_t *ptr, s64 new)
- {
- 	s64 prev;
-diff --git a/arch/arc/include/asm/cmpxchg.h b/arch/arc/include/asm/cmpxchg.h
-index 76f43db0890fc..66b3743c94008 100644
---- a/arch/arc/include/asm/cmpxchg.h
-+++ b/arch/arc/include/asm/cmpxchg.h
-@@ -46,7 +46,7 @@
- 	__typeof__(*(ptr)) _n_ = (new);					\
- 	__typeof__(*(ptr)) _prev_;					\
- 									\
--	switch(sizeof((_p_))) {						\
-+	switch (sizeof(*(_p_))) {						\
- 	case 1:								\
- 		_prev_ = (__typeof__(*(ptr)))cmpxchg_emu_u8((volatile u8 *__force)_p_, (uintptr_t)_o_, (uintptr_t)_n_);	\
- 		break;							\
-@@ -102,7 +102,7 @@
- 	__typeof__(ptr) _p_ = (ptr);					\
- 	__typeof__(*(ptr)) _val_ = (val);				\
- 									\
--	switch(sizeof(*(_p_))) {					\
-+	switch (sizeof(*(_p_))) {					\
- 	case 4:								\
- 		_val_ = __arch_xchg(_p_, _val_);			\
- 		break;							\
--- 
-2.53.0
-
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2874,6 +2874,9 @@ static int tpacket_snd(struct packet_soc
+ 						    vnet_hdr.hdr_len);
+ 			has_vnet_hdr = true;
+ 		}
++		/* Prevent the byte count from wrapping into a negative errno */
++		if (unlikely(tp_len > INT_MAX - len_sum))
++			break;
+ 		copylen = max_t(int, copylen, hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+ 				hlen + tlen + sizeof(struct sockaddr_ll) +
 
 
