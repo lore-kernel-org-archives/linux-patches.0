@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B3644BCB0;
-	Fri,  9 Oct 2026 14:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6624E432E;
+	Fri,  9 Oct 2026 14:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556547; cv=none; b=gxaOxBjX/ymkXt0kesvZuKzIPJPaXPRbBj0C8LEjm8hi4AhGDkr6ZAf5KS6rHnvgxCl4KeaIzC5XwKEMrJh4FOpJj6mdo/TyHKRSKV7lm7oxcb0YvMpPvlPcYnNJV+BI8djtAEpSqYJWy4KS/WrskXQZ0d7FU1i/VHuKGKWo6ss=
+	t=1791556549; cv=none; b=iSNtvQ1KBCHeYm/LzoUBloiYsBQCFNXaMTVjfVKv8Hk0q3p9HgzxOmXdv5/wlkcrHIVQm3Auyhw3l7xXHPS7CcfXROv10Bv2O+OiQGzKvq/CqFaVwF/idnbD0PPfYk7U8ktbyWirG/ohnqs0VRUH2lzX7FDuOf+v3wL3TCiAKlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556547; c=relaxed/simple;
-	bh=dvDw17PVRo0bK/0GG37hMeQoe85XGBTM6Esrzx1Zl68=;
+	s=arc-20240116; t=1791556549; c=relaxed/simple;
+	bh=q72VABqJd41iSX+Wy1od9UKz6mERbMVnO5EXQq8siKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgkc3PVr/F6obT89oAMYeVlWNzjyRCbvWGT7HpYJ5VaCqY4bzLPoQzthXddsZfuf4tc0FEVztDDXLRBzH/v/CQ8tw2wiAI/nJq/cVqmx0qI7E5AlXtjU+G1THsTid6sPdqEHvj2ZgOlRaUvlGXLx17tQEK+x+Xr4868/C3YWDOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8J+qNWa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EAtFroC0krdaGAtkU7c21Nb+pOg5i/YS6iQCJY6/VHeGMt+QHwQWuwUzfehwpj8ko2EWpn5s2JJ6dUq5BYFxDpQPjDwujhjcZbmOEebtZChEW7l6jXSn2BWRN2UkP6xk3mNGoXsfZTolxWD4VEL4ZYT5PlxwjD+5nl1cR/b4Ki8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jq+OXLwz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8J+qNWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C37C1F000FF;
-	Fri,  9 Oct 2026 14:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jq+OXLwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1221F1F0089A;
+	Fri,  9 Oct 2026 14:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556544;
-	bh=007c9jmDC3tz6HMJI9+0FzTjqIo+t3Fgk1l01FwAF50=;
+	s=korg; t=1791556547;
+	bh=A+YqASJDtf0UFFcqj9EG8PqAXQYXXbY/YOW8s0RQeII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8J+qNWalDI75JDhoJ9TwYIMxoCuH7ptRf5Ppj/uVIGNGQUrF7lLbkSxsJQ5KEnGC
-	 BHqHfxKYiRLWX4mRMuzLKm1+4yyFPtUuDOA+7YQtCgq7oW2ELcYl2gBVlyFp3d39rS
-	 nvyBiXaouwzKm0IPy8S7aQrR8Pby3oKOmipKNB7E=
+	b=Jq+OXLwzHknucLAlbWyujVoy9RR6S8sxvzBZgQwaB02pSo+acrvU0XuYH4WpnIStQ
+	 krrOpajC8I/G0xmj3dIwBigS4HcTiw/nzkdyGEk1jRnfrMafcvWP63p3iaeQuYMcLN
+	 fbJjymhHDg6jWE0b2SrG0crJlMbKWN6xmM/pRq+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 198/428] Input: s6sy761 - fix resume ordering and restore sensing
-Date: Fri,  9 Oct 2026 16:08:55 +0200
-Message-ID: <20261009140950.486817513@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Michael Walle <mwalle@kernel.org>
+Subject: [PATCH 6.18 253/403] mtd: spi-nor: core: Fix mutex leak in spi_nor_rww_start_exclusive()
+Date: Fri,  9 Oct 2026 16:10:14 +0200
+Message-ID: <20261009140958.090020037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,67 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit a215720959c5450b3699e243904b39c3f8f68888 upstream.
+commit 44b8a0bf5f96e8393312fc34b956766882341f16 upstream.
 
-System suspend powers the controller off and resume powers it back on,
-but the resume path enables the interrupt before s6sy761_power_on()
-checks the boot. The firmware raises its boot-complete event on the
-interrupt line, the threaded handler consumes it, s6sy761_power_on()
-then reads an empty event and resume fails with -ENODEV, skipping the
-touch function setup:
+Use the same guard(mutex) pattern as the other RWW helpers so nor->lock
+is released on both the busy and successful return paths.
 
-s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
-
-Power the chip on first and only then unmask the interrupt. Once resume
-completes the boot handshake the chip comes back with sensing off, as
-at probe where input_open() turns it on, so the touchscreen stays dead
-after resume. Send SENSE_ON again when the input device is open.
-
-Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
-the touch function and sense status match the pre-suspend state.
-
-Assisted-by: LLM
+Fixes: 03e7bb864d9a ("mtd: spi-nor: use scope-based mutex cleanup helpers")
 Cc: stable@vger.kernel.org
-Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+[mw: rephrased commit message]
+Signed-off-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/s6sy761.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/s6sy761.c
-+++ b/drivers/input/touchscreen/s6sy761.c
-@@ -500,10 +500,22 @@ static int s6sy761_suspend(struct device
- static int s6sy761_resume(struct device *dev)
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -1245,7 +1245,7 @@ static bool spi_nor_rww_start_exclusive(
  {
- 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
-+	int err;
-+
-+	err = s6sy761_power_on(sdata);
-+	if (err)
-+		return err;
+ 	struct spi_nor_rww *rww = &nor->rww;
  
- 	enable_irq(sdata->client->irq);
+-	mutex_lock(&nor->lock);
++	guard(mutex)(&nor->lock);
  
--	return s6sy761_power_on(sdata);
-+	guard(mutex)(&sdata->input->mutex);
-+
-+	if (!input_device_enabled(sdata->input))
-+		return 0;
-+
-+	err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
-+
-+	return err;
- }
- 
- static const struct dev_pm_ops s6sy761_pm_ops = {
+ 	if (rww->ongoing_io || rww->ongoing_rd || rww->ongoing_pe)
+ 		return false;
 
 
