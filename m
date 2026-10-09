@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F5031A045;
-	Fri,  9 Oct 2026 14:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8552931A045;
+	Fri,  9 Oct 2026 14:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555694; cv=none; b=aeVbraFwvs2a6GbHTQWbdZA9YrmxNzi0iQwCSQ0HuQdsAehhFHSYXbpVP73EOt16jTBGhljPSr6jDoX5ztIECZ3WnN6tHEQBnXG7vM4L3ZUIRSQfNSCZE8DbHnV6vjkR+tGbVjU2xnkMTy+o6XYFL90U8EuN29oATqeAeOGdKLQ=
+	t=1791555697; cv=none; b=iiB6pIz7IMVcCT56eiMO/Zi55jZ+d52Qa1w8S08E7zliQnE9AyflwTSf6XXF9FMKKJnH2ToZIS+NQBqaW3h5JbUr2f149p96Ux4d3Ipaooze11HSorMkLbQ7f8o7V7mZqXH64B479N3Q5r65zGUIVsCYbG336BXewVfwil3+DNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555694; c=relaxed/simple;
-	bh=X4K8dRzD+LYTjQ6F4lodS47n+7ztHqI6eatDb1D0Nwg=;
+	s=arc-20240116; t=1791555697; c=relaxed/simple;
+	bh=J+529zmOxO41EabpXRFvxolTmQtkr0FrpUBs6H7MAKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtycikiHih/I+GWuZsX2ptql7A7nDRLKjUhPoVEhw0wBG3Rb0EwkDbIVSXtT9YKyY7xyl62LJs174ATKkKMqJ5utsAz7oVFNbjX1y/ut0xQZ7pw4R8ATWmN+YhJJDdXZy6qC+kAnB+cH4TtWQkbLG/+Sw+9C12fpoSZ3l73M0nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7ZPcsQu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aeh9x4FrpqA/zezpl+M9jELt14ANcFLqBpVJ1ErAW+5Bnl3E46XPhNHgY6s5jXBfaokX9UJIxVOgKcF8waTUWfM1d5NoP8BdYlUYKb7Gg2L4Z9fQQRE0stmxwX0hpU7LtPXRp/iB3fmz4pnxLWsrQbW2eXUDzB4nC9L6OZVm6j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0FyhIm5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7ZPcsQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B871F00893;
-	Fri,  9 Oct 2026 14:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0FyhIm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13F51F000FF;
+	Fri,  9 Oct 2026 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555693;
-	bh=gvjP34Ia+RBTqQA8R5WBHSAN/Xz4fKjRIgX8kPy6SqI=;
+	s=korg; t=1791555696;
+	bh=4FiSOs5TDsahnYl/+aNhp48zuFyBizyfv2g/+fqQJAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D7ZPcsQu4RyXSCPA2zk5q0nkfBbcyepnhJS16esvOxdkIY3ypp/QlsGd3/MJMVESV
-	 a2vY6npVOcJoVA6NDzUOgRqFdhkNd0RAucV8agXACvbf7AA+TNsF04p9ydaFDqkNN0
-	 bkOnJFae4SB9sdN4Wfd3AccxQIgJRWp7F8voaiYc=
+	b=R0FyhIm5SkmafnY4u3fVQP4c+OZU6smDDxx1ifbuhIf1+vdGhKYz7zHNgBtikD4P9
+	 hBnUczBjJq2YjuzA8mnpTyjaOM6UjpOcenOhd6sK/Wfk9RQlRwMM9HuHhXCeyI32Y5
+	 cTsRrSzzHc27HkiyhO4DmDUBKY27g+TUVcHMHKIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 050/428] netfs: zero gaps in read-gaps folio to avoid writing back stale data
-Date: Fri,  9 Oct 2026 16:06:27 +0200
-Message-ID: <20261009140947.218592014@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 101/403] net: stmmac: convert priv->sph* to boolean and rename
+Date: Fri,  9 Oct 2026 16:07:42 +0200
+Message-ID: <20261009140954.448381188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,56 +48,178 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit 8db55c5cd831a786a1a2a2d391aa80354535a353 upstream.
+[ Upstream commit 7ac60a14d3fce87f0bfd0e50a7bfd5e683c33817 ]
 
-netfs_read_gaps() leaves gaps around a streaming write's dirty region
-unread on the server side, so a short/EOF response there left stale
-folio content that later got written back.
+priv->sph* only have 'true' and 'false' used with them, yet they are an
+int. Change their type to a bool, and rename to make their usage more
+clear.
 
-Zero it after the read completes, not before: netfs_wait_for_read()
-returns rreq->transferred once ret >= 0, so build an iterator over the
-same bvec array the read used, advance past ret, and zero the rest.
-The dirty region already maps to sink pages in that array rather than
-the real folio, so this can't touch it, and only the actual shortfall
-gets zeroed instead of the whole gap upfront.
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/E1vLIDN-0000000Evur-2NLU@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 88095728511e ("net: stmmac: fix rx Scatter-Gather support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  4 +--
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 26 +++++++++----------
+ .../stmicro/stmmac/stmmac_selftests.c         |  2 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_xdp.c  |  2 +-
+ 4 files changed, 17 insertions(+), 17 deletions(-)
 
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -541,6 +541,13 @@ static int netfs_read_gaps(struct file *
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index 865531d6cd3b8..21b473c8d2a90 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -251,8 +251,8 @@ struct stmmac_priv {
+ 	int hwts_tx_en;
+ 	bool tx_path_in_lpi_mode;
+ 	bool tso;
+-	int sph;
+-	int sph_cap;
++	bool sph_active;
++	bool sph_capable;
+ 	u32 sarc_type;
+ 	u32 rx_riwt[MTL_MAX_RX_QUEUES];
+ 	int hwts_rx_en;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index b9d4c2afc9a80..be7406fbb5fea 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1462,7 +1462,7 @@ static int stmmac_init_rx_buffers(struct stmmac_priv *priv,
+ 		buf->page_offset = stmmac_rx_offset(priv);
+ 	}
  
- 	ret = netfs_wait_for_read(rreq);
- 	if (ret >= 0) {
-+		if (ret < flen) {
-+			struct iov_iter iter;
-+
-+			iov_iter_bvec(&iter, ITER_DEST, bvec, i, flen);
-+			iov_iter_advance(&iter, ret);
-+			iov_iter_zero(flen - ret, &iter);
-+		}
- 		if (group)
- 			folio_change_private(folio, group);
+-	if (priv->sph && !buf->sec_page) {
++	if (priv->sph_active && !buf->sec_page) {
+ 		buf->sec_page = page_pool_alloc_pages(rx_q->page_pool, gfp);
+ 		if (!buf->sec_page)
+ 			return -ENOMEM;
+@@ -2048,7 +2048,7 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	pp_params.offset = stmmac_rx_offset(priv);
+ 	pp_params.max_len = dma_conf->dma_buf_sz;
+ 
+-	if (priv->sph) {
++	if (priv->sph_active) {
+ 		pp_params.offset = 0;
+ 		pp_params.max_len += stmmac_rx_offset(priv);
+ 	}
+@@ -3521,7 +3521,7 @@ static int stmmac_hw_setup(struct net_device *dev)
+ 	}
+ 
+ 	/* Enable Split Header */
+-	sph_en = (priv->hw->rx_csum > 0) && priv->sph;
++	sph_en = (priv->hw->rx_csum > 0) && priv->sph_active;
+ 	for (chan = 0; chan < rx_cnt; chan++)
+ 		stmmac_enable_sph(priv, priv->ioaddr, sph_en, chan);
+ 
+@@ -4846,7 +4846,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+ 				break;
+ 		}
+ 
+-		if (priv->sph && !buf->sec_page) {
++		if (priv->sph_active && !buf->sec_page) {
+ 			buf->sec_page = page_pool_alloc_pages(rx_q->page_pool, gfp);
+ 			if (!buf->sec_page)
+ 				break;
+@@ -4857,7 +4857,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+ 		buf->addr = page_pool_get_dma_addr(buf->page) + buf->page_offset;
+ 
+ 		stmmac_set_desc_addr(priv, p, buf->addr);
+-		if (priv->sph)
++		if (priv->sph_active)
+ 			stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, true);
  		else
+ 			stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, false);
+@@ -4892,12 +4892,12 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
+ 	int coe = priv->hw->rx_csum;
+ 
+ 	/* Not first descriptor, buffer is always zero */
+-	if (priv->sph && len)
++	if (priv->sph_active && len)
+ 		return 0;
+ 
+ 	/* First descriptor, get split header length */
+ 	stmmac_get_rx_header_len(priv, p, &hlen);
+-	if (priv->sph && hlen) {
++	if (priv->sph_active && hlen) {
+ 		priv->xstats.rx_split_hdr_pkt_n++;
+ 		return hlen;
+ 	}
+@@ -4920,7 +4920,7 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+ 	unsigned int plen = 0;
+ 
+ 	/* Not split header, buffer is not available */
+-	if (!priv->sph)
++	if (!priv->sph_active)
+ 		return 0;
+ 
+ 	/* For GMAC4, when split header is enabled, in some rare cases, the
+@@ -6020,8 +6020,8 @@ static int stmmac_set_features(struct net_device *netdev,
+ 	 */
+ 	stmmac_rx_ipc(priv, priv->hw);
+ 
+-	if (priv->sph_cap) {
+-		bool sph_en = (priv->hw->rx_csum > 0) && priv->sph;
++	if (priv->sph_capable) {
++		bool sph_en = (priv->hw->rx_csum > 0) && priv->sph_active;
+ 		u32 chan;
+ 
+ 		for (chan = 0; chan < priv->plat->rx_queues_to_use; chan++)
+@@ -7002,7 +7002,7 @@ int stmmac_xdp_open(struct net_device *dev)
+ 	}
+ 
+ 	/* Adjust Split header */
+-	sph_en = (priv->hw->rx_csum > 0) && priv->sph;
++	sph_en = (priv->hw->rx_csum > 0) && priv->sph_active;
+ 
+ 	/* DMA RX Channel Configuration */
+ 	for (chan = 0; chan < rx_cnt; chan++) {
+@@ -7621,8 +7621,8 @@ int stmmac_dvr_probe(struct device *device,
+ 	if (priv->dma_cap.sphen &&
+ 	    !(priv->plat->flags & STMMAC_FLAG_SPH_DISABLE)) {
+ 		ndev->hw_features |= NETIF_F_GRO;
+-		priv->sph_cap = true;
+-		priv->sph = priv->sph_cap;
++		priv->sph_capable = true;
++		priv->sph_active = priv->sph_capable;
+ 		dev_info(priv->device, "SPH feature enabled\n");
+ 	}
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index a2f99e2cb43b5..d922e32fe4fbc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1807,7 +1807,7 @@ static int stmmac_test_sph(struct stmmac_priv *priv)
+ 	struct stmmac_packet_attrs attr = { };
+ 	int ret;
+ 
+-	if (!priv->sph)
++	if (!priv->sph_active)
+ 		return -EOPNOTSUPP;
+ 
+ 	/* Check for UDP first */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
+index aa6f16d3df649..d7e4db7224b0c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
+@@ -129,7 +129,7 @@ int stmmac_xdp_set_prog(struct stmmac_priv *priv, struct bpf_prog *prog,
+ 		bpf_prog_put(old_prog);
+ 
+ 	/* Disable RX SPH for XDP operation */
+-	priv->sph = priv->sph_cap && !stmmac_xdp_is_enabled(priv);
++	priv->sph_active = priv->sph_capable && !stmmac_xdp_is_enabled(priv);
+ 
+ 	if (if_running && need_update)
+ 		stmmac_xdp_open(dev);
+-- 
+2.53.0
+
 
 
