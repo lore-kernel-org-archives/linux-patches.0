@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EA82D77F5;
-	Fri,  9 Oct 2026 14:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4F835BDDB;
+	Fri,  9 Oct 2026 14:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557318; cv=none; b=aU4QpLABfw3G6C2Mj6eF3o8LRrHAwSbuQ36MLMjqkwFjQNZ9NlxblfUHZ04hmllEBr1vIvZcOhXl18TG7KIzNTJFxknBuJmNW/1PVHc9mFp5IhNizjBf1jgEH3zNkOiUnkh9R/zHW/ozwxBfM28jj6q75gn5R+q99qUOFqb3lS4=
+	t=1791557322; cv=none; b=XPZoBQIaK1g8ptt4X4r9tCIGsGIy9J11w9/24yB3Nl/Zys08mCIJojs7tGZms+Y++FoPsLWDGp14q8crRsYyBvELJqJ/9FOPXKF/QINSf6e+1EIznt4deWZ9IW2uu0Vmqie7MYfRnK0VYsbTyMiAWLWB6rOopiO2dcBZlUdiInY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557318; c=relaxed/simple;
-	bh=8uRkMSh94gZVVnEKLf99Inj98T0CUGd9C1l71+vtsuE=;
+	s=arc-20240116; t=1791557322; c=relaxed/simple;
+	bh=UZfXd39iChUdUzBuQDtVImMQnQnCnQOplOgOcvMG6lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eE5gLWEU3fdS0whj0PrCf9ynqAkHvkjE7v9mwpwAudphXwT65Q5t+dMq2mREYST5sm9CszJzCss+wULLdpuahZ0aM77ZI4Mt021Qa+exqvICoZfIzTinYiX0wASf+BpvZMOYi+y6U5uu4TRurMxYQ+0a0m7G+8vOdatMN9s3oWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXapUSmH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5/ciAQ4NOKyCmKHczzxP56sSFV/Fog5aEh/vLhBCZgForE+ysYrmEbOanUAfYkXX1J1w8Q0iApU6XWCO+CCzi86ME2coCAkLYlnzwdZZby7a0XgcXONdPHWgqkklGK/3uWSnzRHBR8+izxG2aOAn8+AZULP/2OHigvTvAiVXEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3yyB2Vf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXapUSmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D185E1F000FF;
-	Fri,  9 Oct 2026 14:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3yyB2Vf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987231F000FF;
+	Fri,  9 Oct 2026 14:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557317;
-	bh=vo1X2iE81p+Gxq3pdl9vRppVUghH9aUJifYF8hmpOGw=;
+	s=korg; t=1791557320;
+	bh=zKMxIZE75go/zgOtkd10Lp7kfqqCyZrZka60zQTp2vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXapUSmHXElBgwaLoH9Htj+QzmisbsWrh4dqXF3oC5L5AUN2tGbp6XmAYVCHeKjrg
-	 g6lMNcZWBi6BnyJKtExSSsfmlw9yjqZPhVVOu/RmO4afRqemFUv0X7TlobglAOUwZO
-	 4kUQ655PbwN+9m9v1MhYQSiLNWLyj2eRMbdj89dU=
+	b=E3yyB2VfA11YADcAMn0qCG++ZFun6dNosYmU1iic8zdkptfhcKC06gKJdkOTxG/1/
+	 wCQXViluthbwu/XtmTjeJTqBtIAr3p2TvxvH934WjC7wok03oZhoupT5+vQrhhSzKN
+	 hoAKzZKKo3uALgwqQvR/bjgVNu22uaWU5EnUugvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 381/403] unwind: Shorten lines
-Date: Fri,  9 Oct 2026 16:12:22 +0200
-Message-ID: <20261009141001.236372766@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 337/428] wifi: mac80211: fix mesh fast xmit path deletion UAF
+Date: Fri,  9 Oct 2026 16:11:14 +0200
+Message-ID: <20261009140953.547367871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit c31b9d2f589463a7cb286467a618b3b598654890 ]
+commit ee3aadc43ea69d98f666431e787137ac0badbb85 upstream.
 
-There are some exceptionally long lines that cause ugly wrapping.
+mesh_fast_tx_cache() stores raw mesh_path pointers. Path deletion
+flushes the cache and then frees the path with kfree_rcu(), but a
+lookup that already holds the path can insert a new cache entry
+after the flush. The cache then points at freed memory.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://patch.msgid.link/20250924080118.545274393@infradead.org
-Stable-dep-of: b9d1fdc6f4ac ("perf: Replace perf_event_header__init_id with full header init")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Set MESH_PATH_DELETED before flushing, and skip inserting a cache
+entry if the path or MPP path is already deleted. Check this under
+the cache walk lock so it is ordered with the flush. Use WRITE_ONCE()
+for the deletion flag updates because the cache check reads flags
+without taking state_lock.
+
+Fixes: d5edb9ae8d56 ("wifi: mac80211: mesh fast xmit support")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/1daa7a98199fe6965c2da7c42717073a6fd39a0b.1789615568.git.zihanx@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/unwind_deferred.h |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ net/mac80211/mesh_pathtbl.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/include/linux/unwind_deferred.h
-+++ b/include/linux/unwind_deferred.h
-@@ -8,7 +8,9 @@
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -577,6 +577,12 @@ void mesh_fast_tx_cache(struct ieee80211
+ 		goto unlock_sta;
  
- struct unwind_work;
- 
--typedef void (*unwind_callback_t)(struct unwind_work *work, struct unwind_stacktrace *trace, u64 cookie);
-+typedef void (*unwind_callback_t)(struct unwind_work *work,
-+				  struct unwind_stacktrace *trace,
-+				  u64 cookie);
- 
- struct unwind_work {
- 	struct list_head		list;
-@@ -68,9 +70,17 @@ static __always_inline void unwind_reset
- static inline void unwind_task_init(struct task_struct *task) {}
- static inline void unwind_task_free(struct task_struct *task) {}
- 
--static inline int unwind_user_faultable(struct unwind_stacktrace *trace) { return -ENOSYS; }
--static inline int unwind_deferred_init(struct unwind_work *work, unwind_callback_t func) { return -ENOSYS; }
--static inline int unwind_deferred_request(struct unwind_work *work, u64 *timestamp) { return -ENOSYS; }
-+static inline int unwind_user_faultable(struct unwind_stacktrace *trace)
-+{ return -ENOSYS; }
+ 	spin_lock(&cache->walk_lock);
++	if ((READ_ONCE(mpath->flags) & MESH_PATH_DELETED) ||
++	    (mppath && (READ_ONCE(mppath->flags) & MESH_PATH_DELETED))) {
++		kfree(entry);
++		goto unlock_cache;
++	}
 +
-+static inline int
-+unwind_deferred_init(struct unwind_work *work, unwind_callback_t func)
-+{ return -ENOSYS; }
-+
-+static inline int
-+unwind_deferred_request(struct unwind_work *work, u64 *timestamp)
-+{ return -ENOSYS; }
-+
- static inline void unwind_deferred_cancel(struct unwind_work *work) {}
+ 	prev = rhashtable_lookup_get_insert_fast(&cache->rht,
+ 						 &entry->rhash,
+ 						 fast_tx_rht_params);
+@@ -808,7 +814,8 @@ static void mesh_path_free_rcu(struct me
+ 	struct ieee80211_sub_if_data *sdata = mpath->sdata;
  
- static inline void unwind_deferred_task_exit(struct task_struct *task) {}
+ 	spin_lock_bh(&mpath->state_lock);
+-	mpath->flags |= MESH_PATH_RESOLVING | MESH_PATH_DELETED;
++	WRITE_ONCE(mpath->flags,
++		   mpath->flags | MESH_PATH_RESOLVING | MESH_PATH_DELETED);
+ 	mesh_gate_del(tbl, mpath);
+ 	spin_unlock_bh(&mpath->state_lock);
+ 	timer_shutdown_sync(&mpath->timer);
+@@ -822,6 +829,9 @@ static void __mesh_path_del(struct mesh_
+ {
+ 	hlist_del_rcu(&mpath->walk_list);
+ 	rhashtable_remove_fast(&tbl->rhead, &mpath->rhash, mesh_rht_params);
++	spin_lock_bh(&mpath->state_lock);
++	WRITE_ONCE(mpath->flags, mpath->flags | MESH_PATH_DELETED);
++	spin_unlock_bh(&mpath->state_lock);
+ 	if (tbl == &mpath->sdata->u.mesh.mpp_paths)
+ 		mesh_fast_tx_flush_addr(mpath->sdata, mpath->dst);
+ 	else
 
 
