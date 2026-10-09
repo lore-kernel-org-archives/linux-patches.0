@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310644E2F36;
-	Fri,  9 Oct 2026 14:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE1B399CE9;
+	Fri,  9 Oct 2026 14:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555734; cv=none; b=EuYFYj7oUr0t+ngRXyiMdT+G3Pe7nHWiHJPy76tkIV4F6jnqDOP94ysgZehy1DrRdgC11hgpFCE/KTvObHVzE9IB09ufQLxsddHANJTifi4aG8jCK54QheeS4AR9S1ynxUrI73SBh8LbQjpHdhABiMO62IVe/idXHYmn0moAF9c=
+	t=1791555737; cv=none; b=LafmTfejmS9KFhaXo/Cst8DWC6YZ+eLNMzGZ0QWgFB7Ym9VExautNtQlyCdO+GKn+Lq5AeREcdJjld0UPDtEaXm3145UQbnslsHltaV0dC42JHzIBhBUZJSxAhtV5G05/hvkSl+z4Ewo0bgtzYUovWhkL6NYtWcQsL+Sivscbzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555734; c=relaxed/simple;
-	bh=xEWiyG0kG7Mp65l/yF0kbpFGZj2BVJHpT42g4QnmWic=;
+	s=arc-20240116; t=1791555737; c=relaxed/simple;
+	bh=hI4IHgsVBpD+Aurnl9Y1oj3A3EQw5L+PM/2B5LciXfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fde000RWl7OtUxTmm4c4/gu4l4vleR/MplX04lDuTEaCaX36PeCGkaCQcmIIM+wiP+LVZrPLFyMcOF72kc3sa+w0T2HQ9v/Xd0izk/v1JF942oSAGld5EVEpz5X+Hh74r5wwMMQX/PK/4U3xFvhkgzGLKZHemCOcaxr67+T0EDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDd6H4sy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RLATyd5GTikr95pN9dRMfSIZZ3wKL5su9COQ69aFnKm9V0aHdx49+WPInhxCG7jqCl5XR6vRc9ay438SrZzUpRI4zICfni92PLC31B7Na2134AqdGRmWeUfUopYsnJLpxcLUnM7rK5WD+rU8Y0P8jn4ngjgFJjJpLX2KkXMRxmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKm5itUz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDd6H4sy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714871F000FF;
-	Fri,  9 Oct 2026 14:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKm5itUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5D91F000FF;
+	Fri,  9 Oct 2026 14:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555733;
-	bh=sCjvN8ecWtjJWRtp1SuvArs0T9f8iO58iQpZX2ao7dU=;
+	s=korg; t=1791555735;
+	bh=FQq3X9Si6uzFXUmYxM+22qnkhYw3h59n7dWePURqI28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDd6H4syLzxE4HNvvlpES8TXalYqDxU6p6c92kt3s7TpdguwyX6KOs1pEvqAOArOB
-	 BWzQxb1FrTx1A6zhLQGtSsY/iRIEOXbnMfPqHU2GmAnhX2Px9TrMrkLq4hunMXCl4J
-	 B5M3KpMACOa13K0EeZRZHvoTmGeMexbBz9vTEbNM=
+	b=lKm5itUzg5x0hN2Zd3HVuvVBukWn2/UvNwQ8ehNtS42IsJFwUNI1Kb7vGSvmmW9i0
+	 +c3DQLaVsJNo+zDzDs7yyZcFRT6c8T3PQlS5k9bl74P9LdCSYdtP2xWu2WLewjB9bn
+	 x6T8bZQDNez7A1T+GvX/NEDXMUpoZSMqBthrngVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/403] virtio_blk: set the zone write granularity
-Date: Fri,  9 Oct 2026 16:07:48 +0200
-Message-ID: <20261009140954.584933977@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 7.2 021/428] fprobe: Use guard(rcu_sched_notrace) and check rcu_is_watching()
+Date: Fri,  9 Oct 2026 16:05:58 +0200
+Message-ID: <20261009140946.526014948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +47,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 684b413b5483f57c890c171b9400076a0143b918 ]
+commit e0a6249190402a28f1e2925a81acf573157d55ef upstream.
 
-virtblk_read_zoned_limits() reads the write granularity that the device
-reports in virtio_blk_zoned_characteristics and assigns it to the
-physical block size and to io_min, but never to the limit that is named
-after it. queue_limits.zone_write_granularity is left at zero, so
-blk_validate_zoned_limits() raises it to the logical block size:
+unregister_fprobe() and unregister_fprobe_async() (used by BPF
+kprobe-multi) rely on standard RCU grace periods (synchronize_rcu()
+and call_rcu()) to wait until in-flight fprobe handlers complete before
+freeing the fprobe.
 
-	if (lim->zone_write_granularity < lim->logical_block_size)
-		lim->zone_write_granularity = lim->logical_block_size;
+However, if an fprobe handler executes while RCU is not watching (such
+as in the idle loop or nohz_full extended quiescent states), standard
+RCU does not track preemption-disabled sections. Consequently,
+synchronize_rcu() does not wait for those executions, which can lead
+to a use-after-free if the fprobe is freed immediately after
+unregistration. Ensure handlers exit early when !rcu_is_watching().
 
-A device that reports a granularity coarser than its logical block size,
-which is what the field exists to express, therefore has it silently
-reduced. A 512e host managed disk passed through to a guest reports a
-logical block size of 512 and a write granularity of 4096, and the guest
-ends up with a zone write granularity of 512.
+Furthermore, fprobe_fgraph_entry() and fprobe_ftrace_entry() previously
+used guard(rcu)() and rcu_read_lock(), which invoke lockdep on every
+hit under CONFIG_PROVE_LOCKING. This adds overhead and can cause lockdep
+recursion if probed functions interact with lockdep.
 
-bio_split_alignment() returns lim->zone_write_granularity if it is non-zero
-and bio_split_io_at() may split a bio with as per bio_split_alignment().
-This can real to the write getting rejected by the host drive, as the write
-is not aligned to the physical block size.
+Since rhltable_lookup() and rhl_for_each_entry_rcu() use
+rcu_dereference_all_check() (which checks rcu_read_lock_any_held()),
+holding preemption disabled via rcu_read_lock_sched_notrace() is fully
+valid and sufficient so long as rcu_is_watching() is true.
 
-zonefs also takes its block size from bdev_zone_write_granularity(), so it
-would incorrectly use 512 on a disk that requires 4096.
+Define and use guard(rcu_sched_notrace)() across fprobe_ftrace_entry(),
+fprobe_fgraph_entry(), and fprobe_return(). This eliminates fast-path
+rcu_read_lock() and lockdep overhead while guaranteeing safe grace
+period synchronization.
 
-sd_zbc_read_zones() sets the limit from the physical block size for the
-same reason. NVMe ZNS and null_blk leave it unset, but the fallback
-gives the right answer for them, as their write granularity is the
-logical block size. virtio carries a separate value that may exceed it.
+Link: https://lore.kernel.org/all/179064115227.394389.16910234241400391996.stgit@devnote2/
 
-Set the zone write granularity from the value that the device reports.
-
-Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://patch.msgid.link/20260918140641.2031075-2-cassel@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-e46bcd68-4a56-4f19-a255-e3772980e5e3
+Fixes: 657b594b2084 ("fprobe: Fix unregister_fprobe() to wait for RCU grace period")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/virtio_blk.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/fprobe.c |   26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index f061420dfb10c..e577b02cf4003 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -740,6 +740,7 @@ static int virtblk_read_zoned_limits(struct virtio_blk *vblk,
- 		dev_warn(&vdev->dev, "zero write granularity reported\n");
- 		return -ENODEV;
- 	}
-+	lim->zone_write_granularity = wg;
- 	lim->physical_block_size = wg;
- 	lim->io_min = wg;
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -47,6 +47,10 @@ static struct rhltable fprobe_ip_table;
+ static DEFINE_MUTEX(fprobe_mutex);
+ static struct fgraph_ops fprobe_graph_ops;
  
--- 
-2.53.0
-
++DEFINE_LOCK_GUARD_0(rcu_sched_notrace,
++		    rcu_read_lock_sched_notrace(),
++		    rcu_read_unlock_sched_notrace())
++
+ static u32 fprobe_node_hashfn(const void *data, u32 len, u32 seed)
+ {
+ 	return hash_ptr(*(unsigned long **)data, 32);
+@@ -329,16 +333,14 @@ static void fprobe_ftrace_entry(unsigned
+ 	struct fprobe *fp;
+ 	int bit;
+ 
++	if (!rcu_is_watching())
++		return;
++
+ 	bit = ftrace_test_recursion_trylock(ip, parent_ip);
+ 	if (bit < 0)
+ 		return;
+ 
+-	/*
+-	 * ftrace_test_recursion_trylock() disables preemption, but
+-	 * rhltable_lookup() checks whether rcu_read_lcok is held.
+-	 * So we take rcu_read_lock() here.
+-	 */
+-	rcu_read_lock();
++	guard(rcu_sched_notrace)();
+ 	head = rhltable_lookup(&fprobe_ip_table, &ip, fprobe_rht_params);
+ 
+ 	rhl_for_each_entry_rcu(node, pos, head, hlist) {
+@@ -353,7 +355,6 @@ static void fprobe_ftrace_entry(unsigned
+ 		else
+ 			__fprobe_handler(ip, parent_ip, fp, fregs, NULL);
+ 	}
+-	rcu_read_unlock();
+ 	ftrace_test_recursion_unlock(bit);
+ }
+ NOKPROBE_SYMBOL(fprobe_ftrace_entry);
+@@ -574,10 +575,13 @@ static int fprobe_fgraph_entry(struct ft
+ 	struct fprobe *fp;
+ 	int used, ret;
+ 
++	if (!rcu_is_watching())
++		return 0;
++
+ 	if (WARN_ON_ONCE(!fregs))
+ 		return 0;
+ 
+-	guard(rcu)();
++	guard(rcu_sched_notrace)();
+ 	head = rhltable_lookup(&fprobe_ip_table, &func, fprobe_rht_params);
+ 	reserved_words = 0;
+ 	rhl_for_each_entry_rcu(node, pos, head, hlist) {
+@@ -672,13 +676,16 @@ static void fprobe_return(struct ftrace_
+ 	int size, curr;
+ 	int size_words;
+ 
++	if (!rcu_is_watching())
++		return;
++
+ 	fgraph_data = (unsigned long *)fgraph_retrieve_data(gops->idx, &size);
+ 	if (WARN_ON_ONCE(!fgraph_data))
+ 		return;
+ 	size_words = SIZE_IN_LONG(size);
+ 	ret_ip = ftrace_regs_get_instruction_pointer(fregs);
+ 
+-	preempt_disable_notrace();
++	guard(rcu_sched_notrace)();
+ 
+ 	curr = 0;
+ 	while (size_words > curr) {
+@@ -694,7 +701,6 @@ static void fprobe_return(struct ftrace_
+ 		}
+ 		curr += size;
+ 	}
+-	preempt_enable_notrace();
+ }
+ NOKPROBE_SYMBOL(fprobe_return);
+ 
 
 
