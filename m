@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60751331ED5;
-	Fri,  9 Oct 2026 14:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D7033BBD9;
+	Fri,  9 Oct 2026 14:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555374; cv=none; b=Z/i3LMvbr4P8ml5cMENRpb5xm3RT7jAxYBYMhtF+vspQC59wemwNXRnAQhiQtPv7QUOEsIoPbji04Z50mTkRpXwPWbrz4Z/lQ2707Eeu0lHTumUr/d6FeSmHIGYBiL2RhkKCKRWu+eUkfl+XlDl5pnsU/hBmBLlCkFt9geNiTJw=
+	t=1791555378; cv=none; b=OpgP/lNyagRxw37gH0eC7zGOC+bYmZXB0FWLVUNyx8VzE9LA+l+Ojz7TQw9WOY25Y2JILaAHIpHr/N4xIlBbj+kxQBgmLoN30ysoXkHG6FMbbwsPxQ5m3I0FtMr2T+ikmaBWgs2MZJw6XgZ2RrFQHcAnwmFsFTv5qzn9guLw5WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555374; c=relaxed/simple;
-	bh=Oq8kr7zr5OsriisctF/QyClySup9B2IamwD48aiR72k=;
+	s=arc-20240116; t=1791555378; c=relaxed/simple;
+	bh=2gBtqNw0Rk1zzGFOjqrKpLhFLueVyAxWVpLTUGyN6lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJYRzQz2y3dWKKjmhdnTTle59BZSu6odbiVat4Xufv1VQaT1zuBUFhwwzoEGCo8G4XIVGXxYZHTYrQPOVk6Lq4VGxJmPLfevTAjzI818jV4qhpJzB3HyQBcM6QibWPxCjryrB8tqeGC7ehZc4q+nnkjusGE6ygIK6MbJ+oCydPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtHJLAyG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNHV5p4xM0XBxyz8shzm8BQK787VJpZYUuPGbcqG7K9SsQDpGEm1YYGLkPMMUWh5WD7Koms+SffqZlBGvfBMHYqtrXbPnTLK+mJV9bFk3YnoLc4LbhbkAkPxNBWgWts3epsXcFq/s8hbww7TW9pVpXRgYQrgBgJESJuVoYjgq74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8ZSyzyU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtHJLAyG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AFB1F00898;
-	Fri,  9 Oct 2026 14:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8ZSyzyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4681F00893;
+	Fri,  9 Oct 2026 14:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555367;
-	bh=+zsv/1Q/Y+Rvx81dBYJXq6Rg7Y7mW7B638bnHrw3Sng=;
+	s=korg; t=1791555373;
+	bh=QUcpF3zeuvZipawNCfLjmrH4a1GCEOt9aVSZzW29P/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NtHJLAyGzruGydu2TRDAkOoQ3pTwvs+rMRrLvEjOXZ7P2bZr/vhfnODmylZ1Y9iVm
-	 1NBJpK64zPq9ZXQ7I9YSdp9hUkheylGIH30B+k/rjAaGXS2fHCQx45ZeptSnp4pUtt
-	 lod8fbdniAFi56XajIC9cvjnMvuoUKDJfgHZDeG0=
+	b=j8ZSyzyUbiPBaYuQyFNCsf47jW4sNi0cPa8rGNSqhDEltwPUZwt9oHVkdPir4rFpO
+	 0LvksslMgNxsgSI27yJwvypbjUs38TSP1HJBWgSQTSIE4QUVl1b/1GJqPkay6hDi7U
+	 AP0DIzkFJCBEHX8InThowF1XnnL+tRM5OBf2ff1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 034/403] netfilter: nft_flow_offload: drop flowtable reference on init error path
-Date: Fri,  9 Oct 2026 16:06:35 +0200
-Message-ID: <20261009140952.908273276@linuxfoundation.org>
+	Dennis Piecha <d.piecha@ymail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 036/403] r8169: disable EEE on RTL8168h/8111h
+Date: Fri,  9 Oct 2026 16:06:37 +0200
+Message-ID: <20261009140952.954115404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,62 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 747928b5d4ff8c8de55138a54c13980e4bb88578 upstream.
+commit 3cdeaef1754ab8155cdd828c958ada3d36e9ad9a upstream.
 
-nft_flow_offload_init() bumps the flowtable use count with
-nft_use_inc() before calling nf_ct_netns_get().  When the latter
-fails, the error is returned as-is and the reference is leaked.
+Force EEE off on the RTL8168h/8111h (RTL_GIGA_MAC_VER_46) at PHY connect
+with phy_disable_eee().
 
-The upper layers do not balance it either: nf_tables_newexpr()
-clears expr->ops when the expression init callback fails, so the
-nft_expr_more() iteration in nft_rule_expr_deactivate() and
-nf_tables_rule_destroy() stops right before the failed expression
-and its ->destroy callback, which would drop the reference, never
-runs.
+Commit 202fef9bbbf5 ("net: phy: realtek: fix EEE advertisement write on
+the internal PHY MMD path") made EEE actually advertise on the generic
+Realtek PHY; the write had been a no-op before. On the RTL8168h that
+un-masks a latent defect: once EEE negotiates, RX silently stalls after
+~7-20 minutes. The carrier stays up, no counter or dmesg moves, and only
+"ip link set down/up" recovers it; disabling EEE keeps the link stable.
 
-Each failed rule addition therefore leaks one flowtable reference
-and the flowtable can no longer be removed: NFT_MSG_DELFLOWTABLE
-keeps reporting -EBUSY even though no rule references it.
+Root-causing the RTL8168h LPI/RX path needs hardware not available now, so
+disable EEE for this version. Use phy_disable_eee() rather than dropping
+the version from rtl_supports_eee(): the latter also skips
+rtl_enable_tx_lpi(), whose disable branch clears the MAC TX-LPI bits (ERI
+0x1b0[1:0]) on link up. rtl_hw_start_8168h_1() does not clear them (the
+RTL8402/RTL8106e init does), so a warm reboot from an EEE-active state
+could otherwise leave TX-LPI asserted while the PHY no longer negotiates
+EEE. Keeping the version EEE-capable preserves that clear path. This also
+covers the RTL8168M, which shares RTL_GIGA_MAC_VER_46.
 
-Save the nf_ct_netns_get() return value and undo the nft_use_inc()
-when it fails, restoring the inc/dec pairing within
-nft_flow_offload_init() itself.
-
-Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Reported-by: Dennis Piecha <d.piecha@ymail.com>
+Closes: https://lore.kernel.org/all/353419280.954808.1790290283530@mail.yahoo.com/
+Fixes: 202fef9bbbf5 ("net: phy: realtek: fix EEE advertisement write on the internal PHY MMD path")
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260925071040.2137178-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_flow_offload.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -159,6 +159,7 @@ static int nft_flow_offload_init(const s
- 	struct nft_flow_offload *priv = nft_expr_priv(expr);
- 	u8 genmask = nft_genmask_next(ctx->net);
- 	struct nft_flowtable *flowtable;
-+	int err;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -5268,6 +5268,12 @@ static int r8169_mdio_register(struct rt
+ 		phy_disable_eee_mode(tp->phydev,
+ 				     ETHTOOL_LINK_MODE_2500baseT_Full_BIT);
  
- 	if (!tb[NFTA_FLOW_TABLE_NAME])
- 		return -EINVAL;
-@@ -173,7 +174,11 @@ static int nft_flow_offload_init(const s
- 
- 	priv->flowtable = flowtable;
- 
--	return nf_ct_netns_get(ctx->net, ctx->family);
-+	err = nf_ct_netns_get(ctx->net, ctx->family);
-+	if (err < 0)
-+		nft_use_dec(&flowtable->use);
++	/* Keep EEE off but the version stays EEE-capable so that link-up
++	 * still clears the MAC TX-LPI bits.
++	 */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_46)
++		phy_disable_eee(tp->phydev);
 +
-+	return err;
- }
+ 	/* PHY will be woken up in rtl_open() */
+ 	phy_suspend(tp->phydev);
  
- static void nft_flow_offload_deactivate(const struct nft_ctx *ctx,
 
 
