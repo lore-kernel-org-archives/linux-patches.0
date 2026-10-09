@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789464E2F35;
-	Fri,  9 Oct 2026 14:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAB63AC0E7;
+	Fri,  9 Oct 2026 14:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555794; cv=none; b=d365Z8dn2qC3Ak3SYkBd25rRlwYtYpSfxZm/OPfUc/mO5T7JNN+7c8v8kbUFCIdWm80noLJrmfa/+jhZLKPpfOLfLJsDp+w8bIjBv4OrbUiSnLh05HmdSWWcVJk/gOu0nCdK2IUazyLujNJAgyfLm5B3ogudhe4zzaFlmOhqgW0=
+	t=1791555795; cv=none; b=kWZOddKAfTauTsEr/TdXQjed42heWcng8MgzE72FqRF1ZM/+xNw28NgEmrgkbCr7N4nVDB7G8YbUCeEEt4ASVDItbiQMOJ22rc1YL9PorObNVDCCAIP7lJCiIsq+PX8fXwp5USWbsxvdQWPYfc/9RwrWcXt4Z+SZ+w3cM+arjX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555794; c=relaxed/simple;
-	bh=VDUkdx1sCrKGXzK5drHemW7cSJIZiN7IXcJu7l4Lv4o=;
+	s=arc-20240116; t=1791555795; c=relaxed/simple;
+	bh=Wcbtygjyzzyzib7auNcqrctXwqcTgKGeurxi7uHVNag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3n6U/x5UC1gq+xS/L9T+VBsTmshdX4dzvNJHx69xDWWQ+mKkKo4kirwUx+wMczTLFiA9yZ61kZU9WcJK7Dh4AZtslm5v0aaxPaKK9kK9IE12/jtZKqg8YRag6f3oPqbeZQF+KSp9gq2CjVz2sPqkqWaDpx1752xAysk2g/afbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=if7uhtnz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qEkkdq+ge7PTjaNMkXD3C7pq7PpriEaOSgRvURtDjlZ4N8DecJa+5y/xUkUvzqQuZiaGRIAlTxTJYaBAD9/Qxs1bE1xT8lHFlIgvOIt7/PucBGZ7YYMNQzNvAsD4cbVPKCB8Z/GJLQFMmXcVeJiJgY4I01gWBW3d0pZkXWvnnSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03smChk9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="if7uhtnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43CD1F000FF;
-	Fri,  9 Oct 2026 14:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03smChk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B93F1F00893;
+	Fri,  9 Oct 2026 14:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555791;
-	bh=x4RZRqf5RdLlMGuBPD3sBb91SJLfkwK77TCSw76zbVQ=;
+	s=korg; t=1791555794;
+	bh=RjiUN3YIUGIFztO1X9YwsSjbFIEPybEGxC7OCxlRlfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=if7uhtnzPQ/sSAqOJ+0+UBM8ufWtEqUoxmZJw3YenmbJJ2cmmVAF+jfkwC76yvWXG
-	 7yCWWBhq5v2WMa0CAX9GPjbbOsGSfFwkhoKB3zYbjNIsql7M8xuC8yv9dkyRzCdsRu
-	 VGp2pyUf7S9qBJRsKHPZ2AK5Oe9aibszO3etXh8Q=
+	b=03smChk9bN7Ztu7mriQStmHXmFEYyTXNtBsjBv0lGkdybEo3vL7o6EoKXMfddrQ65
+	 8zxltrrpwyj83oP0Y8r4OyKXu6rVdKlEkS580qqUgRM3shsGSLWFZ8PuGML2Kuditn
+	 ZrKpUENb9pO9rOYSV9Muvi3sTqpwm7OQ0xTCEa4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jeff Jo <jeffjo@openai.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 070/428] mtd: core: call _get_device() with the master MTD
-Date: Fri,  9 Oct 2026 16:06:47 +0200
-Message-ID: <20261009140947.690356304@linuxfoundation.org>
+Subject: [PATCH 6.18 119/403] tcp: refresh TS.Recent for accepted old ACKs
+Date: Fri,  9 Oct 2026 16:08:00 +0200
+Message-ID: <20261009140954.862814925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jeff Jo <jeffjo@openai.com>
 
-[ Upstream commit 12b31d1acd20b3185bb5f0748db0cf6874c8e9d1 ]
+[ Upstream commit 1b92780ae4fc3be64f05d97ed8833c445e73b0cf ]
 
-__get_mtd_device() calls the master's _get_device() callback with mtd,
-which may be a partition. __put_mtd_device() passes the master.
+A TCP packet can carry new data while acknowledging traffic in the
+opposite direction. With overlapping traffic in both directions, a
+delayed packet's acknowledgment can be older than one Linux has already
+accepted, even when that packet fills a gap in the received data.
 
-This breaks gluebi partitions because gluebi_get_device() uses
-container_of() and therefore requires the master MTD. Pass the master
-to _get_device(), matching _put_device().
+Linux accepts the data, but tcp_ack() takes the old_ack path and skips
+updating TS.Recent, the timestamp saved for outgoing acknowledgments.
+The reply therefore echoes an older timestamp. If the sender uses this
+echo to measure round-trip time after a long idle period, its estimate
+includes the idle time and can reduce its sending rate.
 
-Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Update TS.Recent in old_ack using tcp_replace_ts_recent(), before SACK
+processing can trigger a transmission. This reuses the existing timestamp
+and sequence checks, including PAWS protection against old duplicate
+packets. ACK validation already rejects old ACKs in SYN_RECV before this
+path, so no additional state check is needed.
+
+Echoing the timestamp of the packet that fills the receive gap follows
+RFC 7323 section 4.3. In a socket reproduction with 300 seconds idle,
+controlled reordering and retransmission to exercise timestamp-based RTT
+sampling, the sender's smoothed round-trip time was 37.5 seconds without
+the fix and 15.5 ms with it.
+
+Fixes: 12fb3dd9dc3c ("tcp: call tcp_replace_ts_recent() from tcp_ack()")
+Assisted-by: LLM sparse
+Signed-off-by: Jeff Jo <jeffjo@openai.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 6158452be24d6..491a27d0315fa 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -1333,7 +1333,7 @@ int __get_mtd_device(struct mtd_info *mtd)
- 	int err;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index d9b07a3b93904..e1785140bf9b1 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4204,6 +4204,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 	return 1;
  
- 	if (master->_get_device) {
--		err = master->_get_device(mtd);
-+		err = master->_get_device(master);
- 		if (err)
- 			return err;
- 	}
+ old_ack:
++	/* An old ACK can carry new data. Update TS.Recent before SACK
++	 * processing can trigger a retransmission.
++	 */
++	if (flag & FLAG_UPDATE_TS_RECENT)
++		tcp_replace_ts_recent(tp, TCP_SKB_CB(skb)->seq);
++
+ 	/* If data was SACKed, tag it and see if we should send more data.
+ 	 * If data was DSACKed, see if we can undo a cwnd reduction.
+ 	 */
 -- 
 2.53.0
 
