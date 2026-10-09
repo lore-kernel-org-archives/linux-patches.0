@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B182439F71;
-	Fri,  9 Oct 2026 14:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EB533DED1;
+	Fri,  9 Oct 2026 14:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555449; cv=none; b=nFNzsqxL6aUmuWL3aop5YXEw5WKEIJe17YGmEQ0uzb1n+e8+LtXn0z0Sn9HvawyEkwCEyuLBO9Yk15PyXB7iLV2Xe/QpLMFlR3EMyyjwf/NpUNnNp/22eONGTXPwgjCqgqoZhghpp9Lb/rnyEkY9pJh8qtN2iKNlGbt0/v8j3No=
+	t=1791555457; cv=none; b=nGesBzQgi6WrmFPCmV3b5H/lUj3Dsov7XijO4GGqgWGIurE+PhZhGwNT7SwVOHPuQWXCWQS+rads0b6KDsza4sdSaKLX1aE+IBWBWU2LJBRBFKGNhIsFhJmeM0d/sD3LWq9Z87bsS15qK4AUuHzPR0FDpsrxdJ+m57v1GpuOWSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555449; c=relaxed/simple;
-	bh=wAfJ1fkprrYV8UkmbmFx7n/6/a/Do8LunyKtu1NbQr8=;
+	s=arc-20240116; t=1791555457; c=relaxed/simple;
+	bh=mJJHUSWXeRTw812rKRYQy/ix2ogqm30iqYWdVBR5aqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccRQaS2JTGEw5MjzyI9CLQU8ML7Lw78pSE+U11+J7MfBNHk3Bqh+sCUUaHSQv7bmM8Ql6Pay6wWJs+C5Y4NagznCZfY6RfMUmAeEhSXvVB1wBA3NLmCpn/9AKXtzO40x4td/1cjFTpgt5ZYzomKvYCMJ2Y0W9Zlu51Xe2p1zs7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDga2xGH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZe/d5lHhQY8/G2AyKKvUGifZsifPj/NME26psWxncRJb61syOAJRycbSNOtD5fk6rczTJbzfTrRxH3YFAG4eE9/nazIAm9DAd45IVaY2nJ5/h7ExgqXJH4ZHPf0AplIvk/Jvz6YHByhLw8J+50BcW882LE7Pmi3/KJlikpPooU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+ch2NgO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDga2xGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281ED1F00893;
-	Fri,  9 Oct 2026 14:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+ch2NgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAE21F000FF;
+	Fri,  9 Oct 2026 14:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555447;
-	bh=+7iHbMO7Ce2umq+d37KxKeIZQKc14Va5L9kjx+xwHwA=;
+	s=korg; t=1791555451;
+	bh=SUILUFdW6jPPh1OgiJPuv0ibO0Fh/GLWYwUIbN9/Ihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JDga2xGHx8YeC9guEr26V7QS7yO+3Miul4WPh7ZWJWv5k9GEo2OYMlO78HwRexjKr
-	 GoKo2akBosKxXOL02F3YAu5II9rTWI6dX/7h16EC6H9b6strUP1U/UBixtfKW59vU/
-	 RI18yLnR2nV4gtxZCoE/Vxrlzg98/b3zMIGq7O8U=
+	b=F+ch2NgO2HUFemtwv0N6E2eMfnf+U5+zfQ41I/SIDOAwkNQDNW1NXoeKLA/ftkflu
+	 qKZmCx6P1DOWtKNrWh6gykCmJFHC6PETgzfELdW2K4Sv5oK7d+FXmk+QcwmNqujCug
+	 fiwss2Ujaik/z+wKI0ONVPbIt5DBeq/RMxesOmjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/403] mtd: core: call _get_device() with the master MTD
-Date: Fri,  9 Oct 2026 16:07:01 +0200
-Message-ID: <20261009140953.502280874@linuxfoundation.org>
+	Junyuan Feng <a@lollipopkit.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 025/403] io_uring/zcrx: requeue multishot receives stopped by a local resource
+Date: Fri,  9 Oct 2026 16:06:26 +0200
+Message-ID: <20261009140952.702002696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,41 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Junyuan Feng <a@lollipopkit.com>
 
-[ Upstream commit 12b31d1acd20b3185bb5f0748db0cf6874c8e9d1 ]
+commit 98ad5b63f5041dc354a6e694f4a9436f74e0681b upstream.
 
-__get_mtd_device() calls the master's _get_device() callback with mtd,
-which may be a partition. __put_mtd_device() passes the master.
+A multishot RECV_ZC can go idle with unread TCP data when a
+receiver-local resource runs out. An empty copy-fallback niov freelist
+returns -ENOMEM; a full CQ returns -ENOSPC. After partial progress the
+stop reason is lost: io_zcrx_copy_chunk() and io_zcrx_recv_skb() report
+the copied bytes, and tcp_read_sock() drops an error from a later call
+once earlier data was consumed. The edge-triggered request is then not
+requeued, so it cannot consume the remaining data until another socket
+event arrives.
 
-This breaks gluebi partitions because gluebi_get_device() uses
-container_of() and therefore requires the master MTD. Pass the master
-to _get_device(), matching _put_device().
+Record in io_zcrx_recv_skb() when a walk stops before consuming the
+length it was offered, and requeue if the pass still returned data. The
+failed chunk is first on the next pass. The resource is usually still
+exhausted by then, so that pass fails at once and ends the request with
+an error CQE, which the application must handle by re-arming. The
+request does not spin, and the stall becomes a visible error. Keep the
+existing skb limit and SOCK_DONE handling.
 
-Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11ed914bbf94 ("io_uring/zcrx: add io_recvzc request")
+Fixes: bc57c7d36c4c ("io_uring/zcrx: add copy fallback")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-6-sol
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Junyuan Feng <a@lollipopkit.com>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/010001a0cd914529-23df2f94-bbe0-49cd-ae5d-05922356fa12-000000@email.amazonses.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/zcrx.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 42cabd3c1efad..51c8ed4893480 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -1315,7 +1315,7 @@ int __get_mtd_device(struct mtd_info *mtd)
- 	int err;
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -322,6 +322,7 @@ struct io_zcrx_args {
+ 	struct io_zcrx_ifq	*ifq;
+ 	struct socket		*sock;
+ 	unsigned		nr_skbs;
++	bool			stopped_early;
+ };
  
- 	if (master->_get_device) {
--		err = master->_get_device(mtd);
-+		err = master->_get_device(master);
- 		if (err)
- 			return err;
+ static const struct memory_provider_ops io_uring_pp_zc_ops;
+@@ -1205,6 +1206,9 @@ io_zcrx_recv_skb(read_descriptor_t *desc
  	}
--- 
-2.53.0
-
+ 
+ out:
++	/* Bytes left in len mean an error stopped the walk early. */
++	if (len)
++		args->stopped_early = true;
+ 	if (offset == start_off)
+ 		return ret;
+ 	desc->count -= (offset - start_off);
+@@ -1242,8 +1246,9 @@ static int io_zcrx_tcp_recvmsg(struct io
+ 			ret = -ENOTCONN;
+ 		else
+ 			ret = -EAGAIN;
+-	} else if (unlikely(args.nr_skbs > IO_SKBS_PER_CALL_LIMIT) &&
+-		   (issue_flags & IO_URING_F_MULTISHOT)) {
++	} else if ((issue_flags & IO_URING_F_MULTISHOT) &&
++		   (unlikely(args.nr_skbs > IO_SKBS_PER_CALL_LIMIT) ||
++		    args.stopped_early)) {
+ 		ret = IOU_REQUEUE;
+ 	} else if (sock_flag(sk, SOCK_DONE)) {
+ 		/* Make it to retry until it finally gets 0. */
 
 
