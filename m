@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12C32BE7CD;
-	Fri,  9 Oct 2026 14:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBD82BE7CD;
+	Fri,  9 Oct 2026 14:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556030; cv=none; b=WH2FWrnDUvC43UNQck7S/dOIH81lLl2Otvj+R1HQxJvnJLOWlo9PDENUygrsV3ehV3x0P3RwEOkwRpAjAMz9k5hi7jnEeyq3Ao3FI+9kd1WGxkHEqLrKwQSkSZaYbrMFVUImT9kEZ3kLiBneFCPpT8Xd7yM++RXk3S+O34n4BK4=
+	t=1791556032; cv=none; b=DlzqWwXuIzCtoNdMMNM3TRexlZHOLzGh0nu8Zf4tihxlyz74GqJTakxYc+3SzkpeonjE019ySzf2xxCZSQQ59bJPOaJpwm0WbqfcbKckqLsTRuz3bT9QAnQyt2njF+uAd0m7W9umWU2G6SEbNiCAvhKrkCW5eMvSS4MnqspXvEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556030; c=relaxed/simple;
-	bh=t5VCYAa9H+nbzQqky8oomkezMol9CdqVxx/3a5U+KOc=;
+	s=arc-20240116; t=1791556032; c=relaxed/simple;
+	bh=2u6HuNyPkbdtpHoAzbs3QCJEhAX4e/r4/YJf/bkUIKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zh+7kQh2HGqkuL0DsWNVQpw8PEbHYvHuO/KEGtEzYwlGzyEg5qpGQ6De3S7SWhIieZIx3PyOTKL8BTDxdYhUQysHd/VSCfadqwUwh1OtyYfp59iN4bCqJIFl2thGhLaV7vHUkML8gv0SJ20k/OfyjLQ/D4zjF9Peqbdd255wwHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJauUyib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GsHlTjpozDbEEx2LTJE8bVR/J2o2pwd5v5/MbODVxStoHZFWRvoBmF1nyrefVuLnmFnONqQnW2cl3NDJWsvSKHeSEz84l9CqY2hEfLgMB/flpRGhly/7xmLqLpJ44J/rUv0hld+oyx3NcFKSDxrdOtQ1LYoCQiCW4njCXW/j270=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmjYDaVE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJauUyib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FB21F000FF;
-	Fri,  9 Oct 2026 14:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmjYDaVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0688A1F000FF;
+	Fri,  9 Oct 2026 14:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556028;
-	bh=tmFQVGZhEiCMzjVh3jxDCe3L4CjI/7/qItvvhQumPr0=;
+	s=korg; t=1791556031;
+	bh=HKnn/jQRU9QEHcuxgqwzM0CvSpKxc1ejLaz11GK8uUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJauUyib3cTgxD50GzJmTcUyYNBPVLygiA8QzkHVAR9OeeOtk1N2vNbkXQQsjkajb
-	 pgHA4Ev872DakfykBBBUQT4JWRhqJ63qm2BR3JCibDM8OVc+wfSfW8gcS+K0zyqCF2
-	 /U0uTh/8ONJVCvnuYWDyE4kbBwanXvKSJLz5ULK8=
+	b=tmjYDaVEf9pdrkY5L4zJVb/kej84zeQc8VbDaDmS2VfT4EsPJ5yNXw9hhan9SqiHb
+	 v7Gwnb4la07rQyaHkmDsPl7oDvwf5hl8Of3NTPiIXy2JMx41fq528rpnEsAKffitE7
+	 hZyvE6rNAKeVT4hYLNYmrwvA06+fddxwiRZqv204=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 110/428] net/sched: cls_api: reclaim an empty proto on the error path
-Date: Fri,  9 Oct 2026 16:07:27 +0200
-Message-ID: <20261009140948.621358741@linuxfoundation.org>
+	David Heidelberg <david@ixit.cz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 153/403] Input: s6sy761 - fix resume ordering and restore sensing
+Date: Fri,  9 Oct 2026 16:08:34 +0200
+Message-ID: <20261009140955.649864073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,89 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 0bb8eab29b55045281a4963d4557f2776cdf8cfa ]
+commit a215720959c5450b3699e243904b39c3f8f68888 upstream.
 
-Two racing tc filter add requests on the same chain/prio of an
-unlocked classifier both run change() on the shared proto and both
-can fail: the winner's tcf_chain_tp_delete_empty() attempt gives up
-because the loser's handle is still in the idr, and the loser's
-error path drops only its own reference without a second reclamation
-attempt. The empty proto stays linked in the chain, holding the
-chain reference, a block reference and the classifier module
-reference until the chain or block is torn down.
+System suspend powers the controller off and resume powers it back on,
+but the resume path enables the interrupt before s6sy761_power_on()
+checks the boot. The firmware raises its boot-complete event on the
+interrupt line, the threaded handler consumes it, s6sy761_power_on()
+then reads an empty event and resume fails with -ENODEV, skipping the
+touch function setup:
 
-Reclaim the proto on the error path of any failed request that holds
-a proto reference. The reclamation is emptiness-gated:
-tcf_chain_tp_delete_empty() unlinks the proto only when
-delete_empty() admits it is empty, so a live shared proto is never
-unlinked. A proto the request created is reclaimed unconditionally -
-it is the only owner, so marking it for deletion is safe even without
-a delete_empty callback. Classifiers without one (the check marks the
-proto unconditionally) are rtnl-serialized, so the raced window this
-guard closes cannot arise for them.
+s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
 
-This is a follow-up to commit d4e359b3608a ("net/sched: cls_api: fix
-teardown of an adopted proto on insert-race loss"), which stopped the
-loser of the insert race from unlinking the winner's live proto but
-left the empty-proto residual in place.
+Power the chip on first and only then unmask the interrupt. Once resume
+completes the boot handshake the chip comes back with sensing off, as
+at probe where input_open() turns it on, so the touchscreen stays dead
+after resume. Send SENSE_ON again when the input device is open.
 
-Conditions to recreate:
-- CONFIG_NET_CLS_FLOWER=y; veth pair
-- tc qdisc add dev veth0 ingress
-- two concurrent `tc filter add dev veth0 ingress protocol ip pref 1
-  flower skip_sw ... action drop` (both fail in fl_hw_replace_filter
-  after publishing their handle in the idr); repeat in a loop
-- an empty flower tp stays linked after both requests fail; visible
-  as a bare `filter protocol ip pref 1 flower chain 0` header in
-  `tc filter show` with no filter entries
-- CAP_NET_ADMIN (namespace-local via unshare -Urn suffices)
+Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
+the touch function and sense status match the pre-suspend state.
 
-Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260805134049.927864-1-victor@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-JCOT.v1.20260910090924@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Cc: stable@vger.kernel.org
+Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_api.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/s6sy761.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index c47d2ee13641d..a9f54988561f2 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2463,7 +2463,20 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 	}
+--- a/drivers/input/touchscreen/s6sy761.c
++++ b/drivers/input/touchscreen/s6sy761.c
+@@ -500,10 +500,22 @@ static int s6sy761_suspend(struct device
+ static int s6sy761_resume(struct device *dev)
+ {
+ 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
++	int err;
++
++	err = s6sy761_power_on(sdata);
++	if (err)
++		return err;
  
- errout:
--	if (err && tp_state == TP_CREATED)
-+	if (err && !IS_ERR_OR_NULL(tp) &&
-+	    (tp_state == TP_CREATED || tp->ops->delete_empty))
-+		/*
-+		 * The request is dropping its reference to tp. If it was
-+		 * the last user (the idr is empty now), reclaim the proto.
-+		 * A tp this request created is reclaimed unconditionally:
-+		 * it is the only owner, so marking it for deletion is
-+		 * safe. Otherwise only classifiers with a delete_empty
-+		 * callback are reclaimed -- the callback admits an empty
-+		 * proto only, so a live shared proto is never unlinked.
-+		 * Classifiers without one (deleting is set
-+		 * unconditionally) are rtnl-serialized, so the raced
-+		 * window this guard closes cannot arise for them.
-+		 */
- 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
- errout_tp:
- 	if (chain) {
--- 
-2.53.0
-
+ 	enable_irq(sdata->client->irq);
+ 
+-	return s6sy761_power_on(sdata);
++	guard(mutex)(&sdata->input->mutex);
++
++	if (!input_device_enabled(sdata->input))
++		return 0;
++
++	err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
++
++	return err;
+ }
+ 
+ static const struct dev_pm_ops s6sy761_pm_ops = {
 
 
