@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744BE4D5964;
-	Fri,  9 Oct 2026 14:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8EC2367DF;
+	Fri,  9 Oct 2026 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555530; cv=none; b=YpQzW5RTDy7YITqFwKVSM/RiN7Topyd97EuNWNwopvi63cqC6QwX66ROVrBmxnXYAaLCUNivZFDGLlyYShqwAuzbIWJCqT9f4HtqbQyF1+KeefS4a/drPgbAhqRL/Z7HvbXLxx3q0TogseCT23tOpMFtJooYoI3AjDnbXwSpGsQ=
+	t=1791555536; cv=none; b=VCwyjC+ihfQDf6ZcUmpqnINm/NWGX43/7/MfzWxKjfZyJmoyHo1lmiPF00yCaLIcPLs1s2gPlTV36lWqufNuqD9hO/jEKwK0OMM/roeu+qaYTmH9/3Gb37z10vr3Tpdign6X0EkqiqYVkQ2JR1gvyyIDnENjSkn1E5MONUfViYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555530; c=relaxed/simple;
-	bh=b+e98YGA11Li0O9p8Lcpu/kp4+yeSgvzS2UTnOPBj+Q=;
+	s=arc-20240116; t=1791555536; c=relaxed/simple;
+	bh=X/P6VrarSfAiiBwQeZeLAn3URBYhCNtGcPbIZSLHhkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eA6n8M7u55ps0gMiP7KG3c8rsIxLbA2xwvaq2jJ7V96qwMTlzdZXRf4I9KSRBV8laXAyHMdMELciv1Qm2Qe6Mva5Ees4igAYR46VCSKVb7qzqs8s4F2ix8yppkF4O0jyhsGP9JAJa9F7m/nf+URkc1OUzTKnlW42cwdQLSk2DRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blt1vF3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sXxU6tUbp8nss39EZJWaZj+JYbrr+ILkgLClfN/uz5otRLZmdYQuT/+fjnHsoekXcmOPkvsxJWx5ncIn0rUn2JdCfScRoculWkDLew07XCXOSHEmKMlIr6VjOPSQntZEZv+6FBzmGRU83tM8naLpDOuMrn1nNb2O0hxpNrjgcbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2ZLEbZ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blt1vF3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9405A1F000FF;
-	Fri,  9 Oct 2026 14:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2ZLEbZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670271F00898;
+	Fri,  9 Oct 2026 14:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555528;
-	bh=/LzV8V1ARtgVpvpZItYI4Pjs/3H8o9DwR/tvwFDdWsQ=;
+	s=korg; t=1791555530;
+	bh=LvBXeEp0A3vAhAdmzIsSxKDHkTakl2sSYMUAgztwa28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=blt1vF3GWWijwa5wZClZj/47V7vw1FTCjeYFFvjztpCiQnELJ79NLDMwFkOo/ENqR
-	 YsDx3V4vgOqHPoUzOokxHcv5SRmyrK/LN+x4oBNUFlGjK+MTxjAP8bdRlSl+xo4xHi
-	 H9pFxrsvys5+QlIYRJkWgFSvDjgoM2Phlh7Qb26s=
+	b=l2ZLEbZ0S2E0B4jQ72GVlRh6L29MFo+JOmnDX+r9RvqYZyi4NQcDTTKBV0rzc6+6v
+	 TsqKqWoTw1sPOkPvZI8FVZ1PzYTvaN9jIuiJHUpO5npTaE5YD2mreDb9ZkTKvyTeK2
+	 l/RBCdDWHa9sPgbF/Am8qIGLI5ex34cYUT6eOuFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 074/403] rtc: ac100: Fix clock provider use-after-free on probe failure
-Date: Fri,  9 Oct 2026 16:07:15 +0200
-Message-ID: <20261009140953.827117648@linuxfoundation.org>
+	lollipopkit <a@lolli.tech>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 024/428] io_uring/cmd_net: end TX_TIMESTAMP multishot when the CQ is full
+Date: Fri,  9 Oct 2026 16:06:01 +0200
+Message-ID: <20261009140946.596768074@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,143 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: lollipopkit <a@lolli.tech>
 
-[ Upstream commit fcf0b58e976e83adf246b014518e49c662b96f5e ]
+commit 3a3d93070c5ec8b8049d57025987ba313420bda9 upstream.
 
-ac100_rtc_register_clks() registers the RTC-32k clock with
-clk_hw_register_fixed_rate() and the clock provider with
-of_clk_add_hw_provider(). Neither is device managed, and both are
-released only from ac100_rtc_remove(). The driver core does not call
-remove() when probe() fails: really_probe() reaches probe_failed below
-the device_remove() call and goes straight to releasing the device's
-managed resources.
+SOCKET_URING_OP_TX_TIMESTAMP arms an EPOLLERR apoll multishot and, on
+each error queue edge, posts one 32 byte aux CQE per timestamp skb. Aux
+CQEs have no overflow backing, so io_uring_cmd_post_mshot_cqe32() fails
+once the CQ ring is full. The loop then stops, splices the unprocessed
+skbs back onto sk_error_queue and returns -EAGAIN.
 
-ac100_rtc_probe() ends with
+-EAGAIN is IOU_RETRY, so the request goes idle until the next poll
+event. io_arm_apoll() forces EPOLLET and draining the CQ does not re-run
+the command, so the spliced-back timestamps stay queued until an
+unrelated later timestamp produces a new edge.
 
-	return devm_rtc_register_device(chip->rtc);
+End the multishot when a CQE cannot be posted, as multishot poll and
+recv already do. There is no partial result to report, so complete with
+-ENOBUFS: no CQ space is left for the timestamp CQEs. This command does
+not use provided buffers, so the value cannot be confused with a buffer
+ring running empty. The terminal CQE still reaches userspace because
+request completions can go to the overflow list. The application sees a
+CQE without IORING_CQE_F_MORE, which it already has to handle, and the
+first issue of the re-armed request delivers the queued timestamps.
 
-so if that fails after the clocks have been registered, the provider is
-left on the global of_clk_providers list holding chip->clk_data, which
-was allocated with devm_kzalloc() and is freed while probe() unwinds. A
-later lookup on this device tree node then reads freed memory in
-of_clk_hw_onecell_get(). Consumers that do exactly that exist in tree:
-the wifi power sequence nodes on sun8i-a83t-bananapi-m3 and
-sun8i-a83t-cubietruck-plus take <&ac100_rtc 1>, and the sun9i-a80 boards
-route osc32k through <&ac100_rtc 0>. The window is narrow, as
-devm_rtc_register_device() can only fail with -ENOMEM here, but the
-provider is left dangling whenever it does.
+A timestamp that cannot be extracted keeps its current behaviour.
 
-The RTC-32k clock is leaked on the same path. Since clk_core_lookup()
-searches a global list that is not scoped per device, __clk_register()
-rejects the duplicate name with -EEXIST, so the leak also makes a later
-probe of the same device fail.
+This was found with LLM assistance while reviewing io_uring multishot
+handlers for the pattern behind a RECV_ZC stall reported earlier (see
+Link), and confirmed with a reproducer on v7.3-rc2 and an A/B run of
+this patch.
 
-The error path that returns -EINVAL when the ADDA 4M parent clock cannot
-be found leaks the RTC-32k clock in the same way. No provider has been
-registered at that point, so that one is a leak rather than a
-use-after-free.
-
-Register both with devm_clk_hw_register_fixed_rate() and
-devm_of_clk_add_hw_provider() so that they are released whenever the
-device goes away, on a failed probe as well as on unbind. Devres
-releases in reverse order of acquisition, so the provider is removed
-before chip->clk_data is freed, and the clkout children are now
-unregistered before their parent rather than after it.
-ac100_rtc_unregister_clks() and the remove callback then have nothing
-left to do and are removed.
-
-Fixes: d00a18a42c14 ("rtc: ac100: Add RTC driver for X-Powers AC100")
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-rtc/20260905184936.155E11F00A3A@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB0001A489CC45A591ABBB9BDCC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9e4ed359b8ef ("io_uring/netcmd: add tx timestamping cmd support")
+Link: https://lore.kernel.org/all/010001a0cd914529-23df2f94-bbe0-49cd-ae5d-05922356fa12-000000@email.amazonses.com/
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-6-sol
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: lollipopkit <a@lolli.tech>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/20260927074206.65427-1-a@lolli.tech
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ac100.c | 36 +++++++-----------------------------
- 1 file changed, 7 insertions(+), 29 deletions(-)
+ io_uring/cmd_net.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ac100.c b/drivers/rtc/rtc-ac100.c
-index 9917cd67f4c6d..ef6a9368c63f2 100644
---- a/drivers/rtc/rtc-ac100.c
-+++ b/drivers/rtc/rtc-ac100.c
-@@ -318,10 +318,10 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
+--- a/io_uring/cmd_net.c
++++ b/io_uring/cmd_net.c
+@@ -69,8 +69,8 @@ static inline int io_uring_cmd_setsockop
+ 				  optlen);
+ }
  
- 	chip->clk_data->num = AC100_CLKOUT_NUM;
+-static bool io_process_timestamp_skb(struct io_uring_cmd *cmd, struct sock *sk,
+-				     struct sk_buff *skb, unsigned issue_flags)
++static int io_process_timestamp_skb(struct io_uring_cmd *cmd, struct sock *sk,
++				    struct sk_buff *skb, unsigned int issue_flags)
+ {
+ 	struct sock_exterr_skb *serr = SKB_EXT_ERR(skb);
+ 	struct io_uring_cqe cqe[2];
+@@ -83,7 +83,7 @@ static bool io_process_timestamp_skb(str
  
--	chip->rtc_32k_clk = clk_hw_register_fixed_rate(chip->dev,
--						       AC100_RTC_32K_NAME,
--						       NULL, 0,
--						       AC100_RTC_32K_RATE);
-+	chip->rtc_32k_clk = devm_clk_hw_register_fixed_rate(chip->dev,
-+							    AC100_RTC_32K_NAME,
-+							    NULL, 0,
-+							    AC100_RTC_32K_RATE);
- 	if (IS_ERR(chip->rtc_32k_clk)) {
- 		ret = PTR_ERR(chip->rtc_32k_clk);
- 		dev_err(chip->dev, "Failed to register RTC-32k clock: %d\n",
-@@ -355,28 +355,14 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
- 		if (ret) {
- 			dev_err(chip->dev, "Failed to register clk '%s': %d\n",
- 				init.name, ret);
--			goto err_unregister_rtc_32k;
-+			return ret;
- 		}
+ 	ret = skb_get_tx_timestamp(skb, sk, &ts);
+ 	if (ret < 0)
+-		return false;
++		return ret;
  
- 		chip->clk_data->hws[i] = &clk->hw;
+ 	tskey = serr->ee.ee_data;
+ 	tstype = serr->ee.ee_info;
+@@ -98,7 +98,9 @@ static bool io_process_timestamp_skb(str
+ 	iots = (struct io_timespec *)&cqe[1];
+ 	iots->tv_sec = ts.tv_sec;
+ 	iots->tv_nsec = ts.tv_nsec;
+-	return io_uring_cmd_post_mshot_cqe32(cmd, issue_flags, cqe);
++	if (!io_uring_cmd_post_mshot_cqe32(cmd, issue_flags, cqe))
++		return -ENOBUFS;
++	return 0;
+ }
+ 
+ static int io_uring_cmd_timestamp(struct socket *sock,
+@@ -135,7 +137,8 @@ static int io_uring_cmd_timestamp(struct
+ 		skb = skb_peek(&list);
+ 		if (!skb)
+ 			break;
+-		if (!io_process_timestamp_skb(cmd, sk, skb, issue_flags))
++		ret = io_process_timestamp_skb(cmd, sk, skb, issue_flags);
++		if (ret)
+ 			break;
+ 		__skb_dequeue(&list);
+ 		consume_skb(skb);
+@@ -145,6 +148,12 @@ static int io_uring_cmd_timestamp(struct
+ 		scoped_guard(spinlock_irqsave, &q->lock)
+ 			skb_queue_splice(&list, q);
  	}
- 
--	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, chip->clk_data);
--	if (ret)
--		goto err_unregister_rtc_32k;
--
--	return 0;
--
--err_unregister_rtc_32k:
--	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
--
--	return ret;
--}
--
--static void ac100_rtc_unregister_clks(struct ac100_rtc_dev *chip)
--{
--	of_clk_del_provider(chip->dev->of_node);
--	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
-+	return devm_of_clk_add_hw_provider(chip->dev, of_clk_hw_onecell_get,
-+					   chip->clk_data);
++	/*
++	 * Aux CQEs cannot overflow and the poll is edge triggered, so nothing
++	 * re-runs the command once the CQ drains. End the multishot instead.
++	 */
++	if (ret == -ENOBUFS)
++		return -ENOBUFS;
+ 	return -EAGAIN;
  }
  
- /*
-@@ -614,13 +600,6 @@ static int ac100_rtc_probe(struct platform_device *pdev)
- 	return devm_rtc_register_device(chip->rtc);
- }
- 
--static void ac100_rtc_remove(struct platform_device *pdev)
--{
--	struct ac100_rtc_dev *chip = platform_get_drvdata(pdev);
--
--	ac100_rtc_unregister_clks(chip);
--}
--
- static const struct of_device_id ac100_rtc_match[] = {
- 	{ .compatible = "x-powers,ac100-rtc" },
- 	{ },
-@@ -629,7 +608,6 @@ MODULE_DEVICE_TABLE(of, ac100_rtc_match);
- 
- static struct platform_driver ac100_rtc_driver = {
- 	.probe		= ac100_rtc_probe,
--	.remove		= ac100_rtc_remove,
- 	.driver		= {
- 		.name		= "ac100-rtc",
- 		.of_match_table	= of_match_ptr(ac100_rtc_match),
--- 
-2.53.0
-
 
 
