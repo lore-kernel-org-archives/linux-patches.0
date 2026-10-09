@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC96830E828;
-	Fri,  9 Oct 2026 14:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671B14582D3;
+	Fri,  9 Oct 2026 14:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557655; cv=none; b=C+D0hNxLxV7ZCzZSMCyEI2xI9LH6sNd3P5/7oEwwKHvAEDk//wj35B+bIRtDlBfu8wPMKE8u2lRamIwW0lONIV+2iIQmhXX9Vxllw3MFfpfkdgmcIxvOD5mdxqppNyBZMqMPnLZlQgpG6tIqcRkak9iXUq6o26950qf1GkEoM+s=
+	t=1791557659; cv=none; b=SjkKf06QeQsD7WAFfyC7bPQwZzaSP01MXysxk3o1Pkp0z71Ev3tEKsGzdhreMImJvR1Amo9RPgS9mTIX2/Zr0u4tX2B3qpgYwMKSnBdYJJOVOz1PGz3Hr/IrNyGE202xh4VlR8wxgGLMqrF+KdPgoy+q3KWPgUfDaK3+wdgdc5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557655; c=relaxed/simple;
-	bh=yHpyKhzbstZ+KkWJKk1GFugn140OKUOHhtgJon/eFAw=;
+	s=arc-20240116; t=1791557659; c=relaxed/simple;
+	bh=XIKGlCb78F+GPwh24rbHhf31pgwVYSf4kPS6tvU0JWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2NlwQVq8YGu+w2phDyDtaTN/CUu1k+zKlT+QgA0aq8zmEY1Y2YthrV5AlnyFBzQq5SykRcGt2G8CqR8v+65E3kWnAu0VF8T2Y/iLmqEAHCohvztWpPqNGoIG0eqvMg3inmlfPMnmjsXfxqvOOitykXuphZOMSMJwoHOHX969Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0GXRIwS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FVpMMSrC5D/HLA/r8DfnrELZWlaugDb0IMsFVOiM8fG+zJuqLK0RzieeldO6P0cxTWCdHVbBXXcr5mISm40Xz0oXZ8RteHBSccsk+Mp65Jxr5JgSORhRyGk8vA8AIhQHkCK+Dpjzx80kWlFHOoXLcoHlk34p5R9BsHz5dzvwWaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+m2+zCF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0GXRIwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BA21F00893;
-	Fri,  9 Oct 2026 14:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+m2+zCF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54C61F000FF;
+	Fri,  9 Oct 2026 14:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557654;
-	bh=SqJ+fY+q2ZlfM8wNuLtRkbBRwR7P+FfmWaVukwYFvpY=;
+	s=korg; t=1791557658;
+	bh=im8HcrTjn228itZ0/iER+Dlotv3grIeTWBQbGHDH2mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0GXRIwSKWSnPZeZ4G7wf/qR/GOANVitQUc3mL934oy4bq72iQ88krOoTl0q5PlpW
-	 LsARQDx7XTthrMefAu+zMrN2KHA2q1j8AnvHRJByriMu80XpQoMT4nK9Lbm20u1SG6
-	 j0T59RdYW44WzvvukpPwtIYwrCmtncVRO+rAxqYE=
+	b=t+m2+zCF25wD01qGxv6CwDtuUex3afeFUkEQZDOKyCF0hiZqTICAH++yepGzlhVdw
+	 SYvNm9qxns8cOcVZSnEMHlj2tNgdzgUfGO4RFpL5qYXg7rwwogGHiVlokRoDUfF8CG
+	 x72anQtR2bRVrtXaJzpKQhBzZ1eCk0mjroygEbmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 399/428] iio: frequency: admv1013: fix wrong channel field used in admv1013_read_raw()
-Date: Fri,  9 Oct 2026 16:12:16 +0200
-Message-ID: <20261009140954.978542256@linuxfoundation.org>
+Subject: [PATCH 7.2 390/428] iio: adc: stm32-adc: fix possible division by zero in processed channel
+Date: Fri,  9 Oct 2026 16:12:07 +0200
+Message-ID: <20261009140954.768456841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,41 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 2093236e886ad9446ec3285ba520e024dd1464e1 upstream.
+commit c5de6a6f855fdcf1e0ea549fb227a316db51c405 upstream.
 
-admv1013_read_raw() switches on chan->channel instead of
-chan->channel2 when handling IIO_CHAN_INFO_CALIBBIAS. The channel
-field only ever holds 0 or 1 (see ADMV1013_CHAN_CALIB()), while the
-IIO_MOD_I / IIO_MOD_Q modifiers are stored in channel2. As a result,
-the switch always falls through to the default case and calibbias
-reads always fail with -EINVAL, even though the corresponding
-admv1013_write_raw() path correctly uses channel2 and works as
-expected.
+In case the conversion has failed or returned zero, processing *val
+can lead to a division by zero. Need to check for errors, or converted
+value is zero, before processing the data. In case the converted value
+is zero, e.g. the Vrefint channel, this should be considered as invalid
+in all cases.
 
-Fix the read path to switch on chan->channel2, matching the write
-path and the actual channel_spec definition.
-
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: 0e346b2cfa85 ("iio: adc: stm32-adc: add vrefint calibration support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260911161555.244F31F000FF@smtp.kernel.org/
 Cc: stable@vger.kernel.org
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/stm32-adc.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -195,7 +195,7 @@ static int admv1013_read_raw(struct iio_
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -1608,11 +1608,16 @@ static int stm32_adc_read_raw(struct iio
+ 			ret = stm32_adc_single_conv(indio_dev, chan, val);
+ 		else
+ 			ret = -EINVAL;
++		iio_device_release_direct(indio_dev);
++		if (ret < 0)
++			return ret;
  
- 	switch (info) {
- 	case IIO_CHAN_INFO_CALIBBIAS:
--		switch (chan->channel) {
-+		switch (chan->channel2) {
- 		case IIO_MOD_I:
- 			addr = ADMV1013_REG_OFFSET_ADJUST_I;
- 			break;
+-		if (mask == IIO_CHAN_INFO_PROCESSED)
++		if (mask == IIO_CHAN_INFO_PROCESSED) {
++			if (*val == 0)
++				return -EINVAL;
+ 			*val = STM32_ADC_VREFINT_VOLTAGE * adc->vrefint.vrefint_cal / *val;
++		}
+ 
+-		iio_device_release_direct(indio_dev);
+ 		return ret;
+ 
+ 	case IIO_CHAN_INFO_SCALE:
 
 
