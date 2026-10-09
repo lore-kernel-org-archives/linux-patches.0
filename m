@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9453C9893;
-	Fri,  9 Oct 2026 14:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961413B19DE;
+	Fri,  9 Oct 2026 14:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556687; cv=none; b=e+Zmim9++H1Zq1yq0LDtxFT65GN+lttumPAlzrWx39Mz1HKZ+uIL4jUPfBd5Lyb37ETcpFj93YvomzTeLQQIN2BPa+MnebhlIcy3Tm0usV5waVIkr2uNqnAx9VdtUikh1m9LAtn1h50VzfWKjfDSd2t7dBxgkTsyJECWopd3Jl4=
+	t=1791556691; cv=none; b=QmM5fdS/1nO6TrvcDWnr9DU9ybRirV48fsLlwFvGMFXBGyt8LpbYK+Wy3hvHoplU3a5+WiBYI0/mPLGJAUJ5AR9bCxF8Bzslv34C1aDzMqcG4MCLWcyServzKIFisVTTjFYuYf/kE89Cksjjc2WRvmW8Ev0SWpKz7ZlWexQR6js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556687; c=relaxed/simple;
-	bh=aBATFSdV3ET9bsk2ikXYQUplp78VSp5QQinvSxf6Lic=;
+	s=arc-20240116; t=1791556691; c=relaxed/simple;
+	bh=W2eySuQmHd99bSgf1nA3PwX8RWgX+M48OyVtHWKiF0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceC+kLZ2wI2VGBbuBxfcV2VYUgOU1pWy3sqSYfoRXOcmhBp/q8lYWoSShxNUZGO2E4EohUVC3J8H9cdX+NP4QhkTUCOz+wzsbiIYPgc9r7CZGTgH2zoPuzsFHONiPKIp4UTvxa8MUhy7PlzQuaHb43fXbQAQtDKXXtBHnjeLD5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaPQZcuK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fqcz49i9l54P5QCXj+oI1F0GNW04LeQTSZFC2XoeL2B5nXL87C4kklaYM8fxQwGHtHBRN1Qo9zBjczH4zBa3pwdMeVp8zDSkFhGV/0xKt1onWuzuOcve7QiOIiOWgWYbNqX5AcjoQiwQXu4mDSBG1tc1uSOmlAjIO1hWi1bUH7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLC0hL8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaPQZcuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122AB1F000FF;
-	Fri,  9 Oct 2026 14:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLC0hL8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB431F000FF;
+	Fri,  9 Oct 2026 14:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556686;
-	bh=vHEj1UQgSn292RqzOhAyitRVR8/quFGE07NjuiSJqJo=;
+	s=korg; t=1791556689;
+	bh=usTVAkHqafF4Fy8P9jLz+nSzWb2/eR2Q7elk4QuksEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IaPQZcuK+KU/hxv9Dhr+ucDoJjOm4iwkm1u7Gel3IcjVeMKHgf0PjE9ES0dj9KbyZ
-	 KhZSfMnPNdrEQ3+2Gs4H2cn0fQQOowEsb/gmgXKhB4kbzghGiImbyAe1F1x0qaUR3C
-	 Tp+zpTq6vGeBznm7K2Lrz/OHaigQzAGrmDKmB8Dk=
+	b=WLC0hL8snhXWz29F7MjLecCbrd9yhF3jUv0j149rXkgUb+D2jGZhKbWRRgu5Mt81o
+	 XU3OHrDr5c30HLwitnItqkactXCeNm2w4CjGjYZdYMU1s0Bn0OuQmQuUWi6V4scCud
+	 0XCNnSx/fPEP0ZsHT7VJNJDwDzvOogwoTWepeggc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 275/403] wifi: mac80211: handle empty FILS association request payload
-Date: Fri,  9 Oct 2026 16:10:36 +0200
-Message-ID: <20261009140958.619012794@linuxfoundation.org>
+	stable@kernel.org,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: [PATCH 7.2 221/428] usb: gadget: aspeed-vhub: cancel wake work on device removal
+Date: Fri,  9 Oct 2026 16:09:18 +0200
+Message-ID: <20261009140950.973072954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5bfd4b0b40b79781d900cb2f7da0685070f53c67 upstream.
+commit 20388c8d1d74c203fec8194c45cd31afdfab934e upstream.
 
-fils_encrypt_assoc_req() accepts a (Re)Association Request frame whose
-last element is the FILS Session element.  crypt_len is then zero and
-aes_siv_encrypt() is called with an empty plaintext.
+wake_work is armed from the gadget .wakeup callback to resume suspended
+downstream ports, and it is never cancelled in ast_vhub_remove(), so a
+work item queued before or during removal can run after devm has freed
+vhub and its ports, a use-after-free.
 
-kmemdup() returns ZERO_SIZE_PTR for a zero-length allocation, so the
-unconditional sg_init_one() puts an invalid page into the scatterlist.
-With CONFIG_DEBUG_SG this triggers a kernel BUG in sg_set_buf();
-without the debug check the bogus page is handed to the crypto backend.
+Cancelling the work alone is not sufficient: usb_gadget_wakeup() takes
+no lock and the unbind path never clears wakeup_en, so a remote-wakeup
+request in flight on another CPU can re-arm the work after the cancel
+and before vhub is freed.
 
-AES-SIV is defined for empty plaintext and the S2V result is then the
-complete output, so handle this case before the CTR step, which has
-nothing to encrypt.
+ast_vhub_del_dev() already clears d->registered under vhub->lock before
+unregistering the gadget. Refuse the wakeup in ast_vhub_udc_wakeup()
+once d->registered is clear: the check and the schedule_work() are then
+atomic against the unbind, so a wakeup that passed before the flag was
+cleared is drained by the cancel_work_sync() after the del_dev loop,
+and one that arrives later returns without arming. Also move INIT_WORK()
+to the top of ast_vhub_probe(), since the probe error path reuses
+ast_vhub_remove() and would otherwise cancel a never-initialized work
+item.
 
-Fixes: 39404feee691 ("mac80211: FILS AEAD protection for station mode association frames")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Reviewed-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/325c048982d637a3af80d74ac5b36e9369b93f1e.1789751126.git.xuyuqiabc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7ecca2a4080c ("usb/gadget: Add driver for Aspeed SoC virtual hub")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Link: https://patch.msgid.link/20260908041740.613713-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/fils_aead.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/gadget/udc/aspeed-vhub/core.c |    4 ++++
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c  |    2 +-
+ drivers/usb/gadget/udc/aspeed-vhub/hub.c  |    5 +++--
+ drivers/usb/gadget/udc/aspeed-vhub/vhub.h |    1 +
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/mac80211/fils_aead.c
-+++ b/net/mac80211/fils_aead.c
-@@ -95,6 +95,14 @@ static int aes_siv_encrypt(const u8 *key
- 	if (res)
- 		return res;
+--- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+@@ -267,6 +267,9 @@ static void ast_vhub_remove(struct platf
+ 	for (i = 0; i < vhub->max_ports; i++)
+ 		ast_vhub_del_dev(&vhub->ports[i].dev);
  
-+	/* With an empty plaintext there is no ciphertext to produce and
-+	 * the S2V result is the complete output.
-+	 */
-+	if (!plain_len) {
-+		memcpy(out, v, AES_BLOCK_SIZE);
-+		return 0;
-+	}
++	/* Final drain; the worker takes vhub->lock, so stay outside of it */
++	cancel_work_sync(&vhub->wake_work);
 +
- 	/* Use a temporary buffer of the plaintext to handle need for
- 	 * overwriting this during AES-CTR.
- 	 */
+ 	spin_lock_irqsave(&vhub->lock, flags);
+ 
+ 	/* Mask & ack all interrupts  */
+@@ -328,6 +331,7 @@ static int ast_vhub_probe(struct platfor
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&vhub->lock);
++	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 	vhub->pdev = pdev;
+ 	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
+ 				      VHUB_IRQ_DEV1_BIT);
+--- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+@@ -280,7 +280,7 @@ static int ast_vhub_udc_wakeup(struct us
+ 	int rc = -EINVAL;
+ 
+ 	spin_lock_irqsave(&d->vhub->lock, flags);
+-	if (!d->wakeup_en)
++	if (!d->wakeup_en || !d->registered)
+ 		goto err;
+ 
+ 	DDBG(d, "Device initiated wakeup\n");
+--- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+@@ -558,7 +558,7 @@ void ast_vhub_device_connect(struct ast_
+ 		ast_vhub_send_host_wakeup(vhub);
+ }
+ 
+-static void ast_vhub_wake_work(struct work_struct *work)
++void ast_vhub_wake_work(struct work_struct *work)
+ {
+ 	struct ast_vhub *vhub = container_of(work,
+ 					     struct ast_vhub,
+@@ -588,6 +588,8 @@ static void ast_vhub_wake_work(struct wo
+ 
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub)
+ {
++	lockdep_assert_held(&vhub->lock);
++
+ 	/*
+ 	 * A device is trying to wake the world, because this
+ 	 * can recurse into the device, we break the call chain
+@@ -1076,7 +1078,6 @@ static int ast_vhub_init_desc(struct ast
+ int ast_vhub_init_hub(struct ast_vhub *vhub)
+ {
+ 	vhub->speed = USB_SPEED_UNKNOWN;
+-	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 
+ 	return ast_vhub_init_desc(vhub);
+ }
+--- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
++++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
+@@ -547,6 +547,7 @@ void ast_vhub_hub_suspend(struct ast_vhu
+ void ast_vhub_hub_resume(struct ast_vhub *vhub);
+ void ast_vhub_hub_reset(struct ast_vhub *vhub);
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub);
++void ast_vhub_wake_work(struct work_struct *work);
+ 
+ /* dev.c */
+ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx);
 
 
