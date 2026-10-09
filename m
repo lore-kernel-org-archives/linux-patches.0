@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CFE4E50AC;
-	Fri,  9 Oct 2026 14:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDEB4E3ED4;
+	Fri,  9 Oct 2026 14:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555648; cv=none; b=WbnhNT3p6O2AUc+N8NRp8Kz3TI8IhTS6MTInkalv8pkZDfRbh8u/mZjuFHjxjwGO7iN9lueQfR3lhHTrjNZMHJy7vtINQF3Yw+YH1fl2Ou1luVOdnXnl0kZ9p071Z2gYkw1IfATmKKR1DZ5v3ZuIN/BPPWhZyYcpWq8iKD8SOYI=
+	t=1791555649; cv=none; b=e6i3q14ORWQ5iSZERsBSLKiD8IQItH9Bwp2vxm/uEWB3I6L8GHTymFso22RYEXacL6tZ/39L3JYM2tda8ZDAYyV3qJdV/bgsl50VeZYW2EkBVyIPZYj5HAnytFpXH1OQF9TYQNd+LzuX1xO9alXx308kLTFvg9qRncBKVD47S4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555648; c=relaxed/simple;
-	bh=X0JFuKHN/aDEwA/GCZc1tJm2/RbXzVhZC+sPaJLqgqk=;
+	s=arc-20240116; t=1791555649; c=relaxed/simple;
+	bh=nBZinOeuL/1r4xIAo1e6GEGzanbAQjj3uITv2vOc/lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5CKN4U2Y0B1xSN0mChsTDEd/h1CAtXDp/2CzYhZGlpHJNbevxH7boIY4I+/ZP0qGzgamz+r3daKWgFuT+pcxybGudW3W5EYpPP2WJNtXleQ+ToOJUIuVa/xqerwsc42dJxlEUv1vZWzzsmdgho20+tmqqksfFfWi8L13FjW8Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0AKHteB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O8VQ/NFF7EfjMuXDlQue0bxQnME+lq+GYQpmXOnvnurhNv8X9Sb/D5FK2Kb4zojBuM5ral2fQt1TkgzUyfue3zrvVbPzGNbdx6RnBL81UAmHjgOZ6YU7EOh3MEjwVEPLlu963Sx8G2uG9oKeAuHcH6r9nn1o7NiCnMI3AQp2hQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATwWRWtW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0AKHteB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6A61F00899;
-	Fri,  9 Oct 2026 14:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATwWRWtW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5496E1F000FF;
+	Fri,  9 Oct 2026 14:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555645;
-	bh=ECDnkJW7N599iNpfDQ0wYiBPMDL/SSLL3604U6hqwBY=;
+	s=korg; t=1791555642;
+	bh=BYp5M1oUVR3H2E/nxkva2mZwQNwEEPMhgMR93bnWr3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0AKHteBJOrBsGHnH+3raxl9QK/LXpYHtd+H/DTdUCvJvUjTdxYaJPYqRuxD8EYfN
-	 LEdRQUll6L3kd0Mts+agrPts8ur5BJVZNFyorqBe3a56AubjodnSWcvQ7Cn56rHk5p
-	 ApW5mqiR8vZijhdbzZFQ/ku+lYzLi+IAXhJeUz4g=
+	b=ATwWRWtWNVVX2SbF/r11APxisj9sSZtSKMSqZP3eOOfcFA0g4F7h6x4N6zADZQOnv
+	 MqD3zjmzZBml19LpfOQ5Xbqy4iwHFaaAE61JuCEXkj8hkkAPERbGXx9573a24IjFBx
+	 Zww7a7PUbfWUTU/GnEq6OB3AXEKENDg0gPUCs05I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 7.2 042/428] random: vDSO: avoid call to memset() when zeroing reserved parameter
-Date: Fri,  9 Oct 2026 16:06:19 +0200
-Message-ID: <20261009140947.024207620@linuxfoundation.org>
+	Nicolas Escande <nico.escande@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 070/403] wifi: ath11k: reset ar->num_stations on hardware start
+Date: Fri,  9 Oct 2026 16:07:11 +0200
+Message-ID: <20261009140953.733489761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,127 +49,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-commit eb13a1ff271b0d180687eebb30611b0b276d5193 upstream.
+[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
 
-After a recent change in LLVM [1], builds with the random vDSO
-implementation, such as PowerPC and RISC-V, fail when checking the vDSO:
+When (multiple) hw restart occurs, we end up in a situation where we
+cannot accept new stations / mesh peers. This seems to be the
+'num_stations' in 'struct ath11k' that did not get reset properly in
+this case. In ath11k_mac_op_start(), it was indeed the only accounting var
+that did not get reset so let's clear it too.
 
-  arch/powerpc/kernel/vdso/vdso32.so.dbg: dynamic relocations are not supported
-  arch/riscv/kernel/vdso/vdso.so.dbg: dynamic relocations are not supported
+This avoids problems like those:
 
-memset() is now generated when zeroing params->reserved for some builds
-because LLVM has an optimization (now run in more instances) that can
-recognize at compile time when it is assigning a static value to a
-contiguous area of memory and turn that into a call to memset(). Both
-clang and GCC assume memset() is always available [2].
+	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
+	[1248828.088115] Call trace:
+	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
+	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
+	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
+	[1248828.088127]  process_one_work+0x178/0x3c0
+	[1248828.088130]  worker_thread+0x280/0x440
+	[1248828.088133]  kthread+0xe0/0xf8
+	[1248828.088137]  ret_from_fork+0x10/0x20
+	[1248828.088141] ---[ end trace 0000000000000000 ]---
+	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
+	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
 
-Clang has an internal fiddly hook, -max-store-memset, which we can set
-to a high number, to disable generating out of line memset calls [3].
-Similarly, GCC has -finline-stringops=memset to do the same [4], should
-this issue ever hit future version of GCC. While these options wouldn't
-make sense for normal kernel code, it is fine for the extremely limited
-and intentionally compact vDSO code.
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
 
-Link: https://github.com/llvm/llvm-project/commit/90cebef1411617fc3eedd359bdf00cb44b1c2439 [1]
-Link: https://gcc.gnu.org/onlinedocs/gcc-16.2.0/gcc/Standards.html#index-ffreestanding [2]
-Link: https://github.com/llvm/llvm-project/commit/b28eeb28bea39148738dc375e8a97072a1907e64 [3]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-finline-stringops [4]
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2183
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/vdso/Makefile     |    2 +-
- arch/loongarch/vdso/Makefile        |    1 +
- arch/powerpc/kernel/vdso/Makefile   |    1 +
- arch/riscv/kernel/vdso/Makefile     |    1 +
- arch/s390/kernel/vdso/Makefile      |    1 +
- arch/x86/entry/vdso/vdso64/Makefile |    2 +-
- init/Kconfig                        |    5 +++++
- 7 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/vdso/Makefile
-+++ b/arch/arm64/kernel/vdso/Makefile
-@@ -41,7 +41,7 @@ CC_FLAGS_REMOVE_VDSO := $(CC_FLAGS_FTRAC
- 			$(CC_FLAGS_LTO) $(CC_FLAGS_CFI) \
- 			-Wmissing-prototypes -Wmissing-declarations
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index c97c07a7ef0fd..60ffecd52280e 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -6402,6 +6402,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
+ 	ar->num_started_vdevs = 0;
+ 	ar->num_created_vdevs = 0;
+ 	ar->num_peers = 0;
++	ar->num_stations = 0;
+ 	ar->allocated_vdev_map = 0;
  
--CC_FLAGS_ADD_VDSO := -O2 -mcmodel=tiny -fasynchronous-unwind-tables
-+CC_FLAGS_ADD_VDSO := -O2 -mcmodel=tiny -fasynchronous-unwind-tables $(CONFIG_CC_OPT_INLINE_MEMSET)
- 
- CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_REMOVE_VDSO)
- CFLAGS_REMOVE_vgetrandom.o = $(CC_FLAGS_REMOVE_VDSO)
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -16,6 +16,7 @@ ccflags-vdso := \
- 	$(filter -m64,$(KBUILD_CFLAGS)) \
- 	$(filter -march=%,$(KBUILD_CFLAGS)) \
- 	$(filter -m%-float,$(KBUILD_CFLAGS)) \
-+	$(CONFIG_CC_OPT_INLINE_MEMSET) \
- 	$(CLANG_FLAGS) \
- 	-D__VDSO__
- 
---- a/arch/powerpc/kernel/vdso/Makefile
-+++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -43,6 +43,7 @@ ccflags-y := -fno-common -fno-builtin -D
- ccflags-y += $(DISABLE_LATENT_ENTROPY_PLUGIN)
- ccflags-y += $(call cc-option, -fno-stack-protector)
- ccflags-y += -DDISABLE_BRANCH_PROFILING
-+ccflags-y += $(CONFIG_CC_OPT_INLINE_MEMSET)
- ccflags-y += -ffreestanding -fasynchronous-unwind-tables
- ccflags-remove-y := $(CC_FLAGS_FTRACE)
- ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack $(CLANG_FLAGS)
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -36,6 +36,7 @@ endif
- ccflags-y := -fno-stack-protector
- ccflags-y += -DDISABLE_BRANCH_PROFILING
- ccflags-y += -fno-builtin
-+ccflags-y += $(CONFIG_CC_OPT_INLINE_MEMSET)
- ccflags-y += $(KBUILD_BASE_ISA)$(CFI_MARCH)
- ccflags-y += $(CFI_FULL)
- asflags-y += $(KBUILD_BASE_ISA)$(CFI_MARCH)
---- a/arch/s390/kernel/vdso/Makefile
-+++ b/arch/s390/kernel/vdso/Makefile
-@@ -29,6 +29,7 @@ KBUILD_CFLAGS_VDSO := $(filter-out -muna
- KBUILD_CFLAGS_VDSO := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_VDSO))
- KBUILD_CFLAGS_VDSO += -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
- KBUILD_CFLAGS_VDSO += -fno-stack-protector $(DISABLE_KSTACK_ERASE)
-+KBUILD_CFLAGS_VDSO += $(CONFIG_CC_OPT_INLINE_MEMSET)
- ldflags-y := -shared -soname=linux-vdso.so.1 \
- 	     --hash-style=both --build-id=sha1 \
- 	     $(call ld-option, --eh-frame-hdr) -T
---- a/arch/x86/entry/vdso/vdso64/Makefile
-+++ b/arch/x86/entry/vdso/vdso64/Makefile
-@@ -14,7 +14,7 @@ vobjs-$(CONFIG_X86_SGX)			+= vsgx.o
- vobjs-$(CONFIG_FUTEX_ROBUST_UNLOCK)	+= vfutex.o
- 
- # Compilation flags
--flags-y				:= -DBUILD_VDSO64 -m64 -mcmodel=small
-+flags-y				:= -DBUILD_VDSO64 -m64 -mcmodel=small $(CONFIG_CC_OPT_INLINE_MEMSET)
- 
- # The location of this include matters!
- include $(src)/../common/Makefile.include
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -173,6 +173,11 @@ config CC_HAS_ALLOC_TOKEN
- config CC_HAS_MULTIDIMENSIONAL_NONSTRING
- 	def_bool $(success,echo 'char tag[][4] __attribute__((__nonstring__)) = { };' | $(CC) $(CLANG_FLAGS) -x c - -c -o /dev/null -Werror)
- 
-+config CC_OPT_INLINE_MEMSET
-+	string
-+	default "-finline-stringops=memset" if $(cc-option,-finline-stringops=memset)
-+	default "-mllvm -max-store-memset=4294967294" if $(cc-option,-mllvm -max-store-memset=4294967294)
-+
- config LD_CAN_USE_KEEP_IN_OVERLAY
- 	# ld.lld prior to 21.0.0 did not support KEEP within an overlay description
- 	# https://github.com/llvm/llvm-project/pull/130661
+ 	/* Configure monitor status ring with default rx_filter to get rx status
+-- 
+2.53.0
+
 
 
