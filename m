@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E9D46D2A3;
-	Fri,  9 Oct 2026 14:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A60B39FCCD;
+	Fri,  9 Oct 2026 14:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555745; cv=none; b=rF4sU5YpGp6UPGKC6ruHkmV+grkYSheWFV6h6nxaAxUaBTirQop/BiQtdlcnSZZUhDKWSPvp1xjMyLQCeOOMaNaM3VPib7m1q1xvF6nyhxka0MLa5A20/jxVM2YFpDyAW6E1mGUgnYIMnKgQsmSCt/RBEp47LZdf/gECClJbpXc=
+	t=1791555748; cv=none; b=kP4Tdvf/SbezTyXmM9dNnUhqB1vtjRA5wcPFycAwAgqIN9zLQPo16090xWeWkMyVglrbMK6WGLYhge7PfLsR9EhjgVpoX2bCGKFGFL8w7sFhOaW3UuMZEeXa4kWe0lINbQkp5kU14ce1J3fFy4kDY8RsnepJ3cxjqkTLFIXldIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555745; c=relaxed/simple;
-	bh=tNajtaz3arMQyVjEV20wHU2a+OwARptevT9Ff/Avo/Q=;
+	s=arc-20240116; t=1791555748; c=relaxed/simple;
+	bh=hgh6Zh5p5b4EGJnWwddQhJJR6EfXvpCZBOlWPrg5L7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiirmUMIWMyck+IzoyxbWn98ZCVRD39KOhv3inuqZwCoCvQZJKqFfhnR0rBw1tITx1Boelv+akevI50BCjd2MUsgK7q15Q3SKsdMy/0oXVOeTsusXlWFSI4ZrDN8QemynV6QSMOkgT+WL6l3RoiIx9SR+KFnaQHuYwG21Mhy7SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQ/DG5bs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qeX+dDAgpDyjRqdaj9xsv+LVlsdhOPVlcWRB01S3XdwvwZAr99p5BTLN4pAhWzlTLlHSUEJzV6hawMUPkBEeb75pi3EswoPQjeHqaDgzyimu686zNAnHTNIp67JhgSWFWRl5rNpzgIhmKvDKbSTjnd/d1LKFUariEoDOaxGqHD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Egmzdu8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQ/DG5bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947C31F000FF;
-	Fri,  9 Oct 2026 14:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Egmzdu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793A91F000FF;
+	Fri,  9 Oct 2026 14:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555744;
-	bh=mifLnTkw1Y5y2glRtly/R+2EfVJgGqb9NEd7UEL9pDc=;
+	s=korg; t=1791555747;
+	bh=I2098vgET20E64pdRDYEZ1swCt0d8/wgMSOFC4wWr24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bQ/DG5bsxuyenTTm/HApgq0JaFIYO/4OrDc/WtUZV+LvpBDu+BWDqQ3+/yFbGfCTB
-	 g6U5UfuKXK8TNRpuhVDbQ/zb7xvplLKUQSj2CZa3qkBRd8xs/DSVvklOHqfNbwUTFj
-	 U2CGruY5CaZxeseTF7+CujDtUximjcoFEa9rG2es=
+	b=2Egmzdu81zwoz9MjWMLkaQqKF/ZS8jct8q7dSnI6EoV9xH9KhXbh1GFeu6/3Snxwh
+	 3cqfuPx7WAV8RWNwJbKYhuE4b03jArCR4M2y6nxxkCxeTnvF3TfTeMZA13u+pRwDDb
+	 /ZMiYH3FL96iT5ojPFRiUbblsoutchz+ECVvustA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yi Yang <yiyang13@huawei.com>
-Subject: [PATCH 7.2 058/428] vc_screen: reload vc pointer before if (ret) in vcs_write() to avoid UAF
-Date: Fri,  9 Oct 2026 16:06:35 +0200
-Message-ID: <20261009140947.412227213@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 109/403] net: bcmgenet: fix NULL dereference in set_coalesce before first open
+Date: Fri,  9 Oct 2026 16:07:50 +0200
+Message-ID: <20261009140954.630881776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-commit 226bd5603371cd9f6642cbb9e9a677f445de3530 upstream.
+[ Upstream commit 19419faf58dfe5bcc8a9e60e622976c5f8e3ddc1 ]
 
-The reload of 'vc' added by commit 8fb9ea65c9d1 ("vc_screen: reload load
-of struct vc_data pointer in vcs_write() to avoid UAF") sits after the
-'if (ret)' block, so the copy-failure break path exits the loop without
-reloading vc. If the vc was kfree()'d via vc_port_destruct during the
-unlocked copy_from_user() window, the post-loop
-'if (written && vc) vcs_scr_updated(vc)' is reached with a stale
-non-NULL vc. The '&& vc' guard from commit a287620312dc ("vc_screen:
-fix null-ptr-deref in vcs_notifier() during concurrent vcs_write") only
-handles the NULL case, not this stale-non-NULL case; vcs_notifier() then
-reads param->vc->vc_num from freed memory:
+The Rx ring priv and index are only set in bcmgenet_init_rx_ring(),
+which runs at open. Setting the Rx coalescing parameters on an interface
+that was never opened, e.g. "ethtool -C eth0 rx-usecs 50", dereferences
+a NULL ring->priv. The oops happens with RTNL held, so networking
+stays stuck until a reboot:
 
-  BUG: KASAN: slab-use-after-free in vcs_notifier+0x7c/0xd0
-  Read of size 2 at addr ffff888007149190
-  Call Trace:
-   vcs_notifier+0x7c/0xd0
-   atomic_notifier_call_chain+0x70/0xa0
-   vcs_scr_updated+0x77/0xa0
-   vcs_write+0x71b/0x7e0
-  Allocated by task: vc_allocate -> con_install -> tty_open
-  Freed by task: kfree <- vt_ioctl (VT_DISALLOCATE -> vc_port_destruct)
+  Unable to handle kernel paging request at virtual address 0000000000002788
+  pc : bcmgenet_set_rx_coalesce.isra.0+0x10/0x88
+  lr : bcmgenet_set_coalesce+0xe8/0x180
+  Call trace:
+   bcmgenet_set_rx_coalesce.isra.0+0x10/0x88 (P)
+   __ethnl_set_coalesce.isra.0+0x490/0x570
+   ethnl_set_coalesce+0x48/0xc0
+   ethnl_default_set_doit+0xf4/0x230
+   genl_family_rcv_msg_doit+0xe8/0x160
+   genl_rcv_msg+0x220/0x2a0
+   netlink_rcv_skb+0x68/0x140
+   genl_rcv+0x40/0x60
+   netlink_unicast+0x338/0x3c0
+   netlink_sendmsg+0x19c/0x3f8
+   __sock_sendmsg+0x64/0xc0
+   __sys_sendto+0x124/0x198
+   __arm64_sys_sendto+0x30/0x48
 
-Move the reload to immediately after console_lock(), before 'if (ret)',
-so every break path below passes a fresh vc to the post-loop
-vcs_scr_updated().
+Set priv and index at probe. Writing the registers while the interface
+is down is harmless because open resets the MAC and
+bcmgenet_init_rx_coalesce() reapplies the stored values.
 
-Fixes: a287620312dc ("vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write")
-Cc: stable@kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://patch.msgid.link/20260901113131.2760010-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It was observed on a Raspberry Pi CM4, but should apply to all other
+genet devices.
+
+Fixes: 9f4ca05827a2 ("net: bcmgenet: Add support for adaptive RX coalescing")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260928105642.856210-1-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -633,6 +633,18 @@ vcs_write(struct file *file, const char
- 		ret = copy_from_user(con_buf, buf, this_round);
- 		console_lock();
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 151403442e4ea..5a891cf59f108 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -4156,8 +4156,11 @@ static int bcmgenet_probe(struct platform_device *pdev)
+ 	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
  
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer; recheck here, before
-+		 * if (ret), so every break path below passes a fresh vc to the
-+		 * post-loop vcs_scr_updated(). Return data written so far.
-+		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			return -ENXIO;
-+		}
-+
- 		if (ret) {
- 			this_round -= ret;
- 			if (!this_round) {
-@@ -644,17 +656,6 @@ vcs_write(struct file *file, const char
- 				return -EFAULT;
- 			}
- 		}
--
--		/* The vc might have been freed or vcs_size might have changed
--		 * while we slept to grab the user buffer, so recheck.
--		 * Return data written up to now on failure.
--		 */
--		vc = vcs_vc(inode, &viewed);
--		if (!vc) {
--			if (written)
--				break;
--			return -ENXIO;
--		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
+ 	/* Set default coalescing parameters */
+-	for (i = 0; i <= priv->hw_params->rx_queues; i++)
++	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
++		priv->rx_rings[i].priv = priv;
++		priv->rx_rings[i].index = i;
+ 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
++	}
+ 
+ 	/* Initialize u64 stats seq counter for 32bit machines */
+ 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
+-- 
+2.53.0
+
 
 
