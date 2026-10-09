@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E024D6C21;
-	Fri,  9 Oct 2026 14:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FFC3D647A;
+	Fri,  9 Oct 2026 14:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555415; cv=none; b=qwqz9wUQdFQUvuDM2ZkydRHnuGeTuv/vPdewp2geHAUcsMQAk76tIVi+r6xisK88BsRGAILX5A+S4CrB+WXIBZvamYTo4Ppa2Ji75QBdE/xGok4+79G1zUveA6Q4565NVpqbjH1DSxd2UCpm49gG2i/TTodkXdLrRFSKDpTPFd4=
+	t=1791555416; cv=none; b=Y92L8Afrzrp/AJLQtN2M+PBV07edDYbFRPlsXDr52W9qWTp0baavCLhv5HT5xJRotBCFbpgd0LzUNfjam1n7+5/WZrM6ZYtQy8AN9LcziefMLGOPCSfPSgABIYZOfHAXGeJZjAljkSk3KixMmBQyFbq3QBnaEzO5/1bDs7SOH3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555415; c=relaxed/simple;
-	bh=3g/GtHUiVcH9lpgfZglPJz+qlKWoD5MspCRw/Rw9/P0=;
+	s=arc-20240116; t=1791555416; c=relaxed/simple;
+	bh=Fzq+vspLYpcvIWccUcLtwuM9L3Vg0BbIEZOnvcBlQzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htEQdV1CJV9xJtSjEtJZ5DhuMsrJGZiMZPHyX7H+ags8COx4vH8Z6B0BWjfuhlpnkyi0GlXws79epNxi8UGvC6rgnELLLM0fMcj4gSLoLuIzi/IA7bN9a6hcD44l4PQzhV3Ke/o1V60PQdSv81Tka8sX/iFKoELP/FYz2dZwmRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zs6SUPxN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oqgXIARgKg0vD1rEKvVVU2v43cmyZQklSXbfQ+p3agfepsb4mryHil3TI1u3ENKslVxkczDXJ6ofQ2hEib0NTh4D3neA3rBbypGWfDDYrUbkAnpdfto+p1SqV1g2YgIGKa/rxSG7QymSzzdv29aJUsJ0Eb6Uo4jVU+mkvJKruCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn/tMIQ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zs6SUPxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A411C1F00893;
-	Fri,  9 Oct 2026 14:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn/tMIQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C96A1F000FF;
+	Fri,  9 Oct 2026 14:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555407;
-	bh=GjXXP5UzagTxE95OhJYk76c6CtBWBqgg0tBsNj79zzE=;
+	s=korg; t=1791555412;
+	bh=+E3or8JXXZElOics3fK88E165edIHnqtP5IT7w9nQgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zs6SUPxNdik72Ych8E3HA8iF3h4OtWXWRmGiLuhKV77Z83OMHScc9eaDT4aeXr8TT
-	 4L3wbPBaYCW5mlF/rNE3Eq8SnfDCli3ZtluVUwadr3aOS5Ce4sz9AIoI/NoxfOhW7y
-	 ObRQlVtVlOXNmgyAE82m07EnoJB7vjizbLMsyoI0=
+	b=vn/tMIQ7nOG6IWpG/DLQLozS0qGmu2/DqX+WIVphaeGsiT7A+c9xhL/xMl4lrUnFG
+	 ktBY8CkZ8zK3UEk+cwmc2BarWiNT7Abf6Th1H6R/zWY37x8dMdYBo1ZCIq0lLRdDCH
+	 cWhAH0nSmB51x4nQqb8HaTBwkiltQmI3ZcJn6Vvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/403] rds_tcp: close NULL deref window in rds_tcp_set_callbacks
-Date: Fri,  9 Oct 2026 16:06:48 +0200
-Message-ID: <20261009140953.205482480@linuxfoundation.org>
+	stable@kernel.org,
+	Yi Yang <yiyang13@huawei.com>
+Subject: [PATCH 6.18 049/403] vc_screen: reload vc pointer before if (ret) in vcs_write() to avoid UAF
+Date: Fri,  9 Oct 2026 16:06:50 +0200
+Message-ID: <20261009140953.250785568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -53,75 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit d2bfdbb69cf87676981b1043010b6224d84c6d3a upstream.
+commit 226bd5603371cd9f6642cbb9e9a677f445de3530 upstream.
 
-rds_tcp_set_callbacks() links a new rds_tcp_connection onto
-rds_tcp_tc_list under rds_tcp_tc_list_lock. It releases the
-lock, then assigns tc->t_sock = sock outside the lock.
+The reload of 'vc' added by commit 8fb9ea65c9d1 ("vc_screen: reload load
+of struct vc_data pointer in vcs_write() to avoid UAF") sits after the
+'if (ret)' block, so the copy-failure break path exits the loop without
+reloading vc. If the vc was kfree()'d via vc_port_destruct during the
+unlocked copy_from_user() window, the post-loop
+'if (written && vc) vcs_scr_updated(vc)' is reached with a stale
+non-NULL vc. The '&& vc' guard from commit a287620312dc ("vc_screen:
+fix null-ptr-deref in vcs_notifier() during concurrent vcs_write") only
+handles the NULL case, not this stale-non-NULL case; vcs_notifier() then
+reads param->vc->vc_num from freed memory:
 
-rds_tcp_tc_info() and rds6_tcp_tc_info() walk rds_tcp_tc_list
-under the same lock. Both dereference tc->t_sock->sk without
-a NULL check.
+  BUG: KASAN: slab-use-after-free in vcs_notifier+0x7c/0xd0
+  Read of size 2 at addr ffff888007149190
+  Call Trace:
+   vcs_notifier+0x7c/0xd0
+   atomic_notifier_call_chain+0x70/0xa0
+   vcs_scr_updated+0x77/0xa0
+   vcs_write+0x71b/0x7e0
+  Allocated by task: vc_allocate -> con_install -> tty_open
+  Freed by task: kfree <- vt_ioctl (VT_DISALLOCATE -> vc_port_destruct)
 
-A reader can acquire rds_tcp_tc_list_lock between the writer's
-spin_unlock and the t_sock store. It then sees a list entry
-whose t_sock is NULL. The dereference of tc->t_sock->sk is a
-NULL access.
+Move the reload to immediately after console_lock(), before 'if (ret)',
+so every break path below passes a fresh vc to the post-loop
+vcs_scr_updated().
 
-Move tc->t_sock = sock inside rds_tcp_tc_list_lock, before
-list_add_tail. A reader holding the lock then observes the
-linkage and the t_sock store together.
-
-The restore path is safe. rds_tcp_restore_callbacks() does
-list_del_init inside the lock. The matching tc->t_sock = NULL
-after unlink is harmless to readers holding the lock.
-
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260512142807.1855619-1-maoyi.xie@ntu.edu.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[ achender: resolved context conflict; tc->t_rtn initialization is not
-  present in this tree ]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a287620312dc ("vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write")
+Cc: stable@kernel.org
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Link: https://patch.msgid.link/20260901113131.2760010-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/tcp.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/tty/vt/vc_screen.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index f6d243c4e52cb..eab960d10ab08 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -232,16 +232,19 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
- 	rdsdebug("setting sock %p callbacks to tc %p\n", sock, tc);
- 	write_lock_bh(&sock->sk->sk_callback_lock);
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -633,6 +633,18 @@ vcs_write(struct file *file, const char
+ 		ret = copy_from_user(con_buf, buf, this_round);
+ 		console_lock();
  
--	/* done under the callback_lock to serialize with write_space */
-+	/* done under the callback_lock to serialize with write_space.
-+	 * Set t_sock inside rds_tcp_tc_list_lock so readers walking
-+	 * rds_tcp_tc_list under the same lock cannot observe an
-+	 * entry whose t_sock is NULL.
-+	 */
- 	spin_lock(&rds_tcp_tc_list_lock);
-+	tc->t_sock = sock;
- 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
- 	spin_unlock(&rds_tcp_tc_list_lock);
- 
- 	/* accepted sockets need our listen data ready undone */
- 	if (sock->sk->sk_data_ready == rds_tcp_listen_data_ready)
- 		sock->sk->sk_data_ready = sock->sk->sk_user_data;
++		/* The vc might have been freed or vcs_size might have changed
++		 * while we slept to grab the user buffer; recheck here, before
++		 * if (ret), so every break path below passes a fresh vc to the
++		 * post-loop vcs_scr_updated(). Return data written so far.
++		 */
++		vc = vcs_vc(inode, &viewed);
++		if (!vc) {
++			if (written)
++				break;
++			return -ENXIO;
++		}
++
+ 		if (ret) {
+ 			this_round -= ret;
+ 			if (!this_round) {
+@@ -644,17 +656,6 @@ vcs_write(struct file *file, const char
+ 				return -EFAULT;
+ 			}
+ 		}
 -
--	tc->t_sock = sock;
- 	tc->t_cpath = cp;
- 	tc->t_orig_data_ready = sock->sk->sk_data_ready;
- 	tc->t_orig_write_space = sock->sk->sk_write_space;
--- 
-2.53.0
-
+-		/* The vc might have been freed or vcs_size might have changed
+-		 * while we slept to grab the user buffer, so recheck.
+-		 * Return data written up to now on failure.
+-		 */
+-		vc = vcs_vc(inode, &viewed);
+-		if (!vc) {
+-			if (written)
+-				break;
+-			return -ENXIO;
+-		}
+ 		size = vcs_size(vc, attr, false);
+ 		if (size < 0) {
+ 			if (written)
 
 
