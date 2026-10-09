@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961F83BD64D;
-	Fri,  9 Oct 2026 14:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885B3BD64D;
+	Fri,  9 Oct 2026 14:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556834; cv=none; b=X+MzwsPK2jNot4bqvOwkcmMd4JlMAboFUVYmoEv8V5IdWYafgkhQkxJ+GYLueFdmdiFBddyPiS1qzpP9kFqPkzfFbl3hROorB/jNH1lG70/Pl0U3gcfxEjiq1zPkbTg39KzjqZXH65eyUrS2PwnN0oBTzlmETXsBctrk7UtqB2Q=
+	t=1791556836; cv=none; b=NTFUOw0YVw2cKMIy//YVTbQiraGYU9DGY51vVIXWkP5dYy/dfYlTKOPud6XsDCGly/ozbtxoVEqngixWZaPnulLdN5Q8CfD1fC28Dv2ciFHSc9CXGu8obJFamkrRLacsjUn8weG0FHJpBtXWMBf2O28Nmc25hH8rB1kzbGDY6y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556834; c=relaxed/simple;
-	bh=j3mAe0nczySXWn4YY6l0kiho5KznIN+d6iYWKfx+NCw=;
+	s=arc-20240116; t=1791556836; c=relaxed/simple;
+	bh=neeOok17qIaWh7S8YO9qBrxM+yikmrreBKOMNAnIeDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgqG+hhUtP0HW7fROp+thqalcD5Rs+O+l/5Qout+GlLxQHBwuyp17X71YTbhMzL+Y2CEOJCXoEzKKezQ0trtmnp569/LoofHKpwdciEp0PccaxK1uu7x/NTuMmJoJla38a+/dwvZe/XymgN703/+zeittjGmlXZrA2gej++PSYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmboNNZN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sjU1s2QSvSTghc8O9uIZoawGqEWfjc6UTIT0F8B5zROGGEZT5W7j6OsdT+8EtdRiaFVR1JqDvWyyj2bF03Eec+Sl7+LCvsRt58+5XEFrVwSp9ZgjpX22lIz/mwPlE6obYDPS3YL2pIv3opvLzgyAmflyMSO3MmFsfXo36qGNLnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfx7QGUi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmboNNZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81D61F000FF;
-	Fri,  9 Oct 2026 14:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfx7QGUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20ED1F000FF;
+	Fri,  9 Oct 2026 14:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556832;
-	bh=VQfXHEbaWutnn7MgCk/rGCfy41nNOb9VooHOWHmP2SQ=;
+	s=korg; t=1791556835;
+	bh=bxU6YZA54GPKBHJvV1AEfUI6r2tfNA0bniY9U4dktRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmboNNZN1gBgWSL6z6c40bbt/TP04+YRgCkC/uKfh6IBRj0n8Il7+TdJoZUK08KYh
-	 hTfRBcBTOCYdhrIJbVt/hfuAXvHNq/GXPPCA2GH6K2Ytlw2fSvgo4yr5Wq3wkfZenq
-	 SKqF/MKDbGzWcuT6iUirTTbu6X7TZLq2kv2C2pmM=
+	b=yfx7QGUi4Dh0yLE/DEhwGXxHvNq4Q5cTLb2gMk5B/AhlC2QolyykIrYYYYI+MitQ2
+	 7neCDeAYjESTPSk72WBjRlcmEFThoIjbYQ8dHLHjdCSDFXdaCUWUGQ78ntrxPndVRg
+	 3BapiL6HvEoVFW9R8F11iJeaYgV41cL2xHL1OLdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 7.2 249/428] serial: 8250_bcm7271: fix use-after-free in brcmuart_remove()
-Date: Fri,  9 Oct 2026 16:09:46 +0200
-Message-ID: <20261009140951.576773766@linuxfoundation.org>
+	Kendall Willis <k-willis@ti.com>,
+	Tony Lindgren <tony.lindgren@linux.intel.com>
+Subject: [PATCH 7.2 250/428] serial: 8250_omap: fix wake irq cleared during suspend
+Date: Fri,  9 Oct 2026 16:09:47 +0200
+Message-ID: <20261009140951.597655028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -52,50 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Kendall Willis <k-willis@ti.com>
 
-commit 189b9dc8c96ec9486482f27c1372b04a7152175e upstream.
+commit 73f3e6ca7a6a7c952977c7c94f1c6dddebcafa34 upstream.
 
-brcmuart_handle_irq() starts priv->hrt to work around a receive-timeout
-quirk of the 8250 core when hardware flow control is enabled; the timer
-callback brcmuart_hrtimer_func() dereferences priv.
+The wake irq was cleared in shutdown(), which runs during the suspend
+sequence, making it impossible to wake the system via UART.
+Move wake irq setup to probe() and teardown to remove() so the irq
+remains armed during suspend when the UART is a wakeup source.
 
-brcmuart_remove() cancels the hrtimer before it unregisters the port, so
-a receive-timeout interrupt that arrives in between re-arms the timer.
-After devm frees priv, the callback runs on freed memory.
-
-Unregister the port before cancelling the hrtimer.
-serial8250_unregister_port() shuts the port down and frees its IRQ, so
-brcmuart_handle_irq() can no longer restart the timer, and the final
-hrtimer_cancel() drains any timer that was armed before or during the
-unregister.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
 Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260909084002.686911-1-fanwu01@zju.edu.cn
+Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
+Signed-off-by: Kendall Willis <k-willis@ti.com>
+Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
+Link: https://patch.msgid.link/20260825-uart-wakeirq-fix-v2-1-0b9fba03d9b6@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1123,8 +1123,8 @@ static void brcmuart_remove(struct platf
- 	struct brcmuart_priv *priv = platform_get_drvdata(pdev);
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -711,12 +711,6 @@ static int omap_8250_startup(struct uart
+ 	struct uart_8250_dma *dma = &priv->omap8250_dma;
+ 	int ret;
  
- 	debugfs_remove_recursive(priv->debugfs_dir);
--	hrtimer_cancel(&priv->hrt);
+-	if (priv->wakeirq) {
+-		ret = dev_pm_set_dedicated_wake_irq(port->dev, priv->wakeirq);
+-		if (ret)
+-			return ret;
+-	}
+-
+ #ifdef CONFIG_PM
+ 	up->capabilities |= UART_CAP_RPM;
+ #endif
+@@ -787,7 +781,6 @@ static void omap_8250_shutdown(struct ua
+ 	}
+ 
+ 	disable_irq_nosync(port->irq);
+-	dev_pm_clear_wake_irq(port->dev);
+ 
+ 	serial8250_release_dma(up);
+ 	up->dma = NULL;
+@@ -1588,6 +1581,12 @@ static int omap8250_probe(struct platfor
+ 
+ 	priv->wakeirq = irq_of_parse_and_map(np, 1);
+ 
++	if (priv->wakeirq) {
++		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, priv->wakeirq);
++		if (ret)
++			goto err;
++	}
++
+ 	ret = serial8250_register_8250_port(&up);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "unable to register 8250 port\n");
+@@ -1603,6 +1602,7 @@ static int omap8250_probe(struct platfor
+ 
+ 	return 0;
+ err:
++	dev_pm_clear_wake_irq(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	flush_work(&priv->qos_work);
+@@ -1625,6 +1625,7 @@ static void omap8250_remove(struct platf
+ 	omap_8250_shutdown(&up->port);
  	serial8250_unregister_port(priv->line);
-+	hrtimer_cancel(&priv->hrt);
- 	brcmuart_free_bufs(&pdev->dev, priv);
- 	if (priv->dma_enabled)
- 		brcmuart_arbitration(priv, 0);
+ 	priv->line = -ENODEV;
++	dev_pm_clear_wake_irq(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	flush_work(&priv->qos_work);
 
 
