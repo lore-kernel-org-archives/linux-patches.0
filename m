@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5216919F40B;
-	Fri,  9 Oct 2026 14:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404083D8912;
+	Fri,  9 Oct 2026 14:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556872; cv=none; b=KQMpiZ5Q5PCxXp1JqRJjG10oIlrf01pHcZvRArVBlUhmj2CZ74g5t0VM2sLEWGhB6QQNnXg5XYnMCzswgJoYKzq69ApgUkBpJIQua1YzmGTTqLyu8GK6UXg481p3T0VeWuclw6edbQQjdYcd8LwZeTD2qmvAZ62OKlAPSm/jRKE=
+	t=1791556875; cv=none; b=SFkZ3h9u9+8Dv65IHDK3vq5vMT14N27LwviBUotf+FFT7k/yEhV+HnO/BfWJhYdfqgWzMZTYXF0wSpJzDvGpkJLIvMXJevT6cWrs7RhqisukGb6DF6/hag2vHCZuYDx6f53b4pyLwzNhKwDdH7zoJ+ZdXp3kmBjqrtpJ8P9y9Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556872; c=relaxed/simple;
-	bh=NQIV8OccRLlFnxh7/D4WfRD9QKEM57iE7MvqMh71o9Y=;
+	s=arc-20240116; t=1791556875; c=relaxed/simple;
+	bh=sFf30vdnuP37xFy8x/w2zEiYhcD3Y08yOlW1Z55kWJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYzbmHTGVNimRv96euDyNrT4AGvqG30g9Xqs5UqFLrKg09Qtx0oeI1O+QinsTfKdriELHMS1iQi+wGZRBd3PaKytbLA9OKup+4eGJ3MdlmyqSentJupDZE777PAzjXPh1zLlkzOLjl/3KmsP7GP0enrP9SS2fUKTmIlhzm1/WfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIT8Q2w4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L2iItSbtG1sw9dtWAUFQhhoxkCwOYZKTRaa716D4KbBB/sv4H1Q5QK6+qTEbnXSFQ0sQHL7gUTW2061xnJYH4SqALrkNKfkwl9j8nOCL0m6QpPF6034F+LizLmD3U5za2jVPAdgWrTgJqRqOZhfoZ+fYguQVRDLvicbdcoqygMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4qittCa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIT8Q2w4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84F51F000FF;
-	Fri,  9 Oct 2026 14:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4qittCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1C51F000FF;
+	Fri,  9 Oct 2026 14:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556871;
-	bh=yiTfHhalS6LmvcT5Q0kIfZi1Gz4YnDbR61oXvzB467w=;
+	s=korg; t=1791556874;
+	bh=AFm0ejGpPTu5I/BzOtaXSxASTzN6biTdy8NIyLSFpfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PIT8Q2w44rm8WHidtvNbpbVvWbOem26nwceUmnalK2t8CWRY/BAkbBFnoPS+2KUm7
-	 LX5FELoFy4dTUjIhdbfrgkZStyM5/QaDSx+iDtg8+l9v1SJ/+4FCOek588ppEDFWZm
-	 KD7MtkvQXQHJXBb3ktddnArRhaPnLvuVjhnBFY7w=
+	b=M4qittCa7dejXoNOe87zP0w4YbTLrBLJ4/a2Sd/7QFd15zVm3ywJZE3adNk/e1Era
+	 CXOOiodXIPkiBjGIPJYNufzQpX7aUTur1k9Zfi2XsR2y1Ld6UIvlnCWhlQSxsTmOvF
+	 5M2ZboZJ30/Ke4sdV+hFdVJs5XyCcLLQyUkSb2DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 7.2 256/428] serial: ma35d1: Fix clock reference leak in ma35d1serial_probe()
-Date: Fri,  9 Oct 2026 16:09:53 +0200
-Message-ID: <20261009140951.728220199@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 280/403] USB: serial: fix driver deregistration order
+Date: Fri,  9 Oct 2026 16:10:41 +0200
+Message-ID: <20261009140958.740388171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +46,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 98401cf912fe8a081ef8e500c421b6d957b55a99 upstream.
+commit 646e5b28b4fdbc1b828a2398d6ced2c1dd308a46 upstream.
 
-of_clk_get() returns a clock with a reference that has to be released
-with clk_put(). ma35d1serial_probe() never does that, so the reference
-is leaked on the probe error paths and also when the port is removed.
+USB serial driver modules register one driver for the USB bus and one or
+more drivers for the ports on the USB serial bus.
 
-Release it on the error paths and in ma35d1serial_remove().
+When unloading a driver module, the USB driver must be deregistered
+before the USB serial bus drivers so that I/O is stopped before
+unbinding the ports to avoid use-after-free in completion handlers
+accessing port data.
 
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Cc: stable@kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917155650.2161274-1-vulab@iscas.ac.cn
+Note that the "new_id" attributes must first be removed to prevent new
+ids from being added and triggering a probe of the USB driver after it
+has been deregistered.
+
+Fixes: 765e0ba62613 ("usb-serial: new API for driver registration")
+Cc: stable@vger.kernel.org	# 3.4
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/ma35d1_serial.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/serial/bus.c        |    4 ++++
+ drivers/usb/serial/usb-serial.c |   21 ++++++++++++++++++---
+ include/linux/usb/serial.h      |    1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -728,7 +728,7 @@ static int ma35d1serial_probe(struct pla
- 
- 	ret = clk_prepare_enable(up->clk);
- 	if (ret)
--		goto err_iounmap;
-+		goto err_put_clk;
- 
- 	if (up->port.line != 0)
- 		up->port.uartclk = clk_get_rate(up->clk);
-@@ -755,6 +755,9 @@ err_free_irq:
- err_clk_disable:
- 	clk_disable_unprepare(up->clk);
- 
-+err_put_clk:
-+	clk_put(up->clk);
-+
- err_iounmap:
- 	iounmap(up->port.membase);
- 	return ret;
-@@ -770,6 +773,7 @@ static void ma35d1serial_remove(struct p
- 
- 	uart_remove_one_port(&ma35d1serial_reg, port);
- 	clk_disable_unprepare(up->clk);
-+	clk_put(up->clk);
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -169,3 +169,7 @@ void usb_serial_bus_deregister(struct us
+ 	free_dynids(driver);
  }
  
- static int ma35d1serial_suspend(struct platform_device *dev, pm_message_t state)
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver)
++{
++	driver_remove_file(&driver->driver, &driver_attr_new_id);
++}
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1472,7 +1472,7 @@ int __usb_serial_register_drivers(struct
+ {
+ 	int rc;
+ 	struct usb_driver *udriver;
+-	struct usb_serial_driver * const *sd;
++	struct usb_serial_driver * const *sd, * const *s;
+ 
+ 	/*
+ 	 * udriver must be registered before any of the serial drivers,
+@@ -1525,9 +1525,11 @@ int __usb_serial_register_drivers(struct
+ 	return 0;
+ 
+ err_deregister_drivers:
++	for (s = serial_drivers; s < sd; ++s)
++		usb_serial_bus_remove_new_id(*s);
++	usb_deregister(udriver);
+ 	while (sd-- > serial_drivers)
+ 		usb_serial_deregister(*sd);
+-	usb_deregister(udriver);
+ err_free_driver:
+ 	kfree(udriver);
+ 	return rc;
+@@ -1545,10 +1547,23 @@ EXPORT_SYMBOL_GPL(__usb_serial_register_
+ void usb_serial_deregister_drivers(struct usb_serial_driver *const serial_drivers[])
+ {
+ 	struct usb_driver *udriver = (*serial_drivers)->usb_driver;
++	struct usb_serial_driver * const *sd;
++
++	/*
++	 * udriver must be deregistered before the serial drivers so that
++	 * I/O is stopped before unbinding the ports.
++	 *
++	 * Remove the new_id attributes to prevent ids from being added and
++	 * triggering a probe of udriver after it has been deregistered.
++	 */
++	for (sd = serial_drivers; *sd; ++sd)
++		usb_serial_bus_remove_new_id(*sd);
++
++	usb_deregister(udriver);
+ 
+ 	for (; *serial_drivers; ++serial_drivers)
+ 		usb_serial_deregister(*serial_drivers);
+-	usb_deregister(udriver);
++
+ 	kfree(udriver);
+ }
+ EXPORT_SYMBOL_GPL(usb_serial_deregister_drivers);
+--- a/include/linux/usb/serial.h
++++ b/include/linux/usb/serial.h
+@@ -380,6 +380,7 @@ void usb_serial_handle_dcd_change(struct
+ 
+ int usb_serial_bus_register(struct usb_serial_driver *device);
+ void usb_serial_bus_deregister(struct usb_serial_driver *device);
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver);
+ 
+ extern const struct bus_type usb_serial_bus_type;
+ extern struct tty_driver *usb_serial_tty_driver;
 
 
