@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8684E36D1;
-	Fri,  9 Oct 2026 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB8348C403;
+	Fri,  9 Oct 2026 14:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557262; cv=none; b=C3nAUhepVgegeqxYclPOFMEwHDXinkMTB6447o9FYbtS8hrddceOWe4w5AZTleiHT8Z8CKLgfu9Wgn16yIMblISxvGJzrYovabLGHR1B+Qhrng9y/VI+PaNwzaP2KWRJoxUgXgJffTe7X8V3/B9ycRfvu8MI4SjOS/SrwT62s9U=
+	t=1791557264; cv=none; b=BhL66ARyRL8MHXM189zyXIcCfTpsv7iJ3FQtXyL1/9dFbxnEREwX6QJYWYIIsz1QiHg9DswM4i3ETy6Jl/XwdsvrTJTxaq+D1CdZP8ZJ7CHo1iUGkAtOGIf/rjZoNWQ3tjU/fPO0I1IkhpJbIKBLciKNbYh8ls6Iw8tlU63NUPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557262; c=relaxed/simple;
-	bh=BdbhP+iXhOGvvrMVu1lTDhDOYLrxbkW6xZoPPJqBWOk=;
+	s=arc-20240116; t=1791557264; c=relaxed/simple;
+	bh=9i9lqTs3WGGrcmLoATaBiIoEJPBRSDhHjncdoIxCfB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQyk57/O+0HfAHCIHq0rWMQyY/cOaagMnUJWlANah1FmyxzI49TvGRirYe+mWJ3E15Vh1of9VjvbeTAmVzU/YyScz3feNZFRm06KtH6XdiuGXO/9Dv70/ZtNhgTbmU4oNbAbRvA+3xWfZKPTIMi+tF1E4hhD6fmuzGwBwCu0CBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaNXqh0Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A4JhO9fTw/y9LB+uvUxVylBzWyvtvoklc/NB0X/brGwC2QIwu0tVCUDdyQ+rqFFK6tyH7eroFdF+PxQMERjFvDKtEREKhUrClbAuns+OBMQifHEF+HE/E2W58vApZre+bk5v0U7pE4ITwm+WlqbGF+znQf22cMlBJ3wDgIXFlwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxONzOgY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaNXqh0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A9B1F000FF;
-	Fri,  9 Oct 2026 14:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxONzOgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4557B1F000FF;
+	Fri,  9 Oct 2026 14:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557261;
-	bh=8bXxg8pJJaxfQbfDidSRllaIxfXkuS86CqgrjywRvTE=;
+	s=korg; t=1791557263;
+	bh=sNBDkIPtxH+xG0O0gj1Q9qBEV+WHWwILl6OCeuG7Fh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GaNXqh0QFC6QoXrT5GufUbmutxamBs3fUovD1DBPyXkidJCEDaMxCAr7OM3v2vKQh
-	 VBR+/IiMSEvCMHGY8GD7JYcnhMFrT9M2Yjoi24bLOwxfn0gLtfMAW94fyq/M+C7/gt
-	 hd+Ag2/rURuVHmUTMoiULUgIFESGzyNuu4inpCNc=
+	b=CxONzOgYE2euFpEgIb1mFkChk5SHncZMUr3iWbuIqI+tZyFqWgsPgKglkOGURW+b0
+	 xzjhUAgxfk0NCz4ZSJ7o9PtreoG0slBuFJnyXK3qCPnxAsmO9d6gjTREI07gRYeaC8
+	 8yh4elsRS2OLoIJFtpZX1wSQ7fqGLHGZUwlu94yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Zhang <george.zhang@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Arthur Heymans <arthur@aheymans.xyz>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/403] drm/amd/display: Preserve eDP mode on initial ASSR failure
-Date: Fri,  9 Oct 2026 16:12:14 +0200
-Message-ID: <20261009141001.034559353@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 328/428] wifi: mac80211: keep paired old chanctx alive
+Date: Fri,  9 Oct 2026 16:11:05 +0200
+Message-ID: <20261009140953.342416395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,78 +47,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arthur Heymans <arthur@aheymans.xyz>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 5e08102d1d336593160d1434261d50b0c0f6cbe6 ]
+commit 3412e9a800786d1dec4a58367db1cba275e7ef11 upstream.
 
-Commit 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when
-reinitializing hardware") made ASSR failure fall back to the default panel
-mode unless eDP mode had previously been applied.
+An in-place replacement keeps reciprocal replace_ctx pointers between
+the old WILL_BE_REPLACED chanctx and the new REPLACES_OTHER chanctx.
+However, the early free paths only consider assigned and reserved link
+users when deciding whether to free the old chanctx.
 
-However, dc_link is zero-initialized and DP_PANEL_MODE_DEFAULT is zero.
-Before the first call to dp_set_panel_mode(), panel_mode therefore looks
-like a previously applied default mode. If ASSR setup fails during the
-first link training attempt, the driver incorrectly trains the eDP link
-using the default scrambling mode.
+That lets the old chanctx be freed too early while the replacement
+partner still points back to it, either when the last assigned link is
+released or when that link successfully reassigns to another existing
+context. Later unreserve and switch-finalization paths can then follow a
+stale replace_ctx pointer.
 
-On a Google Vilboz Chromebook running self-built coreboot firmware and
-PSP verstage, this leaves the panel mostly black with corrupted output
-along the top edge.
+Keep a paired old chanctx alive until the replacement pair has been torn
+down. Apply the same check to both __ieee80211_link_release_channel()
+and ieee80211_link_use_reserved_reassign(). If the replacement is later
+abandoned, ieee80211_link_unreserve_chanctx() already tears down the
+pairing before freeing the old chanctx once no users remain.
 
-Track whether panel_mode has actually been initialized, and only consult
-the saved mode after it has been applied. This retains the recovery
-behavior while preserving eDP mode during initial link training.
-
-Fixes: 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when reinitializing hardware")
-Assisted-by: Pi:gpt-5.6-sol
-Reviewed-by: George Zhang <george.zhang@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Arthur Heymans <arthur@aheymans.xyz>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ccb6c2702033f1002b45807fb3cc938760f26f78)
-Cc: stable@vger.kernel.org # 6.4.x
-[ sashal: Adjusted context to preserve the existing diagnostic-message formatting in dp_set_panel_mode(). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/b9b582b0db3814f641648b8886bb50f9d68f93ac.1785730815.git.zhilinz@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc.h                                    |    1 +
- drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/chan.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -1624,6 +1624,7 @@ struct dc_scratch_space {
- 	struct ddc_service *ddc;
- 
- 	enum dp_panel_mode panel_mode;
-+	bool panel_mode_initialized;
- 	bool aux_mode;
- 
- 	/* Private to DC core */
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
-@@ -91,6 +91,7 @@ void dp_set_panel_mode(struct dc_link *l
- 	}
- 
- 	link->panel_mode = panel_mode;
-+	link->panel_mode_initialized = true;
- 	DC_LOG_DETECTION_DP_CAPS("Link: %d eDP panel mode supported: %d "
- 		 "eDP panel mode enabled: %d \n",
- 		 link->link_index,
-@@ -1293,7 +1294,8 @@ void edp_set_panel_assr(struct dc_link *
- 
- 		result = cp_psp->funcs.enable_assr(cp_psp->handle, link);
- 
--		if (!result && link->panel_mode != DP_PANEL_MODE_EDP)
-+		if (!result && link->panel_mode_initialized &&
-+		    link->panel_mode != DP_PANEL_MODE_EDP)
- 			*panel_mode = DP_PANEL_MODE_DEFAULT;
- 	}
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -231,6 +231,13 @@ int ieee80211_chanctx_refcount(struct ie
+ 	return num;
  }
+ 
++static bool
++ieee80211_chanctx_has_replace_partner(struct ieee80211_chanctx *ctx)
++{
++	return ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
++	       ctx->replace_ctx;
++}
++
+ static int ieee80211_num_chanctx(struct ieee80211_local *local, int radio_idx)
+ {
+ 	struct ieee80211_chanctx *ctx;
+@@ -1403,6 +1410,7 @@ void ieee80211_link_unreserve_chanctx(st
+ {
+ 	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_chanctx *ctx = link->reserved_chanctx;
++	struct ieee80211_chanctx *old_ctx = NULL;
+ 
+ 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
+ 
+@@ -1416,6 +1424,7 @@ void ieee80211_link_unreserve_chanctx(st
+ 			if (WARN_ON(!ctx->replace_ctx))
+ 				return;
+ 
++			old_ctx = ctx->replace_ctx;
+ 			WARN_ON(ctx->replace_ctx->replace_state !=
+ 			        IEEE80211_CHANCTX_WILL_BE_REPLACED);
+ 			WARN_ON(ctx->replace_ctx->replace_ctx != ctx);
+@@ -1426,6 +1435,11 @@ void ieee80211_link_unreserve_chanctx(st
+ 
+ 			list_del_rcu(&ctx->list);
+ 			kfree_rcu(ctx, rcu_head);
++
++			if (ieee80211_chanctx_refcount(sdata->local,
++						       old_ctx) == 0)
++				ieee80211_free_chanctx(sdata->local, old_ctx,
++						       false);
+ 		} else {
+ 			ieee80211_free_chanctx(sdata->local, ctx, false);
+ 		}
+@@ -1705,7 +1719,8 @@ ieee80211_link_use_reserved_reassign(str
+ 
+ 	ieee80211_check_fast_xmit_iface(sdata);
+ 
+-	if (ieee80211_chanctx_refcount(local, old_ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, old_ctx) == 0 &&
++	    !ieee80211_chanctx_has_replace_partner(old_ctx))
+ 		ieee80211_free_chanctx(local, old_ctx, false);
+ 
+ 	ieee80211_recalc_chanctx_min_def(local, new_ctx);
+@@ -2190,7 +2205,8 @@ void __ieee80211_link_release_channel(st
+ 	}
+ 
+ 	ieee80211_assign_link_chanctx(link, NULL, false);
+-	if (ieee80211_chanctx_refcount(local, ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, ctx) == 0 &&
++	    !ieee80211_chanctx_has_replace_partner(ctx))
+ 		ieee80211_free_chanctx(local, ctx, skip_idle_recalc);
+ 
+ 	link->radar_required = false;
 
 
