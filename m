@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1960C4E80D9;
-	Fri,  9 Oct 2026 14:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7BC4E36D1;
+	Fri,  9 Oct 2026 14:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557036; cv=none; b=Mq8yCFVWXDxsL1cE3GSVaWpnWgFqQ6XZymwJEHF7LuJCFZX4sa6XlIEiLEkwaoNhqmRwzxGtvnFtskVOl/jg3pdc7Hx+iMHC8lhqf9rmUDkqxdXjLDXxJCktc2luDgnux2CV7kPtoOOHgwMxVJluZukdG29xTAjbQ8cROoeTeO8=
+	t=1791557040; cv=none; b=S6YWQqxDLWbxt1swfKnjSQYwAOCWOI48B81WkdlAPVSjZU3Qt/reK79ALVrSfw5KNzpGnIVersPWnu2nEJwcGTp58jxwkHEpk4xrYgr0t7z4cdKZcBTiujUv+bXzIqebz8AYqSJMTk58JE20NUTSWZhmhB6mVRe/kau7sobZWrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557036; c=relaxed/simple;
-	bh=XcpwmIDyxZfCb2ukLAHVbzkwO1K4nYWu7tO1+jyPTFY=;
+	s=arc-20240116; t=1791557040; c=relaxed/simple;
+	bh=jQkUXlLIN91ADymA0rIOs7pob2nnnnLnUDA5XlAAFFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=op2quctzZZ5GeLon5g1I71n6we5aJRKnwHZl2P7diJ6qMnQzJs7VsGO0zXEVH0EfGeypPk55y6YE1e3e7aLkkABI+Kl7j/tpH4B5JrU3YVbQJWaNNtz6RijJk/0i7ZwQqzZ4yYt6D7NXYZA7FwHN84KeNK4RSGmVVCm03ATQ+9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUECpxHS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NwomK71nmPvoKjGKoxgkTGzLETL+Xy26DW9O5ov4De9x0zZeIWkR7EgNmE6srssWfDoo0YaY4W4XH4Xzlk9n6uc2kxGnZsmD9QDAN+4f2T0TOhkUktMoUajVynOHHr18Qyjsw7AomvIp+zewPyGQJl5ucg9Tyi6N3kcPW0OMBfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHUH91Tq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUECpxHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8BD1F000FF;
-	Fri,  9 Oct 2026 14:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHUH91Tq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A121F000FF;
+	Fri,  9 Oct 2026 14:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557034;
-	bh=x2jG66RH7kkNSgS08Sasoti2ft3iWo4h9e6/VLwFSCc=;
+	s=korg; t=1791557037;
+	bh=jolyUq/GMVLdNBu/bfqKaMHueRiYDRDVE2av6i6+IsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUECpxHSAa7udUtCGr1XQ9WT/EImGa5/KkS6ojaYj+r7iGT5qwQUzjQ23ZNrTqd0O
-	 pIh7FVtWdrdAE7pexXSWeHynuacEovd0NAFfBL3ZuudT6+AziGP+BIkk12N5kI3pAO
-	 kMFUnphAQCA/+9GtavILest54/7gF0ttDAgCs1ag=
+	b=wHUH91TqZVKMjglM+09EkXmBHI8fpbFbAqjN/dJLIPZny3UA/z8OMBem8OJvcOBHx
+	 gaL6rg/cIwIDUl2IxfrkIk4ZAb7GP2VKGGjWwW+6FNZquz0CCAVcLzPxzhNSb9+bYc
+	 6rBmgUVcNDQVwEpJVrI5MsCL2mbUahZSvG+1skmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Ivan Mikhaylov <fr0st61te@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 336/403] iio: proximity: vcnl3020: fix ISR bitmask check in IRQ handler
-Date: Fri,  9 Oct 2026 16:11:37 +0200
-Message-ID: <20261009141000.109331973@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.2 286/428] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
+Date: Fri,  9 Oct 2026 16:10:23 +0200
+Message-ID: <20261009140952.383854053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +46,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 7d38af8f20239a66e90de7632a79c9425256c574 upstream.
+commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
 
-The threaded IRQ handler contained multiple issues in handling interrupt
-events and clearing status flags:
+On 64-bit systems, outgoing BR/EDR connections always fall back to page
+scan repetition mode R2 with no clock offset once the system has been
+up for more than five minutes, even when inquiry found the peer only
+seconds earlier. This lengthens paging and can increase the risk of a
+Page Timeout.
 
-1. ISR bit check: The handler incorrectly checked the Interrupt Status
-   Register (VCNL_ISR) against VCNL_ICR_THRES_EN (BIT(1)), which is a
-   bitmask meant for the Control Register (VCNL_PS_ICR). In VCNL_ISR,
-   BIT(1) corresponds only to low-threshold interrupts. A high-threshold
-   interrupt (VCNL_INT_TH_HI, BIT(0)) on its own was completely ignored and
-   returned IRQ_NONE.
+The inquiry cache stores jiffies in __u32 timestamps, but its age
+helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
+-300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
+after boot on 64-bit systems. Assigning it to __u32 then drops the upper
+32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
+2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
+hci_inquiry() is affected by the same truncation when checking the whole
+cache. 32-bit systems are unaffected because unsigned long is 32 bits
+wide there.
 
-2. Event direction & channel index: The handler unconditionally pushed a
-   RISING event code on channel index 1. The driver only registers a single
-   proximity channel (index 0), and low-threshold interrupts should be
-   reported with IIO_EV_DIR_FALLING.
+Use unsigned long for both timestamps so they have the same width as
+jiffies on 32-bit and 64-bit systems, and update the debugfs format
+specifier accordingly.
 
-3. ISR clearing: The write-back to acknowledge the interrupt only preserved
-   BIT(1) instead of masking against both valid status bits.
-
-Fix this by checking both VCNL_INT_TH_HI and VCNL_INT_TH_LOW bits in
-VCNL_ISR, pushing separate IIO events with the correct direction and
-channel index (0), and properly clearing handled status bits.
-
-Fixes: 3363fbbe19e5 ("iio: proximity: vcnl3020: add periodic mode")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/vcnl3020.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ include/net/bluetooth/hci_core.h |    4 ++--
+ net/bluetooth/hci_debugfs.c      |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/proximity/vcnl3020.c
-+++ b/drivers/iio/proximity/vcnl3020.c
-@@ -584,16 +584,26 @@ static irqreturn_t vcnl3020_handle_irq_t
- 		return IRQ_HANDLED;
- 	}
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -62,7 +62,7 @@ struct inquiry_entry {
+ 		NAME_PENDING,
+ 		NAME_KNOWN,
+ 	} name_state;
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	struct inquiry_data	data;
+ };
  
--	if (!(isr & VCNL_ICR_THRES_EN))
-+	if (!(isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW)))
- 		return IRQ_NONE;
+@@ -78,7 +78,7 @@ struct discovery_state {
+ 	struct list_head	all;	/* All devices found during inquiry */
+ 	struct list_head	unknown;	/* Name state not known */
+ 	struct list_head	resolve;	/* Name needs to be resolved */
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	bdaddr_t		last_adv_addr;
+ 	u8			last_adv_addr_type;
+ 	s8			last_adv_rssi;
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -364,7 +364,7 @@ static int inquiry_cache_show(struct seq
  
--	iio_push_event(indio_dev,
--		       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 1,
--				            IIO_EV_TYPE_THRESH,
--				            IIO_EV_DIR_RISING),
--		       iio_get_time_ns(indio_dev));
-+	if (isr & VCNL_INT_TH_HI) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_RISING),
-+			       iio_get_time_ns(indio_dev));
-+	}
-+
-+	if (isr & VCNL_INT_TH_LOW) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_FALLING),
-+			       iio_get_time_ns(indio_dev));
-+	}
- 
--	rc = regmap_write(data->regmap, VCNL_ISR, isr & VCNL_ICR_THRES_EN);
-+	rc = regmap_write(data->regmap, VCNL_ISR, isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW));
- 	if (rc)
- 		dev_err(data->dev, "Error (%d) writing in reg (0x%x)\n",
- 			rc, VCNL_ISR);
+ 	list_for_each_entry(e, &cache->all, all) {
+ 		struct inquiry_data *data = &e->data;
+-		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
++		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
+ 			   &data->bdaddr,
+ 			   data->pscan_rep_mode, data->pscan_period_mode,
+ 			   data->pscan_mode, data->dev_class[2],
 
 
