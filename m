@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011E33B19DE;
-	Fri,  9 Oct 2026 14:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13143B582F;
+	Fri,  9 Oct 2026 14:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556574; cv=none; b=MXv/VLzILTu6XsLfaKip3XuGS04RvWUcxNuB8r0cUfkOH2S3iRGy6DMFIGbbvko5rkc/XO7k7cTI5SbmSG0TKBSr1SiKeVEY3fNi2mUxn8okvT0Pb4HyBJny8v6fF2qCOqEHjmFvuMBf5eVrw476uEduToEWFY73F1g2X82kXNY=
+	t=1791556577; cv=none; b=ReDDcELG2isM6eIujYjFMrTlb5bXJRpjgTY6MeioOqDEiknH69T8MOEAKbQG7CP3Y5P17D72yQUZvek8diIOGHFdek7V821XkMN5mA3B0yZh0NP++0efLcM80fKyFYCIhYycePPeXZP+onMcfqb+8e6OMzr/tD8o3Xr+KSZh0fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556574; c=relaxed/simple;
-	bh=0xMqId9dgDLCI21eAJo6LZzyrcZaHvaHUZurlcPyaMw=;
+	s=arc-20240116; t=1791556577; c=relaxed/simple;
+	bh=1bJy6MYyiXCXCTvbIJb7z56Y5McUJrjVdVE6j3f6g7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBUBju8AShFiJSz2LpjpTfvwIkbLHLpa+VMAD4f92P4b633Dk9cZeTK4501m+l1/2aCcY5gRei290AEUkpDMLP9nG9/XcWPxDmLKu5tqaVc5tK5IVqS+/8GYb0JiDahA4PG4gqwMGFxJ/VO1uTZAvjQ8LDbXMzCV34TFZm6LUXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hce6VQFL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmkarCvBbNxuPpMCJFzbqXMDa0ljKFYcLNqNsISEH6l7CwD5eCXRI4BtwQFV1GcUUaVUCEghKSPy5H1UczWGHjwbIKbSDscu/OwEql2Kh4H39SGp43d6d3uaqZtbdFLfrJoyBauW9tAyAi9Ttk+XI34+hJl6IfhdzA8cZ7yFoms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8d9AxJT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hce6VQFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8AB1F000FF;
-	Fri,  9 Oct 2026 14:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8d9AxJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B9E1F000FF;
+	Fri,  9 Oct 2026 14:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556572;
-	bh=evm22oyOvxZi0Z9WBWvS5+ohU0qEXMH9y7Gfov3LVsk=;
+	s=korg; t=1791556575;
+	bh=lpTnqNApPQ0NNhNU1ddZkcFCAMR7KdYcD6SN0ubXxbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hce6VQFLntDlYDwqtuvYk14KCQLM8oLBsM6Wl7zqAOAEx8PR7Xa3s2hP2k/yARotJ
-	 ZtfCFBfpblfr7MBAcrM36HwmMFFtK3X7cMPjo3WV58DM7kzf/BLzNNCJeTEGJTGDLb
-	 02+6KoUDd4uHRtpRilNS7hcJsBr8xm6ujfTBQA6E=
+	b=N8d9AxJTjS29Ep0Z1c0BPxZB13CHv3vGIsuqUQcj3/ZnybOBb2acRit6+8HSwhz27
+	 nrBW22Jpb0gih8OPCrdqRu8qK9pU+PUTttTobMl3hthPQefKGYD4tZPnzEbtT9Hciv
+	 mNyc2WPRukUb0caJk4c4BX+aut6WNc17yyoo0BRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 257/403] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
-Date: Fri,  9 Oct 2026 16:10:18 +0200
-Message-ID: <20261009140958.184754500@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 7.2 203/428] rust_binder: reschedule node refcount update on thread exit
+Date: Fri,  9 Oct 2026 16:09:00 +0200
+Message-ID: <20261009140950.590490061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +46,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 2abb25273c82061dd4670690c81c319c03740bf6 upstream.
+commit 2a74ccd1bcc170e66525f34e9de8652b57e2cf3d upstream.
 
-Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
-runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
-If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
-then runs the same L2 with TPR virtualization disabled, KVM will fail to
-refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
-virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
-L1 by proxy) read and write L0's TPR.
+When a thread exits via BINDER_THREAD_EXIT, its pending work items are
+cancelled. If a thread exits while holding a pending node refcount
+increment (e.g. pushed as deferred work to that thread), the refcount
+increment was previously dropped because Node::cancel() and
+NodeWrapper::cancel() were no-ops.
 
-Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
-Cc: stable@vger.kernel.org
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Dropping the refcount update leaves the node's delivery state and count
+state desynchronized, and userspace will not receive the notification,
+which can cause the node to never be freed from the process's nodes tree
+when all external references are dropped.
+
+Fix this by implementing DeliverToRead::cancel() for Node and NodeWrapper
+to move the pending refcount update to the process's work queue on thread
+exit so another thread can deliver it to userspace.
+
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260903-binder-thread-exit-node-v1-1-be09ff14f6a4@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/android/binder/node.rs         |   20 ++++++++++++++++---
+ drivers/android/binder/node/wrapper.rs |   34 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -1700,6 +1700,9 @@ static void copy_vmcs12_to_shadow(struct
- static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
- {
- #ifdef CONFIG_KVM_HYPERV
-+	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
-+				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
-+				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
- 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
- 	struct hv_enlightened_vmcs *evmcs = nested_vmx_evmcs(vmx);
- 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(&vmx->vcpu);
-@@ -1708,6 +1711,9 @@ static void copy_enlightened_to_vmcs12(s
- 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
- 	vmcs12->guest_rip = evmcs->guest_rip;
+--- a/drivers/android/binder/node.rs
++++ b/drivers/android/binder/node.rs
+@@ -49,9 +49,9 @@ pub(crate) struct CouldNotDeliverCritica
+ ///   about to drop the weak reference, then the strong increment could be processed after the
+ ///   other thread has already exited, which would be too late.
+ ///
+-/// Note that trying to create a `ListArc` to the node can succeed even if `has_normal_push` is
++/// Note that trying to create a `ListArc` to the node can succeed even if `has_pushed_node` is
+ /// set. This is because another thread might just have popped the node from a todo list, but not
+-/// yet called `do_work`. However, if `has_normal_push` is false, then creating a `ListArc` should
++/// yet called `do_work`. However, if `has_pushed_node` is false, then creating a `ListArc` should
+ /// always succeed.
+ ///
+ /// Like the other fields in `NodeInner`, the delivery state is protected by the process lock.
+@@ -733,7 +733,21 @@ impl DeliverToRead for Node {
+         self.do_work_locked(writer, owner_inner)
+     }
  
-+	if ((hv_clean_fields & runtime_controls) != runtime_controls)
-+		vmx->nested.force_msr_bitmap_recalc = true;
+-    fn cancel(self: DArc<Self>) {}
++    fn cancel(self: DArc<Self>) {
++        let _drop_outside_lock;
++        let mut owner_inner = self.owner.inner.lock();
 +
- 	if (unlikely(!(hv_clean_fields &
- 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_ENLIGHTENMENTSCONTROL))) {
- 		hv_vcpu->nested.pa_page_gpa = evmcs->partition_assist_page;
++        // We only do something on BINDER_THREAD_EXIT, not process exit.
++        if owner_inner.is_dead {
++            return;
++        }
++
++        // If BINDER_THREAD_EXIT is invoked on a thread with a pending node refcount update, we
++        // should move ourselves to ensure the refcount update is still delivered.
++        if let Some(node) = ListArc::try_from_arc_borrow(self.as_arc_borrow()) {
++            _drop_outside_lock = owner_inner.push_work(&self.owner, node);
++        }
++    }
+ 
+     fn should_sync_wakeup(&self) -> bool {
+         false
+--- a/drivers/android/binder/node/wrapper.rs
++++ b/drivers/android/binder/node/wrapper.rs
+@@ -57,7 +57,39 @@ impl DeliverToRead for NodeWrapper {
+         node.do_work_locked(writer, owner_inner)
+     }
+ 
+-    fn cancel(self: DArc<Self>) {}
++    fn cancel(self: DArc<Self>) {
++        let _drop_outside_lock;
++        let node = &self.node;
++        let mut owner_inner = node.owner.inner.lock();
++
++        // We only do something on BINDER_THREAD_EXIT, not process exit.
++        if owner_inner.is_dead {
++            return;
++        }
++
++        // We transfer the responsibility of the node refcount update to the scheduled Node because
++        // NodeWrapper has no way to re-create the ListArc.
++        let inner = node.inner.access_mut(&mut owner_inner);
++
++        let ds = &mut inner.delivery_state;
++        assert!(ds.has_pushed_wrapper);
++        assert!(ds.has_strong_zero2one);
++        ds.has_pushed_wrapper = false;
++
++        // We are changing the state to one where the Node is the strong zero2one update instead of
++        // the wrapper.
++        ds.has_weak_zero2one = false;
++
++        if !ds.has_pushed_node {
++            if let Some(node2) = ListArc::try_from_arc_borrow(node.as_arc_borrow()) {
++                ds.has_pushed_node = true;
++                _drop_outside_lock = owner_inner.push_work(&node.owner, node2);
++            } else {
++                // This can't actually happen.
++                ds.has_strong_zero2one = false;
++            }
++        }
++    }
+ 
+     fn should_sync_wakeup(&self) -> bool {
+         false
 
 
