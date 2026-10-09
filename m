@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E26F459AD2;
-	Fri,  9 Oct 2026 14:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981EF459AD2;
+	Fri,  9 Oct 2026 14:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556981; cv=none; b=Ictb0WBUvdqCmAw4YwEW30jHHjChozJxkClIqewrqVSuWwuyK/s9occ8IK732MRAZw8ZQcceiVadvTb5nd9NH2n8GyAq7BKjN+Az0yWF3cJTWAJHcPu7pM/PmZyt2hWEmN0ErKLloE6ASf8C2o7jYGgZIU0o3OK4HaYPIrF+NP4=
+	t=1791556985; cv=none; b=DTa3UTS8fTOYWedGOe1qHfncmbQWAcW/KXg8j+17yBjHoUDo0K7UOendQHd42LTDxMqDGwOa9s0PtUU8b0X8mBkI6qKiU7bxigCqVmuecxb8aBukHLiA6x8yskPDWoSKdRz6iBpjSWGIn4ynQg2nM1bZAUlFf/qTsNzzfm6/vFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556981; c=relaxed/simple;
-	bh=9FLIQ9Xi+b/yQ0TpafDISQQ8SJ5oQ0Z/D44Rb/+KeIM=;
+	s=arc-20240116; t=1791556985; c=relaxed/simple;
+	bh=K9EX3rnweD/dNRINPfN93tLQhhiqUAqINsZhDWpye5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDGGW9zoMPKEdMRNzmm+XKjR7ILNajT7iXVOLklEV+bfAUBoiITyIiXtTS9EqO1bcd7dqth8NBjsnfSd2W53NKt8TaGFR7D8RnXjDEJZaHXi1D7OOo+4zhsP67Z9CfXANRV9/sdsJBY7QR7s/H2cUNrE+xzKdbCkrsXCAjVemVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kquRK4AM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gx58Tm2Z5vkH4gQYN2bcls0GDxTkHrmKVEycFrYm7Uzw8ETLy2b5aB4tXJzxjRcKcYBVXYDGjx1Jz9yMkKkGlW77rNRh81DlFAjrA7YM5RV7xouMmweV/AZrp8UJJInF6H5QwxkpOsUu1Vy9Ih8XrDgqvmSNQHJhewo0zI8D0aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCzNAECz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kquRK4AM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D891F000FF;
-	Fri,  9 Oct 2026 14:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCzNAECz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3991F000FF;
+	Fri,  9 Oct 2026 14:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556979;
-	bh=v4+swGPXsnGYGKrY5GdCkzgn2HxyUj/wluIo/rftQdQ=;
+	s=korg; t=1791556983;
+	bh=vH2jnLL7ZWLGuA5jgAY4Ano8R51Bt7MeG3sGCHG3ECA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kquRK4AM6U0hEqmDH59zD4qUPyBFK0b3KtlUdy1d08GnJCC2KepQ4ZcEpRgbF2wvx
-	 obKMkfuRD3CAOuuen9U838HnSV7m2Z4pe0Po9mYQBalga7ROVbCO1He7LOuNM7IkYF
-	 3B0pjh08B9/3SKUvLUfOHXoicW9D3/1JGxNajj/A=
+	b=CCzNAECzqMKgBVAwSe0u2XaK6VEfYpd2Zg4sZYiwP6HAZ1pGq9A8IXm9Q1HxBCDqz
+	 Fq06ikXV/VbFwzy+sgF6SG+LrSx0A6aXcpmSdldd0hWZM4pDlzaiEJ1WQk4Vu+QOLt
+	 revf4TUD+PhEwbhSmNZHz64Tgcv8b9wgeZKZTBpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.2 277/428] EDAC/altera: Fix use-after-free in error paths
-Date: Fri,  9 Oct 2026 16:10:14 +0200
-Message-ID: <20261009140952.179371566@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 328/403] iio: light: gp2ap020a00f: drain irq_work after free_irq
+Date: Fri,  9 Oct 2026 16:11:29 +0200
+Message-ID: <20261009140959.903879448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit eef3b67f9c6782127163b631c9043011a68016e2 upstream.
+commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
 
-In both altr_edac_a10_device_add() and altr_portb_setup(), the error path
-freed the dci structure before releasing the devres group. Since the managed
-single and double bit IRQ handlers use altdev(dci->pvt_info) as their data, an
-IRQ firing between freeing dci and unregistering the IRQs could dereference
-the freed memory.
+The threaded IRQ handler queues data->work through irq_work_queue() so
+the trigger is polled from a per-CPU context.  free_irq() does not flush
+an irq_work the handler already queued, so after gp2ap020a00f_remove()
+returns that work may still run and call iio_trigger_poll() on data->trig,
+which the devm cleanup has already freed, causing a use-after-free.
 
-Release the devres group first so the managed IRQs are unregistered
-before the dci structure is freed.
+Add irq_work_sync(&data->work) after free_irq() in remove() and in the
+probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
+fix use-after-free on remove").
 
-Fixes: 911049845d70 ("EDAC, altera: Add Arria10 SD-MMC EDAC support")
-Fixes: 588cb03ea208 ("EDAC, altera: Add Arria10 L2 Cache ECC handling")
-Closes: https://sashiko.dev/#/patchset/20260719211238.589402-1-rosenp%40gmail.com
-Assisted-by: LLM
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org ## 6.18+
-Link: https://patch.msgid.link/20260911120627.2634225-5-dinguyen@kernel.org
+Found by an in-house static analysis tool, confirmed by manual review.
+
+Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/iio/light/gp2ap020a00f.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1594,8 +1594,13 @@ static int altr_portb_setup(struct altr_
- 	return 0;
- 
- err_release_group_1:
--	edac_device_free_ctl_info(dci);
-+	/*
-+	 * Release the devres group first so the managed IRQs are
-+	 * unregistered before dci (which contains the IRQ handler's
-+	 * data via dci->pvt_info) is freed, avoiding a use-after-free.
-+	 */
- 	devres_release_group(device->edac->dev, altr_portb_setup);
-+	edac_device_free_ctl_info(dci);
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 	return rc;
-@@ -1998,9 +2003,17 @@ static int altr_edac_a10_device_add(stru
- 	return 0;
- 
- err_release_group1:
-+	/*
-+	 * Release the devres group first so the managed IRQs are
-+	 * unregistered before dci (which contains the IRQ handler's
-+	 * data via dci->pvt_info) is freed, avoiding a use-after-free.
-+	 */
-+	devres_release_group(edac->dev, NULL);
- 	edac_device_free_ctl_info(dci);
-+	goto err_print;
- err_release_group:
- 	devres_release_group(edac->dev, NULL);
-+err_print:
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 
+--- a/drivers/iio/light/gp2ap020a00f.c
++++ b/drivers/iio/light/gp2ap020a00f.c
+@@ -1560,6 +1560,7 @@ error_trigger_unregister:
+ 	iio_trigger_unregister(data->trig);
+ error_free_irq:
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ error_uninit_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ error_regulator_disable:
+@@ -1582,6 +1583,7 @@ static void gp2ap020a00f_remove(struct i
+ 	iio_device_unregister(indio_dev);
+ 	iio_trigger_unregister(data->trig);
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	regulator_disable(data->vled_reg);
+ }
 
 
