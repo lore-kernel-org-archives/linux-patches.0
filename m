@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F76139FCCD;
-	Fri,  9 Oct 2026 14:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D532AF1D;
+	Fri,  9 Oct 2026 14:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556397; cv=none; b=EihjQB0ym1F07AK5nd3NA5ozv/2x26f2nl9vRXabxW4hbTNuWMTwFi1SDBjiLt2Ej4oiWnK8SoM54X7WUhbfyuP9TzF4gwLmeEvscOGYB8yjFRz/jsLSYJv634biv7n0m5Fzi+MzzTIomDp2btoeXUgibXMYXwhKO91nhKulN+w=
+	t=1791556400; cv=none; b=E82wBudVvGea58fEwiXc3paS8gLH4qHs7iVIp1RathPxyde6s1QiFiAGKD1EsmVPFv3v94Tgpa58SLehNNzswoyL8LE7AGYuv+SqtgE+Co4g5KjfqbOn7cccsgCjUjw4AIAE6JaCZtZMJ4Yv6v0h6XAWFMjAHAcA8LhgBYJ2uNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556397; c=relaxed/simple;
-	bh=EXXqSEAKcujF09UPpFMgMIw/9stoHoyOhsnu2oyCNqE=;
+	s=arc-20240116; t=1791556400; c=relaxed/simple;
+	bh=WreUBnBBgB8b/oWYRKq0OJAYgYlv8ji5dNL3pSDEya0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c95oOb8aqXo3HHp5CZHm0aRkX7GBP6SO+Kj9HGJ5bt+SLqS2ezHeV4cioSpIoAkGTqxJVF4ppjroEX1xuoSumNMLYRKORJuXZsIic9iU/BU8iRT9sq1rmQwSQxRqkCm+RX5YQKWhUQ/IPsoiKtT8tVp1hGNWxu/O/nyi4oSCJ8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPZdY1Eo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gt5Gx9o8aDDolTwjM2nTcBJhApk08Ac3bKpj93unMuiCGHlohVBOcR68/4DPwAsVYe5mzHSO4iTwQ4eyoSiJDEnY9Jmok7YBFpu2P+29FysHpuTThDNGBOzHQbHADlUXmjP7e0ptmee8ZdsdM9P8SVmUz397H+SirXREiisVHic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOFjsqSY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPZdY1Eo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61081F000FF;
-	Fri,  9 Oct 2026 14:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOFjsqSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ADE1F000FF;
+	Fri,  9 Oct 2026 14:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556396;
-	bh=qPVNbrbhxWY/ouVwfpnfmMKJ1SCEEtVxiqI3xOCe0XA=;
+	s=korg; t=1791556399;
+	bh=BJOLLIEb0DtMcUANT/LVvHU0srYL1rwh/vL9IUhD5Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VPZdY1EoIAcHdhNtwdT4E4cRl0XkOu6TYzJp3oBen+nvrUsbgx6uKDFvGKP/xD5sF
-	 sAU6GwdVuJq2BDID9fghbieQhi3rFy5GLaMgOpDyKbx2vnBTlQVBNp8XmyVsCwnnBV
-	 q5pHMfI+BnLqUWHg7Gyx9+aF9LCl5fidi7FvKpE4=
+	b=WOFjsqSYLM+mPnAGUZHtkX+HkBBcAsXKnuqW/ItnE/zgFHGnoK33Iu8L8bTev4g+T
+	 +bpkq0ar8jZXuKDnE+vBBLEuaMZwCgwx8j5PWJN86AMoaaf3UQ6aapv+CBPbCpYqb7
+	 PoiukKqaBfU+9pPmuNBRf0jfYUtMkHj9bI2Z8n6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kendall Willis <k-willis@ti.com>,
-	Tony Lindgren <tony.lindgren@linux.intel.com>
-Subject: [PATCH 6.18 200/403] serial: 8250_omap: fix wake irq cleared during suspend
-Date: Fri,  9 Oct 2026 16:09:21 +0200
-Message-ID: <20261009140956.810543786@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 227/403] Bluetooth: hci_sync: Fix inquiry cache use-after-free
+Date: Fri,  9 Oct 2026 16:09:48 +0200
+Message-ID: <20261009140957.459884893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,76 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kendall Willis <k-willis@ti.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 73f3e6ca7a6a7c952977c7c94f1c6dddebcafa34 upstream.
+commit 8ed67535fdff40ca652bcd4ac7da68d11d01bd34 upstream.
 
-The wake irq was cleared in shutdown(), which runs during the suspend
-sequence, making it impossible to wake the system via UART.
-Move wake irq setup to probe() and teardown to remove() so the irq
-remains armed during suspend when the UART is a wakeup source.
+The sync command worker holds hdev->req_lock, but inquiry-cache updates
+and flushes use hdev->lock. Both hci_acl_create_conn_sync() and
+hci_stop_discovery_sync() look up entries and read their fields without
+taking hdev->lock.
 
-Cc: stable@kernel.org
-Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
-Signed-off-by: Kendall Willis <k-willis@ti.com>
-Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
-Link: https://patch.msgid.link/20260825-uart-wakeirq-fix-v2-1-0b9fba03d9b6@ti.com
+After either lookup returns, a concurrent HCIINQUIRY ioctl can acquire
+hdev->lock and flush the cache, freeing the entry. The worker then reads
+the freed entry while preparing a create-connection or remote-name-cancel
+command. The list traversal also races with cache updates and removal.
+
+KASAN reported these accesses:
+
+  BUG: KASAN: slab-use-after-free in hci_acl_create_conn_sync+0x5f1/0x650
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_acl_create_conn_sync+0x5f1/0x650
+   hci_cmd_sync_work+0x13c/0x290
+
+  Allocated by task 90:
+   hci_inquiry_cache_update+0x3e6/0x7d0
+   hci_inquiry_result_evt+0x3cb/0x560
+
+  Freed by task 93:
+   hci_inquiry_cache_flush+0x111/0x2b0
+   hci_inquiry+0x2f2/0x780
+   hci_sock_ioctl+0x269/0x5f0
+
+  BUG: KASAN: slab-use-after-free in hci_stop_discovery_sync+0x3b1/0x3c0
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_stop_discovery_sync+0x3b1/0x3c0
+   hci_cmd_sync_work+0x173/0x300
+
+  Allocated by task 86:
+   hci_inquiry_cache_update+0x483/0x940
+   hci_inquiry_result_evt+0x3cb/0x560
+
+  Freed by task 91:
+   hci_inquiry_cache_flush+0x13e/0x2f0
+   hci_inquiry+0x2f2/0x780
+   hci_sock_ioctl+0x269/0x5f0
+
+Hold hdev->lock across each lookup and all reads from its result. Copy the
+remote address before unlocking so discovery cancellation does not retain
+a cache entry pointer. Release the lock before sending synchronous HCI
+commands, since their completion handlers may need the same lock.
+
+Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
+Fixes: 45340097ce6e ("Bluetooth: hci_conn: Only do ACL connections sequentially")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ net/bluetooth/hci_sync.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -727,12 +727,6 @@ static int omap_8250_startup(struct uart
- 	struct uart_8250_dma *dma = &priv->omap8250_dma;
- 	int ret;
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5605,6 +5605,7 @@ int hci_stop_discovery_sync(struct hci_d
+ {
+ 	struct discovery_state *d = &hdev->discovery;
+ 	struct inquiry_entry *e;
++	bdaddr_t addr;
+ 	int err;
  
--	if (priv->wakeirq) {
--		ret = dev_pm_set_dedicated_wake_irq(port->dev, priv->wakeirq);
--		if (ret)
--			return ret;
--	}
--
- #ifdef CONFIG_PM
- 	up->capabilities |= UART_CAP_RPM;
- #endif
-@@ -803,7 +797,6 @@ static void omap_8250_shutdown(struct ua
+ 	bt_dev_dbg(hdev, "state %u", hdev->discovery.state);
+@@ -5640,15 +5641,21 @@ int hci_stop_discovery_sync(struct hci_d
+ 		return 0;
+ 
+ 	if (d->state == DISCOVERY_RESOLVING || d->state == DISCOVERY_STOPPING) {
++		hci_dev_lock(hdev);
+ 		e = hci_inquiry_cache_lookup_resolve(hdev, BDADDR_ANY,
+ 						     NAME_PENDING);
+-		if (!e)
++		if (!e) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
++
++		bacpy(&addr, &e->data.bdaddr);
++		hci_dev_unlock(hdev);
+ 
+ 		/* Ignore cancel errors since it should interfere with stopping
+ 		 * of the discovery.
+ 		 */
+-		hci_remote_name_cancel_sync(hdev, &e->data.bdaddr);
++		hci_remote_name_cancel_sync(hdev, &addr);
  	}
  
- 	disable_irq_nosync(port->irq);
--	dev_pm_clear_wake_irq(port->dev);
- 
- 	serial8250_release_dma(up);
- 	up->dma = NULL;
-@@ -1602,6 +1595,12 @@ static int omap8250_probe(struct platfor
- 
- 	priv->wakeirq = irq_of_parse_and_map(np, 1);
- 
-+	if (priv->wakeirq) {
-+		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, priv->wakeirq);
-+		if (ret)
-+			goto err;
-+	}
-+
- 	ret = serial8250_register_8250_port(&up);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "unable to register 8250 port\n");
-@@ -1617,6 +1616,7 @@ static int omap8250_probe(struct platfor
- 
  	return 0;
- err:
-+	dev_pm_clear_wake_irq(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	flush_work(&priv->qos_work);
-@@ -1639,6 +1639,7 @@ static void omap8250_remove(struct platf
- 	omap_8250_shutdown(&up->port);
- 	serial8250_unregister_port(priv->line);
- 	priv->line = -ENODEV;
-+	dev_pm_clear_wake_irq(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	flush_work(&priv->qos_work);
+@@ -7081,6 +7088,7 @@ static int hci_acl_create_conn_sync(stru
+ 	bacpy(&cp.bdaddr, &conn->dst);
+ 	cp.pscan_rep_mode = 0x02;
+ 
++	hci_dev_lock(hdev);
+ 	ie = hci_inquiry_cache_lookup(hdev, &conn->dst);
+ 	if (ie) {
+ 		if (inquiry_entry_age(ie) <= INQUIRY_ENTRY_AGE_MAX) {
+@@ -7092,6 +7100,7 @@ static int hci_acl_create_conn_sync(stru
+ 
+ 		memcpy(conn->dev_class, ie->data.dev_class, 3);
+ 	}
++	hci_dev_unlock(hdev);
+ 
+ 	cp.pkt_type = cpu_to_le16(conn->pkt_type);
+ 	if (lmp_rswitch_capable(hdev) && !(hdev->link_mode & HCI_LM_MASTER))
 
 
