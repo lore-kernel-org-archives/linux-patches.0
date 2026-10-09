@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEA1230BDB;
-	Fri,  9 Oct 2026 14:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577ED4E532F;
+	Fri,  9 Oct 2026 14:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555669; cv=none; b=hHI6TZc/Q6L6BRb9YGJsPrzGFbn6GTiIpTEAgI1oZbZZzKZdZOw4KTyViadD/2qBY7+F1dYW5fZgnUkPTDmDcnJGhi1vkiAWV1QtokGXIsco2gzhEycHGyZtwoJ72KWkl0htUnNrrtNyIgeRkIO5gTK6hYxaz8Vz9XX39ODi2m0=
+	t=1791555672; cv=none; b=M4YrbMQCBY15Drq2RUrkhAwN3uaQs79NUPBmvbCBteOgGCjb1i8oNuePd4Ha8mWHHZmpu42+ythisseM5PhrIj74sfxzckK/PqElN4vnzIp06pwYosdr3GZQQOAieBnEmXOQKgSHZLMraJpByguOKCrHJS0jlUE0y58ztxum3lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555669; c=relaxed/simple;
-	bh=JtGxthZwP/N/+wYRf3uMTG2OttR4EUxYwqYGxivsj4o=;
+	s=arc-20240116; t=1791555672; c=relaxed/simple;
+	bh=XbLUZ+yF59suHVZCQIZBFpfhhg6JbJ0l7cIOnCxc5Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMgWdIuFX3cC5eJl5YPwMuVUQEs3ep2zgvwK1Y0GC9okA8pvEUi6V7yjLM4RfacJNAvtkrVW1a4IvBqoTcmg8FUVLMxV9JcrHlOr+RiV54T5D36Jj0MNFVYDIJt06Htw6WgQtHTaa/5b/lREeL/JV+e8SNXrndCnA5kROCT7s3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd5jlo4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OTgQzRgwRyuzSS1tNUOznO07vsWFTraPtQ1i4EMwLfmDjPcivizkMIzjYVCLp+LY3tB/qpkxw9+qMSCA8KNviBBCI24jQeQxZqwQ1EeVj8v9H6N+znN3Arh22N7e6yN0wUz1G27fhOScxy8/6kiuNgzPjw7DvK1kx0V04UcSyTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x69hSS/d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd5jlo4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEAD1F00898;
-	Fri,  9 Oct 2026 14:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x69hSS/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03BD1F000FF;
+	Fri,  9 Oct 2026 14:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555668;
-	bh=waUb5S2CHVr2BtbeQc+OVcrz/Fd2bOpAT35dfX8p5I4=;
+	s=korg; t=1791555671;
+	bh=2J3c3AcvIteXx5lEAhxlSK75ks/hkD9NgpICJLWKqnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qd5jlo4I0CICTdbmkv/kWIKVHvr+IlunktEIi/akWBYS33OBaiEoNSmb3PDfM28zJ
-	 xxzmiKoyd08/8W6T4EpzhgjEbW1/K+fPZiFoSA4Fa5Ys9RubXBO1ydlpKcpx5fSt6z
-	 CX0NGmRjxqOoIk4a/ydGitYMvcx5uem4z36qXEB4=
+	b=x69hSS/d8XIjrd05jAQy2KH22ePaewQO2Oe619xHh0k9Dp0VQTa5Fu7MSucxn+Xs4
+	 k7Rb1+2PH3gDPHCgWBC0S938kC2F9TZ8qvalEv65lOJ1ksRtpQTQu7n9egpj3B4Fh1
+	 wXezn/urr81yFJECxZTmPMC743nv+OJN5XEoiGe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <brads@mainlining.org>,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Joel Granados <joel.granados@kernel.org>
-Subject: [PATCH 7.2 046/428] sysctl: Negate before converting in the int read path
-Date: Fri,  9 Oct 2026 16:06:23 +0200
-Message-ID: <20261009140947.118995510@linuxfoundation.org>
+	Mark Bloch <mbloch@nvidia.com>,
+	Anirudh Virdi <avirdi@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 097/403] net/mlx5: Fix slab-out-of-bounds when handling team device events
+Date: Fri,  9 Oct 2026 16:07:38 +0200
+Message-ID: <20261009140954.356523584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Anirudh Virdi <avirdi@redhat.com>
 
-commit e955f14fa8467d70aaeea5830b4d1773d5b25500 upstream.
+[ Upstream commit 04c824940d52871c49866a4ac67b504146f7cf35 ]
 
-proc_int_k2u_conv_kop() reports the sign through *negp and the magnitude
-through *u_ptr, but for a negative value it hands the sign-extended int to
-the converter and negates the result:
+The mlx5_handle_changeupper_event() and mlx5_handle_changeinfodata_event()
+functions check for LAG masters (which includes both bonding and team
+devices) but only call bonding-specific APIs. When processing team device
+events, calling bond_slave_get_rcu() and bond_is_slave_inactive() on
+team_port structures causes KASAN to detect an out-of-bounds memory access
+since team_port is smaller than bond slave.
 
-	*u_ptr = k_ptr_op ? -k_ptr_op((ulong)val) : -(ulong)val;
+Fix this by wrapping the bond-specific API calls with a check for bonding
+devices. This allows the function to still process LAG events for both
+bonding and teams but only calls bond-specific functions when dealing with
+actual bonding devices.
 
-With div_hz() and CONFIG_HZ=1000 a stored -1000 becomes
-(ulong)-1000 / 1000 == 18446744073709550, and negating that wraps:
+For mlx5_handle_changeinfodata_event(), keep the explicit bond check as
+mlx5 doesn't handle state information for team ports anyway.
 
-	# echo -1 > /proc/sys/net/ipv4/tcp_fin_timeout
-	# cat /proc/sys/net/ipv4/tcp_fin_timeout
-	-18428297329635842066
+Tested with Mellanox ConnectX-5 on Linux 7.2.0-rc6:
+- Bonding: PASS (no regressions)
+- Team device: PASS (no KASAN errors)
 
-The magnitude is HZ dependent but the wrap is not: the negation happens
-after the division at every CONFIG_HZ.
-
-Take the magnitude first and convert that, which is what the open-coded
-version did before commit 2dc164a48e6f ("sysctl: Create converter
-functions with two new macros") folded it into a macro.  The
-k_ptr_op == NULL branch was already correct.
-
-All three int converters that pass a k_ptr_op are affected:
-proc_dointvec_jiffies(), proc_dointvec_userhz_jiffies() and
-proc_dointvec_ms_jiffies().
-
-Fixes: 2dc164a48e6f ("sysctl: Create converter functions with two new macros")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 54493a08e21f ("net/mlx5: Lag, record inactive state of bond device")
+Suggested-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Anirudh Virdi <avirdi@redhat.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20260924064244.94045-1-avirdi@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sysctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -478,7 +478,7 @@ int proc_int_k2u_conv_kop(ulong *u_ptr,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index d20f9d3e30c79..353101dee4dcf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1333,9 +1333,11 @@ static int mlx5_handle_changeupper_event(struct mlx5_lag *ldev,
+ 			}
+ 		}
+ 		if (i < MLX5_MAX_PORTS) {
+-			slave = bond_slave_get_rcu(ndev_tmp);
+-			if (slave)
+-				has_inactive |= bond_is_slave_inactive(slave);
++			if (netif_is_bond_master(upper)) {
++				slave = bond_slave_get_rcu(ndev_tmp);
++				if (slave)
++					has_inactive |= bond_is_slave_inactive(slave);
++			}
+ 			bond_status |= (1 << idx);
+ 		}
  
- 	if (val < 0) {
- 		*negp = true;
--		*u_ptr = k_ptr_op ? -k_ptr_op((ulong)val) : -(ulong)val;
-+		*u_ptr = k_ptr_op ? k_ptr_op(-(ulong)val) : -(ulong)val;
- 	} else {
- 		*negp = false;
- 		*u_ptr = k_ptr_op ? k_ptr_op((ulong)val) : (ulong) val;
+@@ -1419,7 +1421,7 @@ static int mlx5_handle_changeinfodata_event(struct mlx5_lag *ldev,
+ 	bool has_inactive = 0;
+ 	int idx;
+ 
+-	if (!netif_is_lag_master(ndev))
++	if (!netif_is_bond_master(ndev))
+ 		return 0;
+ 
+ 	rcu_read_lock();
+-- 
+2.53.0
+
 
 
