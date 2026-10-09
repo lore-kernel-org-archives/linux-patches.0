@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B084D598B;
-	Fri,  9 Oct 2026 14:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E88F4D598B;
+	Fri,  9 Oct 2026 14:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556949; cv=none; b=LbjMHd5BSF+aaJ8nX8jupzfVS3tHnkSbop6cjgdv5x00CZUTBWUsi0Bv/4tGCoDJJNqBXz2+gRZe6iUzjaqpoO/neVRckkN3qmWChjPW6YY/FdQXbiM6EJmHsKeCUXCR9qqYUrLzwE/N9jGgIN/Dg6xN5b2MK90+QXoiqQgOguo=
+	t=1791556952; cv=none; b=iLRMZgLPmsuk4Kb3BYmVM8Oj32B7524p65PA8UN06C+w7OuB9mJBW34qsr0IitnrQddSLiznGGqsJE51bfntTIAjbl6GvMXMlcIoEGSoLOIRp3+7bdkjbJt9TRU1Rt1VFuqno+vUV4hTdMnXH4TXdJJhn71gUvspOqgMLuytD/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556949; c=relaxed/simple;
-	bh=nF0lIa/kDXNDYVSxcO7YPPan4e9eg33ByEiLzUInEsg=;
+	s=arc-20240116; t=1791556952; c=relaxed/simple;
+	bh=6LoMXAL15bX1zGnKMBEOKVYtbqrrCLeyu6Fp5hRnEZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfGLQiSLvT/0SA+XmV2duAf8eC3sP9wDpnj2uoU7RRNRFl/yVqs1iHMWal31AvdO+c0eBapaEMr5r8emVDjTJM2xiIifxxv7LYVZBrdOSVjBFYjlP5UtiaYhUWBPZ9fwR2uEQxckvM5ObU150cFlFJsdYctheZgXHvdlutZjiCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytFoAk2D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eZnkGfaJBXDHC6D9naQDBto4gZtam7m13x9NVs78pRFvQhi5E3CoZMj/rdIxzrobc+EZ94MnGJ6OyLaF2uuU79MgHtU6hV05FwuwVjAhx02aqXoHK5u4nXjQPghGLSP4A3Wk41k4ag7EErkSMm6gDS+IK8iaBYoXgQcxU3sLD54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B33U0pXd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytFoAk2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999EA1F000FF;
-	Fri,  9 Oct 2026 14:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B33U0pXd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616981F000FF;
+	Fri,  9 Oct 2026 14:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556948;
-	bh=vNuqVLXpiot0sS7XxRTrRT9S+w5LFmRR9JRhMyRV7ao=;
+	s=korg; t=1791556950;
+	bh=YlleUV+9C88HaMD0gNixAnTGACiMw12f0JBCjEJ4ckU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ytFoAk2DtB+ANbbFWmySoTAr4ofY/9Xt5oqmIeiDMZXoJ2RPfCS/pBzs9W6lC16Jr
-	 yVOvuulYnNIbasuafeEuFN5lUv7XIm4wNQAYz4TDmWLCYUMjPgwwXiK0ftizwdjjSk
-	 /LQGo7tZ2QI1e2kDPjNa2P0HNK/ZpL5prlVWdYxQ=
+	b=B33U0pXdH8cTZrZ0gZ6XoG/DCzVB6mGzFEQXCHW7aePsfnO+7niASwpONoYgP1RsV
+	 3ol/iKh3OrZqZ+vLAIEFbnVrn9lJl06+ok2XMCBBfgpU5sN0Y9DP/hUnJjHLW5fc82
+	 /KAqwj/MTNDi7WOSDAsNs8wMbjdgGDzzExNbYLqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.2 230/428] usb: typec: tipd: fix uninitialized typec_partner_desc in cd321x_update_work()
-Date: Fri,  9 Oct 2026 16:09:27 +0200
-Message-ID: <20261009140951.166455257@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 7.2 224/428] usb: chipidea: tegra: disable runtime PM on resume failure
+Date: Fri,  9 Oct 2026 16:09:21 +0200
+Message-ID: <20261009140951.037862211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,47 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 88c7e458af53ff781a3f1051708395892b325576 upstream.
+commit f1d6f7d25fe88ee49aaad96c8649e090fc3a4b68 upstream.
 
-cd321x_update_work() passes a stack-allocated typec_partner_desc to
-typec_register_partner() after initializing only usb_pd, accessory and
-identity.
+tegra_usb_probe() enables runtime PM before resuming the device. If
+pm_runtime_resume_and_get() fails, probe returns without disabling runtime
+PM. The later error paths reach pm_runtime_force_suspend(), but this early
+return bypasses that cleanup.
 
-typec_register_partner() copies attach and deattach from the descriptor
-into the partner. With those fields left unset, garbage function pointers
-may be stored and later invoked from typec_partner_link_device() when a USB
-device is linked to the port. Uninitialized pd_revision and usb_capability
-similarly leak stack data through partner sysfs.
+Disable runtime PM before returning the resume error. Do not use the
+fail_power_off path: the failed resume did not retain a usage reference,
+so its pm_runtime_put_sync_suspend() would be unbalanced.
 
-Zero-initialize the descriptor so optional callbacks remain NULL and the
-remaining fields are zero.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: 82432bbfb9e8 ("usb: typec: tipd: Handle mode transitions for CD321x")
-Cc: stable <stable@kernel.org> # 6.18+
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260906131942.83153-3-radhey.shyam.pandey@amd.com
+Fixes: 8b85e11c1a7a ("usb: chipidea: tegra: Add runtime PM and OPP support")
+Cc: stable <stable@kernel.org>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260913041033.25144-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_tegra.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -818,11 +818,10 @@ static void cd321x_update_work(struct wo
+--- a/drivers/usb/chipidea/ci_hdrc_tegra.c
++++ b/drivers/usb/chipidea/ci_hdrc_tegra.c
+@@ -306,8 +306,10 @@ static int tegra_usb_probe(struct platfo
  
- 	/* Set up partner if we were previously disconnected (or changed). */
- 	if (!tps->partner) {
--		struct typec_partner_desc desc;
-+		struct typec_partner_desc desc = { };
+ 	pm_runtime_enable(&pdev->dev);
+ 	err = pm_runtime_resume_and_get(&pdev->dev);
+-	if (err)
++	if (err) {
++		pm_runtime_disable(&pdev->dev);
+ 		return err;
++	}
  
- 		desc.usb_pd = is_pd;
- 		desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
--		desc.identity = NULL;
- 
- 		if (desc.usb_pd)
- 			desc.identity = &st.partner_identity;
+ 	if (device_property_present(&pdev->dev, "nvidia,needs-double-reset"))
+ 		usb->needs_double_reset = true;
 
 
