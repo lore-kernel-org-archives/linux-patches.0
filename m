@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0A84EFFAE;
-	Fri,  9 Oct 2026 14:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3F399CE9;
+	Fri,  9 Oct 2026 14:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556935; cv=none; b=tvcPft2m7HvjCAKFN5a/CvkL05EelFGaAY00ms+B8y0+jGxTT+PoH2Eu1nzpCq19mI3KD1unSFIbjsp+TDDSwWJ9QXoOhk5MnRhf56rrAQJpZhYgRAIzNEJyDY2XXXxK7Ye30nkW+cbzp1ydqmId9mvWCVVgha4hi/PZJkiTSoU=
+	t=1791556938; cv=none; b=OSAVU3xX5b8pluVE8qj5WzkTWGjbXut4eTzkUPMrGpdHgVc8CPetWRckrAtuZBuDcjjQVyPMI+D209PhnsOVlXvULIuhtOGvX6f8al1jG1pPqPdG4THdsGPn/DsTl2SIYvNyltlObQ84HR9K2whuxA5CfdDFzTPrjIMiWGTO/M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556935; c=relaxed/simple;
-	bh=iLI1hEJVJlNKf0Qwr5xQPCMUY9uov0iVAjKpp41DR0k=;
+	s=arc-20240116; t=1791556938; c=relaxed/simple;
+	bh=PpuRbt6AeVZbmWSkdbHiRFUa5YxjXkVmP0Nu+VMJ66U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lL+RmT8bkYj8Dwk/c8sNlohnsMLHrYMdet51B9l1dfKqMJz7SECo8SU7cR2V5E4ZXx3Uu5r7PYFaZSPghRyYlOEJ+jXYLf8U0KYTXJy9J/+FFObq11tgGcrlrZCZ587rEXa+LrcPxQoYhpqSaGmSntHraVQTRc+E/GMXtzaqk4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUwoNMck; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rNWGhMbQiTn35ZTYGErlFtuIAmbbOjdla5cYp2uXgqOPQGaiF5lycG97e974mWjevQHAoaxd4/Ll+47tiqM/RWABJV3/7tVPuJCNxeg5q3GBVo5sHl0vYy6vKDKTY1hrTXypl9+MZl0ILGu3FljS8na5n03wsWLv2NUoiSYjMFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmpt4dAq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUwoNMck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBB21F000FF;
-	Fri,  9 Oct 2026 14:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmpt4dAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CF11F000FF;
+	Fri,  9 Oct 2026 14:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556933;
-	bh=Q/nD7h24b/0nvcTpjOGXxthjGYv2AihBb+Ftl7911ME=;
+	s=korg; t=1791556936;
+	bh=wrXoJ4d6a3S0hWeGH/gT8IqTH+MG06CyVOo28rywyPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUwoNMck9dtB+xTBmXZNPe24QOcQQ8SI/gbEsXDaSWV+bEHifZQwXOAtjl+ShPOrj
-	 9J5aOYbAYj0hEVe7X61bEdUtex8i6I7tCGQOSUchnaQbZ8xX225tQnvSEXzTiqPstw
-	 alBQ4f7xOTH+EEYcdOSDZoY/8fmo70SCtzeMnfpU=
+	b=zmpt4dAqDAN00PAUVsx0zlrXihlAzXRgvDiviqggkywLfMrkG/fs1a/ayZM8B1MiQ
+	 YOuCxGy13a5uoVvGnFRqaOZtOv+zo+nChJRpl5wkFCZ8BP/M2aTQYvCqiPJaIkhiEn
+	 iCNi7rZQZFZYbVHkqhnwaWBSjWD5qFYuUB75vP/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zimeng Li <me@lizi.moe>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 266/428] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
-Date: Fri,  9 Oct 2026 16:10:03 +0200
-Message-ID: <20261009140951.939733949@linuxfoundation.org>
+	Nick Bowler <nbowler@draconx.ca>,
+	syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 281/403] USB: serial: fix ioctl hangup race
+Date: Fri,  9 Oct 2026 16:10:42 +0200
+Message-ID: <20261009140958.764019248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +47,283 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zimeng Li <me@lizi.moe>
+From: Johan Hovold <johan@kernel.org>
 
-commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
+commit ae0e61d95677efa778379853e495d748e6efbf95 upstream.
 
-The DAI ID is a hardware port ID and is not necessarily the index of
-the corresponding entry in variant->dai_driver.
+The tty ioctls can race with hangup and end up calling into a tty driver
+for a device that is already gone or powered down.
 
-When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
-currently uses dai_id to index variant->dai_driver. This is incorrect
-for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
-DAI has ID 4 while it is the only entry in the DAI driver table. If
-that DAI is configured for QUAD01 and probe reaches this branch, the
-code writes beyond that single entry via dai_driver[4] instead of
-updating the DAI being processed.
+Serialise the callbacks using the tty port mutex and add the missing
+checks to make sure the port has not been hung up before accessing port
+driver data or hardware.
 
-Use the loop index i when updating the current DAI's playback channel
-constraints, while retaining dai_id for indexing the hardware-port
-specific playback SD-line mode array.
+This specifically avoids dereferencing a NULL-pointer if a device is
+disconnected during lengthy break signalling.
 
-This fixes the incorrect DAI table access for platforms where the DAI
-ID does not match its position in the driver table.
+Note that TIOCGICOUNT and TIOCMIWAIT do not access port driver data or
+hardware and are therefore not affected by the race.
 
-Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zimeng Li <me@lizi.moe>
-Assisted-by: LLM-assisted source analysis
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f34d7a5b7010 ("tty: The big operations rework")
+Reported-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://lore.kernel.org/all/CADyTPExB2kYOOwkO0JqGhKaYVDqO9uS9WCw0J=MCTdVhcGOogA@mail.gmail.com/
+Reported-by: syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6a9087a4.4d659fcc.734b4.0013.GAE@google.com
+Cc: stable@vger.kernel.org	# 2.6.26
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/generic.c    |   10 +++-
+ drivers/usb/serial/usb-serial.c |   94 +++++++++++++++++++++++++++++++---------
+ drivers/usb/serial/xr_serial.c  |   10 +---
+ 3 files changed, 86 insertions(+), 28 deletions(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1234,8 +1234,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
- 		}
- 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
- 			LPAIF_I2SCTL_MODE_QUAD01) {
--			variant->dai_driver[dai_id].playback.channels_min = 4;
--			variant->dai_driver[dai_id].playback.channels_max = 4;
-+			variant->dai_driver[i].playback.channels_min = 4;
-+			variant->dai_driver[i].playback.channels_max = 4;
- 		}
+--- a/drivers/usb/serial/generic.c
++++ b/drivers/usb/serial/generic.c
+@@ -267,6 +267,7 @@ EXPORT_SYMBOL_GPL(usb_serial_generic_cha
+ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	unsigned int bps;
+ 	unsigned long period;
+ 	unsigned long expire;
+@@ -286,7 +287,14 @@ void usb_serial_generic_wait_until_sent(
+ 					__func__, jiffies_to_msecs(timeout),
+ 					jiffies_to_msecs(period));
+ 	expire = jiffies + timeout;
+-	while (!port->serial->type->tx_empty(port)) {
++	for (;;) {
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty) || port->serial->type->tx_empty(port)) {
++			mutex_unlock(&tport->mutex);
++			break;
++		}
++		mutex_unlock(&tport->mutex);
++
+ 		schedule_timeout_interruptible(period);
+ 		if (signal_pending(current))
+ 			break;
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -403,17 +403,13 @@ static unsigned int serial_chars_in_buff
+ static void serial_wait_until_sent(struct tty_struct *tty, int timeout)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
+-	struct usb_serial *serial = port->serial;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+ 	if (!port->serial->type->wait_until_sent)
+ 		return;
+ 
+-	mutex_lock(&serial->disc_mutex);
+-	if (!serial->disconnected)
+-		port->serial->type->wait_until_sent(tty, timeout);
+-	mutex_unlock(&serial->disc_mutex);
++	port->serial->type->wait_until_sent(tty, timeout);
+ }
+ 
+ static void serial_throttle(struct tty_struct *tty)
+@@ -441,8 +437,13 @@ static int serial_get_serial(struct tty_
+ 	struct usb_serial_port *port = tty->driver_data;
+ 	struct tty_port *tport = &port->port;
+ 	unsigned int close_delay, closing_wait;
++	int ret = 0;
+ 
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
+ 
+ 	close_delay = jiffies_to_msecs(tport->close_delay) / 10;
+ 	closing_wait = tport->closing_wait;
+@@ -455,10 +456,10 @@ static int serial_get_serial(struct tty_
+ 
+ 	if (port->serial->type->get_serial)
+ 		port->serial->type->get_serial(tty, ss);
+-
++out_unlock:
+ 	mutex_unlock(&tport->mutex);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
+@@ -474,6 +475,10 @@ static int serial_set_serial(struct tty_
+ 		closing_wait = msecs_to_jiffies(closing_wait * 10);
+ 
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
+ 
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		if (close_delay != tport->close_delay ||
+@@ -501,6 +506,7 @@ static int serial_ioctl(struct tty_struc
+ 					unsigned int cmd, unsigned long arg)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	int retval = -ENOIOCTLCMD;
+ 
+ 	dev_dbg(&port->dev, "%s - cmd 0x%04x\n", __func__, cmd);
+@@ -511,8 +517,21 @@ static int serial_ioctl(struct tty_struc
+ 			retval = port->serial->type->tiocmiwait(tty, arg);
+ 		break;
+ 	default:
+-		if (port->serial->type->ioctl)
++		if (!port->serial->type->ioctl)
++			break;
++
++		if (cmd == TIOCSRS485)
++			down_write(&tty->termios_rwsem);
++
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty))
++			retval = -EIO;
++		else
+ 			retval = port->serial->type->ioctl(tty, cmd, arg);
++		mutex_unlock(&tport->mutex);
++
++		if (cmd == TIOCSRS485)
++			up_write(&tty->termios_rwsem);
  	}
  
+ 	return retval;
+@@ -522,25 +541,40 @@ static void serial_set_termios(struct tt
+ 		               const struct ktermios *old)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->set_termios)
+-		port->serial->type->set_termios(tty, port, old);
+-	else
++	if (!port->serial->type->set_termios) {
+ 		tty_termios_copy_hw(&tty->termios, old);
++		return;
++	}
++
++	mutex_lock(&tport->mutex);
++	if (!tty_io_error(tty))
++		port->serial->type->set_termios(tty, port, old);
++	mutex_unlock(&tport->mutex);
+ }
+ 
+ static int serial_break(struct tty_struct *tty, int break_state)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->break_ctl)
+-		return port->serial->type->break_ctl(tty, break_state);
++	if (!port->serial->type->break_ctl)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->break_ctl(tty, break_state);
++	mutex_unlock(&tport->mutex);
+ 
+-	return -ENOTTY;
++	return ret;
+ }
+ 
+ static int serial_proc_show(struct seq_file *m, void *v)
+@@ -581,24 +615,44 @@ static int serial_proc_show(struct seq_f
+ static int serial_tiocmget(struct tty_struct *tty)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmget)
+-		return port->serial->type->tiocmget(tty);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmget)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmget(tty);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_tiocmset(struct tty_struct *tty,
+ 			    unsigned int set, unsigned int clear)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmset)
+-		return port->serial->type->tiocmset(tty, set, clear);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmset)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmset(tty, set, clear);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_get_icount(struct tty_struct *tty,
+--- a/drivers/usb/serial/xr_serial.c
++++ b/drivers/usb/serial/xr_serial.c
+@@ -849,12 +849,9 @@ static int xr_get_rs485_config(struct tt
+ 	struct usb_serial_port *port = tty->driver_data;
+ 	struct xr_data *data = usb_get_serial_port_data(port);
+ 
+-	down_read(&tty->termios_rwsem);
+-	if (copy_to_user(argp, &data->rs485, sizeof(data->rs485))) {
+-		up_read(&tty->termios_rwsem);
++	/* core holds port mutex */
++	if (copy_to_user(argp, &data->rs485, sizeof(data->rs485)))
+ 		return -EFAULT;
+-	}
+-	up_read(&tty->termios_rwsem);
+ 
+ 	return 0;
+ }
+@@ -870,10 +867,9 @@ static int xr_set_rs485_config(struct tt
+ 		return -EFAULT;
+ 	xr_sanitize_serial_rs485(&rs485);
+ 
+-	down_write(&tty->termios_rwsem);
++	/* core holds termios rwsem and port mutex */
+ 	data->rs485 = rs485;
+ 	xr_set_flow_mode(tty, port, NULL);
+-	up_write(&tty->termios_rwsem);
+ 
+ 	if (copy_to_user(argp, &rs485, sizeof(rs485)))
+ 		return -EFAULT;
 
 
