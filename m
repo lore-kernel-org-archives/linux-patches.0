@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC89A4E2F36;
-	Fri,  9 Oct 2026 14:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D340D3C9893;
+	Fri,  9 Oct 2026 14:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555620; cv=none; b=B1/Kly5HC8v7KPtcjK1XxwyGRs9CEIlMU2ihwhHtoNfgbB6govn2gKGa0S5TutlFTUt+Sk2tdvk7qxme42ikl6/GUlnu+CH8Kw6dZXAlp87/q4QpTgDZNFUrLfdrn+drizTubexFoXleYcqchePEriGbqrw/Yyrge0lYIqpg0ZI=
+	t=1791555623; cv=none; b=CLdNsA7qROionActB67iToZDSiMEoI+hpCmbrRxuVSkMksSHZEk94kxKuJ0U5AI1sJBqiIyaW/vpu96oJUEv0jB/g6tkPN+KagTs7aPRHghD208CtXgx0ijb/n3CIPwuuiXkmtuOGtwBDoYqCfmC7H8fzZJI8GVtQnSMCXa7GU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555620; c=relaxed/simple;
-	bh=MMhuxZM5kRgiUmacjlu1rG/LRwghTz6KMPECl3SkbV0=;
+	s=arc-20240116; t=1791555623; c=relaxed/simple;
+	bh=fC+kt7Ff7+W1ZYIInp9wJaPLPojxAzTaqUbHa9wlReY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DJD1TyGvBtWQZeeBTbaoLI6yERrVCiY0T7M49XuYicCZBTBPogBkXQhcdeEUBczZxBnGgaLF54p8Z85rfsx+vx5ZeFmJmP2cRYS8UN8HzSL/vexveddxOOSEs7JlUrkn+nCgvS7fMo09RojXf5NMnwnT6nFAaDk3cOmq8vbGO7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo7LAwXV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=le1/xA0uV3K8pa+rpebEQa2WawFi4thaBwIdt69XnSKIAS4pXkdFtO+p0PEIcEugG8tY7cB8a2cGtrSn7ESIMP1JxzFnjSnfsbkakI8G89Ako28umkLXg7TCR+fYbisEdhvr3vnPzbA5e3LpKAa49c+HHWqFnqsKfHYbA0RKWVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veLeZsYW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo7LAwXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1433C1F0089D;
-	Fri,  9 Oct 2026 14:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veLeZsYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34581F00898;
+	Fri,  9 Oct 2026 14:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555611;
-	bh=ewWt77KXYRq6mXDaOEzlrrJIWbc0LTp+eRybbfFKACQ=;
+	s=korg; t=1791555614;
+	bh=xGGzvMitAEQICQqevhAp2vjyABidXQWn6TJUYtyqnLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mo7LAwXV5z3xJ2ME+Ddde4wpy+h51uzV06l8pdCxKkBpxoW/3a8Uc30ovJAkrAiCj
-	 xd9t/ByQ1+DaGSd0U0/dSRr/pSGMqBylK0/v7OyPPF6Tg581k/gCAkJ5L247lgDN5C
-	 fCI8g2tShdi+oaPwJrGwP154BOVBTgNYsopfpsKc=
+	b=veLeZsYWrZJUDLPTndHZhOfP3FhhNB3yBHJWPrMiEfjaRqh7kgB6fEzwS7ALcmC7U
+	 cwqdISGqwBhcIrWSR5LxMR6/lWYQSEi53SqMNciNm1ZqkAy/sfkWYWHAkLAQvDIzD7
+	 7ptoLNcDyVCM37+dk1S4gZ0Adpvp0M9MFSDwLYxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.2 019/428] audit: fix exe mark UAF in kill_rules()
-Date: Fri,  9 Oct 2026 16:05:56 +0200
-Message-ID: <20261009140946.478465465@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 037/428] net: phy: aquantia: fix system interface type not updated in forced mode
+Date: Fri,  9 Oct 2026 16:06:14 +0200
+Message-ID: <20261009140946.906579405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -46,94 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
+commit 6e0022b5ae3dc5b833af0fcc1578dc20a1d6bc71 upstream.
 
-kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
-tree is pruned. It drops entry->rule.exe before removing the rule from
-the RCU-visible filter lists.
+aqr_gen1_read_status() decodes the MDIO_PHYXS_VEND_IF_STATUS register
+to determine which SerDes interface the PHY is currently using on its
+system side and stores the result in phydev->interface. phylink relies
+on this value to configure the MAC.
 
-After a rule has been installed with AUDIT_ADD_RULE, which requires
-CAP_AUDIT_CONTROL, removing the watched directory can race with another
-task that is still evaluating the rule. In that case, fsnotify can free
-the executable mark before the reader reaches audit_mark_compare(),
-causing a use-after-free.
+The autoneg == AUTONEG_DISABLE check is not correct:
+MDIO_PHYXS_VEND_IF_STATUS is set by the PHY firmware based on the
+negotiated link speed, not based on whether autoneg was used to reach
+it. When the link comes up at 1G in forced mode, the register correctly
+reads SGMII, but the early return prevents phydev->interface from being
+updated. It stays at whatever value it held before (typically 2500BASE-X
+from the initial autoneg run), so phylink configures the MAC for the
+wrong interface and the link cannot come up.
 
-KASAN reports:
-
-    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
-
-Unlink the published rules from the RCU-visible lists and retain them
-on tree->rules for cleanup. If any rule has an executable mark, wait for
-a single RCU grace period before removing the marks and scheduling the
-entries for freeing. Otherwise, call_rcu() already provides the required
-deferred freeing without a synchronous wait.
+Remove the autoneg guard so that the system interface type is always
+decoded when the link is up.
 
 Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 110a2432c520 ("net: phy: aquantia: add downshift support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260923-qcom-sa8255p-emac-v15-1-e82f33720737@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit_tree.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/net/phy/aquantia/aquantia_main.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -545,22 +545,38 @@ static void kill_rules(struct audit_cont
- {
- 	struct audit_krule *rule, *next;
- 	struct audit_entry *entry;
-+	bool need_sync = false;
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -544,7 +544,7 @@ static int aqr_gen1_read_status(struct p
+ 	if (ret)
+ 		return ret;
  
- 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
- 		entry = container_of(rule, struct audit_entry, rule);
+-	if (!phydev->link || phydev->autoneg == AUTONEG_DISABLE)
++	if (!phydev->link)
+ 		return 0;
  
--		list_del_init(&rule->rlist);
- 		if (rule->tree) {
- 			/* not a half-baked one */
- 			audit_tree_log_remove_rule(context, rule);
--			if (entry->rule.exe)
--				audit_remove_mark(entry->rule.exe);
- 			rule->tree = NULL;
- 			list_del_rcu(&entry->list);
- 			list_del(&entry->rule.list);
--			call_rcu(&entry->rcu, audit_free_rule_rcu);
-+			if (entry->rule.exe)
-+				need_sync = true;
-+		} else {
-+			list_del_init(&rule->rlist);
- 		}
- 	}
+ 	/* The status register is not immediately correct on line side link up.
+@@ -594,6 +594,9 @@ static int aqr_gen1_read_status(struct p
+ 
+ 	phydev->interface = aqr_translate_interface(phydev, interface);
+ 
++	if (phydev->autoneg == AUTONEG_DISABLE)
++		return 0;
 +
-+	if (list_empty(&tree->rules))
-+		return;
-+
-+	if (need_sync)
-+		synchronize_rcu();
-+
-+	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
-+		entry = container_of(rule, struct audit_entry, rule);
-+
-+		list_del_init(&rule->rlist);
-+		if (entry->rule.exe)
-+			audit_remove_mark(entry->rule.exe);
-+		call_rcu(&entry->rcu, audit_free_rule_rcu);
-+	}
+ 	/* Read rate from vendor register */
+ 	return aqr_gen1_read_rate(phydev);
  }
- 
- /*
 
 
