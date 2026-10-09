@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BD3BB12B;
-	Fri,  9 Oct 2026 14:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665593BB12B;
+	Fri,  9 Oct 2026 14:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555869; cv=none; b=pliU/jPdaA7+E/+xUVW3uG56hWWCL4dPdLoiwH5Qf6g7V4AOqewdwZ8LlzsILdju0rv79q142TWScwsYR0YvWmdQo0KX8w2AWYCs5DDDk7JrDOXLQdM31uv+T+ODJrm/47dlqKnhZEAMzv/ZrxRbL7ZqFGLYGLEs+sK6jubb828=
+	t=1791555872; cv=none; b=KyvNPtLlPyTJS1PYuMLul8IJriFco1sbdaU0TNO39XXKDKHTNt5MDqKeUxZ5GOv0GvzssoAC4py0lgPMCN6Xnlg8d4xVgydnKvA0YU48pk8Fzx5uNWsBWxUTjwZ2UN9gKz/mWG1KW880FSOWWdcHjzlfmFm7VeTIv1E8wEHP6Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555869; c=relaxed/simple;
-	bh=NPziwwDSEgNAJP8+hbYpAl/ZxK4gzKbRqmoburY9w1I=;
+	s=arc-20240116; t=1791555872; c=relaxed/simple;
+	bh=4jtxyHSg0kHE9AxcwGVY3E83AJQ1H4zfL+Fdk5KVLJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iu+uOlFtS905XbUjCXJBI8k0/aMBg01NdFm9RkTzMTqOFzQqZrioKqo0FkvTaNVGq66L+0YHJkZcIb0e1ductRIQ8ZnzM1YwwRAZKgWF8/1Y9xL+wmSRUysFKuxR4SAA4RWkNoxyFAP09Dk08sZF/jJBwzY5kGNhoGj8KevN6j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSp5XzDR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BIULR6scx5KpiT0Y04t7e1EUKFsVQaU0niQMG5lkHJ+fF1x5NGnyO4ietfGv3w6dvo5xmhWbTzkZBaxXrAG+Yj+cb8mzHqd2RHdTujCdhwTeKfvhUY0T8YCb7nO7hfYulAyAR1WxXU4Y2RkdijrS3X+HRGQP913GrICToJ4kun4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw46b28w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSp5XzDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED60D1F000FF;
-	Fri,  9 Oct 2026 14:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw46b28w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E561F000FF;
+	Fri,  9 Oct 2026 14:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555868;
-	bh=mY4E1Cc5uCp1VpSX+QBQeAlkMRjLoPhLX/IU5ZwfzYY=;
+	s=korg; t=1791555871;
+	bh=Nz3qIV4RPH/v6C8n45rZkvtxjr9YDPIN/SbhDFUzcPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSp5XzDRAW9SO9P+FQWqVooskzTs2Jm/yRnsvlsXSHhfcN1y54243R16JBX4hKMwe
-	 q2Z2IF9xJJE1i2og2vTnlJdFKOwVnU/p5GlpwBtTHBR+CCVJqxyPH8Vhru8EN125Ah
-	 u542d8t8JJlQpmOTCtekZRyqItCAQkBJqoDx1EJY=
+	b=Dw46b28wnqccA4q+p6fO+ge6OF9+vSk8MTCFGd1QD6dVJXAuzwAuNuaxuDYTxepeV
+	 /0TBLLTyppfwRWew0ObF0KmJ8HuAPYBmaFcgcDeqjUQ2OsAje5S6p60QFKxoy0ByNW
+	 4FTKeh2VOZRIlX6IEDRpl/i7gru6wNvNmptyfoVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjian Dai <daihongjian@kylinsec.com.cn>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Georgios Karantzas <gck.kara@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/403] i2c: at91: release DMA channels when probe defers
-Date: Fri,  9 Oct 2026 16:08:12 +0200
-Message-ID: <20261009140955.139628479@linuxfoundation.org>
+Subject: [PATCH 7.2 083/428] wifi: ath9k_htc: bound TX aggregation to MAX_TX_BUF_SIZE
+Date: Fri,  9 Oct 2026 16:07:00 +0200
+Message-ID: <20261009140947.998926894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +46,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongjian Dai <daihongjian@kylinsec.com.cn>
+From: Georgios Karantzas <gck.kara@gmail.com>
 
-[ Upstream commit c98bf3b86609a18ab16d067280257326e557c636 ]
+[ Upstream commit aeaca27c1db3106967ffbb2b517d98c835f6d500 ]
 
-at91_twi_probe_master() can return -EPROBE_DEFER from
-at91_init_twi_recovery_info() after at91_twi_configure_dma() has already
-claimed the tx/rx DMA channels. at91_twi_probe() then returns without
-releasing them, and since dma_request_chan() is not devres-managed the
-channels leak on every deferred probe attempt.
+__hif_usb_tx() dequeues up to MAX_TX_AGGR_NUM (20) frames into a
+single tx_buf of MAX_TX_BUF_SIZE (32768) bytes, limiting the batch
+by record count but never by cumulative byte length.
 
-Release the channels before deferring the probe.
+With large frames (MTU 2304), 20 aggregated frames of 2292 bytes
+each exceed the allocation (20 * 2296 = 45920 bytes), so the
+memcpy() in the loop writes up to 13152 bytes past tx_buf->buf
+before usb_submit_urb().
 
-Fixes: f7eeb1af8537 ("i2c: at91: release DMA channels on remove and probe error")
-Assisted-by: LLM
-Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/7D85C6CB6BF0A82E+20260929164340.41628-1-daihongjian@kylinsec.com.cn
+Peek the queue head and stop before copying any record that would
+cross MAX_TX_BUF_SIZE, then dispatch the current batch. Leftover
+skbs remain queued and are drained on the next URB completion.
+
+The byte bound changes the loop's exit semantics: it can now exit
+before i == tx_skb_cnt - 1. Stock only finalized tx_buf->len on
+that last index (len += offset), so an early break would submit a
+URB holding only the last record's length while every dequeued skb
+is freed on completion, silently dropping frames. Make tx_buf->len
+a running total and advance tx_buf->offset per record instead; the
+stride round_up(nskb->len + 4, 4) is identical to the stock stride
+when the loop runs to completion.
+
+Tested on hardware with an MTU 2304 flood: the loop stops at
+record 15 (len = 32144, offset = 32144, within 32768), no
+oversized URB is submitted, and MTU 1500 pings pass 20/20.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Georgios Karantzas <gck.kara@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260911001143.4507-1-gck.kara@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-at91-master.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
-index 68238cc8aee0d..e0c3de5e82033 100644
---- a/drivers/i2c/busses/i2c-at91-master.c
-+++ b/drivers/i2c/busses/i2c-at91-master.c
-@@ -921,8 +921,14 @@ int at91_twi_probe_master(struct platform_device *pdev,
- 	at91_calc_twi_clock(dev);
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index d3491ff08e6ef..7d2f292e20c52 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -14,6 +14,7 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
  
- 	rc = at91_init_twi_recovery_info(pdev, dev);
--	if (rc == -EPROBE_DEFER)
-+	if (rc == -EPROBE_DEFER) {
-+		/*
-+		 * The DMA channels were already set up above, release them
-+		 * before deferring the probe so they are not leaked.
-+		 */
-+		at91_twi_dma_release(dev);
- 		return rc;
-+	}
++#include <linux/math.h>
+ #include <linux/unaligned.h>
+ #include "htc.h"
  
- 	dev->adapter.algo = &at91_twi_algorithm;
- 	dev->adapter.quirks = &at91_twi_quirks;
+@@ -328,11 +329,14 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 	tx_skb_cnt = min_t(u16, hif_dev->tx.tx_skb_cnt, MAX_TX_AGGR_NUM);
+ 
+ 	for (i = 0; i < tx_skb_cnt; i++) {
+-		nskb = __skb_dequeue(&hif_dev->tx.tx_skb_queue);
++		nskb = skb_peek(&hif_dev->tx.tx_skb_queue);
++		if (!nskb)
++			break;
+ 
+-		/* Should never be NULL */
+-		BUG_ON(!nskb);
++		if (tx_buf->offset + nskb->len + 4 > MAX_TX_BUF_SIZE)
++			break;
+ 
++		nskb = __skb_dequeue(&hif_dev->tx.tx_skb_queue);
+ 		hif_dev->tx.tx_skb_cnt--;
+ 
+ 		buf = tx_buf->buf;
+@@ -342,13 +346,8 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 		*hdr++ = cpu_to_le16(ATH_USB_TX_STREAM_MODE_TAG);
+ 		buf += 4;
+ 		memcpy(buf, nskb->data, nskb->len);
+-		tx_buf->len = nskb->len + 4;
+-
+-		if (i < (tx_skb_cnt - 1))
+-			tx_buf->offset += (((tx_buf->len - 1) / 4) + 1) * 4;
+-
+-		if (i == (tx_skb_cnt - 1))
+-			tx_buf->len += tx_buf->offset;
++		tx_buf->len = tx_buf->offset + nskb->len + 4;
++		tx_buf->offset += round_up(nskb->len + 4, 4);
+ 
+ 		__skb_queue_tail(&tx_buf->skb_queue, nskb);
+ 		TX_STAT_INC(hif_dev, skb_queued);
 -- 
 2.53.0
 
