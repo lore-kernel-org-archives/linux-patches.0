@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C744735C6A8;
-	Fri,  9 Oct 2026 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BD3BB12B;
+	Fri,  9 Oct 2026 14:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555866; cv=none; b=KxDCB2PUQK/blyTHFpnIjMR0lw9Iaz/b+++pUCn9M5oKOW2Dv4iCa99rcrOruXhK1SXe+iOhYbRDKLH6bvR9uv0PeZYNoC40GxML3uvhgMEuUg15tbePPuWieG1fDaR7RxKB+21sMirycOvUZ6lIdJEo5fTCD7VACHPzu7dOPYk=
+	t=1791555869; cv=none; b=pliU/jPdaA7+E/+xUVW3uG56hWWCL4dPdLoiwH5Qf6g7V4AOqewdwZ8LlzsILdju0rv79q142TWScwsYR0YvWmdQo0KX8w2AWYCs5DDDk7JrDOXLQdM31uv+T+ODJrm/47dlqKnhZEAMzv/ZrxRbL7ZqFGLYGLEs+sK6jubb828=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555866; c=relaxed/simple;
-	bh=g5TyJHEERyfErM8ya8SRCTslUPYVGTcRQxyLrhpsIrA=;
+	s=arc-20240116; t=1791555869; c=relaxed/simple;
+	bh=NPziwwDSEgNAJP8+hbYpAl/ZxK4gzKbRqmoburY9w1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9ZiDipPGXV2DgsOmHhbpRiNDWoADw6pM03OpXkidZAaLA5g59xI3vPCo9Pd3VSEbF/nedeRsb/AFiu3rNwV/Fo+yMf102MZ12W0BH/+noJO7addRSkHo35l0ymQNHIEy0wWTEyAzdqHl6KNUDd/Cg67GurZr22ajQ0vJlMI21c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX1IZGF6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iu+uOlFtS905XbUjCXJBI8k0/aMBg01NdFm9RkTzMTqOFzQqZrioKqo0FkvTaNVGq66L+0YHJkZcIb0e1ductRIQ8ZnzM1YwwRAZKgWF8/1Y9xL+wmSRUysFKuxR4SAA4RWkNoxyFAP09Dk08sZF/jJBwzY5kGNhoGj8KevN6j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSp5XzDR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX1IZGF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3227F1F000FF;
-	Fri,  9 Oct 2026 14:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSp5XzDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED60D1F000FF;
+	Fri,  9 Oct 2026 14:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555865;
-	bh=0CzYEbIishsPEOJSHe+yZPOYKL8W37/4GFEkrpd+JYw=;
+	s=korg; t=1791555868;
+	bh=mY4E1Cc5uCp1VpSX+QBQeAlkMRjLoPhLX/IU5ZwfzYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lX1IZGF6SwLZwDfGFpMDlkaHr7FL56Cbqr4+MqBfjiP6MC+LGiiqjgEyH3FHzZE+U
-	 GEBsn0g8IMyAsjSOYOpGJ8SxXrEYEM1qf8R5U/Wku0xTEOEiBpuDpe3rAj3X7Jz27q
-	 ppjVRL3nvQvtJgbVHh7oRaNgMr41zl2Ilcrofqw0=
+	b=GSp5XzDRAW9SO9P+FQWqVooskzTs2Jm/yRnsvlsXSHhfcN1y54243R16JBX4hKMwe
+	 q2Z2IF9xJJE1i2og2vTnlJdFKOwVnU/p5GlpwBtTHBR+CCVJqxyPH8Vhru8EN125Ah
+	 u542d8t8JJlQpmOTCtekZRyqItCAQkBJqoDx1EJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Hongjian Dai <daihongjian@kylinsec.com.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 082/428] wifi: ath9k: reject short WMI command responses
-Date: Fri,  9 Oct 2026 16:06:59 +0200
-Message-ID: <20261009140947.975830108@linuxfoundation.org>
+Subject: [PATCH 6.18 131/403] i2c: at91: release DMA channels when probe defers
+Date: Fri,  9 Oct 2026 16:08:12 +0200
+Message-ID: <20261009140955.139628479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Hongjian Dai <daihongjian@kylinsec.com.cn>
 
-[ Upstream commit 93ce8ea70451e800601bc9444aa33043de15d67b ]
+[ Upstream commit c98bf3b86609a18ab16d067280257326e557c636 ]
 
-ath9k_wmi_rsp_callback() removes the validated WMI header and copies
-the number of bytes expected by the waiting command into its response
-buffer. A device response shorter than that expectation can therefore
-be read beyond the skb payload.
+at91_twi_probe_master() can return -EPROBE_DEFER from
+at91_init_twi_recovery_info() after at91_twi_configure_dma() has already
+claimed the tx/rx DMA channels. at91_twi_probe() then returns without
+releasing them, and since dma_request_chan() is not devres-managed the
+channels leak on every deferred probe attempt.
 
-Record -EMSGSIZE for a short response, complete the waiter, and return
-the stored status from the command path. This also prevents callers from
-consuming stale response bytes as a successful reply.
+Release the channels before deferring the probe.
 
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Fixes: f7eeb1af8537 ("i2c: at91: release DMA channels on remove and probe error")
 Assisted-by: LLM
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260814075837.20005-1-pengpeng@iscas.ac.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/7D85C6CB6BF0A82E+20260929164340.41628-1-daihongjian@kylinsec.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 16 ++++++++++++++--
- drivers/net/wireless/ath/ath9k/wmi.h |  1 +
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-at91-master.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 44e91815a1594..4a08babb6d9d6 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -206,9 +206,16 @@ static void ath9k_wmi_rsp_callback(struct wmi *wmi, struct sk_buff *skb)
- {
- 	skb_pull(skb, sizeof(struct wmi_cmd_hdr));
+diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
+index 68238cc8aee0d..e0c3de5e82033 100644
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -921,8 +921,14 @@ int at91_twi_probe_master(struct platform_device *pdev,
+ 	at91_calc_twi_clock(dev);
  
--	if (wmi->cmd_rsp_buf != NULL && wmi->cmd_rsp_len != 0)
-+	if (wmi->cmd_rsp_buf && wmi->cmd_rsp_len) {
-+		if (skb->len < wmi->cmd_rsp_len) {
-+			wmi->cmd_rsp_status = -EMSGSIZE;
-+			goto complete;
-+		}
- 		memcpy(wmi->cmd_rsp_buf, skb->data, wmi->cmd_rsp_len);
+ 	rc = at91_init_twi_recovery_info(pdev, dev);
+-	if (rc == -EPROBE_DEFER)
++	if (rc == -EPROBE_DEFER) {
++		/*
++		 * The DMA channels were already set up above, release them
++		 * before deferring the probe so they are not leaked.
++		 */
++		at91_twi_dma_release(dev);
+ 		return rc;
 +	}
-+	wmi->cmd_rsp_status = 0;
  
-+complete:
- 	complete(&wmi->cmd_wait);
- }
- 
-@@ -300,6 +307,7 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	/* record the rsp buffer and length */
- 	wmi->cmd_rsp_buf = rsp_buf;
- 	wmi->cmd_rsp_len = rsp_len;
-+	wmi->cmd_rsp_status = 0;
- 
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-@@ -356,9 +364,13 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		return -ETIMEDOUT;
- 	}
- 
-+	spin_lock_irqsave(&wmi->wmi_lock, flags);
-+	ret = wmi->cmd_rsp_status;
-+	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-+
- 	mutex_unlock(&wmi->op_mutex);
- 
--	return 0;
-+	return ret;
- 
- out:
- 	ath_dbg(common, WMI, "WMI failure for: %s\n", wmi_cmd_to_name(cmd_id));
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.h b/drivers/net/wireless/ath/ath9k/wmi.h
-index 5c3b710b8f319..0bb9d31f1a1cc 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.h
-+++ b/drivers/net/wireless/ath/ath9k/wmi.h
-@@ -157,6 +157,7 @@ struct wmi {
- 	u16 tx_seq_id;
- 	u8 *cmd_rsp_buf;
- 	u32 cmd_rsp_len;
-+	int cmd_rsp_status;
- 	bool stopped;
- 
- 	struct list_head pending_tx_events;
+ 	dev->adapter.algo = &at91_twi_algorithm;
+ 	dev->adapter.quirks = &at91_twi_quirks;
 -- 
 2.53.0
 
