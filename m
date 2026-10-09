@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8574E36CA;
-	Fri,  9 Oct 2026 14:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A034E2F1F;
+	Fri,  9 Oct 2026 14:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555615; cv=none; b=UPVSwtnE//Dwpsl0NNpBXg6ErzERvv7S2eBv+6JDdoI6o18goveJc/01axzTb2I0HpHaKG6uTAvgku+/2qNahRCEOX72CSkROHxyZDJyCyeHWjmULywgX5RO1tAtJyZzzmismkvJsf4pj0Q824fZB++aWrvDQ1XOruXFj1ORchI=
+	t=1791555616; cv=none; b=akUuIPNMal29pPbPGWSJWZg7HVSWI6ls4PI/YtjS8X7rTD7sw/yCFhbvtM/MZYU1xw0xfqvlLkOYWJdMlfHHlNcJbpwH3ZAKldPUyLjbLWMKoa5IpldiZykpfNLOgkfmiyxtmoBGv47HRSZ2f5ex2wpn91z+e+dm63fw0hipP10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555615; c=relaxed/simple;
-	bh=b78LrvWBhkFPe+wgk0TQaqSXxM3oBQAZ9fwibenUnWA=;
+	s=arc-20240116; t=1791555616; c=relaxed/simple;
+	bh=BcJFu+5o3FBF2qWIqArOSSuJSlbonkdH+8G5iThe6Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bImP1wap/UDyfFv2mjsivZk55ZPRuvYdp+mwriiajn+fS3X3wCKWVBN7bT1V27dhKX0Wu3FyJaHawR/m3HScIQYuHaV7HnAc377jJmZNIqlo06eKVDcG2OQSml1TslbjMT3BTEYzfYLUW1gbXgyYT9HQk3yoKWwyAR00S4OqLh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjnPgZTV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNARE23iCBVaVrntunyPFN69jDvILNGFVDyGUIhvuRQTWjbv2rSUoaD2LWVqn46ePfI2t59U9sYrWLLn1S+fdMLcu6C37s2Fc6WqRv7W4b/ucZTT5r6asUFaJOlv2lA0c5AD+z+zyCTlGwtHw/sJkyYByhSPDX+mHMzOngMz14c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2y5+IgB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjnPgZTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA3F1F000FF;
-	Fri,  9 Oct 2026 14:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2y5+IgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B65B1F0089A;
+	Fri,  9 Oct 2026 14:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555606;
-	bh=rpYM8srOo2w1SKKWftdDl4sAhUzogywZn7laTjG8Dwk=;
+	s=korg; t=1791555608;
+	bh=ZtZufKxoVf0FtEhrPCdZQ5KP1qLDerLpgNlY+BLSJck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjnPgZTViZtdlwFI9n4t/cu7vgjDNWpxhfOByBF7WeLAz9ksMZuqAvcpt3KJr4RWc
-	 hVvHbF3rqOwix4ERtYyyJ1UrfQNLylnMNwf6j6QukrV/4xq9mcY1K2xidNhk3xNOJh
-	 RTFH6+iYOWn3qrfnYlXXvh+pIyqdQjxS1Dn2gn5Y=
+	b=i2y5+IgBkSIg84LzA9HbVvoxfUUmM+g+2272wuasuKcepnVmiB28z4hBEff+JgY6g
+	 eT5533HLBI6AuuYVFBCm3JagSyRRoKBEMJuLQTdITTVfIS9CRPZs6K/1p6wVYhMsOz
+	 D3Px7ZItOWwko03eZNR3fBKx+IFLkHXoheFOwxyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alireza Asgari <alireza@asgari.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 036/428] net: fix checksum offsets in skb_splice_from_iter()
-Date: Fri,  9 Oct 2026 16:06:13 +0200
-Message-ID: <20261009140946.881525929@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Oleg Keri <okerixx@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 087/403] arm64: topology: fix arch_freq_get_on_cpu() overflow above 4.19 GHz
+Date: Fri,  9 Oct 2026 16:07:28 +0200
+Message-ID: <20261009140954.129083225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alireza Asgari <alireza@asgari.net>
+From: Oleg Keri <okerixx@gmail.com>
 
-commit febec6a7076499d16b37f556724a942633a270a6 upstream.
+[ Upstream commit 3872cc6b92940af0f73c6f9a45d65300492d648d ]
 
-skb_splice_from_iter() appends multiple page fragments before updating
-skb->len. However, skb_splice_csum_page() uses that unchanged length as the
-offset for every fragment checksum. If bytes already appended during the
-call have an odd total length, a later fragment's checksum is combined
-with the wrong parity.
+arch_freq_get_on_cpu() computes the product of the frequency scale and
+the reference frequency as a u64, but assigns it to an unsigned int
+before shifting it back down:
 
-For example, prime a UDP socket with sendto(MSG_MORE) and splice two
-distinct pipe buffers containing "abc" and "DEFGH". Uncorking reports
-success, but the receiver discards the packet for a bad checksum.
-This also affects IPv6 and fragments beginning near a page boundary.
+	freq = scale * arch_scale_freq_ref(cpu);
+	freq >>= SCHED_CAPACITY_SHIFT;
 
-Pass the initial skb length plus the bytes already spliced to the checksum
-helper. Keep the existing final length update and partial-progress error
-handling unchanged. CHECKSUM_PARTIAL does not use this helper and remains
-unaffected.
+The product is truncated to 32 bits before the shift, so the result
+wraps once arch_scale_freq_ref() exceeds 2^32 / SCHED_CAPACITY_SCALE,
+i.e. 4194304 kHz.
 
-Fixes: 2e910b95329c ("net: Add a function to splice pages into an skbuff for MSG_SPLICE_PAGES")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alireza Asgari <alireza@asgari.net>
-Link: https://patch.msgid.link/20260924-fix-udp-splice-checksum-v1-1-fe61d65447a8@asgari.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On a Snapdragon X2 Elite (Glymur) laptop, whose boost OPP is 4723200
+kHz, cpuinfo_avg_freq reports 524283 kHz instead of ~4723200 kHz while
+the CPU demonstrably runs at the boost frequency: a fixed workload
+completes in 1.72 s at the 4723200 kHz OPP versus 2.01 s at 4032000
+kHz, matching the 1.171 frequency ratio.
+
+Shift the u64 product and narrow only at the return.
+
+Fixes: 16d1e27475f6 ("arm64: Provide an AMU-based version of arch_freq_get_on_cpu")
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Oleg Keri <okerixx@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/topology.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -7397,7 +7397,8 @@ nodefer:	kfree_skb_napi_cache(skb);
+diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
+index 5d07ee85bdae4..1be36a30d9e6c 100644
+--- a/arch/arm64/kernel/topology.c
++++ b/arch/arm64/kernel/topology.c
+@@ -287,7 +287,6 @@ int arch_freq_get_on_cpu(int cpu)
+ 	struct amu_cntr_sample *amu_sample;
+ 	unsigned int start_cpu = cpu;
+ 	unsigned long last_update;
+-	unsigned int freq = 0;
+ 	u64 scale;
+ 
+ 	if (!amu_fie_cpu_supported(cpu) || !arch_scale_freq_ref(cpu))
+@@ -346,9 +345,8 @@ int arch_freq_get_on_cpu(int cpu)
+ 	 * (see amu_scale_freq_tick for details)
+ 	 */
+ 	scale = arch_scale_freq_capacity(cpu);
+-	freq = scale * arch_scale_freq_ref(cpu);
+-	freq >>= SCHED_CAPACITY_SHIFT;
+-	return freq;
++
++	return (scale * arch_scale_freq_ref(cpu)) >> SCHED_CAPACITY_SHIFT;
  }
  
- static void skb_splice_csum_page(struct sk_buff *skb, struct page *page,
--				 size_t offset, size_t len)
-+				 size_t offset, size_t len,
-+				 unsigned int csum_offset)
- {
- 	const char *kaddr;
- 	__wsum csum;
-@@ -7405,7 +7406,7 @@ static void skb_splice_csum_page(struct
- 	kaddr = kmap_local_page(page);
- 	csum = csum_partial(kaddr + offset, len, 0);
- 	kunmap_local(kaddr);
--	skb->csum = csum_block_add(skb->csum, csum, skb->len);
-+	skb->csum = csum_block_add(skb->csum, csum, csum_offset);
- }
- 
- /**
-@@ -7465,7 +7466,8 @@ ssize_t skb_splice_from_iter(struct sk_b
- 			}
- 
- 			if (skb->ip_summed == CHECKSUM_NONE)
--				skb_splice_csum_page(skb, page, off, part);
-+				skb_splice_csum_page(skb, page, off, part,
-+						     skb->len + spliced);
- 
- 			off = 0;
- 			spliced += part;
+ static void amu_fie_setup(const struct cpumask *cpus)
+-- 
+2.53.0
+
 
 
