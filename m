@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A475F399CE9;
-	Fri,  9 Oct 2026 14:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BA03D6CB4;
+	Fri,  9 Oct 2026 14:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555843; cv=none; b=BCYzH62JmDO4x70Wdcb8S2tiUyRXDpACMk560emBnuqUPijeji8BoV4/CjE3X/gwkOGuIRK5p9rEP1DB/VNDh5bfrmyBsNBY9HiuFU38UZXKbyZ9rMiwdvvaMga64Fpw2KoxtNGVWWys7hcjXyLVGdZqzE9+1fSUJagtnSv2RK8=
+	t=1791555847; cv=none; b=AL80tTwLpa7gqwZWusBQLCfzb79Jb61Zy/GUf14UKnh6fgM+aZi8kK4SP8DbnOo2zOAjHMUxsGySrnANxSCcRO6yEc9P6XyQB424xQliLWLqDnKBuvF/hM2XP97o0zeMAYab9Gac2mKx7oe5FW5QFGyBYQKDZRuZb3GMODkze1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555843; c=relaxed/simple;
-	bh=r6HVJslfGR/SAJ37mI+deStnXBoPMXxMV25qkws9ZW0=;
+	s=arc-20240116; t=1791555847; c=relaxed/simple;
+	bh=Zn0KyTrLCamDkunvoj4EcArNbQeD01Ejj/3Lw2aaryk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3/56oBMEzWntzMtqzJkjWRsVWR+drKMiEToSrGpH7eggDffxdb0DG40H/iZwBd1HZeKLaUE7hb0gKpel7c1/uITQQoJZkqSByjjS/upV6vgLqCu3Z1Cg2opcVsEuNEBo+z5LGIeVq1dFPLEh3aynx6h4Kfq+LoV+gQLwqsxQOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfbIa2Oo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f+aIxJtp5AkSv6vA81cRMrC9Tu/cz2lsPpffOPf1hSIWHlYM4xL3BCesDPIRf0GatlsccWctD4AGUOHp3Lr8wq0c8xHhmizSK4OevjwAvgYC+Sc98NXMKpXYartf1lOBqzjJB5CYN6kZHLEcTzW2cEzWThOjPwUNn4HNUR/jia8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lx1vl5dY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfbIa2Oo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BEC1F000FF;
-	Fri,  9 Oct 2026 14:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx1vl5dY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3621F000FF;
+	Fri,  9 Oct 2026 14:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555842;
-	bh=oDYuUqqViovbI8icUFjYOgr+DMPd7pKzcG0BoiaaKPI=;
+	s=korg; t=1791555846;
+	bh=MoHjTAePVSUizalizNw8lA6NCSFyYPIqVXMnb50wDho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfbIa2OoHKzQ6gDhdk11a9+VXV91wVfmXN+6A+qxfA/WoUFo2ORRBZR9FXx6W0Xtv
-	 N81y/L1juk3p4ATgpP2n+jIY+eOhZHRbWB92M0A6sQJi5GK2OEDcpt8LGVONvnoxK5
-	 5FE0cQdt5OWxIMzE2sgzaqqcSPCFjLtDAp7uTS/s=
+	b=Lx1vl5dY9tyjpPCSloY3rLGFhynUMNFqmHPTcpH4WW+WE9jvwdk4XczGg+ayHha/4
+	 aBM1OCBHz1BMTH4qxEeYQ+n7OlPc9s38hyQBbr5R1tSrMtlEavREgv1w7A/An9Rwzb
+	 etUUwHcu0WoyuF3erY5P4p+O84aiKrnakfVgUE14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Freimanis <quentin@q-lab.dev>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuchao Zhang <ndaugoing@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/403] net: sparx5: make ports inherit the switch base mac address type
-Date: Fri,  9 Oct 2026 16:08:08 +0200
-Message-ID: <20261009140955.047073923@linuxfoundation.org>
+Subject: [PATCH 7.2 079/428] wifi: mac80211: drop oversized fragments to avoid extra_len overflow
+Date: Fri,  9 Oct 2026 16:06:56 +0200
+Message-ID: <20261009140947.905848735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Freimanis <quentin@q-lab.dev>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
+[ Upstream commit 5e4f3509793b4db2c0835340224743db680e861f ]
 
-When the switch uses a random base MAC address it does not mark each
-port's address as random:
+In ieee80211_rx_h_defragment(), fragment payloads are accumulated into
+entry->extra_len as subsequent fragments arrive:
 
-  $ dmesg | grep "MAC addr"
-  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
-  $ cat /sys/class/net/eth0/addr_assign_type
-  0
+        entry->extra_len += rx->skb->len;
 
-0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
+When the final fragment arrives, the head fragment is dequeued, and
+pskb_expand_head() is called with entry->extra_len to ensure sufficient
+tailroom for all queued fragments before copying:
 
-With a random MAC reported as NET_ADDR_PERM, systemd's
-MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
-gets a new IP address every boot and a static reservation can't be used.
-Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
-address derived from the interface name and machine-id.
+        if (skb_tailroom(rx->skb) < entry->extra_len) {
+                if (unlikely(pskb_expand_head(rx->skb, 0, entry->extra_len,
+                                              GFP_ATOMIC))) {
+                        ...
+                }
+        }
+        while ((skb = __skb_dequeue(&entry->skb_list))) {
+                skb_put_data(rx->skb, skb->data, skb->len);
+                dev_kfree_skb(skb);
+        }
 
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In commit 69f132236827 ("mac80211: shrink struct
+ieee80211_fragment_entry"), entry->extra_len was narrowed from unsigned
+int to u16 in order to reduce structure memory footprint.
+
+However, an IEEE 802.11 frame sequence can contain up to 16 fragments
+(frag numbers 0..15). If a sequence of large fragments arrives (e.g. from
+a malicious peer or rogue AP), the sum of fragment lengths can exceed
+65535 bytes (for example, 15 fragments of 4400 bytes total 66000 bytes).
+Because extra_len is a u16, this addition overflows and wraps around
+modulo 65536 (e.g. 66000 wraps to 464).
+
+Consequently, pskb_expand_head() allocates only the truncated amount of
+tailroom (or is skipped entirely if the head fragment already has >= 464
+bytes of tailroom). When skb_put_data() subsequently iterates through the
+queued skb list, it appends the full payload into the undersized buffer,
+causing skb_put() to trigger skb_over_panic() and crash the kernel in
+softirq context.
+
+A legitimate MSDU in IEEE 802.11 is at most 2304 bytes (or up to 7935/11454
+bytes for A-MSDU, which is not fragmented), well below U16_MAX.
+
+Fix this without increasing the size of struct ieee80211_fragment_entry by
+checking whether adding the incoming fragment length would exceed U16_MAX.
+If so, purge the queued fragments and drop the frame.
+
+Fixes: 69f132236827 ("mac80211: shrink struct ieee80211_fragment_entry")
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Link: https://patch.msgid.link/20260918034004.85078-2-ndaugoing@gmail.com
+[assign a separate drop reason]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
- 3 files changed, 3 insertions(+)
+ net/mac80211/drop.h | 1 +
+ net/mac80211/rx.c   | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index f201cb6c587a7..46837e7efbd07 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -896,6 +896,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
- 		eth_random_addr(sparx5->base_mac);
- 		sparx5->base_mac[5] = 0;
-+		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
+diff --git a/net/mac80211/drop.h b/net/mac80211/drop.h
+index f06a8aa905c53..f433ee17cce51 100644
+--- a/net/mac80211/drop.h
++++ b/net/mac80211/drop.h
+@@ -108,6 +108,7 @@ typedef unsigned int __bitwise ieee80211_rx_result;
+ 	R(RX_DROP_U_UNHANDLED_PREQ)		\
+ 	R(RX_DROP_U_UNHANDLED_MGMT_STYPE)	\
+ 	R(RX_DROP_U_NO_LINK)			\
++	R(RX_DROP_U_DEFRAG_OVERFLOW)		\
+ /* this line for the trailing \ - add before this */
+ 
+ /* having two enums allows for checking ieee80211_rx_result use with sparse */
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 5e26be8e27d8f..7ead509304ebe 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -2499,6 +2499,12 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
  	}
  
- 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index 97d53e229ad69..a5675f13a11e2 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -392,6 +392,7 @@ struct sparx5 {
- 	struct notifier_block switchdev_blocking_nb;
- 	/* Switch state */
- 	u8 base_mac[ETH_ALEN];
-+	u8 base_mac_assign_type;
- 	/* Associated bridge device (when bridged) */
- 	struct net_device *hw_bridge_dev;
- 	/* Bridged interfaces */
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-index 1d34af78166a3..ae84ab7378823 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-@@ -289,6 +289,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
- 	ndev->ethtool_ops = &sparx5_ethtool_ops;
- 
- 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
-+	ndev->addr_assign_type = sparx5->base_mac_assign_type;
- 
- 	return ndev;
- }
+ 	skb_pull(rx->skb, ieee80211_hdrlen(fc));
++	if (unlikely((u32)entry->extra_len + rx->skb->len > U16_MAX)) {
++		I802_DEBUG_INC(rx->local->rx_handlers_drop_defrag);
++		__skb_queue_purge(&entry->skb_list);
++		return RX_DROP_U_DEFRAG_OVERFLOW;
++	}
++
+ 	__skb_queue_tail(&entry->skb_list, rx->skb);
+ 	entry->last_frag = frag;
+ 	entry->extra_len += rx->skb->len;
 -- 
 2.53.0
 
