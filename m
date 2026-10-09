@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B454E50B4;
-	Fri,  9 Oct 2026 14:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEC64E50BD;
+	Fri,  9 Oct 2026 14:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557374; cv=none; b=Ah149z3dDe8SY+O39MZMWBs7xIRzwg3T/9x4Jt2i3CYfC0c5FKFhA3ne6YcDh0Mvgx78g6RjldHyUJQOaw6Df/swASa6mJlheh/Nr/EROHpuGNJ4OCEGHikatEjQUwSFT3f1qID+FYRm4G+I46TN8gVO3Qs3HBK11oR6rVMkN9g=
+	t=1791557376; cv=none; b=ZrBe/lIodnykovG4U4SNJ3X1GQ6QGQgUKTgXvRr2THvXGWicbgQrv7nwSqBQ9YhHBto7nxYwCxC0x4LFadmCzNNq0H11pHEA1rO4SNL46E5kkqNQANLPSR6XYEmgHdN1SJJfmwaKpaqYNwr2kPyNn/wV/rQOJ2Cw5GuQ/rLwA6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557374; c=relaxed/simple;
-	bh=bhVZrMyjYqYi/00pCbqLpw5GQJ/lqor6ach23xuVALs=;
+	s=arc-20240116; t=1791557376; c=relaxed/simple;
+	bh=eOFEc9CD6N8uDollueV0XhXKKrMgoZpRhVcRm0FolHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNchrK3MfAWhTGWlUtpDZV+uYBlpg7DXG4KTE7lft3Qy+K74vxZRWxT7IQDqtFnzIjlv31G0d2K/XNP7Jai8/OsxQHbRduQ+xw8Gggqw6hkbRh5jiOr/L3o0nTSuzHPMk3aW+6W/58tKms8Ds5W0A9J2D2enUEzLTs7qDfgMq6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEnOL12S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yl14ZjLiL3xxTxflYUedjLsgnCCxdOpJdNwsodI/LmTypUwIGuOEPQNDcj9c8mXjIxaqL/9oRMaf2EXAncLwzGf6IzLP37xEWc6JmZU4s8B74Jb08sLj8wHKSiwyHm6kCLsXcehHTboXsgdLkoWvYaH5tYwcnOyPaTSSBHctgSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm5J4bln; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEnOL12S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201DE1F000FF;
-	Fri,  9 Oct 2026 14:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm5J4bln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8CE1F000FF;
+	Fri,  9 Oct 2026 14:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557372;
-	bh=GaC+kNMQ8Mktj2mVjdgAnJpwg+VbS7FpvieB2ue8rtA=;
+	s=korg; t=1791557375;
+	bh=xvvegFnfqSrgqwhrbAS+R1mwhka9cUJgYA3KqIromWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OEnOL12SeTP+xNrBBnaH/k3Fycd5Yk8sVbp1xb1+g9kZsivSBTv4QbBl//X8cjtcA
-	 cNQESkj1rejU8L8dx+4YkqVSNLkhU25504m03XdIQwytrT9Y9IJiusCaoTy0azCdU4
-	 R+taFsQwn5sj8h6WXREVe1Ivh4Qe+QF/DxjmOD1g=
+	b=bm5J4blnRPvUCXU/DvOiQzVFhgQ8LdazxOLj5YwaExKr6FH93Yv8QxB3MFfVF66nn
+	 pLJnncI7ygIFRpAgHlUV5r67Zka1hveNc/BwBpxNIqgWfFtomS8FP34tnEUHW8g82D
+	 JazFal1/YaHDCMmBMlVT5ytgucbv3B23h9fEbP44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 345/428] USB: serial: option: add support for SIMCom SIM8260C
-Date: Fri,  9 Oct 2026 16:11:22 +0200
-Message-ID: <20261009140953.734361248@linuxfoundation.org>
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 390/403] KVM: arm64: Apply the fine-grained UNDEFs without FEAT_FGT
+Date: Fri,  9 Oct 2026 16:12:31 +0200
+Message-ID: <20261009141001.463968667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-commit 35c950c9ec2c4c4d45dc9b63cfe8fca774ce33a0 upstream.
+[ Upstream commit 4bdd2b3a708c1feb701cb8b62feb8ad2fd77bb07 ]
 
-Add support for SIMCom SIM8260C (1e0e:902b).
+FGUs don't actually require hardware support, so don't gate fgt trap
+config insertion on FGT. This is the only action required to allow FGUs
+always, as kvm_calculate_traps() already computes the FGU bits with or
+without FEAT_FGT.
 
-T:  Bus=08 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1e0e ProdID=902b Rev= 5.04
-S:  Manufacturer=SIMCOM
-S:  Product=SDXLEMUR-LITE-MTP _SN:120696AB
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 5 IfCount= 3 Cls=01(audio) Sub=00 Prot=20
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan_simcom
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 0 Cls=01(audio) Sub=01 Prot=20 Driver=snd-usb-audio
-I:* If#= 6 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
-I:  If#= 6 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
-E:  Ad=05(O) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
-I:* If#= 7 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
-I:  If#= 7 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
-E:  Ad=89(I) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
+This also fixes a spurious WARN when a TLBI OS is run on a guest in vEL1
+without FEAT_TLBIOS on non FEAT_FGT hardware. In this configuration the
+course-grained HCR_EL2.TTLBOS trap reaches the handler handle_tlbi_el1(),
+which expects an EL1 TLBI only from vEL2. With FGUs enabled the UNDEF
+will be injected without needing the specific handler.
 
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Fixes: f5a5a406b4b8b ("KVM: arm64: Propagate and handle Fine-Grained UNDEF bits")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
+Link: https://patch.msgid.link/20260929090031.3829185-2-fuad.tabba@linux.dev
+[oliver: Take Wei-Lin's suggested changelog]
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kvm/emulate-nested.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2168,6 +2168,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
- 	  .driver_info = RSVD(7) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x902b, 0xff),
-+	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
- 	  .driver_info = RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
+--- a/arch/arm64/kvm/emulate-nested.c
++++ b/arch/arm64/kvm/emulate-nested.c
+@@ -2294,9 +2294,6 @@ int __init populate_nv_trap_config(void)
+ 				print_nv_trap_error(fgt, "FGT bit is reserved", ret);
+ 			}
+ 
+-			if (!cpus_have_final_cap(ARM64_HAS_FGT))
+-				continue;
+-
+ 			prev = xa_store(&sr_forward_xa, enc,
+ 					xa_mk_value(tc.val), GFP_KERNEL);
+ 
 
 
