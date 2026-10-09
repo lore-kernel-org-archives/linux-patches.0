@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6FF4E9C3E;
-	Fri,  9 Oct 2026 14:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498884E433D;
+	Fri,  9 Oct 2026 14:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557099; cv=none; b=Cal60U+6ULnnTtEmKI7ZzmLuDtHpdLewVW3NP49q0OeT29LB8qwqnafCVjNuX06zdDlSXuLiXkj4DkpMTj9uBbVsSmklObCvv+s2LXAKJKh8oGS3dVKQVr+875b+tsLtFFnk4RGylBySECehRoSX4f1Iim43+as+fzZwTfxT6EQ=
+	t=1791557102; cv=none; b=HtJpdj+4NE7E+DX/kDuPG/ZAbC5OEWqa6gqkrC8EAisGgUBQa2DXh3TNqHvZh3qWe2J3gtnc3dZLHLDzMGHdz/W8NRGyctHd+C9l/lU1Brr878gHmfVr5Dy82NK/1VbOkUJL0XwXCCdLftVTLRxynlgaUeQK0cYn8a1w8fDzSVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557099; c=relaxed/simple;
-	bh=hektFdn+yiPUAKuBspSWeBB62B8s95yagv0AMWbK1sQ=;
+	s=arc-20240116; t=1791557102; c=relaxed/simple;
+	bh=hFGbbmfRMq8O4AcJONJ99GciT3JB6bK2xHdkLICcPRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skIadjMI0LwOcj9PcjGZSO03D9SAyokbIiHFixl+T4GgufwJGanXvEGGdI14RQD+X6PgxBDJ2qGZtoDEgLq42Bg8vP8CCOLGQO5Kex988H/ySUd/U1B4lY+FuRURTeDeNHxIhap1grm9CpflwVYJ0HEXhBvQSG4NFtEkkP8I2z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08N7kYtA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OXXbrzQpHsbnzWDYCb8YIzf5cOB/k27G/B9IYZEPiqe+BVu6pXgDI47jTgQ1y9kPGiWoIFYb4e1kzpOVl3FWf2ouPxi3CkMt/v3I9GG+1nbPF3a8/5hU81IQEnpy9QgbPyHw2wZs0r+9T27usTpAbUM/0LRnhVLkEuAwxHRqeGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztRi80DO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08N7kYtA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C988A1F000FF;
-	Fri,  9 Oct 2026 14:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztRi80DO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8331F000FF;
+	Fri,  9 Oct 2026 14:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557098;
-	bh=dZ3aji5kziB0gQ1nr85xNP9D3rnzoknrH7WzL3UjtKo=;
+	s=korg; t=1791557101;
+	bh=okAVppSNCKca5z/XDXVTJBB86tlsuYLAcH8TiCLdXaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=08N7kYtAm3ChF7S/b2PKmkw5qpZN6DmbIkcK1SkJHE+yYxl59SCyY9v273wZdFtLD
-	 O+xGn7bMhaJZ6ekWhrQdGH/CqHT3UYfHUFXn4CsuZ5Ec2SRZ9lRB2ZuWEtdW0NZc56
-	 Xskjpc85AT6N6+v7OhdqJ2oJJJTqMGf0OPW0HTy0=
+	b=ztRi80DOZjxWc/3Mbg8zxMjQ4lWjq+/HBMo0V3DaHC289jhPXoJJBICxJEoDtErDy
+	 oQucTBcplAN7Xf45UqH2Hoo8lTAZM7Qa1paZSrkQQZhfvp3EbfOxf/QrL1+NNVTOm4
+	 zWPbb1Iqo50aoYhZDP0F9MwPFotSCswzxE8T/pmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 346/403] mm/vma: predicate setting mmap_prepare VMA fields on new vma alloc
-Date: Fri,  9 Oct 2026 16:11:47 +0200
-Message-ID: <20261009141000.358971514@linuxfoundation.org>
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 296/428] nvme-multipath: set BLK_FEAT_ZONED only after the zone info is known
+Date: Fri,  9 Oct 2026 16:10:33 +0200
+Message-ID: <20261009140952.613148993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,78 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 976d5e0ddac885b0219252f004f6c561c344df9d ]
+commit 4a5e49ba0abb8b4328d6318c9aef0c0121f95507 upstream.
 
-It only makes sense to manipulate VMA fields if a new VMA was allocated,
-rather than merged.
+The namespace head is marked zoned at allocation time based only on the
+command set identifier.  If the zone info query reports a zero zone size,
+the path namespace is registered without zoned limits while the head
+still advertises the zoned capability with a zone size of zero, and
+reporting zones or writing to the head then shifts by ilog2(0).
 
-VMA merging does not compare vm_ops or vm_private_data, so a merged VMA
-keeps its own, which is also what the legacy f_op->mmap path does since it
-never touches an existing VMA.
+Drop the zoned feature from the head allocation and let the head limits
+refresh stack it in from the path namespace instead.
 
-Currently, these fields will get overwritten by whatever state is
-established in the mmap_prepare hook, and if the VMA was merged,
-vm_ops->mapped will not have been called, so this could destructively
-clear existing state without replacing it with anything valid.
-
-There is an implicit requirement that vm_private_data and vm_ops are
-fungible across VMAs which means that losing the 'new' state is fine.
-
-However in this case the 'old' state is being overwritten by potentially
-invalid 'new' state, so this must be rectified.
-
-Additionally constify have_mmap_prepare while here.
-
-All existing in-tree users either derive state from the file or are
-unmergeable due to VMA flags, so this has no direct impact.
-
-Link: https://lore.kernel.org/20260923-fix-mmap-prepare-overwrite-v1-1-3b3f1bfcdf5e@kernel.org
-Fixes: c84bf6dd2b83 ("mm: introduce new .mmap_prepare() file callback")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 28982ad73d6a ("nvme: set BLK_FEAT_ZONED for ZNS multipath disks")
+Fixes: 3838e80fcfb3 ("nvme: skip the zoned limits update if the zone info query failed")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/multipath.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index d160cc6a608af..d1158fdcde287 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2693,7 +2693,7 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
- {
- 	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma = NULL;
--	bool have_mmap_prepare = file && file->f_op->mmap_prepare;
-+	const bool have_mmap_prepare = file && file->f_op->mmap_prepare;
- 	VMA_ITERATOR(vmi, mm, addr);
- 	MMAP_STATE(map, mm, &vmi, addr, len, pgoff, vm_flags, file);
- 	bool allocated_new;
-@@ -2727,7 +2727,7 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
- 			goto unacct_error;
- 	}
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -737,8 +737,6 @@ int nvme_mpath_alloc_disk(struct nvme_ct
+ 	lim.dma_alignment = 3;
+ 	lim.features |= BLK_FEAT_IO_STAT | BLK_FEAT_NOWAIT |
+ 		BLK_FEAT_POLL | BLK_FEAT_ATOMIC_WRITES | BLK_FEAT_PCI_P2PDMA;
+-	if (head->ids.csi == NVME_CSI_ZNS)
+-		lim.features |= BLK_FEAT_ZONED;
  
--	if (have_mmap_prepare)
-+	if (have_mmap_prepare && allocated_new)
- 		set_vma_user_defined_fields(vma, &map);
- 
- 	__mmap_complete(&map, vma);
--- 
-2.53.0
-
+ 	head->disk = blk_alloc_disk(&lim, ctrl->numa_node);
+ 	if (IS_ERR(head->disk))
 
 
