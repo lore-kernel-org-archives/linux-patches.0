@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A772D399CE9;
-	Fri,  9 Oct 2026 14:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CD1470450;
+	Fri,  9 Oct 2026 14:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556847; cv=none; b=dBf5ekyCN7UBDCHiS2ghJ9aWW7PW23MT1AtbmqlnauEES4u2WTBAYOIl5wu4G9LCZHwGUs1GTE9YneQfojAHQUfTaDk9PYlBJzNtKHgTqAneeSwiPGr/Ahc9lZlytUcVTymfhIJyUg+Amt03NTDrrA6Q1UJfcqIRbu4AiJPC7JY=
+	t=1791556850; cv=none; b=kUUCdzQJ4B6ZtAGIZWvyOWTcnSyzmIT7vr7PtCpGJ7vvyMgY3DkwOYz1w6lYDIEAeLB7LKHuCyzYyTdLmSdTb4X+u8/+d8vvtGAkqLT4ZEP1wC4eG6+3V2qzBzzsmgdLHIXZIEA08PDPvUQDmAOSLbc2o2JDeksECNNm7YCgSp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556847; c=relaxed/simple;
-	bh=MMI89PuISIdnHP45hd+uzYFYL7CYqHgDZIGdUcGDq8E=;
+	s=arc-20240116; t=1791556850; c=relaxed/simple;
+	bh=zESyKwx94RfVGR23b8a1cVnVVlHyR278s+4nMEmbq64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PRewsbDLo7wLPMfk7cjEKK5fDB/EK17lALHGkAO75yP0QvUssMZ0GUz7lfSCQIPbffh9pfAyZs+/x/RoPSWFXNYd7LeHh6DGNGDMNqSo1wru0ogeBnurUkHsArnuJRbaZatOacUfZZmNJ2z/CJ7VdXqXOvwInouigacPLHVUPmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdtuI8B7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ix18ppHjsEPQLtJvjGIsWgGwZWdMtccsquZVNqPSdn7bjFAun8bs8q/yZWFLXJhGlRkGPjhC1IWpLur731NWfDRyIxIf2qBPMS6lDPzMbjzhwMmQQbUWkj9ku5k+68Y25iXW6nYi5SID8N8GTI+qUBU+CJ+i8reG3wYmlvIg98Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX5e4LeT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdtuI8B7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104411F000FF;
-	Fri,  9 Oct 2026 14:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX5e4LeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8D11F000FF;
+	Fri,  9 Oct 2026 14:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556846;
-	bh=WF1kIE4YtXFKXiJIYYgMkORk6RGuKemHXg6WEI1ZioM=;
+	s=korg; t=1791556849;
+	bh=gePhDVg88QxLjNy8p0PnwLTyzXnVchhmpGY3Xx471i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdtuI8B7+VVT/MK/sZbNWX5Y2YRkT1vO2r/rOPZvm2QeMDj/ik++iDnKOV6hwlG9e
-	 WhJOHpQTNLIGPhU/pO5t6WCdABgmJ3plBg8LNwqFYqwgP/+tZR+1tiZ182x6ZTSnTP
-	 eOGioeU5oJfpkOnpBWaV8Z9woKZZtlxGcCVEeHhA=
+	b=CX5e4LeTGi6K1tbcTk8+nxPNUuOVqHmAQ6WLo6evQqvgSPu1NwnlQ1o/gFVj7bEJh
+	 7YxkHQq5P7tAankQr+tZ87dyyy7yjEEPqRDzCQyswIPYPkvAKfgT3UndGzdYO+swGB
+	 GsUBxLcvFmqTJmaZF49sXdvGkgB1j1zXQGL+myK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 302/403] iio: adc: ad_sigma_delta: fix use-after-free on unbind
-Date: Fri,  9 Oct 2026 16:11:03 +0200
-Message-ID: <20261009140959.275464718@linuxfoundation.org>
+	syzbot+9f57c1b2792029198fcf@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Tony Lindgren <tony.lindgren@linux.intel.com>
+Subject: [PATCH 7.2 252/428] serial: core: fix NULL pointer dereference in serial_core_unregister_port()
+Date: Fri,  9 Oct 2026 16:09:49 +0200
+Message-ID: <20261009140951.640530062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,107 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit 9ee8306121495d2a25aa5d1bfd519f2748786b83 upstream.
+commit 499485a67fbacf4d9afbdb43522388c64f853428 upstream.
 
-ad_sd_buffer_postenable() allocates sigma_delta->samples_buf with
-devm_krealloc() at runtime, so its devres entry sits after all
-probe-time entries of the driver. devm resources are released in
-reverse allocation order, which means unbind frees samples_buf before
-iio_device_unregister() disables the buffers and detaches the trigger
-pollfunc. The data ready IRQ is still enabled at that point, so
-ad_sd_trigger_handler() can still run and memcpy() incoming samples
-into the freed samples_buf.
+port->port_dev is NULL when no port device is installed: it is cleared
+on teardown, and never set if registration failed before
+serial_core_port_device_add().  serial_core_unregister_port() passes it
+straight to serial_core_get_ctrl_dev(), which dereferences it:
 
-Fix this by preallocating the buffer in
-devm_ad_sd_setup_buffer_and_trigger(), before the triggered buffer and
-the IRQ are set up, so it is freed only after iio_device_unregister()
-has drained the trigger handler via free_irq(). Size it for the worst
-case of all sequencer slots being active; ad_sd_validate_scan_mask()
-already caps the number of active channels at num_slots.
+  KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
+  RIP: serial_core_unregister_port
+  Call Trace:
+   serial8250_unregister_port
+   serial8250_remove
+   unbind_store
 
-This issue was found by an in-house static analysis tool.
+Return early when there is no port device, and read port->port_dev
+under port_mutex.
 
-Fixes: 8bea9af887de ("iio: adc: ad_sigma_delta: Add sequencer support")
-Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Also clear port->port_dev on the serial_core_register_port() error
+path, where the port device has already been removed.
+
+Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
+Reported-by: syzbot+9f57c1b2792029198fcf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9f57c1b2792029198fcf
+Cc: stable@kernel.org
+Assisted-by: Claude:claude-opus-5
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=9f57c1b2792029198fcf
+Link: https://lore.kernel.org/all/20260826073237.1377668-1-linuxoid@gmail.com/
+Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
+Link: https://patch.msgid.link/20260826084654.1392851-1-linuxoid@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |   31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/tty/serial/serial_core.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -496,7 +496,6 @@ static int ad_sd_buffer_postenable(struc
- 	const struct iio_scan_type *scan_type = &indio_dev->channels[0].scan_type;
- 	struct spi_transfer *xfer = sigma_delta->sample_xfer;
- 	unsigned int i, slot, channel;
--	u8 *samples_buf;
- 	int ret;
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3336,6 +3336,7 @@ int serial_core_register_port(struct uar
  
- 	if (sigma_delta->num_slots == 1) {
-@@ -528,7 +527,7 @@ static int ad_sd_buffer_postenable(struc
- 		xfer[1].bits_per_word = scan_type->realbits;
- 		xfer[1].len = spi_bpw_to_bytes(scan_type->realbits);
- 	} else {
--		unsigned int samples_buf_size, scan_size;
-+		unsigned int scan_size;
+ err_unregister_port_dev:
+ 	serial_base_port_device_remove(port->port_dev);
++	port->port_dev = NULL;
  
- 		if (sigma_delta->active_slots > 1) {
- 			ret = ad_sigma_delta_append_status(sigma_delta, true);
-@@ -536,17 +535,6 @@ static int ad_sd_buffer_postenable(struc
- 				return ret;
- 		}
+ err_unregister_ctrl_dev:
+ 	serial_base_ctrl_device_remove(new_ctrl_dev);
+@@ -3350,12 +3351,24 @@ err_unregister_ctrl_dev:
+ void serial_core_unregister_port(struct uart_driver *drv, struct uart_port *port)
+ {
+ 	struct device *phys_dev = port->dev;
+-	struct serial_port_device *port_dev = port->port_dev;
+-	struct serial_ctrl_device *ctrl_dev = serial_core_get_ctrl_dev(port_dev);
++	struct serial_port_device *port_dev;
++	struct serial_ctrl_device *ctrl_dev;
+ 	int ctrl_id = port->ctrl_id;
  
--		samples_buf_size =
--			ALIGN(slot * BITS_TO_BYTES(scan_type->storagebits),
--			      sizeof(s64));
--		samples_buf_size += sizeof(s64);
--		samples_buf = devm_krealloc(&sigma_delta->spi->dev,
--					    sigma_delta->samples_buf,
--					    samples_buf_size, GFP_KERNEL);
--		if (!samples_buf)
--			return -ENOMEM;
--
--		sigma_delta->samples_buf = samples_buf;
- 		scan_size = BITS_TO_BYTES(scan_type->realbits + scan_type->shift);
- 		/* For 24-bit data, there is an extra byte of padding. */
- 		xfer[1].rx_buf = &sigma_delta->rx_buf[scan_size == 3 ? 1 : 0];
-@@ -853,6 +841,23 @@ int devm_ad_sd_setup_buffer_and_trigger(
+ 	guard(mutex)(&port_mutex);
  
- 		indio_dev->setup_ops = &ad_sd_buffer_setup_ops;
- 	} else {
-+		const struct iio_scan_type *scan_type =
-+			&indio_dev->channels[0].scan_type;
-+		unsigned int samples_buf_size;
++	/*
++	 * A NULL port device means there is no registered port device to
++	 * remove: serial_core_remove_one_port() clears port_dev on
++	 * teardown, and it is never set if registration failed before
++	 * serial_core_port_device_add().
++	 */
++	port_dev = port->port_dev;
++	if (!port_dev)
++		return;
 +
-+		/*
-+		 * Worst-case size: all sequencer slots can be active, capped
-+		 * at num_slots by ad_sd_validate_scan_mask().
-+		 */
-+		samples_buf_size =
-+			ALIGN(sigma_delta->num_slots *
-+			      BITS_TO_BYTES(scan_type->storagebits),
-+			      sizeof(s64));
-+		samples_buf_size += sizeof(s64);
-+		sigma_delta->samples_buf = devm_kzalloc(dev, samples_buf_size, GFP_KERNEL);
-+		if (!sigma_delta->samples_buf)
-+			return -ENOMEM;
++	ctrl_dev = serial_core_get_ctrl_dev(port_dev);
 +
- 		ret = devm_iio_triggered_buffer_setup(dev, indio_dev,
- 						      &iio_pollfunc_store_time,
- 						      &ad_sd_trigger_handler,
+ 	port->flags |= UPF_DEAD;
+ 
+ 	serial_core_remove_one_port(drv, port);
 
 
