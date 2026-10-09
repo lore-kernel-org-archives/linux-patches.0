@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596691A682B;
-	Fri,  9 Oct 2026 14:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B397231C91;
+	Fri,  9 Oct 2026 14:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556367; cv=none; b=oJssBUhUZiATC4G1a7t3UTGK+h8jSxRCuq4RH613abYfyY4vYS0GFKdSTDQDH80e5KLYrZQ2QyPkFabOV3dTgU7vIVnmlQaUNPArswoWDyPcLFYyVU6V6k4VKCKyQD6wFHSnGepDklWwLgNyqJ7nSfh5oNBuolMNF4YK66fA8go=
+	t=1791556371; cv=none; b=G2MoNq3cPTUHQxA6AClD/uhrRW5RMlVDWhG0u0CskV+XCut+AhqbrUAFH++2sxiANxTyAtP9nc0NTvncwEPi/1oN9+61NNSqhNdM+YutzI8baaRjta54hEhn0IiPWhKs4MbChUO1Un34GWd3pLqClv0osodzLxZx+tmSlgp1I7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556367; c=relaxed/simple;
-	bh=ZAe6ii9XHhwuJFuHMEUhQB/4dA2FfQGXRv84PeLi4P4=;
+	s=arc-20240116; t=1791556371; c=relaxed/simple;
+	bh=LUF9au/GEuB/7f0O63N/i6DBYQ5cdej8KzX9hfMsphQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDs+YbHhLPnVQtHb3vlGumPn/xztLSLyo52ixhXEM6gEJxq/uL6zg0T2nHl3Fsb62Dfmlvi7Vj4JYeVp1n2E5nQa8Kw+AHnbtXN6KeNcvIpleqxCU4NAV3KgrpDRUZjJB1jC1Jiqg9TiTtN/BQc9Av+FxV2mcuKCNRxsbr/SLxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC7rz8lC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AcGyH3iP9gGMWkpVCKtHtxPFdqHAxUc8eKOIW+EsKu3DBrzGfvZ4R4NEiqFfk2Wq4qx9cSh0ugbJCrxbBBk0uEWdwmjjIuB7kVcKU3w4MUnw706L8wQ5wCP8Qz4GKcH4gIGoga08jE/0WJUBcgySBpS9tRrAaKAoWPY6Q45K3/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pq+77vrv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC7rz8lC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1831F000FF;
-	Fri,  9 Oct 2026 14:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pq+77vrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710551F000FF;
+	Fri,  9 Oct 2026 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556366;
-	bh=u/N0w9NC9u7X6zZmfM7qpVz4IHAsjyXRRvv0GEtm1YU=;
+	s=korg; t=1791556370;
+	bh=PV6cEkWDg7pKzshskG6TLjG5i+IYkDsq62C8wmeV8Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HC7rz8lCJgxlSJtVG4tQTVNp3dq5atobwTnvLlirtCmyhupu2VI5fuPBeOgkxh/zH
-	 3xYGgGzctpGQcHkzqIHIPNViNkRTH0la6WrCcYHF1eBE+KLcnOIIxyyk5oR+P9OpwO
-	 otG9jhzzZQSnNgHuuAYDi8LIjC16p3+tyRdlqEk0=
+	b=pq+77vrvjbEo9vmYxAqgAHs/5HU/gurs/8+LofoGHxK/HEEoCDJT8owIuupNWbOh9
+	 tARvUA5eXKrOQ9MRVJEJLDnM3rKx2n11FKDkhIk70uZQyA61CnI8kztSFrnLEN2aIY
+	 g0KCs4apXWXFD+cbhcYf1GAfyLxqjaz1rpMpbq5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rounak Das <rounakdas2025@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.18 222/403] EDAC/altera: Fix device node reference leaks in the SDMMC ECC setup
-Date: Fri,  9 Oct 2026 16:09:43 +0200
-Message-ID: <20261009140957.337919423@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 165/428] futex: Fix private hash use-after-free on resize
+Date: Fri,  9 Oct 2026 16:08:22 +0200
+Message-ID: <20261009140949.782552538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rounak Das <rounakdas2025@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit 7d5a36a5490d496e17823085fbe7ec6c0a7bf43d upstream.
+[ Upstream commit f35e3b5784221654f9cdbd6222275a7fa203f6c3 ]
 
-Under altr_portb_setup() and socfpga_init_sdmmc_ecc(),
-of_find_compatible_node() was being used to look up the sdmmc-ecc
-node. This node wasn't being dropped using of_node_put().
+poll_state_synchronize_rcu(mm->futex.phash.batches) is used by
+futex_ref_drop() to check that a grace period has passed since the
+current hash was published. This relies on batches referencing a grace
+period which started after the hash pointer was assigned.
 
-altr_portb_setup() did not drop its reference under its success path
-or on any error path.
+__futex_pivot_hash() sets mmph->batches before it replaces mmph->hash:
 
-socfpga_init_sdmmc_ecc() did an early return thereby skipping the
-common exit label and thus leaking the reference.
+    scoped_guard(rcu) {
+            mmph->batches = get_state_synchronize_rcu();
+            rcu_assign_pointer(mmph->hash, new);
+    }
 
-Add the missing of_node_put() calls in altr_portb_setup(), and route
-socfpga_init_sdmmc_ecc()'s success path through the common exit label.
+The scoped_guard(rcu) doesn't stop new grace periods from starting, and
+if one starts between those two assignments, futex_ref_drop() can move
+forward while a reader still holds a pointer to the old hash.
 
-Fixes: 911049845d70 ("EDAC, altera: Add Arria10 SD-MMC EDAC support")
-Fixes: 788586efd116 ("EDAC/altera: Initialize peripheral FIFOs in probe()")
-Closes: https://sashiko.dev/#/patchset/20260708091135.94114-1-rounakdas2025%40gmail.com
-Signed-off-by: Rounak Das <rounakdas2025@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org # 6.18+
-Link: https://patch.msgid.link/20260926120846.35716-1-rounakdas2025@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix things by setting mmph->batches after assigning mmph->hash.  The
+scoped_guard(rcu) isn't needed, so let's drop that as well.
+
+Fixes: 56180dd20c19 ("futex: Use RCU-based per-CPU reference counting instead of rcuref_t")
+Assisted-by: kres
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://patch.msgid.link/20261001135022.2220288-1-mason@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/futex/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1506,6 +1506,7 @@ static int altr_portb_setup(struct altr_
- 	dci = edac_device_alloc_ctl_info(sizeof(*altdev), ecc_name, 1,
- 					 ecc_name, 1, 0, edac_idx);
- 	if (!dci) {
-+		of_node_put(np);
- 		edac_printk(KERN_ERR, EDAC_DEVICE,
- 			    "%s: Unable to allocate PortB EDAC device\n",
- 			    ecc_name);
-@@ -1518,6 +1519,7 @@ static int altr_portb_setup(struct altr_
- 
- 	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL)) {
- 		edac_device_free_ctl_info(dci);
-+		of_node_put(np);
- 		return -ENOMEM;
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index be4aeacd4b540..6a1971f9588e4 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -216,10 +216,12 @@ static bool __futex_pivot_hash(struct mm_struct *mm, struct futex_private_hash *
+ 		futex_rehash_private(fph, new);
  	}
- 
-@@ -1584,6 +1586,8 @@ static int altr_portb_setup(struct altr_
- 		rc = -ENOMEM;
- 		goto err_release_group_1;
- 	}
-+	of_node_put(np);
-+
- 	altr_create_edacdev_dbgfs(dci, prv);
- 
- 	list_add(&altdev->next, &altdev->edac->a10_ecc_devices);
-@@ -1600,6 +1604,7 @@ err_release_group_1:
- 	 */
- 	devres_release_group(device->edac->dev, altr_portb_setup);
- 	edac_device_free_ctl_info(dci);
-+	of_node_put(np);
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 	return rc;
-@@ -1627,7 +1632,7 @@ static int socfpga_init_sdmmc_ecc(struct
- 		goto exit;
- 
- 	/* Setup portB */
--	return altr_portb_setup(device);
-+	rc = altr_portb_setup(device);
- 
- exit:
- 	of_node_put(child);
+ 	new->state = FR_PERCPU;
+-	scoped_guard(rcu) {
+-		mmph->batches = get_state_synchronize_rcu();
+-		rcu_assign_pointer(mmph->hash, new);
+-	}
++	rcu_assign_pointer(mmph->hash, new);
++	/*
++	 * mmph->batches must reference a grace period which started after
++	 * mmph->hash was assigned. See futex_ref_drop().
++	 */
++	mmph->batches = get_state_synchronize_rcu();
+ 	kvfree_rcu(fph, rcu);
+ 	return true;
+ }
+-- 
+2.53.0
+
 
 
