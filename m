@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E0B4E66A7;
-	Fri,  9 Oct 2026 14:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850E4E66DA;
+	Fri,  9 Oct 2026 14:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556990; cv=none; b=Xuxy8LjX3XXW73789M5nYTARAB+iwVc9hhCNXT7E3arNOsekLBPRX2QPShEhMmvKXkz0yK2/cNlR3ury9YUdixtQrVEFjFUf/2u0gI8jqTIWe5s+7EBYa73kTg3/gYvtTl8l5pCGVdIlVafFnTyitsxb9IWNeXJJFPLAb0t+g4s=
+	t=1791556993; cv=none; b=QsIKN0eP5r8Pszquq9wTTAgc/TWw3+WckmiQSJljJAMpdtWsLPkLBXh6EBDtFgbL77lCvcOc0uR1PNfdEIIKftsAdbt9IEt8TW/5ofw7OpeYJ+7OqZoISqE4HnwuQqzmgcPn89NDSHZfLDZwtU62N5GpdSodq3IwUCxqDyw8aN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556990; c=relaxed/simple;
-	bh=h7IRbNS4jqUJE2akmp3Z+Zfus0RlKEHLV3iDjbWbWL0=;
+	s=arc-20240116; t=1791556993; c=relaxed/simple;
+	bh=pTX7NbTDq8sUfRj80My7VkV3VkcEGTJKzks0Qp1OywY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBUqYe16TfDhf2rJilSNBQGmLPGghiZzFsZd1xsun2h+cLabkO2Q0IQJQPtrJMPhKYbpKvDVRAkKbcrxBmufFxB57mEdkeS86g0PkE78MCgpK/xem1ukwuPfCUuW9Y1G9rjif0tmCPkdJRicBVF9YZuiOUnaFZilAQwI3e3Xp3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqlI6gJa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kd0vUu+UcmLIN9LIwSiglainy8dqTgvuhRAM+/wqhZM/GEnzqyNhPG/saH+hPiMqT6PZG29OLupiofyOi0nT6OTfbkak+yb/mD8yvMpQWGH9j6EJooE7lsYm3+9bANou6FApY6asdKaVduRhnQcYyvB/hINN2TxRv4hu/kScHU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLXMBK2m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqlI6gJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247F71F00893;
-	Fri,  9 Oct 2026 14:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLXMBK2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56351F000FF;
+	Fri,  9 Oct 2026 14:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556989;
-	bh=cZZNe0QVYbidw7PRbRkgA6I+FtdGQlJPyIDZ/3Qsv5s=;
+	s=korg; t=1791556992;
+	bh=ZKfWTJ65T/+R+VRNF58o2OHR07b6g3GT5q+vt2TcWL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqlI6gJaIMyXqKZ+mu9AZjB/r0hpsuNzJOgk/2zG6XyqdND8DmPh+fgnSRgFx7//i
-	 2wqxZKfCVZI2Fv/dX438yz5BA5ANRjdyo/Ifrx256hoBtalBSNMMO+1dMXhsVvQN6L
-	 P7KnZ09cAzdj4ObcWinkAi2n3IcNmQtgLLZsdyTc=
+	b=oLXMBK2mnp6HQZ5tj/RPUoA0hdroxp5sOLCvUa7fd6LrF04pO1vmfz6RFCZxrEvuu
+	 bSXbHU1Mp9Papiu2q/E776L1kBsu3fsZLH97PBaZhlAFczx+MVFjvism8CrflxMvXR
+	 MoI7XGl/hDjj4iHhnmoIt2G+QAJ2+NLT8JcnuiPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rounak Das <rounakdas2025@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 7.2 278/428] EDAC/altera: Fix device node reference leaks in the SDMMC ECC setup
-Date: Fri,  9 Oct 2026 16:10:15 +0200
-Message-ID: <20261009140952.203507251@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 329/403] iio: light: rohm-bu27034: Fix infinite delay on error
+Date: Fri,  9 Oct 2026 16:11:30 +0200
+Message-ID: <20261009140959.930009818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +47,175 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rounak Das <rounakdas2025@gmail.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 7d5a36a5490d496e17823085fbe7ec6c0a7bf43d upstream.
+commit 8065a6c02f629187131f3136bedb26f9080e3cca upstream.
 
-Under altr_portb_setup() and socfpga_init_sdmmc_ecc(),
-of_find_compatible_node() was being used to look up the sdmmc-ecc
-node. This node wasn't being dropped using of_node_put().
+When reading an integration-time fails, the code will use error code to
+compute the sleep time.
 
-altr_portb_setup() did not drop its reference under its success path
-or on any error path.
+Fix this by using the smallest integration time as a default if
+reading fails.
 
-socfpga_init_sdmmc_ecc() did an early return thereby skipping the
-common exit label and thus leaking the reference.
-
-Add the missing of_node_put() calls in altr_portb_setup(), and route
-socfpga_init_sdmmc_ecc()'s success path through the common exit label.
-
-Fixes: 911049845d70 ("EDAC, altera: Add Arria10 SD-MMC EDAC support")
-Fixes: 788586efd116 ("EDAC/altera: Initialize peripheral FIFOs in probe()")
-Closes: https://sashiko.dev/#/patchset/20260708091135.94114-1-rounakdas2025%40gmail.com
-Signed-off-by: Rounak Das <rounakdas2025@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org # 6.18+
-Link: https://patch.msgid.link/20260926120846.35716-1-rounakdas2025@gmail.com
+Fixes: e52afbd61039 ("iio: light: ROHM BU27034 Ambient Light Sensor")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/light/rohm-bu27034.c |   60 +++++++++++++++++++++++----------------
+ 1 file changed, 36 insertions(+), 24 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1505,6 +1505,7 @@ static int altr_portb_setup(struct altr_
- 	dci = edac_device_alloc_ctl_info(sizeof(*altdev), ecc_name, 1,
- 					 ecc_name, 1, 0, edac_idx);
- 	if (!dci) {
-+		of_node_put(np);
- 		edac_printk(KERN_ERR, EDAC_DEVICE,
- 			    "%s: Unable to allocate PortB EDAC device\n",
- 			    ecc_name);
-@@ -1517,6 +1518,7 @@ static int altr_portb_setup(struct altr_
+--- a/drivers/iio/light/rohm-bu27034.c
++++ b/drivers/iio/light/rohm-bu27034.c
+@@ -137,6 +137,7 @@ static const struct iio_gain_sel_pair bu
+ #define BU27034_MEAS_MODE_200MS		2
+ #define BU27034_MEAS_MODE_400MS		4
  
- 	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL)) {
- 		edac_device_free_ctl_info(dci);
-+		of_node_put(np);
- 		return -ENOMEM;
- 	}
++#define BU27034_INT_TIME_US_MIN (55 * USEC_PER_MSEC)
+ static const struct iio_itime_sel_mul bu27034_itimes[] = {
+ 	GAIN_SCALE_ITIME_US(400000, BU27034_MEAS_MODE_400MS, 8),
+ 	GAIN_SCALE_ITIME_US(200000, BU27034_MEAS_MODE_200MS, 4),
+@@ -296,7 +297,7 @@ static int bu27034_get_gain(struct bu270
+ 	return 0;
+ }
  
-@@ -1585,6 +1587,8 @@ static int altr_portb_setup(struct altr_
- 		rc = -ENOMEM;
- 		goto err_release_group_1;
- 	}
-+	of_node_put(np);
+-static int bu27034_get_int_time(struct bu27034_data *data)
++static int bu27034_get_int_time(struct bu27034_data *data, int *itime)
+ {
+ 	int ret, sel;
+ 
+@@ -304,24 +305,30 @@ static int bu27034_get_int_time(struct b
+ 	if (ret)
+ 		return ret;
+ 
+-	return iio_gts_find_int_time_by_sel(&data->gts,
+-					    sel & BU27034_MASK_MEAS_MODE);
++	ret = iio_gts_find_int_time_by_sel(&data->gts,
++					   sel & BU27034_MASK_MEAS_MODE);
++	if (ret < 0)
++		return ret;
 +
- 	altr_create_edacdev_dbgfs(dci, prv);
++	*itime = ret;
++
++	return 0;
+ }
  
- 	list_add(&altdev->next, &altdev->edac->a10_ecc_devices);
-@@ -1601,6 +1605,7 @@ err_release_group_1:
- 	 */
- 	devres_release_group(device->edac->dev, altr_portb_setup);
- 	edac_device_free_ctl_info(dci);
-+	of_node_put(np);
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 	return rc;
-@@ -1628,7 +1633,7 @@ static int socfpga_init_sdmmc_ecc(struct
- 		goto exit;
+ static int _bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
+ 			      int *val2)
+ {
+-	int gain, ret;
++	int gain, itime, ret;
  
- 	/* Setup portB */
--	return altr_portb_setup(device);
-+	rc = altr_portb_setup(device);
+ 	ret = bu27034_get_gain(data, channel, &gain);
+ 	if (ret)
+ 		return ret;
  
- exit:
- 	of_node_put(child);
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &itime);
++	if (ret)
+ 		return ret;
+ 
+-	return iio_gts_get_scale(&data->gts, gain, ret, val, val2);
++	return iio_gts_get_scale(&data->gts, gain, itime, val, val2);
+ }
+ 
+ static int bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
+@@ -397,12 +404,10 @@ static int bu27034_try_set_int_time(stru
+ 	int ret, int_time_old, i;
+ 
+ 	guard(mutex)(&data->mutex);
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &int_time_old);
++	if (ret)
+ 		return ret;
+ 
+-	int_time_old = ret;
+-
+ 	if (!iio_gts_valid_time(&data->gts, time_us)) {
+ 		dev_err(data->dev, "Unsupported integration time %u\n",
+ 			time_us);
+@@ -841,7 +846,7 @@ static int bu27034_meas_set(struct bu270
+ static int bu27034_get_single_result(struct bu27034_data *data, int chan,
+ 				     int *val)
+ {
+-	int ret;
++	int ret, itime;
+ 
+ 	if (chan < BU27034_CHAN_DATA0 || chan > BU27034_CHAN_DATA1)
+ 		return -EINVAL;
+@@ -850,11 +855,11 @@ static int bu27034_get_single_result(str
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &itime);
++	if (ret)
+ 		return ret;
+ 
+-	msleep(ret / 1000);
++	msleep(itime / 1000);
+ 
+ 	return bu27034_read_result(data, chan, val);
+ }
+@@ -904,12 +909,10 @@ static int bu27034_calc_mlux(struct bu27
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &meastime);
++	if (ret)
+ 		return ret;
+ 
+-	meastime = ret;
+-
+ 	d1_d0_ratio_scaled = (unsigned int)ch1 * (unsigned int)gain0 * 100;
+ 	helper64 = (u64)ch1 * (u64)gain0 * 100LLU;
+ 
+@@ -970,9 +973,9 @@ static int bu27034_read_raw(struct iio_d
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_INT_TIME:
+ 		*val = 0;
+-		*val2 = bu27034_get_int_time(data);
+-		if (*val2 < 0)
+-			return *val2;
++		ret = bu27034_get_int_time(data, val2);
++		if (ret)
++			return ret;
+ 
+ 		return IIO_VAL_INT_PLUS_MICRO;
+ 
+@@ -1157,11 +1160,20 @@ static int bu27034_buffer_thread(void *a
+ {
+ 	struct iio_dev *idev = arg;
+ 	struct bu27034_data *data;
+-	int wait_ms;
++	int wait_ms, ret;
+ 
+ 	data = iio_priv(idev);
+ 
+-	wait_ms = bu27034_get_int_time(data);
++	/*
++	 * If reading the integration time fails, default to the minimum so we
++	 * don't lose samples. This may waste CPU cycles, but as a hardening
++	 * against theoretical, once-in-a-blue-moon error, this should be Ok.
++	 */
++	wait_ms = BU27034_INT_TIME_US_MIN;
++	ret = bu27034_get_int_time(data, &wait_ms);
++	if (ret)
++		dev_warn(data->dev, "Failed to get integration time\n");
++
+ 	wait_ms /= 1000;
+ 
+ 	wait_ms -= BU27034_MEAS_WAIT_PREMATURE_MS;
 
 
