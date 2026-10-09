@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A45B4E73CD;
-	Fri,  9 Oct 2026 14:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E634E73CC;
+	Fri,  9 Oct 2026 14:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557444; cv=none; b=nmoHzsPfjuh8n8L4hdy+4hsjvmwCpBdpGp5C9OYfxwQ8g5NqRTH15TpTw/zKbxhmBpmC6Q+jM+DdKF+8exV+R9JM5N2P7VNgIRW8JpR2CvBz78SmH+34dgWcbfU3z+6mbPF6G/rQwV9X9uW0NyWagadb0mnimGO+zxyPkz38x1Y=
+	t=1791557446; cv=none; b=dUw3hdg4Fg6oWKFuDhHLyD47Ydw/MD++ZNegy9yYIUQBbkO1S1Iju48mxEIPks7Iq8hX/1EFIWaMEA7ClPugo/3kNyfGm+YNDV0SbazonRZJDIv/gXE5QQHzs4qzWMz1zQ8qrULaf2ZnnHK4r/XV5wlMM5cjvAdQc7w+QbZLatM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557444; c=relaxed/simple;
-	bh=1DnBrZoUk6rRJqUQXGgpjfYNKd2zvBToYiTg8MK3NmI=;
+	s=arc-20240116; t=1791557446; c=relaxed/simple;
+	bh=GklUTorcQmVvqB8/GCE5DzarEAZmNInC/OPwHDs0LsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3UrONdBu92aTgo1A/eVxTQAyMq1Ma9yCtvU4B5u24VhldPW+SClG6Yh0xAMWXqqszjpoOqnKWZrqUGo8NzWXxhO5IZILoia2VlTiZh9Q+6HM64xBr0+7m5nz7HtiuOClaBa4C2c+ZlFvuRr+3yL1NipLi+95jvtoAAmwVcrPGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUbNb0iU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a8jDjrNrc1OJblvEsH51A8xcwcCDQpK9rlXD44H7QnlYQcPqBhvZkeUYqqy3hsCYkLv2Oy3HsjNPrirqw9o25xHTwLc4VNkpQyySdYyLP3CyzdrQ6FwYeby6mAkAgfrDqITh+NLCHk87VNL9s8T3N4E2E4z8vMKd9FpJBy7R6YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlKXfDWU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUbNb0iU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0DC1F000FF;
-	Fri,  9 Oct 2026 14:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlKXfDWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513731F000FF;
+	Fri,  9 Oct 2026 14:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557443;
-	bh=j9QtGR8+ULu3L5JXKXRW3Typ2HdOOBl5xo8/abjo0KQ=;
+	s=korg; t=1791557445;
+	bh=Oj1xRSDlAxtx79NBVOa1pi6J7UhLBH9QcgX4W4MxTtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUbNb0iUqnPfY09ja2J5o4nI00Tn99krUFKPtHMVABzvUkSZ1cNFwMn5ApcZwT3Fm
-	 qlnhOcjIqB1IqtLAZVn/nj/+Vx5Y4WJnZsSx8aD1eI3iIjNDDJAaNM2+fH+oxfWYqR
-	 2AboX+4Nzrq7mopKvSZrpL6lzKQNAUunoN8XwalQ=
+	b=LlKXfDWUX0gilqyHZvuohm6j+NkewBuZolnqFTPohYJ7ePPAL/fs0r/2yxTRAuiKW
+	 ASys8bf+u+OXkelgbL7RYPbwmOuE4L50JcZpiqo29yiawrliAjL0edlNtnZPaaHaVn
+	 0EoOEXR04iZm3IQQ9cZSWrRtZVUurjIDgoTdoMno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 361/428] smb: client: discard post-EOF pagecache when extending a file via copy range
-Date: Fri,  9 Oct 2026 16:11:38 +0200
-Message-ID: <20261009140954.105592251@linuxfoundation.org>
+Subject: [PATCH 7.2 362/428] smb: client: discard post-EOF pagecache when extending a file via clone range
+Date: Fri,  9 Oct 2026 16:11:39 +0200
+Message-ID: <20261009140954.128440889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -59,20 +59,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit 7b473ac7cd6f7e087876d3c67b1bc6df662fb429 upstream.
+commit 4721587f96cb8de8164f3fd203093a0875560999 upstream.
 
-cifs_file_copychunk_range() invalidated the pagecache only for the
-destination region, so when a copy extends the file the folio straddling
-the old EOF - which may hold data dirtied past EOF through an mmap - was
-never dropped and became visible as file content once the file was
-extended.
+cifs_remap_file_range() discarded the pagecache only for the folios
+overlapping the destination region, so when a clone extends the file the
+folio straddling the old EOF - which may hold data dirtied past EOF
+through an mmap - was never dropped and became visible as file content
+once the file was extended.
 
-Start the invalidation at the smaller of the destination offset and the
-old EOF.  filemap_invalidate_inode() writes back before invalidating
-while i_size is still old, so nothing past the old EOF is flushed to the
-server.
+Start the discard at the smaller of fstart and the old EOF.  i_size is
+still old here, so nothing past the old EOF is flushed to the server.
 
-Fixes: 8101d6e112e2 ("cifs: Fix copy offload to flush destination region")
+Fixes: c54fc3a4f375 ("cifs: Fix flushing, invalidation and file size with FICLONE")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
@@ -85,25 +83,27 @@ Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/client/cifsfs.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/fs/smb/client/cifsfs.c
 +++ b/fs/smb/client/cifsfs.c
-@@ -1585,8 +1585,13 @@ ssize_t cifs_file_copychunk_range(unsign
- 	/* Flush and invalidate all the folios in the destination region.  If
- 	 * the copy was successful, then some of the flush is extra overhead,
- 	 * but we need to allow for the copy failing in some way (eg. ENOSPC).
-+	 *
-+	 * Start at the old EOF when extending so the folio straddling it, which
-+	 * may hold data written past EOF through an mmap, is dropped too.
- 	 */
--	rc = filemap_invalidate_inode(target_inode, true, destoff, destoff + len - 1);
-+	rc = filemap_invalidate_inode(target_inode, true,
-+				      min(destoff, i_size_read(target_inode)),
-+				      destoff + len - 1);
- 	if (rc)
- 		goto unlock;
+@@ -1467,9 +1467,14 @@ static loff_t cifs_remap_file_range(stru
+ 	i_size = target_inode->i_size;
+ 	spin_unlock(&target_inode->i_lock);
+ 
+-	/* Discard all the folios that overlap the destination region. */
++	/*
++	 * Discard all the folios that overlap the destination region.  Start at
++	 * the old EOF when extending so the folio straddling it, which may hold
++	 * data written past EOF through an mmap, is dropped too.
++	 */
+ 	cifs_dbg(FYI, "about to discard pages %llx-%llx\n", fstart, fend);
+-	truncate_inode_pages_range(&target_inode->i_data, fstart, fend);
++	truncate_inode_pages_range(&target_inode->i_data,
++				   min(fstart, i_size), fend);
+ 
+ 	fscache_invalidate(cifs_inode_cookie(target_inode), NULL, i_size, 0);
  
 
 
