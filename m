@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2255230BDB;
-	Fri,  9 Oct 2026 14:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15EE4E3252;
+	Fri,  9 Oct 2026 14:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555929; cv=none; b=k4Isk0deea2vm5DRNVwYzcjJZDacKxCDigLLsS9PU4Z16srQs0nlXswxOVUhgODfz47V2Bu9+P//x3DUYtNOpFBf9lGuCBwgM3VNzkLZBpjZzi0owPpcXNuZNQ+JUIK9UWbriIEGTjizQyrBJEdMLMVcrUwFJ7qpLq8vHtGEg0U=
+	t=1791555932; cv=none; b=HqwFbf2uAeKsfLZJAd5UY+BdNEYloujdtQFRGnfWVunmElDuz/lt3ZTYXYJhQAGDcaq3ib7gUmwnAT5bCO0It93dnlu6dwwuMqxgIc8bfMQCYNEEyCgMs4IsRU/tCZ9+ib0p24USHOIB7/2MlEP3cIDbYJQTGOBGUdLuNzTxDmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555929; c=relaxed/simple;
-	bh=snu+dbTAWxaAoDzUjcshmGSClusomZDaQLXsOGxzIa4=;
+	s=arc-20240116; t=1791555932; c=relaxed/simple;
+	bh=ZBtSOlFREmi/IiizaeNIt1sf6O1dHYkqECZTOE/Q+hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncZWltxCvKyotRQ6QCk/De+kRys7V+L7l8dURkfXTQzbpdCVdc9UV0AMSqpCx5fMyhqUCpRwkg7Xv+cBQWLL15ZzDV6JqtoDCLgUF89OFH2gwg+1LQ/BPK4hP7fYso+G2t4+AZrfNlzwklhwH+XyWV1Gabs+UfmFXvtq9KRH+TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeTGOx1J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G+5R5lbhdJBM9A0wCFPPcHXawI2neu5uYkaPHpi+BbPsOmybJcywA4TtOSPxB6pDmoX63Uq3GbwQQlg+jt07bFmTCQxpKzbMgmLsjm5bCI1SFzcHLTMDFuh1DhsR5CY5QlHsN0mgSO2BZbKBKKzREJb4gIEyQcv3edYpgyGRskw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/tSfWJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeTGOx1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C571F000FF;
-	Fri,  9 Oct 2026 14:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/tSfWJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F641F000FF;
+	Fri,  9 Oct 2026 14:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555928;
-	bh=elQIOqcVY7s5nUqfuwn49ysUP++eYvyiDqOqoJXmGyg=;
+	s=korg; t=1791555931;
+	bh=twu5/N9CPzADcyiaBF3v2DO4TzXUKzGQcun/u+a9AZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeTGOx1JKEbObok0VwdV2TJgWgbgsofRPT/D0+OFCA+Fz7t6Tvprri9tDE4jOrb7k
-	 QV77/EOiUkzadzpld3nby0dYZy0WVHJ6oj320ilwZWoBfiYaKOxQKBe7XbdDUGLV7a
-	 SPJW/gk0k95iaVHK4qruauk2egLUVhAE4VO1osZM=
+	b=0/tSfWJJLuFdyuQdosSWPTInJfJOiIrBdLUEWmbcavEPa/+wNUJ5Ab14DlHXb49gl
+	 l+UGg1H8GYP4byfh1hKgbDHceweoUgFPf+LfdfsCh8Ts396CKGkYvdI7mTgSZlttOx
+	 MyOdOimHiYDcf33gFqb8YtaFo+H2YkqMkt/E8PAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 092/428] block: reject polled dio with user integrity metadata
-Date: Fri,  9 Oct 2026 16:07:09 +0200
-Message-ID: <20261009140948.221082522@linuxfoundation.org>
+	Imre Kaloz <kaloz@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 141/403] drm/radeon: Read the VRAM VBIOS signature with readb()
+Date: Fri,  9 Oct 2026 16:08:22 +0200
+Message-ID: <20261009140955.371793155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +46,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 2a42e6fe1293f2e2d579c9fe5bbab056dd8b880e ]
+commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
 
-IOCB_HAS_METADATA leaves iocb->private as a uio_meta, while
-iocb_bio_iopoll() expects a bio. Since 2729a60bbfb9, metadata I/O
-always uses __blkdev_direct_IO(), which never publishes the bio for
-polling, so IOPOLL calls bio_poll() on the uio_meta.
+igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
+__iomem load, which faults on sparc64 before the copy runs at all.
+radeon_read_bios() already reads its two signature bytes with
+readb() ahead of its own copy; use the same accessor here, keeping
+the check before the allocation.
 
-Reproducer: io_uring IOPOLL plus a PI attribute on an integrity device
-(scsi_debug dif=1 dix=1). KASAN reports:
-
-  Oops: general protection fault, probably for non-canonical
-  address 0xdffffc0000000004
-  KASAN: null-ptr-deref in range
-  [0x0000000000000020-0x0000000000000027]
-  RIP: 0010:bio_poll+0x9d/0x4b0
-  Call Trace:
-   iocb_bio_iopoll+0x5b/0x80
-   io_uring_classic_poll+0xf3/0x140
-   io_do_iopoll+0x4e3/0xc00
-   io_iopoll_check+0x275/0x560
-   __do_sys_io_uring_enter+0x2e5/0x720
-
-Return -EOPNOTSUPP when HIPRI is combined with user metadata.
-
-Fixes: 2729a60bbfb9 ("block: don't silently ignore metadata for sync read/write")
-Assisted-by: LLM
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Link: https://patch.msgid.link/20260923093732.1504291-1-yangxiuwei@kylinos.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/fops.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/block/fops.c b/block/fops.c
-index cb919dea00411..1f29aeb19157f 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -404,6 +404,11 @@ static ssize_t blkdev_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 	if (blkdev_dio_invalid(bdev, iocb, iter))
- 		return -EINVAL;
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -49,6 +49,7 @@
+ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+ {
+ 	uint8_t __iomem *bios;
++	uint8_t val1, val2;
+ 	resource_size_t vram_base;
+ 	resource_size_t size = 256 * 1024; /* ??? */
  
-+	/* HIPRI needs private as bio; HAS_METADATA keeps it as uio_meta */
-+	if ((iocb->ki_flags & IOCB_HIPRI) &&
-+	    (iocb->ki_flags & IOCB_HAS_METADATA))
-+		return -EOPNOTSUPP;
+@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
+ 		return false;
+ 	}
+ 
+-	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
++	val1 = readb(&bios[0]);
++	val2 = readb(&bios[1]);
 +
- 	if (iov_iter_rw(iter) == WRITE) {
- 		u16 max_write_streams = bdev_max_write_streams(bdev);
- 
--- 
-2.53.0
-
++	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
+ 		iounmap(bios);
+ 		return false;
+ 	}
 
 
