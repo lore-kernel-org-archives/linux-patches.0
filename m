@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BD235C6A8;
-	Fri,  9 Oct 2026 14:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF2535C6A8;
+	Fri,  9 Oct 2026 14:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555884; cv=none; b=P92v9/Ou3WIbTkKauA2CwDPJOiU3sXrnYtlmisYcFNpHQ/F01ob4DHh6PjzbBTSo7yHb2J+nZYpKzNAIsS02yF8S7mHi088VOQFjikanHBMHbwlTg7Yn2+4qe9A9e+hS0Y3u95hbtSO/ZaKRNkdW8eLghmPAmyo54Uhy1nSloMk=
+	t=1791555886; cv=none; b=XoH+hGGH/G5BCDzHpUh08AmKmaoeE+cIchvHlXP9QzO+K7JDAtQzvLt61NlnQ3uu2V+d0XKxbIusYJ0REC93SaVMV/SxmoGkeYI0+zrIloWdsGPPyHMuGQpr+m0UJfTsOxvPuxiov+Q2lFmKLYZ4p2kNPCTr5Jhox8vQcj0IwEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555884; c=relaxed/simple;
-	bh=K/6OnBTXhD5c56bdhLUASCc8HktH+RcZg5tBnA7DAb0=;
+	s=arc-20240116; t=1791555886; c=relaxed/simple;
+	bh=E9R6iSxhowzFEbr42aQbW2BTS1wYnH1VGSCI8dlpzVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVXkJcf5jt6wn6OWOh8Sj5FsCtb68J6/UyzfRs9t6MkfyU8HaTzImnwkCbMOQLKGnH1jL+JHzDhdj0uv5AzohF2NsLQLGf1wXEA2D3kJncfm8tGoprVXiky/O8nwL7oTWg7SrUCEsEhm3XI+U0a6u5jgbyBhxDrgvq1kymPECjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFX5NbKE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mpyTWynDg7ioW1H8e11uqWLgG6+MGTBjYyLgWMzepOX0BVQvGueSvWX7BJ5CGBP7Fv5R6pgffduH3fbFfdeQhpOiOwIYtk7+CeRL5GEvnjEWpEeAIRxspHpqs8Kw0GwzD7M6hQMO/7M5s8gk3WNuIU8rgq2wOLfT2P0nSk1J+Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjYWHuEy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFX5NbKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F10A1F000FF;
-	Fri,  9 Oct 2026 14:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjYWHuEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3142D1F000FF;
+	Fri,  9 Oct 2026 14:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555882;
-	bh=3HqeTdTHLoA7xKaZYve7wVp4PRTfgmkC/2HXnx/Sdzk=;
+	s=korg; t=1791555885;
+	bh=ME9VyHxOGBlzybNWtActmgOsy97FPQexj+UlI0uyH5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bFX5NbKEi1EmHucuRYLXvyA0GElkIUcNiBE221LLu5JOrMk5K1eEXSnM4ulq4CPdi
-	 f5e1IgnsGyM7+U7yUYohB7tx73zPWpOPMRPayuhd0ffT2h68t5QyxGxmyrNgnQu9rY
-	 70XVSwjrYsQDIygjq1q1nFUXgVHywxn67SN/y4ko=
+	b=mjYWHuEypbGda8UrLYmdip6FiQJkLKDdODv+djf/wmF+1OQU2+ZaeNxN90tuYmuno
+	 Wrt7embUxTll3RPcYnXIHp7VU53BkOOaTNkiuX8HNOrm/Ir+lM3hGMHovNw1b0KMD0
+	 ACMGcZo3VbmtJ098xHCREl+MyOccTgQyXUx35ZtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandeep Haemoon <sandeeph@loljews.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/403] net: ethernet: mtk_eth_soc: allocate dummy netdev sooner
-Date: Fri,  9 Oct 2026 16:07:52 +0200
-Message-ID: <20261009140954.675813236@linuxfoundation.org>
+Subject: [PATCH 7.2 085/428] rtc: ac100: Fix clock provider use-after-free on probe failure
+Date: Fri,  9 Oct 2026 16:07:02 +0200
+Message-ID: <20261009140948.047436912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,119 +48,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandeep Haemoon <sandeeph@loljews.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit 6f0c2c4f5e7143eba75153ecc8af3a03f7b6a98b ]
+[ Upstream commit fcf0b58e976e83adf246b014518e49c662b96f5e ]
 
-The RX rings and the shared NAPI are carried by an internal "dummy" netdev
-(eth->dummy_dev). mtk_probe() creates that dummy device, and adds the
-shared tx/rx NAPI to it, only after the MAC netdevs have been registered.
-That order has been there since the MT7623 support was added and leaves a
-window in which the netdevs are visible to the network core before the
-shared NAPI and the dummy device exist.
+ac100_rtc_register_clks() registers the RTC-32k clock with
+clk_hw_register_fixed_rate() and the clock provider with
+of_clk_add_hw_provider(). Neither is device managed, and both are
+released only from ac100_rtc_remove(). The driver core does not call
+remove() when probe() fails: really_probe() reaches probe_failed below
+the device_remove() call and goes straight to releasing the device's
+managed resources.
 
-If anything brings the first netdev up during that window (e.g. netifd
-opening the WAN link the instant the interface is registered), the
-first-open path runs without them. On NETSYS v2 and later SoCs
-mtk_rx_alloc() -> __xdp_rxq_info_reg() then dereferences eth->dummy_dev ==
-NULL:
+ac100_rtc_probe() ends with
 
-  WARNING: CPU: ... Missing net_device from driver
+	return devm_rtc_register_device(chip->rtc);
 
-in net/core/xdp.c and mtk_open() fails with -ENODEV. On NETSYS v1 SoCs
-(MT7621/MT7622/MT7623/MT7629) there is no page pool, so the same open
-instead calls napi_enable() on a napi_struct that netif_napi_add() has not
-initialised yet and dereferences a NULL napi->dev.
+so if that fails after the clocks have been registered, the provider is
+left on the global of_clk_providers list holding chip->clk_data, which
+was allocated with devm_kzalloc() and is freed while probe() unwinds. A
+later lookup on this device tree node then reads freed memory in
+of_clk_hw_onecell_get(). Consumers that do exactly that exist in tree:
+the wifi power sequence nodes on sun8i-a83t-bananapi-m3 and
+sun8i-a83t-cubietruck-plus take <&ac100_rtc 1>, and the sun9i-a80 boards
+route osc32k through <&ac100_rtc 0>. The window is narrow, as
+devm_rtc_register_device() can only fail with -ENOMEM here, but the
+provider is left dangling whenever it does.
 
-Allocate the dummy netdev and add the shared tx/rx NAPI to it before the
-register_netdev() loop. Both the dummy-allocation failure and a
-register_netdev() failure now unwind through mtk_unreg_dev(), which
-unregisters the net_device notifiers and the netdevs registered so far,
-stopping a concurrently-opened netdev (ndo_stop) and its NAPI before the
-dummy carrier is freed.
+The RTC-32k clock is leaked on the same path. Since clk_core_lookup()
+searches a global list that is not scoped per device, __clk_register()
+rejects the duplicate name with -EEXIST, so the leak also makes a later
+probe of the same device fail.
 
-A netdev that opened during the window can also have queued the
-frame-engine reset worker (via the tx watchdog or phylink), so the probe
-error path now cancels eth->pending_work before freeing the shared state,
-as mtk_cleanup() already does on remove.
+The error path that returns -EINVAL when the ADDA 4M parent clock cannot
+be found leaks the RTC-32k clock in the same way. No provider has been
+registered at that point, so that one is a leak rather than a
+use-after-free.
 
-Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
-Signed-off-by: Sandeep Haemoon <sandeeph@loljews.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/patch-e52c13380b0768fec63af04c80e4b487@loljews.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Register both with devm_clk_hw_register_fixed_rate() and
+devm_of_clk_add_hw_provider() so that they are released whenever the
+device goes away, on a failed probe as well as on unbind. Devres
+releases in reverse order of acquisition, so the provider is removed
+before chip->clk_data is freed, and the clkout children are now
+unregistered before their parent rather than after it.
+ac100_rtc_unregister_clks() and the remove callback then have nothing
+left to do and are removed.
+
+Fixes: d00a18a42c14 ("rtc: ac100: Add RTC driver for X-Powers AC100")
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-rtc/20260905184936.155E11F00A3A@smtp.kernel.org/
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Link: https://patch.msgid.link/AS8P251MB0001A489CC45A591ABBB9BDCC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 38 ++++++++++++++-------
- 1 file changed, 26 insertions(+), 12 deletions(-)
+ drivers/rtc/rtc-ac100.c | 36 +++++++-----------------------------
+ 1 file changed, 7 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 3f43e487d8875..162a17a87c7f5 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -5337,6 +5337,22 @@ static int mtk_probe(struct platform_device *pdev)
+diff --git a/drivers/rtc/rtc-ac100.c b/drivers/rtc/rtc-ac100.c
+index a2f465438fd05..c579c4bf5578d 100644
+--- a/drivers/rtc/rtc-ac100.c
++++ b/drivers/rtc/rtc-ac100.c
+@@ -319,10 +319,10 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
+ 
+ 	chip->clk_data->num = AC100_CLKOUT_NUM;
+ 
+-	chip->rtc_32k_clk = clk_hw_register_fixed_rate(chip->dev,
+-						       AC100_RTC_32K_NAME,
+-						       NULL, 0,
+-						       AC100_RTC_32K_RATE);
++	chip->rtc_32k_clk = devm_clk_hw_register_fixed_rate(chip->dev,
++							    AC100_RTC_32K_NAME,
++							    NULL, 0,
++							    AC100_RTC_32K_RATE);
+ 	if (IS_ERR(chip->rtc_32k_clk)) {
+ 		ret = PTR_ERR(chip->rtc_32k_clk);
+ 		dev_err(chip->dev, "Failed to register RTC-32k clock: %d\n",
+@@ -356,28 +356,14 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
+ 		if (ret) {
+ 			dev_err(chip->dev, "Failed to register clk '%s': %d\n",
+ 				init.name, ret);
+-			goto err_unregister_rtc_32k;
++			return ret;
  		}
+ 
+ 		chip->clk_data->hws[i] = &clk->hw;
  	}
  
-+	/* we run 2 devices on the same DMA ring so we need a dummy device
-+	 * for NAPI to work. Allocate it before registering the netdevs so a
-+	 * concurrent ndo_open (e.g. netifd bringing the first netdev up the
-+	 * instant it is registered) never observes eth->dummy_dev == NULL in
-+	 * mtk_dma_init() -> mtk_rx_alloc() -> __xdp_rxq_info_reg() (net/core/xdp.c
-+	 * "Missing net_device from driver") and fails the first open.
-+	 */
-+	eth->dummy_dev = alloc_netdev_dummy(0);
-+	if (!eth->dummy_dev) {
-+		err = -ENOMEM;
-+		dev_err(eth->dev, "failed to allocated dummy device\n");
-+		goto err_unreg_netdev;
-+	}
-+	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
-+	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
-+
- 	for (i = 0; i < MTK_MAX_DEVS; i++) {
- 		if (!eth->netdev[i])
- 			continue;
-@@ -5351,18 +5367,6 @@ static int mtk_probe(struct platform_device *pdev)
- 				   eth->netdev[i]->base_addr, eth->irq[MTK_FE_IRQ_SHARED]);
- 	}
- 
--	/* we run 2 devices on the same DMA ring so we need a dummy device
--	 * for NAPI to work
--	 */
--	eth->dummy_dev = alloc_netdev_dummy(0);
--	if (!eth->dummy_dev) {
--		err = -ENOMEM;
--		dev_err(eth->dev, "failed to allocated dummy device\n");
--		goto err_unreg_netdev;
--	}
--	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
--	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
+-	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, chip->clk_data);
+-	if (ret)
+-		goto err_unregister_rtc_32k;
 -
- 	platform_set_drvdata(pdev, eth);
- 	schedule_delayed_work(&eth->reset.monitor_work,
- 			      MTK_DMA_MONITOR_TIMEOUT);
-@@ -5372,6 +5376,16 @@ static int mtk_probe(struct platform_device *pdev)
- err_unreg_netdev:
- 	mtk_unreg_dev(eth);
- err_deinit_ppe:
-+	/* A netdev opened while probe was still registering can have queued
-+	 * the frame-engine reset worker, which takes rtnl and drives the
-+	 * hardware; cancel it before anything below is torn down.
-+	 */
-+	cancel_work_sync(&eth->pending_work);
-+	if (eth->dummy_dev) {
-+		netif_napi_del(&eth->tx_napi);
-+		netif_napi_del(&eth->rx_napi);
-+		free_netdev(eth->dummy_dev);
-+	}
- 	mtk_ppe_deinit(eth);
- 	mtk_mdio_cleanup(eth);
- err_free_dev:
+-	return 0;
+-
+-err_unregister_rtc_32k:
+-	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
+-
+-	return ret;
+-}
+-
+-static void ac100_rtc_unregister_clks(struct ac100_rtc_dev *chip)
+-{
+-	of_clk_del_provider(chip->dev->of_node);
+-	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
++	return devm_of_clk_add_hw_provider(chip->dev, of_clk_hw_onecell_get,
++					   chip->clk_data);
+ }
+ 
+ /*
+@@ -615,13 +601,6 @@ static int ac100_rtc_probe(struct platform_device *pdev)
+ 	return devm_rtc_register_device(chip->rtc);
+ }
+ 
+-static void ac100_rtc_remove(struct platform_device *pdev)
+-{
+-	struct ac100_rtc_dev *chip = platform_get_drvdata(pdev);
+-
+-	ac100_rtc_unregister_clks(chip);
+-}
+-
+ static const struct of_device_id ac100_rtc_match[] = {
+ 	{ .compatible = "x-powers,ac100-rtc" },
+ 	{ },
+@@ -630,7 +609,6 @@ MODULE_DEVICE_TABLE(of, ac100_rtc_match);
+ 
+ static struct platform_driver ac100_rtc_driver = {
+ 	.probe		= ac100_rtc_probe,
+-	.remove		= ac100_rtc_remove,
+ 	.driver		= {
+ 		.name		= "ac100-rtc",
+ 		.of_match_table	= of_match_ptr(ac100_rtc_match),
 -- 
 2.53.0
 
