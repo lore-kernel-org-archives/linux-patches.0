@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCE73F54BD;
-	Fri,  9 Oct 2026 14:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EF046EF92;
+	Fri,  9 Oct 2026 14:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556315; cv=none; b=paweEWcGpRLx5ACwrgHVuLw9FQNvu0K19U6z14pN/+NyDC8r7gV+hDrlFMCG9/KiU13O/vkzOwrjezD+0Lhf2ktePqb7IDLyIAK7/8PLD8Yon8eE/kg2HhgGCcSOfBRG9SLrj7VM7y3hTPfUbv71k/y+LvhRG/p8q98X75r3zng=
+	t=1791556318; cv=none; b=bO5FC4GcawTAtxCdxqalEJYViG4uz0IDLJghb0/+oIIlQOzV02/QHOPNJNCuhlar7+KcppFmh9e7LBZtBg7mkTofIVhEUquWRHcsNhnCbXjuAe8YSPUVnqwNqeBxn7iJRg7nUEKevqv/x6QXxMUE+Dj1pi9RP59+zu0Fvq1LfG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556315; c=relaxed/simple;
-	bh=KVNqv7dcVNtfCUE03uOOplmiXDi1mQ0kWtbDiqRr9nk=;
+	s=arc-20240116; t=1791556318; c=relaxed/simple;
+	bh=SU7njEuXfPJpe1MnEN5+3D8m1KOS2EWBHAIC4JwGWZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cAKx7ODFKlUldQOdR0C0SbWeQXqcEyV4JzNprmLgb5dc6R8mh4IKVgxAEEvqcfh8MDQCSijZ2Bt7FiQYlDeyYbakCLYpGvA9PnENng1rXCTsih+mwDXN10ZYU32VLRJPnb5OozFOxVyvyzRxFrpKKQXB/CV+sAiT78y/FovWoP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISAyNe/s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b40Ol16aE5Ui2bCUZOgmHaTtYmG5lrMZYct/uOgvnyIGXrG/W7aJWvbE7jBu2e+K8EFrwKJ3e/MWUusEy8qNNy1O/s4jUOkrQzYjl7wwGYfBEWftJEu+ao1X0TGF09K4KGHgpTCd+kUJ0YO4DP6Y8CEkxhSXt4n1jMRbkz6Ncwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmWLiKrT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISAyNe/s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A757B1F00893;
-	Fri,  9 Oct 2026 14:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmWLiKrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB761F000FF;
+	Fri,  9 Oct 2026 14:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556311;
-	bh=m4jAflZOXXAVMxN/Rf8auVi/GIRJyX/AyX5w3iStrmc=;
+	s=korg; t=1791556314;
+	bh=8XVqELbhFtglqbb/Co9n0TkYsk2v3X6p1Kr7/jFVA+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ISAyNe/sB8mkEtsbHJGqsz1WH3vIMY+y6NfICRv/2g2HRNO9wifVuofZCz8TzMWPl
-	 cKDZIhPgj6ppoKgC4Zjzw3noGrt3tquYlRtqaE5OwN+tL1DbiQETd916hzUJKo67ce
-	 Vzmpf1EaaRzqOROS8P68tiHswIOpSmpaTPAVErYE=
+	b=RmWLiKrT7QYdPooXTE4NS2DeO9c09C6GrJU6aAVohCNfLRadxrUws3vGw3ctVyx2j
+	 48xytSUKYvXvAmuiS/mW3+SXqlECDNs5um+6r43Hk83wdK9BNXhlMWQ8Ld+cAvoAug
+	 MEjsArwM7Mi/ZPnvHsawM4bDUySoifpYT/Tpyyqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 156/428] net: mvneta: clear XDP pfmemalloc flag between frames
-Date: Fri,  9 Oct 2026 16:08:13 +0200
-Message-ID: <20261009140949.593465932@linuxfoundation.org>
+	co+24304d323d28f156@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 214/403] ALSA: ua101: reject mismatched capture/playback packet sizes
+Date: Fri,  9 Oct 2026 16:09:35 +0200
+Message-ID: <20261009140957.145698307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 8f1c2a10500a84a621ff13073f96deea0753ed42 ]
+commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
 
-mvneta_swbm_add_rx_fragment() sets XDP_FLAGS_FRAGS_PF_MEMALLOC on the
-xdp_buff when a fragment page is a pfmemalloc one (page under memory
-pressure). The xdp_buff is reused for the next frame, but only the
-XDP_FLAGS_HAS_FRAGS bit was cleared at frame start, so the pfmemalloc
-bit leaked from one frame into the following ones. mvneta_swbm_build_skb()
-propagates the flag to skb->pfmemalloc through xdp_update_skb_frags_info(),
-so the skb of a subsequent fragmented frame could be wrongly marked as
-pfmemalloc even if none of its pages are under pressure.
+detect_usb_format() cross-checks bSubframeSize, bBitResolution and
+tSamFreq between the capture and playback interfaces, but never relates
+the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
+gets a buffer of ua->playback.max_packet_bytes, while the number of
+bytes written into it is derived from the capture stream:
+capture_urb_complete() computes frames from the received capture packet
+and capture.frame_bytes, and start_usb_playback() and playback_work()
+multiply that by playback.frame_bytes.
 
-Clear all the xdp_buff flags in mvneta_swbm_rx_frame(), which is invoked
-for each new frame, instead of just the XDP_FLAGS_HAS_FRAGS bit.
+A device declaring a large capture wMaxPacketSize with few capture
+channels and a small playback wMaxPacketSize with many playback channels
+therefore memset()s and memcpy()s past the end of the playback buffer,
+in open() of the PCM node the driver registers during probe.
+usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
+-EMSGSIZE, but only after the write.
 
-Fixes: ed7a58cb40bd ("net: marvell: rely on xdp_update_skb_shared_info utility routine")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260929-mvneta-xdp-clear-frag-fix-v4-1-1e63b25eeed8@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
+declares proportional packet sizes and is unaffected.
+
+  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
+  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
+  Call Trace:
+   __asan_memset (mm/kasan/shadow.c:84)
+   start_usb_playback (sound/usb/misc/ua101.c:586)
+   playback_pcm_open (sound/usb/misc/ua101.c:679)
+   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
+   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
+   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
+   snd_open (sound/core/sound.c:166)
+   chrdev_open (fs/char_dev.c:411)
+   do_dentry_open (fs/open.c:996)
+   vfs_open (fs/open.c:1101)
+   path_openat (fs/namei.c:4837 fs/namei.c:5000)
+   do_file_open (fs/namei.c:5029)
+   do_sys_openat2 (fs/open.c:1417)
+   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  The buggy address belongs to the object at ffff8881098f3c00
+   which belongs to the cache kmalloc-192 of size 192
+  The buggy address is located 0 bytes inside of
+   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
+
+Cc: stable@vger.kernel.org
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Reported-by: <co+24304d323d28f156@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 2 +-
- include/net/xdp.h                     | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ sound/usb/misc/ua101.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 744d6585a949d..ad71b5e39e338 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -2340,7 +2340,7 @@ mvneta_swbm_rx_frame(struct mvneta_port *pp,
- 
- 	/* Prefetch header */
- 	prefetch(data);
--	xdp_buff_clear_frags_flag(xdp);
-+	xdp_reinit_buff(xdp);
- 	xdp_prepare_buff(xdp, data, pp->rx_offset_correction + MVNETA_MH_SIZE,
- 			 data_len, true);
- }
-diff --git a/include/net/xdp.h b/include/net/xdp.h
-index aa742f413c358..07231adfb5f82 100644
---- a/include/net/xdp.h
-+++ b/include/net/xdp.h
-@@ -106,6 +106,11 @@ struct xdp_buff {
- 	};
- };
- 
-+static __always_inline void xdp_reinit_buff(struct xdp_buff *xdp)
-+{
-+	xdp->flags = 0;
-+}
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -1002,6 +1002,15 @@ static int detect_usb_format(struct ua10
+ 	}
+ 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
+ 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
 +
- static __always_inline bool xdp_buff_has_frags(const struct xdp_buff *xdp)
- {
- 	return !!(xdp->flags & XDP_FLAGS_HAS_FRAGS);
--- 
-2.53.0
-
++	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
++	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
++		dev_err(&ua->dev->dev,
++			"playback packet size %u too small for %u capture frames\n",
++			ua->playback.max_packet_bytes,
++			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
++		return -ENXIO;
++	}
+ 	return 0;
+ }
+ 
 
 
