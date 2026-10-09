@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DDA4EB85C;
-	Fri,  9 Oct 2026 14:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2BF4E4C45;
+	Fri,  9 Oct 2026 14:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557344; cv=none; b=RvvOzzSogK0d3uoo8gyNzo2J5Qy/VAB7+nnod3OoL/8IwFRk3MciyzoOowiyhBPvAR8WM/ZVVSFq/7GK+f4jJ8+jyvdeuRuCH+tJiiXj67cLsCBD0Ufasd5UFJhCwihNDsbsH5EAPNffIIFObyVGdu8wjLmxFcVTMeb1WLXj17M=
+	t=1791557347; cv=none; b=LqwVVjZFp4zqAXMIifDB9QCKL6ajmkUL/OA/pkSIW2Kr6xI/4PIdKekwBdqPahLCkMuupSgCPiibXwJnMPR1WQ0VsG9Xs0Z4Ew7WCG40ZTilXlAfaqo0h+Y9ahsZo7Pto5tul/Wra5AHo5jeA5EglU8GWU9DhZDByxeLZBA8MpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557344; c=relaxed/simple;
-	bh=9VDkY1L7PXOsPAT+hYQeYZ/Npt2M9xTzajLGuYV8Jks=;
+	s=arc-20240116; t=1791557347; c=relaxed/simple;
+	bh=l3Kym15S/q9BqRFfFN24thOK/9jry9IlvHSMQV6e1fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfCMwJLUOI5XVBK5jI+QmO57evalYKTkRyGSyeXG1PNJ+iFyidqAihulV3bhynDJsPHzAaUrVoSO6Tf0/BlzysrohJNVDX7FvC8H38hGbqcTuf5i6E22emOAqMCoPz9/NNW8U3yB6WpMUDBbDGr2+5h5laf9UYIWW3/gekoEPRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02HPhUEW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JuD0uZx4tgAEFCNf+N9bgY2QdEdDQzyYGYNspiWn5EYVLaTj2TPGauGGPh8AwbB4q9hpuFYvF88o57HhimPqZeYQoNZYX3Qn0vbQ9cMk+bBvRe4az0P5wP4SAug1AXdALp6CFJrftxKoPh9h4oDikeD4M5PIdciKOTnNNV4WSwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdMvtvO5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02HPhUEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1151F000FF;
-	Fri,  9 Oct 2026 14:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdMvtvO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A401F000FF;
+	Fri,  9 Oct 2026 14:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557343;
-	bh=9IzHz7q8K0JY4qiOcNprTaEXgyVa4G1Wjd5weLFWdxM=;
+	s=korg; t=1791557346;
+	bh=jpeWDqLMu8rkJbKecibeDel9OPFORJ+ORyi77KhaeaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02HPhUEWhAThA3CHy+eQ9L3ywFYx5g20Sk9L5Gf5hT0moby2nYq4CwgyUEU31ofbp
-	 UgPhcx2vyoU/+pOur8xCz+R98gxt6cvm5QxhH1xL6EMmUUiXszMNGF3v/41aaYhrod
-	 THnMInvJWBj06QlQv8iA3mAfjYbYcpksFggv2EfM=
+	b=SdMvtvO5u3v8XH8Xlc8HE8PkaVZ7xh5dh0KS9jpJISUMOyGRYZYGihXGvig6I2wt8
+	 +HbOV4p/zL12PFfv5+ASbj+JDFFXcKhRu8WD02sYua6YCOf8nwGn4prOm65SpvMyhr
+	 WvUdRdIlUt0Q+YiifA7nugiOSTv2anZQdwp0nTks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 385/403] arm64: mm: Fix the break-before-make flush range for erratum 2645198
-Date: Fri,  9 Oct 2026 16:12:26 +0200
-Message-ID: <20261009141001.338821198@linuxfoundation.org>
+	Bill Pemberton <wfp5p@virginia.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.2 341/428] USB: serial: ssu100: fix baud rate overflow
+Date: Fri,  9 Oct 2026 16:11:18 +0200
+Message-ID: <20261009140953.642346919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +46,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 1fef81669147d63eb8c5d3627d54eadc21173a0b ]
+commit afc235a217360c6859068d2e37a4df305c4d1be2 upstream.
 
-modify_prot_start_ptes() performs the break-before-make TLB invalidation
-required by erratum 2645198 with __flush_tlb_range(), whose third
-argument is the end address of the range.  It passes nr * PAGE_SIZE
-instead of addr + nr * PAGE_SIZE, so __do_flush_tlb_range() computes the
-page count as (nr * PAGE_SIZE - addr) >> PAGE_SHIFT.
+The requested baud rate is incorrectly truncated to 16 bits so that
+line speeds above 65535 bps cannot be set.
 
-For addr > nr * PAGE_SIZE that subtraction underflows, the page count
-exceeds the batching limit and the flush degenerates to flush_tlb_mm(),
-so a single-page mprotect broadcasts an ASID-wide invalidation and a
-full-range mmu notifier call.
+Use 32 bits for the rate and remainder while rejecting rates outside of
+[50,460800] to avoid having the divisor or remainder overflow.
 
-For addr <= nr * PAGE_SIZE only [addr, nr * PAGE_SIZE) is invalidated,
-and when the cleared batch starts below nr * PAGE_SIZE the tail is left
-in the TLB.  The workaround then no longer covers the whole batch, and
-for addr == nr * PAGE_SIZE the flush is empty.
+This issue was flagged by an LLM.
 
-On affected Cortex-A715 CPUs, this can corrupt ESR_ELx and FAR_ELx on the
-next instruction abort caused by a permission fault.
-
-Pass addr + nr * PAGE_SIZE as the end address.
-
-Fixes: 7efa1cd5f89b5 ("arm64: add batched versions of ptep_modify_prot_start/commit")
-Cc: stable@vger.kernel.org
+Fixes: 52af95459939 ("USB: add USB serial ssu100 driver")
+Cc: stable@vger.kernel.org	# 2.6.36
+Cc: Bill Pemberton <wfp5p@virginia.edu>
 Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ sashal: Adapted __flush_tlb_range() arguments from PAGE_SIZE, 3, TLBF_NOWALKCACHE to PAGE_SIZE, true, 3. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/ssu100.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -2150,7 +2150,7 @@ pte_t modify_prot_start_ptes(struct vm_a
- 		 * in cases where cpu is affected with errata #2645198.
- 		 */
- 		if (pte_accessible(vma->vm_mm, pte) && pte_user_exec(pte))
--			__flush_tlb_range(vma, addr, nr * PAGE_SIZE,
-+			__flush_tlb_range(vma, addr, addr + nr * PAGE_SIZE,
- 					  PAGE_SIZE, true, 3);
- 	}
+--- a/drivers/usb/serial/ssu100.c
++++ b/drivers/usb/serial/ssu100.c
+@@ -32,6 +32,7 @@
  
+ #define  SERIAL_EVEN_PARITY         (UART_LCR_PARITY | UART_LCR_EPAR)
+ 
++#define  MIN_BAUD_RATE              50
+ #define  MAX_BAUD_RATE              460800
+ 
+ #define ATC_DISABLED                0x00
+@@ -217,9 +218,10 @@ static void ssu100_set_termios(struct tt
+ {
+ 	struct usb_device *dev = port->serial->dev;
+ 	struct ktermios *termios = &tty->termios;
+-	u16 baud, divisor, remainder;
++	speed_t baud, remainder;
+ 	unsigned int cflag = termios->c_cflag;
+ 	u16 urb_value = 0; /* will hold the new flags */
++	u16 divisor;
+ 	int result;
+ 
+ 	if (cflag & PARENB) {
+@@ -235,6 +237,18 @@ static void ssu100_set_termios(struct tt
+ 	if (!baud)
+ 		baud = 9600;
+ 
++	if (baud < MIN_BAUD_RATE || baud > MAX_BAUD_RATE) {
++		if (old_termios)
++			baud = tty_termios_baud_rate(old_termios);
++		else
++			baud = clamp(baud, MIN_BAUD_RATE, MAX_BAUD_RATE);
++
++		tty_encode_baud_rate(tty, baud, baud);
++
++		if (!baud)
++			baud = 9600;
++	}
++
+ 	dev_dbg(&port->dev, "%s - got baud = %d\n", __func__, baud);
+ 
+ 
+@@ -310,7 +324,7 @@ static int ssu100_open(struct tty_struct
+ 		dev_dbg(&port->dev, "%s - set uart failed\n", __func__);
+ 
+ 	if (tty)
+-		ssu100_set_termios(tty, port, &tty->termios);
++		ssu100_set_termios(tty, port, NULL);
+ 
+ 	return usb_serial_generic_open(tty, port);
+ }
 
 
