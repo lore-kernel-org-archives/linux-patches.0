@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8004F3D34A2;
-	Fri,  9 Oct 2026 14:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5281B4E533C;
+	Fri,  9 Oct 2026 14:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556960; cv=none; b=lTIxKZOryflqDnk688DurcMWzffWvcBnzVJvEY8bSMGdLeXWgjDTwDwM2ivZke2RNbqw0rotfMRkFRquFXaR2Klf/D+NM0UetKuad080l5FXVhgEuH7+vgjpQB734/xVaAiWUyoCjDn05Co/2ABprmcvl/bqC8L7dBmiDxR2vIk=
+	t=1791556963; cv=none; b=kFF8yn96pcjmty6wVWUTY12BDohpMnct9KZJoTbAUL/sC05ndNzaXIV4i2Q1aK8RiCaz1uRrBZIOx35EtiXLg+yC0DUoAb+4a8+z9F1CTZqwOdPUu/4rEwivnpPpG4nT/IZo5Qw6WK7Av3Xns9Omob51+kRhf2JwdKbQ0AnGog4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556960; c=relaxed/simple;
-	bh=v0UK5OfsPpvHDMn65Coa84qu9a29p9uYiBizerZ1JBY=;
+	s=arc-20240116; t=1791556963; c=relaxed/simple;
+	bh=YEIq6RNQHvaZCyy9zM49p+fkz+FpURHakd3eTwTdgak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhbHwpbreARUZPPsb/g2SrBos5fr78XBND3xLYVU5NXM8kooPhzw5rHk1LgZRioAv0DaDhkCEcqDIc3ExJPSC3YYnkvK4FteezqvGbnGkKU2zXJPgFu886Q0BEVqEdXmBegpyVjWXMsWKqzJsjH1gmw31G7F2E2tAICN4i3tr+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZC5VsbNd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sZOIkl9hNB4IJDNZCnm28SZ2OUyvJpckFL6SMxU7pvrHur34RolusXZHiqyNsWYJzFs1TnjiIM9K8tkbP6ZqiarDZeyWtV833dPJ0VF+lPkWDzkNJyiEZeClHH9GpgiFk/lmVdObKaT9MuvTWl50FcJ4ng3W5m7pTvjbXqMr7uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9zfkXvv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZC5VsbNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44391F000FF;
-	Fri,  9 Oct 2026 14:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9zfkXvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07331F000FF;
+	Fri,  9 Oct 2026 14:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556959;
-	bh=NiJ/aDoAnTqIyzIP3vcxDUD+Qy6MVxs2A5TcWwT8AVI=;
+	s=korg; t=1791556962;
+	bh=cOX0trwN1Xi01B/nbj/Pq5fit1HIvnRjulx+W+Xcyhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZC5VsbNd8stytZxOlM5WKpR+7ZdPUnfU6jpXrLczpF4munpBemAVxObik/yAztKQI
-	 x6LtUwV5yXtZRtm3jabNV7BExeJdRhKB4WLtpXLVzKYHbZmxDRchJZqyRJYDM7dAiE
-	 62LmPwkSqxMcm51rplrEZXOHVSkC2uiiz1E3kHBI=
+	b=a9zfkXvvsnR+uLp3Bql1bgo4jp6UWY1f1DkhPvTL4Ho7+aAY+2vwRjBnhtNQNh2xZ
+	 dfEJ+nM+o+LVZU8c1tflwtEsc8TbfT95lwMc23JR55zXMLt7vSA/aiU3r/aZZzDtwO
+	 QpI0aQvmAEc0sixay5aVbvQptQWccOTXb0E9vbo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arkamondalofficial@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 324/403] iio: gyro: adis16136: fix unprotected debugfs reads
-Date: Fri,  9 Oct 2026 16:11:25 +0200
-Message-ID: <20261009140959.807729709@linuxfoundation.org>
+	Dinh Nguyen <dinguyen@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 7.2 274/428] EDAC/altera: Do not allow driver unbinding
+Date: Fri,  9 Oct 2026 16:10:11 +0200
+Message-ID: <20261009140952.109265524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +46,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arka Mondal <arkamondalofficial@gmail.com>
+From: Dinh Nguyen <dinguyen@kernel.org>
 
-commit 2b498df75d6c29aa3e760127ae0f0003df598b53 upstream.
+commit 19a4f1a6ed00286d70229f4fd5f690cc2fb033dc upstream.
 
-The serial_number file operations are open coded and never call
-debugfs_file_get(), which debugfs_create_file_unsafe() requires.
-debugfs_remove_recursive() therefore does not wait for a read in
-progress, and unbind frees the iio_dev underneath it.
+The driver must remain bound; unbinding and re-binding it would erase active
+system memory.
 
-Use debugfs_create_file() instead.
+Remove the .remove functions because they will not ever get used.
 
-Fixes: 9aaea09b4cbd ("gyro:adis16136: fix debugfs_simple_attr.cocci warnings")
-Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 588cb03ea208 ("EDAC, altera: Add Arria10 L2 Cache ECC handling")
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org # 6.18+
+Link: https://patch.msgid.link/20260911120627.2634225-2-dinguyen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/adis16136.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/altera_edac.c |   25 ++++---------------------
+ 1 file changed, 4 insertions(+), 21 deletions(-)
 
---- a/drivers/iio/gyro/adis16136.c
-+++ b/drivers/iio/gyro/adis16136.c
-@@ -145,7 +145,7 @@ static int adis16136_debugfs_init(struct
- 	struct adis16136 *adis16136 = iio_priv(indio_dev);
- 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -453,15 +453,6 @@ free:
+ 	return res;
+ }
  
--	debugfs_create_file_unsafe("serial_number", 0400,
-+	debugfs_create_file("serial_number", 0400,
- 		d, adis16136, &adis16136_serial_fops);
- 	debugfs_create_file_unsafe("product_id", 0400,
- 		d, adis16136, &adis16136_product_id_fops);
+-static void altr_sdram_remove(struct platform_device *pdev)
+-{
+-	struct mem_ctl_info *mci = platform_get_drvdata(pdev);
+-
+-	edac_mc_del_mc(&pdev->dev);
+-	edac_mc_free(mci);
+-	platform_set_drvdata(pdev, NULL);
+-}
+-
+ /*
+  * If you want to suspend, need to disable EDAC by removing it
+  * from the device tree or defconfig.
+@@ -481,13 +472,13 @@ static const struct dev_pm_ops altr_sdra
+ 
+ static struct platform_driver altr_sdram_edac_driver = {
+ 	.probe = altr_sdram_probe,
+-	.remove = altr_sdram_remove,
+ 	.driver = {
+ 		.name = "altr_sdram_edac",
+ #ifdef CONFIG_PM
+ 		.pm = &altr_sdram_pm_ops,
+ #endif
+ 		.of_match_table = altr_sdram_ctrl_of_match,
++		.suppress_bind_attrs = true,
+ 	},
+ };
+ 
+@@ -517,6 +508,7 @@ static struct platform_driver altr_edac_
+ 	.driver = {
+ 		.name = "socfpga_ecc_manager",
+ 		.of_match_table = altr_edac_of_match,
++		.suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(altr_edac_driver);
+@@ -803,22 +795,12 @@ fail:
+ 	return res;
+ }
+ 
+-static void altr_edac_device_remove(struct platform_device *pdev)
+-{
+-	struct edac_device_ctl_info *dci = platform_get_drvdata(pdev);
+-	struct altr_edac_device_dev *drvdata = dci->pvt_info;
+-
+-	debugfs_remove_recursive(drvdata->debugfs_dir);
+-	edac_device_del_device(&pdev->dev);
+-	edac_device_free_ctl_info(dci);
+-}
+-
+ static struct platform_driver altr_edac_device_driver = {
+ 	.probe =  altr_edac_device_probe,
+-	.remove = altr_edac_device_remove,
+ 	.driver = {
+ 		.name = "altr_edac_device",
+ 		.of_match_table = altr_edac_device_of_match,
++		.suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(altr_edac_device_driver);
+@@ -2217,6 +2199,7 @@ static struct platform_driver altr_edac_
+ 	.driver = {
+ 		.name = "socfpga_a10_ecc_manager",
+ 		.of_match_table = altr_edac_a10_of_match,
++		.suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(altr_edac_a10_driver);
 
 
