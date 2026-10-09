@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AE02C0F6D;
-	Fri,  9 Oct 2026 14:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC3034D3BE;
+	Fri,  9 Oct 2026 14:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557547; cv=none; b=E+xWM69gfejldpvXAawkGU7/SmbjEETO2iYZbbUhzhJFxqv7vs5C6yTg8hgQAmc6O4D22oq3jVJoj66x1bG+gxMzM9uZaEb3SvigWzm/5TDHLJLNX8znCZcuusMzKpaReApYD0MMJgSeiq7phArJLoukKgJDDXsGFfDCkxqkc84=
+	t=1791557552; cv=none; b=QNdKgLrMnBKSLXveTsGF1LsnOxpy5lCmYJWW/GltLdiLOQCAIgX5fQdBug8D4ypLr2wjKS7MSiATWH4jTVyIyoCyAGF7uj0RUtQKZ3ypAIycVPyJ7dnpxOBvJMYfuOV+ZfeOxegFdhZng3e74LLBaj9MlW/cTO+MzO2gOSUsJFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557547; c=relaxed/simple;
-	bh=ZxQuyTEGJU7oyOoSbS3czlGbWM2dMqzzHsT09kLq4qA=;
+	s=arc-20240116; t=1791557552; c=relaxed/simple;
+	bh=uAlXx7TMcpUnzwGb5oPbckdHkyE/8oBbvBvt5vOIs6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jeAUC/4UP66ag05TWRDkcYHVH4zZ1t8tsPBM/NB3ruXqpH6WnNTd9kH6ujawXfMc+RQqsX4raBaNpF9KBnctZYbdR/9UC1b2n6PN1ut/ezQDPO4k7V8q33+m4AowqqTKZmd84rwlmDlRbk+x91GtmEH9WHqHwXmmQ3GKDS5SXJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYjNFCV/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RNwlMGfISxN2EXwTb9KJRTSaXVbeTRPyeyO3UI/lWDHBLm7bP0N37owN0iv+1E2/r1HynOjghPWJG7ukyPVrue/Y6Gg7TnOWlcQubDZ1l8VNWgbG/VTcJDJs9AIpqArhGgc7F0TtCssOoxViF5v3dt8kZ+mrx7tdzPGU477ZHWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AN9a8uA3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYjNFCV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211961F000FF;
-	Fri,  9 Oct 2026 14:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AN9a8uA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062701F000FF;
+	Fri,  9 Oct 2026 14:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557546;
-	bh=wKJ3T5ihdyQXvpDXlYZJp5q5G/7CI9SCNZSlhWKPQ18=;
+	s=korg; t=1791557549;
+	bh=tUD0U2f3xE8qTjLxRyMoi9yktrCJ7d++/69Yp9Vu+0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYjNFCV/kR53iumUVzlVc9EndJJ5ZWEcpCBLJpreGJ93y9Aodjy+gYTe74Gw8hzo5
-	 pFcyfrl8Om/TBqwSE1hLa8KFAPgFXSL6Fm4GUNVlGzndw8nJhkwJwm91KF+LuIfx/P
-	 /7ouLKso1LsvT4WfhOrzVmjnLKuNFRYpLzeWR388=
+	b=AN9a8uA3bbaLlGL7r4eSmM23+jd0jzbo3sKnX37oZMdP+dR0PPzN270qml4ZFO8vc
+	 xXk7Ttged0Q5Ax7xQ0HJXlDxOlt+U/270teg8xvQsIobOFezwESWVkOnCTA8mQjoUp
+	 JWHHnpDJwdTMNAC0pTdFY1SHX6cKuWHYLa7NaP6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Arka Mondal <arkamondalofficial@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 391/428] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
-Date: Fri,  9 Oct 2026 16:12:08 +0200
-Message-ID: <20261009140954.792587777@linuxfoundation.org>
+Subject: [PATCH 7.2 400/428] iio: gyro: adis16136: fix unprotected debugfs reads
+Date: Fri,  9 Oct 2026 16:12:17 +0200
+Message-ID: <20261009140955.001876505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Arka Mondal <arkamondalofficial@gmail.com>
 
-commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
+commit 2b498df75d6c29aa3e760127ae0f0003df598b53 upstream.
 
-If devm_thermal_of_zone_register() fails, probe returns without
-unregistering the IIO map array or disabling runtime PM.
+The serial_number file operations are open coded and never call
+debugfs_file_get(), which debugfs_create_file_unsafe() requires.
+debugfs_remove_recursive() therefore does not wait for a read in
+progress, and unbind frees the iio_dev underneath it.
 
-Jump to err_map to release them.
+Use debugfs_create_file() instead.
 
-Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 9aaea09b4cbd ("gyro:adis16136: fix debugfs_simple_attr.cocci warnings")
+Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/gyro/adis16136.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/sun4i-gpadc-iio.c
-+++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -638,10 +638,10 @@ static int sun4i_gpadc_probe(struct plat
- 		 * thermal because no thermal DT node is found.
- 		 */
- 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
--			dev_err(&pdev->dev,
--				"could not register thermal sensor: %ld\n",
--				PTR_ERR(info->tzd));
--			return PTR_ERR(info->tzd);
-+			ret = dev_err_probe(&pdev->dev,
-+					    PTR_ERR(info->tzd),
-+					    "could not register thermal sensor\n");
-+			goto err_map;
- 		}
- 	}
+--- a/drivers/iio/gyro/adis16136.c
++++ b/drivers/iio/gyro/adis16136.c
+@@ -145,7 +145,7 @@ static int adis16136_debugfs_init(struct
+ 	struct adis16136 *adis16136 = iio_priv(indio_dev);
+ 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
  
+-	debugfs_create_file_unsafe("serial_number", 0400,
++	debugfs_create_file("serial_number", 0400,
+ 		d, adis16136, &adis16136_serial_fops);
+ 	debugfs_create_file_unsafe("product_id", 0400,
+ 		d, adis16136, &adis16136_product_id_fops);
 
 
