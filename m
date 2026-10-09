@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311D545A2BC;
-	Fri,  9 Oct 2026 14:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB53BB112;
+	Fri,  9 Oct 2026 14:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556816; cv=none; b=NuTVEwsQJecigEOWfkci/HZ5dvOzBLHLMs3MNwlsE4u/swCtvrqx8J7rLsiW9QoYLvgkEoC3uU/7gKIFg5C2W967IvYi5KKgHxTqB81xY0l85veIAhQU6CBW7kGwOLmbSta7o4SNMkxC64kD5H9qI+FmfuWULCXkXdgnaahvUG8=
+	t=1791556819; cv=none; b=tNfvG78WUkp7ZSmUuYIyeAwcqaf7cLqoN7wCfcaPqV6HNENC4Qk+/G+LhTLy9gcC1j9jZAUbjYFxG57i+mgx5evKJV6rsbIPUS4MhQXou9cHq7fb0Oi8kBoe4gAPIH6z4Eeomf0FlkbD2Z9cSj0p45CG4/VCrtBJlwRVmKEspFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556816; c=relaxed/simple;
-	bh=uD8pKNp4lPekT6qocj2Hh9+IvM6IobqV6T+cH1NpApY=;
+	s=arc-20240116; t=1791556819; c=relaxed/simple;
+	bh=Xy1ilqFr3Ua1n296CNG3HAbiVfa3MUsCE3QBKjKikVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSWAQ9g+8v9tuKR9dBfR1U4GS3Hjpw+BHD5bxU+YqxjAeEzVt/FIoF0Z1TG+IUyQoz550i4CZJX/f8ic2SVc4j92NMO2MNYAhHTO1ZlHOET33DSdYUs1NmegvqAHrB12ucYSuVnjJmN5wxa4jlUOimm0obbn5pH2dSgWDJzLP2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZQZKw3g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X6UnfTaa7Hvxj6t1WQGUgP8T9Vcwt0yCR+DymO8PnMPx7LD4SY7GEgU7VGLyZxLGuMw8EzQt3ddRkSFPv5NAKNMkMEtBWRb0zjBHrgqN9TWHgQk8MFZpZjsmgIlvxcxfKD0W++W6heD1jMvWoPgHx2+8ti1LVWWPFxjEaDw+Qik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRtbTHaH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZQZKw3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DDD1F00893;
-	Fri,  9 Oct 2026 14:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRtbTHaH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC481F000FF;
+	Fri,  9 Oct 2026 14:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556815;
-	bh=jIoUdTphj9nRyimTYtiEH/TB5L4sQyZyFKGOD0DcMK0=;
+	s=korg; t=1791556818;
+	bh=AVPVVWPp5/8HepEi7SNKWmJTB1rLJ3FQ9olknz7ED1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZQZKw3g6dlKKlTTpTR6/SVCdjulRzdU+Q+QPkFoRaH0ZivBdKViP/4gPNE6oI/K5
-	 fgAJus8jdVHVS20AVJ5D/tsAyQNTb8o/Pl8lkAdrqwPQe1FImXTb4KLUnc3qATcbDK
-	 1r06TREyIuJ6KHRal9tljZNLgeshOzG2TJIhpgQ4=
+	b=WRtbTHaHfZolpvO6o7j99a+3GaZ2aH6HzAxwpTueFl+wpdfuG5ouC23rwTuaGYddJ
+	 bLjQgRdO4DqDrSW2C3HqSYngVD4mAu259JeY5xHUnWRBaCSyzT0tFSrCM6m3fHfMYc
+	 8MEp7ulZGe1lbleaE8zeDpIQOUxkXbL3ZazIDIZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 7.2 246/428] tty: fix saved termios reset race
-Date: Fri,  9 Oct 2026 16:09:43 +0200
-Message-ID: <20261009140951.511080964@linuxfoundation.org>
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 298/403] iio: accel: kionix-kx022a: Prevent memory leak and fix state
+Date: Fri,  9 Oct 2026 16:10:59 +0200
+Message-ID: <20261009140959.174114550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,127 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 8df07fe93573e9e548d6645273e9bcb6eb74059e upstream.
+commit e65e128b51a37dd1a9056ac3d1705d805a5c8bb0 upstream.
 
-Resetting saved termios state on device registration is needed where a
-minor number can be reused for an entirely different device and where
-the old settings may prevent the port from even being opened (e.g. when
-CLOCAL is not set).
+The driver allocates memory for samples at buffer enable path. If regmap
+operation fails in the kx022a_fifo_enable() at the buffer enable path, the
+allocated memory is never freed. Furthermore, the state information and
+previous hardware configuration(s) aren't undone, potentially leaving
+WMI interrupts and buffers enabled, or driver state flags wrong.
 
-Not all TTY drivers guarantee that the minor number is no longer in use
-when registering devices however, something which can lead to a
-use-after-free when closing a TTY (and saving its termios) races with
-re-registration.
+Free the memory and revert the hardware configuration and state flags on
+error path.
 
-Add a new TTY_DRIVER_RESET_SAVED_TERMIOS flag to request that any saved
-termios state is reset on registration and only set it for drivers that
-make sure that the minor number is no longer in use.
-
-Fixes: 93857edd9829 ("tty: reset termios state on device registration")
-Reported-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://lore.kernel.org/20260926184154.3017929-1-nicoyip.dev@gmail.com
-Cc: stable@kernel.org	# 4.12
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260930131845.1809256-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e7123a4dfcd7 ("iio: accel: kionix-kx022a: Refactor driver and add chip_info structure")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/greybus/uart.c  |    3 ++-
- drivers/tty/tty_io.c            |   18 ++++++++++--------
- drivers/usb/class/cdc-acm.c     |    2 +-
- drivers/usb/serial/usb-serial.c |    3 ++-
- include/linux/tty_driver.h      |    6 ++++++
- 5 files changed, 21 insertions(+), 11 deletions(-)
+ drivers/iio/accel/kionix-kx022a.c |   28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
---- a/drivers/staging/greybus/uart.c
-+++ b/drivers/staging/greybus/uart.c
-@@ -948,7 +948,8 @@ static int gb_tty_init(void)
- 	int retval = 0;
+--- a/drivers/iio/accel/kionix-kx022a.c
++++ b/drivers/iio/accel/kionix-kx022a.c
+@@ -980,26 +980,44 @@ static int kx022a_fifo_enable(struct kx0
+ 	guard(mutex)(&data->mutex);
+ 	ret = __kx022a_turn_on_off(data, false);
+ 	if (ret)
+-		return ret;
++		goto err_free_out;
  
- 	gb_tty_driver = tty_alloc_driver(GB_NUM_MINORS, TTY_DRIVER_REAL_RAW |
--					 TTY_DRIVER_DYNAMIC_DEV);
-+					 TTY_DRIVER_DYNAMIC_DEV |
-+					 TTY_DRIVER_RESET_SAVED_TERMIOS);
- 	if (IS_ERR(gb_tty_driver)) {
- 		pr_err("Can not allocate tty driver\n");
- 		retval = -ENOMEM;
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3283,14 +3283,16 @@ struct device *tty_register_device_attr(
- 		goto err_put;
+ 	/* Update watermark to HW */
+ 	ret = kx022a_fifo_set_wmi(data);
+ 	if (ret)
+-		return ret;
++		goto err_turn_on_out;
  
- 	if (!(driver->flags & TTY_DRIVER_DYNAMIC_ALLOC)) {
--		/*
--		 * Free any saved termios data so that the termios state is
--		 * reset when reusing a minor number.
--		 */
--		tp = driver->termios[index];
--		if (tp) {
--			driver->termios[index] = NULL;
--			kfree(tp);
-+		if (driver->flags & TTY_DRIVER_RESET_SAVED_TERMIOS) {
-+			/*
-+			 * Free any saved termios data so that the termios
-+			 * state is reset when reusing a minor number.
-+			 */
-+			tp = driver->termios[index];
-+			if (tp) {
-+				driver->termios[index] = NULL;
-+				kfree(tp);
-+			}
- 		}
+ 	/* Enable buffer */
+ 	ret = regmap_set_bits(data->regmap, data->chip_info->buf_cntl2,
+ 			      KX022A_MASK_BUF_EN);
+ 	if (ret)
+-		return ret;
++		goto err_turn_on_out;
  
- 		retval = tty_cdev_add(driver, devt, index, 1);
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -2145,7 +2145,7 @@ static int __init acm_init(void)
- {
- 	int retval;
- 	acm_tty_driver = tty_alloc_driver(ACM_TTY_MINORS, TTY_DRIVER_REAL_RAW |
--			TTY_DRIVER_DYNAMIC_DEV);
-+			TTY_DRIVER_DYNAMIC_DEV | TTY_DRIVER_RESET_SAVED_TERMIOS);
- 	if (IS_ERR(acm_tty_driver))
- 		return PTR_ERR(acm_tty_driver);
- 	acm_tty_driver->driver_name = "acm",
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -1318,7 +1318,8 @@ static int __init usb_serial_init(void)
- 	int result;
+ 	data->state |= KX022A_STATE_FIFO;
+ 	ret = regmap_set_bits(data->regmap, data->ien_reg,
+ 			      KX022A_MASK_WMI);
+ 	if (ret)
+-		return ret;
++		goto err_buf_disable_out;
  
- 	usb_serial_tty_driver = tty_alloc_driver(USB_SERIAL_TTY_MINORS,
--			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
-+			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV |
-+			TTY_DRIVER_RESET_SAVED_TERMIOS);
- 	if (IS_ERR(usb_serial_tty_driver))
- 		return PTR_ERR(usb_serial_tty_driver);
+-	return __kx022a_turn_on_off(data, true);
++	ret = __kx022a_turn_on_off(data, true);
++	if (ret)
++		goto err_wmi_clear_out;
++
++	return ret;
++
++err_wmi_clear_out:
++	regmap_clear_bits(data->regmap, data->ien_reg,
++			  KX022A_MASK_WMI);
++err_buf_disable_out:
++	regmap_clear_bits(data->regmap, data->chip_info->buf_cntl2,
++			  KX022A_MASK_BUF_EN);
++	data->state &= ~KX022A_STATE_FIFO;
++err_turn_on_out:
++	__kx022a_turn_on_off(data, true);
++err_free_out:
++	kfree(data->fifo_buffer);
++
++	return ret;
+ }
  
---- a/include/linux/tty_driver.h
-+++ b/include/linux/tty_driver.h
-@@ -73,6 +73,11 @@ struct serial_struct;
-  * @TTY_DRIVER_NO_WORKQUEUE:
-  *	Do not create workqueue when tty_register_driver(). Whenever set, flip
-  *	buffer workqueue can be set by tty_port_link_wq() for every port.
-+ *
-+ * @TTY_DRIVER_RESET_SAVED_TERMIOS
-+ *	Reset any saved termios settings on device registration when reusing a
-+ *	minor number. Must only be set by drivers that guarantee that the minor
-+ *	number is no longer in use.
-  */
- enum tty_driver_flag {
- 	TTY_DRIVER_INSTALLED		= BIT(0),
-@@ -84,6 +89,7 @@ enum tty_driver_flag {
- 	TTY_DRIVER_DYNAMIC_ALLOC	= BIT(6),
- 	TTY_DRIVER_UNNUMBERED_NODE	= BIT(7),
- 	TTY_DRIVER_NO_WORKQUEUE		= BIT(8),
-+	TTY_DRIVER_RESET_SAVED_TERMIOS	= BIT(9),
- };
- 
- enum tty_driver_type {
+ static int kx022a_buffer_postenable(struct iio_dev *idev)
 
 
