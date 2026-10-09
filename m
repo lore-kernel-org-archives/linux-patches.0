@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577ED4E532F;
-	Fri,  9 Oct 2026 14:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261F14E56C6;
+	Fri,  9 Oct 2026 14:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555672; cv=none; b=M4YrbMQCBY15Drq2RUrkhAwN3uaQs79NUPBmvbCBteOgGCjb1i8oNuePd4Ha8mWHHZmpu42+ythisseM5PhrIj74sfxzckK/PqElN4vnzIp06pwYosdr3GZQQOAieBnEmXOQKgSHZLMraJpByguOKCrHJS0jlUE0y58ztxum3lI=
+	t=1791555675; cv=none; b=uY86cAA7++yistM6SJCrUQjC8Urw0nYxKS8HUxZnsWfwuXvMqno/vdlaVaQqQR6AChijxIlTfpfhjNB0CMJsM2Z3xk1Dgybg+1PdTGFFxIWa+DMTaQ8GXYJiGoNBjR3BuVmn1L4SxCrfRLjuYkNX6ENUY6D23pcUOK23AFLSisw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555672; c=relaxed/simple;
-	bh=XbLUZ+yF59suHVZCQIZBFpfhhg6JbJ0l7cIOnCxc5Gc=;
+	s=arc-20240116; t=1791555675; c=relaxed/simple;
+	bh=qyEhJzjjcVpQ4tiLH9Dm3UQdeq28wLzAriQLVqkU7SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTgQzRgwRyuzSS1tNUOznO07vsWFTraPtQ1i4EMwLfmDjPcivizkMIzjYVCLp+LY3tB/qpkxw9+qMSCA8KNviBBCI24jQeQxZqwQ1EeVj8v9H6N+znN3Arh22N7e6yN0wUz1G27fhOScxy8/6kiuNgzPjw7DvK1kx0V04UcSyTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x69hSS/d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yij3wFm+d3y5UJu4bs8E4vEua+Kd8Bqsw4tlbMsSM7/R2utHcvVILKcnoZjhKSYKJ6se1Gy+YHZw67fswAL4eLHWcHIDBRE5RbMSxC0m+W/bPXIQ2NDQdpZXnY/wPGsEMRLxvNEhxkakB6LOkTKBDtJe/CzhE7ztXDwq2F4zqks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRTeuPzZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x69hSS/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03BD1F000FF;
-	Fri,  9 Oct 2026 14:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRTeuPzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F02F1F000FF;
+	Fri,  9 Oct 2026 14:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555671;
-	bh=2J3c3AcvIteXx5lEAhxlSK75ks/hkD9NgpICJLWKqnI=;
+	s=korg; t=1791555674;
+	bh=yurmya1p+vXkmtpUynWvRi7brYf5+QNwwrlTRXV7FVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x69hSS/d8XIjrd05jAQy2KH22ePaewQO2Oe619xHh0k9Dp0VQTa5Fu7MSucxn+Xs4
-	 k7Rb1+2PH3gDPHCgWBC0S938kC2F9TZ8qvalEv65lOJ1ksRtpQTQu7n9egpj3B4Fh1
-	 wXezn/urr81yFJECxZTmPMC743nv+OJN5XEoiGe8=
+	b=sRTeuPzZ3fdLzkEW97qOAe7pWigWbzd8kbZ0Z5tpAwEHA9vcQv4kMHn7yCHrYomWr
+	 oJAGthdut1C+3f4c0ELX7X2N5ji9KM33UN0fxeYfpzw1ml1PitMAwzW2FZ7I06AABa
+	 4EF5LZZRBKYjjjCuhUP+4cgs/C4f2Qqmkp40nz2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Anirudh Virdi <avirdi@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/403] net/mlx5: Fix slab-out-of-bounds when handling team device events
-Date: Fri,  9 Oct 2026 16:07:38 +0200
-Message-ID: <20261009140954.356523584@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Subject: [PATCH 7.2 020/428] crypto: x86/aes-gcm - fix always true check for last AAD segment
+Date: Fri,  9 Oct 2026 16:05:57 +0200
+Message-ID: <20261009140946.503095071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +46,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anirudh Virdi <avirdi@redhat.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit 04c824940d52871c49866a4ac67b504146f7cf35 ]
+commit 226154ea87952ad7141ce2dcf52a6c2edd71b8fe upstream.
 
-The mlx5_handle_changeupper_event() and mlx5_handle_changeinfodata_event()
-functions check for LAG masters (which includes both bonding and team
-devices) but only call bonding-specific APIs. When processing team device
-events, calling bond_slave_get_rcu() and bond_is_slave_inactive() on
-team_port structures causes KASAN to detect an out-of-bounds memory access
-since team_port is smaller than bond slave.
+In gcm_process_assoc(), a segment that is not the last one must have its
+length rounded down to a multiple of 16 bytes, as required by the
+assembly. The check for a non-last segment is `if (unlikely(assoclen))
+/* Not the last segment yet? */` where assoclen is the number of AAD
+bytes remaining after the current segment.
 
-Fix this by wrapping the bond-specific API calls with a check for bonding
-devices. This allows the function to still process LAG events for both
-bonding and teams but only calls bond-specific functions when dealing with
-actual bonding devices.
+Since the conversion to the new scatterwalk API, assoclen is decremented
+at the end of the loop body rather than the beginning, so it still
+includes the current segment when the check executes, making the check
+always true.
 
-For mlx5_handle_changeinfodata_event(), keep the explicit bond check as
-mlx5 doesn't handle state information for team ports anyway.
+As a result the last segment was rounded down as well, causing some
+avoidable extra work: an additional memcpy into the temporary buffer and
+an additional call into the assembly after the loop. The GCM
+authentication tag is unaffected either way, so the self-tests pass and
+this went unnoticed. It is purely an efficiency issue rather than a
+correctness one.
 
-Tested with Mellanox ConnectX-5 on Linux 7.2.0-rc6:
-- Bonding: PASS (no regressions)
-- Team device: PASS (no KASAN errors)
+Fix this by moving the assoclen decrement back to the beginning of the
+loop body.
 
-Fixes: 54493a08e21f ("net/mlx5: Lag, record inactive state of bond device")
-Suggested-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Anirudh Virdi <avirdi@redhat.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20260924064244.94045-1-avirdi@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e9787deff49e ("crypto: x86/aes-gcm - use the new scatterwalk functions")
+Cc: stable@vger.kernel.org
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Link: https://patch.msgid.link/20260926145903.6061-1-raizudeen.kerneldev@gmail.com
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/x86/crypto/aesni-intel_glue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index d20f9d3e30c79..353101dee4dcf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -1333,9 +1333,11 @@ static int mlx5_handle_changeupper_event(struct mlx5_lag *ldev,
- 			}
+--- a/arch/x86/crypto/aesni-intel_glue.c
++++ b/arch/x86/crypto/aesni-intel_glue.c
+@@ -1293,6 +1293,7 @@ static void gcm_process_assoc(const stru
+ 		unsigned int len;
+ 		const u8 *src = walk.addr;
+ 
++		assoclen -= orig_len_this_step;
+ 		if (unlikely(pos)) {
+ 			len = min(len_this_step, 16 - pos);
+ 			memcpy(&buf[pos], src, len);
+@@ -1320,7 +1321,6 @@ next:
+ 			kernel_fpu_end();
+ 			kernel_fpu_begin();
  		}
- 		if (i < MLX5_MAX_PORTS) {
--			slave = bond_slave_get_rcu(ndev_tmp);
--			if (slave)
--				has_inactive |= bond_is_slave_inactive(slave);
-+			if (netif_is_bond_master(upper)) {
-+				slave = bond_slave_get_rcu(ndev_tmp);
-+				if (slave)
-+					has_inactive |= bond_is_slave_inactive(slave);
-+			}
- 			bond_status |= (1 << idx);
- 		}
- 
-@@ -1419,7 +1421,7 @@ static int mlx5_handle_changeinfodata_event(struct mlx5_lag *ldev,
- 	bool has_inactive = 0;
- 	int idx;
- 
--	if (!netif_is_lag_master(ndev))
-+	if (!netif_is_bond_master(ndev))
- 		return 0;
- 
- 	rcu_read_lock();
--- 
-2.53.0
-
+-		assoclen -= orig_len_this_step;
+ 	}
+ 	if (unlikely(pos))
+ 		aes_gcm_aad_update(key, ghash_acc, buf, pos, flags);
 
 
