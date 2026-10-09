@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CD1470450;
-	Fri,  9 Oct 2026 14:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731E0470450;
+	Fri,  9 Oct 2026 14:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556850; cv=none; b=kUUCdzQJ4B6ZtAGIZWvyOWTcnSyzmIT7vr7PtCpGJ7vvyMgY3DkwOYz1w6lYDIEAeLB7LKHuCyzYyTdLmSdTb4X+u8/+d8vvtGAkqLT4ZEP1wC4eG6+3V2qzBzzsmgdLHIXZIEA08PDPvUQDmAOSLbc2o2JDeksECNNm7YCgSp8=
+	t=1791556853; cv=none; b=AGSHm1c1OZ/BuGrqQfiaYf/v9UsUAKUJcK0Qndt6ywaH8uYNLuUXhDnXYZgGl/aSk+qlCRT4s4QtKbQ8EeZYP0cQnI1PA8fH1qQGgqzwF+/CH9O1GK5Fp2fMxVQL2vZrRTCp5MuJJDpRw0pZ9WEdL1y6437xOmV6tabA+v4MmQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556850; c=relaxed/simple;
-	bh=zESyKwx94RfVGR23b8a1cVnVVlHyR278s+4nMEmbq64=;
+	s=arc-20240116; t=1791556853; c=relaxed/simple;
+	bh=7G74qGV04+Fzz675bV8zAMwdM19Qou/t1vgl2WPECek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ix18ppHjsEPQLtJvjGIsWgGwZWdMtccsquZVNqPSdn7bjFAun8bs8q/yZWFLXJhGlRkGPjhC1IWpLur731NWfDRyIxIf2qBPMS6lDPzMbjzhwMmQQbUWkj9ku5k+68Y25iXW6nYi5SID8N8GTI+qUBU+CJ+i8reG3wYmlvIg98Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX5e4LeT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mEKupUmfRT3BfIsn7cDAEw15rGTmD47nwE5CVoudnRKXP/cvu9SxY0K6xOu2Ra5V/f1RetzWBxitLp2wVPsRWok/HPNdPsyT16sPglXUXmc1/mR3pNNYL4w0cnGK4ynIZo2IfAvTsndSAj2cxfD3JEKZn4HsbSO+7e7M6xFGoI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXoljk6U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX5e4LeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8D11F000FF;
-	Fri,  9 Oct 2026 14:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXoljk6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69C21F000FF;
+	Fri,  9 Oct 2026 14:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556849;
-	bh=gePhDVg88QxLjNy8p0PnwLTyzXnVchhmpGY3Xx471i0=;
+	s=korg; t=1791556852;
+	bh=Du0usr3M7LfRj8VOssb+k5gZR7AAuTG61HCCl7e97pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CX5e4LeTGi6K1tbcTk8+nxPNUuOVqHmAQ6WLo6evQqvgSPu1NwnlQ1o/gFVj7bEJh
-	 7YxkHQq5P7tAankQr+tZ87dyyy7yjEEPqRDzCQyswIPYPkvAKfgT3UndGzdYO+swGB
-	 GsUBxLcvFmqTJmaZF49sXdvGkgB1j1zXQGL+myK0=
+	b=gXoljk6UuvFNt6hWjGz0F1z1h5A2YhB6x1NBFr3g9WYTR2ckCdpTd9Y97NL6oDcRh
+	 aZqVbiMCLCdr3oRYqpc8Y5BrBvN+wNZTdvAhXy/ITIsofAJ4gZMO4SpsZQOovrripi
+	 uwO+xEtckbUJz8wVVzd72efb6orowzlAibUIbct8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9f57c1b2792029198fcf@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Tony Lindgren <tony.lindgren@linux.intel.com>
-Subject: [PATCH 7.2 252/428] serial: core: fix NULL pointer dereference in serial_core_unregister_port()
-Date: Fri,  9 Oct 2026 16:09:49 +0200
-Message-ID: <20261009140951.640530062@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 303/403] iio: adc: ade9000: fix NULL pointer dereference in clkout registration
+Date: Fri,  9 Oct 2026 16:11:04 +0200
+Message-ID: <20261009140959.301278075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 499485a67fbacf4d9afbdb43522388c64f853428 upstream.
+commit 49ee1c6a3ebda6b7de06b2961b0e09c1c3fe536a upstream.
 
-port->port_dev is NULL when no port device is installed: it is cleared
-on teardown, and never set if registration failed before
-serial_core_port_device_add().  serial_core_unregister_port() passes it
-straight to serial_core_get_ctrl_dev(), which dereferences it:
+ade9000_setup_clkout() passes NULL as the register address when
+registering a divider clock. During clock registration, the common
+clock framework calls clk_divider_recalc_rate(), which dereferences
+the address through readl(). As a result, probing an ADE9000 configured
+as a clock provider with an external input clock crashes.
 
-  KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
-  RIP: serial_core_unregister_port
-  Call Trace:
-   serial8250_unregister_port
-   serial8250_remove
-   unbind_store
+CLKOUT passes CLKIN through without changing its rate. Register it as
+a 1:1 fixed-factor clock, which does not require register access.
 
-Return early when there is no port device, and read port->port_dev
-under port_mutex.
+This change does not affect the configuration using the internal clock,
+for which the driver does not register a clock provider.
 
-Also clear port->port_dev on the serial_core_register_port() error
-path, where the port device has already been removed.
-
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Reported-by: syzbot+9f57c1b2792029198fcf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9f57c1b2792029198fcf
-Cc: stable@kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=9f57c1b2792029198fcf
-Link: https://lore.kernel.org/all/20260826073237.1377668-1-linuxoid@gmail.com/
-Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
-Link: https://patch.msgid.link/20260826084654.1392851-1-linuxoid@gmail.com
+Fixes: 81de7b4619fc ("iio: adc: add ade9000 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ade9000.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3336,6 +3336,7 @@ int serial_core_register_port(struct uar
+--- a/drivers/iio/adc/ade9000.c
++++ b/drivers/iio/adc/ade9000.c
+@@ -1652,8 +1652,9 @@ static int ade9000_setup_clkout(struct d
+ 		return 0;
  
- err_unregister_port_dev:
- 	serial_base_port_device_remove(port->port_dev);
-+	port->port_dev = NULL;
+ 	/* CLKOUT passes through CLKIN with divider of 1 */
+-	clkout_hw = devm_clk_hw_register_divider(dev, "clkout", __clk_get_name(st->clkin),
+-						 CLK_SET_RATE_PARENT, NULL, 0, 1, 0, NULL);
++	clkout_hw = devm_clk_hw_register_fixed_factor(dev, "clkout",
++						      __clk_get_name(st->clkin),
++						      CLK_SET_RATE_PARENT, 1, 1);
+ 	if (IS_ERR(clkout_hw))
+ 		return dev_err_probe(dev, PTR_ERR(clkout_hw), "Failed to register clkout");
  
- err_unregister_ctrl_dev:
- 	serial_base_ctrl_device_remove(new_ctrl_dev);
-@@ -3350,12 +3351,24 @@ err_unregister_ctrl_dev:
- void serial_core_unregister_port(struct uart_driver *drv, struct uart_port *port)
- {
- 	struct device *phys_dev = port->dev;
--	struct serial_port_device *port_dev = port->port_dev;
--	struct serial_ctrl_device *ctrl_dev = serial_core_get_ctrl_dev(port_dev);
-+	struct serial_port_device *port_dev;
-+	struct serial_ctrl_device *ctrl_dev;
- 	int ctrl_id = port->ctrl_id;
- 
- 	guard(mutex)(&port_mutex);
- 
-+	/*
-+	 * A NULL port device means there is no registered port device to
-+	 * remove: serial_core_remove_one_port() clears port_dev on
-+	 * teardown, and it is never set if registration failed before
-+	 * serial_core_port_device_add().
-+	 */
-+	port_dev = port->port_dev;
-+	if (!port_dev)
-+		return;
-+
-+	ctrl_dev = serial_core_get_ctrl_dev(port_dev);
-+
- 	port->flags |= UPF_DEAD;
- 
- 	serial_core_remove_one_port(drv, port);
 
 
