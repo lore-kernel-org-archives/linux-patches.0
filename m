@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8934E36F8;
-	Fri,  9 Oct 2026 14:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DAF4E0B83;
+	Fri,  9 Oct 2026 14:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557536; cv=none; b=kumfzrXHNh8Ke41M9sJVw+zF+HZgmqRaTRaQPCVvq0hO9WyOAatjbn9hJOICSWOkYPKFi+Jb1cx+Jz4gnLuLxKzq3kNsxl3VzN0rVL6WV5Mb94jOXECd1lIRbjlLc0ZHEfTHdd8x+6XCVvw/PcocATq5FepCVLVbkgfh/bV9rZ4=
+	t=1791557539; cv=none; b=KUXiA7eu5KgymNfUn6zZE3pudCBXHBei/rBwboxBNAJK81HywmKsMszwTL7FsHRIEnBJglU6tNcPZooGx1u/5ICxVVpS3/wUjZvqGGsu9ONQemYzFArklHS8Rlh7Yb286U8/I9Z4uP5yBZ6n5kg++IIdNbA1y47YN6m7GfV5Q90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557536; c=relaxed/simple;
-	bh=4aPXEXR81kbSA6k0RxfDF0y0GDcfPwc4F1OhcoFqknU=;
+	s=arc-20240116; t=1791557539; c=relaxed/simple;
+	bh=bhY6PixQBI7UF2woXOL+7tpaCC4ZldWp/1YOV5fARuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogSijxE8YqaCQggDyTTT1+5dNBW/oLhPzVDvbiG2YCqll4EGj5dk0ojROenIuMRX4GO7PTnCfJ47H6cdDAcoSaKxbrGcHbXjBFo2VdLhwiLO5SdqTZhk+cUgmOgCwIOLHgAyNVbDSJzHyQ7205KZVHbcKudfWRBoAJPbbvuqczM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JieZbcON; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVNTwa9+OK4QSATIFRoJM0Sq2eU9KiSKjY7PFN6H5FuT4dJXiWPSiV64exymwqGYWm0afhx4QxG9O3jVluKNaidMpuNOlHbkXOumwIDydonWTVLeEuZIkRNHjBZN3NsJZYqgl2t2FLizikdya48dA2u+hIPRM6dNPet7J/oj7g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQqGMA/n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JieZbcON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A841D1F000FF;
-	Fri,  9 Oct 2026 14:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQqGMA/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DDE1F000FF;
+	Fri,  9 Oct 2026 14:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557535;
-	bh=1KsznxGQNpNGzTUY2KrTAxeoJBLpFEIauj4Hl7i2aXo=;
+	s=korg; t=1791557538;
+	bh=LsrYepROfzAJ0O6XlnA8S/EzrtCAHyNYcEMCBQzJLgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JieZbcONUe0uzL7RBrWF3T9UHX6oHhxAcfzEY9cu9/U5AKUaPU1L08jZall33B46Z
-	 LoKteWqxzJfdope05bxZANRYZnFxyjw6EUaqAV6XhVnf2hTzPEVyHzl49DyTgJURoO
-	 hfoMwIUMtAmJ7oIZ1TxT+WQ7dzPSuR3nMj8Sh7F8=
+	b=jQqGMA/nu2MkYkIbGoWqeit3Pc5WVJAZkPFsCQ3GTdOOkn/QGtVB5Lr7QAm2rXdGz
+	 1WFznaKnuT6g7Nd5Pjtc35daSOyFAJX6XNtDZyX4FRERgWjLpyX3llPsDU9dsrT6Fz
+	 7DT59891wxKfE2yarNlCrb1TaIt7gyTIIP60dFkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.2 354/428] thunderbolt: Tear down inactive DP tunnels when the domain is stopped
-Date: Fri,  9 Oct 2026 16:11:31 +0200
-Message-ID: <20261009140953.943841133@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 398/403] xen/netfront: drop RX packets with a short Ethernet header
+Date: Fri,  9 Oct 2026 16:12:39 +0200
+Message-ID: <20261009141001.667358831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +46,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 0b457c6733f73421a3fb03786f13d67c618b5119 upstream.
+commit 089e58805c452e52179482b1025a8e309a57f801 upstream.
 
-tb_stop() only tears down DMA tunnels so a DP tunnel that is still
-waiting for dprx_work to complete keeps that work queued while the
-routers are removed and the control channel is stopped. The work only
-stops once the DPRX timeout has passed and because it requeues itself
-until then the flush_workqueue() in tb_domain_remove() won't wait for its
-final run. The callback then runs against a domain that is already torn
-down. A reference to that domain is kept so the completion waiting for
-that domain to disappear in unbind will block until the timeout is
-eventually reached.
+handle_incoming_queue() pulls pull_to bytes into the head before
+calling eth_type_trans().  pull_to is the length of the first RX slot,
+capped at RX_COPY_THRESHOLD, and that length comes from the backend.
+Nothing checks it against ETH_HLEN.
 
-Tear down DP tunnels that are not active yet as well which also cancels
-that work. Tunnels for displays that are already alive are untouched and
-keep working.
+If the first slot is shorter than ETH_HLEN and more slots follow, the
+head ends up shorter than an Ethernet header while skb->len is longer,
+and eth_type_trans() BUG()s in __skb_pull().  If the whole packet is
+shorter than ETH_HLEN, eth_type_trans() reads the header past the end
+of the data instead.
 
-Fixes: d6d458d42e1e ("thunderbolt: Handle DisplayPort tunnel activation asynchronously")
+Pull at least ETH_HLEN, and drop the packet if that fails, which also
+drops packets too short to hold an Ethernet header.  This also checks
+the return value of the pull, which was ignored.
+
+Fixes: 0d160211965b ("xen: add virtual network device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-short-head-v1-1-12d7113a7e4e@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/xen-netfront.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2950,11 +2950,12 @@ static void tb_stop(struct tb *tb)
- 	/* tunnels are only present after everything has been initialized */
- 	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list) {
- 		/*
--		 * DMA tunnels require the driver to be functional so we
--		 * tear them down. Other protocol tunnels can be left
--		 * intact.
-+		 * DMA tunnels and DP tunnels which are not yet active require
-+		 * the driver to be functional so we tear them down.
-+		 * Other protocol tunnels can be left intact.
- 		 */
--		if (tb_tunnel_is_dma(tunnel))
-+		if (tb_tunnel_is_dma(tunnel) ||
-+		    (tb_tunnel_is_dp(tunnel) && !tb_tunnel_is_active(tunnel)))
- 			tb_tunnel_deactivate(tunnel);
- 		tb_tunnel_put(tunnel);
- 	}
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1234,8 +1234,16 @@ static int handle_incoming_queue(struct
+ 	while ((skb = __skb_dequeue(rxq)) != NULL) {
+ 		int pull_to = NETFRONT_SKB_CB(skb)->pull_to;
+ 
+-		if (pull_to > skb_headlen(skb))
+-			__pskb_pull_tail(skb, pull_to - skb_headlen(skb));
++		/* pull_to comes from the first slot's length, which the
++		 * backend controls.  Make sure the head holds at least an
++		 * Ethernet header for eth_type_trans().
++		 */
++		if (!pskb_may_pull(skb, max(pull_to, ETH_HLEN))) {
++			kfree_skb(skb);
++			packets_dropped++;
++			queue->info->netdev->stats.rx_errors++;
++			continue;
++		}
+ 
+ 		/* Ethernet work: Delayed to here as it peeks the header. */
+ 		skb->protocol = eth_type_trans(skb, queue->info->netdev);
 
 
