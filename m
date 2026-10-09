@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D27F4DBD62;
-	Fri,  9 Oct 2026 14:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54142230BDB;
+	Fri,  9 Oct 2026 14:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555582; cv=none; b=i7SM+1HIj4QNwU4H4/6O+rPDVO2Hud3qL26LWBsuT7/XVgLGWo3+PjzqUPkR4Cj+xYIGBEHJAx2wT8WQeXWUKS4OjX+Vaii/3oMo0wDNffB/dyWY6zyA+B2aAjicmGvYUWtgmzJBLwadD5mQxKEsPTw6Kx+DOceZWHfBGgUrqes=
+	t=1791555584; cv=none; b=vBJPv2LKHjXkrpGWJFcxsxPukTj0dFg/fg1gh5aYEZr7kHo/NhsZQQgQU+rZyK8dL1g8WB1SsH1tIMeH8NLIwpkm96dcljFDzPp0Fbv0s80gXYohU0EHEFaxnN9v/B2T3FJd6KHmEKoZZ6CsAI2i3N9IxcNKh4HiK+Frd1KWqxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555582; c=relaxed/simple;
-	bh=TY1iru7K9EWdNNruDoAm5kHx+8GacN9bkcHoKpqh6vo=;
+	s=arc-20240116; t=1791555584; c=relaxed/simple;
+	bh=lHdRYCQ9/z6rA1CbFuItqSOXK8J9hvysdwwcYB/VkiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bW74zQX42jutY798IsK/UQJ92TLJPE9BMah29GqCj9C2DE/JEdTbv3X5YW4v3WsuUeS0lH9ZpWPrgIDKSG5N9z7Lkm/hVuBYCm3ND39ClMRuNk2HPmF5gQDeOnbCwHlmCfF55+mLLX3cw1z7cIk/82NzBBIkIGmws7ycEZSZtps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ts0lvagJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mxaQwilvBBsJ1vYQQWBCAOCR0ePmg/e39x1zNMuweIp1+UQtnP2tGYI/eF8PJeeXDnP1SEdfePksWrwAy+e2YGbV7rQQIE7DhHULRvTwz2HBGU1u43nqlkbjp1hTufPerDJqkdV3PCaCP8N723KreJ6f4qnhEBXGJPOp5LF86c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnTt60Br; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ts0lvagJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F28C1F00898;
-	Fri,  9 Oct 2026 14:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnTt60Br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542EE1F00893;
+	Fri,  9 Oct 2026 14:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555580;
-	bh=BEtWDSaiiiL1mKefJ00XGb5K/3emS1fOnGv3NuMhPEk=;
+	s=korg; t=1791555582;
+	bh=2N/NnupTdSLNU3Au2IsCCxFA7/vSkIKq+RZQjn9LMmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ts0lvagJm3M1V8oQYyW8l0VumF2D6sy/ovME/vz5kpEX/+n0Mi8OUBVYnKMbdTLcH
-	 MaTjJ28VOTogbTMbOye+ZcBr0xyncYV73Uxhuo3Uljf5dR6poDNiughhT1pGQ5LhNS
-	 VLAodnFcqTHl2lS4udyrSKLXR2Pk1hwLdmmvuQ7A=
+	b=VnTt60BrjY6ZN9gUyeYbdOd+C91rLhj4UNOHaCr8N51Nc/k/fnU+nELU5b+/17UxX
+	 h96Nbc2h6cmHYbeeDdm6ITn9dgh0YLsGL0HEZZkZhArZlkVWUw8OGqP2RI3XqMlAwk
+	 xzl8nRDP+mb/gZOz7WXWwEi1NqOC/CG8M4hf4/g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/403] wifi: mac80211: drop oversized fragments to avoid extra_len overflow
-Date: Fri,  9 Oct 2026 16:07:10 +0200
-Message-ID: <20261009140953.709694835@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 7.2 032/428] of/overlay: put property on deadprops only after changeset add succeeds
+Date: Fri,  9 Oct 2026 16:06:09 +0200
+Message-ID: <20261009140946.788698292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +46,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 5e4f3509793b4db2c0835340224743db680e861f ]
+commit 814f2da6995772c07a7c9c2cc6028b6e3f3ecc9c upstream.
 
-In ieee80211_rx_h_defragment(), fragment payloads are accumulated into
-entry->extra_len as subsequent fragments arrive:
+add_changeset_property() links a new property of a not-yet-live
+target node into the node's deadprops list before handing it to
+of_changeset_add_property(). If that fails, the error path frees the
+property but leaves the freed pointer linked in deadprops, and
+of_node_release() frees it a second time when the aborted overlay's
+node is released.
 
-        entry->extra_len += rx->skb->len;
+Record the changeset entry first and link the property into deadprops
+only on success. of_changeset_add_property() never looks at the
+node's property lists, so the order of the two steps is otherwise
+immaterial, and the error path frees a property that nothing
+references.
 
-When the final fragment arrives, the head fragment is dequeued, and
-pskb_expand_head() is called with entry->extra_len to ensure sufficient
-tailroom for all queued fragments before copying:
-
-        if (skb_tailroom(rx->skb) < entry->extra_len) {
-                if (unlikely(pskb_expand_head(rx->skb, 0, entry->extra_len,
-                                              GFP_ATOMIC))) {
-                        ...
-                }
-        }
-        while ((skb = __skb_dequeue(&entry->skb_list))) {
-                skb_put_data(rx->skb, skb->data, skb->len);
-                dev_kfree_skb(skb);
-        }
-
-In commit 69f132236827 ("mac80211: shrink struct
-ieee80211_fragment_entry"), entry->extra_len was narrowed from unsigned
-int to u16 in order to reduce structure memory footprint.
-
-However, an IEEE 802.11 frame sequence can contain up to 16 fragments
-(frag numbers 0..15). If a sequence of large fragments arrives (e.g. from
-a malicious peer or rogue AP), the sum of fragment lengths can exceed
-65535 bytes (for example, 15 fragments of 4400 bytes total 66000 bytes).
-Because extra_len is a u16, this addition overflows and wraps around
-modulo 65536 (e.g. 66000 wraps to 464).
-
-Consequently, pskb_expand_head() allocates only the truncated amount of
-tailroom (or is skipped entirely if the head fragment already has >= 464
-bytes of tailroom). When skb_put_data() subsequently iterates through the
-queued skb list, it appends the full payload into the undersized buffer,
-causing skb_put() to trigger skb_over_panic() and crash the kernel in
-softirq context.
-
-A legitimate MSDU in IEEE 802.11 is at most 2304 bytes (or up to 7935/11454
-bytes for A-MSDU, which is not fragmented), well below U16_MAX.
-
-Fix this without increasing the size of struct ieee80211_fragment_entry by
-checking whether adding the incoming fragment length would exceed U16_MAX.
-If so, purge the queued fragments and drop the frame.
-
-Fixes: 69f132236827 ("mac80211: shrink struct ieee80211_fragment_entry")
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Link: https://patch.msgid.link/20260918034004.85078-2-ndaugoing@gmail.com
-[assign a separate drop reason]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f96278810150 ("of: overlay: set node fields from properties when add new overlay node")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5 [Claude Code]
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-4-02754604805a@nexthop.ai
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/drop.h | 1 +
- net/mac80211/rx.c   | 6 ++++++
- 2 files changed, 7 insertions(+)
+ drivers/of/overlay.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/drop.h b/net/mac80211/drop.h
-index f06a8aa905c53..f433ee17cce51 100644
---- a/net/mac80211/drop.h
-+++ b/net/mac80211/drop.h
-@@ -108,6 +108,7 @@ typedef unsigned int __bitwise ieee80211_rx_result;
- 	R(RX_DROP_U_UNHANDLED_PREQ)		\
- 	R(RX_DROP_U_UNHANDLED_MGMT_STYPE)	\
- 	R(RX_DROP_U_NO_LINK)			\
-+	R(RX_DROP_U_DEFRAG_OVERFLOW)		\
- /* this line for the trailing \ - add before this */
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -358,12 +358,13 @@ static int add_changeset_property(struct
+ 		return -ENOMEM;
  
- /* having two enums allows for checking ieee80211_rx_result use with sparse */
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 160ccb0bdf27d..3a9d7020d8d53 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -2392,6 +2392,12 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
- 	}
- 
- 	skb_pull(rx->skb, ieee80211_hdrlen(fc));
-+	if (unlikely((u32)entry->extra_len + rx->skb->len > U16_MAX)) {
-+		I802_DEBUG_INC(rx->local->rx_handlers_drop_defrag);
-+		__skb_queue_purge(&entry->skb_list);
-+		return RX_DROP_U_DEFRAG_OVERFLOW;
-+	}
-+
- 	__skb_queue_tail(&entry->skb_list, rx->skb);
- 	entry->last_frag = frag;
- 	entry->extra_len += rx->skb->len;
--- 
-2.53.0
-
+ 	if (!prop) {
+-		if (!target->in_livetree) {
++		ret = of_changeset_add_property(&ovcs->cset, target->np,
++						new_prop);
++		/* the detached node owns the property until the apply */
++		if (!ret && !target->in_livetree) {
+ 			new_prop->next = target->np->deadprops;
+ 			target->np->deadprops = new_prop;
+ 		}
+-		ret = of_changeset_add_property(&ovcs->cset, target->np,
+-						new_prop);
+ 	} else {
+ 		ret = of_changeset_update_property(&ovcs->cset, target->np,
+ 						   new_prop);
 
 
