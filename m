@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58022DEA6B;
-	Fri,  9 Oct 2026 14:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B818342173;
+	Fri,  9 Oct 2026 14:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557632; cv=none; b=ssEgWWmb3o8QqD9Gn/nvnv83A0IuflI32KYzep0Nth0yAqqzExb92R2GhtqSNj13k1ZVZo+Hg2TuluxjRS2nDdS3u8uhU8ToI1HpEpMsRf7HvluyDJ+ftcmU+px/8fXyTqGycavOktteuP0eMSIOswzA7pMRloPVpIUL84jDB84=
+	t=1791557635; cv=none; b=LqM6NJl8v5NtNcJl8mK2mZHKrfNRZpR6O16SlMMozDzWws6BCoJbNPxWpDP+CTEMef9nIMrV9JbxWtQauc6e+tY7yxP8J309KLmU3vqBn6TDIJJ5PEdyGB1X3DMQkW9tTLqcQN+22wbfE6iMQirPmf7lieJ/lw3m/EFAtt5Gk9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557632; c=relaxed/simple;
-	bh=OmZwVvcdr2aLv97idAVmyuANkCsjyLCjg+amNKethUs=;
+	s=arc-20240116; t=1791557635; c=relaxed/simple;
+	bh=C4DQOAY59wd32F2qHX+pTkn4Td0cyoyVYZG116RK6cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2Q8FXwxIuAmlzu8iCaWCLKBW0Wy2CujJJg9Rj4EFJD1uRUJ11iBKXQTbpjx/BUEt1uUet90NUNN45Kko0v+IJ8gPQVGglYOldlcsgjz/KsS6o7O72UyqKUDAOcA6gmyjV+DHyKPctiy8uGPl0NCqA56N/ErIMBqnvZX7jOS/II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y20R0sO3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KLCcIrfJEHMWIfnmG+6CxxknTtD0sUJ+SljkVQQoWA8IKb5V3dpz4CKTXVVxN8nfp9DzEh69AH+ydwVPv0BQ1bwGXvpxPG2LdoRQx+ociUZctNooEeIxWWpmPkVxwMCKV5bug+M1WsqvEiUAyyhEapTJR6sXBOicypd8p8GF8AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRAn78L7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y20R0sO3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E371F000FF;
-	Fri,  9 Oct 2026 14:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRAn78L7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020BD1F000FF;
+	Fri,  9 Oct 2026 14:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557631;
-	bh=LFDzaJT29M6HxDJOQ7FGZrueAUAUvHeYFMFfN2pFSGE=;
+	s=korg; t=1791557634;
+	bh=EZ8fCTz6sETx+q1zqxZibFvZO+J+IlE/HPi60g/38Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y20R0sO3HFcZ9i4xGabu490KgOsfck+6IuFgpPMf7RKR8AIEcsWQ57msmk2Ti6aG9
-	 Ls9DEDQV/DReSOsQc7v3gGhhzyMJToJghcoUlEqySD2TE0LSz5X+IrNMZJYhE935I4
-	 EIUodG0lq+dKzss1kRvy7kmNZ837P/EwZr3RQxbs=
+	b=nRAn78L7v/hClzR1+9h5ov1NVT41VTCHNHU7fpyT5vFSgxyeATthbwo2B/54D+JRJ
+	 nGXESMdsjReJFxl06NOtFQDwgOuTlmL0DIvkgPFaQSh3/u38p3VYy3GRH1xErFU0bP
+	 epmTj8wRuG8XSU+dgLwL7GH8jzBY9LJSZYQW+OsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilberto Conde <gilbertorconde@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 426/428] net: usb: qmi_wwan: add Quectel EG120K-EA
-Date: Fri,  9 Oct 2026 16:12:43 +0200
-Message-ID: <20261009140955.605266248@linuxfoundation.org>
+Subject: [PATCH 7.2 427/428] xen/netfront: drop RX packets with a short Ethernet header
+Date: Fri,  9 Oct 2026 16:12:44 +0200
+Message-ID: <20261009140955.629064736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,68 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gilberto Conde <gilbertorconde@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 0f2fd31f63c65c409bd336af3a42d478a9207c1f upstream.
+commit 089e58805c452e52179482b1025a8e309a57f801 upstream.
 
-Add support for the Quectel EG120K-EA LTE Cat.12 module (USB ID
-2c7c:030b). Its QMI interface (interface 4) uses class/subclass/protocol
-ff/ff/ff like the other recent Quectel modules, so match it the same way.
+handle_incoming_queue() pulls pull_to bytes into the head before
+calling eth_type_trans().  pull_to is the length of the first RX slot,
+capped at RX_COPY_THRESHOLD, and that length comes from the backend.
+Nothing checks it against ETH_HLEN.
 
-The product ID is shared with the EM060K, which the option driver
-already knows and uses to claim the serial interfaces. Without a
-qmi_wwan entry the data interface is left unbound.
+If the first slot is shorter than ETH_HLEN and more slots follow, the
+head ends up shorter than an Ethernet header while skb->len is longer,
+and eth_type_trans() BUG()s in __skb_pull().  If the whole packet is
+shorter than ETH_HLEN, eth_type_trans() reads the header past the end
+of the data instead.
 
-Tested on a GL.iNet GL-X2000, where the module is soldered down and
-enumerates at SuperSpeed: cdc-wdm0 and wwan0 appear and ModemManager
-brings up a data session.
+Pull at least ETH_HLEN, and drop the packet if that fails, which also
+drops packets too short to hold an Ethernet header.  This also checks
+the return value of the pull, which was ignored.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2c7c ProdID=030b Rev= 5.04
-S:  Manufacturer=Quectel
-S:  Product=EG120K-EA
-S:  SerialNumber=45546267
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#=12 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
-Link: https://patch.msgid.link/20260921093426.2870266-1-gilbertorconde@gmail.com
+Fixes: 0d160211965b ("xen: add virtual network device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-short-head-v1-1-12d7113a7e4e@toxicpanda.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/xen-netfront.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1085,6 +1085,7 @@ static const struct usb_device_id produc
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
-+	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x030b)},	/* Quectel EM060K/EG120K-EA */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0620)},	/* Quectel EM160R-GL */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0800)},	/* Quectel RM500Q-GL */
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1234,8 +1234,16 @@ static int handle_incoming_queue(struct
+ 	while ((skb = __skb_dequeue(rxq)) != NULL) {
+ 		int pull_to = NETFRONT_SKB_CB(skb)->pull_to;
+ 
+-		if (pull_to > skb_headlen(skb))
+-			__pskb_pull_tail(skb, pull_to - skb_headlen(skb));
++		/* pull_to comes from the first slot's length, which the
++		 * backend controls.  Make sure the head holds at least an
++		 * Ethernet header for eth_type_trans().
++		 */
++		if (!pskb_may_pull(skb, max(pull_to, ETH_HLEN))) {
++			kfree_skb(skb);
++			packets_dropped++;
++			queue->info->netdev->stats.rx_errors++;
++			continue;
++		}
+ 
+ 		/* Ethernet work: Delayed to here as it peeks the header. */
+ 		skb->protocol = eth_type_trans(skb, queue->info->netdev);
 
 
