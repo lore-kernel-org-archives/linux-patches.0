@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9153B19DE;
-	Fri,  9 Oct 2026 14:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6F9459AD2;
+	Fri,  9 Oct 2026 14:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556154; cv=none; b=Edmn6PON1A53RetbGcpDyBhOVyQNjFbUicl9I6OAzHkWq7kjPIckZrMOIkz3XQgCmwJEaCfd0vRWauZNL762TVxoHkWnal0u41ikKgMfyTUtg6bPnDCxUaAFKu+vNZxt8jrO6SJ5kL3k5ZEEkTepvq7OzEycB8szoMe38A/uqTI=
+	t=1791556156; cv=none; b=sfaPd/YWQzVcaJvD0uhFu4Djm+jc4KunFc+wJqpjCAsACTFoDd6cHlU9zGo2olduYW2/VLt9y+4fKYapkV/BIP3NcaikpJzDKz7uKvH26dnIIFbeRg6ZSlRg0QbMMH+nFfc1C7wx8TVuRAT+5Dac4NRVCF7yNYzu+wGaqhkB/zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556154; c=relaxed/simple;
-	bh=kOmLoUUBg0a0R/4unlq9Tt6bgxLj9pKXDeh/Z3DL0/k=;
+	s=arc-20240116; t=1791556156; c=relaxed/simple;
+	bh=n9tWF0iuJFZdrsMg58WJeZ+htpRLhuSls1jYchip8a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjPCo6uMDZX1zrsPgAm/Hrxz3sDr+J9NXa+gQzCbCSKNrf3MVMF9IB1WYAlC9HZHQHrV/Jba16fnFQozkWhH8P0IbdCxuZ5kQkXXx5JBk8Zc+uENV46nMu/qUClQcC6UZVqJnDt5zvWzcKYWcGduuJMkZ5x8L8788W4AZf48vPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dypi4N7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C02gEVlhnvQWoQ0A/IOrRw/ReqUMc5ttl/HYVog2AyUVcPnX9ZclMnyd78zZ2229NWcyoxDnfU0+mZ15Wga5VzkGTl712J4l/PmMj0wnwCtzjkwFxPNoeLDpyhX+GumVWGI7AT9yVE2KeFYQzq7cHylrbpD4cF+D2l4NSJnFlP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/vIVnWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dypi4N7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475731F000FF;
-	Fri,  9 Oct 2026 14:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/vIVnWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2164F1F000FF;
+	Fri,  9 Oct 2026 14:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556152;
-	bh=GbjpoRtWg2ciV9PK6Wd4ckRTOGadlA83tiiLQvdNpkg=;
+	s=korg; t=1791556155;
+	bh=nJiqCUOA1XmDe0cRuNg3HdGbm7LoVgQuhVFkW7US24k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dypi4N7jhQnAlKPWqoxr5bkb7IP/U0xahweeFVWGq9rdUgYq0ItLcGJtgOAWM49yR
-	 UgCvYepH53ZT9L9S3Pnp4x8y8sgExr/EGHgJttURbArDTTI1PoDvnJmBRtxQ/Hhk7K
-	 2ChGxJZJdYYp8k2iW/IOTyViFp6wI/9d7YH9z2yo=
+	b=g/vIVnWSBjPCzznstC5S3i5CKKibGYYWfxIti8Nr4K3R+8jty1WjDfbDPht0qmsnu
+	 q2KVdulkGSWj3aPGr2tvs0b46hYeiYSDEYxkJL6BMfe3pdUCwhsOhY3VuRCRY27GKp
+	 AqAmKSHVpCWhKdp+/MPBr58xw8t1vBX5JphGg8Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 129/428] net: ethtool: let tsconfig reach a PHY-only timestamp provider
-Date: Fri,  9 Oct 2026 16:07:46 +0200
-Message-ID: <20261009140949.019514419@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 183/403] usb: typec: tipd: fix uninitialized typec_partner_desc in tps6598x_connect()
+Date: Fri,  9 Oct 2026 16:09:04 +0200
+Message-ID: <20261009140956.399547317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 036778a4fad19b54b73ae229a1901665aa8750a2 ]
+commit c4b27b3605788bbf9e4251f3cd4ab94645ab036f upstream.
 
-TSCONFIG_GET and TSCONFIG_SET reject a device that implements neither
-hwtstamp NDO, even when its PHY can serve the request. The ioctls they
-meant to replace handle it, so the two interfaces disagree on the same
-hardware and user space has to pick one.
+tps6598x_connect() passes a stack-allocated typec_partner_desc to
+typec_register_partner() after initializing only usb_pd, accessory and
+identity.
 
-Accept the default timestamping PHY and an already installed provider on
-both sides. On the set side the test moves into ethnl_set_tsconfig() as
-the validate callback runs without rtnl. On the get side it stays ahead
-of ethnl_ops_begin(), so a device that can serve nothing keeps failing
-with EOPNOTSUPP and a dump still skips it rather than stopping there.
+typec_register_partner() copies attach and deattach from the descriptor
+into the partner. With those fields left unset, garbage function pointers
+may be stored and later invoked from typec_partner_link_device() when a USB
+device is linked to the port. Uninitialized pd_revision and usb_capability
+similarly leak stack data through partner sysfs.
 
-A netdev provider needs ndo_hwtstamp_set to be programmed at all, so
-don't pick that source without it, and test for ndo_hwtstamp_get before
-calling it.
+Zero-initialize the descriptor so optional callbacks remain NULL and the
+remaining fields are zero.
 
-Fixes: 6e9e2eed4f39 ("net: ethtool: Add support for tsconfig command to get/set hwtstamp config")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260925135237.3432266-3-nb@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
+Cc: stable <stable@kernel.org> # 5.15+
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260906131942.83153-2-radhey.shyam.pandey@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev_ioctl.c   |  3 ++-
- net/ethtool/tsconfig.c | 24 ++++++++++--------------
- 2 files changed, 12 insertions(+), 15 deletions(-)
+ drivers/usb/typec/tipd/core.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/dev_ioctl.c b/net/core/dev_ioctl.c
-index 164643140a523..f6029f60c1dc9 100644
---- a/net/core/dev_ioctl.c
-+++ b/net/core/dev_ioctl.c
-@@ -267,7 +267,8 @@ int dev_get_hwtstamp_phylib(struct net_device *dev,
- 		    hwprov->phydev)
- 			return phy_hwtstamp_get(hwprov->phydev, cfg);
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -340,7 +340,7 @@ static void tps6598x_set_data_role(struc
  
--		if (hwprov->source == HWTSTAMP_SOURCE_NETDEV)
-+		if (hwprov->source == HWTSTAMP_SOURCE_NETDEV &&
-+		    dev->netdev_ops->ndo_hwtstamp_get)
- 			return dev->netdev_ops->ndo_hwtstamp_get(dev, cfg);
- 
- 		return -EOPNOTSUPP;
-diff --git a/net/ethtool/tsconfig.c b/net/ethtool/tsconfig.c
-index 24b64862011f0..a2848ef0ddc4a 100644
---- a/net/ethtool/tsconfig.c
-+++ b/net/ethtool/tsconfig.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- 
- #include <linux/net_tstamp.h>
-+#include <linux/phy.h>
- #include <linux/ptp_clock_kernel.h>
- #include <net/netdev_lock.h>
- 
-@@ -42,7 +43,9 @@ static int tsconfig_prepare_data(const struct ethnl_req_info *req_base,
- 	struct kernel_hwtstamp_config cfg = {};
+ static int tps6598x_connect(struct tps6598x *tps, u32 status)
+ {
+-	struct typec_partner_desc desc;
++	struct typec_partner_desc desc = { };
+ 	enum typec_pwr_opmode mode;
  	int ret;
  
--	if (!dev->netdev_ops->ndo_hwtstamp_get)
-+	if (!dev->netdev_ops->ndo_hwtstamp_get &&
-+	    !phy_is_default_hwtstamp(dev->phydev) &&
-+	    !netdev_ops_lock_dereference(dev->hwprov, dev))
- 		return -EOPNOTSUPP;
+@@ -351,7 +351,6 @@ static int tps6598x_connect(struct tps65
  
- 	ret = ethnl_ops_begin(dev);
-@@ -248,17 +251,6 @@ static int tsconfig_send_reply(struct net_device *dev, struct genl_info *info)
- 	return ret;
- }
+ 	desc.usb_pd = mode == TYPEC_PWR_MODE_PD;
+ 	desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
+-	desc.identity = NULL;
  
--static int ethnl_set_tsconfig_validate(struct ethnl_req_info *req_base,
--				       struct genl_info *info)
--{
--	const struct net_device_ops *ops = req_base->dev->netdev_ops;
--
--	if (!ops->ndo_hwtstamp_set || !ops->ndo_hwtstamp_get)
--		return -EOPNOTSUPP;
--
--	return 1;
--}
--
- static struct hwtstamp_provider *
- tsconfig_set_hwprov_from_desc(struct net_device *dev,
- 			      struct genl_info *info,
-@@ -272,7 +264,7 @@ tsconfig_set_hwprov_from_desc(struct net_device *dev,
- 	int ret;
- 
- 	ret = ethtool_net_get_ts_info_by_phc(dev, &ts_info, hwprov_desc);
--	if (!ret) {
-+	if (!ret && dev->netdev_ops->ndo_hwtstamp_set) {
- 		/* Found */
- 		source = HWTSTAMP_SOURCE_NETDEV;
- 	} else {
-@@ -313,6 +305,11 @@ static int ethnl_set_tsconfig(struct ethnl_req_info *req_base,
- 	if (!netif_device_present(dev))
- 		return -ENODEV;
- 
-+	if (!dev->netdev_ops->ndo_hwtstamp_set &&
-+	    !phy_is_default_hwtstamp(dev->phydev) &&
-+	    !netdev_ops_lock_dereference(dev->hwprov, dev))
-+		return -EOPNOTSUPP;
-+
- 	if (tb[ETHTOOL_A_TSCONFIG_HWTSTAMP_PROVIDER]) {
- 		struct hwtstamp_provider_desc __hwprov_desc = {.index = -1};
- 		struct hwtstamp_provider *__hwprov;
-@@ -455,6 +452,5 @@ const struct ethnl_request_ops ethnl_tsconfig_request_ops = {
- 	.reply_size		= tsconfig_reply_size,
- 	.fill_reply		= tsconfig_fill_reply,
- 
--	.set_validate		= ethnl_set_tsconfig_validate,
- 	.set			= ethnl_set_tsconfig,
- };
--- 
-2.53.0
-
+ 	if (desc.usb_pd) {
+ 		ret = tps6598x_read_partner_identity(tps);
 
 
