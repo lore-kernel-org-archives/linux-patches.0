@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BA1BA45;
-	Fri,  9 Oct 2026 14:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C291A34D397;
+	Fri,  9 Oct 2026 14:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556645; cv=none; b=ZAsD2TcIKuWZ5ctJVwFBG3WkksxRbzMtsqxi/BOjQAJVnpRe9pmVA4o8ywIi7htJHw3eLydGKXQxkNZLFOPPfAEe8x0VxoW3tGjSuhxztXOOAQbUdFSUu653UzKYSVPuopDH9WY+ZiDWffD2rexPOAlib/OQtFp7dNV7uSSEKT8=
+	t=1791556648; cv=none; b=lP4wXpMwNTAq9t5L/dZvbcN4cJQwLq2TYJduJcOWHGTH3NwVKlplbCuqLorAPrRtkU/17Y2wU+3keOms3oDXFQCKjWhYGb5ff8FgCM0g/HZV3qZiXpUkCe8MgkCdoKQ5qOfhD0JcNlaooC6vrmODcnJjHGWvpIv3ZAkQsHUhgQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556645; c=relaxed/simple;
-	bh=UFuBEZqG1lufxhmj/J3dH6oqbEtDdd7kQSU4BcLWeHg=;
+	s=arc-20240116; t=1791556648; c=relaxed/simple;
+	bh=GIlUnd+5vWU1PnWsSOf14K0L4OBXRQ7UE8+r0T3khwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2AHyXn7z5iyZJ5hvTt3JcPsQA4a1yrVtld6XLQJMOuC9JBpVt2v7BPINNKUp1WzWP8RfHnTghDft76RZTWnT8gEDMJXx9v14dqHYAn714xlhFV+eTeQphQ1WWpeQVKaSat4eV9HHsJu9FCsAzsEygvYE6+ARsb1l+lPBflQh3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fz0MRqHK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g9DYTiOytDYDbhivpGv5sc+A+55UbznUFg6gol37/TvaaCmLhPVukzyG3PKMNVrXvicz7oe2Yl2ty5Yd7CDXd+EZlBWwRxTY8tcjpWx5n8o1qCtDoShUu2atUaag4biCHAt1MF9ZU64nqgivKbi2eK7EFeZvKhTHEg3rVgRhJ5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AasqdSDT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fz0MRqHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D981F000FF;
-	Fri,  9 Oct 2026 14:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AasqdSDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB11F000FF;
+	Fri,  9 Oct 2026 14:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556644;
-	bh=Sj3zSYhvtJFMNg52y3w76TR+JbZGk4V7ZC0eQ+FZWso=;
+	s=korg; t=1791556647;
+	bh=qZ7zs6qerQgmnD3cyrZXTfAnQlJ3Ba3XZvVL3WBi4JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fz0MRqHK7C7aqq2UCGrbPAwh/Ry7QUJIprArfbOTuYE+nQSmOZwJ6f9oQOMvXZdkM
-	 r3uG30ccLMtRzgnIudnNGzaT5zgXhKLXSJI+lxCdmdFPF7gvI1WAb2ppNTfIaG/ZkV
-	 1k6Zpsj0Ol/UK+d8RiLbOg895/aEPvZtTs+GfHEM=
+	b=AasqdSDTVDZo9ccT457jiRoILsHrAznNV90BE7U+nFmKa8rj1HMPTNN0vrrLBwh5h
+	 SAoioiG6aRDeKDDfNM8y+OKn/XG85FV9ZHPRYvcF4Y9Rvw/NAr70rmc8tWSQDmXToM
+	 pA/q4xjau7mF/V7c18KIhgeBGnin78sPpIBzvkrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.2 214/428] usb: ohci-st: disable controller wakeup on removal
-Date: Fri,  9 Oct 2026 16:09:11 +0200
-Message-ID: <20261009140950.826036199@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 269/403] wifi: mac80211: account proxy paths against the mesh path limit
+Date: Fri,  9 Oct 2026 16:10:30 +0200
+Message-ID: <20261009140958.473510044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +46,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 08b2ccd7eb7e41f77a04a09112ca3edcc588e3f0 upstream.
+commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b upstream.
 
-Probe enables controller wakeup after the OHCI core marks controllers with
-RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
-wakeup source can remain attached after driver unbind.
+Proxy-path churn can drive the interface path counter negative and let
+later mesh path additions exceed MESH_MAX_MPATHS.
 
-Disable controller wakeup after removing the HCD.
+mesh_path_free_rcu() decrements the interface mpaths counter for entries
+from both the mesh and proxy path tables, but mpp_path_add() never
+reserves a slot in that counter. Removing or expiring a proxy path
+therefore returns a slot that was never charged.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
+it falls below the number of installed paths the limit no longer holds.
 
-Fixes: d115837259ad ("usb: host: ohci-st: Add OHCI driver support for ST STB devices")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-5-mhun512@gmail.com
+Reserve the shared quota before allocating a proxy path and release it on
+every unsuccessful addition. Mesh and proxy paths now share one
+1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
+
+Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM sparse kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-st.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mesh_pathtbl.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/ohci-st.c
-+++ b/drivers/usb/host/ohci-st.c
-@@ -235,6 +235,7 @@ static void st_ohci_platform_remove(stru
- 	int clk;
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -733,10 +733,15 @@ int mpp_path_add(struct ieee80211_sub_if
+ 	if (is_multicast_ether_addr(dst))
+ 		return -EOPNOTSUPP;
  
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
++	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
++		return -ENOSPC;
++
+ 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
  
- 	if (pdata->power_off)
- 		pdata->power_off(dev);
+-	if (!new_mpath)
++	if (!new_mpath) {
++		atomic_dec(&sdata->u.mesh.mpaths);
+ 		return -ENOMEM;
++	}
+ 
+ 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
+ 	tbl = &sdata->u.mesh.mpp_paths;
+@@ -749,10 +754,12 @@ int mpp_path_add(struct ieee80211_sub_if
+ 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
+ 	spin_unlock_bh(&tbl->walk_lock);
+ 
+-	if (ret)
++	if (ret) {
+ 		kfree(new_mpath);
+-	else
++		atomic_dec(&sdata->u.mesh.mpaths);
++	} else {
+ 		mesh_fast_tx_flush_addr(sdata, dst);
++	}
+ 
+ 	sdata->u.mesh.mpp_paths_generation++;
+ 	return ret;
 
 
