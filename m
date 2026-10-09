@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DE03D5C1E;
-	Fri,  9 Oct 2026 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDEF17A305;
+	Fri,  9 Oct 2026 14:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555402; cv=none; b=YeWfDSNT7E4xsOdusjsp1eCx8o2Jn7h263G74iTy/LlTA/ptU9He0o3hcIoJcaAu5TdIqyVNiDih4bEux2E6qWY5PpAir8WJ03Ruiw7e3XkxIofog0har78iPwedvm3o48b1u4VB+nL5ZuWRUxZoEelTWVh5O3n5ozSi/2RMpi4=
+	t=1791555407; cv=none; b=fBZtN1ZgjzfagTnt9EUnnF/Ts4DDESpplzHgy3KnDdE+DdP8oFj23FwjJsq4g9238C/HqyGD8+7lUMfo83msRgVebKkaJT8VOgWjjoivTNPpnRJh7CC4HMmMkOwpj82PgzqXKx3MVu8sm7GWzNSlO3aXDMzhvaUlztRZqfrEtN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555402; c=relaxed/simple;
-	bh=vog+pYkOOCcHap9LB6Mq6UGK5E7auUOK8b+/ZzervtU=;
+	s=arc-20240116; t=1791555407; c=relaxed/simple;
+	bh=5S2b8d/BLyeBM+1mqNtDmwvrd/eL3XqRRxvMsVEfW4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkWOXUWbE/D1vaspFWm+//aR8uJOSt/XYmW2EKCx/0ucXhJumg/h90rG707eZLYpBygtAqAruBA24qf+M3s8yAp+M1MQkdCbtt+dsp2b8y/HV+zJnEUssJdtzIomikAoG/cPz2i8dO5TwV22ecqfr7ac+fcRDUyOG8QsylssLQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FtsKMGf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KBArUL2qPnAtUdNi8/EvsUldvQwaMzoLfxytmD4CIIvGBU/v5b6ClJqWdlScJCQfZDSUHDGigy01orqgZUax1vkjuUnZ10O6eKTyCwAQIVk83hjBsHDPbADg7r7WHWt+ZosFdv7WRmPCC2/fT5/J66RW5lcV/5F9USUuzlfGms4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZ6fPtl1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FtsKMGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197631F00893;
-	Fri,  9 Oct 2026 14:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZ6fPtl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C331F00898;
+	Fri,  9 Oct 2026 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555398;
-	bh=RY2pypmwr0Rw4akn17NeqRgY4YgDX/nt8fidkWSPqgM=;
+	s=korg; t=1791555401;
+	bh=oxNI1Lx7XEoi5A58N0lKT5t4tE5xUv5Z22/+eugRGL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FtsKMGfFWq2OgZ8NnbxbYcHBT5U5+sm1Bx5+PrHFFCfcuOaRXYuXX+V8ylHQCjG9
-	 aO9E7Dx9YFUUnwVRtWJQqaaLyxZAZaepUy8p5UGSoecSLEj17vEoh6N7e9pcOqGxCt
-	 i3vJFGYB21u4dNrxWE1Zddqgpxaa4XCoypmio3Ko=
+	b=xZ6fPtl16Ta31IqnTO2IYAosQXbrWvuLk97BLTNbN+McsE6BWhS2svlZXAAx0AQlV
+	 fL+lrq33T4D/NoW1dMOZ8yY7MdV/y86agklc7C6RTGg/i0hdSRJlDCgVts/8Klv1e+
+	 I1XAvgRBQrXbDYv9Stby5aGkjixK4wUZSO6VImbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhichen Wang <wangzhichen@manus.ai>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.18 044/403] virt: vmgenid: set driver_data before registering notification handlers
-Date: Fri,  9 Oct 2026 16:06:45 +0200
-Message-ID: <20261009140953.136543565@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: [PATCH 6.18 045/403] mm: shmem: ignore sysfs configs for shmem forced collapse
+Date: Fri,  9 Oct 2026 16:06:46 +0200
+Message-ID: <20261009140953.158458976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,89 +61,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhichen Wang <wangzhichen@manus.ai>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit 9f8139c6145cf17d690d6c414d43b4c0bef632fb upstream.
+commit 72c3d682c165b836b54a3d07a01f72e39c47022c upstream.
 
-Both probe paths register their notification handler before assigning
-driver_data, which the handler dereferences.
+According to Documentation/mm/transhuge.rst, MADV_COLLAPSE is expected to
+ignore any THP or mTHP interface settings.
 
-In the devicetree path, the notification IRQ can fire as soon as
-devm_request_irq() registers the handler: the interrupt may already be
-pending at probe time, for example when a VMM injects the
-generation-changed notification while restoring a guest from a snapshot
-that was taken before the driver had probed (Firecracker does exactly
-this on snapshot restore). The IRQ is also requested with IRQF_SHARED,
-so another device sharing the line can trigger the handler just as
-early. The handler then calls vmgenid_notify(), which dereferences the
-still-NULL driver_data and panics:
+However, after commit 26c7d8413aaf ("mm: thp: support "THPeligible"
+semantics for mTHP with anonymous shmem"), performing MADV_COLLAPSE on
+shmem will depend on /sys/.../hugepages-2048kB/shmem_enabled being set to
+"inherit" (although that is the default), which can cause MADV_COLLAPSE to
+fail unexpectedly.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.38+ #1 PREEMPT(none)
-  Hardware name: linux,dummy-virt (DT)
-  pc : vmgenid_notify.isra.0+0x24/0x8c
-  lr : vmgenid_of_irq_handler+0x14/0x34
-  Call trace:
-   vmgenid_notify.isra.0+0x24/0x8c (P)
-   vmgenid_of_irq_handler+0x14/0x34
-   __handle_irq_event_percpu+0x44/0x1bc
-   handle_irq_event+0x4c/0xb4
-   handle_fasteoi_irq+0xf8/0x1f8
+This could cause a userspace-visible performance regression.
 
-The ACPI path has the same ordering problem: the handler is installed
-with acpi_install_notify_handler() before driver_data is assigned.
-ACPI notifications are dispatched asynchronously from a workqueue, so
-the window is narrow, but a notification arriving between the two calls
-hits the same NULL dereference.
+Fix this by returning the result of shmem_huge_global_enabled() directly
+when MADV_COLLAPSE is requested, allowing PMD-order collapse while
+ignoring shmem THP/mTHP settings.
 
-Assign driver_data before registering the handlers. The state is fully
-initialized at that point, so the handlers are safe to run. Should
-registration fail, the probe error path leaves no dangling pointer
-behind: the driver core clears driver_data in device_unbind_cleanup().
-
-Fixes: 7b1bcd6b50a6 ("virt: vmgenid: add support for devicetree bindings")
-Fixes: e07606713a90 ("virt: vmgenid: change implementation to use a platform driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhichen Wang <wangzhichen@manus.ai>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/063f655b4d6c4234f3aa27ed6ecab10283ecb880.1789351825.git.baolin.wang@linux.alibaba.com
+Fixes: 26c7d8413aaf ("mm: thp: support "THPeligible" semantics for mTHP with anonymous shmem")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Closes: https://lore.kernel.org/all/20260908125105.1510704-7-kirill@shutemov.name/
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Acked-by: Qi Zheng <qi.zheng@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/vmgenid.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/shmem.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/virt/vmgenid.c
-+++ b/drivers/virt/vmgenid.c
-@@ -83,6 +83,8 @@ static int vmgenid_add_acpi(struct devic
- 	}
- 	setup_vmgenid_state(state, virt_addr);
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1812,8 +1812,11 @@ unsigned long shmem_allowable_huge_order
  
-+	dev->driver_data = state;
-+
- 	status = acpi_install_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
- 					     vmgenid_acpi_handler, dev);
- 	if (ACPI_FAILURE(status)) {
-@@ -90,7 +92,6 @@ static int vmgenid_add_acpi(struct devic
- 		goto out;
- 	}
+ 	global_orders = shmem_huge_global_enabled(inode, index, write_end,
+ 						  shmem_huge_force, vma, vm_flags);
+-	/* Tmpfs huge pages allocation */
+-	if (!vma || !vma_is_anon_shmem(vma))
++	/*
++	 * Tmpfs huge pages allocation or forced collapse ignores
++	 * sysfs configs.
++	 */
++	if (!vma || !vma_is_anon_shmem(vma) || shmem_huge_force)
+ 		return global_orders;
  
--	dev->driver_data = state;
- out:
- 	ACPI_FREE(parsed.pointer);
- 	return ret;
-@@ -124,12 +125,13 @@ static int vmgenid_add_of(struct platfor
- 	if (ret < 0)
- 		return ret;
- 
-+	pdev->dev.driver_data = state;
-+
- 	ret = devm_request_irq(&pdev->dev, ret, vmgenid_of_irq_handler,
- 			       IRQF_SHARED, "vmgenid", &pdev->dev);
- 	if (ret < 0)
- 		return ret;
- 
--	pdev->dev.driver_data = state;
- 	return 0;
- }
- 
+ 	/*
 
 
