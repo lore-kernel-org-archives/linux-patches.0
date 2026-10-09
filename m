@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EF046EF92;
-	Fri,  9 Oct 2026 14:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E5C4E36C4;
+	Fri,  9 Oct 2026 14:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556318; cv=none; b=bO5FC4GcawTAtxCdxqalEJYViG4uz0IDLJghb0/+oIIlQOzV02/QHOPNJNCuhlar7+KcppFmh9e7LBZtBg7mkTofIVhEUquWRHcsNhnCbXjuAe8YSPUVnqwNqeBxn7iJRg7nUEKevqv/x6QXxMUE+Dj1pi9RP59+zu0Fvq1LfG0=
+	t=1791556322; cv=none; b=dPuqe4c75GArTVbJvAXyqY2+mw9bvhi+/2RoWNAQXhkdDjgStEN0ZC9tjgyVAJYmdFhYduMBrGX6WsOO9wurwY0b6bw7sg0cFPPVA+zIMnWSnFnTD8hachTqhL2DZqdJuBarctCRmsjsr8K+TZOlsqRW0VsCfWtvMDl4FvMS5So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556318; c=relaxed/simple;
-	bh=SU7njEuXfPJpe1MnEN5+3D8m1KOS2EWBHAIC4JwGWZo=;
+	s=arc-20240116; t=1791556322; c=relaxed/simple;
+	bh=rGv+Pqsf8YqfI056peRJja0dtFsiepBuL73OPbgNF+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b40Ol16aE5Ui2bCUZOgmHaTtYmG5lrMZYct/uOgvnyIGXrG/W7aJWvbE7jBu2e+K8EFrwKJ3e/MWUusEy8qNNy1O/s4jUOkrQzYjl7wwGYfBEWftJEu+ao1X0TGF09K4KGHgpTCd+kUJ0YO4DP6Y8CEkxhSXt4n1jMRbkz6Ncwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmWLiKrT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZe0S7SCowBDWD1/CeS3Sa6ViJTLxgYU6ETeH05jm2P0/6/7575uAIutqwpBB9bkzBxbBAMwEgXFA1SgrdCi9TOuQJE05v6uDMpbJ4/P0zPY7C7aM+4Axx/vbwcSwMia0PaY3oJ5BjA4+XlLXhJ9WyXE0eaokrA6P8z3O5Fi/4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=witzoY+C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmWLiKrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB761F000FF;
-	Fri,  9 Oct 2026 14:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="witzoY+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E601F000FF;
+	Fri,  9 Oct 2026 14:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556314;
-	bh=8XVqELbhFtglqbb/Co9n0TkYsk2v3X6p1Kr7/jFVA+g=;
+	s=korg; t=1791556319;
+	bh=+aw4DlbT8QoUOHTklGSxDF0oHVQwhoR5JosGYdV6nyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmWLiKrT7QYdPooXTE4NS2DeO9c09C6GrJU6aAVohCNfLRadxrUws3vGw3ctVyx2j
-	 48xytSUKYvXvAmuiS/mW3+SXqlECDNs5um+6r43Hk83wdK9BNXhlMWQ8Ld+cAvoAug
-	 MEjsArwM7Mi/ZPnvHsawM4bDUySoifpYT/Tpyyqo=
+	b=witzoY+CemHfbVV9z14VR7qJwhSgtc/MwGIBquxQI4L87blmJu5ZmNmlmzFIqIRsr
+	 HeJuKCxrAs2bTtAca0J8YEdkIRKKL/z9JKQFT5eaw5UE00xhHBplBXoe+DUuTsHC+u
+	 DBm8m2TlrDOp6k7p+OHpXLkZX3+r9WExnRTw4vc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24304d323d28f156@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
+	Baojun Xu <baojun.xu@ti.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Aleksei Arsenev <alesharik4@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 214/403] ALSA: ua101: reject mismatched capture/playback packet sizes
-Date: Fri,  9 Oct 2026 16:09:35 +0200
-Message-ID: <20261009140957.145698307@linuxfoundation.org>
+Subject: [PATCH 6.18 215/403] ALSA: hda/realtek: Fix square wave output on ASUS Strix G615LR
+Date: Fri,  9 Oct 2026 16:09:36 +0200
+Message-ID: <20261009140957.170663923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,83 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
+commit cfc0a117d773eb585ca7e87d20c50d1c415058e5 upstream.
 
-detect_usb_format() cross-checks bSubframeSize, bBitResolution and
-tSamFreq between the capture and playback interfaces, but never relates
-the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
-gets a buffer of ua->playback.max_packet_bytes, while the number of
-bytes written into it is derived from the capture stream:
-capture_urb_complete() computes frames from the received capture packet
-and capture.frame_bytes, and start_usb_playback() and playback_work()
-multiply that by playback.frame_bytes.
+ASUS ROG Strix G16 G615LR (PCI SSID 1043:3f20) outputs a loud
+full-scale square wave from internal speakers since the TAS2781
+amplifier driver started loading. The quirk was using
+ALC287_FIXUP_TXNW2781_I2C which chains to the ThinkPad headset
+jack fixup, but this is an ASUS device that should use
+ALC287_FIXUP_TXNW2781_I2C_ASUS which chains to ALC294_FIXUP_ASUS_SPK
+for proper EAPD and pin configuration.
 
-A device declaring a large capture wMaxPacketSize with few capture
-channels and a small playback wMaxPacketSize with many playback channels
-therefore memset()s and memcpy()s past the end of the playback buffer,
-in open() of the PCM node the driver registers during probe.
-usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
--EMSGSIZE, but only after the write.
-
-Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
-declares proportional packet sizes and is unaffected.
-
-  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
-  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
-  Call Trace:
-   __asan_memset (mm/kasan/shadow.c:84)
-   start_usb_playback (sound/usb/misc/ua101.c:586)
-   playback_pcm_open (sound/usb/misc/ua101.c:679)
-   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
-   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
-   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
-   snd_open (sound/core/sound.c:166)
-   chrdev_open (fs/char_dev.c:411)
-   do_dentry_open (fs/open.c:996)
-   vfs_open (fs/open.c:1101)
-   path_openat (fs/namei.c:4837 fs/namei.c:5000)
-   do_file_open (fs/namei.c:5029)
-   do_sys_openat2 (fs/open.c:1417)
-   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  The buggy address belongs to the object at ffff8881098f3c00
-   which belongs to the cache kmalloc-192 of size 192
-  The buggy address is located 0 bytes inside of
-   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
-
+Fixes: f7cede182c96 ("ALSA: hda/realtek: Add Asus quirk for TAS amplifiers")
 Cc: stable@vger.kernel.org
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Reported-by: <co+24304d323d28f156@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
+Cc: Baojun Xu <baojun.xu@ti.com>
+Cc: Antheas Kapenekakis <lkml@antheas.dev>
+Reported-by: Aleksei Arsenev <alesharik4@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=222045
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260923121640.272509-1-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/hda/codecs/realtek/alc269.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -1002,6 +1002,15 @@ static int detect_usb_format(struct ua10
- 	}
- 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
- 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
-+
-+	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
-+	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
-+		dev_err(&ua->dev->dev,
-+			"playback packet size %u too small for %u capture frames\n",
-+			ua->playback.max_packet_bytes,
-+			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
-+		return -ENXIO;
-+	}
- 	return 0;
- }
- 
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7236,7 +7236,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TXNW2781_I2C_ASUS),
+ 	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x3fd0, "ASUS B3605CVA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3ff0, "ASUS B5405CVA", ALC245_FIXUP_CS35L41_SPI_2),
 
 
