@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7BF3B582F;
-	Fri,  9 Oct 2026 14:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D67DBA45;
+	Fri,  9 Oct 2026 14:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556597; cv=none; b=X40D0xATx0ERinjQ4H5NgeHW5p30bLeYd5vPGAeXm4RVwUrON+KaExeHxVxa0QIEtC/UxUUov7Y+BihnsL/v2IqdYy+ma+zqcZ/x6kKbRKpCrZ3siHFodT+Xq7fmVj7GQ7Sg8FlqrohPJmoJHrzP8YwSpDr5FFXJE71ccaZvSto=
+	t=1791556600; cv=none; b=Iiv4G+iZSQXklgIJVd8B/bHO/a6YRlaelJxiuDrWXXtHm1+JxNdML/5bCEaPBbbsNlrMk4fGmkZvRGNROE8Iv/LQuKiFBR+i1QvMAyiIV8wJQeubZIJX8cOzdiZaNCA4eb5PvAplFPVjdhOUUx35rlV3fB+EjGOi8eKbgmtcTIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556597; c=relaxed/simple;
-	bh=BjCHwB5q94O76jZYtW91vXMqqwxAVgeZkkBX8psjFAQ=;
+	s=arc-20240116; t=1791556600; c=relaxed/simple;
+	bh=W4WDQ5U3ZjnMnNMAUkMVKIlCJWl7pYkUilrzkpHqw5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=re6x43BQB0RQkO4n5A0HH8IBqyWAqYxbF6vs6fKmD2IHyhI2NA9ng6uzR2ny4DX1XAiFB69/r/5EN3ZSCSc8Jv9szTlLBtVlgFjRN3x6zamhujwJxQ+QSpXrpJPvmH19CSVbs90E9JwH6GvoHq6EwEwEH0MnAcQaoIhq1zTgK08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=io1qfhzH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q+Q9M2BcAc+T1r0ZpOEsr9O8ZColUchZWeTOPw7b7q43ou6wgtgU0UuPqA1n/PDZFWZzUAZAujVR3JzGNxzXE5Oy8kKHrFBMmNz5FsHPHb2m8tVPgfy2YQFuVyHuJR9poIuo6Es+mTQtykGE8q8t5S5vacTY9HRpOsxY6C/Hg10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juDYL2A3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="io1qfhzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B6E1F000FF;
-	Fri,  9 Oct 2026 14:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juDYL2A3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6552A1F000FF;
+	Fri,  9 Oct 2026 14:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556596;
-	bh=S1cJBVuoljFw0R7oaS7wImU+Bl+vfROUyIZ8EnehUZA=;
+	s=korg; t=1791556598;
+	bh=Gd06CcLnTLOv1teR7aRld/5/ArfFfLl+72Zy4Q3JzZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=io1qfhzHddtdOXeSCQr+Vu5QKeLUGKTo7Ubt5jFc8W8kjMow+oOuK2bX4tSobxSet
-	 /5VHFhQqnf2HYu7L8K03LFUpQfDocTpzWyvLYVl189qb+kbDcycee9mGG5xVrQcBgu
-	 wkl6RBV8dyKXVGvCSgDxx391d3Ae9YyQIn1a/uAc=
+	b=juDYL2A3Q3u62FXbDWX9P4pITQa7vWTkbKTMTVS4v6awg/sbQRs2ce1PGcno6WrIi
+	 3MIPW5sYZViO2KDZCy6WRf/1rho0TpCNtt60B7TKibBLz9QpDJV7l5DMVA3hdoQVLc
+	 tSqNi0+fskWV/Yhiv3g9szBx8c50xq3q5hnw5/VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 6.18 261/403] KVM: arm64: Clear HCR_EL2.RW for 32-bit non-protected vCPUs
-Date: Fri,  9 Oct 2026 16:10:22 +0200
-Message-ID: <20261009140958.279606507@linuxfoundation.org>
+	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.2 207/428] USB: serial: fix port tear down use-after-free
+Date: Fri,  9 Oct 2026 16:09:04 +0200
+Message-ID: <20261009140950.674715621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Johan Hovold <johan@kernel.org>
 
-commit 80ae56184b57176b908cd6a7ececf274a7e4b3c7 upstream.
+commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
 
-pKVM keeps its own copy of each vCPU's HCR_EL2 at EL2, initialised with
-RW set unconditionally. Nothing stops userspace from creating a
-non-protected AArch32 VM, and with RW set, entering one of its vCPUs is
-an illegal exception return: KVM_RUN fails with KVM_EXIT_FAIL_ENTRY.
+Some drivers for multiport devices access port driver data from
+completion handlers of shared URBs submitted at attach() or first open()
+and stopped at disconnect() or last close(), respectively.
 
-Clear RW for a vCPU that is AArch32 at EL1, when the CPU has AArch32
-EL1. On a CPU without it, RW stays set and the entry still fails, rather
-than EL2 switching *32_EL2 registers that are UNDEFINED there. The host
-already rejects such a vCPU, but EL2 takes the vCPU's features from the
-host and doesn't rely on that.
+A simple NULL check before accessing the driver data makes sure that a
+port state container has at least been allocated, but a completion
+handler can still race with port tear down.
 
-Fixes: b56680de9c648 ("KVM: arm64: Initialize trap register values in hyp in pKVM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260929090031.3829185-3-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Reorder the disconnect handling so that ports are not deregistered (and
+their driver data freed) until after all ports have been hung up and the
+driver disconnect() callback has run so that all I/O has been stopped.
+
+Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
+Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
+Cc: stable@vger.kernel.org	# 2.6.30
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/serial/usb-serial.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -52,6 +52,15 @@ static void pkvm_vcpu_reset_hcr(struct k
- 	else
- 		vcpu->arch.hcr_el2 |= HCR_TID2;
- 
-+	/*
-+	 * Without AArch32 EL1, leave RW set and let the entry fail with an
-+	 * illegal exception return: the *32_EL2 registers EL2 would otherwise
-+	 * switch are UNDEFINED there.
-+	 */
-+	if (vcpu_has_feature(vcpu, KVM_ARM_VCPU_EL1_32BIT) &&
-+	    cpus_have_final_cap(ARM64_HAS_32BIT_EL1))
-+		vcpu->arch.hcr_el2 &= ~HCR_EL2_RW;
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1191,12 +1191,17 @@ static void usb_serial_disconnect(struct
+ 		usb_serial_port_poison_urbs(port);
+ 		wake_up_interruptible(&port->port.delta_msr_wait);
+ 		cancel_work_sync(&port->work);
+-		if (device_is_registered(&port->dev))
+-			device_del(&port->dev);
+ 	}
 +
- 	if (vcpu_has_ptrauth(vcpu))
- 		vcpu->arch.hcr_el2 |= (HCR_API | HCR_APK);
+ 	if (serial->type->disconnect)
+ 		serial->type->disconnect(serial);
  
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (device_is_registered(&port->dev))
++			device_del(&port->dev);
++	}
++
+ 	release_sibling(serial, interface);
+ 
+ 	/* let the last holder of this object cause it to be cleaned up */
 
 
