@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF2E4E7803;
-	Fri,  9 Oct 2026 14:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214874E36C4;
+	Fri,  9 Oct 2026 14:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556122; cv=none; b=hAUVbJY91Ru+a+6gIslI00t6NTZronP5KbPgJzHQAh3FYn3nVkrsZe0M1ssgMWFShOIepGjpZSHN0YSYT32AbhXiLnksy8Yz98jMU7VoVf2hG6NrdYblmSCn/cOHdiokZN3ZWS+bYqK943j2YWlFK7Hi45GvI0/IVj2Mme6JFfc=
+	t=1791556125; cv=none; b=N5vhHIGfOhCJYIRntBEZ1jf6jQWrDXA/vUpCn9+3VpZkrVbiRN2r1oXxfEByEXaiH9v7X1mtn2A9qZ6IbJkNZho7T+VWXNMjr1am63RYfJrew1+vD1aa+hVEDBgkJaX5EvDm/MxvFVQ8qxXAPiWh0n79ncVSKWTi3WCrsRySG8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556122; c=relaxed/simple;
-	bh=PZ5WWdevr7epC6J0b6RH2Q/Ua43ykUr3BAubQZ7/wRY=;
+	s=arc-20240116; t=1791556125; c=relaxed/simple;
+	bh=K1DKfQ6ScnbvouKQ8nwoOskEGsiHFw4E8drBcYGki94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlXyEpKDUOJSitlbLLVgLBkg7SD/eU7hXjVC3ijGyisvU7N/Y8gqq6XrY0a3TEsILMKKaH6erfe2naf3Mzed0Hk9IKyF6UWfhbaDd8/mXvjCKpjqnpHOwAzz+bncXRdNY85ZOi0EK/HeaZwCOZ/5echjho72n4ouo/2jnG3yA4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2PakVCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDmE1PlbfXwmrLP5MWqVLrtCREXLepDK8d1PZ+Bqtwvnznh9JeM0ACb6hIo1W3YcL2L+8N2eDHDi2qqXand0bD1ZUacElAJMNrRrhIMQoNV6bjlBm4ezS+w8TWWCrhmvYI5PxXbwH02ebXxhuKu2UzZh4BjM/pEDMgy8suRHsiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVKKRuRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2PakVCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7971F000FF;
-	Fri,  9 Oct 2026 14:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVKKRuRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8039F1F000FF;
+	Fri,  9 Oct 2026 14:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556121;
-	bh=8p65aUmWa+jgIbFvCY7XgZw6BmJL32F8fg+f5iv1U3A=;
+	s=korg; t=1791556124;
+	bh=5ak9vePrz1EF3Mcb25QFl5lJ+j3dl/EiP3ItuUsvtC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2PakVCfuHRbq6ws8Hc4nCubXfNF3TKGjOHeTfLJcyT1Ohjmkj2Hcnb4WfToyQBy1
-	 IfERAT4W69532sHN21Iy2Xfzdfyrg/oJXVefUTogOxJ3rme99nX2ikPfnFlAOV7ke4
-	 l17YcTp4f30qEq+5kNmS90uXv4dXpVjByxyNCg8k=
+	b=AVKKRuRzFxNSpiL/rta/58J1dVlnl/9IsePhcq7p2VA5yvvwn5Amg9diEodoxf3zf
+	 4fFNZpAbsQpuHpAVcjJB5s9Jx0wRSRh261RAUhGtVvaRsbBrV+jx24k9/led76xg4p
+	 PkhvwNJ4MZLX/XZxkWekuaYW4HoAvOzceLPxOvVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baha Mesleh <baha.mesleh@nokia.com>,
-	Subrat Pandey <subratp@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 124/428] octeontx2-af: mcs: Fix SC resource cleanup loop
-Date: Fri,  9 Oct 2026 16:07:41 +0200
-Message-ID: <20261009140948.915204285@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.18 178/403] usb: chipidea: tegra: disable runtime PM on resume failure
+Date: Fri,  9 Oct 2026 16:08:59 +0200
+Message-ID: <20261009140956.279131289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baha Mesleh <baha.mesleh@nokia.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit cdef07f3002f708a345392ee28d0d9bfac8383a1 ]
+commit f1d6f7d25fe88ee49aaad96c8649e090fc3a4b68 upstream.
 
-The SC resource cleanup and statistics loops were incorrectly
-iterating over secy.max instead of sc.max, so the highest SC id
-could be left allocated across teardown or FLR. Use sc.max as
-the loop bound.
+tegra_usb_probe() enables runtime PM before resuming the device. If
+pm_runtime_resume_and_get() fails, probe returns without disabling runtime
+PM. The later error paths reach pm_runtime_force_suspend(), but this early
+return bypasses that cleanup.
 
-Fixes: cfc14181d497 ("octeontx2-af: cn10k: mcs: Manage the MCS block hardware resources")
-Signed-off-by: Baha Mesleh <baha.mesleh@nokia.com>
-Signed-off-by: Subrat Pandey <subratp@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260922102149.2078168-3-subratp@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Disable runtime PM before returning the resume error. Do not use the
+fail_power_off path: the failed resume did not retain a usage reference,
+so its pm_runtime_put_sync_suspend() would be unbalanced.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 8b85e11c1a7a ("usb: chipidea: tegra: Add runtime PM and OPP support")
+Cc: stable <stable@kernel.org>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260913041033.25144-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_tegra.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-index 211c10aa5880f..30c672d526a0c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-@@ -314,7 +314,7 @@ int mcs_clear_all_stats(struct mcs *mcs, u16 pcifunc, int dir)
- 	}
+--- a/drivers/usb/chipidea/ci_hdrc_tegra.c
++++ b/drivers/usb/chipidea/ci_hdrc_tegra.c
+@@ -306,8 +306,10 @@ static int tegra_usb_probe(struct platfo
  
- 	/* Clear SC stats */
--	for (id = 0; id < map->secy.max; id++) {
-+	for (id = 0; id < map->sc.max; id++) {
- 		if (map->sc2pf_map[id] != pcifunc)
- 			continue;
- 		mcs_clear_stats(mcs, MCS_SC_STATS, id, dir);
-@@ -738,7 +738,7 @@ int mcs_free_all_rsrc(struct mcs *mcs, int dir, u16 pcifunc)
- 	}
+ 	pm_runtime_enable(&pdev->dev);
+ 	err = pm_runtime_resume_and_get(&pdev->dev);
+-	if (err)
++	if (err) {
++		pm_runtime_disable(&pdev->dev);
+ 		return err;
++	}
  
- 	/* free sc entries */
--	for (id = 0; id < map->secy.max; id++) {
-+	for (id = 0; id < map->sc.max; id++) {
- 		if (map->sc2pf_map[id] != pcifunc)
- 			continue;
- 		mcs_free_rsrc(&map->sc, map->sc2pf_map, id, pcifunc);
--- 
-2.53.0
-
+ 	if (device_property_present(&pdev->dev, "nvidia,needs-double-reset"))
+ 		usb->needs_double_reset = true;
 
 
