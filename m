@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3473BB112;
-	Fri,  9 Oct 2026 14:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE983D34A2;
+	Fri,  9 Oct 2026 14:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556497; cv=none; b=uRj8Ek6A6Kr2m9OLohaTo6AyMPxPfW+Tfo5/ruXFrmOVgsVNwtdEoi/vEkb44HyrUQ2CVJAJTcUAmxH5rXk3RBSRIp3bGlpW300OlTsmBjM7YYu2oXcSzmoeAxbyumQSZ4OUbWHmxMdVDf1d7SRESaZL/QUVHWwQTV1h6bbIq4k=
+	t=1791556498; cv=none; b=glhuR4t7YBgNGJgypZhKEpHn0HJdbFD1+UsFfpnihJkGl5Cnjh/KLWJXNRXd6gx2d0OuHGDwx8r2yV/4Lyvy+PwXf6BITAn7I3nJBeN6ADI2qKW6kLfPK+Y5g+rxkUYLjSOzAqpSGNNvLigOvWPmZrB2YeBlkHJAjin/WwRfKwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556497; c=relaxed/simple;
-	bh=aIp7tdxuo8Y0ZyZTTADf0yYSPL+BOg6rhlMqxS7gQ7I=;
+	s=arc-20240116; t=1791556498; c=relaxed/simple;
+	bh=agmgPwAUbtNOcWqDWcjq54FEYPIHfOeWAPNWj0DxzdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO9IPYAtMBSHC4iocW1zmPuvM6UT8obZsCBHHtbeO9CKZmibXc06j/0+r+4MEhj89lHf0fbnxEWzxb7zpOU2153HLCNgrEhIuHT/BR0GjizBMI5+5nzaYRPkWcl6FLgh9wogzUA1uJYwNuv81fOOHu+qGZqFt4jRfZYh4weupso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBC5Ga9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DL0gAwl3jW1/zZTzgztbTOIkGzofxNq0IhNejfoQbS8FPkp9pcClAEb1mcGRW1GkXQLLKz+w0kgijnwAEm9qiEBUESkTIzBQIo3rx0OcUQ8RhSnOcOn0wtqSGEfLzkvW60MmIpUCZo3o54FoSwcntVRNJU2dDSZPurknC8WKNcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBJCVWqI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBC5Ga9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859411F000FF;
-	Fri,  9 Oct 2026 14:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBJCVWqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3A21F00893;
+	Fri,  9 Oct 2026 14:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556494;
-	bh=pu0RkmEfHUauWhtLaK7CKPGB7g6PTUbYJiV3sZY69Og=;
+	s=korg; t=1791556496;
+	bh=Fxkp8KrH8oXzRrWyR6iNU2bwVCxoWMdG+10GtDc/XjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBC5Ga9q/MRj4curiLeb7mbOrVHPUAPM7g27EylUwXjTqdNhNipzTOmER2Y3FnVUW
-	 sHo8cOcf9zwyDZVeqicJ3rfrr1fv87H8UEdwM1laXu+0msaFeyotA+CvDvXsJM7tNO
-	 zIy/zU2lm/5rB55hA20TY+X8+7xQeTByNRdbMw34=
+	b=BBJCVWqIKmcc1QwpBOlx7jBPk2epgUKvS3PhPbZ1JcA99CC8Z5VQdSv/X6awhG2Fa
+	 ROoCmhJR2OigP/E6haTU91pFshroVYiZjEgdGVw4Cf48LmommA1ShPoOIoI4dSXs6r
+	 dS6uKm8pMFJGmRYu9aKVHzgvvaIxOIeokrcviqEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 244/403] tpm: fix off-by-four bounds check in tpm2_get_random()
-Date: Fri,  9 Oct 2026 16:10:05 +0200
-Message-ID: <20261009140957.872750193@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tomer Pomeranc <tomerpo@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 7.2 191/428] binder: fix leaked fd fixups on TF_UPDATE_TXN supersede
+Date: Fri,  9 Oct 2026 16:08:48 +0200
+Message-ID: <20261009140950.337444128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Tomer Pomeranc <tomerpo@gmail.com>
 
-[ Upstream commit 9b522400bf5c082feb9a0037a053ea822a2c7e4d ]
+commit c4c02084d6687d5cd5edccaf52cc45e5160f1184 upstream.
 
-When the response carries the TPM2_ST_SESSIONS tag, tpm2_get_random()
-skips the 4-byte parameter size field before locating the random data,
-but the bounds check still validates the response length against
-TPM_HEADER_SIZE.  A truncated response can pass the check and make
-memcpy() read up to 4 bytes past the response end, so stale buffer
-contents end up in the caller's random bytes.
+When a TF_UPDATE_TXN transaction supersedes a pending async transaction
+in a frozen process, the outdated transaction is freed with kfree()
+directly. This skips binder_free_txn_fixups(), leaking all
+binder_txn_fd_fixup entries and their fget()'d struct file references.
 
-Fix this by checking the response length against 'offset', which
-already includes the skipped parameter size field.
+The leaked file refcounts never reach zero, so the struct file objects
+are permanently pinned in memory. They survive process exit and
+accumulate across invocations until file-max exhaustion.
 
-Cc: stable@vger.kernel.org #  v6.12+
-Fixes: 1b6d7f9eb150 ("tpm: add session encryption protection to tpm2_get_random()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260902074839.417419-1-yijiangshan%40kylinos.cn
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260903035837.219284-1-yijiangshan@kylinos.cn
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Every other transaction cleanup path (binder_free_transaction(),
+binder_transaction() error paths, binder_release_work()) correctly
+calls binder_free_txn_fixups(). Add the missing call before kfree()
+in the t_outdated cleanup block.
+
+Fixes: 9864bb480133 ("Binder: add TF_UPDATE_TXN to replace outdated txn")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tomer Pomeranc <tomerpo@gmail.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260812195316.259136-2-tomerpo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
-index 2f506cdb5f458..c5465834396af 100644
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -298,7 +298,7 @@ int tpm2_get_random(struct tpm_chip *chip, u8 *dest, size_t max)
- 		out = (struct tpm2_get_random_out *)&buf.data[offset];
- 		recd = min_t(u32, be16_to_cpu(out->size), num_bytes);
- 		if (tpm_buf_length(&buf) <
--		    TPM_HEADER_SIZE +
-+		    offset +
- 		    offsetof(struct tpm2_get_random_out, buffer) +
- 		    recd) {
- 			err = -EFAULT;
--- 
-2.53.0
-
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2932,6 +2932,7 @@ static int binder_proc_transaction(struc
+ 		trace_binder_transaction_update_buffer_release(buffer);
+ 		binder_release_entire_buffer(proc, NULL, buffer, true);
+ 		binder_alloc_free_buf(&proc->alloc, buffer);
++		binder_free_txn_fixups(t_outdated);
+ 		kfree(t_outdated);
+ 		binder_stats_deleted(BINDER_STAT_TRANSACTION);
+ 	}
 
 
