@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABE12D8DC4;
-	Fri,  9 Oct 2026 14:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8563CB2E9;
+	Fri,  9 Oct 2026 14:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555504; cv=none; b=E463R2kI7vbNlql4rMgsyvPEk6F+D+iZmJYKFgFdIOWfaxbhokAvmKBLNs8DGstJzTy0ZvnoXZVQH/iVjN6gw6+hulMlTq4s8+JRbrXFVZR+F80RmD5eimu/oPYKhhQcpxkTObw9CDdILO5WxObXtn5naXoPhVKhTYhR32FCVAA=
+	t=1791555505; cv=none; b=HJZk4YdEbH+uLLHG20ThI7U/up172d3yeAX0v+ZfeR7ru1tADP2S71naaNaTVR2WOtVS4jCRBPRKOREN8/wGEDakdYNxTFewjRLfDypWZR72bsymtxz32agQ2vOzWkmdKH4CsufT/8sQORH229RJnbRMRlmhOWxmx9hlyAOZoHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555504; c=relaxed/simple;
-	bh=RPXrTlDqSkwjKuQWYkGRpkNMHUZ4wfPhAh7F9zIgqUs=;
+	s=arc-20240116; t=1791555505; c=relaxed/simple;
+	bh=IHsiBqraoYCBzW7nP7GXUW8ZRl4w9w6+LEu7b9IGH/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aa0GxEw+fGfdRtxajoHrTSH5ChNmz97Ek13AbYq9zaCjp+XrsUg0MC+QEa40TSD7Gva57c0xl7wp8SC5K6Au/1T6+maB/vTPCDyD42hDHlaNMTHRLHrnlIWDP11+xWdLcD/1xXArFabGMc3jFOgEdTt602LN7eos3IYD98+CIqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3yvvcla; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D1wF73E9ojt4RW4RbXNrpaMtLnj/EV5qktHqg/5PFrZZTjWGdNHKb9Qx7+ZpHyPizIo2TEJeWs6nQqBMczSXpcPqGopVor8BtHqt9Nfd0YP/b6IDSLBavimnI5/k0SiZ1QwQnYz5FkW0EXlyFo0Pjy4jEAIpi0HzBGBXosLBeFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c38lLmnW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3yvvcla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0337B1F000FF;
-	Fri,  9 Oct 2026 14:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c38lLmnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181701F00893;
+	Fri,  9 Oct 2026 14:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555502;
-	bh=Mc8YgNwxMlbdzu7/OIjOnzv2XkI43P6HzZL8S5GcnRM=;
+	s=korg; t=1791555499;
+	bh=QUp1SsQPIRisiuGD8DapVTCcO6XzF2I5WHIWOCIjbH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3yvvclanpGBfKw9DsFHvDSUxtDtILRvPfMzz1PrAuYpeNq40DdksEpxyyL93ZJOr
-	 r7KUyh1jfDGUMvY4XUuoTPYz3KT+ho+/Gt+cWNZkHWunoxHsnkZkHjSvSQQAr7Ba15
-	 7RkJd3daBRLvbAW0BOwV/2FrVzpGkjviepiA08R4=
+	b=c38lLmnWH8IuouniGg+aMiD3kZ4Sdthw7JmHR7JQroAgpRoSlRL0XpBBHtmfe0hPt
+	 3lJejxBTlWp8KyjeSSGugDNFnKBzU9GiewN0cBhEmtj8U6O+vLPHi4W1rK94l0mYPO
+	 jZTGjt7K7Rm+N3b2a5h6n9sI1SIJ+GSqG44aXTto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 027/403] kprobes: Skip disarmed probes when checking optkprobe overlap
-Date: Fri,  9 Oct 2026 16:06:28 +0200
-Message-ID: <20261009140952.749490439@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 068/403] wifi: mac80211: remove RX_DROP
+Date: Fri,  9 Oct 2026 16:07:09 +0200
+Message-ID: <20261009140953.687930213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,57 +50,469 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 7a39c732a22ec4a369af9e19fbe3d666ec83eec4 upstream.
+[ Upstream commit 58dc87d839280ac0f57b2a5caf647c2ed5cab1aa ]
 
-On x86, an optkprobe at A replaces five bytes with a jump. If a disabled
-probe B is at A+2, get_optimized_kprobe() stops at B when arming a new
-probe C at A+4. It leaves A optimized:
+Since it's hard to figure out what RX_DROP means when looking
+at traces that drop packets in mac80211, add more specific drop
+reasons and remove RX_DROP entirely.
 
-              A    A+1  A+2  A+3  A+4
-  A's jump  | e9 | d0 | d1 | d2 | d3 |
-  after C   | e9 | d0 | d1 | d2 | cc |
-
-The INT3 for C overwrites the last byte of A's jump displacement, so
-execution can jump to the wrong address. B can have prepared optinsns
-while disarmed, but has no jump to unoptimize.
-
-Continue past disarmed and unprepared probes to find the active optimized
-probe before arming a probe in its jump.
-
-Link: https://lore.kernel.org/all/20260930053618.104498-1-leon.hwang@linux.dev/
-
-Fixes: afd66255b9a4 ("kprobes: Introduce kprobes jump optimization")
-Cc: stable@vger.kernel.org
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260116092025.79d995e87026.I7cde413988f7a382c551cd1c1e2b05a52ec71755@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 5e4f3509793b ("wifi: mac80211: drop oversized fragments to avoid extra_len overflow")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/mac80211/drop.h | 46 ++++++++++++++++++++-
+ net/mac80211/rx.c   | 98 +++++++++++++++++++++++----------------------
+ 2 files changed, 94 insertions(+), 50 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -493,14 +493,16 @@ static bool kprobe_queued(struct kprobe
- static struct kprobe *get_optimized_kprobe(kprobe_opcode_t *addr)
+diff --git a/net/mac80211/drop.h b/net/mac80211/drop.h
+index eb9ab310f91ca..f06a8aa905c53 100644
+--- a/net/mac80211/drop.h
++++ b/net/mac80211/drop.h
+@@ -2,7 +2,7 @@
+ /*
+  * mac80211 drop reason list
+  *
+- * Copyright (C) 2023-2024 Intel Corporation
++ * Copyright (C) 2023-2024, 2026 Intel Corporation
+  */
+ 
+ #ifndef MAC80211_DROP_H
+@@ -65,6 +65,49 @@ typedef unsigned int __bitwise ieee80211_rx_result;
+ 	/* 0x30 */				\
+ 	R(RX_DROP_U_BAD_MGMT_KEYIDX)		\
+ 	R(RX_DROP_U_UNKNOWN_ACTION_REJECTED)	\
++	R(RX_DROP_U_MESH_DS_BITS)		\
++	R(RX_DROP_U_MESH_A3_MISMATCH)		\
++	R(RX_DROP_U_MESH_NO_A4)			\
++	R(RX_DROP_U_MESH_A4_MISMATCH)		\
++	R(RX_DROP_U_MESH_UNEXP_DATA)		\
++	R(RX_DROP_U_MESH_WRONG_ACTION)		\
++	R(RX_DROP_U_MESH_UNEXP_MGMT)		\
++	R(RX_DROP_U_SPURIOUS_NOTIF)		\
++	R(RX_DROP_U_RUNT_DATA)			\
++	R(RX_DROP_U_KEY_TAINTED)		\
++	R(RX_DROP_U_UNPROTECTED)		\
++	R(RX_DROP_U_MCAST_FRAGMENT)		\
++	R(RX_DROP_U_DEFRAG_MISMATCH)		\
++	R(RX_DROP_U_RUNT_MESH_DATA)		\
++	/* 0x40 */				\
++	R(RX_DROP_U_MESH_NO_TTL)		\
++	R(RX_DROP_U_MESH_RMC)			\
++	R(RX_DROP_U_MESH_BAD_AE)		\
++	R(RX_DROP_U_MESH_TTL_EXPIRED)		\
++	R(RX_DROP_U_MESH_NOT_FORWARDING)	\
++	R(RX_DROP_U_AMSDU_WITHOUT_DATA)		\
++	R(RX_DROP_U_NULL_DATA)			\
++	R(RX_DROP_U_UNEXPECTED_4ADDR)		\
++	R(RX_DROP_U_PORT_CONTROL)		\
++	R(RX_DROP_U_UNKNOWN_STA)		\
++	R(RX_DROP_U_RUNT_BAR)			\
++	R(RX_DROP_U_BAR_OUTSIDE_SESSION)	\
++	R(RX_DROP_U_CTRL_FRAME)			\
++	R(RX_DROP_U_RUNT_MGMT)			\
++	R(RX_DROP_U_EXPECTED_MGMT)		\
++	R(RX_DROP_U_NONBCAST_BEACON)		\
++	/* 0x50 */				\
++	R(RX_DROP_U_MALFORMED_ACTION)		\
++	R(RX_DROP_U_UNKNOWN_MCAST_ACTION)	\
++	R(RX_DROP_U_UNEXPECTED_EXT_FRAME)	\
++	R(RX_DROP_U_UNHANDLED_MGMT)		\
++	R(RX_DROP_U_MCAST_DEAUTH)		\
++	R(RX_DROP_U_UNHANDLED_DEAUTH)		\
++	R(RX_DROP_U_MCAST_DISASSOC)		\
++	R(RX_DROP_U_UNHANDLED_DISASSOC)		\
++	R(RX_DROP_U_UNHANDLED_PREQ)		\
++	R(RX_DROP_U_UNHANDLED_MGMT_STYPE)	\
++	R(RX_DROP_U_NO_LINK)			\
+ /* this line for the trailing \ - add before this */
+ 
+ /* having two enums allows for checking ieee80211_rx_result use with sparse */
+@@ -85,7 +128,6 @@ enum ___mac80211_drop_reason {
+ enum mac80211_drop_reason {
+ 	RX_CONTINUE	= (__force ieee80211_rx_result)___RX_CONTINUE,
+ 	RX_QUEUED	= (__force ieee80211_rx_result)___RX_QUEUED,
+-	RX_DROP		= (__force ieee80211_rx_result)___RX_DROP_UNUSABLE,
+ #define DEF(x) x = (__force ieee80211_rx_result)___ ## x,
+ 	MAC80211_DROP_REASONS_UNUSABLE(DEF)
+ #undef DEF
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 13b7432d732f8..160ccb0bdf27d 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -6,7 +6,7 @@
+  * Copyright 2007-2010	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright(c) 2015 - 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018-2025 Intel Corporation
++ * Copyright (C) 2018-2026 Intel Corporation
+  */
+ 
+ #include <linux/jiffies.h>
+@@ -1056,14 +1056,14 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
+ 		if (is_multicast_ether_addr(hdr->addr1)) {
+ 			if (ieee80211_has_tods(hdr->frame_control) ||
+ 			    !ieee80211_has_fromds(hdr->frame_control))
+-				return RX_DROP;
++				return RX_DROP_U_MESH_DS_BITS;
+ 			if (ether_addr_equal(hdr->addr3, dev_addr))
+-				return RX_DROP;
++				return RX_DROP_U_MESH_A3_MISMATCH;
+ 		} else {
+ 			if (!ieee80211_has_a4(hdr->frame_control))
+-				return RX_DROP;
++				return RX_DROP_U_MESH_NO_A4;
+ 			if (ether_addr_equal(hdr->addr4, dev_addr))
+-				return RX_DROP;
++				return RX_DROP_U_MESH_A4_MISMATCH;
+ 		}
+ 	}
+ 
+@@ -1075,20 +1075,20 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
+ 		struct ieee80211_mgmt *mgmt;
+ 
+ 		if (!ieee80211_is_mgmt(hdr->frame_control))
+-			return RX_DROP;
++			return RX_DROP_U_MESH_UNEXP_DATA;
+ 
+ 		if (ieee80211_is_action(hdr->frame_control)) {
+ 			u8 category;
+ 
+ 			/* make sure category field is present */
+ 			if (rx->skb->len < IEEE80211_MIN_ACTION_SIZE)
+-				return RX_DROP;
++				return RX_DROP_U_RUNT_ACTION;
+ 
+ 			mgmt = (struct ieee80211_mgmt *)hdr;
+ 			category = mgmt->u.action.category;
+ 			if (category != WLAN_CATEGORY_MESH_ACTION &&
+ 			    category != WLAN_CATEGORY_SELF_PROTECTED)
+-				return RX_DROP;
++				return RX_DROP_U_MESH_WRONG_ACTION;
+ 			return RX_CONTINUE;
+ 		}
+ 
+@@ -1098,7 +1098,7 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
+ 		    ieee80211_is_auth(hdr->frame_control))
+ 			return RX_CONTINUE;
+ 
+-		return RX_DROP;
++		return RX_DROP_U_MESH_UNEXP_MGMT;
+ 	}
+ 
+ 	return RX_CONTINUE;
+@@ -1524,7 +1524,7 @@ ieee80211_rx_h_check(struct ieee80211_rx_data *rx)
+ 			hdrlen = ieee80211_hdrlen(hdr->frame_control);
+ 
+ 			if (rx->skb->len < hdrlen + 8)
+-				return RX_DROP;
++				return RX_DROP_U_RUNT_DATA;
+ 
+ 			skb_copy_bits(rx->skb, hdrlen + 6, &ethertype, 2);
+ 			if (ethertype == rx->sdata->control_port_protocol)
+@@ -1534,9 +1534,9 @@ ieee80211_rx_h_check(struct ieee80211_rx_data *rx)
+ 		if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
+ 		    cfg80211_rx_spurious_frame(rx->sdata->dev, hdr->addr2,
+ 					       rx->link_id, GFP_ATOMIC))
+-			return RX_DROP_U_SPURIOUS;
++			return RX_DROP_U_SPURIOUS_NOTIF;
+ 
+-		return RX_DROP;
++		return RX_DROP_U_SPURIOUS;
+ 	}
+ 
+ 	return RX_CONTINUE;
+@@ -2027,7 +2027,7 @@ ieee80211_rx_h_decrypt(struct ieee80211_rx_data *rx)
+ 		if (rx->link_sta) {
+ 			if (ieee80211_is_group_privacy_action(skb) &&
+ 			    test_sta_flag(rx->sta, WLAN_STA_MFP))
+-				return RX_DROP;
++				return RX_DROP_U_UNPROTECTED;
+ 
+ 			rx->key = rcu_dereference(rx->link_sta->gtk[mmie_keyidx]);
+ 		}
+@@ -2112,11 +2112,11 @@ ieee80211_rx_h_decrypt(struct ieee80211_rx_data *rx)
+ 
+ 	if (rx->key) {
+ 		if (unlikely(rx->key->flags & KEY_FLAG_TAINTED))
+-			return RX_DROP;
++			return RX_DROP_U_KEY_TAINTED;
+ 
+ 		/* TODO: add threshold stuff again */
+ 	} else {
+-		return RX_DROP;
++		return RX_DROP_U_UNPROTECTED;
+ 	}
+ 
+ 	switch (rx->key->conf.cipher) {
+@@ -2290,7 +2290,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
+ 		goto out;
+ 
+ 	if (is_multicast_ether_addr(hdr->addr1))
+-		return RX_DROP;
++		return RX_DROP_U_MCAST_FRAGMENT;
+ 
+ 	I802_DEBUG_INC(rx->local->rx_handlers_fragments);
+ 
+@@ -2345,7 +2345,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
+ 					  rx->seqno_idx, hdr);
+ 	if (!entry) {
+ 		I802_DEBUG_INC(rx->local->rx_handlers_drop_defrag);
+-		return RX_DROP;
++		return RX_DROP_U_DEFRAG_MISMATCH;
+ 	}
+ 
+ 	/* "The receiver shall discard MSDUs and MMPDUs whose constituent
+@@ -2867,25 +2867,25 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
+ 		return RX_CONTINUE;
+ 
+ 	if (!pskb_may_pull(skb, sizeof(*eth) + 6))
+-		return RX_DROP;
++		return RX_DROP_U_RUNT_MESH_DATA;
+ 
+ 	mesh_hdr = (struct ieee80211s_hdr *)(skb->data + sizeof(*eth));
+ 	mesh_hdrlen = ieee80211_get_mesh_hdrlen(mesh_hdr);
+ 
+ 	if (!pskb_may_pull(skb, sizeof(*eth) + mesh_hdrlen))
+-		return RX_DROP;
++		return RX_DROP_U_RUNT_MESH_DATA;
+ 
+ 	eth = (struct ethhdr *)skb->data;
+ 	multicast = is_multicast_ether_addr(eth->h_dest);
+ 
+ 	mesh_hdr = (struct ieee80211s_hdr *)(eth + 1);
+ 	if (!mesh_hdr->ttl)
+-		return RX_DROP;
++		return RX_DROP_U_MESH_NO_TTL;
+ 
+ 	/* frame is in RMC, don't forward */
+ 	if (is_multicast_ether_addr(eth->h_dest) &&
+ 	    mesh_rmc_check(sdata, eth->h_source, mesh_hdr))
+-		return RX_DROP;
++		return RX_DROP_U_MESH_RMC;
+ 
+ 	/* forward packet */
+ 	if (sdata->crypto_tx_tailroom_needed_cnt)
+@@ -2902,7 +2902,7 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
+ 			/* has_a4 already checked in ieee80211_rx_mesh_check */
+ 			proxied_addr = mesh_hdr->eaddr2;
+ 		else
+-			return RX_DROP;
++			return RX_DROP_U_MESH_BAD_AE;
+ 
+ 		rcu_read_lock();
+ 		mppath = mpp_path_lookup(sdata, proxied_addr);
+@@ -2934,14 +2934,14 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
+ 			goto rx_accept;
+ 
+ 		IEEE80211_IFSTA_MESH_CTR_INC(ifmsh, dropped_frames_ttl);
+-		return RX_DROP;
++		return RX_DROP_U_MESH_TTL_EXPIRED;
+ 	}
+ 
+ 	if (!ifmsh->mshcfg.dot11MeshForwarding) {
+ 		if (is_multicast_ether_addr(eth->h_dest))
+ 			goto rx_accept;
+ 
+-		return RX_DROP;
++		return RX_DROP_U_MESH_NOT_FORWARDING;
+ 	}
+ 
+ 	skb_set_queue_mapping(skb, ieee802_1d_to_ac[skb->priority]);
+@@ -3127,7 +3127,7 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
+ 		return RX_CONTINUE;
+ 
+ 	if (unlikely(!ieee80211_is_data_present(fc)))
+-		return RX_DROP;
++		return RX_DROP_U_AMSDU_WITHOUT_DATA;
+ 
+ 	if (unlikely(ieee80211_has_a4(hdr->frame_control))) {
+ 		switch (rx->sdata->vif.type) {
+@@ -3184,7 +3184,7 @@ ieee80211_rx_h_data(struct ieee80211_rx_data *rx)
+ 		return RX_CONTINUE;
+ 
+ 	if (unlikely(!ieee80211_is_data_present(hdr->frame_control)))
+-		return RX_DROP;
++		return RX_DROP_U_NULL_DATA;
+ 
+ 	/* Send unexpected-4addr-frame event to hostapd */
+ 	if (ieee80211_has_a4(hdr->frame_control) &&
+@@ -3194,7 +3194,7 @@ ieee80211_rx_h_data(struct ieee80211_rx_data *rx)
+ 			cfg80211_rx_unexpected_4addr_frame(
+ 				rx->sdata->dev, rx->sta->sta.addr, rx->link_id,
+ 				GFP_ATOMIC);
+-		return RX_DROP;
++		return RX_DROP_U_UNEXPECTED_4ADDR;
+ 	}
+ 
+ 	res = __ieee80211_data_to_8023(rx, &port_control);
+@@ -3206,7 +3206,7 @@ ieee80211_rx_h_data(struct ieee80211_rx_data *rx)
+ 		return res;
+ 
+ 	if (!ieee80211_frame_allowed(rx, fc))
+-		return RX_DROP;
++		return RX_DROP_U_PORT_CONTROL;
+ 
+ 	/* directly handle TDLS channel switch requests/responses */
+ 	if (unlikely(((struct ethhdr *)rx->skb->data)->h_proto ==
+@@ -3271,11 +3271,11 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
+ 		};
+ 
+ 		if (!rx->sta)
+-			return RX_DROP;
++			return RX_DROP_U_UNKNOWN_STA;
+ 
+ 		if (skb_copy_bits(skb, offsetof(struct ieee80211_bar, control),
+ 				  &bar_data, sizeof(bar_data)))
+-			return RX_DROP;
++			return RX_DROP_U_RUNT_BAR;
+ 
+ 		tid = le16_to_cpu(bar_data.control) >> 12;
+ 
+@@ -3287,7 +3287,7 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
+ 
+ 		tid_agg_rx = rcu_dereference(rx->sta->ampdu_mlme.tid_rx[tid]);
+ 		if (!tid_agg_rx)
+-			return RX_DROP;
++			return RX_DROP_U_BAR_OUTSIDE_SESSION;
+ 
+ 		start_seq_num = le16_to_cpu(bar_data.start_seq_num) >> 4;
+ 		event.u.ba.tid = tid;
+@@ -3311,7 +3311,7 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
+ 		return RX_QUEUED;
+ 	}
+ 
+-	return RX_DROP;
++	return RX_DROP_U_CTRL_FRAME;
+ }
+ 
+ static void ieee80211_process_sa_query_req(struct ieee80211_sub_if_data *sdata,
+@@ -3420,10 +3420,10 @@ ieee80211_rx_h_mgmt_check(struct ieee80211_rx_data *rx)
+ 	 * and unknown (reserved) frames are useless.
+ 	 */
+ 	if (rx->skb->len < 24)
+-		return RX_DROP;
++		return RX_DROP_U_RUNT_MGMT;
+ 
+ 	if (!ieee80211_is_mgmt(mgmt->frame_control))
+-		return RX_DROP;
++		return RX_DROP_U_EXPECTED_MGMT;
+ 
+ 	/* drop too small action frames */
+ 	if (ieee80211_is_action(mgmt->frame_control) &&
+@@ -3433,7 +3433,7 @@ ieee80211_rx_h_mgmt_check(struct ieee80211_rx_data *rx)
+ 	/* Drop non-broadcast Beacon frames */
+ 	if (ieee80211_is_beacon(mgmt->frame_control) &&
+ 	    !is_broadcast_ether_addr(mgmt->da))
+-		return RX_DROP;
++		return RX_DROP_U_NONBCAST_BEACON;
+ 
+ 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
+ 	    ieee80211_is_beacon(mgmt->frame_control) &&
+@@ -3962,10 +3962,10 @@ ieee80211_rx_h_action_return(struct ieee80211_rx_data *rx)
+ 	if (!(status->rx_flags & IEEE80211_RX_MALFORMED_ACTION_FRM) &&
+ 	    (sdata->vif.type == NL80211_IFTYPE_AP ||
+ 	     sdata->vif.type == NL80211_IFTYPE_AP_VLAN))
+-		return RX_DROP;
++		return RX_DROP_U_MALFORMED_ACTION;
+ 
+ 	if (is_multicast_ether_addr(mgmt->da))
+-		return RX_DROP;
++		return RX_DROP_U_UNKNOWN_MCAST_ACTION;
+ 
+ 	/* do not return rejected action frames */
+ 	if (mgmt->u.action.category & 0x80)
+@@ -4010,7 +4010,7 @@ ieee80211_rx_h_ext(struct ieee80211_rx_data *rx)
+ 		return RX_CONTINUE;
+ 
+ 	if (sdata->vif.type != NL80211_IFTYPE_STATION)
+-		return RX_DROP;
++		return RX_DROP_U_UNEXPECTED_EXT_FRAME;
+ 
+ 	/* for now only beacons are ext, so queue them */
+ 	ieee80211_queue_skb_to_iface(sdata, rx->link_id, rx->sta, rx->skb);
+@@ -4031,7 +4031,7 @@ ieee80211_rx_h_mgmt(struct ieee80211_rx_data *rx)
+ 	    sdata->vif.type != NL80211_IFTYPE_ADHOC &&
+ 	    sdata->vif.type != NL80211_IFTYPE_OCB &&
+ 	    sdata->vif.type != NL80211_IFTYPE_STATION)
+-		return RX_DROP;
++		return RX_DROP_U_UNHANDLED_MGMT;
+ 
+ 	switch (stype) {
+ 	case cpu_to_le16(IEEE80211_STYPE_AUTH):
+@@ -4042,32 +4042,32 @@ ieee80211_rx_h_mgmt(struct ieee80211_rx_data *rx)
+ 	case cpu_to_le16(IEEE80211_STYPE_DEAUTH):
+ 		if (is_multicast_ether_addr(mgmt->da) &&
+ 		    !is_broadcast_ether_addr(mgmt->da))
+-			return RX_DROP;
++			return RX_DROP_U_MCAST_DEAUTH;
+ 
+ 		/* process only for station/IBSS */
+ 		if (sdata->vif.type != NL80211_IFTYPE_STATION &&
+ 		    sdata->vif.type != NL80211_IFTYPE_ADHOC)
+-			return RX_DROP;
++			return RX_DROP_U_UNHANDLED_DEAUTH;
+ 		break;
+ 	case cpu_to_le16(IEEE80211_STYPE_ASSOC_RESP):
+ 	case cpu_to_le16(IEEE80211_STYPE_REASSOC_RESP):
+ 	case cpu_to_le16(IEEE80211_STYPE_DISASSOC):
+ 		if (is_multicast_ether_addr(mgmt->da) &&
+ 		    !is_broadcast_ether_addr(mgmt->da))
+-			return RX_DROP;
++			return RX_DROP_U_MCAST_DISASSOC;
+ 
+ 		/* process only for station */
+ 		if (sdata->vif.type != NL80211_IFTYPE_STATION)
+-			return RX_DROP;
++			return RX_DROP_U_UNHANDLED_DISASSOC;
+ 		break;
+ 	case cpu_to_le16(IEEE80211_STYPE_PROBE_REQ):
+ 		/* process only for ibss and mesh */
+ 		if (sdata->vif.type != NL80211_IFTYPE_ADHOC &&
+ 		    sdata->vif.type != NL80211_IFTYPE_MESH_POINT)
+-			return RX_DROP;
++			return RX_DROP_U_UNHANDLED_PREQ;
+ 		break;
+ 	default:
+-		return RX_DROP;
++		return RX_DROP_U_UNHANDLED_MGMT_STYPE;
+ 	}
+ 
+ 	ieee80211_queue_skb_to_iface(sdata, rx->link_id, rx->sta, rx->skb);
+@@ -4095,7 +4095,7 @@ static void ieee80211_rx_handlers_result(struct ieee80211_rx_data *rx,
+ static void ieee80211_rx_handlers(struct ieee80211_rx_data *rx,
+ 				  struct sk_buff_head *frames)
  {
- 	int i;
--	struct kprobe *p = NULL;
-+	struct kprobe *p;
- 	struct optimized_kprobe *op;
+-	ieee80211_rx_result res = RX_DROP;
++	ieee80211_rx_result res;
+ 	struct sk_buff *skb;
  
- 	/* Don't check i == 0, since that is a breakpoint case. */
--	for (i = 1; !p && i < MAX_OPTIMIZED_LENGTH / sizeof(kprobe_opcode_t); i++)
-+	for (i = 1; i < MAX_OPTIMIZED_LENGTH / sizeof(kprobe_opcode_t); i++) {
- 		p = get_kprobe(addr - i);
-+		/* A disabled probe can have prepared, but inactive, optinsns. */
-+		if (!p || !kprobe_optready(p) || kprobe_disarmed(p))
-+			continue;
+ #define CALL_RXH(rxh)			\
+@@ -4121,8 +4121,10 @@ static void ieee80211_rx_handlers(struct ieee80211_rx_data *rx,
+ 		 */
+ 		rx->skb = skb;
  
--	if (p && kprobe_optready(p)) {
- 		op = container_of(p, struct optimized_kprobe, kp);
- 		if (arch_within_optimized_kprobe(op, addr))
- 			return p;
+-		if (WARN_ON_ONCE(!rx->link))
++		if (WARN_ON_ONCE(!rx->link)) {
++			res = RX_DROP_U_NO_LINK;
+ 			goto rxh_next;
++		}
+ 
+ 		CALL_RXH(ieee80211_rx_h_check_more_data);
+ 		CALL_RXH(ieee80211_rx_h_uapsd_and_pspoll);
+@@ -4159,7 +4161,7 @@ static void ieee80211_rx_handlers(struct ieee80211_rx_data *rx,
+ static void ieee80211_invoke_rx_handlers(struct ieee80211_rx_data *rx)
+ {
+ 	struct sk_buff_head reorder_release;
+-	ieee80211_rx_result res = RX_DROP;
++	ieee80211_rx_result res;
+ 
+ 	__skb_queue_head_init(&reorder_release);
+ 
+-- 
+2.53.0
+
 
 
