@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C5734CFD0;
-	Fri,  9 Oct 2026 14:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C482367DF;
+	Fri,  9 Oct 2026 14:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555338; cv=none; b=RUQ8ynQSK0GMsfOuUc68dogEjlAAbcbuKz0L197RMmJt9aKFkLIvRWFpn0NZ9RodFDqFp0JyxaCmpLtU1x5Iez134GRTrYiMNlbAQz+dCMHSe4xxIBhTrgMD93XTAgjMKyofTBR40BblYJ0ybMmTrBq5XEttZLsxWcRKLx+2mOI=
+	t=1791555343; cv=none; b=BKIesnQkAatEN/Ad0kdLQ3aGxclBXRSJ4+k8E5RuW2UHVdG8mWfCnlJJPpmv9IsBu4LsIhu9eD+tfRAU0UE1UbkusgvqQyZmssINSETqxXcnbwyLmJZDGhA0TRzXEAOAOx5PU5WrQkGw/zB/cSsX6nbSUxmG3UPp1jHkcDrFHa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555338; c=relaxed/simple;
-	bh=UYdTtlAw0CTAfdsL5XpHbZBPboXUvvOIc828NsKfLJw=;
+	s=arc-20240116; t=1791555343; c=relaxed/simple;
+	bh=eaQrIXxqNju5fhealSYoIGXLjwTEl07ZMMR1pxlPcq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIoREu1LHI5IpgYHl0brwtbYN3Kj4NoIZ8GEFZpCjAN9m2/JgEAbRIOhMd1x12Za7iVTJLDBQNdqxegrQTtDhaIujUrEMsGjWowiIiTqmwn0izWDiYTKSSZjxg8D/pSJBXwFFsELCNIzPCxYUqDLqp2x1DGvZ30XOs1AXm/f98Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULyOozoZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=szPyvZ2qW+3dPheapBZVKiHq/XDvjdNiktyTuPjB4yJ5jGrC4unZHsltiQ1cBRzvvF7dzM1WIKvFejbMLWr8fgeTws1M49XEoHzHIlDDQY1hOSJlevm1wzZd1Kmwu9pRCucwostYjomPPLPCpFe9oQijkmgAoxzPNlA9OvASvsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehIr/Gt6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULyOozoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D74F1F00898;
-	Fri,  9 Oct 2026 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehIr/Gt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CE21F000FF;
+	Fri,  9 Oct 2026 14:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555336;
-	bh=/QGHb+vC7UN04FX9run8pL0x1dMa+x+WxsU53TWNiBo=;
+	s=korg; t=1791555339;
+	bh=7W4gPZTyEh3445XjznnIsi4qMEtLMI3StKLTOWn1YVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ULyOozoZOqBOSOt2XNbVLpyRlfbIuwi4viF4QTgRe6tSljiTkZYPjLFRulTKnNQEB
-	 dse+pxWxQLAWmhJMf0oAKTMeVk3o8ZOBXSlVM8oKbKgSsQlOjfKbBlSaINHH2X8hRc
-	 zpnTHLFwxgDrkTEk9Pr3Lkpl2o5YHvbPCJ19XVyg=
+	b=ehIr/Gt61KhQBdzWrvzE73aPoBBDHt99L2bQ0jFyb7KiUYQxCGzzJw2s31eFkTYbA
+	 gaubvo2cMBHuBkdLmHaR0l8Z9j/5RZDbO2z+vjNmV/Z9MAKVMsc75Q9YxVBjvGwi+M
+	 YyHT8IW9V+oFtVuxrtuwjYDOvXKXaqTzqMCKwU6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tibor Harcsa <silurust@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/403] Bluetooth: btusb: Add IMC Networks QCA9377 to quirks table
-Date: Fri,  9 Oct 2026 16:06:13 +0200
-Message-ID: <20261009140952.406122095@linuxfoundation.org>
+Subject: [PATCH 6.18 013/403] cifs: on replayable errors back-off before replay, not after
+Date: Fri,  9 Oct 2026 16:06:14 +0200
+Message-ID: <20261009140952.428372328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,63 +51,554 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tibor Harcsa <silurust@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit dc16388d45ecbd3be0d8c9424dbbaa2c81806578 ]
+[ Upstream commit 16d480ed4990ed5aefb99c111dd14131a338e3c9 ]
 
-Add the USB ID (13d3:3503) for the IMC Networks Qualcomm Atheros
-QCA9377 Bluetooth controller to the btusb quirks table. This device
-requires Qualcomm Rome firmware and wideband speech support to function
-properly; otherwise, BLE scanning fails with HCI unexpected event
-opcode 0x2005 errors.
+On replayable errors, we call smb2_should_replays that does these
+things today:
+1. decide if we need to replay the command again
+2. sleep to back-off the failed request
+3. update the next sleep value
 
-The device reports the following in /sys/kernel/debug/usb/devices:
+We will not be able to use this for async requests, when this is
+processed in callbacks (as this will be called in cifsd threads that
+should not sleep in response processing).
 
-P:  Vendor=13d3 ProdID=3503 Rev= 0.01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+Modify the behaviour by taking the sleep out of smb2_should_replay
+and performing the sleep for back-off just before actually
+performing the replay.
 
-Signed-off-by: Tibor Harcsa <silurust@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 566820af017e ("smb: client: close handle after create-context parsing failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cached_dir.c |   6 +-
+ fs/smb/client/smb2inode.c  |  21 +++++--
+ fs/smb/client/smb2ops.c    |  32 ++++++++---
+ fs/smb/client/smb2pdu.c    | 112 +++++++++++++++++++++++++++----------
+ 4 files changed, 129 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index c496f746fafa4..59fff918fd2de 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -307,6 +307,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3503), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index 1bd15cc8194c9..0c8c0e69e1ea2 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -155,7 +155,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 	struct cached_fid *cfid;
+ 	struct cached_fids *cfids;
+ 	const char *npath;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 	__le32 lease_flags = 0;
  
- 	/* QCA WCN6855 chipset */
- 	{ USB_DEVICE(0x0489, 0xe0c7), .driver_info = BTUSB_QCA_WCN6855 |
+ 	if (cifs_sb->root == NULL)
+@@ -313,6 +313,10 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 	smb2_set_related(&rqst[1]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
++
+ 		smb2_set_replay(server, &rqst[0]);
+ 		smb2_set_replay(server, &rqst[1]);
+ 	}
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index e419b303ce9cf..19f22e0a9efd0 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -199,7 +199,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct reparse_data_buffer *rbuf;
+ 	struct TCP_Server_Info *server;
+ 	int resp_buftype[MAX_COMPOUND];
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 	__u8 delete_pending[8] = {1,};
+ 	struct kvec *rsp_iov, *iov;
+ 	struct inode *inode = NULL;
+@@ -649,18 +649,26 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 	num_rqst++;
+ 
+ 	if (cfile) {
+-		if (retries)
++		if (retries) {
++			/* Back-off before retry */
++			if (cur_sleep)
++				msleep(cur_sleep);
+ 			for (i = 1; i < num_rqst - 2; i++)
+ 				smb2_set_replay(server, &rqst[i]);
++		}
+ 
+ 		rc = compound_send_recv(xid, ses, server,
+ 					flags, num_rqst - 2,
+ 					&rqst[1], &resp_buftype[1],
+ 					&rsp_iov[1]);
+ 	} else {
+-		if (retries)
++		if (retries) {
++			/* Back-off before retry */
++			if (cur_sleep)
++				msleep(cur_sleep);
+ 			for (i = 0; i < num_rqst; i++)
+ 				smb2_set_replay(server, &rqst[i]);
++		}
+ 
+ 		rc = compound_send_recv(xid, ses, server,
+ 					flags, num_rqst,
+@@ -1210,7 +1218,7 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
+ {
+ 	struct kvec open_iov[SMB2_CREATE_IOV_SIZE];
+ 	__le16 *utf16_path __free(kfree) = NULL;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 	struct TCP_Server_Info *server;
+ 	struct cifs_open_parms oparms;
+ 	struct smb2_create_req *creq;
+@@ -1274,6 +1282,9 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
+ 	smb2_set_related(&rqst[1]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		for (int i = 0; i < ARRAY_SIZE(rqst);  i++)
+ 			smb2_set_replay(server, &rqst[i]);
+ 	}
+@@ -1294,7 +1305,7 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
+ 	if (rc == -EINVAL && dentry) {
+ 		dentry = NULL;
+ 		retries = 0;
+-		cur_sleep = 1;
++		cur_sleep = 0;
+ 		goto again;
+ 	}
+ 	/*
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 19c82ad224a19..116b0aacb056b 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -1210,7 +1210,7 @@ smb2_set_ea(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct smb2_file_full_ea_info *ea;
+ 	struct smb2_query_info_rsp *rsp;
+ 	int rc, used_len = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -1341,6 +1341,9 @@ smb2_set_ea(const unsigned int xid, struct cifs_tcon *tcon,
+ 	smb2_set_related(&rqst[2]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst[0]);
+ 		smb2_set_replay(server, &rqst[1]);
+ 		smb2_set_replay(server, &rqst[2]);
+@@ -1605,7 +1608,7 @@ smb2_ioctl_query_info(const unsigned int xid,
+ 	void *data[2];
+ 	int create_options = is_dir ? CREATE_NOT_FILE : CREATE_NOT_DIR;
+ 	void (*free_req1_func)(struct smb_rqst *r);
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -1755,6 +1758,9 @@ smb2_ioctl_query_info(const unsigned int xid,
+ 	smb2_set_related(&rqst[2]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst[0]);
+ 		smb2_set_replay(server, &rqst[1]);
+ 		smb2_set_replay(server, &rqst[2]);
+@@ -2545,7 +2551,7 @@ smb2_query_dir_first(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct smb2_query_directory_rsp *qd_rsp = NULL;
+ 	struct smb2_create_rsp *op_rsp = NULL;
+ 	struct TCP_Server_Info *server;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -2603,6 +2609,9 @@ smb2_query_dir_first(const unsigned int xid, struct cifs_tcon *tcon,
+ 	smb2_set_related(&rqst[1]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst[0]);
+ 		smb2_set_replay(server, &rqst[1]);
+ 	}
+@@ -2879,10 +2888,14 @@ bool smb2_should_replay(struct cifs_tcon *tcon,
+ 		return false;
+ 
+ 	if (tcon->retry || (*pretries)++ < tcon->ses->server->retrans) {
+-		msleep(*pcur_sleep);
+-		(*pcur_sleep) = ((*pcur_sleep) << 1);
+-		if ((*pcur_sleep) > CIFS_MAX_SLEEP)
+-			(*pcur_sleep) = CIFS_MAX_SLEEP;
++		/* Update sleep time for exponential backoff */
++		if (!(*pcur_sleep))
++			(*pcur_sleep) = 1;
++		else {
++			(*pcur_sleep) = ((*pcur_sleep) << 1);
++			if ((*pcur_sleep) > CIFS_MAX_SLEEP)
++				(*pcur_sleep) = CIFS_MAX_SLEEP;
++		}
+ 		return true;
+ 	}
+ 
+@@ -2913,7 +2926,7 @@ smb2_query_info_compound(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int rc;
+ 	__le16 *utf16_path;
+ 	struct cached_fid *cfid;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -3003,6 +3016,9 @@ smb2_query_info_compound(const unsigned int xid, struct cifs_tcon *tcon,
+ 	smb2_set_related(&rqst[2]);
+ 
+ 	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		if (!cfid) {
+ 			smb2_set_replay(server, &rqst[0]);
+ 			smb2_set_replay(server, &rqst[2]);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index e0edfce3fbe5f..b4b1605b00234 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2867,7 +2867,7 @@ int smb311_posix_mkdir(const unsigned int xid, struct inode *inode,
+ 	unsigned int total_len;
+ 	__le16 *utf16_path = NULL;
+ 	struct TCP_Server_Info *server;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -2980,8 +2980,12 @@ int smb311_posix_mkdir(const unsigned int xid, struct inode *inode,
+ 	trace_smb3_posix_mkdir_enter(xid, tcon->tid, ses->Suid, full_path, CREATE_NOT_FILE,
+ 				    FILE_WRITE_ATTRIBUTES);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	/* resource #4: response buffer */
+ 	rc = cifs_send_recv(xid, ses, server,
+@@ -3229,7 +3233,7 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
+ 	int resp_buftype = CIFS_NO_BUFFER;
+ 	int rc = 0;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -3259,8 +3263,12 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
+ 	trace_smb3_open_enter(xid, tcon->tid, tcon->ses->Suid, oparms->path,
+ 		oparms->create_options, oparms->desired_access);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags,
+@@ -3444,7 +3452,7 @@ SMB2_ioctl(const unsigned int xid, struct cifs_tcon *tcon, u64 persistent_fid,
+ 	int resp_buftype = CIFS_NO_BUFFER;
+ 	int rc = 0;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ 	if (!tcon)
+ 		return -EIO;
+@@ -3486,8 +3494,12 @@ SMB2_ioctl(const unsigned int xid, struct cifs_tcon *tcon, u64 persistent_fid,
+ 	if (rc)
+ 		goto ioctl_exit;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags,
+@@ -3641,7 +3653,7 @@ __SMB2_close(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int rc = 0;
+ 	int flags = 0;
+ 	bool query_attrs = false;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -3675,8 +3687,12 @@ __SMB2_close(const unsigned int xid, struct cifs_tcon *tcon,
+ 	if (rc)
+ 		goto close_exit;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -3846,7 +3862,7 @@ query_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct TCP_Server_Info *server;
+ 	int flags = 0;
+ 	bool allocated = false;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ 	cifs_dbg(FYI, "Query Info\n");
+ 
+@@ -3882,8 +3898,12 @@ query_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	trace_smb3_query_info_enter(xid, persistent_fid, tcon->tid,
+ 				    ses->Suid, info_class, (__u32)info_type);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -4039,7 +4059,7 @@ SMB2_change_notify(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int resp_buftype = CIFS_NO_BUFFER;
+ 	int flags = 0;
+ 	int rc = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -4072,8 +4092,12 @@ SMB2_change_notify(const unsigned int xid, struct cifs_tcon *tcon,
+ 	trace_smb3_notify_enter(xid, persistent_fid, tcon->tid, ses->Suid,
+ 				(u8)watch_tree, completion_filter);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -4380,7 +4404,7 @@ SMB2_flush(const unsigned int xid, struct cifs_tcon *tcon, u64 persistent_fid,
+ 	int resp_buftype = CIFS_NO_BUFFER;
+ 	int flags = 0;
+ 	int rc = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -4408,8 +4432,12 @@ SMB2_flush(const unsigned int xid, struct cifs_tcon *tcon, u64 persistent_fid,
+ 
+ 	trace_smb3_flush_enter(xid, persistent_fid, tcon->tid, ses->Suid);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -5175,7 +5203,7 @@ SMB2_write(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 	int flags = 0;
+ 	unsigned int total_len;
+ 	struct TCP_Server_Info *server;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -5226,8 +5254,12 @@ SMB2_write(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 	iov_iter_kvec(&rqst.rq_iter, ITER_SOURCE, &iov[1], n_vec,
+ 		      io_parms->length);
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, io_parms->tcon->ses, server,
+ 			    &rqst,
+@@ -5578,7 +5610,7 @@ SMB2_query_directory(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct cifs_ses *ses = tcon->ses;
+ 	struct TCP_Server_Info *server;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -5603,8 +5635,12 @@ SMB2_query_directory(const unsigned int xid, struct cifs_tcon *tcon,
+ 	if (rc)
+ 		goto qdir_exit;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -5713,7 +5749,7 @@ send_set_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct cifs_ses *ses = tcon->ses;
+ 	struct TCP_Server_Info *server;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -5748,8 +5784,12 @@ send_set_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 		return rc;
+ 	}
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags,
+@@ -5828,7 +5868,7 @@ SMB2_oplock_break(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct kvec iov[1];
+ 	struct kvec rsp_iov;
+ 	int resp_buf_type;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -5858,8 +5898,12 @@ SMB2_oplock_break(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rqst.rq_iov = iov;
+ 	rqst.rq_nvec = 1;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buf_type, flags, &rsp_iov);
+@@ -5961,7 +6005,7 @@ SMB311_posix_qfs_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct TCP_Server_Info *server;
+ 	FILE_SYSTEM_POSIX_INFO *info = NULL;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -5982,8 +6026,12 @@ SMB311_posix_qfs_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rqst.rq_iov = &iov;
+ 	rqst.rq_nvec = 1;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -6026,7 +6074,7 @@ SMB2_QFS_attr(const unsigned int xid, struct cifs_tcon *tcon,
+ 	struct TCP_Server_Info *server;
+ 	unsigned int rsp_len, offset;
+ 	int flags = 0;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -6063,8 +6111,12 @@ SMB2_QFS_attr(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rqst.rq_iov = &iov;
+ 	rqst.rq_nvec = 1;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, ses, server,
+ 			    &rqst, &resp_buftype, flags, &rsp_iov);
+@@ -6126,7 +6178,7 @@ smb2_lockv(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int flags = CIFS_NO_RSP_BUF;
+ 	unsigned int total_len;
+ 	struct TCP_Server_Info *server;
+-	int retries = 0, cur_sleep = 1;
++	int retries = 0, cur_sleep = 0;
+ 
+ replay_again:
+ 	/* reinitialize for possible replay */
+@@ -6162,8 +6214,12 @@ smb2_lockv(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rqst.rq_iov = iov;
+ 	rqst.rq_nvec = 2;
+ 
+-	if (retries)
++	if (retries) {
++		/* Back-off before retry */
++		if (cur_sleep)
++			msleep(cur_sleep);
+ 		smb2_set_replay(server, &rqst);
++	}
+ 
+ 	rc = cifs_send_recv(xid, tcon->ses, server,
+ 			    &rqst, &resp_buf_type, flags,
 -- 
 2.53.0
 
