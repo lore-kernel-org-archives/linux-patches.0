@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D49C353A82;
-	Fri,  9 Oct 2026 14:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AD83D1AA6;
+	Fri,  9 Oct 2026 14:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557119; cv=none; b=MteGbFwSJWoFnX8jCi0ekajPrtGSI/hT3VgKHQa9mJEMmWLgcPFhFEW4BKhsxjJRzIuO9v3g+d0TC1wrU4SmyjMA+qQxM31AEUFT7xwttaP8eK+DxAseBKIW00SMAhDnkK8SPkYh8f0KxQpYdJKZqAe1bQyG4zOiIj1UNNbfjGA=
+	t=1791557122; cv=none; b=PpCkZEtX28tN77NfYYK17U+nXk3QJooL5E6/dd9JnfS6oxzwQXgL68VTxDEpQtQvg6wHy+2CmVtBglrW4wWYkZB6C8nxUFS4OBMHk3dVbMuOc7+H10PmP2aI8kH5y0snkfAD4I0HZi8QNNn+iFJ20UI/vnoUb2+5dunW1xgPpoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557119; c=relaxed/simple;
-	bh=OgFzuLlAwWsR1d/TEDHt+1hWZy+nEm9r30jTpu8dMU0=;
+	s=arc-20240116; t=1791557122; c=relaxed/simple;
+	bh=+9PojPt9r4E7abHD5fEe6EdWw/U4BzAgggp/Ro0TftE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJZ9F1RvFU02t883yNSCJxJ+62d6fLTmn797JCJFRckprFDKSGvc7ju5MnVSUlRUeIbZ/JosheayT7R050mTUOsiMlXBcUxOTS5nyZUXfs11jxsoLabIcnCbDlfHKjlrwbL/S4Hi9YSgyLGpxPhNHK7scjCHn6PzqQmvDHbDdas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVYxwCB+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G22oQJw6VBClpjYev4OvTot/ERJlnIp0GcoF6/C7AU+dT/84m/0mxbKyriKlY6vC0Jc+WgZWk7PxRvhmcXcZyZp41xwqzAW50tkEolqX8FXZ3Jph+8F0jJfsBsSL2Q27EW0pjzNcQcsiOJzjGSyXgUWLO6s8r7Dg/x8J5aXQJAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1Yohc92; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVYxwCB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C0D1F000FF;
-	Fri,  9 Oct 2026 14:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1Yohc92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E701F000FF;
+	Fri,  9 Oct 2026 14:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557118;
-	bh=z1ZOrQaKkHQaHRJ0YV8/Hhisjc9rvldGnusKKDH9er0=;
+	s=korg; t=1791557121;
+	bh=2ZCSHOvBrz3tBlHqVxaPyfmgJqSxuyi2FaKiLmZsX0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EVYxwCB+JkTc/POxRIQ0NYCDSutBcFTANgicfwzkoJ6uVCKgd5LfaKQo6BJipOXXV
-	 UO8HgZ5wLui+O1Xamc2kn51PBUk1qmsb67PbyOrfjHMem1kilwjHpgTKQoO1jrH8dn
-	 W3DJRIJ3LnmdcHESRdq3k5BWZQwF7at1ljOYlSig=
+	b=y1Yohc92Cb+ERxBpfBdoLnjum/icDfik9TknvS9y9Xj97R+14tIc/HXKS0atZPiuk
+	 zlUFGzZbyNtYQdKso7ZE5p7QIvxa+WD5cnjIUQ4w9pQooJdtCbxkL2TJBJJWoQRPXK
+	 El7DCJ0UUJkNNTYj/u5o0WA/ilVI7B4Qb2mI5CLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 349/403] rust: devres: fix race between concurrent revokers
-Date: Fri,  9 Oct 2026 16:11:50 +0200
-Message-ID: <20261009141000.433281831@linuxfoundation.org>
+	co+77553a7fc66ac133@bugs.sh,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 299/428] nvmet-auth: fix out-of-bounds write in nvmet_auth_challenge()
+Date: Fri,  9 Oct 2026 16:10:36 +0200
+Message-ID: <20261009140952.681925245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,180 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit acc516dfa1972d31836b50abc0115216cd0fccc5 upstream.
+commit fa6778e030bed9841ddcdf96bc7018da9ac03562 upstream.
 
-There is a potential race condition when two paths try to revoke a
-Devres concurrently.
+nvmet_auth_challenge() receives its output buffer as a void pointer.
+sizeof(*d) therefore evaluates to one with GCC and undercounts the fixed
+challenge header by 15 bytes.  A short AUTH_RECEIVE buffer can pass the
+check before the challenge is copied past the end of its allocation.
 
-The driver core's devres_release_all() calls Revocable::revoke() via the
-release callback, while Devres::drop() calls revoke_nosync() on another
-CPU.
+Use the typed challenge pointer when calculating the response size.
 
-The revoker that does not claim the is_available swap returns
-immediately, but the revoker that did may still be executing
-drop_in_place() on the inner data. This can cause a use-after-free when
-the other revoker's caller proceeds to drop adjacent resources that
-drop_in_place() still references (e.g., Devres<DmaMappedSgt> racing with
-SGTable freeing the backing sg_table and pages).
-
-Fix this by adding a Completion. The release callback signals the
-Completion after revoke() finishes, and Devres::drop() waits for it when
-it loses the is_available swap. This ensures the wrapped object is fully
-torn down before Devres::drop() returns.
+  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
+  Write of size 32 by task kworker/1:1H/64
+  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
+  Call Trace:
+  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
+  nvmet_tcp_try_recv_pdu (drivers/nvme/target/tcp.c:1119 drivers/nvme/target/tcp.c:1243)
+  nvmet_tcp_io_work (drivers/nvme/target/tcp.c:1350 drivers/nvme/target/tcp.c:1382 drivers/nvme/target/tcp.c:1445)
+  process_one_work (kernel/workqueue.c:3322)
+  worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  The buggy address is located 16 bytes inside of
+   allocated 33-byte region [ffff888000554e80, ffff888000554ea1)
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260612202841.2577C1F000E9@smtp.kernel.org/
-Fixes: 05aa6fb1c21d ("rust: scatterlist: Add abstraction for sg_table")
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260628174451.2275679-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-[ Re-introduce Inner<T> for Arc<Inner<T>> as commit 9aa64d2503c6 ("rust:
-  devres: embed struct devres_node directly") is not in 6.18. ]
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Reported-by: co+77553a7fc66ac133@bugs.sh
+Closes: https://lore.kernel.org/all/Ah6QavQXwvshtqyUcYD1P1R7XE0ND9fB7lbV@bugs.sh/
+Assisted-by: Codex:gpt-5.6
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/devres.rs |   56 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -13,10 +13,18 @@ use crate::{
-     ffi::c_void,
-     prelude::*,
-     revocable::{Revocable, RevocableGuard},
--    sync::{aref::ARef, rcu, Arc},
-+    sync::{aref::ARef, rcu, Arc, Completion},
-     types::ForeignOwnable,
- };
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -426,7 +426,7 @@ static int nvmet_auth_challenge(struct n
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+ 	int ret = 0;
+ 	int hash_len = nvme_auth_hmac_hash_len(ctrl->shash_id);
+-	int data_size = sizeof(*d) + hash_len;
++	int data_size = sizeof(*data) + hash_len;
  
-+#[pin_data]
-+struct Inner<T> {
-+    #[pin]
-+    data: Revocable<T>,
-+    #[pin]
-+    revocation: Completion,
-+}
-+
- /// This abstraction is meant to be used by subsystems to containerize [`Device`] bound resources to
- /// manage their lifetime.
- ///
-@@ -31,6 +39,10 @@ use crate::{
- /// After the [`Devres`] has been unbound it is not possible to access the encapsulated resource
- /// anymore.
- ///
-+/// When a [`Devres`] is dropped, it is guaranteed that `T` has been fully dropped by the time
-+/// [`Devres::drop`] returns, even if a concurrent revocation through the release callback is in
-+/// progress.
-+///
- /// [`Devres`] users should make sure to simply free the corresponding backing resource in `T`'s
- /// [`Drop`] implementation.
- ///
-@@ -104,7 +116,7 @@ pub struct Devres<T: Send + 'static> {
-     /// Has to be stored, since Rust does not guarantee to always return the same address for a
-     /// function. However, the C API uses the address as a key.
-     callback: unsafe extern "C" fn(*mut c_void),
--    data: Arc<Revocable<T>>,
-+    inner: Arc<Inner<T>>,
- }
- 
- impl<T: Send + 'static> Devres<T> {
-@@ -117,43 +129,51 @@ impl<T: Send + 'static> Devres<T> {
-         Error: From<E>,
-     {
-         let callback = Self::devres_callback;
--        let data = Arc::pin_init(Revocable::new(data), GFP_KERNEL)?;
--        let devres_data = data.clone();
-+        let inner = Arc::pin_init::<Error>(
-+            try_pin_init!(Inner {
-+                data <- Revocable::new(data),
-+                revocation <- Completion::new(),
-+            }),
-+            GFP_KERNEL,
-+        )?;
-+        let devres_inner = inner.clone();
- 
-         // SAFETY:
-         // - `dev.as_raw()` is a pointer to a valid bound device.
--        // - `data` is guaranteed to be a valid for the duration of the lifetime of `Self`.
-+        // - `inner` is guaranteed to be a valid for the duration of the lifetime of `Self`.
-         // - `devm_add_action()` is guaranteed not to call `callback` for the entire lifetime of
-         //   `dev`.
-         to_result(unsafe {
-             bindings::devm_add_action(
-                 dev.as_raw(),
-                 Some(callback),
--                Arc::as_ptr(&data).cast_mut().cast(),
-+                Arc::as_ptr(&inner).cast_mut().cast(),
-             )
-         })?;
- 
-         // `devm_add_action()` was successful and has consumed the reference count.
--        core::mem::forget(devres_data);
-+        core::mem::forget(devres_inner);
- 
-         Ok(Self {
-             dev: dev.into(),
-             callback,
--            data,
-+            inner,
-         })
-     }
- 
-     fn data(&self) -> &Revocable<T> {
--        &self.data
-+        &self.inner.data
-     }
- 
-     #[allow(clippy::missing_safety_doc)]
-     unsafe extern "C" fn devres_callback(ptr: *mut kernel::ffi::c_void) {
--        // SAFETY: In `Self::new` we've passed a valid pointer of `Revocable<T>` to
--        // `devm_add_action()`, hence `ptr` must be a valid pointer to `Revocable<T>`.
--        let data = unsafe { Arc::from_raw(ptr.cast::<Revocable<T>>()) };
-+        // SAFETY: In `Self::new` we've passed a valid pointer of `Inner<T>` to
-+        // `devm_add_action()`, hence `ptr` must be a valid pointer to `Inner<T>`.
-+        let inner = unsafe { Arc::from_raw(ptr.cast::<Inner<T>>()) };
- 
--        data.revoke();
-+        if inner.data.revoke() {
-+            inner.revocation.complete_all();
-+        }
-     }
- 
-     fn remove_action(&self) -> bool {
-@@ -165,7 +185,7 @@ impl<T: Send + 'static> Devres<T> {
-             bindings::devm_remove_action_nowarn(
-                 self.dev.as_raw(),
-                 Some(self.callback),
--                core::ptr::from_ref(self.data()).cast_mut().cast(),
-+                Arc::as_ptr(&self.inner).cast_mut().cast(),
-             )
-         } == 0)
-     }
-@@ -243,11 +263,15 @@ impl<T: Send + 'static> Drop for Devres<
-         if unsafe { self.data().revoke_nosync() } {
-             // We revoked `self.data` before the devres action did, hence try to remove it.
-             if self.remove_action() {
--                // SAFETY: In `Self::new` we have taken an additional reference count of `self.data`
-+                // SAFETY: In `Self::new` we have taken an additional reference count of `self.inner`
-                 // for `devm_add_action()`. Since `remove_action()` was successful, we have to drop
-                 // this additional reference count.
--                drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.data)) });
-+                drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.inner)) });
-             }
-+        } else {
-+            // The release callback is concurrently revoking; wait for it to finish
-+            // `drop_in_place()` of the wrapped object before returning.
-+            self.inner.revocation.wait_for_completion();
-         }
-     }
- }
+ 	if (ctrl->dh_tfm)
+ 		data_size += ctrl->dh_keysize;
 
 
