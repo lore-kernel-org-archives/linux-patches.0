@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C61231C91;
-	Fri,  9 Oct 2026 14:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC1639FCCD;
+	Fri,  9 Oct 2026 14:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556391; cv=none; b=hbUGgYpWX+CuKepYo2fymJ8LlElDOxjb8+CAEpVwzFJHCQS8TBZVOToo+0ngkdXBiXlVrPqAa+nvn6UDE+Zd+thPZE4RDNqHei8RVeUq8Ru3ZH2x2//XlCuPuz5zb/5+e58HpWbo2M86YYZo4EQxDszE+DJ7bjvH5ppjeOSVdaw=
+	t=1791556394; cv=none; b=nnFN80FFn9drh0GDOfvmiu04/O6mHfzTHhxGLQ/tjpLS6dmW3JJcHyRyA7Nssnt1zk5c1XGfj2mtDYspCpDnaGelFWElZREdD0diosZe/6AGKUbaYkq4wJnqhUysNVOdmyqRDOd3ba7epMKDS25Zu54kOsjZ5zEDFQS6IKR5C3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556391; c=relaxed/simple;
-	bh=p8glZ66iAb8wBKrVql0ARCk4+e009Nsx2qD4mKk94q8=;
+	s=arc-20240116; t=1791556394; c=relaxed/simple;
+	bh=PRL5/wLOX78DWgdTE6zNuvyrz/V0aU14LiSdtd9YT5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IB/gfV67FFglAQA2LhzApEmjy45kCzwc7jgp0QQEnQ1sqolz9YI+AijGJNlV/hZb1QTD7LfOUGYer0rQj9AHA5fB+gsAvZJrEAWxHtqXlULsuwJ/x8LDrO8jxsmUhysvq/1di0nT+JWR2GbYM9MH6dt/Svm2OSbXVd0hcmt63fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGgIqSNO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dcepQZf1Y9RjzP397uJ0BAzfd2to2YEYVuG8pYFnUKG63S8wGrxGpIXvG5hjliTXvJiR31kzQ2wt8On19j5qLO5/rJ42QABGvPPpISXIOOw9nDhZ6PEi3IJb8yJNSGFdKhLnkQxVNXxLj1HfCBmMyWrfckH9kO3L7dAjEmjFHNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le1T3OES; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGgIqSNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7EE1F000FF;
-	Fri,  9 Oct 2026 14:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le1T3OES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE101F000FF;
+	Fri,  9 Oct 2026 14:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556390;
-	bh=qBX/AzbN0T/umS08zlukkwT4owwXDVc1B1dc8Dg5Ozc=;
+	s=korg; t=1791556393;
+	bh=curMv0jiW6i1ULNWKzJjr6FthjST99UJJO4PfFO8WCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qGgIqSNO/P4QHBdyppf3hp+nrNAxIznRTcfMr1GAnjNF/Km1Qwn7jv0JUJZh+wf55
-	 b3up4EzdxDKsrPwwc7a3l60c/iBjWj+OC2JwZz43dN6jrbUc/xa6wpeblbwTJKJfJz
-	 BYY9W0TbzHFbCv522+75T6j6Vqo6Niqqhm75qsdE=
+	b=Le1T3OEScDpc/p83CBv6y6fBRLIfm8x1bjGgGUTQVR4vuzwbLF01A4430GnuXCC3K
+	 PJiCxaVqTITNxUBdnwXJ2Qx8RuM2P/xJnhxVcl8XSvQYW03Ki3y2ARss26KC8OFYYH
+	 q0uyIJkvDszLYiBPdv/3PeEYaQV22TisBWnQAZCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 226/403] Bluetooth: RFCOMM: Fix initial port reference race
-Date: Fri,  9 Oct 2026 16:09:47 +0200
-Message-ID: <20261009140957.435916619@linuxfoundation.org>
+	George Zhang <george.zhang@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Arthur Heymans <arthur@aheymans.xyz>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 169/428] drm/amd/display: Preserve eDP mode on initial ASSR failure
+Date: Fri,  9 Oct 2026 16:08:26 +0200
+Message-ID: <20261009140949.866366101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,92 +49,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Arthur Heymans <arthur@aheymans.xyz>
 
-commit 2d696c1ed3468dcb62578a3911e687110d463520 upstream.
+commit 5e08102d1d336593160d1434261d50b0c0f6cbe6 upstream.
 
-For RFCOMM_RELEASE_ONHUP devices, rfcomm_tty_install() and
-__rfcomm_release_dev() both use RFCOMM_TTY_OWNED to decide who drops the
-initial tty_port reference. The release path tests the bit separately
-from the install path setting it, so both can drop that reference.
+Commit 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when
+reinitializing hardware") made ASSR failure fall back to the default panel
+mode unless eDP mode had previously been applied.
 
-The synchronous hangup does not prevent this race: port->tty is not
-assigned until tty_port_open(), after installation. The following
-interleaving is possible:
+However, dc_link is zero-initialized and DP_PANEL_MODE_DEFAULT is zero.
+Before the first call to dp_set_panel_mode(), panel_mode therefore looks
+like a previously applied default mode. If ASSR setup fails during the
+first link training attempt, the driver incorrectly trains the eDP link
+using the default scrambling mode.
 
-  1. Install and release each obtain a reference with rfcomm_dev_get().
-  2. Release observes RFCOMM_TTY_OWNED clear.
-  3. Install sets RFCOMM_TTY_OWNED and drops the initial reference.
-  4. Release drops the same initial reference again.
-  5. TTY cleanup drops its reference and frees the device.
-  6. Release performs its final tty_port_put() on the freed port.
+On a Google Vilboz Chromebook running self-built coreboot firmware and
+PSP verstage, this leaves the panel mostly black with corrupted output
+along the top edge.
 
-KASAN reported:
+Track whether panel_mode has actually been initialized, and only consult
+the saved mode after it has been applied. This retains the recovery
+behavior while preserving eDP mode during initial link training.
 
-  BUG: KASAN: slab-use-after-free in tty_port_put+0x22/0x190
-  Write of size 4 at addr ffff8881001d3d5c by task poc/92
-
-  Call Trace:
-   tty_port_put+0x22/0x190
-   rfcomm_dev_ioctl+0x1d4/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
-
-  Allocated by task 88:
-   rfcomm_dev_ioctl+0x8f6/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
-
-  Freed by task 65:
-   kfree+0x131/0x3c0
-   rfcomm_dev_destruct+0x23b/0x2f0
-   release_one_tty+0xc1/0x370
-   process_one_work+0x661/0x1090
-
-Use test_and_set_bit() in both paths so that only the caller that changes
-RFCOMM_TTY_OWNED from clear to set drops the initial reference. Each path
-keeps its own lookup reference until release or TTY cleanup, preserving
-the existing callback ordering and error handling.
-
-Fixes: 80ea73378af4 ("Bluetooth: Fix unreleased rfcomm_dev reference")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when reinitializing hardware")
+Assisted-by: Pi:gpt-5.6-sol
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Arthur Heymans <arthur@aheymans.xyz>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ccb6c2702033f1002b45807fb3cc938760f26f78)
+Cc: stable@vger.kernel.org # 6.4.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/tty.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                                    |    1 +
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c |    4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -465,7 +465,7 @@ static int __rfcomm_release_dev(void __u
- 	/* Shut down TTY synchronously before freeing rfcomm_dev */
- 	tty_port_tty_vhangup(&dev->port);
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1763,6 +1763,7 @@ struct dc_scratch_space {
+ 	struct ddc_service *ddc;
  
--	if (!test_bit(RFCOMM_TTY_OWNED, &dev->status))
-+	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
+ 	enum dp_panel_mode panel_mode;
++	bool panel_mode_initialized;
+ 	bool aux_mode;
  
- 	tty_port_put(&dev->port);
-@@ -727,10 +727,9 @@ static int rfcomm_tty_install(struct tty
- 	 * when the last process closes the tty. The behaviour is expected by
- 	 * userspace.
- 	 */
--	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags)) {
--		set_bit(RFCOMM_TTY_OWNED, &dev->status);
-+	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags) &&
-+	    !test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
--	}
+ 	/* Private to DC core */
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+@@ -92,6 +92,7 @@ void dp_set_panel_mode(struct dc_link *l
+ 	}
  
- 	return 0;
+ 	link->panel_mode = panel_mode;
++	link->panel_mode_initialized = true;
+ 	DC_LOG_DETECTION_DP_CAPS("%d eDP panel mode supported: %d, enabled: %d\n",
+ 				 link->link_index,
+ 				 link->dpcd_caps.panel_mode_edp,
+@@ -1300,7 +1301,8 @@ void edp_set_panel_assr(struct dc_link *
+ 
+ 		result = cp_psp->funcs.enable_assr(cp_psp->handle, link);
+ 
+-		if (!result && link->panel_mode != DP_PANEL_MODE_EDP)
++		if (!result && link->panel_mode_initialized &&
++		    link->panel_mode != DP_PANEL_MODE_EDP)
+ 			*panel_mode = DP_PANEL_MODE_DEFAULT;
+ 	}
  }
 
 
