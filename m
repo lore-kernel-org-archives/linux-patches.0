@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5920146C850;
-	Fri,  9 Oct 2026 14:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744BE4D5964;
+	Fri,  9 Oct 2026 14:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555526; cv=none; b=kZq1Hl9sBTSbk8k6+T0dlmhmGpRPKutDwCPOmRRFkYsjwkZMsgw2ZgNvYKKw3ifbLH3aEGkifApqvQjqHK8A3PI9m//JzzyCAXoJp5an91fewXGjWNizV/IPoi5PKN2HCyIPTtIGKBjnkQu6octbX/0bpv5Z1S2i43YTjSnvaiM=
+	t=1791555530; cv=none; b=YpQzW5RTDy7YITqFwKVSM/RiN7Topyd97EuNWNwopvi63cqC6QwX66ROVrBmxnXYAaLCUNivZFDGLlyYShqwAuzbIWJCqT9f4HtqbQyF1+KeefS4a/drPgbAhqRL/Z7HvbXLxx3q0TogseCT23tOpMFtJooYoI3AjDnbXwSpGsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555526; c=relaxed/simple;
-	bh=9Xs33AaS2jlgs0Tl4hGKtoCQqVnf/FcxLLp9CVS8tG0=;
+	s=arc-20240116; t=1791555530; c=relaxed/simple;
+	bh=b+e98YGA11Li0O9p8Lcpu/kp4+yeSgvzS2UTnOPBj+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcNukMNqbX+OkzhYpLwh4P/9wQYQHZGvS4lXiMFbp5pTcS15SZVGzgZz6++jOGGxu1sDwjVHIKnPk97sxnsdinR8iOxiS/HhJEsbT6gQCSuJn4HiAkDTNJweIEOGI+fzGXcmLPayIeVRy95/rVtDn9BssEEUHP5VTZ0SVoIJroY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHk1jmbQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eA6n8M7u55ps0gMiP7KG3c8rsIxLbA2xwvaq2jJ7V96qwMTlzdZXRf4I9KSRBV8laXAyHMdMELciv1Qm2Qe6Mva5Ees4igAYR46VCSKVb7qzqs8s4F2ix8yppkF4O0jyhsGP9JAJa9F7m/nf+URkc1OUzTKnlW42cwdQLSk2DRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blt1vF3G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHk1jmbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CBE1F000FF;
-	Fri,  9 Oct 2026 14:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blt1vF3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9405A1F000FF;
+	Fri,  9 Oct 2026 14:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555525;
-	bh=jJLpgOQvW+uYOT6ohxrVRXl7NO6mOiSNpjAKLC4pZn8=;
+	s=korg; t=1791555528;
+	bh=/LzV8V1ARtgVpvpZItYI4Pjs/3H8o9DwR/tvwFDdWsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHk1jmbQjqwKoG9/PS2y0ABhw9slf0Ve6yaZnCikPsFWFJK2C/C+CXYzjr9xIwhl/
-	 R5phxqVZ/kSXFg/BJAq86VkhZyHuTpz4EeE8yDJQu2+X5K9bX/OhN6d67Yt/G6So2Y
-	 +HLdZ3CphIE/lx3DLEnboYPwTiOETgTrjKLW1P/4=
+	b=blt1vF3GWWijwa5wZClZj/47V7vw1FTCjeYFFvjztpCiQnELJ79NLDMwFkOo/ENqR
+	 YsDx3V4vgOqHPoUzOokxHcv5SRmyrK/LN+x4oBNUFlGjK+MTxjAP8bdRlSl+xo4xHi
+	 H9pFxrsvys5+QlIYRJkWgFSvDjgoM2Phlh7Qb26s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 7.2 023/428] HID: multitouch: stop the release timer from being rearmed on remove
-Date: Fri,  9 Oct 2026 16:06:00 +0200
-Message-ID: <20261009140946.571670667@linuxfoundation.org>
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 074/403] rtc: ac100: Fix clock provider use-after-free on probe failure
+Date: Fri,  9 Oct 2026 16:07:15 +0200
+Message-ID: <20261009140953.827117648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +48,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-commit 5acb2dace582f061aab5e14c399ac9480315f44b upstream.
+[ Upstream commit fcf0b58e976e83adf246b014518e49c662b96f5e ]
 
-mt_remove() quiesces the sticky-finger timer before stopping the
-hardware:
+ac100_rtc_register_clks() registers the RTC-32k clock with
+clk_hw_register_fixed_rate() and the clock provider with
+of_clk_add_hw_provider(). Neither is device managed, and both are
+released only from ac100_rtc_remove(). The driver core does not call
+remove() when probe() fails: really_probe() reaches probe_failed below
+the device_remove() call and goes straight to releasing the device's
+managed resources.
 
-    timer_delete_sync(&td->release_timer);
+ac100_rtc_probe() ends with
 
-    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
-    hid_hw_stop(hdev);
+	return devm_rtc_register_device(chip->rtc);
 
-timer_delete_sync() waits for a running callback and dequeues the timer,
-but it does not stop the timer from being armed again. The transport is
-still delivering reports at that point, and the report path rearms it:
+so if that fails after the clocks have been registered, the provider is
+left on the global of_clk_providers list holding chip->clk_data, which
+was allocated with devm_kzalloc() and is freed while probe() unwinds. A
+later lookup on this device tree node then reads freed memory in
+of_clk_hw_onecell_get(). Consumers that do exactly that exist in tree:
+the wifi power sequence nodes on sun8i-a83t-bananapi-m3 and
+sun8i-a83t-cubietruck-plus take <&ac100_rtc 1>, and the sun9i-a80 boards
+route osc32k through <&ac100_rtc 0>. The window is narrow, as
+devm_rtc_register_device() can only fail with -ENOMEM here, but the
+provider is left dangling whenever it does.
 
-    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
-        if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-            mod_timer(&td->release_timer,
-                      jiffies + msecs_to_jiffies(100));
+The RTC-32k clock is leaked on the same path. Since clk_core_lookup()
+searches a global list that is not scoped per device, __clk_register()
+rejects the duplicate name with -EEXIST, so the leak also makes a later
+probe of the same device fail.
 
-A report that arrives after timer_delete_sync() has returned therefore
-leaves the timer queued. td is allocated with devm_kzalloc() against
-hdev->dev, so it is freed when the driver is unbound, after mt_remove()
-returns. When the timer fires afterwards, mt_expired_timeout()
-dereferences the freed td:
+The error path that returns -EINVAL when the ADDA 4M parent clock cannot
+be found leaks the RTC-32k clock in the same way. No provider has been
+registered at that point, so that one is a leak rather than a
+use-after-free.
 
-    struct mt_device *td = timer_container_of(td, t, release_timer);
-    struct hid_device *hdev = td->hdev;
+Register both with devm_clk_hw_register_fixed_rate() and
+devm_of_clk_add_hw_provider() so that they are released whenever the
+device goes away, on a failed probe as well as on unbind. Devres
+releases in reverse order of acquisition, so the provider is removed
+before chip->clk_data is freed, and the clkout children are now
+unregistered before their parent rather than after it.
+ac100_rtc_unregister_clks() and the remove callback then have nothing
+left to do and are removed.
 
-    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
-
-Simply moving the teardown after hid_hw_stop() does not fix this on its
-own, because mt_expired_timeout() calls mt_release_contacts(), which
-walks hdev->inputs; the timer still has to be quiesced before
-hid_hw_stop() tears the input devices down.
-
-Use timer_shutdown_sync() instead, which additionally makes any later
-mod_timer() a no-op, so neither ordering constraint has to be traded off
-against the other. This is the final-teardown pattern the function was
-introduced for, and hid-wiimote already uses it for the same reason.
-
-Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260723224211.613112-1-you@example.com?part=1
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d00a18a42c14 ("rtc: ac100: Add RTC driver for X-Powers AC100")
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-rtc/20260905184936.155E11F00A3A@smtp.kernel.org/
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Link: https://patch.msgid.link/AS8P251MB0001A489CC45A591ABBB9BDCC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-ac100.c | 36 +++++++-----------------------------
+ 1 file changed, 7 insertions(+), 29 deletions(-)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2260,7 +2260,7 @@ static void mt_remove(struct hid_device
- {
- 	struct mt_device *td = hid_get_drvdata(hdev);
+diff --git a/drivers/rtc/rtc-ac100.c b/drivers/rtc/rtc-ac100.c
+index 9917cd67f4c6d..ef6a9368c63f2 100644
+--- a/drivers/rtc/rtc-ac100.c
++++ b/drivers/rtc/rtc-ac100.c
+@@ -318,10 +318,10 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
  
--	timer_delete_sync(&td->release_timer);
-+	timer_shutdown_sync(&td->release_timer);
+ 	chip->clk_data->num = AC100_CLKOUT_NUM;
  
- 	sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
- 	hid_hw_stop(hdev);
+-	chip->rtc_32k_clk = clk_hw_register_fixed_rate(chip->dev,
+-						       AC100_RTC_32K_NAME,
+-						       NULL, 0,
+-						       AC100_RTC_32K_RATE);
++	chip->rtc_32k_clk = devm_clk_hw_register_fixed_rate(chip->dev,
++							    AC100_RTC_32K_NAME,
++							    NULL, 0,
++							    AC100_RTC_32K_RATE);
+ 	if (IS_ERR(chip->rtc_32k_clk)) {
+ 		ret = PTR_ERR(chip->rtc_32k_clk);
+ 		dev_err(chip->dev, "Failed to register RTC-32k clock: %d\n",
+@@ -355,28 +355,14 @@ static int ac100_rtc_register_clks(struct ac100_rtc_dev *chip)
+ 		if (ret) {
+ 			dev_err(chip->dev, "Failed to register clk '%s': %d\n",
+ 				init.name, ret);
+-			goto err_unregister_rtc_32k;
++			return ret;
+ 		}
+ 
+ 		chip->clk_data->hws[i] = &clk->hw;
+ 	}
+ 
+-	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, chip->clk_data);
+-	if (ret)
+-		goto err_unregister_rtc_32k;
+-
+-	return 0;
+-
+-err_unregister_rtc_32k:
+-	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
+-
+-	return ret;
+-}
+-
+-static void ac100_rtc_unregister_clks(struct ac100_rtc_dev *chip)
+-{
+-	of_clk_del_provider(chip->dev->of_node);
+-	clk_unregister_fixed_rate(chip->rtc_32k_clk->clk);
++	return devm_of_clk_add_hw_provider(chip->dev, of_clk_hw_onecell_get,
++					   chip->clk_data);
+ }
+ 
+ /*
+@@ -614,13 +600,6 @@ static int ac100_rtc_probe(struct platform_device *pdev)
+ 	return devm_rtc_register_device(chip->rtc);
+ }
+ 
+-static void ac100_rtc_remove(struct platform_device *pdev)
+-{
+-	struct ac100_rtc_dev *chip = platform_get_drvdata(pdev);
+-
+-	ac100_rtc_unregister_clks(chip);
+-}
+-
+ static const struct of_device_id ac100_rtc_match[] = {
+ 	{ .compatible = "x-powers,ac100-rtc" },
+ 	{ },
+@@ -629,7 +608,6 @@ MODULE_DEVICE_TABLE(of, ac100_rtc_match);
+ 
+ static struct platform_driver ac100_rtc_driver = {
+ 	.probe		= ac100_rtc_probe,
+-	.remove		= ac100_rtc_remove,
+ 	.driver		= {
+ 		.name		= "ac100-rtc",
+ 		.of_match_table	= of_match_ptr(ac100_rtc_match),
+-- 
+2.53.0
+
 
 
