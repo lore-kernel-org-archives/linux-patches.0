@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1CA4CEE73;
-	Fri,  9 Oct 2026 14:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4804E2F36;
+	Fri,  9 Oct 2026 14:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555446; cv=none; b=ds/6XEB+T3RAwQdpJI0T7ZrtxGRNQkUsTqqXEjHvVGsYL2n37UDczynczoC+aNj/71PpxzFj+dcoSetzo4XmJowUCEEU3LeQeb0/Z34SF0vbiP+TBAiNkJC9qFqxG8tOgJ9PwIyyRTblb0KmNcXplYXhvMkABtqTYRl7biyxglM=
+	t=1791555449; cv=none; b=UMsvN4TBFtobN0d/y7uHvC475JuTqOGEhAy4BbBhGx+n1VrOO6nc624r1MSNS2md9oSTnJXhXUNQ+uuyFnfeFdqXV5y9XtdZ3jWpBV56qJF5trJJp4wybyFXg+7SXKV6buqT5GtqJB5+REAmRzYKvMK/CYOB0jrHM7Q2drUQ/uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555446; c=relaxed/simple;
-	bh=hR2+GIYoPM8wxpKuJo9WVIirfwJk9FpxYLt9R33+6Bc=;
+	s=arc-20240116; t=1791555449; c=relaxed/simple;
+	bh=t/rWIRSoONcCC+l1v/veYswzwkBuhpMIf/S3w1HNCTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/PA8sV9q5bmImTlDkQLP8R9zoV5njQnJ1kx5Is3HdGVSi60Unha+s5cX/iB1+XMiUw32wHafFUJMXoeP9yGFhZebCh7Tq7b7uKWxOzAdL0OgXVRrwoWI2qtiqqx97jhEwRz7EuExpnQfT7VczTP2xpLUBnLgcP1UC12nOXJ1Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXVPUAWH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ckKPaZDfVMGb2xAJzDXmTqbwjQUIE30AOVHw/WsvfTn+jIFZxAFcoVXHu3+wGPl0DCnd6sC9mJJOvW7nwpGC+Bds2/mXKg0H8KoMxHuW36JhMpXwlIBK71Ls7p9p4f5HvUhLbXkP1C3rd70dYffzUoIE4p476eRYjrFkreKKAGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5HYxT8x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXVPUAWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8121F00893;
-	Fri,  9 Oct 2026 14:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5HYxT8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA031F000FF;
+	Fri,  9 Oct 2026 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555441;
-	bh=svppk4yXNCAdgC7KOIaT7CXYC+aLBc4ThacIlKJI8qY=;
+	s=korg; t=1791555444;
+	bh=62fwmuoBKrtXQHO3eEkDLIhS606l4ekRgAohkw21mCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXVPUAWHMlSSNeKl4UiFhw+4+7KoT1XWYDb+Pb1GRlFiu7D5ztPLL3M8ZMRF/jpmt
-	 QvU2u9MKOd5Pg7eiNKFukz+udd5ljI+843hr/4IlcCvsutmLnixw5wpCmAQjtfnU8C
-	 gakllPNsT3DlRrOUVlhCn2RGlvsLoaSa2Oov5MDQ=
+	b=e5HYxT8xrlsZpavD9AiGNWY1ax28snicxL1I3vNivhJKlW6SrlVQgU6t/q9IJFkaL
+	 kmWg3ZClTpiM3AKA6g5+De9mJBwKiGpJA2askdhBDuPvRLUJ6JMCyNSycRGVd7tyXi
+	 TZFsj4zaNmyr8F8Iqjx74AVvMZZ3m35DRVsoLHVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/403] iio: light: rohm-bu27034: Fix error return
-Date: Fri,  9 Oct 2026 16:06:59 +0200
-Message-ID: <20261009140953.457614185@linuxfoundation.org>
+Subject: [PATCH 6.18 059/403] iio: accel: kionix-kx022a: Fix array boundary check
+Date: Fri,  9 Oct 2026 16:07:00 +0200
+Message-ID: <20261009140953.479713629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -53,35 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 4e5b0b7c5d95814b6d76911a91572a0691925ca7 ]
+[ Upstream commit 0e65412aee4f651d2c9785f542a13e4b44002a75 ]
 
-When BU27034 fails to read gain value at integration-time setting, it
-returns 0. This leaves caller unaware of the fact that setting the
-integration time failed.
+The driver performs a sanity check for an array size, when converting a
+register value to an array index. The check incorrectly accepts the
+sizeof(array) as a last index, when last valid index should be
+sizeof(array) - 1.
 
-Fix this by returning the relevant error instead of zero.
+Fix the check by bailing out when index >= sizeof(array).
 
-Fixes: 439c2cef8157 ("iio: bu27034: simplify using guard(mutex)")
+Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
 Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/rohm-bu27034.c | 2 +-
+ drivers/iio/accel/kionix-kx022a.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/rohm-bu27034.c b/drivers/iio/light/rohm-bu27034.c
-index 28d111ac8c0a7..f9a4216184063 100644
---- a/drivers/iio/light/rohm-bu27034.c
-+++ b/drivers/iio/light/rohm-bu27034.c
-@@ -415,7 +415,7 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
- 	for (i = 0; i < numg; i++) {
- 		ret = bu27034_get_gain(data, gains[i].chan, &gains[i].old_gain);
+diff --git a/drivers/iio/accel/kionix-kx022a.c b/drivers/iio/accel/kionix-kx022a.c
+index 39485572a76b4..8a13f78aeab07 100644
+--- a/drivers/iio/accel/kionix-kx022a.c
++++ b/drivers/iio/accel/kionix-kx022a.c
+@@ -649,7 +649,7 @@ static int kx022a_read_raw(struct iio_dev *idev,
  		if (ret)
--			return 0;
-+			return ret;
+ 			return ret;
  
- 		ret = iio_gts_find_new_gain_by_old_gain_time(&data->gts,
- 							     gains[i].old_gain,
+-		if ((regval & KX022A_MASK_ODR) >
++		if ((regval & KX022A_MASK_ODR) >=
+ 		    ARRAY_SIZE(kx022a_accel_samp_freq_table)) {
+ 			dev_err(data->dev, "Invalid ODR\n");
+ 			return -EINVAL;
 -- 
 2.53.0
 
