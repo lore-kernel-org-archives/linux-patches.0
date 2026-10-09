@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB8348C403;
-	Fri,  9 Oct 2026 14:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9F348C403;
+	Fri,  9 Oct 2026 14:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557264; cv=none; b=BhL66ARyRL8MHXM189zyXIcCfTpsv7iJ3FQtXyL1/9dFbxnEREwX6QJYWYIIsz1QiHg9DswM4i3ETy6Jl/XwdsvrTJTxaq+D1CdZP8ZJ7CHo1iUGkAtOGIf/rjZoNWQ3tjU/fPO0I1IkhpJbIKBLciKNbYh8ls6Iw8tlU63NUPA=
+	t=1791557267; cv=none; b=MDANBokGCyXiDMWfHFDWs+HlOmSY2eOe1intcJ/iUUaCqn/CcI8zeNJlNpbX+FF+fMgLxez/5H61WbxR4grSDEVWgwQjioYH/ZzNn5LO5P7/LJCxKQkqsF3gIuSFJX43ygo4AH+saQX4K9rtQWlePJoZNgH/gxBSZuzBOsTpHc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557264; c=relaxed/simple;
-	bh=9i9lqTs3WGGrcmLoATaBiIoEJPBRSDhHjncdoIxCfB0=;
+	s=arc-20240116; t=1791557267; c=relaxed/simple;
+	bh=gFdQKesmXsDEj7Bbn5uwWG/MoiQLvaa4YozV6ZYsqW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4JhO9fTw/y9LB+uvUxVylBzWyvtvoklc/NB0X/brGwC2QIwu0tVCUDdyQ+rqFFK6tyH7eroFdF+PxQMERjFvDKtEREKhUrClbAuns+OBMQifHEF+HE/E2W58vApZre+bk5v0U7pE4ITwm+WlqbGF+znQf22cMlBJ3wDgIXFlwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxONzOgY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UYqzpdponde/tU43U6sTgQQNXpzlP5OCcq43X5d45U1uKFottP8gtoP8mRDjmr9JcIOHzzti4GdEpnJY5B9UodXyWvJa2MyXlRbP6JhrhJJpNx+rtGvfHVBfVFilamlzBriTuJIx5mLOlYjx/r+9lPozRGz0YT0LRndp7KugUVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAD+nY5I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxONzOgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4557B1F000FF;
-	Fri,  9 Oct 2026 14:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAD+nY5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302ED1F00893;
+	Fri,  9 Oct 2026 14:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557263;
-	bh=sNBDkIPtxH+xG0O0gj1Q9qBEV+WHWwILl6OCeuG7Fh0=;
+	s=korg; t=1791557266;
+	bh=t4NfJJVbrubUq2Mr8U/4/KA6uYnR1ViteSCT4pAUQWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CxONzOgYE2euFpEgIb1mFkChk5SHncZMUr3iWbuIqI+tZyFqWgsPgKglkOGURW+b0
-	 xzjhUAgxfk0NCz4ZSJ7o9PtreoG0slBuFJnyXK3qCPnxAsmO9d6gjTREI07gRYeaC8
-	 8yh4elsRS2OLoIJFtpZX1wSQ7fqGLHGZUwlu94yg=
+	b=pAD+nY5I3quBwBKnd71qaK10bEsUWDJcuVjG6SmUVp6VN8vonNYJRltVwUtrVRegl
+	 e/9OlKuUDWowcfbAS07HfbLxDG13wVgGWMnNDqyepUEAX0Wl3+XrCXxkTG0YHJjf1o
+	 W5fJoeEeI5qcAUTN1+zj4lReHSpHANQjvAwdqaC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 328/428] wifi: mac80211: keep paired old chanctx alive
-Date: Fri,  9 Oct 2026 16:11:05 +0200
-Message-ID: <20261009140953.342416395@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sagnik Sasmal <sagnik@sagnik.me>
+Subject: [PATCH 7.2 310/428] mtd: spinand: Do not update the QE bit on devices without one
+Date: Fri,  9 Oct 2026 16:10:47 +0200
+Message-ID: <20261009140952.931381935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,101 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Sagnik Sasmal <sagnik@sagnik.me>
 
-commit 3412e9a800786d1dec4a58367db1cba275e7ef11 upstream.
+commit 1c1a342aceec79528b3ba51f376eca2be5928fe7 upstream.
 
-An in-place replacement keeps reciprocal replace_ctx pointers between
-the old WILL_BE_REPLACED chanctx and the new REPLACES_OTHER chanctx.
-However, the early free paths only consider assigned and reserved link
-users when deciding whether to free the old chanctx.
+Commit be0b86c648bf ("mtd: spinand: Gather all the bus interface
+steps in one single function") moved quad-enable setup into
+spinand_configure_chip(). The new code only determines whether quad
+mode is needed when SPINAND_HAS_QE_BIT is set, but calls
+spinand_init_quad_enable() unconditionally. This clears configuration
+register bit 0 on devices without a QE bit.
 
-That lets the old chanctx be freed too early while the replacement
-partner still points back to it, either when the last assigned link is
-released or when that link successfully reassigns to another existing
-context. Later unreserve and switch-finalization paths can then follow a
-stale replace_ctx pointer.
+That bit is not universally a QE bit. On the Winbond W25N02KV it is
+H-DIS, which disables the active-low HOLD function. Clearing H-DIS
+enables HOLD during single and dual I/O operations. If IO3 is not kept
+high, the flash can pause a command and ignore clock and data.
 
-Keep a paired old chanctx alive until the replacement pair has been torn
-down. Apply the same check to both __ieee80211_link_release_channel()
-and ieee80211_link_use_reserved_reassign(). If the replacement is later
-abandoned, ieee80211_link_unreserve_chanctx() already tears down the
-pairing before freeing the old chanctx once no users remain.
+H-DIS is not restored by the FFh reset command, allowing the incorrect
+state to survive an SoC warm reboot while the flash remains powered.
 
-Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Before the refactoring, spinand_init_quad_enable() returned without
+touching the configuration register on devices without
+SPINAND_HAS_QE_BIT. Restore that behavior by only calling the helper
+when the flag is set.
+
+Return zero explicitly once SSDR configuration completes, as all errors
+are returned immediately. This avoids returning an uninitialized value
+when neither optional configuration step runs.
+
+The regression was reproduced on a JioRouter JIDU6401 with an MT7986
+SoC and a W25N02KV. With Linux 6.18.44, sysupgrade failed and the
+following warm reboot hung in BL2. With this change applied, both
+sysupgrade and warm reboot completed successfully.
+
+Fixes: be0b86c648bf ("mtd: spinand: Gather all the bus interface steps in one single function")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/b9b582b0db3814f641648b8886bb50f9d68f93ac.1785730815.git.zhilinz@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: LLM
+Signed-off-by: Sagnik Sasmal <sagnik@sagnik.me>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/chan.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/spi/core.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -231,6 +231,13 @@ int ieee80211_chanctx_refcount(struct ie
- 	return num;
- }
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1812,11 +1812,11 @@ try_ssdr:
+ 		    spinand->ssdr_op_templates.write_cache->data.buswidth == 4 ||
+ 		    spinand->ssdr_op_templates.update_cache->data.buswidth == 4)
+ 			quad_enable = true;
+-	}
  
-+static bool
-+ieee80211_chanctx_has_replace_partner(struct ieee80211_chanctx *ctx)
-+{
-+	return ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
-+	       ctx->replace_ctx;
-+}
-+
- static int ieee80211_num_chanctx(struct ieee80211_local *local, int radio_idx)
- {
- 	struct ieee80211_chanctx *ctx;
-@@ -1403,6 +1410,7 @@ void ieee80211_link_unreserve_chanctx(st
- {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
- 	struct ieee80211_chanctx *ctx = link->reserved_chanctx;
-+	struct ieee80211_chanctx *old_ctx = NULL;
+-	ret = spinand_init_quad_enable(spinand, quad_enable);
+-	if (ret)
+-		return ret;
++		ret = spinand_init_quad_enable(spinand, quad_enable);
++		if (ret)
++			return ret;
++	}
  
- 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
- 
-@@ -1416,6 +1424,7 @@ void ieee80211_link_unreserve_chanctx(st
- 			if (WARN_ON(!ctx->replace_ctx))
- 				return;
- 
-+			old_ctx = ctx->replace_ctx;
- 			WARN_ON(ctx->replace_ctx->replace_state !=
- 			        IEEE80211_CHANCTX_WILL_BE_REPLACED);
- 			WARN_ON(ctx->replace_ctx->replace_ctx != ctx);
-@@ -1426,6 +1435,11 @@ void ieee80211_link_unreserve_chanctx(st
- 
- 			list_del_rcu(&ctx->list);
- 			kfree_rcu(ctx, rcu_head);
-+
-+			if (ieee80211_chanctx_refcount(sdata->local,
-+						       old_ctx) == 0)
-+				ieee80211_free_chanctx(sdata->local, old_ctx,
-+						       false);
- 		} else {
- 			ieee80211_free_chanctx(sdata->local, ctx, false);
- 		}
-@@ -1705,7 +1719,8 @@ ieee80211_link_use_reserved_reassign(str
- 
- 	ieee80211_check_fast_xmit_iface(sdata);
- 
--	if (ieee80211_chanctx_refcount(local, old_ctx) == 0)
-+	if (ieee80211_chanctx_refcount(local, old_ctx) == 0 &&
-+	    !ieee80211_chanctx_has_replace_partner(old_ctx))
- 		ieee80211_free_chanctx(local, old_ctx, false);
- 
- 	ieee80211_recalc_chanctx_min_def(local, new_ctx);
-@@ -2190,7 +2205,8 @@ void __ieee80211_link_release_channel(st
+ 	if (spinand->configure_chip) {
+ 		ret = spinand->configure_chip(spinand, SSDR);
+@@ -1824,7 +1824,7 @@ try_ssdr:
+ 			return ret;
  	}
  
- 	ieee80211_assign_link_chanctx(link, NULL, false);
--	if (ieee80211_chanctx_refcount(local, ctx) == 0)
-+	if (ieee80211_chanctx_refcount(local, ctx) == 0 &&
-+	    !ieee80211_chanctx_has_replace_partner(ctx))
- 		ieee80211_free_chanctx(local, ctx, skip_idle_recalc);
+-	return ret;
++	return 0;
+ }
  
- 	link->radar_required = false;
+ static int spinand_init_flash(struct spinand_device *spinand)
 
 
