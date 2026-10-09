@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07801A682B;
-	Fri,  9 Oct 2026 14:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899711A682B;
+	Fri,  9 Oct 2026 14:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555989; cv=none; b=q4Kp596YyTK6Gk13XZQwOsiqrlcedKjHdVHgpt5JyhIOIjs3lxXnpDp3X35JWhWBVa7Rh3ZL6v21c/c9ieLnnCktn8Jw3rwhG8f2jmE+vh76zMG1+1gY8+btO0r0oU/qVdgVdHS4dCySP3s0ByOA4RmGkSnUdbOb2ljMMQmZCW4=
+	t=1791555992; cv=none; b=kyIqh9F2LuDy2XmGm9a5OGRF7imbiiurTz/OJ2kR3UlS2YaNjU4MoLzN8be+0Fi+l9axkdSzqiABZaau10ML2q6i0eEjLNsuWkHNMEMzrWugE08igjGFlYgWrkWlUJBZ+Neb9H8seEoCl5aE2K5yKBKN+znxLGqYMVtQPhNDfCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555989; c=relaxed/simple;
-	bh=XF68xoxHqIKdarV28Sk+Wj0/BotWlmxYNhsm5euQMnA=;
+	s=arc-20240116; t=1791555992; c=relaxed/simple;
+	bh=zQIkZUB9Zn7CiXc+LprqihRWAwRTkPHTcJw4osoIq6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXbSysZvteLJdNKbTpdfJbu0qyK/u4Fdl2uFyxOlnYVelG7SEa9iC19SQuqpsvSgiUd4Q8bJ/2cIB55jn3OLUjwHL0sTAwZHeYwHZU+isa97J2eIpwwmMcWSc7RVY8S6QdWuhcwPM3dPWK79coKpIKDDh7h+e36GeczzxqVHzOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtirS8dn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J4FG72SV7eROm93h9MEoaWTuXcecszzhDbAfar6gLm9TQq45KpZbnl6DBSw6kZGilZBBgy/cO+Ne9yPoHSbLSyxXe/d/rUSCXJcfZ7TTZMfXLQ3tz7ssLDVdp4hqT+KoidwlMmunkkOsTIvDlGmjKUxEEQ2hbfrzmdYJL1IFFGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8VoNKGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtirS8dn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE2D1F000FF;
-	Fri,  9 Oct 2026 14:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8VoNKGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2FE1F0089A;
+	Fri,  9 Oct 2026 14:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555988;
-	bh=2cNmJ/gCzN9GRRYOnKI2eFF0bMZircMvb51pHzt0MvA=;
+	s=korg; t=1791555991;
+	bh=Hrf2mcZMkxaxFIVU2ykqOT6XBo5BJ1JTvigJYbA43Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FtirS8dnSdT8QHuVvJvfgpm5k19g81RPWy/708/rKfedID3r9N/lbqXoqqRrc85bH
-	 Iz8rbsfrlwkrNCt6B+zk42VynE+nefC+7gbxkF2JbuJJwat1iTRGvfZLv+cLbzuIPT
-	 Qf+dgdUaFrK+TVqP40iPdaDvjh3256xxqoO2t5P8=
+	b=u8VoNKGx5TaGAloEfFN3j8d+DiyeYjiKLa4oNK0FApw6HgbCyKOeN81dQ2itnUkAJ
+	 dIiqR9Iy8sKbXLTPovlc/ibQdXt9347sfhn5DcbDb7hKvQK5S0WWjwGERCTR9YbXIi
+	 SLeyGVt1hfX+kRQ6nG6Q0jbUD6mdB7xIx037GYPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.18 150/403] kgdboc: Fix tty driver reference leak in configure_kgdboc()
-Date: Fri,  9 Oct 2026 16:08:31 +0200
-Message-ID: <20261009140955.580371871@linuxfoundation.org>
+	Alexei Starovoitov <ast@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 102/428] bpf: Fix overflow of jump offset in constant blinding
+Date: Fri,  9 Oct 2026 16:07:19 +0200
+Message-ID: <20261009140948.455710866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Alexei Starovoitov <ast@kernel.org>
 
-commit ef3134cd0d4831ae2137aee2883987859b80b2c6 upstream.
+[ Upstream commit ad139384ecddb6f3e7e3c3c12765aafae0e39670 ]
 
-tty_find_polling_driver() returns the tty driver with an extra
-reference taken by tty_driver_kref_get(). configure_kgdboc() stores it
-in kgdb_tty_driver but the reference is never dropped: it is leaked when
-kgdb_register_io_module() fails, when the configuration is cleared, and
-on every reconfigure.
+bpf_jit_blind_insn() rewrites 'if rX op imm goto off' into:
 
-Release the reference both when unconfiguring and on the error path.
+  AX = imm ^ rnd
+  AX ^= rnd
+  if rX op AX goto off
 
-Fixes: 7d7b93c1452f ("tty: kref the tty driver object")
-Cc: stable@kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260917155523.2161202-1-vulab@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+and subtracts 2 from off when the jump is backward. off is s16, so
+-32767 and -32768 wrap and the jump goes 32767 insns forward, past the
+end of the prog. The jump is inside the patch, hence bpf_adj_branches()
+doesn't check it. The kernel crashes when such prog runs with
+bpf_jit_harden=2.
+
+Return -ERANGE in such case. bpf_jit_blind_constants() fails the same
+way when blinding of other insns moves a jump out of range.
+
+Fixes: 4f3446bb809f ("bpf: add generic constant blinding for use in jits")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20260924182353.277516-1-alexei.starovoitov@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/kgdboc.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/bpf/core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/kgdboc.c
-+++ b/drivers/tty/serial/kgdboc.c
-@@ -188,6 +188,11 @@ static void cleanup_kgdboc(void)
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 71ee96a77ae26..5ec94c370872a 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -1355,7 +1355,7 @@ static int bpf_jit_blind_insn(const struct bpf_insn *from,
+ {
+ 	struct bpf_insn *to = to_buff;
+ 	u32 imm_rnd = get_random_u32();
+-	s16 off;
++	int off;
  
- 	kgdboc_unregister_kbd();
- 	kgdb_unregister_io_module(&kgdboc_io_ops);
-+
-+	if (kgdb_tty_driver) {
-+		tty_driver_kref_put(kgdb_tty_driver);
-+		kgdb_tty_driver = NULL;
-+	}
- }
+ 	BUILD_BUG_ON(BPF_REG_PARAMS + 2 != MAX_BPF_JIT_REG);
+ 	BUILD_BUG_ON(BPF_REG_AX + 1 != MAX_BPF_JIT_REG);
+@@ -1431,6 +1431,8 @@ static int bpf_jit_blind_insn(const struct bpf_insn *from,
+ 		off = from->off;
+ 		if (off < 0)
+ 			off -= 2;
++		if (off < S16_MIN)
++			return -ERANGE;
+ 		*to++ = BPF_ALU64_IMM(BPF_MOV, BPF_REG_AX, imm_rnd ^ from->imm);
+ 		*to++ = BPF_ALU64_IMM(BPF_XOR, BPF_REG_AX, imm_rnd);
+ 		*to++ = BPF_JMP_REG(from->code, from->dst_reg, BPF_REG_AX, off);
+@@ -1451,6 +1453,8 @@ static int bpf_jit_blind_insn(const struct bpf_insn *from,
+ 		off = from->off;
+ 		if (off < 0)
+ 			off -= 2;
++		if (off < S16_MIN)
++			return -ERANGE;
+ 		*to++ = BPF_ALU32_IMM(BPF_MOV, BPF_REG_AX, imm_rnd ^ from->imm);
+ 		*to++ = BPF_ALU32_IMM(BPF_XOR, BPF_REG_AX, imm_rnd);
+ 		*to++ = BPF_JMP32_REG(from->code, from->dst_reg, BPF_REG_AX,
+@@ -1599,7 +1603,9 @@ struct bpf_prog *bpf_jit_blind_constants(struct bpf_verifier_env *env, struct bp
+ 		if (!rewritten)
+ 			continue;
  
- static int configure_kgdboc(void)
-@@ -254,6 +259,10 @@ do_register:
- 
- noconfig:
- 	kgdboc_unregister_kbd();
-+	if (kgdb_tty_driver) {
-+		tty_driver_kref_put(kgdb_tty_driver);
-+		kgdb_tty_driver = NULL;
-+	}
- 	configured = 0;
- 
- 	return err;
+-		if (env)
++		if (rewritten < 0)
++			tmp = ERR_PTR(rewritten);
++		else if (env)
+ 			tmp = bpf_patch_insn_data(env, i, insn_buff, rewritten);
+ 		else
+ 			tmp = bpf_patch_insn_single(clone, i, insn_buff, rewritten);
+-- 
+2.53.0
+
 
 
