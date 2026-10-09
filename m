@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B21C17A305;
-	Fri,  9 Oct 2026 14:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399F17A305;
+	Fri,  9 Oct 2026 14:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555476; cv=none; b=G7Jl1BR5OMd6czl4b3wRhFrHn9RWVv/uLSaOpkQON9gLZg+z3+Oq/zigJB7vB/bGeGPw7uZ/UcuuO9S+5BiEtkBHOYnA31qiasDs0DcZRDAHfyIhVEw3BVhwpRvUGJnwNVaM/NVtnx2yVNPZy5Zoq73y7uRQIwDxjXN9IDI/YtA=
+	t=1791555481; cv=none; b=jE+oHnsNNgyTwBR33JzL61sJJ5UvzwSolEPPevIbxA5cYYUuPEEt1MP1NU5+x7IV/pJupOjfsBF0fWkpCJMbRi4cQOmwjuoUe6/fPvyKA9oHLvFGDgyNAcOHkP+EsHPzx4TnZ80CKaUlFpn2wrxkUQfad1c4/rWmsErJGBhBILg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555476; c=relaxed/simple;
-	bh=d1vW2SkukRl3Iyu2e2FUreQfkuzF3rxwhfYUjmXXYg0=;
+	s=arc-20240116; t=1791555481; c=relaxed/simple;
+	bh=aD8rBoAUnzQz0rkJ1JpUE9JWYgeo/xii9vVK1/bbw3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQGJlvzM8zK2UqxbapUgLOTPO4Z2n6dg2C1TOUrp0RVYPzWPbMA075G/MjOFYOyjxpV+gfyt/QONLOysKPDeypPdiHzrRnWhBEZ9KsaPgXRjozmXAW+Rr2lyfc/6bD34V/uYQLwqJ9ZAUkwXMk7VKq7sLN9MmT0GpLxQb8HMACo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbFrrBoZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bISXZ4uSJAshKhD8Nk/r+7QOOwL0HnJWDwXMa53iyQvX0wmNKEjp4Y40uG0p8y3AGreUqfGi4OHaKPcpgRNtDcoaXICjBsZWhBQZ0oply7/So1PUcOpfXOBWo0qQ7UMyCDOog0oSzHbAKhM3ALn1Jp/a85CWp8vspEjOpOqSHsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tB7EW2pB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbFrrBoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20311F00893;
-	Fri,  9 Oct 2026 14:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tB7EW2pB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8027B1F000FF;
+	Fri,  9 Oct 2026 14:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555474;
-	bh=qsVyJP//82e31L+frYMnBbsY9ZSTIEMLxKplSbydX7w=;
+	s=korg; t=1791555477;
+	bh=BaB57VypdLktvPDAmaf5HezbUmF29Uj6hZeBS1RlgrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbFrrBoZEk7nkqTPAsQHX6kaPvlrKmU6zAV6mu5kCBXYcm0ZO7Vu7i55afcY3SYXd
-	 AuELlbGrJEeBER9bfCJVIGfFxhxwjHCuFVyq6oEA7PfqxVhIPg10gyQoWu2/IG7QUy
-	 3di4GfTzp1Mcud7q0eBUMFmGiyNWN+HzOOalIpcA=
+	b=tB7EW2pB2UQv8gWHH8JCpvJWPUR3eS17OCHtbuPkDG4Ro/wu/m6hlAHD4h9mFLKAB
+	 SYw0uyjnT8rBSLRxrwa7Y9Vano+6FvuaTr11+4QwM4j0u85OTatQiZQhtrag3en160
+	 hmxfDbiCr0h7QbhWm/YjZ9YTIuBrDdXUvunf3PHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	fangqiurong <fangqiurong@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/403] of/overlay: dont create "//" paths for fragments targeting the root
-Date: Fri,  9 Oct 2026 16:07:05 +0200
-Message-ID: <20261009140953.594399686@linuxfoundation.org>
+Subject: [PATCH 7.2 012/428] sched_ext: Dont run ops.dequeue() with a DSQ lock held
+Date: Fri,  9 Oct 2026 16:05:49 +0200
+Message-ID: <20261009140946.312576568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-[ Upstream commit 21c89ff1fc86ffa517f3a9ca1ba5c48e9e37c1ba ]
+[ Upstream commit cb86607ada73185f321baa7f9d94a08a3a40bbf5 ]
 
-dup_and_fixup_symbol_prop() rewrites a symbol value by replacing its
-"/fragment/__overlay__" prefix with the fragment's target path. When
-the fragment targets the root node the target path is "/" and the
-result starts with "//", which __of_find_node_by_full_path() cannot
-resolve: symbols pointing into such fragments silently stop
-resolving.
+ops.dequeue() is invoked with the source user DSQ's lock still held on
+the consume and move paths (scx_consume_dispatch_q(),
+move_task_between_dsqs()). A BPF scheduler which locks the source user
+DSQ from ops.dequeue() - e.g. by iterating it with bpf_iter_scx_dsq -
+self-deadlocks.
 
-Drop the target path when it is the root and the tail is non-empty. A
-value naming the fragment root itself (empty tail) keeps the "/".
+ops.dequeue() can only call the "any" kfuncs and none of them can lock a
+builtin DSQ, so the global and bypass paths can't deadlock; however,
+all DSQ locks share one lockdep class, so iterating any user DSQ from
+ops.dequeue() on those paths trips the recursion check.
 
-Fixes: d1651b03c2df ("of: overlay: add overlay symbols to live device tree")
-Assisted-by: Claude:claude-fable-5 [Claude Code]
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-7-02754604805a@nexthop.ai
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Move the invocation after the DSQ unlock on all three paths.
+SCX_TASK_IN_CUSTODY is cleared under the lock serializing the transfer
+so that the callback is invoked exactly once.
+
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Cc: stable@vger.kernel.org # v7.1+
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ adapted upstream sched_ext helpers to their older static equivalents. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/overlay.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/ext/ext.c | 48 +++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
-index 8e5b5e5d2bc4e..f987b0db24b3b 100644
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -256,6 +256,9 @@ static struct property *dup_and_fixup_symbol_prop(
- 	if (!target_path)
- 		return NULL;
- 	target_path_len = strlen(target_path);
-+	/* a root target renders as "/"; drop it to avoid "//" results */
-+	if (target_path_len == 1 && target_path[0] == '/' && path_tail_len)
-+		target_path_len = 0;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 59ed2c2e39d77..476a584d0d4da 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1450,20 +1450,14 @@ static inline bool task_scx_migrating(struct task_struct *p)
+ 	return p->scx.sticky_cpu >= 0;
+ }
  
- 	new_prop = kzalloc(sizeof(*new_prop), GFP_KERNEL);
- 	if (!new_prop)
+-/*
+- * Call ops.dequeue() if the task is in BPF custody and not migrating.
+- * Clears %SCX_TASK_IN_CUSTODY when the callback is invoked.
+- */
+-static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+-			      struct task_struct *p, u64 deq_flags)
++/* Must be called under the lock serializing @p's custody transfers. */
++static bool task_leave_custody(struct task_struct *p)
+ {
+ 	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
+-		return;
+-
+-	if (SCX_HAS_OP(sch, dequeue))
+-		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
++		return false;
+ 
+ 	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
++	return true;
+ }
+ 
+ static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+@@ -1471,7 +1465,8 @@ static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq
+ {
+ 	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
+ 
+-	call_task_dequeue(sch, rq, p, 0);
++	if (task_leave_custody(p) && SCX_HAS_OP(sch, dequeue))
++		SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
+ 
+ 	/*
+ 	 * Note that @rq's lock may be dropped between this enqueue and @p
+@@ -1634,16 +1629,28 @@ static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 	if (is_local) {
+ 		local_dsq_post_enq(sch, dsq, p, enq_flags);
+ 	} else {
++		bool call_dequeue = false;
++
+ 		/*
+-		 * Task on global/bypass DSQ: leave custody, task on
+-		 * non-terminal DSQ: enter custody.
++		 * Global and bypass DSQs are terminal - the task leaves the
++		 * scheduler's custody, so ops.dequeue() fires. It can run
++		 * without @p's rq lock (finish_dispatch() passes the dispatch
++		 * rq); that's safe because dequeue_task_scx() waits on
++		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
++		 * can't race it. A non-terminal DSQ keeps the task in custody.
++		 * The custody transfer happens under @dsq->lock so that later
++		 * consumers see the flag clear; the callback runs after
++		 * @dsq->lock is dropped because it may lock a DSQ itself.
+ 		 */
+ 		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
+-			call_task_dequeue(sch, rq, p, 0);
++			call_dequeue = task_leave_custody(p);
+ 		else
+ 			p->scx.flags |= SCX_TASK_IN_CUSTODY;
+ 
+ 		raw_spin_unlock(&dsq->lock);
++
++		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
++			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
+ 	}
+ 
+ 	/*
+@@ -2111,7 +2118,7 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
+ 		/*
+ 		 * A queued task must always be in BPF scheduler's custody. If
+ 		 * SCX_TASK_IN_CUSTODY is clear, finish_dispatch() on another
+-		 * CPU has already passed call_task_dequeue() (which clears the
++		 * CPU has already passed task_leave_custody() (which clears the
+ 		 * flag), but has not yet written SCX_OPSS_NONE. That final
+ 		 * store does not require this rq's lock, so retrying with
+ 		 * cpu_relax() is bounded: we will observe NONE (or DISPATCHING,
+@@ -2159,7 +2166,8 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
+ 	 * NONE but the task may still have %SCX_TASK_IN_CUSTODY set until
+ 	 * it is enqueued on the destination.
+ 	 */
+-	call_task_dequeue(sch, rq, p, deq_flags);
++	if (task_leave_custody(p) && SCX_HAS_OP(sch, dequeue))
++		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
+ }
+ 
+ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_flags)
+@@ -2263,13 +2271,10 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+ 
+ static void move_local_task_to_local_dsq(struct scx_sched *sch,
+ 					 struct task_struct *p, u64 enq_flags,
+-					 struct scx_dispatch_q *src_dsq,
+ 					 struct rq *dst_rq)
+ {
+ 	struct scx_dispatch_q *dst_dsq = &dst_rq->scx.local_dsq;
+ 
+-	/* @dsq is locked and @p is on @dst_rq */
+-	lockdep_assert_held(&src_dsq->lock);
+ 	lockdep_assert_rq_held(dst_rq);
+ 
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
+@@ -2513,9 +2518,8 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 		/* @p is going from a non-local DSQ to a local DSQ */
+ 		if (src_rq == dst_rq) {
+ 			task_unlink_from_dsq(p, src_dsq);
+-			move_local_task_to_local_dsq(sch, p, enq_flags,
+-						     src_dsq, dst_rq);
+ 			raw_spin_unlock(&src_dsq->lock);
++			move_local_task_to_local_dsq(sch, p, enq_flags, dst_rq);
+ 		} else {
+ 			raw_spin_unlock(&src_dsq->lock);
+ 			move_remote_task_to_local_dsq(p, enq_flags,
+@@ -2566,8 +2570,8 @@ static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
+ 
+ 		if (rq == task_rq) {
+ 			task_unlink_from_dsq(p, dsq);
+-			move_local_task_to_local_dsq(sch, p, enq_flags, dsq, rq);
+ 			raw_spin_unlock(&dsq->lock);
++			move_local_task_to_local_dsq(sch, p, enq_flags, rq);
+ 			return true;
+ 		}
+ 
 -- 
 2.53.0
 
