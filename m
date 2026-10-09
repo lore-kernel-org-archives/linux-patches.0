@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F2D1A682B;
-	Fri,  9 Oct 2026 14:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AD133A6EB;
+	Fri,  9 Oct 2026 14:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555770; cv=none; b=RVCskA757/qxXz5aWU0Am9VlzmQeE5cJnAxfilMJ+DAPbD+JT0kzoZIr4QVq+VjygcYuKhhDxpaUFt3D+JKdbbjQt9XTypzel42SkgZ94ALTHBXw9U7HytzHIbtAGy1/ZTTuYAq9GQRpoSABZsudTBX+8PJoGUsOAYdJnnKTmNs=
+	t=1791555772; cv=none; b=XLcQkKjzT5IsxocBGtoMvpdjqAA6nPAs4b4fuc9NcJKQr21EcXCyQ37Iyqn/HA76Hz8mMcWtgYYXGlwJ+zl/5TpcRS+zNXaumDmWhsLDEHHe44CbSFPfKtzikhT0sSCSLgWWcqgKPmJZNIDh2MHcUZcLfvIk5xCRFCQBfR/sIGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555770; c=relaxed/simple;
-	bh=6/b15ItbE4WnLCgmcMRNtlzbIL/misbWPNur4PA13ug=;
+	s=arc-20240116; t=1791555772; c=relaxed/simple;
+	bh=+YHNTvdJQD2ATOulRxpjVQMXW8Ypkc2V2vNzeXeHAog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1yhakIN4spgbI7/nucYSm9RVnpX48ZtGXC3Ib/o2mcrES+tAeG+IotnQ3l4PBN9z5SQiT1/Gdz0sRPCjPQqQSEKGnh46ZB0foGAqLC9qtADG5FnGBMMttYbLvnMHP54JD6NILGVSI6n0snJIT2SkkpIm3Yzq8UA3E7RK1c2RyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1Rdu2jY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=riVkdg4h1MSSgbnr8GW/1/+nje/ZGxS0d1u05wB6MEUJyyoYhhWHnjMpIcl2JPoj0Loj6BbwcXwmiwkZJfn7/ozqNu/DGoJGLvzdCKdGjQAkWARg1kpepubPOP7R6kUOyCScgtOy2sZFNrJcSNL91FNPd+Cug0WIHXyOsRVL6Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oml8Pq3E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1Rdu2jY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C381F000FF;
-	Fri,  9 Oct 2026 14:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oml8Pq3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D2D1F000FF;
+	Fri,  9 Oct 2026 14:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555768;
-	bh=0GRhL2lmKzeKydqAtBO24Rbr36n0l2KRwvfYM0DE6ic=;
+	s=korg; t=1791555771;
+	bh=UF7qDeX4K1WIW69H/9Rnxd/2IWBQ7unm7DmFVawrruY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1Rdu2jYZ5JOz076BDg3H2Rr9DI95IIN1SMuzCnQx0KQWWsaTpjQoZDl5upRUgylR
-	 s5jeMUPALmC51BBKI20Hai18lu+Q5VIk2XYpFkqh9uEjB9NXIV6b7R3DVz8AoGkMac
-	 9P/qXnsMJRjWgkDiP6XobmUSSg3FCORmfraD6MnI=
+	b=oml8Pq3EvRwWJQC7tPxP3beYsWOMlAtI9O9FAuhOaQKhJK1wVep0Vkr0fRYhr7KnY
+	 sG52pocDndSzytov7uJKEzNWmoF5V6afbQOuui8KP2DaVsH/zNc31lYFWVjOetxcPF
+	 J12gBTZTgVEdzmuQMNeql9r/5yIYB5KyN6ITSzqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 115/403] net: sparx5: move MAC table initialization and add deinit function
-Date: Fri,  9 Oct 2026 16:07:56 +0200
-Message-ID: <20261009140954.768864089@linuxfoundation.org>
+Subject: [PATCH 7.2 067/428] iio: light: rohm-bu27034: Fix error return
+Date: Fri,  9 Oct 2026 16:06:44 +0200
+Message-ID: <20261009140947.620367806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,220 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 13cb1b68842b010275974454d4c5dffaf427197f ]
+[ Upstream commit 4e5b0b7c5d95814b6d76911a91572a0691925ca7 ]
 
-Consolidate all MAC table initialization from sparx5_start() into
-sparx5_mact_init(), move it to probe(), and add a deinit function for
-proper teardown.
+When BU27034 fails to read gain value at integration-time setting, it
+returns 0. This leaves caller unaware of the fact that setting the
+integration time failed.
 
-Also, make sparx5_mact_pull_work() static since it is only used within
-sparx5_mactable.c.
+Fix this by returning the relevant error instead of zero.
 
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260227-sparx5-init-deinit-v2-3-10ba54ccf005@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0d2c49915bc3 ("net: sparx5: skip ptp deinit if init was skipped")
+Fixes: 439c2cef8157 ("iio: bu27034: simplify using guard(mutex)")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../microchip/sparx5/sparx5_mactable.c        | 34 +++++++++++++++-
- .../ethernet/microchip/sparx5/sparx5_main.c   | 39 +++++--------------
- .../ethernet/microchip/sparx5/sparx5_main.h   |  4 +-
- 3 files changed, 44 insertions(+), 33 deletions(-)
+ drivers/iio/light/rohm-bu27034.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_mactable.c b/drivers/net/ethernet/microchip/sparx5/sparx5_mactable.c
-index f5584244612cd..2bf9c5f64151c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_mactable.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_mactable.c
-@@ -419,7 +419,7 @@ static void sparx5_mact_handle_entry(struct sparx5 *sparx5,
- 				  true);
- }
+diff --git a/drivers/iio/light/rohm-bu27034.c b/drivers/iio/light/rohm-bu27034.c
+index 28d111ac8c0a7..f9a4216184063 100644
+--- a/drivers/iio/light/rohm-bu27034.c
++++ b/drivers/iio/light/rohm-bu27034.c
+@@ -415,7 +415,7 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
+ 	for (i = 0; i < numg; i++) {
+ 		ret = bu27034_get_gain(data, gains[i].chan, &gains[i].old_gain);
+ 		if (ret)
+-			return 0;
++			return ret;
  
--void sparx5_mact_pull_work(struct work_struct *work)
-+static void sparx5_mact_pull_work(struct work_struct *work)
- {
- 	struct delayed_work *del_work = to_delayed_work(work);
- 	struct sparx5 *sparx5 = container_of(del_work, struct sparx5,
-@@ -489,8 +489,10 @@ void sparx5_set_ageing(struct sparx5 *sparx5, int msecs)
- 		 LRN_AUTOAGE_CFG(0));
- }
- 
--void sparx5_mact_init(struct sparx5 *sparx5)
-+int sparx5_mact_init(struct sparx5 *sparx5)
- {
-+	char queue_name[32];
-+
- 	mutex_init(&sparx5->lock);
- 
- 	/*  Flush MAC table */
-@@ -502,4 +504,32 @@ void sparx5_mact_init(struct sparx5 *sparx5)
- 		dev_warn(sparx5->dev, "MAC flush error\n");
- 
- 	sparx5_set_ageing(sparx5, BR_DEFAULT_AGEING_TIME / HZ * 1000);
-+
-+	/* Add host mode BC address (points only to CPU) */
-+	sparx5_mact_learn(sparx5, sparx5_get_pgid(sparx5, PGID_CPU),
-+			  (unsigned char[]){0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
-+			  NULL_VID);
-+
-+	mutex_init(&sparx5->mdb_lock);
-+	INIT_LIST_HEAD(&sparx5->mdb_entries);
-+	mutex_init(&sparx5->mact_lock);
-+	INIT_LIST_HEAD(&sparx5->mact_entries);
-+	snprintf(queue_name, sizeof(queue_name), "%s-mact",
-+		 dev_name(sparx5->dev));
-+	sparx5->mact_queue = create_singlethread_workqueue(queue_name);
-+	if (!sparx5->mact_queue)
-+		return -ENOMEM;
-+
-+	INIT_DELAYED_WORK(&sparx5->mact_work, sparx5_mact_pull_work);
-+	queue_delayed_work(sparx5->mact_queue, &sparx5->mact_work,
-+			   SPX5_MACT_PULL_DELAY);
-+
-+	return 0;
-+}
-+
-+void sparx5_mact_deinit(struct sparx5 *sparx5)
-+{
-+	cancel_delayed_work_sync(&sparx5->mact_work);
-+	destroy_workqueue(sparx5->mact_queue);
-+	mutex_destroy(&sparx5->mact_lock);
- }
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index fe8d78413a73d..8ac9960a776a2 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -683,10 +683,8 @@ static void sparx5_board_init(struct sparx5 *sparx5)
- 
- static int sparx5_start(struct sparx5 *sparx5)
- {
--	u8 broadcast[ETH_ALEN] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
- 	const struct sparx5_consts *consts = sparx5->data->consts;
- 	const struct sparx5_ops *ops = sparx5->data->ops;
--	char queue_name[32];
- 	u32 idx;
- 	int err;
- 
-@@ -726,19 +724,12 @@ static int sparx5_start(struct sparx5 *sparx5)
- 			 ANA_CL_FILTER_CTRL_FORCE_FCS_UPDATE_ENA,
- 			 sparx5, ANA_CL_FILTER_CTRL(idx));
- 
--	/* Init MAC table, ageing */
--	sparx5_mact_init(sparx5);
--
- 	/* Init PGID table arbitrator */
- 	sparx5_pgid_init(sparx5);
- 
- 	/* Setup VLANs */
- 	sparx5_vlan_init(sparx5);
- 
--	/* Add host mode BC address (points only to CPU) */
--	sparx5_mact_learn(sparx5, sparx5_get_pgid(sparx5, PGID_CPU), broadcast,
--			  NULL_VID);
--
- 	/* Enable queue limitation watermarks */
- 	sparx5_qlim_set(sparx5);
- 
-@@ -755,22 +746,6 @@ static int sparx5_start(struct sparx5 *sparx5)
- 	if (err)
- 		return err;
- 
--	/* Init mact_sw struct */
--	mutex_init(&sparx5->mact_lock);
--	INIT_LIST_HEAD(&sparx5->mact_entries);
--	snprintf(queue_name, sizeof(queue_name), "%s-mact",
--		 dev_name(sparx5->dev));
--	sparx5->mact_queue = create_singlethread_workqueue(queue_name);
--	if (!sparx5->mact_queue)
--		return -ENOMEM;
--
--	INIT_DELAYED_WORK(&sparx5->mact_work, sparx5_mact_pull_work);
--	queue_delayed_work(sparx5->mact_queue, &sparx5->mact_work,
--			   SPX5_MACT_PULL_DELAY);
--
--	mutex_init(&sparx5->mdb_lock);
--	INIT_LIST_HEAD(&sparx5->mdb_entries);
--
- 	sparx5_board_init(sparx5);
- 
- 	/* Start Frame DMA with fallback to register based INJ/XTR */
-@@ -1003,12 +978,18 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 		goto cleanup_ptp;
- 	}
- 
-+	err = sparx5_mact_init(sparx5);
-+	if (err) {
-+		dev_err(sparx5->dev, "Failed to initialize MAC table\n");
-+		goto cleanup_vcap;
-+	}
-+
- 	INIT_LIST_HEAD(&sparx5->mall_entries);
- 
- 	err = sparx5_register_netdevs(sparx5);
- 	if (err) {
- 		dev_err(sparx5->dev, "Failed to register net devices\n");
--		goto cleanup_vcap;
-+		goto cleanup_mact;
- 	}
- 
- 	err = sparx5_register_notifier_blocks(sparx5);
-@@ -1021,14 +1002,14 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 
- cleanup_netdevs:
- 	sparx5_unregister_netdevs(sparx5);
-+cleanup_mact:
-+	sparx5_mact_deinit(sparx5);
- cleanup_vcap:
- 	sparx5_vcap_deinit(sparx5);
- cleanup_ptp:
- 	sparx5_ptp_deinit(sparx5);
- cleanup_ports:
- 	sparx5_destroy_netdevs(sparx5);
--	if (sparx5->mact_queue)
--		destroy_workqueue(sparx5->mact_queue);
- cleanup_config:
- 	kfree(configs);
- cleanup_pnode:
-@@ -1052,11 +1033,11 @@ static void mchp_sparx5_remove(struct platform_device *pdev)
- 	}
- 	sparx5_unregister_notifier_blocks(sparx5);
- 	sparx5_unregister_netdevs(sparx5);
-+	sparx5_mact_deinit(sparx5);
- 	sparx5_vcap_deinit(sparx5);
- 	sparx5_ptp_deinit(sparx5);
- 	ops->fdma_deinit(sparx5);
- 	sparx5_destroy_netdevs(sparx5);
--	destroy_workqueue(sparx5->mact_queue);
- }
- 
- static const struct sparx5_regs sparx5_regs = {
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index 6a069434fca60..e4c39cca7b266 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -470,7 +470,6 @@ void sparx5_fdma_reload(struct sparx5 *sparx5, struct fdma *fdma);
- void sparx5_fdma_injection_mode(struct sparx5 *sparx5);
- 
- /* sparx5_mactable.c */
--void sparx5_mact_pull_work(struct work_struct *work);
- int sparx5_mact_learn(struct sparx5 *sparx5, int port,
- 		      const unsigned char mac[ETH_ALEN], u16 vid);
- bool sparx5_mact_getnext(struct sparx5 *sparx5,
-@@ -489,7 +488,8 @@ int sparx5_del_mact_entry(struct sparx5 *sparx5,
- int sparx5_mc_sync(struct net_device *dev, const unsigned char *addr);
- int sparx5_mc_unsync(struct net_device *dev, const unsigned char *addr);
- void sparx5_set_ageing(struct sparx5 *sparx5, int msecs);
--void sparx5_mact_init(struct sparx5 *sparx5);
-+int sparx5_mact_init(struct sparx5 *sparx5);
-+void sparx5_mact_deinit(struct sparx5 *sparx5);
- 
- /* sparx5_vlan.c */
- void sparx5_pgid_update_mask(struct sparx5_port *port, int pgid, bool enable);
+ 		ret = iio_gts_find_new_gain_by_old_gain_time(&data->gts,
+ 							     gains[i].old_gain,
 -- 
 2.53.0
 
