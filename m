@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5B94E36D6;
-	Fri,  9 Oct 2026 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DFA4D598B;
+	Fri,  9 Oct 2026 14:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556898; cv=none; b=qtQATCKh7VmeAXwbB1hforsGfhX88g8AG520gSZUYVgia7urXIyazOodqL4OeHIKs71mHjiOh9Z/n92rAdWk0xI7CVhbtXfiBBTQlKQliHQSr4k6S/16gfUgSQi/wFWYhuTxhQ4OfooOYV+McDsTPqvLXwkeSZJwN3FWbIazHyo=
+	t=1791556900; cv=none; b=F8fZaFs8F4ZN9foeQ8K4ohFuf+P/WFwajYASv+i2RNQmGbFbXOVg945EL8LuEGeE9tFsMmiJdMCIXUwYeZRHmU/sjm9nXwUBu42tssGG1PQS5MkdWGRBimhj4fqH+Ly6XD5wr3IgStkEJSgeRV00pfVT8xndfQbDAnwpDieJ3qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556898; c=relaxed/simple;
-	bh=C7slN4O+RZbfyyJ/QrU63+Dw+YWWlqAuq3RBlZpCWNA=;
+	s=arc-20240116; t=1791556900; c=relaxed/simple;
+	bh=xCU5jAs74naaPvzBZ2hmQEZ8ZwIzSykcG/pRjABP5eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLZXzu8kO7Nk0VeS9ZPFZubaOOaLNef+QgyX4x3jtmcQ4ZGdNeN1TSthXEmV87z3+VaSuGxI5PA++P5LQMGp6YujiqnF9tBJXpe9OzKB2iTzSHFOwP+Zij9y0S89zgXpmBRUMvELJkNqu4AQUnmwM5ykCfFUGl+8PHLyM8ot7ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGSefuW+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBd+LLkRijBgPaFyuZQipN07rNFcQa7mHlIchC77asSBZaNOUJzTDonji4owpVek4S4E3WYQYwuaUY85r3DGpN66DzkAvZI65h2+oXxHyx1dXjgbve57NsS8Na2fU2M9vhamTkDyUtxILo2QPVDU+iFmOFUy+B3vNRHTjKtl65E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KagqJzET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGSefuW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219211F000FF;
-	Fri,  9 Oct 2026 14:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KagqJzET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098FF1F000FF;
+	Fri,  9 Oct 2026 14:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556896;
-	bh=r/KFZ0wxbsVaoTj5hvXkXmY31ExFdsGcsl8RdGbk6nk=;
+	s=korg; t=1791556899;
+	bh=dTVfP55I5RKeQb9nUbHvDSRKhYBGoIV/aN4osVZFm7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGSefuW+qDLSPDkihOKoGJ/0bvOnW0mmJQ6O/fCYGYpZrtUNVNhGhYzApYdKCKXel
-	 pBgw3Fis8d+E+lDoL60e8fivxwED3qzBHR9MmRa5HbuwglFA8CY+ZNagGvUQ3ZhDKd
-	 SboEEC0Fsi+56D2+SYeP8uOzYUTudqi/my2t7wzs=
+	b=KagqJzETrmfc/UIoSLV4fe+AVBOXBILGkfDe3Uqmc5/7XJI4Wv/tkVuEBEf4puP7r
+	 a2bq8YamQlQSrTCYpnKx8mDphgqXaVzxSwrkUEIX8KrX9TCLHoQN1o9ws55RZoxeLe
+	 VvdbTIyPG/+VvQRzCVVxvDxLWMcrqWnH93ntdMbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
-	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>,
-	David Laight <david.laight.linux@gmail.com>
-Subject: [PATCH 7.2 260/428] serial: sc16is7xx: refill TX FIFO below trigger using fresh TXLVL
-Date: Fri,  9 Oct 2026 16:09:57 +0200
-Message-ID: <20261009140951.812630980@linuxfoundation.org>
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 311/403] iio: adc: rohm-bd79124: Fix channel initialization
+Date: Fri,  9 Oct 2026 16:11:12 +0200
+Message-ID: <20261009140959.492878227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 527484911a40f6e84cf47e8bc490f7da61ab4151 upstream.
+commit edd56c01d174153bf90160279742ff6f3ad27a93 upstream.
 
-sc16is7xx_handle_tx() reads TXLVL once and sizes the hardware TX FIFO
-write from that value. TXLVL reports free space in the hardware TX FIFO.
+The alarm limit register on BD79124 span to two consecutive registers.
+The first register for high-limit containing also hysteresis
+configuration. The initialization in driver writes only one 8-bit
+register, overwriting the hysteresis and leaving the other limit
+register uninitialized.
 
-On this SPI-backed path, hardirq/softirq activity, RT scheduling, and
-waiting for synchronous SPI transfers can delay the refill while the UART
-continues draining. The TXLVL value can therefore become stale before the
-hardware TX FIFO write completes.
+Fix the limit initialization by using the bd79124_write_int_to_reg(),
+which correctly initializes the limit on both of the registers.
 
-One failing ftrace with the default 8-free-space trigger showed:
-
-  tx_start       txlvl=9  txlvl_read_us=580
-  tx_pre_write   sent=9   pre_write_us=16
-  tx_segment     sent=9   seg_us=364
-  tx_post_write  txlvl_before=9 sent=9 txlvl_after=12 pending_after=29
-                 post_gap_us=12 post_txlvl_us=130
-
-The driver read 9 free spaces and wrote 9 bytes to the hardware TX FIFO,
-but the post-write TXLVL read still reported 12 free spaces while 29 bytes
-remained queued in the xmit kfifo. Even allowing for the post-write read
-window, the hardware TX FIFO had not been filled below the 8-free-space
-trigger, so no new threshold crossing was expected.
-
-The captured failing samples had the same pattern: data remained queued
-in the xmit kfifo while post-write TXLVL remained above the hardware
-trigger. The hardware TX FIFO then drained empty before another refill
-was requested, producing an unintended gap on the wire.
-
-Fix this by re-reading TXLVL after each hardware TX FIFO write while data
-remains queued in the xmit kfifo. If TXLVL is still at or above the
-trigger, top up the hardware TX FIFO again. Stop when the xmit kfifo is
-empty or a TXLVL read confirms that hardware TX FIFO free space is
-strictly below the trigger.
-
-Stopping when TXLVL was equal to the trigger still allowed TX gaps in the
-tested workload. Continuing until TXLVL was strictly below the trigger
-eliminated the observed gaps caused by stale-TXLVL under-fill.
-
-Program the hardware TX trigger explicitly through TLR using the same
-constant as the refill-loop threshold. This prevents the software refill
-condition from diverging from the programmed hardware trigger.
-
-Tested on SC16IS752 over 1 MHz SPI on an i.MX6ULL single-core
-PREEMPT_RT system, transmitting RS-485 at 115200 baud 8N1 under
-continuous Modbus RTU load.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@kernel.org
-Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
-Link: https://lore.kernel.org/linux-serial/20260623112225.82386-3-paultyson.mbewe@ziehl-abegg.de/
-Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
-Reviewed-by: David Laight <david.laight.linux@gmail.com>
-Link: https://patch.msgid.link/20260930145628.566535-2-paultyson.mbewe@ziehl-abegg.de
+Fixes: 3f57a3b9ab74 ("iio: adc: Support ROHM BD79124 ADC")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ drivers/iio/adc/rohm-bd79124.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -216,6 +216,8 @@
- #define SC16IS7XX_TLR_TX_TRIGGER(words)	((((words) / 4) & 0x0f) << 0)
- #define SC16IS7XX_TLR_RX_TRIGGER(words)	((((words) / 4) & 0x0f) << 4)
+--- a/drivers/iio/adc/rohm-bd79124.c
++++ b/drivers/iio/adc/rohm-bd79124.c
+@@ -949,13 +949,13 @@ static int bd79124_chan_init(struct bd79
+ {
+ 	int ret;
  
-+#define SC16IS7XX_TX_TRIGGER_LEVEL	8
-+
- /* IOControl register bits (Only 75x/76x) */
- #define SC16IS7XX_IOCONTROL_LATCH_BIT	BIT(0)   /* Enable input latching */
- #define SC16IS7XX_IOCONTROL_MODEM_A_BIT	BIT(1)   /* Enable GPIO[7:4] as modem A pins */
-@@ -647,6 +649,21 @@ static void sc16is7xx_handle_rx(struct u
- 	tty_flip_buffer_push(&port->state->port);
+-	ret = regmap_write(data->map, BD79124_GET_HIGH_LIMIT_REG(channel),
+-			   BD79124_HIGH_LIMIT_MAX);
++	ret = bd79124_write_int_to_reg(data, BD79124_GET_HIGH_LIMIT_REG(channel),
++				       BD79124_HIGH_LIMIT_MAX);
+ 	if (ret)
+ 		return ret;
+ 
+-	return regmap_write(data->map, BD79124_GET_LOW_LIMIT_REG(channel),
+-			    BD79124_LOW_LIMIT_MIN);
++	return bd79124_write_int_to_reg(data, BD79124_GET_LOW_LIMIT_REG(channel),
++					BD79124_LOW_LIMIT_MIN);
  }
  
-+static unsigned int sc16is7xx_txlvl(struct uart_port *port)
-+{
-+	unsigned int txlvl;
-+
-+	txlvl = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
-+	if (txlvl > SC16IS7XX_FIFO_SIZE) {
-+		dev_err_ratelimited(port->dev,
-+				    "chip reports %u free bytes in TX FIFO, but it only has %u\n",
-+				    txlvl, SC16IS7XX_FIFO_SIZE);
-+		return 0;
-+	}
-+
-+	return txlvl;
-+}
-+
- static void sc16is7xx_handle_tx(struct uart_port *port)
- {
- 	struct tty_port *tport = &port->state->port;
-@@ -668,13 +685,7 @@ static void sc16is7xx_handle_tx(struct u
- 	}
- 
- 	/* Limit to space available in TX FIFO */
--	txlen = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
--	if (txlen > SC16IS7XX_FIFO_SIZE) {
--		dev_err_ratelimited(port->dev,
--			"chip reports %d free bytes in TX fifo, but it only has %d",
--			txlen, SC16IS7XX_FIFO_SIZE);
--		txlen = 0;
--	}
-+	txlen = sc16is7xx_txlvl(port);
- 
- 	/* Handle circular buffer wrap-around by sending multiple segments */
- 	while (txlen > 0 && !kfifo_is_empty(&tport->xmit_fifo)) {
-@@ -687,7 +698,14 @@ static void sc16is7xx_handle_tx(struct u
- 
- 		sc16is7xx_fifo_write(port, tail, to_send);
- 		uart_xmit_advance(port, to_send);
--		txlen -= to_send;
-+
-+		if (kfifo_is_empty(&tport->xmit_fifo))
-+			break;
-+
-+		/* Refill below the trigger to enable the next THRI crossing. */
-+		txlen = sc16is7xx_txlvl(port);
-+		if (txlen < SC16IS7XX_TX_TRIGGER_LEVEL)
-+			break;
- 	}
- 
- 	uart_port_lock_irqsave(port, &flags);
-@@ -1139,6 +1157,10 @@ static int sc16is7xx_startup(struct uart
- 			     SC16IS7XX_TCR_RX_RESUME(24) |
- 			     SC16IS7XX_TCR_RX_HALT(48));
- 
-+	/* Sync hardware and software TX trigger levels */
-+	sc16is7xx_port_write(port, SC16IS7XX_TLR_REG,
-+			     SC16IS7XX_TLR_TX_TRIGGER(SC16IS7XX_TX_TRIGGER_LEVEL));
-+
- 	/* Disable TCR/TLR access */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
- 
+ static int bd79124_get_gpio_pins(const struct iio_chan_spec *cs, int num_channels)
 
 
