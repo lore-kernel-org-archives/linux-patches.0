@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEE73B3BFE;
-	Fri,  9 Oct 2026 14:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8C5438011;
+	Fri,  9 Oct 2026 14:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556504; cv=none; b=Xycb2Dsi9S38yBx4brvWe0yYYOXFiEXv+XL9bwBBgO0B58407ufpVlRzIAyMF9IWRiZkXIrJekmkAIVScy5MAMrA68MUIPYvNGoHOuls3D6quVGtDjGrIDtwVNTUqZQlPS8H0mjQjXy3ukqjRceFc7mNmbf20vusGb9nRC/oQlg=
+	t=1791556506; cv=none; b=liDvJ+zyMr7xHQDiscvApJ4/kvH7O2LoLjf05MCsVw49d+/fMIYWrAT500fKsyJT5pru5vEWYK56pIlSFn6+mZBNZUI3jguNMn77A0cj2YK2sUmySq/MNr2RjMTFZnPjNhRHWmf79rE7lG2CBr48hMGgoK5JybRHc0sImRYc4Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556504; c=relaxed/simple;
-	bh=AsytZDle8AT/HOImC0Qt3B04a2tPtGUtwYCvoUTrZV0=;
+	s=arc-20240116; t=1791556506; c=relaxed/simple;
+	bh=XjeOoWThrdFQ30XACi0wIA3q8+NoNhcMH9E8jRU/3To=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRqmxu+MzZ9OAPle2AIDe3Q1hKOguDIJO3Yrgr5vMdi7FHiKX4W1R9eu3qPTNYmVR9Q9kq9tw8+sUk0SF8imsrEQtA1ZHlHxvu72gNQ83BEBCimR4NnEK8YZsNXyR6TjST5ntb8T48hNtkOwfNAZ8MzijaHwI+lngtSBa2mVkI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ql4766iR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yzue/btuWx4rMXD+ohk3poxrTn4z0AoaTfswVSCIGte2YBMh2DIiyF6VuazMUeCHEAnJtHXLiE0HICW5ywKZZBJlAuGOeh23mmJu2TDj1aXlxVzU4MxCF6/ZE9nkGJ7nOT9zpLGjKMLgwDeSIdB0rTE7rzw6e/e5gRkvFml20eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4s8wlL7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ql4766iR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3D91F00898;
-	Fri,  9 Oct 2026 14:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4s8wlL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22CC1F000FF;
+	Fri,  9 Oct 2026 14:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556502;
-	bh=n7V+25ifSmnjuhUbFCqJzU7cdWBuYK6rgVu2z80ibj8=;
+	s=korg; t=1791556505;
+	bh=GuzjZ63UlZTfJkvSRVtl0EA1ICJaENiBDkPw3LpmLcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ql4766iRqnzgF+qoss59ZKZmVdaqP+LhfiAzg8g21punGyX2lmFRzzBV6qSNf+SF7
-	 q+1AwFF+piqgA7fl6lERSM7mQxYj4/Pvfv6j2KWZKWMHO1/iTJGmXkk6zUCQgwxrHP
-	 7sq0e7Q84etUHRNka263pJZaeBEEzpreC+fgyVrw=
+	b=u4s8wlL7ke2PhB49hZ60lysWlXeHsBb3rSxpt+c5Yz9dRwunIpCMLIW0VdRXO2Oll
+	 rVVnfZWWSFRQ7VNgGhTmgarVizqQ6+lyiwK8nujOzr2zVXPl+uflAC0ETQaXa5/Cxc
+	 gtuDMlkq+M8kiUddw0+y1EKNN0estfbfPqeA6i+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 7.2 192/428] binderfs: fix UAF write in binder_add_device
-Date: Fri,  9 Oct 2026 16:08:49 +0200
-Message-ID: <20261009140950.358946353@linuxfoundation.org>
+	Gaurav Sinha <gsinha@micron.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 246/403] nvme-pci: add NVME_QUIRK_DMAPOOL_ALIGN_512 for Micron 4100AT
+Date: Fri,  9 Oct 2026 16:10:07 +0200
+Message-ID: <20261009140957.918937830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,147 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Bean Huo <beanhuo@micron.com>
 
-commit 30d15f44a9e513ec2f257fdf192d9d1fa5af0799 upstream.
+commit c72f9f7bd23c91e944910d9bcbf12503d21a4a1f upstream.
 
-binderfs_binder_device_create() publishes the new dentry with
-d_make_persistent() and then calls simple_done_creating(), which drops
-the parent directory lock and the creator's dentry reference. It then
-calls binder_add_device() to register the device in the global
-binder_devices list.
+The Micron 4100AT fetches PRP Lists in 512 byte strides, but the driver
+allocates small PRP List descriptors in 256 byte strides.  A descriptor
+in the last 256 bytes of a dmapool page makes the controller read past
+the page: the access lands on an adjacent IOVA, the IOMMU faults the
+command. That last block only became reachable with commit da9619a30e73
+("dmapool: link blocks across pages"), so this affects v6.4 and later.
 
-After simple_done_creating() releases the parent directory lock, a
-concurrent unlinkat() can remove the new device entry. Dropping the
-creator's dentry reference can then trigger binderfs_evict_inode(),
-freeing the device. binder_add_device() later accesses the freed
-object, causing UAF write.
+Align the small descriptor pool to 512 bytes, as commit ebefac564796
+("nvme-pci: 512 byte aligned dma pool segment quirk") already does for
+another controller with the same erratum.  The last block then starts
+at offset 0xE00 and the fetch stays inside the page.
 
-Found by a modified Syzkaller:
-
-	BUG: KASAN: slab-use-after-free in hlist_add_head include/linux/list.h:1073 [inline]
-	BUG: KASAN: slab-use-after-free in binder_add_device+0xa9/0xc0 drivers/android/binder.c:7068
-	Write of size 8 at addr ffff88805b340c00 by task syz.1.532/11389
-
-	CPU: 0 UID: 0 PID: 11389 Comm: syz.1.532 Not tainted 7.2.0 #4 PREEMPT(full)
-	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	Call Trace:
-	<TASK>
-	__dump_stack lib/dump_stack.c:94 [inline]
-	dump_stack_lvl+0x10e/0x1f0 lib/dump_stack.c:120
-	print_address_description mm/kasan/report.c:378 [inline]
-	print_report+0xf7/0x600 mm/kasan/report.c:482
-	kasan_report+0xe4/0x120 mm/kasan/report.c:595
-	hlist_add_head include/linux/list.h:1073 [inline]
-	binder_add_device+0xa9/0xc0 drivers/android/binder.c:7068
-	binderfs_binder_device_create.isra.0+0x724/0x990 drivers/android/binderfs.c:196
-	binder_ctl_ioctl+0x186/0x1b0 drivers/android/binderfs.c:241
-	vfs_ioctl fs/ioctl.c:51 [inline]
-	__do_sys_ioctl fs/ioctl.c:597 [inline]
-	__se_sys_ioctl fs/ioctl.c:583 [inline]
-	__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7ff9027a833d
-	Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-	RSP: 002b:00007ff903674018 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-	RAX: ffffffffffffffda RBX: 00007ff902a35fa0 RCX: 00007ff9027a833d
-	RDX: 0000200000000500 RSI: 00000000c1086201 RDI: 0000000000000004
-	RBP: 00007ff902850733 R08: 0000000000000000 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 00007ff902a36038 R14: 00007ff902a35fa0 R15: 00007ffd7166bfa0
-	</TASK>
-
-	Allocated by task 11389:
-	kasan_save_stack+0x33/0x60 mm/kasan/common.c:57
-	kasan_save_track+0x14/0x30 mm/kasan/common.c:78
-	poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
-	__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
-	kasan_kmalloc include/linux/kasan.h:263 [inline]
-	__kmalloc_cache_noprof+0x2e4/0x6f0 mm/slub.c:5489
-	_kmalloc_noprof include/linux/slab.h:988 [inline]
-	_kzalloc_noprof include/linux/slab.h:1309 [inline]
-	binderfs_binder_device_create.isra.0+0x17a/0x990 drivers/android/binderfs.c:148
-	binder_ctl_ioctl+0x186/0x1b0 drivers/android/binderfs.c:241
-	vfs_ioctl fs/ioctl.c:51 [inline]
-	__do_sys_ioctl fs/ioctl.c:597 [inline]
-	__se_sys_ioctl fs/ioctl.c:583 [inline]
-	__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-	Freed by task 11389:
-	kasan_save_stack+0x33/0x60 mm/kasan/common.c:57
-	kasan_save_track+0x14/0x30 mm/kasan/common.c:78
-	kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
-	poison_slab_object mm/kasan/common.c:253 [inline]
-	__kasan_slab_free+0x5f/0x80 mm/kasan/common.c:285
-	kasan_slab_free include/linux/kasan.h:235 [inline]
-	slab_free_hook mm/slub.c:2677 [inline]
-	slab_free mm/slub.c:6377 [inline]
-	kfree+0x2fc/0x6e0 mm/slub.c:6692
-	binderfs_evict_inode+0x1e8/0x260 drivers/android/binderfs.c:268
-	evict+0x3c2/0xad0 fs/inode.c:825
-	iput_final fs/inode.c:2019 [inline]
-	iput fs/inode.c:2068 [inline]
-	iput+0x79a/0xd30 fs/inode.c:2031
-	dentry_unlink_inode+0x27f/0x460 fs/dcache.c:479
-	dentry_kill+0x25d/0xc20 fs/dcache.c:826
-	finish_dput fs/dcache.c:1001 [inline]
-	dput.part.0+0xce/0x230 fs/dcache.c:1042
-	dput+0x1f/0x30 fs/dcache.c:1037
-	end_dirop+0x7d/0xa0 fs/namei.c:2956
-	binderfs_binder_device_create.isra.0+0x71c/0x990 drivers/android/binderfs.c:194
-	binder_ctl_ioctl+0x186/0x1b0 drivers/android/binderfs.c:241
-	vfs_ioctl fs/ioctl.c:51 [inline]
-	__do_sys_ioctl fs/ioctl.c:597 [inline]
-	__se_sys_ioctl fs/ioctl.c:583 [inline]
-	__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-	The buggy address belongs to the object at ffff88805b340c00
-	which belongs to the cache kmalloc-512 of size 512
-	The buggy address is located 0 bytes inside of
-	freed 512-byte region [ffff88805b340c00, ffff88805b340e00)
-
-Fix by calling binder_add_device() before d_make_persistent(),
-while the parent directory lock is still held and the dentry
-cannot be discarded.
-
-Cc: stable <stable@kernel.org>
-Fixes: b89aa544821d ("convert binderfs")
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.5
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/F6EF5FB778E87C98+20260913085645.1639558-1-peiyang_he@smail.nju.edu.cn
+Cc: <stable@vger.kernel.org> # 6.4.x: ebefac564796: nvme-pci: 512 byte aligned dma pool segment quirk
+Cc: <stable@vger.kernel.org> # 6.4.x
+Signed-off-by: Gaurav Sinha <gsinha@micron.com>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binderfs.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/android/binderfs.c
-+++ b/drivers/android/binderfs.c
-@@ -189,12 +189,11 @@ static int binderfs_binder_device_create
- 		goto err;
- 	}
- 	inode->i_private = device;
-+	binder_add_device(device);
- 	d_make_persistent(dentry, inode);
- 	fsnotify_create(root->d_inode, dentry);
- 	simple_done_creating(dentry);
- 
--	binder_add_device(device);
--
- 	return 0;
- 
- err:
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3917,6 +3917,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
+ 	 { PCI_DEVICE(0x1344, 0x6001),   /* Micron Nitro NVMe */
+ 		 .driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1344, 0x6004),	/* Micron 4100AT */
++		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
+ 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
 
 
