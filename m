@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA1F4EDCAC;
-	Fri,  9 Oct 2026 14:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA494E781A;
+	Fri,  9 Oct 2026 14:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557273; cv=none; b=eXjgg2/8oa5kSKTQsHvO5oeyqkNaszWE4Iy2nLW+x5bFBshjSUwIvBrx5+nPUp+btuZRCLuM8Ljb4YSSjUz8JGXrtfAnMyWWRDdt9ZjK5lEHZYwDsnn2YytckKlJKw0NHXB+E5cgwnEIDsOiITg2T8xIcAFb2wQxO5Q6NmErmWY=
+	t=1791557276; cv=none; b=sDxR/Rh6VcLixv/CrY9MgO62CCk5arnX0pd+lzFRWhbPe/Sw8tdf6Ajpo7fDryxn2H6gkybxK00HAeYlCHG/HVBZm8Y5awnNlYfNU9jMEZrk/UrnqaSm2tVdExePlbomV200fBNvyCLfgqUaFxX7OXa1dwr9yeWmcrlZILf7J9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557273; c=relaxed/simple;
-	bh=33l+vr2vidCOwgt+ABVxGnUcIHpz4jAYD3mtnILqTSs=;
+	s=arc-20240116; t=1791557276; c=relaxed/simple;
+	bh=UEvGPlKdvoHwdZa3sakkcMw6zTXe43J/wanPgebsjMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMoYA6yxpKGCVtTrd4qYZkWU/WKdZn4kcuH8bElhHiOKmJ8vMQNXWG6QK+ePGGyfu5j0sFhPfJIEtjtIFgtk2XDPFovPW+LrApu2gMe0y0gHxPuFVZ7trhyIJd3kgwiS7VT8cal7X2TLPLDDEw35Y96ggeFcHKMX4RoRtuLLANs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppB4dOaH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I2E3l8rRq18tnm6D2xxX47pgvR941KILssDZh4bsII3MRnLmudJzpEaQt5tDVQnfjME8hpPQqaH+gGPr8PAWCapD5Di0+fwljUOL4f5etj8KdXIqXUeLhfjLszJKbLov14gTzpYjKGnPH3S58d3Q8STrxbowMCTtDgGri+F8G8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpKrJOPm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppB4dOaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072561F000FF;
-	Fri,  9 Oct 2026 14:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpKrJOPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB41B1F000FF;
+	Fri,  9 Oct 2026 14:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557272;
-	bh=JCutGjow6mbtD6T96LpgXZSoDP7WKDh38Oycx/E9Agg=;
+	s=korg; t=1791557275;
+	bh=tMEdcOhGLUF3rr6t2qpY2Bqt+w+57Yoe+QOhokc7eL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppB4dOaH/Upzr2o7NlrWKmkAGcDZto8QKdav1aWRIeeOtZkUCF267sQzaZMi1tZWR
-	 IpT0Ugkbh0Cldx9BMQGuCoFh4m1u26wJgiDhjuXxpjCt68gwmfE8Iy/fWDMpP45c+t
-	 YNdB859OM9CwPOCgerTRA1+0mGNAo5DSiioKiDVo=
+	b=JpKrJOPmrdv5iP/SrsFtEGCtVlfFzlU1bKCKB3XIHV4x8av6RsYiICdGtlvSYvTTH
+	 BEAmrYfbKn5KwH/7fv63SfpTnP7Bq1ACbdtiDGyGGNq9daFXA0YEOjOy/LhM2oqq7V
+	 t4rFVt9P3bMVKJ5S6HaktORdnDHtptfsmq7ESnTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 7.2 329/428] wifi: mac80211: shut down RX BA session timer on teardown
-Date: Fri,  9 Oct 2026 16:11:06 +0200
-Message-ID: <20261009140953.364667815@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Francisco=20Beltr=C3=A1n=20Millal=C3=A9n?= <fbeltranmillalen@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 375/403] drm/amdgpu: reset VI ASIC on MacBookPro14,3
+Date: Fri,  9 Oct 2026 16:12:16 +0200
+Message-ID: <20261009141001.085702831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,52 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Francisco Beltrán Millalén <fbeltranmillalen@gmail.com>
 
-commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e upstream.
+[ Upstream commit a22e5e4f2ebbdbb962cc3233094d189c4dfaa051 ]
 
-Tearing down an RX BA session can leave the session timer queued on a
-freed tid_rx. Later timer-wheel processing and the timer callback itself
-then run against freed memory.
+On a MacBookPro14,3 with a Radeon Pro 555 (Polaris11), the framebuffer
+is at MC address 0 when amdgpu loads after a cold boot, as the firmware
+leaves it (MC_VM_FB_LOCATION = 0x007f0000), while the VBIOS ASIC_Init
+table places it at 0xF4_0000_0000 (0xf47ff400).  amdgpu reads the
+location once, at init, so after a re-POST (S3 resume or GPU reset)
+the framebuffer has moved and the driver keeps programming the old
+one: the SMU is handed a table that was never written and the GPU
+does not come back, which leaves the internal panel black.
 
-An RX BAR handler can dereference tid_rx under RCU before teardown
-unpublishes it and stay in its read-side critical section while teardown
-deletes the session timer. The stale handler can then rearm the timer
-after timer_delete_sync() returns and before the RCU callback frees
-tid_rx.
+Resetting the ASIC on load makes ASIC_Init run before the driver reads
+the location, so the driver uses the VBIOS placement from the start and
+every later re-POST puts the framebuffer back where it already is.
 
-Use timer_shutdown_sync() so rearm attempts become ineffective once
-teardown starts. Keep reorder_timer unchanged: teardown marks the session
-removed under reorder_lock and its release path checks that state before
-rearming. session_timer has no equivalent guard because
-ieee80211_rx_h_ctrl() rearms it before taking reorder_lock.
+Add the Radeon Pro 555 used in this machine to the existing VI reset
+quirk table.
 
-Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
-Cc: stable@kernel.org # 5.15+
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested on a MacBookPro14,3 on 6.18.49 with the quirk table backported
+(the kernel also carries unrelated local PCI and ACPI patches for this
+machine).  The framebuffer is at 0x000000F400000000 after both cold and
+warm boot, and the GPU survived 9 S3 cycles (lid close and rtcwake, one
+of them with the lid closed for about 7.5 minutes and a USB-C disk
+attached), each followed by a few minutes of 3D load; no ring timeouts
+or VM faults were reported.  The reset adds about 0.23 s to amdgpu init.
+
+Suggested-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/all/20260924132952.25054-1-fbeltranmillalen@gmail.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Francisco Beltrán Millalén <fbeltranmillalen@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b6b1d97218518003107d4446fac278fa3e0a19a0)
+Cc: stable@vger.kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/agg-rx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/agg-rx.c
-+++ b/net/mac80211/agg-rx.c
-@@ -102,7 +102,7 @@ void __ieee80211_stop_rx_ba_session(stru
- 	if (!tid_rx)
- 		return;
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1417,6 +1417,7 @@ struct vi_reset_quirk {
+ static const struct vi_reset_quirk vi_reset_quirks[] = {
+ 	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x0190, 0xe3 }, /* Radeon Pro 555X */
+ 	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x018f, 0xc2 }, /* Radeon Pro 560X */
++	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x017a, 0xc7 }, /* Radeon Pro 555 */
+ };
  
--	timer_delete_sync(&tid_rx->session_timer);
-+	timer_shutdown_sync(&tid_rx->session_timer);
- 
- 	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
- 	spin_lock_bh(&tid_rx->reorder_lock);
+ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
 
 
