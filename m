@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D094E4C5E;
-	Fri,  9 Oct 2026 14:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9A545A2BC;
+	Fri,  9 Oct 2026 14:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557359; cv=none; b=SlSRPC5xohP2VPc02lh/fhugJvqqo/IpyIQdQswbBu9zuZSEOF3gRUzLHtuT8UCwxz60ANcjLUW/ZfZ/ZiTThj2ZanjMzX+QB7lbKOUTshl2z/Gt+GWRYH8YrPoJ0ku7HbcZIPj+5DX2eZqjY5HsyAHtp7SdQ0/koA4/ij5rpXA=
+	t=1791557362; cv=none; b=pM1rDmIPFDvgw4/VMufIIKrVP7Vtc7WablMbIu2HxHUH3R77F+oQkeKpwm30qb1tLUXOiqh6O5oH2ivYgcmqCGLJJcvCHm3PucPSufRekEDuy+o/Ozxh8TsOkjYSABW7+FBGGM70JRzgGVsD3KqcWRi7tYWWVdTDEaEUgn1E5Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557359; c=relaxed/simple;
-	bh=H0bTe+PGBeK/Tc5u+t57beG12waOjP1uujlX6rtrCbU=;
+	s=arc-20240116; t=1791557362; c=relaxed/simple;
+	bh=3hS6wm0TLvaRelsvQrHdo3TzCfzVID1L0FIOOQSfGj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/EWDcHEtBkZlMB/OS6hwNDmPc814ZEkbZzhJhlqb40J9vpQgS8JCF9orfoj+2ZDUKE6Q1eZ2HqV/I617a8UQp9MieYGBc0qkGVMEgBYq/vj6YdhuhXZVMuaFhOQvhl6fLQJoJVXQTKhQGH8STd6DYuK4ScoJEIRH4MRMoLSfZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxPRrkGV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rishlRfnQ8V5IRVb9eYtJFhQXVumtKhiQyJsGGHo7puCsOL0lHBjKyc6PZ7d7wi8C9Hkd9Br/feHJlMSNBrVcSBcxlyPl40QV1rX+7E96itINbaBMwxv7KIw7F9UwFI61iJuGtl54PGLDDWVm1gT/KwDMzO6bbCgXGR+C4LeM4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMg11l7G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxPRrkGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E007C1F000FF;
-	Fri,  9 Oct 2026 14:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMg11l7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED51F000FF;
+	Fri,  9 Oct 2026 14:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557358;
-	bh=9XWw8qEp0zOuqq1BXtKRnkGk/b/lFWwgt9g9zBTlUcw=;
+	s=korg; t=1791557361;
+	bh=NHAEacThJ1xniSAwOU82g1mtZHKUjF981XvwsArjK2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qxPRrkGVq3Z+GN6Dd7UEaDFBwAG4cmqU1Xc/uiYxlMcNRhHokWOo7cm5GP3G13Ovj
-	 628wGRLg0RCtlz4JwXtAoGJ8fT/YiY5BGnq+BYUAHv9B7s0tz4wYkwyeYJbfRE2YyU
-	 /NpN+DLj7hs5N0DudjNRetVcxrva8vKyPla8Kq5E=
+	b=WMg11l7Gn+PqJfN3f7LQL9hcaOmCSS9nOWg/uPS8M0ds7LKDwFQK2w7J/G5XWxJNs
+	 p9Bw+UY6vfQHjxTA6MhP6uDtjdL+RWPU7R3nnii6e3wn2UsTeY4AmyyGPNDEEwImpo
+	 kAFcH6ZrQYxHg+wrM5tOyBn1RHr+TlbFvI+sbaZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 343/428] USB: serial: fix driver deregistration order
-Date: Fri,  9 Oct 2026 16:11:20 +0200
-Message-ID: <20261009140953.688976235@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 388/403] KVM: x86: Move IRQ-related helper declarations from kvm_host.h => irq.h
+Date: Fri,  9 Oct 2026 16:12:29 +0200
+Message-ID: <20261009141001.412907113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,105 +50,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 646e5b28b4fdbc1b828a2398d6ced2c1dd308a46 upstream.
+[ Upstream commit 0bdd2d6d7328a7debcf138a7d6ef95d01a26b1b8 ]
 
-USB serial driver modules register one driver for the USB bus and one or
-more drivers for the ports on the USB serial bus.
+Move the function declaration for APIs to get/query pending IRQs from
+kvm_host.h to irq.h, as the APIs are only used by KVM x86 code.
 
-When unloading a driver module, the USB driver must be deregistered
-before the USB serial bus drivers so that I/O is stopped before
-unbinding the ports to avoid use-after-free in completion handlers
-accessing port data.
+No functional change intended.
 
-Note that the "new_id" attributes must first be removed to prevent new
-ids from being added and triggering a probe of the USB driver after it
-has been deregistered.
-
-Fixes: 765e0ba62613 ("usb-serial: new API for driver registration")
-Cc: stable@vger.kernel.org	# 3.4
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Message-ID: <20260613000329.732085-25-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/bus.c        |    4 ++++
- drivers/usb/serial/usb-serial.c |   21 ++++++++++++++++++---
- include/linux/usb/serial.h      |    1 +
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/kvm_host.h |    5 -----
+ arch/x86/kvm/irq.h              |    6 ++++++
+ arch/x86/kvm/svm/nested.c       |    1 +
+ arch/x86/kvm/vmx/nested.c       |    1 +
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/serial/bus.c
-+++ b/drivers/usb/serial/bus.c
-@@ -169,3 +169,7 @@ void usb_serial_bus_deregister(struct us
- 	free_dynids(driver);
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -2379,12 +2379,7 @@ enum {
+ # define kvm_memslots_for_spte_role(kvm, role) __kvm_memslots(kvm, 0)
+ #endif
+ 
+-int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
+-int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
+-int kvm_cpu_has_extint(struct kvm_vcpu *v);
+ int kvm_arch_interrupt_allowed(struct kvm_vcpu *vcpu);
+-int kvm_cpu_get_extint(struct kvm_vcpu *v);
+-int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
+ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
+ 
+ int kvm_pv_send_ipi(struct kvm *kvm, unsigned long ipi_bitmap_low,
+--- a/arch/x86/kvm/irq.h
++++ b/arch/x86/kvm/irq.h
+@@ -112,6 +112,12 @@ static inline int irqchip_in_kernel(stru
+ 	return mode != KVM_IRQCHIP_NONE;
  }
  
-+void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver)
-+{
-+	driver_remove_file(&driver->driver, &driver_attr_new_id);
-+}
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -1470,7 +1470,7 @@ int __usb_serial_register_drivers(struct
- {
- 	int rc;
- 	struct usb_driver *udriver;
--	struct usb_serial_driver * const *sd;
-+	struct usb_serial_driver * const *sd, * const *s;
- 
- 	/*
- 	 * udriver must be registered before any of the serial drivers,
-@@ -1523,9 +1523,11 @@ int __usb_serial_register_drivers(struct
- 	return 0;
- 
- err_deregister_drivers:
-+	for (s = serial_drivers; s < sd; ++s)
-+		usb_serial_bus_remove_new_id(*s);
-+	usb_deregister(udriver);
- 	while (sd-- > serial_drivers)
- 		usb_serial_deregister(*sd);
--	usb_deregister(udriver);
- err_free_driver:
- 	kfree(udriver);
- 	return rc;
-@@ -1543,10 +1545,23 @@ EXPORT_SYMBOL_GPL(__usb_serial_register_
- void usb_serial_deregister_drivers(struct usb_serial_driver *const serial_drivers[])
- {
- 	struct usb_driver *udriver = (*serial_drivers)->usb_driver;
-+	struct usb_serial_driver * const *sd;
++int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
++int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
++int kvm_cpu_has_extint(struct kvm_vcpu *v);
++int kvm_cpu_get_extint(struct kvm_vcpu *v);
++int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
 +
-+	/*
-+	 * udriver must be deregistered before the serial drivers so that
-+	 * I/O is stopped before unbinding the ports.
-+	 *
-+	 * Remove the new_id attributes to prevent ids from being added and
-+	 * triggering a probe of udriver after it has been deregistered.
-+	 */
-+	for (sd = serial_drivers; *sd; ++sd)
-+		usb_serial_bus_remove_new_id(*sd);
-+
-+	usb_deregister(udriver);
+ void kvm_inject_pending_timer_irqs(struct kvm_vcpu *vcpu);
+ void kvm_inject_apic_timer_irqs(struct kvm_vcpu *vcpu);
+ void kvm_apic_nmi_wd_deliver(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -23,6 +23,7 @@
  
- 	for (; *serial_drivers; ++serial_drivers)
- 		usb_serial_deregister(*serial_drivers);
--	usb_deregister(udriver);
-+
- 	kfree(udriver);
- }
- EXPORT_SYMBOL_GPL(usb_serial_deregister_drivers);
---- a/include/linux/usb/serial.h
-+++ b/include/linux/usb/serial.h
-@@ -381,6 +381,7 @@ void usb_serial_handle_dcd_change(struct
- 
- int usb_serial_bus_register(struct usb_serial_driver *device);
- void usb_serial_bus_deregister(struct usb_serial_driver *device);
-+void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver);
- 
- extern const struct bus_type usb_serial_bus_type;
- extern struct tty_driver *usb_serial_tty_driver;
+ #include "kvm_emulate.h"
+ #include "trace.h"
++#include "irq.h"
+ #include "mmu.h"
+ #include "x86.h"
+ #include "smm.h"
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -11,6 +11,7 @@
+ #include "x86.h"
+ #include "cpuid.h"
+ #include "hyperv.h"
++#include "irq.h"
+ #include "mmu.h"
+ #include "nested.h"
+ #include "pmu.h"
 
 
