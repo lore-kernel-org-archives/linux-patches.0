@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31F13382DA;
-	Fri,  9 Oct 2026 14:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8824EBAE3;
+	Fri,  9 Oct 2026 14:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557140; cv=none; b=t9MzgRhG2BdhE07hMTA0pvlgMCeDrIIo50PtHGmIKBiUVw9R2hKPa0Aw2xl2bZ69JKmjJwu5Ez3MasrITZyKAoFo3ZH2dkwy9Xi11W96iUH+Yom3XAyCHMIfcaSdaainCYxUwaQnFRD6n6ThNJcrfT34zfEoRO12lAU3DxJS/Ns=
+	t=1791557143; cv=none; b=aF1NhTbesQKgKWgrWXvKXg91e5SA7I505w/AD4I9CXaND1xVHFvAsEzTquv+aJFlJ2ZuSZ24TkU3ztmbTFsUy9XC4aK6adml10OI/zaYkY7dN0ESTDbmrvCiXI+3XiAKITFetOQk4696z7cbATm1p1/8U9BazBWVoJdnS4OeAkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557140; c=relaxed/simple;
-	bh=93XzHaYnozGB2dzB8AKCLAKM9Xjxs2CUwuTPNOb7zOE=;
+	s=arc-20240116; t=1791557143; c=relaxed/simple;
+	bh=naSevYPWQwT8zBJv7D04eTbrcG1+UNH9xgMPvHsLnhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aKFKzAcZ3l7d/bEWMZLgFdHuJSWC9rE3fZGY5GzOY7qcdc4dV+t8ZwoM8UrUVzxecWlHQFHhxoHda/RZDwMvXfEMCT4dyLRft27YC/wzVAl94ZP1VIOLEpHPD14y4bfVkDxCpsYxhMf/W7OjyM9wHIGUJvl+Vbg7hZamB2OTAN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myEwmhQv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=asirhCKegfFpgj4zww1MVIZKKegU2ClrG4olv0Fcf0CaEBKnmeYB/ffj7mKFBpxajD2ysvqjVvjncAFMcgOuDRjnmRNhGJar8goOYJxDSuWpAmXkyRl+L83ZH5OBN2jn03AgsRR1xsHGlSG/jGJLFckcn17ldZsr7ECVv0Z81DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vP1Iu3AA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myEwmhQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560C41F000FF;
-	Fri,  9 Oct 2026 14:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vP1Iu3AA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284CF1F000FF;
+	Fri,  9 Oct 2026 14:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557138;
-	bh=CllqN9hd7JhWcBfQuhGSurJQA+tp2mblAL1PqOAEIOg=;
+	s=korg; t=1791557141;
+	bh=CmqaoMG1bJy2SEY++SPUgfTgLgoELiUF8c7r2pWAIZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myEwmhQvpIgkTJkhxNrhBhDgxcsat/ftVXpAOiG1j34fgurTTO7ahC+F4xGfPRAaw
-	 9mrptQywfj2TW+4EQ22MiUkcNrZ7KVjcEvtdsBxY7q7Czu/5zUw+LW+P/Duk2j6wZJ
-	 e+RnvTIfeWb9s5PX3v4UFbBjRIQFySGuy0/dqhI8=
+	b=vP1Iu3AAH5XFR4cya7601MmOt1ZpZAbqUmhvAIiJ4KdkDU/tblAk0mm0i9i6ZfhlK
+	 QwgHPiKIeqc3XhYFcePXebREJQuYa9EweXI26Fq71REQSTXXUMwWNxWaGxQfOZI+gw
+	 75JZ6sQTwn8a+E7V38GOtGdrAnKi6wRmL2y7L580=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b320a4d5f65a61dbbf89@syzkaller.appspotmail.com,
-	=?UTF-8?q?J=C3=B6rn=20Engel?= <joern@barelysecure.org>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.2 302/428] mtd: block2mtd: Fix divide error when erase_size is zero
-Date: Fri,  9 Oct 2026 16:10:39 +0200
-Message-ID: <20261009140952.750252694@linuxfoundation.org>
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 353/403] fs,fsverity: remove check for fsverity being enabled in setattr_prepare()
+Date: Fri,  9 Oct 2026 16:11:54 +0200
+Message-ID: <20261009141000.533386508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Andrey Albershteyn <aalbersh@kernel.org>
 
-commit b5965c4221165045e19736794ca5f48ae3d67142 upstream.
+commit d2f96bcb89d36d488a10e3bcf819b98536968286 upstream.
 
-The erase size is parsed from the "block2mtd" module parameter and can
-be set to zero. add_device() then evaluates
+The check that fs-verity is available in the kernel is not necessary
+here. Filesystems could have fsverity files even without fs-verity
+enabled. In that case, truncate on fsverity file will succeed, what this
+check is trying to prevent.
 
-        if (size % erase_size)
-
-with a zero divisor, which triggers a divide error:
-
-divide error: 0000 [#1] PREEMPT SMP PTI
-RIP: 0010:add_device drivers/mtd/devices/block2mtd.c:296 [inline]
-RIP: 0010:block2mtd_setup2+0x592/0xda0 drivers/mtd/devices/block2mtd.c:459
-Call Trace:
-block2mtd_setup+0x27/0xe0 drivers/mtd/devices/block2mtd.c:476
-param_attr_store+0x214/0x310 kernel/params.c:589
-module_attr_store+0x65/0x90 kernel/params.c:904
-kernfs_fop_write_iter+0x3a4/0x540 fs/kernfs/file.c:345
-...
-
-Reject a zero erase size before performing the modulo operation so the
-existing "erasesize must be a divisor of device size" error path
-reports the invalid argument and frees the device.
-
-Fixes: ea6d833a3fdd ("mtd: block2mtd: check device size")
-Reported-by: syzbot+b320a4d5f65a61dbbf89@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/6a7b58ba.ac361c09.22ff0a.0045.GAE@google.com/
-Suggested-by: Jörn Engel <joern@barelysecure.org>
+Fixes: e9734653c523 ("fs,fsverity: reject size changes on fsverity files in setattr_prepare")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260727094352.1734826-1-aalbersh@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/block2mtd.c |    2 +-
+ fs/attr.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/devices/block2mtd.c
-+++ b/drivers/mtd/devices/block2mtd.c
-@@ -293,7 +293,7 @@ static struct block2mtd_dev *add_device(
- 	}
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -176,7 +176,7 @@ int setattr_prepare(struct mnt_idmap *id
+ 		 * covered by the open-time check because sys_truncate() takes a
+ 		 * path, not an open file.
+ 		 */
+-		if (IS_ENABLED(CONFIG_FS_VERITY) && IS_VERITY(inode))
++		if (IS_VERITY(inode))
+ 			return -EPERM;
  
- 	size = bdev_nr_bytes(bdev);
--	if ((long)size % erase_size) {
-+	if (!erase_size || (long)size % erase_size) {
- 		pr_err("erasesize must be a divisor of device size\n");
- 		goto err_free_block2mtd;
- 	}
+ 		error = inode_newsize_ok(inode, attr->ia_size);
 
 
