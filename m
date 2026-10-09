@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28E14E2F1B;
-	Fri,  9 Oct 2026 14:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E8D399CE9;
+	Fri,  9 Oct 2026 14:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555835; cv=none; b=HLiMTtx2ZDSMOuF+Gl30i+4aObawgaDuaJ1akDrHGWHh9fK3e0X0lylJmTLzYo/QCQedgBYPM0iAUGZvelsjpyb3t5lF2MCGNEVwdBPet/LOLEheGUm98oPEOLbNvi6s+bH09QKFEdisL5xpdKBPJN8cKAF41P6IF0X2cnWw04M=
+	t=1791555837; cv=none; b=NlmdNEOLAsH56pO+DV1cJpZqhO5QTgZkLYG22fgrt1vXBzU9PUcfrukDF+4IyzANWhAx1mAiAuLxf48sF7FV8La36s4xe9a82duExU3xGJZ8+UiD8WrP0ewhffzwTIs52qGxRFtrokOGd9bbABc+YAGxe9+t5Xk3YN3lcHxgmmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555835; c=relaxed/simple;
-	bh=F4kq/XypGeZw614KLTmlrLUCO1eXO/64KNvnpVvRNWI=;
+	s=arc-20240116; t=1791555837; c=relaxed/simple;
+	bh=PQVt3QiL11Me3gCb0ZLWNe55zjbEME2iAJE56dGgVps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcOJ0oiibE4Pxdg1RamsBvkgVgSlYlT/+00q7t7bhOuy+WhhRHMrIulLod/pzl4PVX8b44xRwEfEG7PKZRvYDVie8a1PzF7cJ3Aq2iMDhnORzMYZOJVaGa7NWCxn477JKRNZwGbscNoFiWohj1YBDURlm5y58T6oBicZ8Vh2ByM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8H/8Rzw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8B1+iqdLlXLCVvgw8wrGcTTIm5uiY+jhJffK0LtE2PnTt7tWr6oPgwmXgSCtk3eJhWTbUzBuA2QVgP5qhz2avd+vzIBjWzAoB/38MMWTHZTU4GzMnPpTMnZTlglOXUPqNMBotdfPix/7FDXzSKs+nPYGJgJ5wZJZLjODhsmFqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6Iyo9Ey; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8H/8Rzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468921F000FF;
-	Fri,  9 Oct 2026 14:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6Iyo9Ey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2068A1F000FF;
+	Fri,  9 Oct 2026 14:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555833;
-	bh=KOleVCEZcWPKADNYf+2J8N0H2IXc58wSday43n76q8g=;
+	s=korg; t=1791555836;
+	bh=TMKsiQOkeVRmazbe1oIKtaEzwXAYycyIo8NqmEnYH1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8H/8Rzw2l65y18XWt4S2QVBWvPf3z2vXdfTZSIKatCG/XOy535bY/B8vC75kwIPk
-	 CiKV4Nx3ljfAkZnT3CF9BEjUSR9t/WjF5LHQjl9DhqKeRgz3rMmiwoVOIPjC7yPmmj
-	 RN4ZYArTTWbQuy7bd5NcsbAva0Be1RfUTkh6ZwMA=
+	b=I6Iyo9EyoNfwFfDHMxVVXKVoLSEQ7T20guZxeHlkbmqrD5+J5GIUMtWU/LBp+DVY8
+	 xWbbqqsDBPIW2rrltEUv3+F6ShRI7Eq5bW0bGtqLjMW25Nwc8agzTr/nI4Phjwh0M5
+	 O/CvwhBVLCp9lLD7C/ICRyIRFADunStJ5AIC/Q/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 077/428] wifi: wfx: validate MIB read length before copying to caller
-Date: Fri,  9 Oct 2026 16:06:54 +0200
-Message-ID: <20261009140947.858321811@linuxfoundation.org>
+Subject: [PATCH 6.18 126/403] of: Put coreboot node after compatibility check
+Date: Fri,  9 Oct 2026 16:08:07 +0200
+Message-ID: <20261009140955.024372511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit ce67ebe9d8629776ce38e6995ae72fb903c828db ]
+[ Upstream commit 77f21a59e8cf7efcc1c4b3e9176e8b99993a7ae4 ]
 
-wfx_hif_read_mib() copies reply->length bytes from the firmware
-response into the caller-provided buffer without checking that
-reply->length does not exceed val_len. A firmware response with
-a length field larger than expected overruns the caller buffer and
-reads past the end of the reply allocation.
+of_find_compatible_node() returns a referenced device node, but
+EXCLUDED_DEFAULT_CELLS_PLATFORMS used the result only as a boolean and
+discarded the reference. This leaked a reference each time the
+address-cells or size-cells warning condition was evaluated on a
+coreboot system.
 
-Replace the dead -ENOMEM check with an active validation that
-reply->length fits within val_len before the memcpy.
+Use a helper that checks for the coreboot node with a scoped reference,
+so the reference is dropped once the check is done.
 
-Fixes: f95a29d40782 ("staging: wfx: add HIF commands helpers")
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB000155034FC391A2A54B9803C8BD2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 8600058ba28a7 ("of: Add coreboot firmware to excluded default cells list")
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://patch.msgid.link/20260924011358.734722-1-oss.patchbox@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/hif_tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/of/base.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/hif_tx.c b/drivers/net/wireless/silabs/wfx/hif_tx.c
-index 9f403d275cb13..9efb108bd877d 100644
---- a/drivers/net/wireless/silabs/wfx/hif_tx.c
-+++ b/drivers/net/wireless/silabs/wfx/hif_tx.c
-@@ -207,9 +207,11 @@ int wfx_hif_read_mib(struct wfx_dev *wdev, int vif_id, u16 mib_id, void *val, si
- 		dev_warn(wdev->dev, "%s: confirmation mismatch request\n", __func__);
- 		ret = -EIO;
- 	}
--	if (ret == -ENOMEM)
-+	if (!ret && le16_to_cpu(reply->length) > val_len) {
- 		dev_err(wdev->dev, "buffer is too small to receive %s (%zu < %d)\n",
- 			wfx_get_mib_name(mib_id), val_len, le16_to_cpu(reply->length));
-+		ret = -EIO;
-+	}
- 	if (!ret)
- 		memcpy(val, &reply->mib_data, le16_to_cpu(reply->length));
- 	else
+diff --git a/drivers/of/base.c b/drivers/of/base.c
+index ffd1d51dff38b..1fed97aeafeda 100644
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -95,9 +95,17 @@ static bool __of_node_is_type(const struct device_node *np, const char *type)
+ 	return !strcmp(match, type);
+ }
+ 
++static bool of_coreboot_present(void)
++{
++	struct device_node *np __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "coreboot");
++
++	return np;
++}
++
+ #define EXCLUDED_DEFAULT_CELLS_PLATFORMS ( \
+ 	IS_ENABLED(CONFIG_SPARC) || \
+-	of_find_compatible_node(NULL, NULL, "coreboot") \
++	of_coreboot_present() \
+ )
+ 
+ int of_bus_n_addr_cells(struct device_node *np)
 -- 
 2.53.0
 
