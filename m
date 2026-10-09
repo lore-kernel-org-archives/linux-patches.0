@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5EC4E73D5;
-	Fri,  9 Oct 2026 14:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A45B4E73CD;
+	Fri,  9 Oct 2026 14:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557441; cv=none; b=EJ5cA4KIldvAnxi1pk/R73GszOChhvxSPpFzL4ZQ7z0CTzMzGu19pi8zI/LF9RZ4cBjGiLANb7GZoRLrY7cSuy/HXlWWxR0ANKP5qgZEoTpzg5NRDhcLZTqXYyA8eSO1Bg0AP3n575P5lEnfyersNVGzEx5HO0j1qu2P5h8K/kE=
+	t=1791557444; cv=none; b=nmoHzsPfjuh8n8L4hdy+4hsjvmwCpBdpGp5C9OYfxwQ8g5NqRTH15TpTw/zKbxhmBpmC6Q+jM+DdKF+8exV+R9JM5N2P7VNgIRW8JpR2CvBz78SmH+34dgWcbfU3z+6mbPF6G/rQwV9X9uW0NyWagadb0mnimGO+zxyPkz38x1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557441; c=relaxed/simple;
-	bh=fUn3g8fncHw2F4ilGFn80yK69YG02rXXv0/ltC/Cpxk=;
+	s=arc-20240116; t=1791557444; c=relaxed/simple;
+	bh=1DnBrZoUk6rRJqUQXGgpjfYNKd2zvBToYiTg8MK3NmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HsxEc1idmPFNeSErDvl2dnXlPdYIuJdga0K0La50lz/tkdzHBQ2gZc7Pptqccin6D1trBBmw0RB//FeCHLvvJcCjHr4bYDW/CtKshsTzdwlJRoUa/wtggBdVB5jem46tH9jCaZnC7gnSf3tABOIP92kdK83gNN4ZpCXwWjZ5hdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNm0olh7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3UrONdBu92aTgo1A/eVxTQAyMq1Ma9yCtvU4B5u24VhldPW+SClG6Yh0xAMWXqqszjpoOqnKWZrqUGo8NzWXxhO5IZILoia2VlTiZh9Q+6HM64xBr0+7m5nz7HtiuOClaBa4C2c+ZlFvuRr+3yL1NipLi+95jvtoAAmwVcrPGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUbNb0iU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNm0olh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB671F000FF;
-	Fri,  9 Oct 2026 14:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUbNb0iU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0DC1F000FF;
+	Fri,  9 Oct 2026 14:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557440;
-	bh=rTwoRJ2ghnkeX++u2CUUGnF9egM0XTWFXZrh7lydmcg=;
+	s=korg; t=1791557443;
+	bh=j9QtGR8+ULu3L5JXKXRW3Typ2HdOOBl5xo8/abjo0KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNm0olh7Wwn6SgLeQ7JOq5TyxBHuhd/vHXjDc8hA8y0RnG6+0X/hR9+qs4QKnWaQP
-	 0krOe8NJ933qRBP7p6GrdzpbJ2EIRFKyWzw5WN2EoP96VARZKiUKDcuD5oU9Tsk9sD
-	 YeSB2SMl/IFwJH1GVdWsNGRQNcbaXmofNonXUxlg=
+	b=hUbNb0iUqnPfY09ja2J5o4nI00Tn99krUFKPtHMVABzvUkSZ1cNFwMn5ApcZwT3Fm
+	 qlnhOcjIqB1IqtLAZVn/nj/+Vx5Y4WJnZsSx8aD1eI3iIjNDDJAaNM2+fH+oxfWYqR
+	 2AboX+4Nzrq7mopKvSZrpL6lzKQNAUunoN8XwalQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 395/403] KVM: x86: Add static calls for nested virtualization ops
-Date: Fri,  9 Oct 2026 16:12:36 +0200
-Message-ID: <20261009141001.594257198@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 7.2 361/428] smb: client: discard post-EOF pagecache when extending a file via copy range
+Date: Fri,  9 Oct 2026 16:11:38 +0200
+Message-ID: <20261009140954.105592251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,303 +53,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 4b9819a50674dd40d176033f9ea2e23a70889dc6 ]
+commit 7b473ac7cd6f7e087876d3c67b1bc6df662fb429 upstream.
 
-Use static calls to invoke nested virtualization ops, as many of the calls
-are in relatively hot paths when L2 is active, e.g. checking for events,
-and because there's no reason not use static calls these days.
+cifs_file_copychunk_range() invalidated the pagecache only for the
+destination region, so when a copy extends the file the folio straddling
+the old EOF - which may hold data dirtied past EOF through an mmap - was
+never dropped and became visible as file content once the file was
+extended.
 
-Opportunistically use a RET0 static call for get_evmcs_version() instead
-of manually checking for a non-NULL vendor hook.
+Start the invalidation at the smaller of the destination offset and the
+old EOF.  filemap_invalidate_inode() writes back before invalidating
+while i_size is still old, so nothing past the old EOF is flushed to the
+server.
 
-Link: https://patch.msgid.link/20260630202828.440724-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-
-[ Backport to 6.18: retain the vendor init/exit declarations and the
-  existing direct translate_nested_gpa() implementation.  Omit the
-  translate_nested_gpa static-call entry because this tree has no such
-  nested-ops member.  Initialize the nested static calls inside the
-  existing kvm_ops_update() instead of adding a helper function; do not
-  import the unrelated kvm_setup_efer_caps() context.  This preserves
-  the get_nested_state_pages call site required by 10180a277549. ]
-
-[ sashal: Reduced backport -- upstream 4b9819a50674d touches 7 file(s), this
-  backport carries 6. Not backported here:
-  arch/x86/kvm/mmu.h
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8101d6e112e2 ("cifs: Fix copy offload to flush destination region")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm-x86-nested-ops.h |   35 +++++++++++++++++++++
- arch/x86/include/asm/kvm_host.h           |    8 ++++
- arch/x86/kvm/hyperv.c                     |    7 +---
- arch/x86/kvm/mmu/paging_tmpl.h            |    2 -
- arch/x86/kvm/x86.c                        |   50 +++++++++++++++++++-----------
- arch/x86/kvm/x86.h                        |    2 -
- 6 files changed, 80 insertions(+), 24 deletions(-)
- create mode 100644 arch/x86/include/asm/kvm-x86-nested-ops.h
+ fs/smb/client/cifsfs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/arch/x86/include/asm/kvm-x86-nested-ops.h
-@@ -0,0 +1,35 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#if !defined(KVM_X86_NESTED_OP) || \
-+    !defined(KVM_X86_NESTED_OP_OPTIONAL) || \
-+    !defined(KVM_X86_NESTED_OP_OPTIONAL_RET0)
-+#error Missing one or more KVM_X86_NESTED_OP #defines
-+#else
-+/*
-+ * KVM_X86_NESTED_OP() and KVM_X86_NESTED_OP_OPTIONAL() are used to help
-+ * generate both DECLARE/DEFINE_STATIC_CALL() invocations and
-+ * "static_call_update()" calls.
-+ *
-+ * KVM_X86_NESTED_OP_OPTIONAL() can be used for those functions that can have
-+ * a NULL definition.  KVM_X86_NESTED_OP_OPTIONAL_RET0() can be used likewise
-+ * to make a definition optional, but in this case the default will
-+ * be __static_call_return0.
-+ */
-+KVM_X86_NESTED_OP(leave_nested)
-+KVM_X86_NESTED_OP(is_exception_vmexit)
-+KVM_X86_NESTED_OP(check_events)
-+KVM_X86_NESTED_OP_OPTIONAL_RET0(has_events)
-+KVM_X86_NESTED_OP(triple_fault)
-+KVM_X86_NESTED_OP(get_state)
-+KVM_X86_NESTED_OP(set_state)
-+KVM_X86_NESTED_OP(get_nested_state_pages)
-+KVM_X86_NESTED_OP_OPTIONAL_RET0(write_log_dirty)
-+#ifdef CONFIG_KVM_HYPERV
-+KVM_X86_NESTED_OP_OPTIONAL(enable_evmcs)
-+KVM_X86_NESTED_OP_OPTIONAL_RET0(get_evmcs_version)
-+KVM_X86_NESTED_OP(hv_inject_synthetic_vmexit_post_tlb_flush)
-+#endif
-+#endif
-+
-+#undef KVM_X86_NESTED_OP
-+#undef KVM_X86_NESTED_OP_OPTIONAL
-+#undef KVM_X86_NESTED_OP_OPTIONAL_RET0
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -2009,6 +2009,14 @@ extern struct kvm_x86_ops kvm_x86_ops;
- #define KVM_X86_OP_OPTIONAL_RET0 KVM_X86_OP
- #include <asm/kvm-x86-ops.h>
- 
-+#define kvm_nested_call(func) static_call(kvm_x86_nested_##func)
-+
-+#define KVM_X86_NESTED_OP(func) \
-+	DECLARE_STATIC_CALL(kvm_x86_nested_##func, *(((struct kvm_x86_nested_ops *)0)->func));
-+#define KVM_X86_NESTED_OP_OPTIONAL KVM_X86_NESTED_OP
-+#define KVM_X86_NESTED_OP_OPTIONAL_RET0 KVM_X86_NESTED_OP
-+#include <asm/kvm-x86-nested-ops.h>
-+
- int kvm_x86_vendor_init(struct kvm_x86_init_ops *ops);
- void kvm_x86_vendor_exit(void);
- 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -2415,7 +2415,7 @@ static int kvm_hv_hypercall_complete(str
- 	ret = kvm_skip_emulated_instruction(vcpu);
- 
- 	if (tlb_lock_count)
--		kvm_x86_ops.nested_ops->hv_inject_synthetic_vmexit_post_tlb_flush(vcpu);
-+		kvm_nested_call(hv_inject_synthetic_vmexit_post_tlb_flush)(vcpu);
- 
- 	return ret;
- }
-@@ -2799,9 +2799,8 @@ int kvm_get_hv_cpuid(struct kvm_vcpu *vc
- 	};
- 	int i, nent = ARRAY_SIZE(cpuid_entries);
- 
--	if (kvm_x86_ops.nested_ops->enabled &&
--	    kvm_x86_ops.nested_ops->get_evmcs_version)
--		evmcs_ver = kvm_x86_ops.nested_ops->get_evmcs_version(vcpu);
-+	if (kvm_x86_ops.nested_ops->enabled)
-+		evmcs_ver = kvm_nested_call(get_evmcs_version)(vcpu);
- 
- 	if (cpuid->nent < nent)
- 		return -E2BIG;
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -222,7 +222,7 @@ static int FNAME(update_accessed_dirty_b
- 				!(pte & PT_GUEST_DIRTY_MASK)) {
- 			trace_kvm_mmu_set_dirty_bit(table_gfn, index, sizeof(pte));
- #if PTTYPE == PTTYPE_EPT
--			if (kvm_x86_ops.nested_ops->write_log_dirty(vcpu, addr))
-+			if (kvm_nested_call(write_log_dirty)(vcpu, addr))
- 				return -EINVAL;
- #endif
- 			pte |= PT_GUEST_DIRTY_MASK;
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -139,6 +139,13 @@ struct kvm_x86_ops kvm_x86_ops __read_mo
- EXPORT_STATIC_CALL_GPL(kvm_x86_get_cs_db_l_bits);
- EXPORT_STATIC_CALL_GPL(kvm_x86_cache_reg);
- 
-+#define KVM_X86_NESTED_OP(func)							\
-+	DEFINE_STATIC_CALL_NULL(kvm_x86_nested_##func,				\
-+				*(((struct kvm_x86_nested_ops *)0)->func));
-+#define KVM_X86_NESTED_OP_OPTIONAL KVM_X86_NESTED_OP
-+#define KVM_X86_NESTED_OP_OPTIONAL_RET0 KVM_X86_NESTED_OP
-+#include <asm/kvm-x86-nested-ops.h>
-+
- static bool __read_mostly ignore_msrs = 0;
- module_param(ignore_msrs, bool, 0644);
- 
-@@ -836,7 +843,7 @@ static void kvm_multiple_exception(struc
- 	 * wants to intercept the exception.
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1585,8 +1585,13 @@ ssize_t cifs_file_copychunk_range(unsign
+ 	/* Flush and invalidate all the folios in the destination region.  If
+ 	 * the copy was successful, then some of the flush is extra overhead,
+ 	 * but we need to allow for the copy failing in some way (eg. ENOSPC).
++	 *
++	 * Start at the old EOF when extending so the folio straddling it, which
++	 * may hold data written past EOF through an mmap, is dropped too.
  	 */
- 	if (is_guest_mode(vcpu) &&
--	    kvm_x86_ops.nested_ops->is_exception_vmexit(vcpu, nr, error_code)) {
-+	    kvm_nested_call(is_exception_vmexit)(vcpu, nr, error_code)) {
- 		kvm_queue_exception_vmexit(vcpu, nr, has_error, error_code,
- 					   has_payload, payload);
- 		return;
-@@ -4605,7 +4612,7 @@ int kvm_vm_ioctl_check_extension(struct
- 		break;
- 	case KVM_CAP_NESTED_STATE:
- 		r = kvm_x86_ops.nested_ops->enabled ?
--			kvm_x86_ops.nested_ops->get_state(NULL, NULL, 0) : 0;
-+			kvm_nested_call(get_state)(NULL, NULL, 0) : 0;
- 		break;
- #ifdef CONFIG_KVM_HYPERV
- 	case KVM_CAP_HYPERV_DIRECT_TLBFLUSH:
-@@ -5654,7 +5661,7 @@ static int kvm_vcpu_ioctl_enable_cap(str
- 			if (!kvm_x86_ops.nested_ops->enabled ||
- 			    !kvm_x86_ops.nested_ops->enable_evmcs)
- 				return -ENOTTY;
--			r = kvm_x86_ops.nested_ops->enable_evmcs(vcpu, &vmcs_version);
-+			r = kvm_nested_call(enable_evmcs)(vcpu, &vmcs_version);
- 			if (!r) {
- 				user_ptr = (void __user *)(uintptr_t)cap->args[0];
- 				if (copy_to_user(user_ptr, &vmcs_version,
-@@ -6160,8 +6167,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 		if (get_user(user_data_size, &user_kvm_nested_state->size))
- 			break;
+-	rc = filemap_invalidate_inode(target_inode, true, destoff, destoff + len - 1);
++	rc = filemap_invalidate_inode(target_inode, true,
++				      min(destoff, i_size_read(target_inode)),
++				      destoff + len - 1);
+ 	if (rc)
+ 		goto unlock;
  
--		r = kvm_x86_ops.nested_ops->get_state(vcpu, user_kvm_nested_state,
--						     user_data_size);
-+		r = kvm_nested_call(get_state)(vcpu, user_kvm_nested_state, user_data_size);
- 		if (r < 0)
- 			break;
- 
-@@ -6205,7 +6211,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 			break;
- 
- 		idx = srcu_read_lock(&vcpu->kvm->srcu);
--		r = kvm_x86_ops.nested_ops->set_state(vcpu, user_kvm_nested_state, &kvm_state);
-+		r = kvm_nested_call(set_state)(vcpu, user_kvm_nested_state, &kvm_state);
- 		srcu_read_unlock(&vcpu->kvm->srcu, idx);
- 		break;
- 	}
-@@ -9602,6 +9608,8 @@ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_setup
- 
- static inline void kvm_ops_update(struct kvm_x86_init_ops *ops)
- {
-+	const struct kvm_x86_nested_ops *nested_ops = ops->runtime_ops->nested_ops;
-+
- 	memcpy(&kvm_x86_ops, ops->runtime_ops, sizeof(kvm_x86_ops));
- 
- #define __KVM_X86_OP(func) \
-@@ -9615,6 +9623,17 @@ static inline void kvm_ops_update(struct
- #include <asm/kvm-x86-ops.h>
- #undef __KVM_X86_OP
- 
-+#define __KVM_X86_NESTED_OP(func) \
-+	static_call_update(kvm_x86_nested_##func, nested_ops->func);
-+#define KVM_X86_NESTED_OP(func) \
-+	WARN_ON(!nested_ops->func); __KVM_X86_NESTED_OP(func)
-+#define KVM_X86_NESTED_OP_OPTIONAL __KVM_X86_NESTED_OP
-+#define KVM_X86_NESTED_OP_OPTIONAL_RET0(func) \
-+	static_call_update(kvm_x86_nested_##func, (void *)nested_ops->func ? : \
-+						  (void *)__static_call_return0);
-+#include <asm/kvm-x86-nested-ops.h>
-+#undef __KVM_X86_NESTED_OP
-+
- 	kvm_pmu_ops_update(ops->pmu_ops);
- }
- 
-@@ -10157,11 +10176,11 @@ static void post_kvm_run_save(struct kvm
- int kvm_check_nested_events(struct kvm_vcpu *vcpu)
- {
- 	if (kvm_test_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
--		kvm_x86_ops.nested_ops->triple_fault(vcpu);
-+		kvm_nested_call(triple_fault)(vcpu);
- 		return 1;
- 	}
- 
--	return kvm_x86_ops.nested_ops->check_events(vcpu);
-+	return kvm_nested_call(check_events)(vcpu);
- }
- 
- static void kvm_inject_exception(struct kvm_vcpu *vcpu)
-@@ -10401,9 +10420,7 @@ static int kvm_check_and_inject_events(s
- 			kvm_x86_call(enable_irq_window)(vcpu);
- 	}
- 
--	if (is_guest_mode(vcpu) &&
--	    kvm_x86_ops.nested_ops->has_events &&
--	    kvm_x86_ops.nested_ops->has_events(vcpu, true))
-+	if (is_guest_mode(vcpu) && kvm_nested_call(has_events)(vcpu, true))
- 		*req_immediate_exit = true;
- 
- 	/*
-@@ -10690,7 +10707,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		}
- 
- 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
--			if (unlikely(!kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu))) {
-+			if (unlikely(!kvm_nested_call(get_nested_state_pages)(vcpu))) {
- 				r = 0;
- 				goto out;
- 			}
-@@ -10742,7 +10759,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		}
- 		if (kvm_test_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
- 			if (is_guest_mode(vcpu))
--				kvm_x86_ops.nested_ops->triple_fault(vcpu);
-+				kvm_nested_call(triple_fault)(vcpu);
- 
- 			if (kvm_check_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
- 				vcpu->run->exit_reason = KVM_EXIT_SHUTDOWN;
-@@ -11144,9 +11161,7 @@ bool kvm_vcpu_has_events(struct kvm_vcpu
- 	if (kvm_hv_has_stimer_pending(vcpu))
- 		return true;
- 
--	if (is_guest_mode(vcpu) &&
--	    kvm_x86_ops.nested_ops->has_events &&
--	    kvm_x86_ops.nested_ops->has_events(vcpu, false))
-+	if (is_guest_mode(vcpu) && kvm_nested_call(has_events)(vcpu, false))
- 		return true;
- 
- 	if (kvm_xen_has_pending_events(vcpu))
-@@ -11564,8 +11579,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 	 * a pending VM-Exit if L1 wants to intercept the exception.
- 	 */
- 	if (vcpu->arch.exception_from_userspace && is_guest_mode(vcpu) &&
--	    kvm_x86_ops.nested_ops->is_exception_vmexit(vcpu, ex->vector,
--							ex->error_code)) {
-+	    kvm_nested_call(is_exception_vmexit)(vcpu, ex->vector, ex->error_code)) {
- 		kvm_queue_exception_vmexit(vcpu, ex->vector,
- 					   ex->has_error_code, ex->error_code,
- 					   ex->has_payload, ex->payload);
---- a/arch/x86/kvm/x86.h
-+++ b/arch/x86/kvm/x86.h
-@@ -165,7 +165,7 @@ int kvm_check_nested_events(struct kvm_v
- /* Forcibly leave the nested mode in cases like a vCPU reset */
- static inline void kvm_leave_nested(struct kvm_vcpu *vcpu)
- {
--	kvm_x86_ops.nested_ops->leave_nested(vcpu);
-+	kvm_nested_call(leave_nested)(vcpu);
- }
- 
- /*
 
 
