@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE9331A045;
-	Fri,  9 Oct 2026 14:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA769231C91;
+	Fri,  9 Oct 2026 14:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556007; cv=none; b=fdZ6ZCZrbuGg5q1W6vBBarEiNsyov3bxB7Tk+0Snv6CHYgCIju1qTOPsYvCnhGyYqd1DS9MWs9jb6qMErof7+LALoZeHL+nTewyuN8UJ+mjgay5Fr7n+GfXBsAZG/cYgD3K4SZKgbah7Wp4k1oXjog28y3hd+FEHoCBCe6x/YEE=
+	t=1791556009; cv=none; b=QS2yMqPYpqOAFCZ3x3fWWErXakDTVrUa7Q/LV9C95b+x+bktYfjfULOWaXG8rxq0dURF+CzUU3ZFdS+XV/nuZH6ezvFKsuLzB505NMyf+9MeerYlCJfy5BTDVg1ofae7ARshsR5penBKPxG6HeKBBiILT5/1t8UtE9Ulgg0iYR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556007; c=relaxed/simple;
-	bh=4/eXPc9unSf+IJv3JEieWoR/zK5QzirtUR3JkwpHe1U=;
+	s=arc-20240116; t=1791556009; c=relaxed/simple;
+	bh=Dzkz4XP3YAW5P1pnETFIUfnhr+IoOKpAj2n9Iu1XZR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0hqT1Zuf1N61yfHeIbHYkg7CL/kE43QvmUrigOmmqXXx5jmGv3fcuFxkqzX3prI28RTAswQAlChz/OM6g2VR1laVIrBayefKzPWOyiKhD20kd+P/SjGPw03sUHFl4d7LqqgiN9mpI2k9WKkg2CRwqDV13jg3WeXxmids4w+MSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2o0ehqK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KGVQ90dwGzFLkrOEbpSB5OhfAZ3V9p93MP+jbaenupMDU4gaq/7cP9XpdxcnXXuhNszi2MNQYhw0cGLgj5pxxp4711EX5Gn0JIUU7DjncQiJ+TCYTs6mnwbhB/dG8ShUxPxWNUQZ4lNW5qem10Kj7L2TrEJlB2wjHz37pqtLHAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yul695SV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2o0ehqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A1D1F000FF;
-	Fri,  9 Oct 2026 14:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yul695SV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBE81F000FF;
+	Fri,  9 Oct 2026 14:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556005;
-	bh=IMBvI3VVn4Ly52P48C6ajU9mFrIzeEVbEvUSo37g0L8=;
+	s=korg; t=1791556008;
+	bh=2iIt1UjR1vzMGEJkpQ893ZHg5ot7z5IU6Rbtrfndq20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2o0ehqKITlvq63bQmkRl2BQTX5fY4Mn4EpFX6OO9Gubbs8u2/3amkK1ucM2otwMR
-	 IbClq2KzPfrzMqlOpulh4Z/h+u+d2uDY8HTynZeNAikeq09BHmYroIcJ++Oxxj/gGL
-	 jKXc9vl9OSPnbY4frcnKP486ehW9TJQLl4kIBAog=
+	b=Yul695SVhHJ2lSU4hGxqi9lAFFvu6h2ryOEjS0gOfaT+OWGHJ7miOzoq+hwpBL5CB
+	 bzAi78YqnMB6pH3E1BlrO17MLLgjUBJLojg3qwhQhwUncnh35fUAvbSEf0q6NSMgRN
+	 GDh3wQvdPntqQGR3V2AOFHQSvsfI/xaUfr3nDqsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	John Garry <john.garry@linux.dev>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 106/428] nvme: work around -Wformat-security warning
-Date: Fri,  9 Oct 2026 16:07:23 +0200
-Message-ID: <20261009140948.538510463@linuxfoundation.org>
+	stable@kernel.org,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 6.18 159/403] soc: qcom: geni-se: Correct QUP Core ICC vote constants
+Date: Fri,  9 Oct 2026 16:08:40 +0200
+Message-ID: <20261009140955.800411713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,123 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 6b8a5367e9e73a17561b8ce584ae77a43f712007 ]
+commit 1cd9b1be5a9c56fd69e3f555b200a1844f9b873e upstream.
 
-Passing a string variable into dev_set_name() causes a warning
-when building with -Wformat-security enabled:
+The GENI_TO_CORE ("qup-core") ICC vote selects the QUP Core 2X clock
+rate. The CORE_2X_*_MHZ constants are expressed in Bps, but their
+values are several orders of magnitude too small. For example, the
+50 MHz threshold is represented by 2500 rather than 25000000 Bps.
 
-drivers/nvme/host/core.c: In function 'nvme_cdev_add':
-drivers/nvme/host/core.c:3911:9: error: format not a string literal and no format arguments [-Werror=format-security]
- 3911 |         ret = dev_set_name(cdev_device, name);
+As a result, clients using these constants can severely under-vote the
+QUP Core clock.
 
-Remove the temporary strings and let dev_set_name() do the
-same thing internally.
+Correct the constants to their intended Bps thresholds so that the ICC
+provider selects the corresponding QUP Core 2X clock rate. Drop the unused
+definitions.
 
-Fixes: 26acdaa357cd ("nvme: fix crash and memory leak during invalid cdev teardown")
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 58ffbba6a399 ("soc: qcom: geni: Support for ICC voting")
+Cc: stable@kernel.org
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-1-f78eb611204e@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c      |   21 +++++++++------------
- drivers/nvme/host/multipath.c |   12 +++++-------
- drivers/nvme/host/nvme.h      |    6 +++---
- 3 files changed, 17 insertions(+), 22 deletions(-)
+ include/linux/soc/qcom/geni-se.h |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3913,9 +3913,9 @@ void nvme_cdev_del(struct cdev *cdev, st
- 	put_device(cdev_device);
- }
+--- a/include/linux/soc/qcom/geni-se.h
++++ b/include/linux/soc/qcom/geni-se.h
+@@ -303,17 +303,12 @@ struct geni_se {
+ #define QUP_SE_VERSION_2_5                  0x20050000
  
--int nvme_cdev_add(const char *name, struct cdev *cdev,
--		struct device *cdev_device,
--		const struct file_operations *fops, struct module *owner)
-+int nvme_cdev_add(struct cdev *cdev, struct device *cdev_device,
-+		const struct file_operations *fops, struct module *owner,
-+		int ctrl, int head)
- {
- 	int minor, ret;
+ /*
+- * Define bandwidth thresholds that cause the underlying Core 2X interconnect
+- * clock to run at the named frequency. These baseline values are recommended
+- * by the hardware team, and are not dynamically scaled with GENI bandwidth
+- * beyond basic on/off.
++ * QUP Core 2X clock votes used by GENI clients through the "qup-core" ICC
++ * path. Values are in Bps and must be converted with Bps_to_icc() before
++ * setting avg_bw.
+  */
+-#define CORE_2X_19_2_MHZ		960
+-#define CORE_2X_50_MHZ			2500
+-#define CORE_2X_100_MHZ			5000
+-#define CORE_2X_150_MHZ			7500
+-#define CORE_2X_200_MHZ			10000
+-#define CORE_2X_236_MHZ			16383
++#define CORE_2X_19_2_MHZ		9600000
++#define CORE_2X_50_MHZ			25000000
  
-@@ -3923,7 +3923,7 @@ int nvme_cdev_add(const char *name, stru
- 	if (minor < 0)
- 		return minor;
+ #define GENI_DEFAULT_BW			Bps_to_icc(1000)
  
--	ret = dev_set_name(cdev_device, name);
-+	ret = dev_set_name(cdev_device, "ng%dn%d", ctrl, head);
- 	if (ret) {
- 		ida_free(&nvme_ns_chr_minor_ida, minor);
- 		return ret;
-@@ -3964,17 +3964,14 @@ static const struct file_operations nvme
- 
- static void nvme_add_ns_cdev(struct nvme_ns *ns)
- {
--	char name[32];
--
- 	ns->cdev_device.parent = ns->ctrl->device;
--	snprintf(name, sizeof(name), "ng%dn%d", ns->ctrl->instance,
--		 ns->head->instance);
- 
- 	nvme_get_ns(ns); /* Undone in nvme_cdev_rel() */
--	if (nvme_cdev_add(name, &ns->cdev, &ns->cdev_device,
--			&nvme_ns_chr_fops, ns->ctrl->ops->module)) {
--		dev_err(ns->ctrl->device, "Unable to create the %s device\n",
--			name);
-+	if (nvme_cdev_add(&ns->cdev, &ns->cdev_device,
-+			&nvme_ns_chr_fops, ns->ctrl->ops->module,
-+			ns->ctrl->instance, ns->head->instance)) {
-+		dev_err(ns->ctrl->device, "Unable to create the ng%dn%d device\n",
-+			ns->ctrl->instance, ns->head->instance);
- 		nvme_put_ns(ns);
- 		return;
- 	}
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -621,17 +621,15 @@ static const struct file_operations nvme
- 
- static void nvme_add_ns_head_cdev(struct nvme_ns_head *head)
- {
--	char name[32];
--
- 	head->cdev_device.parent = &head->subsys->dev;
--	snprintf(name, sizeof(name), "ng%dn%d", head->subsys->instance,
--		 head->instance);
- 
- 	nvme_get_ns_head(head); /* Undone in nvme_cdev_rel() */
--	if (nvme_cdev_add(name, &head->cdev, &head->cdev_device,
--			&nvme_ns_head_chr_fops, THIS_MODULE)) {
-+	if (nvme_cdev_add(&head->cdev, &head->cdev_device,
-+			&nvme_ns_head_chr_fops, THIS_MODULE,
-+			head->subsys->instance, head->instance)) {
- 		dev_err(disk_to_dev(head->disk),
--			"Unable to create the %s device\n", name);
-+			"Unable to create the ng%dn%d device\n",
-+			head->subsys->instance, head->instance);
- 		nvme_put_ns_head(head);
- 		return;
- 	}
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -1008,9 +1008,9 @@ int nvme_get_log(struct nvme_ctrl *ctrl,
- void nvme_get_ns_head(struct nvme_ns_head *head);
- bool nvme_tryget_ns_head(struct nvme_ns_head *head);
- void nvme_put_ns_head(struct nvme_ns_head *head);
--int nvme_cdev_add(const char *name, struct cdev *cdev,
--		struct device *cdev_device,
--		const struct file_operations *fops, struct module *owner);
-+int nvme_cdev_add(struct cdev *cdev, struct device *cdev_device,
-+		const struct file_operations *fops, struct module *owner,
-+		int ctrl, int head);
- void nvme_cdev_del(struct cdev *cdev, struct device *cdev_device);
- int nvme_ioctl(struct block_device *bdev, blk_mode_t mode,
- 		unsigned int cmd, unsigned long arg);
 
 
