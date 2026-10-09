@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B24F45D910;
-	Fri,  9 Oct 2026 14:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CD433BBD9;
+	Fri,  9 Oct 2026 14:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556269; cv=none; b=W0yOE6oDvpZ4oaajPAHFm99iD6X3D75J37m23PQ5AqC8/s7kDtINtNrcv4rHm0kzKFm2hmCAxaopEBXXWoYOALFExEMvGCyjuRWTJ0QYqubj72XOihDJqU+EPLwU8YV6lOO3nYtZbxoMdAGs7HSWb29P2hyX3eqreiR9Wk3czns=
+	t=1791556272; cv=none; b=np2n1NseTWlOqkgtB4mbvTsxgsm53CtZG4NrApDvqyzrfQUyoB+NMgnqjgt6TvFHJZ3AWxxBcVSNUECJ2bg7lL2iRGzFEiM8WeJGjOPHDlwqyaSIs/9itM4+rJG0ieXpLX9z/2sy99S7l/y+nDZIgj/x7EybR02kQctYUqR6zGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556269; c=relaxed/simple;
-	bh=eu7lr0wRMZBEq+zECwmHMeO7zNbRv/bFJ3vVI0pCbPc=;
+	s=arc-20240116; t=1791556272; c=relaxed/simple;
+	bh=gXnHetRZ7ORoM/TNZEEO9VVYGdAbs5opVKOkhhtAcLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geThiRmAkO+XoW8aSN+OkMdR7bhOSerW3WYY+GNp1T8q8Gh3w3AqXg87T8jEYJ8sRyS3cfyiVZFw41ozhxctEKvPx7fDEizYfO5EZ5ho+1bbh31dMczmewYF+raDhXqaJkhkm51Y003TKJeoqXIrFWxIpyw1TaprLC4KQ1sQzjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1ZWfU1G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nh+RdCbBrB4MxuiVpZPh9NEZovnROYsMXL0pX/Ejy1VrV3np33J8ZpPhphjMhdXv90FX+1mYBoLX8HtxzR5x638AfTG3FevJ+Nk5EhM9nlu4qEdjOEz9SubL1iRYffehqsniwOk8HSN2/n1gwD7CI3Ct9b1dlXUCC4A1WXQxOL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+Drd58o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1ZWfU1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094571F000FF;
-	Fri,  9 Oct 2026 14:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+Drd58o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75D11F000FF;
+	Fri,  9 Oct 2026 14:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556268;
-	bh=gd4+ZBEz8lvBSIynpsEWEw5aE05uYavBStf5u6wyZXQ=;
+	s=korg; t=1791556271;
+	bh=yHZ90/tUPVDy7H5dDyPN0wesfymytUcZ6pCBz+/1ol8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1ZWfU1GK/TCExrDhZDHXl+kkuH75DNBYTRlys3xn0fG6Ws/mbtiRCVTtDYIVBkt1
-	 mKnCyvfzeuEY8fHKas1Lzmcl85EKa43Hh2W041RI731PmkTGMyZE79petuw3zjVlIy
-	 Ae9ecXOdgLDx7TpV054yL+Nqp7c/NUdFDLNSQdmo=
+	b=W+Drd58ozCuJ/nBpt66yzxMoxuoicNyq2dhxt+1ORl8Y+H87oXwgdEmJ93mOYDBV5
+	 4cDiFBSX/84jDGdaPEJLM0ioT7gOXfqGmzrjGkd3p/6W/S8vxXHKM5uL+5XBJPeN5P
+	 H8qM9GlM0hmdEbyG9GlFWxRJ+fGJv1P+J+RH1nmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 197/403] tty: abort break signalling on hangup
-Date: Fri,  9 Oct 2026 16:09:18 +0200
-Message-ID: <20261009140956.738817062@linuxfoundation.org>
+	stable@kernel.org,
+	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
+	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>,
+	David Laight <david.laight.linux@gmail.com>
+Subject: [PATCH 6.18 207/403] serial: sc16is7xx: refill TX FIFO below trigger using fresh TXLVL
+Date: Fri,  9 Oct 2026 16:09:28 +0200
+Message-ID: <20261009140956.979873520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,124 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
 
-commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
+commit 527484911a40f6e84cf47e8bc490f7da61ab4151 upstream.
 
-The break ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+sc16is7xx_handle_tx() reads TXLVL once and sizes the hardware TX FIFO
+write from that value. TXLVL reports free space in the hardware TX FIFO.
 
-Drivers must handle this race, but TCSBRK and TCSBRKP should still be
-aborted to avoid calling back into the driver after a user-controlled
-timeout (possibly even after the tty has been reopened).
+On this SPI-backed path, hardirq/softirq activity, RT scheduling, and
+waiting for synchronous SPI transfers can delay the refill while the UART
+continues draining. The TXLVL value can therefore become stale before the
+hardware TX FIFO write completes.
 
-Note that drivers should disable any break state on shutdown so just
-return on hangup (calling break_ctl() again is racy and will most likely
-fail for drivers handling the race).
+One failing ftrace with the default 8-free-space trigger showed:
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+  tx_start       txlvl=9  txlvl_read_us=580
+  tx_pre_write   sent=9   pre_write_us=16
+  tx_segment     sent=9   seg_us=364
+  tx_post_write  txlvl_before=9 sent=9 txlvl_after=12 pending_after=29
+                 post_gap_us=12 post_txlvl_us=130
+
+The driver read 9 free spaces and wrote 9 bytes to the hardware TX FIFO,
+but the post-write TXLVL read still reported 12 free spaces while 29 bytes
+remained queued in the xmit kfifo. Even allowing for the post-write read
+window, the hardware TX FIFO had not been filled below the 8-free-space
+trigger, so no new threshold crossing was expected.
+
+The captured failing samples had the same pattern: data remained queued
+in the xmit kfifo while post-write TXLVL remained above the hardware
+trigger. The hardware TX FIFO then drained empty before another refill
+was requested, producing an unintended gap on the wire.
+
+Fix this by re-reading TXLVL after each hardware TX FIFO write while data
+remains queued in the xmit kfifo. If TXLVL is still at or above the
+trigger, top up the hardware TX FIFO again. Stop when the xmit kfifo is
+empty or a TXLVL read confirms that hardware TX FIFO free space is
+strictly below the trigger.
+
+Stopping when TXLVL was equal to the trigger still allowed TX gaps in the
+tested workload. Continuing until TXLVL was strictly below the trigger
+eliminated the observed gaps caused by stale-TXLVL under-fill.
+
+Program the hardware TX trigger explicitly through TLR using the same
+constant as the refill-loop threshold. This prevents the software refill
+condition from diverging from the programmed hardware trigger.
+
+Tested on SC16IS752 over 1 MHz SPI on an i.MX6ULL single-core
+PREEMPT_RT system, transmitting RS-485 at 115200 baud 8N1 under
+continuous Modbus RTU load.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@kernel.org
+Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
+Link: https://lore.kernel.org/linux-serial/20260623112225.82386-3-paultyson.mbewe@ziehl-abegg.de/
+Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Reviewed-by: David Laight <david.laight.linux@gmail.com>
+Link: https://patch.msgid.link/20260930145628.566535-2-paultyson.mbewe@ziehl-abegg.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
- include/linux/tty.h  |    1 +
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -620,6 +620,8 @@ static void __tty_hangup(struct tty_stru
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -246,6 +246,8 @@
+ #define SC16IS7XX_TLR_TX_TRIGGER(words)	((((words) / 4) & 0x0f) << 0)
+ #define SC16IS7XX_TLR_RX_TRIGGER(words)	((((words) / 4) & 0x0f) << 4)
  
- 	tty_ldisc_hangup(tty, cons_filp != NULL);
- 
-+	wake_up_interruptible(&tty->break_wait);
++#define SC16IS7XX_TX_TRIGGER_LEVEL	8
 +
- 	spin_lock_irq(&tty->ctrl.lock);
- 	clear_bit(TTY_THROTTLED, &tty->flags);
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-@@ -2458,6 +2460,7 @@ static int tiocgetd(struct tty_struct *t
-  * send_break - performed time break
-  * @tty: device to break on
-  * @duration: timeout in mS
-+ * @file: file object
-  *
-  * Perform a timed break on hardware that lacks its own driver level timed
-  * break functionality.
-@@ -2465,8 +2468,9 @@ static int tiocgetd(struct tty_struct *t
-  * Locking:
-  *	@tty->atomic_write_lock serializes
-  */
--static int send_break(struct tty_struct *tty, unsigned int duration)
-+static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
- {
-+	long timeout;
- 	int retval;
+ /* IOControl register bits (Only 75x/76x) */
+ #define SC16IS7XX_IOCONTROL_LATCH_BIT	BIT(0)   /* Enable input latching */
+ #define SC16IS7XX_IOCONTROL_MODEM_A_BIT	BIT(1)   /* Enable GPIO[7:4] as modem A pins */
+@@ -694,6 +696,21 @@ static void sc16is7xx_handle_rx(struct u
+ 	tty_flip_buffer_push(&port->state->port);
+ }
  
- 	if (tty->ops->break_ctl == NULL)
-@@ -2480,13 +2484,26 @@ static int send_break(struct tty_struct
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (!retval) {
--		msleep_interruptible(duration);
--		retval = tty->ops->break_ctl(tty, 0);
--	} else if (retval == -EOPNOTSUPP) {
--		/* some drivers can tell only dynamically */
--		retval = 0;
-+	if (retval) {
-+		if (retval == -EOPNOTSUPP) {
-+			/* some drivers can tell only dynamically */
-+			retval = 0;
-+		}
-+		goto out_unlock;
++static unsigned int sc16is7xx_txlvl(struct uart_port *port)
++{
++	unsigned int txlvl;
++
++	txlvl = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
++	if (txlvl > SC16IS7XX_FIFO_SIZE) {
++		dev_err_ratelimited(port->dev,
++				    "chip reports %u free bytes in TX FIFO, but it only has %u\n",
++				    txlvl, SC16IS7XX_FIFO_SIZE);
++		return 0;
 +	}
 +
-+	timeout = msecs_to_jiffies(duration);
-+	timeout = wait_event_interruptible_timeout(tty->break_wait,
-+						   tty_hung_up_p(file),
-+						   timeout);
-+	/* return early on hangup only */
-+	if (timeout > 0) {
-+		retval = -EIO;
-+		goto out_unlock;
- 	}
++	return txlvl;
++}
 +
-+	retval = tty->ops->break_ctl(tty, 0);
-+out_unlock:
- 	tty_write_unlock(tty);
+ static void sc16is7xx_handle_tx(struct uart_port *port)
+ {
+ 	struct tty_port *tport = &port->state->port;
+@@ -715,13 +732,7 @@ static void sc16is7xx_handle_tx(struct u
+ 	}
  
- 	if (signal_pending(current))
-@@ -2754,10 +2771,10 @@ long tty_ioctl(struct file *file, unsign
- 		 * This is used by the tcdrain() termios function.
- 		 */
- 		if (!arg)
--			return send_break(tty, 250);
-+			return send_break(file, tty, 250);
- 		return 0;
- 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
--		return send_break(tty, arg ? arg*100 : 250);
-+		return send_break(file, tty, arg ? arg * 100 : 250);
+ 	/* Limit to space available in TX FIFO */
+-	txlen = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
+-	if (txlen > SC16IS7XX_FIFO_SIZE) {
+-		dev_err_ratelimited(port->dev,
+-			"chip reports %d free bytes in TX fifo, but it only has %d",
+-			txlen, SC16IS7XX_FIFO_SIZE);
+-		txlen = 0;
+-	}
++	txlen = sc16is7xx_txlvl(port);
  
- 	case TIOCMGET:
- 		return tty_tiocmget(tty, p);
-@@ -3117,6 +3134,7 @@ struct tty_struct *alloc_tty_struct(stru
- 	init_ldsem(&tty->ldisc_sem);
- 	init_waitqueue_head(&tty->write_wait);
- 	init_waitqueue_head(&tty->read_wait);
-+	init_waitqueue_head(&tty->break_wait);
- 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
- 	mutex_init(&tty->atomic_write_lock);
- 	spin_lock_init(&tty->ctrl.lock);
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -230,6 +230,7 @@ struct tty_struct {
- 	struct fasync_struct *fasync;
- 	wait_queue_head_t write_wait;
- 	wait_queue_head_t read_wait;
-+	wait_queue_head_t break_wait;
- 	struct work_struct hangup_work;
- 	void *disc_data;
- 	void *driver_data;
+ 	/* Handle circular buffer wrap-around by sending multiple segments */
+ 	while (txlen > 0 && !kfifo_is_empty(&tport->xmit_fifo)) {
+@@ -734,7 +745,14 @@ static void sc16is7xx_handle_tx(struct u
+ 
+ 		sc16is7xx_fifo_write(port, tail, to_send);
+ 		uart_xmit_advance(port, to_send);
+-		txlen -= to_send;
++
++		if (kfifo_is_empty(&tport->xmit_fifo))
++			break;
++
++		/* Refill below the trigger to enable the next THRI crossing. */
++		txlen = sc16is7xx_txlvl(port);
++		if (txlen < SC16IS7XX_TX_TRIGGER_LEVEL)
++			break;
+ 	}
+ 
+ 	uart_port_lock_irqsave(port, &flags);
+@@ -1186,6 +1204,10 @@ static int sc16is7xx_startup(struct uart
+ 			     SC16IS7XX_TCR_RX_RESUME(24) |
+ 			     SC16IS7XX_TCR_RX_HALT(48));
+ 
++	/* Sync hardware and software TX trigger levels */
++	sc16is7xx_port_write(port, SC16IS7XX_TLR_REG,
++			     SC16IS7XX_TLR_TX_TRIGGER(SC16IS7XX_TX_TRIGGER_LEVEL));
++
+ 	/* Disable TCR/TLR access */
+ 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
+ 
 
 
