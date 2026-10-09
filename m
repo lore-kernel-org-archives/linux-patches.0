@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FFC3D647A;
-	Fri,  9 Oct 2026 14:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACD318859B;
+	Fri,  9 Oct 2026 14:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555416; cv=none; b=Y92L8Afrzrp/AJLQtN2M+PBV07edDYbFRPlsXDr52W9qWTp0baavCLhv5HT5xJRotBCFbpgd0LzUNfjam1n7+5/WZrM6ZYtQy8AN9LcziefMLGOPCSfPSgABIYZOfHAXGeJZjAljkSk3KixMmBQyFbq3QBnaEzO5/1bDs7SOH3E=
+	t=1791555417; cv=none; b=qvToYBweW2jYiaUBuUnlhgHzABc/7OXIelJpBbfcnRJiR4CpBlYKRFuqHHJwEPrMZWUD1k3NA+xLTTLVgAErktPQ7PqMXMV8Lu7nIJqWVO+47OP8sEZKHqDq4+MboBxgDHGq3Q3TXHVfL/pqYTvLiwt6ffEL8awkKf34KPr21as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555416; c=relaxed/simple;
-	bh=Fzq+vspLYpcvIWccUcLtwuM9L3Vg0BbIEZOnvcBlQzM=;
+	s=arc-20240116; t=1791555417; c=relaxed/simple;
+	bh=DQIVHBGEcK9mWItduJdFmXyLUFsivSpdhLBJekUUDFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqgXIARgKg0vD1rEKvVVU2v43cmyZQklSXbfQ+p3agfepsb4mryHil3TI1u3ENKslVxkczDXJ6ofQ2hEib0NTh4D3neA3rBbypGWfDDYrUbkAnpdfto+p1SqV1g2YgIGKa/rxSG7QymSzzdv29aJUsJ0Eb6Uo4jVU+mkvJKruCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn/tMIQ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Avsml8EHcRS+1XVE5AYAkipKFelX3gnVENrg8krx14opEXxckF0Bs7jVTTzsXyYY2oXg0MmKQJx+YtEWUiS4Wh0qgOffX4+C2XFHI4W3/FT6NuGpo15woQ/K1VGxjRz16f3SJGS9iDjcJq4CA4jsfUrn2gJ3rgN8vXRiIdJfq3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwtXLFMS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn/tMIQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C96A1F000FF;
-	Fri,  9 Oct 2026 14:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwtXLFMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A21D1F00898;
+	Fri,  9 Oct 2026 14:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555412;
-	bh=+E3or8JXXZElOics3fK88E165edIHnqtP5IT7w9nQgI=;
+	s=korg; t=1791555415;
+	bh=t1J0DYeX16Mi9QEo08kfZe/O8eE9v406W1N3svdAFGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vn/tMIQ7nOG6IWpG/DLQLozS0qGmu2/DqX+WIVphaeGsiT7A+c9xhL/xMl4lrUnFG
-	 ktBY8CkZ8zK3UEk+cwmc2BarWiNT7Abf6Th1H6R/zWY37x8dMdYBo1ZCIq0lLRdDCH
-	 cWhAH0nSmB51x4nQqb8HaTBwkiltQmI3ZcJn6Vvc=
+	b=TwtXLFMSWXhAxSB9gLM09CrvAeZVWYQle7Rx6yYDKXYKez4eGxGsYWT09cCXmCIy+
+	 yOvHxvvPlD61QmR+UEpE1w01ji4vqxiaLUT6uf5fQ+RUBDOrZPILBOL3GRIC2/MpRI
+	 XTdC8qSN2UD8L78xaPyJyyfV5W/Tz8fEGTWIwdHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yi Yang <yiyang13@huawei.com>
-Subject: [PATCH 6.18 049/403] vc_screen: reload vc pointer before if (ret) in vcs_write() to avoid UAF
-Date: Fri,  9 Oct 2026 16:06:50 +0200
-Message-ID: <20261009140953.250785568@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hui Peng <benquike@gmail.com>
+Subject: [PATCH 6.18 050/403] vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection()
+Date: Fri,  9 Oct 2026 16:06:51 +0200
+Message-ID: <20261009140953.273992774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,82 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit 226bd5603371cd9f6642cbb9e9a677f445de3530 upstream.
+commit 39495ef5d6f8019e62d65807f217a7ca8232727a upstream.
 
-The reload of 'vc' added by commit 8fb9ea65c9d1 ("vc_screen: reload load
-of struct vc_data pointer in vcs_write() to avoid UAF") sits after the
-'if (ret)' block, so the copy-failure break path exits the loop without
-reloading vc. If the vc was kfree()'d via vc_port_destruct during the
-unlocked copy_from_user() window, the post-loop
-'if (written && vc) vcs_scr_updated(vc)' is reached with a stale
-non-NULL vc. The '&& vc' guard from commit a287620312dc ("vc_screen:
-fix null-ptr-deref in vcs_notifier() during concurrent vcs_write") only
-handles the NULL case, not this stale-non-NULL case; vcs_notifier() then
-reads param->vc->vc_num from freed memory:
+In paste_selection(), the loop copies min_t(unsigned int,
+vc_sel.buf_len - pasted,tty->receive_room) bytes per iteration into
+tty_ldisc_receive_buf() and increments pasted += count.
 
-  BUG: KASAN: slab-use-after-free in vcs_notifier+0x7c/0xd0
-  Read of size 2 at addr ffff888007149190
-  Call Trace:
-   vcs_notifier+0x7c/0xd0
-   atomic_notifier_call_chain+0x70/0xa0
-   vcs_scr_updated+0x77/0xa0
-   vcs_write+0x71b/0x7e0
-  Allocated by task: vc_allocate -> con_install -> tty_open
-  Freed by task: kfree <- vt_ioctl (VT_DISALLOCATE -> vc_port_destruct)
+Because the selection mutex (vc_sel.lock) is dropped inside the loop
+Whenever the line discipline buffer fills up and paste_selection()
+sleeps on tty->write_wait, a concurrent TIOCLINUX (TIOCL_SETSEL) ioctl
+can replace vc_sel.buffer with a shorter selection and reduce
+vc_sel.buf_len below pasted.
 
-Move the reload to immediately after console_lock(), before 'if (ret)',
-so every break path below passes a fresh vc to the post-loop
-vcs_scr_updated().
+When paste_selection() resumes, vc_sel.buf_len - pasted underflows as an
+unsigned integer to a large positive value, causing
+tty_ldisc_receive_buf(ld, vc_sel.buffer + pasted, NULL, count) to read
+up to 4094 bytes out-of-bounds past the newly allocated vc_sel.buffer.
 
-Fixes: a287620312dc ("vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write")
-Cc: stable@kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://patch.msgid.link/20260901113131.2760010-1-yiyang13@huawei.com
+Fix this by terminating the loop when pasted >= vc_sel.buf_len.
+
+Kernel stack trace (Linux 7.3.0-rc3):
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in n_tty_receive_buf_common+0xa01/0x1650
+ Read of size 4094 at addr ffff888101c58010 by task kworker/u17:1/65
+ Workqueue: events_unbound flush_to_ldisc
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x70/0xa0
+  print_report+0x153/0x4c6
+  kasan_report+0xf1/0x120
+  kasan_check_range+0x11c/0x200
+  __asan_memcpy+0x29/0x70
+  n_tty_receive_buf_common+0xa01/0x1650
+  tty_ldisc_receive_buf+0x66/0x110
+  tty_port_default_receive_buf+0x6b/0xb0
+  flush_to_ldisc+0x1b4/0x410
+  process_one_work+0x6ff/0x1110
+  worker_thread+0x4a8/0xb70
+  kthread+0x307/0x3e0
+  ret_from_fork+0x3ed/0x680
+  </TASK>
+ ==================================================================
+
+Fixes: e8c75a30a23c ("vt: selection, push sel_lock up")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Link: https://patch.msgid.link/20260919110041.3763078-1-benquike@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/tty/vt/selection.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -633,6 +633,18 @@ vcs_write(struct file *file, const char
- 		ret = copy_from_user(con_buf, buf, this_round);
- 		console_lock();
- 
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer; recheck here, before
-+		 * if (ret), so every break path below passes a fresh vc to the
-+		 * post-loop vcs_scr_updated(). Return data written so far.
-+		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			return -ENXIO;
-+		}
-+
- 		if (ret) {
- 			this_round -= ret;
- 			if (!this_round) {
-@@ -644,17 +656,6 @@ vcs_write(struct file *file, const char
- 				return -EFAULT;
- 			}
+--- a/drivers/tty/vt/selection.c
++++ b/drivers/tty/vt/selection.c
+@@ -433,8 +433,8 @@ int paste_selection(struct tty_struct *t
+ 			bps = NULL;
  		}
--
--		/* The vc might have been freed or vcs_size might have changed
--		 * while we slept to grab the user buffer, so recheck.
--		 * Return data written up to now on failure.
--		 */
--		vc = vcs_vc(inode, &viewed);
--		if (!vc) {
--			if (written)
--				break;
--			return -ENXIO;
--		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
+ 
+-		count = vc_sel.buf_len - pasted;
+-		if (count) {
++		if (vc_sel.buf_len > pasted) {
++			count = vc_sel.buf_len - pasted;
+ 			pasted += tty_ldisc_receive_buf(ld, vc_sel.buffer + pasted,
+ 							NULL, count);
+ 			if (vc_sel.buf_len > pasted)
 
 
