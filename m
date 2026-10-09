@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E12C4D37CB;
-	Fri,  9 Oct 2026 14:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEBC4E2F2F;
+	Fri,  9 Oct 2026 14:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556194; cv=none; b=MJoC/vC6RgkS61zeW9qgQBkrX2Z/PDTdJq8ncjWyxAAmjZDnpTkKCeEnbqXfEBp8CeX9vSiajy8CqyqXBK7zjS2YUOkIzLwnsJ9sgCdezTb3z3Ph0SJdE+9I20bOxpk9O0A9Lv16uMmlOrMUTxR/hl7eaGsDOcjPQRinmv3WztU=
+	t=1791556197; cv=none; b=lgC3Mu1y87QQSqfHNi9ojrQStI2Ih0Kq27YUw5ECsCsOTHUQwXARAachHOrzSC4k13+c0Ac7AaN57KsJUWzYd0WpEIY3rb3QFZBxz3AWkbeDgOixl8Qnpt07Uj348/qvRhNXyRf2f3zZPrk8AZGRgZwM7o/WtNnRtC8CeXzeafQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556194; c=relaxed/simple;
-	bh=pQMT5Wdi2IeCIOdjQutMyUN4wJX6nusrlbjLPuIhz4s=;
+	s=arc-20240116; t=1791556197; c=relaxed/simple;
+	bh=fh1fjd2OGBlq0HBoKlMdwXAIWc0Jj9BRkGBCt8ZTISo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI8cYyuV42X8hBVci7vlV4kcpYTHt5n14N+SQtIriVNxiRjc4rOYk49SgvqEp9V8UW30KYzSb0mZzOZWvIZssqhxud4vDL3XCxoWEjng0sY4PrNqtN6nDfhJUxhTYqJyYWiGHVfKrxgCMxoEYwXDxzakJJYT6/xnuaZMSKQd7ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP0Fyuew; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h8QtcttpyoHgBmNjc/m8gmUANFK5tn8A/Tvj6J+7IfdOFfrukY2s6x3REOAJePjcFbNRO7AuPSGlQrayRpDzOsb3GnhyjKKPX/s7wzOKYPs/m77uclqrJRO2Lt+GVV6azPmMlkmKX8tCmNSAOzbiE8EB5UbQnRnw879fyVNtEzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx4s70hm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP0Fyuew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E3B1F000FF;
-	Fri,  9 Oct 2026 14:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx4s70hm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4547F1F000FF;
+	Fri,  9 Oct 2026 14:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556193;
-	bh=iqMILKWL0m/+EKX/JsC08yOHN1qvsDcElpdW7idYg1U=;
+	s=korg; t=1791556195;
+	bh=L1Ee9BTSpZp8gyNk/VXThEkZdLkFmG/PwpG0W3wE2Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zP0FyuewBJXjFbPWwQIbCQRyAgwpXDjp1BdMVA9xl1k+bHsNNnOkyS30mcmgE8eMm
-	 aYmi1WC0REmN3yYFNmbiq9zSzYtkkLTq+kuw3pnRtRMwVzcaUeKPFBDIaxa5QdIvzS
-	 tIGijVQ6TDsGUt1X9MXsfKGCr2hD0ceT//eXhz9U=
+	b=Nx4s70hmCtqypUXLRB3dGhEEAYzh74jW4VNimCSgSqpJrOGScy46XoPC7ota67hM1
+	 MtrbtBzKD3BskN3nlq1s9rN74Okk6iINNdajGeaKGG/JQ0BoozkL4ysQAxr1iNdFY2
+	 6k15OY7nIZHUBox6/9Z/Q0wiJIQQ+igt/5aVWXYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 135/428] net/sched: sch_codel: match the no-drop threshold to the packet size
-Date: Fri,  9 Oct 2026 16:07:52 +0200
-Message-ID: <20261009140949.145992861@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jie Deng <dengjie03@kylinos.cn>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.18 189/403] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
+Date: Fri,  9 Oct 2026 16:09:10 +0200
+Message-ID: <20261009140956.545338583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-[ Upstream commit 54518e0e827f4ca9229ae657022c60bf60f5c1bf ]
+commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
 
-commit 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid
-disabling CoDel") clamped q->params.mtu to [256, 1 << 20]. The value is
-the CoDel no-drop threshold (codel_impl.h "*backlog <= params->mtu"), so
-on a link whose maximum transmitted packet size is below 256 the floor
-extends CoDel's minimum-backlog exemption beyond one packet and delays
-drop or mark eligibility by several small packets.
+The Cadence USBSS controller is a two-function PCI device. The first
+probed function allocates the driver data and stores it with
+pci_set_drvdata(), while the second function reuses it via
+pci_get_drvdata() when pci_is_enabled() reports that the first
+function has already been probed.
 
-Keep the upper bound that guards the original overflow (psched_mtu()
-wrapping to ~2 GiB on a huge-MTU device) but drop the 256 floor, so the
-threshold tracks the real device packet size.
+When the second function is probed while the first one has been
+enabled but has not yet set its driver data, pci_get_drvdata()
+returns NULL, and the subsequent wrap->devfn assignment dereferences
+a NULL pointer and crashes the kernel.
+logs:
+Call trace:
+  cdns3_pci_probe+0xa4/0x300
+  local_pci_probe+0x44/0xa8
+  pci_call_probe+0x54/0x158
+  pci_device_probe+0x84/0x100
+  really_probe+0x184/0x3d0
+  __driver_probe_device+0x80/0x178
+  driver_probe_device+0x44/0xe8
+  __driver_attach+0xec/0x1f8
+  bus_for_each_dev+0x7c/0xe0
+  driver_attach+0x28/0x38
+  bus_add_driver+0x110/0x238
+  driver_register+0x64/0x128
+  __pci_register_driver+0x50/0x60
+  cdns3_pci_driver_init+0x28/0x38
+  do_one_initcall+0x5c/0x280
+  do_initcalls+0x104/0x1d8
+  kernel_init_freeable+0x140/0x218
+  kernel_init+0x28/0x1f8
+  ret_from_fork+0x10/0x20
 
-Conditions to recreate the bug: attach a codel qdisc on a link whose
-MTU plus hard_header_len is below 256 (e.g. a CAN interface). At that
-MTU the no-drop threshold must equal the device MTU plus its
-hard-header length; before this patch it was forced to 256.
-Requires CAP_NET_ADMIN in a user namespace.
+Return -EPROBE_DEFER in this case so that probing is retried after
+the first function has completed its probe.
 
-Fixes: 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid disabling CoDel")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com.2
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_codel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 6aa5829d69612..a1ba2e355f2d1 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -205,7 +205,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
- 	codel_params_init(&q->params);
- 	codel_vars_init(&q->vars);
- 	codel_stats_init(&q->stats);
--	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
-+	q->params.mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), 1 << 20);
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -96,6 +96,11 @@ static int cdns3_pci_probe(struct pci_de
  
- 	if (opt) {
- 		int err = codel_change(sch, opt, extack);
--- 
-2.53.0
-
+ 	if (pci_is_enabled(func)) {
+ 		wrap = pci_get_drvdata(func);
++		if (!wrap) {
++			dev_err(&pdev->dev,
++				"second function not initialized, retrying\n");
++			return -EPROBE_DEFER;
++		}
+ 	} else {
+ 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
+ 		if (!wrap)
 
 
