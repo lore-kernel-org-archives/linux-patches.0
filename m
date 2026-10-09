@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9F348C403;
-	Fri,  9 Oct 2026 14:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35614E80D1;
+	Fri,  9 Oct 2026 14:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557267; cv=none; b=MDANBokGCyXiDMWfHFDWs+HlOmSY2eOe1intcJ/iUUaCqn/CcI8zeNJlNpbX+FF+fMgLxez/5H61WbxR4grSDEVWgwQjioYH/ZzNn5LO5P7/LJCxKQkqsF3gIuSFJX43ygo4AH+saQX4K9rtQWlePJoZNgH/gxBSZuzBOsTpHc8=
+	t=1791557270; cv=none; b=qjhsMByFm5bLS8wZUXNfjSxV/Kapi3vNDes0ULYm9GAIUeX1qhi/U+/K0C+cdYowhTLIDd0cvtHPzReZMLsDj5VkpnY7s6IVxCEgSXDbg56MDCifG1+Ps2yF2vMoa4dhiQWUMVeo2t7eaqQ//2jWhRmQTY6QmoAfTZ+boI8iHXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557267; c=relaxed/simple;
-	bh=gFdQKesmXsDEj7Bbn5uwWG/MoiQLvaa4YozV6ZYsqW8=;
+	s=arc-20240116; t=1791557270; c=relaxed/simple;
+	bh=3fSkTM/wJx+3BK4ealiwUYp6lJ5JvyZyuMr+Dfc9ZlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYqzpdponde/tU43U6sTgQQNXpzlP5OCcq43X5d45U1uKFottP8gtoP8mRDjmr9JcIOHzzti4GdEpnJY5B9UodXyWvJa2MyXlRbP6JhrhJJpNx+rtGvfHVBfVFilamlzBriTuJIx5mLOlYjx/r+9lPozRGz0YT0LRndp7KugUVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAD+nY5I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UMDeZL8pak+wUN7/yLBIXmqyYSFMHggCZFJHmqmZAPyhRhtusrGpR2CVRhrcnzmAw6I79u7quz/MpBUNz+My4EYK7+BDyY0qMPPKsMi+sso3Mt8td51JT9q5My1ifYfJ6HFb3z3fQ0+YHpZe9oEUKRDYIJq+s7tiLfXNIA97wFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwsEnaPA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAD+nY5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302ED1F00893;
-	Fri,  9 Oct 2026 14:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwsEnaPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264251F00893;
+	Fri,  9 Oct 2026 14:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557266;
-	bh=t4NfJJVbrubUq2Mr8U/4/KA6uYnR1ViteSCT4pAUQWk=;
+	s=korg; t=1791557269;
+	bh=J5+ds8vkDGEOQdWD/CM6RwIApPQQ0DuUKTircnms2Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pAD+nY5I3quBwBKnd71qaK10bEsUWDJcuVjG6SmUVp6VN8vonNYJRltVwUtrVRegl
-	 e/9OlKuUDWowcfbAS07HfbLxDG13wVgGWMnNDqyepUEAX0Wl3+XrCXxkTG0YHJjf1o
-	 W5fJoeEeI5qcAUTN1+zj4lReHSpHANQjvAwdqaC4=
+	b=FwsEnaPAF/4AqLNUuHoCLMDPModtz9AvQIPCDPBqlY22fL4d4FVlr0gh8ZoJhRM4e
+	 T+pggih9FdPtXVUC9wXazmoQh1+/EswkoLm5C1UQYWVK1MKm6MHhbEeGS80VEbzbmy
+	 6mSMc5z9iw46wof99FBCAVD+MnFuCQPHW+l/i848=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sagnik Sasmal <sagnik@sagnik.me>
-Subject: [PATCH 7.2 310/428] mtd: spinand: Do not update the QE bit on devices without one
-Date: Fri,  9 Oct 2026 16:10:47 +0200
-Message-ID: <20261009140952.931381935@linuxfoundation.org>
+	Frederick Morlock <me@freddy.us>,
+	Andre Eikmeyer <dev@deq.rocks>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 374/403] drm/amdgpu: reset VI ASIC on MacBookPro15,1
+Date: Fri,  9 Oct 2026 16:12:15 +0200
+Message-ID: <20261009141001.060099628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,80 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagnik Sasmal <sagnik@sagnik.me>
+From: Andre Eikmeyer <dev@deq.rocks>
 
-commit 1c1a342aceec79528b3ba51f376eca2be5928fe7 upstream.
+[ Upstream commit a5be7ad8f5f0e067613e9197638f216f46252946 ]
 
-Commit be0b86c648bf ("mtd: spinand: Gather all the bus interface
-steps in one single function") moved quad-enable setup into
-spinand_configure_chip(). The new code only determines whether quad
-mode is needed when SPINAND_HAS_QE_BIT is set, but calls
-spinand_init_quad_enable() unconditionally. This clears configuration
-register bit 0 on devices without a QE bit.
+After S3, reloading amdgpu on MacBookPro15,1 systems with a Radeon Pro
+555X or 560X fails while loading the SMU firmware. The existing SMC
+register check does not request a reset because the registers do not
+reliably reflect the stale SMU state on these machines.
 
-That bit is not universally a QE bit. On the Winbond W25N02KV it is
-H-DIS, which disables the active-low HOLD function. Clearing H-DIS
-enables HOLD during single and dual I/O operations. If IO3 is not kept
-high, the flash can pause a command and ignore clock and data.
+Frederick Morlock found that forcing a VI ASIC reset allows the driver to
+initialize again. This patch limits his workaround to the exact PCI
+device, Apple subsystem device and revision combinations used by these
+two GPUs, leaving other VI hardware unchanged.
 
-H-DIS is not restored by the FFh reset command, allowing the incorrect
-state to survive an SoC warm reboot while the flash remains powered.
-
-Before the refactoring, spinand_init_quad_enable() returned without
-touching the configuration register on devices without
-SPINAND_HAS_QE_BIT. Restore that behavior by only calling the helper
-when the flag is set.
-
-Return zero explicitly once SSDR configuration completes, as all errors
-are returned immediately. This avoids returning an uninitialized value
-when neither optional configuration step runs.
-
-The regression was reproduced on a JioRouter JIDU6401 with an MT7986
-SoC and a W25N02KV. With Linux 6.18.44, sysupgrade failed and the
-following warm reboot hung in BL2. With this change applied, both
-sysupgrade and warm reboot completed successfully.
-
-Fixes: be0b86c648bf ("mtd: spinand: Gather all the bus interface steps in one single function")
-Cc: stable@vger.kernel.org
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Assisted-by: LLM
-Signed-off-by: Sagnik Sasmal <sagnik@sagnik.me>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Suggested-by: Frederick Morlock <me@freddy.us>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a22e5e4f2ebb ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vi.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1812,11 +1812,11 @@ try_ssdr:
- 		    spinand->ssdr_op_templates.write_cache->data.buswidth == 4 ||
- 		    spinand->ssdr_op_templates.update_cache->data.buswidth == 4)
- 			quad_enable = true;
--	}
- 
--	ret = spinand_init_quad_enable(spinand, quad_enable);
--	if (ret)
--		return ret;
-+		ret = spinand_init_quad_enable(spinand, quad_enable);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	if (spinand->configure_chip) {
- 		ret = spinand->configure_chip(spinand, SSDR);
-@@ -1824,7 +1824,7 @@ try_ssdr:
- 			return ret;
- 	}
- 
--	return ret;
-+	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1407,10 +1407,30 @@ static uint64_t vi_get_pcie_replay_count
+ 	return (nak_r + nak_g);
  }
  
- static int spinand_init_flash(struct spinand_device *spinand)
++struct vi_reset_quirk {
++	u16 device;
++	u16 subsystem_vendor;
++	u16 subsystem_device;
++	u8 revision;
++};
++
++static const struct vi_reset_quirk vi_reset_quirks[] = {
++	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x0190, 0xe3 }, /* Radeon Pro 555X */
++	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x018f, 0xc2 }, /* Radeon Pro 560X */
++};
++
+ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
+ {
++	unsigned int i;
+ 	u32 clock_cntl, pc;
+ 
++	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
++		if (adev->pdev->device == vi_reset_quirks[i].device &&
++		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
++		    adev->pdev->subsystem_device == vi_reset_quirks[i].subsystem_device &&
++		    adev->pdev->revision == vi_reset_quirks[i].revision)
++			return true;
++
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
+ 
 
 
