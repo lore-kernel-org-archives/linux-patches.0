@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D7033BBD9;
-	Fri,  9 Oct 2026 14:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4094D17BA;
+	Fri,  9 Oct 2026 14:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555378; cv=none; b=OpgP/lNyagRxw37gH0eC7zGOC+bYmZXB0FWLVUNyx8VzE9LA+l+Ojz7TQw9WOY25Y2JILaAHIpHr/N4xIlBbj+kxQBgmLoN30ysoXkHG6FMbbwsPxQ5m3I0FtMr2T+ikmaBWgs2MZJw6XgZ2RrFQHcAnwmFsFTv5qzn9guLw5WA=
+	t=1791555384; cv=none; b=pw9g5brchOwZR9btzVrdYvi46WVWYIQzA463pe38Qn5EficIM3nwNcXpxZP1P5NaIjtrmddKCR9n046IJqZfY8GtK2mCguMecCeTCMSqNJZ+PAsNkQ8p549EkLfshamOaJn6sIpebttGnODeaERLy2exHCMrnX6vIrnyUm1V6WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555378; c=relaxed/simple;
-	bh=2gBtqNw0Rk1zzGFOjqrKpLhFLueVyAxWVpLTUGyN6lk=;
+	s=arc-20240116; t=1791555384; c=relaxed/simple;
+	bh=ycm+t9f91kdWYUWuDuSfpeu5SJnHjiNbzxJvAqw+Ji8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNHV5p4xM0XBxyz8shzm8BQK787VJpZYUuPGbcqG7K9SsQDpGEm1YYGLkPMMUWh5WD7Koms+SffqZlBGvfBMHYqtrXbPnTLK+mJV9bFk3YnoLc4LbhbkAkPxNBWgWts3epsXcFq/s8hbww7TW9pVpXRgYQrgBgJESJuVoYjgq74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8ZSyzyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHYvM4End0dEV/EqOMHIzUsb8P3L2j+xnwlgzNxDdQiJTNpOV/2zjLVX714uZkRHo47MUd6e0Pyle0sR7yKRC/0nQ05j/qTo4StVrTcj9GrQQ78pcF6//Bp024tO5pckEeh3maTEkQy+8MB2u3VC9PaW5uhEER/qwAlz+Jlgyy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtqSOxmX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8ZSyzyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4681F00893;
-	Fri,  9 Oct 2026 14:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtqSOxmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97371F000FF;
+	Fri,  9 Oct 2026 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555373;
-	bh=QUcpF3zeuvZipawNCfLjmrH4a1GCEOt9aVSZzW29P/I=;
+	s=korg; t=1791555376;
+	bh=6F/XgW2Jf37zZ7eDrAioCrbpenAUokgpjTvr6i7uJb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8ZSyzyUbiPBaYuQyFNCsf47jW4sNi0cPa8rGNSqhDEltwPUZwt9oHVkdPir4rFpO
-	 0LvksslMgNxsgSI27yJwvypbjUs38TSP1HJBWgSQTSIE4QUVl1b/1GJqPkay6hDi7U
-	 AP0DIzkFJCBEHX8InThowF1XnnL+tRM5OBf2ff1Q=
+	b=XtqSOxmXBVDsJ+9wN1nR3GOxVfDpE90JIDVks/RONjR3snb8znaQFjWgAYRT7rlSj
+	 LvoEkfdQmYzGIei7F3yR0NyJBfBMhs+f9ZSoTdLH00oPuvt2j1L3YLtgDtErFv+nYB
+	 yxGRhG3hFd6XZAnWpSatwuuMenePykjEuoCFAcGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Piecha <d.piecha@ymail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 036/403] r8169: disable EEE on RTL8168h/8111h
-Date: Fri,  9 Oct 2026 16:06:37 +0200
-Message-ID: <20261009140952.954115404@linuxfoundation.org>
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.18 037/403] rtc: ac100: Assign .num before accessing .hws
+Date: Fri,  9 Oct 2026 16:06:38 +0200
+Message-ID: <20261009140952.976845311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,56 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-commit 3cdeaef1754ab8155cdd828c958ada3d36e9ad9a upstream.
+commit 6a4117eee82dd85f11bf898bf66026764011eeb6 upstream.
 
-Force EEE off on the RTL8168h/8111h (RTL_GIGA_MAC_VER_46) at PHY connect
-with phy_disable_eee().
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)
+about the number of elements in .hws[], so that it can warn when .hws[]
+is accessed out of bounds. As noted in that change, the __counted_by
+member must be initialized with the number of elements before the first
+array access happens, otherwise there will be a warning from each access
+prior to the initialization because the number of elements is zero.
+This occurs in ac100_rtc_register_clks() due to .num being assigned only
+after every clkout clock has been stored in .hws[]. With
+CONFIG_UBSAN_BOUNDS and a compiler that implements __counted_by (GCC
+15.1+ or Clang 20.1+), this triggers an array-index-out-of-bounds report
+during probe, and with CONFIG_UBSAN_TRAP the first store traps.
 
-Commit 202fef9bbbf5 ("net: phy: realtek: fix EEE advertisement write on
-the internal PHY MMD path") made EEE actually advertise on the generic
-Realtek PHY; the write had been a no-op before. On the RTL8168h that
-un-masks a latent defect: once EEE negotiates, RX silently stalls after
-~7-20 minutes. The carrier stays up, no counter or dmesg moves, and only
-"ip link set down/up" recovers it; disabling EEE keeps the link stable.
+Initialize .num with AC100_CLKOUT_NUM, the number of elements .hws[] was
+allocated with, right after the allocation. That is the value the loop
+counter ends up at on the success path anyway, so the provider's
+behaviour is unchanged.
 
-Root-causing the RTL8168h LPI/RX path needs hardware not available now, so
-disable EEE for this version. Use phy_disable_eee() rather than dropping
-the version from rtl_supports_eee(): the latter also skips
-rtl_enable_tx_lpi(), whose disable branch clears the MAC TX-LPI bits (ERI
-0x1b0[1:0]) on link up. rtl_hw_start_8168h_1() does not clear them (the
-RTL8402/RTL8106e init does), so a warm reboot from an EEE-active state
-could otherwise leave TX-LPI asserted while the PHY no longer negotiates
-EEE. Keeping the version EEE-capable preserves that clear path. This also
-covers the RTL8168M, which shares RTL_GIGA_MAC_VER_46.
-
-Reported-by: Dennis Piecha <d.piecha@ymail.com>
-Closes: https://lore.kernel.org/all/353419280.954808.1790290283530@mail.yahoo.com/
-Fixes: 202fef9bbbf5 ("net: phy: realtek: fix EEE advertisement write on the internal PHY MMD path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260925071040.2137178-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/AS8P251MB00013E724A77A355668B6CCEC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/rtc/rtc-ac100.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -5268,6 +5268,12 @@ static int r8169_mdio_register(struct rt
- 		phy_disable_eee_mode(tp->phydev,
- 				     ETHTOOL_LINK_MODE_2500baseT_Full_BIT);
+--- a/drivers/rtc/rtc-ac100.c
++++ b/drivers/rtc/rtc-ac100.c
+@@ -316,6 +316,8 @@ static int ac100_rtc_register_clks(struc
+ 	if (!chip->clk_data)
+ 		return -ENOMEM;
  
-+	/* Keep EEE off but the version stays EEE-capable so that link-up
-+	 * still clears the MAC TX-LPI bits.
-+	 */
-+	if (tp->mac_version == RTL_GIGA_MAC_VER_46)
-+		phy_disable_eee(tp->phydev);
++	chip->clk_data->num = AC100_CLKOUT_NUM;
 +
- 	/* PHY will be woken up in rtl_open() */
- 	phy_suspend(tp->phydev);
+ 	chip->rtc_32k_clk = clk_hw_register_fixed_rate(chip->dev,
+ 						       AC100_RTC_32K_NAME,
+ 						       NULL, 0,
+@@ -359,7 +361,6 @@ static int ac100_rtc_register_clks(struc
+ 		chip->clk_data->hws[i] = &clk->hw;
+ 	}
  
+-	chip->clk_data->num = i;
+ 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, chip->clk_data);
+ 	if (ret)
+ 		goto err_unregister_rtc_32k;
 
 
