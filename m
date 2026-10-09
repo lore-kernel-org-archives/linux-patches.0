@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2542FBA45;
-	Fri,  9 Oct 2026 14:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C17399CE9;
+	Fri,  9 Oct 2026 14:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556614; cv=none; b=rt+zezqhUnZcz/RTMHpG40hp4bjMPOmqX9vnLY1h33vzafivDXQp7EUojjmIlH0JzuTtKvCOlkAnBeMkkdXntJ7SW10oFNoTTIk8v54/Go2SGrm50j3MLSztfCFDqhOwJr69VTRZYrGeSHFz/29Dvy6slr211FxprCq3m5Yr+f0=
+	t=1791556617; cv=none; b=YPwmgADqt1rN/lK4b+xn6orUTqLwjXhE2Fo7u9PXBUhzOukheAUE+JZU0pvcwa8OAOIcDMYUp33QnW2lMjXyUfIce3510yLnewIVGEFASBWhhoprvpXuWxjeCQLReS67RTIBTDv8NT6Le4j4oQTuEMaxD2zA/BGAT49woDBT018=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556614; c=relaxed/simple;
-	bh=sTVLFvhYa5gCGqsD0FcIh/Bu5JzRG+JBMiysxqe+BAY=;
+	s=arc-20240116; t=1791556617; c=relaxed/simple;
+	bh=lOl/Jozva6s5OO1X/peXhNZp4e9cgAnkywzGmUaIVt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkTi7BNi9tOolBKA/lx+hoV5pG3zwBumT54GlnIHiT+/PGHFsEHxMa8p03tfjLd3RDrNcXjk4V+mxk4h/AbtHCkJZyZyXdX2cSIHw+l2Zi3dLhj1ONkAX+jOo0Cm0KKNrob5yr0pe4mePUrmk3qX9I9sQlRXK9k8gqNrM7g/IZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rsym2r0B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mLIwG+gDovSzUuPcfvSqjw1XE7QCBLCLZwdpaGGCrLRkTaQg+cV6jCSaQImH01FOIJPLF2TAQ53mo3BFnlf6pbExdHCYcLzvM3a4AQBs1CXoaaTDpvZrBHbrEcf4kOFa4GdCPpfD8HdBWj9iPZ1dheEUcLY+gjetiJSFII7J7Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpQg6exl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rsym2r0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9C91F000FF;
-	Fri,  9 Oct 2026 14:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpQg6exl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662511F000FF;
+	Fri,  9 Oct 2026 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556613;
-	bh=8Wb/YpGN2OC++CbAehIJiRyRVMEOEZyG8egPGniAlYA=;
+	s=korg; t=1791556616;
+	bh=HucJkU0xhkOEox73yAWXi1qYATfoQU/fjTXYG9kO9f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rsym2r0BshzoOXS+WGp4GYe5iyYccEs/KqoQ5Kj771Q2cQF0xnQKmfiJRkUrVPy+k
-	 aoLliFGS4hCCOi+hd9xiEUlOCg5piFhkW/uVWrcf1BatHx8nlYNq8SKRBIny/JwwcN
-	 L39bkLFsR1Imeu83ZIjCX06spZSUJfxBrouIJZRc=
+	b=OpQg6exlJ1OJ6fdS70ER0xqN9yXiuN6WEp3RU6BOcHrQwmG+rqJkasraM4Eanz+Di
+	 l+ihsXHSvDCt3HOHcpYezHYqwr0e6qglmTNVDtGcc7SNEWCqu5vwpm+abbZarsvdsu
+	 ViRhf9A33v9Kn97zhmwRp0+W9LsWlWbbiXPuAT9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Fluhr <mathieu.fluhr@gmail.com>,
-	stable <stable@kernel.org>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 7.2 209/428] usb: hub: use shorter 120ms post resume hold for SS root hubs
-Date: Fri,  9 Oct 2026 16:09:06 +0200
-Message-ID: <20261009140950.718729288@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 264/403] wifi: cw1200: fix TX padding OOB read leaking heap data to device
+Date: Fri,  9 Oct 2026 16:10:25 +0200
+Message-ID: <20261009140958.352518169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +46,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 29480b05e6e226594dc11ccf2a036fbd5cdd0e42 upstream.
+commit 7c1611780823b76219cb1478db53dfd890c4a9a2 upstream.
 
-Holding a USB3 hub PM runtime reference for 200ms at hub resume triggers
-an AMD platform issue.  Users running Android adb report crashes after
-adb has been polling and waking up the USB subsystem once a second for
-some time.  Vendors are working on a solution.  Disabling USB runtime PM
-is one way to prevent this issue, but it is also proven that reducing the
-hold time to 120ms in resume also mitigates it.  See Link for more
-details.
+The TX path rounds the transfer size up to the bus alignment
+(align_size(), up to 511 bytes for SDIO, 1 byte for SPI) but sends
+the padded length straight from the frame buffer, which has no room
+reserved for the padding.  cw1200_data_write() therefore reads past
+the end of the frame and the bus transfer carries those bytes to the
+device.  A bogus device can collect up to 511 bytes of kernel heap
+data per TX frame.
 
-Reducing the hold time to 120ms for the USB3 roothub is in itself a valid
-change and optimization, as the current 200ms is excessive: a root hub
-has no upstream suspended hub whose wake propagation needs to be
-accounted for, but still need some time for USB3 link training to
-complete.
+The RX path does not have this problem: it allocates the skb with
+the aligned length (alloc_len) before reading.
 
-Keep the 200ms hold for external hubs that commit 8f5b7e2bec1c
-("usb: hub: fix detection of high tier USB3 devices behind suspended
-hubs") is intended for.
+Compute the exact padding with the bus align_size() callback, make
+sure queued TX frames have tailroom for it, and zero the padding
+bytes before the transfer so nothing past the frame is exposed.
 
-Reported-by: Mathieu Fluhr <mathieu.fluhr@gmail.com>
-Link: https://lore.kernel.org/all/CAPyJwA_D9qw0T72f8zwM1yKjP+To=maVANbcdsWM7yRmbBxYvw@mail.gmail.com/
-Cc: stable <stable@kernel.org>
-Fixes: 8f5b7e2bec1c ("usb: hub: fix detection of high tier USB3 devices behind suspended hubs")
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260903112903.542719-1-lovekeshsolanki00@gmail.com
+This is not expected to change driver behavior on most cases: frame
+contents and transfer sizes are unchanged, only the content of the
+padding bytes (previously undefined stale memory, now zero), which
+the device never reads since the WSM header carries the real frame
+length.  The skb expansion can only fail under memory exhaustion,
+in which case the frame is dropped like on the existing error paths
+of cw1200_tx().
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7982b4a7e64f74e2068790ec389ca680a081f730@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/st/cw1200/bh.c   |    8 +++++++-
+ drivers/net/wireless/st/cw1200/txrx.c |   14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -73,8 +73,11 @@
- /*
-  * Give SS hubs 200ms time after wake to train downstream links before
-  * assuming no port activity and allowing hub to runtime suspend back.
-+ * Root hubs have no upstream hub whose wake propagation needs to be
-+ * accounted for, so they need less time, use 120ms for them.
-  */
- #define USB_SS_PORT_U0_WAKE_TIME	200  /* ms */
-+#define USB_SS_RH_PORT_U0_WAKE_TIME     120 /* ms */
+--- a/drivers/net/wireless/st/cw1200/bh.c
++++ b/drivers/net/wireless/st/cw1200/bh.c
+@@ -343,6 +343,7 @@ static int cw1200_bh_tx_helper(struct cw
+ 			       int *tx_burst)
+ {
+ 	size_t tx_len;
++	size_t aligned_len;
+ 	u8 *data;
+ 	int ret;
+ 	struct wsm_hdr *wsm;
+@@ -375,9 +376,14 @@ static int cw1200_bh_tx_helper(struct cw
  
- /* Protect struct usb_device->state and ->children members
-  * Note: Both are also protected by ->dev.sem, except that ->state can
-@@ -1358,7 +1361,9 @@ static void hub_activate(struct usb_hub
+ 	atomic_inc(&priv->bh_tx);
  
- 		queue_delayed_work(system_power_efficient_wq,
- 				   &hub->post_resume_work,
--				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
-+				   msecs_to_jiffies(hdev->parent ?
-+				USB_SS_PORT_U0_WAKE_TIME :
-+				USB_SS_RH_PORT_U0_WAKE_TIME));
- 		return;
- 	}
+-	tx_len = priv->hwbus_ops->align_size(
++	aligned_len = priv->hwbus_ops->align_size(
+ 		priv->hwbus_priv, tx_len);
  
++	/* Zero the bus alignment padding so no stale data is sent. */
++	if (aligned_len > tx_len)
++		memset(data + tx_len, 0, aligned_len - tx_len);
++	tx_len = aligned_len;
++
+ 	/* Check if not exceeding CW1200 capabilities */
+ 	if (WARN_ON_ONCE(tx_len > EFFECTIVE_BUF_SIZE))
+ 		pr_debug("Write aligned len: %zu\n", tx_len);
+--- a/drivers/net/wireless/st/cw1200/txrx.c
++++ b/drivers/net/wireless/st/cw1200/txrx.c
+@@ -14,6 +14,7 @@
+ #include "wsm.h"
+ #include "bh.h"
+ #include "sta.h"
++#include "hwbus.h"
+ #include "debug.h"
+ 
+ #define CW1200_INVALID_RATE_ID (0xFF)
+@@ -716,6 +717,7 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 	struct ieee80211_sta *sta;
+ 	struct wsm_tx *wsm;
+ 	bool tid_update = false;
++	size_t pad_len;
+ 	u8 flags = 0;
+ 	int ret;
+ 
+@@ -764,6 +766,18 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 
+ 	sta = t.sta;
+ 
++	/*
++	 * The bus transfer is padded up to the bus alignment and the
++	 * padding is transferred from the frame buffer.  Make sure the
++	 * buffer has room for the padding so the device never receives
++	 * data past the end of the frame.
++	 */
++	pad_len = priv->hwbus_ops->align_size(priv->hwbus_priv, skb->len) -
++		skb->len;
++	if (skb_tailroom(skb) < pad_len &&
++	    pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC))
++		goto drop;
++
+ 	spin_lock_bh(&priv->ps_state_lock);
+ 	{
+ 		tid_update = cw1200_tx_h_pm_state(priv, &t);
 
 
