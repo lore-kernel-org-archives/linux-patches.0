@@ -1,48 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDEF17A305;
-	Fri,  9 Oct 2026 14:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6AD33BBD9;
+	Fri,  9 Oct 2026 14:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555407; cv=none; b=fBZtN1ZgjzfagTnt9EUnnF/Ts4DDESpplzHgy3KnDdE+DdP8oFj23FwjJsq4g9238C/HqyGD8+7lUMfo83msRgVebKkaJT8VOgWjjoivTNPpnRJh7CC4HMmMkOwpj82PgzqXKx3MVu8sm7GWzNSlO3aXDMzhvaUlztRZqfrEtN0=
+	t=1791555409; cv=none; b=R14U9wdsxhpnYibZh8kK06nTkcSKVWxpKgh7q29aHpczGQ7yyTxq1vAD4ltNZ8LPKV7Yq4fM8MomqnB6YPvGYkmvYcG7BuSg4GFBk7kr1M/3laj9RfkfbSodnZ0ocTrhUu24iuC/s3uK3CHdkMkqub7esTQyx6kW3kRysn1S6a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555407; c=relaxed/simple;
-	bh=5S2b8d/BLyeBM+1mqNtDmwvrd/eL3XqRRxvMsVEfW4g=;
+	s=arc-20240116; t=1791555409; c=relaxed/simple;
+	bh=Ea4Z+2gwydj5R+58chjobNVTEZYK8JSFjjSo5wU/giQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBArUL2qPnAtUdNi8/EvsUldvQwaMzoLfxytmD4CIIvGBU/v5b6ClJqWdlScJCQfZDSUHDGigy01orqgZUax1vkjuUnZ10O6eKTyCwAQIVk83hjBsHDPbADg7r7WHWt+ZosFdv7WRmPCC2/fT5/J66RW5lcV/5F9USUuzlfGms4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZ6fPtl1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fr+mT0NwGqeJHf5/1SE3T/SYwcMZ9bLARBc5Y+QjizjRb65UhukjRqXW/6nUYJpO/vYlk7qhxoUHpSkOe5c7KD87HFpB2CBH5EAmqgqeHogfXMPDC3KJD0JJTLxQgtmrR0f7WZQhi0ZnNI9FF6ZupkuEnGkoNwXvJtsRo46UxRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6FC5V0E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZ6fPtl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C331F00898;
-	Fri,  9 Oct 2026 14:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6FC5V0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940721F000FF;
+	Fri,  9 Oct 2026 14:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555401;
-	bh=oxNI1Lx7XEoi5A58N0lKT5t4tE5xUv5Z22/+eugRGL0=;
+	s=korg; t=1791555404;
+	bh=CUKOpvx+Avc7dWhxerlH7Q+8X4SsaNGrMSxbY+yUB8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xZ6fPtl16Ta31IqnTO2IYAosQXbrWvuLk97BLTNbN+McsE6BWhS2svlZXAAx0AQlV
-	 fL+lrq33T4D/NoW1dMOZ8yY7MdV/y86agklc7C6RTGg/i0hdSRJlDCgVts/8Klv1e+
-	 I1XAvgRBQrXbDYv9Stby5aGkjixK4wUZSO6VImbo=
+	b=t6FC5V0EX7oz7LCVxDKbQedtcLxWa5p4vKaRzbm7KDXPtv2+d1pT/P3o/uhWZcJFm
+	 tSKUFZxVrUMpaYoK5MnhX7cYv8RZQZ/Tga6JUpKniBMd1TKhDvYXTQxBzguXAdPbCm
+	 +I8SqfGJfw4cv6+Sv/lFJqKYobRBdvW1xUPFIxtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com,
 	Zi Yan <ziy@nvidia.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Barry Song <baohua@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
 	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>
-Subject: [PATCH 6.18 045/403] mm: shmem: ignore sysfs configs for shmem forced collapse
-Date: Fri,  9 Oct 2026 16:06:46 +0200
-Message-ID: <20261009140953.158458976@linuxfoundation.org>
+	Kairui Song <ryncsn@gmail.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Liam Howlett <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nico Pache <npache@redhat.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 046/403] mm/huge_memory: initialise workingset state before folio split
+Date: Fri,  9 Oct 2026 16:06:47 +0200
+Message-ID: <20261009140953.181813409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -61,63 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-commit 72c3d682c165b836b54a3d07a01f72e39c47022c upstream.
+[ Upstream commit aca1f2d5de17e138bc6c4859126b77e516b82541 ]
 
-According to Documentation/mm/transhuge.rst, MADV_COLLAPSE is expected to
-ignore any THP or mTHP interface settings.
+xas_try_split() adds __GFP_ACCOUNT for page-cache xa_nodes, but
+__folio_split() leaves the xa_state's xa_lru unset.  That lets a live,
+memcg-charged xa_node exist without being linked into the mapping's
+shadow_nodes list_lru; when reclaim later walks the list_lru it trips
+VM_WARN_ON(!css_is_dying()).
 
-However, after commit 26c7d8413aaf ("mm: thp: support "THPeligible"
-semantics for mTHP with anonymous shmem"), performing MADV_COLLAPSE on
-shmem will depend on /sys/.../hugepages-2048kB/shmem_enabled being set to
-"inherit" (although that is the default), which can cause MADV_COLLAPSE to
-fail unexpectedly.
+Use mapping_set_update() to install both the workingset update callback
+and the shadow_nodes list_lru on the xa_state.
 
-This could cause a userspace-visible performance regression.
-
-Fix this by returning the result of shmem_huge_global_enabled() directly
-when MADV_COLLAPSE is requested, allowing PMD-order collapse while
-ignoring shmem THP/mTHP settings.
-
-Link: https://lore.kernel.org/063f655b4d6c4234f3aa27ed6ecab10283ecb880.1789351825.git.baolin.wang@linux.alibaba.com
-Fixes: 26c7d8413aaf ("mm: thp: support "THPeligible" semantics for mTHP with anonymous shmem")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Closes: https://lore.kernel.org/all/20260908125105.1510704-7-kirill@shutemov.name/
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Acked-by: Qi Zheng <qi.zheng@linux.dev>
+Link: https://lore.kernel.org/20260725101419.3938406-1-matt@readmodwrite.com
+Fixes: 58729c04cf10 ("mm/huge_memory: add buddy allocator like (non-uniform) folio_split()")
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Reported-by: syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c5b060ce82921a2fd500
+Reviewed-by: Zi Yan <ziy@nvidia.com>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
 Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/huge_memory.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1812,8 +1812,11 @@ unsigned long shmem_allowable_huge_order
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index e0c7b7efd38a2..df4a3e6215d4d 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3797,7 +3797,7 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+ 		gfp_t gfp;
  
- 	global_orders = shmem_huge_global_enabled(inode, index, write_end,
- 						  shmem_huge_force, vma, vm_flags);
--	/* Tmpfs huge pages allocation */
--	if (!vma || !vma_is_anon_shmem(vma))
-+	/*
-+	 * Tmpfs huge pages allocation or forced collapse ignores
-+	 * sysfs configs.
-+	 */
-+	if (!vma || !vma_is_anon_shmem(vma) || shmem_huge_force)
- 		return global_orders;
+ 		mapping = folio->mapping;
+-		min_order = mapping_min_folio_order(folio->mapping);
++		min_order = mapping_min_folio_order(mapping);
+ 		if (new_order < min_order) {
+ 			ret = -EINVAL;
+ 			goto out;
+@@ -3811,6 +3811,8 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
+ 			goto out;
+ 		}
  
- 	/*
++		mapping_set_update(&xas, mapping);
++
+ 		if (uniform_split) {
+ 			xas_set_order(&xas, folio->index, new_order);
+ 			xas_split_alloc(&xas, folio, folio_order(folio), gfp);
+-- 
+2.53.0
+
 
 
