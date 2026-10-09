@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476BD33EB01;
-	Fri,  9 Oct 2026 14:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990F33B19DE;
+	Fri,  9 Oct 2026 14:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556805; cv=none; b=N8+hO7IJ17rwceoM5W1z00j1h4ANO14f6NLcL/X7TDgmVA8VjftlSlxxsh+SvU5vtLI8Zbst3V6azMHhCrWouTJl3CPLenPaYGA4N5I6LyF2ow5Joy47JQY7eDQKeyHM0OlEqw0+vgMe2pDGqnZZ1WmneEIgeYx5HsavY3QdXCk=
+	t=1791556807; cv=none; b=CLRZg1lMZiF4nyo7dIDyiJNSsuP84z9ryO1SVCVMqR0r3dAw30SMkyNzfqTNAtfSj1+n2VIsbgUFyTIXZVNdAWjw3AXmRuPMXKgwccLiS8fVXiyUmSacZJk8/AxpKye6kD3whhFBhpvAYX5Q/GJ8tftkIo2hJGsU3GPZ8FPq0Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556805; c=relaxed/simple;
-	bh=oyy3KB70wjUdIBITapl54iDmEfxTCfHYxiVHv3OcUKA=;
+	s=arc-20240116; t=1791556807; c=relaxed/simple;
+	bh=Fp7xxN+VMRSDPQh7HCprO2TD/dG5KsmPL7oatqfTsEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1rZe9mMHPv15+p+UmNmGooeUU+C61OXlFDBN7/cTlCRmfgZWKdtWSIpq7EGEmJhrLbYR28pJJSGiTyslX6av1hMJUurhMQ6el6gmhv1asfCwFLyGn1eTLhQEYuXeN3X+ynCsseV5HA7a6richiDC6Xh8FelimnSOvNUyY1wM+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py7v8WMe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bsLKPTd0F2dospfuqfiGftUgjjSScGxcSECkZIiwWowmBM9foLtaoAh6guHmFJuQ0lCw8RgjzB7HJdezViII2swcg3we3IYVuyZO8H3rc2zIIiba3vyAV3ZWlFY5ROBt/GAVCYF3/kGV/2ajo+qn4g51RbCpdv+hSg/ocPlZMKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgJ66yHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py7v8WMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5E31F000FF;
-	Fri,  9 Oct 2026 14:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgJ66yHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE3C1F000FF;
+	Fri,  9 Oct 2026 14:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556803;
-	bh=1YV45/mubYPHAV3aeZn61wxV9E42b2xkdC519hnGvlw=;
+	s=korg; t=1791556806;
+	bh=ie+XiwjF/YgtWrjqkr3vhl43cKllt/z6cA1en9UXgAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=py7v8WMeu3+Er9Q4haAsJsDv8swE5nY9N3+8FIcwEHbM964m5XpcorjRtxiXsqZRE
-	 3Yt+SZCQQ6S1EfRobskndsnRbb/IcNfuCPsnq8kdjgBMTynG7KlXgL8jkEA4qJ11cD
-	 fJrPmkXbhrt+Hmas4rcq/G5FBeCvwIXEIk2Zv6Kc=
+	b=KgJ66yHOFLrKySlDYEI1VUwENWWQDY4nLlXK9/x/Doa4vfelDsRhupNPoAxgEkswA
+	 006rIYfg0MMchWhXJ8H3SV8bqH13laCdsYL0eUCNJppQCN16bim2q/MlLV4+vt1moa
+	 mpLSGU/da02j5i2LzKpM+33+W/3ii6+kcAnUcImU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 245/428] tty: abort break signalling on hangup
-Date: Fri,  9 Oct 2026 16:09:42 +0200
-Message-ID: <20261009140951.490846788@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.18 296/403] smb: client: flush and commit data before querying allocated ranges
+Date: Fri,  9 Oct 2026 16:10:57 +0200
+Message-ID: <20261009140959.126731290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,128 +53,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
+commit aa994489bd835547c191827acc460192e147032d upstream.
 
-The break ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+The mode 0 / FALLOC_FL_KEEP_SIZE fallocate emulation for small interior
+ranges in smb3_simple_fallocate_range() issues
+FSCTL_QUERY_ALLOCATED_RANGES and zero-fills any sub-range the server
+reports as an unallocated hole, to force block allocation without
+changing file contents.
 
-Drivers must handle this race, but TCSBRK and TCSBRKP should still be
-aborted to avoid calling back into the driver after a user-controlled
-timeout (possibly even after the tty has been reopened).
+This is unsafe against Windows servers.  Per the Win32 documentation,
+FSCTL_QUERY_ALLOCATED_RANGES only reports ranges that *may* contain
+nonzero data and is explicitly not coherent with recently written data:
 
-Note that drivers should disable any break state on shutdown so just
-return on hangup (calling break_ctl() again is racy and will most likely
-fail for drivers handling the race).
+  "a call to FSCTL_QUERY_ALLOCATED_RANGES [after writing to a network
+   file] would not necessarily return a correct list of allocated
+   regions.  To ensure coherency [...] flush the data to the file"
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+fsx (generic/363) reproduces the resulting corruption against Windows
+Server 2022: a range is written, an uncached read returns the data, yet
+the next FSCTL_QUERY_ALLOCATED_RANGES on that range reports it as a whole
+hole, so the emulation overwrites live data with zeroes.  A network trace
+confirmed the WRITE, the READ returning data and the query returning an
+empty range list within microseconds.  Samba does not exhibit this; its
+query is coherent with the written data.
+
+Write back the dirty pages, drain any outstanding I/O and issue an SMB2
+FLUSH to force the server to commit the data before querying the
+allocated ranges, so the query reflects the data actually present.
+
+With this, generic/363 passes against both Windows Server 2022 and Samba
+over 100000 fsx operations.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
- include/linux/tty.h  |    1 +
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ fs/smb/client/smb2ops.c |   32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -620,6 +620,8 @@ static void __tty_hangup(struct tty_stru
- 
- 	tty_ldisc_hangup(tty, cons_filp != NULL);
- 
-+	wake_up_interruptible(&tty->break_wait);
-+
- 	spin_lock_irq(&tty->ctrl.lock);
- 	clear_bit(TTY_THROTTLED, &tty->flags);
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-@@ -2458,6 +2460,7 @@ static int tiocgetd(struct tty_struct *t
-  * send_break - performed time break
-  * @tty: device to break on
-  * @duration: timeout in mS
-+ * @file: file object
-  *
-  * Perform a timed break on hardware that lacks its own driver level timed
-  * break functionality.
-@@ -2465,8 +2468,9 @@ static int tiocgetd(struct tty_struct *t
-  * Locking:
-  *	@tty->atomic_write_lock serializes
-  */
--static int send_break(struct tty_struct *tty, unsigned int duration)
-+static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
- {
-+	long timeout;
- 	int retval;
- 
- 	if (tty->ops->break_ctl == NULL)
-@@ -2480,13 +2484,26 @@ static int send_break(struct tty_struct
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (!retval) {
--		msleep_interruptible(duration);
--		retval = tty->ops->break_ctl(tty, 0);
--	} else if (retval == -EOPNOTSUPP) {
--		/* some drivers can tell only dynamically */
--		retval = 0;
-+	if (retval) {
-+		if (retval == -EOPNOTSUPP) {
-+			/* some drivers can tell only dynamically */
-+			retval = 0;
-+		}
-+		goto out_unlock;
-+	}
-+
-+	timeout = msecs_to_jiffies(duration);
-+	timeout = wait_event_interruptible_timeout(tty->break_wait,
-+						   tty_hung_up_p(file),
-+						   timeout);
-+	/* return early on hangup only */
-+	if (timeout > 0) {
-+		retval = -EIO;
-+		goto out_unlock;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3697,6 +3697,24 @@ static int smb3_simple_fallocate_range(u
+ 		goto out;
  	}
+ 
++	filemap_invalidate_lock(inode->i_mapping);
 +
-+	retval = tty->ops->break_ctl(tty, 0);
-+out_unlock:
- 	tty_write_unlock(tty);
++	/*
++	 * Flush and commit the data to the server, otherwise
++	 * FSCTL_QUERY_ALLOCATED_RANGES might report recently written data as
++	 * unallocated holes on Windows Servers, and the loop below would
++	 * then zero-fill them and corrupt the file.
++	 */
++	rc = filemap_write_and_wait_range(inode->i_mapping, off,
++					  off + len - 1);
++	if (rc)
++		goto out_unlock;
++	netfs_wait_for_outstanding_io(inode);
++	rc = SMB2_flush(xid, tcon, cfile->fid.persistent_fid,
++			cfile->fid.volatile_fid);
++	if (rc)
++		goto out_unlock;
++
+ 	in_data.file_offset = cpu_to_le64(off);
+ 	in_data.length = cpu_to_le64(len);
+ 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
+@@ -3706,7 +3724,7 @@ static int smb3_simple_fallocate_range(u
+ 			1024 * sizeof(struct file_allocated_range_buffer),
+ 			(char **)&out_data, &out_data_len);
+ 	if (rc)
+-		goto out;
++		goto out_unlock;
  
- 	if (signal_pending(current))
-@@ -2754,10 +2771,10 @@ long tty_ioctl(struct file *file, unsign
- 		 * This is used by the tcdrain() termios function.
- 		 */
- 		if (!arg)
--			return send_break(tty, 250);
-+			return send_break(file, tty, 250);
- 		return 0;
- 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
--		return send_break(tty, arg ? arg*100 : 250);
-+		return send_break(file, tty, arg ? arg * 100 : 250);
+ 	tmp_data = out_data;
+ 	while (len) {
+@@ -3716,12 +3734,12 @@ static int smb3_simple_fallocate_range(u
+ 		if (out_data_len == 0) {
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+ 					       cfile, off, len, buf);
+-			goto out;
++			goto out_unlock;
+ 		}
  
- 	case TIOCMGET:
- 		return tty_tiocmget(tty, p);
-@@ -3117,6 +3134,7 @@ struct tty_struct *alloc_tty_struct(stru
- 	init_ldsem(&tty->ldisc_sem);
- 	init_waitqueue_head(&tty->write_wait);
- 	init_waitqueue_head(&tty->read_wait);
-+	init_waitqueue_head(&tty->break_wait);
- 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
- 	mutex_init(&tty->atomic_write_lock);
- 	spin_lock_init(&tty->ctrl.lock);
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -230,6 +230,7 @@ struct tty_struct {
- 	struct fasync_struct *fasync;
- 	wait_queue_head_t write_wait;
- 	wait_queue_head_t read_wait;
-+	wait_queue_head_t break_wait;
- 	struct work_struct hangup_work;
- 	void *disc_data;
- 	void *driver_data;
+ 		if (out_data_len < sizeof(struct file_allocated_range_buffer)) {
+ 			rc = -EINVAL;
+-			goto out;
++			goto out_unlock;
+ 		}
+ 
+ 		range_start = le64_to_cpu(tmp_data->file_offset);
+@@ -3729,7 +3747,7 @@ static int smb3_simple_fallocate_range(u
+ 		if (check_add_overflow(range_start, range_len, &range_end) ||
+ 		    range_end > S64_MAX) {
+ 			rc = -EINVAL;
+-			goto out;
++			goto out_unlock;
+ 		}
+ 
+ 		if (off < range_start) {
+@@ -3744,11 +3762,11 @@ static int smb3_simple_fallocate_range(u
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+ 					       cfile, off, l, buf);
+ 			if (rc)
+-				goto out;
++				goto out_unlock;
+ 			off = off + l;
+ 			len = len - l;
+ 			if (len == 0)
+-				goto out;
++				goto out_unlock;
+ 		}
+ 		/*
+ 		 * We are at a section of allocated data, just skip forward
+@@ -3767,6 +3785,8 @@ static int smb3_simple_fallocate_range(u
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
+ 	}
+ 
++ out_unlock:
++	filemap_invalidate_unlock(inode->i_mapping);
+  out:
+ 	kfree(out_data);
+ 	kvfree(buf);
 
 
