@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178D9399CE9;
-	Fri,  9 Oct 2026 14:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6B73BB112;
+	Fri,  9 Oct 2026 14:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556742; cv=none; b=WF6LAwJyrgy1jsWjTLcj943RxT5ux43h8d47M+2MAfnMwhvn9xMvpY1yzyXuaUhVbkHpIeLUbyxlbiDRh+fL8/zbyHNBSuZhzRJ7bN9hrZhRhRiUCBX7QmFxWdsMgLvjx43WfhI/6LmwpIOXO6PhdoTL8ErO3Ay2KdgviLleGvA=
+	t=1791556745; cv=none; b=G5kNFuKg0phFIjNsUP9AIKqgGUEPasQ4QX2mVytXG5KUAv8gDXRu5ZguAe4hSvD0Cts+WOY3e8O4dIr2eP/xxhdFs3uiNQu+eTpppA+jMlrrBk55WoF0Afu/JLBhbUyNgb+34b/LroedbltDjW854wKME5/M7c0pUAVuftDaLX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556742; c=relaxed/simple;
-	bh=8+yw9EK8THmRZSJYZAjkBFOOihgmgtksj5dpLRMMb5U=;
+	s=arc-20240116; t=1791556745; c=relaxed/simple;
+	bh=o6PL6FL6EyLjEl9kHgREV6stTzbpi9TEAmvzjbcTOPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AT8dGgbxGTO+aSTfk14aPygdl7uIR+BUT9J7VxuD5E+R4/Or5Pw41p3XrQkg4tk2VwAg8V2cCTXz9P1SVDnLVXp4//8OWzUPyR02zwIt6Orp8Vw4Jqg3M48z/sn9UV0cCIl3p2aKsb7Ol2z90oaZVk3XpST3KXdI3rXhAHM34Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbxJaEJi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SjNmcXekRN7BUAIcWheWGghNRU3mwwn08Xhi3T7fxn/1UOJARWZ36WpIjMeFd0fmOJwdPliNCxq4dcuTPkxlV2Ag97LHVW9TYrJ+muO4JmzmQ7fLRjC7Nch+0sRO0YP3Vc3pRXt/GmBE1JacjSQ3759jlI6SbFAfFNRliBlT5O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkKN2lnC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbxJaEJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACD61F000FF;
-	Fri,  9 Oct 2026 14:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkKN2lnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547CB1F000FF;
+	Fri,  9 Oct 2026 14:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556741;
-	bh=weAmcgq/9jEWS9xGesUzDzAZvSYFOBGP5v9a9VAkXIo=;
+	s=korg; t=1791556743;
+	bh=B7lA3hhABW7dc/3yMdKgdwh4d4FhR1jZKcuTdghOQmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kbxJaEJi/+3LShDt4hB7b5D4rYq5iIb52GeJGzPaYdTsBABuaJxxeVq3zDG1U/8OP
-	 /CloSP3iE3z6AEt0Q0hjPa9e7TGWKHOHxVrS6KhYtSaZ1QemfwHOCDw/haOL7RS0Kp
-	 Q+m0u3SymlVr9o4gUO8KrRVAmEuLVWWMIA3VXPtA=
+	b=bkKN2lnCytMYnw9Mmhz4o9QTko04+j7ldTfugRXwiJqHNBEyFNDztTpnkMILNUp6y
+	 t7jx7uAqolFE6mlxDHgGJM8NxaIiF472dcuVQ8wsnhsNiI8h33N84O9yzX59D37tSx
+	 r/5Xpksli6dWqMNrgIaJcMYGxCrT+2rd9aq40yeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Lin <ian.lin@jetone.com.tw>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 286/403] USB: serial: option: add Compal EXC-T1 support
-Date: Fri,  9 Oct 2026 16:10:47 +0200
-Message-ID: <20261009140958.886859768@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sicong Huang <congei42@163.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 7.2 235/428] usb: cdns3: fix use-after-free in cdns3_gadget_exit()
+Date: Fri,  9 Oct 2026 16:09:32 +0200
+Message-ID: <20261009140951.274066120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Lin <ian.lin@jetone.com.tw>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit b51faf3f2e307f114854bbe6d495f03cd5370686 upstream.
+commit ebe9b68c396792c15d0ac690d592e449e74ed804 upstream.
 
-The Compal EXC-T1 is a Qualcomm MDM9207-based LTE modem which reports
-"EXC-x1" as its USB product string. It exposes diagnostic, modem, AT,
-and NMEA ports as vendor-specific interfaces with subclass 0x10 and
-protocols 0x01 through 0x04.
+cdns3_gadget_start() arms two works on system_freezable_wq:
+pending_status_wq for the deferred ep0 status stage and aligned_buf_wq
+for realigned request buffers. Both handlers use the cdns3_device the
+works are embedded in, and cdns3_pending_setup_status_handler() also
+calls the ep0 request completion.
 
-Add exact interface matches for these four ports, leaving the ff/ff/ff
-interface unbound.
+cdns3_gadget_exit() does not wait for these works. It frees all
+endpoints and aligned buffers and drops the last reference to the
+gadget device, which frees priv_dev, so a work queued before the exit
+can run after the free.
 
-Relevant output from usb-devices:
+Fix this by waiting for both works after the gadget driver is unbound
+and the IRQ is freed, when no new work can be queued, and before the
+endpoints and buffers are released.
 
-T:  Bus=03 Lev=02 Prnt=03 Port=03 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=04b7 ProdID=4d22 Rev=03.18
-S:  Manufacturer=CEI
-S:  Product=EXC-x1
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=10 Prot=01 Driver=option
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=02 Driver=option
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=03 Driver=option
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=04 Driver=option
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=05 Driver=qmi_wwan
+This issue was found by an in-house static analysis tool.
 
-Tested on a Compal EXC-T1 modem using an Ubuntu kernel build. The four
-serial interfaces bound to option and exposed ttyUSB3 through ttyUSB6.
-
-Assisted-by: Codex:GPT-5
-Signed-off-by: Ian Lin <ian.lin@jetone.com.tw>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Reported-by: Sicong Huang <congei42@163.com>
+Closes: https://lore.kernel.org/linux-usb/7f5719b.8700.18f67b324d3.Coremail.congei42@163.com/
+Suggested-by: Sicong Huang <congei42@163.com>
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260909095655.694527-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
+ drivers/usb/cdns3/cdns3-gadget.c |    4 ++++
  1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2437,6 +2437,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x01) },	/* Compal EXC-T1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x02) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x03) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x04) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -3269,6 +3269,10 @@ static void cdns3_gadget_exit(struct cdn
+ 	usb_del_gadget(&priv_dev->gadget);
+ 	devm_free_irq(cdns->dev, cdns->dev_irq, priv_dev);
+ 
++	/* The works can still be queued until the IRQ is freed. */
++	cancel_work_sync(&priv_dev->pending_status_wq);
++	cancel_work_sync(&priv_dev->aligned_buf_wq);
++
+ 	cdns3_free_all_eps(priv_dev);
+ 
+ 	while (!list_empty(&priv_dev->aligned_buf_list)) {
 
 
