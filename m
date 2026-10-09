@@ -1,41 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0449D3D8912;
-	Fri,  9 Oct 2026 14:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E017B3D8912;
+	Fri,  9 Oct 2026 14:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557091; cv=none; b=EyPphOmFWb4Ifk5mi9lwYX69wygTlF8gpjauNzTFiwp+sZgkc2sG1dAobfMnbHNp8D6GN5o/cMLrmuluLsW2seVvWgWjRNvQnHB+vyvt5ZblDDPAIw0BRo7QyApteOYNVkFF9vp1bS3FdIQg490htZJbySmJEVxqYtLAegYoqYU=
+	t=1791557094; cv=none; b=Hwtxfkk4tiHk1rC40Yhs7Oma3UX7izAQM5n63JK1OawMk/OTIFDsoxIwEptnh4unWGSSaCHISMFQXGnPJqMUC3/OJmv4ber/CBeBiOn6Gogb6dr5VU++Pm9h25WA3dyWY4vdcBMtTFvJv7vUVbaaPrxHVeuKknqT52d1oLqJFx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557091; c=relaxed/simple;
-	bh=gH6soa3pYzWdUF16z3jtdh5s8id8vV4CMgyldjY1r0M=;
+	s=arc-20240116; t=1791557094; c=relaxed/simple;
+	bh=JKISAsTPdfRTQ0HOZkaM0pP/CZFRxxkIKUIHnKrPd4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3GzqzNM/kkupKM0DDNPrvJZaUN78UeujFossRsMeqaJA8jKkti60NFDOybTVlLh2bvxeZjauAuS1RajI8+0/zhaeCemdtqzp3S7VqPbmSlDcqvjUZbupfw9+HSSbtfvahA4XWjUrqXZmpI7+KbwqwqgbU4EcjPe0EYSDlhBrGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4jC1ObJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=agvzhr/A/G63eiqeRCr0n71+Xt4sBOIP+jysFRUH8y+FttXNiWAdFbkHAIM9n/wzvpxe7QgnwY5rFP8nie20jOpINQRMVFZkBXuQzKz2MytOmYSM9dpIaFceuAYeojS+PI1TdpCTF9lj5zQ7bWQpJTMTIaBe2sJZOiwR6cQoRz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMR8ivIk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4jC1ObJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF321F000FF;
-	Fri,  9 Oct 2026 14:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMR8ivIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF11F000FF;
+	Fri,  9 Oct 2026 14:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557089;
-	bh=cmoH3vTjB8FiWMYvxMWcyT465BeUrBK9WxOMUB1RDcw=;
+	s=korg; t=1791557092;
+	bh=QzjS9JUIBPatGI9fPZ5ghc/j4PknDudpaY2XQLjDBSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J4jC1ObJvr/Xv+k0YX4OuBPUBx8V/xwOg9bKuD2ZEYDZ1nKmJFBVvZTR5aVBZ9cMi
-	 9k8kcMWPZZP3RDJY1URVk5w6QHTmLQpkPzt0XW6bYMqYmAtGIoAohXD00T7VGhYffA
-	 4pIfeceNua+o1vLevfo9SV4Km47qqkCp3m3dQJvc=
+	b=BMR8ivIkBbKmI+3NKIeINcR6YLC2Q/zaBwct0CJrx7wcVduZ/meeEw4NEQsTX3x+N
+	 HuJosjx695yubCbuFpxiN/wnh46u2OZwdMtAQJr8L2lfTw51zB/UWHalqSD9rBUryI
+	 rIelWsx8IEHBfh72R0XytgGtTlt+lHql+sMbdzsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Pedro Falcato <pfalcato@suse.de>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 7.2 294/428] x86/mm: Drop unnecessary PMD page copy when freeing
-Date: Fri,  9 Oct 2026 16:10:31 +0200
-Message-ID: <20261009140952.567849466@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Chatre, Reinette" <reinette.chatre@intel.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dave Martin <dave.martin@arm.com>,
+	Dave Young <dyoung@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Guo Ren <guoren@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Hugh Dickins <hughd@google.com>,
+	James Morse <james.morse@arm.com>,
+	Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Luck, Tony" <tony.luck@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	Robin Murohy <robin.murphy@arm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 345/403] mm/vma: rename __mmap_prepare() function to avoid confusion
+Date: Fri,  9 Oct 2026 16:11:46 +0200
+Message-ID: <20261009141000.334027270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,148 +94,146 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit e3ee38c1bc0b11a8d3e63dce7050759b61864286 upstream.
+[ Upstream commit 2bcd9207dedc585bae33ad7b337f2232a8a11da8 ]
 
-On a box with a discrete GPU, lockdep reports a possible deadlock as
-soon as kswapd shrinks the TTM page pool. The immediate cause is an
-x86 commit that added an mmap_read_lock() to kernel page protection
-munging code.
+Now we have the f_op->mmap_prepare() hook, having a static function called
+__mmap_prepare() that has nothing to do with it is confusing, so rename
+the function to __mmap_setup().
 
-The huge vmap code holds the same lock over a GFP_KERNEL allocation,
-which is a no-no now that reclaim can take it. That allocation is in a
-page table *free* path and ends up being for dubious purposes[1].
-Basically, it tries to avoid hardware setting Accessed=1 in page table
-entries that are unreachable by the hardware, a non-issue.
-
-Remove the PMD copy. Detach the original PMD page at the PUD, flush
-the mid-level caches, and free the PTE tables straight from the
-detached PMD page. With no allocation left, the locking issue is gone.
-
-Lockdep splat/analysis:
-
-  WARNING: possible circular locking dependency detected
-  7.3.0-rc3-f6e7b42bf05b+ #183 Tainted: G     U
-  ------------------------------------------------------
-  kswapd0/269 is trying to acquire lock:
-  ((init_mm).mmap_lock){++++}-{4:4}, at: change_page_attr_set_clr+0x29a/0x4a0
-  but task is already holding lock:
-  (pool_shrink_rwsem){.+.+}-{4:4}, at: ttm_pool_shrink+0xb2/0x330 [ttm]
-  Chain exists of:
-    (init_mm).mmap_lock --> fs_reclaim --> pool_shrink_rwsem
-
-The cycle is built from three edges:
-
-  1) pool_shrink_rwsem -> (init_mm).mmap_lock
-
-     The TTM shrinker restores the caching attribute of every page it
-     frees, while holding pool_shrink_rwsem:
-
-       ttm_pool_shrink()
-       -> ttm_pool_dispose_list()
-       -> ttm_pool_free_page()
-       -> set_pages_wb()
-       -> change_page_attr_set_clr()   [ init_mm mmap read lock ]
-
-  2) fs_reclaim -> pool_shrink_rwsem
-
-     The same shrinker, called from reclaim.
-
-  3) (init_mm).mmap_lock -> fs_reclaim
-
-     ioremap() installing a huge PUD mapping over an existing PMD table:
-
-       ioremap_page_range()
-       -> vmap_range_noflush()
-       -> vmap_try_huge_pud()          [ init_mm mmap read lock ]
-       -> pud_free_pmd_page()
-       -> __get_free_page(GFP_KERNEL)  [ enters reclaim ]
-
-[ dhansen: Lots of changelog munging/trimming and merged comments from my
-	   version of the fix. ]
-
-Fixes: d5d8b8662e6e ("x86/mm/pat: Acquire init_mm read lock on attribute changes to avoid UAF")
-Suggested-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lkml.kernel.org/r/d25a22c60ca0f04091697ef9cda0d72ce0cf8af3.1760959442.git.lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Link: https://lore.kernel.org/20260916062222.27347-1-mikhail.v.gavrilov@gmail.com
-Link: https://lore.kernel.org/all/e11449f0-d9ad-4d1b-ab21-2be7d71fe335@intel.com/ [1]
-Link: https://patch.msgid.link/20260923223116.20090-1-mikhail.v.gavrilov@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/mm/pgtable.c |   38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Chatre, Reinette <reinette.chatre@intel.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Dave Martin <dave.martin@arm.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Guo Ren <guoren@kernel.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Kevin Tian <kevin.tian@intel.com>
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nicolas Pitre <nico@fluxnic.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Robin Murohy <robin.murphy@arm.com>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -705,47 +705,37 @@ int pmd_clear_huge(pmd_t *pmd)
+Preserve the separate setup and callback error paths so a failed callback
+still undoes memory accounting.
+
+Record whether merging found a VMA and use that result to select new VMA
+allocation. This preserves existing behavior while providing the
+allocated_new flag needed by the follow-up change to user-defined fields.
+Move the error declaration below the mapping state to avoid a conflict
+with the follow-up const qualifier change.
+
+Stable-dep-of: 976d5e0ddac8 ("mm/vma: predicate setting mmap_prepare VMA fields on new vma alloc")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ mm/vma.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/mm/vma.c b/mm/vma.c
+index 5beb18b0610b0..d160cc6a608af 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -2382,7 +2382,7 @@ static void update_ksm_flags(struct mmap_state *map)
  }
  
- #ifdef CONFIG_X86_64
--/**
-- * pud_free_pmd_page - Clear PUD entry and free PMD page
-- * @pud: Pointer to a PUD
-- * @addr: Virtual address associated with PUD
-- *
-- * Context: The PUD range has been unmapped and TLB purged.
-- * Return: 1 if clearing the entry succeeded. 0 otherwise.
-- *
-- * NOTE: Callers must allow a single page allocation.
-+/*
-+ * Given a PUD poitner, detach and free the pointed-to
-+ * PMD page and any PTE page children. The entire range
-+ * under the PUD must not have any valid translations
-+ * and the TLB must have already been flushed.
+ /*
+- * __mmap_prepare() - Prepare to gather any overlapping VMAs that need to be
++ * __mmap_setup() - Prepare to gather any overlapping VMAs that need to be
+  * unmapped once the map operation is completed, check limits, account mapping
+  * and clean up any pre-existing VMAs.
+  *
+@@ -2391,7 +2391,7 @@ static void update_ksm_flags(struct mmap_state *map)
+  *
+  * Returns: 0 on success, error code otherwise.
   */
- int pud_free_pmd_page(pud_t *pud, unsigned long addr)
+-static int __mmap_prepare(struct mmap_state *map, struct list_head *uf)
++static int __mmap_setup(struct mmap_state *map, struct list_head *uf)
  {
--	pmd_t *pmd, *pmd_sv;
- 	struct ptdesc *pt;
-+	pmd_t *pmd;
- 	int i;
+ 	int error;
+ 	struct vma_iterator *vmi = map->vmi;
+@@ -2693,14 +2693,15 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
+ {
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma = NULL;
+-	int error;
+ 	bool have_mmap_prepare = file && file->f_op->mmap_prepare;
+ 	VMA_ITERATOR(vmi, mm, addr);
+ 	MMAP_STATE(map, mm, &vmi, addr, len, pgoff, vm_flags, file);
++	bool allocated_new;
++	int error;
  
- 	pmd = pud_pgtable(*pud);
--	pmd_sv = (pmd_t *)__get_free_page(GFP_KERNEL);
--	if (!pmd_sv)
--		return 0;
--
--	for (i = 0; i < PTRS_PER_PMD; i++) {
--		pmd_sv[i] = pmd[i];
--		if (!pmd_none(pmd[i]))
--			pmd_clear(&pmd[i]);
--	}
+ 	map.check_ksm_early = can_set_ksm_flags_early(&map);
  
-+	/* Detach the PMD page: */
- 	pud_clear(pud);
- 
--	/* INVLPG to clear all paging-structure caches */
-+	/*
-+	 * PMD and all its descendents are unreachable
-+	 * via normal page walks. Make them unreachable
-+	 * in cached mid-level walks too:
-+	 */
- 	flush_tlb_kernel_range(addr, addr + PAGE_SIZE-1);
- 
- 	for (i = 0; i < PTRS_PER_PMD; i++) {
--		if (!pmd_none(pmd_sv[i])) {
--			pt = page_ptdesc(pmd_page(pmd_sv[i]));
-+		if (!pmd_none(pmd[i])) {
-+			pt = page_ptdesc(pmd_page(pmd[i]));
- 			pagetable_dtor_free(pt);
- 		}
+-	error = __mmap_prepare(&map, uf);
++	error = __mmap_setup(&map, uf);
+ 	if (error)
+ 		goto abort_munmap;
+ 	if (have_mmap_prepare)
+@@ -2719,7 +2720,8 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
  	}
  
--	free_page((unsigned long)pmd_sv);
--
- 	pmd_free(&init_mm, pmd);
+ 	/* ...but if we can't, allocate a new VMA. */
+-	if (!vma) {
++	allocated_new = !vma;
++	if (allocated_new) {
+ 		error = __mmap_new_vma(&map, &vma);
+ 		if (error)
+ 			goto unacct_error;
+@@ -2732,7 +2734,7 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
  
- 	return 1;
+ 	return addr;
+ 
+-	/* Accounting was done by __mmap_prepare(). */
++	/* Accounting was done by __mmap_setup(). */
+ unacct_error:
+ 	if (map.charged)
+ 		vm_unacct_memory(map.charged);
+-- 
+2.53.0
+
 
 
