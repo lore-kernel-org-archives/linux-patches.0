@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C4C1D47AC;
-	Fri,  9 Oct 2026 14:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30EF31E846;
+	Fri,  9 Oct 2026 14:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557108; cv=none; b=PxzQ+p0htqPtHDHgxecSI2SLYwvfiyT+S59tnb3Aj0rGyL4qe+JwOv00VHviM/Wl1QKsdWkqydhL8zR7F0PLTQLj4zyFsRu5EpcSKWwJIKDwoVTtvE4W26opljP2Mpb3+XaNHIvetcxGr3jYPHgeWmtA8e1kK486Uo/FuCDRasI=
+	t=1791557110; cv=none; b=odM4O699rXd1m2AEt3xY075ArZZBdHq6ae0WGOd1M74Mi0/FxFRKkUjqGPmRCV+mg0g0YajDJy65BknD+pXoWvmRjEv22TlvVE0M4+wCKgQarreJAnJGY1cn/nTljknt3fs6hZvnUuDCSJWVE9o+phKeT0EMgiqQ8JnMrBgb6Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557108; c=relaxed/simple;
-	bh=gD2TGzoixxigOF75nJcbbRezM15r9bNv330SMgPw1wQ=;
+	s=arc-20240116; t=1791557110; c=relaxed/simple;
+	bh=yWqXYur2Q9LZpjDQnBsgZbg0eZFlBQppmWe7jXTzzEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdNZ9IVKevtwSdtdZKhn0ZrFaXRHBnOlcJPbvbFvxYdLVL1gCuucmoOhnp4GrW1ZB+UpPw9wadSTaSWMbUnBNoQxzfmvRDyJQYHjUii0tL/EnpL6P3vuJXVhm8JOW/zaYXV1VJmKgy15RCmuv8Cni6jHhialciwW4l8sJnI7xkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOaZ646p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUOZr5mxWl3yQs1/Q9ROJdwnR8LIg551FRqkxHtK0ExgpWtMPbV2JuqhZfqnA0NZ7ADykGtXq6bD9yl4YlldGMKySuMO4oCMCPb142Xl/xkQAT7D/VzMmcGmyFaxIBu2acbFaRRdYHi2S9MsOHzCclUqpI+sk94mIiHBu/1rpHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+vxpO6x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOaZ646p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5851F000FF;
-	Fri,  9 Oct 2026 14:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+vxpO6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9531F000FF;
+	Fri,  9 Oct 2026 14:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557106;
-	bh=spvacOiknUk8gi1OA5VjPxIY6zAZBFR9Zalsir3TO14=;
+	s=korg; t=1791557109;
+	bh=dWP2B+yQ0IDtXiRzGmmGB1ZA2zEDOOAu/zlMsxJX43w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gOaZ646ppjsZfLbWh77S9q6DiwO7i5W/dhwZEt4e4r+3hWQdbAKZ2kzzKQ6t3EQtq
-	 H/OakR5l3Tk25zQ9Zn16BOwVrmtbx3PGPhRQIlFa98DFD+Kp3GsaPK+YZy55qh9VQw
-	 z2AjOdE4jcmTgJO2Ub8dbyIq7K1u7IPS6TG02a2Q=
+	b=R+vxpO6xWIzcThEIA8cl7koLf0YugOmoOjDWEwq/xEazZ0pG7OlVztuPynb9YYOVv
+	 UnvHndLpGdRs6lGCb5MLOhgH1jQ7dnD0B2zv4Ac8EdOGJLIHeStQCsLrO3ApwfGnbw
+	 2KEt+gglTpak+zVmIK0Q6dbaMyoBN842ygbt9FgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 297/428] nvme-multipath: fix underflow in ANA log bounds checks
-Date: Fri,  9 Oct 2026 16:10:34 +0200
-Message-ID: <20261009140952.635679431@linuxfoundation.org>
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Eliot Courtney <ecourtney@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 348/403] rust: devres: add static bound to Devres<T>
+Date: Fri,  9 Oct 2026 16:11:49 +0200
+Message-ID: <20261009141000.408689031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 63fa2d9c9c37020bd2703fe2a6a38027b5abeb15 upstream.
+commit 016267b521b18529c977c9eca9597a1669c3d73c upstream.
 
-The number of ANA groups advertised through Identify Controller sizes the
-ANA log buffer. The ANA log header and group descriptors independently
-supply the number of groups and namespace IDs to parse.
+Devres::new() registers a callback with the C devres subsystem via
+devres_node_add(). If the Devres is leaked (e.g. via
+core::mem::forget(), which is safe), its Drop impl never runs, and the
+devres release callback will revoke the inner Revocable on device
+unbind, which drops T in place. If T contains non-'static references,
+those may be dangling by that point.
 
-Both bounds checks subtract an untrusted object size from ana_log_size
-before comparing the current offset. If the object is larger than the
-buffer, the size_t subtraction underflows and lets the parser read beyond
-ana_log_buf.
+Add a 'static bound to prevent storing types with borrowed data in
+Devres.
 
-Check the current offset before the first subtraction and compare each
-object size with the remaining buffer instead. This rejects inconsistent
-ANA data before dereferencing a truncated group descriptor or walking an
-oversized namespace ID array.
-
-Fixes: 0d0b660f214d ("nvme: add ANA support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 76c01ded724b ("rust: add devres abstraction")
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Eliot Courtney <ecourtney@nvidia.com>
+Link: https://patch.msgid.link/20260526000447.350558-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/multipath.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ rust/kernel/devres.rs |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -815,7 +815,8 @@ static int nvme_parse_ana_log(struct nvm
- 		u32 nr_nsids;
- 		size_t nsid_buf_size;
+--- a/rust/kernel/devres.rs
++++ b/rust/kernel/devres.rs
+@@ -97,7 +97,7 @@ use crate::{
+ /// # Ok(())
+ /// # }
+ /// ```
+-pub struct Devres<T: Send> {
++pub struct Devres<T: Send + 'static> {
+     dev: ARef<Device>,
+     /// Pointer to [`Self::devres_callback`].
+     ///
+@@ -107,7 +107,7 @@ pub struct Devres<T: Send> {
+     data: Arc<Revocable<T>>,
+ }
  
--		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - sizeof(*desc)))
-+		if (WARN_ON_ONCE(offset > ctrl->ana_log_size ||
-+				 sizeof(*desc) > ctrl->ana_log_size - offset))
- 			return -EINVAL;
+-impl<T: Send> Devres<T> {
++impl<T: Send + 'static> Devres<T> {
+     /// Creates a new [`Devres`] instance of the given `data`.
+     ///
+     /// The `data` encapsulated within the returned `Devres` instance' `data` will be
+@@ -236,7 +236,7 @@ unsafe impl<T: Send> Send for Devres<T>
+ // SAFETY: `Devres` can be shared with any task, if `T: Sync`.
+ unsafe impl<T: Send + Sync> Sync for Devres<T> {}
  
- 		nr_nsids = le32_to_cpu(desc->nnsids);
-@@ -831,7 +832,7 @@ static int nvme_parse_ana_log(struct nvm
- 			return -EINVAL;
- 
- 		offset += sizeof(*desc);
--		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - nsid_buf_size))
-+		if (WARN_ON_ONCE(nsid_buf_size > ctrl->ana_log_size - offset))
- 			return -EINVAL;
- 
- 		error = cb(ctrl, desc, data);
+-impl<T: Send> Drop for Devres<T> {
++impl<T: Send + 'static> Drop for Devres<T> {
+     fn drop(&mut self) {
+         // SAFETY: When `drop` runs, it is guaranteed that nobody is accessing the revocable data
+         // anymore, hence it is safe not to wait for the grace period to finish.
 
 
