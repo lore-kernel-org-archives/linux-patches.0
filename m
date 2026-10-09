@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FFC45D913;
-	Fri,  9 Oct 2026 14:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0295D2AF1D;
+	Fri,  9 Oct 2026 14:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556148; cv=none; b=FW+W73CLE1y2uT/HQ47vhqQO0IhrioT6m2OsZnzsOThWFj8VMY8koIj/LX4kyphd0lSXxXaXbh7dFiYAudqLiWr5ehQjC1TEfJbqwQPyECYFIiSmxi7HoHKgfS6dOf5hUyukSMBOA0akwtDEnTtp15Cs3KzCABwVdmMMWtHWHXk=
+	t=1791556151; cv=none; b=Sx7rz1ORML+RqHvuJs9tYwnac2nOIvHfNORAcnBz4L17KBY8fEcsQGditByUxxwFVY6qzIuUn2nCF7fbSgbE5P/riHFXkF3J6mx5YKxWZH1C6AbH08gvogaKGJKQ2+xZLEGvghOVV9IFxadX/GQoLRlsjdPrVcWMSHhO74rc9Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556148; c=relaxed/simple;
-	bh=Y5cQsNn1Iqvsu4ris5ha2pl7TQp/R/HIEqqy/5NWjhQ=;
+	s=arc-20240116; t=1791556151; c=relaxed/simple;
+	bh=Mf4muBAD6tVioQK3t/m6H7yArqcyEB9uS8Wj8v7yQEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjK6tLKlebd3dsOj9Fsh5wvzzFThbHEZPXA7oDIVsaP1awE6UFvqPURNcTSk2oJTGRouRmT55Zx43jm9qXPLvslKwx/J1IVIoq7PJr8SKOfk4tnMrPK/6UBKko3je9jn/zVHjx5NiQ566wYmktx8QdcmaKQa3w4Cta7Xa/9ABFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8iIac3O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ViTw3ny0MIeI9Zu4b/n0KgIwtreDqEQGr4bu8p3jjhXa2X8SQ4jsVWyfiBjZUTQENfJjsF5sliMNQaZ3LK6iLONQmpYRrnKmN0WIVVfw9p2WZ5zlHGCIbbyzeBNownidzyUBZnlADZia1YmminrZGVnb7iNk4hz67q2iOZ40y6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHMHc2Rx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8iIac3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A8E1F000FF;
-	Fri,  9 Oct 2026 14:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHMHc2Rx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9A31F000FF;
+	Fri,  9 Oct 2026 14:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556147;
-	bh=ucDEre2dmVtUwoUDg3NUIvB5b/N5Uoqb0mQ6PYiIPrs=;
+	s=korg; t=1791556149;
+	bh=fZ/5Q/W6IKy7Rn2PYkctWkMnn7Hm2eltiJNkkGXHqyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8iIac3ONIQMzuBZRDMELDsW7wIqNQrahPwh85RuIjTWeuwhrYADmZ06d5F240RFI
-	 JqMzfCtmn0/bGRT1QRulwuyIjD4XnGQRfWUUtyPCI8avRdkbpvW782cwJiXjGs67mQ
-	 McE4JALTwr9lIOGJ9rJodD4ULYuVPrZAeZbQ6lgM=
+	b=fHMHc2RxbZWWDbzjBwHGse/FT21NIxIp7yXNCKYy5lJfmaYCX7PTBH6Cmq47/IK3e
+	 Xm04LgozLwil+P/E4fsO2b2Ti1RRrqcA5l/4J8/Jj6kIqP13PkkR0TOEWabW+xzzmr
+	 6/ptfQ2wbNrzYK3OIcksBjApm7fq1UDZ7gR2wIdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 128/428] seg6: ensure packet data is writable before modifying SRH and IPv6 DA
-Date: Fri,  9 Oct 2026 16:07:45 +0200
-Message-ID: <20261009140948.998342266@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marian Rotariu <marian.c.rotariu@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 182/403] usb: typec: tipd: dont send GAID when probe fails in APP mode
+Date: Fri,  9 Oct 2026 16:09:03 +0200
+Message-ID: <20261009140956.376158451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,370 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Marian Rotariu <marian.c.rotariu@gmail.com>
 
-[ Upstream commit 8ae3f4067ba4ae3a15581392f6dac422e3d3def0 ]
+commit c5df31f10880737d13b75eff42faee7accb9f956 upstream.
 
-advance_nextseg() modifies the SRH Segments Left field and the IPv6
-destination address without ensuring the packet data is writable.
-seg6_next_csid_advance_arg() has the same problem when it advances the
-NEXT-C-SID argument in the destination address.
+When probe fails after the chip was already in APP mode (booted from
+EEPROM), the err_reset_controller path unconditionally calls
+tps->data->reset(), which for tps25750 sends the GAID 4CC command.
+GAID transitions the chip from APP back to PTCH, causing a second
+probe attempt that sees PTCH mode and tries to load the firmware from
+/lib/firmware, instead of reading the EEPROM as it should.
 
-The skb may be cloned, for example by an AF_PACKET socket receiving on
-the ingress device. advance_nextseg() and seg6_next_csid_advance_arg()
-then write into the packet data shared with the clone. A read from that
-socket can return the modified packet instead of the received one. The
-simplified path below shows this for advance_nextseg():
+The err_reset_controller path can be triggered by -EPROBE_DEFER from
+the probe sequence. GAID should only be sent when the controller
+actually loaded firmware at probe time.
 
-__netif_receive_skb_one_core
-  __netif_receive_skb_core
-    deliver_skb               [orig: users=2, cloned=0]
-      packet_rcv
-        skb_clone             clone queued to the AF_PACKET socket
-        consume_skb(orig)     [orig: users=1, cloned=1]
-  ipv6_rcv
-    ip6_rcv_core              skb_share_check: no-op [orig: users=1]
-    [...]
-      input_action_end_core
-        advance_nextseg       writes into the data shared with the clone
+The abnormal behavior was seen on a tps25751d that has an EEPROM
+connected to it.
 
-Call skb_ensure_writable() in advance_nextseg() and in
-seg6_next_csid_advance_arg() before they modify the packet data.
-skb_ensure_writable() may reallocate skb->head, which invalidates the
-pointers into the packet data taken before the call.
-advance_nextseg() now returns a valid SRH pointer, or NULL if
-skb_ensure_writable() fails.
-seg6_next_csid_advance_arg() takes the pointer to the destination
-address from the skb after skb_ensure_writable().
-On failure, the callers drop the packet with SKB_DROP_REASON_NOMEM.
-
-Fixes: 140f04c33bbc ("ipv6: sr: implement several seg6local actions")
-Fixes: 848f3c0d4769 ("seg6: add NEXT-C-SID support for SRv6 End behavior")
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260925133807.32-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d49f90822015 ("usb: typec: tipd: add init and reset functions to tipd_data")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marian Rotariu <marian.c.rotariu@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260806085302.1307606-1-marian.c.rotariu@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c | 140 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 117 insertions(+), 23 deletions(-)
+ drivers/usb/typec/tipd/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index d1070aec7b72b..53f7b24525759 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -278,13 +278,43 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
- 	return true;
- }
- 
--static void advance_nextseg(struct ipv6_sr_hdr *srh, struct in6_addr *daddr)
-+/* advance the SRH to the next segment and set the IPv6 DA accordingly.
-+ * skb pointers may change: after this call, the caller must evaluate again
-+ * any pointer into the packet data.
-+ *
-+ * This function returns:
-+ *  - the SRH on success;
-+ *  - NULL when the skb cannot be made writable. In this case, the function
-+ *    sets the drop reason to SKB_DROP_REASON_NOMEM.
-+ */
-+static struct ipv6_sr_hdr *advance_nextseg(struct sk_buff *skb,
-+					   struct ipv6_sr_hdr *srh,
-+					   enum skb_drop_reason *reason)
- {
- 	struct in6_addr *addr;
-+	int srhoff;
-+	int wlen;
-+
-+	srhoff = (unsigned char *)srh - skb->data;
-+	/* we write only the Segment Left field and the IPv6 DA. The segment
-+	 * list is only read, and seg6_get_srh() already pulled it into the
-+	 * linear area.
-+	 */
-+	wlen = srhoff + sizeof(*srh);
-+
-+	if (unlikely(skb_ensure_writable(skb, wlen))) {
-+		*reason = SKB_DROP_REASON_NOMEM;
-+		return NULL;
-+	}
-+
-+	/* skb_ensure_writable() may change skb pointers; evaluate srh again */
-+	srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
- 
- 	srh->segments_left--;
- 	addr = srh->segments + srh->segments_left;
--	*daddr = *addr;
-+	ipv6_hdr(skb)->daddr = *addr;
-+
-+	return srh;
- }
- 
- static int
-@@ -382,12 +412,26 @@ static bool seg6_next_csid_is_arg_zero(const struct in6_addr *addr,
- 	return true;
- }
- 
--/* assume that DA.Argument length > 0 */
--static void seg6_next_csid_advance_arg(struct in6_addr *addr,
--				       const struct seg6_flavors_info *finfo)
-+/* assume that DA.Argument length > 0.
-+ * skb pointers may change: after this call, the caller must evaluate again
-+ * any pointer into the packet data.
-+ *
-+ * This function returns:
-+ *  - SKB_NOT_DROPPED_YET on success;
-+ *  - SKB_DROP_REASON_NOMEM when the skb cannot be made writable.
-+ */
-+static enum skb_drop_reason
-+seg6_next_csid_advance_arg(struct sk_buff *skb,
-+			   const struct seg6_flavors_info *finfo)
- {
- 	__u8 fnc_octects = seg6_flv_lcnode_func_octects(finfo);
- 	__u8 blk_octects = seg6_flv_lcblock_octects(finfo);
-+	struct in6_addr *addr;
-+
-+	if (unlikely(skb_ensure_writable(skb, sizeof(struct ipv6hdr))))
-+		return SKB_DROP_REASON_NOMEM;
-+
-+	addr = &ipv6_hdr(skb)->daddr;
- 
- 	/* advance DA.Argument */
- 	memmove(&addr->s6_addr[blk_octects],
-@@ -395,6 +439,8 @@ static void seg6_next_csid_advance_arg(struct in6_addr *addr,
- 		16 - blk_octects - fnc_octects);
- 
- 	memset(&addr->s6_addr[16 - fnc_octects], 0x00, fnc_octects);
-+
-+	return SKB_NOT_DROPPED_YET;
- }
- 
- static int input_action_end_finish(struct sk_buff *skb,
-@@ -408,31 +454,42 @@ static int input_action_end_finish(struct sk_buff *skb,
- static int input_action_end_core(struct sk_buff *skb,
- 				 struct seg6_local_lwt *slwt)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	struct ipv6_sr_hdr *srh;
-+	int err = -EINVAL;
- 
- 	srh = get_and_validate_srh(skb);
- 	if (!srh)
- 		goto drop;
- 
--	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+	srh = advance_nextseg(skb, srh, &reason);
-+	if (!srh) {
-+		err = -ENOMEM;
-+		goto drop;
-+	}
- 
- 	return input_action_end_finish(skb, slwt);
- 
- drop:
--	kfree_skb(skb);
--	return -EINVAL;
-+	kfree_skb_reason(skb, reason);
-+	return err;
- }
- 
- static int end_next_csid_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- {
- 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
- 	struct in6_addr *daddr = &ipv6_hdr(skb)->daddr;
-+	enum skb_drop_reason reason;
- 
- 	if (seg6_next_csid_is_arg_zero(daddr, finfo))
- 		return input_action_end_core(skb, slwt);
- 
- 	/* update DA */
--	seg6_next_csid_advance_arg(daddr, finfo);
-+	reason = seg6_next_csid_advance_arg(skb, finfo);
-+	if (reason) {
-+		kfree_skb_reason(skb, reason);
-+		return -ENOMEM;
-+	}
- 
- 	return input_action_end_finish(skb, slwt);
- }
-@@ -448,19 +505,25 @@ static int input_action_end_x_finish(struct sk_buff *skb,
- static int input_action_end_x_core(struct sk_buff *skb,
- 				   struct seg6_local_lwt *slwt)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	struct ipv6_sr_hdr *srh;
-+	int err = -EINVAL;
- 
- 	srh = get_and_validate_srh(skb);
- 	if (!srh)
- 		goto drop;
- 
--	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+	srh = advance_nextseg(skb, srh, &reason);
-+	if (!srh) {
-+		err = -ENOMEM;
-+		goto drop;
-+	}
- 
- 	return input_action_end_x_finish(skb, slwt);
- 
- drop:
--	kfree_skb(skb);
--	return -EINVAL;
-+	kfree_skb_reason(skb, reason);
-+	return err;
- }
- 
- static int end_x_next_csid_core(struct sk_buff *skb,
-@@ -468,12 +531,17 @@ static int end_x_next_csid_core(struct sk_buff *skb,
- {
- 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
- 	struct in6_addr *daddr = &ipv6_hdr(skb)->daddr;
-+	enum skb_drop_reason reason;
- 
- 	if (seg6_next_csid_is_arg_zero(daddr, finfo))
- 		return input_action_end_x_core(skb, slwt);
- 
- 	/* update DA */
--	seg6_next_csid_advance_arg(daddr, finfo);
-+	reason = seg6_next_csid_advance_arg(skb, finfo);
-+	if (reason) {
-+		kfree_skb_reason(skb, reason);
-+		return -ENOMEM;
-+	}
- 
- 	return input_action_end_x_finish(skb, slwt);
- }
-@@ -760,10 +828,12 @@ static bool seg6_pop_srh(struct sk_buff *skb, int srhoff)
-  */
- static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
- 	enum seg6_local_flv_action action;
- 	enum seg6_local_pktinfo pinfo;
- 	struct ipv6_sr_hdr *srh;
-+	int err = -EINVAL;
- 	__u32 flvmask;
- 	int srhoff;
- 
-@@ -787,10 +857,18 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- 	switch (action) {
- 	case SEG6_LOCAL_FLV_ACT_END:
- 		/* process the packet as the "standard" End behavior */
--		advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+		srh = advance_nextseg(skb, srh, &reason);
-+		if (!srh) {
-+			err = -ENOMEM;
-+			goto drop;
-+		}
- 		break;
- 	case SEG6_LOCAL_FLV_ACT_PSP:
--		advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+		srh = advance_nextseg(skb, srh, &reason);
-+		if (!srh) {
-+			err = -ENOMEM;
-+			goto drop;
-+		}
- 
- 		if (unlikely(!seg6_pop_srh(skb, srhoff)))
- 			goto drop;
-@@ -807,8 +885,8 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- 	return input_action_end_finish(skb, slwt);
- 
- drop:
--	kfree_skb(skb);
--	return -EINVAL;
-+	kfree_skb_reason(skb, reason);
-+	return err;
- }
- 
- /* regular endpoint function */
-@@ -847,21 +925,27 @@ static int input_action_end_x(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- 
- static int input_action_end_t(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	struct ipv6_sr_hdr *srh;
-+	int err = -EINVAL;
- 
- 	srh = get_and_validate_srh(skb);
- 	if (!srh)
- 		goto drop;
- 
--	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+	srh = advance_nextseg(skb, srh, &reason);
-+	if (!srh) {
-+		err = -ENOMEM;
-+		goto drop;
-+	}
- 
- 	seg6_lookup_nexthop(skb, NULL, slwt->table);
- 
- 	return dst_input(skb);
- 
- drop:
--	kfree_skb(skb);
--	return -EINVAL;
-+	kfree_skb_reason(skb, reason);
-+	return err;
- }
- 
- /* decapsulate and forward inner L2 frame on specified interface */
-@@ -1375,6 +1459,7 @@ static int input_action_end_b6(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- static int input_action_end_b6_encap(struct sk_buff *skb,
- 				     struct seg6_local_lwt *slwt)
- {
-+	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
- 	struct ipv6_sr_hdr *srh;
- 	int err = -EINVAL;
- 
-@@ -1382,7 +1467,11 @@ static int input_action_end_b6_encap(struct sk_buff *skb,
- 	if (!srh)
- 		goto drop;
- 
--	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+	srh = advance_nextseg(skb, srh, &reason);
-+	if (!srh) {
-+		err = -ENOMEM;
-+		goto drop;
-+	}
- 
- 	skb_reset_inner_headers(skb);
- 	skb->encapsulation = 1;
-@@ -1398,7 +1487,7 @@ static int input_action_end_b6_encap(struct sk_buff *skb,
- 	return dst_input(skb);
- 
- drop:
--	kfree_skb(skb);
-+	kfree_skb_reason(skb, reason);
- 	return err;
- }
- 
-@@ -1434,6 +1523,7 @@ static int input_action_end_bpf(struct sk_buff *skb,
- 				struct seg6_local_lwt *slwt)
- {
- 	struct seg6_bpf_srh_state *srh_state;
-+	enum skb_drop_reason reason;
- 	struct ipv6_sr_hdr *srh;
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -1745,6 +1745,7 @@ static int tps6598x_probe(struct i2c_cli
+ 	const struct tipd_data *data;
+ 	struct tps6598x *tps;
+ 	struct fwnode_handle *fwnode;
++	bool patch_loaded = false;
+ 	u32 status;
+ 	u32 vid;
  	int ret;
+@@ -1797,6 +1798,7 @@ static int tps6598x_probe(struct i2c_cli
+ 		return ret;
  
-@@ -1442,7 +1532,11 @@ static int input_action_end_bpf(struct sk_buff *skb,
- 		kfree_skb(skb);
- 		return -EINVAL;
- 	}
--	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
-+	srh = advance_nextseg(skb, srh, &reason);
-+	if (!srh) {
-+		kfree_skb_reason(skb, reason);
-+		return -ENOMEM;
-+	}
+ 	if (ret == TPS_MODE_PTCH) {
++		patch_loaded = true;
+ 		ret = tps->data->init(tps);
+ 		if (ret)
+ 			return ret;
+@@ -1885,7 +1887,8 @@ err_clear_mask:
+ 	tps6598x_write64(tps, TPS_REG_INT_MASK1, 0);
+ err_reset_controller:
+ 	/* Reset PD controller to remove any applied patch */
+-	tps->data->reset(tps);
++	if (patch_loaded)
++		tps->data->reset(tps);
  
- 	/* The access to the per-CPU buffer srh_state is protected by running
- 	 * always in softirq context (with disabled BH). On PREEMPT_RT the
--- 
-2.53.0
-
+ 	return ret;
+ }
 
 
