@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682133D34A2;
-	Fri,  9 Oct 2026 14:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3815D3BB112;
+	Fri,  9 Oct 2026 14:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556466; cv=none; b=DE78jx1858I5ajQO/6LY41HJKuMaHwOB4UghM/oWMvlLZPMzThdsHhcxln8mmwFyXLMNIWscF8bTVE1TAA3OfP33vnLQ+QNcP312r+4d6A9THA5W+4rRwSx8YPdeGbZhzRtMawq23fYm9mXiWDp4zCb2z8wkTtaRBfmhs+LxBUw=
+	t=1791556469; cv=none; b=SQq02oB2W78BvsLQ9hsqxCfIORFNpSdX2pJ85eJS4SpEHZCBHNw4OmklfxatFuSsx4PNHxSudwwXE98tmj8cTRXLJh/V21D7L4cFbkvdALLZxxLbVsj82OHvW3gAcEFPDPittN/g+J+LHhLYUegBbzPcmbcynOvlNf/qIPQMlDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556466; c=relaxed/simple;
-	bh=ZpOxz6t7sfVztKplPQ8hr5Io3iHVTv7FyiTp3itTNTE=;
+	s=arc-20240116; t=1791556469; c=relaxed/simple;
+	bh=aNadQIF+XT7nih7joovW4vZ4XPHuHjphiqeLE1TbYaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bt86yA68W56K3E0/BVwUskymIXVvJxUmEtkb9c1uVCFIk/K9U4m0WNAz2pgn+x2Rop6g25dvWNaFApTrSaY32LXc05BpkyJA1D3K9y2aIDdzuyuJ4WogLOuRZIfwfAXFxfmtIURdyDgRMzU1BIQh8eBdI6KQh8ckM5MhjYFSAlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PomNnIZz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oyj/ZN/a+rgnIc7Xp2K0MVnczE3uIkh7fQJUe4/NZF+gFTeSdKeOsp166K/DCdNjnjRbewx7QaxVBvWbbh8VLEBfvtd5dGLrg8yiaEggP08lF8H0JUEexEBCnb8qk/+06VZcvhFdVdvHQ4xAQ7H7RCw1vLQm3J1ZV37+hsGFXkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeUlxs+e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PomNnIZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73351F000FF;
-	Fri,  9 Oct 2026 14:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeUlxs+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9451F1F000FF;
+	Fri,  9 Oct 2026 14:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556465;
-	bh=JePRzUtn5YDYhYvm0BJetpGrShEGrYzGs6Ui4EXrGDE=;
+	s=korg; t=1791556468;
+	bh=Wpc3vwAKz+OaeHvmNKSFxM3YkiRykTadEp7FU1zgq58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PomNnIZzVupx1baT1g7V+ObbMEnTp8c/v5MnU0IYO7XDlIu22/hJQTymRRxLBw4yV
-	 oyiPoxDxgltkYUlt1OwPqfa3AhTkYTLRdKjSwDafbBRZVMvROEIfLIRhr6fK91Pzv3
-	 F/s54S/nSlFv//JFnypNwIQx/pndja89Nh8xPE3A=
+	b=WeUlxs+eAM3oalUKAAHPDr6oNS+NLOOyJ78m35yfXTkd1i8W2ZZRJBZqdG9ahfROa
+	 Y5ntCeYvHBE5EBYxYcV8PRmEtMkGgwnIlcSd7jk5nwcbdwHVzQZ6EsV/+DikJMWnHd
+	 3lSqvtwd+2kc0F3zEh/qn/QRkV8VEts4T2Skdgsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 7.2 180/428] drm/i915/vrr: Disable DC balance by default
-Date: Fri,  9 Oct 2026 16:08:37 +0200
-Message-ID: <20261009140950.100933892@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 238/403] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+Date: Fri,  9 Oct 2026 16:09:59 +0200
+Message-ID: <20261009140957.732656838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +47,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit c034e8a46e4cb703018fe7e10fe5a3a974d6a7c3 upstream.
+[ Upstream commit 1745ccbd2907db2bdaa843e4abccde4fdaccbe5d ]
 
-Disable VRR DC balance by default due to timing issues observed on some
-panel/TCON combinations.
+kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
+safe for deallocation of the region inside the loop.  However, the loop
+internal logic does not deallocate regions.  Hence it is only wasting the
+next pointer.  Also, it causes a problem.
 
-Keep the module parameter to enable DC balance during debugging and to
-isolate DC balance effects from underlying VRR/display timing issues.
+When an address filter is applied, and there is a region that intersects
+with the filter, the filter splits the region on the filter boundary.  The
+intention is to let DAMOS apply action to only filtered-in address ranges.
+However, it is using damon_for_each_region_safe(), which sets the next
+region before the execution of the iteration.  Hence, the region that
+split and now will be next to the previous region, is simply ignored.  As
+a result, DAMOS applies the action to target regions bit slower than
+expected, when the address filter is used.  Shouldn't be a big problem but
+definitely better to be fixed.  damos_skip_charged_region() was working
+around the issue using a double pointer hack.
 
---v2:
-- Make enable_dc_balance a bool and keep it disabled by default; fix the
-  parameter type/value mismatch and correct the description (Chaitanya
-  Kumar Borah, Jani Nikula)
-- Explain in the commit message why the feature is gated and why a
-  module parameter is used (Jani Nikula)
+Use damon_for_each_region(), which is safe for this use case.  And drop
+the work around in damos_skip_charged_region().
 
---v3:
-- Commit message update (Jani Nikula)
-
-Fixes: 555819270707 ("drm/i915/vrr: Enable DC Balance")
-Cc: <stable@vger.kernel.org> # v7.0+
-Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260917074322.2606738-1-mitulkumar.ajitkumar.golani@intel.com
-(cherry picked from commit d1ef78f0581e856c4238c751e9ae2884ce58c275)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_params.c |    4 ++++
- drivers/gpu/drm/i915/display/intel_display_params.h |    1 +
- drivers/gpu/drm/i915/display/intel_vrr.c            |    4 +++-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_params.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_params.c
-@@ -120,6 +120,10 @@ intel_display_param_named_unsafe(enable_
- 	"(0=disabled, 1=enable up to PSR1, 2=enable up to PSR2) "
- 	"Default: -1 (use per-chip default)");
- 
-+intel_display_param_named_unsafe(enable_dc_balance, bool, 0400,
-+	"Enable VRR DC balance (0=disabled, 1=enabled). "
-+	"Default: 0 (disabled)");
-+
- intel_display_param_named_unsafe(enable_panel_replay, int, 0400,
- 	"Enable Panel Replay (0=disabled, 1=enabled). Default: -1 (use per-chip default)");
- 
---- a/drivers/gpu/drm/i915/display/intel_display_params.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_params.h
-@@ -46,6 +46,7 @@ struct drm_printer;
- 	param(bool, enable_dp_mst, true, 0600) \
- 	param(int, enable_fbc, -1, 0600) \
- 	param(int, enable_psr, -1, 0600) \
-+	param(bool, enable_dc_balance, false, 0600) \
- 	param(int, enable_panel_replay, -1, 0600) \
- 	param(bool, psr_safest_params, false, 0400) \
- 	param(bool, enable_psr2_sel_fetch, true, 0400) \
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -383,10 +383,12 @@ static bool intel_vrr_dc_balance_possibl
- static void
- intel_vrr_dc_balance_compute_config(struct intel_crtc_state *crtc_state)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 0182cc8198d37..016d38c127d61 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1734,16 +1734,18 @@ static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+  * This function checks if a given region should be skipped or not for the
+  * reason.  If only the starting part of the region has previously charged,
+  * this function splits the region into two so that the second one covers the
+- * area that not charged in the previous charge widnow and saves the second
+- * region in *rp and returns false, so that the caller can apply DAMON action
+- * to the second one.
++ * area that not charged in the previous charge widnow, and return true.  The
++ * caller can see the second one on the next iteration of the region walk.
++ * Note that this means the caller should use damon_for_each_region() instead
++ * of damon_for_each_region_safe().  If damon_for_each_region_safe() is used,
++ * the second region will just be ignored.
+  *
+- * Return: true if the region should be entirely skipped, false otherwise.
++ * Return: true if the region should be skipped, false otherwise.
+  */
+ static bool damos_skip_charged_region(struct damon_target *t,
+-		struct damon_region **rp, struct damos *s, unsigned long min_sz_region)
++		struct damon_region *r, struct damos *s,
++		unsigned long min_sz_region)
  {
-+	struct intel_display *display = to_intel_display(crtc_state);
- 	int guardband_usec, adjustment_usec;
- 	struct drm_display_mode *adjusted_mode = &crtc_state->hw.adjusted_mode;
+-	struct damon_region *r = *rp;
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
+ 	bool skip = false;
+@@ -1770,9 +1772,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 				sz_to_skip = min_sz_region;
+ 			}
+ 			damon_split_region_at(t, r, sz_to_skip);
+-			r = damon_next_region(r);
+-			*rp = r;
+-			skip = false;
++			skip = true;
+ 		}
+ 	}
+ out:
+@@ -2034,7 +2034,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (quota->esz && quota->charged_sz >= quota->esz)
+ 			continue;
  
--	if (!intel_vrr_dc_balance_possible(crtc_state) || !crtc_state->vrr.enable)
-+	if (!intel_vrr_dc_balance_possible(crtc_state) ||
-+	    !crtc_state->vrr.enable || !display->params.enable_dc_balance)
- 		return;
+-		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
++		if (damos_skip_charged_region(t, r, s, c->min_sz_region))
+ 			continue;
  
- 	crtc_state->vrr.dc_balance.vmax = crtc_state->vrr.vmax;
+ 		if (!damos_valid_target(c, t, r, s))
+@@ -2307,7 +2307,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ static void kdamond_apply_schemes(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+-	struct damon_region *r, *next_r;
++	struct damon_region *r;
+ 	struct damos *s;
+ 	unsigned long sample_interval = c->attrs.sample_interval ?
+ 		c->attrs.sample_interval : 1;
+@@ -2330,7 +2330,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 
+ 	mutex_lock(&c->walk_control_lock);
+ 	damon_for_each_target(t, c) {
+-		damon_for_each_region_safe(r, next_r, t)
++		damon_for_each_region(r, t)
+ 			damon_do_apply_schemes(c, t, r);
+ 	}
+ 
+-- 
+2.53.0
+
 
 
