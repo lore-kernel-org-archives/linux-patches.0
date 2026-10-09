@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCE03BB112;
-	Fri,  9 Oct 2026 14:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011E33B19DE;
+	Fri,  9 Oct 2026 14:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556571; cv=none; b=ApGG+5LI92qRaVpijlKa5KRBLQt8IhqiEfKz9+n/Gbh9/VPTyodc5jdXGYh5557F3pdbJgeTy4qoKQ4x6n85bmecqz/i1voZul3DWGbTAh4gSz+Tn9X9450+s1bqtnZx1sNyQu9r+igPjUU8ihgPffXoWT/3827a4RmRz6z0cJs=
+	t=1791556574; cv=none; b=MXv/VLzILTu6XsLfaKip3XuGS04RvWUcxNuB8r0cUfkOH2S3iRGy6DMFIGbbvko5rkc/XO7k7cTI5SbmSG0TKBSr1SiKeVEY3fNi2mUxn8okvT0Pb4HyBJny8v6fF2qCOqEHjmFvuMBf5eVrw476uEduToEWFY73F1g2X82kXNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556571; c=relaxed/simple;
-	bh=MekKFVFJZi3CsBFby8S5l7wH+Dfxvmj35gbXpLToIdw=;
+	s=arc-20240116; t=1791556574; c=relaxed/simple;
+	bh=0xMqId9dgDLCI21eAJo6LZzyrcZaHvaHUZurlcPyaMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPHROj/rwqIqgP8BWm8h267N2UyoEPXjWnxPFHyhV+ijiPCV5yJR1+6P8LsgiJQcDHaktO/3ZkbjYbttWov9QLGkSv9uhm3qmdfkcDTsibQD5PiL+JEoiVE1K4ICfg+C1AsXiWx/fZJQb7AiB5flAJyP1jzX66zY7zNj17njJIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0noNM2v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bBUBju8AShFiJSz2LpjpTfvwIkbLHLpa+VMAD4f92P4b633Dk9cZeTK4501m+l1/2aCcY5gRei290AEUkpDMLP9nG9/XcWPxDmLKu5tqaVc5tK5IVqS+/8GYb0JiDahA4PG4gqwMGFxJ/VO1uTZAvjQ8LDbXMzCV34TFZm6LUXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hce6VQFL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0noNM2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867841F000FF;
-	Fri,  9 Oct 2026 14:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hce6VQFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8AB1F000FF;
+	Fri,  9 Oct 2026 14:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556570;
-	bh=N1AiFfEqZfCishlL8jEbVqQi5Q8zLwEwtuvLKMpTEp0=;
+	s=korg; t=1791556572;
+	bh=evm22oyOvxZi0Z9WBWvS5+ohU0qEXMH9y7Gfov3LVsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0noNM2vHKq6W63Da2RvVn3t10FLmr0G+FqFLXgpOY/yVveYNkpz0tNMTTmT3Z3D9
-	 vv+Yy8kOmYvG9MznIRbc/SaHdKSfLigooqYIt+XSuhq0ynt7Fgm+EuFgjaKE9ehuQS
-	 ACYJlganR8FuO6myj93OYebeMgpJO8liBIR454gI=
+	b=Hce6VQFLntDlYDwqtuvYk14KCQLM8oLBsM6Wl7zqAOAEx8PR7Xa3s2hP2k/yARotJ
+	 ZtfCFBfpblfr7MBAcrM36HwmMFFtK3X7cMPjo3WV58DM7kzf/BLzNNCJeTEGJTGDLb
+	 02+6KoUDd4uHRtpRilNS7hcJsBr8xm6ujfTBQA6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 185/428] drm/amdgpu: fix IP instance memory leak on kobject add failure
-Date: Fri,  9 Oct 2026 16:08:42 +0200
-Message-ID: <20261009140950.208808339@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 257/403] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
+Date: Fri,  9 Oct 2026 16:10:18 +0200
+Message-ID: <20261009140958.184754500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f5a5add3605935163dd0f75749b6a7869e9765af upstream.
+commit 2abb25273c82061dd4670690c81c319c03740bf6 upstream.
 
-amdgpu_discovery_sysfs_ips() allocates ip_hw_instance with
-kzalloc_flex() and initializes its embedded kobject before calling
-kobject_add().
+Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
+runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
+If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
+then runs the same L2 with TPR virtualization disabled, KVM will fail to
+refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
+virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
+L1 by proxy) read and write L0's TPR.
 
-If kobject_add() fails, the return value is ignored and execution
-continues without dropping the initial kobject reference. The failed
-kobject is not retained in the kset list, so the normal sysfs teardown
-path cannot find it. As a result, ip_hw_instance_release() is never
-called and the ip_hw_instance allocation is leaked.
-
-Call kobject_put() when kobject_add() fails so the initial reference is
-dropped and ip_hw_instance_release() can free the allocation. Keep the
-existing best-effort sysfs behavior by continuing with the remaining IP
-entries after the failed registration.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: a6c40b178092 ("drm/amdgpu: Show IP discovery in sysfs")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5c75fbcca8af1096d8d9415b91d8ea6212c22ee1)
+Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
 Cc: stable@vger.kernel.org
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/vmx/nested.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -1270,6 +1270,8 @@ static int amdgpu_discovery_sysfs_ips(st
- 			ip_hw_instance->kobj.kset = &ip_hw_id->hw_id_kset;
- 			res = kobject_add(&ip_hw_instance->kobj, NULL,
- 					  "%d", ip_hw_instance->num_instance);
-+			if (res)
-+				kobject_put(&ip_hw_instance->kobj);
- next_ip:
- 			if (reg_base_64)
- 				ip_offset += struct_size(ip, base_address_64,
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1700,6 +1700,9 @@ static void copy_vmcs12_to_shadow(struct
+ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
+ {
+ #ifdef CONFIG_KVM_HYPERV
++	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
+ 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
+ 	struct hv_enlightened_vmcs *evmcs = nested_vmx_evmcs(vmx);
+ 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(&vmx->vcpu);
+@@ -1708,6 +1711,9 @@ static void copy_enlightened_to_vmcs12(s
+ 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
+ 	vmcs12->guest_rip = evmcs->guest_rip;
+ 
++	if ((hv_clean_fields & runtime_controls) != runtime_controls)
++		vmx->nested.force_msr_bitmap_recalc = true;
++
+ 	if (unlikely(!(hv_clean_fields &
+ 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_ENLIGHTENMENTSCONTROL))) {
+ 		hv_vcpu->nested.pa_page_gpa = evmcs->partition_assist_page;
 
 
