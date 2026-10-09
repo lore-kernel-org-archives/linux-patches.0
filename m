@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6624B3B3C13;
-	Fri,  9 Oct 2026 14:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A08045A2AC;
+	Fri,  9 Oct 2026 14:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555469; cv=none; b=QTfROM1+ImDuB/rGrg02At7T6gkAnglmfhp+NyDwbFP7+IbfRT52CLxlqtpbOXWmkENvhzjzWvpIjb/v+W7QefkLOkVzaRyO8mzprrQ+G+J0Zv6ZkaLs/PDHpeKdwhDWYyS0WT4qFTU3KyCT2su1Stoz4fUfchsEq9m4iyRVjXU=
+	t=1791555470; cv=none; b=gCRp50lE4oxQrwsD1jDZthSWmIztgtppv26d9VkeTBYkCJ0qm9DE2EachOhARr/Z0QierGCggxNbHCZOolPZUeI0zIYeDvB0n/Ibwyy15E1dXUHwQBCmnuRwUYc3lYysqRdei2+3sjD3HQqy5vXbhMAsWPfCATHT/nOqJz9hFIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555469; c=relaxed/simple;
-	bh=EdXoM3dNkgJtOHKA8iqWg3cdIZIj9tWOb8fWRy9Xx+Y=;
+	s=arc-20240116; t=1791555470; c=relaxed/simple;
+	bh=NelsH7vfsKryDqhPRs0cw13QteC5YUa0Zb5rZnUbbNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKQTVCYvrvKo44wXmh5sxEMEi/umfgjbV2YvIBINUuCJgeHoS/D5Bhko7XPJlBfx8gb+/ul6DVpZsHxhjwuoUTCgEicH/4voZNQGSWn6KwYbE+QYpWmJxXlge1ka0WYpCXixUBIXjYWXre8xsektQg3VtOIThcyr/Q8CdOQhHd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIjoCcVv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+g3Xd4Ldqi0/Vb14owQ6dsgvhMgWRglFwIcETwOL3CkHRQcgIRclXK5NPFiMgeUzCffh/gBSBRRWdAF8XIwAaa/Mym6VCYb1fWnD8T3j2tgLoNRIuggP/milJO9KVgXYITd+kGX+JZqmnnX6wPZ88+LAMmdeSm9PT6mzxOt5/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX4sQzri; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIjoCcVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F8E1F000FF;
-	Fri,  9 Oct 2026 14:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX4sQzri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FAF1F00893;
+	Fri,  9 Oct 2026 14:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555465;
-	bh=l/sE8fAmj4Jwp6iUsKgzU2yS5d4p5tj8lts3S/Smn+g=;
+	s=korg; t=1791555468;
+	bh=3alw7/u/Qyu6VExZ0wv+kHQI8z2G8qOxWMnFHrd5uN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oIjoCcVvkLy2C52KR7dJloLt1TG+keBj78EEkmQ0kQLFiHOrKP8frESlwCIeOTTwQ
-	 g+dgul+zx0qKph7c+sSPg/dyHFJQRCTOAr1MlMH81g4wZ9Qqw+GLQ/dE7rvejtaqNe
-	 E5Vtz/mRMfmNQ15taxVuh87lxL4lNaQIdLUfLcjk=
+	b=vX4sQzriVwc8OBk1/F2QWlj0hkIViU6r2n8pNwSuw3gdI77NEjhapVD/GuQuyMxPF
+	 NWgs5E+KNHmXrx+c7gdcChsrnp2Zx9H+G+3fb4ZE0unLRDRxjqE3yEFAzZOAnF+z80
+	 c29lNYiaTKjGuQUpOGVopaAYemv7xQjp+BoSGmj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 010/428] sched_ext: Build the cid tables privately and publish them with RCU
-Date: Fri,  9 Oct 2026 16:05:47 +0200
-Message-ID: <20261009140946.265914007@linuxfoundation.org>
+Subject: [PATCH 6.18 063/403] of/overlay: dont leak fragment references when changeset init fails
+Date: Fri,  9 Oct 2026 16:07:04 +0200
+Message-ID: <20261009140953.571460813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,397 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 3a773220d39ba993dfe5d135f8b610be10794d5d ]
+[ Upstream commit 1d62f0f2bc7edb12ed09f71203df0e47fa4efca4 ]
 
-The cid tables are visible to the cid kfuncs while being modified: the
-first enable publishes the global pointers before filling them,
-ops.init_cids() overrides rewrite them in place, and re-enables rebuild
-them in place. A racing TRACING or SYSCALL program can read unfilled
-entries, including uninitialized memory in the kmalloc'd tables, or torn
-topo updates.
+init_overlay_changeset() stores the number of initialized fragments
+in ovcs->count only on full success. When find_target() or the
+__symbols__ lookup fails partway through, the target and overlay
+references taken for the fragments initialized so far are never
+dropped: free_overlay_changeset() bounds its cleanup loop by
+ovcs->count, which is still 0.
 
-Tie the tables' lifetimes to the root sched instead: each root enable
-builds a fresh set privately and publishes the per-table __rcu globals once
-the layout is final, and root disable unpublishes and RCU-frees the set. A
-non-NULL global is now always a fully built table which stays valid for the
-reader's RCU read section, and lookups stay two loads. Kfuncs treat NULL as
-no-mapping, also after the scheduler exits instead of reporting the stale
-last mapping.
+Store the running count on the error path so free_overlay_changeset()
+puts whatever was set up. The store is guarded by ovcs->fragments
+because on the allocation-failure path cnt still holds the counting
+pass total while there is no fragments array; everywhere else cnt
+only counts fully-initialized fragments.
 
-The cid kfuncs are available whether the root scheduler is cid-form or
-cpu-form, the latter to allow gradual migration to cids. Every root
-therefore builds and publishes a default mapping.
-
-Every reader must either be gated on scheduler liveness or NULL-check
-inside an RCU read section. Fix the two kfuncs that were neither:
-scx_bpf_this_cid() read the table with no RCU or preemption protection and
-scx_bpf_task_cid() relied on KF_RCU, which doesn't put a sleepable program
-in an RCU read section. The hotplug callbacks are instead serialized by
-retiring the tables inside the cpus_read_lock() section that clears
-scx_root.
-
-v2: Document why every root builds the tables (desc + cid.c comment).
-
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Closes: https://lore.kernel.org/r/al3tLtPZZkFjMveK@gpd4
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-
-[ Stable dependency adaptation for 94480606a677:
-  Limit private construction and RCU publication to scx_cid_topo, the table
-  read by the target. 7.2 has no cid shards or sub.c and permits overrides
-  from ops.init(), not ops.init_cids(). Keep its existing cpu<->cid arrays
-  and callback interface. Build a fresh topology table on every enable and
-  override, publish only complete tables, and revoke the table on root
-  disable. Reclaim replaced tables after synchronize_rcu(), outside the
-  override's read-side critical section. Reuse existing functions; omit
-  upstream's new allocation/publication/free helpers and shard changes.
-
-  Publish the default topology before ops.init() and override replacements
-  before returning, preserving topology queries during this callback.
-  Allocation and validation failures release unpublished temporary tables.
-
-  Also fold in the existing-function/prototype changes from b38332be61a8
-  (sched_ext: Make scx_bpf_kick_cid() return void). This matches the adjacent
-  context in the target's common.bpf.h hunk; in-tree callers do not consume
-  the return value. The target applies cleanly with a three-way application.
-  This dependency does not change scx_bpf_cid_topo()'s signature. ]
-
-[ sashal: Reduced backport -- upstream 3a773220d39ba touches 5 file(s), this
-  backport carries 4. Not backported here:
-  kernel/sched/ext/internal.h
-  kernel/sched/ext/sub.c
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 94480606a677 ("sched_ext: Add a size argument to scx_bpf_cid_topo() so struct scx_cid_topo can grow")
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/20260805204009.CF3891F000E9@smtp.kernel.org
+Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
+Assisted-by: Claude:claude-opus-4-8 [Claude Code]
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-6-02754604805a@nexthop.ai
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/cid.c                   | 114 ++++++++++++++---------
- kernel/sched/ext/cid.h                   |   2 +-
- kernel/sched/ext/ext.c                   |  19 ++--
- tools/sched_ext/include/scx/common.bpf.h |   2 +-
- 4 files changed, 83 insertions(+), 54 deletions(-)
+ drivers/of/overlay.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index af83084ec740a..347fee8d88890 100644
---- a/kernel/sched/ext/cid.c
-+++ b/kernel/sched/ext/cid.c
-@@ -13,14 +13,15 @@
- /*
-  * cid tables.
-  *
-- * Pointers are published once on first enable and never revoked. The default
-- * mapping is populated before ops.init() runs; scx_bpf_cid_override() commits
-- * before it returns. As long as the BPF scheduler only uses the tables from
-- * those points onward, it sees a consistent view.
-+ * The cpu<->cid arrays are allocated once and populated before ops.init().
-+ * The topology table is built privately and published with RCU, including
-+ * when ops.init() overrides the mapping. Published topology tables are never
-+ * modified and are retired after an RCU grace period. Root disable revokes
-+ * the topology table, so readers must check for NULL.
-  */
- s16 *scx_cid_to_cpu_tbl;
- s16 *scx_cpu_to_cid_tbl;
--struct scx_cid_topo *scx_cid_topo;
-+struct scx_cid_topo __rcu *scx_cid_topo;
+diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
+index 1364b8ae6cac7..8e5b5e5d2bc4e 100644
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -854,6 +854,10 @@ static int init_overlay_changeset(struct overlay_changeset *ovcs,
+ err_out:
+ 	pr_err("%s() failed, ret = %d\n", __func__, ret);
  
- #define SCX_CID_TOPO_NEG	(struct scx_cid_topo) {				\
- 	.core_cid = -1, .core_idx = -1, .llc_cid = -1, .llc_idx = -1,		\
-@@ -43,30 +44,26 @@ static const struct cpumask *cpu_llc_mask(int cpu, struct cpumask *fallbacks)
- 	return &ci->info_list[ci->num_leaves - 1].shared_cpu_map;
- }
- 
--/* Allocate the cid tables once on first enable; never freed. */
-+/* Allocate the cpu<->cid arrays once on first enable; never freed. */
- static s32 scx_cid_arrays_alloc(void)
- {
- 	u32 npossible = num_possible_cpus();
- 	s16 *cid_to_cpu, *cpu_to_cid;
--	struct scx_cid_topo *cid_topo;
- 
- 	if (scx_cid_to_cpu_tbl)
- 		return 0;
- 
- 	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
- 	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
--	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
- 
--	if (!cid_to_cpu || !cpu_to_cid || !cid_topo) {
-+	if (!cid_to_cpu || !cpu_to_cid) {
- 		kfree(cid_to_cpu);
- 		kfree(cpu_to_cid);
--		kfree(cid_topo);
- 		return -ENOMEM;
- 	}
- 
- 	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
- 	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
--	WRITE_ONCE(scx_cid_topo, cid_topo);
- 	return 0;
- }
- 
-@@ -88,6 +85,8 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	cpumask_var_t core_scratch __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	cpumask_var_t llc_fallback __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	cpumask_var_t online_no_topo __free(free_cpumask_var) = CPUMASK_VAR_NULL;
-+	struct scx_cid_topo *topo __free(kfree) = NULL;
-+	struct scx_cid_topo *old_topo;
- 	u32 next_cid = 0;
- 	s32 next_node_idx = 0, next_llc_idx = 0, next_core_idx = 0;
- 	s32 cpu, ret;
-@@ -101,6 +100,10 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	if (ret)
- 		return ret;
- 
-+	topo = kmalloc_objs(*topo, num_possible_cpus(), GFP_KERNEL);
-+	if (!topo)
-+		return -ENOMEM;
++	/* let free_overlay_changeset() put the fragments set up so far */
++	if (ovcs->fragments)
++		ovcs->count = cnt;
 +
- 	if (!zalloc_cpumask_var(&to_walk, GFP_KERNEL) ||
- 	    !zalloc_cpumask_var(&node_scratch, GFP_KERNEL) ||
- 	    !zalloc_cpumask_var(&llc_scratch, GFP_KERNEL) ||
-@@ -165,7 +168,7 @@ s32 scx_cid_init(struct scx_sched *sch)
- 
- 					scx_cid_to_cpu_tbl[cid] = ccpu;
- 					scx_cpu_to_cid_tbl[ccpu] = cid;
--					scx_cid_topo[cid] = (struct scx_cid_topo){
-+					topo[cid] = (struct scx_cid_topo){
- 						.core_cid = core_cid,
- 						.core_idx = core_idx,
- 						.llc_cid = llc_cid,
-@@ -198,7 +201,7 @@ s32 scx_cid_init(struct scx_sched *sch)
- 		cid = next_cid++;
- 		scx_cid_to_cpu_tbl[cid] = cpu;
- 		scx_cpu_to_cid_tbl[cpu] = cid;
--		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
-+		topo[cid] = SCX_CID_TOPO_NEG;
- 	}
- 
- 	if (!cpumask_empty(llc_fallback))
-@@ -208,6 +211,13 @@ s32 scx_cid_init(struct scx_sched *sch)
- 		pr_warn("scx_cid: online cpus with no usable topology: %*pbl\n",
- 			cpumask_pr_args(online_no_topo));
- 
-+	/* Root enable and ops.init() serialize topology table updates. */
-+	old_topo = rcu_replace_pointer(scx_cid_topo, no_free_ptr(topo), true);
-+	if (old_topo) {
-+		synchronize_rcu();
-+		kfree(old_topo);
-+	}
-+
- 	return 0;
+ 	return ret;
  }
  
-@@ -291,51 +301,60 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
- 				      const struct bpf_prog_aux *aux)
- {
- 	cpumask_var_t seen __free(free_cpumask_var) = CPUMASK_VAR_NULL;
-+	struct scx_cid_topo *topo __free(kfree) = NULL;
-+	struct scx_cid_topo *old_topo;
- 	struct scx_sched *sch;
- 	bool alloced;
- 	s32 cpu, cid;
- 
- 	/* GFP_KERNEL alloc must happen before the rcu read section */
- 	alloced = zalloc_cpumask_var(&seen, GFP_KERNEL);
-+	topo = kmalloc_objs(*topo, num_possible_cpus(), GFP_KERNEL);
- 
--	guard(rcu)();
--
--	sch = scx_prog_sched(aux);
--	if (unlikely(!sch))
--		return;
-+	scoped_guard(rcu) {
-+		sch = scx_prog_sched(aux);
-+		if (unlikely(!sch))
-+			return;
- 
--	if (!alloced) {
--		scx_error(sch, "scx_bpf_cid_override: failed to allocate cpumask");
--		return;
--	}
-+		if (!alloced || !topo) {
-+			scx_error(sch, "scx_bpf_cid_override: failed to allocate tables");
-+			return;
-+		}
- 
--	if (scx_parent(sch)) {
--		scx_error(sch, "scx_bpf_cid_override() only allowed from root sched");
--		return;
--	}
-+		if (scx_parent(sch)) {
-+			scx_error(sch, "scx_bpf_cid_override() only allowed from root sched");
-+			return;
-+		}
- 
--	if (cpu_to_cid__sz != nr_cpu_ids * sizeof(s32)) {
--		scx_error(sch, "scx_bpf_cid_override: expected %zu bytes, got %u",
--			  nr_cpu_ids * sizeof(s32), cpu_to_cid__sz);
--		return;
--	}
-+		if (cpu_to_cid__sz != nr_cpu_ids * sizeof(s32)) {
-+			scx_error(sch, "scx_bpf_cid_override: expected %zu bytes, got %u",
-+				  nr_cpu_ids * sizeof(s32), cpu_to_cid__sz);
-+			return;
-+		}
- 
--	for_each_possible_cpu(cpu) {
--		s32 c = cpu_to_cid[cpu];
-+		for_each_possible_cpu(cpu) {
-+			s32 c = cpu_to_cid[cpu];
- 
--		if (!cid_valid(sch, c))
--			return;
--		if (cpumask_test_and_set_cpu(c, seen)) {
--			scx_error(sch, "cid %d assigned to multiple cpus", c);
--			return;
-+			if (!cid_valid(sch, c))
-+				return;
-+			if (cpumask_test_and_set_cpu(c, seen)) {
-+				scx_error(sch, "cid %d assigned to multiple cpus", c);
-+				return;
-+			}
-+			scx_cpu_to_cid_tbl[cpu] = c;
-+			scx_cid_to_cpu_tbl[c] = cpu;
- 		}
--		scx_cpu_to_cid_tbl[cpu] = c;
--		scx_cid_to_cpu_tbl[c] = cpu;
-+
-+		/* The override carries no topology. Publish a complete replacement. */
-+		for (cid = 0; cid < num_possible_cpus(); cid++)
-+			topo[cid] = SCX_CID_TOPO_NEG;
-+
-+		old_topo = rcu_replace_pointer(scx_cid_topo, no_free_ptr(topo), true);
- 	}
- 
--	/* Invalidate stale topo info - the override carries no topology. */
--	for (cid = 0; cid < num_possible_cpus(); cid++)
--		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
-+	/* This sleepable kfunc must leave its RCU read section before waiting. */
-+	synchronize_rcu();
-+	kfree(old_topo);
- }
- 
- /**
-@@ -660,22 +679,25 @@ bool scx_cmask_empty(const struct scx_cmask *m)
-  *
-  * Fill @out__uninit with the topology info for @cid. Trigger scx_error() if
-  * @cid is out of range. If @cid is valid but in the no-topo section, all fields
-- * are set to -1.
-+ * are set to -1. All fields are also set to -1 when no cid tables have been
-+ * published yet, which a program may observe while racing the root enable.
-  */
- __bpf_kfunc void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out__uninit,
- 				  const struct bpf_prog_aux *aux)
- {
-+	struct scx_cid_topo *topo;
- 	struct scx_sched *sch;
- 
- 	guard(rcu)();
- 
- 	sch = scx_prog_sched(aux);
--	if (unlikely(!sch) || !cid_valid(sch, cid)) {
-+	topo = rcu_dereference(scx_cid_topo);
-+	if (unlikely(!sch) || !cid_valid(sch, cid) || unlikely(!topo)) {
- 		*out__uninit = SCX_CID_TOPO_NEG;
- 		return;
- 	}
- 
--	*out__uninit = READ_ONCE(scx_cid_topo)[cid];
-+	*out__uninit = topo[cid];
- }
- 
- __bpf_kfunc_end_defs();
-diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index 9c4f4b907f12d..55c8ab30156e5 100644
---- a/kernel/sched/ext/cid.h
-+++ b/kernel/sched/ext/cid.h
-@@ -50,7 +50,7 @@ struct scx_sched;
-  */
- extern s16 *scx_cid_to_cpu_tbl;
- extern s16 *scx_cpu_to_cid_tbl;
--extern struct scx_cid_topo *scx_cid_topo;
-+extern struct scx_cid_topo __rcu *scx_cid_topo;
- extern struct btf_id_set8 scx_kfunc_ids_init;
- 
- void scx_cmask_clear(struct scx_cmask *m);
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 2d0ab78b0efa5..59ed2c2e39d77 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -6221,6 +6221,7 @@ static inline void scx_sub_disable(struct scx_sched *sch) { }
- 
- static void scx_root_disable(struct scx_sched *sch)
- {
-+	struct scx_cid_topo *topo;
- 	struct scx_task_iter sti;
- 	struct task_struct *p;
- 	bool was_switched_all;
-@@ -6350,8 +6351,15 @@ static void scx_root_disable(struct scx_sched *sch)
- 	 */
- 	cpus_read_lock();
- 	RCU_INIT_POINTER(scx_root, NULL);
-+	topo = rcu_replace_pointer(scx_cid_topo, NULL,
-+				   lockdep_is_held(&scx_enable_mutex));
- 	cpus_read_unlock();
- 
-+	if (topo) {
-+		synchronize_rcu();
-+		kfree(topo);
-+	}
-+
- 	/*
- 	 * Delete the kobject from the hierarchy synchronously. Otherwise, sysfs
- 	 * could observe an object of the same name still in the hierarchy when
-@@ -9625,10 +9633,10 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
-  * @flags: %SCX_KICK_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-- * cid-addressed equivalent of scx_bpf_kick_cpu(). Return 0 on success,
-- * -errno otherwise.
-+ * cid-addressed equivalent of scx_bpf_kick_cpu(). An invalid @cid aborts the
-+ * scheduler via scx_cid_to_cpu().
-  */
--__bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
-+__bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
- {
- 	struct scx_sched *sch;
- 	s32 cpu;
-@@ -9636,12 +9644,11 @@ __bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *
- 	guard(rcu)();
- 	sch = scx_prog_sched(aux);
- 	if (unlikely(!sch))
--		return -ENODEV;
-+		return;
- 	cpu = scx_cid_to_cpu(sch, cid);
- 	if (cpu < 0)
--		return cpu;
-+		return;
- 	scx_kick_cpu(sch, cpu, flags);
--	return 0;
- }
- 
- /**
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 9591a6e778ce8..5f715d69cde6d 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -105,7 +105,7 @@ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __
- s32 scx_bpf_cpu_to_cid(s32 cpu) __ksym __weak;
- s32 scx_bpf_cid_to_cpu(s32 cid) __ksym __weak;
- void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out) __ksym __weak;
--s32 scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
-+void scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
- s32 scx_bpf_task_cid(const struct task_struct *p) __ksym __weak;
- s32 scx_bpf_this_cid(void) __ksym __weak;
- struct task_struct *scx_bpf_cid_curr(s32 cid) __ksym __weak;
 -- 
 2.53.0
 
