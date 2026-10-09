@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8038A46D2A3;
-	Fri,  9 Oct 2026 14:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310644E2F36;
+	Fri,  9 Oct 2026 14:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555731; cv=none; b=c8N6JaGoPrs3GLDqNz7XLK+HV2qQSE9CmrO1FX2NXB32OzKGi2XcAdMEz2f+sJat0qnhfTn5S82W0uk2ETFTDGIfr0CngWu6Xb47NSIhQPZfOiG5A11dfvIKnBxoZ9xiy1Wv3gvDM52yvLcXss/vVRUUPsrNRumCfCneHNxNJfY=
+	t=1791555734; cv=none; b=EuYFYj7oUr0t+ngRXyiMdT+G3Pe7nHWiHJPy76tkIV4F6jnqDOP94ysgZehy1DrRdgC11hgpFCE/KTvObHVzE9IB09ufQLxsddHANJTifi4aG8jCK54QheeS4AR9S1ynxUrI73SBh8LbQjpHdhABiMO62IVe/idXHYmn0moAF9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555731; c=relaxed/simple;
-	bh=bI1BKMN7y/Woy9G/prLrWnl8yq8iDXNu4slzoZW78k0=;
+	s=arc-20240116; t=1791555734; c=relaxed/simple;
+	bh=xEWiyG0kG7Mp65l/yF0kbpFGZj2BVJHpT42g4QnmWic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1i1ckzblAYn0BM4xOmjdTQ1JT4hN87KfC/9Rs6C3RC2ExvixmwAT51zlIbU/qJo2GgdssOQ5Pgednr5fFL2cOhqLdQbqx4mXAHfJ0PCQhu6XxjqEC4Y5CQzxmfZwnusH7/vslVqdZ4a+DDPwXeceRVlhbK996WAorfmHSEXTQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13fic7Aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fde000RWl7OtUxTmm4c4/gu4l4vleR/MplX04lDuTEaCaX36PeCGkaCQcmIIM+wiP+LVZrPLFyMcOF72kc3sa+w0T2HQ9v/Xd0izk/v1JF942oSAGld5EVEpz5X+Hh74r5wwMMQX/PK/4U3xFvhkgzGLKZHemCOcaxr67+T0EDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDd6H4sy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13fic7Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AB41F00893;
-	Fri,  9 Oct 2026 14:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDd6H4sy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714871F000FF;
+	Fri,  9 Oct 2026 14:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555730;
-	bh=mP6P9Ap9PRLaKpp5Ar9riPE1vIBXMnFMwneNxClzu5c=;
+	s=korg; t=1791555733;
+	bh=sCjvN8ecWtjJWRtp1SuvArs0T9f8iO58iQpZX2ao7dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13fic7Aw9U0gkQQklpL29FS0tVSp5xfZ99S8jI0XjaciMHdZiJ78cC6AWGu7luLjf
-	 9HyMQjoBISSj9WKrshn8GJbdSa1Y/XiC4VRqDb74sMzQRY1y8QuXmSt6LnXQlPCPRN
-	 ZBFjgG5bDH0WLrsQZLPzO4AqmkcZe++Raiwp8AF0=
+	b=ZDd6H4syLzxE4HNvvlpES8TXalYqDxU6p6c92kt3s7TpdguwyX6KOs1pEvqAOArOB
+	 BWzQxb1FrTx1A6zhLQGtSsY/iRIEOXbnMfPqHU2GmAnhX2Px9TrMrkLq4hunMXCl4J
+	 B5M3KpMACOa13K0EeZRZHvoTmGeMexbBz9vTEbNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>
-Subject: [PATCH 7.2 056/428] mm/vma: predicate setting mmap_prepare VMA fields on new vma alloc
-Date: Fri,  9 Oct 2026 16:06:33 +0200
-Message-ID: <20261009140947.362926445@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 107/403] virtio_blk: set the zone write granularity
+Date: Fri,  9 Oct 2026 16:07:48 +0200
+Message-ID: <20261009140954.584933977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,73 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 976d5e0ddac885b0219252f004f6c561c344df9d upstream.
+[ Upstream commit 684b413b5483f57c890c171b9400076a0143b918 ]
 
-It only makes sense to manipulate VMA fields if a new VMA was allocated,
-rather than merged.
+virtblk_read_zoned_limits() reads the write granularity that the device
+reports in virtio_blk_zoned_characteristics and assigns it to the
+physical block size and to io_min, but never to the limit that is named
+after it. queue_limits.zone_write_granularity is left at zero, so
+blk_validate_zoned_limits() raises it to the logical block size:
 
-VMA merging does not compare vm_ops or vm_private_data, so a merged VMA
-keeps its own, which is also what the legacy f_op->mmap path does since it
-never touches an existing VMA.
+	if (lim->zone_write_granularity < lim->logical_block_size)
+		lim->zone_write_granularity = lim->logical_block_size;
 
-Currently, these fields will get overwritten by whatever state is
-established in the mmap_prepare hook, and if the VMA was merged,
-vm_ops->mapped will not have been called, so this could destructively
-clear existing state without replacing it with anything valid.
+A device that reports a granularity coarser than its logical block size,
+which is what the field exists to express, therefore has it silently
+reduced. A 512e host managed disk passed through to a guest reports a
+logical block size of 512 and a write granularity of 4096, and the guest
+ends up with a zone write granularity of 512.
 
-There is an implicit requirement that vm_private_data and vm_ops are
-fungible across VMAs which means that losing the 'new' state is fine.
+bio_split_alignment() returns lim->zone_write_granularity if it is non-zero
+and bio_split_io_at() may split a bio with as per bio_split_alignment().
+This can real to the write getting rejected by the host drive, as the write
+is not aligned to the physical block size.
 
-However in this case the 'old' state is being overwritten by potentially
-invalid 'new' state, so this must be rectified.
+zonefs also takes its block size from bdev_zone_write_granularity(), so it
+would incorrectly use 512 on a disk that requires 4096.
 
-Additionally constify have_mmap_prepare while here.
+sd_zbc_read_zones() sets the limit from the physical block size for the
+same reason. NVMe ZNS and null_blk leave it unset, but the fallback
+gives the right answer for them, as their write granularity is the
+logical block size. virtio carries a separate value that may exceed it.
 
-All existing in-tree users either derive state from the file or are
-unmergeable due to VMA flags, so this has no direct impact.
+Set the zone write granularity from the value that the device reports.
 
-Link: https://lore.kernel.org/20260923-fix-mmap-prepare-overwrite-v1-1-3b3f1bfcdf5e@kernel.org
-Fixes: c84bf6dd2b83 ("mm: introduce new .mmap_prepare() file callback")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://patch.msgid.link/20260918140641.2031075-2-cassel@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/virtio_blk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2745,7 +2745,7 @@ static unsigned long __mmap_region(struc
- {
- 	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma = NULL;
--	bool have_mmap_prepare = file && file->f_op->mmap_prepare;
-+	const bool have_mmap_prepare = file && file->f_op->mmap_prepare;
- 	VMA_ITERATOR(vmi, mm, addr);
- 	MMAP_STATE(map, mm, &vmi, addr, len, pgoff, vma_flags, file);
- 	struct vm_area_desc desc = {
-@@ -2787,7 +2787,7 @@ static unsigned long __mmap_region(struc
- 		allocated_new = true;
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index f061420dfb10c..e577b02cf4003 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -740,6 +740,7 @@ static int virtblk_read_zoned_limits(struct virtio_blk *vblk,
+ 		dev_warn(&vdev->dev, "zero write granularity reported\n");
+ 		return -ENODEV;
  	}
++	lim->zone_write_granularity = wg;
+ 	lim->physical_block_size = wg;
+ 	lim->io_min = wg;
  
--	if (have_mmap_prepare)
-+	if (have_mmap_prepare && allocated_new)
- 		set_vma_user_defined_fields(vma, &map);
- 
- 	__mmap_complete(&map, vma);
+-- 
+2.53.0
+
 
 
