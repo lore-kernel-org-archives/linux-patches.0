@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEBC4E2F2F;
-	Fri,  9 Oct 2026 14:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18544A7CA0;
+	Fri,  9 Oct 2026 14:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556197; cv=none; b=lgC3Mu1y87QQSqfHNi9ojrQStI2Ih0Kq27YUw5ECsCsOTHUQwXARAachHOrzSC4k13+c0Ac7AaN57KsJUWzYd0WpEIY3rb3QFZBxz3AWkbeDgOixl8Qnpt07Uj348/qvRhNXyRf2f3zZPrk8AZGRgZwM7o/WtNnRtC8CeXzeafQ=
+	t=1791556199; cv=none; b=AI+frEOIrOcUj1DIl+krcHJNXpctRZaiKGSa4cCsX9u2Gtq3O6DX5FeBH3MMyWks3iDSmJp5U0hTXhACnxu9a4PiS8PBIfIL5AMPNzAbh3msnWe4zfyCBE8h95eSOI4KKWOPclqYi9j8eg9LkmJiUswKKKP/k6m7Ko05L9jNjMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556197; c=relaxed/simple;
-	bh=fh1fjd2OGBlq0HBoKlMdwXAIWc0Jj9BRkGBCt8ZTISo=;
+	s=arc-20240116; t=1791556199; c=relaxed/simple;
+	bh=JkA2wvfsa7X3TmuCz0DKIkj571POGO5g02wr3qgm+yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8QtcttpyoHgBmNjc/m8gmUANFK5tn8A/Tvj6J+7IfdOFfrukY2s6x3REOAJePjcFbNRO7AuPSGlQrayRpDzOsb3GnhyjKKPX/s7wzOKYPs/m77uclqrJRO2Lt+GVV6azPmMlkmKX8tCmNSAOzbiE8EB5UbQnRnw879fyVNtEzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx4s70hm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Hl3LL3ogNgKY+uXtlroF84ngMEfN2cCk3iX6oMvwjVPGs7lcI6f71/m1AFsKhHmhMT5vr1hMhaXsDQ7Eil/2GNTK8F6cfZA4HUmjT61wJKPPc+8KYixL0z4uR/JZ+higdGpOcXCBLPUQVJy9+ttjI5WEJa20iRXOcUW5KqfHv6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jop0R7TK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx4s70hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4547F1F000FF;
-	Fri,  9 Oct 2026 14:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jop0R7TK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FF31F000FF;
+	Fri,  9 Oct 2026 14:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556195;
-	bh=L1Ee9BTSpZp8gyNk/VXThEkZdLkFmG/PwpG0W3wE2Yk=;
+	s=korg; t=1791556198;
+	bh=o9LiTXbYJjJjNpZGQBzvxVSOJiJt7YeVRnsh9ejWQg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nx4s70hmCtqypUXLRB3dGhEEAYzh74jW4VNimCSgSqpJrOGScy46XoPC7ota67hM1
-	 MtrbtBzKD3BskN3nlq1s9rN74Okk6iINNdajGeaKGG/JQ0BoozkL4ysQAxr1iNdFY2
-	 6k15OY7nIZHUBox6/9Z/Q0wiJIQQ+igt/5aVWXYc=
+	b=jop0R7TKHFS0Gh72gFdYNmqjvNsBpXTTLxqdx66poW/fxjJWp36MG3Hl5ECSv2/Ox
+	 PG92qqZ3eW2VzmqHhCJfMpazDDV0aRIcWvNE3DS+qhgXAD/CbFqJvJ+u+bBoykmjrH
+	 pYDelBDB8loGhX9Zw12khGzBt6PI0pSAFt6meWP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jie Deng <dengjie03@kylinos.cn>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.18 189/403] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
-Date: Fri,  9 Oct 2026 16:09:10 +0200
-Message-ID: <20261009140956.545338583@linuxfoundation.org>
+	=?UTF-8?q?Sebastian=20Dalfu=C3=9F?= <sd@sedf.de>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 136/428] ALSA: usb-audio: Add boot quirk for Behringer CM1A
+Date: Fri,  9 Oct 2026 16:07:53 +0200
+Message-ID: <20261009140949.167477277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,74 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Sebastian Dalfuß <sd@sedf.de>
 
-commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
+[ Upstream commit 45b5beb60bf7bd41c55ef17f6f2d28b351fad6c0 ]
 
-The Cadence USBSS controller is a two-function PCI device. The first
-probed function allocates the driver data and stores it with
-pci_set_drvdata(), while the second function reuses it via
-pci_get_drvdata() when pci_is_enabled() reports that the first
-function has already been probed.
+After a power cycle and reenumeration, the Behringer CM1A* leaves its
+MIDI endpoint inoperative. USB enumeration and driver binding
+complete successfully, but MIDI outputs remain pending.
 
-When the second function is probed while the first one has been
-enabled but has not yet set its driver data, pci_get_drvdata()
-returns NULL, and the subsequent wrap->devfn assignment dereferences
-a NULL pointer and crashes the kernel.
-logs:
-Call trace:
-  cdns3_pci_probe+0xa4/0x300
-  local_pci_probe+0x44/0xa8
-  pci_call_probe+0x54/0x158
-  pci_device_probe+0x84/0x100
-  really_probe+0x184/0x3d0
-  __driver_probe_device+0x80/0x178
-  driver_probe_device+0x44/0xe8
-  __driver_attach+0xec/0x1f8
-  bus_for_each_dev+0x7c/0xe0
-  driver_attach+0x28/0x38
-  bus_add_driver+0x110/0x238
-  driver_register+0x64/0x128
-  __pci_register_driver+0x50/0x60
-  cdns3_pci_driver_init+0x28/0x38
-  do_one_initcall+0x5c/0x280
-  do_initcalls+0x104/0x1d8
-  kernel_init_freeable+0x140/0x218
-  kernel_init+0x28/0x1f8
-  ret_from_fork+0x10/0x20
+A GET_DESCRIPTOR request for the device descriptor, issued after USB
+configuration, makes the endpoint operational. Add a one time boot quirk
+to perform that request before ALSA initializes the device.
 
-Return -EPROBE_DEFER in this case so that probing is retried after
-the first function has completed its probe.
+*
+ID 1397:1234 BEHRINGER International GmbH CM1A
 
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sebastian Dalfuß <sd@sedf.de>
+Link: https://patch.msgid.link/apwG4DRfNyvmRzyb@sedf.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: b5c4823cf3e4 ("ALSA: usb-audio: Apply boot quirk for Behringer models generically")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/quirks.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -96,6 +96,11 @@ static int cdns3_pci_probe(struct pci_de
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 681f4cff3546f..034bc4bbe7f4c 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -849,6 +849,27 @@ static int snd_usb_accessmusic_boot_quirk(struct usb_device *dev)
+ 	return 0;
+ }
  
- 	if (pci_is_enabled(func)) {
- 		wrap = pci_get_drvdata(func);
-+		if (!wrap) {
-+			dev_err(&pdev->dev,
-+				"second function not initialized, retrying\n");
-+			return -EPROBE_DEFER;
-+		}
- 	} else {
- 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
- 		if (!wrap)
++/*
++ * A post configuration device descriptor read is needed to make the CM1A
++ * operational after reenumeration.
++ */
++static int snd_usb_cm1a_boot_quirk(struct usb_device *dev)
++{
++	struct usb_device_descriptor *desc __free(kfree) = kmalloc_obj(*desc);
++	int err;
++
++	if (!desc)
++		return -ENOMEM;
++
++	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0, desc, sizeof(*desc));
++	if (err < 0) {
++		dev_err(&dev->dev, "failed to read device descriptor: %d\n", err);
++		return err;
++	}
++
++	return 0;
++}
++
+ /*
+  * Some sound cards from Native Instruments are in fact compliant to the USB
+  * audio standard of version 2 and other approved USB standards, even though
+@@ -1681,6 +1702,8 @@ int snd_usb_apply_boot_quirk_once(struct usb_device *dev,
+ 	switch (id) {
+ 	case USB_ID(0x07fd, 0x0008): /* MOTU M Series, 1st hardware version */
+ 		return snd_usb_motu_m_series_boot_quirk(dev);
++	case USB_ID(0x1397, 0x1234): /* Behringer CM1A */
++		return snd_usb_cm1a_boot_quirk(dev);
+ 	}
+ 
+ 	return 0;
+-- 
+2.53.0
+
 
 
