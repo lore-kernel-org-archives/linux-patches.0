@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB4E399CE9;
-	Fri,  9 Oct 2026 14:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8183B582F;
+	Fri,  9 Oct 2026 14:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556655; cv=none; b=tTkYMJraVLoyGH10cfwwgaehUWQLQbIF9cAMWRxDqEyJ1K3lSB/Oz0qAeFztoEs9eKRSsXQHz5f1pvhIRi5x0VIoo9KptC2lptMerTJ70+cOEK58B/2vJDzRxULD9Hihr7L2jTD35Xjkt4U4Ml3c7KJkVI65qNXNT7ZhyHx7Fzc=
+	t=1791556657; cv=none; b=Ey2s/4/oS10bT2stCNfLp7YLcYBm9Rj4yqh1LBNJGpOm+aHNaNJ1kAj4ME0fFHGbz1YD+anIhoD7QHe5MvpXQlVvFoqjrWm+hznjwrpRjN3wGKoBRSFQrDQXeTFBDGJK/Vv2TVLQ1pzWsVYLGqSAGKgWhluzwGflJrWYUeJv/KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556655; c=relaxed/simple;
-	bh=WNr/O1tnuSoVx6NliqDQFerekozaqmt2wKohZxvzAKo=;
+	s=arc-20240116; t=1791556657; c=relaxed/simple;
+	bh=YLNxXSgiPNIPgzMzRHehZnhRKv3ORmVEDcktab0keZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efw4I6+nWLVfe9wjCKmEueoeqYDCWERBORmLdB3DlSy9rdFOfi1yTdXDLZ4YyB0wrDn9usUUmcjfR9hw55jUdcQJ2M2WKpTJZeMOq3tML44VHn/LgCvl2cOhN1349F0tDt+bUsCJnmxCs9UFeOLCAvCSeY9FuPv8dSbsz4wRdrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK4MeJaj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qV7Ld3E74IL9l9KsFHz9voHCSg6nBc2ehKzVk7+ToAy/jkbWWXqcprbvMPbQYEXsNbKT5fGD8iH5kBh/73hGDWqReq2fcfp7vVFNVLmjOvmy5N4I7e8BwKo2ypQwvGz02aEfuve1QEdl/AeyoK66rVxZrbf0K8MX/8QEwEVwM0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0NGnxWM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK4MeJaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D09B1F000FF;
-	Fri,  9 Oct 2026 14:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0NGnxWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA08D1F000FF;
+	Fri,  9 Oct 2026 14:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556653;
-	bh=5oYtJTyWX6++0xI2B3ARsdQ2epd8aBTbFKhJpt8c1aw=;
+	s=korg; t=1791556656;
+	bh=TtzZDz4CEmv1pi5j0kYFMSdi3CHFObXfyU7yT1NrNU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yK4MeJaj/89vKQbw+PteIrBn/bhX7o7ihI/XefYGVoeHAMPoeDJuUPwOWHpOFEG/H
-	 BCCoTDZ8sx6vV0sI95DNaSjNRLiw4Lx5Cabx4xMlSun9l8vCynUqwGUMPza+vsrDbX
-	 RJLfzebjWl7b9dRarfpW2300DVfXXVF28C8r7W2I=
+	b=q0NGnxWMw3fBzByoF67kh9DPUnlzxkq0Li4IMTtmhOxveCTl19uCdUye7ksI+O5r3
+	 2HjPe9qSnWkUElHgIBsxB4nbxKgXwNsTgo349U5+h+2PPQTxcwO/Y+M9VS9M030Zpq
+	 YdtfHQrUIDDNe3gih7rTNVx5/1ldExnTtWvoGfHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 270/403] wifi: mac80211: keep fallback association elements alive
-Date: Fri,  9 Oct 2026 16:10:31 +0200
-Message-ID: <20261009140958.499191609@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Ivy Lopez <skunkolee@gmail.com>
+Subject: [PATCH 7.2 216/428] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
+Date: Fri,  9 Oct 2026 16:09:13 +0200
+Message-ID: <20261009140950.869148695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-commit a10a2f80476d166fd81c361ec0319493671b694e upstream.
+commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
 
-Associating to a non-transmitted MBSSID profile reads freed memory while
-determining the operating channel and applying HT capabilities.
+generic_set_cmd() and generic_get_cmd() use the low nibble of
+ctrl->bRequest as an index into con->data[]:
 
-When an association response omits WMM, HT, or VHT information,
-ieee80211_assoc_config_link() parses the cached BSS IEs and copies the
-missing element pointers out of that fallback parse. For a
-non-transmitted MBSSID profile those pointers refer to merged-profile
-storage owned by the parse object, and the fallback block frees that
-object at its end. The copied pointers are used afterwards to determine
-the operating channel, configure bandwidth, and apply HT capabilities.
+    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
+    ...
+    con->data[cmd] = value;            /* OOB when cmd >= 5 */
 
-Keep the fallback parse result alive until association setup finishes.
+struct usb_audio_control (include/linux/usb/audio.h) declares data as
+a 5-element array, so indices 5 through 15 write (or read) up to 44
+bytes past the end of the array on the heap.
 
-Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
-Cc: stable@kernel.org
-Assisted-by: LLM sparse kasan
-[reorder variable declaration]
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+A malicious USB host can craft a class-specific SET_CUR / GET_CUR
+request with an arbitrary bRequest value, triggering the out-of-bounds
+access from an IRQ completion handler with no further preconditions.
+
+Add an ARRAY_SIZE() guard to both functions.
+
+Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
+Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -5235,6 +5235,7 @@ static bool ieee80211_assoc_config_link(
- 	bool is_6ghz = cbss->channel->band == NL80211_BAND_6GHZ;
- 	bool is_s1g = cbss->channel->band == NL80211_BAND_S1GHZ;
- 	const struct cfg80211_bss_ies *bss_ies = NULL;
-+	struct ieee802_11_elems *bss_elems = NULL;
- 	struct ieee80211_supported_band *sband;
- 	struct ieee802_11_elems *elems;
- 	const __le16 prof_bss_param_ch_present =
-@@ -5318,7 +5319,6 @@ static bool ieee80211_assoc_config_link(
- 	     (is_5ghz && link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT &&
- 	      (!elems->vht_cap_elem || !elems->vht_operation)))) {
- 		const struct cfg80211_bss_ies *ies;
--		struct ieee802_11_elems *bss_elems;
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -797,6 +797,9 @@ fail:
  
- 		rcu_read_lock();
- 		ies = rcu_dereference(cbss->ies);
-@@ -5380,7 +5380,6 @@ static bool ieee80211_assoc_config_link(
- 					   "AP bug: VHT operation missing from AssocResp\n");
- 			}
- 		}
--		kfree(bss_elems);
- 	}
+ static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	con->data[cmd] = value;
  
- 	/*
-@@ -5632,6 +5631,7 @@ static bool ieee80211_assoc_config_link(
- 	ret = true;
- out:
- 	kfree(elems);
-+	kfree(bss_elems);
- 	kfree(bss_ies);
- 	return ret;
+ 	return 0;
+@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
+ 
+ static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	return con->data[cmd];
  }
+ 
 
 
