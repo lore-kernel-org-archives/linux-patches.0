@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63C01A682B;
-	Fri,  9 Oct 2026 14:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738A64D37A2;
+	Fri,  9 Oct 2026 14:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555803; cv=none; b=V0RG5ZNG8XeP37uWqyC8D3PYxdM/Kr9+WwdXSTRbw+BWFHkiqp6djuuSIvHfY8RJX5Dzb4c9+G8vJeN9bWrRVjA0KpoCNS0pnXRVjMbmzl9tTRRMl1NZKgpbqtyIInew8AjVfozO9B98iK42H5SwGbCfW84ufHjexgqtAzEUTbk=
+	t=1791555806; cv=none; b=biaMzl/aiTENW+Hqlo2PaFpiH5GZ/C6AXI00uDWYwJffKBIb1frLCe3m6wElq+qwycULORIAFMPAoDJ8zdzmeDzMHI3ZnE785mWmRfp841WJ02IFKk7KM6uOLtzls2xUSsD7qH/aAvqjMC99a3siuEdHLjYQjhuRah+uJ2HIG+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555803; c=relaxed/simple;
-	bh=owNCXmOqx/7MjgSwUqKFu3dntCpmbFJPQx/3vTkUFrg=;
+	s=arc-20240116; t=1791555806; c=relaxed/simple;
+	bh=DjPaHy0upUDEAkAfRe9WPtHRxwvNW1WKfhG6dtbneZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7HmfcejPAxqvXh4ztk2iWegpaTzF2EJ+d1MmIuOn8+QCKOnZ+VyGeX5gQqd7EfysUjLGRqYn/GEzLzONb/dSbj1QU2wKeaRv0n/Cq8Y+ZDfLK8HZ0psdqZVjB0Wh5rvCKyK5+X/6KGavQ91FQZS6pKnTDh0mBgmkWs88l2sIT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi9ZLXCi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VlU1owd6gjUIPphRnRE50n1DRjTGlXenn+EGyaO2xEvou/NOmUa0enTRX9ykZE2LqQFhy1N8/boKqDb2Z9z0zjlHEo+8VQOq4Bu2drhw4J31FdtFlh3u/MUJKZzqSanX0g7nlYIDyK0NFVUUgXOtHVqnCR1uv2JM58EaccZ1cm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFkGl9N5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi9ZLXCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8581F00893;
-	Fri,  9 Oct 2026 14:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFkGl9N5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D102D1F000FF;
+	Fri,  9 Oct 2026 14:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555802;
-	bh=GSFCVoG3ggIhyDMY9TSLd1rkYSS5bXBnmnoJE1x8J9U=;
+	s=korg; t=1791555805;
+	bh=eoirqrQZ4lRR4/watMBtQL1AcfDvjw/H6v00LjlRnUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vi9ZLXCilA8RjG+DC0kd2j2FrTaaagVqDqiw5GUwnnAEg3sizCkRB9m4X+Lr7RNyb
-	 F6Gxxiv1gfkC015Fbm/zPq6WYi0nzDo6Tqg9ew5gNqsNHIYb2YRsRhlcVPl0afI7qX
-	 0iBTDbGfr6ydww6ZchbenwQ7Nirx02/E5st0IkDk=
+	b=KFkGl9N5uDPds4Ygel337Gn3yqAu9fN0TH/4ftLND+jc7Q+hCXNYqBLmzWosc/P4B
+	 r/jyWAaGJqtRMHAv/jO7hqUEVVcHUTDEOqMm0DxIviGpRpUWkWtdNScylJwntCzScQ
+	 OyIqazjINBXxCYyalOZb5pGOcRwm4v5+LqV4iSZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Hao Zhang <zhanghao1@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 072/428] blk-cgroup: save IRQ state in blkg_tryget_closest()
-Date: Fri,  9 Oct 2026 16:06:49 +0200
-Message-ID: <20261009140947.737738375@linuxfoundation.org>
+Subject: [PATCH 6.18 121/403] ipvs: do not create invisible templates
+Date: Fri,  9 Oct 2026 16:08:02 +0200
+Message-ID: <20261009140954.908727105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,72 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Zhang <zhanghao1@kylinos.cn>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 327c428ba79b13e4cc5253333a9d5c0aa5579bdf ]
+[ Upstream commit 616cf5c06934364ab1002b420ebe975850b4b208 ]
 
-bio_set_dev() associates the bio with a blkg through bio_associate_blkg().
-If the blkg lookup misses, blkg_tryget_closest() takes q->queue_lock with
-spin_lock_irq() and releases it with spin_unlock_irq(), which
-unconditionally enables local interrupts.
+The IP_VS_CONN_F_ONE_PACKET flag was implemented for normal
+connections. When conn template inherits this flag from
+dest->conn_flags it will not be hashed. As result, we will
+create new template for every new normal connection.
 
-Callers may call bio_set_dev() with interrupts already disabled, e.g.
-dm-thin's pool_map() does so while holding pool->lock taken with
-spin_lock_irq().  The nested spin_unlock_irq() then enables interrupts
-while pool->lock is still held, so an I/O completion softirq can run on
-the same CPU, re-acquire pool->lock (thin_endio(), or overwrite_endio()
--> complete_mapping_preparation()) and deadlock.  lockdep reports this
-as inconsistent SOFTIRQ-ON-W to IN-SOFTIRQ-W usage.
+Fix it to allow one template to be used by many normal
+connections.
 
-Commit 3a762de55b4e ("block: save irq state in blkg_lookup_create()")
-fixed the same problem while the lock lived in blkg_lookup_create(), but
-commit 9327a865e395 ("blk-cgroup: don't nest queue_lock under rcu in
-blkg_lookup_create()") moved the locking into blkg_tryget_closest() and
-reverted it to spin_lock_irq().
-
-Save and restore the caller's IRQ state instead.
-
-Fixes: 9327a865e395 ("blk-cgroup: don't nest queue_lock under rcu in blkg_lookup_create()")
-Cc: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Hao Zhang <zhanghao1@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/aqQmqb1k57PXj8Ef@192.168.1.215
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260916231652.127456-1-pablo%40netfilter.org
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 52080c7c1a14b..1951bda17cf5c 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2078,6 +2078,7 @@ static inline struct blkcg_gq *blkg_tryget_closest(struct bio *bio,
- 	struct request_queue *q = bio->bi_bdev->bd_queue;
- 	struct blkcg *blkcg = css_to_blkcg(css);
- 	struct blkcg_gq *blkg;
-+	unsigned long flags;
- 
- 	rcu_read_lock();
- 	blkg = blkg_lookup(blkcg, q);
-@@ -2092,11 +2093,11 @@ static inline struct blkcg_gq *blkg_tryget_closest(struct bio *bio,
- 	 * Fast path failed, we're probably issuing IO in this cgroup the first
- 	 * time, hold lock to create new blkg.
- 	 */
--	spin_lock_irq(&q->queue_lock);
-+	spin_lock_irqsave(&q->queue_lock, flags);
- 	blkg = blkg_lookup_create(blkcg, bio->bi_bdev->bd_disk);
- 	if (blkg)
- 		blkg = blkg_lookup_tryget(blkg);
--	spin_unlock_irq(&q->queue_lock);
-+	spin_unlock_irqrestore(&q->queue_lock, flags);
- 
- 	return blkg;
- }
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index 7da11628073b9..6bedad1f48fce 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -591,6 +591,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
+ 	if (cp->protocol != IPPROTO_UDP)
+ 		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	flags = cp->flags;
++	/* Only visible templates can control multiple connections */
++	if (flags & IP_VS_CONN_F_TEMPLATE)
++		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	/* Bind with the destination and its corresponding transmitter */
+ 	if (flags & IP_VS_CONN_F_SYNC) {
+ 		/* Synced conns are hashed, so they can not get this flag */
 -- 
 2.53.0
 
