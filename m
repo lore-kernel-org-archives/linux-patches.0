@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF3C45C713;
-	Fri,  9 Oct 2026 14:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B640367B8F;
+	Fri,  9 Oct 2026 14:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555853; cv=none; b=thdrrGoilQHItnyYEEiV5rUs2HTyYSB0ILLKYEAHPZ2I3pMRdTfkzuzjgrCmmm+6X6DeFP+Lq7885hW5UmsCEQ6UC3/8OkZJBg0LLor+VnDvOGaLPLnpJDLxmxkDOvhCjhVeqcFfJ/aaGNQy782LcB5b4e4hwEJ6ORWbF6pdxXw=
+	t=1791555856; cv=none; b=P/MFgtTAYZaECvDKGCoPJ1d0IhdqtmYgAQY2o6me8MCxk/wW7ystf6iPKMTLsdyHqS7TszMR7Z3ahK5rmxk7Wo1j8BHF5/H7eFAa3UpK7HUQiGis7dZLgGHpb4L5MT645g7exnfsTK2DbLmx9RyTXyS/fZUd2KfEQQqoHA+6gQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555853; c=relaxed/simple;
-	bh=CYSKxn44pN6AafVkGWWAXhwtSpid9KnLy1cbeIZCFEk=;
+	s=arc-20240116; t=1791555856; c=relaxed/simple;
+	bh=/RdA1vasvfuOr3APHr381uEPwXOOpWlmrcqWJJrZeMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltkrgil2+zOACGD+Lw8CkSHr4B3OufvujEYdl+QKo3TqJu6o/gewTzw+aZSIxCdbrpLWwYS9wct0tgzkVjGdYFcdzYvbLWd4ynrZ+6HVsKBTGBSgezgFy8T3QWXMWLTzM5mOmEEODObGKk8y5np4LzPD65pcEW2+VVjFZaUJ+Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckqP4Q7P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ccwhT3UmdYW3UQEEjoFwOz7mzHtKVrP5J3uTGLZnHm+L7MHvUkspKw9/a5Ctyu1L+bhjAyAsKle6EfARSq20B7NeqvjfgQcpPqF5mp626yjrNk2OIKcB4H/gLI3nnglcr/etBEmq52m/md5LxlknNPDqysYE7/eEBzxyUyThu7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ie6RTOFe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckqP4Q7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5146C1F000FF;
-	Fri,  9 Oct 2026 14:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ie6RTOFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205D61F000FF;
+	Fri,  9 Oct 2026 14:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555851;
-	bh=1v5Nf4hdC1N+uQjJxQ6M7xM6Cwij7IvE+fsi83Tl4fc=;
+	s=korg; t=1791555854;
+	bh=zxw275SQ6m+93I4o6+RtkBIjZl8uZrzhFza04YOY2pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckqP4Q7PxaRNmltC3kYbO6QAcP+xj0s/qD6mebyHWK7Pc9o3uCxzv+eigf5bN5Hwn
-	 xnTKriAZqYLdAJvnEA7l9O+v0UOz3Ic2GX7dgoP4Gc/qJqo8YqPeI6YWfRyXEPYpl4
-	 bgFj4DT++2F736RqQe8N+rGvjK5MnpcnpkbNPHIM=
+	b=ie6RTOFe+3++K1pNfscvp2Geb30zP0Ts+nKuiTh2Zu1WGZpTaJrwgPOXJgoWrI588
+	 Bf9ZBmSpJQ+SNdy2EYXpr4L/LFwtj7kgKNUSxgDJckmCNvsj37htVBboH0JSHiBrJJ
+	 dQ/cqPaiauMiMbjUx7lc3gY7/8txJlRHT9QNRUYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 062/428] ALSA: caiaq: unregister the input device when probe fails
-Date: Fri,  9 Oct 2026 16:06:39 +0200
-Message-ID: <20261009140947.503216890@linuxfoundation.org>
+	Nicolas Escande <nico.escande@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 080/428] wifi: ath11k: reset ar->num_stations on hardware start
+Date: Fri,  9 Oct 2026 16:06:57 +0200
+Message-ID: <20261009140947.928968080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,56 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-commit 0b7bd20f6379bc5e431fd74d866390f5b5b63f3c upstream.
+[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
 
-setup_card() registers the input device, whose name and phys point into
-struct snd_usb_caiaqdev, and then goes on to snd_card_register() and
-snd_usb_caiaq_control_init(). If either fails, snd_probe() calls
-snd_card_free(), which frees the device state but leaves the input
-device registered: card_free() only clears the pointer, and the input
-device is unregistered from snd_disconnect() alone. Reading its "uevent"
-attribute afterwards dereferences freed memory:
+When (multiple) hw restart occurs, we end up in a situation where we
+cannot accept new stations / mesh peers. This seems to be the
+'num_stations' in 'struct ath11k' that did not get reset properly in
+this case. In ath11k_mac_op_start(), it was indeed the only accounting var
+that did not get reset so let's clear it too.
 
-  BUG: KASAN: slab-use-after-free in string+0x4a9/0x4f0
-  Read of size 1 at addr ffff8880208f5043 by task caiaq/4967
-   add_uevent_var+0x183/0x3a0
-   input_dev_uevent+0x162/0x900
-   dev_uevent+0x2f1/0x870
-   uevent_show+0x1ca/0x3a0
-   ...
+This avoids problems like those:
 
-Unregister the input device on the probe error path, as
-snd_disconnect() does. snd_usb_caiaq_input_disconnect() is a no-op when
-no input device was registered.
+	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
+	[1248828.088115] Call trace:
+	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
+	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
+	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
+	[1248828.088127]  process_one_work+0x178/0x3c0
+	[1248828.088130]  worker_thread+0x280/0x440
+	[1248828.088133]  kthread+0xe0/0xf8
+	[1248828.088137]  ret_from_fork+0x10/0x20
+	[1248828.088141] ---[ end trace 0000000000000000 ]---
+	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
+	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
 
-Reproduced with a raw-gadget Audio Kontrol 1 and a temporary hack that
-makes snd_usb_caiaq_control_init() fail.
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
 
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2a123f6269da57ffefaa
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20260925170717.22462-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath11k/mac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -562,6 +562,9 @@ static int snd_probe(struct usb_interfac
- 	ret = init_card(caiaqdev(card));
- 	if (ret < 0) {
- 		dev_err(&usb_dev->dev, "unable to init card! (ret=%d)\n", ret);
-+#ifdef CONFIG_SND_USB_CAIAQ_INPUT
-+		snd_usb_caiaq_input_disconnect(caiaqdev(card));
-+#endif
- 		snd_card_free(card);
- 		return ret;
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index ae91b57c8422f..c1fa42edd3630 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -6716,6 +6716,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
+ 	ar->num_started_vdevs = 0;
+ 	ar->num_created_vdevs = 0;
+ 	ar->num_peers = 0;
++	ar->num_stations = 0;
+ 	ar->allocated_vdev_map = 0;
+ 
+ 	/* Configure monitor status ring with default rx_filter to get rx status
+-- 
+2.53.0
+
 
 
