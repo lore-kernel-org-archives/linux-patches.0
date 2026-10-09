@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB4F4E5355;
-	Fri,  9 Oct 2026 14:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482A84E56C6;
+	Fri,  9 Oct 2026 14:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557232; cv=none; b=A8HTWTEYEVJwSo+5EaCgR3Pkhylb7n8lMh8FYbhNgS7xoKSEm6iWbP6Vs7ZISFdvzROlGTe+t4Ix1xALS0lC1K0TVGdUFXST1Bx/Pw2Jii0UXDyiGO0CngSWUQnem8Jj//8RKVXt302XHRe555wrRWvSrQayXwxVlJXyvyxCEGM=
+	t=1791557235; cv=none; b=o3ihO/pGsHxk/A9xunuX7Vrf7tWOplWIEUDlKtRQPkXbvdfmSXqglCwGetOtPdSfUTvCS7O1SMfXrQ4fRSHmI9o/MeSsTregtUAuHsP8RbXkG55bPIxzyedzHfknUFFg3IBbfd/btWu9iqZfp5nW8J1WbFcrELUbOXIOM8alIBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557232; c=relaxed/simple;
-	bh=7pwvzxvq6krsVIQw5B57Gm82dva9pwJhbUjvu6CzDhI=;
+	s=arc-20240116; t=1791557235; c=relaxed/simple;
+	bh=9eBSYQZ5y3cji70QzMd+Szug07t31KgyWzRCz0mBs30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UU9SDgspJRtBuIJoaTwwFXhU0lfK0WFTvSqsuWnosmhzUUvSS8KawH7Zu9MuH1XgtgnF72mO7H5P35mOHLjnb2noSuHrdiO44a8balW0a5ATvL4iHp1O94lLoW79QUKyyPxkU0oQYUxlamNCJTmTEuvQOhcASPLocvH+FhMPSY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/zccC17; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5QoyyBwVg/mzhSfl5HR+/MCK3qGvfaMNKMISHLsw2cdH5Q7C1DbqAevcXoQfFU3ostGS+zsJvMqsKSl3XnfSWWW8/bxpF2Sl5+i3/LbiBSt/t0E/uzQrDzlYTFRogu+ukwsNoTtzyV+rAV3MNgXpk0e/+VRDqtPvN1OEW9BWmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7WCn3p+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/zccC17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F431F000FF;
-	Fri,  9 Oct 2026 14:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7WCn3p+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861D81F00898;
+	Fri,  9 Oct 2026 14:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557229;
-	bh=/PKu2vV9chNJ5aNrHccFgI128OiEW0edYnDNCQ58Fig=;
+	s=korg; t=1791557232;
+	bh=CM2288KEM6jysWHAX/UwVMEwwS+jnuUwiukHJcWbNL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/zccC17CH3BUgSEQBV2tELroIKdbF/hCZt0at3eDfXdhdq0QWog1sCFxPVh9NK6a
-	 8jqUTZV1NJ4ZNAtUmOtLHpj2ZwarcgR7S+AALvVKp2itU6tls4JJ08srkm0uoySqQA
-	 XyTyxVlLVzC9FiarckVLmoVx/tB7VCA1R94QXy9M=
+	b=C7WCn3p+oRPdbjMPq+5JzGiQwvqM4+lEowIqWgFXOrwkiaa0DUJMxfWyfctKzhvk0
+	 T9mo9QybIwma1UtD6aO4TOUKpUiUKomodqNkV6+HpYVFTUxaATARgroU0JJz2JHaS0
+	 ogxhOFx9M4Lft3otGkx0jO76/J88qdJoOr2BCCek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 368/403] smb: client: only require read lease for size-extending preallocate
-Date: Fri,  9 Oct 2026 16:12:09 +0200
-Message-ID: <20261009141000.904074915@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Oliver Upton <oupton@kernel.org>
+Subject: [PATCH 7.2 323/428] KVM: arm64: Use stage-1 leaf size for VM_PFNMAP
+Date: Fri,  9 Oct 2026 16:11:00 +0200
+Message-ID: <20261009140953.228871345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,173 +47,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit b5d59e7270d078ab28a9c4b4d11dc3eb24671988 ]
+commit 71cc2c67fb8f8d5aa8154eb482e9846d2214f11b upstream.
 
-smb3_simple_falloc() refuses any fallocate that clears FALLOC_FL_KEEP_SIZE
-with -EOPNOTSUPP whenever the inode is not read caching:
+When commit 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for
+host device MMIO") added VM_PFNMAP support to get_vma_page_shift(),
+stage-1 page tables did not support huge PFNMAP (as in VFIO-PCI
+vfio_pci_mmap_huge_fault()) and transparent_hugepage_adjust() was
+unsafe for MMIO as it dereferenced struct page.
 
-	/* if file not oplocked can't be sure whether asking to extend size */
-	if (!CIFS_CACHE_READ(cifsi))
-		if (!keep_size) {
-			...
-			return rc;
-		}
+Since commit 6011cf68c885 ("KVM: arm64: Walk userspace page tables to
+compute the THP mapping size"), transparent_hugepage_adjust() instead
+walks the host stage-1 page tables via get_user_mapping_size() without
+touching struct page. Meanwhile, commit 3e509c9b03f9 ("mm/arm64:
+support large pfn mappings") enabled stage-1 huge PFNMAP.
 
-As with smb3_zero_range(), the read lease is only needed to trust the
-cached size when deciding whether the request extends the file. When it
-is not held, the size can instead be fetched from the server, which is
-authoritative, rather than refusing the request outright: after
-flushing, query the server's end of file and take the larger of it and
-the cached size for the interior-vs-extend decision. The larger of the
-two is used because the server's end of file reflects another client's
-growth while the cached size reflects this client's own writes that may
-not have reached the server yet; using the server size alone would
-wrongly treat an interior request as extending when a range flush left
-an extending write unwritten.
+So. we can drop the VMA-based VM_PFNMAP size calculation in
+get_vma_page_shift() and let transparent_hugepage_adjust() derive
+the stage-2 mapping size directly from the populated stage-1 leaf
+for non-cacheable mappings as well.
 
-smb3_simple_fallocate_range(), which performs the actual interior
-emulation, decided whether the range already lies past EOF from its own
-i_size_read(inode) rather than the old_eof computed above. In the
-leaseless case, that is exactly the stale, undershooting size this
-patch works around: a genuinely interior range can read as past EOF by
-that stale count, which skips the FSCTL_QUERY_ALLOCATED_RANGES check
-entirely and overwrites already-allocated server data with zeroes
-instead of only filling the holes. Pass old_eof into
-smb3_simple_fallocate_range() and use it for that comparison instead of
-re-deriving a second, inconsistent one.
-
-Rejecting interior requests is observed as generic/363 randomly failing
-against Windows Server with
-
-	do_preallocate: fallocate: Operation not supported
-
-fsx issues an interior, non-KEEP_SIZE preallocate while the inode is
-transiently not read caching: the server had just downgraded the file's
-lease from RWH to RH after breaking the write caching, and the ensuing
-handle reopen/revalidation left CIFS_CACHE_READ momentarily clear. The
-range sat within the server's end of file, so no extend was needed, yet
-it was refused and fsx aborted. This keeps the emulation correct even
-when a genuine lease break from another client leaves the inode
-without read caching -- the case the -EOPNOTSUPP guard turned into a
-hard failure. The extra flush and round trip only happen when both
-keep_size is false and no read lease is held; every other case is
-unchanged.
-
-Fixes: 9ccf3216238c ("Add support for original fallocate")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-[ sashal: Adapted EOF handling to use SMB2_query_info() and the two-argument cifs_resize_file_locked() API. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for host device MMIO")
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/mmu.c |   47 ++++++-----------------------------------------
+ 1 file changed, 6 insertions(+), 41 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3671,7 +3671,8 @@ static int smb3_simple_fallocate_write_r
- static int smb3_simple_fallocate_range(unsigned int xid,
- 				       struct cifs_tcon *tcon,
- 				       struct cifsFileInfo *cfile,
--				       loff_t off, loff_t len)
-+				       loff_t off, loff_t len,
-+				       loff_t old_eof)
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1468,32 +1468,11 @@ transparent_hugepage_adjust(struct kvm *
+ 	return PAGE_SIZE;
+ }
+ 
+-static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
++static int get_vma_page_shift(struct vm_area_struct *vma)
  {
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
- 	struct inode *inode = d_inode(cfile->dentry);
-@@ -3687,7 +3688,7 @@ static int smb3_simple_fallocate_range(u
- 		goto out;
+-	unsigned long pa;
+-
+-	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
++	if (is_vm_hugetlb_page(vma))
+ 		return huge_page_shift(hstate_vma(vma));
+ 
+-	if (!(vma->vm_flags & VM_PFNMAP))
+-		return PAGE_SHIFT;
+-
+-	VM_BUG_ON(is_vm_hugetlb_page(vma));
+-
+-	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
+-
+-#ifndef __PAGETABLE_PMD_FOLDED
+-	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
+-	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
+-	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
+-		return PUD_SHIFT;
+-#endif
+-
+-	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
+-	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
+-	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
+-		return PMD_SHIFT;
+-
+ 	return PAGE_SHIFT;
+ }
+ 
+@@ -1794,7 +1773,7 @@ static short kvm_s2_resolve_vma_size(con
+ 		vma_shift = PAGE_SHIFT;
+ 	} else {
+ 		s2vi->max_map_size = PUD_SIZE;
+-		vma_shift = get_vma_page_shift(vma, s2fd->hva);
++		vma_shift = get_vma_page_shift(vma);
  	}
  
--	if (off >= i_size_read(inode)) {
-+	if (off >= old_eof) {
- 		rc = smb3_simple_fallocate_write_range(xid, tcon, cfile,
- 						       off, len, buf);
- 		goto out;
-@@ -3811,14 +3812,31 @@ static long smb3_simple_falloc(struct fi
- 
- 	trace_smb3_falloc_enter(xid, cfile->fid.persistent_fid, tcon->tid,
- 				tcon->ses->Suid, off, len);
--	/* if file not oplocked can't be sure whether asking to extend size */
--	if (!CIFS_CACHE_READ(cifsi))
--		if (!keep_size) {
-+
-+	if (!keep_size && !CIFS_CACHE_READ(cifsi)) {
-+		unsigned long long server_eof;
-+
-+		rc = filemap_write_and_wait(inode->i_mapping);
-+		if (rc) {
- 			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
- 				tcon->tid, tcon->ses->Suid, off, len, rc);
- 			free_xid(xid);
- 			return rc;
+ 	switch (vma_shift) {
+@@ -1952,16 +1931,6 @@ static int kvm_s2_fault_pin_pfn(const st
+ 				return -EFAULT;
+ 			}
+ 		} else {
+-			/*
+-			 * If the page was identified as device early by looking at
+-			 * the VMA flags, vma_pagesize is already representing the
+-			 * largest quantity we can map.  If instead it was mapped
+-			 * via __kvm_faultin_pfn(), vma_pagesize is set to PAGE_SIZE
+-			 * and must not be upgraded.
+-			 *
+-			 * In both cases, we don't let transparent_hugepage_adjust()
+-			 * change things at the last minute.
+-			 */
+ 			s2vi->map_non_cacheable = true;
  		}
-+		netfs_wait_for_outstanding_io(inode);
-+
-+		rc = SMB2_query_info(xid, tcon, cfile->fid.persistent_fid,
-+				     cfile->fid.volatile_fid, &file_inf);
-+		if (rc) {
-+			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
-+				tcon->tid, tcon->ses->Suid, off, len, rc);
-+			free_xid(xid);
-+			return rc;
-+		}
-+		server_eof = le64_to_cpu(file_inf.EndOfFile);
-+		/* Only use the larger EOF to decide whether we're extending. */
-+		old_eof = max_t(loff_t, old_eof, server_eof);
-+	}
+ 
+@@ -2051,10 +2020,10 @@ static int kvm_s2_fault_map(const struct
  
  	/*
- 	 * Extending the file
-@@ -3842,7 +3860,7 @@ static long smb3_simple_falloc(struct fi
- 			}
- 
- 			rc = smb3_simple_fallocate_range(xid, tcon, cfile,
--							 off, len);
-+							 off, len, old_eof);
- 			if (rc) {
- 				spin_lock(&inode->i_lock);
- 				cifsi->time = 0;
-@@ -3921,7 +3939,7 @@ static long smb3_simple_falloc(struct fi
- 		}
+ 	 * If we are not forced to use page mapping, check if we are
+-	 * backed by a THP and thus use block mapping if possible.
++	 * backed by a huge stage-1 mapping and thus use block mapping if
++	 * possible.
+ 	 */
+-	if (mapping_size == PAGE_SIZE &&
+-	    !(s2vi->max_map_size == PAGE_SIZE || s2vi->map_non_cacheable)) {
++	if (mapping_size == PAGE_SIZE && s2vi->max_map_size != PAGE_SIZE) {
+ 		if (perm_fault_granule > PAGE_SIZE) {
+ 			mapping_size = perm_fault_granule;
+ 		} else {
+@@ -2132,10 +2101,6 @@ static int user_mem_abort(const struct k
+ 			return ret;
  	}
  
--	if ((keep_size == true) || (i_size_read(inode) >= off + len)) {
-+	if (keep_size || old_eof >= off + len) {
- 		/*
- 		 * At this point, we are trying to fallocate an internal
- 		 * regions of a sparse file. Since smb2 does not have a
-@@ -3938,7 +3956,7 @@ static long smb3_simple_falloc(struct fi
- 		 */
- 		if (len <= 1024 * 1024) {
- 			rc = smb3_simple_fallocate_range(xid, tcon, cfile,
--							 off, len);
-+							 off, len, old_eof);
- 			goto out;
- 		}
- 
-@@ -3950,7 +3968,7 @@ static long smb3_simple_falloc(struct fi
- 		 * ie potentially making a few extra pages at the beginning
- 		 * or end of the file non-sparse via set_sparse is harmless.
- 		 */
--		if ((off > 8192) || (off + len + 8192 < i_size_read(inode))) {
-+		if (off > 8192 || off + len + 8192 < old_eof) {
- 			rc = -EOPNOTSUPP;
- 			goto out;
- 		}
+-	/*
+-	 * Let's check if we will get back a huge page backed by hugetlbfs, or
+-	 * get block mapping for device MMIO region.
+-	 */
+ 	ret = kvm_s2_fault_pin_pfn(s2fd, &s2vi);
+ 	if (ret != 1)
+ 		return ret;
 
 
