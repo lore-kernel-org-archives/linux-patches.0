@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDC03431F5;
-	Fri,  9 Oct 2026 14:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0438D33EB01;
+	Fri,  9 Oct 2026 14:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555904; cv=none; b=beD1ubRMbQKSp7WJZwc8MaTr30PYZ16i2dkpdycmzIl1jgJCiUGRuIXPN7IADr6g8YzzceMOVYUpobSrZxCjtrgL1N/CZub7xCCXs/o0o27BTNNwI34m9pe3H410MXl/YApcDuV8kWfOVxgjjrwRlQZCQj2ot4SHFobWaWTtptI=
+	t=1791555907; cv=none; b=IOiF/tCjGq7hsLzvpLFJuKTVGEdmUi8Mhqqz4wM9B+Li9N+yq3sVHd2MkrhzTnRx+0yu75TdXOp52jtpRvlYm60J3Fsim4xHzmGCHMsnDU3nLxOdZXQpoebR03fDGdX1cUywckulMS4m4XfCdkGtCNtMa/uneSix2ZmTtNfVFkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555904; c=relaxed/simple;
-	bh=wmynu3urcwFcjEUNUOD2cNf1gSfwDXxnctNpLtJuMjA=;
+	s=arc-20240116; t=1791555907; c=relaxed/simple;
+	bh=QIrVZMczagBTvof5i0vLEiBsxfC4p/oi6Uy6k2pAimc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUPHe4Te5mVsRWWUtqVhZlLM1O5hZuKus6LzU9YPekNDhBHMlrlU/4z7qXax+r7itLXkzVsTPborH3U+fQ65yzMe/Th/oSkdbuOhhY5tOTI6K1Bj8OtZvrhPDwWBWfnDf1QYKp+AzHRvXDHOBi3vjqUh4vuLnp016CKhWctsE2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgzP/OyB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NqY+rTaA6SdRzsr5MHiw/XX7RCQqLxQzR8DTz0wOAZgiWjaiReIT28+/E9Pq+m0yYsn0Xd6+K/gcat2KmnFPHDXGaxgOFgXpdsrd01gvDPY+HG2ONPvTV9UP2wS2vguxWh34K36Df5K1eDZg43PkJq+36wvx32Ye2zHZrhH+51M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGj0naQ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgzP/OyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7FC1F000FF;
-	Fri,  9 Oct 2026 14:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGj0naQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A311F00893;
+	Fri,  9 Oct 2026 14:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555903;
-	bh=xxipEeZ18tO6qtp0CbxeJSFreG/Qysl7mZShFyfpFRE=;
+	s=korg; t=1791555905;
+	bh=94IVVBRCBM9wnFYVXTxcJVhGq84Fw85ZTeyFKxYjF80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgzP/OyBTSZvzCJnolSWHQjYXq5A584VpN+lQ4rMiMQNadgPCR05r0FVfyg7WpZ6H
-	 lxh6PwSIsevDtIsfAmEXvaofIHeoNdMXqGHzWp+brDjXwdshrBCY7Yz1l5G+uCkfrx
-	 IReE9YkA2Oxl24wNEFsJR459/igHbfI7333jt5DE=
+	b=aGj0naQ9n1eAcMnyUgmWafUANOIQUMSAqJbB0t1H2mIjcdXmm7Xm2n+Mtf4Pb4/Ug
+	 hQN9V0xVdbYaRHuDg4Bfz21iH2uz22zj+S0qmOdDLi48YvREqB14oROk7uoq4p1cNF
+	 AGaG2dubO84G3rfY/CPd8J5w72s9eoJa8FqwM02A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 088/428] wifi: cfg80211: preserve hidden-group beacon IE ownership
-Date: Fri,  9 Oct 2026 16:07:05 +0200
-Message-ID: <20261009140948.121263991@linuxfoundation.org>
+	George Zhang <george.zhang@amd.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 137/403] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
+Date: Fri,  9 Oct 2026 16:08:18 +0200
+Message-ID: <20261009140955.278411041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit cc45f313d85533d647ce619326302aad6f797c14 ]
+commit 015e72cde567d2450e282c2790773463156b2d0a upstream.
 
-A hidden-group probe-response entry borrows its beacon IEs from the
-group's beacon entry. cfg80211_update_assoc_bss_entry() can pass such
-an entry to cfg80211_update_known_bss() when merging scan entries
-after a channel switch.
+dc_state_create_copy() can return NULL on allocation failure.
+dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
+and continues execution, returning success.  dm_resume() then
+dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
+following dc_state->stream_count loop, crashing during GPU reset
+recovery.
 
-Copying the borrowed beacon_ies into the associated entry gives the
-same allocation two owners. Releasing the group's beacon entry can
-then leave the associated entry pointing to freed IEs, which are
-freed again when that entry is released.
+Return -ENOMEM immediately if the copy fails, so the caller aborts
+suspend instead of leaving a NULL cached state for resume.
 
-Skip beacon IE replacement when the source entry belongs to a hidden
-group. Preserve probe-response processing, the subsequent metadata
-updates, and the existing rejection path for conflicting hidden
-beacon updates.
-
-Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Closes: https://lore.kernel.org/linux-wireless/20260901080427.1983015-1-yilinzhang@moonshot.ai/
-Assisted-by: Codex:gpt-6-astra
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 4a1ec7e3547d8..9af995894bd5a 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1964,20 +1964,22 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 			return false;
- 		}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3266,9 +3266,14 @@ static int dm_suspend(struct amdgpu_ip_b
+ 		dc_allow_idle_optimizations(adev->dm.dc, false);
  
--		old = rcu_access_pointer(known->pub.beacon_ies);
-+		if (!new->pub.hidden_beacon_bss) {
-+			old = rcu_access_pointer(known->pub.beacon_ies);
- 
--		rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
-+			rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
- 
--		/* Override IEs if they were from a beacon before */
--		if (old == rcu_access_pointer(known->pub.ies))
--			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
-+			/* Override IEs if they were from a beacon before */
-+			if (old == rcu_access_pointer(known->pub.ies))
-+				rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
- 
--		cfg80211_update_hidden_bsses(known,
--					     rcu_access_pointer(new->pub.beacon_ies),
--					     old);
-+			cfg80211_update_hidden_bsses(known,
-+						     rcu_access_pointer(new->pub.beacon_ies),
-+						     old);
- 
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
-+			if (old)
-+				kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
+ 		dm->cached_dc_state = dc_state_create_copy(dm->dc->current_state);
++		if (!dm->cached_dc_state) {
++			drm_err(adev_to_drm(adev),
++				"Failed to allocate cached DC state during suspend\n");
++			mutex_unlock(&dm->dc_lock);
++			return -ENOMEM;
 +		}
- 	}
  
- 	known->pub.beacon_interval = new->pub.beacon_interval;
--- 
-2.53.0
-
+-		if (dm->cached_dc_state)
+-			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		res = amdgpu_dm_commit_zero_streams(dm->dc);
+ 		if (res != DC_OK) {
 
 
