@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8611F3B582F;
-	Fri,  9 Oct 2026 14:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C982BE7CD;
+	Fri,  9 Oct 2026 14:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555978; cv=none; b=RwPk4wk70tuK8qwttP4LDiS6N5GHNZxQIG1vjoTg2Y3y6nSzbldeYjBWPmWsi+jgIlOUqN2hQKZZpdajqVs7GlzlsYxQgPf4i5WJrLXywDr6xzD2fk9EKq2Q8FiwRNlcfFXgAER+SjSYrrK+7H6O97GJniA2K8FJ9JteDR/I+kI=
+	t=1791555981; cv=none; b=fgK3HhyybBHODJXHS+CkyxeZxJyngnuzgKQWUbNrvYNr/D4R9Rpxfx2Br3Ayey8fsVgc1h+RzGYBoqUPRAG+nbuF+PL/WUelqhwwo3ekrYNVhhHqVXAWjH+aVpulQfW2/2cEkCA8MVuS1tkV558pMGUsstzxMihuW0Vq8w3WMHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555978; c=relaxed/simple;
-	bh=FmlaMl8OKcHHDed49DXg+0Yrknv8RUbT6U1dLY7FI/Q=;
+	s=arc-20240116; t=1791555981; c=relaxed/simple;
+	bh=RVaV56a3FlxZ8ObkpouyWOKi1iMIkhD4dvDnSDHZ6IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oB9jqOaQi6ztqECm9JfXoNw02h3M5DjnG8eUtIPLKVhDvfr3kqFOzRZcPBkqXpIpmTw1aGUZALXoYBtEHVeCJrQI/jBw74ksnRnPAl79U6y8LudFcjlI4DtDgVrRidHE3C4eeNV0z9vZo26l2spv4znfw0E4QrZIPUXIf21oe34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHNN+eLe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cBIoPDwFAC6nZcsgotUd1sRuJMSxzQIpqdAohL/r6F6zeVFDc1hQQJD+IdEBSFSNsYHoKa57KYuKtUbnKV2LBGD55p8S0VSGrGj7EXmmWw+EVxOu4eAWWDau9GkEDQa3ySdGMow5CNeg16jlulBtYJiOedhZ6i9ymloIo86bbaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtsMkfku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHNN+eLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B501F000FF;
-	Fri,  9 Oct 2026 14:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtsMkfku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BCC1F000FF;
+	Fri,  9 Oct 2026 14:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555977;
-	bh=yCTDQ75TAzm1yLRt6cuyInXG981hH98YF6xXyP6pYBA=;
+	s=korg; t=1791555980;
+	bh=gjIvAhN2zZd5Vo1YkD/G7sAwTEOuejlN8GZc2TnlMKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rHNN+eLevkffaN6Lo64ZjX9W7V7UTOJ0NVUofuzsMH4n//PJAF7vw75QZqZKZIWDm
-	 RnLI+2XpULRbs4For7s12z/WBUF6yZVQ55UudA00YYnq/FnwJw98mp2zzgE3xKDhsI
-	 skedYM6uGlk5M8zzMk+Pw+nk7N8Bcqrk5XqBRFdI=
+	b=CtsMkfkucAbus0OabTgDcfzYkqDf/GKicZsdf+50DZnrYeoz5YvOdJsnl7gF59ouH
+	 9LHZXOYsROYvq7TUVvMtY5JWkjBe+Kk9sUqM3hPbK93CIhtLASUqgUihmi7/qJKoir
+	 cNyxg+7rl/UnT0j7grBAQcRgaogrbeUtXp/VWxOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+be8fa7ea6f77fdce@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 064/428] ALSA: line6: reject oversized playback packets
-Date: Fri,  9 Oct 2026 16:06:41 +0200
-Message-ID: <20261009140947.549944752@linuxfoundation.org>
+	Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 100/428] ASoC: SDCA: Add better pm_runtime error handling in func probe
+Date: Fri,  9 Oct 2026 16:07:17 +0200
+Message-ID: <20261009140948.412857204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,83 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
+[ Upstream commit 91094f9c86216898ce92141c26c8fec7e97544c0 ]
 
-Each playback URB is handed a slice of out.buffer that is exactly
-LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
-endpoint, but the number of bytes written into that slice is never
-compared against it.
+Add a common error path in probe that balances the runtime PM reference.
 
-submit_audio_out_urb() takes the frame count from prev_fsize, which
-audio_in_callback() derived from the *IN* endpoint's received packet
-length, and rescales it with the playback frame size; when prev_fsize is
-still zero it synthesizes a length from the sample rate instead.  On a
-device declaring a large IN wMaxPacketSize and a small OUT
-wMaxPacketSize, the resulting memcpy(), or the memset() when the
-playback stream is idle, runs past its slice and, as the reproducer
-below shows, beyond the allocation.
-
-usb_submit_urb() is not a backstop.  max_packet_size_out comes from
-usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
-while USB core validates a high-speed isochronous length against that
-base scaled by usb_endpoint_maxp_mult().  A length of up to three times
-the allocated slice is therefore accepted, and even a rejected URB is
-only rejected after the write.
-
-Reject a packet that does not fit the slice the driver allocated for it.
-Clamping it instead would silently shorten the capture-derived rate
-feedback and desynchronize the two streams.
-
-  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
-  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
-  Workqueue: events line6_startup_work
-  Call Trace:
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   submit_audio_out_urb (sound/usb/line6/playback.c:229)
-   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
-   line6_stream_start (sound/usb/line6/pcm.c:194)
-   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
-   line6_startup_work (sound/usb/line6/driver.c:728)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  The buggy address belongs to the object at ffff888100bbd400
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes inside of
-   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
-
-Cc: stable@vger.kernel.org
-Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
-Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3af1815a2f9c ("ASoC: SDCA: Add basic SDCA function driver")
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260924095458.2683755-3-mstrozek@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/playback.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/sdca/sdca_class_function.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/sound/usb/line6/playback.c
-+++ b/sound/usb/line6/playback.c
-@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
+diff --git a/sound/soc/sdca/sdca_class_function.c b/sound/soc/sdca/sdca_class_function.c
+index 86e5d28511542..60eecf34c7788 100644
+--- a/sound/soc/sdca/sdca_class_function.c
++++ b/sound/soc/sdca/sdca_class_function.c
+@@ -388,20 +388,27 @@ static int class_function_probe(struct auxiliary_device *auxdev,
  
- 		fsize *= bytes_per_frame;
+ 	ret = devm_pm_runtime_enable(dev);
+ 	if (ret)
+-		return ret;
++		goto err_pm;
  
-+		if (fsize > line6pcm->max_packet_size_out) {
-+			dev_err(line6pcm->line6->ifcdev,
-+				"playback packet too large: %d > %d\n",
-+				fsize, line6pcm->max_packet_size_out);
-+			return -EMSGSIZE;
-+		}
+ 	ret = class_function_boot(drv);
+ 	if (ret)
+-		return ret;
++		goto err_pm;
+ 
+ 	ret = devm_snd_soc_register_component(dev, cmp_drv, dais, num_dais);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to register component\n");
++	if (ret) {
++		dev_err_probe(dev, ret, "failed to register component\n");
++		goto err_pm;
++	}
+ 
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
+ 
+ 	return 0;
 +
- 		fout->offset = urb_size;
- 		fout->length = fsize;
- 		urb_size += fsize;
++err_pm:
++	pm_runtime_put_sync(dev);
++
++	return ret;
+ }
+ 
+ static void class_function_remove(struct auxiliary_device *auxdev)
+-- 
+2.53.0
+
 
 
