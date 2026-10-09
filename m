@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5281B4E533C;
-	Fri,  9 Oct 2026 14:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D6D4D598B;
+	Fri,  9 Oct 2026 14:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556963; cv=none; b=kFF8yn96pcjmty6wVWUTY12BDohpMnct9KZJoTbAUL/sC05ndNzaXIV4i2Q1aK8RiCaz1uRrBZIOx35EtiXLg+yC0DUoAb+4a8+z9F1CTZqwOdPUu/4rEwivnpPpG4nT/IZo5Qw6WK7Av3Xns9Omob51+kRhf2JwdKbQ0AnGog4=
+	t=1791556966; cv=none; b=VcfumgH1L4hvaL1/oIYX5DbZdT+ACala6KTqBqEiaC7g7bdfgnb2SPoEJoq23H8y/kY/zCboAIJJr4/aaKEGOhVB/hFszUe+vDzV1d8qCCSmH+lZ7jQUxUjTEzps9MQN6s+7A/qsCbb8pgre19l/3VaV5oLwC6yXaCBQ8JZYTu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556963; c=relaxed/simple;
-	bh=YEIq6RNQHvaZCyy9zM49p+fkz+FpURHakd3eTwTdgak=;
+	s=arc-20240116; t=1791556966; c=relaxed/simple;
+	bh=RGoi6kbH/r3CkKrAfbGK4FnqPBIFCUEn7fwTKUrB/XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZOIkl9hNB4IJDNZCnm28SZ2OUyvJpckFL6SMxU7pvrHur34RolusXZHiqyNsWYJzFs1TnjiIM9K8tkbP6ZqiarDZeyWtV833dPJ0VF+lPkWDzkNJyiEZeClHH9GpgiFk/lmVdObKaT9MuvTWl50FcJ4ng3W5m7pTvjbXqMr7uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9zfkXvv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ejL+TvZZvQeiP2eFNxbmdXR4YZq7a+kDGCp3Q3jFdOq0cYg9DyAm+GNzqoa11hIK00krRXTjH4Quelb6Yi81nNJ+3+ECNQ41oRW63HoG/vrZRF3opZ4Sgzp0iHkPXrtdka2ZACJ83a5FUmEAYKesha3LiWdVHUrGKffsZk9Ics8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZvQh+EK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9zfkXvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07331F000FF;
-	Fri,  9 Oct 2026 14:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZvQh+EK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E2F1F000FF;
+	Fri,  9 Oct 2026 14:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556962;
-	bh=cOX0trwN1Xi01B/nbj/Pq5fit1HIvnRjulx+W+Xcyhw=;
+	s=korg; t=1791556965;
+	bh=8mp47yu2qMGucRH823MmxyLxXj2Ee7MC0rwKv8PwkY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a9zfkXvvsnR+uLp3Bql1bgo4jp6UWY1f1DkhPvTL4Ho7+aAY+2vwRjBnhtNQNh2xZ
-	 dfEJ+nM+o+LVZU8c1tflwtEsc8TbfT95lwMc23JR55zXMLt7vSA/aiU3r/aZZzDtwO
-	 QpI0aQvmAEc0sixay5aVbvQptQWccOTXb0E9vbo0=
+	b=iZvQh+EKlhy+nAfUSnUuIBFwmJ9+4bCSqYZhE89r4QtxUreexqOTRqPWZzuCwZT1T
+	 hdxJHVsvf7J1D2gCLz4ae19zZHeaVk6Lh5NRvOzoWKECVCRY/CFLB4fO9GdaQK9BE5
+	 muQ0l8cBTLNVXQ6ySQOqizxn20bhYRCVEjEl5Yfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.2 274/428] EDAC/altera: Do not allow driver unbinding
-Date: Fri,  9 Oct 2026 16:10:11 +0200
-Message-ID: <20261009140952.109265524@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Marco Chen <marcochen.dev@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 325/403] iio: health: max30102: fix NULL dereference in interrupt handler
+Date: Fri,  9 Oct 2026 16:11:26 +0200
+Message-ID: <20261009140959.832209715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,101 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: Marco Chen <marcochen.dev@gmail.com>
 
-commit 19a4f1a6ed00286d70229f4fd5f690cc2fb033dc upstream.
+commit f0ea4824deebf21dacfbe397c4b0a5fd3e745a8d upstream.
 
-The driver must remain bound; unbinding and re-binding it would erase active
-system memory.
+The interrupt is requested in max30102_probe() and stays enabled
+for the lifetime of the device, but indio_dev->active_scan_mask is only
+valid while a buffer is enabled. When an interrupt arrives while no
+buffer is enabled, the handler dereferences the NULL active_scan_mask:
 
-Remove the .remove functions because they will not ever get used.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Call trace:
+   __bitmap_weight+0x64/0x98 (P)
+   max30102_interrupt_handler+0x48/0x160 [max30102]
 
-Fixes: 588cb03ea208 ("EDAC, altera: Add Arria10 L2 Cache ECC handling")
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org # 6.18+
-Link: https://patch.msgid.link/20260911120627.2634225-2-dinguyen@kernel.org
+Call max30102_fifo_count() at the top of the handler and return early
+unless it reports a FIFO sample is ready. Because FIFO_RDY is the only
+interrupt source enabled in max30102_chip_init(), an invocation of
+max30102_interrupt_handler() without the FIFO_RDY interrupt status bit
+set carries no data to read and can return before touching
+active_scan_mask. A negative return from max30102_fifo_count()
+indicates a failed interrupt status read and is treated the same way.
+
+Fixes: 90579b69e94b ("iio: health: max30102: Add MAX30105 support")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Marco Chen <marcochen.dev@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |   25 ++++---------------------
- 1 file changed, 4 insertions(+), 21 deletions(-)
+ drivers/iio/health/max30102.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -453,15 +453,6 @@ free:
- 	return res;
- }
+--- a/drivers/iio/health/max30102.c
++++ b/drivers/iio/health/max30102.c
+@@ -291,9 +291,15 @@ static irqreturn_t max30102_interrupt_ha
+ {
+ 	struct iio_dev *indio_dev = private;
+ 	struct max30102_data *data = iio_priv(indio_dev);
+-	unsigned int measurements = bitmap_weight(indio_dev->active_scan_mask,
+-						  iio_get_masklength(indio_dev));
+-	int ret, cnt = 0;
++	unsigned int measurements;
++	int ret, cnt;
++
++	cnt = max30102_fifo_count(data);
++	if (cnt <= 0)
++		return IRQ_HANDLED;
++
++	measurements = bitmap_weight(indio_dev->active_scan_mask,
++				     iio_get_masklength(indio_dev));
  
--static void altr_sdram_remove(struct platform_device *pdev)
--{
--	struct mem_ctl_info *mci = platform_get_drvdata(pdev);
--
--	edac_mc_del_mc(&pdev->dev);
--	edac_mc_free(mci);
--	platform_set_drvdata(pdev, NULL);
--}
--
- /*
-  * If you want to suspend, need to disable EDAC by removing it
-  * from the device tree or defconfig.
-@@ -481,13 +472,13 @@ static const struct dev_pm_ops altr_sdra
+ 	mutex_lock(&data->lock);
  
- static struct platform_driver altr_sdram_edac_driver = {
- 	.probe = altr_sdram_probe,
--	.remove = altr_sdram_remove,
- 	.driver = {
- 		.name = "altr_sdram_edac",
- #ifdef CONFIG_PM
- 		.pm = &altr_sdram_pm_ops,
- #endif
- 		.of_match_table = altr_sdram_ctrl_of_match,
-+		.suppress_bind_attrs = true,
- 	},
- };
- 
-@@ -517,6 +508,7 @@ static struct platform_driver altr_edac_
- 	.driver = {
- 		.name = "socfpga_ecc_manager",
- 		.of_match_table = altr_edac_of_match,
-+		.suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(altr_edac_driver);
-@@ -803,22 +795,12 @@ fail:
- 	return res;
- }
- 
--static void altr_edac_device_remove(struct platform_device *pdev)
--{
--	struct edac_device_ctl_info *dci = platform_get_drvdata(pdev);
--	struct altr_edac_device_dev *drvdata = dci->pvt_info;
--
--	debugfs_remove_recursive(drvdata->debugfs_dir);
--	edac_device_del_device(&pdev->dev);
--	edac_device_free_ctl_info(dci);
--}
--
- static struct platform_driver altr_edac_device_driver = {
- 	.probe =  altr_edac_device_probe,
--	.remove = altr_edac_device_remove,
- 	.driver = {
- 		.name = "altr_edac_device",
- 		.of_match_table = altr_edac_device_of_match,
-+		.suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(altr_edac_device_driver);
-@@ -2217,6 +2199,7 @@ static struct platform_driver altr_edac_
- 	.driver = {
- 		.name = "socfpga_a10_ecc_manager",
- 		.of_match_table = altr_edac_a10_of_match,
-+		.suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(altr_edac_a10_driver);
 
 
