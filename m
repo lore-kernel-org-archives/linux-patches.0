@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3DB44CF44;
-	Fri,  9 Oct 2026 14:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046BF4582D3;
+	Fri,  9 Oct 2026 14:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556236; cv=none; b=IVWGjibHfRte+YbaaVyWvz+4+3ifhSM7Bc2Y7uKO4w84LTKqfqH3cuNL0dC5f+P6OMlfkFQT0zDhOjJ2UM7w1R8GVrbhGXPXDZ8iEfUhR9K0+aSiN6huYR8Hua5sSKzgJBMDjI5196JaRWX+gs9CHf06V8Cp6nxVR939YAj8KaQ=
+	t=1791556239; cv=none; b=CyB7uUAIzjHLVVNye1TdRnqQCglgOJ3VBVaqesO0YsTc2fd6KpHaAEs2vaaAkYNTwGpDt6Rzgpd3Hn2zsGUDcAodZWo2IgSDBDZD3yO+li5SvZJ4CetPjzQa9blqd/QKJ5jb/yel9j/B8ppzqEATSiinnLuYZr49Xw1Xad3QHf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556236; c=relaxed/simple;
-	bh=WuvKAzD3SYVJ9xtdv8VDsAVnTMkL4gbMvpnxm3BaXXU=;
+	s=arc-20240116; t=1791556239; c=relaxed/simple;
+	bh=2YSa4s5fJ+GSSEgSnGDXdt43w+Y+VPwMaSIfrXymp5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T1wlCqfXcx6z1M430w8Dj3tRdRCEI7tjBG0H0DJ82csdUJT07QGavscBXUyf6EI3p0LKsNIaXzyivGM4AwFYfOjwKTPOdDcWSq1aagm6lcoajMHw/DNbrBGTv1tgsj5N4kOKKFWBrIzWrgH27vQL5Hz+a+iGGnIImZHGshJEC/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY97+EoQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t+rix2Wm3AoOWIeMFzi15hLU6i/xBYWmpedcmt1bw0bSoHic5xi3FX22XmqOT1T2/HWd4vomioyYw+vZhJTlEIrr1zHOSgalPFAchzTSLcLTCncfktTHzNm2fHvmm8XECydjrAdv5ddthtW9/nIBDTkJkKqngf84JuCAP59Sgm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkRZYtiF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY97+EoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC8E1F000FF;
-	Fri,  9 Oct 2026 14:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkRZYtiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621431F000FF;
+	Fri,  9 Oct 2026 14:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556235;
-	bh=uUOD1d8k63p0BXfBiiywxlhWeGLzwTn/ewdE6cdxssk=;
+	s=korg; t=1791556237;
+	bh=YtsUT3PX4ibj7LDJl71TbqKCtdcOCb0dE/SwwWjw1Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DY97+EoQuwBPuHT8v/dA5A/6dheaDbiL5sEDmDeHwKS8EUwZrJnkas+g63oPJjS0q
-	 Zu6SG22qf1f+gS2fw5nobnKrzbNwOqrE23qEb7n5wTqKzeb60cy/vKQG0BB2z6hp4P
-	 ZZZmPg+iYYSVn+dwJPZthNcfHz9ylV5h/fmDo17Y=
+	b=SkRZYtiFY4zA3o9BYCe3Fmdm/9p+00MGq/PUBqnXg23nz8EoTnw03o1LHgBEOaowu
+	 OAqtPxvMHtefYf7v+h7G6j+uJYwUi/nJRDdJJLrDixHOl6L44RHHWhQr1HsyPp2wMe
+	 kp2sysSrRcAS2P/c9SIoOdkoWcBfYjVdApDJ8xW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martino Papero <martino.papero@lcb.to.it>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 151/403] Input: atkbd - skip deactivate for Lenovo IdeaPad Slim 3 15IWC11
-Date: Fri,  9 Oct 2026 16:08:32 +0200
-Message-ID: <20261009140955.603313119@linuxfoundation.org>
+	stable@kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Subject: [PATCH 6.18 196/403] tty: serial: qcom_geni_serial: Keep console RX functional after deep idle
+Date: Fri,  9 Oct 2026 16:09:17 +0200
+Message-ID: <20261009140956.714605389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,50 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martino Papero <martino.papero@lcb.to.it>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-commit 3bf8d603fd45649c106cae6290a10f20b1bbb569 upstream.
+commit 63ef71d1474b5417b5b2dec700cd251c44a570d9 upstream.
 
-The internal keyboard on the Lenovo IdeaPad Slim 3 15IWC11 (83RR)
-does not work correctly with the default i8042 settings. Using
-i8042.nopnp=1 and i8042.dumbkbd=1 restores keyboard input, but prevents
-the Caps Lock LED from working. Using i8042.nopnp=1 alone does not fix
-the keyboard.
+At baud rates up to 115200, the serial console uses only a 1 kBps keepalive
+vote for the GENI_TO_CORE ("qup-core") ICC path. This vote keeps the path
+active but does not request a QUP Core 2X clock rate.
 
-The laptop works correctly when atkbd_deactivate_fixup is used instead.
-Add a DMI quirk for the 83RR to enable it.
+When the CPU enters a deeper idle state, the missing Core clock vote can
+leave the console RX path unresponsive.
 
-This was tested without any i8042 command-line parameters. Keyboard
-input and the Caps Lock LED work correctly, including after suspend
-and resume and after a cold boot.
+Use the 19.2 MHz Core 2X vote at low baud rates, while retaining the 50 MHz
+vote at higher baud rates, so that console RX remains functional after deep
+idle transitions.
 
-Link: https://lore.kernel.org/all/4f43465f-98ba-4722-8e29-03df20315369@kernel.org/
-Signed-off-by: Martino Papero <martino.papero@lcb.to.it>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/c0b597b8-e7ad-4fba-a2bb-5d252e3dfbd3@lcb.to.it
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 7cf563b2c846 ("tty: serial: qcom_geni_serial: Add interconnect support")
+Cc: stable@kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-2-f78eb611204e@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1968,6 +1968,14 @@ static const struct dmi_system_id atkbd_
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
-+		/* Lenovo IdeaPad Slim 3 15IWC11 (83RR) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83RR"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
-+	{
- 		/* Xiaomi Book Pro 14 (TM2424) */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1303,9 +1303,8 @@ static int geni_serial_set_rate(struct u
+ 	 * Bump up BW vote on CPU and CORE path as driver supports FIFO mode
+ 	 * only.
+ 	 */
+-	avg_bw_core = (baud > 115200) ? Bps_to_icc(CORE_2X_50_MHZ)
+-						: GENI_DEFAULT_BW;
+-	port->se.icc_paths[GENI_TO_CORE].avg_bw = avg_bw_core;
++	avg_bw_core = baud > 115200 ? CORE_2X_50_MHZ : CORE_2X_19_2_MHZ;
++	port->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(avg_bw_core);
+ 	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
+ 	geni_icc_set_bw(&port->se);
+ 
 
 
