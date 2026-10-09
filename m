@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8F033BBD9;
-	Fri,  9 Oct 2026 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B24F45D910;
+	Fri,  9 Oct 2026 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556267; cv=none; b=HwUZHrWLVh1WT7F3mQqI4jHNZvZc81lIY3lEbgzQ2yIEN+vcig3wN+N7gEKBa070/PHzMJSWPJcF4QGiODfd3JvvHFQol14Np9Vueh5uhda/K9549VvoDMVcXdGxR/Ob7JI3JvL3w3MXPAfRFa4tQRv//38+JayMEi0zvEy37vc=
+	t=1791556269; cv=none; b=W0yOE6oDvpZ4oaajPAHFm99iD6X3D75J37m23PQ5AqC8/s7kDtINtNrcv4rHm0kzKFm2hmCAxaopEBXXWoYOALFExEMvGCyjuRWTJ0QYqubj72XOihDJqU+EPLwU8YV6lOO3nYtZbxoMdAGs7HSWb29P2hyX3eqreiR9Wk3czns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556267; c=relaxed/simple;
-	bh=vKKXV3MWoLjCHvK5q/NKYIwqBovOaQmpepNe5NxW/N4=;
+	s=arc-20240116; t=1791556269; c=relaxed/simple;
+	bh=eu7lr0wRMZBEq+zECwmHMeO7zNbRv/bFJ3vVI0pCbPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YB/zJnuc5SFoW6hVHQRrLQP73MP1azOfd1Vv/XASGMK4OxrfiNk85NpEwmvGC7tWA9WkeBQr3Gnyg6pR8RCJf14qjjNU2pf5aMHjuGlzDUSK5oWjt8fNew3F24jRzt7xAcKzQDmhyf442wW4DiStzo69I4oBEL9VSvIhYk937IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p8ZbcnY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=geThiRmAkO+XoW8aSN+OkMdR7bhOSerW3WYY+GNp1T8q8Gh3w3AqXg87T8jEYJ8sRyS3cfyiVZFw41ozhxctEKvPx7fDEizYfO5EZ5ho+1bbh31dMczmewYF+raDhXqaJkhkm51Y003TKJeoqXIrFWxIpyw1TaprLC4KQ1sQzjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1ZWfU1G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p8ZbcnY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AD61F000FF;
-	Fri,  9 Oct 2026 14:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1ZWfU1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094571F000FF;
+	Fri,  9 Oct 2026 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556265;
-	bh=3tdN30Cvy+CoF85AIVgjInzY/4gP/MUMjqGrOQ1Rbvo=;
+	s=korg; t=1791556268;
+	bh=gd4+ZBEz8lvBSIynpsEWEw5aE05uYavBStf5u6wyZXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1p8ZbcnYjRxp6atqC/Bl6wQIuTuoLWvmG+N7PxvMkHAP2fgpq56t1LaBPLIDnqcb0
-	 1GixoYi5jbqzf/goTtI07Nt/8/8vkq9B0LW2vFWRTverCEDuZs6CMvVyKMdHCErZ/w
-	 J54sGMdmcOYkGxpmUdF1wH7/rebZRY1/oQY34PRM=
+	b=W1ZWfU1GK/TCExrDhZDHXl+kkuH75DNBYTRlys3xn0fG6Ws/mbtiRCVTtDYIVBkt1
+	 mKnCyvfzeuEY8fHKas1Lzmcl85EKa43Hh2W041RI731PmkTGMyZE79petuw3zjVlIy
+	 Ae9ecXOdgLDx7TpV054yL+Nqp7c/NUdFDLNSQdmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 149/428] netfilter: bpf: reject invalid NAT manipulation types
-Date: Fri,  9 Oct 2026 16:08:06 +0200
-Message-ID: <20261009140949.441054214@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 197/403] tty: abort break signalling on hangup
+Date: Fri,  9 Oct 2026 16:09:18 +0200
+Message-ID: <20261009140956.738817062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +46,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 16d464013ec2267b00a83f4bfbb97b3ecc63bfa7 ]
+commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
 
-As bpf_ct_set_nat_info() is not validating the NAT manipulation type a
-wrong value can be passed directly to nf_nat_setup_info(). This triggers
-the WARN_ON() at nf_nat_setup_info() and if panic_on_warn isn't set,
-then IPS_SRC_NAT_DONE is set without adding nat_bysource and conntrack
-cleanup tries to unlink an uninitialized hlist node.
+The break ioctls can race with hangup and end up calling into a tty
+driver for a device that is already gone or powered down.
 
-Fix this by checking that NAT manipulation type is correct before
-calling nf_nat_setup_info(). In addition, if the WARN_ON is hit, return
-NF_DROP instead of continuing with the processing to avoid similar
-situations in the future.
+Drivers must handle this race, but TCSBRK and TCSBRKP should still be
+aborted to avoid calling back into the driver after a user-controlled
+timeout (possibly even after the tty has been reopened).
 
-Reported-by: VEGA <vega@nebusec.ai>
-Fixes: 0fabd2aa199f ("net: netfilter: add bpf_ct_set_nat_info kfunc helper")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that drivers should disable any break state on shutdown so just
+return on hangup (calling break_ctl() again is racy and will most likely
+fail for drivers handling the race).
+
+Fixes: f34d7a5b7010 ("tty: The big operations rework")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_nat_bpf.c  | 3 +++
- net/netfilter/nf_nat_core.c | 5 +++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
+ include/linux/tty.h  |    1 +
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_bpf.c b/net/netfilter/nf_nat_bpf.c
-index f9dd85ccea01b..7572b58c448b4 100644
---- a/net/netfilter/nf_nat_bpf.c
-+++ b/net/netfilter/nf_nat_bpf.c
-@@ -39,6 +39,9 @@ __bpf_kfunc int bpf_ct_set_nat_info(struct nf_conn___init *nfct,
- 	if (proto != NFPROTO_IPV4 && proto != NFPROTO_IPV6)
- 		return -EINVAL;
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -620,6 +620,8 @@ static void __tty_hangup(struct tty_stru
  
-+	if (manip != NF_NAT_MANIP_SRC && manip != NF_NAT_MANIP_DST)
-+		return -EINVAL;
+ 	tty_ldisc_hangup(tty, cons_filp != NULL);
+ 
++	wake_up_interruptible(&tty->break_wait);
 +
- 	memset(&range, 0, sizeof(struct nf_nat_range2));
- 	range.flags = NF_NAT_RANGE_MAP_IPS;
- 	range.min_addr = *addr;
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index be021d8ecc41a..eee3d5427146e 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -773,8 +773,9 @@ nf_nat_setup_info(struct nf_conn *ct,
- 	if (nf_ct_is_confirmed(ct))
- 		return NF_ACCEPT;
+ 	spin_lock_irq(&tty->ctrl.lock);
+ 	clear_bit(TTY_THROTTLED, &tty->flags);
+ 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
+@@ -2458,6 +2460,7 @@ static int tiocgetd(struct tty_struct *t
+  * send_break - performed time break
+  * @tty: device to break on
+  * @duration: timeout in mS
++ * @file: file object
+  *
+  * Perform a timed break on hardware that lacks its own driver level timed
+  * break functionality.
+@@ -2465,8 +2468,9 @@ static int tiocgetd(struct tty_struct *t
+  * Locking:
+  *	@tty->atomic_write_lock serializes
+  */
+-static int send_break(struct tty_struct *tty, unsigned int duration)
++static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
+ {
++	long timeout;
+ 	int retval;
  
--	WARN_ON(maniptype != NF_NAT_MANIP_SRC &&
--		maniptype != NF_NAT_MANIP_DST);
-+	if (WARN_ON(maniptype != NF_NAT_MANIP_SRC &&
-+		    maniptype != NF_NAT_MANIP_DST))
-+		return NF_DROP;
+ 	if (tty->ops->break_ctl == NULL)
+@@ -2480,13 +2484,26 @@ static int send_break(struct tty_struct
+ 		return -EINTR;
  
- 	if (WARN_ON(nf_nat_initialized(ct, maniptype)))
- 		return NF_DROP;
--- 
-2.53.0
-
+ 	retval = tty->ops->break_ctl(tty, -1);
+-	if (!retval) {
+-		msleep_interruptible(duration);
+-		retval = tty->ops->break_ctl(tty, 0);
+-	} else if (retval == -EOPNOTSUPP) {
+-		/* some drivers can tell only dynamically */
+-		retval = 0;
++	if (retval) {
++		if (retval == -EOPNOTSUPP) {
++			/* some drivers can tell only dynamically */
++			retval = 0;
++		}
++		goto out_unlock;
++	}
++
++	timeout = msecs_to_jiffies(duration);
++	timeout = wait_event_interruptible_timeout(tty->break_wait,
++						   tty_hung_up_p(file),
++						   timeout);
++	/* return early on hangup only */
++	if (timeout > 0) {
++		retval = -EIO;
++		goto out_unlock;
+ 	}
++
++	retval = tty->ops->break_ctl(tty, 0);
++out_unlock:
+ 	tty_write_unlock(tty);
+ 
+ 	if (signal_pending(current))
+@@ -2754,10 +2771,10 @@ long tty_ioctl(struct file *file, unsign
+ 		 * This is used by the tcdrain() termios function.
+ 		 */
+ 		if (!arg)
+-			return send_break(tty, 250);
++			return send_break(file, tty, 250);
+ 		return 0;
+ 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
+-		return send_break(tty, arg ? arg*100 : 250);
++		return send_break(file, tty, arg ? arg * 100 : 250);
+ 
+ 	case TIOCMGET:
+ 		return tty_tiocmget(tty, p);
+@@ -3117,6 +3134,7 @@ struct tty_struct *alloc_tty_struct(stru
+ 	init_ldsem(&tty->ldisc_sem);
+ 	init_waitqueue_head(&tty->write_wait);
+ 	init_waitqueue_head(&tty->read_wait);
++	init_waitqueue_head(&tty->break_wait);
+ 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
+ 	mutex_init(&tty->atomic_write_lock);
+ 	spin_lock_init(&tty->ctrl.lock);
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -230,6 +230,7 @@ struct tty_struct {
+ 	struct fasync_struct *fasync;
+ 	wait_queue_head_t write_wait;
+ 	wait_queue_head_t read_wait;
++	wait_queue_head_t break_wait;
+ 	struct work_struct hangup_work;
+ 	void *disc_data;
+ 	void *driver_data;
 
 
