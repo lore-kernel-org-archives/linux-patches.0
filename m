@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE1B399CE9;
-	Fri,  9 Oct 2026 14:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E593B582F;
+	Fri,  9 Oct 2026 14:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555737; cv=none; b=LafmTfejmS9KFhaXo/Cst8DWC6YZ+eLNMzGZ0QWgFB7Ym9VExautNtQlyCdO+GKn+Lq5AeREcdJjld0UPDtEaXm3145UQbnslsHltaV0dC42JHzIBhBUZJSxAhtV5G05/hvkSl+z4Ewo0bgtzYUovWhkL6NYtWcQsL+Sivscbzs=
+	t=1791555739; cv=none; b=Ixz1rT2111ZxYQKwevYAoBQ4wwkyzdGPZYHlRJqDAUswj4Uq1xpcEHx2fLleEhf7feO3Fnd9bf6lC447gTksHKWgcLjiJl3uKQrGJDB6mZo2ykS4zCwj7bXkhYtoYe9wxmp8wGNAkVkQTYC2DhdTC1y4osWOo1l14cpmdd6cURU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555737; c=relaxed/simple;
-	bh=hI4IHgsVBpD+Aurnl9Y1oj3A3EQw5L+PM/2B5LciXfM=;
+	s=arc-20240116; t=1791555739; c=relaxed/simple;
+	bh=h/5AXvDzuwBz2FQkKGPNLYSY9ws0XDPGdzGwvhJh4M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLATyd5GTikr95pN9dRMfSIZZ3wKL5su9COQ69aFnKm9V0aHdx49+WPInhxCG7jqCl5XR6vRc9ay438SrZzUpRI4zICfni92PLC31B7Na2134AqdGRmWeUfUopYsnJLpxcLUnM7rK5WD+rU8Y0P8jn4ngjgFJjJpLX2KkXMRxmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKm5itUz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6Cl1gs85YHRDrW7O1+YGDP49O3oiCp7CKSWn08lejyjHHu8SKHvGkam80wBtCm92nKP9E1Wt9ukxayG6Jpty/xxwqc8/fC/0MDFWLFH3KGWHfm7zsJGtRrdYNvolHl1eLvFsvF94lN9xzfWT8GzeV95YiC98LffOKudV2jDXFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVtsCA3U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKm5itUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5D91F000FF;
-	Fri,  9 Oct 2026 14:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVtsCA3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0B51F000FF;
+	Fri,  9 Oct 2026 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555735;
-	bh=FQq3X9Si6uzFXUmYxM+22qnkhYw3h59n7dWePURqI28=;
+	s=korg; t=1791555738;
+	bh=EueAFmKyJMEFpqUZLikErYLnZtczLO4x1Z+iUbWBgss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKm5itUzg5x0hN2Zd3HVuvVBukWn2/UvNwQ8ehNtS42IsJFwUNI1Kb7vGSvmmW9i0
-	 +c3DQLaVsJNo+zDzDs7yyZcFRT6c8T3PQlS5k9bl74P9LdCSYdtP2xWu2WLewjB9bn
-	 x6T8bZQDNez7A1T+GvX/NEDXMUpoZSMqBthrngVo=
+	b=sVtsCA3U+in/2yRDYt8Bh2xrSZBMxq9BbWgoDxuN5KrbuI1ci4mcyjlNlG+F74xUu
+	 rKBOftiZZyXF/s0sR3yf6ftLtOt0Ygq9BBcbp/okGmUbFkZiNHoJnW5bSGdeUjZ+Bx
+	 59Z9l2kFvdG9bqZMz1M2gno/hGsm7u21m6RdZ4EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 7.2 021/428] fprobe: Use guard(rcu_sched_notrace) and check rcu_is_watching()
-Date: Fri,  9 Oct 2026 16:05:58 +0200
-Message-ID: <20261009140946.526014948@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: [PATCH 7.2 057/428] mm: shmem: ignore sysfs configs for shmem forced collapse
+Date: Fri,  9 Oct 2026 16:06:34 +0200
+Message-ID: <20261009140947.387798262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,133 +61,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit e0a6249190402a28f1e2925a81acf573157d55ef upstream.
+commit 72c3d682c165b836b54a3d07a01f72e39c47022c upstream.
 
-unregister_fprobe() and unregister_fprobe_async() (used by BPF
-kprobe-multi) rely on standard RCU grace periods (synchronize_rcu()
-and call_rcu()) to wait until in-flight fprobe handlers complete before
-freeing the fprobe.
+According to Documentation/mm/transhuge.rst, MADV_COLLAPSE is expected to
+ignore any THP or mTHP interface settings.
 
-However, if an fprobe handler executes while RCU is not watching (such
-as in the idle loop or nohz_full extended quiescent states), standard
-RCU does not track preemption-disabled sections. Consequently,
-synchronize_rcu() does not wait for those executions, which can lead
-to a use-after-free if the fprobe is freed immediately after
-unregistration. Ensure handlers exit early when !rcu_is_watching().
+However, after commit 26c7d8413aaf ("mm: thp: support "THPeligible"
+semantics for mTHP with anonymous shmem"), performing MADV_COLLAPSE on
+shmem will depend on /sys/.../hugepages-2048kB/shmem_enabled being set to
+"inherit" (although that is the default), which can cause MADV_COLLAPSE to
+fail unexpectedly.
 
-Furthermore, fprobe_fgraph_entry() and fprobe_ftrace_entry() previously
-used guard(rcu)() and rcu_read_lock(), which invoke lockdep on every
-hit under CONFIG_PROVE_LOCKING. This adds overhead and can cause lockdep
-recursion if probed functions interact with lockdep.
+This could cause a userspace-visible performance regression.
 
-Since rhltable_lookup() and rhl_for_each_entry_rcu() use
-rcu_dereference_all_check() (which checks rcu_read_lock_any_held()),
-holding preemption disabled via rcu_read_lock_sched_notrace() is fully
-valid and sufficient so long as rcu_is_watching() is true.
+Fix this by returning the result of shmem_huge_global_enabled() directly
+when MADV_COLLAPSE is requested, allowing PMD-order collapse while
+ignoring shmem THP/mTHP settings.
 
-Define and use guard(rcu_sched_notrace)() across fprobe_ftrace_entry(),
-fprobe_fgraph_entry(), and fprobe_return(). This eliminates fast-path
-rcu_read_lock() and lockdep overhead while guaranteeing safe grace
-period synchronization.
-
-Link: https://lore.kernel.org/all/179064115227.394389.16910234241400391996.stgit@devnote2/
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-e46bcd68-4a56-4f19-a255-e3772980e5e3
-Fixes: 657b594b2084 ("fprobe: Fix unregister_fprobe() to wait for RCU grace period")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/063f655b4d6c4234f3aa27ed6ecab10283ecb880.1789351825.git.baolin.wang@linux.alibaba.com
+Fixes: 26c7d8413aaf ("mm: thp: support "THPeligible" semantics for mTHP with anonymous shmem")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Closes: https://lore.kernel.org/all/20260908125105.1510704-7-kirill@shutemov.name/
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Acked-by: Qi Zheng <qi.zheng@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |   26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ mm/shmem.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -47,6 +47,10 @@ static struct rhltable fprobe_ip_table;
- static DEFINE_MUTEX(fprobe_mutex);
- static struct fgraph_ops fprobe_graph_ops;
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1831,8 +1831,11 @@ unsigned long shmem_allowable_huge_order
  
-+DEFINE_LOCK_GUARD_0(rcu_sched_notrace,
-+		    rcu_read_lock_sched_notrace(),
-+		    rcu_read_unlock_sched_notrace())
-+
- static u32 fprobe_node_hashfn(const void *data, u32 len, u32 seed)
- {
- 	return hash_ptr(*(unsigned long **)data, 32);
-@@ -329,16 +333,14 @@ static void fprobe_ftrace_entry(unsigned
- 	struct fprobe *fp;
- 	int bit;
+ 	global_orders = shmem_huge_global_enabled(inode, index, write_end,
+ 						  shmem_huge_force, vma, vm_flags);
+-	/* Tmpfs huge pages allocation */
+-	if (!vma || !vma_is_anon_shmem(vma))
++	/*
++	 * Tmpfs huge pages allocation or forced collapse ignores
++	 * sysfs configs.
++	 */
++	if (!vma || !vma_is_anon_shmem(vma) || shmem_huge_force)
+ 		return global_orders;
  
-+	if (!rcu_is_watching())
-+		return;
-+
- 	bit = ftrace_test_recursion_trylock(ip, parent_ip);
- 	if (bit < 0)
- 		return;
- 
--	/*
--	 * ftrace_test_recursion_trylock() disables preemption, but
--	 * rhltable_lookup() checks whether rcu_read_lcok is held.
--	 * So we take rcu_read_lock() here.
--	 */
--	rcu_read_lock();
-+	guard(rcu_sched_notrace)();
- 	head = rhltable_lookup(&fprobe_ip_table, &ip, fprobe_rht_params);
- 
- 	rhl_for_each_entry_rcu(node, pos, head, hlist) {
-@@ -353,7 +355,6 @@ static void fprobe_ftrace_entry(unsigned
- 		else
- 			__fprobe_handler(ip, parent_ip, fp, fregs, NULL);
- 	}
--	rcu_read_unlock();
- 	ftrace_test_recursion_unlock(bit);
- }
- NOKPROBE_SYMBOL(fprobe_ftrace_entry);
-@@ -574,10 +575,13 @@ static int fprobe_fgraph_entry(struct ft
- 	struct fprobe *fp;
- 	int used, ret;
- 
-+	if (!rcu_is_watching())
-+		return 0;
-+
- 	if (WARN_ON_ONCE(!fregs))
- 		return 0;
- 
--	guard(rcu)();
-+	guard(rcu_sched_notrace)();
- 	head = rhltable_lookup(&fprobe_ip_table, &func, fprobe_rht_params);
- 	reserved_words = 0;
- 	rhl_for_each_entry_rcu(node, pos, head, hlist) {
-@@ -672,13 +676,16 @@ static void fprobe_return(struct ftrace_
- 	int size, curr;
- 	int size_words;
- 
-+	if (!rcu_is_watching())
-+		return;
-+
- 	fgraph_data = (unsigned long *)fgraph_retrieve_data(gops->idx, &size);
- 	if (WARN_ON_ONCE(!fgraph_data))
- 		return;
- 	size_words = SIZE_IN_LONG(size);
- 	ret_ip = ftrace_regs_get_instruction_pointer(fregs);
- 
--	preempt_disable_notrace();
-+	guard(rcu_sched_notrace)();
- 
- 	curr = 0;
- 	while (size_words > curr) {
-@@ -694,7 +701,6 @@ static void fprobe_return(struct ftrace_
- 		}
- 		curr += size;
- 	}
--	preempt_enable_notrace();
- }
- NOKPROBE_SYMBOL(fprobe_return);
- 
+ 	/*
 
 
