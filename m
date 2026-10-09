@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214E4E73A1;
-	Fri,  9 Oct 2026 14:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637C3F54BD;
+	Fri,  9 Oct 2026 14:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556219; cv=none; b=KT+bq9CUrVS4v3tYnPtfoXjZMZPQMDG6tYw6CipfUztrNi0ZlpDdPcEk0Ivt2BoBEDUep60eAxIwXQUCc/Abhkg7au0F7aP9HID1EBzLtvwqUw7c1nSxednZNSzbmABhHgQUR4cKAe3Yv52on9sZAfeklHJykg5HcKz6qTYuSHQ=
+	t=1791556222; cv=none; b=EH/EXAM7/bnuCRV0fj6KgoUQWw11wRLNokMyHTNo1S5UytxJIgfENLMD1ekEG647A67RrRfIircvstxERYKYTsSnhdSB0bYD6djdJcOGraR9QYiYgxNLch5jf1zYoFMchyO31LZNxhqSVARh2lKh5ty2427LNU7RWFqdC6uEaQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556219; c=relaxed/simple;
-	bh=arl7S9E5+NL5Ef+vgyIPYL/lPUD2N8uhkAubv7uQxAw=;
+	s=arc-20240116; t=1791556222; c=relaxed/simple;
+	bh=9ngTKZu2NDEVIoCzHK3UiBoXIJBZ+C7d75L16a8Yg4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyUVHy66j7wL6nEtmW7vwYkCxMeqI2Ck8y91zB9eQDPfLx8RmXn8oPZ6iQxv3lNoRDhw53x/z+Ai672QtKr6TSE5fHgk+2Sm3wLLI3TPP6k+RzfO2f5n0kP7rDxl6zBxrC1bD+ExAB1Yizq5qiIuKmjSXFDIdJqO/f6CvjGb7Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM6x68qo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BF1T10XWEfrbYS8vnkNxMOdINHpgfUrhY2EQmNXpW4YdYygcmy8FsTQpMX91WHNwjowkgNUDMKYOZz8ghmVwOnBW6KCN/blyDKPhd9h2McQcZF3EkA1g+D6dmOxIhnOnrSSl2gVKbzevsmhOnQGw5SHRBb1AHQcVSPLCtFnllzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZtS3SAC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM6x68qo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD49D1F000FF;
-	Fri,  9 Oct 2026 14:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZtS3SAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BFC1F000FF;
+	Fri,  9 Oct 2026 14:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556218;
-	bh=XYj32oGQW7niK6tCBTOmug+YuTLWxuSa7FN/Li7Vbi8=;
+	s=korg; t=1791556221;
+	bh=Qj6jB1u75BUts+ideaiqrka1fYfBxw6lcADlEAXYGMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zM6x68qoH47hx8bQqw4sWkdFdGju1eH0sM5oYu15FOM2ZfIsP+T8SYw7R+SSPXQN0
-	 y5mPjuClTSOFoLPBpHiHKgnYqjO8FwIKzXmw3rIimxBH5UXKXPvIOjODsMcNKYBw/t
-	 FInGGKH3QZXqelZQFHhEHyoAMUvrSR/g5LyVBPTU=
+	b=yZtS3SACGmF6/VQcz083BiyQKIdvhvp75SQt7yQlF/otIh81OvjwzC2rRctmo8+7m
+	 O31/bgjI6BwwHQ7Swip/uldxqZEwNE7lhnUaQMkRUuuL1IAcc2l77529RuRdDxu4zs
+	 o3NR7gtrJDxPEdDQ7ceQp42gT+iUMXunn1rGg6EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Joshua Rogers <linux@joshua.hu>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.18 193/403] tty: vcc: hold port lock when clearing tty pointer in vcc_cleanup
-Date: Fri,  9 Oct 2026 16:09:14 +0200
-Message-ID: <20261009140956.640938596@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 157/403] rust_binder: cancel deferred work items in thread exit
+Date: Fri,  9 Oct 2026 16:08:38 +0200
+Message-ID: <20261009140955.748524977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,36 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 03b49c991abb8d021ca6fe51cd173447236b0552 upstream.
+commit 62479b6e5df82cbdf3c4145130928f233fae78fb upstream.
 
-vcc_cleanup() sets port->tty to NULL without holding port->lock, racing
-with vcc_event() LDC callbacks that read port->tty under port->lock and
-then use tty->port. This can cause a use-after-free when the callback
-dereferences tty->port after cleanup has already destroyed and freed it.
+If there are deferred work items on the thread todo list, then they are
+not cleaned up in the Thread::release() method. Thus, update the code to
+clean up the work items even if they are deferred.
 
-Assisted-by: AISLE:Snapshot
+This can happen if the thread dies while it has an active outgoing
+transaction.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260803-aisle-tty-vcc-v2-2-a50bc9b15193@linuxfoundation.org
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260903-binder-exit-get-work-v1-1-2d6129a238df@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vcc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/android/binder/thread.rs |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/vcc.c
-+++ b/drivers/tty/vcc.c
-@@ -986,7 +986,8 @@ static void vcc_cleanup(struct tty_struc
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -656,6 +656,12 @@ impl Thread {
+         self.inner.lock().push_return_work(reply);
+     }
  
- 	port = vcc_get(tty->index, true);
- 	if (port) {
--		port->tty = NULL;
-+		scoped_guard(spinlock_irqsave, &port->lock)
-+			port->tty = NULL;
++    pub(crate) fn pop_work_even_if_deferred(&self) -> Option<DLArc<dyn DeliverToRead>> {
++        let mut thread_inner = self.inner.lock();
++        thread_inner.process_work_list = true;
++        thread_inner.pop_work()
++    }
++
+     fn translate_object(
+         &self,
+         obj_index: usize,
+@@ -1606,7 +1612,7 @@ impl Thread {
+         self.unwind_transaction_stack();
  
- 		if (port->removed) {
- 			vcc_table_remove(tty->index);
+         // Cancel all pending work items.
+-        while let Ok(Some(work)) = self.get_work_local(false) {
++        while let Some(work) = self.pop_work_even_if_deferred() {
+             work.into_arc().cancel();
+         }
+     }
 
 
