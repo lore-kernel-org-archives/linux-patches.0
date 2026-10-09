@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0393235BDDB;
-	Fri,  9 Oct 2026 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30C04E4C35;
+	Fri,  9 Oct 2026 14:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557333; cv=none; b=f9xsgJtoM/xfttwM0HuaCVfi2teDYSaw6ix/eZpWa80oYHga2cX+sPDAPeqeTemdMWi4ZHTDe14H1GB6z0rpujJH2ZEmmL2PwkIHJNvy/3KfN+NtlSCc/dH+/M8C/VHu8RDqAoWcPHfhj7pb/t/GdAI2UdbymdOKReSypeBm1HQ=
+	t=1791557335; cv=none; b=A6t6SsfMPbaOAE1mTzQYSmumb9H8/RnosNSv0d4P6ct4S/EtGS2UBv9O8G9h9ZoT9zXrLVaeyzpTfYWOISBau44lLsEFmDNMKbltYn7xBJHvqVV8dY+Ffq+UGGOIjnUF7jBUnaeR1SqkxsAgtbCJrE38+0MHDDo/AXHJjWCBziw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557333; c=relaxed/simple;
-	bh=1kEHt6L+Bn0RKJE7IeBM4mWXhZwZpMVGqvHZy4S3ONw=;
+	s=arc-20240116; t=1791557335; c=relaxed/simple;
+	bh=iTLpU/hrsJ9NFPpbyiFmWZ4z4AX/QvQAjhhGVgOodrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEraGVAIIrZUpvPpUOZwHLe80d6ZYvNTmvcoqJ0xlbtnvfVqCRqLhr9aweyjagbimZF9ZWep0ma172XAiz4zYxkRKD+3VSx4rOcZ511KrpJUoii2Sdh4KtP+0NTQkpvw+C2Q/YYBj6Z+OKwq2/m8UUb2Rnz9aScSJt8hbHwOMZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVVahtmp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eEHrzPo6QLtoMRgRhh4ehm1O2R4GJQsbbRG00YqvUOUVRkUozat/Ul3Hx75BH4f5aqVBjF6YZ/Q+uMykiD0i/tzCYks6frMlDXBPWKLL0GUNhR0OGGDzTClvSuJVCj6CwjFsjFlWrCKLwakM19bsF14X6ioFpdKHEuwcHsZmPVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPZCFJxp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVVahtmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E241F00893;
-	Fri,  9 Oct 2026 14:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPZCFJxp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A65A1F000FF;
+	Fri,  9 Oct 2026 14:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557331;
-	bh=XbHbjxyClkYBNZTObBzxJPJWQflz1FA2lF0hMAl7jYU=;
+	s=korg; t=1791557334;
+	bh=tV729A6j+iQVVzo5upyAukParvaGM4Wv1xkI3NwgRq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VVVahtmpfOaw0g0mjdf1HbfGjHCSrRxI0vaJWgyM2EFg7ErOJzrZmc/kkBFJcN6sd
-	 BQWTleeljr8JTkib6gJwIV4fakID5oLypqAQanqYbfradTA9vcd9wJSQZ/lYtBXlJC
-	 XQ7dztWtsV8u18TDMlXwFO2qGikdOOPJgzl36Cic=
+	b=PPZCFJxp7ZZV+wVuf6vtUhnO5IcMA6qHwI+b1NGxPxw7aRw2SOLUBElteo6Bf/ozn
+	 nzL+hwUBdeLACA6aJuc0B0fmC05EaJLkRBsyKRHf5i9rQXOT6CrGuL1/gARhdJbFFh
+	 PmzwNnqFNvwEOGo/HP4xEJwpTRm253DwGDHDvVo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 357/403] nvmet: copy the hostid into the ctrl before creating PR pc_refs
-Date: Fri,  9 Oct 2026 16:11:58 +0200
-Message-ID: <20261009141000.632994888@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Carrat?= <jeremy.carrat@icloud.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.2 339/428] USB: serial: cp210x: add Corsair AX1500i Power Supply
+Date: Fri,  9 Oct 2026 16:11:16 +0200
+Message-ID: <20261009140953.593642181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Jérémy Carrat <jeremy.carrat@icloud.com>
 
-[ Upstream commit 5211fed41d7ec90e9ab7239dc4bffffe4d0b2b62 ]
+commit d84e27d87738634b92001500435ae4dadba10a13 upstream.
 
-Commit 6202783184bf ("nvmet: Improve nvmet_alloc_ctrl() interface and
-implementation") added a second uuid_copy() of args->hostid near the end
-of nvmet_alloc_ctrl(), and commit 7b658153f1b8 ("nvmet: Remove duplicate
-uuid_copy") removed the original copy that sat before
-nvmet_ctrl_init_pr() instead of the new one.
+The Corsair AX1500i power supply exposes its Corsair Link monitoring
+interface on a mini-USB port through an on-board CP2103, using a
+Corsair-specific product ID. Without the ID in the table no driver binds
+and no tty is created.
 
-Since then nvmet_ctrl_init_pr() snapshots ctrl->hostid into the
-per-controller per-namespace reservation refs while the uuid_copy()
-from the connect data runs later, after the controller is published.
-The ctrl is allocated with kzalloc(), so every pc_ref created on this
-path stores the nil UUID.
+Tested by forcing the driver association with
 
-pc_ref->hostid has a single consumer: nvmet_pr_set_ctrl_to_abort()
-matches it against the preempted registrant's hostid to kill and drain
-the victim's in-flight I/O for Preempt and Abort.  The match can never
-hit with the nil UUID, so whenever a namespace with reservations
-enabled exists before a host connects, which includes every reconnect,
-Preempt and Abort silently degrades into a plain Preempt: the
-preempting host sees success while the victim's in-flight I/O is still
-in the air.
+  echo 1b1c 1c02 > /sys/bus/usb-serial/drivers/cp210x/new_id
 
-Copy the hostid where the rest of the connect data is consumed, before
-the controller is published and before nvmet_ctrl_init_pr() takes its
-snapshot.
+and then setting the serial port to 115200 8N1. Adding the ID is sufficient
+to talk to the device: the tty reaches a USB-to-SMBus bridge sitting behind
+the UART, which identifies itself as "USB to SMB Bridge (Firmware by Ross
+Fosler)" version 0.9 and relays PMBus reads to the power supply controller.
+Input voltage and current, input and output power, internal temperature and
+fan speed were all read back on an AX1500i.
 
-Fixes: 7b658153f1b8 ("nvmet: Remove duplicate uuid_copy")
+  [    7.806181] usb 3-14: New USB device found, idVendor=1b1c, idProduct=1c02, bcdDevice= 1.00
+  [  698.526754] usbcore: registered new interface driver cp210x
+  [  698.526767] usbserial: USB Serial support registered for cp210x
+  [  698.527863] cp210x 3-14:1.0: cp210x converter detected
+  [  698.529263] usb 3-14: cp210x converter now attached to ttyUSB0
+
+The related AX1600i (1b1c:1c11, iProduct "USB API") is expected to be the
+same kind of device but has not been tested here, so it is not added.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jérémy Carrat <jeremy.carrat@icloud.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1633,6 +1633,8 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(stru
- 
- 	memcpy(ctrl->subsysnqn, args->subsysnqn, NVMF_NQN_SIZE);
- 	memcpy(ctrl->hostnqn, args->hostnqn, NVMF_NQN_SIZE);
-+	if (args->hostid)
-+		uuid_copy(&ctrl->hostid, args->hostid);
- 
- 	kref_init(&ctrl->ref);
- 	ctrl->subsys = subsys;
-@@ -1689,9 +1691,6 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(stru
- 	nvmet_debugfs_ctrl_setup(ctrl);
- 	mutex_unlock(&subsys->lock);
- 
--	if (args->hostid)
--		uuid_copy(&ctrl->hostid, args->hostid);
--
- 	dhchap_status = nvmet_setup_auth(ctrl, args->sq, false);
- 	if (dhchap_status) {
- 		pr_err("Failed to setup authentication, dhchap status %u\n",
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
+ 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
+ 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
++	{ USB_DEVICE(0x1B1C, 0x1C02) }, /* Corsair AX1500i Power Supply */
+ 	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
+ 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
+ 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
 
 
