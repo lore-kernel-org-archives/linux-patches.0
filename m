@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECDC3431F5;
-	Fri,  9 Oct 2026 14:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42DD3B19DE;
+	Fri,  9 Oct 2026 14:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556080; cv=none; b=s3jA3n/T+Xz9hoGBX8du5fgswgpERKcm6OR65TyvLK9z2Lox+UF8AC3k33G4Z7sge/3y+dGo5O/9QON5gjpBR7JKmuGiEPOjxVfnk7o9TigB/Ljx5ZXWAez4XmsuyGR/jAt28xg5qpgWU0aUwtx6/g4dGeJYvREZb5es06Xyqpo=
+	t=1791556082; cv=none; b=QupnJKhyhBjk+vf0hOF0+QYLvDDG3QizPpI76aS8A+XF5eVCvNo6NNABSK/Lf0eZityhkkj2SThON6ZfO78xyjatPeWwR7tMJW30p8+zLNrTivoXvPEig92ogv2ruV7XkwWRs9sDVsdMR7DHn+ssCKgk4PEpd46KgpP0QFXfwFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556080; c=relaxed/simple;
-	bh=vtrsybf1oyoZKZthb4bkpsd4eJHeyr9L6DjOA5E/Fl4=;
+	s=arc-20240116; t=1791556082; c=relaxed/simple;
+	bh=Vi8DIFbcok3Ar37t4NuHfID35tNClsHi5NAUUqVCslo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UpoG2MBAU6L5ISFhXPS5M6kPbOV/+qBn//a2xh5E82ZqUR7mehPaiHQ3k9vArgfM3t1pv5laB8G84NovgZRnLxDLDlGq2ptRJGKLMO4DJS2BjIlGJtZ//jKinc8QEJMshT4DCWc5+ly2ezQScRHdZIenFabeIHEYwJmoGqpr3as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLCz2bet; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DehO6DPaKN3E/II9aWR99QgaFGwOafmCtetuQtsExiUGdBcuk62ch1BI2xteyjnOUrqUWS7c1IrUi+4pd6eg7DESYpd/P6QMrZXrsD8BHXPCMw/IqbNkMoesjTM6YMBuFLGbBG3uDmNWJ0Mj74u6cGyNANV9eQBCHHt9wvIYrEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nesjy7td; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLCz2bet"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAD31F000FF;
-	Fri,  9 Oct 2026 14:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nesjy7td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3951F000FF;
+	Fri,  9 Oct 2026 14:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556079;
-	bh=n0HECNfIgAGA6s26iZLJDgE5ZeOXUIN2tEfP9KrKH94=;
+	s=korg; t=1791556081;
+	bh=u8M/xGPrYJVLAQL9PZrbFqx8ThIhWnfPlEAqYP1NVLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLCz2betEmwL4VFU0S57hS3iiSCCvXmjIWaY3AChMakVgriDv70Kadxv3iRXcps1l
-	 z2UaNWrgcqH/XoyULR8hJuJurEK8sF1v8FXD8v4kVO5hTH6RF7djH2Kfx/dIACNo8d
-	 9dDV8kNWys89U5TC8CFNn3MDjJvaUFdSv3eOCEsE=
+	b=Nesjy7tdy7zibD8e6VX8iyhKUWKt0Z2GtFsVZw2CqkIbHoSqhVX4dIsAMPckd/zRX
+	 /xtxO5QasWVPmME1ISuFc15fL8/4nX8WZ0XVxtrLTN75PWvYjICdxACOAqLMN83g+B
+	 +z034Fq2ugGN5LwywUhf7S0Uz2C3eyZhitcLiJhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Wajdeczko?= <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 117/428] drm/xe/pf: Keep VF LMEM BAR size low if no VFs enabled
-Date: Fri,  9 Oct 2026 16:07:34 +0200
-Message-ID: <20261009140948.767091826@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Ivy Lopez <skunkolee@gmail.com>
+Subject: [PATCH 6.18 171/403] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
+Date: Fri,  9 Oct 2026 16:08:52 +0200
+Message-ID: <20261009140956.108989434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-[ Upstream commit 72207463f7a4a6818a88f4ef57802b42da534301 ]
+commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
 
-When VFs are enabled on dGFX the driver resizes the PF VF_LMEM_BAR to
-fit the requested layout. After VFs are disabled the PF VF BAR
-size is left as-is. On platforms with tight MMIO apertures a
-subsequent unplug/rescan followed by another enable may fail with:
+generic_set_cmd() and generic_get_cmd() use the low nibble of
+ctrl->bRequest as an index into con->data[]:
 
-  "VF BAR …: can't assign; no space"
+    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
+    ...
+    con->data[cmd] = value;            /* OOB when cmd >= 5 */
 
-because the PCI core reserves address space based on the (now large) VF
-template, often multiplied by totalvfs.
+struct usb_audio_control (include/linux/usb/audio.h) declares data as
+a 5-element array, so indices 5 through 15 write (or read) up to 44
+bytes past the end of the array on the heap.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5937
-Fixes: 94eae6ee4c2d ("drm/xe/pf: Set VF LMEM BAR size")
-Signed-off-by: Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>
-Cc: Michał Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Michał Winiarski <michal.winiarski@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patch.msgid.link/20260918110130.700332-1-marcin.bernatowicz@linux.intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 0646547a67d25c407f5a4ac71b4eefe8b941202b)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A malicious USB host can craft a class-specific SET_CUR / GET_CUR
+request with an arbitrary bRequest value, triggering the out-of-bounds
+access from an IRQ completion handler with no further preconditions.
+
+Add an ARRAY_SIZE() guard to both functions.
+
+Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
+Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pci_sriov.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci_sriov.c b/drivers/gpu/drm/xe/xe_pci_sriov.c
-index c023a2a1fc171..31abcee552115 100644
---- a/drivers/gpu/drm/xe/xe_pci_sriov.c
-+++ b/drivers/gpu/drm/xe/xe_pci_sriov.c
-@@ -177,6 +177,7 @@ static int pf_enable_vfs(struct xe_device *xe, int num_vfs)
- 	return num_vfs;
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -797,6 +797,9 @@ fail:
  
- failed:
-+	pf_resize_vf_vram_bar(xe, xe->sriov.pf.device_total_vfs);
- 	xe_sriov_pf_unprovision_vfs(xe, num_vfs);
- 	xe_pm_runtime_put(xe);
- 	pf_finish_vfs_enabling(xe);
-@@ -204,6 +205,8 @@ static int pf_disable_vfs(struct xe_device *xe)
- 
- 	pci_disable_sriov(pdev);
- 
-+	pf_resize_vf_vram_bar(xe, xe->sriov.pf.device_total_vfs);
+ static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
 +
- 	xe_sriov_pf_reprovision_default(xe);
+ 	con->data[cmd] = value;
  
- 	pf_reset_vfs(xe, num_vfs);
--- 
-2.53.0
-
+ 	return 0;
+@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
+ 
+ static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	return con->data[cmd];
+ }
+ 
 
 
