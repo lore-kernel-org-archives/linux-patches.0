@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BBF3EC805;
-	Fri,  9 Oct 2026 14:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C6D3D8903;
+	Fri,  9 Oct 2026 14:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556289; cv=none; b=SFkpyztLAxRcld489yY7U4/9v/Kaqlvs4G0Akgyvv3aUZ7R5OwJGahUPs4EpNymVcflOKGfuEAsA8I+3p1c0zlvsUD0+KWwhrNZeXD7EG6ud3AUG6GNRwb/Otgb9Ypn/tNIS2EBo/9It9+EHIlRc+F1bGQ5N3d4lPdQb+2Jm6jw=
+	t=1791556292; cv=none; b=Gr9ikx2ac6ZnVHGnPp10Gx+sXPi1CyhPgmLuNnhCZvvfKJuxQy51/uBVF4juhmBucJs9xsxbAgqzwqXzUf6qj5MMqiLYSRZABq2iZxu4CJuvhSleX1942o6PGdPMindNbBdCy8SmCfzcFkO7YpDdtvrs0mpRC29+eC4h8C1zA9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556289; c=relaxed/simple;
-	bh=00Vtl3kbOqwtmpqZOSHAFpQFd0fAIHRgTTsFluMXf10=;
+	s=arc-20240116; t=1791556292; c=relaxed/simple;
+	bh=kaoDcc3zbahf0xi2NH9mD0UARQVn+wSe1Aq0rJcem3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFtUWZponsnZcV4k2Q/lDWSlQLUpC1MW1MJBlKW0J9mDRO5K7mkeMPCGW2dgmDqnW2s+6k8Hl3yljn+M0N/fTYUP7U+ZTvwns0eX7741ZQ/ekjziBsiNo+yDCrzZeW6A7G1U6qy1U1ja2EPfjuxpjxL4GC0+7ZwjnrtVQ/U77lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m27Pltw6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mMRBpovhqLmoAf3kHBX2L/fw64uOz78t2RfzBybcBZVLKIYKXDyvVjwZO017NfC7LZ/qDdAVTRYxdf6fGdxBtS/p+KKDiAcHZFw/2/g1bTfoobduownvDk5AwJYHyEM0eGjFGYncVSVInsy57Q4TmhMEEGI1HpV0gQrkYkSEp88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdIt/UUk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m27Pltw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE9B1F000FF;
-	Fri,  9 Oct 2026 14:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdIt/UUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EB41F000FF;
+	Fri,  9 Oct 2026 14:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556288;
-	bh=eeKLj3Tr4fF5LjKyl7qDlFigAciVvsPTlK1ExEGrIwU=;
+	s=korg; t=1791556291;
+	bh=meI03fxC3+mSEH3qBcEWaFoDssq9rF6LiE1k6Odt5K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m27Pltw6VJcnJQFxO0ieXVq9jJVXbyYf1tyosGsnc/7jbYNVkTfvSbgXFbKe29r+t
-	 ZKPgnplN9UVVjzcG5hCjeC44zx2OEYQkpPgYbMn9ziFldIanc2n+BOYnlBr3+fmAjY
-	 pi9598QrhXfiLlS5YMV1ETgs3o/Pq1BQf+MbQB70=
+	b=EdIt/UUkh/OejZEjpQcp3LvTyspRvricL2Hwe/bpz0EuUkY23+gGAwflxaOXpHPQI
+	 V5Lc31r6zUVkR3AKcEosrPKRHHh+1E5tgu2wG4FB0DGhGrLV7P8N3cWyU9bTTSWGZV
+	 Q61gscqAmB+51C0Y7rVlAexLPnXitlORfXn52TYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 210/403] ASoC: codecs: rt1017-sdca-sdw: fix uninitialized stream_config->type
-Date: Fri,  9 Oct 2026 16:09:31 +0200
-Message-ID: <20261009140957.051870951@linuxfoundation.org>
+	Quentin Freimanis <quentin@q-lab.dev>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 153/428] net: sparx5: make ports inherit the switch base mac address type
+Date: Fri,  9 Oct 2026 16:08:10 +0200
+Message-ID: <20261009140949.528775221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +49,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Quentin Freimanis <quentin@q-lab.dev>
 
-commit 174d160884199cad97413f33fe1b56027dc0d3e1 upstream.
+[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
 
-stream_config is not initialized before being passed to
-sdw_stream_add_slave().  The type field may contain garbage and is
-later copied to stream->type by sdw_config_stream().
+When the switch uses a random base MAC address it does not mark each
+port's address as random:
 
-Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
+  $ dmesg | grep "MAC addr"
+  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
+  $ cat /sys/class/net/eth0/addr_assign_type
+  0
 
-While at it, use snd_sdw_params_to_config() helper instead of
-open-coding the same logic.
+0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
 
-Fixes: 2b7aecd58528 ("ASoC: rt1017: Add RT1017 SDCA amplifier driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260914104551.377880-1-yijiangshan@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With a random MAC reported as NET_ADDR_PERM, systemd's
+MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
+gets a new IP address every boot and a static reservation can't be used.
+Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
+address derived from the interface name and machine-id.
+
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1017-sdca-sdw.c |   27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
+ 3 files changed, 3 insertions(+)
 
---- a/sound/soc/codecs/rt1017-sdca-sdw.c
-+++ b/sound/soc/codecs/rt1017-sdca-sdw.c
-@@ -16,6 +16,7 @@
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
-+#include <sound/sdw.h>
- #include <sound/initval.h>
- #include <sound/tlv.h>
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index dad713e9ddd5b..b530fb6d3d0c9 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -898,6 +898,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+ 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
+ 		eth_random_addr(sparx5->base_mac);
+ 		sparx5->base_mac[5] = 0;
++		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
+ 	}
  
-@@ -574,11 +575,10 @@ static int rt1017_sdca_pcm_hw_params(str
- {
- 	struct snd_soc_component *component = dai->component;
- 	struct rt1017_sdca_priv *rt1017 = snd_soc_component_get_drvdata(component);
--	struct sdw_stream_config stream_config;
-+	struct sdw_stream_config stream_config = {0};
- 	struct sdw_port_config port_config;
--	enum sdw_data_direction direction;
- 	struct sdw_stream_runtime *sdw_stream;
--	int retval, port, num_channels, ch_mask;
-+	int retval, port;
- 	unsigned int sampling_rate;
+ 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+index eb57b86fbe22f..0f7d8440f6149 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+@@ -392,6 +392,7 @@ struct sparx5 {
+ 	struct notifier_block switchdev_blocking_nb;
+ 	/* Switch state */
+ 	u8 base_mac[ETH_ALEN];
++	u8 base_mac_assign_type;
+ 	/* Associated bridge device (when bridged) */
+ 	struct net_device *hw_bridge_dev;
+ 	/* Bridged interfaces */
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+index 4dedf5d926416..b3725cf2dd44c 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+@@ -294,6 +294,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
+ 	ndev->ethtool_ops = &sparx5_ethtool_ops;
  
- 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
-@@ -592,28 +592,17 @@ static int rt1017_sdca_pcm_hw_params(str
+ 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
++	ndev->addr_assign_type = sparx5->base_mac_assign_type;
  
- 	/* SoundWire specific configuration */
- 	/* port 1 for playback */
--	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
--		direction = SDW_DATA_DIR_RX;
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
- 		port = 1;
--	} else {
--		direction = SDW_DATA_DIR_TX;
-+	else
- 		port = 2;
--	}
--
--	num_channels = params_channels(params);
--	ch_mask = (1 << num_channels) - 1;
--
--	stream_config.frame_rate = params_rate(params);
--	stream_config.ch_count = num_channels;
--	stream_config.bps = snd_pcm_format_width(params_format(params));
--	stream_config.direction = direction;
- 
--	port_config.ch_mask = ch_mask;
-+	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
- 	port_config.num = port;
- 
- 	dev_dbg(dai->dev, "frame_rate %d, ch_count %d, bps %d, direction %d, ch_mask %d, port: %d\n",
--		params_rate(params), num_channels, snd_pcm_format_width(params_format(params)),
--		direction, ch_mask, port);
-+		stream_config.frame_rate, stream_config.ch_count, stream_config.bps,
-+		stream_config.direction, port_config.ch_mask, port);
- 
- 	retval = sdw_stream_add_slave(rt1017->sdw_slave, &stream_config,
- 				&port_config, 1, sdw_stream);
+ 	return ndev;
+ }
+-- 
+2.53.0
+
 
 
