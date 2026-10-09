@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F341A343D8A;
-	Fri,  9 Oct 2026 14:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60E14D7950;
+	Fri,  9 Oct 2026 14:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555388; cv=none; b=HENaY/MmgnVI0JU6iXPxi0ot8YrSSQSqSVbrSFJO/56iO3bFxXr5fS3ykWNr6GJjhbgjkXdLZWnU4hIVu3SzSz9BSiJnmrT2IxADSwtzBuWM9ezwyNByfVFS3/N30szqwdZhPUQntmulQXQmxmlZ0rA0IEzwoSZbFrkgPzrqc+E=
+	t=1791555392; cv=none; b=B8gqlVcufTsAOqLCc9U+KtsdQv93IKuk9AHrfmNzffzhMAUdrmJzy7PQ5YEtxy5m47i7tcdWjaWQLIDQ3U4WB9k6NCTDr8Jn0KmAFKNdS9dxa0y0VLQugL3OxJI8dlezlmX2EJ3E7gMCZRZTEpk0WQUFbKKAV0wpishtJ4ETOzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555388; c=relaxed/simple;
-	bh=K1tBykmUwvmX9owmFytNkxs7+SeaLC3rlZZhoRtL/Lw=;
+	s=arc-20240116; t=1791555392; c=relaxed/simple;
+	bh=NoOPTrKottHO/B+AFEPF5U2826P70s0RQN4lX0NXNZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0pqBKFD5LCcxWVc/omunrTrBDCCf7cDleFTF0Vb2s0uEPWURRJrgGZF+j3tdny1YMzCnTfuH4seYd1jvdZCnHXE8kmZb2D1Wyx20dj2WFsnlJSTeUauAoj03vcFE+O3fcfBDWSxXxWNfaYWBk8JcArI0QmrkFiPKudaa+537yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll9u1Roz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sS4wqtSkrIa/9Nj6h27+Siyb0OLvVwZosKH6lKrHnlHbBAmZF/w6CojgV/gepHRG38ieoJ2bShkZOBwVv60JhVLnTlNV2rekIJkVW1vrG66jGavqqjgTrEjIV+kD3H4PmeE8CmhVTSYBE6YM+znSN7KYUXWLTSWKBLzlLkY2P84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGBTsYZF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll9u1Roz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6781F00899;
-	Fri,  9 Oct 2026 14:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGBTsYZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F1C1F000FF;
+	Fri,  9 Oct 2026 14:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555384;
-	bh=rs4o/Gwezb0oNfQoCQfzJP6TPcB4k/Y9iNJKG/k+IPo=;
+	s=korg; t=1791555387;
+	bh=wl7ayfQVFwf7VK5kpSTkY11p2HJDpgp8EJ/x04QesHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ll9u1RozFDbUg+3zqi49YS/2POEuAtT4Ht1VJDe1i9u/suxQrApBlJ9wa6lc7si7m
-	 7O9NuVywaS3zJ2SnXa0AmqTIAETIVBrTh17VycxgPVmLiVSIkvmPhBZ7zdOZKSs0CB
-	 cHLFsEqMGKhN/9Oq2bxM2FoK9L5eO1Sptif0jIPg=
+	b=KGBTsYZFVPH+A+Q8MPMZdW9ke39E8vvTzK9EUHDfR+k+DX/JG0UClQSAWQFVWhkC0
+	 verL1npWbiKgy/di0kNiQOUjXW6FhLMRsw89c5vZ1sdjyUEkEl2vIPP9Kg21CCC/RR
+	 zSoLXC0jU1BQoZNmbgLUhnRiifb9Fc79zBycTRAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Surendran Kanagaraj <surenkj@amazon.com>,
-	Gunnar Kudrjavets <gunnarku@amazon.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.18 040/403] tpm: Disable TPM on null key name mismatch
-Date: Fri,  9 Oct 2026 16:06:41 +0200
-Message-ID: <20261009140953.045380539@linuxfoundation.org>
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.18 023/403] HID: multitouch: stop the release timer from being rearmed on remove
+Date: Fri,  9 Oct 2026 16:06:24 +0200
+Message-ID: <20261009140952.657258832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,68 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Surendran Kanagaraj <surenkj@amazon.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 015fb29a748342a186f37b602ac70017098c8251 upstream.
+commit 5acb2dace582f061aab5e14c399ac9480315f44b upstream.
 
-The null key name check exists to protect against TPM reset attacks, so
-a mismatch should stop the device from serving further requests.
-Currently it does not disable the chip when it finds a mismatch.
+mt_remove() quiesces the sticky-finger timer before stopping the
+hardware:
 
-The mismatch is logged:
+    timer_delete_sync(&td->release_timer);
 
-    tpm tpm0: null key integrity check failed
+    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
+    hid_hw_stop(hdev);
 
-but the chip keeps serving commands:
+timer_delete_sync() waits for a running callback and dequeues the timer,
+but it does not stop the timer from being armed again. The transport is
+still delivering reports at that point, and the report path rearms it:
 
-    / # tpm2_getcap -c properties-fixed
-    TPM_PT_FAMILY_INDICATOR:
-      as UINT32:                0x08322e3000
-      as string:                "2.0"
-    ...
+    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
+        if (td->mt_io_flags & MT_IO_SLOTS_MASK)
+            mod_timer(&td->release_timer,
+                      jiffies + msecs_to_jiffies(100));
 
-tpm2_load_null() where the null key name check is run sets the chip as
-disabled only if the rc is non zero. When the mismatch is seen, rc is
-zero at that point and it returns success. The other issue is that the
-caller expects the null key handle to be populated when the function
-returns 0 which it does here without writing the handle and proceeds
-assuming the null key handle is valid.
+A report that arrives after timer_delete_sync() has returned therefore
+leaves the timer queued. td is allocated with devm_kzalloc() against
+hdev->dev, so it is freed when the driver is unbound, after mt_remove()
+returns. When the timer fires afterwards, mt_expired_timeout()
+dereferences the freed td:
 
-During the test, I noticed that tpm2_start_auth_session() uses the
-uninitialized stack value as the key handle since tpm2_load_null()
-returns 0 despite the integrity failure and proceeds with
-TPM2_CC_START_AUTH_SESS with this value as salt key handle.
+    struct mt_device *td = timer_container_of(td, t, release_timer);
+    struct hid_device *hdev = td->hdev;
 
-Set rc to -ENODEV on the mismatch. The error path then disables the chip
-and returns the correct code to the caller.
+    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
 
-Tested in QEMU with swtpm and CONFIG_TCG_TPM2_HMAC=y by making
-TPM2_CC_CONTEXT_LOAD fail with TPM2_RC_INTEGRITY and changing the name
-of the re-created null key. The chip is now disabled on the mismatch.
+Simply moving the teardown after hid_hw_stop() does not fix this on its
+own, because mt_expired_timeout() calls mt_release_contacts(), which
+walks hdev->inputs; the timer still has to be quiesced before
+hid_hw_stop() tears the input devices down.
 
-Fixes: cc7d8594342a ("tpm: Rollback tpm2_load_null()")
-Fixes: 423893fcbe7e ("tpm: Disable TPM on tpm2_create_primary() failure")
-Cc: stable@vger.kernel.org # v6.12+
-Assisted-by: LLM
-Signed-off-by: Surendran Kanagaraj <surenkj@amazon.com>
-Link: https://lore.kernel.org/r/20260918000731.48657-1-surenkj@amazon.com
-Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Use timer_shutdown_sync() instead, which additionally makes any later
+mod_timer() a no-op, so neither ordering constraint has to be traded off
+against the other. This is the final-teardown pattern the function was
+introduced for, and hid-wiimote already uses it for the same reason.
+
+Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260723224211.613112-1-you@example.com?part=1
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-sessions.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-multitouch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -983,6 +983,7 @@ static int tpm2_load_null(struct tpm_chi
- 	/* Deduce from the name change TPM interference: */
- 	dev_err(&chip->dev, "null key integrity check failed\n");
- 	tpm2_flush_context(chip, tmp_null_key);
-+	rc = -ENODEV;
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2250,7 +2250,7 @@ static void mt_remove(struct hid_device
+ {
+ 	struct mt_device *td = hid_get_drvdata(hdev);
  
- err:
- 	if (rc) {
+-	timer_delete_sync(&td->release_timer);
++	timer_shutdown_sync(&td->release_timer);
+ 
+ 	sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
+ 	hid_hw_stop(hdev);
 
 
