@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C193515D4;
-	Fri,  9 Oct 2026 14:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E016361651;
+	Fri,  9 Oct 2026 14:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555495; cv=none; b=YDz+m5NakKJaq1ip44HAHjQnYubAhHb9Ji5JhR+2VnYeuw9SqB/pgvNJfBAYNBuexEXrzrZtlGzhkSDdEdfF7/GwbeT4GTOuP57C1+uUsfcKLI+R5bnY5YsiyW6wSP8gOFXMcfbre1Ms552mEidEbMX8v4iWucA/Q/79/CW1yyA=
+	t=1791555495; cv=none; b=mD5rg7jn1KkCfHTYQmtNOhLr/o3zXt+hcY1x2vAHTH1vU7PvQo9mfOqt++d2a0JEKtPg7YdQa+q7zroV6MD5jGQ5YWLLr1an0L2NXms/wBVF8x7Q/2dJfNvwZ1dRZMK6kUZPfAfUrQjgxccYENkX25xXIY3EsPlCe/807i9W0Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791555495; c=relaxed/simple;
-	bh=B9Sm/v87K63vrT5poEj8m5qUFoLi/VnrPnctza06yf0=;
+	bh=FfOJP0zTrLdKmM8Z4f5TlX15rTIuTUIB90Mqytxus/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaAkoPknbvO5fxzYqIDcHs87s810cXYUrKzSpoc8Q9MXflEtQh1IqRhmfOLVwI0Swih0piLxTp9/fxdj7uGXVnXGKNjBsiANaZpam1X3kOi/+6aZg+dvp1tzJGYYG14tB+XKDwOvBAWWMrOk4y1zvN5bAELMV+YxDcnpJD1c5L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPINX5jC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VMpI/Cjz0/kgUscZc01EPLyvCsEOh4U0BP10PqiLt6z/P67XbKEP6BFATrcRixoE9QQgKBwCPPVPvpiBiJzbSCyxLqFuZLtBfkmFRuOH9jhoEFygLgCqpwKv7nr+xvTh1hmsh8b9J9eVd1UV9FtlsCNyh88kJAD9dntme8UyJC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLaVH6bo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPINX5jC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD321F000FF;
-	Fri,  9 Oct 2026 14:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLaVH6bo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819471F00893;
+	Fri,  9 Oct 2026 14:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555488;
-	bh=Rn5+7PrlRjbpaL1CVmVQkznjwD65a/tKjpVRHwyzPQw=;
+	s=korg; t=1791555491;
+	bh=7CyIVrfeBhSEjKsqZvCzpESGp7VtwIwBD35nuduw+sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gPINX5jCEYp8bl6gtfDtc/iGWBYL1k4Bm7WC6AWqePaSudQBh22R9qoTlWjDM6bVS
-	 Ec05BUwyD1EpZ8D2q2XkfUKAkmOlP4yXOoM4ZQdA2o5PJP92CPiuwpl3VWqM6LaJaU
-	 izPbhL3qEFejC0OZoZg+qxsFGlK2HNprNUHKGqzM=
+	b=RLaVH6boQ+fEidwjbnPknHc3NQgzD6HpbE4SH7lYngohcayxXnCga2MipbOVcgXlh
+	 iRBcC9YCwADLeidLuG/ke+1RlVLAOp/2RfjOL9eq5vj3+/FRCxrWkZtJJ7B3YQp6Gi
+	 WWl6z6hDBb5sJ1j9t1TiV5tqe337gLKNSVWwWzyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jinwoo Lee <rkskek9254@gmail.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 066/403] wifi: wfx: validate MIB read length before copying to caller
-Date: Fri,  9 Oct 2026 16:07:07 +0200
-Message-ID: <20261009140953.641425565@linuxfoundation.org>
+Subject: [PATCH 7.2 014/428] KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails
+Date: Fri,  9 Oct 2026 16:05:51 +0200
+Message-ID: <20261009140946.363008844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit ce67ebe9d8629776ce38e6995ae72fb903c828db ]
+[ Upstream commit 10180a277549339020b08000206092c07e0bff5a ]
 
-wfx_hif_read_mib() copies reply->length bytes from the firmware
-response into the caller-provided buffer without checking that
-reply->length does not exceed val_len. A firmware response with
-a length field larger than expected overruns the caller buffer and
-reads past the end of the reply allocation.
+Re-pend GET_NESTED_STATE_PAGES before exiting to userspace if getting the
+nested pages fails in the KVM_RUN path.  If userspace re-runs the vCPU, and
+vmcs02 holds valid PFNs from the *previous* run of L2, then KVM could
+re-enter L2 with stale, unpinned PFNs mapped into e.g. the vAPIC page.
 
-Replace the dead -ENOMEM check with an active validation that
-reply->length fits within val_len before the memcpy.
+Note, both SVM and VMX (as of commit 11722439fb20 ("KVM: nVMX: Ensure
+KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit") ensure the request
+is cleared on VM-Exit (including the "forced" case), i.e. there is no risk
+of double-mapping due to emulated VMLAUNCH/VMRESUME/VMRUN *and* the request
+trying to map the nested pages.
 
-Fixes: f95a29d40782 ("staging: wfx: add HIF commands helpers")
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB000155034FC391A2A54B9803C8BD2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 671ddc700fd0 ("KVM: nVMX: Don't leak L1 MMIO regions to L2")
+Cc: stable@vger.kernel.org
+Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
+Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260921211608.1030158-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/hif_tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/silabs/wfx/hif_tx.c b/drivers/net/wireless/silabs/wfx/hif_tx.c
-index 9f403d275cb13..9efb108bd877d 100644
---- a/drivers/net/wireless/silabs/wfx/hif_tx.c
-+++ b/drivers/net/wireless/silabs/wfx/hif_tx.c
-@@ -207,9 +207,11 @@ int wfx_hif_read_mib(struct wfx_dev *wdev, int vif_id, u16 mib_id, void *val, si
- 		dev_warn(wdev->dev, "%s: confirmation mismatch request\n", __func__);
- 		ret = -EIO;
- 	}
--	if (ret == -ENOMEM)
-+	if (!ret && le16_to_cpu(reply->length) > val_len) {
- 		dev_err(wdev->dev, "buffer is too small to receive %s (%zu < %d)\n",
- 			wfx_get_mib_name(mib_id), val_len, le16_to_cpu(reply->length));
-+		ret = -EIO;
-+	}
- 	if (!ret)
- 		memcpy(val, &reply->mib_data, le16_to_cpu(reply->length));
- 	else
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 61db05ff023cd..b91c424042829 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10694,6 +10694,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 
+ 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
+ 			if (unlikely(!kvm_nested_call(get_nested_state_pages)(vcpu))) {
++				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+ 				r = 0;
+ 				goto out;
+ 			}
 -- 
 2.53.0
 
