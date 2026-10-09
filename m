@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272E4E50A6;
-	Fri,  9 Oct 2026 14:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B6F4E7807;
+	Fri,  9 Oct 2026 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555717; cv=none; b=Bp83PzCZlNGKG1/338VZB/N5Vt8IdLOMlVlr4XEBLIVksHVM/4TyHVVBZZbAlkEcASd+SQY8ebic9NCWRAxbz6pD4jpDzItPHmI/zLyVEY9rotpTAtrHUz3TRSE1VHEdFnez6gZOYYNGjc6LvraRv+nTpSaboUtNIi+RhxThy7Y=
+	t=1791555720; cv=none; b=QeDJMTHQqsXoeBQcuOh3pBQdQrete6irVGOj9hWqUHYKezdMgsn6y5tBbjnlrz2hEVU92gep9YeB8KaMrp7yMPGjJpyI6hJ7SlylfbB4uuIK1ohVck3QvuMwBNRtU62Cj5plB9EArh7UTxgJgTKulGtqO7TsAthFQvlSTUOPXN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555717; c=relaxed/simple;
-	bh=fmug0JCrVloHCn3/q8SN0nmv0WzP7fN3hR9J19+1yfo=;
+	s=arc-20240116; t=1791555720; c=relaxed/simple;
+	bh=RyG2qQ5ZPQHdc9oCBMhgx1VS4Bj9F/fvzb2/H9LqnOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FGwAmIeS83dlCrq/BoumCgVeoj54yOovgSAevIgaEAOqYq8LEv5DjODhwXLeRIwN04BNNgLcnNgUWEfwp4sLZalwIQP+FQPqgUlnYfIt2YUEFFVxgLpvIZ/oZRCzbCUtYYaTtMrMxFIBlpZP6eOrr0Rfh6GfI8h6eSos2F2bWvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL6SEoK8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VpDYAJYEasK3b+/FDHylG0Iw5b1T7JKbzEb3Ly2yr4/ecKsbDoLoH5d2hRyAjHCzYjd2aOv9PZ3BBEwmIrwtGhwa6QRjx4q83LA0YbnlHE7/QyEE9KM6cwvCVLQr0heecD+v0D52/vkSE3PCsU0idII26vALG4C9dc4aBXlZ96s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b45kpEDG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL6SEoK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87EC1F000FF;
-	Fri,  9 Oct 2026 14:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b45kpEDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A311F00893;
+	Fri,  9 Oct 2026 14:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555716;
-	bh=g9vTCMQMRhcCaiy6ZlSfWPgSkRgv0tDCNMJOvG9FXkg=;
+	s=korg; t=1791555719;
+	bh=wbK5my2Zz722XwWioK33Hs5KoC3XdUNDB/qSjoSrXyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tL6SEoK8Rbmgv8R0nHS8zNPA5EmkTnz/AGmOypMO8tRsgBAjQvsIDoHRKcr8UtWRZ
-	 K7zJLK1SLGdiZdlBxHARJ7rN3JQRKL1qylKJzd3vOsn/Mc5m+1qmqT2ZqRkFBXGyKy
-	 WksKehCRa8IuT5j/t3GXv5xf30XjIFMFqvKAnNYs=
+	b=b45kpEDGD664AxahV/sDExXCYLgC8W3lsBYH28aF7o+Jm04T2cnnOTbP4dph27DTG
+	 dikq7qSka7JzkJ5NMZ+Nbkn+X1+dehbearFm8IieHL5EhXUQBaR1DtyL46AuFgIkB7
+	 5BG8NbpUjslGdk7OsI5TAz94PvhIQzpuZc9j7nB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannu Varjoranta <hannu@varjosoft.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ankit Garg <nktgrg@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 104/403] gve: DQO: accept TSO packets with non-protocol gso_type bits
-Date: Fri,  9 Oct 2026 16:07:45 +0200
-Message-ID: <20261009140954.517183562@linuxfoundation.org>
+	Zhichen Wang <wangzhichen@manus.ai>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 7.2 054/428] virt: vmgenid: set driver_data before registering notification handlers
+Date: Fri,  9 Oct 2026 16:06:31 +0200
+Message-ID: <20261009140947.313715912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,98 +46,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hannu Varjoranta <hannu@varjosoft.com>
+From: Zhichen Wang <wangzhichen@manus.ai>
 
-[ Upstream commit f8932b2c0c9ae6fb577bcc05a2080c8498f91c0d ]
+commit 9f8139c6145cf17d690d6c414d43b4c0bef632fb upstream.
 
-Since commit 014c607f86ab ("gve: add support for UDP GSO for DQO
-format"), gve_prep_tso() matches shinfo->gso_type exactly. gso_type is
-a bitmask, though: SKB_GSO_DODGY is set on every GSO packet that comes
-from tun/tap, packet sockets or other untrusted sources, and
-SKB_GSO_TCP_ECN and SKB_GSO_TCP_FIXEDID can be set as well. Such packets
-hit the default case, gve_tx_add_skb_dqo() fails and gve_try_tx_skb()
-drops them, counting them in tx_dropped.
+Both probe paths register their notification handler before assigning
+driver_data, which the handler dereferences.
 
-These packets do reach the driver: tcp_gso_segment() passes DODGY skbs
-through unsegmented to devices that support TSO, after recomputing
-gso_segs, so drivers must tolerate the bit.
+In the devicetree path, the notification IRQ can fire as soon as
+devm_request_irq() registers the handler: the interrupt may already be
+pending at probe time, for example when a VMM injects the
+generation-changed notification while restoring a guest from a snapshot
+that was taken before the driver had probed (Firecracker does exactly
+this on snapshot restore). The IRQ is also requested with IRQF_SHARED,
+so another device sharing the line can trigger the handler just as
+early. The handler then calls vmgenid_notify(), which dereferences the
+still-NULL driver_data and panics:
 
-This breaks virtual machines behind a tap on GCE instances using the DQO
-queue formats. Every TSO packet forwarded from a guest (gso_type
-SKB_GSO_TCPV4 | SKB_GSO_DODGY) is dropped, and guest uploads slow to a
-crawl of retransmissions or stall entirely, while the host's own TSO
-traffic (gso_type SKB_GSO_TCPV4) is unaffected. On an n4 instance
-(DQO-QPL) with a Cloud Hypervisor guest, a 64 MB upload from the guest
-went from a 60 s timeout at ~0.9 MB/s to 0.19 s with this change, with
-tx_dropped no longer increasing.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.38+ #1 PREEMPT(none)
+  Hardware name: linux,dummy-virt (DT)
+  pc : vmgenid_notify.isra.0+0x24/0x8c
+  lr : vmgenid_of_irq_handler+0x14/0x34
+  Call trace:
+   vmgenid_notify.isra.0+0x24/0x8c (P)
+   vmgenid_of_irq_handler+0x14/0x34
+   __handle_irq_event_percpu+0x44/0x1bc
+   handle_irq_event+0x4c/0xb4
+   handle_fasteoi_irq+0xf8/0x1f8
 
-Host TCP with ECN is hit as well: gve advertises NETIF_F_TSO_ECN, so a
-TSO packet carrying CWR has SKB_GSO_TCP_ECN set and is dropped too.
+The ACPI path has the same ordering problem: the handler is installed
+with acpi_install_notify_handler() before driver_data is assigned.
+ACPI notifications are dispatched asynchronously from a workqueue, so
+the window is narrow, but a notification arriving between the two calls
+hits the same NULL dereference.
 
-Restore the bitmask test that commit 1b9f75634441 ("gve: ignore
-nonrelevant GSO type bits when processing TSO headers") introduced for
-the same problem, keeping the UDP GSO support.
+Assign driver_data before registering the handlers. The state is fully
+initialized at that point, so the handlers are safe to run. Should
+registration fail, the probe error path leaves no dangling pointer
+behind: the driver core clears driver_data in device_unbind_cleanup().
 
-While here, reload shinfo after skb_cow_head(). If the head was cloned,
-pskb_expand_head() moves skb_shared_info to the new head, and the
-pointer cached at function entry can then refer to memory that another
-clone frees.
-
-Fixes: 014c607f86ab ("gve: add support for UDP GSO for DQO format")
-Signed-off-by: Hannu Varjoranta <hannu@varjosoft.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260925115237.56465-1-hannu@varjosoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7b1bcd6b50a6 ("virt: vmgenid: add support for devicetree bindings")
+Fixes: e07606713a90 ("virt: vmgenid: change implementation to use a platform driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhichen Wang <wangzhichen@manus.ai>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/virt/vmgenid.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-index b5565d0b197f0..dad793c0a7c4b 100644
---- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -600,25 +600,25 @@ static int gve_prep_tso(struct sk_buff *skb)
- 	err = skb_cow_head(skb, 0);
- 	if (err < 0)
- 		return err;
-+	shinfo = skb_shinfo(skb);
+--- a/drivers/virt/vmgenid.c
++++ b/drivers/virt/vmgenid.c
+@@ -83,6 +83,8 @@ static int vmgenid_add_acpi(struct devic
+ 	}
+ 	setup_vmgenid_state(state, virt_addr);
  
- 	l4_start = skb_transport_offset(skb);
- 	paylen = skb->len - l4_start;
- 
--	switch (shinfo->gso_type) {
--	case SKB_GSO_TCPV4:
--	case SKB_GSO_TCPV6:
-+	/* gso_type is a bitmask: SKB_GSO_DODGY, SKB_GSO_TCP_ECN and
-+	 * SKB_GSO_TCP_FIXEDID may be set alongside the protocol bit.
-+	 */
-+	if (shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6)) {
- 		tcp = tcp_hdr(skb);
- 		csum_replace_by_diff(&tcp->check,
- 				     (__force __wsum)htonl(paylen));
- 		header_len = skb_tcp_all_headers(skb);
--		break;
--	case SKB_GSO_UDP_L4:
-+	} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
- 		udp = udp_hdr(skb);
- 		csum_replace_by_diff(&udp->check,
- 				     (__force __wsum)htonl(paylen));
- 		header_len = sizeof(struct udphdr) + l4_start;
--		break;
--	default:
-+	} else {
- 		return -EINVAL;
++	dev->driver_data = state;
++
+ 	status = acpi_install_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
+ 					     vmgenid_acpi_handler, dev);
+ 	if (ACPI_FAILURE(status)) {
+@@ -90,7 +92,6 @@ static int vmgenid_add_acpi(struct devic
+ 		goto out;
  	}
  
--- 
-2.53.0
-
+-	dev->driver_data = state;
+ out:
+ 	ACPI_FREE(parsed.pointer);
+ 	return ret;
+@@ -124,12 +125,13 @@ static int vmgenid_add_of(struct platfor
+ 	if (ret < 0)
+ 		return ret;
+ 
++	pdev->dev.driver_data = state;
++
+ 	ret = devm_request_irq(&pdev->dev, ret, vmgenid_of_irq_handler,
+ 			       IRQF_SHARED, "vmgenid", &pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	pdev->dev.driver_data = state;
+ 	return 0;
+ }
+ 
 
 
