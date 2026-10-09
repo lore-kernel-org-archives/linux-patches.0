@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACE73BED42;
-	Fri,  9 Oct 2026 14:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA00353A82;
+	Fri,  9 Oct 2026 14:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557490; cv=none; b=LjDkrGSWjYA20mS7Vg2VidVJf4BDe7D8oRyg3TjuZE9sNNYC6ngaI2XgYmZ/LoOaHq1/HGg9COKTMjRO98SVB8pcEDBZMrmna1kVNOE3mARcaaXbEx5UcpyZhDjJ89XKEu8sysq6+p/2fsgZugPmy4VIx2ApUFmZDGar55zjayo=
+	t=1791557493; cv=none; b=a2vuOuOVvIr7CJyM6GK97WJRdd8wvQ/lttXHdqvgIBJ2pIUi4qIhPErMn7ym2HVK4jKsTqf3T6SR2rHXnY9JqJv0NFJovJbwU0omtKPKVfI6ZL3r9vAbtyOHsonxADetdy3BLZwJjUpkA1TS3OuDT1F82s5Pgtenp13HPUVrV3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557490; c=relaxed/simple;
-	bh=Wbln3EXkVBwkFERFPNvinDoStm9Amw5GYxf7H9Mq63c=;
+	s=arc-20240116; t=1791557493; c=relaxed/simple;
+	bh=+blfnTh4wEesGcZutkbPqWi7K+QlU4e5jMOofzGvbaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzPz+yTpvxYcb1R6GDcBcitkj3HDtO0BwsIClvl5Okod7UNDfpEGMxAhPRUxKlkoVVyKcuOJn0KG/3oldCm8Opp70hKl2AGRRRLun6RuhW+QEx3qO3zrRfi/s3to0iCytEUZdvrrq9BNdLyRc5TIeNhnJ8mLdhuLcNRlAvXfv7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6E21Dep; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N1UH1pKi5CrzBIrnh/k1ZfyzMX5/Z4DKUFvah6Z2qNDu3LtzoNK3Dujc5pGpbISjN6R7WauKAlCbjS/qmOWFZ/ySMq6MWYnor7jPF/r5o2xVOE68GBzaTnV9GaWHaM9ITG0XaJPxRgag1S5KPyRXfv3of4WKevY1+O0uRxQyGcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un6ahHpe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6E21Dep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D3E1F000FF;
-	Fri,  9 Oct 2026 14:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un6ahHpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73C01F000FF;
+	Fri,  9 Oct 2026 14:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557489;
-	bh=hA7l2QtgKbHobZpZ1tktWxF8LuipJO32P1nbjYIXxjc=;
+	s=korg; t=1791557492;
+	bh=9idc6rEdOcX7hqvyJHGaFsnIyJSO+iJSaD6BJbU9htk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U6E21DepgCo2G/DCsCzx25qu5JPk2RN+KVqilNOBnZpShEaDQVwzQFmOK+Zix9S+i
-	 nLni/qLAFGUi4Qfkn38iOw1NK/mCPExVo5Co27fKqBxYU0m3qGIOtrhIsBl6HlGb70
-	 Ld/DzY3Yz5k88ViWQz1GX4qVxc17l/jBVLIepY14=
+	b=un6ahHpeyBYCv5vL9f2eyOJWxsTkI37w9WgQhfETtLvpkiBPc0illOKH0w4zq7UlQ
+	 PmCW7ivpsGdsujgD0hq4OJmfyIJv0pVSyuk1oYqAdaRZbmH4Pg7yQXr6BG5wU9aAM0
+	 dXFKVgZL35r4n0b7D6zKqL+M8gepXExAkTACvLEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Antoniu Miclaus <antoniu.miclaus@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 377/428] iio: adc: ade9000: fix overlapping scan_index for current and voltage channels
-Date: Fri,  9 Oct 2026 16:11:54 +0200
-Message-ID: <20261009140954.471024422@linuxfoundation.org>
+Subject: [PATCH 7.2 378/428] iio: adc: ade9000: handle Phase C dip events in IRQ1 handler
+Date: Fri,  9 Oct 2026 16:11:55 +0200
+Message-ID: <20261009140954.494444157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -53,16 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit d01f63f673e18f3a99ce8d6fbf1a5f58b70990f7 upstream.
+commit fafefa925ed7ec10383d9bf0378abf878b7f13cb upstream.
 
-Current channels used scan_index "num" and voltage "num + 1", so with
-phases 0, 1 and 2 the indices overlapped and no longer matched the
-IA=0, VA=1, IB=2, VB=3, IC=4, VC=5 layout expected by
-ade9000_waveform_buffer_config(). Phase B and C buffers were configured
-incorrectly.
+ADE9000_ST1_CROSSING_DEPTH is the exclusive upper bound for scanning the
+STATUS1 event bits, so a value of 25 left out the highest event bit,
+ADE9000_ST1_DIPC_BIT (bit 25). Phase C dip events were never reported.
 
-Use "num * 2" for current and "num * 2 + 1" for voltage to get the
-non-overlapping 0/1, 2/3, 4/5 layout.
+Bump the value to 26 so bit 25 is scanned.
 
 Fixes: 81de7b4619fc ("iio: adc: add ade9000 support")
 Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
@@ -70,28 +67,19 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ade9000.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ade9000.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/iio/adc/ade9000.c
 +++ b/drivers/iio/adc/ade9000.c
-@@ -444,7 +444,7 @@ static const struct iio_chan_spec_ext_in
- 			      BIT(IIO_CHAN_INFO_CALIBSCALE),		\
- 	.event_spec = ade9000_current_events,				\
- 	.num_event_specs = ARRAY_SIZE(ade9000_current_events),		\
--	.scan_index = num,						\
-+	.scan_index = num * 2,						\
- 	.indexed = 1,							\
- 	.scan_type = {							\
- 		.sign = 's',						\
-@@ -464,7 +464,7 @@ static const struct iio_chan_spec_ext_in
- 			      BIT(IIO_CHAN_INFO_FREQUENCY),		\
- 	.event_spec = ade9000_voltage_events,				\
- 	.num_event_specs = ARRAY_SIZE(ade9000_voltage_events),		\
--	.scan_index = num + 1,	/* interleave with current channels */	\
-+	.scan_index = num * 2 + 1, /* interleave with current channels */	\
- 	.indexed = 1,							\
- 	.scan_type = {							\
- 		.sign = 's',						\
+@@ -219,7 +219,7 @@
+ #define ADE9000_ST1_ERROR2_BIT		BIT(30)
+ #define ADE9000_ST1_ERROR3_BIT		BIT(31)
+ #define ADE9000_ST1_CROSSING_FIRST	6
+-#define ADE9000_ST1_CROSSING_DEPTH	25
++#define ADE9000_ST1_CROSSING_DEPTH	26
+ 
+ #define ADE9000_WFB_TRG_DIP_BIT		BIT(0)
+ #define ADE9000_WFB_TRG_SWELL_BIT	BIT(1)
 
 
