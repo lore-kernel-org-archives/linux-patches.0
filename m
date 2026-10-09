@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253B14E4C27;
-	Fri,  9 Oct 2026 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49AF2D592D;
+	Fri,  9 Oct 2026 14:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555761; cv=none; b=DgMz/c8+h3yDy/WOySOFt5QEnnw/7pVOJT/um/kJ1tSAS2ugpVKdpZDFa21VLytpTZBaRctaN/76Vca31NX/KrzYt1jc7gLR/U+k57y1Hz6RqeyHRRMS/D7ndLzTVj9Sd3MV+XMRDxh4trZZWwS8B+ivxT5b1OUoieejOoyJRts=
+	t=1791555764; cv=none; b=T5OeIeCiwXQYa8VcmpTP/gwKISmLHZKqPVCxF2bMZ0cl+dmKT8xbCKGhbWiGzFtacyng1l/QlWhPgEYVINDNCw54VhRXO5Yjefc0kyt2NthFzvh9QGp/v+A/VVe2o7097/ObOY4neEaHe9FhJm6t28uEZg1g+tTNxc/5FjC5Ih8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555761; c=relaxed/simple;
-	bh=40hV/ZDtn8vmE74LrHWljaYr2wZR1obH3pueEYXPK20=;
+	s=arc-20240116; t=1791555764; c=relaxed/simple;
+	bh=HCxoE17DJjA7RwApVGxA8e2AAR1or8LTBpFsCZkYuO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fc5tUBrfeLCEynLyIXxO818GnAGRwst3DuuMyOtTBkMO8K6APBw/QmsrwnGrqm0lgdbTXI+al7aIaT34T+JXczAppuokcvgx1VnldwF+es1MW/tapk+ajIwkgw31FfmoHlIzBN//XdGmPAj/9xE3FvYtUU9C4B3FIK10saqWxQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvoGRwBp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N6/7PCpwkZJ+nHse3bdLSS5lnfMUVrLSAMP52GL2o77iifkvbBLh4di2z5FAA7isgsTQ8XAPx+jCHDWnTlyNf5FusCLHtDmfSMj2EKepDVnaG2r5w/oKyyXtnFckntwLXc9NUO2FBFKk2nJVyXPA5bXyIluN7UW0DT5MG3CJ1Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtpmSsiZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvoGRwBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839F21F00893;
-	Fri,  9 Oct 2026 14:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtpmSsiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3161F000FF;
+	Fri,  9 Oct 2026 14:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555760;
-	bh=l+w9fuCsJ+JohPbmtf52BU5Ado9CcFONcNZ1T0WO5Vc=;
+	s=korg; t=1791555762;
+	bh=y3Ry8w0acqCmmNxCdBUJlY1mJaxFtnp/MmE0c8Z4X5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wvoGRwBpAfQewf+PCUjsFsHEeuKGlT3GnP8cFcTLLPxTPNakx3NCR+F9EmEpFQZ4Q
-	 nC+GfISp8aEEjILlIfrtETDwuBd93Je2wfMSWvnyV9TFR0cNCXNXvXTUaQpuln23qe
-	 EyzJSVNlONv5GMXKSEfvyn1DVNsFob6uDGlzWNQo=
+	b=jtpmSsiZuyIeVuu+uEWMZ7W+MFKOtOGsU+0vrgPTB8Rm+/8RV1sKwujo8fxwYaAh5
+	 vyZZ4xKst54w9Lzpit9PmvM3lbwjq7uGPStU2FS7uRheuIZ0jM7cLh/u5sVA3ZZffu
+	 URM9hRuJUdOUeshpNuE8j/0SSafKt77lTkemktJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Garcia <berto@igalia.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 065/428] ext4: dont enable large folios on encrypted inodes
-Date: Fri,  9 Oct 2026 16:06:42 +0200
-Message-ID: <20261009140947.573856035@linuxfoundation.org>
+Subject: [PATCH 6.18 114/403] net: sparx5: move VCAP initialization to probe
+Date: Fri,  9 Oct 2026 16:07:55 +0200
+Message-ID: <20261009140954.746831135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alberto Garcia <berto@igalia.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-Commit 709f0f1f1bf5 ("ext4: add checks for large folio
-incompatibilities when BS > PS") disables large folios at mount time
-if the "encrypt" feature is set. However, enabling that feature on a
-mounted filesystem circumvents that check, and writing encrypted data
-results in a crash:
+[ Upstream commit 3a95973e7c79bbef04171240ecf8c42e28b4ea46 ]
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000028
-  Workqueue: ext4-rsv-conversion ext4_end_io_rsv_work
-  RIP: 0010:ext4_finish_bio+0xf7/0x3e0
-  Call Trace:
-   ext4_release_io_end+0x51/0x110
-   ext4_end_io_end+0x4c/0xe0
-   ext4_end_io_rsv_work+0xb3/0x100
+Move the VCAP initialization code from sparx5_start() to probe(). Add
+proper error handling with a cleanup_vcap label and sparx5_vcap_deinit()
+call.
 
-Fix this by disabling large folios on encrypted inodes, as is
-already done for inodes that use data journaling.
+Also, rename sparx5_vcap_destroy() to sparx5_vcap_deinit() to stay
+consistent with the naming.
 
-This affects all kernels between v6.19 and v7.2, but it is not needed
-in v7.3, where the code was significantly refactored.
-
-Fixes: 709f0f1f1bf5 ("ext4: add checks for large folio incompatibilities when BS > PS")
-Signed-off-by: Alberto Garcia <berto@igalia.com>
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20260227-sparx5-init-deinit-v2-2-10ba54ccf005@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0d2c49915bc3 ("net: sparx5: skip ptp deinit if init was skipped")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/microchip/sparx5/sparx5_main.c  | 16 ++++++++++------
+ .../net/ethernet/microchip/sparx5/sparx5_main.h  |  2 +-
+ .../ethernet/microchip/sparx5/sparx5_vcap_impl.c |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index a33629b397b06..32f79f48a9dda 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5287,7 +5287,8 @@ void ext4_set_inode_mapping_order(struct inode *inode)
- 	if (!min_order && !S_ISREG(inode->i_mode))
- 		return;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index 6bd0f43ef275c..fe8d78413a73d 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -773,10 +773,6 @@ static int sparx5_start(struct sparx5 *sparx5)
  
--	if (ext4_test_inode_flag(inode, EXT4_INODE_JOURNAL_DATA))
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_JOURNAL_DATA) ||
-+	    ext4_test_inode_flag(inode, EXT4_INODE_ENCRYPT))
- 		max_order = min_order;
+ 	sparx5_board_init(sparx5);
  
- 	mapping_set_folio_order_range(inode->i_mapping, min_order, max_order);
+-	err = sparx5_vcap_init(sparx5);
+-	if (err)
+-		return err;
+-
+ 	/* Start Frame DMA with fallback to register based INJ/XTR */
+ 	err = -ENXIO;
+ 	if (sparx5->fdma_irq >= 0) {
+@@ -1001,12 +997,18 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+ 		goto cleanup_ports;
+ 	}
+ 
++	err = sparx5_vcap_init(sparx5);
++	if (err) {
++		dev_err(sparx5->dev, "Failed to initialize VCAP\n");
++		goto cleanup_ptp;
++	}
++
+ 	INIT_LIST_HEAD(&sparx5->mall_entries);
+ 
+ 	err = sparx5_register_netdevs(sparx5);
+ 	if (err) {
+ 		dev_err(sparx5->dev, "Failed to register net devices\n");
+-		goto cleanup_ptp;
++		goto cleanup_vcap;
+ 	}
+ 
+ 	err = sparx5_register_notifier_blocks(sparx5);
+@@ -1019,6 +1021,8 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+ 
+ cleanup_netdevs:
+ 	sparx5_unregister_netdevs(sparx5);
++cleanup_vcap:
++	sparx5_vcap_deinit(sparx5);
+ cleanup_ptp:
+ 	sparx5_ptp_deinit(sparx5);
+ cleanup_ports:
+@@ -1048,9 +1052,9 @@ static void mchp_sparx5_remove(struct platform_device *pdev)
+ 	}
+ 	sparx5_unregister_notifier_blocks(sparx5);
+ 	sparx5_unregister_netdevs(sparx5);
++	sparx5_vcap_deinit(sparx5);
+ 	sparx5_ptp_deinit(sparx5);
+ 	ops->fdma_deinit(sparx5);
+-	sparx5_vcap_destroy(sparx5);
+ 	sparx5_destroy_netdevs(sparx5);
+ 	destroy_workqueue(sparx5->mact_queue);
+ }
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+index fe7d8bcc0cd99..6a069434fca60 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+@@ -563,7 +563,7 @@ void sparx5_get_hwtimestamp(struct sparx5 *sparx5,
+ 
+ /* sparx5_vcap_impl.c */
+ int sparx5_vcap_init(struct sparx5 *sparx5);
+-void sparx5_vcap_destroy(struct sparx5 *sparx5);
++void sparx5_vcap_deinit(struct sparx5 *sparx5);
+ 
+ /* sparx5_pgid.c */
+ enum sparx5_pgid_type {
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+index f426f37dd6191..34e82758e9921 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+@@ -2083,7 +2083,7 @@ int sparx5_vcap_init(struct sparx5 *sparx5)
+ 	return err;
+ }
+ 
+-void sparx5_vcap_destroy(struct sparx5 *sparx5)
++void sparx5_vcap_deinit(struct sparx5 *sparx5)
+ {
+ 	struct vcap_control *ctrl = sparx5->vcap_ctrl;
+ 	struct vcap_admin *admin, *admin_next;
 -- 
 2.53.0
 
