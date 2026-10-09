@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560103F54BD;
-	Fri,  9 Oct 2026 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F063D8903;
+	Fri,  9 Oct 2026 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556275; cv=none; b=RFcuUrgnEDz6JbEouGqc8vM3s41adG/6bVXBy+zEqmBGn56lZNKHgOj3bhwJwPRcK2CFZZEzr4H0pdLDnJcQubwONOP7BjZGPP002odojgzn6OuqewHlSE9hx0+kKe2T5agn1sNw1wueiqIvuuprT0Yl/LaqCfX754oZgHMoKgw=
+	t=1791556278; cv=none; b=MdkXB6RzKkS5uHHKn/4QsUkIdqneQaBXD62s99lR6tavOOiW85q5fxOIiuIlINpU8YBEcA3cli6Y1SEbFP0vJLOo2O5gLeDPjoCIjbLrE2istqcOHLnmfXTBmljs8rEpNXHRpsogFKyTT4X7PHRC+cnntVTg80tr8/1gXbI7Fbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556275; c=relaxed/simple;
-	bh=a5ic7XmPPI3ogbeP2lpZ/ZZTVMh+mu3icyhJWp62NhE=;
+	s=arc-20240116; t=1791556278; c=relaxed/simple;
+	bh=Zgi1QEnCU8svME2/1KPTyi5MQVKwwlc+BgPQZc3jY38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKfSTMJvu7lKyV0kF0h4upNQCf19uf34pk9j7AfG2eDXgwqmu0ewrTjQ2Q92rn6oRvb21rDvuFnrlfKzdrpZH+cJ8z/l3Yb0iFvpjgv/IIempingOdcwXR01r/ESXypbotJwyZnRxo0TsPDMLq9LQ4u6R450fJmao5/PeFj3Jaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouwl08+U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFOYfZX68F8tUUhDd8P0OnssVIY+5Em6eOiwzDVw2fiRcRtYU+h7S+Cq/a1MnQ00wZM8pAc2EZrxKGCum+TPfhcGhBY1Eyz2kJGJFMr354YA2eJO5zaRfT/rSZiXeDNa3CQ3Ca8TZfhMjdgvOq0BIl5yGISj5Nf6KsI7BAerg/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsy8gXfd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouwl08+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBDF1F000FF;
-	Fri,  9 Oct 2026 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsy8gXfd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886541F000FF;
+	Fri,  9 Oct 2026 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556274;
-	bh=TtJZGB/bWPnjv88jR5zT1fuTUHWQ03nehg1OCV+r654=;
+	s=korg; t=1791556277;
+	bh=qK4tfNznxR5mK+ums1+gXrfdx1xPtrNtzBwYs18Ktr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ouwl08+UWH8N/pxi9yvMKDHyDYqZ9sr5xkBNEZ8RW2oh6pG0qqTUx4Zi3wH9DnkQB
-	 OCzC9WBhjU6r5yK4LZDuwD4d4Y5UjYO/fjfyTYWTfXJlwqZxv0x0Z3KLuR+8TFR18h
-	 9XF+8akpeFEKZk9ibWwJGEQrdAG300yEEuvV9oNQ=
+	b=qsy8gXfdYmma1BlAxf+LOR35CrnZh/EqaD8VyM/U35H2Yd9wO0XTkPUFV1iV0fe1F
+	 5xtZudstxljRNloDiJoJWen1ASfY4ph0M4cdNF/a8tpA+xOn43rdFisLDq8VjzvOHa
+	 Drw0ZEDfeAdtKcMoLkfHa+CnxcQTcD0N7grSI5L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 150/428] netfilter: flowtable: generalize pending status bit
-Date: Fri,  9 Oct 2026 16:08:07 +0200
-Message-ID: <20261009140949.464285167@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 208/403] arm64/fpsimd: signal: Forbid non-streaming SVE payload on SME-only systems
+Date: Fri,  9 Oct 2026 16:09:29 +0200
+Message-ID: <20261009140957.003918969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,129 +48,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 7c549fb7eecd01fdba7c0d12c01da876ef8a3214 ]
+commit e060d9069b49fe55f38057dfe592068014652671 upstream.
 
-Rename NF_FLOW_HW_PENDING to NF_FLOW_PENDING and use it to inhibit the
-flowtable GC worker until pending hw offload work has been completed.
+When system_supports_sme() is true but system_supports_sve() is false,
+restoring a specifically crafted SVE signal context can result in the
+task erroneously having non-streaming SVE state. Subsequent attempts to
+manipulate the task's FPSIMD/SVE/SME state can result in a variety of
+problems, including fatal EL1 UNDEFs.
 
-Apparently, nf_flow_offload_stats() can schedule work to retrieve stats
-while the flow is being removed by GC.
+In such configurations, the kernel always creates an SVE signal context
+when delivering a signal, and this can only be in one of two states:
 
-And this bit can also be used in a follow up patch to disable GC until
-the flow has been fully added in both directions.
+(1) SVE_SIG_FLAG_SM is set, and an SVE payload is present containing
+    streaming mode SVE state. The recorded VL is the task's live
+    streaming VL.
 
-Revert the reordering done in commit d644b23afe1e ("netfilter:
-flowtable: publish HW_DEAD after worker is done") to prevent a race
-between GC and hw offload handler.
+(2) SVE_SIG_FLAG_SM is clear, and an SVE payload is not present. The
+    FPSIMD context contains the non-streaming mode FPSIMD state. The
+    recorded VL is 0.
 
-Fixes: 2c8897953f3b ("netfilter: flowtable: Add pending bit for offload work")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Currently restore_sve_fpsimd_context() correctly rejects cases where
+SVE_SIG_FLAG_SM is set and an SVE payload is not present, but fails to
+reject cases where SVE_SIG_FLAG_SM is clear and an SVE payload is
+present. Consequently, restore_sve_fpsimd_context() can place the task
+in a state where it has non-streaming SVE state even when this is not
+supported by HW.
+
+For example, this can cause a later EL1 UNDEF when the kernel attempts to
+restore the task's ZCR_EL1 value:
+
+| # ./sme-sigcontext-to-sve
+| Internal error: Oops - Undefined instruction: 0000000002000000 [#1]  SMP
+| Modules linked in:
+| CPU: 0 UID: 0 PID: 131 Comm: sme-sigcontext- Not tainted 7.3.0-rc1 #1 PREEMPT
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 61402009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+| pc : fpsimd_restore_current_state+0x258/0x458
+| lr : exit_to_user_mode_loop+0xb8/0x188
+| sp : ffff80008056be40
+| x29: ffff80008056be40 x28: fff00000c1670000 x27: 0000000000000000
+| x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+| x23: ffff80008056bec0 x22: 0000000000000008 x21: 0000000000000040
+| x20: 0000000000000081 x19: 0000000008800010 x18: 0000000000000000
+| x17: 0000fffffd412570 x16: 0000000000001000 x15: 0000fffffd4123b0
+| x14: 0000fffffd412780 x13: 0000fffffd412be8 x12: 0000000047435300
+| x11: 0000fffffd412570 x10: 0000000000000000 x9 : 0000000045585401
+| x8 : fff00000c18a6c44 x7 : 0000000000000000 x6 : 0000000000000002
+| x5 : 0000000000000002 x4 : ffff800080568000 x3 : 0000000000000001
+| x2 : 0000000008800010 x1 : fff00000c1670000 x0 : 0000000008800000
+| Call trace:
+|  fpsimd_restore_current_state+0x258/0x458 (P)
+|  exit_to_user_mode_loop+0xb8/0x188
+|  el0_svc+0x1cc/0x1d0
+|  el0t_64_sync_handler+0xa0/0xe4
+|  el0t_64_sync+0x198/0x19c
+| Code: d5384101 f9400020 53175c03 36b80de0 (d5381202)
+| ---[ end trace 0000000000000000 ]---
+| Kernel panic - not syncing: Oops - Undefined instruction: Fatal exception in interrupt
+| Kernel Offset: 0x291fb1000000 from 0xffff800080000000
+| PHYS_OFFSET: 0x40000000
+| CPU features: 0x0,00000000,0052802f,ffb88f43,3afcf73f
+| Memory Limit: none
+
+Rework restore_sve_fpsimd_context() to reject cases where
+SVE_SIG_FLAG_SM is clear and an SVE payload is not present. As
+parse_user_sigframe() rejects SVE signal frames when neither SVE nor SME
+are supported, it isn't necessary for restore_sve_fpsimd_context() to
+handle the case where neither are supported.
+
+Fixes: 7dde62f0687c  ("arm64/signal: Always accept SVE signal frames on SME only systems")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_flow_table.h |  2 +-
- net/netfilter/nf_flow_table_core.c    |  7 ++++++-
- net/netfilter/nf_flow_table_offload.c | 14 +++++---------
- net/sched/act_ct.c                    |  2 +-
- 4 files changed, 13 insertions(+), 12 deletions(-)
+ arch/arm64/kernel/signal.c |   34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index ce414118962f5..d69cadd53bc35 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -183,10 +183,10 @@ enum nf_flow_flags {
- 	NF_FLOW_DNAT,
- 	NF_FLOW_CLOSING,
- 	NF_FLOW_TEARDOWN,
-+	NF_FLOW_PENDING,
- 	NF_FLOW_HW,
- 	NF_FLOW_HW_DYING,
- 	NF_FLOW_HW_DEAD,
--	NF_FLOW_HW_PENDING,
- 	NF_FLOW_HW_BIDIRECTIONAL,
- 	NF_FLOW_HW_ESTABLISHED,
- };
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 254063fca0780..7f51b18f9fb41 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -575,7 +575,12 @@ static void nf_flow_table_extend_ct_timeout(struct nf_conn *ct)
- static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
- 				    struct flow_offload *flow, void *data)
- {
--	bool teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
-+	bool teardown;
+--- a/arch/arm64/kernel/signal.c
++++ b/arch/arm64/kernel/signal.c
+@@ -433,6 +433,7 @@ static int restore_sve_fpsimd_context(st
+ 	unsigned int vl, vq;
+ 	struct user_fpsimd_state fpsimd;
+ 	u16 user_vl, flags;
++	bool fpsimd_only;
+ 	bool sm;
+ 
+ 	if (user->sve_size < sizeof(*user->sve))
+@@ -443,19 +444,33 @@ static int restore_sve_fpsimd_context(st
+ 	if (err)
+ 		return err;
+ 
++	fpsimd_only = (user->sve_size == sizeof(*user->sve));
+ 	sm = flags & SVE_SIG_FLAG_SM;
 +
-+	if (test_bit(NF_FLOW_PENDING, &flow->flags))
-+		return;
+ 	if (sm) {
+ 		if (!system_supports_sme())
+ 			return -EINVAL;
+ 
++		/*
++		 * Streaming SVE state is always preserved with an SVE payload.
++		 * Only accept streaming state which has an SVE payload.
++		 */
++		if (fpsimd_only)
++			return -EINVAL;
 +
-+	teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
+ 		vl = task_get_sme_vl(current);
+ 	} else {
+ 		/*
+-		 * A SME only system use SVE for streaming mode so can
+-		 * have a SVE formatted context with a zero VL and no
+-		 * payload data.
++		 * Non-streaming SVE state may be preserved without an SVE
++		 * payload, in which case all state is saved in the FPSIMD
++		 * context.
++		 *
++		 * On SME-only systems, non-streaming (FPSIMD-only) state is
++		 * always preserved without an SVE payload, and with VL==0. On
++		 * such systems, only accept non-streaming state without an SVE
++		 * payload.
+ 		 */
+-		if (!system_supports_sve() && !system_supports_sme())
++		if (!system_supports_sve() && !fpsimd_only)
+ 			return -EINVAL;
  
- 	if (nf_flow_has_expired(flow) ||
- 	    nf_ct_is_dying(flow->ct) ||
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 6757fd89c1f1a..4365859220e6a 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -995,6 +995,7 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
- 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
- 	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
- 		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
-+	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
- }
+ 		vl = task_get_sve_vl(current);
+@@ -464,16 +479,7 @@ static int restore_sve_fpsimd_context(st
+ 	if (user_vl != vl)
+ 		return -EINVAL;
  
- static void flow_offload_tuple_stats(struct flow_offload_work *offload,
-@@ -1056,13 +1057,8 @@ static void flow_offload_work_handler(struct work_struct *work)
- 		default:
- 			WARN_ON_ONCE(1);
- 	}
--
--	clear_bit(NF_FLOW_HW_PENDING, &offload->flow->flags);
--	if (offload->cmd == FLOW_CLS_DESTROY) {
--		/* Publish after the worker's last flow access. */
--		smp_mb__before_atomic();
--		set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
--	}
-+	smp_mb__before_atomic();
-+	clear_bit(NF_FLOW_PENDING, &offload->flow->flags);
+-	/*
+-	 * Non-streaming SVE state may be preserved without an SVE payload, in
+-	 * which case the SVE context only has a header with VL==0, and all
+-	 * state can be restored from the FPSIMD context.
+-	 *
+-	 * Streaming SVE state is always preserved with an SVE payload. For
+-	 * consistency and robustness, reject restoring streaming SVE state
+-	 * without an SVE payload.
+-	 */
+-	if (!sm && user->sve_size == sizeof(*user->sve))
++	if (fpsimd_only)
+ 		return restore_fpsimd_context(user);
  
- 	kfree(offload);
- }
-@@ -1089,12 +1085,12 @@ nf_flow_offload_work_alloc(struct nf_flowtable *flowtable,
- {
- 	struct flow_offload_work *offload;
- 
--	if (test_and_set_bit(NF_FLOW_HW_PENDING, &flow->flags))
-+	if (test_and_set_bit(NF_FLOW_PENDING, &flow->flags))
- 		return NULL;
- 
- 	offload = kmalloc_obj(struct flow_offload_work, GFP_ATOMIC);
- 	if (!offload) {
--		clear_bit(NF_FLOW_HW_PENDING, &flow->flags);
-+		clear_bit(NF_FLOW_PENDING, &flow->flags);
- 		return NULL;
- 	}
- 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 1d62bb654149c..1cc6eb6250614 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -289,7 +289,7 @@ static bool tcf_ct_flow_is_outdated(const struct flow_offload *flow)
- {
- 	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
- 	       test_bit(IPS_HW_OFFLOAD_BIT, &flow->ct->status) &&
--	       !test_bit(NF_FLOW_HW_PENDING, &flow->flags) &&
-+	       !test_bit(NF_FLOW_PENDING, &flow->flags) &&
- 	       !test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
- }
- 
--- 
-2.53.0
-
+ 	vq = sve_vq_from_vl(vl);
 
 
