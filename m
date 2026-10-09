@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C995E3B582F;
-	Fri,  9 Oct 2026 14:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEA1230BDB;
+	Fri,  9 Oct 2026 14:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555667; cv=none; b=oBs1ipfM2X73QCodH/05oHB2EmvytR2JLZHxNBSX95wqSiXkKtEUv69SgaYVqQ9VBfw1CJh6qHKS5zo2lClEAx18mYrrOlSFMUYCLj/ijGUBU45t1YnH0JxneRsTtG2G8QYiFkTyFIW0nwyYdSEBCODAqO2R516sKAEtRsjEEwI=
+	t=1791555669; cv=none; b=hHI6TZc/Q6L6BRb9YGJsPrzGFbn6GTiIpTEAgI1oZbZZzKZdZOw4KTyViadD/2qBY7+F1dYW5fZgnUkPTDmDcnJGhi1vkiAWV1QtokGXIsco2gzhEycHGyZtwoJ72KWkl0htUnNrrtNyIgeRkIO5gTK6hYxaz8Vz9XX39ODi2m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555667; c=relaxed/simple;
-	bh=G1y42HCrmI08Y3Jm9+rhpq9Ea6z4QP/zmX5zx7WOmbE=;
+	s=arc-20240116; t=1791555669; c=relaxed/simple;
+	bh=JtGxthZwP/N/+wYRf3uMTG2OttR4EUxYwqYGxivsj4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrzwotW7K6GwGgAqXdazP7DwFJcYEEaJNv2r8zPKUXErEKiu+9kXxOozLjVQtFwEzkXM+7r4nQa+cN88yv2zJPg4rYpdmtVUyYzp74ELNfReWyWazsgsFG3yCa28dtPiHb0qToTUh4rQRyM/pO1y5/eowIy8IJwt6BeLCiLZl4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY1qXgSq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GMgWdIuFX3cC5eJl5YPwMuVUQEs3ep2zgvwK1Y0GC9okA8pvEUi6V7yjLM4RfacJNAvtkrVW1a4IvBqoTcmg8FUVLMxV9JcrHlOr+RiV54T5D36Jj0MNFVYDIJt06Htw6WgQtHTaa/5b/lREeL/JV+e8SNXrndCnA5kROCT7s3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd5jlo4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY1qXgSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11D81F00898;
-	Fri,  9 Oct 2026 14:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd5jlo4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEAD1F00898;
+	Fri,  9 Oct 2026 14:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555665;
-	bh=OYDZ0B1HRFlOEpc9SIhwnEC02JAvqW9NZqM9RR9JlRE=;
+	s=korg; t=1791555668;
+	bh=waUb5S2CHVr2BtbeQc+OVcrz/Fd2bOpAT35dfX8p5I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qY1qXgSqK6PmQU9RzQK72vD5rHIBhRjt6BgHpFarDaxAUEcRV6fabukkZxGL9iGIT
-	 liSFFrHNUDSwOJBoGhUpMkVvvlw0phKbC2nn80qbrHW0Akdm6sUFfIkZvlojGekQEb
-	 fFgFxtDBvrF1MC31X8cLBoCLlsnsexNAR/92830E=
+	b=qd5jlo4I0CICTdbmkv/kWIKVHvr+IlunktEIi/akWBYS33OBaiEoNSmb3PDfM28zJ
+	 xxzmiKoyd08/8W6T4EpzhgjEbW1/K+fPZiFoSA4Fa5Ys9RubXBO1ydlpKcpx5fSt6z
+	 CX0NGmRjxqOoIk4a/ydGitYMvcx5uem4z36qXEB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 096/403] net: systemport: Fix RUNT MIB counter register offset calculation
-Date: Fri,  9 Oct 2026 16:07:37 +0200
-Message-ID: <20261009140954.332696601@linuxfoundation.org>
+	Bradley Morgan <brads@mainlining.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Joel Granados <joel.granados@kernel.org>
+Subject: [PATCH 7.2 046/428] sysctl: Negate before converting in the int read path
+Date: Fri,  9 Oct 2026 16:06:23 +0200
+Message-ID: <20261009140947.118995510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 242935adfeb096f09b29fb2cfcf12f9eb2911fc6 ]
+commit e955f14fa8467d70aaeea5830b4d1773d5b25500 upstream.
 
-In UniMAC hardware, there is a 0xC byte gap between the RX MIB counters
-and the TX MIB counters, and a second 0xC byte gap between the TX MIB
-counters and the RX RUNT MIB counters.
+proc_int_k2u_conv_kop() reports the sign through *negp and the magnitude
+through *u_ptr, but for a negative value it hands the sign-extended int to
+the converter and negates the result:
 
-In bcm_sysport_update_mib_counters(), 'offset' was only set to
-UMAC_MIB_STAT_OFFSET (0xC) for all non-RX counters, omitting the second
-0xC gap for BCM_SYSPORT_STAT_RUNT counters. As a result, all 4 RUNT MIB
-counters were read from unmapped gap register space.
+	*u_ptr = k_ptr_op ? -k_ptr_op((ulong)val) : -(ulong)val;
 
-Fix this by setting offset to 2 * UMAC_MIB_STAT_OFFSET (0x18) when
-reading BCM_SYSPORT_STAT_RUNT counters.
+With div_hz() and CONFIG_HZ=1000 a stored -1000 becomes
+(ulong)-1000 / 1000 == 18446744073709550, and negating that wraps:
 
-Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260922232440.598918-6-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	# echo -1 > /proc/sys/net/ipv4/tcp_fin_timeout
+	# cat /proc/sys/net/ipv4/tcp_fin_timeout
+	-18428297329635842066
+
+The magnitude is HZ dependent but the wrap is not: the negation happens
+after the division at every CONFIG_HZ.
+
+Take the magnitude first and convert that, which is what the open-coded
+version did before commit 2dc164a48e6f ("sysctl: Create converter
+functions with two new macros") folded it into a macro.  The
+k_ptr_op == NULL branch was already correct.
+
+All three int converters that pass a k_ptr_op are affected:
+proc_dointvec_jiffies(), proc_dointvec_userhz_jiffies() and
+proc_dointvec_ms_jiffies().
+
+Fixes: 2dc164a48e6f ("sysctl: Create converter functions with two new macros")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Joel Granados <joel.granados@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bcmsysport.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sysctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
-index 8bfcfbe696b26..ff2512b2fe7b7 100644
---- a/drivers/net/ethernet/broadcom/bcmsysport.c
-+++ b/drivers/net/ethernet/broadcom/bcmsysport.c
-@@ -391,8 +391,10 @@ static void bcm_sysport_update_mib_counters(struct bcm_sysport_priv *priv)
- 			if (priv->is_lite)
- 				continue;
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -478,7 +478,7 @@ int proc_int_k2u_conv_kop(ulong *u_ptr,
  
--			if (s->type != BCM_SYSPORT_STAT_MIB_RX)
-+			if (s->type == BCM_SYSPORT_STAT_MIB_TX)
- 				offset = UMAC_MIB_STAT_OFFSET;
-+			else if (s->type == BCM_SYSPORT_STAT_RUNT)
-+				offset = 2 * UMAC_MIB_STAT_OFFSET;
- 			val = umac_readl(priv, UMAC_MIB_START + j + offset);
- 			break;
- 		case BCM_SYSPORT_STAT_RXCHK:
--- 
-2.53.0
-
+ 	if (val < 0) {
+ 		*negp = true;
+-		*u_ptr = k_ptr_op ? -k_ptr_op((ulong)val) : -(ulong)val;
++		*u_ptr = k_ptr_op ? k_ptr_op(-(ulong)val) : -(ulong)val;
+ 	} else {
+ 		*negp = false;
+ 		*u_ptr = k_ptr_op ? k_ptr_op((ulong)val) : (ulong) val;
 
 
