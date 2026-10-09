@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD67399CE9;
-	Fri,  9 Oct 2026 14:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1D031E85E;
+	Fri,  9 Oct 2026 14:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556623; cv=none; b=RgaIzHe+nTiOFksDU8fE6Jo0MZhagHCQnMyVXmMlQby+rB3vQZVL6pgnWfckWpqSyyxQWiPoOdbjI12glJ9hXo7BsXfUgFYODXTcesNR+Cm4oGDn9woYrC6JwaGphPT+uSA0YCbBNzjIQri1vglXk/zjXtbSbLLsyrgvtba/eRc=
+	t=1791556626; cv=none; b=fcjxuDQXHhiuuEX2J3uWa3NG4iMpUHO2ps/WUG3KTUxG468tqierIOm9usbay2FsdmKG0CDxbdc1WkkfzNZx63UWL6au3aW1oUijXAS3Y1//CT0VSgk649tUBC5PewexmJnsgJu2a+qkAT1OzCs8JFknoLdTwt6aBXrDEUccig4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556623; c=relaxed/simple;
-	bh=ro4qg8tdF/fTduhaCDYks1TLe8SzQKU8GRpfqJidnvU=;
+	s=arc-20240116; t=1791556626; c=relaxed/simple;
+	bh=Earr8pPTseHTDS0SdahOIZscf93AJcZAVE+mUeTLJFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz65flufAzK9SSO9d0zn0GrtpCMylozB1ibBO00+xgTuM64wsnkqz/YfJmaA1eUrO9LwE+WdZGuuTZWORMVkGXsq2fBSkxEl3/LjsRCG1//+jBXN9cC+UNG2Z526bKiVphbQ3Oxq2jwM+xPBMn6XxfYd27rHBC9+WQAp1ffMjNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN4gQne0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMoC9LwTU4+7fjgmoipxQwelzYN5oQqO0wRGwucYofPp4IWbveE4SeAZo+Wj9KADHMjXa3K+cYztweQ8DmLoE0SUi1cwEhNDYIMFskTca21sgcoa+zWiEGl2hOYTLvQvJkJcofoPqjPU1wCdjwvbF4X52O6TQAsJvW5goFoz85k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8HrxGh/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN4gQne0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB8B1F000FF;
-	Fri,  9 Oct 2026 14:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8HrxGh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8CA1F000FF;
+	Fri,  9 Oct 2026 14:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556622;
-	bh=evdYZ/Yi0YbqCZdIi1zjjieIvS84DrgD/4yE6gU/yO4=;
+	s=korg; t=1791556625;
+	bh=PxPqohjXgEf/LMNSfMfx9ZVbZuJT8LVgPqT1mOpSTZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hN4gQne04+wo2pFE+bB5qGN5/FjDMtRydkcKS99jmKRjBzPiCjJ613pg0AS6+r2kn
-	 GxaeVrsZfqsljU2m3ITh8vQIccm10E1X19jq2dJ92jP9YxeXPERfUfDHEGp4dU3JfB
-	 hwEs/NChXcvWdn3jvK/nEp+AHxfSBB67Z7d6HdUU=
+	b=E8HrxGh/aBbee91JrpHRM2XjEVMeHpGkWLrwytdACuhIaV0ylfHBy5tgx8RJNvXMO
+	 gTGq2Ix0TrGlOIR9kMHnWLTOZHcs92aCYgrvXGXpPvz2Fo9jIhp2Uu6L4n9+wiE1Qg
+	 4GnrVmTXPvekYPVMexzIq4yLcjxTDUNWzJcHqSp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 265/403] wifi: iwlegacy: 3945: free EEPROM data on remove
-Date: Fri,  9 Oct 2026 16:10:26 +0200
-Message-ID: <20261009140958.374754154@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.2 211/428] usb: ohci-da8xx: disable controller wakeup on cleanup
+Date: Fri,  9 Oct 2026 16:09:08 +0200
+Message-ID: <20261009140950.762292963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit f8ebe286394c0bbb4a6dbacb182a34ab6376922d upstream.
+commit 901197dd4c7dcffbf97426487d4c047555c98554 upstream.
 
-il3945_pci_probe() calls il_eeprom_init(), which allocates memory for
-the EEPROM data. The probe failure paths release this allocation with
-il_eeprom_free(), but the remove path does not free it after a
-successful probe.
+The OHCI core marks controllers with RemoteWakeupConnected as
+wakeup-capable. Probe enables wakeup, but neither removal nor a later
+notifier registration failure disables it, leaving the wakeup source
+attached.
 
-As a result, the EEPROM data is leaked when the PCI device is removed.
+Disable controller wakeup after removing the HCD on both paths.
 
-Free the EEPROM data in il3945_pci_remove() before releasing the
-mac80211 hardware structure.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-This issue was found by manual code inspection.
-
-Fixes: 073d3f5f1b3b ("iwlwifi: changing EEPROM layout handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260916073736.2952028-1-lgs201920130244@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260915012011.61874-2-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlegacy/3945-mac.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/ohci-da8xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-@@ -3806,6 +3806,7 @@ il3945_pci_remove(struct pci_dev *pdev)
+--- a/drivers/usb/host/ohci-da8xx.c
++++ b/drivers/usb/host/ohci-da8xx.c
+@@ -447,6 +447,7 @@ static int ohci_da8xx_probe(struct platf
  
- 	il_free_channel_map(il);
- 	il_free_geos(il);
-+	il_eeprom_free(il);
- 	kfree(il->scan_cmd);
- 	dev_kfree_skb(il->beacon_skb);
- 	ieee80211_free_hw(il->hw);
+ err_remove_hcd:
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
+ err:
+ 	usb_put_hcd(hcd);
+ 	return error;
+@@ -457,6 +458,7 @@ static void ohci_da8xx_remove(struct pla
+ 	struct usb_hcd	*hcd = platform_get_drvdata(pdev);
+ 
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
+ 	usb_put_hcd(hcd);
+ }
+ 
 
 
