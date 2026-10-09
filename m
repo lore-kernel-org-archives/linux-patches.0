@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6325E3B19DE;
-	Fri,  9 Oct 2026 14:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC01BA45;
+	Fri,  9 Oct 2026 14:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556768; cv=none; b=mwKA5TOuOHEGwa83w/9Qoj3E/2nrhqQ683IpqtTYPj19K95jiOD9FoeMZCIAiHTR2EXG0pGxbQpxk49b3XjaloI2qJYUsaZnjSFVCkmYdTQCrJliE2NCeymgYiaJkHoXafMfoSRdQJRHWWiZCuo5GJ4vUwBl5aZYh4GNeI9aNos=
+	t=1791556771; cv=none; b=nqNs/wPW9CK9UajPLbuLR4bQTvs5CWE02uYZFLgfBqvlLDH3OZ26bPoIEYjgwmdx+piNzCLzHOVZRwykATCejJfrTXuesvIrJmxsMyRnkMYSOWy/JVoAAk/+TSGPyQ3G+U4NuhnYPPuONI1dB+dB4gpIg68twdf1Bq7RFpUmziA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556768; c=relaxed/simple;
-	bh=FkN7FrYKezkmKLumljsAcdS7OeyRE+ISPUA7ZzOHL9g=;
+	s=arc-20240116; t=1791556771; c=relaxed/simple;
+	bh=deq68+e08DRLgFnuP2lBEpabUqbOKOr1AH54iepvrHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4pLLCGCNlxOSkZUALFI5Ht06PoxU3QWDhS/J9KI96XfCnnbUxR8axNowZlA/Z5XqUTF0kJfXFuyvpmIwLHOch7FlzxHAImLz9h3rkHbKjYR0HjZ/iO6Kp2/tSiOnZC786Dy4Ho/3FEvn4Neoo1qk0SFC3TCVUdMafvoavO1tAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0E787mVy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sFuXWmLnh3Wl/lmMHpYAODx9q16rnPERLpDIEZvbeNuRzcFV6yPm+n2tuUGppayDLJcrqnRx4BiNuRh9Hz7XrLE9a49yz5qpyz5D7JUo1jInMEGUnVetPoPdN4/TH2bgYpab3KJIaFe+8SsYQrsNHXJGkMGnLR+ICS5lFbcZH3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8bpOTyy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0E787mVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750131F00893;
-	Fri,  9 Oct 2026 14:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8bpOTyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CAB1F000FF;
+	Fri,  9 Oct 2026 14:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556767;
-	bh=hb2QWsOzUUWccqIofkD86kcSrP1Ot5Z6F931n0WVK94=;
+	s=korg; t=1791556770;
+	bh=D3Xvdg11hRgT70xe9q7m0JBo5YPlP7JBxYoY/ASKoEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0E787mVy2N2d7hrrpqEt5gYWmRnbk783vqIHnv4/EzxBjBU56muAo+YejUJkmix79
-	 /Dim7aeF0KHZGQqs2Jlf793iRCyeVKCQJAO1iaY4r1+JNC1l0aqrEfutdIGxTghqQI
-	 99rvFjFnslKLnHCuHusMM1h4TpniwC7hDOwB/U20=
+	b=Y8bpOTyy9pr7uI8+Md7s4TDwG4svwa4PvXjtqXRehFPNw9qWzgFgC+PgPrGaBGeo7
+	 2RrgVuc30iXfebpDFenDjfou5F2gUGi3URDnvChyV2A5P9ctLu89sQM5fip+JaDmVC
+	 dnjLnbHf2MrekYYl75kEvtDqMvcUCJH5zW4amMss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.18 290/403] thunderbolt: Tear down inactive DP tunnels when the domain is stopped
-Date: Fri,  9 Oct 2026 16:10:51 +0200
-Message-ID: <20261009140958.983229160@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 7.2 239/428] tty: vcc: zero-initialize control packet in vcc_send_ctl()
+Date: Fri,  9 Oct 2026 16:09:36 +0200
+Message-ID: <20261009140951.360526202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit 0b457c6733f73421a3fb03786f13d67c618b5119 upstream.
+commit 1f71f565e3585da1098ff19ca3c24687dab59185 upstream.
 
-tb_stop() only tears down DMA tunnels so a DP tunnel that is still
-waiting for dprx_work to complete keeps that work queued while the
-routers are removed and the control channel is stopped. The work only
-stops once the DPRX timeout has passed and because it requeues itself
-until then the flush_workqueue() in tb_domain_remove() won't wait for its
-final run. The callback then runs against a domain that is already torn
-down. A reference to that domain is kept so the completion waiting for
-that domain to disappear in unbind will block until the timeout is
-eventually reached.
+The stack-allocated struct vio_vcc pkt was partially initialized,
+leaving the tag.stype_env field uninitialized before being sent via
+ldc_write(), potentially leaking kernel stack data to the LDC peer.
 
-Tear down DP tunnels that are not active yet as well which also cancels
-that work. Tunnels for displays that are already alive are untouched and
-keep working.
-
-Fixes: d6d458d42e1e ("thunderbolt: Handle DisplayPort tunnel activation asynchronously")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Assisted-by: AISLE:Snapshot
+Cc: stable <stable@kernel.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260803-aisle-tty-vcc-v2-1-a50bc9b15193@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/tty/vcc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2946,11 +2946,12 @@ static void tb_stop(struct tb *tb)
- 	/* tunnels are only present after everything has been initialized */
- 	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list) {
- 		/*
--		 * DMA tunnels require the driver to be functional so we
--		 * tear them down. Other protocol tunnels can be left
--		 * intact.
-+		 * DMA tunnels and DP tunnels which are not yet active require
-+		 * the driver to be functional so we tear them down.
-+		 * Other protocol tunnels can be left intact.
- 		 */
--		if (tb_tunnel_is_dma(tunnel))
-+		if (tb_tunnel_is_dma(tunnel) ||
-+		    (tb_tunnel_is_dp(tunnel) && !tb_tunnel_is_active(tunnel)))
- 			tb_tunnel_deactivate(tunnel);
- 		tb_tunnel_put(tunnel);
- 	}
+--- a/drivers/tty/vcc.c
++++ b/drivers/tty/vcc.c
+@@ -492,7 +492,7 @@ static ssize_t domain_show(struct device
+ 
+ static int vcc_send_ctl(struct vcc_port *port, int ctl)
+ {
+-	struct vio_vcc pkt;
++	struct vio_vcc pkt = {};
+ 	int rv;
+ 
+ 	pkt.tag.type = VIO_TYPE_CTRL;
 
 
