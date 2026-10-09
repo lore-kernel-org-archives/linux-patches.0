@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD824519A0;
-	Fri,  9 Oct 2026 14:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E601846AA8C;
+	Fri,  9 Oct 2026 14:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556108; cv=none; b=N41HtNqEbMqJC8hHCJUb7OYgGEiPBGIj0xfbhtdTre61jM9v18FFakWcz7lnJCiGGHOfHfWSFLIsz4OncJYWyYKhWIHIv8jLh/CgoPWDRII0oZhANGvScPZm7hxPOvTYGLJ1kK13gAVJxQnK8affWYTXGFXhkon1SMZ84H+hbTI=
+	t=1791556110; cv=none; b=bQJOAp6ZvJW+lGXRZPWKQx2e8mZmWcEJHxj9qC2M+d6SrGcBnM4v6hEV7Ng5wBZMuzmCPnAToHb69HGaQfKsUYCC7y+p+CrNyy52gLAIrt6Mn+ZmkI6+DXuAQ43DZF1MMqBaYkYjz34dFT+SFo/41r26U+gf2bYocEuKtnuj0So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556108; c=relaxed/simple;
-	bh=T3T2A++K0B0vf3uQBeqjLx5bD3kDYWj3zg/Ji5pNEO4=;
+	s=arc-20240116; t=1791556110; c=relaxed/simple;
+	bh=4IWQNB7Tql0OsLIOLdVO6OAy9gfOzp1CFszEBwUAu3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pO6B5wj/vwxjYVKTmSJpgxws6umaQH33+feQ+hMc6RibTpocOH98R4NHF5Z/SRJ2YZCN0F4IVr2pUvSncur7K4KMdLsrvnceycWh1HgZ3Kumq5I3e2b2G83nyvyDSZ1PcTgjhBF10okkpG9AcJ9XUGzMnZ/fsyh2z0YnIPd60MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9aHxZYR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m7yw6YlhARjMv7cAun+ewMUxNcAW2u2QfagaSkaif5r4LiqA1rGfCn3iJwOe4ujV7aeNwQ06Y/dwQJIWzwFcOc3+QYAh6jYcGVS6YxPZRz+JNHIdhlmW8Mr3QVVsXe4glMwYhV716BnR3xxnvCokqisxYPHPFVEIjrTUj0D7ZWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PidnLrEk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9aHxZYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665B61F000FF;
-	Fri,  9 Oct 2026 14:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PidnLrEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD381F000FF;
+	Fri,  9 Oct 2026 14:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556106;
-	bh=1dpxjeyoSaiyz7A7hrofhI6rf7RmKjATc+1dnPotyqE=;
+	s=korg; t=1791556109;
+	bh=kEr2L9IoRD0LTHZcFL34U04vlFPAAw3WYUdWwO5nuJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9aHxZYRmw5cYQQf29UxZJkGrCCDvx6Mu64Cip1rS1WvOTQenuYhS1AW8P6tVv1F/
-	 /mdQtBsYpVWi8jOQSKvOjgzVSwtTwuu8pEggJ0kAMcUOR8qhaYTuek2cbcdaDAn7sY
-	 PITHMObr7xMlYR4Y8kjLg7QwJVkq1cqTp0oQ+pCY=
+	b=PidnLrEkxxapv10T+p9ZxnRr7szA8uxrqpPLy4VLMZlGvv1svkdnGhW8pYJ49gfGR
+	 roORjxnUiezKu9IfGVw2l2ADDGtDZ4rPE9gZMzfGmt0DihQMBuWyw4GmprF8X/VHUV
+	 P7f47JAL8I4jvXIppkTSV1UUOP7wl4xxIqMPdtVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: [PATCH 6.18 175/403] usb: gadget: aspeed-vhub: cancel wake work on device removal
-Date: Fri,  9 Oct 2026 16:08:56 +0200
-Message-ID: <20261009140956.208720106@linuxfoundation.org>
+	Mark Bloch <mbloch@nvidia.com>,
+	Anirudh Virdi <avirdi@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 122/428] net/mlx5: Fix slab-out-of-bounds when handling team device events
+Date: Fri,  9 Oct 2026 16:07:39 +0200
+Message-ID: <20261009140948.871654857@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,120 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Anirudh Virdi <avirdi@redhat.com>
 
-commit 20388c8d1d74c203fec8194c45cd31afdfab934e upstream.
+[ Upstream commit 04c824940d52871c49866a4ac67b504146f7cf35 ]
 
-wake_work is armed from the gadget .wakeup callback to resume suspended
-downstream ports, and it is never cancelled in ast_vhub_remove(), so a
-work item queued before or during removal can run after devm has freed
-vhub and its ports, a use-after-free.
+The mlx5_handle_changeupper_event() and mlx5_handle_changeinfodata_event()
+functions check for LAG masters (which includes both bonding and team
+devices) but only call bonding-specific APIs. When processing team device
+events, calling bond_slave_get_rcu() and bond_is_slave_inactive() on
+team_port structures causes KASAN to detect an out-of-bounds memory access
+since team_port is smaller than bond slave.
 
-Cancelling the work alone is not sufficient: usb_gadget_wakeup() takes
-no lock and the unbind path never clears wakeup_en, so a remote-wakeup
-request in flight on another CPU can re-arm the work after the cancel
-and before vhub is freed.
+Fix this by wrapping the bond-specific API calls with a check for bonding
+devices. This allows the function to still process LAG events for both
+bonding and teams but only calls bond-specific functions when dealing with
+actual bonding devices.
 
-ast_vhub_del_dev() already clears d->registered under vhub->lock before
-unregistering the gadget. Refuse the wakeup in ast_vhub_udc_wakeup()
-once d->registered is clear: the check and the schedule_work() are then
-atomic against the unbind, so a wakeup that passed before the flag was
-cleared is drained by the cancel_work_sync() after the del_dev loop,
-and one that arrives later returns without arming. Also move INIT_WORK()
-to the top of ast_vhub_probe(), since the probe error path reuses
-ast_vhub_remove() and would otherwise cancel a never-initialized work
-item.
+For mlx5_handle_changeinfodata_event(), keep the explicit bond check as
+mlx5 doesn't handle state information for team ports anyway.
 
-This issue was found by an in-house static analysis tool.
+Tested with Mellanox ConnectX-5 on Linux 7.2.0-rc6:
+- Bonding: PASS (no regressions)
+- Team device: PASS (no KASAN errors)
 
-Fixes: 7ecca2a4080c ("usb/gadget: Add driver for Aspeed SoC virtual hub")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Link: https://patch.msgid.link/20260908041740.613713-1-fanwu01@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 54493a08e21f ("net/mlx5: Lag, record inactive state of bond device")
+Suggested-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Anirudh Virdi <avirdi@redhat.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20260924064244.94045-1-avirdi@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/core.c |    4 ++++
- drivers/usb/gadget/udc/aspeed-vhub/dev.c  |    2 +-
- drivers/usb/gadget/udc/aspeed-vhub/hub.c  |    5 +++--
- drivers/usb/gadget/udc/aspeed-vhub/vhub.h |    1 +
- 4 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -266,6 +266,9 @@ static void ast_vhub_remove(struct platf
- 	for (i = 0; i < vhub->max_ports; i++)
- 		ast_vhub_del_dev(&vhub->ports[i].dev);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index dd14cdc378de0..3b34bec559e08 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1943,9 +1943,11 @@ static int mlx5_handle_changeupper_event(struct mlx5_lag *ldev,
+ 			}
+ 		}
+ 		if (i < MLX5_MAX_PORTS) {
+-			slave = bond_slave_get_rcu(ndev_tmp);
+-			if (slave)
+-				has_inactive |= bond_is_slave_inactive(slave);
++			if (netif_is_bond_master(upper)) {
++				slave = bond_slave_get_rcu(ndev_tmp);
++				if (slave)
++					has_inactive |= bond_is_slave_inactive(slave);
++			}
+ 			bond_status |= (1 << idx);
+ 		}
  
-+	/* Final drain; the worker takes vhub->lock, so stay outside of it */
-+	cancel_work_sync(&vhub->wake_work);
-+
- 	spin_lock_irqsave(&vhub->lock, flags);
+@@ -2029,7 +2031,7 @@ static int mlx5_handle_changeinfodata_event(struct mlx5_lag *ldev,
+ 	bool has_inactive = 0;
+ 	int idx;
  
- 	/* Mask & ack all interrupts  */
-@@ -324,6 +327,7 @@ static int ast_vhub_probe(struct platfor
- 		return -ENOMEM;
+-	if (!netif_is_lag_master(ndev))
++	if (!netif_is_bond_master(ndev))
+ 		return 0;
  
- 	spin_lock_init(&vhub->lock);
-+	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
- 	vhub->pdev = pdev;
- 	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
- 				      VHUB_IRQ_DEV1_BIT);
---- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-@@ -280,7 +280,7 @@ static int ast_vhub_udc_wakeup(struct us
- 	int rc = -EINVAL;
- 
- 	spin_lock_irqsave(&d->vhub->lock, flags);
--	if (!d->wakeup_en)
-+	if (!d->wakeup_en || !d->registered)
- 		goto err;
- 
- 	DDBG(d, "Device initiated wakeup\n");
---- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-@@ -558,7 +558,7 @@ void ast_vhub_device_connect(struct ast_
- 		ast_vhub_send_host_wakeup(vhub);
- }
- 
--static void ast_vhub_wake_work(struct work_struct *work)
-+void ast_vhub_wake_work(struct work_struct *work)
- {
- 	struct ast_vhub *vhub = container_of(work,
- 					     struct ast_vhub,
-@@ -588,6 +588,8 @@ static void ast_vhub_wake_work(struct wo
- 
- void ast_vhub_hub_wake_all(struct ast_vhub *vhub)
- {
-+	lockdep_assert_held(&vhub->lock);
-+
- 	/*
- 	 * A device is trying to wake the world, because this
- 	 * can recurse into the device, we break the call chain
-@@ -1076,7 +1078,6 @@ static int ast_vhub_init_desc(struct ast
- int ast_vhub_init_hub(struct ast_vhub *vhub)
- {
- 	vhub->speed = USB_SPEED_UNKNOWN;
--	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
- 
- 	return ast_vhub_init_desc(vhub);
- }
---- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-@@ -546,6 +546,7 @@ void ast_vhub_hub_suspend(struct ast_vhu
- void ast_vhub_hub_resume(struct ast_vhub *vhub);
- void ast_vhub_hub_reset(struct ast_vhub *vhub);
- void ast_vhub_hub_wake_all(struct ast_vhub *vhub);
-+void ast_vhub_wake_work(struct work_struct *work);
- 
- /* dev.c */
- int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx);
+ 	rcu_read_lock();
+-- 
+2.53.0
+
 
 
