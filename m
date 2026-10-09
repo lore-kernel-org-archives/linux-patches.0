@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C39B4E0B93;
-	Fri,  9 Oct 2026 14:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FBB4E50DD;
+	Fri,  9 Oct 2026 14:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557199; cv=none; b=vAdOfTN1+Il7yEiLuWx0N6JwwDkBHzlg0P2ccvt9raI+YrBoXhlSGQqOwCB3wf2X39eIW3RFESAHhqLG4p6fQwPg2NmuIYHqktIWb1gzY+/bYtwq+1fRLq3JzYK5gF46lSz1/BiBheQQWsWpYVZHVqK/rLSJkC4XdtDDyYL+JgY=
+	t=1791557202; cv=none; b=iLkApBfiEbtxy9+DI+kBUNIlYuMwBap+BePkDJ4PtLYGfqC+7bFyzHOzEQpsMDGTUAqC7FFdZgLy89EYW+U5E6eg5emK9ux8hg+0hbXu55MYtPQtKFKj0EJ/6ePl/vbaweUXbL5gl4RV4KKkG2AKmDJFZwmchgjTtClvoLdIiMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557199; c=relaxed/simple;
-	bh=ZucNQV1lH3eYWoC4/56X1QKOVXKB7qnbo2wtkw4ftHI=;
+	s=arc-20240116; t=1791557202; c=relaxed/simple;
+	bh=d9XCyeQ2qhTNVQ+6TV3PHF9U9xyu8gFlFAeB1sje7jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4baWEdzrPdIoRjx5d7cgEymGrj/4LTKWi+cesgpVK41r8vyuAQJCoTBvJNMVu5oEQa0lPP1obWCg3ijgGsRsjZiMZ1PdrFHKyJ4jkML8CTJvfLxX/D/pm78m6t0G4uQTXtBQPxnaCIDh+KAaK8TNLMtvX8YLss/sTsVjy1MsaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYboyEIa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FI90AzMwOvbTFghoSsUqdURmzbDwhv2UFtWpuLxU7NQ31+eqf7gk4x+qXK7yVxP5CfMf9cfHBOsBu/dgfK26dS81OzWRzisMD+L3jleMldShJsbs2ZTv5Kjmv6lRkDDV4lHKNJIBXjIFHTaP02GyOHAD4+b3GPhW9RPHc0tBRB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gkfrM+3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYboyEIa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4A91F000FF;
-	Fri,  9 Oct 2026 14:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gkfrM+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0B81F000FF;
+	Fri,  9 Oct 2026 14:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557198;
-	bh=80ZmPLY4VQd41Hg2TD24mOot6bco2RBisWUwGmaCaXo=;
+	s=korg; t=1791557201;
+	bh=r3z8Bxg9k5hdVDk7UfSoH09wssPW62DLnAS7P623I+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYboyEIaul6RINYN5+vR+r8ZTEQq8QrVeGEOnJFk4QlNFy0VPAQCEGKZaOJyyFEW3
-	 eVUKjJGYoPvn/c/EkA54+8aWdpatPfeRKi3+RozMdbOpWG0XzZ8ux6ZPRfKhkvRPkV
-	 9jEugjDDZBrOoTn85P1t3qkt0YNjg6lAdmQg4yNk=
+	b=1gkfrM+3Jis7Knc3IbV2/bxhJ4iYmuSoStWDp23/lKLwHonKbCMfy6RQtmKuPsdS7
+	 j/SyQkI4j4Fi88ry6r+v3P0h8OqjiE4kCuZtLWC3beBRjmjUBVd32NGkyDPJlxmR9F
+	 ZK9kkFgWUxT4OnBnj80Nj1Hx+Bb8YpiG5CkSyVKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 363/403] thunderbolt: Dont access a DP tunnel after its DPRX read was canceled
-Date: Fri,  9 Oct 2026 16:12:04 +0200
-Message-ID: <20261009141000.780003152@linuxfoundation.org>
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Oliver Upton <oupton@kernel.org>
+Subject: [PATCH 7.2 318/428] KVM: arm64: Clear HCR_EL2.RW for 32-bit non-protected vCPUs
+Date: Fri,  9 Oct 2026 16:10:55 +0200
+Message-ID: <20261009140953.112721331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +46,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 419fa32fa5bc2d7fb9d0d15d5630b1c1090808b3 ]
+commit 80ae56184b57176b908cd6a7ececf274a7e4b3c7 upstream.
 
-tb_dp_dprx_work() checks ->dprx_canceled before it takes tb->lock so it
-misses a tb_dp_dprx_stop() that could not cancel the already running
-work. It then polls the DPRX capabilities and runs the callback for a
-tunnel that has already been torn down while the domain is suspending or
-going away.
+pKVM keeps its own copy of each vCPU's HCR_EL2 at EL2, initialised with
+RW set unconditionally. Nothing stops userspace from creating a
+non-protected AArch32 VM, and with RW set, entering one of its vCPUs is
+an illegal exception return: KVM_RUN fails with KVM_EXIT_FAIL_ENTRY.
 
-This can be hit by cancelling the DPRX read from outside the ordered
-tb->wq: During suspend tb_disconnect_and_release_dp() does just this and
-with a later patch tb_stop() will do it as well. The latter in combination
-with the Apple NHI where the DPRX read never completed is how I hit
-this.
+Clear RW for a vCPU that is AArch32 at EL1, when the CPU has AArch32
+EL1. On a CPU without it, RW stays set and the entry still fails, rather
+than EL2 switching *32_EL2 registers that are UNDEFINED there. The host
+already rejects such a vCPU, but EL2 takes the vCPU's features from the
+host and doesn't rely on that.
 
-Check the flag with tb->lock held instead and check it again in
-tb_dp_tunnel_active() because the callback runs after the lock has been
-dropped again.
-
-Also clear the flag in tb_dp_dprx_start() so that it only ever describes
-the work that is currently in flight.
-
-Fixes: d6d458d42e1e ("thunderbolt: Handle DisplayPort tunnel activation asynchronously")
+Fixes: b56680de9c648 ("KVM: arm64: Initialize trap register values in hyp in pKVM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-[ sashal: Adjusted tb_dp_dprx_start() context to retain optional callbacks and synchronous reads. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260929090031.3829185-3-fuad.tabba@linux.dev
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c     |   12 ++++++++++++
- drivers/thunderbolt/tunnel.c |   11 +++++++++--
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/pkvm.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1910,6 +1910,18 @@ static void tb_dp_tunnel_active(struct t
- 	struct tb *tb = data;
- 
- 	mutex_lock(&tb->lock);
-+
-+	/*
-+	 * If the DPRX read was canceled the tunnel is already being torn
-+	 * down by whoever canceled it. Do not touch the adapters here
-+	 * because the routers may be gone by now.
-+	 */
-+	if (tunnel->dprx_canceled) {
-+		tb_tunnel_dbg(tunnel, "DPRX read canceled, not activating\n");
-+		mutex_unlock(&tb->lock);
-+		return;
-+	}
-+
- 	if (tb_tunnel_is_active(tunnel)) {
- 		int consumed_up, consumed_down, ret;
- 
---- a/drivers/thunderbolt/tunnel.c
-+++ b/drivers/thunderbolt/tunnel.c
-@@ -1097,8 +1097,14 @@ static void tb_dp_dprx_work(struct work_
- 	struct tb_tunnel *tunnel = container_of(work, typeof(*tunnel), dprx_work.work);
- 	struct tb *tb = tunnel->tb;
+--- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
++++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+@@ -54,6 +54,15 @@ static void pkvm_vcpu_reset_hcr(struct k
+ 	else
+ 		vcpu->arch.hcr_el2 |= HCR_TID2;
  
 +	/*
-+	 * The DPRX read can be canceled while this work is waiting for
-+	 * tb->lock. Check the flag only once it is held: while the lock is
-+	 * held the tunnel cannot be torn down under us and the adapters are
-+	 * safe to access.
++	 * Without AArch32 EL1, leave RW set and let the entry fail with an
++	 * illegal exception return: the *32_EL2 registers EL2 would otherwise
++	 * switch are UNDEFINED there.
 +	 */
-+	mutex_lock(&tb->lock);
- 	if (!tunnel->dprx_canceled) {
--		mutex_lock(&tb->lock);
- 		if (tb_dp_is_usb4(tunnel->src_port->sw) &&
- 		    tb_dp_wait_dprx(tunnel, TB_DPRX_WAIT_TIMEOUT)) {
- 			if (ktime_before(ktime_get(), tunnel->dprx_timeout)) {
-@@ -1110,8 +1116,8 @@ static void tb_dp_dprx_work(struct work_
- 		} else {
- 			tb_tunnel_set_active(tunnel, true);
- 		}
--		mutex_unlock(&tb->lock);
- 	}
-+	mutex_unlock(&tb->lock);
++	if (vcpu_has_feature(vcpu, KVM_ARM_VCPU_EL1_32BIT) &&
++	    cpus_have_final_cap(ARM64_HAS_32BIT_EL1))
++		vcpu->arch.hcr_el2 &= ~HCR_EL2_RW;
++
+ 	if (vcpu_has_ptrauth(vcpu))
+ 		vcpu->arch.hcr_el2 |= (HCR_API | HCR_APK);
  
- 	if (tunnel->callback)
- 		tunnel->callback(tunnel, tunnel->callback_data);
-@@ -1129,6 +1135,7 @@ static int tb_dp_dprx_start(struct tb_tu
- 	tb_domain_get(tunnel->tb);
- 
- 	tunnel->dprx_started = true;
-+	tunnel->dprx_canceled = false;
- 
- 	if (tunnel->callback) {
- 		tunnel->dprx_timeout = dprx_timeout_to_ktime(dprx_timeout);
 
 
