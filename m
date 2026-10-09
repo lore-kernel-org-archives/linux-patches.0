@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214874E36C4;
-	Fri,  9 Oct 2026 14:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76904E36C6;
+	Fri,  9 Oct 2026 14:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556125; cv=none; b=N5vhHIGfOhCJYIRntBEZ1jf6jQWrDXA/vUpCn9+3VpZkrVbiRN2r1oXxfEByEXaiH9v7X1mtn2A9qZ6IbJkNZho7T+VWXNMjr1am63RYfJrew1+vD1aa+hVEDBgkJaX5EvDm/MxvFVQ8qxXAPiWh0n79ncVSKWTi3WCrsRySG8g=
+	t=1791556127; cv=none; b=fVaBf6CGX0gu6R/p2NYjH1crRICbop4toW2W6CIOcX66XNjCHeMhjkFUn4aNjdt0LFMUPGKs0K5wGBD8CHhm53LNy19MSGcjFEoq0rSdgk/rtjMjCSRNj65Lzefsx0jerRtFu1zuHPtuFdysYPWioPMLbTVia7/kHqcO9VU2P5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556125; c=relaxed/simple;
-	bh=K1DKfQ6ScnbvouKQ8nwoOskEGsiHFw4E8drBcYGki94=;
+	s=arc-20240116; t=1791556127; c=relaxed/simple;
+	bh=8G8e9kPLnu4mfhEqeHYJUj846f4BEK1sDn5x+EmO+iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDmE1PlbfXwmrLP5MWqVLrtCREXLepDK8d1PZ+Bqtwvnznh9JeM0ACb6hIo1W3YcL2L+8N2eDHDi2qqXand0bD1ZUacElAJMNrRrhIMQoNV6bjlBm4ezS+w8TWWCrhmvYI5PxXbwH02ebXxhuKu2UzZh4BjM/pEDMgy8suRHsiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVKKRuRz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebReNs74AS0eD5vOT89Qvqc8iAhC65b4MWNT9c0qjraYLuZ3RRTOoAHnxIk2StZt9k8s9qksX61MZe4cz0z6JdsTofzWd9wurTBk1JuiRsvLvsFPrN3gTt4r7yYGmdezZvVWGVkUn4f5AAkgA00PJ2BoJwFLU1JnSw8d2gw+atU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hd8VBmUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVKKRuRz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8039F1F000FF;
-	Fri,  9 Oct 2026 14:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hd8VBmUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4149E1F000FF;
+	Fri,  9 Oct 2026 14:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556124;
-	bh=5ak9vePrz1EF3Mcb25QFl5lJ+j3dl/EiP3ItuUsvtC0=;
+	s=korg; t=1791556126;
+	bh=7oVUv78y0mq7deWxURcYzFrGvUKq6ejFq129QxrqL1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVKKRuRzFxNSpiL/rta/58J1dVlnl/9IsePhcq7p2VA5yvvwn5Amg9diEodoxf3zf
-	 4fFNZpAbsQpuHpAVcjJB5s9Jx0wRSRh261RAUhGtVvaRsbBrV+jx24k9/led76xg4p
-	 PkhvwNJ4MZLX/XZxkWekuaYW4HoAvOzceLPxOvVE=
+	b=Hd8VBmUd0G/Ay7K5lLDYJ1od7Pd1fDxT+OiLAaeIwGYVnGDubwcZZfUGKtkl1a0/i
+	 ZzeIjtEEAqBCnBvz8FbfgTLU3ApSUbHOXx83As5mmJm2OiBAngQmrGvMoSXfNx22ay
+	 H68GBEIsRSDKwQ4MrSepFjC5MZTOQkFGhgGew+C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.18 178/403] usb: chipidea: tegra: disable runtime PM on resume failure
-Date: Fri,  9 Oct 2026 16:08:59 +0200
-Message-ID: <20261009140956.279131289@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Vineet Gupta <vgupta@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 103/428] ARC: arch_cmpxchg_relaxed to use size of pointed type not pointer
+Date: Fri,  9 Oct 2026 16:07:20 +0200
+Message-ID: <20261009140948.475838184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Vineet Gupta <vgupta@kernel.org>
 
-commit f1d6f7d25fe88ee49aaad96c8649e090fc3a4b68 upstream.
+[ Upstream commit f050c3e61d2a1aaece3170d459e4ce5fa2486c12 ]
 
-tegra_usb_probe() enables runtime PM before resuming the device. If
-pm_runtime_resume_and_get() fails, probe returns without disabling runtime
-PM. The later error paths reach pm_runtime_force_suspend(), but this early
-return bypasses that cleanup.
+Bradley spotted this snafu when working on two-byte cmpxchg emulation.
+He originally folded this fix into his series but the fix itself
+uncovered a pre-existing issue, missing arch_atomic64_cmpxchg_relaxed
+which just needed to be wired up.
 
-Disable runtime PM before returning the resume error. Do not use the
-fail_power_off path: the failed resume did not retain a usage reference,
-so its pm_runtime_put_sync_suspend() would be unbalanced.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 8b85e11c1a7a ("usb: chipidea: tegra: Add runtime PM and OPP support")
-Cc: stable <stable@kernel.org>
-Assisted-by: OpenAI:GPT-5.6
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260913041033.25144-1-mhun512@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e188f3330a13 ("ARC: cmpxchg/xchg: rewrite as macros to make type safe")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609240539.AkulvjVe-lkp@intel.com/
+Suggested-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_tegra.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arc/include/asm/atomic64-arcv2.h | 6 ++++++
+ arch/arc/include/asm/cmpxchg.h        | 4 ++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_tegra.c
-+++ b/drivers/usb/chipidea/ci_hdrc_tegra.c
-@@ -306,8 +306,10 @@ static int tegra_usb_probe(struct platfo
+diff --git a/arch/arc/include/asm/atomic64-arcv2.h b/arch/arc/include/asm/atomic64-arcv2.h
+index 73080a664369b..1ca4a1047fb37 100644
+--- a/arch/arc/include/asm/atomic64-arcv2.h
++++ b/arch/arc/include/asm/atomic64-arcv2.h
+@@ -156,6 +156,12 @@ static inline u64 __arch_cmpxchg64_relaxed(volatile void *ptr, u64 old, u64 new)
+ }
+ #define arch_cmpxchg64_relaxed __arch_cmpxchg64_relaxed
  
- 	pm_runtime_enable(&pdev->dev);
- 	err = pm_runtime_resume_and_get(&pdev->dev);
--	if (err)
-+	if (err) {
-+		pm_runtime_disable(&pdev->dev);
- 		return err;
-+	}
- 
- 	if (device_property_present(&pdev->dev, "nvidia,needs-double-reset"))
- 		usb->needs_double_reset = true;
++static inline s64 arch_atomic64_cmpxchg_relaxed(atomic64_t *v, s64 old, s64 new)
++{
++	return arch_cmpxchg64_relaxed(&v->counter, old, new);
++}
++#define arch_atomic64_cmpxchg_relaxed arch_atomic64_cmpxchg_relaxed
++
+ static inline s64 arch_atomic64_xchg(atomic64_t *ptr, s64 new)
+ {
+ 	s64 prev;
+diff --git a/arch/arc/include/asm/cmpxchg.h b/arch/arc/include/asm/cmpxchg.h
+index 76f43db0890fc..66b3743c94008 100644
+--- a/arch/arc/include/asm/cmpxchg.h
++++ b/arch/arc/include/asm/cmpxchg.h
+@@ -46,7 +46,7 @@
+ 	__typeof__(*(ptr)) _n_ = (new);					\
+ 	__typeof__(*(ptr)) _prev_;					\
+ 									\
+-	switch(sizeof((_p_))) {						\
++	switch (sizeof(*(_p_))) {						\
+ 	case 1:								\
+ 		_prev_ = (__typeof__(*(ptr)))cmpxchg_emu_u8((volatile u8 *__force)_p_, (uintptr_t)_o_, (uintptr_t)_n_);	\
+ 		break;							\
+@@ -102,7 +102,7 @@
+ 	__typeof__(ptr) _p_ = (ptr);					\
+ 	__typeof__(*(ptr)) _val_ = (val);				\
+ 									\
+-	switch(sizeof(*(_p_))) {					\
++	switch (sizeof(*(_p_))) {					\
+ 	case 4:								\
+ 		_val_ = __arch_xchg(_p_, _val_);			\
+ 		break;							\
+-- 
+2.53.0
+
 
 
