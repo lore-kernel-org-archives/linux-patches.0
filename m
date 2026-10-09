@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3173D9DDB;
-	Fri,  9 Oct 2026 14:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBF545C713;
+	Fri,  9 Oct 2026 14:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556679; cv=none; b=okBlhL8c+kAnMwx7/JR9/Csc+UOubr/5afToJ0UDEZKMr02Sx6Lu7lEwtcwbvnIF0C6LpVEBDj04Dp4i8JbdyXOYpokl3hl4+uSdEePHLP3shkqpzd4CX3D+JJaDNXACM4b692Je73fgG7M+zNRXGI04nmjLlEaZU9NP+Dn72HA=
+	t=1791556682; cv=none; b=PkWizXGmVjvsXAh/wgUxe7BpFJ1Ix5x5Slf2D+XodYvFO9/cmR0c9ch/sM/77oI/a32J6y1hmAnffMa9poCK81MGwBnWBLTkDFp/rRip+LjUOrAT5e6NRdoatX+de9h/gfJDg+ewybIYSyCUcauWIDs11Usxf+Pzcc5GIkn5DF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556679; c=relaxed/simple;
-	bh=TdqyLAG/eXomE44sog9fRa1Xj4zfaIyNU627+wCqOMc=;
+	s=arc-20240116; t=1791556682; c=relaxed/simple;
+	bh=lt4SRf+MC+2cykkjVq4uOtrhdQCXBQs+QtTTARX10kU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7KrXKNqfcJsqOEMg7SdN1i8Z4G3zLElEAwaFqlMk9RXiQEZlvCoI9VLYdNoFh+5IpRzGCtl5hCc+X6XbLa9/zRkMGhXbxGL6bGSsEEz/ajZDuTCQn4+byAv/DuY9sVxnSZY72PjUEwd6n2oxyBzKndqUMarOwhHaI9QUqRJtbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdIsyrZ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=twULQ0/Qe9LhdROT1RPG2ahYKDt9hb5g9LRifwlmn3B933QkdGN4G9ilRWCxP+114LsmafQf0dtcLqp86SkGcDxOYhoi1spLFIzHnGSh8kLZM9d//LjMYokEkO/51GippEG/4gqLfM/8nRgm3AU2uO9M+910DMwnIxQYc9jPdCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoLlft8K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdIsyrZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DEE1F000FF;
-	Fri,  9 Oct 2026 14:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoLlft8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF361F000FF;
+	Fri,  9 Oct 2026 14:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556678;
-	bh=xtEdXqm5ageo60VRElFmuDN5DqxVMdN28bX8wshPwQ4=;
+	s=korg; t=1791556681;
+	bh=W3x1t/FSo0AkqcHtoYz0xiC6a07Oq0d4+gyIa0Kkoso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdIsyrZ+Gp4gt7xQCkKrCwH1WJ8sWdkEXrPmwywe3zObOK4G20+xCgW8YAO3kQmsY
-	 VBoDNM1q/LDDM7J+cFCO4/PyZU2oZLtr0QargQJzql7zeFAbqXxIaACH7CBpCeUcn/
-	 SOzCFjfT5s+Pdc3v4ingIyDCbGg4My1ExpgyM8oo=
+	b=QoLlft8KXo8v+JACrEGSZAV1JponzbBc+56urtYIxKGugaMG67GnN0IlA0EcF8E6b
+	 gA98fRd9hbBNTCfIPn0JAiIDBoD6wFMFfYm7ehERWEuLedPKoBfYbjN/Rbu7UhtL/1
+	 JclYVHMM8OEe6nS8p6CXhQTOVOC+QsxlszDxYCZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 7.2 219/428] usb: dwc3: am62: Fix runtime PM usage count leak on probe error path
-Date: Fri,  9 Oct 2026 16:09:16 +0200
-Message-ID: <20261009140950.932139175@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 274/403] wifi: mac80211: fix mesh fast xmit path deletion UAF
+Date: Fri,  9 Oct 2026 16:10:35 +0200
+Message-ID: <20261009140958.594292952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 3d9bbf0ffeb9b7ac1b6ad06b52e037870a7e0c63 upstream.
+commit ee3aadc43ea69d98f666431e787137ac0badbb85 upstream.
 
-dwc3_ti_probe() takes a runtime PM reference with pm_runtime_get_noresume()
-before creating the dwc3 core child device, and releases it with
-pm_runtime_put_autosuspend() once probe has succeeded. The err_pm_disable
-error path only disables runtime PM, so the reference taken a few lines
-earlier is never dropped.
+mesh_fast_tx_cache() stores raw mesh_path pointers. Path deletion
+flushes the cache and then frees the path with kfree_rcu(), but a
+lookup that already holds the path can insert a new cache entry
+after the flush. The cache then points at freed memory.
 
-The usage counter lives in struct device and is not reset when the driver
-is unbound, so the leaked reference outlives the failed probe. If the
-device is probed again, through a manual rebind or a module reload, the
-counter starts at one instead of zero and the pm_runtime_put_autosuspend()
-on the success path can no longer bring it back down. The wrapper then
-stays runtime resumed for good and autosuspend never kicks in.
+Set MESH_PATH_DELETED before flushing, and skip inserting a cache
+entry if the path or MPP path is already deleted. Check this under
+the cache walk lock so it is ordered with the flush. Use WRITE_ONCE()
+for the deletion flag updates because the cache check reads flags
+without taking state_lock.
 
-Drop the reference before disabling runtime PM, matching the ordering
-already used in dwc3_ti_remove().
-
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260902-dwc3-am62-rpm-fix-v1-1-7a2807e33307@amd.com
+Fixes: d5edb9ae8d56 ("wifi: mac80211: mesh fast xmit support")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/1daa7a98199fe6965c2da7c42717073a6fd39a0b.1789615568.git.zihanx@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mesh_pathtbl.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -297,6 +297,7 @@ static int dwc3_ti_probe(struct platform
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -577,6 +577,12 @@ void mesh_fast_tx_cache(struct ieee80211
+ 		goto unlock_sta;
  
- err_pm_disable:
- 	clk_disable_unprepare(am62->usb2_refclk);
-+	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_suspended(dev);
- 	return ret;
+ 	spin_lock(&cache->walk_lock);
++	if ((READ_ONCE(mpath->flags) & MESH_PATH_DELETED) ||
++	    (mppath && (READ_ONCE(mppath->flags) & MESH_PATH_DELETED))) {
++		kfree(entry);
++		goto unlock_cache;
++	}
++
+ 	prev = rhashtable_lookup_get_insert_fast(&cache->rht,
+ 						 &entry->rhash,
+ 						 fast_tx_rht_params);
+@@ -808,7 +814,8 @@ static void mesh_path_free_rcu(struct me
+ 	struct ieee80211_sub_if_data *sdata = mpath->sdata;
+ 
+ 	spin_lock_bh(&mpath->state_lock);
+-	mpath->flags |= MESH_PATH_RESOLVING | MESH_PATH_DELETED;
++	WRITE_ONCE(mpath->flags,
++		   mpath->flags | MESH_PATH_RESOLVING | MESH_PATH_DELETED);
+ 	mesh_gate_del(tbl, mpath);
+ 	spin_unlock_bh(&mpath->state_lock);
+ 	timer_shutdown_sync(&mpath->timer);
+@@ -822,6 +829,9 @@ static void __mesh_path_del(struct mesh_
+ {
+ 	hlist_del_rcu(&mpath->walk_list);
+ 	rhashtable_remove_fast(&tbl->rhead, &mpath->rhash, mesh_rht_params);
++	spin_lock_bh(&mpath->state_lock);
++	WRITE_ONCE(mpath->flags, mpath->flags | MESH_PATH_DELETED);
++	spin_unlock_bh(&mpath->state_lock);
+ 	if (tbl == &mpath->sdata->u.mesh.mpp_paths)
+ 		mesh_fast_tx_flush_addr(mpath->sdata, mpath->dst);
+ 	else
 
 
