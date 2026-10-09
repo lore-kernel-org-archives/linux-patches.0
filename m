@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D3F3EC805;
-	Fri,  9 Oct 2026 14:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34383BB112;
+	Fri,  9 Oct 2026 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556554; cv=none; b=D9u4jj0jhKhmY95rOp1WZsQSTpky4TzsZu79/6HhOpf9/Y4hhW1p+OdcUkgauhTaBCx3bXq/gSnIoJ5M7SXzGix8sLmyqqEWeKm+DMefIRg9ouz+x2YbyhsxB07H14eug4xLpqs5xb/KZZwkQpM/G9zRgLn6Ou4Q6Q3jRikAdY8=
+	t=1791556557; cv=none; b=iUOrcAVH10n1yVf18C50RSaVvcHH+eg0BRW80O+5evDZytGl9bpO8vnrsJ1aH11UWGw7DThgME9wPv/E0TBDnnJA/MV8BtFstLcscqWeb7ljxKTTWPlE8WQATjg8UcTB0g10RS7D6KwJ5PBao8IVCDNgNIRIee2vMgqyyC9qZnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556554; c=relaxed/simple;
-	bh=80H8hs76CPnlyUijil13gVdx0mksUjcc3Ow6Pn60x+g=;
+	s=arc-20240116; t=1791556557; c=relaxed/simple;
+	bh=W03Tbf2YRmCMDMIf1NzZGthOGJB/3kJQPvT6wYY9CJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oXc3RyWSM4PBh4j+NkusJ0aX8xu00ixvFvD9DVqUW9la4j4hyJBkc7vxn9EsX8uC6KufjIScUXlOnRut/k8CFR5IFby6WIpIONCabn2YHMS/opFyj2N2iRur0ZOFPXD6Y4gVnFD8Ke3sX6nOQI9uh89IHgGPn/DUGcCjDElQUmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vT5rI9Zh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BJrxsnBAFIKMPDpwEhsc6I5chtvK96FjIUp8nLPHRb1hC5QL/GWb/ZlgGuPA+Bbj0lQHnIjOubPj2J7MO8IPeILEqORySbNAEzxWi7zcCuJejVOTsNdRXQAHhahc9smhCs4zMWzmXgJkHFR/eeHYe0QxIpPnNVau+vJkOB1SWD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOmF8Fc9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vT5rI9Zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C491F00893;
-	Fri,  9 Oct 2026 14:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOmF8Fc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7621F000FF;
+	Fri,  9 Oct 2026 14:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556553;
-	bh=ljF25PEQTCD1y3xzheQlS3UZYdWygQv5lhwxMDZzU0Y=;
+	s=korg; t=1791556555;
+	bh=KHZNWwZH21gFB7T+CnXQI+kozXo/90ZCW4UWrFshM9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vT5rI9ZhwbuRSzeNR2F7vYUZpvXTDY38ZdbBRozfnIb66USwDAj9CntcuNY1QZGTB
-	 BXmNwVEeLZvaKiv9uWsa21s1+LcNYuXcLm7gCg2+q7IDkrSpAmbf1oaQ8w67wInHSW
-	 HNsVuOqjw11Wv+dCq2TPIjIF8LLY4l9CrZ0TH2UI=
+	b=DOmF8Fc9nwa6d2pfZV4jYc314DVk9xebDJWvb+ZU3n5InCc+q22BHXFJ4Q2pirAt6
+	 /10S+ynXQoyD9pgfoPf6mVUgeUjaQbzEerMuZkXiJ/sKL9ejYWk1x/o3k6o5RwtkNC
+	 72uBk8U9AyD4SYxmzIHwfkAjKybcTq8tNhcUqPeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Xu <han.xu@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 254/403] mtd: spinand: Enable QE on all dies
-Date: Fri,  9 Oct 2026 16:10:15 +0200
-Message-ID: <20261009140958.114058362@linuxfoundation.org>
+	Daniel Salmun <salmundani@gmail.com>,
+	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.2 200/428] Input: synaptics - limit T440p InterTouch quirk to LEN0036
+Date: Fri,  9 Oct 2026 16:08:57 +0200
+Message-ID: <20261009140950.528559852@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +48,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Han Xu <han.xu@nxp.com>
+From: Raphaël Larocque <rlarocque@disroot.org>
 
-commit 63d6cace2c4a7f36c1cb44f1bb5e0f3ef19e5c7f upstream.
+commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
 
-The QUAD ENABLE (QE) bit is stored in a per-die configuration
-register on some SPI-NAND devices. When a device contains multiple
-dies, updating the QE bit only on the currently selected die can
-leave the remaining dies operating in non-quad mode.
- 
-Iterate over all targets and update the QE setting on each die
-during initialization to ensure consistent quad I/O operation
-across the entire device.
+The ThinkPad L440 also uses board id 2722, but does not have the SMBus
+initialization problem seen on the T440p. On the L440, the SMBus
+companion becomes available shortly after psmouse probes, allowing the
+touchpad to use SMBus/RMI4 normally.
 
-Tested on ISSI IS38SMW04G8B.
+The T440p's quirk is currently applied to all Synaptics touchpads with
+board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
+as reported by Daniel Salmun.
 
-Fixes: 7529df465248 ("mtd: nand: Add core infrastructure to support SPI NANDs")
+Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
+that other devices sharing board id 2722 retain their normal
+SMBus/RMI4 operation.
+
+Reported-by: Daniel Salmun <salmundani@gmail.com>
+Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
+Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
+Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/input/mouse/synaptics.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -180,8 +180,26 @@ static int spinand_init_cfg_cache(struct
- static int spinand_init_quad_enable(struct spinand_device *spinand,
- 				    bool enable)
- {
--	return spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
--			       enable ? CFG_QUAD_ENABLE : 0);
-+	struct nand_device *nand = spinand_to_nand(spinand);
-+	unsigned int target;
-+	int ret;
-+
-+	/*
-+	 * QE is a per-die setting on some devices. Program each target
-+	 * individually when enabling or disabling quad I/O mode.
-+	 */
-+	for (target = 0; target < nand->memorg.ntargets; target++) {
-+		ret = spinand_select_target(spinand, target);
-+		if (ret)
-+			return ret;
-+
-+		ret = spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
-+				      enable ? CFG_QUAD_ENABLE : 0);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
- }
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1839,8 +1839,10 @@ static int synaptics_setup_intertouch(st
+ 			return -ENXIO;
+ 		}
  
- static int spinand_ecc_enable(struct spinand_device *spinand,
+-		/* Disable intertouch on known-broken board revisions */
+-		if (info->board_id == 2722) {
++		/* Disable intertouch on known-broken T440p board revisions */
++		if (info->board_id == 2722 &&
++		    psmouse_matches_pnp_id(psmouse,
++					   (const char * const []){"LEN0036", NULL})) {
+ 			psmouse_info(psmouse,
+ 				     "Disabling intertouch for board id %u\n",
+ 				     info->board_id);
 
 
