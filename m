@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1363F31A045;
-	Fri,  9 Oct 2026 14:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7C881ACD;
+	Fri,  9 Oct 2026 14:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556050; cv=none; b=exp4D4TQsAm5d+qRzvrYtq7dQbDcRD7doYCNIu98/Wb7Q/BB+F/tMGWCVW0mjfpAI8mhFUGJFq/Yr+fw21qnXo4Xj6OEbbJfFLRJ59k6adnBLzAEFWGaZ95dSqIuzC30VXCBVr/UUou5K3WlMQE5DxtqAh7rfXVWboiM8ts3F7U=
+	t=1791556052; cv=none; b=rl3iux5WDSgVgwjZp/E1HxXDYcXXNVuDcPeFe2RnRp32i1W5bB+Id5V9an6JXFYPWLU19+LwGnxvUlAPOS9e3DYo9mhUv0j3DgPx3c0fC4HUbiMITLJ8ynVInP2cosQ+EZgYOUHNMScW3b/Ep89WtJUAiyeJ5jh1LN58WkFnt6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556050; c=relaxed/simple;
-	bh=6WL4iB2HB66douoBEBcN/cbvAP4uu7Jz5JX5NrnGJFg=;
+	s=arc-20240116; t=1791556052; c=relaxed/simple;
+	bh=ZQfxrygelbJYOFcqtqN4wJY/Vqo/XElc876w3/UmIUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOzfMbn099lOxPkW85VP5vFJH0/t0NBHqRHpwLm854K6b/UhiI5eVJsOOeZW+R32C5YYQqUZxAGsUZumfVjkPnsf3Jv1SJD4wQaUwZjCh6vaqmKiMxluFDlQekGBqdTTlhnBfnrRdShdWiVWrJCLgnCXrw/vUxikewvc3bZPqQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFcpzJXQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EqDfm+fyY1Atf7XKVq7JyDwLY6PKDYaNNJ1hJxUS4FDBALSeLz4zGfbgYmqywldtRGOZ3XQfDHMcLQZi540+VZxbzpm3XNvrQj1DXEOosEU8iF+e9aURW/263Tm6hcsZu7mxm1T6cX5lUxIBIMquzY2LEaoJm3hUq07/gKqc+PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHqTmhmQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFcpzJXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD4B1F000FF;
-	Fri,  9 Oct 2026 14:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHqTmhmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C3D1F000FF;
+	Fri,  9 Oct 2026 14:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556049;
-	bh=UAE4WrgowDc10aRvZGsjIc7lrdMj/vnJlBXB9Q1eBik=;
+	s=korg; t=1791556051;
+	bh=ED1yR2lwPVlDK1Ry17oErqE8QhRWjDvDop+2QCXJPg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFcpzJXQLNW6R7iiGygnQvH25AXVjB0hoHU6+7Z7gprNz9VG96J2cUlC3kesP/ZOw
-	 81kSLIlrExKd89G2Uk1twJpjIhp2FwYOrQp/N1oLYCuavOHn1I4FVZOxVum1R3ql0K
-	 h4hVmvdh3k8WJ07gaig7HFxNU33J0K8G9wDcDPpU=
+	b=yHqTmhmQ4mCx0tuaCZ+/8m2BSDfWK2MQalxONP8NrizKl0oBjqcBZ9xtg+FRqm3fS
+	 jYzpiQeKGUKfUgDtuXA8o6QXsbSi9aMQWXCi8B4hxk3BQ/cUyLNFqIN8bHr2yQtWEd
+	 cYsQt6d8IVcrDI5uD9hfY4RgDMEixsJR+SymBEQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.18 166/403] usb: ohci-da8xx: disable controller wakeup on cleanup
-Date: Fri,  9 Oct 2026 16:08:47 +0200
-Message-ID: <20261009140955.981482777@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 113/428] netfilter: ipset: do not update comments from kernel-side adds
+Date: Fri,  9 Oct 2026 16:07:30 +0200
+Message-ID: <20261009140948.684219803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 901197dd4c7dcffbf97426487d4c047555c98554 upstream.
+[ Upstream commit a442c8a89fb9c531f9d6ab86120c31decd778d51 ]
 
-The OHCI core marks controllers with RemoteWakeupConnected as
-wakeup-capable. Probe enables wakeup, but neither removal nor a later
-notifier registration failure disables it, leaving the wakeup source
-attached.
+'Fixes' commit stopped calling ip_set_init_comment() for hash types
+from kernel-side-adds (xtables .. -j SET).  ip_set_init_comment() says:
 
-Disable controller wakeup after removing the HCD on both paths.
+   "The kadt functions don't use the comment extensions in any way."
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+But bitmap set type calls the function from kadt cb too.
 
-Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-2-mhun512@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While this appears to be safe (serialized via the set spinlock), it seems
+better to not call the init function either, least of all to keep
+behaviour consistent.
+
+ip_set_list calls ip_set_init_comment() only from uadt cb, it can be
+kept as-is.
+
+This was triggered by yet another LLM review, hinting that the existing
+rcu_dereference_protected() cannot be downgraded to only check if the
+nfnl mutex is held.
+
+Fixes: f30415929be8 ("netfilter: ipset: do not update comments from kernel-side hash adds")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ohci-da8xx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/ipset/ip_set_bitmap_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/ohci-da8xx.c
-+++ b/drivers/usb/host/ohci-da8xx.c
-@@ -464,6 +464,7 @@ static int ohci_da8xx_probe(struct platf
+diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
+index d6a7e66045422..ae376fa3e7a3b 100644
+--- a/net/netfilter/ipset/ip_set_bitmap_gen.h
++++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
+@@ -159,7 +159,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
  
- err_remove_hcd:
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- err:
- 	usb_put_hcd(hcd);
- 	return error;
-@@ -474,6 +475,7 @@ static void ohci_da8xx_remove(struct pla
- 	struct usb_hcd	*hcd = platform_get_drvdata(pdev);
- 
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- 	usb_put_hcd(hcd);
- }
- 
+ 	if (SET_WITH_COUNTER(set))
+ 		ip_set_init_counter(ext_counter(x, set), ext);
+-	if (SET_WITH_COMMENT(set))
++	if (SET_WITH_COMMENT(set) && !ext->target)
+ 		ip_set_init_comment(set, ext_comment(x, set), ext);
+ 	if (SET_WITH_SKBINFO(set))
+ 		ip_set_init_skbinfo(ext_skbinfo(x, set), ext);
+-- 
+2.53.0
+
 
 
