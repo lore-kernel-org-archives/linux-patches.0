@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637C3F54BD;
-	Fri,  9 Oct 2026 14:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6863C109F;
+	Fri,  9 Oct 2026 14:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556222; cv=none; b=EH/EXAM7/bnuCRV0fj6KgoUQWw11wRLNokMyHTNo1S5UytxJIgfENLMD1ekEG647A67RrRfIircvstxERYKYTsSnhdSB0bYD6djdJcOGraR9QYiYgxNLch5jf1zYoFMchyO31LZNxhqSVARh2lKh5ty2427LNU7RWFqdC6uEaQU=
+	t=1791556225; cv=none; b=jvzlQQ8gJ5hxvxAdsfVEkGXcUUHnmx2SSlbQUJ2QwR8ZiFkZNch24ahc8tK/MWH0GLrgRcSQsJk78xLm2TjDB8a7xHuPWg3YTqfP/Bo96xQjQf28ikP2IlaS97/kdvlQ4GV4nYuH0GrWKHKJ4kakdzWbeNEsSTq3y/Ixn5udlec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556222; c=relaxed/simple;
-	bh=9ngTKZu2NDEVIoCzHK3UiBoXIJBZ+C7d75L16a8Yg4Q=;
+	s=arc-20240116; t=1791556225; c=relaxed/simple;
+	bh=ABW6TKDfgN+aHqqmn5wY7cmi9A+Cj8qNo1xvBzLALtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BF1T10XWEfrbYS8vnkNxMOdINHpgfUrhY2EQmNXpW4YdYygcmy8FsTQpMX91WHNwjowkgNUDMKYOZz8ghmVwOnBW6KCN/blyDKPhd9h2McQcZF3EkA1g+D6dmOxIhnOnrSSl2gVKbzevsmhOnQGw5SHRBb1AHQcVSPLCtFnllzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZtS3SAC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=puaKnrMH1QHykrv0uGDiya1qbT1Kd8G1nBOjlMsWvcPMYE0wpAoSWxQNOvFj4fRAuWVzgQKCOY04T8JClXX1zVHzLh/Ve2604mXnyBNfSj5VQVgDb+iO0HdSQitJIuAg8iF9GwBuRGZK29T0/ZZ7T+73unL36H8IQzjp/ZssaOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0uuEhGX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZtS3SAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BFC1F000FF;
-	Fri,  9 Oct 2026 14:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0uuEhGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4965D1F000FF;
+	Fri,  9 Oct 2026 14:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556221;
-	bh=Qj6jB1u75BUts+ideaiqrka1fYfBxw6lcADlEAXYGMI=;
+	s=korg; t=1791556223;
+	bh=ZYkHOdrMB/XF0k8Ker51F2ivBrn4bRy0fd5a4/8btkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZtS3SACGmF6/VQcz083BiyQKIdvhvp75SQt7yQlF/otIh81OvjwzC2rRctmo8+7m
-	 O31/bgjI6BwwHQ7Swip/uldxqZEwNE7lhnUaQMkRUuuL1IAcc2l77529RuRdDxu4zs
-	 o3NR7gtrJDxPEdDQ7ceQp42gT+iUMXunn1rGg6EM=
+	b=x0uuEhGXl+V9KyU4PGVrHnNBNBgaiTZ4wZevUB5WOrjZQ481EuuOc8hlQuwJGkS5D
+	 ZGaaWZ5JHFiKnuYSCa9BIV5x7y+phSje9xZugjgL2Xp3cgUzsSteCSVULJFL643qkJ
+	 ACIBfvMcOfxqqZMEzc1xbL8YM1IZMWR/mWN3UD2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.18 157/403] rust_binder: cancel deferred work items in thread exit
-Date: Fri,  9 Oct 2026 16:08:38 +0200
-Message-ID: <20261009140955.748524977@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 140/428] net: bcmgenet: fix NULL dereference in set_coalesce before first open
+Date: Fri,  9 Oct 2026 16:07:57 +0200
+Message-ID: <20261009140949.252733424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-commit 62479b6e5df82cbdf3c4145130928f233fae78fb upstream.
+[ Upstream commit 19419faf58dfe5bcc8a9e60e622976c5f8e3ddc1 ]
 
-If there are deferred work items on the thread todo list, then they are
-not cleaned up in the Thread::release() method. Thus, update the code to
-clean up the work items even if they are deferred.
+The Rx ring priv and index are only set in bcmgenet_init_rx_ring(),
+which runs at open. Setting the Rx coalescing parameters on an interface
+that was never opened, e.g. "ethtool -C eth0 rx-usecs 50", dereferences
+a NULL ring->priv. The oops happens with RTNL held, so networking
+stays stuck until a reboot:
 
-This can happen if the thread dies while it has an active outgoing
-transaction.
+  Unable to handle kernel paging request at virtual address 0000000000002788
+  pc : bcmgenet_set_rx_coalesce.isra.0+0x10/0x88
+  lr : bcmgenet_set_coalesce+0xe8/0x180
+  Call trace:
+   bcmgenet_set_rx_coalesce.isra.0+0x10/0x88 (P)
+   __ethnl_set_coalesce.isra.0+0x490/0x570
+   ethnl_set_coalesce+0x48/0xc0
+   ethnl_default_set_doit+0xf4/0x230
+   genl_family_rcv_msg_doit+0xe8/0x160
+   genl_rcv_msg+0x220/0x2a0
+   netlink_rcv_skb+0x68/0x140
+   genl_rcv+0x40/0x60
+   netlink_unicast+0x338/0x3c0
+   netlink_sendmsg+0x19c/0x3f8
+   __sock_sendmsg+0x64/0xc0
+   __sys_sendto+0x124/0x198
+   __arm64_sys_sendto+0x30/0x48
 
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260903-binder-exit-get-work-v1-1-2d6129a238df@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Set priv and index at probe. Writing the registers while the interface
+is down is harmless because open resets the MAC and
+bcmgenet_init_rx_coalesce() reapplies the stored values.
+
+It was observed on a Raspberry Pi CM4, but should apply to all other
+genet devices.
+
+Fixes: 9f4ca05827a2 ("net: bcmgenet: Add support for adaptive RX coalescing")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260928105642.856210-1-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder/thread.rs |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder/thread.rs
-+++ b/drivers/android/binder/thread.rs
-@@ -656,6 +656,12 @@ impl Thread {
-         self.inner.lock().push_return_work(reply);
-     }
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index f725d26e6020f..e8908916558b1 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -4151,8 +4151,11 @@ static int bcmgenet_probe(struct platform_device *pdev)
+ 	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
  
-+    pub(crate) fn pop_work_even_if_deferred(&self) -> Option<DLArc<dyn DeliverToRead>> {
-+        let mut thread_inner = self.inner.lock();
-+        thread_inner.process_work_list = true;
-+        thread_inner.pop_work()
-+    }
-+
-     fn translate_object(
-         &self,
-         obj_index: usize,
-@@ -1606,7 +1612,7 @@ impl Thread {
-         self.unwind_transaction_stack();
+ 	/* Set default coalescing parameters */
+-	for (i = 0; i <= priv->hw_params->rx_queues; i++)
++	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
++		priv->rx_rings[i].priv = priv;
++		priv->rx_rings[i].index = i;
+ 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
++	}
  
-         // Cancel all pending work items.
--        while let Ok(Some(work)) = self.get_work_local(false) {
-+        while let Some(work) = self.pop_work_even_if_deferred() {
-             work.into_arc().cancel();
-         }
-     }
+ 	/* Initialize u64 stats seq counter for 32bit machines */
+ 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
+-- 
+2.53.0
+
 
 
