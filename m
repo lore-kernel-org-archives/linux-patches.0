@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF97C4E5329;
-	Fri,  9 Oct 2026 14:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADF33B19DE;
+	Fri,  9 Oct 2026 14:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556954; cv=none; b=BOvjdvpO6S6qwNE16CKCpibUYfWA5p49i/tApUY7Npe0RGygjq9uHqcnkFHjLKJOuTQBKBQ6r3btUZLyE6mFyU1IHyFhFAW2YpxLeYpeG68K6dzp8bOuw63dPFIVMcbB82IRiVBsWfBaZe6TptxvOPQSYjM9if5jnLLjSTQpikk=
+	t=1791556957; cv=none; b=F9JEepbiA8Yc7r63bVitk1acdDm8LrK9K0RnO6cI4cSPXP3fsAPOtQOKYOK2d7FEfaOHjyNb5K88y27nd7LBzZp7yxa+sQy6wD4qX5wepnuzk+5NePD12LKVM4r0EOqoe+7RXS4fUPGGt5xIxvW25avl7igMm/DXRvKB/g8IuoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556954; c=relaxed/simple;
-	bh=Z2tRWtvT2iRpm/gGNm3Rvy4obWHPr7/YtrGZ1MyZltk=;
+	s=arc-20240116; t=1791556957; c=relaxed/simple;
+	bh=mCAonnpxZW6tEafWYg07KevZTOd1FReu7WEN3WN6wJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOlL5QgXc02JHL7dkT9y5nLeW5M+sqYU7PzSA84DBzgS8FdwtFSJccni3IthpX/tY/gI4fZepV/OtPzpngg87Fn4oC7x0HLHBX5qXQHbSPR7oGf5nRsaUb4EYMkXuoqiJ3H5E0PLvpJPtx+KvcW4bx8jM+E1cXvdkGtvOmJSg9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNxRUw2f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aacdHMY+hZtdGTwbiwZ5Qlnp6s4PljL2EJwxoOHTtgpK+X/hpbqVb5rQ3IoyonhHEyDGUIa+G0xMdzdPWN+r5jwH/h96CcGD0orOWY3Z6SgN0ttUmROkRJb8N+LbpJwBFHtt3lELC3rP9+yduHo3G4pQCjEz6S8w98n8KUzwBPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANZv/oJ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNxRUw2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F971F000FF;
-	Fri,  9 Oct 2026 14:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANZv/oJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBF11F000FF;
+	Fri,  9 Oct 2026 14:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556953;
-	bh=j9Gp07JCpFr7EAr0ffgGG3KFTnCb1AH9qd1s9Qji7Lc=;
+	s=korg; t=1791556956;
+	bh=5EYezBQ6hpizFXQAINDrS4/j45QSmVMVC+SopEUWPXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNxRUw2femBXdOIeoMOdmuYOMIq1NBx+nDORE5qm3knBfcc1mqaJDVJlOp6gq/T24
-	 R4amdJ7H7MUgTQ9O4ylHdwoY2a802CGvUQ09NLpvzgVaO2J+CXDkx6QlohIMQBQG8Q
-	 iRTxt2h2ioSLSv2yuZ/RHL30w/PLlLyED/AaE55I=
+	b=ANZv/oJ/scyS/2Y2lG3hLrvdryVGr1Zq1vnAMUxquJ4in5nZe0ow4bGbDCUEu06CB
+	 F0SwlzmG6UIYg7HmXKxKikKVLR+a+9km8vLNL9izk/bHAN21YXGAWGOlgLOciOBF4L
+	 SLFYmV1EQeJM71p6Y5uvWF11gVqJywaeiUfn+lBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 319/403] iio: admv1013: initialize callback mutex before registering notifier
-Date: Fri,  9 Oct 2026 16:11:20 +0200
-Message-ID: <20261009140959.685543398@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 7.2 273/428] EDAC/versalnet: Drop remote processor handle refcount on driver removal
+Date: Fri,  9 Oct 2026 16:10:10 +0200
+Message-ID: <20261009140952.088944674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit baf7e43b7fb5afb777353bf265ddf9d909f72b9f upstream.
+commit 5f43a2d35d5e748c09a50a98fc766dc95bb3a6bd upstream.
 
-admv1013_probe() registers a clock notifier whose callback takes st->lock
-on POST_RATE_CHANGE. Initialize the mutex before
-devm_clk_notifier_register() so the callback cannot observe an
-uninitialized lock during probe.
+mc_probe() acquires a reference to the remote processor with
+rproc_get_by_phandle(), but mc_remove() does not release the reference.
 
-Use devm_mutex_init() so the lock lifetime is tied to the device and
-cleanup stays paired with the rest of the managed probe resources.
+rproc_shutdown() only balances the power reference acquired by rproc_boot();
+it does not drop the device reference acquired by rproc_get_by_phandle(). As
+a result, successful driver removal leaves the remoteproc reference
+unbalanced.
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Call rproc_put() during removal to release the reference acquired in
+mc_probe().
+
+  [ bp: Massage commit message. ]
+
+Fixes: d5fe2fec6c40d ("EDAC: Add a driver for the AMD Versal NET DDR controller")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260913053532.1324671-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/edac/versalnet_edac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -604,11 +604,14 @@ static int admv1013_probe(struct spi_dev
- 				     "failed to get the LO input clock\n");
+--- a/drivers/edac/versalnet_edac.c
++++ b/drivers/edac/versalnet_edac.c
+@@ -953,6 +953,7 @@ static void mc_remove(struct platform_de
+ 	remove_versalnet(priv);
+ 	rproc_shutdown(priv->mcdi->r5_rproc);
+ 	cdx_mcdi_finish(priv->mcdi);
++	rproc_put(priv->mcdi->r5_rproc);
+ 	kfree(priv->mcdi);
+ }
  
- 	st->nb.notifier_call = admv1013_freq_change;
--	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
-+
-+	ret = devm_mutex_init(dev, &st->lock);
- 	if (ret)
- 		return ret;
- 
--	mutex_init(&st->lock);
-+	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
-+	if (ret)
-+		return ret;
- 
- 	ret = admv1013_init(st, vcm_uv);
- 	if (ret) {
 
 
