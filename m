@@ -1,43 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5606520E334;
-	Fri,  9 Oct 2026 14:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75CD4E3EF6;
+	Fri,  9 Oct 2026 14:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555314; cv=none; b=ZMw4imHHKk8mNEyrrr7hIUzJgtdAL0e4ecRMXeqSy1aClUmgkx4cJ6Sog+ofQIiZXiL1wTKyJMYKQV30zrqZbllIBtV3MaNRS6Rq9w+i00oMqPQp1xay+MXHmV41fBEIxUwMxSl7/VuoQYwHMQWiFhRGurg0oc0U+3QiBAGRP00=
+	t=1791555317; cv=none; b=OZr6a01wf7pUD8QRaHW6Znx3gZGG2ZJ6zWyTA8c7HkN0HIhWIq71IU1KywT8tjxL/3zLZGIpi0y67GvzNVCWbcHQrA3QxXZD9INxvGwcnIUa67CuiuabDYJzC0EwHq2ZignSO57F9vg+cTc+LIjVeGAv0wv26/KqHO/qkAwKNVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555314; c=relaxed/simple;
-	bh=8X42IEgfCMgEI5pOj0VDVrUEoETGtSsJzABzWW69Pjk=;
+	s=arc-20240116; t=1791555317; c=relaxed/simple;
+	bh=oB0tg2Q6ZJK/RmrtSdu1GLns0c1Jmy27x4a4n/oyMR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vA+jHR/kciJDmjOHd/k4d+QfA1PUKvRUa1FfWhTDIOnheD05OeD2Dg6gNwcu+Do5C6kRZl4uEdzY/vOArAEkIDk1nezn2lKuZiU5jUo9gmVpYd3N5Rn8quQU0ptMaAfG39a3H08yBeaqzZqYLmXF53JJF5zTKnGitzqQJKUWyQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwffhI/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E6py+C6YwBqfNLnWSfiiBHVkRxD6JjzVMGkuCKt+7wD4f8LSsvACbXGT7V2QpnAmOeCShn0Avu//EfZmgIlXHeRawn+PXsflQHAiG36GOKwCdZfqHLxoCnaEDmBD2Fk7zfeyK80N/NeiotFGs82jtkAQlrLVxj4dghVI47JCRtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL1q5d4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwffhI/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761C71F00898;
-	Fri,  9 Oct 2026 14:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL1q5d4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65C91F00893;
+	Fri,  9 Oct 2026 14:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555308;
-	bh=xNrdHP0Xk14jazGJXBZibm1G9XAUI0mZg/1Bg5LrdtA=;
+	s=korg; t=1791555313;
+	bh=Y6IsvsktR1JCVjuBDrepAc8EXiqqd6FGrFlHF7Yz9J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwffhI/7M9glWp0mF7t3bQPTWaUdi8oRneiEccMxIH3hXPeznMAcg/R4k/fL/Hftj
-	 OznPmGfZIVBJAoCAYWL6udyb1jnmB1Y+3wvvoEXR/5cWyEp2pzsyf9zrnJ0fMxBqKB
-	 vEkNo1QHDfT5iUsVid+Q28Y8cu0gJgkUgLETZ3hc=
+	b=eL1q5d4xoQY5PtJJz298h1zVW+OX15MnCwNcRIVAZRX4sElaTc7zbX3OKrnz4JlyX
+	 FvnHMKPB17lBII2dPIGPrvaFHUhWTpLe5pQ2VTVzBJxTgB3M9CkTxqhw7y0Nmm+qQV
+	 bYZSjI1JTW4MYGrXMWrCnJUIirOTHdMh9AFBTfLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hubert Mazur <hmazur@google.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Stanislaw Kardach <skardach@google.com>,
-	Michal Krawczyk <mikrawczyk@google.com>,
-	Slawomir Rosek <srosek@google.com>,
+	Luiz Capitulino <luizcap@redhat.com>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam@infradead.org>,
+	Li Wang <li.wang@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Nico Pache <npache@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Atish Patra <atishp@meta.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/403] mm/execmem: make the populate and alloc atomic
-Date: Fri,  9 Oct 2026 16:06:06 +0200
-Message-ID: <20261009140952.247073301@linuxfoundation.org>
+Subject: [PATCH 6.18 004/403] selftests/mm: hugetlb-mremap: add setup of HugeTLB pages
+Date: Fri,  9 Oct 2026 16:06:05 +0200
+Message-ID: <20261009140952.223803167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -56,183 +74,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hubert Mazur <hmazur@google.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 1871d548fc4feb007644efb6d669c93a4e191254 ]
+commit a914785f6349da754e1226420bf4e51961956769 upstream.
 
-When a block of memory is requested from the execmem manager it tries to
-find a suitable fragment by traversing the free_areas.  In case there is
-no such block, a new memory area is added to the free_areas and then
-allocated to the caller by traversing the free_area tree again.
+hugetlb-mremap test fails if there are no free huge pages prepared by a
+wrapper script.
 
-The above operations of allocation and tree traversal are not atomic hence
-another request may consume this newly allocated memory block which
-results in the allocation failure for the original request.  Such
-occurrence can be spotted on devices running the 6.18 kernel during the
-parallel modules loading.
+Add setup of HugeTLB pages to the test and make sure that the original
+settings are restored on the test exit.
 
-To mitigate such resource races execute the cache population and
-allocation operations under one mutex lock.
-
-Link: https://lkml.kernel.org/r/20260320075723.779985-1-hmazur@google.com
-Signed-off-by: Hubert Mazur <hmazur@google.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Stanislaw Kardach <skardach@google.com>
-Cc: Michal Krawczyk <mikrawczyk@google.com>
-Cc: Slawomir Rosek <srosek@google.com>
-Cc: Hubert Mazur <hmazur@google.com>
+Link: https://lore.kernel.org/20260511162840.375890-42-rppt@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Tested-by: Luiz Capitulino <luizcap@redhat.com>
+Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Donet Tom <donettom@linux.ibm.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Li Wang <li.wang@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Atish Patra <atishp@meta.com>
+
+[ Backport-notes: this is a partial backport containing only the aligning
+of 'length' to the hugepage size. The hugepage_settings.h include line and
+the hugetlb_setup_default() call are omitted. Without this fix, the
+uffd_register() call always fails on arm64 with 64K base pages and 512 MiB
+default HugeTLB page size causing the test to fail with the error below as
+'length' is 10 MiB and not aligned to the HugeTLB page size.
+
+  # -------------------------
+  # running ./hugepage-mremap
+  # -------------------------
+  # TAP version 13
+  # 1..1
+  # # Map haddr: Returned address is 0x7eaa40000000
+  # # Map daddr: Returned address is 0x7daa40000000
+  # # Map vaddr: Returned address is 0x7faa40000000
+  # Bail out! ioctl-UFFDIO_REGISTER: Invalid argument
+  # # Planned tests != run tests (1 != 0)
+  # # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:0 error:0
+  # [FAIL]
+  not ok 1 hugepage-mremap # exit=1
+  # NOTE: These hugetlb tests provide minimal coverage.  Use
+  #       https://github.com/libhugetlbfs/libhugetlbfs.git for
+  #       hugetlb regression testing.
+  # SKIP ./uffd-wp-mremap
+]
+Signed-off-by: Luiz Capitulino <luizcap@redhat.com>
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/execmem.c | 55 +++++++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 26 deletions(-)
+ tools/testing/selftests/mm/hugepage-mremap.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/mm/execmem.c b/mm/execmem.c
-index 810a4ba9c9243..084a207e4278b 100644
---- a/mm/execmem.c
-+++ b/mm/execmem.c
-@@ -203,13 +203,6 @@ static int execmem_cache_add_locked(void *ptr, size_t size, gfp_t gfp_mask)
- 	return mas_store_gfp(&mas, (void *)lower, gfp_mask);
- }
+diff --git a/tools/testing/selftests/mm/hugepage-mremap.c b/tools/testing/selftests/mm/hugepage-mremap.c
+index 928c1045e2954..d6caa075a86a0 100644
+--- a/tools/testing/selftests/mm/hugepage-mremap.c
++++ b/tools/testing/selftests/mm/hugepage-mremap.c
+@@ -97,6 +97,7 @@ static void register_region_with_uffd(char *addr, size_t len)
  
--static int execmem_cache_add(void *ptr, size_t size, gfp_t gfp_mask)
--{
--	guard(mutex)(&execmem_cache.mutex);
--
--	return execmem_cache_add_locked(ptr, size, gfp_mask);
--}
--
- static bool within_range(struct execmem_range *range, struct ma_state *mas,
- 			 size_t size)
+ int main(int argc, char *argv[])
  {
-@@ -225,18 +218,16 @@ static bool within_range(struct execmem_range *range, struct ma_state *mas,
- 	return false;
- }
++	unsigned long hugepage_size;
+ 	size_t length = 0;
+ 	int ret = 0, fd;
  
--static void *__execmem_cache_alloc(struct execmem_range *range, size_t size)
-+static void *execmem_cache_alloc_locked(struct execmem_range *range, size_t size)
- {
- 	struct maple_tree *free_areas = &execmem_cache.free_areas;
- 	struct maple_tree *busy_areas = &execmem_cache.busy_areas;
- 	MA_STATE(mas_free, free_areas, 0, ULONG_MAX);
- 	MA_STATE(mas_busy, busy_areas, 0, ULONG_MAX);
--	struct mutex *mutex = &execmem_cache.mutex;
- 	unsigned long addr, last, area_size = 0;
- 	void *area, *ptr = NULL;
- 	int err;
+@@ -114,7 +115,11 @@ int main(int argc, char *argv[])
+ 	else
+ 		length = DEFAULT_LENGTH_MB;
  
--	mutex_lock(mutex);
- 	mas_for_each(&mas_free, area, ULONG_MAX) {
- 		area_size = mas_range_len(&mas_free);
- 
-@@ -245,7 +236,7 @@ static void *__execmem_cache_alloc(struct execmem_range *range, size_t size)
- 	}
- 
- 	if (area_size < size)
--		goto out_unlock;
-+		return NULL;
- 
- 	addr = mas_free.index;
- 	last = mas_free.last;
-@@ -254,7 +245,7 @@ static void *__execmem_cache_alloc(struct execmem_range *range, size_t size)
- 	mas_set_range(&mas_busy, addr, addr + size - 1);
- 	err = mas_store_gfp(&mas_busy, (void *)addr, GFP_KERNEL);
- 	if (err)
--		goto out_unlock;
-+		return NULL;
- 
- 	mas_store_gfp(&mas_free, NULL, GFP_KERNEL);
- 	if (area_size > size) {
-@@ -268,19 +259,25 @@ static void *__execmem_cache_alloc(struct execmem_range *range, size_t size)
- 		err = mas_store_gfp(&mas_free, ptr, GFP_KERNEL);
- 		if (err) {
- 			mas_store_gfp(&mas_busy, NULL, GFP_KERNEL);
--			goto out_unlock;
-+			return NULL;
- 		}
- 	}
- 	ptr = (void *)addr;
- 
--out_unlock:
--	mutex_unlock(mutex);
- 	return ptr;
- }
- 
--static int execmem_cache_populate(struct execmem_range *range, size_t size)
-+static void *__execmem_cache_alloc(struct execmem_range *range, size_t size)
-+{
-+	guard(mutex)(&execmem_cache.mutex);
-+
-+	return execmem_cache_alloc_locked(range, size);
-+}
-+
-+static void *execmem_cache_populate_alloc(struct execmem_range *range, size_t size)
- {
- 	unsigned long vm_flags = VM_ALLOW_HUGE_VMAP;
-+	struct mutex *mutex = &execmem_cache.mutex;
- 	struct vm_struct *vm;
- 	size_t alloc_size;
- 	int err = -ENOMEM;
-@@ -294,7 +291,7 @@ static int execmem_cache_populate(struct execmem_range *range, size_t size)
- 	}
- 
- 	if (!p)
--		return err;
-+		return NULL;
- 
- 	vm = find_vm_area(p);
- 	if (!vm)
-@@ -307,33 +304,39 @@ static int execmem_cache_populate(struct execmem_range *range, size_t size)
- 	if (err)
- 		goto err_free_mem;
- 
--	err = execmem_cache_add(p, alloc_size, GFP_KERNEL);
-+	/*
-+	 * New memory blocks must be allocated and added to the cache
-+	 * as an atomic operation, otherwise they may be consumed
-+	 * by a parallel call to the execmem_cache_alloc function.
-+	 */
-+	mutex_lock(mutex);
-+	err = execmem_cache_add_locked(p, alloc_size, GFP_KERNEL);
- 	if (err)
- 		goto err_reset_direct_map;
- 
--	return 0;
-+	p = execmem_cache_alloc_locked(range, size);
-+
-+	mutex_unlock(mutex);
-+
-+	return p;
- 
- err_reset_direct_map:
-+	mutex_unlock(mutex);
- 	execmem_set_direct_map_valid(vm, true);
- err_free_mem:
- 	vfree(p);
--	return err;
-+	return NULL;
- }
- 
- static void *execmem_cache_alloc(struct execmem_range *range, size_t size)
- {
- 	void *p;
--	int err;
- 
- 	p = __execmem_cache_alloc(range, size);
- 	if (p)
- 		return p;
- 
--	err = execmem_cache_populate(range, size);
--	if (err)
--		return NULL;
--
--	return __execmem_cache_alloc(range, size);
-+	return execmem_cache_populate_alloc(range, size);
- }
- 
- static inline bool is_pending_free(void *ptr)
++	hugepage_size = default_huge_page_size();
++	if (!hugepage_size)
++		ksft_exit_skip("Could not detect default hugetlb page size\n");
+ 	length = MB_TO_BYTES(length);
++	length = (length + hugepage_size - 1) & ~(hugepage_size - 1);
+ 	fd = memfd_create(argv[0], MFD_HUGETLB);
+ 	if (fd < 0)
+ 		ksft_exit_fail_msg("Open failed: %s\n", strerror(errno));
 -- 
 2.53.0
 
