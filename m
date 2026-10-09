@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5EC4EB871;
-	Fri,  9 Oct 2026 14:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4A84EBACC;
+	Fri,  9 Oct 2026 14:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557129; cv=none; b=MreKTSeO9Tq7y9OkGICOEr0nYXuQHRYksRcolhNHZ4UgbFx6Wf7Sk/ewNQ+ky31FJO8be0IGAxCny1JxKP3UurV/rrLZe7KnEteo6Bl8wHqx/3S2ziNKC/k/hn3/w46Dqfke0/aq2UIEvLSYmITIYCPFzrWXoJQNdchEjrwAYig=
+	t=1791557131; cv=none; b=gPhIQLFulkUB0CUFn6c+e3LZhkP+DWycq1aPec88Y9HBl4PW1sSGIksDUMDxQoy3NEdRc19uJxTIR/2w/N/zIXSFeJocm+YHU5GfLpMmzCxsTCdG6qa7NuxiswqWBYM+uloHfYD8uP6GWEocCp1K6NoP3vv2AYVry29xl2Rv0ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557129; c=relaxed/simple;
-	bh=tt+xp8RT6d6ZDFJeEe6gnm7Zk3zKJRDHALHCAVd3LZ4=;
+	s=arc-20240116; t=1791557131; c=relaxed/simple;
+	bh=QqN5mvDq5Qxdg0Ap8tfJINoRb7dhxR/n1PEZZ7fnDPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCjfYJlw1ru1Qyuyzg3o/XI4a3KWN7s4aCvsbTuMIpBrv9qi9WuCJ733bStAUG4CjxqywEl0tQ98Y+8YcpEIb8SR3j2kV8Gtb8F/UxykLdbGOI7O4Z+WMM5nAZ0ep/F2Wnf/anhcYj18yg2LTF8YsREHCAn0ybw1pB4Uatoefrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmu/UhN2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sxpc062Jadjlmtn9Be4SbqEWlhn6XbXMjcxV5hLEBYZXASU8jXmGH4/hmwnpY4XA4cfjMQ9rRqFq41FAv6OCW4CdE2hljxoMWKoknUHJQ1ZMD5CkMcAMB9ypMrUh+z7lKthD7mbNLg+vSlwv8PnwszB7JB15Ix/w4XQvQ2n0VrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1FjrzeK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmu/UhN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544E31F00898;
-	Fri,  9 Oct 2026 14:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1FjrzeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DAC1F000FF;
+	Fri,  9 Oct 2026 14:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557126;
-	bh=XehFnwy3lUCFAS7kqshNfDCYWS1wavDFGkn7gy6YsUU=;
+	s=korg; t=1791557129;
+	bh=9Auimc5yKLWM6P5F+Hb/QLAAOZe4GWAuRI7NJwm1rSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kmu/UhN2UgjwTPosIgw92yupbfmHvsGmv4I3mvDLFfBds2YAKvL37bktLFcy/7owu
-	 4XNKZS84qFmGHAVCwAvw1742YeYOfD2sNmqhK6spIYYUwFnN2D1tnbKXGY0CDqgQ6+
-	 IvUQexjCXZSAHrZQ2Fpe/5uNTMlVyA525DLvfgwY=
+	b=t1FjrzeK5hKw+pfEFdg9m5+zvP515Z5DZ6+lkaP5S3oFqlVKhT1hhXRrmG0glDoXW
+	 mLf7jVR8JHeBrB1U/0zmIIwB6krZWxbWblXR7J6FcLXSVt7hXNXmAKD3cuGsO51swH
+	 +EMhdZs8JLAZ3f7EiMNLpHJNmv5UOm9SFyT5QjdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 300/428] nvmet: pci-epf: reject too-short SGL segments
-Date: Fri,  9 Oct 2026 16:10:37 +0200
-Message-ID: <20261009140952.704240780@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 351/403] rust: irq: pass RegistrationInner as cookie to request_irq
+Date: Fri,  9 Oct 2026 16:11:52 +0200
+Message-ID: <20261009141000.483493269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +45,233 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 5d5fbfbbacd1efb13a9bf91317d4fde859ede4b9 upstream.
+With commit ba268514ea14 ("rust: devres: fix race condition due to
+nesting"), Devres::new() returns Result<Self> by value instead of
+initializing in-place via PinInit. Because request_irq() is called
+inside Devres::new(), registration.inner is still uninitialized when the
+IRQ is enabled, so accessing registration.inner.device() in the IRQ
+callback can read uninitialized memory.
 
-The host controls an SGL segment's length. A nonzero length smaller than
-one SGL descriptor makes nr_descs zero, so
-nvmet_pci_epf_get_sgl_segment() reads the type byte of sgls[-1] outside
-the allocated buffer. If that byte contains a segment descriptor type,
-the function also copies the preceding 16 bytes and returns a negative
-descriptor count.
+Fix this by storing the Device and handler pointer in RegistrationInner
+and passing RegistrationInner as the IRQ cookie after its fields are
+initialized.
 
-The read was reproduced in 3/3 KASAN boots with only the host transfer
-mocked by a KUnit test:
+This is not needed in mainline because commit 98c63ce4d760 ("rust: irq:
+make Registration compatible with lifetime-bound drivers") removed
+Devres from irq::Registration.
 
-  BUG: KASAN: slab-out-of-bounds in nvmet_pci_epf_get_sgl_segment
-  Read of size 1 by task kunit_try_catch
-  Call Trace:
-   nvmet_pci_epf_get_sgl_segment
-   nvmet_pci_epf_short_sgl_test
-  Kernel panic - not syncing: KASAN: panic_on_warn set ...
-
-Reject segments that cannot hold one descriptor before allocating or
-transferring their contents.
-
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 29e16fcd67ee ("rust: irq: add &Device<Bound> argument to irq callbacks")
+Fixes: ba268514ea14 ("rust: devres: fix race condition due to nesting")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/pci-epf.c |    3 +++
- 1 file changed, 3 insertions(+)
+ rust/kernel/irq/request.rs |   89 +++++++++++++++++++++++++++------------------
+ 1 file changed, 54 insertions(+), 35 deletions(-)
 
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1001,6 +1001,9 @@ nvmet_pci_epf_get_sgl_segment(struct nvm
- 	int nr_descs, ret;
- 	void *buf;
+--- a/rust/kernel/irq/request.rs
++++ b/rust/kernel/irq/request.rs
+@@ -14,7 +14,7 @@ use crate::error::to_result;
+ use crate::irq::flags::Flags;
+ use crate::prelude::*;
+ use crate::str::CStr;
+-use crate::sync::Arc;
++use crate::sync::{aref::ARef, Arc};
  
-+	if (length < sizeof(struct nvme_sgl_desc))
-+		return NULL;
-+
- 	buf = kmalloc(length, GFP_KERNEL);
- 	if (!buf)
- 		return NULL;
+ /// The value that can be returned from a [`Handler`] or a [`ThreadedHandler`].
+ #[repr(u32)]
+@@ -54,13 +54,18 @@ impl<T: ?Sized + Handler, A: Allocator>
+ /// # Invariants
+ ///
+ /// - `self.irq` is the same as the one passed to `request_{threaded}_irq`.
+-/// - `cookie` was passed to `request_{threaded}_irq` as the cookie. It is guaranteed to be unique
++/// - `&self` was passed to `request_{threaded}_irq` as the cookie. It is guaranteed to be unique
+ ///   by the type system, since each call to `new` will return a different instance of
+ ///   `Registration`.
++/// - `self.handler` points to a valid instance of the handler `T` that lives at least until
++///   `Self::drop` completes.
+ #[pin_data(PinnedDrop)]
+ struct RegistrationInner {
+     irq: u32,
+-    cookie: *mut c_void,
++    dev: ARef<Device>,
++    handler: *const c_void,
++    #[pin]
++    _pin: PhantomPinned,
+ }
+ 
+ impl RegistrationInner {
+@@ -77,18 +82,22 @@ impl PinnedDrop for RegistrationInner {
+         //
+         // Safe as per the invariants of `RegistrationInner` and:
+         //
+-        // - The containing struct is `!Unpin` and was initialized using
++        // - `RegistrationInner` is `!Unpin` and was initialized using
+         // pin-init, so it occupied the same memory location for the entirety of
+         // its lifetime.
+         //
+         // Notice that this will block until all handlers finish executing,
+         // i.e.: at no point will &self be invalid while the handler is running.
+-        unsafe { bindings::free_irq(self.irq, self.cookie) };
++        unsafe {
++            bindings::free_irq(
++                self.irq,
++                core::ptr::from_mut::<Self>(self.get_unchecked_mut()).cast::<c_void>(),
++            )
++        };
+     }
+ }
+ 
+-// SAFETY: We only use `inner` on drop, which called at most once with no
+-// concurrent access.
++// SAFETY: `RegistrationInner` has no interior mutability and `handler` points to a `Sync` handler.
+ unsafe impl Sync for RegistrationInner {}
+ 
+ // SAFETY: It is safe to send `RegistrationInner` across threads.
+@@ -180,7 +189,7 @@ impl<'a> IrqRequest<'a> {
+ ///
+ /// # Invariants
+ ///
+-/// * We own an irq handler whose cookie is a pointer to `Self`.
++/// * We own an irq handler whose cookie is a pointer to `Self::inner`.
+ #[pin_data]
+ pub struct Registration<T: Handler + 'static> {
+     #[pin]
+@@ -207,10 +216,13 @@ impl<T: Handler + 'static> Registration<
+             handler <- handler,
+             inner <- Devres::new(
+                 request.dev,
+-                try_pin_init!(RegistrationInner {
+-                    // INVARIANT: `this` is a valid pointer to the `Registration` instance
+-                    cookie: this.as_ptr().cast::<c_void>(),
+-                    irq: {
++                try_pin_init!(&inner_this in RegistrationInner {
++                    irq: request.irq,
++                    dev: request.dev.into(),
++                    // SAFETY: `this` is a valid pointer to the `Registration` instance.
++                    handler: unsafe { &raw const (*this.as_ptr()).handler }.cast(),
++                    _pin: PhantomPinned,
++                    _: {
+                         // SAFETY:
+                         // - The callbacks are valid for use with request_irq.
+                         // - If this succeeds, the slot is guaranteed to be valid until the
+@@ -225,11 +237,10 @@ impl<T: Handler + 'static> Registration<
+                                 Some(handle_irq_callback::<T>),
+                                 flags.into_inner(),
+                                 name.as_char_ptr(),
+-                                this.as_ptr().cast::<c_void>(),
++                                inner_this.as_ptr().cast::<c_void>(),
+                             )
+                         })?;
+-                        request.irq
+-                    }
++                    },
+                 })
+             ),
+             _pin: PhantomPinned,
+@@ -265,13 +276,15 @@ unsafe extern "C" fn handle_irq_callback
+     _irq: i32,
+     ptr: *mut c_void,
+ ) -> c_uint {
+-    // SAFETY: `ptr` is a pointer to `Registration<T>` set in `Registration::new`
+-    let registration = unsafe { &*(ptr as *const Registration<T>) };
++    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `Registration::new`
++    let inner = unsafe { &*(ptr as *const RegistrationInner) };
++    // SAFETY: `inner.handler` is a pointer to `T` set in `Registration::new`
++    let handler = unsafe { &*inner.handler.cast::<T>() };
+     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
+     // callback is running implies that the device has not yet been unbound.
+-    let device = unsafe { registration.inner.device().as_bound() };
++    let device = unsafe { inner.dev.as_bound() };
+ 
+-    T::handle(&registration.handler, device) as c_uint
++    T::handle(handler, device) as c_uint
+ }
+ 
+ /// The value that can be returned from [`ThreadedHandler::handle`].
+@@ -401,7 +414,7 @@ impl<T: ?Sized + ThreadedHandler, A: All
+ ///
+ /// # Invariants
+ ///
+-/// * We own an irq handler whose cookie is a pointer to `Self`.
++/// * We own an irq handler whose cookie is a pointer to `Self::inner`.
+ #[pin_data]
+ pub struct ThreadedRegistration<T: ThreadedHandler + 'static> {
+     #[pin]
+@@ -428,10 +441,13 @@ impl<T: ThreadedHandler + 'static> Threa
+             handler <- handler,
+             inner <- Devres::new(
+                 request.dev,
+-                try_pin_init!(RegistrationInner {
+-                    // INVARIANT: `this` is a valid pointer to the `ThreadedRegistration` instance.
+-                    cookie: this.as_ptr().cast::<c_void>(),
+-                    irq: {
++                try_pin_init!(&inner_this in RegistrationInner {
++                    irq: request.irq,
++                    dev: request.dev.into(),
++                    // SAFETY: `this` is a valid pointer to the `ThreadedRegistration` instance.
++                    handler: unsafe { &raw const (*this.as_ptr()).handler }.cast(),
++                    _pin: PhantomPinned,
++                    _: {
+                         // SAFETY:
+                         // - The callbacks are valid for use with request_threaded_irq.
+                         // - If this succeeds, the slot is guaranteed to be valid until the
+@@ -447,11 +463,10 @@ impl<T: ThreadedHandler + 'static> Threa
+                                 Some(thread_fn_callback::<T>),
+                                 flags.into_inner(),
+                                 name.as_char_ptr(),
+-                                this.as_ptr().cast::<c_void>(),
++                                inner_this.as_ptr().cast::<c_void>(),
+                             )
+                         })?;
+-                        request.irq
+-                    }
++                    },
+                 })
+             ),
+             _pin: PhantomPinned,
+@@ -487,13 +502,15 @@ unsafe extern "C" fn handle_threaded_irq
+     _irq: i32,
+     ptr: *mut c_void,
+ ) -> c_uint {
+-    // SAFETY: `ptr` is a pointer to `ThreadedRegistration<T>` set in `ThreadedRegistration::new`
+-    let registration = unsafe { &*(ptr as *const ThreadedRegistration<T>) };
++    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
++    let inner = unsafe { &*(ptr as *const RegistrationInner) };
++    // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
++    let handler = unsafe { &*inner.handler.cast::<T>() };
+     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
+     // callback is running implies that the device has not yet been unbound.
+-    let device = unsafe { registration.inner.device().as_bound() };
++    let device = unsafe { inner.dev.as_bound() };
+ 
+-    T::handle(&registration.handler, device) as c_uint
++    T::handle(handler, device) as c_uint
+ }
+ 
+ /// # Safety
+@@ -503,11 +520,13 @@ unsafe extern "C" fn thread_fn_callback<
+     _irq: i32,
+     ptr: *mut c_void,
+ ) -> c_uint {
+-    // SAFETY: `ptr` is a pointer to `ThreadedRegistration<T>` set in `ThreadedRegistration::new`
+-    let registration = unsafe { &*(ptr as *const ThreadedRegistration<T>) };
++    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
++    let inner = unsafe { &*(ptr as *const RegistrationInner) };
++    // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
++    let handler = unsafe { &*inner.handler.cast::<T>() };
+     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
+     // callback is running implies that the device has not yet been unbound.
+-    let device = unsafe { registration.inner.device().as_bound() };
++    let device = unsafe { inner.dev.as_bound() };
+ 
+-    T::handle_threaded(&registration.handler, device) as c_uint
++    T::handle_threaded(handler, device) as c_uint
+ }
 
 
