@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C246AA8C;
-	Fri,  9 Oct 2026 14:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5920146C850;
+	Fri,  9 Oct 2026 14:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555523; cv=none; b=Gd2/Y3w/iH2a/Kwgahd31xo6VfB8n3DWiG8n6b/MAidORIL543BSrjMwcUEp9NY1uYJHDI6VZ/RVoNZjs7v0WAN7eEdna8eNrJHAURGlwMvTR60bdj2vbr+/M9J/GjD4FWVVuGpbAs6m61jMLuN2Erce/TWs9A+yiP2QLfyjp1E=
+	t=1791555526; cv=none; b=kZq1Hl9sBTSbk8k6+T0dlmhmGpRPKutDwCPOmRRFkYsjwkZMsgw2ZgNvYKKw3ifbLH3aEGkifApqvQjqHK8A3PI9m//JzzyCAXoJp5an91fewXGjWNizV/IPoi5PKN2HCyIPTtIGKBjnkQu6octbX/0bpv5Z1S2i43YTjSnvaiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555523; c=relaxed/simple;
-	bh=e/WeX7RMS1C2M+gVUu5ESEGmVkd4uFxNGtidyvXiaRE=;
+	s=arc-20240116; t=1791555526; c=relaxed/simple;
+	bh=9Xs33AaS2jlgs0Tl4hGKtoCQqVnf/FcxLLp9CVS8tG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gia9ktQn7iewImXBW+CUw3CIRLKEegSiwLIFHV1Szj1gNHQ6PomVQQhxH/koqtiunOAA9quVeHA9CL57B43lTvZUM6Dbqj+yia9TKV7pSk/LnLIGMq//CGmCqKmM48r/7nco7Ua3jU7wtLDzLvmje8FdgnXhHRsjIT+WtsdfEQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZwVSfXe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mcNukMNqbX+OkzhYpLwh4P/9wQYQHZGvS4lXiMFbp5pTcS15SZVGzgZz6++jOGGxu1sDwjVHIKnPk97sxnsdinR8iOxiS/HhJEsbT6gQCSuJn4HiAkDTNJweIEOGI+fzGXcmLPayIeVRy95/rVtDn9BssEEUHP5VTZ0SVoIJroY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHk1jmbQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZwVSfXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C421F00898;
-	Fri,  9 Oct 2026 14:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHk1jmbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CBE1F000FF;
+	Fri,  9 Oct 2026 14:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555522;
-	bh=+jsVsgctpObGFSo5I95fMcnjwK6CJ7/0etAudwTWLwQ=;
+	s=korg; t=1791555525;
+	bh=jJLpgOQvW+uYOT6ohxrVRXl7NO6mOiSNpjAKLC4pZn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DZwVSfXen5K4PU1DUWXQRYBrqXOrhRbrQTTHwplkCXHA4/vpeM/jmgbcqDVyEiuL6
-	 66bgusin2qUu/mUyTrWEj2vmxX3PvjDv+DV8c+XjUQpRV0vekhgH9xsh7J8pv2IT3w
-	 Nsepu6yIM4PGn/N2jVexTEffFQzTVLBvYOkAJ8Hc=
+	b=gHk1jmbQjqwKoG9/PS2y0ABhw9slf0Ve6yaZnCikPsFWFJK2C/C+CXYzjr9xIwhl/
+	 R5phxqVZ/kSXFg/BJAq86VkhZyHuTpz4EeE8yDJQu2+X5K9bX/OhN6d67Yt/G6So2Y
+	 +HLdZ3CphIE/lx3DLEnboYPwTiOETgTrjKLW1P/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/403] rtc: dev: zero-initialize struct rtc_wkalrm to prevent information leak
-Date: Fri,  9 Oct 2026 16:07:14 +0200
-Message-ID: <20261009140953.803911629@linuxfoundation.org>
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 7.2 023/428] HID: multitouch: stop the release timer from being rearmed on remove
+Date: Fri,  9 Oct 2026 16:06:00 +0200
+Message-ID: <20261009140946.571670667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit 0ee5c5d804d592a8328a425b9274487d393d3a05 ]
+commit 5acb2dace582f061aab5e14c399ac9480315f44b upstream.
 
-The struct rtc_wkalrm has padding holes after the 'pending' member.
-When returned to userspace via the RTC_WKALRM_RD ioctl, uninitialized
-kernel stack data residing in these holes may be leaked.
+mt_remove() quiesces the sticky-finger timer before stopping the
+hardware:
 
-Zero-initialize the struct at declaration to eliminate this information
-leak risk.
+    timer_delete_sync(&td->release_timer);
 
-Fixes smatch warnings:
-- drivers/rtc/dev.c:392 rtc_dev_ioctl() warn: check that 'alarm' doesn't
-  leak information (struct has a hole after 'pending')
+    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
+    hid_hw_stop(hdev);
 
-Fixes: 36e14f5fdfdf ("rtc: rename core files")
-Assisted-by: smatch:2.0 [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/B28B7DE18F3A9447+20260827015444.3314227-1-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+timer_delete_sync() waits for a running callback and dequeues the timer,
+but it does not stop the timer from being armed again. The transport is
+still delivering reports at that point, and the report path rearms it:
+
+    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
+        if (td->mt_io_flags & MT_IO_SLOTS_MASK)
+            mod_timer(&td->release_timer,
+                      jiffies + msecs_to_jiffies(100));
+
+A report that arrives after timer_delete_sync() has returned therefore
+leaves the timer queued. td is allocated with devm_kzalloc() against
+hdev->dev, so it is freed when the driver is unbound, after mt_remove()
+returns. When the timer fires afterwards, mt_expired_timeout()
+dereferences the freed td:
+
+    struct mt_device *td = timer_container_of(td, t, release_timer);
+    struct hid_device *hdev = td->hdev;
+
+    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
+
+Simply moving the teardown after hid_hw_stop() does not fix this on its
+own, because mt_expired_timeout() calls mt_release_contacts(), which
+walks hdev->inputs; the timer still has to be quiesced before
+hid_hw_stop() tears the input devices down.
+
+Use timer_shutdown_sync() instead, which additionally makes any later
+mod_timer() a no-op, so neither ordering constraint has to be traded off
+against the other. This is the final-teardown pattern the function was
+introduced for, and hid-wiimote already uses it for the same reason.
+
+Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260723224211.613112-1-you@example.com?part=1
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/dev.c | 2 +-
+ drivers/hid/hid-multitouch.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/dev.c b/drivers/rtc/dev.c
-index baf1a8ca8b2b1..f699de159b143 100644
---- a/drivers/rtc/dev.c
-+++ b/drivers/rtc/dev.c
-@@ -207,7 +207,7 @@ static long rtc_dev_ioctl(struct file *file,
- 	struct rtc_device *rtc = file->private_data;
- 	const struct rtc_class_ops *ops = rtc->ops;
- 	struct rtc_time tm;
--	struct rtc_wkalrm alarm;
-+	struct rtc_wkalrm alarm = { 0 };
- 	struct rtc_param param;
- 	void __user *uarg = (void __user *)arg;
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2260,7 +2260,7 @@ static void mt_remove(struct hid_device
+ {
+ 	struct mt_device *td = hid_get_drvdata(hdev);
  
--- 
-2.53.0
-
+-	timer_delete_sync(&td->release_timer);
++	timer_shutdown_sync(&td->release_timer);
+ 
+ 	sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
+ 	hid_hw_stop(hdev);
 
 
