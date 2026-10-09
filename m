@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D363D565F;
-	Fri,  9 Oct 2026 14:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BD235C6A8;
+	Fri,  9 Oct 2026 14:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555881; cv=none; b=CUP0Efrhg428MuXF4loBRHykcZar96GLl8jSySMU7XOG6eNULuCf0dOZFe+Vdku+/oHB/TWNddGoeQCRck1tjNvrXTfxVTnzxnw9fgaujEFb25XJCu4LTWIaFN1Q4gtygutXaoujbzq1jPNgjyBs0c3VVDmhg+vtMgDkwPYqLcI=
+	t=1791555884; cv=none; b=P92v9/Ou3WIbTkKauA2CwDPJOiU3sXrnYtlmisYcFNpHQ/F01ob4DHh6PjzbBTSo7yHb2J+nZYpKzNAIsS02yF8S7mHi088VOQFjikanHBMHbwlTg7Yn2+4qe9A9e+hS0Y3u95hbtSO/ZaKRNkdW8eLghmPAmyo54Uhy1nSloMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555881; c=relaxed/simple;
-	bh=DdXl4g1xOMKN9xdXKDjZv4xdD3Z7/eG0kjmqZCdY7LQ=;
+	s=arc-20240116; t=1791555884; c=relaxed/simple;
+	bh=K/6OnBTXhD5c56bdhLUASCc8HktH+RcZg5tBnA7DAb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDGb11MiFQesFVdgtT6aG65jzL0hBd+pGB0rTSqLOQgO2xVEUlANjsK/sOdLcZnqN7PPFXqL1UuJ26SvUOKf8QLp+LJLoZr4B65gw8BldfFIC0mWCI+d4THj6CNFCyzY9M9wQcSMeoT08i7M52Ptv53lTmyBmT3jtu9n+mcxNjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jee96RXr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVXkJcf5jt6wn6OWOh8Sj5FsCtb68J6/UyzfRs9t6MkfyU8HaTzImnwkCbMOQLKGnH1jL+JHzDhdj0uv5AzohF2NsLQLGf1wXEA2D3kJncfm8tGoprVXiky/O8nwL7oTWg7SrUCEsEhm3XI+U0a6u5jgbyBhxDrgvq1kymPECjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFX5NbKE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jee96RXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747D41F000FF;
-	Fri,  9 Oct 2026 14:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFX5NbKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F10A1F000FF;
+	Fri,  9 Oct 2026 14:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555880;
-	bh=/s3q5bj75u7LYzFETNW4ss0SBvArXMJ6bVqfiOWWJ4A=;
+	s=korg; t=1791555882;
+	bh=3HqeTdTHLoA7xKaZYve7wVp4PRTfgmkC/2HXnx/Sdzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jee96RXr9PxxgtJH2Mkglalhnw5ExtRM/9xaDoz167hUDiPcBB8OojQbCXhR5vDkS
-	 0Li3ZLXq2ysjga7kEMymzm/Vlnd4VybEjs9u1LAUAOdIeVOPS073HX2bWCGWd20Xwo
-	 E3/3a0hJ86V6+K1CXwXfI8qaEJIaepeK4vlmFVdY=
+	b=bFX5NbKEi1EmHucuRYLXvyA0GElkIUcNiBE221LLu5JOrMk5K1eEXSnM4ulq4CPdi
+	 f5e1IgnsGyM7+U7yUYohB7tx73zPWpOPMRPayuhd0ffT2h68t5QyxGxmyrNgnQu9rY
+	 70XVSwjrYsQDIygjq1q1nFUXgVHywxn67SN/y4ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Sandeep Haemoon <sandeeph@loljews.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 133/403] ALSA: core: Define auto-cleanup for snd_card_free()
-Date: Fri,  9 Oct 2026 16:08:14 +0200
-Message-ID: <20261009140955.185603587@linuxfoundation.org>
+Subject: [PATCH 6.18 111/403] net: ethernet: mtk_eth_soc: allocate dummy netdev sooner
+Date: Fri,  9 Oct 2026 16:07:52 +0200
+Message-ID: <20261009140954.675813236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,45 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Sandeep Haemoon <sandeeph@loljews.com>
 
-[ Upstream commit f1d565dc92955f05383794e0fa27e61ee0555027 ]
+[ Upstream commit 6f0c2c4f5e7143eba75153ecc8af3a03f7b6a98b ]
 
-For the errors at the probe time, we'd need to call rather
-snd_card_free() instead of the snd_card_unref() -- the former calls
-explicitly snd_card_disconnect() that cleans up the registered
-devices, etc, while the latter may leak in corner cases.
+The RX rings and the shared NAPI are carried by an internal "dummy" netdev
+(eth->dummy_dev). mtk_probe() creates that dummy device, and adds the
+shared tx/rx NAPI to it, only after the MAC netdevs have been registered.
+That order has been there since the MT7623 support was added and leaves a
+window in which the netdevs are visible to the network core before the
+shared NAPI and the dummy device exist.
 
-For convenience, define a new auto-clean with snd_card_free.
+If anything brings the first netdev up during that window (e.g. netifd
+opening the WAN link the instant the interface is registered), the
+first-open path runs without them. On NETSYS v2 and later SoCs
+mtk_rx_alloc() -> __xdp_rxq_info_reg() then dereferences eth->dummy_dev ==
+NULL:
 
-Link: https://patch.msgid.link/20261001151039.592033-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: e6229c0402ea ("ALSA: ice1712: Fix the error handling via auto-cleanup at probe")
+  WARNING: CPU: ... Missing net_device from driver
+
+in net/core/xdp.c and mtk_open() fails with -ENODEV. On NETSYS v1 SoCs
+(MT7621/MT7622/MT7623/MT7629) there is no page pool, so the same open
+instead calls napi_enable() on a napi_struct that netif_napi_add() has not
+initialised yet and dereferences a NULL napi->dev.
+
+Allocate the dummy netdev and add the shared tx/rx NAPI to it before the
+register_netdev() loop. Both the dummy-allocation failure and a
+register_netdev() failure now unwind through mtk_unreg_dev(), which
+unregisters the net_device notifiers and the netdevs registered so far,
+stopping a concurrently-opened netdev (ndo_stop) and its NAPI before the
+dummy carrier is freed.
+
+A netdev that opened during the window can also have queued the
+frame-engine reset worker (via the tx watchdog or phylink), so the probe
+error path now cancels eth->pending_work before freeing the shared state,
+as mtk_cleanup() already does on remove.
+
+Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
+Signed-off-by: Sandeep Haemoon <sandeeph@loljews.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/patch-e52c13380b0768fec63af04c80e4b487@loljews.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 38 ++++++++++++++-------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index 618055761fe01..0b7148b0d9d75 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -316,6 +316,15 @@ static inline void snd_card_unref(struct snd_card *card)
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 3f43e487d8875..162a17a87c7f5 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -5337,6 +5337,22 @@ static int mtk_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
- DEFINE_FREE(snd_card_unref, struct snd_card *, if (_T) snd_card_unref(_T))
- 
-+/*
-+ * For automatic error handling at probe time, assign the card like:
-+ *	struct snd_card *card __free(snd_card_free) = NULL;
-+ * then create and process as usual.
-+ * But, don't forget to clear to NULL at successful return for avoiding
-+ * the unexpected cleanup!
-+ */
-+DEFINE_FREE(snd_card_free, struct snd_card *, if (_T) snd_card_free(_T))
++	/* we run 2 devices on the same DMA ring so we need a dummy device
++	 * for NAPI to work. Allocate it before registering the netdevs so a
++	 * concurrent ndo_open (e.g. netifd bringing the first netdev up the
++	 * instant it is registered) never observes eth->dummy_dev == NULL in
++	 * mtk_dma_init() -> mtk_rx_alloc() -> __xdp_rxq_info_reg() (net/core/xdp.c
++	 * "Missing net_device from driver") and fails the first open.
++	 */
++	eth->dummy_dev = alloc_netdev_dummy(0);
++	if (!eth->dummy_dev) {
++		err = -ENOMEM;
++		dev_err(eth->dev, "failed to allocated dummy device\n");
++		goto err_unreg_netdev;
++	}
++	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
++	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
 +
- #define snd_card_set_dev(card, devptr) ((card)->dev = (devptr))
+ 	for (i = 0; i < MTK_MAX_DEVS; i++) {
+ 		if (!eth->netdev[i])
+ 			continue;
+@@ -5351,18 +5367,6 @@ static int mtk_probe(struct platform_device *pdev)
+ 				   eth->netdev[i]->base_addr, eth->irq[MTK_FE_IRQ_SHARED]);
+ 	}
  
- /* device.c */
+-	/* we run 2 devices on the same DMA ring so we need a dummy device
+-	 * for NAPI to work
+-	 */
+-	eth->dummy_dev = alloc_netdev_dummy(0);
+-	if (!eth->dummy_dev) {
+-		err = -ENOMEM;
+-		dev_err(eth->dev, "failed to allocated dummy device\n");
+-		goto err_unreg_netdev;
+-	}
+-	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
+-	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
+-
+ 	platform_set_drvdata(pdev, eth);
+ 	schedule_delayed_work(&eth->reset.monitor_work,
+ 			      MTK_DMA_MONITOR_TIMEOUT);
+@@ -5372,6 +5376,16 @@ static int mtk_probe(struct platform_device *pdev)
+ err_unreg_netdev:
+ 	mtk_unreg_dev(eth);
+ err_deinit_ppe:
++	/* A netdev opened while probe was still registering can have queued
++	 * the frame-engine reset worker, which takes rtnl and drives the
++	 * hardware; cancel it before anything below is torn down.
++	 */
++	cancel_work_sync(&eth->pending_work);
++	if (eth->dummy_dev) {
++		netif_napi_del(&eth->tx_napi);
++		netif_napi_del(&eth->rx_napi);
++		free_netdev(eth->dummy_dev);
++	}
+ 	mtk_ppe_deinit(eth);
+ 	mtk_mdio_cleanup(eth);
+ err_free_dev:
 -- 
 2.53.0
 
