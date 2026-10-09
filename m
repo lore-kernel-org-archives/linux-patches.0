@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6624E432E;
-	Fri,  9 Oct 2026 14:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1EA4E50D7;
+	Fri,  9 Oct 2026 14:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556549; cv=none; b=iSNtvQ1KBCHeYm/LzoUBloiYsBQCFNXaMTVjfVKv8Hk0q3p9HgzxOmXdv5/wlkcrHIVQm3Auyhw3l7xXHPS7CcfXROv10Bv2O+OiQGzKvq/CqFaVwF/idnbD0PPfYk7U8ktbyWirG/ohnqs0VRUH2lzX7FDuOf+v3wL3TCiAKlw=
+	t=1791556552; cv=none; b=TGJrcSLBiuTsBMCA6hFPJdxcUweEiN2I8gGPpT4k2lya2rF5W+WpI0TAcERMYaKxU3iu5aqlfM1LpDywBbV1zN+TRq0A5K2mAYx6K4bkqBSaV2nCvmvYSP1Dse3Mb6HgANGiEw8/imhZIITqZRTX4bwZTuswAd/cjoMwpSoz0Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556549; c=relaxed/simple;
-	bh=q72VABqJd41iSX+Wy1od9UKz6mERbMVnO5EXQq8siKU=;
+	s=arc-20240116; t=1791556552; c=relaxed/simple;
+	bh=t9f/rzJv1pxlUH4mgYVnH1o1ibIXOf66jX5Ug7GM0+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EAtFroC0krdaGAtkU7c21Nb+pOg5i/YS6iQCJY6/VHeGMt+QHwQWuwUzfehwpj8ko2EWpn5s2JJ6dUq5BYFxDpQPjDwujhjcZbmOEebtZChEW7l6jXSn2BWRN2UkP6xk3mNGoXsfZTolxWD4VEL4ZYT5PlxwjD+5nl1cR/b4Ki8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jq+OXLwz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5jkI5zHP9WlxmNRlvR1YGMz/HHVQS7TOGFB3KlO1xf+sjyhV0o/bk3dRAt+qxPmU1dOJpleghb9D9Gxi6KKhTKF+XahroyB7ncDLXoWOpDfB5XiFIRsBeXBKxjLE52rRLNTjHnnO6S13SveJsMEQQeHXuSGUkpzL2SeGn25heE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2wq1fxf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jq+OXLwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1221F1F0089A;
-	Fri,  9 Oct 2026 14:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2wq1fxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF55A1F000FF;
+	Fri,  9 Oct 2026 14:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556547;
-	bh=A+YqASJDtf0UFFcqj9EG8PqAXQYXXbY/YOW8s0RQeII=;
+	s=korg; t=1791556550;
+	bh=y+rRI1wYHB+0vnDN3wmeSLIiR1cpnld8Mx6zoYlp3rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jq+OXLwzHknucLAlbWyujVoy9RR6S8sxvzBZgQwaB02pSo+acrvU0XuYH4WpnIStQ
-	 krrOpajC8I/G0xmj3dIwBigS4HcTiw/nzkdyGEk1jRnfrMafcvWP63p3iaeQuYMcLN
-	 fbJjymhHDg6jWE0b2SrG0crJlMbKWN6xmM/pRq+s=
+	b=g2wq1fxfjQLynQSpdI8ty9sfRnoYnGa6SHA3csR5P7n5I/bK7j6ezHVnPcjnnMO5b
+	 4jYO0ohgZo/KvCd65D++Q0qdLHh71d1P7LpZoWu/2w4sdllpjMnUqIaDUEEegpE6v9
+	 9Qh9rV9ItpzH4QT4CLSsdzgCYSIHIXG9Ojmr4Ll4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Michael Walle <mwalle@kernel.org>
-Subject: [PATCH 6.18 253/403] mtd: spi-nor: core: Fix mutex leak in spi_nor_rww_start_exclusive()
-Date: Fri,  9 Oct 2026 16:10:14 +0200
-Message-ID: <20261009140958.090020037@linuxfoundation.org>
+	John Rosencutter <rosencutter@gmail.com>,
+	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.2 199/428] Input: synaptics - add LEN205b entry to smbus_pnp_ids for ThinkPad T490
+Date: Fri,  9 Oct 2026 16:08:56 +0200
+Message-ID: <20261009140950.507642971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
 
-commit 44b8a0bf5f96e8393312fc34b956766882341f16 upstream.
+commit a961417c5ae77bbb728a23d9577ecd8f4d8a4b5a upstream.
 
-Use the same guard(mutex) pattern as the other RWW helpers so nor->lock
-is released on both the busy and successful return paths.
+Lenovo ThinkPad T490 has a Synaptics Touchpad that supports SMBus/RMI4
+mode, but is not listed in smbus_pnp_ids table.
 
-Fixes: 03e7bb864d9a ("mtd: spi-nor: use scope-based mutex cleanup helpers")
+Add LEN205b to smbus_pnp_ids[] passlist.
+
+Reported-by: John Rosencutter <rosencutter@gmail.com>
+Closes: https://lore.kernel.org/all/CAOGuaRh025eKcBf9P8UrvtXNp68vQ0HVF2EbNMp-kpdaC1HNpA@mail.gmail.com/
+Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+Link: https://patch.msgid.link/20260920200730.1836756-1-lovekeshsolanki00@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-[mw: rephrased commit message]
-Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/synaptics.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -1245,7 +1245,7 @@ static bool spi_nor_rww_start_exclusive(
- {
- 	struct spi_nor_rww *rww = &nor->rww;
- 
--	mutex_lock(&nor->lock);
-+	guard(mutex)(&nor->lock);
- 
- 	if (rww->ongoing_io || rww->ongoing_rd || rww->ongoing_pe)
- 		return false;
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -191,6 +191,7 @@ static const char * const smbus_pnp_ids[
+ 	"LEN2054", /* E480 */
+ 	"LEN2055", /* E580 */
+ 	"LEN2058", /* E490 */
++	"LEN205b", /* T490 */
+ 	"LEN2068", /* T14 Gen 1 */
+ 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
+ 	"SYN3003", /* HP EliteBook 850 G1 */
 
 
