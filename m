@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28922DEA6B;
-	Fri,  9 Oct 2026 14:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769B730E828;
+	Fri,  9 Oct 2026 14:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557621; cv=none; b=XAOVBRf6siMG5ejQSUmvCNd5FAZgXO8OeG2T8iQUOsFGuPih8uoRGufR+tvfpVqm84Bs4I6D62AgWmSFX6A1JkT6ajCulA1W2K/xYgxdyPSrqwgBPpwdldHQNeZlakKNE6uFZ91OEUw3dJoOC6rglDEgTG3lLNXVl7lJKBiMLcI=
+	t=1791557624; cv=none; b=mf77uxY7X0wLg8h62zY8iH90Zhl6kc9bsB398dFzGiiCIp3fkuqoEETtsqQzcpbwR+4ErrrSZMRjxOl5RfywepfmddSC0OMLG+wl7WhdrfQLCL4NUBIhORkbnt+vXKHx3zIud8nvypku4w3P4TwO2mGFCsD6kceEqijT7nZA9Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557621; c=relaxed/simple;
-	bh=aGZMmyRD7ttWBAIVnGMMxuXnUMYaBb5xHtQ3GhglFMs=;
+	s=arc-20240116; t=1791557624; c=relaxed/simple;
+	bh=uMta6Kn2W/w93mFdRq9yqwuczdtSelvU9nJ7RcFFI1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kz0IOeQDVu0Stykc0B5o9vu2jDUHeKkAD5lSFrjxACUgAtv8r2qlNjW3odVMQTEG/fvd66kO41ZSLRrGJJc2rXWGjlMzl/7Yz7tuS4yg7gwHXt6mgfhXTesnhCY9UoKE9XfSnWl8X8/h+VY8B0/mRhQWuQ32zvwtnXIxGkAhP3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nC2NOTNi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVzAQ/womO3JX9GpBcfDq2Dvewu/PsB+xJaE3KSwyPXlHc7eVyE21ZtPoDd0SAl+J768VsGynVOEwS1Lq3/+OKERe9rURCh1SGiKrFENyH+D1RSk8bEygxx5dpcTtp4YfyXKAHTI60uQP3brhpSRHn/YlTIqzjJ3WbosVJad1TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XmDrDgZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nC2NOTNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E2B1F000FF;
-	Fri,  9 Oct 2026 14:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XmDrDgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24501F00893;
+	Fri,  9 Oct 2026 14:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557620;
-	bh=fstcu0Ae1LrLBjOvUaiP9sHwFq49T3rRbqiQ0bTP/6M=;
+	s=korg; t=1791557623;
+	bh=x0+WPJmnuBwv9aPVeHjSW1/AqQ6MesD1wVDLw4bDZjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nC2NOTNi9OlV0nS4S2VhwF1OnutHsv0h1Nb5GI59OhsykNB1mEe5kgd4Me8eR8R8Y
-	 qPqFymQAAehG68fVe4ocxciPf7fw4jYwyKbmKV+sObPjLth/kau7hBXDLKFB2f1zWa
-	 Uxh+rkdixqbLoOsBbtoUWFe3WpjG1+ZGPPzAOsmo=
+	b=2XmDrDgZ6ankBKYoH3aTtfv/DjQkUwup9UeF9MtwZEL4fKwA6jflSNwq4g3GJgxd6
+	 2f/0wPbs103vI7mx+BhFCuktK/YTeQIrO1N/kw+uRd311tEGKYwkeNnxehDqn385xv
+	 qEVMUNtm/BZ8G6zvqIj28GIxs+HByH4vjs8ZQcbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Beata Michalska <beata.michalska@arm.com>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 422/428] perf: Require kernel access for text poke events
-Date: Fri,  9 Oct 2026 16:12:39 +0200
-Message-ID: <20261009140955.510792995@linuxfoundation.org>
+Subject: [PATCH 7.2 423/428] arm64: errata: Factor out broken AMU const counter cap
+Date: Fri,  9 Oct 2026 16:12:40 +0200
+Message-ID: <20261009140955.533801920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,48 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Beata Michalska <beata.michalska@arm.com>
 
-[ Upstream commit 357e8a77a501d96c9517f01f4a211eed5e9c9184 ]
+[ Upstream commit 573371caf7aea8582212da81dcead2c3f48fac4b ]
 
-Perf events with exclude_kernel=1 can be opened without kernel perf
-access. However, exclude_kernel does not suppress text-poke sideband
-records. Every PERF_RECORD_TEXT_POKE is marked PERF_RECORD_MISC_KERNEL
-and contains a raw kernel instruction address.
+Move the workaround from the erratum 2457168-specific cpucap to a generic
+broken AMU constant-counter one. This keeps the existing Cortex-A510
+handling unchanged while allowing other errata with similar AMU constant
+counter issue to share the capability bit and call sites.
 
-An unprivileged task can therefore open and mmap a task-local software
-event with text_poke=1. Both opening a count-only tracepoint event and
-configuring UDP GRO for ESP-in-UDP cause updates to inline static calls;
-the observer receives the relocated addresses of the modified instructions.
-For a known kernel image, any such address reveals the runtime kernel
-text base despite KASLR.
+Signed-off-by: Beata Michalska <beata.michalska@arm.com>
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 
-Call perf_allow_kernel() whenever attr.text_poke is set, regardless of
-exclude_kernel. Events that neither monitor kernel execution nor request
-text-poke records retain their existing permissions.
+Omit the comment update in amu_read_core_const_ctrs(), since paired
+CPPC FFH counter reads are not implemented here. Keep the capability
+rename in the existing counter-read and initialization paths, together
+with the shared MIDR range list needed by the additional erratum.
 
-Fixes: e17d43b93e54 ("perf: Add perf text poke event")
-Assisted-by: LLM
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/99131354c41e23188f778b92f90363775b482395.1790573390.git.zcliangcn@gmail.com
+Stable-dep-of: 45f730467987 ("arm64: errata: Add Cortex-A725 erratum 3821522 workaround")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/Kconfig             |    8 ++++++++
+ arch/arm64/kernel/cpu_errata.c |   20 ++++++++++++++------
+ arch/arm64/kernel/cpufeature.c |    2 +-
+ arch/arm64/kernel/topology.c   |    2 +-
+ arch/arm64/tools/cpucaps       |    2 +-
+ 5 files changed, 25 insertions(+), 9 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13882,7 +13882,7 @@ SYSCALL_DEFINE5(perf_event_open,
- 	if (err)
- 		return err;
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1017,9 +1017,17 @@ config ARM64_ERRATUM_1902691
  
--	if (!attr.exclude_kernel ||
-+	if (!attr.exclude_kernel || attr.text_poke ||
- 	    ((attr.sample_type & PERF_SAMPLE_CALLCHAIN) &&
- 	     !attr.exclude_callchain_kernel)) {
- 		err = perf_allow_kernel();
+ 	  If unsure, say Y.
+ 
++config ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
++	bool
++	# Targeting errata affecting AMEVCNTR01, the AMU constant counter.
++	# On affected CPUs the counter may not increment at the expected rate,
++	# making it unreliable. As a result, AMU users should treat it as
++	# unavailable rather than relying on misleading counter values.
++
+ config ARM64_ERRATUM_2457168
+ 	bool "Cortex-A510: 2457168: workaround for AMEVCNTR01 incrementing incorrectly"
+ 	depends on ARM64_AMU_EXTN
++	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
+ 	default y
+ 	help
+ 	  This option adds the workaround for ARM Cortex-A510 erratum 2457168.
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -377,6 +377,16 @@ static const struct arm64_cpu_capabiliti
+ };
+ #endif
+ 
++#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
++static const struct midr_range workaround_amu_constcnt_list[] = {
++#ifdef CONFIG_ARM64_ERRATUM_2457168
++	/* Cortex-A510 r0p0-r1p1 */
++	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
++#endif
++	{}
++};
++#endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
++
+ #ifdef CONFIG_CAVIUM_ERRATUM_23154
+ static const struct midr_range cavium_erratum_23154_cpus[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_THUNDERX),
+@@ -904,14 +914,12 @@ const struct arm64_cpu_capabilities arm6
+ 		ERRATA_MIDR_REV_RANGE(MIDR_CORTEX_A510, 0, 0, 2)
+ 	},
+ #endif
+-#ifdef CONFIG_ARM64_ERRATUM_2457168
++#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
+ 	{
+-		.desc = "ARM erratum 2457168",
+-		.capability = ARM64_WORKAROUND_2457168,
++		.desc = "Broken AMU AMEVCNTR01 (const counter)",
++		.capability = ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT,
+ 		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
+-
+-		/* Cortex-A510 r0p0-r1p1 */
+-		CAP_MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1)
++		CAP_MIDR_RANGE_LIST(workaround_amu_constcnt_list)
+ 	},
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_2038923
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -2087,7 +2087,7 @@ static void cpu_amu_enable(struct arm64_
+ 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
+ 
+ 		/* 0 reference values signal broken/disabled counters */
+-		if (!this_cpu_has_cap(ARM64_WORKAROUND_2457168))
++		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT))
+ 			update_freq_counters_refs();
+ 	}
+ }
+--- a/arch/arm64/kernel/topology.c
++++ b/arch/arm64/kernel/topology.c
+@@ -390,7 +390,7 @@ static void cpu_read_constcnt(void *val)
+ 	 * the counter is disabled. A return value of 0 at counter read is
+ 	 * properly handled as an error case by the users of the counter.
+ 	 */
+-	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_2457168) ?
++	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT) ?
+ 		      0UL : read_constcnt();
+ }
+ 
+--- a/arch/arm64/tools/cpucaps
++++ b/arch/arm64/tools/cpucaps
+@@ -103,7 +103,6 @@ WORKAROUND_1902691
+ WORKAROUND_2038923
+ WORKAROUND_2064142
+ WORKAROUND_2077057
+-WORKAROUND_2457168
+ WORKAROUND_2645198
+ WORKAROUND_2658417
+ WORKAROUND_4193714
+@@ -128,3 +127,4 @@ WORKAROUND_REPEAT_TLBI
+ WORKAROUND_SPECULATIVE_AT
+ WORKAROUND_SPECULATIVE_SSBS
+ WORKAROUND_SPECULATIVE_UNPRIV_LOAD
++WORKAROUND_BROKEN_AMU_CONSTCNT
 
 
