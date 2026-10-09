@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AC581ACD;
-	Fri,  9 Oct 2026 14:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C93281ACD;
+	Fri,  9 Oct 2026 14:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557644; cv=none; b=okJJQcZZHqBIpSmoqmt8sBrRr6Sga01UNDbZ8vDyI5+r4nT1AL8BwdTMK2wJMpjAfag2zcqc7QmOAcH7YDqIirzWdOJNr21eKAlwgEDucUXSiLXyZkciB6a0GJmcPPkwkF6mjCkWn5smyR6KNJ7dKFKmeI0M0dhImPSQ8eDjO10=
+	t=1791557647; cv=none; b=OstnRBI+MGaI5VIX0VSWRvzSjywcHmzf3GKy40TqZ4DHiohG223UedEYIUULHOiMQxvHqOgMer193McjYfHiL66SOrrn1D7FtAnvKHVMt+url0wQfn2ZhZ9YsoUSniI7lAV6r1L9lWF9Yk/ZTo7MjFKt+JwVvOsTls9vghLhV4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557644; c=relaxed/simple;
-	bh=s+C0iBeaRqmSuIp/I6DcWZIdw0xbWXOoJnJ2Q4ByL1Y=;
+	s=arc-20240116; t=1791557647; c=relaxed/simple;
+	bh=BFXOXicl3sSDVD9ACsxRLkWEK51eihYU5fFQYZAMiss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mj1jHVgbc4h3c0K+QztL1Fl/YPTRXufQJep0UJlorUGAIx3ICl6iodmIasuJj3QRc3tSvUBnfXwquO/9GJDLSzkwddGLGoZ8824v/i3NAwgjbg1nf5J/RmH/Pl1ghq0XcXe5cgUV025U96CMDHvxNwfhFzpgJwK6KZQYsRZZIkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvYR4uuz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k2xweiAAqOfvcg4wTKRY3vxrRnOH9zyev/1D5+eFUp4oDBIF+kdyUhycjQts6DZ0Go2Ijb0evWIjf+8459IcckEkueYYzFloZ5XBOTwPBYl0SyZ7nawCEf/D20c9zTr1JNPCPf/H1n4AAW26Pj1ZL4Y0KpwwwSRYYLDPKO1d0EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTbupRCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvYR4uuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A251F000FF;
-	Fri,  9 Oct 2026 14:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTbupRCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8368E1F000FF;
+	Fri,  9 Oct 2026 14:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557643;
-	bh=zxjFnfrghL4wqB5iGZIspF6DEYln/MhwzlDadenCinE=;
+	s=korg; t=1791557646;
+	bh=lKIA+q2r19GtZCOAaT2fh7g1WC4EPSiRoYPJOoDKqdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvYR4uuzHzA0GaTIV3+pHPBy8Mwt9eFXdgfHy6xOcaewFQfD4xPJ7SBuJnMEdd1p7
-	 WMPJe7/KPIQH3Qf1B9BPtg7xCuACmI0vzuYU5Q6YuXGd07rArDF6tcBzflM+Z7aLp5
-	 01J2w0o/OxmCTTmzTlGTmkS4YKTdUVORnKFuDKEk=
+	b=RTbupRCGV5tbNq0TjRwCeaxvWDexuqxa8zW/gDpN7fG+cHo7OQZQx0suKqSQBYivF
+	 P2K1mmPj6WyJWnaELjEzQrbNcVEJcsic3YjVZWzchO9w2Zq2cFlxUAifx7wRu9R8bh
+	 r2QaBrcTh3M47tA0rvdiFHPU6PlvBceLAXuZveto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jinseob Kim <kimjinseob88@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 395/428] iio: buffer: serialize buffer teardown with mode claims
-Date: Fri,  9 Oct 2026 16:12:12 +0200
-Message-ID: <20261009140954.885883216@linuxfoundation.org>
+Subject: [PATCH 7.2 396/428] iio: buffer: Ensure bounce buffer used for unaligned case is zeroed.
+Date: Fri,  9 Oct 2026 16:12:13 +0200
+Message-ID: <20261009140954.909033431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -54,46 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinseob Kim <kimjinseob88@gmail.com>
+From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 
-commit 84bb0fc46ccf6a545b8fdf57cda83770186ed8dd upstream.
+commit 5330036bc68d23672bfcc16c60c54701ae123083 upstream.
 
-Buffer-mode claims hold mlock to guarantee that the device remains in
-buffer mode until the claim is released. Normal buffer updates take
-info_exist_lock followed by mlock in iio_update_buffers().
+iio_push_to_buffers_with_ts_unaligned() leaks uninitialized heap memory
+to userspace if the data passed in is not a multiple of 8 bytes and the
+timestamp is enabled. Specify __GFP_ZERO for the devm_krealloc()
+to ensure any extra space is cleared.
 
-However, iio_device_unregister() disables and deactivates all buffers
-without taking mlock. This can invalidate buffer state, including
-active_scan_mask, while a buffer-mode claim is held.
-
-Take mlock in iio_disable_all_buffers() so that unregister honors the
-mode-claim lifetime guarantee. The info_exist_lock -> mlock ordering
-matches iio_update_buffers().
-
-Fixes: 0a8565425afd ("iio: core: introduce iio_device_{claim|release}_buffer_mode() APIs")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
+Fixes: 95ec3fdf2b79 ("iio: core: Introduce iio_push_to_buffers_with_ts_unaligned()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260529121005.1470-1-kimjinseob88%40gmail.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: stable@vger.kernel.org
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/industrialio-buffer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/iio/industrialio-buffer.c
 +++ b/drivers/iio/industrialio-buffer.c
-@@ -1377,6 +1377,10 @@ EXPORT_SYMBOL_GPL(iio_update_buffers);
+@@ -2466,7 +2466,8 @@ int iio_push_to_buffers_with_ts_unaligne
  
- void iio_disable_all_buffers(struct iio_dev *indio_dev)
- {
-+	struct iio_dev_opaque *iio_dev_opaque = to_iio_dev_opaque(indio_dev);
-+
-+	guard(mutex)(&iio_dev_opaque->mlock);
-+
- 	iio_disable_buffers(indio_dev);
- 	iio_buffer_deactivate_all(indio_dev);
- }
+ 		bb = devm_krealloc(&indio_dev->dev,
+ 				   iio_dev_opaque->bounce_buffer,
+-				   indio_dev->scan_bytes, GFP_KERNEL);
++				   indio_dev->scan_bytes,
++				   GFP_KERNEL | __GFP_ZERO);
+ 		if (!bb)
+ 			return -ENOMEM;
+ 		iio_dev_opaque->bounce_buffer = bb;
 
 
