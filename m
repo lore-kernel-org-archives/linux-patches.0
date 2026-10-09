@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA982BE7CD;
-	Fri,  9 Oct 2026 14:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F2D3431F5;
+	Fri,  9 Oct 2026 14:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556094; cv=none; b=tzEVAvJOf4xSYq/WTC2cuGLIDuXctxBNddul95sZLDEebS0AsHgwANMb5n5F4Eo7SZ/2UdRdBxbQMO/glMCWPvtM4KfbEA5YDoj2x4bS3zSQ1RO58dtm5TtgR1Xyei8weB8c/ACkkzXPlfPGoF/+XeotUq362j5mbVidvsHP39c=
+	t=1791556096; cv=none; b=oB9w6hDTCRfOS0sibddoxoFtMC3w0Vxmcw0zq356olOMhap9lpEOGK9yoOF8lgBz81f5la1XrBHtXrm4Fnp+UOzWeFVfVH4fmlSrgEzcfCgCP81o+YkwGUdsm7pfaPpeqAI59feVWohC/rlo7scrqF6unbDFUXslMEjseoR8D/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556094; c=relaxed/simple;
-	bh=3mK/BTHLjGZq+Te91MOGOMlC8te1VoEiTFtzhlOrPNg=;
+	s=arc-20240116; t=1791556096; c=relaxed/simple;
+	bh=oaAg+/HWtOIo65bBv18hoze6IEaf/hQg+5P6uYA3ziQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A74a+Md0RoiOfFaA8RWfb+c+oYvx4+YmV38sh9Tyh7jFo7hGslh9U0LTktzx5ntExwNP3AksCBQrPRhnIIMasgGY6vPbBY6zMyH6zZ5/27itaLYLY7gtlyUCgvn2jO4Yg8d6kutGjY0+80kTVXcv8QBqEpN2MFtx6ChtmuLpeFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoxTwQjq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oRvK3IJ+YgK+aPPbFaMxesl6V07/yV+bBg6v3T+dylw0006nKfkc+u6DYRe+B4YvoUxFTvwQoqR0nnq0ce46/gQzk2iHe+2OJe0N70M1DlN14n+De+TylWKB3Qu6tKA3zuMCy/VqpOI08PX31xZaBRxNXWctdwOjKQFqsUlCyd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zu4CbXJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoxTwQjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598961F000FF;
-	Fri,  9 Oct 2026 14:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zu4CbXJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7881F000FF;
+	Fri,  9 Oct 2026 14:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556092;
-	bh=Xa89NlXTyTZc6aKOvNOEZZlXW1B6UZCfh3drdov25Fo=;
+	s=korg; t=1791556095;
+	bh=vFIOBCkOFpJYsQq1l4hBLtLLkRi9PksTpF3Ayjo88yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eoxTwQjqMOq+H2ndH/c3eVSA5x02r+mtONTu6am9C31Q74K1hUaZUY/jElI340N3s
-	 PNlqGvIhVxAx1L7JUlMFmzk6OGsBXMoobcnYhUJ71O3Zhcaok1k/YwCkzfsxC4RQwT
-	 eAgdzu8YqmdF7vn3dsM911fLfhW54qe+h1x/0Dr0=
+	b=Zu4CbXJak/87Wb+55rdtAa9a7gIj/vQToB0r/WboFY+9enrjO10FF7qia9rJqUPbR
+	 cOdidaBcCkfSIPI26sPIcWKhkTfGJvzZp5c/UxiuwRQ1hG1KclqxZN3blFycFspzrJ
+	 vldMW3+GVpi0eLJg7q8faHSZNywCFadXtBzSFalM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Marek Maslanka <mmaslanka@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 173/403] usb: typec: port-mapper: Only match USB4 port if host interface is available
-Date: Fri,  9 Oct 2026 16:08:54 +0200
-Message-ID: <20261009140956.159310104@linuxfoundation.org>
+	Daniel Salmun <salmundani@gmail.com>,
+	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 155/403] Input: synaptics - limit T440p InterTouch quirk to LEN0036
+Date: Fri,  9 Oct 2026 16:08:36 +0200
+Message-ID: <20261009140955.699198087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -45,93 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Maslanka <mmaslanka@google.com>
+From: Raphaël Larocque <rlarocque@disroot.org>
 
-commit aef5a7e207656ad6abdeeaa0bfc8ee9a1f9c02f6 upstream.
+commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
 
-typec_port_match() adds a component match for the USB4 port whenever a
-USB 3.x port that shares the _PLD with the Type-C connector has the
-"usb4-host-interface" property, regardless of whether a USB4 port can
-ever be registered for it. The component framework binds the aggregate
-device only once every match has found its component, so if the USB4
-port never shows up, the USB 2.0 and USB 3.x ports are not linked to the
-connector either: the "connector" symlinks are never created and USB
-devices enumerated on those ports are never linked with the Type-C
-partner.
+The ThinkPad L440 also uses board id 2722, but does not have the SMBus
+initialization problem seen on the T440p. On the L440, the SMBus
+companion becomes available shortly after psmouse probes, allowing the
+touchpad to use SMBus/RMI4 normally.
 
-This happens in at least two cases:
+The T440p's quirk is currently applied to all Synaptics touchpads with
+board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
+as reported by Daniel Salmun.
 
-1. CONFIG_USB4 is not reachable from the Type-C core, i.e. CONFIG_USB4=n,
-   or CONFIG_USB4=m with CONFIG_TYPEC=y as in the x86_64 gki_defconfig.
-   usb4_usb3_port_match() is then a stub that always returns false.
+Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
+that other devices sharing board id 2722 retain their normal
+SMBus/RMI4 operation.
 
-2. The firmware references a USB4 host interface that is disabled. For
-   example, on Intel Alder Lake-N (ChromeOS Nissa) the TCSS xHCI USB3
-   ports (SS01-SS04) reference TDM0/TDM1, whose _STA returns 0 because
-   the SoC has no integrated Thunderbolt/USB4 and the DMA controllers
-   are disabled in TCSS DEVEN. No PCI device is enumerated for them.
-
-Only add the USB4 component match if CONFIG_USB4 is reachable and the
-referenced host interface is available and has been enumerated as a
-device. The latter mirrors the check in usb_acpi_add_usb4_devlink(), see
-commit 623dae3e7084 ("usb: acpi: fix boot hang due to early incorrect
-'tunneled' USB3 device links").
-
-Fixes: 4fd7a1f0f7f2 ("usb: typec: Connect Type-C port with associated USB4 port")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Marek Maslanka <mmaslanka@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260925131650.3777399-1-mmaslanka@google.com
+Reported-by: Daniel Salmun <salmundani@gmail.com>
+Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
+Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
+Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/port-mapper.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/input/mouse/synaptics.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/port-mapper.c
-+++ b/drivers/usb/typec/port-mapper.c
-@@ -42,6 +42,23 @@ static int usb4_port_compare(struct devi
- 	return usb4_usb3_port_match(dev, fwnode);
- }
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1839,8 +1839,10 @@ static int synaptics_setup_intertouch(st
+ 			return -ENXIO;
+ 		}
  
-+static bool typec_has_usb4_host_interface(const struct fwnode_handle *fwnode)
-+{
-+	if (!IS_REACHABLE(CONFIG_USB4))
-+		return false;
-+
-+	struct fwnode_handle *nhi_fwnode __free(fwnode_handle) =
-+		fwnode_find_reference(fwnode, "usb4-host-interface", 0);
-+
-+	/*
-+	 * The USB4 port can only appear if the host interface is enabled in
-+	 * the firmware and has been enumerated as a device. The latter is
-+	 * the same check as in usb_acpi_add_usb4_devlink().
-+	 */
-+	return !IS_ERR(nhi_fwnode) && fwnode_device_is_available(nhi_fwnode) &&
-+	       nhi_fwnode->dev;
-+}
-+
- static int typec_port_compare(struct device *dev, void *fwnode)
- {
- 	return device_match_fwnode(dev, fwnode);
-@@ -64,11 +81,11 @@ static int typec_port_match(struct devic
- 				    adev_fwnode);
- 
- 		/*
--		 * If dev is USB 3.x port, it may have reference to the
-+		 * If dev is USB 3.x port, it may have reference to an available
- 		 * USB4 host interface in which case we can also link the
- 		 * Type-C port with the USB4 port.
- 		 */
--		if (fwnode_property_present(adev_fwnode, "usb4-host-interface"))
-+		if (typec_has_usb4_host_interface(adev_fwnode))
- 			component_match_add(&arg->port->dev, &arg->match,
- 					    usb4_port_compare, adev_fwnode);
- 	}
+-		/* Disable intertouch on known-broken board revisions */
+-		if (info->board_id == 2722) {
++		/* Disable intertouch on known-broken T440p board revisions */
++		if (info->board_id == 2722 &&
++		    psmouse_matches_pnp_id(psmouse,
++					   (const char * const []){"LEN0036", NULL})) {
+ 			psmouse_info(psmouse,
+ 				     "Disabling intertouch for board id %u\n",
+ 				     info->board_id);
 
 
