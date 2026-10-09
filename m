@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C76231C91;
-	Fri,  9 Oct 2026 14:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B653431F8;
+	Fri,  9 Oct 2026 14:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556377; cv=none; b=t4RzYWwOYrnzEpc8/7aAKdop5JevKiO+Ck+FRR1muMFJy1VNMO69w4qR9gtfpPe8ODNxA7iWCbg4nDZ1Vp3iqJIO1KorlcmXXtQOMZK7Zr6FxIu4uOvInnKzwG5bsDTh5Meq5N/YsEfTUgxa4B3A6uouOJ83nmyymZQzQuqk/p0=
+	t=1791556380; cv=none; b=pBJbd6qYf7KPsWR9/Vsm+3N+TFpJs0Yfl80RYi6BwOigcAa/k66FffoJjRzWmBIFgofVOQF5yZns8+rZa5t9seexVwIsA2GPbOJqo4PFENllUFpOBvg3oDDvf5UqmOmyxjmZ6IrsXppUHqQ5ivmWBUpJCrOUfXGmz7Fx+uCB+rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556377; c=relaxed/simple;
-	bh=5vUh7BYWuXPa2+R1NZfiLV4QR2aN0fNSiB8nPpBmH0I=;
+	s=arc-20240116; t=1791556380; c=relaxed/simple;
+	bh=Z5L7Q/c8l+bQ7scyvgSdpk4j+so96mrl1pb7WacJWxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kbMBy2Puw9TCfjmgbn0wlgAlH07SqrE49tGr98a9DPmhGtQmJosHHn2zrMyOpuMUJ2QPGnwG/UJGf297+6Mp9XqlFUQL5J4IWelImywZUbm4wAgRkdwPKFTKSN3GS5k43tWpK7GIFXBh0mdzLl/llOpLwVov4uIGBy3k1Vsqtkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+HscC+Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jwoV6S9Wj9N68/SMQabtTPh5Lr1Tlz1M4mQ+UYCAJ3eFqwLgNsW1iTGl/M45mvp0qiy+IScHAWXNeXYnWXnrkeI9Sh/pPo6NzUTPhxNJK9n5Q/0jHuaSxcF0ldT51pr/j7Sry8ocr+gjAxjrVUVDeSQwO3rvZlbgp5suirVMYiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHLLH2xm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+HscC+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A561F1F000FF;
-	Fri,  9 Oct 2026 14:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHLLH2xm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF8B1F000FF;
+	Fri,  9 Oct 2026 14:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556376;
-	bh=0r9KpOxhtlSIxaPk2KO0DcXG08KbQCCOowvg2OgwHbU=;
+	s=korg; t=1791556379;
+	bh=yMxRH36flAPOxwA61Or8/7be7PP+dGIPIrQbYN2Vyw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+HscC+ZDxeXexQfq0P6y6yBXsWXyH3N9A5UNiXO2KC1NN4nS0QkxEAeqnqJHmIk5
-	 q8mXe6nYye3Ik8qH0bmfAd0L/MCniuWzaRAFmfehHVY5m30Ly9Jr7fqnunMaYPKYWw
-	 x3LzpIXqtTDuzllvotNp6r4rjaUR/Cat9VbLIKj0=
+	b=BHLLH2xmrdIEKCgQ28OGNgSfrT1qwAMK7EqCRr8ZykjrJbv2RtfA2skEz+C7BSCjT
+	 I9jy7dEQuZmsVHDfzkQQodfDBov82VUNyXoS2sm2YSjSveJFyy+irUINJ86s6dd4np
+	 pfGnyAYA81WeTDJM8xvDxkjwL+j9jXKVtJbQEk/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com,
-	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 166/428] bpf: Fix missing migration protection in __rhtab_map_lookup_and_delete_batch()
-Date: Fri,  9 Oct 2026 16:08:23 +0200
-Message-ID: <20261009140949.804523752@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 224/403] i2c: xiic: defer RX_FULL until all trailing bytes are in FIFO
+Date: Fri,  9 Oct 2026 16:09:45 +0200
+Message-ID: <20261009140957.386466249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ömer Mete Kaya <omermetekaya0@gmail.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit de020dc8049bfb2b22e3b6d99c031feb2e22d112 ]
+commit e6fe3ea04f0113fe4d47c03d76e03805a4768ca7 upstream.
 
-bpf_mem_cache_free_rcu() uses this_cpu_ptr() which requires migration
-to be disabled. All callers of rhtab_delete_elem() disable migration
-except __rhtab_map_lookup_and_delete_batch(), which calls it under
-rcu_read_lock() only.
+For the normal path of xiic_smbus_block_read_setup() -- the trailing
+bytes all fit in one Rx FIFO fill -- RFD was programmed two below the
+byte count, which fires the RX_FULL interrupt while the last byte is
+still in flight. xiic_read_rx() then lands in its bytes_rem == 1 branch
+and sets NACK on a byte still on the wire, truncating the read.
 
-On CONFIG_PREEMPT_RCU, rcu_read_lock() does not disable preemption or
-migration, so the task can migrate between CPUs during the delete loop,
-causing this_cpu_ptr() to trigger:
+Without PEC this is harmless: the truncated byte is the dummy one the
+caller never looks at. With PEC enabled it is the PEC byte itself, and
+i2c_smbus_check_pec() fails the transfer with -EBADMSG.
 
-  BUG: using smp_processor_id() in preemptible [00000000] code
+Raise the threshold by one so RX_FULL fires only once every remaining
+byte is already buffered. That routes the drain through
+xiic_read_rx()'s bytes_rem == 0 path, which reads everything out and
+emits the stop cleanly. The only change for the non-PEC case is that
+the controller waits one extra byte-time before servicing the
+interrupt.
 
-Fix by wrapping the delete loop in migrate_disable()/migrate_enable()
-in __rhtab_map_lookup_and_delete_batch(), matching the migration
-protection that the other callers already provide.
+rfd_set stays inside the 4 bits of XIIC_RFD_REG_OFFSET: this branch is
+only reached when rxmsg_len + pec_len <= IIC_RX_FIFO_DEPTH, so the
+value is at most IIC_RX_FIFO_DEPTH - 1.
 
-Fixes: 818e00848227 ("bpf: Implement iteration ops for resizable hashtab")
-Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
-Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://patch.msgid.link/20260929081609.557899-1-omermetekaya0@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fd7e415d891073b83e1f
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e4c1ff772e1a ("i2c: xiic: Add smbus_block_read functionality")
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Cc: <stable@vger.kernel.org> # v6.3+
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260924-i2c-xiic-v7-2-df7e752332ef@nexthop.ai
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/hashtab.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-xiic.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 68b7e87268f21..84cfeb9270d16 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -3376,8 +3376,10 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- 	if (do_delete) {
-+		migrate_disable();
- 		for (i = 0; i < total; i++)
- 			rhtab_delete_elem(rhtab, del_elems[i], NULL, 0);
-+		migrate_enable();
- 	}
- 
- 	rcu_read_unlock();
--- 
-2.53.0
-
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -570,11 +570,11 @@ static void xiic_smbus_block_read_setup(
+ 			i2c->smbus_actual_len = 1 + rxmsg_len + pec_len;
+ 		} else {
+ 			/*
+-			 * All trailing bytes fit in the Rx FIFO. The widened
+-			 * condition above guarantees rxmsg_len + pec_len >= 2,
+-			 * so this cannot underflow.
++			 * All trailing bytes fit in the Rx FIFO. Defer RX_FULL
++			 * until every one of them is buffered, so the drain
++			 * takes xiic_read_rx()'s bytes_rem == 0 path.
+ 			 */
+-			rfd_set = rxmsg_len + pec_len - 2;
++			rfd_set = rxmsg_len + pec_len - 1;
+ 			i2c->rx_msg->len = rxmsg_len + 1 + pec_len;
+ 		}
+ 		xiic_setreg8(i2c, XIIC_RFD_REG_OFFSET, rfd_set);
 
 
