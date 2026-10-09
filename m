@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA934582D3;
-	Fri,  9 Oct 2026 14:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8341A682B;
+	Fri,  9 Oct 2026 14:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555958; cv=none; b=gnR04gT6ibHbvFkqewzZuj8dHtx3lEVcgsPKs4hYbVhV/+wbjn8VGVqhuDaTyyEav96BcKAobzXo0FgZMIO24gXMywuG9PksRqMNXDBfdzrL0wosKR/EORM7jc/4cPN7sQpDk2QX9eDR5DReoll9dr/T4P79/So/ZaK+cBvgRYs=
+	t=1791555961; cv=none; b=t7iyklFinTN5MWLbbTPO5CEwGEKP57YeKtezH0ZTcKLm/Ptllhro2HgNpJGgTDHxDtvRsg48D8IyxDAtO7plGp0zqFjSErJ9KQbwpOPveiavZO9XYww6roiA7s5U/KSV+i1MocP5bZJNICpDTvPdY8uCiS4C81kqCisMRpxKxmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555958; c=relaxed/simple;
-	bh=2gyxmcWpQuXf1qC6++dPU3e6dw+b/IZpp2oxj8vrx6E=;
+	s=arc-20240116; t=1791555961; c=relaxed/simple;
+	bh=7dvm+AqLj5ylxlyg7LU9rLBPmEKC17A4J138WBBztDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLqSUZ/GLyg2OQo7G5Qjy7DcGXbi7eYdT7Iv46eYtSmjdqDjsNBfpPxY+/NOPirTpCXwdnIYQcMst3u40AD82gJbDB45uNbxqgW8NA8EQKcWiQt8NavdVD8nwd0nxm0ehOipY7euNmPm27D0fxvOQj7ElIGLb8TcdoQWogsotI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTvagSWY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bv/vGbSP/p4mesKgTU5EfnGaNCREX02zun+P8rZrSyWHyuvx2eLLqiuColXyAVeSa2pf3SKv1q+YIWK+ScUkhIYUSwFcwxerqLjKQ+gpcp0cNTJfxUZBOK+mSrmGXpqMmQSESgqMJo1XSsHAoh72RExZXIvvphbgYqanGkCxfzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENdrp+AL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTvagSWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E1B1F000FF;
-	Fri,  9 Oct 2026 14:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENdrp+AL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BB61F000FF;
+	Fri,  9 Oct 2026 14:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555957;
-	bh=SQFLxLFGrJv/9tcS3Zf1iCuvXBvQQCQksQEi7AcANP0=;
+	s=korg; t=1791555960;
+	bh=BP3DYJSC7gka1MIjUnFeLBemoPSQlTt3rDM96fnRXPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTvagSWYJ5BnwgRyb7yb0CLeIl/6GWDfHAhAIb4CK4yO6XCErNTg8vp+kL8/qzl9+
-	 3hrEGcqLawoEreQTuy2C6HT2CQ9v0emAI5AsP1eJWrZqvrLHbBpJGO2GiONhhjET4+
-	 XEwfTcaDBPKbfLGrNj//mbxgw/bA0j0aggKHBO7I=
+	b=ENdrp+ALZPWSSJ/O9V7qAam0m2cdb5+BposRUnK27QA9aBjrRhxSAZx7/XgqyW/Zh
+	 rD+d1KBOe7sxKeaKXCfYk3aM58S9h4U9YUIs4z7YhLjwxo2aC4dWM4QZTE33d1MV57
+	 ocQlcylb4ns45rp8spPEcrZQ7rBE+fC6ocAUVHNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 145/403] drm/amdgpu: fix IP instance memory leak on kobject add failure
-Date: Fri,  9 Oct 2026 16:08:26 +0200
-Message-ID: <20261009140955.463232825@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 097/428] mm/slab: do not wake up kswapd in __kfree_rcu_sheaf()
+Date: Fri,  9 Oct 2026 16:07:14 +0200
+Message-ID: <20261009140948.342915011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,198 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Harry Yoo (Meta) <harry@kernel.org>
 
-commit f5a5add3605935163dd0f75749b6a7869e9765af upstream.
+[ Upstream commit af2fb3ee6679b517e2fdbd3ba16ec276a8b74312 ]
 
-amdgpu_discovery_sysfs_ips() allocates ip_hw_instance with
-kzalloc_flex() and initializes its embedded kobject before calling
-kobject_add().
+Since kfree_rcu() can be called under pi_lock (a raw spinlock in the
+scheduler), kfree_rcu() itself should never allocate memory with
+__GFP_KSWAPD_RECLAIM as waking up kswapd ends up acquiring pi_lock,
+which leads to a deadlock.
 
-If kobject_add() fails, the return value is ignored and execution
-continues without dropping the initial kobject reference. The failed
-kobject is not retained in the kset list, so the normal sysfs teardown
-path cannot find it. As a result, ip_hw_instance_release() is never
-called and the ip_hw_instance allocation is leaked.
+Reproducing the issue even intentionally was not straightforward.
+The set_cpus_allowed_force() path that is called under pi_lock is
+exercised very rarely, and competing tasks that allocate memory will
+most likely wake kswapd up.
 
-Call kobject_put() when kobject_add() fails so the initial reference is
-dropped and ip_hw_instance_release() can free the allocation. Keep the
-existing best-effort sysfs behavior by continuing with the remaining IP
-entries after the failed registration.
+Therefore the existence of the deadlock was verified with a modified
+kernel that has a lockdep map for waking up kswapd:
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  7.2.0-rc1-slab-for-next+ #10 Not tainted
+  ------------------------------------------------------
+  git/6660 is trying to acquire lock:
+  ffff8e524533c550 (&p->pi_lock){-.-.}-{2:2}, at: _raw_spin_lock_irqsave+0x12/0x20
 
-Fixes: a6c40b178092 ("drm/amdgpu: Show IP discovery in sysfs")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5c75fbcca8af1096d8d9415b91d8ea6212c22ee1)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  but task is already holding lock:
+  ffff8e57bffff1a0 (&pgdat->kswapd_wait){....}-{3:3}, at: _raw_spin_lock_irqsave+0x12/0x20
+
+  which lock already depends on the new lock.
+
+  the existing dependency chain (in reverse order) is:
+
+  -> #2 (&pgdat->kswapd_wait){....}-{3:3}:
+         __lock_acquire+0x5a4/0xc50
+         lock_acquire.part.0+0xb7/0x240
+         lock_acquire+0x70/0x170
+         __raw_spin_lock_irqsave+0x44/0x80
+         _raw_spin_lock_irqsave+0x12/0x20
+         __wake_up_common_lock+0x31/0xa0
+         __wake_up+0x20/0x40
+         kswapd_wakeup_wake+0x7e/0x110
+         wakeup_kswapd+0x295/0x320
+         wake_all_kswapds+0xac/0x1a0
+         __alloc_pages_slowpath.constprop.0+0x282/0xf80
+         __alloc_frozen_pages_noprof+0x32a/0x360
+         alloc_slab_page+0x2e/0x160
+         allocate_slab+0x82/0x420
+         new_slab+0x52/0xb0
+         refill_objects+0x13d/0x190
+         refill_sheaf+0x5d/0xd0
+         __pcs_replace_empty_main+0x230/0xb10
+         [...]
+
+  -> #1 (kswapd_wakeup){-.-.}-{0:0}:
+         __lock_acquire+0x5a4/0xc50
+         lock_sync.part.0+0x75/0x100
+         lock_sync+0x36/0x70
+         might_wakeup_kswapd+0x61/0xa0
+         __kfree_rcu_sheaf+0x33/0xd90
+         kvfree_call_rcu+0x1d4/0x3b0
+         set_cpus_allowed_force+0x163/0x220
+         cpuset_cpus_allowed_fallback+0x18b/0x240
+         select_fallback_rq+0x1e6/0x250
+	 [...]
+
+  -> #0 (&p->pi_lock){-.-.}-{2:2}:
+         check_prev_add+0xe6/0xe00
+         validate_chain+0x51e/0x6e0
+         __lock_acquire+0x5a4/0xc50
+         lock_acquire.part.0+0xb7/0x240
+         lock_acquire+0x70/0x170
+         __raw_spin_lock_irqsave+0x44/0x80
+         _raw_spin_lock_irqsave+0x12/0x20
+         try_to_wake_up+0x77/0xa90
+         default_wake_function+0x27/0x60
+         autoremove_wake_function+0x23/0xb0
+         __wake_up_common+0xb8/0x170
+         __wake_up_common_lock+0x51/0xa0
+         __wake_up+0x20/0x40
+         kswapd_wakeup_wake+0x7e/0x110
+         wakeup_kswapd+0x295/0x320
+         wake_all_kswapds+0xac/0x1a0
+         __alloc_pages_slowpath.constprop.0+0x282/0xf80
+         __alloc_frozen_pages_noprof+0x32a/0x360
+         alloc_slab_page+0x2e/0x160
+         allocate_slab+0x82/0x420
+         new_slab+0x52/0xb0
+         refill_objects+0x13d/0x190
+         refill_sheaf+0x5d/0xd0
+         __pcs_replace_empty_main+0x230/0xb10
+         [...]
+
+  other info that might help us debug this:
+
+  Chain exists of:
+    &p->pi_lock --> kswapd_wakeup --> &pgdat->kswapd_wait
+
+   Possible unsafe locking scenario:
+
+         CPU0                    CPU1
+         ----                    ----
+    lock(&pgdat->kswapd_wait);
+                                 lock(kswapd_wakeup);
+                                 lock(&pgdat->kswapd_wait);
+    lock(&p->pi_lock);
+
+   *** DEADLOCK ***
+
+  3 locks held by git/6660:
+   #0: ffff8e519f0e9e20 (&type->i_mutex_dir_key#6){++++}-{4:4}, at: lookup_slow+0x2d/0x60
+   #1: ffffffff8a31c460 (kswapd_wakeup){-.-.}-{0:0}, at: kswapd_wakeup_wake+0x4d/0x110
+   #2: ffff8e57bffff1a0 (&pgdat->kswapd_wait){....}-{3:3}, at: _raw_spin_lock_irqsave+0x12/0x20
+
+  [...]
+
+Fix this by always avoiding waking up kswapd in __kfree_rcu_sheaf().
+Note that there are two paths that might wake up kswapd:
+
+  1) __kfree_rcu_sheaf()
+     // __GFP_KSWAPD_RECLAIM might wake up kswapd
+     -> alloc_empty_sheaf(GFP_NOWAIT)
+
+  2) __kfree_rcu_sheaf()
+     // Let's say __kfree_rcu_sheaf() doesn't pass GFP_NOWAIT
+     -> alloc_empty_sheaf(__GFP_NOWARN)
+     -> kmalloc_flags()
+     -> slab_alloc_node()
+     -> alloc_from_pcs()
+     -> __pcs_replace_empty_main()
+     // Free a sheaf in an allocation path when the sheaf becomes empty
+     // and refilling the sheaf fails
+     -> free_empty_sheaf()
+     -> slab_free()
+     -> free_to_pcs()
+     -> __pcs_replace_full_main()
+     // However free path always assumes it's safe to wake up kswapd
+     -> alloc_empty_sheaf(GFP_NOWAIT)
+
+Drop __GFP_KSWAPD_RECLAIM in both cases. Note that the kfree_rcu() is
+not the only user of free_to_pcs() path, but it should be fixed as it
+can be invoked under pi_lock.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260831-b4-kfree_rcu_hotfix-v1-1-4f0fb882638b%40kernel.org
+Fixes: ec66e0d59952 ("slab: add sheaf support for batching kfree_rcu() operations")
+Link: https://lore.kernel.org/linux-mm/20260831143500.x-saxdAs@linutronix.de
+Assisted-by: LLM # dicovery and verification
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20260922-kfree-rcu-dont-wakeup-kswapd-v1-1-42d7e2636f9e@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/slub.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -1151,6 +1151,8 @@ static int amdgpu_discovery_sysfs_ips(st
- 			ip_hw_instance->kobj.kset = &ip_hw_id->hw_id_kset;
- 			res = kobject_add(&ip_hw_instance->kobj, NULL,
- 					  "%d", ip_hw_instance->num_instance);
-+			if (res)
-+				kobject_put(&ip_hw_instance->kobj);
- next_ip:
- 			if (reg_base_64)
- 				ip_offset += struct_size(ip, base_address_64,
+diff --git a/mm/slub.c b/mm/slub.c
+index d8b6d80def1de..130b6fe3fe039 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -5911,7 +5911,8 @@ __pcs_replace_full_main(struct kmem_cache *s, struct slub_percpu_sheaves *pcs,
+ 	if (!allow_spin)
+ 		return NULL;
+ 
+-	empty = alloc_empty_sheaf(s, GFP_NOWAIT, SLAB_ALLOC_DEFAULT);
++	/* Don't wake up kswapd, it will cause deadlock under pi_lock */
++	empty = alloc_empty_sheaf(s, __GFP_NOWARN, SLAB_ALLOC_DEFAULT);
+ 	if (empty)
+ 		goto got_empty;
+ 
+@@ -6068,7 +6069,6 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj, unsigned int free_flags)
+ 		struct slab_sheaf *empty;
+ 		struct node_barn *barn;
+ 		unsigned int alloc_flags = to_alloc_flags(free_flags);
+-		gfp_t gfp = allow_spin ? GFP_NOWAIT : __GFP_NOWARN;
+ 
+ 		/* Bootstrap or debug cache, fall back */
+ 		if (unlikely(!cache_has_sheaves(s))) {
+@@ -6097,7 +6097,8 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj, unsigned int free_flags)
+ 
+ 		local_unlock(&s->cpu_sheaves->lock);
+ 
+-		empty = alloc_empty_sheaf(s, gfp, alloc_flags);
++		/* Don't wake up kswapd, it will cause deadlock under pi_lock */
++		empty = alloc_empty_sheaf(s, __GFP_NOWARN, alloc_flags);
+ 
+ 		if (!empty)
+ 			goto fail;
+-- 
+2.53.0
+
 
 
