@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA769231C91;
-	Fri,  9 Oct 2026 14:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F173431F8;
+	Fri,  9 Oct 2026 14:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556009; cv=none; b=QS2yMqPYpqOAFCZ3x3fWWErXakDTVrUa7Q/LV9C95b+x+bktYfjfULOWaXG8rxq0dURF+CzUU3ZFdS+XV/nuZH6ezvFKsuLzB505NMyf+9MeerYlCJfy5BTDVg1ofae7ARshsR5penBKPxG6HeKBBiILT5/1t8UtE9Ulgg0iYR4=
+	t=1791556012; cv=none; b=n7UnlpTs4AzXT1sV7tbBDFUWyY7UcTgXWYRfFtssU0/uJyEfyO99E6f8hVzA1LcAGSo3BSL1ekZAilpNaZWLDzQdQDBL8krS1TOpYHtVn0+SeVVUgq0sn/xEQhtBOyKPNzA++GiQGc9jT9DMl+06zoXYdNVVdRpOVyZpO0w4gZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556009; c=relaxed/simple;
-	bh=Dzkz4XP3YAW5P1pnETFIUfnhr+IoOKpAj2n9Iu1XZR4=;
+	s=arc-20240116; t=1791556012; c=relaxed/simple;
+	bh=3R8D1EK8BjtOIpQunAOkKWpymHhOTT1v2Cch2aI3xFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGVQ90dwGzFLkrOEbpSB5OhfAZ3V9p93MP+jbaenupMDU4gaq/7cP9XpdxcnXXuhNszi2MNQYhw0cGLgj5pxxp4711EX5Gn0JIUU7DjncQiJ+TCYTs6mnwbhB/dG8ShUxPxWNUQZ4lNW5qem10Kj7L2TrEJlB2wjHz37pqtLHAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yul695SV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2ofa6I3oAA3hJpSFrkCrQnwyBQ8wObYd1Kh+Y1aXptvLRVZ1GWMFi47q3Z/63EY1rn0es5tE/kMpwcsX/h8wN5n1INWSv0nY9ZPOPh1j61tNhBQpNkxN4cIUoTAW8IOh11mvg6Qt/qpJLTHWDP0lOwPCF/vv/4CG7nZqE5qcxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izsSR7+a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yul695SV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBE81F000FF;
-	Fri,  9 Oct 2026 14:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izsSR7+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FE21F000FF;
+	Fri,  9 Oct 2026 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556008;
-	bh=2iIt1UjR1vzMGEJkpQ893ZHg5ot7z5IU6Rbtrfndq20=;
+	s=korg; t=1791556011;
+	bh=Jl60YLXazvhIkLQce1bJAU4TcTPqmUFJSIpHovUNT7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yul695SVhHJ2lSU4hGxqi9lAFFvu6h2ryOEjS0gOfaT+OWGHJ7miOzoq+hwpBL5CB
-	 bzAi78YqnMB6pH3E1BlrO17MLLgjUBJLojg3qwhQhwUncnh35fUAvbSEf0q6NSMgRN
-	 GDh3wQvdPntqQGR3V2AOFHQSvsfI/xaUfr3nDqsg=
+	b=izsSR7+adiHQJrMTtU6LpwHTrPOLNPttDMAYxFb+2UdZbvOBMXdtPm6JAEuXwYz/6
+	 8gMdlkVSWZ/6X1MHKXhaWrKY8dKURIh0lNB5EZkL+gQdkM5fGTn7wJ/RwDYPYeOoCX
+	 X6vGJYEqVWmDvT2BYGfHyvAPCDLg7V05NadVrYYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.18 159/403] soc: qcom: geni-se: Correct QUP Core ICC vote constants
-Date: Fri,  9 Oct 2026 16:08:40 +0200
-Message-ID: <20261009140955.800411713@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 107/428] nvme: fix command effects log lifetime for multipath heads
+Date: Fri,  9 Oct 2026 16:07:24 +0200
+Message-ID: <20261009140948.558977353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +48,179 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Yao Sang <sangyao@kylinos.cn>
 
-commit 1cd9b1be5a9c56fd69e3f555b200a1844f9b873e upstream.
+[ Upstream commit 72ece656abd4de8645a421fb482d7a11e6533a45 ]
 
-The GENI_TO_CORE ("qup-core") ICC vote selects the QUP Core 2X clock
-rate. The CORE_2X_*_MHZ constants are expressed in Bps, but their
-values are several orders of magnitude too small. For example, the
-50 MHz threshold is represented by 2500 rather than 25000000 Bps.
+KASAN reported a use-after-free when an I/O passthrough command was sent
+through a multipath namespace head after the controller path that first
+created the head had been removed:
 
-As a result, clients using these constants can severely under-vote the
-QUP Core clock.
+  BUG: KASAN: slab-use-after-free in nvme_command_effects+0x192/0x200 [nvme_core]
+  Read of size 4 at addr ffff888141b14400 by task nvme/19811
+  nvme_command_effects+0x192/0x200 [nvme_core]
+  nvme_cmd_allowed+0x7e/0x1b0 [nvme_core]
+  nvme_user_cmd.constprop.0+0x1b5/0x450 [nvme_core]
+  nvme_ns_head_chr_ioctl+0xf4/0x2a0 [nvme_core]
 
-Correct the constants to their intended Bps thresholds so that the ICC
-provider selects the corresponding QUP Core 2X clock rate. Drop the unused
-definitions.
+Move the log cache to the subsystem, with one entry per command set. Both
+controllers and namespace heads hold subsystem references, keeping their
+log pointers valid until subsystem release.
 
-Fixes: 58ffbba6a399 ("soc: qcom: geni: Support for ICC voting")
-Cc: stable@kernel.org
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-1-f78eb611204e@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be93e87e7802 ("nvme: support for multiple Command Sets Supported and Effects log pages")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/soc/qcom/geni-se.h |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/nvme/host/core.c |   41 +++++++++++++++++++----------------------
+ drivers/nvme/host/nvme.h |    3 ++-
+ 2 files changed, 21 insertions(+), 23 deletions(-)
 
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -303,17 +303,12 @@ struct geni_se {
- #define QUP_SE_VERSION_2_5                  0x20050000
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3179,9 +3179,16 @@ static void nvme_release_subsystem(struc
+ {
+ 	struct nvme_subsystem *subsys =
+ 		container_of(dev, struct nvme_subsystem, dev);
++	struct nvme_effects_log *cel;
++	unsigned long i;
  
- /*
-- * Define bandwidth thresholds that cause the underlying Core 2X interconnect
-- * clock to run at the named frequency. These baseline values are recommended
-- * by the hardware team, and are not dynamically scaled with GENI bandwidth
-- * beyond basic on/off.
-+ * QUP Core 2X clock votes used by GENI clients through the "qup-core" ICC
-+ * path. Values are in Bps and must be converted with Bps_to_icc() before
-+ * setting avg_bw.
-  */
--#define CORE_2X_19_2_MHZ		960
--#define CORE_2X_50_MHZ			2500
--#define CORE_2X_100_MHZ			5000
--#define CORE_2X_150_MHZ			7500
--#define CORE_2X_200_MHZ			10000
--#define CORE_2X_236_MHZ			16383
-+#define CORE_2X_19_2_MHZ		9600000
-+#define CORE_2X_50_MHZ			25000000
+ 	if (subsys->instance >= 0)
+ 		ida_free(&nvme_instance_ida, subsys->instance);
++	xa_for_each(&subsys->cels, i, cel) {
++		xa_erase(&subsys->cels, i);
++		kfree(cel);
++	}
++	xa_destroy(&subsys->cels);
+ 	kfree(subsys);
+ }
  
- #define GENI_DEFAULT_BW			Bps_to_icc(1000)
+@@ -3293,6 +3300,7 @@ static int nvme_init_subsystem(struct nv
+ 	kref_init(&subsys->ref);
+ 	INIT_LIST_HEAD(&subsys->ctrls);
+ 	INIT_LIST_HEAD(&subsys->nsheads);
++	xa_init(&subsys->cels);
+ 	nvme_init_subnqn(subsys, ctrl, id);
+ 	memcpy(subsys->serial, id->sn, sizeof(subsys->serial));
+ 	memcpy(subsys->model, id->mn, sizeof(subsys->model));
+@@ -3395,7 +3403,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl,
+ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
+ 				struct nvme_effects_log **log)
+ {
+-	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
++	struct nvme_effects_log *old, *cel = xa_load(&ctrl->subsys->cels, csi);
+ 	int ret;
  
+ 	if (cel)
+@@ -3412,7 +3420,7 @@ static int nvme_get_effects_log(struct n
+ 		return ret;
+ 	}
+ 
+-	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
++	old = xa_store(&ctrl->subsys->cels, csi, cel, GFP_KERNEL);
+ 	if (xa_is_err(old)) {
+ 		kfree(cel);
+ 		return xa_err(old);
+@@ -3487,7 +3495,7 @@ static int nvme_init_effects_log(struct
+ 	if (!effects)
+ 		return -ENOMEM;
+ 
+-	old = xa_store(&ctrl->cels, csi, effects, GFP_KERNEL);
++	old = xa_store(&ctrl->subsys->cels, csi, effects, GFP_KERNEL);
+ 	if (xa_is_err(old)) {
+ 		kfree(effects);
+ 		return xa_err(old);
+@@ -3533,23 +3541,27 @@ static int nvme_init_effects(struct nvme
+ {
+ 	int ret = 0;
+ 
++	mutex_lock(&ctrl->subsys->lock);
++	ctrl->effects = xa_load(&ctrl->subsys->cels, NVME_CSI_NVM);
+ 	if (ctrl->effects)
+-		return 0;
++		goto out_unlock;
+ 
+ 	if (id->lpa & NVME_CTRL_LPA_CMD_EFFECTS_LOG) {
+ 		ret = nvme_get_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
+ 		if (ret < 0)
+-			return ret;
++			goto out_unlock;
+ 	}
+ 
+ 	if (!ctrl->effects) {
+ 		ret = nvme_init_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
+ 		if (ret < 0)
+-			return ret;
++			goto out_unlock;
+ 	}
+ 
+ 	nvme_init_known_nvm_effects(ctrl);
+-	return 0;
++out_unlock:
++	mutex_unlock(&ctrl->subsys->lock);
++	return ret;
+ }
+ 
+ static int nvme_check_ctrl_fabric_info(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
+@@ -5134,19 +5146,6 @@ void nvme_uninit_ctrl(struct nvme_ctrl *
+ }
+ EXPORT_SYMBOL_GPL(nvme_uninit_ctrl);
+ 
+-static void nvme_free_cels(struct nvme_ctrl *ctrl)
+-{
+-	struct nvme_effects_log	*cel;
+-	unsigned long i;
+-
+-	xa_for_each(&ctrl->cels, i, cel) {
+-		xa_erase(&ctrl->cels, i);
+-		kfree(cel);
+-	}
+-
+-	xa_destroy(&ctrl->cels);
+-}
+-
+ static void nvme_free_ctrl(struct device *dev)
+ {
+ 	struct nvme_ctrl *ctrl =
+@@ -5159,7 +5158,6 @@ static void nvme_free_ctrl(struct device
+ 		blk_put_queue(ctrl->fabrics_q);
+ 	if (!subsys || ctrl->instance != subsys->instance)
+ 		ida_free(&nvme_instance_ida, ctrl->instance);
+-	nvme_free_cels(ctrl);
+ 	nvme_mpath_uninit(ctrl);
+ 	cleanup_srcu_struct(&ctrl->srcu);
+ 	nvme_auth_stop(ctrl);
+@@ -5205,7 +5203,6 @@ int nvme_init_ctrl(struct nvme_ctrl *ctr
+ 
+ 	mutex_init(&ctrl->scan_lock);
+ 	INIT_LIST_HEAD(&ctrl->namespaces);
+-	xa_init(&ctrl->cels);
+ 	ctrl->dev = dev;
+ 	ctrl->ops = ops;
+ 	ctrl->quirks = quirks;
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -413,7 +413,6 @@ struct nvme_ctrl {
+ 	unsigned long quirks;
+ 	struct nvme_id_power_state psd[32];
+ 	struct nvme_effects_log *effects;
+-	struct xarray cels;
+ 	struct work_struct scan_work;
+ 	struct work_struct async_event_work;
+ 	struct delayed_work ka_work;
+@@ -505,6 +504,8 @@ struct nvme_subsystem {
+ 	struct list_head	ctrls;
+ 	struct list_head	nsheads
+ 		__guarded_by(&lock);
++	/* Command effects logs, indexed by CSI and protected by lock. */
++	struct xarray		cels;
+ 	char			subnqn[NVMF_NQN_SIZE];
+ 	char			serial[20];
+ 	char			model[40];
 
 
