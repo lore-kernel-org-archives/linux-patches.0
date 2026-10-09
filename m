@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E755C2773E5;
-	Fri,  9 Oct 2026 14:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AE02C0F6D;
+	Fri,  9 Oct 2026 14:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557545; cv=none; b=C/b/H8qhg1rsIOW+EIgRKZvsFa4tuwvOeG8Hgh2Y2ba+5Rabslm7iABqLHZPUeF7DHV9DUB0FNe4T77L/zWwWx0eObYf8jowegboBzA1cJx3440EcSj6GP61DaAsbi53ZhK60rfAV8AZTSTEb+wZR6Hr4REuImgl9H4yX4lUz4U=
+	t=1791557547; cv=none; b=E+xWM69gfejldpvXAawkGU7/SmbjEETO2iYZbbUhzhJFxqv7vs5C6yTg8hgQAmc6O4D22oq3jVJoj66x1bG+gxMzM9uZaEb3SvigWzm/5TDHLJLNX8znCZcuusMzKpaReApYD0MMJgSeiq7phArJLoukKgJDDXsGFfDCkxqkc84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557545; c=relaxed/simple;
-	bh=+IvgShRJ4kRidRfOoeaxyGvgRSzUXJUkCejeZ84pqDY=;
+	s=arc-20240116; t=1791557547; c=relaxed/simple;
+	bh=ZxQuyTEGJU7oyOoSbS3czlGbWM2dMqzzHsT09kLq4qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euzUX8XlmXPvFYStuKGlpwadHhLSaINDNZRRRhijTD4fPFWIpWqBmAZEFeTZUQOqn6PiJa/GDeCmqZBg7Vmn1ZfWHhiqLRNcWJEqvARpDmY4xdN+oQGq7ryfGhXcvSocNykSkN8l1NCIAibrtC3BHcy9Aj0LvAOFWVpQkvrJWD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpuqMpy0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jeAUC/4UP66ag05TWRDkcYHVH4zZ1t8tsPBM/NB3ruXqpH6WnNTd9kH6ujawXfMc+RQqsX4raBaNpF9KBnctZYbdR/9UC1b2n6PN1ut/ezQDPO4k7V8q33+m4AowqqTKZmd84rwlmDlRbk+x91GtmEH9WHqHwXmmQ3GKDS5SXJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYjNFCV/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpuqMpy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BFC1F000FF;
-	Fri,  9 Oct 2026 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYjNFCV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211961F000FF;
+	Fri,  9 Oct 2026 14:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557543;
-	bh=ls3laCq2qoKtkxVxA2rGG6Oj7IY1Kdwbv+Tp+bA4xbQ=;
+	s=korg; t=1791557546;
+	bh=wKJ3T5ihdyQXvpDXlYZJp5q5G/7CI9SCNZSlhWKPQ18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpuqMpy02dHT0xKEpUXL++Rf4D/tOTwUrbNmgI/diNo5J+ky8GaRwwwEC1GMjtk33
-	 DPer9j2yD6rwHTCF9TomUcyhOw5O5Gjdf+nK7GDPVaAFTQGLU1K9VnOQ5EupzRkG3c
-	 j6+wOHN7HhytCdy5UUDxXORkl8z6s1Wb4tAwlEuE=
+	b=sYjNFCV/kR53iumUVzlVc9EndJJ5ZWEcpCBLJpreGJ93y9Aodjy+gYTe74Gw8hzo5
+	 pFcyfrl8Om/TBqwSE1hLa8KFAPgFXSL6Fm4GUNVlGzndw8nJhkwJwm91KF+LuIfx/P
+	 /7ouLKso1LsvT4WfhOrzVmjnLKuNFRYpLzeWR388=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.2 350/428] thunderbolt: Fix KASAN reported use-after-free when request is canceled
-Date: Fri,  9 Oct 2026 16:11:27 +0200
-Message-ID: <20261009140953.851575094@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 7.2 391/428] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
+Date: Fri,  9 Oct 2026 16:12:08 +0200
+Message-ID: <20261009140954.792587777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,245 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
+commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
 
-Alan reported that when doing stress testing sometimes KASAN notices
-use-after-free during control channel operation (stripped down keeping
-the relevant parts):
+If devm_thermal_of_zone_register() fails, probe returns without
+unregistering the IIO map array or disabling runtime PM.
 
- BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
- Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
-  <TASK>
-  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+Jump to err_map to release them.
 
- Allocated by task 1760:
-  __kmalloc_cache_noprof+0x1ee/0x550
-  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
- Freed by task 926:
-  kfree+0x18f/0x4a0
-  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
-  tb_cfg_request_work+0x82/0x120 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
- Second to last potentially related work creation:
-  __queue_work+0x575/0xd00
-  queue_work_on+0x77/0x80
-  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
-  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
-The last stack trace is helpful because it shows that we are cancelling
-a request and looking at tb_cfg_request_cancel() what might happen is
-that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
-starts and because of this it will call schedule_work() queueing the
-same work to run again. However, it is already removed from the
-request_queue and reference count is dropped so when
-tb_cfg_request_work() triggers again it will access memory that is
-already released.
-
-Fix this so that we first make sure a cancelled request is not handed
-away from tb_cfg_request_find() or scheduled to run. Then instead of
-relying on the worker to clean up the request we will do it in
-tb_cfg_request_cancel() after the work is canceled from running. Make
-tb_cfg_request_dequeue() release the request only if it was actually
-removed from the queue.
-
-Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
+Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -73,7 +73,6 @@ struct tb_ctl {
- #define tb_ctl_dbg_once(ctl, format, arg...) \
- 	dev_dbg_once((ctl)->nhi->dev, format, ## arg)
- 
--static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
- /* Serializes access to request kref_get/put */
- static DEFINE_MUTEX(tb_cfg_request_lock);
- 
-@@ -133,41 +132,42 @@ void tb_cfg_request_put(struct tb_cfg_re
- static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
- 				  struct tb_cfg_request *req)
- {
-+	tb_cfg_request_get(req);
-+
- 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
- 	WARN_ON(req->ctl);
- 
--	mutex_lock(&ctl->request_queue_lock);
-+	guard(mutex)(&ctl->request_queue_lock);
- 	if (!ctl->running) {
--		mutex_unlock(&ctl->request_queue_lock);
-+		tb_cfg_request_put(req);
- 		return -ENOTCONN;
- 	}
- 	req->ctl = ctl;
- 	list_add_tail(&req->list, &ctl->request_queue);
- 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	mutex_unlock(&ctl->request_queue_lock);
- 	return 0;
- }
- 
--static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
-+static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
- {
--	struct tb_ctl *ctl = req->ctl;
--
--	mutex_lock(&ctl->request_queue_lock);
--	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
--		mutex_unlock(&ctl->request_queue_lock);
--		return;
--	}
-+	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+}
- 
--	list_del(&req->list);
--	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
--		wake_up(&tb_cfg_request_cancel_queue);
--	mutex_unlock(&ctl->request_queue_lock);
-+static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
-+{
-+	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
- }
- 
--static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
-+static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
- {
--	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+	struct tb_ctl *ctl = req->ctl;
-+
-+	guard(mutex)(&ctl->request_queue_lock);
-+	if (tb_cfg_request_is_active(req)) {
-+		list_del(&req->list);
-+		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+		tb_cfg_request_put(req);
-+	}
- }
- 
- static struct tb_cfg_request *
-@@ -178,7 +178,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
- 	mutex_lock(&pkg->ctl->request_queue_lock);
- 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
- 		tb_cfg_request_get(iter);
--		if (iter->match(iter, pkg)) {
-+		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
- 			req = iter;
- 			break;
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -638,10 +638,10 @@ static int sun4i_gpadc_probe(struct plat
+ 		 * thermal because no thermal DT node is found.
+ 		 */
+ 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
+-			dev_err(&pdev->dev,
+-				"could not register thermal sensor: %ld\n",
+-				PTR_ERR(info->tzd));
+-			return PTR_ERR(info->tzd);
++			ret = dev_err_probe(&pdev->dev,
++					    PTR_ERR(info->tzd),
++					    "could not register thermal sensor\n");
++			goto err_map;
  		}
-@@ -512,8 +512,11 @@ static void tb_ctl_rx_callback(struct tb
- 	trace_tb_rx(pkg->ctl->index, frame->eof, pkg->buffer, frame->size, !req);
- 
- 	if (req) {
--		if (req->copy(req, pkg))
--			schedule_work(&req->work);
-+		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
-+			if (!tb_cfg_request_is_canceled(req) &&
-+			    req->copy(req, pkg))
-+				schedule_work(&req->work);
-+		}
- 		tb_cfg_request_put(req);
  	}
- 
-@@ -525,11 +528,10 @@ static void tb_cfg_request_work(struct w
- {
- 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
- 
--	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
-+	if (!tb_cfg_request_is_canceled(req))
- 		req->callback(req->callback_data);
- 
- 	tb_cfg_request_dequeue(req);
--	tb_cfg_request_put(req);
- }
- 
- /**
-@@ -555,10 +557,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 	INIT_WORK(&req->work, tb_cfg_request_work);
- 	INIT_LIST_HEAD(&req->list);
- 
--	tb_cfg_request_get(req);
- 	ret = tb_cfg_request_enqueue(ctl, req);
- 	if (ret)
--		goto err_put;
-+		return ret;
- 
- 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
- 			req->request_type);
-@@ -572,9 +573,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 
- err_dequeue:
- 	tb_cfg_request_dequeue(req);
--err_put:
--	tb_cfg_request_put(req);
--
- 	return ret;
- }
- 
-@@ -588,9 +586,10 @@ err_put:
-  */
- void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
- {
--	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
--	schedule_work(&req->work);
--	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
-+	scoped_guard(mutex, &req->ctl->request_queue_lock)
-+		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
-+	cancel_work_sync(&req->work);
-+	tb_cfg_request_dequeue(req);
- 	req->result.err = err;
- }
  
 
 
