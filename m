@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE5E3AD522;
-	Fri,  9 Oct 2026 14:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2024E9C2B;
+	Fri,  9 Oct 2026 14:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557295; cv=none; b=aqo4eQUUKRrdCiKsI7xkMQu5Q7dubDiJUjzrbT1Fr9J2dRpvtTzloy521+INoENTXVMv05W1Caio1QLunU13twSwBPATXOXMruUcdgwBNp+MI2J7de0hqTYGPEXc0u8Q/S++XU6IP46tVLj36BsGB2MnqXarMsn+VdBc2A01tsY=
+	t=1791557298; cv=none; b=EveUhDxYJEbci6SacO3xcXBNU6XVactXdCADBFcCttIrfSEPxczpU1kuFbMBLk2/z2hqduF48G9CYhgUwSZRrp3LzZubIou6cSj1ilAmbz73REbv+Am/5xqHGo3lWu0wCuQ93fzCRIdgNL6pOt0+kYc2M9v6t1obQFypPtWFMf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557295; c=relaxed/simple;
-	bh=86xx1+qXNHnDqmH242xfmxJp4vQwcdvRHp5pgKbX5PI=;
+	s=arc-20240116; t=1791557298; c=relaxed/simple;
+	bh=XPUazZ3uBqe4D0+n3vdfr0P16walECkWtFeAbQmkYC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nL3neSBOwZuZYA8Wj+zoR5zoREP1wZ2VXvOqfZs9ajnGUNi1BzBFPVZxJYLuBokQo0dKeJc7o0vSYMi/DEJzWAKT0mVzxF12GfPU1Z52PfqpYfc8diO9khKEEWFYyQ+sJ/4Ry1VNCJ97uYRU8LK1wH/t22XhfRBaR955rd/i+C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvOruliu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PGSdhO8owmGcwq2Dkry8BdokU9sPij8xWCLkMG3Pq1guWBrDXSjnf0eJIA26QQOFVX1Smlj2RNGNdRgO1pL8HHJEbn37w3aJ4nTKL4Qw3WxZAVWyMNpDB3aFuWnx1JadfVRjzEDFbX2IA4zk8iD1dI3iSQfotjKckXcu0lBpZ1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWK1AfQS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvOruliu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11601F000FF;
-	Fri,  9 Oct 2026 14:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWK1AfQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BB51F000FF;
+	Fri,  9 Oct 2026 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557294;
-	bh=cneMPgOh5WDQJARl/lTuxbXGsZQ7T/8hLRgAli2/iok=;
+	s=korg; t=1791557297;
+	bh=I0OJREJtA8ZDGHoQLqjirqI2xrPUJzj/a1QrvlJPbz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SvOruliuiLWUj4htEXr9dZBWv2oD/Kz3apwEN+aZegyj5+kpujIMdh9jtjQ8zq/UH
-	 id8VvuPxfPlYM/uDk6RXeOjbJ3HNuWSMgEvwblIt6pmitCS5RwQXBtW0q+IaQx+DYW
-	 kOiU7T+Li30k4I9JI8JP3VSTfxNmwZOPFxIBUmJs=
+	b=sWK1AfQSQO0wcW8uNP2g35xonufbyVghpjGUFDKHVoT8NrXCn6CwpB7ys0Dbedt1Q
+	 QEuMWzhKhRPOwjhES3BfQt7TuFU98Lbhsi1p5Et6W95o9oKyTFidJVrOlV1age89wZ
+	 FEHmrKXKl3tBSH/pD/Cb661BIiM1e4LfE5oDzgaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 333/428] wifi: mac80211: minstrel_ht: validate fixed rate index
-Date: Fri,  9 Oct 2026 16:11:10 +0200
-Message-ID: <20261009140953.457830275@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Starke <daniel.starke@siemens.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 378/403] tty: n_gsm: fix missing modem controls after DLCI open in convergence layer type 2
+Date: Fri,  9 Oct 2026 16:12:19 +0200
+Message-ID: <20261009141001.159753127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +47,180 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-commit 15fb9e3cea55fbc378261ce35a32b0f8828f0000 upstream.
+[ Upstream commit 11ea5a63d30ad6d305b1c22301cd99ff45a98c8d ]
 
-The fixed_rate_idx debugfs file is a plain u32 attribute, so any value
-can be written to it.  minstrel_ht_update_stats() then copies the value
-into mi->max_tp_rate[] and mi->max_prob_rate, and
-minstrel_ht_set_rate() uses MI_RATE_GROUP()/MI_RATE_IDX() to index
-minstrel_mcs_groups[] (42 entries) and mi->groups[].rates[] (10 entries)
-with it.
+The current implementation only updates the virtual V.24 control signals
+after DLCI open in basic option mode. In advanced option mode with
+convergence layer type 2 an empty data frame needs to be transmitted to
+inform the peer about the initial virtual V.24 control signals. Not doing
+so has two unwanted side effects:
+1. hardware flow control status is unclear (initial CTS line is unknown)
+2. DLCI user presence is not transmitted (initial DTR line is unknown)
 
-Writing e.g. 65535 selects group 4095 and rate index 15, far outside
-both arrays.  The out-of-bounds entries are dereferenced and updated as
-struct minstrel_rate_stats (retry counts, etc.), so the invalid index
-corrupts adjacent kernel memory.  With CONFIG_UBSAN_BOUNDS the access is
-reported as an array-index-out-of-bounds in minstrel_ht_set_rate().
+Applications waiting on these lines can not start after a DLCI has been
+opened until the first data frame has been transmitted.
 
-Only a valid group/rate pair, or U32_MAX to disable fixed rate
-processing, can be used safely, so reject any other value when the
-debugfs file is written.
+Fix this by using gsm_modem_update() thoroughly which handles basic and
+advanced option mode correctly. Add a flag in gsm_modem_update() and the
+delegated gsm_modem_upd_via_msc() to control whether waiting for the MSC
+command response is possible. Remove obsolete gsm_modem_send_initial_msc().
 
-The file is only reachable through a root-only debugfs mount, so this is
-not a privilege boundary.  The out-of-bounds access is still a bug that
-must not be reachable through a writable debugfs attribute.
-
-Fixes: 24f7580e852b ("minstrel_ht: fixed rate mode through debugfs")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Reviewed-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/288e6f6d30dc82ff40da502755e6666982f6b735.1789798000.git.xuyuqiabc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://patch.msgid.link/20260826063026.2472-1-daniel.starke@siemens.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adjusted deletion context for the missing colon in the `@dlci` comment. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rc80211_minstrel_ht.c |   30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ drivers/tty/n_gsm.c |   47 ++++++++++++++---------------------------------
+ 1 file changed, 14 insertions(+), 33 deletions(-)
 
---- a/net/mac80211/rc80211_minstrel_ht.c
-+++ b/net/mac80211/rc80211_minstrel_ht.c
-@@ -7,6 +7,7 @@
- #include <linux/types.h>
- #include <linux/skbuff.h>
- #include <linux/debugfs.h>
-+#include <linux/limits.h>
- #include <linux/random.h>
- #include <linux/moduleparam.h>
- #include <linux/ieee80211.h>
-@@ -1994,14 +1995,39 @@ minstrel_ht_alloc(struct ieee80211_hw *h
- }
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -454,14 +454,13 @@ static const u8 gsm_fcs8[256] = {
  
- #ifdef CONFIG_MAC80211_DEBUGFS
-+static int minstrel_ht_fixed_rate_idx_get(void *data, u64 *val)
-+{
-+	*val = *(u32 *)data;
-+	return 0;
-+}
-+
-+static int minstrel_ht_fixed_rate_idx_set(void *data, u64 val)
-+{
-+	u32 idx = val;
-+
-+	/* U32_MAX is the default and keeps fixed rate processing disabled */
-+	if (val != U32_MAX &&
-+	    (val > U16_MAX ||
-+	     MI_RATE_GROUP(idx) >= ARRAY_SIZE(minstrel_mcs_groups) ||
-+	     MI_RATE_IDX(idx) >= MCS_GROUP_RATES))
-+		return -EINVAL;
-+
-+	*(u32 *)data = idx;
-+	return 0;
-+}
-+
-+DEFINE_DEBUGFS_ATTRIBUTE(minstrel_ht_fixed_rate_idx_fops,
-+			 minstrel_ht_fixed_rate_idx_get,
-+			 minstrel_ht_fixed_rate_idx_set, "%llu\n");
-+
- static void minstrel_ht_add_debugfs(struct ieee80211_hw *hw, void *priv,
- 				    struct dentry *debugfsdir)
+ static void gsm_dlci_close(struct gsm_dlci *dlci);
+ static int gsmld_output(struct gsm_mux *gsm, u8 *data, int len);
+-static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk);
++static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait);
+ static struct gsm_msg *gsm_data_alloc(struct gsm_mux *gsm, u8 addr, int len,
+ 								u8 ctrl);
+ static int gsm_send_packet(struct gsm_mux *gsm, struct gsm_msg *msg);
+ static struct gsm_dlci *gsm_dlci_alloc(struct gsm_mux *gsm, int addr);
+ static void gsmld_write_trigger(struct gsm_mux *gsm);
+ static void gsmld_write_task(struct work_struct *work);
+-static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci);
+ 
+ /**
+  *	gsm_fcs_add	-	update FCS
+@@ -2175,7 +2174,7 @@ static void gsm_dlci_open(struct gsm_dlc
+ 		pr_debug("DLCI %d goes open.\n", dlci->addr);
+ 	/* Send current modem state */
+ 	if (dlci->addr) {
+-		gsm_modem_send_initial_msc(dlci);
++		gsm_modem_update(dlci, 0, false);
+ 	} else {
+ 		/* Start keep-alive control */
+ 		gsm->ka_num = 0;
+@@ -4137,9 +4136,10 @@ static void gsm_modem_upd_via_data(struc
+  *	gsm_modem_upd_via_msc	-	send modem bits via control frame
+  *	@dlci: channel
+  *	@brk: break signal
++ *	@wait: wait for the MSC command
+  */
+ 
+-static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
++static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk, bool wait)
  {
- 	struct minstrel_priv *mp = priv;
- 
- 	mp->fixed_rate_idx = (u32) -1;
--	debugfs_create_u32("fixed_rate_idx", S_IRUGO | S_IWUGO, debugfsdir,
--			   &mp->fixed_rate_idx);
-+	debugfs_create_file("fixed_rate_idx", S_IRUGO | S_IWUGO, debugfsdir,
-+			    &mp->fixed_rate_idx, &minstrel_ht_fixed_rate_idx_fops);
+ 	u8 modembits[3];
+ 	struct gsm_control *ctrl;
+@@ -4156,6 +4156,8 @@ static int gsm_modem_upd_via_msc(struct
+ 		modembits[2] = (brk << 4) | 2 | EA; /* Length, Break, EA */
+ 		len++;
+ 	}
++	if (!wait)
++		return gsm_control_command(dlci->gsm, CMD_MSC, modembits, len);
+ 	ctrl = gsm_control_send(dlci->gsm, CMD_MSC, modembits, len);
+ 	if (ctrl == NULL)
+ 		return -ENOMEM;
+@@ -4163,34 +4165,13 @@ static int gsm_modem_upd_via_msc(struct
  }
- #endif
  
+ /**
+- * gsm_modem_send_initial_msc - Send initial modem status message
+- *
+- * @dlci channel
+- *
+- * Send an initial MSC message after DLCI open to set the initial
+- * modem status lines. This is only done for basic mode.
+- * Does not wait for a response as we cannot block the input queue
+- * processing.
+- */
+-static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci)
+-{
+-	u8 modembits[2];
+-
+-	if (dlci->adaption != 1 || dlci->gsm->encoding != GSM_BASIC_OPT)
+-		return 0;
+-
+-	modembits[0] = (dlci->addr << 2) | 2 | EA; /* DLCI, Valid, EA */
+-	modembits[1] = (gsm_encode_modem(dlci) << 1) | EA;
+-	return gsm_control_command(dlci->gsm, CMD_MSC, (const u8 *)&modembits, 2);
+-}
+-
+-/**
+  *	gsm_modem_update	-	send modem status line state
+  *	@dlci: channel
+  *	@brk: break signal
++ *	@wait: wait for the MSC command
+  */
+ 
+-static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
++static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait)
+ {
+ 	if (dlci->gsm->dead)
+ 		return -EL2HLT;
+@@ -4200,7 +4181,7 @@ static int gsm_modem_update(struct gsm_d
+ 		return 0;
+ 	} else if (dlci->gsm->encoding == GSM_BASIC_OPT) {
+ 		/* Send as MSC control message. */
+-		return gsm_modem_upd_via_msc(dlci, brk);
++		return gsm_modem_upd_via_msc(dlci, brk, wait);
+ 	}
+ 
+ 	/* Modem status lines are not supported. */
+@@ -4266,7 +4247,7 @@ static void gsm_dtr_rts(struct tty_port
+ 		modem_tx &= ~(TIOCM_DTR | TIOCM_RTS);
+ 	if (modem_tx != dlci->modem_tx) {
+ 		dlci->modem_tx = modem_tx;
+-		gsm_modem_update(dlci, 0);
++		gsm_modem_update(dlci, 0, true);
+ 	}
+ }
+ 
+@@ -4472,7 +4453,7 @@ static int gsmtty_tiocmset(struct tty_st
+ 
+ 	if (modem_tx != dlci->modem_tx) {
+ 		dlci->modem_tx = modem_tx;
+-		return gsm_modem_update(dlci, 0);
++		return gsm_modem_update(dlci, 0, true);
+ 	}
+ 	return 0;
+ }
+@@ -4554,7 +4535,7 @@ static void gsmtty_throttle(struct tty_s
+ 		dlci->modem_tx &= ~TIOCM_RTS;
+ 	dlci->throttled = true;
+ 	/* Send an MSC with RTS cleared */
+-	gsm_modem_update(dlci, 0);
++	gsm_modem_update(dlci, 0, true);
+ }
+ 
+ static void gsmtty_unthrottle(struct tty_struct *tty)
+@@ -4566,7 +4547,7 @@ static void gsmtty_unthrottle(struct tty
+ 		dlci->modem_tx |= TIOCM_RTS;
+ 	dlci->throttled = false;
+ 	/* Send an MSC with RTS set */
+-	gsm_modem_update(dlci, 0);
++	gsm_modem_update(dlci, 0, true);
+ }
+ 
+ static int gsmtty_break_ctl(struct tty_struct *tty, int state)
+@@ -4584,7 +4565,7 @@ static int gsmtty_break_ctl(struct tty_s
+ 		if (encode > 0x0F)
+ 			encode = 0x0F;	/* Best effort */
+ 	}
+-	return gsm_modem_update(dlci, encode);
++	return gsm_modem_update(dlci, encode, true);
+ }
+ 
+ static void gsmtty_cleanup(struct tty_struct *tty)
 
 
