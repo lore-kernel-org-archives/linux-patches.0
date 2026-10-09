@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1EA4E50D7;
-	Fri,  9 Oct 2026 14:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D3F3EC805;
+	Fri,  9 Oct 2026 14:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556552; cv=none; b=TGJrcSLBiuTsBMCA6hFPJdxcUweEiN2I8gGPpT4k2lya2rF5W+WpI0TAcERMYaKxU3iu5aqlfM1LpDywBbV1zN+TRq0A5K2mAYx6K4bkqBSaV2nCvmvYSP1Dse3Mb6HgANGiEw8/imhZIITqZRTX4bwZTuswAd/cjoMwpSoz0Fw=
+	t=1791556554; cv=none; b=D9u4jj0jhKhmY95rOp1WZsQSTpky4TzsZu79/6HhOpf9/Y4hhW1p+OdcUkgauhTaBCx3bXq/gSnIoJ5M7SXzGix8sLmyqqEWeKm+DMefIRg9ouz+x2YbyhsxB07H14eug4xLpqs5xb/KZZwkQpM/G9zRgLn6Ou4Q6Q3jRikAdY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556552; c=relaxed/simple;
-	bh=t9f/rzJv1pxlUH4mgYVnH1o1ibIXOf66jX5Ug7GM0+I=;
+	s=arc-20240116; t=1791556554; c=relaxed/simple;
+	bh=80H8hs76CPnlyUijil13gVdx0mksUjcc3Ow6Pn60x+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5jkI5zHP9WlxmNRlvR1YGMz/HHVQS7TOGFB3KlO1xf+sjyhV0o/bk3dRAt+qxPmU1dOJpleghb9D9Gxi6KKhTKF+XahroyB7ncDLXoWOpDfB5XiFIRsBeXBKxjLE52rRLNTjHnnO6S13SveJsMEQQeHXuSGUkpzL2SeGn25heE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2wq1fxf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oXc3RyWSM4PBh4j+NkusJ0aX8xu00ixvFvD9DVqUW9la4j4hyJBkc7vxn9EsX8uC6KufjIScUXlOnRut/k8CFR5IFby6WIpIONCabn2YHMS/opFyj2N2iRur0ZOFPXD6Y4gVnFD8Ke3sX6nOQI9uh89IHgGPn/DUGcCjDElQUmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vT5rI9Zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2wq1fxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF55A1F000FF;
-	Fri,  9 Oct 2026 14:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vT5rI9Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C491F00893;
+	Fri,  9 Oct 2026 14:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556550;
-	bh=y+rRI1wYHB+0vnDN3wmeSLIiR1cpnld8Mx6zoYlp3rw=;
+	s=korg; t=1791556553;
+	bh=ljF25PEQTCD1y3xzheQlS3UZYdWygQv5lhwxMDZzU0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2wq1fxfjQLynQSpdI8ty9sfRnoYnGa6SHA3csR5P7n5I/bK7j6ezHVnPcjnnMO5b
-	 4jYO0ohgZo/KvCd65D++Q0qdLHh71d1P7LpZoWu/2w4sdllpjMnUqIaDUEEegpE6v9
-	 9Qh9rV9ItpzH4QT4CLSsdzgCYSIHIXG9Ojmr4Ll4=
+	b=vT5rI9ZhwbuRSzeNR2F7vYUZpvXTDY38ZdbBRozfnIb66USwDAj9CntcuNY1QZGTB
+	 BXmNwVEeLZvaKiv9uWsa21s1+LcNYuXcLm7gCg2+q7IDkrSpAmbf1oaQ8w67wInHSW
+	 HNsVuOqjw11Wv+dCq2TPIjIF8LLY4l9CrZ0TH2UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Rosencutter <rosencutter@gmail.com>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 199/428] Input: synaptics - add LEN205b entry to smbus_pnp_ids for ThinkPad T490
-Date: Fri,  9 Oct 2026 16:08:56 +0200
-Message-ID: <20261009140950.507642971@linuxfoundation.org>
+	Han Xu <han.xu@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 254/403] mtd: spinand: Enable QE on all dies
+Date: Fri,  9 Oct 2026 16:10:15 +0200
+Message-ID: <20261009140958.114058362@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,41 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: Han Xu <han.xu@nxp.com>
 
-commit a961417c5ae77bbb728a23d9577ecd8f4d8a4b5a upstream.
+commit 63d6cace2c4a7f36c1cb44f1bb5e0f3ef19e5c7f upstream.
 
-Lenovo ThinkPad T490 has a Synaptics Touchpad that supports SMBus/RMI4
-mode, but is not listed in smbus_pnp_ids table.
+The QUAD ENABLE (QE) bit is stored in a per-die configuration
+register on some SPI-NAND devices. When a device contains multiple
+dies, updating the QE bit only on the currently selected die can
+leave the remaining dies operating in non-quad mode.
+ 
+Iterate over all targets and update the QE setting on each die
+during initialization to ensure consistent quad I/O operation
+across the entire device.
 
-Add LEN205b to smbus_pnp_ids[] passlist.
+Tested on ISSI IS38SMW04G8B.
 
-Reported-by: John Rosencutter <rosencutter@gmail.com>
-Closes: https://lore.kernel.org/all/CAOGuaRh025eKcBf9P8UrvtXNp68vQ0HVF2EbNMp-kpdaC1HNpA@mail.gmail.com/
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Link: https://patch.msgid.link/20260920200730.1836756-1-lovekeshsolanki00@gmail.com
+Fixes: 7529df465248 ("mtd: nand: Add core infrastructure to support SPI NANDs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/spi/core.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -191,6 +191,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
- 	"LEN2058", /* E490 */
-+	"LEN205b", /* T490 */
- 	"LEN2068", /* T14 Gen 1 */
- 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -180,8 +180,26 @@ static int spinand_init_cfg_cache(struct
+ static int spinand_init_quad_enable(struct spinand_device *spinand,
+ 				    bool enable)
+ {
+-	return spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
+-			       enable ? CFG_QUAD_ENABLE : 0);
++	struct nand_device *nand = spinand_to_nand(spinand);
++	unsigned int target;
++	int ret;
++
++	/*
++	 * QE is a per-die setting on some devices. Program each target
++	 * individually when enabling or disabling quad I/O mode.
++	 */
++	for (target = 0; target < nand->memorg.ntargets; target++) {
++		ret = spinand_select_target(spinand, target);
++		if (ret)
++			return ret;
++
++		ret = spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
++				      enable ? CFG_QUAD_ENABLE : 0);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
+ }
+ 
+ static int spinand_ecc_enable(struct spinand_device *spinand,
 
 
