@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111F12EBBAF;
-	Fri,  9 Oct 2026 14:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D0C2EBBAF;
+	Fri,  9 Oct 2026 14:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557282; cv=none; b=dWcqqKnWlVgSEuCWzu7MlhJ5sakXhSAIaC83gP02IoZ1BGVwJdioAeCh+NzTEy1zLYpEsIOE1w3hTPrhQDQb55QVsMWRL/f3CbiHDdoNhdu8qIPrVUAKe4biajLaeu8NLoRhPUIyEVR9CP+4AGMID/DMAlWTgX+8DPqrdgyOwxM=
+	t=1791557285; cv=none; b=QW+HGjWWlCNSI6F/b1d0L6Ceni39mz8MafN1JCUud9BQvsAC4uRjUyTeRkHJtjwqL7HzZx12KIp4ZynnZPkXfoKaIDtbtmO6xyGRcO9vl7Wwk/Rm6BOS+zOeNS9HIISE/LtU+RiZN32V6bpYlnMjGIBLmyz78K0t/sFG0xqRsbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557282; c=relaxed/simple;
-	bh=jP84GhRvbKkUIwoZ5O3NlVpnW4sZzrFYWX6aoVZR/Ws=;
+	s=arc-20240116; t=1791557285; c=relaxed/simple;
+	bh=YjJNuE0DuCL13tSJXT8heSvCmWgdlU5GbpeAVHJpsEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcE/X/zc0rtFy7+fMDTe6N5T6PBQpH733gwgTcnPEh6XvJtVUFNVwFSDai+7CSQnjscfMSFHp+570tYovXDuct/y0HyVDg7Cgm+BU2Y0/ZmjchhJBieOS6g1bxQD5s7jjY+Q5TPwPmhPPzm+eqKW5/H9HQILa/MOR87+3eVs8SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/fmUXAl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jKhdCqeyzQnBAk/5zYKjjZmsdUhZDCyh/iMPx4g3ZxQj+T/Ll+Site0IqHgr4eTiOH34RJvBSg0/zZRbW2EDRE95TRD9aIqnBlMwEylxlm4iFukw5s59n5cQvhPv7gPUs8TUQtFlh6mPcbjdo6MbdSCIg7zu8o6AvMPYBNXA21c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl+PCqks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/fmUXAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D42A1F000FF;
-	Fri,  9 Oct 2026 14:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl+PCqks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819531F000FF;
+	Fri,  9 Oct 2026 14:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557280;
-	bh=fSv2479IXATPK+PNOuQ2S0jfZ1moMOWF4X1x1OoeJE8=;
+	s=korg; t=1791557283;
+	bh=PbU3p2E8YXtgIr3VY5kVyXz9xK5uR/D+2TYQXcbjas8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/fmUXAlgCU/jh3HiFmaolcsHs9hZbVwumgG45L0mWqqaYokCVqFH4cuNBnFJgqc9
-	 VEBTx82dKeSmXMtJw7UplXDKcDniJT0jKEytbCV0deQME2IX7VP0E+GvY9cw6WW/D1
-	 aUbZDnAres5cR22DZAM8qsupVX5LcdnOBf8+qZ4Q=
+	b=Jl+PCqksQbK/JD0mjtv0t5t5S+UlAClSVM/s0IFWcyqZLO2J8l2e1BkWEQm4sbgZI
+	 iHX0++WvFlFG7LVWBrMys0j5fqnKFXWmANkAARs569nqT2pN4gt23yPRt4Kiebt/fh
+	 uTjiSIMQg9FlEIpt1zWuJ6D1Mg/0fg8eCpucAUTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 331/428] wifi: mac80211: account proxy paths against the mesh path limit
-Date: Fri,  9 Oct 2026 16:11:08 +0200
-Message-ID: <20261009140953.412122314@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 376/403] drm/amd/display: Fix fast updates on DCE 8.1
+Date: Fri,  9 Oct 2026 16:12:17 +0200
+Message-ID: <20261009141001.110381118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,75 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b upstream.
+[ Upstream commit 687d31ea9ac76b299817060fa1e5582d6c752ae0 ]
 
-Proxy-path churn can drive the interface path counter negative and let
-later mesh path additions exceed MESH_MAX_MPATHS.
+DCE8 should use legacy fast updates.
+This was already set for DCE 8.0 and 8.3, but it seems
+that DCE 8.1 (found in Kaveri chips) was forgotten.
 
-mesh_path_free_rcu() decrements the interface mpaths counter for entries
-from both the mesh and proxy path tables, but mpp_path_add() never
-reserves a slot in that counter. Removing or expiring a proxy path
-therefore returns a slot that was never charged.
+This fix should be backported to all kernel versions that
+have "Refactor fast update to use new HWSS build sequence",
+but this patch won't apply cleanly to older kernels due to
+another refactor in "Remove dc param from check_update".
 
-mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
-it falls below the number of installed paths the limit no longer holds.
-
-Reserve the shared quota before allocating a proxy path and release it on
-every unsuccessful addition. Mesh and proxy paths now share one
-1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
-
-Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
+Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
+Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923122033.1046651-2-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 57605379559e3b5044c8274a1010ec658e5e73af)
 Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: omitted dc->check_config initialization because enable_legacy_fast_update remains in dc->debug. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_pathtbl.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -733,10 +733,15 @@ int mpp_path_add(struct ieee80211_sub_if
- 	if (is_multicast_ether_addr(dst))
- 		return -EOPNOTSUPP;
+--- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
+@@ -1121,6 +1121,7 @@ static bool dce81_construct(
+ 	dc->caps.max_cursor_size = 128;
+ 	dc->caps.min_horizontal_blanking_period = 80;
+ 	dc->caps.is_apu = true;
++	dc->debug = debug_defaults;
  
-+	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
-+		return -ENOSPC;
-+
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
- 
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return -ENOMEM;
-+	}
- 
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
- 	tbl = &sdata->u.mesh.mpp_paths;
-@@ -749,10 +754,12 @@ int mpp_path_add(struct ieee80211_sub_if
- 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
- 
--	if (ret)
-+	if (ret) {
- 		kfree(new_mpath);
--	else
-+		atomic_dec(&sdata->u.mesh.mpaths);
-+	} else {
- 		mesh_fast_tx_flush_addr(sdata, dst);
-+	}
- 
- 	sdata->u.mesh.mpp_paths_generation++;
- 	return ret;
+ 	/*************************************************
+ 	 *  Create resources                             *
 
 
