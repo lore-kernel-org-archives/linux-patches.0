@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D920F3431F5;
-	Fri,  9 Oct 2026 14:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA593BD64D;
+	Fri,  9 Oct 2026 14:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556227; cv=none; b=srYDTBk1WLx/edX6FMfk9bnyt7f2vr5hCKun0MZJ29/FWV75I37Qr3oUuneD1Uepg5cRZ2/rZjy2DSm/Ycd7MdmwHv8JjyrqNnSugX/bWIVHmV5sSaf2HQd5OfyY0j+yrlpJJ8uwIcYo9f/VssyJMb2f6SEW3A93JZ5xgnFFhr4=
+	t=1791556231; cv=none; b=MvkZSUTL8ecDZHSRTzfDfnLLbhHdolpy9QYhgTGhJWecbDw8VNfNS6n9K7MIrq3UioFoix+qmLjd0vb5sBQFdtkHcMqACjEuZkZ1rJAqiDXdoFDa8gDKy742zKe5uQv3cPKvm7tVE+7+0JXO672eGCs2AZw8k9cS+8fQs8K9tjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556227; c=relaxed/simple;
-	bh=Nb1524uvUl/Ou9BR4r2AsZWBmhpCoeZsT9H5cZt7z80=;
+	s=arc-20240116; t=1791556231; c=relaxed/simple;
+	bh=kqLT7/hfMoOSltFK5gGGprDhfaqmdC59cv8HrTvIcSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVx1NDQf7qtSRL2rPKr1u7EiTiKLZCdM1J42IMv/vmGyQ5hHMYNLsEpMZ+f4qe/HL2/0y856TrvgF9egUYif3i6vOEdnLjOKump2b2oYoaQZcmOJiMR8lau23NrEDnBGikAWI11Kls8wyVdnzvCtsb/jhSRk6zC+fET5SNuLWn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPvsHA4a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i1PZM5jqwE4Sd4F/ZyaHo09sICx8uQICeXdkFPuwuPHaPL2slU9KbPSPxa9GWMqGZC355hRW4Rjc5TOqvLxHXjhNf24BWGttryOQHxdKr9wjfATB3uokfw269rvuuF46AtVi4a34rgJbvRkjcSxAOlqQWHxSLw7ogB7rSRH4Rng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ux3dFkgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPvsHA4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167C61F000FF;
-	Fri,  9 Oct 2026 14:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ux3dFkgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E774E1F000FF;
+	Fri,  9 Oct 2026 14:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556226;
-	bh=XJfEhd0KkyRHUgly2c841rppLvNwB9ET0ZHj/h87uL8=;
+	s=korg; t=1791556229;
+	bh=tBP+ceITAe3+PI+TRFVBkMeuLVEPjjGUhr5wSbqfH6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPvsHA4ajRZ1GUxMofR8tvD09e/jZDER52DHEMb3Eb1tB3dPyq6S1OUKL82rxjva/
-	 sgxV0Jwa6hO17OBBmGM3uxxBY/fCx2gAIrzizqxPWmWPdxP4dNRv++gSG67F70deZJ
-	 WISjBHeRB4pCX7xPILp3GixRxeIl2z9uSUB32ca8=
+	b=ux3dFkgA5xkovzjdj6w+5nY17oYOkOCiLTo9u00TrSdBokjnMVpIv4RAhLsiDIN4x
+	 1ILv4zKeNIbnNO2RCBTP+v0BIywFjVQdIErSa+jJ+5xAmnne1320ZqAT9hK9KW5IxJ
+	 l9v8dcpC/1spoZHY+LhFlSbvAW1r2KeoI/tvxAz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 194/403] tty: tty_port: restore TTY_IO_ERROR on activation failure
-Date: Fri,  9 Oct 2026 16:09:15 +0200
-Message-ID: <20261009140956.666812506@linuxfoundation.org>
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 141/428] net: cap skb->queue_mapping when the tx queue is picked
+Date: Fri,  9 Oct 2026 16:07:58 +0200
+Message-ID: <20261009140949.273453211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +50,278 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 56964f6a31238fb41d5830bb42520c5b10ff7d8f upstream.
+[ Upstream commit ea4d4b5dddb5121e64f56fd8e0720bd8b447b63d ]
 
-Make sure to restore the TTY_IO_ERROR flag if activation fails to
-prevent I/O attempts on a port that is gone or powered down.
+skbedit can set skb->queue_mapping and raise the per-CPU skip_txqueue
+flag so __dev_queue_xmit() honours the mapping. __dev_queue_xmit()
+cleared the flag before sch_handle_egress() and only read it afterwards,
+so the flag was not confined to the xmit that set it: a nested xmit
+(mirred redirect or mirror, or a drop after skbedit) could set the flag
+and the outer xmit would consume it for an skb that never went through
+skbedit.
 
-This specifically avoids issues like kernel panic due to unclocked
-accesses or NULL-pointer dereferences when accessing powered down or
-deregistered ports when a TTY ioctl races with hangup and open.
+A forwarded packet still carries the ingress NIC's rx_queue + 1 in
+skb->queue_mapping, so the outer device then indexes its tx queue state
+with that stale value. Taprio's child array q->qdiscs[] is sized to the
+device's queue count, so taprio_enqueue() indexes past its allocation
+and dereferences the result as a struct Qdisc *.
 
-Note that the flag is set again in tty_port_close() but not restoring it
-on activation failure leaves a window where drivers fail to handle the
-ioctl-hangup race.
+We (ab)use the skb->nf_skip_egress which means "skip netfilter egress
+for this packet" to tag to "am I in tc egress?". Despite the overload
+I dont see it as a conflict since the marker is set only around the
+single sch_handle_egress() call and ingress path is guarded by
+tc_at_ingress.
+I will send a followup(net-next) patch once this hits net-next to
+rename the skb->nf_skip_egress bit/flag to skb->skip_egress
 
-Fixes: a9a37ec33a1b ("tty: tty_port: Move the IO_ERROR clear")
-Cc: stable <stable@kernel.org>  # 2.6.33
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260908084000.218528-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Arm the flag only from the egress classifier that can use it: raise
+skip_txqueue from tcf_skbedit_act() only when it runs inside
+sch_handle_egress(), thanks to skb->nf_skip_egress. An egress qdisc
+classifier runs in q->enqueue(), after the tx queue has been picked,
+so a mapping it sets cannot affect the current packet; arming the flag
+there only pollutes it for a later xmit. Then own the flag for the xmit
+frame the egress hook runs in: save the incoming value and clear it just
+before sch_handle_egress(), and restore it after the hook - on the
+consumed (drop) path, or, in the same call that reads it, on the
+surviving path. The save and the restores stay inside the
+egress_needed_key static branch, so a packet pays for them only when
+egress hooks are active (2f1e85b1aee4).
+
+Store the value netdev_cap_txqueue() selected back into skb->queue_mapping
+in netdev_tx_queue_mapping(), as netdev_core_pick_tx() already does, so
+the skip_txqueue path never hands a later reader on the xmit path a
+mapping the device cannot serve. A store made still later in the same
+frame, by a tc BPF program attached to a transmit qdisc, is outside this
+path and is not re-capped; a separate followup will resolve that path.
+
+netdev_xmit_skip_txqueue() returns the previous flag value so the
+save-and-clear is one call, and a no-op stub is provided when
+CONFIG_NET_EGRESS is disabled. skb->nf_skip_egress is compiled under
+CONFIG_NET_EGRESS rather than CONFIG_NETFILTER_SKIP_EGRESS, so
+skb_at_tc_egress() is valid whenever the egress path is built.
+
+A local user in a network namespace can redirect a packet from a device
+with more TX queues to one with fewer after setting a mapping valid only
+on the larger device. That reaches these reads and, under KASAN, faults
+with "slab-out-of-bounds in taprio_enqueue".
+
+Conditions to recreate the bug: the report's own trigger is a local user
+with CAP_NET_ADMIN in a network namespace, so no eBPF program is needed.
+With CONFIG_NET_SCH_TAPRIO=y, CONFIG_NET_ACT_SKBEDIT=y,
+CONFIG_NET_ACT_MIRRED=y, CONFIG_NET_CLS_MATCHALL=y,
+CONFIG_NET_SCH_PRIO=y and KASAN enabled, create qa (3 queues), qb
+(2 queues) and qc (1 queue) as dummy devices; put a taprio root on qb
+(num_tc 1, queues 2@0) and clsact on all three; then add an egress
+matchall filter on every device. On qa: "action skbedit queue_mapping 2
+pipe action mirred egress redirect dev qb". On qb: "action mirred egress
+mirror dev qc". On qc: "action skbedit queue_mapping 0 pipe". Send one
+packet out qa. qc's skbedit sets the flag while qb's outer xmit is in
+flight; without the fix qb consumes it and reads its two-entry taprio
+child array with the forwarded packet's stale mapping. A qc whose
+skbedit is instead installed in a transmit-qdisc classifier (a matchall
+filter on the qc root qdisc) reaches the same code path the same way
+without the fix.
+
+Testing: on a KASAN build with panic_on_warn=1 the unfixed kernel panics
+with "BUG: KASAN: slab-out-of-bounds in taprio_enqueue", a read 0 bytes
+past a 16-byte taprio_init() allocation, for the clsact-setter and the
+transmit-qdisc-classifier reproducers and for a clsact skbedit-then-tc-BPF
+store; the fixed kernel runs all three with no report, and the BPF store
+variant additionally shows the expected "selects TX queue" clamp notice
+from the write-back.
+
+Fixes: 2f1e85b1aee4 ("net: sched: use queue_mapping to pick tx queue")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Link: https://lore.kernel.org/netdev/CANn89iLwYx8nCVf0pCEk_MmEiyC6kQaMwCQT9WkQVeeNzNQHqQ@mail.gmail.com/
+Link: https://lore.kernel.org/netdev/179008581937.2160803.7117814290574262942@kernel.org/
+Link: https://lore.kernel.org/netdev/179033713973.2160803.4914570693994398206@kernel.org/
+Link: https://lore.kernel.org/netdev/20260925180407.63647514@kernel.org/
+Link: https://lore.kernel.org/netdev/CANn89i+k-mZKDQVtvws_MEXeuMTAdaCcOXFZE-RfhcGTu90sjA@mail.gmail.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/QDISC-9R8V.v4.20260928081529@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_port.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/netfilter_netdev.h |  2 +-
+ include/linux/rtnetlink.h        |  7 ++++++-
+ include/linux/skbuff.h           |  2 +-
+ include/net/sch_generic.h        |  9 +++++++++
+ net/core/dev.c                   | 31 ++++++++++++++++++++++++-------
+ net/sched/act_skbedit.c          |  5 ++---
+ 6 files changed, 43 insertions(+), 13 deletions(-)
 
---- a/drivers/tty/tty_port.c
-+++ b/drivers/tty/tty_port.c
-@@ -745,8 +745,10 @@ int tty_port_open(struct tty_port *port,
- 		clear_bit(TTY_IO_ERROR, &tty->flags);
- 		if (port->ops->activate) {
- 			int retval = port->ops->activate(port, tty);
--			if (retval)
-+			if (retval) {
-+				set_bit(TTY_IO_ERROR, &tty->flags);
- 				return retval;
-+			}
+diff --git a/include/linux/netfilter_netdev.h b/include/linux/netfilter_netdev.h
+index 3175073a66ba6..2a854a0bbd4ba 100644
+--- a/include/linux/netfilter_netdev.h
++++ b/include/linux/netfilter_netdev.h
+@@ -133,7 +133,7 @@ static inline struct sk_buff *nf_hook_egress(struct sk_buff *skb, int *rc,
+ 
+ static inline void nf_skip_egress(struct sk_buff *skb, bool skip)
+ {
+-#ifdef CONFIG_NETFILTER_SKIP_EGRESS
++#ifdef CONFIG_NET_EGRESS
+ 	skb->nf_skip_egress = skip;
+ #endif
+ }
+diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
+index ea39dd23a1976..077d2b486de04 100644
+--- a/include/linux/rtnetlink.h
++++ b/include/linux/rtnetlink.h
+@@ -178,7 +178,12 @@ void net_dec_ingress_queue(void);
+ #ifdef CONFIG_NET_EGRESS
+ void net_inc_egress_queue(void);
+ void net_dec_egress_queue(void);
+-void netdev_xmit_skip_txqueue(bool skip);
++bool netdev_xmit_skip_txqueue(bool skip);
++#else
++static inline bool netdev_xmit_skip_txqueue(bool skip)
++{
++	return false;
++}
+ #endif
+ 
+ void rtnetlink_init(void);
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index ce125cd244439..a9f4d2cba64fd 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1020,7 +1020,7 @@ struct sk_buff {
+ #ifdef CONFIG_NET_REDIRECT
+ 	__u8			from_ingress:1;
+ #endif
+-#ifdef CONFIG_NETFILTER_SKIP_EGRESS
++#ifdef CONFIG_NET_EGRESS
+ 	__u8			nf_skip_egress:1;
+ #endif
+ #ifdef CONFIG_SKB_DECRYPTED
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index f35bd06a6bad6..1acaadb3e2cf0 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -810,6 +810,15 @@ static inline bool skb_at_tc_ingress(const struct sk_buff *skb)
+ #endif
+ }
+ 
++static inline bool skb_at_tc_egress(const struct sk_buff *skb)
++{
++#ifdef CONFIG_NET_EGRESS
++	return skb->nf_skip_egress && !skb_at_tc_ingress(skb);
++#else
++	return false;
++#endif
++}
++
+ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
+ {
+ #ifdef CONFIG_NET_CLS_ACT
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 9d1f88f7fb5bf..6f75d1d1af32c 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4413,9 +4413,14 @@ EXPORT_SYMBOL(dev_loopback_xmit);
+ static struct netdev_queue *
+ netdev_tx_queue_mapping(struct net_device *dev, struct sk_buff *skb)
+ {
+-	int qm = skb_get_queue_mapping(skb);
++	int queue = skb_get_queue_mapping(skb);
++	int capped;
+ 
+-	return netdev_get_tx_queue(dev, netdev_cap_txqueue(dev, qm));
++	capped = netdev_cap_txqueue(dev, queue);
++	if (unlikely(capped != queue))
++		skb_set_queue_mapping(skb, capped);
++
++	return netdev_get_tx_queue(dev, capped);
+ }
+ 
+ #ifndef CONFIG_PREEMPT_RT
+@@ -4424,9 +4429,13 @@ static bool netdev_xmit_txqueue_skipped(void)
+ 	return __this_cpu_read(softnet_data.xmit.skip_txqueue);
+ }
+ 
+-void netdev_xmit_skip_txqueue(bool skip)
++bool netdev_xmit_skip_txqueue(bool skip)
+ {
++	bool prev = netdev_xmit_txqueue_skipped();
++
+ 	__this_cpu_write(softnet_data.xmit.skip_txqueue, skip);
++
++	return prev;
+ }
+ EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
+ 
+@@ -4436,9 +4445,13 @@ static bool netdev_xmit_txqueue_skipped(void)
+ 	return current->net_xmit.skip_txqueue;
+ }
+ 
+-void netdev_xmit_skip_txqueue(bool skip)
++bool netdev_xmit_skip_txqueue(bool skip)
+ {
++	bool prev = netdev_xmit_txqueue_skipped();
++
+ 	current->net_xmit.skip_txqueue = skip;
++
++	return prev;
+ }
+ EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
+ #endif
+@@ -4857,21 +4870,25 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	tcx_set_ingress(skb, false);
+ #ifdef CONFIG_NET_EGRESS
+ 	if (static_branch_unlikely(&egress_needed_key)) {
++		bool skip_txq;
++
+ 		if (nf_hook_egress_active()) {
+ 			skb = nf_hook_egress(skb, &rc, dev);
+ 			if (!skb)
+ 				goto out;
  		}
- 		tty_port_set_initialized(port, true);
+ 
+-		netdev_xmit_skip_txqueue(false);
++		skip_txq = netdev_xmit_skip_txqueue(false);
+ 
+ 		nf_skip_egress(skb, true);
+ 		skb = sch_handle_egress(skb, &rc, dev);
+-		if (!skb)
++		if (!skb) {
++			netdev_xmit_skip_txqueue(skip_txq);
+ 			goto out;
++		}
+ 		nf_skip_egress(skb, false);
+ 
+-		if (netdev_xmit_txqueue_skipped())
++		if (netdev_xmit_skip_txqueue(skip_txq))
+ 			txq = netdev_tx_queue_mapping(dev, skb);
  	}
+ #endif
+diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
+index bfec6b6684103..26258b353cdee 100644
+--- a/net/sched/act_skbedit.c
++++ b/net/sched/act_skbedit.c
+@@ -72,9 +72,8 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
+ 	}
+ 	if (params->flags & SKBEDIT_F_QUEUE_MAPPING &&
+ 	    skb->dev->real_num_tx_queues > params->queue_mapping) {
+-#ifdef CONFIG_NET_EGRESS
+-		netdev_xmit_skip_txqueue(true);
+-#endif
++		if (skb_at_tc_egress(skb))
++			netdev_xmit_skip_txqueue(true);
+ 		skb_set_queue_mapping(skb, tcf_skbedit_hash(params, skb));
+ 	}
+ 	if (params->flags & SKBEDIT_F_MARK) {
+-- 
+2.53.0
+
 
 
