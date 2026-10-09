@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C95444BCB0;
-	Fri,  9 Oct 2026 14:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDD24E0B6E;
+	Fri,  9 Oct 2026 14:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555357; cv=none; b=e4cuKsrawnQ0qFQNwFEiIzZkfy6kuuOvAwPE/n/3MivBLznCmawAS8Q429IVNLttKQ37W6Xsc/cybbGc26rK4QTU0YJ15KRDDR3ZE6B3ob8strC2xS9SA7P1GRTy8Bcu0ceGRHPEyWL2sp0nNbbrVLyx+NzShVjkp11v36+RQTY=
+	t=1791555360; cv=none; b=V+p+BujPdsTBWCTdKNrrJSTp9z7xmmBz2wbnmXpeK3SFVNtIcRihdyrCAiE32P0hAJGM1s5K2z4nfnuoIb8a6YKLWy0lcmWIecus2ia+qQpjrlBweW9WC+BrFFdRN1f0tEr5DuSVlA0gWmcFJ9p82wZDo60FOvQVQT/GLPoR8VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555357; c=relaxed/simple;
-	bh=OvP6eizAP74mFEBdanqRdapDkw0y9rrWfVAQXDD+UtA=;
+	s=arc-20240116; t=1791555360; c=relaxed/simple;
+	bh=iYIpk03vPFYqilmQrwHZZDIWmoXBmqO4m5PWRZ6QoKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IePOlVV3sLbD/s4eOksJTgntg8rpipuByaQwojTuXV6gUFZ/Sdbga4nxZ0VqCft7vih5ExfnBLAPnkjQXaFUnuWHtppiy5/TWkkO93n79kQDDdcBHfeeO9zr37+dP4/yVLHrNyN91oyhwWU2JExhOn5k2bPzrbyNuZtglq6EGCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY7JjZhT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=np1VIMscIlh5nM3jDVzNBtEv1I3PSH3RnQYEHvorsXe1rGQiPB+NZd08Ad12xtNxVw2oMMck84CKcPBbUpLxhV/ZCLPTW8b3V4tsrLlbK7VRUHsMQ8ibDr5ddV0AeMF2nZL/Z1YBcWonaw9gf1n25my6sOiKZ+e1d5lugq66aPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4yjxUD6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY7JjZhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EAE1F00893;
-	Fri,  9 Oct 2026 14:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4yjxUD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07A01F000FF;
+	Fri,  9 Oct 2026 14:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555353;
-	bh=x1I+n1gTuspZJKSKCabRmG4XgDg2WfchileUWDsB9QE=;
+	s=korg; t=1791555356;
+	bh=QsBft/ZoT+imrYClzs8h/2gXAgCYA/SMVhJuyGQ6oRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uY7JjZhT10uwJfs3SqkCNHp0TmPlUaYnqqzQgCqBD8zXyC2sgh/7qfpAiLZA23CHi
-	 Ib9N+0mVxUPknapJOfsIXw5HuibcPL8uKieNTDqILFh9sPmGelMcN6/G4wBUMGcbyl
-	 XN3/1Yq7MwV1gGxELu/VgzJmlo6wcMVFD8Qp/qeA=
+	b=j4yjxUD645WeRGjDlHhSgMVI6eBsoNtwFXA20LIQekVChOLzhIuClAKTPCOhJUVDN
+	 m4Xjeiu2w+q3Iisj08gyeR56GyYHJcMFnBMyf0xv7XTmEyiZxEdhEd1rr60PGMPzNc
+	 u8IaVXpncxQ/+gaRW+b80XUCI07U/CpqxBU6CHr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
-	Jiakai Xu <jiakaiPeanut@gmail.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/403] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
-Date: Fri,  9 Oct 2026 16:06:09 +0200
-Message-ID: <20261009140952.316959691@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.18 022/403] HID: bpf: cast size to ssize_t when checking hid_bpf_hw_request
+Date: Fri,  9 Oct 2026 16:06:23 +0200
+Message-ID: <20261009140952.635479963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -53,68 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiakai Xu <jiakaipeanut@gmail.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 11366ead4f1412befea660777576c89a1bac0c1e ]
+commit 3afefbfe55c2a8a0c4bdf6f4cc1f773da120027c upstream.
 
-Add a null pointer check for imsic_state before dereferencing it in
-kvm_riscv_aia_imsic_has_attr(). While the function checks that the
-vcpu exists, it doesn't verify that the vcpu's imsic_state has been
-initialized, leading to a null pointer dereference when accessed.
+As reported by Sashiko:
+If a transport driver encounters a hardware error and returns a negative
+error code such as -EPIPE, ret is implicitly promoted to size_t when
+compared against size. This causes the negative error code to evaluate
+as a large positive number, making the (ret > size) condition true.
 
-This issue was discovered during fuzzing of RISC-V KVM code. The
-crash occurs when userspace calls KVM_HAS_DEVICE_ATTR ioctl on an
-AIA IMSIC device before the IMSIC state has been fully initialized
-for a vcpu.
+This silently converts the hardware error into a success return value
+and copies the unmodified buffer back, which could leave BPF programs
+operating on uninitialized or stale data.
 
-The crash manifests as:
-  Unable to handle kernel paging request at virtual address
-  dfffffff00000001
-  ...
-  epc : kvm_riscv_aia_imsic_has_attr+0x464/0x50e
-  arch/riscv/kvm/aia_imsic.c:998
-  ...
-  kvm_riscv_aia_imsic_has_attr+0x464/0x50e arch/riscv/kvm/aia_imsic.c:998
-  aia_has_attr+0x128/0x2bc arch/riscv/kvm/aia_device.c:471
-  kvm_device_ioctl_attr virt/kvm/kvm_main.c:4722 [inline]
-  kvm_device_ioctl+0x296/0x374 virt/kvm/kvm_main.c:4739
-  ...
+Fix this by casting size into ssize_t to return the actual negative
+error code.
 
-The fix adds a check to return -ENODEV if imsic_state is NULL, which
-is consistent with other error handling in the function and prevents
-the null pointer dereference.
-
-Fixes: 5463091a51cf ("RISC-V: KVM: Expose IMSIC registers as attributes of AIA irqchip")
-Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
-Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260125143344.2515451-1-xujiakai2025@iscas.ac.cn
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/20260904130354.A79471F00A3D@smtp.kernel.org/
+Fixes: 2b658c1c442e ("HID: bpf: prevent buffer overflow in hid_hw_request")
+Cc: stable@vger.kernel.org
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/aia_imsic.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hid/bpf/hid_bpf_dispatch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
-index a357ea73516f6..b4fee98402179 100644
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -1002,8 +1002,11 @@ int kvm_riscv_aia_imsic_has_attr(struct kvm *kvm, unsigned long type)
- 	if (!vcpu)
- 		return -ENODEV;
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -456,7 +456,7 @@ hid_bpf_hw_request(struct hid_bpf_ctx *c
+ 					      (u64)(long)ctx,
+ 					      true); /* prevent infinite recursions */
  
--	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 	imsic = vcpu->arch.aia_context.imsic_state;
-+	if (!imsic)
-+		return -ENODEV;
-+
-+	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 	return imsic_mrif_isel_check(imsic->nr_eix, isel);
- }
- 
--- 
-2.53.0
-
+-	if (ret > size)
++	if (ret > (ssize_t)size)
+ 		ret = size;
+ 	if (ret > 0)
+ 		memcpy(buf, dma_data, ret);
 
 
