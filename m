@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F423B3B19DE;
-	Fri,  9 Oct 2026 14:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED013B582F;
+	Fri,  9 Oct 2026 14:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556487; cv=none; b=KDm1F6+jV4JudqEal1WxhJTF/CJDJxn0nHCqme8OIig662zJQ+nkWhR/9NjmBtm17BzXjD0pi0mAbZfHIwEt+TQFiXSHPJBu6IYzvliFEfEI2sM6tHvU1HYo3JMam4RC0OPAd5BsyPzKX1nZpntZ8tkeTR/Z6jZps0I2m7RsI/g=
+	t=1791556489; cv=none; b=MFf2/xmyzLC1XAlLMh2JFl9G89mtqLQdIzILDsGZySr8szAmcqaSTRcc9qHKHcEEIrCCxVziuttS2o+TsWAzWCutkjAg4/Gqby+m5UN2HmVJAWXzFU22QFkcJ5K0Ixpyov4kDKGIAgWSb0OA52J6hjH1JNjM6EiSYpQcvmWTpZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556487; c=relaxed/simple;
-	bh=Dn6OCAhOBnBXoxMjKh7y60Hb0mQ/WvjSLg2G3cUoCUg=;
+	s=arc-20240116; t=1791556489; c=relaxed/simple;
+	bh=dlK13NHmJ3MVEr59YO2ppUF5z69yJAqy2rTz1+GLux8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgoNIKAVy6vyYtLxqx4JISKoD0cUfW9snnHrxTfdJ36uJAafVE3fVLE/xPHWEmf8lqaSVcPtkRrIy+GNmMFUYlfG5wI/czBUp9EL1OA4FeeLihqcCP4RLcJB6tBBGk5XJRK5lr64g9rtOH0yN+cca/eKNOoD5ZD+T4NrrgL0x9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO7SIMHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWFsamuPVDA7jWF4ZVNFXQINSSjARLrdwZKaLOdNfpbV1pdksuZXm3qzOEy68zTPSEwBfq6AJhCdWAgPo6q2+ws1/cC2VBbO4Og7688m/Qrx0ceTclHw+LVrQjQAYDxVVMaT9GBFxzbD2tuyrZ/QAwpF+7A1XepE02WtYc7lG2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+LKZuSa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO7SIMHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174921F0089A;
-	Fri,  9 Oct 2026 14:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+LKZuSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90281F00898;
+	Fri,  9 Oct 2026 14:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556485;
-	bh=XYqWCSPDSPoWO9phEFiMX49OSajHAORj2Mspmklb+nM=;
+	s=korg; t=1791556488;
+	bh=MY0lsXIqzcyrPHO5DDOUs4bnnah+zRy81InQKh/y44E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lO7SIMHj9iAyWPArx0aRmUFFK9zvkk+i7/obDZNKCacRD2utlVYfcNdkP61VVKHU5
-	 mr7ywAzBMbfwZIVkm/BUjpov2ZIz5VjmAMmqZ/Kb4x+jQxKbYUtwyfomgWFP91rznt
-	 nx6T6oz/8lu24lGUQEvg7O78j2Bnc1MTBH5BImQM=
+	b=y+LKZuSa9j+M5HCxL8fkiHaVmc5FzlSdplEhIbA72r3/q9+ycZtChEwr740r4+3na
+	 AWSXR4KjlzcZj0hdvqjsPnfBcIuD6qqdQjmZ8NPMyBhM2Y+TkA4uxHalSI3pLRpvAv
+	 cm1LmEDm06XJondqEX88KhvYbHCt9C8juHE1eaus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theo Andersen Carton <andersen.theo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 189/428] drm/amdgpu: skip the noirq suspend reset for a switcheroo-parked GPU
-Date: Fri,  9 Oct 2026 16:08:46 +0200
-Message-ID: <20261009140950.293033898@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 243/403] net: extend IPv6 exthdr detection of tunneled packets
+Date: Fri,  9 Oct 2026 16:10:04 +0200
+Message-ID: <20261009140957.849680715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +47,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Theo Andersen Carton <andersen.theo@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit eadb85cca111152bd334b861fb53747ab851d13a upstream.
+[ Upstream commit 5f0764cb1c81a9712bce605d38efe6d844a70b29 ]
 
-amdgpu_pmops_suspend_noirq() resets the ASIC unconditionally. When the GPU
-has been parked by vga_switcheroo it has neither power nor a PCIe link, so
-the reset cannot reach it: pci_set_power_state() reports the device as
-inaccessible and amdgpu_asic_reset() returns -EINVAL. A failure there
-aborts the entire noirq suspend phase, and with it the system suspend, so
-the machine cannot sleep at all while the GPU is switched off.
+Commit c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM
+GSO fallback") split skb_gso_has_extension_hdr() into mutually exclusive
+branches on skb->encapsulation. This did not yet address all paths:
 
-amdgpu_device_prepare(), amdgpu_device_suspend() and amdgpu_device_resume()
-all bail out early on DRM_SWITCH_POWER_OFF. This callback was added later,
-for an unrelated reason, and did not inherit the check. nouveau guards
-every one of its PM callbacks the same way.
+1. With skb->encapsulation set, the outer header is not checked. IPv6
+   tunnels such as ip6_gre and ip6_tunnel add an outer Destination
+   Options header by default (encap_limit). Their GSO packets skip
+   software GSO, then skb_csum_hwoffload_help() sees the outer extension
+   header and calls skb_checksum_help() on the GSO skb, which warns and
+   drops it.
 
-Bail out the same way here. On a single-GPU system switch_power_state is
-never DRM_SWITCH_POWER_OFF, so this is a no-op there.
+2. Tunnels over IPv6 without an outer transport header, such as
+   ip6_tunnel, leave skb->transport_header at the inner transport
+   header. skb_network_header_len() then spans the outer IPv6, tunnel
+   and inner IP headers, a false positive.
 
-Found on a MacBookPro11,5, where the Radeon is powered down through
-apple-gmux so that the internal panel can be driven by the iGPU instead.
-Every suspend failed in amdgpu_pmops_suspend_noirq() while the card was
-off; with this check a full S3 cycle completes.
+3. UDP tunnels without an inner network header, such as SCTP-in-UDP or
+   PSP, have no inner IPv6 header to check. Decide on the outer header
+   alone.
 
-Fixes: 9e051720f9d3 ("drm/amdgpu: Ensure HDA function is suspended before ASIC reset")
-Signed-off-by: Theo Andersen Carton <andersen.theo@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 539d0558638a6dcc066f1cf592b6b9a52adc8ea4)
+4. Directly dereferencing inner_ip_hdr(skb)->version without
+   skb_header_pointer() is unsafe.
+
+Instead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if
+set, on the inner IPv6 header. Read the headers with skb_header_pointer().
+Keep the skb_network_header_len() check when !skb->encapsulation to also
+catch encapsulated packets without skb->encapsulation (e.g., virtio).
+
+Use the same helper in skb_csum_hwoffload_help(). Its open coded test
+has the false positive of (2) and ignores the inner header.
+
+Background: checksum offload of tunneled packets invariants:
+
+Non-GSO skb:
+- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes
+  the outer checksum in software and the device offloads only the inner L4
+  checksum.
+- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,
+  Remote Checksum Offload), the device offloads the outer UDP or GRE
+  checksum instead.
+
+GSO skb:
+- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM
+  computes both inner and outer checksums per segment.
+  The outer checksum is seeded with only the pseudo-header checksum.
+
+A NETIF_F_IPV6_CSUM device must parse through the outer headers to
+reach the inner ones.
+
+Fixes: c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260926140506.2335137-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: kept the !ipv6_has_hopopt_jumbo() exemptions; this tree still inserts the BIG TCP HBH jumbo header ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/dev.c | 49 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2653,6 +2653,14 @@ static int amdgpu_pmops_suspend_noirq(st
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
- 	int r;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 22b90820d2c7d..10e02845fea44 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3756,20 +3756,36 @@ static netdev_features_t dflt_features_check(struct sk_buff *skb,
+ 	return vlan_features_check(skb, features);
+ }
  
-+	/*
-+	 * A GPU parked by vga_switcheroo has no power and no PCIe link, so the
-+	 * ASIC reset below would fail and abort the whole noirq suspend phase.
-+	 * Bail out like amdgpu_device_prepare/suspend/resume() already do.
-+	 */
-+	if (drm_dev->switch_power_state == DRM_SWITCH_POWER_OFF)
-+		return 0;
+-static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
+-{
+-	if (!skb->encapsulation)
+-		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
+-			skb_transport_header_was_set(skb) &&
+-			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
+-	else
+-		return (!skb_inner_network_header_was_set(skb) ||
+-			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			   inner_ip_hdr(skb)->version == 6)) &&
+-			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
++static bool __skb_has_ipv6_ext_hdr(const struct sk_buff *skb, int nhoff)
++{
++	const struct ipv6hdr *ip6h;
++	struct ipv6hdr _ip6h;
 +
- 	if (amdgpu_acpi_should_gpu_reset(adev)) {
- 		amdgpu_device_lock_reset_domain(adev->reset_domain);
- 		r = amdgpu_asic_reset(adev);
++	ip6h = skb_header_pointer(skb, nhoff, sizeof(_ip6h), &_ip6h);
++	return ip6h && ip6h->version == 6 && ipv6_ext_hdr(ip6h->nexthdr);
++}
++
++static bool skb_has_ipv6_extension_hdr(const struct sk_buff *skb)
++{
++	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6)) {
++		if (__skb_has_ipv6_ext_hdr(skb, skb_network_offset(skb)))
++			return true;
++
++		/* Catch tunnels without skb->encapsulation (e.g., virtio). */
++		if (!skb->encapsulation &&
++		    skb_transport_header_was_set(skb) &&
++		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
++			return true;
++	}
++
++	/* Tunnels without an inner network header, such as SCTP-in-UDP or
++	 * PSP, have no inner IP header and thus no inner extension header.
++	 */
++	if (skb->encapsulation && skb_inner_network_header_was_set(skb) &&
++	    __skb_has_ipv6_ext_hdr(skb, skb_inner_network_offset(skb)))
++		return true;
++
++	return false;
+ }
+ 
+ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+@@ -3824,7 +3840,7 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 	 * so neither does TSO that depends on it.
+ 	 */
+ 	if (features & NETIF_F_IPV6_CSUM &&
+-	    skb_gso_has_extension_hdr(skb) &&
++	    skb_has_ipv6_extension_hdr(skb) &&
+ 	    !ipv6_has_hopopt_jumbo(skb))
+ 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
+ 
+@@ -3927,8 +3943,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		return 0;
+ 
+ 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
+-		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
+-		    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++		if (skb_has_ipv6_extension_hdr(skb) &&
+ 		    !ipv6_has_hopopt_jumbo(skb))
+ 			goto sw_checksum;
+ 
+-- 
+2.53.0
+
 
 
