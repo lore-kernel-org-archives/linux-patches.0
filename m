@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2720A4DBD62;
-	Fri,  9 Oct 2026 14:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E9146AF2F;
+	Fri,  9 Oct 2026 14:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555433; cv=none; b=AwONDzSg5Dc5unitq5BZJD5BPwEgqDa2g+ZeVmWsflS6DS6DTYhfFOlMLjj8yGTDRXrb5s//hzELiBt6SbLY6KnoA4+C3gYGX1flSkAdHOIToJllj0fY0TFSRjxh7KqAurzTAkvCvNpnuX5Q7hTMFh9rcXnW/OpJrhqMRbuws5I=
+	t=1791555436; cv=none; b=EMxoE16gEh4tLNw1JEeNJbx5Lz4aMICS1x8y9eDzfQX6ycIzBOjlqB8j47U63GFdJ8yZGL49ytAqJ1kLiZKdJS6scpyCNOhz8Mk/RooapTPWtovwhd3wntOp9BlSpdTub0LgVZZ47/UTFUvYgC2xKp+OSX09kzW86kpJT8WGIa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555433; c=relaxed/simple;
-	bh=XLQ7+1UeWZUkQCqbewbbWvKmQdfyvv/R3m8RG5a5gC4=;
+	s=arc-20240116; t=1791555436; c=relaxed/simple;
+	bh=eVR9Cl4gVFqPneuhchYNYLfsKCI4prHLqp1POIT/B/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h4rmMcLdutq3eDCphHgKLGPGApmSyRV8Z+spcV4+Td+N5vk+7G3raQrH/ybjRIAS5js55ZUl4gzB7M1WVH2UU0dzxz25zd7EKee395koH7dNH43tGtAMOCR9eJkn4vDpjE9fPIY7OK9ENLiMO/1P1tm4PBel6CACYXVIec5PMXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWkgXo/p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYTqWfvwnmrZ03O3t4HQGxY3uzdo/sCDNV32It2en1OpLfQIpA6YSeQP6V0XJS6SfLeV+71o9CL7XLukaTe/ukMsZbZJKgbKZ2w5t4rac2HDoH9S4sVr3Z2/Jn9aQNAI9qupVowJFsLQUhxoL30vefeX5sPdrmDoV4ictGQOLiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kV78S7d6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWkgXo/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C81F000FF;
-	Fri,  9 Oct 2026 14:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kV78S7d6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD4C1F00893;
+	Fri,  9 Oct 2026 14:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555429;
-	bh=XHCF5aJzyAwdcd+HQaEauhibvj4WNvZCkeEXNzy0efI=;
+	s=korg; t=1791555432;
+	bh=5Q83MtqT42GL90HpLHAWNA9l/Gh3h8qokBY9nKvHsdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MWkgXo/p7MFgU8TKZ+vfiujVDoMjY/k/rID+mZam9ZHSscQOXOsDRaNeMigPyd/A3
-	 ln45u9Ig1uv91ZhqdUY4WOYl3QyrOCsRCgzhD+OFaV1j9l8ujO39wn418BCAwcFD2l
-	 ce4+uS8b2ZYw/gCofvgOkHkl1lTDjVdiqus9nbjc=
+	b=kV78S7d6VUCHjHC28AapimZfJ9UfDnDhkeqgzgIhF++G6/JTjUl4rx1rX16peuoWk
+	 SblxcpPVRwfoc9oGsaBYCp2Na5TbyKM+uz2f2gVlcFHWWgmN5wYoGUGOVJewoRNAdu
+	 NqdkM8PeWohl6Ot287fwUEUpNP5whiwpqeDQHVGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+be8fa7ea6f77fdce@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 054/403] ALSA: line6: reject oversized playback packets
-Date: Fri,  9 Oct 2026 16:06:55 +0200
-Message-ID: <20261009140953.364020730@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 055/403] random: vDSO: avoid call to memset() when zeroing reserved parameter
+Date: Fri,  9 Oct 2026 16:06:56 +0200
+Message-ID: <20261009140953.387581755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,83 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
+commit eb13a1ff271b0d180687eebb30611b0b276d5193 upstream.
 
-Each playback URB is handed a slice of out.buffer that is exactly
-LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
-endpoint, but the number of bytes written into that slice is never
-compared against it.
+After a recent change in LLVM [1], builds with the random vDSO
+implementation, such as PowerPC and RISC-V, fail when checking the vDSO:
 
-submit_audio_out_urb() takes the frame count from prev_fsize, which
-audio_in_callback() derived from the *IN* endpoint's received packet
-length, and rescales it with the playback frame size; when prev_fsize is
-still zero it synthesizes a length from the sample rate instead.  On a
-device declaring a large IN wMaxPacketSize and a small OUT
-wMaxPacketSize, the resulting memcpy(), or the memset() when the
-playback stream is idle, runs past its slice and, as the reproducer
-below shows, beyond the allocation.
+  arch/powerpc/kernel/vdso/vdso32.so.dbg: dynamic relocations are not supported
+  arch/riscv/kernel/vdso/vdso.so.dbg: dynamic relocations are not supported
 
-usb_submit_urb() is not a backstop.  max_packet_size_out comes from
-usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
-while USB core validates a high-speed isochronous length against that
-base scaled by usb_endpoint_maxp_mult().  A length of up to three times
-the allocated slice is therefore accepted, and even a rejected URB is
-only rejected after the write.
+memset() is now generated when zeroing params->reserved for some builds
+because LLVM has an optimization (now run in more instances) that can
+recognize at compile time when it is assigning a static value to a
+contiguous area of memory and turn that into a call to memset(). Both
+clang and GCC assume memset() is always available [2].
 
-Reject a packet that does not fit the slice the driver allocated for it.
-Clamping it instead would silently shorten the capture-derived rate
-feedback and desynchronize the two streams.
+Clang has an internal fiddly hook, -max-store-memset, which we can set
+to a high number, to disable generating out of line memset calls [3].
+Similarly, GCC has -finline-stringops=memset to do the same [4], should
+this issue ever hit future version of GCC. While these options wouldn't
+make sense for normal kernel code, it is fine for the extremely limited
+and intentionally compact vDSO code.
 
-  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
-  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
-  Workqueue: events line6_startup_work
-  Call Trace:
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   submit_audio_out_urb (sound/usb/line6/playback.c:229)
-   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
-   line6_stream_start (sound/usb/line6/pcm.c:194)
-   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
-   line6_startup_work (sound/usb/line6/driver.c:728)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  The buggy address belongs to the object at ffff888100bbd400
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes inside of
-   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
-
-Cc: stable@vger.kernel.org
-Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
-Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/llvm/llvm-project/commit/90cebef1411617fc3eedd359bdf00cb44b1c2439 [1]
+Link: https://gcc.gnu.org/onlinedocs/gcc-16.2.0/gcc/Standards.html#index-ffreestanding [2]
+Link: https://github.com/llvm/llvm-project/commit/b28eeb28bea39148738dc375e8a97072a1907e64 [3]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-finline-stringops [4]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2183
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+[nathan: Backport to 6.18]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/playback.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/kernel/vdso/Makefile   | 2 +-
+ arch/loongarch/vdso/Makefile      | 1 +
+ arch/powerpc/kernel/vdso/Makefile | 1 +
+ arch/riscv/kernel/vdso/Makefile   | 1 +
+ arch/s390/kernel/vdso64/Makefile  | 1 +
+ arch/x86/entry/vdso/Makefile      | 1 +
+ init/Kconfig                      | 5 +++++
+ 7 files changed, 11 insertions(+), 1 deletion(-)
 
---- a/sound/usb/line6/playback.c
-+++ b/sound/usb/line6/playback.c
-@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
+diff --git a/arch/arm64/kernel/vdso/Makefile b/arch/arm64/kernel/vdso/Makefile
+index 7dec05dd33b70..f6619e1cb2ce7 100644
+--- a/arch/arm64/kernel/vdso/Makefile
++++ b/arch/arm64/kernel/vdso/Makefile
+@@ -41,7 +41,7 @@ CC_FLAGS_REMOVE_VDSO := $(CC_FLAGS_FTRACE) -Os $(CC_FLAGS_SCS) \
+ 			$(CC_FLAGS_LTO) $(CC_FLAGS_CFI) \
+ 			-Wmissing-prototypes -Wmissing-declarations
  
- 		fsize *= bytes_per_frame;
+-CC_FLAGS_ADD_VDSO := -O2 -mcmodel=tiny -fasynchronous-unwind-tables
++CC_FLAGS_ADD_VDSO := -O2 -mcmodel=tiny -fasynchronous-unwind-tables $(CONFIG_CC_OPT_INLINE_MEMSET)
  
-+		if (fsize > line6pcm->max_packet_size_out) {
-+			dev_err(line6pcm->line6->ifcdev,
-+				"playback packet too large: %d > %d\n",
-+				fsize, line6pcm->max_packet_size_out);
-+			return -EMSGSIZE;
-+		}
+ CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_REMOVE_VDSO)
+ CFLAGS_REMOVE_vgetrandom.o = $(CC_FLAGS_REMOVE_VDSO)
+diff --git a/arch/loongarch/vdso/Makefile b/arch/loongarch/vdso/Makefile
+index f4d076ce18436..5db5a650ed446 100644
+--- a/arch/loongarch/vdso/Makefile
++++ b/arch/loongarch/vdso/Makefile
+@@ -13,6 +13,7 @@ ccflags-vdso := \
+ 	$(filter -E%,$(KBUILD_CFLAGS)) \
+ 	$(filter -march=%,$(KBUILD_CFLAGS)) \
+ 	$(filter -m%-float,$(KBUILD_CFLAGS)) \
++	$(CONFIG_CC_OPT_INLINE_MEMSET) \
+ 	$(CLANG_FLAGS) \
+ 	-D__VDSO__
+ 
+diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
+index 8834dfe9d7279..4d465d2024d98 100644
+--- a/arch/powerpc/kernel/vdso/Makefile
++++ b/arch/powerpc/kernel/vdso/Makefile
+@@ -43,6 +43,7 @@ ccflags-y := -fno-common -fno-builtin -DBUILD_VDSO
+ ccflags-y += $(DISABLE_LATENT_ENTROPY_PLUGIN)
+ ccflags-y += $(call cc-option, -fno-stack-protector)
+ ccflags-y += -DDISABLE_BRANCH_PROFILING
++ccflags-y += $(CONFIG_CC_OPT_INLINE_MEMSET)
+ ccflags-y += -ffreestanding -fasynchronous-unwind-tables
+ ccflags-remove-y := $(CC_FLAGS_FTRACE)
+ ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack $(CLANG_FLAGS)
+diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
+index 340bbd945591e..e67d9bae96de4 100644
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -27,6 +27,7 @@ endif
+ ccflags-y := -fno-stack-protector
+ ccflags-y += -DDISABLE_BRANCH_PROFILING
+ ccflags-y += -fno-builtin
++ccflags-y += $(CONFIG_CC_OPT_INLINE_MEMSET)
+ 
+ ifneq ($(c-gettimeofday-y),)
+   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
+diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
+index d8f0df7428096..b6b6d1d62c613 100644
+--- a/arch/s390/kernel/vdso64/Makefile
++++ b/arch/s390/kernel/vdso64/Makefile
+@@ -32,6 +32,7 @@ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_
+ KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
++KBUILD_CFLAGS_64 += $(CONFIG_CC_OPT_INLINE_MEMSET)
+ ldflags-y := -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
+ 
+diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
+index f247f5f5cb44d..5836d77aa974b 100644
+--- a/arch/x86/entry/vdso/Makefile
++++ b/arch/x86/entry/vdso/Makefile
+@@ -54,6 +54,7 @@ $(obj)/vdso-image-%.c: $(obj)/vdso%.so.dbg $(obj)/vdso%.so $(obj)/vdso2c FORCE
+ CFL := $(PROFILING) -mcmodel=small -fPIC -O2 -fasynchronous-unwind-tables -m64 \
+        $(filter -g%,$(KBUILD_CFLAGS)) -fno-stack-protector \
+        -fno-omit-frame-pointer -foptimize-sibling-calls \
++       $(CONFIG_CC_OPT_INLINE_MEMSET) \
+        -DDISABLE_BRANCH_PROFILING -DBUILD_VDSO
+ 
+ ifdef CONFIG_MITIGATION_RETPOLINE
+diff --git a/init/Kconfig b/init/Kconfig
+index 6ce315af48c15..1858e55bfd7cd 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -142,6 +142,11 @@ config CC_HAS_COUNTED_BY
+ config CC_HAS_MULTIDIMENSIONAL_NONSTRING
+ 	def_bool $(success,echo 'char tag[][4] __attribute__((__nonstring__)) = { };' | $(CC) $(CLANG_FLAGS) -x c - -c -o /dev/null -Werror)
+ 
++config CC_OPT_INLINE_MEMSET
++	string
++	default "-finline-stringops=memset" if $(cc-option,-finline-stringops=memset)
++	default "-mllvm -max-store-memset=4294967294" if $(cc-option,-mllvm -max-store-memset=4294967294)
 +
- 		fout->offset = urb_size;
- 		fout->length = fsize;
- 		urb_size += fsize;
+ config LD_CAN_USE_KEEP_IN_OVERLAY
+ 	# ld.lld prior to 21.0.0 did not support KEEP within an overlay description
+ 	# https://github.com/llvm/llvm-project/pull/130661
+-- 
+2.53.0
+
 
 
