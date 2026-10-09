@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FD14E5322;
-	Fri,  9 Oct 2026 14:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951974E50A5;
+	Fri,  9 Oct 2026 14:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556189; cv=none; b=BUWYavci/WCUjywb2hnFpAK57LVyHVTzluW1W6CMejjO6tLJvvED1j+UlYeFyfg30u5XnL7TDxxp3KDE2a3ihK6OUKL6CTNm8+pwqcmNzDaLBZLB8CC5kffiaimD8LKXEUIV/MwMQzyaAYpxEwYVTdLxqGZJJTfbRNX+2fsl7yE=
+	t=1791556192; cv=none; b=OmMw9xP5fWomAwnRoF8DbSTo3RoepJSh46qX0CP1gY5U0STKCh0Av0LLnXlI2b2sBhXPhvPHEkrtDix3pMuG2BJz0Mw2m3doqtrN/YyvXCWEVAkFnKbJ644dczGMrI/Oxo6ixYFIEMzIjD0R+PYOplKl5S8E3oNE1MU1wnAHkM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556189; c=relaxed/simple;
-	bh=ebcrYSztG4zZJ+gQWwUhBP8//xX8GiC/gT5/gzk5gho=;
+	s=arc-20240116; t=1791556192; c=relaxed/simple;
+	bh=RThqodW+WQ3OWjPwJejN4Ai2UCVNO9Cu6WEzYm6PAS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgl6yVatxcMcAXSKfN0Z02fjWetTXQ2HTclGy6c4mAWRooEclaq1tGOxtZTzoCCjPQ5tMUPNt9DdsM+MTbSwKhvPlEkZCcamNDuTFjJlP2w0k1k+1+LZ5gQQxE0eLjiCBDP0ITfvJOEDZ9dpzgjCkNI0AEEVyuY1ziGBKG6sIrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNUsnHNM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VZHB/ffF8x7U0TtfKV0xcBDqZNUjXoBDcyRhANNzYvSf6KwFSDIcRq1tUEVi5E2P1o62zsUfqeDLLxPUyLAW1wQcr2IDbpSH6k4ABaWDJd4C2qoYEReeKHwM/w9FQKkz1/R6zuGZs9OfKkJy0D4Ank5MjZho6OWiJX/yxS5lGic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOImE98Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNUsnHNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA781F00893;
-	Fri,  9 Oct 2026 14:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOImE98Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747911F000FF;
+	Fri,  9 Oct 2026 14:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556187;
-	bh=O1JB8glq2LKF+4D4yi6lRuj/sd8Qcivqm3tXNI95sLs=;
+	s=korg; t=1791556190;
+	bh=3O2jY3djD5eSweInJDtsCDorFzAoKSKVzygRUNs19SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DNUsnHNMoGodYPDuiA8MBJuD2jRznHbyzelQTQ416M1o6hGXkxyRPPbKyfe2WcxkA
-	 2lSNfVCPm5zvx+9LMiRJD7zH4uOdNrRyR1oGi42K25jRJPZ44BgqTO5HG33Vs5z+Dd
-	 PwsDCJv1Qo1wqHg0PbtWZr3Cb82kv1JrhXNZbCSo=
+	b=cOImE98ZgR8pNlAHluZOPSMNRYNKNAOvSLN65EGFPWDxBr8K9MJec0Xv3QnGS88om
+	 0GpO+c61HMfRfnTlVEfKs2s1g9RUMlyNBPB23wyXZ9d4n0iKLQIJ95nTrpLCnTh4GU
+	 OqRgffRX0K+2TWkvfRvVPIhhfduUG/axPkEPNDu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sicong Huang <congei42@163.com>,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.18 188/403] usb: cdns3: fix use-after-free in cdns3_gadget_exit()
-Date: Fri,  9 Oct 2026 16:09:09 +0200
-Message-ID: <20261009140956.520888261@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 104/428] nvme: add nvme_get_ns_head()
+Date: Fri,  9 Oct 2026 16:07:21 +0200
+Message-ID: <20261009140948.497348721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +49,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: John Garry <john.garry@linux.dev>
 
-commit ebe9b68c396792c15d0ac690d592e449e74ed804 upstream.
+[ Upstream commit a11e0a4cb4189c468683a2f384f0c266c26a497f ]
 
-cdns3_gadget_start() arms two works on system_freezable_wq:
-pending_status_wq for the deferred ep0 status stage and aligned_buf_wq
-for realigned request buffers. Both handlers use the cdns3_device the
-works are embedded in, and cdns3_pending_setup_status_handler() also
-calls the ep0 request completion.
+Add a wrapper for getting a reference to the NS head.
 
-cdns3_gadget_exit() does not wait for these works. It frees all
-endpoints and aligned buffers and drops the last reference to the
-gadget device, which frees priv_dev, so a work queued before the exit
-can run after the free.
+This would be used in scenarios when we know that getting a reference
+would not fail.
 
-Fix this by waiting for both works after the gadget driver is unbound
-and the IRQ is freed, when no new work can be queued, and before the
-endpoints and buffers are released.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Reported-by: Sicong Huang <congei42@163.com>
-Closes: https://lore.kernel.org/linux-usb/7f5719b.8700.18f67b324d3.Coremail.congei42@163.com/
-Suggested-by: Sicong Huang <congei42@163.com>
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260909095655.694527-1-fanwu01@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 6b8a5367e9e7 ("nvme: work around -Wformat-security warning")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/host/core.c      |    5 +++++
+ drivers/nvme/host/multipath.c |    2 +-
+ drivers/nvme/host/nvme.h      |    1 +
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -3270,6 +3270,10 @@ static void cdns3_gadget_exit(struct cdn
- 	usb_del_gadget(&priv_dev->gadget);
- 	devm_free_irq(cdns->dev, cdns->dev_irq, priv_dev);
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -691,6 +691,11 @@ static void nvme_free_ns_head(struct kre
+ 	kfree(head);
+ }
  
-+	/* The works can still be queued until the IRQ is freed. */
-+	cancel_work_sync(&priv_dev->pending_status_wq);
-+	cancel_work_sync(&priv_dev->aligned_buf_wq);
++void nvme_get_ns_head(struct nvme_ns_head *head)
++{
++	kref_get(&head->ref);
++}
 +
- 	cdns3_free_all_eps(priv_dev);
+ bool nvme_tryget_ns_head(struct nvme_ns_head *head)
+ {
+ 	return kref_get_unless_zero(&head->ref);
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -777,7 +777,7 @@ int nvme_mpath_alloc_disk(struct nvme_ct
+ 	set_bit(GD_SUPPRESS_PART_SCAN, &head->disk->state);
+ 	sprintf(head->disk->disk_name, "nvme%dn%d",
+ 			ctrl->subsys->instance, head->instance);
+-	nvme_tryget_ns_head(head);
++	nvme_get_ns_head(head);
+ 	return 0;
+ }
  
- 	while (!list_empty(&priv_dev->aligned_buf_list)) {
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -1005,6 +1005,7 @@ int nvme_delete_ctrl(struct nvme_ctrl *c
+ void nvme_queue_scan(struct nvme_ctrl *ctrl);
+ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
+ 		void *log, size_t size, u64 offset);
++void nvme_get_ns_head(struct nvme_ns_head *head);
+ bool nvme_tryget_ns_head(struct nvme_ns_head *head);
+ void nvme_put_ns_head(struct nvme_ns_head *head);
+ int nvme_cdev_add(const char *name, struct cdev *cdev,
 
 
