@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60E14D7950;
-	Fri,  9 Oct 2026 14:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13294340A57;
+	Fri,  9 Oct 2026 14:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555392; cv=none; b=B8gqlVcufTsAOqLCc9U+KtsdQv93IKuk9AHrfmNzffzhMAUdrmJzy7PQ5YEtxy5m47i7tcdWjaWQLIDQ3U4WB9k6NCTDr8Jn0KmAFKNdS9dxa0y0VLQugL3OxJI8dlezlmX2EJ3E7gMCZRZTEpk0WQUFbKKAV0wpishtJ4ETOzY=
+	t=1791555395; cv=none; b=QkmnZkoqtPlHmvZUtZYYcIjOjDLTO9MdSKHG8bt318kOQlmlaZs/BueZowrNaueKomjSTpbnp3ViunKnqBc5Q6i6UJv0rlwKnU1sHnu8ADDM5QT9umH7H0XesBzDbRbmvjJp3wH1VsCuStpZl4CcWhnlzL0FN1SOtVz8Amke5NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555392; c=relaxed/simple;
-	bh=NoOPTrKottHO/B+AFEPF5U2826P70s0RQN4lX0NXNZg=;
+	s=arc-20240116; t=1791555395; c=relaxed/simple;
+	bh=f/r9f42gTA0hhQdHrmYFNXB2ry9GJrfNgAjfpfuDRm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sS4wqtSkrIa/9Nj6h27+Siyb0OLvVwZosKH6lKrHnlHbBAmZF/w6CojgV/gepHRG38ieoJ2bShkZOBwVv60JhVLnTlNV2rekIJkVW1vrG66jGavqqjgTrEjIV+kD3H4PmeE8CmhVTSYBE6YM+znSN7KYUXWLTSWKBLzlLkY2P84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGBTsYZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RM/BSHS8TquvcIOrdJg9v+5eESMpkSAVDvi+3mriDBD2okQqGt0Rjao7se4RzzVjC+fYrMzZyab5AbL0jfZMDC4kXoPVqk/BWWxh6jJtN1cm+aPQSrb2fwZYxNpTUPXBm5cmgkUSFrEtND6Pgq0ZuGTSIXEo7CTA0ysjlVmSVAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt8orbZ6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGBTsYZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F1C1F000FF;
-	Fri,  9 Oct 2026 14:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt8orbZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D937E1F00893;
+	Fri,  9 Oct 2026 14:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555387;
-	bh=wl7ayfQVFwf7VK5kpSTkY11p2HJDpgp8EJ/x04QesHU=;
+	s=korg; t=1791555390;
+	bh=nzhQOq2d75vHLVx48lT5Nht/83741YalV8d647g8PW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGBTsYZFVPH+A+Q8MPMZdW9ke39E8vvTzK9EUHDfR+k+DX/JG0UClQSAWQFVWhkC0
-	 verL1npWbiKgy/di0kNiQOUjXW6FhLMRsw89c5vZ1sdjyUEkEl2vIPP9Kg21CCC/RR
-	 zSoLXC0jU1BQoZNmbgLUhnRiifb9Fc79zBycTRAU=
+	b=Pt8orbZ6VIyeBCoeMgVTCw3Drm5ChNTmYdSVmuYA332Pt9VFSYeYfPCDLwZoj+ozf
+	 9Yx+d4kpFVAubp7jXFi8oYsZaMOdiWet/WB/vzO9oix2Cm1UUGQ24MiV6u0zankMt8
+	 YWquMMqy96b0LMiCxywVFBx+4eXNZHFepabmNBjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.18 023/403] HID: multitouch: stop the release timer from being rearmed on remove
-Date: Fri,  9 Oct 2026 16:06:24 +0200
-Message-ID: <20261009140952.657258832@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.18 041/403] netfs: zero gaps in read-gaps folio to avoid writing back stale data
+Date: Fri,  9 Oct 2026 16:06:42 +0200
+Message-ID: <20261009140953.068835893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,70 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 5acb2dace582f061aab5e14c399ac9480315f44b upstream.
+commit 8db55c5cd831a786a1a2a2d391aa80354535a353 upstream.
 
-mt_remove() quiesces the sticky-finger timer before stopping the
-hardware:
+netfs_read_gaps() leaves gaps around a streaming write's dirty region
+unread on the server side, so a short/EOF response there left stale
+folio content that later got written back.
 
-    timer_delete_sync(&td->release_timer);
+Zero it after the read completes, not before: netfs_wait_for_read()
+returns rreq->transferred once ret >= 0, so build an iterator over the
+same bvec array the read used, advance past ret, and zero the rest.
+The dirty region already maps to sink pages in that array rather than
+the real folio, so this can't touch it, and only the actual shortfall
+gets zeroed instead of the whole gap upfront.
 
-    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
-    hid_hw_stop(hdev);
-
-timer_delete_sync() waits for a running callback and dequeues the timer,
-but it does not stop the timer from being armed again. The transport is
-still delivering reports at that point, and the report path rearms it:
-
-    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
-        if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-            mod_timer(&td->release_timer,
-                      jiffies + msecs_to_jiffies(100));
-
-A report that arrives after timer_delete_sync() has returned therefore
-leaves the timer queued. td is allocated with devm_kzalloc() against
-hdev->dev, so it is freed when the driver is unbound, after mt_remove()
-returns. When the timer fires afterwards, mt_expired_timeout()
-dereferences the freed td:
-
-    struct mt_device *td = timer_container_of(td, t, release_timer);
-    struct hid_device *hdev = td->hdev;
-
-    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
-
-Simply moving the teardown after hid_hw_stop() does not fix this on its
-own, because mt_expired_timeout() calls mt_release_contacts(), which
-walks hdev->inputs; the timer still has to be quiesced before
-hid_hw_stop() tears the input devices down.
-
-Use timer_shutdown_sync() instead, which additionally makes any later
-mod_timer() a no-op, so neither ordering constraint has to be traded off
-against the other. This is the final-teardown pattern the function was
-introduced for, and hid-wiimote already uses it for the same reason.
-
-Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260723224211.613112-1-you@example.com?part=1
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/netfs/buffered_read.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2250,7 +2250,7 @@ static void mt_remove(struct hid_device
- {
- 	struct mt_device *td = hid_get_drvdata(hdev);
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -460,6 +460,13 @@ static int netfs_read_gaps(struct file *
  
--	timer_delete_sync(&td->release_timer);
-+	timer_shutdown_sync(&td->release_timer);
- 
- 	sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
- 	hid_hw_stop(hdev);
+ 	ret = netfs_wait_for_read(rreq);
+ 	if (ret >= 0) {
++		if (ret < flen) {
++			struct iov_iter iter;
++
++			iov_iter_bvec(&iter, ITER_DEST, bvec, i, flen);
++			iov_iter_advance(&iter, ret);
++			iov_iter_zero(flen - ret, &iter);
++		}
+ 		if (group)
+ 			folio_change_private(folio, group);
+ 		else
 
 
