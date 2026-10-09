@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC2F2AF1D;
-	Fri,  9 Oct 2026 14:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F30B39FCCD;
+	Fri,  9 Oct 2026 14:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556408; cv=none; b=OZEvx2H5a0doVgsaiE4pKJVnEBGhDNaGBwdnXiEeoZFH3Fe03UZx4J+LIe717dTbaoAkkQmQbDpw0DnBAWBWrL25GQnERGETfBUO4Nh7MbtWN1AJFNg7GrO8XMjjpAvWNdfT+E9N7MLk9uZXFqWbPv3Bz/m6QEtiln87hBehMRE=
+	t=1791556411; cv=none; b=kq0gdGL809bA3atQdq2WLcoZ476xsZ5zhpRlydZqlwEzgTRc1DRNlR0XBXk1Po9+Rx2xxR9f1g8c8LOtrRx77jcyEbT3Svfg0tzlxxTM8WBe1xTx3KgedwyKpSyGWwVE+Rkse9uC3Vm7qDNeI4P+CmwS3inu53k2OBudNaABCmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556408; c=relaxed/simple;
-	bh=HhcpPzF+sMvenAru6C0XwOT76Fz/PMQWcEom2tVs0Vk=;
+	s=arc-20240116; t=1791556411; c=relaxed/simple;
+	bh=hC0Agdc5tzhSgGKL6EkS97MBDMk+dpMozrMHDe0kxFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lgsI663YRJbCudhLJdAXKc18/L89e83ZfLNjmBW82ZF9CrHqpvnhF5DlhqVvDhNVlgM33d93PSYHOFE3vcoJSXYL9ET39oi//Pi2fpygUFkbmFS8xX7PzL07g/2iX9UPJXf6eO/YnCMtsgK7vTowiR7j8/VYs5HAb+5t8CIZink=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0r/mJ4q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mjf8ep3U4DHnM54PKu7851i8kPohQpq2fTIJlTtkrzL11Q+qDPVRNITvWJlE/2MRGR6GWoKF3x7iW2uM89/b030LE8oIJM4jJlSZFCyNs1xvHYlk8mQUQyN6G3Pt1mHiMFJGIW8WjQojqbxGZKyyv2x1BsmcacrsAiJmc0Ifc/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuQnTlUj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0r/mJ4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EF21F000FF;
-	Fri,  9 Oct 2026 14:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuQnTlUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12E91F000FF;
+	Fri,  9 Oct 2026 14:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556407;
-	bh=LxuLAk6I7M/y3xp2eT51IX9CpxPrfWWzq5y7YI1Oqys=;
+	s=korg; t=1791556410;
+	bh=x6kzT9w6wCVDmszNorJo+OTKOVQE2QkFlteK0Ti+Dxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0r/mJ4qCIbMigJVvlug2M7IVHnQO0M6BZRmnLf7/yIn0YuCYwUaFshXWoNETUZHf
-	 nrFc/ztReyY51K1o7nIDuGjQ43Ni4akAanYBFQOwKdrt92VxfwTrsTsInqm3DjTetN
-	 naJ40EM/LKkDcYgVB3OJAxAcrxxQMJMERaDsQvPM=
+	b=JuQnTlUjTVuEhRattZGH9TYDY7iKjQ0cdScUgWLVbRA0/HlS0g4QenG6G6ahyPOXV
+	 LSBBWHF9RMkz/FfONBKU+7/qPs4vsZAEV/P5zvQAxu+vcUmU9+VA7e5jWCP714Hyip
+	 6AG96HM5JdZLfPZh6AywlsNhWLcFpgneOA18oLEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 171/428] drm/amd/display: Fix fast updates on DCE 6.x
-Date: Fri,  9 Oct 2026 16:08:28 +0200
-Message-ID: <20261009140949.910497311@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 229/403] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
+Date: Fri,  9 Oct 2026 16:09:50 +0200
+Message-ID: <20261009140957.507512740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 88427119e1f039c8cdffd63726c136a986ef519f upstream.
+commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
 
-DCE6 should use legacy fast updates, just like all DCE8 - DCN2.
-Set that flag for DCE 6.0, 6.1 and 6.4 (all DCE6 versions).
+On 64-bit systems, outgoing BR/EDR connections always fall back to page
+scan repetition mode R2 with no clock offset once the system has been
+up for more than five minutes, even when inquiry found the peer only
+seconds earlier. This lengthens paging and can increase the risk of a
+Page Timeout.
 
-Technically DCE6 should have been included when the fast update
-code was refactored, but it just happened to work until now.
+The inquiry cache stores jiffies in __u32 timestamps, but its age
+helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
+-300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
+after boot on 64-bit systems. Assigning it to __u32 then drops the upper
+32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
+2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
+hci_inquiry() is affected by the same truncation when checking the whole
+cache. 32-bit systems are unaffected because unsigned long is 32 bits
+wide there.
 
-A recent commit "Attach only plane updates that actually changed"
-has exposed this issue because with that commit, DC accidentally
-took the new fast update code path for DCE6 as well, which caused
-it to boot into a black screen with a flip done timeout.
+Use unsigned long for both timestamps so they have the same width as
+jiffies on 32-bit and 64-bit systems, and update the debugfs format
+specifier accordingly.
 
-This fix should be backported to all kernel versions that
-have "Refactor fast update to use new HWSS build sequence",
-but this patch won't apply cleanly to older kernels due to
-another refactor in "Remove dc param from check_update".
-
-Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
-Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923122033.1046651-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 698fda6e360625850413a2d1a90b72ae5f03073d)
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c |   12 ++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/bluetooth/hci_core.h |    4 ++--
+ net/bluetooth/hci_debugfs.c      |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-@@ -448,6 +448,12 @@ static const struct dce_abm_mask abm_mas
- 		ABM_MASK_SH_LIST_DCE110(_MASK)
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -65,7 +65,7 @@ struct inquiry_entry {
+ 		NAME_PENDING,
+ 		NAME_KNOWN,
+ 	} name_state;
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	struct inquiry_data	data;
  };
  
-+static const struct dc_debug_options debug_defaults = { 0 };
-+
-+static const struct dc_check_config config_defaults = {
-+	.enable_legacy_fast_update = true,
-+};
-+
- #define CTX  ctx
- #define REG(reg) mm ## reg
+@@ -81,7 +81,7 @@ struct discovery_state {
+ 	struct list_head	all;	/* All devices found during inquiry */
+ 	struct list_head	unknown;	/* Name state not known */
+ 	struct list_head	resolve;	/* Name needs to be resolved */
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	bdaddr_t		last_adv_addr;
+ 	u8			last_adv_addr_type;
+ 	s8			last_adv_rssi;
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -367,7 +367,7 @@ static int inquiry_cache_show(struct seq
  
-@@ -937,6 +943,8 @@ static bool dce60_construct(
- 	dc->caps.max_cursor_size = 64;
- 	dc->caps.dual_link_dvi = true;
- 	dc->caps.extended_aux_timeout_support = false;
-+	dc->debug = debug_defaults;
-+	dc->check_config = config_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
-@@ -1134,6 +1142,8 @@ static bool dce61_construct(
- 	dc->caps.i2c_speed_in_khz = 40;
- 	dc->caps.max_cursor_size = 64;
- 	dc->caps.is_apu = true;
-+	dc->debug = debug_defaults;
-+	dc->check_config = config_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
-@@ -1332,6 +1342,8 @@ static bool dce64_construct(
- 	dc->caps.i2c_speed_in_khz = 40;
- 	dc->caps.max_cursor_size = 64;
- 	dc->caps.is_apu = true;
-+	dc->debug = debug_defaults;
-+	dc->check_config = config_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
+ 	list_for_each_entry(e, &cache->all, all) {
+ 		struct inquiry_data *data = &e->data;
+-		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
++		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
+ 			   &data->bdaddr,
+ 			   data->pscan_rep_mode, data->pscan_period_mode,
+ 			   data->pscan_mode, data->dev_class[2],
 
 
