@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981EF459AD2;
-	Fri,  9 Oct 2026 14:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDA94E66A7;
+	Fri,  9 Oct 2026 14:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556985; cv=none; b=DTa3UTS8fTOYWedGOe1qHfncmbQWAcW/KXg8j+17yBjHoUDo0K7UOendQHd42LTDxMqDGwOa9s0PtUU8b0X8mBkI6qKiU7bxigCqVmuecxb8aBukHLiA6x8yskPDWoSKdRz6iBpjSWGIn4ynQg2nM1bZAUlFf/qTsNzzfm6/vFA=
+	t=1791556989; cv=none; b=qJb7II1q2Li2t5zgkkL2c5uaUMyX67ULzynBR+Z4EyGQ2D/Fsa0GnGwSgIdtJsnBciqjY2Ntrx+rylDs6YuZx3dQHrwlVlxr7HcA5O6nmKFhu7Z4owYJzkKLpwmtfe4/MUhaPxil00dzU+01UxMJ0HnuJ0fW24/gmZpzSxYTg38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556985; c=relaxed/simple;
-	bh=K9EX3rnweD/dNRINPfN93tLQhhiqUAqINsZhDWpye5A=;
+	s=arc-20240116; t=1791556989; c=relaxed/simple;
+	bh=ddOpsktk7VrmjOSgqb6aDbBdx66VRNHSyIxNz4zwElw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gx58Tm2Z5vkH4gQYN2bcls0GDxTkHrmKVEycFrYm7Uzw8ETLy2b5aB4tXJzxjRcKcYBVXYDGjx1Jz9yMkKkGlW77rNRh81DlFAjrA7YM5RV7xouMmweV/AZrp8UJJInF6H5QwxkpOsUu1Vy9Ih8XrDgqvmSNQHJhewo0zI8D0aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCzNAECz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bZEe5srPmw7M7hAtutuzpUTcwieoSOMcjCHeqsAlNE6dMJjFBT40tiPq5mFv5Z5Hq6lE615LZRhFwFwnnRlId5k2kRrmgtsb07BAHOog4npcxlvVCbB41UoE/niLhbAj+VstlQLYwWSFN+yg5wwUkuYz86BDFO3FTUu+7McjWjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kUtr8N7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCzNAECz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3991F000FF;
-	Fri,  9 Oct 2026 14:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kUtr8N7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590C41F000FF;
+	Fri,  9 Oct 2026 14:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556983;
-	bh=vH2jnLL7ZWLGuA5jgAY4Ano8R51Bt7MeG3sGCHG3ECA=;
+	s=korg; t=1791556986;
+	bh=S7+TacL+OHxps20u+HX1wvNHjWn3/uyb2lrULtqlb+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCzNAECzqMKgBVAwSe0u2XaK6VEfYpd2Zg4sZYiwP6HAZ1pGq9A8IXm9Q1HxBCDqz
-	 Fq06ikXV/VbFwzy+sgF6SG+LrSx0A6aXcpmSdldd0hWZM4pDlzaiEJ1WQk4Vu+QOLt
-	 revf4TUD+PhEwbhSmNZHz64Tgcv8b9wgeZKZTBpE=
+	b=1kUtr8N7aWXiEJjveRZbL6vNV0CVA8O2c7fZLSYZnRWTMN/c6s2SIdRJsnke1tv8G
+	 4WbMaJtnr/sDyK07ClTExuwn//D7nr1lKtR/k/pLwkAzYquIC9HrfvUZvl9psfirL9
+	 JhguHip+QSGC9g5y4bWnW8O0Po/H813fl/Fnx/Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 328/403] iio: light: gp2ap020a00f: drain irq_work after free_irq
-Date: Fri,  9 Oct 2026 16:11:29 +0200
-Message-ID: <20261009140959.903879448@linuxfoundation.org>
+	co+24304d323d28f156@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 269/428] ALSA: ua101: reject mismatched capture/playback packet sizes
+Date: Fri,  9 Oct 2026 16:10:06 +0200
+Message-ID: <20261009140952.004264373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
+commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
 
-The threaded IRQ handler queues data->work through irq_work_queue() so
-the trigger is polled from a per-CPU context.  free_irq() does not flush
-an irq_work the handler already queued, so after gp2ap020a00f_remove()
-returns that work may still run and call iio_trigger_poll() on data->trig,
-which the devm cleanup has already freed, causing a use-after-free.
+detect_usb_format() cross-checks bSubframeSize, bBitResolution and
+tSamFreq between the capture and playback interfaces, but never relates
+the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
+gets a buffer of ua->playback.max_packet_bytes, while the number of
+bytes written into it is derived from the capture stream:
+capture_urb_complete() computes frames from the received capture packet
+and capture.frame_bytes, and start_usb_playback() and playback_work()
+multiply that by playback.frame_bytes.
 
-Add irq_work_sync(&data->work) after free_irq() in remove() and in the
-probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
-fix use-after-free on remove").
+A device declaring a large capture wMaxPacketSize with few capture
+channels and a small playback wMaxPacketSize with many playback channels
+therefore memset()s and memcpy()s past the end of the playback buffer,
+in open() of the PCM node the driver registers during probe.
+usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
+-EMSGSIZE, but only after the write.
 
-Found by an in-house static analysis tool, confirmed by manual review.
+Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
+declares proportional packet sizes and is unaffected.
 
-Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
+  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
+  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
+  Call Trace:
+   __asan_memset (mm/kasan/shadow.c:84)
+   start_usb_playback (sound/usb/misc/ua101.c:586)
+   playback_pcm_open (sound/usb/misc/ua101.c:679)
+   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
+   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
+   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
+   snd_open (sound/core/sound.c:166)
+   chrdev_open (fs/char_dev.c:411)
+   do_dentry_open (fs/open.c:996)
+   vfs_open (fs/open.c:1101)
+   path_openat (fs/namei.c:4837 fs/namei.c:5000)
+   do_file_open (fs/namei.c:5029)
+   do_sys_openat2 (fs/open.c:1417)
+   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  The buggy address belongs to the object at ffff8881098f3c00
+   which belongs to the cache kmalloc-192 of size 192
+  The buggy address is located 0 bytes inside of
+   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
+
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Reported-by: <co+24304d323d28f156@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/gp2ap020a00f.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/misc/ua101.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/iio/light/gp2ap020a00f.c
-+++ b/drivers/iio/light/gp2ap020a00f.c
-@@ -1560,6 +1560,7 @@ error_trigger_unregister:
- 	iio_trigger_unregister(data->trig);
- error_free_irq:
- 	free_irq(client->irq, indio_dev);
-+	irq_work_sync(&data->work);
- error_uninit_buffer:
- 	iio_triggered_buffer_cleanup(indio_dev);
- error_regulator_disable:
-@@ -1582,6 +1583,7 @@ static void gp2ap020a00f_remove(struct i
- 	iio_device_unregister(indio_dev);
- 	iio_trigger_unregister(data->trig);
- 	free_irq(client->irq, indio_dev);
-+	irq_work_sync(&data->work);
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	regulator_disable(data->vled_reg);
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -1002,6 +1002,15 @@ static int detect_usb_format(struct ua10
+ 	}
+ 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
+ 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
++
++	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
++	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
++		dev_err(&ua->dev->dev,
++			"playback packet size %u too small for %u capture frames\n",
++			ua->playback.max_packet_bytes,
++			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
++		return -ENXIO;
++	}
+ 	return 0;
  }
+ 
 
 
