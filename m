@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBF43BD64D;
-	Fri,  9 Oct 2026 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3853B4DA9AF;
+	Fri,  9 Oct 2026 14:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555754; cv=none; b=iL2ZzwH9LKf2VEhARzLPeeuwrymadqZlmJvFY/qzEudzIdkFOcPV4QFVKPnBo6FVsdPKGCVu8pF5DYdCJ9kzxrLNpxQP7Mo3pCIaqFc/ilcJGqGdKlrOr0dHcmPX9vcplv7LFh16ihaqzvbrjDxbcgO4pbLPeCHyhkFi572EU1Q=
+	t=1791555758; cv=none; b=ZiGkVY56kQi8+IRPJj5qXC2eIJsa/ONFkvq0EF+2K2Vdb2uGQCDpCeur0ZFQf+n6UgdPlZwv+rfdIwGwkxpjKaA8MvF1zZIOwy5LNc0mX3bUSSu/FwUIXJUmsfR+yBp7lzCRY7fX7D8k+ZxqgGKM2m/jS9tLB3B2PBfSQZmBn2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555754; c=relaxed/simple;
-	bh=TgPF54lS3VRSz4xRX2xyEH6CaDKm94GJdLQu1hCNz7g=;
+	s=arc-20240116; t=1791555758; c=relaxed/simple;
+	bh=QhZVyVN3fxzVTs9ooi8/HUfgnH7L4itA73bpMrigg84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swOXtYPyiOwr9vejviBfZewhUFrfSZrVRuJDZ8FQfhvBsAd7NzaEzqgvhHmoJ0sB9WyNJs8bm04XLk2bWCszBGLAsuXjYgRUM9rb3AWWg8D+zaSgudyWlOuymPEzcb45eYFPpnn5RHpQEmmtVOA0/Q213v4SnaXgBbvvfyEoHpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1ZHI1Ud; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=svKZhZ4Q4ILycqZq7AnbfWVBw/oMQAN4qJvFWZ7iBEcsPtO11ds4GTPVL9SwM3vR3swNbrVT1gNsMwV2Zy+daHpZlB+DV6SdaMU72qt89qwwincskQguj9SyAPpXTHQsk9AT/hfzitYyCGvdPvUfM5RdAJxIEuP9GDR4LmvtUIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfofcgb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1ZHI1Ud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5451F000FF;
-	Fri,  9 Oct 2026 14:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfofcgb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AF01F00893;
+	Fri,  9 Oct 2026 14:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555753;
-	bh=pjt2fP3y1ixp9anPaJ2fqHWNHAy2Fi2HPCd67qZ5xyE=;
+	s=korg; t=1791555757;
+	bh=E+llPs//mGnoKkjTOuYhCNmGw7ly6LeHBgHNedTDmX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F1ZHI1UdfYjRehjeL/NRhCdc7eQ0QfihIVVrvU96rPRtTSYTyf5OkvlXUmSG3Srzv
-	 Pz1/DTToaLhx38ZINpt/OodjMEKcicODqFtuYjHVMVOo0eQKWCF10wdoPdlUHTacoW
-	 Trf+mhVUk589fV7uoMo72quES9yuJ0vch08TDzCY=
+	b=nfofcgb2MjZsHJJImeYp2csopRLXStHqZ3MHQOImziJU2rVmCbCKDzrssvt7lO8E1
+	 BmFlutoA5+ab7bV2tzT6QZnQaJIRtYJSQk6QRSHUUDtJmeeW5FoKz8aDmKiaK+o/Si
+	 nZXzTtXLrmA/O8jgknwC5bV/Pi9jsixyJqH5kgIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tibor Harcsa <silurust@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 016/428] Bluetooth: btusb: Add IMC Networks QCA9377 to quirks table
-Date: Fri,  9 Oct 2026 16:05:53 +0200
-Message-ID: <20261009140946.410072716@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>
+Subject: [PATCH 7.2 060/428] vt: skip screen update for DEC alignment test on backgroup consoles
+Date: Fri,  9 Oct 2026 16:06:37 +0200
+Message-ID: <20261009140947.458652311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,65 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tibor Harcsa <silurust@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit dc16388d45ecbd3be0d8c9424dbbaa2c81806578 ]
+commit 0928ed9bd7946baee911efa401088697836e3b1e upstream.
 
-Add the USB ID (13d3:3503) for the IMC Networks Qualcomm Atheros
-QCA9377 Bluetooth controller to the btusb quirks table. This device
-requires Qualcomm Rome firmware and wideband speech support to function
-properly; otherwise, BLE scanning fails with HCI unexpected event
-opcode 0x2005 errors.
+[BUG]
+Recently, we encountered a KASAN warning as follows:
 
-The device reports the following in /sys/kernel/debug/usb/devices:
+BUG: KASAN: slab-out-of-bounds in fb_pad_aligned_buffer+0x11f/0x140
+Read of size 1 at addr ff1100015fd9f6a4 by task tty_fbcon_oob/1239
+CPU: 7 UID: 0 PID: 1239 Comm: tty_fbcon_oob Not tainted 7.3.0-rc1 #100 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ ...
+ kasan_report+0xf0/0x120
+ fb_pad_aligned_buffer+0x11f/0x140
+ ccw_putcs+0x86c/0xa80
+ fbcon_putcs+0x338/0x410
+ do_update_region+0x21d/0x450
+ do_con_write+0x1e0e/0x4880
+ con_write+0x13/0x80
+ n_tty_write+0x374/0x1010
+ file_tty_write.isra.0+0x404/0x7a0
+ ...
 
-P:  Vendor=13d3 ProdID=3503 Rev= 0.01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+reproduce:
+1) open /dev/tty0, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 8 and op.height = 16 (visible VC1)
+2) open /dev/tty1, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 28 and op.height = 24 (invisible VC2)
+3) echo 3 > /sys/devices/virtual/graphics/fbcon/rotate_all
+4) write EShash8(esc hash8) to tty1
 
-Signed-off-by: Tibor Harcsa <silurust@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[CAUSE]
+All VCs render to the framebuffer. setfont only modifies the target VC's
+font without resizing the framebuffer backing buffer (par->rotated.buf);
+the buffer is only resized for the visible VC
+(fbcon_do_set_font -> ... -> vc_do_resize -> update_screen). This relies on
+the con_should_update() check performed before every update_region().
+
+However, the ESC # 8 path (do_con_trol -> do_update_region) omits the
+con_should_update() check. After changing the font size of an invisible VC,
+do_update_region() fills using the new font size against a buffer that was
+never resized, causing an out-of-bounds access.
+
+[FIX]
+Only push the update when the console is visible and not blanked, add
+the con_should_update() check in the do_con_trol() like every other call
+site of do_update_region() (update_region(), invert_screen(), ...).
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260905064337.3083103-1-wozizhi@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/vt/vt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 87d50efcd2715..bf9a93d5c9efa 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -308,6 +308,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3503), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* QCA WCN6855 chipset */
- 	{ USB_DEVICE(0x0489, 0xe0c7), .driver_info = BTUSB_QCA_WCN6855 |
--- 
-2.53.0
-
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -2860,7 +2860,8 @@ static void do_con_trol(struct tty_struc
+ 			csi_J(vc, CSI_J_VISIBLE);
+ 			vc->vc_video_erase_char =
+ 				(vc->vc_video_erase_char & 0xff00) | ' ';
+-			do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
++			if (con_should_update(vc))
++				do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
+ 		}
+ 		return;
+ 	case ESsetG0:	/* ESC ( */
 
 
