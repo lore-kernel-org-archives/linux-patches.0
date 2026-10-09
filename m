@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2720C4E532F;
-	Fri,  9 Oct 2026 14:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E837A4D598B;
+	Fri,  9 Oct 2026 14:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557399; cv=none; b=NzZZ6AR/IJWPiikpdeqFl9qEzxPqEbSqBC23+FcSrL3YmkxCTDJiRq/EmwyzVV/m8kn7SESJDpDlFvQIaF3N5tV/xASA62/erY0RkJ1lR89QRgJ0LQfDdSkff6fT2i686ukQvuI2dsFGxOypQcdeNtiuuKh7PrOuVzTC1NnkCDw=
+	t=1791557402; cv=none; b=RJx2/eBzjQFJqJ1FGubGyLq40cgp0nb41/jeLrumgxD0VAWLNUoKwEVLBNrGOp4me/GP52isuWFXU6Jw2cQXbQP6X/WZq7ZBJpvMzKAa9uaZOjqm3Cgrq1w4ewy8NhOHrJZZziVHrm0+VRs+JqQbKXyjCnvxktsx9Gaz2hrpirU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557399; c=relaxed/simple;
-	bh=zaguBDcHMUsZgN9RTdzUwMqhoBLvBsCizNlV7KMf8OU=;
+	s=arc-20240116; t=1791557402; c=relaxed/simple;
+	bh=fDWE79TdL4XDTIEuXhlZGUvnCDcg+rWyw5gCMHiyvQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9du9/VgZnc2ovVKmujiHRHtUH7tPTZLj7DHVH6Y1g1wTCi7vE19I1L8t30BoLvcefpQTnQVQwotg8wUmEhDL+2ljOVHIoEYQp678K26s9SGt9p+Nt0nbS9MlA6EzlcZAyvHvCTl2Ulwuo5tt/OL0TK4HTb6+jiLy0XfwF9HQng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ishHiDD2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwbIjfp0ozPC5CatOJ9sZaRn3WvMPuMux6KA7AI0t0SRvNfTvj6W+z+tVIbKCCYk9sdGhKaMw0w1TPLXzgwycJ5XjaukVfLiVaHXI27G3/xpom4gtr9P83R+8ADHPMXVUa3PAXU2CTkrsyck9F2WfpxgQ1LHsElLuiBqnRbwz7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enplqU4z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ishHiDD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8531F000FF;
-	Fri,  9 Oct 2026 14:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enplqU4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6601F000FF;
+	Fri,  9 Oct 2026 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557398;
-	bh=/+4v1cCjYA5iBf4ifQsXBmSqgmx+6YfKZEtL7xP8quc=;
+	s=korg; t=1791557400;
+	bh=0H5FQ73FTISfc+QyftA1RyJ/nsuMljXE+TFcOXG2bGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ishHiDD23wnWY+3TcQRuHevTW84XIoTZ6+37uZXwmlcklcN2T3fZZiRksOjX2DcKg
-	 kQzQ3oNuEtSDyqYcBOpmZci+Vi+4EV2hqkSYW5r5pEgiKCB7VKw7mYr4HfjDyL5bNa
-	 sRbBYKhpxarMvo2jDQ9ehVCT1U3mQr8RXGfAkau8=
+	b=enplqU4zWHl0EWef3hMof6Vc+7UDMCUFTfNrH+c+wY7lBfmPQ19i8AfTWEQr9ESPR
+	 1NaQzcXR98x7VlFPxDb9WbteQcyvtAiFXmzhX76OAe7irXXhD+43GvYNS/BdfFpF71
+	 GdRRVZnsTmKCRX0ejopWo6rg7S2B9KlIaS3mB2s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Lin <ian.lin@jetone.com.tw>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 349/428] USB: serial: option: add Compal EXC-T1 support
-Date: Fri,  9 Oct 2026 16:11:26 +0200
-Message-ID: <20261009140953.827649564@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 394/403] KVM: x86: Reject nested CAP enablement if nested virtualization is disabled
+Date: Fri,  9 Oct 2026 16:12:35 +0200
+Message-ID: <20261009141001.568597004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Lin <ian.lin@jetone.com.tw>
+From: Sean Christopherson <seanjc@google.com>
 
-commit b51faf3f2e307f114854bbe6d495f03cd5370686 upstream.
+[ Upstream commit b65699be2c606d2687593516d93e66d16a713b61 ]
 
-The Compal EXC-T1 is a Qualcomm MDM9207-based LTE modem which reports
-"EXC-x1" as its USB product string. It exposes diagnostic, modem, AT,
-and NMEA ports as vendor-specific interfaces with subclass 0x10 and
-protocols 0x01 through 0x04.
+Add a flag to explicitly track if nested virtualization is enabled, and use
+it enumerate that various nested CAPs are unsupported, and to reject
+enablement of said CAPs.  When the nested ops hooks were moved to their
+own structure, KVM's NULL-by-default behavior was deliberately dropped,
+with the changelog asserting that all was well.  That wasn't quite true;
+there is no danger to KVM, but now KVM is over-reporting support for
+KVM_CAP_NESTED_STATE and KVM_CAP_HYPERV_ENLIGHTENED_VMCS.
 
-Add exact interface matches for these four ports, leaving the ff/ff/ff
-interface unbound.
-
-Relevant output from usb-devices:
-
-T:  Bus=03 Lev=02 Prnt=03 Port=03 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=04b7 ProdID=4d22 Rev=03.18
-S:  Manufacturer=CEI
-S:  Product=EXC-x1
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=10 Prot=01 Driver=option
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=02 Driver=option
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=03 Driver=option
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=04 Driver=option
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=05 Driver=qmi_wwan
-
-Tested on a Compal EXC-T1 modem using an Ubuntu kernel build. The four
-serial interfaces bound to option and exposed ttyUSB3 through ttyUSB6.
-
-Assisted-by: Codex:GPT-5
-Signed-off-by: Ian Lin <ian.lin@jetone.com.tw>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 33b22172452f ("KVM: x86: move nested-related kvm_x86_ops to a separate struct")
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/20260630202828.440724-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/include/asm/kvm_host.h |    2 ++
+ arch/x86/kvm/hyperv.c           |    3 ++-
+ arch/x86/kvm/svm/svm.c          |    1 +
+ arch/x86/kvm/vmx/vmx.c          |    1 +
+ arch/x86/kvm/x86.c              |   12 +++++++-----
+ 5 files changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2436,6 +2436,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x01) },	/* Compal EXC-T1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x02) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x03) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x04) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1954,6 +1954,8 @@ struct kvm_x86_ops {
+ };
+ 
+ struct kvm_x86_nested_ops {
++	bool enabled;
++
+ 	void (*leave_nested)(struct kvm_vcpu *vcpu);
+ 	bool (*is_exception_vmexit)(struct kvm_vcpu *vcpu, u8 vector,
+ 				    u32 error_code);
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -2799,7 +2799,8 @@ int kvm_get_hv_cpuid(struct kvm_vcpu *vc
+ 	};
+ 	int i, nent = ARRAY_SIZE(cpuid_entries);
+ 
+-	if (kvm_x86_ops.nested_ops->get_evmcs_version)
++	if (kvm_x86_ops.nested_ops->enabled &&
++	    kvm_x86_ops.nested_ops->get_evmcs_version)
+ 		evmcs_ver = kvm_x86_ops.nested_ops->get_evmcs_version(vcpu);
+ 
+ 	if (cpuid->nent < nent)
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -5451,6 +5451,7 @@ static __init int svm_hardware_setup(voi
+ 		if (r)
+ 			return r;
+ 	}
++	svm_nested_ops.enabled = nested;
+ 
+ 	/*
+ 	 * KVM's MMU doesn't support using 2-level paging for itself, and thus
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -8642,6 +8642,7 @@ __init int vmx_hardware_setup(void)
+ 		if (r)
+ 			return r;
+ 	}
++	vmx_nested_ops.enabled = nested;
+ 
+ 	r = alloc_kvm_area();
+ 	if (r && nested)
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4604,7 +4604,7 @@ int kvm_vm_ioctl_check_extension(struct
+ 			r &= ~KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST;
+ 		break;
+ 	case KVM_CAP_NESTED_STATE:
+-		r = kvm_x86_ops.nested_ops->get_state ?
++		r = kvm_x86_ops.nested_ops->enabled ?
+ 			kvm_x86_ops.nested_ops->get_state(NULL, NULL, 0) : 0;
+ 		break;
+ #ifdef CONFIG_KVM_HYPERV
+@@ -4612,7 +4612,8 @@ int kvm_vm_ioctl_check_extension(struct
+ 		r = kvm_x86_ops.enable_l2_tlb_flush != NULL;
+ 		break;
+ 	case KVM_CAP_HYPERV_ENLIGHTENED_VMCS:
+-		r = kvm_x86_ops.nested_ops->enable_evmcs != NULL;
++		r = kvm_x86_ops.nested_ops->enabled &&
++		    kvm_x86_ops.nested_ops->enable_evmcs != NULL;
+ 		break;
+ #endif
+ 	case KVM_CAP_SMALLER_MAXPHYADDR:
+@@ -5650,7 +5651,8 @@ static int kvm_vcpu_ioctl_enable_cap(str
+ 			uint16_t vmcs_version;
+ 			void __user *user_ptr;
+ 
+-			if (!kvm_x86_ops.nested_ops->enable_evmcs)
++			if (!kvm_x86_ops.nested_ops->enabled ||
++			    !kvm_x86_ops.nested_ops->enable_evmcs)
+ 				return -ENOTTY;
+ 			r = kvm_x86_ops.nested_ops->enable_evmcs(vcpu, &vmcs_version);
+ 			if (!r) {
+@@ -6150,7 +6152,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 		u32 user_data_size;
+ 
+ 		r = -EINVAL;
+-		if (!kvm_x86_ops.nested_ops->get_state)
++		if (!kvm_x86_ops.nested_ops->enabled)
+ 			break;
+ 
+ 		BUILD_BUG_ON(sizeof(user_data_size) != sizeof(user_kvm_nested_state->size));
+@@ -6180,7 +6182,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 		int idx;
+ 
+ 		r = -EINVAL;
+-		if (!kvm_x86_ops.nested_ops->set_state)
++		if (!kvm_x86_ops.nested_ops->enabled)
+ 			break;
+ 
+ 		r = -EFAULT;
 
 
