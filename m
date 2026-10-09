@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAB63AC0E7;
-	Fri,  9 Oct 2026 14:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED2C3B3BE6;
+	Fri,  9 Oct 2026 14:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555795; cv=none; b=kWZOddKAfTauTsEr/TdXQjed42heWcng8MgzE72FqRF1ZM/+xNw28NgEmrgkbCr7N4nVDB7G8YbUCeEEt4ASVDItbiQMOJ22rc1YL9PorObNVDCCAIP7lJCiIsq+PX8fXwp5USWbsxvdQWPYfc/9RwrWcXt4Z+SZ+w3cM+arjX8=
+	t=1791555797; cv=none; b=GS9CKSTeB5wDcYE7CWuxaXSIeStcBo3WjjA+zP7ZRMvl/RhZOweMr3Y5gcXJDss00KUSE6ieKeCiFUkjAweq0WR3xDZ1B9/TIUFRZc0xBGDUGV7DAt61gMzkvZrPXk15NKmEPqU+j/cVyMhWQJJ+J/+PbQzmYSIEPcCMkTT9gEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555795; c=relaxed/simple;
-	bh=Wcbtygjyzzyzib7auNcqrctXwqcTgKGeurxi7uHVNag=;
+	s=arc-20240116; t=1791555797; c=relaxed/simple;
+	bh=voN9gFMkvyMxc5nN1Dos9TWJ+Jg70dyeWFxECx3D2Kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEkkdq+ge7PTjaNMkXD3C7pq7PpriEaOSgRvURtDjlZ4N8DecJa+5y/xUkUvzqQuZiaGRIAlTxTJYaBAD9/Qxs1bE1xT8lHFlIgvOIt7/PucBGZ7YYMNQzNvAsD4cbVPKCB8Z/GJLQFMmXcVeJiJgY4I01gWBW3d0pZkXWvnnSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03smChk9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tj9XnpE/Kgipsbsuuda03Kuv7dy1hNDrXpzXDoH6Kl3BwQPNGb4RVLGkjyZ3a0Izu68uvj0r6YyPvPmYtfdReyvyPwVERDyX46w2mEO5mM6liWTYdK3PeVGxzSNr8/JLqIWgdoq4I87iwqPg032cIE1laqKqCdjeffc7QRPc4qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eiCva+CV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03smChk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B93F1F00893;
-	Fri,  9 Oct 2026 14:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eiCva+CV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485EB1F000FF;
+	Fri,  9 Oct 2026 14:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555794;
-	bh=RjiUN3YIUGIFztO1X9YwsSjbFIEPybEGxC7OCxlRlfQ=;
+	s=korg; t=1791555796;
+	bh=p90ek6yTax+QGJDCwEd1tmDL2mn6kREbM4qCIvXCw4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=03smChk9bN7Ztu7mriQStmHXmFEYyTXNtBsjBv0lGkdybEo3vL7o6EoKXMfddrQ65
-	 8zxltrrpwyj83oP0Y8r4OyKXu6rVdKlEkS580qqUgRM3shsGSLWFZ8PuGML2Kuditn
-	 ZrKpUENb9pO9rOYSV9Muvi3sTqpwm7OQ0xTCEa4U=
+	b=eiCva+CVv33Shx/EePmpkgIyB0i5CvLfaUDJi5aQXSO6I51bsXbidRcN21eA02jjj
+	 yjU7AWE71MOLCvqsN0k6t5BvtJQVTQgoU3nmEsFh1mFLSceEEdTyD2SJ3r6zfgUbfY
+	 +s1aND0BmkV8yIJp/+vUUBY8iKZdKQnyFN1AMY5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Jo <jeffjo@openai.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 119/403] tcp: refresh TS.Recent for accepted old ACKs
-Date: Fri,  9 Oct 2026 16:08:00 +0200
-Message-ID: <20261009140954.862814925@linuxfoundation.org>
+Subject: [PATCH 7.2 071/428] nvmet: preserve device path on allocation failure
+Date: Fri,  9 Oct 2026 16:06:48 +0200
+Message-ID: <20261009140947.715395532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Jo <jeffjo@openai.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 1b92780ae4fc3be64f05d97ed8833c445e73b0cf ]
+[ Upstream commit 2f271b812170d4cad578bae1f91db72f3c2e36e7 ]
 
-A TCP packet can carry new data while acknowledging traffic in the
-opposite direction. With overlapping traffic in both directions, a
-delayed packet's acknowledgment can be older than one Linux has already
-accepted, even when that packet fills a gap in the received data.
+nvmet_ns_device_path_store() frees the old path before allocating its
+replacement, losing the existing configuration if allocation fails.
+Allocate the new path before freeing the old one.
 
-Linux accepts the data, but tcp_ack() takes the old_ack path and skips
-updating TS.Recent, the timestamp saved for outgoing acknowledgments.
-The reply therefore echoes an older timestamp. If the sender uses this
-echo to measure round-trip time after a long idle period, its estimate
-includes the idle time and can reduce its sending rate.
-
-Update TS.Recent in old_ack using tcp_replace_ts_recent(), before SACK
-processing can trigger a transmission. This reuses the existing timestamp
-and sequence checks, including PAWS protection against old duplicate
-packets. ACK validation already rejects old ACKs in SYN_RECV before this
-path, so no additional state check is needed.
-
-Echoing the timestamp of the packet that fills the receive gap follows
-RFC 7323 section 4.3. In a socket reproduction with 300 seconds idle,
-controlled reordering and retransmission to exercise timestamp-based RTT
-sampling, the sender's smoothed round-trip time was 37.5 seconds without
-the fix and 15.5 ms with it.
-
-Fixes: 12fb3dd9dc3c ("tcp: call tcp_replace_ts_recent() from tcp_ack()")
-Assisted-by: LLM sparse
-Signed-off-by: Jeff Jo <jeffjo@openai.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/configfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index d9b07a3b93904..e1785140bf9b1 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4204,6 +4204,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 	return 1;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 6286e38436ddf..b03b5d1c2dc3d 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -534,6 +534,7 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	struct nvmet_subsys *subsys = ns->subsys;
+ 	size_t len;
+ 	int ret;
++	char *new_path = NULL;
  
- old_ack:
-+	/* An old ACK can carry new data. Update TS.Recent before SACK
-+	 * processing can trigger a retransmission.
-+	 */
-+	if (flag & FLAG_UPDATE_TS_RECENT)
-+		tcp_replace_ts_recent(tp, TCP_SKB_CB(skb)->seq);
+ 	mutex_lock(&subsys->lock);
+ 	ret = -EBUSY;
+@@ -545,12 +546,14 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	if (!len)
+ 		goto out_unlock;
+ 
+-	kfree(ns->device_path);
+ 	ret = -ENOMEM;
+-	ns->device_path = kmemdup_nul(page, len, GFP_KERNEL);
+-	if (!ns->device_path)
++	new_path = kmemdup_nul(page, len, GFP_KERNEL);
++	if (!new_path)
+ 		goto out_unlock;
+ 
++	kfree(ns->device_path);
++	ns->device_path = new_path;
 +
- 	/* If data was SACKed, tag it and see if we should send more data.
- 	 * If data was DSACKed, see if we can undo a cwnd reduction.
- 	 */
+ 	mutex_unlock(&subsys->lock);
+ 	return count;
+ 
 -- 
 2.53.0
 
