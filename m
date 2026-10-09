@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9A545A2BC;
-	Fri,  9 Oct 2026 14:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258914E4C5E;
+	Fri,  9 Oct 2026 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557362; cv=none; b=pM1rDmIPFDvgw4/VMufIIKrVP7Vtc7WablMbIu2HxHUH3R77F+oQkeKpwm30qb1tLUXOiqh6O5oH2ivYgcmqCGLJJcvCHm3PucPSufRekEDuy+o/Ozxh8TsOkjYSABW7+FBGGM70JRzgGVsD3KqcWRi7tYWWVdTDEaEUgn1E5Bs=
+	t=1791557365; cv=none; b=KlowNSFgyc1D7To+9z/r+2KzVK26AraW+ofq8/4qkbbyz05QMP+FEfjrsn+fixrX+2I7TKb5dkEsJvbvOVQKKfHualtnN2fCpIO6tp+nxEKSnG1mT+xDGT/p8F/pVvxBGjDe03BR7C2ImA6LjZGiBbbiLf4j4NErh4b7AO7g5XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557362; c=relaxed/simple;
-	bh=3hS6wm0TLvaRelsvQrHdo3TzCfzVID1L0FIOOQSfGj0=;
+	s=arc-20240116; t=1791557365; c=relaxed/simple;
+	bh=bWROYkNpsMuRsgZsxO2xtofub8BLHcAGFZ4QrYRNENM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rishlRfnQ8V5IRVb9eYtJFhQXVumtKhiQyJsGGHo7puCsOL0lHBjKyc6PZ7d7wi8C9Hkd9Br/feHJlMSNBrVcSBcxlyPl40QV1rX+7E96itINbaBMwxv7KIw7F9UwFI61iJuGtl54PGLDDWVm1gT/KwDMzO6bbCgXGR+C4LeM4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMg11l7G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KGXcXj5Q7M0seyepDpcb+BUvTBiRB0himV+Vpie8ESo7VeS9jpoWJcEK9gubA6Uxyflyr0YeERMKCLbsPo2NQWfsFX4FOjN+K2adqhbHGO/C2yQR62VwuyE1hK5o2+pOQT13TlPutT16Ugl39Qt0YB6K2J/L/cDkxp+xwZYM9C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7ehR/KD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMg11l7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED51F000FF;
-	Fri,  9 Oct 2026 14:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7ehR/KD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803AF1F000FF;
+	Fri,  9 Oct 2026 14:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557361;
-	bh=NHAEacThJ1xniSAwOU82g1mtZHKUjF981XvwsArjK2I=;
+	s=korg; t=1791557364;
+	bh=IY1IKI+erLZPSkBthF/EDxBB2okVA6XqNQ0NJ2xFp3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WMg11l7Gn+PqJfN3f7LQL9hcaOmCSS9nOWg/uPS8M0ds7LKDwFQK2w7J/G5XWxJNs
-	 p9Bw+UY6vfQHjxTA6MhP6uDtjdL+RWPU7R3nnii6e3wn2UsTeY4AmyyGPNDEEwImpo
-	 kAFcH6ZrQYxHg+wrM5tOyBn1RHr+TlbFvI+sbaZM=
+	b=f7ehR/KD7pybL0/N0FdpHu5yHn7vNWSBJo8d5wpxoCfSqn0OcpcraRfGyCMABCZ5+
+	 h6nvUeEDWcEw1fwEJPC/JnMO+xGudHTrnXMS6GFT3G3gYZuGe4NoCIR87odvBWJ25u
+	 xdkRZJLQnOwzMFeVW8UxJs+VLAN+hsIUoHzPZgBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
+	Sashiko Bot <sashiko-bot@kernel.org>,
 	Sean Christopherson <seanjc@google.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 388/403] KVM: x86: Move IRQ-related helper declarations from kvm_host.h => irq.h
-Date: Fri,  9 Oct 2026 16:12:29 +0200
-Message-ID: <20261009141001.412907113@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.2 312/428] KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it
+Date: Fri,  9 Oct 2026 16:10:49 +0200
+Message-ID: <20261009140952.977551761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,84 +47,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 0bdd2d6d7328a7debcf138a7d6ef95d01a26b1b8 ]
+commit 8abbc76120a74bfba1851bd97528099d715e45c6 upstream.
 
-Move the function declaration for APIs to get/query pending IRQs from
-kvm_host.h to irq.h, as the APIs are only used by KVM x86 code.
+Nullify have_run_cpus when freeing the mask, particularly in the error path
+of __sev_guest_init(), so that KVM doesn't have to subtly use sev->active
+to track whether or not the mask has been freed.  As pointed out by Sashiko,
+blindly freeing the mask in sev_vm_destroy() results in a double-free if
+the mask is freed if __sev_guest_init() fails.
 
-No functional change intended.
+Throw the logic in a helper as nullifying the pointer is frustratingly
+difficult and weird due to have_run_cpus being a single-entry array when
+CPUMASK_OFFSTACK=n.  Deliberately don't use CPUMASK_VAR_NULL, as it's not
+directly assignable when the cpumask is on-stack, e.g. requires using a
+local variable and a memcpy(), which is beyond ridiculous.  Furthermore,
+while clearing the on-stack bitmask is an unnecessary and arguably unwanted
+side effect, KVM absolutely relies on '0' being the "null" value given that
+the struct is zero-allocated.
 
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Opportunistically add an alloc() helper to pair with free(); there are just
+enough call sites to make doing so worthwhile.
+
+Fixes: 12c1f6e03f94 ("KVM: SEV: Free have_run_cpus during VM destruction even if VM is no longer SEV")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260923165349.CAAF01F000FF@smtp.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Message-ID: <20260613000329.732085-25-seanjc@google.com>
+Message-ID: <20260928154644.2559454-2-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    5 -----
- arch/x86/kvm/irq.h              |    6 ++++++
- arch/x86/kvm/svm/nested.c       |    1 +
- arch/x86/kvm/vmx/nested.c       |    1 +
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/kvm/svm/sev.c |   33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -2379,12 +2379,7 @@ enum {
- # define kvm_memslots_for_spte_role(kvm, role) __kvm_memslots(kvm, 0)
- #endif
- 
--int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
--int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
--int kvm_cpu_has_extint(struct kvm_vcpu *v);
- int kvm_arch_interrupt_allowed(struct kvm_vcpu *vcpu);
--int kvm_cpu_get_extint(struct kvm_vcpu *v);
--int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
- void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
- 
- int kvm_pv_send_ipi(struct kvm *kvm, unsigned long ipi_bitmap_low,
---- a/arch/x86/kvm/irq.h
-+++ b/arch/x86/kvm/irq.h
-@@ -112,6 +112,12 @@ static inline int irqchip_in_kernel(stru
- 	return mode != KVM_IRQCHIP_NONE;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -488,6 +488,20 @@ static void snp_guest_req_cleanup(struct
+ 	sev->guest_resp_buf = NULL;
  }
  
-+int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
-+int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
-+int kvm_cpu_has_extint(struct kvm_vcpu *v);
-+int kvm_cpu_get_extint(struct kvm_vcpu *v);
-+int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
++static int sev_alloc_have_run_cpus(struct kvm_sev_info *sev)
++{
++	if (!zalloc_cpumask_var(&sev->have_run_cpus, GFP_KERNEL_ACCOUNT))
++		return -ENOMEM;
 +
- void kvm_inject_pending_timer_irqs(struct kvm_vcpu *vcpu);
- void kvm_inject_apic_timer_irqs(struct kvm_vcpu *vcpu);
- void kvm_apic_nmi_wd_deliver(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -23,6 +23,7 @@
++	return 0;
++}
++
++static void sev_free_have_run_cpus(struct kvm_sev_info *sev)
++{
++	free_cpumask_var(sev->have_run_cpus);
++	memset(&sev->have_run_cpus, 0, sizeof(sev->have_run_cpus));
++}
++
+ static int __sev_guest_init(struct kvm *kvm, struct kvm_sev_cmd *argp,
+ 			    struct kvm_sev_init *data,
+ 			    unsigned long vm_type)
+@@ -545,10 +559,9 @@ static int __sev_guest_init(struct kvm *
+ 	if (ret)
+ 		goto e_free_asid;
  
- #include "kvm_emulate.h"
- #include "trace.h"
-+#include "irq.h"
- #include "mmu.h"
- #include "x86.h"
- #include "smm.h"
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -11,6 +11,7 @@
- #include "x86.h"
- #include "cpuid.h"
- #include "hyperv.h"
-+#include "irq.h"
- #include "mmu.h"
- #include "nested.h"
- #include "pmu.h"
+-	if (!zalloc_cpumask_var(&sev->have_run_cpus, GFP_KERNEL_ACCOUNT)) {
+-		ret = -ENOMEM;
++	ret = sev_alloc_have_run_cpus(sev);
++	if (ret)
+ 		goto e_free_asid;
+-	}
+ 
+ 	/* This needs to happen after SEV/SNP firmware initialization. */
+ 	if (snp_active) {
+@@ -566,7 +579,7 @@ static int __sev_guest_init(struct kvm *
+ 	return 0;
+ 
+ e_free:
+-	free_cpumask_var(sev->have_run_cpus);
++	sev_free_have_run_cpus(sev);
+ e_free_asid:
+ 	argp->error = init_args.error;
+ 	sev_asid_free(sev);
+@@ -2198,10 +2211,9 @@ int sev_vm_move_enc_context_from(struct
+ 	 * does not, i.e. KVM could skip flushes if memory is reclaimed from
+ 	 * the old VM but not the new VM.
+ 	 */
+-	if (!zalloc_cpumask_var(&dst_sev->have_run_cpus, GFP_KERNEL_ACCOUNT)) {
+-		ret = -ENOMEM;
++	ret = sev_alloc_have_run_cpus(dst_sev);
++	if (ret)
+ 		goto out_source_vcpu;
+-	}
+ 
+ 	sev_migrate_from(kvm, source_kvm);
+ 	kvm_vm_dead(source_kvm);
+@@ -2899,10 +2911,9 @@ int sev_vm_copy_enc_context_from(struct
+ 	}
+ 
+ 	mirror_sev = to_kvm_sev_info(kvm);
+-	if (!zalloc_cpumask_var(&mirror_sev->have_run_cpus, GFP_KERNEL_ACCOUNT)) {
+-		ret = -ENOMEM;
++	ret = sev_alloc_have_run_cpus(mirror_sev);
++	if (ret)
+ 		goto e_unlock;
+-	}
+ 
+ 	/*
+ 	 * The mirror kvm holds an enc_context_owner ref so its asid can't
+@@ -2995,7 +3006,7 @@ void sev_vm_destroy(struct kvm *kvm)
+ 	 * Free the mask even if the VM is not *currently* an SEV VM, as it may
+ 	 * have been an SEV VM prior to intra-host migration.
+ 	 */
+-	free_cpumask_var(sev->have_run_cpus);
++	sev_free_have_run_cpus(sev);
+ 
+ 	if (!sev_guest(kvm))
+ 		return;
 
 
