@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C279F314B6E;
-	Fri,  9 Oct 2026 14:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363862ECD32;
+	Fri,  9 Oct 2026 14:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555422; cv=none; b=BK/QJ8XsXSc5zGiJW0qqHlB3ehE0z0d583u66wIV56ysdQBVXhlLa7NZgKfX9EBmykUT0DrmNPadrUT5xyXcz+cSN7MCg8E8p/8fcAVsx7Ixy8jYx23Zx1nu2MVPLwVSK9pCMsrHolF7lAHRg1LJWy56PGoNH338kILBv3vK9q8=
+	t=1791555424; cv=none; b=Idi2ulIzPJSzDwHQSG7KI2PJKtwqcR9u7QxxjID2cJLgGN2KRs0TVlblymMbzQ5mvN1yZs9aKJJxco0aC0Uozd0QtwRMi8xU1jSMhY/uldokqZyDsMEBOsH9LbVMh4nHjHKw9q3l5UXJEmZR6xzU14d9DMbi8zwrlMYEVAvqzTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555422; c=relaxed/simple;
-	bh=5MxUxnWno7haeJ2O2BKRc4OEh3cuxrpIxZQFSAyM7XI=;
+	s=arc-20240116; t=1791555424; c=relaxed/simple;
+	bh=l5SyRaYzkqfwTdqeU3VDeB5gpw+NtOZlb9t4k10HQmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzAMzXeiVK9QiMyRgKcUeNDrfmgQ6decIMHerv/KEPGmL1OZhF7NDFNLWdwC9IZ5UonKCa015Vf5KWne8KiyXjrFPbMIeLp4MiV2D1Uz2SlTVXM3XffUxglZllwGdekrCKZwhVdErdf+LEyQmFMdkbJJFuqJ6/F5s54UAXPoUa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjpEDn/5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gp1NjAoopAkukMhaUdSTrbKxxjmLNOFingQK1Gd5i77gfmt3XJU3SFPWEOZ+5LWrXgaRWCImbD792J16/pxerzolA5CKsbf8LtwxmqoI/juVHWB8ygVSpQYCH6ZGpXUg7bTrIR1vIQLiqUP9LL3NbAYiktLBpwLwShBPv3RVNwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmzlklEE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjpEDn/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E99F1F000FF;
-	Fri,  9 Oct 2026 14:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmzlklEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDFD1F00893;
+	Fri,  9 Oct 2026 14:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555418;
-	bh=WLr5c29qUqOe9zk685B4p25RX1+xQe/XfBoNbdXVSRE=;
+	s=korg; t=1791555421;
+	bh=vufC49lzrjKw6zf19JyXbnP1Q4JxVF2yRutd+mrLHN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjpEDn/5i56XI5aSnOlV42tUkTQm8jtpN9sa6bn0nOZo1ojEzE4KNOFKEobzZJIbj
-	 jteFYGBnNUFImW/tCYO9cVhqG5LRrKA7+ahXnvq2qi26PmPWhIymUuOALw7gVJdJRR
-	 UUIrf5WiGzpZnKVDZpmDi4FusIrBy8Y+/8zoab9w=
+	b=hmzlklEEHYueAr3yW/VlvrYbx06Rwrvi+nZ70yEU6aZ0RKDxw5U3/nefd/LlU/kTl
+	 UsoyZgQ9Q6fr3CNXbJ+Qrd0juFKMwjzeAckEgT/VlbyEuyykiXEovAHGjI/KoVey6s
+	 sp6411Rs8EJxdWLlEhoZ0HdOxeu8TT4cNJ8REANY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lollipopkit <a@lolli.tech>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 024/403] io_uring/cmd_net: end TX_TIMESTAMP multishot when the CQ is full
-Date: Fri,  9 Oct 2026 16:06:25 +0200
-Message-ID: <20261009140952.680310501@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>
+Subject: [PATCH 6.18 051/403] vt: skip screen update for DEC alignment test on backgroup consoles
+Date: Fri,  9 Oct 2026 16:06:52 +0200
+Message-ID: <20261009140953.296728618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -51,106 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lollipopkit <a@lolli.tech>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-commit 3a3d93070c5ec8b8049d57025987ba313420bda9 upstream.
+commit 0928ed9bd7946baee911efa401088697836e3b1e upstream.
 
-SOCKET_URING_OP_TX_TIMESTAMP arms an EPOLLERR apoll multishot and, on
-each error queue edge, posts one 32 byte aux CQE per timestamp skb. Aux
-CQEs have no overflow backing, so io_uring_cmd_post_mshot_cqe32() fails
-once the CQ ring is full. The loop then stops, splices the unprocessed
-skbs back onto sk_error_queue and returns -EAGAIN.
+[BUG]
+Recently, we encountered a KASAN warning as follows:
 
--EAGAIN is IOU_RETRY, so the request goes idle until the next poll
-event. io_arm_apoll() forces EPOLLET and draining the CQ does not re-run
-the command, so the spliced-back timestamps stay queued until an
-unrelated later timestamp produces a new edge.
+BUG: KASAN: slab-out-of-bounds in fb_pad_aligned_buffer+0x11f/0x140
+Read of size 1 at addr ff1100015fd9f6a4 by task tty_fbcon_oob/1239
+CPU: 7 UID: 0 PID: 1239 Comm: tty_fbcon_oob Not tainted 7.3.0-rc1 #100 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ ...
+ kasan_report+0xf0/0x120
+ fb_pad_aligned_buffer+0x11f/0x140
+ ccw_putcs+0x86c/0xa80
+ fbcon_putcs+0x338/0x410
+ do_update_region+0x21d/0x450
+ do_con_write+0x1e0e/0x4880
+ con_write+0x13/0x80
+ n_tty_write+0x374/0x1010
+ file_tty_write.isra.0+0x404/0x7a0
+ ...
 
-End the multishot when a CQE cannot be posted, as multishot poll and
-recv already do. There is no partial result to report, so complete with
--ENOBUFS: no CQ space is left for the timestamp CQEs. This command does
-not use provided buffers, so the value cannot be confused with a buffer
-ring running empty. The terminal CQE still reaches userspace because
-request completions can go to the overflow list. The application sees a
-CQE without IORING_CQE_F_MORE, which it already has to handle, and the
-first issue of the re-armed request delivers the queued timestamps.
+reproduce:
+1) open /dev/tty0, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 8 and op.height = 16 (visible VC1)
+2) open /dev/tty1, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 28 and op.height = 24 (invisible VC2)
+3) echo 3 > /sys/devices/virtual/graphics/fbcon/rotate_all
+4) write EShash8(esc hash8) to tty1
 
-A timestamp that cannot be extracted keeps its current behaviour.
+[CAUSE]
+All VCs render to the framebuffer. setfont only modifies the target VC's
+font without resizing the framebuffer backing buffer (par->rotated.buf);
+the buffer is only resized for the visible VC
+(fbcon_do_set_font -> ... -> vc_do_resize -> update_screen). This relies on
+the con_should_update() check performed before every update_region().
 
-This was found with LLM assistance while reviewing io_uring multishot
-handlers for the pattern behind a RECV_ZC stall reported earlier (see
-Link), and confirmed with a reproducer on v7.3-rc2 and an A/B run of
-this patch.
+However, the ESC # 8 path (do_con_trol -> do_update_region) omits the
+con_should_update() check. After changing the font size of an invisible VC,
+do_update_region() fills using the new font size against a buffer that was
+never resized, causing an out-of-bounds access.
 
-Fixes: 9e4ed359b8ef ("io_uring/netcmd: add tx timestamping cmd support")
-Link: https://lore.kernel.org/all/010001a0cd914529-23df2f94-bbe0-49cd-ae5d-05922356fa12-000000@email.amazonses.com/
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-6-sol
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: lollipopkit <a@lolli.tech>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://patch.msgid.link/20260927074206.65427-1-a@lolli.tech
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[FIX]
+Only push the update when the console is visible and not blanked, add
+the con_should_update() check in the do_con_trol() like every other call
+site of do_update_region() (update_region(), invert_screen(), ...).
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260905064337.3083103-1-wozizhi@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/cmd_net.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/tty/vt/vt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/io_uring/cmd_net.c
-+++ b/io_uring/cmd_net.c
-@@ -53,8 +53,8 @@ static inline int io_uring_cmd_setsockop
- 				  optlen);
- }
- 
--static bool io_process_timestamp_skb(struct io_uring_cmd *cmd, struct sock *sk,
--				     struct sk_buff *skb, unsigned issue_flags)
-+static int io_process_timestamp_skb(struct io_uring_cmd *cmd, struct sock *sk,
-+				    struct sk_buff *skb, unsigned int issue_flags)
- {
- 	struct sock_exterr_skb *serr = SKB_EXT_ERR(skb);
- 	struct io_uring_cqe cqe[2];
-@@ -67,7 +67,7 @@ static bool io_process_timestamp_skb(str
- 
- 	ret = skb_get_tx_timestamp(skb, sk, &ts);
- 	if (ret < 0)
--		return false;
-+		return ret;
- 
- 	tskey = serr->ee.ee_data;
- 	tstype = serr->ee.ee_info;
-@@ -82,7 +82,9 @@ static bool io_process_timestamp_skb(str
- 	iots = (struct io_timespec *)&cqe[1];
- 	iots->tv_sec = ts.tv_sec;
- 	iots->tv_nsec = ts.tv_nsec;
--	return io_uring_cmd_post_mshot_cqe32(cmd, issue_flags, cqe);
-+	if (!io_uring_cmd_post_mshot_cqe32(cmd, issue_flags, cqe))
-+		return -ENOBUFS;
-+	return 0;
- }
- 
- static int io_uring_cmd_timestamp(struct socket *sock,
-@@ -119,7 +121,8 @@ static int io_uring_cmd_timestamp(struct
- 		skb = skb_peek(&list);
- 		if (!skb)
- 			break;
--		if (!io_process_timestamp_skb(cmd, sk, skb, issue_flags))
-+		ret = io_process_timestamp_skb(cmd, sk, skb, issue_flags);
-+		if (ret)
- 			break;
- 		__skb_dequeue(&list);
- 		consume_skb(skb);
-@@ -129,6 +132,12 @@ static int io_uring_cmd_timestamp(struct
- 		scoped_guard(spinlock_irqsave, &q->lock)
- 			skb_queue_splice(&list, q);
- 	}
-+	/*
-+	 * Aux CQEs cannot overflow and the poll is edge triggered, so nothing
-+	 * re-runs the command once the CQ drains. End the multishot instead.
-+	 */
-+	if (ret == -ENOBUFS)
-+		return -ENOBUFS;
- 	return -EAGAIN;
- }
- 
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -2790,7 +2790,8 @@ static void do_con_trol(struct tty_struc
+ 			csi_J(vc, CSI_J_VISIBLE);
+ 			vc->vc_video_erase_char =
+ 				(vc->vc_video_erase_char & 0xff00) | ' ';
+-			do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
++			if (con_should_update(vc))
++				do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
+ 		}
+ 		return;
+ 	case ESsetG0:	/* ESC ( */
 
 
