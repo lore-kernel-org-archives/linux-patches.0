@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB8D81ACD;
-	Fri,  9 Oct 2026 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC96830E828;
+	Fri,  9 Oct 2026 14:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557653; cv=none; b=DM7WFwyDV/wJld69aKz9dV4V18l96vXaoabwC7egPwwln1TVmq502LIPXkX1/1FmW/7oCWN5m0bvkIztbOvUbLtq7qO43//5ed9X5Ofxuf/e5HMLU9PTlr6FJqrHsliBlM1ixB1lpLufj1iK76+mX8+Wc2shNrLX7vM8JpDLfuU=
+	t=1791557655; cv=none; b=C+D0hNxLxV7ZCzZSMCyEI2xI9LH6sNd3P5/7oEwwKHvAEDk//wj35B+bIRtDlBfu8wPMKE8u2lRamIwW0lONIV+2iIQmhXX9Vxllw3MFfpfkdgmcIxvOD5mdxqppNyBZMqMPnLZlQgpG6tIqcRkak9iXUq6o26950qf1GkEoM+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557653; c=relaxed/simple;
-	bh=HfFEjjfm60nLB3Wv2gdFxc9YgMpgEBdZIY1qiGaL/oc=;
+	s=arc-20240116; t=1791557655; c=relaxed/simple;
+	bh=yHpyKhzbstZ+KkWJKk1GFugn140OKUOHhtgJon/eFAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRM2xmk2rgDXHR35f6KmWQDbH2wgynzSfnF8DEx+j79qDEqW76WW+eJ+eRBFPZVOBjDJEJkf7k3rDMlGaRM1QYA9N7WFzpkM8/+PT137kdem0zyPvqPxucOTfuKsPvJrsVIqPjf1H7y5MVY24XzrApT2evLNlIbpB5I/msHl5oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2W0WOvk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t2NlwQVq8YGu+w2phDyDtaTN/CUu1k+zKlT+QgA0aq8zmEY1Y2YthrV5AlnyFBzQq5SykRcGt2G8CqR8v+65E3kWnAu0VF8T2Y/iLmqEAHCohvztWpPqNGoIG0eqvMg3inmlfPMnmjsXfxqvOOitykXuphZOMSMJwoHOHX969Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0GXRIwS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2W0WOvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661511F000FF;
-	Fri,  9 Oct 2026 14:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0GXRIwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BA21F00893;
+	Fri,  9 Oct 2026 14:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557652;
-	bh=hm2jpAeUeQgJPQDCD9A/VuO1+mDNwJ09yXNZsRxkWqs=;
+	s=korg; t=1791557654;
+	bh=SqJ+fY+q2ZlfM8wNuLtRkbBRwR7P+FfmWaVukwYFvpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j2W0WOvkwZZzEoKRfDJW7pyJhGKgbcga7IgfYIgEKHnycbP5TMfUOlpajHUG0Y/Pm
-	 GZtwbATjFI/A29iuJetHSz5h0bNu2aGtw8JcOkXMLVpsfE+yapmI1xYQFoZmBiAhc+
-	 tswEHbaNk8mu70orWfbSqJnbpBCkxybAiVQfrZUU=
+	b=J0GXRIwSKWSnPZeZ4G7wf/qR/GOANVitQUc3mL934oy4bq72iQ88krOoTl0q5PlpW
+	 LsARQDx7XTthrMefAu+zMrN2KHA2q1j8AnvHRJByriMu80XpQoMT4nK9Lbm20u1SG6
+	 j0T59RdYW44WzvvukpPwtIYwrCmtncVRO+rAxqYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Stable@vger.kernel.org,
+	Salah Triki <salah.triki@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 398/428] iio: frequency: adf4377: Fully initialize clk_init_data and clk_parent_data
-Date: Fri,  9 Oct 2026 16:12:15 +0200
-Message-ID: <20261009140954.955593884@linuxfoundation.org>
+Subject: [PATCH 7.2 399/428] iio: frequency: admv1013: fix wrong channel field used in admv1013_read_raw()
+Date: Fri,  9 Oct 2026 16:12:16 +0200
+Message-ID: <20261009140954.978542256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -53,53 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit e787fd23d5063c61582c3c27522240b6e6703fde upstream.
+commit 2093236e886ad9446ec3285ba520e024dd1464e1 upstream.
 
-The clk_init_data structure contains several mutually-exclusive members
-for different methods to specify the possible parents of a clock,
-prompting drivers to initialize only the members they need.  However,
-not initializing all members may cause subtle issues, which are only
-exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
-enabled.
+admv1013_read_raw() switches on chan->channel instead of
+chan->channel2 when handling IIO_CHAN_INFO_CALIBBIAS. The channel
+field only ever holds 0 or 1 (see ADMV1013_CHAN_CALIB()), while the
+IIO_MOD_I / IIO_MOD_Q modifiers are stored in channel2. As a result,
+the switch always falls through to the default case and calibbias
+reads always fail with -EINVAL, even though the corresponding
+admv1013_write_raw() path correctly uses channel2 and works as
+expected.
 
-adf4377_clk_register() fills in init.parent_data, and assumes that
-init.parent_names is NULL.  However, the latter is uninitialized, and
-thus may cause a crash.
+Fix the read path to switch on chan->channel2, matching the write
+path and the actual channel_spec definition.
 
-Similarly, adf4377_clk_register() fills in only parent_data.fw_name,
-leaving other members of the clk_parent_data structure uninitialized.
-
-Make sure all members are fully initialized, to fix such bugs, and to
-avoid future breakage when converting drivers to a different method for
-specifying the parents.
-
-Fixes: 60e5448ddbec2dc2 ("iio: frequency: adf4377: add clk provider support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/adf4377.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/frequency/admv1013.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/frequency/adf4377.c
-+++ b/drivers/iio/frequency/adf4377.c
-@@ -997,10 +997,10 @@ static const struct clk_ops adf4377_clk_
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -195,7 +195,7 @@ static int admv1013_read_raw(struct iio_
  
- static int adf4377_clk_register(struct adf4377_state *st)
- {
-+	struct clk_parent_data parent_data = { };
- 	struct spi_device *spi = st->spi;
- 	struct device *dev = &spi->dev;
--	struct clk_init_data init;
--	struct clk_parent_data parent_data;
-+	struct clk_init_data init = { };
- 	int ret;
- 
- 	if (!device_property_present(dev, "#clock-cells"))
+ 	switch (info) {
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+-		switch (chan->channel) {
++		switch (chan->channel2) {
+ 		case IIO_MOD_I:
+ 			addr = ADMV1013_REG_OFFSET_ADJUST_I;
+ 			break;
 
 
