@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A034E2F1F;
-	Fri,  9 Oct 2026 14:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC89A4E2F36;
+	Fri,  9 Oct 2026 14:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555616; cv=none; b=akUuIPNMal29pPbPGWSJWZg7HVSWI6ls4PI/YtjS8X7rTD7sw/yCFhbvtM/MZYU1xw0xfqvlLkOYWJdMlfHHlNcJbpwH3ZAKldPUyLjbLWMKoa5IpldiZykpfNLOgkfmiyxtmoBGv47HRSZ2f5ex2wpn91z+e+dm63fw0hipP10=
+	t=1791555620; cv=none; b=B1/Kly5HC8v7KPtcjK1XxwyGRs9CEIlMU2ihwhHtoNfgbB6govn2gKGa0S5TutlFTUt+Sk2tdvk7qxme42ikl6/GUlnu+CH8Kw6dZXAlp87/q4QpTgDZNFUrLfdrn+drizTubexFoXleYcqchePEriGbqrw/Yyrge0lYIqpg0ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555616; c=relaxed/simple;
-	bh=BcJFu+5o3FBF2qWIqArOSSuJSlbonkdH+8G5iThe6Wo=;
+	s=arc-20240116; t=1791555620; c=relaxed/simple;
+	bh=MMhuxZM5kRgiUmacjlu1rG/LRwghTz6KMPECl3SkbV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNARE23iCBVaVrntunyPFN69jDvILNGFVDyGUIhvuRQTWjbv2rSUoaD2LWVqn46ePfI2t59U9sYrWLLn1S+fdMLcu6C37s2Fc6WqRv7W4b/ucZTT5r6asUFaJOlv2lA0c5AD+z+zyCTlGwtHw/sJkyYByhSPDX+mHMzOngMz14c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2y5+IgB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DJD1TyGvBtWQZeeBTbaoLI6yERrVCiY0T7M49XuYicCZBTBPogBkXQhcdeEUBczZxBnGgaLF54p8Z85rfsx+vx5ZeFmJmP2cRYS8UN8HzSL/vexveddxOOSEs7JlUrkn+nCgvS7fMo09RojXf5NMnwnT6nFAaDk3cOmq8vbGO7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo7LAwXV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2y5+IgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B65B1F0089A;
-	Fri,  9 Oct 2026 14:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo7LAwXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1433C1F0089D;
+	Fri,  9 Oct 2026 14:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555608;
-	bh=ZtZufKxoVf0FtEhrPCdZQ5KP1qLDerLpgNlY+BLSJck=;
+	s=korg; t=1791555611;
+	bh=ewWt77KXYRq6mXDaOEzlrrJIWbc0LTp+eRybbfFKACQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2y5+IgBkSIg84LzA9HbVvoxfUUmM+g+2272wuasuKcepnVmiB28z4hBEff+JgY6g
-	 eT5533HLBI6AuuYVFBCm3JagSyRRoKBEMJuLQTdITTVfIS9CRPZs6K/1p6wVYhMsOz
-	 D3Px7ZItOWwko03eZNR3fBKx+IFLkHXoheFOwxyQ=
+	b=Mo7LAwXV5z3xJ2ME+Ddde4wpy+h51uzV06l8pdCxKkBpxoW/3a8Uc30ovJAkrAiCj
+	 xd9t/ByQ1+DaGSd0U0/dSRr/pSGMqBylK0/v7OyPPF6Tg581k/gCAkJ5L247lgDN5C
+	 fCI8g2tShdi+oaPwJrGwP154BOVBTgNYsopfpsKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Oleg Keri <okerixx@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 087/403] arm64: topology: fix arch_freq_get_on_cpu() overflow above 4.19 GHz
-Date: Fri,  9 Oct 2026 16:07:28 +0200
-Message-ID: <20261009140954.129083225@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 7.2 019/428] audit: fix exe mark UAF in kill_rules()
+Date: Fri,  9 Oct 2026 16:05:56 +0200
+Message-ID: <20261009140946.478465465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Keri <okerixx@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 3872cc6b92940af0f73c6f9a45d65300492d648d ]
+commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
 
-arch_freq_get_on_cpu() computes the product of the frequency scale and
-the reference frequency as a u64, but assigns it to an unsigned int
-before shifting it back down:
+kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
+tree is pruned. It drops entry->rule.exe before removing the rule from
+the RCU-visible filter lists.
 
-	freq = scale * arch_scale_freq_ref(cpu);
-	freq >>= SCHED_CAPACITY_SHIFT;
+After a rule has been installed with AUDIT_ADD_RULE, which requires
+CAP_AUDIT_CONTROL, removing the watched directory can race with another
+task that is still evaluating the rule. In that case, fsnotify can free
+the executable mark before the reader reaches audit_mark_compare(),
+causing a use-after-free.
 
-The product is truncated to 32 bits before the shift, so the result
-wraps once arch_scale_freq_ref() exceeds 2^32 / SCHED_CAPACITY_SCALE,
-i.e. 4194304 kHz.
+KASAN reports:
 
-On a Snapdragon X2 Elite (Glymur) laptop, whose boost OPP is 4723200
-kHz, cpuinfo_avg_freq reports 524283 kHz instead of ~4723200 kHz while
-the CPU demonstrably runs at the boost frequency: a fixed workload
-completes in 1.72 s at the 4723200 kHz OPP versus 2.01 s at 4032000
-kHz, matching the 1.171 frequency ratio.
+    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
 
-Shift the u64 product and narrow only at the return.
+Unlink the published rules from the RCU-visible lists and retain them
+on tree->rules for cleanup. If any rule has an executable mark, wait for
+a single RCU grace period before removing the marks and scheduling the
+entries for freeing. Otherwise, call_rcu() already provides the required
+deferred freeing without a synchronous wait.
 
-Fixes: 16d1e27475f6 ("arm64: Provide an AMU-based version of arch_freq_get_on_cpu")
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Oleg Keri <okerixx@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Tested-by: Ricardo Robaina <rrobaina@redhat.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/topology.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ kernel/audit_tree.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 5d07ee85bdae4..1be36a30d9e6c 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -287,7 +287,6 @@ int arch_freq_get_on_cpu(int cpu)
- 	struct amu_cntr_sample *amu_sample;
- 	unsigned int start_cpu = cpu;
- 	unsigned long last_update;
--	unsigned int freq = 0;
- 	u64 scale;
+--- a/kernel/audit_tree.c
++++ b/kernel/audit_tree.c
+@@ -545,22 +545,38 @@ static void kill_rules(struct audit_cont
+ {
+ 	struct audit_krule *rule, *next;
+ 	struct audit_entry *entry;
++	bool need_sync = false;
  
- 	if (!amu_fie_cpu_supported(cpu) || !arch_scale_freq_ref(cpu))
-@@ -346,9 +345,8 @@ int arch_freq_get_on_cpu(int cpu)
- 	 * (see amu_scale_freq_tick for details)
- 	 */
- 	scale = arch_scale_freq_capacity(cpu);
--	freq = scale * arch_scale_freq_ref(cpu);
--	freq >>= SCHED_CAPACITY_SHIFT;
--	return freq;
+ 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
+ 		entry = container_of(rule, struct audit_entry, rule);
+ 
+-		list_del_init(&rule->rlist);
+ 		if (rule->tree) {
+ 			/* not a half-baked one */
+ 			audit_tree_log_remove_rule(context, rule);
+-			if (entry->rule.exe)
+-				audit_remove_mark(entry->rule.exe);
+ 			rule->tree = NULL;
+ 			list_del_rcu(&entry->list);
+ 			list_del(&entry->rule.list);
+-			call_rcu(&entry->rcu, audit_free_rule_rcu);
++			if (entry->rule.exe)
++				need_sync = true;
++		} else {
++			list_del_init(&rule->rlist);
+ 		}
+ 	}
 +
-+	return (scale * arch_scale_freq_ref(cpu)) >> SCHED_CAPACITY_SHIFT;
++	if (list_empty(&tree->rules))
++		return;
++
++	if (need_sync)
++		synchronize_rcu();
++
++	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
++		entry = container_of(rule, struct audit_entry, rule);
++
++		list_del_init(&rule->rlist);
++		if (entry->rule.exe)
++			audit_remove_mark(entry->rule.exe);
++		call_rcu(&entry->rcu, audit_free_rule_rcu);
++	}
  }
  
- static void amu_fie_setup(const struct cpumask *cpus)
--- 
-2.53.0
-
+ /*
 
 
