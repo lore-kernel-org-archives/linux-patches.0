@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ECBBA45;
-	Fri,  9 Oct 2026 14:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BBF3EC805;
+	Fri,  9 Oct 2026 14:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556286; cv=none; b=Ikp/JljtOjeVV4p3UtyY5/NtfYXfDnS3pjHuyxXKchYgrnOAfqBH0f8spOwW7H1/jIA5P97UJoqOA/QMn4Dy08COcvBcHluR4kmme0QY5PoJ25z49cw9ObrAcS5IeF/n+5iFP+eKltsjRJISm1kJFCBHYTFFNsir1f5vJ4hXjLI=
+	t=1791556289; cv=none; b=SFkpyztLAxRcld489yY7U4/9v/Kaqlvs4G0Akgyvv3aUZ7R5OwJGahUPs4EpNymVcflOKGfuEAsA8I+3p1c0zlvsUD0+KWwhrNZeXD7EG6ud3AUG6GNRwb/Otgb9Ypn/tNIS2EBo/9It9+EHIlRc+F1bGQ5N3d4lPdQb+2Jm6jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556286; c=relaxed/simple;
-	bh=RtHakaLqkxT1edratJ2Tc+6KLgrlGkWKcJ/5+LSSIEM=;
+	s=arc-20240116; t=1791556289; c=relaxed/simple;
+	bh=00Vtl3kbOqwtmpqZOSHAFpQFd0fAIHRgTTsFluMXf10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rf1+6bVZmcj5PyT/8k4wVCLdrQ9Yl2etcW5NNSgWpJHJUewBDjLp9PWwQdyCpXYLcho4WOG84hT2Kj6/q0Uh1e8CFWsSUi4VUcWPJIhhfpbVmGHPI8uQmkoHyeXSonbSoAUKqwJBTfmax2STIIH4IqW0BjYrlEqAZbPK/kVMSDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfoK55ux; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MFtUWZponsnZcV4k2Q/lDWSlQLUpC1MW1MJBlKW0J9mDRO5K7mkeMPCGW2dgmDqnW2s+6k8Hl3yljn+M0N/fTYUP7U+ZTvwns0eX7741ZQ/ekjziBsiNo+yDCrzZeW6A7G1U6qy1U1ja2EPfjuxpjxL4GC0+7ZwjnrtVQ/U77lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m27Pltw6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfoK55ux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D3F1F000FF;
-	Fri,  9 Oct 2026 14:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m27Pltw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE9B1F000FF;
+	Fri,  9 Oct 2026 14:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556285;
-	bh=4zEzWDN0Q9uk1UEL4cPzGPWBK/gPczmVz3s+KRRFDVc=;
+	s=korg; t=1791556288;
+	bh=eeKLj3Tr4fF5LjKyl7qDlFigAciVvsPTlK1ExEGrIwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sfoK55uxGCyHQRsm+3ojyj85srM/o5/v87V2CJ3T6pbgbPm7cdeIaL8wiQdV5/+zT
-	 65OH5OgoSr8U6VTjjQ16IAdaunwHpBdAZcxuQnvS7tF+B1S7c0APUyh9kDjbhm/bc8
-	 3S4dc9+g0zY3OA2HDdiQ8pm8j2DVT2bJhgq5akaE=
+	b=m27Pltw6VJcnJQFxO0ieXVq9jJVXbyYf1tyosGsnc/7jbYNVkTfvSbgXFbKe29r+t
+	 ZKPgnplN9UVVjzcG5hCjeC44zx2OEYQkpPgYbMn9ziFldIanc2n+BOYnlBr3+fmAjY
+	 pi9598QrhXfiLlS5YMV1ETgs3o/Pq1BQf+MbQB70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 152/428] of: Put coreboot node after compatibility check
-Date: Fri,  9 Oct 2026 16:08:09 +0200
-Message-ID: <20261009140949.507405974@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 210/403] ASoC: codecs: rt1017-sdca-sdw: fix uninitialized stream_config->type
+Date: Fri,  9 Oct 2026 16:09:31 +0200
+Message-ID: <20261009140957.051870951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +46,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 77f21a59e8cf7efcc1c4b3e9176e8b99993a7ae4 ]
+commit 174d160884199cad97413f33fe1b56027dc0d3e1 upstream.
 
-of_find_compatible_node() returns a referenced device node, but
-EXCLUDED_DEFAULT_CELLS_PLATFORMS used the result only as a boolean and
-discarded the reference. This leaked a reference each time the
-address-cells or size-cells warning condition was evaluated on a
-coreboot system.
+stream_config is not initialized before being passed to
+sdw_stream_add_slave().  The type field may contain garbage and is
+later copied to stream->type by sdw_config_stream().
 
-Use a helper that checks for the coreboot node with a scoped reference,
-so the reference is dropped once the check is done.
+Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
 
-Fixes: 8600058ba28a7 ("of: Add coreboot firmware to excluded default cells list")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://patch.msgid.link/20260924011358.734722-1-oss.patchbox@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While at it, use snd_sdw_params_to_config() helper instead of
+open-coding the same logic.
+
+Fixes: 2b7aecd58528 ("ASoC: rt1017: Add RT1017 SDCA amplifier driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://patch.msgid.link/20260914104551.377880-1-yijiangshan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt1017-sdca-sdw.c |   27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 477017ed6f49b..f4673bfe38100 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -95,9 +95,17 @@ static bool __of_node_is_type(const struct device_node *np, const char *type)
- 	return !strcmp(match, type);
- }
+--- a/sound/soc/codecs/rt1017-sdca-sdw.c
++++ b/sound/soc/codecs/rt1017-sdca-sdw.c
+@@ -16,6 +16,7 @@
+ #include <sound/pcm_params.h>
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
++#include <sound/sdw.h>
+ #include <sound/initval.h>
+ #include <sound/tlv.h>
  
-+static bool of_coreboot_present(void)
-+{
-+	struct device_node *np __free(device_node) =
-+		of_find_compatible_node(NULL, NULL, "coreboot");
-+
-+	return np;
-+}
-+
- #define EXCLUDED_DEFAULT_CELLS_PLATFORMS ( \
- 	IS_ENABLED(CONFIG_SPARC) || \
--	of_find_compatible_node(NULL, NULL, "coreboot") \
-+	of_coreboot_present() \
- )
+@@ -574,11 +575,10 @@ static int rt1017_sdca_pcm_hw_params(str
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct rt1017_sdca_priv *rt1017 = snd_soc_component_get_drvdata(component);
+-	struct sdw_stream_config stream_config;
++	struct sdw_stream_config stream_config = {0};
+ 	struct sdw_port_config port_config;
+-	enum sdw_data_direction direction;
+ 	struct sdw_stream_runtime *sdw_stream;
+-	int retval, port, num_channels, ch_mask;
++	int retval, port;
+ 	unsigned int sampling_rate;
  
- int of_bus_n_addr_cells(struct device_node *np)
--- 
-2.53.0
-
+ 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
+@@ -592,28 +592,17 @@ static int rt1017_sdca_pcm_hw_params(str
+ 
+ 	/* SoundWire specific configuration */
+ 	/* port 1 for playback */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+-		direction = SDW_DATA_DIR_RX;
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+ 		port = 1;
+-	} else {
+-		direction = SDW_DATA_DIR_TX;
++	else
+ 		port = 2;
+-	}
+-
+-	num_channels = params_channels(params);
+-	ch_mask = (1 << num_channels) - 1;
+-
+-	stream_config.frame_rate = params_rate(params);
+-	stream_config.ch_count = num_channels;
+-	stream_config.bps = snd_pcm_format_width(params_format(params));
+-	stream_config.direction = direction;
+ 
+-	port_config.ch_mask = ch_mask;
++	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
+ 	port_config.num = port;
+ 
+ 	dev_dbg(dai->dev, "frame_rate %d, ch_count %d, bps %d, direction %d, ch_mask %d, port: %d\n",
+-		params_rate(params), num_channels, snd_pcm_format_width(params_format(params)),
+-		direction, ch_mask, port);
++		stream_config.frame_rate, stream_config.ch_count, stream_config.bps,
++		stream_config.direction, port_config.ch_mask, port);
+ 
+ 	retval = sdw_stream_add_slave(rt1017->sdw_slave, &stream_config,
+ 				&port_config, 1, sdw_stream);
 
 
