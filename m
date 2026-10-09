@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482A84E56C6;
-	Fri,  9 Oct 2026 14:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C724E56E3;
+	Fri,  9 Oct 2026 14:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557235; cv=none; b=o3ihO/pGsHxk/A9xunuX7Vrf7tWOplWIEUDlKtRQPkXbvdfmSXqglCwGetOtPdSfUTvCS7O1SMfXrQ4fRSHmI9o/MeSsTregtUAuHsP8RbXkG55bPIxzyedzHfknUFFg3IBbfd/btWu9iqZfp5nW8J1WbFcrELUbOXIOM8alIBs=
+	t=1791557237; cv=none; b=QnSSX4mpv1UkIGo7lG+wMfYdlpXW30SlCkxWBb68uZG2jg0SaLUJjDor41W2VQSiMdvACKZvhZIKMKubKOKm3Pte5mqL2RGKphYHPzS8B+XHwnjfpNNYrhhiPaVul2vzdEpNPUhCJ7eq2J12ZD5wTZzVSx65RGkh1XIH65QDqdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557235; c=relaxed/simple;
-	bh=9eBSYQZ5y3cji70QzMd+Szug07t31KgyWzRCz0mBs30=;
+	s=arc-20240116; t=1791557237; c=relaxed/simple;
+	bh=y3UtAnPeN0bM+suACP1etnxmTkMlSefn/kxol0PIAR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5QoyyBwVg/mzhSfl5HR+/MCK3qGvfaMNKMISHLsw2cdH5Q7C1DbqAevcXoQfFU3ostGS+zsJvMqsKSl3XnfSWWW8/bxpF2Sl5+i3/LbiBSt/t0E/uzQrDzlYTFRogu+ukwsNoTtzyV+rAV3MNgXpk0e/+VRDqtPvN1OEW9BWmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7WCn3p+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O3JOBFn4/QdZOxyFEr25l76qafaG5keF5qpsu4YVcHAy5PFLNhdm//2BPlj4s5liSkrziSM2NI3ROhYP3yIbi6CsWZ+VL/lgvxBTH+RbXHfF+9ogHli9mTeeFfJaruJjDIEe0a7gK1HhbMU69brJ9rxkBP1sHxb9lIGHzJAULx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRyPuu3B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7WCn3p+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861D81F00898;
-	Fri,  9 Oct 2026 14:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRyPuu3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E721F000FF;
+	Fri,  9 Oct 2026 14:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557232;
-	bh=CM2288KEM6jysWHAX/UwVMEwwS+jnuUwiukHJcWbNL0=;
+	s=korg; t=1791557234;
+	bh=1+d5uSXInBUZHyBmu6UWxnjTeTagKyPzauTaPSzzyHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7WCn3p+oRPdbjMPq+5JzGiQwvqM4+lEowIqWgFXOrwkiaa0DUJMxfWyfctKzhvk0
-	 T9mo9QybIwma1UtD6aO4TOUKpUiUKomodqNkV6+HpYVFTUxaATARgroU0JJz2JHaS0
-	 ogxhOFx9M4Lft3otGkx0jO76/J88qdJoOr2BCCek=
+	b=XRyPuu3Bh+5aoaC6a1LkMx1dpswo+48KZxERUHxfZKKIBttgy2wJ/yMMZiEy6cK1I
+	 Ua/CP0Y8KSHoTnFKKb0E5ty9mmn8qvaGArnQI2Mxv2SfELmSbGcgGJ6fHgdUcE0MPS
+	 Y3T1S9gngLHQx6VhuRoA0SIru5ktG9iJQSt8apds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Mostafa Saleh <smostafa@google.com>,
-	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 323/428] KVM: arm64: Use stage-1 leaf size for VM_PFNMAP
-Date: Fri,  9 Oct 2026 16:11:00 +0200
-Message-ID: <20261009140953.228871345@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.2 309/428] mtd: spinand: fix zero oobavail when no ECC engine is used
+Date: Fri,  9 Oct 2026 16:10:46 +0200
+Message-ID: <20261009140952.908128424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -45,131 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit 71cc2c67fb8f8d5aa8154eb482e9846d2214f11b upstream.
+commit 636fe10d8f3559210ff63108a208d39ea2e9c3bd upstream.
 
-When commit 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for
-host device MMIO") added VM_PFNMAP support to get_vma_page_shift(),
-stage-1 page tables did not support huge PFNMAP (as in VFIO-PCI
-vfio_pci_mmap_huge_fault()) and transparent_hugepage_adjust() was
-unsafe for MMIO as it dereferenced struct page.
+Commit 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no
+ECC engine") made the OOB free bytes count conditional on having an
+ECC engine so that probing would not fail when none is requested.
+However mtd->oobavail is still assigned from ret just after that
+block, and ret is 0 there, so the device ends up advertising no
+available OOB bytes at all.
 
-Since commit 6011cf68c885 ("KVM: arm64: Walk userspace page tables to
-compute the THP mapping size"), transparent_hugepage_adjust() instead
-walks the host stage-1 page tables via get_user_mapping_size() without
-touching struct page. Meanwhile, commit 3e509c9b03f9 ("mm/arm64:
-support large pfn mappings") enabled stage-1 huge PFNMAP.
+mtd_oobavail() returns mtd->oobavail for MTD_OPS_AUTO_OOB, so a zero
+value makes every automatic OOB access fail with -EINVAL. JFFS2 fares
+worse: it keeps its cleanmarker in the OOB area on NAND and refuses to
+mount outright, reporting "inconsistent device description".
 
-So. we can drop the VMA-based VM_PFNMAP size calculation in
-get_vma_page_shift() and let transparent_hugepage_adjust() derive
-the stage-2 mapping size directly from the populated stage-1 leaf
-for non-cacheable mappings as well.
+No ECC engine also means no ooblayout was ever installed, which would
+make the count return -ENOTSUPP, so install the same fallback layout
+the on-die path already uses before counting unconditionally.
 
-Assisted-by: LLM
+Fixes: 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no ECC engine")
 Cc: stable@vger.kernel.org
-Fixes: 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for host device MMIO")
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c |   47 ++++++-----------------------------------------
- 1 file changed, 6 insertions(+), 41 deletions(-)
+ drivers/mtd/nand/spi/core.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1468,32 +1468,11 @@ transparent_hugepage_adjust(struct kvm *
- 	return PAGE_SIZE;
- }
- 
--static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
-+static int get_vma_page_shift(struct vm_area_struct *vma)
- {
--	unsigned long pa;
--
--	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
-+	if (is_vm_hugetlb_page(vma))
- 		return huge_page_shift(hstate_vma(vma));
- 
--	if (!(vma->vm_flags & VM_PFNMAP))
--		return PAGE_SHIFT;
--
--	VM_BUG_ON(is_vm_hugetlb_page(vma));
--
--	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
--
--#ifndef __PAGETABLE_PMD_FOLDED
--	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
--		return PUD_SHIFT;
--#endif
--
--	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
--		return PMD_SHIFT;
--
- 	return PAGE_SHIFT;
- }
- 
-@@ -1794,7 +1773,7 @@ static short kvm_s2_resolve_vma_size(con
- 		vma_shift = PAGE_SHIFT;
- 	} else {
- 		s2vi->max_map_size = PUD_SIZE;
--		vma_shift = get_vma_page_shift(vma, s2fd->hva);
-+		vma_shift = get_vma_page_shift(vma);
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1995,12 +1995,17 @@ static int spinand_init(struct spinand_d
+ 			goto err_cleanup_ecc_engine;
  	}
  
- 	switch (vma_shift) {
-@@ -1952,16 +1931,6 @@ static int kvm_s2_fault_pin_pfn(const st
- 				return -EFAULT;
- 			}
- 		} else {
--			/*
--			 * If the page was identified as device early by looking at
--			 * the VMA flags, vma_pagesize is already representing the
--			 * largest quantity we can map.  If instead it was mapped
--			 * via __kvm_faultin_pfn(), vma_pagesize is set to PAGE_SIZE
--			 * and must not be upgraded.
--			 *
--			 * In both cases, we don't let transparent_hugepage_adjust()
--			 * change things at the last minute.
--			 */
- 			s2vi->map_non_cacheable = true;
- 		}
- 
-@@ -2051,10 +2020,10 @@ static int kvm_s2_fault_map(const struct
- 
- 	/*
- 	 * If we are not forced to use page mapping, check if we are
--	 * backed by a THP and thus use block mapping if possible.
-+	 * backed by a huge stage-1 mapping and thus use block mapping if
-+	 * possible.
- 	 */
--	if (mapping_size == PAGE_SIZE &&
--	    !(s2vi->max_map_size == PAGE_SIZE || s2vi->map_non_cacheable)) {
-+	if (mapping_size == PAGE_SIZE && s2vi->max_map_size != PAGE_SIZE) {
- 		if (perm_fault_granule > PAGE_SIZE) {
- 			mapping_size = perm_fault_granule;
- 		} else {
-@@ -2132,10 +2101,6 @@ static int user_mem_abort(const struct k
- 			return ret;
+-	if (nand->ecc.engine) {
+-		ret = mtd_ooblayout_count_freebytes(mtd);
+-		if (ret < 0)
+-			goto err_cleanup_ecc_engine;
++	if (!nand->ecc.engine) {
++		if (spinand->eccinfo.ooblayout)
++			mtd_set_ooblayout(mtd, spinand->eccinfo.ooblayout);
++		else
++			mtd_set_ooblayout(mtd, &spinand_noecc_ooblayout);
  	}
  
--	/*
--	 * Let's check if we will get back a huge page backed by hugetlbfs, or
--	 * get block mapping for device MMIO region.
--	 */
- 	ret = kvm_s2_fault_pin_pfn(s2fd, &s2vi);
- 	if (ret != 1)
- 		return ret;
++	ret = mtd_ooblayout_count_freebytes(mtd);
++	if (ret < 0)
++		goto err_cleanup_ecc_engine;
++
+ 	mtd->oobavail = ret;
+ 
+ 	/* Propagate ECC information to mtd_info */
 
 
