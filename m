@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D418F45A2BC;
-	Fri,  9 Oct 2026 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F5945A2BC;
+	Fri,  9 Oct 2026 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556718; cv=none; b=nxYfFKZOnyZxpR1broO0YCmqVCT3PY8vVCjL8XKQmHq3bpXZ+1sBlDPVGQDO6kfSphiTN1xa667jEvLbfzBu+TUTvuHTFbTn9W6z/H86PMehkpaUY3afFaPPClvd8t8UM7/QCZB/RvUhKKmVxbnkfcGkb8vxrKRzQ5bf5AdFgjI=
+	t=1791556722; cv=none; b=EWJblPlQKHPHizegKmrOK8C2i/AGbNgQXfCBRHamrkN29mWV7QdSAsfDrnWWhVMHwaSD56eKFyG9vmnYvV0QKaylWpXmYAy5PAWvLhFKMPYxsc98UeGL/rEh/3VGaWJoNNd9b4HZs3+NXKBn1dkJd9wBm0FN+Xdk4Um8One9mEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556718; c=relaxed/simple;
-	bh=uAjlaQn/Hsj3eHt909RjAcmi20sjST7O1nOto2B7RBg=;
+	s=arc-20240116; t=1791556722; c=relaxed/simple;
+	bh=tzzg9xNXu/YgOy7MGcv669z2PbFHyZLBecjbDicweGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joF1RH8eDWdfiJYQkaUP7Hyy72FZ2MEiyDiO95W7mFQAsL+mXMZ0yxYb3FIUGOVM5Wo07xVS/Y+L+dMvpWk71pCVbXtj+lkDZkC19Qa9YHm/MOFH/UizWEXRxVLnY6Nh9Hg6P6TgXJhpA/liEI1xgctedE9DuZ+VPes70aDy+BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bREh3F/w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jG/b6ylewzhOm+W3hlkQrl3gUTbUem79qYJJh4zodVhP7hSzsQN+/iXbnIJ9xdB7SQXvXwT3/kwh7ay3ySjQool7vboFI+sDx1inQ3OO588CEYQS4OcT0dApeJBQnHa/zIs/BbHq9EDFb9LrRvc7FB0CUehgUCvb63aqKFP7RbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=didfliq4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bREh3F/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FBA1F000FF;
-	Fri,  9 Oct 2026 14:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="didfliq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC4A1F000FF;
+	Fri,  9 Oct 2026 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556717;
-	bh=58x1yW3/0qzijd50MLqR/4lEQARzCQVnUB9w9oXGRpA=;
+	s=korg; t=1791556720;
+	bh=bFfFdDaMNoO1hbVi7jUEuX7rnqD4K0CnB2eXcjxvXtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bREh3F/wTSLYsQQDBL4lS4ScifJbhMpVESgYLFUM1efeogzClhZxsXPlSSP4r+e8B
-	 RVlo13opzvKZBAeaK5dhX+zCj+VnGrXk8Kr//jcKBDerlQ+eNE2sy/K84mapl2IYoX
-	 3n4Rc8uzbGhg8/RkKerRYJWfQbm4M1NEXMXwJuCg=
+	b=didfliq4Vx9gYx/pUe6yC3N/2NeLUmyqDz2nXtQr/i/3ohxvKoRS3Sa4jK6Fo1EFj
+	 6wjl9EkdXktL6mtQrM/psCzs/w5+Adxs/tk8vbYZAYfygnUqPW26wPvbjNN6d2LRI2
+	 +XQj/fGz0mvz2Hq1ObyDVm32dYIo1G6lHsqHRsdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 282/403] USB: serial: option: add support for SIMCom SIM8260C
-Date: Fri,  9 Oct 2026 16:10:43 +0200
-Message-ID: <20261009140958.788540810@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.2 231/428] usb: typec: ucsi: glink: fix use-after-free of ucsi on remove
+Date: Fri,  9 Oct 2026 16:09:28 +0200
+Message-ID: <20261009140951.187777012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 35c950c9ec2c4c4d45dc9b63cfe8fca774ce33a0 upstream.
+commit 63b269ec537dc0fd26d0bd64872c26860d108c9d upstream.
 
-Add support for SIMCom SIM8260C (1e0e:902b).
+The pmic_glink client is released by the devres cleanup, which runs
+after pmic_glink_ucsi_remove() has returned, so its notification
+callbacks can queue work until then. Work that runs after
+ucsi_unregister() has been called touches freed state: it dereferences
+the connector array that ucsi_unregister() freed, or registers and
+unregisters the instance a second time.
 
-T:  Bus=08 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1e0e ProdID=902b Rev= 5.04
-S:  Manufacturer=SIMCOM
-S:  Product=SDXLEMUR-LITE-MTP _SN:120696AB
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 5 IfCount= 3 Cls=01(audio) Sub=00 Prot=20
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan_simcom
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 0 Cls=01(audio) Sub=01 Prot=20 Driver=snd-usb-audio
-I:* If#= 6 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
-I:  If#= 6 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
-E:  Ad=05(O) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
-I:* If#= 7 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
-I:  If#= 7 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
-E:  Ad=89(I) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
+Disable both work items with disable_work_sync() before unregistering,
+and unregister only if the instance is still registered.
 
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+This issue was found by an in-house static analysis tool.
+
+Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Link: https://lore.kernel.org/r/20260227190430.889-1-nathan.c.rebello@gmail.com
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260908060216.616045-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_glink.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2169,6 +2169,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
- 	  .driver_info = RSVD(7) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x902b, 0xff),
-+	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
- 	  .driver_info = RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -362,6 +362,10 @@ static void pmic_glink_ucsi_destroy(void
+ {
+ 	struct pmic_glink_ucsi *ucsi = data;
+ 
++	/* Drain the work items before ucsi_destroy() frees the ucsi instance */
++	cancel_work_sync(&ucsi->notify_work);
++	cancel_work_sync(&ucsi->register_work);
++
+ 	/* Protect to make sure we're not in a middle of a transaction from a glink callback */
+ 	mutex_lock(&ucsi->lock);
+ 	ucsi_destroy(ucsi->ucsi);
+@@ -467,8 +471,15 @@ static void pmic_glink_ucsi_remove(struc
+ {
+ 	struct pmic_glink_ucsi *ucsi = dev_get_drvdata(&adev->dev);
+ 
+-	/* Unregister first to stop having read & writes */
+-	ucsi_unregister(ucsi->ucsi);
++	/* Callbacks can queue work until devres releases the client */
++	disable_work_sync(&ucsi->notify_work);
++	disable_work_sync(&ucsi->register_work);
++
++	/* register_work may have unregistered the instance already */
++	if (ucsi->ucsi_registered) {
++		ucsi->ucsi_registered = false;
++		ucsi_unregister(ucsi->ucsi);
++	}
+ }
+ 
+ static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
 
 
