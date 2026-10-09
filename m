@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D88633A6EB;
-	Fri,  9 Oct 2026 14:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682133D34A2;
+	Fri,  9 Oct 2026 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556463; cv=none; b=LvPd1tpNBi7jfCgZJ3zFF5E7kk5DDu4m69EEBetdZmo5UHNblqg5xC0rd46J05YhZ4QLEpBCKi1VgXMD04f2EP0tgta/6vWVckWjtgL2Cdz37HJuAumnhg5OAD0AdITK4S9vXjjKwU6uvw8nemhMXz52ki6uqPAs45wTjSopRJo=
+	t=1791556466; cv=none; b=DE78jx1858I5ajQO/6LY41HJKuMaHwOB4UghM/oWMvlLZPMzThdsHhcxln8mmwFyXLMNIWscF8bTVE1TAA3OfP33vnLQ+QNcP312r+4d6A9THA5W+4rRwSx8YPdeGbZhzRtMawq23fYm9mXiWDp4zCb2z8wkTtaRBfmhs+LxBUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556463; c=relaxed/simple;
-	bh=q7B6G//ZoAVGfL29ulLVYt/7iwpfQjvFbqFur2/ejbE=;
+	s=arc-20240116; t=1791556466; c=relaxed/simple;
+	bh=ZpOxz6t7sfVztKplPQ8hr5Io3iHVTv7FyiTp3itTNTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRUb7JX+6BbRkVZDWfFaNjDtbeYw9uiSzhVrmwNk0cbjkFkmmwG2eryOw9Dqp7AYMDodoL0RoLAgK4fTFIBADopo6HvnMJqjjAkxqGySRTmjaAaKVBRMorlVRXlSamyDOK/H3fsqsizFivd5K7ioj+ggSFXOXpr4efa4Q6JvwkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrCz5b0Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bt86yA68W56K3E0/BVwUskymIXVvJxUmEtkb9c1uVCFIk/K9U4m0WNAz2pgn+x2Rop6g25dvWNaFApTrSaY32LXc05BpkyJA1D3K9y2aIDdzuyuJ4WogLOuRZIfwfAXFxfmtIURdyDgRMzU1BIQh8eBdI6KQh8ckM5MhjYFSAlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PomNnIZz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrCz5b0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09BE1F00893;
-	Fri,  9 Oct 2026 14:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PomNnIZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73351F000FF;
+	Fri,  9 Oct 2026 14:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556462;
-	bh=pZj22Eche/Jg6dQ7wKZAENyW/bqMHtJzY310LMORym4=;
+	s=korg; t=1791556465;
+	bh=JePRzUtn5YDYhYvm0BJetpGrShEGrYzGs6Ui4EXrGDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrCz5b0ZilkMsOjlixZ90Zogy0pzstk6dm6aUYv4wSq0tXjtEKGE70fOTcn6uJfv8
-	 Xo8IZ6HRI3oCkFMlmNf+sss9VgFDO6QRKzh5hgAxvmYjTOOxUGk02Yp+sozKF8uVHm
-	 FkV94j6FrkEH+ra+ZxBp8CJr2SPQa3hkrfwLHPgE=
+	b=PomNnIZzVupx1baT1g7V+ObbMEnTp8c/v5MnU0IYO7XDlIu22/hJQTymRRxLBw4yV
+	 oyiPoxDxgltkYUlt1OwPqfa3AhTkYTLRdKjSwDafbBRZVMvROEIfLIRhr6fK91Pzv3
+	 F/s54S/nSlFv//JFnypNwIQx/pndja89Nh8xPE3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.18 237/403] x86/mm: Drop unnecessary PMD page copy when freeing
-Date: Fri,  9 Oct 2026 16:09:58 +0200
-Message-ID: <20261009140957.707465633@linuxfoundation.org>
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 7.2 180/428] drm/i915/vrr: Disable DC balance by default
+Date: Fri,  9 Oct 2026 16:08:37 +0200
+Message-ID: <20261009140950.100933892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,148 +47,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
 
-commit e3ee38c1bc0b11a8d3e63dce7050759b61864286 upstream.
+commit c034e8a46e4cb703018fe7e10fe5a3a974d6a7c3 upstream.
 
-On a box with a discrete GPU, lockdep reports a possible deadlock as
-soon as kswapd shrinks the TTM page pool. The immediate cause is an
-x86 commit that added an mmap_read_lock() to kernel page protection
-munging code.
+Disable VRR DC balance by default due to timing issues observed on some
+panel/TCON combinations.
 
-The huge vmap code holds the same lock over a GFP_KERNEL allocation,
-which is a no-no now that reclaim can take it. That allocation is in a
-page table *free* path and ends up being for dubious purposes[1].
-Basically, it tries to avoid hardware setting Accessed=1 in page table
-entries that are unreachable by the hardware, a non-issue.
+Keep the module parameter to enable DC balance during debugging and to
+isolate DC balance effects from underlying VRR/display timing issues.
 
-Remove the PMD copy. Detach the original PMD page at the PUD, flush
-the mid-level caches, and free the PTE tables straight from the
-detached PMD page. With no allocation left, the locking issue is gone.
+--v2:
+- Make enable_dc_balance a bool and keep it disabled by default; fix the
+  parameter type/value mismatch and correct the description (Chaitanya
+  Kumar Borah, Jani Nikula)
+- Explain in the commit message why the feature is gated and why a
+  module parameter is used (Jani Nikula)
 
-Lockdep splat/analysis:
+--v3:
+- Commit message update (Jani Nikula)
 
-  WARNING: possible circular locking dependency detected
-  7.3.0-rc3-f6e7b42bf05b+ #183 Tainted: G     U
-  ------------------------------------------------------
-  kswapd0/269 is trying to acquire lock:
-  ((init_mm).mmap_lock){++++}-{4:4}, at: change_page_attr_set_clr+0x29a/0x4a0
-  but task is already holding lock:
-  (pool_shrink_rwsem){.+.+}-{4:4}, at: ttm_pool_shrink+0xb2/0x330 [ttm]
-  Chain exists of:
-    (init_mm).mmap_lock --> fs_reclaim --> pool_shrink_rwsem
-
-The cycle is built from three edges:
-
-  1) pool_shrink_rwsem -> (init_mm).mmap_lock
-
-     The TTM shrinker restores the caching attribute of every page it
-     frees, while holding pool_shrink_rwsem:
-
-       ttm_pool_shrink()
-       -> ttm_pool_dispose_list()
-       -> ttm_pool_free_page()
-       -> set_pages_wb()
-       -> change_page_attr_set_clr()   [ init_mm mmap read lock ]
-
-  2) fs_reclaim -> pool_shrink_rwsem
-
-     The same shrinker, called from reclaim.
-
-  3) (init_mm).mmap_lock -> fs_reclaim
-
-     ioremap() installing a huge PUD mapping over an existing PMD table:
-
-       ioremap_page_range()
-       -> vmap_range_noflush()
-       -> vmap_try_huge_pud()          [ init_mm mmap read lock ]
-       -> pud_free_pmd_page()
-       -> __get_free_page(GFP_KERNEL)  [ enters reclaim ]
-
-[ dhansen: Lots of changelog munging/trimming and merged comments from my
-	   version of the fix. ]
-
-Fixes: d5d8b8662e6e ("x86/mm/pat: Acquire init_mm read lock on attribute changes to avoid UAF")
-Suggested-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Link: https://lore.kernel.org/20260916062222.27347-1-mikhail.v.gavrilov@gmail.com
-Link: https://lore.kernel.org/all/e11449f0-d9ad-4d1b-ab21-2be7d71fe335@intel.com/ [1]
-Link: https://patch.msgid.link/20260923223116.20090-1-mikhail.v.gavrilov@gmail.com
-Cc: stable@vger.kernel.org
+Fixes: 555819270707 ("drm/i915/vrr: Enable DC Balance")
+Cc: <stable@vger.kernel.org> # v7.0+
+Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260917074322.2606738-1-mitulkumar.ajitkumar.golani@intel.com
+(cherry picked from commit d1ef78f0581e856c4238c751e9ae2884ce58c275)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pgtable.c |   38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_params.c |    4 ++++
+ drivers/gpu/drm/i915/display/intel_display_params.h |    1 +
+ drivers/gpu/drm/i915/display/intel_vrr.c            |    4 +++-
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -716,47 +716,37 @@ int pmd_clear_huge(pmd_t *pmd)
- }
+--- a/drivers/gpu/drm/i915/display/intel_display_params.c
++++ b/drivers/gpu/drm/i915/display/intel_display_params.c
+@@ -120,6 +120,10 @@ intel_display_param_named_unsafe(enable_
+ 	"(0=disabled, 1=enable up to PSR1, 2=enable up to PSR2) "
+ 	"Default: -1 (use per-chip default)");
  
- #ifdef CONFIG_X86_64
--/**
-- * pud_free_pmd_page - Clear PUD entry and free PMD page
-- * @pud: Pointer to a PUD
-- * @addr: Virtual address associated with PUD
-- *
-- * Context: The PUD range has been unmapped and TLB purged.
-- * Return: 1 if clearing the entry succeeded. 0 otherwise.
-- *
-- * NOTE: Callers must allow a single page allocation.
-+/*
-+ * Given a PUD poitner, detach and free the pointed-to
-+ * PMD page and any PTE page children. The entire range
-+ * under the PUD must not have any valid translations
-+ * and the TLB must have already been flushed.
-  */
- int pud_free_pmd_page(pud_t *pud, unsigned long addr)
++intel_display_param_named_unsafe(enable_dc_balance, bool, 0400,
++	"Enable VRR DC balance (0=disabled, 1=enabled). "
++	"Default: 0 (disabled)");
++
+ intel_display_param_named_unsafe(enable_panel_replay, int, 0400,
+ 	"Enable Panel Replay (0=disabled, 1=enabled). Default: -1 (use per-chip default)");
+ 
+--- a/drivers/gpu/drm/i915/display/intel_display_params.h
++++ b/drivers/gpu/drm/i915/display/intel_display_params.h
+@@ -46,6 +46,7 @@ struct drm_printer;
+ 	param(bool, enable_dp_mst, true, 0600) \
+ 	param(int, enable_fbc, -1, 0600) \
+ 	param(int, enable_psr, -1, 0600) \
++	param(bool, enable_dc_balance, false, 0600) \
+ 	param(int, enable_panel_replay, -1, 0600) \
+ 	param(bool, psr_safest_params, false, 0400) \
+ 	param(bool, enable_psr2_sel_fetch, true, 0400) \
+--- a/drivers/gpu/drm/i915/display/intel_vrr.c
++++ b/drivers/gpu/drm/i915/display/intel_vrr.c
+@@ -383,10 +383,12 @@ static bool intel_vrr_dc_balance_possibl
+ static void
+ intel_vrr_dc_balance_compute_config(struct intel_crtc_state *crtc_state)
  {
--	pmd_t *pmd, *pmd_sv;
- 	struct ptdesc *pt;
-+	pmd_t *pmd;
- 	int i;
++	struct intel_display *display = to_intel_display(crtc_state);
+ 	int guardband_usec, adjustment_usec;
+ 	struct drm_display_mode *adjusted_mode = &crtc_state->hw.adjusted_mode;
  
- 	pmd = pud_pgtable(*pud);
--	pmd_sv = (pmd_t *)__get_free_page(GFP_KERNEL);
--	if (!pmd_sv)
--		return 0;
--
--	for (i = 0; i < PTRS_PER_PMD; i++) {
--		pmd_sv[i] = pmd[i];
--		if (!pmd_none(pmd[i]))
--			pmd_clear(&pmd[i]);
--	}
+-	if (!intel_vrr_dc_balance_possible(crtc_state) || !crtc_state->vrr.enable)
++	if (!intel_vrr_dc_balance_possible(crtc_state) ||
++	    !crtc_state->vrr.enable || !display->params.enable_dc_balance)
+ 		return;
  
-+	/* Detach the PMD page: */
- 	pud_clear(pud);
- 
--	/* INVLPG to clear all paging-structure caches */
-+	/*
-+	 * PMD and all its descendents are unreachable
-+	 * via normal page walks. Make them unreachable
-+	 * in cached mid-level walks too:
-+	 */
- 	flush_tlb_kernel_range(addr, addr + PAGE_SIZE-1);
- 
- 	for (i = 0; i < PTRS_PER_PMD; i++) {
--		if (!pmd_none(pmd_sv[i])) {
--			pt = page_ptdesc(pmd_page(pmd_sv[i]));
-+		if (!pmd_none(pmd[i])) {
-+			pt = page_ptdesc(pmd_page(pmd[i]));
- 			pagetable_dtor_free(pt);
- 		}
- 	}
- 
--	free_page((unsigned long)pmd_sv);
--
- 	pmd_free(&init_mm, pmd);
- 
- 	return 1;
+ 	crtc_state->vrr.dc_balance.vmax = crtc_state->vrr.vmax;
 
 
