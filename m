@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF7B2BE7CD;
-	Fri,  9 Oct 2026 14:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA982BE7CD;
+	Fri,  9 Oct 2026 14:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556091; cv=none; b=csN1v5p6v6dxl12p8REGsw+h6Pa6zdmbYcqyWoL80JPIPdgr+fauE5iMkBtSBCkeOIxSLl0HLdU1dUulhDHQelrpKJoOQt+rYBg6NRREjiF2Q6VZ1bowxPlYlLsIwvnaA6g6ktob+AdKIv6xzpxVih6frkvr9O8baeywB3UkpTM=
+	t=1791556094; cv=none; b=tzEVAvJOf4xSYq/WTC2cuGLIDuXctxBNddul95sZLDEebS0AsHgwANMb5n5F4Eo7SZ/2UdRdBxbQMO/glMCWPvtM4KfbEA5YDoj2x4bS3zSQ1RO58dtm5TtgR1Xyei8weB8c/ACkkzXPlfPGoF/+XeotUq362j5mbVidvsHP39c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556091; c=relaxed/simple;
-	bh=KVqrlwzIEKlblMQheavIoKE1yNfuQEa5ZlbZVT5/E0g=;
+	s=arc-20240116; t=1791556094; c=relaxed/simple;
+	bh=3mK/BTHLjGZq+Te91MOGOMlC8te1VoEiTFtzhlOrPNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fO4IBbRN21+lV/MKFR2uK8lSF+goFwDzu1qnUNGa4QqIiWpiAscrSwgu4ZLbsjFItzWotDKhqnxpRSrmWl5gnihtWDcIt8AoFF+4Jp5vmYTrBAin8sZekc7A6Wjq4xTTLrI9l6j13WfvjqwwDDTh9NAY3YQ1uDtD9KorJSE6wX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHsNWLR2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A74a+Md0RoiOfFaA8RWfb+c+oYvx4+YmV38sh9Tyh7jFo7hGslh9U0LTktzx5ntExwNP3AksCBQrPRhnIIMasgGY6vPbBY6zMyH6zZ5/27itaLYLY7gtlyUCgvn2jO4Yg8d6kutGjY0+80kTVXcv8QBqEpN2MFtx6ChtmuLpeFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoxTwQjq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHsNWLR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5EE1F000FF;
-	Fri,  9 Oct 2026 14:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoxTwQjq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598961F000FF;
+	Fri,  9 Oct 2026 14:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556090;
-	bh=MilS29canKjiI1Sv7n8FbFV0VuSoogM8dfdSJ0689hE=;
+	s=korg; t=1791556092;
+	bh=Xa89NlXTyTZc6aKOvNOEZZlXW1B6UZCfh3drdov25Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yHsNWLR2SVJj+1je4YaBjJB2c+r/5vs2dm9AsMV2s6b2cft39EcSnqXKbEKH2t/rw
-	 qb7J6OldLiJEzUE2i0pIIgAwD4pj3AjJbd8STCdUp/qANuZSIR9B88w/g6dqMvvhhl
-	 dE/lN5hQ46cZ8/Cv1VECDBpKiN8VhWb/RmgsB06w=
+	b=eoxTwQjqMOq+H2ndH/c3eVSA5x02r+mtONTu6am9C31Q74K1hUaZUY/jElI340N3s
+	 PNlqGvIhVxAx1L7JUlMFmzk6OGsBXMoobcnYhUJ71O3Zhcaok1k/YwCkzfsxC4RQwT
+	 eAgdzu8YqmdF7vn3dsM911fLfhW54qe+h1x/0Dr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien Stephan <jstephan@baylibre.com>,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 119/428] drm/mediatek: mtk_hdmi_v2: fix VID_DOWNSAMPLE_CONFIG register offset
-Date: Fri,  9 Oct 2026 16:07:36 +0200
-Message-ID: <20261009140948.808644194@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marek Maslanka <mmaslanka@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 173/403] usb: typec: port-mapper: Only match USB4 port if host interface is available
+Date: Fri,  9 Oct 2026 16:08:54 +0200
+Message-ID: <20261009140956.159310104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julien Stephan <jstephan@baylibre.com>
+From: Marek Maslanka <mmaslanka@google.com>
 
-[ Upstream commit 3e292c56bf5e338efcda7f9bfa603180855cd1be ]
+commit aef5a7e207656ad6abdeeaa0bfc8ee9a1f9c02f6 upstream.
 
-According to the datasheet, VID_DOWNSAMPLE_CONFIG is at offset 0x8f0;
-0x8d0 is the VID_CSC_COEFF_0 register.
+typec_port_match() adds a component match for the USB4 port whenever a
+USB 3.x port that shares the _PLD with the Type-C connector has the
+"usb4-host-interface" property, regardless of whether a USB4 port can
+ever be registered for it. The component framework binds the aggregate
+device only once every match has found its component, so if the USB4
+port never shows up, the USB 2.0 and USB 3.x ports are not linked to the
+connector either: the "connector" symlinks are never created and USB
+devices enumerated on those ports are never linked with the Type-C
+partner.
 
-Fixes: 8d0f79886273 ("drm/mediatek: Introduce HDMI/DDC v2 for MT8195/MT8188")
-Signed-off-by: Julien Stephan <jstephan@baylibre.com>
-Reviewed-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260828-mtk-hdmi-v2-fix-register-offset-v1-1-118ad5d7ebe3@baylibre.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This happens in at least two cases:
+
+1. CONFIG_USB4 is not reachable from the Type-C core, i.e. CONFIG_USB4=n,
+   or CONFIG_USB4=m with CONFIG_TYPEC=y as in the x86_64 gki_defconfig.
+   usb4_usb3_port_match() is then a stub that always returns false.
+
+2. The firmware references a USB4 host interface that is disabled. For
+   example, on Intel Alder Lake-N (ChromeOS Nissa) the TCSS xHCI USB3
+   ports (SS01-SS04) reference TDM0/TDM1, whose _STA returns 0 because
+   the SoC has no integrated Thunderbolt/USB4 and the DMA controllers
+   are disabled in TCSS DEVEN. No PCI device is enumerated for them.
+
+Only add the USB4 component match if CONFIG_USB4 is reachable and the
+referenced host interface is available and has been enumerated as a
+device. The latter mirrors the check in usb_acpi_add_usb4_devlink(), see
+commit 623dae3e7084 ("usb: acpi: fix boot hang due to early incorrect
+'tunneled' USB3 device links").
+
+Fixes: 4fd7a1f0f7f2 ("usb: typec: Connect Type-C port with associated USB4 port")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marek Maslanka <mmaslanka@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260925131650.3777399-1-mmaslanka@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi_regs_v2.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/port-mapper.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_regs_v2.h b/drivers/gpu/drm/mediatek/mtk_hdmi_regs_v2.h
-index 521b35c7e14d3..bf3ebf5492d15 100644
---- a/drivers/gpu/drm/mediatek/mtk_hdmi_regs_v2.h
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi_regs_v2.h
-@@ -173,7 +173,7 @@
- #define  TPI_AUDIO_LOOKUP_EN		BIT(2)
+--- a/drivers/usb/typec/port-mapper.c
++++ b/drivers/usb/typec/port-mapper.c
+@@ -42,6 +42,23 @@ static int usb4_port_compare(struct devi
+ 	return usb4_usb3_port_match(dev, fwnode);
+ }
  
- /* Video downsampling configuration */
--#define VID_DOWNSAMPLE_CONFIG		0x8d0
-+#define VID_DOWNSAMPLE_CONFIG		0x8f0
- #define  C444_C422_CONFIG_ENABLE	BIT(0)
- #define  C422_C420_CONFIG_ENABLE	BIT(4)
- #define  C422_C420_CONFIG_BYPASS	BIT(5)
--- 
-2.53.0
-
++static bool typec_has_usb4_host_interface(const struct fwnode_handle *fwnode)
++{
++	if (!IS_REACHABLE(CONFIG_USB4))
++		return false;
++
++	struct fwnode_handle *nhi_fwnode __free(fwnode_handle) =
++		fwnode_find_reference(fwnode, "usb4-host-interface", 0);
++
++	/*
++	 * The USB4 port can only appear if the host interface is enabled in
++	 * the firmware and has been enumerated as a device. The latter is
++	 * the same check as in usb_acpi_add_usb4_devlink().
++	 */
++	return !IS_ERR(nhi_fwnode) && fwnode_device_is_available(nhi_fwnode) &&
++	       nhi_fwnode->dev;
++}
++
+ static int typec_port_compare(struct device *dev, void *fwnode)
+ {
+ 	return device_match_fwnode(dev, fwnode);
+@@ -64,11 +81,11 @@ static int typec_port_match(struct devic
+ 				    adev_fwnode);
+ 
+ 		/*
+-		 * If dev is USB 3.x port, it may have reference to the
++		 * If dev is USB 3.x port, it may have reference to an available
+ 		 * USB4 host interface in which case we can also link the
+ 		 * Type-C port with the USB4 port.
+ 		 */
+-		if (fwnode_property_present(adev_fwnode, "usb4-host-interface"))
++		if (typec_has_usb4_host_interface(adev_fwnode))
+ 			component_match_add(&arg->port->dev, &arg->match,
+ 					    usb4_port_compare, adev_fwnode);
+ 	}
 
 
