@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327AE3D9DDB;
-	Fri,  9 Oct 2026 14:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285E52BE7CD;
+	Fri,  9 Oct 2026 14:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555812; cv=none; b=mvpuchTiedWKWe4t/RZ59lLZyiCPEnBKQJMLIvtiUst0Tt8MgjBSK1jGfDiN9aXN+Qug5XfRgj1j9BXkbFxXpwdoxr0OKYf/yxDpYKx/YbF2go7txQuN3iGF/kmAtgFqiRd+a38tY0RFojJw47ZsiByf2I7C0FYAOyk+B28is3A=
+	t=1791555815; cv=none; b=s4QHxB32xTATBJlxHC1nYnY8aYjMETsLcsR1nbmC/Ly2J+0GKkoGu0b8aPq6ogX1dSbxNhqfQ7z82SF/UB1qcaMJIiRu/CktdT5g36qCa/n6aVO/bZHvhHves5vHUCRmdfykD6A8lcGwfoEdSE/0s29UzCcZ9qdDlOUQ7j7hWrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555812; c=relaxed/simple;
-	bh=3CCQy4/ZEMHrMgwGH58Y1aExjVZb9OJn4K7XDO74PQU=;
+	s=arc-20240116; t=1791555815; c=relaxed/simple;
+	bh=VuH0Je94ka4dgY+wwCXQBR/EeZ33hvdraxomH0DJqZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyMd8W27yWDtD/4/G3iBX09taTSvqUDzB1JEeYHrZIj/D0mmorRdpiSKEaI2p7Lnh0JZ4OHdJLzYBTrKFUEDkHQPrsomZe7hS2xzMs1qXjpr/bDNUA6QPJz6+io5Qt7K0+nVCRfHlBi4fD9KQIn7jF+15UKHhjvlDRNWZXCD9zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSLCYBQq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I05oAt1Gpdtk76t7rlR1N0RvHQlppVTbP2fHfFHCWcXghjN/9s5638u4ZEkg9OEarCip5dvg2Z8GDH102ZTZEhzINs7HYmDKd9Flomgn/dj/5IElEkYf5taVCFtlhtryaRNPHcPMzc2q7h9IBtja61jGy/Ad944Zn4rofs4Kn08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RD92Rtj4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSLCYBQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A541F000FF;
-	Fri,  9 Oct 2026 14:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RD92Rtj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0E01F00899;
+	Fri,  9 Oct 2026 14:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555811;
-	bh=/K12HyKr3QaHeIc73nsW3dvUkKNAD7aWbG2/mkrmHAM=;
+	s=korg; t=1791555814;
+	bh=EqcMf39gpTP7fWVGye3kfzaOIMxaTP0BFioaCFBGGEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSLCYBQqfoq2iX2XiFkYcAeFCFz5fyVtlQaDhlyZnrZzsdaHsYOtutJ3RfTdIrv17
-	 uobNB9lX4FLvFGFwS5bE5mYNwCBD634f6r3r02IqBIDxKTf9GfXQ4RwX5iXGPbsLF1
-	 T1zVg71WKgyghRkzeFDsTYPwrG5pS6paG/9TOG4o=
+	b=RD92Rtj4UyEDSiyVSGZ4jsSN4qD5KBzlfJ1y9lwVkXlqflTQD0DliWBs9z7Q+bVxf
+	 2NFVu/lbvyLxg8UnMh5igrcReU6QDChfZ16skx1+Uy+QVwdJUdCQMUzPYg7ygRwygc
+	 DBPzBg3z8V48CZ4oapFATPE/IxtljL8UV1EFLulY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/403] ipvs: filter some flags received in the backup server
-Date: Fri,  9 Oct 2026 16:08:03 +0200
-Message-ID: <20261009140954.932117157@linuxfoundation.org>
+Subject: [PATCH 7.2 074/428] of/overlay: dont leak fragment references when changeset init fails
+Date: Fri,  9 Oct 2026 16:06:51 +0200
+Message-ID: <20261009140947.786358813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,106 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit f96e91748f6304668fe647e686d199d7207d36f1 ]
+[ Upstream commit 1d62f0f2bc7edb12ed09f71203df0e47fa4efca4 ]
 
-While the IPVS SYNC protocol is not secure by design
-we can still protect the backup server from messages that
-can wreak havoc.
+init_overlay_changeset() stores the number of initialized fragments
+in ovcs->count only on full success. When find_target() or the
+__symbols__ lookup fails partway through, the target and overlay
+references taken for the fragments initialized so far are never
+dropped: free_overlay_changeset() bounds its cleanup loop by
+ovcs->count, which is still 0.
 
-This commit addresses problems from received connection flags
-or their combinations. We now drop messages as follows:
+Store the running count on the error path so free_overlay_changeset()
+puts whatever was set up. The store is guarded by ovcs->fragments
+because on the allocation-failure path cnt still holds the counting
+pass total while there is no fragments array; everywhere else cnt
+only counts fully-initialized fragments.
 
-1. the NO_CPORT+TEMPLATE combination allows lookups for normal
-connections to hit template which can break in many ways.
-While the master does not sync connections with NO_CPORT flag,
-i.e. before they are established, we still accept NO_CPORT
-without TEMPLATE.
-
-2. ONE_PACKET: it is not sent by master, so we do not
-expect it in backup. Before now it was ignored by
-IP_VS_CONN_F_BACKUP_MASK for protocol v1 while protocol
-v0 created connections that are not hashed and dropped
-immediately. Better to apply the IP_VS_CONN_F_BACKUP_MASK
-also to the flags from v0 messages for consistency with v1.
-
-Fixes: 87375ab47cd0 ("[IPVS]: ip_vs_ftp breaks connections using persistence")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/20260805204009.CF3891F000E9@smtp.kernel.org
+Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
+Assisted-by: Claude:claude-opus-4-8 [Claude Code]
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-6-02754604805a@nexthop.ai
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ drivers/of/overlay.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 699651e84d832..b835f61886d6d 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -950,6 +950,21 @@ static void ip_vs_proc_conn(struct netns_ipvs *ipvs, struct ip_vs_conn_param *pa
- 	ip_vs_conn_put(cp);
+diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
+index 0cc08567c300e..276870291656b 100644
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -854,6 +854,10 @@ static int init_overlay_changeset(struct overlay_changeset *ovcs,
+ err_out:
+ 	pr_err("%s() failed, ret = %d\n", __func__, ret);
+ 
++	/* let free_overlay_changeset() put the fragments set up so far */
++	if (ovcs->fragments)
++		ovcs->count = cnt;
++
+ 	return ret;
  }
- 
-+/* Check for incompatible flags */
-+static bool ip_vs_sync_validate_flags(u32 flags)
-+{
-+	/* We do not expect NO_CPORT, especially to allow lookups
-+	 * to hit templates
-+	 */
-+	if (flags & IP_VS_CONN_F_NO_CPORT) {
-+		if (flags & IP_VS_CONN_F_TEMPLATE)
-+			return false;
-+	}
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
-+		return false;
-+	return true;
-+}
-+
- /*
-  *  Process received multicast message for Version 0
-  */
-@@ -973,8 +988,7 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			return;
- 		}
- 		s = (struct ip_vs_sync_conn_v0 *) p;
--		flags = ntohs(s->flags) | IP_VS_CONN_F_SYNC;
--		flags &= ~IP_VS_CONN_F_HASHED;
-+		flags = ntohs(s->flags);
- 		if (flags & IP_VS_CONN_F_SEQ_MASK) {
- 			opt = (struct ip_vs_sync_conn_options *)&s[1];
- 			p += FULL_CONN_SIZE;
-@@ -987,6 +1001,13 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			p += SIMPLE_CONN_SIZE;
- 		}
- 
-+		if (!ip_vs_sync_validate_flags(flags)) {
-+			IP_VS_DBG(2, "BACKUP v0, Invalid flags 0x%X\n", flags);
-+			continue;
-+		}
-+		flags &= IP_VS_CONN_F_BACKUP_MASK;
-+		flags |= IP_VS_CONN_F_SYNC;
-+
- 		state = ntohs(s->state);
- 		if (!(flags & IP_VS_CONN_F_TEMPLATE)) {
- 			pp = ip_vs_proto_get(s->protocol);
-@@ -1142,7 +1163,13 @@ static inline int ip_vs_proc_sync_conn(struct netns_ipvs *ipvs, __u8 *p, __u8 *m
- 	}
- 
- 	/* Get flags and Mask off unsupported */
--	flags  = ntohl(s->v4.flags) & IP_VS_CONN_F_BACKUP_MASK;
-+	flags = ntohl(s->v4.flags);
-+	if (!ip_vs_sync_validate_flags(flags)) {
-+		IP_VS_DBG(3, "BACKUP, Invalid flags 0x%X\n", flags);
-+		retc = 25;
-+		goto out;
-+	}
-+	flags &= IP_VS_CONN_F_BACKUP_MASK;
- 	flags |= IP_VS_CONN_F_SYNC;
- 	state = ntohs(s->v4.state);
  
 -- 
 2.53.0
