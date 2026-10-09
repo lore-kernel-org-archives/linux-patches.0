@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD90125AA;
-	Fri,  9 Oct 2026 14:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08A93B582F;
+	Fri,  9 Oct 2026 14:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556476; cv=none; b=hXsh+DyAm9eAIbnXEnEUImGSzZFel247S1cg24D50DnuVI+UkoKdqKa2wrGR0M71oPjMI0BlG9fhlyL+AmUvlnNoNI57cTDu5ZBA8aPwa7TjDXZs1lPmAQWIXL9PNBMo3rNh8rXjxb8g2W3QE/ZpSGlzlHeKDpLSRZn1X/Lx134=
+	t=1791556478; cv=none; b=Eq2MB6mEZ0NGTMnrU4qm1/hcSLTMgz1eoRU+jt+NZRO1+CHhd2CGNsmC3uBqob0jcg7DnbX9NIO0fEGTMatTmD8EWdWO4QxlKE/Rwv3i4gL2VgdmRbkZ+jnnX36P2YjuSgxZW7R1C5CHI4+8F5x4kJ7wm77IFa8uO3Vy6or6a6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556476; c=relaxed/simple;
-	bh=yXbC6ZV6RUDnJWug2Yr9efvV4MLhrTaC2+eBqBdb/p8=;
+	s=arc-20240116; t=1791556478; c=relaxed/simple;
+	bh=SNDLkUHvmjgV4agMrl0evzWsJOiSAWu+pKko4I+hyE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptUlLr31xcOl4YgT+gPOjNLb0+gkUNhd9UGQjKuhrwQCeZv+3MbpJbmYu2pwKzsbM5e7HKCBQm9vmZ/K1QJtTJTuqbDZY8UdxVGobr2KWV/Nh3rhd9HilJB/S32GbN8mg3XncBktwJe/KxjY3W6/fDYwhRl08kosaFuPyODkAUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbpgfoSv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dKhh/WJixujt0HzFwwHJIk7UZX8d+u3ZmLl1mQjQxgxEAzKwWaZsc9CC6MxPLi7V20sVrS891jefiIz0sEMBN6FUyBHlHgBiNgrd5Cfy5o41YyxRinDCCYVWug8HotJR8jrtMVoN+osJk6cPKyMmBm5H0ovQZ1n1ftrbZyz5Qgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erPfDZ87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbpgfoSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718F91F000FF;
-	Fri,  9 Oct 2026 14:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erPfDZ87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397091F00893;
+	Fri,  9 Oct 2026 14:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556474;
-	bh=VVOjhzKKl7vy/Nn8+Kb3d4XMuJ5lxlrbLsgsfgHUJ8U=;
+	s=korg; t=1791556476;
+	bh=pUGjKahWjfU8cmxndfT+ek7mZ3YPVPWy8pKgStQKZhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CbpgfoSvMfzAhFjhUHwWp6E2ShM/OyeFUdhvnde7gFseOo7FvET+JNPPTGNNHbxZ4
-	 OJfL7Y34CA0oOOfbmld/jtCDOpgr6P2weQZUB2iah/ERfUBPtSxSx++1A1N9A+LgjP
-	 HvKDnh1vT9Y0QyVW/s6REcy+rkuVcC8cP/rYy73Y=
+	b=erPfDZ87xaPvoIRrDV/gtD3z46Xxxkp2QO7nS4thZkqCknNcDTMLYO4r9Jp1sgTd3
+	 LEArs2DQI8Ikm1zlm6QsY0N8zA5ZqmE1I8BJvw+TK13HWEG4wR+n6u8SP+pHaU7ULW
+	 30Io2J3GnW+jzCCAKIQqvQKQojHPKzVeuRzXfn6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com,
-	Johan Hovold <johan@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 195/403] tty: port: fix tty_port_tty_vhangup() race
-Date: Fri,  9 Oct 2026 16:09:16 +0200
-Message-ID: <20261009140956.690318916@linuxfoundation.org>
+	Haojie Li <lihaojie@kylinos.cn>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 7.2 182/428] drm/mediatek: Add missing IS_ERR check for ovl_adaptor platform device
+Date: Fri,  9 Oct 2026 16:08:39 +0200
+Message-ID: <20261009140950.145474726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,206 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Haojie Li <lihaojie@kylinos.cn>
 
-commit b48820de8c1a596c5b99775524dfce73c6576c5d upstream.
+commit bce7698e2e6565bb765bd0522337f29f5f312624 upstream.
 
-Drivers rely on tty_port_tty_vhangup() to synchronously hang up their
-ports before tearing down resources as part of deregistration (e.g. on
-physical disconnect).
+platform_device_register_data() can fail and return an ERR_PTR, but the
+return value is used without checking, leading to an invalid pointer
+being stored in ddp_comp[].dev and passed to component_match_add() and
+mtk_ddp_comp_init(), which could result in a kernel crash.
 
-If tty_port_tty_vhangup() races with another hangup it may however
-return before the port has been shut down. This is in turn can lead to
-use-after-free and NULL-pointer dereferences in racing ioctls (including
-a synchronous hangup) and in processing of racing asynchronous hangups
-(carrier loss).
+Add an IS_ERR() check to jump to the error handling path on failure.
 
-Add the missing serialisation to tty_port_tty_vhangup() and
-tty_port_hangup() so that the former does not return until the port has
-been shut down also when there is a racing hangup.
-
-Note that serial core does not use tty_port_hangup(), but it already
-holds the port mutex when clearing port->tty and shutting down the port
-in uart_hangup().
-
-Fixes: 7ca0ff9ab321 ("tty: Add a full port_close function")
-Cc: stable@kernel.org	# 2.6.32: 2b5eac0f8c6e: tty: introduce and use tty_port_tty_vhangup() helper
-Cc: stable@kernel.org	# 2.6.32
-Reported-by: syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/6a944641.4d659fcc.734b4.003c.GAE@google.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910125114.640880-1-johan@kernel.org
+Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260825100845.438893-1-lihaojie@kylinos.cn/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_port.c   |   87 +++++++++++++++++++++++++++++++----------------
- include/linux/tty_port.h |   22 +----------
- 2 files changed, 60 insertions(+), 49 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/tty_port.c
-+++ b/drivers/tty/tty_port.c
-@@ -319,19 +319,9 @@ void tty_port_tty_set(struct tty_port *p
- }
- EXPORT_SYMBOL(tty_port_tty_set);
- 
--/**
-- * tty_port_shutdown - internal helper to shutdown the device
-- * @port: tty port to be shut down
-- * @tty: the associated tty
-- *
-- * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-- * shutdown the device if it was initialized (note consoles remain
-- * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-- * @port->ops->shutdown().
-- */
--static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+static void tty_port_shutdown_locked(struct tty_port *port, struct tty_struct *tty)
- {
--	guard(mutex)(&port->mutex);
-+	lockdep_assert_held(&port->mutex);
- 
- 	if (port->console)
- 		return;
-@@ -352,6 +342,23 @@ static void tty_port_shutdown(struct tty
- }
- 
- /**
-+ * tty_port_shutdown - internal helper to shutdown the device
-+ * @port: tty port to be shut down
-+ * @tty: the associated tty
-+ *
-+ * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-+ * shutdown the device if it was initialized (note consoles remain
-+ * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-+ * @port->ops->shutdown().
-+ */
-+static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+{
-+	guard(mutex)(&port->mutex);
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -1112,6 +1112,9 @@ static int mtk_drm_probe(struct platform
+ 							    PLATFORM_DEVID_AUTO,
+ 							    (void *)private->mmsys_dev,
+ 							    sizeof(*private->mmsys_dev));
++		if (IS_ERR(ovl_adaptor))
++			return PTR_ERR(ovl_adaptor);
 +
-+	tty_port_shutdown_locked(port, tty);
-+}
-+
-+/**
-  * tty_port_hangup		-	hangup helper
-  * @port: tty port
-  *
-@@ -364,36 +371,58 @@ void tty_port_hangup(struct tty_port *po
- {
- 	struct tty_struct *tty;
- 
--	scoped_guard(spinlock_irqsave, &port->lock) {
--		port->count = 0;
--		tty = port->tty;
--		if (tty)
--			set_bit(TTY_IO_ERROR, &tty->flags);
--		port->tty = NULL;
--	}
-+	scoped_guard(mutex, &port->mutex) {
-+		scoped_guard(spinlock_irqsave, &port->lock) {
-+			port->count = 0;
-+			tty = port->tty;
-+			if (tty)
-+				set_bit(TTY_IO_ERROR, &tty->flags);
-+			port->tty = NULL;
-+		}
- 
--	tty_port_set_active(port, false);
--	tty_port_shutdown(port, tty);
-+		tty_port_set_active(port, false);
-+		tty_port_shutdown_locked(port, tty);
-+	}
- 	tty_kref_put(tty);
- 	wake_up_interruptible(&port->open_wait);
- 	wake_up_interruptible(&port->delta_msr_wait);
- }
- EXPORT_SYMBOL(tty_port_hangup);
- 
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async)
-+/**
-+ * tty_port_tty_hangup - helper to hang up a tty asynchronously
-+ * @port: tty port
-+ * @check_clocal: hang only ttys with %CLOCAL unset?
-+ */
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
- {
- 	scoped_guard(tty_port_tty, port) {
- 		struct tty_struct *tty = scoped_tty();
- 
--		if (!check_clocal || !C_CLOCAL(tty)) {
--			if (async)
--				tty_hangup(tty);
--			else
--				tty_vhangup(tty);
--		}
-+		if (!check_clocal || !C_CLOCAL(tty))
-+			tty_hangup(tty);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(tty_port_tty_hangup);
-+
-+/**
-+ * tty_port_tty_vhangup - helper to hang up a tty synchronously
-+ * @port: tty port
-+ */
-+void tty_port_tty_vhangup(struct tty_port *port)
-+{
-+	struct tty_struct *tty;
-+
-+	mutex_lock(&port->mutex);
-+	tty = tty_port_tty_get(port);
-+	mutex_unlock(&port->mutex);
-+
-+	if (tty) {
-+		tty_vhangup(tty);
-+		tty_kref_put(tty);
- 	}
- }
--EXPORT_SYMBOL_GPL(__tty_port_tty_hangup);
-+EXPORT_SYMBOL_GPL(tty_port_tty_vhangup);
- 
- /**
-  * tty_port_tty_wakeup - helper to wake up a tty
---- a/include/linux/tty_port.h
-+++ b/include/linux/tty_port.h
-@@ -232,7 +232,8 @@ bool tty_port_carrier_raised(struct tty_
- void tty_port_raise_dtr_rts(struct tty_port *port);
- void tty_port_lower_dtr_rts(struct tty_port *port);
- void tty_port_hangup(struct tty_port *port);
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async);
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal);
-+void tty_port_tty_vhangup(struct tty_port *port);
- void tty_port_tty_wakeup(struct tty_port *port);
- int tty_port_block_til_ready(struct tty_port *port, struct tty_struct *tty,
- 		struct file *filp);
-@@ -251,25 +252,6 @@ static inline int tty_port_users(struct
- 	return port->count + port->blocked_open;
- }
- 
--/**
-- * tty_port_tty_hangup - helper to hang up a tty asynchronously
-- * @port: tty port
-- * @check_clocal: hang only ttys with %CLOCAL unset?
-- */
--static inline void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
--{
--	__tty_port_tty_hangup(port, check_clocal, true);
--}
--
--/**
-- * tty_port_tty_vhangup - helper to hang up a tty synchronously
-- * @port: tty port
-- */
--static inline void tty_port_tty_vhangup(struct tty_port *port)
--{
--	__tty_port_tty_hangup(port, false, false);
--}
--
- #ifdef CONFIG_TTY
- void tty_kref_put(struct tty_struct *tty);
- __DEFINE_CLASS_IS_CONDITIONAL(tty_port_tty, true);
+ 		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev = &ovl_adaptor->dev;
+ 		mtk_ddp_comp_init(dev, NULL, &private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR],
+ 				  DDP_COMPONENT_DRM_OVL_ADAPTOR);
 
 
