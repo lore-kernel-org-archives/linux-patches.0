@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B464EC649;
-	Fri,  9 Oct 2026 14:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0353D4EC669;
+	Fri,  9 Oct 2026 14:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557157; cv=none; b=t6y3heEmLSJqlcqeKXwliXkvBtzirJxi7wQ299gEL9uzPjl46eIOcqY3QeGhWeK36i6Q8nyZq1POh3zpHLM1HLnxAUUxlgFf0RY+b9Ttx3APgHHfVIashJDbR/Wp9chSbREF6wtXahNK8pDsiDzmDvUSN/alQZfhJwpKsyXmja4=
+	t=1791557160; cv=none; b=Zvn5LGLDfbKHq/13rt1vOCrmBVhLN6R63rGs8bAlSbEmhhJYYHSooRnmblDq0D6M8qNC1h72wAkVMqexT0bSIcL6+EwzQPab0PWewt6J8FxwtZM5EL8sAXY7wW8O487tyQPExgrSt/1OTjJ/STD8p0jN6DSc1gr85fFPd7fO41c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557157; c=relaxed/simple;
-	bh=BUYysk4e6sDsrpB611RfpZRmBhuhLc9pdkkuyyR5bjs=;
+	s=arc-20240116; t=1791557160; c=relaxed/simple;
+	bh=ERMNPFoZTwAijkE4H5m/Lth/sV9BO6Nf5UhVpnileHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXZLII1uO7xJ+63yHtIMreyEkfyXzF7tizn5b/Fk63uZIs92yDY4lzDyfsoxAboQV0j8Q43qEgNVoyyyx7MQUWFHSYX6X0XyeXPyfGiGCHvhVIgVRugPA+hD9+JtoP4AjnczQmZdEuQire2rddlQBrBr47hJpRCa5YiGHiW9XzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKvkB2ZP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wmy44fqRvNiKlCH8007K5hvwKWieQ0ARWWNoo6U5N9oTVZ9qj+2aRy73YBjInVtvzX1hJMdp9QzPTeRi/dYX/HSIGkE5OHPO07dI5jZP/yj02KYD5FWIeMpHNV2D6dO7gyUE/3VcJAi/EtNVMR34y21QcX8yS7ZIPVnjYcZVL/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CB88DfoX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKvkB2ZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE7B1F00893;
-	Fri,  9 Oct 2026 14:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CB88DfoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C0A1F000FF;
+	Fri,  9 Oct 2026 14:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557156;
-	bh=SoDhQbmi2LWmDtjljjuJ3mSBfJK+vPUTtZ13Z0pCor4=;
+	s=korg; t=1791557158;
+	bh=YQnSRh7ZhQgjR3rp3Ufb8AXD76X3UgS27jHvBRVD8d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKvkB2ZPTMDXO2Ot+K5uNX5jREmyCu8mfzlAkEfT/nQf7r8HmbS/uknE+uoSEV2yd
-	 vXtPgxShGHIohpX+f9P60yVoUE6o+Imr1wMQzIEWzOoiBMjg6QbHO+77swC8kCx/Ws
-	 8areIMtTBoCvj75+9mrIPVmX+6/40cMHfnv4ayTc=
+	b=CB88DfoXt2tkWEA9jjiKXMi9z5wAWoqUmxq931+XNOITozeMvYictcohabkKHwCym
+	 Vk9yAnsohdjzqwbXR38XwAP5amnlLamkaoHwSk4h/EgtX5ET7JelVuXMaDBk3UVEuH
+	 +UYMAH5UOFdr9c32nf0lU+VQlEz7cZQxSjcZ6LSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 355/403] Bluetooth: Serialize SMP remote OOB data access
-Date: Fri,  9 Oct 2026 16:11:56 +0200
-Message-ID: <20261009141000.583481590@linuxfoundation.org>
+	Edward Karpicz <webmaster@toradex.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>
+Subject: [PATCH 7.2 305/428] mtd: rawnand: vf610_nfc: fix reads on chips with more than 64 bytes of OOB
+Date: Fri,  9 Oct 2026 16:10:42 +0200
+Message-ID: <20261009140952.817160117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,153 +47,193 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit 81a2345f1984f0b36d3226571bc196316a01b648 ]
+commit 37adc9c5789c76db3b1ee7aeec3999b8503020d0 upstream.
 
-build_pairing_cmd() looks up remote OOB data and copies its contents
-without holding hdev->lock, which serializes the list's writers. After
-SMP finds an entry, a concurrent management Remove Remote OOB Data
-command can unlink and free it before SMP reads its present flag or
-copies its random and confirmation values. Removal can also invalidate
-an entry while the lookup is still traversing the list.
+The controller transfers 64 spare bytes per page and the driver only
+implements the matching 64-byte ECC layout, so attach_chip() shrinks
+mtd->oobsize when the chip provides more. That clamp does not survive:
+nand_scan_tail() runs nanddev_init() after ->attach_chip(), and it
+restores mtd->oobsize from the memory organization, which still holds
+the value detected from the chip. The driver then transfers writesize
+plus the chip's full OOB size, the hardware ECC parity ends up at a
+different offset than the layout the controller was set up for, and
+every ECC-protected read fails with -EBADMSG.
 
-KASAN reported:
+Measured on a Colibri VF61 (MX30LF4G28AC, 2048-byte pages, 112 bytes of
+OOB): with the clamp lost, UBI cannot read the erase counter headers of
+the pages U-Boot has just written, and the on-flash bad block table
+written by an older kernel reads back with ECC errors, so the board
+does not boot. Kernels before commit a7ab085d7c16 ("mtd: rawnand:
+Initialize the nand_device object") are not affected because nothing
+overwrote the clamp there, which is why the same chip works with a v4.4
+kernel and with U-Boot, whose copy of this driver has no memory
+organization to restore the value from. Edward Karpicz reported that
+the clamp no longer takes effect on this chip; see the link below.
 
-  BUG: KASAN: slab-use-after-free in build_pairing_cmd+0x948/0x9b0
-  Call Trace:
-   build_pairing_cmd+0x948/0x9b0
-   smp_recv_cb+0x459f/0x8110
-   l2cap_recv_frame+0xf14/0x9190
-   l2cap_recv_acldata+0xa64/0xd40
-   hci_rx_work+0x4ca/0x730
+Instead of modifying the memory organization, keep the detected OOB
+size and give the driver its own mtd_ooblayout_ops: the same layout the
+NAND core uses for large pages, but computed on the first 64 OOB bytes
+instead of the whole OOB, so the ECC bytes stay where U-Boot and the
+old kernels put them. The data paths transfer writesize plus those 64
+bytes, as the controller always has.
 
-  Allocated by task 87:
-   hci_add_remote_oob_data+0x11d/0x530
-   add_remote_oob_data+0x282/0x400
-   hci_sock_sendmsg+0x1033/0x1ea0
+Since mtd->oobsize now reports the chip's real spare size, fill the
+tail of oob_poi with 0xff after the 64 transferred bytes on ECC page
+reads: the core may copy the full mtd->oobsize from it, which would
+otherwise expose whatever the buffer held before. 0xff also matches
+what a raw read returns from flash, since the write path only ever
+programs the first 64 spare bytes.
 
-  Freed by task 93:
-   hci_remote_oob_data_clear+0x108/0x1c0
-   remove_remote_oob_data+0x198/0x220
-   hci_sock_sendmsg+0x1033/0x1ea0
-
-Taking hdev->lock in build_pairing_cmd() would recurse for callers that
-already hold it and invert the device-to-L2CAP lock order on the receive
-path. Add a per-device remote_oob_lock instead, held across the SMP
-lookup and copies and by the add, remove and clear helpers. Cover
-initialization and in-place updates as well, so SMP cannot read partially
-initialized or updated OOB values. Release the mutex on allocation
-failure, preserving the existing error return.
-
-The new critical sections acquire no device, connection or channel locks.
-Writers retain their existing hdev->lock protection, which continues to
-serialize the other readers without changing their locking or behavior.
-
-Link: https://lore.kernel.org/r/00660cd3-7d71-13a4-f617-229e6defb701@gmail.com
-Fixes: 02b05bd8b0a6 ("Bluetooth: Set SMP OOB flag if OOB data is available")
+Reported-by: Edward Karpicz <webmaster@toradex.com>
+Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: a7ab085d7c16 ("mtd: rawnand: Initialize the nand_device object")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Retained kmalloc(sizeof(*data), GFP_KERNEL) instead of kmalloc_obj(*data). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    1 +
- net/bluetooth/hci_core.c         |   12 +++++++++++-
- net/bluetooth/smp.c              |    2 ++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/vf610_nfc.c |   72 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 12 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -563,6 +563,7 @@ struct hci_dev {
- 	struct list_head	link_keys;
- 	struct list_head	long_term_keys;
- 	struct list_head	identity_resolving_keys;
-+	struct mutex		remote_oob_lock;
- 	struct list_head	remote_oob_data;
- 	struct list_head	le_accept_list;
- 	struct list_head	le_resolv_list;
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1525,8 +1525,10 @@ int hci_remove_remote_oob_data(struct hc
- 
- 	BT_DBG("%s removing %pMR (%u)", hdev->name, bdaddr, bdaddr_type);
- 
-+	mutex_lock(&hdev->remote_oob_lock);
- 	list_del(&data->list);
- 	kfree(data);
-+	mutex_unlock(&hdev->remote_oob_lock);
- 
- 	return 0;
- }
-@@ -1535,10 +1537,12 @@ void hci_remote_oob_data_clear(struct hc
- {
- 	struct oob_data *data, *n;
- 
-+	mutex_lock(&hdev->remote_oob_lock);
- 	list_for_each_entry_safe(data, n, &hdev->remote_oob_data, list) {
- 		list_del(&data->list);
- 		kfree(data);
- 	}
-+	mutex_unlock(&hdev->remote_oob_lock);
+--- a/drivers/mtd/nand/raw/vf610_nfc.c
++++ b/drivers/mtd/nand/raw/vf610_nfc.c
+@@ -505,6 +505,11 @@ static int vf610_nfc_exec_op(struct nand
+ 				      check_only);
  }
  
- int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
-@@ -1547,11 +1551,14 @@ int hci_add_remote_oob_data(struct hci_d
- {
- 	struct oob_data *data;
- 
-+	mutex_lock(&hdev->remote_oob_lock);
- 	data = hci_find_remote_oob_data(hdev, bdaddr, bdaddr_type);
- 	if (!data) {
- 		data = kmalloc(sizeof(*data), GFP_KERNEL);
--		if (!data)
-+		if (!data) {
-+			mutex_unlock(&hdev->remote_oob_lock);
- 			return -ENOMEM;
-+		}
- 
- 		bacpy(&data->bdaddr, bdaddr);
- 		data->bdaddr_type = bdaddr_type;
-@@ -1584,6 +1591,8 @@ int hci_add_remote_oob_data(struct hci_d
- 
- 	BT_DBG("%s for %pMR", hdev->name, bdaddr);
- 
-+	mutex_unlock(&hdev->remote_oob_lock);
++static unsigned int vf610_nfc_spare_size(struct mtd_info *mtd)
++{
++	return min_t(unsigned int, mtd->oobsize, 64);
++}
 +
- 	return 0;
+ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 					 uint8_t *oob, int page)
+ {
+@@ -522,7 +527,7 @@ static inline int vf610_nfc_correct_data
+ 		return ecc_count;
+ 
+ 	nfc->data_access = true;
+-	nand_read_oob_op(&nfc->chip, page, 0, oob, mtd->oobsize);
++	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
+ 	nfc->data_access = false;
+ 
+ 	/*
+@@ -530,7 +535,7 @@ static inline int vf610_nfc_correct_data
+ 	 * at least less then half of the ECC strength.
+ 	 */
+ 	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
+-					   mtd->oobsize, NULL, 0,
++					   vf610_nfc_spare_size(mtd), NULL, 0,
+ 					   flips_threshold);
  }
  
-@@ -2521,6 +2530,7 @@ struct hci_dev *hci_alloc_dev_priv(int s
- 	mutex_init(&hdev->lock);
- 	mutex_init(&hdev->req_lock);
- 	mutex_init(&hdev->mgmt_pending_lock);
-+	mutex_init(&hdev->remote_oob_lock);
+@@ -551,7 +556,7 @@ static int vf610_nfc_read_page(struct na
+ {
+ 	struct vf610_nfc *nfc = chip_to_nfc(chip);
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+-	int trfr_sz = mtd->writesize + mtd->oobsize;
++	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
+ 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
+ 	int stat;
  
- 	ida_init(&hdev->unset_handle_ida);
+@@ -577,11 +582,16 @@ static int vf610_nfc_read_page(struct na
+ 	 */
+ 	vf610_nfc_rd_from_sram(buf, nfc->regs + NFC_MAIN_AREA(0),
+ 			       mtd->writesize, false);
+-	if (oob_required)
++	if (oob_required) {
++		unsigned int spare = vf610_nfc_spare_size(mtd);
++
+ 		vf610_nfc_rd_from_sram(chip->oob_poi,
+ 				       nfc->regs + NFC_MAIN_AREA(0) +
+ 						   mtd->writesize,
+-				       mtd->oobsize, false);
++				       spare, false);
++		/* Not transferred, and never written: reads back erased */
++		memset(chip->oob_poi + spare, 0xff, mtd->oobsize - spare);
++	}
  
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -683,6 +683,7 @@ static void build_pairing_cmd(struct l2c
- 		else
- 			bdaddr_type = BDADDR_LE_RANDOM;
+ 	stat = vf610_nfc_correct_data(chip, buf, chip->oob_poi, page);
  
-+		mutex_lock(&hdev->remote_oob_lock);
- 		oob_data = hci_find_remote_oob_data(hdev, &hcon->dst,
- 						    bdaddr_type);
- 		if (oob_data && oob_data->present) {
-@@ -693,6 +694,7 @@ static void build_pairing_cmd(struct l2c
- 			SMP_DBG("OOB Remote Confirmation: %16phN", smp->pcnf);
- 			SMP_DBG("OOB Remote Random: %16phN", smp->rr);
- 		}
-+		mutex_unlock(&hdev->remote_oob_lock);
+@@ -599,7 +609,7 @@ static int vf610_nfc_write_page(struct n
+ {
+ 	struct vf610_nfc *nfc = chip_to_nfc(chip);
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+-	int trfr_sz = mtd->writesize + mtd->oobsize;
++	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
+ 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
+ 	u8 status;
+ 	int ret;
+@@ -740,6 +750,49 @@ static void vf610_nfc_init_controller(st
+ 	}
+ }
  
- 	} else {
- 		authreq &= ~SMP_AUTH_SC;
++/*
++ * With 64 byte OOB chips the core's large page layout matches what
++ * U-Boot uses, and on chips with more, U-Boot and older kernels clamped
++ * mtd->oobsize to 64. Modifying the OOB size is no longer possible, the
++ * actual chip geometry must be respected, so to avoid breaking those
++ * existing setups use our own layout: the core's large page one,
++ * computed over the first 64 spare bytes only.
++ */
++static int vf610_nfc_ooblayout_ecc(struct mtd_info *mtd, int section,
++				   struct mtd_oob_region *oobregion)
++{
++	struct nand_device *nand = mtd_to_nanddev(mtd);
++	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
++
++	if (section || !total_ecc_bytes)
++		return -ERANGE;
++
++	oobregion->length = total_ecc_bytes;
++	oobregion->offset = vf610_nfc_spare_size(mtd) - oobregion->length;
++
++	return 0;
++}
++
++static int vf610_nfc_ooblayout_free(struct mtd_info *mtd, int section,
++				    struct mtd_oob_region *oobregion)
++{
++	struct nand_device *nand = mtd_to_nanddev(mtd);
++	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
++
++	if (section)
++		return -ERANGE;
++
++	oobregion->length = vf610_nfc_spare_size(mtd) - total_ecc_bytes - 2;
++	oobregion->offset = 2;
++
++	return 0;
++}
++
++static const struct mtd_ooblayout_ops vf610_nfc_ooblayout_ops = {
++	.ecc = vf610_nfc_ooblayout_ecc,
++	.free = vf610_nfc_ooblayout_free,
++};
++
+ static int vf610_nfc_attach_chip(struct nand_chip *chip)
+ {
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+@@ -770,12 +823,7 @@ static int vf610_nfc_attach_chip(struct
+ 		return -ENXIO;
+ 	}
+ 
+-	/* Only 64 byte ECC layouts known */
+-	if (mtd->oobsize > 64)
+-		mtd->oobsize = 64;
+-
+-	/* Use default large page ECC layout defined in NAND core */
+-	mtd_set_ooblayout(mtd, nand_get_large_page_ooblayout());
++	mtd_set_ooblayout(mtd, &vf610_nfc_ooblayout_ops);
+ 	if (chip->ecc.strength == 32) {
+ 		nfc->ecc_mode = ECC_60_BYTE;
+ 		chip->ecc.bytes = 60;
 
 
