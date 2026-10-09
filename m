@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7034E50D6;
-	Fri,  9 Oct 2026 14:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214E4E73A1;
+	Fri,  9 Oct 2026 14:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556217; cv=none; b=Jg/MURPHnwNCEbky4sgqip+bjh8NfT0eXqj/flkLNo02nYnIkMx46rRlKmXx7AavZ30Pbu2Xb+RqIrqMqpP8DnDk6W3i9+VxDM7Wg46ItQJlxzV8Oxc2Q4Cv9K1Bx64YsLfXjLQMkjAosiJwUN8cyitytqF8YvgL9drUzKXHe1Q=
+	t=1791556219; cv=none; b=KT+bq9CUrVS4v3tYnPtfoXjZMZPQMDG6tYw6CipfUztrNi0ZlpDdPcEk0Ivt2BoBEDUep60eAxIwXQUCc/Abhkg7au0F7aP9HID1EBzLtvwqUw7c1nSxednZNSzbmABhHgQUR4cKAe3Yv52on9sZAfeklHJykg5HcKz6qTYuSHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556217; c=relaxed/simple;
-	bh=dFbDLV9VyzICyptEZX+vWUNDWw0hbo2E9k+E+12KQGg=;
+	s=arc-20240116; t=1791556219; c=relaxed/simple;
+	bh=arl7S9E5+NL5Ef+vgyIPYL/lPUD2N8uhkAubv7uQxAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adwOKRSk8OOrXc9ZP0LVSfpKBkuV76X7JhCp+KPGtVswZo6uPotqJj/mkrVtqIgSs2zVyJ4NV5anwdV+1FdPV4FIu9O47zfjq0dAbhBq6uAoeFY+snhyT4BbUeADvU0ldoa8eLWABSfJRJGFgPgzW1ycl5d73lk6VSkfOboDYFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlwMmsMt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GyUVHy66j7wL6nEtmW7vwYkCxMeqI2Ck8y91zB9eQDPfLx8RmXn8oPZ6iQxv3lNoRDhw53x/z+Ai672QtKr6TSE5fHgk+2Sm3wLLI3TPP6k+RzfO2f5n0kP7rDxl6zBxrC1bD+ExAB1Yizq5qiIuKmjSXFDIdJqO/f6CvjGb7Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM6x68qo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlwMmsMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCCB1F000FF;
-	Fri,  9 Oct 2026 14:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM6x68qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD49D1F000FF;
+	Fri,  9 Oct 2026 14:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556215;
-	bh=4cXO5al0tCRiHLgJBQ3w9xUKzRZPImgKBmlKAGMoZgo=;
+	s=korg; t=1791556218;
+	bh=XYj32oGQW7niK6tCBTOmug+YuTLWxuSa7FN/Li7Vbi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlwMmsMtMjVrz0PXD7XUzrzh8AG85Rj1oBFqjC3AbhFlQPaP6aC7Ivx9HPrVOeAFQ
-	 UEbJLLBeVY726QJVywsudKYXUj5dJLbSkteZeMRTaovkO/7w9plUAmVX02TGeZFbpP
-	 i6L92XDE3rkSUfOFUBOFNHC4TY8GOhE7eHAz7Iyo=
+	b=zM6x68qoH47hx8bQqw4sWkdFdGju1eH0sM5oYu15FOM2ZfIsP+T8SYw7R+SSPXQN0
+	 y5mPjuClTSOFoLPBpHiHKgnYqjO8FwIKzXmw3rIimxBH5UXKXPvIOjODsMcNKYBw/t
+	 FInGGKH3QZXqelZQFHhEHyoAMUvrSR/g5LyVBPTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihisa Yamamoto <yoshihisa.yamamoto.xn@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 139/428] net: pcs: rzn1-miic: Clear MIIC protection state before unprotect sequence
-Date: Fri,  9 Oct 2026 16:07:56 +0200
-Message-ID: <20261009140949.231545836@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.18 193/403] tty: vcc: hold port lock when clearing tty pointer in vcc_cleanup
+Date: Fri,  9 Oct 2026 16:09:14 +0200
+Message-ID: <20261009140956.640938596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yoshihisa Yamamoto <yoshihisa.yamamoto.xn@renesas.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-[ Upstream commit 8b9993437429c66d11430ae61ffa5937a6abb4ae ]
+commit 03b49c991abb8d021ca6fe51cd173447236b0552 upstream.
 
-On RZ/T2H and RZ/N1D MIIC, writing 0x0000 to the MIIC protection
-register clears the protection state machine.
+vcc_cleanup() sets port->tty to NULL without holding port->lock, racing
+with vcc_event() LDC callbacks that read port->tty under port->lock and
+then use tty->port. This can cause a use-after-free when the callback
+dereferences tty->port after cleanup has already destroyed and freed it.
 
-The initial protection state cannot be assumed to be constant,
-as it may be influenced by previous activity before the driver
-takes ownership of the hardware.
-
-Clear the protection state before issuing the unprotect sequence
-so that register access always starts from a known state, regardless
-of any previous activity.
-
-Fixes: 7dc54d3b8d91 ("net: pcs: add Renesas MII converter driver")
-Signed-off-by: Yoshihisa Yamamoto <yoshihisa.yamamoto.xn@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://patch.msgid.link/TYCPR01MB74815955A10817B64BD6FB93A4812@TYCPR01MB7481.jpnprd01.prod.outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: AISLE:Snapshot
+Cc: stable <stable@kernel.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260803-aisle-tty-vcc-v2-2-a50bc9b15193@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pcs/pcs-rzn1-miic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/vcc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/pcs/pcs-rzn1-miic.c b/drivers/net/pcs/pcs-rzn1-miic.c
-index cb74861e823c8..3aa5134670609 100644
---- a/drivers/net/pcs/pcs-rzn1-miic.c
-+++ b/drivers/net/pcs/pcs-rzn1-miic.c
-@@ -270,6 +270,9 @@ static struct miic_port *phylink_pcs_to_miic_port(struct phylink_pcs *pcs)
+--- a/drivers/tty/vcc.c
++++ b/drivers/tty/vcc.c
+@@ -986,7 +986,8 @@ static void vcc_cleanup(struct tty_struc
  
- static void miic_unlock_regs(struct miic *miic)
- {
-+	/* Clear protection state */
-+	writel(0x0000, miic->base + MIIC_PRCMD);
-+
- 	/* Unprotect register writes */
- 	writel(0x00A5, miic->base + MIIC_PRCMD);
- 	writel(0x0001, miic->base + MIIC_PRCMD);
--- 
-2.53.0
-
+ 	port = vcc_get(tty->index, true);
+ 	if (port) {
+-		port->tty = NULL;
++		scoped_guard(spinlock_irqsave, &port->lock)
++			port->tty = NULL;
+ 
+ 		if (port->removed) {
+ 			vcc_table_remove(tty->index);
 
 
