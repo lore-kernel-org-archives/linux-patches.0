@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F1D4E432E;
-	Fri,  9 Oct 2026 14:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67464E780C;
+	Fri,  9 Oct 2026 14:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555726; cv=none; b=e4WNW38X5nzUlwxrRyUQ/zr0IF8cGV1HHYoX++REKH5+1g9Vv5ItDgxj5HoEkRKJ5eoyGPjrOTQgg3lRP2zE0jlYLJuxvMUbYozzXe7BQPqrZtdyUFPSWuWvAK53aOTDUeStv3D5KDqUvOdAxllzBSFlrlg5NDrrOFhhsKlVqmY=
+	t=1791555728; cv=none; b=J43UvqzTp6UFVVCqOzcktiuz2FjEBO/UZUzKwZNgtm/f2AxRbOZMtRv1CtmwKGZsYE39zF4ADrpf6kmo6HWE2HOz31sgvet2FYyyqjJxTSGdsD5uHfgoYQlZIDePamvBi0WsVFKpYVyFwrbA426DFLC6Lbm7TPLQRcDoahj9Q9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555726; c=relaxed/simple;
-	bh=1zNvbQOE2ivdsGxbLmFbzAiunhwkeRTzSMRcoIcSS/A=;
+	s=arc-20240116; t=1791555728; c=relaxed/simple;
+	bh=EotnESlJxcS4nFAaWOWmWns3OZ0Dg+4CQAdTssDQIqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcGfR4FllYwQ/vr4K8FFpS5Yknb43RTAuDoHW7Yzd6yu3iIxQypXrEvX00m0/qpLf/+ll5NltPbcZMBrzxFh66JrOlC35hLWvYEynadszY0/g1+dZnmUZoVFXEaNO6LBhk9Lpik0YItw6zoZGzgEIcvb0nh2JUt1nuKgNLJNvj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czmrA6Se; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ijLbF6YM9OXBE2RivCDiytIDFQpJd5r8cDNLcoDCYjobQYOoCIVOQ/p9ljfFEfb1Iy9p2t9Mnd5vM9ekW9G4E1MgQLGbQJwJ9Ekz3o2OnCYq/HzoddkeGRq/l9kghyWQge1dxyjbEUbfho/LEBAy9Zzl3A8ImeadlH3Zukqpsuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNwdAyDC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czmrA6Se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9A21F000FF;
-	Fri,  9 Oct 2026 14:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNwdAyDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2152D1F000FF;
+	Fri,  9 Oct 2026 14:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555724;
-	bh=GKLd39pqzuo49/MfW0LrEMHkIf62Z3YqJgsp8B7b1vQ=;
+	s=korg; t=1791555727;
+	bh=lnTHLIGxJdFs8Jbqq3l8jMCZRKZa5q4DujijGvq2n88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=czmrA6SeKTCMpHT1oi175G8VsrB9GyDNigK/rEy6RNxz8ICUhOYF2+9sFGqyYJDRL
-	 yS9S/ht7F6Cc1GSnu1HzpxUfELX7wAyoHYSdif+/pYxDnef+EpKz2spJ83TFc/Umll
-	 GjUXvEqb6jtvFC2Ux2i9yjs6rS9q6Y+VTS0cRsRo=
+	b=RNwdAyDC/RjSnketOA7rJ+vrcjDqJ401HNpV8bSJcFiAkwUUSiHtJtwN2ACKanNvj
+	 FQrH3wyyfd/jHPiP6/6ji7pTUftKp+z+yf6Z5yHHXnw4dtGxru7TUZPNMwUl23UNm8
+	 JejRVnMsuOhznKcTrexXMSzPnha5CrNtc4k4D4Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: [PATCH 7.2 055/428] mm/damon/core: dont skip damos_adjust_quota() while esz is not zero
-Date: Fri,  9 Oct 2026 16:06:32 +0200
-Message-ID: <20261009140947.338662531@linuxfoundation.org>
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 106/403] net/sched: sch_codel: match the no-drop threshold to the packet size
+Date: Fri,  9 Oct 2026 16:07:47 +0200
+Message-ID: <20261009140954.561688777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 52ae167ce16609c7e6fffef588b3c2c26de2db19 upstream.
+[ Upstream commit 54518e0e827f4ca9229ae657022c60bf60f5c1bf ]
 
-DAMOS could unexpectedly stop working when a user disables quota using the
-online parameters commit feature.  Fix it by correcting a wrong quota
-unset check in damos_adjust_quota().
+commit 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid
+disabling CoDel") clamped q->params.mtu to [256, 1 << 20]. The value is
+the CoDel no-drop threshold (codel_impl.h "*backlog <= params->mtu"), so
+on a link whose maximum transmitted packet size is below 256 the floor
+extends CoDel's minimum-backlog exemption beyond one packet and delays
+drop or mark eligibility by several small packets.
 
-DAMON users could disable all quotas by unsetting time and size quotas,
-and removing all quota goals.  The intention of disabling quotas would be
-making DAMOS run at full speed.  When such quota disabled setup is
-detected, damos_adjust_quota() skips all its work.  The skipped works
-include effective size quota (damos_quota->esz) updates and charged quota
-amount (damos_quota->charged_sz) resets.  The intention is to avoid doing
-unnecessary work when quotas are disabled.
+Keep the upper bound that guards the original overflow (psched_mtu()
+wrapping to ~2 GiB on a huge-MTU device) but drop the 256 floor, so the
+threshold tracks the real device packet size.
 
-However, users could do the setup while effective size quota is non-zero,
-by doing the disabling with the online DAMON parameters commit feature.
-In this case, because the effective size quota exists, DAMOS will keep
-working with the quota until it is fully charged.  After the effective
-quota is fully charged, the charged quota amount (damos_quota->charged_sz)
-cannot be reset because damos_adjust_quota() skips it.  Then, DAMOS stops
-working until the quota is newly set or DAMON is entirely restarted.
+Conditions to recreate the bug: attach a codel qdisc on a link whose
+MTU plus hard_header_len is below 256 (e.g. a CAN interface). At that
+MTU the no-drop threshold must equal the device MTU plus its
+hard-header length; before this patch it was forced to 256.
+Requires CAP_NET_ADMIN in a user namespace.
 
-The problem happens because damos_adjust_quota() assumes the user setup
-for disabling quota immediately disabled it.  In reality, the quota is
-still working until the effective size quota is also updated to zero.
-Other logic for catching that uses damos_quota_is_set(), which understands
-the fact and therefore checks the effective size quota in addition to the
-user setup.  Fix the issue by using damos_quota_is_set() in
-damos_adjust_quota() to determine if its works should be skipped.
-
-The user impact is a non-deterministic and unexpected DAMOS stop behavior.
-That is, users would disable quotas using the online parameters commit
-feature, expecting DAMOS will run at full speed.  However, depending on
-the timing, the setup can be updated while the effective size quota is
-non-zero.  Due to the above mentioned internal mechanism, DAMOS stops
-working instead of running at full speed.  It is unexpected behavior.  It
-is also non-deterministic because sometimes the setup is done when the
-effective size quota is zero, depending on the timing.  It doesn't cause
-critical issues like crashes or leaks.  Users can simply set a reasonable
-quota again, or restart DAMON.  But definitely it is an unexpected and
-non-deterministic behavior that makes it difficult to reliably use.  Also
-investigating the root cause of the behavior would be quite difficult.
-
-Link: https://lore.kernel.org/20260916135020.86483-1-sj@kernel.org
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid disabling CoDel")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com.2
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c |    2 +-
+ net/sched/sch_codel.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2949,7 +2949,7 @@ static void damos_adjust_quota(struct da
- 	unsigned long cumulated_sz, cached_esz;
- 	unsigned int score, max_score = 0;
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 1d2caed1bf5b8..4a639555de79d 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -206,7 +206,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	codel_params_init(&q->params);
+ 	codel_vars_init(&q->vars);
+ 	codel_stats_init(&q->stats);
+-	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
++	q->params.mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), 1 << 20);
  
--	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
-+	if (!damos_quota_is_set(quota))
- 		return;
- 
- 	/* First charge window */
+ 	if (opt) {
+ 		int err = codel_change(sch, opt, extack);
+-- 
+2.53.0
+
 
 
