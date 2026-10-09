@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D9A4519A0;
-	Fri,  9 Oct 2026 14:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D38B3D8912;
+	Fri,  9 Oct 2026 14:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555826; cv=none; b=hZO02ELrEn1giRCfYRYGq9CPw8kiufKbuXli0xxEFsvO7bvmO8NsLjFaqCy08JmpInOWoV5i24wacvu5dWz4AfiVIeFqprWj6abfvEa7J8ziByV4D87D84FGiOcKskdxiv1NCgaGFVBwx+hObkOOIHN7O0aD8sKkF/82QVDSccU=
+	t=1791555829; cv=none; b=Rr/jZsYhe8vUGSubx1VJcPggYuv8UYE6KKad0jxoYDAItFzgCWpDE1ExXlm03IgjoS4794PAhi+hNkyfzPXOywpF9MeCNa4qqqiZ5m3UJbNV5lKh394dXuBsZ69lGBmJcexXweyC4t2gDg+uwHziqas7D3lYOVGVkCtt7O/ZcBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555826; c=relaxed/simple;
-	bh=d5G3IeTWECHeGyWvLnTON3N1+YyHq1/ffMcoINyR2ok=;
+	s=arc-20240116; t=1791555829; c=relaxed/simple;
+	bh=BLWweNAgRtBAKWaHjjNlPjtRzDxyxIMR7vqtvbj85Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWJPJaJdfhMUQU0fW5mFagWFYi54Q6i3y8PmBJwqfiwmSJQxCh8TKsQsqjiUA/WD43AawuNdoQXOKWhRD8d2Ddrw1rWv1Mtj1KFiWFinWj15CgyTrgAD03yhqiRRHea1mQ0L4VLfboaenhk11hOsMJhhhlpf0bE8ItmvT2OopFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U31eJ3ul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IbD+XvZB7hbFGsDOm+fyNsIcsLSzq6wEm1zzBwyBHA+KnRvUICF0ZEOKw6PQkJyQUhVpcqNJ+0Vn+j+6Fp+aE/v/CpI7yezHoBfN+1djOP8iVv1e6YYRt3aj406z3Kgs8dZPxv/5Mdu5Xapxm+pJCbWhytviHVrvV6rZqeEmFlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv2+RSNP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U31eJ3ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90AF1F000FF;
-	Fri,  9 Oct 2026 14:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv2+RSNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB941F000FF;
+	Fri,  9 Oct 2026 14:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555825;
-	bh=t2AQzqhhvz+g74RA2mKOOQuXZSFSgHJCBEBb3vrZk18=;
+	s=korg; t=1791555828;
+	bh=wYbyoYisKw5JZsCR3OUflKfJ8B+BHyEuK76zlWqzhI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U31eJ3ulsEOZxy1c2yu6xQx/iv/ZktOJ80bnkAa61QpJFfV2NJFhLcRAtSvnZ1Lhs
-	 PEgd62ynYON81KpQgf7sOQXQ2Z9hqqPlC3YdJfyqMpM1g87SirpsZkSHPDIRUQZ7F2
-	 3lpuCbize7Dg6mo1UvOCalRvvPBjweZSOLmGss9o=
+	b=Hv2+RSNPOboZJkkrlJeMbKa9+bicW53nIV7lmReYQlvWH6Mghj+oMJ2E/MZ7CBmM2
+	 9lTCQc+LTxKYadcvz6eBbMRdEsSyc0zcY559fLV1XIouFt95Tj+QhOPj++sCj0VJWI
+	 Xa8bEQkDzvJrqz2jdyx0t0taPw6wl7zHmVJenDys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/403] netfilter: flowtable: generalize pending status bit
-Date: Fri,  9 Oct 2026 16:08:05 +0200
-Message-ID: <20261009140954.977872612@linuxfoundation.org>
+Subject: [PATCH 7.2 076/428] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
+Date: Fri,  9 Oct 2026 16:06:53 +0200
+Message-ID: <20261009140947.834765535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,127 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 7c549fb7eecd01fdba7c0d12c01da876ef8a3214 ]
+[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
 
-Rename NF_FLOW_HW_PENDING to NF_FLOW_PENDING and use it to inhibit the
-flowtable GC worker until pending hw offload work has been completed.
+The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
+DRC_0. Its shift and max are right for the field, only the register is
+wrong.
 
-Apparently, nf_flow_offload_stats() can schedule work to retrieve stats
-while the flow is being removed by GC.
+Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
+Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
+Writing either one moves the other, and the quick release threshold is
+never reached at all.
 
-And this bit can also be used in a follow up patch to disable GC until
-the flow has been fully added in both directions.
+The six fields of DRC_1 tile it exactly, so there is nowhere else the
+threshold could live. Point the control at DRC_1.
 
-Revert the reordering done in commit d644b23afe1e ("netfilter:
-flowtable: publish HW_DEAD after worker is done") to prevent a race
-between GC and hw offload handler.
+Found by a sweep for two controls claiming the same bits of one
+register. No board with this codec was to hand, the register map is
+the driver's own wm8903.h.
 
-Fixes: 2c8897953f3b ("netfilter: flowtable: Add pending bit for offload work")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_flow_table.h |  2 +-
- net/netfilter/nf_flow_table_core.c    |  7 ++++++-
- net/netfilter/nf_flow_table_offload.c | 14 +++++---------
- net/sched/act_ct.c                    |  2 +-
- 4 files changed, 13 insertions(+), 12 deletions(-)
+ sound/soc/codecs/wm8903.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index 7c330caae52bf..9778ef5e26c66 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -166,10 +166,10 @@ enum nf_flow_flags {
- 	NF_FLOW_DNAT,
- 	NF_FLOW_CLOSING,
- 	NF_FLOW_TEARDOWN,
-+	NF_FLOW_PENDING,
- 	NF_FLOW_HW,
- 	NF_FLOW_HW_DYING,
- 	NF_FLOW_HW_DEAD,
--	NF_FLOW_HW_PENDING,
- 	NF_FLOW_HW_BIDIRECTIONAL,
- 	NF_FLOW_HW_ESTABLISHED,
- };
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 2fc2e08aecfb1..f1f119062c86e 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -568,7 +568,12 @@ static void nf_flow_table_extend_ct_timeout(struct nf_conn *ct)
- static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
- 				    struct flow_offload *flow, void *data)
- {
--	bool teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
-+	bool teardown;
-+
-+	if (test_bit(NF_FLOW_PENDING, &flow->flags))
-+		return;
-+
-+	teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
- 
- 	if (nf_flow_has_expired(flow) ||
- 	    nf_ct_is_dying(flow->ct) ||
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 8e3edc7c37b38..2af7d64696044 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -993,6 +993,7 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
- 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
- 	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
- 		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
-+	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
- }
- 
- static void flow_offload_tuple_stats(struct flow_offload_work *offload,
-@@ -1054,13 +1055,8 @@ static void flow_offload_work_handler(struct work_struct *work)
- 		default:
- 			WARN_ON_ONCE(1);
- 	}
--
--	clear_bit(NF_FLOW_HW_PENDING, &offload->flow->flags);
--	if (offload->cmd == FLOW_CLS_DESTROY) {
--		/* Publish after the worker's last flow access. */
--		smp_mb__before_atomic();
--		set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
--	}
-+	smp_mb__before_atomic();
-+	clear_bit(NF_FLOW_PENDING, &offload->flow->flags);
- 
- 	kfree(offload);
- }
-@@ -1087,12 +1083,12 @@ nf_flow_offload_work_alloc(struct nf_flowtable *flowtable,
- {
- 	struct flow_offload_work *offload;
- 
--	if (test_and_set_bit(NF_FLOW_HW_PENDING, &flow->flags))
-+	if (test_and_set_bit(NF_FLOW_PENDING, &flow->flags))
- 		return NULL;
- 
- 	offload = kmalloc(sizeof(struct flow_offload_work), GFP_ATOMIC);
- 	if (!offload) {
--		clear_bit(NF_FLOW_HW_PENDING, &flow->flags);
-+		clear_bit(NF_FLOW_PENDING, &flow->flags);
- 		return NULL;
- 	}
- 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 1adfd61733a14..161c62dafaa14 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -287,7 +287,7 @@ static bool tcf_ct_flow_is_outdated(const struct flow_offload *flow)
- {
- 	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
- 	       test_bit(IPS_HW_OFFLOAD_BIT, &flow->ct->status) &&
--	       !test_bit(NF_FLOW_HW_PENDING, &flow->flags) &&
-+	       !test_bit(NF_FLOW_PENDING, &flow->flags) &&
- 	       !test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
- }
- 
+diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
+index 320d7737699d9..585f0185c0d3b 100644
+--- a/sound/soc/codecs/wm8903.c
++++ b/sound/soc/codecs/wm8903.c
+@@ -677,7 +677,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
+ SOC_ENUM("DRC FF Delay", drc_ff_delay),
+ SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
+ SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
+-SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
++SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
+ SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
+ SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
+ SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
 -- 
 2.53.0
 
