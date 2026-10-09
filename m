@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769B730E828;
-	Fri,  9 Oct 2026 14:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4066A2DEA6B;
+	Fri,  9 Oct 2026 14:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557624; cv=none; b=mf77uxY7X0wLg8h62zY8iH90Zhl6kc9bsB398dFzGiiCIp3fkuqoEETtsqQzcpbwR+4ErrrSZMRjxOl5RfywepfmddSC0OMLG+wl7WhdrfQLCL4NUBIhORkbnt+vXKHx3zIud8nvypku4w3P4TwO2mGFCsD6kceEqijT7nZA9Is=
+	t=1791557627; cv=none; b=ZUuV1EHrZ18LtUslNOypNTsMKKmnKi5t3W/0xBHMdVkdtytQaMEl9dIHLGJNXjpUzan0YJJoa7irPGbmOVXC2EFGq2lH0T8ZPZhF5XSJoFa4BXm8Mhh1eC59kMRudUVEqe4d2hy5ghb+1DtlgwV4AvJuoRm7k5/akc9vTz+6JGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557624; c=relaxed/simple;
-	bh=uMta6Kn2W/w93mFdRq9yqwuczdtSelvU9nJ7RcFFI1c=;
+	s=arc-20240116; t=1791557627; c=relaxed/simple;
+	bh=uPiTKiWix49Rn7shkvwTigKknSrE+9y7A9k9dUCCykI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVzAQ/womO3JX9GpBcfDq2Dvewu/PsB+xJaE3KSwyPXlHc7eVyE21ZtPoDd0SAl+J768VsGynVOEwS1Lq3/+OKERe9rURCh1SGiKrFENyH+D1RSk8bEygxx5dpcTtp4YfyXKAHTI60uQP3brhpSRHn/YlTIqzjJ3WbosVJad1TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XmDrDgZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdkaZfNm8uAMugsxHdqJEvjV0jzn2qBr9fOOkXIlFXhiHeSVraO19J5pLkqoixdauL8LcpROnA6jZxdlrmHZD6bISlq6uOphDGR2itrLVyFH+fBgkdLU1CjLjKkWIVQFu0FT/kZfz00sh5/nnQai6L6w+1wyXdQ2BGHt3/FB0AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRtUWWzN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XmDrDgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24501F00893;
-	Fri,  9 Oct 2026 14:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRtUWWzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D94F1F000FF;
+	Fri,  9 Oct 2026 14:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557623;
-	bh=x0+WPJmnuBwv9aPVeHjSW1/AqQ6MesD1wVDLw4bDZjM=;
+	s=korg; t=1791557626;
+	bh=YSMZBH536TueXYqFLtPONJYCC3amXWM6lZrb3qVk3tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2XmDrDgZ6ankBKYoH3aTtfv/DjQkUwup9UeF9MtwZEL4fKwA6jflSNwq4g3GJgxd6
-	 2f/0wPbs103vI7mx+BhFCuktK/YTeQIrO1N/kw+uRd311tEGKYwkeNnxehDqn385xv
-	 qEVMUNtm/BZ8G6zvqIj28GIxs+HByH4vjs8ZQcbs=
+	b=BRtUWWzN0GX5uRf93YvKjKnyREjsM3TxDrPu6Nq1jzFoToC+EhlsoI0r++7ab11tK
+	 kZak0IBSy9OeYLq0FXS4JBS2Kb9Hpv64B4k1FYnpaMtzfN911umrCoozjaO/vw7hxR
+	 K32xjyJbL2LQc5NFqu8cOwulTOI+nHBKwclh4wzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Murzin <vladimir.murzin@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 423/428] arm64: errata: Factor out broken AMU const counter cap
-Date: Fri,  9 Oct 2026 16:12:40 +0200
-Message-ID: <20261009140955.533801920@linuxfoundation.org>
+Subject: [PATCH 7.2 424/428] arm64: errata: Add Cortex-A725 erratum 3821522 workaround
+Date: Fri,  9 Oct 2026 16:12:41 +0200
+Message-ID: <20261009140955.558264115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -54,127 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Beata Michalska <beata.michalska@arm.com>
 
-[ Upstream commit 573371caf7aea8582212da81dcead2c3f48fac4b ]
+[ Upstream commit 45f7304679875eb000d67e194090ee7abd05c89c ]
 
-Move the workaround from the erratum 2457168-specific cpucap to a generic
-broken AMU constant-counter one. This keeps the existing Cortex-A510
-handling unchanged while allowing other errata with similar AMU constant
-counter issue to share the capability bit and call sites.
+Cortex-A725 erratum 3821522 affects the CNT_CYCLES event, which can
+incur a significant increment error when a CPU enters and subsequently
+exits WFE or WFI, and may no longer track the system counter
+frequency.
 
+The AMEVCNTR01_EL0 counter is used as the AMU constant counter for
+frequency invariance and CPPC FFH feedback counters. Wire the affected
+Cortex-A725 range into the shared broken AMU constant-counter capability
+so the affected counter is treated as unavailable by returning zero in
+the AMU counter paths. This prevents the broken counter from being used
+as a reference source.
+
+The erratum can also affect PMUv3 users of the CNT_CYCLES event,
+but this workaround intentionally does not change PMU event handling.
+Hiding or rejecting the PMU event from the erratum code would change
+the perf-visible PMU event interface, including raw event selection,
+and would need a separate PMU-specific approach rather than being
+folded into the AMU reference-counter workaround.
+
+Cc: stable@vger.kernel.org
 Signed-off-by: Beata Michalska <beata.michalska@arm.com>
 Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
-
-Omit the comment update in amu_read_core_const_ctrs(), since paired
-CPPC FFH counter reads are not implemented here. Keep the capability
-rename in the existing counter-read and initialization paths, together
-with the shared MIDR range list needed by the additional erratum.
-
-Stable-dep-of: 45f730467987 ("arm64: errata: Add Cortex-A725 erratum 3821522 workaround")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Kconfig             |    8 ++++++++
- arch/arm64/kernel/cpu_errata.c |   20 ++++++++++++++------
- arch/arm64/kernel/cpufeature.c |    2 +-
- arch/arm64/kernel/topology.c   |    2 +-
- arch/arm64/tools/cpucaps       |    2 +-
- 5 files changed, 25 insertions(+), 9 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    2 ++
+ arch/arm64/Kconfig                          |   22 ++++++++++++++++++++++
+ arch/arm64/kernel/cpu_errata.c              |    4 ++++
+ arch/arm64/kernel/topology.c                |    9 +++++----
+ 4 files changed, 33 insertions(+), 4 deletions(-)
 
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -174,6 +174,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A725     | #3821522        | ARM64_ERRATUM_3821522       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-X1       | #1502854        | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-X1       | #3324344        | ARM64_ERRATUM_3194386       |
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -1017,9 +1017,17 @@ config ARM64_ERRATUM_1902691
+@@ -1058,6 +1058,28 @@ config ARM64_ERRATUM_2645198
  
  	  If unsure, say Y.
  
-+config ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
-+	bool
-+	# Targeting errata affecting AMEVCNTR01, the AMU constant counter.
-+	# On affected CPUs the counter may not increment at the expected rate,
-+	# making it unreliable. As a result, AMU users should treat it as
-+	# unavailable rather than relying on misleading counter values.
-+
- config ARM64_ERRATUM_2457168
- 	bool "Cortex-A510: 2457168: workaround for AMEVCNTR01 incrementing incorrectly"
- 	depends on ARM64_AMU_EXTN
++config ARM64_ERRATUM_3821522
++	bool "Cortex-A725: 3821522: workaround for possible CNT_CYCLES increment error due to WFE/WFI"
++	depends on ARM64_AMU_EXTN
 +	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
- 	default y
- 	help
- 	  This option adds the workaround for ARM Cortex-A510 erratum 2457168.
++	default y
++	help
++	  This option adds the workaround for ARM Cortex-A725 erratum 3821522.
++
++	  On affected A725 cores, the CNT_CYCLES event may incur a significant
++	  increment error when entering and subsequently exiting WFx.
++	  As a result, the CNT_CYCLES may diverge from the system counter
++	  frequency at which it is expected to increment.
++	  This renders the AMU counter AMEVCNTR01, that implements CNT_CYCLES,
++	  being unreliable and unsuitable for use.
++
++	  Since there is no hardware workaround, reads of the affected CNT_CYCLES
++	  counter return 0 in the relevant paths. This causes users of the counter
++	  to treat it as unavailable and is functionally equivalent to firmware
++	  disabling the affected counter.
++
++	  If unsure, say Y.
++
+ config ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+ 	bool
+ 
 --- a/arch/arm64/kernel/cpu_errata.c
 +++ b/arch/arm64/kernel/cpu_errata.c
-@@ -377,6 +377,16 @@ static const struct arm64_cpu_capabiliti
- };
+@@ -383,6 +383,10 @@ static const struct midr_range workaroun
+ 	/* Cortex-A510 r0p0-r1p1 */
+ 	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
  #endif
- 
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
-+static const struct midr_range workaround_amu_constcnt_list[] = {
-+#ifdef CONFIG_ARM64_ERRATUM_2457168
-+	/* Cortex-A510 r0p0-r1p1 */
-+	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
++#ifdef CONFIG_ARM64_ERRATUM_3821522
++	/* Cortex-A725 r0p0 - r0p2 */
++	MIDR_RANGE(MIDR_CORTEX_A725, 0, 0, 0, 2),
 +#endif
-+	{}
-+};
-+#endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
-+
- #ifdef CONFIG_CAVIUM_ERRATUM_23154
- static const struct midr_range cavium_erratum_23154_cpus[] = {
- 	MIDR_ALL_VERSIONS(MIDR_THUNDERX),
-@@ -904,14 +914,12 @@ const struct arm64_cpu_capabilities arm6
- 		ERRATA_MIDR_REV_RANGE(MIDR_CORTEX_A510, 0, 0, 2)
- 	},
- #endif
--#ifdef CONFIG_ARM64_ERRATUM_2457168
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
- 	{
--		.desc = "ARM erratum 2457168",
--		.capability = ARM64_WORKAROUND_2457168,
-+		.desc = "Broken AMU AMEVCNTR01 (const counter)",
-+		.capability = ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT,
- 		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
--
--		/* Cortex-A510 r0p0-r1p1 */
--		CAP_MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1)
-+		CAP_MIDR_RANGE_LIST(workaround_amu_constcnt_list)
- 	},
- #endif
- #ifdef CONFIG_ARM64_ERRATUM_2038923
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2087,7 +2087,7 @@ static void cpu_amu_enable(struct arm64_
- 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
- 
- 		/* 0 reference values signal broken/disabled counters */
--		if (!this_cpu_has_cap(ARM64_WORKAROUND_2457168))
-+		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT))
- 			update_freq_counters_refs();
- 	}
- }
+ 	{}
+ };
+ #endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
 --- a/arch/arm64/kernel/topology.c
 +++ b/arch/arm64/kernel/topology.c
-@@ -390,7 +390,7 @@ static void cpu_read_constcnt(void *val)
- 	 * the counter is disabled. A return value of 0 at counter read is
- 	 * properly handled as an error case by the users of the counter.
+@@ -385,10 +385,11 @@ static void cpu_read_corecnt(void *val)
+ static void cpu_read_constcnt(void *val)
+ {
+ 	/*
+-	 * Return 0 if the current CPU is affected by erratum 2457168. A value
+-	 * of 0 is also returned if the current CPU does not support AMUs or if
+-	 * the counter is disabled. A return value of 0 at counter read is
+-	 * properly handled as an error case by the users of the counter.
++	 * Return 0 if the current CPU is affected by a HW erratum.
++	 * A value of 0 is also returned if the current CPU does not
++	 * support AMUs or if the counter is disabled. A return
++	 * value of 0 at counter read is properly handled as an error
++	 * case by the users of the counter.
  	 */
--	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_2457168) ?
-+	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT) ?
+ 	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT) ?
  		      0UL : read_constcnt();
- }
- 
---- a/arch/arm64/tools/cpucaps
-+++ b/arch/arm64/tools/cpucaps
-@@ -103,7 +103,6 @@ WORKAROUND_1902691
- WORKAROUND_2038923
- WORKAROUND_2064142
- WORKAROUND_2077057
--WORKAROUND_2457168
- WORKAROUND_2645198
- WORKAROUND_2658417
- WORKAROUND_4193714
-@@ -128,3 +127,4 @@ WORKAROUND_REPEAT_TLBI
- WORKAROUND_SPECULATIVE_AT
- WORKAROUND_SPECULATIVE_SSBS
- WORKAROUND_SPECULATIVE_UNPRIV_LOAD
-+WORKAROUND_BROKEN_AMU_CONSTCNT
 
 
