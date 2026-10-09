@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2B034EEFD;
-	Fri,  9 Oct 2026 14:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2383367B8F;
+	Fri,  9 Oct 2026 14:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557576; cv=none; b=TRZSJxX+y26goJuIU+7wFoZU6Q9T8RSY0jY+NSFvyFUGNPskjnnQ7qJd93dSi4n1KL3+DNyjeUPCWzBEoB22vENX84KSUJxHuaJSNY+kI6j6JIKpW8yAWSkmlGL3j2jq261eO0E+46I/Bt1WGQVQx8Yt6+r6msawP+TVDJ6w2yk=
+	t=1791557579; cv=none; b=aTtgzG//qzl+7NXNAH1bxnftqZVN84VN6Emy0iU+cUuCk/9mlbEDKyDUq3Gy8aZfBv0Dmu47ToRiwpxk8JIfjPreGkKd0xVYRx9JkE8YAg8gvGpp/wtGW2kkqrLd/oWL3JnVJFGroQJGcklRyI5hIG5u4DL4g2DozxY4Ic5fEvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557576; c=relaxed/simple;
-	bh=DugDs2P4087ulp9LauxKY/wFP/pKRSRNqaOagY8ROEM=;
+	s=arc-20240116; t=1791557579; c=relaxed/simple;
+	bh=dhDJ4dRyp/QGUPw+DkNI5s/3Dfg6yBVZi7fTsL/AGvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlQNrXjdFJxIV3yehXjBapE+2GB7IGRvIzmstUkkdCKkk1weLKEe1hJ6EuG08nP2wyYPT4bXbeQMNxvqEjFk423thi1en2QBwi0F7f/aMcAOObML5JAlMIkUkW2PGEuzzf/anz2VS98TKTMRlREqjS+EXFzDTAQvOBw6xZKFArM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtXB+4kn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cp72C2x5s+Ol12VwLezHJcXM1tKFcIBBmkLsdZXHxFEB00jsbyb4KPRpGw4oul+VTFbVBOwFi3tahH6q5ofA++or/hVdtyF4S8mwcfPyWilQyI3sRZ9ZmC7QN3Lcb91sTmJSEdNdDZDbo5wnEVLb0jFIgbkIgHE6PMk6xNzhS7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1K4Ek/nU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtXB+4kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EAD1F000FF;
-	Fri,  9 Oct 2026 14:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1K4Ek/nU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEAF1F000FF;
+	Fri,  9 Oct 2026 14:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557575;
-	bh=6H8WZokkadBwMVCseWh520TPVEFQlGsargVpurahd6U=;
+	s=korg; t=1791557578;
+	bh=jyxYicUaOCF6HHgxdTvWLITDjxzSNpA3WxdJHpjEJe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UtXB+4knvlGas5+NwRY1+UinGqNy2LoImg+awV6m9cpRQnVxwYAnwhr4gWDnhhLxq
-	 RkZuN8m/XhFuz4D8fH8rs5CnCRj1+DtCrYnKUEN0sbeh+qE9AE3rnY1wth4CKhMeJz
-	 jWQQem/Hgo+TkNX5f+V/6Bf+oLpsmK2MVW52wWp0=
+	b=1K4Ek/nUeW4HI5ZHDzOD6fgVDjLZE/ptW7olExJK4NMkxXDjjgNg7rrssKRp2Ykwf
+	 DIRIc5yhHDdUhyoW/VnPXNR/RxnWqZitdyLHCa5ckgxCQ6JBz7DKf4HEMr4Ncao18M
+	 TuP4OqNF0MhatOt0q7t1oERkr5qAuKGhQNrWvPUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 409/428] iio: proximity: isl29501: Fix return type of isl29501_register_write
-Date: Fri,  9 Oct 2026 16:12:26 +0200
-Message-ID: <20261009140955.210623819@linuxfoundation.org>
+Subject: [PATCH 7.2 392/428] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
+Date: Fri,  9 Oct 2026 16:12:09 +0200
+Message-ID: <20261009140954.816121494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,40 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit e8dd273d199f5bbe295a8e3d8b777c5505b6b2e1 upstream.
+commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
 
-isl29501_register_write() was returning a u32 instead of an int.
-Since the function returns negative error codes (such as -ERANGE or
-return values from i2c_smbus_write_byte_data()), returning an unsigned
-integer type prevents callers from correctly checking for negative error
-conditions.
+Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
+ever holds a runtime PM usage count. So the pm_runtime_put() in both
+places always triggers the "Runtime PM usage count underflow!" warning
+on every failed probe and every unbind.
 
-Fix this by changing the function return type from u32 to int.
+Drop both calls.
 
-This was found through manual code review.
-
-Fixes: 1c28799257bc ("iio: light: isl29501: Add support for the ISL29501 ToF sensor.")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/isl29501.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/iio/proximity/isl29501.c
-+++ b/drivers/iio/proximity/isl29501.c
-@@ -226,7 +226,7 @@ err:
- 	return ret;
- }
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -657,7 +657,6 @@ err_map:
+ 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
+ 		iio_map_array_unregister(indio_dev);
  
--static u32 isl29501_register_write(struct isl29501_private *isl29501,
-+static int isl29501_register_write(struct isl29501_private *isl29501,
- 				   enum isl29501_register_name name,
- 				   u32 value)
- {
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	return ret;
+@@ -668,7 +667,6 @@ static void sun4i_gpadc_remove(struct pl
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
+ 
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
 
 
