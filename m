@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A2A125AA;
-	Fri,  9 Oct 2026 14:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C393B582F;
+	Fri,  9 Oct 2026 14:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556421; cv=none; b=Ws2v9p1YfVWlwevqx/XDOivGpSOmr4FEmNugfTY9eHzmWrbOSd0AQQT9eqNH0MQskVDAMALMj4JmAkrQbsvOQLSaiCuVD7cgVHddsibKs0fJg4zuEpuB1pf1G8dW3wl6Fzixc5SEJZ+bIOJ+pg6DCpL+i+JURGPPhjB9avzfn6Y=
+	t=1791556424; cv=none; b=EBLs6KCr6aGzpiMvQI/cE00/cjlNWLpQenhRLpIrn3rsbQg7LNInYUKl00J+6xRw0SRsXoNm9kFPMsSKl8TBYHHegKjc7BG5Bywso1lGUJLmTkENUzmDYsuFZr+nTgTPoD735vy7zz/bDvR8YKcoD7mQp2oIFJUQI/LmPEh7dl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556421; c=relaxed/simple;
-	bh=KMB5tnyAojtzxtJhloJ/Z6FdDuP7kzk1w28v8AfeZ2k=;
+	s=arc-20240116; t=1791556424; c=relaxed/simple;
+	bh=4VQ1m4xKr+tNWxxXwfEvsZQn70124RU9GN4NnvzjBgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKosGvegRvSx4cFlE2oCoqmBjn2IQGNTEtxIAI9oRlUGTF0mtYscVLGYEHHrHUvsoRIrMgk6fJ10ZcY7qnM7tZDqcL15bHi1sPmLGG10lQQAq8+BzPXFCuwKPAFyRZ+BBHjxyqB6JXm2g6FqElcoyP2c1Z8Kvad3FtXFiC46jPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgBT6ZrS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZdrw4eRAW6qtmRBklmpKtWJWiUI/IFsgA14zTLWOhI+cxT0SqpmJx4IITqAke7e65eL4r1b94hWFY1z24czEWfkTH7QwFLaF9kKcoAQVdE7HH+lJOenWdijb/r4yugIIvpZnvBa5yM/m9SXhPZC3OkH2fVMswp30YpADS28F+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMB5Pckw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgBT6ZrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D701F000FF;
-	Fri,  9 Oct 2026 14:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMB5Pckw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FA51F00898;
+	Fri,  9 Oct 2026 14:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556419;
-	bh=tB+hbiXPNORA16Z7TY5LMncWPuxRl6LbdtfpAn8xQg8=;
+	s=korg; t=1791556422;
+	bh=eHqXDtGtqmK1Ts+RDE+kFz7RTCFSxn67pe3TM+sj1Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kgBT6ZrScMw44qjZxEl3s0lyRQB7td+tcZSpHmzMo0ZZi1osbC9FG0VRT4LwtFj7u
-	 2Kc2SrUn81aL1PqfYijDgvDplDl1Uy+pdVYIs20k/TuEsF/ZAiNWsqL3vaMIuHIyXN
-	 qS9qeNNhppJV74DKHcUYzKjQAT0bOH6s/HvGoHSE=
+	b=DMB5Pckwjtp8Jvr0PsPZDlfPDvHGGc9kuVoaPJKLYmjMhGRFG/vJy1TfLXQrhPGJ7
+	 3JCkC1CxVe+oMomG6vmU0k7uRXIXgjqbyP6GjItxPmNHz0tAHwTDPZEwWuH4uUE8qv
+	 Q9Kf8g/yX5tuamLlz0+BIzqz7UQF3T0vjch6u6Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Polack <spolack+git@mailbox.org>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 173/428] drm/amd/display: Fix stale replay_events after mod_power stream removal
-Date: Fri,  9 Oct 2026 16:08:30 +0200
-Message-ID: <20261009140949.951917888@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 231/403] Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown
+Date: Fri,  9 Oct 2026 16:09:52 +0200
+Message-ID: <20261009140957.556794512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +46,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Polack <spolack+git@mailbox.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit b76a5b7bee22556914f7cde210f695ef162d81bf upstream.
+commit 848a7a91c7f03675d3bd8db6f7721cbf9cb50e21 upstream.
 
-[Why]
-mod_power_remove_stream() shifts the remaining power_entity slots down
-but does not move replay_events, and mod_power_add_stream() does not
-initialize it. replay_events therefore stay bound to the map slot
-instead of the stream.
+hci_low_sent() selects a connection under RCU but drops the read lock
+before calculating its quota and returning it to the scheduler. The
+connection is then used without lifetime protection by hci_sched_iso()
+and hci_sched_sco().
 
-When several streams are disabled in one atomic commit,
-amdgpu_dm_mod_power_update_streams() removes them one after another.
-The eDP stream can then be looked up in a slot whose stale
-replay_events already have replay_event_hw_programming set, so
-amdgpu_dm_replay_set_event() returns early ("already in desired state")
-without calling mod_power_set_replay_event(). Replay is not disabled
-before the eDP panel is powered off. After DPMS on, the sink reports
-neither replay state nor frame lock (DPCD 0x378 = 0x00, no error bits),
-so the HPD IRQ recovery does not trigger and the panel stays black
-until a full modeset.
+After the TX worker drops the RCU read lock, hci_abort_conn_sync() on
+hdev->req_workqueue can remove the connection from the hash, complete
+synchronize_rcu(), purge its queues and release it. The TX worker on
+hdev->workqueue can then access the freed connection in hci_quote_sent()
+or while dequeuing packets and updating conn->sent.
 
-Seen with an eDP panel using FreeSync Replay plus two DP-MST displays:
-DPMS off/on of all outputs leaves eDP black, while DPMS of eDP alone
-works. Doing an eDP-only DPMS first makes the next all-output DPMS
-fail reliably.
+KASAN reported:
 
-[How]
-Shift replay_events together with the PSR cached fields in
-mod_power_remove_stream() and initialize it to replay_event_vsync in
-mod_power_add_stream(), matching the psr_event_vsync initial value used
-for PSR (both vsync events are driven together by
-amdgpu_dm_crtc_set_static_screen_optimze()).
+  BUG: KASAN: slab-use-after-free in hci_low_sent+0x730/0x840
+  Workqueue: hci0 hci_tx_work
+  Call Trace:
+   hci_low_sent+0x730/0x840
+   hci_sched_iso+0x25e/0x4d0
+   hci_tx_work+0x239/0xcb0
 
-Tested on 7.3.0-rc3 (238650ef6c7c): the reproducer above now recovers
-reliably, and Replay still engages when the screen is idle.
+  Allocated by task 93:
+   __hci_conn_add+0x16f/0x1b40
+   hci_bind_bis+0x782/0x17b0
+   hci_connect_bis+0xa0/0x510
+   iso_sock_connect+0x589/0x1050
 
-The issue was debugged with help from an AI assistant (Claude), which
-analysed ftrace/kprobe traces and the driver source, pointed to the
-missing replay_events handling and suggested this change. I collected
-the traces and built and tested the fix on the affected hardware.
+  Freed by task 88:
+   kfree+0x131/0x3c0
+   device_release+0xc8/0x240
+   kobject_put+0x14d/0x280
+   hci_conn_del+0x55a/0xe80
+   hci_disconnect_sync+0x156/0x180
+   hci_abort_conn_sync+0x3e7/0x940
+   hci_cmd_sync_work+0x13c/0x290
 
-Fixes: 4cef2ac4c795 ("drm/amd/display: Introduce power module on Linux")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Simon Polack <spolack+git@mailbox.org>
-Reviewed-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3d47e38e271195435e125527b224d11cfdb777b1)
+Hold hci_dev_lock() across connection selection and transmission in both
+SCO and ISO scheduling, serializing them with connection teardown. This
+also prevents queuing completion timestamps after the connection queues
+have been purged. Extending RCU across transmission would be unsafe
+because the transmit path can sleep. Keep the ISO timeout check outside
+the mutex since hci_link_tx_to() takes it itself.
+
+The preceding channel fix already holds this mutex in the ACL and LE
+schedulers, which call the SCO scheduler between packets. Move the SCO
+body to __hci_sched_sco(), assert that its caller holds the mutex, and
+use it directly from these locked paths. Keep a locking hci_sched_sco()
+wrapper for the direct calls from hci_tx_work(). This avoids recursively
+acquiring the device mutex while preserving the scheduling order.
+
+Remove the obsolete claim that connection removal disables TX.
+
+Fixes: bf4c63252490 ("Bluetooth: convert conn hash to RCU")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/power/power.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_core.c |   26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/power/power.c
-+++ b/drivers/gpu/drm/amd/display/modules/power/power.c
-@@ -333,6 +333,7 @@ bool mod_power_add_stream(struct mod_pow
- 		core_power->map[core_power->num_entities].psr_enabled = 0;
- 		core_power->map[core_power->num_entities].psr_events = psr_event_vsync;
- 		core_power->map[core_power->num_entities].psr_power_opt = 0;
-+		core_power->map[core_power->num_entities].replay_events = replay_event_vsync;
- 		core_power->num_entities++;
- 		return true;
- 	}
-@@ -392,6 +393,7 @@ bool mod_power_remove_stream(struct mod_
- 		core_power->map[i].psr_enabled = core_power->map[i + 1].psr_enabled;
- 		core_power->map[i].psr_events = core_power->map[i + 1].psr_events;
- 		core_power->map[i].psr_power_opt = core_power->map[i + 1].psr_power_opt;
-+		core_power->map[i].replay_events = core_power->map[i + 1].replay_events;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3441,9 +3441,6 @@ static struct hci_conn *hci_low_sent(str
+ 	struct hci_conn *conn = NULL, *c;
+ 	unsigned int num = 0, min = ~0;
  
- 		memcpy(core_power->map[i].psr_context, core_power->map[i + 1].psr_context, sizeof(struct mod_power_psr_context));
- 		memset(core_power->map[i + 1].psr_context, 0, sizeof(struct mod_power_psr_context));
+-	/* We don't have to lock device here. Connections are always
+-	 * added and removed with TX task disabled. */
+-
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -3648,13 +3645,15 @@ static void __check_timeout(struct hci_d
+ }
+ 
+ /* Schedule SCO */
+-static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
++static void __hci_sched_sco(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn *conn;
+ 	struct sk_buff *skb;
+ 	int quote, *cnt;
+ 	unsigned int pkts = hdev->sco_pkts;
+ 
++	lockdep_assert_held(&hdev->lock);
++
+ 	bt_dev_dbg(hdev, "type %u", type);
+ 
+ 	if (!hci_conn_num(hdev, type) || !pkts)
+@@ -3689,6 +3688,13 @@ static void hci_sched_sco(struct hci_dev
+ 		queue_work(hdev->workqueue, &hdev->tx_work);
+ }
+ 
++static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
++{
++	hci_dev_lock(hdev);
++	__hci_sched_sco(hdev, type);
++	hci_dev_unlock(hdev);
++}
++
+ static void hci_sched_acl_pkt(struct hci_dev *hdev)
+ {
+ 	unsigned int cnt = hdev->acl_cnt;
+@@ -3724,8 +3730,8 @@ static void hci_sched_acl_pkt(struct hci
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev, SCO_LINK);
+-			hci_sched_sco(hdev, ESCO_LINK);
++			__hci_sched_sco(hdev, SCO_LINK);
++			__hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3784,8 +3790,8 @@ static void hci_sched_le(struct hci_dev
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev, SCO_LINK);
+-			hci_sched_sco(hdev, ESCO_LINK);
++			__hci_sched_sco(hdev, SCO_LINK);
++			__hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3811,6 +3817,8 @@ static void hci_sched_iso(struct hci_dev
+ 
+ 	__check_timeout(hdev, *cnt, type);
+ 
++	hci_dev_lock(hdev);
++
+ 	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+@@ -3824,6 +3832,8 @@ static void hci_sched_iso(struct hci_dev
+ 			(*cnt)--;
+ 		}
+ 	}
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ static void hci_tx_work(struct work_struct *work)
 
 
