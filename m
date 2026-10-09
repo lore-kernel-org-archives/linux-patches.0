@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A214E5355;
-	Fri,  9 Oct 2026 14:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A594E3ED9;
+	Fri,  9 Oct 2026 14:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556208; cv=none; b=fVVMtCEzH1GvQ3i7Zxmi82KUqwOGhSTdqqryhj3nCKRmZdU0d28fqZJ9qbDLFOjzJbLH+2TcQppwRoYxQl9cTpws9cTRKDPh39NwgVTE+BBQHxIDe0hZtTmiDoL6th0gpJ3HG4bjMx42/lHhRj0zNDmQ2bS8aPTl4qQekbOxz9s=
+	t=1791556210; cv=none; b=aBy5SaSKYD896dipCvlfQuJ/VZSEzaeC5fgXp0QGAnxe9FchKyy19RwFCmzwNqv7NcIsjMWhr8T0cmOsJ3Kdc/62O+yOmbiqu1e+9wN5dIKZCJMsuHYAxBl6Sf9HK/d6hMcBDy3LWhEUPCrixzQxvJ4DbvaeJ4PRjAXopiBYHEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556208; c=relaxed/simple;
-	bh=g27xIIuSKd7qJkXU8YT5s2At8tqdKHfFI5auRXZI9/s=;
+	s=arc-20240116; t=1791556210; c=relaxed/simple;
+	bh=mkh9iMmDqkR69cM+FiFXopGXvnXWH6ltPCQrmf2Yd08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYEfRuBbesiSLKWkjsEyjPU0/Oe4QIk32FZDdCv4eYKc9PLKaslA+MHvx8KMUeqWGQWk/vOPXaQhlnOM8ZBxZjzi1O4gqiIPEgpdbW5K55jEandKysz42Iuyv7QJp2tXuaa1DArZgnJyHEviVylGb07o7foB7Jn1QsT5zzsm4KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7wWUquk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdaXOGM/kGdYsLe9RkMa6gxYebwVgfYmY7iWbvvk3OG0x75EtkyOMrea3+1nEUoYuiY81IBD7mKZPQPIMitTc63DNjDIEdcLiSQMxb3ZbRUK0ED5GxMKehexXXZKBlT38SiRCfhGr4nNDw79dVqy4J0HVSCHhQqhxx8JFk9iiQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4+sfXyz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7wWUquk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695E11F00893;
-	Fri,  9 Oct 2026 14:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4+sfXyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2F21F000FF;
+	Fri,  9 Oct 2026 14:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556206;
-	bh=52WQfMZMFNaXT2hWNbz9KEnv01uG/sANC3tpi4T7/6I=;
+	s=korg; t=1791556209;
+	bh=NrD0t0s17LUDcNkggVXg1+0yhusv8G48aL57KUZWqtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7wWUqukfvapT6O5ehmgA5iu9vb+kZgy/Kajlj4MfJbtKcKcGGK8tsPwesieL1TBM
-	 XUACyYBoCXrjURWFVc43Ih4sAdO56rsXxyjEaJ92Gc2WavLgJCCN+KpHE98OaxXX2f
-	 xZ+y8Nbs0B+D+CLaKiVkNITBqZ5QdeBC2Wjoq9co=
+	b=k4+sfXyzn4+DXu9VmD45FwJIKZ4QuaZ3H1p5Ju9Bo6WcDqtoezKZRwjSOEEXBuzYw
+	 /+waQVT45+EjmWG9yU6yO5C3BZSynaq3kQVUCvrGqLhY7m6RKT9KAPMQr0kP7cHuyv
+	 4j2RuFHXfTtHkOSYcF52z6ZZdHShz6RtE8GgBo+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johan Hovold <johan@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 191/403] tty: amiserial: fix broken TIOCMIWAIT
-Date: Fri,  9 Oct 2026 16:09:12 +0200
-Message-ID: <20261009140956.592949807@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 138/428] virtio_blk: set the zone write granularity
+Date: Fri,  9 Oct 2026 16:07:55 +0200
+Message-ID: <20261009140949.210783306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
+[ Upstream commit 684b413b5483f57c890c171b9400076a0143b918 ]
 
-A change replacing interruptible_sleep_on() inadvertently broke the
-TIOCMIWAIT implementation which now immediately returns -EIO (unless
-there is a racing modem status update).
+virtblk_read_zoned_limits() reads the write granularity that the device
+reports in virtio_blk_zoned_characteristics and assigns it to the
+physical block size and to io_min, but never to the limit that is named
+after it. queue_limits.zone_write_granularity is left at zero, so
+blk_validate_zoned_limits() raises it to the logical block size:
 
-Replace the old hangup (and signal) detection with a check for the
-TTY_IO_ERROR flag which is set on hangup.
+	if (lim->zone_write_granularity < lim->logical_block_size)
+		lim->zone_write_granularity = lim->logical_block_size;
 
-Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
-Cc: stable@kernel.org	# 3.14
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A device that reports a granularity coarser than its logical block size,
+which is what the field exists to express, therefore has it silently
+reduced. A 512e host managed disk passed through to a guest reports a
+logical block size of 512 and a write granularity of 4096, and the guest
+ends up with a zone write granularity of 512.
+
+bio_split_alignment() returns lim->zone_write_granularity if it is non-zero
+and bio_split_io_at() may split a bio with as per bio_split_alignment().
+This can real to the write getting rejected by the host drive, as the write
+is not aligned to the physical block size.
+
+zonefs also takes its block size from bdev_zone_write_granularity(), so it
+would incorrectly use 512 on a disk that requires 4096.
+
+sd_zbc_read_zones() sets the limit from the physical block size for the
+same reason. NVMe ZNS and null_blk leave it unset, but the fallback
+gives the right answer for them, as their write granularity is the
+logical block size. virtio carries a separate value that may exceed it.
+
+Set the zone write granularity from the value that the device reports.
+
+Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://patch.msgid.link/20260918140641.2031075-2-cassel@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/amiserial.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/block/virtio_blk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/amiserial.c
-+++ b/drivers/tty/amiserial.c
-@@ -1138,11 +1138,6 @@ static int rs_ioctl(struct tty_struct *t
- 				local_irq_save(flags);
- 				cnow = info->icount; /* atomic copy */
- 				local_irq_restore(flags);
--				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
--				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
--					ret = -EIO; /* no change => error */
--					break;
--				}
- 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
- 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
- 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
-@@ -1150,6 +1145,10 @@ static int rs_ioctl(struct tty_struct *t
- 					ret = 0;
- 					break;
- 				}
-+				if (tty_io_error(tty)) {
-+					ret = -EIO;
-+					break;
-+				}
- 				schedule();
- 				/* see if a signal did it */
- 				if (signal_pending(current)) {
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 32bf3ba07a9dc..c8bfbf8435ac7 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -743,6 +743,7 @@ static int virtblk_read_zoned_limits(struct virtio_blk *vblk,
+ 		dev_warn(&vdev->dev, "zero write granularity reported\n");
+ 		return -ENODEV;
+ 	}
++	lim->zone_write_granularity = wg;
+ 	lim->physical_block_size = wg;
+ 	lim->io_min = wg;
+ 
+-- 
+2.53.0
+
 
 
