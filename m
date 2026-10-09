@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599532D8DC4;
-	Fri,  9 Oct 2026 14:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DBA4E4332;
+	Fri,  9 Oct 2026 14:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555895; cv=none; b=pYa1g3x+ceGnt372iyH6VNRXkm6LATPH+m7No1F23vIkeln8ubxJl69zabYKs+H1vwpWHqSZiXGUNkfyf7U3eUOK1APmdZtjJ/N9N8oDSIr1MiZrkTYDXfe0oYstvptfFZB8OI64HPwVf7CSEWMYWmEaFTthh6wSsfScBoNwcTs=
+	t=1791555898; cv=none; b=CkY5y4SGsLEPnVDdmtWDhJeOJK6FlM6grxveJuXuJ1kSVxmOB5UrOviGkzwSeLkLIw13S9jm34ySvp+4NaNinr3dHojJ/jAIguq3uvViOFSYwsHBYEJ0fF0b4/L8l4lviRGctDtIYSKOLTyjnRGbVZoUz7Ki6hQ3CinHj9KQ0tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555895; c=relaxed/simple;
-	bh=xr/qx2+1RbBnSFir+aioAkIl5KELD0xS1NOGdbADIKM=;
+	s=arc-20240116; t=1791555898; c=relaxed/simple;
+	bh=E7ZZKMOF2HF+dJ//SC0kvZWNXys1DBFXpgFKG/OGafI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlwdmTxDcae3MxiPBWMDRwOB0mVcqaI9mg6Vw231OcW7mR9Gv3gdJBhuNUGa6S1xG4rl4mUoGtPhYcMfh+yerCfvTmkno1GYX+R+LnJwbxrinISaR9dU94auJLkMkUzXYDRXZq9cF5BE8HgEinPvPWRafrDUyjO+m+ggrZZew5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdQHKZN4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Un63F3ggn4eBt+roOS3B1wwsnl7oB8HPhmzPl/yCMMHPEz/pQefPeGLRu8RGfogKqZngFvkY2Ir0AS2DD8I4/UbTXeUiXYcLULQSwabyVPjmgfTlbVYJBFt+uNnDalBJCIcUws/B2u7r1hqExP5IfpEYvmZaVn6fCRgSWihePgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/FBYcJz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdQHKZN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CDE1F00893;
-	Fri,  9 Oct 2026 14:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/FBYcJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BD41F000FF;
+	Fri,  9 Oct 2026 14:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555894;
-	bh=j6mNnKjRRkkm18Y9mp7yUShIa1biXNYjAQVQ+UUI3io=;
+	s=korg; t=1791555897;
+	bh=j6V0fQWBNSrhWBY6JGRDIWx2h93XFrpHunwB2QtRoII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdQHKZN4N7pJ+b53xoviyR/BDZew3Yk1o2FABNkOudxbu1qMFyMxcTFs63O0u0bLy
-	 CVGzHkiJrtmZbLQ1Dfme4SwUdJf0ZxgbhcR2/Hrrt9kJbKsyhEEHLwg2PLzWYvyw37
-	 EFJqnXFULyawsWFrLJC7/qwN7nUD8p/0BBOQd4sM=
+	b=B/FBYcJz9jptKrxmax+mU8GJek8tSouiJX8nxh6lnaUHirIJoHXQgWWKnRGyO82yt
+	 /KrYQ7T9yPnP2jC98EfVeb+sOVJUDQpMMMGqDTDEPOmNrE0OGvzDFhiVp+zrv46zxX
+	 2RGVk0FvSUvdCBS06sXD1Pcwj1dzVqI6H2u9aIPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wiza Jalakasi <wjalakasi@gmail.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 135/403] spi: cs42l43: Workaround for wrong speaker ID on Dell XPS 13 DX13260
-Date: Fri,  9 Oct 2026 16:08:16 +0200
-Message-ID: <20261009140955.231558510@linuxfoundation.org>
+Subject: [PATCH 7.2 087/428] wifi: mac80211: validate TX status rate metadata
+Date: Fri,  9 Oct 2026 16:07:04 +0200
+Message-ID: <20261009140948.097682781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,166 +49,229 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit cad16d850e3759dd82cd869f739b56e9844a1fee ]
+[ Upstream commit 6bdcdb31318c10e6369cff8e5b32c37397e98091 ]
 
-On Dell XPS 13 DX13260 create an acpi_gpio_mapping with exactly two
-GPIO entries to point at the two pins in the GpioIo(). Use this to
-read the speaker ID GPIOs.
+minstrel_ht_tx_status() converts the HT/VHT rate reported in a TX status
+into a group and rate index and uses those to index the minstrel_ht rate
+tables.  The existing validation only checked that an entry was present
+and had tries recorded; it did not check that the reported MCS, spatial
+stream count and bandwidth are representable by the tables, so malformed
+metadata passed to minstrel_ht_get_stats() or
+minstrel_ht_ri_get_stats() could be used as an out-of-bounds index.
 
-This fixes problems on Dell XPS 13 DX13260:
+Validate the rate metadata in the common TX status path instead of only
+in minstrel_ht, since the values are used by more than rate control.
+The legacy ieee80211_tx_rate array and the rate_info based entries are
+sanitized in ieee80211_tx_status_ext() and ieee80211_tx_rate_update()
+before any consumer runs: an entry that does not describe a valid rate
+for its encoding is dropped.  minstrel_ht keeps the checks that depend
+on its own tables, i.e. the supported number of spatial streams, the MCS
+group size and the supported bandwidths.
 
-- No speaker audio
-- The wrong firmware was loaded so the speaker protection did not match
-  the speaker characteristics.
+This does not take away the driver's responsibility to report sane
+values, it only prevents a single bad report from corrupting mac80211
+state.  No WARN_ON() is added: with panic_on_warn a driver bug would
+otherwise turn into a denial of service.
 
-The Dell XPS 13 DX13260 has two speaker ID GPIOs, to form a 2-bit ID. The
-ACPI GpioIo() has both pins but the Linux-specific spk-id-gpios property
-only has a mapping to the first pin. This meant that the speaker ID was
-wrong in most cases, and that would lead to the codec driver loading the
-wrong amp firmware, or not finding a firmware (as 0 is not a valid ID on
-this laptop).
-
-Assisted-by: Codex:gpt-6-sol
-Reported-by: Wiza Jalakasi <wjalakasi@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221956
-Tested-by: Wiza Jalakasi <wjalakasi@gmail.com>
-Fixes: f3c605147741e ("spi: cs42l43: Add GPIO speaker id support to the bridge configuration")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261001085830.4014291-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a5f69d94d8e2 ("mac80211: Get rid of search loop for rate group index")
+Fixes: 9208247d74bc ("mac80211: minstrel_ht: add basic support for VHT rates <= 3SS@80MHz")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Reviewed-by: Ren Wei <weir@nebusec.ai>
+Link: https://patch.msgid.link/607e985d71fbbe63ebfc182a37f882f04f980f7f.1789958876.git.xuyuqiabc@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cs42l43.c | 97 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ net/mac80211/rc80211_minstrel_ht.c | 59 ++++++++++++++++++++++---
+ net/mac80211/status.c              | 70 ++++++++++++++++++++++++++++++
+ 2 files changed, 123 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
-index 14307dd800b74..4d153f58f2462 100644
---- a/drivers/spi/spi-cs42l43.c
-+++ b/drivers/spi/spi-cs42l43.c
-@@ -11,6 +11,7 @@
- #include <linux/bitfield.h>
- #include <linux/cleanup.h>
- #include <linux/device.h>
-+#include <linux/dmi.h>
- #include <linux/errno.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio/machine.h>
-@@ -230,12 +231,108 @@ static size_t cs42l43_spi_max_length(struct spi_device *spi)
- 	return CS42L43_SPI_MAX_LENGTH;
+diff --git a/net/mac80211/rc80211_minstrel_ht.c b/net/mac80211/rc80211_minstrel_ht.c
+index b73ef3adfcc57..60f3e4c8676d2 100644
+--- a/net/mac80211/rc80211_minstrel_ht.c
++++ b/net/mac80211/rc80211_minstrel_ht.c
+@@ -1193,6 +1193,54 @@ minstrel_ht_update_stats(struct minstrel_priv *mp, struct minstrel_ht_sta *mi)
+ 	mi->sample_time = jiffies;
  }
  
 +/*
-+ * Workaround needed for two speaker ID pins in one ACPI GpioIo() but
-+ * the Linux-specific _DSD property only contains one pin.
-+ * Create a temporary acpi_gpio_mapping pointing at both pins.
++ * Check whether an HT/VHT rate from a TX status entry maps to an entry
++ * in the minstrel_ht rate tables.  Values that cannot be represented
++ * there must not be used for indexing mi->groups[] and the MCS groups.
 + */
-+static const struct acpi_gpio_params cs42l43_2bit_speaker_id_from_one_gpioio_params[] = {
-+	[0] = {
-+		.crs_entry_index = 0,
-+		.line_index = 0,
-+	},
-+	[1] = {
-+		.crs_entry_index = 0,
-+		.line_index = 1,
-+	},
-+};
-+
-+static const struct acpi_gpio_mapping cs42l43_2bit_speaker_id_from_one_gpioio_mapping[] = {
-+	{
-+		.name = "spk-id-quirk-gpios",
-+		.data = cs42l43_2bit_speaker_id_from_one_gpioio_params,
-+		.size = ARRAY_SIZE(cs42l43_2bit_speaker_id_from_one_gpioio_params),
-+	},
-+	{ }
-+};
-+
-+static int cs42l43_get_2bit_speaker_id_from_one_gpioio(struct cs42l43_spi *priv, int *result)
++static bool
++minstrel_ht_txstat_rate_valid(struct ieee80211_tx_rate *rate)
 +{
-+	struct fwnode_reference_args args;
-+	struct acpi_device *adev;
-+	struct gpio_desc *desc;
-+	u32 spkid = 0;
-+	int i, ret;
++	unsigned int bw;
 +
-+	/* Use the _DSD property to get the node containing the GpioIo() */
-+	ret = fwnode_property_get_reference_args(dev_fwnode(priv->dev), "spk-id-gpios",
-+						 NULL, 3, 0, &args);
-+	if (ret)
-+		return ret;
++	if (!(rate->flags & (IEEE80211_TX_RC_MCS | IEEE80211_TX_RC_VHT_MCS)))
++		return true;
 +
-+	struct fwnode_handle *fwnode __free(fwnode_handle) = args.fwnode;
-+
-+	/* An acpi_gpio_mapping must be added to the node that contains the GpioIo() */
-+	adev = to_acpi_device_node(fwnode);
-+	if (!adev)
-+		return -EINVAL;
-+
-+	ret = acpi_dev_add_driver_gpios(adev, cs42l43_2bit_speaker_id_from_one_gpioio_mapping);
-+	if (ret)
-+		return ret;
-+
-+	/* gpiod_get_array() can't read from a mapping in a child node */
-+	for (i = 0; i < ARRAY_SIZE(cs42l43_2bit_speaker_id_from_one_gpioio_params); i++) {
-+		desc = fwnode_gpiod_get_index(fwnode, "spk-id-quirk", i, GPIOD_IN,
-+					      dev_name(priv->dev));
-+		if (IS_ERR(desc)) {
-+			ret = PTR_ERR(desc);
-+			goto out;
-+		}
-+
-+		ret = gpiod_get_value_cansleep(desc);
-+		gpiod_put(desc);
-+		if (ret < 0)
-+			goto out;
-+
-+		spkid |= (u32)ret << i;
++	if (rate->flags & IEEE80211_TX_RC_MCS) {
++		/* minstrel_ht supports up to MINSTREL_MAX_STREAMS streams */
++		return rate->idx < MINSTREL_MAX_STREAMS * 8;
 +	}
 +
-+	dev_dbg(priv->dev, "spk-id-gpios = %u\n", spkid);
-+	*result = spkid;
-+	ret = 0;
-+out:
-+	acpi_dev_remove_driver_gpios(adev);
++	/* minstrel_ht has no VHT groups for 160 MHz and wider */
++	bw = !!(rate->flags & IEEE80211_TX_RC_40_MHZ_WIDTH) +
++	     2 * !!(rate->flags & IEEE80211_TX_RC_80_MHZ_WIDTH);
++	if ((rate->flags & IEEE80211_TX_RC_160_MHZ_WIDTH) || bw > BW_80)
++		return false;
 +
-+	return ret;
++	return ieee80211_rate_get_vht_nss(rate) <= MINSTREL_MAX_STREAMS &&
++	       ieee80211_rate_get_vht_mcs(rate) < MCS_GROUP_RATES;
 +}
 +
-+static const struct dmi_system_id cs42l43_spk_id_quirks[] = {
-+	{
-+		.ident = "Dell XPS 13 DX13260",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0E53"),
-+		},
-+		.driver_data = cs42l43_get_2bit_speaker_id_from_one_gpioio,
-+	},
-+	{ }
-+};
++static bool
++minstrel_ht_ri_txstat_rate_valid(struct rate_info *rate)
++{
++	if (!(rate->flags & (RATE_INFO_FLAGS_MCS | RATE_INFO_FLAGS_VHT_MCS)))
++		return true;
 +
- static int cs42l43_get_speaker_id_gpios(struct cs42l43_spi *priv, int *result)
- {
-+	const struct dmi_system_id *dmi_id;
- 	struct gpio_descs *descs;
- 	u32 spkid;
- 	int i, ret;
- 
-+	dmi_id = dmi_first_match(cs42l43_spk_id_quirks);
-+	if (dmi_id) {
-+		int (*get_speaker_id)(struct cs42l43_spi *priv, int *result) = dmi_id->driver_data;
-+
-+		return get_speaker_id(priv, result);
++	if (rate->flags & RATE_INFO_FLAGS_MCS) {
++		/* minstrel_ht supports up to MINSTREL_MAX_STREAMS streams */
++		return rate->mcs < MINSTREL_MAX_STREAMS * 8;
 +	}
 +
- 	descs = gpiod_get_array_optional(priv->dev, "spk-id", GPIOD_IN);
- 	if (!descs)
- 		return 0;
++	/* minstrel_ht has VHT groups only for 20/40/80 MHz */
++	if (rate->bw != RATE_INFO_BW_20 && rate->bw != RATE_INFO_BW_40 &&
++	    rate->bw != RATE_INFO_BW_80)
++		return false;
++
++	return rate->nss <= MINSTREL_MAX_STREAMS &&
++	       rate->mcs < MCS_GROUP_RATES;
++}
++
+ static bool
+ minstrel_ht_txstat_valid(struct minstrel_priv *mp, struct minstrel_ht_sta *mi,
+ 			 struct ieee80211_tx_rate *rate)
+@@ -1205,9 +1253,8 @@ minstrel_ht_txstat_valid(struct minstrel_priv *mp, struct minstrel_ht_sta *mi,
+ 	if (!rate->count)
+ 		return false;
+ 
+-	if (rate->flags & IEEE80211_TX_RC_MCS ||
+-	    rate->flags & IEEE80211_TX_RC_VHT_MCS)
+-		return true;
++	if (rate->flags & (IEEE80211_TX_RC_MCS | IEEE80211_TX_RC_VHT_MCS))
++		return minstrel_ht_txstat_rate_valid(rate);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(mp->cck_rates); i++)
+ 		if (rate->idx == mp->cck_rates[i])
+@@ -1235,9 +1282,9 @@ minstrel_ht_ri_txstat_valid(struct minstrel_priv *mp,
+ 	if (!rate_status->try_count)
+ 		return false;
+ 
+-	if (rate_status->rate_idx.flags & RATE_INFO_FLAGS_MCS ||
+-	    rate_status->rate_idx.flags & RATE_INFO_FLAGS_VHT_MCS)
+-		return true;
++	if (rate_status->rate_idx.flags &
++	    (RATE_INFO_FLAGS_MCS | RATE_INFO_FLAGS_VHT_MCS))
++		return minstrel_ht_ri_txstat_rate_valid(&rate_status->rate_idx);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(mp->cck_rates); i++) {
+ 		if (rate_status->rate_idx.legacy ==
+diff --git a/net/mac80211/status.c b/net/mac80211/status.c
+index dd1dbba06838e..e10e5bcc279b6 100644
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -1161,6 +1161,73 @@ void ieee80211_tx_status_skb(struct ieee80211_hw *hw, struct sk_buff *skb)
+ }
+ EXPORT_SYMBOL(ieee80211_tx_status_skb);
+ 
++/*
++ * Check whether the HT/VHT rate information in a TX status entry is
++ * valid for its encoding.  This is not specific to any rate control
++ * algorithm; all status consumers rely on the values being sane.
++ */
++static bool ieee80211_tx_status_rate_info_valid(const struct rate_info *rate)
++{
++	if (rate->flags & RATE_INFO_FLAGS_MCS)
++		return rate->mcs < 32;
++
++	if (rate->flags & RATE_INFO_FLAGS_VHT_MCS)
++		return rate->nss >= 1 && rate->nss <= 8 && rate->mcs <= 11;
++
++	return true;
++}
++
++static bool
++ieee80211_tx_status_tx_rate_valid(const struct ieee80211_tx_rate *rate)
++{
++	if (rate->flags & IEEE80211_TX_RC_MCS)
++		return rate->idx < 32;
++
++	if (rate->flags & IEEE80211_TX_RC_VHT_MCS)
++		return ieee80211_rate_get_vht_mcs(rate) <= 11;
++
++	return true;
++}
++
++/*
++ * Drop TX status rate entries that don't describe a valid rate.  The
++ * status information is used by rate control and by other mac80211
++ * code, and a malformed entry must not be able to corrupt state beyond
++ * the driver that reported it.
++ */
++static void
++ieee80211_tx_status_drop_invalid_rates(struct ieee80211_tx_status *status)
++{
++	int i;
++
++	for (i = 0; i < status->n_rates; i++) {
++		struct ieee80211_rate_status *rs = &status->rates[i];
++
++		if (ieee80211_tx_status_rate_info_valid(&rs->rate_idx))
++			continue;
++
++		rs->try_count = 0;
++		memset(&rs->rate_idx, 0, sizeof(rs->rate_idx));
++	}
++
++	if (!status->info)
++		return;
++
++	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
++		struct ieee80211_tx_rate *rate;
++
++		rate = &status->info->status.rates[i];
++		if (rate->idx < 0)
++			break;
++
++		if (ieee80211_tx_status_tx_rate_valid(rate))
++			continue;
++
++		rate->idx = -1;
++		rate->count = 0;
++	}
++}
++
+ void ieee80211_tx_status_ext(struct ieee80211_hw *hw,
+ 			     struct ieee80211_tx_status *status)
+ {
+@@ -1173,6 +1240,8 @@ void ieee80211_tx_status_ext(struct ieee80211_hw *hw,
+ 	bool acked, noack_success, ack_signal_valid;
+ 	u16 tx_time_est;
+ 
++	ieee80211_tx_status_drop_invalid_rates(status);
++
+ 	if (pubsta) {
+ 		sta = container_of(pubsta, struct sta_info, sta);
+ 
+@@ -1296,6 +1365,7 @@ void ieee80211_tx_rate_update(struct ieee80211_hw *hw,
+ 		.sta = pubsta,
+ 	};
+ 
++	ieee80211_tx_status_drop_invalid_rates(&status);
+ 	rate_control_tx_status(local, &status);
+ 
+ 	if (ieee80211_hw_check(&local->hw, HAS_RATE_CONTROL))
 -- 
 2.53.0
 
