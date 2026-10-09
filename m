@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552CA4E56C6;
-	Fri,  9 Oct 2026 14:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2F74C6507;
+	Fri,  9 Oct 2026 14:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557250; cv=none; b=hcE3xpkn/zSqqWl34Nx29CuQPlHcrZWuqfjFl6QytHd8kBMn/tEFoo+AfW65giJTwkanN2KyunksoXOQDzZnwj6tLU00qUVmmdHH/TDj8iyEI39eDgW6NK8PPXxhr9OMYJsy+oM4CRecSNqKsXJw0CnVjfn5B1TJIlSXQyxQkyc=
+	t=1791557253; cv=none; b=EjOv/nYb1O6U3LZjB2xnU8dnFFZv4xBNYVr4O9WKYpfDBHg3y+uwbDxvJYLA8G2YRSOZ3UTrEM9SzGpgdYLTe49C/oSixCb8ZlbKMInP1PR8iT6KC5uZm3c0NeIG1LKyrRDbCr+a/4/Dq2CyanZo/T/tY41tskzqtUMTU7xMTsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557250; c=relaxed/simple;
-	bh=DGcuSSUIAjVgFKGi4qMlA6ADhhf+vAHmIfhEe4c69lY=;
+	s=arc-20240116; t=1791557253; c=relaxed/simple;
+	bh=x5vHKuACRozad0kbm5D1s622L4lgdFmofIIG/d/0SNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jglpRabhzD8zv6XCrfUVdA1V3eNl+ZJy97AiTxJ6OS2b01dGBdy38chfEhN+cSBG3rznuIbabnmk4Ca6bFiQhTNAvU463yKekKYCGWCHTXZFPi/fK1LTc315s8iOBDFiSQ4BgkDo/S7AlihH+f23HCIVk8E8buYd6NT015g+L2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6OoHYPD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DwbVLBAcPd3KoquIu+qa7+nXY6b3Nj9i9PVRuMjIn8SezQ0loI0NUOM1OVLCDP/8nnHOEe7OUamHBuL5f4u/LA5hsbYVgC4VUzcs3OGD3Q90+RTsE3O6z4efB9GULUtnElf7tPraWNQFftwlPnmtxrMv7fbxLrDt1Wt8UxZS2qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgJ+vCmz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6OoHYPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E001F000FF;
-	Fri,  9 Oct 2026 14:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgJ+vCmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23281F000FF;
+	Fri,  9 Oct 2026 14:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557249;
-	bh=Edrn7wVd2ogf4fAVLXDTRjlbPSNCTV/uNvpColwNxfo=;
+	s=korg; t=1791557252;
+	bh=+LT/GvsQOYIpIWDTgEOUCyqLGknUUjuZtbN7GwlXcMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6OoHYPDvSYQBR8P77xHnJlgADFB4An5z2cMxzaYjrOj0CDsasicJpKzFDFA0dumU
-	 +9XW2azzcB5noKfqUwT+6n+TgHnIHNwLj3Qd62ozd4r7jez8RtfI5XEwbS0t0uWeL7
-	 LbpqqVu6xPIva9ydy8V6r9NDFvO4rKRHV9TuZjs4=
+	b=NgJ+vCmzrWKnH2xL/6DtZk4mu9PtlV+1clTRfXlQSTWVNr2RwTqABRMpzDNKXfHnd
+	 tw9dFec25zNITBI/sdnrKXCHUkYsH3RZQA0JM4+X4IFbGGIv1ZF3gIZZWJpIJqZ/kk
+	 5vFbRjg28ffc6CIIYgEY5SAbFJ52D4fg29ISRuVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 371/403] iio: adc: ad4030: fix invalid oversampling_ratio validation
-Date: Fri,  9 Oct 2026 16:12:12 +0200
-Message-ID: <20261009141000.984490392@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 326/428] wifi: iwlegacy: 3945: free EEPROM data on remove
+Date: Fri,  9 Oct 2026 16:11:03 +0200
+Message-ID: <20261009140953.297030195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit d615210564205993e8f0e7ccb57cc2e66b7d5706 ]
+commit f8ebe286394c0bbb4a6dbacb182a34ab6376922d upstream.
 
-In ad4030_set_avg_frame_len(), the logarithm is calculated before input
-validation. Passing zero or negative values leads to an undefined result
-from ilog2().
+il3945_pci_probe() calls il_eeprom_init(), which allocates memory for
+the EEPROM data. The probe failure paths release this allocation with
+il_eeprom_free(), but the remove path does not free it after a
+successful probe.
 
-Validate that the input is strictly positive prior to computing its
-logarithm.
+As a result, the EEPROM data is leaked when the PCI device is removed.
 
-Fixes: 949abd1ca5a4 ("iio: adc: ad4030: add averaging support")
-Assisted-by: LLM
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Free the EEPROM data in il3945_pci_remove() before releasing the
+mac80211 hardware structure.
+
+This issue was found by manual code inspection.
+
+Fixes: 073d3f5f1b3b ("iwlwifi: changing EEPROM layout handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: Adjusted context for the missing SPI offload code. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260916073736.2952028-1-lgs201920130244@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad4030.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/adc/ad4030.c
-+++ b/drivers/iio/adc/ad4030.c
-@@ -514,13 +514,20 @@ static int ad4030_set_chan_calibbias(str
- static int ad4030_set_avg_frame_len(struct iio_dev *dev, int avg_val)
- {
- 	struct ad4030_state *st = iio_priv(dev);
--	unsigned int avg_log2 = ilog2(avg_val);
- 	unsigned int last_avg_idx = ARRAY_SIZE(ad4030_average_modes) - 1;
-+	unsigned int avg_log2;
- 	int ret;
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3807,6 +3807,7 @@ il3945_pci_remove(struct pci_dev *pdev)
  
--	if (avg_val < 0 || avg_val > ad4030_average_modes[last_avg_idx])
-+	/* Reject unsupported modes */
-+	if (avg_val > ad4030_average_modes[last_avg_idx])
- 		return -EINVAL;
- 
-+	/* Avoid invalid values for logarithm since it's undefined */
-+	if (avg_val < 1)
-+		return -EINVAL;
-+
-+	avg_log2 = ilog2(avg_val);
-+
- 	ret = regmap_write(st->regmap, AD4030_REG_AVG,
- 			   AD4030_REG_AVG_MASK_AVG_SYNC |
- 			   FIELD_PREP(AD4030_REG_AVG_MASK_AVG_VAL, avg_log2));
+ 	il_free_channel_map(il);
+ 	il_free_geos(il);
++	il_eeprom_free(il);
+ 	kfree(il->scan_cmd);
+ 	dev_kfree_skb(il->beacon_skb);
+ 	ieee80211_free_hw(il->hw);
 
 
