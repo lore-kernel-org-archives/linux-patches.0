@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA593BD64D;
-	Fri,  9 Oct 2026 14:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDD22AF1D;
+	Fri,  9 Oct 2026 14:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556231; cv=none; b=MvkZSUTL8ecDZHSRTzfDfnLLbhHdolpy9QYhgTGhJWecbDw8VNfNS6n9K7MIrq3UioFoix+qmLjd0vb5sBQFdtkHcMqACjEuZkZ1rJAqiDXdoFDa8gDKy742zKe5uQv3cPKvm7tVE+7+0JXO672eGCs2AZw8k9cS+8fQs8K9tjg=
+	t=1791556233; cv=none; b=BBcO5SypUiYO9oAZboM0lXTiohBk+uhr7i9QxDO2ULTDS8HjP95UO191N0bmwelHXotD7c6nv3h7GPOTg2L2FpRbZczA4ZWVqdYlWyExG2N3d32zkMT5qNd0XbRPR7AnNKxAy+8Jl/bKoYuJ6ZBeRqgdZtg0F8xYhDiC4iT1Klw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556231; c=relaxed/simple;
-	bh=kqLT7/hfMoOSltFK5gGGprDhfaqmdC59cv8HrTvIcSY=;
+	s=arc-20240116; t=1791556233; c=relaxed/simple;
+	bh=gfaRuTVxMY2gHe3QVsMM6F6aHYA9+y2k9onrEQESKAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1PZM5jqwE4Sd4F/ZyaHo09sICx8uQICeXdkFPuwuPHaPL2slU9KbPSPxa9GWMqGZC355hRW4Rjc5TOqvLxHXjhNf24BWGttryOQHxdKr9wjfATB3uokfw269rvuuF46AtVi4a34rgJbvRkjcSxAOlqQWHxSLw7ogB7rSRH4Rng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ux3dFkgA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qRRhmftl6bzoJ58hQ8sdYBqDbo5qTy2WZol+cyVYilG3/UaS1dUyZ/WciF8o2g9S8wkrlUOkqV/ooKtFbDs1anva6RIYgBuEmPGBtBqOtRt+r9pHfP7WCfCdoz7JUKV7CIoBhAWP+hGm7PELmOJL+ltI9CYt0/1/S7yDqdTs/0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0TBdMHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ux3dFkgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E774E1F000FF;
-	Fri,  9 Oct 2026 14:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0TBdMHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45E11F000FF;
+	Fri,  9 Oct 2026 14:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556229;
-	bh=tBP+ceITAe3+PI+TRFVBkMeuLVEPjjGUhr5wSbqfH6U=;
+	s=korg; t=1791556232;
+	bh=ImCxMZavjfuwsyVj+Xt38IGpteHPXp0vT92PtwM+35w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ux3dFkgA5xkovzjdj6w+5nY17oYOkOCiLTo9u00TrSdBokjnMVpIv4RAhLsiDIN4x
-	 1ILv4zKeNIbnNO2RCBTP+v0BIywFjVQdIErSa+jJ+5xAmnne1320ZqAT9hK9KW5IxJ
-	 l9v8dcpC/1spoZHY+LhFlSbvAW1r2KeoI/tvxAz4=
+	b=l0TBdMHJz1GJAEx87tLNHFg15dATHBKLz/k15KbupY2zXnR4HUokdv395DkFxdfhQ
+	 Jy79VE9GzLLe++Cge2GqEs/u7t6WvyoTA3cF56UhrPtJWWsrMuEhmb6sZpfF4yzpgV
+	 BAlJlSSHN65CoUs1ROEbTG3f7Ie+fntFfqzmrLmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 141/428] net: cap skb->queue_mapping when the tx queue is picked
-Date: Fri,  9 Oct 2026 16:07:58 +0200
-Message-ID: <20261009140949.273453211@linuxfoundation.org>
+Subject: [PATCH 7.2 105/428] nvme: fix cdev lifetime
+Date: Fri,  9 Oct 2026 16:07:22 +0200
+Message-ID: <20261009140948.517047419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -54,274 +53,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit ea4d4b5dddb5121e64f56fd8e0720bd8b447b63d ]
+[ Upstream commit 9952f3882ecba709092379b71e02b09762b26f96 ]
 
-skbedit can set skb->queue_mapping and raise the per-CPU skip_txqueue
-flag so __dev_queue_xmit() honours the mapping. __dev_queue_xmit()
-cleared the flag before sch_handle_egress() and only read it afterwards,
-so the flag was not confined to the xmit that set it: a nested xmit
-(mirred redirect or mirror, or a drop after skbedit) could set the flag
-and the outer xmit would consume it for an skb that never went through
-skbedit.
+Sashiko bot reported a potential problem for the cdev lifetime in [0]
+- the code there is heavily based on the NVMe code.
 
-A forwarded packet still carries the ingress NIC's rx_queue + 1 in
-skb->queue_mapping, so the outer device then indexes its tx queue state
-with that stale value. Taprio's child array q->qdiscs[] is sized to the
-device's queue count, so taprio_enqueue() indexes past its allocation
-and dereferences the result as a struct Qdisc *.
+Currently the NS head .open and .release file_operations methods take and
+put a reference to the nvme_ns_head to ensure that this structure does not
+disappear while we open fds for that cdev.
 
-We (ab)use the skb->nf_skip_egress which means "skip netfilter egress
-for this packet" to tag to "am I in tc egress?". Despite the overload
-I dont see it as a conflict since the marker is set only around the
-single sch_handle_egress() call and ingress path is guarded by
-tc_at_ingress.
-I will send a followup(net-next) patch once this hits net-next to
-rename the skb->nf_skip_egress bit/flag to skb->skip_egress
+In multipath mode, when we teardown the NS head, we call nvme_cdev_del() ->
+cdev_device_del() -> cdev_del(). However after cdev_del() returns, cdevs
+already open will remain and their fops will still be callable. As such,
+we can still reference the cdev after the nvme_ns_head reference count
+drops to 0 (and is freed).
 
-Arm the flag only from the egress classifier that can use it: raise
-skip_txqueue from tcf_skbedit_act() only when it runs inside
-sch_handle_egress(), thanks to skb->nf_skip_egress. An egress qdisc
-classifier runs in q->enqueue(), after the tx queue has been picked,
-so a mapping it sets cannot affect the current packet; arming the flag
-there only pollutes it for a later xmit. Then own the flag for the xmit
-frame the egress hook runs in: save the incoming value and clear it just
-before sch_handle_egress(), and restore it after the hook - on the
-consumed (drop) path, or, in the same call that reads it, on the
-surviving path. The save and the restores stay inside the
-egress_needed_key static branch, so a packet pays for them only when
-egress hooks are active (2f1e85b1aee4).
+This can be shown with an application which delays between opening the cdev
+and issuing the ioctl while the NS head is being torn down:
 
-Store the value netdev_cap_txqueue() selected back into skb->queue_mapping
-in netdev_tx_queue_mapping(), as netdev_core_pick_tx() already does, so
-the skip_txqueue path never hands a later reader on the xmit path a
-mapping the device cannot serve. A store made still later in the same
-frame, by a tc BPF program attached to a transmit qdisc, is outside this
-path and is not re-capped; a separate followup will resolve that path.
+# ./ioctl_file /dev/ng1n1 &
+# waiting 10 seconds ....
 
-netdev_xmit_skip_txqueue() returns the previous flag value so the
-save-and-clear is one call, and a no-op stub is provided when
-CONFIG_NET_EGRESS is disabled. skb->nf_skip_egress is compiled under
-CONFIG_NET_EGRESS rather than CONFIG_NETFILTER_SKIP_EGRESS, so
-skb_at_tc_egress() is valid whenever the egress path is built.
+# ./ini_nvme_teardown.sh
+[   21.221718] nvme nvme1: Removing ctrl: NQN "nvme-test-target"
+[   21.274609] nvme nvme2: Removing ctrl: NQN "nvme-test-target"
+# now going to issue ioctl ....
+[   26.549285] ==================================================================
+[   26.550841] BUG: KASAN: slab-use-after-free in cdev_put.part.0+0x3d/0x40
+[   26.552352] Read of size 8 at addr ffff88811e7fa170 by task ioctl_file/237
+[   26.553805]
+[   26.554227] CPU: 3 UID: 0 PID: 237 Comm: ioctl_file Not tainted 7.2.0-rc1-00004-g6852a10e32d4 #921 PREEMPT(lazy)
+[   26.554236] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   26.554241] Call Trace:
+[   26.554245]  <TASK>
+[   26.554248]  dump_stack_lvl+0x68/0xa0
+[   26.554266]  print_report+0x10d/0x5d0
+[   26.554276]  ? __virt_addr_valid+0x21d/0x3f0
+[   26.554287]  ? cdev_put.part.0+0x3d/0x40
+[   26.554292]  kasan_report+0x96/0xd0
+[   26.554300]  ? cdev_put.part.0+0x3d/0x40
+[   26.554307]  cdev_put.part.0+0x3d/0x40
+[   26.554313]  __fput+0x7bc/0xa70
+[   26.554322]  fput_close_sync+0xd8/0x190
+[   26.554328]  ? __pfx_fput_close_sync+0x10/0x10
+[   26.554337]  __x64_sys_close+0x79/0xd0
+[   26.554344]  do_syscall_64+0x117/0x6b0
+[   26.554351]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   26.554358] RIP: 0033:0x7f938c067727
+[   26.554364] Code: 48 89 fa 4c 89 df e8 28 ad 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5bf
+[   26.554369] RSP: 002b:00007fff49f05980 EFLAGS: 00000202 ORIG_RAX: 0000000000000003
+[   26.554376] RAX: ffffffffffffffda RBX: 00007f938bfd7780 RCX: 00007f938c067727
+[   26.554380] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+[   26.554383] RBP: 00007fff49f05a10 R08: 0000000000000000 R09: 0000000000000000
+[   26.554386] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+[   26.554389] R13: 00007fff49f05b40 R14: 00007f938c207000 R15: 000055c148471d78
+[   26.554397]  </TASK>
+[   26.554399]
+[   26.575612] Allocated by task 100:
+[   26.575871]  kasan_save_stack+0x24/0x50
+[   26.576157]  kasan_save_track+0x14/0x30
+[   26.576418]  __kasan_kmalloc+0x7f/0x90
+[   26.576668]  __kmalloc_noprof+0x281/0x6c0
+[   26.576938]  nvme_alloc_ns+0x7f7/0x3170
+[   26.577206]  nvme_scan_ns+0x508/0x880
+[   26.577449]  async_run_entry_fn+0x8c/0x350
+[   26.577723]  process_scheduled_works+0xb6f/0x1a00
+[   26.578034]  worker_thread+0x4ad/0xb40
+[   26.578283]  kthread+0x34f/0x450
+[   26.578501]  ret_from_fork+0x563/0x800
+[   26.578752]  ret_from_fork_asm+0x1a/0x30
+[   26.579012]
+[   26.579124] Freed by task 237:
+[   26.579335]  kasan_save_stack+0x24/0x50
+[   26.579596]  kasan_save_track+0x14/0x30
+[   26.579855]  kasan_save_free_info+0x3a/0x60
+[   26.580131]  __kasan_slab_free+0x43/0x70
+[   26.580388]  kfree+0x321/0x500
+[   26.580591]  nvme_ns_head_chr_release+0x39/0x50
+[   26.580883]  __fput+0x352/0xa70
+[   26.581095]  fput_close_sync+0xd8/0x190
+[   26.581350]  __x64_sys_close+0x79/0xd0
+[   26.581595]  do_syscall_64+0x117/0x6b0
+[   26.581842]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   26.582176]
+[   26.582286] Last potentially related work creation:
+[   26.582593]  kasan_save_stack+0x24/0x50
+[   26.582841]  kasan_record_aux_stack+0x89/0xa0
+[   26.583210]  insert_work+0x22/0x170
+[   26.583442]  __queue_work+0x7b1/0xfa0
+[   26.583682]  queue_work_on+0x77/0x80
+[   26.583921]  kblockd_schedule_work+0x18/0x20
+[   26.584207]  nvme_mpath_put_disk+0x42/0xa0
+[   26.584632]  nvme_free_ns_head+0x1c/0x160
+[   26.584904]  nvme_ns_head_chr_release+0x39/0x50
+[   26.585208]  __fput+0x352/0xa70
+[   26.585420]  fput_close_sync+0xd8/0x190
+[   26.585677]  __x64_sys_close+0x79/0xd0
+[   26.585924]  do_syscall_64+0x117/0x6b0
+[   26.586173]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   26.586505]
+[   26.586616] Second to last potentially related work creation:
+[   26.586991]  kasan_save_stack+0x24/0x50
+[   26.587246]  kasan_record_aux_stack+0x89/0xa0
+[   26.587538]  insert_work+0x22/0x170
+[   26.587770]  __queue_work+0x7b1/0xfa0
+[   26.588010]  queue_work_on+0x77/0x80
+[   26.588247]  kblockd_schedule_work+0x18/0x20
+[   26.588529]  nvme_remove_head+0x3d/0xb0
+[   26.588787]  nvme_ns_remove+0x4b2/0x930
+[   26.589040]  nvme_remove_namespaces+0x29c/0x410
+[   26.589340]  nvme_do_delete_ctrl+0xf3/0x190
+[   26.589611]  nvme_delete_ctrl_sync+0x71/0x90
+[   26.589889]  nvme_sysfs_delete+0x91/0xb0
+[   26.590151]  kernfs_fop_write_iter+0x2fb/0x4a0
+[   26.590452]  vfs_write+0x929/0xfc0
+[   26.590688]  ksys_write+0xf2/0x1d0
+[   26.590923]  do_syscall_64+0x117/0x6b0
+[   26.591171]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   26.591498]
+[   26.591605] The buggy address belongs to the object at ffff88811e7fa000
+[   26.591605]  which belongs to the cache kmalloc-4k of size 4096
+[   26.592409] The buggy address is located 368 bytes inside of
+[   26.592409]  freed 4096-byte region [ffff88811e7fa000, ffff88811e7fb000)
+[   26.593205]
+[   26.593321] The buggy address belongs to the physical page:
+[   26.593701] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11e7f8
+[   26.594250] head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[   26.594743] flags: 0x200000000000040(head|node=0|zone=2)
+[   26.595093] page_type: f5(slab)
+[   26.595312] raw: 0200000000000040 ffff888100043040 dead000000000122 0000000000000000
+[   26.595810] raw: 0000000000000000 0000000000040004 00000000f5000000 0000000000000000
+[   26.596309] head: 0200000000000040 ffff888100043040 dead000000000122 0000000000000000
+[   26.596806] head: 0000000000000000 0000000000040004 00000000f5000000 0000000000000000
+[   26.597313] head: 0200000000000003 fffffffffffffe01 00000000ffffffff 00000000ffffffff
+[   26.597813] head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+[   26.598317] page dumped because: kasan: bad access detected
+[   26.598676]
+[   26.598784] Memory state around the buggy address:
+[   26.599093]  ffff88811e7fa000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   26.599559]  ffff88811e7fa080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   26.600023] >ffff88811e7fa100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   26.600485]                                                              ^
+[   26.600921]  ffff88811e7fa180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   26.601390]  ffff88811e7fa200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   26.601855] ==================================================================
+[   26.602374] Disabling lock debugging due to kernel taint
 
-A local user in a network namespace can redirect a packet from a device
-with more TX queues to one with fewer after setting a mapping valid only
-on the larger device. That reaches these reads and, under KASAN, faults
-with "slab-out-of-bounds in taprio_enqueue".
+When all fds for the cdev disappear, the cdev removal path puts a
+reference to the parent object, which is the nvme_ns_head.cdev_device - see
+cdev_default_release() -> kobject_put(parent).
 
-Conditions to recreate the bug: the report's own trigger is a local user
-with CAP_NET_ADMIN in a network namespace, so no eBPF program is needed.
-With CONFIG_NET_SCH_TAPRIO=y, CONFIG_NET_ACT_SKBEDIT=y,
-CONFIG_NET_ACT_MIRRED=y, CONFIG_NET_CLS_MATCHALL=y,
-CONFIG_NET_SCH_PRIO=y and KASAN enabled, create qa (3 queues), qb
-(2 queues) and qc (1 queue) as dummy devices; put a taprio root on qb
-(num_tc 1, queues 2@0) and clsact on all three; then add an egress
-matchall filter on every device. On qa: "action skbedit queue_mapping 2
-pipe action mirred egress redirect dev qb". On qb: "action mirred egress
-mirror dev qc". On qc: "action skbedit queue_mapping 0 pipe". Send one
-packet out qa. qc's skbedit sets the flag while qb's outer xmit is in
-flight; without the fix qb consumes it and reads its two-entry taprio
-child array with the forwarded packet's stale mapping. A qc whose
-skbedit is instead installed in a transmit-qdisc classifier (a matchall
-filter on the qc root qdisc) reaches the same code path the same way
-without the fix.
+Fix the lifetime for the cdev by making adding the cdev add take a
+reference to the NS head and drop that reference in the
+nvme_ns_head.cdev_device release function.
 
-Testing: on a KASAN build with panic_on_warn=1 the unfixed kernel panics
-with "BUG: KASAN: slab-out-of-bounds in taprio_enqueue", a read 0 bytes
-past a 16-byte taprio_init() allocation, for the clsact-setter and the
-transmit-qdisc-classifier reproducers and for a clsact skbedit-then-tc-BPF
-store; the fixed kernel runs all three with no report, and the BPF store
-variant additionally shows the expected "selects TX queue" clamp notice
-from the write-back.
+The same problem exists for the NS cdev lifetime, so resolve that issue
+through a similar method by taking a reference to the NS for the lifetime
+of the cdev. Note that nvme_ns_chr_open() -> nvme_ns_open() also takes a
+reference to the NS. Now that should not be needed, but that code is
+common to bdev ioctl, so keep as is.
 
-Fixes: 2f1e85b1aee4 ("net: sched: use queue_mapping to pick tx queue")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Link: https://lore.kernel.org/netdev/CANn89iLwYx8nCVf0pCEk_MmEiyC6kQaMwCQT9WkQVeeNzNQHqQ@mail.gmail.com/
-Link: https://lore.kernel.org/netdev/179008581937.2160803.7117814290574262942@kernel.org/
-Link: https://lore.kernel.org/netdev/179033713973.2160803.4914570693994398206@kernel.org/
-Link: https://lore.kernel.org/netdev/20260925180407.63647514@kernel.org/
-Link: https://lore.kernel.org/netdev/CANn89i+k-mZKDQVtvws_MEXeuMTAdaCcOXFZE-RfhcGTu90sjA@mail.gmail.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/QDISC-9R8V.v4.20260928081529@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[0] https://lore.kernel.org/linux-scsi/20260703102918.3723667-1-john.g.garry@oracle.com/T/#m67265e2906d617acd2743c0a00809246d0cfc506
+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 6b8a5367e9e7 ("nvme: work around -Wformat-security warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter_netdev.h |  2 +-
- include/linux/rtnetlink.h        |  7 ++++++-
- include/linux/skbuff.h           |  2 +-
- include/net/sch_generic.h        |  9 +++++++++
- net/core/dev.c                   | 31 ++++++++++++++++++++++++-------
- net/sched/act_skbedit.c          |  5 ++---
- 6 files changed, 43 insertions(+), 13 deletions(-)
+ drivers/nvme/host/core.c      |    7 +++++++
+ drivers/nvme/host/multipath.c |   22 ++--------------------
+ 2 files changed, 9 insertions(+), 20 deletions(-)
 
-diff --git a/include/linux/netfilter_netdev.h b/include/linux/netfilter_netdev.h
-index 3175073a66ba6..2a854a0bbd4ba 100644
---- a/include/linux/netfilter_netdev.h
-+++ b/include/linux/netfilter_netdev.h
-@@ -133,7 +133,7 @@ static inline struct sk_buff *nf_hook_egress(struct sk_buff *skb, int *rc,
- 
- static inline void nf_skip_egress(struct sk_buff *skb, bool skip)
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3900,6 +3900,11 @@ static int nvme_subsys_check_duplicate_i
+ static void nvme_cdev_rel(struct device *dev)
  {
--#ifdef CONFIG_NETFILTER_SKIP_EGRESS
-+#ifdef CONFIG_NET_EGRESS
- 	skb->nf_skip_egress = skip;
- #endif
- }
-diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
-index ea39dd23a1976..077d2b486de04 100644
---- a/include/linux/rtnetlink.h
-+++ b/include/linux/rtnetlink.h
-@@ -178,7 +178,12 @@ void net_dec_ingress_queue(void);
- #ifdef CONFIG_NET_EGRESS
- void net_inc_egress_queue(void);
- void net_dec_egress_queue(void);
--void netdev_xmit_skip_txqueue(bool skip);
-+bool netdev_xmit_skip_txqueue(bool skip);
-+#else
-+static inline bool netdev_xmit_skip_txqueue(bool skip)
-+{
-+	return false;
-+}
- #endif
- 
- void rtnetlink_init(void);
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index ce125cd244439..a9f4d2cba64fd 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1020,7 +1020,7 @@ struct sk_buff {
- #ifdef CONFIG_NET_REDIRECT
- 	__u8			from_ingress:1;
- #endif
--#ifdef CONFIG_NETFILTER_SKIP_EGRESS
-+#ifdef CONFIG_NET_EGRESS
- 	__u8			nf_skip_egress:1;
- #endif
- #ifdef CONFIG_SKB_DECRYPTED
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index f35bd06a6bad6..1acaadb3e2cf0 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -810,6 +810,15 @@ static inline bool skb_at_tc_ingress(const struct sk_buff *skb)
- #endif
+ 	ida_free(&nvme_ns_chr_minor_ida, MINOR(dev->devt));
++	if (dev->parent->class == &nvme_class)
++		nvme_put_ns(container_of(dev, struct nvme_ns, cdev_device));
++	else
++		nvme_put_ns_head(container_of(dev, struct nvme_ns_head,
++				cdev_device));
  }
  
-+static inline bool skb_at_tc_egress(const struct sk_buff *skb)
-+{
-+#ifdef CONFIG_NET_EGRESS
-+	return skb->nf_skip_egress && !skb_at_tc_ingress(skb);
-+#else
-+	return false;
-+#endif
-+}
-+
- static inline bool skb_skip_tc_classify(struct sk_buff *skb)
- {
- #ifdef CONFIG_NET_CLS_ACT
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 9d1f88f7fb5bf..6f75d1d1af32c 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4413,9 +4413,14 @@ EXPORT_SYMBOL(dev_loopback_xmit);
- static struct netdev_queue *
- netdev_tx_queue_mapping(struct net_device *dev, struct sk_buff *skb)
- {
--	int qm = skb_get_queue_mapping(skb);
-+	int queue = skb_get_queue_mapping(skb);
-+	int capped;
+ void nvme_cdev_del(struct cdev *cdev, struct device *cdev_device)
+@@ -3965,10 +3970,12 @@ static void nvme_add_ns_cdev(struct nvme
+ 	snprintf(name, sizeof(name), "ng%dn%d", ns->ctrl->instance,
+ 		 ns->head->instance);
  
--	return netdev_get_tx_queue(dev, netdev_cap_txqueue(dev, qm));
-+	capped = netdev_cap_txqueue(dev, queue);
-+	if (unlikely(capped != queue))
-+		skb_set_queue_mapping(skb, capped);
-+
-+	return netdev_get_tx_queue(dev, capped);
- }
- 
- #ifndef CONFIG_PREEMPT_RT
-@@ -4424,9 +4429,13 @@ static bool netdev_xmit_txqueue_skipped(void)
- 	return __this_cpu_read(softnet_data.xmit.skip_txqueue);
- }
- 
--void netdev_xmit_skip_txqueue(bool skip)
-+bool netdev_xmit_skip_txqueue(bool skip)
- {
-+	bool prev = netdev_xmit_txqueue_skipped();
-+
- 	__this_cpu_write(softnet_data.xmit.skip_txqueue, skip);
-+
-+	return prev;
- }
- EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
- 
-@@ -4436,9 +4445,13 @@ static bool netdev_xmit_txqueue_skipped(void)
- 	return current->net_xmit.skip_txqueue;
- }
- 
--void netdev_xmit_skip_txqueue(bool skip)
-+bool netdev_xmit_skip_txqueue(bool skip)
- {
-+	bool prev = netdev_xmit_txqueue_skipped();
-+
- 	current->net_xmit.skip_txqueue = skip;
-+
-+	return prev;
- }
- EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
- #endif
-@@ -4857,21 +4870,25 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
- 	tcx_set_ingress(skb, false);
- #ifdef CONFIG_NET_EGRESS
- 	if (static_branch_unlikely(&egress_needed_key)) {
-+		bool skip_txq;
-+
- 		if (nf_hook_egress_active()) {
- 			skb = nf_hook_egress(skb, &rc, dev);
- 			if (!skb)
- 				goto out;
- 		}
- 
--		netdev_xmit_skip_txqueue(false);
-+		skip_txq = netdev_xmit_skip_txqueue(false);
- 
- 		nf_skip_egress(skb, true);
- 		skb = sch_handle_egress(skb, &rc, dev);
--		if (!skb)
-+		if (!skb) {
-+			netdev_xmit_skip_txqueue(skip_txq);
- 			goto out;
-+		}
- 		nf_skip_egress(skb, false);
- 
--		if (netdev_xmit_txqueue_skipped())
-+		if (netdev_xmit_skip_txqueue(skip_txq))
- 			txq = netdev_tx_queue_mapping(dev, skb);
++	nvme_get_ns(ns); /* Undone in nvme_cdev_rel() */
+ 	if (nvme_cdev_add(name, &ns->cdev, &ns->cdev_device,
+ 			&nvme_ns_chr_fops, ns->ctrl->ops->module)) {
+ 		dev_err(ns->ctrl->device, "Unable to create the %s device\n",
+ 			name);
++		nvme_put_ns(ns);
+ 		return;
  	}
- #endif
-diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
-index bfec6b6684103..26258b353cdee 100644
---- a/net/sched/act_skbedit.c
-+++ b/net/sched/act_skbedit.c
-@@ -72,9 +72,8 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
+ 	set_bit(NVME_NS_CDEV_LIVE, &ns->flags);
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -611,28 +611,8 @@ const struct block_device_operations nvm
+ 	.pr_ops		= &nvme_pr_ops,
+ };
+ 
+-static inline struct nvme_ns_head *cdev_to_ns_head(struct cdev *cdev)
+-{
+-	return container_of(cdev, struct nvme_ns_head, cdev);
+-}
+-
+-static int nvme_ns_head_chr_open(struct inode *inode, struct file *file)
+-{
+-	if (!nvme_tryget_ns_head(cdev_to_ns_head(inode->i_cdev)))
+-		return -ENXIO;
+-	return 0;
+-}
+-
+-static int nvme_ns_head_chr_release(struct inode *inode, struct file *file)
+-{
+-	nvme_put_ns_head(cdev_to_ns_head(inode->i_cdev));
+-	return 0;
+-}
+-
+ static const struct file_operations nvme_ns_head_chr_fops = {
+ 	.owner		= THIS_MODULE,
+-	.open		= nvme_ns_head_chr_open,
+-	.release	= nvme_ns_head_chr_release,
+ 	.unlocked_ioctl	= nvme_ns_head_chr_ioctl,
+ 	.compat_ioctl	= compat_ptr_ioctl,
+ 	.uring_cmd	= nvme_ns_head_chr_uring_cmd,
+@@ -647,10 +627,12 @@ static void nvme_add_ns_head_cdev(struct
+ 	snprintf(name, sizeof(name), "ng%dn%d", head->subsys->instance,
+ 		 head->instance);
+ 
++	nvme_get_ns_head(head); /* Undone in nvme_cdev_rel() */
+ 	if (nvme_cdev_add(name, &head->cdev, &head->cdev_device,
+ 			&nvme_ns_head_chr_fops, THIS_MODULE)) {
+ 		dev_err(disk_to_dev(head->disk),
+ 			"Unable to create the %s device\n", name);
++		nvme_put_ns_head(head);
+ 		return;
  	}
- 	if (params->flags & SKBEDIT_F_QUEUE_MAPPING &&
- 	    skb->dev->real_num_tx_queues > params->queue_mapping) {
--#ifdef CONFIG_NET_EGRESS
--		netdev_xmit_skip_txqueue(true);
--#endif
-+		if (skb_at_tc_egress(skb))
-+			netdev_xmit_skip_txqueue(true);
- 		skb_set_queue_mapping(skb, tcf_skbedit_hash(params, skb));
- 	}
- 	if (params->flags & SKBEDIT_F_MARK) {
--- 
-2.53.0
-
+ 	set_bit(NVME_NSHEAD_CDEV_LIVE, &head->flags);
 
 
