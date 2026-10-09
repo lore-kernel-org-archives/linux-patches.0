@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B525B33BBD9;
-	Fri,  9 Oct 2026 14:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C029334D397;
+	Fri,  9 Oct 2026 14:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556333; cv=none; b=jZGepeDRp/f4S2Z52SnDwilqQ2voBU3z7Xjfhwlv+f17VPSMou/D5GBfDfD86d0g6nB7A2pMJRAMxR+akdCutCG91XGHx5plI9mIDfb/CUGpsdXBsCG4ZJE4shkHCw7gvLzHxbpJpStPRXj3JwOfFcULpphJ3VVpk2Dqxg81Ju0=
+	t=1791556335; cv=none; b=k2AuocxRdr3JvmzHArJjhdYq2WNSHGWWLIR/G1nJec/NcAF6IpVrgU30SxWmKPpvcohWmZCiToTchdtXYxsoLFsPgkehzZe8lQrzangQE3dYptfcr9fTTxApZ4BSduI2xWZF3PthjZt6ub/Y+I0biQyvhRGj+wxdn8mriwHq/2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556333; c=relaxed/simple;
-	bh=kIifQedGN8b/A6YmM3yFayQ7aRf96aoQaS6y9c5LDhU=;
+	s=arc-20240116; t=1791556335; c=relaxed/simple;
+	bh=9xcvrZBOhEDwf7pjaDkCnP5RuuT+pfpWFNimLpr6AsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pywT+LCVjc6ZPjZZEteyLYDPDSML39G5FJBmeTo47TY56/BkBxNSdA9C7XUWF84/2hZm6AJ/qp5n6PvD9WGLSGGebAi52gJOQIRdZuwMWJkFpnQzvcgbvkd932qw05OT6xLirytm4ZOxuRVZf3g5KfhVPXcn3c6t/J9A9WO+Z/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZTRXDcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rw24CmTlbXDqAUFKK3estr2t9ZBwCYd616ANHMXx52lAsGX/oo6H+WlMc6IWD33feh3f7eCo99QvN057IDDZ3yyPFBrabBYhjfMA/pZRJsnM8Ipr9ZgP9Xs3LmmQDS+4DrfdxWdDFYrBrzlljqCmCLRY0f6+a4c8CuCsIEHVuXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnlatHsj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZTRXDcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171351F000FF;
-	Fri,  9 Oct 2026 14:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnlatHsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D251F000FF;
+	Fri,  9 Oct 2026 14:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556331;
-	bh=WQ0fKT4tFYDJd+knrhg05bb5cRPbP2htYPH8Enxt+SQ=;
+	s=korg; t=1791556334;
+	bh=2/m1zgTAqe3BpfYISPiAAsBwDQMWdvPgZI8zB4irrD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pZTRXDcjb2KUOo2gyhz3Q+7Ngcgy7U6WJkEMepGKRSnl7kmmeMy2QDWXDeFOCbsWX
-	 t2yy1+YO9Ac8+65iwo1pvhKM38gojy0d0DdgeFvRtF/Mnhcuv3DW0HgPIwGF9jbmof
-	 0TccWH+W3G0+dz1Dzx3iuRWeG3ukduGuM4sSwfpA=
+	b=OnlatHsj0i3fzT/BQ41ZkmeZHn/1h+5eMWL2Qqwf1oC9QxD20Y52/PHMaESG9enDY
+	 nbp+53zuz5xsnAo8PPxh5K+H3evULbJgv0V7WcsR3CeAh9XAPvYVumuuL7KVXcMAQv
+	 /jHw737Y8d0BHWp8lfHOTIKwN54zNUevHGQbzV6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.18 199/403] serial: 8250_bcm7271: fix use-after-free in brcmuart_remove()
-Date: Fri,  9 Oct 2026 16:09:20 +0200
-Message-ID: <20261009140956.786658624@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 6.18 217/403] EDAC/versalnet: Drop remote processor handle refcount on driver removal
+Date: Fri,  9 Oct 2026 16:09:38 +0200
+Message-ID: <20261009140957.218926982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -52,50 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 189b9dc8c96ec9486482f27c1372b04a7152175e upstream.
+commit 5f43a2d35d5e748c09a50a98fc766dc95bb3a6bd upstream.
 
-brcmuart_handle_irq() starts priv->hrt to work around a receive-timeout
-quirk of the 8250 core when hardware flow control is enabled; the timer
-callback brcmuart_hrtimer_func() dereferences priv.
+mc_probe() acquires a reference to the remote processor with
+rproc_get_by_phandle(), but mc_remove() does not release the reference.
 
-brcmuart_remove() cancels the hrtimer before it unregisters the port, so
-a receive-timeout interrupt that arrives in between re-arms the timer.
-After devm frees priv, the callback runs on freed memory.
+rproc_shutdown() only balances the power reference acquired by rproc_boot();
+it does not drop the device reference acquired by rproc_get_by_phandle(). As
+a result, successful driver removal leaves the remoteproc reference
+unbalanced.
 
-Unregister the port before cancelling the hrtimer.
-serial8250_unregister_port() shuts the port down and frees its IRQ, so
-brcmuart_handle_irq() can no longer restart the timer, and the final
-hrtimer_cancel() drains any timer that was armed before or during the
-unregister.
+Call rproc_put() during removal to release the reference acquired in
+mc_probe().
 
-This issue was found by an in-house static analysis tool.
+  [ bp: Massage commit message. ]
 
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260909084002.686911-1-fanwu01@zju.edu.cn
+Fixes: d5fe2fec6c40d ("EDAC: Add a driver for the AMD Versal NET DDR controller")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260913053532.1324671-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/versalnet_edac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1123,8 +1123,8 @@ static void brcmuart_remove(struct platf
- 	struct brcmuart_priv *priv = platform_get_drvdata(pdev);
+--- a/drivers/edac/versalnet_edac.c
++++ b/drivers/edac/versalnet_edac.c
+@@ -938,6 +938,7 @@ static void mc_remove(struct platform_de
+ 	remove_versalnet(priv);
+ 	rproc_shutdown(priv->mcdi->r5_rproc);
+ 	cdx_mcdi_finish(priv->mcdi);
++	rproc_put(priv->mcdi->r5_rproc);
+ 	kfree(priv->mcdi);
+ }
  
- 	debugfs_remove_recursive(priv->debugfs_dir);
--	hrtimer_cancel(&priv->hrt);
- 	serial8250_unregister_port(priv->line);
-+	hrtimer_cancel(&priv->hrt);
- 	brcmuart_free_bufs(&pdev->dev, priv);
- 	if (priv->dma_enabled)
- 		brcmuart_arbitration(priv, 0);
 
 
