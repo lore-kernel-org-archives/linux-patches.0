@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951974E50A5;
-	Fri,  9 Oct 2026 14:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E12C4D37CB;
+	Fri,  9 Oct 2026 14:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556192; cv=none; b=OmMw9xP5fWomAwnRoF8DbSTo3RoepJSh46qX0CP1gY5U0STKCh0Av0LLnXlI2b2sBhXPhvPHEkrtDix3pMuG2BJz0Mw2m3doqtrN/YyvXCWEVAkFnKbJ644dczGMrI/Oxo6ixYFIEMzIjD0R+PYOplKl5S8E3oNE1MU1wnAHkM8=
+	t=1791556194; cv=none; b=MJoC/vC6RgkS61zeW9qgQBkrX2Z/PDTdJq8ncjWyxAAmjZDnpTkKCeEnbqXfEBp8CeX9vSiajy8CqyqXBK7zjS2YUOkIzLwnsJ9sgCdezTb3z3Ph0SJdE+9I20bOxpk9O0A9Lv16uMmlOrMUTxR/hl7eaGsDOcjPQRinmv3WztU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556192; c=relaxed/simple;
-	bh=RThqodW+WQ3OWjPwJejN4Ai2UCVNO9Cu6WEzYm6PAS4=;
+	s=arc-20240116; t=1791556194; c=relaxed/simple;
+	bh=pQMT5Wdi2IeCIOdjQutMyUN4wJX6nusrlbjLPuIhz4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZHB/ffF8x7U0TtfKV0xcBDqZNUjXoBDcyRhANNzYvSf6KwFSDIcRq1tUEVi5E2P1o62zsUfqeDLLxPUyLAW1wQcr2IDbpSH6k4ABaWDJd4C2qoYEReeKHwM/w9FQKkz1/R6zuGZs9OfKkJy0D4Ank5MjZho6OWiJX/yxS5lGic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOImE98Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HI8cYyuV42X8hBVci7vlV4kcpYTHt5n14N+SQtIriVNxiRjc4rOYk49SgvqEp9V8UW30KYzSb0mZzOZWvIZssqhxud4vDL3XCxoWEjng0sY4PrNqtN6nDfhJUxhTYqJyYWiGHVfKrxgCMxoEYwXDxzakJJYT6/xnuaZMSKQd7ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP0Fyuew; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOImE98Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747911F000FF;
-	Fri,  9 Oct 2026 14:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP0Fyuew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E3B1F000FF;
+	Fri,  9 Oct 2026 14:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556190;
-	bh=3O2jY3djD5eSweInJDtsCDorFzAoKSKVzygRUNs19SA=;
+	s=korg; t=1791556193;
+	bh=iqMILKWL0m/+EKX/JsC08yOHN1qvsDcElpdW7idYg1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOImE98ZgR8pNlAHluZOPSMNRYNKNAOvSLN65EGFPWDxBr8K9MJec0Xv3QnGS88om
-	 0GpO+c61HMfRfnTlVEfKs2s1g9RUMlyNBPB23wyXZ9d4n0iKLQIJ95nTrpLCnTh4GU
-	 OqRgffRX0K+2TWkvfRvVPIhhfduUG/axPkEPNDu0=
+	b=zP0FyuewBJXjFbPWwQIbCQRyAgwpXDjp1BdMVA9xl1k+bHsNNnOkyS30mcmgE8eMm
+	 aYmi1WC0REmN3yYFNmbiq9zSzYtkkLTq+kuw3pnRtRMwVzcaUeKPFBDIaxa5QdIvzS
+	 tIGijVQ6TDsGUt1X9MXsfKGCr2hD0ceT//eXhz9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Keith Busch <kbusch@kernel.org>,
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 104/428] nvme: add nvme_get_ns_head()
-Date: Fri,  9 Oct 2026 16:07:21 +0200
-Message-ID: <20261009140948.497348721@linuxfoundation.org>
+Subject: [PATCH 7.2 135/428] net/sched: sch_codel: match the no-drop threshold to the packet size
+Date: Fri,  9 Oct 2026 16:07:52 +0200
+Message-ID: <20261009140949.145992861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -53,61 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.garry@linux.dev>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit a11e0a4cb4189c468683a2f384f0c266c26a497f ]
+[ Upstream commit 54518e0e827f4ca9229ae657022c60bf60f5c1bf ]
 
-Add a wrapper for getting a reference to the NS head.
+commit 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid
+disabling CoDel") clamped q->params.mtu to [256, 1 << 20]. The value is
+the CoDel no-drop threshold (codel_impl.h "*backlog <= params->mtu"), so
+on a link whose maximum transmitted packet size is below 256 the floor
+extends CoDel's minimum-backlog exemption beyond one packet and delays
+drop or mark eligibility by several small packets.
 
-This would be used in scenarios when we know that getting a reference
-would not fail.
+Keep the upper bound that guards the original overflow (psched_mtu()
+wrapping to ~2 GiB on a huge-MTU device) but drop the 256 floor, so the
+threshold tracks the real device packet size.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 6b8a5367e9e7 ("nvme: work around -Wformat-security warning")
+Conditions to recreate the bug: attach a codel qdisc on a link whose
+MTU plus hard_header_len is below 256 (e.g. a CAN interface). At that
+MTU the no-drop threshold must equal the device MTU plus its
+hard-header length; before this patch it was forced to 256.
+Requires CAP_NET_ADMIN in a user namespace.
+
+Fixes: 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid disabling CoDel")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com.2
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c      |    5 +++++
- drivers/nvme/host/multipath.c |    2 +-
- drivers/nvme/host/nvme.h      |    1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ net/sched/sch_codel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -691,6 +691,11 @@ static void nvme_free_ns_head(struct kre
- 	kfree(head);
- }
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 6aa5829d69612..a1ba2e355f2d1 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -205,7 +205,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	codel_params_init(&q->params);
+ 	codel_vars_init(&q->vars);
+ 	codel_stats_init(&q->stats);
+-	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
++	q->params.mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), 1 << 20);
  
-+void nvme_get_ns_head(struct nvme_ns_head *head)
-+{
-+	kref_get(&head->ref);
-+}
-+
- bool nvme_tryget_ns_head(struct nvme_ns_head *head)
- {
- 	return kref_get_unless_zero(&head->ref);
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -777,7 +777,7 @@ int nvme_mpath_alloc_disk(struct nvme_ct
- 	set_bit(GD_SUPPRESS_PART_SCAN, &head->disk->state);
- 	sprintf(head->disk->disk_name, "nvme%dn%d",
- 			ctrl->subsys->instance, head->instance);
--	nvme_tryget_ns_head(head);
-+	nvme_get_ns_head(head);
- 	return 0;
- }
- 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -1005,6 +1005,7 @@ int nvme_delete_ctrl(struct nvme_ctrl *c
- void nvme_queue_scan(struct nvme_ctrl *ctrl);
- int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
- 		void *log, size_t size, u64 offset);
-+void nvme_get_ns_head(struct nvme_ns_head *head);
- bool nvme_tryget_ns_head(struct nvme_ns_head *head);
- void nvme_put_ns_head(struct nvme_ns_head *head);
- int nvme_cdev_add(const char *name, struct cdev *cdev,
+ 	if (opt) {
+ 		int err = codel_change(sch, opt, extack);
+-- 
+2.53.0
+
 
 
