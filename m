@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD534E4C43;
-	Fri,  9 Oct 2026 14:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D994E4C3A;
+	Fri,  9 Oct 2026 14:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556927; cv=none; b=fuoMjeHPRwUvKRBT39ClU3BFHOtnxxm2nZ/lOBwmFViHHofo3rbp0uM3aDjucDw8lobJGA2vG45S3EVNDdgMk79w+XsmTi64XPSa2L4zJE4Hw7vl0qgGr6wRZ2LRE+apuo76oewzfdxNh9Sacu+94mtP6At7PSr5jgCmuV29N8A=
+	t=1791556929; cv=none; b=ZDXyfirIx3t6jUmobdviZD+zY7iQ0Dk6Bt9KhQoq7UpCUuIopnXuUp/05J4sYIitBb42zKaDyUHuusvBFyiRe7an9YeHQAFweL9xqsT6f8mxHN5p2Yk7fsEIkGMIBR3xdninyFm4ly4xS4gOt6tKajcpk8WWtOILIfh6lyhTYTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556927; c=relaxed/simple;
-	bh=Gz16RbM2Qp2SkNb1c0+VtTDwHQgz39xVzEPIDrrMhhI=;
+	s=arc-20240116; t=1791556929; c=relaxed/simple;
+	bh=prVpvr9nU+gwLvESPhJ662FAYtxwQC63InZZBmeEsSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SI7V18H2durPzD8IWe4TfdKqqKRnzQODaS1AggyjDIBfSk36oNBQjKfoxmyo/WzJB4OyKJuSXGLooFLPXxQR7tGx1Q71NUADyCtwgFVgNK9dnVtqOsDxHZhmiRTbNX06nBIHMwNskUdgV2NuT7IgDtO9jf3/hFd/sbAd9hSyVJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAbTgDZn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txEe1Q6d/AmeNOyXq0NH5lZtcZD2hH+YcRn4W5ENQ9rcdtuMOaVD8Pc+PmXH7jSDKy0EW7pQ0HRiIwvNj2Arj6re7t0VA8hBF4UrXEp8v5uFlLo+dh4MK/t8LUlMKiGoqL+Y1IsZoghA48IOK1tESvO8h7LnzOxyO29vuuvCL/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQ7FuhhO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAbTgDZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E756A1F000FF;
-	Fri,  9 Oct 2026 14:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQ7FuhhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A111F000FF;
+	Fri,  9 Oct 2026 14:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556925;
-	bh=eWDMd0/aqCvt4ZQk186/0np64+znd4pThq6m9PpReMQ=;
+	s=korg; t=1791556928;
+	bh=GCTeJeFdeA0ez6FioiPd87HVRvVWzvP/VdVmLXxmyKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jAbTgDZnxdjGpOUIqZdhzRUTerFKi0Cprax7S69zQvaovZfqpNvFJtKa9vQhJ8is8
-	 x4IptvBzKw4YBBf+3cVR8hyveYy69PBiFgxQ0Fl1l2Fuy7AlmpymPhcZgjgDLFwtc7
-	 4m9RrpNwhjIiicWL1Msvb6Cj6VujRmxOvbvf94lE=
+	b=LQ7FuhhO5aX/NtGvt4cV0BJXzU1RGlEpQk38rnAbbu3/hejY/dQ3eWvwXIgzlHHpD
+	 ckWTfHPY7dGNm+t+++a7uNjETVSrZ5cItLf8feVee9Y0IGEDdz7+dysBErC5d5IcJ8
+	 hgzJxjwCeuzGOHmAAEfryTfZFKRsXj/dHM1ttYX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 315/403] iio: adc: stm32-adc: fix possible division by zero in processed channel
-Date: Fri,  9 Oct 2026 16:11:16 +0200
-Message-ID: <20261009140959.589810405@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 265/428] ASoC: codecs: rt1017-sdca-sdw: fix uninitialized stream_config->type
+Date: Fri,  9 Oct 2026 16:10:02 +0200
+Message-ID: <20261009140951.918256657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +46,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit c5de6a6f855fdcf1e0ea549fb227a316db51c405 upstream.
+commit 174d160884199cad97413f33fe1b56027dc0d3e1 upstream.
 
-In case the conversion has failed or returned zero, processing *val
-can lead to a division by zero. Need to check for errors, or converted
-value is zero, before processing the data. In case the converted value
-is zero, e.g. the Vrefint channel, this should be considered as invalid
-in all cases.
+stream_config is not initialized before being passed to
+sdw_stream_add_slave().  The type field may contain garbage and is
+later copied to stream->type by sdw_config_stream().
 
-Fixes: 0e346b2cfa85 ("iio: adc: stm32-adc: add vrefint calibration support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260911161555.244F31F000FF@smtp.kernel.org/
+Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
+
+While at it, use snd_sdw_params_to_config() helper instead of
+open-coding the same logic.
+
+Fixes: 2b7aecd58528 ("ASoC: rt1017: Add RT1017 SDCA amplifier driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://patch.msgid.link/20260914104551.377880-1-yijiangshan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/stm32-adc.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt1017-sdca-sdw.c |   27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -1609,11 +1609,16 @@ static int stm32_adc_read_raw(struct iio
- 			ret = stm32_adc_single_conv(indio_dev, chan, val);
- 		else
- 			ret = -EINVAL;
-+		iio_device_release_direct(indio_dev);
-+		if (ret < 0)
-+			return ret;
+--- a/sound/soc/codecs/rt1017-sdca-sdw.c
++++ b/sound/soc/codecs/rt1017-sdca-sdw.c
+@@ -15,6 +15,7 @@
+ #include <sound/pcm_params.h>
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
++#include <sound/sdw.h>
+ #include <sound/initval.h>
+ #include <sound/tlv.h>
  
--		if (mask == IIO_CHAN_INFO_PROCESSED)
-+		if (mask == IIO_CHAN_INFO_PROCESSED) {
-+			if (*val == 0)
-+				return -EINVAL;
- 			*val = STM32_ADC_VREFINT_VOLTAGE * adc->vrefint.vrefint_cal / *val;
-+		}
+@@ -573,11 +574,10 @@ static int rt1017_sdca_pcm_hw_params(str
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct rt1017_sdca_priv *rt1017 = snd_soc_component_get_drvdata(component);
+-	struct sdw_stream_config stream_config;
++	struct sdw_stream_config stream_config = {0};
+ 	struct sdw_port_config port_config;
+-	enum sdw_data_direction direction;
+ 	struct sdw_stream_runtime *sdw_stream;
+-	int retval, port, num_channels, ch_mask;
++	int retval, port;
+ 	unsigned int sampling_rate;
  
--		iio_device_release_direct(indio_dev);
- 		return ret;
+ 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
+@@ -591,28 +591,17 @@ static int rt1017_sdca_pcm_hw_params(str
  
- 	case IIO_CHAN_INFO_SCALE:
+ 	/* SoundWire specific configuration */
+ 	/* port 1 for playback */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+-		direction = SDW_DATA_DIR_RX;
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+ 		port = 1;
+-	} else {
+-		direction = SDW_DATA_DIR_TX;
++	else
+ 		port = 2;
+-	}
+-
+-	num_channels = params_channels(params);
+-	ch_mask = (1 << num_channels) - 1;
+-
+-	stream_config.frame_rate = params_rate(params);
+-	stream_config.ch_count = num_channels;
+-	stream_config.bps = snd_pcm_format_width(params_format(params));
+-	stream_config.direction = direction;
+ 
+-	port_config.ch_mask = ch_mask;
++	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
+ 	port_config.num = port;
+ 
+ 	dev_dbg(dai->dev, "frame_rate %d, ch_count %d, bps %d, direction %d, ch_mask %d, port: %d\n",
+-		params_rate(params), num_channels, snd_pcm_format_width(params_format(params)),
+-		direction, ch_mask, port);
++		stream_config.frame_rate, stream_config.ch_count, stream_config.bps,
++		stream_config.direction, port_config.ch_mask, port);
+ 
+ 	retval = sdw_stream_add_slave(rt1017->sdw_slave, &stream_config,
+ 				&port_config, 1, sdw_stream);
 
 
