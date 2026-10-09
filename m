@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CD433BBD9;
-	Fri,  9 Oct 2026 14:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560103F54BD;
+	Fri,  9 Oct 2026 14:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556272; cv=none; b=np2n1NseTWlOqkgtB4mbvTsxgsm53CtZG4NrApDvqyzrfQUyoB+NMgnqjgt6TvFHJZ3AWxxBcVSNUECJ2bg7lL2iRGzFEiM8WeJGjOPHDlwqyaSIs/9itM4+rJG0ieXpLX9z/2sy99S7l/y+nDZIgj/x7EybR02kQctYUqR6zGI=
+	t=1791556275; cv=none; b=RFcuUrgnEDz6JbEouGqc8vM3s41adG/6bVXBy+zEqmBGn56lZNKHgOj3bhwJwPRcK2CFZZEzr4H0pdLDnJcQubwONOP7BjZGPP002odojgzn6OuqewHlSE9hx0+kKe2T5agn1sNw1wueiqIvuuprT0Yl/LaqCfX754oZgHMoKgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556272; c=relaxed/simple;
-	bh=gXnHetRZ7ORoM/TNZEEO9VVYGdAbs5opVKOkhhtAcLo=;
+	s=arc-20240116; t=1791556275; c=relaxed/simple;
+	bh=a5ic7XmPPI3ogbeP2lpZ/ZZTVMh+mu3icyhJWp62NhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nh+RdCbBrB4MxuiVpZPh9NEZovnROYsMXL0pX/Ejy1VrV3np33J8ZpPhphjMhdXv90FX+1mYBoLX8HtxzR5x638AfTG3FevJ+Nk5EhM9nlu4qEdjOEz9SubL1iRYffehqsniwOk8HSN2/n1gwD7CI3Ct9b1dlXUCC4A1WXQxOL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+Drd58o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKfSTMJvu7lKyV0kF0h4upNQCf19uf34pk9j7AfG2eDXgwqmu0ewrTjQ2Q92rn6oRvb21rDvuFnrlfKzdrpZH+cJ8z/l3Yb0iFvpjgv/IIempingOdcwXR01r/ESXypbotJwyZnRxo0TsPDMLq9LQ4u6R450fJmao5/PeFj3Jaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouwl08+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+Drd58o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75D11F000FF;
-	Fri,  9 Oct 2026 14:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouwl08+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBDF1F000FF;
+	Fri,  9 Oct 2026 14:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556271;
-	bh=yHZ90/tUPVDy7H5dDyPN0wesfymytUcZ6pCBz+/1ol8=;
+	s=korg; t=1791556274;
+	bh=TtJZGB/bWPnjv88jR5zT1fuTUHWQ03nehg1OCV+r654=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+Drd58ozCuJ/nBpt66yzxMoxuoicNyq2dhxt+1ORl8Y+H87oXwgdEmJ93mOYDBV5
-	 4cDiFBSX/84jDGdaPEJLM0ioT7gOXfqGmzrjGkd3p/6W/S8vxXHKM5uL+5XBJPeN5P
-	 H8qM9GlM0hmdEbyG9GlFWxRJ+fGJv1P+J+RH1nmA=
+	b=ouwl08+UWH8N/pxi9yvMKDHyDYqZ9sr5xkBNEZ8RW2oh6pG0qqTUx4Zi3wH9DnkQB
+	 OCzC9WBhjU6r5yK4LZDuwD4d4Y5UjYO/fjfyTYWTfXJlwqZxv0x0Z3KLuR+8TFR18h
+	 9XF+8akpeFEKZk9ibWwJGEQrdAG300yEEuvV9oNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
-	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>,
-	David Laight <david.laight.linux@gmail.com>
-Subject: [PATCH 6.18 207/403] serial: sc16is7xx: refill TX FIFO below trigger using fresh TXLVL
-Date: Fri,  9 Oct 2026 16:09:28 +0200
-Message-ID: <20261009140956.979873520@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 150/428] netfilter: flowtable: generalize pending status bit
+Date: Fri,  9 Oct 2026 16:08:07 +0200
+Message-ID: <20261009140949.464285167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +46,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 527484911a40f6e84cf47e8bc490f7da61ab4151 upstream.
+[ Upstream commit 7c549fb7eecd01fdba7c0d12c01da876ef8a3214 ]
 
-sc16is7xx_handle_tx() reads TXLVL once and sizes the hardware TX FIFO
-write from that value. TXLVL reports free space in the hardware TX FIFO.
+Rename NF_FLOW_HW_PENDING to NF_FLOW_PENDING and use it to inhibit the
+flowtable GC worker until pending hw offload work has been completed.
 
-On this SPI-backed path, hardirq/softirq activity, RT scheduling, and
-waiting for synchronous SPI transfers can delay the refill while the UART
-continues draining. The TXLVL value can therefore become stale before the
-hardware TX FIFO write completes.
+Apparently, nf_flow_offload_stats() can schedule work to retrieve stats
+while the flow is being removed by GC.
 
-One failing ftrace with the default 8-free-space trigger showed:
+And this bit can also be used in a follow up patch to disable GC until
+the flow has been fully added in both directions.
 
-  tx_start       txlvl=9  txlvl_read_us=580
-  tx_pre_write   sent=9   pre_write_us=16
-  tx_segment     sent=9   seg_us=364
-  tx_post_write  txlvl_before=9 sent=9 txlvl_after=12 pending_after=29
-                 post_gap_us=12 post_txlvl_us=130
+Revert the reordering done in commit d644b23afe1e ("netfilter:
+flowtable: publish HW_DEAD after worker is done") to prevent a race
+between GC and hw offload handler.
 
-The driver read 9 free spaces and wrote 9 bytes to the hardware TX FIFO,
-but the post-write TXLVL read still reported 12 free spaces while 29 bytes
-remained queued in the xmit kfifo. Even allowing for the post-write read
-window, the hardware TX FIFO had not been filled below the 8-free-space
-trigger, so no new threshold crossing was expected.
-
-The captured failing samples had the same pattern: data remained queued
-in the xmit kfifo while post-write TXLVL remained above the hardware
-trigger. The hardware TX FIFO then drained empty before another refill
-was requested, producing an unintended gap on the wire.
-
-Fix this by re-reading TXLVL after each hardware TX FIFO write while data
-remains queued in the xmit kfifo. If TXLVL is still at or above the
-trigger, top up the hardware TX FIFO again. Stop when the xmit kfifo is
-empty or a TXLVL read confirms that hardware TX FIFO free space is
-strictly below the trigger.
-
-Stopping when TXLVL was equal to the trigger still allowed TX gaps in the
-tested workload. Continuing until TXLVL was strictly below the trigger
-eliminated the observed gaps caused by stale-TXLVL under-fill.
-
-Program the hardware TX trigger explicitly through TLR using the same
-constant as the refill-loop threshold. This prevents the software refill
-condition from diverging from the programmed hardware trigger.
-
-Tested on SC16IS752 over 1 MHz SPI on an i.MX6ULL single-core
-PREEMPT_RT system, transmitting RS-485 at 115200 baud 8N1 under
-continuous Modbus RTU load.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@kernel.org
-Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
-Link: https://lore.kernel.org/linux-serial/20260623112225.82386-3-paultyson.mbewe@ziehl-abegg.de/
-Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
-Reviewed-by: David Laight <david.laight.linux@gmail.com>
-Link: https://patch.msgid.link/20260930145628.566535-2-paultyson.mbewe@ziehl-abegg.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2c8897953f3b ("netfilter: flowtable: Add pending bit for offload work")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ include/net/netfilter/nf_flow_table.h |  2 +-
+ net/netfilter/nf_flow_table_core.c    |  7 ++++++-
+ net/netfilter/nf_flow_table_offload.c | 14 +++++---------
+ net/sched/act_ct.c                    |  2 +-
+ 4 files changed, 13 insertions(+), 12 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -246,6 +246,8 @@
- #define SC16IS7XX_TLR_TX_TRIGGER(words)	((((words) / 4) & 0x0f) << 0)
- #define SC16IS7XX_TLR_RX_TRIGGER(words)	((((words) / 4) & 0x0f) << 4)
- 
-+#define SC16IS7XX_TX_TRIGGER_LEVEL	8
+diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
+index ce414118962f5..d69cadd53bc35 100644
+--- a/include/net/netfilter/nf_flow_table.h
++++ b/include/net/netfilter/nf_flow_table.h
+@@ -183,10 +183,10 @@ enum nf_flow_flags {
+ 	NF_FLOW_DNAT,
+ 	NF_FLOW_CLOSING,
+ 	NF_FLOW_TEARDOWN,
++	NF_FLOW_PENDING,
+ 	NF_FLOW_HW,
+ 	NF_FLOW_HW_DYING,
+ 	NF_FLOW_HW_DEAD,
+-	NF_FLOW_HW_PENDING,
+ 	NF_FLOW_HW_BIDIRECTIONAL,
+ 	NF_FLOW_HW_ESTABLISHED,
+ };
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 254063fca0780..7f51b18f9fb41 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -575,7 +575,12 @@ static void nf_flow_table_extend_ct_timeout(struct nf_conn *ct)
+ static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
+ 				    struct flow_offload *flow, void *data)
+ {
+-	bool teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
++	bool teardown;
 +
- /* IOControl register bits (Only 75x/76x) */
- #define SC16IS7XX_IOCONTROL_LATCH_BIT	BIT(0)   /* Enable input latching */
- #define SC16IS7XX_IOCONTROL_MODEM_A_BIT	BIT(1)   /* Enable GPIO[7:4] as modem A pins */
-@@ -694,6 +696,21 @@ static void sc16is7xx_handle_rx(struct u
- 	tty_flip_buffer_push(&port->state->port);
++	if (test_bit(NF_FLOW_PENDING, &flow->flags))
++		return;
++
++	teardown = test_bit(NF_FLOW_TEARDOWN, &flow->flags);
+ 
+ 	if (nf_flow_has_expired(flow) ||
+ 	    nf_ct_is_dying(flow->ct) ||
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 6757fd89c1f1a..4365859220e6a 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -995,6 +995,7 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
+ 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
+ 	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
+ 		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
++	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
  }
  
-+static unsigned int sc16is7xx_txlvl(struct uart_port *port)
-+{
-+	unsigned int txlvl;
-+
-+	txlvl = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
-+	if (txlvl > SC16IS7XX_FIFO_SIZE) {
-+		dev_err_ratelimited(port->dev,
-+				    "chip reports %u free bytes in TX FIFO, but it only has %u\n",
-+				    txlvl, SC16IS7XX_FIFO_SIZE);
-+		return 0;
-+	}
-+
-+	return txlvl;
-+}
-+
- static void sc16is7xx_handle_tx(struct uart_port *port)
- {
- 	struct tty_port *tport = &port->state->port;
-@@ -715,13 +732,7 @@ static void sc16is7xx_handle_tx(struct u
+ static void flow_offload_tuple_stats(struct flow_offload_work *offload,
+@@ -1056,13 +1057,8 @@ static void flow_offload_work_handler(struct work_struct *work)
+ 		default:
+ 			WARN_ON_ONCE(1);
  	}
- 
- 	/* Limit to space available in TX FIFO */
--	txlen = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
--	if (txlen > SC16IS7XX_FIFO_SIZE) {
--		dev_err_ratelimited(port->dev,
--			"chip reports %d free bytes in TX fifo, but it only has %d",
--			txlen, SC16IS7XX_FIFO_SIZE);
--		txlen = 0;
+-
+-	clear_bit(NF_FLOW_HW_PENDING, &offload->flow->flags);
+-	if (offload->cmd == FLOW_CLS_DESTROY) {
+-		/* Publish after the worker's last flow access. */
+-		smp_mb__before_atomic();
+-		set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
 -	}
-+	txlen = sc16is7xx_txlvl(port);
++	smp_mb__before_atomic();
++	clear_bit(NF_FLOW_PENDING, &offload->flow->flags);
  
- 	/* Handle circular buffer wrap-around by sending multiple segments */
- 	while (txlen > 0 && !kfifo_is_empty(&tport->xmit_fifo)) {
-@@ -734,7 +745,14 @@ static void sc16is7xx_handle_tx(struct u
+ 	kfree(offload);
+ }
+@@ -1089,12 +1085,12 @@ nf_flow_offload_work_alloc(struct nf_flowtable *flowtable,
+ {
+ 	struct flow_offload_work *offload;
  
- 		sc16is7xx_fifo_write(port, tail, to_send);
- 		uart_xmit_advance(port, to_send);
--		txlen -= to_send;
-+
-+		if (kfifo_is_empty(&tport->xmit_fifo))
-+			break;
-+
-+		/* Refill below the trigger to enable the next THRI crossing. */
-+		txlen = sc16is7xx_txlvl(port);
-+		if (txlen < SC16IS7XX_TX_TRIGGER_LEVEL)
-+			break;
+-	if (test_and_set_bit(NF_FLOW_HW_PENDING, &flow->flags))
++	if (test_and_set_bit(NF_FLOW_PENDING, &flow->flags))
+ 		return NULL;
+ 
+ 	offload = kmalloc_obj(struct flow_offload_work, GFP_ATOMIC);
+ 	if (!offload) {
+-		clear_bit(NF_FLOW_HW_PENDING, &flow->flags);
++		clear_bit(NF_FLOW_PENDING, &flow->flags);
+ 		return NULL;
  	}
  
- 	uart_port_lock_irqsave(port, &flags);
-@@ -1186,6 +1204,10 @@ static int sc16is7xx_startup(struct uart
- 			     SC16IS7XX_TCR_RX_RESUME(24) |
- 			     SC16IS7XX_TCR_RX_HALT(48));
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 1d62bb654149c..1cc6eb6250614 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -289,7 +289,7 @@ static bool tcf_ct_flow_is_outdated(const struct flow_offload *flow)
+ {
+ 	return test_bit(IPS_SEEN_REPLY_BIT, &flow->ct->status) &&
+ 	       test_bit(IPS_HW_OFFLOAD_BIT, &flow->ct->status) &&
+-	       !test_bit(NF_FLOW_HW_PENDING, &flow->flags) &&
++	       !test_bit(NF_FLOW_PENDING, &flow->flags) &&
+ 	       !test_bit(NF_FLOW_HW_ESTABLISHED, &flow->flags);
+ }
  
-+	/* Sync hardware and software TX trigger levels */
-+	sc16is7xx_port_write(port, SC16IS7XX_TLR_REG,
-+			     SC16IS7XX_TLR_TX_TRIGGER(SC16IS7XX_TX_TRIGGER_LEVEL));
-+
- 	/* Disable TCR/TLR access */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
- 
+-- 
+2.53.0
+
 
 
