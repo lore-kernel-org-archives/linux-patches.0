@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DB03431F8;
-	Fri,  9 Oct 2026 14:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788423C9893;
+	Fri,  9 Oct 2026 14:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556699; cv=none; b=Jkb7zFXKYg38peRCahXNJK2LQAfGyfxk5+7Ax5+21H5TqsfEc45pI0rFS5j8omOVFk295J1EOhcdYo0ATZRdLmLTI8N/aEvCG2JHwl7KLJQR1apO01Uwo3hD4kvj4B+1d0XqMJVyR2PDSdkKEvWwEcm/XaDazmZ0u8Ud419aYYo=
+	t=1791556702; cv=none; b=kDN0QdepBns7TC8C1k+hlC/xjTS//e823MXKX7FqCpgOvjMNBw/7/5JgPm+EdCihbuwnVQjR7R7iDEAUp3Q7Zkn4kxvwIteLIsr7nD2WbD/ymvyeJ/8xWGi1DV4YMtoXR5pUFUBjnPXyPhPBBfo+NCmsaYf4l9Geo3DJwNwc7xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556699; c=relaxed/simple;
-	bh=XUHdsEAL5s+t8GEmIqn75ZXokj7kgYs9but24rLc/1k=;
+	s=arc-20240116; t=1791556702; c=relaxed/simple;
+	bh=jJUhJu3m+dCdBohp9Q9b//oELDCNic8AbXTj3ufPJps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuYToSWnhj/6ZntJmqH+fFKSKB8jVn+Kpfoc/7JPznLfArrmtsJ4KkrJiUIzNAqy9X1gT9hwGRFqKs0jg0ji7/+eX2Poj0Gy50mbbv4eh24Z2C79fsyxdnLWxCv4c4P3yfv1QC7x1JcKjrNB0YN6fq3Kz8pOqih/B/Ms1bOT6JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2hkJ/P+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lCRw2EiEojy0B6dPYL2bWzZTQC3lKEww8pzmCClXdr+NHD9JeVZFuitPUptqZlekL0bf4Wg701OhsoRlLMJi23Kgp1s/LI0PFdIU4Qm2UC/XM2jX6NJyM/W3+RnMrHfBkiZeuXd36qBBTOv8PCmnVcLvLvZ41SPvpvKbg4x2/mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7xFLEGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2hkJ/P+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4161F000FF;
-	Fri,  9 Oct 2026 14:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7xFLEGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BAF1F0089C;
+	Fri,  9 Oct 2026 14:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556698;
-	bh=oAb325RQA+zbhDUVcp3iss1GUfcC5TTc4jQQQo/4q1c=;
+	s=korg; t=1791556701;
+	bh=dyJv+BSBz9hU0lLv4MmBulIo6epjiYm4pLypo03tmzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B2hkJ/P+J6P1/Kb18wVfTAI2O7V7LhVL63dI0/O9qzSqZsz+pEuwYZ/vk8kePfESw
-	 fZ+B158DGGgErCzm8Pnn3BSA68uMGPJmgh+Q6dkip4DOrE04qR4a8mVX4Xkh0sgJZ3
-	 6HVYM5ZKKVVGNpNxMoxbOYvQxGFEmNL+XHJ3l9yY=
+	b=i7xFLEGxHHfTd5vTpXd7JnRs06K1kFy/nZiVxIb084WbLhCUj+8ymiGTrMw013CMo
+	 cPnDTmfPEEcTucRSjuuKQoB/B+cDYSuDfwzSy3BQ5hndUaXXXitJacmui2gzZB9/hU
+	 40zVYVEyNUD8OvPH6MH/X6mU4RfjBGRhBjgXnMT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatio Zhang <hongkun.zhang@amd.com>,
-	Hawking.Zhang@amd.com,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 187/428] drm/amdgpu: drop userq callback assignment for sdma 7.1
-Date: Fri,  9 Oct 2026 16:08:44 +0200
-Message-ID: <20261009140950.250829695@linuxfoundation.org>
+	Bill Pemberton <wfp5p@virginia.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 277/403] USB: serial: quatech2: fix baud rate overflow
+Date: Fri,  9 Oct 2026 16:10:38 +0200
+Message-ID: <20261009140958.665881948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +46,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 1d1f1acecddf742eb1f305122209bc2034fd90b1 upstream.
+commit ec06546b43b612cefc851558981b4955c0ef9e46 upstream.
 
-Not enabled in 7.1 so drop the assignment.
+The requested baud rate is incorrectly truncated to 16 bits so that
+line speeds above 65535 bps cannot be set.
 
-Cc: Horatio Zhang <hongkun.zhang@amd.com>
-Cc: Hawking.Zhang@amd.com
-Fixes: 4ed5116aacf6 ("drm/amdgpu: Add sdma v7_1_0 support")
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 106e19f69a066fb6354dac04e5f5ed43a06727f7)
-Cc: stable@vger.kernel.org
+Use 32 bits for the rate while rejecting rates outside of
+[50,921600] to avoid having the 16-bit divisor overflow.
+
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: stable@vger.kernel.org	# 3.5
+Cc: Bill Pemberton <wfp5p@virginia.edu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/usb/serial/quatech2.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c
-@@ -1356,10 +1356,6 @@ static int sdma_v7_1_sw_init(struct amdg
- 	else
- 		DRM_ERROR("Failed to allocated memory for SDMA IP Dump\n");
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -54,6 +54,7 @@
+ #define QT2_XMIT_FLUSH      0x05  /* no following info */
+ #define QT2_CONTROL_ESCAPE  0xff  /* pass through previous 2 control bytes */
  
--#ifdef CONFIG_DRM_AMDGPU_NAVI3X_USERQ
--	adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
--#endif
--
- 	return r;
- }
++#define  MIN_BAUD_RATE              50
+ #define  MAX_BAUD_RATE              921600
+ #define  DEFAULT_BAUD_RATE          9600
+ 
+@@ -158,7 +159,7 @@ static inline int calc_baud_divisor(int
+ 
+ static inline int qt2_set_port_config(struct usb_device *dev,
+ 				      unsigned char port_number,
+-				      u16 baudrate, u16 lcr)
++				      speed_t baudrate, u16 lcr)
+ {
+ 	int divisor = calc_baud_divisor(baudrate);
+ 	u16 index = ((u16) (lcr << 8) | (u16) (port_number));
+@@ -259,9 +260,9 @@ static void qt2_set_termios(struct tty_s
+ 	struct usb_device *dev = port->serial->dev;
+ 	struct qt2_port_private *port_priv;
+ 	struct ktermios *termios = &tty->termios;
+-	u16 baud;
+ 	unsigned int cflag = termios->c_cflag;
+ 	u16 new_lcr = 0;
++	speed_t baud;
+ 	int status;
+ 
+ 	port_priv = usb_get_serial_port_data(port);
+@@ -279,6 +280,18 @@ static void qt2_set_termios(struct tty_s
+ 	if (!baud)
+ 		baud = 9600;
+ 
++	if (baud < MIN_BAUD_RATE || baud > MAX_BAUD_RATE) {
++		if (old_termios)
++			baud = tty_termios_baud_rate(old_termios);
++		else
++			baud = clamp(baud, MIN_BAUD_RATE, MAX_BAUD_RATE);
++
++		tty_encode_baud_rate(tty, baud, baud);
++
++		if (!baud)
++			baud = 9600;
++	}
++
+ 	status = qt2_set_port_config(dev, port_priv->device_port, baud,
+ 				     new_lcr);
+ 	if (status < 0)
+@@ -375,7 +388,7 @@ static int qt2_open(struct tty_struct *t
+ 	port_priv->device_port = (u8) device_port;
+ 
+ 	if (tty)
+-		qt2_set_termios(tty, port, &tty->termios);
++		qt2_set_termios(tty, port, NULL);
+ 
+ 	return 0;
  
 
 
