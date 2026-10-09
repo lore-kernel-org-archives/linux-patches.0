@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98962D77F5;
-	Fri,  9 Oct 2026 14:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4D63290B9;
+	Fri,  9 Oct 2026 14:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557565; cv=none; b=UsSidUG+uZXwYM5iNUZUn+gGTiiJ+dbCOP50ltREpTJcD3Px7ef6lpJUkfWNx9NhHwydHsUFUmyZBBqlDDR8i4qUgMyzn+ZHJkM1EqRvkjisceu0WUMm3m+36Q1nxgVAPeLicOlwhl9TadrY9f1iXsNb4647SL6iLr151eKuf88=
+	t=1791557568; cv=none; b=GeAaomOE9NmaCZGGO25ZAXeg5tfW6y0LoUF/XM4abDITIu16tK3N8zeU3phOaK/WS6nMk59NFL7xS/Y37V1NJvZQAHvbxlAPfOikBAtzMPZM8HvhSL02H/wjGb9JzrHcj7gKsyM3PgslGjowLEKeo78sK0OUQ5JZOmAa8/ul67g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557565; c=relaxed/simple;
-	bh=OKTY4E9waHnGU8JpVCGPYh29JfzfCxIIjcY8a2wBwFo=;
+	s=arc-20240116; t=1791557568; c=relaxed/simple;
+	bh=NnnPUN5vFZYA+z9mbo2Mn1KlV49nwOps/3JGlyz46uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaKDI8cM4YSgYcNi0TddEqFU8mRK65ZBVItQcXt+orwDsmSyZEqA3jvnttoLW7dK/Kg7rpbTqEKetFMPy3Xd3N1k3dibjY88SofS4s86PdMu4IfGMVzHqDafJO7uu7Jau3uIcDVZH+uxQvSPiU4UI6PtQ5BtwZVe1AZBRbva/2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2OHL4Hi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MG5B47GTjFoSILAMnLqh5MDtMoB6w8r5lO/j8jJUEkreYb4uK2obzMxoIt9cJAhF/JIdMPklf25vliHb/81jvcITyryLcOQlUtMwiklNGW+7EsOsez2W8bW/zH0SEcTLzElWjMywx9gr2URzbbpuDFtUaZRaBkuze2cdGZ7YnjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKq6Sx3n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2OHL4Hi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531431F00893;
-	Fri,  9 Oct 2026 14:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKq6Sx3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E11D1F000FF;
+	Fri,  9 Oct 2026 14:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557563;
-	bh=IWO1lxwvoUrIAb9kE8awJQHml+8dSn5OvfE+zlj4MhQ=;
+	s=korg; t=1791557566;
+	bh=Z5TFyCiWCa9GUI5V3NahkZC3lg+l366LGcilNRSEu+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2OHL4HieVlDD2GZeyOUaFSadvGevJy0iKV/zGq+2CXEFxvE9ITATXT7+lEySqm4L
-	 lBMBY0x6PIMNy3mOhIMb60mHZjxaMk47HjJ2nihTUZhgYuwvVt2IUEL2oscSzq5kq2
-	 HsCxOKR9MK/k5qmwyqpmfl37Mn4tSZwZ+W0Ebpjs=
+	b=yKq6Sx3nmXB1XkTL8diUy24AlCxxiH/vCJTZYjH/jDgfyWDd0xke+uKMPFQi5Ne4x
+	 LfE/ktrh82GSzvNBs2OSVul9LYm0jinBeensPinsQEW9BsVrPIxP/KPKAdbjSyzPKE
+	 68jacqVCovg4+ysnoh9HQlE8bLU8M40GOs2FcPz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Hui Su <sh_def@163.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 405/428] iio: light: rohm-bu27034: Fix infinite delay on error
-Date: Fri,  9 Oct 2026 16:12:22 +0200
-Message-ID: <20261009140955.117273763@linuxfoundation.org>
+Subject: [PATCH 7.2 406/428] iio: pressure: bmp280: fix out-of-bounds access in sampling frequency lookup
+Date: Fri,  9 Oct 2026 16:12:23 +0200
+Message-ID: <20261009140955.139633229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,171 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-commit 8065a6c02f629187131f3136bedb26f9080e3cca upstream.
+commit 56c423b233b214182c58c99861899327b45b0d6c upstream.
 
-When reading an integration-time fails, the code will use error code to
-compute the sleep time.
+The sampling frequency tables store each frequency as an integer part and
+a fractional part in micro units. num_sampling_freq_avail is initialized
+to the number of flattened integer elements because read_avail() returns
+the table as a flat array.
 
-Fix this by using the smallest integration time as a default if
-reading fails.
+bmp280_write_sampling_frequency(), however, indexes the same table as a
+two-dimensional array and uses num_sampling_freq_avail as the number of
+rows. Convert the flattened element count back to the number of rows
+before iterating over the table.
 
-Fixes: e52afbd61039 ("iio: light: ROHM BU27034 Ambient Light Sensor")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 10b40ffba2f9 ("iio: pressure: bmp280: Add more tunable config parameters for BMP380")
 Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/rohm-bu27034.c |   60 +++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 24 deletions(-)
+ drivers/iio/pressure/bmp280-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/light/rohm-bu27034.c
-+++ b/drivers/iio/light/rohm-bu27034.c
-@@ -137,6 +137,7 @@ static const struct iio_gain_sel_pair bu
- #define BU27034_MEAS_MODE_200MS		2
- #define BU27034_MEAS_MODE_400MS		4
- 
-+#define BU27034_INT_TIME_US_MIN (55 * USEC_PER_MSEC)
- static const struct iio_itime_sel_mul bu27034_itimes[] = {
- 	GAIN_SCALE_ITIME_US(400000, BU27034_MEAS_MODE_400MS, 8),
- 	GAIN_SCALE_ITIME_US(200000, BU27034_MEAS_MODE_200MS, 4),
-@@ -296,7 +297,7 @@ static int bu27034_get_gain(struct bu270
- 	return 0;
- }
- 
--static int bu27034_get_int_time(struct bu27034_data *data)
-+static int bu27034_get_int_time(struct bu27034_data *data, int *itime)
+--- a/drivers/iio/pressure/bmp280-core.c
++++ b/drivers/iio/pressure/bmp280-core.c
+@@ -836,7 +836,7 @@ static int bmp280_write_sampling_frequen
+ 					   int val, int val2)
  {
- 	int ret, sel;
+ 	const int (*avail)[2] = data->chip_info->sampling_freq_avail;
+-	const int n = data->chip_info->num_sampling_freq_avail;
++	const int n = data->chip_info->num_sampling_freq_avail / 2;
+ 	int ret, prev;
+ 	int i;
  
-@@ -304,24 +305,30 @@ static int bu27034_get_int_time(struct b
- 	if (ret)
- 		return ret;
- 
--	return iio_gts_find_int_time_by_sel(&data->gts,
--					    sel & BU27034_MASK_MEAS_MODE);
-+	ret = iio_gts_find_int_time_by_sel(&data->gts,
-+					   sel & BU27034_MASK_MEAS_MODE);
-+	if (ret < 0)
-+		return ret;
-+
-+	*itime = ret;
-+
-+	return 0;
- }
- 
- static int _bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
- 			      int *val2)
- {
--	int gain, ret;
-+	int gain, itime, ret;
- 
- 	ret = bu27034_get_gain(data, channel, &gain);
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &itime);
-+	if (ret)
- 		return ret;
- 
--	return iio_gts_get_scale(&data->gts, gain, ret, val, val2);
-+	return iio_gts_get_scale(&data->gts, gain, itime, val, val2);
- }
- 
- static int bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
-@@ -397,12 +404,10 @@ static int bu27034_try_set_int_time(stru
- 	int ret, int_time_old, i;
- 
- 	guard(mutex)(&data->mutex);
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &int_time_old);
-+	if (ret)
- 		return ret;
- 
--	int_time_old = ret;
--
- 	if (!iio_gts_valid_time(&data->gts, time_us)) {
- 		dev_err(data->dev, "Unsupported integration time %u\n",
- 			time_us);
-@@ -841,7 +846,7 @@ static int bu27034_meas_set(struct bu270
- static int bu27034_get_single_result(struct bu27034_data *data, int chan,
- 				     int *val)
- {
--	int ret;
-+	int ret, itime;
- 
- 	if (chan < BU27034_CHAN_DATA0 || chan > BU27034_CHAN_DATA1)
- 		return -EINVAL;
-@@ -850,11 +855,11 @@ static int bu27034_get_single_result(str
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &itime);
-+	if (ret)
- 		return ret;
- 
--	msleep(ret / 1000);
-+	msleep(itime / 1000);
- 
- 	return bu27034_read_result(data, chan, val);
- }
-@@ -904,12 +909,10 @@ static int bu27034_calc_mlux(struct bu27
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &meastime);
-+	if (ret)
- 		return ret;
- 
--	meastime = ret;
--
- 	d1_d0_ratio_scaled = (unsigned int)ch1 * (unsigned int)gain0 * 100;
- 	helper64 = (u64)ch1 * (u64)gain0 * 100LLU;
- 
-@@ -970,9 +973,9 @@ static int bu27034_read_raw(struct iio_d
- 	switch (mask) {
- 	case IIO_CHAN_INFO_INT_TIME:
- 		*val = 0;
--		*val2 = bu27034_get_int_time(data);
--		if (*val2 < 0)
--			return *val2;
-+		ret = bu27034_get_int_time(data, val2);
-+		if (ret)
-+			return ret;
- 
- 		return IIO_VAL_INT_PLUS_MICRO;
- 
-@@ -1157,11 +1160,20 @@ static int bu27034_buffer_thread(void *a
- {
- 	struct iio_dev *idev = arg;
- 	struct bu27034_data *data;
--	int wait_ms;
-+	int wait_ms, ret;
- 
- 	data = iio_priv(idev);
- 
--	wait_ms = bu27034_get_int_time(data);
-+	/*
-+	 * If reading the integration time fails, default to the minimum so we
-+	 * don't lose samples. This may waste CPU cycles, but as a hardening
-+	 * against theoretical, once-in-a-blue-moon error, this should be Ok.
-+	 */
-+	wait_ms = BU27034_INT_TIME_US_MIN;
-+	ret = bu27034_get_int_time(data, &wait_ms);
-+	if (ret)
-+		dev_warn(data->dev, "Failed to get integration time\n");
-+
- 	wait_ms /= 1000;
- 
- 	wait_ms -= BU27034_MEAS_WAIT_PREMATURE_MS;
 
 
