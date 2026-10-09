@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB60357A4A;
-	Fri,  9 Oct 2026 14:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E755C2773E5;
+	Fri,  9 Oct 2026 14:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557542; cv=none; b=OqPzdZZP+biwQfSCUnHgpp8K3FtfKQDL0ofSrgiOFbHCsZn0meFhW6RqTZBvScqlfcra1eVjiuuLY7FvPGhAorhuo7YHgsbc4xVvC1QU79YVCnepDyxsHd0paLj7YO/p+2ycWqYvThtr6YVPLFU8xLYVL5BYdfviCN8kRVx/DKI=
+	t=1791557545; cv=none; b=C/b/H8qhg1rsIOW+EIgRKZvsFa4tuwvOeG8Hgh2Y2ba+5Rabslm7iABqLHZPUeF7DHV9DUB0FNe4T77L/zWwWx0eObYf8jowegboBzA1cJx3440EcSj6GP61DaAsbi53ZhK60rfAV8AZTSTEb+wZR6Hr4REuImgl9H4yX4lUz4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557542; c=relaxed/simple;
-	bh=D0w/Ov4wEDbdJhNNRVPQXUyoDU2V12CwzQX8fo3tbr8=;
+	s=arc-20240116; t=1791557545; c=relaxed/simple;
+	bh=+IvgShRJ4kRidRfOoeaxyGvgRSzUXJUkCejeZ84pqDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sk7NkXtxjAB8p/5mZ30haFx9XGuC7miat4sF1rYlDb3FUzPeP1RJWNLuahkw602mJLNdwhvu8+Iv3Q5AhsOkUhVHoLAlam9WqQDNC1TSjsbYlg6tk697wT6c/5IcA2/Av2VkrcAQIEUF8KwxeukdvVTwAq7jhznxQNFgGDHEcQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns1vlKBN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=euzUX8XlmXPvFYStuKGlpwadHhLSaINDNZRRRhijTD4fPFWIpWqBmAZEFeTZUQOqn6PiJa/GDeCmqZBg7Vmn1ZfWHhiqLRNcWJEqvARpDmY4xdN+oQGq7ryfGhXcvSocNykSkN8l1NCIAibrtC3BHcy9Aj0LvAOFWVpQkvrJWD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpuqMpy0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns1vlKBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721CF1F000FF;
-	Fri,  9 Oct 2026 14:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpuqMpy0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BFC1F000FF;
+	Fri,  9 Oct 2026 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557541;
-	bh=utZcYYWRbOXuMQ5lui62v3pctdV9MjngijB6vAGbfrM=;
+	s=korg; t=1791557543;
+	bh=ls3laCq2qoKtkxVxA2rGG6Oj7IY1Kdwbv+Tp+bA4xbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ns1vlKBN1Wn/3xZ5IAonHMeeMgGNCubb7hXe8k5LpiVFY6AcQXA+R5Q1yTMrN8f+h
-	 H3OipZLHPKxkzsnYSqgsJrmlPA7tq9D8HUzi2IrKF1TFFeWekgBYhVYGDKhx7UTZNi
-	 iKelaNtOY6X80erajzGEuKw+D6YzvGj/eTGAg0OU=
+	b=CpuqMpy02dHT0xKEpUXL++Rf4D/tOTwUrbNmgI/diNo5J+ky8GaRwwwEC1GMjtk33
+	 DPer9j2yD6rwHTCF9TomUcyhOw5O5Gjdf+nK7GDPVaAFTQGLU1K9VnOQ5EupzRkG3c
+	 j6+wOHN7HhytCdy5UUDxXORkl8z6s1Wb4tAwlEuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.2 355/428] thunderbolt: Fix domain reference leak when DPRX read is canceled
-Date: Fri,  9 Oct 2026 16:11:32 +0200
-Message-ID: <20261009140953.966440436@linuxfoundation.org>
+Subject: [PATCH 7.2 350/428] thunderbolt: Fix KASAN reported use-after-free when request is canceled
+Date: Fri,  9 Oct 2026 16:11:27 +0200
+Message-ID: <20261009140953.851575094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,104 +50,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 1fd1f67c94d30889377bba774f032ec15e8b9299 upstream.
+commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
 
-tb_tunnel_one_dp() takes a domain reference which is only dropped once
-tb_dp_tunnel_active() has run on the work queue. If that work is
-cancelled that reference is leaked. Since
-commit f5cc545f5969 ("thunderbolt: Wait for tb_domain_release() to
-complete when driver is removed") instead of just leaking memory this
-now also blocks in the completion wait forever when unbinding the
-driver.
+Alan reported that when doing stress testing sometimes KASAN notices
+use-after-free during control channel operation (stripped down keeping
+the relevant parts):
 
-This can be triggered whenever a DP tunnel is torn down before the DPRX
-read has completed, e.g. by unplugging within the timeout, and then
-unbinding the driver.
+ BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+ Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
+  <TASK>
+  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-That reference only exists to keep the domain around while the DPRX work
-is scheduled so let the work itself own it: take it in tb_dp_dprx_start()
-and drop it in both places that end the work. Get/put are then paired
-inside the same file and it doesn't matter anymore if the callback ever
-runs.
+ Allocated by task 1760:
+  __kmalloc_cache_noprof+0x1ee/0x550
+  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Fixes: d6d458d42e1e ("thunderbolt: Handle DisplayPort tunnel activation asynchronously")
+ Freed by task 926:
+  kfree+0x18f/0x4a0
+  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
+  tb_cfg_request_work+0x82/0x120 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+
+ Second to last potentially related work creation:
+  __queue_work+0x575/0xd00
+  queue_work_on+0x77/0x80
+  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
+  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+
+The last stack trace is helpful because it shows that we are cancelling
+a request and looking at tb_cfg_request_cancel() what might happen is
+that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
+starts and because of this it will call schedule_work() queueing the
+same work to run again. However, it is already removed from the
+request_queue and reference count is dropped so when
+tb_cfg_request_work() triggers again it will access memory that is
+already released.
+
+Fix this so that we first make sure a cancelled request is not handed
+away from tb_cfg_request_find() or scheduled to run. Then instead of
+relying on the worker to clean up the request we will do it in
+tb_cfg_request_cancel() after the work is canceled from running. Make
+tb_cfg_request_dequeue() release the request only if it was actually
+removed from the queue.
+
+Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c     |    6 +-----
- drivers/thunderbolt/tunnel.c |   12 +++++++++---
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1966,8 +1966,6 @@ static void tb_dp_tunnel_active(struct t
- 		tb_dp_resource_unavailable(tb, in, "DPRX negotiation failed");
- 	}
- 	mutex_unlock(&tb->lock);
--
--	tb_domain_put(tb);
- }
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -73,7 +73,6 @@ struct tb_ctl {
+ #define tb_ctl_dbg_once(ctl, format, arg...) \
+ 	dev_dbg_once((ctl)->nhi->dev, format, ## arg)
  
- static void tb_tunnel_one_dp(struct tb *tb, struct tb_port *in,
-@@ -2028,8 +2026,7 @@ static void tb_tunnel_one_dp(struct tb *
- 	       available_up, available_down);
+-static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
+ /* Serializes access to request kref_get/put */
+ static DEFINE_MUTEX(tb_cfg_request_lock);
  
- 	tunnel = tb_tunnel_alloc_dp(tb, in, out, link_nr, available_up,
--				    available_down, tb_dp_tunnel_active,
--				    tb_domain_get(tb));
-+				    available_down, tb_dp_tunnel_active, tb);
- 	if (!tunnel) {
- 		tb_port_dbg(out, "could not allocate DP tunnel\n");
- 		goto err_reclaim_usb;
-@@ -2050,7 +2047,6 @@ err_free:
- 	tb_tunnel_put(tunnel);
- err_reclaim_usb:
- 	tb_reclaim_usb3_bandwidth(tb, in, out);
--	tb_domain_put(tb);
- err_detach_group:
- 	tb_detach_bandwidth_group(in);
- err_dealloc_dp:
---- a/drivers/thunderbolt/tunnel.c
-+++ b/drivers/thunderbolt/tunnel.c
-@@ -1109,15 +1109,17 @@ static void tb_dp_dprx_work(struct work_
- 
- 	tunnel->callback(tunnel, tunnel->callback_data);
- 	tb_tunnel_put(tunnel);
-+	tb_domain_put(tb);
- }
- 
- static int tb_dp_dprx_start(struct tb_tunnel *tunnel)
+@@ -133,41 +132,42 @@ void tb_cfg_request_put(struct tb_cfg_re
+ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
+ 				  struct tb_cfg_request *req)
  {
- 	/*
--	 * Bump up the reference to keep the tunnel around. It will be
--	 * dropped in tb_dp_dprx_stop() once the tunnel is deactivated.
-+	 * Bump up the references to keep the tunnel and the domain around
-+	 * until the work has run or has been canceled.
- 	 */
- 	tb_tunnel_get(tunnel);
-+	tb_domain_get(tunnel->tb);
- 
- 	tunnel->dprx_started = true;
- 	tunnel->dprx_timeout = dprx_timeout_to_ktime(dprx_timeout);
-@@ -1128,11 +1130,15 @@ static int tb_dp_dprx_start(struct tb_tu
- 
- static void tb_dp_dprx_stop(struct tb_tunnel *tunnel)
- {
-+	struct tb *tb = tunnel->tb;
++	tb_cfg_request_get(req);
 +
- 	if (tunnel->dprx_started) {
- 		tunnel->dprx_started = false;
- 		tunnel->dprx_canceled = true;
--		if (cancel_delayed_work(&tunnel->dprx_work))
-+		if (cancel_delayed_work(&tunnel->dprx_work)) {
- 			tb_tunnel_put(tunnel);
-+			tb_domain_put(tb);
-+		}
+ 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
+ 	WARN_ON(req->ctl);
+ 
+-	mutex_lock(&ctl->request_queue_lock);
++	guard(mutex)(&ctl->request_queue_lock);
+ 	if (!ctl->running) {
+-		mutex_unlock(&ctl->request_queue_lock);
++		tb_cfg_request_put(req);
+ 		return -ENOTCONN;
  	}
+ 	req->ctl = ctl;
+ 	list_add_tail(&req->list, &ctl->request_queue);
+ 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	mutex_unlock(&ctl->request_queue_lock);
+ 	return 0;
+ }
+ 
+-static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
++static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
+ {
+-	struct tb_ctl *ctl = req->ctl;
+-
+-	mutex_lock(&ctl->request_queue_lock);
+-	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
+-		mutex_unlock(&ctl->request_queue_lock);
+-		return;
+-	}
++	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++}
+ 
+-	list_del(&req->list);
+-	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+-		wake_up(&tb_cfg_request_cancel_queue);
+-	mutex_unlock(&ctl->request_queue_lock);
++static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
++{
++	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+ }
+ 
+-static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
++static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
+ {
+-	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++	struct tb_ctl *ctl = req->ctl;
++
++	guard(mutex)(&ctl->request_queue_lock);
++	if (tb_cfg_request_is_active(req)) {
++		list_del(&req->list);
++		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++		tb_cfg_request_put(req);
++	}
+ }
+ 
+ static struct tb_cfg_request *
+@@ -178,7 +178,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
+ 	mutex_lock(&pkg->ctl->request_queue_lock);
+ 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
+ 		tb_cfg_request_get(iter);
+-		if (iter->match(iter, pkg)) {
++		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
+ 			req = iter;
+ 			break;
+ 		}
+@@ -512,8 +512,11 @@ static void tb_ctl_rx_callback(struct tb
+ 	trace_tb_rx(pkg->ctl->index, frame->eof, pkg->buffer, frame->size, !req);
+ 
+ 	if (req) {
+-		if (req->copy(req, pkg))
+-			schedule_work(&req->work);
++		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
++			if (!tb_cfg_request_is_canceled(req) &&
++			    req->copy(req, pkg))
++				schedule_work(&req->work);
++		}
+ 		tb_cfg_request_put(req);
+ 	}
+ 
+@@ -525,11 +528,10 @@ static void tb_cfg_request_work(struct w
+ {
+ 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
+ 
+-	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
++	if (!tb_cfg_request_is_canceled(req))
+ 		req->callback(req->callback_data);
+ 
+ 	tb_cfg_request_dequeue(req);
+-	tb_cfg_request_put(req);
+ }
+ 
+ /**
+@@ -555,10 +557,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 	INIT_WORK(&req->work, tb_cfg_request_work);
+ 	INIT_LIST_HEAD(&req->list);
+ 
+-	tb_cfg_request_get(req);
+ 	ret = tb_cfg_request_enqueue(ctl, req);
+ 	if (ret)
+-		goto err_put;
++		return ret;
+ 
+ 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
+ 			req->request_type);
+@@ -572,9 +573,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 
+ err_dequeue:
+ 	tb_cfg_request_dequeue(req);
+-err_put:
+-	tb_cfg_request_put(req);
+-
+ 	return ret;
+ }
+ 
+@@ -588,9 +586,10 @@ err_put:
+  */
+ void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
+ {
+-	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+-	schedule_work(&req->work);
+-	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
++	scoped_guard(mutex, &req->ctl->request_queue_lock)
++		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
++	cancel_work_sync(&req->work);
++	tb_cfg_request_dequeue(req);
+ 	req->result.err = err;
  }
  
 
