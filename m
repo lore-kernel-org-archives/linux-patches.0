@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E254F2D77F5;
-	Fri,  9 Oct 2026 14:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EA82D77F5;
+	Fri,  9 Oct 2026 14:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557315; cv=none; b=a3lbRTLA6Twg2x695qiycqdZebaaufaNrbvbke6wV58RmHpJLtI+ErBxwImWLyO3Gu3sHkCVDDD+epE26cRRnlKux3AqlzlS2xNGySnzZgt5OYuRnr9RRXMPbiVKesy4k59WqChkY/zG+6cuBJDn7jCCoRU+yrgLO7mX/yJs6sI=
+	t=1791557318; cv=none; b=aU4QpLABfw3G6C2Mj6eF3o8LRrHAwSbuQ36MLMjqkwFjQNZ9NlxblfUHZ04hmllEBr1vIvZcOhXl18TG7KIzNTJFxknBuJmNW/1PVHc9mFp5IhNizjBf1jgEH3zNkOiUnkh9R/zHW/ozwxBfM28jj6q75gn5R+q99qUOFqb3lS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557315; c=relaxed/simple;
-	bh=bQyzXdKynZptvPqimxfa8lo26o6hztycYunAnqtBMGA=;
+	s=arc-20240116; t=1791557318; c=relaxed/simple;
+	bh=8uRkMSh94gZVVnEKLf99Inj98T0CUGd9C1l71+vtsuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnkzSd2GrHYoED5N2yStOvdXGZr1yihAmBJVQWMfHwSls/7Sb0cUjYRSoRjYC8sHg+y+PUz9arhvtADSh+CEN2y2He/JcuECJQgeN11+eBrkfl/pkOLUvjDZoESNVSbz4yc22nh1n8L/+xHalakOIXwbQHmLKN61sD28Ucg8LhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+Ae1bs8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eE5gLWEU3fdS0whj0PrCf9ynqAkHvkjE7v9mwpwAudphXwT65Q5t+dMq2mREYST5sm9CszJzCss+wULLdpuahZ0aM77ZI4Mt021Qa+exqvICoZfIzTinYiX0wASf+BpvZMOYi+y6U5uu4TRurMxYQ+0a0m7G+8vOdatMN9s3oWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXapUSmH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+Ae1bs8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034261F000FF;
-	Fri,  9 Oct 2026 14:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXapUSmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D185E1F000FF;
+	Fri,  9 Oct 2026 14:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557314;
-	bh=aV1PfGyFYIM3YzlOIMmhHz5MJbIZh+OoAGNDoduvEr0=;
+	s=korg; t=1791557317;
+	bh=vo1X2iE81p+Gxq3pdl9vRppVUghH9aUJifYF8hmpOGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w+Ae1bs8uinMqFoT2QSl+5KzVdZZY06jH+5C6dfMaejUruW1ZLEwafoHucjkk1plv
-	 +RlFzTArZbtu6XIp67yrUGy8vTmmMr7Xewwd/mRCGQMCrYiaGlPaZmk4YGMz1jppVz
-	 zM30+tdelfFMMDSKkXYDYfzprQv0A7d/AeGl4KJQ=
+	b=UXapUSmHXElBgwaLoH9Htj+QzmisbsWrh4dqXF3oC5L5AUN2tGbp6XmAYVCHeKjrg
+	 g6lMNcZWBi6BnyJKtExSSsfmlw9yjqZPhVVOu/RmO4afRqemFUv0X7TlobglAOUwZO
+	 4kUQ655PbwN+9m9v1MhYQSiLNWLyj2eRMbdj89dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Pesaresi <andreapesaresi82@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 336/428] wifi: mac80211: set info->band for 802.3 encap offload frames
-Date: Fri,  9 Oct 2026 16:11:13 +0200
-Message-ID: <20261009140953.525187690@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 381/403] unwind: Shorten lines
+Date: Fri,  9 Oct 2026 16:12:22 +0200
+Message-ID: <20261009141001.236372766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 4febc02cd02f021f2b6d0768332be643ef14a12d upstream.
+[ Upstream commit c31b9d2f589463a7cb286467a618b3b598654890 ]
 
-Unlike the 802.11 TX paths, ieee80211_8023_xmit() does not set
-info->band from the channel context on non-MLD interfaces. It stays at
-0, so ieee80211_get_tx_rates() uses the wrong band for these frames.
+There are some exceptionally long lines that cause ugly wrapping.
 
-Set it the same way as ieee80211_build_hdr(): drop the frame if there is
-no channel context, and leave the band at 0 on MLD interfaces.
-
-Reported-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
-Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260926120216.4054712-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20250924080118.545274393@infradead.org
+Stable-dep-of: b9d1fdc6f4ac ("perf: Replace perf_event_header__init_id with full header init")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/linux/unwind_deferred.h |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4707,6 +4707,7 @@ static void ieee80211_8023_xmit(struct i
- {
- 	struct ieee80211_tx_info *info;
- 	struct ieee80211_local *local = sdata->local;
-+	struct ieee80211_chanctx_conf *chanctx_conf;
- 	struct tid_ampdu_tx *tid_tx = NULL;
- 	struct sk_buff *seg, *next;
- 	unsigned int skbs = 0, len = 0;
-@@ -4756,6 +4757,16 @@ static void ieee80211_8023_xmit(struct i
- 		sdata = container_of(sdata->bss,
- 				     struct ieee80211_sub_if_data, u.ap);
+--- a/include/linux/unwind_deferred.h
++++ b/include/linux/unwind_deferred.h
+@@ -8,7 +8,9 @@
  
-+	/* MLD transmissions must not rely on the band */
-+	if (!ieee80211_vif_is_mld(&sdata->vif)) {
-+		chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
-+		if (unlikely(!chanctx_conf)) {
-+			kfree_skb_list(skb);
-+			return;
-+		}
-+		info->band = chanctx_conf->def.chan->band;
-+	}
+ struct unwind_work;
+ 
+-typedef void (*unwind_callback_t)(struct unwind_work *work, struct unwind_stacktrace *trace, u64 cookie);
++typedef void (*unwind_callback_t)(struct unwind_work *work,
++				  struct unwind_stacktrace *trace,
++				  u64 cookie);
+ 
+ struct unwind_work {
+ 	struct list_head		list;
+@@ -68,9 +70,17 @@ static __always_inline void unwind_reset
+ static inline void unwind_task_init(struct task_struct *task) {}
+ static inline void unwind_task_free(struct task_struct *task) {}
+ 
+-static inline int unwind_user_faultable(struct unwind_stacktrace *trace) { return -ENOSYS; }
+-static inline int unwind_deferred_init(struct unwind_work *work, unwind_callback_t func) { return -ENOSYS; }
+-static inline int unwind_deferred_request(struct unwind_work *work, u64 *timestamp) { return -ENOSYS; }
++static inline int unwind_user_faultable(struct unwind_stacktrace *trace)
++{ return -ENOSYS; }
 +
- 	info->flags |= IEEE80211_TX_CTL_HW_80211_ENCAP;
- 	info->control.vif = &sdata->vif;
++static inline int
++unwind_deferred_init(struct unwind_work *work, unwind_callback_t func)
++{ return -ENOSYS; }
++
++static inline int
++unwind_deferred_request(struct unwind_work *work, u64 *timestamp)
++{ return -ENOSYS; }
++
+ static inline void unwind_deferred_cancel(struct unwind_work *work) {}
  
+ static inline void unwind_deferred_task_exit(struct task_struct *task) {}
 
 
