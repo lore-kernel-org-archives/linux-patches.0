@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6603515D4;
-	Fri,  9 Oct 2026 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9074C9DEE;
+	Fri,  9 Oct 2026 14:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555487; cv=none; b=ZY2SbJYKbhuJ8rPNK/5smCWOnQTnF4J9A3Xlb4PZ0p+lwA0aiofOvz/aGQDpqEkj7Ifxgu3OrspOcmo2GVPGSnyxYisj7eYmCpp6xHw375XIh8JeX1pttjbSQU/j8Mz0LPRcwam5qx5LdhjW+YFsrTCqjbRHTuJ8M7XQ549Yckw=
+	t=1791555488; cv=none; b=KZ1e0QsU7UNlQxxBavFdE65/1dIV6LXJA8E1gK+2Mt7O5B16mgKyJzQPCHOl10hnMubkcHr9FKGEzOZp5+O7dICn2tZ+NXSxHYdZsqWqZZDgdSEn7ST5zRrjM4/We+TI7/dIzgfh0oaZY7oHuMmFH5qxbYuc457kNjjnL6Ic/Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555487; c=relaxed/simple;
-	bh=X2is7sZKdI0dse++C4H0g919KAy2CICTlZJc8rUsSzE=;
+	s=arc-20240116; t=1791555488; c=relaxed/simple;
+	bh=ZjvDzX2TuWeaUYq+sVl7GjVSIQ1v1FLPqtFPZsI25f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbuJAZZiFaGWD/wI+RrQDjW2LraxeDg5I8nuTcp6MTHq6FuFLhKZqyGSL3ZBOKSGxw4kDJ+B/zLOvJSoDMfrUiESFmu6nzapGWLC6A9+80CWHLHfLWsdI9J+qZzseAxD7S8WPlIu25OLEnjrRThZE2fXojeDiZ05QFZ0xHd2a74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIBPcxAY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hTjGHvMFmlsYNv2b2KUHGrh93WRRFzABQ0vvbYt3kcWVuhGN+NRZgn9UAyBrfpJhG7+6WjUs1M/RMGqWOex2GYnN6DiAEcbNCvIFX/NeI9pPJFahReWUgcv30KdliGqXpzEEZ6IZxM7QHuxUSpJUx5BnqzVfwa/mhGx7JAbt6Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOk/qPfX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIBPcxAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A16F1F00893;
-	Fri,  9 Oct 2026 14:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOk/qPfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68DA1F00898;
+	Fri,  9 Oct 2026 14:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555479;
-	bh=A4xZSjikqb4KWalklAeMy8HylNwzBjN2MrWxpB3L9nU=;
+	s=korg; t=1791555485;
+	bh=jP5ld3h2BgZ9cIik80PmSFHpj1wpME4bnNSMz6l1ZWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GIBPcxAYJr3ISwmNIruQpmiuVCXodvIZwc1HTDB630GPMiwp0IGbe4hI/NnyS2nts
-	 MVXLhC5sr25GFo5NHuY8G09K2x05j6oqAPR2C3ygv1PCZYrgg4kFluC0iDXKumockr
-	 uXEU69aAHiIlG9n5zHaJUEWMVpuj6mtmlBgg+76o=
+	b=LOk/qPfXVcEUIXJ9Iz0fiHGmlh0C2ttYJu+llHHivyq7x0ciWCaWqpuretQ8u0Ssn
+	 XcyEOZrw6T9plOVmjqYK/YUtX+NXjmj2lcNYmogW1wcjYwsAANB1aUT0GyTI217the
+	 PSZk6gPxIrHuCHII/XMPRWcigxaWvSfcR/tP2968=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/403] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
-Date: Fri,  9 Oct 2026 16:07:06 +0200
-Message-ID: <20261009140953.617073789@linuxfoundation.org>
+Subject: [PATCH 7.2 013/428] sched_ext: Wait for SCX_OPSS_DISPATCHING before reenqueueing a task
+Date: Fri,  9 Oct 2026 16:05:50 +0200
+Message-ID: <20261009140946.339028698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
+[ Upstream commit 7de9a6fb44eae4f05e68c805d58b9c618815adfa ]
 
-The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
-DRC_0. Its shift and max are right for the field, only the register is
-wrong.
+ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics") moved the final
+ops_state store in scx_dispatch_enqueue() after the DSQ unlock so that the
+custody update and ops.dequeue() precede it. A task can thus be found on a
+DSQ while still SCX_OPSS_DISPATCHING.
 
-Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
-Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
-Writing either one moves the other, and the quick release threshold is
-never reached at all.
+The dequeue and core-sched pick paths wait for the state to clear in
+ops_dequeue() but the reenqueue paths don't. A reenqueue in that window runs
+ops.enqueue() and sets SCX_OPSS_QUEUED before the dispatch has completed.
+The dispatcher's final store then overwrites it with SCX_OPSS_NONE and
+finish_dispatch() drops every later dispatch of the task.
 
-The six fields of DRC_1 tile it exactly, so there is nowhere else the
-threshold could live. Point the control at DRC_1.
+Wait for SCX_OPSS_DISPATCHING to clear before dequeueing a task for
+reenqueue, the same way ops_dequeue() does.
 
-Found by a sweep for two controls claiming the same bits of one
-register. No board with this codec was to hand, the register map is
-the driver's own wm8903.h.
-
-Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ inlined scx_reenq_wait_dispatching() into the existing reenqueue functions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8903.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/ext.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
-index f7d726e3052c1..e9858aaf6ca8e 100644
---- a/sound/soc/codecs/wm8903.c
-+++ b/sound/soc/codecs/wm8903.c
-@@ -677,7 +677,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
- SOC_ENUM("DRC FF Delay", drc_ff_delay),
- SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
- SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
--SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
-+SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
- SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
- SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
- SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 476a584d0d4da..cd7cbd1c99a26 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4294,6 +4294,14 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
+ 		if (!local_task_should_reenq(p, &reenq_flags, &reason))
+ 			continue;
+ 
++		/*
++		 * The dispatcher stores the final ops_state after dropping the DSQ
++		 * lock, so @p can be found on a DSQ while still
++		 * %SCX_OPSS_DISPATCHING. Reenqueueing @p before that store lands
++		 * would have it clobber the new %SCX_OPSS_QUEUED.
++		 */
++		if (unlikely(atomic_long_read_acquire(&p->scx.ops_state) == SCX_OPSS_DISPATCHING))
++			wait_ops_state(p, SCX_OPSS_DISPATCHING);
+ 		dispatch_dequeue(rq, p);
+ 
+ 		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
+@@ -4416,6 +4424,8 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+ 		}
+ 
+ 		/* @p is on @dsq, its rq and @dsq are locked */
++		if (unlikely(atomic_long_read_acquire(&p->scx.ops_state) == SCX_OPSS_DISPATCHING))
++			wait_ops_state(p, SCX_OPSS_DISPATCHING);
+ 		dispatch_dequeue_locked(p, dsq);
+ 		raw_spin_unlock(&dsq->lock);
+ 
 -- 
 2.53.0
 
