@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5911D3BD64D;
-	Fri,  9 Oct 2026 14:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02A6399CE9;
+	Fri,  9 Oct 2026 14:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556139; cv=none; b=BgJ56K4zaJWPMMu3dqOWLx+yyPM6T4OTBQ9ueUqKCSHMRjRPc9gnOVId8BW/LAEpRo0NvxXZLtoRHh/FIhGLUM5puWxWoZuI1hOC4KfYrUvsVqj3fqv5bp0D6zvNPXEGi/U+hUn963YUQq0ota3xKGRacgfU1vS45TVYxLk/4Xk=
+	t=1791556142; cv=none; b=XTOSKzmZU+ZILIW0IvbOIwDC9O9KaTL4GeJpRKZ7d/oVbLXFGRI7CdM5GkBxIPwp8d0PnnBJPQ4Dwpa8eeQn7yHZzaGUDwYtT/fqGOB7mmELNF5Qnl3rlppGGTszFW/5kGnghyxwAbpiKeXUTi97OficVOv2olUetxUM7I8vMRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556139; c=relaxed/simple;
-	bh=ZeKs6W9CRNOEqaEDYZPIalxG9d+tjYuLVzz2BCK/R8I=;
+	s=arc-20240116; t=1791556142; c=relaxed/simple;
+	bh=KMJKX8ns9cXDlWko43ZvlqG00b7SlsmorB58wsGyOcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHgw4FAGF4Js8wiMrKHrKbgJBwzq5Y0POMd15F4W6xDqnMsQBaEJA0WR0Fzii2H7SE9XaNv7dvKUt16tz/TQORZPLt3P3CbVYmO4Mn0r9Z/Olywmt8eH1WfPe4hlJdFBDC2XUiSDDPlL55dbnRxyQSmRnGoaHHNARRmP73SIjGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgETlWSp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UPkP4iNrB2m/24F3RTM7OqHY6omiWQDANLI1bIubbzSoypcyo/ovBiqJRpfe9H5pzBAEjETKjnddHmeL6AhKWYHQlCVgCPYOfCHz4Y1zQ+/nr7tkOAl+eBT3ddfQuS7nY73IDN/IMTRarb7HekUQsGOKt3R7ALEWogAp1sX1Exk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOWS7s6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgETlWSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71ED71F000FF;
-	Fri,  9 Oct 2026 14:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOWS7s6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E71F000FF;
+	Fri,  9 Oct 2026 14:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556138;
-	bh=AWIGzNPlmKwJ76rh9j2aTjNtflRmQN42UPSyi9dl+jM=;
+	s=korg; t=1791556140;
+	bh=yOcumrBwBX777YK2rL5Y8/4FPHy8dlHfG7a67KN2vuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wgETlWSpLMFsooP7Q5rxHdlWNtRvRzNE3Uuzj6um8bEyRfe1VOMHI4HHwdcO0ilVC
-	 zClVkKdNEVxmMDtzvPSGdXuSk384//0i0NuCaLltUpimUOUfSS1zM09IhzI837KrJb
-	 ocVcwf7HOo3J5OUgRT0idvygj0e+3veDbRXq0FVY=
+	b=SOWS7s6SuICXoD47JzlZndiVYT3b+8U8kgMg26394/cFJb05o97DIPfrezxVsjBAt
+	 x6p7io8tx8PHQwsAiImxCMAfdwsgjguZBhRejTtMLMEqs0J78xu86EOzAIW4BTiI8U
+	 a8B07EQd5S26zNiPUYbafxE6izvYxFddrNzhoIIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.18 180/403] USB: dwc2: shut down wakeup timer before freeing HCD state
-Date: Fri,  9 Oct 2026 16:09:01 +0200
-Message-ID: <20261009140956.328752632@linuxfoundation.org>
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 127/428] net: stmmac: fix rx Scatter-Gather support
+Date: Fri,  9 Oct 2026 16:07:44 +0200
+Message-ID: <20261009140948.976897032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +47,261 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-commit fd772af9512cdecb83de34a461801533828e77fd upstream.
+[ Upstream commit 88095728511e0df9c89528944f5a1762ad298983 ]
 
-dwc2_wakeup_detected() accesses the DWC2 host state and can rearm the
-wakeup timer.  dwc2_hcd_free() currently deletes the timer only after
-freeing host-owned state, and timer_delete() does not synchronize a
-callback or prevent it from being queued again.
+When a received frame is larger than dma_buf_sz, the DMA scatters it
+across multiple RX descriptors (rx Scatter-Gather). The secondary RX
+buffer (sec_page) was only allocated and programmed when split-header
+(SPH) was active, so for regular frames buffer2 was neither allocated
+nor backed by a valid mapping. As soon as an incoming frame overflowed
+buffer1, the DMA wrote the overflow into the unmapped secondary-buffer
+address, triggering an SMMU translation fault on IOMMU-based platforms:
 
-Stop and shut down the timer in dwc2_hcd_release(), before the HCD
-resources are freed.  This covers both the HCD initialization error path
-and normal HCD removal.
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0x00000000, fsynr=0x7f0011, cbfrsynra=0x1c90, cb=11
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c90
+arm-smmu 15000000.iommu: FSYNR0 = 007f0011 [S1CBNDX=127 WNR PLVL=1]
 
-Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260904065323.4047026-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Enable scatter-gather for non-SPH frames on cores that can program an
+independent secondary RX buffer (GMAC4/XGMAC): allocate and mark buffer2
+as valid in stmmac_init_rx_buffers() and stmmac_rx_refill(), and account
+for it in the buffer length computation. Legacy cores have no set_sec_addr
+op, so they keep buffer2 disabled.
+
+Since buffer2 is handed to the DMA at page offset 0, the page pool sync
+window is widened to cover both buffers in every mode: offset is set to 0
+and max_len to dma_buf_sz + stmmac_rx_offset().
+
+The FCS can straddle the buffer1/buffer2 boundary and a descriptor
+boundary, so it is now stripped from the tail of the assembled frame with
+pskb_trim() instead of from a single buffer, avoiding an unsigned underflow
+for frames that overflow a buffer by 1..3 bytes. For single-buffer frames
+the XDP program must not see the FCS, so it is removed from the XDP buffer
+before the program runs.
+
+Native XDP currently only supports single-buffer (linear) frames. An
+oversized frame accepted by the MAC (jumbo enabled) is received via
+buffer2; the XDP program only sees buffer1, so on a TX/REDIRECT verdict
+the frame is forwarded truncated. XDP multi-buffer support to handle
+this case is planned as a follow-up.
+
+AF_XDP zero-copy RX is not covered by this change: a ZC queue still
+programs buffer2 at DMA address 0 (and XGMAC has no buffer2-valid bit),
+so an oversized frame overflowing buffer1 can still trigger the same
+SMMU translation fault. Handling is planned as a follow-up.
+
+Fixes: 88ebe2cf7f3f ("net: stmmac: Rework stmmac_rx()")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260923-stmmac-rx-sg-fix-v3-1-ed26fea7180d@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 83 +++++++++++--------
+ 1 file changed, 49 insertions(+), 34 deletions(-)
 
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -5082,14 +5082,13 @@ static void dwc2_hcd_free(struct dwc2_hs
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 29025eb416987..010fef79ec01e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1629,6 +1629,16 @@ static void stmmac_clear_descriptors(struct stmmac_priv *priv,
+ 		stmmac_clear_tx_descriptors(priv, dma_conf, queue);
+ }
+ 
++static bool stmmac_rx_check_buf2_cap(struct stmmac_priv *priv)
++{
++	/* Only cores that can program an independent secondary RX buffer
++	 * (used for scatter-gather overflow or split-header payload) back
++	 * buffer2. Legacy cores have no set_sec_addr op, so buffer2 is
++	 * never handed to the hardware there.
++	 */
++	return priv->hw->desc && priv->hw->desc->set_sec_addr;
++}
++
+ /**
+  * stmmac_init_rx_buffers - init the RX descriptor buffer.
+  * @priv: driver private structure
+@@ -1659,16 +1669,13 @@ static int stmmac_init_rx_buffers(struct stmmac_priv *priv,
+ 		buf->page_offset = stmmac_rx_offset(priv);
  	}
  
- 	cancel_work_sync(&hsotg->phy_reset_work);
+-	if (priv->sph_active && !buf->sec_page) {
++	if (stmmac_rx_check_buf2_cap(priv) && !buf->sec_page) {
+ 		buf->sec_page = page_pool_alloc_pages(rx_q->page_pool, gfp);
+ 		if (!buf->sec_page)
+ 			return -ENOMEM;
+ 
+ 		buf->sec_addr = page_pool_get_dma_addr(buf->sec_page);
+ 		stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, true);
+-	} else {
+-		buf->sec_page = NULL;
+-		stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, false);
+ 	}
+ 
+ 	buf->addr = page_pool_get_dma_addr(buf->page) + buf->page_offset;
+@@ -2256,13 +2263,8 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	pp_params.nid = dev_to_node(priv->device);
+ 	pp_params.dev = priv->device;
+ 	pp_params.dma_dir = xdp_prog ? DMA_BIDIRECTIONAL : DMA_FROM_DEVICE;
+-	pp_params.offset = stmmac_rx_offset(priv);
+-	pp_params.max_len = dma_conf->dma_buf_sz;
 -
--	timer_delete(&hsotg->wkp_timer);
+-	if (priv->sph_active) {
+-		pp_params.offset = 0;
+-		pp_params.max_len += stmmac_rx_offset(priv);
+-	}
++	pp_params.offset = 0;
++	pp_params.max_len = dma_conf->dma_buf_sz + stmmac_rx_offset(priv);
+ 
+ 	rx_q->page_pool = page_pool_create(&pp_params);
+ 	if (IS_ERR(rx_q->page_pool)) {
+@@ -5095,7 +5097,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+ 				break;
+ 		}
+ 
+-		if (priv->sph_active && !buf->sec_page) {
++		if (stmmac_rx_check_buf2_cap(priv) && !buf->sec_page) {
+ 			buf->sec_page = page_pool_alloc_pages(rx_q->page_pool, gfp);
+ 			if (!buf->sec_page)
+ 				break;
+@@ -5106,10 +5108,8 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+ 		buf->addr = page_pool_get_dma_addr(buf->page) + buf->page_offset;
+ 
+ 		stmmac_set_desc_addr(priv, p, buf->addr);
+-		if (priv->sph_active)
+-			stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, true);
+-		else
+-			stmmac_set_desc_sec_addr(priv, p, buf->sec_addr, false);
++		stmmac_set_desc_sec_addr(priv, p, buf->sec_addr,
++					 stmmac_rx_check_buf2_cap(priv));
+ 		stmmac_refill_desc3(priv, rx_q, p);
+ 
+ 		rx_q->rx_count_frames++;
+@@ -5140,7 +5140,9 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
+ 	unsigned int plen = 0, hlen = 0;
+ 	int coe = priv->hw->rx_csum;
+ 
+-	/* Not first descriptor, buffer is always zero */
++	/* Not first descriptor, SPH enabled: buffer1 only carries the
++	 * split header of the first descriptor, so it is zero here.
++	 */
+ 	if (priv->sph_active && len)
+ 		return 0;
+ 
+@@ -5151,14 +5153,16 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
+ 		return hlen;
+ 	}
+ 
+-	/* First descriptor, not last descriptor and not split header */
++	/* Not last descriptor and not split header: buffer1 is fully filled */
+ 	if (status & rx_not_ls)
+ 		return priv->dma_conf.dma_buf_sz;
+ 
+ 	plen = stmmac_get_rx_frame_len(priv, p, coe);
+ 
+-	/* First descriptor and last descriptor and not split header */
+-	return min_t(unsigned int, priv->dma_conf.dma_buf_sz, plen);
++	/* Last descriptor and not split header: buffer1 holds the remaining
++	 * bytes of the frame, up to dma_buf_sz
++	 */
++	return min_t(unsigned int, priv->dma_conf.dma_buf_sz, plen - len);
  }
  
- static void dwc2_hcd_release(struct dwc2_hsotg *hsotg)
- {
- 	/* Turn off all host-specific interrupts */
- 	dwc2_disable_host_interrupts(hsotg);
-+	timer_shutdown_sync(&hsotg->wkp_timer);
+ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+@@ -5168,8 +5172,7 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+ 	int coe = priv->hw->rx_csum;
+ 	unsigned int plen = 0;
  
- 	dwc2_hcd_free(hsotg);
+-	/* Not split header, buffer is not available */
+-	if (!priv->sph_active)
++	if (!stmmac_rx_check_buf2_cap(priv))
+ 		return 0;
+ 
+ 	/* For GMAC4, when split header is enabled, in some rare cases, the
+@@ -5186,14 +5189,15 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+ 	 * Thus 'plen - len' always gives the correct length of buf2.
+ 	 */
+ 
+-	/* Not GMAC4 and not last descriptor */
+-	if (priv->plat->core_type != DWMAC_CORE_GMAC4 && (status & rx_not_ls))
++	/* Not GMAC4, or non-SPH and not last descriptor */
++	if ((priv->plat->core_type != DWMAC_CORE_GMAC4 || !priv->sph_active) &&
++	    (status & rx_not_ls))
+ 		return priv->dma_conf.dma_buf_sz;
+ 
+ 	/* GMAC4 or last descriptor */
+ 	plen = stmmac_get_rx_frame_len(priv, p, coe);
+ 
+-	return plen - len;
++	return plen > len ? plen - len : 0;
  }
+ 
+ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+@@ -5716,6 +5720,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 	unsigned int desc_size;
+ 	struct sk_buff *skb = NULL;
+ 	struct stmmac_xdp_buff ctx;
++	bool fcs_stripped = false;
+ 	int xdp_status = 0;
+ 	int bufsz;
+ 
+@@ -5805,24 +5810,25 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		len += buf2_len;
+ 
+ 		/* ACS is disabled; strip manually. */
+-		if (likely(!(status & rx_not_ls))) {
+-			if (buf2_len) {
+-				buf2_len -= ETH_FCS_LEN;
+-				len -= ETH_FCS_LEN;
+-			} else if (buf1_len) {
+-				buf1_len -= ETH_FCS_LEN;
+-				len -= ETH_FCS_LEN;
+-			}
+-		}
++		if (likely(!(status & rx_not_ls)))
++			len -= ETH_FCS_LEN;
+ 
+ 		if (!skb) {
+ 			unsigned int pre_len, sync_len;
+ 
++			/* Each frame starts here: reset the FCS handling */
++			fcs_stripped = false;
++
+ 			dma_sync_single_for_cpu(priv->device, buf->addr,
+ 						buf1_len, dma_dir);
+ 			net_prefetch(page_address(buf->page) +
+ 				     buf->page_offset);
+ 
++			if (stmmac_xdp_is_enabled(priv) && !buf2_len) {
++				buf1_len -= ETH_FCS_LEN;
++				fcs_stripped = true;
++			}
++
+ 			xdp_init_buff(&ctx.xdp, bufsz, &rx_q->xdp_rxq);
+ 			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
+ 					 buf->page_offset, buf1_len, true);
+@@ -5923,6 +5929,15 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		/* Got entire packet into SKB. Finish it. */
+ 
++		/* Remove FCS if needed */
++		if (!fcs_stripped && pskb_trim(skb, len)) {
++			dev_kfree_skb_any(skb);
++			skb = NULL;
++			rx_dropped++;
++			count++;
++			continue;
++		}
++
+ 		stmmac_get_rx_hwtstamp(priv, p, np, skb);
+ 
+ 		if (priv->hw->hw_vlan_en)
+-- 
+2.53.0
+
 
 
