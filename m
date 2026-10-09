@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2AC3B19DE;
-	Fri,  9 Oct 2026 14:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FFC45D913;
+	Fri,  9 Oct 2026 14:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556144; cv=none; b=h04dg+HeQV4lwHCvw/k7zVpTIyKYpPjRPtebZO+J8AoupFYMD9ua+lCl5C70lcDnfn1slYnFn47N6t9KzDdM8P7GwD+ytAMyoYqyEiloJ9gQyDen5ZGtgBjNRzIo/n9YCcRLf16rdN1C0EiDB96SnKnVQSClkG5eSkWSMCBpH+8=
+	t=1791556148; cv=none; b=FW+W73CLE1y2uT/HQ47vhqQO0IhrioT6m2OsZnzsOThWFj8VMY8koIj/LX4kyphd0lSXxXaXbh7dFiYAudqLiWr5ehQjC1TEfJbqwQPyECYFIiSmxi7HoHKgfS6dOf5hUyukSMBOA0akwtDEnTtp15Cs3KzCABwVdmMMWtHWHXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556144; c=relaxed/simple;
-	bh=Jeyk+sY64GweluQYkJyBIVAasgQELFoGxh4e3ZCFKEk=;
+	s=arc-20240116; t=1791556148; c=relaxed/simple;
+	bh=Y5cQsNn1Iqvsu4ris5ha2pl7TQp/R/HIEqqy/5NWjhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szxXnvbY4AhtMy9ngURdi29OTbnMdZ+biN2dBLIdeUeVPmQ6aGzlnuAaf5cAtYTk7bw3JFubJpH9QRSZ53mJWpmSS+pzXuvfL+0fMK9fQ8FTqlPrld0W6S371CM+m1ATnjK7qleOO+w5Z8XjtZ2/UiOF1L21WPsKgemSk4OP9ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wopnpc48; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MjK6tLKlebd3dsOj9Fsh5wvzzFThbHEZPXA7oDIVsaP1awE6UFvqPURNcTSk2oJTGRouRmT55Zx43jm9qXPLvslKwx/J1IVIoq7PJr8SKOfk4tnMrPK/6UBKko3je9jn/zVHjx5NiQ566wYmktx8QdcmaKQa3w4Cta7Xa/9ABFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8iIac3O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wopnpc48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142961F000FF;
-	Fri,  9 Oct 2026 14:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8iIac3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A8E1F000FF;
+	Fri,  9 Oct 2026 14:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556143;
-	bh=wG1dGaZT+/skzo8DhU4cU9MODq1fF3ben0w43ng4PaI=;
+	s=korg; t=1791556147;
+	bh=ucDEre2dmVtUwoUDg3NUIvB5b/N5Uoqb0mQ6PYiIPrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wopnpc48FOhUzieLVuSOMd56p/KHjqZ90MF39NqauzzEgIj2wpnm9vicjA9gUMghu
-	 nMJGcBpqq5yaNpUX9gieGAx3g/oz2mvVyZkKUawRIWUA/2bhxYJur86wnkigmqwcYe
-	 18TNNpCtAnk6NeSKhQVFSpW+Ub5QwonGsSIHJahU=
+	b=Y8iIac3ONIQMzuBZRDMELDsW7wIqNQrahPwh85RuIjTWeuwhrYADmZ06d5F240RFI
+	 JqMzfCtmn0/bGRT1QRulwuyIjD4XnGQRfWUUtyPCI8avRdkbpvW782cwJiXjGs67mQ
+	 McE4JALTwr9lIOGJ9rJodD4ULYuVPrZAeZbQ6lgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 181/403] usb: typec: tcpm: recover after failure to start the frs ams
-Date: Fri,  9 Oct 2026 16:09:02 +0200
-Message-ID: <20261009140956.352390833@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 128/428] seg6: ensure packet data is writable before modifying SRH and IPv6 DA
+Date: Fri,  9 Oct 2026 16:07:45 +0200
+Message-ID: <20261009140948.998342266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +47,370 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-commit 90156585765b29304f07b0e4a1c56a969876fcfc upstream.
+[ Upstream commit 8ae3f4067ba4ae3a15581392f6dac422e3d3def0 ]
 
-Reset the port if the tcpm fails to start the FAST_ROLE_SWAP AMS by
-initiating error recovery on it.
+advance_nextseg() modifies the SRH Segments Left field and the IPv6
+destination address without ensuring the packet data is writable.
+seg6_next_csid_advance_arg() has the same problem when it advances the
+NEXT-C-SID argument in the destination address.
 
-This helps in cases where some cables (incorrectly) signal an FRS to
-an FRS capable port during disconnection. The TCPC autonomously starts
-sourcing VBUS on detecting the FRS signal. However, the VBUS sourcing is
-left on when the FAST_ROLE_SWAP AMS fails to start (as tcpm_sink_tx_ok
-is 0 as CC is open due to the cable disconnect). This is because the
-code sets the state to INVALID_STATE without resetting the port state.
+The skb may be cloned, for example by an AF_PACKET socket receiving on
+the ingress device. advance_nextseg() and seg6_next_csid_advance_arg()
+then write into the packet data shared with the clone. A read from that
+socket can return the modified packet instead of the received one. The
+simplified path below shows this for advance_nextseg():
 
-Log snippet before changes:
-[  101.401960] AMS FAST_ROLE_SWAP start
-[  101.401971] Sink TX No Go
-[  101.401982] sourcing vbus
-[  101.401987] VBUS on
-[  101.402159] VBUS on
-[  109.257809] CC1: 0 -> 0, CC2: 5 -> 0 [state SNK_READY, polarity 1, disconnected]
-[  111.267442] VBUS on
+__netif_receive_skb_one_core
+  __netif_receive_skb_core
+    deliver_skb               [orig: users=2, cloned=0]
+      packet_rcv
+        skb_clone             clone queued to the AF_PACKET socket
+        consume_skb(orig)     [orig: users=1, cloned=1]
+  ipv6_rcv
+    ip6_rcv_core              skb_share_check: no-op [orig: users=1]
+    [...]
+      input_action_end_core
+        advance_nextseg       writes into the data shared with the clone
 
-After changes:
-[   70.541211] AMS FAST_ROLE_SWAP start
-[   70.541220] Sink TX No Go
-[   70.541228] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
-[   70.541362] VBUS on
-[   70.541365] sourcing vbus
-[   70.541367] VBUS on
-[   70.541374] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
-[   70.541410] disable vbus discharge ret:0
-[   70.543028] Setting usb_comm capable false
-[   70.544009] Setting voltage/current limit 0 mV 0 mA
-[   70.544034] polarity 0
-[   70.544239] Requesting mux state 0, usb-role 0, orientation 0
-[   70.555550] cc:=0
-[   70.555595] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
-[   70.555697] VBUS off
-[   70.555702] VBUS VSAFE0V
-[   70.555762] CC1: 5 -> 0, CC2: 0 -> 0 [state PORT_RESET, polarity 0, disconnected]
-[   70.587794] VBUS off
-[   70.587799] VBUS VSAFE0V
-[   70.655672] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
-[   70.655682] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev3 NONE_AMS]
-[   70.655686] Start toggling
-[   70.656274] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
+Call skb_ensure_writable() in advance_nextseg() and in
+seg6_next_csid_advance_arg() before they modify the packet data.
+skb_ensure_writable() may reallocate skb->head, which invalidates the
+pointers into the packet data taken before the call.
+advance_nextseg() now returns a valid SRH pointer, or NULL if
+skb_ensure_writable() fails.
+seg6_next_csid_advance_arg() takes the pointer to the destination
+address from the skb after skb_ensure_writable().
+On failure, the callers drop the packet with SKB_DROP_REASON_NOMEM.
 
-Fixes: 0908c5aca31e ("usb: typec: tcpm: AMS and Collision Avoidance")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260903-frs-error-handling-v1-1-ad0fee541847@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 140f04c33bbc ("ipv6: sr: implement several seg6local actions")
+Fixes: 848f3c0d4769 ("seg6: add NEXT-C-SID support for SRv6 End behavior")
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260925133807.32-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/seg6_local.c | 140 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 117 insertions(+), 23 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -6503,7 +6503,7 @@ static void tcpm_pd_event_handler(struct
- 				port->upcoming_state = FR_SWAP_SEND;
- 				ret = tcpm_ams_start(port, FAST_ROLE_SWAP);
- 				if (ret == -EAGAIN)
--					port->upcoming_state = INVALID_STATE;
-+					tcpm_set_state(port, ERROR_RECOVERY, 0);
- 			} else {
- 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
- 			}
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index d1070aec7b72b..53f7b24525759 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -278,13 +278,43 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
+ 	return true;
+ }
+ 
+-static void advance_nextseg(struct ipv6_sr_hdr *srh, struct in6_addr *daddr)
++/* advance the SRH to the next segment and set the IPv6 DA accordingly.
++ * skb pointers may change: after this call, the caller must evaluate again
++ * any pointer into the packet data.
++ *
++ * This function returns:
++ *  - the SRH on success;
++ *  - NULL when the skb cannot be made writable. In this case, the function
++ *    sets the drop reason to SKB_DROP_REASON_NOMEM.
++ */
++static struct ipv6_sr_hdr *advance_nextseg(struct sk_buff *skb,
++					   struct ipv6_sr_hdr *srh,
++					   enum skb_drop_reason *reason)
+ {
+ 	struct in6_addr *addr;
++	int srhoff;
++	int wlen;
++
++	srhoff = (unsigned char *)srh - skb->data;
++	/* we write only the Segment Left field and the IPv6 DA. The segment
++	 * list is only read, and seg6_get_srh() already pulled it into the
++	 * linear area.
++	 */
++	wlen = srhoff + sizeof(*srh);
++
++	if (unlikely(skb_ensure_writable(skb, wlen))) {
++		*reason = SKB_DROP_REASON_NOMEM;
++		return NULL;
++	}
++
++	/* skb_ensure_writable() may change skb pointers; evaluate srh again */
++	srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
+ 
+ 	srh->segments_left--;
+ 	addr = srh->segments + srh->segments_left;
+-	*daddr = *addr;
++	ipv6_hdr(skb)->daddr = *addr;
++
++	return srh;
+ }
+ 
+ static int
+@@ -382,12 +412,26 @@ static bool seg6_next_csid_is_arg_zero(const struct in6_addr *addr,
+ 	return true;
+ }
+ 
+-/* assume that DA.Argument length > 0 */
+-static void seg6_next_csid_advance_arg(struct in6_addr *addr,
+-				       const struct seg6_flavors_info *finfo)
++/* assume that DA.Argument length > 0.
++ * skb pointers may change: after this call, the caller must evaluate again
++ * any pointer into the packet data.
++ *
++ * This function returns:
++ *  - SKB_NOT_DROPPED_YET on success;
++ *  - SKB_DROP_REASON_NOMEM when the skb cannot be made writable.
++ */
++static enum skb_drop_reason
++seg6_next_csid_advance_arg(struct sk_buff *skb,
++			   const struct seg6_flavors_info *finfo)
+ {
+ 	__u8 fnc_octects = seg6_flv_lcnode_func_octects(finfo);
+ 	__u8 blk_octects = seg6_flv_lcblock_octects(finfo);
++	struct in6_addr *addr;
++
++	if (unlikely(skb_ensure_writable(skb, sizeof(struct ipv6hdr))))
++		return SKB_DROP_REASON_NOMEM;
++
++	addr = &ipv6_hdr(skb)->daddr;
+ 
+ 	/* advance DA.Argument */
+ 	memmove(&addr->s6_addr[blk_octects],
+@@ -395,6 +439,8 @@ static void seg6_next_csid_advance_arg(struct in6_addr *addr,
+ 		16 - blk_octects - fnc_octects);
+ 
+ 	memset(&addr->s6_addr[16 - fnc_octects], 0x00, fnc_octects);
++
++	return SKB_NOT_DROPPED_YET;
+ }
+ 
+ static int input_action_end_finish(struct sk_buff *skb,
+@@ -408,31 +454,42 @@ static int input_action_end_finish(struct sk_buff *skb,
+ static int input_action_end_core(struct sk_buff *skb,
+ 				 struct seg6_local_lwt *slwt)
+ {
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	struct ipv6_sr_hdr *srh;
++	int err = -EINVAL;
+ 
+ 	srh = get_and_validate_srh(skb);
+ 	if (!srh)
+ 		goto drop;
+ 
+-	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++	srh = advance_nextseg(skb, srh, &reason);
++	if (!srh) {
++		err = -ENOMEM;
++		goto drop;
++	}
+ 
+ 	return input_action_end_finish(skb, slwt);
+ 
+ drop:
+-	kfree_skb(skb);
+-	return -EINVAL;
++	kfree_skb_reason(skb, reason);
++	return err;
+ }
+ 
+ static int end_next_csid_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ {
+ 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
+ 	struct in6_addr *daddr = &ipv6_hdr(skb)->daddr;
++	enum skb_drop_reason reason;
+ 
+ 	if (seg6_next_csid_is_arg_zero(daddr, finfo))
+ 		return input_action_end_core(skb, slwt);
+ 
+ 	/* update DA */
+-	seg6_next_csid_advance_arg(daddr, finfo);
++	reason = seg6_next_csid_advance_arg(skb, finfo);
++	if (reason) {
++		kfree_skb_reason(skb, reason);
++		return -ENOMEM;
++	}
+ 
+ 	return input_action_end_finish(skb, slwt);
+ }
+@@ -448,19 +505,25 @@ static int input_action_end_x_finish(struct sk_buff *skb,
+ static int input_action_end_x_core(struct sk_buff *skb,
+ 				   struct seg6_local_lwt *slwt)
+ {
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	struct ipv6_sr_hdr *srh;
++	int err = -EINVAL;
+ 
+ 	srh = get_and_validate_srh(skb);
+ 	if (!srh)
+ 		goto drop;
+ 
+-	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++	srh = advance_nextseg(skb, srh, &reason);
++	if (!srh) {
++		err = -ENOMEM;
++		goto drop;
++	}
+ 
+ 	return input_action_end_x_finish(skb, slwt);
+ 
+ drop:
+-	kfree_skb(skb);
+-	return -EINVAL;
++	kfree_skb_reason(skb, reason);
++	return err;
+ }
+ 
+ static int end_x_next_csid_core(struct sk_buff *skb,
+@@ -468,12 +531,17 @@ static int end_x_next_csid_core(struct sk_buff *skb,
+ {
+ 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
+ 	struct in6_addr *daddr = &ipv6_hdr(skb)->daddr;
++	enum skb_drop_reason reason;
+ 
+ 	if (seg6_next_csid_is_arg_zero(daddr, finfo))
+ 		return input_action_end_x_core(skb, slwt);
+ 
+ 	/* update DA */
+-	seg6_next_csid_advance_arg(daddr, finfo);
++	reason = seg6_next_csid_advance_arg(skb, finfo);
++	if (reason) {
++		kfree_skb_reason(skb, reason);
++		return -ENOMEM;
++	}
+ 
+ 	return input_action_end_x_finish(skb, slwt);
+ }
+@@ -760,10 +828,12 @@ static bool seg6_pop_srh(struct sk_buff *skb, int srhoff)
+  */
+ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ {
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	const struct seg6_flavors_info *finfo = &slwt->flv_info;
+ 	enum seg6_local_flv_action action;
+ 	enum seg6_local_pktinfo pinfo;
+ 	struct ipv6_sr_hdr *srh;
++	int err = -EINVAL;
+ 	__u32 flvmask;
+ 	int srhoff;
+ 
+@@ -787,10 +857,18 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ 	switch (action) {
+ 	case SEG6_LOCAL_FLV_ACT_END:
+ 		/* process the packet as the "standard" End behavior */
+-		advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++		srh = advance_nextseg(skb, srh, &reason);
++		if (!srh) {
++			err = -ENOMEM;
++			goto drop;
++		}
+ 		break;
+ 	case SEG6_LOCAL_FLV_ACT_PSP:
+-		advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++		srh = advance_nextseg(skb, srh, &reason);
++		if (!srh) {
++			err = -ENOMEM;
++			goto drop;
++		}
+ 
+ 		if (unlikely(!seg6_pop_srh(skb, srhoff)))
+ 			goto drop;
+@@ -807,8 +885,8 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ 	return input_action_end_finish(skb, slwt);
+ 
+ drop:
+-	kfree_skb(skb);
+-	return -EINVAL;
++	kfree_skb_reason(skb, reason);
++	return err;
+ }
+ 
+ /* regular endpoint function */
+@@ -847,21 +925,27 @@ static int input_action_end_x(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ 
+ static int input_action_end_t(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ {
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	struct ipv6_sr_hdr *srh;
++	int err = -EINVAL;
+ 
+ 	srh = get_and_validate_srh(skb);
+ 	if (!srh)
+ 		goto drop;
+ 
+-	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++	srh = advance_nextseg(skb, srh, &reason);
++	if (!srh) {
++		err = -ENOMEM;
++		goto drop;
++	}
+ 
+ 	seg6_lookup_nexthop(skb, NULL, slwt->table);
+ 
+ 	return dst_input(skb);
+ 
+ drop:
+-	kfree_skb(skb);
+-	return -EINVAL;
++	kfree_skb_reason(skb, reason);
++	return err;
+ }
+ 
+ /* decapsulate and forward inner L2 frame on specified interface */
+@@ -1375,6 +1459,7 @@ static int input_action_end_b6(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ static int input_action_end_b6_encap(struct sk_buff *skb,
+ 				     struct seg6_local_lwt *slwt)
+ {
++	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
+ 	struct ipv6_sr_hdr *srh;
+ 	int err = -EINVAL;
+ 
+@@ -1382,7 +1467,11 @@ static int input_action_end_b6_encap(struct sk_buff *skb,
+ 	if (!srh)
+ 		goto drop;
+ 
+-	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++	srh = advance_nextseg(skb, srh, &reason);
++	if (!srh) {
++		err = -ENOMEM;
++		goto drop;
++	}
+ 
+ 	skb_reset_inner_headers(skb);
+ 	skb->encapsulation = 1;
+@@ -1398,7 +1487,7 @@ static int input_action_end_b6_encap(struct sk_buff *skb,
+ 	return dst_input(skb);
+ 
+ drop:
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return err;
+ }
+ 
+@@ -1434,6 +1523,7 @@ static int input_action_end_bpf(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
+ 	struct seg6_bpf_srh_state *srh_state;
++	enum skb_drop_reason reason;
+ 	struct ipv6_sr_hdr *srh;
+ 	int ret;
+ 
+@@ -1442,7 +1532,11 @@ static int input_action_end_bpf(struct sk_buff *skb,
+ 		kfree_skb(skb);
+ 		return -EINVAL;
+ 	}
+-	advance_nextseg(srh, &ipv6_hdr(skb)->daddr);
++	srh = advance_nextseg(skb, srh, &reason);
++	if (!srh) {
++		kfree_skb_reason(skb, reason);
++		return -ENOMEM;
++	}
+ 
+ 	/* The access to the per-CPU buffer srh_state is protected by running
+ 	 * always in softirq context (with disabled BH). On PREEMPT_RT the
+-- 
+2.53.0
+
 
 
