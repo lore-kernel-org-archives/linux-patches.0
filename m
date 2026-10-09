@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261F14E56C6;
-	Fri,  9 Oct 2026 14:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4CB4E56CB;
+	Fri,  9 Oct 2026 14:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555675; cv=none; b=uY86cAA7++yistM6SJCrUQjC8Urw0nYxKS8HUxZnsWfwuXvMqno/vdlaVaQqQR6AChijxIlTfpfhjNB0CMJsM2Z3xk1Dgybg+1PdTGFFxIWa+DMTaQ8GXYJiGoNBjR3BuVmn1L4SxCrfRLjuYkNX6ENUY6D23pcUOK23AFLSisw=
+	t=1791555678; cv=none; b=m82o7Zlq3oHBuXGaWk2P/WfepCz44tSVZSAZiK1NDOjG88KJbRFgqEdXPKM/2P0hqpScZwFN8ry7vDCjB0m4g+7BU2a/CmbEiLvbj9Zf+CsrPfARanPW83xvwzzOcyi2D7dzocnrulWRGTyfpXRfxSmOBzogzc4PNUVW3oQmLU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555675; c=relaxed/simple;
-	bh=qyEhJzjjcVpQ4tiLH9Dm3UQdeq28wLzAriQLVqkU7SM=;
+	s=arc-20240116; t=1791555678; c=relaxed/simple;
+	bh=liK5HUlnLbVwWRqL6CnhvPb6+Z1lI85ILPt13KqglAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yij3wFm+d3y5UJu4bs8E4vEua+Kd8Bqsw4tlbMsSM7/R2utHcvVILKcnoZjhKSYKJ6se1Gy+YHZw67fswAL4eLHWcHIDBRE5RbMSxC0m+W/bPXIQ2NDQdpZXnY/wPGsEMRLxvNEhxkakB6LOkTKBDtJe/CzhE7ztXDwq2F4zqks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRTeuPzZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H1lwR1qknfzonF1HXLYxdjBDun78tyuzPQbV3+G8G/LtyFKX7KGK3GQQGN0Njo0Y45nr7u1Ti5GK61Xh3kkhsls8c4DZDKX4JKgk/QgMU0F0/hDFlIPRSUbimfFziQKuv/TEjsyBCR6Yoc0NZQpENEERaDUtiLNB+uxhaqZvvfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+1fp9ck; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRTeuPzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F02F1F000FF;
-	Fri,  9 Oct 2026 14:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+1fp9ck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6D21F000FF;
+	Fri,  9 Oct 2026 14:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555674;
-	bh=yurmya1p+vXkmtpUynWvRi7brYf5+QNwwrlTRXV7FVk=;
+	s=korg; t=1791555677;
+	bh=yRUXP0ImvjOTEZhk4pFomTB3M88pydKKxnjyJBULQ00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sRTeuPzZ3fdLzkEW97qOAe7pWigWbzd8kbZ0Z5tpAwEHA9vcQv4kMHn7yCHrYomWr
-	 oJAGthdut1C+3f4c0ELX7X2N5ji9KM33UN0fxeYfpzw1ml1PitMAwzW2FZ7I06AABa
-	 4EF5LZZRBKYjjjCuhUP+4cgs/C4f2Qqmkp40nz2g=
+	b=r+1fp9ckOiIbcbpFwONtig61bUcvSCQExUmizIOgipLGq7FSQXfzt9XQGWQ1P/a7+
+	 qDf9KC0F4ybveATwniL8xrDY8GCsPvOtNi93JyiXR9ZtpHbQdS23KVnJg7XmPXQ8vp
+	 u21T2lduZ9kuLoT4qPO2cDu1b1M8cyXlx3abOYVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
-Subject: [PATCH 7.2 020/428] crypto: x86/aes-gcm - fix always true check for last AAD segment
-Date: Fri,  9 Oct 2026 16:05:57 +0200
-Message-ID: <20261009140946.503095071@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Joel Granados <joel.granados@kernel.org>
+Subject: [PATCH 7.2 047/428] time/jiffies: Saturate in mult_hz() instead of wrapping
+Date: Fri,  9 Oct 2026 16:06:24 +0200
+Message-ID: <20261009140947.143787778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,59 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 226154ea87952ad7141ce2dcf52a6c2edd71b8fe upstream.
+commit fdd6553e1e53b0421d89c7469c8a36d2eadb1115 upstream.
 
-In gcm_process_assoc(), a segment that is not the last one must have its
-length rounded down to a multiple of 16 bytes, as required by the
-assembly. The check for a non-last segment is `if (unlikely(assoclen))
-/* Not the last segment yet? */` where assoclen is the number of AAD
-bytes remaining after the current segment.
+Return ULONG_MAX for values that don't fit an unsigned long.
+proc_int_u2k_conv_uop() now correctly rejects a result above INT_MAX.
 
-Since the conversion to the new scatterwalk API, assoclen is decremented
-at the end of the loop body rather than the beginning, so it still
-includes the current segment when the check executes, making the check
-always true.
+This is the erroneous behaviour that is being fixed. The input has to
+exceed ULONG_MAX / HZ for the product to wrap, so the value below is
+specific to CONFIG_HZ=1000:
 
-As a result the last segment was rounded down as well, causing some
-avoidable extra work: an additional memcpy into the temporary buffer and
-an additional call into the assembly after the loop. The GCM
-authentication tag is unaffected either way, so the self-tests pass and
-this went unnoticed. It is purely an efficiency issue rather than a
-correctness one.
+  # echo 18446744073709552 > /proc/sys/net/ipv4/tcp_keepalive_time
+  # cat /proc/sys/net/ipv4/tcp_keepalive_time
+  0
 
-Fix this by moving the assoclen decrement back to the beginning of the
-loop body.
+That value is now rejected with an error.
 
-Fixes: e9787deff49e ("crypto: x86/aes-gcm - use the new scatterwalk functions")
+The original bound ("*u_ptr > INT_MAX / HZ") was removed in commit
+2dc164a48e6f ("sysctl: Create converter functions with two new macros").
+
+Fixes: 2dc164a48e6f ("sysctl: Create converter functions with two new macros")
 Cc: stable@vger.kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
-Link: https://patch.msgid.link/20260926145903.6061-1-raizudeen.kerneldev@gmail.com
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Joel Granados <joel.granados@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/aesni-intel_glue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/jiffies.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/crypto/aesni-intel_glue.c
-+++ b/arch/x86/crypto/aesni-intel_glue.c
-@@ -1293,6 +1293,7 @@ static void gcm_process_assoc(const stru
- 		unsigned int len;
- 		const u8 *src = walk.addr;
+--- a/kernel/time/jiffies.c
++++ b/kernel/time/jiffies.c
+@@ -101,6 +101,8 @@ void __init register_refined_jiffies(lon
+ #ifdef CONFIG_PROC_SYSCTL
+ static ulong mult_hz(const ulong val)
+ {
++	if (val >= ULONG_MAX / HZ)
++		return ULONG_MAX;
+ 	return val * HZ;
+ }
  
-+		assoclen -= orig_len_this_step;
- 		if (unlikely(pos)) {
- 			len = min(len_this_step, 16 - pos);
- 			memcpy(&buf[pos], src, len);
-@@ -1320,7 +1321,6 @@ next:
- 			kernel_fpu_end();
- 			kernel_fpu_begin();
- 		}
--		assoclen -= orig_len_this_step;
- 	}
- 	if (unlikely(pos))
- 		aes_gcm_aad_update(key, ghash_acc, buf, pos, flags);
 
 
