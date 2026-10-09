@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF6B3382DA;
-	Fri,  9 Oct 2026 14:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4666581ACD;
+	Fri,  9 Oct 2026 14:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557604; cv=none; b=utrSec4v6BJ080Wq0Ib3F6BzjPgzlj4j0jyBgbWTC9NTmWASzZgcciUIt5pksKsd5zbu1g2XvcruXVAJmkwbTUSb7cjV0hh+cVJhbvPW+dKOf0p7KQ86/ORrRk9q/XNecQJ7+paxWU1wd8m9k/bbTuf3+VvmtlgxkNczcfgGTKY=
+	t=1791557607; cv=none; b=CkNgM6f3H00UQqR0w+639rRcEUo3Eet8dX6HckS7kkXUFGO9eJ0IMLFltZ/wmXRenoW5LVjracqVL8LzfdayPx8pEqIM6pdudimOTvW/Hywyy8z7GDZrhPkAJHZDk0lJH1kjmmwFASr8z7Jne8zRdOgoe9Kwgnt51YdPwkh09vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557604; c=relaxed/simple;
-	bh=zGnJJP9w3ryWic8A51CjcyQNGSzKH7WoDMJaMhxx4XA=;
+	s=arc-20240116; t=1791557607; c=relaxed/simple;
+	bh=+ugto1PhGQpgA85hQ0Q2kl+3QK6nmfxUzrhcsIevIx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ3K+029f6xMjsiYyL2vduTRacdmO2aCan5rGhXi4GhfbuBev0nD2Tg9GlB/+qyqmcaSbbsKATu8oGbxiJLfRxNDdvgIrYSVmbLigO2W9e3Plstmjx1Saois3MY6MC2Nof4+xn/LelyGa7FqMnet2l2J9QfQ3abgwFPIaqGxeFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyzmnEWG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RPvvUEW7L2UF3jZFD7lOIX1QeNfXt6gPGI1eD+3f3Coaa1qCjBDlr0yvDuFSkRdND1RPNelRbms3f9L/yZ0PueUBOiReXruYL+xQvcbYrAnukgMmcB3hnsLQKiMD6fZ3wMF2s9aie1eW1Y93LQJR6HoMrUbxdYl1pV+8BCDx2pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhBH8Hlc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyzmnEWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672111F000FF;
-	Fri,  9 Oct 2026 14:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhBH8Hlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567F71F000FF;
+	Fri,  9 Oct 2026 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557603;
-	bh=53gX5M7xhjpE5SyLNFFEzKK+q3fHY+HzrY9r2edFD8k=;
+	s=korg; t=1791557605;
+	bh=hoWaMahotIuZ3Hwg2vV4+34uSWVtP4fVadDYtpdq2pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyzmnEWGsgrX36ASBc0A27BUvKv4FXaTYk71tM86uAGMSgNIEy/i5em6L+Kyp6gyk
-	 WvML91r8clzOUk8YpaZKli+HytTbScideop/q97qP9zAJfcpStAIv7eFK6k1Vov0bT
-	 HP0OUL/f79m+8kB07h7SEnYG+CGnxm6ZZA9TR9xo=
+	b=OhBH8Hlc9jdu1seJT6Q+55O+g4AmqQ67S9wJ4eO3m6hE7RP/BmdPZGRQxlLmqygqw
+	 NmFghnk0n/m58ucWSNiuYhmMrf4ACo8V/tUgi4luMeXyD/XfUwZNK020eTsFsIdlvf
+	 pDQ//2rBv2Yg1KVkmLbmobjXcPpSQtkt8UgyCTIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.2 417/428] rust: irq: pass RegistrationInner as cookie to request_irq
-Date: Fri,  9 Oct 2026 16:12:34 +0200
-Message-ID: <20261009140955.394178741@linuxfoundation.org>
+	Ray Wu <ray.wu@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	"ChiaHsuan (Tom) Chung" <chiahsuan.chung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 418/428] drm/amd/display: map PWM brightness through custom backlight curve
+Date: Fri,  9 Oct 2026 16:12:35 +0200
+Message-ID: <20261009140955.417515365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -49,229 +54,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Ray Wu <ray.wu@amd.com>
 
-With commit ba268514ea14 ("rust: devres: fix race condition due to
-nesting"), Devres::new() returns Result<Self> by value instead of
-initializing in-place via PinInit. Because request_irq() is called
-inside Devres::new(), registration.inner is still uninitialized when the
-IRQ is enabled, so accessing registration.inner.device() in the IRQ
-callback can read uninitialized memory.
+[ Upstream commit 51cc916648d1421e0271090fb4fa86550a7a96d9 ]
 
-Fix this by storing the Device and handler pointer in RegistrationInner
-and passing RegistrationInner as the IRQ cookie after its fields are
-initialized.
+[Why/How]
+On the PWM path, convert the userspace brightness to an input signal and
+derive the target luminance from the custom backlight curve, then pass
+the resulting millipercent to the power module.
 
-This is not needed in mainline because commit 98c63ce4d760 ("rust: irq:
-make Registration compatible with lifetime-bound drivers") removed
-Devres from irq::Registration and moved request_irq() after all fields
-are initialized.
+This keeps PWM programming and backlight curve mapping in the power
+module, aligning the Linux path with the Windows behavior.
 
-Fixes: 29e16fcd67ee ("rust: irq: add &Device<Bound> argument to irq callbacks")
-Fixes: ba268514ea14 ("rust: devres: fix race condition due to nesting")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5723
+Fixes: 3c108046e1d6 ("drm/amd/display: Add power module on Linux")
+Assisted-by: Cursor:Claude-Opus-4.8
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Reviewed-by: ChiaHsuan (Tom) Chung <chiahsuan.chung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bc4e099caa85e8d4c3555851a0feb07058c4a1fe)
+Cc: stable@vger.kernel.org
+[ sashal: Relocated the changes into the existing display manager code because the backlight code had not been split out. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/irq/request.rs |   89 +++++++++++++++++++++++++++------------------
- 1 file changed, 54 insertions(+), 35 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   92 +++++++++++++++++++---
+ 1 file changed, 80 insertions(+), 12 deletions(-)
 
---- a/rust/kernel/irq/request.rs
-+++ b/rust/kernel/irq/request.rs
-@@ -14,7 +14,7 @@ use crate::error::to_result;
- use crate::irq::flags::Flags;
- use crate::prelude::*;
- use crate::str::CStr;
--use crate::sync::Arc;
-+use crate::sync::{aref::ARef, Arc};
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -70,6 +70,7 @@
+ #include "ivsrcid/ivsrcid_vislands30.h"
  
- /// The value that can be returned from a [`Handler`] or a [`ThreadedHandler`].
- #[repr(u32)]
-@@ -54,13 +54,18 @@ impl<T: ?Sized + Handler, A: Allocator +
- /// # Invariants
- ///
- /// - `self.irq` is the same as the one passed to `request_{threaded}_irq`.
--/// - `cookie` was passed to `request_{threaded}_irq` as the cookie. It is guaranteed to be unique
-+/// - `&self` was passed to `request_{threaded}_irq` as the cookie. It is guaranteed to be unique
- ///   by the type system, since each call to `new` will return a different instance of
- ///   `Registration`.
-+/// - `self.handler` points to a valid instance of the handler `T` that lives at least until
-+///   `Self::drop` completes.
- #[pin_data(PinnedDrop)]
- struct RegistrationInner {
-     irq: u32,
--    cookie: *mut c_void,
-+    dev: ARef<Device>,
-+    handler: *const c_void,
-+    #[pin]
-+    _pin: PhantomPinned,
+ #include <linux/backlight.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+ #include <linux/types.h>
+@@ -1974,6 +1975,8 @@ static int amdgpu_dm_init_power_module(s
+ 		init_data[i].use_custom_backlight_caps = false;
+ 		init_data[i].custom_backlight_caps_config_no = 0;
+ 		init_data[i].use_linear_backlight_curve = false;
++		if (amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE)
++			init_data[i].use_linear_backlight_curve = true;
+ 		init_data[i].def_varibright_enable = 0;
+ 		init_data[i].varibright_level = 0;
+ 		/*
+@@ -5304,6 +5307,68 @@ static inline u32 scale_fw_to_input(int
+ 	return min + DIV_ROUND_CLOSEST_ULL(input * (max - min), AMDGPU_MAX_BL_LEVEL);
  }
  
- impl RegistrationInner {
-@@ -77,18 +82,22 @@ impl PinnedDrop for RegistrationInner {
-         //
-         // Safe as per the invariants of `RegistrationInner` and:
-         //
--        // - The containing struct is `!Unpin` and was initialized using
-+        // - `RegistrationInner` is `!Unpin` and was initialized using
-         // pin-init, so it occupied the same memory location for the entirety of
-         // its lifetime.
-         //
-         // Notice that this will block until all handlers finish executing,
-         // i.e.: at no point will &self be invalid while the handler is running.
--        unsafe { bindings::free_irq(self.irq, self.cookie) };
-+        unsafe {
-+            bindings::free_irq(
-+                self.irq,
-+                core::ptr::from_mut::<Self>(self.get_unchecked_mut()).cast::<c_void>(),
-+            )
-+        };
-     }
- }
++static u32 backlight_signal_to_luminance(const struct amdgpu_dm_backlight_caps *caps,
++					 u32 signal)
++{
++	u32 lower_signal, upper_signal;
++	u32 lower_lum, upper_lum;
++	int i;
++
++	if (!caps->data_points)
++		return DIV_ROUND_CLOSEST(signal * 100, AMDGPU_MAX_BL_LEVEL);
++
++	if (signal < caps->luminance_data[0].input_signal) {
++		lower_signal = 0;
++		lower_lum = 0;
++		upper_signal = caps->luminance_data[0].input_signal;
++		upper_lum = caps->luminance_data[0].luminance;
++	} else if (signal >=
++		   caps->luminance_data[caps->data_points - 1].input_signal) {
++		lower_signal = caps->luminance_data[caps->data_points - 1].input_signal;
++		lower_lum = caps->luminance_data[caps->data_points - 1].luminance;
++		upper_signal = caps->max_input_signal;
++		upper_lum = 100;
++	} else {
++		for (i = 1;
++		     i < caps->data_points &&
++		     signal > caps->luminance_data[i].input_signal;
++		     i++)
++			;
++
++		lower_signal = caps->luminance_data[i - 1].input_signal;
++		upper_signal = caps->luminance_data[i].input_signal;
++		lower_lum = caps->luminance_data[i - 1].luminance;
++		upper_lum = caps->luminance_data[i].luminance;
++	}
++
++	if (upper_signal == lower_signal)
++		return upper_lum;
++
++	return lower_lum + DIV_ROUND_CLOSEST((upper_lum - lower_lum) *
++					     (signal - lower_signal),
++					     upper_signal - lower_signal);
++}
++
++static u32 convert_brightness_to_millipercent(const struct amdgpu_dm_backlight_caps *caps,
++					      u32 user_brightness)
++{
++	unsigned int min, max;
++	u32 signal, luminance;
++
++	if (!get_brightness_range(caps, &min, &max))
++		return DIV_ROUND_CLOSEST_ULL((u64)user_brightness * 100000,
++					     MAX_BACKLIGHT_LEVEL);
++
++	user_brightness = clamp(user_brightness, min, max);
++	if (amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE)
++		return DIV_ROUND_CLOSEST_ULL((u64)user_brightness * 100000, max);
++
++	signal = scale_input_to_fw(max, user_brightness);
++	luminance = backlight_signal_to_luminance(caps, signal);
++
++	return min_t(u32, luminance * 1000, 100000);
++}
++
+ static void convert_custom_brightness(const struct amdgpu_dm_backlight_caps *caps,
+ 				      unsigned int min, unsigned int max,
+ 				      uint32_t *user_brightness)
+@@ -5421,10 +5486,10 @@ static void amdgpu_dm_backlight_set_leve
+ 	struct amdgpu_dm_backlight_caps *caps;
+ 	struct dc_link *link;
+ 	u32 brightness = 0;
++	u32 millipercent = 0;
+ 	bool rc = false, reallow_idle = false;
+ 	struct drm_connector *connector;
+ 	struct dc_stream_state *stream;
+-	unsigned int min, max;
  
--// SAFETY: We only use `inner` on drop, which called at most once with no
--// concurrent access.
-+// SAFETY: `RegistrationInner` has no interior mutability and `handler` points to a `Sync` handler.
- unsafe impl Sync for RegistrationInner {}
+ 	list_for_each_entry(connector, &dm->ddev->mode_config.connector_list, head) {
+ 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
+@@ -5447,12 +5512,21 @@ static void amdgpu_dm_backlight_set_leve
+ 	/* update scratch register */
+ 	if (bl_idx == 0)
+ 		amdgpu_atombios_scratch_regs_set_backlight_level(dm->adev, dm->brightness[bl_idx]);
+-	brightness = convert_brightness_from_user(caps, dm->brightness[bl_idx]);
++
+ 	link = (struct dc_link *)dm->backlight_link[bl_idx];
++	stream = dm_find_stream_with_link(dm, link);
++	if (!stream)
++		return;
  
- // SAFETY: It is safe to send `RegistrationInner` across threads.
-@@ -179,7 +188,7 @@ impl<'a> IrqRequest<'a> {
- ///
- /// # Invariants
- ///
--/// * We own an irq handler whose cookie is a pointer to `Self`.
-+/// * We own an irq handler whose cookie is a pointer to `Self::inner`.
- #[pin_data]
- pub struct Registration<T: Handler> {
-     #[pin]
-@@ -206,10 +215,13 @@ impl<T: Handler> Registration<T> {
-             handler <- handler,
-             inner <- Devres::new(
-                 request.dev,
--                try_pin_init!(RegistrationInner {
--                    // INVARIANT: `this` is a valid pointer to the `Registration` instance
--                    cookie: this.as_ptr().cast::<c_void>(),
--                    irq: {
-+                try_pin_init!(&inner_this in RegistrationInner {
-+                    irq: request.irq,
-+                    dev: request.dev.into(),
-+                    // SAFETY: `this` is a valid pointer to the `Registration` instance.
-+                    handler: unsafe { &raw const (*this.as_ptr()).handler }.cast(),
-+                    _pin: PhantomPinned,
-+                    _: {
-                         // SAFETY:
-                         // - The callbacks are valid for use with request_irq.
-                         // - If this succeeds, the slot is guaranteed to be valid until the
-@@ -224,11 +236,10 @@ impl<T: Handler> Registration<T> {
-                                 Some(handle_irq_callback::<T>),
-                                 flags.into_inner(),
-                                 name.as_char_ptr(),
--                                this.as_ptr().cast::<c_void>(),
-+                                inner_this.as_ptr().cast::<c_void>(),
-                             )
-                         })?;
--                        request.irq
--                    }
-+                    },
-                 })
-             ),
-             _pin: PhantomPinned,
-@@ -261,13 +272,15 @@ impl<T: Handler> Registration<T> {
- ///
- /// This function should be only used as the callback in `request_irq`.
- unsafe extern "C" fn handle_irq_callback<T: Handler>(_irq: i32, ptr: *mut c_void) -> c_uint {
--    // SAFETY: `ptr` is a pointer to `Registration<T>` set in `Registration::new`
--    let registration = unsafe { &*(ptr as *const Registration<T>) };
-+    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `Registration::new`
-+    let inner = unsafe { &*(ptr as *const RegistrationInner) };
-+    // SAFETY: `inner.handler` is a pointer to `T` set in `Registration::new`
-+    let handler = unsafe { &*inner.handler.cast::<T>() };
-     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
-     // callback is running implies that the device has not yet been unbound.
--    let device = unsafe { registration.inner.device().as_bound() };
-+    let device = unsafe { inner.dev.as_bound() };
+-	/* Apply brightness quirk */
+-	if (caps->brightness_mask)
+-		brightness |= caps->brightness_mask;
++	if (caps->aux_support) {
++		brightness = convert_brightness_from_user(caps, dm->brightness[bl_idx]);
++		/* Apply brightness quirk */
++		if (caps->brightness_mask)
++			brightness |= caps->brightness_mask;
++	} else {
++		millipercent = convert_brightness_to_millipercent(caps,
++								  user_brightness);
++	}
  
--    T::handle(&registration.handler, device) as c_uint
-+    T::handle(handler, device) as c_uint
- }
+ 	if (trace_amdgpu_dm_brightness_enabled()) {
+ 		trace_amdgpu_dm_brightness(__builtin_return_address(0),
+@@ -5462,10 +5536,6 @@ static void amdgpu_dm_backlight_set_leve
+ 					   power_supply_is_system_supplied() > 0);
+ 	}
  
- /// The value that can be returned from [`ThreadedHandler::handle`].
-@@ -396,7 +409,7 @@ impl<T: ?Sized + ThreadedHandler, A: All
- ///
- /// # Invariants
- ///
--/// * We own an irq handler whose cookie is a pointer to `Self`.
-+/// * We own an irq handler whose cookie is a pointer to `Self::inner`.
- #[pin_data]
- pub struct ThreadedRegistration<T: ThreadedHandler> {
-     #[pin]
-@@ -423,10 +436,13 @@ impl<T: ThreadedHandler> ThreadedRegistr
-             handler <- handler,
-             inner <- Devres::new(
-                 request.dev,
--                try_pin_init!(RegistrationInner {
--                    // INVARIANT: `this` is a valid pointer to the `ThreadedRegistration` instance.
--                    cookie: this.as_ptr().cast::<c_void>(),
--                    irq: {
-+                try_pin_init!(&inner_this in RegistrationInner {
-+                    irq: request.irq,
-+                    dev: request.dev.into(),
-+                    // SAFETY: `this` is a valid pointer to the `ThreadedRegistration` instance.
-+                    handler: unsafe { &raw const (*this.as_ptr()).handler }.cast(),
-+                    _pin: PhantomPinned,
-+                    _: {
-                         // SAFETY:
-                         // - The callbacks are valid for use with request_threaded_irq.
-                         // - If this succeeds, the slot is guaranteed to be valid until the
-@@ -442,11 +458,10 @@ impl<T: ThreadedHandler> ThreadedRegistr
-                                 Some(thread_fn_callback::<T>),
-                                 flags.into_inner(),
-                                 name.as_char_ptr(),
--                                this.as_ptr().cast::<c_void>(),
-+                                inner_this.as_ptr().cast::<c_void>(),
-                             )
-                         })?;
--                        request.irq
--                    }
-+                    },
-                 })
-             ),
-             _pin: PhantomPinned,
-@@ -482,24 +497,28 @@ unsafe extern "C" fn handle_threaded_irq
-     _irq: i32,
-     ptr: *mut c_void,
- ) -> c_uint {
--    // SAFETY: `ptr` is a pointer to `ThreadedRegistration<T>` set in `ThreadedRegistration::new`
--    let registration = unsafe { &*(ptr as *const ThreadedRegistration<T>) };
-+    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
-+    let inner = unsafe { &*(ptr as *const RegistrationInner) };
-+    // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
-+    let handler = unsafe { &*inner.handler.cast::<T>() };
-     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
-     // callback is running implies that the device has not yet been unbound.
--    let device = unsafe { registration.inner.device().as_bound() };
-+    let device = unsafe { inner.dev.as_bound() };
+-	stream = dm_find_stream_with_link(dm, link);
+-	if (!stream)
+-		return;
+-
+ 	mutex_lock(&dm->dc_lock);
+ 	if (dm->dc->caps.ips_support && dm->dc->ctx->dmub_srv->idle_allowed) {
+ 		dc_allow_idle_optimizations(dm->dc, false);
+@@ -5477,10 +5547,8 @@ static void amdgpu_dm_backlight_set_leve
+ 			AUX_BL_DEFAULT_TRANSITION_TIME_MS, false, true);
+ 	} else {
+ 		/* power module uses millipercent */
+-		get_brightness_range(caps, &min, &max);
+-		brightness = DIV_ROUND_CLOSEST(brightness * 100, (max - min)) * 1000;
+ 		rc = mod_power_set_backlight_percent(dm->power_module, stream,
+-						     brightness, 0, false);
++						     millipercent, 0, false);
+ 	}
  
--    T::handle(&registration.handler, device) as c_uint
-+    T::handle(handler, device) as c_uint
- }
- 
- /// # Safety
- ///
- /// This function should be only used as the callback in `request_threaded_irq`.
- unsafe extern "C" fn thread_fn_callback<T: ThreadedHandler>(_irq: i32, ptr: *mut c_void) -> c_uint {
--    // SAFETY: `ptr` is a pointer to `ThreadedRegistration<T>` set in `ThreadedRegistration::new`
--    let registration = unsafe { &*(ptr as *const ThreadedRegistration<T>) };
-+    // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
-+    let inner = unsafe { &*(ptr as *const RegistrationInner) };
-+    // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
-+    let handler = unsafe { &*inner.handler.cast::<T>() };
-     // SAFETY: The irq callback is removed before the device is unbound, so the fact that the irq
-     // callback is running implies that the device has not yet been unbound.
--    let device = unsafe { registration.inner.device().as_bound() };
-+    let device = unsafe { inner.dev.as_bound() };
- 
--    T::handle_threaded(&registration.handler, device) as c_uint
-+    T::handle_threaded(handler, device) as c_uint
- }
+ 	/*
 
 
