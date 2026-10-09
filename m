@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850E4E66DA;
-	Fri,  9 Oct 2026 14:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774084E66B9;
+	Fri,  9 Oct 2026 14:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556993; cv=none; b=QsIKN0eP5r8Pszquq9wTTAgc/TWw3+WckmiQSJljJAMpdtWsLPkLBXh6EBDtFgbL77lCvcOc0uR1PNfdEIIKftsAdbt9IEt8TW/5ofw7OpeYJ+7OqZoISqE4HnwuQqzmgcPn89NDSHZfLDZwtU62N5GpdSodq3IwUCxqDyw8aN0=
+	t=1791556998; cv=none; b=HPxjEpTLhLrzAzAwfJxRFgrt2K0hU8TR54tqoyVyoXPSN8JWuUD2efe+kzUgCybgKP7AqifBn1s67zFt6mNdTBtMZdNtVJRlLw6PHgJg8PX6Ls21JwiTqEb4rP2VZKYvUIp73feq6XX9HabkjkjjZmWPxbizw2jZRCYLMS8rQNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556993; c=relaxed/simple;
-	bh=pTX7NbTDq8sUfRj80My7VkV3VkcEGTJKzks0Qp1OywY=;
+	s=arc-20240116; t=1791556998; c=relaxed/simple;
+	bh=4mha64YW2Dr67N19J881Hjt6RMElyqarZbHEcHNfx0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kd0vUu+UcmLIN9LIwSiglainy8dqTgvuhRAM+/wqhZM/GEnzqyNhPG/saH+hPiMqT6PZG29OLupiofyOi0nT6OTfbkak+yb/mD8yvMpQWGH9j6EJooE7lsYm3+9bANou6FApY6asdKaVduRhnQcYyvB/hINN2TxRv4hu/kScHU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLXMBK2m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sNE5HssPyRnzeNieduF/9m9dTwvsunkN3jCws7MxMtUucbdB9qGtC7R6dM9Zh2GIPcZP+eI1AwbPsB5IhAMLNXpY69uFohjRVBZN6bLgeUOCjZZarJd4PXWl7Q94I4E1nXTF198UE6W/Jo3RSLHHk+hyjcNCXU7C6GO43pRML2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVDrXzg/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLXMBK2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56351F000FF;
-	Fri,  9 Oct 2026 14:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVDrXzg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE1C1F000FF;
+	Fri,  9 Oct 2026 14:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556992;
-	bh=ZKfWTJ65T/+R+VRNF58o2OHR07b6g3GT5q+vt2TcWL4=;
+	s=korg; t=1791556995;
+	bh=Vjfl+700qWk/BrY4TOmbkTdi5UVIzi0WOX2iWnvC77Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLXMBK2mnp6HQZ5tj/RPUoA0hdroxp5sOLCvUa7fd6LrF04pO1vmfz6RFCZxrEvuu
-	 bSXbHU1Mp9Papiu2q/E776L1kBsu3fsZLH97PBaZhlAFczx+MVFjvism8CrflxMvXR
-	 MoI7XGl/hDjj4iHhnmoIt2G+QAJ2+NLT8JcnuiPk=
+	b=nVDrXzg/LxIDex8G9jGA4FbNWmpoj+wRL8jd2vRp5Zhnp2JR0SRzlmUesSbhT9yBr
+	 Ffop+jQiZHJOqTimxABUuR1ArJix7ySCDmRAgeM9Gk48LVNAKeDd5EjRL9QvqLjuzG
+	 DwVFMMSsb8IfGXsVhy2RjAy/h3v8tgkd056LsenA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 329/403] iio: light: rohm-bu27034: Fix infinite delay on error
-Date: Fri,  9 Oct 2026 16:11:30 +0200
-Message-ID: <20261009140959.930009818@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 7.2 279/428] i2c: xiic: preserve PEC byte length in SMBus block read setup
+Date: Fri,  9 Oct 2026 16:10:16 +0200
+Message-ID: <20261009140952.225968825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,175 +47,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 8065a6c02f629187131f3136bedb26f9080e3cca upstream.
+commit b7e6df2f52ed5c02838832f53c171a5645f9b376 upstream.
 
-When reading an integration-time fails, the code will use error code to
-compute the sleep time.
+xiic_smbus_block_read_setup() recalculates i2c->rx_msg->len based on the
+length byte returned by the device, but historically clobbered the PEC
+byte expectation the SMBus core had baked into msg->len. That dropped
+the PEC byte from the caller's buffer on the normal and chunked
+receive-fifo branches.
 
-Fix this by using the smallest integration time as a default if
-reading fails.
+Compute pec_len up-front as (i2c->rx_msg->len - 1) -- the trailing bytes
+the caller has already accounted for beyond the length byte, 1 when the
+SMBus core enabled PEC, and possibly more for an I2C_M_RECV_LEN request
+coming from i2c-dev -- and add it to the new length in every branch:
 
-Fixes: e52afbd61039 ("iio: light: ROHM BU27034 Ambient Light Sensor")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+  - chunked: the trailing bytes do not fit in the Rx FIFO, so drain in
+    chunks. The guard becomes (rxmsg_len + pec_len > IIC_RX_FIFO_DEPTH)
+    rather than rxmsg_len alone, both because pec_len bytes also have to
+    fit and because it is what bounds rfd_set in the else branch below
+    to the 4 bits of XIIC_RFD_REG_OFFSET.
+
+  - padded (1 + rxmsg_len + pec_len < SMBUS_BLOCK_READ_MIN_LEN): the
+    hardware needs at least 3 bytes on the bus to exit the read cleanly
+    (the second byte is already being clocked in by the time the ISR
+    reads the length byte and is too late to NACK), so we still pad
+    rx_msg->len up to SMBUS_BLOCK_READ_MIN_LEN. The dummy trailing byte
+    that gets drained must then be trimmed off before handing the
+    message back to the SMBus core; otherwise i2c_smbus_check_pec()
+    reads buf[len-1] (= dummy) instead of the real PEC byte at buf[1]
+    and rejects every clean zero-length block read with -EBADMSG.
+
+    Record the true valid byte count in a new field
+    i2c->smbus_actual_len and trim rx_msg->len down to it in
+    xiic_smbus_trim_len(), called from both completion sites that clear
+    rx_msg: xiic_process()'s RX_FULL branch and xiic_recv_atomic(),
+    which drains the FIFO with interrupts off.
+
+    smbus_actual_len is per-receive state, so xiic_start_recv() clears
+    it before every receive. Only the padded branch ever sets it, and a
+    block read aborted by arbitration loss or a TX error never reaches
+    the completion site, so without that clear a stale value would trim
+    the length of an unrelated later read.
+
+    The condition is expressed in total bytes rather than the old
+    "(rxmsg_len == 1) || (rxmsg_len == 0)" so that a request carrying
+    more than one trailing byte does not get padded: padding records a
+    length the drain never reaches, which would hand the caller a byte
+    that was never received.
+
+  - normal: all trailing bytes fit in one FIFO fill. rfd_set gains
+    pec_len for the same reason the length does. Because the padded
+    branch above has already taken every case with fewer than
+    SMBUS_BLOCK_READ_MIN_LEN total bytes, rxmsg_len + pec_len is at
+    least 2 here and the subtraction cannot underflow the u8.
+
+Fixes: e4c1ff772e1a ("i2c: xiic: Add smbus_block_read functionality")
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Cc: <stable@vger.kernel.org> # v6.3+
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260924-i2c-xiic-v7-1-df7e752332ef@nexthop.ai
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/rohm-bu27034.c |   60 +++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 24 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c |   54 +++++++++++++++++++++++++++++++-----------
+ 1 file changed, 41 insertions(+), 13 deletions(-)
 
---- a/drivers/iio/light/rohm-bu27034.c
-+++ b/drivers/iio/light/rohm-bu27034.c
-@@ -137,6 +137,7 @@ static const struct iio_gain_sel_pair bu
- #define BU27034_MEAS_MODE_200MS		2
- #define BU27034_MEAS_MODE_400MS		4
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -73,6 +73,9 @@ enum i2c_scl_freq {
+  * @prev_msg_tx: Previous message is Tx
+  * @quirks: To hold platform specific bug info
+  * @smbus_block_read: Flag to handle block read
++ * @smbus_actual_len: Valid byte count (length + payload + optional PEC) of a
++ *	padded SMBus block read. msg->len is trimmed to this on completion.
++ *	Zero when no trimming is needed.
+  * @input_clk: Input clock to I2C controller
+  * @i2c_clk: I2C SCL frequency
+  * @atomic: Mode of transfer
+@@ -98,6 +101,7 @@ struct xiic_i2c {
+ 	bool prev_msg_tx;
+ 	u32 quirks;
+ 	bool smbus_block_read;
++	unsigned int smbus_actual_len;
+ 	unsigned long input_clk;
+ 	unsigned int i2c_clk;
+ 	bool atomic;
+@@ -539,30 +543,38 @@ static void xiic_smbus_block_read_setup(
  
-+#define BU27034_INT_TIME_US_MIN (55 * USEC_PER_MSEC)
- static const struct iio_itime_sel_mul bu27034_itimes[] = {
- 	GAIN_SCALE_ITIME_US(400000, BU27034_MEAS_MODE_400MS, 8),
- 	GAIN_SCALE_ITIME_US(200000, BU27034_MEAS_MODE_200MS, 4),
-@@ -296,7 +297,7 @@ static int bu27034_get_gain(struct bu270
- 	return 0;
- }
- 
--static int bu27034_get_int_time(struct bu27034_data *data)
-+static int bu27034_get_int_time(struct bu27034_data *data, int *itime)
- {
- 	int ret, sel;
- 
-@@ -304,24 +305,30 @@ static int bu27034_get_int_time(struct b
- 	if (ret)
- 		return ret;
- 
--	return iio_gts_find_int_time_by_sel(&data->gts,
--					    sel & BU27034_MASK_MEAS_MODE);
-+	ret = iio_gts_find_int_time_by_sel(&data->gts,
-+					   sel & BU27034_MASK_MEAS_MODE);
-+	if (ret < 0)
-+		return ret;
+ 	/* Check if received length is valid */
+ 	if (rxmsg_len <= I2C_SMBUS_BLOCK_MAX) {
++		unsigned int pec_len = i2c->rx_msg->len - 1;
 +
-+	*itime = ret;
+ 		/* Set Receive fifo depth */
+-		if (rxmsg_len > IIC_RX_FIFO_DEPTH) {
++		if (rxmsg_len + pec_len > IIC_RX_FIFO_DEPTH) {
+ 			/*
+-			 * When Rx msg len greater than or equal to Rx fifo capacity
+-			 * Receive fifo depth should set to Rx fifo capacity minus 1
++			 * Trailing bytes (payload plus any PEC) exceed Rx FIFO
++			 * capacity, so drain in chunks. This also keeps the
++			 * else branch below from pushing rfd_set past the
++			 * 4-bit XIIC_RFD_REG_OFFSET field.
+ 			 */
+ 			rfd_set = IIC_RX_FIFO_DEPTH - 1;
+-			i2c->rx_msg->len = rxmsg_len + 1;
+-		} else if ((rxmsg_len == 1) ||
+-			(rxmsg_len == 0)) {
++			i2c->rx_msg->len = rxmsg_len + 1 + pec_len;
++		} else if (1 + rxmsg_len + pec_len < SMBUS_BLOCK_READ_MIN_LEN) {
+ 			/*
+-			 * Minimum of 3 bytes required to exit cleanly. 1 byte
+-			 * already received, Second byte is being received. Have
+-			 * to set NACK in read_rx before receiving the last byte
++			 * The HW needs SMBUS_BLOCK_READ_MIN_LEN bytes on the
++			 * bus to exit cleanly: by the time the ISR reads the
++			 * length byte the second byte is already being clocked
++			 * in, too late to NACK. Pad the drain target and record
++			 * the real length, trimmed back on completion so the
++			 * PEC check sees the right byte.
+ 			 */
+ 			rfd_set = 0;
+ 			i2c->rx_msg->len = SMBUS_BLOCK_READ_MIN_LEN;
++			i2c->smbus_actual_len = 1 + rxmsg_len + pec_len;
+ 		} else {
+ 			/*
+-			 * When Rx msg len less than Rx fifo capacity
+-			 * Receive fifo depth should set to Rx msg len minus 2
++			 * All trailing bytes fit in the Rx FIFO. The widened
++			 * condition above guarantees rxmsg_len + pec_len >= 2,
++			 * so this cannot underflow.
+ 			 */
+-			rfd_set = rxmsg_len - 2;
+-			i2c->rx_msg->len = rxmsg_len + 1;
++			rfd_set = rxmsg_len + pec_len - 2;
++			i2c->rx_msg->len = rxmsg_len + 1 + pec_len;
+ 		}
+ 		xiic_setreg8(i2c, XIIC_RFD_REG_OFFSET, rfd_set);
+ 
+@@ -575,6 +587,16 @@ static void xiic_smbus_block_read_setup(
+ 	dev_err(i2c->adap.dev.parent, "smbus_block_read Invalid msg length\n");
+ }
+ 
++/*
++ * Undo the setup-time padding of a short SMBus block read before rx_msg is
++ * cleared, so the PEC check sees the right byte.
++ */
++static void xiic_smbus_trim_len(struct xiic_i2c *i2c)
++{
++	if (i2c->rx_msg && i2c->smbus_actual_len)
++		i2c->rx_msg->len = i2c->smbus_actual_len;
++}
 +
-+	return 0;
- }
- 
- static int _bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
- 			      int *val2)
+ static void xiic_read_rx(struct xiic_i2c *i2c)
  {
--	int gain, ret;
-+	int gain, itime, ret;
+ 	u8 bytes_in_fifo, cr = 0, bytes_to_read = 0;
+@@ -797,6 +819,8 @@ static irqreturn_t xiic_process(int irq,
  
- 	ret = bu27034_get_gain(data, channel, &gain);
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &itime);
-+	if (ret)
- 		return ret;
- 
--	return iio_gts_get_scale(&data->gts, gain, ret, val, val2);
-+	return iio_gts_get_scale(&data->gts, gain, itime, val, val2);
- }
- 
- static int bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
-@@ -397,12 +404,10 @@ static int bu27034_try_set_int_time(stru
- 	int ret, int_time_old, i;
- 
- 	guard(mutex)(&data->mutex);
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &int_time_old);
-+	if (ret)
- 		return ret;
- 
--	int_time_old = ret;
--
- 	if (!iio_gts_valid_time(&data->gts, time_us)) {
- 		dev_err(data->dev, "Unsupported integration time %u\n",
- 			time_us);
-@@ -841,7 +846,7 @@ static int bu27034_meas_set(struct bu270
- static int bu27034_get_single_result(struct bu27034_data *data, int chan,
- 				     int *val)
- {
--	int ret;
-+	int ret, itime;
- 
- 	if (chan < BU27034_CHAN_DATA0 || chan > BU27034_CHAN_DATA1)
- 		return -EINVAL;
-@@ -850,11 +855,11 @@ static int bu27034_get_single_result(str
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &itime);
-+	if (ret)
- 		return ret;
- 
--	msleep(ret / 1000);
-+	msleep(itime / 1000);
- 
- 	return bu27034_read_result(data, chan, val);
- }
-@@ -904,12 +909,10 @@ static int bu27034_calc_mlux(struct bu27
- 	if (ret)
- 		return ret;
- 
--	ret = bu27034_get_int_time(data);
--	if (ret < 0)
-+	ret = bu27034_get_int_time(data, &meastime);
-+	if (ret)
- 		return ret;
- 
--	meastime = ret;
--
- 	d1_d0_ratio_scaled = (unsigned int)ch1 * (unsigned int)gain0 * 100;
- 	helper64 = (u64)ch1 * (u64)gain0 * 100LLU;
- 
-@@ -970,9 +973,9 @@ static int bu27034_read_raw(struct iio_d
- 	switch (mask) {
- 	case IIO_CHAN_INFO_INT_TIME:
- 		*val = 0;
--		*val2 = bu27034_get_int_time(data);
--		if (*val2 < 0)
--			return *val2;
-+		ret = bu27034_get_int_time(data, val2);
-+		if (ret)
-+			return ret;
- 
- 		return IIO_VAL_INT_PLUS_MICRO;
- 
-@@ -1157,11 +1160,20 @@ static int bu27034_buffer_thread(void *a
- {
- 	struct iio_dev *idev = arg;
- 	struct bu27034_data *data;
--	int wait_ms;
-+	int wait_ms, ret;
- 
- 	data = iio_priv(idev);
- 
--	wait_ms = bu27034_get_int_time(data);
-+	/*
-+	 * If reading the integration time fails, default to the minimum so we
-+	 * don't lose samples. This may waste CPU cycles, but as a hardening
-+	 * against theoretical, once-in-a-blue-moon error, this should be Ok.
-+	 */
-+	wait_ms = BU27034_INT_TIME_US_MIN;
-+	ret = bu27034_get_int_time(data, &wait_ms);
-+	if (ret)
-+		dev_warn(data->dev, "Failed to get integration time\n");
+ 		xiic_read_rx(i2c);
+ 		if (xiic_rx_space(i2c) == 0) {
++			xiic_smbus_trim_len(i2c);
 +
- 	wait_ms /= 1000;
+ 			/* this is the last part of the message */
+ 			i2c->rx_msg = NULL;
  
- 	wait_ms -= BU27034_MEAS_WAIT_PREMATURE_MS;
+@@ -938,6 +962,7 @@ static void xiic_recv_atomic(struct xiic
+ 			return;
+ 	}
+ 
++	xiic_smbus_trim_len(i2c);
+ 	i2c->rx_msg = NULL;
+ 	xiic_irq_clr_en(i2c, XIIC_INTR_TX_ERROR_MASK);
+ 
+@@ -955,6 +980,9 @@ static void xiic_start_recv(struct xiic_
+ 	u8 cr = 0, rfd_set = 0;
+ 	struct i2c_msg *msg = i2c->rx_msg = i2c->tx_msg;
+ 
++	/* A stale value from an aborted block read would truncate this msg. */
++	i2c->smbus_actual_len = 0;
++
+ 	if (!i2c->atomic)
+ 		dev_dbg(i2c->adap.dev.parent, "%s entry, ISR: 0x%x, CR: 0x%x\n",
+ 			__func__, xiic_getreg32(i2c, XIIC_IISR_OFFSET),
 
 
