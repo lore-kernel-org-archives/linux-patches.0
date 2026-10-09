@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2383367B8F;
-	Fri,  9 Oct 2026 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A82274FDF;
+	Fri,  9 Oct 2026 14:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557579; cv=none; b=aTtgzG//qzl+7NXNAH1bxnftqZVN84VN6Emy0iU+cUuCk/9mlbEDKyDUq3Gy8aZfBv0Dmu47ToRiwpxk8JIfjPreGkKd0xVYRx9JkE8YAg8gvGpp/wtGW2kkqrLd/oWL3JnVJFGroQJGcklRyI5hIG5u4DL4g2DozxY4Ic5fEvg=
+	t=1791557582; cv=none; b=s6PO7IvFHBDewbsvEIGfwCKIootAN2ilChG2AUhyny6Kq0YfNmt0EhuoY/YkA/fTTN8d0MbeMhYO8mvjwZWvvtFfY8L3My0ke7fFzB/bFBySUY6oGF34MnxTl+LlztgeUInEOVUDymjIiZ4SdDyzPoH98sfQU39sLA2/l2txLiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557579; c=relaxed/simple;
-	bh=dhDJ4dRyp/QGUPw+DkNI5s/3Dfg6yBVZi7fTsL/AGvo=;
+	s=arc-20240116; t=1791557582; c=relaxed/simple;
+	bh=S23p0d6YYJgHQrRh2o2TRzfc58rO4Yght36CSfqTR3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cp72C2x5s+Ol12VwLezHJcXM1tKFcIBBmkLsdZXHxFEB00jsbyb4KPRpGw4oul+VTFbVBOwFi3tahH6q5ofA++or/hVdtyF4S8mwcfPyWilQyI3sRZ9ZmC7QN3Lcb91sTmJSEdNdDZDbo5wnEVLb0jFIgbkIgHE6PMk6xNzhS7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1K4Ek/nU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OJsUla5kEqjkK6pFFYJoS7T1A1QKi3lYkyNHv8tX6wtU+b4zK2XnYb82x8N7rvPzHInULasBbALLZ+J0QvJ/Ybs2/nisKwNSt2sgrO/wT8TELu9WIoFTRREbJg0pHGUbWVUC90QheRCP3Nf3+hr97loQQuU2vfLtkDiXxBJ4p4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkdlGvJq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1K4Ek/nU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEAF1F000FF;
-	Fri,  9 Oct 2026 14:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkdlGvJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD11F000FF;
+	Fri,  9 Oct 2026 14:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557578;
-	bh=jyxYicUaOCF6HHgxdTvWLITDjxzSNpA3WxdJHpjEJe0=;
+	s=korg; t=1791557581;
+	bh=uMAFoJRyelrQjEN6AYmg4HNrIPfaO+E5+RJQZyqVxw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1K4Ek/nUeW4HI5ZHDzOD6fgVDjLZE/ptW7olExJK4NMkxXDjjgNg7rrssKRp2Ykwf
-	 DIRIc5yhHDdUhyoW/VnPXNR/RxnWqZitdyLHCa5ckgxCQ6JBz7DKf4HEMr4Ncao18M
-	 TuP4OqNF0MhatOt0q7t1oERkr5qAuKGhQNrWvPUo=
+	b=JkdlGvJqLHOJ+UYtV5uQVBkDtFXDlvgZzIDn6/c7fDY/ouECxyDbsgSps8i9N4U26
+	 RCfv+d3sOEVlLDtZzrLeU8rrzzCJpp14gHeSDvHZ0KkPz/oFQ4MVmt/0N8VzkHNC79
+	 UtOFl/vJXzBBFJexfW1xH1ODAn2cHxl2ksB5pqdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Cong Nguyen <congnt264@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 392/428] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
-Date: Fri,  9 Oct 2026 16:12:09 +0200
-Message-ID: <20261009140954.816121494@linuxfoundation.org>
+Subject: [PATCH 7.2 410/428] iio: proximity: pulsedlight: fix iio_device left registered on PM setup failure
+Date: Fri,  9 Oct 2026 16:12:27 +0200
+Message-ID: <20261009140955.231990692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
+commit 4daa9ca557b4b98ae1ad38a6d1deaa3e31eb8edf upstream.
 
-Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
-ever holds a runtime PM usage count. So the pm_runtime_put() in both
-places always triggers the "Runtime PM usage count underflow!" warning
-on every failed probe and every unbind.
+pm_runtime_set_active() failing in probe() jumps to error_unreg_buffer,
+which only calls iio_triggered_buffer_cleanup() -- it does not undo the
+iio_device_register() that already succeeded a few lines above. probe()
+then returns the error, the devm-managed indio_dev is freed, but the
+iio core still has it registered: the sysfs/chardev nodes stay live and
+point at freed memory.
 
-Drop both calls.
+Add an error_unreg_dev label that unregisters the iio device before
+falling through to the existing buffer cleanup, mirroring the teardown
+order already used in lidar_remove().
 
-Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 4ac4e086fd8c ("iio: pulsedlight-lidar-lite: add runtime PM")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/iio/proximity/pulsedlight-lidar-lite-v2.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/sun4i-gpadc-iio.c
-+++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -657,7 +657,6 @@ err_map:
- 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
- 		iio_map_array_unregister(indio_dev);
+--- a/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
++++ b/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
+@@ -294,12 +294,14 @@ static int lidar_probe(struct i2c_client
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	ret = pm_runtime_set_active(&client->dev);
+ 	if (ret)
+-		goto error_unreg_buffer;
++		goto error_unreg_dev;
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_idle(&client->dev);
  
- 	return ret;
-@@ -668,7 +667,6 @@ static void sun4i_gpadc_remove(struct pl
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
+ 	return 0;
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
++error_unreg_dev:
++	iio_device_unregister(indio_dev);
+ error_unreg_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
  
- 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
 
 
