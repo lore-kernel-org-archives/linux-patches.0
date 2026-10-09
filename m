@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C724E56E3;
-	Fri,  9 Oct 2026 14:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43954E5356;
+	Fri,  9 Oct 2026 14:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557237; cv=none; b=QnSSX4mpv1UkIGo7lG+wMfYdlpXW30SlCkxWBb68uZG2jg0SaLUJjDor41W2VQSiMdvACKZvhZIKMKubKOKm3Pte5mqL2RGKphYHPzS8B+XHwnjfpNNYrhhiPaVul2vzdEpNPUhCJ7eq2J12ZD5wTZzVSx65RGkh1XIH65QDqdg=
+	t=1791557239; cv=none; b=Umv0zC01ilTsIAOgT6W2kP+COdHXl/xbG67lYRtezRysxEovpwZi2xfzRCHIoOpQrBii3ulABiaSNUPGSVHLhSNq6+XN0qlEfYOz+sruaZquIvUJKITfa+yX9Q128XG8ZtMY+FXsC+2Pj5nYXe7wFD6xTTllDhNLr2blPlLMIg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557237; c=relaxed/simple;
-	bh=y3UtAnPeN0bM+suACP1etnxmTkMlSefn/kxol0PIAR8=;
+	s=arc-20240116; t=1791557239; c=relaxed/simple;
+	bh=j4DBnaaVXP8JndTZPNoTzzGB8sV8hcLt/hfsu2tlNSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O3JOBFn4/QdZOxyFEr25l76qafaG5keF5qpsu4YVcHAy5PFLNhdm//2BPlj4s5liSkrziSM2NI3ROhYP3yIbi6CsWZ+VL/lgvxBTH+RbXHfF+9ogHli9mTeeFfJaruJjDIEe0a7gK1HhbMU69brJ9rxkBP1sHxb9lIGHzJAULx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRyPuu3B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U8WR/FAHd1pD7Vhh6C5HnUM2ZkgPhXbpHOlOhqlwFrrZfqWLjpV8cMxa+wldlN5yDr85SVSSfYY4aZsgcv4yhC0/z5iCUzenEdz5a9rAW1kVosXlbKuwDoVV5fvm6YwXB/Y3gTxmMqklYdm8Exl1BwBnbCstY9yCcULMQtB8z2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02HPPL3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRyPuu3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E721F000FF;
-	Fri,  9 Oct 2026 14:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02HPPL3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8381F00893;
+	Fri,  9 Oct 2026 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557234;
-	bh=1+d5uSXInBUZHyBmu6UWxnjTeTagKyPzauTaPSzzyHk=;
+	s=korg; t=1791557237;
+	bh=QaPNn9+HjGxzS0zLkdp80bROqN3pv1dlWdcDn+oaLBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRyPuu3Bh+5aoaC6a1LkMx1dpswo+48KZxERUHxfZKKIBttgy2wJ/yMMZiEy6cK1I
-	 Ua/CP0Y8KSHoTnFKKb0E5ty9mmn8qvaGArnQI2Mxv2SfELmSbGcgGJ6fHgdUcE0MPS
-	 Y3T1S9gngLHQx6VhuRoA0SIru5ktG9iJQSt8apds=
+	b=02HPPL3Xe4DWp6Y/XxZhE/64GtSUa2doDUQIDZxw9MsGNCte+ndhzdk6T8fanJduk
+	 cewuOjNL84VQUKCBkVO4PVPCcMSsZexlnh0JTnI/KyXTprLHVJnqzl8IWU6gOAA3ka
+	 kGubfCaOrNT8xzKaYL8QlfW5xfTmaiZ1yR2Sc05Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.2 309/428] mtd: spinand: fix zero oobavail when no ECC engine is used
-Date: Fri,  9 Oct 2026 16:10:46 +0200
-Message-ID: <20261009140952.908128424@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 369/403] units: Add HZ_PER_GHZ
+Date: Fri,  9 Oct 2026 16:12:10 +0200
+Message-ID: <20261009141000.930525859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,65 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 636fe10d8f3559210ff63108a208d39ea2e9c3bd upstream.
+[ Upstream commit 5083dba0fde5446c00ee1a82a3911c8f88a2c72e ]
 
-Commit 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no
-ECC engine") made the OOB free bytes count conditional on having an
-ECC engine so that probing would not fail when none is requested.
-However mtd->oobavail is still assigned from ret just after that
-block, and ret is 0 there, so the device ends up advertising no
-available OOB bytes at all.
+The is going to be a new user of the HZ_PER_GHZ definition besides
+possibly existing ones. Add that one to the header.
 
-mtd_oobavail() returns mtd->oobavail for MTD_OPS_AUTO_OOB, so a zero
-value makes every automatic OOB access fail with -EINVAL. JFFS2 fares
-worse: it keeps its cleanmarker in the OOB area on NAND and refuses to
-mount outright, reporting "inconsistent device description".
+While at it, split Hz and kHz groups of the multipliers for better
+maintenance and readability.
 
-No ECC engine also means no ooblayout was ever installed, which would
-make the count return -ENOTSUPP, so install the same fallback layout
-the on-die path already uses before counting unconditionally.
-
-Fixes: 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no ECC engine")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260112134900.4142954-2-andriy.shevchenko@linux.intel.com
+Stable-dep-of: d61521056420 ("iio: adc: ad4030: fix invalid oversampling_ratio validation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/linux/units.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1995,12 +1995,17 @@ static int spinand_init(struct spinand_d
- 			goto err_cleanup_ecc_engine;
- 	}
+--- a/include/linux/units.h
++++ b/include/linux/units.h
+@@ -25,9 +25,12 @@
+ #define MICROHZ_PER_HZ		1000000UL
+ #define MILLIHZ_PER_HZ		1000UL
  
--	if (nand->ecc.engine) {
--		ret = mtd_ooblayout_count_freebytes(mtd);
--		if (ret < 0)
--			goto err_cleanup_ecc_engine;
-+	if (!nand->ecc.engine) {
-+		if (spinand->eccinfo.ooblayout)
-+			mtd_set_ooblayout(mtd, spinand->eccinfo.ooblayout);
-+		else
-+			mtd_set_ooblayout(mtd, &spinand_noecc_ooblayout);
- 	}
++/* Hz based multipliers */
+ #define HZ_PER_KHZ		1000UL
+ #define HZ_PER_MHZ		1000000UL
++#define HZ_PER_GHZ		1000000000UL
  
-+	ret = mtd_ooblayout_count_freebytes(mtd);
-+	if (ret < 0)
-+		goto err_cleanup_ecc_engine;
-+
- 	mtd->oobavail = ret;
++/* kHz based multipliers */
+ #define KHZ_PER_MHZ		1000UL
+ #define KHZ_PER_GHZ		1000000UL
  
- 	/* Propagate ECC information to mtd_info */
 
 
