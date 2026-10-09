@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FB33431F8;
-	Fri,  9 Oct 2026 14:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6663B582F;
+	Fri,  9 Oct 2026 14:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556024; cv=none; b=mrRYytRI5moeBY9TvSBQNS2e1ji2wNQPZEOdDI+bGiY41nXC3bGXnWeoidoc20lBjalH/C4YmWvoZ0cFvVWvOeIzPPXJeD9xa2aeJkrKxdlqkluTJBD7aXDLoXQQsO+N9Fq95MIMyNENWyqUZKq2vxDp+4m5lsjZq2TSfjXG0Ys=
+	t=1791556026; cv=none; b=IVuvfY8ywoczYdLOBGjX+XJCRIUan11YMWynTuJ+Xhv8pt4QYwCJdsvmrxKsnfaWpzd6pK+qRzOskiMEdCYnGY9ejQxy9lWU3HwfGPIPqE3mZL+NXcQsuPV0PWJjnBUOFbZMn7wKZPKMcL2fJKrtaLw1WrBQRSs807L35yzyNs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556024; c=relaxed/simple;
-	bh=tZvA8KYOiSNxLeL0f6diqmx0zcmMBQAQ6CTZMxGXBPE=;
+	s=arc-20240116; t=1791556026; c=relaxed/simple;
+	bh=HjhPOpT+D/YyVQV2WadvT/q1zdADk1LVh2ia/hIZzKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1aTzwP9eiW5huBsl1no1RH1SU6qmZ5kH94sExt8GviB5EWSKQNmPNYTO/4KCffNrP6jCgHUfIyHDbdC/VkwZpXE3qgQmTrKsxkOzAhaFCEsfMm701p1eGp04b5EZCF8XbL02F03yufOUGnEXyc6ohSz9+S/AJRY8YLZHhlqykM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRjAheRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfzRrcD1WoQ0WM6MKaGUA1zltTn1m3Wc3wzUSu29H1Ydzh0y95KOHoKMVW9uLga0NtRwOpdEL8yG19kYKtsVfC0KsgOlBPzyM+rQKRseUAf3imt1rTMC7b6ikbk5w8p1Bi7h/rVgockfoAGoqTO23/0wu3G/OHPClBZUAzbsmiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTZ9fiKK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRjAheRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B5E1F000FF;
-	Fri,  9 Oct 2026 14:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTZ9fiKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C481F000FF;
+	Fri,  9 Oct 2026 14:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556022;
-	bh=v5zUgEJVRWU3Y/NppgT3RM6bMaJYx0xcw1U3rAk/7so=;
+	s=korg; t=1791556025;
+	bh=deY4y3lwZpQ4hv1mzOg9XrS2bSWyBhdFoZLOR3u4b84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hRjAheRlTyvJqBNX3iMZQO9u/LtGygmD5kXufUwKCntmEbTjKwgva/DxuUfTsWEsB
-	 QXQ9hbJEeqB18iPv9PdHHr6kQxVXEi2qW4goTK41uP7+z8MEZYp/i6iFlEsjVV0WBJ
-	 aQgYHdc6Q9MeneNC/xaPKM1zluTx5iGesfDETp4c=
+	b=tTZ9fiKKnr2RcNGzUORXvKzh5MIcUDDd0OkjWyxGzGo1wgQE6y6d8j7+WzEjgal11
+	 rI6Rc2kyV8XdAyOBeLYUW8DqDbc+w9g7SfdCxwzDZxEmVY8jdC+44Iy1v0u8PtvqYw
+	 Yh3ObmtiHrXCEaX6kN9VFej5fzy9+NHzsl4/OdpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 109/428] net/mctp: publish the mctp_dev only after it is initialised
-Date: Fri,  9 Oct 2026 16:07:26 +0200
-Message-ID: <20261009140948.601103193@linuxfoundation.org>
+	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 162/403] USB: serial: fix port tear down use-after-free
+Date: Fri,  9 Oct 2026 16:08:43 +0200
+Message-ID: <20261009140955.879946202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit aadf655e8ea9a8ffa24bb8d69f504572e8d18181 ]
+commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
 
-mctp_add_dev() links the new mctp_dev into dev->mctp_ptr before mdev->dev
-is assigned, so a reader that picks the device up in that window
-dereferences a net_device pointer that is still NULL:
+Some drivers for multiport devices access port driver data from
+completion handlers of shared URBs submitted at attach() or first open()
+and stopped at disconnect() or last close(), respectively.
 
-KASAN: null-ptr-deref in range [0x00000000000000b0-0x00000000000000b7]
-Call Trace:
- <TASK>
- ? __pfx_mctp_sendmsg (./include/linux/sockptr.h:49)
- ? __pfx_mctp_dst_output (net/mctp/route.c:41)
- ? selinux_socket_sendmsg (security/selinux/hooks.c:5278)
- ____sys_sendmsg (net/socket.c:775 (discriminator 1) net/socket.c:790
- (discriminator 1) net/socket.c:2684 (discriminator 1))
- ? __pfx_____sys_sendmsg (net/socket.c:1131)
- ? __pfx_copy_msghdr_from_user (net/socket.c:2590)
- ? update_cfs_rq_load_avg (kernel/sched/fair.c:5478)
- ___sys_sendmsg (net/socket.c:2738)
- ? __pfx____sys_sendmsg (net/socket.c:2625)
- ? perf_event_task_tick (./include/linux/rcupdate.h:838)
- ? sched_tick (kernel/sched/core.c:5818)
- ? clockevents_program_event (kernel/time/clockevents.c:372)
- ? fdget (./include/linux/rcupdate.h:873 fs/file.c:1100)
- __sys_sendmsg (net/socket.c:2770)
- ? __pfx___sys_sendmsg (net/socket.c:2751)
- do_syscall_64 (arch/x86/entry/syscall_64.c:63)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+A simple NULL check before accessing the driver data makes sure that a
+port state container has at least been allocated, but a completion
+handler can still race with port tear down.
 
-Fix by publishing only once the object is fully initialised:
-__mctp_dev_get() runs under rcu_read_lock() only and hands
-this object to readers as soon as mctp_ptr is assigned, so
-they must never observe mdev->dev == NULL.
+Reorder the disconnect handling so that ports are not deregistered (and
+their driver data freed) until after all ports have been hung up and the
+driver disconnect() callback has run so that all I/O has been stopped.
 
-Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/729830b8.130.1a0c945579d.Coremail.18983559317@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
+Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
+Cc: stable@vger.kernel.org	# 2.6.30
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/serial/usb-serial.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 822120e860c82..9f76ff092559a 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -344,13 +344,13 @@ static struct mctp_dev *mctp_add_dev(struct net_device *dev)
- 
- 	mdev->net = mctp_default_net(dev_net(dev));
- 
--	/* associate to net_device */
- 	refcount_set(&mdev->refs, 1);
--	rcu_assign_pointer(dev->mctp_ptr, mdev);
--
- 	dev_hold(dev);
- 	mdev->dev = dev;
- 
-+	/* Associate to net_device, publish the mdev. */
-+	rcu_assign_pointer(dev->mctp_ptr, mdev);
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1194,12 +1194,17 @@ static void usb_serial_disconnect(struct
+ 		usb_serial_port_poison_urbs(port);
+ 		wake_up_interruptible(&port->port.delta_msr_wait);
+ 		cancel_work_sync(&port->work);
+-		if (device_is_registered(&port->dev))
+-			device_del(&port->dev);
+ 	}
 +
- 	return mdev;
- }
+ 	if (serial->type->disconnect)
+ 		serial->type->disconnect(serial);
  
--- 
-2.53.0
-
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (device_is_registered(&port->dev))
++			device_del(&port->dev);
++	}
++
+ 	release_sibling(serial, interface);
+ 
+ 	/* let the last holder of this object cause it to be cleaned up */
 
 
