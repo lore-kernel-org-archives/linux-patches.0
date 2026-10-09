@@ -1,55 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6AD33BBD9;
-	Fri,  9 Oct 2026 14:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F09933AD8B;
+	Fri,  9 Oct 2026 14:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555409; cv=none; b=R14U9wdsxhpnYibZh8kK06nTkcSKVWxpKgh7q29aHpczGQ7yyTxq1vAD4ltNZ8LPKV7Yq4fM8MomqnB6YPvGYkmvYcG7BuSg4GFBk7kr1M/3laj9RfkfbSodnZ0ocTrhUu24iuC/s3uK3CHdkMkqub7esTQyx6kW3kRysn1S6a4=
+	t=1791555414; cv=none; b=SFXJBzZJLEwFUnulJVPoHLZ3QUsKBxVW5VGnWuFApmosU4G4e2+u5AhT7Zhs5S7KRj2kzMt/uCrsn4+0IeuZeW2FGyX1EIK7wbKNVtyu/NoH4PuSrwCcL7+052kFZ5U55bCtzAoHnHBYI5Xo/vJOAHTsGEPFSpRXigEXHiOFpEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555409; c=relaxed/simple;
-	bh=Ea4Z+2gwydj5R+58chjobNVTEZYK8JSFjjSo5wU/giQ=;
+	s=arc-20240116; t=1791555414; c=relaxed/simple;
+	bh=ZX7BaHhfzq/4eWspuN0v46kpM3ChRbDravQdIbiYEpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr+mT0NwGqeJHf5/1SE3T/SYwcMZ9bLARBc5Y+QjizjRb65UhukjRqXW/6nUYJpO/vYlk7qhxoUHpSkOe5c7KD87HFpB2CBH5EAmqgqeHogfXMPDC3KJD0JJTLxQgtmrR0f7WZQhi0ZnNI9FF6ZupkuEnGkoNwXvJtsRo46UxRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6FC5V0E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MuTPB/kVszqqL4IHw0BmsOnfhnPVsUyCXT1qXnr6zK6BZGoJuxaVapQvNab+uaSbyV2j44lpf7h55RQDKfztg/7gctND2RC9nv5NmO3XVhnDqovhCQTMGZYccAyneldtr+AMsoTrj4cwmfUIcJgTQKffvfCv8KM5Jtba3QlUONs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjdK1wVV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6FC5V0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940721F000FF;
-	Fri,  9 Oct 2026 14:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjdK1wVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF7B1F00898;
+	Fri,  9 Oct 2026 14:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555404;
-	bh=CUKOpvx+Avc7dWhxerlH7Q+8X4SsaNGrMSxbY+yUB8Q=;
+	s=korg; t=1791555410;
+	bh=TI1EmJ8/sU0cewAQC9dGXEnOk2axLQd0OOETEtkSX74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6FC5V0EX7oz7LCVxDKbQedtcLxWa5p4vKaRzbm7KDXPtv2+d1pT/P3o/uhWZcJFm
-	 tSKUFZxVrUMpaYoK5MnhX7cYv8RZQZ/Tga6JUpKniBMd1TKhDvYXTQxBzguXAdPbCm
-	 +I8SqfGJfw4cv6+Sv/lFJqKYobRBdvW1xUPFIxtk=
+	b=rjdK1wVVlzsOU3iksW6663QjWcSP65/fWU6RyJhVVXoJGkPMdBvahauFTAgopCc+P
+	 cnGWkQ3QK7yzlU2w7iDoLL4BEAoHisI7QRbOzNmenSlfCHQAbq8bxDrZtP2gxGwb/H
+	 Ci2qtN78rt7GaLLc127mi4Uz95cAEbgOx42ayNEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Kairui Song <ryncsn@gmail.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nico Pache <npache@redhat.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Johan Thomsen <write@ownrisk.dk>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/403] mm/huge_memory: initialise workingset state before folio split
-Date: Fri,  9 Oct 2026 16:06:47 +0200
-Message-ID: <20261009140953.181813409@linuxfoundation.org>
+Subject: [PATCH 6.18 048/403] net: dst_metadata: fix false-positive memcpy overflow in tun_dst_unclone
+Date: Fri,  9 Oct 2026 16:06:49 +0200
+Message-ID: <20261009140953.228857097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -68,69 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit aca1f2d5de17e138bc6c4859126b77e516b82541 ]
+[ Upstream commit 4c6d43db2a4d2cef3921e885cf34798f790d34ea ]
 
-xas_try_split() adds __GFP_ACCOUNT for page-cache xa_nodes, but
-__folio_split() leaves the xa_state's xa_lru unset.  That lets a live,
-memcg-charged xa_node exist without being linked into the mapping's
-shadow_nodes list_lru; when reclaim later walks the list_lru it trips
-VM_WARN_ON(!css_is_dying()).
+kmalloc_flex() in metadata_dst_alloc() sets __counted_by for the
+structure to the options_len, which is then initialized to zero.
+Later, we're initializing the structure by copying the tunnel info
+together with the options, and this triggers a warning for a potential
+memcpy overflow, since the compiler estimates that the options can't
+fit into the structure, even though the memory for them is actually
+allocated.
 
-Use mapping_set_update() to install both the workingset update callback
-and the shadow_nodes list_lru on the xa_state.
+ memcpy: detected buffer overflow: 104 byte write of buffer size 96
+ WARNING: CPU: X PID: Y at lib/string_helpers.c:1036 __fortify_report
+  skb_tunnel_info_unclone+0x179/0x190
+  geneve_xmit+0x7fe/0xe00
 
-Link: https://lore.kernel.org/20260725101419.3938406-1-matt@readmodwrite.com
-Fixes: 58729c04cf10 ("mm/huge_memory: add buddy allocator like (non-uniform) folio_split()")
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reported-by: syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c5b060ce82921a2fd500
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The issue is triggered when built with clang and source fortification.
+
+Fix that by doing the copy in two stages: first - the main data with
+the options_len, then the options.  This way the correct length should
+be known at the time of the copy.
+
+It would be better if the options_len never changed after allocation,
+but the allocation code is a little separate from the initialization
+and it would be awkward and potentially dangerous to return a struct
+with options_len set to a non-zero value from the metadata_dst_alloc().
+
+Another option would be to use ip_tunnel_info_opts_set(), but it is
+doing too many unnecessary operations for the use case here.
+
+Fixes: 69050f8d6d07 ("treewide: Replace kmalloc with kmalloc_obj for non-scalar types")
+Reported-by: Johan Thomsen <write@ownrisk.dk>
+Closes: https://lore.kernel.org/netdev/CAKv6aAM8_EWgXScnKmKYm_4SwGDVBK++dzfP+Y6msUXbp99QUw@mail.gmail.com/
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260616100332.1308294-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/dst_metadata.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index e0c7b7efd38a2..df4a3e6215d4d 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3797,7 +3797,7 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
- 		gfp_t gfp;
+diff --git a/include/net/dst_metadata.h b/include/net/dst_metadata.h
+index 1fc2fb03ce3f9..f45d1e3163f00 100644
+--- a/include/net/dst_metadata.h
++++ b/include/net/dst_metadata.h
+@@ -164,8 +164,11 @@ static inline struct metadata_dst *tun_dst_unclone(struct sk_buff *skb)
+ 	if (!new_md)
+ 		return ERR_PTR(-ENOMEM);
  
- 		mapping = folio->mapping;
--		min_order = mapping_min_folio_order(folio->mapping);
-+		min_order = mapping_min_folio_order(mapping);
- 		if (new_order < min_order) {
- 			ret = -EINVAL;
- 			goto out;
-@@ -3811,6 +3811,8 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
- 			goto out;
- 		}
- 
-+		mapping_set_update(&xas, mapping);
+-	memcpy(&new_md->u.tun_info, &md_dst->u.tun_info,
+-	       sizeof(struct ip_tunnel_info) + md_size);
++	/* Copy in two stages to keep the __counted_by happy. */
++	new_md->u.tun_info = md_dst->u.tun_info;
++	memcpy(ip_tunnel_info_opts(&new_md->u.tun_info),
++	       ip_tunnel_info_opts(&md_dst->u.tun_info), md_size);
 +
- 		if (uniform_split) {
- 			xas_set_order(&xas, folio->index, new_order);
- 			xas_split_alloc(&xas, folio, folio_order(folio), gfp);
+ #ifdef CONFIG_DST_CACHE
+ 	/* Unclone the dst cache if there is one */
+ 	if (new_md->u.tun_info.dst_cache.cache) {
 -- 
 2.53.0
 
