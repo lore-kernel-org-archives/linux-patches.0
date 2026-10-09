@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C6D3D8903;
-	Fri,  9 Oct 2026 14:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1A23B19DE;
+	Fri,  9 Oct 2026 14:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556292; cv=none; b=Gr9ikx2ac6ZnVHGnPp10Gx+sXPi1CyhPgmLuNnhCZvvfKJuxQy51/uBVF4juhmBucJs9xsxbAgqzwqXzUf6qj5MMqiLYSRZABq2iZxu4CJuvhSleX1942o6PGdPMindNbBdCy8SmCfzcFkO7YpDdtvrs0mpRC29+eC4h8C1zA9o=
+	t=1791556295; cv=none; b=XvHWnBoWv7W+E8SoMVeaOGjXzj310gCDuw96g+dj8lY04EtYxOb/8kJ92uCK6Zm6DLERAEggwRtcHGZ07o/wgUn/3+hlFoA5HZtUcBYbGgTJIRjScBUUCvsdUY1/duCHc4CjJPCovhn2MzphaNImmy/NHRpBw1jqbwrYoa8s2X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556292; c=relaxed/simple;
-	bh=kaoDcc3zbahf0xi2NH9mD0UARQVn+wSe1Aq0rJcem3c=;
+	s=arc-20240116; t=1791556295; c=relaxed/simple;
+	bh=nn1kM7mB/E5k6Cwy15GwOFiCBUwBEONdkMBwthyOeQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMRBpovhqLmoAf3kHBX2L/fw64uOz78t2RfzBybcBZVLKIYKXDyvVjwZO017NfC7LZ/qDdAVTRYxdf6fGdxBtS/p+KKDiAcHZFw/2/g1bTfoobduownvDk5AwJYHyEM0eGjFGYncVSVInsy57Q4TmhMEEGI1HpV0gQrkYkSEp88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdIt/UUk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZeVNoJ7DkpklSnSd27EB1ain2FCsYJUBZafcLlBKb0Ld8f7T/D470Kn1ZGcoDtM8OURX7HxrB29bJQeEaxWgNkuCsbMzCnMfID6VDL3GfjuElUJ2gsKyx9tmav2bWHDEGJA6NZQI4kC9J7fiMgVV9zebFAgrzmbjKVLQF4mt9J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pN/eJYGe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdIt/UUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EB41F000FF;
-	Fri,  9 Oct 2026 14:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pN/eJYGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9D71F000FF;
+	Fri,  9 Oct 2026 14:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556291;
-	bh=meI03fxC3+mSEH3qBcEWaFoDssq9rF6LiE1k6Odt5K4=;
+	s=korg; t=1791556294;
+	bh=p1Q4ElZwEA8bkkKa7iNrJ36tFiW6nYpjjY90ydSkxcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdIt/UUkh/OejZEjpQcp3LvTyspRvricL2Hwe/bpz0EuUkY23+gGAwflxaOXpHPQI
-	 V5Lc31r6zUVkR3AKcEosrPKRHHh+1E5tgu2wG4FB0DGhGrLV7P8N3cWyU9bTTSWGZV
-	 Q61gscqAmB+51C0Y7rVlAexLPnXitlORfXn52TYg=
+	b=pN/eJYGexm0cizuZ4lXochIxbZEM9r5X2A3wEonjPjNaRxUgbpKg7l5nnaxpPedwb
+	 atWJplRJonj0tgu+Idoba7zFM0cbr6UMdMPJBvAEchy59j5vopJBV4saA7ywxhCyog
+	 t814o/2tRyWjIM/FZ8hJRx3xRYrrAgiiS1lsnfQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Freimanis <quentin@q-lab.dev>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 153/428] net: sparx5: make ports inherit the switch base mac address type
-Date: Fri,  9 Oct 2026 16:08:10 +0200
-Message-ID: <20261009140949.528775221@linuxfoundation.org>
+	Zimeng Li <me@lizi.moe>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 211/403] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
+Date: Fri,  9 Oct 2026 16:09:32 +0200
+Message-ID: <20261009140957.075560207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,81 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Freimanis <quentin@q-lab.dev>
+From: Zimeng Li <me@lizi.moe>
 
-[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
+commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
 
-When the switch uses a random base MAC address it does not mark each
-port's address as random:
+The DAI ID is a hardware port ID and is not necessarily the index of
+the corresponding entry in variant->dai_driver.
 
-  $ dmesg | grep "MAC addr"
-  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
-  $ cat /sys/class/net/eth0/addr_assign_type
-  0
+When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
+currently uses dai_id to index variant->dai_driver. This is incorrect
+for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
+DAI has ID 4 while it is the only entry in the DAI driver table. If
+that DAI is configured for QUAD01 and probe reaches this branch, the
+code writes beyond that single entry via dai_driver[4] instead of
+updating the DAI being processed.
 
-0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
+Use the loop index i when updating the current DAI's playback channel
+constraints, while retaining dai_id for indexing the hardware-port
+specific playback SD-line mode array.
 
-With a random MAC reported as NET_ADDR_PERM, systemd's
-MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
-gets a new IP address every boot and a static reservation can't be used.
-Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
-address derived from the interface name and machine-id.
+This fixes the incorrect DAI table access for platforms where the DAI
+ID does not match its position in the driver table.
 
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zimeng Li <me@lizi.moe>
+Assisted-by: LLM-assisted source analysis
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
- 3 files changed, 3 insertions(+)
+ sound/soc/qcom/lpass-cpu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index dad713e9ddd5b..b530fb6d3d0c9 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -898,6 +898,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
- 		eth_random_addr(sparx5->base_mac);
- 		sparx5->base_mac[5] = 0;
-+		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -1234,8 +1234,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
+ 		}
+ 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
+ 			LPAIF_I2SCTL_MODE_QUAD01) {
+-			variant->dai_driver[dai_id].playback.channels_min = 4;
+-			variant->dai_driver[dai_id].playback.channels_max = 4;
++			variant->dai_driver[i].playback.channels_min = 4;
++			variant->dai_driver[i].playback.channels_max = 4;
+ 		}
  	}
  
- 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index eb57b86fbe22f..0f7d8440f6149 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -392,6 +392,7 @@ struct sparx5 {
- 	struct notifier_block switchdev_blocking_nb;
- 	/* Switch state */
- 	u8 base_mac[ETH_ALEN];
-+	u8 base_mac_assign_type;
- 	/* Associated bridge device (when bridged) */
- 	struct net_device *hw_bridge_dev;
- 	/* Bridged interfaces */
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-index 4dedf5d926416..b3725cf2dd44c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-@@ -294,6 +294,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
- 	ndev->ethtool_ops = &sparx5_ethtool_ops;
- 
- 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
-+	ndev->addr_assign_type = sparx5->base_mac_assign_type;
- 
- 	return ndev;
- }
--- 
-2.53.0
-
 
 
