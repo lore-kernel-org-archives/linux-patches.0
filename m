@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3FF125AA;
-	Fri,  9 Oct 2026 14:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C76231C91;
+	Fri,  9 Oct 2026 14:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556374; cv=none; b=V0FRSkDyC+yyWhm82jPOxONejmae/Wr2AVQAovm/BETMtLNn3eK0+4mBOkpJIz7BbQIjBaU8fcEhrvl8vFJ9rFpAD0C4ULNccVBRpH+SdcL/9d/OYtcDTjcDHvfN8V1PaZhdYn4QjdS9Kd9pG9OvoEPclPfMWWacVFzziCETdVk=
+	t=1791556377; cv=none; b=t4RzYWwOYrnzEpc8/7aAKdop5JevKiO+Ck+FRR1muMFJy1VNMO69w4qR9gtfpPe8ODNxA7iWCbg4nDZ1Vp3iqJIO1KorlcmXXtQOMZK7Zr6FxIu4uOvInnKzwG5bsDTh5Meq5N/YsEfTUgxa4B3A6uouOJ83nmyymZQzQuqk/p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556374; c=relaxed/simple;
-	bh=JKFt5+DI5gw11oTkFx6jQVGa28bq0aW9kuamDDujONs=;
+	s=arc-20240116; t=1791556377; c=relaxed/simple;
+	bh=5vUh7BYWuXPa2+R1NZfiLV4QR2aN0fNSiB8nPpBmH0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBAv/307FO60tdg8P8+WfjYT/TkvvI7d+Jxm6e0G/NYDQ1TVoahvVtQM3jPCbRsQFSyhmV2K3MNinqtQbXRSjnOjxXGef7Pr+4AOeCKnLuS7MsJdns+TWYesJyopVZmMzWuJgCrHEDPa0cR7d4yqc66DO2s6pp4BoStb535TyYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQhACcBm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kbMBy2Puw9TCfjmgbn0wlgAlH07SqrE49tGr98a9DPmhGtQmJosHHn2zrMyOpuMUJ2QPGnwG/UJGf297+6Mp9XqlFUQL5J4IWelImywZUbm4wAgRkdwPKFTKSN3GS5k43tWpK7GIFXBh0mdzLl/llOpLwVov4uIGBy3k1Vsqtkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+HscC+Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQhACcBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D716A1F000FF;
-	Fri,  9 Oct 2026 14:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+HscC+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A561F1F000FF;
+	Fri,  9 Oct 2026 14:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556373;
-	bh=zeP5TifB1aPNeYKssGvyvV7AH+wSURrg2Bp9D4T9CFk=;
+	s=korg; t=1791556376;
+	bh=0r9KpOxhtlSIxaPk2KO0DcXG08KbQCCOowvg2OgwHbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQhACcBmDdrqZHdZF0WHfVZomkJESXyVlIf0ChUyLtnyP8s3e1z+zoO0uAVMd28+Q
-	 Z2jfSzB0AmpD2UPJzH2fMuSa44kXKe8CAa633S6QljZQQdlrYOtyfI99WTxWnoAEn+
-	 vC7Iy06NKQUo4HsgOZxR9GnKFIN/VmRi6Au3Cgws=
+	b=s+HscC+ZDxeXexQfq0P6y6yBXsWXyH3N9A5UNiXO2KC1NN4nS0QkxEAeqnqJHmIk5
+	 q8mXe6nYye3Ik8qH0bmfAd0L/MCniuWzaRAFmfehHVY5m30Ly9Jr7fqnunMaYPKYWw
+	 x3LzpIXqtTDuzllvotNp6r4rjaUR/Cat9VbLIKj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Michal Simek <michal.simek@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 223/403] i2c: xiic: preserve PEC byte length in SMBus block read setup
-Date: Fri,  9 Oct 2026 16:09:44 +0200
-Message-ID: <20261009140957.362446920@linuxfoundation.org>
+	syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 166/428] bpf: Fix missing migration protection in __rhtab_map_lookup_and_delete_batch()
+Date: Fri,  9 Oct 2026 16:08:23 +0200
+Message-ID: <20261009140949.804523752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,193 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-commit b7e6df2f52ed5c02838832f53c171a5645f9b376 upstream.
+[ Upstream commit de020dc8049bfb2b22e3b6d99c031feb2e22d112 ]
 
-xiic_smbus_block_read_setup() recalculates i2c->rx_msg->len based on the
-length byte returned by the device, but historically clobbered the PEC
-byte expectation the SMBus core had baked into msg->len. That dropped
-the PEC byte from the caller's buffer on the normal and chunked
-receive-fifo branches.
+bpf_mem_cache_free_rcu() uses this_cpu_ptr() which requires migration
+to be disabled. All callers of rhtab_delete_elem() disable migration
+except __rhtab_map_lookup_and_delete_batch(), which calls it under
+rcu_read_lock() only.
 
-Compute pec_len up-front as (i2c->rx_msg->len - 1) -- the trailing bytes
-the caller has already accounted for beyond the length byte, 1 when the
-SMBus core enabled PEC, and possibly more for an I2C_M_RECV_LEN request
-coming from i2c-dev -- and add it to the new length in every branch:
+On CONFIG_PREEMPT_RCU, rcu_read_lock() does not disable preemption or
+migration, so the task can migrate between CPUs during the delete loop,
+causing this_cpu_ptr() to trigger:
 
-  - chunked: the trailing bytes do not fit in the Rx FIFO, so drain in
-    chunks. The guard becomes (rxmsg_len + pec_len > IIC_RX_FIFO_DEPTH)
-    rather than rxmsg_len alone, both because pec_len bytes also have to
-    fit and because it is what bounds rfd_set in the else branch below
-    to the 4 bits of XIIC_RFD_REG_OFFSET.
+  BUG: using smp_processor_id() in preemptible [00000000] code
 
-  - padded (1 + rxmsg_len + pec_len < SMBUS_BLOCK_READ_MIN_LEN): the
-    hardware needs at least 3 bytes on the bus to exit the read cleanly
-    (the second byte is already being clocked in by the time the ISR
-    reads the length byte and is too late to NACK), so we still pad
-    rx_msg->len up to SMBUS_BLOCK_READ_MIN_LEN. The dummy trailing byte
-    that gets drained must then be trimmed off before handing the
-    message back to the SMBus core; otherwise i2c_smbus_check_pec()
-    reads buf[len-1] (= dummy) instead of the real PEC byte at buf[1]
-    and rejects every clean zero-length block read with -EBADMSG.
+Fix by wrapping the delete loop in migrate_disable()/migrate_enable()
+in __rhtab_map_lookup_and_delete_batch(), matching the migration
+protection that the other callers already provide.
 
-    Record the true valid byte count in a new field
-    i2c->smbus_actual_len and trim rx_msg->len down to it in
-    xiic_smbus_trim_len(), called from both completion sites that clear
-    rx_msg: xiic_process()'s RX_FULL branch and xiic_recv_atomic(),
-    which drains the FIFO with interrupts off.
-
-    smbus_actual_len is per-receive state, so xiic_start_recv() clears
-    it before every receive. Only the padded branch ever sets it, and a
-    block read aborted by arbitration loss or a TX error never reaches
-    the completion site, so without that clear a stale value would trim
-    the length of an unrelated later read.
-
-    The condition is expressed in total bytes rather than the old
-    "(rxmsg_len == 1) || (rxmsg_len == 0)" so that a request carrying
-    more than one trailing byte does not get padded: padding records a
-    length the drain never reaches, which would hand the caller a byte
-    that was never received.
-
-  - normal: all trailing bytes fit in one FIFO fill. rfd_set gains
-    pec_len for the same reason the length does. Because the padded
-    branch above has already taken every case with fewer than
-    SMBUS_BLOCK_READ_MIN_LEN total bytes, rxmsg_len + pec_len is at
-    least 2 here and the subtraction cannot underflow the u8.
-
-Fixes: e4c1ff772e1a ("i2c: xiic: Add smbus_block_read functionality")
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Cc: <stable@vger.kernel.org> # v6.3+
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260924-i2c-xiic-v7-1-df7e752332ef@nexthop.ai
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 818e00848227 ("bpf: Implement iteration ops for resizable hashtab")
+Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
+Link: https://patch.msgid.link/20260929081609.557899-1-omermetekaya0@gmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fd7e415d891073b83e1f
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c |   54 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 41 insertions(+), 13 deletions(-)
+ kernel/bpf/hashtab.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -74,6 +74,9 @@ enum i2c_scl_freq {
-  * @prev_msg_tx: Previous message is Tx
-  * @quirks: To hold platform specific bug info
-  * @smbus_block_read: Flag to handle block read
-+ * @smbus_actual_len: Valid byte count (length + payload + optional PEC) of a
-+ *	padded SMBus block read. msg->len is trimmed to this on completion.
-+ *	Zero when no trimming is needed.
-  * @input_clk: Input clock to I2C controller
-  * @i2c_clk: I2C SCL frequency
-  * @atomic: Mode of transfer
-@@ -99,6 +102,7 @@ struct xiic_i2c {
- 	bool prev_msg_tx;
- 	u32 quirks;
- 	bool smbus_block_read;
-+	unsigned int smbus_actual_len;
- 	unsigned long input_clk;
- 	unsigned int i2c_clk;
- 	bool atomic;
-@@ -540,30 +544,38 @@ static void xiic_smbus_block_read_setup(
- 
- 	/* Check if received length is valid */
- 	if (rxmsg_len <= I2C_SMBUS_BLOCK_MAX) {
-+		unsigned int pec_len = i2c->rx_msg->len - 1;
-+
- 		/* Set Receive fifo depth */
--		if (rxmsg_len > IIC_RX_FIFO_DEPTH) {
-+		if (rxmsg_len + pec_len > IIC_RX_FIFO_DEPTH) {
- 			/*
--			 * When Rx msg len greater than or equal to Rx fifo capacity
--			 * Receive fifo depth should set to Rx fifo capacity minus 1
-+			 * Trailing bytes (payload plus any PEC) exceed Rx FIFO
-+			 * capacity, so drain in chunks. This also keeps the
-+			 * else branch below from pushing rfd_set past the
-+			 * 4-bit XIIC_RFD_REG_OFFSET field.
- 			 */
- 			rfd_set = IIC_RX_FIFO_DEPTH - 1;
--			i2c->rx_msg->len = rxmsg_len + 1;
--		} else if ((rxmsg_len == 1) ||
--			(rxmsg_len == 0)) {
-+			i2c->rx_msg->len = rxmsg_len + 1 + pec_len;
-+		} else if (1 + rxmsg_len + pec_len < SMBUS_BLOCK_READ_MIN_LEN) {
- 			/*
--			 * Minimum of 3 bytes required to exit cleanly. 1 byte
--			 * already received, Second byte is being received. Have
--			 * to set NACK in read_rx before receiving the last byte
-+			 * The HW needs SMBUS_BLOCK_READ_MIN_LEN bytes on the
-+			 * bus to exit cleanly: by the time the ISR reads the
-+			 * length byte the second byte is already being clocked
-+			 * in, too late to NACK. Pad the drain target and record
-+			 * the real length, trimmed back on completion so the
-+			 * PEC check sees the right byte.
- 			 */
- 			rfd_set = 0;
- 			i2c->rx_msg->len = SMBUS_BLOCK_READ_MIN_LEN;
-+			i2c->smbus_actual_len = 1 + rxmsg_len + pec_len;
- 		} else {
- 			/*
--			 * When Rx msg len less than Rx fifo capacity
--			 * Receive fifo depth should set to Rx msg len minus 2
-+			 * All trailing bytes fit in the Rx FIFO. The widened
-+			 * condition above guarantees rxmsg_len + pec_len >= 2,
-+			 * so this cannot underflow.
- 			 */
--			rfd_set = rxmsg_len - 2;
--			i2c->rx_msg->len = rxmsg_len + 1;
-+			rfd_set = rxmsg_len + pec_len - 2;
-+			i2c->rx_msg->len = rxmsg_len + 1 + pec_len;
- 		}
- 		xiic_setreg8(i2c, XIIC_RFD_REG_OFFSET, rfd_set);
- 
-@@ -576,6 +588,16 @@ static void xiic_smbus_block_read_setup(
- 	dev_err(i2c->adap.dev.parent, "smbus_block_read Invalid msg length\n");
- }
- 
-+/*
-+ * Undo the setup-time padding of a short SMBus block read before rx_msg is
-+ * cleared, so the PEC check sees the right byte.
-+ */
-+static void xiic_smbus_trim_len(struct xiic_i2c *i2c)
-+{
-+	if (i2c->rx_msg && i2c->smbus_actual_len)
-+		i2c->rx_msg->len = i2c->smbus_actual_len;
-+}
-+
- static void xiic_read_rx(struct xiic_i2c *i2c)
- {
- 	u8 bytes_in_fifo, cr = 0, bytes_to_read = 0;
-@@ -798,6 +820,8 @@ static irqreturn_t xiic_process(int irq,
- 
- 		xiic_read_rx(i2c);
- 		if (xiic_rx_space(i2c) == 0) {
-+			xiic_smbus_trim_len(i2c);
-+
- 			/* this is the last part of the message */
- 			i2c->rx_msg = NULL;
- 
-@@ -939,6 +963,7 @@ static void xiic_recv_atomic(struct xiic
- 			return;
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 68b7e87268f21..84cfeb9270d16 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -3376,8 +3376,10 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
  	}
  
-+	xiic_smbus_trim_len(i2c);
- 	i2c->rx_msg = NULL;
- 	xiic_irq_clr_en(i2c, XIIC_INTR_TX_ERROR_MASK);
+ 	if (do_delete) {
++		migrate_disable();
+ 		for (i = 0; i < total; i++)
+ 			rhtab_delete_elem(rhtab, del_elems[i], NULL, 0);
++		migrate_enable();
+ 	}
  
-@@ -956,6 +981,9 @@ static void xiic_start_recv(struct xiic_
- 	u8 cr = 0, rfd_set = 0;
- 	struct i2c_msg *msg = i2c->rx_msg = i2c->tx_msg;
- 
-+	/* A stale value from an aborted block read would truncate this msg. */
-+	i2c->smbus_actual_len = 0;
-+
- 	if (!i2c->atomic)
- 		dev_dbg(i2c->adap.dev.parent, "%s entry, ISR: 0x%x, CR: 0x%x\n",
- 			__func__, xiic_getreg32(i2c, XIIC_IISR_OFFSET),
+ 	rcu_read_unlock();
+-- 
+2.53.0
+
 
 
