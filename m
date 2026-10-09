@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0543AC0E7;
-	Fri,  9 Oct 2026 14:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3118B2BE7CD;
+	Fri,  9 Oct 2026 14:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555995; cv=none; b=GM8ceiOXeDWNQ2fIAq5PNkIDKORExvxda6Lgg1F68SV+0Aa0hRKsoSE5t9YbsaV3kMOR+cy0RJOsLD+eDUJZBYaKYFgTQTV+nTEOuArJ+fQRRkDUBxmRjYLWjTBUT89onXBLyaM2+joDOZnpfHNr49hBBCWP7FerTeqFiHS87ZY=
+	t=1791555998; cv=none; b=Bns59RoD8YbYfqluKnSc+L+8HkJkcOvVuFywYCd7d0altL4H0s8ugg4MLXayK00s5ZF1DtC/SP4t4FgPI7JQ6O4tVB7Pa1tE4GVrHO9d+BYsO/s/esjKYCaAFfLijVDXXEmwr0M+ytyFmxpxQonBmocDgdckhJxvXAe6egkJU1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555995; c=relaxed/simple;
-	bh=dOIDobhFKtpBXalW4g6JHQ/WFy1Tqx1VBqJ30NxqHFg=;
+	s=arc-20240116; t=1791555998; c=relaxed/simple;
+	bh=SSA/r8HT3XVGNLFWw7XWzt5holxw5QnuaMMpUmyF/tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMavPWRoKglR0oFADd6WJebqFJmnJdTc0seLMnf/sozT2MUq5v/SOORSq0ba9Yei0Ydts/iDmSbaVFY9v1GkwDG/LwsLVAjHLFayComqSMis1wf09OZglEULATgcHwFJJVR7/s0gUINzuR/mdFWscMFJErMnJahcyyegV8ag5sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2m9QUcz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOOwoZRvtVT4L2yUVY7GY/Lh9BFeB4coATwHrEiGXB0JmR6jKkGqNF2VZEn3EiCt4/9q4br/Au18IWqdE3IV8eurC90uvQUfE7PPK3vzDm6m7VeEH2X3yD1Kc48FHbjnmLE/X51kSteb/HbKDpY4f5D8ZyfGvQMCmqRdUaA16ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dek7+iG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2m9QUcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86D81F000FF;
-	Fri,  9 Oct 2026 14:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dek7+iG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA861F000FF;
+	Fri,  9 Oct 2026 14:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555994;
-	bh=zV7GBH70EHF9DqTzj8BTzRC+KomRiwM4GezV178U2Is=;
+	s=korg; t=1791555997;
+	bh=I6+/MaFUwfLZ3VAv5Z6TlMkzDrOmbaxmf5KodJIWC58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2m9QUcz2lxk6UZxcQZLrknEAt6S8/d+NpfFaXQT67dyJs9WKPcSt/Ut5cF2Jh8lQ
-	 zKsFqetQtI7+yZVkR9JUfCE3VHIEp53LSiHpdxH0GScbdPzSvs3w9GDRtREigIMmwy
-	 4+k9ackmixyZEBTDcLTrzFzou/ZD8MTCyozdiX34=
+	b=2dek7+iGw4k9GbVjhQD/P7HKDxbQS0NwJQd4pGMeWqQ/dBEndObKBdHoTe7lBa5Q5
+	 zYvcwPA9o+7VQOHOGZY67S2UNzwMZ54knH68/RiPt/CkfRJj0PPES/C/F3U43EW+T8
+	 r8WeEdyUGDyuNETc9GL1szyJqoPzZ/2uN4ucOwOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/403] net: sparx5: move netdev and notifier block registration to probe
-Date: Fri,  9 Oct 2026 16:07:54 +0200
-Message-ID: <20261009140954.722998215@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hui Peng <benquike@gmail.com>
+Subject: [PATCH 7.2 059/428] vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection()
+Date: Fri,  9 Oct 2026 16:06:36 +0200
+Message-ID: <20261009140947.435897471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +46,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit b8909aad5b8de0e2d7e27c0246119eb07f0caa3b ]
+commit 39495ef5d6f8019e62d65807f217a7ca8232727a upstream.
 
-Move netdev registration and notifier block registration from
-sparx5_start() to probe(). This allows proper cleanup via goto-based
-error labels in probe().
+In paste_selection(), the loop copies min_t(unsigned int,
+vc_sel.buf_len - pasted,tty->receive_room) bytes per iteration into
+tty_ldisc_receive_buf() and increments pasted += count.
 
-Also, remove the sparx5_cleanup_ports() helper as its functionality is now
-split between sparx5_unregister_netdevs() and sparx5_destroy_netdevs()
-called at appropriate points.
+Because the selection mutex (vc_sel.lock) is dropped inside the loop
+Whenever the line discipline buffer fills up and paste_selection()
+sleeps on tty->write_wait, a concurrent TIOCLINUX (TIOCL_SETSEL) ioctl
+can replace vc_sel.buffer with a shorter selection and reduce
+vc_sel.buf_len below pasted.
 
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260227-sparx5-init-deinit-v2-1-10ba54ccf005@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0d2c49915bc3 ("net: sparx5: skip ptp deinit if init was skipped")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When paste_selection() resumes, vc_sel.buf_len - pasted underflows as an
+unsigned integer to a large positive value, causing
+tty_ldisc_receive_buf(ld, vc_sel.buffer + pasted, NULL, count) to read
+up to 4094 bytes out-of-bounds past the newly allocated vc_sel.buffer.
+
+Fix this by terminating the loop when pasted >= vc_sel.buf_len.
+
+Kernel stack trace (Linux 7.3.0-rc3):
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in n_tty_receive_buf_common+0xa01/0x1650
+ Read of size 4094 at addr ffff888101c58010 by task kworker/u17:1/65
+ Workqueue: events_unbound flush_to_ldisc
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x70/0xa0
+  print_report+0x153/0x4c6
+  kasan_report+0xf1/0x120
+  kasan_check_range+0x11c/0x200
+  __asan_memcpy+0x29/0x70
+  n_tty_receive_buf_common+0xa01/0x1650
+  tty_ldisc_receive_buf+0x66/0x110
+  tty_port_default_receive_buf+0x6b/0xb0
+  flush_to_ldisc+0x1b4/0x410
+  process_one_work+0x6ff/0x1110
+  worker_thread+0x4a8/0xb70
+  kthread+0x307/0x3e0
+  ret_from_fork+0x3ed/0x680
+  </TASK>
+ ==================================================================
+
+Fixes: e8c75a30a23c ("vt: selection, push sel_lock up")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Link: https://patch.msgid.link/20260919110041.3763078-1-benquike@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ethernet/microchip/sparx5/sparx5_main.c   | 41 ++++++++++---------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ drivers/tty/vt/selection.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 40b1bfc600a79..6bd0f43ef275c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -771,20 +771,11 @@ static int sparx5_start(struct sparx5 *sparx5)
- 	mutex_init(&sparx5->mdb_lock);
- 	INIT_LIST_HEAD(&sparx5->mdb_entries);
+--- a/drivers/tty/vt/selection.c
++++ b/drivers/tty/vt/selection.c
+@@ -434,8 +434,8 @@ int paste_selection(struct tty_struct *t
+ 			bps = NULL;
+ 		}
  
--	err = sparx5_register_netdevs(sparx5);
--	if (err)
--		return err;
--
- 	sparx5_board_init(sparx5);
--	err = sparx5_register_notifier_blocks(sparx5);
--	if (err)
--		return err;
- 
- 	err = sparx5_vcap_init(sparx5);
--	if (err) {
--		sparx5_unregister_notifier_blocks(sparx5);
-+	if (err)
- 		return err;
--	}
- 
- 	/* Start Frame DMA with fallback to register based INJ/XTR */
- 	err = -ENXIO;
-@@ -833,12 +824,6 @@ static int sparx5_start(struct sparx5 *sparx5)
- 	return err;
- }
- 
--static void sparx5_cleanup_ports(struct sparx5 *sparx5)
--{
--	sparx5_unregister_netdevs(sparx5);
--	sparx5_destroy_netdevs(sparx5);
--}
--
- static int mchp_sparx5_probe(struct platform_device *pdev)
- {
- 	struct initial_port_config *configs, *config;
-@@ -1018,10 +1003,26 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 
- 	INIT_LIST_HEAD(&sparx5->mall_entries);
- 
-+	err = sparx5_register_netdevs(sparx5);
-+	if (err) {
-+		dev_err(sparx5->dev, "Failed to register net devices\n");
-+		goto cleanup_ptp;
-+	}
-+
-+	err = sparx5_register_notifier_blocks(sparx5);
-+	if (err) {
-+		dev_err(sparx5->dev, "Failed to register notifier blocks\n");
-+		goto cleanup_netdevs;
-+	}
-+
- 	goto cleanup_config;
- 
-+cleanup_netdevs:
-+	sparx5_unregister_netdevs(sparx5);
-+cleanup_ptp:
-+	sparx5_ptp_deinit(sparx5);
- cleanup_ports:
--	sparx5_cleanup_ports(sparx5);
-+	sparx5_destroy_netdevs(sparx5);
- 	if (sparx5->mact_queue)
- 		destroy_workqueue(sparx5->mact_queue);
- cleanup_config:
-@@ -1045,12 +1046,12 @@ static void mchp_sparx5_remove(struct platform_device *pdev)
- 		disable_irq(sparx5->fdma_irq);
- 		sparx5->fdma_irq = -ENXIO;
- 	}
-+	sparx5_unregister_notifier_blocks(sparx5);
-+	sparx5_unregister_netdevs(sparx5);
- 	sparx5_ptp_deinit(sparx5);
- 	ops->fdma_deinit(sparx5);
--	sparx5_cleanup_ports(sparx5);
- 	sparx5_vcap_destroy(sparx5);
--	/* Unregister netdevs */
--	sparx5_unregister_notifier_blocks(sparx5);
-+	sparx5_destroy_netdevs(sparx5);
- 	destroy_workqueue(sparx5->mact_queue);
- }
- 
--- 
-2.53.0
-
+-		count = vc_sel.buf_len - pasted;
+-		if (count) {
++		if (vc_sel.buf_len > pasted) {
++			count = vc_sel.buf_len - pasted;
+ 			pasted += tty_ldisc_receive_buf(ld, vc_sel.buffer + pasted,
+ 							NULL, count);
+ 			if (vc_sel.buf_len > pasted)
 
 
