@@ -1,112 +1,101 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD33318B9B
-	for <patches@lists.linux.dev>; Fri,  9 Oct 2026 23:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F28E49C4CF
+	for <patches@lists.linux.dev>; Fri,  9 Oct 2026 23:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791588186; cv=none; b=fG+WL3u85VTO35816vBKYJzAnmI7aQ/ZEDA6vsG96U6VBGUnnu5VhNF/QgmHXN19DxWicDHl5m4sH0JmqD9eeS2AI0iw3G4/kobAjDE+p0F5CazquaNiK3ByNh6rEVU1u6qAdqjWg7E1Yis9CwhVhNEuiRQp323NzbhaLlYy4jA=
+	t=1791588596; cv=none; b=ZFl0og7rfHW8Ak8VTkC7q1+f0tTOKrti3/rBfB0kijcnUeunq+tGleRTj+XeNQF220TXE3FqjRhIaKpQBoDgatA2QwwuO1AFOaTv7rk0H25NEmGaM77It2MudoIB03Qjq72j1RrFOMolXBUUCz9WvYjB7E6j9qwSwQiy7ROB4Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791588186; c=relaxed/simple;
-	bh=VBnbwFMLD3JSNrfnQDebdiG+E2lh/z2NfE/iMSTFfOk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EcZhfKiuF9yE5vuXF/TqJR8W8Jocd3aFz7T0360KmYUM64+75TsYh0/zXDVeLjRBC8S2CWTUcI8AAfFQ53WB7O6cARuHUYVLgF28VYfpfyfhvGkSSlBKVC5fedy2rtzP9ZfiUZTcAYsk2dWDgXZib12wJUegVoBX2bdzVD8tS/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIDh2ZxY; arc=none smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791588596; c=relaxed/simple;
+	bh=W+0BKaSSS5geABgZG0ihHeDh9uE0UJzbPOc7RSsg218=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:Mime-Version:
+	 References:In-Reply-To; b=cirq9tINJ0AeQesG4ctZcHmWzFnXs7Heg5AOr1grLnOApr+LRVVyyMpEdQPGo7aneX7tbRwB7vL31+xV4Pq83Wvggy8TRVqTq+P7VTbPmFgslp43u65xUY6wcFwEUYuR8IPGq/wocpDKjUxv56TMm6nz/FRPoijhDltEodJVYEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai; spf=pass smtp.mailfrom=nexthop.ai; dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b=LMaTTW0m; arc=none smtp.client-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexthop.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIDh2ZxY"
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-3514b90bb89so284423eec.1
-        for <patches@lists.linux.dev>; Fri, 09 Oct 2026 16:23:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b="LMaTTW0m"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-3518cbe59b0so142043eec.0
+        for <patches@lists.linux.dev>; Fri, 09 Oct 2026 16:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791588183; x=1792192983; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NKTLYTxvw3UCc06aTLO4FFaTc08hP3j7X8BS9ATAWjs=;
-        b=CIDh2ZxYSwSBgx/aazp3Ke21DxKzMRXs9JG1+JmHJW287tcNyxONCeNJnpjXJVGRLU
-         YfLUk/DLYfXe5e7zrwP6N9XzazyJiC/rzKI6LAkLXonJ+4caCVZMGifYXwYpqvq5hYrf
-         LcBOIpQYRxZsw3f38gtJtbhrdv3F3cjR35M2Q3QpL8LxBER2y/JU8jH9IakOBIv+YsFd
-         QDNMxgk/qYTj/LpzaVKeANSmyXEC6Uxd30xsWwfgj2+8YrcjAsjOtD+je1Z99R8ACvrU
-         u5kLcozwSfVzQLhiql2/37853mZA0L4gGPr2xtml+n2x7Q8HIA4E69HQmpweDH2l+r3a
-         thCw==
+        d=nexthop.ai; s=google; t=1791588594; x=1792193394; darn=lists.linux.dev;
+        h=in-reply-to:references:content-transfer-encoding:mime-version:to
+         :from:subject:cc:message-id:date:content-type:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IcQaew24vaZlVXB9zMTh3pNgIar2qi3hXpDnWpO6VUM=;
+        b=LMaTTW0mr703aF3QYifD7uvqsYnxNZLnBFuHteO8QUPXJ0MYocRPBs7Msbz8sX0ysg
+         lCUqQRs1dFIAVU/ATx9O0EB1NPS/cXj/3D2mkTlGgAFAegPrOxJgPZYwetxP1+xQjmLr
+         dOPzPckg9sC0hFoReR6+ne0yEN0MgjXMS11ydjXM+ZkhiCIKIq2Jdpwe1e+6AKB1lU1K
+         zKQELH4lAiy8TCb7eRWK56hFRNh/9sqKk/fwDXvM51fJ0skqoFR4Xu3aG12AQn8m1tRO
+         iEjlcdHIOS47wh+XGV6hBu6TxIzLnA9wMYq0yhTWqjLPUx3lxUXtKS+MShw+SGdDD5DJ
+         a5Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791588183; x=1792192983;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NKTLYTxvw3UCc06aTLO4FFaTc08hP3j7X8BS9ATAWjs=;
-        b=rVN2bEdXowTCsmBp8vSskWsfLbuqt0QsqNHg+TdAvvjwQ4QXdELrdlFaOLSfibfuhR
-         24PmpSyVMljyxJ6vluQkHro592T37M34RyhoMw63Icu4wsZlk5IGvY5MyAZwBTnANh4D
-         i4u5FqwPeOdIAkqLz25VN8rnJdm00Hvc7Q2dvC4DNua33JylJ9vX+2SGKEAb67+XT/yC
-         fBxAJvgz2jiA7gRO2HrMzEtoR0w3Q6Ws2mldN2w+SyL8NQeUDq5kDPHtvMkfDgVoJhM9
-         QsNOZ2dtmmlN7FZ4tCWwPVXs7EmwqU6U/au4Ksdrd2hz6t5SD4tvAJ7pniD09B6zeTGO
-         95bg==
-X-Gm-Message-State: AFq9FYJKOPUQ3gRJQSdJlyWDjmY/oaui80cXXqqrZpOYTdoC9lWfRAdz
-	zyQJZ8pmdSVnibnyg9/Ur44KOcERA7zIIrNIokwpZr6Wq6Eup1uxZfZA
-X-Gm-Gg: AYBFou0QI4H2CfwnwcCQ8JM1CfBs2c1PHA3hWZmJY8Wal9nXvs7m+YyDKXuW2rVbkxq
-	EdwVmY4U8hQaj/A9+IBkx/ugMnpAbYTCRgsHRUnQL3Ihj4ykToMWjVqaZ5fZDEGZ5VaxW1Tbktv
-	3nELrlAug+FEiFoZHmGhyWgUfZc1c+5UuORHRTIVSbp3H9/6+aQSauZHgkxvcXxfsml+JxRI11+
-	zdQMBFq69NCe7Ob/8FvFyqdZ40dzZnNXJOsFYLm5HHY33mqlUVaG2XfYExTmQrdT9ZRP0bER3++
-	x7DQQ4GBLws9llr4Kad1SI1rUhonKf1ZOgWbQGSpLs6oiV1kHho7iKAf5WmjLsuNqeCMm86B05Y
-	kQtwkbjG+12ddvd/razc9KU2Gm8iaUxkINOAfYQ8yevKG7RJXzVmB34sCcy7BVWhEj1kETO0RWx
-	ssQs/FJdR6x9jgOBVG0j6/Iy5T6ltpEr077TV84zKDO1TFPy+U8S222YUI7zD8u6Df2AGlEpzW6
-	+bBr+/MDUwoVbIeSzpbGOp4
-X-Received: by 2002:a05:693c:4090:b0:351:1230:e379 with SMTP id 5a478bee46e88-3537df59719mr5073363eec.6.1791588183110;
-        Fri, 09 Oct 2026 16:23:03 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537ca6d202sm8736839eec.13.2026.10.09.16.23.01
+        d=1e100.net; s=20260707; t=1791588594; x=1792193394;
+        h=in-reply-to:references:content-transfer-encoding:mime-version:to
+         :from:subject:cc:message-id:date:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IcQaew24vaZlVXB9zMTh3pNgIar2qi3hXpDnWpO6VUM=;
+        b=pLmL/KDwkFiPuRUwcoxrjAAyd1rsGPxLed5qAW9TJ9CfRuB/SZsYRXdVjKrxpFgGXB
+         76PwHB85CxWRlKAw5yZK7zFY6dB0u+q8F374Wv+mLhgPHaP+gwNh3ixLWmFIX2RsCyfs
+         0R8bBkKt7sHJ0zNzLAyrSXPDNM4mekw3uLZjKDuMQjQ1rk4LgFjy87fMWy51XjVN7T1Y
+         IjGvoIjVoF7eOKpg2qAUgElWIT0EGj2u3MtdU9IDxtD11o+VDQHuNJWRDSPCeWpb/lBH
+         DJPgHnYZi2pXfjuqXuT3ZihImWkLbVviZN0vAvcRVprlkTI8DkieY5UnGHziQtz4vai/
+         /Lag==
+X-Gm-Message-State: AFq9FYLOsxLsw6efTQRQ+/2dCiY87hDizd8UVjb5y0UeJZLB4J3VhUht
+	AmzPuE0RTz6W4b2EbSVPMZCBT01EXQEqRtqEKebFMH5RhvVt9/M//9cWk439wUTiIG0=
+X-Gm-Gg: AYBFou3nYyvGx5OymkhzLuTZcCUnAsR/BrD5FNLnZQk1lBX3vzbFS/7+M8S5MiGqR54
+	RI/lchQMbnJM0OkaEcJPH31LXzhLAav+XA5TtOOnKrjv8HbhV0rMr5m3HJuJAt1NRLu2OMxJdaW
+	A1IxCMV84EpJ4bLbuxacwhJbQexcEgkPXJ7OTOv/QaHe5yLnEdk/qRmXY02Yd+6heK6HcVbGLJh
+	e0v/yv5gYGeuiA1xWTI5nV4jEawlfSU73++hNoGDydELJFId1zlPUnB8yCuks3xn0S2aBwpK/47
+	dvkz2sBSQz17OuLdaaj2QzSlGiqEBZH61J/PL9KHpapYJCbqcQYyL0vzOO3H3NS+z/tre/Ksp6V
+	WIS4rBldR1SKqSEbQ+g7O6wFgUOsp1gElqZROQFdXTyxmtC/CfQWdJ+ML89q+QtG6I1oI6Y1Wwa
+	qjdFxTn+6ubDB2Heam67++uzmMjcNJe+aT5khnAM69rVIVmh7CxMY303W1Svu4YZLXcbyp32A=
+X-Received: by 2002:a05:7301:fb0:b0:354:cca:1cd7 with SMTP id 5a478bee46e88-3540cca326dmr2855507eec.4.1791588594254;
+        Fri, 09 Oct 2026 16:29:54 -0700 (PDT)
+Received: from localhost ([50.145.100.174])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537ca0e64csm9419413eec.10.2026.10.09.16.29.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2026 16:23:02 -0700 (PDT)
-Message-ID: <bc869fb3-404a-4c81-926c-545def70956e@gmail.com>
-Date: Fri, 9 Oct 2026 16:23:00 -0700
+        Fri, 09 Oct 2026 16:29:53 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 09 Oct 2026 16:29:53 -0700
+Message-Id: <DM0P5HE7X6JY.2JCW21G5D10FQ@nexthop.ai>
+Cc: <patches@lists.linux.dev>, "Abdurrahman Hussain"
+ <abdurrahman@nexthop.ai>, "Michal Simek" <michal.simek@amd.com>, "Andi
+ Shyti" <andi.shyti@kernel.org>
+Subject: Re: [PATCH 7.2 280/428] i2c: xiic: defer RX_FULL until all trailing
+ bytes are in FIFO
+From: "Abdurrahman Hussain" <abdurrahman@nexthop.ai>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/403] 6.18.56-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20261009140952.119038291@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: aerc 0.22.0
+References: <20261009140946.008206689@linuxfoundation.org>
+ <20261009140952.249649769@linuxfoundation.org>
+In-Reply-To: <20261009140952.249649769@linuxfoundation.org>
 
-On 10/9/26 07:06, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.56 release.
-> There are 403 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 11 Oct 2026 14:08:27 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.56-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Fri Oct 9, 2026 at 7:10 AM PDT, Greg Kroah-Hartman wrote:
+> 7.2-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Hi Greg,
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+This one is being reverted upstream, and Sasha has already dropped it
+from the 7.2, 6.18, 6.12 and 6.6 queues:
+
+  https://lore.kernel.org/linux-i2c/20261008-i2c-xiic-block-read-nack-v2-1-=
+76735ed0b0bf@nexthop.ai/
+
+Noting it here so the review thread matches. 279 and 281 are fine and
+should stay.
+
+Thanks,
+Abdurrahman
