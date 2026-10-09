@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D89E4E432E;
-	Fri,  9 Oct 2026 14:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A354E433E;
+	Fri,  9 Oct 2026 14:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555635; cv=none; b=K8W9frQDLPzpLAsfolpQ6nNkMr13IKg9k54+stdcUK8fjwhIK/JPCBT0VfzeRk5A+wYU6Hctc961YHLUM/lq7QMJLrlAVaKrBqDBioVPyNL7g2yare61Uu07w2AcrPYUKpObgBgnsz2gM1IBsr1ADYYGt3Z7mAUsooiRqC1QpWw=
+	t=1791555637; cv=none; b=ndyhhKaOwO21UEXp5ZzR7VLL8lrENhqNwE2lBj5ktHbPFvjlc0gF154n7dg/+giUqakfnRuzQ3XlBdvlovdmtz03DzlCi2kwwxwXWHO4igBTdbgLnIapuhDUFks/bxlD9Of1mVcDk8RaZ+9ugaVMVxExdRIRCAjHbdyjDYprhbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555635; c=relaxed/simple;
-	bh=XcCfjDA+gSwrItJF8pof8f3wxRl7XdTLa2Rle5goXpA=;
+	s=arc-20240116; t=1791555637; c=relaxed/simple;
+	bh=N3/oWY7Mby1OfizDu83Ib5TQ64GJuBkqd3u0xYEyTGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSe0pZW3aOghZP6sVVtWiqcp3iOZ6PnYbE3gyXdKx9AM2TyGG7FXU1bl2wUGjMPBY1cWqAludMjcOnMnvQii34OeAWHwmSXccFfXl0BNpjwWvtgGwvh4Z2exwGwt8S7xIXYuftxREEBTIcjLTd/beDEbWwEIDOBtZfRUjyQ/19k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8P9Ac83; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hIlgg9sntfIEvL/th5EulvBNKuBq7mKw7sa4W3cJe8+ycIicJxZhsd4XjCJXQqzqmmgvxCBp0+4l72AgTEaU1zOPKGo+Lw6K/Q3kD9DvSFg56hlOy0wY3gRoKQ5fyqDVrFatwtVtfcYLE53bnewh1RifA8iZALdT3GTZsxT54+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06/oMMSS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8P9Ac83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570771F00899;
-	Fri,  9 Oct 2026 14:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06/oMMSS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9C81F00893;
+	Fri,  9 Oct 2026 14:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555622;
-	bh=KZy2sJ/1XwuOn8hHVkTQvVysfGzvYapj/xWras253dU=;
+	s=korg; t=1791555628;
+	bh=aOyx6z/WA6EQZvrgCFYIxoRLo3vzXibfePE8Ln2ePS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8P9Ac83a2GKjvoLTbycYQs0BktEdbb1hzOsjnEyTQoNWijrLD8owFpWM23lZyOF2
-	 ryya5KT9a5PcHe+pqBOUvO+eUyug3RUhfpn3YPcxzoNnulKuvgj/PTa/9usODDSRIY
-	 nM0aA4q6BFSOKE7tGo4FO9gmli+wDrXcoFVHI2p4=
+	b=06/oMMSSIAsZzPhqGgSk/6UAJCYrqwmtrAvyds6FSh1GxZP9MhpF/cQZLjy5PA9MJ
+	 HXeXzHm9DUtntTEn91K2ITt2s6EzBFl7xmOlA5f+IMLWE1FAM9ZonI9kfxh2vDNWX1
+	 VG1EhKhf08WZ8FERBmvU2E6wBWxTD7EduvKF/9sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Eric Dumazet <edumazet@google.com>,
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 089/403] net/mctp: publish the mctp_dev only after it is initialised
-Date: Fri,  9 Oct 2026 16:07:30 +0200
-Message-ID: <20261009140954.172170789@linuxfoundation.org>
+Subject: [PATCH 6.18 090/403] net/sched: cls_api: reclaim an empty proto on the error path
+Date: Fri,  9 Oct 2026 16:07:31 +0200
+Message-ID: <20261009140954.195288947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -52,73 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit aadf655e8ea9a8ffa24bb8d69f504572e8d18181 ]
+[ Upstream commit 0bb8eab29b55045281a4963d4557f2776cdf8cfa ]
 
-mctp_add_dev() links the new mctp_dev into dev->mctp_ptr before mdev->dev
-is assigned, so a reader that picks the device up in that window
-dereferences a net_device pointer that is still NULL:
+Two racing tc filter add requests on the same chain/prio of an
+unlocked classifier both run change() on the shared proto and both
+can fail: the winner's tcf_chain_tp_delete_empty() attempt gives up
+because the loser's handle is still in the idr, and the loser's
+error path drops only its own reference without a second reclamation
+attempt. The empty proto stays linked in the chain, holding the
+chain reference, a block reference and the classifier module
+reference until the chain or block is torn down.
 
-KASAN: null-ptr-deref in range [0x00000000000000b0-0x00000000000000b7]
-Call Trace:
- <TASK>
- ? __pfx_mctp_sendmsg (./include/linux/sockptr.h:49)
- ? __pfx_mctp_dst_output (net/mctp/route.c:41)
- ? selinux_socket_sendmsg (security/selinux/hooks.c:5278)
- ____sys_sendmsg (net/socket.c:775 (discriminator 1) net/socket.c:790
- (discriminator 1) net/socket.c:2684 (discriminator 1))
- ? __pfx_____sys_sendmsg (net/socket.c:1131)
- ? __pfx_copy_msghdr_from_user (net/socket.c:2590)
- ? update_cfs_rq_load_avg (kernel/sched/fair.c:5478)
- ___sys_sendmsg (net/socket.c:2738)
- ? __pfx____sys_sendmsg (net/socket.c:2625)
- ? perf_event_task_tick (./include/linux/rcupdate.h:838)
- ? sched_tick (kernel/sched/core.c:5818)
- ? clockevents_program_event (kernel/time/clockevents.c:372)
- ? fdget (./include/linux/rcupdate.h:873 fs/file.c:1100)
- __sys_sendmsg (net/socket.c:2770)
- ? __pfx___sys_sendmsg (net/socket.c:2751)
- do_syscall_64 (arch/x86/entry/syscall_64.c:63)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+Reclaim the proto on the error path of any failed request that holds
+a proto reference. The reclamation is emptiness-gated:
+tcf_chain_tp_delete_empty() unlinks the proto only when
+delete_empty() admits it is empty, so a live shared proto is never
+unlinked. A proto the request created is reclaimed unconditionally -
+it is the only owner, so marking it for deletion is safe even without
+a delete_empty callback. Classifiers without one (the check marks the
+proto unconditionally) are rtnl-serialized, so the raced window this
+guard closes cannot arise for them.
 
-Fix by publishing only once the object is fully initialised:
-__mctp_dev_get() runs under rcu_read_lock() only and hands
-this object to readers as soon as mctp_ptr is assigned, so
-they must never observe mdev->dev == NULL.
+This is a follow-up to commit d4e359b3608a ("net/sched: cls_api: fix
+teardown of an adopted proto on insert-race loss"), which stopped the
+loser of the insert race from unlinking the winner's live proto but
+left the empty-proto residual in place.
 
-Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/729830b8.130.1a0c945579d.Coremail.18983559317@163.com
+Conditions to recreate:
+- CONFIG_NET_CLS_FLOWER=y; veth pair
+- tc qdisc add dev veth0 ingress
+- two concurrent `tc filter add dev veth0 ingress protocol ip pref 1
+  flower skip_sw ... action drop` (both fail in fl_hw_replace_filter
+  after publishing their handle in the idr); repeat in a loop
+- an empty flower tp stays linked after both requests fail; visible
+  as a bare `filter protocol ip pref 1 flower chain 0` header in
+  `tc filter show` with no filter entries
+- CAP_NET_ADMIN (namespace-local via unshare -Urn suffices)
+
+Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260805134049.927864-1-victor@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-JCOT.v1.20260910090924@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/cls_api.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 7861d83aaad26..a181643571231 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -344,13 +344,13 @@ static struct mctp_dev *mctp_add_dev(struct net_device *dev)
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 8a881048e71ec..0bc0c010434cb 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2463,7 +2463,20 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	}
  
- 	mdev->net = mctp_default_net(dev_net(dev));
- 
--	/* associate to net_device */
- 	refcount_set(&mdev->refs, 1);
--	rcu_assign_pointer(dev->mctp_ptr, mdev);
--
- 	dev_hold(dev);
- 	mdev->dev = dev;
- 
-+	/* Associate to net_device, publish the mdev. */
-+	rcu_assign_pointer(dev->mctp_ptr, mdev);
-+
- 	return mdev;
- }
- 
+ errout:
+-	if (err && tp_state == TP_CREATED)
++	if (err && !IS_ERR_OR_NULL(tp) &&
++	    (tp_state == TP_CREATED || tp->ops->delete_empty))
++		/*
++		 * The request is dropping its reference to tp. If it was
++		 * the last user (the idr is empty now), reclaim the proto.
++		 * A tp this request created is reclaimed unconditionally:
++		 * it is the only owner, so marking it for deletion is
++		 * safe. Otherwise only classifiers with a delete_empty
++		 * callback are reclaimed -- the callback admits an empty
++		 * proto only, so a live shared proto is never unlinked.
++		 * Classifiers without one (deleting is set
++		 * unconditionally) are rtnl-serialized, so the raced
++		 * window this guard closes cannot arise for them.
++		 */
+ 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
+ errout_tp:
+ 	if (chain) {
 -- 
 2.53.0
 
