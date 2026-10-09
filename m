@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B793D8912;
-	Fri,  9 Oct 2026 14:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE28A4E2F1B;
+	Fri,  9 Oct 2026 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555681; cv=none; b=h9SDrqR8MDGx+hkMue0ECDrzp7IcgnFTEJvvo33+f9D9vN0I9wBl8fylstSVC+Vi27e+UK/kv8itZkII6eeyknT6YTjHepSoPrjyjJJLVd4R1lB5QgZgu5ATz7he0NZSEgWzxqrY2CVqaowSYQpDkJpAVmzAAhudbUZYkq4Y2Cw=
+	t=1791555683; cv=none; b=Dtr3zd1zT+DLLs+4eVfz7M94L2xA2bPzsZWEyEMkLezCKWybpmsBZZJa+JbX+ijYtmbRdIr+YPC/rtfKYDOwEPpaIHxy9ozh2Bag4MmRm8qqp/MT5veHDcvkbQLXw0mBLbDGpuv4xuXhx8vim2eaQeyuqCm068vqjkoOiPdAgkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555681; c=relaxed/simple;
-	bh=je6nw4fwRp9BFh+oAEbS1SJVEuGtsZp4ZwO9XfpuvFQ=;
+	s=arc-20240116; t=1791555683; c=relaxed/simple;
+	bh=kcAs9IMUspENw1XwcZlC1AdUQydBQkB8OPy6ptB7QuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jN8UXhKjI3gbZjTxwg2moLQTIRJxhMc8GNq1CHY5r/2uvdVP4C6qj3SCt6d4GeEYeQxZ4WfRKzwCxxddQ1e99kuY8pb93svJE8fGALStdta29wUexDXLR0qra/uaQOH/yarTCR/XLsfMk/LD0SzyxVyx4ku1/ZI5Fh9v4m/A4zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCHIuwlU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=US7OzAn1O5MVb8FNJ1HzS5iN9nlAwaRlCHoYVJRYCVvoWMQV/dho1zy6TXqfYhD7nkuwXP66RxEUdNrECFL6L7xudISnFmisqKI1K00bD3dVKk7z4H7nEysEIlsQPKvSV+YXJq9uvIOMXxw58imhVpkSkmYY2JNRk6JuQUu/iAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fy0sK07R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCHIuwlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C811F000FF;
-	Fri,  9 Oct 2026 14:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fy0sK07R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3891F000FF;
+	Fri,  9 Oct 2026 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555679;
-	bh=DApPPzOrRbGCpSIgarEeKQWbou2747PqMSaFKalpsro=;
+	s=korg; t=1791555682;
+	bh=sqsIvZU2CLNGGq08v2jKp76WPbjfB6sUO1obBd2tS8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hCHIuwlUYAcLy4xuUWQpSVSWI21aYXsLpO6STZsD4UjHsI4MI/Di5Akc5Wedbh7S8
-	 ykSIV2ZeypTi6fsbLe4Gd/fRWM7LGsKqDmWYyJmq3a9I+tWx/+DZ0UqYI0sMiR70gw
-	 SSI8HKrR+bo4jCn1J+ZTCLRC1RmR24UyTLDRhi3E=
+	b=Fy0sK07RzY3j9CPhEQ2SKth9lpVL1Ol86Hz29tqywKf2THzMyvRyHW5zytv3KRTN9
+	 XTUE7Rz3DlPieom4GYko7UkHKv2Bku7Kvlphuo60NkZRS9WFpkH3HGd1LQiG11XJCU
+	 t40qZ7CSuDOJiHK2In7WzmTJBWV3pE7qryhDXCkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baha Mesleh <baha.mesleh@nokia.com>,
-	Subrat Pandey <subratp@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/403] octeontx2-af: mcs: Fix SC resource cleanup loop
-Date: Fri,  9 Oct 2026 16:07:39 +0200
-Message-ID: <20261009140954.380382625@linuxfoundation.org>
+	Surendran Kanagaraj <surenkj@amazon.com>,
+	Gunnar Kudrjavets <gunnarku@amazon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.2 048/428] tpm: Disable TPM on null key name mismatch
+Date: Fri,  9 Oct 2026 16:06:25 +0200
+Message-ID: <20261009140947.168415009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baha Mesleh <baha.mesleh@nokia.com>
+From: Surendran Kanagaraj <surenkj@amazon.com>
 
-[ Upstream commit cdef07f3002f708a345392ee28d0d9bfac8383a1 ]
+commit 015fb29a748342a186f37b602ac70017098c8251 upstream.
 
-The SC resource cleanup and statistics loops were incorrectly
-iterating over secy.max instead of sc.max, so the highest SC id
-could be left allocated across teardown or FLR. Use sc.max as
-the loop bound.
+The null key name check exists to protect against TPM reset attacks, so
+a mismatch should stop the device from serving further requests.
+Currently it does not disable the chip when it finds a mismatch.
 
-Fixes: cfc14181d497 ("octeontx2-af: cn10k: mcs: Manage the MCS block hardware resources")
-Signed-off-by: Baha Mesleh <baha.mesleh@nokia.com>
-Signed-off-by: Subrat Pandey <subratp@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260922102149.2078168-3-subratp@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The mismatch is logged:
+
+    tpm tpm0: null key integrity check failed
+
+but the chip keeps serving commands:
+
+    / # tpm2_getcap -c properties-fixed
+    TPM_PT_FAMILY_INDICATOR:
+      as UINT32:                0x08322e3000
+      as string:                "2.0"
+    ...
+
+tpm2_load_null() where the null key name check is run sets the chip as
+disabled only if the rc is non zero. When the mismatch is seen, rc is
+zero at that point and it returns success. The other issue is that the
+caller expects the null key handle to be populated when the function
+returns 0 which it does here without writing the handle and proceeds
+assuming the null key handle is valid.
+
+During the test, I noticed that tpm2_start_auth_session() uses the
+uninitialized stack value as the key handle since tpm2_load_null()
+returns 0 despite the integrity failure and proceeds with
+TPM2_CC_START_AUTH_SESS with this value as salt key handle.
+
+Set rc to -ENODEV on the mismatch. The error path then disables the chip
+and returns the correct code to the caller.
+
+Tested in QEMU with swtpm and CONFIG_TCG_TPM2_HMAC=y by making
+TPM2_CC_CONTEXT_LOAD fail with TPM2_RC_INTEGRITY and changing the name
+of the re-created null key. The chip is now disabled on the mismatch.
+
+Fixes: cc7d8594342a ("tpm: Rollback tpm2_load_null()")
+Fixes: 423893fcbe7e ("tpm: Disable TPM on tpm2_create_primary() failure")
+Cc: stable@vger.kernel.org # v6.12+
+Assisted-by: LLM
+Signed-off-by: Surendran Kanagaraj <surenkj@amazon.com>
+Link: https://lore.kernel.org/r/20260918000731.48657-1-surenkj@amazon.com
+Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm2-sessions.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-index 211c10aa5880f..30c672d526a0c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-@@ -314,7 +314,7 @@ int mcs_clear_all_stats(struct mcs *mcs, u16 pcifunc, int dir)
- 	}
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -985,6 +985,7 @@ static int tpm2_load_null(struct tpm_chi
+ 	/* Deduce from the name change TPM interference: */
+ 	dev_err(&chip->dev, "null key integrity check failed\n");
+ 	tpm2_flush_context(chip, tmp_null_key);
++	rc = -ENODEV;
  
- 	/* Clear SC stats */
--	for (id = 0; id < map->secy.max; id++) {
-+	for (id = 0; id < map->sc.max; id++) {
- 		if (map->sc2pf_map[id] != pcifunc)
- 			continue;
- 		mcs_clear_stats(mcs, MCS_SC_STATS, id, dir);
-@@ -738,7 +738,7 @@ int mcs_free_all_rsrc(struct mcs *mcs, int dir, u16 pcifunc)
- 	}
- 
- 	/* free sc entries */
--	for (id = 0; id < map->secy.max; id++) {
-+	for (id = 0; id < map->sc.max; id++) {
- 		if (map->sc2pf_map[id] != pcifunc)
- 			continue;
- 		mcs_free_rsrc(&map->sc, map->sc2pf_map, id, pcifunc);
--- 
-2.53.0
-
+ err:
+ 	if (rc) {
 
 
