@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A6A4DDB5A;
-	Fri,  9 Oct 2026 14:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9634E433D;
+	Fri,  9 Oct 2026 14:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555325; cv=none; b=BBUvcblhYsk3cpObyXIjstG+BPaK9vvdncoxFX9ZoxRaSG8RKAl5LXpMPYRtASnksv5Zyr2hjRaBYF2BI1g/LIW5co+pJ3fpriHv4hjftsodvdX5bPPxr86oSlqtBTzbuWutUb8+Tt4WkGgWu0tnLWF3xbqQy92GpIBxkom0hF0=
+	t=1791555326; cv=none; b=g90rriObKHs0OqTI21UpAnJGICCEtPONQNiU0c9xauj6yTRAsXi+siBn0CPnUzwVnUGb7mRO26wI+Km0Kcn/VxlPw8fwUg/iz4vM4eVwHX/55OCy5LbKMDjko2uznPWi3wFKHJUhFRgkIJ3DmwMwcvA0Fo6HxFzOyCQhDdLvLbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555325; c=relaxed/simple;
-	bh=kB5w2wo3Xlm13EP0i7BavlXSxND9fd5MFru2y/CVJLk=;
+	s=arc-20240116; t=1791555326; c=relaxed/simple;
+	bh=0AlomNefV/L5CrqAYpRf+gkw8peNpLZVcHG5BZWieck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPcjUkUAqIiNgQmZKPPX+VWBnBmXClYcW18SGeTlzS9wPm3jCj0ElLZAjK32QG+S6fksV/r446FHAfUuiaszIHyvo9081opAV5O0vvR2R5AwEWhpAxZkVhYDUufdh3rWz7A6W3wz56RJFIs8hsfJvOhJuiqLADx3n68ica5zY2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXL4Ehf2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iEOZsBJFLvndlfzDGU3t435XLIRvHKTd0hl5kZXnzfZE/gSkrYNPwhgIDiqoLBveqryrFWx16IC6uoXpVdC6o6oRZD26LsXefhSC6Ge6yZXop1w5HjiiOEEeSeV2P9YuCDt5IGXioM2CMvexLua/MKSTuH4a4ifdP/Pc9MDqkfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OPAvtf3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXL4Ehf2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70E11F0089B;
-	Fri,  9 Oct 2026 14:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OPAvtf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4141F000FF;
+	Fri,  9 Oct 2026 14:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555319;
-	bh=Ueqfc71IjLgrlHgE2jWGX9JZSJivgXvAmeZBLNd9O7U=;
+	s=korg; t=1791555316;
+	bh=sV+rnsJD35bkikDq0UaCXEn7boalcwikBeWMCzzA0hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aXL4Ehf2C9Kl9WympysjCItSYF0CcyY62kwup4d00i72vOepe2bpbIJR+uCkx3piR
-	 A+G1UV2P6KeqHF8n3UA747pZfiaXdlhxS/Uot4i93S3tp+QZKAcJCOSsfLLG2eg5Yn
-	 cCmyPogn0v7C1eQVSIsZka62WebzxwbJvwtbe3+Y=
+	b=2OPAvtf3dbhzxDRaeuyVEAXMiDkShqKd1aR5wl+nqlf7KS6J0zF8Rt2g0t+kRg+vC
+	 dlWJKWQsI3shas+qj/LWv21+/OEJa/U4L9r6TC2OEzF/MhJR0JNkDp/l7/1hB+my9e
+	 Q9cUWCCfyPv7szie+ExXiXJoAXvl4SolgmA1ZEAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 009/403] neighbour: Use RCU list helpers for neigh_parms.list writers.
-Date: Fri,  9 Oct 2026 16:06:10 +0200
-Message-ID: <20261009140952.339739465@linuxfoundation.org>
+Subject: [PATCH 6.18 007/403] xfs: dont let memory failures leak blocks and kill repairs
+Date: Fri,  9 Oct 2026 16:06:08 +0200
+Message-ID: <20261009140952.292713586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -46,59 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 06d6322280d95757cef1e3ee0fc62c644629523e ]
+[ Upstream commit ab1c416d2377cdc16123ef521aac4da1c468c3d4 ]
 
-We will convert RTM_GETNEIGHTBL to RCU soon, where we traverse
-tbl->parms_list under RCU in neightbl_dump_info().
+LOLLM complains that a memory allocation failure in
+xrep_newbt_add_blocks results in online repair leaking blocks that were
+previously allocated to write a new btree, but the problem is worse than
+that -- a limitation of the codebase is that the callers cannot undo the
+transaction /and/ return the error -- either you undo all changes and
+commit the transaction, or you error out and the filesystem goes down.
 
-Let's use RCU list helper for neigh_parms in neigh_parms_alloc()
-and neigh_parms_release().
+However, the new btree space reservation object isn't that big (~48
+bytes).  Let's just do a NOFAIL allocation and the problem goes away.
 
-neigh_table_init() uses the plain list_add() for the default
-neigh_parm that is embedded in the table and not yet published.
-
-Note that neigh_parms_release() already uses call_rcu() to free
-neigh_parms.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251022054004.2514876-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: be408417630427 ("xfs: implement block reservation accounting for btrees we're staging")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ Changed kmalloc_obj() to kmalloc(sizeof(struct xrep_newbt_resv), ...) to preserve the branch’s existing allocation syntax. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/newbt.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 862867874e121..6afd6490d7847 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -1765,7 +1765,7 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
- 		}
+diff --git a/fs/xfs/scrub/newbt.c b/fs/xfs/scrub/newbt.c
+index 951ae8b71566c..2a9547789c5c1 100644
+--- a/fs/xfs/scrub/newbt.c
++++ b/fs/xfs/scrub/newbt.c
+@@ -195,9 +195,11 @@ xrep_newbt_add_blocks(
+ 	struct xrep_newbt_resv		*resv;
+ 	int				error;
  
- 		write_lock_bh(&tbl->lock);
--		list_add(&p->list, &tbl->parms.list);
-+		list_add_rcu(&p->list, &tbl->parms.list);
- 		write_unlock_bh(&tbl->lock);
+-	resv = kmalloc(sizeof(struct xrep_newbt_resv), XCHK_GFP_FLAGS);
+-	if (!resv)
+-		return -ENOMEM;
++	/*
++	 * We have no way to clean up the allocated space *and* return an
++	 * ENOMEM if we fail to allocate this control structure.
++	 */
++	resv = kmalloc(sizeof(struct xrep_newbt_resv), GFP_KERNEL | __GFP_NOFAIL);
  
- 		neigh_parms_data_state_cleanall(p);
-@@ -1787,7 +1787,7 @@ void neigh_parms_release(struct neigh_table *tbl, struct neigh_parms *parms)
- 	if (!parms || parms == &tbl->parms)
- 		return;
- 	write_lock_bh(&tbl->lock);
--	list_del(&parms->list);
-+	list_del_rcu(&parms->list);
- 	parms->dead = 1;
- 	write_unlock_bh(&tbl->lock);
- 	netdev_put(parms->dev, &parms->dev_tracker);
+ 	INIT_LIST_HEAD(&resv->list);
+ 	resv->agbno = XFS_FSB_TO_AGBNO(mp, args->fsbno);
 -- 
 2.53.0
 
