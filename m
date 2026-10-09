@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD81331EA4;
-	Fri,  9 Oct 2026 14:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B674D7D29;
+	Fri,  9 Oct 2026 14:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555543; cv=none; b=Ld2OWqbyzURjnECNLyabOGBOAgwJaO65S3W1vzvOjaeLg7ozwcehVSnwXvYeSoQyA7LACmKG0SXsYmmy3CUtn88AyxqAm0ad8JSzOyMzeKFo54toTQQiAh+U42J10oMcLlriH5SF1BsUw1hvT6GKahX2Jrc+YMKpPkRyJzJcoeg=
+	t=1791555544; cv=none; b=WB2bFr5/TR6TWItMTnHORMNhXg4JdRLMXO1BSfyW6qm2SbW7zp6uK4D5HHSMZGeKulAi68IN8gX9JFnQc35b0C4bMt/e+8GPOwyLqpFGB9H3t8Hb1LISjlBxrd/gzwwDTUYzmXWWB3/8KF2S56I22XANv8XoW6wdk5FSCEQl58I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555543; c=relaxed/simple;
-	bh=iehLIMFmnPk0ZdgCDhXjYsyp4stft/AjfixwnzA0Has=;
+	s=arc-20240116; t=1791555544; c=relaxed/simple;
+	bh=LG4YcL9xv1rKYXZjs9/G3v2H+RSv4TQy0drx+TbIFgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jR+agCZV9I01AkwAuM+vFVWzKGm6ovFfPeGiQgLKR+xNN+ZWR0Unwg2XqpBSBFe9jHI2+TfHbLgOBomrrqATjMbdm7BNX7ljYwXF9zAXu6XrSztbdcnznCDQregrEWVLP5EqUplnE4qt38NNMj058YTWkkdSE5nc1TZ95aMRLU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNY0CDDo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FbmSyZ21OxfnZvVsqQEedOxgSKApI3sWA90Q26eUpV9JA4dSINqDd8C8w1UOI6YalIKd9+91tvA3ztjuojwnMlNFF+YiYBcMfVe05K58HF5v1NIv3DTaSNzozGeQ8uzmxEsES3Pqb/V62npGP6zdkEAOjSKndszhwo8hMLv6n0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLX2gz7N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNY0CDDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E3D1F000FF;
-	Fri,  9 Oct 2026 14:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLX2gz7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7AF1F00893;
+	Fri,  9 Oct 2026 14:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555539;
-	bh=+1uStr6UCrnQ5BsmAnYJWMhJW/JqyM057lIOnSa90T8=;
+	s=korg; t=1791555536;
+	bh=+18cg5TfMaSY6672twVUJdv3bPTnld7GldP1huA+SVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNY0CDDofCLovooFyo8Gl6Pk6DOHI6OIPBcbqVY89SMA/jIg5EXUtwcd2wHsHBd6F
-	 Adf77W2fYv6h/ewsGvTzTNVM3XEt3nIYVetvW/l7oidSI4A1kCe0edxdZEuuNL90iH
-	 llYvJyAPFtkpG0ZUzMZ6Ktw6X1wLc3hPzZj6p+nY=
+	b=RLX2gz7NYEgQOxYPN66RP68iDJSuPzJE96tdpxgyiv0P0WnDeuzXOtSXxZJtc1Ven
+	 ZLJtZqeTdECbg+/xnYyrSxP2o55ex3OZ4F1YaAe1excy2ZReyak5FLjSVDrGqo7GiS
+	 2WNC8wsyayMSck6BTcQu63+5lHpBJq8iEbCFTmtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/403] wifi: cfg80211: preserve hidden-group beacon IE ownership
-Date: Fri,  9 Oct 2026 16:07:17 +0200
-Message-ID: <20261009140953.874211203@linuxfoundation.org>
+	Junyuan Feng <a@lollipopkit.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 025/428] io_uring/zcrx: requeue multishot receives stopped by a local resource
+Date: Fri,  9 Oct 2026 16:06:02 +0200
+Message-ID: <20261009140946.621113912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Junyuan Feng <a@lollipopkit.com>
 
-[ Upstream commit cc45f313d85533d647ce619326302aad6f797c14 ]
+commit 98ad5b63f5041dc354a6e694f4a9436f74e0681b upstream.
 
-A hidden-group probe-response entry borrows its beacon IEs from the
-group's beacon entry. cfg80211_update_assoc_bss_entry() can pass such
-an entry to cfg80211_update_known_bss() when merging scan entries
-after a channel switch.
+A multishot RECV_ZC can go idle with unread TCP data when a
+receiver-local resource runs out. An empty copy-fallback niov freelist
+returns -ENOMEM; a full CQ returns -ENOSPC. After partial progress the
+stop reason is lost: io_zcrx_copy_chunk() and io_zcrx_recv_skb() report
+the copied bytes, and tcp_read_sock() drops an error from a later call
+once earlier data was consumed. The edge-triggered request is then not
+requeued, so it cannot consume the remaining data until another socket
+event arrives.
 
-Copying the borrowed beacon_ies into the associated entry gives the
-same allocation two owners. Releasing the group's beacon entry can
-then leave the associated entry pointing to freed IEs, which are
-freed again when that entry is released.
+Record in io_zcrx_recv_skb() when a walk stops before consuming the
+length it was offered, and requeue if the pass still returned data. The
+failed chunk is first on the next pass. The resource is usually still
+exhausted by then, so that pass fails at once and ends the request with
+an error CQE, which the application must handle by re-arming. The
+request does not spin, and the stall becomes a visible error. Keep the
+existing skb limit and SOCK_DONE handling.
 
-Skip beacon IE replacement when the source entry belongs to a hidden
-group. Preserve probe-response processing, the subsequent metadata
-updates, and the existing rejection path for conflicting hidden
-beacon updates.
-
-Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Closes: https://lore.kernel.org/linux-wireless/20260901080427.1983015-1-yilinzhang@moonshot.ai/
-Assisted-by: Codex:gpt-6-astra
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 11ed914bbf94 ("io_uring/zcrx: add io_recvzc request")
+Fixes: bc57c7d36c4c ("io_uring/zcrx: add copy fallback")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-6-sol
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Junyuan Feng <a@lollipopkit.com>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/010001a0cd914529-23df2f94-bbe0-49cd-ae5d-05922356fa12-000000@email.amazonses.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ io_uring/zcrx.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 29e150b4511f2..3d3956e4cce2f 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1965,20 +1965,22 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 			return false;
- 		}
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -340,6 +340,7 @@ struct io_zcrx_args {
+ 	struct io_kiocb		*req;
+ 	struct io_zcrx_ifq	*ifq;
+ 	unsigned		nr_skbs;
++	bool			stopped_early;
+ };
  
--		old = rcu_access_pointer(known->pub.beacon_ies);
-+		if (!new->pub.hidden_beacon_bss) {
-+			old = rcu_access_pointer(known->pub.beacon_ies);
- 
--		rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
-+			rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
- 
--		/* Override IEs if they were from a beacon before */
--		if (old == rcu_access_pointer(known->pub.ies))
--			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
-+			/* Override IEs if they were from a beacon before */
-+			if (old == rcu_access_pointer(known->pub.ies))
-+				rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
- 
--		cfg80211_update_hidden_bsses(known,
--					     rcu_access_pointer(new->pub.beacon_ies),
--					     old);
-+			cfg80211_update_hidden_bsses(known,
-+						     rcu_access_pointer(new->pub.beacon_ies),
-+						     old);
- 
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
-+			if (old)
-+				kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
-+		}
+ static const struct memory_provider_ops io_uring_pp_zc_ops;
+@@ -1727,6 +1728,9 @@ io_zcrx_recv_skb(read_descriptor_t *desc
  	}
  
- 	known->pub.beacon_interval = new->pub.beacon_interval;
--- 
-2.53.0
-
+ out:
++	/* Bytes left in len mean an error stopped the walk early. */
++	if (len)
++		args->stopped_early = true;
+ 	if (offset == start_off)
+ 		return ret;
+ 	desc->count -= (offset - start_off);
+@@ -1763,8 +1767,9 @@ static int io_zcrx_tcp_recvmsg(struct io
+ 			ret = -ENOTCONN;
+ 		else
+ 			ret = -EAGAIN;
+-	} else if (unlikely(args.nr_skbs > IO_SKBS_PER_CALL_LIMIT) &&
+-		   (issue_flags & IO_URING_F_MULTISHOT)) {
++	} else if ((issue_flags & IO_URING_F_MULTISHOT) &&
++		   (unlikely(args.nr_skbs > IO_SKBS_PER_CALL_LIMIT) ||
++		    args.stopped_early)) {
+ 		ret = IOU_REQUEUE;
+ 	} else if (sock_flag(sk, SOCK_DONE)) {
+ 		/* Make it to retry until it finally gets 0. */
 
 
