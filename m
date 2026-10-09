@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6E64E4C48;
-	Fri,  9 Oct 2026 14:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BAE81ACD;
+	Fri,  9 Oct 2026 14:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555661; cv=none; b=oG3nfcOhbXdYcL/HfVjuxfZRocyP7kKDgpG9kU/fdaQeBrRXHzBEJxNsu8hT8AeUjwtqJIC8ffwmfIS6euG5204LVW9ezJRkD5GGuykyFMmO/reIrxkdf+A/cIc61qHNAdkccBb2wMf5JYRALDbH9bnV6xciCq5t5SJgkvfhbBo=
+	t=1791555663; cv=none; b=RE3bFDJGmnoQo0lfTfkmog3RoBEcYnhdcBxNLrFUHlk9gYqgXV1/emwCMPc6NIc09xEv2EXSUzCrR0WGe7Gu3ibQGF9zau3N/SwaZpcacpF1LegCHZWpAz2IpbT3oROZ4SqG+QR50f6kQi6v/fz6WI470waXy3tVeZKrO+NHTLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555661; c=relaxed/simple;
-	bh=trYChexoC0D8RS/4H0CH+L39Txftn//tJNIobxfxO8c=;
+	s=arc-20240116; t=1791555663; c=relaxed/simple;
+	bh=njTWQYBDFeUEu6Tvtl85xdWYNfZmERQxsq54RVhQRRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMetDlGEhOTOLilc+Sf7Uo99QmOWMGR1CGtJCFWnsCoecWr6Bsh+AAzDeKyWaWImsUmhPmk+d0/hSbeJT/HxKRWuAZHnQHjI311MVCumWJAD5JNrfwxlmA2plVCqqia7BesXLPFvpA3DKMSfHCCoV9TzuuJWXne1U0b4p75hUWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPGdLqSX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gDxG0jpWev3VfXddiOM3SXhDYzFuiD6FnGkDAsOSdud9eE7j6/T0TdyziBNJllmEZEuCSbE1ImxQrL9kc5Q6Qpb7Zm1i3UsV6QNvCf+fFrds7/eiAWjJnMbWMCeuYkT4eSDnPMKqV8JnpSpBVYNtuRykr2n+oEv696yUn4xXG+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZXgDIxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPGdLqSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2A71F000FF;
-	Fri,  9 Oct 2026 14:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZXgDIxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504131F00893;
+	Fri,  9 Oct 2026 14:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555657;
-	bh=+d60HLYh7m2KvncRH5JKnHpsiyDQL24qVZ50hOasPqI=;
+	s=korg; t=1791555659;
+	bh=2NuyFymJNzSPreFEfg2s8AGwu6JXGvF/cYWSAfhhI44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPGdLqSXEGPy9b5UJ1oVGtSbA9sAQMd3/XLFBQyWD06ywLzEP1v5bZoHTHht1PWIV
-	 S/Ob/cHE5ZwT/JdW21qgYWroUC1nIEWSIfT+dpekYD3xr4MhjzmtsOL0p59tya14LO
-	 ZMVh6OPogsRU+BIln6zRmH0nko0LUm+uWpzikY5k=
+	b=EZXgDIxEPWoKWzAck9mInT6gQ4kces1BMsz1Bp+Lu/c9Zx01Erhfwi9SwhSLrcP1/
+	 glAU7ZpdK4z5YuIlRVjIBLZxqFSzd4XcSdsENgWI6hg5iBmSOUVxQewQQuNGr5jcAT
+	 hgo1QfUphZv5Pn2G/s60UaRGIReKhi9iXHTrYbnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 7.2 044/428] rtc: spear: initialize IRQ state before requesting alarm IRQ
-Date: Fri,  9 Oct 2026 16:06:21 +0200
-Message-ID: <20261009140947.072607219@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 095/403] net: systemport: Fix buffer overflow in bcm_sysport_get_stats()
+Date: Fri,  9 Oct 2026 16:07:36 +0200
+Message-ID: <20261009140954.311006780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit 055ef5ce9f67a6a3a1363fa663007f8196cc0fb8 upstream.
+[ Upstream commit eb7b84af0ec5c71b4920e999611b466b3784496c ]
 
-devm_request_irq() enables the interrupt before it returns, so the handler
-may run while probe is still initializing the device. Initialize the MMIO
-address and spinlock before requesting the alarm IRQ.
+When running on SYSTEMPORT Lite, certain statistics are unsupported and
+skipped during bcm_sysport_get_stats(). The variable 'j' tracks the
+compacted index into the destination data buffer, whereas 'i' iterates
+over all elements in bcm_sysport_gstrings_stats.
 
-Fixes: 0942a71e435f ("rtc: add support for spear rtc")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260902080318.3498434-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Because the buffer allocated by ethtool is sized only according to
+bcm_sysport_get_sset_count(), storing values at data[i] instead of
+data[j] writes past the allocated array bounds, leading to memory
+corruption.
+
+Fix this by writing to data[j] instead of data[i].
+
+Fixes: 10377ba7673d ("net: systemport: Support 64bit statistics")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260922232440.598918-2-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-spear.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/rtc/rtc-spear.c
-+++ b/drivers/rtc/rtc-spear.c
-@@ -363,6 +363,12 @@ static int spear_rtc_probe(struct platfo
- 	if (irq < 0)
- 		return irq;
- 
-+	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(config->ioaddr))
-+		return PTR_ERR(config->ioaddr);
-+
-+	spin_lock_init(&config->lock);
-+
- 	status = devm_request_irq(&pdev->dev, irq, spear_rtc_irq, 0, pdev->name,
- 			config);
- 	if (status) {
-@@ -371,10 +377,6 @@ static int spear_rtc_probe(struct platfo
- 		return status;
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index bc4e1f3b3752d..8bfcfbe696b26 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -482,10 +482,10 @@ static void bcm_sysport_get_stats(struct net_device *dev,
+ 		    s->type == BCM_SYSPORT_STAT_NETDEV64) {
+ 			do {
+ 				start = u64_stats_fetch_begin(syncp);
+-				data[i] = *(u64 *)p;
++				data[j] = *(u64 *)p;
+ 			} while (u64_stats_fetch_retry(syncp, start));
+ 		} else
+-			data[i] = *(u32 *)p;
++			data[j] = *(u32 *)p;
+ 		j++;
  	}
  
--	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(config->ioaddr))
--		return PTR_ERR(config->ioaddr);
--
- 	config->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(config->clk))
- 		return PTR_ERR(config->clk);
-@@ -383,7 +385,6 @@ static int spear_rtc_probe(struct platfo
- 	if (status < 0)
- 		return status;
- 
--	spin_lock_init(&config->lock);
- 	platform_set_drvdata(pdev, config);
- 
- 	config->rtc->ops = &spear_rtc_ops;
+-- 
+2.53.0
+
 
 
