@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52A94E80CF;
-	Fri,  9 Oct 2026 14:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665094E80DE;
+	Fri,  9 Oct 2026 14:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557027; cv=none; b=KMsSwxlLY3RzFgAzYSGnWNcKsLz+lO73Wtg3L+P37Q3JbV6LUW69Mo7VbUiwFoOSjPWZ6V2GY7hFfwkGvZYs65tIMBITBhpoxLluj1mh3w4eQfdxGmmjhIyfNpCU5HdOWug6p2Fp0Ojj+FAmSndlHU1ts7m+U61uzugFwKQYqx0=
+	t=1791557030; cv=none; b=i4YDp8wam79eogJeiQNN50LbwfRVA32bFNAvmRL8MbqcMWCiKI1y8X0bphH2RqXLAX9osUxfGMZ0iHqKnqmcFamRys4UaS0Kz0/LQ8TJd+C8qy/a6qikZZTox1w1z91HMljFwJaja10jyqTk+sOS+6+uQWfF7l0LMBZJKzBrTh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557027; c=relaxed/simple;
-	bh=Bf9mYnkWKAmuhTCIhpQDhqWCyLazDr6tQ+4CU9H3t8g=;
+	s=arc-20240116; t=1791557030; c=relaxed/simple;
+	bh=MHu5TBzBhUiP7XYw18ttcLpy+9rLjcDzcW2EFikgOy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaOMlP0X9hG/PWZsDHCApMzDXFKZqgtd/JfQbxyY11qCn6ueFBgDLYoiiJPO3ng16quoeRFhh7J8Ky1WV3LBF5KrsI7ByH5L/70wUkpjO3cG3RQxqD1L5V+kfJZk+4QHFATI3ajs+Q6r+XJJ+ZLULp6UVCIjd9dEOTGPAY/rUrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJyQOR+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lntP9dromKUVe4nLprhCdEcvrjCpvip31Am9qlpDMLd6CE2+YAhTg0YiJQ0sLNU+WhB08COEvk2UgbaxPQVEx+RqzPQkNOp23aCEr2RAre7Rv7BJbvACbiO38OkiJ+LvqFl/AK9P8a4kmE+bGkSSkbCwZF6Blk8r1QtCM/vZgtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIzIzpU0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJyQOR+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6091F00898;
-	Fri,  9 Oct 2026 14:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIzIzpU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B472F1F000FF;
+	Fri,  9 Oct 2026 14:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557026;
-	bh=bt07nONaXg7QGJmlm0ZH/whK9juQWUyNrqIHQY3+Dj0=;
+	s=korg; t=1791557029;
+	bh=2hVErJBEebiPBZsdKSJA4m+/OqbrIytShLLtSuQ/Qt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BJyQOR+DsyrYRLjxbiNNv8DGt56mkH0D+ucwRTrUunxO+c+lV6NEFoaJDsBVTwzxE
-	 pzTLotXvzuRMyvLxbntnnR2QrGpQfTozvKYpnnB/miyrhYkDdihdx8NhA+jTGuExPm
-	 0CK8Pnu3HzUp4AODSzfkHPOCpxfdVAx8chqGhFY8=
+	b=WIzIzpU0ol42FhB23+knNj6AP3WQJ6A0vxuXzycPe6ootKz0CBHp+524ML0ul/t27
+	 MNt7DsXl37PdTvCAVS/uSlloLokPW0gSWAZFpl7jxeV0benYCPJPSNWTVzPhbH/mPq
+	 GFP2G+U/YC02tSR15LviLxhSJlQei8V5/SHljTCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 284/428] Bluetooth: hci_sync: Fix inquiry cache use-after-free
-Date: Fri,  9 Oct 2026 16:10:21 +0200
-Message-ID: <20261009140952.338124720@linuxfoundation.org>
+	Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 335/403] iio: proximity: sx9324: Correct proximity channel resolution
+Date: Fri,  9 Oct 2026 16:11:36 +0200
+Message-ID: <20261009141000.084850781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,120 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
 
-commit 8ed67535fdff40ca652bcd4ac7da68d11d01bd34 upstream.
+commit fbf33cb18334e7cab1ed4ad2e9a98a1299ad874c upstream.
 
-The sync command worker holds hdev->req_lock, but inquiry-cache updates
-and flushes use hdev->lock. Both hci_acl_create_conn_sync() and
-hci_stop_discovery_sync() look up entries and read their fields without
-taking hdev->lock.
+The proximity channels were previously defined with 12 realbits.
+However, PROXDIFF is read from RegDiffMsb (0x65) and RegDiffLsb
+(0x66). The SX9324 datasheet assigns bits 7:0 of each register to
+PROXDIFF and documents it as a signed two's-complement value
+(Revision 3, Section 8, Table 8, page 43). In contrast, RegOffsetMsb
+explicitly marks bits 7:6 as reserved. Thus, PROXDIFF is a 16-bit
+signed value.
 
-After either lookup returns, a concurrent HCIINQUIRY ioctl can acquire
-hdev->lock and flush the cache, freeing the entry. The worker then reads
-the freed entry while preparing a create-connection or remote-name-cancel
-command. The list traversal also races with cache updates and removal.
+With realbits = 12, sx_common_read_proximity() uses bit 11 as the
+sign bit in sign_extend32(), causing samples outside the 12-bit
+signed range to wrap into the [-2048, 2047] range.
 
-KASAN reported these accesses:
+Correct the realbits value to 16 to accurately reflect the hardware.
 
-  BUG: KASAN: slab-use-after-free in hci_acl_create_conn_sync+0x5f1/0x650
-  Workqueue: hci0 hci_cmd_sync_work
-  Call Trace:
-   hci_acl_create_conn_sync+0x5f1/0x650
-   hci_cmd_sync_work+0x13c/0x290
+Tested on an SX9324-based device: a phase 0 DIFF readback of 0x7fff
+was reported as -1 before this change and as 32767 afterward.
 
-  Allocated by task 90:
-   hci_inquiry_cache_update+0x3e6/0x7d0
-   hci_inquiry_result_evt+0x3cb/0x560
-
-  Freed by task 93:
-   hci_inquiry_cache_flush+0x111/0x2b0
-   hci_inquiry+0x2f2/0x780
-   hci_sock_ioctl+0x269/0x5f0
-
-  BUG: KASAN: slab-use-after-free in hci_stop_discovery_sync+0x3b1/0x3c0
-  Workqueue: hci0 hci_cmd_sync_work
-  Call Trace:
-   hci_stop_discovery_sync+0x3b1/0x3c0
-   hci_cmd_sync_work+0x173/0x300
-
-  Allocated by task 86:
-   hci_inquiry_cache_update+0x483/0x940
-   hci_inquiry_result_evt+0x3cb/0x560
-
-  Freed by task 91:
-   hci_inquiry_cache_flush+0x13e/0x2f0
-   hci_inquiry+0x2f2/0x780
-   hci_sock_ioctl+0x269/0x5f0
-
-Hold hdev->lock across each lookup and all reads from its result. Copy the
-remote address before unlocking so discovery cancellation does not retain
-a cache entry pointer. Release the lock before sending synchronous HCI
-commands, since their completion handlers may need the same lock.
-
-Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
-Fixes: 45340097ce6e ("Bluetooth: hci_conn: Only do ACL connections sequentially")
+Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/proximity/sx9324.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5684,6 +5684,7 @@ int hci_stop_discovery_sync(struct hci_d
- {
- 	struct discovery_state *d = &hdev->discovery;
- 	struct inquiry_entry *e;
-+	bdaddr_t addr;
- 	int err;
- 
- 	bt_dev_dbg(hdev, "state %u", hdev->discovery.state);
-@@ -5719,15 +5720,21 @@ int hci_stop_discovery_sync(struct hci_d
- 		return 0;
- 
- 	if (d->state == DISCOVERY_RESOLVING || d->state == DISCOVERY_STOPPING) {
-+		hci_dev_lock(hdev);
- 		e = hci_inquiry_cache_lookup_resolve(hdev, BDADDR_ANY,
- 						     NAME_PENDING);
--		if (!e)
-+		if (!e) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
-+
-+		bacpy(&addr, &e->data.bdaddr);
-+		hci_dev_unlock(hdev);
- 
- 		/* Ignore cancel errors since it should interfere with stopping
- 		 * of the discovery.
- 		 */
--		hci_remote_name_cancel_sync(hdev, &e->data.bdaddr);
-+		hci_remote_name_cancel_sync(hdev, &addr);
- 	}
- 
- 	return 0;
-@@ -7157,6 +7164,7 @@ static int hci_acl_create_conn_sync(stru
- 	bacpy(&cp.bdaddr, &conn->dst);
- 	cp.pscan_rep_mode = 0x02;
- 
-+	hci_dev_lock(hdev);
- 	ie = hci_inquiry_cache_lookup(hdev, &conn->dst);
- 	if (ie) {
- 		if (inquiry_entry_age(ie) <= INQUIRY_ENTRY_AGE_MAX) {
-@@ -7168,6 +7176,7 @@ static int hci_acl_create_conn_sync(stru
- 
- 		memcpy(conn->dev_class, ie->data.dev_class, 3);
- 	}
-+	hci_dev_unlock(hdev);
- 
- 	cp.pkt_type = cpu_to_le16(conn->pkt_type);
- 	if (lmp_rswitch_capable(hdev) && !(hdev->link_mode & HCI_LM_MASTER))
+--- a/drivers/iio/proximity/sx9324.c
++++ b/drivers/iio/proximity/sx9324.c
+@@ -223,7 +223,7 @@ static const struct iio_chan_spec_ext_in
+ 	.scan_index = idx,					 \
+ 	.scan_type = {						 \
+ 		.sign = 's',					 \
+-		.realbits = 12,					 \
++		.realbits = 16,					 \
+ 		.storagebits = 16,				 \
+ 		.endianness = IIO_BE,				 \
+ 	},							 \
 
 
