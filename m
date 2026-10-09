@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406F2C0F6D;
-	Fri,  9 Oct 2026 14:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98962D77F5;
+	Fri,  9 Oct 2026 14:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557562; cv=none; b=DJm/gTzJUbHlGgyggbBN6ItwNEPZRRz/zR4yxk0oAMUweRKH1l+/wheyd5n8zUmszH2BUf6cba5Z6e8zp3Mrz058mLtkAYvZFbT6vcqwT3prDUTmSXutnanToKLdp1Fzm89VWgfiNFNnkZhXjH4SHCPd37DHhzDTBbG0jw/vOSg=
+	t=1791557565; cv=none; b=UsSidUG+uZXwYM5iNUZUn+gGTiiJ+dbCOP50ltREpTJcD3Px7ef6lpJUkfWNx9NhHwydHsUFUmyZBBqlDDR8i4qUgMyzn+ZHJkM1EqRvkjisceu0WUMm3m+36Q1nxgVAPeLicOlwhl9TadrY9f1iXsNb4647SL6iLr151eKuf88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557562; c=relaxed/simple;
-	bh=VwOH8cCPKgXpYiD0sE3CMw0skro3lVUwARrukYBSb5A=;
+	s=arc-20240116; t=1791557565; c=relaxed/simple;
+	bh=OKTY4E9waHnGU8JpVCGPYh29JfzfCxIIjcY8a2wBwFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBefita+YXw7ckcDUCWM1Teo14rrE8IS6Xga/DffhHqMJ9i2B8TyQThjKpZLsq9+Q0ro+JArHnlnDYJ/NWc8gN3s8r+1X8SJZhFKsGbwhnfEB2qd6vKAWKHXuWIV8vBc31LU+XOyK6PQQZ0iFC7aVfHIeBgTs+o8vB7Pw7flDQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YztbVdjO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZaKDI8cM4YSgYcNi0TddEqFU8mRK65ZBVItQcXt+orwDsmSyZEqA3jvnttoLW7dK/Kg7rpbTqEKetFMPy3Xd3N1k3dibjY88SofS4s86PdMu4IfGMVzHqDafJO7uu7Jau3uIcDVZH+uxQvSPiU4UI6PtQ5BtwZVe1AZBRbva/2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2OHL4Hi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YztbVdjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5401F000FF;
-	Fri,  9 Oct 2026 14:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2OHL4Hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531431F00893;
+	Fri,  9 Oct 2026 14:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557561;
-	bh=xK3IUue7YO67XDq+5FHIUC+LaBcI44wOGbLIqw0mWaI=;
+	s=korg; t=1791557563;
+	bh=IWO1lxwvoUrIAb9kE8awJQHml+8dSn5OvfE+zlj4MhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YztbVdjOLbm7YgTtaucit3lDGwI2oLfUA6zHiR1eT3jsjBEXa4iUuF3oMg8lHBqme
-	 wTKcyW72zNSlR1jIcitIjtU9WVSbA0tckABio/UnMS11t6xDPguiNiMaO+q4+gPwHE
-	 HDBF+NBIT4Pxh9ZtsgCgN/xYeEGbyPqEr8dV4iRY=
+	b=q2OHL4HieVlDD2GZeyOUaFSadvGevJy0iKV/zGq+2CXEFxvE9ITATXT7+lEySqm4L
+	 lBMBY0x6PIMNy3mOhIMb60mHZjxaMk47HjJ2nihTUZhgYuwvVt2IUEL2oscSzq5kq2
+	 HsCxOKR9MK/k5qmwyqpmfl37Mn4tSZwZ+W0Ebpjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 404/428] iio: light: gp2ap020a00f: drain irq_work after free_irq
-Date: Fri,  9 Oct 2026 16:12:21 +0200
-Message-ID: <20261009140955.093873025@linuxfoundation.org>
+Subject: [PATCH 7.2 405/428] iio: light: rohm-bu27034: Fix infinite delay on error
+Date: Fri,  9 Oct 2026 16:12:22 +0200
+Message-ID: <20261009140955.117273763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -50,49 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
+commit 8065a6c02f629187131f3136bedb26f9080e3cca upstream.
 
-The threaded IRQ handler queues data->work through irq_work_queue() so
-the trigger is polled from a per-CPU context.  free_irq() does not flush
-an irq_work the handler already queued, so after gp2ap020a00f_remove()
-returns that work may still run and call iio_trigger_poll() on data->trig,
-which the devm cleanup has already freed, causing a use-after-free.
+When reading an integration-time fails, the code will use error code to
+compute the sleep time.
 
-Add irq_work_sync(&data->work) after free_irq() in remove() and in the
-probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
-fix use-after-free on remove").
+Fix this by using the smallest integration time as a default if
+reading fails.
 
-Found by an in-house static analysis tool, confirmed by manual review.
-
-Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
+Fixes: e52afbd61039 ("iio: light: ROHM BU27034 Ambient Light Sensor")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/gp2ap020a00f.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/light/rohm-bu27034.c |   60 +++++++++++++++++++++++----------------
+ 1 file changed, 36 insertions(+), 24 deletions(-)
 
---- a/drivers/iio/light/gp2ap020a00f.c
-+++ b/drivers/iio/light/gp2ap020a00f.c
-@@ -1497,6 +1497,7 @@ error_trigger_unregister:
- 	iio_trigger_unregister(data->trig);
- error_free_irq:
- 	free_irq(client->irq, indio_dev);
-+	irq_work_sync(&data->work);
- error_uninit_buffer:
- 	iio_triggered_buffer_cleanup(indio_dev);
- error_regulator_disable:
-@@ -1519,6 +1520,7 @@ static void gp2ap020a00f_remove(struct i
- 	iio_device_unregister(indio_dev);
- 	iio_trigger_unregister(data->trig);
- 	free_irq(client->irq, indio_dev);
-+	irq_work_sync(&data->work);
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	regulator_disable(data->vled_reg);
+--- a/drivers/iio/light/rohm-bu27034.c
++++ b/drivers/iio/light/rohm-bu27034.c
+@@ -137,6 +137,7 @@ static const struct iio_gain_sel_pair bu
+ #define BU27034_MEAS_MODE_200MS		2
+ #define BU27034_MEAS_MODE_400MS		4
+ 
++#define BU27034_INT_TIME_US_MIN (55 * USEC_PER_MSEC)
+ static const struct iio_itime_sel_mul bu27034_itimes[] = {
+ 	GAIN_SCALE_ITIME_US(400000, BU27034_MEAS_MODE_400MS, 8),
+ 	GAIN_SCALE_ITIME_US(200000, BU27034_MEAS_MODE_200MS, 4),
+@@ -296,7 +297,7 @@ static int bu27034_get_gain(struct bu270
+ 	return 0;
  }
+ 
+-static int bu27034_get_int_time(struct bu27034_data *data)
++static int bu27034_get_int_time(struct bu27034_data *data, int *itime)
+ {
+ 	int ret, sel;
+ 
+@@ -304,24 +305,30 @@ static int bu27034_get_int_time(struct b
+ 	if (ret)
+ 		return ret;
+ 
+-	return iio_gts_find_int_time_by_sel(&data->gts,
+-					    sel & BU27034_MASK_MEAS_MODE);
++	ret = iio_gts_find_int_time_by_sel(&data->gts,
++					   sel & BU27034_MASK_MEAS_MODE);
++	if (ret < 0)
++		return ret;
++
++	*itime = ret;
++
++	return 0;
+ }
+ 
+ static int _bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
+ 			      int *val2)
+ {
+-	int gain, ret;
++	int gain, itime, ret;
+ 
+ 	ret = bu27034_get_gain(data, channel, &gain);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &itime);
++	if (ret)
+ 		return ret;
+ 
+-	return iio_gts_get_scale(&data->gts, gain, ret, val, val2);
++	return iio_gts_get_scale(&data->gts, gain, itime, val, val2);
+ }
+ 
+ static int bu27034_get_scale(struct bu27034_data *data, int channel, int *val,
+@@ -397,12 +404,10 @@ static int bu27034_try_set_int_time(stru
+ 	int ret, int_time_old, i;
+ 
+ 	guard(mutex)(&data->mutex);
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &int_time_old);
++	if (ret)
+ 		return ret;
+ 
+-	int_time_old = ret;
+-
+ 	if (!iio_gts_valid_time(&data->gts, time_us)) {
+ 		dev_err(data->dev, "Unsupported integration time %u\n",
+ 			time_us);
+@@ -841,7 +846,7 @@ static int bu27034_meas_set(struct bu270
+ static int bu27034_get_single_result(struct bu27034_data *data, int chan,
+ 				     int *val)
+ {
+-	int ret;
++	int ret, itime;
+ 
+ 	if (chan < BU27034_CHAN_DATA0 || chan > BU27034_CHAN_DATA1)
+ 		return -EINVAL;
+@@ -850,11 +855,11 @@ static int bu27034_get_single_result(str
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &itime);
++	if (ret)
+ 		return ret;
+ 
+-	msleep(ret / 1000);
++	msleep(itime / 1000);
+ 
+ 	return bu27034_read_result(data, chan, val);
+ }
+@@ -904,12 +909,10 @@ static int bu27034_calc_mlux(struct bu27
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = bu27034_get_int_time(data);
+-	if (ret < 0)
++	ret = bu27034_get_int_time(data, &meastime);
++	if (ret)
+ 		return ret;
+ 
+-	meastime = ret;
+-
+ 	d1_d0_ratio_scaled = (unsigned int)ch1 * (unsigned int)gain0 * 100;
+ 	helper64 = (u64)ch1 * (u64)gain0 * 100LLU;
+ 
+@@ -970,9 +973,9 @@ static int bu27034_read_raw(struct iio_d
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_INT_TIME:
+ 		*val = 0;
+-		*val2 = bu27034_get_int_time(data);
+-		if (*val2 < 0)
+-			return *val2;
++		ret = bu27034_get_int_time(data, val2);
++		if (ret)
++			return ret;
+ 
+ 		return IIO_VAL_INT_PLUS_MICRO;
+ 
+@@ -1157,11 +1160,20 @@ static int bu27034_buffer_thread(void *a
+ {
+ 	struct iio_dev *idev = arg;
+ 	struct bu27034_data *data;
+-	int wait_ms;
++	int wait_ms, ret;
+ 
+ 	data = iio_priv(idev);
+ 
+-	wait_ms = bu27034_get_int_time(data);
++	/*
++	 * If reading the integration time fails, default to the minimum so we
++	 * don't lose samples. This may waste CPU cycles, but as a hardening
++	 * against theoretical, once-in-a-blue-moon error, this should be Ok.
++	 */
++	wait_ms = BU27034_INT_TIME_US_MIN;
++	ret = bu27034_get_int_time(data, &wait_ms);
++	if (ret)
++		dev_warn(data->dev, "Failed to get integration time\n");
++
+ 	wait_ms /= 1000;
+ 
+ 	wait_ms -= BU27034_MEAS_WAIT_PREMATURE_MS;
 
 
