@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18B33B3BE6;
-	Fri,  9 Oct 2026 14:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A24334D3BE;
+	Fri,  9 Oct 2026 14:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557241; cv=none; b=RXme+YoZDeg71nzVfWVoIKuse6enLobrWpeckqjhLYOEiDGLNTMDnC70uAPGP8bWmiV5fkjza10gEy//m7MRdvyfmXaxzAlC2SFChhWdXyD6za97fVnHxRTeQdTuqNEzEPRsSX6m2BkVUgMVtXOCf4EQMKG5jx1qxBQXja/uoqI=
+	t=1791557244; cv=none; b=OZ1tQwWtRcaN8HiN2vPzNgSk8KYfqneh2v4Sg9VVtMqxZs6MYTUIiLQ/3u1GMWbqDKhJbT9jJcx7NCf5FksAXjcCI6lEQpm37GZgETD3vewGLN8Fa1UQ4Qx0ReCSq9s5MOMJvw+5oUMLxaAWuEwVWFipCeD0PGaHWGSvoxmXf5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557241; c=relaxed/simple;
-	bh=4sS3pytmzsPkWsM40rAXvGSujduhgA4oufv97avlh2E=;
+	s=arc-20240116; t=1791557244; c=relaxed/simple;
+	bh=AQgK0Oa0R55BE1zKlWX9QFbR+V3yj48KYbLNYAdT8Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGrZ0vGgUqp6aJp0dzl898gNk2t5StNDMMOqYox3gQUhkhBy4h+4z0DTcai/grY5e3LioDC0/HaQdcmSLWRd2c0g/3dnC0KgEbN7jsJs4QH+y4WQn990MUEMFl/o11JZm+W4DySL7nWAvwq2PigTIKBRZW4Vb/9WON9AoJBEYeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCng2SXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AsJvgIUkzjOWGzk/131cbNtUTI5rHXaSOaafRwA4Cba0SI3rtDNueB5FjYaFW7GmhuAe49fXeMJyNT72T8DtykldyFCnnDvez6M5jSG50xY02tSlmj6ypseDwbv6tYE5ewRseVTsZVuoQzrOUWEbY7ADblxAknPDI5pY0Malssg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTJ60OdQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCng2SXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D64E1F000FF;
-	Fri,  9 Oct 2026 14:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTJ60OdQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3591F00893;
+	Fri,  9 Oct 2026 14:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557240;
-	bh=m1QGSD32YGIuIE8RnExzwxQ7o25A32YhZ3O03h+k72k=;
+	s=korg; t=1791557243;
+	bh=lfJaJCdAHFc1MWg8VsEupDPHcz+um9PGL5bbu3cW4+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCng2SXICEEF3sjexd8l0Bn/3dJzIaMTS2ov1YwTHDmurYr25PiM0scPN7K0yF8W/
-	 trNtHok8Nfd26cBOr8fN8+gYuDf8hZnYlOgDlZDSam+LSHBo8QfsjV/kbIFmwX62DY
-	 LcAB+fjGROnYnMR00qs37dpz9DecWQg/DgpmAG4U=
+	b=gTJ60OdQjqZrbh8ka5MrD/qfACZoRWF+GOc+gZcRGcpi/9KEfzk4p2S13/+Jt3dDB
+	 RdyT/yidyO6jJ5KJnctxRM5+gGsY892/fJiQh8Mz4DmzYX0GYrBWlXX6Ao+chtViH2
+	 peF8HQ9zyfUitce1Fg2zEi9aEM468CMPwEnQ7b9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 324/428] wifi: cfg80211: fix RTS threshold setting for single-radio PHY
-Date: Fri,  9 Oct 2026 16:11:01 +0200
-Message-ID: <20261009140953.251373288@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 370/403] iio: adc: ad4030: Use BIT macro to improve code readability
+Date: Fri,  9 Oct 2026 16:12:11 +0200
+Message-ID: <20261009141000.957164399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Marcelo Schmitt <marcelo.schmitt@analog.com>
 
-commit 9eda41e32263806a66835e275efdcc0c5f46bbc4 upstream.
+[ Upstream commit a10f6dd4eef2e64fe1f366613bed45aa308494de ]
 
-Due to an incorrect old_radio_rts_threshold check, we do not set
-rdev->wiphy.rts_threshold for a single-radio PHY, and the threshold
-value is not propagated to lower layers.
+Use BIT macro to make the list of average modes more readable.
 
-Cc: stable@vger.kernel.org
-Fixes: 264637941cf4 ("wifi: cfg80211: Add Support to Set RTS Threshold for each Radio")
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260919092454.50266-1-stf_xl@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: d61521056420 ("iio: adc: ad4030: fix invalid oversampling_ratio validation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/iio/adc/ad4030.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4562,12 +4562,13 @@ static int nl80211_set_wiphy(struct sk_b
- 			rdev->wiphy.retry_long = retry_long;
- 		if (changed & WIPHY_PARAM_FRAG_THRESHOLD)
- 			rdev->wiphy.frag_threshold = frag_threshold;
--		if ((changed & WIPHY_PARAM_RTS_THRESHOLD) &&
--		    old_radio_rts_threshold) {
-+		if (changed & WIPHY_PARAM_RTS_THRESHOLD) {
- 			rdev->wiphy.rts_threshold = rts_threshold;
--			for (i = 0 ; i < rdev->wiphy.n_radio; i++)
--				rdev->wiphy.radio_cfg[i].rts_threshold =
--					rdev->wiphy.rts_threshold;
-+			if (old_radio_rts_threshold) {
-+				for (i = 0; i < rdev->wiphy.n_radio; i++)
-+					rdev->wiphy.radio_cfg[i].rts_threshold =
-+						rdev->wiphy.rts_threshold;
-+			}
- 		}
- 		if (changed & WIPHY_PARAM_COVERAGE_CLASS)
- 			rdev->wiphy.coverage_class = coverage_class;
+--- a/drivers/iio/adc/ad4030.c
++++ b/drivers/iio/adc/ad4030.c
+@@ -232,10 +232,16 @@ struct ad4030_state {
+ 	.num_ext_scan_type = ARRAY_SIZE(_scan_type),			\
+ }
+ 
++/*
++ * AD4030 can average over 2^N samples, where N = 1, 2, 3, ..., 16.
++ * We use N = 0 to mean no sample averaging.
++ */
+ static const int ad4030_average_modes[] = {
+-	1, 2, 4, 8, 16, 32, 64, 128,
+-	256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
+-	65536,
++	BIT(0),					/* No sampling average */
++	BIT(1), BIT(2), BIT(3), BIT(4),
++	BIT(5), BIT(6), BIT(7), BIT(8),
++	BIT(9), BIT(10), BIT(11), BIT(12),
++	BIT(13), BIT(14), BIT(15), BIT(16),
+ };
+ 
+ static int ad4030_enter_config_mode(struct ad4030_state *st)
 
 
