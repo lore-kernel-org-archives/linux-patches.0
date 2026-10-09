@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5142207DF7;
-	Fri,  9 Oct 2026 14:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90A54D0A14;
+	Fri,  9 Oct 2026 14:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555336; cv=none; b=I4/C0kMnO8M0ly0Xed5B8l71HaCie1goL8oo7prc8FPyG6gLt4hy3DkGqfJyEGTU4vuv8HegVjX/5wKKHKU6qtgN+H9g2MSHUXesKVwyviq4Tl1la4Vej8+Mo6W7w05fx5Gf4cJi150yUXCKvTGJe9URyFlnFCHSfiye2g9C0KY=
+	t=1791555337; cv=none; b=fgda5ky8RAJjiUfzueUeCKg+jPTyOvwES99rVQ5u7Z6yFZrFK7h31WTDohthnhX/xIofTlCXwCKBdLSV0t8OXBT4n5/+o2F8TMpbZa0SDk0BLj2+CawHoy1tSxToe3OM9IxpZc33xpNcYhuPszLT4dHrjMEp+4pCOlamUc5mh64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555336; c=relaxed/simple;
-	bh=x0ImUGEmCrbELgIJ5P7h86LbSlHGrqzHTT+PspGsoWU=;
+	s=arc-20240116; t=1791555337; c=relaxed/simple;
+	bh=TMwSAAQb29JelGeE4TSjv9sR8IO5hsBIVnNJdTyk2is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ofuo97xb7Xdz+B4a7hZLuihwrZFkgntIZlWZ34pPE6nDPri8cPzOVAe3fh4ypaHSVwlMt64yEH0DJptTSRqGJeGuLwjv0KUJ/c3p+OCSHA3i9thh5iueZIF77mc2gkP/62R7a7o91CB63bgvJ6X/89xDSKggrGV3nmH3kbcFhRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYoWS8y8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qTPKxT7BxQQS9g1/rdYgmZuDslkK6AmsEPLAmwLul5pBqt7b8ETnVm/WYEsC6nNYXtGL8k8oJQTmbpUTiK1jkYqrljhd1njGwQsWazf0Z2YJ7Kul7tmem1RWXBUcDh08lRwvfhbVjnjS9FJdlJz5oxAP6N4Ej7qkJhRPkHotWls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxXTrAQJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYoWS8y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213B61F000FF;
-	Fri,  9 Oct 2026 14:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxXTrAQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2151F00893;
+	Fri,  9 Oct 2026 14:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555327;
-	bh=97KGqzljKVsNzAtmWh58+Byvotc6a6I/dXYoGO5Hnq4=;
+	s=korg; t=1791555330;
+	bh=YPrDF2meLbiw6q4SmDpyhQe4AYbp+bQn9+q7Z5ABJ90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYoWS8y8Fh36vHUT+a16qBTJWOsw/QBeYG7Fgz/3CEgpIUkHw2ZgTyfzCallbzYIe
-	 lTvLeTR4M2X7TU+jdY0esnZLYsprPKh/EBOM/mGUPEYaXNxlRQcZ2JWrTqVxXqxDSN
-	 7wVVPj7nvEXE5eI0DdnoSG0Y2I8JLwN5wA5RF36k=
+	b=kxXTrAQJ9OsiXzjk47QLYgQmAsebCfb/tE5Fc8BBbjm/1/QosuefF8qgIuvz6A8sd
+	 a1ZqdWS5wS+T789afOHtSWMCn4BFtbMM9Tl+0w8VHbtL4VVRiSQBAjhA8Mk1It2Ztu
+	 1Rtxw9fAjdpcu3lhKfs5j8UJYhflZ6uIxlJrw2Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 020/403] audit: fix exe mark UAF in kill_rules()
-Date: Fri,  9 Oct 2026 16:06:21 +0200
-Message-ID: <20261009140952.590165001@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 010/403] neighbour: Annotate access to neigh_parms fields.
+Date: Fri,  9 Oct 2026 16:06:11 +0200
+Message-ID: <20261009140952.360657533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -46,94 +46,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
+[ Upstream commit 35d7c70870338aa6a367b9e4ed528914320b0be0 ]
 
-kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
-tree is pruned. It drops entry->rule.exe before removing the rule from
-the RCU-visible filter lists.
+NEIGH_VAR() is read locklessly in the fast path, and IPv6 ndisc uses
+NEIGH_VAR_SET() locklessly.
 
-After a rule has been installed with AUDIT_ADD_RULE, which requires
-CAP_AUDIT_CONTROL, removing the watched directory can race with another
-task that is still evaluating the rule. In that case, fsnotify can free
-the executable mark before the reader reaches audit_mark_compare(),
-causing a use-after-free.
+The next patch will convert neightbl_dump_info() to RCU.
 
-KASAN reports:
+Let's annotate accesses to neigh_param with READ_ONCE() and WRITE_ONCE().
 
-    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
+Note that ndisc_ifinfo_sysctl_change() uses &NEIGH_VAR() and we cannot
+use '&' with READ_ONCE(), so NEIGH_VAR_PTR() is introduced.
 
-Unlink the published rules from the RCU-visible lists and retain them
-on tree->rules for cleanup. If any rule has an executable mark, wait for
-a single RCU grace period before removing the marks and scheduling the
-entries for freeing. Otherwise, call_rcu() already provides the required
-deferred freeing without a synchronous wait.
+Note also that NEIGH_VAR_INIT() does not need WRITE_ONCE() as it is before
+parms is published.  Also, the only user hippi_neigh_setup_dev() is no
+longer called since commit e3804cbebb67 ("net: remove COMPAT_NET_DEV_OPS"),
+which looks wrong, but probably no one uses HIPPI and RoadRunner.
 
-Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251022054004.2514876-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/audit_tree.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ include/net/neighbour.h | 15 ++++++++++++---
+ net/core/neighbour.c    | 17 ++++++-----------
+ net/ipv6/ndisc.c        |  8 ++++----
+ 3 files changed, 22 insertions(+), 18 deletions(-)
 
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -545,22 +545,38 @@ static void kill_rules(struct audit_cont
+diff --git a/include/net/neighbour.h b/include/net/neighbour.h
+index c13c758aca7e0..862e53007fd2e 100644
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -92,15 +92,17 @@ struct neigh_parms {
+ static inline void neigh_var_set(struct neigh_parms *p, int index, int val)
  {
- 	struct audit_krule *rule, *next;
- 	struct audit_entry *entry;
-+	bool need_sync = false;
- 
- 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
- 		entry = container_of(rule, struct audit_entry, rule);
- 
--		list_del_init(&rule->rlist);
- 		if (rule->tree) {
- 			/* not a half-baked one */
- 			audit_tree_log_remove_rule(context, rule);
--			if (entry->rule.exe)
--				audit_remove_mark(entry->rule.exe);
- 			rule->tree = NULL;
- 			list_del_rcu(&entry->list);
- 			list_del(&entry->rule.list);
--			call_rcu(&entry->rcu, audit_free_rule_rcu);
-+			if (entry->rule.exe)
-+				need_sync = true;
-+		} else {
-+			list_del_init(&rule->rlist);
- 		}
- 	}
-+
-+	if (list_empty(&tree->rules))
-+		return;
-+
-+	if (need_sync)
-+		synchronize_rcu();
-+
-+	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
-+		entry = container_of(rule, struct audit_entry, rule);
-+
-+		list_del_init(&rule->rlist);
-+		if (entry->rule.exe)
-+			audit_remove_mark(entry->rule.exe);
-+		call_rcu(&entry->rcu, audit_free_rule_rcu);
-+	}
+ 	set_bit(index, p->data_state);
+-	p->data[index] = val;
++	WRITE_ONCE(p->data[index], val);
  }
  
- /*
+-#define NEIGH_VAR(p, attr) ((p)->data[NEIGH_VAR_ ## attr])
++#define __NEIGH_VAR(p, attr) ((p)->data[NEIGH_VAR_ ## attr])
++#define NEIGH_VAR(p, attr) READ_ONCE(__NEIGH_VAR(p, attr))
++#define NEIGH_VAR_PTR(p, attr) (&(__NEIGH_VAR(p, attr)))
+ 
+ /* In ndo_neigh_setup, NEIGH_VAR_INIT should be used.
+  * In other cases, NEIGH_VAR_SET should be used.
+  */
+-#define NEIGH_VAR_INIT(p, attr, val) (NEIGH_VAR(p, attr) = val)
++#define NEIGH_VAR_INIT(p, attr, val) (__NEIGH_VAR(p, attr) = val)
+ #define NEIGH_VAR_SET(p, attr, val) neigh_var_set(p, NEIGH_VAR_ ## attr, val)
+ 
+ static inline void neigh_parms_data_state_setall(struct neigh_parms *p)
+@@ -378,6 +380,13 @@ struct net *neigh_parms_net(const struct neigh_parms *parms)
+ 
+ unsigned long neigh_rand_reach_time(unsigned long base);
+ 
++static inline void neigh_set_reach_time(struct neigh_parms *p)
++{
++	unsigned long base = NEIGH_VAR(p, BASE_REACHABLE_TIME);
++
++	WRITE_ONCE(p->reachable_time, neigh_rand_reach_time(base));
++}
++
+ void pneigh_enqueue(struct neigh_table *tbl, struct neigh_parms *p,
+ 		    struct sk_buff *skb);
+ struct pneigh_entry *pneigh_lookup(struct neigh_table *tbl, struct net *net,
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 6afd6490d7847..ce537eca16409 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -996,8 +996,7 @@ static void neigh_periodic_work(struct work_struct *work)
+ 
+ 		WRITE_ONCE(tbl->last_rand, jiffies);
+ 		list_for_each_entry(p, &tbl->parms_list, list)
+-			p->reachable_time =
+-				neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
++			neigh_set_reach_time(p);
+ 	}
+ 
+ 	if (atomic_read(&tbl->entries) < READ_ONCE(tbl->gc_thresh1))
+@@ -1750,8 +1749,7 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
+ 	if (p) {
+ 		p->tbl		  = tbl;
+ 		refcount_set(&p->refcnt, 1);
+-		p->reachable_time =
+-				neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
++		neigh_set_reach_time(p);
+ 		p->qlen = 0;
+ 		netdev_hold(dev, &p->dev_tracker, GFP_KERNEL);
+ 		p->dev = dev;
+@@ -1811,8 +1809,7 @@ void neigh_table_init(int index, struct neigh_table *tbl)
+ 	list_add(&tbl->parms.list, &tbl->parms_list);
+ 	write_pnet(&tbl->parms.net, &init_net);
+ 	refcount_set(&tbl->parms.refcnt, 1);
+-	tbl->parms.reachable_time =
+-			  neigh_rand_reach_time(NEIGH_VAR(&tbl->parms, BASE_REACHABLE_TIME));
++	neigh_set_reach_time(&tbl->parms);
+ 	tbl->parms.qlen = 0;
+ 
+ 	tbl->stats = alloc_percpu(struct neigh_statistics);
+@@ -2195,7 +2192,7 @@ static int neightbl_fill_parms(struct sk_buff *skb, struct neigh_parms *parms)
+ 			NEIGH_VAR(parms, MCAST_PROBES)) ||
+ 	    nla_put_u32(skb, NDTPA_MCAST_REPROBES,
+ 			NEIGH_VAR(parms, MCAST_REPROBES)) ||
+-	    nla_put_msecs(skb, NDTPA_REACHABLE_TIME, parms->reachable_time,
++	    nla_put_msecs(skb, NDTPA_REACHABLE_TIME, READ_ONCE(parms->reachable_time),
+ 			  NDTPA_PAD) ||
+ 	    nla_put_msecs(skb, NDTPA_BASE_REACHABLE_TIME,
+ 			  NEIGH_VAR(parms, BASE_REACHABLE_TIME), NDTPA_PAD) ||
+@@ -2474,8 +2471,7 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 				 * only be effective after the next time neigh_periodic_work
+ 				 * decides to recompute it (can be multiple minutes)
+ 				 */
+-				p->reachable_time =
+-					neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
++				neigh_set_reach_time(p);
+ 				break;
+ 			case NDTPA_GC_STALETIME:
+ 				NEIGH_VAR_SET(p, GC_STALETIME,
+@@ -3733,8 +3729,7 @@ static int neigh_proc_base_reachable_time(const struct ctl_table *ctl, int write
+ 		 * only be effective after the next time neigh_periodic_work
+ 		 * decides to recompute it
+ 		 */
+-		p->reachable_time =
+-			neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
++		neigh_set_reach_time(p);
+ 	}
+ 	return ret;
+ }
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 7262356de10d9..73732ca910fca 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1450,7 +1450,7 @@ static enum skb_drop_reason ndisc_router_discovery(struct sk_buff *skb)
+ 					      BASE_REACHABLE_TIME, rtime);
+ 				NEIGH_VAR_SET(in6_dev->nd_parms,
+ 					      GC_STALETIME, 3 * rtime);
+-				in6_dev->nd_parms->reachable_time = neigh_rand_reach_time(rtime);
++				neigh_set_reach_time(in6_dev->nd_parms);
+ 				in6_dev->tstamp = jiffies;
+ 				send_ifinfo_notify = true;
+ 			}
+@@ -1951,9 +1951,9 @@ int ndisc_ifinfo_sysctl_change(const struct ctl_table *ctl, int write, void *buf
+ 		ret = -1;
+ 
+ 	if (write && ret == 0 && dev && (idev = in6_dev_get(dev)) != NULL) {
+-		if (ctl->data == &NEIGH_VAR(idev->nd_parms, BASE_REACHABLE_TIME))
+-			idev->nd_parms->reachable_time =
+-					neigh_rand_reach_time(NEIGH_VAR(idev->nd_parms, BASE_REACHABLE_TIME));
++		if (ctl->data == NEIGH_VAR_PTR(idev->nd_parms, BASE_REACHABLE_TIME))
++			neigh_set_reach_time(idev->nd_parms);
++
+ 		WRITE_ONCE(idev->tstamp, jiffies);
+ 		inet6_ifinfo_notify(RTM_NEWLINK, idev);
+ 		in6_dev_put(idev);
+-- 
+2.53.0
+
 
 
