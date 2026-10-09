@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ADF125AA;
-	Fri,  9 Oct 2026 14:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4934D397;
+	Fri,  9 Oct 2026 14:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556414; cv=none; b=KLXJlfvRXvSItq9KPTkLxlrB7Lfp1RabhvTa2w6f6kAhvL+Gsp3/hWTUiJ0ZYO3uTzBgrW8/vQh74wqGIr8sRNcF5X8vRvTS0eW43oLWJw+uKmb3at260JU4V9pOZ1R0s5EK9I+atmACExBJNJrViy0ixvl/vPX1qcATP3KeAuk=
+	t=1791556417; cv=none; b=ndhalr2wUmC8XanITwfoC5A0TNAd23KPbtgKHMvsAJ+2EMSPMb6pL+u8kU5aiTgAm9nEd+FCZaTcqGu5n/DDSNtfLBGoooZmI+jYT7kAi5dA2h7CpfQUfcP+UzlZf33JxzCLJEgvP1tOiLaPjyKXsLjAnW/cIH2T55bEYHCFXgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556414; c=relaxed/simple;
-	bh=YYiFt9FD4Ds2qaWez9nKeVLqp7Hlo1rLRfbeT9FxrK8=;
+	s=arc-20240116; t=1791556417; c=relaxed/simple;
+	bh=mgCiSTjAfXs7q1TeCHnGAtCYpu4k9Ax7CIy6HkDK/FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nGRh0f+8K1v19Zjv6dqdz1neReV6E4LlG9xaMMrNt70rPgyk8C+tSiv4uk1wH8Jif0KYqYKTOE/IdaXcfAts1ZdfXjm9CV46yKpX/A6/LUOTY6FnJBSc0qmGANYWKtmK0iOD+o7ZeNmOPIsEUYAl9onvh1ebZMAcgPRMuLtb9kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zeLpxRf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=adsTb/45WBfGv5o1py91oxFHdB/vBXSSuSJmT/z/iS8GY+6t7R05FsXKu3zxZeEO+UPhKl8Tl+JbPGoX3+6lGd6Tpp6CSk7eNLklmH1DpQ/gYuZYZLjnqZp4NzQ8ejleBQTPx1dvIZI9C8Sc+6uTlpxU1iE4M+5o6t8aOFAOtLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dng8asH9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zeLpxRf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A3F1F000FF;
-	Fri,  9 Oct 2026 14:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dng8asH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A403B1F000FF;
+	Fri,  9 Oct 2026 14:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556413;
-	bh=0OOTIISfAOs9/C5gxLQqL3rXQkDAyWcopxSxuRHnsvU=;
+	s=korg; t=1791556416;
+	bh=70jHU1HQ9mjosuaupg8bqqlWEA29zv17IAcG9SVkuao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1zeLpxRfDOiguPLLQ26mMWmVzPeArcwONAOblFKQcS7mnua7UyXFUCfrTXvRTVotp
-	 JChY0xl09g9SDZ9O531DWQnPfdU90U4zC81gX/DNX0Xn2dLkcf26yNu/A+4/5cE0O0
-	 lCTvCXXv71NZF1P+gv2XqFSUIQMCEqSY3xcgsbxY=
+	b=Dng8asH9Xz0ogYsYXHPTbYFDpEwxYvpVuSJ6MbALmUJla7o5DmZnO5smdJbcajfVc
+	 NjKn/2SSYPzbTacv56JAaS7yXOMjkRqCeSKdJ9LFglkKCO86YU475DU67e4lRD0NAB
+	 1D14bW7tDd82mU5C+W5lkP0aBF2VMKdkYRcawT7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 172/428] drm/amd/display: Fix fast updates on DCE 8.1
-Date: Fri,  9 Oct 2026 16:08:29 +0200
-Message-ID: <20261009140949.931505615@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 230/403] Bluetooth: hci_core: Serialize ACL scheduling with channel deletion
+Date: Fri,  9 Oct 2026 16:09:51 +0200
+Message-ID: <20261009140957.532109102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,50 +44,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 687d31ea9ac76b299817060fa1e5582d6c752ae0 upstream.
+commit f4845ab191a4f686a5da481fbba90ed73bb693b0 upstream.
 
-DCE8 should use legacy fast updates.
-This was already set for DCE 8.0 and 8.3, but it seems
-that DCE 8.1 (found in Kaveri chips) was forgotten.
+hci_chan_sent() selects a channel under RCU but drops the read lock before
+accessing chan->conn and returning the channel. The ACL and LE schedulers
+then use its packet queue and update its transmit counters without any
+protection against channel deletion.
 
-This fix should be backported to all kernel versions that
-have "Refactor fast update to use new HWSS build sequence",
-but this patch won't apply cleanly to older kernels due to
-another refactor in "Remove dc param from check_update".
+After TX selects a channel and releases RCU, a disconnect command timeout
+on the separate request workqueue can run hci_conn_failed() and
+l2cap_conn_del(). hci_chan_del() can then unlink the channel, complete
+synchronize_rcu(), purge its queue and free it before TX resumes. This
+causes use-after-free both in hci_chan_sent() and in its callers.
 
-Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
-Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923122033.1046651-2-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 57605379559e3b5044c8274a1010ec658e5e73af)
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_chan_sent+0x892/0x9b0
+  Workqueue: hci0 hci_tx_work
+  Call Trace:
+   hci_chan_sent+0x892/0x9b0
+   hci_tx_work+0x5e6/0xb70
+  Allocated by task 91:
+   hci_chan_create+0xe3/0x350
+   l2cap_conn_add.part.0+0x12/0xa30
+   l2cap_chan_connect+0x110d/0x1b60
+   l2cap_sock_connect+0x310/0x530
+  Freed by task 99:
+   hci_chan_del+0x11f/0x170
+   l2cap_conn_del+0x4f1/0x800
+   l2cap_connect_cfm+0x88c/0xd30
+   hci_conn_failed+0x150/0x250
+   hci_abort_conn_sync+0x3e3/0x800
+   hci_cmd_sync_run+0x7e/0xc0
+   hci_abort_conn+0x105/0x1f0
+   disconnect_sync+0x157/0x290
+   hci_cmd_sync_work+0x13c/0x290
+
+Hold the existing device mutex across channel selection and transmission
+in both schedulers to serialize them with channel teardown. Keep timeout
+handling outside the critical sections because hci_link_tx_to() acquires
+the same mutex. This also permits the transmit path to sleep, unlike
+extending the RCU read-side critical section across packet submission.
+
+Fixes: 3eff45eaf817 ("Bluetooth: convert tx_task to workqueue")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_core.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-@@ -1148,6 +1148,8 @@ static bool dce81_construct(
- 	dc->caps.max_cursor_size = 128;
- 	dc->caps.min_horizontal_blanking_period = 80;
- 	dc->caps.is_apu = true;
-+	dc->debug = debug_defaults;
-+	dc->check_config = config_defaults;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3698,6 +3698,8 @@ static void hci_sched_acl_pkt(struct hci
  
- 	/*************************************************
- 	 *  Create resources                             *
+ 	__check_timeout(hdev, cnt, ACL_LINK);
+ 
++	hci_dev_lock(hdev);
++
+ 	while (hdev->acl_cnt &&
+ 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+@@ -3729,6 +3731,8 @@ static void hci_sched_acl_pkt(struct hci
+ 
+ 	if (cnt != hdev->acl_cnt)
+ 		hci_prio_recalculate(hdev, ACL_LINK);
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ static void hci_sched_acl(struct hci_dev *hdev)
+@@ -3757,6 +3761,8 @@ static void hci_sched_le(struct hci_dev
+ 
+ 	__check_timeout(hdev, *cnt, LE_LINK);
+ 
++	hci_dev_lock(hdev);
++
+ 	tmp = *cnt;
+ 	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+@@ -3785,6 +3791,8 @@ static void hci_sched_le(struct hci_dev
+ 
+ 	if (*cnt != tmp)
+ 		hci_prio_recalculate(hdev, LE_LINK);
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ /* Schedule iso */
 
 
