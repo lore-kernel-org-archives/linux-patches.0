@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2024E9C2B;
-	Fri,  9 Oct 2026 14:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FD74EA36F;
+	Fri,  9 Oct 2026 14:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557298; cv=none; b=EveUhDxYJEbci6SacO3xcXBNU6XVactXdCADBFcCttIrfSEPxczpU1kuFbMBLk2/z2hqduF48G9CYhgUwSZRrp3LzZubIou6cSj1ilAmbz73REbv+Am/5xqHGo3lWu0wCuQ93fzCRIdgNL6pOt0+kYc2M9v6t1obQFypPtWFMf0=
+	t=1791557301; cv=none; b=RUJP7HV5jbcKkIdVk9GqQxeW9xXPtP9y6Xi8iRDledSQxjYQZAUWLAKmAv9kqpRaIXmnY8EkqpALlyYT2BG3i3Rit6jn4hrU+lYKHezw89T9ky/QreistpVBpakdjtegLEbl0CKFs7uMBAv5y2mTnwgQFBhDtc26TiVTq4+j8KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557298; c=relaxed/simple;
-	bh=XPUazZ3uBqe4D0+n3vdfr0P16walECkWtFeAbQmkYC0=;
+	s=arc-20240116; t=1791557301; c=relaxed/simple;
+	bh=qlmZ5DAJR7brrzfFoQGSqID6h6Pr1RUBCSVqoDi2ISY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGSdhO8owmGcwq2Dkry8BdokU9sPij8xWCLkMG3Pq1guWBrDXSjnf0eJIA26QQOFVX1Smlj2RNGNdRgO1pL8HHJEbn37w3aJ4nTKL4Qw3WxZAVWyMNpDB3aFuWnx1JadfVRjzEDFbX2IA4zk8iD1dI3iSQfotjKckXcu0lBpZ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWK1AfQS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/yHABS95viWmQU5DwAcyz4EmYlodBZc2vgh4vQAhhsvUzakdorNqiqMQRWz2cgkYv6UHCDOyUj5TLvBJEFG9wfQG9+FRBFj135VxAd+h31zTjVPv5Z8PsOICJZqtCZqVraiycIh/hgnYh/eA4ckKyHrvWrxeBS9gZqVpn/cyuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpg0eZIJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWK1AfQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BB51F000FF;
-	Fri,  9 Oct 2026 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpg0eZIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2C91F000FF;
+	Fri,  9 Oct 2026 14:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557297;
-	bh=I0OJREJtA8ZDGHoQLqjirqI2xrPUJzj/a1QrvlJPbz8=;
+	s=korg; t=1791557300;
+	bh=f2gR41s/dNLWadtsWxp/A+7Bz11tfpmzGxRaSWEkozw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sWK1AfQSQO0wcW8uNP2g35xonufbyVghpjGUFDKHVoT8NrXCn6CwpB7ys0Dbedt1Q
-	 QEuMWzhKhRPOwjhES3BfQt7TuFU98Lbhsi1p5Et6W95o9oKyTFidJVrOlV1age89wZ
-	 FEHmrKXKl3tBSH/pD/Cb661BIiM1e4LfE5oDzgaw=
+	b=kpg0eZIJ3OvndqJEVQ3ziWiWk2VNjaj/jaKvyFejtumnhbs4AWeMa+gbvlKQP3qCc
+	 nPw4sogMc0qIln5/6YCYPRyAgG9dvdDJVBwjn6Q5jqUs+ellPECnMwOzJPC3ekiMy4
+	 uHBllV0etSKjAuVw+KXeWogNDNvNWqfIEtMfWpkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Starke <daniel.starke@siemens.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 378/403] tty: n_gsm: fix missing modem controls after DLCI open in convergence layer type 2
-Date: Fri,  9 Oct 2026 16:12:19 +0200
-Message-ID: <20261009141001.159753127@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.2 311/428] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
+Date: Fri,  9 Oct 2026 16:10:48 +0200
+Message-ID: <20261009140952.953799579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,180 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 11ea5a63d30ad6d305b1c22301cd99ff45a98c8d ]
+commit 2abb25273c82061dd4670690c81c319c03740bf6 upstream.
 
-The current implementation only updates the virtual V.24 control signals
-after DLCI open in basic option mode. In advanced option mode with
-convergence layer type 2 an empty data frame needs to be transmitted to
-inform the peer about the initial virtual V.24 control signals. Not doing
-so has two unwanted side effects:
-1. hardware flow control status is unclear (initial CTS line is unknown)
-2. DLCI user presence is not transmitted (initial DTR line is unknown)
+Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
+runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
+If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
+then runs the same L2 with TPR virtualization disabled, KVM will fail to
+refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
+virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
+L1 by proxy) read and write L0's TPR.
 
-Applications waiting on these lines can not start after a DLCI has been
-opened until the first data frame has been transmitted.
-
-Fix this by using gsm_modem_update() thoroughly which handles basic and
-advanced option mode correctly. Add a flag in gsm_modem_update() and the
-delegated gsm_modem_upd_via_msc() to control whether waiting for the MSC
-command response is possible. Remove obsolete gsm_modem_send_initial_msc().
-
-Fixes: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://patch.msgid.link/20260826063026.2472-1-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adjusted deletion context for the missing colon in the `@dlci` comment. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
+Cc: stable@vger.kernel.org
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |   47 ++++++++++++++---------------------------------
- 1 file changed, 14 insertions(+), 33 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -454,14 +454,13 @@ static const u8 gsm_fcs8[256] = {
- 
- static void gsm_dlci_close(struct gsm_dlci *dlci);
- static int gsmld_output(struct gsm_mux *gsm, u8 *data, int len);
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk);
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait);
- static struct gsm_msg *gsm_data_alloc(struct gsm_mux *gsm, u8 addr, int len,
- 								u8 ctrl);
- static int gsm_send_packet(struct gsm_mux *gsm, struct gsm_msg *msg);
- static struct gsm_dlci *gsm_dlci_alloc(struct gsm_mux *gsm, int addr);
- static void gsmld_write_trigger(struct gsm_mux *gsm);
- static void gsmld_write_task(struct work_struct *work);
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci);
- 
- /**
-  *	gsm_fcs_add	-	update FCS
-@@ -2175,7 +2174,7 @@ static void gsm_dlci_open(struct gsm_dlc
- 		pr_debug("DLCI %d goes open.\n", dlci->addr);
- 	/* Send current modem state */
- 	if (dlci->addr) {
--		gsm_modem_send_initial_msc(dlci);
-+		gsm_modem_update(dlci, 0, false);
- 	} else {
- 		/* Start keep-alive control */
- 		gsm->ka_num = 0;
-@@ -4137,9 +4136,10 @@ static void gsm_modem_upd_via_data(struc
-  *	gsm_modem_upd_via_msc	-	send modem bits via control frame
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
-  */
- 
--static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk, bool wait)
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1758,6 +1758,9 @@ static void copy_vmcs12_to_shadow(struct
+ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
  {
- 	u8 modembits[3];
- 	struct gsm_control *ctrl;
-@@ -4156,6 +4156,8 @@ static int gsm_modem_upd_via_msc(struct
- 		modembits[2] = (brk << 4) | 2 | EA; /* Length, Break, EA */
- 		len++;
- 	}
-+	if (!wait)
-+		return gsm_control_command(dlci->gsm, CMD_MSC, modembits, len);
- 	ctrl = gsm_control_send(dlci->gsm, CMD_MSC, modembits, len);
- 	if (ctrl == NULL)
- 		return -ENOMEM;
-@@ -4163,34 +4165,13 @@ static int gsm_modem_upd_via_msc(struct
- }
+ #ifdef CONFIG_KVM_HYPERV
++	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
+ 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
+ 	struct hv_enlightened_vmcs *evmcs = nested_vmx_evmcs(vmx);
+ 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(&vmx->vcpu);
+@@ -1766,6 +1769,9 @@ static void copy_enlightened_to_vmcs12(s
+ 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
+ 	vmcs12->guest_rip = evmcs->guest_rip;
  
- /**
-- * gsm_modem_send_initial_msc - Send initial modem status message
-- *
-- * @dlci channel
-- *
-- * Send an initial MSC message after DLCI open to set the initial
-- * modem status lines. This is only done for basic mode.
-- * Does not wait for a response as we cannot block the input queue
-- * processing.
-- */
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci)
--{
--	u8 modembits[2];
--
--	if (dlci->adaption != 1 || dlci->gsm->encoding != GSM_BASIC_OPT)
--		return 0;
--
--	modembits[0] = (dlci->addr << 2) | 2 | EA; /* DLCI, Valid, EA */
--	modembits[1] = (gsm_encode_modem(dlci) << 1) | EA;
--	return gsm_control_command(dlci->gsm, CMD_MSC, (const u8 *)&modembits, 2);
--}
--
--/**
-  *	gsm_modem_update	-	send modem status line state
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
-  */
- 
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait)
- {
- 	if (dlci->gsm->dead)
- 		return -EL2HLT;
-@@ -4200,7 +4181,7 @@ static int gsm_modem_update(struct gsm_d
- 		return 0;
- 	} else if (dlci->gsm->encoding == GSM_BASIC_OPT) {
- 		/* Send as MSC control message. */
--		return gsm_modem_upd_via_msc(dlci, brk);
-+		return gsm_modem_upd_via_msc(dlci, brk, wait);
- 	}
- 
- 	/* Modem status lines are not supported. */
-@@ -4266,7 +4247,7 @@ static void gsm_dtr_rts(struct tty_port
- 		modem_tx &= ~(TIOCM_DTR | TIOCM_RTS);
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		gsm_modem_update(dlci, 0);
-+		gsm_modem_update(dlci, 0, true);
- 	}
- }
- 
-@@ -4472,7 +4453,7 @@ static int gsmtty_tiocmset(struct tty_st
- 
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		return gsm_modem_update(dlci, 0);
-+		return gsm_modem_update(dlci, 0, true);
- 	}
- 	return 0;
- }
-@@ -4554,7 +4535,7 @@ static void gsmtty_throttle(struct tty_s
- 		dlci->modem_tx &= ~TIOCM_RTS;
- 	dlci->throttled = true;
- 	/* Send an MSC with RTS cleared */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static void gsmtty_unthrottle(struct tty_struct *tty)
-@@ -4566,7 +4547,7 @@ static void gsmtty_unthrottle(struct tty
- 		dlci->modem_tx |= TIOCM_RTS;
- 	dlci->throttled = false;
- 	/* Send an MSC with RTS set */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static int gsmtty_break_ctl(struct tty_struct *tty, int state)
-@@ -4584,7 +4565,7 @@ static int gsmtty_break_ctl(struct tty_s
- 		if (encode > 0x0F)
- 			encode = 0x0F;	/* Best effort */
- 	}
--	return gsm_modem_update(dlci, encode);
-+	return gsm_modem_update(dlci, encode, true);
- }
- 
- static void gsmtty_cleanup(struct tty_struct *tty)
++	if ((hv_clean_fields & runtime_controls) != runtime_controls)
++		vmx->nested.force_msr_bitmap_recalc = true;
++
+ 	if (unlikely(!(hv_clean_fields &
+ 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_ENLIGHTENMENTSCONTROL))) {
+ 		hv_vcpu->nested.pa_page_gpa = evmcs->partition_assist_page;
 
 
