@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B1F3D1AA6;
-	Fri,  9 Oct 2026 14:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DDA4EB85C;
+	Fri,  9 Oct 2026 14:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557342; cv=none; b=u+W7v+CQJ95KdHyLFl5/kU0fVB2S1sePdLaj0579nJ3ralvJ030C42XvMFVtc9RmKctuqgDXABGsJI2Kh+IZ76kRoKUxNalSc1pvJKmG0wlq982ihU25HVQmb0WqqN1My0IOTx58UsGSslSbnmEFmF++B2A3BeDt7uZewxFYHPk=
+	t=1791557344; cv=none; b=RvvOzzSogK0d3uoo8gyNzo2J5Qy/VAB7+nnod3OoL/8IwFRk3MciyzoOowiyhBPvAR8WM/ZVVSFq/7GK+f4jJ8+jyvdeuRuCH+tJiiXj67cLsCBD0Ufasd5UFJhCwihNDsbsH5EAPNffIIFObyVGdu8wjLmxFcVTMeb1WLXj17M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557342; c=relaxed/simple;
-	bh=9W/3T3bqmwM/NO6BDYNwnN4Nl+EMbKSAtyMjn6+29SQ=;
+	s=arc-20240116; t=1791557344; c=relaxed/simple;
+	bh=9VDkY1L7PXOsPAT+hYQeYZ/Npt2M9xTzajLGuYV8Jks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTFBIVAH/LJsCVPkBgngcHaPc9yrBCvRQ7H+QoAOwqBbFTP3t4lOv3J8DhKF4kdPD8oPFzrFNTE+ZZkqOP/CXw7SJRZODXwb1Z2XpiBmJ/nw6Bs+2hPyXnf/j/8ltD1KDNhf6Lz7tJrUOdM1NuEUZPnU9eBqqvQIe8NZ1qTBENw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibPt9RFk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfCMwJLUOI5XVBK5jI+QmO57evalYKTkRyGSyeXG1PNJ+iFyidqAihulV3bhynDJsPHzAaUrVoSO6Tf0/BlzysrohJNVDX7FvC8H38hGbqcTuf5i6E22emOAqMCoPz9/NNW8U3yB6WpMUDBbDGr2+5h5laf9UYIWW3/gekoEPRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02HPhUEW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibPt9RFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC351F000FF;
-	Fri,  9 Oct 2026 14:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02HPhUEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1151F000FF;
+	Fri,  9 Oct 2026 14:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557340;
-	bh=GAaokJJHxnAvZCAW6fJLe0fVKMDlVny55ID3nTcKl9o=;
+	s=korg; t=1791557343;
+	bh=9IzHz7q8K0JY4qiOcNprTaEXgyVa4G1Wjd5weLFWdxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ibPt9RFkP/zHcZsJdFz83dkpDchW2+NHOxmhl7lX/XDfe4ZSlIbZq24VM6MzliDik
-	 tzlxqKQ+kYcWvuRSQJRXyx0D93TG0KG/pQXnscStmj8U/khhep6t6/ycHCa/GHYhJV
-	 /swGr0VUW9qBbwnh3gkl2aHPMCJzPwCTdbwAI8rk=
+	b=02HPhUEWhAThA3CHy+eQ9L3ywFYx5g20Sk9L5Gf5hT0moby2nYq4CwgyUEU31ofbp
+	 UgPhcx2vyoU/+pOur8xCz+R98gxt6cvm5QxhH1xL6EMmUUiXszMNGF3v/41aaYhrod
+	 THnMInvJWBj06QlQv8iA3mAfjYbYcpksFggv2EfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bill Pemberton <wfp5p@virginia.edu>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 340/428] USB: serial: quatech2: fix baud rate overflow
-Date: Fri,  9 Oct 2026 16:11:17 +0200
-Message-ID: <20261009140953.617754119@linuxfoundation.org>
+	Andrea Parri <parri.andrea@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 385/403] arm64: mm: Fix the break-before-make flush range for erratum 2645198
+Date: Fri,  9 Oct 2026 16:12:26 +0200
+Message-ID: <20261009141001.338821198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit ec06546b43b612cefc851558981b4955c0ef9e46 upstream.
+[ Upstream commit 1fef81669147d63eb8c5d3627d54eadc21173a0b ]
 
-The requested baud rate is incorrectly truncated to 16 bits so that
-line speeds above 65535 bps cannot be set.
+modify_prot_start_ptes() performs the break-before-make TLB invalidation
+required by erratum 2645198 with __flush_tlb_range(), whose third
+argument is the end address of the range.  It passes nr * PAGE_SIZE
+instead of addr + nr * PAGE_SIZE, so __do_flush_tlb_range() computes the
+page count as (nr * PAGE_SIZE - addr) >> PAGE_SHIFT.
 
-Use 32 bits for the rate while rejecting rates outside of
-[50,921600] to avoid having the 16-bit divisor overflow.
+For addr > nr * PAGE_SIZE that subtraction underflows, the page count
+exceeds the batching limit and the flush degenerates to flush_tlb_mm(),
+so a single-page mprotect broadcasts an ASID-wide invalidation and a
+full-range mmu notifier call.
 
-Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
-Cc: stable@vger.kernel.org	# 3.5
-Cc: Bill Pemberton <wfp5p@virginia.edu>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+For addr <= nr * PAGE_SIZE only [addr, nr * PAGE_SIZE) is invalidated,
+and when the cleared batch starts below nr * PAGE_SIZE the tail is left
+in the TLB.  The workaround then no longer covers the whole batch, and
+for addr == nr * PAGE_SIZE the flush is empty.
+
+On affected Cortex-A715 CPUs, this can corrupt ESR_ELx and FAR_ELx on the
+next instruction abort caused by a permission fault.
+
+Pass addr + nr * PAGE_SIZE as the end address.
+
+Fixes: 7efa1cd5f89b5 ("arm64: add batched versions of ptep_modify_prot_start/commit")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ sashal: Adapted __flush_tlb_range() arguments from PAGE_SIZE, 3, TLBF_NOWALKCACHE to PAGE_SIZE, true, 3. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/quatech2.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ arch/arm64/mm/mmu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/quatech2.c
-+++ b/drivers/usb/serial/quatech2.c
-@@ -52,6 +52,7 @@
- #define QT2_XMIT_FLUSH      0x05  /* no following info */
- #define QT2_CONTROL_ESCAPE  0xff  /* pass through previous 2 control bytes */
- 
-+#define  MIN_BAUD_RATE              50
- #define  MAX_BAUD_RATE              921600
- #define  DEFAULT_BAUD_RATE          9600
- 
-@@ -156,7 +157,7 @@ static inline int calc_baud_divisor(int
- 
- static inline int qt2_set_port_config(struct usb_device *dev,
- 				      unsigned char port_number,
--				      u16 baudrate, u16 lcr)
-+				      speed_t baudrate, u16 lcr)
- {
- 	int divisor = calc_baud_divisor(baudrate);
- 	u16 index = ((u16) (lcr << 8) | (u16) (port_number));
-@@ -257,9 +258,9 @@ static void qt2_set_termios(struct tty_s
- 	struct usb_device *dev = port->serial->dev;
- 	struct qt2_port_private *port_priv;
- 	struct ktermios *termios = &tty->termios;
--	u16 baud;
- 	unsigned int cflag = termios->c_cflag;
- 	u16 new_lcr = 0;
-+	speed_t baud;
- 	int status;
- 
- 	port_priv = usb_get_serial_port_data(port);
-@@ -277,6 +278,18 @@ static void qt2_set_termios(struct tty_s
- 	if (!baud)
- 		baud = 9600;
- 
-+	if (baud < MIN_BAUD_RATE || baud > MAX_BAUD_RATE) {
-+		if (old_termios)
-+			baud = tty_termios_baud_rate(old_termios);
-+		else
-+			baud = clamp(baud, MIN_BAUD_RATE, MAX_BAUD_RATE);
-+
-+		tty_encode_baud_rate(tty, baud, baud);
-+
-+		if (!baud)
-+			baud = 9600;
-+	}
-+
- 	status = qt2_set_port_config(dev, port_priv->device_port, baud,
- 				     new_lcr);
- 	if (status < 0)
-@@ -373,7 +386,7 @@ static int qt2_open(struct tty_struct *t
- 	port_priv->device_port = (u8) device_port;
- 
- 	if (tty)
--		qt2_set_termios(tty, port, &tty->termios);
-+		qt2_set_termios(tty, port, NULL);
- 
- 	return 0;
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -2150,7 +2150,7 @@ pte_t modify_prot_start_ptes(struct vm_a
+ 		 * in cases where cpu is affected with errata #2645198.
+ 		 */
+ 		if (pte_accessible(vma->vm_mm, pte) && pte_user_exec(pte))
+-			__flush_tlb_range(vma, addr, nr * PAGE_SIZE,
++			__flush_tlb_range(vma, addr, addr + nr * PAGE_SIZE,
+ 					  PAGE_SIZE, true, 3);
+ 	}
  
 
 
