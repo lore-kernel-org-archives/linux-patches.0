@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574704D7950;
-	Fri,  9 Oct 2026 14:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4AA30F819;
+	Fri,  9 Oct 2026 14:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555386; cv=none; b=BpBVPvNw0+ZdfWEZuzUgGCztP+3VToPX8M4/4LptCO/KWHFlYVsAFPQvONbFC1TE5ysVdZYYewhjIENKSaFYBi4UNutTXfJMY6Da3bMyWgaHWmGvPg4df0yxohJyyTSbEB0FerOKAjHJiIyfavxTpJcQ9I2PgvPM0BqifqUhvEM=
+	t=1791555387; cv=none; b=k8qE5P9RFRbnRI6y/nX4OMGkuOUK+llG4aFc45in9eJ56RTX6HrR7IN3GqZ76flCPVNyuBEAws+2j7oqNRRWDxvexNGj66FsPVGK580RHHUuO8X6C6QclKRPCA50cZJMSoWbojFkD5W6c6MO+P2QJ9+7gH6acylriu+O4i7XxXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555386; c=relaxed/simple;
-	bh=fIuRxm4MQkj+RCcuJyEVLVIjxxFMQb9MHlpWcwbK74s=;
+	s=arc-20240116; t=1791555387; c=relaxed/simple;
+	bh=SYEGKmD1Pfm8uiDaw1l5cMjPU+SFTc7lEmvRHlJfMiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fntmYLulRCcIJamxrualmKT1O+MTAj3XBtosw96VmQGSZGMmEIqO5l6nuT3NWw+kZa65JuVwJZNcjUKiJCk7G2+Fwz3nws+04jrV0K9nI3SY/Qp44So6Fbn9RJ2DnGUzEfASuYfogHfUy5CWCE8LvO7/QooBM2SC9KXulr58lyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQzEcQaA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pNaZ0jNfoPwxUHScCjg5zm+H+jQ6rosSgJnuMY/B9ydBFvDy0tW+GB7nNWnQLgT/v2ZvZCHvnXXVVZcpxgNUMxAS0D3CHigl/nZ2E9SWpDIH1IXlR/5SMHZXeIqkJz0fB/0Qxwo/9309rVRYlYqg4/xzajRABOEqFLuVly6HZPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Q9nKVhv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQzEcQaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01491F00893;
-	Fri,  9 Oct 2026 14:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Q9nKVhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AE51F00898;
+	Fri,  9 Oct 2026 14:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555379;
-	bh=hRVNlakqDJLox0HCX7PR81J251+ZUksEwYPJcHUTR4w=;
+	s=korg; t=1791555381;
+	bh=O8i69GWhhc5OKjIqOCauw1DU477FhtJ8LDiWMN1T5FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gQzEcQaAutkEsaShGqGD1JO2a0m4cYtiYs1uSQ/Qg5esjFw9RBbzwPuNMTJyNEzun
-	 FenS7cmLQlgMA2ZX2t1/g5agppYPMeFvLDiG6XYTtpyyWdL4eZg3u2LvOEK6lI7v4G
-	 bfSbiF4Br8IB3cojdT32QkQAsAOqDLonbxn9zouk=
+	b=2Q9nKVhv4W5f5R7STv1XrmfL8hayS3M2QmOYy44imrRq5rnkdAs3ovXMXOucajWNH
+	 dx87V01UG5QdX/ECTr0uwxTdtrWsonMmOCQ2z+25YT5TmHBhOVCBYd31rRyeZf16rf
+	 K7j0fkms5CywcnMy1GDMdxBZCyw17RbwjmGtqtKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 038/403] rtc: spear: initialize IRQ state before requesting alarm IRQ
-Date: Fri,  9 Oct 2026 16:06:39 +0200
-Message-ID: <20261009140952.999087232@linuxfoundation.org>
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 039/403] sctp: check RCV_SHUTDOWN after the sendmsg connect wait
+Date: Fri,  9 Oct 2026 16:06:40 +0200
+Message-ID: <20261009140953.022194704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -50,58 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 055ef5ce9f67a6a3a1363fa663007f8196cc0fb8 upstream.
+commit 4f1da630d13de0370e2f6361f961f1c8b384af1c upstream.
 
-devm_request_irq() enables the interrupt before it returns, so the handler
-may run while probe is still initializing the device. Initialize the MMIO
-address and spinlock before requesting the alarm IRQ.
+sctp_wait_for_connect() drops the socket lock while it sleeps. An
+out-of-the-blue ABORT can then be processed from the socket backlog and
+unlink the association. If a concurrent shutdown(fd, SHUT_RD) sets
+RCV_SHUTDOWN, the waiter breaks with err == 0 before checking
+asoc->base.dead. Its final sctp_association_put() can then free the
+association, leaving sctp_sendmsg_to_asoc() to continue with a dangling
+pointer.
 
-Fixes: 0942a71e435f ("rtc: add support for spear rtc")
+Check RCV_SHUTDOWN along with the wait error in sctp_sendmsg_to_asoc()
+before using the association again. The check only accesses the socket,
+so it needs no additional association reference. Return the existing
+-ESRCH so that sctp_sendmsg() skips freeing a new association that may
+already have been destroyed.
+
+Keep sctp_wait_for_connect() unchanged to preserve its behavior for the
+connect() caller.
+
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260902080318.3498434-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260926095606.68601-1-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-spear.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/sctp/socket.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-spear.c
-+++ b/drivers/rtc/rtc-spear.c
-@@ -363,6 +363,12 @@ static int spear_rtc_probe(struct platfo
- 	if (irq < 0)
- 		return irq;
- 
-+	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(config->ioaddr))
-+		return PTR_ERR(config->ioaddr);
-+
-+	spin_lock_init(&config->lock);
-+
- 	status = devm_request_irq(&pdev->dev, irq, spear_rtc_irq, 0, pdev->name,
- 			config);
- 	if (status) {
-@@ -371,10 +377,6 @@ static int spear_rtc_probe(struct platfo
- 		return status;
- 	}
- 
--	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(config->ioaddr))
--		return PTR_ERR(config->ioaddr);
--
- 	config->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(config->clk))
- 		return PTR_ERR(config->clk);
-@@ -383,7 +385,6 @@ static int spear_rtc_probe(struct platfo
- 	if (status < 0)
- 		return status;
- 
--	spin_lock_init(&config->lock);
- 	platform_set_drvdata(pdev, config);
- 
- 	config->rtc->ops = &spear_rtc_ops;
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1843,7 +1843,7 @@ static int sctp_sendmsg_to_asoc(struct s
+ 		if (asoc->ep->intl_enable) {
+ 			timeo = sock_sndtimeo(sk, 0);
+ 			err = sctp_wait_for_connect(asoc, &timeo);
+-			if (err) {
++			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
+ 				err = -ESRCH;
+ 				goto err;
+ 			}
 
 
