@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC99F3431F8;
-	Fri,  9 Oct 2026 14:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C254E36CA;
+	Fri,  9 Oct 2026 14:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555595; cv=none; b=BE+6s6eNg9Tt9LFamKBwElJBBJOoYpyJNvmflHI+f7GcblApcBK+JL59QWmT8cmwAeSTIhjyQlxYvzJz8sLaO6d764x3RQ/YqKLRNBmK0lwhWXa2rAMtL85Zm51URuBWnNg9i4DwD4/BIMUz3fTbJvL/ioNKp/zdvki4MKyrORM=
+	t=1791555603; cv=none; b=gfo1J6E0jMEQpXo5+FaUwfM+VU34Bocwu7Xpllij+MNH9SrLjkMtIE9lBuZroTXhE+PXGDHm7TFSa6P4va8FXrdT8NsRseRvZqyWwrquwLDJX0JOgL9A5MIRKMqZagOqEx4Qrd/qEqW5/mpmYfS4XnpAL5iWO9Q2DS5zDOLecn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555595; c=relaxed/simple;
-	bh=tACkVjkqsnSV+yAF0x5FQBACN7gHBG7kAM056Cbpms0=;
+	s=arc-20240116; t=1791555603; c=relaxed/simple;
+	bh=LIPAMNA4MFYUztNE4ZfkXuYKADAS5/F2NjDiy0Yj84s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uN0MV6f4EKXSyIS6xiuOS71XvZteO6jm8fTqc/w6ZDdl68AyqPZZvxvpFA/xHDUO8XajJSbxZ88+vZrLEavr8qxG9zv9+71SKee1SCueGt33REA0vXOtRrYcoFF1aKuAMnftVgzFVw+mrzMkhO+wFeTup0flZRC4agwkoGYf4pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFeFVBLH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzLxEC6wsMgFe3yXcB/iboejLfAPAubnxuLgPA8fxpfIuZEUCu1HyFKRaZ2bFnKWvtbzMAXfiiqspzf06ywQIBv2YuKNqmuwiqnv0S//K/Ve3wBFAEIN0+1VjuqZG7tBnOCSvQPjIYB0VAEj6TXTVayPGPrVGV6E78KPsDxnXHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoRMfZRP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFeFVBLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154471F00893;
-	Fri,  9 Oct 2026 14:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoRMfZRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C2B1F00898;
+	Fri,  9 Oct 2026 14:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555591;
-	bh=9kKowbD1/hkigffW+6CjqMUpuO80h3KFhgnlq7TzNvI=;
+	s=korg; t=1791555594;
+	bh=HshEQfc9xJtG6KBapUSzlhs6dlt2h1i2DHNLvK9wTjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFeFVBLHT/dGVuunUD/B07GZOZ2V/bmxOgecY5apcgi4l8rqQifJEf4rFdJbVs1kI
-	 xHY+J7DtNYDpG+3urMuMOKyduvwiy4/kAK2EJiA440MsxA/5vKJzZhhMqmMDbD0Vsz
-	 6E3WqDvoVG/nZOb06On8euYGcPEdcfzUS7rcgqqo=
+	b=YoRMfZRP1KmSnNocL7hDmNC4FkzrWZaoJe5NgUup1JisppE6G/4dVlTkJu+j7hz4C
+	 a97ZX8gov3GddyAFSL+9Zsac1YAhshM3wPWTnP8lAm7otZ6sR4e3+DingA9o266uzk
+	 +0xqO+Ao5PARHYrHdAtjRwi2K2/aVEzxeR7Jy2vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Hu <huhai@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/403] blk-mq: set RQF_USE_SCHED when the operation is known
-Date: Fri,  9 Oct 2026 16:07:25 +0200
-Message-ID: <20261009140954.057836176@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 034/428] net: gso: limit recursive IP-in-IP segmentation
+Date: Fri,  9 Oct 2026 16:06:11 +0200
+Message-ID: <20261009140946.835251620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,194 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit ab6c756f28c741d704a7c3e04814bfc3adf6f818 ]
+commit 006c8b834aed8b02bd8fb9fb05e9e7ead37d1763 upstream.
 
-The cached requests are allocated for one operation but can be handed
-out for another. A passthrough command has RQF_USE_SCHED cleared, so
-using those flags for a subsequent read/write bio will insert it into
-the scheduler without ->prepare_request() and frees it without
-->finish_request(). For kyber, this leaks the domain token acquired at
-dispatch and stalls the queue.
+IP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()
+for each nested IP header. encap_level tracks header bytes, not callback
+depth, so a deep chain can exhaust the kernel stack. Making
+inet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP
+GSO/TSO later made the path reachable. The IPv6 stackable path was
+introduced separately and uses the same guard.
 
-Don't set RQF_USE_SCHED based on the first operation the batch happened
-to be allocated for. Instead, set it after the request is claimed by an
-operation. Introduce a helper function, blk_mq_rq_late_init() for this,
-and absorb blk_mq_rq_time_init() since the two run together.
+Count IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once
+per top-level GSO operation and preserved across GRE/UDP context changes.
+Use the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first
+five entries pass, and the sixth returns -EINVAL before dispatching
+another GSO callback.
 
-Fixes: 4b6a5d9cea91 ("block: enable batched allocation for blk_mq_alloc_request()")
-Link: https://lore.kernel.org/linux-block/20260916151655.2588-1-15815827059@163.com/
-Reported-by: Henry Hu <huhai@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260922172711.1573186-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3347c9602955 ("ipv4: gso: make inet_gso_segment() stackable")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/all/cover.1790157745.git.zihanx@nebusec.ai/
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260924051521.32568-2-zihanx@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c      | 59 ++++++++++++++++++++++++++++-----------------
- block/mq-deadline.c |  2 +-
- 2 files changed, 38 insertions(+), 23 deletions(-)
+ include/net/gso.h      |    8 ++++++++
+ net/core/gso.c         |    1 +
+ net/ipv4/af_inet.c     |    3 +++
+ net/ipv6/ip6_offload.c |    4 ++++
+ 4 files changed, 16 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index d9a7e04ad1794..ba0c48d58e134 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -447,16 +447,6 @@ static struct request *blk_mq_rq_ctx_init(struct blk_mq_alloc_data *data,
- 	WRITE_ONCE(rq->deadline, 0);
- 	req_ref_set(rq, 1);
+--- a/include/net/gso.h
++++ b/include/net/gso.h
+@@ -19,10 +19,18 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
++	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+ #define SKB_GSO_CB(skb) ((struct skb_gso_cb *)((skb)->cb + SKB_GSO_CB_OFFSET))
  
--	if (rq->rq_flags & RQF_USE_SCHED) {
--		struct elevator_queue *e = data->q->elevator;
--
--		INIT_HLIST_NODE(&rq->hash);
--		RB_CLEAR_NODE(&rq->rb_node);
--
--		if (e->type->ops.prepare_request)
--			e->type->ops.prepare_request(rq);
--	}
--
- 	return rq;
- }
- 
-@@ -493,6 +483,12 @@ __blk_mq_alloc_requests_batch(struct blk_mq_alloc_data *data)
- 	return rq_list_pop(data->cached_rqs);
- }
- 
-+static bool blk_op_bypass_sched(blk_opf_t opf)
++static inline bool gso_recursion_inc_test(struct sk_buff *skb,
++					  unsigned int limit)
 +{
-+	return (opf & REQ_OP_MASK) == REQ_OP_FLUSH ||
-+	       blk_op_is_passthrough(opf);
++	return ++SKB_GSO_CB(skb)->recursion_counter > limit;
 +}
 +
- static void blk_mq_limit_depth(struct blk_mq_alloc_data *data)
+ static inline int skb_tnl_header_len(const struct sk_buff *inner_skb)
  {
- 	struct elevator_mq_ops *ops;
-@@ -513,12 +509,10 @@ static void blk_mq_limit_depth(struct blk_mq_alloc_data *data)
- 	 * Flush/passthrough requests are special and go directly to the
- 	 * dispatch list, they are not subject to the async_depth limit.
- 	 */
--	if ((data->cmd_flags & REQ_OP_MASK) == REQ_OP_FLUSH ||
--	    blk_op_is_passthrough(data->cmd_flags))
-+	if (blk_op_bypass_sched(data->cmd_flags))
- 		return;
+ 	return (skb_mac_header(inner_skb) - inner_skb->head) -
+--- a/net/core/gso.c
++++ b/net/core/gso.c
+@@ -117,6 +117,7 @@ struct sk_buff *__skb_gso_segment(struct
  
- 	WARN_ON_ONCE(data->flags & BLK_MQ_REQ_RESERVED);
--	data->rq_flags |= RQF_USE_SCHED;
+ 	SKB_GSO_CB(skb)->mac_offset = skb_headroom(skb);
+ 	SKB_GSO_CB(skb)->encap_level = 0;
++	SKB_GSO_CB(skb)->recursion_counter = 0;
  
- 	/*
- 	 * By default, sync requests have no limit, and async requests are
-@@ -529,6 +523,29 @@ static void blk_mq_limit_depth(struct blk_mq_alloc_data *data)
- 		ops->limit_depth(data->cmd_flags, data);
- }
+ 	skb_reset_mac_header(skb);
+ 	skb_reset_mac_len(skb);
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1375,6 +1375,9 @@ struct sk_buff *inet_gso_segment(struct
+ 	int id;
  
-+/*
-+ * Finish initializing a request once it has been claimed for an operation.
-+ * Cached requests are allocated before that operation is known.
-+ */
-+static void blk_mq_rq_late_init(struct request *rq, u64 alloc_time_ns)
-+{
-+	struct elevator_queue *e;
-+
-+	blk_mq_rq_time_init(rq, alloc_time_ns);
-+
-+	if (!(rq->rq_flags & RQF_SCHED_TAGS) || (rq->rq_flags & RQF_RESV) ||
-+	    blk_op_bypass_sched(rq->cmd_flags))
-+		return;
-+
-+	rq->rq_flags |= RQF_USE_SCHED;
-+	INIT_HLIST_NODE(&rq->hash);
-+	RB_CLEAR_NODE(&rq->rb_node);
-+
-+	e = rq->q->elevator;
-+	if (e->type->ops.prepare_request)
-+		e->type->ops.prepare_request(rq);
-+}
-+
- static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
- {
- 	struct request_queue *q = data->q;
-@@ -557,7 +574,7 @@ static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
- 	if (data->nr_tags > 1) {
- 		rq = __blk_mq_alloc_requests_batch(data);
- 		if (rq) {
--			blk_mq_rq_time_init(rq, alloc_time_ns);
-+			blk_mq_rq_late_init(rq, alloc_time_ns);
- 			return rq;
- 		}
- 		data->nr_tags = 1;
-@@ -585,7 +602,7 @@ static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
- 	if (!(data->rq_flags & RQF_SCHED_TAGS))
- 		blk_mq_inc_active_requests(data->hctx);
- 	rq = blk_mq_rq_ctx_init(data, blk_mq_tags_from_data(data), tag);
--	blk_mq_rq_time_init(rq, alloc_time_ns);
-+	blk_mq_rq_late_init(rq, alloc_time_ns);
- 	return rq;
- }
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*iph))))
+ 		goto out;
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -17,6 +17,7 @@
+ #include <net/udp.h>
+ #include <net/gro.h>
+ #include <net/gso.h>
++#include <net/ip_tunnels.h>
  
-@@ -632,8 +649,6 @@ static struct request *blk_mq_alloc_cached_request(struct request_queue *q,
- 		if (plug->nr_ios == 1)
- 			return NULL;
- 		rq = blk_mq_rq_cache_fill(q, plug, opf, flags);
--		if (!rq)
--			return NULL;
- 	} else {
- 		rq = rq_list_peek(&plug->cached_rqs);
- 		if (!rq || rq->q != q)
-@@ -645,11 +660,11 @@ static struct request *blk_mq_alloc_cached_request(struct request_queue *q,
- 			return NULL;
+ #include "ip6_offload.h"
+ #include "tcpv6_offload.c"
+@@ -104,6 +105,9 @@ static struct sk_buff *ipv6_gso_segment(
+ 	bool gso_partial;
  
- 		rq_list_pop(&plug->cached_rqs);
--		blk_mq_rq_time_init(rq, blk_time_get_ns());
-+		rq->cmd_flags = opf;
-+		INIT_LIST_HEAD(&rq->queuelist);
-+		blk_mq_rq_late_init(rq, blk_time_get_ns());
- 	}
- 
--	rq->cmd_flags = opf;
--	INIT_LIST_HEAD(&rq->queuelist);
- 	return rq;
- }
- 
-@@ -761,7 +776,7 @@ struct request *blk_mq_alloc_request_hctx(struct request_queue *q,
- 	if (!(data.rq_flags & RQF_SCHED_TAGS))
- 		blk_mq_inc_active_requests(data.hctx);
- 	rq = blk_mq_rq_ctx_init(&data, blk_mq_tags_from_data(&data), tag);
--	blk_mq_rq_time_init(rq, alloc_time_ns);
-+	blk_mq_rq_late_init(rq, alloc_time_ns);
- 	rq->__data_len = 0;
- 	rq->phys_gap_bit = 0;
- 	rq->__sector = (sector_t) -1;
-@@ -3189,9 +3204,9 @@ void blk_mq_submit_bio(struct bio *bio)
- new_request:
- 	if (rq) {
- 		rq_qos_throttle(rq->q, bio);
--		blk_mq_rq_time_init(rq, blk_time_get_ns());
- 		rq->cmd_flags = bio->bi_opf;
- 		INIT_LIST_HEAD(&rq->queuelist);
-+		blk_mq_rq_late_init(rq, blk_time_get_ns());
- 	} else {
- 		rq = blk_mq_get_new_requests(q, plug, bio);
- 		if (unlikely(!rq)) {
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 29d00221fbea6..555ab81bc12a8 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -704,7 +704,7 @@ static void dd_insert_requests(struct blk_mq_hw_ctx *hctx,
- 	blk_mq_free_requests(&free);
- }
- 
--/* Callback from inside blk_mq_rq_ctx_init(). */
-+/* Callback from inside blk_mq_rq_late_init(). */
- static void dd_prepare_request(struct request *rq)
- {
- 	rq->elv.priv[0] = NULL;
--- 
-2.53.0
-
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*ipv6h))))
+ 		goto out;
 
 
