@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F30B39FCCD;
-	Fri,  9 Oct 2026 14:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ADF125AA;
+	Fri,  9 Oct 2026 14:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556411; cv=none; b=kq0gdGL809bA3atQdq2WLcoZ476xsZ5zhpRlydZqlwEzgTRc1DRNlR0XBXk1Po9+Rx2xxR9f1g8c8LOtrRx77jcyEbT3Svfg0tzlxxTM8WBe1xTx3KgedwyKpSyGWwVE+Rkse9uC3Vm7qDNeI4P+CmwS3inu53k2OBudNaABCmo=
+	t=1791556414; cv=none; b=KLXJlfvRXvSItq9KPTkLxlrB7Lfp1RabhvTa2w6f6kAhvL+Gsp3/hWTUiJ0ZYO3uTzBgrW8/vQh74wqGIr8sRNcF5X8vRvTS0eW43oLWJw+uKmb3at260JU4V9pOZ1R0s5EK9I+atmACExBJNJrViy0ixvl/vPX1qcATP3KeAuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556411; c=relaxed/simple;
-	bh=hC0Agdc5tzhSgGKL6EkS97MBDMk+dpMozrMHDe0kxFk=;
+	s=arc-20240116; t=1791556414; c=relaxed/simple;
+	bh=YYiFt9FD4Ds2qaWez9nKeVLqp7Hlo1rLRfbeT9FxrK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjf8ep3U4DHnM54PKu7851i8kPohQpq2fTIJlTtkrzL11Q+qDPVRNITvWJlE/2MRGR6GWoKF3x7iW2uM89/b030LE8oIJM4jJlSZFCyNs1xvHYlk8mQUQyN6G3Pt1mHiMFJGIW8WjQojqbxGZKyyv2x1BsmcacrsAiJmc0Ifc/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuQnTlUj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nGRh0f+8K1v19Zjv6dqdz1neReV6E4LlG9xaMMrNt70rPgyk8C+tSiv4uk1wH8Jif0KYqYKTOE/IdaXcfAts1ZdfXjm9CV46yKpX/A6/LUOTY6FnJBSc0qmGANYWKtmK0iOD+o7ZeNmOPIsEUYAl9onvh1ebZMAcgPRMuLtb9kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zeLpxRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuQnTlUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12E91F000FF;
-	Fri,  9 Oct 2026 14:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zeLpxRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A3F1F000FF;
+	Fri,  9 Oct 2026 14:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556410;
-	bh=x6kzT9w6wCVDmszNorJo+OTKOVQE2QkFlteK0Ti+Dxo=;
+	s=korg; t=1791556413;
+	bh=0OOTIISfAOs9/C5gxLQqL3rXQkDAyWcopxSxuRHnsvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuQnTlUjTVuEhRattZGH9TYDY7iKjQ0cdScUgWLVbRA0/HlS0g4QenG6G6ahyPOXV
-	 LSBBWHF9RMkz/FfONBKU+7/qPs4vsZAEV/P5zvQAxu+vcUmU9+VA7e5jWCP714Hyip
-	 6AG96HM5JdZLfPZh6AywlsNhWLcFpgneOA18oLEk=
+	b=1zeLpxRfDOiguPLLQ26mMWmVzPeArcwONAOblFKQcS7mnua7UyXFUCfrTXvRTVotp
+	 JChY0xl09g9SDZ9O531DWQnPfdU90U4zC81gX/DNX0Xn2dLkcf26yNu/A+4/5cE0O0
+	 lCTvCXXv71NZF1P+gv2XqFSUIQMCEqSY3xcgsbxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 229/403] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
-Date: Fri,  9 Oct 2026 16:09:50 +0200
-Message-ID: <20261009140957.507512740@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 172/428] drm/amd/display: Fix fast updates on DCE 8.1
+Date: Fri,  9 Oct 2026 16:08:29 +0200
+Message-ID: <20261009140949.931505615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,76 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
+commit 687d31ea9ac76b299817060fa1e5582d6c752ae0 upstream.
 
-On 64-bit systems, outgoing BR/EDR connections always fall back to page
-scan repetition mode R2 with no clock offset once the system has been
-up for more than five minutes, even when inquiry found the peer only
-seconds earlier. This lengthens paging and can increase the risk of a
-Page Timeout.
+DCE8 should use legacy fast updates.
+This was already set for DCE 8.0 and 8.3, but it seems
+that DCE 8.1 (found in Kaveri chips) was forgotten.
 
-The inquiry cache stores jiffies in __u32 timestamps, but its age
-helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
--300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
-after boot on 64-bit systems. Assigning it to __u32 then drops the upper
-32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
-2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
-hci_inquiry() is affected by the same truncation when checking the whole
-cache. 32-bit systems are unaffected because unsigned long is 32 bits
-wide there.
+This fix should be backported to all kernel versions that
+have "Refactor fast update to use new HWSS build sequence",
+but this patch won't apply cleanly to older kernels due to
+another refactor in "Remove dc param from check_update".
 
-Use unsigned long for both timestamps so they have the same width as
-jiffies on 32-bit and 64-bit systems, and update the debugfs format
-specifier accordingly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
+Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923122033.1046651-2-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 57605379559e3b5044c8274a1010ec658e5e73af)
 Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    4 ++--
- net/bluetooth/hci_debugfs.c      |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -65,7 +65,7 @@ struct inquiry_entry {
- 		NAME_PENDING,
- 		NAME_KNOWN,
- 	} name_state;
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	struct inquiry_data	data;
- };
+--- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
+@@ -1148,6 +1148,8 @@ static bool dce81_construct(
+ 	dc->caps.max_cursor_size = 128;
+ 	dc->caps.min_horizontal_blanking_period = 80;
+ 	dc->caps.is_apu = true;
++	dc->debug = debug_defaults;
++	dc->check_config = config_defaults;
  
-@@ -81,7 +81,7 @@ struct discovery_state {
- 	struct list_head	all;	/* All devices found during inquiry */
- 	struct list_head	unknown;	/* Name state not known */
- 	struct list_head	resolve;	/* Name needs to be resolved */
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	bdaddr_t		last_adv_addr;
- 	u8			last_adv_addr_type;
- 	s8			last_adv_rssi;
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -367,7 +367,7 @@ static int inquiry_cache_show(struct seq
- 
- 	list_for_each_entry(e, &cache->all, all) {
- 		struct inquiry_data *data = &e->data;
--		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
-+		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
- 			   &data->bdaddr,
- 			   data->pscan_rep_mode, data->pscan_period_mode,
- 			   data->pscan_mode, data->dev_class[2],
+ 	/*************************************************
+ 	 *  Create resources                             *
 
 
