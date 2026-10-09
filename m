@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B889847141D;
-	Fri,  9 Oct 2026 14:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C694DBD62;
+	Fri,  9 Oct 2026 14:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556261; cv=none; b=o+UfcVlEgVmzuFogdQfSWr3tZENdcCfUAsqA558UBNLCGsXeXTfD+8i5OGAj04qRhOxqAWCcxV+wUhBvE7YwTC5MWfZjRfl5NWQA/cB8ExGLACWpNxgpGThc4kuNcNIyVVieD5QVTlrMe4BhMgFBwUQlzBNJxvZt2S/jfOmEi20=
+	t=1791556264; cv=none; b=hGznDujgfrdlbTjmzJOtWZaMImJfKM0HUhBoFUVCapET3A9Bb6ql54sOmQGdmHeF+lkgAkQEkrBTpTJT1pCiog8OvASXfzzby0gEKcC9YpGKPFUYzc3xlaItt/zCZRqsZqtuFZafy5J93xBPG6Bgl3GzHKgFgVCiruArq4BvgHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556261; c=relaxed/simple;
-	bh=KUV6YuYxYGXeMsRZRVMpuS28uLoTwQGU0BRyfF5aAIw=;
+	s=arc-20240116; t=1791556264; c=relaxed/simple;
+	bh=ZsLQuLocj1zMLkH8ylTV1Z/adwLjHq9BsSgDp6C+w3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8mDT6VJo+VEJMYvnmiEfOOowmLFE6sIJ/OfqGsV8zFSXxzVOiXpNlVlKpBpziZoD16Qux2+NnsAvs5HZTog/tb0MhKKe0GQuZu/bzG1eVt7NTJkArEVFplIR8+TQ2KqryxsmNm18l/flR239Hxra+pvMtH0mkN9ksQ7N47ZjeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmDcIr/P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYiIyP2+URdWScTQvzF1/wvln8R7NvjNCX8VIU8p+V8AiHxZx3SMiFbPk+u2WFlQj3Yfqq92Z9xWBv+zQb2D7ZvIYh6Dt9ejUNCjZW7uxlSzFLkipjq0QLOCsXDCFz6SwPw2AUVZzdXtlgqcnFY5T9AEXXwyNknNpVBzCOXb2fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV+A7d4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmDcIr/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97C31F000FF;
-	Fri,  9 Oct 2026 14:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV+A7d4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7931F000FF;
+	Fri,  9 Oct 2026 14:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556260;
-	bh=6zK7SnHydfrVK+hHnvdBaMlvQZCXgzLaXXdFUC/86dE=;
+	s=korg; t=1791556263;
+	bh=w/WcsbnVAfVEoMVfFlf2zQA1nGQyJ7DYJvNYlWeeXl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmDcIr/PEtpIhOsEjBqaqtILAYvlkkcrotb6yeQ76lU+4cswViCkMBc7ggob4YkR5
-	 BHFHJWVFK4fGInuTAd+Ntph4qcRHrNOWApzUUMHnOumDwP6o3Lx5XXRrRmNf/RriNe
-	 zH9iYNv/uWx6g4T6AeOYPa/4kRVX8+TdogxWIRHo=
+	b=PV+A7d4ww/bo43JplyQQCaSw0+IGqWD1OuAkD7hIs5NdLo3asukI08G3g3vN2YfEU
+	 ZIoDhEI9dNyR/XiCUduG9KMtahEd+/9qGPR3hwo2+l5eOzmQexdPTidasDILeA/6cx
+	 bYX7IkSpXQvaitpExb1qBXk3PVIvIptpFHGgDBZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 148/428] ipvs: filter some flags received in the backup server
-Date: Fri,  9 Oct 2026 16:08:05 +0200
-Message-ID: <20261009140949.420142083@linuxfoundation.org>
+	stable@kernel.org,
+	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
+	Joachim Knorr <joachim.knorr@ziehl-abegg.de>,
+	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Subject: [PATCH 6.18 206/403] serial: sc16is7xx: fix TX gap caused by kfifo circular buffer wrap-around
+Date: Fri,  9 Oct 2026 16:09:27 +0200
+Message-ID: <20261009140956.955678469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,109 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
 
-[ Upstream commit f96e91748f6304668fe647e686d199d7207d36f1 ]
+commit abfafa6fc3c17b7dffa5dce3acc8dba70ed656b9 upstream.
 
-While the IPVS SYNC protocol is not secure by design
-we can still protect the backup server from messages that
-can wreak havoc.
+kfifo_out_linear_ptr() returns only one contiguous linear segment of the
+xmit kfifo. When transmit data wraps around the end of the kfifo, only
+the first segment up to the buffer end is sent. The remaining data at
+the start of the kfifo is not sent until the next TX interrupt fires,
+resulting in a visible mid-frame TX gap on the wire.
 
-This commit addresses problems from received connection flags
-or their combinations. We now drop messages as follows:
+The resulting gap is unintended: data remains queued in the xmit kfifo,
+but the hardware TX FIFO drains empty before the remaining segment is
+sent. Such gaps can break timing-sensitive serial protocols such as
+Modbus RTU.
 
-1. the NO_CPORT+TEMPLATE combination allows lookups for normal
-connections to hit template which can break in many ways.
-While the master does not sync connections with NO_CPORT flag,
-i.e. before they are established, we still accept NO_CPORT
-without TEMPLATE.
+Modbus RTU requires a message to be transmitted as a continuous stream.
+For baud rates above 19200, the Modbus Serial Line guide recommends a
+fixed 750 us inter-character timeout. On the tested 115200-baud system,
+oscilloscope measurements showed mid-frame gaps exceeding that value.
+Receivers using the recommended timeout may therefore discard the
+incomplete message.
 
-2. ONE_PACKET: it is not sent by master, so we do not
-expect it in backup. Before now it was ignored by
-IP_VS_CONN_F_BACKUP_MASK for protocol v1 while protocol
-v0 created connections that are not hashed and dropped
-immediately. Better to apply the IP_VS_CONN_F_BACKUP_MASK
-also to the flags from v0 messages for consistency with v1.
+The incomplete transfer also causes unnecessary TX interrupts: instead
+of using all available hardware TX FIFO space in one go, the driver
+requires an extra interrupt to send the remaining segment after the
+wrap.
 
-Fixes: 87375ab47cd0 ("[IPVS]: ip_vs_ftp breaks connections using persistence")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After the tty xmit buffer was converted to a kfifo, the driver used
+uart_fifo_out() to copy data into a linear staging buffer, allowing a
+transfer to span the kfifo wrap-around boundary. Commit 133f4c00b8b2
+("serial: sc16is7xx: fix TX fifo corruption") replaced uart_fifo_out()
+with a single kfifo_out_linear_ptr() call to remove the shared TX/RX
+buffer. Since kfifo_out_linear_ptr() exposes only one contiguous
+segment, that change lost the wrap-around handling.
+
+Fix this by calling kfifo_out_linear_ptr() in a loop, advancing through
+all contiguous segments until the available hardware TX FIFO space is
+exhausted or the xmit kfifo is empty.
+
+This fixes the kfifo wrap-around gap independently of the stale-TXLVL
+refill issue.
+
+Tested on SC16IS752 over SPI driving RS-485 at 115200 baud 8N1 on an
+i.MX6ULL-based board. Oscilloscope measurements confirmed mid-frame
+breaks at the kfifo wrap-around boundary before the fix; no such breaks
+were observed afterward.
+
+Fixes: 133f4c00b8b2 ("serial: sc16is7xx: fix TX fifo corruption")
+Cc: stable@kernel.org
+Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
+Reviewed-by: Joachim Knorr <joachim.knorr@ziehl-abegg.de>
+Link: https://lore.kernel.org/linux-serial/20260623112225.82386-2-paultyson.mbewe@ziehl-abegg.de/
+Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Link: https://patch.msgid.link/20260930143207.542930-1-paultyson.mbewe@ziehl-abegg.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 5383aeafb0aed..69dc28153ec12 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -949,6 +949,21 @@ static void ip_vs_proc_conn(struct netns_ipvs *ipvs, struct ip_vs_conn_param *pa
- 	ip_vs_conn_put(cp);
- }
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -699,7 +699,6 @@ static void sc16is7xx_handle_tx(struct u
+ 	struct tty_port *tport = &port->state->port;
+ 	unsigned long flags;
+ 	unsigned int txlen;
+-	unsigned char *tail;
  
-+/* Check for incompatible flags */
-+static bool ip_vs_sync_validate_flags(u32 flags)
-+{
-+	/* We do not expect NO_CPORT, especially to allow lookups
-+	 * to hit templates
-+	 */
-+	if (flags & IP_VS_CONN_F_NO_CPORT) {
-+		if (flags & IP_VS_CONN_F_TEMPLATE)
-+			return false;
-+	}
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
-+		return false;
-+	return true;
-+}
-+
- /*
-  *  Process received multicast message for Version 0
-  */
-@@ -972,8 +987,7 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			return;
- 		}
- 		s = (struct ip_vs_sync_conn_v0 *) p;
--		flags = ntohs(s->flags) | IP_VS_CONN_F_SYNC;
--		flags &= ~IP_VS_CONN_F_HASHED;
-+		flags = ntohs(s->flags);
- 		if (flags & IP_VS_CONN_F_SEQ_MASK) {
- 			opt = (struct ip_vs_sync_conn_options *)&s[1];
- 			p += FULL_CONN_SIZE;
-@@ -986,6 +1000,13 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			p += SIMPLE_CONN_SIZE;
- 		}
- 
-+		if (!ip_vs_sync_validate_flags(flags)) {
-+			IP_VS_DBG(2, "BACKUP v0, Invalid flags 0x%X\n", flags);
-+			continue;
-+		}
-+		flags &= IP_VS_CONN_F_BACKUP_MASK;
-+		flags |= IP_VS_CONN_F_SYNC;
-+
- 		state = ntohs(s->state);
- 		if (!(flags & IP_VS_CONN_F_TEMPLATE)) {
- 			pp = ip_vs_proto_get(s->protocol);
-@@ -1141,7 +1162,13 @@ static inline int ip_vs_proc_sync_conn(struct netns_ipvs *ipvs, __u8 *p, __u8 *m
+ 	if (unlikely(port->x_char)) {
+ 		sc16is7xx_port_write(port, SC16IS7XX_THR_REG, port->x_char);
+@@ -724,9 +723,19 @@ static void sc16is7xx_handle_tx(struct u
+ 		txlen = 0;
  	}
  
- 	/* Get flags and Mask off unsupported */
--	flags  = ntohl(s->v4.flags) & IP_VS_CONN_F_BACKUP_MASK;
-+	flags = ntohl(s->v4.flags);
-+	if (!ip_vs_sync_validate_flags(flags)) {
-+		IP_VS_DBG(3, "BACKUP, Invalid flags 0x%X\n", flags);
-+		retc = 25;
-+		goto out;
+-	txlen = kfifo_out_linear_ptr(&tport->xmit_fifo, &tail, txlen);
+-	sc16is7xx_fifo_write(port, tail, txlen);
+-	uart_xmit_advance(port, txlen);
++	/* Handle circular buffer wrap-around by sending multiple segments */
++	while (txlen > 0 && !kfifo_is_empty(&tport->xmit_fifo)) {
++		unsigned char *tail;
++		unsigned int to_send;
++
++		to_send = kfifo_out_linear_ptr(&tport->xmit_fifo, &tail, txlen);
++		if (!to_send)
++			break;
++
++		sc16is7xx_fifo_write(port, tail, to_send);
++		uart_xmit_advance(port, to_send);
++		txlen -= to_send;
 +	}
-+	flags &= IP_VS_CONN_F_BACKUP_MASK;
- 	flags |= IP_VS_CONN_F_SYNC;
- 	state = ntohs(s->v4.state);
  
--- 
-2.53.0
-
+ 	uart_port_lock_irqsave(port, &flags);
+ 	if (kfifo_len(&tport->xmit_fifo) < WAKEUP_CHARS)
 
 
