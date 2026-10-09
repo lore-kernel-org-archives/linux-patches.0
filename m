@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ED4399CE9;
-	Fri,  9 Oct 2026 14:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2D3431F8;
+	Fri,  9 Oct 2026 14:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556588; cv=none; b=ZMQdRZ+A92gDdrQNZtNB6Ce33g3hGKLbHqW29wIGp+0XxlFrbsigLuIX0pCICgg1UASs9dMs72D75zYMfR4/hDiwk+P4mler6+9OGKRM8wnI3MKwVlffFLxhQ9AjqlFS0W4n4gKyuY3uGwLnT+Hi2E1jWWvYv9R+oX/NPLB17OI=
+	t=1791556591; cv=none; b=DZGDraFl3732SWmTTiPZL8UvwFW/t+mK8n40Qa3tNgo5aGDXwQb45cSjf4ONG/onXXXwR2edV1wCgOnTMN1F1pjIr/DUpI5zq+WxtoUPrTJbVqU9yq1csrFeMliSn99Y7eRiz6JjzXEbtghCbySR4PY8yvTQuLia52CQmiccNDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556588; c=relaxed/simple;
-	bh=hsS8cc2pAihrww8H1Sc73Ze8D77kbsO7lHyQzGUXlUk=;
+	s=arc-20240116; t=1791556591; c=relaxed/simple;
+	bh=2MaR9BmjSOTeC2swHWI3k8pJuRVgChI/k3/NYM4SLXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXvfKc7Dyg4/sCo/8PBsLWzC3nDnFrzKcLNP3/YYHB/cHfmSEQiz1cPzDz9NReAey5j63KcqptCJFIRxAKJpDeh53JHgie2nbwA1Xw8RgjcjuOzgVNvE+b3CrkOXt/gU3WCLG4rW0bmnWvQ/PNajiC6+Nddda+xLozBsRQHKCIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUbmBwku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bXV+ml/9FxK8A3JnEe14fjOaajKYG20AmSU23yUNPbZvTtBIX1PUPMh0o0yUqhI85xZiVY7hehISN8c3w+adO6MqY/2mA2jSk9cF7ayf/V167O8OS1GMZGTxCsbRlgU/zksjYjaqb67lcoidWuqK9LSSG3anCy+9fCoyQT0I7UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MG3KfNpi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUbmBwku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C094B1F000FF;
-	Fri,  9 Oct 2026 14:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MG3KfNpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8341F000FF;
+	Fri,  9 Oct 2026 14:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556587;
-	bh=DyTCK0WiVPlt7ETL2PCSSOGiYZWGSgiUMTWOxOrSLko=;
+	s=korg; t=1791556590;
+	bh=A/yLeQ0oV4tiocGRQem6sIseQSwd3AvCYim92QGesoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUbmBwkuUklc72OHcLjiiEjHJRMB0VBztLCHlLxiN7hFqNnG+x2iZVqE9D0w/SgVB
-	 GLGI7BkIHfzpNHn0NToxIbe5XcdEmvyeBhYUsC2nfZU3BT68+idgMTTptSckiOzn6B
-	 RNFn/Ba/EUTVG5Z0+vHb1NE3MFCE+zKHAQZWCnrY=
+	b=MG3KfNpiAsiTLg6g5I6pGsBtUNQM2QSbqLUSpAaaEiIV6Y0fXicCwt6cNbXF092cR
+	 GEvghfF9m3Igf9HF6/Ovh8tcWe67Zx3U7EYZLoj4mydIc9a+uvrOOYxBXZcLNHtM+Y
+	 vvbAYF0m+9HNHTDb3N/r3n9PeQp5wIsg0hc0LN/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.2 205/428] USB: cdc-acm: fix racy TIOCMIWAIT implementation
-Date: Fri,  9 Oct 2026 16:09:02 +0200
-Message-ID: <20261009140950.632716823@linuxfoundation.org>
+	Gabriel Schneider <gbrls@osec.io>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 260/403] KVM: x86/mmu: Bail from shadow walks if the root is invalid or a dummy
+Date: Fri,  9 Oct 2026 16:10:21 +0200
+Message-ID: <20261009140958.256646261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,106 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
+commit b6249c1d5665098c8bf12f8d3e4712bf04c775bc upstream.
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+When walking shadow page tables, immediately terminate the walk if the root
+is a "dummy" root, i.e. a root whose top-level page table is backed by the
+zero page, but otherwise doesn't exist.  If memslot creation races with a
+stage-2 page fault (EPT violation or #NPF) from L2, then if the stars align,
+KVM will attempt to walk shadow page tables using the zero page and hit a
+NULL pointer deref.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+  BUG: kernel NULL pointer dereference, address: 0000000000000021
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: Oops: 0000 [#1] SMP
+  CPU: 30 UID: 1000 PID: 941 Comm: qemu Not tainted 7.2.0-rc2-1b731e5ded48-next-vm #1741 PREEMPTLAZY
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:__kvm_mmu_invalidate_addr+0xea/0x210 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_mmu_invalidate_addr+0x92/0xe0 [kvm]
+   __kvm_inject_emulated_page_fault+0x67/0x80 [kvm]
+   ept_page_fault+0x160/0x850 [kvm]
+   kvm_mmu_do_page_fault+0x102/0x1f0 [kvm]
+   kvm_mmu_page_fault+0x8e/0x6b0 [kvm]
+   vmx_handle_exit+0x163/0x640 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0x960/0x2120 [kvm]
+   kvm_vcpu_ioctl+0x2c7/0x970 [kvm]
+   __x64_sys_ioctl+0x90/0xd0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f606d0b53bb
 
-Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
+Opportunistically harden the shadow walks against fully invalid roots, but
+WARN, as all callers are expected/required to pre-check for a valid root.
+Don't WARN in the dummy root case as the whole point of using a dummy root
+is to provide a root that's valid enough to enter the guest, i.e. it should
+Just Work for all flows except those that *need* to know about dummy roots.
+
+Alternatively, KVM could allocate a dedicated page and associated shadow
+page structure for the dummy root, which is very tempting as it such an
+approach should be more resilient against unexpected behavior.  But that
+would be a much larger and thus riskier change than simply terminating
+walks of dummy roots.
+
+Fixes: 0e3223d8d00a ("KVM: x86/mmu: Use dummy root, backed by zero page, for !visible guest roots")
+Reported-by: Gabriel Schneider <gbrls@osec.io>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260925234256.2384816-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
- drivers/usb/class/cdc-acm.h |    1 -
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -331,7 +331,6 @@ static void acm_process_notification(str
- 
- 		spin_lock_irqsave(&acm->read_lock, flags);
- 		acm->ctrlin = newctrl;
--		acm->oldcount = acm->iocount;
- 
- 		if (difference & USB_CDC_SERIAL_STATE_DSR)
- 			acm->iocount.dsr++;
-@@ -1027,11 +1026,16 @@ static int wait_serial_change(struct acm
- 	DECLARE_WAITQUEUE(wait, current);
- 	struct async_icount old, new;
- 
--	do {
-+	spin_lock_irq(&acm->read_lock);
-+	old = acm->iocount;
-+	spin_unlock_irq(&acm->read_lock);
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2479,6 +2479,12 @@ static void shadow_walk_init_using_root(
+ {
+ 	iterator->addr = addr;
+ 	iterator->shadow_addr = root;
 +
-+	add_wait_queue(&acm->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&acm->read_lock);
--		old = acm->oldcount;
- 		new = acm->iocount;
--		acm->oldcount = new;
- 		spin_unlock_irq(&acm->read_lock);
- 
- 		if ((arg & TIOCM_DSR) &&
-@@ -1044,22 +1048,20 @@ static int wait_serial_change(struct acm
- 			old.rng != new.rng)
- 			break;
- 
--		add_wait_queue(&acm->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&acm->wioctl, &wait);
- 		if (acm->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
--			else
--				rv = -ENODEV;
--		} else {
--			if (signal_pending(current))
--				rv = -ERESTARTSYS;
-+			rv = -ENODEV;
-+			break;
- 		}
--	} while (!rv);
- 
--	
-+		schedule();
-+
-+		if (signal_pending(current)) {
-+			rv = -ERESTARTSYS;
-+			break;
-+		}
++	if (WARN_ON_ONCE(!VALID_PAGE(root)) || kvm_mmu_is_dummy_root(root)) {
++		iterator->level = 0;
++		return;
 +	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&acm->wioctl, &wait);
++
+ 	iterator->level = vcpu->arch.mmu->root_role.level;
  
- 	return rv;
- }
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -90,7 +90,6 @@ struct acm {
- 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
- 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
- 	struct async_icount iocount;			/* counters for control line changes */
--	struct async_icount oldcount;			/* for comparison of counter */
- 	wait_queue_head_t wioctl;			/* for ioctl */
- 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
- 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
+ 	if (iterator->level >= PT64_ROOT_4LEVEL &&
 
 
