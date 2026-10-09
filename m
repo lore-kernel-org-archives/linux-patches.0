@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9C4E50A5;
-	Fri,  9 Oct 2026 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2B83D9DDB;
+	Fri,  9 Oct 2026 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557182; cv=none; b=CU01EiEoEmYoovZi/w6mrGwevbynhbaHIiCrXqklGIj2UX8yn3uoFred3cJDEnUivTYYtBX28r/MTGUpeSL49pMPv9clNpW2vBb3SSHYLq5GmL0vGfUfg5Mu/3fz0SWvczB6ES0xUrSNEoJ9CmIG6QC7gRQSuG0BxRJ2imQd9w4=
+	t=1791557185; cv=none; b=ofsTs6wfEB9dF9JcnEbGgG/SIS2NylfKVn0kUl7l40tOx36c3kB2XOmE8Hf+H9Grv/aeD2cv+FH0NqsrCXD79Gxb5FWlkirfRPrqMZxE5Kmiuh1lRTUgm4yccAEMq2nEvdDmFG8exIDiR0svZDr8LuedmGvh9/UsOnkPm0aGvFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557182; c=relaxed/simple;
-	bh=zVHBoX7lUFgpEqHhpKUKbj95PbIMinuXh9FhUCy1Q2I=;
+	s=arc-20240116; t=1791557185; c=relaxed/simple;
+	bh=MDw6t+3TnC95Q2rSra6higeBB5TzJSoFOQlA/eGDW1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaAlLRwfpxSA5yh7NgaGBHKLbVrTM0ms61LTtWLAMv745FBQ/4l+iAEB8fblvLpsnajLpfoBJaD9M8R+hSHllaw5q66qfp20pHs6KPuH51qiF1B1BXUizsx9lkacwThYTHW0DhxChHBJKGkWUUMTcK+uthulvHGS9kAvvrIEH7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NYi16+N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jAzkXR1nCs60rapmgWtuCy8pN0XGfBtB3qVX7uHZ4psv54rlwV1KxRr47A8EdS4KtuaQTPuJ+pmNFy01Iv4qUB8Mg8JduL8KTdAm8FaJMxp99Rt+9nEUvlMZ7+Vr5wmJMXSkj0VzO9ucm3ivG2wfH1qGJthS9gJ7yDERXwmO4F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW9K7q8r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NYi16+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D174A1F000FF;
-	Fri,  9 Oct 2026 14:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW9K7q8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A6D1F000FF;
+	Fri,  9 Oct 2026 14:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557181;
-	bh=T55eVULcdgjA6q+t5sC4NpNgyrXkF6I66HVXMLmDG90=;
+	s=korg; t=1791557184;
+	bh=Y17L0/cb8Oe9FvtbKwPCMQQb0xaAvREPArq8LAv5nEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0NYi16+NTYDY4x8hndwq8BzCfz+A3QUViQINR+yQebj58D09QfJGIicywkkQ0SZ4/
-	 +8XWBz9gf5JUHoj77PlaDoB+BDhWvkF30xBfn3Q8EMq4J9CyDken9vrwP/poO19B6H
-	 pumwV9QCU+DFrTg0e34tUBnLQ4uyh0wy26Cewjtw=
+	b=RW9K7q8rh7E88f3VxkngOi4Y90mBkM9jLx02y8LHCulPng721PFY/2E2G/tK7+YPQ
+	 2fsby4mPqhjcgiQ8yWpzj65s0zgIcTHVa4izTKc7/I3MY1ptyEfskuAbRRKFLxJuWc
+	 QLzueRsV2lQoaGf4ww39V5qmjG7iLZhS8ho5UXVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 360/403] wifi: mac80211: count only matching reservations in reserved switch
-Date: Fri,  9 Oct 2026 16:12:01 +0200
-Message-ID: <20261009141000.704754858@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.2 315/428] KVM: SVM: Use the active VMCBs MSR bitmap when checking if MSR is intercepted
+Date: Fri,  9 Oct 2026 16:10:52 +0200
+Message-ID: <20261009140953.043954577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,131 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 437f3727b4fd715266c296435c116288f82666fd ]
+commit 9e06bbb9ade7cdf28d4a3b5b14e5812881c8df85 upstream.
 
-ieee80211_vif_use_reserved_switch() validates a replacement by counting
-assigned links on ctx->replace_ctx and treating reservations too
-broadly. A link can still be assigned to the old channel context while
-holding a reservation that belongs to a different replacement
-operation.
+Use the MSR permission bitmap of the active VMCB instead of assuming that
+KVM is always using vmcb02's bitmap when L2 is active, as KVM uses msrpm02
+if and only if L1 wants to intercept MSR accesses, i.e. if and only if KVM
+needs to merge msprm01 with msrpm12.
 
-That can make the current replacement appear complete too early. If
-another link finalizes first, the function can free the
-WILL_BE_REPLACED chanctx while the unmatched link and driver still use
-it, leading to a use-after-free in later beacon generation.
+Don't bother tracking the virtual address of the bitmap that's being used,
+as __va() is cheap on x86, and caching the virtual address would introduce
+yet another source of potentially stale information.
 
-Require an in-place reservation to point at the current replacement
-context, and require the reserved and assigned contexts to be the
-matching replacement pair, before counting or moving the link.
-
-Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Fixes: b2ac58f90540 ("KVM/SVM: Allow direct access to MSR_IA32_SPEC_CTRL")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/4b6c4b8648ab1920c38a40be32c0b1a2797b4ac6.1785726007.git.zhilinz@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Adapted channel-context iterator accesses to existing direct list loops using link instead of iter.link. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260826195833.844526-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/chan.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/svm.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -1485,7 +1485,8 @@ out:
- }
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -673,16 +673,7 @@ static void clr_dr_intercepts(struct vcp
  
- static bool
--ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
-+ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link,
-+					struct ieee80211_chanctx *ctx)
+ static bool msr_write_intercepted(struct vcpu_svm *svm, u32 msr)
  {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
- 	struct ieee80211_chanctx *old_ctx, *new_ctx;
-@@ -1495,6 +1496,9 @@ ieee80211_link_has_in_place_reservation(
- 	new_ctx = link->reserved_chanctx;
- 	old_ctx = ieee80211_link_get_chanctx(link);
+-	/*
+-	 * For non-nested case:
+-	 * If the L01 MSR bitmap does not intercept the MSR, then we need to
+-	 * save it.
+-	 *
+-	 * For nested case:
+-	 * If the L02 MSR bitmap does not intercept the MSR, then we need to
+-	 * save it.
+-	 */
+-	void *msrpm = is_guest_mode(&svm->vcpu) ? svm->nested.msrpm : svm->msrpm;
++	void *msrpm = __va(__sme_clr(svm->vmcb->control.msrpm_base_pa));
  
-+	if (new_ctx != ctx)
-+		return false;
-+
- 	if (!old_ctx)
- 		return false;
- 
-@@ -1507,6 +1511,12 @@ ieee80211_link_has_in_place_reservation(
- 	if (new_ctx->replace_state != IEEE80211_CHANCTX_REPLACES_OTHER)
- 		return false;
- 
-+	if (new_ctx->replace_ctx != old_ctx)
-+		return false;
-+
-+	if (old_ctx->replace_ctx != new_ctx)
-+		return false;
-+
- 	return true;
+ 	return svm_test_msr_bitmap_write(msrpm, msr);
  }
- 
-@@ -1536,7 +1546,7 @@ static int ieee80211_chsw_switch_vifs(st
- 
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			old_ctx = ieee80211_link_get_chanctx(link);
-@@ -1639,7 +1649,7 @@ static int ieee80211_vif_use_reserved_sw
- 		list_for_each_entry(link, &ctx->replace_ctx->assigned_links,
- 				    assigned_chanctx_list) {
- 			n_assigned++;
--			if (link->reserved_chanctx) {
-+			if (ieee80211_link_has_in_place_reservation(link, ctx)) {
- 				n_reserved++;
- 				if (link->reserved_ready)
- 					n_ready++;
-@@ -1660,7 +1670,7 @@ static int ieee80211_vif_use_reserved_sw
- 		ctx->conf.radar_enabled = false;
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (ieee80211_link_has_in_place_reservation(link) &&
-+			if (ieee80211_link_has_in_place_reservation(link, ctx) &&
- 			    !link->reserved_ready)
- 				return -EAGAIN;
- 
-@@ -1702,7 +1712,7 @@ static int ieee80211_vif_use_reserved_sw
- 
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			ieee80211_chan_bw_change(local,
-@@ -1751,7 +1761,7 @@ static int ieee80211_vif_use_reserved_sw
- 			struct ieee80211_bss_conf *link_conf = link->conf;
- 			u64 changed = 0;
- 
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			rcu_assign_pointer(link_conf->chanctx_conf,
-@@ -1805,7 +1815,8 @@ static int ieee80211_vif_use_reserved_sw
- 		 */
- 		list_for_each_entry_safe(link, link_tmp, &ctx->reserved_links,
- 					 reserved_chanctx_list) {
--			if (WARN_ON(ieee80211_link_has_in_place_reservation(link)))
-+			if (WARN_ON(ieee80211_link_has_in_place_reservation(link,
-+									    ctx)))
- 				continue;
- 
- 			if (WARN_ON(link->reserved_chanctx != ctx))
 
 
