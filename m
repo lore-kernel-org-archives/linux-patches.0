@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246FE3BB112;
-	Fri,  9 Oct 2026 14:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DB03431F8;
+	Fri,  9 Oct 2026 14:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556696; cv=none; b=Khidst08RGf+1samvBNBHeVUO75F7VeUinEyDsYjy11Atd8Guf1ZApvNO8jGTfjY8dSZPL/0iJmj6Okx4taZUXaU1BO0iTjMxf5UqV99D1tBiyfWUPFHgjFsQD3gUE+ZqUwUCSvY4jesEGlKXl8tFDkQNEHBE9GKqke3kM6a80A=
+	t=1791556699; cv=none; b=Jkb7zFXKYg38peRCahXNJK2LQAfGyfxk5+7Ax5+21H5TqsfEc45pI0rFS5j8omOVFk295J1EOhcdYo0ATZRdLmLTI8N/aEvCG2JHwl7KLJQR1apO01Uwo3hD4kvj4B+1d0XqMJVyR2PDSdkKEvWwEcm/XaDazmZ0u8Ud419aYYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556696; c=relaxed/simple;
-	bh=DZVqeBflRJLKgkz+4ZvdiwTSt/xqARGklOepdz0+YpU=;
+	s=arc-20240116; t=1791556699; c=relaxed/simple;
+	bh=XUHdsEAL5s+t8GEmIqn75ZXokj7kgYs9but24rLc/1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdQCP7oOxxs8RiqqBQA3h8aHwwbb7Lqpl8bT1ieLZT73DtNoNOB52uKAKIwkWo6l5d18TdppeQoaBvzrfFzpVI13MIbJxoJH7UrCL+KNkjIWRUEyOax71LuMjcbBmMOWVlEkQshC1dpTVdRSTT8OI1VSZiA07MYsncWZyQwGpMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL0UfQC+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RuYToSWnhj/6ZntJmqH+fFKSKB8jVn+Kpfoc/7JPznLfArrmtsJ4KkrJiUIzNAqy9X1gT9hwGRFqKs0jg0ji7/+eX2Poj0Gy50mbbv4eh24Z2C79fsyxdnLWxCv4c4P3yfv1QC7x1JcKjrNB0YN6fq3Kz8pOqih/B/Ms1bOT6JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2hkJ/P+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL0UfQC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834511F000FF;
-	Fri,  9 Oct 2026 14:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2hkJ/P+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4161F000FF;
+	Fri,  9 Oct 2026 14:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556695;
-	bh=n4k6g7WNwylrWfpNHuiTgqTXaAVe5sKOw/PtY7tbpBE=;
+	s=korg; t=1791556698;
+	bh=oAb325RQA+zbhDUVcp3iss1GUfcC5TTc4jQQQo/4q1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aL0UfQC+dgDz5Zbn5RIhE6IcczK+BYppYVBubyLQ8mDF82EFqzRiJttS61cS4V9Jk
-	 qxSSm5MYT2nBU/RWUSFmHwmJdTw+PIKhI162phH8FSIBde6fXJyohyE9e0m4Tv965U
-	 DAJW5VqmAkwps8Lum//h62xAA60RyvORFKA5T/Po=
+	b=B2hkJ/P+J6P1/Kb18wVfTAI2O7V7LhVL63dI0/O9qzSqZsz+pEuwYZ/vk8kePfESw
+	 fZ+B158DGGgErCzm8Pnn3BSA68uMGPJmgh+Q6dkip4DOrE04qR4a8mVX4Xkh0sgJZ3
+	 6HVYM5ZKKVVGNpNxMoxbOYvQxGFEmNL+XHJ3l9yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseo Kim <neck3922@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.2 222/428] USB: gadget: dummy-hcd: Fix wait for outstanding request completions
-Date: Fri,  9 Oct 2026 16:09:19 +0200
-Message-ID: <20261009140950.995756555@linuxfoundation.org>
+	Horatio Zhang <hongkun.zhang@amd.com>,
+	Hawking.Zhang@amd.com,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 187/428] drm/amdgpu: drop userq callback assignment for sdma 7.1
+Date: Fri,  9 Oct 2026 16:08:44 +0200
+Message-ID: <20261009140950.250829695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,66 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b263ff9b0fc5c1f371d65c4eb196b31263d039ff upstream.
+commit 1d1f1acecddf742eb1f305122209bc2034fd90b1 upstream.
 
-The dummy-hcd driver emulates synchronize_irq() by waiting until its
-private callback_usage counter drops to 0 (with the private lock not
-held).  This counter is incremented whenever a gadget driver callback
-occurs (which requires the private lock to be dropped), but not when a
-request completion handler is called.
+Not enabled in 7.1 so drop the assignment.
 
-This is an oversight.  Request completion is triggered by timer
-interrupts (emulating device IRQs in a real UDC), and the interrupt
-handlers are supposed to have completed when the synchronize_irq()
-emulation routine returns -- they aren't supposed to be in the middle
-of a completion callback.  If this happens it can lead to a gadget
-driver's unbind routine running before all outstanding request
-completions have finished, maybe even allowing the gadget driver's
-module to be unloaded while a completion handler is still running.
-
-Fix the oversight by incrementing the callback_usage value across
-request completion callbacks.
-
-Link: https://lore.kernel.org/linux-usb/7a87e293-633c-4100-aa8d-91560ba5e5c5@rowland.harvard.edu/
-Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
-Tested-by: Minseo Kim <neck3922@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/f23b9e1a-f110-441a-a1d8-95f442ec09d5@rowland.harvard.edu
+Cc: Horatio Zhang <hongkun.zhang@amd.com>
+Cc: Hawking.Zhang@amd.com
+Fixes: 4ed5116aacf6 ("drm/amdgpu: Add sdma v7_1_0 support")
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 106e19f69a066fb6354dac04e5f5ed43a06727f7)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -343,9 +343,11 @@ static void dummy_giveback(struct dummy
- {
- 	bool fifo = req == &dum->fifo_req;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_1.c
+@@ -1356,10 +1356,6 @@ static int sdma_v7_1_sw_init(struct amdg
+ 	else
+ 		DRM_ERROR("Failed to allocated memory for SDMA IP Dump\n");
  
-+	++dum->callback_usage;
- 	spin_unlock(&dum->lock);
- 	usb_gadget_giveback_request(_ep, &req->req);
- 	spin_lock(&dum->lock);
-+	--dum->callback_usage;
- 	if (fifo)
- 		dum->fifo_req_busy = 0;
+-#ifdef CONFIG_DRM_AMDGPU_NAVI3X_USERQ
+-	adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
+-#endif
+-
+ 	return r;
  }
-@@ -759,11 +761,13 @@ static int dummy_queue(struct usb_ep *_e
- 		req->req.complete = fifo_complete;
  
- 		list_add_tail(&req->queue, &ep->queue);
-+		++dum->callback_usage;
- 		spin_unlock(&dum->lock);
- 		_req->actual = _req->length;
- 		_req->status = 0;
- 		usb_gadget_giveback_request(_ep, _req);
- 		spin_lock(&dum->lock);
-+		--dum->callback_usage;
- 	}  else
- 		list_add_tail(&req->queue, &ep->queue);
- 	spin_unlock_irqrestore(&dum->lock, flags);
 
 
