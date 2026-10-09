@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C291A34D397;
-	Fri,  9 Oct 2026 14:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BF445C713;
+	Fri,  9 Oct 2026 14:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556648; cv=none; b=lP4wXpMwNTAq9t5L/dZvbcN4cJQwLq2TYJduJcOWHGTH3NwVKlplbCuqLorAPrRtkU/17Y2wU+3keOms3oDXFQCKjWhYGb5ff8FgCM0g/HZV3qZiXpUkCe8MgkCdoKQ5qOfhD0JcNlaooC6vrmODcnJjHGWvpIv3ZAkQsHUhgQc=
+	t=1791556652; cv=none; b=LasA8gCpNYFgXUmAAl1IoMPDYgHXyJ2vR9IwTP9tpNeUsTq9NKcGkIrHCRvewYCLPSf3s3UHhapY3qbjCWyj++j2sWozJKrv7ik778nOa5xAkBWVbM0p34Sx5dMbEoksVOVl1wrEobe69Mz+j7GOmsU2nRX07TPpmPa5sZxlAWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556648; c=relaxed/simple;
-	bh=GIlUnd+5vWU1PnWsSOf14K0L4OBXRQ7UE8+r0T3khwo=;
+	s=arc-20240116; t=1791556652; c=relaxed/simple;
+	bh=21ohszfQX1+Rkf0IFWdIWMFtehO5ybx69qIQLASl1vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9DYTiOytDYDbhivpGv5sc+A+55UbznUFg6gol37/TvaaCmLhPVukzyG3PKMNVrXvicz7oe2Yl2ty5Yd7CDXd+EZlBWwRxTY8tcjpWx5n8o1qCtDoShUu2atUaag4biCHAt1MF9ZU64nqgivKbi2eK7EFeZvKhTHEg3rVgRhJ5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AasqdSDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dp5CXdSrnv4YiapCVsvB0ToZMHjjeSjuRb31prB9NTddJm6a4P55T1dZeU1UTs5Jl9soaX9KU0EMr0i4RxWHkeLjHbtINlUvNwBVr8M1UdSAJ7ORRzoG1FzUkzJOr4nSqU8ee0C3Eq5srfjSB3+FVgG85rd7vcZtTdFtxnfhYig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6TOEto8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AasqdSDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB11F000FF;
-	Fri,  9 Oct 2026 14:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6TOEto8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C961F000FF;
+	Fri,  9 Oct 2026 14:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556647;
-	bh=qZ7zs6qerQgmnD3cyrZXTfAnQlJ3Ba3XZvVL3WBi4JM=;
+	s=korg; t=1791556650;
+	bh=PN0UVl5i5f01GYAWKg3Ul1TqLigltLS8Abx/FMsW5s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AasqdSDTVDZo9ccT457jiRoILsHrAznNV90BE7U+nFmKa8rj1HMPTNN0vrrLBwh5h
-	 SAoioiG6aRDeKDDfNM8y+OKn/XG85FV9ZHPRYvcF4Y9Rvw/NAr70rmc8tWSQDmXToM
-	 pA/q4xjau7mF/V7c18KIhgeBGnin78sPpIBzvkrA=
+	b=V6TOEto8GyKDvdMjwSwcoB4NeZbk6LAzgZ51uCc3TeC1j0AqHjKkIkHc1KeczXjXO
+	 2QTWGWeW3/0S98Dr+DyCGGdtI4b+lYco0WHsWehJ6Qyd0lplVKpFShoS7I8r0Uw9Xy
+	 W9kEE8Si5GqBwiVtQ/LeEkLhB90o0Ffa5m5bhZLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 269/403] wifi: mac80211: account proxy paths against the mesh path limit
-Date: Fri,  9 Oct 2026 16:10:30 +0200
-Message-ID: <20261009140958.473510044@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@sina.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 215/428] usb: gadget: midi2: Fix the jack descriptor array sizes
+Date: Fri,  9 Oct 2026 16:09:12 +0200
+Message-ID: <20261009140950.847906491@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b upstream.
+commit 310c2d4608d8c1a2baa57db1dfd319c5c40cf4a1 upstream.
 
-Proxy-path churn can drive the interface path counter negative and let
-later mesh path additions exceed MESH_MAX_MPATHS.
+The jack in/out descriptor arrays in struct f_midi2_usb_config have
+the size of MAX_CABLES, which look reasonable -- but it turned out to
+be incorrect.  Namely, the entries for those arrays are added from
+both inputs and outputs, hence for each loop cycle, it adds two, ended
+up with as twice as the expected size.  This inconsistency may result
+in potential OOB when a large number of jacks are set up via configfs,
+although the max number of cables (the loop count) is limited to
+MAX_CABLES.
 
-mesh_path_free_rcu() decrements the interface mpaths counter for entries
-from both the mesh and proxy path tables, but mpp_path_add() never
-reserves a slot in that counter. Removing or expiring a proxy path
-therefore returns a slot that was never charged.
+For addressing it, correct the jack_ins & jack_outs array sizes to
+twice, MAX_CABLES * 2.
 
-mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
-it falls below the number of installed paths the limit no longer holds.
-
-Reserve the shared quota before allocating a proxy path and release it on
-every unsuccessful addition. Mesh and proxy paths now share one
-1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
-
-Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 856fa444b098 ("usb: gadget: midi2: Dynamically create MIDI 1.0 altset descriptors")
+Cc: stable <stable@kernel.org>
+Reported-by: syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c35f34092a4bc9855be6
+Link: https://lore.kernel.org/20260826134606.127250-1-eadavis@sina.com
+Cc: Edward Adam Davis <eadavis@sina.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260901145512.785142-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_pathtbl.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_midi2.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -733,10 +733,15 @@ int mpp_path_add(struct ieee80211_sub_if
- 	if (is_multicast_ether_addr(dst))
- 		return -EOPNOTSUPP;
+--- a/drivers/usb/gadget/function/f_midi2.c
++++ b/drivers/usb/gadget/function/f_midi2.c
+@@ -1633,8 +1633,8 @@ struct f_midi2_usb_config {
  
-+	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
-+		return -ENOSPC;
-+
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
+ 	/* MIDI 1.0 jacks */
+ 	unsigned char jack_in, jack_out, jack_id;
+-	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES];
+-	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES];
++	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES * 2];
++	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES * 2];
+ };
  
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return -ENOMEM;
-+	}
- 
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
- 	tbl = &sdata->u.mesh.mpp_paths;
-@@ -749,10 +754,12 @@ int mpp_path_add(struct ieee80211_sub_if
- 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
- 
--	if (ret)
-+	if (ret) {
- 		kfree(new_mpath);
--	else
-+		atomic_dec(&sdata->u.mesh.mpaths);
-+	} else {
- 		mesh_fast_tx_flush_addr(sdata, dst);
-+	}
- 
- 	sdata->u.mesh.mpp_paths_generation++;
- 	return ret;
+ static int append_config(struct f_midi2_usb_config *config, void *d)
 
 
