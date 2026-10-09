@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399F17A305;
-	Fri,  9 Oct 2026 14:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4243D225A38;
+	Fri,  9 Oct 2026 14:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555481; cv=none; b=jE+oHnsNNgyTwBR33JzL61sJJ5UvzwSolEPPevIbxA5cYYUuPEEt1MP1NU5+x7IV/pJupOjfsBF0fWkpCJMbRi4cQOmwjuoUe6/fPvyKA9oHLvFGDgyNAcOHkP+EsHPzx4TnZ80CKaUlFpn2wrxkUQfad1c4/rWmsErJGBhBILg=
+	t=1791555485; cv=none; b=aUXuPjwVZfLGFmeOtsR1VmDhJDebHjJFPimHjsjsKxYRE2Fe3VIdg7cZKPGaEckeF6v5k21LIr6FWLkweGyV9+RlnlMyKXieCL9OcaHGXJjUGg3ELZE8PU5I7XZNd7Un7jYMzVC75vaL6k6MkAeC2lDPYoFz2OZPHlWSLDsgUP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555481; c=relaxed/simple;
-	bh=aD8rBoAUnzQz0rkJ1JpUE9JWYgeo/xii9vVK1/bbw3I=;
+	s=arc-20240116; t=1791555485; c=relaxed/simple;
+	bh=FzTIeJzntoPZOIY3Gjy1h/nNfKvTVLEfR0bCAcV8/p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bISXZ4uSJAshKhD8Nk/r+7QOOwL0HnJWDwXMa53iyQvX0wmNKEjp4Y40uG0p8y3AGreUqfGi4OHaKPcpgRNtDcoaXICjBsZWhBQZ0oply7/So1PUcOpfXOBWo0qQ7UMyCDOog0oSzHbAKhM3ALn1Jp/a85CWp8vspEjOpOqSHsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tB7EW2pB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SApvMeRODMdoJQ47y9D6fU//GAXO8ZatJu1B5KQcNI4xifi6LxEfyj5IQNigGh+qGNF4tVqta0k0jEGZ8XPmBJPI50qRUFA5QCHtHTeEE6Zq189jzsTLBN/zXlMngZ+X688fEjTrxWewPEQxVfvC7RP/mW9IGJpsv6fHJpJgblI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B76FUdoh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tB7EW2pB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8027B1F000FF;
-	Fri,  9 Oct 2026 14:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B76FUdoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063371F000FF;
+	Fri,  9 Oct 2026 14:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555477;
-	bh=BaB57VypdLktvPDAmaf5HezbUmF29Uj6hZeBS1RlgrI=;
+	s=korg; t=1791555482;
+	bh=gSWNi4NWB1K6sJeUjiGmBxEDFwb7WUsNfd73iu3fqug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tB7EW2pB2UQv8gWHH8JCpvJWPUR3eS17OCHtbuPkDG4Ro/wu/m6hlAHD4h9mFLKAB
-	 SYw0uyjnT8rBSLRxrwa7Y9Vano+6FvuaTr11+4QwM4j0u85OTatQiZQhtrag3en160
-	 hmxfDbiCr0h7QbhWm/YjZ9YTIuBrDdXUvunf3PHI=
+	b=B76FUdoh73HjHV7mYqDbXzx8rPBO5lEUpfbx3j6AuImqD+odFaJ8MlOxUAIBM+t8P
+	 Qb6Na/pbbCjksdh1amr4e4nxw9ios+bLZx/ya9H3qrxyRdjqJ/iBSOpgM0wzHXLrDy
+	 ud+VpoU1fvho+zxH/7JfJvqG3Ilo3Vavp0CUz6sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	fangqiurong <fangqiurong@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 012/428] sched_ext: Dont run ops.dequeue() with a DSQ lock held
-Date: Fri,  9 Oct 2026 16:05:49 +0200
-Message-ID: <20261009140946.312576568@linuxfoundation.org>
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shaobo Huang <huangshaobo3@xiaomi.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	David Hildenbrand <david@kernel.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>
+Subject: [PATCH 6.18 026/403] kasan: unpoison task stack below watermark only in generic mode
+Date: Fri,  9 Oct 2026 16:06:27 +0200
+Message-ID: <20261009140952.725092359@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
-References: <20261009140946.008206689@linuxfoundation.org>
+In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
+References: <20261009140952.119038291@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,167 +53,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+From: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 
-[ Upstream commit cb86607ada73185f321baa7f9d94a08a3a40bbf5 ]
+commit 22ab0647764c38924669673634ae333578d77768 upstream.
 
-ops.dequeue() is invoked with the source user DSQ's lock still held on
-the consume and move paths (scx_consume_dispatch_q(),
-move_task_between_dsqs()). A BPF scheduler which locks the source user
-DSQ from ops.dequeue() - e.g. by iterating it with bpf_iter_scx_dsq -
-self-deadlocks.
+CPU resume and BPF exception handling can discard stack frames without
+running their compiler-generated epilogues.  Generic KASAN needs
+kasan_unpoison_task_stack_below() to clear the redzones left behind by
+those frames before the stack is reused.
 
-ops.dequeue() can only call the "any" kfuncs and none of them can lock a
-builtin DSQ, so the global and bypass paths can't deadlock; however,
-all DSQ locks share one lockdep class, so iterating any user DSQ from
-ops.dequeue() on those paths trips the recursion check.
+CONFIG_KASAN_STACK also enables this helper for SW_TAGS.  The helper
+derives the stack base from an untagged stack pointer, so kasan_unpoison()
+writes KASAN_TAG_KERNEL (0xff) into the shadow for [base, watermark).  For
+a vmapped task stack, vm_area->addr still carries the original random
+allocation tag.  This creates a tag mismatch at the stack base even if
+that memory has never held an instrumented stack object.
 
-Move the invocation after the DSQ unlock on all three paths.
-SCX_TASK_IN_CUSTODY is cleared under the lock serializing the transfer
-so that the callback is invoked exactly once.
+When the task exits and its stack is not cached, thread_stack_free_rcu()
+passes vm_area->addr to vfree().  In RCU callback context this reaches
+vfree_atomic(), whose llist_add() writes to the allocation base through
+the tagged pointer and triggers a false KASAN invalid-access report:
 
-Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
-Cc: stable@vger.kernel.org # v7.1+
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ adapted upstream sched_ext helpers to their older static equivalents. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: KASAN: invalid-access in vfree_atomic+0x90/0x150
+  Write of size 8 at addr c2ffffc0a8f70000 by task rcuop/7/75
+  Pointer tag: [c2], memory tag: [ff]
+  Call trace:
+   __hwasan_store8_noabort+0xe8/0xf8
+   vfree_atomic+0x90/0x150
+   vfree+0x220/0x298
+   thread_stack_free_rcu+0x3c/0x4c
+   rcu_do_batch+0x308/0xaf0
+   rcu_nocb_cb_kthread+0x33c/0x708
+
+The deferred-free path started using the tagged vm_area->addr in commit
+449e0b4ed5a1 ("fork: clean-up naming of vm_stack/vm_struct variables in
+vmap stacks code").  Previously it freed the untagged pointer derived from
+tsk->stack, so the write was never tag-checked.
+
+SW_TAGS does not need the blanket shadow reset to make subsequent stack
+accesses valid: untagged kernel pointers have the match-all 0xff tag, and
+the compiler initializes the shadow tags of instrumented stack objects
+before use.
+
+Return early unless CONFIG_KASAN_GENERIC is enabled.  Keep the mode check
+in the common helper so it covers both resume and bpf_throw().
+
+Link: https://lore.kernel.org/20260916175113.1327454-1-ryabinin.a.a@gmail.com
+Fixes: 449e0b4ed5a1 ("fork: clean-up naming of vm_stack/vm_struct variables in vmap stacks code")
+Signed-off-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Shaobo Huang <huangshaobo3@xiaomi.com>
+Closes: https://lore.kernel.org/all/20260806123020.90869-1-huangshaobo3@xiaomi.com/
+Assisted-by: LLM
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c | 48 +++++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 22 deletions(-)
+ mm/kasan/common.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 59ed2c2e39d77..476a584d0d4da 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1450,20 +1450,14 @@ static inline bool task_scx_migrating(struct task_struct *p)
- 	return p->scx.sticky_cpu >= 0;
- }
- 
--/*
-- * Call ops.dequeue() if the task is in BPF custody and not migrating.
-- * Clears %SCX_TASK_IN_CUSTODY when the callback is invoked.
-- */
--static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
--			      struct task_struct *p, u64 deq_flags)
-+/* Must be called under the lock serializing @p's custody transfers. */
-+static bool task_leave_custody(struct task_struct *p)
+diff --git a/mm/kasan/common.c b/mm/kasan/common.c
+index b7d05c2a6d93..7d21c4db68d2 100644
+--- a/mm/kasan/common.c
++++ b/mm/kasan/common.c
+@@ -114,12 +114,23 @@ void kasan_unpoison_task_stack(struct task_struct *task)
+ /* Unpoison the stack for the current task beyond a watermark sp value. */
+ asmlinkage void kasan_unpoison_task_stack_below(const void *watermark)
  {
- 	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
--		return;
--
--	if (SCX_HAS_OP(sch, dequeue))
--		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
-+		return false;
- 
- 	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
-+	return true;
- }
- 
- static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
-@@ -1471,7 +1465,8 @@ static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq
- {
- 	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
- 
--	call_task_dequeue(sch, rq, p, 0);
-+	if (task_leave_custody(p) && SCX_HAS_OP(sch, dequeue))
-+		SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
- 
- 	/*
- 	 * Note that @rq's lock may be dropped between this enqueue and @p
-@@ -1634,16 +1629,28 @@ static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
- 	if (is_local) {
- 		local_dsq_post_enq(sch, dsq, p, enq_flags);
- 	} else {
-+		bool call_dequeue = false;
++	void *base;
 +
- 		/*
--		 * Task on global/bypass DSQ: leave custody, task on
--		 * non-terminal DSQ: enter custody.
-+		 * Global and bypass DSQs are terminal - the task leaves the
-+		 * scheduler's custody, so ops.dequeue() fires. It can run
-+		 * without @p's rq lock (finish_dispatch() passes the dispatch
-+		 * rq); that's safe because dequeue_task_scx() waits on
-+		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
-+		 * can't race it. A non-terminal DSQ keeps the task in custody.
-+		 * The custody transfer happens under @dsq->lock so that later
-+		 * consumers see the flag clear; the callback runs after
-+		 * @dsq->lock is dropped because it may lock a DSQ itself.
- 		 */
- 		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
--			call_task_dequeue(sch, rq, p, 0);
-+			call_dequeue = task_leave_custody(p);
- 		else
- 			p->scx.flags |= SCX_TASK_IN_CUSTODY;
- 
- 		raw_spin_unlock(&dsq->lock);
++	/*
++	 * Only the generic mode needs this. In the tag-based mode the
++	 * compiler fully initializes the shadow of stack variables on
++	 * function entry, so stale tags left below the watermark are
++	 * harmless.
++	 */
++	if (!IS_ENABLED(CONFIG_KASAN_GENERIC))
++		return;
 +
-+		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
-+			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
- 	}
- 
  	/*
-@@ -2111,7 +2118,7 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- 		/*
- 		 * A queued task must always be in BPF scheduler's custody. If
- 		 * SCX_TASK_IN_CUSTODY is clear, finish_dispatch() on another
--		 * CPU has already passed call_task_dequeue() (which clears the
-+		 * CPU has already passed task_leave_custody() (which clears the
- 		 * flag), but has not yet written SCX_OPSS_NONE. That final
- 		 * store does not require this rq's lock, so retrying with
- 		 * cpu_relax() is bounded: we will observe NONE (or DISPATCHING,
-@@ -2159,7 +2166,8 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- 	 * NONE but the task may still have %SCX_TASK_IN_CUSTODY set until
- 	 * it is enqueued on the destination.
+ 	 * Calculate the task stack base address.  Avoid using 'current'
+ 	 * because this function is called by early resume code which hasn't
+ 	 * yet set up the percpu register (%gs).
  	 */
--	call_task_dequeue(sch, rq, p, deq_flags);
-+	if (task_leave_custody(p) && SCX_HAS_OP(sch, dequeue))
-+		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
+-	void *base = (void *)((unsigned long)watermark & ~(THREAD_SIZE - 1));
++	base = (void *)((unsigned long)watermark & ~(THREAD_SIZE - 1));
+ 
+ 	kasan_unpoison(base, watermark - base, false);
  }
- 
- static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_flags)
-@@ -2263,13 +2271,10 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
- 
- static void move_local_task_to_local_dsq(struct scx_sched *sch,
- 					 struct task_struct *p, u64 enq_flags,
--					 struct scx_dispatch_q *src_dsq,
- 					 struct rq *dst_rq)
- {
- 	struct scx_dispatch_q *dst_dsq = &dst_rq->scx.local_dsq;
- 
--	/* @dsq is locked and @p is on @dst_rq */
--	lockdep_assert_held(&src_dsq->lock);
- 	lockdep_assert_rq_held(dst_rq);
- 
- 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
-@@ -2513,9 +2518,8 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 		/* @p is going from a non-local DSQ to a local DSQ */
- 		if (src_rq == dst_rq) {
- 			task_unlink_from_dsq(p, src_dsq);
--			move_local_task_to_local_dsq(sch, p, enq_flags,
--						     src_dsq, dst_rq);
- 			raw_spin_unlock(&src_dsq->lock);
-+			move_local_task_to_local_dsq(sch, p, enq_flags, dst_rq);
- 		} else {
- 			raw_spin_unlock(&src_dsq->lock);
- 			move_remote_task_to_local_dsq(p, enq_flags,
-@@ -2566,8 +2570,8 @@ static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
- 
- 		if (rq == task_rq) {
- 			task_unlink_from_dsq(p, dsq);
--			move_local_task_to_local_dsq(sch, p, enq_flags, dsq, rq);
- 			raw_spin_unlock(&dsq->lock);
-+			move_local_task_to_local_dsq(sch, p, enq_flags, rq);
- 			return true;
- 		}
- 
 -- 
-2.53.0
+2.56.0
 
 
 
