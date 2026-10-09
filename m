@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20B72D77F5;
-	Fri,  9 Oct 2026 14:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8993D1AA6;
+	Fri,  9 Oct 2026 14:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557570; cv=none; b=Le3D5zc24aMAhWlxV2F3CmRwzONcBkGMu9hfshlFi9tmb7ceNV3D+5yX0s5j0j8t8k7D/KqKkh4rmfO83t/OHH7SUh9RhfKkd2Y3tUCTx6LfWTervDwW8bXElnT5mzdmL5cmAIJY/6830qXgVjgM4J+usyVG9uuzXiBZa5wg7Ck=
+	t=1791557573; cv=none; b=EmMxml+Swzu61hAR3CF7pZsnhlm5w3JADMW7NrikreG/7VirATOXEMnDwmzaL56wgH4p17pzbwqhMaD32dab98ii3sPxFKZXG55LroHsaGqfs22000aHNioRQnnO7rMpzLMkFf1Ysd0slUkWFe5nyNv6k0yi1pAJErHyM/Cj2g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557570; c=relaxed/simple;
-	bh=63SZn63Xyp43gCtlQFzIjgeJV95WQkKoEu9rCumOTFY=;
+	s=arc-20240116; t=1791557573; c=relaxed/simple;
+	bh=L8QDZbX5naYQnbvN9T09PrjywBg9aQXUBsPp2VXgiRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+TxVNz/jgtA60Om1B/ahBm5rgQDVu6ugok/IhQ2Lu489Y7bfjuTwOLcTlpwFWnwbmJ4GCrzs+hYdGodVHOh41OpWRO7MweGavdgJIjadjV1l0DF9SsByMNJeu84ewlQUw1xRz3QGjjLTXrsE5gfibywF2VMkuhXuz0TGpCe6j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK7LPZBI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UjiraMMbLjyucXUWa7FN33dGMSGtEkZKrTTm7moH6AP/QVM01gSebYR6ReUljWnH2lmA82Cu5aGnn6sTQ0bKCTm08uFapSx8PK1vU0WXNJ8zu0Q5Kr44qykbFBYf/Og39kjmowzTiTU/rwQhw4z7zFZfBeQGvemZgPmobuxSdNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcFgNvmh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK7LPZBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A821F00893;
-	Fri,  9 Oct 2026 14:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcFgNvmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0541F000FF;
+	Fri,  9 Oct 2026 14:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791557569;
-	bh=3iE+/Lf0U8xMJfk6KKCAqX50Gi03awutrJKhhEyDxEY=;
+	s=korg; t=1791557572;
+	bh=iFDT0fW+y84FwzAdOzKZwwwm4Bm22TBUdI2s1xpjSrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UK7LPZBITT0Y59tpns/LVM3ooVE3gskQGbuFtdIzSIRyMobV5YDR8ZO7pXSS8cdHV
-	 JHC+VBst0h6cuJLe4ZzogwLoevIP3o9k97Ec8R2cWG7xZ2nMnSo/uKl/9yJUopMcNA
-	 6A7FVDauOOXbwnM45xZmWWZvgG6p4FaXoN4jQQg0=
+	b=bcFgNvmhNY+4QRCaFTT44TASB0JGDGr2UuJj0O5e03+D0cMUCGYohREsof6ObwJwa
+	 ZbFV1YLvYFr6Q82Nnyh3vL9R3XCfVNFVi5j+ZuJkiIFKVecCiwMqCu/bERpger9uB7
+	 eV/AoMRfVb44/1U1aWzL8No6r5Dg80MwKf4q4AN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Stable@vger.kernel.org,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 407/428] iio: pressure: rohm-bm1390: Return error when read fails
-Date: Fri,  9 Oct 2026 16:12:24 +0200
-Message-ID: <20261009140955.162443873@linuxfoundation.org>
+Subject: [PATCH 7.2 408/428] iio: proximity: aw96103: validate firmware data length
+Date: Fri,  9 Oct 2026 16:12:25 +0200
+Message-ID: <20261009140955.187290758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
 References: <20261009140946.008206689@linuxfoundation.org>
@@ -51,33 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit b0e951ffc5a28141a106562997ca136ec6a0e1a3 upstream.
+commit 1a7c522a35477d70320bd64aba8e9de0c1058c6f upstream.
 
-The data reading function ignores the cached error value, and
-unconditionally returns 0. Return cached 'ret' -value after stopping
-the measurement so user knows if read failed and data is garbage.
+The firmware parser reads a length from the binary header and then uses
+it to walk six-byte register/value entries. A truncated firmware image
+can make the parser read beyond the copied firmware buffer. A value
+smaller than the four-byte count field also underflows, producing a very
+large length.
 
-Fixes: 534674463a59 ("iio: bm1390: simplify using guard(mutex)")
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Read the little-endian field with get_unaligned_le32(), as previously
+proposed by David Lechner. Validate the header size, reject an
+underflowed length, ensure the resulting payload is contained in the
+firmware image, and require it to contain whole register/value entries.
+
+Fixes: 07b241262dca ("iio: proximity: aw96103: Add support for aw96103/aw96105 proximity sensor")
+Link: https://lore.kernel.org/r/20260314-iio-proximity-aw96103-fix-firmware-read-v1-1-c74fe9ccd82b@baylibre.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/rohm-bm1390.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/proximity/aw96103.c |   30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/pressure/rohm-bm1390.c
-+++ b/drivers/iio/pressure/rohm-bm1390.c
-@@ -289,7 +289,7 @@ static int bm1390_read_data(struct bm139
- 	if (warn)
- 		dev_warn(data->dev, "Failed to stop measurement (%d)\n", warn);
+--- a/drivers/iio/proximity/aw96103.c
++++ b/drivers/iio/proximity/aw96103.c
+@@ -24,6 +24,7 @@
+ #define AW96103_BIN_VALID_DATA_OFFSET		64
+ #define AW96103_BIN_DATA_LEN_OFFSET		16
+ #define AW96103_BIN_DATA_REG_NUM_SIZE		4
++#define AW96103_BIN_REG_SIZE			6
+ #define AW96103_BIN_CHIP_TYPE_SIZE		8
+ #define AW96103_BIN_CHIP_TYPE_OFFSET		24
  
--	return 0;
-+	return ret;
+@@ -229,14 +230,27 @@ static const struct aw_chip_info aw_chip
+ 	},
+ };
+ 
+-static void aw96103_parsing_bin_file(struct aw_bin *bin)
++static int aw96103_parsing_bin_file(struct aw_bin *bin)
+ {
++	u32 data_len;
++
++	if (bin->len < AW96103_BIN_VALID_DATA_OFFSET)
++		return -EINVAL;
++
++	data_len = get_unaligned_le32(bin->data + AW96103_BIN_DATA_LEN_OFFSET);
++	if (data_len < AW96103_BIN_DATA_REG_NUM_SIZE)
++		return -EINVAL;
++
++	bin->valid_data_len = data_len - AW96103_BIN_DATA_REG_NUM_SIZE;
++	if (bin->valid_data_len > bin->len - AW96103_BIN_VALID_DATA_OFFSET ||
++	    bin->valid_data_len % AW96103_BIN_REG_SIZE)
++		return -EINVAL;
++
+ 	bin->valid_data_addr = AW96103_BIN_VALID_DATA_OFFSET;
+-	bin->valid_data_len =
+-		*(unsigned int *)(bin->data + AW96103_BIN_DATA_LEN_OFFSET) -
+-		AW96103_BIN_DATA_REG_NUM_SIZE;
+ 	memcpy(bin->chip_type, bin->data + AW96103_BIN_CHIP_TYPE_OFFSET,
+ 	       AW96103_BIN_CHIP_TYPE_SIZE);
++
++	return 0;
  }
  
- static int bm1390_read_raw(struct iio_dev *idev,
+ static const struct regmap_config aw96103_regmap_confg = {
+@@ -500,7 +514,7 @@ static int aw96103_bin_valid_loaded(stru
+ 	int ret;
+ 
+ 	for (i = 0; i < aw_bin_data_s->valid_data_len;
+-	     i += 6, start_addr += 6) {
++	     i += AW96103_BIN_REG_SIZE, start_addr += AW96103_BIN_REG_SIZE) {
+ 		reg_addr = get_unaligned_le16(aw_bin_data_s->data + start_addr);
+ 		reg_data = get_unaligned_le32(aw_bin_data_s->data +
+ 					      start_addr + 2);
+@@ -550,6 +564,8 @@ static int aw96103_para_loaded(struct aw
+ static int aw96103_cfg_all_loaded(const struct firmware *cont,
+ 				  struct aw96103 *aw96103)
+ {
++	int ret;
++
+ 	if (!cont)
+ 		return -EINVAL;
+ 
+@@ -561,7 +577,9 @@ static int aw96103_cfg_all_loaded(const
+ 	aw_bin->len = cont->size;
+ 	memcpy(aw_bin->data, cont->data, cont->size);
+ 	release_firmware(cont);
+-	aw96103_parsing_bin_file(aw_bin);
++	ret = aw96103_parsing_bin_file(aw_bin);
++	if (ret)
++		return ret;
+ 
+ 	return aw96103_bin_valid_loaded(aw96103, aw_bin);
+ }
 
 
