@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B10D3BBFBC;
-	Fri,  9 Oct 2026 14:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C95444BCB0;
+	Fri,  9 Oct 2026 14:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791555354; cv=none; b=m++IKQ/tMafAOZxdPZlMoIi24xqnh+1R7N81dQVsqUs8wMqMMgK5OOW1jHgkwrKaMdbKWadwVgw5pxvf7xf/fbpfuXm6PgO/pl0MW9ISap1q9ypPyRw4u93toEOcPMGWMyT2EBg0hmvOZsdmfXsoRB6jNOpkD8fhjqtpV3MPF8s=
+	t=1791555357; cv=none; b=e4cuKsrawnQ0qFQNwFEiIzZkfy6kuuOvAwPE/n/3MivBLznCmawAS8Q429IVNLttKQ37W6Xsc/cybbGc26rK4QTU0YJ15KRDDR3ZE6B3ob8strC2xS9SA7P1GRTy8Bcu0ceGRHPEyWL2sp0nNbbrVLyx+NzShVjkp11v36+RQTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791555354; c=relaxed/simple;
-	bh=3RoejBxp5tLKB/9SakvEwkWlyrmYkKPJ97SSUSqH21g=;
+	s=arc-20240116; t=1791555357; c=relaxed/simple;
+	bh=OvP6eizAP74mFEBdanqRdapDkw0y9rrWfVAQXDD+UtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2P45UIKiNDAxL173xVOm+OR209NgL5W3/+pDJJ3RrtQEm5+X5xxz4w4zYH4QKS9x68oJXrI4UqaM8yD0YQOCkWLmnRGOKHH+65bKTe14f72X+9FzNU3oMf1NhuH1gkpBxfkj8IYDX0vTenqwhrxXI8VhA2riEzEeySh83B3Hbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BabylZaZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IePOlVV3sLbD/s4eOksJTgntg8rpipuByaQwojTuXV6gUFZ/Sdbga4nxZ0VqCft7vih5ExfnBLAPnkjQXaFUnuWHtppiy5/TWkkO93n79kQDDdcBHfeeO9zr37+dP4/yVLHrNyN91oyhwWU2JExhOn5k2bPzrbyNuZtglq6EGCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY7JjZhT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BabylZaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08D01F000FF;
-	Fri,  9 Oct 2026 14:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY7JjZhT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EAE1F00893;
+	Fri,  9 Oct 2026 14:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791555350;
-	bh=2gHfNVim2MkAVeFdAnE4gBFsQI41AkSwf/KApTwljmw=;
+	s=korg; t=1791555353;
+	bh=x1I+n1gTuspZJKSKCabRmG4XgDg2WfchileUWDsB9QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BabylZaZDdNAb2DNaEW49A3E0uD8ZKUry5amsLzGUwnykgXebXzIpFGcSXBKxNCKp
-	 APyAjv9v9/cXQMqq0Fm+dJ9vXG2v+EWPk7bPKbEdAzrv/+r21ro5bBOHmuirA0p96x
-	 8mvwELL03Zuf50NxTrkjcE5vsp3A6jhG38g1rLMo=
+	b=uY7JjZhT10uwJfs3SqkCNHp0TmPlUaYnqqzQgCqBD8zXyC2sgh/7qfpAiLZA23CHi
+	 Ib9N+0mVxUPknapJOfsIXw5HuibcPL8uKieNTDqILFh9sPmGelMcN6/G4wBUMGcbyl
+	 XN3/1Yq7MwV1gGxELu/VgzJmlo6wcMVFD8Qp/qeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Jiakai Xu <jiakaiPeanut@gmail.com>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 017/403] cifs: Remove the RFC1002 header from smb_hdr
-Date: Fri,  9 Oct 2026 16:06:18 +0200
-Message-ID: <20261009140952.521502731@linuxfoundation.org>
+Subject: [PATCH 6.18 008/403] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
+Date: Fri,  9 Oct 2026 16:06:09 +0200
+Message-ID: <20261009140952.316959691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
 References: <20261009140952.119038291@linuxfoundation.org>
@@ -57,238 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jiakai Xu <jiakaipeanut@gmail.com>
 
-[ Upstream commit 83bfbd0bb9025f98fa62b44f93bd67466773d1db ]
+[ Upstream commit 11366ead4f1412befea660777576c89a1bac0c1e ]
 
-Remove the RFC1002 header from struct smb_hdr as used for SMB-1.0.  This
-simplifies the SMB-1.0 code by simplifying a lot of places that have to add
-or subtract 4 to work around the fact that the RFC1002 header isn't really
-part of the message and the base for various offsets within the message is
-from the base of the smb_hdr, not the RFC1002 header.
+Add a null pointer check for imsic_state before dereferencing it in
+kvm_riscv_aia_imsic_has_attr(). While the function checks that the
+vcpu exists, it doesn't verify that the vcpu's imsic_state has been
+initialized, leading to a null pointer dereference when accessed.
 
-Further, clean up a bunch of places that require an extra kvec struct
-specifically pointing to the RFC1002 header, such that kvec[0].iov_base
-must be exactly 4 bytes before kvec[1].iov_base.
+This issue was discovered during fuzzing of RISC-V KVM code. The
+crash occurs when userspace calls KVM_HAS_DEVICE_ATTR ioctl on an
+AIA IMSIC device before the IMSIC state has been fully initialized
+for a vcpu.
 
-This allows the header preamble size stuff to be removed too.
+The crash manifests as:
+  Unable to handle kernel paging request at virtual address
+  dfffffff00000001
+  ...
+  epc : kvm_riscv_aia_imsic_has_attr+0x464/0x50e
+  arch/riscv/kvm/aia_imsic.c:998
+  ...
+  kvm_riscv_aia_imsic_has_attr+0x464/0x50e arch/riscv/kvm/aia_imsic.c:998
+  aia_has_attr+0x128/0x2bc arch/riscv/kvm/aia_device.c:471
+  kvm_device_ioctl_attr virt/kvm/kvm_main.c:4722 [inline]
+  kvm_device_ioctl+0x296/0x374 virt/kvm/kvm_main.c:4739
+  ...
 
-The size of the request and response message are then handed around either
-directly or by summing the size of all the iov_len members in the kvec
-array for which we have a count.
+The fix adds a check to return -ENODEV if imsic_state is NULL, which
+is consistent with other error handling in the function and prevents
+the null pointer dereference.
 
-Also, this simplifies and cleans up the common transmission and receive
-paths for SMB1 and SMB2/3 as there no longer needs to be special handling
-casing for SMB1 messages as the RFC1002 header is now generated on the fly
-for SMB1 as it is for SMB2/3.
-
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-
-Stable dependency adaptation for 6c5c547f037bc18f0b8d0b5db5a648f8f630ce85:
-
-Retain only the midQ-to-mid rename in compound_send_recv(). Prepare its
-response-copy block using the corresponding layout from 62432a3f51450:
-check the received response first, then copy it and transfer ownership
-inside the resp_iov guard. This provides the context needed for the target
-to defer response-buffer transfers until compound synchronization finishes.
-
-Omit the SMB1 RFC1002 conversion and all other unrelated hunks. This stable
-tree still defines smb_hdr in client/cifspdu.h, uses the older negotiate
-and filesystem-info type names, and has moved CIFSTCon and transaction2
-helpers out of the upstream locations. Restoring those functions or
-importing the intervening SMB1 reorganization is unnecessary for the target.
-Keep HEADER_PREAMBLE_SIZE(server) in the response length because SMB1 still
-reaches this shared path through SendReceive2(). No functions are added.
-
-The target applies cleanly with a three-way application on this adaptation.
-
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-
-[ sashal: Reduced backport -- upstream 83bfbd0bb9025 touches 19 file(s), this
-  backport carries 1. Not backported here:
-  fs/smb/client/cifs_debug.c
-  fs/smb/client/cifs_debug.h
-  fs/smb/client/cifsencrypt.c
-  fs/smb/client/cifsglob.h
-  fs/smb/client/cifspdu.h
-  fs/smb/client/cifsproto.h
-  fs/smb/client/cifssmb.c
-  fs/smb/client/cifstransport.c
-  ... and 10 more
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 6c5c547f037b ("smb: client: close completed creates on compound wait errors")
+Fixes: 5463091a51cf ("RISC-V: KVM: Expose IMSIC registers as attributes of AIA irqchip")
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260125143344.2515451-1-xujiakai2025@iscas.ac.cn
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 73 ++++++++++++++++++++-------------------
- 1 file changed, 37 insertions(+), 36 deletions(-)
+ arch/riscv/kvm/aia_imsic.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 4da3d62b6481e..53db53a78d6c5 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -864,7 +864,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 		   int *resp_buf_type, struct kvec *resp_iov)
- {
- 	int i, j, optype, rc = 0;
--	struct mid_q_entry *midQ[MAX_COMPOUND];
-+	struct mid_q_entry *mid[MAX_COMPOUND];
- 	bool cancelled_mid[MAX_COMPOUND] = {false};
- 	struct cifs_credits credits[MAX_COMPOUND] = {
- 		{ .value = 0, .instance = 0 }
-@@ -930,35 +930,35 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 	}
+diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
+index a357ea73516f6..b4fee98402179 100644
+--- a/arch/riscv/kvm/aia_imsic.c
++++ b/arch/riscv/kvm/aia_imsic.c
+@@ -1002,8 +1002,11 @@ int kvm_riscv_aia_imsic_has_attr(struct kvm *kvm, unsigned long type)
+ 	if (!vcpu)
+ 		return -ENODEV;
  
- 	for (i = 0; i < num_rqst; i++) {
--		midQ[i] = server->ops->setup_request(ses, server, &rqst[i]);
--		if (IS_ERR(midQ[i])) {
-+		mid[i] = server->ops->setup_request(ses, server, &rqst[i]);
-+		if (IS_ERR(mid[i])) {
- 			revert_current_mid(server, i);
- 			for (j = 0; j < i; j++)
--				delete_mid(midQ[j]);
-+				delete_mid(mid[j]);
- 			cifs_server_unlock(server);
+-	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+ 	imsic = vcpu->arch.aia_context.imsic_state;
++	if (!imsic)
++		return -ENODEV;
++
++	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+ 	return imsic_mrif_isel_check(imsic->nr_eix, isel);
+ }
  
- 			/* Update # of requests on wire to server */
- 			for (j = 0; j < num_rqst; j++)
- 				add_credits(server, &credits[j], optype);
--			return PTR_ERR(midQ[i]);
-+			return PTR_ERR(mid[i]);
- 		}
- 
--		midQ[i]->mid_state = MID_REQUEST_SUBMITTED;
--		midQ[i]->optype = optype;
-+		mid[i]->mid_state = MID_REQUEST_SUBMITTED;
-+		mid[i]->optype = optype;
- 		/*
- 		 * Invoke callback for every part of the compound chain
- 		 * to calculate credits properly. Wake up this thread only when
- 		 * the last element is received.
- 		 */
- 		if (i < num_rqst - 1)
--			midQ[i]->callback = cifs_compound_callback;
-+			mid[i]->callback = cifs_compound_callback;
- 		else
--			midQ[i]->callback = cifs_compound_last_callback;
-+			mid[i]->callback = cifs_compound_last_callback;
- 	}
- 	rc = smb_send_rqst(server, num_rqst, rqst, flags);
- 
- 	for (i = 0; i < num_rqst; i++)
--		cifs_save_when_sent(midQ[i]);
-+		cifs_save_when_sent(mid[i]);
- 
- 	if (rc < 0) {
- 		revert_current_mid(server, num_rqst);
-@@ -1001,23 +1001,23 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 	spin_unlock(&ses->ses_lock);
- 
- 	for (i = 0; i < num_rqst; i++) {
--		rc = wait_for_response(server, midQ[i]);
-+		rc = wait_for_response(server, mid[i]);
- 		if (rc != 0)
- 			break;
- 	}
- 	if (rc != 0) {
- 		for (; i < num_rqst; i++) {
- 			cifs_server_dbg(FYI, "Cancelling wait for mid %llu cmd: %d\n",
--				 midQ[i]->mid, le16_to_cpu(midQ[i]->command));
--			send_cancel(server, &rqst[i], midQ[i]);
--			spin_lock(&midQ[i]->mid_lock);
--			midQ[i]->wait_cancelled = true;
--			if (midQ[i]->callback) {
--				midQ[i]->callback = cifs_cancelled_callback;
-+				 mid[i]->mid, le16_to_cpu(mid[i]->command));
-+			send_cancel(server, &rqst[i], mid[i]);
-+			spin_lock(&mid[i]->mid_lock);
-+			mid[i]->wait_cancelled = true;
-+			if (mid[i]->callback) {
-+				mid[i]->callback = cifs_cancelled_callback;
- 				cancelled_mid[i] = true;
- 				credits[i].value = 0;
- 			}
--			spin_unlock(&midQ[i]->mid_lock);
-+			spin_unlock(&mid[i]->mid_lock);
- 		}
- 	}
- 
-@@ -1025,37 +1025,38 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 		if (rc < 0)
- 			goto out;
- 
--		rc = cifs_sync_mid_result(midQ[i], server);
-+		rc = cifs_sync_mid_result(mid[i], server);
- 		if (rc != 0) {
- 			/* mark this mid as cancelled to not free it below */
- 			cancelled_mid[i] = true;
- 			goto out;
- 		}
- 
--		if (!midQ[i]->resp_buf ||
--		    midQ[i]->mid_state != MID_RESPONSE_READY) {
-+		if (!mid[i]->resp_buf ||
-+		    mid[i]->mid_state != MID_RESPONSE_READY) {
- 			rc = -EIO;
- 			cifs_dbg(FYI, "Bad MID state?\n");
- 			goto out;
- 		}
- 
--		buf = (char *)midQ[i]->resp_buf;
--		resp_iov[i].iov_base = buf;
--		resp_iov[i].iov_len = midQ[i]->resp_buf_size +
--			HEADER_PREAMBLE_SIZE(server);
-+		rc = server->ops->check_receive(mid[i], server,
-+						flags & CIFS_LOG_ERROR);
- 
--		if (midQ[i]->large_buf)
--			resp_buf_type[i] = CIFS_LARGE_BUFFER;
--		else
--			resp_buf_type[i] = CIFS_SMALL_BUFFER;
--
--		rc = server->ops->check_receive(midQ[i], server,
--						     flags & CIFS_LOG_ERROR);
-+		if (resp_iov) {
-+			buf = (char *)mid[i]->resp_buf;
-+			resp_iov[i].iov_base = buf;
-+			resp_iov[i].iov_len = mid[i]->resp_buf_size +
-+				HEADER_PREAMBLE_SIZE(server);
- 
--		/* mark it so buf will not be freed by delete_mid */
--		if ((flags & CIFS_NO_RSP_BUF) == 0)
--			midQ[i]->resp_buf = NULL;
-+			if (mid[i]->large_buf)
-+				resp_buf_type[i] = CIFS_LARGE_BUFFER;
-+			else
-+				resp_buf_type[i] = CIFS_SMALL_BUFFER;
- 
-+			/* mark it so buf will not be freed by delete_mid */
-+			if ((flags & CIFS_NO_RSP_BUF) == 0)
-+				mid[i]->resp_buf = NULL;
-+		}
- 	}
- 
- 	/*
-@@ -1084,7 +1085,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 	 */
- 	for (i = 0; i < num_rqst; i++) {
- 		if (!cancelled_mid[i])
--			delete_mid(midQ[i]);
-+			delete_mid(mid[i]);
- 	}
- 
- 	return rc;
 -- 
 2.53.0
 
