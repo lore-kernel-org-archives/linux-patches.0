@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731E0470450;
-	Fri,  9 Oct 2026 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4289D473C8D;
+	Fri,  9 Oct 2026 14:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791556853; cv=none; b=AGSHm1c1OZ/BuGrqQfiaYf/v9UsUAKUJcK0Qndt6ywaH8uYNLuUXhDnXYZgGl/aSk+qlCRT4s4QtKbQ8EeZYP0cQnI1PA8fH1qQGgqzwF+/CH9O1GK5Fp2fMxVQL2vZrRTCp5MuJJDpRw0pZ9WEdL1y6437xOmV6tabA+v4MmQg=
+	t=1791556856; cv=none; b=MKh8I7YCTRIJ+8+4sxPAw2u0nX30QU2FNvr2awy1XisPHsr0S1CfcxuIWI2G+Rk3TKMGEyxEOS1Wt+w9SgWp2XgQlDIArsqk5R7m+k3ucjpT49TeN5PKzyw5x8iOoEZ28EVD2d6gEw+e0HrLaKS/0svdPKT+jp69Ne9rMfA6WZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791556853; c=relaxed/simple;
-	bh=7G74qGV04+Fzz675bV8zAMwdM19Qou/t1vgl2WPECek=;
+	s=arc-20240116; t=1791556856; c=relaxed/simple;
+	bh=MVsrWP6buyP+L5NdkBkHibZsa4o8NNb5pxIJrBKsG+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEKupUmfRT3BfIsn7cDAEw15rGTmD47nwE5CVoudnRKXP/cvu9SxY0K6xOu2Ra5V/f1RetzWBxitLp2wVPsRWok/HPNdPsyT16sPglXUXmc1/mR3pNNYL4w0cnGK4ynIZo2IfAvTsndSAj2cxfD3JEKZn4HsbSO+7e7M6xFGoI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXoljk6U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6iCR+4O8C2ChQR2lHmWih0lsnhqflyapH5rw/YoOUN2jGW/57zIangKKA3IDXXbhM8+LZutasehGaKEX1Nj9jmMnB+PJl11GpbdgbdGT+N0mtngc8YnWefUjnBIg2tOwvcq8F1JZtByGMHZffTDWy//2/0TVCbNUfAONt+yvnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ar2i3BsV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXoljk6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69C21F000FF;
-	Fri,  9 Oct 2026 14:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ar2i3BsV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FB11F000FF;
+	Fri,  9 Oct 2026 14:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791556852;
-	bh=Du0usr3M7LfRj8VOssb+k5gZR7AAuTG61HCCl7e97pY=;
+	s=korg; t=1791556855;
+	bh=1bkGJKXbgdSl4V10PN0qPGiRbhkTZTlzX75RjriCp4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXoljk6UuvFNt6hWjGz0F1z1h5A2YhB6x1NBFr3g9WYTR2ckCdpTd9Y97NL6oDcRh
-	 aZqVbiMCLCdr3oRYqpc8Y5BrBvN+wNZTdvAhXy/ITIsofAJ4gZMO4SpsZQOovrripi
-	 uwO+xEtckbUJz8wVVzd72efb6orowzlAibUIbct8=
+	b=Ar2i3BsVKVNPHs3D8wSRyIXK61nJ4HP85Yo7hdFvR42rPAFDGK4Y6SsoWNK6Ha7Hd
+	 SH75rBERrkfOo/k1ZtR/u2+6ddWXiBZNF0UDdCRKZImjcHMxjNSn+Ajg1CokgeAbvW
+	 6k55/EzcxmNt+Gmvt28DibTttqEPa/5zwuz7WJ6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 303/403] iio: adc: ade9000: fix NULL pointer dereference in clkout registration
-Date: Fri,  9 Oct 2026 16:11:04 +0200
-Message-ID: <20261009140959.301278075@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 7.2 253/428] serial: revert guards in uart_wait_modem_status()
+Date: Fri,  9 Oct 2026 16:09:50 +0200
+Message-ID: <20261009140951.662557080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261009140952.119038291@linuxfoundation.org>
-References: <20261009140952.119038291@linuxfoundation.org>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+References: <20261009140946.008206689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 49ee1c6a3ebda6b7de06b2961b0e09c1c3fe536a upstream.
+commit f658e6bcd00a4eafaa9c98c0b7483cc2c5dac539 upstream.
 
-ade9000_setup_clkout() passes NULL as the register address when
-registering a divider clock. During clock registration, the common
-clock framework calls clk_divider_recalc_rate(), which dereferences
-the address through readl(). As a result, probing an ADE9000 configured
-as a clock provider with an external input clock crashes.
+Mixing scope-based and regular cleanup is discouraged and
+uart_port_deref() used by uart_wait_modem_status() falls in the latter
+category.
 
-CLKOUT passes CLKIN through without changing its rate. Register it as
-a 1:1 fixed-factor clock, which does not require register access.
+Revert the guard conversion in preparation for fixing a hangup race.
 
-This change does not affect the configuration using the internal clock,
-for which the driver does not register a clock provider.
-
-Fixes: 81de7b4619fc ("iio: adc: add ade9000 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 56609c050051 ("serial: serial_core: use guard()s")
+Cc: stable@kernel.org	# 6.18
+Cc: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260910130816.642699-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ade9000.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/serial_core.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/adc/ade9000.c
-+++ b/drivers/iio/adc/ade9000.c
-@@ -1652,8 +1652,9 @@ static int ade9000_setup_clkout(struct d
- 		return 0;
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -1212,15 +1212,16 @@ static int uart_wait_modem_status(struct
+ 	uport = uart_port_ref(state);
+ 	if (!uport)
+ 		return -EIO;
+-	scoped_guard(uart_port_lock_irq, uport) {
+-		memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
+-		uart_enable_ms(uport);
+-	}
++	uart_port_lock_irq(uport);
++	memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
++	uart_enable_ms(uport);
++	uart_port_unlock_irq(uport);
  
- 	/* CLKOUT passes through CLKIN with divider of 1 */
--	clkout_hw = devm_clk_hw_register_divider(dev, "clkout", __clk_get_name(st->clkin),
--						 CLK_SET_RATE_PARENT, NULL, 0, 1, 0, NULL);
-+	clkout_hw = devm_clk_hw_register_fixed_factor(dev, "clkout",
-+						      __clk_get_name(st->clkin),
-+						      CLK_SET_RATE_PARENT, 1, 1);
- 	if (IS_ERR(clkout_hw))
- 		return dev_err_probe(dev, PTR_ERR(clkout_hw), "Failed to register clkout");
+ 	add_wait_queue(&port->delta_msr_wait, &wait);
+ 	for (;;) {
+-		scoped_guard(uart_port_lock_irq, uport)
+-			memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
++		uart_port_lock_irq(uport);
++		memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
++		uart_port_unlock_irq(uport);
+ 
+ 		set_current_state(TASK_INTERRUPTIBLE);
  
 
 
