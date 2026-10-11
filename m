@@ -1,151 +1,140 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297E54705F;
-	Sun, 11 Oct 2026 03:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28F1346777
+	for <patches@lists.linux.dev>; Sun, 11 Oct 2026 08:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791689294; cv=none; b=mO4NFO7SHdc7tuI88/Donaq3MnaLWOrlkKDTvCAKbVU3ERGvDoyXpFna3g4zIAnGIMY42GErulIek4UtSLX5zsw83ha7qs/zNQZnNIsI1HlThKzWj8zSJ1wX/qIJj/Bi5lzG7sHawEcqLH7KavvkYQssHpcC4pRv2nvCDh+N54M=
+	t=1791707137; cv=none; b=MfL6JJ+eE8m1d0OYMTQ97Ljl0CXGLdaJ3vC0cJRg6THZFI8b/8ng6i2du4DlvCSH3qgtP4cSuTBHWVdRTchdBJCf3U+MN6TSl3xCx7PUwYcZbH13EKKHRM+T/OcUhGYtusLfYBdvT+bP4Zp4pTYz6GnNM2oP2dvXeN/3obRmgiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791689294; c=relaxed/simple;
-	bh=/YPLbqEcFVqjmRMWusjhbUsaybFteEuS+PBKtWSD37I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bXFLefT+GYWA+oT4nRFG0dnjNE5bK2BkctN5zdX+8YbUruFcmv6UE8gHlErCHFHq/Rb1htSKxuGQTXGzPxQGa7ECmUjVyAp1qOPnwmXQO3S8EOmGwA8ywTS2IjJWYKN9xq6jjiIFA1rrGC5A6WPEBR+cvguLXgW2tEpfHiIGaHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=pafyuOO3; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1791707137; c=relaxed/simple;
+	bh=kScpCZUfbiwUBCfY1/4QhXc1j3HkTC2SpEXoET/sHcw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TFoeCFoW6tNTU5uwcEVAFbdcQwIYnhETndEf4baD4EE5Zh4VLixYzN7mOw7vmFfkDBOVXelhGF6ntlKaKD1jC1/kVnCacieyDZtNBUSkhVAXgVgaqxxhvwNmCmExtocZKPZ+fMPDq6WLh4B3WPDUSw9s6m6/G59c6H0DDMmSvnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m9GvCQes; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WvdmI4V4; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="pafyuOO3"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=ZmJlsXYI+H0VdIL85rNDi+Xp9VytUUOPhTxfLykp7to=; b=pafyuOO3/E5PdQ3Yeib6eUID6A
-	yrr4hsUiVq+lj2Iv6KCajrqzgyVEJmn+f52VXXaLtXRgIdb7ptxr/rS5KFlj3C96VpPHSnrJ5cpgr
-	UCLAZf/9oR9nxdj8USg8WHVi2T6AwW/lQEKdj1yjOpzTS4PDew6VqrqY4CnxGHhTJ9ps06GQKzCZB
-	W7T00iwK1lPqHM3QKfIJdy6KuJR0YGu+pcuc3g2JUwqFT7a3GH1SIu1aSI3K96uOehfw6zhM+Xcds
-	s0rwok+R02Ixp0bt5hcd32HfORw4gLFw9vcuXMwmlGNpj+fKbau9MkpDJbvv7YfRaHEdwQt72PXm0
-	wZlD9yQA==;
-Received: from [50.53.43.113] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1xFkEE-00000008gGO-1EWR;
-	Sun, 11 Oct 2026 03:28:02 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: netdev@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>
-Subject: [PATCH net-next] net: dccp: uapi: clean up kernel-doc comments
-Date: Sat, 10 Oct 2026 20:28:00 -0700
-Message-ID: <20261011032800.278870-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m9GvCQes";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WvdmI4V4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id CD3E4EC0A8A
+	for <patches@lists.linux.dev>; Sun, 11 Oct 2026 04:25:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Sun, 11 Oct 2026 04:25:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1791707134;
+	 x=1791793534; bh=LLtGKMrhKvPJ9XjJTi6BFyiUya1GkfxLEGv2nPtdLf0=; b=
+	m9GvCQes0K3+D2VAJrOiLgljwFAXLN7y77l8iINntKZhojIXRRYCzW/5CuaMufMy
+	7oSdK97cYwuWD7XSj+R3WQCUjFH0+EEYrITzFfzCHiWTsMNHFrT7Dcohn/ubs1qX
+	b9gWKY9gCauGeExMM41NiqLkeAyNYHU9YBR3EZBrSQPfwdXReweMFdzEpV8cKBFV
+	tbdq/lRw8aQrCrdaSTR+Xb30yCkUr8Q8EPPPXBOWpkyvpz4DYNG+D4GT2ePnrj7w
+	Y0lLNT/MYvvrE30NrDR8Ummv0Ry64Ufpl07U7yNGYL7I04FWjHAmPaDzhzJSH+8v
+	uAulQp3Z18ZS0EvA9dKPpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791707134; x=
+	1791793534; bh=LLtGKMrhKvPJ9XjJTi6BFyiUya1GkfxLEGv2nPtdLf0=; b=W
+	vdmI4V4MOawQQ5mtLM/t4Dib4j6C76B0jVPYr4P46sVJ88ryDi7c8cCJAAg3fBBi
+	7BZ+DDGT6Lirz2Q1I88eLHLqz2Mgd8vD2n9ShyEQqVoImn6ECYLI6lPtr9VAZl+o
+	jCbNrLBM5t1gD54S+Hzk4AmaSmhvX0v0ronri/AB118tsfgCaRNOtgmOgi/s8wni
+	9SKFoAk3vRfUij2mVPwA7LyLDW4Q8m+R+gIHVJr4ZTEP2vfH97nGVlCTNSm7zW/e
+	2U6YkjfV4MAIT+DZoi/2Lir09IWDHwfYNLfYcp+nozHTj1fXQHs2SaAXkd6rlc3k
+	mnKVQJjQSngxzcxwfbPMA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791707134; d=pobox.com;
+	mf=PGJhcnJ5bkBwb2JveC5jb20+;
+	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
+	s=fm1:rsa-sha256:EZ9UOE67YSB1d59OFUlbAh0AlA5vCWPhoXaiLM/bvjRcl1k
+	S6d5oulR/mWOCxIZHTGte2bAjMeqP8WjiTXimemYaM5/Qdw51AuKM32qcsl1xhH1
+	iY/PRoi2TmqLvocZ+p/mtuqkyLjtilfWs75M3Nh+FakGL13NT2ecTXA29y+AxHpR
+	FB/pYDw8dFCyR60ZrvHCKxQAe+MqXveayKmTd88A7e3IowZR8ogYxm0kwl2npJTp
+	+xo85PEV38tyuBmNdo0/OHIbKg7xeT48dB7S9TaRZW8fsm9Wa0ifvgKb+MBEXTBM
+	EBrHaZAjQolbdnA/1xvzdiWv5brGeD1vYsviv6g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=14;
+	hn=cc,content-language,content-transfer-encoding,content-type,
+	date,feedback-id,from,in-reply-to,message-id,mime-version,
+	references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:UJXWda4JDQgsQCsKK+DUYbwUhN5jrbonyH/hgjgH89E=:kScpCZUfbiwUBCfY1/4QhXc1j3HkTC2SpEXoET/sHcw=;
+X-ME-Sender: <xms:_UfLaiTFc1WVMa6T8l7WaOOzSp0r25cxCmH7FEDhrmDRbGNYcIp1UA>
+    <xme:_UfLajqXnDYjMUX6wV_gvPO4EPB-64dL8waiK2YsE-TTL9yr5SKZCg4RiDGH5uaum
+    WA6bOwLfegvGUK8QnJH6shhrv_6AwKwivV9jchaF52US8hS-wsdVv1qwA>
+X-ME-Received: <xmr:_UfLarVmFq-6UoA3PNTTL-gsMEFqNYTCf1MoMFj-C9yhpamz_nc5BsoU_U15OWiHtYLKFf_2m7jdGu7c1aOygUrXl-vNXURa>
+X-ME-Proxy-Cause: dmFkZTGIpgsSKCJlcXUNrfhQ+rOxRjqphKb+CKmUmfpqVrmmf+En8wMSywkaPXMTn8INhK
+    kU6j9n8EsW9STbEz2liYD2xeGXc4HNf+WhiUxXoa2GtAE/efkNC8+D4x3DRFafeR7i+YzE
+    XpSTO+f5oiMpHg9xAWurhjt9ycNlApP7pnwuEIcK/ZpYgdlagip/pXrar1axYNJ8DXXqOZ
+    0vSOVzY4gJtpoDC3fhRvQH78AcbISUWzKarDj0DTnGFnwAT9j3ywp34O14MQ0wSyxmPKxj
+    yCtxxzus65xp0grVOrsazpc7kBidm2+pTlSliBgCSCBZOfFbo8pQD9bK+qjH8O0srD0bkR
+    WifMS4NVEnAz/RmbE//7jjCl7ZkBE9Zml0FKj4stCVPr3xbw+xA6fpnQsDeROc2E10ZnyH
+    w7tJFqlIKBfdDFvF4mFy526q06qhDTG/piibSbakG1SDdzEJy1CZv4OjeHXmIt8oU1iPKv
+    5t6b8uvHqX9o304cZU96cr2hNesO5uF+1TyDon4WAbHOvVrHLFAlDN9kHIiVH4GlUAZr1/
+    QfGur6C5ePZtPc78HMPi+Q1ery6ZgmHPWGv7Vitt8LYTaBqFwBwRBqOJwNwdbNpa/Zpsll
+    12gU0o8u0UZP4xwvngiyn+NSka4xuG2cy1yqVvwLWlcG/9I3dNxJdkaJAmtw
+X-ME-Proxy: <xmx:_UfLah9DH6X6RIzaJ69BFSmivrBxezBgX4RXB0hLya8km3K5cnvBPA>
+    <xmx:_kfLajYnnaL4hX50Q3ZEniiCccUg2lNDzZhetAsb5Sbl9GiitkrzBw>
+    <xmx:_kfLapfMRyherokzlQFoOp2FxGhceiM_l_OfhuXtnz5y5QY1ap83ig>
+    <xmx:_kfLatrnXz8zlJbuq1HJSRBv1d5I3l3rZgAQQzPAQU-0slcSYyRQ5w>
+    <xmx:_kfLalEcTzPsHI1HfCK6k_hUK8WCak6PSSoS_M83ynhQmUWaJMuIWQ-8>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 11 Oct 2026 04:25:31 -0400 (EDT)
+Message-ID: <47315427-d8c8-4f60-a0ed-c607ed1d10ea@pobox.com>
+Date: Sun, 11 Oct 2026 01:25:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.2 000/428] 7.2.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261009140946.008206689@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20261009140946.008206689@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Use correct kernel-doc format for struct members and add comments for
-missing struct members (dccph_seq2 and reserved).
+On 10/9/26 7:05 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.2.10 release.
+> There are 428 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 11 Oct 2026 14:08:23 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
----
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
+Tested on 2 amd64 systems and an arm64 virtual machine. Working well,
+no regressions observed.
 
- include/uapi/linux/dccp.h |   41 ++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 18 deletions(-)
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
---- linext-2026-1007.orig/include/uapi/linux/dccp.h
-+++ linext-2026-1007/include/uapi/linux/dccp.h
-@@ -8,15 +8,19 @@
- /**
-  * struct dccp_hdr - generic part of DCCP packet header
-  *
-- * @dccph_sport - Relevant port on the endpoint that sent this packet
-- * @dccph_dport - Relevant port on the other endpoint
-- * @dccph_doff - Data Offset from the start of the DCCP header, in 32-bit words
-- * @dccph_ccval - Used by the HC-Sender CCID
-- * @dccph_cscov - Parts of the packet that are covered by the Checksum field
-- * @dccph_checksum - Internet checksum, depends on dccph_cscov
-- * @dccph_x - 0 = 24 bit sequence number, 1 = 48
-- * @dccph_type - packet type, see DCCP_PKT_ prefixed macros
-- * @dccph_seq - sequence number high or low order 24 bits, depends on dccph_x
-+ * @dccph_sport: Relevant port on the endpoint that sent this packet
-+ * @dccph_dport: Relevant port on the other endpoint
-+ * @dccph_doff: Data Offset from the start of the DCCP header, in 32-bit words
-+ * @dccph_ccval: Used by the HC-Sender CCID
-+ * @dccph_cscov: Parts of the packet that are covered by the Checksum field
-+ * @dccph_checksum: Internet checksum, depends on dccph_cscov
-+ * @dccph_x: 0 = 24 bit sequence number, 1 = 48
-+ * @dccph_type: packet type, see DCCP_PKT_ prefixed macros
-+ * @dccph_reserved: reserved bits
-+ * @dccph_seq: sequence number high or low order lower 16 bits,
-+ *  depends on dccph_x
-+ * @dccph_seq2: sequence number high or low order upper 8 bits,
-+ *  depends on dccph_x
-  */
- struct dccp_hdr {
- 	__be16	dccph_sport,
-@@ -50,7 +54,7 @@ struct dccp_hdr {
- /**
-  * struct dccp_hdr_ext - the low bits of a 48 bit seq packet
-  *
-- * @dccph_seq_low - low 24 bits of a 48 bit seq packet
-+ * @dccph_seq_low: low 24 bits of a 48 bit seq packet
-  */
- struct dccp_hdr_ext {
- 	__be32	dccph_seq_low;
-@@ -59,7 +63,7 @@ struct dccp_hdr_ext {
- /**
-  * struct dccp_hdr_request - Connection initiation request header
-  *
-- * @dccph_req_service - Service to which the client app wants to connect
-+ * @dccph_req_service: Service to which the client app wants to connect
-  */
- struct dccp_hdr_request {
- 	__be32	dccph_req_service;
-@@ -67,8 +71,9 @@ struct dccp_hdr_request {
- /**
-  * struct dccp_hdr_ack_bits - acknowledgment bits common to most packets
-  *
-- * @dccph_resp_ack_nr_high - 48 bit ack number high order bits, contains GSR
-- * @dccph_resp_ack_nr_low - 48 bit ack number low order bits, contains GSR
-+ * @dccph_reserved1: reserved bits
-+ * @dccph_ack_nr_high: 48 bit ack number high order bits, contains GSR
-+ * @dccph_ack_nr_low: 48 bit ack number low order bits, contains GSR
-  */
- struct dccp_hdr_ack_bits {
- 	__be16	dccph_reserved1;
-@@ -78,8 +83,8 @@ struct dccp_hdr_ack_bits {
- /**
-  * struct dccp_hdr_response - Connection initiation response header
-  *
-- * @dccph_resp_ack - 48 bit Acknowledgment Number Subheader (5.3)
-- * @dccph_resp_service - Echoes the Service Code on a received DCCP-Request
-+ * @dccph_resp_ack: 48 bit Acknowledgment Number Subheader (5.3)
-+ * @dccph_resp_service: Echoes the Service Code on a received DCCP-Request
-  */
- struct dccp_hdr_response {
- 	struct dccp_hdr_ack_bits	dccph_resp_ack;
-@@ -89,9 +94,9 @@ struct dccp_hdr_response {
- /**
-  * struct dccp_hdr_reset - Unconditionally shut down a connection
-  *
-- * @dccph_reset_ack - 48 bit Acknowledgment Number Subheader (5.6)
-- * @dccph_reset_code - one of %dccp_reset_codes
-- * @dccph_reset_data - the Data 1 ... Data 3 fields from 5.6
-+ * @dccph_reset_ack: 48 bit Acknowledgment Number Subheader (5.6)
-+ * @dccph_reset_code: one of %dccp_reset_codes
-+ * @dccph_reset_data: the Data 1 ... Data 3 fields from 5.6
-  */
- struct dccp_hdr_reset {
- 	struct dccp_hdr_ack_bits	dccph_reset_ack;
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
