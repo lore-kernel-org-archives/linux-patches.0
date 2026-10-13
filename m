@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D8D2C11E4;
-	Tue, 13 Oct 2026 12:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF512C11E4;
+	Tue, 13 Oct 2026 12:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894876; cv=none; b=bzXwjJXK3td06mt/36x9JIMMXuM+ERBC5Bm31rwrgHYkqC0hjFTtMzj44f4bJswkik2wmp/LFlZPX84mben6zqQ2hymG9RdRdPzaYP+fLBdp3FpxwxSxsuUfMcZQNhTQBGBK7tCI1mBqcfRpV3maKXUhgb6qQlZaCguBHYqtShE=
+	t=1791894880; cv=none; b=TB42ZZDmnlsvY6ySuBOtzCOuTXA404P2lwngMh/NPyVvBqTgV9mH3Kv8pfgX3P95KYDBCCblyrTq2Ys8487JKgtR30UIMGNZ7uIA75IHxRALplLj+B/W3I3i4oqPf+pmj2Nis7CcYtDlS/PmnVL93hNIXRVQp4vIE61Tg2+yTFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894876; c=relaxed/simple;
-	bh=oY7zqYBc2D8MAnFmWwHmtSq62Vdf8nhHrvJF99nDKl8=;
+	s=arc-20240116; t=1791894880; c=relaxed/simple;
+	bh=/Y/yTkdzPYoiypHCTQ1b3RsA1OtVerZRfYKFJaxzDEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IT/GLQdATd+LBHMPmo8NxRLqaciza50kGoVUf5y3krycraz4kEh5XXChOtdGScLeHHoGAPJwQkltMtFFrUzM96BZNjZgGDXfLlxtOuNy+mdvY+hyYNQ9SsZvScH9HXktvfNXQKBEFWQPRNjV6C9Tzr95hH0C0O4vmzmdUw4WpIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hODl7rbV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RsDjnDkA+Rav8wFPeQ7QO7Rl6wwBcYma03u+7TfhQj80bqphhYVaxyFtapiEgC3h+MMAcjAJRqu8ljVqikwSamWREiAw/vWKMCbVrgKMii9yXXhnYYucysoLW+bafXLIh4s77YIxdEDe5SA48NQrCOjgLaLxtCYd754D/bna4b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QI9bjK4p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hODl7rbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7B71F000FF;
-	Tue, 13 Oct 2026 12:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QI9bjK4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7C11F000FF;
+	Tue, 13 Oct 2026 12:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894875;
-	bh=bVAWqtIYIt36dVl/TCEE+nydafxCbvUAs6sDCKCRlUk=;
+	s=korg; t=1791894878;
+	bh=OA0J+vrjfmiK7XHqsngzkARbmXjdBMo2ndO4h3u50oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hODl7rbVRFMtsY3RG2AskwOLCYH0eK6FSRM89EJO52cUzGcZvDQwCjGsfWqAQNJP0
-	 MuxnTLHUeK6isohPH12NcGgvox4KQbksZqeCiKacYUaLiwQJCjJs8bxaQ/6gZZCzrJ
-	 gtqbWeWmeMlDc2qTg20rqfb5pNrg7BH3xfZRS3eY=
+	b=QI9bjK4pB3aY495IV5OSKO58NDJwRcKVBUebYq2QJkGNQkBTS6LyR5uE0uozVgL8+
+	 j6gWbJe3elYG1Ia8N7eb47MTd07AXtdHTc/87x5LxL8wgL1tikJbgdJLWEUTsQ1CUV
+	 EGqQwElc/QKm8IlKE2TTZ3pzAzN1A0eb0thXFib8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+be8fa7ea6f77fdce@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 042/497] ALSA: line6: reject oversized playback packets
-Date: Tue, 13 Oct 2026 13:33:29 +0200
-Message-ID: <20261013112908.888289727@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Hagen Paul Pfeifer <hagen@jauu.net>,
+	Jakub Kacinski <kuba@kernel.org>,
+	James Bottomley <james.bottomley@HansenPartnership.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 043/497] mm/secretmem: properly account locked pages
+Date: Tue, 13 Oct 2026 13:33:30 +0200
+Message-ID: <20261013112908.911003518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,89 +60,363 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
+[ Upstream commit 97d34aa65c29cca85e3e9050f4c936389b38a054 ]
 
-Each playback URB is handed a slice of out.buffer that is exactly
-LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
-endpoint, but the number of bytes written into that slice is never
-compared against it.
+secretmem accounts folios by treating memory as if it were mlock()'d and
+thus limited by the RLIMIT_MEMLOCK limit.
 
-submit_audio_out_urb() takes the frame count from prev_fsize, which
-audio_in_callback() derived from the *IN* endpoint's received packet
-length, and rescales it with the playback frame size; when prev_fsize is
-still zero it synthesizes a length from the sample rate instead.  On a
-device declaring a large IN wMaxPacketSize and a small OUT
-wMaxPacketSize, the resulting memcpy(), or the memset() when the
-playback stream is idle, runs past its slice and, as the reproducer
-below shows, beyond the allocation.
+However the folios are unevictable and remain so until the inode is
+evicted, eliminating usual mlock() semantics - mapping folios then
+unmapping them does not clear their unevictable state, since it depends on
+AS_UNEVICTABLE, not PG_mlocked.
 
-usb_submit_urb() is not a backstop.  max_packet_size_out comes from
-usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
-while USB core validates a high-speed isochronous length against that
-base scaled by usb_endpoint_maxp_mult().  A length of up to three times
-the allocated slice is therefore accepted, and even a rejected URB is
-only rejected after the write.
+A user can therefore easily work around the RLIMIT_MEMLOCK limit - simply
+map then unmap and VmLck no longer counts the secretmem range.  Worse,
+folios are not accounted in the process's RSS, meaning the OOM killer
+won't know to kill the process.
 
-Reject a packet that does not fit the slice the driver allocated for it.
-Clamping it instead would silently shorten the capture-derived rate
-feedback and desynchronize the two streams.
+Repeatedly mapping/unmapping (or forking) can then result in the
+consumption of all available system memory with unevictable folios and
+cause system instability.
 
-  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
-  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
-  Workqueue: events line6_startup_work
-  Call Trace:
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   submit_audio_out_urb (sound/usb/line6/playback.c:229)
-   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
-   line6_stream_start (sound/usb/line6/pcm.c:194)
-   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
-   line6_startup_work (sound/usb/line6/driver.c:728)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+A secretmem fd can be passed between processes and over fork so a
+per-process limit simply does not make sense, so follow the precedent set
+by io_uring, perf, skbuff, iommufd and xdp by tracking the number of
+locked pages in user_struct->locked_vm.
 
-  The buggy address belongs to the object at ffff888100bbd400
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes inside of
-   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
+Since the scope tracked is actually inode lifetime, the RLIMIT_MEMLOCK
+applies per-user not per-process, so it doesn't make sense to bypass for
+users with CAP_IPC_LOCK, therefore remove this bypass.
 
-Cc: stable@vger.kernel.org
-Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
-Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+There is simply no reason to carry on marking the mapping as mlock()'d
+since it's misleading and the lifecycle is now correctly handled, so
+remove this too.
+
+Note that secretmem does not support any form of truncation (including
+hole punching) and the folios are unreclaimable, so the folios need only
+be accounted on fault and unaccounted on inode destruction.
+
+__secretmem_account_pages() is more or less a duplicate of the code that
+io_uring etc.  use, but since this is a bug fix that needs backporting,
+defer any de-duplication efforts to a follow-up.
+
+test_mlock_limit() asserts mlock_future_ok() on mmap(), however this has
+been removed, so remove the test altogether for the fix.  A new test will
+be sent separately for upstream.
+
+Link: https://lore.kernel.org/20260826-secretmem-accounting-v3-1-94cb04399510@kernel.org
+Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: Daehyeon Ko <4ncienth@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/20260813225328.2010303-1-4ncienth@gmail.com/
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Tested-by: Daehyeon Ko <4ncienth@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Hagen Paul Pfeifer <hagen@jauu.net>
+Cc: Jakub Kacinski <kuba@kernel.org>
+Cc: James Bottomley <james.bottomley@HansenPartnership.com>
+Cc: Jesper Dangaard Brouer <hawk@kernel.org>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Stanislav Fomichev <sdf@fomichev.me>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted secretmem changes to Linux 6.12’s page-based fault handling and legacy mmap interface. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/playback.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/sched/user.h                |   3 +-
+ mm/secretmem.c                            | 117 ++++++++++++++++++++--
+ tools/testing/selftests/mm/memfd_secret.c |  30 +-----
+ 3 files changed, 110 insertions(+), 40 deletions(-)
 
---- a/sound/usb/line6/playback.c
-+++ b/sound/usb/line6/playback.c
-@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
+diff --git a/include/linux/sched/user.h b/include/linux/sched/user.h
+index 4cc52698e214e..8d7e5521f7cdd 100644
+--- a/include/linux/sched/user.h
++++ b/include/linux/sched/user.h
+@@ -25,7 +25,8 @@ struct user_struct {
  
- 		fsize *= bytes_per_frame;
+ #if defined(CONFIG_PERF_EVENTS) || defined(CONFIG_BPF_SYSCALL) || \
+ 	defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
+-	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD)
++	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD) || \
++	defined(CONFIG_SECRETMEM)
+ 	atomic_long_t locked_vm;
+ #endif
+ #ifdef CONFIG_WATCH_QUEUE
+diff --git a/mm/secretmem.c b/mm/secretmem.c
+index aec96e4896f00..e89accd5b3688 100644
+--- a/mm/secretmem.c
++++ b/mm/secretmem.c
+@@ -18,6 +18,8 @@
+ #include <linux/secretmem.h>
+ #include <linux/set_memory.h>
+ #include <linux/sched/signal.h>
++#include <linux/sched/user.h>
++#include <linux/cred.h>
  
-+		if (fsize > line6pcm->max_packet_size_out) {
-+			dev_err(line6pcm->line6->ifcdev,
-+				"playback packet too large: %d > %d\n",
-+				fsize, line6pcm->max_packet_size_out);
-+			return -EMSGSIZE;
+ #include <uapi/linux/magic.h>
+ 
+@@ -47,10 +49,69 @@ bool secretmem_active(void)
+ 	return !!atomic_read(&secretmem_users);
+ }
+ 
++struct secretmem_inode_state {
++	struct user_struct	*user;
++	atomic_long_t		nr_pages_accounted;
++};
++
++static bool __secretmem_account_pages(struct user_struct *user,
++		unsigned long nr_pages)
++{
++	unsigned long page_limit, cur_pages, new_pages;
++
++	if (!nr_pages)
++		return true;
++
++	page_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
++
++	cur_pages = atomic_long_read(&user->locked_vm);
++	do {
++		new_pages = cur_pages + nr_pages;
++		if (new_pages > page_limit)
++			return false;
++	} while (!atomic_long_try_cmpxchg(&user->locked_vm,
++					  &cur_pages, new_pages));
++	return true;
++}
++
++static bool secretmem_account_folio(struct secretmem_inode_state *state,
++		const struct folio *folio)
++{
++	const unsigned long nr_pages = folio_nr_pages(folio);
++
++	if (!__secretmem_account_pages(state->user, nr_pages))
++		return false;
++
++	atomic_long_add(nr_pages, &state->nr_pages_accounted);
++	return true;
++}
++
++static void __secretmem_unaccount_pages(struct secretmem_inode_state *state,
++		unsigned long nr_pages)
++{
++	atomic_long_sub(nr_pages, &state->user->locked_vm);
++	atomic_long_sub(nr_pages, &state->nr_pages_accounted);
++}
++
++static void secretmem_unaccount_folio(struct secretmem_inode_state *state,
++		struct folio *folio)
++{
++	__secretmem_unaccount_pages(state, folio_nr_pages(folio));
++}
++
++static void secretmem_unaccount_all_folios(struct secretmem_inode_state *state)
++{
++	const unsigned long nr_pages_accounted =
++		atomic_long_read(&state->nr_pages_accounted);
++
++	__secretmem_unaccount_pages(state, nr_pages_accounted);
++}
++
+ static vm_fault_t secretmem_fault(struct vm_fault *vmf)
+ {
+ 	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
+ 	struct inode *inode = file_inode(vmf->vma->vm_file);
++	struct secretmem_inode_state *state = inode->i_private;
+ 	pgoff_t offset = vmf->pgoff;
+ 	gfp_t gfp = vmf->gfp_mask;
+ 	unsigned long addr;
+@@ -73,9 +134,16 @@ static vm_fault_t secretmem_fault(struct vm_fault *vmf)
+ 			goto out;
+ 		}
+ 
++		if (!secretmem_account_folio(state, folio)) {
++			folio_put(folio);
++			ret = VM_FAULT_SIGBUS;
++			goto out;
 +		}
 +
- 		fout->offset = urb_size;
- 		fout->length = fsize;
- 		urb_size += fsize;
+ 		page = &folio->page;
+ 		err = set_direct_map_invalid_noflush(page);
+ 		if (err) {
++			secretmem_unaccount_folio(state, folio);
+ 			folio_put(folio);
+ 			ret = vmf_error(err);
+ 			goto out;
+@@ -84,6 +152,7 @@ static vm_fault_t secretmem_fault(struct vm_fault *vmf)
+ 		__folio_mark_uptodate(folio);
+ 		err = filemap_add_folio(mapping, folio, offset, gfp);
+ 		if (unlikely(err)) {
++			secretmem_unaccount_folio(state, folio);
+ 			/*
+ 			 * If a split of large page was required, it
+ 			 * already happened when we marked the page invalid
+@@ -114,23 +183,30 @@ static const struct vm_operations_struct secretmem_vm_ops = {
+ 	.fault = secretmem_fault,
+ };
+ 
++static void secretmem_destroy_inode_priv(struct inode *inode)
++{
++	struct secretmem_inode_state *state = inode->i_private;
++
++	secretmem_unaccount_all_folios(state);
++	free_uid(state->user);
++	kfree(state);
++	inode->i_private = NULL;
++}
++
+ static int secretmem_release(struct inode *inode, struct file *file)
+ {
+ 	atomic_dec(&secretmem_users);
++	secretmem_destroy_inode_priv(inode);
++
+ 	return 0;
+ }
+ 
+ static int secretmem_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+-	unsigned long len = vma->vm_end - vma->vm_start;
+-
+ 	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) == 0)
+ 		return -EINVAL;
+ 
+-	if (!mlock_future_ok(vma->vm_mm, vma->vm_flags | VM_LOCKED, len))
+-		return -EAGAIN;
+-
+-	vm_flags_set(vma, VM_LOCKED | VM_DONTDUMP);
++	vm_flags_set(vma, VM_DONTDUMP);
+ 	vma->vm_ops = &secretmem_vm_ops;
+ 
+ 	return 0;
+@@ -190,20 +266,40 @@ static const struct inode_operations secretmem_iops = {
+ 
+ static struct vfsmount *secretmem_mnt;
+ 
++static int secretmem_init_inode_priv(struct inode *inode)
++{
++	struct secretmem_inode_state *state;
++
++	state = kzalloc_obj(*state);
++	if (!state)
++		return -ENOMEM;
++
++	state->user = get_uid(current_user());
++	inode->i_private = state;
++	return 0;
++}
++
+ static struct file *secretmem_file_create(unsigned long flags)
+ {
+ 	struct file *file;
+ 	struct inode *inode;
+ 	const char *anon_name = "[secretmem]";
++	int err;
+ 
+ 	inode = anon_inode_make_secure_inode(secretmem_mnt->mnt_sb, anon_name, NULL);
+ 	if (IS_ERR(inode))
+ 		return ERR_CAST(inode);
+ 
++	err = secretmem_init_inode_priv(inode);
++	if (err)
++		goto err_free_inode;
++
+ 	file = alloc_file_pseudo(inode, secretmem_mnt, "secretmem",
+ 				 O_RDWR, &secretmem_fops);
+-	if (IS_ERR(file))
+-		goto err_free_inode;
++	if (IS_ERR(file)) {
++		err = PTR_ERR(file);
++		goto err_free_priv;
++	}
+ 
+ 	mapping_set_gfp_mask(inode->i_mapping, GFP_HIGHUSER);
+ 	mapping_set_unevictable(inode->i_mapping);
+@@ -216,10 +312,11 @@ static struct file *secretmem_file_create(unsigned long flags)
+ 	inode->i_size = 0;
+ 
+ 	return file;
+-
++err_free_priv:
++	secretmem_destroy_inode_priv(inode);
+ err_free_inode:
+ 	iput(inode);
+-	return file;
++	return ERR_PTR(err);
+ }
+ 
+ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
+diff --git a/tools/testing/selftests/mm/memfd_secret.c b/tools/testing/selftests/mm/memfd_secret.c
+index 9a0597310a765..06cffbc3fd77f 100644
+--- a/tools/testing/selftests/mm/memfd_secret.c
++++ b/tools/testing/selftests/mm/memfd_secret.c
+@@ -57,33 +57,6 @@ static void test_file_apis(int fd)
+ 		pass("file IO is blocked as expected\n");
+ }
+ 
+-static void test_mlock_limit(int fd)
+-{
+-	size_t len;
+-	char *mem;
+-
+-	len = mlock_limit_cur;
+-	if (len % page_size != 0)
+-		len = (len/page_size) * page_size;
+-
+-	mem = mmap(NULL, len, prot, mode, fd, 0);
+-	if (mem == MAP_FAILED) {
+-		fail("unable to mmap secret memory\n");
+-		return;
+-	}
+-	munmap(mem, len);
+-
+-	len = mlock_limit_max * 2;
+-	mem = mmap(NULL, len, prot, mode, fd, 0);
+-	if (mem != MAP_FAILED) {
+-		fail("unexpected mlock limit violation\n");
+-		munmap(mem, len);
+-		return;
+-	}
+-
+-	pass("mlock limit is respected\n");
+-}
+-
+ static void test_vmsplice(int fd, const char *desc)
+ {
+ 	ssize_t transferred;
+@@ -297,7 +270,7 @@ static void prepare(void)
+ 				   strerror(errno));
+ }
+ 
+-#define NUM_TESTS 6
++#define NUM_TESTS 5
+ 
+ int main(int argc, char *argv[])
+ {
+@@ -319,7 +292,6 @@ int main(int argc, char *argv[])
+ 	if (ftruncate(fd, page_size))
+ 		ksft_exit_fail_msg("ftruncate failed: %s\n", strerror(errno));
+ 
+-	test_mlock_limit(fd);
+ 	test_file_apis(fd);
+ 	/*
+ 	 * We have to run the first vmsplice test before any secretmem page was
+-- 
+2.53.0
+
 
 
