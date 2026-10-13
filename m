@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECBA4F3EAF;
-	Tue, 13 Oct 2026 12:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55CB4EF12E;
+	Tue, 13 Oct 2026 12:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894707; cv=none; b=NmoxuCoDFa7VCO+N3QT4RHAY3dZLqimwwXTDgVyf+pwQlTHP8oVPbZkrNH+KYMuZ+uwJWenrT5Mp/N/j4dvdv7MS1dGRuf1sjB46ZJoNG8OLQdRDGJzn4CWG/En6cS9w2W57km+HdVqtm9YG3Y05ZJX2t4Qh//c3QGinMdA0uqQ=
+	t=1791894711; cv=none; b=JYBWEOOCDjUJD96hxwXFgXPRXUWd6tjbBK+g6XIJBgQ4dqo7DoBrs0JWKa8dI5ZG5rYaQuYXoO6qtRYh0KL3FTcUDWrPlO2buk+O2rwSY5cN2ClVMhpCVOvJdQbbeFbtVqvdX1kQpzPs1wZH0MHocmg2GPcl4lPTRTbq2/VdQ48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894707; c=relaxed/simple;
-	bh=x557hSaH463ZkS7PiSu3/GKk33WQVE4/znu8tFSpfbo=;
+	s=arc-20240116; t=1791894711; c=relaxed/simple;
+	bh=hRwFW7FXioD0tttcnb53A5PMB/kaihhHlOQ4fsswVlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNoaeMOJDJOSz5kBCL5Yi4DZSF9QWGX6cye1zOTbCsd/6WTxvYejUkvUw0FtTi5RMztQkooVRcfs/pmFTQX9+9dtTR6e0Nubp+fe+qZEbfQzSwaMIBcFLsZzkBpyoZi0OGxkGWsC6kQ9FsX34EAiVY/zxdB1t5yB0Wpgcv/L+n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0TXiqjt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WjfQVv7WqULlYWHwtjPcKdTWJhOXktU8yTbB/u7RumbAMT3WWAERsm4QTnJ/J4pAGYefxRdwvw5MrEz9p3UdB0eQ52NbNRgEHKvhWRmIjVa62RxhiYYpSX6LEVGdwLFhfV/ztYm1xfkd/NW/TwqFL4RmvRyY+EtVe91lBqkzMUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BguQ6kYv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0TXiqjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7261F000FF;
-	Tue, 13 Oct 2026 12:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BguQ6kYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234201F000FF;
+	Tue, 13 Oct 2026 12:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894706;
-	bh=wYuhcOG48JOBKceKOpURMZ8fVMftS2n5tfWY/LONWKo=;
+	s=korg; t=1791894709;
+	bh=Btw948SklNOrXFjaiEMYb3EbJ46CjL/gWiiboAKV79E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0TXiqjtt0HgSLZBRvA72YUdx20De5hHOnx1qBXFbGYsFcOIGXMi3a+7r2Sx9Uci5
-	 NcQEXOGfblHlH0IhI1CFPmd/3EU5+hnEmPYKHlhL2d3dLbefW5KxwNZ6CeNollxA0E
-	 BkX02C/mf/OGXbMMOx/HOWINZjrXRtp3oyVTrITM=
+	b=BguQ6kYv0UpUOdn6UbH5dAUeJKf2GO9ow6vD3DpixBhvc/sY8OtXQhsjLxfUUKfM3
+	 2lURVkPkRsXfORbQ9qmKeX8hmq2ywNHqCRMbbvGdSTj/sEwy+3jovGW2+TBqrK228y
+	 3PZQ/KKNwQ34KpQAI5PrFfM8J2oW79F5NnDEuC5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alireza Asgari <alireza@asgari.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 029/497] net: fix checksum offsets in skb_splice_from_iter()
-Date: Tue, 13 Oct 2026 13:33:16 +0200
-Message-ID: <20261013112908.577538065@linuxfoundation.org>
+	Shen Yongchao <grayhat@foxmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 003/497] KVM: arm64: nv: Fix life cycle of the nested_mmus array
+Date: Tue, 13 Oct 2026 13:32:50 +0200
+Message-ID: <20261013112907.956068293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,66 +55,305 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alireza Asgari <alireza@asgari.net>
+From: Marc Zyngier <maz@kernel.org>
 
-commit febec6a7076499d16b37f556724a942633a270a6 upstream.
+[ Upstream commit 33346f8960c7bb6a3b4e273b5cfe25c5a8be349f ]
 
-skb_splice_from_iter() appends multiple page fragments before updating
-skb->len. However, skb_splice_csum_page() uses that unchanged length as the
-offset for every fragment checksum. If bytes already appended during the
-call have an odd total length, a later fragment's checksum is combined
-with the wrong parity.
+The nested_mmus array holds the shadow page tables that are used when
+a guest is running a nested context. These structures are allocated on
+VCPU_INIT for whole guest, which implies that they may have to be
+relocated as the array grows.
 
-For example, prime a UDP socket with sendto(MSG_MORE) and splice two
-distinct pipe buffers containing "abc" and "DEFGH". Uncorking reports
-success, but the receiver discards the packet for a bad checksum.
-This also affects IPv6 and fragments beginning near a page boundary.
+Should a VCPU_INIT occur whilst a vcpu is actively running an L2 and
+that the allocation requires relocation, that vcpu will still be
+running with a pointer to the previous structure, which will have been
+freed.
 
-Pass the initial skb length plus the bytes already spliced to the checksum
-helper. Keep the existing final length update and partial-progress error
-handling unchanged. CHECKSUM_PARTIAL does not use this helper and remains
-unaffected.
+Fix this by turning the array of structures to an array of pointers,
+which is now allocated at VM creation, sized to the absolute maximum
+that KVM can handle.
 
-Fixes: 2e910b95329c ("net: Add a function to splice pages into an skbuff for MSG_SPLICE_PAGES")
+In turn, each VCPU_INIT contributes S2_MMU_PER_VCPU to the pool. No
+reallocation is ever performed, and the life cycle of each object is
+much clearer:
+
+- the nested_mmus array is allocated in kvm_init_nested(), and freed
+  in kvm_arch_destroy_vm()
+
+- s2_mmu structures are allocated in kvm_vcpu_init_nested(), and freed
+  on kvm_arch_flush_shadow_all()
+
+Finally, the freeing of vcpu->arch.vncr_array is made consistent
+rather than being done on some failure paths, but not others.
+
+Fixes: 4f128f8e1aaa ("KVM: arm64: nv: Support multiple nested Stage-2 mmu structures")
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Suggested-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Link: https://lore.kernel.org/r/20260803224405.41468-1-kmehltretter@gmail.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Alireza Asgari <alireza@asgari.net>
-Link: https://patch.msgid.link/20260924-fix-udp-splice-checksum-v1-1-fe61d65447a8@asgari.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/core/skbuff.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
+Link: https://patch.msgid.link/20260911162203.1919330-2-maz@kernel.org
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -7258,7 +7258,8 @@ nodefer:	kfree_skb_napi_cache(skb);
+[6.12 backport: Retain the fixed pointer array and per-vCPU MMU batches,
+including publication under mmu_lock and cleanup of partially initialized
+batches. Add the stage-2 unwind label to the existing VM initialization
+path without importing the newer protected-VM setup. Omit VNCR allocation,
+VNCR TLB accounting, E2H0 checks and the debug-exception declaration, whose
+support is absent here. No new functions are introduced. Keep the MMU
+cleanup layout needed by e5843f4effaa ("KVM: arm64: nv: Delay freeing of
+shadow S2 structures until VM destruction").]
+
+Stable-dep-of: e5843f4effaa ("KVM: arm64: nv: Delay freeing of shadow S2 structures until VM destruction")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/include/asm/kvm_host.h   |  2 +-
+ arch/arm64/include/asm/kvm_nested.h |  2 +-
+ arch/arm64/kvm/arm.c                | 10 +++-
+ arch/arm64/kvm/nested.c             | 88 +++++++++++++++--------------
+ 4 files changed, 55 insertions(+), 47 deletions(-)
+
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index ab0402642f347..4f6afd2c042fe 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -292,7 +292,7 @@ struct kvm_arch {
+ 	 * Stage 2 paging state for VMs with nested S2 using a virtual
+ 	 * VMID.
+ 	 */
+-	struct kvm_s2_mmu *nested_mmus;
++	struct kvm_s2_mmu **nested_mmus;
+ 	size_t nested_mmus_size;
+ 	int nested_mmus_next;
+ 
+diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+index 233e655227164..d9250fa8cdd03 100644
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -64,7 +64,7 @@ static inline u64 translate_ttbr0_el2_to_ttbr0_el1(u64 ttbr0)
  }
  
- static void skb_splice_csum_page(struct sk_buff *skb, struct page *page,
--				 size_t offset, size_t len)
-+				 size_t offset, size_t len,
-+				 unsigned int csum_offset)
+ extern bool forward_smc_trap(struct kvm_vcpu *vcpu);
+-extern void kvm_init_nested(struct kvm *kvm);
++extern int kvm_init_nested(struct kvm *kvm);
+ extern int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu);
+ extern void kvm_init_nested_s2_mmu(struct kvm_s2_mmu *mmu);
+ extern struct kvm_s2_mmu *lookup_s2_mmu(struct kvm_vcpu *vcpu);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 72e4c290d8fca..ec229e6a0b731 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -181,8 +181,6 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+ 	mutex_unlock(&kvm->lock);
+ #endif
+ 
+-	kvm_init_nested(kvm);
+-
+ 	ret = kvm_share_hyp(kvm, kvm + 1);
+ 	if (ret)
+ 		return ret;
+@@ -201,6 +199,10 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+ 	if (ret)
+ 		goto err_free_cpumask;
+ 
++	ret = kvm_init_nested(kvm);
++	if (ret)
++		goto err_uninit_mmu;
++
+ 	kvm_vgic_early_init(kvm);
+ 
+ 	kvm_timer_init_vm(kvm);
+@@ -214,6 +216,9 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+ 
+ 	return 0;
+ 
++err_uninit_mmu:
++	kvm_uninit_stage2_mmu(kvm);
++	kvfree(kvm->arch.nested_mmus);
+ err_free_cpumask:
+ 	free_cpumask_var(kvm->arch.supported_cpus);
+ err_unshare_kvm:
+@@ -270,6 +275,7 @@ void kvm_arch_destroy_vm(struct kvm *kvm)
+ 
+ 	kvm_unshare_hyp(kvm, kvm + 1);
+ 
++	kvfree(kvm->arch.nested_mmus);
+ 	kvm_arm_teardown_hypercalls(kvm);
+ }
+ 
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index c4b17d90fc49d..aae70f62133a6 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -27,10 +27,14 @@
+  */
+ #define S2_MMU_PER_VCPU		2
+ 
+-void kvm_init_nested(struct kvm *kvm)
++int kvm_init_nested(struct kvm *kvm)
  {
- 	const char *kaddr;
- 	__wsum csum;
-@@ -7266,7 +7267,7 @@ static void skb_splice_csum_page(struct
- 	kaddr = kmap_local_page(page);
- 	csum = csum_partial(kaddr + offset, len, 0);
- 	kunmap_local(kaddr);
--	skb->csum = csum_block_add(skb->csum, csum, skb->len);
-+	skb->csum = csum_block_add(skb->csum, csum, csum_offset);
+-	kvm->arch.nested_mmus = NULL;
++	kvm->arch.nested_mmus = kvmalloc_objs(struct kvm_s2_mmu *,
++					      KVM_MAX_VCPUS * S2_MMU_PER_VCPU,
++					      GFP_KERNEL_ACCOUNT);
+ 	kvm->arch.nested_mmus_size = 0;
++
++	return kvm->arch.nested_mmus ? 0 : -ENOMEM;
  }
  
- /**
-@@ -7327,7 +7328,8 @@ ssize_t skb_splice_from_iter(struct sk_b
- 			}
+ static int init_nested_s2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
+@@ -51,42 +55,41 @@ static int init_nested_s2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
+ int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm *kvm = vcpu->kvm;
+-	struct kvm_s2_mmu *tmp;
+-	int num_mmus, ret = 0;
++	int num_mmus;
++
++	lockdep_assert_held(&kvm->arch.config_lock);
  
- 			if (skb->ip_summed == CHECKSUM_NONE)
--				skb_splice_csum_page(skb, page, off, part);
-+				skb_splice_csum_page(skb, page, off, part,
-+						     skb->len + spliced);
+-	/*
+-	 * Let's treat memory allocation failures as benign: If we fail to
+-	 * allocate anything, return an error and keep the allocated array
+-	 * alive. Userspace may try to recover by intializing the vcpu
+-	 * again, and there is no reason to affect the whole VM for this.
+-	 */
+ 	num_mmus = atomic_read(&kvm->online_vcpus) * S2_MMU_PER_VCPU;
+-	tmp = kvrealloc(kvm->arch.nested_mmus,
+-			size_mul(sizeof(*kvm->arch.nested_mmus), num_mmus),
+-			GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+-	if (!tmp)
+-		return -ENOMEM;
  
- 			off = 0;
- 			spliced += part;
+-	/*
+-	 * If we went through a realocation, adjust the MMU back-pointers in
+-	 * the previously initialised kvm_pgtable structures.
+-	 */
+-	if (kvm->arch.nested_mmus != tmp)
+-		for (int i = 0; i < kvm->arch.nested_mmus_size; i++)
+-			tmp[i].pgt->mmu = &tmp[i];
++	if (num_mmus > kvm->arch.nested_mmus_size) {
++		struct kvm_s2_mmu *tmp;
++		int i, ret = 0;
+ 
+-	for (int i = kvm->arch.nested_mmus_size; !ret && i < num_mmus; i++)
+-		ret = init_nested_s2_mmu(kvm, &tmp[i]);
++		tmp = kvzalloc_objs(*tmp, S2_MMU_PER_VCPU, GFP_KERNEL_ACCOUNT);
++		if (!tmp)
++			ret = -ENOMEM;
+ 
+-	if (ret) {
+-		for (int i = kvm->arch.nested_mmus_size; i < num_mmus; i++)
+-			kvm_free_stage2_pgd(&tmp[i]);
++		for (i = 0; !ret && i < S2_MMU_PER_VCPU; i++) {
++			ret = init_nested_s2_mmu(kvm, &tmp[i]);
++			if (ret)
++				break;
++		}
+ 
+-		return ret;
+-	}
++		if (ret) {
++			while (--i >= 0)
++				kvm_free_stage2_pgd(&tmp[i]);
+ 
+-	kvm->arch.nested_mmus_size = num_mmus;
+-	kvm->arch.nested_mmus = tmp;
++			kvfree(tmp);
++			return ret;
++		}
++
++		guard(write_lock)(&kvm->mmu_lock);
++
++		for (i = 0; i < S2_MMU_PER_VCPU; i++)
++			kvm->arch.nested_mmus[i + kvm->arch.nested_mmus_size] = &tmp[i];
++
++		kvm->arch.nested_mmus_size += S2_MMU_PER_VCPU;
++	}
+ 
+ 	return 0;
+ }
+@@ -541,7 +544,7 @@ void kvm_s2_mmu_iterate_by_vmid(struct kvm *kvm, u16 vmid,
+ 	write_lock(&kvm->mmu_lock);
+ 
+ 	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (!kvm_s2_mmu_valid(mmu))
+ 			continue;
+@@ -583,7 +586,7 @@ struct kvm_s2_mmu *lookup_s2_mmu(struct kvm_vcpu *vcpu)
+ 	 *   if S2 translation is disabled.
+ 	 */
+ 	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (!kvm_s2_mmu_valid(mmu))
+ 			continue;
+@@ -622,7 +625,7 @@ static struct kvm_s2_mmu *get_s2_mmu_nested(struct kvm_vcpu *vcpu)
+ 	for (i = kvm->arch.nested_mmus_next;
+ 	     i < (kvm->arch.nested_mmus_size + kvm->arch.nested_mmus_next);
+ 	     i++) {
+-		s2_mmu = &kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
++		s2_mmu = kvm->arch.nested_mmus[i % kvm->arch.nested_mmus_size];
+ 
+ 		if (atomic_read(&s2_mmu->refcnt) == 0)
+ 			break;
+@@ -748,7 +751,7 @@ void kvm_nested_s2_wp(struct kvm *kvm)
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
+ 
+ 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (kvm_s2_mmu_valid(mmu))
+ 			kvm_stage2_wp_range(mmu, 0, kvm_phys_size(mmu));
+@@ -762,7 +765,7 @@ void kvm_nested_s2_unmap(struct kvm *kvm, bool may_block)
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
+ 
+ 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (kvm_s2_mmu_valid(mmu))
+ 			kvm_stage2_unmap_range(mmu, 0, kvm_phys_size(mmu), may_block);
+@@ -776,7 +779,7 @@ void kvm_nested_s2_flush(struct kvm *kvm)
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
+ 
+ 	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (kvm_s2_mmu_valid(mmu))
+ 			kvm_stage2_flush_range(mmu, 0, kvm_phys_size(mmu));
+@@ -785,16 +788,15 @@ void kvm_nested_s2_flush(struct kvm *kvm)
+ 
+ void kvm_arch_flush_shadow_all(struct kvm *kvm)
+ {
+-	int i;
+-
+-	for (i = 0; i < kvm->arch.nested_mmus_size; i++) {
+-		struct kvm_s2_mmu *mmu = &kvm->arch.nested_mmus[i];
++	for (int i = kvm->arch.nested_mmus_size - 1; i >= 0; i--) {
++		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
+ 
+ 		if (!WARN_ON(atomic_read(&mmu->refcnt)))
+ 			kvm_free_stage2_pgd(mmu);
++
++		if ((i % S2_MMU_PER_VCPU) == 0)
++			kvfree(mmu);
+ 	}
+-	kvfree(kvm->arch.nested_mmus);
+-	kvm->arch.nested_mmus = NULL;
+ 	kvm->arch.nested_mmus_size = 0;
+ 	kvm_uninit_stage2_mmu(kvm);
+ }
+-- 
+2.53.0
+
 
 
