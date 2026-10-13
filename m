@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448014FE2D1;
-	Tue, 13 Oct 2026 12:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F258F4FE2E9;
+	Tue, 13 Oct 2026 12:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892983; cv=none; b=ROVeLeaVyuR/9Sc/vcKCxswT+uibwbG7iRajydk61NLtOzfuuCtwFyjpATWOMGx2Y+ZlCMT7eZbZy6Y6XvmbbHCn1DhlULTEskcxSYvGtAylrv7GnvG77HcjtVemG8ms13im98bY6XX/rSBPq8Us89x5CxY+hsfNqMwf4cvTsns=
+	t=1791892986; cv=none; b=cOaNU3qXNAnAGXlUIRRHbHv+tO77pFuhzXpTN7sPqjLDPrcXpeWnj2xfKZ+Tdkfdo2fyMx5q8pjlEAlTNfq8/8/UiAln/c0EvcnzRtxrLnoU1FdJUy5m0yxcEqQ55sHys90JA8HOZjYyuwUmjgto+dPHqUlRF1hwrmEUiFGBmIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892983; c=relaxed/simple;
-	bh=xMJyVEevQMuDJysDjZhKDSalnzWo9dQoc3wqI6TgLAw=;
+	s=arc-20240116; t=1791892986; c=relaxed/simple;
+	bh=1+a7CBr4gNmNbPLVjH2fIxFu3ts4AEq/zQi6amR+5Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fy3DnS+CViRr/oTrelLQvqWc0ohsC/pKfcwND5Xx8NcJUFl6KpTwe6wDR/w5SlmOlm2rTT1xBCTe8BjRuskNf3PGMPQ1wf/dtNLECobrEKPQj0n+ZBmzoX/LrZMk4PrY/IGyQewG1q1/UXaJfL2Xj+TyYIbznmkIwmbqdLy5XCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0uCMkT6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q7AbFtIUAw7ZMnGISmgFsF2NERzO5ainNmEJ51fcn6PazoBenQPoh2q90GFTNjD8/tpJRKCBLfjpGDezs1pSispJcJ0XBnrm9XyWzCI2oXnL/6dYpaH/3tfwqVr+ZPbelRUg9PpHrnUF4B3QJB81DIXSDBjX3n5wyzg+LkngZwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW/IIvdZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0uCMkT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA121F000FF;
-	Tue, 13 Oct 2026 12:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW/IIvdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C141F000FF;
+	Tue, 13 Oct 2026 12:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892982;
-	bh=qciexvdZNYuQ4X//Ie9r42NdTGRg03NxWPJG+h8VZdU=;
+	s=korg; t=1791892984;
+	bh=k1j3yax/FoFr4P1zRKZO+GWpNcEx3ekVeQ8m8JR19dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0uCMkT6R9lYzFriBfi2W+anjg5ME+/exHF5HtoU92gCXc/uT3xj9cFiWEI+/Clp9
-	 TOsp4f9/JBV7xMDLhDCg1GpUxWrPWaUXPBWM/tAmLOh/YQIDvbMZRkERXX3cUlvi0Y
-	 oAaadTDZ5UGqL/Pxltnw0ux9WqHfKO0wCx9f5yTA=
+	b=iW/IIvdZZMl8Y3obpuKD1hMBrUG7DQezlRb6NrB9P2h1zI2+4drG5AsK7hgpprz05
+	 oocW10/zSNnnfYaowmtP04VsnnLlAo8lHxj6V7+1kTXiziIXCYqiGi4Eirw685k1X8
+	 ruDA0wSQsL8m8HEMTIP649jrIPJSI7OY1oUL+dKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Yibo Tan <lhfff@tju.edu.cn>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 074/621] mmc: cavium-thunderx: destroy slot platform devices on remove
-Date: Tue, 13 Oct 2026 13:31:09 +0200
-Message-ID: <20261013112922.612871389@linuxfoundation.org>
+Subject: [PATCH 6.18 075/621] mmc: mtk-sd: Cancel request timeout work on remove
+Date: Tue, 13 Oct 2026 13:31:10 +0200
+Message-ID: <20261013112922.636744419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,50 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-commit 29ee8cf18a21b02cd0b2e35f741b61cd1fe3e14e upstream.
+commit b38af5386a74416e898955443f2e26547b358cb2 upstream.
 
-thunder_mmc_probe() creates host->slot_pdev[i] with
-of_platform_device_create(), while thunder_mmc_remove() does not destroy
-the child platform devices.
+The driver queues req_timeout while a request is active.
+msdc_request_done() uses cancel_delayed_work(), which does not wait for
+a timeout callback that has already started.
 
-The probe failure path removes each MMC slot and destroys its associated
-platform device, but the normal remove path only removes the MMC slot.
-As a result, the child platform devices remain registered after the
-ThunderX MMC controller is removed.
+The timeout callback calls mmc_request_done(), which wakes the request
+waiter, and then continues to use host->dev_comp and check the SDIO IRQ.
+During unbind, msdc_drv_remove() can return and the managed mmc_host can
+be freed before the callback finishes.
 
-Destroy each slot platform device during removal after cleaning up the
-corresponding MMC slot, matching the probe failure cleanup path. Keep an
-extra device reference around of_platform_device_destroy() as done in
-the existing error path.
+KASAN reported use-after-free accesses in msdc_request_done() and
+msdc_recheck_sdio_irq() in each of three unbind tests.  The same tests
+completed without a kernel diagnostic after this change.
 
-This issue was found by manual code inspection.
+Call cancel_delayed_work_sync() after mmc_remove_host() has stopped new
+requests and before the driver releases the host resources.
 
-Fixes: 166bac38c3c56 ("mmc: cavium: Add MMC PCI driver for ThunderX SOCs")
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/cavium-thunderx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/cavium-thunderx.c
-+++ b/drivers/mmc/host/cavium-thunderx.c
-@@ -173,9 +173,12 @@ static void thunder_mmc_remove(struct pc
- 	u64 dma_cfg;
- 	int i;
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -3194,6 +3194,7 @@ static void msdc_drv_remove(struct platf
  
--	for (i = 0; i < CAVIUM_MAX_MMC; i++)
-+	for (i = 0; i < CAVIUM_MAX_MMC; i++) {
- 		if (host->slot[i])
- 			cvm_mmc_of_slot_remove(host->slot[i]);
-+		if (host->slot_pdev[i])
-+			of_platform_device_destroy(&host->slot_pdev[i]->dev, NULL);
-+	}
+ 	platform_set_drvdata(pdev, NULL);
+ 	mmc_remove_host(mmc);
++	cancel_delayed_work_sync(&host->req_timeout);
+ 	msdc_deinit_hw(host);
+ 	msdc_gate_clock(host);
  
- 	dma_cfg = readq(host->dma_base + MIO_EMM_DMA_CFG(host));
- 	dma_cfg &= ~MIO_EMM_DMA_CFG_EN;
 
 
