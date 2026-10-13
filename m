@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF633B71C0;
-	Tue, 13 Oct 2026 12:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101804F93A4;
+	Tue, 13 Oct 2026 12:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895037; cv=none; b=PoL8W8PHeKTDgbUotuUwnXviKLQwQ780F9PbMgQFBzAmNfUn3T7FW7RSwOevlliGCzMV6wQxhzEkd65wQvLRwp8nb679Tuxb+9jbRj62KSiEvWk8pHUUFTvkGixb8j9WdsuZpYGpdFVq+xBDxbcJ15U2/M4/lLwkqN+kdphOtjk=
+	t=1791895041; cv=none; b=jSZLUIdiS4eJrdvxC4TcEuLqG7lpL2D/MT81O8LU4Vlb7h0/tybhgxErHQWdoWnPb9UD38JT7Z2VjtK08L+RGioKFQZQclKAhmYHvhB4+49oVvUTUAWgOLDeR51BjolP3CWzs18hXDX+6LQmyRJS9VgQ3EneQrmmH+YhX471XBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895037; c=relaxed/simple;
-	bh=Kv1gqzK3bIoucGK/mFMpc/On1KM1oNHSm2tVYpZd1As=;
+	s=arc-20240116; t=1791895041; c=relaxed/simple;
+	bh=hcKDyi1wAjf/3fuH/NJ7eFJcABTiHSLxK+YrcvjrFn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWMSC9dYnFzHAgdgIAdH5otQ8pHVNFFzs9BFn3x9Ts6/mKbax92fqtdpe80IRadsSmHHCPhC15mAGcVz6mM35o20ZYZUXsUGtgo2FLG4mqJpmR1/Frcf4ZBB0YrgqEOD3u7mBazZAGs1ohdNvx1cXC1GNyx3H0KvUvICoPaTKvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oz+5gjQn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hgbt+O2Yxkx/PxleKjwTOoXTxCG5rJ7QSbvEVfAn/g5jyOfz0nGlsW03nC4mXJ/1se2GvgO6JrZtbX8m8nsQ59NwH+3tcIUZHiibNgXJ2R14LZVSUZHcmco4VQiLawvjJSq98theGIs1OPXed+82egHVey8vht6MA5+b7XaGXR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7flnWuZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oz+5gjQn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED8D1F000FF;
-	Tue, 13 Oct 2026 12:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7flnWuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5686D1F000FF;
+	Tue, 13 Oct 2026 12:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895036;
-	bh=1leJV9b/aV6YOqGzy5LuqSCOtomppiahgMRA8ZARQE8=;
+	s=korg; t=1791895040;
+	bh=qkEZhw1k7yCRgRzFq0x9kPFeIzYRBZkekrW1CqYvfY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oz+5gjQnznI2cUzF2NAQ/lvlCsvqwtKS9+ZxIlbZz1GDu1WAAhIofxo7TDrLzU8jJ
-	 PtntaRYIQZbnVFmTlfVuLoLi5mU9op/RsG4MebVkvn5+FpgIwDLY1IcsC7HRrcRJXF
-	 e0EPitMHhNjqG7RgXTW55U1KgUJtkG2Jp/CjMvag=
+	b=p7flnWuZOOJj2iUMKTCtw8Pj0A2b4bQKdHR7D6jwA7eHs20V/8cZ05x75sb+9BGZN
+	 DgSSzOPY0e3Or25lVYG6DrLlF3lFK+4SpBJ3ZFeuuSilfXhxGHiXpcMD7DVOpO2fD0
+	 3F3dJCwXdsJ1gfXiIypwkZ+M7yb2NHDevsPcx3zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 141/497] usb: ohci-st: disable controller wakeup on removal
-Date: Tue, 13 Oct 2026 13:35:08 +0200
-Message-ID: <20261013112911.235710155@linuxfoundation.org>
+	syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@sina.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 142/497] usb: gadget: midi2: Fix the jack descriptor array sizes
+Date: Tue, 13 Oct 2026 13:35:09 +0200
+Message-ID: <20261013112911.258782253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,42 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 08b2ccd7eb7e41f77a04a09112ca3edcc588e3f0 upstream.
+commit 310c2d4608d8c1a2baa57db1dfd319c5c40cf4a1 upstream.
 
-Probe enables controller wakeup after the OHCI core marks controllers with
-RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
-wakeup source can remain attached after driver unbind.
+The jack in/out descriptor arrays in struct f_midi2_usb_config have
+the size of MAX_CABLES, which look reasonable -- but it turned out to
+be incorrect.  Namely, the entries for those arrays are added from
+both inputs and outputs, hence for each loop cycle, it adds two, ended
+up with as twice as the expected size.  This inconsistency may result
+in potential OOB when a large number of jacks are set up via configfs,
+although the max number of cables (the loop count) is limited to
+MAX_CABLES.
 
-Disable controller wakeup after removing the HCD.
+For addressing it, correct the jack_ins & jack_outs array sizes to
+twice, MAX_CABLES * 2.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: d115837259ad ("usb: host: ohci-st: Add OHCI driver support for ST STB devices")
+Fixes: 856fa444b098 ("usb: gadget: midi2: Dynamically create MIDI 1.0 altset descriptors")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-5-mhun512@gmail.com
+Reported-by: syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c35f34092a4bc9855be6
+Link: https://lore.kernel.org/20260826134606.127250-1-eadavis@sina.com
+Cc: Edward Adam Davis <eadavis@sina.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260901145512.785142-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-st.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_midi2.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/ohci-st.c
-+++ b/drivers/usb/host/ohci-st.c
-@@ -235,6 +235,7 @@ static void st_ohci_platform_remove(stru
- 	int clk;
+--- a/drivers/usb/gadget/function/f_midi2.c
++++ b/drivers/usb/gadget/function/f_midi2.c
+@@ -1636,8 +1636,8 @@ struct f_midi2_usb_config {
  
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
+ 	/* MIDI 1.0 jacks */
+ 	unsigned char jack_in, jack_out, jack_id;
+-	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES];
+-	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES];
++	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES * 2];
++	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES * 2];
+ };
  
- 	if (pdata->power_off)
- 		pdata->power_off(dev);
+ static int append_config(struct f_midi2_usb_config *config, void *d)
 
 
