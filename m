@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941BE3B059F;
-	Tue, 13 Oct 2026 12:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761CD3B059F;
+	Tue, 13 Oct 2026 12:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894784; cv=none; b=FjGKDoy87OJqDvPgR2V0BeewBh7UL/9BN53I4HBm+fzR4rsE3dE8wm2JTeW/UrAnO3OXkFy5I26w+8X6FYxb/ZiUilERV1ncIqAtig4mQEi3LnCMQL7+PxWfDt079HqlOkDrHe//iyeHatM77EBEBFfyAVsxnBMTCzZzR5F5ipI=
+	t=1791894787; cv=none; b=PnxjFkToO25Y2BQH65V38OoJkLTFx5BR2Ot4EVnVY8OBlJSAxcm5ErnMcdjvqrr3/KFAWzm5IKxsMjvcH447kpsOqqL3yBIrhTHW+qz6vt9JSP5ogXlx1S74XjQ62Lh7Tgx4Zdvm0GBj4q3axxFvx77/CZQdGf8AhNYBATK8QlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894784; c=relaxed/simple;
-	bh=aqJUyaK0jmAhL4KO8zRgxKu0bgVpYaXaxiHITzyPux0=;
+	s=arc-20240116; t=1791894787; c=relaxed/simple;
+	bh=96lCzLim/SJUJEe2AmLOAVjVRDJpEIn0C1jDVxJVXtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F215BgmmRZgnWjNc8YQGoJWjFeZ4mOeI3qPOby68b+7UemiDkkUkRa/Xx0FyiYzB752St1b8QBE1NOwLH42eg5XSuBLX4YKKTt7xfnimQYKE2WCPpcQfeWIC+oE6xOp98+TudrvDYbcBHMA4OXHL9DspFqaS8ur/gTo4LH+fUZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrVz1D0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i1+t+abjhGqmlH7FWG6hnwG6UWenm6ah/wkHdg2GbXzPJv9QPt4tVJYTcIKYF6je9jUWmgAt9hjuOgRyzxe84m4hg+7Ns94rMAfLbzzGOLNmOkNC/lg61Rgx8wTCunPb+Zdw3O0cSnxzE7Nk9U6RUNwvC8pJ1xZG07q6qH2c5KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eegvWZXH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrVz1D0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DFA1F000FF;
-	Tue, 13 Oct 2026 12:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eegvWZXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3631F000FF;
+	Tue, 13 Oct 2026 12:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894783;
-	bh=usA3HopQWKiVrGVQKCJoN57eMe9Wt1wLDN5sPVGOt4g=;
+	s=korg; t=1791894786;
+	bh=I3qGWUjYT0U3r+fiw0wFK9/3utS8ko2C+yZCJRrW7zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrVz1D0x8UtmFvpV9Ry+HqNzDiMVvUpKqNS59kNbvKTsp+GETVUccW+xGZ2/m1IUZ
-	 fHptA17ECntl/4ji7IWYBcnx4k3bdianBysdS0dKVJftm7O7qWOGtGIfdNs/X46iZB
-	 1cnmzvwxjBOChNo8k3iZ8msWBuHHgHWbrdW44VU0=
+	b=eegvWZXHhrXMQG9w4DDswZPBAs/Fu6LVV7ZbVGvM8Hn90tlasepkXOHXLi6xz4wni
+	 cDeJOdbA3HkRq/Ir1RFyVmS0MV7UMwkGRsn1D3R7TTDsk/Kwf7Pc4q6DAYs4odmqkl
+	 ph9UUSZNlJZUZKKfzcjwBwGleD1m7P0tPkRjWgdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/497] wifi: ath11k: reset ar->num_stations on hardware start
-Date: Tue, 13 Oct 2026 13:33:43 +0200
-Message-ID: <20261013112909.217000950@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>
+Subject: [PATCH 6.12 039/497] vt: skip screen update for DEC alignment test on backgroup consoles
+Date: Tue, 13 Oct 2026 13:33:26 +0200
+Message-ID: <20261013112908.818342124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,58 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
+commit 0928ed9bd7946baee911efa401088697836e3b1e upstream.
 
-When (multiple) hw restart occurs, we end up in a situation where we
-cannot accept new stations / mesh peers. This seems to be the
-'num_stations' in 'struct ath11k' that did not get reset properly in
-this case. In ath11k_mac_op_start(), it was indeed the only accounting var
-that did not get reset so let's clear it too.
+[BUG]
+Recently, we encountered a KASAN warning as follows:
 
-This avoids problems like those:
+BUG: KASAN: slab-out-of-bounds in fb_pad_aligned_buffer+0x11f/0x140
+Read of size 1 at addr ff1100015fd9f6a4 by task tty_fbcon_oob/1239
+CPU: 7 UID: 0 PID: 1239 Comm: tty_fbcon_oob Not tainted 7.3.0-rc1 #100 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ ...
+ kasan_report+0xf0/0x120
+ fb_pad_aligned_buffer+0x11f/0x140
+ ccw_putcs+0x86c/0xa80
+ fbcon_putcs+0x338/0x410
+ do_update_region+0x21d/0x450
+ do_con_write+0x1e0e/0x4880
+ con_write+0x13/0x80
+ n_tty_write+0x374/0x1010
+ file_tty_write.isra.0+0x404/0x7a0
+ ...
 
-	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
-	[1248828.088115] Call trace:
-	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
-	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
-	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
-	[1248828.088127]  process_one_work+0x178/0x3c0
-	[1248828.088130]  worker_thread+0x280/0x440
-	[1248828.088133]  kthread+0xe0/0xf8
-	[1248828.088137]  ret_from_fork+0x10/0x20
-	[1248828.088141] ---[ end trace 0000000000000000 ]---
-	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
-	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
+reproduce:
+1) open /dev/tty0, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 8 and op.height = 16 (visible VC1)
+2) open /dev/tty1, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 28 and op.height = 24 (invisible VC2)
+3) echo 3 > /sys/devices/virtual/graphics/fbcon/rotate_all
+4) write EShash8(esc hash8) to tty1
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
+[CAUSE]
+All VCs render to the framebuffer. setfont only modifies the target VC's
+font without resizing the framebuffer backing buffer (par->rotated.buf);
+the buffer is only resized for the visible VC
+(fbcon_do_set_font -> ... -> vc_do_resize -> update_screen). This relies on
+the con_should_update() check performed before every update_region().
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, the ESC # 8 path (do_con_trol -> do_update_region) omits the
+con_should_update() check. After changing the font size of an invisible VC,
+do_update_region() fills using the new font size against a buffer that was
+never resized, causing an out-of-bounds access.
+
+[FIX]
+Only push the update when the console is visible and not blanked, add
+the con_should_update() check in the do_con_trol() like every other call
+site of do_update_region() (update_region(), invert_screen(), ...).
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260905064337.3083103-1-wozizhi@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/vt/vt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 53bc1b90bab3c..2d0c6f9f3f763 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6396,6 +6396,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
- 	ar->num_started_vdevs = 0;
- 	ar->num_created_vdevs = 0;
- 	ar->num_peers = 0;
-+	ar->num_stations = 0;
- 	ar->allocated_vdev_map = 0;
- 
- 	/* Configure monitor status ring with default rx_filter to get rx status
--- 
-2.53.0
-
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -2688,7 +2688,8 @@ static void do_con_trol(struct tty_struc
+ 			csi_J(vc, CSI_J_VISIBLE);
+ 			vc->vc_video_erase_char =
+ 				(vc->vc_video_erase_char & 0xff00) | ' ';
+-			do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
++			if (con_should_update(vc))
++				do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
+ 		}
+ 		return;
+ 	case ESsetG0:	/* ESC ( */
 
 
