@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2450D2EA173;
-	Tue, 13 Oct 2026 12:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F9733B97B;
+	Tue, 13 Oct 2026 12:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895470; cv=none; b=CL0bU7br/oKh238H9hShIqlPXah7VLhGNPm5KB9VadPNyn7qtoCmkEl0IYwVVWNbnMIwb3s1Qrwv/ALsepeDriFAqe7uYQOmWASsc/4U118PUXjN6Ae2QiaYHe3BZHvFnS1fLzoDQ4USx5/LlAigIuwJ8U7aMQOMuWVBTJNxrt4=
+	t=1791895474; cv=none; b=YIJjmFa/2VvpsfW6ox3V2VfnzsotnJoV4rPJGF7yqveEmInrAKtImSvClYwkTeXp+eoKzbm7iAgi9TNOxjztE6NlhuvrX8UgXvtPVy8tamG+ISsdOy/bq5C9rPFVqhMMDc3Nfziaep9HlWXiuGYXazVoWpF6/l3iztQitcsytFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895470; c=relaxed/simple;
-	bh=OyZWacrqlSFgFqYQuwDgRpr1MqqnpSzDjq2bQfgwV/8=;
+	s=arc-20240116; t=1791895474; c=relaxed/simple;
+	bh=UMvIlBJHS6T70x8BA1uASjvz4hlFj4NYB5N6rH4wUrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DT/yoT6ouXgRRgLM8lLitxQ5F1GtjfRvXNj5EA1GHjInyQGFXiyJDUb+ys9+r/Y2J0bNEs6XfoR404RAnNF4tfr5InbeKxGlGCTxa90OOznbnpgu1GQPYNAemCl5DgyxLoz0kVZaVTaWRp7O1NK4ttjIGwLy/gDoENs4dZhNefA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeSQkW5a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPiAqTzszXCP7+zCrR7slYjrkS1jYrHKACe+WCegrhdIakViH6XGOh71LZYH9tRfwqvV4+vJZ8rvDZ5jwLtxTyM8Ry882vrZISyJpLw1Jxo8p/gkX1UMXMzusTR0YI62iH52a5o1qPsg58Hnh+WCC81KEFDqelicdZaz0sfhya8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg5I6Xsu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeSQkW5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A66C1F000FF;
-	Tue, 13 Oct 2026 12:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg5I6Xsu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DF81F000FF;
+	Tue, 13 Oct 2026 12:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895469;
-	bh=wDgQQcrFDp455fXMulN78PmYbZSybbWzIOZPfEwR0ME=;
+	s=korg; t=1791895472;
+	bh=b071fzrDqNpIBsCfCr29xg3k0aOZeBd8TbP+1lSfTR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YeSQkW5a179kjS0WEznCkf1zS/YMqDy7g7itJLIuawOhP6nQzEmX9awYOYx7ZCYQB
-	 IAvoTmTS5l2B0jRx2OveRDyNgVsjHn0ziPkmnV8+e2TYVfJb2/7j8T7D/A5aPatQuS
-	 rFJOMD+MYyNhpu416GYRNzYO09/5NjcmLjmzAUvU=
+	b=kg5I6XsuZzvyNUDikFPOcBZwW4qsgh7A+lBVh4NnfE/gYZK7jBSYxmGJhrO+5jjIn
+	 uF4CaJ+BsGwV2ovj0KxUzJTge9xt9yFc6yd+KfMtAdQfOGswsbC6i4JyZIB4IhqNmz
+	 aThxeg9L03/BmTiOtLYolpwSfku2JV5bi+k4Bte8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/497] arm64/fpsimd: signal: Forbid non-streaming SVE payload on SME-only systems
-Date: Tue, 13 Oct 2026 13:37:33 +0200
-Message-ID: <20261013112914.684044126@linuxfoundation.org>
+Subject: [PATCH 6.12 287/497] Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown
+Date: Tue, 13 Oct 2026 13:37:34 +0200
+Message-ID: <20261013112914.707179500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,156 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit e060d9069b49fe55f38057dfe592068014652671 ]
+[ Upstream commit 848a7a91c7f03675d3bd8db6f7721cbf9cb50e21 ]
 
-When system_supports_sme() is true but system_supports_sve() is false,
-restoring a specifically crafted SVE signal context can result in the
-task erroneously having non-streaming SVE state. Subsequent attempts to
-manipulate the task's FPSIMD/SVE/SME state can result in a variety of
-problems, including fatal EL1 UNDEFs.
+hci_low_sent() selects a connection under RCU but drops the read lock
+before calculating its quota and returning it to the scheduler. The
+connection is then used without lifetime protection by hci_sched_iso()
+and hci_sched_sco().
 
-In such configurations, the kernel always creates an SVE signal context
-when delivering a signal, and this can only be in one of two states:
+After the TX worker drops the RCU read lock, hci_abort_conn_sync() on
+hdev->req_workqueue can remove the connection from the hash, complete
+synchronize_rcu(), purge its queues and release it. The TX worker on
+hdev->workqueue can then access the freed connection in hci_quote_sent()
+or while dequeuing packets and updating conn->sent.
 
-(1) SVE_SIG_FLAG_SM is set, and an SVE payload is present containing
-    streaming mode SVE state. The recorded VL is the task's live
-    streaming VL.
+KASAN reported:
 
-(2) SVE_SIG_FLAG_SM is clear, and an SVE payload is not present. The
-    FPSIMD context contains the non-streaming mode FPSIMD state. The
-    recorded VL is 0.
+  BUG: KASAN: slab-use-after-free in hci_low_sent+0x730/0x840
+  Workqueue: hci0 hci_tx_work
+  Call Trace:
+   hci_low_sent+0x730/0x840
+   hci_sched_iso+0x25e/0x4d0
+   hci_tx_work+0x239/0xcb0
 
-Currently restore_sve_fpsimd_context() correctly rejects cases where
-SVE_SIG_FLAG_SM is set and an SVE payload is not present, but fails to
-reject cases where SVE_SIG_FLAG_SM is clear and an SVE payload is
-present. Consequently, restore_sve_fpsimd_context() can place the task
-in a state where it has non-streaming SVE state even when this is not
-supported by HW.
+  Allocated by task 93:
+   __hci_conn_add+0x16f/0x1b40
+   hci_bind_bis+0x782/0x17b0
+   hci_connect_bis+0xa0/0x510
+   iso_sock_connect+0x589/0x1050
 
-For example, this can cause a later EL1 UNDEF when the kernel attempts to
-restore the task's ZCR_EL1 value:
+  Freed by task 88:
+   kfree+0x131/0x3c0
+   device_release+0xc8/0x240
+   kobject_put+0x14d/0x280
+   hci_conn_del+0x55a/0xe80
+   hci_disconnect_sync+0x156/0x180
+   hci_abort_conn_sync+0x3e7/0x940
+   hci_cmd_sync_work+0x13c/0x290
 
-| # ./sme-sigcontext-to-sve
-| Internal error: Oops - Undefined instruction: 0000000002000000 [#1]  SMP
-| Modules linked in:
-| CPU: 0 UID: 0 PID: 131 Comm: sme-sigcontext- Not tainted 7.3.0-rc1 #1 PREEMPT
-| Hardware name: linux,dummy-virt (DT)
-| pstate: 61402009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-| pc : fpsimd_restore_current_state+0x258/0x458
-| lr : exit_to_user_mode_loop+0xb8/0x188
-| sp : ffff80008056be40
-| x29: ffff80008056be40 x28: fff00000c1670000 x27: 0000000000000000
-| x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-| x23: ffff80008056bec0 x22: 0000000000000008 x21: 0000000000000040
-| x20: 0000000000000081 x19: 0000000008800010 x18: 0000000000000000
-| x17: 0000fffffd412570 x16: 0000000000001000 x15: 0000fffffd4123b0
-| x14: 0000fffffd412780 x13: 0000fffffd412be8 x12: 0000000047435300
-| x11: 0000fffffd412570 x10: 0000000000000000 x9 : 0000000045585401
-| x8 : fff00000c18a6c44 x7 : 0000000000000000 x6 : 0000000000000002
-| x5 : 0000000000000002 x4 : ffff800080568000 x3 : 0000000000000001
-| x2 : 0000000008800010 x1 : fff00000c1670000 x0 : 0000000008800000
-| Call trace:
-|  fpsimd_restore_current_state+0x258/0x458 (P)
-|  exit_to_user_mode_loop+0xb8/0x188
-|  el0_svc+0x1cc/0x1d0
-|  el0t_64_sync_handler+0xa0/0xe4
-|  el0t_64_sync+0x198/0x19c
-| Code: d5384101 f9400020 53175c03 36b80de0 (d5381202)
-| ---[ end trace 0000000000000000 ]---
-| Kernel panic - not syncing: Oops - Undefined instruction: Fatal exception in interrupt
-| Kernel Offset: 0x291fb1000000 from 0xffff800080000000
-| PHYS_OFFSET: 0x40000000
-| CPU features: 0x0,00000000,0052802f,ffb88f43,3afcf73f
-| Memory Limit: none
+Hold hci_dev_lock() across connection selection and transmission in both
+SCO and ISO scheduling, serializing them with connection teardown. This
+also prevents queuing completion timestamps after the connection queues
+have been purged. Extending RCU across transmission would be unsafe
+because the transmit path can sleep. Keep the ISO timeout check outside
+the mutex since hci_link_tx_to() takes it itself.
 
-Rework restore_sve_fpsimd_context() to reject cases where
-SVE_SIG_FLAG_SM is clear and an SVE payload is not present. As
-parse_user_sigframe() rejects SVE signal frames when neither SVE nor SME
-are supported, it isn't necessary for restore_sve_fpsimd_context() to
-handle the case where neither are supported.
+The preceding channel fix already holds this mutex in the ACL and LE
+schedulers, which call the SCO scheduler between packets. Move the SCO
+body to __hci_sched_sco(), assert that its caller holds the mutex, and
+use it directly from these locked paths. Keep a locking hci_sched_sco()
+wrapper for the direct calls from hci_tx_work(). This avoids recursively
+acquiring the device mutex while preserving the scheduling order.
 
-Fixes: 7dde62f0687c  ("arm64/signal: Always accept SVE signal frames on SME only systems")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
+Remove the obsolete claim that connection removal disables TX.
+
+Fixes: bf4c63252490 ("Bluetooth: convert conn hash to RCU")
 Cc: stable@vger.kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Adjusted hci_sched_iso() lock placement around existing ISO/LE/ACL credit selection with no ISO timeout check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/signal.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ net/bluetooth/hci_core.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kernel/signal.c b/arch/arm64/kernel/signal.c
-index 02ec2aa171453..dde9489aa3aec 100644
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -402,6 +402,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
- 	unsigned int vl, vq;
- 	struct user_fpsimd_state fpsimd;
- 	u16 user_vl, flags;
-+	bool fpsimd_only;
- 	bool sm;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 4f973e22ce86e..253ee56d7bf66 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3450,9 +3450,6 @@ static struct hci_conn *hci_low_sent(struct hci_dev *hdev, __u8 type,
+ 	struct hci_conn *conn = NULL, *c;
+ 	unsigned int num = 0, min = ~0;
  
- 	if (user->sve_size < sizeof(*user->sve))
-@@ -412,19 +413,33 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
- 	if (err)
- 		return err;
+-	/* We don't have to lock device here. Connections are always
+-	 * added and removed with TX task disabled. */
+-
+ 	rcu_read_lock();
  
-+	fpsimd_only = (user->sve_size == sizeof(*user->sve));
- 	sm = flags & SVE_SIG_FLAG_SM;
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -3640,13 +3637,15 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt, u8 type)
+ }
+ 
+ /* Schedule SCO */
+-static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
++static void __hci_sched_sco(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn *conn;
+ 	struct sk_buff *skb;
+ 	int quote, *cnt;
+ 	unsigned int pkts = hdev->sco_pkts;
+ 
++	lockdep_assert_held(&hdev->lock);
 +
- 	if (sm) {
- 		if (!system_supports_sme())
- 			return -EINVAL;
+ 	bt_dev_dbg(hdev, "type %u", type);
  
-+		/*
-+		 * Streaming SVE state is always preserved with an SVE payload.
-+		 * Only accept streaming state which has an SVE payload.
-+		 */
-+		if (fpsimd_only)
-+			return -EINVAL;
+ 	if (!hci_conn_num(hdev, type) || !pkts)
+@@ -3681,6 +3680,13 @@ static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
+ 		queue_work(hdev->workqueue, &hdev->tx_work);
+ }
+ 
++static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
++{
++	hci_dev_lock(hdev);
++	__hci_sched_sco(hdev, type);
++	hci_dev_unlock(hdev);
++}
 +
- 		vl = task_get_sme_vl(current);
- 	} else {
- 		/*
--		 * A SME only system use SVE for streaming mode so can
--		 * have a SVE formatted context with a zero VL and no
--		 * payload data.
-+		 * Non-streaming SVE state may be preserved without an SVE
-+		 * payload, in which case all state is saved in the FPSIMD
-+		 * context.
-+		 *
-+		 * On SME-only systems, non-streaming (FPSIMD-only) state is
-+		 * always preserved without an SVE payload, and with VL==0. On
-+		 * such systems, only accept non-streaming state without an SVE
-+		 * payload.
- 		 */
--		if (!system_supports_sve() && !system_supports_sme())
-+		if (!system_supports_sve() && !fpsimd_only)
- 			return -EINVAL;
+ static void hci_sched_acl_pkt(struct hci_dev *hdev)
+ {
+ 	unsigned int cnt = hdev->acl_cnt;
+@@ -3716,8 +3722,8 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
+ 			chan->conn->sent++;
  
- 		vl = task_get_sve_vl(current);
-@@ -433,16 +448,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
- 	if (user_vl != vl)
- 		return -EINVAL;
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev, SCO_LINK);
+-			hci_sched_sco(hdev, ESCO_LINK);
++			__hci_sched_sco(hdev, SCO_LINK);
++			__hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
  
--	/*
--	 * Non-streaming SVE state may be preserved without an SVE payload, in
--	 * which case the SVE context only has a header with VL==0, and all
--	 * state can be restored from the FPSIMD context.
--	 *
--	 * Streaming SVE state is always preserved with an SVE payload. For
--	 * consistency and robustness, reject restoring streaming SVE state
--	 * without an SVE payload.
--	 */
--	if (!sm && user->sve_size == sizeof(*user->sve))
-+	if (fpsimd_only)
- 		return restore_fpsimd_context(user);
+@@ -3776,8 +3782,8 @@ static void hci_sched_le(struct hci_dev *hdev)
+ 			chan->conn->sent++;
  
- 	vq = sve_vq_from_vl(vl);
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev, SCO_LINK);
+-			hci_sched_sco(hdev, ESCO_LINK);
++			__hci_sched_sco(hdev, SCO_LINK);
++			__hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3801,6 +3807,9 @@ static void hci_sched_iso(struct hci_dev *hdev, __u8 type)
+ 
+ 	cnt = hdev->iso_pkts ? &hdev->iso_cnt :
+ 		hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
++
++	hci_dev_lock(hdev);
++
+ 	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+@@ -3812,6 +3821,8 @@ static void hci_sched_iso(struct hci_dev *hdev, __u8 type)
+ 			(*cnt)--;
+ 		}
+ 	}
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ static void hci_tx_work(struct work_struct *work)
 -- 
 2.53.0
 
