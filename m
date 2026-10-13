@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E309F4F68CE;
-	Tue, 13 Oct 2026 12:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A75D33D6F8;
+	Tue, 13 Oct 2026 12:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895923; cv=none; b=lhFWEty16O/6Zs/iM8/Ym0y45o9mi671VKO/Zh1R9SHq3WwACYr/98M3wv41ay3eMyJNzOMqNg3TluB1f3YtS0upwzmPTcGCB2tp8MIqySefipP9G7k0+mSYQJn4G8g/CKYAPtZUQgfquVpGD6aN4EdV169258L9W3b5DsLSDUk=
+	t=1791895927; cv=none; b=SWzWvyl74lf+A+//j5dZa1NwmC2IE5RuB2hXbY6UbJ1xKixr2IcYtPnj6MZV1Od2pTriCno/hoinyoiUgI8fq/YAnNqbD9IbNMNIjj7lq/8utBnfWBAaV31dFFem6cNX1MAhBARumFErom64Bm67d602NSyFl+NYIhVbr5Dqb50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895923; c=relaxed/simple;
-	bh=hjRE2kMEwYoLEwjWRF2353J/9Yv27qcWo+V9fR08o9k=;
+	s=arc-20240116; t=1791895927; c=relaxed/simple;
+	bh=O9Mr5c/8OFVCRM/92Blg9T7sQqodk7o8jwYe10R7rr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m95dtVF2mEpbIaCvmzq2tjHn3Ala6Wy9ByvdEin6WDk1C/PRA6E5XIS5FgD9zl+DD2RPd+/55BXQt+e8gjQIR2IbnLq95jExz3IXOtAN6PxF0/0QUM/z13ZdocT4tuJhLVCiDfZxepf04MyJvkgh5vTTwBlKVvOA8r1/z/xlzII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwwCNb0E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GCa6gcnk1S/sytDvxfV594qTNRPl0dkKnOvtL2gKiVBFn0OnHu5KJV0pnOHHXTiRx/mSWlrpBFrlCuIVSWq/TwLsaUTAHLcczkfovpkBzAu44fRxwtwEpamlMNWx65fuL9Das+DQIxQPrMAnVwF17MSkUJBKn7fThDn4NXWR7MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfJ9zdkp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwwCNb0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4345C1F000FF;
-	Tue, 13 Oct 2026 12:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfJ9zdkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F6D1F000FF;
+	Tue, 13 Oct 2026 12:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895922;
-	bh=PcD76DqjTSWUv3N71we6GCEcgh3itR1XHrgGq01k8Cg=;
+	s=korg; t=1791895925;
+	bh=3FrWFGt6lhe0HePU/v2kqDqTlbzjtg8hbgJxt7y+Kdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zwwCNb0Ei3L1z17XkUGjQgda0Ctl7sf6BQ9HyDGPyUAmSoKh5E5igDrqo/sL2Gpnr
-	 O2B3G0m/3PFfhY0PmKXPQHN6kNsRbeRNf31qClq0TL9NZJ+6nEwjk76oQOPDcyZonq
-	 nvtpscwdFzwHNZFdRtV3S42sgi3pxjprngAwBFEs=
+	b=cfJ9zdkpT5y0Mq3WwPx/62qwZWePiFZ0r9645+5/S5FuFPMp1J+yyglL7FuCo/9Ro
+	 HD6ETNGqORX38XSaZnb0tjqC1tjX/YeUuAiVf8lK+RAkuyHp/PRSYI5rwxsp0bt8rI
+	 n7QSYelF6eMy46tovn5HWkI9cHDwNEiudZm3Yy1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 438/497] namespace: dont copy an unmounted mount tree
-Date: Tue, 13 Oct 2026 13:40:05 +0200
-Message-ID: <20261013112918.280003606@linuxfoundation.org>
+Subject: [PATCH 6.12 439/497] fs: refuse fspick() on internal superblocks
+Date: Tue, 13 Oct 2026 13:40:06 +0200
+Message-ID: <20261013112918.302757628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,57 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 8bacbf6be959973b28b691713a872c12eae69eec upstream.
+commit 02587a4af82adccaef8e3b3624b4e7f1c401632d upstream.
 
-may_copy_tree() accepts a mount whose root is an nsfs or pidfs file
-before it checks whether that mount is mounted. This exception exists
-for nsfs and pidfs mounts. They are part of no mount namespace so
-neither check_mnt() nor is_mounted() would let them through and
-bind-mounting a nsfsfd or a pidfd wouldn't work.
+There's a few instances where a internal superblock is reachable by
+fspick(). Block that. graft_tree() and fsmount() already refuse them.
+fanotify refuses mount and superblock marks on them for the same reason.
 
-Problem is that exception also admits a bind mount of such a file when
-it was lazily unmounted and is only kept alive by a file descriptor:
-
-  mount --bind /proc/self/ns/net /tmp/x
-  exec 3< /tmp/x
-  umount -l /tmp/x
-  mount --rbind /proc/self/fd/3 /tmp/y
-
-With MS_REC or AT_RECURSIVE copy_tree() doesn't stop at the unmounted
-mount. It copies every mount that stayed attached to it as well. So if
-you have a bunch of overmounts over the nsfsfd or the pidfd the whole
-unmounted stack is copied. That's a bug.
-
-So refuse to walk an unmounted tree. Copying its root alone stays
-possible. So a bind mount of a namespace that is gone can still be
-recreated from a file descriptor on the old one. The file descriptor
-pins that mount and its root and __has_locked_children() only reads the
-direct children which don't leave the parent's list without
-namespace_sem. The internal mounts carry MNT_NS_INTERNAL instead of NULL
-and are still walked. Copying an unmounted tree recursively fails with
-EINVAL.
-
-Fixes: e149ed2b805f ("take the targets of /proc/*/ns/* symlinks to separate fs")
-Fixes: ef4144ac2dec ("pidfs: allow bind-mounts")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-4-f357abf3d17b@kernel.org
+Fixes: cf3cba4a429b ("vfs: syscall: Add fspick() to select a superblock for reconfiguration")
+Cc: stable@vger.kernel.org # v5.2+
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-6-f357abf3d17b@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    3 +++
+ fs/fsopen.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2792,6 +2792,9 @@ static struct mount *__do_loopback(struc
- 	if (!check_mnt(old) && old_path->dentry->d_op != &ns_dentry_operations)
- 		return mnt;
+--- a/fs/fsopen.c
++++ b/fs/fsopen.c
+@@ -190,6 +190,9 @@ SYSCALL_DEFINE3(fspick, int, dfd, const
+ 	ret = -EINVAL;
+ 	if (target.mnt->mnt_root != target.dentry)
+ 		goto err_path;
++	/* kernel-internal superblocks are nobody's to reconfigure */
++	if (target.dentry->d_sb->s_flags & SB_NOUSER)
++		goto err_path;
  
-+	if (recurse && !old->mnt_ns)
-+		return ERR_PTR(-EINVAL);
-+
- 	if (!recurse && __has_locked_children(old, old_path->dentry))
- 		return mnt;
- 
+ 	fc = fs_context_for_reconfigure(target.dentry, 0, 0);
+ 	if (IS_ERR(fc)) {
 
 
