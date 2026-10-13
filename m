@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B93A433041;
-	Tue, 13 Oct 2026 12:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981844EB872;
+	Tue, 13 Oct 2026 12:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895712; cv=none; b=hzq8carnJ8wtqIkNh3kxYCeg2hJGawvP+RaTWpfuTOAk4O/Oc/WpXffy3JDWmGpkoL22+N2V10DoJMpdPBYOjA8NqoOzbFUqDsoX/Wxaoso3U1qS/5rafYQ15nQUTwFXR8ztIJY+mWQsCMAfbt8StSD+VXbsBN1Ja88c/8lutxU=
+	t=1791895715; cv=none; b=d+Id1CXveDaEcnT0JVaJSb1sTeqyeX4dv5/BKeVozkzgJffBD0ju8WIwWCeiNTx/X8Ecw/PIh65T88KOsi1FfnbGmsBK5duFiqUXIHztZHvE/h/XvuH8jfYQGMPWdoZ17b1cNa4qhouTByveCDmMX4A0mlcxEQfEFn9wZ+Tfzos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895712; c=relaxed/simple;
-	bh=5PTMk3Vo6VPAvaaFIBTnSZUxGBzWikSg2+TpyTVa+n0=;
+	s=arc-20240116; t=1791895715; c=relaxed/simple;
+	bh=xSaxROWpPQGnHgNv8B7BWzfkBpR4/wY0Z0TJ2H1V9Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3dwtg55us6YaqqUCDTmMyrM5ckgf5yOpboZHc0LasIpuGf1EMoIUYX2NX46Ky0kQqkyS0SwNStv2oMitVQwdq1z1zi/LVQJou561FJreGu1AGyyIMdB3o4jjabG5GFY1+LGeRRGRpQeXluZ9rnBP6mwrKaI9A5DEGUldHMTCpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yclONUwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gaxtm/IY7xuzhGheTMltS88qIIRyAyCU/FdbSu3V0lL/aHky6buVOjfB4gG5zdJepImtwjO6DdOrWF2HAGajRuy2L0zEOOtnSaC3JcM0Mjk0rdIQGCIl6TC0fRtZVUjzP048yhfBIcCg5fBvYvhzveE9Dpvxsq6v10NWiqlGOgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFV49T2k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yclONUwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5711F000FF;
-	Tue, 13 Oct 2026 12:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFV49T2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A191F000FF;
+	Tue, 13 Oct 2026 12:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895711;
-	bh=kfPG09ZPZQiRljzj5WL5y/uENET7GI6b9/2kLoY/g1M=;
+	s=korg; t=1791895714;
+	bh=jiHjQt5f8Bye4aaQr1g5bSBzq//El/MvdICQhdoAvPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yclONUwXCi1fzI6qi2JCqg59Zn4Sf/uqMsQ9vTtqI4mZKvPF9sBs2/iBM+Jgkljkt
-	 k+WVYAVtT/9+cjX/Gz4vD/b5SalIx3LzTDs5Gv41FslR8D/zG40SCoKSAfSTCARKbk
-	 XYHWAoWPSRgGeslboZvg3M21ciH7lHMway6NGPa8=
+	b=JFV49T2k+nZ8zB5xFMxmc23hso0Szp1mkYMIXGo/N6r1lXNlnBNRjh+iiWXz1uDCE
+	 0nqUJSMDhNhKKnnFRakWRGt+xBGOzCq39uc488Y3Z7iQ6VF1PeyBc9/1pC+hg0ko1E
+	 6uI9Wbv2RRNsrQSMCSREqAYQ2h72Iyyg/wOIyiBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com,
-	Palla Raghunath <raghunathpalla.0209@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 365/497] dm ioctl: dont let data_start run past the buffer
-Date: Tue, 13 Oct 2026 13:38:52 +0200
-Message-ID: <20261013112916.566595980@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 324/497] KVM: SVM: Use the active VMCBs MSR bitmap when checking if MSR is intercepted
+Date: Tue, 13 Oct 2026 13:38:11 +0200
+Message-ID: <20261013112915.593871798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,64 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palla Raghunath <raghunathpalla.0209@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 9b3fcf519d370df94a56f3b272d9eddffffa5be8 upstream.
+[ Upstream commit 9e06bbb9ade7cdf28d4a3b5b14e5812881c8df85 ]
 
-struct dm_ioctl has seven bytes of trailing padding, so the smallest
-buffer userspace is allowed to ask for, offsetof(struct dm_ioctl, data),
-is seven bytes shorter than sizeof(struct dm_ioctl).
+Use the MSR permission bitmap of the active VMCB instead of assuming that
+KVM is always using vmcb02's bitmap when L2 is active, as KVM uses msrpm02
+if and only if L1 wants to intercept MSR accesses, i.e. if and only if KVM
+needs to merge msprm01 with msrpm12.
 
-get_result_buffer() sets data_start to sizeof(struct dm_ioctl) without
-looking at how big the buffer actually is. Ask for the minimum and
-data_start ends up seven bytes past the end. Callers add it to
-data_size, and ctl_ioctl() copies that much back to userspace:
+Don't bother tracking the virtual address of the bitmap that's being used,
+as __va() is cheap on x86, and caching the virtual address would introduce
+yet another source of potentially stale information.
 
-  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0xad/0xd0
-  Read of size 312 at addr ffff8880169e4c00 by task repro-dm/140
-   ctl_ioctl+0x5e3/0xcb0
-   dm_ctl_ioctl+0x25/0x40
-  allocated 305-byte region [ffff8880169e4c00, ffff8880169e4d31)
-
-A DM_LIST_DEVICES with data_size set to 305 is enough to hit it, and the
-seven bytes that leak are whatever sat next to the allocation.
-
-Clamp data_start to the buffer size.
-
-Note that this is not a security bug because the out-of-bounds read can
-only be triggered by root.
-
-Reported-by: syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48d935cf48a4a76be346
-Fixes: 76c072b48e39 ("dm ioctl: move compat code")
+Fixes: b2ac58f90540 ("KVM/SVM: Allow direct access to MSR_IA32_SPEC_CTRL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260826195833.844526-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: Adapted VMCB access to use to_svm(vcpu) with the existing struct kvm_vcpu parameter. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ioctl.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/svm.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -556,10 +556,16 @@ static void *get_result_buffer(struct dm
- {
- 	param->data_start = align_ptr(param + 1) - (void *) param;
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 2c8883511d7b0..9408ab965aeaa 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -812,17 +812,7 @@ static bool msr_write_intercepted(struct kvm_vcpu *vcpu, u32 msr)
+ 	u32 offset;
+ 	u32 *msrpm;
  
--	if (param->data_start < param_size)
-+	if (param->data_start < param_size) {
- 		*len = param_size - param->data_start;
--	else
-+	} else {
-+		/*
-+		 * The buffer can be as small as offsetof(*param, data), which
-+		 * is less than sizeof(*param), so don't run off the end of it.
-+		 */
- 		*len = 0;
-+		param->data_start = param_size;
-+	}
+-	/*
+-	 * For non-nested case:
+-	 * If the L01 MSR bitmap does not intercept the MSR, then we need to
+-	 * save it.
+-	 *
+-	 * For nested case:
+-	 * If the L02 MSR bitmap does not intercept the MSR, then we need to
+-	 * save it.
+-	 */
+-	msrpm = is_guest_mode(vcpu) ? to_svm(vcpu)->nested.msrpm:
+-				      to_svm(vcpu)->msrpm;
++	msrpm = __va(__sme_clr(to_svm(vcpu)->vmcb->control.msrpm_base_pa));
  
- 	return ((void *) param) + param->data_start;
- }
+ 	offset    = svm_msrpm_offset(msr);
+ 	bit_write = 2 * (msr & 0x0f) + 1;
+-- 
+2.53.0
+
 
 
