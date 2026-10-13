@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363EC4F052F;
-	Tue, 13 Oct 2026 11:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EF34F402E;
+	Tue, 13 Oct 2026 11:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892613; cv=none; b=jgziyyJXoOnZS0LgQhgqGQGToMB2jmWYy0he1oAPNoW7ZgCSU/CdwK/xj2GeB23X52kwJ23SO2gE0ga7hmmH+BTMuWchnNE1zOd2Wbj7aDksrvgElllazf9HHvFno/cYIyja8IqTARDrfCq7Y12wjLhYoaG5EtEK7A520doHaCA=
+	t=1791892617; cv=none; b=pBdH5Y3heiWhLoLNosFi1BFRnczLfHNqSM0KBbDEtyLGvqRC6seFfhLUreozukN/AAJRdwFbLYzd2sRAwha5NL4Ws8lx9aMlvysnyHcXwkcVoES7/O5FNBZl8I3sR/m1DYok74oy+EomHuYM8RUNyemX4vykiHXpHkywhir/OJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892613; c=relaxed/simple;
-	bh=TcZwcS8CZ/D0Zty1u1a4+480vsm3DrowPbJ3V10605Y=;
+	s=arc-20240116; t=1791892617; c=relaxed/simple;
+	bh=dlOrgO24NgNXKO1eADWucv2Cy7g+WtVnJQ0tFT8Af40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNB+RZNEFQNie7U0asZnnsWsIKrrIW94aAoo0eO+DuYZ5Gjn/FCk9+7OVte9/iq8dG+hcC4N6OnufrU9hk7w5+7bBRcuokp/XvIYsI6Zmjnu5f0Gq1VY8QLewwbNzaJV6EeiZk541PBeWh9JHSJjMIScRW73SijBFuPCtyPrvBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNB4Y30i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qf41uuCpEAGdYck2P6bW1PzaCz+2boJYmFD0VkWCgnG7rbjsMhQSjCeUXOCuDZ3Wh2tzhL91ezMqHdg0nipVg3iRRMqw7ZIiztd0XUlebO5s0Sehd5ndWze2V2GQh7MfuL/dE6oJKl9GFRlBefsbXcjWZd+D5r5CvDas8Rti/5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzIzTSTp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNB4Y30i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6D71F00893;
-	Tue, 13 Oct 2026 11:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzIzTSTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16A51F000FF;
+	Tue, 13 Oct 2026 11:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892612;
-	bh=iorMrP6HQYofKGazz17vmqjftsIVXJhOQlB2F8PFXcE=;
+	s=korg; t=1791892615;
+	bh=B9rwEWFEaFl3af7D8ZZELLCCpEKCAPsuVMNJEDE0t/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNB4Y30iVe/p/FkEE87P8QvLyDYos0AtjLKRkstpJr/8Pyn+RMFaNOYQTQOotw8K+
-	 ubSOJHcrEu9MBM7bNMsb3lvPFmFyk5bWLBHPDohs/hvOWuK8KU3a3nrLIoCjkX4ZFy
-	 h+htKGa+U5qxynQB/4aEMwB0LKFZsIo98Wx5L2vk=
+	b=CzIzTSTp635wp8KELrfjiPe2Y20sFbaeMfBqfK2isZH2AoIjzgF9RkKISXBHzO5Z3
+	 NXbN9gWPTkxvnY69btKsGmKXVktS6OxZ8RdGFXf/sa0YuYvukJJteE8HAFFsQwkuBR
+	 ZTVR2v98Nh/03PvEgvWNh+g1LUoo8oN/N0JAciMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 232/281] wifi: mt76: account non-AQL frames per peer rather than per link
-Date: Tue, 13 Oct 2026 13:39:08 +0200
-Message-ID: <20261013112900.781636297@linuxfoundation.org>
+Subject: [PATCH 7.2 233/281] wifi: mt76: use ALTX queue for packets to disassociated stations
+Date: Tue, 13 Oct 2026 13:39:09 +0200
+Message-ID: <20261013112900.804405321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,90 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 752770d7a58c821c17909c3ca67f9f14ab146a40 ]
+[ Upstream commit 7c2e6b43c3082c2242ecfa5875b2b4b2cd06140f ]
 
-The driver increments wcid->non_aql_packets when a frame goes to the
-hardware queue. The completion path decrements the counter again.
-
-For an MLO peer, the hardware reports the completion on the link that it
-used for the transmission. This link can differ from the link that the
-driver queued the frame on. In that case, the increment and the
-decrement go to different link wcids, and the count drifts upwards until
-it blocks the station.
-
-Keep the count on the wcid of the primary link, like the other peer-wide
+Running these packets through regular buffering queues could cause them
+to hang, especially when the packets were for stations that in disassoc
 state.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Link: https://patch.msgid.link/20260818125825.395538-5-nbd@nbd.name
+Fixes: dedf2ec30fe4 ("wifi: mt76: fix queue assignment for deauth packets")
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260901092232.461379-1-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h |  7 +++++++
- drivers/net/wireless/mediatek/mt76/tx.c   | 11 ++++++++---
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 1 +
+ drivers/net/wireless/mediatek/mt76/tx.c          | 3 ++-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 61ef1b80feb85..9188a27e78652 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1425,6 +1425,13 @@ mtxq_to_txq(struct mt76_txq *mtxq)
- 	return container_of(ptr, struct ieee80211_txq, drv_priv);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 4783e5f52d229..1830398ff719f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -805,6 +805,7 @@ __mt7915_drop_sta(void *ptr, u8 *mac, struct ieee80211_vif *vif)
  
-+/* peer-wide state uses the wcid of the primary link */
-+static inline struct mt76_wcid *
-+mt76_wcid_primary(struct mt76_wcid *wcid)
-+{
-+	return wcid->def_wcid ? wcid->def_wcid : wcid;
-+}
-+
- static inline struct ieee80211_sta *
- wcid_to_sta(struct mt76_wcid *wcid)
- {
+ 	msta = (struct mt7915_sta *)sta->drv_priv;
+ 	mt7915_mcu_add_sta(data->dev, vif, sta, CONN_STATE_DISCONNECT, false);
++	msta->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
+ 	msta->wcid.sta_disabled = 1;
+ 	msta->wcid.sta = 0;
+ }
+@@ -871,6 +872,7 @@ int mt7915_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 		mutex_unlock(&dev->mt76.mutex);
+ 
+ 		mt7915_mcu_add_sta(dev, vif, sta, CONN_STATE_DISCONNECT, false);
++		msta->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
+ 		msta->wcid.sta_disabled = 1;
+ 		msta->wcid.sta = 0;
+ 		return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 484fe880232b4..ae006f29091ff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1429,6 +1429,7 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			else if (sta->mlo && links == BIT(link_id)) /* last link */
+ 				mt7996_mcu_teardown_mld_sta(dev, link,
+ 							    msta_link);
++			msta_link->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
+ 			msta_link->wcid.sta_disabled = 1;
+ 			msta_link->wcid.sta = 0;
+ 			links = links & ~BIT(link_id);
 diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 12c615b1294b4..c6245b10abb0c 100644
+index c6245b10abb0c..65703dbb185c9 100644
 --- a/drivers/net/wireless/mediatek/mt76/tx.c
 +++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -234,6 +234,8 @@ mt76_tx_check_non_aql(struct mt76_dev *dev, struct mt76_wcid *wcid,
- 	if (!wcid || info->tx_time_est)
- 		return;
- 
-+	wcid = mt76_wcid_primary(wcid);
-+
- 	pending = atomic_dec_return(&wcid->non_aql_packets);
- 	if (pending < 0)
- 		atomic_cmpxchg(&wcid->non_aql_packets, pending, 0);
-@@ -344,7 +346,8 @@ __mt76_tx_queue_skb(struct mt76_phy *phy, int qid, struct sk_buff *skb,
- 	if (!non_aql)
- 		return idx;
- 
--	pending = atomic_inc_return(&wcid->non_aql_packets);
-+	/* the hardware can report the completion on a different link */
-+	pending = atomic_inc_return(&mt76_wcid_primary(wcid)->non_aql_packets);
- 	if (stop && pending >= MT_MAX_NON_AQL_PKT)
- 		*stop = true;
- 
-@@ -498,7 +501,8 @@ mt76_txq_send_burst(struct mt76_phy *phy, struct mt76_queue *q,
- 			return 0;
- 	}
- 
--	if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
-+	if (atomic_read(&mt76_wcid_primary(wcid)->non_aql_packets) >=
-+	    MT_MAX_NON_AQL_PKT)
- 		return 0;
- 
- 	skb = mt76_txq_dequeue(phy, mtxq);
-@@ -595,7 +599,8 @@ mt76_txq_schedule_list(struct mt76_phy *phy, enum mt76_txq_id qid)
- 			continue;
- 		}
- 
--		if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
-+		if (atomic_read(&mt76_wcid_primary(wcid)->non_aql_packets) >=
-+		    MT_MAX_NON_AQL_PKT)
- 			continue;
- 		if (dev->queue_ops->tx_cleanup &&
- 		    q->queued + 2 * MT_TXQ_FREE_THR >= q->ndesc) {
+@@ -672,7 +672,8 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
+ 		if ((dev->drv->drv_flags & MT_DRV_HW_MGMT_TXQ) &&
+ 		    !(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) &&
+ 		    !ieee80211_is_data_present(hdr->frame_control) &&
+-		    (!ieee80211_is_bufferable_mmpdu(skb) ||
++		    (!(wcid->tx_info & MT_WCID_TX_INFO_SET) ||
++		     !ieee80211_is_bufferable_mmpdu(skb) ||
+ 		     ieee80211_is_deauth(hdr->frame_control) ||
+ 		     ieee80211_is_disassoc(hdr->frame_control) ||
+ 		     head == &wcid->tx_offchannel))
 -- 
 2.53.0
 
