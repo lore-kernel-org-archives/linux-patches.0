@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD574F68BC;
-	Tue, 13 Oct 2026 12:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525683E557D;
+	Tue, 13 Oct 2026 12:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893637; cv=none; b=A/63gtzpkk0oFGNd0+91+2SHkZISyw9K89OKhkZalyTR3RSqRnCX4otRVv4k9aKzXbR7yfqw8UrQSpcUbQ4olxSp5ZYPBTzL1hc65shdHzlWTiryGX0cbGADO1vphx1E9+DUb23qO7X9wk8+xp+P2HmcIddskWgT4hY2WQMxXLw=
+	t=1791893640; cv=none; b=B/th2gNXwidGOZzG/URXvqyRRZhp6AFqpUsH4Nxsi5ROJiNCHfHa8SdE74In7OahOBggZxZqKLZfEIu3Cnhcxa9STpA7I1gdD2dwIXQRX62VK+8ug68vdOPzWALQomG1TSTmvV40AYMTl6mrkasOYCX02HUduaTTIieA5MuJB3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893637; c=relaxed/simple;
-	bh=LPcJrDrElzA7ik3/KBdiydZGB0/2S1fKL+VbpYDkMso=;
+	s=arc-20240116; t=1791893640; c=relaxed/simple;
+	bh=1Vxb/IzuAf9ssnXIZAZEnU2EYWKhct58KIhK3TT3w3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7RtgGDl5jKf35qpdgBdije8BhKICxoK50K/DwtywcWBc1KrE5FvViKrYGNXRjZV/tvV/2JYXT1IuPjY91eMz0eb07RnSrWw5vp9F1iznFgOe+m/fs+/RZYeM5cqWKiVF0TSc6UQkzt928kaLFpEMZ8c0WRgAf+x/qj2qT+7kmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X646tCay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mh0DBA74Vrvhe5qRVGU7EMuI/IM+fR5DHZRrrqKAUsokbNbJ6ax3UIl3c1euxjHa7XvYhkAf4/slulQD2EqmOEHKYuqypab29sti+zoDGNcvkmG0JgMQcEqOnEl8dK+yoqIfmLUJr9gpEyoE2UtMEuhyZtnl33N40gWpo/XpB8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlU75/jX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X646tCay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D471F000FF;
-	Tue, 13 Oct 2026 12:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlU75/jX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAB61F000FF;
+	Tue, 13 Oct 2026 12:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893636;
-	bh=snrnzl72eofBeJbZ+bl7IICXMnuGx+WzWoRpJ24QlaU=;
+	s=korg; t=1791893639;
+	bh=c2wyspgRgJhNKrg5QCPJY9S3kPJXlcqBqAuN0tD1cxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X646tCaynhKNn2xVJkfGGrLLPpmsBhWjzUjkEtxspz4Z3u9jjZDWpK05giyttPlzi
-	 vmnZCLUq0mYSzyDswM4AH1sD6gshE0Sv9g3LYsUQW6dsIWFj0ZsySf0lADgNuqKovC
-	 RWmmC79GzL0Tqv2Kqmv/N7QV5KwcE616k/2I2YIo=
+	b=OlU75/jXzo4DpoYg+BoHe0m2TbajlbYp4rKJhjxXZSt3KVOLkwcD2OTbgt1+xK4I5
+	 yZ9RViPrFAyAVEkmuT15hsTIcb0290sKfehriGTvJntz9lcfzvnJmKeAWCLicjc5+f
+	 rbOUxYIwlk+rW23EElsYzAqyY01X9Nl+iQUWukNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 290/621] md/raid1: fix writes_pending and barrier reference leaks on write failures
-Date: Tue, 13 Oct 2026 13:34:45 +0200
-Message-ID: <20261013112927.741452549@linuxfoundation.org>
+Subject: [PATCH 6.18 291/621] i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev()
+Date: Tue, 13 Oct 2026 13:34:46 +0200
+Message-ID: <20261013112927.764405319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,116 +52,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 8e065a1602511282fc0da2dc89445e0eb71a681c ]
+[ Upstream commit 650716f23eac488c6696babdc7805f6a6b7427ad ]
 
-raid1_make_request() acquires a writes_pending reference with
-md_write_start() before calling raid1_write_request(). Several failure
-paths in raid1_write_request() complete the bio and return without
-reaching the normal write completion path, causing the corresponding
-md_write_end() to be skipped.
+i3c_hci_addr_to_dev() walks bus->devs.i3c, which is protected by
+bus.lock (rwsem).  However, it is invoked from the MIPI I3C HCI IRQ
+handler, which cannot take bus.lock.  This allows concurrent device
+addition/removal in the I3C core to modify the list while it is being
+traversed, potentially leading to use-after-free or crashes.
 
-Make raid1_write_request() return a status indicating whether the write
-request was successfully queued. This allows raid1_make_request() to
-call md_write_end() when raid1_write_request() fails.
+Remove the dependency on the bus device list and introduce a dedicated
+lookup table.  Add an ibi_devs[] array indexed by DAT entry, maintained
+under hci->lock.  Update the array when IBIs are enabled or disabled,
+so that it always reflects the set of devices allowed to generate IBIs.
+Also update when IBIs are freed, to cover the corner case when an IBI is
+freed without first being disabled (e.g. oldedev in
+i3c_master_add_i3c_dev_locked()).
 
-Additionally, if wait_blocked_rdev() fails after wait_barrier()
-succeeds, the associated barrier reference is not released.
+Move i3c_hci_addr_to_dev() into core.c, reimplement it using the new
+array, and add a lockdep assertion to enforce that hci->lock is held
+by callers.
 
-Call allow_barrier() before returning from that path to keep the barrier
-accounting balanced.
+Demote a message in PIO and DMA IBI handling, from an error to a debug
+message, because there is a race window when the condition can arise
+normally.
 
-Fixes: b1a7ad8b5c4f ("md/raid1: Handle bio_split() errors")
-Fixes: f2a38abf5f1c ("md/raid1: Atomic write support")
-Fixes: 5aa705039c4f ("md: raid1 add nowait support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
-Closes: https://sashiko.dev/#/patchset/20260611132500.763528-1-abd.masalkhi@gmail.com?part=1
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260613182810.1317258-2-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260612080107.11606-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 37 ++++++++++++++++++++++++--
+ drivers/i3c/master/mipi-i3c-hci/dma.c  | 12 +++++++--
+ drivers/i3c/master/mipi-i3c-hci/hci.h  |  1 +
+ drivers/i3c/master/mipi-i3c-hci/ibi.h  | 13 +--------
+ drivers/i3c/master/mipi-i3c-hci/pio.c  |  7 +++--
+ 5 files changed, 52 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 1370be1e5cc7b..333ac4fbe59bc 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1482,7 +1482,7 @@ static void raid1_start_write_behind(struct mddev *mddev, struct r1bio *r1_bio,
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 1eeab337e5e53..e9fd314eb17b9 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -21,6 +21,7 @@
+ #include "ext_caps.h"
+ #include "cmd.h"
+ #include "dat.h"
++#include "ibi.h"
  
- }
  
--static void raid1_write_request(struct mddev *mddev, struct bio *bio,
-+static bool raid1_write_request(struct mddev *mddev, struct bio *bio,
- 				int max_write_sectors)
+ /*
+@@ -119,6 +120,7 @@ static inline struct i3c_hci *to_i3c_hci(struct i3c_master_controller *m)
+ static int i3c_hci_bus_init(struct i3c_master_controller *m)
  {
- 	struct r1conf *conf = mddev->private;
-@@ -1493,6 +1493,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 	int max_sectors;
- 	bool write_behind = false;
- 	bool is_discard = (bio_op(bio) == REQ_OP_DISCARD);
-+	sector_t sector = bio->bi_iter.bi_sector;
+ 	struct i3c_hci *hci = to_i3c_hci(m);
++	struct device *dev = hci->master.dev.parent;
+ 	struct i3c_device_info info;
+ 	int ret;
  
- 	if (mddev_is_clustered(mddev) &&
- 	    mddev->cluster_ops->area_resyncing(mddev, WRITE,
-@@ -1501,7 +1502,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 		DEFINE_WAIT(w);
- 		if (bio->bi_opf & REQ_NOWAIT) {
- 			bio_wouldblock_error(bio);
--			return;
-+			return false;
- 		}
- 		for (;;) {
- 			prepare_to_wait(&conf->wait_barrier,
-@@ -1523,12 +1524,13 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 	if (!wait_barrier(conf, bio->bi_iter.bi_sector,
- 				bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
--		return;
-+		return false;
- 	}
+@@ -139,6 +141,10 @@ static int i3c_hci_bus_init(struct i3c_master_controller *m)
+ 	if (ret)
+ 		return ret;
  
- 	if (!wait_blocked_rdev(mddev, bio)) {
- 		bio_wouldblock_error(bio);
--		return;
-+		allow_barrier(conf, sector);
-+		return false;
- 	}
- 
- 	r1_bio = alloc_r1bio(mddev, bio);
-@@ -1687,7 +1689,8 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 
- 	/* In case raid1d snuck in to freeze_array */
- 	wake_up_barrier(conf);
--	return;
-+	return true;
++	hci->ibi_devs = devm_kcalloc(dev, hci->DAT_entries, sizeof(*hci->ibi_devs), GFP_KERNEL);
++	if (!hci->ibi_devs)
++		return -ENOMEM;
 +
- err_handle:
- 	for (k = 0; k < i; k++) {
- 		if (r1_bio->bios[k]) {
-@@ -1697,6 +1700,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 	}
- 
- 	raid_end_bio_io(r1_bio);
-+	return false;
+ 	ret = hci->io->init(hci);
+ 	if (ret)
+ 		return ret;
+@@ -477,14 +483,40 @@ static int i3c_hci_request_ibi(struct i3c_dev_desc *dev,
+ 	return hci->io->request_ibi(hci, dev, req);
  }
  
- static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
-@@ -1720,8 +1724,9 @@ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
- 	if (bio_data_dir(bio) == READ)
- 		raid1_read_request(mddev, bio, sectors, NULL);
- 	else {
--		md_write_start(mddev,bio);
--		raid1_write_request(mddev, bio, sectors);
-+		md_write_start(mddev, bio);
-+		if (!raid1_write_request(mddev, bio, sectors))
-+			md_write_end(mddev);
- 	}
- 	return true;
++static void __i3c_hci_disable_ibi(struct i3c_hci *hci, struct i3c_dev_desc *dev)
++{
++	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
++
++	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
++	scoped_guard(spinlock_irqsave, &hci->lock)
++		hci->ibi_devs[dev_data->dat_idx] = NULL;
++}
++
+ static void i3c_hci_free_ibi(struct i3c_dev_desc *dev)
+ {
+ 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
+ 	struct i3c_hci *hci = to_i3c_hci(m);
+ 
++	/* Must ensure the IBI has been disabled */
++	__i3c_hci_disable_ibi(hci, dev);
+ 	hci->io->free_ibi(hci, dev);
  }
+ 
++struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
++{
++	int dat_idx;
++
++	lockdep_assert_held(&hci->lock);
++
++	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
++		struct i3c_dev_desc *dev = hci->ibi_devs[dat_idx];
++
++		if (dev && dev->info.dyn_addr == addr)
++			return dev;
++	}
++	return NULL;
++}
++
+ static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
+ {
+ 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
+@@ -492,6 +524,8 @@ static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
+ 	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
+ 
+ 	mipi_i3c_hci_dat_v1.clear_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
++	scoped_guard(spinlock_irqsave, &hci->lock)
++		hci->ibi_devs[dev_data->dat_idx] = dev;
+ 	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
+ }
+ 
+@@ -499,9 +533,8 @@ static int i3c_hci_disable_ibi(struct i3c_dev_desc *dev)
+ {
+ 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
+ 	struct i3c_hci *hci = to_i3c_hci(m);
+-	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
+ 
+-	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
++	__i3c_hci_disable_ibi(hci, dev);
+ 	return i3c_master_disec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
+ }
+ 
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 34c21a56a25d9..37717e530a250 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -710,10 +710,15 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 	}
+ 
+ 	/* determine who this is for */
++	spin_lock(&hci->lock);
+ 	dev = i3c_hci_addr_to_dev(hci, ibi_addr);
+ 	if (!dev) {
+-		dev_err(&hci->master.dev,
+-			"IBI for unknown device %#x\n", ibi_addr);
++		/*
++		 * Either an IBI received just before IBI's were disabled, or
++		 * the controller is broken. Assume the former.
++		 */
++		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi_addr);
++		spin_unlock(&hci->lock);
+ 		goto done;
+ 	}
+ 
+@@ -722,6 +727,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 	if (ibi_size > dev_ibi->max_len) {
+ 		dev_err(&hci->master.dev, "IBI payload too big (%d > %d)\n",
+ 			ibi_size, dev_ibi->max_len);
++		spin_unlock(&hci->lock);
+ 		goto done;
+ 	}
+ 
+@@ -738,6 +744,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 	slot = i3c_generic_ibi_get_free_slot(dev_ibi->pool);
+ 	if (!slot) {
+ 		dev_err(&hci->master.dev, "no free slot for IBI\n");
++		spin_unlock(&hci->lock);
+ 		goto done;
+ 	}
+ 
+@@ -768,6 +775,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 	slot->dev = dev;
+ 	slot->len = ibi_size;
+ 	i3c_master_queue_ibi(dev, slot);
++	spin_unlock(&hci->lock);
+ 
+ done:
+ 	/* take care to update the ibi dequeue pointer atomically */
+diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
+index 5502ab0a3535d..dad6b71bac358 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/hci.h
++++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
+@@ -54,6 +54,7 @@ struct i3c_hci {
+ 	unsigned int DAT_entries;
+ 	unsigned int DAT_entry_size;
+ 	void *DAT_data;
++	struct i3c_dev_desc **ibi_devs;
+ 	unsigned int DCT_entries;
+ 	unsigned int DCT_entry_size;
+ 	u8 version_major;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/ibi.h b/drivers/i3c/master/mipi-i3c-hci/ibi.h
+index e1f98e264da0e..073ca67b7d04d 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/ibi.h
++++ b/drivers/i3c/master/mipi-i3c-hci/ibi.h
+@@ -26,17 +26,6 @@
+ #define IBI_DATA_LENGTH			GENMASK(7, 0)
+ 
+ /*  handy helpers */
+-static inline struct i3c_dev_desc *
+-i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
+-{
+-	struct i3c_bus *bus = i3c_master_get_bus(&hci->master);
+-	struct i3c_dev_desc *dev;
+-
+-	i3c_bus_for_each_i3cdev(bus, dev) {
+-		if (dev->info.dyn_addr == addr)
+-			return dev;
+-	}
+-	return NULL;
+-}
++struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr);
+ 
+ #endif
+diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
+index 35e6acc958a8e..3a89f1628f6d4 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/pio.c
++++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
+@@ -839,8 +839,11 @@ static bool hci_pio_prep_new_ibi(struct i3c_hci *hci, struct hci_pio_data *pio)
+ 
+ 	dev = i3c_hci_addr_to_dev(hci, ibi->addr);
+ 	if (!dev) {
+-		dev_err(&hci->master.dev,
+-			"IBI for unknown device %#x\n", ibi->addr);
++		/*
++		 * Either an IBI received just before IBI's were disabled, or
++		 * the controller is broken. Assume the former.
++		 */
++		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi->addr);
+ 		return true;
+ 	}
+ 
 -- 
 2.53.0
 
