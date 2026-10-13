@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30574F0522;
-	Tue, 13 Oct 2026 12:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8944F68AD;
+	Tue, 13 Oct 2026 12:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894309; cv=none; b=GI2T8Y7o5XhfaPEPSmatKURVtmVcFYYAxwLOyLrcwVy0ioNghIB0ktQp6VizqGQNwIP7EcTHiMStUTzk137U+ByrBsERYLUvI0Ac83QDyO89MX6KBg0MPITRrtHvwHqXQ/087DprY+erC/d0mV9K9hyiI1kCTXR3oJvwo+WiDwQ=
+	t=1791894313; cv=none; b=sMGKRCDWCwHVXcNWR4IGbBZAP9LNNNy+HQISuDz7XGQyBUWSADbIepPhi0iwVWm7PdrQFe1YcpImD/o/4ZTCQw/N3t0kZMZiaz6ZI9pdRbuQKI8WfqxFwVbPgYn0ro5OLrHkhLhtxocxJ5JkyDHqiBk/cCbqcS2c52Vx2HQzvdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894309; c=relaxed/simple;
-	bh=oQbV0xKFNZt7PPZ3sIsGX0hCDWobnvsFMcWBPXANJzc=;
+	s=arc-20240116; t=1791894313; c=relaxed/simple;
+	bh=/aRrLZ18gYnjgHHJhQOcqEbxPKpEzgsM2E+HJ7GvamI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZNY4l6UCyvUJ309W/Y7Ou9xeyy17GpgOIuGmjaRo4DY5yTB0VeTVZtI7yPBSeH2vBtFVMTCcIYNZfQtZcE/rl4jQHeK2mxiyCmzNjGoRXTnlPX5PcMYzT+bQmWYGmCrhrCdzxBGvrToHTvh1h/Wm6wfEeEint+hWPWa8suNLZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLaGgPUv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRzhF6GrwCWaVCdWT+v62u9odGorJdMANtyH04lUrA+KYv4lO74QguBrv4W41wVHfhUSAtBXOHqf42VXSGtNrMBsMzVFYGfhUgKXZrzrGQbfq7xSkczSYVxRfCT8YwgyYS2CvmzcnkOoyghBbQkUjDqlQhuc58d3KqCnSkSl55w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xV+HUPsE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLaGgPUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DBC1F000FF;
-	Tue, 13 Oct 2026 12:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xV+HUPsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A291F000FF;
+	Tue, 13 Oct 2026 12:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894308;
-	bh=fZ3YjrkdxN78rU326iKlpXt5hGwO/ghOkwMGMxscyfQ=;
+	s=korg; t=1791894311;
+	bh=4KNhIaVQ4e9P+l6QS5EATb6aBhVRvNPJHtyb9ScetnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eLaGgPUvuEqJQF3nReDHfjOsaHojjiwOI9teBGwJOGXJdZc7mN+J4SIryyV1DanGE
-	 MK9++hE8Bf0ougXZ9hpYvidZNgtSEF1BRVoeIv/sATlLcpMdXGdn4/tp+heAk9ep2o
-	 EeXe6h7H7/sKgGJVm8cDThU+/2Z8qzpG9xgFQhAw=
+	b=xV+HUPsE21L0EA+uvhojrDkhAxDKdWSyFL0yfs8h/y5nDj7o59w/3WZNFhvQJyb5V
+	 d42HNQtiL/bnDaPnSEHsXhjp9g1rGC0e+Nm1zEJI/dvdmq5ZEmCTaClo8kLeWivhLl
+	 gKHwfgcCTiQDyo0mMCjO0+nAdZdQSltIc5VEbVsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 516/621] bpf: zero extend the result of an arena 32-bit cmpxchg
-Date: Tue, 13 Oct 2026 13:38:31 +0200
-Message-ID: <20261013112933.069951105@linuxfoundation.org>
+Subject: [PATCH 6.18 517/621] ring-buffer: Skip invalid sub-buffers when validating persistent ring buffer
+Date: Tue, 13 Oct 2026 13:38:32 +0200
+Message-ID: <20261013112933.093825116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,57 +51,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 4814ed6406f3493bd554ad046da5f7fc04833571 ]
+[ Upstream commit eb3bd277b37cd435d26a44a40d8f7c87ff16feb6 ]
 
-bpf_convert_ctx_accesses() rewrites an atomic on an arena pointer from
-BPF_STX | BPF_ATOMIC to BPF_STX | BPF_PROBE_ATOMIC, and it runs before
-bpf_opt_subreg_zext_lo32_rnd_hi32().
+Skip invalid sub-buffers when validating the persistent ring buffer
+instead of discarding the entire ring buffer. Only skipped buffers
+are invalidated (cleared).
 
-That pass emits an explicit zero extension for a 32-bit cmpxchg even
-when bpf_jit_needs_zext() is false. This is done because on some
-architectures 32-bit cmpxchg requires explicit zero extension for the
-dst register. E.g. on x86-64 'lock cmpxchg' does not change the %eax
-if comparison is successful, while BPF semantics declare that each
-operation on a 32-bit register zero extends it's upper half.
+If the cache data in memory fails to be synchronized during a reboot,
+the persistent ring buffer may become partially corrupted, but other
+sub-buffers may still contain readable event data. Only discard the
+subbuffers that are found to be corrupted.
 
-is_cmpxchg_insn() matches BPF_MODE == BPF_ATOMIC only, so an arena
-cmpxchg misses said zero extension adjustment. This patch adjusts
-is_cmpxchg_insn() to match BPF_PROBE_ATOMIC alongside BPF_ATOMIC.
+Link: https://lore.kernel.org/all/20260520185018.051228084@kernel.org/
 
-Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260903171542.1438050-1-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260522171050.914418536@kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+[SDR: Fixed max_loops in rb_iter_peek() as well ]
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Stable-dep-of: 6c001a62c34f ("ring-buffer: Add checking nr_subbufs to persistent ring buffer validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 118 ++++++++++++++++++++++---------------
+ 1 file changed, 72 insertions(+), 46 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 971446e05187c..494a3144c6a7a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -604,10 +604,15 @@ static bool helper_multiple_ref_obj_use(enum bpf_func_id func_id,
- 	return ref_obj_uses > 1;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index fc1c0034bc985..eed5c45b86ae6 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -412,6 +412,12 @@ static __always_inline unsigned int rb_page_capacity(struct buffer_page *bpage)
+ 	return (PAGE_SIZE << bpage->order) - BUF_PAGE_HDR_SIZE;
  }
  
-+/*
-+ * Matches BPF_PROBE_ATOMIC too: bpf_convert_ctx_accesses() rewrites arena
-+ * atomics before bpf_opt_subreg_zext_lo32_rnd_hi32() runs.
-+ */
- static bool is_cmpxchg_insn(const struct bpf_insn *insn)
++/* Size is determined by what has been committed */
++static __always_inline unsigned int rb_page_size(struct buffer_page *bpage)
++{
++	return rb_page_commit(bpage) & ~RB_MISSED_MASK;
++}
++
+ static void free_buffer_page(struct buffer_page *bpage)
  {
- 	return BPF_CLASS(insn->code) == BPF_STX &&
--	       BPF_MODE(insn->code) == BPF_ATOMIC &&
-+	       (BPF_MODE(insn->code) == BPF_ATOMIC ||
-+		BPF_MODE(insn->code) == BPF_PROBE_ATOMIC) &&
- 	       insn->imm == BPF_CMPXCHG;
+ 	/* Range pages are not to be freed */
+@@ -1836,7 +1842,6 @@ static bool rb_cpu_meta_valid(struct ring_buffer_cpu_meta *meta, int cpu,
+ 			      unsigned long *subbuf_mask)
+ {
+ 	int subbuf_size = PAGE_SIZE;
+-	struct buffer_data_page *subbuf;
+ 	unsigned long buffers_start;
+ 	unsigned long buffers_end;
+ 	int i;
+@@ -1844,6 +1849,11 @@ static bool rb_cpu_meta_valid(struct ring_buffer_cpu_meta *meta, int cpu,
+ 	if (!subbuf_mask)
+ 		return false;
+ 
++	if (meta->subbuf_size != PAGE_SIZE) {
++		pr_info("Ring buffer boot meta [%d] invalid subbuf_size\n", cpu);
++		return false;
++	}
++
+ 	buffers_start = meta->first_buffer;
+ 	buffers_end = meta->first_buffer + (subbuf_size * meta->nr_subbufs);
+ 
+@@ -1860,11 +1870,12 @@ static bool rb_cpu_meta_valid(struct ring_buffer_cpu_meta *meta, int cpu,
+ 		return false;
+ 	}
+ 
+-	subbuf = rb_subbufs_from_meta(meta);
+-
+ 	bitmap_clear(subbuf_mask, 0, meta->nr_subbufs);
+ 
+-	/* Is the meta buffers and the subbufs themselves have correct data? */
++	/*
++	 * Ensure the meta::buffers array has correct data. The data in each subbufs
++	 * are checked later in rb_meta_validate_events().
++	 */
+ 	for (i = 0; i < meta->nr_subbufs; i++) {
+ 		if (meta->buffers[i] < 0 ||
+ 		    meta->buffers[i] >= meta->nr_subbufs) {
+@@ -1872,18 +1883,12 @@ static bool rb_cpu_meta_valid(struct ring_buffer_cpu_meta *meta, int cpu,
+ 			return false;
+ 		}
+ 
+-		if ((unsigned)local_read(&subbuf->commit) > subbuf_size) {
+-			pr_info("Ring buffer boot meta [%d] buffer invalid commit\n", cpu);
+-			return false;
+-		}
+-
+ 		if (test_bit(meta->buffers[i], subbuf_mask)) {
+ 			pr_info("Ring buffer boot meta [%d] array has duplicates\n", cpu);
+ 			return false;
+ 		}
+ 
+ 		set_bit(meta->buffers[i], subbuf_mask);
+-		subbuf = (void *)subbuf + subbuf_size;
+ 	}
+ 
+ 	return true;
+@@ -1947,13 +1952,22 @@ static int rb_read_data_buffer(struct buffer_data_page *dpage, int tail, int cpu
+ 	return events;
  }
  
+-static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu)
++static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu,
++			      struct ring_buffer_cpu_meta *meta)
+ {
+ 	unsigned long long ts;
++	unsigned long tail;
+ 	u64 delta;
+-	int tail;
+ 
+-	tail = local_read(&dpage->commit);
++	/*
++	 * When a sub-buffer is recovered from a read, the commit value may
++	 * have RB_MISSED_* bits set, as these bits are reset on reuse.
++	 * Even after clearing these bits, a commit value greater than the
++	 * subbuf_size is considered invalid.
++	 */
++	tail = local_read(&dpage->commit) & ~RB_MISSED_MASK;
++	if (tail > meta->subbuf_size - BUF_PAGE_HDR_SIZE)
++		return -1;
+ 	return rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
+ }
+ 
+@@ -1964,6 +1978,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 	struct buffer_page *head_page, *orig_head, *orig_reader;
+ 	unsigned long entry_bytes = 0;
+ 	unsigned long entries = 0;
++	int discarded = 0;
+ 	int ret;
+ 	u64 ts;
+ 	int i;
+@@ -1975,14 +1990,19 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 	orig_reader = cpu_buffer->reader_page;
+ 
+ 	/* Do the reader page first */
+-	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu);
++	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu, meta);
+ 	if (ret < 0) {
+-		pr_info("Ring buffer reader page is invalid\n");
+-		goto invalid;
++		pr_info("Ring buffer meta [%d] invalid reader page detected\n",
++			cpu_buffer->cpu);
++		discarded++;
++		/* Instead of discard whole ring buffer, discard only this sub-buffer. */
++		local_set(&orig_reader->entries, 0);
++		local_set(&orig_reader->page->commit, 0);
++	} else {
++		entries += ret;
++		entry_bytes += rb_page_size(orig_reader);
++		local_set(&orig_reader->entries, ret);
+ 	}
+-	entries += ret;
+-	entry_bytes += local_read(&orig_reader->page->commit);
+-	local_set(&orig_reader->entries, ret);
+ 
+ 	ts = head_page->page->time_stamp;
+ 
+@@ -2010,7 +2030,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 			break;
+ 
+ 		/* Stop rewind if the page is invalid. */
+-		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu);
++		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu, meta);
+ 		if (ret < 0)
+ 			break;
+ 
+@@ -2019,7 +2039,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 		if (ret)
+ 			local_inc(&cpu_buffer->pages_touched);
+ 		entries += ret;
+-		entry_bytes += rb_page_commit(head_page);
++		entry_bytes += rb_page_size(head_page);
+ 	}
+ 	if (i)
+ 		pr_info("Ring buffer [%d] rewound %d pages\n", cpu_buffer->cpu, i);
+@@ -2089,21 +2109,24 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 		if (head_page == orig_reader)
+ 			continue;
+ 
+-		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu);
++		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu, meta);
+ 		if (ret < 0) {
+-			pr_info("Ring buffer meta [%d] invalid buffer page\n",
+-				cpu_buffer->cpu);
+-			goto invalid;
+-		}
+-
+-		/* If the buffer has content, update pages_touched */
+-		if (ret)
+-			local_inc(&cpu_buffer->pages_touched);
+-
+-		entries += ret;
+-		entry_bytes += local_read(&head_page->page->commit);
+-		local_set(&head_page->entries, ret);
++			if (!discarded)
++				pr_info("Ring buffer meta [%d] invalid buffer page detected\n",
++					cpu_buffer->cpu);
++			discarded++;
++			/* Instead of discard whole ring buffer, discard only this sub-buffer. */
++			local_set(&head_page->entries, 0);
++			local_set(&head_page->page->commit, 0);
++		} else {
++			/* If the buffer has content, update pages_touched */
++			if (ret)
++				local_inc(&cpu_buffer->pages_touched);
+ 
++			entries += ret;
++			entry_bytes += rb_page_size(head_page);
++			local_set(&head_page->entries, ret);
++		}
+ 		if (head_page == cpu_buffer->commit_page)
+ 			break;
+ 	}
+@@ -2117,7 +2140,10 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 	local_set(&cpu_buffer->entries, entries);
+ 	local_set(&cpu_buffer->entries_bytes, entry_bytes);
+ 
+-	pr_info("Ring buffer meta [%d] is from previous boot!\n", cpu_buffer->cpu);
++	pr_info("Ring buffer meta [%d] is from previous boot!", cpu_buffer->cpu);
++	if (discarded)
++		pr_cont(" (%d pages discarded)", discarded);
++	pr_cont("\n");
+ 	return;
+ 
+  invalid:
+@@ -3303,12 +3329,6 @@ rb_iter_head_event(struct ring_buffer_iter *iter)
+ 	return NULL;
+ }
+ 
+-/* Size is determined by what has been committed */
+-static __always_inline unsigned rb_page_size(struct buffer_page *bpage)
+-{
+-	return rb_page_commit(bpage) & ~RB_MISSED_MASK;
+-}
+-
+ static __always_inline unsigned
+ rb_commit_index(struct ring_buffer_per_cpu *cpu_buffer)
+ {
+@@ -5480,6 +5500,7 @@ rb_update_iter_read_stamp(struct ring_buffer_iter *iter,
+ static struct buffer_page *
+ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
+ {
++	int max_loops = cpu_buffer->ring_meta ? cpu_buffer->nr_pages : 3;
+ 	struct buffer_page *reader = NULL;
+ 	unsigned long overwrite;
+ 	unsigned long flags;
+@@ -5492,11 +5513,14 @@ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
+  again:
+ 	/*
+ 	 * This should normally only loop twice. But because the
+-	 * start of the reader inserts an empty page, it causes
+-	 * a case where we will loop three times. There should be no
+-	 * reason to loop four times (that I know of).
++	 * start of the reader inserts an empty page, it causes a
++	 * case where we will loop three times. There should be no
++	 * reason to loop four times unless the ring buffer is a
++	 * recovered persistent ring buffer. For persistent ring buffers,
++	 * invalid pages are reset during recovery, so there may be more
++	 * than 3 contiguous pages can be empty, but less than nr_pages.
+ 	 */
+-	if (RB_WARN_ON(cpu_buffer, ++nr_loops > 3)) {
++	if (RB_WARN_ON(cpu_buffer, ++nr_loops > max_loops)) {
+ 		reader = NULL;
+ 		goto out;
+ 	}
+@@ -5786,12 +5810,14 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct ring_buffer_event *event;
+ 	int nr_loops = 0;
++	int max_loops;
+ 
+ 	if (ts)
+ 		*ts = 0;
+ 
+ 	cpu_buffer = iter->cpu_buffer;
+ 	buffer = cpu_buffer->buffer;
++	max_loops = cpu_buffer->ring_meta ? cpu_buffer->nr_pages : 3;
+ 
+ 	/*
+ 	 * Check if someone performed a consuming read to the buffer
+@@ -5814,7 +5840,7 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
+ 	 * the ring buffer with an active write as the consumer is.
+ 	 * Do not warn if the three failures is reached.
+ 	 */
+-	if (++nr_loops > 3)
++	if (++nr_loops > max_loops)
+ 		return NULL;
+ 
+ 	if (rb_per_cpu_empty(cpu_buffer))
 -- 
 2.53.0
 
