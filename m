@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C1F3D5241;
-	Tue, 13 Oct 2026 11:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CBF3AE18C;
+	Tue, 13 Oct 2026 11:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892549; cv=none; b=AJ+DvI/4jrXkawgMpce1YbP5YhQ7h+9tgaG7zXddJ+IOMtopNW2XTPFUOlqotBpGjdmfuwcubbcfNUo46BOQhMb9BESnT6CC+wBz4xi7AxFKKcN/wg+OcxxjglUNyuRp6F+T3tXQXeZyAoLnAq8CKF08xCwWIWm1cEkdsxICaTA=
+	t=1791892552; cv=none; b=OxS4fPDFo004xlUHLOqokSTsPUGKvKwmO6WOKeubUMFj5YTHnvYFgPKYZqS+dxPQcW4iq7PsiR0fic/QEaR0CpZmqABGk5hNyfyZ5abSpTXPejLVKA7ZJ+DlTmEbmYIdOYGlOwI7RX6h8CBqr3GuTVOGNYh/VVcqegTn43kZWq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892549; c=relaxed/simple;
-	bh=kMYBsJAHQk6CymMifx7o5npo1h0wSNMIRKysCG1abac=;
+	s=arc-20240116; t=1791892552; c=relaxed/simple;
+	bh=F4Ez+Sc1YCYvFvZDjC9tlF5i2tdORD+HPzBFOH3Eaic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+iIUwcLbcNnAVcm+M6ADWcrRK6D8yUcwa7/4chtgf813U8bMiivnvMDgrxdOUEgGTW+uQRcmk5KmGRirNjLbY26XIK++SdncDysXVtPdY53yOysVaT28p49YSodDI9VEBlDCZlGCdUXMDPROFzO7sOQch6Gq967zHuNU8bBnt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZ5RbrA+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tkr0/mndOiGnGZM2gosbazfaN69i+/XjNjQuL2+02vp7sowZODAJvjQnNqftrwnZX+ifekCYr2dQKgNxISNVQAi450pyfNvxtqBwGyx9pzprkEE8ISnqHNEMvT62DX485IoZWUeUqtmbECP7aF8PSwgo8nocf6ktJS4HDcVncOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfVprF68; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ5RbrA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAD91F000FF;
-	Tue, 13 Oct 2026 11:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfVprF68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BA91F000FF;
+	Tue, 13 Oct 2026 11:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892548;
-	bh=ZBazoL0FwlJ6vViUPMc/MrJ+FsxQKypF70X2HkNu4UQ=;
+	s=korg; t=1791892551;
+	bh=V3Y4uP013iYM/v4anDdtEluF4iHkAR2jAAdfVBHQqro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZ5RbrA+EyTwMypgqq3qYTx0H5MO1JGbiBbBYI//oBQ4K54/jrTTFKj0Lx25czrSM
-	 HSqCiGFKSaeSnLj0XN3i7pJOwbL7brv/SlCBeLuDCG+/8U4VQsA1/oIBc7e6sW/z3Y
-	 NYgcim5KrRoBicrIs1ndAklRIDfhe9yXBhyI9L3A=
+	b=KfVprF682LP65aKeXjB1tqMk0NMRrhB8jt8rS0Rf58zN0Z1smJG9aiHbfqkiIW+kj
+	 mlrfwCzQHFt7vHZ7IsqI4d7SimRjLCQd5pqt3Bns9wAvElisrjGS5eszLViuCJqRop
+	 cvqMsUiihkwgHEGobpnAOmnZwDub1GX0KDLlEMa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 173/281] namespace: keep the lock on a mount that a propagated copy is moved beneath
-Date: Tue, 13 Oct 2026 13:38:09 +0200
-Message-ID: <20261013112859.361893459@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 209/281] spi: spi-nxp-fspi: exit stop mode before waiting for DLL lock
+Date: Tue, 13 Oct 2026 13:38:45 +0200
+Message-ID: <20261013112900.234358702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -49,76 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit d74d66aa708ccf2bc0b1e265a83fed0f2308d5c4 upstream.
+[ Upstream commit 94b6df050433875f493fb8298b58d7b0dc32eb9c ]
 
-attach_recursive_mnt() transfers MNT_LOCKED from the top mount to the
-mount that is moved beneath it with MOVE_MOUNT_BENEATH. This allows the
-owner of a user namespace to replace its locked /proc or its root. The
-mount beneath takes on the job of covering the underlying mountpoint
-allowing the top mount to be unmounted.
+For 8D-8D-8D (octal DTR) mode the FlexSPI samples read data using
+MCR0[RXCLKSRC] = 3 (flash-memory-provided read strobe on the DQS pad),
+which requires the DLL to be locked. Per the i.MX95 Reference Manual
+(FlexSPI chapter, "DLL configuration for sampling"), when the serial
+root clock is above 100 MHz the DLL is enabled (DLLxCR[DLLEN] = 1,
+OVRDEN = 0) and software must then wait for STS2[xREFLOCK] and
+STS2[xSLVLOCK] to be asserted before starting a read or write. This DLL
+lock is relative to the serial root clock.
 
-Consider two mount namespaces:
+While the module is in stop mode (MCR0[MDIS] = 1) the AHB and serial
+clocks are gated off internally, so the serial root clock the DLL locks
+against is not running. nxp_fspi_dll_calibration() both programs DLLxCR
+and then polls STS2 for lock. When it runs entirely in stop mode the
+STS2 REF/SLV lock bits never assert (observed as "DLL lock failed" with
+STS2 = 0).
 
-(H) The host H has a shared mount P with a secret in P/d
-(Z) Z is a user namespace made from M. Its copy of P receives
-    propagation from the host's P and its copy of M's cover on P/d is
-    locked Z's owner must not get to see P/d.
+The MCR0 bit fields (RXCLKSRC) and the serial root clock rate still have
+to be reconfigured in stop mode, so keep entering stop mode around that.
+Only move the exit from stop mode (clearing MCR0[MDIS]) ahead of the DLL
+calibration/override step, so that the serial root clock is running when
+the DLL is calibrated and STS2 can report lock.
 
-Now (H) mounts X on P/d. This propagates into (Z). The copy of X lands
-beneath (Z)'s locked cover. The locked property is transfered from (Z)'s
-cover to the copy of X propagated beneath it. The cover is now unlocked.
-
-Now (H) unmounts X again. The copy of X in (Z) gets unmounted and the
-covering mount is left unlocked on top of P/d. (Z) can now unmount it:
-
-    Z: umount2(P/d)             = EINVAL            /* the cover is locked */
-    H: mount X on P/d, umount X                     /* both propagate into Z /*
-    Z: umount2(P/d)             = 0                 /* the cover is now unlocked */
-    Z: read P/d/secret          = "covered-by-root" /* secret revealed */
-
-So only transfer the locked property to the mount beneath for mounts the
-caller has placed. A propagated copy that lands beneath a locked mount
-is locked as well so that the mount at the bottom of the stack carries a
-lock the way every check expects. The mount on top of it remains locked
-to ensure that it keeps covering even if the propagated mount is
-unmounted again.
-
-Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
-Cc: stable@vger.kernel.org # v7.1+
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-9-dd44b89d44ce@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b4bde5cfff8e ("spi: spi-nxp-fspi: enter stop mode before reconfiguring MCR0 and DLL")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://patch.msgid.link/20260928-fspi-fix-v1-1-a0f9288cd5c8@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2697,15 +2697,17 @@ static int attach_recursive_mnt(struct m
- 			/*
- 			 * If @q was locked it was meant to hide
- 			 * whatever was under it. Let @child take over
--			 * that job and lock it, then we can unlock @q.
--			 * That'll allow another namespace to shed @q
--			 * and reveal @child. Clearly, that mounter
--			 * consented to this by not severing the mount
--			 * relationship. Otherwise, what's the point.
-+			 * that job and lock it. If @child is the mount
-+			 * the caller placed we can then unlock @q:
-+			 * nothing another namespace does removes it
-+			 * again. A propagated copy goes away when the
-+			 * mounter of the original unmounts it, so @q
-+			 * keeps its lock.
- 			 */
- 			if (IS_MNT_LOCKED(q)) {
- 				child->mnt.mnt_flags |= MNT_LOCKED;
--				q->mnt.mnt_flags &= ~MNT_LOCKED;
-+				if (child == source_mnt)
-+					q->mnt.mnt_flags &= ~MNT_LOCKED;
- 			}
- 			mnt_change_mountpoint(r, mp, q);
- 		}
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index 4425132432ec8..e0c88e9f81833 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -898,10 +898,10 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+ 	dev_dbg(f->dev, "Target device [CS:%x] selected\n", spi_get_chipselect(spi, 0));
+ 
+ 	/*
+-	 * Per the FlexSPI reference manual (initialization sequence), MCR0 and
+-	 * the DLL control registers should be configured while the module is in
+-	 * stop mode (MCR0[MDIS] = 1). Enter stop mode before reconfiguring the
+-	 * RX sample clock source and the DLL, then exit stop mode afterwards.
++	 * Per the FlexSPI reference manual (initialization sequence), MCR0
++	 * should be configured while the module is in stop mode (MCR0[MDIS] = 1).
++	 * Enter stop mode before reconfiguring the RX sample clock source, then
++	 * exit stop mode afterwards.
+ 	 */
+ 	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
+ 	fspi_writel(f, reg | FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
+@@ -936,6 +936,16 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * Exit stop mode before running the DLL calibration. The DLL
++	 * reference clock is derived from the module clock domain, which is
++	 * gated while MCR0[MDIS] = 1. Calibrating the DLL in stop mode leaves
++	 * the STS2 lock bits stuck at 0 (the DLL never runs), so clear MDIS
++	 * first and let the module and reference clock run.
++	 */
++	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
++	fspi_writel(f, reg & ~FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
++
+ 	/*
+ 	 * If clock rate > 100MHz, then switch from DLL override mode to
+ 	 * DLL calibration mode.
+@@ -945,10 +955,6 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+ 	else
+ 		nxp_fspi_dll_override(f);
+ 
+-	/* Exit stop mode now that MCR0 and the DLL have been reconfigured. */
+-	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
+-	fspi_writel(f, reg & ~FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
+-
+ 	f->pre_op_rate = op->max_freq;
+ 
+ 	f->selected = spi_get_chipselect(spi, 0);
+-- 
+2.53.0
+
 
 
