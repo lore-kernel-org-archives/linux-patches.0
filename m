@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C884F30F2;
-	Tue, 13 Oct 2026 11:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF67A4F68A9;
+	Tue, 13 Oct 2026 11:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892702; cv=none; b=iDyf1nmGFBqUBUxtG4/X2JB/mv1cHFbTK9a4QBfkN7ZamNjPAOhPJwWyfto2/cvAAegaEZXhD60QgbNiAJ50WqLjqAwCHZsFzgDGrhPia/tFWPMHh71yzTpZ3dzX2N96HlrFtoa18SE0Mj1Q9zIxDqKzhOeCsIxp06rK9vT8Zhs=
+	t=1791892705; cv=none; b=GqKVp7pY5nRs9l/ZaUz6uHsMSBMiwyFOCxfEQTSGgahZ/IayWKjUbMGYndMj1v8z4I6aNPsTNMJ4VTX7RmXy+3fOUy+Fcx9hUwz1LC+5rfkhJMiVlcLaCWBSy5RFW9wJlGPEPYrhEi8i2fSNLB1B4aLKRZagsSAL2sM/PoT5Rwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892702; c=relaxed/simple;
-	bh=cWui0Jz8hbuBE7+v0va1ZrZgdX9aKMFvOduSHx55D2M=;
+	s=arc-20240116; t=1791892705; c=relaxed/simple;
+	bh=ffRFtOeoz2x9iT//dRKuQr1HfXk/M22GXD42ZkPlwWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilvBmMl8nR7IrJjo7g0OV6zTO6gtYRavrXKWEGNnKpodmlMDvjxHUyqGn83a57tqmoDKX8mBVl/ozMO7uMQmkv0w4cEDaE39ehk1GZ8LZ7cV0ArnTxos0nTR19/MzXmEU11RXfYZ83xyKCgaloaDq/E79E799zrsJ5S+015KHzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdGZgHl7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ajsvjw78pidvFn0iUTCsXodBTDLItvSpDA6jHgNGq7W82zUFNrMhFUD5ck9KLiYecgvCE3CutP3aD9MkqT8M3Gf+dc1p6J/T00wFCm/txpBUpgfzArhOzhYgqiJo9m+KYSNmACUqqIUobgicz+dv+rTIYPECtTD0PcDne+fG9DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WS+kjYkY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdGZgHl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D911F00893;
-	Tue, 13 Oct 2026 11:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS+kjYkY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D4A1F000FF;
+	Tue, 13 Oct 2026 11:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892701;
-	bh=uaFv05PUDj19youPSsMsiuSGxTgQOd5QIuRU3kRxEgY=;
+	s=korg; t=1791892704;
+	bh=jRVNNHSJrPX+3llSt8b1VL/u0dc1GOP9KtR3qEIs4e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RdGZgHl7B7wAY6KTxCssinL2CPAYJhc5TkjxYjyNEQ9ApbPPiGzFcHw0JaqQy10wG
-	 mysP4wVflQY4HP1MaiisIp9PgVbzi+rw+aA752+v2mT8UZRzS9q1u3y1yYRJbqqdch
-	 uN35zVfVBWj3UjjPmyr5Fg59y9RmXwnRTZWeVKKk=
+	b=WS+kjYkYi9vwh0w8BWklXQXsCsJRMFjcpzMJe92MBFrTC7/4JSy7o/mYx4JEk0Zt2
+	 omg8eI+ETdByv38eWKfa3RCPCMLIAP25KGvaeumIcq10/wODYCLtMDcCn1wuuhIOku
+	 kJAzFwdrzS4mFyyvWr4CjXP0K2uMQSBoXc1FnHqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
-	Paul Walmsley <pjw@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Joe Damato <joe@dama.to>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 259/281] riscv: ptrace: Zero-initialize regset buffers before copyin
-Date: Tue, 13 Oct 2026 13:39:35 +0200
-Message-ID: <20261013112901.428055072@linuxfoundation.org>
+Subject: [PATCH 7.2 260/281] bnxt_en: Add bnxt_clear_bars() helper
+Date: Tue, 13 Oct 2026 13:39:36 +0200
+Message-ID: <20261013112901.451521823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,47 +56,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 59052a88ba5fe4a7bb34b3a0a42aa5d453d3bb97 ]
+[ Upstream commit 8f5d59b9cfa69beab3b52cca621bb301c5af98aa ]
 
-user_regset_copyin() only copies `count` bytes, so a PTRACE_SETREGSET
-request with a short iov_len leaves the rest of the stack buffer
-uninitialized. In riscv_vr_set() that garbage is validated and copied
-into the target's vstate, and in riscv_cfi_set() it can be stored as
-the target's shadow stack pointer. Zero both buffers, as the get path
-already does.
+In bnxt_io_slot_reset(), we clear the 6 BAR registers.  Add a helper
+function to do that.  The helper will be used again in the next patch.
 
-Fixes: 9300f0043974 ("RISC-V: Add ptrace support for vectors")
-Fixes: 2af7c9cf021c ("riscv/ptrace: expose riscv CFI status and state via ptrace and in core files")
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Link: https://patch.msgid.link/20260826115711.86861-1-min_halo@163.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20261005204246.3822563-2-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 386f887c8290 ("bnxt_en: Fix driver init in kdump kernel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/ptrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
-index 566856e42f658..a0055743d3ba5 100644
---- a/arch/riscv/kernel/ptrace.c
-+++ b/arch/riscv/kernel/ptrace.c
-@@ -230,6 +230,7 @@ static int riscv_vr_set(struct task_struct *target,
- 		return -ENODATA;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index cad3bbe1b12f0..da35fec65d1b0 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -17066,6 +17066,14 @@ void bnxt_print_device_info(struct bnxt *bp)
+ 	pcie_print_link_status(bp->pdev);
+ }
  
- 	/* Copy rest of the vstate except datap */
-+	memset(&ptrace_vstate, 0, sizeof(ptrace_vstate));
- 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ptrace_vstate, 0,
- 				 sizeof(struct __riscv_v_regset_state));
- 	if (unlikely(ret))
-@@ -345,6 +346,7 @@ static int riscv_cfi_set(struct task_struct *target,
++static void bnxt_clear_bars(struct pci_dev *pdev)
++{
++	int off;
++
++	for (off = PCI_BASE_ADDRESS_0; off <= PCI_BASE_ADDRESS_5; off += 4)
++		pci_write_config_dword(pdev, off, 0);
++}
++
+ static int bnxt_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	struct bnxt_hw_resc *hw_resc;
+@@ -17547,7 +17555,6 @@ static pci_ers_result_t bnxt_io_slot_reset(struct pci_dev *pdev)
+ 	struct bnxt *bp = netdev_priv(netdev);
+ 	int retry = 0;
+ 	int err = 0;
+-	int off;
  
- 	regs = task_pt_regs(target);
+ 	netdev_info(bp->dev, "PCI Slot Reset\n");
  
-+	memset(&user_cfi, 0, sizeof(user_cfi));
- 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &user_cfi, 0, -1);
- 	if (ret)
- 		return ret;
+@@ -17576,11 +17583,8 @@ static pci_ers_result_t bnxt_io_slot_reset(struct pci_dev *pdev)
+ 		 * write the BARs to 0 to force restore, in case of fatal error.
+ 		 */
+ 		if (test_and_clear_bit(BNXT_STATE_PCI_CHANNEL_IO_FROZEN,
+-				       &bp->state)) {
+-			for (off = PCI_BASE_ADDRESS_0;
+-			     off <= PCI_BASE_ADDRESS_5; off += 4)
+-				pci_write_config_dword(bp->pdev, off, 0);
+-		}
++				       &bp->state))
++			bnxt_clear_bars(pdev);
+ 		pci_restore_state(pdev);
+ 
+ 		bnxt_inv_fw_health_reg(bp);
 -- 
 2.53.0
 
