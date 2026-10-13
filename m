@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831114F85BC;
-	Tue, 13 Oct 2026 12:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144244EC65A;
+	Tue, 13 Oct 2026 12:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893755; cv=none; b=LpmUwA6UTpyqbZcUYyTCswipcf6FeENpC37WH84oqGVZWSrujGGneooRSsftcvMLg++hjEOjTRzN5FqVBlrZp/ZRCeff8gOIZBP4lYh3b3227ESBh/cdlYXIpO5uUvWyO9sUsIRJ4ZqT2EABfi07+IIxs2ZWtfBNlpaoYpxuIF4=
+	t=1791893757; cv=none; b=jdtUkiFok9IQeo6aiy80x6Enx/poeqwQsMtj+7sR1Q2n50VL+3+rT6Nq/EbS6YtD17UaQg/rW1ANX9WHOSRkwl85/LHuEAYdR2AFLlvwUkg1v6nu1FBLwxD8BKolCLlh8Lt+SELdRyGNVWZCxgOO9tYpxkcUHu4equAyfDaDl3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893755; c=relaxed/simple;
-	bh=rIqAVRuh7PhJ77p2k0DN+27KcLfKKiixYYKOxBSVEDE=;
+	s=arc-20240116; t=1791893757; c=relaxed/simple;
+	bh=BTXIo0y3z1opYQCHu+wjZnqbEGig07wzP9Bm2aApMwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+UukwC9i13BCvB4+oOYHnrF2rUw9e97rCFlLOOcSUXCaClTN46MYxcuoXgpBWSYJh9QCXeaBRWV3PDbXi17KDo0LPkYquUmFKePdhvTjakuwZOR0q644Q1Hn46WBbUMgKAjUIHUN7PktN1qVMPkXmPkbkD3c5fwAlT9tsxhOdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtdXqC51; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u7MRQKlW76UCRKKCX1xt87rBIIMqgctCR8XgYTAGzoAEop9Rm9+lD+VZRLUegjeGWsy7agf4J6kXnPzqJxUwoyyNSWzryMYmQrcgVHpgXdO+pFC1jJubgMmuKv+iWQIlmg9fOka7BW0WbVzxzm5a1wURlPw2Ia8wLQ38cWB6rPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtCLC0ps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtdXqC51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680E91F000FF;
-	Tue, 13 Oct 2026 12:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtCLC0ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABBB1F000FF;
+	Tue, 13 Oct 2026 12:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893753;
-	bh=jjjMRuXfCsaPYFJk5vVQlaZy1IitSL1hmFUp60vAEmo=;
+	s=korg; t=1791893756;
+	bh=N29IsMLSdsS2QlHd7pDsM6GI9JOIG0pMc/MQjLAQr0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TtdXqC5121EE0JtbToDbk7BivqPmQZDlRdONfr6jFqSzd5ZnyvaADkGne6yeUnaXE
-	 KaeCMwTR4heH2H940aNs3t0Nmt+cHfHUBwY04z40H4HrtTgcUXFBKuKi1/7wvzPWGs
-	 eOe0c+LP2v3SsIkn7OMX5QSz4UTG3TxGOx3NPbmU=
+	b=WtCLC0psy0ZGDFTZSo/d/DVcvNHb/KzQqgHQHwOp3WnFhvaFoOvYL0MI/koqo+IGG
+	 TDIy57qtZ3EU9rwl1LR9io3MM3+ChUat1d0WBIR5jQRsqWOHW0gMhAoPym35HFxnnN
+	 pXOpmZynMunigp7PJPs9fy7qKywulNINhK5IVr3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 330/621] xsk: reclaim invalid Tx descriptors in ZC batch path
-Date: Tue, 13 Oct 2026 13:35:25 +0200
-Message-ID: <20261013112928.684766888@linuxfoundation.org>
+Subject: [PATCH 6.18 331/621] nexthop: avoid unlocked f6i_list walk in nh_rt_cache_flush
+Date: Tue, 13 Oct 2026 13:35:26 +0200
+Message-ID: <20261013112928.707643964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,514 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 72f2b4516faf55d4dfac2414649d3cffa5fd2c5e ]
+[ Upstream commit 4787a6d2629b4e8c0b6bacab1f75c1660eca44d9 ]
 
-The zero-copy Tx batch parser stops when it encounters an invalid
-descriptor. If this happens after one or more continuation descriptors,
-the Tx consumer can be advanced past fragments that are neither submitted
-to the driver nor returned to userspace through the completion ring.
+nh_rt_cache_flush() walks nh->f6i_list during an RTNL-serialized nexthop
+replace without holding nh->lock, racing the unlocked IPv6 route
+add/delete that mutate the list under nh->lock and free fib6_info
+entries (nh_rt_cache_flush() is inlined into rtm_new_nexthop()):
 
-A similar problem occurs when a packet exceeds xdp_zc_max_segs. The
-descriptors consumed up to the limit are released without completion, and
-the remaining continuation descriptors can subsequently be interpreted
-as the beginning of another packet.
+  BUG: KASAN: slab-use-after-free in nh_rt_cache_flush (net/ipv4/nexthop.c:2243)
+  Read of size 8 at addr ffff888012953e18 by task exploit/146
+   nh_rt_cache_flush (net/ipv4/nexthop.c:2243)
+   replace_nexthop (net/ipv4/nexthop.c:2610)
+   rtm_new_nexthop (net/ipv4/nexthop.c:3323)
+   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
 
-Parse Tx batches in packet units and distinguish descriptors belonging to
-complete valid packets from descriptors consumed while draining an
-invalid or oversized packet. Return the former to the driver and append
-the latter to the CQ address area so userspace can reclaim their UMEM
-frames.
+Unlike the other f6i_list walks, this one bumps each route's sernum via
+fib6_update_sernum_upto_root(), which needs tb6_lock; taking nh->lock
+around it would invert the established tb6_lock -> nh->lock order and
+deadlock. As the only purpose is to invalidate cached dsts, bump the
+IPv6 sernum for the whole netns with rt_genid_bump_ipv6() instead,
+mirroring the rt_cache_flush() already done for IPv4 just above.
 
-Treat a standalone invalid descriptor as a one-descriptor reclaim-only
-packet. Advancing the Tx-ring consumer releases the ring slot, but does
-not by itself return ownership of the referenced UMEM frame to userspace.
-
-Once draining starts, continue until the packet's end-of-packet
-descriptor is consumed. Preserve the drain state on the socket when EOP
-has not yet been supplied, so draining can continue during a later call.
-Leave incomplete but otherwise valid packets on the Tx ring.
-
-Shared-UMEM pools using multi-buffer Tx also need packet-framed parsing.
-Walk their Tx sockets one packet at a time, preserving the existing
-per-socket fairness scheme, instead of using the legacy one-descriptor
-fallback. Keep that fallback for shared pools that do not use
-multi-buffer Tx. Since the drain state is maintained per socket and both
-the singular and shared paths can resume an interrupted drain, changing
-the socket list from singular to shared requires no special bind-time
-transition.
-
-CQ entries are positional, and drivers may complete only part of the Tx
-work returned by xsk_tx_peek_release_desc_batch(). Therefore, reclaim-only
-entries cannot be published immediately when earlier driver-visible
-descriptors are still outstanding.
-
-Track the number of driver-visible CQ entries preceding the reclaim
-entries. Let xsk_tx_completed() publish partial hardware Tx completions,
-and publish the reclaim entries only after every earlier Tx descriptor
-has completed. Complete a reclaim-only batch immediately when there is no
-driver-visible work in front of it, and prevent another Tx batch from
-being appended while reclaim entries remain pending.
-
-Also cap batch processing by the size of the pool's temporary descriptor
-array, as Tx rings belonging to sockets sharing a UMEM may have different
-sizes.
-
-This ensures that every invalid Tx descriptor consumed by the ZC batch
-path is either submitted to the driver as part of a valid packet or
-returned to userspace without violating CQ completion ordering.
-
-Reviewed-by: Jason Xing <kernelxing@tencent.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Link: https://patch.msgid.link/20260719135609.147823-5-maciej.fijalkowski@intel.com
+Fixes: 081efd18326e ("ipv6: Protect nh->f6i_list with spinlock and flag.")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260722002951.2614721-2-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/af_xdp.rst |  54 ++++----
- include/net/xsk_buff_pool.h         |   3 +
- net/xdp/xsk.c                       | 187 +++++++++++++++++++++++++---
- net/xdp/xsk_buff_pool.c             |   1 +
- net/xdp/xsk_queue.h                 |  65 +++++++---
- 5 files changed, 248 insertions(+), 62 deletions(-)
+ net/ipv4/nexthop.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
-index 50d92084a49c6..cc3f0d16b28fb 100644
---- a/Documentation/networking/af_xdp.rst
-+++ b/Documentation/networking/af_xdp.rst
-@@ -43,12 +43,13 @@ UMEM also has two rings: the FILL ring and the COMPLETION ring. The
- FILL ring is used by the application to send down addr for the kernel
- to fill in with RX packet data. References to these frames will then
- appear in the RX ring once each packet has been received. The
--COMPLETION ring, on the other hand, contains frame addr that the
--kernel has transmitted completely and can now be used again by user
--space, for either TX or RX. Thus, the frame addrs appearing in the
--COMPLETION ring are addrs that were previously transmitted using the
--TX ring. In summary, the RX and FILL rings are used for the RX path
--and the TX and COMPLETION rings are used for the TX path.
-+COMPLETION ring, on the other hand, contains frame addresses from Tx
-+descriptors that the kernel has finished processing and that can now be
-+used again by user space, for either Tx or Rx. This includes frames whose
-+transmission has completed as well as frames referenced by invalid Tx
-+descriptors rejected by the kernel. A completion therefore returns
-+ownership of a frame to user space, but does not by itself guarantee that
-+the packet was successfully transmitted.
- 
- The socket is then finally bound with a bind() call to a device and a
- specific queue id on that device, and it is not until bind is
-@@ -169,14 +170,15 @@ chunks mode, then the incoming addr will be left untouched.
- UMEM Completion Ring
- ~~~~~~~~~~~~~~~~~~~~
- 
--The COMPLETION Ring is used transfer ownership of UMEM frames from
-+The COMPLETION Ring is used to transfer ownership of UMEM frames from
- kernel-space to user-space. Just like the FILL ring, UMEM indices are
--used.
--
--Frames passed from the kernel to user-space are frames that has been
--sent (TX ring) and can be used by user-space again.
--
--The user application consumes UMEM addrs from this ring.
-+used. Frames passed from the kernel to user-space are frames referenced
-+by Tx descriptors that the kernel has finished processing and can be
-+used by user-space again. This includes both frames whose transmission
-+has completed and frames referenced by invalid Tx descriptors that were
-+rejected and reclaimed by the kernel. A completion entry does not
-+guarantee successful packet transmission. The user application consumes
-+UMEM addrs from this ring.
- 
- 
- RX Ring
-@@ -504,21 +506,25 @@ will be treated as an invalid descriptor.
- These are the semantics for producing packets onto AF_XDP Tx ring
- consisting of multiple frames:
- 
--* When an invalid descriptor is found, all the other
--  descriptors/frames of this packet are marked as invalid and not
--  completed. The next descriptor is treated as the start of a new
--  packet, even if this was not the intent (because we cannot guess
--  the intent). As before, if your program is producing invalid
--  descriptors you have a bug that must be fixed.
-+* When an invalid descriptor is found, the complete packet is treated as
-+  invalid. The kernel consumes descriptors through the descriptor marking
-+  the end of the packet and returns all their frame addresses through the
-+  COMPLETION ring. A standalone invalid descriptor is treated as a
-+  one-descriptor invalid packet. The descriptor following the end of the
-+  invalid packet is treated as the start of a new packet. As before, if
-+  your program is producing invalid descriptors you have a bug that must
-+  be fixed. Rejected descriptors are reported in the ``tx_invalid_descs``
-+  statistic.
- 
- * Zero length descriptors are treated as invalid descriptors.
- 
- * For copy mode, the maximum supported number of frames in a packet is
--  equal to CONFIG_MAX_SKB_FRAGS + 1. If it is exceeded, all
--  descriptors accumulated so far are dropped and treated as
--  invalid. To produce an application that will work on any system
--  regardless of this config setting, limit the number of frags to 18,
--  as the minimum value of the config is 17.
-+  equal to CONFIG_MAX_SKB_FRAGS + 1. If it is exceeded, all descriptors
-+  through the end of the oversized packet are consumed, treated as invalid,
-+  and their frame addresses are returned through the COMPLETION ring. To
-+  produce an application that will work on any system regardless of this
-+  config setting, limit the number of frags to 18, as the minimum value of
-+  the config is 17.
- 
- * For zero-copy mode, the limit is up to what the NIC HW
-   supports. Usually at least five on the NICs we have checked. We
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index a5de5a9cb5ac4..a461bb63761b7 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -78,6 +78,9 @@ struct xsk_buff_pool {
- 	u32 chunk_size;
- 	u32 chunk_shift;
- 	u32 frame_len;
-+	u32 tx_descs_nentries;
-+	u32 reclaim_descs;
-+	u32 tx_zc_pending_descs;
- 	u32 xdp_zc_max_segs;
- 	u8 tx_metadata_len; /* inherited from umem */
- 	u8 cached_need_wakeup;
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 5a0b156069da1..68194711dded0 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -454,6 +454,23 @@ void __xsk_map_flush(struct list_head *flush_list)
- 
- void xsk_tx_completed(struct xsk_buff_pool *pool, u32 nb_entries)
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 66d5c996866bf..7adec5cc263e4 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2219,15 +2219,18 @@ static void remove_nexthop(struct net *net, struct nexthop *nh,
+ static void nh_rt_cache_flush(struct net *net, struct nexthop *nh,
+ 			      struct nexthop *replaced_nh)
  {
-+	u32 reclaim_descs = READ_ONCE(pool->reclaim_descs);
-+
-+	if (unlikely(reclaim_descs)) {
-+		u32 pending_descs = READ_ONCE(pool->tx_zc_pending_descs);
-+
-+		if (nb_entries < pending_descs) {
-+			WRITE_ONCE(pool->tx_zc_pending_descs,
-+				   pending_descs - nb_entries);
-+			xskq_prod_submit_n(pool->cq, nb_entries);
-+			return;
-+		}
-+
-+		WRITE_ONCE(pool->tx_zc_pending_descs, 0);
-+		nb_entries += reclaim_descs;
-+		WRITE_ONCE(pool->reclaim_descs, 0);
-+	}
-+
- 	xskq_prod_submit_n(pool->cq, nb_entries);
- }
- EXPORT_SYMBOL(xsk_tx_completed);
-@@ -529,24 +546,157 @@ static u32 xsk_tx_peek_release_fallback(struct xsk_buff_pool *pool, u32 max_entr
- 	return nb_pkts;
- }
+-	struct fib6_info *f6i;
+ 	struct nh_group *nhg;
++	bool have_f6i;
+ 	int i;
  
-+static void xsk_tx_commit_batch(struct xsk_buff_pool *pool,
-+				struct xsk_tx_batch *batch)
-+{
-+	u32 nb_descs = xsk_tx_batch_cq_descs(batch);
-+	u32 cq_cached_prod;
-+
-+	if (!nb_descs)
-+		return;
-+
-+	cq_cached_prod = pool->cq->cached_prod;
-+	xskq_prod_write_addr_batch(pool->cq, pool->tx_descs, nb_descs);
-+
-+	if (unlikely(batch->reclaim_descs)) {
-+		u32 cq_pending_descs;
-+
-+		/* CQ is positional. Descriptors already written but not
-+		 * submitted must complete before any reclaim-only descriptors
-+		 * appended below.
-+		 */
-+		cq_pending_descs = cq_cached_prod - xskq_get_prod(pool->cq);
-+
-+		WRITE_ONCE(pool->tx_zc_pending_descs,
-+			   batch->tx_descs + cq_pending_descs);
-+		WRITE_ONCE(pool->reclaim_descs, batch->reclaim_descs);
-+		if (unlikely(!pool->tx_zc_pending_descs))
-+			xsk_tx_completed(pool, 0);
-+	}
-+}
-+
-+static struct xsk_tx_batch
-+__xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, struct xdp_sock *xs,
-+				 struct xdp_desc *descs, u32 max_descs)
-+{
-+	struct xsk_tx_batch batch = {};
-+	u32 entries;
-+
-+	entries = xskq_cons_nb_entries(xs->tx, max_descs);
-+	if (!entries)
-+		return batch;
-+
-+	batch = xskq_cons_read_desc_batch(xs, pool, descs, max_descs);
-+	if (!xsk_tx_batch_cq_descs(&batch)) {
-+		xs->tx->queue_empty_descs++;
-+	} else {
-+		__xskq_cons_release(xs->tx);
-+		xs->sk.sk_write_space(&xs->sk);
-+	}
-+	return batch;
-+}
-+
-+static struct xsk_tx_batch
-+xsk_tx_peek_release_shared_desc_batch(struct xsk_buff_pool *pool, u32 max_descs)
-+{
-+	u32 cq_descs_before, cq_descs_after;
-+	struct xsk_tx_batch sum_batch = {};
-+	bool budget_exhausted;
-+	u32 per_socket_budget;
-+	struct xdp_sock *xs;
-+
-+	/* The fairness quota must allow one maximum-sized valid packet. */
-+	per_socket_budget = max_t(u32, MAX_PER_SOCKET_BUDGET,
-+				  pool->xdp_zc_max_segs);
-+
-+again:
-+	budget_exhausted = false;
-+	cq_descs_before = xsk_tx_batch_cq_descs(&sum_batch);
-+	list_for_each_entry_rcu(xs, &pool->xsk_tx_list, tx_list) {
-+		u32 budget, budget_left, offset, remaining, used;
-+		struct xsk_tx_batch curr_batch;
-+
-+		/* Once reclaim-only descriptors have been appended to the CQ
-+		 * address area, do not append driver-visible Tx descriptors
-+		 * from another socket after them. xsk_tx_completed() relies on
-+		 * all driver-visible descriptors preceding all reclaim-only
-+		 * descriptors in CQ order.
-+		 */
-+		if (sum_batch.reclaim_descs)
-+			break;
-+
-+		/* be gentle when playing with pool->tx_descs */
-+		offset = xsk_tx_batch_cq_descs(&sum_batch);
-+		if (offset >= max_descs)
-+			break;
-+
-+		if (xs->tx_budget_spent >= per_socket_budget) {
-+			if (xskq_cons_nb_entries(xs->tx, 1))
-+				budget_exhausted = true;
-+			continue;
-+		}
-+
-+		budget_left = per_socket_budget - xs->tx_budget_spent;
-+		remaining = max_descs - offset;
-+		budget = min(remaining, budget_left);
-+
-+		curr_batch = __xsk_tx_peek_release_desc_batch(pool, xs,
-+							      pool->tx_descs + offset,
-+							      budget);
-+		used = xsk_tx_batch_cq_descs(&curr_batch);
-+		if (!used) {
-+			if (curr_batch.budget_limited && budget_left < remaining)
-+				budget_exhausted = true;
-+			continue;
-+		}
-+
-+		xs->tx_budget_spent += used;
-+		sum_batch.tx_descs += curr_batch.tx_descs;
-+		sum_batch.reclaim_descs = curr_batch.reclaim_descs;
-+	}
-+
-+	cq_descs_after = xsk_tx_batch_cq_descs(&sum_batch);
-+
-+	if (sum_batch.reclaim_descs || cq_descs_after >= max_descs)
-+		return sum_batch;
-+
-+	/* Continue filling the batch while this pass made progress */
-+	if (cq_descs_before != cq_descs_after)
-+		goto again;
-+
-+	if (!budget_exhausted)
-+		return sum_batch;
-+
-+	list_for_each_entry_rcu(xs, &pool->xsk_tx_list, tx_list)
-+		xs->tx_budget_spent = 0;
-+	goto again;
-+}
-+
- u32 xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, u32 nb_pkts)
- {
-+	struct xsk_tx_batch batch = {};
- 	struct xdp_sock *xs;
-+	bool umem_shared;
+ 	if (!list_empty(&nh->fi_list))
+ 		rt_cache_flush(net);
  
- 	rcu_read_lock();
--	if (!list_is_singular(&pool->xsk_tx_list)) {
--		/* Fallback to the non-batched version */
--		rcu_read_unlock();
--		return xsk_tx_peek_release_fallback(pool, nb_pkts);
--	}
-+	if (unlikely(READ_ONCE(pool->reclaim_descs)))
-+		goto out;
+-	list_for_each_entry(f6i, &nh->f6i_list, nh_list)
+-		ipv6_stub->fib6_update_sernum(net, f6i);
++	spin_lock_bh(&nh->lock);
++	have_f6i = !list_empty(&nh->f6i_list);
++	spin_unlock_bh(&nh->lock);
++	if (have_f6i)
++		rt_genid_bump_ipv6(net);
  
--	xs = list_first_or_null_rcu(&pool->xsk_tx_list, struct xdp_sock, tx_list);
--	if (!xs) {
--		nb_pkts = 0;
-+	xs = list_first_or_null_rcu(&pool->xsk_tx_list, struct xdp_sock,
-+				    tx_list);
-+	if (!xs)
- 		goto out;
--	}
- 
--	nb_pkts = xskq_cons_nb_entries(xs->tx, nb_pkts);
-+	nb_pkts = min(nb_pkts, pool->tx_descs_nentries);
-+	if (!nb_pkts)
-+		goto out;
-+
-+	umem_shared = !list_is_singular(&pool->xsk_tx_list);
-+
-+	if (umem_shared && !(pool->umem->flags & XDP_UMEM_SG_FLAG)) {
-+		rcu_read_unlock();
-+		return xsk_tx_peek_release_fallback(pool, nb_pkts);
-+	}
- 
- 	/* This is the backpressure mechanism for the Tx path. Try to
- 	 * reserve space in the completion queue for all packets, but
-@@ -558,19 +708,16 @@ u32 xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, u32 nb_pkts)
- 	if (!nb_pkts)
- 		goto out;
- 
--	nb_pkts = xskq_cons_read_desc_batch(xs->tx, pool, nb_pkts);
--	if (!nb_pkts) {
--		xs->tx->queue_empty_descs++;
--		goto out;
--	}
--
--	__xskq_cons_release(xs->tx);
--	xskq_prod_write_addr_batch(pool->cq, pool->tx_descs, nb_pkts);
--	xs->sk.sk_write_space(&xs->sk);
-+	batch = umem_shared ?
-+		xsk_tx_peek_release_shared_desc_batch(pool, nb_pkts) :
-+		__xsk_tx_peek_release_desc_batch(pool, xs,
-+						 pool->tx_descs,
-+						 nb_pkts);
-+	xsk_tx_commit_batch(pool, &batch);
- 
- out:
- 	rcu_read_unlock();
--	return nb_pkts;
-+	return batch.tx_descs;
- }
- EXPORT_SYMBOL(xsk_tx_peek_release_desc_batch);
- 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index ef13b1ef778c6..5ee0edaf075c0 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -56,6 +56,7 @@ int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs,
- 	if (!pool->tx_descs)
- 		return -ENOMEM;
- 
-+	pool->tx_descs_nentries = nentries;
- 	return 0;
- }
- 
-diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
-index 4f764b5748d2d..69a48f1f26b85 100644
---- a/net/xdp/xsk_queue.h
-+++ b/net/xdp/xsk_queue.h
-@@ -53,6 +53,17 @@ struct parsed_desc {
- 	u32 valid;
- };
- 
-+struct xsk_tx_batch {
-+	u32 tx_descs;
-+	u32 reclaim_descs;
-+	bool budget_limited;
-+};
-+
-+static inline u32 xsk_tx_batch_cq_descs(const struct xsk_tx_batch *batch)
-+{
-+	return batch->tx_descs + batch->reclaim_descs;
-+}
-+
- /* The structure of the shared state of the rings are a simple
-  * circular buffer, as outlined in
-  * Documentation/core-api/circular-buffers.rst. For the Rx and
-@@ -258,17 +269,18 @@ static inline void parse_desc(struct xsk_queue *q, struct xsk_buff_pool *pool,
- 	parsed->mb = xp_mb_desc(desc);
- }
- 
--static inline
--u32 xskq_cons_read_desc_batch(struct xsk_queue *q, struct xsk_buff_pool *pool,
--			      u32 max)
-+static inline struct xsk_tx_batch
-+xskq_cons_read_desc_batch(struct xdp_sock *xs, struct xsk_buff_pool *pool,
-+			  struct xdp_desc *descs, u32 max)
- {
--	u32 cached_cons = q->cached_cons, nb_entries = 0;
--	struct xdp_desc *descs = pool->tx_descs;
--	u32 total_descs = 0, nr_frags = 0;
-+	bool drain = READ_ONCE(xs->drain_cont);
-+	u32 cached_cons, nb_entries = 0;
-+	struct xsk_tx_batch batch = {};
-+	struct xsk_queue *q = xs->tx;
-+	u32 nr_frags = 0;
-+
-+	cached_cons = q->cached_cons;
- 
--	/* track first entry, if stumble upon *any* invalid descriptor, rewind
--	 * current packet that consists of frags and stop the processing
--	 */
- 	while (cached_cons != q->cached_prod && nb_entries < max) {
- 		struct xdp_rxtx_ring *ring = (struct xdp_rxtx_ring *)q->ring;
- 		u32 idx = cached_cons & q->ring_mask;
-@@ -278,25 +290,42 @@ u32 xskq_cons_read_desc_batch(struct xsk_queue *q, struct xsk_buff_pool *pool,
- 		cached_cons++;
- 		parse_desc(q, pool, &descs[nb_entries], &parsed);
- 		if (unlikely(!parsed.valid))
--			break;
-+			drain = true;
-+
-+		nr_frags++;
-+		nb_entries++;
- 
- 		if (likely(!parsed.mb)) {
--			total_descs += (nr_frags + 1);
--			nr_frags = 0;
--		} else {
--			nr_frags++;
--			if (nr_frags == pool->xdp_zc_max_segs) {
-+			if (unlikely(drain)) {
-+				batch.reclaim_descs = nr_frags;
-+				WRITE_ONCE(xs->drain_cont, false);
- 				nr_frags = 0;
- 				break;
- 			}
-+
-+			batch.tx_descs += nr_frags;
-+			nr_frags = 0;
-+			continue;
-+		}
-+
-+		if (nr_frags == pool->xdp_zc_max_segs)
-+			drain = true;
-+	}
-+
-+	if (nr_frags) {
-+		if (drain) {
-+			batch.reclaim_descs = nr_frags;
-+			WRITE_ONCE(xs->drain_cont, true);
-+		} else {
-+			if (nb_entries == max)
-+				batch.budget_limited = true;
-+			cached_cons -= nr_frags;
- 		}
--		nb_entries++;
- 	}
- 
--	cached_cons -= nr_frags;
- 	/* Release valid plus any invalid entries */
- 	xskq_cons_release_n(q, cached_cons - q->cached_cons);
--	return total_descs;
-+	return batch;
- }
- 
- /* Functions for consumers */
+ 	/* if an IPv6 group was replaced, we have to release all old
+ 	 * dsts to make sure all refcounts are released
 -- 
 2.53.0
 
