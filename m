@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1B34FD290;
-	Tue, 13 Oct 2026 12:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7654FE2CB;
+	Tue, 13 Oct 2026 12:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893229; cv=none; b=JTuwaOjZANCmB8EYQJnzEoxibdAXScxJeYX3bTgNbtgi7Hae8/G+XsPkWKGMB7qpcQD7IVnLbXfDdelBb4T4wSzl23I2T9nhpEWGSTNSCx5qvnkpTrfWCfbO9mtUggZdloy32bHmJ17QFVqNsdC5zVKeOgVrZYRz3Rh6VuHtju4=
+	t=1791893232; cv=none; b=bV7twk9kgbI85Cf/9heXN1uLAMWtuqb7zfUv6X/h6BM/PrLBRX2CzcWdu1jenAbyzZUBv48XuHHcP0VrNpyXa8bud0HGKd0t008UszVfTj/Hl7aHxoXjatBNb6PN7qpGxxHQPExE4790brFHaxM8dF5RMxQEn8VxeQXmW0QE2vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893229; c=relaxed/simple;
-	bh=N/EFyZpWLSVJeNNntO2oLWIZBI1o6zlpS4xJ2+k9agI=;
+	s=arc-20240116; t=1791893232; c=relaxed/simple;
+	bh=z34O5KAGvaP2q1DWLN1tHDIVqJZFYO5bUGrhOFyQhqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2DFJpqYIIvz/D3jkyda+MBSvJdGgl8az+QgrADy6dxCuoeX6/DUPZglWbiiwxsKSEFkiLWsXYjGXMhYFbplWLtAcZswpZgQbFuLxRCrbEZt9yKSKjAyVYAOdh87KFGqBdbRxcLVNJmfbGFnXBp6uGEl8fXJ99u4qXdF0svOWbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fwjdg4zh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U/TF1S9agyu2OHwotvNKh3SMlXQ1DWkX4w1+6EdpMGOi1DSi5poYC8TfXa/eD+U6QkXdIHbglyvK3Nu1AnKL7V/VIOM/ZyjCfHD11Rs4jQrMNwD23CUU3i8LxLvQSgt1w97LFVqGKwa/GS4oVZD7zdgzusTR35oVWy2g3FblEF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCYNWe9t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fwjdg4zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF111F000FF;
-	Tue, 13 Oct 2026 12:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCYNWe9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF8C1F000FF;
+	Tue, 13 Oct 2026 12:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893228;
-	bh=QESofUzkiWoaAYBRvDiv6W+yPUfFRGF+sFfMvrcxr3s=;
+	s=korg; t=1791893231;
+	bh=Vt+TY3+c8eIevTY//oUCxXOseygRy6EjzfjRhfDyZG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fwjdg4zh5pKtorMhEqzg0h5DeC6Hkzc6rVXsic6DRdHGrlWrrli79Y3DNCrxH+QFG
-	 ZsArPPIe6zkbFjT7Op5RxyL/JeEgDHk9rY1KbANQVgnY8CFfHVR/SbcN2g75WIm9oV
-	 e00Nj5hUwETzkpzEgsMZdAlJZ8UNntwxk0xZpj90=
+	b=oCYNWe9txcOuOEu8fEQhRBdKzIN+b7+ZzX27HXHCMTHBvXnQ5umD5hUfdER0TuemB
+	 jy0bYq4cfxjkQp61zfZmgsZxgADMx7e06K1PHrsAzg6LXLWgcOkz7B2OO4N9SoaOkS
+	 yMr7P2usVZaQejvh/HXZcyA+2pr9+UzuaMHqpQ74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 154/621] PCI: endpoint: Add missing NULL check for alloc_workqueue()
-Date: Tue, 13 Oct 2026 13:32:29 +0200
-Message-ID: <20261013112924.509183708@linuxfoundation.org>
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.18 113/621] drm/i915/gt: Unmask interrupts only when ACTIVE is true
+Date: Tue, 13 Oct 2026 13:31:48 +0200
+Message-ID: <20261013112923.535953187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,65 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-[ Upstream commit 03f336a869b3a3f119d3ae52ac9723739c7fb7b6 ]
+commit 5346b1cec6afa4f9b4b49a9f84e3cfef95a3f7bb upstream.
 
-alloc_workqueue() can return NULL on memory allocation failure. Without
-proper error checking, this may lead to a NULL pointer dereference when
-queue_work() is later called with the NULL workqueue pointer in
-epf_ntb_epc_init().
+There is a small race window between intel_rps_boost() reading
+a stale ACTIVE state and queuing rps->work, where ACTIVE may be
+changed via asynchronous calls triggered by wakeref drop.
+This means that rps_work() could be triggered after the GT has
+been parked, so unmasking RPS PM interrupts would happen without
+holding PM wakelock. This sequence of events may be observed
+during live_rc6_ctx_wa() selftest:
 
-Add a NULL check immediately after alloc_workqueue() and return -ENOMEM on
-failure to prevent the driver from loading with an invalid workqueue
-pointer.
+1) live_rc6_ctx_wa()
+   -> intel_engine_pm_put()
+      -> wakeref_put()
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251110040446.2065-1-vulab@iscas.ac.cn
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ASYNC1) wakeref_put() callback
+          -> __engine_park()
+             -> intel_gt_pm_put_async()
+                -> intel_gt_pm_put_async_untracked()
+                   -> intel_wakeref_put_async()
+
+ASYNC2) wakeref_put_async() callback
+          -> __gt_park()
+             -> intel_rps_park()
+                -> intel_rps_clear_active() [clear ACTIVE]
+                WITH INTERRUPTS:
+                -> rps_disable_interrupts()
+                   -> cancel_work_sync(rps->work)
+                   -> rps_reset_interrupts() [rps->pm_iir = 0]
+                WITHOUT INTERRUPTS (TIMER mode):
+                -> rps_stop_timer()
+                   -> cancel_work_sync(rps->work)
+
+2) live_rc6_ctx_wa()
+   -> intel_gt_wait_for_idle()
+      -> intel_gt_retire_requests_timeout()
+         -> dma_fence_wait_timeout()
+            -> ops->wait() [i915_fence_wait()]
+               -> i915_request_wait_timeout()
+                  -> intel_rps_boost()
+                     -> intel_rps_is_active() [check ACTIVE]
+                        [OPEN RACE WINDOW]
+                     -> queue_work(rps->work)
+         -> retire_requests()
+            -> i915_request_retire()
+               -> intel_rps_dec_waiters() [from 1 to 0]
+
+If ASYNC1 and ASYNC2 would execute during [OPEN RACE WINDOW],
+then:
+
+3) rps_work() executes from the workqueue and may satisfy
+   "(!pm_iir && !client_boost)" test (in TIMER mode rps->pm_iir
+   is zeroed by an earlier rps_work() call or never gets a new
+   value after previous intel_rps_unpark() event), so it jumps
+   to "out" label, bypassing intel_rps_is_active() guard and
+   executes gen6_gt_pm_unmask_irq();
+
+4) GT is parked and runtime PM wakelock is dropped, so only
+   a raw reference in __gt_park() ->
+   intel_display_power_put_async() remains for 100ms, then the
+   MMIO write in gen6_gt_pm_unmask_irq() detects missing
+   wakelock via assert_rpm_wakelock_held() and emits
+   "RPM wakelock ref not held during HW access" tainting kernel.
+
+Commit 3e7abf814193 ("drm/i915: Extract GT render power state management")
+dropped the "if (rps->interrupts_enabled)" guard that
+gen6_pm_rps_work() had around this unmask in i915_irq.c.
+INTEL_RPS_ACTIVE brackets the same window, since it is set in
+intel_rps_unpark() before rps_enable_interrupts() and
+rps_start_timer() and cleared in intel_rps_park() before
+rps_stop_timer() and rps_disable_interrupts().
+
+Skip unmasking when RPS is no longer active (reaching unmask
+operation is independent of INTERRUPT mode). This does not
+prevent RPS operation from resuming on the next unpark.
+In interrupt mode, intel_rps_unpark() calls
+rps_enable_interrupts(), which enables and unmasks the PM
+interrupts. In timer mode, it calls rps_start_timer(),
+restarting periodic engine-busyness evaluation. The timer
+generates software RPS events and queues rps_work() directly,
+independently of PM interrupt delivery. Neither mode requires
+the late worker to unmask interrupts while the GT is parked
+
+Fixes: 3e7abf814193 ("drm/i915: Extract GT render power state management")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/16562
+Cc: stable@vger.kernel.org # v5.5+
+Assisted-by: GitHub-Copilot:claude-opus-5
+Assisted-by: GitHub-Copilot:gpt-6-astra
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260910081329.3300417-1-krzysztof.karas@intel.com
+(cherry picked from commit ca4a6deadad15b91ee083afe445fa6bdbfb68206)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-ntb.c  | 5 +++++
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_rps.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-index 33cafce06e633..5314aca2188a0 100644
---- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-@@ -2075,6 +2075,11 @@ static int __init epf_ntb_init(void)
+--- a/drivers/gpu/drm/i915/gt/intel_rps.c
++++ b/drivers/gpu/drm/i915/gt/intel_rps.c
+@@ -1904,7 +1904,8 @@ static void rps_work(struct work_struct
  
- 	kpcintb_workqueue = alloc_workqueue("kpcintb",
- 				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
-+	if (!kpcintb_workqueue) {
-+		pr_err("Failed to allocate kpcintb workqueue\n");
-+		return -ENOMEM;
-+	}
-+
- 	ret = pci_epf_register_driver(&epf_ntb_driver);
- 	if (ret) {
- 		destroy_workqueue(kpcintb_workqueue);
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index fadebe86417b6..68110855ea1c7 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -1515,6 +1515,11 @@ static int __init epf_ntb_init(void)
+ out:
+ 	spin_lock_irq(gt->irq_lock);
+-	gen6_gt_pm_unmask_irq(gt, rps->pm_events);
++	if (intel_rps_is_active(rps))
++		gen6_gt_pm_unmask_irq(gt, rps->pm_events);
+ 	spin_unlock_irq(gt->irq_lock);
+ }
  
- 	kpcintb_workqueue = alloc_workqueue("kpcintb",
- 				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
-+	if (!kpcintb_workqueue) {
-+		pr_err("Failed to allocate kpcintb workqueue\n");
-+		return -ENOMEM;
-+	}
-+
- 	ret = pci_epf_register_driver(&epf_ntb_driver);
- 	if (ret) {
- 		destroy_workqueue(kpcintb_workqueue);
--- 
-2.53.0
-
 
 
