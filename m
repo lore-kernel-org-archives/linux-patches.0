@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD7D4F054D;
-	Tue, 13 Oct 2026 12:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE4B4FE2CD;
+	Tue, 13 Oct 2026 12:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895148; cv=none; b=lTEGzT6F0dLrH50fSeI1KfMpsspcwI859LtHXT4IAxYCl/UvPOlndqlh8bxQO6V7nQM1mZDe5mtatNTGwVk70rMhGJPhRIplOUyZgFMHbBL9RQhgmDaGxvBjQjobXmO5k5zRUCTO0Gs5hMZIdGLL055DO8P5TG/9voJoGig3GPc=
+	t=1791895151; cv=none; b=pU3ARlJPyK5d5e83Ke6bEYsebyefJtGFvH60xvno8ve4YKBBD4Gc2Cf6xG7pzpIWE1kQWTHA8BX2AchTlFRWSmSbZXvjGq71lCDyVW1T/vH4q3u/JadzfBu1ITYobhJfNSLwlJOzLMSqbyvscWXLmLYLepIyyhsIpc1OYjyoF40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895148; c=relaxed/simple;
-	bh=hGASBD0fU/o4QGkbDOmnSC6vvQBJag+gXIom7NAWnl8=;
+	s=arc-20240116; t=1791895151; c=relaxed/simple;
+	bh=MJNO6VQrO9EKhNwjd9mHJgHhagPRHeDuR67IcKSzfC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPeGzcIeDVORiH+PfZWwrRAS9O1NwPCjHeXQCNj7Q8ZrIrMoNfId3vH85B1Ewa8PE3coCP9dJ8Q5CgI/FBLCl9zelWfw6xBUZ8YHW+Mhg391w6eniX5pdqi2oxmGdHnL2uCBSagF7xM9FlNiFbJ2MnT4wXXgy+15jWbUR1T+gss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4cNi+d5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aS9XlrM8ykZ6NfOshLmrH3HJXH7A+wzYhjFbD9FY07i1IzviTKvyokXu6Kzq/qLwx2t378Q3wQeBlM+XCtePwgo9oancihNGDGh/dyto5C/OvRsScf5v+TnSVnvCNcVhRXZRcjvh2KrC0BOCG51JBKkyLk3EXa3AKtU5Y/qWQYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yg38ovI2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4cNi+d5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0EE1F000FF;
-	Tue, 13 Oct 2026 12:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yg38ovI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A0C1F000FF;
+	Tue, 13 Oct 2026 12:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895146;
-	bh=KHqUciFHQKyOMpM7P93ot+uen3sq/AdvOFSWFtzDT7s=;
+	s=korg; t=1791895149;
+	bh=zzq/NoF6hFxP7KYtRxpdjJEAqoc07DIqIKzOrCUdsnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4cNi+d5zxLSNNTZ5qwKrspXoJCUejNt7kIQHWeM//zQ4x9apvkFiEC4vz0mNsenq
-	 lv43thqsP+bhGcAazb89UMe/0kir1jL8DBQv42gfO9jEPAc+XDJFWcOKXPXreqzZA4
-	 99VSF+UwB6iAOZvUsVKqcoUUEnnTsr83eUKzehY8=
+	b=Yg38ovI2Dclz3upl4GBMYA6sPIsXAAZX3KZZsH2zD3rEQru+FWw+efdJfV+Q+qPHf
+	 2Qe5Hw1IlqNdLvqB9bRFzsK1oeUeRaP0YmFftRZQfttFPbXeyeWmS1OyRwbc9WOJlq
+	 UoVkVISv9NGEuziiWUwpYeLD9D9b0+yIMB7QG4Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zimeng Li <me@lizi.moe>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 175/497] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
-Date: Tue, 13 Oct 2026 13:35:42 +0200
-Message-ID: <20261013112912.044647342@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Bruno Produit <bruno.produit@trailofbits.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 176/497] ALSA: seq: Serialize compat port-info ioctls
+Date: Tue, 13 Oct 2026 13:35:43 +0200
+Message-ID: <20261013112912.067995535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,52 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zimeng Li <me@lizi.moe>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
+commit 95b2e0361c88753afa030c10698be0a1a5b67650 upstream.
 
-The DAI ID is a hardware port ID and is not necessarily the index of
-the corresponding entry in variant->dai_driver.
+The native sequencer ioctl path serializes handler calls with
+client->ioctl_mutex, but the translated port-info compat path invokes the
+same handlers through snd_seq_kernel_client_ctl() without taking that
+mutex.
 
-When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
-currently uses dai_id to index variant->dai_driver. This is incorrect
-for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
-DAI has ID 4 while it is the only entry in the DAI driver table. If
-that DAI is configured for QUAD01 and probe reaches this branch, the
-code writes beyond that single entry via dai_driver[4] instead of
-updating the DAI being processed.
+This lets concurrent compat CREATE_PORT requests pass the port-count
+check before any request reaches the serialized insertion. The computed
+integer port index can then exceed the address field range and wrap to an
+existing index. Subsequent subscriber teardown can resolve the duplicate
+address to the wrong port and access a freed subscriber.
 
-Use the loop index i when updating the current DAI's playback channel
-constraints, while retaining dai_id for indexing the hardware-port
-specific playback SD-line mode array.
+Take ioctl_mutex while dispatching converted port-info requests, matching
+the native ioctl path. All translated port-info commands share this
+helper, so their accesses to the client port state are serialized as
+well.
 
-This fixes the incorrect DAI table access for platforms where the DAI
-ID does not match its position in the driver table.
-
-Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
+Fixes: b3defb791b26 ("ALSA: seq: Make ioctls race-free")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zimeng Li <me@lizi.moe>
-Assisted-by: LLM-assisted source analysis
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Codex:gpt-5.6-sol gpt-6-astra
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
+Link: https://patch.msgid.link/20260917105643.90102-1-bruno.produit@trailofbits.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_compat.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1234,8 +1234,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
- 		}
- 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
- 			LPAIF_I2SCTL_MODE_QUAD01) {
--			variant->dai_driver[dai_id].playback.channels_min = 4;
--			variant->dai_driver[dai_id].playback.channels_max = 4;
-+			variant->dai_driver[i].playback.channels_min = 4;
-+			variant->dai_driver[i].playback.channels_max = 4;
- 		}
- 	}
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -44,7 +44,9 @@ static int snd_seq_call_port_info_ioctl(
+ 		return -EFAULT;
+ 	data->kernel = NULL;
+ 
+-	err = snd_seq_kernel_client_ctl(client->number, cmd, data);
++	scoped_guard(mutex, &client->ioctl_mutex) {
++		err = snd_seq_kernel_client_ctl(client->number, cmd, data);
++	}
+ 	if (err < 0)
+ 		return err;
  
 
 
