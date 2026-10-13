@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C339A4E4C5A;
-	Tue, 13 Oct 2026 11:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB5C4E4302;
+	Tue, 13 Oct 2026 11:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892124; cv=none; b=aEKNkic88eXmpD3SZMmNpQY8/BIH99tbNW32md8nr5iRK3Sl4jJfE9rNPlkJxiBQ690I9n7PDeO5bbhSNDBKiDa4WtxAyYZNvensEcdBlhE+slbjKHkFct39aI6q1JLzBX8p4OixIFPuD4lfLvthSl0wyZUO7eIFO31a7KWW9NY=
+	t=1791892127; cv=none; b=Y0e9v08BPOSRQNY7t4TE+HrVLYsKRb+71bG3v2PgYvOFSSUhMdlaOFuBtD9P00D1UA92M3uIqXaJq540xXVpySxc3ciyXv/afuyl7Nk5WIn2zUOAJUgYWjwrEsS3g4ZAt5KOEPnJtyuyT45A85yIYvL0wI3fYFVYV9TIvgx8lnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892124; c=relaxed/simple;
-	bh=DRDCkOmI4NGfLIH/bfKH2m0e8PLWm1iMWhatsQyXmHE=;
+	s=arc-20240116; t=1791892127; c=relaxed/simple;
+	bh=VwY+KZCDs6Q7jdPPMtxIIxGDcK4KD6/WAvCi7zSV4IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKPaWOZaIjawZvQatGgK6qVUQEA29sNDCnA7czDIjg44iAgs4hq87a8WNfwMAPxOsSveGd0zHAJTVCyt6Gfkhz4t+zEu06k7Bj4XIVHwOxAotHEKIfnVB8vRmFz6s76XjF9sR+s0fvEXi+nE7H4ytRu1dIF+oFpzYP0bVaKdC+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUIqXIDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4l0VGbp4I5xt+vj4J52Cnqr031RtdXkT3CFKmzlHvPA4pgGkkaj0aWzsKEY3Uy3/yOlSZlyh3VayjAS/AgMu/Q25tLk1UcNk2xe5RKWIpzw/JX6pRGKmENg8Xt0+vzO26AVDi7+b8SXh5q+/xnc3wHM3fb7nWr5OjDCLo6Xrvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YotBc+fx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUIqXIDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D382F1F00893;
-	Tue, 13 Oct 2026 11:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YotBc+fx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E0D1F000FF;
+	Tue, 13 Oct 2026 11:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892123;
-	bh=Bvn9ZiFxbAcOK1E/QOiqPaLMG08YNXFTz0Oo1mp10s4=;
+	s=korg; t=1791892126;
+	bh=YRq36xcJroDrrHqA2D8MAum0FsTckp8foB0mioD7jg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUIqXIDZVXml0wjYWifJ4KLGEfm6g9p+CjPtXj00FhUB9TTa6fqRyYgW8BipC409y
-	 r8FZlkNnl554hZRMB9SZLld+8DRgfsV6bIEHMGBodQYhAPl22FQs2CheBRAMSn48eY
-	 dpOdeZ9Qxl6aH7e1hJVFakRbLVzRZATNulWzuObA=
+	b=YotBc+fxTjvp11NZhmge80uHio+yNkrPPQnTwi9hhW6eDnr8prJfA4Yz6/5DwUf97
+	 FQwfuSWcYR1VLyLEtBqTYFcZm6jKn7V5Ou/Xo70IgTXxlVWfWpR+Km/XePFHOdis2Q
+	 fYaF9LEm/vFVAy8w0L75Nxx1NyF5J9vpqqog1tT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michele Dionisio <michele.dionisio@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 031/281] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
-Date: Tue, 13 Oct 2026 13:35:47 +0200
-Message-ID: <20261013112855.809120872@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.2 067/281] keys: finalize persistent keyring timeout after link attempt
+Date: Tue, 13 Oct 2026 13:36:23 +0200
+Message-ID: <20261013112856.756661888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,134 +50,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michele Dionisio <michele.dionisio@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 upstream.
+commit 25bf14f817168079f731975b8998fc2af380f29e upstream.
 
-When the driver is removed while the user space process that created
-the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
-interface is removed twice and the kernel crashes.
+When no keyring exists for the requested UID, KEYCTL_GET_PERSISTENT
+creates and registers one before linking it to the requested destination.
+The configured timeout is set only after the destination link succeeds.
 
-The two paths are:
+A destination restricted with KEYCTL_RESTRICT_KEYRING makes that link fail
+with -EPERM. With persistent_keyring_expiry set to 60 seconds, /proc/keys
+still reports the registered keyring's expiry as "perm".
+The failed call therefore leaves a quota-exempt keyring in the namespace's
+hidden register, where it may remain until namespace teardown.
 
- - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
-   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
-   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
-   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
-   which unregisters the wdev and frees the vif and the ifp.
+Rename the write-locked helper to key_get_or_create_persistent() and return
+the key reference through a result parameter. Return 0 when it creates a
+keyring and 1 when the retry finds an existing one. Return a negative error
+on failure. Another caller may create the keyring between the initial
+read-locked lookup and the retry under the write lock.
 
- - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
-   and calls brcmf_remove_interface(ifp, false) for the same ifp.
-   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
-   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
-   cfg80211_unregister_wdev() on the wdev that was already unregistered
-   and freed.
+Set the timeout after permission checking and linking. Do this on success,
+or on failure if the call allocated the keyring. This leaves a new keyring
+collectible after failure without starting its timeout while linking is
+still in progress.
 
-The second list_del_rcu() of wdev->list faults on LIST_POISON2:
-
-  brcmfmac: brcmf_p2p_del_vif delete P2P vif
-  brcmfmac: brcmf_p2p_deinit_discovery enter
-  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
-  brcmfmac: brcmf_detach Enter
-  brcmfmac: brcmf_bus_change_state 1 -> 0
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  [1.5 s later, brcmf_p2p_del_vif() timed out]
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  Unable to handle kernel paging request at virtual address dead000000000122
-  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
-  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-  Call trace:
-   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
-   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
-   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
-   brcmf_detach+0x88/0x180 [brcmfmac]
-   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
-   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
-   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
-   sdio_bus_remove+0x38/0x144
-   device_release_driver_internal+0x1e8/0x2c0
-   device_release_driver+0x14/0x20
-   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
-   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
-   __exit_compat+0x18/0x418 [brcmfmac_cyw]
-   __arm64_sys_delete_module+0x1ac/0x244
-
-The log was taken with debug=0x406 on an i.MX 8M Plus board with a
-CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
-brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
-in mainline.
-
-To reproduce:
-
-  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
-     P2P device (iw dev shows "type P2P-device").
-  2. Stop wpa_supplicant and remove the driver without waiting for
-     wpa_supplicant to exit:
-
-       kill $(pidof wpa_supplicant)
-       rmmod brcmfmac_cyw brcmfmac
-
-The crash is reproducible on that board.
-
-For the interface without a netdev (the P2P device), take RTNL and the
-wiphy mutex in brcmf_detach() before reading iflist, and remove it with
-locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
-slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
-any more. The interfaces with a netdev are removed as before, because
-brcmf_del_if() takes RTNL on its own for the primary interface.
-
-Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
-Cc: stable@vger.kernel.org
-Assisted-by: claude-opus-5-5
-Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: f36f8c75ae2e ("KEYS: Add per-user_namespace registers for persistent per-UID kerberos caches")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260912095440.79864-1-kmehltretter@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |   27 ++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ security/keys/persistent.c |   55 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1489,8 +1489,31 @@ void brcmf_detach(struct device *dev)
- 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
- 	/* make sure primary interface removed last */
- 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
--		if (drvr->iflist[i])
--			brcmf_remove_interface(drvr->iflist[i], false);
-+		struct brcmf_if *ifp = drvr->iflist[i];
-+
-+		if (!ifp)
-+			continue;
-+
-+		if (ifp->ndev) {
-+			brcmf_remove_interface(ifp, false);
-+			continue;
-+		}
-+
-+		/* The P2P device interface has no netdev. Its removal can
-+		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
-+		 * process that is exiting (e.g. wpa_supplicant), which ends
-+		 * in brcmf_p2p_del_vif() under RTNL and the wiphy mutex. If
-+		 * both paths remove the interface, the wdev is unregistered
-+		 * twice and the vif is used after being freed. Take the same
-+		 * locks and re-read iflist, so only one path removes it.
-+		 */
-+		rtnl_lock();
-+		wiphy_lock(drvr->wiphy);
-+		ifp = drvr->iflist[i];
-+		if (ifp)
-+			brcmf_remove_interface(ifp, true);
-+		wiphy_unlock(drvr->wiphy);
-+		rtnl_unlock();
- 	}
- 	brcmf_bus_stop(drvr->bus_if);
+--- a/security/keys/persistent.c
++++ b/security/keys/persistent.c
+@@ -33,25 +33,31 @@ static int key_create_persistent_registe
+ }
  
+ /*
+- * Create the persistent keyring for the specified user.
++ * Get or create the persistent keyring for the specified user.
+  *
+  * Called with the namespace's sem locked for writing.
++ *
++ * Returns a boolean indicating whether the keyring already existed,
++ * or a negative error. On success, *persistent_ref holds a reference
++ * to the keyring.
+  */
+-static key_ref_t key_create_persistent(struct user_namespace *ns, kuid_t uid,
+-				       struct keyring_index_key *index_key)
++static int key_get_or_create_persistent(struct user_namespace *ns, kuid_t uid,
++					struct keyring_index_key *index_key,
++					key_ref_t *persistent_ref)
+ {
+ 	struct key *persistent;
+-	key_ref_t reg_ref, persistent_ref;
++	key_ref_t reg_ref;
+ 
+ 	if (!ns->persistent_keyring_register) {
+-		long err = key_create_persistent_register(ns);
++		int err = key_create_persistent_register(ns);
++
+ 		if (err < 0)
+-			return ERR_PTR(err);
++			return err;
+ 	} else {
+ 		reg_ref = make_key_ref(ns->persistent_keyring_register, true);
+-		persistent_ref = find_key_to_update(reg_ref, index_key);
+-		if (persistent_ref)
+-			return persistent_ref;
++		*persistent_ref = find_key_to_update(reg_ref, index_key);
++		if (*persistent_ref)
++			return 1;
+ 	}
+ 
+ 	persistent = keyring_alloc(index_key->description,
+@@ -61,9 +67,10 @@ static key_ref_t key_create_persistent(s
+ 				   KEY_ALLOC_NOT_IN_QUOTA, NULL,
+ 				   ns->persistent_keyring_register);
+ 	if (IS_ERR(persistent))
+-		return ERR_CAST(persistent);
++		return PTR_ERR(persistent);
+ 
+-	return make_key_ref(persistent, true);
++	*persistent_ref = make_key_ref(persistent, true);
++	return 0;
+ }
+ 
+ /*
+@@ -78,6 +85,7 @@ static long key_get_persistent(struct us
+ 	key_ref_t reg_ref, persistent_ref;
+ 	char buf[32];
+ 	long ret;
++	bool created = false;
+ 
+ 	/* Look in the register if it exists */
+ 	memset(&index_key, 0, sizeof(index_key));
+@@ -100,23 +108,24 @@ static long key_get_persistent(struct us
+ 	 * also need to create the register.
+ 	 */
+ 	down_write(&ns->keyring_sem);
+-	persistent_ref = key_create_persistent(ns, uid, &index_key);
++	ret = key_get_or_create_persistent(ns, uid, &index_key,
++					   &persistent_ref);
+ 	up_write(&ns->keyring_sem);
+-	if (!IS_ERR(persistent_ref))
+-		goto found;
+-
+-	return PTR_ERR(persistent_ref);
++	if (ret < 0)
++		return ret;
++	created = ret == 0;
+ 
+ found:
++	persistent = key_ref_to_ptr(persistent_ref);
+ 	ret = key_task_permission(persistent_ref, current_cred(), KEY_NEED_LINK);
+-	if (ret == 0) {
+-		persistent = key_ref_to_ptr(persistent_ref);
++	if (ret == 0)
+ 		ret = key_link(key_ref_to_ptr(dest_ref), persistent);
+-		if (ret == 0) {
+-			key_set_timeout(persistent, persistent_keyring_expiry);
+-			ret = persistent->serial;
+-		}
+-	}
++
++	if (ret == 0 || created)
++		key_set_timeout(persistent, persistent_keyring_expiry);
++
++	if (ret == 0)
++		ret = persistent->serial;
+ 
+ 	key_ref_put(persistent_ref);
+ 	return ret;
 
 
