@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C394F4021;
-	Tue, 13 Oct 2026 12:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCF42C4FA;
+	Tue, 13 Oct 2026 12:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893931; cv=none; b=I9kWGH1g1xcaQGoEto5kC5XgbxJ1C9ik9ndth91Vl5WSbl9ZBPeFIp3PCoO8XfyXZmF5pmiwxBL8ax3CtO9NqX/mLNKtpsZuzKZadwuvQxRHOhDP7GMXOxMJg8en9j/5PetsHgEewoihoNC6nccLRvjgOpVAh3AoQhmMYDpyjaM=
+	t=1791893934; cv=none; b=GCNuvvW4yJysv7CPDHQx/UdWM1VXaZsGelwdMQaXlYRswM9OkUhOf5mzmefyAso8nPtHgeCuZQCsmWYLHJkNjn8ujCFkY+3QYZX373P4208QxFQKBacXX4c/386rvCm1D1k/TWU2GEsb9Ddk0mezFDZEViModbZuRC23QUoVIHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893931; c=relaxed/simple;
-	bh=mb9sCoIK26DQk/0jeaXkhcGLM09XdbQW78lWZjzJvx0=;
+	s=arc-20240116; t=1791893934; c=relaxed/simple;
+	bh=s/2HSCXOwxpuT9XwUrTRydMGtI6Al0EAdnCI44/DnxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyl9aFUT4sEGSDZysjhVVcQ95zS+HkC8VuNCi9Ow+XVEVfUL2zK4pR1b1TutUgO5wjJyRQhhdBvuA/Bko865xdJtzSGHEiV9uF7+3Csl7tjXjVGiuDXyF1Sat0TtGk6EcbY7Lg6Iyx8amQ/Jte2bHe1o7q/bArQ6X/T78/WASMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1otXCra; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y+ElViY9XC+fQLHS7ZGWSDEabuL476B2ynpEisvQsvfrneRaVYP9TFRj21i1IM+wlv9MMWkaPWMfuB14/m2yp6U2RW7o0YHZaHT7ba5gryrD6i4ENeD1dz5w2SX2e+P8yunvZNcCWTmLs+Pt7wsGwggGxqiIkmvJbW4Xc1xlM2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQrLSDf1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1otXCra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E311F000FF;
-	Tue, 13 Oct 2026 12:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQrLSDf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B761F000FF;
+	Tue, 13 Oct 2026 12:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893929;
-	bh=4SUOe7p7AoPPuZsFtl6H0SGF8e4vJBhH/YyN2kO59vI=;
+	s=korg; t=1791893933;
+	bh=26BDMIYuv6GVr3PNh4HHNzT1vCAHyjx6tDUZNiVMYY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1otXCraowlDZSoDtECZhp1KLBu1EsVG1+Z/nMTvI1DgRIg+lg4rr/Gm0jZJPVYV3
-	 RuhHawB8BbhsqjVXGwWnU1fa+dREqLEHOR4DcZ36W6C1H0fDFFOm0avMU9ah70iCiS
-	 gP0BbUomQup7cRZZioeH7SMggQPcLklTOGKjwUIw=
+	b=SQrLSDf1a39IbwLUzQ4wPsGpRoJwVLzWJfXasEb+lh6HCSJJhHQrIhNCTqgK1q2hY
+	 tKsdRZT0oyWQx7ihoY8KWSKKYWalrefBaW2Y3LalmPwXlWbjriBIeKkHOGSyigAvp7
+	 2owN2u0johyGzqcp1HDtrisk4KogG3s3J1BjfAZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishvambar Panth S <vishvambar.panth-s@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 347/621] eth: bnxt: avoid deadlock when canceling IRQ affinity notifier
-Date: Tue, 13 Oct 2026 13:35:42 +0200
-Message-ID: <20261013112929.086388618@linuxfoundation.org>
+Subject: [PATCH 6.18 348/621] ipvs: revalidate ihl to prevent out-of-bounds access
+Date: Tue, 13 Oct 2026 13:35:43 +0200
+Message-ID: <20261013112929.110045353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,212 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 51e96fa31f7e7eac2cba8f854e24d36600cc040b ]
+[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
 
-Unregistering IRQ affinity notifiers waits for the callback synchronously.
-bnxt takes the netdev instance lock in the notifier (to restart the queue)
-and cancels the work under the same lock. This may obviously deadlock.
+While the outer IP header is already pulled into the skb head,
+we must be careful and revalidate the embedded headers after
+reading them from the skb frags to prevent out-of-bounds
+access.
 
-Move the restart to the async service task. The queue restart isn't
-super time sensitive. Store the new TPH tag, schedule the task.
-Safely canceling the service task is already ironed out.
+One such place reported by Sashiko is ip_vs_nat_icmp() where
+local process can change the ihl field and after
+skb_ensure_writable() we can see larger value which is a
+problem for the ip_send_check(cih) calls.
 
-In bnxt_request_irq() the order of registering notifier, affinity and
-initial TPH programming has to be inverted. I think it was racy
-previously since user may trigger an update as soon as notifier
-is installed.
+Add check to drop the packet if the ihl field is changed.
 
-There's a small known gap - if pcie_tph_get_cpu_st() fails at init
-and the target tag is 0 we may miss programming the entry.
-This does not seem worth fixing, the code has skip-on-failure
-all over the place, anyway.
-
-Fixes: c214410c47d6 ("bnxt_en: Add TPH support in BNXT driver")
-Tested-by: Vishvambar Panth S <vishvambar.panth-s@broadcom.com>
-Link: https://patch.msgid.link/20260803193135.2030368-5-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 86 ++++++++++++++++-------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  3 +
- 2 files changed, 64 insertions(+), 25 deletions(-)
+ include/net/ip_vs.h             |  2 +-
+ net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
+ net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 35c8684d1b4ca..744587e6cc631 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11647,12 +11647,13 @@ static void bnxt_irq_affinity_notify(struct irq_affinity_notify *notify,
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 94dfc3a265ee5..955185eff1307 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -1726,7 +1726,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
+ 	return fwd;
+ }
+ 
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph);
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 4e30a903f4bdc..401159a660750 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -745,7 +745,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
+  * Packet has been made sufficiently writable in caller
+  * - inout: 1=in->out, 0=out->in
+  */
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph)
  {
- 	struct bnxt_irq *irq;
- 	u16 tag;
--	int err;
+@@ -753,6 +753,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
+ 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
  
- 	irq = container_of(notify, struct bnxt_irq, affinity_notify);
- 
- #ifdef CONFIG_RFS_ACCEL
- 	if (irq->bp->dev->rx_cpu_rmap && irq->ring_nr < irq->bp->rx_nr_rings) {
-+		int err;
-+
- 		err = cpu_rmap_update(irq->bp->dev->rx_cpu_rmap, irq->ring_nr,
- 				      mask);
- 		if (err)
-@@ -11670,20 +11671,11 @@ static void bnxt_irq_affinity_notify(struct irq_affinity_notify *notify,
- 		return;
- 
- 	if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
--				cpumask_first(irq->cpu_mask), &tag))
-+				cpumask_first(mask), &tag))
- 		return;
- 
--	if (pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag))
--		return;
--
--	netdev_lock(irq->bp->dev);
--	if (netif_running(irq->bp->dev)) {
--		err = netdev_rx_queue_restart(irq->bp->dev, irq->ring_nr);
--		if (err)
--			netdev_err(irq->bp->dev,
--				   "RX queue restart failed: err=%d\n", err);
--	}
--	netdev_unlock(irq->bp->dev);
-+	WRITE_ONCE(irq->new_tag, tag);
-+	bnxt_queue_sp_work(irq->bp, BNXT_TPH_UPDATE_SP_EVENT);
++	/* Before now we may used ihl from skb frag, revalidate it after
++	 * copying it into skb head to prevent out-of-bounds access
++	 */
++	if (cih->ihl * 4 != ciph->len - ciph->off)
++		return false;
+ 	if (inout) {
+ 		iph->saddr = cp->vaddr.ip;
+ 		ip_send_check(iph);
+@@ -786,6 +791,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	else
+ 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
+ 			      "Forwarding altered incoming ICMP");
++	return true;
  }
  
- static void bnxt_irq_affinity_release(struct kref *ref)
-@@ -11754,6 +11746,8 @@ static void bnxt_free_irq(struct bnxt *bp)
- 		}
+ #ifdef CONFIG_IP_VS_IPV6
+@@ -877,7 +883,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
+ 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
+ 	else
+ #endif
+-		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
++		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
++			goto out;
  
- 		irq->requested = 0;
-+		irq->tag = 0;
-+		irq->new_tag = 0;
- 	}
+ 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
+ 		goto out;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 7db74b2ea358c..fa66e31685504 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -1577,7 +1577,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
+ 		goto tx_error;
  
- 	/* Disable TPH support */
-@@ -11793,6 +11787,7 @@ static int bnxt_request_irq(struct bnxt *bp)
- 	for (i = 0, j = 0; i < bp->cp_nr_rings; i++) {
- 		int map_idx = bnxt_cp_num_to_irq_num(bp, i);
- 		struct bnxt_irq *irq = &bp->irq_tbl[map_idx];
-+		unsigned int cpu_num;
- 		u16 tag;
+-	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
++	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
++		goto tx_error;
  
- 		if (IS_ENABLED(CONFIG_RFS_ACCEL) &&
-@@ -11818,8 +11813,19 @@ static int bnxt_request_irq(struct bnxt *bp)
- 		irq->have_cpumask = 1;
- 		irq->msix_nr = map_idx;
- 		irq->ring_nr = i;
--		cpumask_set_cpu(cpumask_local_spread(i, numa_node),
--				irq->cpu_mask);
-+		cpu_num = cpumask_local_spread(i, numa_node);
-+		cpumask_set_cpu(cpu_num, irq->cpu_mask);
-+
-+		/* Init ST table entry if we can get the mapping */
-+		if (!pcie_tph_get_cpu_st(bp->pdev, TPH_MEM_TYPE_VM,
-+					 cpu_num, &tag)) {
-+			pcie_tph_set_st_entry(bp->pdev, irq->msix_nr, tag);
-+			irq->tag = tag;
-+			irq->new_tag = tag;
-+		}
-+
-+		bnxt_register_irq_notifier(bp, irq);
-+
- 		rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
- 		if (rc) {
- 			netdev_warn(bp->dev,
-@@ -11827,16 +11833,6 @@ static int bnxt_request_irq(struct bnxt *bp)
- 				    irq->vector);
- 			break;
- 		}
--
--		bnxt_register_irq_notifier(bp, irq);
--
--		/* Init ST table entry */
--		if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
--					cpumask_first(irq->cpu_mask),
--					&tag))
--			continue;
--
--		pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
- 	}
- 	return rc;
- }
-@@ -14301,6 +14297,43 @@ static void bnxt_rtnl_unlock_sp(struct bnxt *bp)
- 	rtnl_unlock();
- }
- 
-+static void bnxt_tph_update(struct bnxt *bp)
-+{
-+	struct net_device *dev = bp->dev;
-+	int i;
-+
-+	bnxt_rtnl_lock_sp(bp);
-+	if (!test_bit(BNXT_STATE_OPEN, &bp->state))
-+		goto unlock;
-+
-+	for (i = 0; i < bp->rx_nr_rings; i++) {
-+		struct bnxt_irq *irq;
-+		int map_idx, err;
-+		u16 tag;
-+
-+		map_idx = bnxt_cp_num_to_irq_num(bp, i);
-+		irq = &bp->irq_tbl[map_idx];
-+		tag = READ_ONCE(irq->new_tag);
-+		if (irq->tag == tag)
-+			continue;
-+
-+		if (pcie_tph_set_st_entry(bp->pdev, irq->msix_nr, tag))
-+			continue;
-+
-+		err = netdev_rx_queue_restart(dev, irq->ring_nr);
-+		if (err) {
-+			netdev_err(dev, "RX queue restart failed: err=%d\n",
-+				   err);
-+			continue;
-+		}
-+
-+		irq->tag = tag;
-+	}
-+
-+unlock:
-+	bnxt_rtnl_unlock_sp(bp);
-+}
-+
- /* Only called from bnxt_sp_task() */
- static void bnxt_reset(struct bnxt *bp, bool silent)
- {
-@@ -14739,6 +14772,9 @@ static void bnxt_sp_task(struct work_struct *work)
- 			bnxt_devlink_health_fw_report(bp);
- 	}
- 
-+	if (test_and_clear_bit(BNXT_TPH_UPDATE_SP_EVENT, &bp->sp_event))
-+		bnxt_tph_update(bp);
-+
- 	smp_mb__before_atomic();
- 	clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
- }
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 7ca57bbc5ff61..1859612fa2138 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1253,6 +1253,8 @@ struct bnxt_irq {
- 	struct bnxt	*bp;
- 	int		msix_nr;
- 	int		ring_nr;
-+	u16		tag;
-+	u16		new_tag;
- 	struct irq_affinity_notify affinity_notify;
- };
- 
-@@ -2622,6 +2624,7 @@ struct bnxt {
- #define BNXT_RING_COAL_NOW_SP_EVENT	17
- #define BNXT_FW_RESET_NOTIFY_SP_EVENT	18
- #define BNXT_FW_EXCEPTION_SP_EVENT	19
-+#define BNXT_TPH_UPDATE_SP_EVENT	20
- #define BNXT_LINK_CFG_CHANGE_SP_EVENT	21
- #define BNXT_THERMAL_THRESHOLD_SP_EVENT	22
- #define BNXT_FW_ECHO_REQUEST_SP_EVENT	23
+ 	/* Another hack: avoid icmp_send in ip_fragment */
+ 	skb->ignore_df = 1;
 -- 
 2.53.0
 
