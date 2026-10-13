@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDBD4F55C6;
-	Tue, 13 Oct 2026 12:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303B15013DC;
+	Tue, 13 Oct 2026 12:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893313; cv=none; b=Gia02aIC210NhF+3OA7qG6WZubmi9aC6wSkjgh2fgRNlC8PLigl4eLeXgjHk2DY+cnzYfVtRp6rBN+WfFOyia0/YYYFrnJvEfVMR/bDXyNogQUJ6sfrY3Eoqrt+6nSwi29Y/6JJs498VFnNXZ2ithd8oHqiWz/yIG8+UA59OGZw=
+	t=1791893316; cv=none; b=sAMNQtCqLT5ZxSgVZxcytN+fNV1zbYbFePnL32eoXMzC+PNq7XDf5RuN8TwB1HziFdZQkyybQLbBfc4hpH1HzyHxBSKPsCRBf/gzzCk6n3Ep3em5PDDZY0OPY/8V5xYljGA8IDfoTO+e5t+ekdmn8Kpk1SWcS0zDh+RcfrWTvmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893313; c=relaxed/simple;
-	bh=CLT4jPDDkGLpzvAlIEWVf7Cf2AIH/nKuSLkCnvqzJCQ=;
+	s=arc-20240116; t=1791893316; c=relaxed/simple;
+	bh=CYvUBnLDDq0SWZmGp9kQ+u8ydcUuViYD1cUiz9DzMQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/b46blWnMXGdOEq1jIgcBsYFj9otK93h+s15blbVmlpDWtqDyUtdd/+NGwOz/tM+QlTecPGlgAlFRDghgXenkM1YRBchmlW6/pDmG+mWy+4SmupVepT/dh11zzfTTIaEflIUjy+peOWwf124jv6dTUvVoR99YkcRi4eyPzomt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVpLhswI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFxCHY8uIJNKqBPpgyMjXqAhPWU/yLqXmCNyMkqs58vGSwu5qnHD6UQiUKrI/yfvJh+/KjEvMhERXLsnIG10Svq3cHqj2gdMS1xIq0eGRMBJGbOn/SxYaKtzAhtEn7FwFWDGTWLIWe6xbOJzaIW2iSzo1mEe5LkMRssuHHGrf68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3jeNGTH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVpLhswI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20D1F000FF;
-	Tue, 13 Oct 2026 12:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3jeNGTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB7F1F000FF;
+	Tue, 13 Oct 2026 12:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893312;
-	bh=kUzySmpR83N+Vtn+a5JJhpRCdDYTNlNuL1xT6V48a7o=;
+	s=korg; t=1791893315;
+	bh=p+VyNzdJlJ0PO+TFdIE5YsezkPga8kV3c5XJL+CUESY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVpLhswIN07keihWRlZxD/7RoVI97oxR+jpTeIMNT6lpZDOQhCOb35LDR7LIdE+MA
-	 vi4l+CZUuov/Jy57h6uLZ6da1WgRVbQKsUAWyFlqkQ4Nv2VYP2UZXSVT992SBtvvUj
-	 OWTd5hZVE7aRolEKc1aSKeUFO0jqB2v/MwwbEpeE=
+	b=k3jeNGTHEh3RgBKIZ/DYTErqkRcDVKk200fa6kLiDBVXGpVHumET2G/dRd6QGUCex
+	 X7Aoap4JndyNEyv9YnfhdDfz1gwc615pNQXTNIfMVIPL/H64m1FqGp3QD6YCvx0/5m
+	 svLH5d3iruDnDBzcqc54szABltA7NjXZBcbwPupA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 184/621] btrfs: remove reserved argument from btrfs_pin_extent()
-Date: Tue, 13 Oct 2026 13:32:59 +0200
-Message-ID: <20261013112925.228772038@linuxfoundation.org>
+Subject: [PATCH 6.18 158/621] ice: drop page splitting and recycling
+Date: Tue, 13 Oct 2026 13:32:33 +0200
+Message-ID: <20261013112924.605588927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,104 +54,513 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 8dcb8e4b110d86aaae2c485622423b6f63a65408 ]
+[ Upstream commit 3a4f419f750946181e3d6a339a1ef1942c5b5685 ]
 
-All callers pass a value of 1 (true) to it, so remove it.
+As part of the transition toward Page Pool integration, remove the
+legacy page splitting and recycling logic from the ice driver. This
+mirrors the approach taken in commit 920d86f3c552 ("iavf: drop page
+splitting and recycling").
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: c7d1d4ff5674 ("btrfs: don't BUG() on unexpected delayed ref type in run_one_delayed_ref()")
+The previous model attempted to reuse partially consumed pages by
+splitting them and tracking their usage across descriptors. While
+this was once a memory optimization, it introduced significant
+complexity and overhead in the Rx path, including:
+- Manual refcount management and page reuse heuristics;
+- Per-descriptor buffer shuffling, which could involve moving dozens
+  of `ice_rx_buf` structures per NAPI cycle;
+- Increased branching and cache pressure in the hotpath.
+
+This change simplifies the Rx logic by always allocating fresh pages
+and letting the networking stack handle their lifecycle. Although this
+may temporarily reduce performance (up to ~98% in some XDP cases), it
+greatly improves maintainability and paves the way for Page Pool,
+which will restore and exceed previous performance levels.
+
+The `ice_rx_buf` array is retained for now to minimize diffstat and
+ease future replacement with a shared buffer abstraction.
+
+Co-developed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: e142dc4ef0f4 ("ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 15 +++++++--------
- fs/btrfs/extent-tree.h |  3 +--
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h         |   2 +
+ drivers/net/ethernet/intel/ice/ice_base.c    |  29 ++--
+ drivers/net/ethernet/intel/ice/ice_txrx.c    | 139 ++-----------------
+ drivers/net/ethernet/intel/ice/ice_txrx.h    |  72 ----------
+ drivers/net/ethernet/intel/ice/virt/queues.c |   5 +-
+ 5 files changed, 24 insertions(+), 223 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 7c199d59a5465..cbd57c46d3244 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1764,7 +1764,7 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 192c1ec973b9f..e5ba5bc23065a 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -374,6 +374,8 @@ struct ice_vsi {
+ 	spinlock_t arfs_lock;	/* protects aRFS hash table and filter state */
+ 	atomic_t *arfs_last_fltr_id;
  
- 	if (TRANS_ABORTED(trans)) {
- 		if (insert_reserved) {
--			btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
-+			btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
- 			free_head_ref_squota_rsv(trans->fs_info, href);
++	u16 max_frame;
++
+ 	struct ice_aqc_vsi_props info;	 /* VSI properties */
+ 	struct ice_vsi_vlan_info vlan_info;	/* vlan config to be restored */
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index b3eb9f5125003..fee58f879d9e1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -495,7 +495,7 @@ static int ice_setup_rx_ctx(struct ice_rx_ring *ring)
+ 	/* Receive Packet Data Buffer Size.
+ 	 * The Packet Data Buffer Size is defined in 128 byte units.
+ 	 */
+-	rlan_ctx.dbuf = DIV_ROUND_UP(ring->rx_buf_len,
++	rlan_ctx.dbuf = DIV_ROUND_UP(ICE_RXBUF_3072,
+ 				     BIT_ULL(ICE_RLAN_CTX_DBUF_S));
+ 
+ 	/* use 32 byte descriptors */
+@@ -536,8 +536,8 @@ static int ice_setup_rx_ctx(struct ice_rx_ring *ring)
+ 	/* Max packet size for this queue - must not be set to a larger value
+ 	 * than 5 x DBUF
+ 	 */
+-	rlan_ctx.rxmax = min_t(u32, ring->max_frame,
+-			       ICE_MAX_CHAINED_RX_BUFS * ring->rx_buf_len);
++	rlan_ctx.rxmax = min_t(u32, vsi->max_frame,
++			       ICE_MAX_CHAINED_RX_BUFS * ICE_RXBUF_3072);
+ 
+ 	/* Rx queue threshold in units of 64 */
+ 	rlan_ctx.lrxqthresh = 1;
+@@ -608,7 +608,7 @@ static unsigned int ice_get_frame_sz(struct ice_rx_ring *rx_ring)
+ #if (PAGE_SIZE >= 8192)
+ 	frame_sz = rx_ring->rx_buf_len;
+ #else
+-	frame_sz = ice_rx_pg_size(rx_ring) / 2;
++	frame_sz = PAGE_SIZE;
+ #endif
+ 
+ 	return frame_sz;
+@@ -624,6 +624,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ {
+ 	struct device *dev = ice_pf_to_dev(ring->vsi->back);
+ 	u32 num_bufs = ICE_RX_DESC_UNUSED(ring);
++	u32 rx_buf_len;
+ 	int err;
+ 
+ 	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF) {
+@@ -631,7 +632,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 ring->rx_buf_len);
++						 ICE_RXBUF_3072);
+ 			if (err)
+ 				return err;
  		}
- 		return 0;
-@@ -1783,7 +1783,7 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
- 	else
- 		BUG();
- 	if (ret && insert_reserved)
--		btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
-+		btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
- 	if (ret < 0)
- 		btrfs_err(trans->fs_info,
- "failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
-@@ -1890,7 +1890,7 @@ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
- 	spin_unlock(&delayed_refs->lock);
+@@ -640,12 +641,12 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 		if (ring->xsk_pool) {
+ 			xdp_rxq_info_unreg(&ring->xdp_rxq);
  
- 	if (head->must_insert_reserved) {
--		btrfs_pin_extent(trans, head->bytenr, head->num_bytes, 1);
-+		btrfs_pin_extent(trans, head->bytenr, head->num_bytes);
- 		if (head->is_data) {
- 			struct btrfs_root *csum_root;
+-			ring->rx_buf_len =
++			rx_buf_len =
+ 				xsk_pool_get_rx_frame_size(ring->xsk_pool);
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 ring->rx_buf_len);
++						 rx_buf_len);
+ 			if (err)
+ 				return err;
+ 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
+@@ -663,7 +664,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 				err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 							 ring->q_index,
+ 							 ring->q_vector->napi.napi_id,
+-							 ring->rx_buf_len);
++							 ICE_RXBUF_3072);
+ 				if (err)
+ 					return err;
+ 			}
+@@ -735,17 +736,9 @@ int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx)
+ static void ice_vsi_cfg_frame_size(struct ice_vsi *vsi, struct ice_rx_ring *ring)
+ {
+ 	if (!vsi->netdev) {
+-		ring->max_frame = ICE_MAX_FRAME_LEGACY_RX;
+-		ring->rx_buf_len = ICE_RXBUF_1664;
+-#if (PAGE_SIZE < 8192)
+-	} else if (!ICE_2K_TOO_SMALL_WITH_PADDING &&
+-		   (vsi->netdev->mtu <= ETH_DATA_LEN)) {
+-		ring->max_frame = ICE_RXBUF_1536 - NET_IP_ALIGN;
+-		ring->rx_buf_len = ICE_RXBUF_1536 - NET_IP_ALIGN;
+-#endif
++		vsi->max_frame = ICE_MAX_FRAME_LEGACY_RX;
+ 	} else {
+-		ring->max_frame = ICE_AQ_SET_MAC_FRAME_SIZE_MAX;
+-		ring->rx_buf_len = ICE_RXBUF_3072;
++		vsi->max_frame = ICE_AQ_SET_MAC_FRAME_SIZE_MAX;
+ 	}
+ }
  
-@@ -2607,15 +2607,14 @@ static int pin_down_extent(struct btrfs_trans_handle *trans,
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 48bdd4ccb9ff0..e81be0f04b36a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -543,13 +543,13 @@ void ice_clean_rx_ring(struct ice_rx_ring *rx_ring)
+ 		 */
+ 		dma_sync_single_range_for_cpu(dev, rx_buf->dma,
+ 					      rx_buf->page_offset,
+-					      rx_ring->rx_buf_len,
++					      ICE_RXBUF_3072,
+ 					      DMA_FROM_DEVICE);
+ 
+ 		/* free resources associated with mapping */
+-		dma_unmap_page_attrs(dev, rx_buf->dma, ice_rx_pg_size(rx_ring),
++		dma_unmap_page_attrs(dev, rx_buf->dma, PAGE_SIZE,
+ 				     DMA_FROM_DEVICE, ICE_RX_DMA_ATTR);
+-		__page_frag_cache_drain(rx_buf->page, rx_buf->pagecnt_bias);
++		__free_page(rx_buf->page);
+ 
+ 		rx_buf->page = NULL;
+ 		rx_buf->page_offset = 0;
+@@ -803,10 +803,6 @@ ice_alloc_mapped_page(struct ice_rx_ring *rx_ring, struct ice_rx_buf *bi)
+ 	struct page *page = bi->page;
+ 	dma_addr_t dma;
+ 
+-	/* since we are recycling buffers we should seldom need to alloc */
+-	if (likely(page))
+-		return true;
+-
+ 	/* alloc new page for storage */
+ 	page = dev_alloc_pages(ice_rx_pg_order(rx_ring));
+ 	if (unlikely(!page)) {
+@@ -815,7 +811,7 @@ ice_alloc_mapped_page(struct ice_rx_ring *rx_ring, struct ice_rx_buf *bi)
+ 	}
+ 
+ 	/* map page for use */
+-	dma = dma_map_page_attrs(rx_ring->dev, page, 0, ice_rx_pg_size(rx_ring),
++	dma = dma_map_page_attrs(rx_ring->dev, page, 0, PAGE_SIZE,
+ 				 DMA_FROM_DEVICE, ICE_RX_DMA_ATTR);
+ 
+ 	/* if mapping failed free memory back to system since
+@@ -831,7 +827,6 @@ ice_alloc_mapped_page(struct ice_rx_ring *rx_ring, struct ice_rx_buf *bi)
+ 	bi->page = page;
+ 	bi->page_offset = rx_ring->rx_offset;
+ 	page_ref_add(page, USHRT_MAX - 1);
+-	bi->pagecnt_bias = USHRT_MAX;
+ 
+ 	return true;
+ }
+@@ -902,7 +897,7 @@ bool ice_alloc_rx_bufs(struct ice_rx_ring *rx_ring, unsigned int cleaned_count)
+ 		/* sync the buffer for use by the device */
+ 		dma_sync_single_range_for_device(rx_ring->dev, bi->dma,
+ 						 bi->page_offset,
+-						 rx_ring->rx_buf_len,
++						 ICE_RXBUF_3072,
+ 						 DMA_FROM_DEVICE);
+ 
+ 		/* Refresh the desc even if buffer_addrs didn't change
+@@ -931,69 +926,6 @@ bool ice_alloc_rx_bufs(struct ice_rx_ring *rx_ring, unsigned int cleaned_count)
+ 	return !!cleaned_count;
+ }
+ 
+-/**
+- * ice_rx_buf_adjust_pg_offset - Prepare Rx buffer for reuse
+- * @rx_buf: Rx buffer to adjust
+- * @size: Size of adjustment
+- *
+- * Update the offset within page so that Rx buf will be ready to be reused.
+- * For systems with PAGE_SIZE < 8192 this function will flip the page offset
+- * so the second half of page assigned to Rx buffer will be used, otherwise
+- * the offset is moved by "size" bytes
+- */
+-static void
+-ice_rx_buf_adjust_pg_offset(struct ice_rx_buf *rx_buf, unsigned int size)
+-{
+-#if (PAGE_SIZE < 8192)
+-	/* flip page offset to other buffer */
+-	rx_buf->page_offset ^= size;
+-#else
+-	/* move offset up to the next cache line */
+-	rx_buf->page_offset += size;
+-#endif
+-}
+-
+-/**
+- * ice_can_reuse_rx_page - Determine if page can be reused for another Rx
+- * @rx_buf: buffer containing the page
+- *
+- * If page is reusable, we have a green light for calling ice_reuse_rx_page,
+- * which will assign the current buffer to the buffer that next_to_alloc is
+- * pointing to; otherwise, the DMA mapping needs to be destroyed and
+- * page freed
+- */
+-static bool
+-ice_can_reuse_rx_page(struct ice_rx_buf *rx_buf)
+-{
+-	unsigned int pagecnt_bias = rx_buf->pagecnt_bias;
+-	struct page *page = rx_buf->page;
+-
+-	/* avoid re-using remote and pfmemalloc pages */
+-	if (!dev_page_is_reusable(page))
+-		return false;
+-
+-	/* if we are only owner of page we can reuse it */
+-	if (unlikely(rx_buf->pgcnt - pagecnt_bias > 1))
+-		return false;
+-#if (PAGE_SIZE >= 8192)
+-#define ICE_LAST_OFFSET \
+-	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_3072)
+-	if (rx_buf->page_offset > ICE_LAST_OFFSET)
+-		return false;
+-#endif /* PAGE_SIZE >= 8192) */
+-
+-	/* If we have drained the page fragment pool we need to update
+-	 * the pagecnt_bias and page count so that we fully restock the
+-	 * number of references the driver holds.
+-	 */
+-	if (unlikely(pagecnt_bias == 1)) {
+-		page_ref_add(page, USHRT_MAX - 1);
+-		rx_buf->pagecnt_bias = USHRT_MAX;
+-	}
+-
+-	return true;
+-}
+-
+ /**
+  * ice_add_xdp_frag - Add contents of Rx buffer to xdp buf as a frag
+  * @rx_ring: Rx descriptor ring to transact packets on
+@@ -1032,35 +964,6 @@ ice_add_xdp_frag(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp,
  	return 0;
  }
  
--int btrfs_pin_extent(struct btrfs_trans_handle *trans,
--		     u64 bytenr, u64 num_bytes, int reserved)
-+int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num_bytes)
+-/**
+- * ice_reuse_rx_page - page flip buffer and store it back on the ring
+- * @rx_ring: Rx descriptor ring to store buffers on
+- * @old_buf: donor buffer to have page reused
+- *
+- * Synchronizes page for reuse by the adapter
+- */
+-static void
+-ice_reuse_rx_page(struct ice_rx_ring *rx_ring, struct ice_rx_buf *old_buf)
+-{
+-	u16 nta = rx_ring->next_to_alloc;
+-	struct ice_rx_buf *new_buf;
+-
+-	new_buf = &rx_ring->rx_buf[nta];
+-
+-	/* update, and store next to alloc */
+-	nta++;
+-	rx_ring->next_to_alloc = (nta < rx_ring->count) ? nta : 0;
+-
+-	/* Transfer page from old buffer to new buffer.
+-	 * Move each member individually to avoid possible store
+-	 * forwarding stalls and unnecessary copy of skb.
+-	 */
+-	new_buf->dma = old_buf->dma;
+-	new_buf->page = old_buf->page;
+-	new_buf->page_offset = old_buf->page_offset;
+-	new_buf->pagecnt_bias = old_buf->pagecnt_bias;
+-}
+-
+ /**
+  * ice_get_rx_buf - Fetch Rx buffer and synchronize data for use
+  * @rx_ring: Rx descriptor ring to transact packets on
+@@ -1086,9 +989,6 @@ ice_get_rx_buf(struct ice_rx_ring *rx_ring, const unsigned int size,
+ 				      rx_buf->page_offset, size,
+ 				      DMA_FROM_DEVICE);
+ 
+-	/* We have pulled a buffer for use, so decrement pagecnt_bias */
+-	rx_buf->pagecnt_bias--;
+-
+ 	return rx_buf;
+ }
+ 
+@@ -1183,16 +1083,10 @@ ice_put_rx_buf(struct ice_rx_ring *rx_ring, struct ice_rx_buf *rx_buf)
+ 	if (!rx_buf)
+ 		return;
+ 
+-	if (ice_can_reuse_rx_page(rx_buf)) {
+-		/* hand second half of page back to the ring */
+-		ice_reuse_rx_page(rx_ring, rx_buf);
+-	} else {
+-		/* we are not reusing the buffer so unmap it */
+-		dma_unmap_page_attrs(rx_ring->dev, rx_buf->dma,
+-				     ice_rx_pg_size(rx_ring), DMA_FROM_DEVICE,
+-				     ICE_RX_DMA_ATTR);
+-		__page_frag_cache_drain(rx_buf->page, rx_buf->pagecnt_bias);
+-	}
++	/* we are not reusing the buffer so unmap it */
++	dma_unmap_page_attrs(rx_ring->dev, rx_buf->dma,
++			     PAGE_SIZE, DMA_FROM_DEVICE,
++			     ICE_RX_DMA_ATTR);
+ 
+ 	/* clear contents of buffer_info */
+ 	rx_buf->page = NULL;
+@@ -1218,27 +1112,12 @@ static void ice_put_rx_mbuf(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp,
+ 	u32 idx = rx_ring->first_desc;
+ 	u32 cnt = rx_ring->count;
+ 	struct ice_rx_buf *buf;
+-	u32 xdp_frags = 0;
+-	int i = 0;
+-
+-	if (unlikely(xdp_buff_has_frags(xdp)))
+-		xdp_frags = xdp_get_shared_info_from_buff(xdp)->nr_frags;
+ 
+ 	while (idx != ntc) {
+ 		buf = &rx_ring->rx_buf[idx];
+ 		if (++idx == cnt)
+ 			idx = 0;
+ 
+-		/* An XDP program could release fragments from the end of the
+-		 * buffer. For these, we need to keep the pagecnt_bias as-is.
+-		 * To do this, only adjust pagecnt_bias for fragments up to
+-		 * the total remaining after the XDP program has run.
+-		 */
+-		if (verdict != ICE_XDP_CONSUMED)
+-			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
+-		else if (i++ <= xdp_frags)
+-			buf->pagecnt_bias++;
+-
+ 		ice_put_rx_buf(rx_ring, buf);
+ 	}
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
+index 427f672fe0538..3c7830f787de8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.h
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
+@@ -27,71 +27,7 @@
+ 
+ #define ICE_MAX_TXQ_PER_TXQG	128
+ 
+-/* Attempt to maximize the headroom available for incoming frames. We use a 2K
+- * buffer for MTUs <= 1500 and need 1536/1534 to store the data for the frame.
+- * This leaves us with 512 bytes of room.  From that we need to deduct the
+- * space needed for the shared info and the padding needed to IP align the
+- * frame.
+- *
+- * Note: For cache line sizes 256 or larger this value is going to end
+- *	 up negative.  In these cases we should fall back to the legacy
+- *	 receive path.
+- */
+-#if (PAGE_SIZE < 8192)
+-#define ICE_2K_TOO_SMALL_WITH_PADDING \
+-	((unsigned int)(NET_SKB_PAD + ICE_RXBUF_1536) > \
+-			SKB_WITH_OVERHEAD(ICE_RXBUF_2048))
+-
+-/**
+- * ice_compute_pad - compute the padding
+- * @rx_buf_len: buffer length
+- *
+- * Figure out the size of half page based on given buffer length and
+- * then subtract the skb_shared_info followed by subtraction of the
+- * actual buffer length; this in turn results in the actual space that
+- * is left for padding usage
+- */
+-static inline int ice_compute_pad(int rx_buf_len)
+-{
+-	int half_page_size;
+-
+-	half_page_size = ALIGN(rx_buf_len, PAGE_SIZE / 2);
+-	return SKB_WITH_OVERHEAD(half_page_size) - rx_buf_len;
+-}
+-
+-/**
+- * ice_skb_pad - determine the padding that we can supply
+- *
+- * Figure out the right Rx buffer size and based on that calculate the
+- * padding
+- */
+-static inline int ice_skb_pad(void)
+-{
+-	int rx_buf_len;
+-
+-	/* If a 2K buffer cannot handle a standard Ethernet frame then
+-	 * optimize padding for a 3K buffer instead of a 1.5K buffer.
+-	 *
+-	 * For a 3K buffer we need to add enough padding to allow for
+-	 * tailroom due to NET_IP_ALIGN possibly shifting us out of
+-	 * cache-line alignment.
+-	 */
+-	if (ICE_2K_TOO_SMALL_WITH_PADDING)
+-		rx_buf_len = ICE_RXBUF_3072 + SKB_DATA_ALIGN(NET_IP_ALIGN);
+-	else
+-		rx_buf_len = ICE_RXBUF_1536;
+-
+-	/* if needed make room for NET_IP_ALIGN */
+-	rx_buf_len -= NET_IP_ALIGN;
+-
+-	return ice_compute_pad(rx_buf_len);
+-}
+-
+-#define ICE_SKB_PAD ice_skb_pad()
+-#else
+-#define ICE_2K_TOO_SMALL_WITH_PADDING false
+ #define ICE_SKB_PAD (NET_SKB_PAD + NET_IP_ALIGN)
+-#endif
+ 
+ /* We are assuming that the cache line is always 64 Bytes here for ice.
+  * In order to make sure that is a correct assumption there is a check in probe
+@@ -202,7 +138,6 @@ struct ice_rx_buf {
+ 	struct page *page;
+ 	unsigned int page_offset;
+ 	unsigned int pgcnt;
+-	unsigned int pagecnt_bias;
+ };
+ 
+ struct ice_q_stats {
+@@ -368,7 +303,6 @@ struct ice_rx_ring {
+ 	struct ice_tx_ring *xdp_ring;
+ 	struct ice_rx_ring *next;	/* pointer to next ring in q_vector */
+ 	struct xsk_buff_pool *xsk_pool;
+-	u16 max_frame;
+ 	u16 rx_buf_len;
+ 	dma_addr_t dma;			/* physical address of ring */
+ 	u8 dcb_tc;			/* Traffic class of ring */
+@@ -475,15 +409,9 @@ struct ice_coalesce_stored {
+ 
+ static inline unsigned int ice_rx_pg_order(struct ice_rx_ring *ring)
  {
- 	struct btrfs_block_group *cache;
- 
- 	cache = btrfs_lookup_block_group(trans->fs_info, bytenr);
- 	BUG_ON(!cache); /* Logic error */
- 
--	pin_down_extent(trans, cache, bytenr, num_bytes, reserved);
-+	pin_down_extent(trans, cache, bytenr, num_bytes, 1);
- 
- 	btrfs_put_block_group(cache);
+-#if (PAGE_SIZE < 8192)
+-	if (ring->rx_buf_len > (PAGE_SIZE / 2))
+-		return 1;
+-#endif
  	return 0;
-@@ -3524,7 +3523,7 @@ int btrfs_free_extent(struct btrfs_trans_handle *trans, struct btrfs_ref *ref)
- 	 * tree, just update pinning info and exit early.
- 	 */
- 	if (ref->ref_root == BTRFS_TREE_LOG_OBJECTID) {
--		btrfs_pin_extent(trans, ref->bytenr, ref->num_bytes, 1);
-+		btrfs_pin_extent(trans, ref->bytenr, ref->num_bytes);
- 		ret = 0;
- 	} else if (ref->type == BTRFS_REF_METADATA) {
- 		ret = btrfs_add_delayed_tree_ref(trans, ref, NULL);
-@@ -5007,7 +5006,7 @@ int btrfs_alloc_logged_file_extent(struct btrfs_trans_handle *trans,
- 	ret = alloc_reserved_file_extent(trans, 0, root_objectid, 0, owner,
- 					 offset, ins, 1, root_objectid);
- 	if (ret)
--		btrfs_pin_extent(trans, ins->objectid, ins->offset, 1);
-+		btrfs_pin_extent(trans, ins->objectid, ins->offset);
- 	ret = btrfs_record_squota_delta(fs_info, &delta);
- 	btrfs_put_block_group(block_group);
- 	return ret;
-diff --git a/fs/btrfs/extent-tree.h b/fs/btrfs/extent-tree.h
-index e970ac42a871a..e573509c5a71d 100644
---- a/fs/btrfs/extent-tree.h
-+++ b/fs/btrfs/extent-tree.h
-@@ -110,8 +110,7 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
- 			     struct btrfs_fs_info *fs_info, u64 bytenr,
- 			     u64 offset, int metadata, u64 *refs, u64 *flags,
- 			     u64 *owner_root);
--int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num,
--		     int reserved);
-+int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num);
- int btrfs_pin_extent_for_log_replay(struct btrfs_trans_handle *trans,
- 				    const struct extent_buffer *eb);
- int btrfs_exclude_logged_extents(struct extent_buffer *eb);
+ }
+ 
+-#define ice_rx_pg_size(_ring) (PAGE_SIZE << ice_rx_pg_order(_ring))
+-
+ union ice_32b_rx_flex_desc;
+ 
+ void ice_init_ctrl_rx_descs(struct ice_rx_ring *rx_ring, u32 num_descs);
+diff --git a/drivers/net/ethernet/intel/ice/virt/queues.c b/drivers/net/ethernet/intel/ice/virt/queues.c
+index 0765ee901b7c7..771434ec881e2 100644
+--- a/drivers/net/ethernet/intel/ice/virt/queues.c
++++ b/drivers/net/ethernet/intel/ice/virt/queues.c
+@@ -863,18 +863,17 @@ int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+ 			     qpi->rxq.databuffer_size < 128))
+ 				goto error_param;
+-			ring->rx_buf_len = qpi->rxq.databuffer_size;
+ 			if (qpi->rxq.max_pkt_size > max_frame_size ||
+ 			    qpi->rxq.max_pkt_size < 64)
+ 				goto error_param;
+ 
+-			ring->max_frame = qpi->rxq.max_pkt_size;
++			vsi->max_frame = qpi->rxq.max_pkt_size;
+ 			/* add space for the port VLAN since the VF driver is
+ 			 * not expected to account for it in the MTU
+ 			 * calculation
+ 			 */
+ 			if (ice_vf_is_port_vlan_ena(vf))
+-				ring->max_frame += VLAN_HLEN;
++				vsi->max_frame += VLAN_HLEN;
+ 
+ 			if (ice_vsi_cfg_single_rxq(vsi, q_idx)) {
+ 				dev_warn(ice_pf_to_dev(pf), "VF-%d failed to configure RX queue %d\n",
 -- 
 2.53.0
 
