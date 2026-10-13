@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11E1155C87;
-	Tue, 13 Oct 2026 11:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4A84EBAD7;
+	Tue, 13 Oct 2026 11:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892571; cv=none; b=DMXsxRuiV/LVNmsF5fnueK8Z0NpD70gq/QVC280cMIMQVqmtXXjjLjOy/oj2XRbF9SvFcck8iXGjGGStQEv8YkaZ5jGTLdZYID87tY6BMNChOXBhjFngkRxnY2o1ZLLqWcnII8p8Gs66AkLNmJVHz/qd+6T7JbJ6esfC9ptmMQg=
+	t=1791892574; cv=none; b=VXo1BM7/zjUCr8l3Qw9YWZkoVLDOxDk7/EuTdOGegZn1N9APcrB+IYisnvvwmPPegCINmxtXFAVttJJqQ3In8aCxSOkfzR66KPXwVfIikk3egrF//HUCXrkC6FxPutSYmDgosnIhhGuA1TixzgITz4CFU02t0blrGQZL/Udb4AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892571; c=relaxed/simple;
-	bh=z0Y43nsGMd7pLewHECx6htsj1WO/1w/HIAEchw1rWwI=;
+	s=arc-20240116; t=1791892574; c=relaxed/simple;
+	bh=X1C6Fi/yUxmZcwgTHDZ2cGpivFBj0P3pEMlprqgoato=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4T4jOXLJ2yQhbBELXns6NLtC8wUxlBMAqrRcSg9dTPfMIhcDWgP7zOEUa0OuGE7N9bIg/J6fXKg/nODegBuGh+e3k4DobWd4z0TDBGRYHW3T7w5SL3xYPw9ePS14hwu9M5Ptes2O4xgc1UkS2Ix27/w1CssnFH5VS8Cpu/nyko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0r7qPXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JaHwNzYOu4PKtkMf6zkWXzpaG3ZeJ7CzwFtdqFVORNtEBbLLWRJZyiM+iXw86kj6kF6JJfKieBn3dQaKeHE+O+5UaZurrYBlJV0XtdIa5jJV7eiBoBmUr4n9nF24/bNflnufKwQqExG5hd2/MY9F3IHvtkncFPLo1lb7wslUjNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6grlj3b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0r7qPXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2235C1F000FF;
-	Tue, 13 Oct 2026 11:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6grlj3b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12ADC1F000FF;
+	Tue, 13 Oct 2026 11:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892569;
-	bh=LLl6afzEcVyy7cjhiq5DgWH5UmrmDzi3fB5Y1Pbw+Q0=;
+	s=korg; t=1791892572;
+	bh=oGIAn2mT8WqtTOUy3CxKiDJ22nEQJ0sG9KHdeFY7/Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j0r7qPXcguRNcQ7vdNOjVYr/+lxDs6be7FRT06JFpVplDUoCZ8CGP9P2Z7CXQmYZa
-	 y8qjluaanqA7slB00SMS9WBP8O20BgSQI28L+lA2MsDof5XDeODh3yolUPC1Dm3iW3
-	 c6FQLIpBc43ehfrUN6hguBBitrzCc3rp3M8ICTQM=
+	b=V6grlj3bqTmRT4FpTEz70qpF3baNIAetpY7/5cEXOYC0E9HoMSURdLo7DC4ntd15T
+	 FSsON/wiRV2u4Ux5tknlkr5q0jLHCpwZeAZNRVwL71KP2VUpIV4Hr/tw+DYpCgYSwn
+	 yPncNaFe71QznxASb3Djd92GaFg5lry3ij+gCuJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 215/281] btrfs: fix xattr replace when multiple xattrs are packed in the same item
-Date: Tue, 13 Oct 2026 13:38:51 +0200
-Message-ID: <20261013112900.379858152@linuxfoundation.org>
+Subject: [PATCH 7.2 174/281] xfs: stop exchanging reflink flags when exchanging mappings
+Date: Tue, 13 Oct 2026 13:38:10 +0200
+Message-ID: <20261013112859.385910104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,250 +53,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 858bee1c77857aabcc2327cd32dd8266332de332 ]
+[ Upstream commit d84d6c1a7f1e2de9e601703a326a4c1b7b421943 ]
 
-If we have a btrfs_dir_item item that packs multiple xattrs and then we
-replace the value of one of them (with the setxattr(2) family of syscalls)
-with another value of a different size, we end up not having a fully
-initialized btrfs_dir_item, resulting in a corruption that the tree
-checker will detect at extent buffer writeback time.
+When an exchange covers both files from offset 0 to i_disk_size,
+xmi_can_exchange_reflink_flags() assumes every mapping moved and hands
+the reflink flag over to the other file.
 
-This is because in btrfs_setxattr() when we find a btrfs_dir_item with
-multiple xattrs (due to the crc32c hash of their name being the same)
-we delete one of the xattr items (btrfs_dir_item) and then insert a new
-one, but the deletion and insertion results in shifting existing data in
-the leaf and therefore when the new value of a xattr has a different size,
-the new btrfs_dir_item is placed in a leaf section that was not
-initialized and we only copy the value's data and set the value's length
-in the new btrfs_dir_item, without setting the name, the name's length,
-the key (which must be all zeroes for xattrs), flags (BTRFS_FT_XATTR) and
-transaction ID.
+That assumption is wrong.  A file can still own shared blocks past
+i_disk_size, e.g. after EXCHANGE_RANGE_TO_EOF sets a smaller size
+without unmapping anything.  The flag is cleared anyway, and the next
+write to such a block happens in place instead of CoW, corrupting the
+other file that shares it.
 
-The following script reproduces the issue:
+Commit a23eca88448e ("xfs: fix exchange-range reflink flag clearing
+issue with INO1_WRITTEN") fixed one instance of this.  Rather than add
+another special case, stop moving the flags.
+xfs_exchmaps_ensure_reflink() already sets the flag on both inodes
+before the exchange, so both just keep it.
 
-  $ cat test.sh
-  #!/bin/bash
+Nothing sets CLEAR_INO{1,2}_REFLINK anymore.  Intents logged by older
+kernels may still carry them; recovery already masks them off, so they
+stay in the log format mask and are ignored.
 
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
+XFS_IOC_SWAPEXT has the same problem: it moves the reflink flag from
+one inode to the other along with the extents.  Just removing that is
+not enough here: the exchange path flags both inodes up front in
+xfs_exchmaps_ensure_reflink(), but swapext has no such step, so the
+inode receiving the shared extents would be left without the flag.
+Set it on both inodes instead, and make sure both have a CoW fork,
+since an inode with the reflink flag is expected to have one.
 
-  mkfs.btrfs -f $DEV
-  mount $DEV $MNT
+The flag now stays until FALLOC_FL_UNSHARE_RANGE, xfs_scrub, or a
+truncate to zero removes it.
 
-  touch $MNT/testfile
-
-  # Add two xattrs that, on btrfs, have the same hash (crc32c) for their
-  # name and therefore are packed into the same btrfs_dir_item.
-  setfattr -n user.foobar -v 123 $MNT/testfile
-  setfattr -n user.WvG1c1Td -v qwerty $MNT/testfile
-
-  # Verify the xattrs are present.
-  echo "xattrs before:"
-  getfattr --absolute-names --dump $MNT/testfile
-
-  # Now replace the value of the foobar xattr with a significantly larger
-  # value.
-  setfattr -n user.foobar -v abcdefghijklmnopqrstuvwxyz $MNT/testfile
-
-  # Check the xattrs have the expected values.
-  echo "xattrs after:"
-  getfattr --absolute-names --dump $MNT/testfile
-
-  umount $MNT
-
-Running it:
-
-  $ ./test.sh
-  (...)
-  xattrs before:
-  # file: /mnt/sdi/testfile
-  user.WvG1c1Td="qwerty"
-  user.foobar="123"
-
-  xattrs after:
-  # file: /mnt/sdi/testfile
-  user.WvG1c1Td="qwerty"
-
-So the "user.foobar" xattr is missing and there was a transaction abort
-when unmounting the fs with the following traces in dmesg:
-
-  $ dmesg
-  [869800.159271] BTRFS warning (device sdi): access to eb bytenr 30474240 len 16384 out of range start 16015 len 25964
-  [869800.159293] ------------[ cut here ]------------
-  [869800.159296] WARNING: fs/btrfs/extent_io.c:4408 at report_eb_range+0x44/0x60 [btrfs], CPU#8: getfattr/2605179
-  [869800.168961] Modules linked in: btrfs dm_thin_pool (...)
-  [869800.190527] CPU: 8 UID: 0 PID: 2605179 Comm: getfattr Tainted: G        W           7.3.0-rc3-btrfs-next-244+ #1 PREEMPT(full)
-  [869800.193726] Tainted: [W]=WARN
-  [869800.194502] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [869800.197576] RIP: 0010:report_eb_range+0x44/0x60 [btrfs]
-  [869800.198985] Code: 48 8b 7b 18 (...)
-  [869800.203531] RSP: 0018:ffffce4541937d58 EFLAGS: 00010246
-  [869800.204609] RAX: 0000000000000000 RBX: ffff8dde054b8738 RCX: 0000000000000000
-  [869800.206137] RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffffffffc04c92a0
-  [869800.207645] RBP: 0000000000003e8f R08: 0000000000000000 R09: 3fffffffffefffff
-  [869800.226175] R10: ffffce4541937a88 R11: 0000000000000003 R12: 000000000000656c
-  [869800.227594] R13: ffff8dde14be800f R14: 000000000000656c R15: 0000000000000069
-  [869800.229097] FS:  00007f59023bb780(0000) GS:ffff8de5788ed000(0000) knlGS:0000000000000000
-  [869800.231137] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [869800.232321] CR2: 0000558dc45e6a78 CR3: 0000000765b16004 CR4: 0000000000370ef0
-  [869800.233783] Call Trace:
-  [869800.234330]  <TASK>
-  [869800.234791]  read_extent_buffer+0x4d/0x100 [btrfs]
-  [869800.235898]  btrfs_listxattr+0x199/0x240 [btrfs]
-  [869800.236912]  vfs_listxattr+0x51/0xa0
-  [869800.237683]  listxattr+0x7e/0x100
-  [869800.238398]  path_listxattrat+0x9e/0x190
-  [869800.239117]  do_syscall_64+0x89/0x470
-  [869800.239877]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [869800.240914] RIP: 0033:0x7f59024cdcb7
-  [869800.241686] Code: f0 ff ff 73 (...)
-  [869800.245353] RSP: 002b:00007ffd056dcdb8 EFLAGS: 00000246 ORIG_RAX: 00000000000000c2
-  [869800.246892] RAX: ffffffffffffffda RBX: 00007ffd056df2e2 RCX: 00007f59024cdcb7
-  [869800.248853] RDX: 0000000000006600 RSI: 0000558dc45e0470 RDI: 00007ffd056df2e2
-  [869800.250514] RBP: 00007ffd056df2e2 R08: 0000000000006600 R09: 0000000000006600
-  [869800.252295] R10: 0000000000000004 R11: 0000000000000246 R12: 00000000ffffff9c
-  [869800.254105] R13: 0000558dc45e0470 R14: 0000000000006600 R15: 0000000000000000
-  [869800.255931]  </TASK>
-  [869800.256529] ---[ end trace 0000000000000000 ]---
-  [869800.260071] page: refcount:2 mapcount:0 mapping:000000007ccfc77f index:0x1d10 pfn:0x608c69
-  [869800.260075] memcg:ffff8dde00344d40
-  [869800.260076] aops:btree_aops [btrfs] ino:1
-  [869800.260151] flags: 0x17fffc00000402a(uptodate|lru|private|writeback|node=0|zone=2|lastcpupid=0x1ffff)
-  [869800.260154] raw: 017fffc00000402a fffff4adc773d4c8 fffff4adc48f3d88 ffff8de36504ba30
-  [869800.260155] raw: 0000000000001d10 ffff8dde054b8738 00000002ffffffff ffff8dde00344d40
-  [869800.260156] page dumped because: eb page dump
-  [869800.260157] BTRFS critical (device sdi): corrupt leaf: root=5 block=30474240 slot=5 ino=257, invalid location key type, have 46, expect 132 or 1
-  [869800.260161] BTRFS info (device sdi): leaf 30474240 gen 9 total ptrs 6 free space 15629 owner 5
-  [869800.260163] BTRFS info (device sdi): refs 3 lock_owner 0 current 2550294
-  [869800.260164] 	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
-  [869800.260165] 		inode generation 3 transid 0 size 0 nbytes 16384
-  [869800.260166] 		block group 0 mode 40755 links 1 uid 0 gid 0
-  [869800.260167] 		rdev 0 sequence 0 flags 0x0
-  [869800.260168] 		atime 1790340637.0
-  [869800.260169] 		ctime 1790340637.0
-  [869800.260169] 		mtime 1790340637.0
-  [869800.260170] 		otime 1790340637.0
-  [869800.260170] 	item 1 key (256 INODE_REF 256) itemoff 16111 itemsize 12
-  [869800.260172] 		index 0 name_len 2
-  [869800.260172] 	item 2 key (256 DIR_ITEM 982728850) itemoff 16073 itemsize 38
-  [869800.260173] 		location key (257 1 0) type 1
-  [869800.260174] 		transid 9 data_len 0 name_len 8
-  [869800.260175] 	item 3 key (257 INODE_ITEM 0) itemoff 15913 itemsize 160
-  [869800.260176] 		inode generation 9 transid 9 size 0 nbytes 0
-  [869800.260177] 		block group 0 mode 100664 links 1 uid 0 gid 0
-  [869800.260177] 		rdev 0 sequence 0 flags 0x0
-  [869800.260178] 		atime 1790340638.38778502
-  [869800.260179] 		ctime 1790340638.38778502
-  [869800.260179] 		mtime 1790340638.38778502
-  [869800.260180] 		otime 1790340638.38778502
-  [869800.260180] 	item 4 key (257 INODE_REF 256) itemoff 15895 itemsize 18
-  [869800.260181] 		index 2 name_len 8
-  [869800.260182] 	item 5 key (257 XATTR_ITEM 751495445) itemoff 15779 itemsize 116
-  [869800.260183] 		location key (0 0 0) type 8
-  [869800.266052] 		transid 9 data_len 6 name_len 13
-  [869800.266053] 		location key (8243121639454149888 46 7229457603934778967) type 0
-  [869800.266055] 		transid 113 data_len 26 name_len 0
-  [869800.266056] 		location key (8608196880778817904 120 162425) type 9
-  [869800.266057] 		transid 8391162079612502016 data_len 26982 name_len 25964
-  [869800.266058] BTRFS error (device sdi): block=30474240 write time tree block corruption detected
-  [869800.266091] ------------[ cut here ]------------
-  [869800.266092] WARNING: fs/btrfs/disk-io.c:336 at btree_csum_one_bio+0x20b/0x220 [btrfs], CPU#7: kworker/u50:7/2550294
-  [869800.268392] Modules linked in: btrfs dm_thin_pool (...)
-  [869800.365851] CPU: 7 UID: 0 PID: 2550294 Comm: kworker/u50:7 Tainted: G        W           7.3.0-rc3-btrfs-next-244+ #1 PREEMPT(full)
-  [869800.368937] Tainted: [W]=WARN
-  [869800.369834] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [869800.372778] Workqueue: writeback wb_workfn (flush-btrfs-3821)
-  [869800.374314] RIP: 0010:btree_csum_one_bio+0x20b/0x220 [btrfs]
-  [869800.375915] Code: 89 44 24 04 (...)
-  [869800.380639] RSP: 0018:ffffce4548e3f7d0 EFLAGS: 00010246
-  [869800.382008] RAX: 0000000000000000 RBX: ffff8dde054b8738 RCX: 0000000000000000
-  [869800.383850] RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff8de091c2ddc0
-  [869800.385710] RBP: ffff8dde196a2000 R08: 0000000000000000 R09: 3fffffffffefffff
-  [869800.387388] R10: ffffce4548e3f500 R11: 0000000000000003 R12: ffffce4548e3f7d8
-  [869800.388973] R13: ffff8dde196a2000 R14: ffff8de36504b750 R15: ffff8dde4c497b00
-  [869800.390414] FS:  0000000000000000(0000) GS:ffff8de5788ad000(0000) knlGS:0000000000000000
-  [869800.392002] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [869800.393160] CR2: 000055cd6e92ad5c CR3: 00000007cb264001 CR4: 0000000000370ef0
-  [869800.394595] Call Trace:
-  [869800.395113]  <TASK>
-  [869800.395570]  btrfs_submit_bbio+0x872/0x890 [btrfs]
-  [869800.397284]  write_meta_extent_buffer+0x70/0x80 [btrfs]
-  [869800.398940]  btree_writepages+0x141/0x4f0 [btrfs]
-  [869800.400426]  ? get_random_u32+0x8a/0xf0
-  [869800.401417]  ? build_slab_freelist+0x47/0x130
-  [869800.402574]  ? preempt_count_add+0x6b/0xa0
-  [869800.403633]  ? _raw_spin_lock_irqsave+0x23/0x50
-  [869800.404807]  ? _raw_spin_unlock_irqrestore+0x22/0x40
-  [869800.406085]  ? alloc_from_new_slab+0x18f/0x330
-  [869800.407223]  do_writepages+0xc6/0x160
-  [869800.408191]  ? refill_objects+0xd8/0x300
-  [869800.409211]  __writeback_single_inode+0x42/0x350
-  [869800.410408]  writeback_sb_inodes+0x231/0x560
-  [869800.411511]  wb_writeback+0x8a/0x300
-  [869800.412440]  wb_workfn+0xbf/0x460
-  [869800.413291]  ? _raw_spin_unlock+0x14/0x30
-  [869800.414328]  ? finish_task_switch.isra.0+0xb9/0x380
-  [869800.415105]  process_one_work+0x1d1/0x3d0
-  [869800.416633]  worker_thread+0x1c4/0x330
-  [869800.417467]  ? __pfx_worker_thread+0x10/0x10
-  [869800.418452]  kthread+0xfc/0x130
-  [869800.419257]  ? __pfx_kthread+0x10/0x10
-  [869800.420089]  ret_from_fork+0x1f7/0x2c0
-  [869800.420863]  ? __pfx_kthread+0x10/0x10
-  [869800.421654]  ret_from_fork_asm+0x1a/0x30
-  [869800.422484]  </TASK>
-  [869800.422953] ---[ end trace 0000000000000000 ]---
-  [869800.424005] BTRFS error (device sdi state A): Transaction 9 aborted (-EIO)
-  [869800.424010] BTRFS: error (device sdi state A) in __btrfs_run_delayed_items:1162: errno=-5 IO failure
-  [869800.424011] BTRFS info (device sdi state EA): forced readonly
-  [869800.424013] BTRFS warning (device sdi state EA): Skipping commit of aborted transaction.
-  [869800.424014] BTRFS: error (device sdi state EA) in cleanup_transaction:2076: errno=-5 IO failure
-
-Fix this by always setting all fields in the new btrfs_dir_item when we
-replace an existing xattr.
-
-Fixes: 5f5bc6b1e2d5 ("Btrfs: make xattr replace operations atomic")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Fixes: f0bc4d134b46 ("xfs: swap inode reflink flags when swapping inode extents")
+Cc: stable@vger.kernel.org # v6.10
+Assisted-by: LLM
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Removed an extra duplicate INO1_WRITTEN guard when deleting xmi_can_exchange_reflink_flags(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/xattr.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/xfs/libxfs/xfs_exchmaps.c   |   90 +----------------------------------------
+ fs/xfs/libxfs/xfs_log_format.h |    4 -
+ fs/xfs/xfs_bmap_util.c         |   15 ++----
+ 3 files changed, 10 insertions(+), 99 deletions(-)
 
-diff --git a/fs/btrfs/xattr.c b/fs/btrfs/xattr.c
-index ab55d10bd71fd..e8762e12f3e1e 100644
---- a/fs/btrfs/xattr.c
-+++ b/fs/btrfs/xattr.c
-@@ -161,6 +161,7 @@ int btrfs_setxattr(struct btrfs_trans_handle *trans, struct inode *inode,
- 		const u16 old_data_len = btrfs_dir_data_len(leaf, di);
- 		const u32 item_size = btrfs_item_size(leaf, slot);
- 		const u32 data_size = sizeof(*di) + name_len + size;
-+		unsigned long name_ptr;
- 		unsigned long data_ptr;
- 		char *ptr;
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -49,7 +49,7 @@ struct xfs_exchmaps_adjacent {
+ 	.right2 = { .br_startblock = HOLESTARTBLOCK }, \
+ }
  
-@@ -189,8 +190,16 @@ int btrfs_setxattr(struct btrfs_trans_handle *trans, struct inode *inode,
- 		ptr = btrfs_item_ptr(leaf, slot, char);
- 		ptr += btrfs_item_size(leaf, slot) - data_size;
- 		di = (struct btrfs_dir_item *)ptr;
-+		memzero_extent_buffer(leaf, (unsigned long)ptr +
-+				      offsetof(struct btrfs_dir_item, location),
-+				      sizeof(struct btrfs_disk_key));
-+		btrfs_set_dir_flags(leaf, di, BTRFS_FT_XATTR);
-+		btrfs_set_dir_transid(leaf, di, trans->transid);
-+		btrfs_set_dir_name_len(leaf, di, name_len);
- 		btrfs_set_dir_data_len(leaf, di, size);
-+		name_ptr = (unsigned long)(di + 1);
- 		data_ptr = ((unsigned long)(di + 1)) + name_len;
-+		write_extent_buffer(leaf, name, name_ptr, name_len);
- 		write_extent_buffer(leaf, value, data_ptr, size);
- 	} else {
- 		/*
--- 
-2.53.0
-
+-/* Information to reset reflink flag / CoW fork state after an exchange. */
++/* Information to reset CoW fork state after an exchange. */
+ 
+ /*
+  * If the reflink flag is set on either inode, make sure it has an incore CoW
+@@ -127,9 +127,7 @@ xmi_has_more_exchange_work(const struct
+ static inline bool
+ xmi_has_postop_work(const struct xfs_exchmaps_intent *xmi)
+ {
+-	return xmi->xmi_flags & (XFS_EXCHMAPS_CLEAR_INO1_REFLINK |
+-				 XFS_EXCHMAPS_CLEAR_INO2_REFLINK |
+-				 __XFS_EXCHMAPS_INO2_SHORTFORM);
++	return xmi->xmi_flags & __XFS_EXCHMAPS_INO2_SHORTFORM;
+ }
+ 
+ /* Check all mappings to make sure we can actually exchange them. */
+@@ -525,18 +523,6 @@ free:
+ 	return error;
+ }
+ 
+-/* Clear the reflink flag after an exchange. */
+-static inline void
+-xfs_exchmaps_clear_reflink(
+-	struct xfs_trans	*tp,
+-	struct xfs_inode	*ip)
+-{
+-	trace_xfs_reflink_unset_inode_flag(ip);
+-
+-	ip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+-}
+-
+ /* Finish whatever work might come after an exchange operation. */
+ static int
+ xfs_exchmaps_do_postop_work(
+@@ -557,16 +543,6 @@ xfs_exchmaps_do_postop_work(
+ 			return error;
+ 	}
+ 
+-	if (xmi->xmi_flags & XFS_EXCHMAPS_CLEAR_INO1_REFLINK) {
+-		xfs_exchmaps_clear_reflink(tp, xmi->xmi_ip1);
+-		xmi->xmi_flags &= ~XFS_EXCHMAPS_CLEAR_INO1_REFLINK;
+-	}
+-
+-	if (xmi->xmi_flags & XFS_EXCHMAPS_CLEAR_INO2_REFLINK) {
+-		xfs_exchmaps_clear_reflink(tp, xmi->xmi_ip2);
+-		xmi->xmi_flags &= ~XFS_EXCHMAPS_CLEAR_INO2_REFLINK;
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -948,56 +924,13 @@ xfs_exchmaps_intent_destroy_cache(void)
+ }
+ 
+ /*
+- * Decide if we will exchange the reflink flags between the two files after the
+- * exchange.  The only time we want to do this is if we're exchanging all
+- * mappings under EOF and the inode reflink flags have different states.
++ * Allocate and initialize a new incore intent item from a request.
+  */
+-static inline bool
+-xmi_can_exchange_reflink_flags(
+-	const struct xfs_exchmaps_req	*req,
+-	unsigned int			reflink_state)
+-{
+-	struct xfs_mount		*mp = req->ip1->i_mount;
+-
+-	/*
+-	 * The INO1_WRITTEN optimization can skip exchanging hole and
+-	 * unwritten mappings, which means we cannot guarantee that all
+-	 * shared extents actually moved to the other file.  Clearing the
+-	 * reflink flag of an inode that still holds shared extents breaks
+-	 * the CoW write path, so refuse to exchange the flags in that case.
+-	 */
+-	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
+-		return false;
+-
+-	/*
+-	 * The INO1_WRITTEN optimization can skip exchanging hole and
+-	 * unwritten mappings, which means we cannot guarantee that all
+-	 * shared extents actually moved to the other file.  Clearing the
+-	 * reflink flag of an inode that still holds shared extents breaks
+-	 * the CoW write path, so refuse to exchange the flags in that case.
+-	 */
+-	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
+-		return false;
+-
+-	if (hweight32(reflink_state) != 1)
+-		return false;
+-	if (req->startoff1 != 0 || req->startoff2 != 0)
+-		return false;
+-	if (req->blockcount != XFS_B_TO_FSB(mp, req->ip1->i_disk_size))
+-		return false;
+-	if (req->blockcount != XFS_B_TO_FSB(mp, req->ip2->i_disk_size))
+-		return false;
+-	return true;
+-}
+-
+-
+-/* Allocate and initialize a new incore intent item from a request. */
+ struct xfs_exchmaps_intent *
+ xfs_exchmaps_init_intent(
+ 	const struct xfs_exchmaps_req	*req)
+ {
+ 	struct xfs_exchmaps_intent	*xmi;
+-	unsigned int			rs = 0;
+ 
+ 	xmi = kmem_cache_zalloc(xfs_exchmaps_intent_cache,
+ 			GFP_NOFS | __GFP_NOFAIL);
+@@ -1021,23 +954,6 @@ xfs_exchmaps_init_intent(
+ 		xmi->xmi_isize2 = req->ip1->i_disk_size;
+ 	}
+ 
+-	/* Record the state of each inode's reflink flag before the op. */
+-	if (xfs_is_reflink_inode(req->ip1))
+-		rs |= 1;
+-	if (xfs_is_reflink_inode(req->ip2))
+-		rs |= 2;
+-
+-	/*
+-	 * Figure out if we're clearing the reflink flags (which effectively
+-	 * exchanges them) after the operation.
+-	 */
+-	if (xmi_can_exchange_reflink_flags(req, rs)) {
+-		if (rs & 1)
+-			xmi->xmi_flags |= XFS_EXCHMAPS_CLEAR_INO1_REFLINK;
+-		if (rs & 2)
+-			xmi->xmi_flags |= XFS_EXCHMAPS_CLEAR_INO2_REFLINK;
+-	}
+-
+ 	if (S_ISDIR(VFS_I(xmi->xmi_ip2)->i_mode) ||
+ 	    S_ISLNK(VFS_I(xmi->xmi_ip2)->i_mode))
+ 		xmi->xmi_flags |= __XFS_EXCHMAPS_INO2_SHORTFORM;
+--- a/fs/xfs/libxfs/xfs_log_format.h
++++ b/fs/xfs/libxfs/xfs_log_format.h
+@@ -927,10 +927,8 @@ struct xfs_xmi_log_format {
+  */
+ #define XFS_EXCHMAPS_INO1_WRITTEN	(1ULL << 2)
+ 
+-/* Clear the reflink flag from inode1 after the operation. */
++/* No longer set, but older intents may carry them; keep them valid. */
+ #define XFS_EXCHMAPS_CLEAR_INO1_REFLINK	(1ULL << 3)
+-
+-/* Clear the reflink flag from inode2 after the operation. */
+ #define XFS_EXCHMAPS_CLEAR_INO2_REFLINK	(1ULL << 4)
+ 
+ #define XFS_EXCHMAPS_LOGGED_FLAGS	(XFS_EXCHMAPS_ATTR_FORK | \
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -1514,7 +1514,6 @@ xfs_swap_extents(
+ 	struct xfs_bstat	*sbp = &sxp->sx_stat;
+ 	int			src_log_flags, target_log_flags;
+ 	int			error = 0;
+-	uint64_t		f;
+ 	int			resblks = 0;
+ 	unsigned int		flags = 0;
+ 	struct timespec64	ctime, mtime;
+@@ -1670,14 +1669,12 @@ xfs_swap_extents(
+ 	if (error)
+ 		goto out_trans_cancel;
+ 
+-	/* Do we have to swap reflink flags? */
+-	if ((ip->i_diflags2 & XFS_DIFLAG2_REFLINK) ^
+-	    (tip->i_diflags2 & XFS_DIFLAG2_REFLINK)) {
+-		f = ip->i_diflags2 & XFS_DIFLAG2_REFLINK;
+-		ip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-		ip->i_diflags2 |= tip->i_diflags2 & XFS_DIFLAG2_REFLINK;
+-		tip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-		tip->i_diflags2 |= f & XFS_DIFLAG2_REFLINK;
++	/* Either inode may now own shared blocks; flag both, with CoW forks. */
++	if ((ip->i_diflags2 | tip->i_diflags2) & XFS_DIFLAG2_REFLINK) {
++		ip->i_diflags2 |= XFS_DIFLAG2_REFLINK;
++		tip->i_diflags2 |= XFS_DIFLAG2_REFLINK;
++		xfs_ifork_init_cow(ip);
++		xfs_ifork_init_cow(tip);
+ 	}
+ 
+ 	/* Swap the cow forks. */
 
 
