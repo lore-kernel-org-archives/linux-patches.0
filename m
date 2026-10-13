@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB338F62F;
-	Tue, 13 Oct 2026 12:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F2249C4CC;
+	Tue, 13 Oct 2026 12:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894488; cv=none; b=JtlvcCP8pFt8Kp+kSBeH6t8G18nbeItj0+3T/5d2X4b8J97hNytAfVCD82h5DupDxu7hEaH+VQ58aGL7fV9MdYsll8/SkQmEaKw9T8R8ypXHSVXTuSZpHQxYTItL8/7rVH4swYx4mUWPbPdqcHp/xva0/N3tMzIzb2toLRvVwQY=
+	t=1791894492; cv=none; b=EqUVN9CjDLUdGumgUeA6msUZmiAuAm6sniz41FloeIFq0l0XdYuHozznpOX+X3lDUPREBHfE4+OluC6jGsenx2n2HC5xh2WHezoCBn8JhVl3RQDyZNxERjN5Yw5UVzANyNrY+Y8mvN2v0CjS9YPNB4nmYG+ouo+6gpt4BtczPJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894488; c=relaxed/simple;
-	bh=knhwBweOub+dQHtBrHCJnOlW/OQJnKwl3ZhKmb3LjUk=;
+	s=arc-20240116; t=1791894492; c=relaxed/simple;
+	bh=st2V0Nv45s5ecpN3ZeDB0BVZO/U+o8TLF6vowxz45Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VRsXx+CFxhOI/TC75+A29918Sous+xMo+kFv5uH921MqFlu++u+Z5+gIMLP2LDuNuUVZqJPPbU7Ihe+QfF0NlIYQnysQp7aK0U5Z/n2cCY1NSmhwmlE2aNyhcpkNqQW4wEdCDuX2K5GP7/mbgbmaTrxkeh/yb0c3S1zIrm5ym+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/jRU16R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dlGDNQp5lg5eeMWJi4ut3Pa1K7qIJChX0r1D3PzQf/+zT/dXABMOGuo9o/w3IHFwh6lrDLRT8m8+UPWKLu9qe1uZHCP6VBixMvtrZ6f2pzorSCBpiwiM7JVG12x8cly1ddf4Oa8TVpjCS+Vib3K4LQq6jy8P/X2w5wuks1k49h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ba0e0RzH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/jRU16R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7C41F000FF;
-	Tue, 13 Oct 2026 12:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba0e0RzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0BC1F000FF;
+	Tue, 13 Oct 2026 12:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894487;
-	bh=lUFAS5jvNyBpLUzxCoBNG/zWKEtULNn7xObv2wiaCHc=;
+	s=korg; t=1791894490;
+	bh=36TCgn7GRJLzvOoU1+ANjYjPaO8pBzoDrEemPDh2YTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/jRU16RbXFC2TXNC1bUGWShlbqbHd8Qf/C6uICipVLVWCOzkmG/0Q1OBD1dpMHcG
-	 XCb/Wiuse1bjvsJczzVJ+9b5QKJQH/uLQShurinCWnmHjVf1lwH7pdOXrbMd4PZq0j
-	 s7TZgCZMawx3eZROLCTYUSgzBLoWErivqfqlNq+8=
+	b=Ba0e0RzHHXY4EMTq7XAu+o7dRdNVddQMI4qTcT0csMHOfUHaKrxQqjUuKXYbHuKZq
+	 8Py1tQacvv7kjXIunVDcaSICY7TgJfEczxlBU+etBDuftVDa8zktlatTVb9rW+5bTu
+	 23A/mX8IsNM2b3FKvUguTmVaFJ4LUM9FGFWILYg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 575/621] ASoC: adau1372: fix invalid default state of output ASRC and DAC muxes
-Date: Tue, 13 Oct 2026 13:39:30 +0200
-Message-ID: <20261013112934.453105785@linuxfoundation.org>
+Subject: [PATCH 6.18 534/621] fs: dont let a migrating task hide its reference from do_umount()
+Date: Tue, 13 Oct 2026 13:38:49 +0200
+Message-ID: <20261013112933.491837133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -46,83 +44,448 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alvin.sipraga@analog.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 36d0e05815ce84266c8b138cd4f84c3feeaf15f4 ]
+[ Upstream commit 7eb84d54fac5002bd975d1de8fd61d57e89172ab ]
 
-The chip has strange power-on reset values for the registers that
-control the output ASRC and DAC source muxes - the values are actually
-marked "Reserved" in the datasheet [1]. This means that until the
-underlying kcontrols are modified, the codec will not function as
-expected.
+propagate_mount_busy() uses mnt_get_count() via do_refcount_check() to
+figure out whether a synchronous umount may proceed or not by summing
+the per-CPU mnt_count counter under mount_lock.
 
-The registers in question are:
+The fastpath for mntget() and mntput() doesn't require that lock. A task
+that already holds a reference and takes another one on a cpu the loop
+has summed can get migrated and drops that reference again on another
+cpu. The loop might not have reached that cpu yet. That ends up
+undercounting. The original reference of the task is missed and umount()
+ends up succeeding with the file still open. The mount is destroyed
+later when the task mntput()s so it degrades to a lazy umount.
 
-  register / field       reset value       valid values
+That's basically the umount(2) variant of commit 9ea0a46ca2c3 ("fix
+mntput/mntput race") closed for the final mntput(). The same
+cpu-migration caused a UAF.
 
-  ASRCO_SOURCE_0_1       0x10
-   ASRC_OUT_SOURCE0      0                 4 .. 16
-   ASRC_OUT_SOURCE1      1                 4 .. 16
-  ASRCO_SOURCE_2_3       0x10
-   ASRC_OUT_SOURCE2      2                 4 .. 16
-   ASRC_OUT_SOURCE3      3                 4 .. 16
-  DAC_SOURCE_0_1         0x10
-   DAC_SOURCE_0          0                 12 .. 13
-   DAC_SOURCE_1          1                 12 .. 13
+Luckily this isn't a UAF. It's just a hidden reference pinning the
+mount but it's wrong nonetheless.
 
-Set some sane defaults during the driver probe:
+Like the other race it's a narrow window but I can reproduce it reliably
+with some patching. The debug patch below prints the sum the loop
+computed next to an immediate re-sum of the same counters. It reports
+who drops the last reference to that mount later:
 
-  ADC Decimator0 -> Output ASRC0
-  ADC Decimator1 -> Output ASRC1
-  ADC Decimator2 -> Output ASRC2
-  ADC Decimator3 -> Output ASRC3
-  Input ASRC0 -> DAC0
-  Input ASRC1 -> DAC1
+#  --- a/fs/namespace.c
+#  +++ b/fs/namespace.c
+#  @@ -34,6 +34,8 @@
+#   #include <linux/mnt_idmapping.h>
+#   #include <linux/pidfs.h>
+#   #include <linux/nstree.h>
+#  +#include <linux/debugfs.h>
+#  +#include <linux/delay.h>
+#
+#   #include "pnode.h"
+#   #include "internal.h"
+#  @@ -263,17 +265,48 @@
+#   #endif
+#   }
+#
+#  +static u32 mnt_get_count_delay_ms;
+#  +static int mnt_get_count_debug_id;
+#  +
+#  +static int __init mnt_get_count_debug_init(void)
+#  +{
+#  +	debugfs_create_u32("mnt_get_count_delay_ms", 0600, NULL,
+#  +			   &mnt_get_count_delay_ms);
+#  +	return 0;
+#  +}
+#  +late_initcall(mnt_get_count_debug_init);
+#  +
+#   /*
+#    * vfsmount lock must be held for write
+#    */
+#   int mnt_get_count(struct mount *mnt)
+#   {
+#   #ifdef CONFIG_SMP
+#  -	int count = 0;
+#  +	static int seen[NR_CPUS];
+#  +	bool slow = mnt_get_count_delay_ms &&
+#  +		    !(mnt->mnt.mnt_flags & MNT_UMOUNT);
+#  +	int count = 0, again = 0;
+#   	int cpu;
+#
+#   	for_each_possible_cpu(cpu) {
+#  -		count += per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_count;
+#  +		seen[cpu] = per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_count;
+#  +		count += seen[cpu];
+#  +		if (slow)
+#  +			mdelay(mnt_get_count_delay_ms);
+#  +	}
+#  +	if (slow) {
+#  +		for_each_possible_cpu(cpu) {
+#  +			int now;
+#  +
+#  +			now = per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_count;
+#  +			again += now;
+#  +			pr_err("mount %d: cpu%d read %d, now %d\n",
+#  +			       mnt->mnt_id, cpu, seen[cpu], now);
+#  +		}
+#  +		mnt_get_count_debug_id = mnt->mnt_id;
+#  +		pr_err("mount %d: sum %d, re-sum %d, %ps\n",
+#  +		       mnt->mnt_id, count, again,
+#  +		       __builtin_return_address(0));
+#   	}
+#
+#   	return count;
+#  @@ -1350,6 +1383,9 @@
+#   	smp_mb();
+#   	mnt_add_count(mnt, -1);
+#   	count = mnt_get_count(mnt);
+#  +	if (count == 0 && mnt->mnt_id == mnt_get_count_debug_id)
+#  +		pr_err("mount %d: last put by %s (%d)\n", mnt->mnt_id,
+#  +		       current->comm, task_pid_nr(current));
+#   	if (count != 0) {
+#   		WARN_ON(count < 0);
+#   		rcu_read_unlock();
 
-With this, the chip will behave as advertised by the default kcontrol
-state exposed by the driver.
+A task holds open a directory fd on a tmpfs. A synchronous rumount() of
+the tmpfs sums up. Concurrently a task calls fchdir() on that fd on
+CPU 0 and fchdir()s back to / on CPU 3. This will cause a path_get() and
+a path_put() with a migration in between without mount_lock held.
 
-[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADAU1372.pdf
+Adding a delay per CPU makes the count loop miss the get in a cpu it
+already visited but count the put in one it hasn't.
 
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-2-599cc17fb5f6@analog.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The reproducer, run as root with debugfs mounted:
+
+  /*
+   * gcc -static -o umount-torn umount-torn.c
+   */
+  #define _GNU_SOURCE
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <sched.h>
+  #include <stdio.h>
+  #include <string.h>
+  #include <unistd.h>
+  #include <sys/mount.h>
+  #include <sys/stat.h>
+  #include <sys/wait.h>
+
+  #define KNOB "/sys/kernel/debug/mnt_get_count_delay_ms"
+  #define MNT "/mnt/x"
+
+  static int kmsg;
+
+  static void pin(int cpu)
+  {
+  	cpu_set_t s;
+
+  	CPU_ZERO(&s);
+  	CPU_SET(cpu, &s);
+  	sched_setaffinity(0, sizeof(s), &s);
+  }
+
+  static void knob(const char *v)
+  {
+  	int fd = open(KNOB, O_WRONLY);
+
+  	write(fd, v, strlen(v));
+  	close(fd);
+  }
+
+  int main(void)
+  {
+  	int last = sysconf(_SC_NPROCESSORS_ONLN) - 1;
+  	int p[2], fd, ret;
+  	pid_t pid;
+  	char c;
+
+  	kmsg = open("/dev/kmsg", O_WRONLY);
+  	mkdir(MNT, 0755);
+  	mount("none", MNT, "tmpfs", 0, NULL);
+  	fd = open(MNT "/f", O_WRONLY | O_CREAT, 0644);
+  	write(fd, "still here\n", 11);
+  	close(fd);
+
+  	pipe(p);
+  	pid = fork();
+  	if (pid == 0) {
+  		int dirfd = open(MNT, O_RDONLY | O_DIRECTORY);
+  		int rootfd = open("/", O_RDONLY | O_DIRECTORY);
+  		struct stat st;
+  		char buf[16];
+
+  		/* one get/put pair while the umount is summing */
+  		usleep(150000);
+  		pin(0);
+  		fchdir(dirfd);		/* mntget() */
+  		dprintf(kmsg, "holder %d: get on cpu %d\n", getpid(),
+  			sched_getcpu());
+  		pin(last);
+  		fchdir(rootfd);		/* mntput() */
+  		dprintf(kmsg, "holder %d: put on cpu %d\n", getpid(),
+  			sched_getcpu());
+
+  		/* the umount has returned, is the fd still good? */
+  		read(p[0], &c, 1);
+  		fd = openat(dirfd, "f", O_RDONLY);
+  		ret = read(fd, buf, sizeof(buf));
+  		dprintf(kmsg, "holder %d: fstat %d openat %d read %d\n",
+  			getpid(), fstat(dirfd, &st), fd, ret);
+  		_exit(0);
+  	}
+
+  	pin(1);
+  	knob("100");
+  	ret = umount2(MNT, 0);
+  	knob("0");
+  	if (ret)
+  		dprintf(kmsg, "umount: %s\n", strerror(errno));
+  	else
+  		dprintf(kmsg, "umount: 0\n");
+  	write(p[1], "x", 1);
+  	waitpid(pid, NULL, 0);
+  	return 0;
+  }
+
+The log shows the busy check summing 2 and when read right after it
+reads 3. The loop read CPU 0 before the get landed there and CPU 3
+after the put did. The umount succeeds while there's still someone
+with an fd. The mount is then dropped when the fd goes:
+
+  [    2.511944] holder 90: get on cpu 0
+  [    2.512023] holder 90: put on cpu 3
+  [    2.671388] mount 28: cpu0 read 1, now 2
+  [    2.671398] mount 28: cpu1 read 2, now 2
+  [    2.671401] mount 28: cpu2 read 0, now 0
+  [    2.671404] mount 28: cpu3 read -1, now -1
+  [    2.671407] mount 28: sum 2, re-sum 3, propagate_mount_busy
+  [    2.671773] umount: 0
+  [    2.672963] holder 90: fstat 0 openat 8 read 11
+  [    2.673663] mount 28: last put by umount-torn (90)
+
+Easy fix would be to order mntget() against the loop that sums up. But
+that's a full barrier and a flag test in mntget() afaict. No bueno...
+That would cost every path_get().
+
+So learn from SRCU. Keep gets and puts in separate per-cpu counters and
+make mnt_get_count() sum all puts first and all gets second with a full
+barrier in between.
+
+A put is always after its own get (hopefully...) independent of the cpu
+the task is on. So a put the first pass counted must have its get
+visible to the second pass. Ergo, we can't undercount.
+
+This is the two pass sum srcu_readers_active_idx_check() does for
+srcu_locks and srcu_unlocks. mntget() keeps a single
+this_cpu_inc(). mntput() gains an smp_wmb() before its increment, a
+compiler barrier on x86 and a store fence on the weakly ordered
+architectures, since the two counters are two words and a put stored
+after a get could otherwise become visible before it. The counters
+are unsigned so the difference stays right after they wrap.
+
+The count can still come out high when a get is counted whose put
+the first pass did not see. We don't care. A task can only take a new
+reference if:
+
+(1) it holds one already
+(2) through __legitimize_mnt() which the seqcount orders
+    against the write side
+
+So a get in this window means someone has a reference and -EBUSY is
+correct. The final mntput() is unchanged. Once ->mnt_ns is NULL every
+put takes the slow path under mount_lock and so no put is in flight
+while it counts. Here's an attempted proof for that crap:
+
+(i) A put never becomes visible before its get. Within one task the
+    smp_wmb() in mntput_no_expire() orders every earlier store before the
+    increment of the puts.
+
+    Any task that migrated in between had its stores flushed by the
+    scheduler. When that reference is handed to another task that's
+    trivially true.
+
+(ii) The double count in mnt_get_count() is ordered via smp_mb(). That
+     keeps every read of the puts counter before every read of the gets
+     counter.
+
+(iii) We never undercount by (ii).
+
+(iv) There are no spurious counts/differences. A get is counted only if
+     it happened and a put is left out only if it hasn't happened when
+     the counter was read. With (iii) this means it's equivalent to the
+     old count whenever nothing is taken or dropped during the loop.
+
+(v) do_umount() holds a reference and mount_lock hence. New references
+    come from: (v.a) __legitimize_mnt() managed by the seqcount. Either
+    it's smp_mb() made the get visible to the loop or it takes the lock
+    and waits for the loop. By (iii) a mount with a additional
+    references is refused. By (iv) refusing the umount just means that
+    any additional reference existed, same as the old counter.
+
+(vi) mntput_no_expire_slowpath() runs with ->mnt_ns already NULL. Hence,
+     every other put must take the slowpath as well and hangs on mount_lock.
+
+    The grace period in namespace_unlock() will make every fast path do
+    a put that still saw ->mnt_ns.
+
+    No put is in flight during the loop.
+
+    A get that is in flight comes from a task holding another reference.
+    That must be included by the count or from __legitimize_mnt() as in
+    (v).
+
+    Ergo, zero means the last reference and non-zero means a reference
+    is live.
+
+(vii) may_umount() uses propagate_mount_busy() as well and
+      may_umount_tree() sums mnt_get_count() itself.
+
+With this patch the race is dead:
+
+  [    3.066786] mount 28: sum 3, re-sum 3, propagate_mount_busy
+  [    3.105867] umount: Device or resource busy
+  [    3.106047] holder 90: fstat 0 openat 8 read 11
+
+Link: https://patch.msgid.link/20260923-work-mount-fixes-v1-7-f424cf8d3242@kernel.org
+Fixes: b3e19d924b6e ("fs: scale mntget/mntput")
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/mount.h     |  3 ++-
+ fs/namespace.c | 48 ++++++++++++++++++++++++++++++------------------
+ 2 files changed, 32 insertions(+), 19 deletions(-)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index a1fcce04c4dfc..f5b135799b146 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -1003,6 +1003,17 @@ int adau1372_probe(struct device *dev, struct regmap *regmap,
+diff --git a/fs/mount.h b/fs/mount.h
+index 20387b522c85f..dcf908049f567 100644
+--- a/fs/mount.h
++++ b/fs/mount.h
+@@ -30,7 +30,8 @@ struct mnt_namespace {
+ } __randomize_layout;
  
- 	regmap_write(regmap, ADAU1372_REG_OP_STAGE_MUTE, 0x0);
+ struct mnt_pcp {
+-	int mnt_count;
++	unsigned int mnt_gets;
++	unsigned int mnt_puts;
+ 	int mnt_writers;
+ };
  
-+	/*
-+	 * Set sane default values for the Output ASRC and DAC input muxes,
-+	 * since the power-on reset defaults are invalid "Reserved" states.
-+	 */
-+	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_0_1,
-+		     0x54); /* Decimator0, Decimator1 */
-+	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_2_3,
-+		     0x76); /* Decimator2, Decimator3 */
-+	regmap_write(regmap, ADAU1372_REG_DAC_SOURCE,
-+		     0xdc); /* Input ASRC0, Input ASRC1 */
+diff --git a/fs/namespace.c b/fs/namespace.c
+index b7d431156738f..3b6d7271eb3d1 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -254,16 +254,24 @@ void mnt_release_group_id(struct mount *mnt)
+ 	mnt->mnt_group_id = 0;
+ }
+ 
+-/*
+- * vfsmount lock must be held for read
+- */
+-static inline void mnt_add_count(struct mount *mnt, int n)
++static inline void mnt_inc_count(struct mount *mnt)
++{
++#ifdef CONFIG_SMP
++	this_cpu_inc(mnt->mnt_pcp->mnt_gets);
++#else
++	preempt_disable();
++	mnt->mnt_count++;
++	preempt_enable();
++#endif
++}
 +
- 	regmap_write(regmap, 0x7, 0x01); /* CLOCK OUT */
++static inline void mnt_dec_count(struct mount *mnt)
+ {
+ #ifdef CONFIG_SMP
+-	this_cpu_add(mnt->mnt_pcp->mnt_count, n);
++	this_cpu_inc(mnt->mnt_pcp->mnt_puts);
+ #else
+ 	preempt_disable();
+-	mnt->mnt_count += n;
++	mnt->mnt_count--;
+ 	preempt_enable();
+ #endif
+ }
+@@ -274,14 +282,17 @@ static inline void mnt_add_count(struct mount *mnt, int n)
+ int mnt_get_count(struct mount *mnt)
+ {
+ #ifdef CONFIG_SMP
+-	int count = 0;
++	unsigned int gets = 0, puts = 0;
+ 	int cpu;
  
- 	return  devm_snd_soc_register_component(dev, &adau1372_driver, &adau1372_dai_driver, 1);
+-	for_each_possible_cpu(cpu) {
+-		count += per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_count;
+-	}
++	/* puts first, so a put counted here has its get counted below */
++	for_each_possible_cpu(cpu)
++		puts += per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_puts;
++	smp_mb();	/* pairs with the smp_wmb() in mntput_no_expire() */
++	for_each_possible_cpu(cpu)
++		gets += per_cpu_ptr(mnt->mnt_pcp, cpu)->mnt_gets;
+ 
+-	return count;
++	return gets - puts;
+ #else
+ 	return mnt->mnt_count;
+ #endif
+@@ -310,7 +321,7 @@ static struct mount *alloc_vfsmnt(const char *name)
+ 		if (!mnt->mnt_pcp)
+ 			goto out_free_devname;
+ 
+-		this_cpu_add(mnt->mnt_pcp->mnt_count, 1);
++		this_cpu_inc(mnt->mnt_pcp->mnt_gets);
+ #else
+ 		mnt->mnt_count = 1;
+ 		mnt->mnt_writers = 0;
+@@ -753,13 +764,13 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
+ 	if (bastard == NULL)
+ 		return 0;
+ 	mnt = real_mount(bastard);
+-	mnt_add_count(mnt, 1);
+-	smp_mb();		// see mntput_no_expire() and do_umount()
++	mnt_inc_count(mnt);
++	smp_mb();	/* see mntput_no_expire_slowpath() and do_umount() */
+ 	if (likely(!read_seqretry(&mount_lock, seq)))
+ 		return 0;
+ 	lock_mount_hash();
+ 	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
+-		mnt_add_count(mnt, -1);
++		mnt_dec_count(mnt);
+ 		unlock_mount_hash();
+ 		return 1;
+ 	}
+@@ -1354,7 +1365,7 @@ static void noinline mntput_no_expire_slowpath(struct mount *mnt)
+ 	 * mount_lock, we'll see their refcount increment here.
+ 	 */
+ 	smp_mb();
+-	mnt_add_count(mnt, -1);
++	mnt_dec_count(mnt);
+ 	count = mnt_get_count(mnt);
+ 	if (count != 0) {
+ 		WARN_ON(count < 0);
+@@ -1411,7 +1422,8 @@ static void mntput_no_expire(struct mount *mnt)
+ 		 * non-NULL under rcu_read_lock(), the reference
+ 		 * we are dropping is not the final one.
+ 		 */
+-		mnt_add_count(mnt, -1);
++		smp_wmb();	/* pairs with the smp_mb() in mnt_get_count() */
++		mnt_dec_count(mnt);
+ 		rcu_read_unlock();
+ 		return;
+ 	}
+@@ -1433,7 +1445,7 @@ EXPORT_SYMBOL(mntput);
+ struct vfsmount *mntget(struct vfsmount *mnt)
+ {
+ 	if (mnt)
+-		mnt_add_count(real_mount(mnt), 1);
++		mnt_inc_count(real_mount(mnt));
+ 	return mnt;
+ }
+ EXPORT_SYMBOL(mntget);
 -- 
 2.53.0
 
