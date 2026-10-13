@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8B34D8D93;
-	Tue, 13 Oct 2026 12:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2046B33B6F8;
+	Tue, 13 Oct 2026 12:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896086; cv=none; b=EnqpTErzQuNkP1nJSTtGLOOI26/b2LKOgGe7JkkbLgo3XwRjs16Hics+hUPCubg5EPsZboDgrZ1mQnZzBNT0wkE9WHZJ/j+hdl9FRvX5/D/YQllNJ8UAoLp20nvWrfyCskg01Q89PhdjEQyaI7+fcfJ2NdQJYIib24EpK8FFYH0=
+	t=1791896088; cv=none; b=IBdB9rA/TflxuL/NvePvKTPzL3SgVfKZcUlN40gT7cZIrnNt9SclVDQZGfg081hZft2UTnK1q/cFaydlQnzdrIiTvzBHR0qlHno9uR+cKcbMHZZM+/qZXNQ1iXzoxqB5qnYqVllXgLOIHHUhVLx2DI4YiIi0llwzpANNT2jX148=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896086; c=relaxed/simple;
-	bh=uIg9q+ko9EK/Qhc9If1ay429st8dkLjVVSFIXYHDYHw=;
+	s=arc-20240116; t=1791896088; c=relaxed/simple;
+	bh=XIUMbgO06sgQITUG1aG0IuRv04OcSSLCFY3w6eWwRxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxPzaLQlms0Fy+YRVTw8bVyJfi4ce5mcNvq9nHiVurckTQ7IOKmeIJ23uRDHcC2TIGIHMWhwcJmz0h0wA/9Njy28byAF25tmfMMwpYYk1DrC+0aJBm8SEiXNWdfPtJPU9bM4C8pW/LMOLo/watTadYi3lE4/8C06S6nq3LItHCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkn9ooyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r+CIvKDCi3LQTRtCQX50siPtSRhYZdqEeZCUhS4UYejdaicbqV0kyZ7flk/72JAZpaPeWEZW+RqJ4Hhgl1ZqLz0htk37ZjFWCVt+AXNS/ctl5CAgPGM8vhv9iCnkxxwaIliwb0j+kDUaEbmC3dhUxYJvo+hSj7U2w6Pp7KByeDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaYRtCV1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkn9ooyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3FD1F000FF;
-	Tue, 13 Oct 2026 12:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaYRtCV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756581F000FF;
+	Tue, 13 Oct 2026 12:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791896084;
-	bh=Fwx/Y6OIf2Gnnl2KSG6Gn6AkvVoVZjendTYzopvZy68=;
+	s=korg; t=1791896087;
+	bh=llYk5GVbTCgCnWOWdc/pdD15B1kYgRTa+rqiPRHXQ0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zkn9ooypvni88X96JYLJkcZFe2x/baEHHSeXYw842gjqSWcN/vKDZEWhhjde//2WV
-	 F9rbyvFnM1VKRZPSd3+9DSUiJK9ic3pls98jSzYFXf34jJ4mrbY4UJDYPoDQVYLgBk
-	 dAaVdCnKOGuErnf85BjfdxjPJfAER0VbMR3fCyvk=
+	b=SaYRtCV1TVe3B2h6Zb+lkuMMPmGlHwEr6k172vhnacavI3mgjmE5b2b6eVcyukHco
+	 r6rZDdhroEwyckp9IqL53KkeVkdJz1R8deFOqnAH40fkWOAcUa1Wy1w91yFgWGpfSM
+	 mQVXLmD0hgxCuXJrWxc8U2s2OVYd+r+SraWafi5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 491/497] drm/vc4: Make v3d paths unavailable on any generation newer than vc4
-Date: Tue, 13 Oct 2026 13:40:58 +0200
-Message-ID: <20261013112919.530165211@linuxfoundation.org>
+Subject: [PATCH 6.12 492/497] drm/vc4: Fix binner slot allocation failing on an idle GPU
+Date: Tue, 13 Oct 2026 13:40:59 +0200
+Message-ID: <20261013112919.553990189@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,614 +45,206 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit dbe8ef676f2764f132d2467882e01e313eef495a ]
+[ Upstream commit cca01232d94adcb10f7c8c5bb8ce072b045fcb58 ]
 
-The V3D IP has been separate since BCM2711, so let's make sure we issue
-a WARN if we're running not only on BCM2711, but also anything newer.
+A job's binner slots are returned to bin_alloc_used by vc4_complete_exec(),
+which runs from the job_done workqueue, but the seqno
+vc4_v3d_get_bin_slot() waits on is incremented earlier, in the function
+vc4_irq_finish_render_job(). Therefore, a waiter can wake, retry, and still
+find the pool full because the worker has not run. By then, the job might
+have left the render_job_list, so no seqno remains to wait on and the
+allocation fails returning -ENOMEM.
 
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-22-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Stable-dep-of: cca01232d94a ("drm/vc4: Fix binner slot allocation failing on an idle GPU")
+This scenario can be reproduced on a Raspberry Pi 3 by using a burst of
+small jobs (e.g. Piglit's `quick_gl` suite), with userspace seeing a
+rejected submit for a pool about to become free.
+
+Note that the slots are held from validation until the render completes,
+so the pool can also be exhausted by jobs still queued on bin_job_list,
+leaving render_job_list empty and nothing to wait on.
+
+Release the slots from the FRDONE handler and wait on the pool instead of
+on one job's seqno. This bounds the wait to the actual resource. Also, by
+claiming the slot inside the wait condition, another submit is unable to
+take the slot between the wakeup and the retry. vc4_complete_exec() keeps
+clearing the slots for jobs that never completed, and now wakes the
+waiters too.
+
+Note that the wait takes a deadline, since the two callers need different
+ones. The submit path is a user task and can be interrupted, so it waits
+without one. On the other hand, vc4_overflow_mem_work() runs on a worker
+and never sees a signal, so it needs a deadline. During a reset,
+vc4_irq_disable() masks V3D_DRIVER_IRQS before draining the worker, and
+with those masked nothing can release a slot. This deadlocks: the worker
+would wait for slots that only the reset can free, while the reset waits
+in cancel_work_sync() for the worker.
+
+Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260930182204.1877361-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c               | 28 +++++++++++-----------
- drivers/gpu/drm/vc4/vc4_crtc.c             |  4 ++--
- drivers/gpu/drm/vc4/vc4_drv.c              |  8 +++----
- drivers/gpu/drm/vc4/vc4_gem.c              | 24 +++++++++----------
- drivers/gpu/drm/vc4/vc4_irq.c              | 10 ++++----
- drivers/gpu/drm/vc4/vc4_kms.c              |  2 +-
- drivers/gpu/drm/vc4/vc4_perfmon.c          | 20 ++++++++--------
- drivers/gpu/drm/vc4/vc4_render_cl.c        |  2 +-
- drivers/gpu/drm/vc4/vc4_v3d.c              | 10 ++++----
- drivers/gpu/drm/vc4/vc4_validate.c         |  8 +++----
- drivers/gpu/drm/vc4/vc4_validate_shaders.c |  2 +-
- 11 files changed, 59 insertions(+), 59 deletions(-)
+ drivers/gpu/drm/vc4/vc4_drv.h      |  2 +-
+ drivers/gpu/drm/vc4/vc4_gem.c      |  8 +++++-
+ drivers/gpu/drm/vc4/vc4_irq.c      |  6 +++-
+ drivers/gpu/drm/vc4/vc4_v3d.c      | 44 ++++++++++++++----------------
+ drivers/gpu/drm/vc4/vc4_validate.c |  2 +-
+ 5 files changed, 34 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index af443c98cd701..212c86acca482 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -251,7 +251,7 @@ void vc4_bo_add_to_purgeable_pool(struct vc4_bo *bo)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	mutex_lock(&vc4->purgeable.lock);
-@@ -265,7 +265,7 @@ static void vc4_bo_remove_from_purgeable_pool_locked(struct vc4_bo *bo)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	/* list_del_init() is used here because the caller might release
-@@ -396,7 +396,7 @@ struct drm_gem_object *vc4_create_object(struct drm_device *dev, size_t size)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return ERR_PTR(-ENODEV);
- 
- 	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
-@@ -427,7 +427,7 @@ struct vc4_bo *vc4_bo_create(struct drm_device *dev, size_t unaligned_size,
- 	struct drm_gem_dma_object *dma_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return ERR_PTR(-ENODEV);
- 
- 	if (size == 0)
-@@ -496,7 +496,7 @@ int vc4_bo_dumb_create(struct drm_file *file_priv,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	ret = vc4_dumb_fixup_args(args);
-@@ -622,7 +622,7 @@ int vc4_bo_inc_usecnt(struct vc4_bo *bo)
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	/* Fast path: if the BO is already retained by someone, no need to
-@@ -661,7 +661,7 @@ void vc4_bo_dec_usecnt(struct vc4_bo *bo)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(bo->base.base.dev);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	/* Fast path: if the BO is still retained by someone, no need to test
-@@ -790,7 +790,7 @@ int vc4_create_bo_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	ret = vc4_grab_bin_bo(vc4, vc4file);
-@@ -820,7 +820,7 @@ int vc4_mmap_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_vc4_mmap_bo *args = data;
- 	struct drm_gem_object *gem_obj;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	gem_obj = drm_gem_object_lookup(file_priv, args->handle);
-@@ -846,7 +846,7 @@ vc4_create_shader_bo_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo = NULL;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (args->size == 0)
-@@ -925,7 +925,7 @@ int vc4_set_tiling_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo;
- 	bool t_format;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (args->flags != 0)
-@@ -971,7 +971,7 @@ int vc4_get_tiling_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (args->flags != 0 || args->modifier != 0)
-@@ -1014,7 +1014,7 @@ int vc4_bo_cache_init(struct drm_device *dev)
- 	int ret;
- 	int i;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	/* Create the initial set of BO labels that the kernel will
-@@ -1079,7 +1079,7 @@ int vc4_label_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	int ret = 0, label;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!args->len)
-diff --git a/drivers/gpu/drm/vc4/vc4_crtc.c b/drivers/gpu/drm/vc4/vc4_crtc.c
-index 26a7cf7f64651..f4081085ff405 100644
---- a/drivers/gpu/drm/vc4/vc4_crtc.c
-+++ b/drivers/gpu/drm/vc4/vc4_crtc.c
-@@ -1000,7 +1000,7 @@ static int vc4_async_page_flip(struct drm_crtc *crtc,
- 	struct vc4_bo *bo = to_vc4_bo(&dma_bo->base);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	/*
-@@ -1043,7 +1043,7 @@ int vc4_page_flip(struct drm_crtc *crtc,
- 		struct drm_device *dev = crtc->dev;
- 		struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--		if (vc4->gen == VC4_GEN_5)
-+		if (vc4->gen > VC4_GEN_4)
- 			return vc5_async_page_flip(crtc, fb, event, flags);
- 		else
- 			return vc4_async_page_flip(crtc, fb, event, flags);
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index 550324819f37f..8c104ace3dc6e 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.c
-+++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -98,7 +98,7 @@ static int vc4_get_param_ioctl(struct drm_device *dev, void *data,
- 	if (args->pad != 0)
- 		return -EINVAL;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d)
-@@ -147,7 +147,7 @@ static int vc4_open(struct drm_device *dev, struct drm_file *file)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_file *vc4file;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	vc4file = kzalloc(sizeof(*vc4file), GFP_KERNEL);
-@@ -165,7 +165,7 @@ static void vc4_close(struct drm_device *dev, struct drm_file *file)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_file *vc4file = file->driver_priv;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	if (vc4file->bin_bo_used)
-@@ -301,7 +301,7 @@ static int vc4_drm_bind(struct device *dev)
- 	else
- 		gen = VC4_GEN_4;
- 
--	if (gen == VC4_GEN_5)
-+	if (gen > VC4_GEN_4)
- 		driver = &vc5_drm_driver;
- 	else
- 		driver = &vc4_drm_driver;
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
+index dd452e6a11430..e259e42018383 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.h
++++ b/drivers/gpu/drm/vc4/vc4_drv.h
+@@ -1038,7 +1038,7 @@ void vc4_plane_async_set_fb(struct drm_plane *plane,
+ /* vc4_v3d.c */
+ extern struct platform_driver vc4_v3d_driver;
+ extern const struct of_device_id vc4_v3d_dt_match[];
+-int vc4_v3d_get_bin_slot(struct vc4_dev *vc4);
++int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout);
+ int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used);
+ void vc4_v3d_bin_bo_put(struct vc4_dev *vc4);
+ int vc4_v3d_pm_get(struct vc4_dev *vc4);
 diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 62d19601ef356..efef43306787a 100644
+index efef43306787a..bec799d41d622 100644
 --- a/drivers/gpu/drm/vc4/vc4_gem.c
 +++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -77,7 +77,7 @@ vc4_get_hang_state_ioctl(struct drm_device *dev, void *data,
- 	u32 i;
- 	int ret = 0;
+@@ -950,11 +950,17 @@ vc4_complete_exec(struct drm_device *dev, struct vc4_exec_info *exec)
+ 		drm_gem_object_put(&bo->base.base);
+ 	}
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -392,7 +392,7 @@ vc4_wait_for_seqno(struct drm_device *dev, uint64_t seqno, uint64_t timeout_ns,
- 	unsigned long timeout_expire;
- 	DEFINE_WAIT(wait);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (vc4->finished_seqno >= seqno)
-@@ -477,7 +477,7 @@ vc4_submit_next_bin_job(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct vc4_exec_info *exec;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- again:
-@@ -525,7 +525,7 @@ vc4_submit_next_render_job(struct drm_device *dev)
- 	if (!exec)
- 		return;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	/* A previous RCL may have written to one of our textures, and
-@@ -546,7 +546,7 @@ vc4_move_job_to_render(struct drm_device *dev, struct vc4_exec_info *exec)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	bool was_empty = list_empty(&vc4->render_job_list);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	list_move_tail(&exec->head, &vc4->render_job_list);
-@@ -973,7 +973,7 @@ vc4_job_handle_completed(struct vc4_dev *vc4)
- 	unsigned long irqflags;
- 	struct vc4_seqno_cb *cb, *cb_temp;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
+-	/* Free up the allocation of any bin slots we used. */
++	/* Free up the allocation of any bin slots we used. Jobs that ran to
++	 * completion had their slots released in vc4_irq_finish_render_job().
++	 * Only jobs that never completed still have slots to be released here.
++	 */
  	spin_lock_irqsave(&vc4->job_lock, irqflags);
-@@ -1012,7 +1012,7 @@ int vc4_queue_seqno_cb(struct drm_device *dev,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	unsigned long irqflags;
+ 	vc4->bin_alloc_used &= ~exec->bin_slots;
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	cb->func = func;
-@@ -1068,7 +1068,7 @@ vc4_wait_seqno_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct drm_vc4_wait_seqno *args = data;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	return vc4_wait_for_seqno_ioctl_helper(dev, args->seqno,
-@@ -1085,7 +1085,7 @@ vc4_wait_bo_ioctl(struct drm_device *dev, void *data,
- 	struct drm_gem_object *gem_obj;
- 	struct vc4_bo *bo;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (args->pad != 0)
-@@ -1134,7 +1134,7 @@ vc4_submit_cl_ioctl(struct drm_device *dev, void *data,
- 				  args->shader_rec_size,
- 				  args->bo_handle_count);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -1270,7 +1270,7 @@ int vc4_gem_init(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	vc4->dma_fence_context = dma_fence_context_alloc(1);
-@@ -1329,7 +1329,7 @@ int vc4_gem_madvise_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_bo *bo;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	switch (args->madv) {
++	/* Let anyone waiting on the binner pool retry. */
++	wake_up_all(&vc4->job_wait_queue);
++
+ 	/* Release the reference on the binner BO if needed. */
+ 	if (exec->bin_bo_used)
+ 		vc4_v3d_bin_bo_put(vc4);
 diff --git a/drivers/gpu/drm/vc4/vc4_irq.c b/drivers/gpu/drm/vc4/vc4_irq.c
-index c201a8aaccb40..4fdad88e53e10 100644
+index 4fdad88e53e10..7d783441ffe26 100644
 --- a/drivers/gpu/drm/vc4/vc4_irq.c
 +++ b/drivers/gpu/drm/vc4/vc4_irq.c
-@@ -263,7 +263,7 @@ vc4_irq_enable(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
+@@ -74,7 +74,7 @@ vc4_overflow_mem_work(struct work_struct *work)
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
+ 	bo = vc4->bin_bo;
  
- 	if (!vc4->v3d)
-@@ -280,7 +280,7 @@ vc4_irq_disable(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
+-	bin_bo_slot = vc4_v3d_get_bin_slot(vc4);
++	bin_bo_slot = vc4_v3d_get_bin_slot(vc4, msecs_to_jiffies(500));
+ 	if (bin_bo_slot < 0) {
+ 		drm_err(&vc4->base, "Couldn't allocate binner overflow mem\n");
+ 		goto complete;
+@@ -165,6 +165,10 @@ vc4_irq_finish_render_job(struct drm_device *dev)
+ 	trace_vc4_rcl_end_irq(dev, exec->seqno);
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
+ 	vc4->finished_seqno++;
++
++	vc4->bin_alloc_used &= ~exec->bin_slots;
++	exec->bin_slots = 0;
++
+ 	list_move_tail(&exec->head, &vc4->job_done_list);
  
- 	if (!vc4->v3d)
-@@ -303,7 +303,7 @@ int vc4_irq_install(struct drm_device *dev, int irq)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (irq == IRQ_NOTCONNECTED)
-@@ -324,7 +324,7 @@ void vc4_irq_uninstall(struct drm_device *dev)
- {
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	vc4_irq_disable(dev);
-@@ -337,7 +337,7 @@ void vc4_irq_reset(struct drm_device *dev)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	unsigned long irqflags;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	/* Acknowledge any stale IRQs. */
-diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
-index c5e28ff3931a7..a5dfccc223388 100644
---- a/drivers/gpu/drm/vc4/vc4_kms.c
-+++ b/drivers/gpu/drm/vc4/vc4_kms.c
-@@ -461,7 +461,7 @@ static struct drm_framebuffer *vc4_fb_create(struct drm_device *dev,
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	struct drm_mode_fb_cmd2 mode_cmd_local;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return ERR_PTR(-ENODEV);
- 
- 	/* If the user didn't specify a modifier, use the
-diff --git a/drivers/gpu/drm/vc4/vc4_perfmon.c b/drivers/gpu/drm/vc4/vc4_perfmon.c
-index e4fda72c19f92..75ff2f7482353 100644
---- a/drivers/gpu/drm/vc4/vc4_perfmon.c
-+++ b/drivers/gpu/drm/vc4/vc4_perfmon.c
-@@ -23,7 +23,7 @@ void vc4_perfmon_get(struct vc4_perfmon *perfmon)
- 		return;
- 
- 	vc4 = perfmon->dev;
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	refcount_inc(&perfmon->refcnt);
-@@ -37,7 +37,7 @@ void vc4_perfmon_put(struct vc4_perfmon *perfmon)
- 		return;
- 
- 	vc4 = perfmon->dev;
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	if (refcount_dec_and_test(&perfmon->refcnt))
-@@ -49,7 +49,7 @@ void vc4_perfmon_start(struct vc4_dev *vc4, struct vc4_perfmon *perfmon)
- 	unsigned int i;
- 	u32 mask;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	if (WARN_ON_ONCE(!perfmon || vc4->active_perfmon))
-@@ -69,7 +69,7 @@ void vc4_perfmon_stop(struct vc4_dev *vc4, struct vc4_perfmon *perfmon,
- {
- 	unsigned int i;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	if (WARN_ON_ONCE(!vc4->active_perfmon ||
-@@ -90,7 +90,7 @@ struct vc4_perfmon *vc4_perfmon_find(struct vc4_file *vc4file, int id)
- 	struct vc4_dev *vc4 = vc4file->dev;
- 	struct vc4_perfmon *perfmon;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return NULL;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
-@@ -105,7 +105,7 @@ void vc4_perfmon_open_file(struct vc4_file *vc4file)
- {
- 	struct vc4_dev *vc4 = vc4file->dev;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	mutex_init(&vc4file->perfmon.lock);
-@@ -131,7 +131,7 @@ void vc4_perfmon_close_file(struct vc4_file *vc4file)
- {
- 	struct vc4_dev *vc4 = vc4file->dev;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	mutex_lock(&vc4file->perfmon.lock);
-@@ -151,7 +151,7 @@ int vc4_perfmon_create_ioctl(struct drm_device *dev, void *data,
- 	unsigned int i;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -205,7 +205,7 @@ int vc4_perfmon_destroy_ioctl(struct drm_device *dev, void *data,
- 	struct drm_vc4_perfmon_destroy *req = data;
- 	struct vc4_perfmon *perfmon;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-@@ -233,7 +233,7 @@ int vc4_perfmon_get_values_ioctl(struct drm_device *dev, void *data,
- 	struct vc4_perfmon *perfmon;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (!vc4->v3d) {
-diff --git a/drivers/gpu/drm/vc4/vc4_render_cl.c b/drivers/gpu/drm/vc4/vc4_render_cl.c
-index ae4ad956f04ff..14079853338eb 100644
---- a/drivers/gpu/drm/vc4/vc4_render_cl.c
-+++ b/drivers/gpu/drm/vc4/vc4_render_cl.c
-@@ -599,7 +599,7 @@ int vc4_get_rcl(struct drm_device *dev, struct vc4_exec_info *exec)
- 	bool has_bin = args->bin_cl_size != 0;
- 	int ret;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	if (args->min_x_tile > args->max_x_tile ||
+ 	nextbin = vc4_first_bin_job(vc4);
 diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index ba74118cedca9..f6a9fe4278824 100644
+index f6a9fe4278824..7a3cd4d913cf4 100644
 --- a/drivers/gpu/drm/vc4/vc4_v3d.c
 +++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -128,7 +128,7 @@ static int vc4_v3d_debugfs_ident(struct seq_file *m, void *unused)
- int
- vc4_v3d_pm_get(struct vc4_dev *vc4)
+@@ -171,46 +171,42 @@ static void vc4_v3d_init_hw(struct drm_device *dev)
+ 	V3D_WRITE(V3D_VPMBASE, 0);
+ }
+ 
+-int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
++static int bin_slot_try_alloc(struct vc4_dev *vc4)
  {
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
+-	struct drm_device *dev = &vc4->base;
+-	unsigned long irqflags;
+ 	int slot;
+-	uint64_t seqno = 0;
+-	struct vc4_exec_info *exec;
+ 
+-	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
+-		return -ENODEV;
++	guard(spinlock_irqsave)(&vc4->job_lock);
+ 
+-try_again:
+-	spin_lock_irqsave(&vc4->job_lock, irqflags);
+ 	slot = ffs(~vc4->bin_alloc_used);
+ 	if (slot != 0) {
+ 		/* Switch from ffs() bit index to a 0-based index. */
+ 		slot--;
+ 		vc4->bin_alloc_used |= BIT(slot);
+-		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+-		return slot;
++	} else {
++		slot = -ENOMEM;
+ 	}
+ 
+-	/* Couldn't find an open slot.  Wait for render to complete
+-	 * and try again.
+-	 */
+-	exec = vc4_last_render_job(vc4);
+-	if (exec)
+-		seqno = exec->seqno;
+-	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
++	return slot;
++}
+ 
+-	if (seqno) {
+-		int ret = vc4_wait_for_seqno(dev, seqno, ~0ull, true);
++int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout)
++{
++	int slot;
++	long ret;
+ 
+-		if (ret == 0)
+-			goto try_again;
 +	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
++		return -ENODEV;
  
- 	mutex_lock(&vc4->power_lock);
-@@ -149,7 +149,7 @@ vc4_v3d_pm_get(struct vc4_dev *vc4)
- void
- vc4_v3d_pm_put(struct vc4_dev *vc4)
- {
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
++	/* If the pool is full, wait for a job to release its slots. */
++	ret = wait_event_interruptible_timeout(vc4->job_wait_queue,
++					       (slot = bin_slot_try_alloc(vc4)) >= 0,
++					       timeout);
++	if (ret < 0)
+ 		return ret;
+-	}
++	if (ret == 0)
++		return -ENOMEM;
  
- 	mutex_lock(&vc4->power_lock);
-@@ -179,7 +179,7 @@ int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
- 	uint64_t seqno = 0;
- 	struct vc4_exec_info *exec;
+-	return -ENOMEM;
++	return slot;
+ }
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- try_again:
-@@ -326,7 +326,7 @@ int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used)
- {
- 	int ret = 0;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	mutex_lock(&vc4->bin_bo_lock);
-@@ -361,7 +361,7 @@ static void bin_bo_release(struct kref *ref)
- 
- void vc4_v3d_bin_bo_put(struct vc4_dev *vc4)
- {
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return;
- 
- 	mutex_lock(&vc4->bin_bo_lock);
+ /*
 diff --git a/drivers/gpu/drm/vc4/vc4_validate.c b/drivers/gpu/drm/vc4/vc4_validate.c
-index 8434037c509a1..fe9e233a65398 100644
+index fe9e233a65398..e2b8685776dc8 100644
 --- a/drivers/gpu/drm/vc4/vc4_validate.c
 +++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -109,7 +109,7 @@ vc4_use_bo(struct vc4_exec_info *exec, uint32_t hindex)
- 	struct drm_gem_dma_object *obj;
- 	struct vc4_bo *bo;
+@@ -404,7 +404,7 @@ validate_tile_binning_config(VALIDATE_ARGS)
+ 		return -EINVAL;
+ 	}
  
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return NULL;
- 
- 	if (hindex >= exec->bo_count) {
-@@ -169,7 +169,7 @@ vc4_check_tex_size(struct vc4_exec_info *exec, struct drm_gem_dma_object *fbo,
- 	uint32_t utile_w = utile_width(cpp);
- 	uint32_t utile_h = utile_height(cpp);
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return false;
- 
- 	/* The shaded vertex format stores signed 12.4 fixed point
-@@ -512,7 +512,7 @@ vc4_validate_bin_cl(struct drm_device *dev,
- 	uint32_t dst_offset = 0;
- 	uint32_t src_offset = 0;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	while (src_offset < len) {
-@@ -959,7 +959,7 @@ vc4_validate_shader_recs(struct drm_device *dev,
- 	uint32_t i;
- 	int ret = 0;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return -ENODEV;
- 
- 	for (i = 0; i < exec->shader_state_count; i++) {
-diff --git a/drivers/gpu/drm/vc4/vc4_validate_shaders.c b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-index 792e2d90aecf1..7ce3ec0906c33 100644
---- a/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-@@ -787,7 +787,7 @@ vc4_validate_shader(struct drm_gem_dma_object *shader_obj)
- 	struct vc4_validated_shader_info *validated_shader = NULL;
- 	struct vc4_shader_validation_state validation_state;
- 
--	if (WARN_ON_ONCE(vc4->gen == VC4_GEN_5))
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
- 		return NULL;
- 
- 	memset(&validation_state, 0, sizeof(validation_state));
+-	bin_slot = vc4_v3d_get_bin_slot(vc4);
++	bin_slot = vc4_v3d_get_bin_slot(vc4, MAX_SCHEDULE_TIMEOUT);
+ 	if (bin_slot < 0) {
+ 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
+ 			drm_err(dev, "Failed to allocate binner memory: %d\n",
 -- 
 2.53.0
 
