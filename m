@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBC24F7CAA;
-	Tue, 13 Oct 2026 12:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B968A4E4C4C;
+	Tue, 13 Oct 2026 12:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893397; cv=none; b=PWn4wL6t/WbhUH6J7F3QFCP1BqQN6k/jmwAHq6XN3Tvrt6zBL/IsCK+3T4q0A/HNslI8V4QR3kJhSCd1gfP3ThrHM0ScA3Ehah7NK5HOzSRE1vPz7YceuAm+emtBynqwcSVZbxmZGRVbhmO5QJESBcYwFoQtspq0pQwVMs0134k=
+	t=1791893401; cv=none; b=DdNbJcq2YUXIZ+C6xuNulAjK7IYCHCt4FR9uXqHCtRdnjlJ3s7hloQX6DUv97VP5/Q0HAPpxkszgukkoahtiJYi7LHf+EC5cG8/yOTcD9DZ+n8WMmGqvWpTBs+KLrYSi/SOc5nC+xFUgEBTLALFuATeoLkzPJOxlJfXFLyKKBTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893397; c=relaxed/simple;
-	bh=kwTbE2AnWNnxDeGJuwvTFWfQTFBRfxIZJGKkYOe12nM=;
+	s=arc-20240116; t=1791893401; c=relaxed/simple;
+	bh=jkrPB4A3G+B30QQcec91qIgjdVKFcaj+h3fQuBDZk5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhUlnrbjNDBKn4jaDG2U/wl1bx7dC0uJN2vnOraWyeHalkJv0G5IlMG+YMJkNEnpVgPR+vC+tFR/Iejt1eCNzFO+BlOY24jWFqQs6RFo5dDO/jfwVRYikLs04i2mJqJwVoQtGDZILvA3lesy6fWoBww9RUFqsbczdOC/YjLu53g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECtAm2R2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M1XgqpW/GmvWeC9LSXPD4MF6VbuPcG4VXMSAQAhuZLiK4+c1G9MYBZkoNJDLH4vmAkq7zthu9XHKu+LJ0KQHK9eDowYSZU52kOQVgTvCx0jCFeoSSffYfSUdWMOi19Rn7Ey5pIGtK6GGqMgRns1BKeJxaqjEQRNA/9WfXRtC6JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWSRyJ9y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECtAm2R2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4331F000FF;
-	Tue, 13 Oct 2026 12:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWSRyJ9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9291F00893;
+	Tue, 13 Oct 2026 12:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893396;
-	bh=+GT3iw+YMKO+faKkhvXAko8g10L1MYPH30bbIGiwGlQ=;
+	s=korg; t=1791893399;
+	bh=cNeJyJu/xAlSBLUxq/wQek1NBLaHeWUXbPYvkV6FN/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECtAm2R2dj9SJmE6GOwfCzvEF/pG3U4hy4Y/OwUpoMAxupJRxP0B0bN0Av5It0Ii5
-	 PclgpABgdSqaCOxw6hC076nAQYkpanzLedd89HCkRlzB/aZmb6jf1rO3nfCfX1nmpb
-	 bFqQmKswbF39y2SfNvXGpdMDDuL4ItUZ7RoLarX0=
+	b=CWSRyJ9yvp/GR9FhZqllgEfl+kuo9JXtlYADxDaCfzeElbNt0K8Oa2T5pg6wONq6Y
+	 IKVfj7Dc2XdGFwaeAVbPhs5bddPCU0gL0c3KVrFxNVWIEt1Xg+PVEiArzFr/YEgOWv
+	 NVlhfkdIxbuAi+G4ejy5/6rz83e6HPYONos5Nj0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 213/621] ice: fix potential NULL pointer deref in error path of ice_set_ringparam()
-Date: Tue, 13 Oct 2026 13:33:28 +0200
-Message-ID: <20261013112925.916432780@linuxfoundation.org>
+Subject: [PATCH 6.18 214/621] ice: fix double-free of tx_buf skb
+Date: Tue, 13 Oct 2026 13:33:29 +0200
+Message-ID: <20261013112925.939585310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,51 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit fa28351f970fa5138c7c5dedfe5dea480a0ee065 ]
+[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
 
-ice_set_ringparam nullifies tstamp_ring of temporary tx_rings, without
-clearing ICE_TX_RING_FLAGS_TXTIME bit.
-When ICE_TX_RING_FLAGS_TXTIME is set and the subsequent
-ice_setup_tx_ring() call fails, a NULL pointer dereference could happen
-in the unwinding sequence:
+If ice_tso() or ice_tx_csum() fail, the error path in
+ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
+to it and is marked as valid (ICE_TX_BUF_SKB).
+'next_to_use' remains unchanged, so the potential problem will
+likely fix itself when the next packet is transmitted and the tx_buf
+gets overwritten. But if there is no next packet and the interface is
+brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
+will find the tx_buf and free the skb for the second time.
 
-ice_clean_tx_ring()
--> ice_is_txtime_cfg() == true (ICE_TX_RING_FLAGS_TXTIME is set)
--> ice_free_tx_tstamp_ring()
-  -> ice_free_tstamp_ring()
-    -> tstamp_ring->desc (NULL deref)
+The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
+path, so that ice_unmap_and_free_tx_buf().
+Move the initialization of 'first' up, to ensure it's already valid in
+case we hit the linearization error path.
 
-Clear ICE_TX_RING_FLAGS_TXTIME bit to avoid the potential issue.
+The bug was spotted by AI while I had it looking for something else.
+It also proposed an initial version of the patch.
 
-Note that this potential issue is found by manual code review.
-Compile test only since unfortunately I don't have E830 devices.
+I reproduced the bug and tested the fix by adding code to inject
+failures, on a build with KASAN.
 
-Fixes: ccde82e90946 ("ice: add E830 Earliest TxTime First Offload support")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com>
+I looked for similar bugs in related Intel drivers and did not find any.
+
+Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-8-686c33c9828d@intel.com
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 15efe2f63bdc9..558733788cc1f 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3248,6 +3248,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 		tx_rings[i].desc = NULL;
- 		tx_rings[i].tx_buf = NULL;
- 		tx_rings[i].tstamp_ring = NULL;
-+		clear_bit(ICE_TX_RING_FLAGS_TXTIME, tx_rings[i].flags);
- 		tx_rings[i].tx_tstamps = &pf->ptp.port.tx;
- 		err = ice_setup_tx_ring(&tx_rings[i]);
- 		if (err) {
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 0ed93fc3bf84e..fd3b5084b0293 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -2404,6 +2404,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	ice_trace(xmit_frame_ring, tx_ring, skb);
+ 
++	/* record the location of the first descriptor for this packet */
++	first = &tx_ring->tx_buf[tx_ring->next_to_use];
++
+ 	if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
+ 		goto out_drop;
+ 
+@@ -2432,8 +2435,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	offload.tx_ring = tx_ring;
+ 
+-	/* record the location of the first descriptor for this packet */
+-	first = &tx_ring->tx_buf[tx_ring->next_to_use];
+ 	first->skb = skb;
+ 	first->type = ICE_TX_BUF_SKB;
+ 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
+@@ -2498,6 +2499,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ out_drop:
+ 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
+ 	dev_kfree_skb_any(skb);
++	first->type = ICE_TX_BUF_EMPTY;
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.53.0
 
