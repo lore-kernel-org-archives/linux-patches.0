@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C895D4156C6;
-	Tue, 13 Oct 2026 12:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E624156C6;
+	Tue, 13 Oct 2026 12:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894373; cv=none; b=hCdFob+EN1z7TSOoo4i9IP65rQp55UuYs/RXSy96psjodfQxgOlc5f7aGUKAZcFgDEbe4ISWLQSZj4NK9KkRaknAWxgSu6RJPStwTLNZ7nPo2fNgVpAm4nsEDO8KlrIT6kKlZwMmyiFP9uiov+Vm1GZsWyLhsO8h/fw/SbMboQs=
+	t=1791894374; cv=none; b=cVTeW8o7tQKtevzEGy9bxsW3xYv0e3HtqpT/nK1JjpsaKklumDRinUrAj1F/s01qm8AQHFH9vvVkz07C2itQctidoXVX6NQZDlOUwfdPcftS+n7sqZNloDqeUlLFEbzmMoutHwVMEbkvXuQWDaL8AD0vPsHkYkhEY4rXA/kCyg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894373; c=relaxed/simple;
-	bh=rbNKInB4wRCZOZ3BVu+9q0gFMGHyfuoYNjz+qDrv/WA=;
+	s=arc-20240116; t=1791894374; c=relaxed/simple;
+	bh=EQrobMLbYGCRefuKC2ZsccUbNMtHYJRoL9r4TnoKq0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIWkGPhF5EeDoTLAEZ5Pu/R7mm2f2AzqZDAvr1F4pv9+4FJOD22U82lzrORC5vvTFi1XIB8SKbwLyzGbo3qjoI14+OuAhBdAS1VAsSiGMGDGKt8e2eyH2WBK51jj72b2KxrEiXRGRBpvNuIZZ0jxmyLYQG59eoWw8HUn+NWy4M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miNdQtTg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HY6Rl2R0gvPGF54GTgiPwUnWTMmOQGxveblehzI9Z6dhn6Wf1JvfULWcyRV1TqqgtIcq+ZTks5LyE6SMrmb4LrJj4LwWcFMMNQrECx+/Le8ZIBGg5nnf2HTb6yD+AM5ZwTZdozNvVJNbAIC94F3B6/8IkpV6ba6BjLH+GW8pH/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpXsZB5k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miNdQtTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F561F000FF;
-	Tue, 13 Oct 2026 12:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpXsZB5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D051F00893;
+	Tue, 13 Oct 2026 12:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894370;
-	bh=lHKDn+7H4GLf2/ktg/DEtILIhhEJNzsGk+zKG3ZPgzs=;
+	s=korg; t=1791894373;
+	bh=8PIhcEQ3PceEBlYn/z5WvUq08+re5/aTfLPhhz06B2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=miNdQtTgscbhjtSNaKFW4xbtQCbVP8bEotQZMsVJBHwqrUy0TSQlaxGExFGjDSxCK
-	 a5SLNhQAzl01gaX33bMVHkRzuGjcicESfjojA+p3DoblDLOFvEI8rCZjZDCSSm2YXx
-	 uFevxwqOhnSn05zvpvd05U9zl5R9pWJSClAlADuU=
+	b=bpXsZB5ku3GAvQGZhK6dzCMp7OIHdXr6I0X8TLxJkIV2mpFca6ykgYvxUPmm1SMXO
+	 YKztwl0MFUXHhhvN2x0IzKxi6TGODTGPcamAjkud+JjGXrFK+KxLFWdHdWBV4a/j5D
+	 sTKxeIo9H1knJazUoKQdEKB6usfpLwdIlRQNF/2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 539/621] drm/aspeed: Balance the display clock enable on teardown
-Date: Tue, 13 Oct 2026 13:38:54 +0200
-Message-ID: <20261013112933.610849673@linuxfoundation.org>
+Subject: [PATCH 6.18 540/621] drm/vc4: Free the BO cache size list on teardown
+Date: Tue, 13 Oct 2026 13:38:55 +0200
+Message-ID: <20261013112933.634604726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -46,60 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
+[ Upstream commit b41ff8b529278216cba22a5dcdc93fea2a3a9619 ]
 
-aspeed_gfx_load() enables the display clock without checking the return
-value and never disables it on probe failure or removal. devm_clk_get()
-only releases the clock reference, leaving the enable unbalanced.
+vc4_bo_cache_destroy() purges the cached BOs but never frees the size
+list, leaking it on every unbind.
 
-Use devm_clk_get_enabled() to handle enable failures and automatically
-disable and unprepare the clock on probe failure or removal.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
-Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
+Fixes: c826a6e10644 ("drm/vc4: Add a BO cache.")
+Assisted-by: LLM
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20260930190721.1897264-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/vc4/vc4_bo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-index 46094cca29747..a226eb2fbbe69 100644
---- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-+++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-@@ -190,13 +190,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
- 	}
- 	reset_control_deassert(priv->rst);
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index cd7996592db37..206be4336b0bd 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -1054,6 +1054,7 @@ static void vc4_bo_cache_destroy(struct drm_device *dev, void *unused)
+ 	cancel_work_sync(&vc4->bo_cache.time_work);
  
--	priv->clk = devm_clk_get(drm->dev, NULL);
-+	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
- 	if (IS_ERR(priv->clk)) {
- 		dev_err(&pdev->dev,
--			"missing or invalid clk device tree entry");
-+			"failed to get and enable clock\n");
- 		return PTR_ERR(priv->clk);
- 	}
--	clk_prepare_enable(priv->clk);
+ 	vc4_bo_cache_purge(dev);
++	kfree(vc4->bo_cache.size_list);
  
- 	/* Sanitize control registers */
- 	writel(0, priv->base + CRT_CTRL1);
+ 	for (i = 0; i < vc4->num_labels; i++) {
+ 		if (vc4->bo_labels[i].num_allocated) {
 -- 
 2.53.0
 
