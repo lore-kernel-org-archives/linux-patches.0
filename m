@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92F1501F2F;
-	Tue, 13 Oct 2026 12:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658424F5DF5;
+	Tue, 13 Oct 2026 12:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893335; cv=none; b=ieJSYJ+4Vn8y878T22+G809Sefn6etA6/p4U/OOFxlzv0jT+VyazGSvUUP+ViCp2FuzJECyoor7J5+gRMljHyW5QPHvPC7O3qz4kOlO1hOe1tyNbo+x3GcoOxIdOzyfOWVy6BgZfD+aDtlGODFV5+SI7TSaclWJACzFNy5IY+5Y=
+	t=1791893337; cv=none; b=uxlQGY9AVcJpcYsQ7u5G0kAtgOeFWMK6e2bvScw3oGhya3P4Dl/tZN3a7UcNVgTRdnyjwPFgxqgA9sZdiFQo90aHkNiQhjVc3vn1htcn7U4a810vw17GR7XBGkg7dXcrfHXuJ7mcQnOgT0gT3gkkbPqrrUXHPxao5mHq6jWg8TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893335; c=relaxed/simple;
-	bh=GJGtoO+X+WgTpXcrU8wSz8aaQm4EoxII1XE25CUstBk=;
+	s=arc-20240116; t=1791893337; c=relaxed/simple;
+	bh=WdGU/LRUVzFpimb3JsY42M5ir0SoJPHUNG/jZg72SXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3ZUIj66QdXBKy65R4T7lkviMIwQVfsUbNS4lZEy6GYM4TzJ7kOvHntD1oG1Y726aOiUyh3oDY5no1+GCeC7MqJ2frieBM0S+DhKjTgaMFVdnGAdoFy16YpOP9X8qR2BBtT4Hgdwr4IosJY4DtbVjjEf2UvRT4l8xTCG5+k8L6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhIxqyiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfkZZjNXaqSrBIJ4U2WxXahK0CtFHdFtgQP+FSvdYxIImU46AUhfN7JX1N6mXT5/bajDNrNC49v7wM6mxUIxaMN1MZc0TCF9sizbKo5TVHChUZCc/he6DDScIaPVmrS4oViMCLRnHJBKtT4vXJOpXtGovdnlPmTkAMMRr4c7s4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZ9K1eiC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhIxqyiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C827E1F000FF;
-	Tue, 13 Oct 2026 12:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZ9K1eiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D641F000FF;
+	Tue, 13 Oct 2026 12:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893333;
-	bh=Hxck9lBDluGBdzi8Ykvtj3kPI0hx0cZiiR52N0bEz5s=;
+	s=korg; t=1791893336;
+	bh=BbNEVOj4/ETr1ofwoiUAS+2Z7s00oqt0eXg2ZstB3ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qhIxqyiMosy0g1tDJLrGtg0VTNVtIEgd+s+LBLe205hi7U2RBehmiAs2zz2nzU9j7
-	 vGNd95vzcy19QqBT0hyAjZblbXnvh+K+kIPy1Ptdk8RlLlCYdbcxN9+6CxybUnCyVH
-	 hAJBkUSVPFfFVs8HGevLNjWqpmJBrJI/YUCiN1io=
+	b=uZ9K1eiCqUTY59uWZ3J14SMWrQ++qp+U9qmie5tiOoU8dK5lpR3+KlSckF6/BUnQl
+	 N129tn3k2/P4DOd7AQROiPAX6W0pQI8QB3wOnYb00ujkMUmzd8jP3SehwRP+/MR/YB
+	 3391bHXPv3k9cYuvIDMcPUsWG0OELiL6avF0P7MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Utkarsh Singh <utkarsh.singh.em@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/621] ASoC: amd: acp-mach-common: Add missing error check for clock acquisition
-Date: Tue, 13 Oct 2026 13:33:05 +0200
-Message-ID: <20261013112925.370859983@linuxfoundation.org>
+Subject: [PATCH 6.18 191/621] gfs2/sysfs: Replace sprintf/snprintf with sysfs_emit
+Date: Tue, 13 Oct 2026 13:33:06 +0200
+Message-ID: <20261013112925.394364450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,65 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Utkarsh Singh <utkarsh.singh.em@gmail.com>
 
-[ Upstream commit 30c64fb9839949f085c8eb55b979cbd8a4c51f00 ]
+[ Upstream commit 02c03021e2fced59b3b5b200fdd00018725d4ee2 ]
 
-The acp_card_rt5682_init() and acp_card_rt5682s_init() functions did not
-check the return values of clk_get(). This could lead to a kernel crash
-when the invalid pointers are later dereferenced by clock core
-functions.
+Documentation/filesystems/sysfs.rst mentions that show() should only
+use sysfs_emit() or sysfs_emit_at() when formatting values returned
+to user space. This patch updates the GFS2 sysfs interface accordingly.
 
-Fix this by:
-1. Changing clk_get() to the device-managed devm_clk_get().
-2. Adding IS_ERR() checks immediately after each clock acquisition.
+It replaces uses of sprintf() and snprintf() in all *_show() functions
+with sysfs_emit() to align with current kernel sysfs API best practices.
+It also updates the TUNE_ATTR_2 macro to use sysfs_emit() instead of
+snprintf().
 
-Fixes: 8b7256266848 ("ASoC: amd: acp: Add support for RT5682-VS codec")
-Fixes: d4c750f2c7d4 ("ASoC: amd: acp: Add generic machine driver support for ACP cards")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260310044327.2582018-1-nichen@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Utkarsh Singh <utkarsh.singh.em@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: da6f5bbc2e79 ("gfs2: fix memory leaks in gfs2_fill_super error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-mach-common.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/gfs2/sys.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-mach-common.c b/sound/soc/amd/acp/acp-mach-common.c
-index a2031e7f61424..d695b9c2b9135 100644
---- a/sound/soc/amd/acp/acp-mach-common.c
-+++ b/sound/soc/amd/acp/acp-mach-common.c
-@@ -133,8 +133,13 @@ static int acp_card_rt5682_init(struct snd_soc_pcm_runtime *rtd)
- 	if (drvdata->hs_codec_id != RT5682)
- 		return -EINVAL;
+diff --git a/fs/gfs2/sys.c b/fs/gfs2/sys.c
+index c3c8842920d24..1213f97419f64 100644
+--- a/fs/gfs2/sys.c
++++ b/fs/gfs2/sys.c
+@@ -59,7 +59,7 @@ static struct kset *gfs2_kset;
  
--	drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
--	drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
-+	drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
-+	if (IS_ERR(drvdata->wclk))
-+		return PTR_ERR(drvdata->wclk);
-+
-+	drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
-+	if (IS_ERR(drvdata->bclk))
-+		return PTR_ERR(drvdata->bclk);
+ static ssize_t id_show(struct gfs2_sbd *sdp, char *buf)
+ {
+-	return snprintf(buf, PAGE_SIZE, "%u:%u\n",
++	return sysfs_emit(buf, "%u:%u\n",
+ 			MAJOR(sdp->sd_vfs->s_dev), MINOR(sdp->sd_vfs->s_dev));
+ }
  
- 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682_widgets,
- 					ARRAY_SIZE(rt5682_widgets));
-@@ -375,8 +380,13 @@ static int acp_card_rt5682s_init(struct snd_soc_pcm_runtime *rtd)
- 		return -EINVAL;
+@@ -68,7 +68,7 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
+ 	unsigned long f = sdp->sd_flags;
+ 	ssize_t s;
  
- 	if (!drvdata->soc_mclk) {
--		drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
--		drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
-+		drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
-+		if (IS_ERR(drvdata->wclk))
-+			return PTR_ERR(drvdata->wclk);
-+
-+		drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
-+		if (IS_ERR(drvdata->bclk))
-+			return PTR_ERR(drvdata->bclk);
- 	}
+-	s = snprintf(buf, PAGE_SIZE,
++	s = sysfs_emit(buf,
+ 		     "Journal Checked:          %d\n"
+ 		     "Journal Live:             %d\n"
+ 		     "Journal ID:               %d\n"
+@@ -140,7 +140,7 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
  
- 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682s_widgets,
+ static ssize_t fsname_show(struct gfs2_sbd *sdp, char *buf)
+ {
+-	return snprintf(buf, PAGE_SIZE, "%s\n", sdp->sd_fsname);
++	return sysfs_emit(buf, "%s\n", sdp->sd_fsname);
+ }
+ 
+ static ssize_t uuid_show(struct gfs2_sbd *sdp, char *buf)
+@@ -150,7 +150,7 @@ static ssize_t uuid_show(struct gfs2_sbd *sdp, char *buf)
+ 	buf[0] = '\0';
+ 	if (uuid_is_null(&s->s_uuid))
+ 		return 0;
+-	return snprintf(buf, PAGE_SIZE, "%pUB\n", &s->s_uuid);
++	return sysfs_emit(buf, "%pUB\n", &s->s_uuid);
+ }
+ 
+ static ssize_t freeze_show(struct gfs2_sbd *sdp, char *buf)
+@@ -158,7 +158,7 @@ static ssize_t freeze_show(struct gfs2_sbd *sdp, char *buf)
+ 	struct super_block *sb = sdp->sd_vfs;
+ 	int frozen = (sb->s_writers.frozen == SB_UNFROZEN) ? 0 : 1;
+ 
+-	return snprintf(buf, PAGE_SIZE, "%d\n", frozen);
++	return sysfs_emit(buf, "%d\n", frozen);
+ }
+ 
+ static ssize_t freeze_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+@@ -194,7 +194,7 @@ static ssize_t freeze_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+ static ssize_t withdraw_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	unsigned int b = gfs2_withdrawing_or_withdrawn(sdp);
+-	return snprintf(buf, PAGE_SIZE, "%u\n", b);
++	return sysfs_emit(buf, "%u\n", b);
+ }
+ 
+ static ssize_t withdraw_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+@@ -397,7 +397,7 @@ static struct kobj_type gfs2_ktype = {
+ static ssize_t proto_name_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	const struct lm_lockops *ops = sdp->sd_lockstruct.ls_ops;
+-	return sprintf(buf, "%s\n", ops->lm_proto_name);
++	return sysfs_emit(buf, "%s\n", ops->lm_proto_name);
+ }
+ 
+ static ssize_t block_show(struct gfs2_sbd *sdp, char *buf)
+@@ -408,7 +408,7 @@ static ssize_t block_show(struct gfs2_sbd *sdp, char *buf)
+ 
+ 	if (test_bit(DFL_BLOCK_LOCKS, &ls->ls_recover_flags))
+ 		val = 1;
+-	ret = sprintf(buf, "%d\n", val);
++	ret = sysfs_emit(buf, "%d\n", val);
+ 	return ret;
+ }
+ 
+@@ -459,7 +459,7 @@ static ssize_t wdack_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+ static ssize_t lkfirst_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+-	return sprintf(buf, "%d\n", ls->ls_first);
++	return sysfs_emit(buf, "%d\n", ls->ls_first);
+ }
+ 
+ static ssize_t lkfirst_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+@@ -492,7 +492,7 @@ static ssize_t lkfirst_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+ static ssize_t first_done_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+-	return sprintf(buf, "%d\n", !!test_bit(DFL_FIRST_MOUNT_DONE, &ls->ls_recover_flags));
++	return sysfs_emit(buf, "%d\n", !!test_bit(DFL_FIRST_MOUNT_DONE, &ls->ls_recover_flags));
+ }
+ 
+ int gfs2_recover_set(struct gfs2_sbd *sdp, unsigned jid)
+@@ -550,18 +550,18 @@ static ssize_t recover_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+ static ssize_t recover_done_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+-	return sprintf(buf, "%d\n", ls->ls_recover_jid_done);
++	return sysfs_emit(buf, "%d\n", ls->ls_recover_jid_done);
+ }
+ 
+ static ssize_t recover_status_show(struct gfs2_sbd *sdp, char *buf)
+ {
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+-	return sprintf(buf, "%d\n", ls->ls_recover_jid_status);
++	return sysfs_emit(buf, "%d\n", ls->ls_recover_jid_status);
+ }
+ 
+ static ssize_t jid_show(struct gfs2_sbd *sdp, char *buf)
+ {
+-	return sprintf(buf, "%d\n", sdp->sd_lockstruct.ls_jid);
++	return sysfs_emit(buf, "%d\n", sdp->sd_lockstruct.ls_jid);
+ }
+ 
+ static ssize_t jid_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+@@ -626,7 +626,7 @@ static struct attribute *lock_module_attrs[] = {
+ 
+ static ssize_t quota_scale_show(struct gfs2_sbd *sdp, char *buf)
+ {
+-	return snprintf(buf, PAGE_SIZE, "%u %u\n",
++	return sysfs_emit(buf, "%u %u\n",
+ 			sdp->sd_tune.gt_quota_scale_num,
+ 			sdp->sd_tune.gt_quota_scale_den);
+ }
+@@ -679,7 +679,7 @@ static struct gfs2_attr tune_attr_##name = __ATTR(name, 0644, show, store)
+ #define TUNE_ATTR_2(name, store)                                              \
+ static ssize_t name##_show(struct gfs2_sbd *sdp, char *buf)                   \
+ {                                                                             \
+-	return snprintf(buf, PAGE_SIZE, "%u\n", sdp->sd_tune.gt_##name);      \
++	return sysfs_emit(buf, "%u\n", sdp->sd_tune.gt_##name);               \
+ }                                                                             \
+ TUNE_ATTR_3(name, name##_show, store)
+ 
 -- 
 2.53.0
 
