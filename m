@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC4F3A4274;
-	Tue, 13 Oct 2026 12:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E6C4E9C27;
+	Tue, 13 Oct 2026 12:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893384; cv=none; b=I1OEtQK0NswIBc8Wfi75fwrjoVrB4KkKJYSc4K8Y1X7hcJbZaq1MDC6/PHOTMshvlBNAsHJyEiVZ5Zu2WNb/F2kaXWZwm500XK0875a1/sKu5MNhI/5PzN5TwfGy5JlScbrEtrw/9CuwNr9Zxw8Gy/vR9Q4/g7xpTEFNz7vJ1Og=
+	t=1791893386; cv=none; b=ktly54wNEj2mhcDYiGiY3oY7b7U2saDraA5AWGi0WJ+3wsGVqv+/IuaoaZwQZm567kvwkrnoY9Xhy5C2auwGRQ7Hzp1Ybh/dvUFaPPNi55qe92Ud8RxdL9W21BY1OGLHnbPI0Xj26EgLA68teui+ajkE4PWbFnXShCD8oNA2/3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893384; c=relaxed/simple;
-	bh=87NW32IHLqItyzkqRpBfmqaxiWn+I5Av+zYnBJAfOWs=;
+	s=arc-20240116; t=1791893386; c=relaxed/simple;
+	bh=1BT0JAc39wReS64ONM94OFsD4FUqfIkfbgP4pIR+q1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p973DyWG8naboDwJx0G6Gnv/d84lp1hc5Pcrqw7hvguQ+KqMH98EVTOsvXgIeu4gBDsihTaiJUyIOsbpZ/GA1eYxBrgK7OuqCAxMH4tCtxPKdyF4ExRDI0KJY8YfCLF3vWUVXEKNG6rTFbN2XSVybLZx509J3y9EdhCKLnXyRkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klQKobQZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cbuax94ywO2pUoERjuozUgZvkrH7csHfj3aWvO71bYaGpp77WsdFRPCCplDD9Kk0e8SMscpeVHVa206NqxaHIn4bIrp02Y65hzoIsy56skEvfyH0PlqGvPnokUoalNTye8CqDRB/5iHNsWFFOSnmuHEnp0utxqWJNsOk83ua7gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1T+vSJR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klQKobQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5011F000FF;
-	Tue, 13 Oct 2026 12:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1T+vSJR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805FC1F000FF;
+	Tue, 13 Oct 2026 12:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893382;
-	bh=m8o5JOFz/JlwLNOPPSyurwkFzQjFJCrnYsfVGWtiOgI=;
+	s=korg; t=1791893385;
+	bh=8QkCbhsGMTBGqTBgXS3nnflAVlOKxLjvGESDksgsCEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klQKobQZiRnaGqiEF2vLnyLZ39+qF9pDSKZ2hgfhIw5+srL23VvSyr9n4CSmjREvj
-	 ILxUVs8YBEQTDMl5x1PsviL9J5wJ65fE0DDyuem7BGkxIiKnq4gmPKC4OiybTE0pAT
-	 pHFyXWljipWB8V2V1rbx61fa586vRYShK4gWlDx0=
+	b=1T+vSJR/iQdDG60RrOhDdlxmCqVzhRUTNd2O4CxSuF8ZKpPlWwx6joaHH7jiKk6Zd
+	 XonUrhsoY0txLBHnn2H1B7iA/jWvsNyE+LfBQX7nx7o8W0oihR27Q29VJ3BnWmvS13
+	 NpMuItd7odFHoGAtpcYBOSigc4esJDJZqJHnNNMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Meghana Malladi <m-malladi@ti.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/621] net: ti: icssg-prueth: Make emac_run_xdp function independent of page
-Date: Tue, 13 Oct 2026 13:32:39 +0200
-Message-ID: <20261013112924.754764419@linuxfoundation.org>
+Subject: [PATCH 6.18 155/621] accel/amdxdna: Fix NULL pointer dereference of mgmt_chann
+Date: Tue, 13 Oct 2026 13:32:30 +0200
+Message-ID: <20261013112924.532009147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,158 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 121133163c9ff0d1e6a2f7d4a461e535088fc2e3 ]
+[ Upstream commit 6270ee26e1edd862ea17e3eba148ca8fb2c99dc9 ]
 
-emac_run_xdp function runs xdp program, at a given hook point
-in the Rx path of the driver in NAPI context and returns
-XDP return codes. In zero copy mode the driver receives
-packets using UMEM frames instead of pages (native XDP).
-Decouple the usage of page in this function.
+mgmt_chann may be set to NULL if the firmware returns an unexpected
+error in aie2_send_mgmt_msg_wait(). This can later lead to a NULL
+pointer dereference in aie2_hw_stop().
 
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Link: https://patch.msgid.link/20251118135542.380574-5-m-malladi@ti.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: eb8c426c9803 ("net: ti: icssg-prueth: fix use-after-free of CPPI descriptor in RX path")
+Fix this by introducing a dedicated helper to destroy mgmt_chann
+and by adding proper NULL checks before accessing it.
+
+Fixes: b87f920b9344 ("accel/amdxdna: Support hardware mailbox")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260226213857.3068474-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c | 26 ++++++++++++--------
- drivers/net/ethernet/ti/icssg/icssg_prueth.c |  3 ++-
- drivers/net/ethernet/ti/icssg/icssg_prueth.h |  9 +++++--
- 3 files changed, 25 insertions(+), 13 deletions(-)
+ drivers/accel/amdxdna/aie2_message.c | 17 ++++++++++++-----
+ drivers/accel/amdxdna/aie2_pci.c     |  7 ++-----
+ drivers/accel/amdxdna/aie2_pci.h     |  1 +
+ 3 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index 73d0e7575efa2..5c7e1247556d0 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -544,15 +544,15 @@ void emac_rx_timestamp(struct prueth_emac *emac,
-  * emac_xmit_xdp_frame - transmits an XDP frame
-  * @emac: emac device
-  * @xdpf: data to transmit
-- * @page: page from page pool if already DMA mapped
-  * @q_idx: queue id
-+ * @buff_type: Type of buffer to be transmitted
-  *
-  * Return: XDP state
-  */
- u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
- 			struct xdp_frame *xdpf,
--			struct page *page,
--			unsigned int q_idx)
-+			unsigned int q_idx,
-+			enum prueth_tx_buff_type buff_type)
- {
- 	struct cppi5_host_desc_t *first_desc;
- 	struct net_device *ndev = emac->ndev;
-@@ -560,6 +560,7 @@ u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
- 	struct prueth_tx_chn *tx_chn;
- 	dma_addr_t desc_dma, buf_dma;
- 	struct prueth_swdata *swdata;
-+	struct page *page;
- 	u32 *epib;
- 	int ret;
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index 932d495230511..41fbe09b8047a 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -39,11 +39,8 @@ static int aie2_send_mgmt_msg_wait(struct amdxdna_dev_hdl *ndev,
  
-@@ -576,7 +577,12 @@ u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
- 		return ICSSG_XDP_CONSUMED;	/* drop */
- 	}
+ 	drm_WARN_ON(&xdna->ddev, xdna->rpm_on && !mutex_is_locked(&xdna->dev_lock));
+ 	ret = xdna_send_msg_wait(xdna, ndev->mgmt_chann, msg);
+-	if (ret == -ETIME) {
+-		xdna_mailbox_stop_channel(ndev->mgmt_chann);
+-		xdna_mailbox_destroy_channel(ndev->mgmt_chann);
+-		ndev->mgmt_chann = NULL;
+-	}
++	if (ret == -ETIME)
++		aie2_destroy_mgmt_chann(ndev);
  
--	if (page) { /* already DMA mapped by page_pool */
-+	if (buff_type == PRUETH_TX_BUFF_TYPE_XDP_TX) { /* already DMA mapped by page_pool */
-+		page = virt_to_head_page(xdpf->data);
-+		if (unlikely(!page)) {
-+			netdev_err(ndev, "xdp tx: failed to get page from xdpf\n");
-+			goto drop_free_descs;
-+		}
- 		buf_dma = page_pool_get_dma_addr(page);
- 		buf_dma += xdpf->headroom + sizeof(struct xdp_frame);
- 	} else { /* Map the linear buffer */
-@@ -631,13 +637,11 @@ EXPORT_SYMBOL_GPL(emac_xmit_xdp_frame);
-  * emac_run_xdp - run an XDP program
-  * @emac: emac device
-  * @xdp: XDP buffer containing the frame
-- * @page: page with RX data if already DMA mapped
-  * @len: Rx descriptor packet length
-  *
-  * Return: XDP state
-  */
--static u32 emac_run_xdp(struct prueth_emac *emac, struct xdp_buff *xdp,
--			struct page *page, u32 *len)
-+static u32 emac_run_xdp(struct prueth_emac *emac, struct xdp_buff *xdp, u32 *len)
- {
- 	struct net_device *ndev = emac->ndev;
- 	struct netdev_queue *netif_txq;
-@@ -664,7 +668,8 @@ static u32 emac_run_xdp(struct prueth_emac *emac, struct xdp_buff *xdp,
- 		q_idx = cpu % emac->tx_ch_num;
- 		netif_txq = netdev_get_tx_queue(ndev, q_idx);
- 		__netif_tx_lock(netif_txq, cpu);
--		result = emac_xmit_xdp_frame(emac, xdpf, page, q_idx);
-+		result = emac_xmit_xdp_frame(emac, xdpf, q_idx,
-+					     PRUETH_TX_BUFF_TYPE_XDP_TX);
- 		__netif_tx_unlock(netif_txq);
- 		if (result == ICSSG_XDP_CONSUMED) {
- 			ndev->stats.tx_dropped++;
-@@ -689,7 +694,8 @@ static u32 emac_run_xdp(struct prueth_emac *emac, struct xdp_buff *xdp,
- 		fallthrough; /* handle aborts by dropping packet */
- 	case XDP_DROP:
- 		ndev->stats.rx_dropped++;
--		page_pool_recycle_direct(emac->rx_chns.pg_pool, page);
-+		page_pool_recycle_direct(emac->rx_chns.pg_pool,
-+					 virt_to_head_page(xdp->data));
- 		return ICSSG_XDP_CONSUMED;
- 	}
+ 	if (!ret && *hdl->data != AIE2_STATUS_SUCCESS) {
+ 		XDNA_ERR(xdna, "command opcode 0x%x failed, status 0x%x",
+@@ -54,6 +51,16 @@ static int aie2_send_mgmt_msg_wait(struct amdxdna_dev_hdl *ndev,
+ 	return ret;
  }
-@@ -758,7 +764,7 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
- 		xdp_init_buff(&xdp, PAGE_SIZE, &rx_chn->xdp_rxq);
- 		xdp_prepare_buff(&xdp, pa, PRUETH_HEADROOM, pkt_len, false);
  
--		*xdp_state = emac_run_xdp(emac, &xdp, page, &pkt_len);
-+		*xdp_state = emac_run_xdp(emac, &xdp, &pkt_len);
- 		if (*xdp_state != ICSSG_XDP_PASS)
- 			goto requeue;
- 		headroom = xdp.data - xdp.data_hard_start;
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-index 284106982aaaa..ad3dec91e4daf 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-@@ -1175,7 +1175,8 @@ static int emac_xdp_xmit(struct net_device *dev, int n, struct xdp_frame **frame
- 	__netif_tx_lock(netif_txq, cpu);
- 	for (i = 0; i < n; i++) {
- 		xdpf = frames[i];
--		err = emac_xmit_xdp_frame(emac, xdpf, NULL, q_idx);
-+		err = emac_xmit_xdp_frame(emac, xdpf, q_idx,
-+					  PRUETH_TX_BUFF_TYPE_XDP_NDO);
- 		if (err != ICSSG_XDP_TX) {
- 			ndev->stats.tx_dropped++;
- 			break;
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.h b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-index 5cc90b66035a1..2092537f546e3 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.h
-@@ -148,6 +148,11 @@ enum prueth_swdata_type {
- 	PRUETH_SWDATA_XDPF,
- };
- 
-+enum prueth_tx_buff_type {
-+	PRUETH_TX_BUFF_TYPE_XDP_TX,
-+	PRUETH_TX_BUFF_TYPE_XDP_NDO,
-+};
++void aie2_destroy_mgmt_chann(struct amdxdna_dev_hdl *ndev)
++{
++	if (!ndev->mgmt_chann)
++		return;
 +
- struct prueth_swdata {
- 	enum prueth_swdata_type type;
- 	union prueth_data {
-@@ -499,8 +504,8 @@ void prueth_put_cores(struct prueth *prueth, int slice);
- u64 icssg_ts_to_ns(u32 hi_sw, u32 hi, u32 lo, u32 cycle_time_ns);
- u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
- 			struct xdp_frame *xdpf,
--			struct page *page,
--			unsigned int q_idx);
-+			unsigned int q_idx,
-+			enum prueth_tx_buff_type buff_type);
- void prueth_rx_cleanup(void *data, dma_addr_t desc_dma);
- void prueth_tx_cleanup(void *data, dma_addr_t desc_dma);
++	xdna_mailbox_stop_channel(ndev->mgmt_chann);
++	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
++	ndev->mgmt_chann = NULL;
++}
++
+ int aie2_suspend_fw(struct amdxdna_dev_hdl *ndev)
+ {
+ 	DECLARE_AIE2_MSG(suspend, MSG_OP_SUSPEND);
+diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
+index 6e3698ed45198..884800e5fd38d 100644
+--- a/drivers/accel/amdxdna/aie2_pci.c
++++ b/drivers/accel/amdxdna/aie2_pci.c
+@@ -326,9 +326,7 @@ static void aie2_hw_stop(struct amdxdna_dev *xdna)
+ 	}
  
+ 	aie2_mgmt_fw_fini(ndev);
+-	xdna_mailbox_stop_channel(ndev->mgmt_chann);
+-	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
+-	ndev->mgmt_chann = NULL;
++	aie2_destroy_mgmt_chann(ndev);
+ 	drmm_kfree(&xdna->ddev, ndev->mbox);
+ 	ndev->mbox = NULL;
+ 	aie2_psp_stop(ndev->psp_hdl);
+@@ -437,8 +435,7 @@ static int aie2_hw_start(struct amdxdna_dev *xdna)
+ 	return 0;
+ 
+ destroy_mgmt_chann:
+-	xdna_mailbox_stop_channel(ndev->mgmt_chann);
+-	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
++	aie2_destroy_mgmt_chann(ndev);
+ stop_psp:
+ 	aie2_psp_stop(ndev->psp_hdl);
+ fini_smu:
+diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
+index 12fec3cf8c8db..7fbe9b2ebac23 100644
+--- a/drivers/accel/amdxdna/aie2_pci.h
++++ b/drivers/accel/amdxdna/aie2_pci.h
+@@ -260,6 +260,7 @@ int aie2_error_async_events_send(struct amdxdna_dev_hdl *ndev);
+ int aie2_error_async_msg_thread(void *data);
+ 
+ /* aie2_message.c */
++void aie2_destroy_mgmt_chann(struct amdxdna_dev_hdl *ndev);
+ int aie2_suspend_fw(struct amdxdna_dev_hdl *ndev);
+ int aie2_resume_fw(struct amdxdna_dev_hdl *ndev);
+ int aie2_set_runtime_cfg(struct amdxdna_dev_hdl *ndev, u32 type, u64 value);
 -- 
 2.53.0
 
