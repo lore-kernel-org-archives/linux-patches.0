@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952304F68CD;
-	Tue, 13 Oct 2026 12:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343C14F68CF;
+	Tue, 13 Oct 2026 12:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895668; cv=none; b=hZAsJBt4Ycn+pmHJZKLJ3rXOXWt2dMwNEyN7M0RLnAggXh/Wmx/C74nt2rxiCMOyxaDpODAI49y+MLEY1cDdLU588T343Xushm9dwJokVEA6hmyCOq9dyqgmObd83j53i3jQSL7SYpwR7jg3HaJHyXlJA6jlhB554Y8bHxpF1Q0=
+	t=1791895671; cv=none; b=WoEkeqEZ9QVSgE7ZG7Z1Ofc58sl5HgU/suTJ7EET0C2NMoFDmm5ZokdNpo1sALpuK59jfVn6uerjnhBQ2F5W6/44ZQQ+QFoidsQnVglzq7Y5NyJu+1CkHGc8pHbp+e2YJqdCxVdEq1rGf8geRHzGkoEtsUfbAHtEqaguHXmEMn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895668; c=relaxed/simple;
-	bh=kLeAhf2Qe+EiFCm11c+7Y70+9mPp5t4glPvEUDA86eo=;
+	s=arc-20240116; t=1791895671; c=relaxed/simple;
+	bh=8JUiCWWNZNZzh6ZFoZJYRXSv1ekEyAe0VmRpF9BTopA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuJlfBTPD8amlSBK7uDGvy3ZkZnVOkodR8GqpnzYQeqEF8RYJ21xeioTbAmrkjoDOj1OQkkDwC71360Ak4M4WGD9IsCsUeHGTXJf1iXjGcYu+QtZaxA2aSYw6bc0UzvZqYa/GGIPNI3JKUlLiaUwP9nB6sngeRfYs1Cwu96qJi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXw8yVHA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgpK3Q7F1y0tDxLY/7L4N4WlIEllaz7jPr2sg2sg9VTQHQqkm5gcLj+h5kMYtMjhaWPRPKFtFMCAeedF9XDinCw6v40HNHGnrnpjdBlwpAOq359AzEH0KPj9HdmDCXOhSCKa3J6JWUFN8XbQjdmmEHCXGzMY2Yp/RDLb3rZ2Mkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDiwoKBX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXw8yVHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50931F000FF;
-	Tue, 13 Oct 2026 12:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDiwoKBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8241F000FF;
+	Tue, 13 Oct 2026 12:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895667;
-	bh=I/XEFj6y5TYnKpUSD2A27Ae1u7ZLuYv/R73thmUFnyo=;
+	s=korg; t=1791895670;
+	bh=UGTzOValLUwzunD+6e1oM+xJZQhHdIrDtrPwpZ0JE8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXw8yVHADMZZYoCaQglRroov35LcPvNQ5c/n5ermFSo2Brjf49UOYkHDcnzajskU7
-	 ymASQzcJX/YSxMNX2bT/cecBCOTqA+Pp4PDnnIzytR2S6ohj/noShh70ZMP6+yPohn
-	 5UG+XOEygGieJ+IbRcinOorddBS2W9aOYwhAad0s=
+	b=KDiwoKBX/j66nYJNoFj5aWFVW4xJFzz4R39xFgv0VvMKOUs2NKqV/I8Ht090whc5z
+	 ztXemaToWV6ndFYhclOvQj66BbXTNhZA4ESS0/2Qvl39B1WNd6sVniAgWw451nOpVI
+	 oTma41minShodlm+qFkXZZcKbOQ0P2skyxOILcHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/497] wifi: ath12k: fix reusing m3 memory
-Date: Tue, 13 Oct 2026 13:38:38 +0200
-Message-ID: <20261013112916.238798176@linuxfoundation.org>
+Subject: [PATCH 6.12 352/497] crypto: drbg - Fix ineffective sanity check
+Date: Tue, 13 Oct 2026 13:38:39 +0200
+Message-ID: <20261013112916.262779498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,92 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 00575bb44b2c2aa53d0a768de2b80c9c1af0174d ]
+commit 040ad83b0e8aa065fd2fc641cacba8491a8b186d upstream.
 
-During firmware recovery or suspend/resume, m3 memory could be reused if
-the size of the new m3 binary is equal to or less than that of the
-existing memory. There will be issues for the latter case, since
-m3_mem->size will be updated with a smaller value and this value is
-eventually used in the free path, where the original total size should be
-used instead.
+Fix drbg_healthcheck_sanity() to correctly check the return value of
+drbg_generate().  drbg_generate() returns 0 on success, or a negative
+errno value on failure.  drbg_healthcheck_sanity() incorrectly assumed
+that it returned a positive value on success.
 
-To fix it, add a new member in m3_mem_region structure to track the original
-memory size and use it in free path.
+This didn't make the sanity check fail, but it made it ineffective.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
-
-[ Backport to 6.12.y: drop the copyright-line hunks, which do not apply
-  to 6.12.y. The code changes are the same as upstream. ]
-
-Fixes: 05090ae82f44 ("wifi: ath12k: check M3 buffer size as well whey trying to reuse it")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251029-ath12k-fix-m3-reuse-v1-1-69225bacfc5d@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Fixes: cde001e4c3c3 ("crypto: rng - RNGs must return 0 in success case")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/qmi.c | 9 ++++++---
- drivers/net/wireless/ath/ath12k/qmi.h | 3 +++
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ crypto/drbg.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-index b93ce9f87f612..5b02d1d76a36e 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.c
-+++ b/drivers/net/wireless/ath/ath12k/qmi.c
-@@ -2724,9 +2724,10 @@ static void ath12k_qmi_m3_free(struct ath12k_base *ab)
- 	if (!m3_mem->vaddr)
- 		return;
+diff --git a/crypto/drbg.c b/crypto/drbg.c
+index 053a24d064143..36574b1f6c3f9 100644
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -1985,7 +1985,6 @@ static int drbg_kcapi_seed(struct crypto_rng *tfm,
+  */
+ static inline int __init drbg_healthcheck_sanity(void)
+ {
+-	int len = 0;
+ #define OUTBUFLEN 16
+ 	unsigned char buf[OUTBUFLEN];
+ 	struct drbg_state *drbg = NULL;
+@@ -2029,12 +2028,12 @@ static inline int __init drbg_healthcheck_sanity(void)
+ 	max_addtllen = drbg_max_addtl(drbg);
+ 	max_request_bytes = drbg_max_request_bytes(drbg);
+ 	drbg_string_fill(&addtl, buf, max_addtllen + 1);
+-	/* overflow addtllen with additonal info string */
+-	len = drbg_generate(drbg, buf, OUTBUFLEN, &addtl);
+-	BUG_ON(0 < len);
++	/* overflow addtllen with additional info string */
++	ret = drbg_generate(drbg, buf, OUTBUFLEN, &addtl);
++	BUG_ON(ret == 0);
+ 	/* overflow max_bits */
+-	len = drbg_generate(drbg, buf, (max_request_bytes + 1), NULL);
+-	BUG_ON(0 < len);
++	ret = drbg_generate(drbg, buf, max_request_bytes + 1, NULL);
++	BUG_ON(ret == 0);
  
--	dma_free_coherent(ab->dev, m3_mem->size,
-+	dma_free_coherent(ab->dev, m3_mem->total_size,
- 			  m3_mem->vaddr, m3_mem->paddr);
- 	m3_mem->vaddr = NULL;
-+	m3_mem->total_size = 0;
- 	m3_mem->size = 0;
- }
- 
-@@ -2762,7 +2763,7 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
- 
- 	/* In recovery/resume cases, M3 buffer is not freed, try to reuse that */
- 	if (m3_mem->vaddr) {
--		if (m3_mem->size >= m3_len)
-+		if (m3_mem->total_size >= m3_len)
- 			goto skip_m3_alloc;
- 
- 		/* Old buffer is too small, free and reallocate */
-@@ -2774,11 +2775,13 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
- 					   GFP_KERNEL);
- 	if (!m3_mem->vaddr) {
- 		ath12k_err(ab, "failed to allocate memory for M3 with size %zu\n",
--			   fw->size);
-+			   m3_len);
- 		ret = -ENOMEM;
- 		goto out;
- 	}
- 
-+	m3_mem->total_size = m3_len;
-+
- skip_m3_alloc:
- 	memcpy(m3_mem->vaddr, m3_data, m3_len);
- 	m3_mem->size = m3_len;
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.h b/drivers/net/wireless/ath/ath12k/qmi.h
-index 0dfcbd8cb59b6..e9eb186441cce 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.h
-+++ b/drivers/net/wireless/ath/ath12k/qmi.h
-@@ -118,6 +118,9 @@ struct target_info {
- };
- 
- struct m3_mem_region {
-+	/* total memory allocated */
-+	u32 total_size;
-+	/* actual memory being used */
- 	u32 size;
- 	dma_addr_t paddr;
- 	void *vaddr;
+ 	/* overflow max addtllen with personalization string */
+ 	ret = drbg_seed(drbg, &addtl, false);
 -- 
 2.53.0
 
