@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5DD466B58;
-	Tue, 13 Oct 2026 12:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8F73D5241;
+	Tue, 13 Oct 2026 12:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894930; cv=none; b=kmlL5TPI72DcEnk/VroBdsdsBslZG0F0Ii/52NsWAvHIBxlC2+wUOo2aIU/x2A5H2OJ+carCvC4pMtQXvN8R8TYoXZ9M0Y/qcNwDrIDDuchzH0y+B0DVVbJk973yzvDJ5oMIQePfr4ts7aeWHthN19o3V82RFcBO/v9iFdYI0eM=
+	t=1791894933; cv=none; b=qOEdRrGESZxUQ59o6Qr6WdOkyYT6XYAI5ncNukxHaakuza/v8gmtxJtoBVRRLvh+x40n8P5RmJpkvLDmUF7Nui+31LejwXe7IBBBekVNz5Ia9v+qTX9t3XQkp4fMmNeygdNXNEswbgrXerm/lBEkKOFpbvYBRfoQ1IZkFCqIw6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894930; c=relaxed/simple;
-	bh=PB5VyAAV9pJXasxCUhBrsu92il/j7sEVxKd8AO4gTXo=;
+	s=arc-20240116; t=1791894933; c=relaxed/simple;
+	bh=Mh97cicKwjM8Ug8A9SjXEQNthJakaozef69HxF8w5vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0+MR/qLZ2ssvW6ib3VeVD12XGSi/SGHy+1q0k552jxPgj/bL6RzvGwPNvCGcIZjFH1H4J/i6Q+NTL+MnxGfNUU858FZFKv42LE4uq9K2LdSnfXvUD0B3ec7IjzBzD8SwSs49qVeJlDh46ez+XLJCjvDAXS6N90x+LNn40LTKGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6J/LuWE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j6ObdaIDYjTeLzxjpxxCvZYv1xiEl/hky/ek0f2ldb5c26VtGJiRgukhtLiG0UvMbwfLpmuZvwyXAoKKBOFqObC8pyLO0V+k5x+QYmB23pyQ/8ElbYWNoSgkaUvA8fmHa1BYu6nVfxQol4XZNk0mOCQwMUJnmHQkh6ph/gaAq+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt2FWdP3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6J/LuWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8732E1F000FF;
-	Tue, 13 Oct 2026 12:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt2FWdP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8781F000FF;
+	Tue, 13 Oct 2026 12:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894929;
-	bh=I5M96RAln+Z4R62yCBaByMeGEQ7zIl6KTfsJvpGZ9SQ=;
+	s=korg; t=1791894932;
+	bh=YYeRU8UMZkk1GUVtjEtkkfw0Q1yNQRS7wpoHG3qn4rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6J/LuWEDftB0oJJIijTfeVl/KhCD2Po1E4wQVRDITdLteVi11bpZ3niu7fWR/11Y
-	 Jl5ZHFozkQuaq/vjwU7nzyA/p/6w5Eyx3iIkhcUOgKYv1VVYDaGsIFrMxtMwJdaF51
-	 0DQIanU/5+hd6uhvs3t+B1GJ/gjaO18xfcwFdQII=
+	b=wt2FWdP3PC/VQGZMJS7kUlNXF6r5V7hsVS1vMBku5KuPe9TtSlflBEVzgCXMl1vMc
+	 SMUEXMU3vRv/NTURKU3QW+bHd/9E8EeHy31Ult0x9gOR+PSydk+1BYMoXjrKWkMxDL
+	 nd0z/OIGplL3eFrFQbP/lhKhCVaOlfmDKBx58bNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@kernel.org>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/497] net/mlx5e: Fix AF_XDP TX timestamp teardown NULL dereference
-Date: Tue, 13 Oct 2026 13:34:31 +0200
-Message-ID: <20261013112910.359352634@linuxfoundation.org>
+Subject: [PATCH 6.12 105/497] ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()
+Date: Tue, 13 Oct 2026 13:34:32 +0200
+Message-ID: <20261013112910.383755899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,42 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 7b97273cbebe9dd4fddc457f0c4f2a124d0e3996 ]
+[ Upstream commit 8ec454dcd00ce3375119111c6394964455b36d0d ]
 
-During XSK TX queue teardown, outstanding descriptors are completed
-without a CQE. If one requested a TX timestamp, the completion path
-passes that NULL CQE to mlx5e_xsk_fill_timestamp(), which dereferences
-it.
+Since commit d58e468b1112 ("flow_dissector: implements flow dissector
+BPF hook") __skb_flow_dissect() needs a net pointer, either from
+skb->dev, skb->sk, or since commit 3cbf4ffba5ee ("net: plumb network
+namespace into __skb_flow_dissect") a caller provided pointer.
 
-Return zero when no CQE is available, indicating that teardown did not
-produce a TX timestamp.
+syzbot was able to reach seg6_make_flowlabel() with an skb having
+neither skb->dev nor skb->sk set: a TIPC UDP bearer sends a discovery
+message through an IPv4 route using seg6 encap, while
+net.ipv6.seg6_flowlabel is set to 1.
 
-Fixes: ec706a860eba ("net/mlx5e: Implement AF_XDP TX timestamp and checksum offload")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260926165402.5902-1-prathameshdeshpande7@gmail.com
+seg6_make_flowlabel() already has a net pointer, use skb_get_hash_net().
+
+WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126, CPU#0: syz.0.17/4930
+Call trace:
+  __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126 (P)
+  __skb_get_hash_net+0xe0/0x29c net/core/flow_dissector.c:1903
+  skb_get_hash include/linux/skbuff.h:1663 [inline]
+  seg6_make_flowlabel+0xcc/0x1ec net/ipv6/seg6_iptunnel.c:132
+  __seg6_do_srh_encap+0x320/0xbf4 net/ipv6/seg6_iptunnel.c:161
+  seg6_do_srh+0x4b4/0xa44 net/ipv6/seg6_iptunnel.c:431
+  seg6_output_core+0x164/0x688 net/ipv6/seg6_iptunnel.c:681
+  seg6_output+0x44/0x1ac net/ipv6/seg6_iptunnel.c:744
+  lwtunnel_output+0x3d0/0x664 net/core/lwtunnel.c:356
+  dst_output include/net/dst.h:470 [inline]
+  ip_local_out+0x110/0x148 net/ipv4/ip_output.c:131
+  iptunnel_xmit+0x50c/0xd38 net/ipv4/ip_tunnel_core.c:97
+  udp_tunnel_xmit_skb+0x220/0x348 net/ipv4/udp_tunnel_core.c:187
+  tipc_udp_xmit+0x75c/0x9c0 net/tipc/udp_media.c:202
+  tipc_udp_send_msg+0x214/0x374 net/tipc/udp_media.c:274
+  tipc_bearer_xmit_skb+0x260/0x3b0 net/tipc/bearer.c:576
+  tipc_enable_bearer net/tipc/bearer.c:366 [inline]
+  __tipc_nl_bearer_enable+0xc90/0xfb0 net/tipc/bearer.c:1048
+  tipc_nl_bearer_enable+0x2c/0x48 net/tipc/bearer.c:1057
+  genl_family_rcv_msg_doit+0x1e4/0x2d4 net/netlink/genetlink.c:1114
+
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Reported-by: syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6abac2eb.3654fce1.1bec97.0000.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260928194524.3617299-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/seg6_iptunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index d4d2de017a504..1f56141616233 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -292,6 +292,9 @@ static u64 mlx5e_xsk_fill_timestamp(void *_priv)
- 	struct mlx5e_xsk_tx_complete *priv = _priv;
- 	u64 ts;
+diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
+index ead677bca4901..d18f73ccf3d4a 100644
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -116,7 +116,7 @@ static __be32 seg6_make_flowlabel(struct net *net, struct sk_buff *skb,
+ 	u32 hash;
  
-+	if (!priv->cqe)
-+		return 0;
-+
- 	ts = get_cqe_ts(priv->cqe);
- 
- 	if (mlx5_is_real_time_rq(priv->cq->mdev) || mlx5_is_real_time_sq(priv->cq->mdev))
+ 	if (do_flowlabel > 0) {
+-		hash = skb_get_hash(skb);
++		hash = skb_get_hash_net(net, skb);
+ 		hash = rol32(hash, 16);
+ 		flowlabel = (__force __be32)hash & IPV6_FLOWLABEL_MASK;
+ 	} else if (!do_flowlabel && skb->protocol == htons(ETH_P_IPV6)) {
 -- 
 2.53.0
 
