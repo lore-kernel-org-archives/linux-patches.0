@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4E4EFFC9;
-	Tue, 13 Oct 2026 11:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C9F4F391F;
+	Tue, 13 Oct 2026 11:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891986; cv=none; b=SpKSi7RgYgwdvxkVNEZYjpoioYNHcyXGv+mlszsZ9Pf4OXlvn+k3v+OfkrOFy+eL+5kS8PNN4s52/7dyYGb+EcQDPE15nQjlPfUhv4187eFkRm+gw+qcEgRKf3mGuew4+uGkzFn+ZWXZLh4Og0ihcrN69dcE42juFi7X+1+pjIM=
+	t=1791891989; cv=none; b=OOxijIlrEVLPu6dZfgi9Mw8zptNuE9LcjZRYEqImkLVgeSms1mFE43Fs6fxeeYmDrs3NaYZESrtO6zYfrNRoV37ikeOSrKlpxWu8NGSzHmZc30KYomVdMK5yqZF5HRdO3dMDnI5d4zW/50nsObJWrwCjCAhFUv2f7DxAvxvC8Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891986; c=relaxed/simple;
-	bh=2SS114JJ8I7lddLw/w0o81SIFN+GdAvKMgR1hy0iqvI=;
+	s=arc-20240116; t=1791891989; c=relaxed/simple;
+	bh=BoG2Vh4YKnzi3MnDQn7jWAh4e0xUJAAmIW6KvGotth0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUBiirdzxcrJ+HYdKiX5sB9mpYOPslGKpP/6Ca8g1syhjxE1ok2Plyav7r1xSPPdKsvYgec6lV92Mx/Yhh58MswG5Aw8qTonxWIBn10d4WZaDLj3jfZxj1bfAFqfvmt7lnz0YSePTNQRrkqEIY2QhQsQ+wN314mqAKs2E5VdcPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdLq6oqU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUgcsAD7NutRBO06E1wkXeE+RZxyGb8LoZEOv7HO4aH9fCz8k2NxXOmBjZ84gUL+GeiO0jeuzJDTQe5ej3pQ1ezjKmZJCoZ7V0ExZsves1cY5DK6U1MT3vD2+DwBnQ3x5ODSe59CmC5LNf0aJ69RJ31fOgnng9h+7y93wYXmmx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm1Kmlol; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdLq6oqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9D61F000FF;
-	Tue, 13 Oct 2026 11:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm1Kmlol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B757D1F000FF;
+	Tue, 13 Oct 2026 11:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891985;
-	bh=rDSYLFpnFALZhWG6XpRWOL3iQ6zlNSnUG4DQtkIXzmU=;
+	s=korg; t=1791891988;
+	bh=L1ppzKPaxZ5KSKhbkhLST1UfiqAHr3zDXC26xoWYhzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdLq6oqUjK478ii6GAK1jnrqhtrPYRvAO4kHw8AQgqRx7UiTZVPA3o/WmSP92TvZy
-	 hZS8EUw5i06BH9l7UNIpt8Cd+fa1K8GkrN84hn/f6GP6zTeoyUHNq8/gp+WKYAhv04
-	 cJFgnkQSEgW1oCJXknCUgI4n0iVPUV5d8QHnbnEQ=
+	b=Sm1Kmlol7w8u3fDFMCGydcDl760yiMdfkaE8cU1flxSe5pTcUkQk9ELLMD95dR5Et
+	 eorUev1z1qUK9oBCVoR45Jmfjmw30wFlB+XKoPvTE96Erx0wQcEqtNsgT6zJlKROSa
+	 /SXq3xu66Cq64f3yAV9cYrgtGJtYjcWtztsV92JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 7.2 022/281] ata: libata-scsi: do not lose CHECK CONDITION for failed ATAPI commands
-Date: Tue, 13 Oct 2026 13:35:38 +0200
-Message-ID: <20261013112855.588294762@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 7.2 023/281] btrfs: scrub: fix local_root reference leak in scrub_print_warning_inode()
+Date: Tue, 13 Oct 2026 13:35:39 +0200
+Message-ID: <20261013112855.613202654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,74 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit bc8ce2cea5f77c4bd1a5184705e300e83546c0c4 upstream.
+commit 1fd742c7479961da6d0bb794ef8ac6b7b9442847 upstream.
 
-Since commit 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands
-on time out"), atapi_qc_complete() sets SAM_STAT_CHECK_CONDITION for a
-failed command only if cmd->result is zero, so that the DID_TIME_OUT or
-DID_REQUEUE host byte of a terminated command is preserved.
+When paths_from_inode() fails, scrub_print_warning_inode() jumps to err
+without dropping the reference taken by btrfs_get_fs_root(), leaking a
+reference to the root every time path resolution fails while printing
+scrub warnings.  Every other error and success path of the function
+drops the reference.
 
-However, cmd->result can also be non-zero for a regular failed ATAPI
-command completed through libata EH: ata_eh_analyze_tf() calls
-ata_eh_decide_disposition(), that is, scsi_check_sense(), on the sense
-data obtained with REQUEST SENSE, and scsi_check_sense() sets the SCSI
-midlayer internal byte of the result for some sense codes, e.g.
-SCSIML_STAT_TGT_FAILURE for ILLEGAL REQUEST with ASC 0x20 (INVALID
-COMMAND OPERATION CODE) or 0x24 (INVALID FIELD IN CDB), or
-SCSIML_STAT_MED_ERROR for MEDIUM ERROR with ASC 0x11 (UNRECOVERED READ
-ERROR). For such commands, atapi_qc_complete() keeps the result as is and
-the command completes with a GOOD status byte, even though it failed and
-valid sense data is available.
+Drop the reference on the paths_from_inode() failure path too.
 
-As a result, passthrough users see these failed ATAPI commands as
-successful. For example, with the emulated IDE CD-ROM drive of QEMU and
-no medium loaded, a PLAY AUDIO MSF command issued with SG_IO completes
-with status 0x00 (and no DRIVER_SENSE) instead of 0x02 (CHECK CONDITION)
-with sense key ILLEGAL REQUEST, ASC/ASCQ 0x20/0x00, and the CDROM ioctls
-CDROMPLAYTRKIND, CDROMSUBCHNL, CDROMPAUSE, CDROMRESUME, CDROMPLAYMSF and
-CDROM_GET_MCN return 0 instead of -ENOMEDIUM or -EOPNOTSUPP.
-
-Fix this by setting the status byte to SAM_STAT_CHECK_CONDITION whenever
-the host byte is not set. Use set_status_byte() rather than overwriting
-the whole result, so that the SCSI midlayer internal byte set by
-scsi_check_sense() is preserved, as ata_scsi_qc_complete() already does
-for ATA commands.
-
-Fixes: 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands on time out")
-Cc: stable@vger.kernel.org
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260929164135.266708-1-hengyul@cs.unc.edu
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 558540c17771 ("btrfs scrub: print paths of corrupted files")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/btrfs/scrub.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3026,10 +3026,15 @@ static void atapi_qc_complete(struct ata
- 		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
- 			qc->dev->sdev->locked = 0;
- 
--		if (cmd->result)
--			ata_scsi_qc_done(qc, false, 0);
--		else
--			ata_scsi_qc_done(qc, true, SAM_STAT_CHECK_CONDITION);
-+		/*
-+		 * Report CHECK CONDITION unless the command was terminated
-+		 * with a host byte set. Only set the status byte, so that the
-+		 * SCSI midlayer internal byte, which scsi_check_sense() may
-+		 * have set from the sense data, is preserved.
-+		 */
-+		if (get_host_byte(cmd) == DID_OK)
-+			set_status_byte(cmd, SAM_STAT_CHECK_CONDITION);
-+		ata_scsi_qc_done(qc, false, 0);
- 		goto schedule_deferred;
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -550,8 +550,10 @@ static int scrub_print_warning_inode(u64
  	}
+ 	ret = paths_from_inode(inum, ipath);
  
+-	if (ret < 0)
++	if (ret < 0) {
++		btrfs_put_root(local_root);
+ 		goto err;
++	}
+ 
+ 	/*
+ 	 * we deliberately ignore the bit ipath might have been too small to
 
 
