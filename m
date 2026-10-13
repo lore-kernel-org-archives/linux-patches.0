@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83FC4F3EC0;
-	Tue, 13 Oct 2026 12:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747244F3EB0;
+	Tue, 13 Oct 2026 12:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894969; cv=none; b=fnXImwWIV4BI5eI4HGmDRiZdoGL/VZox+kQtYfiqzSvgUZYQg7/eylRQXrO90kLWRWQZ0rOxtZibG6Hqj6adTWccCAJE0XiUuKrm3bBkVCUPo/DhATroBfUKlHY/2NbF9z5MiKIqahhTZ6Voh4s3lM7b5zxNyZIVNa9R/0AN4Z0=
+	t=1791894972; cv=none; b=NltNAwLKLlZe7T7dV+t6Hd6YPWahO0To7ChQkFi158zTrdfXLlnwnw9cvE7p7ozTVUw76nf5HZ7pl81EGmSvGM+KLKh9UOgeGPJdlU8K2dLJ3WrPWIlOkULRfXKU2V6G1Za2ggVq6IPtAisNHqzOGrv0ZVTCQP3VvvDlhU3pHHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894969; c=relaxed/simple;
-	bh=c6P+ZH4u1TSnJf+nTSZq87AxhWD8hFff52qDNdrjIJ0=;
+	s=arc-20240116; t=1791894972; c=relaxed/simple;
+	bh=bzDdk9cgofP1OahgFRCxMadDiCGwkkUp5MO+ksWCFtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCHsJ1JYHKTJWIpWgYa5qrJ19vYvi10soLdQW/mf7IzJs62pI9jwAPYe3rHZrc9h/m7hCRbZkipdUGrrkpsUGrGJKnV6ZOjiQ115cQMnAVz86DqIv5zCJr/oInh4DK8rY5HeXmIE+7y4aEkoV4g3W9iv2Gm5eg5zrNtBy0tINQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIfOhCdm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=heMpskt/mnu4h3vS/eHKYhwGtW2TxhYVk+zu3h6u93FRQ++rTvsPFKRELvfKbDyp4oDXobJ/m3k0PVlo2SygKxC4J0i35CUbC1JQs5gWCOQRS/iUeHhf64iLEfVvQut6Oe7rlKGt4vpXMDnXhwgR3Iy3P97xo17mU5QjPiLEH0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlA/T9S1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIfOhCdm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32251F000FF;
-	Tue, 13 Oct 2026 12:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlA/T9S1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34231F00898;
+	Tue, 13 Oct 2026 12:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894968;
-	bh=tKOhLRxK6JFJEE6JhkXx4rprSCP1/127TrqGiVKWipQ=;
+	s=korg; t=1791894971;
+	bh=uHPg40WvYJDYY/BoxX89HpbA9dm7XTH/sYfaUV3pbQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIfOhCdmvDshdHEOHmhqRtj1RsKxPiC9Pof0Hk9q4JZEUBi46fW/1RYUZUr8KLKNI
-	 ol9YM4TE+DoM7+Dod2FXtnCCCJMugl4LGYhlEZ8z93zIr21fJxHy2tbBW9ZfBU58Sp
-	 l+epJkrzQfuBTkmGooqxl8GsWRVdJte8t4s3pp+A=
+	b=ZlA/T9S1mqoDb1DtY8CBE6UdIHqa+d1yWF7dSKdEtZ5kN8ix4XGD6FvLcyxdAoMs5
+	 t36aHWmFTB8g158mohEVC7VQr6/VBzE7iK0QyR6e0Ng0Vhzx5uOfPWbqLxba1Q7gLe
+	 vAhMk+VWApndeXbSO0CGxv46ZPSLoTMInj8reFH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willian Oliveira <williandossantosdeoliveira287@gmail.com>,
+	Imre Kaloz <kaloz@kernel.org>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 116/497] drm/amdgpu/gfx6: fix firmware leak on teardown
-Date: Tue, 13 Oct 2026 13:34:43 +0200
-Message-ID: <20261013112910.644064476@linuxfoundation.org>
+Subject: [PATCH 6.12 117/497] drm/radeon: Read the VRAM VBIOS signature with readb()
+Date: Tue, 13 Oct 2026 13:34:44 +0200
+Message-ID: <20261013112910.667354161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,49 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willian Oliveira <williandossantosdeoliveira287@gmail.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-commit cc172e177795c5f87bc2d71768d077e1c10633e8 upstream.
+commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
 
-The firmware requested in gfx_v6_0_init_microcode() is not released
-when the GFX block is torn down, leaking the firmware resources.
+igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
+__iomem load, which faults on sparc64 before the copy runs at all.
+radeon_read_bios() already reads its two signature bytes with
+readb() ahead of its own copy; use the same accessor here, keeping
+the check before the allocation.
 
-Add gfx_v6_0_free_microcode() and call it from gfx_v6_0_sw_fini()
-to release the PFP, ME, CE and RLC firmware.
-
-Signed-off-by: Willian Oliveira <williandossantosdeoliveira287@gmail.com>
+Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 386e81346f95ab0be5a82c5535de932e7a456924)
+(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-@@ -308,6 +308,14 @@ static const u32 verde_rlc_save_restore_
- 	0x00000000
- };
- 
-+static void gfx_v6_0_free_microcode(struct amdgpu_device *adev)
-+{
-+	amdgpu_ucode_release(&adev->gfx.pfp_fw);
-+	amdgpu_ucode_release(&adev->gfx.me_fw);
-+	amdgpu_ucode_release(&adev->gfx.ce_fw);
-+	amdgpu_ucode_release(&adev->gfx.rlc_fw);
-+}
-+
- static int gfx_v6_0_init_microcode(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -49,6 +49,7 @@
+ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
  {
- 	const char *chip_name;
-@@ -3184,6 +3192,7 @@ static int gfx_v6_0_sw_fini(void *handle
- 		amdgpu_ring_fini(&adev->gfx.compute_ring[i]);
+ 	uint8_t __iomem *bios;
++	uint8_t val1, val2;
+ 	resource_size_t vram_base;
+ 	resource_size_t size = 256 * 1024; /* ??? */
  
- 	amdgpu_gfx_rlc_fini(adev);
-+	gfx_v6_0_free_microcode(adev);
+@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
+ 		return false;
+ 	}
  
- 	return 0;
- }
+-	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
++	val1 = readb(&bios[0]);
++	val2 = readb(&bios[1]);
++
++	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
+ 		iounmap(bios);
+ 		return false;
+ 	}
 
 
