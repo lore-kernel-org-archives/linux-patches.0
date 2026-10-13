@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C56211A09;
-	Tue, 13 Oct 2026 12:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0212566F7;
+	Tue, 13 Oct 2026 12:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894846; cv=none; b=MKocVFVej9bNXYlmXx3qsjP8MwqACujY2W9IRHEGm1T6/70oMvhy1cjCeQCfzFSQHkyoZNfom96stezXelsYQbVqf5TS9ip0VOw3Js52/Zqou9Ozcxe0s4pdXmZId/Gz89lsLMjNl8PIuHr3riojoZMz3vPwWvpXksTMJr3YiwA=
+	t=1791894850; cv=none; b=OkfkQQmf/cy2Nc1fSTsaegNILC5BJ23uopuWgMt8dopsDx+uiwCOrHqxwHHWyhhTKPsdUeZhPNF+DnvdPAsLp/hJnvGBrwM9uYbgoUwuybwowzkBRsnb+aUeaILpfr0PxZaTLt92xJwtjiVOLIJ2eJKYpxBqFA6wiuMDSKAdP7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894846; c=relaxed/simple;
-	bh=7ntSQGOBIWI8dS/A2swxqz85MyNDwqBqSvt+BPhKisU=;
+	s=arc-20240116; t=1791894850; c=relaxed/simple;
+	bh=KGCS9Y9KHUnm0H0/ylSZ/E8H0Oy5/1j/T6tIXt8a2Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyRFJSlbRyJIBfy4TWsotJe/2JnkQU5Ep4gh4lNolis5eq0P6SBQ3fSz+VZP1ZtcBY0mHk+ST2YATh4CKKA5OPwAlhpyL9GZsnETbyQ4Ri+emAco1IedgTtRmVvsU0uW+vPPCjArzXBqb1Y1sqIKrkAQmb1+XCLqmvVfgbdOTaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlMd0WJf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZhNaKlnIr2yUdquT7160dj6IYuaKFleiJFXJdWYe9DO+oHOSMFnRK757DUpo0A5ZsP+DB92H3QGej5OQdQyIy0z9B3qExGvcb/6N4dNhoyW/y2vUKzGS8/h9SjZdOzGZj/NoEIOVckGTanouaQSTw/y1k1Vd21SZN9FwSwzecKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvATqqn8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlMd0WJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEC71F00893;
-	Tue, 13 Oct 2026 12:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvATqqn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE0F1F000FF;
+	Tue, 13 Oct 2026 12:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894845;
-	bh=+k4yazN4crLFQ/x+upfxXXNanid0PSyxCSD1L+c23GU=;
+	s=korg; t=1791894848;
+	bh=g7DQ5jg1L52useh+mV8oOtv6NyH9OdeMWbcSQm6+cwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HlMd0WJfTx+Pl8YAG2JKIstj2vgWjqq9znHyEpKC9q7wTqtjz7SJzumscDuxo/8q/
-	 Wni5KCloU29c1+IXQlhGUP3HPNnzefyDIGiQuIlhrUK66IsxalKgGSsMcKv66ihS1Q
-	 +rKLE5BExSpF3DJGxOHuvx1cPvby4bpzKwHDCgnQ=
+	b=KvATqqn8aeH5yegEWFOKy/zUnLU4OF0m6GN43QG2Zp4Arc/9DPHf3YyVzLk/MyIly
+	 rLqyMp+MMej3Cylnw2PoVbeMphIs1bBTGyVRY5iYntH3FFbX5jIjV/cjfvQul+Svwi
+	 SCu9j9k7Zv3JruSFv4edcjXY6eBcEPBNGeCkG35g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+217e3f1283cafe80586e@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/497] Bluetooth: hci_sync: dont drain cmd_sync backlog on unregister
-Date: Tue, 13 Oct 2026 13:34:02 +0200
-Message-ID: <20261013112909.667486425@linuxfoundation.org>
+Subject: [PATCH 6.12 076/497] net: systemport: Fix buffer overflow in bcm_sysport_get_stats()
+Date: Tue, 13 Oct 2026 13:34:03 +0200
+Message-ID: <20261013112909.690443702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,73 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit b1f24c1ab52345e810c42a1a81286cb5a7c92252 ]
+[ Upstream commit eb7b84af0ec5c71b4920e999611b466b3784496c ]
 
-hci_unregister_dev() disables cmd_work and cmd_timer, then calls
-hci_cmd_sync_clear(), whose cancel_work_sync() waits for
-hci_cmd_sync_work() to return. That worker dequeues and runs every
-entry on cmd_sync_work_list. With cmd_work disabled nothing reaches
-the controller, so each queued HCI command waits the full
-HCI_CMD_TIMEOUT (2s).
+When running on SYSTEMPORT Lite, certain statistics are unsupported and
+skipped during bcm_sysport_get_stats(). The variable 'j' tracks the
+compacted index into the destination data buffer, whereas 'i' iterates
+over all elements in bcm_sysport_gstrings_stats.
 
-The backlog has no bound. Userspace can keep queuing MGMT commands
-such as MGMT_OP_GET_CLOCK_INFO against a controller that doesn't
-answer. Closing /dev/vhci then blocks in vhci_release() for
-backlog * 2s:
+Because the buffer allocated by ethtool is sized only according to
+bcm_sysport_get_sset_count(), storing values at data[i] instead of
+data[j] writes past the allocated array bounds, leading to memory
+corruption.
 
-  INFO: task syz-executor:5749 blocked for more than 143 seconds.
-   cancel_work_sync
-   hci_cmd_sync_clear
-   hci_unregister_dev
-   vhci_release
+Fix this by writing to data[j] instead of data[i].
 
-In a local reproduction the backlog held more than 5000 entries,
-which comes to hours of hang.
-
-Stop the worker from taking new entries once HCI_UNREGISTER is set,
-and wake any request still waiting with -ENODEV before cancelling
-the work. The entries left over are destroyed with -ECANCELED by the
-existing sweep in hci_cmd_sync_clear(). They stay on the list until
-the work has stopped, so hci_cmd_sync_dequeue() and friends still see
-them. A callback already running may still issue another command,
-which delays unregister by at most one timeout per remaining command,
-not by the whole backlog.
-
-Fixes: 008ee9eb8a11 ("Bluetooth: hci_sync: Fix not processing all entries on cmd_sync_work")
-Reported-by: syzbot+217e3f1283cafe80586e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=217e3f1283cafe80586e
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 10377ba7673d ("net: systemport: Support 64bit statistics")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260922232440.598918-2-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 78d9623f5faef..4505dc25f77c8 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -312,6 +312,10 @@ static void hci_cmd_sync_work(struct work_struct *work)
- 	while (1) {
- 		struct hci_cmd_sync_work_entry *entry;
- 
-+		/* Leave the backlog to hci_cmd_sync_clear() */
-+		if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
-+			break;
-+
- 		mutex_lock(&hdev->cmd_sync_work_lock);
- 		entry = list_first_entry_or_null(&hdev->cmd_sync_work_list,
- 						 struct hci_cmd_sync_work_entry,
-@@ -658,6 +662,8 @@ void hci_cmd_sync_clear(struct hci_dev *hdev)
- {
- 	struct hci_cmd_sync_work_entry *entry, *tmp;
- 
-+	/* cmd_work is disabled, the pending request can only time out */
-+	hci_cmd_sync_cancel_sync(hdev, ENODEV);
- 	cancel_work_sync(&hdev->cmd_sync_work);
- 	cancel_work_sync(&hdev->reenable_adv_work);
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index 2b784ced06451..c0af40cdfd165 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -516,10 +516,10 @@ static void bcm_sysport_get_stats(struct net_device *dev,
+ 		    s->type == BCM_SYSPORT_STAT_NETDEV64) {
+ 			do {
+ 				start = u64_stats_fetch_begin(syncp);
+-				data[i] = *(u64 *)p;
++				data[j] = *(u64 *)p;
+ 			} while (u64_stats_fetch_retry(syncp, start));
+ 		} else
+-			data[i] = *(u32 *)p;
++			data[j] = *(u32 *)p;
+ 		j++;
+ 	}
  
 -- 
 2.53.0
