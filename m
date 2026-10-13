@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0916433041;
-	Tue, 13 Oct 2026 12:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC814E2F2A;
+	Tue, 13 Oct 2026 12:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895993; cv=none; b=gwZCCBcsSuwo4X+LFjCP/OTEsdQp9SOL26PS5VZ6d3M6akNpztKFNAChDNeMfu7KE9czUd+AdrgFEoK9ZTyBPeAoGLo+JK6QwxWQfL6G1Byc1l6sqE26eOX3hsn3hIz/Foq5sni1jaSxjuvXBAFvv+Gt5qjlmOS6Cd2GauKUccE=
+	t=1791895995; cv=none; b=kn223WKnzhJ6a5h/TyfTZS04pIle1vVMa8Z6Cm0dbslnTzm0tD/L/ihl7dHTA6wzsSv/kOSyIXJ1WrPNZGJkaUMp48VSacRXjQqCaHLtkRqbiJmR9IP50szA54eL+K8cJDiXpTvzMYuycbqcJjHX3UvsZaP/lvJzYo8W8dqZxm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895993; c=relaxed/simple;
-	bh=ANEzPQfrA9MEANKmdf9bWFi9AebyepLxFaKl2kK1wlw=;
+	s=arc-20240116; t=1791895995; c=relaxed/simple;
+	bh=f4wz7fueTSOWng+/He97uppVpzKKtOf1Byh7JM5h4bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpvTJNz+WMvFMbt5qQjsqLj2pzRvmS5qDmBH27vYI3QBQGEa0jZuo0qf8mPAM2coHukYkRlJ/VnM0bnRppndrGc/523UlklBxaC9C143yPWRnv2H3PEUvtWheS5t/zX2EMLqvogmu1yAdbu94szn7Rg0roo8mKb+aRcBqLJKbDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9Vhyl9V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Au+d9HehxxQUJ7yECiS1/sBDQ+Yl1ex6rBdNDWBm5284CK7NvRiGkB7i3+LS1ye8m564vG+y6HN8b8+wmV8MDcn/3Tdg3EK9Q+sue+kM0QwSPfGA3Qo6ZJFmCQeAJr7J0K1q+IgpaOjl9Hx/fvpqsLGafuw2POfGByNkORqIMpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxcMe4ku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9Vhyl9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2ED1F000FF;
-	Tue, 13 Oct 2026 12:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxcMe4ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B131F008A5;
+	Tue, 13 Oct 2026 12:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895991;
-	bh=Mvkang0kXbkln3UQ65CN+PWs2GlxiOeUhPopbPX3FIc=;
+	s=korg; t=1791895994;
+	bh=LczdJIAsh8bpToc/OOYjVMRNV5aBtSZcO/eDe4WzB3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9Vhyl9VcsE0SZwFPeJfH5JAXtOaGYfO3CHBRJ5Qqk8YOxP3uASrEwlAdAzaeld+a
-	 cZQqHPMQitsQux6WtSeqlg8OjJpCLutrY2372G9F74VoyWV1fLb8RsTpfUTb/2eEdU
-	 AMsoDEy3pZxzo/dIRxaoeokGuvMwrrt4Gt5xSW2Y=
+	b=NxcMe4ku2NTuEH/5JbjB0mfj3TYyHzqilFYBKFxf2Sb5CEMyZjMHKY3VMJAfsUSuW
+	 Q4xXEKVugd01lX8l2kAHZ7HHrr60ux2oNpRZbsTJ8Q9PkTn1SA7dpsxeLjnSY4GOYA
+	 ueqicpWIvqCj+AZK+rU3PITqrwVNeRGk7aGk1z7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Zaiden <rodrigoffzz@gmail.com>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 459/497] tee: optee: fix kernel-doc warnings
-Date: Tue, 13 Oct 2026 13:40:26 +0200
-Message-ID: <20261013112918.776447090@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.12 418/497] riscv: fix load_unaligned_zeropad() fixup for RV32
+Date: Tue, 13 Oct 2026 13:39:45 +0200
+Message-ID: <20261013112917.809266321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,310 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Zaiden <rodrigoffzz@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 3faa6774ffc5973af39ac9c4f1fe93aa92ec9407 ]
+commit d4f25b097e46d82718bb737d4540c99b7ab0a408 upstream.
 
-Fix kernel-doc issues in optee_private.h and optee_msg.h:
+The fixup for load_unaligned_zeropad() runs when REG_L crosses into an
+unmapped page. REG_L is lw on RV32 and ld on RV64, but the fixup assumes
+an 8-byte load: it rounds the address down to 8 bytes and derives the
+shift from three address bits.
 
-- Add missing documentation for struct members: optee_msg_param_value,
-  optee_msg_param, optee_msg_arg, optee, and optee_ffa;
-- Ensure member descriptions follow the order of declaration;
-- Use consistent formatting (lowercase descriptions and ':' after
-  member names);
-- Adjust indentation for better alignment;
+On RV32, a load starting in the last three bytes of a mapped page selects
+the word four bytes earlier and shifts it by 40, 48, or 56 bits, more than
+the register width. The caller gets earlier bytes instead of the string
+tail followed by zeroes. This affects RV32 MMU kernels built with
+RISCV_EFFICIENT_UNALIGNED_ACCESS=y, which selects DCACHE_WORD_ACCESS
+and lets dcache name hashing and comparison and strscpy() use this
+path.
 
-This resolves kernel-doc warnings such as missing member descriptions
-and incorrect prototype documentation.
-No functional changes.
+Derive the alignment and offset masks from sizeof(data) instead of a fixed
+8. This makes RV32 use the correct source word. RV64 code is unchanged: the
+complete extable.o is byte-for-byte identical before and after.
 
-Signed-off-by: Rodrigo Zaiden <rodrigoffzz@gmail.com>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Stable-dep-of: 3c0d2f1f431c ("tee: optee: ffa: support shared memory offsets on large-page kernels")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d0fdc20b0429 ("riscv: select DCACHE_WORD_ACCESS for efficient unaligned access HW")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260907190750.26303-1-kmehltretter@gmail.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/optee/optee_msg.h     |  50 +++++++------
- drivers/tee/optee/optee_private.h | 120 ++++++++++++++++--------------
- 2 files changed, 92 insertions(+), 78 deletions(-)
+ arch/riscv/mm/extable.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tee/optee/optee_msg.h b/drivers/tee/optee/optee_msg.h
-index 838e1d4a22f04..7d9b12e71c035 100644
---- a/drivers/tee/optee/optee_msg.h
-+++ b/drivers/tee/optee/optee_msg.h
-@@ -103,9 +103,9 @@
+--- a/arch/riscv/mm/extable.c
++++ b/arch/riscv/mm/extable.c
+@@ -68,8 +68,8 @@ ex_handler_load_unaligned_zeropad(const
  
- /**
-  * struct optee_msg_param_tmem - temporary memory reference parameter
-- * @buf_ptr:	Address of the buffer
-- * @size:	Size of the buffer
-- * @shm_ref:	Temporary shared memory reference, pointer to a struct tee_shm
-+ * @buf_ptr:	address of the buffer
-+ * @size:	size of the buffer
-+ * @shm_ref:	temporary shared memory reference, pointer to a struct tee_shm
-  *
-  * Secure and normal world communicates pointers as physical address
-  * instead of the virtual address. This is because secure and normal world
-@@ -122,9 +122,9 @@ struct optee_msg_param_tmem {
+ 	addr = regs_get_gpr(regs, reg_addr * sizeof(unsigned long));
  
- /**
-  * struct optee_msg_param_rmem - registered memory reference parameter
-- * @offs:	Offset into shared memory reference
-- * @size:	Size of the buffer
-- * @shm_ref:	Shared memory reference, pointer to a struct tee_shm
-+ * @offs:	offset into shared memory reference
-+ * @size:	size of the buffer
-+ * @shm_ref:	shared memory reference, pointer to a struct tee_shm
-  */
- struct optee_msg_param_rmem {
- 	u64 offs;
-@@ -134,12 +134,12 @@ struct optee_msg_param_rmem {
+-	offset = addr & 0x7UL;
+-	addr &= ~0x7UL;
++	offset = addr & (sizeof(data) - 1);
++	addr &= ~(sizeof(data) - 1);
  
- /**
-  * struct optee_msg_param_fmem - FF-A memory reference parameter
-- * @offs_lower:	   Lower bits of offset into shared memory reference
-- * @offs_upper:	   Upper bits of offset into shared memory reference
-- * @internal_offs: Internal offset into the first page of shared memory
-- *		   reference
-- * @size:	   Size of the buffer
-- * @global_id:	   Global identifier of the shared memory
-+ * @offs_low:		lower bits of offset into shared memory reference
-+ * @offs_high:		higher bits of offset into shared memory reference
-+ * @internal_offs:	internal offset into the first page of shared memory
-+ *			reference
-+ * @size:		size of the buffer
-+ * @global_id:		global identifier of the shared memory
-  */
- struct optee_msg_param_fmem {
- 	u32 offs_low;
-@@ -151,6 +151,9 @@ struct optee_msg_param_fmem {
+ 	data = *(unsigned long *)addr >> (offset * 8);
  
- /**
-  * struct optee_msg_param_value - opaque value parameter
-+ * @a: first opaque value
-+ * @b: second opaque value
-+ * @c: third opaque value
-  *
-  * Value parameters are passed unchecked between normal and secure world.
-  */
-@@ -168,6 +171,7 @@ struct optee_msg_param_value {
-  * @fmem:	parameter by FF-A registered memory reference
-  * @value:	parameter by opaque value
-  * @octets:	parameter by octet string
-+ * @u:		union holding OP-TEE msg parameter
-  *
-  * @attr & OPTEE_MSG_ATTR_TYPE_MASK indicates if tmem, rmem or value is used in
-  * the union. OPTEE_MSG_ATTR_TYPE_VALUE_* indicates value or octets,
-@@ -189,16 +193,18 @@ struct optee_msg_param {
- 
- /**
-  * struct optee_msg_arg - call argument
-- * @cmd: Command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
-- * @func: Trusted Application function, specific to the Trusted Application,
-- *	     used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
-- * @session: In parameter for all OPTEE_MSG_CMD_* except
-- *	     OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter instead
-- * @cancel_id: Cancellation id, a unique value to identify this request
-- * @ret: return value
-- * @ret_origin: origin of the return value
-- * @num_params: number of parameters supplied to the OS Command
-- * @params: the parameters supplied to the OS Command
-+ * @cmd:	command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
-+ * @func:	Trusted Application function, specific to the Trusted
-+ *		Application, used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
-+ * @session:	in parameter for all OPTEE_MSG_CMD_* except
-+ *		OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter
-+ *		instead
-+ * @cancel_id:	cancellation id, a unique value to identify this request
-+ * @pad:	padding for alignment
-+ * @ret:	return value
-+ * @ret_origin:	origin of the return value
-+ * @num_params:	number of parameters supplied to the OS Command
-+ * @params:	the parameters supplied to the OS Command
-  *
-  * All normal calls to Trusted OS uses this struct. If cmd requires further
-  * information than what these fields hold it can be passed as a parameter
-diff --git a/drivers/tee/optee/optee_private.h b/drivers/tee/optee/optee_private.h
-index 9526087f0e680..cea5deab6155d 100644
---- a/drivers/tee/optee/optee_private.h
-+++ b/drivers/tee/optee/optee_private.h
-@@ -47,11 +47,11 @@ typedef void (optee_invoke_fn)(unsigned long, unsigned long, unsigned long,
- 				unsigned long, unsigned long,
- 				struct arm_smccc_res *);
- 
--/*
-+/**
-  * struct optee_call_waiter - TEE entry may need to wait for a free TEE thread
-- * @list_node		Reference in waiters list
-- * @c			Waiting completion reference
-- * @sys_thread		True if waiter belongs to a system thread
-+ * @list_node:	reference in waiters list
-+ * @c:		waiting completion reference
-+ * @sys_thread:	true if waiter belongs to a system thread
-  */
- struct optee_call_waiter {
- 	struct list_head list_node;
-@@ -59,13 +59,13 @@ struct optee_call_waiter {
- 	bool sys_thread;
- };
- 
--/*
-+/**
-  * struct optee_call_queue - OP-TEE call queue management
-- * @mutex			Serializes access to this struct
-- * @waiters			List of threads waiting to enter OP-TEE
-- * @total_thread_count		Overall number of thread context in OP-TEE or 0
-- * @free_thread_count		Number of threads context free in OP-TEE
-- * @sys_thread_req_count	Number of registered system thread sessions
-+ * @mutex:			serializes access to this struct
-+ * @waiters:			list of threads waiting to enter OP-TEE
-+ * @total_thread_count:		overall number of thread context in OP-TEE or 0
-+ * @free_thread_count:		number of threads context free in OP-TEE
-+ * @sys_thread_req_count:	number of registered system thread sessions
-  */
- struct optee_call_queue {
- 	/* Serializes access to this struct */
-@@ -96,17 +96,17 @@ struct optee_shm_arg_cache {
- 
- /**
-  * struct optee_supp - supplicant synchronization struct
-- * @ctx			the context of current connected supplicant.
-- *			if !NULL the supplicant device is available for use,
-- *			else busy
-- * @mutex:		held while accessing content of this struct
-- * @req_id:		current request id if supplicant is doing synchronous
-- *			communication, else -1
-- * @reqs:		queued request not yet retrieved by supplicant
-- * @idr:		IDR holding all requests currently being processed
-- *			by supplicant
-- * @reqs_c:		completion used by supplicant when waiting for a
-- *			request to be queued.
-+ * @mutex:	held while accessing content of this struct
-+ * @ctx:	the context of current connected supplicant.
-+ *		if !NULL the supplicant device is available for use,
-+ *		else busy
-+ * @req_id:	current request id if supplicant is doing synchronous
-+ *		communication, else -1
-+ * @reqs:	queued request not yet retrieved by supplicant
-+ * @idr:	IDR holding all requests currently being processed
-+ *		by supplicant
-+ * @reqs_c:	completion used by supplicant when waiting for a
-+ *		request to be queued.
-  */
- struct optee_supp {
- 	/* Serializes access to this struct */
-@@ -119,25 +119,25 @@ struct optee_supp {
- 	struct completion reqs_c;
- };
- 
--/*
-+/**
-  * struct optee_pcpu - per cpu notif private struct passed to work functions
-- * @optee		optee device reference
-+ * @optee:	optee device reference
-  */
- struct optee_pcpu {
- 	struct optee *optee;
- };
- 
--/*
-+/**
-  * struct optee_smc - optee smc communication struct
-- * @invoke_fn		handler function to invoke secure monitor
-- * @memremaped_shm	virtual address of memory in shared memory pool
-+ * @invoke_fn:		handler function to invoke secure monitor
-+ * @memremaped_shm:	virtual address of memory in shared memory pool
-  * @sec_caps:		secure world capabilities defined by
-  *			OPTEE_SMC_SEC_CAP_* in optee_smc.h
-- * @notif_irq		interrupt used as async notification by OP-TEE or 0
-- * @optee_pcpu		per_cpu optee instance for per cpu work or NULL
-- * @notif_pcpu_wq	workqueue for per cpu asynchronous notification or NULL
-- * @notif_pcpu_work	work for per cpu asynchronous notification
-- * @notif_cpuhp_state   CPU hotplug state assigned for pcpu interrupt management
-+ * @notif_irq:		interrupt used as async notification by OP-TEE or 0
-+ * @optee_pcpu:		per_cpu optee instance for per cpu work or NULL
-+ * @notif_pcpu_wq:	workqueue for per cpu asynchronous notification or NULL
-+ * @notif_pcpu_work:	work for per cpu asynchronous notification
-+ * @notif_cpuhp_state:	CPU hotplug state assigned for pcpu interrupt management
-  */
- struct optee_smc {
- 	optee_invoke_fn *invoke_fn;
-@@ -151,13 +151,15 @@ struct optee_smc {
- };
- 
- /**
-- * struct optee_ffa_data -  FFA communication struct
-- * @ffa_dev		FFA device, contains the destination id, the id of
-+ * struct optee_ffa -  FFA communication struct
-+ * @ffa_dev:		FFA device, contains the destination id, the id of
-  *			OP-TEE in secure world
-- * @bottom_half_value	Notification ID used for bottom half signalling or
-+ * @bottom_half_value:	notification ID used for bottom half signalling or
-  *			U32_MAX if unused
-- * @mutex		Serializes access to @global_ids
-- * @global_ids		FF-A shared memory global handle translation
-+ * @mutex:		serializes access to @global_ids
-+ * @global_ids:		FF-A shared memory global handle translation
-+ * @notif_wq:		workqueue for FF-A asynchronous notification
-+ * @notif_work:		work for FF-A asynchronous notification
-  */
- struct optee_ffa {
- 	struct ffa_device *ffa_dev;
-@@ -195,26 +197,32 @@ struct optee_ops {
- 
- /**
-  * struct optee - main service struct
-- * @supp_teedev:	supplicant device
-- * @teedev:		client device
-- * @ops:		internal callbacks for different ways to reach secure
-- *			world
-- * @ctx:		driver internal TEE context
-- * @smc:		specific to SMC ABI
-- * @ffa:		specific to FF-A ABI
-- * @call_queue:		queue of threads waiting to call @invoke_fn
-- * @notif:		notification synchronization struct
-- * @supp:		supplicant synchronization struct for RPC to supplicant
-- * @pool:		shared memory pool
-- * @mutex:		mutex protecting @rpmb_dev
-- * @rpmb_dev:		current RPMB device or NULL
-- * @rpmb_scan_bus_done	flag if device registation of RPMB dependent devices
-- *			was already done
-- * @rpmb_scan_bus_work	workq to for an RPMB device and to scan optee bus
-- *			and register RPMB dependent optee drivers
-- * @rpc_param_count:	If > 0 number of RPC parameters to make room for
-- * @scan_bus_done	flag if device registation was already done.
-- * @scan_bus_work	workq to scan optee bus and register optee drivers
-+ * @supp_teedev:		supplicant device
-+ * @teedev:			client device
-+ * @ops:			internal callbacks for different ways to reach
-+ *				secure world
-+ * @ctx:			driver internal TEE context
-+ * @smc:			specific to SMC ABI
-+ * @ffa:			specific to FF-A ABI
-+ * @shm_arg_cache:		shared memory cache argument
-+ * @call_queue:			queue of threads waiting to call @invoke_fn
-+ * @notif:			notification synchronization struct
-+ * @supp:			supplicant synchronization struct for RPC to
-+ *				supplicant
-+ * @pool:			shared memory pool
-+ * @rpmb_dev_mutex:		mutex protecting @rpmb_dev
-+ * @rpmb_dev:			current RPMB device or NULL
-+ * @rpmb_intf:			RPMB notifier block
-+ * @rpc_param_count:		if > 0 number of RPC parameters to make room for
-+ * @scan_bus_done:		flag if device registation was already done
-+ * @rpmb_scan_bus_done:		flag if device registation of RPMB dependent
-+ *				devices was already done
-+ * @in_kernel_rpmb_routing:	flag if OP-TEE supports in-kernel RPMB routing
-+ * @scan_bus_work:		workq to scan optee bus and register optee
-+ *				drivers
-+ * @rpmb_scan_bus_work:		workq to for an RPMB device and to scan optee
-+ *				bus and register RPMB dependent optee drivers
-+ * @revision:			OP-TEE OS revision
-  */
- struct optee {
- 	struct tee_device *supp_teedev;
--- 
-2.53.0
-
 
 
