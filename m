@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EA639FCD7;
-	Tue, 13 Oct 2026 12:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EF24F5E12;
+	Tue, 13 Oct 2026 12:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896109; cv=none; b=jS1mUDpog7eZd33aGyZFz/6uPPkW6PRdJAcSRPZoUTN7S+9HBXyi872ltNtLYjAI1gig4gsWb+4Z0QkzNmpif94TPDAhe1DERplejLROlOJ+1CInwLutaRP4jN33nY27HVjluJMv4EIB9bQGQMU9r1/6nKHEPrhCYzCLijhBAGo=
+	t=1791896111; cv=none; b=uauuw771zGj9xRyaE/RaCfg3B6z1NLxgxF68knvPJ1vlltQx1UNH1LO36xtWur/MYWw9eLONTwsT7mmtJQifNTYDqbZsEVezefqbbeMt+iGtBOAq0XI7pJ3+1Ug+Q3A+89BrVjwZ/HA+K0Bg8Gqt1GazSUerW8oyjIuzEpn/thI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896109; c=relaxed/simple;
-	bh=DYJrTQquy2fxDusxsHhuy1Z7KHVoBKK9MvhOaB9bm5U=;
+	s=arc-20240116; t=1791896111; c=relaxed/simple;
+	bh=F683SqL3s33JO36imwC9PD9+6WtN9iU/vBjXBM9dZY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfGYxHBRxUOsGNxPc+dStasMwXT+0XSWU73EEXsX7Rq3J1rDbnYJZBZs7cklnMHWrWACo6uPhGhHDexqn7y+qrzPqmojo3ZdlnqX7/1nwEABsm7+ZeHqC4mHHMoFji8BgVdvWoOkituAJ13qwtvTG8j3PW42OKS7Fj2mV2Ueab8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFGbB/nm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o8vjSl/cY6TTnxYldxOKaOC+K0YNJ2AcEdP3Vehl5aIaOB1u3SQYa47kr4Fo/XGMqwSagVcpTIY6cwR0MaY0mTIG+hCWcDROvOjVY5Tmxe6vzYXgLHGQ39YwUF1zSbieIJ9HJfMg+VJkmdP/2GEfItD0TthtUHQHgx0mLlZ/IXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRm/bp3u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFGbB/nm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CF11F000FF;
-	Tue, 13 Oct 2026 12:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRm/bp3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4032E1F000FF;
+	Tue, 13 Oct 2026 12:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791896107;
-	bh=DK8a79G8wnSinabfTCHBrDHdplVas/33MJiPlkl3Irw=;
+	s=korg; t=1791896110;
+	bh=dscn1oGw29K7M53vdNvKNesepKzMDf7amSaNgiPmGvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFGbB/nmCZhdDqRYVCahkhARkOAeAvQinH5xhF1tqpumKrHO75vA0+cltHL7Cf+XD
-	 CgERh5qVqdKQT9obsu4Hw+p8FVMZAWWBcidsiiD1Ajf8plzKkPCVn4GcDylFGL0/6Y
-	 Q5G240RRTyNXzVm/t1p5VZlOmSdQNWmbI5OaRslI=
+	b=GRm/bp3u3b32P3IDPK+FeZigOIAczv+Nsd/2fvg45IgMsNOsiF/Ax2eUXM7KU+cu6
+	 IpoAuALGSTmCCmezNUjnGg8NtoxPVJ3kGUb8qEFoLCWZ8f4I81e6x0Y3SEh7pC3n3c
+	 FnN6fYqsYxTUTJRSJdCHCLaxr5wIXWBs+84INW3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <aaron.ma@canonical.com>,
+	Tao Gong <gongtao0607@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 465/497] wifi: mt76: mt7925: restore the legacy BSS after MLO teardown
-Date: Tue, 13 Oct 2026 13:40:32 +0200
-Message-ID: <20261013112918.916875676@linuxfoundation.org>
+Subject: [PATCH 6.12 466/497] wifi: mt76: mt7996: fix struct mt7996_mcu_wed_rro_ba_delete_event layout
+Date: Tue, 13 Oct 2026 13:40:33 +0200
+Message-ID: <20261013112918.941739661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,52 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Tao Gong <gongtao0607@gmail.com>
 
-[ Upstream commit 8f9e5807671ee97cacf1957f4a09e43f4f1017a9 ]
+[ Upstream commit 9c9e4e4c8b45873e53774ab8207825b37b7565ec ]
 
-Removing the last link of an MLD interface leaves the firmware with the
-MLD BSS and DEV entry: the removal loop skips the deflink, and the
-hweight16(mvif->valid_links) fallback reads the stale pre-update
-valid_links, which is still non-zero. The entry keeps the per-link MAC
-address, so every subsequent legacy association fails authentication
-until the interface is removed or the module is reloaded.
+Correct the definition of struct mt7996_mcu_wed_rro_ba_delete_event to
+match the 12-byte event record layout observed from firmware.
 
-Remove the deflink BSS and add it back as a legacy BSS on the transition
-to zero links.
+The event TLV sent by firmware is 12 bytes in length rather than 8 bytes.
+It contains an additional 4 bytes that appear to be wlan_id and tid.
+For example, a captured batch deletion of sessions 8, 9, and 10 (TIDs 6,
+0, and 1) shows:
 
-Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Link: https://patch.msgid.link/20260826043658.2255553-1-aaron.ma@canonical.com
+  00000000: 02 00 0c 00 08 00 01 00 06 00 00 00 02 00 0c 00
+  00000010: 09 00 01 00 00 00 00 00 02 00 0c 00 0a 00 01 00
+  00000020: 01 00 00 00
+
+The previous 8-byte structure corrupts the parsing of subsequent TLVs,
+leading to unhandled delete events and erroneous session deletions.
+Consequently, clients that create and tear down BA sessions in batches
+(such as Apple Wi-Fi clients) fail to properly clean up stale sessions,
+causing HW_RRO to be lost upon subsequent reassociations.
+
+Fixes: a5d028d66836 ("wifi: mt76: mt7996: add wed rro delete session garbage collector")
+Signed-off-by: Tao Gong <gongtao0607@gmail.com>
+Link: https://patch.msgid.link/20260823053739.186748-1-gongtao0607@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index bcc5ce829169f..deb226cf5413b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -2079,6 +2079,18 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index ce01f540972bf..dd5b168c71f06 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -249,6 +249,9 @@ struct mt7996_mcu_wed_rro_ba_delete_event {
+ 	__le16 len;
  
- 	mvif->valid_links = new_links;
+ 	__le16 session_id;
++	__le16 wlan_id;
++	u8 tid;
++	u8 __rsv1;
+ 	u8 __rsv2[2];
+ } __packed;
  
-+	/* Restore the legacy BSS after disabling MLO */
-+	if (old_links && !new_links) {
-+		mt792x_mac_link_bss_remove(dev, &mvif->bss_conf,
-+					   &mvif->sta.deflink);
-+		err = mt7925_mac_link_bss_add(dev, &vif->bss_conf,
-+					      &mvif->sta.deflink);
-+		if (err < 0) {
-+			mt792x_mutex_release(dev);
-+			return err;
-+		}
-+	}
-+
- 	mt792x_mutex_release(dev);
- 
- 	return 0;
 -- 
 2.53.0
 
