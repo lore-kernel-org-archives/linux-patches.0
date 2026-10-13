@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666834EB864;
-	Tue, 13 Oct 2026 11:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A764F4026;
+	Tue, 13 Oct 2026 11:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892741; cv=none; b=Lf4VLzzIyJG+kqIeQpROPLOWUVdaUgVaKKfztdEkGzKfzYdXh06UbgVGnR5A12N7qzwbi5sF9RHBEhCdI9kqSR2yhh2swEvd5/bAPiuLVxwU2NP73zlwPFj1FnpUMwaVXduA/oUuS46VhvvDf8jpoif5a0cZatrr5ILDY9Eq42o=
+	t=1791892744; cv=none; b=d7XyOn+Vq1GerrfSvIL3oc1DE0mdwb39pLzYbZ0do53BkxRG8/VZ1YjKF8YkfJdptSjbV7Wc+dqqyr9xUzICGt/wCUVUGKHdBc13LXboCrLkX6d4RmPdDGqBxOF9EY0jwhQTZLYtUeaUbVvSUGg1gOdy2pMtKxuit3YnJcdXBvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892741; c=relaxed/simple;
-	bh=mP85N7K7gKAKy8y1Xjle+O2wxffyzJ1yBeFnSPaDL9M=;
+	s=arc-20240116; t=1791892744; c=relaxed/simple;
+	bh=m4UxjaMgTGrjtRSa76CCtkhK7I+yfELe4ZRUZE885Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGQPCMl15I0l3dy3aj68c4mk5GiSllN/oTFyZNcjRmAB9XsxqjQjtGc5+gCh1jgSQE/7OnYYlB7tv/zFxr4zDMcj0Wc0yi96GvAJvM4vz4UCYkcEya6Xr/6+0wONufmlx3ljSqUAgGiWfHPXHM2Vf421aqW00hUf2QG/T6LyPA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTLSNGpJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oKaiNHYXerufBpxxAK06gSLjpjrFZCFOC7nWWdQ4Lebw2zZ8+qqcFsWwq5Q/u2FEkbfuiOnHXJfDFQwiZlC8veYZtZY0zb93CRB1kfOi/XuwjIPLKn5ISRto3njxyHZkxQeb0fGyOYVu7suer1z/as20V7wa7SjVVxLWnJl8zFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G76TzO/g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTLSNGpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF001F00893;
-	Tue, 13 Oct 2026 11:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G76TzO/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3621F000FF;
+	Tue, 13 Oct 2026 11:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892740;
-	bh=QgdzzNuzTsdKMLwvJsIJk46wR5tsYVyWpdnhuYZLRUQ=;
+	s=korg; t=1791892742;
+	bh=FTWY1aJmDkLcZFIEt56+JL+FUvTAdGObTuEeOy/IFwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTLSNGpJzpCETI1OVGWgttu7r7SHX6qWjbTtiKZsvuzmRjTB1ZU5lBmMmvGxt2YXI
-	 kLLrolYbLuaISuEQTFELQP8gQq/iOu2VTYFU0aEpOJKzMEJYAaNNXJjH6ANHELwoxu
-	 G5EW0FQyFjLmiPokybx1b6Ko6TV6Xb+TiMRc+UJc=
+	b=G76TzO/gYdqSkQh81nGCRIYcoD7ts49JzT0PcTf7/A0WrHlautiGWVUvdX8sJ/T3W
+	 DV6CaVhRzu5cxchvRNlKtB43N9Ae48qEPxvpwDt5fUzpI5T2xZWMWI73VlgnLbzW1P
+	 oV3bcs8v8JwCsk9jazTV9TZe4ECoy8ftqdmWHe64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrea Righi <arighi@nvidia.com>,
 	Kuba Piecuch <jpiecuch@google.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 275/281] sched_ext: Generate qseq from a per-task counter
-Date: Tue, 13 Oct 2026 13:39:51 +0200
-Message-ID: <20261013112901.810925923@linuxfoundation.org>
+Subject: [PATCH 7.2 276/281] sched_ext: Call ops.dequeue() when a task arrives on a remote local DSQ
+Date: Tue, 13 Oct 2026 13:39:52 +0200
+Message-ID: <20261013112901.836733664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,129 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuba Piecuch <jpiecuch@google.com>
 
-commit e6ac89b8b1c12e9104df45a14a26e2dfa96ded06 upstream.
+commit af701b8d3238b9eb7cd450b0491300452c700bf5 upstream.
 
-finish_dispatch() uses the qseq embedded in p->scx.ops_state to tell
-whether the QUEUED instance of a task it's about to claim is the one
-scx_bpf_dsq_insert() saw. qseq is generated from rq->scx.ops_qseq, but
-the counters of different rqs are independent, so if a task is dequeued
-and re-enqueued on a different rq between scx_bpf_dsq_insert() and
-finish_dispatch(), the new QUEUED instance can end up with the same
-qseq as the old one:
+When a task in the BPF scheduler's custody is moved to another CPU's
+local DSQ, ops.dequeue() is only called once the task is picked for
+execution, from set_next_task_scx() with SCX_DEQ_CORE_SCHED_EXEC, even
+though no core-sched pick took place. It should instead be called
+without flags when the task is inserted into the destination DSQ, as it
+is for same-rq dispatches.
 
-  CPU X                          CPU Z
-  -----                          -----
-                                 enqueue p on rq A, qseq = N
-  ops.dispatch()
-    scx_bpf_dsq_insert(p)
-      records qseq N
-                                 sched_setaffinity(p)
-                                   dequeue p from rq A
-                                   enqueue p on rq B, qseq = N
-  finish_dispatch(p, N)
-    qseq matches, p is claimed
+move_remote_task_to_local_dsq() sets p->scx.sticky_cpu across the
+migration so that deactivate_task() on the source rq doesn't end custody.
+Since commit b75aaea24c9f ("sched_ext: Properly mark SCX-internal
+migrations via sticky_cpu"), enqueue_task_scx() only clears it after
+inserting the task, so task_leave_custody() still sees the migration in
+progress and skips the custody exit.
 
-The claim itself is still atomic so the core stays consistent, but an
-insert issued for a previous QUEUED instance gets applied to a new one
-which the BPF scheduler has just received through ops.enqueue(). This
-breaks the guarantee that dispatches targeting a stale instance are
-ignored.
+Clear p->scx.sticky_cpu as soon as enqueue_task_scx() has read it, as
+was done before that commit. The source side is unaffected.
 
-Generate qseq from a per-task counter, p->scx.ops_qseq, instead so that
-consecutive QUEUED instances of a task never share a qseq regardless of
-which rq they're on. The counter is only updated in
-scx_do_enqueue_task() with the task's rq locked, so no additional
-synchronization is needed, and it fits in an existing hole in struct
-sched_ext_entity on 64bit. Remove the now unused rq->scx.ops_qseq.
-
-Never generate qseq 0. NONE and DISPATCHING don't carry a qseq, so
-scx_bpf_dsq_insert() on a task in either state records 0. With a
-per-task counter, every task's first QUEUED instance would otherwise get
-qseq 0 and could be claimed by such an insert. Wrap the counter where
-the QSEQ field wraps so that it can't reach a value that shifts to 0 on
-32bit either.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Cc: stable@vger.kernel.org # 7.1.x: 18d62044cda7: sched_ext: Preserve rq tracking across local DSQ dispatch
+Cc: stable@vger.kernel.org # 7.1.x
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Assisted-by: Claude:claude-opus-5.5
 Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-[ jpiecuch: 7.2.y lacks runnable_cpu in sched_ext_entity, so ops_qseq goes
-  after selected_cpu; adjust context in scx_rq and the dump_line() CPU line ]
+(cherry picked from commit af701b8d3238b9eb7cd450b0491300452c700bf5)
+[ jpiecuch: resolved context conflict, 7.2.y still names the function
+  do_enqueue_task() rather than scx_do_enqueue_task() ]
 Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/ext.h   |    1 +
- kernel/sched/ext/ext.c      |   15 ++++++++++-----
- kernel/sched/ext/internal.h |    5 +++++
- kernel/sched/sched.h        |    1 -
- 4 files changed, 16 insertions(+), 6 deletions(-)
+ kernel/sched/ext/ext.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -198,6 +198,7 @@ struct sched_ext_entity {
- 	s32			sticky_cpu;
- 	s32			holding_cpu;
- 	s32			selected_cpu;
-+	u32			ops_qseq;	/* protected by rq lock */
- 	struct task_struct	*kf_tasks[2];	/* see SCX_CALL_OP_TASK() */
- 
- 	struct list_head	runnable_node;	/* rq->scx.runnable_list */
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1953,8 +1953,14 @@ static void do_enqueue_task(struct rq *r
- 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
- 		goto global;
+@@ -2051,6 +2051,13 @@ static void enqueue_task_scx(struct rq *
+ 	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
  
--	/* DSQ bypass didn't trigger, enqueue on the BPF scheduler */
--	qseq = rq->scx.ops_qseq++ << SCX_OPSS_QSEQ_SHIFT;
-+	/*
-+	 * DSQ bypass didn't trigger, enqueue on the BPF scheduler. Wrap the
-+	 * per-task qseq counter where the QSEQ field wraps and skip 0, which is
-+	 * what scx_bpf_dsq_insert() records for a task in NONE or DISPATCHING.
+ 	/*
++	 * An SCX-internal migration ends on arrival. Clear sticky_cpu so @p can
++	 * leave custody when inserted into the destination DSQ.
 +	 */
-+	p->scx.ops_qseq = ((p->scx.ops_qseq + 1) &
-+			   (SCX_OPSS_QSEQ_MASK >> SCX_OPSS_QSEQ_SHIFT)) ?: 1;
-+	qseq = (unsigned long)p->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT;
++	if (sticky_cpu >= 0)
++		p->scx.sticky_cpu = -1;
++
++	/*
+ 	 * SCX_RQ_IN_WAKEUP promises a task_woken_scx() call once this enqueue
+ 	 * returns. Only the core's wakeup path delivers one. The flags stashed
+ 	 * for a remote activation may carry the wakeup bit without it.
+@@ -2088,9 +2095,6 @@ static void enqueue_task_scx(struct rq *
+ 		dl_server_start(&rq->ext_server);
  
- 	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
- 	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
-@@ -6690,10 +6696,9 @@ static void scx_dump_cpu(struct scx_sche
- 	seq_buf_init(&ns, buf, avail);
+ 	do_enqueue_task(rq, p, enq_flags, sticky_cpu);
+-
+-	if (sticky_cpu >= 0)
+-		p->scx.sticky_cpu = -1;
+ out:
+ 	rq->scx.flags &= ~SCX_RQ_IN_WAKEUP;
  
- 	dump_newline(&ns);
--	dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
-+	dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ksync=%lu",
- 		  cpu, rq->scx.nr_running, rq->scx.flags,
--		  rq->scx.cpu_released, rq->scx.ops_qseq,
--		  rq->scx.kick_sync);
-+		  rq->scx.cpu_released, rq->scx.kick_sync);
- 	dump_line(&ns, "          curr=%s[%d] class=%ps",
- 		  rq->curr->comm, rq->curr->pid,
- 		  rq->curr->sched_class);
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1508,6 +1508,11 @@ enum scx_ops_state {
- 	 * dequeue/requeue, the dispatcher can tell whether it still has a claim
- 	 * on the task being dispatched.
- 	 *
-+	 * QSEQ is generated from the per-task p->scx.ops_qseq counter so that
-+	 * it doesn't repeat across QUEUED instances of the same task even if
-+	 * the task moves between rqs. 0 is never used as a valid QSEQ since
-+	 * NONE and DISPATCHING map to this value.
-+	 *
- 	 * As some 32bit archs can't do 64bit store_release/load_acquire,
- 	 * p->scx.ops_state is atomic_long_t which leaves 30 bits for QSEQ on
- 	 * 32bit machines. The dispatch race window QSEQ protects is very narrow
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -795,7 +795,6 @@ struct scx_rq {
- 	struct scx_dispatch_q	local_dsq;
- 	struct list_head	runnable_list;		/* runnable tasks on this rq */
- 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
--	unsigned long		ops_qseq;
- 	u64			extra_enq_flags;	/* see move_task_to_local_dsq() */
- 	u32			nr_running;
- 	u32			cpuperf_target;		/* [0, SCHED_CAPACITY_SCALE] */
 
 
