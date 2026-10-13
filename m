@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5197B4F798D;
-	Tue, 13 Oct 2026 12:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55B14F7980;
+	Tue, 13 Oct 2026 12:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893955; cv=none; b=Kax8y3CgaDYPDnXm9qqopd3TSHLc6rokzycLLmn3UDXNQ53K1mC18fsvNImJPmaueBapGYTm93qM1GjeDNPWOOHAW+GaCzWTJoea+zGqNCu8gz3b4gkcp4BaQVQ6AmDyUez6t/+6PMkwADW898140lCHexaIClbiqGr5/p5F8/0=
+	t=1791893957; cv=none; b=lwIQqEe4ozTVexMnLBQTw6jnknFaNC5xFPYCigp4SBZu6+c4BkHAhKEKsFKx76VQj5lTdszhmypGKt74FxFkK01dzMvQEiYEK/Nt9THkGXqZ1e25TN6lGUtdPMmQKN8oBFgfxqs5B4xmLYxWqK+YZTKbnRtyVyPs2zISgxDBxn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893955; c=relaxed/simple;
-	bh=YtyCousPaUPmrXZO+cMLlSBpkPgGJOgV+lefc86QBqY=;
+	s=arc-20240116; t=1791893957; c=relaxed/simple;
+	bh=cATCH/NFjsMAHxiirpkvRL/jtnu4dDNKl46p+EhLOl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZ1uS5oLBN1gR1osbEx8/a8ZDT1hYJd2dqDhvyIAf6DPPsQzqaXcBKLrYi9XVewTa1A4p56jOixRUdqh1aN1BHKrr7/7pNVPuTdxjRp9LWEqriw402ZcqmK3d09EslSFmjmFZBCMWSQ1rKf+cSy2Au0Is/f5FkDbOWLyrLp3y34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dj3DdsQy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZtFmcjxpvLM9r6aedqV7IYHwmAr2cGbsGyBq8QwuwnB2h7yrCJO4Vyy1DTVVksgfIYco8lVSUYjyJrzn8bT/HserN05iwO+p2vpUJALOc/OmTlAshFoTfKzsxMk88Q+aPzyJ8WsBdvtlE79KEjhKhGHNdrUnjuoCtc0HnQvEWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZnXt9v8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dj3DdsQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C4E1F000FF;
-	Tue, 13 Oct 2026 12:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZnXt9v8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3531F000FF;
+	Tue, 13 Oct 2026 12:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893953;
-	bh=L1MWsbhXSNNwZ+EBkl3j2Zi9h8gxlNWngh21sqydays=;
+	s=korg; t=1791893956;
+	bh=hD7xiyeu258JFKT6aEDU7TxElUU72yHTBJ6/B2Z4NKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dj3DdsQy9HGAPhUxMh1BlMYQuToQOHOBWqHBQun3QjyI0hhGAGVS+W4Z07rjN5a8y
-	 1tUTlKTl2EcmR5JD3JQPrRzZ5kjxS9y6gOK9KKNNhpl9CzOMTDmovxl0/yYhxsLb9K
-	 1BnoZCuHmiEodAT1KTpu7zxoPTrs9E86zw42PT38=
+	b=NZnXt9v8Gj6uQ1VgCb6cf0T6VBHE7+JW29enkcLtRtXFMI7PgmYF/DLcrdt7w4Pmj
+	 2NMDByf8rtEZ7C5tc46TTVZ5Xsz6u7fdFjjMrPuP87E9TsModr75viMl0xMM+1xjop
+	 A//COGcnJTOA3YwSBrdqfnEPX0KSyEr4/VQFUCew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Bernd Schubert <bernd@bsbernd.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 399/621] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
-Date: Tue, 13 Oct 2026 13:36:34 +0200
-Message-ID: <20261013112930.310444024@linuxfoundation.org>
+Subject: [PATCH 6.18 400/621] fuse: Fix the condition to enable over-io-uring
+Date: Tue, 13 Oct 2026 13:36:35 +0200
+Message-ID: <20261013112930.334158166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,211 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Bernd Schubert <bernd@bsbernd.com>
 
-[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
+[ Upstream commit 1f59015e958174e89be58cc8db16d70a60d17255 ]
 
-Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-l2cap_chan::conn has held reference and remains non-NULL also after the
-corresponding hci_conn is deleted.  In this state accessing various
-fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
-l2cap_sock_setsockopt() access of conn->hcon->hdev.
+The existing condition in fuse_uring_cmd() is there only to avoid
+disabling io-uring for connections that already run with it, missing
+was a condition to refuse any IORING_OP_URING_CMD if the
+connection/channel didn't get enabled because of missing FUSE_INIT
+reply flag FUSE_OVER_IO_URING. Without the reply flag the barrier in
+fuse_uring_ready() doesn't work and IO could already be going on and
+cause deadlock states (at a minimum one between fch->bg_lock and
+queue->lock).
 
-Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
-trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
-getsockopt/setsockopt to ensure it stays alive, and to avoid data races
-in l2cap_chan fields.
+The change itself is trivial, but brings behavior change,
+FUSE_OVER_IO_URING has to be set in the FUSE_INIT_REPLY by fuse servers
+to accept any IORING_OP_URING_CMD. Libfuse does that and the only
+non-libfuse implementation I found (fractal-fuse) also does it.
+Qemu patches for fuse-io-uring are not merged yet, as far as I know.
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Moved up is the smp_load_acquire(&fch->initialized) check, as a
+fuse-server implementation might try to setup io-uring before FUSE_INIT
+is processed and might have gotten -EOPNOTSUPP instead of -EAGAIN.
+
+Also fixed is a stale comment that explains the handling of the
+FUSE_OVER_IO_URING flag in early RFC versions.
+
+If there should be a report from any library or application we
+probably need to revert this commit.
+
+Fixes: 3393ff964e0f ("fuse: block request allocation until io-uring init is complete")
+Signed-off-by: Bernd Schubert <bernd@bsbernd.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 11 deletions(-)
+ fs/fuse/dev_uring.c | 30 +++++++++++++++++++-----------
+ fs/fuse/inode.c     |  4 ----
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 496482141e892..9078a672e2dd3 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -438,11 +438,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
- 	return -EINVAL;
- }
+diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
+index 9b57544935b50..b52d5c2bd4e42 100644
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -1253,23 +1253,31 @@ int fuse_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+ 	}
+ 	fc = fud->fc;
  
-+static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
-+{
-+	lockdep_assert_held(&chan->lock);
-+
-+	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
-+	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
-+	 * remains alive during this chan->lock critical section.
+-	/* Once a connection has io-uring enabled on it, it can't be disabled */
+-	if (!enable_uring && !fc->io_uring) {
+-		pr_info_ratelimited("fuse-io-uring is disabled\n");
+-		return -EOPNOTSUPP;
+-	}
++	/*
++	 * The ring is sized from values negotiated by FUSE_INIT
 +	 */
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		return NULL;
++	if (!fc->initialized)
++		return -EAGAIN;
 +
-+	return chan->conn;
-+}
++	/* Pairs with smp_wmb() in fuse_set_initialized() */
++	smp_rmb();
+ 
+ 	if (fc->aborted)
+ 		return -ECONNABORTED;
+ 	if (!fc->connected)
+ 		return -ENOTCONN;
+ 
+-	/*
+-	 * fuse_uring_register() needs the ring to be initialized,
+-	 * we need to know the max payload size
+-	 */
+-	if (!fc->initialized)
+-		return -EAGAIN;
++	/* Once a connection has io-uring enabled on it, it can't be disabled */
++	if (!enable_uring && !fc->io_uring) {
++		pr_info_ratelimited("fuse-io-uring is disabled by module parameter\n");
++		return -EOPNOTSUPP;
++	}
 +
- static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 				     char __user *optval, int __user *optlen)
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
- 	int err = 0;
-@@ -454,6 +469,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 	if (get_user(len, optlen))
- 		return -EFAULT;
++	if (cmd_op == FUSE_IO_URING_CMD_REGISTER && !fc->io_uring) {
++		pr_info_ratelimited(
++			"fuse-io-uring not enabled on this connection\n");
++		return -EOPNOTSUPP;
++	}
  
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
+ 	switch (cmd_op) {
+ 	case FUSE_IO_URING_CMD_REGISTER:
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index a0a64dfffb759..091a375c32a8d 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1517,10 +1517,6 @@ static struct fuse_init_args *fuse_new_init(struct fuse_mount *fm)
+ 	if (IS_ENABLED(CONFIG_FUSE_PASSTHROUGH))
+ 		flags |= FUSE_PASSTHROUGH;
  
- 	switch (optname) {
-@@ -539,9 +555,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn) {
-+			err = -ENOTCONN;
-+			break;
-+		}
-+
- 		memset(&cinfo, 0, sizeof(cinfo));
--		cinfo.hci_handle = chan->conn->hcon->handle;
--		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
-+		cinfo.hci_handle = conn->hcon->handle;
-+		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
- 		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
-@@ -555,6 +577,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+
- 	return err;
- }
- 
-@@ -563,6 +587,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct bt_security sec;
- 	struct bt_power pwr;
- 	u32 phys;
-@@ -579,6 +604,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	if (get_user(len, optlen))
- 		return -EFAULT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -590,12 +616,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+
- 		memset(&sec, 0, sizeof(sec));
--		if (chan->conn) {
--			sec.level = chan->conn->hcon->sec_level;
-+		if (conn) {
-+			sec.level = conn->hcon->sec_level;
- 
- 			if (sk->sk_state == BT_CONNECTED)
--				sec.key_size = chan->conn->hcon->enc_key_size;
-+				sec.key_size = conn->hcon->enc_key_size;
- 		} else {
- 			sec.level = chan->sec_level;
- 		}
-@@ -671,12 +699,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PHY:
--		if (sk->sk_state != BT_CONNECTED) {
-+		conn = l2cap_chan_conn(chan);
-+
-+		if (sk->sk_state != BT_CONNECTED || !conn) {
- 			err = -ENOTCONN;
- 			break;
- 		}
- 
--		phys = hci_conn_get_phy(chan->conn->hcon);
-+		phys = hci_conn_get_phy(conn->hcon);
- 
- 		if (put_user(phys, (u32 __user *) optval))
- 			err = -EFAULT;
-@@ -709,6 +739,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -739,6 +770,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 
- 	BT_DBG("sk %p", sk);
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -840,6 +872,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -903,6 +936,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	if (level != SOL_BLUETOOTH)
- 		return -ENOPROTOOPT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -928,11 +962,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		chan->sec_level = sec.level;
- 
--		if (!chan->conn)
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn)
- 			break;
- 
--		conn = chan->conn;
--
- 		/* change security for LE channels */
- 		if (chan->scid == L2CAP_CID_ATT) {
- 			if (smp_conn_security(conn->hcon, sec.level)) {
-@@ -987,7 +1020,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		}
- 
- 		if (opt == BT_FLUSHABLE_OFF) {
--			conn = chan->conn;
-+			conn = l2cap_chan_conn(chan);
-+
- 			/* proceed further only when we have l2cap_conn and
- 			   No Flush support in the LM */
- 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
-@@ -1111,6 +1145,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
+-	/*
+-	 * This is just an information flag for fuse server. No need to check
+-	 * the reply - server is either sending IORING_OP_URING_CMD or not.
+-	 */
+ 	if (fuse_uring_enabled())
+ 		flags |= FUSE_OVER_IO_URING;
  
 -- 
 2.53.0
