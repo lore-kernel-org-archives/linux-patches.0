@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F44198A17;
-	Tue, 13 Oct 2026 12:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794972C11DF;
+	Tue, 13 Oct 2026 12:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895747; cv=none; b=IPXt/npFChb5c1qagYWTwu6j2gYVNO7DlK0Zi0JiIoJN4Ao3jM1TknXVMNaCu9xjT2h0GlVC418v/vE9yQVw62bokdobIXYQ7AtXj4VYlhrvJReJtQXOB9swCQt6CJHeaPbAeZVxtJoXwtzUqgvL5+bnh4stqwijgcv3Bi/6OAA=
+	t=1791895750; cv=none; b=ncrVVeAM9S9FnZq2f0gQsNJNUrv6Kxdk6/qEznUWHSwIVitNbw/HuNyIxNJ3eiA4YGixIFgwXKQECuAXCSeshuSycXOC9OD/aukwjZeeT2F0xC6TXVzPbXscvdLeHRwZhrv5SWwnW9zceXsmpTuScFZjhuG9MVZHV8BOEDSEhZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895747; c=relaxed/simple;
-	bh=10D+y7gjnqclR4ZRjiVy2szIWE2ks29swtPeMJrxSeg=;
+	s=arc-20240116; t=1791895750; c=relaxed/simple;
+	bh=v38yUxLsTGT++BShbElDLZRqJWsfdK70bppJJrok1a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C6iSdEoWTxMEQkjchU3hm2kXOLEW2cGvXqgwickoVPtWbUQ2dXmKELym/73AuGCm/LVhUsjgtjIfgg1C2ZyXTdhN7gMbhX68mn2SHf3446gAMdsBCQaJmUBVwHIWJZ0OO+q2uPVvwbIuURPeGEuw7d2cmCnWSMm24hZss+H2tfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+UNDbZd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFXhrQhEgVKtWjRcNyDfwTyElyPBN6k0xS3RYQ11qJ8asquZPyEOPC8SVKJOGD/RlLY+WKkvLD/PtXY3r711c6xGLiJD/Ff2tWu9ebOmbC0GO56Z+zwNmyYv1IgOkPWJkTVbpXDrbXVUyhPewFKpI3ZY4amqhm1fYuaYr65STrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYgeA5Z8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+UNDbZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F4B1F000FF;
-	Tue, 13 Oct 2026 12:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYgeA5Z8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6A41F000FF;
+	Tue, 13 Oct 2026 12:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895746;
-	bh=mTpyZWksDdf0nHwvCWaSXdc1LUIqrJMutyoaQzVsJgs=;
+	s=korg; t=1791895749;
+	bh=qhMGhMoa3iRBFk+1kVs5mS5mXNalTHe53W2bVwqwcas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+UNDbZddJRsZHV/2dWYZr9i1F9INE/bmGR+Do38lNf6WqIphPYjUoeNU25DdzSOt
-	 JZ8qsijlM0W2+6LtjsD5Jb5FTd1aGpTdP3vldJ4T85waFtbM1nk1IbUdzeOuAtbysy
-	 a2Xh6r5Zn9XZgAT/H+65YBLrncpF77eW0Ob/rwKc=
+	b=zYgeA5Z8pTCXVyhS2rDirBFMeHkgtAd+fB+LviTXFrIt88cKfpCefDkEkUgXY+9/p
+	 8yENo5fTvQK686Fx3CI+nbWme0b0yo2Zx9L5TIstYl3EA32ncsJM5OCG1BpRyRZtgo
+	 uCLD9TPss3/uMGO4jqTUe0c1KmLcTZC4XYDke93Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a7f7cb0737bd91aa698c@syzkaller.appspotmail.com,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 380/497] selinux: fix data race on AVC latest_notif
-Date: Tue, 13 Oct 2026 13:39:07 +0200
-Message-ID: <20261013112916.916504100@linuxfoundation.org>
+Subject: [PATCH 6.12 381/497] selinux: preserve NATIVE_LABELS on already-initialized sb in set_mnt_opts
+Date: Tue, 13 Oct 2026 13:39:08 +0200
+Message-ID: <20261013112916.940247716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -46,60 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 1ca924044bf0de879a1648be93a56939652267d3 upstream.
+commit 28b7260548af3d35773477993ad4e4de41578dd7 upstream.
 
-avc_policy_seqno() reads latest_notif without holding notif_lock, while
-avc_latest_notif_update() can update it under that lock. KCSAN reports
-these concurrent accesses during policy boolean updates and permission
-checks.
+When an NFSv4 filesystem exported with security_label is mounted a
+second time, sget_fc() returns the existing superblock and
+nfs_get_root() calls security_sb_set_mnt_opts() again on it. Since the
+superblock is already SB_INITIALIZED, selinux_set_mnt_opts() takes an
+early exit without setting SECURITY_LSM_NATIVE_LABELS in
+*set_kern_flags. nfs_get_root() then sees kflags without
+SECURITY_LSM_NATIVE_LABELS set and clears NFS_CAP_SECURITY_LABEL on
+the shared nfs_server, silently disabling per-file labeling for both
+the new and the original mount.
 
-Use READ_ONCE() for the lockless read and WRITE_ONCE() for the update.
-The spinlock continues to serialize the comparison and update against
-other writers. Reads made while holding notif_lock cannot race with a
-writer and can remain plain accesses.
-
-This marks both sides of the intentional concurrent access and constrains
-compiler transformations, without suppressing checking with data_race().
+Commit 3815a245b501 ("security/selinux: fix SECURITY_LSM_NATIVE_LABELS
+on reused superblock") fixed the same problem in
+selinux_sb_clone_mnt_opts().  The reused-superblock path for a plain
+second mount now goes through sb_set_mnt_opts rather than
+sb_clone_mnt_opts, so it needs the same treatment: on both
+SE_SBINITIALIZED early exits, set SECURITY_LSM_NATIVE_LABELS in
+*set_kern_flags when the superblock was already using
+SECURITY_FS_USE_NATVE.
 
 Cc: stable@vger.kernel.org
-Fixes: 788e7dd4c22e ("SELinux: Improve read/write performance")
-Reported-by: syzbot+a7f7cb0737bd91aa698c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a7f7cb0737bd91aa698c
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Closes: https://github.com/SELinuxProject/selinux-kernel/issues/69
+Closes: https://github.com/SELinuxProject/selinux-kernel/issues/70
+Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/91
+Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/92
+Fixes: eb9ae686507b ("SELinux: Add new labeling type native labels")
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/avc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/selinux/hooks.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/security/selinux/avc.c
-+++ b/security/selinux/avc.c
-@@ -573,7 +573,7 @@ static int avc_latest_notif_update(u32 s
- 		}
- 	} else {
- 		if (seqno > selinux_avc.avc_cache.latest_notif)
--			selinux_avc.avc_cache.latest_notif = seqno;
-+			WRITE_ONCE(selinux_avc.avc_cache.latest_notif, seqno);
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -677,8 +677,12 @@ static int selinux_set_mnt_opts(struct s
+ 	 * will be used for both mounts)
+ 	 */
+ 	if ((sbsec->flags & SE_SBINITIALIZED) && (sb->s_type->fs_flags & FS_BINARY_MOUNTDATA)
+-	    && !opts)
++		&& !opts) {
++		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
++		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
++			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
+ 		goto out;
++	}
+ 
+ 	root_isec = backing_inode_security_novalidate(root);
+ 
+@@ -722,6 +726,9 @@ static int selinux_set_mnt_opts(struct s
+ 		/* previously mounted with options, but not on this attempt? */
+ 		if ((sbsec->flags & SE_MNTMASK) && !opts)
+ 			goto out_double_mount;
++		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
++		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
++			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
+ 		rc = 0;
+ 		goto out;
  	}
- 	spin_unlock_irqrestore(&notif_lock, flag);
- 
-@@ -1200,5 +1200,6 @@ int avc_has_perm(u32 ssid, u32 tsid, u16
- 
- u32 avc_policy_seqno(void)
- {
--	return selinux_avc.avc_cache.latest_notif;
-+	/* Writers hold notif_lock; readers only sample the sequence number. */
-+	return READ_ONCE(selinux_avc.avc_cache.latest_notif);
- }
 
 
