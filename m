@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690372BFC85;
-	Tue, 13 Oct 2026 11:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596D74E0B9D;
+	Tue, 13 Oct 2026 11:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892157; cv=none; b=Fp8T44GuPNU2suQz3e9Lr9UmBjqr0VcpQ98zcvcZJ7NJzPEDz+b0fJQNEDco1ADdvfN1VYfGhhaYSvjx0cOTu6SRyt3LnxihfCHfiRgHkHSUf+obn9kkMxeS1Jv8Cb7aChOj+wGCoJbPAqDU/uBw0KT0IozOIJ5mqAtL39fU5ks=
+	t=1791892160; cv=none; b=DDgvXrS4LRoPTtixoji5j51vMb1AmAJdOWoeenPS3r4ln45/H1YDLWI8TjBGHEOApRjG3Dxn0dUaCgkOCkT4pZ+mVVmAW1UiLiRG5x00z6XCUt9LJ9KJ7j1m0F1igReuS2VoEz88OMbyXbvN7aGJdsyea38aC2zdVhHfgrr+wnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892157; c=relaxed/simple;
-	bh=dEdvkYxKMliNiVvorwVQJzO+UgVny/sH8iXMbnLYwB8=;
+	s=arc-20240116; t=1791892160; c=relaxed/simple;
+	bh=TTGXIBCDIuSPPdo6u+xHcdxWzJa4BZ9pFGFlSXB71xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UBGOZNEpBphjkL2/s7400lNu74/YIBEVWOCRanXcAr4RdKrkFOOCOgUHd4XQ/hapeF3rYInUfQ3qHyAoQ8atOVCOSltvjf+sKX0Iaocyhmyq316fMC4+HMHvk1w/Sh1CTjVgsfBkQJXDsjLKbPK8oqEBAJW6TNJs4B0i6M/kLlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaHo5ElH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Myri1h5E8mRgytSN/Px9NU31xAFA2BU4nftVu6s4uIvkcCcQ/Pu9m2ZN2KAFaMZfV3zXnnxPybw6MFkqVlpWPio+nepIJJPnEm29h6XtjhR+R+FI9ZcQ+CLpMEoMavez6OWC/shJ55nvMG/KWkgJp0gxyni7auV/XdKDFLcQl9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iODM5J8A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaHo5ElH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9191F000FF;
-	Tue, 13 Oct 2026 11:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iODM5J8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05BC1F000FF;
+	Tue, 13 Oct 2026 11:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892156;
-	bh=bu3VbXyzv6VtYtRDhIEBgdUdkzoQVK6Gsqo/MqfJ9CE=;
+	s=korg; t=1791892159;
+	bh=kp/eTYHrVpjPdI5b0QOIn+ULZiUMfSj1M1zXkfnaalg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EaHo5ElH3UhORxrCA7U8jovjKKoPa0hok70dYG7zzSpeuKHC2i8ooWTLUGE7CMo+Q
-	 NIQZBBrq6PcOy5na/EM6lQY5ad29KghfKSHmXqBqnv8NIM/Viq8iVva66FC4AWaH7T
-	 bxKAs5+s7/bbsm4p5OCQasagX+HuLJUSr8A+Enb4=
+	b=iODM5J8A80hcYBM7Yup/h81pWx1N9mbRGY5Bp8HbYDPUPMSZwBbflMAFW8HMI3+LH
+	 2fn1TcbnctVvZ3AnHOjO6R76NdIqxYrDt291YYRqAq0uZKbEUgplvZj0/yG4Y0SBHS
+	 5aHLrVgX2lC7mi+iYe1UM+YoQwyAgJVVeurff9xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramses de Norre <ramses@well-founded.dev>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 034/281] wireguard: queueing: preserve tstamp_type when encapsulating packet
-Date: Tue, 13 Oct 2026 13:35:50 +0200
-Message-ID: <20261013112855.881290827@linuxfoundation.org>
+Subject: [PATCH 7.2 035/281] wireguard: noise: reject response consumption after intermediate initiation
+Date: Tue, 13 Oct 2026 13:35:51 +0200
+Message-ID: <20261013112855.904889456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -54,73 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramses de Norre <ramses@well-founded.dev>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 65ab9de4bdd4c05d8277cfc20ae0b9f5aff60897 upstream.
+commit d0305f8d90029556260c6824b61c493c424eba9e upstream.
 
-Sending traffic through a wireguard tunnel on a host using the fq
-qdisc fills the log with:
+Two threads begin processing the identical response message, received
+twice. The first thread, A, runs. While it's running, the second one,
+B, gets partway through, and during that slow calculation, or even while
+blocking on down_write(), A completes and then also a handshake
+initiation that's already been queued up runs in thread C, which itself
+takes that same down_write(). The handshake initiation creation
+succeeds, and sets the state back to waiting-for-response, and calls
+up_write(), at which point thread B resumes, because either its finished
+its calculations or was finally allowed to acquire down_write(). Thread
+B then copies the state back to the peer, and begins a new session,
+using that state, which is the same session as the one made in thread A.
 
-  fq: likely mono tstamp with tstamp_type 0
+Thread A			Thread B			Thread C
 
-An skb carries a timestamp in skb->tstamp and, separately, a
-skb->tstamp_type field recording which clock that timestamp came from.
-The two have to agree.
+down_read()
+ sA = handshake->state
+ memcpy(cA, handshake->crypto)
+up_read()
+if (sA != 1)
+ goto fail
+slow_crypto(cA)
+				down_read()
+				 sB = handshake->state
+				 memcpy(cB, handshake->crypto)
+				up_read()
+				if (sB != 1)
+				 goto fail
+				slow_crypto(cB)
+down_write()
+ if (sA != handshake->state)
+  goto fail
+ memcpy(handshake->crypto, cA)
+ handshake->state = 2
+up_write()
+down_write()
+ if (handshake->state != 2)
+  goto fail
+ derive_session(handshake->crypto)
+up_write()
+								down_write()
+								 slow_crypto(handshake->crypto)
+								 handshake->state = 1
+								up_write()
+				down_write()
+				 if (sB != handshake->state)
+				   goto fail
+				 memcpy(handshake->crypto, cB)
+				 handshake->state = 2
+				up_write()
+				down_write()
+				 if (handshake->state != 2)
+				  goto fail
+				 derive_session(handshake->crypto)
+				up_write()
 
-When wireguard encapsulates a packet it calls wg_reset_packet(), which
-clears the fields that must not leak from the inner packet into the
-tunnel packet. It does so in two steps:
+This seems basically impossible to hit in a meaningful way in practice,
+but ensure that it absolutely cannot happen by comparing the ephemeral
+private key that's on the stack with the latest one that the peer's
+handshake state has.
 
-  skb_scrub_packet(skb, true);
-  memset(&skb->headers, 0, sizeof(skb->headers));
-
-skb_scrub_packet() deliberately keeps skb->tstamp when it holds a
-monotonic timestamp: that value is the time the packet is scheduled to
-be sent, and the qdisc still needs it. The memset then zeroes
-skb->tstamp_type, because that field sits inside the headers group
-while skb->tstamp does not. The packet therefore leaves wireguard
-carrying a monotonic timestamp labelled as a realtime one.
-
-Nothing noticed until commit c4f796c4f16b ("net_sched: sch_fq: convert
-skb->tstamp if not monotonic"): fq used to assume every timestamp was
-monotonic. It now consults tstamp_type, spots the mismatch, warns, and
-falls back to treating the value as monotonic. Pacing still ends up
-correct, so the log spam is the actual problem.
-
-Save tstamp_type before the memset and restore it when encapsulating,
-next to the hash fields that are already carried over this way. When
-decapsulating it stays zeroed, which is right: an incoming packet's
-timestamp is a realtime receive timestamp.
-
-Fixes: d98d58a00261 ("net: Set skb->mono_delivery_time and clear it after sch_handle_ingress()")
-Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
 Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20261008130124.724119-3-Jason@zx2c4.com
+Link: https://patch.msgid.link/20261008130124.724119-4-Jason@zx2c4.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/queueing.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireguard/noise.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -78,12 +78,14 @@ static inline void wg_reset_packet(struc
- 	u8 l4_hash = skb->l4_hash;
- 	u8 sw_hash = skb->sw_hash;
- 	u32 hash = skb->hash;
-+	u8 tstamp_type = skb->tstamp_type;
- 	skb_scrub_packet(skb, true);
- 	memset(&skb->headers, 0, sizeof(skb->headers));
- 	if (encapsulating) {
- 		skb->l4_hash = l4_hash;
- 		skb->sw_hash = sw_hash;
- 		skb->hash = hash;
-+		skb->tstamp_type = tstamp_type;
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -784,10 +784,11 @@ wg_noise_handshake_consume_response(stru
+ 
+ 	/* Success! Copy everything to peer */
+ 	down_write(&handshake->lock);
+-	/* It's important to check that the state is still the same, while we
+-	 * have an exclusive lock.
++	/* Check that the state is the same and that this is still the
++	 * initiation we started with, while we have an exclusive lock.
+ 	 */
+-	if (handshake->state != state) {
++	if (handshake->state != state ||
++	    crypto_memneq(handshake->ephemeral_private, ephemeral_private, NOISE_PUBLIC_KEY_LEN)) {
+ 		up_write(&handshake->lock);
+ 		goto fail;
  	}
- 	skb->queue_mapping = 0;
- 	skb->nohdr = 0;
 
 
