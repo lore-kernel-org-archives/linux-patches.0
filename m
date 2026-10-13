@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE983B841B;
-	Tue, 13 Oct 2026 12:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E5F389104;
+	Tue, 13 Oct 2026 12:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893349; cv=none; b=OHRKVT3qf5YRoXiV7XgUSlxDAKOOUlY69xFc9RBnPm001D4bC1rcdGQg2fMpjldWpzu5lut4PN6N52lG49ZMxDp+WR7ZKYaExko5UyJceArCQeKjmigaay+oE1J6rr4iVnXvqBtyDo+mp/w5pQ5NXId52YL78c8lUASNUdu+d9o=
+	t=1791893353; cv=none; b=ulUIsdRwDnFUcFgngWviAZfFcG+8kDDNo/7nGDjiqOkbLuPHNZxnNo3G8NJoPQFTLVi5Gs4igukEPWv9WWTkpUHKGuyBc51CA79cMURCHMP34iLsaU0r/drLZiarvkK8F3zDtGkUmGwRSoXq0e9h8uA0yUHTmoz9ikvZydssgp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893349; c=relaxed/simple;
-	bh=EnHMfPfExr2cHs3B1Li1IaZrwD16uvWzyFml1QzHe8g=;
+	s=arc-20240116; t=1791893353; c=relaxed/simple;
+	bh=DzUHkJnCC8384B42oJwqGIA3sLE3Wh6aIBqr97a8sgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHeeS7Y1qlNKipFGTYxoPQ9svWgjJe21Qp/4vbOWDmL211qFJzEsjxuRXf1nP7njdhZZFasY914dvVD0LKO1cAylboDzsT77wcnuHjVwuAO2vd0qLwCUTIoPJnUFOLNgdPA2h2LXKEo1giGjRmqBub8oUlR5z5ETxa7KsLs7t88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEUkC3Xa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5I+VtnSUQTCbnbJVK71eJDagFvJaPq+IZBPAn7S8wER14melUOFu54q0Rl9a2tiHTjOWNJ9CRKRbOtzQS2NDrZSxKngN6kDColkxN9aWsr8IA5EHMQZYt8Hv2XOw0MxSih8cpIBXJ/0SM406AbYWkfvwuFNzPBKDl+XzRxSAJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sQATss5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEUkC3Xa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA1A1F000FF;
-	Tue, 13 Oct 2026 12:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sQATss5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D091F000FF;
+	Tue, 13 Oct 2026 12:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893348;
-	bh=RQn6vGDJ3NXr8mFu6uezJkqnb4ORIqsQ+HkKTbhpKIY=;
+	s=korg; t=1791893351;
+	bh=ei8cARPM+t3KXZUboNRjLtMQtktXd90MYbCdY0Oi80k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEUkC3XaLa9qAYADzSmKTMaTVrsFcs5ogRaQDtgIxhQmZSd1QYsGvfY+6XpqtlToR
-	 tEyysniSsj91Cp8VUPEhor91XsG+17LBgDdtqCBQhJAoNJi+xJMGdqAh6RyUK6btJ9
-	 z3Z2gnPdb1S93HcDVE9f9JUk9iNUy7Ye8p6CYNyo=
+	b=0sQATss5zI7igidlXdAheSeliWuWNeBivgXw9pmWgSJHyW0ZkdM+NgJ359qertG2N
+	 RCEL7gmUDOCbQM2XDdMwbtas+h/qRS8j7tHyEb5wh4VTtggJLe2dmxHenIO07HmoT8
+	 cQQhhUd25w4TBGO4WF15xRQawS37t1ktcUZ/ZVvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 159/621] ice: fix crash in ethtool offline loopback test
-Date: Tue, 13 Oct 2026 13:32:34 +0200
-Message-ID: <20261013112924.630464901@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 195/621] gfs2: Get rid of delayed withdraws
+Date: Tue, 13 Oct 2026 13:33:10 +0200
+Message-ID: <20261013112925.491043058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,154 +50,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit a9c354e656597aededa027d63d2ff0973f6b033f ]
+[ Upstream commit 8daf6c2b3d8ceea5559cceb8ed7e1275ee72a7be ]
 
-Since the conversion of ice to page pool, the ethtool loopback test
-crashes:
+Now that gfs2_withdraw() is asynchronous, is can be called in any
+context and there is no more need for gfs2_withdraw_delayed() or for
+turning delayed withdraws into actual withdraws.  Remove the
+now-obsolete code.
 
- BUG: kernel NULL pointer dereference, address: 000000000000000c
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 1100f1067 P4D 0
- Oops: Oops: 0002 [#1] SMP NOPTI
- CPU: 23 UID: 0 PID: 5904 Comm: ethtool Kdump: loaded Not tainted 6.19.0-0.rc7.260128g1f97d9dcf5364.49.eln154.x86_64 #1 PREEMPT(lazy)
- Hardware name: [...]
- RIP: 0010:ice_alloc_rx_bufs+0x1cd/0x310 [ice]
- Code: 83 6c 24 30 01 66 41 89 47 08 0f 84 c0 00 00 00 41 0f b7 dc 48 8b 44 24 18 48 c1 e3 04 41 bb 00 10 00 00 48 8d 2c 18 8b 04 24 <89> 45 0c 41 8b 4d 00 49 d3 e3 44 3b 5c 24 24 0f 83 ac fe ff ff 44
- RSP: 0018:ff7894738aa1f768 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000700 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ff16dcae79880200 R09: 0000000000000019
- R10: 0000000000000001 R11: 0000000000001000 R12: 0000000000000000
- R13: 0000000000000000 R14: 0000000000000000 R15: ff16dcae6c670000
- FS:  00007fcf428850c0(0000) GS:ff16dcb149710000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000000000000c CR3: 0000000121227005 CR4: 0000000000773ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ice_vsi_cfg_rxq+0xca/0x460 [ice]
-  ice_vsi_cfg_rxqs+0x54/0x70 [ice]
-  ice_loopback_test+0xa9/0x520 [ice]
-  ice_self_test+0x1b9/0x280 [ice]
-  ethtool_self_test+0xe5/0x200
-  __dev_ethtool+0x1106/0x1a90
-  dev_ethtool+0xbe/0x1a0
-  dev_ioctl+0x258/0x4c0
-  sock_do_ioctl+0xe3/0x130
-  __x64_sys_ioctl+0xb9/0x100
-  do_syscall_64+0x7c/0x700
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [...]
-
-It crashes because we have not initialized libeth for the rx ring.
-
-Fix it by treating ICE_VSI_LB VSIs slightly more like normal PF VSIs and
-letting them have a q_vector. It's just a dummy, because the loopback
-test does not use interrupts, but it contains a napi struct that can be
-passed to libeth_rx_fq_create() called from ice_vsi_cfg_rxq() ->
-ice_rxq_pp_create().
-
-Fixes: 93f53db9f9dc ("ice: switch to Page Pool")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: e142dc4ef0f4 ("ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: da6f5bbc2e79 ("gfs2: fix memory leaks in gfs2_fill_super error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_base.c    |  5 ++++-
- drivers/net/ethernet/intel/ice/ice_ethtool.c |  4 ++++
- drivers/net/ethernet/intel/ice/ice_lib.c     | 15 ++++++++++-----
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ fs/gfs2/glock.c  |  2 +-
+ fs/gfs2/glops.c  | 11 ++++-------
+ fs/gfs2/incore.h |  1 -
+ fs/gfs2/log.c    | 21 +++++----------------
+ fs/gfs2/lops.c   |  2 +-
+ fs/gfs2/sys.c    |  2 --
+ fs/gfs2/util.c   | 15 ++-------------
+ fs/gfs2/util.h   | 36 +++---------------------------------
+ 8 files changed, 16 insertions(+), 74 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index fee58f879d9e1..f0aa26144deb5 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -123,6 +123,8 @@ static int ice_vsi_alloc_q_vector(struct ice_vsi *vsi, u16 v_idx)
- 	if (vsi->type == ICE_VSI_VF) {
- 		ice_calc_vf_reg_idx(vsi->vf, q_vector);
- 		goto out;
-+	} else if (vsi->type == ICE_VSI_LB) {
-+		goto skip_alloc;
- 	} else if (vsi->type == ICE_VSI_CTRL && vsi->vf) {
- 		struct ice_vsi *ctrl_vsi = ice_get_vf_ctrl_vsi(pf, vsi);
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 7aec6cfdfd91d..fef2c41995a17 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -756,7 +756,7 @@ __acquires(&gl->gl_lockref.lock)
+ 	 * then it's okay to tell dlm to unlock it.
+ 	 */
+ 	if (unlikely(sdp->sd_log_error) && !gfs2_withdrawing_or_withdrawn(sdp))
+-		gfs2_withdraw_delayed(sdp);
++		gfs2_withdraw(sdp);
+ 	if (glock_blocked_by_withdraw(gl) &&
+ 	    (target != LM_ST_UNLOCKED ||
+ 	     test_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags))) {
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 0c68ab4432b08..28b22cbfb5074 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -45,7 +45,7 @@ static void gfs2_ail_error(struct gfs2_glock *gl, const struct buffer_head *bh)
+ 	       gl->gl_name.ln_type, gl->gl_name.ln_number,
+ 	       gfs2_glock2aspace(gl));
+ 	gfs2_lm(sdp, "AIL error\n");
+-	gfs2_withdraw_delayed(sdp);
++	gfs2_withdraw(sdp);
+ }
  
-@@ -627,7 +629,8 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 	u32 rx_buf_len;
- 	int err;
- 
--	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF) {
-+	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF ||
-+	    ring->vsi->type == ICE_VSI_LB) {
- 		if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
- 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
- 						 ring->q_index,
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index d98e351f09ec0..b2429f85f2e0d 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -1277,6 +1277,10 @@ static u64 ice_loopback_test(struct net_device *netdev)
- 	test_vsi->netdev = netdev;
- 	tx_ring = test_vsi->tx_rings[0];
- 	rx_ring = test_vsi->rx_rings[0];
-+	/* Dummy q_vector and napi. Fill the minimum required for
-+	 * ice_rxq_pp_create().
-+	 */
-+	rx_ring->q_vector->napi.dev = netdev;
- 
- 	if (ice_lbtest_prepare_rings(test_vsi)) {
- 		ret = 2;
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 851fab1812510..6fabc02ba118c 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -107,10 +107,6 @@ static int ice_vsi_alloc_arrays(struct ice_vsi *vsi)
- 	if (!vsi->rxq_map)
- 		goto err_rxq_map;
- 
--	/* There is no need to allocate q_vectors for a loopback VSI. */
--	if (vsi->type == ICE_VSI_LB)
--		return 0;
+ /**
+@@ -83,9 +83,6 @@ static void __gfs2_ail_flush(struct gfs2_glock *gl, bool fsync,
+ 	GLOCK_BUG_ON(gl, !fsync && atomic_read(&gl->gl_ail_count));
+ 	spin_unlock(&sdp->sd_ail_lock);
+ 	gfs2_log_unlock(sdp);
 -
- 	/* allocate memory for q_vector pointers */
- 	vsi->q_vectors = devm_kcalloc(dev, vsi->num_q_vectors,
- 				      sizeof(*vsi->q_vectors), GFP_KERNEL);
-@@ -239,6 +235,8 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
- 	case ICE_VSI_LB:
- 		vsi->alloc_txq = 1;
- 		vsi->alloc_rxq = 1;
-+		/* A dummy q_vector, no actual IRQ. */
-+		vsi->num_q_vectors = 1;
- 		break;
- 	default:
- 		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi_type);
-@@ -2425,14 +2423,21 @@ static int ice_vsi_cfg_def(struct ice_vsi *vsi)
+-	if (gfs2_withdrawing(sdp))
+-		gfs2_withdraw(sdp);
+ }
+ 
+ 
+@@ -608,10 +605,10 @@ static int freeze_go_xmote_bh(struct gfs2_glock *gl)
+ 		j_gl->gl_ops->go_inval(j_gl, DIO_METADATA);
+ 
+ 		error = gfs2_find_jhead(sdp->sd_jdesc, &head);
+-		if (gfs2_assert_withdraw_delayed(sdp, !error))
++		if (gfs2_assert_withdraw(sdp, !error))
+ 			return error;
+-		if (gfs2_assert_withdraw_delayed(sdp, head.lh_flags &
+-						 GFS2_LOG_HEAD_UNMOUNT))
++		if (gfs2_assert_withdraw(sdp, head.lh_flags &
++					 GFS2_LOG_HEAD_UNMOUNT))
+ 			return -EIO;
+ 		gfs2_log_pointers_init(sdp, &head);
+ 	}
+diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
+index db0e72adb9996..5dfdd1f3c5da6 100644
+--- a/fs/gfs2/incore.h
++++ b/fs/gfs2/incore.h
+@@ -599,7 +599,6 @@ enum {
+ 	SDF_SKIP_DLM_UNLOCK	= 8,
+ 	SDF_FORCE_AIL_FLUSH     = 9,
+ 	SDF_FREEZE_INITIATOR	= 10,
+-	SDF_WITHDRAWING		= 11, /* Will withdraw eventually */
+ 	SDF_WITHDRAW_IN_PROG	= 12, /* Withdraw is in progress */
+ 	SDF_REMOTE_WITHDRAW	= 13, /* Performing remote recovery */
+ 	SDF_WITHDRAW_RECOVERY	= 14, /* Wait for journal recovery when we are
+diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
+index ecc5c59b87008..56b6435c90d93 100644
+--- a/fs/gfs2/log.c
++++ b/fs/gfs2/log.c
+@@ -114,7 +114,7 @@ __acquires(&sdp->sd_ail_lock)
+ 			}
+ 			if (!cmpxchg(&sdp->sd_log_error, 0, -EIO)) {
+ 				gfs2_io_error_bh(sdp, bh);
+-				gfs2_withdraw_delayed(sdp);
++				gfs2_withdraw(sdp);
+ 			}
  		}
- 		break;
- 	case ICE_VSI_LB:
--		ret = ice_vsi_alloc_rings(vsi);
-+		ret = ice_vsi_alloc_q_vectors(vsi);
- 		if (ret)
- 			goto unroll_vsi_init;
  
-+		ret = ice_vsi_alloc_rings(vsi);
-+		if (ret)
-+			goto unroll_alloc_q_vector;
-+
- 		ret = ice_vsi_alloc_ring_stats(vsi);
- 		if (ret)
- 			goto unroll_vector_base;
+@@ -326,7 +326,7 @@ static int gfs2_ail1_empty_one(struct gfs2_sbd *sdp, struct gfs2_trans *tr,
+ 		if (!buffer_uptodate(bh) &&
+ 		    !cmpxchg(&sdp->sd_log_error, 0, -EIO)) {
+ 			gfs2_io_error_bh(sdp, bh);
+-			gfs2_withdraw_delayed(sdp);
++			gfs2_withdraw(sdp);
+ 		}
+ 		/*
+ 		 * If we have space for revokes and the bd is no longer on any
+@@ -808,9 +808,6 @@ void gfs2_flush_revokes(struct gfs2_sbd *sdp)
+ 	gfs2_log_lock(sdp);
+ 	gfs2_ail1_empty(sdp, max_revokes);
+ 	gfs2_log_unlock(sdp);
+-
+-	if (gfs2_withdrawing(sdp))
+-		gfs2_withdraw(sdp);
+ }
  
-+		/* Simply map the dummy q_vector to the only rx_ring */
-+		vsi->rx_rings[0]->q_vector = vsi->q_vectors[0];
-+
- 		break;
- 	default:
- 		/* clean up the resources and exit */
+ /**
+@@ -988,9 +985,6 @@ static void empty_ail1_list(struct gfs2_sbd *sdp)
+ 		if (gfs2_withdrawing_or_withdrawn(sdp))
+ 			break;
+ 	}
+-
+-	if (gfs2_withdrawing(sdp))
+-		gfs2_withdraw(sdp);
+ }
+ 
+ /**
+@@ -1072,7 +1066,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 			sdp->sd_log_tr = NULL;
+ 			tr->tr_first = first_log_head;
+ 			if (unlikely(frozen)) {
+-				if (gfs2_assert_withdraw_delayed(sdp,
++				if (gfs2_assert_withdraw(sdp,
+ 				       !tr->tr_num_buf_new && !tr->tr_num_databuf_new))
+ 					goto out_withdraw;
+ 			}
+@@ -1097,7 +1091,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 		clear_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+ 
+ 	if (unlikely(frozen))
+-		if (gfs2_assert_withdraw_delayed(sdp, !reserved_revokes))
++		if (gfs2_assert_withdraw(sdp, !reserved_revokes))
+ 			goto out_withdraw;
+ 
+ 	gfs2_ordered_write(sdp);
+@@ -1152,12 +1146,10 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 		reserved_blocks += (reserved_revokes - sdp->sd_ldptrs) / sdp->sd_inptrs;
+ out:
+ 	if (used_blocks != reserved_blocks) {
+-		gfs2_assert_withdraw_delayed(sdp, used_blocks < reserved_blocks);
++		gfs2_assert_withdraw(sdp, used_blocks < reserved_blocks);
+ 		gfs2_log_release(sdp, reserved_blocks - used_blocks);
+ 	}
+ 	gfs2_trans_free(sdp, tr);
+-	if (gfs2_withdrawing(sdp))
+-		gfs2_withdraw(sdp);
+ 	trace_gfs2_log_flush(sdp, 0, flags);
+ 	return;
+ 
+@@ -1359,9 +1351,6 @@ int gfs2_logd(void *data)
+ 				t);
+ 	}
+ 
+-	if (gfs2_withdrawing(sdp))
+-		gfs2_withdraw(sdp);
+-
+ 	return 0;
+ }
+ 
+diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
+index 9c8c305a75c46..0ed81a685fcd0 100644
+--- a/fs/gfs2/lops.c
++++ b/fs/gfs2/lops.c
+@@ -209,7 +209,7 @@ static void gfs2_end_log_write(struct bio *bio)
+ 		if (!cmpxchg(&sdp->sd_log_error, 0, err))
+ 			fs_err(sdp, "Error %d writing to journal, jid=%u\n",
+ 			       err, sdp->sd_jdesc->jd_jid);
+-		gfs2_withdraw_delayed(sdp);
++		gfs2_withdraw(sdp);
+ 		/* prevent more writes to the journal */
+ 		clear_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+ 		wake_up(&sdp->sd_logd_waitq);
+diff --git a/fs/gfs2/sys.c b/fs/gfs2/sys.c
+index 1213f97419f64..8093a596661ec 100644
+--- a/fs/gfs2/sys.c
++++ b/fs/gfs2/sys.c
+@@ -84,7 +84,6 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
+ 		     "Force AIL Flush:          %d\n"
+ 		     "FS Freeze Initiator:      %d\n"
+ 		     "FS Frozen:                %d\n"
+-		     "Withdrawing:              %d\n"
+ 		     "Withdraw In Prog:         %d\n"
+ 		     "Remote Withdraw:          %d\n"
+ 		     "Withdraw Recovery:        %d\n"
+@@ -117,7 +116,6 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
+ 		     test_bit(SDF_FORCE_AIL_FLUSH, &f),
+ 		     test_bit(SDF_FREEZE_INITIATOR, &f),
+ 		     test_bit(SDF_FROZEN, &f),
+-		     test_bit(SDF_WITHDRAWING, &f),
+ 		     test_bit(SDF_WITHDRAW_IN_PROG, &f),
+ 		     test_bit(SDF_REMOTE_WITHDRAW, &f),
+ 		     test_bit(SDF_WITHDRAW_RECOVERY, &f),
+diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
+index c454bea101dec..e15e11f6f1616 100644
+--- a/fs/gfs2/util.c
++++ b/fs/gfs2/util.c
+@@ -364,8 +364,7 @@ void gfs2_withdraw(struct gfs2_sbd *sdp)
+  */
+ 
+ void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
+-			    const char *function, char *file, unsigned int line,
+-			    bool delayed)
++			    const char *function, char *file, unsigned int line)
+ {
+ 	if (gfs2_withdrawing_or_withdrawn(sdp))
+ 		return;
+@@ -375,17 +374,7 @@ void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
+ 	       "function = %s, file = %s, line = %u\n",
+ 	       assertion, function, file, line);
+ 
+-	/*
+-	 * If errors=panic was specified on mount, it won't help to delay the
+-	 * withdraw.
+-	 */
+-	if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
+-		delayed = false;
+-
+-	if (delayed)
+-		gfs2_withdraw_delayed(sdp);
+-	else
+-		gfs2_withdraw(sdp);
++	gfs2_withdraw(sdp);
+ 	dump_stack();
+ }
+ 
+diff --git a/fs/gfs2/util.h b/fs/gfs2/util.h
+index f424ef2523c43..51347a467b897 100644
+--- a/fs/gfs2/util.h
++++ b/fs/gfs2/util.h
+@@ -37,24 +37,14 @@ do { \
+ 
+ 
+ void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
+-			    const char *function, char *file, unsigned int line,
+-			    bool delayed);
++			    const char *function, char *file, unsigned int line);
+ 
+ #define gfs2_assert_withdraw(sdp, assertion) \
+ 	({ \
+ 		bool _bool = (assertion); \
+ 		if (unlikely(!_bool)) \
+ 			gfs2_assert_withdraw_i((sdp), #assertion, \
+-					__func__, __FILE__, __LINE__, false); \
+-		!_bool; \
+-	})
+-
+-#define gfs2_assert_withdraw_delayed(sdp, assertion) \
+-	({ \
+-		bool _bool = (assertion); \
+-		if (unlikely(!_bool)) \
+-			gfs2_assert_withdraw_i((sdp), #assertion, \
+-					__func__, __FILE__, __LINE__, true); \
++					__func__, __FILE__, __LINE__); \
+ 		!_bool; \
+ 	})
+ 
+@@ -192,15 +182,6 @@ static inline unsigned int gfs2_tune_get_i(struct gfs2_tune *gt,
+ 	return x;
+ }
+ 
+-/**
+- * gfs2_withdraw_delayed - withdraw as soon as possible without deadlocks
+- * @sdp: the superblock
+- */
+-static inline void gfs2_withdraw_delayed(struct gfs2_sbd *sdp)
+-{
+-	set_bit(SDF_WITHDRAWING, &sdp->sd_flags);
+-}
+-
+ /**
+  * gfs2_withdrawing_or_withdrawn - test whether the file system is withdrawing
+  *                                 or withdrawn
+@@ -208,18 +189,7 @@ static inline void gfs2_withdraw_delayed(struct gfs2_sbd *sdp)
+  */
+ static inline bool gfs2_withdrawing_or_withdrawn(struct gfs2_sbd *sdp)
+ {
+-	return unlikely(test_bit(SDF_WITHDRAWN, &sdp->sd_flags) ||
+-			test_bit(SDF_WITHDRAWING, &sdp->sd_flags));
+-}
+-
+-/**
+- * gfs2_withdrawing - check if a withdraw is pending
+- * @sdp: the superblock
+- */
+-static inline bool gfs2_withdrawing(struct gfs2_sbd *sdp)
+-{
+-	return unlikely(test_bit(SDF_WITHDRAWING, &sdp->sd_flags) &&
+-			!test_bit(SDF_WITHDRAWN, &sdp->sd_flags));
++	return unlikely(test_bit(SDF_WITHDRAWN, &sdp->sd_flags));
+ }
+ 
+ static inline bool gfs2_withdraw_in_prog(struct gfs2_sbd *sdp)
 -- 
 2.53.0
 
