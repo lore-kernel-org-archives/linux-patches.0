@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A55B4EDCD6;
-	Tue, 13 Oct 2026 12:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E843D5C06;
+	Tue, 13 Oct 2026 12:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893688; cv=none; b=Y3S2n+6rektdKCMEmydsB4YhHNl1i+Y/xMxJNtV9RxIed9Zdu+iws7J9FbhQmKnL2lzUn1klKI5ZVRpwxg55DfgGnG0wpGbVBf9L4gYVAz3EWWJg1YTglZVPxkAbScK1TFkUVSHsyfQTMQnaKTaBoRzaqGNgyzQKUoRKjHDI4EE=
+	t=1791893691; cv=none; b=BlyRmz+St+QH7V+Yn5skBMtC2Cz+UKqknq9wranyY1Mdui2GqnBHc646e7rG3O1iPNVTvE+6Yn+3JpFQ/YAO46O3J8dvC4ZNlEiwjGi4EUBBeAgYgMA/m21iAmuhhKj8qZ+CVxC5GX1NWAg1mvILPxZhTQE62MjlQ1HDT8/046Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893688; c=relaxed/simple;
-	bh=fW7FVUJEBjil6w7U5Rf1FyysQurnLWZmx1RY52Tdct8=;
+	s=arc-20240116; t=1791893691; c=relaxed/simple;
+	bh=o2rJQ2qfQyzL9ObCA2YL4C6dV4liZdIzwLhgjkt58tQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODfGy9c1uDoiHpCJY8yD5E3su/j0Bvl3yJ1JhU8oeH6mbWfNTWHng8RYWmmMYeVKfidG/p3rbyerR27hi3wBTAE1iv/THYwviKKGecNnuJpOMBVQIM35l4pLFTwb4rFA60YXpKLndPQ4hdcJfFGjFfe2iP5p7JF5cjlV4EfUNYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOu6tN+P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZIr96qeMJVV+dRVp7MrwGMZUn9H12B56u+LJysZ4SU0t6xqmlCPKIxqPgpnOvwcrpjlnPW/QxN9aamaH8saTBYHsAcySAViJRPdLMK8mSs+cCU6jGHQXB37y/AlgPtO5pr9PGkFjCU5tgM3aiKQLIwouhngag5blyJKKOVDOiN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCswiWns; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOu6tN+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C5D1F000FF;
-	Tue, 13 Oct 2026 12:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCswiWns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876851F000FF;
+	Tue, 13 Oct 2026 12:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893687;
-	bh=qP5bI2mEfvr5mG7aS3E5eYR9VXRIIsXPZ4kOgNOo7gY=;
+	s=korg; t=1791893690;
+	bh=0W2ntt8GdZVzJYjMcQtWc1oiaSbTWt96Q89Az01Fbek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOu6tN+PbqhS8ykrdu8zm6kYsAGQGVNhXKba0g5TKG2Z3QpxKdakLFxfqthbhEdv/
-	 k4bLzKdJXMwMj3tIb983Y6iLUYv0SB9DFuodia8XFXTvRPrLxdvlDPaPa92ClvKUOY
-	 dwLNTezlC90yIhUhcnac3sZ2BdXsz3/2TnRNi0e8=
+	b=TCswiWnsYurDDqMNu/ZAJZjNfH3BDHraX5ODi5QBr2mC1yprljvuySwIN6osL/RLy
+	 K8mNlUkSzIvNK2tpQkP4nC+OOIRjj1pmBFvGXTNfSCIKF/DRlOLQyojs2Fj5zGVdVl
+	 /jPbDI5+rj94CfC+ser5kxqafQW1dT77vOZP7UZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wei Zhang <wei.zhang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 310/621] ocfs2: validate fast symlink target during inode read
-Date: Tue, 13 Oct 2026 13:35:05 +0200
-Message-ID: <20261013112928.211317005@linuxfoundation.org>
+Subject: [PATCH 6.18 311/621] wifi: ath12k: fix inconsistent arvif state in vdev_create error paths
+Date: Tue, 13 Oct 2026 13:35:06 +0200
+Message-ID: <20261013112928.235000110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -59,104 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Wei Zhang <wei.zhang@oss.qualcomm.com>
 
-[ Upstream commit e234973f286ed2e8961a24561ec91594ec3e3ff8 ]
+[ Upstream commit c972636efc63f0f43d725b59805dd1ae5bc4b31e ]
 
-ocfs2_validate_inode_block() already rejects several inconsistent
-self-contained dinodes before they are exposed to the rest of the
-filesystem.  Fast symlinks need the same treatment.
+ath12k_mac_vdev_create() has three error path issues that leave arvif
+in an inconsistent state:
 
-A zero-cluster symlink is treated as a fast symlink and later read through
-page_get_link() and ocfs2_fast_symlink_read_folio().  That path uses
-strnlen() on the inline payload and then copies len + 1 bytes into the
-folio.  If a corrupt dinode stores an i_size that does not fit the inline
-area or omits the terminating NUL at i_size, that copy reads past the end
-of the inode block buffer.
+1. When ath12k_wmi_vdev_create() fails, the function returns directly
+   without clearing arvif->ar, which was already set before the WMI
+   call. Subsequent code checking arvif->ar to determine vdev readiness
+   will see a non-NULL value despite no vdev existing in firmware.
 
-Reject zero-cluster symlink dinodes whose i_size exceeds the inline
-fast-symlink capacity or whose inline payload is not NUL-terminated
-exactly at i_size when the inode block is validated.  This keeps malformed
-fast symlinks from reaching the read path.
+2. When ath12k_wmi_send_peer_delete_cmd() fails in err_peer_del, the
+   code jumped to err: skipping the DP peer cleanup and vdev rollback,
+   leaving num_created_vdevs, vdev maps and arvif list membership live.
 
-Validation reproduced this kernel report:
-KASAN use-after-free in ocfs2_fast_symlink_read_folio+0x12c/0x1f0
-RIP: 0033:0x7f5c6d859aa7
-Read of size 3905
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xce/0x630 (?:?)
-  ocfs2_fast_symlink_read_folio+0x12c/0x1f0 (fs/ocfs2/inode.c:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x19f/0x330 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  kasan_check_range+0x105/0x1b0 (?:?)
-  __asan_memcpy+0x23/0x60 (?:?)
-  filemap_read_folio+0x27/0xe0 (?:?)
-  filemap_read_folio+0x35/0xe0 (?:?)
-  do_read_cache_folio+0x138/0x230 (?:?)
-  __page_get_link+0x26/0x110 (?:?)
-  page_get_link+0x2e/0x70 (?:?)
-  vfs_readlink+0x15e/0x250 (?:?)
-  touch_atime+0x4d/0x370 (?:?)
-  do_readlinkat+0x186/0x200 (?:?)
-  do_user_addr_fault+0x65a/0x890 (?:?)
-  __x64_sys_readlink+0x46/0x60 (?:?)
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+3. When ath12k_wait_for_peer_delete_done() fails, the code jumped to
+   err_vdev_del: skipping the DP peer cleanup.
 
-Link: https://lore.kernel.org/20260528151230.361127-1-rollkingzzc@gmail.com
-Fixes: ea022dfb3c2a ("ocfs: simplify symlink handling")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Gui-Dong Han <2045gemini@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix by changing the ath12k_wmi_vdev_create() failure to goto err instead
+of returning directly, routing both err_peer_del failure paths through
+err_dp_peer_del: for proper DP peer and vdev rollback, and consolidating
+the arvif state cleanup at err:.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 477cabfdb776 ("wifi: ath12k: modify link arvif creation and removal for MLO")
+Signed-off-by: Wei Zhang <wei.zhang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260512044906.1735821-2-wei.zhang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/net/wireless/ath/ath12k/mac.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 9ec3a7657b5b6..835c00b90b7c8 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1665,6 +1665,29 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		}
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 2f47054efa44e..7f7eddfa97719 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -9745,7 +9745,7 @@ int ath12k_mac_vdev_create(struct ath12k *ar, struct ath12k_link_vif *arvif)
+ 	if (ret) {
+ 		ath12k_warn(ab, "failed to create WMI vdev %d: %d\n",
+ 			    arvif->vdev_id, ret);
+-		return ret;
++		goto err;
  	}
  
-+	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
-+	    !le32_to_cpu(di->i_clusters)) {
-+		int max_inline = ocfs2_fast_symlink_chars(sb);
-+		u64 i_size = le64_to_cpu(di->i_size);
-+
-+		if (i_size >= max_inline) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: fast symlink i_size %llu exceeds max %d\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)i_size,
-+					 max_inline - 1);
-+			goto bail;
-+		}
-+
-+		if (strnlen((char *)di->id2.i_symlink, i_size + 1) != i_size) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: fast symlink is not NUL-terminated at i_size %llu\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)i_size);
-+			goto bail;
-+		}
-+	}
-+
- 	if (ocfs2_dinode_has_extents(di)) {
- 		struct ocfs2_extent_list *el = &di->id2.i_list;
- 		u16 count = le16_to_cpu(el->l_count);
+ 	ar->num_created_vdevs++;
+@@ -9874,7 +9874,7 @@ int ath12k_mac_vdev_create(struct ath12k *ar, struct ath12k_link_vif *arvif)
+ 		if (ret) {
+ 			ath12k_warn(ar->ab, "failed to delete peer vdev_id %d addr %pM\n",
+ 				    arvif->vdev_id, arvif->bssid);
+-			goto err;
++			goto err_vdev_del;
+ 		}
+ 
+ 		ret = ath12k_wait_for_peer_delete_done(ar, arvif->vdev_id,
+@@ -9893,8 +9893,6 @@ int ath12k_mac_vdev_create(struct ath12k *ar, struct ath12k_link_vif *arvif)
+ 
+ 	ath12k_wmi_vdev_delete(ar, arvif->vdev_id);
+ 	ar->num_created_vdevs--;
+-	arvif->is_created = false;
+-	arvif->ar = NULL;
+ 	ar->allocated_vdev_map &= ~(1LL << arvif->vdev_id);
+ 	ab->free_vdev_map |= 1LL << arvif->vdev_id;
+ 	ab->free_vdev_stats_id_map &= ~(1LL << arvif->vdev_stats_id);
+@@ -9903,6 +9901,7 @@ int ath12k_mac_vdev_create(struct ath12k *ar, struct ath12k_link_vif *arvif)
+ 	spin_unlock_bh(&ar->data_lock);
+ 
+ err:
++	arvif->is_created = false;
+ 	arvif->ar = NULL;
+ 	return ret;
+ }
 -- 
 2.53.0
 
