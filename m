@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9074F4030;
-	Tue, 13 Oct 2026 11:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A554E0B61;
+	Tue, 13 Oct 2026 11:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892181; cv=none; b=n6qTg/x32TIAl9syqcqQxDxnreDW9Rs1vhuienOXphHliDjm4vWP/Ak7bc5V7rdSYPwtcvuoDwERCleF21B+xQ9dlXnDBiJDLUMMuvwcw24m+DkLXJXAQVEIX3Z19Rg0g4Y0DPa3Qc45DVDo0OL0Dnf/JkhZKPYoctZMMEPlM6g=
+	t=1791892184; cv=none; b=IrwDvIUQ40+O6HVYE5q+pYlupGPlRL1dPAOcb6n/mfZrYPo+Ll3LD/D+iF1eKqF5aP5j900psPVTX5PDLVKXpNn94zYfxWZdxqMXll3Pc6GzhsPhiPWthlR+tj+QD/ra1FWws8ukQMTDf7ftXjvSd6UHXiw6D1MKUsc0+id7llY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892181; c=relaxed/simple;
-	bh=k8iiltljkaH+v5tO61qd7aYGzsmzzT9b1toFsCvLlgc=;
+	s=arc-20240116; t=1791892184; c=relaxed/simple;
+	bh=kS1uroq0myAjiYBsFb1FTg03G1y8sT6Bh+k9Tab/ohQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+vnywrggRrSEkCPuPCxxQaIgCnZBsgJUTD5Ue0fvHgkcd4bAgSApTGGqba/B3q/0b2wae5zEkBOKbPoUpRrzFZKfaIZBAYFEbWxOJAk/4lcY6HybTLiGVYCXFmI4CHqh3PCQfgKPJBsmGk+KzShceODv4+6tP3G7WWc0MtxHqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRHxzAzO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmN5w+uGvjWDCnwSozBTys9C9RVKfw0hPbG/GMRXk3rF3k8+QxOO8wolqkDmKV9pnbGnH1g4P5tqwVZnOHGUDewsxdx7WWPCor/4zwHP6p/TKYtfMTI0JKxELx5Vw9fLawZXnoE4Rm4btgAlheZVZ6OzzkswLOPTBJq99dYZEQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxmLkYqh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRHxzAzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBDE1F000FF;
-	Tue, 13 Oct 2026 11:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxmLkYqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E55C1F000FF;
+	Tue, 13 Oct 2026 11:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892179;
-	bh=5z1nkH+99aAT01aSwogDfCMeiHRCI4qGURf0RHuvj/M=;
+	s=korg; t=1791892182;
+	bh=y26UjsDEWPDw9ZU6hpOJPTyYNsUieyMHOrVj2LbOsc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kRHxzAzOBiYxN4Jy2gqIstvR4ICtWNimZEemD0OTIIuqup37dnrmn3JfOfUM9Jj+t
-	 x+X4dlR6yMuVo0KaNRAqxCdK8uH3eSPtnDfiIzUMy0JCK116CoBpMS0FQqSFmeqM43
-	 7GB2DAK0stea2O47sFizC+SgNWOT6y4SmP3j9mJU=
+	b=vxmLkYqhhGtWsnMi3mA+crHIgACOFyWosVAkF7jep1hHPXF+krZEnc9pMr7pRTdf4
+	 niFP7yUhrwEeaGmsu9JLL+ANNSeL6Gq4sxacrAtC3tYxzQE2kamt9YkMrIKklcUPlL
+	 iPaFuPQo/5cEqhg3aCCf5H27QH4aSgMQ8Lreibjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
+	co+2cf741c3005abc20@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 088/281] net: xilinx: axienet: Free outstanding DMA buffers on dmaengine stop
-Date: Tue, 13 Oct 2026 13:36:44 +0200
-Message-ID: <20261013112857.270286557@linuxfoundation.org>
+Subject: [PATCH 7.2 089/281] net: team: stop reusing skb after queue override
+Date: Tue, 13 Oct 2026 13:36:45 +0200
+Message-ID: <20261013112857.295900958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,178 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit bcf2573a68a808a5b54cadafa72b6672e662c2bf upstream.
+commit b7454f1940c5e6d92e753853c476a769e452f30a upstream.
 
-In the dmaengine path the driver pre-submits RX buffers and holds
-in-flight TX buffers whose SKBs are DMA-mapped by the driver and freed
-only in the completion callbacks. On ndo_stop() dmaengine_terminate_sync()
-aborts these descriptors without running their callbacks, and the driver
-then frees only the ring shells, leaking every SKB still owned by the
-engine and its DMA mapping on each ifdown. With 128 RX buffers pre-posted
-per channel, the mapping leak can eventually exhaust a limited IOMMU
-aperture.
+A nonzero dev_queue_xmit() result does not return ownership of the skb.
+When an override port's qdisc drops it, the queue override helper used to
+try another port or the mode transmit op with the freed skb.
 
-Clear the slot's skb in the TX and RX callbacks so a non-NULL skb marks a
-slot that still owns a live, DMA-mapped buffer, and on stop unmap and free
-every such buffer.
+Return the handoff decision separately from transmit success. Select only
+the first override port under RCU and stop after handing it the skb,
+regardless of the lower transmit result. Keep the existing success and
+drop accounting.
 
-axienet_dma_rx_cb() runs from the DMA tasklet and re-arms the RX ring on
-each completion, so it can race axienet_stop(): a completion may submit a
-fresh buffer after dmaengine_terminate_sync() has returned, leaving the
-channel armed with a buffer the teardown then frees while the engine may
-still write into it (dma_release_channel() does not stop it either). Add a
-lock that axienet_dma_rx_cb() holds across the @stopping check and the
-resubmit, and axienet_stop() holds to set @stopping before terminating.
-Once @stopping is set no callback can arm a new buffer, and any armed just
-before is aborted by the terminate, so teardown only frees buffers the
-engine no longer owns.
+  BUG: KASAN: slab-use-after-free in sk_skb_reason_drop
+  Write of size 4 by task poc/5040
+  sk_skb_reason_drop (net/core/skbuff.c:1240)
+  dev_kfree_skb_any_reason (net/core/dev.c:3470)
+  ab_transmit (drivers/net/team/team_mode_activebackup.c:49)
+  team_xmit (drivers/net/team/team_core.c:1849)
+  __dev_direct_xmit (net/core/dev.c:4934)
+  Freed by task 5040:
+  __tcf_kfree_skb_list (net/sched/sch_generic.c:43)
+  __dev_queue_xmit (net/core/dev.c:4831)
+  team_xmit (drivers/net/team/team_core.c:1846)
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
 
-Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Link: https://patch.msgid.link/20260928184207.2361931-1-suraj.gupta2@amd.com
+Fixes: 8ff5105a2b9d ("team: add support for queue override by setting queue_id for port")
+Reported-by: <co+2cf741c3005abc20@bugs.sh>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20261001182326.572045-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h      |    7 ++-
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c |   51 ++++++++++++++++++----
- 2 files changed, 47 insertions(+), 11 deletions(-)
+ drivers/net/team/team_core.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -523,8 +523,9 @@ struct skbuf_dma_descriptor {
-  * @stats_work: Work for reading the hardware statistics counters often enough
-  *              to catch overflows.
-  * @dma_err_task: Work structure to process Axi DMA errors
-- * @stopping:   Set when @dma_err_task shouldn't do anything because we are
-- *              about to stop the device.
-+ * @stopping:   Set when we are about to stop the device: makes @dma_err_task
-+ *              a no-op (legacy DMA path) and fences RX descriptor
-+ *              resubmission in axienet_dma_rx_cb() (dmaengine path).
-  * @tx_irq:	Axidma TX IRQ number
-  * @rx_irq:	Axidma RX IRQ number
-  * @eth_irq:	Ethernet core IRQ number
-@@ -545,6 +546,7 @@ struct skbuf_dma_descriptor {
-  * @tx_ring_tail: TX skb ring buffer tail index.
-  * @rx_ring_head: RX skb ring buffer head index.
-  * @rx_ring_tail: RX skb ring buffer tail index.
-+ * @rx_submit_lock: Protects RX ring resubmission vs teardown in dmaengine path.
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -820,7 +820,8 @@ static struct list_head *__team_get_qom_
+ /*
+  * note: already called with rcu_read_lock
   */
- struct axienet_local {
- 	struct net_device *ndev;
-@@ -626,6 +628,7 @@ struct axienet_local {
- 	int tx_ring_tail;
- 	int rx_ring_head;
- 	int rx_ring_tail;
-+	spinlock_t rx_submit_lock;
- };
- 
- /**
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -881,6 +881,7 @@ static void axienet_dma_tx_cb(void *data
- 	u64_stats_update_end(&lp->tx_stat_sync);
- 	dma_unmap_sg(lp->dev, skbuf_dma->sgl, skbuf_dma->sg_len, DMA_TO_DEVICE);
- 	dev_consume_skb_any(skbuf_dma->skb);
-+	skbuf_dma->skb = NULL;
- 	netif_txq_completed_wake(txq, 1, len,
- 				 CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
- 				 2);
-@@ -1171,6 +1172,7 @@ static void axienet_dma_rx_cb(void *data
- 						       &meta_max_len);
- 	dma_unmap_single(lp->dev, skbuf_dma->dma_address, lp->max_frm_size,
- 			 DMA_FROM_DEVICE);
-+	skbuf_dma->skb = NULL;
- 
- 	if (IS_ERR(app_metadata)) {
- 		if (net_ratelimit())
-@@ -1193,10 +1195,17 @@ static void axienet_dma_rx_cb(void *data
- 	u64_stats_update_end(&lp->rx_stat_sync);
- 
- rx_submit:
-+	spin_lock(&lp->rx_submit_lock);
-+	if (lp->stopping) {
-+		spin_unlock(&lp->rx_submit_lock);
-+		return;
-+	}
-+
- 	for (i = 0; i < CIRC_SPACE(lp->rx_ring_head, lp->rx_ring_tail,
- 				   RX_BUF_NUM_DEFAULT); i++)
- 		axienet_rx_submit_desc(lp->ndev);
- 	dma_async_issue_pending(lp->rx_chan);
-+	spin_unlock(&lp->rx_submit_lock);
+-static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb)
++static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb,
++					 bool *tx_success)
+ {
+ 	struct list_head *qom_list;
+ 	struct team_port *port;
+@@ -828,11 +829,11 @@ static bool team_queue_override_transmit
+ 	if (!team->queue_override_enabled || !skb->queue_mapping)
+ 		return false;
+ 	qom_list = __team_get_qom_list(team, skb->queue_mapping);
+-	list_for_each_entry_rcu(port, qom_list, qom_list) {
+-		if (!team_dev_queue_xmit(team, port, skb))
+-			return true;
+-	}
+-	return false;
++	port = list_first_or_null_rcu(qom_list, struct team_port, qom_list);
++	if (!port)
++		return false;
++	*tx_success = !team_dev_queue_xmit(team, port, skb);
++	return true;
  }
  
- /**
-@@ -1541,6 +1550,7 @@ static int axienet_init_dmaengine(struct
- 	lp->tx_ring_head = 0;
- 	lp->rx_ring_tail = 0;
- 	lp->rx_ring_head = 0;
-+	lp->stopping = false;
- 	lp->tx_skb_ring = kzalloc_objs(*lp->tx_skb_ring, TX_BD_NUM_MAX);
- 	if (!lp->tx_skb_ring) {
- 		ret = -ENOMEM;
-@@ -1752,20 +1762,42 @@ static int axienet_stop(struct net_devic
- 		free_irq(lp->rx_irq, ndev);
- 		axienet_dma_bd_release(ndev);
- 	} else {
-+		struct skbuf_dma_descriptor *skbuf_dma;
-+
-+		spin_lock_bh(&lp->rx_submit_lock);
-+		lp->stopping = true;
-+		spin_unlock_bh(&lp->rx_submit_lock);
-+
- 		dmaengine_terminate_sync(lp->tx_chan);
--		dmaengine_synchronize(lp->tx_chan);
- 		dmaengine_terminate_sync(lp->rx_chan);
--		dmaengine_synchronize(lp->rx_chan);
--
--		for (i = 0; i < TX_BD_NUM_MAX; i++)
--			kfree(lp->tx_skb_ring[i]);
--		kfree(lp->tx_skb_ring);
--		for (i = 0; i < RX_BUF_NUM_DEFAULT; i++)
--			kfree(lp->rx_skb_ring[i]);
--		kfree(lp->rx_skb_ring);
+ static void __team_queue_override_port_del(struct team *team,
+@@ -1864,8 +1865,7 @@ static netdev_tx_t team_xmit(struct sk_b
+ 	bool tx_success;
+ 	unsigned int len = skb->len;
  
- 		dma_release_channel(lp->rx_chan);
- 		dma_release_channel(lp->tx_chan);
-+
-+		/* Unmap and free any buffer the terminate did not reclaim, so it
-+		 * is not leaked; a non-NULL skb marks such a slot.
-+		 */
-+		for (i = 0; i < TX_BD_NUM_MAX; i++) {
-+			skbuf_dma = lp->tx_skb_ring[i];
-+			if (skbuf_dma && skbuf_dma->skb) {
-+				dma_unmap_sg(lp->dev, skbuf_dma->sgl,
-+					     skbuf_dma->sg_len, DMA_TO_DEVICE);
-+				dev_kfree_skb_any(skbuf_dma->skb);
-+			}
-+			kfree(skbuf_dma);
-+		}
-+		kfree(lp->tx_skb_ring);
-+
-+		for (i = 0; i < RX_BUF_NUM_DEFAULT; i++) {
-+			skbuf_dma = lp->rx_skb_ring[i];
-+			if (skbuf_dma && skbuf_dma->skb) {
-+				dma_unmap_single(lp->dev, skbuf_dma->dma_address,
-+						 lp->max_frm_size, DMA_FROM_DEVICE);
-+				dev_kfree_skb_any(skbuf_dma->skb);
-+			}
-+			kfree(skbuf_dma);
-+		}
-+		kfree(lp->rx_skb_ring);
- 	}
- 
- 	netdev_reset_queue(ndev);
-@@ -3062,6 +3094,7 @@ static int axienet_probe(struct platform
- 
- 	spin_lock_init(&lp->rx_cr_lock);
- 	spin_lock_init(&lp->tx_cr_lock);
-+	spin_lock_init(&lp->rx_submit_lock);
- 	INIT_WORK(&lp->rx_dim.work, axienet_rx_dim_work);
- 	lp->rx_dim_enabled = true;
- 	lp->rx_dim.profile_ix = 1;
+-	tx_success = team_queue_override_transmit(team, skb);
+-	if (!tx_success)
++	if (!team_queue_override_transmit(team, skb, &tx_success))
+ 		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
+ 	if (tx_success) {
+ 		struct team_pcpu_stats *pcpu_stats;
 
 
