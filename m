@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF464EF13A;
-	Tue, 13 Oct 2026 11:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E414E8E08;
+	Tue, 13 Oct 2026 11:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892208; cv=none; b=sbvs6aClVCuaBgeDtju2uoWlO/aJsUHIpjiqiW+qxpNAspeFSWp+HGhWYD8eRR9l9JQeBLcIJ/iUjkei3cAMca3PtBSD7daUmVd+PQ8+Wq3iieAXmAnn33cfy7O5f7Rg9pqN75+U06VLuLxS5772/2yTDiyRsefBP93rQP4b7yY=
+	t=1791892211; cv=none; b=rOJFq3JZTflg24Y9CXdGQIrI1w95MVPIhwo6Bt2iQCa4uzhkcWj2VDyP/s3FtJe5rEQJmSFywJWbqjcL3Azkr4btwok1/TjIOLg5NJ1FshoalHd9AN4wKWxBfsHJIkrAoa/F9dHoANIrst4i+Tjf2MARUh6NYX5MEKO7CUO9xmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892208; c=relaxed/simple;
-	bh=UFvzuuTai2L5HttmV7y0q5yDmypXxcePItZ14gSRUNE=;
+	s=arc-20240116; t=1791892211; c=relaxed/simple;
+	bh=XLiKXauYLKnXV7wcXiKlm18eNYaR0jNy2T/YuoDHTxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A24Iuhqx1lKYV0AyXQ6wkjGMWFTfEnk98326q9xir9xrpRMGSMTSIKNMysZ/V2bgqBNzr/Z6z+dRUeAA9hORSFL9gCulCOFVYcEnOGpQHZdXuFfjAONaKqW6sK+GYEkf5kRhE65mAgDG4UiGuiV35saa/6xr5TrsSyTMKD6gYro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8SKD+rI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E1snwaT7GQW8p+s57kEcZyMhlkx/9YVOP6DpoZrdVeJIcb/WbtSv5Zv/BpulPBdkYMixSHYF3iu3C8b5SRgDU4eNVhmYV2kh5nO4Cybpp2fcz9fCPBlIejDbXVbN2FS2zokQD1AYcDH0+nX2gQbtpvwLKBr3lVt5OJyglZ+sfxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2YDqKqw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8SKD+rI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4967D1F000FF;
-	Tue, 13 Oct 2026 11:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2YDqKqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6DF1F000FF;
+	Tue, 13 Oct 2026 11:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892206;
-	bh=esWpzMcyVfhujcqr/W2PXpBIE9Dm6qMG99geRFHACw0=;
+	s=korg; t=1791892209;
+	bh=6Qdf7mAcBqWFqfTalzb4HqoJA+xm1KtObGk3r0Z4Qtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a8SKD+rIgqTE3U+wSOpckU0ktcaMf8MAbjj6Y+x5rdWc6t5TKyrFqFwqpJSEG5gNS
-	 PYeVexZCT2CBCyC27kA7a6IdFfhhO9D3amNYOtLnlAKbmy9IMEms3t8Qo4OjvMq5tC
-	 Gl5WSk/tWd2sBVneR/2b6UQAfiZeLM4wwlRypeio=
+	b=M2YDqKqwJYGWyIoiyLmQEp57lJVN2WX5ONNtoBmibwhbnHjcIMxqYLiYzRE3B/2vL
+	 PrPmzN3yZHGepQcWrpFXl1i2nSlKjKL0dg/2Ew5xahupY86uwcg6QZDpmNAVWD/YfS
+	 4oh5nz85dfpTkH8ewdZTLvOEIeYpk7e5y99PV4KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alexey Charkov <alchark@flipper.net>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 096/281] regulator: of: fill in supply names in of_regulator_bulk_get_all()
-Date: Tue, 13 Oct 2026 13:36:52 +0200
-Message-ID: <20261013112857.468134809@linuxfoundation.org>
+Subject: [PATCH 7.2 097/281] regulator: tps6594-regulator: Fix n_linear_ranges for TPS65224 BUCK2-4
+Date: Tue, 13 Oct 2026 13:36:53 +0200
+Message-ID: <20261013112857.492500548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,96 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-commit e2151c29cec73f6cc70abf1c7cbc7b9b202489f5 upstream.
+commit 2f15518682c779b1014552cb2ccb4a2052f85f27 upstream.
 
-of_regulator_bulk_get_all() returns an array it allocated itself, and
-fills in only the consumer of each entry. Every other way of getting a
-bulk array has the supply name set, because the caller provides it, and
-the core expects it to be there: regulator_bulk_enable() prints it when
-a supply fails to enable, so a caller that hands such an array to it
-dereferences uninitialised memory on that path.
+The TPS65224 BUCK2, BUCK3 and BUCK4 descriptors pass 4 as
+n_linear_ranges, but tps65224_bucks_2_3_4_ranges[] only has two
+entries, covering selectors 0x00-0x45.
 
-Copy each name into the array's own allocation, right behind the
-entries, so that it shares the array's lifetime and callers still have
-nothing extra to free. That also retires the fixed 64 byte stack buffer
-the names were assembled in, which is_supply_name() never bounded the
-copy against.
+The linear range helpers loop over n_linear_ranges entries, so any
+lookup of a selector above 0x45 reads past the end of the array and
+treats whatever follows it as two more ranges. This happens on the
+normal registration path when the core checks the voltage constraints
+against every selector. TPS652G1 uses the same descriptors and is
+affected too.
 
+Use ARRAY_SIZE() so the count always matches the table.
+
+Fixes: 00c826525fba ("regulator: tps6594-regulator: Add TI TPS65224 PMIC regulators")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260928-b4-rk3576-reboot-mode-v1-0-65486b03bd41@flipper.net?part=3
-Fixes: 27b9ecc7a9ba ("regulator: Add of_regulator_bulk_get_all")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260930-regulator-get-all-v2-1-ca82070d22f2@flipper.net
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260930105333.3522412-1-khurana.ridham222@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/of_regulator.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/regulator/tps6594-regulator.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/regulator/of_regulator.c
-+++ b/drivers/regulator/of_regulator.c
-@@ -935,15 +935,15 @@ static int is_supply_name(const char *na
- int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
- 			      struct regulator_bulk_data **consumers)
- {
--	int num_consumers = 0;
-+	int num_consumers = 0, names_len = 0;
- 	struct regulator *tmp;
- 	struct regulator_bulk_data *_consumers = NULL;
- 	struct property *prop;
-+	char *names;
- 	int i, n = 0, ret;
--	char name[64];
+--- a/drivers/regulator/tps6594-regulator.c
++++ b/drivers/regulator/tps6594-regulator.c
+@@ -241,21 +241,21 @@ static const struct regulator_desc tps65
+ 			  TPS65224_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_CTRL(1),
+ 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
+-			  4, 0, 0, NULL, 0, 0),
++			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
+ 	TPS6594_REGULATOR("BUCK3", "buck3", TPS6594_BUCK_3,
+ 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_VOUT_1(2),
+ 			  TPS65224_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_CTRL(2),
+ 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
+-			  4, 0, 0, NULL, 0, 0),
++			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
+ 	TPS6594_REGULATOR("BUCK4", "buck4", TPS6594_BUCK_4,
+ 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_VOUT_1(3),
+ 			  TPS65224_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_CTRL(3),
+ 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
+-			  4, 0, 0, NULL, 0, 0),
++			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
+ };
  
- 	/*
--	 * first pass: get numbers of xxx-supply
-+	 * first pass: get numbers of xxx-supply and the room their names take
- 	 * second pass: fill consumers
- 	 */
- restart:
-@@ -953,16 +953,19 @@ restart:
- 			continue;
- 		if (!_consumers) {
- 			num_consumers++;
-+			names_len += i + 1;
- 			continue;
- 		} else {
--			memcpy(name, prop->name, i);
--			name[i] = '\0';
--			tmp = regulator_get(dev, name);
-+			memcpy(names, prop->name, i);
-+			names[i] = '\0';
-+			tmp = regulator_get(dev, names);
- 			if (IS_ERR(tmp)) {
- 				ret = PTR_ERR(tmp);
- 				goto error;
- 			}
-+			_consumers[n].supply = names;
- 			_consumers[n].consumer = tmp;
-+			names += i + 1;
- 			n++;
- 			continue;
- 		}
-@@ -973,9 +976,16 @@ restart:
- 	}
- 	if (num_consumers == 0)
- 		return 0;
--	_consumers = kmalloc_objs(struct regulator_bulk_data, num_consumers);
-+	/*
-+	 * The supply names are kept in the same allocation as the array, so
-+	 * that they share its lifetime and the caller has nothing extra to
-+	 * free.
-+	 */
-+	_consumers = kzalloc(size_add(size_mul(num_consumers, sizeof(*_consumers)),
-+				      names_len), GFP_KERNEL);
- 	if (!_consumers)
- 		return -ENOMEM;
-+	names = (char *)(_consumers + num_consumers);
- 	goto restart;
- 
- error:
+ static const struct tps6594_regulator_irq_type tps6594_buck1_irq_types[] = {
 
 
