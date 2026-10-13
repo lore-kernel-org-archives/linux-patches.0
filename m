@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47F14FE2E3;
-	Tue, 13 Oct 2026 12:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CDB4E9C3D;
+	Tue, 13 Oct 2026 12:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893796; cv=none; b=IEIbnt7uz2vyaV8wJqEUvcFoeEIlPT5C7+3Pb80zSAzzVNy890T/Tcr1rUb/cD3e9RyFafCQ7QfSpJyFU8fhuH+zp6ObF2SBLOiP8yBCk5BwAPVUnyc17hqyQz4khVR5keFcqt58PomdR+8gBcyMtU8ZeTa2LHq2/5a/s9b/b0s=
+	t=1791893799; cv=none; b=Ook5NnHsl/h4G33djVxCzucYL/IV+EnninyceDjRpvfHqUKcTNAdfhxjrmfC1g73Eq/G6pUzVaxofBPBZoNiZMR3BgplJM3ncJBcsmQYP4ZfVLf1A8a4gFOG7093MDZFJvPBnioCt2nDT9sKGTIlf4f5l2uo12pyTx1qGSZffkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893796; c=relaxed/simple;
-	bh=sV4PBnNSXxpFtxNf9aT2NIdGbaqTdVtL7iumR39yrtE=;
+	s=arc-20240116; t=1791893799; c=relaxed/simple;
+	bh=0YmWdr9SEi3nnQWox8VENgJYgigxza7A1tGIJj8hRZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3sVWqjDGYl44g+GEePHOBwKsnTTZVwWPyys23IxmIH5ya+kaCNCxHDw1twjaJ9ZzhIAervGkWtzMTEl7q5z39IYcK1kleHye1T2FtUnu13YNXQU+gDE6sfPagVVF6GUpFRrZVI+BMPLoVxPAz29fLEVm2K2pUVuq9d/3e25qKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmzwOX88; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYpmE7yP7RBsU9r94zPAQx1khKbuT6lEmKMdsDg2tfGH7assIR9I7efttOBBqppJe8yRWn1L/tQeurEacWgeHMrBTqLF6RCoU3Kay2Qx2jgXFZWSwAomqyC1o2k03xbh1pmpUFwN41Uw0eQJ+SVHjTsWVPvLYU4acmPEu0E1bis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9LkemeU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmzwOX88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAC81F000FF;
-	Tue, 13 Oct 2026 12:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9LkemeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEBC1F00893;
+	Tue, 13 Oct 2026 12:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893795;
-	bh=4kaAJhu6VyAR8F/h90UXG0mei2uGGcznIX3NfHWxkOY=;
+	s=korg; t=1791893798;
+	bh=PN8bBahthxsRAhFbvAlcdam1nq1TDiBxJ6cErYUDLps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmzwOX88iBQdfEpwotSUlDq4hA2cpf82ciMcPmBabzEgTaAlKIvvSIoU49doHpMXo
-	 xdRlxZgmCvwt59GwaJsNRIDrnoQuNhvrqSUNbnX1P0IMBgTwS43Qi1s49JjMAWN10G
-	 E9iG03rFaPWFGPob1iwsd2p35N9WGoY7jLIOnYSk=
+	b=n9LkemeUi+njcYKYiD0xGVFisk7PAkmYS4niWPqIp9Xxy0xNNgD9pVZwOd4AHFnjK
+	 p2MjrXFrnsqurc18Pw35d4jHsOobEzMNq5blMp9DDwkLUuGszbQBYz4uREUjaAxpac
+	 IRUosT7s6JFrmZFvDhiKjSNae9vFOI0LWpqJOB9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dan Williams <djbw@kernel.org>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 301/621] netfilter: nf_dup_netdev: add nf_dev_xmit_recursion*() helpers and use them
-Date: Tue, 13 Oct 2026 13:34:56 +0200
-Message-ID: <20261013112927.997345735@linuxfoundation.org>
+Subject: [PATCH 6.18 302/621] cxl/region: Block region delete during region creation
+Date: Tue, 13 Oct 2026 13:34:57 +0200
+Message-ID: <20261013112928.020141560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,165 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Dan Williams <djbw@kernel.org>
 
-[ Upstream commit 2354e975932dabb06fad239f07a3b68fd1809737 ]
+[ Upstream commit d91feb88692e81b00cd22f0125cfcd04970b4a0b ]
 
-Update nft_dup and nft_fwd to use the nf_dev_xmit_recursion() helpers.
-This patch also disables BH when transmitting the skb to address a
-possible migration to different CPU leading to imbalanced decrementation
-of the recursion counters.
+Expand the range lock, rename it "regions_lock", to disable region deletion
+in the critical period between construct_region() and attach_target(), as
+well as the period between device_add() and registering the remove actions.
 
-This is modeled after Florian Westphal's dev_xmit_recursion*() API
-available since commit 97cdcf37b57e ("net: place xmit recursion in
-softnet data") according to its current state in the tree.
+Otherwise, userspace can confuse the kernel. It can violate the assumption
+the region stays registered through the completion of cxl_add_to_region().
+It can violate the assumption that devm_add_action_or_reset() is working
+with a live 'struct cxl_region'.
 
-Fixes: 1d47b55b36d2 ("netfilter: nft_fwd_netdev: use recursion counter in neigh egress path")
-Fixes: f37ad9127039 ("netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+It is ok for the region to disappear outside of those windows as that
+mirrors device hotplug flows where the proper locks are held.
+
+Fixes: a32320b71f08 ("cxl/region: Add region autodiscovery")
+Signed-off-by: Dan Williams <djbw@kernel.org>
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Tested-by: ALejandro Lucero <alucerop@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260519210158.1499795-2-djbw@kernel.org
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_dup_netdev.h | 34 +++++++++++++++++++++++----
- net/netfilter/nf_dup_netdev.c         | 15 ++++++------
- net/netfilter/nft_fwd_netdev.c        | 17 ++++++++------
- 3 files changed, 47 insertions(+), 19 deletions(-)
+ drivers/cxl/core/port.c   |  2 +-
+ drivers/cxl/core/region.c | 12 ++++++++++--
+ drivers/cxl/cxl.h         |  4 ++--
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/netfilter/nf_dup_netdev.h b/include/net/netfilter/nf_dup_netdev.h
-index 609bcf422a9b3..f6b05bd80c3fe 100644
---- a/include/net/netfilter/nf_dup_netdev.h
-+++ b/include/net/netfilter/nf_dup_netdev.h
-@@ -11,15 +11,39 @@ void nf_fwd_netdev_egress(const struct nft_pktinfo *pkt, int oif);
- 
- #define NF_RECURSION_LIMIT	2
- 
--static inline u8 *nf_get_nf_dup_skb_recursion(void)
--{
- #ifndef CONFIG_PREEMPT_RT
--	return this_cpu_ptr(&softnet_data.xmit.nf_dup_skb_recursion);
-+static inline bool nf_dev_xmit_recursion(void)
-+{
-+	return unlikely(__this_cpu_read(softnet_data.xmit.nf_dup_skb_recursion) >
-+			NF_RECURSION_LIMIT);
-+}
-+
-+static inline void nf_dev_xmit_recursion_inc(void)
-+{
-+	__this_cpu_inc(softnet_data.xmit.nf_dup_skb_recursion);
-+}
-+
-+static inline void nf_dev_xmit_recursion_dec(void)
-+{
-+	__this_cpu_dec(softnet_data.xmit.nf_dup_skb_recursion);
-+}
- #else
--	return &current->net_xmit.nf_dup_skb_recursion;
--#endif
-+static inline bool nf_dev_xmit_recursion(void)
-+{
-+	return unlikely(current->net_xmit.nf_dup_skb_recursion > NF_RECURSION_LIMIT);
-+}
-+
-+static inline void nf_dev_xmit_recursion_inc(void)
-+{
-+	current->net_xmit.nf_dup_skb_recursion++;
- }
- 
-+static inline void nf_dev_xmit_recursion_dec(void)
-+{
-+	current->net_xmit.nf_dup_skb_recursion--;
-+}
-+#endif
-+
- struct nft_offload_ctx;
- struct nft_flow_rule;
- 
-diff --git a/net/netfilter/nf_dup_netdev.c b/net/netfilter/nf_dup_netdev.c
-index a958a1b0c5bee..02d1880bab6b3 100644
---- a/net/netfilter/nf_dup_netdev.c
-+++ b/net/netfilter/nf_dup_netdev.c
-@@ -16,11 +16,6 @@
- static void nf_do_netdev_egress(struct sk_buff *skb, struct net_device *dev,
- 				enum nf_dev_hooks hook)
- {
--	u8 *nf_dup_skb_recursion = nf_get_nf_dup_skb_recursion();
--
--	if (*nf_dup_skb_recursion > NF_RECURSION_LIMIT)
--		goto err;
--
- 	if (hook == NF_NETDEV_INGRESS && skb_mac_header_was_set(skb)) {
- 		if (skb_cow_head(skb, skb->mac_len))
- 			goto err;
-@@ -30,9 +25,15 @@ static void nf_do_netdev_egress(struct sk_buff *skb, struct net_device *dev,
- 
- 	skb->dev = dev;
- 	skb_clear_tstamp(skb);
--	(*nf_dup_skb_recursion)++;
-+	local_bh_disable();
-+	if (nf_dev_xmit_recursion()) {
-+		local_bh_enable();
-+		goto err;
-+	}
-+	nf_dev_xmit_recursion_inc();
- 	dev_queue_xmit(skb);
--	(*nf_dup_skb_recursion)--;
-+	nf_dev_xmit_recursion_dec();
-+	local_bh_enable();
- 	return;
- err:
- 	kfree_skb(skb);
-diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
-index 14c1ac9f20b6a..eceab479bd8c4 100644
---- a/net/netfilter/nft_fwd_netdev.c
-+++ b/net/netfilter/nft_fwd_netdev.c
-@@ -95,7 +95,6 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
- 			      struct nft_regs *regs,
- 			      const struct nft_pktinfo *pkt)
- {
--	u8 *nf_dup_skb_recursion = nf_get_nf_dup_skb_recursion();
- 	struct nft_fwd_neigh *priv = nft_expr_priv(expr);
- 	void *addr = &regs->data[priv->sreg_addr];
- 	int oif = regs->data[priv->sreg_dev];
-@@ -153,13 +152,15 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
- 		goto out;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 2b9e166ea4e0e..8d2dc4b741781 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1995,7 +1995,7 @@ struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
+ 		return ERR_PTR(rc);
  	}
  
--	if (*nf_dup_skb_recursion > NF_RECURSION_LIMIT) {
-+	dev = dev_get_by_index_rcu(nft_net(pkt), oif);
-+	if (!dev) {
- 		verdict = NF_DROP;
- 		goto out;
- 	}
+-	mutex_init(&cxlrd->range_lock);
++	mutex_init(&cxlrd->regions_lock);
  
--	dev = dev_get_by_index_rcu(nft_net(pkt), oif);
--	if (dev == NULL) {
-+	local_bh_disable();
-+	if (nf_dev_xmit_recursion()) {
-+		local_bh_enable();
- 		verdict = NF_DROP;
- 		goto out;
- 	}
-@@ -168,16 +169,18 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
- 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
- 		skb = skb_expand_head(skb, hh_len);
- 		if (!skb) {
--			verdict = NF_STOLEN;
-+			local_bh_enable();
- 			goto out;
- 		}
- 	}
+ 	cxld = &cxlsd->cxld;
+ 	cxld->dev.type = &cxl_decoder_root_type;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index e840ac002f9b1..148168319a266 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -2629,6 +2629,10 @@ static ssize_t create_region_store(struct device *dev, const char *buf,
+ 	if (rc != 1)
+ 		return -EINVAL;
  
- 	skb->dev = dev;
- 	skb_clear_tstamp(skb);
--	(*nf_dup_skb_recursion)++;
++	ACQUIRE(mutex_intr, regions_lock)(&cxlrd->regions_lock);
++	if ((rc = ACQUIRE_ERR(mutex_intr, &regions_lock)))
++		return rc;
 +
-+	nf_dev_xmit_recursion_inc();
- 	neigh_xmit(neigh_table, dev, addr, skb);
--	(*nf_dup_skb_recursion)--;
-+	nf_dev_xmit_recursion_dec();
-+	local_bh_enable();
- out:
- 	regs->verdict.code = verdict;
- }
+ 	cxlr = __create_region(cxlrd, mode, id);
+ 	if (IS_ERR(cxlr))
+ 		return PTR_ERR(cxlr);
+@@ -2688,6 +2692,11 @@ static ssize_t delete_region_store(struct device *dev,
+ 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(dev);
+ 	struct cxl_port *port = to_cxl_port(dev->parent);
+ 	struct cxl_region *cxlr;
++	int rc;
++
++	ACQUIRE(mutex_intr, regions_lock)(&cxlrd->regions_lock);
++	if ((rc = ACQUIRE_ERR(mutex_intr, &regions_lock)))
++		return rc;
+ 
+ 	cxlr = cxl_find_region_by_name(cxlrd, buf);
+ 	if (IS_ERR(cxlr))
+@@ -3575,12 +3584,11 @@ int cxl_add_to_region(struct cxl_endpoint_decoder *cxled)
+ 	 * Ensure that if multiple threads race to construct_region() for @hpa
+ 	 * one does the construction and the others add to that.
+ 	 */
+-	mutex_lock(&cxlrd->range_lock);
++	guard(mutex)(&cxlrd->regions_lock);
+ 	struct cxl_region *cxlr __free(put_cxl_region) =
+ 		cxl_find_region_by_range(cxlrd, hpa);
+ 	if (!cxlr)
+ 		cxlr = construct_region(cxlrd, cxled);
+-	mutex_unlock(&cxlrd->range_lock);
+ 
+ 	rc = PTR_ERR_OR_ZERO(cxlr);
+ 	if (rc)
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index 091c52111d949..b7933a892af72 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -449,7 +449,7 @@ struct cxl_rd_ops {
+  * @cache_size: extended linear cache size if exists, otherwise zero.
+  * @region_id: region id for next region provisioning event
+  * @platform_data: platform specific configuration data
+- * @range_lock: sync region autodiscovery by address range
++ * @regions_lock: sync region discovery, construction, and deletion
+  * @qos_class: QoS performance class cookie
+  * @ops: CXL root decoder operations
+  * @cxlsd: base cxl switch decoder
+@@ -459,7 +459,7 @@ struct cxl_root_decoder {
+ 	resource_size_t cache_size;
+ 	atomic_t region_id;
+ 	void *platform_data;
+-	struct mutex range_lock;
++	struct mutex regions_lock;
+ 	int qos_class;
+ 	struct cxl_rd_ops *ops;
+ 	struct cxl_switch_decoder cxlsd;
 -- 
 2.53.0
 
