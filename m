@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6513E0C67;
-	Tue, 13 Oct 2026 12:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91CE4FD78D;
+	Tue, 13 Oct 2026 12:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894560; cv=none; b=gFYuzOL2wWSiRvJ3M+MVn4nAgzqMqkYFv0NimEpSpSk5JcTtdB37f+AhfDKdC+mc1fNcd708+RbLlihbLAYfIXUxll/IDCEjaQNrH3zrvHZBOyIMtVmcX08ZZAvBuDcfpn6tKOU23787h3o2SiOPJnmaIiBj6SCvBSHF9qEy0FY=
+	t=1791894563; cv=none; b=AoTfXTUP9HhneUfa9mYA77NMynl74PRs6bt9PnQk0ozwGWzIjkLFwjvTiyDMYH30a3FkYfy4fCnOcvR3FsGAb5IquxyJsImKhW36OcQBkB53BkGpYMOYQJ054uC9xyhw6qzvEIyzjR6wbzXil+/n/BIIc7pbce22qcAJaRJKI60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894560; c=relaxed/simple;
-	bh=d3oYgJRfW0BkYCt/EFJKXHtPjWwGMP3IrPT0qu1mpvE=;
+	s=arc-20240116; t=1791894563; c=relaxed/simple;
+	bh=z4GylVignGhzYrZD03omw+iY+Up8C8NV/lO1upIhBkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IZ3DSgsfGMq2HHmPryvhgzAKInTUogas1YPQJqvyW84rQYn+msVW8ENVh9xKwV1kJ302QDgcZu/ON7Hxyo44Phq7wBNKtoIB2Obo6wY77uHo6SzGXc0UrYXy4DkiH+S63N2fYws+fAXEFiU4Zr5bSdEepmaJjn1H0HrMidReaCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKpAMP4/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hHKeuk7PWVh6jIZlCQ5V7zdHnxp/DtuzbzhWD6A5LAJ3wfW2TRM/gE6WwcchWMbFB/7tJdR9g751LFPTOKdBMWCETc4ehvfPisNm4LF5qdvqew+OuUiPFZfGBO2sf59R1vAF0d1L8K9vlZOv/qxk2sbI4cfmXA3xnqoyqIZMCok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKZtGzMq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKpAMP4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397631F0089A;
-	Tue, 13 Oct 2026 12:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKZtGzMq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181F41F000FF;
+	Tue, 13 Oct 2026 12:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894558;
-	bh=Qy+NdJ4TvRDpzJ7xbHckIgHjpXwqvCRC//IWp0AyscY=;
+	s=korg; t=1791894561;
+	bh=ncVV8dCPoKGVz4BHHBLmeJg6U8N+Cm54Dek2vPgyDuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hKpAMP4/4C39F/oUVy9wMIjbUgO90imWixm2VqDgMAqhtc1p48Ki5TfhophfxFgne
-	 jZPkwdBDtlzQAsjr/CG0Jc3ndvkXHhN0bC71YGfxidVdg3L9ajaXChY8n7Z23j3FPU
-	 WCwVKd0eV2DyBX44nIPf2ar1stPe0gAmNknyAU3c=
+	b=TKZtGzMqOo43w4uu468NVqwEnkNFakbXe7HCDlLWIZ41/h+9cziCDDugbboUrS5eL
+	 7+IOtCSNmE95dElHsqkR9mlDCrazHMqyQUNcHinl+UsCIei06JX/BtIcXA8jT7Yxl/
+	 UNsOKnH7SkM3uRaWA+N6Ouhdu0rzdSXCdxng6jeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 601/621] drm/vc4: Fix binner slot allocation failing on an idle GPU
-Date: Tue, 13 Oct 2026 13:39:56 +0200
-Message-ID: <20261013112935.062518507@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Rik van Riel <riel@surriel.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 602/621] x86/CPU/AMD: Fix AMD TLBI Erratum #1718
+Date: Tue, 13 Oct 2026 13:39:57 +0200
+Message-ID: <20261013112935.085075153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,208 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit cca01232d94adcb10f7c8c5bb8ce072b045fcb58 ]
+commit 87db7795cbaaf636ae22ae031f4906db7bb77803 upstream.
 
-A job's binner slots are returned to bin_alloc_used by vc4_complete_exec(),
-which runs from the job_done workqueue, but the seqno
-vc4_v3d_get_bin_slot() waits on is incremented earlier, in the function
-vc4_irq_finish_render_job(). Therefore, a waiter can wake, retry, and still
-find the pool full because the worker has not run. By then, the job might
-have left the render_job_list, so no seqno remains to wait on and the
-allocation fails returning -ENOMEM.
+The processor may fail to invalidate a TLB entry while executing an
+INVLPGB/TLBSYNC instruction pair.
 
-This scenario can be reproduced on a Raspberry Pi 3 by using a burst of
-small jobs (e.g. Piglit's `quick_gl` suite), with userspace seeing a
-rejected submit for a pool about to become free.
+Detect the erratum and apply a software workaround when a microcode fix
+is not present.
 
-Note that the slots are held from validation until the render completes,
-so the pool can also be exhausted by jobs still queued on bin_job_list,
-leaving render_job_list empty and nothing to wait on.
-
-Release the slots from the FRDONE handler and wait on the pool instead of
-on one job's seqno. This bounds the wait to the actual resource. Also, by
-claiming the slot inside the wait condition, another submit is unable to
-take the slot between the wakeup and the retry. vc4_complete_exec() keeps
-clearing the slots for jobs that never completed, and now wakes the
-waiters too.
-
-Note that the wait takes a deadline, since the two callers need different
-ones. The submit path is a user task and can be interrupted, so it waits
-without one. On the other hand, vc4_overflow_mem_work() runs on a worker
-and never sees a signal, so it needs a deadline. During a reset,
-vc4_irq_disable() masks V3D_DRIVER_IRQS before draining the worker, and
-with those masked nothing can release a slot. This deadlocks: the worker
-would wait for slots that only the reset can free, while the reset waits
-in cancel_work_sync() for the worker.
-
-Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260930182204.1877361-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 82378c6c2f43 ("x86/mm: Use INVLPGB for kernel TLB flushes")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Rik van Riel <riel@surriel.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20261002211617.1001617-1-bp@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_drv.h      |  2 +-
- drivers/gpu/drm/vc4/vc4_gem.c      |  8 +++++-
- drivers/gpu/drm/vc4/vc4_irq.c      |  6 +++-
- drivers/gpu/drm/vc4/vc4_v3d.c      | 44 ++++++++++++++----------------
- drivers/gpu/drm/vc4/vc4_validate.c |  2 +-
- 5 files changed, 34 insertions(+), 28 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |    4 ++++
+ arch/x86/include/asm/tlb.h         |    6 ++++++
+ arch/x86/kernel/cpu/amd.c          |    4 ++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
-index 221d8e01d5391..d9ef519d6b021 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.h
-+++ b/drivers/gpu/drm/vc4/vc4_drv.h
-@@ -1054,7 +1054,7 @@ void vc4_plane_async_set_fb(struct drm_plane *plane,
- /* vc4_v3d.c */
- extern struct platform_driver vc4_v3d_driver;
- extern const struct of_device_id vc4_v3d_dt_match[];
--int vc4_v3d_get_bin_slot(struct vc4_dev *vc4);
-+int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout);
- int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used);
- void vc4_v3d_bin_bo_put(struct vc4_dev *vc4);
- int vc4_v3d_pm_get(struct vc4_dev *vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 6887631f2d8be..5eadf11f289a8 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -877,11 +877,17 @@ vc4_complete_exec(struct drm_device *dev, struct vc4_exec_info *exec)
- 		drm_gem_object_put(&bo->base.base);
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -458,6 +458,8 @@
+ #define X86_FEATURE_NO_NESTED_DATA_BP	(20*32+ 0) /* No Nested Data Breakpoints */
+ #define X86_FEATURE_WRMSR_XX_BASE_NS	(20*32+ 1) /* WRMSR to {FS,GS,KERNEL_GS}_BASE is non-serializing */
+ #define X86_FEATURE_LFENCE_RDTSC	(20*32+ 2) /* LFENCE always serializing / synchronizes RDTSC */
++
++#define X86_FEATURE_TLBSYNC_SFW_NO	(20*32+ 4) /* TLBI Erratum #1718 fixed in microcode */
+ #define X86_FEATURE_VERW_CLEAR		(20*32+ 5) /* The memory form of VERW mitigates TSA */
+ #define X86_FEATURE_NULL_SEL_CLR_BASE	(20*32+ 6) /* Null Selector Clears Base */
+ 
+@@ -556,4 +558,6 @@
+ #define X86_BUG_ITS_NATIVE_ONLY		X86_BUG( 1*32+ 8) /* "its_native_only" CPU is affected by ITS, VMX is not affected */
+ #define X86_BUG_TSA			X86_BUG( 1*32+ 9) /* "tsa" CPU is affected by Transient Scheduler Attacks */
+ #define X86_BUG_VMSCAPE			X86_BUG( 1*32+10) /* "vmscape" CPU is affected by VMSCAPE attacks from guests */
++
++#define X86_BUG_TLBI			X86_BUG( 1*32+12) /* "tlbi" AMD TLBI Erratum #1718 */
+ #endif /* _ASM_X86_CPUFEATURES_H */
+--- a/arch/x86/include/asm/tlb.h
++++ b/arch/x86/include/asm/tlb.h
+@@ -110,6 +110,12 @@ static inline void __tlbsync(void)
+ 
+ 	/* TLBSYNC: supported in binutils >= 0.36. */
+ 	asm volatile(".byte 0x0f, 0x01, 0xff" ::: "memory");
++
++	if (!static_cpu_has_bug(X86_BUG_TLBI))
++		return;
++
++	/* TLBSYNC: supported in binutils >= 0.36. */
++	asm volatile(".byte 0x0f, 0x01, 0xff" ::: "memory");
+ }
+ #else
+ /* Some compilers (I'm looking at you clang!) simply can't do DCE */
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1050,6 +1050,10 @@ static void init_amd_zen5(struct cpuinfo
+ 		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
+ 		pr_emerg_once("RDSEED32 is broken. Disabling the corresponding CPUID bit.\n");
  	}
- 
--	/* Free up the allocation of any bin slots we used. */
-+	/* Free up the allocation of any bin slots we used. Jobs that ran to
-+	 * completion had their slots released in vc4_irq_finish_render_job().
-+	 * Only jobs that never completed still have slots to be released here.
-+	 */
- 	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	vc4->bin_alloc_used &= ~exec->bin_slots;
- 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
- 
-+	/* Let anyone waiting on the binner pool retry. */
-+	wake_up_all(&vc4->job_wait_queue);
 +
- 	/* Release the reference on the binner BO if needed. */
- 	if (exec->bin_bo_used)
- 		vc4_v3d_bin_bo_put(vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_irq.c b/drivers/gpu/drm/vc4/vc4_irq.c
-index 4fdad88e53e10..7d783441ffe26 100644
---- a/drivers/gpu/drm/vc4/vc4_irq.c
-+++ b/drivers/gpu/drm/vc4/vc4_irq.c
-@@ -74,7 +74,7 @@ vc4_overflow_mem_work(struct work_struct *work)
- 
- 	bo = vc4->bin_bo;
- 
--	bin_bo_slot = vc4_v3d_get_bin_slot(vc4);
-+	bin_bo_slot = vc4_v3d_get_bin_slot(vc4, msecs_to_jiffies(500));
- 	if (bin_bo_slot < 0) {
- 		drm_err(&vc4->base, "Couldn't allocate binner overflow mem\n");
- 		goto complete;
-@@ -165,6 +165,10 @@ vc4_irq_finish_render_job(struct drm_device *dev)
- 	trace_vc4_rcl_end_irq(dev, exec->seqno);
- 
- 	vc4->finished_seqno++;
-+
-+	vc4->bin_alloc_used &= ~exec->bin_slots;
-+	exec->bin_slots = 0;
-+
- 	list_move_tail(&exec->head, &vc4->job_done_list);
- 
- 	nextbin = vc4_first_bin_job(vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index 63af545a44b34..03589596b7fd9 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -171,46 +171,42 @@ static void vc4_v3d_init_hw(struct drm_device *dev)
- 	V3D_WRITE(V3D_VPMBASE, 0);
++	if (cpu_has(c, X86_FEATURE_INVLPGB) &&
++	    !cpu_has(c, X86_FEATURE_TLBSYNC_SFW_NO))
++		set_cpu_bug(c, X86_BUG_TLBI);
  }
  
--int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
-+static int bin_slot_try_alloc(struct vc4_dev *vc4)
- {
--	struct drm_device *dev = &vc4->base;
--	unsigned long irqflags;
- 	int slot;
--	uint64_t seqno = 0;
--	struct vc4_exec_info *exec;
- 
--	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
--		return -ENODEV;
-+	guard(spinlock_irqsave)(&vc4->job_lock);
- 
--try_again:
--	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	slot = ffs(~vc4->bin_alloc_used);
- 	if (slot != 0) {
- 		/* Switch from ffs() bit index to a 0-based index. */
- 		slot--;
- 		vc4->bin_alloc_used |= BIT(slot);
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return slot;
-+	} else {
-+		slot = -ENOMEM;
- 	}
- 
--	/* Couldn't find an open slot.  Wait for render to complete
--	 * and try again.
--	 */
--	exec = vc4_last_render_job(vc4);
--	if (exec)
--		seqno = exec->seqno;
--	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
-+	return slot;
-+}
- 
--	if (seqno) {
--		int ret = vc4_wait_for_seqno(dev, seqno, ~0ull, true);
-+int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout)
-+{
-+	int slot;
-+	long ret;
- 
--		if (ret == 0)
--			goto try_again;
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
-+		return -ENODEV;
- 
-+	/* If the pool is full, wait for a job to release its slots. */
-+	ret = wait_event_interruptible_timeout(vc4->job_wait_queue,
-+					       (slot = bin_slot_try_alloc(vc4)) >= 0,
-+					       timeout);
-+	if (ret < 0)
- 		return ret;
--	}
-+	if (ret == 0)
-+		return -ENOMEM;
- 
--	return -ENOMEM;
-+	return slot;
- }
- 
- /*
-diff --git a/drivers/gpu/drm/vc4/vc4_validate.c b/drivers/gpu/drm/vc4/vc4_validate.c
-index 205d360a007a2..140a525b9e59d 100644
---- a/drivers/gpu/drm/vc4/vc4_validate.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -401,7 +401,7 @@ validate_tile_binning_config(VALIDATE_ARGS)
- 		return -EINVAL;
- 	}
- 
--	bin_slot = vc4_v3d_get_bin_slot(vc4);
-+	bin_slot = vc4_v3d_get_bin_slot(vc4, MAX_SCHEDULE_TIMEOUT);
- 	if (bin_slot < 0) {
- 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
- 			drm_err(dev, "Failed to allocate binner memory: %d\n",
--- 
-2.53.0
-
+ static void init_amd(struct cpuinfo_x86 *c)
 
 
