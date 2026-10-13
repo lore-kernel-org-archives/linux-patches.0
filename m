@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED218280CD5;
-	Tue, 13 Oct 2026 12:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF633B71C0;
+	Tue, 13 Oct 2026 12:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895035; cv=none; b=Uu8E7uCTLoVuQqH/CNPEERBKtfbX//higesRRMnTE1sB82smuOed15f3Aw+bHn9ZeESNhulnRhFJhzGtUmi2MS+7K3Q/dCBKa/DsWb2jLOWNM57btEWid/JaBB/dWA8CsLdC8AXfhAnE+R/S9iCXBEeM4SjACavPhsU6cItg4vU=
+	t=1791895037; cv=none; b=PoL8W8PHeKTDgbUotuUwnXviKLQwQ780F9PbMgQFBzAmNfUn3T7FW7RSwOevlliGCzMV6wQxhzEkd65wQvLRwp8nb679Tuxb+9jbRj62KSiEvWk8pHUUFTvkGixb8j9WdsuZpYGpdFVq+xBDxbcJ15U2/M4/lLwkqN+kdphOtjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895035; c=relaxed/simple;
-	bh=NBUo+FALJaBM4yDXqRHVSOcbQF7iWd4LA7Xjrj0G/+A=;
+	s=arc-20240116; t=1791895037; c=relaxed/simple;
+	bh=Kv1gqzK3bIoucGK/mFMpc/On1KM1oNHSm2tVYpZd1As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LH02r1sI5Z5MZS3Qhhxue3gde6Ye4DG7BTUO5KoYdJvCnzOx+ReFVBgkcLJ+MZ1ImwtD367Gkl5s4HVh1kYTWyYfAP5XNybl+JWgcbSaqaum0ze6WWVSEHRMuah1hwEALpKDHEZM4WhqcZiuIkafb5It/Tuye3aP1DX3+BBlans=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynuT492b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SWMSC9dYnFzHAgdgIAdH5otQ8pHVNFFzs9BFn3x9Ts6/mKbax92fqtdpe80IRadsSmHHCPhC15mAGcVz6mM35o20ZYZUXsUGtgo2FLG4mqJpmR1/Frcf4ZBB0YrgqEOD3u7mBazZAGs1ohdNvx1cXC1GNyx3H0KvUvICoPaTKvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oz+5gjQn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynuT492b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427CB1F000FF;
-	Tue, 13 Oct 2026 12:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oz+5gjQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED8D1F000FF;
+	Tue, 13 Oct 2026 12:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895033;
-	bh=F2xsUsCeuOrC/xyVlckarIJ8Jdv0+a4b6Vx/WO7Pgfs=;
+	s=korg; t=1791895036;
+	bh=1leJV9b/aV6YOqGzy5LuqSCOtomppiahgMRA8ZARQE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ynuT492bRaGjc5lIVKWL4dzhjlAxtyVBiNusWFBJI1cMIybm9LcwtSniHEYGdqLnl
-	 jsjqEf4Yg73MlWKzUGcLRbfhueJQsF3hVPlpPS/MQVp/Rqp65v0ncGlyOi4omRR06U
-	 JUQY77l0P0fzrJRSl9nwo4NmwsNnXmXHKIM1qin8=
+	b=oz+5gjQnznI2cUzF2NAQ/lvlCsvqwtKS9+ZxIlbZz1GDu1WAAhIofxo7TDrLzU8jJ
+	 PtntaRYIQZbnVFmTlfVuLoLi5mU9op/RsG4MebVkvn5+FpgIwDLY1IcsC7HRrcRJXF
+	 e0EPitMHhNjqG7RgXTW55U1KgUJtkG2Jp/CjMvag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.12 132/497] soc: qcom: geni-se: Correct QUP Core ICC vote constants
-Date: Tue, 13 Oct 2026 13:34:59 +0200
-Message-ID: <20261013112911.024666955@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.12 141/497] usb: ohci-st: disable controller wakeup on removal
+Date: Tue, 13 Oct 2026 13:35:08 +0200
+Message-ID: <20261013112911.235710155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,56 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 1cd9b1be5a9c56fd69e3f555b200a1844f9b873e upstream.
+commit 08b2ccd7eb7e41f77a04a09112ca3edcc588e3f0 upstream.
 
-The GENI_TO_CORE ("qup-core") ICC vote selects the QUP Core 2X clock
-rate. The CORE_2X_*_MHZ constants are expressed in Bps, but their
-values are several orders of magnitude too small. For example, the
-50 MHz threshold is represented by 2500 rather than 25000000 Bps.
+Probe enables controller wakeup after the OHCI core marks controllers with
+RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
+wakeup source can remain attached after driver unbind.
 
-As a result, clients using these constants can severely under-vote the
-QUP Core clock.
+Disable controller wakeup after removing the HCD.
 
-Correct the constants to their intended Bps thresholds so that the ICC
-provider selects the corresponding QUP Core 2X clock rate. Drop the unused
-definitions.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Fixes: 58ffbba6a399 ("soc: qcom: geni: Support for ICC voting")
-Cc: stable@kernel.org
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-1-f78eb611204e@oss.qualcomm.com
+Fixes: d115837259ad ("usb: host: ohci-st: Add OHCI driver support for ST STB devices")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260915012011.61874-5-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/soc/qcom/geni-se.h |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/usb/host/ohci-st.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -297,17 +297,12 @@ struct geni_se {
- #define QUP_SE_VERSION_2_5                  0x20050000
+--- a/drivers/usb/host/ohci-st.c
++++ b/drivers/usb/host/ohci-st.c
+@@ -235,6 +235,7 @@ static void st_ohci_platform_remove(stru
+ 	int clk;
  
- /*
-- * Define bandwidth thresholds that cause the underlying Core 2X interconnect
-- * clock to run at the named frequency. These baseline values are recommended
-- * by the hardware team, and are not dynamically scaled with GENI bandwidth
-- * beyond basic on/off.
-+ * QUP Core 2X clock votes used by GENI clients through the "qup-core" ICC
-+ * path. Values are in Bps and must be converted with Bps_to_icc() before
-+ * setting avg_bw.
-  */
--#define CORE_2X_19_2_MHZ		960
--#define CORE_2X_50_MHZ			2500
--#define CORE_2X_100_MHZ			5000
--#define CORE_2X_150_MHZ			7500
--#define CORE_2X_200_MHZ			10000
--#define CORE_2X_236_MHZ			16383
-+#define CORE_2X_19_2_MHZ		9600000
-+#define CORE_2X_50_MHZ			25000000
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
  
- #define GENI_DEFAULT_BW			Bps_to_icc(1000)
- 
+ 	if (pdata->power_off)
+ 		pdata->power_off(dev);
 
 
