@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598E547071;
-	Tue, 13 Oct 2026 12:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544F3198A17;
+	Tue, 13 Oct 2026 12:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895741; cv=none; b=ASinA+tJI8WxIF40eHIEMvk4f7EX+H2t6hWrUuI7v8ZzufCkFm7p3K6XabhpbJk94PYMVoqHLIl4WW0ll1xTs6wFU+avIwpAwhOTWRl42/7VM+iCxIQjXkcRtPpYU5nEyobsmBh67X358HlhP6vz5wsMlETxHOtjyk/uVXIbvnI=
+	t=1791895744; cv=none; b=CuA9CRJNUTXB26UG5WDRQnJGAI5rJy+AzhSNtUUCUB28z1Wjk31/tch051vNOQBw/gd/WFD6zcxgwXLZRikb455PgADRjGqmvHgGmvVg0Vo+BXJNKndaejQr1oEWlfEWhnHIlU6xB1gd7Kvssmf70+51cv2v4S2M0mg05HB0A9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895741; c=relaxed/simple;
-	bh=+WigUKqlCUk6zJza4fw4RYPT45HOIAwFLFUX1CMF5u0=;
+	s=arc-20240116; t=1791895744; c=relaxed/simple;
+	bh=8Ta8fb4OeFgEba+BPFbRXLxFsneioe547inQ1LiXCSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sazQBrIAkZqUGZ5oNzFnApwXrmZ5LrXSh6eTcKX5Syb7G8Gav/cNSXt/PuwB6u2ZGXxncM1AGXaUy+eiZKdYBdwKbMu4eHyg9/Hnl6qwLQ+OgsV9k69obHs85Fgsg+QIe1tGXmslCppKumJdlzMbeRT+tANSB05RU+1VPlIRh1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgoQ7/nD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/yvLpiDQnXjMBDp+p3suJbTJF9biFRcofqDFsTTiyRwNNl5ABPVt0MZbgrOpLTOEup+nqkRvD75CUSBHk2ECgfHg//gr2E8C2vKtUbG5UWIJ/H21NuGyOLznCA4f9wzJfHB0HvR9YKj6Z6JWhH0wSW62nLZzsTlp23hcwj4DvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC8uPOcz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgoQ7/nD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EE21F000FF;
-	Tue, 13 Oct 2026 12:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC8uPOcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA6F1F000FF;
+	Tue, 13 Oct 2026 12:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895740;
-	bh=oqwbVvwNHmHLlxgdxhPOld8ExWvjTPwApUFBCDSbNtA=;
+	s=korg; t=1791895743;
+	bh=LBmZfEZNIPSn6tPfd3++yokP9qM2BeW4EL5YJsNpiek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgoQ7/nDQvcac7fnxBkrlrFWYtNsu0Nn9lbklZH583G43q8v+DPD4iIUgY/CzRX8n
-	 r/DgOT8IAMQr3jmTMqu7WOovLFoyqj8Zf3bWR9H4Vz8zol82vAbfOwUNgzI64ewXYx
-	 Sqzv3TWIqWVfJJL1LZTXQQ5d5xCkH+L76wjd+l8k=
+	b=YC8uPOczUnEjAK5K7uc6pCPdm+11wvVALwrbEXcMFre88MmwYm/jyAzaLsVjW/Fz7
+	 5weM8uLWHSX28kVNHvz0NkLjBAH4KgSHVi3Bw+p9oK2Z0Dc9Gv6c+EjfCPrglIPwsz
+	 YGPzuvViWZv/o0R1VLBW8D8JxJYQ1eir93AfwT4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 378/497] tipc: hold a reference to nodes found by link name
-Date: Tue, 13 Oct 2026 13:39:05 +0200
-Message-ID: <20261013112916.870886943@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 379/497] Revert "wifi: libertas: reject short monitor TX frames"
+Date: Tue, 13 Oct 2026 13:39:06 +0200
+Message-ID: <20261013112916.893874775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,119 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 17e73bae400f6a434dc006e3bee92c94cf781954 upstream.
+commit 9727d1c4e1c971fc42b049b645fdda6852758835 upstream.
 
-tipc_node_find_by_name() returns a node after dropping its RCU read lock
-without taking a reference.  The LINK_SET, LINK_GET and LINK_RESET_STATS
-handlers then lock and access the node, racing with timer-driven cleanup of
-a down peer.  Generic netlink serialization does not exclude the node
-timer.
+This reverts commit 13ff543e0b2c713aedeaadadde686686e949dc78.
 
-The following interleaving can leave a handler using a freed node:
+The 'goto free' just made things worse, causing a spinlock
+to be handled incorrectly. Revert this for now.
 
-  CPU 0: find the node under RCU and release the node read lock
-  CPU 1: tipc_node_timeout() clears the links and unlinks the down node
-  CPU 1: drop the list and timer references, queuing tipc_node_free()
-  CPU 0: leave the RCU read-side critical section
-  CPU 1: complete the grace period and free the node
-  CPU 0: acquire the node lock through the stale pointer
-
-LINK_SET also uses the node's media address after releasing the node lock,
-when passing queued packets to tipc_bearer_xmit().
-
-KASAN on v7.3-rc5 reported:
-
-  BUG: KASAN: slab-use-after-free in _raw_read_lock_bh
-  Write of size 4 at addr ffff88807e06f008 by task poc/92
-  Call Trace:
-   _raw_read_lock_bh                 kernel/locking/spinlock.c:287
-   tipc_nl_node_set_link             net/tipc/node.c:2475
-   genl_family_rcv_msg_doit          net/netlink/genetlink.c:1114
-   genl_rcv_msg                      net/netlink/genetlink.c:1209
-   netlink_rcv_skb                   net/netlink/af_netlink.c:2575
-
-  Allocated by task 0:
-   tipc_node_create                  net/tipc/node.c:539
-   tipc_node_check_dest              net/tipc/node.c:1196
-   tipc_disc_rcv                     net/tipc/discover.c:252
-
-  Freed by task 92:
-   kfree                             mm/slub.c:6801
-   rcu_core                          kernel/rcu/tree.c:2919
-
-  Last potentially related work creation:
-   __call_rcu_common.constprop.0     kernel/rcu/tree.c:3181
-   tipc_node_timeout                 net/tipc/node.c:814
-
-Acquire a reference to the selected node with kref_get_unless_zero() before
-leaving RCU, returning NULL if the node has already been released.  Release
-that reference on every caller exit after the last node access, including
-transmission in LINK_SET.  Keep the existing link lookup order and locking
-so concurrent link removal still takes the existing error paths.
-
-Fixes: 6a939f365bdb ("tipc: Auto removal of peer down node instance")
+Reported-by: Takashi Iwai <tiwai@suse.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://patch.msgid.link/20260928161246.1895273-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 13ff543e0b2c ("wifi: libertas: reject short monitor TX frames")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/libertas/tx.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -2419,8 +2419,11 @@ static struct tipc_node *tipc_node_find_
- 			}
- 		}
- 		tipc_node_read_unlock(n);
--		if (found_node)
-+		if (found_node) {
-+			if (!kref_get_unless_zero(&found_node->kref))
-+				found_node = NULL;
- 			break;
-+		}
- 	}
- 	rcu_read_unlock();
+--- a/drivers/net/wireless/marvell/libertas/tx.c
++++ b/drivers/net/wireless/marvell/libertas/tx.c
+@@ -117,13 +117,6 @@ netdev_tx_t lbs_hard_start_xmit(struct s
+ 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
+ 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
  
-@@ -2505,6 +2508,7 @@ out:
- 	tipc_node_read_unlock(node);
- 	tipc_bearer_xmit(net, bearer_id, &xmitq, &node->links[bearer_id].maddr,
- 			 NULL);
-+	tipc_node_put(node);
- 	return res;
- }
- 
-@@ -2556,12 +2560,14 @@ int tipc_nl_node_get_link(struct sk_buff
- 		link = node->links[bearer_id].link;
- 		if (!link) {
- 			tipc_node_read_unlock(node);
-+			tipc_node_put(node);
- 			err = -EINVAL;
- 			goto err_free;
- 		}
- 
- 		err = __tipc_nl_add_link(net, &msg, link, 0);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		if (err)
- 			goto err_free;
- 	}
-@@ -2632,11 +2638,13 @@ int tipc_nl_node_reset_link_stats(struct
- 	if (!link) {
- 		spin_unlock_bh(&le->lock);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		return -EINVAL;
- 	}
- 	tipc_link_reset_stats(link);
- 	spin_unlock_bh(&le->lock);
- 	tipc_node_read_unlock(node);
-+	tipc_node_put(node);
- 	return 0;
- }
+-		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
+-			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
+-			dev->stats.tx_dropped++;
+-			dev->stats.tx_errors++;
+-			goto free;
+-		}
+-
+ 		/* set txpd fields from the radiotap header */
+ 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
  
 
 
