@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641695013A9;
-	Tue, 13 Oct 2026 12:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959AA3AE18C;
+	Tue, 13 Oct 2026 12:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893283; cv=none; b=Zlzo2wX+De0di7umyLNxyDyXBmMFoj3Pr9wPNnd3kVh0jtRo0HJL+nRboxjoaz8l1FH2er44MavZdzvqiGlZyhzGKsiFvczYWsxBg+ZGwMt0sdCqORq7eZtv995U778yzU6s5i8MfnJ+JxxJQ3I3sje/bPqK661WnuMcjv2xLQA=
+	t=1791893287; cv=none; b=sK1IvDnzHPpDOts0deAdWzyVXsFbflB6bh1O68iNTJCeaZPVm/+fRLqVN86yP7lq7zmNlh8Ta3zNPN2gx8XHhiBn4eDZ7V4g1LDSPd9AMg8V+HD5fKmdydhOYagoV8mfhlPY1Wa3BG5iDrUuL6/V0bVtpFTsxpXBypfaIAoFafY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893283; c=relaxed/simple;
-	bh=kVwgxrO/X9DsSYoK+lZUDrP1wlsEiAbifL1dWml+nLI=;
+	s=arc-20240116; t=1791893287; c=relaxed/simple;
+	bh=etuIVz7W3mZt4Lo1JlVlpCH34B7j8j4yaAwtHzuNzXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xq4QiZ34K8YQMjnwC/JALFes5cvgvm/GF5o/zCjFy3FNR/c3R12tynMIVPuzzOQXIaInBRy71nJqJ4ID8dYp9Ukkh62KN8iswe1xSwtwVuOTXNAtUAmMfQztE1euw3uXfp/GFSzIo5B03MjjZpUXeacz4TGHa2+R8M7ZvT9Gq+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlvvtacI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kow0uuV7QNJSs+XI/Ov4Z6FRamcYDC9xYcWPjErf3QDU7+KN8LtpNX1MTfvdiD8KceFC/37pJbObrCTFvWaTppD9EbGNIFnk6t1kJIrmwEwmtef5X0FMtAPAMfdMosFnfNM6YKybaFDrO8KcujU5HF0CO4pfkAf8KPvr4QkXJ5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuSEBbjF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlvvtacI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E7B1F00893;
-	Tue, 13 Oct 2026 12:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuSEBbjF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91A1F000FF;
+	Tue, 13 Oct 2026 12:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893282;
-	bh=ERpVJkE/+CiWEsrp+1XTxYjc9LqBQYVtPixrlXbcwy8=;
+	s=korg; t=1791893285;
+	bh=3xfvY4KtyxsDXs5kM5iG4O7fcmLvEHgv0DAEkQSsTws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WlvvtacIE86H7YjzrKIDrMmmd5aIpypaiQ2u6xjHPb5BF3UBYE57933AdveUemHV7
-	 w4q0KiOtzF7A5g03EfsAIpac4rH8DcfEhgFjt2c8OFeR4SJkJg97NKnnKkkcUhnPiI
-	 d6whXNvBfy8ZAT8fmoSz7/HZUkTAZFoR6yFRmXsc=
+	b=KuSEBbjFJr9tFpzvO6ZNsu6/OVPIbxPlODmb2H8lZ101jniF805AMLM75UPP2qTz7
+	 f4/Jg4JL5KoMDOMSiGx/USWYhFtZSfVmUOECLikKgOGuSd+0YDqk7GIdWQK3c6xdJO
+	 sGTNv5HpB1rSjbY3kBXoQ2NjLDYqQvM9wMefCJJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 157/621] ice: remove legacy Rx and construct SKB
-Date: Tue, 13 Oct 2026 13:32:32 +0200
-Message-ID: <20261013112924.580903188@linuxfoundation.org>
+Subject: [PATCH 6.18 175/621] mshv: Move region management to mshv_regions.c
+Date: Tue, 13 Oct 2026 13:32:50 +0200
+Message-ID: <20261013112925.014759797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,408 +53,481 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit 9e314a3c525c91c1e918546f472585cdbd44fbd1 ]
+[ Upstream commit e950c30a1051d27fd6dd9a48c53ffbc41ee773f2 ]
 
-The commit 53844673d555 ("iavf: kill 'legacy-rx' for good") removed
-the legacy Rx path in the iavf driver. This change applies the same
-rationale to the ice driver.
+Refactor memory region management functions from mshv_root_main.c into
+mshv_regions.c for better modularity and code organization.
 
-The legacy Rx path relied on manual skb allocation and header copying,
-which has become increasingly inefficient and difficult to maintain.
-With the stabilization of build_skb() and the growing adoption of
-features like XDP, page_pool, and multi-buffer support, the legacy
-approach is no longer viable.
+Adjust function calls and headers to use the new implementation. Improve
+maintainability and separation of concerns in the mshv_root module.
 
-Key drawbacks of the legacy path included:
-- Higher memory pressure due to direct page allocations and splitting;
-- Redundant memcpy() operations for packet headers;
-- CPU overhead from eth_get_headlen() and Flow Dissector usage;
-- Compatibility issues with XDP, which imposes strict headroom and
-  tailroom requirements.
-
-The ice driver, like iavf, does not benefit from the minimal headroom
-savings that legacy Rx once offered, as it already splits pages into
-fixed halves. Removing this path simplifies the Rx logic, eliminates
-unnecessary branches in the hotpath, and prepares the driver for
-upcoming enhancements.
-
-In addition to removing the legacy Rx path, this change also eliminates
-the custom construct_skb() functions from both the standard and
-zero-copy (ZC) Rx paths. These are replaced with the build_skb()
-and standardized xdp_build_skb_from_zc() helpers, aligning the driver
-with the modern XDP infrastructure and reducing code duplication.
-
-This cleanup also reduces code complexity and improves maintainability
-as we move toward a more unified and modern Rx model across drivers.
-
-Co-developed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: e142dc4ef0f4 ("ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Reviewed-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: c0e296f25767 ("mshv: Fix error handling in mshv_region_pin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h         |  1 -
- drivers/net/ethernet/intel/ice/ice_base.c    | 23 +-----
- drivers/net/ethernet/intel/ice/ice_ethtool.c |  5 --
- drivers/net/ethernet/intel/ice/ice_main.c    | 11 +--
- drivers/net/ethernet/intel/ice/ice_txrx.c    | 86 +-------------------
- drivers/net/ethernet/intel/ice/ice_txrx.h    | 16 ----
- drivers/net/ethernet/intel/ice/ice_xsk.c     | 72 +---------------
- 7 files changed, 6 insertions(+), 208 deletions(-)
+ drivers/hv/Makefile         |   2 +-
+ drivers/hv/mshv_regions.c   | 175 +++++++++++++++++++++++++++++++++++
+ drivers/hv/mshv_root.h      |  10 ++
+ drivers/hv/mshv_root_main.c | 176 +++---------------------------------
+ 4 files changed, 198 insertions(+), 165 deletions(-)
+ create mode 100644 drivers/hv/mshv_regions.c
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index fc4eae0a00cd3..192c1ec973b9f 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -509,7 +509,6 @@ enum ice_pf_flags {
- 	ICE_FLAG_MOD_POWER_UNSUPPORTED,
- 	ICE_FLAG_PHY_FW_LOAD_FAILED,
- 	ICE_FLAG_ETHTOOL_CTXT,		/* set when ethtool holds RTNL lock */
--	ICE_FLAG_LEGACY_RX,
- 	ICE_FLAG_VF_TRUE_PROMISC_ENA,
- 	ICE_FLAG_MDD_AUTO_RESET_VF,
- 	ICE_FLAG_VF_VLAN_PRUNING,
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index 2d35a278c555c..b3eb9f5125003 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -461,19 +461,6 @@ u16 ice_calc_ts_ring_count(struct ice_tx_ring *tx_ring)
- 	return tx_ring->count + max_fetch_desc;
+diff --git a/drivers/hv/Makefile b/drivers/hv/Makefile
+index 1a1677bf4daca..344ddaf377105 100644
+--- a/drivers/hv/Makefile
++++ b/drivers/hv/Makefile
+@@ -13,7 +13,7 @@ hv_vmbus-y := vmbus_drv.o \
+ hv_vmbus-$(CONFIG_HYPERV_TESTING)	+= hv_debugfs.o
+ hv_utils-y := hv_util.o hv_kvp.o hv_snapshot.o hv_utils_transport.o
+ mshv_root-y := mshv_root_main.o mshv_synic.o mshv_eventfd.o mshv_irq.o \
+-	       mshv_root_hv_call.o mshv_portid_table.o
++	       mshv_root_hv_call.o mshv_portid_table.o mshv_regions.o
+ 
+ # Code that must be built-in
+ obj-$(CONFIG_HYPERV) += hv_common.o
+diff --git a/drivers/hv/mshv_regions.c b/drivers/hv/mshv_regions.c
+new file mode 100644
+index 0000000000000..35b866670840e
+--- /dev/null
++++ b/drivers/hv/mshv_regions.c
+@@ -0,0 +1,175 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2025, Microsoft Corporation.
++ *
++ * Memory region management for mshv_root module.
++ *
++ * Authors: Microsoft Linux virtualization team
++ */
++
++#include <linux/mm.h>
++#include <linux/vmalloc.h>
++
++#include <asm/mshyperv.h>
++
++#include "mshv_root.h"
++
++struct mshv_mem_region *mshv_region_create(u64 guest_pfn, u64 nr_pages,
++					   u64 uaddr, u32 flags,
++					   bool is_mmio)
++{
++	struct mshv_mem_region *region;
++
++	region = vzalloc(sizeof(*region) + sizeof(struct page *) * nr_pages);
++	if (!region)
++		return ERR_PTR(-ENOMEM);
++
++	region->nr_pages = nr_pages;
++	region->start_gfn = guest_pfn;
++	region->start_uaddr = uaddr;
++	region->hv_map_flags = HV_MAP_GPA_READABLE | HV_MAP_GPA_ADJUSTABLE;
++	if (flags & BIT(MSHV_SET_MEM_BIT_WRITABLE))
++		region->hv_map_flags |= HV_MAP_GPA_WRITABLE;
++	if (flags & BIT(MSHV_SET_MEM_BIT_EXECUTABLE))
++		region->hv_map_flags |= HV_MAP_GPA_EXECUTABLE;
++
++	/* Note: large_pages flag populated when we pin the pages */
++	if (!is_mmio)
++		region->flags.range_pinned = true;
++
++	return region;
++}
++
++int mshv_region_share(struct mshv_mem_region *region)
++{
++	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_SHARED;
++
++	if (region->flags.large_pages)
++		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
++
++	return hv_call_modify_spa_host_access(region->partition->pt_id,
++			region->pages, region->nr_pages,
++			HV_MAP_GPA_READABLE | HV_MAP_GPA_WRITABLE,
++			flags, true);
++}
++
++int mshv_region_unshare(struct mshv_mem_region *region)
++{
++	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_EXCLUSIVE;
++
++	if (region->flags.large_pages)
++		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
++
++	return hv_call_modify_spa_host_access(region->partition->pt_id,
++			region->pages, region->nr_pages,
++			0,
++			flags, false);
++}
++
++static int mshv_region_remap_pages(struct mshv_mem_region *region,
++				   u32 map_flags,
++				   u64 page_offset, u64 page_count)
++{
++	if (page_offset + page_count > region->nr_pages)
++		return -EINVAL;
++
++	if (region->flags.large_pages)
++		map_flags |= HV_MAP_GPA_LARGE_PAGE;
++
++	return hv_call_map_gpa_pages(region->partition->pt_id,
++				     region->start_gfn + page_offset,
++				     page_count, map_flags,
++				     region->pages + page_offset);
++}
++
++int mshv_region_map(struct mshv_mem_region *region)
++{
++	u32 map_flags = region->hv_map_flags;
++
++	return mshv_region_remap_pages(region, map_flags,
++				       0, region->nr_pages);
++}
++
++static void mshv_region_invalidate_pages(struct mshv_mem_region *region,
++					 u64 page_offset, u64 page_count)
++{
++	if (region->flags.range_pinned)
++		unpin_user_pages(region->pages + page_offset, page_count);
++
++	memset(region->pages + page_offset, 0,
++	       page_count * sizeof(struct page *));
++}
++
++void mshv_region_invalidate(struct mshv_mem_region *region)
++{
++	mshv_region_invalidate_pages(region, 0, region->nr_pages);
++}
++
++int mshv_region_pin(struct mshv_mem_region *region)
++{
++	u64 done_count, nr_pages;
++	struct page **pages;
++	__u64 userspace_addr;
++	int ret;
++
++	for (done_count = 0; done_count < region->nr_pages; done_count += ret) {
++		pages = region->pages + done_count;
++		userspace_addr = region->start_uaddr +
++				 done_count * HV_HYP_PAGE_SIZE;
++		nr_pages = min(region->nr_pages - done_count,
++			       MSHV_PIN_PAGES_BATCH_SIZE);
++
++		/*
++		 * Pinning assuming 4k pages works for large pages too.
++		 * All page structs within the large page are returned.
++		 *
++		 * Pin requests are batched because pin_user_pages_fast
++		 * with the FOLL_LONGTERM flag does a large temporary
++		 * allocation of contiguous memory.
++		 */
++		ret = pin_user_pages_fast(userspace_addr, nr_pages,
++					  FOLL_WRITE | FOLL_LONGTERM,
++					  pages);
++		if (ret < 0)
++			goto release_pages;
++	}
++
++	if (PageHuge(region->pages[0]))
++		region->flags.large_pages = true;
++
++	return 0;
++
++release_pages:
++	mshv_region_invalidate_pages(region, 0, done_count);
++	return ret;
++}
++
++void mshv_region_destroy(struct mshv_mem_region *region)
++{
++	struct mshv_partition *partition = region->partition;
++	u32 unmap_flags = 0;
++	int ret;
++
++	hlist_del(&region->hnode);
++
++	if (mshv_partition_encrypted(partition)) {
++		ret = mshv_region_share(region);
++		if (ret) {
++			pt_err(partition,
++			       "Failed to regain access to memory, unpinning user pages will fail and crash the host error: %d\n",
++			       ret);
++			return;
++		}
++	}
++
++	if (region->flags.large_pages)
++		unmap_flags |= HV_UNMAP_GPA_LARGE_PAGE;
++
++	/* ignore unmap failures and continue as process may be exiting */
++	hv_call_unmap_gpa_pages(partition->pt_id, region->start_gfn,
++				region->nr_pages, unmap_flags);
++
++	mshv_region_invalidate(region);
++
++	vfree(region);
++}
+diff --git a/drivers/hv/mshv_root.h b/drivers/hv/mshv_root.h
+index db6b42db2fdc6..e1d38deaae5bd 100644
+--- a/drivers/hv/mshv_root.h
++++ b/drivers/hv/mshv_root.h
+@@ -308,4 +308,14 @@ extern struct mshv_root mshv_root;
+ extern enum hv_scheduler_type hv_scheduler_type;
+ extern u8 * __percpu *hv_synic_eventring_tail;
+ 
++struct mshv_mem_region *mshv_region_create(u64 guest_pfn, u64 nr_pages,
++					   u64 uaddr, u32 flags,
++					   bool is_mmio);
++int mshv_region_share(struct mshv_mem_region *region);
++int mshv_region_unshare(struct mshv_mem_region *region);
++int mshv_region_map(struct mshv_mem_region *region);
++void mshv_region_invalidate(struct mshv_mem_region *region);
++int mshv_region_pin(struct mshv_mem_region *region);
++void mshv_region_destroy(struct mshv_mem_region *region);
++
+ #endif /* _MSHV_ROOT_H_ */
+diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
+index 97672a331e691..6c62db222210a 100644
+--- a/drivers/hv/mshv_root_main.c
++++ b/drivers/hv/mshv_root_main.c
+@@ -1039,117 +1039,6 @@ static void mshv_async_hvcall_handler(void *data, u64 *status)
+ 	*status = partition->async_hypercall_status;
  }
  
--/**
-- * ice_rx_offset - Return expected offset into page to access data
-- * @rx_ring: Ring we are requesting offset of
-- *
-- * Returns the offset value for ring into the data buffer.
-- */
--static unsigned int ice_rx_offset(struct ice_rx_ring *rx_ring)
+-static int
+-mshv_partition_region_share(struct mshv_mem_region *region)
 -{
--	if (ice_ring_uses_build_skb(rx_ring))
--		return ICE_SKB_PAD;
+-	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_SHARED;
+-
+-	if (region->flags.large_pages)
+-		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
+-
+-	return hv_call_modify_spa_host_access(region->partition->pt_id,
+-			region->pages, region->nr_pages,
+-			HV_MAP_GPA_READABLE | HV_MAP_GPA_WRITABLE,
+-			flags, true);
+-}
+-
+-static int
+-mshv_partition_region_unshare(struct mshv_mem_region *region)
+-{
+-	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_EXCLUSIVE;
+-
+-	if (region->flags.large_pages)
+-		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
+-
+-	return hv_call_modify_spa_host_access(region->partition->pt_id,
+-			region->pages, region->nr_pages,
+-			0,
+-			flags, false);
+-}
+-
+-static int
+-mshv_region_remap_pages(struct mshv_mem_region *region, u32 map_flags,
+-			u64 page_offset, u64 page_count)
+-{
+-	if (page_offset + page_count > region->nr_pages)
+-		return -EINVAL;
+-
+-	if (region->flags.large_pages)
+-		map_flags |= HV_MAP_GPA_LARGE_PAGE;
+-
+-	/* ask the hypervisor to map guest ram */
+-	return hv_call_map_gpa_pages(region->partition->pt_id,
+-				     region->start_gfn + page_offset,
+-				     page_count, map_flags,
+-				     region->pages + page_offset);
+-}
+-
+-static int
+-mshv_region_map(struct mshv_mem_region *region)
+-{
+-	u32 map_flags = region->hv_map_flags;
+-
+-	return mshv_region_remap_pages(region, map_flags,
+-				       0, region->nr_pages);
+-}
+-
+-static void
+-mshv_region_invalidate_pages(struct mshv_mem_region *region,
+-			     u64 page_offset, u64 page_count)
+-{
+-	if (region->flags.range_pinned)
+-		unpin_user_pages(region->pages + page_offset, page_count);
+-
+-	memset(region->pages + page_offset, 0,
+-	       page_count * sizeof(struct page *));
+-}
+-
+-static void
+-mshv_region_invalidate(struct mshv_mem_region *region)
+-{
+-	mshv_region_invalidate_pages(region, 0, region->nr_pages);
+-}
+-
+-static int
+-mshv_region_pin(struct mshv_mem_region *region)
+-{
+-	u64 done_count, nr_pages;
+-	struct page **pages;
+-	__u64 userspace_addr;
+-	int ret;
+-
+-	for (done_count = 0; done_count < region->nr_pages; done_count += ret) {
+-		pages = region->pages + done_count;
+-		userspace_addr = region->start_uaddr +
+-				 done_count * HV_HYP_PAGE_SIZE;
+-		nr_pages = min(region->nr_pages - done_count,
+-			       MSHV_PIN_PAGES_BATCH_SIZE);
+-
+-		/*
+-		 * Pinning assuming 4k pages works for large pages too.
+-		 * All page structs within the large page are returned.
+-		 *
+-		 * Pin requests are batched because pin_user_pages_fast
+-		 * with the FOLL_LONGTERM flag does a large temporary
+-		 * allocation of contiguous memory.
+-		 */
+-		ret = pin_user_pages_fast(userspace_addr, nr_pages,
+-					  FOLL_WRITE | FOLL_LONGTERM,
+-					  pages);
+-		if (ret < 0)
+-			goto release_pages;
+-	}
+-
+-	if (PageHuge(region->pages[0]))
+-		region->flags.large_pages = true;
+-
 -	return 0;
+-
+-release_pages:
+-	mshv_region_invalidate_pages(region, 0, done_count);
+-	return ret;
 -}
 -
- /**
-  * ice_setup_rx_ctx - Configure a receive ring context
-  * @ring: The Rx ring to configure
-@@ -586,13 +573,7 @@ static int ice_setup_rx_ctx(struct ice_rx_ring *ring)
- 	if (vsi->type == ICE_VSI_VF)
- 		return 0;
- 
--	/* configure Rx buffer alignment */
--	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags))
--		ice_clear_ring_build_skb_ena(ring);
--	else
--		ice_set_ring_build_skb_ena(ring);
--
--	ring->rx_offset = ice_rx_offset(ring);
-+	ring->rx_offset = ICE_SKB_PAD;
- 
- 	/* init queue specific tail register */
- 	ring->tail = hw->hw_addr + QRX_TAIL(pf_q);
-@@ -753,7 +734,7 @@ int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx)
-  */
- static void ice_vsi_cfg_frame_size(struct ice_vsi *vsi, struct ice_rx_ring *ring)
+ static struct mshv_mem_region *
+ mshv_partition_region_by_gfn(struct mshv_partition *partition, u64 gfn)
  {
--	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags)) {
-+	if (!vsi->netdev) {
- 		ring->max_frame = ICE_MAX_FRAME_LEGACY_RX;
- 		ring->rx_buf_len = ICE_RXBUF_1664;
- #if (PAGE_SIZE < 8192)
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index c10d0b92e63e5..d98e351f09ec0 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -340,7 +340,6 @@ static const struct ice_priv_flag ice_gstrings_priv_flags[] = {
- 		      ICE_FLAG_VF_TRUE_PROMISC_ENA),
- 	ICE_PRIV_FLAG("mdd-auto-reset-vf", ICE_FLAG_MDD_AUTO_RESET_VF),
- 	ICE_PRIV_FLAG("vf-vlan-pruning", ICE_FLAG_VF_VLAN_PRUNING),
--	ICE_PRIV_FLAG("legacy-rx", ICE_FLAG_LEGACY_RX),
- };
+@@ -1173,7 +1062,7 @@ static int mshv_partition_create_region(struct mshv_partition *partition,
+ 					struct mshv_mem_region **regionpp,
+ 					bool is_mmio)
+ {
+-	struct mshv_mem_region *region, *rg;
++	struct mshv_mem_region *rg;
+ 	u64 nr_pages = HVPFN_DOWN(mem->size);
  
- #define ICE_PRIV_FLAG_ARRAY_SIZE	ARRAY_SIZE(ice_gstrings_priv_flags)
-@@ -1848,10 +1847,6 @@ static int ice_set_priv_flags(struct net_device *netdev, u32 flags)
- 			ice_nway_reset(netdev);
- 		}
+ 	/* Reject overlapping regions */
+@@ -1189,26 +1078,15 @@ static int mshv_partition_create_region(struct mshv_partition *partition,
+ 		return -EEXIST;
  	}
--	if (test_bit(ICE_FLAG_LEGACY_RX, change_flags)) {
--		/* down and up VSI so that changes of Rx cfg are reflected. */
--		ice_down_up(vsi);
--	}
- 	/* don't allow modification of this flag when a single VF is in
- 	 * promiscuous mode because it's not supported
+ 
+-	region = vzalloc(sizeof(*region) + sizeof(struct page *) * nr_pages);
+-	if (!region)
+-		return -ENOMEM;
+-
+-	region->nr_pages = nr_pages;
+-	region->start_gfn = mem->guest_pfn;
+-	region->start_uaddr = mem->userspace_addr;
+-	region->hv_map_flags = HV_MAP_GPA_READABLE | HV_MAP_GPA_ADJUSTABLE;
+-	if (mem->flags & BIT(MSHV_SET_MEM_BIT_WRITABLE))
+-		region->hv_map_flags |= HV_MAP_GPA_WRITABLE;
+-	if (mem->flags & BIT(MSHV_SET_MEM_BIT_EXECUTABLE))
+-		region->hv_map_flags |= HV_MAP_GPA_EXECUTABLE;
++	rg = mshv_region_create(mem->guest_pfn, nr_pages,
++				mem->userspace_addr, mem->flags,
++				is_mmio);
++	if (IS_ERR(rg))
++		return PTR_ERR(rg);
+ 
+-	/* Note: large_pages flag populated when we pin the pages */
+-	if (!is_mmio)
+-		region->flags.range_pinned = true;
++	rg->partition = partition;
+ 
+-	region->partition = partition;
+-
+-	*regionpp = region;
++	*regionpp = rg;
+ 
+ 	return 0;
+ }
+@@ -1246,7 +1124,7 @@ static int mshv_prepare_pinned_region(struct mshv_mem_region *region)
+ 	 * access to guest memory regions.
  	 */
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index f85051072ba2c..b6bbbaa85c925 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2957,10 +2957,7 @@ int ice_vsi_determine_xdp_res(struct ice_vsi *vsi)
-  */
- static int ice_max_xdp_frame_size(struct ice_vsi *vsi)
- {
--	if (test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags))
--		return ICE_RXBUF_1664;
--	else
--		return ICE_RXBUF_3072;
-+	return ICE_RXBUF_3072;
+ 	if (mshv_partition_encrypted(partition)) {
+-		ret = mshv_partition_region_unshare(region);
++		ret = mshv_region_unshare(region);
+ 		if (ret) {
+ 			pt_err(partition,
+ 			       "Failed to unshare memory region (guest_pfn: %llu): %d\n",
+@@ -1259,7 +1137,7 @@ static int mshv_prepare_pinned_region(struct mshv_mem_region *region)
+ 	if (ret && mshv_partition_encrypted(partition)) {
+ 		int shrc;
+ 
+-		shrc = mshv_partition_region_share(region);
++		shrc = mshv_region_share(region);
+ 		if (!shrc)
+ 			goto invalidate_region;
+ 
+@@ -1340,36 +1218,6 @@ mshv_map_user_memory(struct mshv_partition *partition,
+ 	return ret;
  }
  
- /**
-@@ -7879,12 +7876,6 @@ int ice_change_mtu(struct net_device *netdev, int new_mtu)
- 				   frame_size - ICE_ETH_PKT_HDR_PAD);
- 			return -EINVAL;
- 		}
--	} else if (test_bit(ICE_FLAG_LEGACY_RX, pf->flags)) {
--		if (new_mtu + ICE_ETH_PKT_HDR_PAD > ICE_MAX_FRAME_LEGACY_RX) {
--			netdev_err(netdev, "Too big MTU for legacy-rx; Max is %d\n",
--				   ICE_MAX_FRAME_LEGACY_RX - ICE_ETH_PKT_HDR_PAD);
--			return -EINVAL;
+-static void mshv_partition_destroy_region(struct mshv_mem_region *region)
+-{
+-	struct mshv_partition *partition = region->partition;
+-	u32 unmap_flags = 0;
+-	int ret;
+-
+-	hlist_del(&region->hnode);
+-
+-	if (mshv_partition_encrypted(partition)) {
+-		ret = mshv_partition_region_share(region);
+-		if (ret) {
+-			pt_err(partition,
+-			       "Failed to regain access to memory, unpinning user pages will fail and crash the host error: %d\n",
+-			       ret);
+-			return;
 -		}
- 	}
+-	}
+-
+-	if (region->flags.large_pages)
+-		unmap_flags |= HV_UNMAP_GPA_LARGE_PAGE;
+-
+-	/* ignore unmap failures and continue as process may be exiting */
+-	hv_call_unmap_gpa_pages(partition->pt_id, region->start_gfn,
+-				region->nr_pages, unmap_flags);
+-
+-	mshv_region_invalidate(region);
+-
+-	vfree(region);
+-}
+-
+ /* Called for unmapping both the guest ram and the mmio space */
+ static long
+ mshv_unmap_user_memory(struct mshv_partition *partition,
+@@ -1390,7 +1238,7 @@ mshv_unmap_user_memory(struct mshv_partition *partition,
+ 	    region->nr_pages != HVPFN_DOWN(mem.size))
+ 		return -EINVAL;
  
- 	/* if a reset is in progress, wait for some time for it to complete */
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index b843f66c4a6e0..48bdd4ccb9ff0 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -1169,87 +1169,6 @@ ice_build_skb(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
- 	return skb;
+-	mshv_partition_destroy_region(region);
++	mshv_region_destroy(region);
+ 
+ 	return 0;
  }
+@@ -1790,7 +1638,7 @@ static void destroy_partition(struct mshv_partition *partition)
  
--/**
-- * ice_construct_skb - Allocate skb and populate it
-- * @rx_ring: Rx descriptor ring to transact packets on
-- * @xdp: xdp_buff pointing to the data
-- *
-- * This function allocates an skb. It then populates it with the page
-- * data from the current receive descriptor, taking care to set up the
-- * skb correctly.
-- */
--static struct sk_buff *
--ice_construct_skb(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
--{
--	unsigned int size = xdp->data_end - xdp->data;
--	struct skb_shared_info *sinfo = NULL;
--	struct ice_rx_buf *rx_buf;
--	unsigned int nr_frags = 0;
--	unsigned int headlen;
--	struct sk_buff *skb;
--
--	/* prefetch first cache line of first page */
--	net_prefetch(xdp->data);
--
--	if (unlikely(xdp_buff_has_frags(xdp))) {
--		sinfo = xdp_get_shared_info_from_buff(xdp);
--		nr_frags = sinfo->nr_frags;
--	}
--
--	/* allocate a skb to store the frags */
--	skb = napi_alloc_skb(&rx_ring->q_vector->napi, ICE_RX_HDR_SIZE);
--	if (unlikely(!skb))
--		return NULL;
--
--	rx_buf = &rx_ring->rx_buf[rx_ring->first_desc];
--	skb_record_rx_queue(skb, rx_ring->q_index);
--	/* Determine available headroom for copy */
--	headlen = size;
--	if (headlen > ICE_RX_HDR_SIZE)
--		headlen = eth_get_headlen(skb->dev, xdp->data, ICE_RX_HDR_SIZE);
--
--	/* align pull length to size of long to optimize memcpy performance */
--	memcpy(__skb_put(skb, headlen), xdp->data, ALIGN(headlen,
--							 sizeof(long)));
--
--	/* if we exhaust the linear part then add what is left as a frag */
--	size -= headlen;
--	if (size) {
--		/* besides adding here a partial frag, we are going to add
--		 * frags from xdp_buff, make sure there is enough space for
--		 * them
--		 */
--		if (unlikely(nr_frags >= MAX_SKB_FRAGS - 1)) {
--			dev_kfree_skb(skb);
--			return NULL;
--		}
--		skb_add_rx_frag(skb, 0, rx_buf->page,
--				rx_buf->page_offset + headlen, size,
--				xdp->frame_sz);
--	} else {
--		/* buffer is unused, restore biased page count in Rx buffer;
--		 * data was copied onto skb's linear part so there's no
--		 * need for adjusting page offset and we can reuse this buffer
--		 * as-is
--		 */
--		rx_buf->pagecnt_bias++;
--	}
--
--	if (unlikely(xdp_buff_has_frags(xdp))) {
--		struct skb_shared_info *skinfo = skb_shinfo(skb);
--
--		memcpy(&skinfo->frags[skinfo->nr_frags], &sinfo->frags[0],
--		       sizeof(skb_frag_t) * nr_frags);
--
--		xdp_update_skb_frags_info(skb, skinfo->nr_frags + nr_frags,
--					  sinfo->xdp_frags_size,
--					  nr_frags * xdp->frame_sz,
--					  xdp_buff_get_skb_flags(xdp));
--	}
--
--	return skb;
--}
--
- /**
-  * ice_put_rx_buf - Clean up used buffer and either recycle or free
-  * @rx_ring: Rx descriptor ring to transact packets on
-@@ -1464,10 +1383,7 @@ static int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 	hlist_for_each_entry_safe(region, n, &partition->pt_mem_regions,
+ 				  hnode)
+-		mshv_partition_destroy_region(region);
++		mshv_region_destroy(region);
  
- 		continue;
- construct_skb:
--		if (likely(ice_ring_uses_build_skb(rx_ring)))
--			skb = ice_build_skb(rx_ring, xdp);
--		else
--			skb = ice_construct_skb(rx_ring, xdp);
-+		skb = ice_build_skb(rx_ring, xdp);
- 		/* exit if we failed to retrieve a buffer */
- 		if (!skb) {
- 			rx_ring->ring_stats->rx_stats.alloc_buf_failed++;
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
-index 841a07bfba54f..427f672fe0538 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.h
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
-@@ -373,7 +373,6 @@ struct ice_rx_ring {
- 	dma_addr_t dma;			/* physical address of ring */
- 	u8 dcb_tc;			/* Traffic class of ring */
- 	u8 ptp_rx;
--#define ICE_RX_FLAGS_RING_BUILD_SKB	BIT(1)
- #define ICE_RX_FLAGS_CRC_STRIP_DIS	BIT(2)
- #define ICE_RX_FLAGS_MULTIDEV		BIT(3)
- #define ICE_RX_FLAGS_RING_GCS		BIT(4)
-@@ -422,21 +421,6 @@ struct ice_tx_ring {
- 	u16 quanta_prof_id;
- } ____cacheline_internodealigned_in_smp;
- 
--static inline bool ice_ring_uses_build_skb(struct ice_rx_ring *ring)
--{
--	return !!(ring->flags & ICE_RX_FLAGS_RING_BUILD_SKB);
--}
--
--static inline void ice_set_ring_build_skb_ena(struct ice_rx_ring *ring)
--{
--	ring->flags |= ICE_RX_FLAGS_RING_BUILD_SKB;
--}
--
--static inline void ice_clear_ring_build_skb_ena(struct ice_rx_ring *ring)
--{
--	ring->flags &= ~ICE_RX_FLAGS_RING_BUILD_SKB;
--}
--
- static inline bool ice_ring_ch_enabled(struct ice_tx_ring *ring)
- {
- 	return !!ring->ch;
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 575fd48f485f1..b25bc5ba40abf 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -392,69 +392,6 @@ bool ice_alloc_rx_bufs_zc(struct ice_rx_ring *rx_ring,
- 	return __ice_alloc_rx_bufs_zc(rx_ring, xsk_pool, leftover);
- }
- 
--/**
-- * ice_construct_skb_zc - Create an sk_buff from zero-copy buffer
-- * @rx_ring: Rx ring
-- * @xdp: Pointer to XDP buffer
-- *
-- * This function allocates a new skb from a zero-copy Rx buffer.
-- *
-- * Returns the skb on success, NULL on failure.
-- */
--static struct sk_buff *
--ice_construct_skb_zc(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
--{
--	unsigned int totalsize = xdp->data_end - xdp->data_meta;
--	unsigned int metasize = xdp->data - xdp->data_meta;
--	struct skb_shared_info *sinfo = NULL;
--	struct sk_buff *skb;
--	u32 nr_frags = 0;
--
--	if (unlikely(xdp_buff_has_frags(xdp))) {
--		sinfo = xdp_get_shared_info_from_buff(xdp);
--		nr_frags = sinfo->nr_frags;
--	}
--	net_prefetch(xdp->data_meta);
--
--	skb = napi_alloc_skb(&rx_ring->q_vector->napi, totalsize);
--	if (unlikely(!skb))
--		return NULL;
--
--	memcpy(__skb_put(skb, totalsize), xdp->data_meta,
--	       ALIGN(totalsize, sizeof(long)));
--
--	if (metasize) {
--		skb_metadata_set(skb, metasize);
--		__skb_pull(skb, metasize);
--	}
--
--	if (likely(!xdp_buff_has_frags(xdp)))
--		goto out;
--
--	for (int i = 0; i < nr_frags; i++) {
--		struct skb_shared_info *skinfo = skb_shinfo(skb);
--		skb_frag_t *frag = &sinfo->frags[i];
--		struct page *page;
--		void *addr;
--
--		page = dev_alloc_page();
--		if (!page) {
--			dev_kfree_skb(skb);
--			return NULL;
--		}
--		addr = page_to_virt(page);
--
--		memcpy(addr, skb_frag_page(frag), skb_frag_size(frag));
--
--		__skb_fill_page_desc_noacc(skinfo, skinfo->nr_frags++,
--					   addr, 0, skb_frag_size(frag));
--	}
--
--out:
--	xsk_buff_free(xdp);
--	return skb;
--}
--
- /**
-  * ice_clean_xdp_irq_zc - produce AF_XDP descriptors to CQ
-  * @xdp_ring: XDP Tx ring
-@@ -757,20 +694,15 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
- 
- construct_skb:
- 		/* XDP_PASS path */
--		skb = ice_construct_skb_zc(rx_ring, first);
-+		skb = xdp_build_skb_from_zc(first);
- 		if (!skb) {
-+			xsk_buff_free(first);
- 			rx_ring->ring_stats->rx_stats.alloc_buf_failed++;
- 			break;
- 		}
- 
- 		first = NULL;
- 		rx_ring->first_desc = ntc;
--
--		if (eth_skb_pad(skb)) {
--			skb = NULL;
--			continue;
--		}
--
- 		total_rx_bytes += skb->len;
- 		total_rx_packets++;
- 
+ 	/* Withdraw and free all pages we deposited */
+ 	hv_call_withdraw_memory(U64_MAX, NUMA_NO_NODE, partition->pt_id);
 -- 
 2.53.0
 
