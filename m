@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22913E0C57;
-	Tue, 13 Oct 2026 11:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C0C4D98E6;
+	Tue, 13 Oct 2026 11:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892489; cv=none; b=lvo6vaXZfuIdp1myx0Iz8BJqzAgYYMxGFpG9jK8uLlFIoJoeiKzCVavNk8+4uNlxHRk6Zh67P+Lld6MxsLfCE1usYxSNANlzpgN/FodzUeIMzCwiSD06uTRDaIFAa+Pf8MkmrX5f4cuyCiMex1NrTKKBfTLB8JG6C66irQABrbM=
+	t=1791892492; cv=none; b=PIBqwTclgxx/DFG4lIFnC5fFp6W3dryIp+RA4jeAUe4s6uLeQ0mvgcgoGOB/5S3BIXnWkI64Pat0SoS5esFnKsox4j0n2uOfwmsC5skcmN1J7yon8keCb+QzCnyveYN5GXAMXoHR89DP2aZVc99aRlkb1SP8iMMPCEfKL9ZE3uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892489; c=relaxed/simple;
-	bh=j7viy39oYrRzQdew+0TDGHKLK5C5VYOdaVcnJokH+Uc=;
+	s=arc-20240116; t=1791892492; c=relaxed/simple;
+	bh=hsZKHge1CFhc1A+kGoF+GCMzXsqpzpHn36dsTU/U9mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jLQsLE/Q78Xmhy/Z9OgBI5eM4/S+lFRdyollvlM9YaT/nRf8YviTUDQzBC1avYH1tFnPUC9urwPq6Ar03y0mGv/Sbx80/6qynTXOQ4mvMXKgyDplbCHo+JydSDfqcO73A7V3IwjUDYto9HRQIm3pHn0XyRsBRl5PXOcYWJgkHHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X14z11Lf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NBGeBvenSMmQY1IaUMT4xCCZWAD7isIFjGJ+9+UmqcSdvAzL0nq5R02NwHBghVdtTCFbM0zpXt1hhV3ir2g2zc0qQhDThoFxdxxEHV9AyhTaMF2VVQGCojvxhWj5NPSpdMUwzlwebUxcGfkY+/100iuuyHs2kiSiRcqtIMJPyOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhysAsRK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X14z11Lf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343611F000FF;
-	Tue, 13 Oct 2026 11:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhysAsRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162451F000FF;
+	Tue, 13 Oct 2026 11:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892488;
-	bh=BRx8JhPWTxzt2GXac9vtXEMZFU5aYYpOXijNLD4bIUA=;
+	s=korg; t=1791892491;
+	bh=VE+ce63qBxdliHxclhXiQ5qNGrJGDEFE4gQHNtIxEkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X14z11LfgGH34qSkez96EfMysC9hFQQBybhBz4HOMbEQRGtz6nA+Xg0Yd5H9XYSR2
-	 y3xCVOgpIE1t0RtIKGIcdB4oo9lwMhr8ZLbc8lARH+aryrKDjicT0y6Tk+JVPZqcbR
-	 GVm0vWf94JLdtD/R42RqIUgTDyrUDBLKH1Um4T2c=
+	b=hhysAsRKi4TcxPlXNdkW406i4QVy9skeNdQvz9Yk2zfGUuqofyY4kYcjXOP6m4DwG
+	 T88klZ+dxGU2X18GjrhrH6FG2Kud598kJ1FeiHCaGLoHaIRtv3EBZAcfQKmsoSGd8Z
+	 aw7tJ4XrEu/jXf29gghxwg4muNHx3TjtTVrWPcqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	=?UTF-8?q?Robin=20R=C3=A4ber?= <robin.raebi@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.2 190/281] drm/bridge: Fix unlocked list access in drm_bridge_attach()
-Date: Tue, 13 Oct 2026 13:38:26 +0200
-Message-ID: <20261013112859.777558618@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 191/281] cgroup/cpuset: Dont access cpuset_cgrp_subsys.root in is_in_v2_mode()
+Date: Tue, 13 Oct 2026 13:38:27 +0200
+Message-ID: <20261013112859.801386780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -47,59 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 57889076afd1be890150c32ffde3b691fe5707c8 ]
+[ Upstream commit e06b678e3b4e12fdaa0b51a7a5a54abc5dbd6469 ]
 
-drm_bridge_attach() inspects bridge->list to warn about bridges being
-attached without a previous drm_bridge_add() call, but it does so
-without holding bridge_lock.
+After seeing the patch [1] to guard is_in_v2_mode() with RCU, it makes
+me realize that is_in_v2_mode() may be called in a context where a new
+cgroup filesystem is being rebound with stale cpuset_cgrp_subsys.root
+pointer. Avoid this potential UaF situation by adding a new cpuset_v2_mode
+flag which is set when the cpuset_v2_mode mount option is used. This
+flag is written into only when cpuset_bind() is being called with a
+stable cpuset_cgrp_subsys.root value. The is_in_v2_mode() helper is
+modified to read the new cpuset_v2_mode flag instead of accessing
+cpuset_cgrp_subsys.root directly.
 
-The list head can be concurrently written by drm_bridge_add(),
-drm_bridge_remove() and __drm_bridge_free() while they operate on
-neighbouring entries of bridge_list or bridge_lingering_list, all of
-them under bridge_lock.  Hence the unlocked read is a data race, even
-though it is unlikely to change the outcome of list_empty() in practice.
+[1] https://lore.kernel.org/lkml/20260929084124.626693-2-arighi@nvidia.com
 
-Perform the check with bridge_lock held.
-
-Fixes: 76f1a9711b83 ("drm/bridge: add warning for bridges attached without being added")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # RK3588 Orange Pi 5 Plus, dual HDMI
-Tested-by: Robin Räber <robin.raebi@gmail.com>
-Link: https://patch.msgid.link/20260901-dw-hdmi-qp-scramb-v11-14-bc12954a0688@collabora.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: b8d1b8ee93df ("cpuset: Allow v2 behavior in v1 cgroup")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 3618cb12483e2..9124cbe1ff889 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -558,8 +558,10 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
- 	if (!bridge->container)
- 		DRM_WARN("DRM bridge corrupted or not allocated by devm_drm_bridge_alloc()\n");
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 2b86b76dba56b..16c554df4a50e 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -151,6 +151,12 @@ static cpumask_var_t	isolated_cpus;		/* CSCB */
+  */
+ static bool		update_housekeeping;	/* RWCS */
  
--	if (list_empty(&bridge->list))
--		DRM_WARN("Missing drm_bridge_add() before attach\n");
-+	scoped_guard(mutex, &bridge_lock) {
-+		if (list_empty(&bridge->list))
-+			DRM_WARN("Missing drm_bridge_add() before attach\n");
-+	}
++/*
++ * Set if "cpuset_v2_mode" mount option is used
++ * Cached at bind time and not lock protected; accessed via {READ,WRITE}_ONCE
++ */
++static bool		cpuset_v2_mode;
++
+ /*
+  * Copy of isolated_cpus to be passed to housekeeping_update()
+  */
+@@ -403,8 +409,7 @@ static inline bool cpuset_v2(void)
+  */
+ static inline bool is_in_v2_mode(void)
+ {
+-	return cpuset_v2() ||
+-	      (cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE);
++	return cpuset_v2() || READ_ONCE(cpuset_v2_mode);
+ }
  
- 	drm_bridge_get(bridge);
+ /**
+@@ -3602,6 +3607,8 @@ static void cpuset_bind(struct cgroup_subsys_state *root_css)
+ 	mutex_lock(&cpuset_mutex);
+ 	spin_lock_irq(&callback_lock);
  
++	WRITE_ONCE(cpuset_v2_mode,
++		   !!(cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE));
+ 	if (is_in_v2_mode()) {
+ 		cpumask_copy(top_cpuset.cpus_allowed, cpu_possible_mask);
+ 		cpumask_copy(top_cpuset.effective_xcpus, cpu_possible_mask);
 -- 
 2.53.0
 
