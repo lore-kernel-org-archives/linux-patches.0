@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB05F3D9DA8;
-	Tue, 13 Oct 2026 12:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA9B3D9DA8;
+	Tue, 13 Oct 2026 12:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893726; cv=none; b=dTbfsG5BGEQ60zOgDQnK7M3AycqB6M3Wf2X2jo5ERTSM2cXmEdyx4Kn60YoiqKIyQlNzDDoXRq/Eep2U0ps0nhgi7+byHWBHf5HziBRgFZGrL0wNkbmKQH+63UQK2Y3+ad9+cIrzV85BCpr0luk5LrA5hOiAaTWp4/riAP15CsM=
+	t=1791893730; cv=none; b=P9N+uDAcYUQe/tQjrV+7ZCNcYld7BuKtLm1okC/4cL2U7TtneTrSiMEYHWylCTihALKDHYdJ2YFmEuLVo0nhzKIULFkh1Wt0IVQywUPwUszcrJKMbemt3iU9hkhNWXX0Vr7GYEq4rF1X9yNpp5Mbr5+vIzYxuYi2jGbNiYe4wP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893726; c=relaxed/simple;
-	bh=Qt+0syp9jmRI7h6KjQjIOvlaVgIzIyv7/hHbJ3U8Kt4=;
+	s=arc-20240116; t=1791893730; c=relaxed/simple;
+	bh=Gz6eEtCzdxhETOnK7jOfq9/mhl+7bTvG69uKQgG/fA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYUroBtVrS9BCO0wgG2CUPRhdxWx9YgFAFejOfGWCbyUFJHgtJEbl5dJNB24asVLpcXTHO4yqlvbbJ3Dys3Q60TGkM+Z2J1C2pDgarjNNlbZXqTkYEg1/uCLFPlyxmK5JEAq26uG33NzvRb53N9lysJvJq9/udPG5JmXOeQPtd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4G3igjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JNJn80LgrINnLb6PJPXAc08Q1b8J9fhTLT/N0feC/Vd8sTReo5jDB0ItEuEBqNap/WGJRHfDV3Z5YnLT6nbxD2ervg6RRyp66i3LA5SScM4uDBXdwZTOJrRCnoaSoaldoiFPXQ8z9GVMW0aum1ev2zfb0ZubSjSMNsxTSSVzVCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BziQoWLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4G3igjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C921F000FF;
-	Tue, 13 Oct 2026 12:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BziQoWLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AEEB1F000FF;
+	Tue, 13 Oct 2026 12:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893725;
-	bh=BnmlecXSxWk3gj677/7AbhXWJFmXS3OOwu1SVbGWQKw=;
+	s=korg; t=1791893728;
+	bh=yplSVtBEVqk9cBV3Q8DCBCgGQrtpJ9/2IMsHhudyPww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J4G3igjRfgwvEM+0SQu74ZSNciSpLWC8aKP5GzM+lRIqFW/XAa7kJhonreVxN5fkT
-	 Q4ss82dj17UsEp3Ls3vhKsF1iBZXXkOdIqdPReQ1luThNzc/cJKpVMfSYo5ka6ql+c
-	 bP9ERwq8ouSSpN6N+U/tkj9yikouduBrCqK7wSm4=
+	b=BziQoWLCu3FMXU+Pft2fLzIWUary5URVy5BWJFY8MnO6cQFnZrdMGmKDx3QclylMa
+	 OJ/MNbBeISZUU6zZ0J+3/bGbZszrH+0iaFinMITsn2dAzsvTpqlpqJAsUIBQT2NOx4
+	 yimpV6LsFC0ZyylNxC4YVRsDTKL8bnhqqvKWqj+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Kriish Sharma <kriish.sharma2006@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 322/621] Bluetooth: hci_sync: hold conn in hci_connect_pa_sync() callback
-Date: Tue, 13 Oct 2026 13:35:17 +0200
-Message-ID: <20261013112928.494721297@linuxfoundation.org>
+Subject: [PATCH 6.18 323/621] hdlc_ppp: fix potential null pointer in ppp_cp_event logging
+Date: Tue, 13 Oct 2026 13:35:18 +0200
+Message-ID: <20261013112928.517839595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,62 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Kriish Sharma <kriish.sharma2006@gmail.com>
 
-[ Upstream commit 44fc74069d8988f2825246f9401218e29de2c0ab ]
+[ Upstream commit 3dacc900c00bad7275ee8c096dbcaab699d83e36 ]
 
-There is theoretical UAF if the conn is freed while the hci_sync task is
-running.
+drivers/net/wan/hdlc_ppp.c: In function ‘ppp_cp_event’:
+drivers/net/wan/hdlc_ppp.c:353:17: warning: ‘%s’ directive argument is null [-Wformat-overflow=]
+  353 |                 netdev_info(dev, "%s down\n", proto_name(pid));
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/wan/hdlc_ppp.c:342:17: warning: ‘%s’ directive argument is null [-Wformat-overflow=]
+  342 |                 netdev_info(dev, "%s up\n", proto_name(pid));
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Hold refcount to avoid that.
+Update proto_name() to return "LCP" by default instead of NULL.
+This change silences the compiler without changing existing behavior
+and removes the need for the local 'pname' variable in ppp_cp_event.
 
-Fixes: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Suggested-by: Krzysztof Hałasa <khalasa@piap.pl>
+Signed-off-by: Kriish Sharma <kriish.sharma2006@gmail.com>
+Acked-by: Krzysztof Hałasa <khalasa@piap.pl>
+Link: https://patch.msgid.link/20251013014319.1608706-1-kriish.sharma2006@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 56e78b670356 ("Bluetooth: hci_sync: hold conn in hci_connect_big_sync() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wan/hdlc_ppp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 961c3edb33e67..7589cd154c9bf 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -7308,7 +7308,7 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	if (err == -ECANCELED)
--		return;
-+		goto done;
- 
- 	hci_dev_lock(hdev);
- 
-@@ -7332,6 +7332,8 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
- 
- unlock:
- 	hci_dev_unlock(hdev);
-+done:
-+	hci_conn_put(conn);
- }
- 
- static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
-@@ -7421,8 +7423,11 @@ int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn)
+diff --git a/drivers/net/wan/hdlc_ppp.c b/drivers/net/wan/hdlc_ppp.c
+index 22affdcb4ceae..302ed27944e7c 100644
+--- a/drivers/net/wan/hdlc_ppp.c
++++ b/drivers/net/wan/hdlc_ppp.c
+@@ -126,14 +126,12 @@ static inline struct proto *get_proto(struct net_device *dev, u16 pid)
+ static inline const char *proto_name(u16 pid)
  {
- 	int err;
- 
--	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
-+	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync,
-+				      hci_conn_get(conn),
- 				      create_pa_complete);
-+	if (err)
-+		hci_conn_put(conn);
- 	return (err == -EEXIST) ? 0 : err;
+ 	switch (pid) {
+-	case PID_LCP:
+-		return "LCP";
+ 	case PID_IPCP:
+ 		return "IPCP";
+ 	case PID_IPV6CP:
+ 		return "IPV6CP";
+ 	default:
+-		return NULL;
++		return "LCP";
+ 	}
  }
  
 -- 
