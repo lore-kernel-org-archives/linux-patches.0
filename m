@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848234F85BC;
-	Tue, 13 Oct 2026 12:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81EA4FE2E3;
+	Tue, 13 Oct 2026 12:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893137; cv=none; b=BmtWuoo5XfhU6CAVA4J1Chss/LGDB4bt6TfbuDndYgG8uHUWmFmv9uQnDG2AAb5QrT0R+BgskgF7wntbk+Flpm7v/t7ni9HX06Bauv0sitvC59QBMKcuetfKLQ44ZrRbqowQrIeuqhDRZif9rLrf1j1dOBDzrcEcLRYtIEKVxEI=
+	t=1791893141; cv=none; b=Xx0yHMup9QLovkPFevYXeQCF5tFKs1Tde97CUhHvPXidC9GK/sDpM+0ubdOWPL/L8eJK1re9AdRTZVkvrCZVnbwuFjS/Rm2gP52lAZ1gedFiMd3ITAUmA7+TwQBFnIymoYd4jZCa3orBTs2DVXuj7mZs+/yiE2DWp818SN2TJ/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893137; c=relaxed/simple;
-	bh=L7Hj7IFkpS7VWFUOW3XT39sP5E5PIOMFVZvz467t0rc=;
+	s=arc-20240116; t=1791893141; c=relaxed/simple;
+	bh=OTADfKDmPO1DJWRxfS8oG0Jm9elMNCz72X2H369Wi50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GbdA8fHltqu2fy5aQWPw37nqf8QB9T77SBuxqEopQ8e3UzFvCUpVFegPpMYhC/5DI+CmaPZZpcKDecZ1wBYAC11lv2L0VLGXOLdDWTS0kOZ2W+TaZ4IZ2hN+n7TJofGHJtq+aIpdNV/6MWalYUMWdxdm3msDUY0SWfxRB00s+DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br4664NK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k8g51Lb3bkw7Iqq15lCgEFZIkl9OR90l74AAcE4mAqhOqj+aGHZTiXSmYdOoY1XsVUXWoGj7F1cxv0TqDMTVvGmBq7KDP7IZ2XBu2UZmKxLZXKijlXpxbN0QPrvlvx1dYXhvU3y6XPShRJ1tIuD+q/tWMo7WHC/O8KB//w2F0zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlZOWMHk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br4664NK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC631F00898;
-	Tue, 13 Oct 2026 12:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlZOWMHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE60E1F000FF;
+	Tue, 13 Oct 2026 12:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893136;
-	bh=XhfmAqC2dq1FQEcA1+hxTzcRk1afQbSsT2VhhBS5GIM=;
+	s=korg; t=1791893139;
+	bh=YheHzGGbovNkKbD/oqD9mGT785DU2/Gj0lug2CRL9m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Br4664NKro2c5dW1tSa2nb0Y90JdHnMyEF12NWKWRsPhH613WdYtTTM1Xvq1PUU+j
-	 +c7H8fo+dPC1v3YiF/Y2otKSy7M2bCCroD6VsJRmifXT+BkJNkrUck2H8mf66pO2Cf
-	 mZ5woWMpZrPYmR/IfS2OM+DVPVaqBj2OUmkP0ong=
+	b=zlZOWMHknVGzQ3jg7TK8KJXbmr7R2Pl4UsNG33DGp/eHLjyhMY5oehGxUtEo99DKz
+	 sWlXk8PaiXDUganjIcyFq8HbaMTWq+PiWCnK2DORQI7I52OU+rwth/k0bagWOXgy9N
+	 pvV0sbF5zhVwE68vGxUKktBz+B/xYysSASNkfoQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 126/621] drm/amdgpu/userq: return the memdup_user() error for the user MQD
-Date: Tue, 13 Oct 2026 13:32:01 +0200
-Message-ID: <20261013112923.847557227@linuxfoundation.org>
+Subject: [PATCH 6.18 127/621] drm/amd/display: Fix direct scanout alpha on some DRM_FORMATs
+Date: Tue, 13 Oct 2026 13:32:02 +0200
+Message-ID: <20261013112923.872522424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,70 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 76ceb6ed610cbf14341a9ba78c5c0b2199b9030a upstream.
+commit 7744262f5d63f9faa4d59dec127ae1c8b2d56495 upstream.
 
-mes_userq_mqd_create() returns -ENOMEM when copying the user MQD fails,
-even though memdup_user() returns -EFAULT for a bad pointer or -EINTR
-when interrupted by a signal. Return PTR_ERR() instead.
+[Why]
 
-While at it drop the error messages. Neither case is a driver error and
-userspace shouldn't be able to spam the log with invalid IOCTL
-parameters.
+DM was declaring it's own list of has_alpha DRM formats to check against
+for enabling alpha blending, when the format->has_alpha already does
+that for us.
 
-v2: drop the error messages (Christian)
+The self-declared list missed some has_alpha formats, causing
+direct-scanout planes with such formats to appear opaque.
 
-Fixes: 2c695d7c0720 ("drm/amdgpu: enable compute/gfx usermode queue")
-Fixes: 543b61453774 ("drm/amdgpu: enable SDMA usermode queues")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+[How]
+
+Drop the self-declared list, instead use the format->has_alpha field
+directly.
+
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 49a443fcb829be9fc780f10850652ddea2fe81f0)
+(cherry picked from commit 9ecdac91ed43d836683d5daa467f4907405420e2)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_userqueue.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   20 ----------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-@@ -290,8 +290,7 @@ static int mes_userq_mqd_create(struct a
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -109,25 +109,7 @@ void amdgpu_dm_plane_fill_blending_from_
  
- 		compute_mqd = memdup_user(u64_to_user_ptr(mqd_user->mqd), mqd_user->mqd_size);
- 		if (IS_ERR(compute_mqd)) {
--			DRM_ERROR("Failed to read user MQD\n");
--			r = -ENOMEM;
-+			r = PTR_ERR(compute_mqd);
- 			goto free_mqd;
- 		}
+ 	if (plane_state->pixel_blend_mode == DRM_MODE_BLEND_PREMULTI ||
+ 		plane_state->pixel_blend_mode == DRM_MODE_BLEND_COVERAGE) {
+-		static const uint32_t alpha_formats[] = {
+-			DRM_FORMAT_ARGB8888,
+-			DRM_FORMAT_RGBA8888,
+-			DRM_FORMAT_ABGR8888,
+-			DRM_FORMAT_ARGB2101010,
+-			DRM_FORMAT_ABGR2101010,
+-			DRM_FORMAT_ARGB16161616,
+-			DRM_FORMAT_ABGR16161616,
+-			DRM_FORMAT_ARGB16161616F,
+-		};
+-		uint32_t format = plane_state->fb->format->format;
+-		unsigned int i;
+-
+-		for (i = 0; i < ARRAY_SIZE(alpha_formats); ++i) {
+-			if (format == alpha_formats[i]) {
+-				*per_pixel_alpha = true;
+-				break;
+-			}
+-		}
++		*per_pixel_alpha = plane_state->fb->format->has_alpha;
  
-@@ -326,8 +325,7 @@ static int mes_userq_mqd_create(struct a
- 
- 		mqd_gfx_v11 = memdup_user(u64_to_user_ptr(mqd_user->mqd), mqd_user->mqd_size);
- 		if (IS_ERR(mqd_gfx_v11)) {
--			DRM_ERROR("Failed to read user MQD\n");
--			r = -ENOMEM;
-+			r = PTR_ERR(mqd_gfx_v11);
- 			goto free_mqd;
- 		}
- 
-@@ -357,8 +355,7 @@ static int mes_userq_mqd_create(struct a
- 
- 		mqd_sdma_v11 = memdup_user(u64_to_user_ptr(mqd_user->mqd), mqd_user->mqd_size);
- 		if (IS_ERR(mqd_sdma_v11)) {
--			DRM_ERROR("Failed to read sdma user MQD\n");
--			r = -ENOMEM;
-+			r = PTR_ERR(mqd_sdma_v11);
- 			goto free_mqd;
- 		}
- 		r = amdgpu_userq_input_va_validate(queue, mqd_sdma_v11->csa_va,
+ 		if (*per_pixel_alpha && plane_state->pixel_blend_mode == DRM_MODE_BLEND_COVERAGE)
+ 			*pre_multiplied_alpha = false;
 
 
