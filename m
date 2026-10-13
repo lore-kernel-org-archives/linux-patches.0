@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5CC47AF65;
-	Tue, 13 Oct 2026 12:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EBB38F62F;
+	Tue, 13 Oct 2026 12:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894354; cv=none; b=QzTgIxVGzwmXn4ROnKeCIoPOEHVuYQWi011zB3BFVY2cxYqOR9AQdi3bt1cY6DbTtdFwlAN0JqG18wdBpqgA3PgoaShSK8AW+qOrYWtg65ywTnspSgdHytO34nPBXCLoN3aXVz/HdGM77ACtDagXrP0nu974fXhe7xQteVQSTV8=
+	t=1791894357; cv=none; b=fomZRPbff9IDA1toXXHZBhmIdKBGsQunHaeZuZvaySgwtOwVGJ1BfFC+RaZa03sC4JaI7+upl9cYRVWr5wc1+EVMUxWA2+lLobXURsiG/MQvwVsuC4O2e/M1WRotQ39M+T4ZRcwjgy/knTU05HLb38dwTIPBdfkPcywPzxXXLMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894354; c=relaxed/simple;
-	bh=D5mpenJ2EjObmNw+aUin5Eyggu/VzlGhS97vcKJknEI=;
+	s=arc-20240116; t=1791894357; c=relaxed/simple;
+	bh=1TMqf7S9DH0AP0Xj8m8DKIbmoF2pGza/Obe40d3s7VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCAIMDpLWk19iTVeO5NJvOkLHLAwtsLCyWDcWEkOaWgwRxDPCF8QcWX8xGpUTKMZ1Q0tOX0jmwiml3EeeCX0Y2aFW3TADAcIf90nWUoh0wUN1RZcAgwoWjH7Pechr0HYOcUaELBJ/9zUJ4OjOnruJoTlhp9uhtyEj2G/Se6+I2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhfUihxO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bd1zeP7wYUu+2XLUic6v4HZLlWepGCd/hGzCHuaYGS8ekZaxIUVeB9tiIhi8wZYb9V0lTGnpyvtMGZowTe00VdZCtAbttYfCShyIzTDXdoAlmlKiianHqIi21wel9H/hSAFtZugBvr4FvsNUtzWpo9pXuDA4OTORNLoO7Nz5KhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVn+RqtA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhfUihxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3231F000FF;
-	Tue, 13 Oct 2026 12:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVn+RqtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966811F000FF;
+	Tue, 13 Oct 2026 12:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894353;
-	bh=rKj2p715VMzo/NbHjI3gCj/R06xiqYEF/N/3AW+Bw+c=;
+	s=korg; t=1791894356;
+	bh=iaTIaVRq5y1jZSHBDEDyX7gGzrDjTTy2B3N+/cPaKwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhfUihxOL3uARHrDC2b35IukNl1aQUwNK3X0DOg4fGA3DHOlUNF45+ALEcWSnVUiq
-	 xCedIW4DKlqDJ9uLsrslQzLCkVn8zazenKkNo7hJEk4C8vRcIClO/P7R0nhBzZxUgk
-	 1lAzcHK6e9lApt67ZUW7kZfE/HYRBcSM1wg7c0N4=
+	b=MVn+RqtAXktvvHPXgbUJbOiDTHO343qSpp8AA0mBvxPOicVLErtQJKoOOVmwOlCpD
+	 8+G3c110JhOQX0ns/WenkKRzuQEIEPgLttHnxoOP7X/Xd3hlQlrS5EONcHBSVpaNle
+	 Tyw+MRcyQT/fV3RKY0hxNRBvl1Pz3krv84EWkXos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alex Bereza <alex@bereza.email>,
-	Vinod Koul <vkoul@kernel.org>,
+	Evgenii Burenchev <evg28bur@yandex.ru>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 488/621] dmaengine: xilinx_dma: Fix CPU stall in xilinx_dma_poll_timeout
-Date: Tue, 13 Oct 2026 13:38:03 +0200
-Message-ID: <20261013112932.410790972@linuxfoundation.org>
+Subject: [PATCH 6.18 489/621] drm/amd/display: Fix dangling pointer in CRTC reset function
+Date: Tue, 13 Oct 2026 13:38:04 +0200
+Message-ID: <20261013112932.433899365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,100 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bereza <alex@bereza.email>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit aa99c4d1d63bbc26a5fc4c667d89b2595743c19d ]
+[ Upstream commit 0aeed866cb938943908c3ba46422128e49d2d080 ]
 
-Currently when calling xilinx_dma_poll_timeout with delay_us=0 and a
-condition that is never fulfilled, the CPU busy-waits for prolonged time
-and the timeout triggers only with a massive delay causing a CPU stall.
+amdgpu_dm_crtc_reset_state() frees the old state before allocating
+a new one. If kzalloc() fails, the function returns without updating
+the state pointer, leaving a dangling pointer to already freed memory.
 
-This happens due to a huge underestimation of wall clock time in
-poll_timeout_us_atomic. Commit 7349a69cf312 ("iopoll: Do not use
-timekeeping in read_poll_timeout_atomic()") changed the behavior to no
-longer use ktime_get at the expense of underestimation of wall clock
-time which appears to be very large for delay_us=0. Instead of timing
-out after approximately XILINX_DMA_LOOP_COUNT microseconds, the timeout
-takes XILINX_DMA_LOOP_COUNT * 1000 * (time that the overhead of the for
-loop in poll_timeout_us_atomic takes) which is in the range of several
-minutes for XILINX_DMA_LOOP_COUNT=1000000. Fix this by using a non-zero
-value for delay_us. Use delay_us=10 to keep the delay in the hot path of
-starting DMA transfers minimal but still avoid CPU stalls in case of
-unexpected hardware failures.
+Fix this by allocating the new state first. On allocation failure, the
+old state remains untouched and the function safely returns.
 
-One-off measurement with delay_us=0 causes the cpu to busy wait around 7
-minutes in the timeout case. After applying this patch with delay_us=10
-the measured timeout was 1053428 microseconds which is roughly
-equivalent to the expected 1000000 microseconds specified in
-XILINX_DMA_LOOP_COUNT.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Add a constant XILINX_DMA_POLL_DELAY_US for delay_us value.
-
-Fixes: 9495f2648287 ("dmaengine: xilinx_vdma: Use readl_poll_timeout instead of do while loop's")
-Fixes: 7349a69cf312 ("iopoll: Do not use timekeeping in read_poll_timeout_atomic()")
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Alex Bereza <alex@bereza.email>
-Link: https://patch.msgid.link/20260402-fix-atomic-poll-timeout-regression-v4-1-f30d6a6c13cb@bereza.email
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: e7b07ceef2a6 ("drm/amd/display: Merge amdgpu_dm_crtc and dm_crtc_state")
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260629090435.9729-4-evg28bur@yandex.ru
+[adjust for movement around current amd-staging-drm-next]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 8b010e0e0c5c4..94d2e5398dd69 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -167,6 +167,8 @@
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+index 9082b862e7aa9..db202f27ca38f 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -508,13 +508,13 @@ static void amdgpu_dm_crtc_reset_state(struct drm_crtc *crtc)
+ {
+ 	struct dm_crtc_state *state;
  
- /* Delay loop counter to prevent hardware failure */
- #define XILINX_DMA_LOOP_COUNT		1000000
-+/* Delay between polls (avoid a delay of 0 to prevent CPU stalls) */
-+#define XILINX_DMA_POLL_DELAY_US	10
+-	if (crtc->state)
+-		amdgpu_dm_crtc_destroy_state(crtc, crtc->state);
+-
+ 	state = kzalloc(sizeof(*state), GFP_KERNEL);
+-	if (WARN_ON(!state))
++	if (!state)
+ 		return;
  
- /* AXI DMA Specific Registers/Offsets */
- #define XILINX_DMA_REG_SRCDSTADDR	0x18
-@@ -1316,7 +1318,8 @@ static int xilinx_dma_stop_transfer(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to halt */
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_HALTED, 0,
-+				       val & XILINX_DMA_DMASR_HALTED,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
++	if (crtc->state)
++		amdgpu_dm_crtc_destroy_state(crtc, crtc->state);
++
+ 	__drm_atomic_helper_crtc_reset(crtc, &state->base);
  }
  
-@@ -1331,7 +1334,8 @@ static int xilinx_cdma_stop_transfer(struct xilinx_dma_chan *chan)
- 	u32 val;
- 
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_IDLE, 0,
-+				       val & XILINX_DMA_DMASR_IDLE,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
- }
- 
-@@ -1348,7 +1352,8 @@ static void xilinx_dma_start(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to start */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				      !(val & XILINX_DMA_DMASR_HALTED), 0,
-+				      !(val & XILINX_DMA_DMASR_HALTED),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
-@@ -1783,7 +1788,8 @@ static int xilinx_dma_reset(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to finish reset */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMACR, tmp,
--				      !(tmp & XILINX_DMA_DMACR_RESET), 0,
-+				      !(tmp & XILINX_DMA_DMACR_RESET),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
 -- 
 2.53.0
 
