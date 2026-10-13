@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D674F4CEB;
-	Tue, 13 Oct 2026 11:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5414D98E6;
+	Tue, 13 Oct 2026 11:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892382; cv=none; b=LgeTzK1e88a3i1fk14fZMbycMxqHJ9ZVoTIT6QRP0J0py3GrnwIME8FVWMFKGEowULj4e9Ml3O1/245eZrxUs3KcrcY67dE3ZOzQcyoFU2CLLYItopgwOoodaUKeRSyuGszghIX/dOk1r4SZ/ZQmayX3/nrkrUZj9b2zOMDSqyo=
+	t=1791892384; cv=none; b=OAlFk8QWAWDPQpgwTFYMHqqchDA8rodzJ5B1shrg24DRMHqHIk4RmRbFKBngdnwoQ3wo0ZGksH02FGlRRDnz2pEqFhg9ix5xZJeJm13iPPqAjOvLzFH4bJScqGlpBhX+hgQKFr7WD9baroM8dDRXPJEr/o9JZd2IEin2iRqgpYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892382; c=relaxed/simple;
-	bh=Eai4+5jjepUsx8X1fhaUdRnammiQ5xacbQvSPglGO8c=;
+	s=arc-20240116; t=1791892384; c=relaxed/simple;
+	bh=gYvU8pnMAdp0Yd27P3nj6oAThY6PVZd8s8p+v9jycpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2FSyn5gsIb1eMx+QReJ6o5s6nHwh/clQMhUi1IbEwd5ggpdLUwwNiIgb7+kfhhyCgP30Y9amB47mP0kCkeFJGVZ0MKndzawDiunQfX/6nSU/0Vvr2zHxH1M6JVWEeqM8U/WiLibct1tYvWkb4WwEkr/ULeOfO+RjwFpkdjqOJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uX41yBZw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WjGUajZZSnueyp7sxt/AJ94a2q2NIqoSxVTA8SGX2wVR5Ff7R/PWzWOn3bri865fzrDZdHfbgPaFBEXwdgQDZWjk8Fp0gBEO6u4n4P9f9bopz1TEzOPbPguAsnKGvg19HQQ/zMfM2TgfAmR+arzaB6hc2h+iUatjWAKD6BNAeA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhuiVrkf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uX41yBZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE0D1F000FF;
-	Tue, 13 Oct 2026 11:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhuiVrkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3371F000FF;
+	Tue, 13 Oct 2026 11:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892380;
-	bh=YI+gbq10oVVETeey1+SzZawoWpv1wDSMP5mdS3Lh1eA=;
+	s=korg; t=1791892383;
+	bh=BJN0lYbxT+igMeH7yjOKQQ6BCCMeFkLtoJFRQdIUJ9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uX41yBZwnLHevZPFq+h3DBhMCWeG7IkVYC/+enrqpjewvFWcF9BpxOq3kSqA/yJYh
-	 3CP1ICc8Bk2K/fPXEA7jywBi++CMjYLXXK4/JnruIhTtO3kND/6g7fw7oFWoPK4nTy
-	 XERO2ecl1I3sDPgH69D26vHMde5RV4cVjGR6ChTA=
+	b=PhuiVrkf8fVc22ps4PEyP+8BH3ypuTTCmA6dR/9flRlTlsSZAzSQolMuwP0MvmnlX
+	 5diVxESrs3DA1Ltk1pJUWUsHb6zTTmOMcyogB749UVX2Iro9rcIpIEmKkYv7evZdjS
+	 s18n1b5z9+pwGcRyZqHVxtLQmk2fVVAwr86HTOPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 153/281] fs: refuse fspick() on internal superblocks
-Date: Tue, 13 Oct 2026 13:37:49 +0200
-Message-ID: <20261013112858.874345024@linuxfoundation.org>
+Subject: [PATCH 7.2 154/281] namespace: check the target before walking it in do_mount_setattr()
+Date: Tue, 13 Oct 2026 13:37:50 +0200
+Message-ID: <20261013112858.900518303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,32 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 02587a4af82adccaef8e3b3624b4e7f1c401632d upstream.
+commit 08f4288a37ef4b3d19b4a9599ec3048219cac828 upstream.
 
-There's a few instances where a internal superblock is reachable by
-fspick(). Block that. graft_tree() and fsmount() already refuse them.
-fanotify refuses mount and superblock marks on them for the same reason.
+When mount_setattr() changes the propagation type to MS_SHARED
+do_mount_setattr() takes namespace_sem and calls invent_group_ids()
+which walks the whole target tree with next_mnt() and allocates a peer
+group id for every mount that doesn't have one.
 
-Fixes: cf3cba4a429b ("vfs: syscall: Add fspick() to select a superblock for reconfiguration")
-Cc: stable@vger.kernel.org # v5.2+
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-6-f357abf3d17b@kernel.org
+Whether the caller may touch the target at all is only checked
+afterwards under mount_lock. If it may not, cleanup_group_ids() walks
+the tree a second time on the way out to free the ids again.
+
+A detached tree that a file descriptor keeps alive, a mount in another
+mount namespace or a mount below the root of an anonymous mount
+namespace does a bunch of allocation work that is completely useless
+because it will fail and revert right after.
+
+Do the right thing and check the target right after taking namespace_sem
+instead. A mount leaves its namespace only under namespace_sem so the
+mount stays stable. The check under mount_lock stays for the case where
+no propagation change is requested and namespace_sem isn't taken.
+Callers get the same EINVAL as before.
+
+Fixes: 2a1867219c7b ("fs: add mount_setattr()")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-5-f357abf3d17b@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fsopen.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/namespace.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/fsopen.c
-+++ b/fs/fsopen.c
-@@ -190,6 +190,9 @@ SYSCALL_DEFINE3(fspick, int, dfd, const
- 	ret = -EINVAL;
- 	if (target.mnt->mnt_root != target.dentry)
- 		goto err_path;
-+	/* kernel-internal superblocks are nobody's to reconfigure */
-+	if (target.dentry->d_sb->s_flags & SB_NOUSER)
-+		goto err_path;
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4957,6 +4957,11 @@ static int do_mount_setattr(const struct
+ 		 * propagation.
+ 		 */
+ 		namespace_lock();
++		/* invent_group_ids() walks the tree, only walk a mounted one */
++		if (!anon_ns_root(mnt) && !check_mnt(mnt)) {
++			namespace_unlock();
++			return -EINVAL;
++		}
+ 		if (kattr->propagation == MS_SHARED) {
+ 			err = invent_group_ids(mnt, kattr->kflags & MOUNT_KATTR_RECURSE);
+ 			if (err) {
+@@ -4969,6 +4974,7 @@ static int do_mount_setattr(const struct
+ 	err = -EINVAL;
+ 	lock_mount_hash();
  
- 	fc = fs_context_for_reconfigure(target.dentry, 0, 0);
- 	if (IS_ERR(fc)) {
++	/* Checked under namespace_sem already if the propagation changes. */
+ 	if (!anon_ns_root(mnt) && !check_mnt(mnt))
+ 		goto out;
+ 
 
 
