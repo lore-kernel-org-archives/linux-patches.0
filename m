@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525683E557D;
-	Tue, 13 Oct 2026 12:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBA74F68C5;
+	Tue, 13 Oct 2026 12:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893640; cv=none; b=B/th2gNXwidGOZzG/URXvqyRRZhp6AFqpUsH4Nxsi5ROJiNCHfHa8SdE74In7OahOBggZxZqKLZfEIu3Cnhcxa9STpA7I1gdD2dwIXQRX62VK+8ug68vdOPzWALQomG1TSTmvV40AYMTl6mrkasOYCX02HUduaTTIieA5MuJB3c=
+	t=1791893644; cv=none; b=jnX8StsUnATSVp41fJmimoYkVmLjjb+XwU5/plxfN3kcq2UOu7YaaJJPmRpSVUAI5mvBgAaDHJr/GVIkuYdI+u2dAWH84DkNw9eF3UQztaMwInHNBogAPQfvIkI2uA19eqlomIes9BHGy1+jR1IaT5/HMe1D56Qva/l0B6obnj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893640; c=relaxed/simple;
-	bh=1Vxb/IzuAf9ssnXIZAZEnU2EYWKhct58KIhK3TT3w3U=;
+	s=arc-20240116; t=1791893644; c=relaxed/simple;
+	bh=HLgpP++AWTy2/l5WgcVOAaaLQEXEnz05WnSAHmXavZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mh0DBA74Vrvhe5qRVGU7EMuI/IM+fR5DHZRrrqKAUsokbNbJ6ax3UIl3c1euxjHa7XvYhkAf4/slulQD2EqmOEHKYuqypab29sti+zoDGNcvkmG0JgMQcEqOnEl8dK+yoqIfmLUJr9gpEyoE2UtMEuhyZtnl33N40gWpo/XpB8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlU75/jX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0tJKc1VIBDXwCOenhyGD4+2fMAZJWKBJcehR6AOVPr0orB6hGST8NpOppG9fW9Fqou3svkDpQ4UWTaCrAeYAx3qUiDUEONr1253FRad/T1VJC2D9FEKFAfJTGgepEBhapHpFWJwtLpjO7IW+UwYUla/dhVIUET6J75gmsXnDgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvIRLVd8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlU75/jX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAB61F000FF;
-	Tue, 13 Oct 2026 12:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvIRLVd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929581F00893;
+	Tue, 13 Oct 2026 12:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893639;
-	bh=c2wyspgRgJhNKrg5QCPJY9S3kPJXlcqBqAuN0tD1cxg=;
+	s=korg; t=1791893642;
+	bh=AEnAyRb57GWC1TG111Rt6nWj77Ufjj5pkedojjsN7I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OlU75/jXzo4DpoYg+BoHe0m2TbajlbYp4rKJhjxXZSt3KVOLkwcD2OTbgt1+xK4I5
-	 yZ9RViPrFAyAVEkmuT15hsTIcb0290sKfehriGTvJntz9lcfzvnJmKeAWCLicjc5+f
-	 rbOUxYIwlk+rW23EElsYzAqyY01X9Nl+iQUWukNA=
+	b=PvIRLVd8/dbMdH4MK7kZ3qG0LsmiJOnbE3oaYQhvWAMI2Fie+an1TZusAIGjEsBHd
+	 pXBApr03dqFhinJk1RUveoirNgWSWAGoOa5HyEIIzy1Dz30jkMrF/UknpIBi7Wqaxg
+	 iGZAz1uCzzTtcP4gWsRECqZpEdvDGEwcva8pcegI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 291/621] i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev()
-Date: Tue, 13 Oct 2026 13:34:46 +0200
-Message-ID: <20261013112927.764405319@linuxfoundation.org>
+Subject: [PATCH 6.18 292/621] fs/ntfs3: Reformat code and update terminology
+Date: Tue, 13 Oct 2026 13:34:47 +0200
+Message-ID: <20261013112927.788271108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,236 +50,271 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 650716f23eac488c6696babdc7805f6a6b7427ad ]
+[ Upstream commit a846cd0d0a05364c6fa5c4988e75d3b639d6dae5 ]
 
-i3c_hci_addr_to_dev() walks bus->devs.i3c, which is protected by
-bus.lock (rwsem).  However, it is invoked from the MIPI I3C HCI IRQ
-handler, which cannot take bus.lock.  This allows concurrent device
-addition/removal in the I3C core to modify the list while it is being
-traversed, potentially leading to use-after-free or crashes.
+Reformatted the driver code according to the current .clang-format rules
+and updated description of used terminology. No functional changes
+intended.
 
-Remove the dependency on the bus device list and introduce a dedicated
-lookup table.  Add an ibi_devs[] array indexed by DAT entry, maintained
-under hci->lock.  Update the array when IBIs are enabled or disabled,
-so that it always reflects the set of devices allowed to generate IBIs.
-Also update when IBIs are freed, to cover the corner case when an IBI is
-freed without first being disabled (e.g. oldedev in
-i3c_master_add_i3c_dev_locked()).
-
-Move i3c_hci_addr_to_dev() into core.c, reimplement it using the new
-array, and add a lockdep assertion to enforce that hci->lock is held
-by callers.
-
-Demote a message in PIO and DMA IBI handling, from an error to a debug
-message, because there is a race window when the condition can arise
-normally.
-
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260612080107.11606-2-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: e8ed78f40eec ("fs/ntfs3: call _ntfs_bad_inode() when failing to rename")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 37 ++++++++++++++++++++++++--
- drivers/i3c/master/mipi-i3c-hci/dma.c  | 12 +++++++--
- drivers/i3c/master/mipi-i3c-hci/hci.h  |  1 +
- drivers/i3c/master/mipi-i3c-hci/ibi.h  | 13 +--------
- drivers/i3c/master/mipi-i3c-hci/pio.c  |  7 +++--
- 5 files changed, 52 insertions(+), 18 deletions(-)
+ fs/ntfs3/dir.c     |  3 +--
+ fs/ntfs3/file.c    |  6 +++---
+ fs/ntfs3/frecord.c |  7 ++++---
+ fs/ntfs3/inode.c   | 19 +++++++++++--------
+ fs/ntfs3/namei.c   |  6 +++---
+ fs/ntfs3/ntfs_fs.h |  6 +++---
+ fs/ntfs3/super.c   | 31 +++++++++++++++++--------------
+ 7 files changed, 42 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index 1eeab337e5e53..e9fd314eb17b9 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -21,6 +21,7 @@
- #include "ext_caps.h"
- #include "cmd.h"
- #include "dat.h"
-+#include "ibi.h"
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index a68eff8cf1d66..6e1d2ad8c12ea 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -334,8 +334,7 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
+ 	 * It does additional locks/reads just to get the type of name.
+ 	 * Should we use additional mount option to enable branch below?
+ 	 */
+-	if (fname->dup.extend_data &&
+-	    ino != ni->mi.rno) {
++	if (fname->dup.extend_data && ino != ni->mi.rno) {
+ 		struct inode *inode = ntfs_iget5(sbi->sb, &e->ref, NULL);
+ 		if (!IS_ERR_OR_NULL(inode)) {
+ 			dt_type = fs_umode_to_dtype(inode->i_mode);
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 6a19bb0422080..13d623560120c 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1114,8 +1114,8 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 			size_t cp, tail = PAGE_SIZE - off;
  
+ 			folio = page_folio(pages[ip]);
+-			cp = copy_folio_from_iter_atomic(folio, off,
+-							min(tail, bytes), from);
++			cp = copy_folio_from_iter_atomic(
++				folio, off, min(tail, bytes), from);
+ 			flush_dcache_folio(folio);
+ 
+ 			copied += cp;
+@@ -1312,7 +1312,7 @@ static int ntfs_file_release(struct inode *inode, struct file *file)
+ 	if (sbi->options->prealloc &&
+ 	    ((file->f_mode & FMODE_WRITE) &&
+ 	     atomic_read(&inode->i_writecount) == 1)
+-	   /*
++	    /*
+ 	    * The only file when inode->i_fop = &ntfs_file_operations and
+ 	    * init_rwsem(&ni->file.run_lock) is not called explicitly is MFT.
+ 	    *
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 7aa37cf01df5a..af5773c0f210c 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -3072,8 +3072,8 @@ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
+ 	err = ni_add_name(new_dir_ni, ni, new_de);
+ 	if (!err) {
+ 		err = ni_remove_name(dir_ni, ni, de, &de2, &undo);
+-		WARN_ON(err && ni_remove_name(new_dir_ni, ni, new_de, &de2,
+-			&undo));
++		WARN_ON(err &&
++			ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo));
+ 	}
+ 
+ 	/*
+@@ -3224,7 +3224,8 @@ static bool ni_update_parent(struct ntfs_inode *ni, struct NTFS_DUP_INFO *dup,
+ 		if (attr) {
+ 			const struct REPARSE_POINT *rp;
+ 
+-			rp = resident_data_ex(attr, sizeof(struct REPARSE_POINT));
++			rp = resident_data_ex(attr,
++					      sizeof(struct REPARSE_POINT));
+ 			/* If ATTR_REPARSE exists 'rp' can't be NULL. */
+ 			if (rp)
+ 				dup->extend_data = rp->ReparseTag;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index f34e0a786bb60..120691bc71ee9 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -989,9 +989,9 @@ int ntfs_write_begin(const struct kiocb *iocb, struct address_space *mapping,
+ /*
+  * ntfs_write_end - Address_space_operations::write_end.
+  */
+-int ntfs_write_end(const struct kiocb *iocb,
+-		   struct address_space *mapping, loff_t pos,
+-		   u32 len, u32 copied, struct folio *folio, void *fsdata)
++int ntfs_write_end(const struct kiocb *iocb, struct address_space *mapping,
++		   loff_t pos, u32 len, u32 copied, struct folio *folio,
++		   void *fsdata)
+ {
+ 	struct inode *inode = mapping->host;
+ 	struct ntfs_inode *ni = ntfs_i(inode);
+@@ -1113,7 +1113,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 	typeof(rp->SymbolicLinkReparseBuffer) *rs;
+ 	bool is_absolute;
+ 
+-	is_absolute = (strlen(symname) > 1 && symname[1] == ':');
++	is_absolute = symname[0] && symname[1] == ':';
+ 
+ 	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2, is_absolute), GFP_NOFS);
+ 	if (!rp)
+@@ -1150,17 +1150,19 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
+ 
+ 	/* PrintName + SubstituteName. */
+ 	rs->SubstituteNameOffset = cpu_to_le16(sizeof(short) * err);
+-	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
++	rs->SubstituteNameLength =
++		cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
+ 	rs->PrintNameLength = rs->SubstituteNameOffset;
+ 
+ 	/*
+ 	 * TODO: Use relative path if possible to allow Windows to
+ 	 * parse this path.
+-	 * 0-absolute path 1- relative path (SYMLINK_FLAG_RELATIVE).
++	 * 0-absolute path, 1- relative path (SYMLINK_FLAG_RELATIVE).
+ 	 */
+ 	rs->Flags = cpu_to_le32(is_absolute ? 0 : SYMLINK_FLAG_RELATIVE);
+ 
+-	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name, sizeof(short) * err);
++	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name,
++		sizeof(short) * err);
+ 
+ 	if (is_absolute) {
+ 		/* Decorate SubstituteName. */
+@@ -1649,7 +1651,8 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 		 * Use ni_find_attr cause layout of MFT record may be changed
+ 		 * in ntfs_init_acl and ntfs_save_wsl_perm.
+ 		 */
+-		attr = ni_find_attr(ni, NULL, NULL, ATTR_NAME, NULL, 0, NULL, NULL);
++		attr = ni_find_attr(ni, NULL, NULL, ATTR_NAME, NULL, 0, NULL,
++				    NULL);
+ 		if (attr) {
+ 			struct ATTR_FILE_NAME *fn;
+ 
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 747a2a66c488d..64cde1a856f44 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -207,13 +207,13 @@ static int ntfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
+ }
  
  /*
-@@ -119,6 +120,7 @@ static inline struct i3c_hci *to_i3c_hci(struct i3c_master_controller *m)
- static int i3c_hci_bus_init(struct i3c_master_controller *m)
+- * ntfs_mkdir- inode_operations::mkdir
++ * ntfs_mkdir - inode_operations::mkdir
+  */
+ static struct dentry *ntfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 				 struct dentry *dentry, umode_t mode)
  {
- 	struct i3c_hci *hci = to_i3c_hci(m);
-+	struct device *dev = hci->master.dev.parent;
- 	struct i3c_device_info info;
- 	int ret;
- 
-@@ -139,6 +141,10 @@ static int i3c_hci_bus_init(struct i3c_master_controller *m)
- 	if (ret)
- 		return ret;
- 
-+	hci->ibi_devs = devm_kcalloc(dev, hci->DAT_entries, sizeof(*hci->ibi_devs), GFP_KERNEL);
-+	if (!hci->ibi_devs)
-+		return -ENOMEM;
-+
- 	ret = hci->io->init(hci);
- 	if (ret)
- 		return ret;
-@@ -477,14 +483,40 @@ static int i3c_hci_request_ibi(struct i3c_dev_desc *dev,
- 	return hci->io->request_ibi(hci, dev, req);
+-	return ERR_PTR(ntfs_create_inode(idmap, dir, dentry, NULL, S_IFDIR | mode, 0,
+-					 NULL, 0, NULL));
++	return ERR_PTR(ntfs_create_inode(idmap, dir, dentry, NULL,
++					 S_IFDIR | mode, 0, NULL, 0, NULL));
  }
  
-+static void __i3c_hci_disable_ibi(struct i3c_hci *hci, struct i3c_dev_desc *dev)
-+{
-+	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
-+
-+	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	scoped_guard(spinlock_irqsave, &hci->lock)
-+		hci->ibi_devs[dev_data->dat_idx] = NULL;
-+}
-+
- static void i3c_hci_free_ibi(struct i3c_dev_desc *dev)
+ /*
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 7e3d51b8d2ddf..99a78204b9865 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -585,7 +585,8 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
+ 		struct NTFS_DE *de);
+ 
+ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
+-	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de);
++	      struct ntfs_inode *ni, struct NTFS_DE *de,
++	      struct NTFS_DE *new_de);
+ 
+ bool ni_is_dirty(struct inode *inode);
+ int ni_write_parents(struct ntfs_inode *ni, int sync);
+@@ -711,8 +712,7 @@ int ntfs_set_size(struct inode *inode, u64 new_size);
+ int ntfs_get_block(struct inode *inode, sector_t vbn,
+ 		   struct buffer_head *bh_result, int create);
+ int ntfs_write_begin(const struct kiocb *iocb, struct address_space *mapping,
+-		     loff_t pos, u32 len, struct folio **foliop,
+-		     void **fsdata);
++		     loff_t pos, u32 len, struct folio **foliop, void **fsdata);
+ int ntfs_write_end(const struct kiocb *iocb, struct address_space *mapping,
+ 		   loff_t pos, u32 len, u32 copied, struct folio *folio,
+ 		   void *fsdata);
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 66ad6d82bf5c5..346c52f952076 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -16,6 +16,13 @@
+  * mi  - MFT inode               - One MFT record(usually 1024 bytes or 4K), consists of attributes.
+  * ni  - NTFS inode              - Extends linux inode. consists of one or more mft inodes.
+  * index - unit inside directory - 2K, 4K, <=page size, does not depend on cluster size.
++ * resident attribute            - Attribute with content stored directly in the MFT record
++ * non-resident attribute        - Attribute with content stored in clusters
++ * data_size                     - Size of attribute content in bytes. Equal to inode->i_size
++ * valid_size                    - Number of bytes written to the non-resident attribute
++ * allocated_size                - Total size of clusters allocated for non-resident content
++ * total_size                    - Actual size of allocated clusters for sparse or compressed attributes
++ *                               - Constraint: valid_size <= data_size <= allocated_size
+  *
+  * WSL - Windows Subsystem for Linux
+  * https://docs.microsoft.com/en-us/windows/wsl/file-permissions
+@@ -289,10 +296,8 @@ static const struct fs_parameter_spec ntfs_fs_parameters[] = {
+ /*
+  * Load nls table or if @nls is utf8 then return NULL.
+  *
+- * It is good idea to use here "const char *nls".
+- * But load_nls accepts "char*".
+  */
+-static struct nls_table *ntfs_load_nls(char *nls)
++static struct nls_table *ntfs_load_nls(const char *nls)
  {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
- 	struct i3c_hci *hci = to_i3c_hci(m);
+ 	struct nls_table *ret;
  
-+	/* Must ensure the IBI has been disabled */
-+	__i3c_hci_disable_ibi(hci, dev);
- 	hci->io->free_ibi(hci, dev);
+@@ -567,10 +572,8 @@ static void ntfs_create_procdir(struct super_block *sb)
+ 	if (e) {
+ 		struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 
+-		proc_create_data("volinfo", 0444, e,
+-				 &ntfs3_volinfo_fops, sb);
+-		proc_create_data("label", 0644, e,
+-				 &ntfs3_label_fops, sb);
++		proc_create_data("volinfo", 0444, e, &ntfs3_volinfo_fops, sb);
++		proc_create_data("label", 0644, e, &ntfs3_label_fops, sb);
+ 		sbi->procdir = e;
+ 	}
  }
- 
-+struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
-+{
-+	int dat_idx;
-+
-+	lockdep_assert_held(&hci->lock);
-+
-+	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
-+		struct i3c_dev_desc *dev = hci->ibi_devs[dat_idx];
-+
-+		if (dev && dev->info.dyn_addr == addr)
-+			return dev;
-+	}
-+	return NULL;
-+}
-+
- static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
- {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
-@@ -492,6 +524,8 @@ static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
- 	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
- 
- 	mipi_i3c_hci_dat_v1.clear_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	scoped_guard(spinlock_irqsave, &hci->lock)
-+		hci->ibi_devs[dev_data->dat_idx] = dev;
- 	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
+@@ -601,10 +604,12 @@ static void ntfs_remove_proc_root(void)
+ 	}
  }
- 
-@@ -499,9 +533,8 @@ static int i3c_hci_disable_ibi(struct i3c_dev_desc *dev)
- {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
- 	struct i3c_hci *hci = to_i3c_hci(m);
--	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
- 
--	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	__i3c_hci_disable_ibi(hci, dev);
- 	return i3c_master_disec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
- }
- 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 34c21a56a25d9..37717e530a250 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -710,10 +710,15 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	}
- 
- 	/* determine who this is for */
-+	spin_lock(&hci->lock);
- 	dev = i3c_hci_addr_to_dev(hci, ibi_addr);
- 	if (!dev) {
--		dev_err(&hci->master.dev,
--			"IBI for unknown device %#x\n", ibi_addr);
-+		/*
-+		 * Either an IBI received just before IBI's were disabled, or
-+		 * the controller is broken. Assume the former.
-+		 */
-+		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi_addr);
-+		spin_unlock(&hci->lock);
- 		goto done;
- 	}
- 
-@@ -722,6 +727,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	if (ibi_size > dev_ibi->max_len) {
- 		dev_err(&hci->master.dev, "IBI payload too big (%d > %d)\n",
- 			ibi_size, dev_ibi->max_len);
-+		spin_unlock(&hci->lock);
- 		goto done;
- 	}
- 
-@@ -738,6 +744,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	slot = i3c_generic_ibi_get_free_slot(dev_ibi->pool);
- 	if (!slot) {
- 		dev_err(&hci->master.dev, "no free slot for IBI\n");
-+		spin_unlock(&hci->lock);
- 		goto done;
- 	}
- 
-@@ -768,6 +775,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	slot->dev = dev;
- 	slot->len = ibi_size;
- 	i3c_master_queue_ibi(dev, slot);
-+	spin_unlock(&hci->lock);
- 
- done:
- 	/* take care to update the ibi dequeue pointer atomically */
-diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
-index 5502ab0a3535d..dad6b71bac358 100644
---- a/drivers/i3c/master/mipi-i3c-hci/hci.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
-@@ -54,6 +54,7 @@ struct i3c_hci {
- 	unsigned int DAT_entries;
- 	unsigned int DAT_entry_size;
- 	void *DAT_data;
-+	struct i3c_dev_desc **ibi_devs;
- 	unsigned int DCT_entries;
- 	unsigned int DCT_entry_size;
- 	u8 version_major;
-diff --git a/drivers/i3c/master/mipi-i3c-hci/ibi.h b/drivers/i3c/master/mipi-i3c-hci/ibi.h
-index e1f98e264da0e..073ca67b7d04d 100644
---- a/drivers/i3c/master/mipi-i3c-hci/ibi.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/ibi.h
-@@ -26,17 +26,6 @@
- #define IBI_DATA_LENGTH			GENMASK(7, 0)
- 
- /*  handy helpers */
--static inline struct i3c_dev_desc *
--i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
--{
--	struct i3c_bus *bus = i3c_master_get_bus(&hci->master);
--	struct i3c_dev_desc *dev;
--
--	i3c_bus_for_each_i3cdev(bus, dev) {
--		if (dev->info.dyn_addr == addr)
--			return dev;
--	}
--	return NULL;
--}
-+struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr);
- 
+ #else
+-static void ntfs_create_procdir(struct super_block *sb) {}
+-static void ntfs_remove_procdir(struct super_block *sb) {}
+-static void ntfs_create_proc_root(void) {}
+-static void ntfs_remove_proc_root(void) {}
++// clang-format off
++static void ntfs_create_procdir(struct super_block *sb){}
++static void ntfs_remove_procdir(struct super_block *sb){}
++static void ntfs_create_proc_root(void){}
++static void ntfs_remove_proc_root(void){}
++// clang-format on
  #endif
-diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
-index 35e6acc958a8e..3a89f1628f6d4 100644
---- a/drivers/i3c/master/mipi-i3c-hci/pio.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
-@@ -839,8 +839,11 @@ static bool hci_pio_prep_new_ibi(struct i3c_hci *hci, struct hci_pio_data *pio)
  
- 	dev = i3c_hci_addr_to_dev(hci, ibi->addr);
- 	if (!dev) {
--		dev_err(&hci->master.dev,
--			"IBI for unknown device %#x\n", ibi->addr);
-+		/*
-+		 * Either an IBI received just before IBI's were disabled, or
-+		 * the controller is broken. Assume the former.
-+		 */
-+		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi->addr);
- 		return true;
- 	}
+ static struct kmem_cache *ntfs_inode_cachep;
+@@ -1241,8 +1246,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	sb->s_export_op = &ntfs_export_ops;
+ 	sb->s_time_gran = NTFS_TIME_GRAN; // 100 nsec
+ 	sb->s_xattr = ntfs_xattr_handlers;
+-	if (options->nocase)
+-		set_default_d_op(sb, &ntfs_dentry_ops);
++	set_default_d_op(sb, options->nocase ? &ntfs_dentry_ops : NULL);
+ 
+ 	options->nls = ntfs_load_nls(options->nls_name);
+ 	if (IS_ERR(options->nls)) {
+@@ -1666,7 +1670,6 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ out:
+ 	ntfs3_put_sbi(sbi);
+ 	kfree(boot2);
+-	ntfs3_put_sbi(sbi);
+ 	return err;
+ }
  
 -- 
 2.53.0
