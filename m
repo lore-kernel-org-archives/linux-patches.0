@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0C54BD373;
-	Tue, 13 Oct 2026 12:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C414EE858;
+	Tue, 13 Oct 2026 12:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893910; cv=none; b=JfN6wZy+IAOHnQH3Qk3avyjQSXhtI/WIZTO7fgGiEozzkbALFS45eQD2TGDuf/qruvO3xowD89yqhNpBDZuw/eF27yjN1s9W9ASSewKlCc0a4GJ9849CaNE7ssLmQa8PgcJk3o1k5BPzSJezgaty7WxuQiapBaVPfzFvoVODeuw=
+	t=1791893913; cv=none; b=QgoorPnG8dm0qZmn1gEbPSkU6PlPaDDuJQJBfXaXkaS2FqZeJEl4JU7IGr0NbyO98Yjl9h/e0zOIr1WPAcuP8FqI8z+cpfXBcifcRu0L9Gz72/9h2XxGusQ0ywW56Z1BH/s5gAJIXr4vAt7Ay6pW+gah8aej9EPruKGiAnN44M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893910; c=relaxed/simple;
-	bh=QTMNUXE01n+NBIqT5BnmH/mDVleNjxDs8cgyjq8iUdM=;
+	s=arc-20240116; t=1791893913; c=relaxed/simple;
+	bh=NFv+eNN8IKm/W8jq+eg0hc+ZU7/HlPu2sXehDJgwKAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKZb5/cdRv3fp5QEd9QMII0GwR1FAaGhb8N8RIpNuV0+AO9qjzWehLyoIxJKrf2yaVHmmGX87LQRpXPUBGdcxPAMhYAIUKPoYnPxjtolXODJHnk45s8M8ZP0tj9h2AlBzN8JOcOu+lXsWujDzFAqK1ULzBv1v92e5f+97pYXnbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6XBvcZh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KRKbYeJYKtgSkJz6f5n2RX2SA6cAVfnCpaOJu/MIypMW6/8ruqoIKQIrmyFWA8iDbJoVgTvMolLDoapNLMkcBQ0qRZHMgdH8PPjH6PGEXFVqKXi/K8ZTaxh9HrnOi1Zq9EfOY4nYxnJzg3Eut9V0NRia72l17TNAHVmp5ptoL3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNWHcj/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6XBvcZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A53C1F000FF;
-	Tue, 13 Oct 2026 12:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNWHcj/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578A71F000FF;
+	Tue, 13 Oct 2026 12:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893909;
-	bh=06H7kr4ap1UDF++vHEAZDLvUZjB7b50lXcoICrbgX6I=;
+	s=korg; t=1791893911;
+	bh=3FJ5NN+xwZ/pNsfXxIOg1mM01Yuc8qBgqFZTYEHeZOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J6XBvcZhByN/kFklRcyklWEC5Xd/cn2DxIZpIC/VXP5CqvhAJ1l8LHMsBJZIM6iHx
-	 uzWpWma1INNKjlk4EO/L6qijLDxG0Xwc7UeC9+BYJJtk6D6chMqoGsvIboC4XqUEhj
-	 ZSyw4g1WH5kz79Dl10QZYGIvCuwBtbSEaTdmj0TU=
+	b=BNWHcj/Wp18CHIx+3ygoi/iWrsSiyEs7xbAVLraDfJG4VCYL8FiW4nKkJoNXfFCcx
+	 CDRrN73QsQdp5RC2sq81jNHjzpqYVgchL/iPZdEyWsrvHyC3bujDrY7QjbRs+3HKeS
+	 yoB5kmb1vLB2xz31W7kvUza/oRvFCb+B84IcmU0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 346/621] eth: bnxt: decrease indent in bnxt_request_irq()
-Date: Tue, 13 Oct 2026 13:35:41 +0200
-Message-ID: <20261013112929.062563369@linuxfoundation.org>
+Subject: [PATCH 6.18 382/621] kho: fix size calculation in kho_preserved_memory_reserve()
+Date: Tue, 13 Oct 2026 13:36:17 +0200
+Message-ID: <20261013112929.909165669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,100 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Pratyush Yadav (Google) <pratyush@kernel.org>
 
-[ Upstream commit 0fd562c7b9e48e7958f7405e54bf98e8e22ad184 ]
+[ Upstream commit 3a0b8fa2eb36afc88b62a95f33f0c77c71fa5ded ]
 
-bnxt_request_irq() has unnecessary level of indentation.
-Use continue instead. No need to re-fetch NUMA node for
-each IRQ, move to the function level.
+kho_preserved_memory_reserve() calculates the size of a preservation by
+doing 1 << (order + PAGE_SHIFT). Since the '1' is a 32-bit integer, it
+can only be shifted by 31. That is, it will only work for preservations
+up to 2 GiB. Larger preservations will trigger undefined behaviour.
 
-No functional changes.
+While preservations larger than 2 GiB can't be obtained via folios
+currently, they can be obtained via kho_preserve_pages().
 
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260803193135.2030368-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 51e96fa31f7e ("eth: bnxt: avoid deadlock when canceling IRQ affinity notifier")
+For example, memblock reserve_mem uses kho_preserve_pages().
+Reservations larger than 2 GiB are valid and will trigger this bug if
+properly aligned.
+
+Fix it by using 1UL for shifting.
+
+Fixes: fc33e4b44b27 ("kexec: enable KHO support for memory preservation")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20260727150240.889555-1-pratyush@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 46 +++++++++++------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ kernel/kexec_handover.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 4738c0b510bdf..35c8684d1b4ca 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11768,6 +11768,7 @@ static void bnxt_free_irq(struct bnxt *bp)
+diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
+index e1a06b4fc17fc..ac9fa7727b5ff 100644
+--- a/kernel/kexec_handover.c
++++ b/kernel/kexec_handover.c
+@@ -425,7 +425,7 @@ static void __init deserialize_bitmap(unsigned int order,
+ 	unsigned long bit;
  
- static int bnxt_request_irq(struct bnxt *bp)
- {
-+	const int numa_node = dev_to_node(&bp->pdev->dev);
- 	struct cpu_rmap *rmap = NULL;
- 	int i, j, rc = 0;
- 	unsigned long flags = 0;
-@@ -11792,6 +11793,7 @@ static int bnxt_request_irq(struct bnxt *bp)
- 	for (i = 0, j = 0; i < bp->cp_nr_rings; i++) {
- 		int map_idx = bnxt_cp_num_to_irq_num(bp, i);
- 		struct bnxt_irq *irq = &bp->irq_tbl[map_idx];
-+		u16 tag;
- 
- 		if (IS_ENABLED(CONFIG_RFS_ACCEL) &&
- 		    rmap && bp->bnapi[i]->rx_ring) {
-@@ -11810,33 +11812,31 @@ static int bnxt_request_irq(struct bnxt *bp)
- 		netif_napi_set_irq_locked(&bp->bnapi[i]->napi, irq->vector);
- 		irq->requested = 1;
- 
--		if (zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL)) {
--			int numa_node = dev_to_node(&bp->pdev->dev);
--			u16 tag;
-+		if (!zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL))
-+			continue;
- 
--			irq->have_cpumask = 1;
--			irq->msix_nr = map_idx;
--			irq->ring_nr = i;
--			cpumask_set_cpu(cpumask_local_spread(i, numa_node),
--					irq->cpu_mask);
--			rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
--			if (rc) {
--				netdev_warn(bp->dev,
--					    "Update affinity hint failed, IRQ = %d\n",
--					    irq->vector);
--				break;
--			}
-+		irq->have_cpumask = 1;
-+		irq->msix_nr = map_idx;
-+		irq->ring_nr = i;
-+		cpumask_set_cpu(cpumask_local_spread(i, numa_node),
-+				irq->cpu_mask);
-+		rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
-+		if (rc) {
-+			netdev_warn(bp->dev,
-+				    "Update affinity hint failed, IRQ = %d\n",
-+				    irq->vector);
-+			break;
-+		}
- 
--			bnxt_register_irq_notifier(bp, irq);
-+		bnxt_register_irq_notifier(bp, irq);
- 
--			/* Init ST table entry */
--			if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
--						cpumask_first(irq->cpu_mask),
--						&tag))
--				continue;
-+		/* Init ST table entry */
-+		if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
-+					cpumask_first(irq->cpu_mask),
-+					&tag))
-+			continue;
- 
--			pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
--		}
-+		pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
- 	}
- 	return rc;
- }
+ 	for_each_set_bit(bit, bitmap->preserve, PRESERVE_BITS) {
+-		int sz = 1 << (order + PAGE_SHIFT);
++		u64 sz = 1UL << (order + PAGE_SHIFT);
+ 		phys_addr_t phys =
+ 			elm->phys_start + (bit << (order + PAGE_SHIFT));
+ 		struct page *page = phys_to_page(phys);
 -- 
 2.53.0
 
