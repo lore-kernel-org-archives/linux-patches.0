@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299EC4EB862;
-	Tue, 13 Oct 2026 12:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556E4E80B5;
+	Tue, 13 Oct 2026 12:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894954; cv=none; b=VZOJJbO5dSFkWdj9OsGZNQ/KYDJIUdM7eAXVUZMqAyB7my4q4QwWaVdYB437bil3dMkzjkZT9XD9WqNUBSdBVe5xzoBHQiF1C5mG8nQsXY1x3CF02JPwaqgODlf3asGgqg30LK3AK3QzsUJoBl7QzYGwZ7CWnwFeJkK2F20bSsI=
+	t=1791894957; cv=none; b=qIxOUhZ31URAPS1a0ELDn4kt+1H2rXwgT8VcJOaGPTNkyIVAgEMySngNnsFjcOgCUIJTvAXBv5RcPsxgVt2aX/bNSJ3PbiLR77wbkaNacSGh3rwCTtZnDFw2v3YEjM4w3NEtkn3Uoh8zkMW/fMqIAkS66BE2xWRFyhphiQ+FKGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894954; c=relaxed/simple;
-	bh=udcU4aBWs8gLZt42+tRSl3uUnkv2Ha+TgisnreVpmVg=;
+	s=arc-20240116; t=1791894957; c=relaxed/simple;
+	bh=8x6A4kT2hz+ji9qDFuy7u6nx674DhsRCWUHJmV254HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JelN72YgdrZOXSV4yvsObj3FMF9/BKUQJckb/SXoiE8aFU9zJmIx/MOu+M1a5CXpDE6zBFPLPfB/lPZ6zhIWpukMW4MIF41XJFYvl9cTmMbalq4GdykPPBVvRSAy+N07OalzCQvrht1v29py+Um282wwElU05BWu8cfxsW5HLos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAqKcCoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q8g1ryScbm12bYWf8KxIp6ABJylYTFzW3vQye00lJdAEQfZzj92bnOyeqAT+cu2Cd9b+qtMuH297/O2tYV3e3c/ZhRVzVP1nORFAaD5/J0sDBnl/YLNOcQF9JQZ4AVVg+tFtMFnTchRs9IkcI+0ePXYutMJxqkXDd7rcTAgR4ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WORk2Nm6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAqKcCoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE871F000FF;
-	Tue, 13 Oct 2026 12:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WORk2Nm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4E61F00893;
+	Tue, 13 Oct 2026 12:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894953;
-	bh=T7iCEUWGTP3DwlzEVLjGv6O7wCUGqKE6d2HCCJrELaU=;
+	s=korg; t=1791894956;
+	bh=wZzsGRb5hWTNwqyewZjMuX/jeqM4kek/LfYNzzzTK1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAqKcCoKkMQnA97Xuds/Ox01iJmzy5S+TXr4dT38Y6APngWA0W/pokQBykcvjGdbE
-	 gGAWodbchIMlNRvzB4ltR68Y31W/6TCM039wjoWoF9uG3QMbW0VgjPPxz9TXeXtnY/
-	 oYHHxR3zMDjAA5GgFatc3W7Bktd4NAPlv5qEHRJg=
+	b=WORk2Nm69K2J2xdD5tSBgz5esa/c65ZDoPetD3c8PKRkDQzr2UxrlMStAUmoEBNvT
+	 yo/DZNL5pgdvCgqDvDVTddXNdrxldnM6lljp0xwcQE4mAmaVzjoZ7xNsam1kgGfs3l
+	 8U9c3O0bLgRE4FZQ5GQo2F0TvcSE7L2OKNnqygJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikola Prica <nikola.prica@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/497] PCI: Accept AtomicOps already enabled by the hypervisor
-Date: Tue, 13 Oct 2026 13:34:39 +0200
-Message-ID: <20261013112910.548997665@linuxfoundation.org>
+	George Zhang <george.zhang@amd.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 113/497] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
+Date: Tue, 13 Oct 2026 13:34:40 +0200
+Message-ID: <20261013112910.572999137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -47,76 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikola Prica <nikola.prica@amd.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
+commit 015e72cde567d2450e282c2790773463156b2d0a upstream.
 
-pci_enable_atomic_ops_to_root() currently fails when no Root Port is
-visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
-is assigned to the VM, but the Root Port above it is not visible in the
-guest topology.
+dc_state_create_copy() can return NULL on allocation failure.
+dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
+and continues execution, returning success.  dm_resume() then
+dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
+following dc_state->stream_count loop, crashing during GPU reset
+recovery.
 
-In those setups the hypervisor may already have enabled AtomicOp Requester
-Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
-as already enabled and return success instead of failing the Root Port
-walk.
+Return -ENOMEM immediately if the copy fails, so the caller aborts
+suspend instead of leaving a NULL cached state for resume.
 
-After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
-them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
-Port is not visible, so drivers don't use atomics when they could.  On
-systems where the Root Port is not visible but *does* support AtomicOps,
-this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
-endpoint and returned success.
-
-Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
-Signed-off-by: Nikola Prica <nikola.prica@amd.com>
-[bhelgaas: commit log, code comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 4364ed7cdc27b..0d33b30ec2f67 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3764,8 +3764,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3045,9 +3045,14 @@ static int dm_suspend(void *handle)
+ 		dc_allow_idle_optimizations(adev->dm.dc, false);
  
- 	root = pcie_find_root_port(dev);
--	if (!root)
-+	if (!root) {
-+
-+		/*
-+		 * A hypervisor may expose a topology with the root port
-+		 * not visible to the guest.  If the hypervisor has already
-+		 * set AtomicOp Requester Enable in the endpoint, we assume
-+		 * it has verified support in the root port, so it is safe
-+		 * for the driver to use AtomicOps.
-+		 */
-+		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
-+		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
-+			return 0;
-+
- 		return -EINVAL;
-+	}
+ 		dm->cached_dc_state = dc_state_create_copy(dm->dc->current_state);
++		if (!dm->cached_dc_state) {
++			drm_err(adev_to_drm(adev),
++				"Failed to allocate cached DC state during suspend\n");
++			mutex_unlock(&dm->dc_lock);
++			return -ENOMEM;
++		}
  
- 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
- 	if ((cap & cap_mask) != cap_mask)
--- 
-2.53.0
-
+-		if (dm->cached_dc_state)
+-			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
+ 
 
 
