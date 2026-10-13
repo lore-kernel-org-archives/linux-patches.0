@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689F5348C4B;
-	Tue, 13 Oct 2026 12:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F15F4FC355;
+	Tue, 13 Oct 2026 12:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895244; cv=none; b=QI5Dx+zmAoFvNTdnNH9DvK4k7UtxpJNU3bWSPVkHtRjZeak7JgL9TkOUMtTHkD813pq1XTrG2WUTmDjmGnMud2rb+P5ifdBl23AxjuenPWK/CLNZLSQfpjc3tEkZCDm8FJnNihM1MagjWqzJZSG2R/yLb+cJ0nJFrG8Z1dYqUbE=
+	t=1791895247; cv=none; b=SG7jDdcW05aUOhBvRYCJs27rrN5RW+XSK4lJQ3fdLr63/aOUuY8WhqlwgkOUPxNYGoXZHF9OnScq5oYBXRDL3NXh4kGgnZxaUzVgHd3Lz+rrM+eWFZr2OuZthyJ5a3My6w8mNXx8HYZzZFhBRZlIq6UV3U5yfGKAvwXbpynBlLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895244; c=relaxed/simple;
-	bh=2rgRHv6j2u5vNUmE7rFJTNQVPIGQ6H2uH3HTRm05sSQ=;
+	s=arc-20240116; t=1791895247; c=relaxed/simple;
+	bh=zogWFgv1W5AZV+MAaOwt/EX/fKrszriFI5ryb7IYzF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZP6x2UXiaIdDuznOTbgtz/xKZamFPkGZx/arO38fdu+8hA03ufQZHm0jE5iaeaY1FeDTY34FzD6Mu+4Nybh0IVvnHZXVED0Ndd4kKx28J4ItRq/vuhCflWYUSNpzeek4H06As1luMxwFCZayrOYwIOK4mcbR2FhEKqqshcfDxSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+P42G8U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kiXRZNmIREBKKJe/r95GxT45vC6PqBZ2zAnZuWZqxXFPimu4Pah4Xrtvkm2H2H7u/w10KPUekGgRiDlmqvfSEKiYxwSUse2Mvo4Oj9zoaiHUnhFvQXdu+D0DmxsQyxJtGtm+6VPckKgJUOLqGbL91lKwM2NSk6osWZx2bZAHEHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSSYo5Uh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+P42G8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97D21F00893;
-	Tue, 13 Oct 2026 12:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSSYo5Uh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71051F00893;
+	Tue, 13 Oct 2026 12:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895243;
-	bh=mgrYImmFaXoL2hCUyDOk8GkyVH8x4Fdl0RUzo0UlU6o=;
+	s=korg; t=1791895246;
+	bh=zI5zXgeqr9RxKEQHZMT3ubqmpYQXehmd1GGnpta0+gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+P42G8UzE4YDMw68awP6pNE0P30Oq+g6tq6z4mI1wMKtj7owWBDKABf0JcH7G+Zr
-	 hBzQlXYCPVsLtN/PeLcNP9nGcQbJKDevlVcQjisxGCbF/T3QrS+xDuFhsBE2Mt+lj6
-	 w5FP5Cn2XRfn9CNDTs9J3pgFL1HXOdTB4v07IePg=
+	b=kSSYo5UhmRkj2A8SzX58ZlTpq0UI9o2sGr2UzPdzY/C5AgrNWuF1NAvf7mJP3FBt5
+	 3HJAJ7nsVJQAOq7lEZvEhUUOX4ZFfCmLsC3IFTwl4+KGiCZI/sQPqqNePCvOipD9e0
+	 Mygh7xGD1KLskby4ftkG8gNu/F8Yh3iF6z1g585E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 208/497] wifi: mac80211: keep fallback association elements alive
-Date: Tue, 13 Oct 2026 13:36:15 +0200
-Message-ID: <20261013112912.827681015@linuxfoundation.org>
+Subject: [PATCH 6.12 209/497] wifi: mac80211: minstrel_ht: validate fixed rate index
+Date: Tue, 13 Oct 2026 13:36:16 +0200
+Message-ID: <20261013112912.851424250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,67 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-commit a10a2f80476d166fd81c361ec0319493671b694e upstream.
+commit 15fb9e3cea55fbc378261ce35a32b0f8828f0000 upstream.
 
-Associating to a non-transmitted MBSSID profile reads freed memory while
-determining the operating channel and applying HT capabilities.
+The fixed_rate_idx debugfs file is a plain u32 attribute, so any value
+can be written to it.  minstrel_ht_update_stats() then copies the value
+into mi->max_tp_rate[] and mi->max_prob_rate, and
+minstrel_ht_set_rate() uses MI_RATE_GROUP()/MI_RATE_IDX() to index
+minstrel_mcs_groups[] (42 entries) and mi->groups[].rates[] (10 entries)
+with it.
 
-When an association response omits WMM, HT, or VHT information,
-ieee80211_assoc_config_link() parses the cached BSS IEs and copies the
-missing element pointers out of that fallback parse. For a
-non-transmitted MBSSID profile those pointers refer to merged-profile
-storage owned by the parse object, and the fallback block frees that
-object at its end. The copied pointers are used afterwards to determine
-the operating channel, configure bandwidth, and apply HT capabilities.
+Writing e.g. 65535 selects group 4095 and rate index 15, far outside
+both arrays.  The out-of-bounds entries are dereferenced and updated as
+struct minstrel_rate_stats (retry counts, etc.), so the invalid index
+corrupts adjacent kernel memory.  With CONFIG_UBSAN_BOUNDS the access is
+reported as an array-index-out-of-bounds in minstrel_ht_set_rate().
 
-Keep the fallback parse result alive until association setup finishes.
+Only a valid group/rate pair, or U32_MAX to disable fixed rate
+processing, can be used safely, so reject any other value when the
+debugfs file is written.
 
-Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
-Cc: stable@kernel.org
-Assisted-by: LLM sparse kasan
-[reorder variable declaration]
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+The file is only reachable through a root-only debugfs mount, so this is
+not a privilege boundary.  The out-of-bounds access is still a bug that
+must not be reachable through a writable debugfs attribute.
+
+Fixes: 24f7580e852b ("minstrel_ht: fixed rate mode through debugfs")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Reviewed-by: Ren Wei <weir@nebusec.ai>
+Link: https://patch.msgid.link/288e6f6d30dc82ff40da502755e6666982f6b735.1789798000.git.xuyuqiabc@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/rc80211_minstrel_ht.c |   30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4660,6 +4660,7 @@ static bool ieee80211_assoc_config_link(
- 	bool is_6ghz = cbss->channel->band == NL80211_BAND_6GHZ;
- 	bool is_s1g = cbss->channel->band == NL80211_BAND_S1GHZ;
- 	const struct cfg80211_bss_ies *bss_ies = NULL;
-+	struct ieee802_11_elems *bss_elems = NULL;
- 	struct ieee80211_supported_band *sband;
- 	struct ieee802_11_elems *elems;
- 	const __le16 prof_bss_param_ch_present =
-@@ -4739,7 +4740,6 @@ static bool ieee80211_assoc_config_link(
- 	     (is_5ghz && link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_VHT &&
- 	      (!elems->vht_cap_elem || !elems->vht_operation)))) {
- 		const struct cfg80211_bss_ies *ies;
--		struct ieee802_11_elems *bss_elems;
- 
- 		rcu_read_lock();
- 		ies = rcu_dereference(cbss->ies);
-@@ -4801,7 +4801,6 @@ static bool ieee80211_assoc_config_link(
- 					   "AP bug: VHT operation missing from AssocResp\n");
- 			}
- 		}
--		kfree(bss_elems);
- 	}
- 
- 	/*
-@@ -5032,6 +5031,7 @@ static bool ieee80211_assoc_config_link(
- 	ret = true;
- out:
- 	kfree(elems);
-+	kfree(bss_elems);
- 	kfree(bss_ies);
- 	return ret;
+--- a/net/mac80211/rc80211_minstrel_ht.c
++++ b/net/mac80211/rc80211_minstrel_ht.c
+@@ -7,6 +7,7 @@
+ #include <linux/types.h>
+ #include <linux/skbuff.h>
+ #include <linux/debugfs.h>
++#include <linux/limits.h>
+ #include <linux/random.h>
+ #include <linux/moduleparam.h>
+ #include <linux/ieee80211.h>
+@@ -1967,14 +1968,39 @@ minstrel_ht_alloc(struct ieee80211_hw *h
  }
+ 
+ #ifdef CONFIG_MAC80211_DEBUGFS
++static int minstrel_ht_fixed_rate_idx_get(void *data, u64 *val)
++{
++	*val = *(u32 *)data;
++	return 0;
++}
++
++static int minstrel_ht_fixed_rate_idx_set(void *data, u64 val)
++{
++	u32 idx = val;
++
++	/* U32_MAX is the default and keeps fixed rate processing disabled */
++	if (val != U32_MAX &&
++	    (val > U16_MAX ||
++	     MI_RATE_GROUP(idx) >= ARRAY_SIZE(minstrel_mcs_groups) ||
++	     MI_RATE_IDX(idx) >= MCS_GROUP_RATES))
++		return -EINVAL;
++
++	*(u32 *)data = idx;
++	return 0;
++}
++
++DEFINE_DEBUGFS_ATTRIBUTE(minstrel_ht_fixed_rate_idx_fops,
++			 minstrel_ht_fixed_rate_idx_get,
++			 minstrel_ht_fixed_rate_idx_set, "%llu\n");
++
+ static void minstrel_ht_add_debugfs(struct ieee80211_hw *hw, void *priv,
+ 				    struct dentry *debugfsdir)
+ {
+ 	struct minstrel_priv *mp = priv;
+ 
+ 	mp->fixed_rate_idx = (u32) -1;
+-	debugfs_create_u32("fixed_rate_idx", S_IRUGO | S_IWUGO, debugfsdir,
+-			   &mp->fixed_rate_idx);
++	debugfs_create_file("fixed_rate_idx", S_IRUGO | S_IWUGO, debugfsdir,
++			    &mp->fixed_rate_idx, &minstrel_ht_fixed_rate_idx_fops);
+ }
+ #endif
+ 
 
 
