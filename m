@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E7D4F3EB0;
-	Tue, 13 Oct 2026 12:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9764F5DEF;
+	Tue, 13 Oct 2026 12:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893849; cv=none; b=slrfTA0pC6WkuG9g0CUT3HVxrK/IdWnCTEJ41G/MMN6blO7S+UAERL38n8jcPNnvnSOBzUfe3hT8k3DXTkZDzZWs9I0+FX91TMNdlFnoXzpni3m3nCuo3R/kF9Wlzk390XRQX2d5qfA0Z+Z0e6yJwLfgbxnlMuiNzXVd8qcJL98=
+	t=1791893852; cv=none; b=As1IeQuC3BtAwrICOeKpHOMh6AH2SOqRSLilhUzok3/kRsX/rMleL8DWRr1jMQcBr+8SPEMXi5nxJHugk03MkFscwb1ZQ3LqnM5ZQjQT+HFPefwIzjePnp4BxfApkS2oUVvMoPE2zqm8lKM4q4I2WH/rskmJckGMRTK47jI/xOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893849; c=relaxed/simple;
-	bh=SLccd6KKdE3XTWEote002M7/whZitdDjO8mB7aq/TAc=;
+	s=arc-20240116; t=1791893852; c=relaxed/simple;
+	bh=UM/d1f7ZZd1QPOuhUJfo0N62fUH0ff9NBwIohUA1WcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZBnQSkfzaCc4cdbFoZZFcILbebW8xpMbKUav0MP/rWcLCHs3wkKvEsrYjOGQx+Vh4RPWPDZbDPbWdkMDAt7Ar0Z9MlrSOdDFc9Wf9Lc87OJTlN1PnOmAwSi4JiA9QDaZoQbfmP+T+lnSCm3yzHhbI9eDcPlZUadLEZ9Z5EnSCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0ZPg52n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GK3orcedAU9uCYGcKRlimQ13drPP5JgYZyh9rKFLUIfYW5F5RMmLFKf6TEJKgOTgyjJGv5zLmRwZ2bf8x+4ycEtCv+x36fhoYpOQkyvzTt3SdYKoFb8zuS8UzVSJ3pfRqmt9iyoeODfXhxSoc1J05bp9WlzlrZDU1bBTiDSR7QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+pmdrrG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0ZPg52n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39781F000FF;
-	Tue, 13 Oct 2026 12:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+pmdrrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972061F000FF;
+	Tue, 13 Oct 2026 12:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893848;
-	bh=oSBXk1lXI4nvNUz7l0y4x1yoMwUg0wxWryELq+xybDE=;
+	s=korg; t=1791893851;
+	bh=4YOEiMm4nQ1uu2Bm2r0aMWLA0kDDjaIiLzJeKDoJrM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0ZPg52nLyYXq2m9QBHs6IiZKmKqcdfPz9HGOLbSLRaVceSqaCK/SPK/LE+uCGvzX
-	 DYRpSekqVTNl3iiG46NQsU1X0j3tPixV8ir3biCiUZfhCvSDpGVuQO+iL/wuEm+mqx
-	 7BOvk2pURS4B6i+hRwRZPC7Gd9bJ9W8qRbjiq62w=
+	b=o+pmdrrGlDOnfAqLBh4oP0riVKX7XDp9f9o2Y9bnekMr6BY0oudyLhqDMP/e5dcCT
+	 +RejEzd1JofpNoAjloBGEou6EAoT1NldfbepgstpQJp7lzqgxUKothVyTh6xVwQhoR
+	 P6PKqfIUurzWl7nJS8K+Te1fauyAJpPnTgFKpvjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 363/621] drm/amdkfd: Add bounds check for CRAT subtype length
-Date: Tue, 13 Oct 2026 13:35:58 +0200
-Message-ID: <20261013112929.464454954@linuxfoundation.org>
+Subject: [PATCH 6.18 364/621] fbdev: Wrap user-invoked calls to fb_set_var() in helper
+Date: Tue, 13 Oct 2026 13:35:59 +0200
+Message-ID: <20261013112929.488214223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,48 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 6e7566ba4739dd573c331adde1c96690f7a567bd ]
+[ Upstream commit 6f611e5e5f3327cf2e2daabe6ee5acac58cc784e ]
 
-The CRAT parser validates that the subtype header fits within the image,
-but does not verify that the advertised subtype length fits. A malformed
-CRAT table with an oversized length field causes out-of-bounds reads when
-kfd_parse_subtype() casts the header to specific subtype structures.
+Handle fbcon during display updates in fb_set_var_from_user(). Check
+with fbcon if the mode change is possible, update hardware state and
+finally update fbcon. Update all callers.
 
-Add validation that sub_type_hdr + length does not exceed the image
-boundary before parsing the subtype contents.
+Only the FBIOPUT_VSCREENINFO ioctl currently does all steps. Other
+mode-changes callers in sysfs and driver code are missing fbcon-related
+steps.
 
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 48e1d1e6e8798aef0312e68d8e586021b5b3cf4d)
-Cc: stable@vger.kernel.org
+With the new helper, ps3fb and sh_mobile_lcdcfb no longer maintain
+fbcon state themselves.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/video/fbdev/core/fb_chrdev.c   |  6 +-----
+ drivers/video/fbdev/core/fbcon.c       |  2 --
+ drivers/video/fbdev/core/fbmem.c       | 13 +++++++++++++
+ drivers/video/fbdev/core/fbsysfs.c     |  4 +---
+ drivers/video/fbdev/ps3fb.c            |  5 +----
+ drivers/video/fbdev/sh_mobile_lcdcfb.c |  5 +----
+ include/linux/fb.h                     |  2 ++
+ 7 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index ee8660a88060c..b0e87bdc29114 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1412,6 +1412,15 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
- 			break;
- 		}
+diff --git a/drivers/video/fbdev/core/fb_chrdev.c b/drivers/video/fbdev/core/fb_chrdev.c
+index 4ebd16b7e3b8d..54f926fb411bd 100644
+--- a/drivers/video/fbdev/core/fb_chrdev.c
++++ b/drivers/video/fbdev/core/fb_chrdev.c
+@@ -85,11 +85,7 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 		var.activate &= ~FB_ACTIVATE_KD_TEXT;
+ 		console_lock();
+ 		lock_fb_info(info);
+-		ret = fbcon_modechange_possible(info, &var);
+-		if (!ret)
+-			ret = fb_set_var(info, &var);
+-		if (!ret)
+-			fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++		ret = fb_set_var_from_user(info, &var);
+ 		unlock_fb_info(info);
+ 		console_unlock();
+ 		if (!ret && copy_to_user(argp, &var, sizeof(var)))
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 32d3940357625..532522c2aed05 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2757,7 +2757,6 @@ void fbcon_update_vcs(struct fb_info *info, bool all)
+ 	else
+ 		fbcon_modechanged(info);
+ }
+-EXPORT_SYMBOL(fbcon_update_vcs);
  
-+		/* Validate subtype fits within remaining image */
-+		if ((char *)sub_type_hdr + sub_type_hdr->length >
-+		    (char *)crat_image + image_len) {
-+			pr_warn("CRAT subtype length %u exceeds image bounds\n",
-+				sub_type_hdr->length);
-+			ret = -EINVAL;
-+			break;
-+		}
+ /* let fbcon check if it supports a new screen resolution */
+ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *var)
+@@ -2785,7 +2784,6 @@ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *va
+ 
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(fbcon_modechange_possible);
+ 
+ int fbcon_mode_deleted(struct fb_info *info,
+ 		       struct fb_videomode *mode)
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 30a2c0d47e5c8..1533d43a0a0c9 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -346,6 +346,19 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
+ }
+ EXPORT_SYMBOL(fb_set_var);
+ 
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var)
++{
++	int ret = fbcon_modechange_possible(info, var);
 +
- 		if (sub_type_hdr->flags & CRAT_SUBTYPE_FLAGS_ENABLED) {
- 			ret = kfd_parse_subtype(sub_type_hdr, device_list);
- 			if (ret)
++	if (!ret)
++		ret = fb_set_var(info, var);
++	if (!ret)
++		fbcon_update_vcs(info, var->activate & FB_ACTIVATE_ALL);
++
++	return ret;
++}
++EXPORT_SYMBOL(fb_set_var_from_user);
++
+ static void fb_lcd_notify_blank(struct fb_info *info)
+ {
+ 	int power;
+diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
+index fe8bd33e64ab1..d363f94207c3e 100644
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -20,9 +20,7 @@ static int activate(struct fb_info *fb_info, struct fb_var_screeninfo *var)
+ 	var->activate |= FB_ACTIVATE_FORCE;
+ 	console_lock();
+ 	lock_fb_info(fb_info);
+-	err = fb_set_var(fb_info, var);
+-	if (!err)
+-		fbcon_update_vcs(fb_info, var->activate & FB_ACTIVATE_ALL);
++	err = fb_set_var_from_user(fb_info, var);
+ 	unlock_fb_info(fb_info);
+ 	console_unlock();
+ 	if (err)
+diff --git a/drivers/video/fbdev/ps3fb.c b/drivers/video/fbdev/ps3fb.c
+index dbcda307f6a67..1376d19b19aeb 100644
+--- a/drivers/video/fbdev/ps3fb.c
++++ b/drivers/video/fbdev/ps3fb.c
+@@ -29,7 +29,6 @@
+ #include <linux/freezer.h>
+ #include <linux/uaccess.h>
+ #include <linux/fb.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ 
+ #include <asm/cell-regs.h>
+@@ -830,9 +829,7 @@ static int ps3fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 				/* Force, in case only special bits changed */
+ 				var.activate |= FB_ACTIVATE_FORCE;
+ 				par->new_mode_id = val;
+-				retval = fb_set_var(info, &var);
+-				if (!retval)
+-					fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++				retval = fb_set_var_from_user(info, &var);
+ 				console_unlock();
+ 			}
+ 			break;
+diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+index dd950e4ab5ceb..6038f217ab427 100644
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -15,7 +15,6 @@
+ #include <linux/ctype.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/delay.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/ioctl.h>
+@@ -1765,11 +1764,9 @@ static void sh_mobile_fb_reconfig(struct fb_info *info)
+ 	var.height = ch->display.height;
+ 	var.activate = FB_ACTIVATE_NOW;
+ 
+-	if (fb_set_var(info, &var) < 0)
++	if (fb_set_var_from_user(info, &var) < 0)
+ 		/* Couldn't reconfigure, hopefully, can continue as before */
+ 		return;
+-
+-	fbcon_update_vcs(info, true);
+ }
+ 
+ /*
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index da2fdabd18cb3..f622f5f520cf0 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -541,6 +541,8 @@ extern int fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern int fb_pan_display(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern int fb_blank(struct fb_info *info, int blank);
+ 
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
++
+ /*
+  * Helpers for framebuffers in I/O memory
+  */
 -- 
 2.53.0
 
