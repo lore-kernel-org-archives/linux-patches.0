@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8354E7802;
-	Tue, 13 Oct 2026 12:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885214ED19E;
+	Tue, 13 Oct 2026 12:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895813; cv=none; b=IK+ocZ1rdBHWr9rkfUDASaF4k6joxK74CG6YkAPW0qgRxk84Ppu02Rr+ve8NgVoOsD6ZNKE6wnwlNy7/bbn8lBGonIAo8phOKYNVrtDPHmGHK+Ntt0t7EeHPCxWWdFqGa/hTnh/AfNC70PNMtEnrdLcB4S4LiW10oFUTVUIi11A=
+	t=1791895817; cv=none; b=J4S7Kzgwv2o8I60tkTXk4BuGdq5vFSP+E+AEpWZwdcaG5zX5b+YSDbtOA+RkX5Lo3Y1BZnW62UP+++RdZ0l3mKnotYQsjXDjzOF7wCYcm87ge3QyKMgI2lTFjTmVp73JIDiGq9s8HWxXJw6O9sVybaLG02ly18X7VgKSjUjZnV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895813; c=relaxed/simple;
-	bh=fumWAz66jWNJFNHemojpQVuF++iBjDKk2Qq1PtG35Lg=;
+	s=arc-20240116; t=1791895817; c=relaxed/simple;
+	bh=Yl9pmSJE7Yae06vYxNj5WrI8WFARj4d9t+CHY4D6hu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cy+M8I/QDONKY7k+0TJI8KIuv0uDx7fJXUkYPHXZBBo63Q6cXBfV/g+wHl7nPpWkqdSPZ9eymAAvArvR2oytF2IapTg3HV7y3XT+5lYWdBUdG8QKpRqOD1s5OsYEQuOCfOyjO+yHAsTsxuIWBVVq+eEmHBF/IiMJrRaslI8Oo6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGFc/W0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dhTFyu3T8DiRLg3gQpWGqrtwyq8vy3c0E2qZXbYeNos1QfGTRlBQjgYJFkq5t3+C0v/lXdIXum39YJYwOvJRd+IKEyulzidtAGdC1UqmdpppN7r5FbV+midcHtss9TFcMY7vjSJ9omnx8o6699Yy5aDjnOGoxUrVLWkiP4o88ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaOhjUod; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGFc/W0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CE51F0089E;
-	Tue, 13 Oct 2026 12:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaOhjUod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6791F000FF;
+	Tue, 13 Oct 2026 12:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895812;
-	bh=A7I0NEtX+6EmWvozJefu6/WsQhR2r0m0kNQqU5oUM28=;
+	s=korg; t=1791895815;
+	bh=LIsodOStYiuSOt0VhH26sBmErhp89gcSTFPnQl2Tkss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cGFc/W0jApiZwHEftVzRxDNGokgioEMl394H7x56d9I+L+oSa1fSMkNWrpMCG86/w
-	 ThgyKT1LbLAcz0iJ2UEPfq2rtsIvMecudLyui1ieM+oujm1p9ltfjMe3FECHxLROKF
-	 p4eSZshdLqk3S8pIno4YtosZQMHnktJHa73rzJtY=
+	b=iaOhjUodJlRB36ScWKJJ1IZ0QK+8DPDiWrPDT8YFOW2Eup/PKWvJXudRyzjD5X+sQ
+	 dQ2APB/xBQAZxvTpbUDqWecpiLGmegVQ7bcJdo1ifGEqKy8BTK/ogU5KbWoBZl3SjF
+	 lOeYPtHY6Yk4HCKY7ZCd4QAOw9p4Zyk7CeALSWxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 400/497] net/smc: protect clcsock lifetime in smc_getname
-Date: Tue, 13 Oct 2026 13:39:27 +0200
-Message-ID: <20261013112917.385093504@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.12 401/497] net: bridge: avoid recursive multicast port cleanup
+Date: Tue, 13 Oct 2026 13:39:28 +0200
+Message-ID: <20261013112917.408170280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,86 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-commit 64a6b36b0e1855288080bc5f89769f27d6dc03c8 upstream.
+commit 5158353121bae4f552cb677ce8c5c3ef52f93a0d upstream.
 
-smc_getname() dereferences smc->clcsock without holding
-clcsock_release_lock. Link-group termination can release the CLC socket
-through smc_close_active_abort() while the SMC socket is still open,
-for example after shutdown(SHUT_WR).
+br_multicast_sg_del_exclude_ports() removes automatically added STAR_EXCL
+port groups by calling br_multicast_del_pg(). For S,G entries, that
+deletion calls back into br_multicast_sg_del_exclude_ports(), so a large
+number of STAR_EXCL ports consumes one kernel stack frame per port and can
+hit the stack guard page.
 
-A getsockname() caller can load smc->clcsock, then the termination worker
-can clear the pointer and call sock_release() before the caller accesses
-clcsock->ops or invokes getname(). This causes a use-after-free; if the
-worker clears the pointer before the load, it causes a NULL dereference.
-The syscall's file reference keeps the SMC socket alive but does not
-prevent asynchronous release of its CLC socket.
+Keep the complete port-group deletion path for cleanup, but suppress the
+S,G exclude-port cleanup while that helper is already walking the same
+entry. Normal deletion callers retain the existing behavior.
 
-KASAN reported the following with test-only timing instrumentation:
-
-  BUG: KASAN: slab-use-after-free in smc_getname+0x19e/0x1b0
-  Read of size 8 at addr ffff888109abb4e0 by task poc/103
-  Call Trace:
-   smc_getname+0x19e/0x1b0
-   do_getsockname+0xe5/0x170
-   __sys_getsockname+0x8c/0x100
-
-  Allocated by task 95:
-   sock_alloc_inode+0x1e/0x280
-   sock_alloc+0x3d/0x240
-   __sock_create+0x7e/0x430
-   smc_create+0x121/0x240
-
-  Freed by task 0:
-   kmem_cache_free+0xcc/0x340
-   rcu_core+0x50a/0x1850
-
-  Last potentially related work creation:
-   evict+0x446/0x6c0
-   smc_clcsock_release+0xa8/0xd0
-   smc_close_active_abort+0x26a/0x3a0
-   __smc_lgr_terminate.part.0+0x137/0x2e0
-
-Hold clcsock_release_lock across the pointer check and the getname()
-callback to serialize with smc_clcsock_release(). Return -EBADF if the
-CLC socket has already been released, preserving the existing peer
-state check and the callback's return value otherwise.
-
-Fixes: b03faa1fafc8 ("net/smc: postpone release of clcsock")
+Fixes: 8266a0491e92 ("net: bridge: mcast: handle port group filter modes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20261008084444.787449-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/af_smc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/bridge/br_multicast.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -2789,6 +2789,7 @@ int smc_getname(struct socket *sock, str
- 		int peer)
- {
- 	struct smc_sock *smc;
-+	int rc = -EBADF;
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -81,6 +81,10 @@ __br_multicast_add_group(struct net_brid
+ 			 bool blocked);
+ static void br_multicast_find_del_pg(struct net_bridge *br,
+ 				     struct net_bridge_port_group *pg);
++static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++				  struct net_bridge_port_group *pg,
++				  struct net_bridge_port_group __rcu **pp,
++				  bool sg_del_exclude_ports);
+ static void __br_multicast_stop(struct net_bridge_mcast *brmctx);
  
- 	if (peer && (sock->sk->sk_state != SMC_ACTIVE) &&
- 	    (sock->sk->sk_state != SMC_APPCLOSEWAIT1))
-@@ -2796,7 +2797,11 @@ int smc_getname(struct socket *sock, str
- 
- 	smc = smc_sk(sock->sk);
- 
--	return smc->clcsock->ops->getname(smc->clcsock, addr, peer);
-+	mutex_lock(&smc->clcsock_release_lock);
-+	if (smc->clcsock)
-+		rc = smc->clcsock->ops->getname(smc->clcsock, addr, peer);
-+	mutex_unlock(&smc->clcsock_release_lock);
-+	return rc;
+ static int br_mc_disabled_update(struct net_device *dev, bool value,
+@@ -458,7 +462,7 @@ static void br_multicast_sg_del_exclude_
+ 	for (pp = &sgmp->ports;
+ 	     (p = mlock_dereference(*pp, sgmp->br)) != NULL;) {
+ 		if (!(p->flags & MDB_PG_FLAGS_PERMANENT))
+-			br_multicast_del_pg(sgmp, p, pp);
++			__br_multicast_del_pg(sgmp, p, pp, false);
+ 		else
+ 			pp = &p->next;
+ 	}
+@@ -799,9 +803,10 @@ static void br_multicast_destroy_port_gr
+ 	kfree_rcu(pg, rcu);
  }
  
- int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+-void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
+-			 struct net_bridge_port_group *pg,
+-			 struct net_bridge_port_group __rcu **pp)
++static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++				  struct net_bridge_port_group *pg,
++				  struct net_bridge_port_group __rcu **pp,
++				  bool sg_del_exclude_ports)
+ {
+ 	struct net_bridge *br = pg->key.port->br;
+ 	struct net_bridge_group_src *ent;
+@@ -816,7 +821,8 @@ void br_multicast_del_pg(struct net_brid
+ 	if (!br_multicast_is_star_g(&mp->addr)) {
+ 		rhashtable_remove_fast(&br->sg_port_tbl, &pg->rhnode,
+ 				       br_sg_port_rht_params);
+-		br_multicast_sg_del_exclude_ports(mp);
++		if (sg_del_exclude_ports)
++			br_multicast_sg_del_exclude_ports(mp);
+ 	} else {
+ 		br_multicast_star_g_handle_mode(pg, MCAST_INCLUDE);
+ 	}
+@@ -828,6 +834,13 @@ void br_multicast_del_pg(struct net_brid
+ 		mod_timer(&mp->timer, jiffies);
+ }
+ 
++void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++			 struct net_bridge_port_group *pg,
++			 struct net_bridge_port_group __rcu **pp)
++{
++	__br_multicast_del_pg(mp, pg, pp, true);
++}
++
+ static void br_multicast_find_del_pg(struct net_bridge *br,
+ 				     struct net_bridge_port_group *pg)
+ {
 
 
