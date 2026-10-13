@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0175147604A;
-	Tue, 13 Oct 2026 12:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1382F4CDA2E;
+	Tue, 13 Oct 2026 12:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894229; cv=none; b=bbIZfurY2l7OhXrOhmvfexsZKTmR3PLTbGa3ELTzu3b3MwVowN/20f890QUMxloWZE2xH5a6FGIY9G08M8dtEud7i1lVr3yw7xNKxNT7U2XagzCffEB4LkMN0JXlz0CwdEmp81fiScneEbNJpd0OavgVnw7915l0n2Abea9htc0=
+	t=1791894233; cv=none; b=VZE6AHEAQEXT1uY8EnOps7V+/FNE8QGVyh/xUoBkZzgLAaqFvFWkADeKH2ArhnkXAFL5uC2Xq7p9dTnj2aiMQcYKWqH6TppRql89BrVIwCVXHuACdNT/1JI4DhO79HoKDyGcK//8Fqt9pudaNebtGMZlwTSEEpkYhkwFqkTKcz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894229; c=relaxed/simple;
-	bh=QCbrdXyG360YF1XQhK09+fkGfHbHRorjlgIzE6jZVL4=;
+	s=arc-20240116; t=1791894233; c=relaxed/simple;
+	bh=BhTZZiZA59ghWyAdcbtDmO9G8ZTmtJNyahsA1qvAIBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stoyut3ZuIsN6xYlRBGPTedQIgZgtyf1BlVJ1fmRp55SHXuygUn4q+llixv2ajW1fkTl7LASXbihbC+K75bN6TcOR2FmDUcDVwdPLv7VKsd57z/5AGP5QS8mYMQpYwtWTlsFXU4O1o6f7kIJBOHWdZw3/lY37tl7G/FmG9yRwf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixOGC9u1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rju4cBOz+9jaOObqbJHM8Tc8lzuOe079QwuKfPhgiJ+sv1y1VU6Tf/MAwhLez+i6LtF/CY0INRHFX7wBINluympqetjf5yjc0R8U2SyoYEqvMdvK57HZqVHEzAd/iyPPJRewPO2/6tq3ayvwDKvHUNsI9I50T64l+e49OnJF2ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpDg425F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixOGC9u1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7161F000FF;
-	Tue, 13 Oct 2026 12:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpDg425F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D951F000FF;
+	Tue, 13 Oct 2026 12:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894227;
-	bh=Zk3MmelrZG3DuKt3hxGScoXoQAuUAE9OD1pkEsX3Cl8=;
+	s=korg; t=1791894231;
+	bh=mqr5+cRKyY+J08jWKYSCHfJB4ctRTfW1dKYtfKR2PcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ixOGC9u1/YazM7uPdkZMJ1YwbuXpj4nTMWtGIBMhuHqxZa8518b6iFRLvMf0oki5i
-	 F8W9UpI7FFd+XmceyYJ5oRSVgPqZTjofhd4xFW+knIkk8r2HCXHwqVqpxFzZAsOswx
-	 ylNa5cSWisjLyy/SvyDqnIhie+ygwDyVfOpxdRX4=
+	b=rpDg425F/VH0U1a6+dpi9CzXM66cDEd/cv7G26YHbGAigq1djIwRayHW04B83fZ9N
+	 42gDSVhn2783L0AJ/xgzrnHg6EPCAj6LAfVH95G12n2l6OzJs6n4YWQ9VT3yIb9FR/
+	 chnl1NTIV2NTIT2UM9CChKCqM+DmOhAjuD7hAgzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	NeilBrown <neil@brown.name>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 483/621] bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
-Date: Tue, 13 Oct 2026 13:37:58 +0200
-Message-ID: <20261013112932.294853152@linuxfoundation.org>
+Subject: [PATCH 6.18 492/621] nfsd: use workqueue enable/disable APIs for v4_end_grace sync
+Date: Tue, 13 Oct 2026 13:38:07 +0200
+Message-ID: <20261013112932.503405216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,55 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 2aaf67f0516fde29620d0edfc29c01b9ea7ad430 ]
+[ Upstream commit 27e383ddeb3c88e20874c545285f2dce1a98f56a ]
 
-check_kfunc_args() detects a kfunc argument named rdonly_buf_size or
-rdwr_buf_size and stores reg->var_off.value into meta->r0_size, a u64,
-and does not bound it. check_kfunc_call() later copies that value into
-the returned register's mem_size field:
+"nfsd: provide locking for v4_end_grace" introduced a
+client_tracking_active flag protected by nn->client_lock to prevent
+the laundromat from being scheduled before client tracking
+initialization or after shutdown begins. That commit is suitable for
+backporting to LTS kernels that predate commit 86898fa6b8cd
+("workqueue: Implement disable/enable for (delayed) work items").
 
-  meta->r0_size = reg->var_off.value;
-  ...
-  regs[BPF_REG_0].mem_size = meta.r0_size;
+However, the workqueue subsystem in recent kernels provides
+enable_delayed_work() and disable_delayed_work_sync() for this
+purpose. Using this mechanism enable us to remove the
+client_tracking_active flag and associated spinlock operations
+while preserving the same synchronization guarantees, which is
+a cleaner long-term approach.
 
-regs[BPF_REG_0].mem_size is u32. A constant whose upper 32 bits are set
-gets truncated instead of causing a load-time rejection, so the verifier
-records a PTR_TO_MEM register with an approximately 4 GiB mem_size for
-whatever allocation the kfunc returned. A later access check against
-that register uses the truncated, wrong bound.
-
-Reject rdonly_buf_size/rdwr_buf_size values that exceed U32_MAX at the
-point meta->r0_size is set.
-
-Fixes: eb1f7f71c126 ("bpf/verifier: allow kfunc to return an allocated mem")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260709155837.1879230-2-main.kalliope@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: NeilBrown <neil@brown.name>
+Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 11a5fe42e181 ("nfsd: convert nfsd_net boolean flags to unsigned long flags word")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfsd/netns.h     |  1 -
+ fs/nfsd/nfs4state.c | 22 +++++++++-------------
+ 2 files changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index c1e46c0cce981..47549e988f2c7 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13410,6 +13410,11 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 				}
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index f3b440ae98fed..41b49f86e5baa 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -67,7 +67,6 @@ struct nfsd_net {
+ 	struct lock_manager nfsd4_manager;
+ 	bool grace_ended;
+ 	bool grace_end_forced;
+-	bool client_tracking_active;
+ 	time64_t boot_time;
+ 	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
  
- 				meta->r0_size = reg->var_off.value;
-+				if (meta->r0_size > U32_MAX) {
-+					verbose(env, "R%d rdonly/rdwr_buf_size exceeds u32 max\n",
-+						regno);
-+					return -EINVAL;
-+				}
- 				ret = mark_chain_precision(env, regno);
- 				if (ret)
- 					return ret;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index fbaf2f1352748..57d235fc39ac8 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6805,14 +6805,14 @@ bool nfsd4_force_end_grace(struct nfsd_net *nn)
+ {
+ 	if (!nn->client_tracking_ops)
+ 		return false;
+-	spin_lock(&nn->client_lock);
+-	if (nn->grace_ended || !nn->client_tracking_active) {
+-		spin_unlock(&nn->client_lock);
++	if (READ_ONCE(nn->grace_ended))
+ 		return false;
+-	}
++	/* laundromat_work must be initialised now, though it might be disabled */
+ 	WRITE_ONCE(nn->grace_end_forced, true);
++	/* mod_delayed_work() doesn't queue work after
++	 * nfs4_state_shutdown_net() has called disable_delayed_work_sync()
++	 */
+ 	mod_delayed_work(laundry_wq, &nn->laundromat_work, 0);
+-	spin_unlock(&nn->client_lock);
+ 	return true;
+ }
+ 
+@@ -9201,7 +9201,6 @@ static int nfs4_state_create_net(struct net *net)
+ 	nn->boot_time_bt = ktime_get_boottime_seconds();
+ 	nn->grace_ended = false;
+ 	nn->grace_end_forced = false;
+-	nn->client_tracking_active = false;
+ 	nn->nfsd4_manager.block_opens = true;
+ 	INIT_LIST_HEAD(&nn->nfsd4_manager.list);
+ 	INIT_LIST_HEAD(&nn->client_lru);
+@@ -9217,6 +9216,8 @@ static int nfs4_state_create_net(struct net *net)
+ 	INIT_LIST_HEAD(&nn->blocked_locks_lru);
+ 
+ 	INIT_DELAYED_WORK(&nn->laundromat_work, laundromat_main);
++	/* Make sure this cannot run until client tracking is initialised */
++	disable_delayed_work(&nn->laundromat_work);
+ 	INIT_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
+ 	get_net(net);
+ 
+@@ -9284,9 +9285,7 @@ nfs4_state_start_net(struct net *net)
+ 	locks_start_grace(net, &nn->nfsd4_manager);
+ 	nfsd4_client_tracking_init(net);
+ 	/* safe for laundromat to run now */
+-	spin_lock(&nn->client_lock);
+-	nn->client_tracking_active = true;
+-	spin_unlock(&nn->client_lock);
++	enable_delayed_work(&nn->laundromat_work);
+ 	if (nn->track_reclaim_completes && nn->reclaim_str_hashtbl_size == 0)
+ 		goto skip_grace;
+ 	printk(KERN_INFO "NFSD: starting %lld-second grace period (net %x)\n",
+@@ -9335,10 +9334,7 @@ nfs4_state_shutdown_net(struct net *net)
+ 
+ 	shrinker_free(nn->nfsd_client_shrinker);
+ 	cancel_work_sync(&nn->nfsd_shrinker_work);
+-	spin_lock(&nn->client_lock);
+-	nn->client_tracking_active = false;
+-	spin_unlock(&nn->client_lock);
+-	cancel_delayed_work_sync(&nn->laundromat_work);
++	disable_delayed_work_sync(&nn->laundromat_work);
+ 	locks_end_grace(&nn->nfsd4_manager);
+ 
+ 	INIT_LIST_HEAD(&reaplist);
 -- 
 2.53.0
 
