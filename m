@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95D4A35;
-	Tue, 13 Oct 2026 12:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0296D4A35;
+	Tue, 13 Oct 2026 12:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895207; cv=none; b=pxd3A28v6Y/slG/RYdqSQdKMqdnCB1x3t67QgF8F72Lx5qgXQ6v+C50ZIMbAf2IN+gTYDgdJ/1RIlPwxUvhzoT5ZuslWcmIkUgR0osHHVUxp+yEs2PsoJRG8NZ7IZAmaHdDoX587ai+EcpqXJB6oB9kPX9rKUSLDHkosgd3eqLU=
+	t=1791895211; cv=none; b=mU4oyFe8RihFtWrzsPSVoqI7eCG4xVKFy7eA/bQQypbfXTrfu5DVD68fa59/iLWo3vOoNcp76HkuXgPYUbHEdpazcNWBtGJ5rFULnk2af+rIItDOv2br5EqglM2hlTApgzk/F+Q4OtgO9hPC4IeGL6jMlpffw3sRcnMjsG941dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895207; c=relaxed/simple;
-	bh=JXJ3Ksru6JJzJcli2cGESAvDDSnplGV2Lrok9ytXUvk=;
+	s=arc-20240116; t=1791895211; c=relaxed/simple;
+	bh=YAjdeoo/O1Jv23SUgdgKHIj1XMdoR8KUr3Xb6f6oWU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbDJIfz01rJ+VRhGv1S3Fxxe/FV8zXTHvbVXhnNNxFA1QVVIs7TFRNDPACHkxh5Y1mYyMCLoIfG1ENe87e1UqDy9AZpyja3z2XUVpGaLlBfy739OMfahftQhITM+T6R8MVxSwZlFnsmosrQpQwwosZvNILe+E5RROUnO+l+iRxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKxpIEuw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cUEhEG8f+IxIja9P8FD0ouUXnlcr+7mRddFpC2fKa7ArnMiE3Fsm6yja5MLHeLM9m/y+qwFnmYHt/xE/4mS6n3VzUTK/fjgG8Eyjxf8jln803ZaXVtHediivSu273HEIve0YjgL37rL8bvhCTJl3r1QkkcgzplhJSiyTLNN1W0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXoB41W5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKxpIEuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30591F000FF;
-	Tue, 13 Oct 2026 12:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXoB41W5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC931F000FF;
+	Tue, 13 Oct 2026 12:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895206;
-	bh=GLaymcEPud+d46yXwkdVVMsl1hlbS+FaZ8NK+DmyOsg=;
+	s=korg; t=1791895209;
+	bh=1ZB8ub49+6nWuvrw6fgXP27eONwKiQW1ijoAfl9bvNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKxpIEuwjM+kWR6gCAWqfVmqfpS/i8mKn3nv4RTbKOZ8bVVDqsZV2wqnZyImQhMhA
-	 2Ff6Id5eY0O0zr5K2GW2sgUjWP7dlCE0YrjFWn1SzqM1bkOinXIfQmDE6Mo5ni7uEm
-	 g3u65ZEosjVCgs0G8W8xUC058/FjJ65o7SrO6PPI=
+	b=AXoB41W5k6d4UntoSFbW+VHIbTP7nqSQKV0PXqnDDvEPYsTRshOcTS4Zg92XpsvwA
+	 6SyUMDPfye1ALldrwgdhP6nkC0Ezv2q177uGiJPXLtY5LMKiRdSOIds1H4Tf5sxmpa
+	 NZo6V6YEMDxthhtuNoJj2EtcvOIt7gMwWfQrLJhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 180/497] Bluetooth: RFCOMM: Fix initial port reference race
-Date: Tue, 13 Oct 2026 13:35:47 +0200
-Message-ID: <20261013112912.161771280@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 198/497] mtd: rawnand: cadence: Initialize IRQ state before requesting IRQ
+Date: Tue, 13 Oct 2026 13:36:05 +0200
+Message-ID: <20261013112912.591974991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,88 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 2d696c1ed3468dcb62578a3911e687110d463520 upstream.
+commit 21f027016b1290d13c30b198ae7a00e6b3d1d5a5 upstream.
 
-For RFCOMM_RELEASE_ONHUP devices, rfcomm_tty_install() and
-__rfcomm_release_dev() both use RFCOMM_TTY_OWNED to decide who drops the
-initial tty_port reference. The release path tests the bit separately
-from the install path setting it, so both can drop that reference.
+The Cadence NAND interrupt handler uses both the IRQ lock and completion
+object. Registering the IRQ before initializing them leaves a window in
+which a pending interrupt can access uninitialized synchronization state.
 
-The synchronous hangup does not prevent this race: port->tty is not
-assigned until tty_port_open(), after installation. The following
-interleaving is possible:
+Initialize them before registering the handler.
 
-  1. Install and release each obtain a reference with rfcomm_dev_get().
-  2. Release observes RFCOMM_TTY_OWNED clear.
-  3. Install sets RFCOMM_TTY_OWNED and drops the initial reference.
-  4. Release drops the same initial reference again.
-  5. TTY cleanup drops its reference and frees the device.
-  6. Release performs its final tty_port_put() on the freed port.
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in tty_port_put+0x22/0x190
-  Write of size 4 at addr ffff8881001d3d5c by task poc/92
-
-  Call Trace:
-   tty_port_put+0x22/0x190
-   rfcomm_dev_ioctl+0x1d4/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
-
-  Allocated by task 88:
-   rfcomm_dev_ioctl+0x8f6/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
-
-  Freed by task 65:
-   kfree+0x131/0x3c0
-   rfcomm_dev_destruct+0x23b/0x2f0
-   release_one_tty+0xc1/0x370
-   process_one_work+0x661/0x1090
-
-Use test_and_set_bit() in both paths so that only the caller that changes
-RFCOMM_TTY_OWNED from clear to set drops the initial reference. Each path
-keeps its own lookup reference until release or TTY cleanup, preserving
-the existing callback ordering and error handling.
-
-Fixes: 80ea73378af4 ("Bluetooth: Fix unreleased rfcomm_dev reference")
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/tty.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -465,7 +465,7 @@ static int __rfcomm_release_dev(void __u
- 	/* Shut down TTY synchronously before freeing rfcomm_dev */
- 	tty_port_tty_vhangup(&dev->port);
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -2888,6 +2888,9 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf_desc;
+ 	}
  
--	if (!test_bit(RFCOMM_TTY_OWNED, &dev->status))
-+	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
++	spin_lock_init(&cdns_ctrl->irq_lock);
++	init_completion(&cdns_ctrl->complete);
++
+ 	if (devm_request_irq(cdns_ctrl->dev, cdns_ctrl->irq, cadence_nand_isr,
+ 			     IRQF_SHARED, "cadence-nand-controller",
+ 			     cdns_ctrl)) {
+@@ -2896,9 +2899,6 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf;
+ 	}
  
- 	tty_port_put(&dev->port);
-@@ -727,10 +727,9 @@ static int rfcomm_tty_install(struct tty
- 	 * when the last process closes the tty. The behaviour is expected by
- 	 * userspace.
- 	 */
--	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags)) {
--		set_bit(RFCOMM_TTY_OWNED, &dev->status);
-+	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags) &&
-+	    !test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
--	}
- 
- 	return 0;
- }
+-	spin_lock_init(&cdns_ctrl->irq_lock);
+-	init_completion(&cdns_ctrl->complete);
+-
+ 	ret = cadence_nand_hw_init(cdns_ctrl);
+ 	if (ret)
+ 		goto disable_irq;
 
 
