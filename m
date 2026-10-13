@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B04F3913;
-	Tue, 13 Oct 2026 11:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB23D47CA69;
+	Tue, 13 Oct 2026 11:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892331; cv=none; b=nvvnEKnVB4LYlAIDVjMPgOFdb2tqVwO9dteZ1VF1hMQRsTR9hJkzX1IOjdEtoxFU3YK9gPSevHgga8lg3tNG35ifzR0p9poL2eanxOPOYN5ZOLnHTI9aYSswzbK1FWPJDf5wLq4hCeKVBbTtezLuxbQi8Z//QpXb0fadTO8BtSg=
+	t=1791892333; cv=none; b=CvWobgheX6uuK8zX064QMl/czAiRoxlDMU9nu0eCe2DLjC3HBdFElg5VA8ZTrYsYl7Imv8fPgrwS+DEfoGv/JSz1V4mfgR5i7HIVEEFwEHsIYHCh9aFVrP7EOrBvnmFozSDB5wZFoaSassvnoKSr2pEUyC9pna2HDGYBemm9vh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892331; c=relaxed/simple;
-	bh=s1hMhZTJG3FKWFavNBLjaJOURZ7pcTi963kWMNMZrig=;
+	s=arc-20240116; t=1791892333; c=relaxed/simple;
+	bh=Fs/AKcjmR3MGD+gqgkuhD42gXLOubCxFTmcFo3VtVig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N22HNReKUeJSTBSrNliiYFaDOjDrp4xK/4iD2QBcBrZmQmzM1xP3D8OMoKN3yqWLLCIqNY9SuKTMcjbmaO2bySjxyFP1PJ360F8iglPvMYFpJV0FV+aPL2fbgaVJGhLxI+LRYXrZhJMcTYuzeA5yiQ1FlSFHwSAOHmvFPUp4V18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDJJJvKu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FB42+DiEPrlNXW+lCWvgnch7Op15Vzmvp8PgqgXr3tVo84qR/5bpRuk0AD5HjY0mrVneb08mS7fB8TU8j7J6d4OPdpIrF0/eJfVB3Ohdu5QI5WFIf/cV3Y/lBDvE5XVQ8G3h94apMk5PEgEQ/JmRExhbAW9LwaBxVN7r+Lbn2FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPiDQFHr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDJJJvKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189A21F000FF;
-	Tue, 13 Oct 2026 11:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPiDQFHr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234E81F000FF;
+	Tue, 13 Oct 2026 11:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892329;
-	bh=knNjV8aMtSmQ6XM6tVvsxUUrlKeRKnfMv+u8AieIteQ=;
+	s=korg; t=1791892332;
+	bh=sDRatuuF28ABe9gDqtgk9p6Pm/G/QIVZc6lJALw0kHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDJJJvKuFav3ybnHrUBrVd+uyO7DD9YBC6LLf7bfC52i80Rzh6ryQBl9FQVcm9Y7j
-	 f8LESz/sfH5xDR2q0E7kfilGTFVHgzKsCB9yih6k0gCB+ixDzY/D6UFgqkr4I8YFX9
-	 431dumBxJW5KBHFSE6Av0CQpVvKyYfsNmlcbP6Zc=
+	b=UPiDQFHrC43DHLjebRnyG5HRpHVkpXCe2PzQUMUYd960jTXqR317y/zquCq7xSUyF
+	 oeLikPZ1VpAGKwrtRr9BYREkNT6X66RfY2sAjUg7P8n/B8XIaB5i28VCTSu3PN6gtw
+	 OaEpeW+isBBgMfMqKYhiXP401w/Oefwxp+8x+F+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saleel Kudchadker <Saleel.Kudchadker@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Haojie Li <lihaojie@kylinos.cn>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 138/281] drm/amdkfd: align SDMA doorbell base for shader doorbell writes
-Date: Tue, 13 Oct 2026 13:37:34 +0200
-Message-ID: <20261013112858.501505466@linuxfoundation.org>
+Subject: [PATCH 7.2 139/281] drm/amdkfd: fix dma_buf reference leak in get_dmabuf_info
+Date: Tue, 13 Oct 2026 13:37:35 +0200
+Message-ID: <20261013112858.525555241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,113 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
+From: Haojie Li <lihaojie@kylinos.cn>
 
-commit f145d5b3f740de05d85257acdc82f6877180f5c6 upstream.
+commit e6895021a328594368a2a19406a53ffca1ce51c7 upstream.
 
-On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
-routed to an SDMA engine at 32-byte (4 doorbell index) granularity.
-SDMA engine doorbell ranges are 10 indices apart, so the range of every
-odd engine starts 2 indices into a 4-index block that begins in the
-previous engine's range. A shader ringing the doorbell of a queue on an
-odd engine therefore rings the previous engine instead. The intended
-queue never sees the doorbell, so its work stalls and the application
-hangs.
+When kzalloc fails for metadata_buffer in
+amdgpu_amdkfd_get_dmabuf_info(), the function returns -ENOMEM directly
+without calling dma_buf_put(), leaking the dma_buf reference obtained
+earlier via dma_buf_get().
 
-Align the per-engine doorbell base up to a 4-index boundary on these
-ASICs. Each engine only uses 4 of its 10 indices, so the aligned base
-plus the queue offset stays within the engine's range. Even engines are
-already aligned, so only the doorbell IDs of odd-engine queues change.
+Fix both issues by:
+- Adding an error check after the first amdgpu_bo_get_metadata() call
+- Replacing the direct return with r = -ENOMEM and goto out_put to
+  ensure dma_buf_put() is called on all error paths
 
-Only doorbells rung by the device itself are routed this way. Doorbell
-writes from the host, including the kernel's own SDMA rings, are not
-affected.
-
-The doorbell ID of an SDMA queue is saved in CRIU checkpoints and
-checked again on restore. A checkpoint taken before this change that
-contains an SDMA queue on an odd engine will fail to restore with
--EINVAL. This is intentional: the restored process still holds the old
-doorbell address, so accepting the stale ID would bring back the same
-stall.
-
-Tested on MI300X with a shader-rung SDMA doorbell test: queues on odd
-engines hung before this change and complete with it.
-
-v2: use u32 instead of uint32_t for the new locals (checkpatch)
-v3: name the routing granularity, use dev->node_id, document the
-    layout invariants, describe impact
-v4: express the granularity in doorbell indices, drop unrelated
-    cleanups, explain the CRIU restore behavior, add test note
-
-Fixes: 6df442a03d1a ("drm/amdgpu: add new doorbell assignment table for aqua_vanjaram")
-Signed-off-by: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f54ce9e8cbd3 ("drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl")
+Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ee1379e6d7da47bdf7a8d5b89c2d1b28473701fb)
+(cherry picked from commit ffa699553332f8caf8688d312279ddcea9e3c141)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   32 ++++++++++++++----
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h                 |    7 +++
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -599,12 +599,32 @@ static int allocate_doorbell(struct qcm_
- 		 * we need the physical sdma engine id in order to get the
- 		 * correct doorbell offset.
- 		 */
--		uint32_t valid_id = idx_offset[qpd->dqm->dev->node_id *
--					       get_num_all_sdma_engines(qpd->dqm) +
--					       q->properties.sdma_engine_id]
--						+ (q->properties.sdma_queue_id & 1)
--						* KFD_QUEUE_DOORBELL_MIRROR_OFFSET
--						+ (q->properties.sdma_queue_id >> 1);
-+		u32 engine_base = idx_offset[dev->node_id *
-+					     get_num_all_sdma_engines(qpd->dqm) +
-+					     q->properties.sdma_engine_id];
-+		u32 valid_id;
-+
-+		/*
-+		 * With the aqua_vanjaram doorbell layout, a shader doorbell
-+		 * write whose 32-byte block starts in the previous engine's
-+		 * range rings that engine instead. Engine ranges are 10
-+		 * indices apart (sdma_doorbell_range = 20 dwords, halved for
-+		 * 8-byte doorbells, in aqua_vanjaram_doorbell_index_init()),
-+		 * which puts odd engines 2 indices into a shared block.
-+		 * Aligning costs at most 2 indices, and 8 queues per engine use
-+		 * only 4 of the 10, so the aligned base stays in range. The
-+		 * 512-index mirror offset keeps the alignment.
-+		 */
-+		if (KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 3) ||
-+		    KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 4) ||
-+		    KFD_GC_VERSION(dev) == IP_VERSION(9, 5, 0))
-+			engine_base = ALIGN(engine_base,
-+					    KFD_SDMA_SHADER_DOORBELL_GRANULARITY);
-+
-+		valid_id = engine_base +
-+			   (q->properties.sdma_queue_id & 1) *
-+			   KFD_QUEUE_DOORBELL_MIRROR_OFFSET +
-+			   (q->properties.sdma_queue_id >> 1);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -597,14 +597,18 @@ int amdgpu_amdkfd_get_dmabuf_info(struct
+ 		/* first get metadata_size by buffer = NULL */
+ 		r = amdgpu_bo_get_metadata(bo, NULL, 0,
+ 					   metadata_size, NULL);
++		if (r)
++			goto out_put;
  
- 		if (restore_id && *restore_id != valid_id)
- 			return -EINVAL;
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -132,6 +132,13 @@
-  */
- #define KFD_QUEUE_DOORBELL_MIRROR_OFFSET 512
+ 		/* user buf_size is bigger than bo metadata_size
+ 		 * allocate a buf at kernel space and copy */
+ 		if (*metadata_size <= buffer_size) {
+ 			*metadata_buffer = kzalloc(*metadata_size, GFP_KERNEL);
  
-+/*
-+ * On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
-+ * routed to an SDMA engine at 32-byte granularity, i.e. 4 indices with the
-+ * 8-byte SDMA doorbells used on SOC15.
-+ */
-+#define KFD_SDMA_SHADER_DOORBELL_GRANULARITY 4
-+
- /**
-  * enum kfd_ioctl_flags - KFD ioctl flags
-  * Various flags that can be set in &amdkfd_ioctl_desc.flags to control how
+-			if (!*metadata_buffer)
+-				return -ENOMEM;
++			if (!*metadata_buffer) {
++				r = -ENOMEM;
++				goto out_put;
++			}
+ 
+ 			r = amdgpu_bo_get_metadata(bo, *metadata_buffer, *metadata_size,
+ 						   NULL, &metadata_flags);
 
 
