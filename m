@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5B24E7802;
-	Tue, 13 Oct 2026 12:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21C45013AA;
+	Tue, 13 Oct 2026 12:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895998; cv=none; b=Ka2Zu7TYav9AxX+7YgklW+cF4VWV/yn4krMUeC+sJs105oZY7FlK7f3uy3io+Ph4yMtDpOX20FWkB5g3Y09SWaUfiaN9q7WqQBRCzudksSE+2m1UHSPj6wvFqOPWigqohkxahxHEhNmV+lCrqnTYpRU8wnkTxVUEqZDT72zPW1w=
+	t=1791896001; cv=none; b=HvDqCpqv3HeFdWc08svIulul1ZsKit7VrWFrusfhQU3PbIQcYB4PnpXFXKVOfXUO/zfMZ0Rpakr73U37teakZfcGiBuJqYoeY5Mm9R0YIXI8zSyUw7Nk3j5s+a0wMhnfya7qvZtWAk1Z8h6gKR0DS0b8FDh505WX12y69ntmSKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895998; c=relaxed/simple;
-	bh=rLIpCkWyEOMpXJBs4F0h8ShTVg5Nt8mRyl1IYkuBax4=;
+	s=arc-20240116; t=1791896001; c=relaxed/simple;
+	bh=VycmRM1SZ/clsO6FcMMx1boJnE7Cm3PmQBB/dVbl/Zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A0Ifj3RG4Evsz9VFSetvFFd+fijwdpHdgqW/J3pt4KDjxnfrTXqYmIVVFSBp7b4sPhyAq4ICeQAEmBOGEdY9X2G7QEm5TSIEyhKofzfDnoqDvkJr/NfpqXbSLANCmVn4irC1ax0uzQ1qbNGgsn2FyURwEwqxOgRCMfhY58riJTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO9iBDZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dq5nOnZVjRwi6j8OUHVhpls9pzXZzl/wJRiw2dqlZIx8cry56IcF/VSQ/i7hhrkOU0/9NrBNFdbKw1ZvAplxMJ3+iAB/fy4J8ARCjUB3VLJNzPV4hbcnFtdOJoJSAdjXMzY7D6yUi4iUwPI3+OlmM0YPob0RcDOQ+hLxitkW+AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYefLMgM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO9iBDZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AE91F000FF;
-	Tue, 13 Oct 2026 12:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYefLMgM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A5C1F000FF;
+	Tue, 13 Oct 2026 12:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895997;
-	bh=7ArzBJIO5jyP0VZcfGkA5Ac6BWIrTQJHI4v+l3nXtTg=;
+	s=korg; t=1791896000;
+	bh=kU0oLHjUDIgVpDQ+0A/mep4pKwUC8uLeLBkgoxxNccc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NO9iBDZFbwo/bJ8OCpvt3g2d5HiwyFarLFdcqoilscvpVVDWUJrTegYSanKAY17Vi
-	 n7hiYr0h6FSGX0KMAtRkdZemtJxUTzcRnlDwyF+4xXHTF8pb5WC6s7Z4ZubkwwH/ku
-	 o3iADJqXgU9h294s1BpaNvEeAHIEP4bFFrGcFmmM=
+	b=iYefLMgMNBLmnWFC/soeErLaNJwOJpIEDMJX61KW+8dt2nBzjcIgQQyksm4yOYOj6
+	 sQk5yrEOFvZipef6e7XKfIwvwL9sq/Z9MmlzuafNHtdPesSmfC0iN1PjfATbhPT0Bv
+	 MnRJUpmBArYuEk16pmxYsewvHSdhFOyeb7Ird96I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 419/497] Bluetooth: btintel_pcie: use managed IRQ teardown
-Date: Tue, 13 Oct 2026 13:39:46 +0200
-Message-ID: <20261013112917.832666151@linuxfoundation.org>
+Subject: [PATCH 6.12 420/497] Bluetooth: hci_sock: Serialize dead-device detachment
+Date: Tue, 13 Oct 2026 13:39:47 +0200
+Message-ID: <20261013112917.856000263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,60 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 25016fe8c1ed0fccae107bd629089139ffbafe08 upstream.
+commit 381a0925c556a8d91a80a9b9e3e86651d60ffee3 upstream.
 
-The PCIe driver registers its MSI-X handlers with
-devm_request_threaded_irq(), but remove() uses free_irq() directly. The
-devres actions then retain registrations and attempt to release them again
-during device cleanup.
+Rebinding an HCI socket after its controller is unregistered can race
+monitor control replay and crash the kernel. hci_sock_bind() clears
+hci_pi(sk)->hdev and drops the device reference under only the socket
+lock, whereas send_monitor_control_replay() holds hci_sk_list.lock for
+reading.
 
-Use devm_free_irq() for the remove path and for already registered vectors
-when a later setup request fails. This removes the managed resource at the
-same time as the IRQ is released and keeps MSI-X vector teardown ordered
-after IRQ ownership is gone.
+Replay can observe a non-NULL hdev, then bind can clear it and drop the
+last reference before create_monitor_ctrl_open() reads hdev->id. This
+can cause a NULL pointer dereference if the pointer is reloaded, or a
+use-after-free if the old pointer is retained.
 
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+The kernel reported:
+
+  KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
+  RIP: 0010:create_monitor_ctrl_open+0x579/0x800
+  Call Trace:
+   hci_sock_bind+0xd96/0x1190
+   __sys_bind+0x166/0x200
+   __x64_sys_bind+0x6d/0xb0
+   do_syscall_64+0xdd/0x4a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The same missing serialization lets hci_send_to_sock() select a socket
+for the old device and queue its frame after bind has detached the socket
+or installed a new binding.
+
+Take hci_sk_list.lock for writing when clearing the device pointer and
+resetting the socket state. This waits for existing replay and delivery
+readers to finish before detachment and prevents later readers from
+using the old binding. Keep hci_dev_put() outside the critical section
+because the final device release can sleep.
+
+Fixes: e04480920d1e ("Bluetooth: defer cleanup of resources in hci_unregister_dev()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: GPT-6 Astra
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel_pcie.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -902,7 +902,7 @@ static irqreturn_t btintel_pcie_irq_msix
- static int btintel_pcie_setup_irq(struct btintel_pcie_data *data)
- {
- 	int err;
--	int num_irqs, i;
-+	int num_irqs, i, j;
- 
- 	for (i = 0; i < BTINTEL_PCIE_MSIX_VEC_MAX; i++)
- 		data->msix_entries[i].entry = i;
-@@ -931,6 +931,10 @@ static int btintel_pcie_setup_irq(struct
- 						KBUILD_MODNAME,
- 						msix_entry);
- 		if (err) {
-+			for (j = 0; j < i; j++)
-+				devm_free_irq(&data->pdev->dev,
-+					      data->msix_entries[j].vector,
-+					      &data->msix_entries[j]);
- 			pci_free_irq_vectors(data->pdev);
- 			data->alloc_vecs = 0;
- 			return err;
-@@ -1648,7 +1652,7 @@ static void btintel_pcie_remove(struct p
- 		struct msix_entry *msix_entry;
- 
- 		msix_entry = &data->msix_entries[i];
--		free_irq(msix_entry->vector, msix_entry);
-+		devm_free_irq(&pdev->dev, msix_entry->vector, msix_entry);
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1218,8 +1218,10 @@ static int hci_sock_bind(struct socket *
+ 	 */
+ 	hdev = hci_pi(sk)->hdev;
+ 	if (hdev && hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		write_lock(&hci_sk_list.lock);
+ 		hci_pi(sk)->hdev = NULL;
+ 		sk->sk_state = BT_OPEN;
++		write_unlock(&hci_sk_list.lock);
+ 		hci_dev_put(hdev);
  	}
- 
- 	pci_free_irq_vectors(pdev);
+ 	hdev = NULL;
 
 
