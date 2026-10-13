@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE264F3939;
-	Tue, 13 Oct 2026 12:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFD14F475B;
+	Tue, 13 Oct 2026 12:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895020; cv=none; b=iFFx7vapMlAA/9+JjHjJEJjoG7etsVy2ECn0HUDtFI5bCa9aDfQJAvjjXxoOvEoIK/piVzJEbBu9WzsJ5H4n8iMB6lMpzv2ZIgfwG3LoygvMpNKXxdz44iniBkRT7pqukozvFWLKOl1woxAQVc1Brp2g8DIum/aehfgEoqehOfs=
+	t=1791895023; cv=none; b=QVlgz85JZRYP+inRkeW7TiWmJRgk5On0H7L2H4gFfCSYQSsmkO5KYXGePpyJQuLP9Zn6Iyup9uAXqco02kNjLe+96VNNNoUIdlU0b4rn4gog2Vn8YfJqZcC3AZQZ99qy6SSYqAQh6vtvM2hYjUBihD6YGXPHOrwdD+Vn15O5cUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895020; c=relaxed/simple;
-	bh=LlTrK0QeSi0udyachBCd6YmW9c+xp5AA08tBx1g9jc0=;
+	s=arc-20240116; t=1791895023; c=relaxed/simple;
+	bh=IwlCIA7/0XqbmnIut8BvC4Qdfk+MCQFKcAIJ3ObSxnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAJ2OB7w8C6dqI8xwlTHyN/VwKt4SDgzRjRBlA0g00uXn8s58MdfHSx4+ydmTxOAiIGeKOg2q/oGV7UfzkIhUXX5Xu+I1D1FQ9l9uqFLXOJjsiGBcOofeGn6Yb+lZioWg9HRHL+tbUWtCkP5IXKZBoUa9ixvMAAniuVvhaeoYsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o54/WCqT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ldAMuw5OEWE0Bjdewn1pEoTTrxi6v2m34A3nDcQoZ7BA6liTPwcIpCY2UVO2r5tGo4i0SidG/2haGNSfA+UZZca0Rr/p5TWlJXjkRXtWxbWE6s0mJqFBt1tGd9Am0++SP3bEp2YZm2gA9zG3RRojaF6z/u5JvcOPQax1LZWV91A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSW4Uqzc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o54/WCqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A64F1F000FF;
-	Tue, 13 Oct 2026 12:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSW4Uqzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601751F00893;
+	Tue, 13 Oct 2026 12:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895018;
-	bh=WRi2lbAb4L85oBQ6BiJWUgdwCrGuM/l+9v2OXduEmN8=;
+	s=korg; t=1791895022;
+	bh=241cbVCCOupJ7d7sYbeSVMAa1zghH74z3k0m8GE9WWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o54/WCqT5TzrTuK55V3KwJSFBCz7CBJoGNhyYuwpbuPn4Lexl3n/Uo6JvT2Y+LFI+
-	 gqF4HKhIeeanXoglF+YvjCmx9BnGLgnwUA0995M1OM6Q+cQup3x0ozhdOp3uKMGlsA
-	 DdIZQ5jGScr2D/RZSmIf7DprG3mAdCGq92Sa/Emk=
+	b=lSW4UqzceMZGMb9/Wpk1YwJqHuaQhVRiCGJ3LyJQFQvgpUXYKyio1PI8se8oePv3M
+	 xx6QNy4gJ0NJXBI1c2TQyoq1njvvjAyRDzjOqKkJCy5a3UDxmQIAqsk674mG7NpqP/
+	 vltA3jTW0NQXWI8+HQW13JNVWPNI1Fu8MtDpjJ2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/497] virtio_blk: set the zone write granularity
-Date: Tue, 13 Oct 2026 13:34:17 +0200
-Message-ID: <20261013112910.025633791@linuxfoundation.org>
+Subject: [PATCH 6.12 091/497] net: bcmgenet: fix NULL dereference in set_coalesce before first open
+Date: Tue, 13 Oct 2026 13:34:18 +0200
+Message-ID: <20261013112910.050447772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,62 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 684b413b5483f57c890c171b9400076a0143b918 ]
+[ Upstream commit 19419faf58dfe5bcc8a9e60e622976c5f8e3ddc1 ]
 
-virtblk_read_zoned_limits() reads the write granularity that the device
-reports in virtio_blk_zoned_characteristics and assigns it to the
-physical block size and to io_min, but never to the limit that is named
-after it. queue_limits.zone_write_granularity is left at zero, so
-blk_validate_zoned_limits() raises it to the logical block size:
+The Rx ring priv and index are only set in bcmgenet_init_rx_ring(),
+which runs at open. Setting the Rx coalescing parameters on an interface
+that was never opened, e.g. "ethtool -C eth0 rx-usecs 50", dereferences
+a NULL ring->priv. The oops happens with RTNL held, so networking
+stays stuck until a reboot:
 
-	if (lim->zone_write_granularity < lim->logical_block_size)
-		lim->zone_write_granularity = lim->logical_block_size;
+  Unable to handle kernel paging request at virtual address 0000000000002788
+  pc : bcmgenet_set_rx_coalesce.isra.0+0x10/0x88
+  lr : bcmgenet_set_coalesce+0xe8/0x180
+  Call trace:
+   bcmgenet_set_rx_coalesce.isra.0+0x10/0x88 (P)
+   __ethnl_set_coalesce.isra.0+0x490/0x570
+   ethnl_set_coalesce+0x48/0xc0
+   ethnl_default_set_doit+0xf4/0x230
+   genl_family_rcv_msg_doit+0xe8/0x160
+   genl_rcv_msg+0x220/0x2a0
+   netlink_rcv_skb+0x68/0x140
+   genl_rcv+0x40/0x60
+   netlink_unicast+0x338/0x3c0
+   netlink_sendmsg+0x19c/0x3f8
+   __sock_sendmsg+0x64/0xc0
+   __sys_sendto+0x124/0x198
+   __arm64_sys_sendto+0x30/0x48
 
-A device that reports a granularity coarser than its logical block size,
-which is what the field exists to express, therefore has it silently
-reduced. A 512e host managed disk passed through to a guest reports a
-logical block size of 512 and a write granularity of 4096, and the guest
-ends up with a zone write granularity of 512.
+Set priv and index at probe. Writing the registers while the interface
+is down is harmless because open resets the MAC and
+bcmgenet_init_rx_coalesce() reapplies the stored values.
 
-bio_split_alignment() returns lim->zone_write_granularity if it is non-zero
-and bio_split_io_at() may split a bio with as per bio_split_alignment().
-This can real to the write getting rejected by the host drive, as the write
-is not aligned to the physical block size.
+It was observed on a Raspberry Pi CM4, but should apply to all other
+genet devices.
 
-zonefs also takes its block size from bdev_zone_write_granularity(), so it
-would incorrectly use 512 on a disk that requires 4096.
-
-sd_zbc_read_zones() sets the limit from the physical block size for the
-same reason. NVMe ZNS and null_blk leave it unset, but the fallback
-gives the right answer for them, as their write granularity is the
-logical block size. virtio carries a separate value that may exceed it.
-
-Set the zone write granularity from the value that the device reports.
-
-Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://patch.msgid.link/20260918140641.2031075-2-cassel@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9f4ca05827a2 ("net: bcmgenet: Add support for adaptive RX coalescing")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260928105642.856210-1-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 4bedcb49a73a7..789890f3c5ff4 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -741,6 +741,7 @@ static int virtblk_read_zoned_limits(struct virtio_blk *vblk,
- 		dev_warn(&vdev->dev, "zero write granularity reported\n");
- 		return -ENODEV;
- 	}
-+	lim->zone_write_granularity = wg;
- 	lim->physical_block_size = wg;
- 	lim->io_min = wg;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 14e891db97ea8..7da4a2114a771 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -4075,8 +4075,11 @@ static int bcmgenet_probe(struct platform_device *pdev)
+ 	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
  
+ 	/* Set default coalescing parameters */
+-	for (i = 0; i <= priv->hw_params->rx_queues; i++)
++	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
++		priv->rx_rings[i].priv = priv;
++		priv->rx_rings[i].index = i;
+ 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
++	}
+ 
+ 	/* Initialize u64 stats seq counter for 32bit machines */
+ 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
 -- 
 2.53.0
 
