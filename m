@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4824D7D4D;
-	Tue, 13 Oct 2026 11:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F574EE858;
+	Tue, 13 Oct 2026 11:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891980; cv=none; b=I8DsB+JmsNQNUXSfnVHreg2kN6bOgdtZlr3L07SbPrac6x2PiGHvkX1e0mu6fpq9x/2drc5RaKOedZb4H399zPJBIXfeY9e7GR9tY6OuXsVQlsIzb3SlTOtLFqos2rYQTQoSay3ciRz0UucNoFzKbtZUvV39xHXW71abgB5++Ms=
+	t=1791891984; cv=none; b=D8/CrxBga8LyqF+xYhjbw1pwZXlkgHTOfZ9H9VBPWBWdBzYjI/3XW/iqD1ZsOQZTpY00qZ236rB49cRypHZYrePRFCrEcH33MI5WLeTn9Oaj+hh51iV+6FtEogd52Iz+Z0mHW3/sCujx7Jy4z/QTTZa86SR8r9cuH1VGyNnVdno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891980; c=relaxed/simple;
-	bh=GM/96ryhaGmuymIZyGw4l8sPOFXFl2ziMRHddiW5YHc=;
+	s=arc-20240116; t=1791891984; c=relaxed/simple;
+	bh=iro2Z4CVlwyacRK7+jSH6TUlXNPfBgjh93MtvnAMDXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ex/wdtRv2C7HgVDZHMq7+xJdSDMOHb7WQZ5M+KmZUOmbn9evSx2boB/UNcmVth+jwtI+nLi89FM6b5FacLzqbTaKXNj8Ls6LHHRyMuFmk/TcdwjKNiJgDRgwkQx5l9bAkE1KhTEhd4P0sSLa56nV/uywWWC0Bst+CpYqBziOdFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSdFWUbs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E7k/BRl6FOO5x5HA7N0NYOW1Ax+fNcyxCtoInl+bGyUXpvHxSxAK0jrFu6YrgYx2rwnwOJgCEFTYzjjEK5L+cPDpBDLtEL67akZLHmvssjR3OWemNe4POaHQSsvmf5g2tc6TSGaoQU/MJldyvxVCec4wcalr1osPRBhuoP8ZOAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkqAZIC/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSdFWUbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A815C1F00893;
-	Tue, 13 Oct 2026 11:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkqAZIC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F881F000FF;
+	Tue, 13 Oct 2026 11:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891979;
-	bh=0OzuBzh23jbw6QGXmsalB5sKYpv7MrATJqqYAp6+egE=;
+	s=korg; t=1791891982;
+	bh=r9y1nEW7YwAzwiKEXblA3sSl1Pn19+Lu45O8T8b4UUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jSdFWUbsqiXg9wMaokggyd0D0C3Dbn7ZSc//oT+FEUeSxjVSOp/QRiYjGuyTX8ERK
-	 uRov6QNa277ADouP2T69QBPi9wi38IO8IzZKwm3IFTCK8216K0Mu4opqVZFce9HU+O
-	 Y0CyDVos6dMHSNG4Z1KTLVkfyVbiv1P0fPTXjd0k=
+	b=pkqAZIC/2I669el05DgkYAzSQnI6A0TrOq5FSu+kn3JSqIaIjP4hoXv+ooSG0Ybap
+	 a9hll4XLfTTMhoZIgF3/pZuifVnAPhzmJJqRDa+jSrFUuXqnxSd5fy7CdkBHH0HCM9
+	 dwdc50Y9XG3BJWK8LQCX7R4HtgCgkdd6iK4Bedq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.2 020/281] arm64: irq: exclude the softirq stack switch from KCOV
-Date: Tue, 13 Oct 2026 13:35:36 +0200
-Message-ID: <20261013112855.540239989@linuxfoundation.org>
+	Michael Garland <minimelkav@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 021/281] ASoC: amd: yc: Add DMI quirk for Acer Aspire Go 15 (AG15-21P)
+Date: Tue, 13 Oct 2026 13:35:37 +0200
+Message-ID: <20261013112855.564502163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,48 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Michael Garland <minimelkav@gmail.com>
 
-commit a9cd14bfb0c113f1cd77be4349784663bec71bb4 upstream.
+commit d0cb7a7b2a490c381ad97f53155d02a748b60dea upstream.
 
-On IRQ exit, __irq_exit_rcu() drops HARDIRQ_OFFSET before calling
-invoke_softirq(). The arm64 do_softirq_own_stack() wrapper and its
-____do_softirq() trampoline run before __do_softirq() establishes
-softirq context, so KCOV records their PCs in the interrupted task's
-coverage buffer. They also run outside softirq accounting when
-local_bh_enable() reaches do_softirq().
+The Acer Aspire Go 15 (AG15-21P, board MDC Herbag2_MDU) has two PDM
+DMICs connected to the ACP. The BIOS does not set the AcpDmicConnected
+_DSD property, so the acp6x machine driver never registers the DMIC
+card. The existing Herbag_MDU entry does not match this board name, so
+add a DMI quirk for it.
 
-The IRQ-exit coverage makes the KCOV boot selftest fail even after
-the scheduler and timer coverage leaks are suppressed. The generic
-softirq.o is already excluded from KCOV, but that exclusion does not
-cover the separately compiled arm64 wrappers.
+Tested on BIOS V1.11: the acp6x DMIC capture device is registered and
+records audio on both channels.
 
-Exclude irq.o from KCOV instrumentation, as is already done for the
-arm64 entry code. This covers both wrappers even with compilers that
-lack the no_sanitize_coverage attribute. The softirq action functions
-remain instrumented for explicit remote coverage.
-
-Fixes: 8eb858c44b98 ("arm64: run softirqs on the per-CPU IRQ stack")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Michael Garland <minimelkav@gmail.com>
+Link: https://patch.msgid.link/20261005-acp6x-herbag2-quirk-v1-1-a1f2683d758f@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/arm64/kernel/Makefile
-+++ b/arch/arm64/kernel/Makefile
-@@ -25,6 +25,9 @@ KASAN_SANITIZE_stacktrace.o := n
- KCOV_INSTRUMENT_entry-common.o := n
- KCOV_INSTRUMENT_idle.o := n
- 
-+# Softirq stack switching can run outside interrupt context.
-+KCOV_INSTRUMENT_irq.o := n
-+
- # Object file lists.
- obj-y			:= debug-monitors.o entry.o irq.o fpsimd.o		\
- 			   entry-common.o process.o ptrace.o			\
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -762,6 +762,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "MDC"),
++			DMI_MATCH(DMI_BOARD_NAME, "Herbag2_MDU"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "System76"),
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang12"),
+ 		}
 
 
