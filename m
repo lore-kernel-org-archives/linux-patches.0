@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B993246770;
-	Tue, 13 Oct 2026 12:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A173254B3;
+	Tue, 13 Oct 2026 12:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894853; cv=none; b=hFO9OgijxAunk2U/t8M+/eBp9UPwkk9sICgiB3QYTDrBYrikkSmJHDXm7TtBBBp30BZKKosmhF0IfxfnsOdq0OTsCuP4YB/EjUV9Fq3BBrGWpiQZYfC+vUc/XTDKIt9/rePoVLhaSkEi9b5bKm9QIJx++hYH8UyKfg0bEN0svus=
+	t=1791894855; cv=none; b=PFQ5T1eTtFakregxVhZny/bOn/BqCRdaw7GfCyaTbuTsSRXNi9/nReEdvUWqYEWHWxcWFyl8i1roWFxzpv1pdTKi5dsOfUHnm3sjvszuy9knm1TjDc+qeF8X0XZkaz/KPC+Sx0KSV+O3PgCAkVWiFHBC8w6GoxxasbNhaNcD6KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894853; c=relaxed/simple;
-	bh=Wa5obE/QXlpaep5Li2Odt+vbFcRVwvjKr626fBpNg7M=;
+	s=arc-20240116; t=1791894855; c=relaxed/simple;
+	bh=N8061sFkC1fovZk79BuZ+z/dCSVr2wwZW/mzUDIYTxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlC8qiP7D/k6kMGjJiL+hv/6GM3Y/SLcravhcjwqM+/8GG+OBouj5FuTUGF4gBBirhWcErme0kGkDMaruMxGYH5jJNqadVDWkHGDkCxnjvzruvGaL38hc86Ox92Kx0DhG4kssKq/U1RLUQVxnjmoqcYPmZTTbDyuFXzF1BxVqzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErokSv09; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YtmKBAquvKFM80Vjor95dQFHEUrj6zKH/n2GIm05PsQEoWjo8Ry3tvHeNuAOcJII2mo+REkjrbwqitT9A1GaWXYX2pB0LULNdyoEzAi/MsGmcT3fiIBEnQ35dk0zLjvQJIql8mD5Qfrq4V2WDfcis7OtO+y5L3mFkx9qoG8qge0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwDKax+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErokSv09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2ABC1F00893;
-	Tue, 13 Oct 2026 12:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwDKax+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76841F000FF;
+	Tue, 13 Oct 2026 12:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894851;
-	bh=1pIwkaHexexEWD58x70t4AKnC49o+6JrYj1pII5ftck=;
+	s=korg; t=1791894854;
+	bh=/a4lsTKiWKlHs1gBEb+aiDROJPuZ0nAyi0X5fcqtkWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ErokSv09SwYYaOh1ghefUxTxuAmRwOuH7VOD3+WubCjNHZVtI9j6gjeczacdU0c56
-	 sR/nydxGIXXym0nZLEnWD1niyu1+mmrRBGDj0Y8VFXjJYjufQZu1iSoKKA7h77tH8N
-	 zrQ6A0WTRK10LpGQw5EtfuE69cZ39uD64/pVpNiA=
+	b=VwDKax+Nmv1MDxG4roZaVEEKeLXxvguVyFOdaAyMh/5ymdVEgGYcRB6Eo0yZJJn3b
+	 n8bw5YTB6kFaERJ9V8EdxGq89CYY4h51ikfndDve9JuR/e+q8hwZOaCtOIYCKIAXg2
+	 7Mh6V2T1llyRBSCRlJHXA517OqYpeEMBFnqMDqE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 041/497] ALSA: caiaq: unregister the input device when probe fails
-Date: Tue, 13 Oct 2026 13:33:28 +0200
-Message-ID: <20261013112908.864713582@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 077/497] net: systemport: Fix RUNT MIB counter register offset calculation
+Date: Tue, 13 Oct 2026 13:34:04 +0200
+Message-ID: <20261013112909.714633377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,56 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit 0b7bd20f6379bc5e431fd74d866390f5b5b63f3c upstream.
+[ Upstream commit 242935adfeb096f09b29fb2cfcf12f9eb2911fc6 ]
 
-setup_card() registers the input device, whose name and phys point into
-struct snd_usb_caiaqdev, and then goes on to snd_card_register() and
-snd_usb_caiaq_control_init(). If either fails, snd_probe() calls
-snd_card_free(), which frees the device state but leaves the input
-device registered: card_free() only clears the pointer, and the input
-device is unregistered from snd_disconnect() alone. Reading its "uevent"
-attribute afterwards dereferences freed memory:
+In UniMAC hardware, there is a 0xC byte gap between the RX MIB counters
+and the TX MIB counters, and a second 0xC byte gap between the TX MIB
+counters and the RX RUNT MIB counters.
 
-  BUG: KASAN: slab-use-after-free in string+0x4a9/0x4f0
-  Read of size 1 at addr ffff8880208f5043 by task caiaq/4967
-   add_uevent_var+0x183/0x3a0
-   input_dev_uevent+0x162/0x900
-   dev_uevent+0x2f1/0x870
-   uevent_show+0x1ca/0x3a0
-   ...
+In bcm_sysport_update_mib_counters(), 'offset' was only set to
+UMAC_MIB_STAT_OFFSET (0xC) for all non-RX counters, omitting the second
+0xC gap for BCM_SYSPORT_STAT_RUNT counters. As a result, all 4 RUNT MIB
+counters were read from unmapped gap register space.
 
-Unregister the input device on the probe error path, as
-snd_disconnect() does. snd_usb_caiaq_input_disconnect() is a no-op when
-no input device was registered.
+Fix this by setting offset to 2 * UMAC_MIB_STAT_OFFSET (0x18) when
+reading BCM_SYSPORT_STAT_RUNT counters.
 
-Reproduced with a raw-gadget Audio Kontrol 1 and a temporary hack that
-makes snd_usb_caiaq_control_init() fail.
-
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2a123f6269da57ffefaa
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20260925170717.22462-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260922232440.598918-6-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -562,6 +562,9 @@ static int snd_probe(struct usb_interfac
- 	ret = init_card(caiaqdev(card));
- 	if (ret < 0) {
- 		dev_err(&usb_dev->dev, "unable to init card! (ret=%d)\n", ret);
-+#ifdef CONFIG_SND_USB_CAIAQ_INPUT
-+		snd_usb_caiaq_input_disconnect(caiaqdev(card));
-+#endif
- 		snd_card_free(card);
- 		return ret;
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index c0af40cdfd165..2cb3693080744 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -425,8 +425,10 @@ static void bcm_sysport_update_mib_counters(struct bcm_sysport_priv *priv)
+ 			if (priv->is_lite)
+ 				continue;
+ 
+-			if (s->type != BCM_SYSPORT_STAT_MIB_RX)
++			if (s->type == BCM_SYSPORT_STAT_MIB_TX)
+ 				offset = UMAC_MIB_STAT_OFFSET;
++			else if (s->type == BCM_SYSPORT_STAT_RUNT)
++				offset = 2 * UMAC_MIB_STAT_OFFSET;
+ 			val = umac_readl(priv, UMAC_MIB_START + j + offset);
+ 			break;
+ 		case BCM_SYSPORT_STAT_RXCHK:
+-- 
+2.53.0
+
 
 
