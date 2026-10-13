@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0A94EE858;
-	Tue, 13 Oct 2026 12:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5581D389104;
+	Tue, 13 Oct 2026 12:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893027; cv=none; b=idEPfWpxceaInkjm7rOYB4aJ+yVpr3YtxwD0qxEG2Ig437o6JO77kxEudtg/bOcJlXrzMxYGTgG6HKA1hGG1CkKs3uvK/uqN/Pgbzg07IctoyXB/kKys4NhIQySX65Bl+tZ7XkvSaqKqnisr+tfFHhNN2kWX0FpRU+juhyMOPuk=
+	t=1791893030; cv=none; b=fnu41nnyhT5EDzyKZwEWgVsQtyZ6oF9MDOVAdnjv77R3lcjR5yaktzbKBAmrAbpeAe7eIanVgVM9ApXRqGtjRgA0a1ecK09CIS0OTWhQdGKGmo0QOqd5pJGOHZA5omJG67NrHXny4HugAE7us/P5cCedlPQ6iN7rRx6YvsDJbn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893027; c=relaxed/simple;
-	bh=EX5frncfed6GaPJlhN07H8DLEe+44QpQSJzj1vaoA04=;
+	s=arc-20240116; t=1791893030; c=relaxed/simple;
+	bh=XGqK6tmLOl//9/OP2fUMMrS8QnMS0q0G8V1XKUikzII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBElYPOIUGRrxoH21JwxbEyIKAugzK28Vf1VA7eAMiNCjKCLm+Gfqjdakt1DgN2FzT0+7LFUTce2tbrN3uBy5Y0z2CZjES7VFIovaTABTnbNaO0zuwTwt/qtBlVzi0i/+wPT8/zxctTvCsPbnhk5yvlURqtK/TDYmiGh0LNKGtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5DIWMTo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=czHD9facY0uObJUQobdqLkUqXJJhhMLDKZWv59w1eSf5FiYCfgLXIVhpj24G9jIZzgoN2AkrhhjqXehyyXHkg2DDSfFAswFCojN73TDkxW2APhkQYH1sHtB/MAYm9LQKDt472Ox3zI93V6JqxGOJVf0cmaiQgN8BnetOV8mmOdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow6o6sB8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5DIWMTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08B91F000FF;
-	Tue, 13 Oct 2026 12:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow6o6sB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7241F000FF;
+	Tue, 13 Oct 2026 12:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893026;
-	bh=/4GXVkSmDnRYHuIVRp8P2VFoh0lEicDKMv4tG7rt+8U=;
+	s=korg; t=1791893029;
+	bh=Km7eh1IUGfIAH4MplSaZSq4aAOO7sgG5MOSecACaZak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5DIWMTojIzLvuO1CNltcHjK6la+BwD8SJodcg6eXlVAI4LSS2ckU93Oz+jqo18Sk
-	 9+GesYDG6xgI+Plq32lfckEPFw8CkEFazeqFUoPwfjLTz/eoEmpVatI784m1WKKzo+
-	 0/Vi+qcFdKlTtAK/HR6Lblu5vRqNW1FJMbRNJyl8=
+	b=ow6o6sB8JAQgWTVSAxLq6qritYzUdwpbamnKf2FWSKE7zKjzYFfaDlWit3HwNOrLg
+	 5nnKxQlKwGpiUVLCb+SSngc/RYJCKctzuyWwoALXTX53OTc9or3V6t/oUTCRwhcweP
+	 eVSlz7B7Ghice/jF16McLTM0KVf4svdbIT/4FoBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao-Fu Chen <shf.chen@mediatek.com>,
-	Jens Wiklander <jens.wiklander@oss.qualcomm.com>
-Subject: [PATCH 6.18 088/621] optee: register TEE devices only once fully initialized
-Date: Tue, 13 Oct 2026 13:31:23 +0200
-Message-ID: <20261013112922.943674720@linuxfoundation.org>
+	Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 089/621] regulator: ltc3676: dont read the write-only HRST and CLIRQ registers
+Date: Tue, 13 Oct 2026 13:31:24 +0200
+Message-ID: <20261013112922.967115251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,120 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao-Fu Chen <shf.chen@mediatek.com>
+From: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
 
-commit c108feca0a096f8db25d1b69130035025e9e936d upstream.
+commit 28c2388ee24cdbefbcc458fa41ef7bffaaa1cc83 upstream.
 
-optee_probe() called tee_device_register() on both the client and the
-supplicant device before the rest of struct optee had been initialized.
+HRST (0x1e) and CLIRQ (0x1f) are write-only command strobes. Writing HRST
+triggers a hard reset of the chip and writing CLIRQ clears the interrupt;
+reading them returns nothing useful, and the read itself fires the command.
 
-tee_device_register() calls cdev_device_add(), which does two things at
-once: it creates /dev/tee0 and /dev/teepriv0, and it links the device
-into the tee class so that class_find_device() can find it. From that
-moment on the device is reachable both from user space via tee_open()
-and from kernel space via tee_client_open_context(). The only gate in
-teedev_open() is tee_device_get(), which merely checks that
-teedev->desc is non-NULL, which was already set by tee_device_alloc().
-Therefore, there is effectively no gate at all.
+The result is that a plain register dump resets the board:
 
-A context opened in that window can run against a struct optee where
+  cat /sys/kernel/debug/regmap/2-003c/registers
 
-  - optee->call_queue.mutex is not initialized by optee_cq_init()
-  - optee->supp mutex and completions is not initialized by
-    optee_supp_init()
-  - optee->rpmb_dev_mutex is not initialized yet,
-  - the message argument cache is not initialized by
-    optee_shm_arg_cache_init()
-  - optee->ctx is still NULL
+walks every readable register, hits HRST, and the board reboots.
 
-Any open session or invoke during this window takes uninitialized
-mutexes and dereferences a NULL pointer.
+Split the callback back in two so HRST and CLIRQ stay writable but are no
+longer readable. The readable range is left unchanged
+(LTC3676_BUCK1 ... LTC3676_IRQSTAT).
 
-Fix it by moving both tee_device_register() calls down to the point
-where all of struct optee is set up.
-
-Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
+Fixes: 37b918a034fe ("regulator: Add LTC3676 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao-Fu Chen <shf.chen@mediatek.com>
-[JW: adding fixes and cc]
-Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
+Signed-off-by: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
+Link: https://patch.msgid.link/20260902010701.3360310-1-Abhishek.ojha@savoirfairelinux.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/optee/ffa_abi.c |   16 ++++++++--------
- drivers/tee/optee/smc_abi.c |   17 ++++++++---------
- 2 files changed, 16 insertions(+), 17 deletions(-)
+ drivers/regulator/ltc3676.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -1094,14 +1094,6 @@ static int optee_ffa_probe(struct ffa_de
+--- a/drivers/regulator/ltc3676.c
++++ b/drivers/regulator/ltc3676.c
+@@ -232,7 +232,7 @@ static const struct regulator_desc ltc36
+ 	LTC3676_FIXED_REG(LDO4, ldo4, LDOB, 2),
+ };
  
- 	optee_set_dev_group(optee);
+-static bool ltc3676_readable_writeable_reg(struct device *dev, unsigned int reg)
++static bool ltc3676_writeable_reg(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+ 	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
+@@ -243,6 +243,15 @@ static bool ltc3676_readable_writeable_r
+ 	return false;
+ }
  
--	rc = tee_device_register(optee->teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
--	rc = tee_device_register(optee->supp_teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
- 	rc = rhashtable_init(&optee->ffa.global_ids, &shm_rhash_params);
- 	if (rc)
- 		goto err_unreg_supp_teedev;
-@@ -1130,6 +1122,14 @@ static int optee_ffa_probe(struct ffa_de
- 	if (optee_ffa_protmem_pool_init(optee, sec_caps))
- 		pr_info("Protected memory service not available\n");
- 
-+	rc = tee_device_register(optee->teedev);
-+	if (rc)
-+		goto err_unregister_devices;
++static bool ltc3676_readable_reg(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
++		return true;
++	}
++	return false;
++}
 +
-+	rc = tee_device_register(optee->supp_teedev);
-+	if (rc)
-+		goto err_unregister_devices;
-+
- 	rc = optee_enumerate_devices(PTA_CMD_GET_DEVICES);
- 	if (rc)
- 		goto err_unregister_devices;
---- a/drivers/tee/optee/smc_abi.c
-+++ b/drivers/tee/optee/smc_abi.c
-@@ -1840,14 +1840,6 @@ static int optee_probe(struct platform_d
- 
- 	optee_set_dev_group(optee);
- 
--	rc = tee_device_register(optee->teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
--	rc = tee_device_register(optee->supp_teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
- 	optee_cq_init(&optee->call_queue, thread_count);
- 	optee_supp_init(&optee->supp);
- 	optee->smc.memremaped_shm = memremaped_shm;
-@@ -1907,6 +1899,14 @@ static int optee_probe(struct platform_d
- 	if (optee->smc.sec_caps & OPTEE_SMC_SEC_CAP_DYNAMIC_SHM)
- 		pr_info("dynamic shared memory is enabled\n");
- 
-+	rc = tee_device_register(optee->teedev);
-+	if (rc)
-+		goto err_disable_shm_cache;
-+
-+	rc = tee_device_register(optee->supp_teedev);
-+	if (rc)
-+		goto err_disable_shm_cache;
-+
- 	rc = optee_enumerate_devices(PTA_CMD_GET_DEVICES);
- 	if (rc)
- 		goto err_disable_shm_cache;
-@@ -1933,7 +1933,6 @@ err_supp_uninit:
- 	optee_shm_arg_cache_uninit(optee);
- 	optee_supp_uninit(&optee->supp);
- 	mutex_destroy(&optee->call_queue.mutex);
--err_unreg_supp_teedev:
- 	tee_device_unregister(optee->supp_teedev);
- err_unreg_teedev:
- 	tee_device_unregister(optee->teedev);
+ static bool ltc3676_volatile_reg(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+@@ -255,8 +264,8 @@ static bool ltc3676_volatile_reg(struct
+ static const struct regmap_config ltc3676_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+-	.writeable_reg = ltc3676_readable_writeable_reg,
+-	.readable_reg = ltc3676_readable_writeable_reg,
++	.writeable_reg = ltc3676_writeable_reg,
++	.readable_reg = ltc3676_readable_reg,
+ 	.volatile_reg = ltc3676_volatile_reg,
+ 	.max_register = LTC3676_CLIRQ,
+ 	.use_single_read = true,
 
 
