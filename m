@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386A54EFFCF;
-	Tue, 13 Oct 2026 12:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283E34EB862;
+	Tue, 13 Oct 2026 12:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895571; cv=none; b=gG5ZCoI6LSjuiLqR3ZPoV9+BuQKXPNpfmC+DGbfrRwkhwgqQqjDaHS9gVfmlQi4mSws60PAkR0/Q7RTgFDPBcTu4G/h+nqwtoPky1MHdUfFJRvcfc+Q839VQzYIs3NjrIK5jXARUIeiKkG5pVd75x+Q8F0J3mGgwulJC/AyZhkE=
+	t=1791895574; cv=none; b=VfC/z3zvTgtd2hRfGRPxVBu4g/DHg3QTMP2LYPDYWCf1CbfKfXI+BvVXw9b8QR7g+9t3Or/OP16FTTCgftzJv2lNerKLbPS/7OiENE6IqL2zSbhbpwRVMS6z/INT3DkoBORgriVXGXJPodVmm0V9kPGFAvrfmcZKjVWJ1zwysGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895571; c=relaxed/simple;
-	bh=D379gCYFGj2xm0Bq07hxrtfgWMWPQgC4QGJZ+KgaFTU=;
+	s=arc-20240116; t=1791895574; c=relaxed/simple;
+	bh=MymjYLFoISQaNxXrHKFbuatsE9h0E7EgTyUeO/Jndc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbV4VNgXaviMel2+TuRHJBlqlAZpLXNjwURm5bHAFCBPsIu6JRhNhbAhY1MMbc+fRMf9xwC+iHTaxUnc/4fg+jq8eJ8vfqx/5jfltCGRyvuQbIWbse90Pxuo1Zn5XclbYXX4Y8x3txCScDLBryPDU4khtZZUS5FGN3CEC33kv8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1NKu5xa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fr8FV7rBZ4oAQF4o++Go4vFso6Al4S9TOk6YTLzrqa1QPnmQmGXqQuMUGC2f7BGSJIBYmyiiAah019fME/+jn+2jG8GXmHookNT4VzacbzP6nfnMRmj0MYbNsQRCVpSKmPuyUqbBCnnsnxV5JUm8Yn5SM8VEadcpTZFVmFCWxHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8mCr3Lf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1NKu5xa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FAE1F000FF;
-	Tue, 13 Oct 2026 12:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8mCr3Lf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827511F000FF;
+	Tue, 13 Oct 2026 12:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895570;
-	bh=Y2nNEMALZql58NNZyFJc8m51sqhEqh2uhrKyrqbNx7M=;
+	s=korg; t=1791895573;
+	bh=7WhMYUWM3Y3BTgvQOp1IGUTZP6mlEUW7aT5O9vKV3Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z1NKu5xa3Ag0Xxwy1VWmyrw3z5sdzAEhRm9D/PRTxJ+jmsjv08qDUSyVT/xjWVK7X
-	 gJBVzv+mq0dSGaKZnZLy0ycaUZs7TyxYQDW5mNfp7OKk2m+nPAEiRQaTQG7uKoLSaW
-	 PUA1PxHStrN8J3jHDSZcgJDAJJ00gubIBlzqQjtA=
+	b=C8mCr3Lfy8ooTD3cJaLZbHvItpzb/ys3ikLRfw/kxqHx/E/4IRoAN4jH2MJoANdC3
+	 Mv+g1gpJjTPXzyp1XO3Ni0LFse/VAw7GVV8w8jJ2WUtt6VTLPd7/HsDD26qQq0bYs/
+	 XygNVHQV6NfhMiJo8xLJq8tzXgkvZH70qfhOCGjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rik van Riel <riel@surriel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Dave Jones <davej@codemonkey.org.uk>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 317/497] wifi: mac80211: count only matching reservations in reserved switch
-Date: Tue, 13 Oct 2026 13:38:04 +0200
-Message-ID: <20261013112915.427389442@linuxfoundation.org>
+Subject: [PATCH 6.12 318/497] fs: Free any excess xarray nodes in clear_inode()
+Date: Tue, 13 Oct 2026 13:38:05 +0200
+Message-ID: <20261013112915.452037134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,129 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 437f3727b4fd715266c296435c116288f82666fd ]
+[ Upstream commit ee3f011250104129893d8e9599147e457d4d7280 ]
 
-ieee80211_vif_use_reserved_switch() validates a replacement by counting
-assigned links on ctx->replace_ctx and treating reservations too
-broadly. A link can still be assigned to the old channel context while
-holding a reservation that belongs to a different replacement
-operation.
+For many years we've had a hard to hit leak of xarray nodes.  Hugh
+documented it well in commit 786b31121a2c.  Recently people and
+syzbot have found ways to force it to happen with madvise.  Rather
+than fix the leaks where they happen, just call xa_destroy() which
+has the side-effect of cycling the i_pages lock.
 
-That can make the current replacement appear complete too early. If
-another link finalizes first, the function can free the
-WILL_BE_REPLACED chanctx while the unmatched link and driver still use
-it, leading to a use-after-free in later beacon generation.
-
-Require an in-place reservation to point at the current replacement
-context, and require the reserved and assigned contexts to be the
-matching replacement pair, before counting or moving the link.
-
-Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/4b6c4b8648ab1920c38a40be32c0b1a2797b4ac6.1785726007.git.zhilinz@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: adapted iter.link-based channel-context iteration to direct link-list traversal. ]
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Dave Jones <davej@codemonkey.org.uk>
+Link: https://lore.kernel.org/all/20260121062243.1893129-1-tujinjiang@huawei.com/
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://patch.msgid.link/20260623192850.1595958-1-willy@infradead.org
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ fs/inode.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index b156f12daacbb..aea060719a1ea 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -1441,7 +1441,8 @@ ieee80211_link_use_reserved_assign(struct ieee80211_link_data *link)
- }
- 
- static bool
--ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
-+ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link,
-+					struct ieee80211_chanctx *ctx)
+diff --git a/fs/inode.c b/fs/inode.c
+index 8dabb224f941c..7942673f686fd 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -660,21 +660,18 @@ void dump_mapping(const struct address_space *mapping)
+ void clear_inode(struct inode *inode)
  {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
- 	struct ieee80211_chanctx *old_ctx, *new_ctx;
-@@ -1451,6 +1452,9 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
- 	new_ctx = link->reserved_chanctx;
- 	old_ctx = ieee80211_link_get_chanctx(link);
- 
-+	if (new_ctx != ctx)
-+		return false;
+ 	/*
+-	 * We have to cycle the i_pages lock here because reclaim can be in the
+-	 * process of removing the last page (in __filemap_remove_folio())
+-	 * and we must not free the mapping under it.
++	 * We have to cycle the i_pages lock here because reclaim
++	 * can be in the process of removing the last page (in
++	 * __filemap_remove_folio()) and we must not free the mapping
++	 * under it.  We also remove nodes which are empty; these
++	 * can occur in two different ways.  The first is that radix
++	 * tree expansion can fail partway and the second is that THP
++	 * collapse_file() can allocate some temporary nodes and not
++	 * clean them up.
+ 	 */
+-	xa_lock_irq(&inode->i_data.i_pages);
++	xa_destroy(&inode->i_data.i_pages);
 +
- 	if (!old_ctx)
- 		return false;
- 
-@@ -1463,6 +1467,12 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
- 	if (new_ctx->replace_state != IEEE80211_CHANCTX_REPLACES_OTHER)
- 		return false;
- 
-+	if (new_ctx->replace_ctx != old_ctx)
-+		return false;
-+
-+	if (old_ctx->replace_ctx != new_ctx)
-+		return false;
-+
- 	return true;
- }
- 
-@@ -1492,7 +1502,7 @@ static int ieee80211_chsw_switch_vifs(struct ieee80211_local *local,
- 
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			old_ctx = ieee80211_link_get_chanctx(link);
-@@ -1595,7 +1605,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		list_for_each_entry(link, &ctx->replace_ctx->assigned_links,
- 				    assigned_chanctx_list) {
- 			n_assigned++;
--			if (link->reserved_chanctx) {
-+			if (ieee80211_link_has_in_place_reservation(link, ctx)) {
- 				n_reserved++;
- 				if (link->reserved_ready)
- 					n_ready++;
-@@ -1616,7 +1626,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		ctx->conf.radar_enabled = false;
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (ieee80211_link_has_in_place_reservation(link) &&
-+			if (ieee80211_link_has_in_place_reservation(link, ctx) &&
- 			    !link->reserved_ready)
- 				return -EAGAIN;
- 
-@@ -1658,7 +1668,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			ieee80211_chan_bw_change(local,
-@@ -1707,7 +1717,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 			struct ieee80211_bss_conf *link_conf = link->conf;
- 			u64 changed = 0;
- 
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			rcu_assign_pointer(link_conf->chanctx_conf,
-@@ -1761,7 +1771,8 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		 */
- 		list_for_each_entry_safe(link, link_tmp, &ctx->reserved_links,
- 					 reserved_chanctx_list) {
--			if (WARN_ON(ieee80211_link_has_in_place_reservation(link)))
-+			if (WARN_ON(ieee80211_link_has_in_place_reservation(link,
-+									    ctx)))
- 				continue;
- 
- 			if (WARN_ON(link->reserved_chanctx != ctx))
+ 	BUG_ON(inode->i_data.nrpages);
+-	/*
+-	 * Almost always, mapping_empty(&inode->i_data) here; but there are
+-	 * two known and long-standing ways in which nodes may get left behind
+-	 * (when deep radix-tree node allocation failed partway; or when THP
+-	 * collapse_file() failed). Until those two known cases are cleaned up,
+-	 * or a cleanup function is called here, do not BUG_ON(!mapping_empty),
+-	 * nor even WARN_ON(!mapping_empty).
+-	 */
+-	xa_unlock_irq(&inode->i_data.i_pages);
+ 	BUG_ON(!list_empty(&inode->i_data.i_private_list));
+ 	BUG_ON(!(inode->i_state & I_FREEING));
+ 	BUG_ON(inode->i_state & I_CLEAR);
 -- 
 2.53.0
 
