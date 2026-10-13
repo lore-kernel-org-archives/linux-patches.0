@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39378389104;
-	Tue, 13 Oct 2026 11:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2595F155C87;
+	Tue, 13 Oct 2026 11:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892528; cv=none; b=Tso5Dr2EwGkBFI6h+n5bqcT4wIdHprHUUgyal7BJhBxHOK/lBwnEG2ca0jWNpILoeZ4IjWexMLNO0+U2vgOQSrehZuL3RqoU/Wl4k7N9bE9PQsoc1z8lusWvEaCeNxGD67GQoWzoTnIH+i6NjEoJ0niSszFI8aGHK8/Wy+kLV+Y=
+	t=1791892531; cv=none; b=uXEyXp3hfZLye1JYHF/c0mtYMotXBJyGhonprd0AzJ0dhZx1YmP8gq2YXCmpdZcjH0Ca7YSNP+RYF/JXiJgTc1hHjJlX/jQ/+lJGAJ3RYGEOLzyilvOV2MCY0vgvZg/E4U6HWrTGnItOX87XzO8XxxfQfhvLBei7KkLbqWm44DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892528; c=relaxed/simple;
-	bh=4uBg+2Zy11A4FZih0nWAswFzxcdhhqDQl3h9awd+Vig=;
+	s=arc-20240116; t=1791892531; c=relaxed/simple;
+	bh=XVS2vp+GfDdrnHnewzJWHHdeqTeOFrEUM/++i5aSXnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPxOGEQ6UYVfVJmwZxY/oeRmccNhTbshtyDpojRx3lwDDuSeU8/r/NsJgvwDDX9GMQbt/kAFFQdUV0NqvxN1wIwdG6DWC3pwnO3lDuQiQTq+0Ocw7XHhLRZ/yMaS4CWXtN+DefrAFcWFcsZrPxgbW4MwufQ0Ql7GGQPOJrjlUsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P111uI97; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZk+LHzwAJ4vbjPmrLzURnUd6kCjYYxBphZ8/zvhXiY9+5kOiThwVzQ9qIxERxEqtscaLUWUOYqqZVedntZ7n57s5+QmRW4nC3RTjWzhPfopJMOalr+qMmHNtRFYf3/+Kb2+RGX6PeeaqqqsnKeaVQbtF0ot8jVhriHc0v3wUuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEOpGJRR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P111uI97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C25D1F000FF;
-	Tue, 13 Oct 2026 11:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEOpGJRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BC81F000FF;
+	Tue, 13 Oct 2026 11:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892527;
-	bh=EE1dl3mxpXNvepunNOJFNvcE4Z+Sxx5AfK5LVugGxuw=;
+	s=korg; t=1791892530;
+	bh=A6uT35kWl79PVJKDyK6vyryBVgUT9mhMaPuRjUDXCrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P111uI97GktUg139pbK2oKpkKQJmCPZmaVUMkF6R/BNshaef3Wifmfm8jqt8LIpnD
-	 LK8W5cY8rLe5WtNILKb6C7ydB3uP3GSjdR8tYCMWh2VaiVGnKFXlUl62SvTRigMb9F
-	 2USdCwWA3/viQ3N2UjvOCz1goi2EDVcoPjheg3wM=
+	b=ZEOpGJRR90Ruve3pvS6L8wFJmxNGn+9L+YAIdPCuSCOOejSXs/nfdmHoh9PBGRUUa
+	 62yEtw8n+s+EmiRq5ILs4RjwVZGKqCHrLKh/KotyLerL0WABBy/CCK5iR97itwZy84
+	 tlwgkGsgFP3bmfjYK00i2WkWpU9bI3bFXJ2ry0lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liming Sun <limings@nvidia.com>,
+	James Hurley <jahurley@nvidia.com>,
+	Dave Thompson <davthompson@nvidia.com>,
+	Mahantesh Salimath <mahantesh@nvidia.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 202/281] net: stmmac: propagate PTP addend and system time programming errors
-Date: Tue, 13 Oct 2026 13:38:38 +0200
-Message-ID: <20261013112900.065507143@linuxfoundation.org>
+Subject: [PATCH 7.2 203/281] tee: optee: ffa: support shared memory offsets on large-page kernels
+Date: Tue, 13 Oct 2026 13:38:39 +0200
+Message-ID: <20261013112900.088980444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,276 +55,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Mahantesh Salimath <mahantesh@nvidia.com>
 
-[ Upstream commit 232d49dd4b40a666283de9e722899f088ed581b2 ]
+[ Upstream commit 3c0d2f1f431c51a11253f28763be723ac782fd7a ]
 
-stmmac_update_subsecond_increment() ignores the error returned by
-stmmac_config_addend(), and stmmac_init_tstamp_counter() discards the
-addend and system time programming errors, always returning success. A
-failure to program the addend (PTP_TCR_TSADDREG) or to initialize the
-system time counter (PTP_TCR_TSINIT) is therefore silently swallowed,
-leaving the hardware timestamp counter in a non-running or partially
-configured state while the driver keeps operating as if timestamping
-were up. This matters for TAPRIO/EST offloading, which derives the gate
-base time from the hardware timestamp counter.
+OP-TEE FF-A memory objects use 4 KiB pages, while the kernel page
+size may be larger. Consequently, tee_shm->offset can be greater than
+or equal to FFA_PAGE_SIZE, but OP-TEE rejects such a value in
+internal_offs.
 
-The same hooks are also called from the PHC callbacks: settime64 and
-adjfine drop the error and report success to clock_settime() and
-clock_adjtime(), so a dead PTP reference clock goes unnoticed by
-ptp4l/phc2sys.
+Do not encode the excess page offset in offs_low/offs_high. Those
+fields describe the logical memref offset and are copied back into
+tee_param->shm_offs on return. Folding the page offset into them breaks
+parameter round trips when a memref is reused. They are also ignored by
+the OPTEE_RPC_CMD_SHM_ALLOC response path, which uses only global_id and
+internal_offs to construct the shared-memory mobj.
 
-Return error codes from stmmac_update_subsecond_increment(),
-stmmac_init_tstamp_counter(), stmmac_dl_ts_coarse_set() and the
-settime64/adjfine callbacks instead of silently returning success. On
-failure, roll back the partially applied configuration so the hardware
-and the driver bookkeeping stay consistent, and report the reason
-through the devlink extack. Also guard against a zero sub-second
-increment, which would otherwise divide by zero when computing the
-addend.
+Instead, start the FF-A descriptor at the 4 KiB page containing the
+shared buffer, the same approach as optee_fill_pages_list() in the SMC
+ABI. Store the remaining in-page offset in internal_offs and preserve
+shm_offs in offs_low/offs_high. This keeps internal_offs within the
+FF-A page size, maps RPC allocations at the correct address, and
+preserves normal memref offsets across repeated invocations.
 
-Reset the persistent timestamping state (hwts_tx_en, hwts_rx_en,
-tstamp_config, systime_flags and tsfupdt_coarse) when (re)initializing
-timestamping, so a failed init does not leave TX/RX timestamping
-enabled on a counter that never started.
+Tested on ARMv8-A with 64 KiB PAGE_SIZE. OP-TEE OS ran as a secure
+partition under Hafnium (SPMC) over FF-A. Verified registered shared
+memory with tee_shm->offset >= 4 KiB, memref reuse on the same
+TEEC_Operation, and RPC OPTEE_RPC_CMD_SHM_ALLOC (xtest regression
+6007-6009). optee_hello_world, optee_aes, and xtest regression 1005,
+1007, 1008, 4001-4003 and 6001-6003 also passed.
 
-Fixes: cc4c9001ce31 ("net: stmmac: Switch stmmac_hwtimestamp to generic HW Interface Helpers")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4615e5a34b95 ("optee: add FF-A support")
+Acked-by: Liming Sun <limings@nvidia.com>
+Acked-by: James Hurley <jahurley@nvidia.com>
+Acked-by: Dave Thompson <davthompson@nvidia.com>
+Signed-off-by: Mahantesh Salimath <mahantesh@nvidia.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 106 +++++++++++++-----
- .../net/ethernet/stmicro/stmmac/stmmac_ptp.c  |  10 +-
- 2 files changed, 84 insertions(+), 32 deletions(-)
+ drivers/tee/optee/ffa_abi.c   | 22 ++++++++++++++++++----
+ drivers/tee/optee/optee_msg.h |  4 ++--
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 010fef79ec01e..034d9f941d402 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -601,31 +601,64 @@ static void stmmac_get_rx_hwtstamp(struct stmmac_priv *priv, struct dma_desc *p,
- 	}
- }
+diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
+index d3cc7c5fc1e99..d027fe7ce86fd 100644
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -198,7 +198,8 @@ static int to_msg_param_ffa_mem(struct optee_msg_param *mp,
+ 	if (shm) {
+ 		u64 shm_offs = p->u.memref.shm_offs;
  
--static void stmmac_update_subsecond_increment(struct stmmac_priv *priv)
-+static void stmmac_restore_subsecond_increment(struct stmmac_priv *priv,
-+					       u32 default_addend)
- {
- 	bool xmac = dwmac_is_xmac(priv->plat->core_type);
- 	u32 sec_inc = 0;
--	u64 temp = 0;
+-		mp->u.fmem.internal_offs = shm->offset;
++		mp->u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
++					   (FFA_PAGE_SIZE - 1);
  
-+	stmmac_config_addend(priv, priv->ptpaddr, default_addend);
- 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, priv->systime_flags);
-+	stmmac_config_sub_second_increment(priv, priv->ptpaddr,
-+					   priv->plat->clk_ptp_rate,
-+					   xmac, &sec_inc);
-+	priv->default_addend = default_addend;
-+	priv->sub_second_inc = sec_inc;
-+}
-+
-+static int stmmac_update_subsecond_increment(struct stmmac_priv *priv,
-+					     u32 systime_flags)
-+{
-+	bool xmac = dwmac_is_xmac(priv->plat->core_type);
-+	u32 sec_inc = 0, val;
-+	u64 temp = 0;
-+	int ret;
-+
-+	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
+ 		mp->u.fmem.offs_low = shm_offs;
+ 		mp->u.fmem.offs_high = shm_offs >> 32;
+@@ -284,14 +285,26 @@ static int optee_ffa_shm_register(struct tee_context *ctx, struct tee_shm *shm,
+ 		.nattrs = 1,
+ 	};
+ 	struct sg_table sgt;
++	size_t ffa_offs;
+ 	int rc;
  
- 	/* program Sub Second Increment reg */
- 	stmmac_config_sub_second_increment(priv, priv->ptpaddr,
- 					   priv->plat->clk_ptp_rate,
- 					   xmac, &sec_inc);
--	temp = div_u64(1000000000ULL, sec_inc);
--
--	/* Store sub second increment for later use */
--	priv->sub_second_inc = sec_inc;
-+	if (!sec_inc) {
-+		ret = -EINVAL;
-+		goto error;
-+	}
++	if (!num_pages)
++		return -EINVAL;
++
+ 	rc = optee_check_mem_type(start, num_pages);
+ 	if (rc)
+ 		return rc;
  
- 	/* calculate default added value:
- 	 * formula is :
- 	 * addend = (2^32)/freq_div_ratio;
- 	 * where, freq_div_ratio = 1e9ns/sec_inc
- 	 */
-+	temp = div_u64(1000000000ULL, sec_inc);
- 	temp = (u64)(temp << 32);
--	priv->default_addend = div_u64(temp, priv->plat->clk_ptp_rate);
--	stmmac_config_addend(priv, priv->ptpaddr, priv->default_addend);
-+	val = div_u64(temp, priv->plat->clk_ptp_rate);
-+
-+	ret = stmmac_config_addend(priv, priv->ptpaddr, val);
-+	if (ret)
-+		goto error;
-+
-+	priv->sub_second_inc = sec_inc;
-+	priv->default_addend = val;
-+
-+	return 0;
-+error:
-+	/* Restore previous configuration */
-+	stmmac_config_hw_tstamping(priv, priv->ptpaddr, priv->systime_flags);
-+	stmmac_config_sub_second_increment(priv, priv->ptpaddr,
-+					   priv->plat->clk_ptp_rate, xmac,
-+					   NULL);
-+	return ret;
- }
+-	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, 0,
+-				       num_pages * PAGE_SIZE, GFP_KERNEL);
++	/*
++	 * Start the FF-A descriptor at the 4 KiB page containing the shared
++	 * buffer, skipping unused leading 4 KiB pages when PAGE_SIZE is
++	 * larger. Same approach as optee_fill_pages_list() in the SMC ABI.
++	 * This leaves only the offset into that 4 KiB page for internal_offs.
++	 */
++	ffa_offs = round_down(tee_shm_get_page_offset(shm), FFA_PAGE_SIZE);
++	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, ffa_offs,
++				       num_pages * PAGE_SIZE - ffa_offs,
++				       GFP_KERNEL);
+ 	if (rc)
+ 		return rc;
+ 	args.sg = sgt.sgl;
+@@ -458,7 +471,8 @@ static void handle_ffa_rpc_func_cmd_shm_alloc(struct tee_context *ctx,
+ 		.attr = OPTEE_MSG_ATTR_TYPE_FMEM_OUTPUT,
+ 		.u.fmem.size = tee_shm_get_size(shm),
+ 		.u.fmem.global_id = shm->sec_world_id,
+-		.u.fmem.internal_offs = shm->offset,
++		.u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
++					(FFA_PAGE_SIZE - 1),
+ 	};
  
- /**
-@@ -854,35 +887,42 @@ static int stmmac_hwtstamp_get(struct net_device *dev,
- /**
-  * stmmac_init_tstamp_counter - init hardware timestamping counter
-  * @priv: driver private structure
-- * @systime_flags: timestamping flags
-  * Description:
-  * Initialize hardware counter for packet timestamping.
-  * This is valid as long as the interface is open and not suspended.
-  * Will be rerun after resuming from suspend, case in which the timestamping
-  * flags updated by stmmac_hwtstamp_set() also need to be restored.
+ 	arg->ret = TEEC_SUCCESS;
+diff --git a/drivers/tee/optee/optee_msg.h b/drivers/tee/optee/optee_msg.h
+index 7d9b12e71c035..6c3043f8da33c 100644
+--- a/drivers/tee/optee/optee_msg.h
++++ b/drivers/tee/optee/optee_msg.h
+@@ -136,8 +136,8 @@ struct optee_msg_param_rmem {
+  * struct optee_msg_param_fmem - FF-A memory reference parameter
+  * @offs_low:		lower bits of offset into shared memory reference
+  * @offs_high:		higher bits of offset into shared memory reference
+- * @internal_offs:	internal offset into the first page of shared memory
+- *			reference
++ * @internal_offs:	offset into the first 4 KiB page of the FF-A shared
++ *			memory region
+  * @size:		size of the buffer
+  * @global_id:		global identifier of the shared memory
   */
--static int stmmac_init_tstamp_counter(struct stmmac_priv *priv,
--				      u32 systime_flags)
-+static int stmmac_init_tstamp_counter(struct stmmac_priv *priv)
- {
-+	u32 default_addend = priv->default_addend;
- 	struct timespec64 now;
-+	int ret;
- 
- 	if (!priv->plat->clk_ptp_rate) {
- 		netdev_err(priv->dev, "Invalid PTP clock rate");
- 		return -EINVAL;
- 	}
- 
--	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
--	priv->systime_flags = systime_flags;
--
--	stmmac_update_subsecond_increment(priv);
-+	ret = stmmac_update_subsecond_increment(priv, priv->systime_flags);
-+	if (ret)
-+		return ret;
- 
- 	/* initialize system time */
- 	ktime_get_real_ts64(&now);
- 
- 	/* lower 32 bits of tv_sec are safe until y2106 */
--	stmmac_init_systime(priv, priv->ptpaddr, (u32)now.tv_sec, now.tv_nsec);
-+	ret = stmmac_init_systime(priv, priv->ptpaddr, (u32)now.tv_sec,
-+				  now.tv_nsec);
-+	if (ret)
-+		goto error;
- 
- 	return 0;
-+error:
-+	/* Restore previous configuration */
-+	stmmac_restore_subsecond_increment(priv, default_addend);
-+
-+	return ret;
- }
- 
- /**
-@@ -905,8 +945,14 @@ static int stmmac_init_timestamping(struct stmmac_priv *priv)
- 		return -EOPNOTSUPP;
- 	}
- 
--	ret = stmmac_init_tstamp_counter(priv, STMMAC_HWTS_ACTIVE |
--					       PTP_TCR_TSCFUPDT);
-+	/* Reset hw ts configuration */
-+	memset(&priv->tstamp_config, 0, sizeof(priv->tstamp_config));
-+	priv->systime_flags = STMMAC_HWTS_ACTIVE | PTP_TCR_TSCFUPDT;
-+	priv->tsfupdt_coarse = false;
-+	priv->hwts_tx_en = 0;
-+	priv->hwts_rx_en = 0;
-+
-+	ret = stmmac_init_tstamp_counter(priv);
- 	if (ret) {
- 		netdev_warn(priv->dev, "PTP init failed\n");
- 		return ret;
-@@ -927,10 +973,6 @@ static int stmmac_init_timestamping(struct stmmac_priv *priv)
- 		netdev_info(priv->dev,
- 			    "IEEE 1588-2008 Advanced Timestamp supported\n");
- 
--	memset(&priv->tstamp_config, 0, sizeof(priv->tstamp_config));
--	priv->hwts_tx_en = 0;
--	priv->hwts_rx_en = 0;
--
- 	if (priv->plat->flags & STMMAC_FLAG_HWTSTAMP_CORRECT_LATENCY)
- 		stmmac_hwtstamp_correct_latency(priv, priv);
- 
-@@ -7718,18 +7760,26 @@ static int stmmac_dl_ts_coarse_set(struct devlink *dl, u32 id,
- {
- 	struct stmmac_devlink_priv *dl_priv = devlink_priv(dl);
- 	struct stmmac_priv *priv = dl_priv->stmmac_priv;
-+	u32 systime_flags = priv->systime_flags;
-+	int ret;
- 
--	priv->tsfupdt_coarse = ctx->val.vbool;
--
--	if (priv->tsfupdt_coarse)
--		priv->systime_flags &= ~PTP_TCR_TSCFUPDT;
-+	if (ctx->val.vbool)
-+		systime_flags &= ~PTP_TCR_TSCFUPDT;
- 	else
--		priv->systime_flags |= PTP_TCR_TSCFUPDT;
-+		systime_flags |= PTP_TCR_TSCFUPDT;
- 
- 	/* In Coarse mode, we can use a smaller subsecond increment, let's
- 	 * reconfigure the systime, subsecond increment and addend.
- 	 */
--	stmmac_update_subsecond_increment(priv);
-+	ret = stmmac_update_subsecond_increment(priv, systime_flags);
-+	if (ret) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "failed to reconfigure PTP adjustment");
-+		return ret;
-+	}
-+
-+	priv->tsfupdt_coarse = ctx->val.vbool;
-+	priv->systime_flags = systime_flags;
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index 3bfcc9760dce7..493c5d81a36bf 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -28,14 +28,15 @@ static int stmmac_adjust_freq(struct ptp_clock_info *ptp, long scaled_ppm)
- 	    container_of(ptp, struct stmmac_priv, ptp_clock_ops);
- 	unsigned long flags;
- 	u32 addend;
-+	int ret;
- 
- 	addend = adjust_by_scaled_ppm(priv->default_addend, scaled_ppm);
- 
- 	write_lock_irqsave(&priv->ptp_lock, flags);
--	stmmac_config_addend(priv, priv->ptpaddr, addend);
-+	ret = stmmac_config_addend(priv, priv->ptpaddr, addend);
- 	write_unlock_irqrestore(&priv->ptp_lock, flags);
- 
--	return 0;
-+	return ret;
- }
- 
- /**
-@@ -153,12 +154,13 @@ static int stmmac_set_time(struct ptp_clock_info *ptp,
- 	struct stmmac_priv *priv =
- 	    container_of(ptp, struct stmmac_priv, ptp_clock_ops);
- 	unsigned long flags;
-+	int ret;
- 
- 	write_lock_irqsave(&priv->ptp_lock, flags);
--	stmmac_init_systime(priv, priv->ptpaddr, ts->tv_sec, ts->tv_nsec);
-+	ret = stmmac_init_systime(priv, priv->ptpaddr, ts->tv_sec, ts->tv_nsec);
- 	write_unlock_irqrestore(&priv->ptp_lock, flags);
- 
--	return 0;
-+	return ret;
- }
- 
- static int stmmac_enable(struct ptp_clock_info *ptp,
 -- 
 2.53.0
 
