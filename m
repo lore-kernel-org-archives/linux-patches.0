@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329C44FE2D1;
-	Tue, 13 Oct 2026 11:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666834EB864;
+	Tue, 13 Oct 2026 11:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892739; cv=none; b=FFhtHztYwjm8d06nT9dunvTDgyvUINtwztZO54ijWgH8DQc2g9AO8q3373JcWQuocMYmb6Y6Dg1fSCZyz/KHY4Uf7cVZTOYNOgpf0Jr6mo6PBjVNyXrOx0kppMQ76GuJxzYokZhORQTeiNTHXRtJUcmgsVZ1UKbmRri142+RYd0=
+	t=1791892741; cv=none; b=Lf4VLzzIyJG+kqIeQpROPLOWUVdaUgVaKKfztdEkGzKfzYdXh06UbgVGnR5A12N7qzwbi5sF9RHBEhCdI9kqSR2yhh2swEvd5/bAPiuLVxwU2NP73zlwPFj1FnpUMwaVXduA/oUuS46VhvvDf8jpoif5a0cZatrr5ILDY9Eq42o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892739; c=relaxed/simple;
-	bh=AMb3HYHvkpi+FvFoE8peVijomfkxwqordeNAuoLQ5Y8=;
+	s=arc-20240116; t=1791892741; c=relaxed/simple;
+	bh=mP85N7K7gKAKy8y1Xjle+O2wxffyzJ1yBeFnSPaDL9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jjizymVDbbo8izoG48Eybm2fCd92lNeMz7J4TgLaW8mtZiBR66WRyWVaVk6WrwwG0P82hiShwL1TbCUsPAm+WxsU6h0yB7K7ksZeerBamugkmANm97sCr8hoLXS/1wDaEePbQLrOYjUhGzf1G8cPUd0AUYNCBA14eThuQ4PcpK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdXIj5/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGQPCMl15I0l3dy3aj68c4mk5GiSllN/oTFyZNcjRmAB9XsxqjQjtGc5+gCh1jgSQE/7OnYYlB7tv/zFxr4zDMcj0Wc0yi96GvAJvM4vz4UCYkcEya6Xr/6+0wONufmlx3ljSqUAgGiWfHPXHM2Vf421aqW00hUf2QG/T6LyPA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTLSNGpJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdXIj5/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9791F000FF;
-	Tue, 13 Oct 2026 11:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTLSNGpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF001F00893;
+	Tue, 13 Oct 2026 11:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892737;
-	bh=oHmUmVm5nIhdZdZFaNlhTCEip6Jo+OH25kLhKBL+eM0=;
+	s=korg; t=1791892740;
+	bh=QgdzzNuzTsdKMLwvJsIJk46wR5tsYVyWpdnhuYZLRUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdXIj5/bFyLjVglTY7l38keT/WPCfkKH2JTsZlSA/ah0H6YYmUogWvNdGFqpYJlql
-	 4Q6aiUUppIiGtctp5pxT22yvgPR5E+iMszXBrm60sJYxhONXBB9mzTW0+rD3jyc0uI
-	 fgAvV7p0d5uXLhBA3EwW8umV+F2k1V2r14+0Y/D8=
+	b=eTLSNGpJzpCETI1OVGWgttu7r7SHX6qWjbTtiKZsvuzmRjTB1ZU5lBmMmvGxt2YXI
+	 kLLrolYbLuaISuEQTFELQP8gQq/iOu2VTYFU0aEpOJKzMEJYAaNNXJjH6ANHELwoxu
+	 G5EW0FQyFjLmiPokybx1b6Ko6TV6Xb+TiMRc+UJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 274/281] drm/vc4: Fix binner slot allocation failing on an idle GPU
-Date: Tue, 13 Oct 2026 13:39:50 +0200
-Message-ID: <20261013112901.787643028@linuxfoundation.org>
+	Kuba Piecuch <jpiecuch@google.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.2 275/281] sched_ext: Generate qseq from a per-task counter
+Date: Tue, 13 Oct 2026 13:39:51 +0200
+Message-ID: <20261013112901.810925923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -45,208 +44,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Kuba Piecuch <jpiecuch@google.com>
 
-[ Upstream commit cca01232d94adcb10f7c8c5bb8ce072b045fcb58 ]
+commit e6ac89b8b1c12e9104df45a14a26e2dfa96ded06 upstream.
 
-A job's binner slots are returned to bin_alloc_used by vc4_complete_exec(),
-which runs from the job_done workqueue, but the seqno
-vc4_v3d_get_bin_slot() waits on is incremented earlier, in the function
-vc4_irq_finish_render_job(). Therefore, a waiter can wake, retry, and still
-find the pool full because the worker has not run. By then, the job might
-have left the render_job_list, so no seqno remains to wait on and the
-allocation fails returning -ENOMEM.
+finish_dispatch() uses the qseq embedded in p->scx.ops_state to tell
+whether the QUEUED instance of a task it's about to claim is the one
+scx_bpf_dsq_insert() saw. qseq is generated from rq->scx.ops_qseq, but
+the counters of different rqs are independent, so if a task is dequeued
+and re-enqueued on a different rq between scx_bpf_dsq_insert() and
+finish_dispatch(), the new QUEUED instance can end up with the same
+qseq as the old one:
 
-This scenario can be reproduced on a Raspberry Pi 3 by using a burst of
-small jobs (e.g. Piglit's `quick_gl` suite), with userspace seeing a
-rejected submit for a pool about to become free.
+  CPU X                          CPU Z
+  -----                          -----
+                                 enqueue p on rq A, qseq = N
+  ops.dispatch()
+    scx_bpf_dsq_insert(p)
+      records qseq N
+                                 sched_setaffinity(p)
+                                   dequeue p from rq A
+                                   enqueue p on rq B, qseq = N
+  finish_dispatch(p, N)
+    qseq matches, p is claimed
 
-Note that the slots are held from validation until the render completes,
-so the pool can also be exhausted by jobs still queued on bin_job_list,
-leaving render_job_list empty and nothing to wait on.
+The claim itself is still atomic so the core stays consistent, but an
+insert issued for a previous QUEUED instance gets applied to a new one
+which the BPF scheduler has just received through ops.enqueue(). This
+breaks the guarantee that dispatches targeting a stale instance are
+ignored.
 
-Release the slots from the FRDONE handler and wait on the pool instead of
-on one job's seqno. This bounds the wait to the actual resource. Also, by
-claiming the slot inside the wait condition, another submit is unable to
-take the slot between the wakeup and the retry. vc4_complete_exec() keeps
-clearing the slots for jobs that never completed, and now wakes the
-waiters too.
+Generate qseq from a per-task counter, p->scx.ops_qseq, instead so that
+consecutive QUEUED instances of a task never share a qseq regardless of
+which rq they're on. The counter is only updated in
+scx_do_enqueue_task() with the task's rq locked, so no additional
+synchronization is needed, and it fits in an existing hole in struct
+sched_ext_entity on 64bit. Remove the now unused rq->scx.ops_qseq.
 
-Note that the wait takes a deadline, since the two callers need different
-ones. The submit path is a user task and can be interrupted, so it waits
-without one. On the other hand, vc4_overflow_mem_work() runs on a worker
-and never sees a signal, so it needs a deadline. During a reset,
-vc4_irq_disable() masks V3D_DRIVER_IRQS before draining the worker, and
-with those masked nothing can release a slot. This deadlocks: the worker
-would wait for slots that only the reset can free, while the reset waits
-in cancel_work_sync() for the worker.
+Never generate qseq 0. NONE and DISPATCHING don't carry a qseq, so
+scx_bpf_dsq_insert() on a task in either state records 0. With a
+per-task counter, every task's first QUEUED instance would otherwise get
+qseq 0 and could be claimed by such an insert. Wrap the counter where
+the QSEQ field wraps so that it can't reach a value that shifts to 0 on
+32bit either.
 
-Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260930182204.1877361-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Assisted-by: Claude:claude-opus-5.5
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ jpiecuch: 7.2.y lacks runnable_cpu in sched_ext_entity, so ops_qseq goes
+  after selected_cpu; adjust context in scx_rq and the dump_line() CPU line ]
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_drv.h      |  2 +-
- drivers/gpu/drm/vc4/vc4_gem.c      |  8 +++++-
- drivers/gpu/drm/vc4/vc4_irq.c      |  6 +++-
- drivers/gpu/drm/vc4/vc4_v3d.c      | 44 ++++++++++++++----------------
- drivers/gpu/drm/vc4/vc4_validate.c |  2 +-
- 5 files changed, 34 insertions(+), 28 deletions(-)
+ include/linux/sched/ext.h   |    1 +
+ kernel/sched/ext/ext.c      |   15 ++++++++++-----
+ kernel/sched/ext/internal.h |    5 +++++
+ kernel/sched/sched.h        |    1 -
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
-index 0f5958c1e6b60..b0e82c2dc1bae 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.h
-+++ b/drivers/gpu/drm/vc4/vc4_drv.h
-@@ -1051,7 +1051,7 @@ void vc4_plane_async_set_fb(struct drm_plane *plane,
- /* vc4_v3d.c */
- extern struct platform_driver vc4_v3d_driver;
- extern const struct of_device_id vc4_v3d_dt_match[];
--int vc4_v3d_get_bin_slot(struct vc4_dev *vc4);
-+int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout);
- int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used);
- void vc4_v3d_bin_bo_put(struct vc4_dev *vc4);
- int vc4_v3d_pm_get(struct vc4_dev *vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index e231c906709c1..6ee4bd77d4331 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -877,11 +877,17 @@ vc4_complete_exec(struct drm_device *dev, struct vc4_exec_info *exec)
- 		drm_gem_object_put(&bo->base.base);
- 	}
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -198,6 +198,7 @@ struct sched_ext_entity {
+ 	s32			sticky_cpu;
+ 	s32			holding_cpu;
+ 	s32			selected_cpu;
++	u32			ops_qseq;	/* protected by rq lock */
+ 	struct task_struct	*kf_tasks[2];	/* see SCX_CALL_OP_TASK() */
  
--	/* Free up the allocation of any bin slots we used. */
-+	/* Free up the allocation of any bin slots we used. Jobs that ran to
-+	 * completion had their slots released in vc4_irq_finish_render_job().
-+	 * Only jobs that never completed still have slots to be released here.
+ 	struct list_head	runnable_node;	/* rq->scx.runnable_list */
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1953,8 +1953,14 @@ static void do_enqueue_task(struct rq *r
+ 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
+ 		goto global;
+ 
+-	/* DSQ bypass didn't trigger, enqueue on the BPF scheduler */
+-	qseq = rq->scx.ops_qseq++ << SCX_OPSS_QSEQ_SHIFT;
++	/*
++	 * DSQ bypass didn't trigger, enqueue on the BPF scheduler. Wrap the
++	 * per-task qseq counter where the QSEQ field wraps and skip 0, which is
++	 * what scx_bpf_dsq_insert() records for a task in NONE or DISPATCHING.
 +	 */
- 	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	vc4->bin_alloc_used &= ~exec->bin_slots;
- 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
++	p->scx.ops_qseq = ((p->scx.ops_qseq + 1) &
++			   (SCX_OPSS_QSEQ_MASK >> SCX_OPSS_QSEQ_SHIFT)) ?: 1;
++	qseq = (unsigned long)p->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT;
  
-+	/* Let anyone waiting on the binner pool retry. */
-+	wake_up_all(&vc4->job_wait_queue);
-+
- 	/* Release the reference on the binner BO if needed. */
- 	if (exec->bin_bo_used)
- 		vc4_v3d_bin_bo_put(vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_irq.c b/drivers/gpu/drm/vc4/vc4_irq.c
-index 98a8db7200917..dc10d3a4d90f2 100644
---- a/drivers/gpu/drm/vc4/vc4_irq.c
-+++ b/drivers/gpu/drm/vc4/vc4_irq.c
-@@ -74,7 +74,7 @@ vc4_overflow_mem_work(struct work_struct *work)
+ 	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
+ 	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
+@@ -6690,10 +6696,9 @@ static void scx_dump_cpu(struct scx_sche
+ 	seq_buf_init(&ns, buf, avail);
  
- 	bo = vc4->bin_bo;
- 
--	bin_bo_slot = vc4_v3d_get_bin_slot(vc4);
-+	bin_bo_slot = vc4_v3d_get_bin_slot(vc4, msecs_to_jiffies(500));
- 	if (bin_bo_slot < 0) {
- 		drm_err(&vc4->base, "Couldn't allocate binner overflow mem\n");
- 		goto complete;
-@@ -165,6 +165,10 @@ vc4_irq_finish_render_job(struct drm_device *dev)
- 	trace_vc4_rcl_end_irq(dev, exec->seqno);
- 
- 	vc4->finished_seqno++;
-+
-+	vc4->bin_alloc_used &= ~exec->bin_slots;
-+	exec->bin_slots = 0;
-+
- 	list_move_tail(&exec->head, &vc4->job_done_list);
- 
- 	nextbin = vc4_first_bin_job(vc4);
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index 8ca0f4dde04bd..6844e8f3948cf 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -173,46 +173,42 @@ static void vc4_v3d_init_hw(struct drm_device *dev)
- 	V3D_WRITE(V3D_VPMBASE, 0);
- }
- 
--int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
-+static int bin_slot_try_alloc(struct vc4_dev *vc4)
- {
--	struct drm_device *dev = &vc4->base;
--	unsigned long irqflags;
- 	int slot;
--	uint64_t seqno = 0;
--	struct vc4_exec_info *exec;
- 
--	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
--		return -ENODEV;
-+	guard(spinlock_irqsave)(&vc4->job_lock);
- 
--try_again:
--	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	slot = ffs(~vc4->bin_alloc_used);
- 	if (slot != 0) {
- 		/* Switch from ffs() bit index to a 0-based index. */
- 		slot--;
- 		vc4->bin_alloc_used |= BIT(slot);
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return slot;
-+	} else {
-+		slot = -ENOMEM;
- 	}
- 
--	/* Couldn't find an open slot.  Wait for render to complete
--	 * and try again.
--	 */
--	exec = vc4_last_render_job(vc4);
--	if (exec)
--		seqno = exec->seqno;
--	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
-+	return slot;
-+}
- 
--	if (seqno) {
--		int ret = vc4_wait_for_seqno(dev, seqno, ~0ull, true);
-+int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout)
-+{
-+	int slot;
-+	long ret;
- 
--		if (ret == 0)
--			goto try_again;
-+	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
-+		return -ENODEV;
- 
-+	/* If the pool is full, wait for a job to release its slots. */
-+	ret = wait_event_interruptible_timeout(vc4->job_wait_queue,
-+					       (slot = bin_slot_try_alloc(vc4)) >= 0,
-+					       timeout);
-+	if (ret < 0)
- 		return ret;
--	}
-+	if (ret == 0)
-+		return -ENOMEM;
- 
--	return -ENOMEM;
-+	return slot;
- }
- 
- /*
-diff --git a/drivers/gpu/drm/vc4/vc4_validate.c b/drivers/gpu/drm/vc4/vc4_validate.c
-index d2a65c968b1f9..565227657b43b 100644
---- a/drivers/gpu/drm/vc4/vc4_validate.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -402,7 +402,7 @@ validate_tile_binning_config(VALIDATE_ARGS)
- 		return -EINVAL;
- 	}
- 
--	bin_slot = vc4_v3d_get_bin_slot(vc4);
-+	bin_slot = vc4_v3d_get_bin_slot(vc4, MAX_SCHEDULE_TIMEOUT);
- 	if (bin_slot < 0) {
- 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
- 			drm_err(dev, "Failed to allocate binner memory: %d\n",
--- 
-2.53.0
-
+ 	dump_newline(&ns);
+-	dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
++	dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ksync=%lu",
+ 		  cpu, rq->scx.nr_running, rq->scx.flags,
+-		  rq->scx.cpu_released, rq->scx.ops_qseq,
+-		  rq->scx.kick_sync);
++		  rq->scx.cpu_released, rq->scx.kick_sync);
+ 	dump_line(&ns, "          curr=%s[%d] class=%ps",
+ 		  rq->curr->comm, rq->curr->pid,
+ 		  rq->curr->sched_class);
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -1508,6 +1508,11 @@ enum scx_ops_state {
+ 	 * dequeue/requeue, the dispatcher can tell whether it still has a claim
+ 	 * on the task being dispatched.
+ 	 *
++	 * QSEQ is generated from the per-task p->scx.ops_qseq counter so that
++	 * it doesn't repeat across QUEUED instances of the same task even if
++	 * the task moves between rqs. 0 is never used as a valid QSEQ since
++	 * NONE and DISPATCHING map to this value.
++	 *
+ 	 * As some 32bit archs can't do 64bit store_release/load_acquire,
+ 	 * p->scx.ops_state is atomic_long_t which leaves 30 bits for QSEQ on
+ 	 * 32bit machines. The dispatch race window QSEQ protects is very narrow
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -795,7 +795,6 @@ struct scx_rq {
+ 	struct scx_dispatch_q	local_dsq;
+ 	struct list_head	runnable_list;		/* runnable tasks on this rq */
+ 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
+-	unsigned long		ops_qseq;
+ 	u64			extra_enq_flags;	/* see move_task_to_local_dsq() */
+ 	u32			nr_running;
+ 	u32			cpuperf_target;		/* [0, SCHED_CAPACITY_SCALE] */
 
 
