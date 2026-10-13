@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82680472F73;
-	Tue, 13 Oct 2026 12:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267C9472F73;
+	Tue, 13 Oct 2026 12:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894684; cv=none; b=AuWlh22O9St/jTRxMEYXWPVz1W55N8gxJEsRG0D3/jh8lTF2/2FfDzVOa0pFxKErNfKTuDQSZZm4Nq/rtF7zXyfGKCYx0sQHKYRQw1nEfIjJadpf9p6lrCYyRyvu25y7UqvMEHaIj0AAQaiYjO+BftfTqMDgnw9GUUXy1mIE7mY=
+	t=1791894687; cv=none; b=WoD8Q390eTOa6y6Bb6KwJRni89ZPSX7b0OWDX/0SmtL/DDUZ/AJSJ7/mLMma3IWxncVycabR6dBXVBlLeggJ7jU/ZN1h/yhB7l5kulzrxqFhUZgiUbeNqYY/KvX5nXEN1W2oDEQqZAAgrqRytnTHcMuyv5egsQkVHa6bk8ZPX0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894684; c=relaxed/simple;
-	bh=c+lCn5IIcboraERBkeGBNuPx6IY11AFCq15rM3qb82o=;
+	s=arc-20240116; t=1791894687; c=relaxed/simple;
+	bh=l9ItHCBg364XeK1530RIN/tkFx3okgldY5eVwjUwAIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNMxUmN9LRVAa0slI+JIGRHHT+5kGXVYDrAPhNxNMBQ/AKAHtfIs2xaoR1hdahEvOJ8aJOSg65E5GqcjYemRCRfS6XSrYGxk2C1eA1nTn1KXyedVqiTqylSFQqH5bNho+E/5CBt22GLWsM4Jnu35BiwKOs+ezYE0iEZz8QHMPKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cubTYWFW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bvdBvHUxiWv1v5pHkGsgDmmB2OsKWQtLvxTPJBEP/8rV4twBt9VBURKelakMNbdaixokqYzImL469NDSzbkibo6Iu86/+izpPMyGi7lK8Ehr2+WOS6dxQbF5x9aUxyuj8IyHcWa9nPtO1qBGfRw8V/9mIL50APFWVs6LHSqD67k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VJkrBvO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cubTYWFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895A31F000FF;
-	Tue, 13 Oct 2026 12:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VJkrBvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD971F000FF;
+	Tue, 13 Oct 2026 12:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894683;
-	bh=IhaaLNNfcF84ZA+xas0deQsge5JMxBm2VH9HE/b2C2w=;
+	s=korg; t=1791894686;
+	bh=cZ9Aeb3VJsrLOep92aQmoRppTL10aUdMfcbAvR+18h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cubTYWFWu+Jxn0QNWnQ8c/2dxQ1x+3wWpAkxv/SzHdB9p3ywXPaK9BCtX9oVMjWad
-	 ZEs+cAcPOkhb0Uwr5TZ600bdJTnGYTnmpxP2pttiCS3Bm2PlLxSVzxJTW3fDi9HNXw
-	 B6iWHm6PV4yqLqc4CwdW/nqsqr6s8R0lCLczeWtk=
+	b=1VJkrBvOFtJKVa8pjalXJsAzPd1c+MxpSVqJdxn9Wc56jRWY+nfZevKdnrZ7JCcP7
+	 DxRJPuBhPq03ap0vuLLxVTW1sxpS4S/0GliCLiXe7tka/3+MjB9TAUL8cLOON8DeSN
+	 r3pBWARPLy7nwGqlqu1leFTUULABdCyH3q5d7f2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/497] neighbour: Skip default parms when resumed in neightbl_dump_info().
-Date: Tue, 13 Oct 2026 13:33:08 +0200
-Message-ID: <20261013112908.386703471@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Faaris Ansari <faarisansari@googlemail.com>
+Subject: [PATCH 6.12 022/497] ALSA: usb-audio: Apply IGNORE_CTL_ERROR quirk to all Audient devices
+Date: Tue, 13 Oct 2026 13:33:09 +0200
+Message-ID: <20261013112908.410064553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,107 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 979aabdad8dd03394467ee484a1a70f3d40b19ba ]
+[ Upstream commit a154f7b9f197b3d5e41fa3ad62083f5aa93b1fe8 ]
 
-neightbl_dump_info() calls neightbl_fill_info() in each loop
-to render the default parms.
+Faaris reported a problem with Audient EVO4 device and it turned out
+to be a regression by the recent fix commit 87a6f2fa6e6c ("ALSA:
+usb-audio: Propagate write errors in generic mixer put callbacks").
+It exhibited that the hardware gives errors at accessing the mixer
+unit 10 on certain channels, and the change above made it a fatal
+error.
 
-If there are many devices and neightbl_fill_param_info() failed,
-neightbl_fill_info() is called again when the dump resumes:
+We had already a quirk for Audient iD14 to work around such errors
+from the mixer controls, and we can simply apply the same for EVO4.
+OTOH, it's highly possible that other Audient devices suffer from the
+same issue; they must be using similar firmware, after all.
 
-  # ynl --family rt-neigh --dump getneightbl --output-json |
-    jq '.[] | {name: .name, ifindex: .parms.ifindex}'
-  ...
-  {
-    "name": "ndisc_cache",
-    "ifindex": null
-  }
-  ...
-  {
-    "name": "ndisc_cache",
-    "ifindex": 6
-  }
-  {
-    "name": "ndisc_cache",
-    "ifindex": null
-  }
-  {
-    "name": "ndisc_cache",
-    "ifindex": 5
-  }
+So, in this patch, we apply the quirk generically to all devices with
+the vendor ID Audient (2708), instead.  Ignoring the control error
+isn't usually less critical than overreaction to the firmware
+misbehavior.
 
-Let's skip neightbl_fill_info() if it is already called in
-neightbl_dump_info().
-
-Note that we cannot use !neigh_skip instead of !default_skip
-because default_skip == 1 && neigh_skip == 0 could be true
-if the first neightbl_fill_param_info() fails.
-
-Also, nidx must be cleared at the end of each table loop;
-otherwise, if neightbl_fill_info() for a subsequent table
-fails, the leftover nidx from the previous table would be
-saved in cb->args[1], resulting in erroneously skipping parms
-of the subsequent table in the next dump.
-
-Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260909233143.2401847-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 87a6f2fa6e6c ("ALSA: usb-audio: Propagate write errors in generic mixer put callbacks")
+Reported-and-tested-by: Faaris Ansari <faarisansari@googlemail.com>
+Closes: https://lore.kernel.org/CANBVYRCL=8QdLxGg4S6qrahrFtwJxhv-aSGpW7-1S=+iOe4ZGA@mail.gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260929144132.1521617-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/usb/quirks.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index bf07438d6dfa5..172974574f18f 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -2517,9 +2517,10 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
-+	int default_skip = cb->args[2];
-+	int neigh_skip = cb->args[1];
- 	int family, tidx, nidx = 0;
- 	int tbl_skip = cb->args[0];
--	int neigh_skip = cb->args[1];
- 	struct neigh_table *tbl;
- 
- 	if (cb->strict_check) {
-@@ -2541,12 +2542,14 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (tidx < tbl_skip || (family && tbl->family != family))
- 			continue;
- 
--		if (neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
-+		if (!default_skip &&
-+		    neightbl_fill_info(skb, tbl, NETLINK_CB(cb->skb).portid,
- 				       nlh->nlmsg_seq, RTM_NEWNEIGHTBL,
- 				       NLM_F_MULTI) < 0)
- 			break;
- 
--		nidx = 0;
-+		default_skip = 1;
-+
- 		p = list_next_entry(&tbl->parms, list);
- 		list_for_each_entry_from(p, &tbl->parms_list, list) {
- 			if (!net_eq(neigh_parms_net(p), net))
-@@ -2566,10 +2569,13 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 		}
- 
- 		neigh_skip = 0;
-+		nidx = 0;
-+		default_skip = 0;
- 	}
- out:
- 	cb->args[0] = tidx;
- 	cb->args[1] = nidx;
-+	cb->args[2] = default_skip;
- 
- 	return skb->len;
- }
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 0872432b8574b..cc8d755256f2e 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2371,8 +2371,6 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
+ 		   QUIRK_FLAG_DSD_RAW),
+-	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
+-		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
+ 		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+@@ -2440,6 +2438,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x2622, /* IAG Limited devices */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2708, /* Audient devices */
++		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	VENDOR_FLG(0x2772, /* Musical Fidelity devices */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x278b, /* Rotel? */
 -- 
 2.53.0
 
