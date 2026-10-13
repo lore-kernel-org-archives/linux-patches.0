@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C258F4F053F;
-	Tue, 13 Oct 2026 11:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CF04F390A;
+	Tue, 13 Oct 2026 11:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891968; cv=none; b=gaDSD1WuH1/CwWJBcsEnzdYY5r0ZxA52ptx+DwGeOluT4S3jXmZ+OZYQ4TbtpyV5xjsgo7PdvAYvZtrG68YquI8AGdo+wVm7m1JER9rCX4dw6xKtqmdPbfacLQiDBJjTBVPWYa8jGJQoqOx4ZoTMMv6y8oreeqr3E7xRL3dS38o=
+	t=1791891971; cv=none; b=X17WtVRIKvNESb94dDDndBrrVzyiLEqkncWnAR27cCAWkF2G8URe9cRthpsygMXXQTdVxZ71wNh/4vxhyhEiGSAFe2CXoedGvRfWJFJdTYDgNxxteFXkJRty1ZnIK/39fnXFPPMKIWJw/TPlMiGP5juCDKDRktUgxujbd0H5xqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891968; c=relaxed/simple;
-	bh=kWTNIPxA5O/JednmMy7Erqyfn1u5e4TAH5hY007Srk4=;
+	s=arc-20240116; t=1791891971; c=relaxed/simple;
+	bh=oVxLEhzKn+V/jOuapf66qgv0k8gEZE+F0ag5/nFKjF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFSfIojIlVjY+U4qMYQviTspPkc8hYuymDVvsJ5/X18P5ObMO725Y0U2N0M7XO+geBfyRQL2rrbCwrWba0AaTQG9YqCJupUce2lBY5gr/eAh5L7HovWvwzdxnzUTv1vuF4qje3SucmZtGVwDiVyI8Oh6p6npRPdojDmSat9Krg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLOOopbG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IJ1n0GT8aSBr7KlJqKInbt9XH3kYJrgqbFMZM+d5wFFkBUXqYwVDHfgoeTQe1DW8IPAs6AmGq+jc+1PBnon7Fo1ZQpgSke8bShQmM9ucKuFaGIrQoGeiVSdhJuI+yYRjsyqxK6q70QdxVRcUvjRJu4oRBPz1IRhMcT6ORZBn9GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6NtvHVE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLOOopbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFB01F000FF;
-	Tue, 13 Oct 2026 11:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6NtvHVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0D11F00898;
+	Tue, 13 Oct 2026 11:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891967;
-	bh=0S4lJS7+fggsw4mZLCvRE1RzSTl5kaTTcMcioiOnemg=;
+	s=korg; t=1791891970;
+	bh=eVlv5NIXRinjfUNNLRTweCG6oNqBIUz3l2B/P8sVerY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tLOOopbG2uq5cxxeEghXK4QEsigtXyNS+et24i3RubKlJY9QPgtbLdMvW5+nJLhjb
-	 bWLylenulObKTGWKZ4D1IoeZgLf/cAgaVnNeaf+tSe9WgbJgP7Ugm14DYnGiiSVusO
-	 6zdUPI13BfxYjEq3+kve4mJb7aaky/E1g6vX4pM8=
+	b=w6NtvHVEtmlBD2DLlLOZrhAl8xRhIs7bAf/MCqZUY/Y3exlrxTOdYJoNdqv6qa8oy
+	 g1o3xiI2VStcN8UEfe41xRYiQufVG5Y6MTG5uYMAKoQw3rxLK4SeC8lkF7xHklTYcC
+	 j2Mph5LU+/GimsEcmarKsY3xf9pzr48XduhnpR8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Furman <krisfur@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 017/281] Input: xpad - add support for Corsair Novablade Pro
-Date: Tue, 13 Oct 2026 13:35:33 +0200
-Message-ID: <20261013112855.468753549@linuxfoundation.org>
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 018/281] ALSA: ctxfi: Fix memory leakage when clearing DAO input mappers
+Date: Tue, 13 Oct 2026 13:35:34 +0200
+Message-ID: <20261013112855.493005146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,50 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Furman <krisfur@proton.me>
+From: Harin Lee <me@harin.net>
 
-commit f9282b8aa85a8c97c50d656db75feb6d76fc7cbe upstream.
+commit 593d46fc6af9a0178a46e77d6d24b20d2314165f upstream.
 
-Add device IDs for the Corsair Novablade Pro leverless fight controller
-in both wired (0x2b1f) and 2.4 GHz receiver (0x2b2b) modes, and add
-Corsair's vendor ID to the Xbox 360 vendor match list.
+Commit e576e7843c0d ("ALSA: ctxfi: Simplify dao_clear_{left,right}_input() functions")
+centralized the DAO input mapper clearing logic in
+dao_clear_input(), but omitted the kfree() calls.
 
-Outside of its PS4/PS5 modes the controller uses the Xbox 360 protocol
-(vendor-specific class, subclass 93, protocol 1) on interface 0, which
-xpad does not currently bind, so no gamepad device is created. The
-PS4/PS5 modes present a standard HID gamepad and already work with
-hid-generic.
+It removes the mapper entries from the list and sets their pointers
+to NULL without freeing the allocated array. This leaks memory each
+time dao_clear_input() is called.
 
-Tested on 7.2.5 with the 2.4 GHz receiver and wired.
+Store the base pointer of the allocation before clearing the mapper
+entries and free the array after removing entries from the list.
 
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Krzysztof Furman <krisfur@proton.me>
-Link: https://patch.msgid.link/20261009-xpad-corsair-novablade-v1-1-e58746bef99f@proton.me
+Fixes: e576e7843c0d ("ALSA: ctxfi: Simplify dao_clear_{left,right}_input() functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Harin Lee <me@harin.net>
+Link: https://patch.msgid.link/20261001144501.3050667-2-me@harin.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/ctxfi/ctdaio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -302,6 +302,8 @@ static const struct xpad_device {
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
-+	{ 0x1b1c, 0x2b1f, "Corsair Novablade Pro (Wired)", 0, XTYPE_XBOX360 },
-+	{ 0x1b1c, 0x2b2b, "Corsair Novablade Pro (2.4 GHz Receiver)", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0130, "Ion Drum Rocker", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
-@@ -546,6 +548,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
-+	XPAD_XBOX360_VENDOR(0x1b1c),		/* Corsair controllers */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
- 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
- 	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
+--- a/sound/pci/ctxfi/ctdaio.c
++++ b/sound/pci/ctxfi/ctdaio.c
+@@ -221,14 +221,18 @@ static int dao_set_right_input(struct da
+ 
+ static int dao_clear_input(struct dao *dao, unsigned int start, unsigned int end)
+ {
++	struct imapper *entry;
+ 	unsigned int i;
+ 
+-	if (!dao->imappers[start])
++	entry = dao->imappers[start];
++	if (!entry)
+ 		return 0;
++
+ 	for (i = start; i < end; i++) {
+ 		dao->mgr->imap_delete(dao->mgr, dao->imappers[i]);
+ 		dao->imappers[i] = NULL;
+ 	}
++	kfree(entry);
+ 
+ 	return 0;
+ }
 
 
