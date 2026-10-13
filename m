@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95124F85C4;
-	Tue, 13 Oct 2026 12:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49F24F93D0;
+	Tue, 13 Oct 2026 12:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894465; cv=none; b=twzHxy89DlreWfC8sg0P2s1Hrc+x25kXYDmT4TKH8aB8937LiWQ6mQemFVn1nIVM120IOeRwR9AQQylnrUNnGDCTZw6at/Ogp81spa2bTL5iBSD/3lMMsSOZBjXSJvDK4uj/TzR5mdDGSmDruJtFjf5ARWvJR1QRI1EABM4+Cek=
+	t=1791894467; cv=none; b=sHndCa+WYujvA8Sz5m2MJ2Wn8rihPEIMd8kKhm07dKsRG2qZFbFKKthMaatTHQbeSzn5H2YdjTQu8W4XrPgPqiZ4UBtKskva5PHqbqLyeCFEBsSeVLKuX+mmqpfeBiMqD0m0vo+NzGseKBJU/EARYscnB4owRM9dpUFxHP2OND8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894465; c=relaxed/simple;
-	bh=YDHwO30YSk5sWqF6Pl1/4UP+M4RshimbcQUlvUcXgsE=;
+	s=arc-20240116; t=1791894467; c=relaxed/simple;
+	bh=i1yXHGZ8C0SgbR7RBHAylzXs1FiHRhrl0eNp5a5yvrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/pL1MyU0Y7hS2tiQvDCoRrop5fhbkXV1DvkJAJvnLD/thTtNl9+N+I2g7JoRVflZDEFj67Q06OMMhh68bO84tzB0M41Qi0FWTv5WLcHGLCTz6qF5/07B8RPySgQkrh5ODMOuQEKL1NiY7IT0rj1QpO9cxzhV20q3Sio73N/VGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7N6zu/9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNQPZHodZwbkRlqxePXAcJUbRzdUq6vTj8hTWc3Moc883G9/HXo6TisSZPB1k5ii7A4QZkBMd2M/dIJc1wOTxNKmfvQAVMvsJ0oXMEJdpPy1mvM7Kd4Fk1DBDFgQAPl/hFFwgU/2zWEAdWpcDtLyxLcV8OuZTBotjCDJ2jm10VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJGDsZET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7N6zu/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7DC1F000FF;
-	Tue, 13 Oct 2026 12:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJGDsZET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198C11F000FF;
+	Tue, 13 Oct 2026 12:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894463;
-	bh=i1AaWKOxTG+17KPHLe+IrT7asYafiggx3/M1kZaQy6s=;
+	s=korg; t=1791894466;
+	bh=5YZB08y1mL1Nm3b05iN1gLrR7jwzEc0fIQaYBrHf9gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7N6zu/919tjVYxXBb11fsJJM4cYEbbzrOI5k2vNhQPz63jUuSOQlITTx0uqWVMqX
-	 N+Khg+AS54gkCaJP7/3oTwamqjj1o9p+c3A7GR1z9tFzLs6cALqbx/OJH9zL/jjaoQ
-	 6JgbWW+JmsxK8CxSd19hBXeWtkIj9W6WiltogJ+s=
+	b=fJGDsZETJA23y2Vkozpovi2dGuyth1j528ZE0UrwpVyG+gpsDGQVGEvVh+BcSQNzs
+	 3QFym04xSCUs9sAcn2dfqfURoYVqfK9LEF/H0Ti4My6llPMx63IVwGA8BP3k+y6yL8
+	 4AynGDhTOuTKtT/1/f+J9c7oKHgdjJy5yCguTIDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Gong <gongtao0607@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 568/621] wifi: mt76: mt7996: fix struct mt7996_mcu_wed_rro_ba_delete_event layout
-Date: Tue, 13 Oct 2026 13:39:23 +0200
-Message-ID: <20261013112934.285413175@linuxfoundation.org>
+Subject: [PATCH 6.18 533/621] fs: move mntput_no_expire() slowpath into a dedicated routine
+Date: Tue, 13 Oct 2026 13:38:48 +0200
+Message-ID: <20261013112933.468888349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,51 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Gong <gongtao0607@gmail.com>
+From: Mateusz Guzik <mjguzik@gmail.com>
 
-[ Upstream commit 9c9e4e4c8b45873e53774ab8207825b37b7565ec ]
+[ Upstream commit bfef6e1f3488fc09ae966cb4dd2cb09f73cff791 ]
 
-Correct the definition of struct mt7996_mcu_wed_rro_ba_delete_event to
-match the 12-byte event record layout observed from firmware.
+In the stock variant the compiler spills several registers on the stack
+and employs stack smashing protection, adding even more code + a branch
+on exit..
 
-The event TLV sent by firmware is 12 bytes in length rather than 8 bytes.
-It contains an additional 4 bytes that appear to be wlan_id and tid.
-For example, a captured batch deletion of sessions 8, 9, and 10 (TIDs 6,
-0, and 1) shows:
+The actual fast path is small enough that the compiler inlines it for
+all callers -- the symbol is no longer emitted.
 
-  00000000: 02 00 0c 00 08 00 01 00 06 00 00 00 02 00 0c 00
-  00000010: 09 00 01 00 00 00 00 00 02 00 0c 00 0a 00 01 00
-  00000020: 01 00 00 00
+Forcing noinline on it just for code-measurement purposes shows the fast
+path dropping from 111 to 39 bytes.
 
-The previous 8-byte structure corrupts the parsing of subsequent TLVs,
-leading to unhandled delete events and erroneous session deletions.
-Consequently, clients that create and tear down BA sessions in batches
-(such as Apple Wi-Fi clients) fail to properly clean up stale sessions,
-causing HW_RRO to be lost upon subsequent reassociations.
-
-Fixes: a5d028d66836 ("wifi: mt76: mt7996: add wed rro delete session garbage collector")
-Signed-off-by: Tao Gong <gongtao0607@gmail.com>
-Link: https://patch.msgid.link/20260823053739.186748-1-gongtao0607@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
+Link: https://patch.msgid.link/20251114201803.2183505-1-mjguzik@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 7eb84d54fac5 ("fs: don't let a migrating task hide its reference from do_umount()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/namespace.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-index 848c6c5751155..29e8f6d64ede3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-@@ -249,6 +249,9 @@ struct mt7996_mcu_wed_rro_ba_delete_event {
- 	__le16 len;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 0bc34cf8fe001..b7d431156738f 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1342,26 +1342,12 @@ static void delayed_mntput(struct work_struct *unused)
+ }
+ static DECLARE_DELAYED_WORK(delayed_mntput_work, delayed_mntput);
  
- 	__le16 session_id;
-+	__le16 wlan_id;
-+	u8 tid;
-+	u8 __rsv1;
- 	u8 __rsv2[2];
- } __packed;
+-static void mntput_no_expire(struct mount *mnt)
++static void noinline mntput_no_expire_slowpath(struct mount *mnt)
+ {
+ 	LIST_HEAD(list);
+ 	int count;
  
+-	rcu_read_lock();
+-	if (likely(READ_ONCE(mnt->mnt_ns))) {
+-		/*
+-		 * Since we don't do lock_mount_hash() here,
+-		 * ->mnt_ns can change under us.  However, if it's
+-		 * non-NULL, then there's a reference that won't
+-		 * be dropped until after an RCU delay done after
+-		 * turning ->mnt_ns NULL.  So if we observe it
+-		 * non-NULL under rcu_read_lock(), the reference
+-		 * we are dropping is not the final one.
+-		 */
+-		mnt_add_count(mnt, -1);
+-		rcu_read_unlock();
+-		return;
+-	}
++	VFS_BUG_ON(mnt->mnt_ns);
+ 	lock_mount_hash();
+ 	/*
+ 	 * make sure that if __legitimize_mnt() has not seen us grab
+@@ -1412,6 +1398,26 @@ static void mntput_no_expire(struct mount *mnt)
+ 	cleanup_mnt(mnt);
+ }
+ 
++static void mntput_no_expire(struct mount *mnt)
++{
++	rcu_read_lock();
++	if (likely(READ_ONCE(mnt->mnt_ns))) {
++		/*
++		 * Since we don't do lock_mount_hash() here,
++		 * ->mnt_ns can change under us.  However, if it's
++		 * non-NULL, then there's a reference that won't
++		 * be dropped until after an RCU delay done after
++		 * turning ->mnt_ns NULL.  So if we observe it
++		 * non-NULL under rcu_read_lock(), the reference
++		 * we are dropping is not the final one.
++		 */
++		mnt_add_count(mnt, -1);
++		rcu_read_unlock();
++		return;
++	}
++	mntput_no_expire_slowpath(mnt);
++}
++
+ void mntput(struct vfsmount *mnt)
+ {
+ 	if (mnt) {
 -- 
 2.53.0
 
