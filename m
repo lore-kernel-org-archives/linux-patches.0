@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE284E8E08;
-	Tue, 13 Oct 2026 12:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D6F38F62F;
+	Tue, 13 Oct 2026 12:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894037; cv=none; b=JnZVSBUSA2/hsEgOxdHVHu/S1zHRN/RkylsmH+XpQH1N/qTtW+qvUlYgXZ8e5ZK2Z40yla5v9sruc5DsyjnK8NJWq86V6Hkjtd9jBXJPD2WXhWDWOfAnRqvxyDi41yLzBBCUaSevjh9Pr88sCK5RrIVqkmPMskwLTF3qS++Dwlo=
+	t=1791894039; cv=none; b=EhJ/eijD2p3OpSm1GB+NZ3H72BJEmeJkgxspsguToiirklEEsF5NtlQ680SFsln3P2Dk2PQ2sPxk47FVDsbxd9cUSwA/AKqezCNaSZsTeSqytfMwnzAyazDs8vfbGXq79QbYJETcQ1d0S6mxoUCIwGrOaxvF9MQbG1+KIRyftRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894037; c=relaxed/simple;
-	bh=lFy8/Oz5VDrYV74Nq+P5pRCAF3Kny3YDxIuFgxMPiyA=;
+	s=arc-20240116; t=1791894039; c=relaxed/simple;
+	bh=1EYNxbilZpSUaXMtjSUG75kzyMcItYI7hIP9Fug95Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WD+uRa88Ycww8KFPmp5c0rYCa7E+H36YgeTLxpKH/mPw+/2Y16VhiQNwLbB5hKRNyTDDuJk0q+HS8ujbU1InoBK+M7sA8zCt1AIqogFkytHJj/iPwtH3nRztUrV2AJDGDjRMURzETX77iat1CzFVdg3LXrQKq8w7P9HwkwjkwvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9OJogrT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g+Dio8l0RTxJmhc+T0EGG9iGaGsxuFlLEneZCv9Ess5HDUkoYvhQGal6u8SitCzES/qA2F3qDbZgeoBdmUIllfbKYymrik6zhpvJpPqwNdjutKexR/5NU8GMApC4LXKECjVAl9ww8Bxhe0vja+5laBAwsn1Ic25nbDC+JpIwp2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzVglZsN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9OJogrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166D91F000FF;
-	Tue, 13 Oct 2026 12:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzVglZsN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA381F00893;
+	Tue, 13 Oct 2026 12:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894034;
-	bh=JNq/hfNVIMWyjB6no9MVlati5adPl+XWc9B5KbzHi8E=;
+	s=korg; t=1791894037;
+	bh=tUjiENZsYoA8/dx2Tf12ay5gWmZ9C0zXvjZnFqLXWdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d9OJogrT1d4RUlmzPOxQFSbonU9Vd8iUfnQzdr6wQN7iGxVV4+/+1a8mlJuZ719Mj
-	 5otdCy1Kg4NY//XHClpYWOGQ2ToO3CMEsxym0tpFzEE1HVsZoUdqqPq5dP/NBKclpB
-	 nJTIAN1MYPq1nHljbjegnZ5ylsv6cjARuL1/73H4=
+	b=tzVglZsNG1vug5zSRExN9f5fmYXj7H6bKrWOcI/Y492TGfQE/nYj0aDD763c2W7QZ
+	 EPmp+xOoxN7/ljnlDexuXbkuHDVQai3t6oBVdH7oMTOxT3JjC4/Sy3LZwmj6DXcafT
+	 egCBA833OLbhWKRjEXZ4AIwbRNdCRdCsOcV9n86s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 424/621] iommu: Pass in old domain to attach_dev callback functions
-Date: Tue, 13 Oct 2026 13:36:59 +0200
-Message-ID: <20261013112930.896254953@linuxfoundation.org>
+Subject: [PATCH 6.18 425/621] iommu/vt-d: Fix iopf_refcount leak on RID domain replacement
+Date: Tue, 13 Oct 2026 13:37:00 +0200
+Message-ID: <20261013112930.919775033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,1039 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit fd714986e4e46effa6697b13d32918fc59608ccb ]
+[ Upstream commit 236dd58fabd2e951b940a6ad88b81147899ed311 ]
 
-The IOMMU core attaches each device to a default domain on probe(). Then,
-every new "attach" operation has a fundamental meaning of two-fold:
- - detach from its currently attached (old) domain
- - attach to a given new domain
+intel_iommu_attach_device() enables IOPF for the new domain but never
+disables it for the old one.  device_block_translation(), called at the
+start of the function, tears down translation but does not touch any IOPF
+state; blocking_domain_attach_dev() has to call iopf_for_domain_remove()
+explicitly before invoking it for exactly this reason.
 
-Modern IOMMU drivers following this pattern usually want to clean up the
-things related to the old domain, so they call iommu_get_domain_for_dev()
-to fetch the old domain.
+identity_domain_attach_dev() has the same problem.  Its comment claims
+that no PRI handling is needed because the device has been put in the
+blocking state, but the blocking state and the IOPF reference count are
+independent of each other.
 
-Pass in the old domain pointer from the core to drivers, aligning with the
-set_dev_pasid op that does so already.
+As a result, replacing a domain that has an iopf_handler with another
+domain at RID level leaks a reference in info->iopf_refcount.  The count
+never drops back to zero, so iopf_queue_remove_device() is never called
+and iommu_disable_pci_pri() triggers its WARN_ON(info->iopf_refcount)
+when the device is released.
 
-Ensure all low-level attach fcuntions in the core can forward the correct
-old domain pointer. Thus, rework those functions as well.
+The PASID paths already handle this correctly by way of
+iopf_for_domain_replace(); convert the two RID paths to do the same.
+Using the replace helper rather than a bare remove keeps the enable
+before the disable, so the reference count does not transiently reach
+zero and evict the device from the IOPF queue.
 
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Fixes: 17fce9d2336d ("iommu/vt-d: Put iopf enablement in domain attach path")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260602233426.357499-1-baolu.lu%40linux.intel.com
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Stable-dep-of: 236dd58fabd2 ("iommu/vt-d: Fix iopf_refcount leak on RID domain replacement")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/iommu.c                   |  5 +--
- drivers/iommu/amd/iommu.c                     | 11 ++++---
- drivers/iommu/apple-dart.c                    |  9 ++++--
- .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  5 +--
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 31 ++++++++++++-------
- drivers/iommu/arm/arm-smmu/arm-smmu.c         |  9 ++++--
- drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 11 ++++---
- drivers/iommu/exynos-iommu.c                  | 11 ++++---
- drivers/iommu/fsl_pamu_domain.c               | 12 +++----
- drivers/iommu/intel/iommu.c                   | 10 ++++--
- drivers/iommu/intel/nested.c                  |  2 +-
- drivers/iommu/iommu.c                         | 25 +++++++++------
- drivers/iommu/iommufd/selftest.c              |  2 +-
- drivers/iommu/ipmmu-vmsa.c                    | 10 +++---
- drivers/iommu/msm_iommu.c                     | 11 ++++---
- drivers/iommu/mtk_iommu.c                     |  8 ++---
- drivers/iommu/mtk_iommu_v1.c                  |  7 +++--
- drivers/iommu/omap-iommu.c                    | 12 +++----
- drivers/iommu/riscv/iommu.c                   |  9 ++++--
- drivers/iommu/rockchip-iommu.c                | 20 +++++++++---
- drivers/iommu/s390-iommu.c                    | 13 +++++---
- drivers/iommu/sprd-iommu.c                    |  3 +-
- drivers/iommu/sun50i-iommu.c                  |  8 +++--
- drivers/iommu/tegra-smmu.c                    | 10 +++---
- drivers/iommu/virtio-iommu.c                  |  6 ++--
- include/linux/iommu.h                         |  3 +-
- 26 files changed, 160 insertions(+), 103 deletions(-)
+ drivers/iommu/intel/iommu.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index 0a7d14f651e8a..a0d7ca3c598cd 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1156,7 +1156,8 @@ EXPORT_SYMBOL_GPL(iommu_add_device);
-  */
- static int
- spapr_tce_platform_iommu_attach_dev(struct iommu_domain *platform_domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
- 	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct iommu_table_group *table_group;
-@@ -1189,7 +1190,7 @@ static struct iommu_domain spapr_tce_platform_domain = {
- 
- static int
- spapr_tce_blocked_iommu_attach_dev(struct iommu_domain *platform_domain,
--				     struct device *dev)
-+				   struct device *dev, struct iommu_domain *old)
- {
- 	struct iommu_group *grp = iommu_group_get(dev);
- 	struct iommu_table_group *table_group;
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 12302647e2675..e64e6da08a5f7 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -70,8 +70,8 @@ int amd_iommu_max_glx_val = -1;
-  */
- DEFINE_IDA(pdom_ids);
- 
--static int amd_iommu_attach_device(struct iommu_domain *dom,
--				   struct device *dev);
-+static int amd_iommu_attach_device(struct iommu_domain *dom, struct device *dev,
-+				   struct iommu_domain *old);
- 
- static void set_dte_entry(struct amd_iommu *iommu,
- 			  struct iommu_dev_data *dev_data);
-@@ -2655,7 +2655,8 @@ void amd_iommu_domain_free(struct iommu_domain *dom)
- }
- 
- static int blocked_domain_attach_device(struct iommu_domain *domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	struct iommu_dev_data *dev_data = dev_iommu_priv_get(dev);
- 
-@@ -2713,8 +2714,8 @@ static struct iommu_domain release_domain = {
- 	}
- };
- 
--static int amd_iommu_attach_device(struct iommu_domain *dom,
--				   struct device *dev)
-+static int amd_iommu_attach_device(struct iommu_domain *dom, struct device *dev,
-+				   struct iommu_domain *old)
- {
- 	struct iommu_dev_data *dev_data = dev_iommu_priv_get(dev);
- 	struct protection_domain *domain = to_pdomain(dom);
-diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
-index 9804022c7f590..83a5aabcd15d9 100644
---- a/drivers/iommu/apple-dart.c
-+++ b/drivers/iommu/apple-dart.c
-@@ -672,7 +672,8 @@ static int apple_dart_domain_add_streams(struct apple_dart_domain *domain,
- }
- 
- static int apple_dart_attach_dev_paging(struct iommu_domain *domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	int ret, i;
- 	struct apple_dart_stream_map *stream_map;
-@@ -693,7 +694,8 @@ static int apple_dart_attach_dev_paging(struct iommu_domain *domain,
- }
- 
- static int apple_dart_attach_dev_identity(struct iommu_domain *domain,
--					  struct device *dev)
-+					  struct device *dev,
-+					  struct iommu_domain *old)
- {
- 	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
- 	struct apple_dart_stream_map *stream_map;
-@@ -717,7 +719,8 @@ static struct iommu_domain apple_dart_identity_domain = {
- };
- 
- static int apple_dart_attach_dev_blocked(struct iommu_domain *domain,
--					 struct device *dev)
-+					 struct device *dev,
-+					 struct iommu_domain *old)
- {
- 	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
- 	struct apple_dart_stream_map *stream_map;
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index a52f86454f77d..7afb574140399 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -138,14 +138,15 @@ void arm_smmu_master_clear_vmaster(struct arm_smmu_master *master)
- }
- 
- static int arm_smmu_attach_dev_nested(struct iommu_domain *domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old_domain)
- {
- 	struct arm_smmu_nested_domain *nested_domain =
- 		to_smmu_nested_domain(domain);
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
- 	struct arm_smmu_attach_state state = {
- 		.master = master,
--		.old_domain = iommu_get_domain_for_dev(dev),
-+		.old_domain = old_domain,
- 		.ssid = IOMMU_NO_PASID,
- 	};
- 	struct arm_smmu_ste ste;
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3d796ff6c2c62..2c237ca4a3837 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3070,7 +3070,8 @@ void arm_smmu_attach_commit(struct arm_smmu_attach_state *state)
- 	master->ats_enabled = state->ats_enabled;
- }
- 
--static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
-+			       struct iommu_domain *old_domain)
- {
- 	int ret = 0;
- 	struct arm_smmu_ste target;
-@@ -3078,7 +3079,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 	struct arm_smmu_device *smmu;
- 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
- 	struct arm_smmu_attach_state state = {
--		.old_domain = iommu_get_domain_for_dev(dev),
-+		.old_domain = old_domain,
- 		.ssid = IOMMU_NO_PASID,
- 	};
- 	struct arm_smmu_master *master;
-@@ -3254,7 +3255,7 @@ static int arm_smmu_blocking_set_dev_pasid(struct iommu_domain *new_domain,
- 
- 	/*
- 	 * When the last user of the CD table goes away downgrade the STE back
--	 * to a non-cd_table one.
-+	 * to a non-cd_table one, by re-attaching its sid_domain.
- 	 */
- 	if (!arm_smmu_ssids_in_use(&master->cd_table)) {
- 		struct iommu_domain *sid_domain =
-@@ -3262,12 +3263,14 @@ static int arm_smmu_blocking_set_dev_pasid(struct iommu_domain *new_domain,
- 
- 		if (sid_domain->type == IOMMU_DOMAIN_IDENTITY ||
- 		    sid_domain->type == IOMMU_DOMAIN_BLOCKED)
--			sid_domain->ops->attach_dev(sid_domain, dev);
-+			sid_domain->ops->attach_dev(sid_domain, dev,
-+						    sid_domain);
- 	}
- 	return 0;
- }
- 
- static void arm_smmu_attach_dev_ste(struct iommu_domain *domain,
-+				    struct iommu_domain *old_domain,
- 				    struct device *dev,
- 				    struct arm_smmu_ste *ste,
- 				    unsigned int s1dss)
-@@ -3275,7 +3278,7 @@ static void arm_smmu_attach_dev_ste(struct iommu_domain *domain,
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
- 	struct arm_smmu_attach_state state = {
- 		.master = master,
--		.old_domain = iommu_get_domain_for_dev(dev),
-+		.old_domain = old_domain,
- 		.ssid = IOMMU_NO_PASID,
- 	};
- 
-@@ -3316,14 +3319,16 @@ static void arm_smmu_attach_dev_ste(struct iommu_domain *domain,
- }
- 
- static int arm_smmu_attach_dev_identity(struct iommu_domain *domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old_domain)
- {
- 	struct arm_smmu_ste ste;
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
- 
- 	arm_smmu_master_clear_vmaster(master);
- 	arm_smmu_make_bypass_ste(master->smmu, &ste);
--	arm_smmu_attach_dev_ste(domain, dev, &ste, STRTAB_STE_1_S1DSS_BYPASS);
-+	arm_smmu_attach_dev_ste(domain, old_domain, dev, &ste,
-+				STRTAB_STE_1_S1DSS_BYPASS);
- 	return 0;
- }
- 
-@@ -3337,14 +3342,15 @@ static struct iommu_domain arm_smmu_identity_domain = {
- };
- 
- static int arm_smmu_attach_dev_blocked(struct iommu_domain *domain,
--					struct device *dev)
-+				       struct device *dev,
-+				       struct iommu_domain *old_domain)
- {
- 	struct arm_smmu_ste ste;
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
- 
- 	arm_smmu_master_clear_vmaster(master);
- 	arm_smmu_make_abort_ste(&ste);
--	arm_smmu_attach_dev_ste(domain, dev, &ste,
-+	arm_smmu_attach_dev_ste(domain, old_domain, dev, &ste,
- 				STRTAB_STE_1_S1DSS_TERMINATE);
- 	return 0;
- }
-@@ -3647,14 +3653,17 @@ static struct iommu_device *arm_smmu_probe_device(struct device *dev)
- static void arm_smmu_release_device(struct device *dev)
- {
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-+	struct iommu_domain *old_domain = iommu_get_domain_for_dev(dev);
- 
- 	WARN_ON(master->iopf_refcount);
- 
- 	/* Put the STE back to what arm_smmu_init_strtab() sets */
- 	if (dev->iommu->require_direct)
--		arm_smmu_attach_dev_identity(&arm_smmu_identity_domain, dev);
-+		arm_smmu_attach_dev_identity(&arm_smmu_identity_domain, dev,
-+					     old_domain);
- 	else
--		arm_smmu_attach_dev_blocked(&arm_smmu_blocked_domain, dev);
-+		arm_smmu_attach_dev_blocked(&arm_smmu_blocked_domain, dev,
-+					    old_domain);
- 
- 	arm_smmu_disable_pasid(master);
- 	arm_smmu_remove_master(master);
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index 488632b8eeab6..1e218fbea35a0 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -1165,7 +1165,8 @@ static void arm_smmu_master_install_s2crs(struct arm_smmu_master_cfg *cfg,
- 	}
- }
- 
--static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev,
-+			       struct iommu_domain *old)
- {
- 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-@@ -1234,7 +1235,8 @@ static int arm_smmu_attach_dev_type(struct device *dev,
- }
- 
- static int arm_smmu_attach_dev_identity(struct iommu_domain *domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	return arm_smmu_attach_dev_type(dev, S2CR_TYPE_BYPASS);
- }
-@@ -1249,7 +1251,8 @@ static struct iommu_domain arm_smmu_identity_domain = {
- };
- 
- static int arm_smmu_attach_dev_blocked(struct iommu_domain *domain,
--				       struct device *dev)
-+				       struct device *dev,
-+				       struct iommu_domain *old)
- {
- 	return arm_smmu_attach_dev_type(dev, S2CR_TYPE_FAULT);
- }
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 82c3ffe0c7836..9bee85259c69e 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -359,7 +359,8 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
- 	kfree(qcom_domain);
- }
- 
--static int qcom_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int qcom_iommu_attach_dev(struct iommu_domain *domain,
-+				 struct device *dev, struct iommu_domain *old)
- {
- 	struct qcom_iommu_dev *qcom_iommu = dev_iommu_priv_get(dev);
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
-@@ -388,18 +389,18 @@ static int qcom_iommu_attach_dev(struct iommu_domain *domain, struct device *dev
- }
- 
- static int qcom_iommu_identity_attach(struct iommu_domain *identity_domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct qcom_iommu_domain *qcom_domain;
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct qcom_iommu_dev *qcom_iommu = dev_iommu_priv_get(dev);
- 	unsigned int i;
- 
--	if (domain == identity_domain || !domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
--	qcom_domain = to_qcom_iommu_domain(domain);
-+	qcom_domain = to_qcom_iommu_domain(old);
- 	if (WARN_ON(!qcom_domain->iommu))
- 		return -EINVAL;
- 
-diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-index ce9e935cb84c3..38c435d0de395 100644
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -984,7 +984,8 @@ static void exynos_iommu_domain_free(struct iommu_domain *iommu_domain)
- }
- 
- static int exynos_iommu_identity_attach(struct iommu_domain *identity_domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
- 	struct exynos_iommu_domain *domain;
-@@ -1035,7 +1036,8 @@ static struct iommu_domain exynos_identity_domain = {
- };
- 
- static int exynos_iommu_attach_device(struct iommu_domain *iommu_domain,
--				   struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
- 	struct exynos_iommu_domain *domain = to_exynos_domain(iommu_domain);
- 	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
-@@ -1044,7 +1046,7 @@ static int exynos_iommu_attach_device(struct iommu_domain *iommu_domain,
- 	unsigned long flags;
- 	int err;
- 
--	err = exynos_iommu_identity_attach(&exynos_identity_domain, dev);
-+	err = exynos_iommu_identity_attach(&exynos_identity_domain, dev, old);
- 	if (err)
- 		return err;
- 
-@@ -1429,7 +1431,8 @@ static void exynos_iommu_release_device(struct device *dev)
- 	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
- 	struct sysmmu_drvdata *data;
- 
--	WARN_ON(exynos_iommu_identity_attach(&exynos_identity_domain, dev));
-+	WARN_ON(exynos_iommu_identity_attach(&exynos_identity_domain, dev,
-+					     NULL));
- 
- 	list_for_each_entry(data, &owner->controllers, owner_node)
- 		device_link_del(data->link);
-diff --git a/drivers/iommu/fsl_pamu_domain.c b/drivers/iommu/fsl_pamu_domain.c
-index 5f08523f97cb9..9664ef9840d2c 100644
---- a/drivers/iommu/fsl_pamu_domain.c
-+++ b/drivers/iommu/fsl_pamu_domain.c
-@@ -238,7 +238,7 @@ static int update_domain_stash(struct fsl_dma_domain *dma_domain, u32 val)
- }
- 
- static int fsl_pamu_attach_device(struct iommu_domain *domain,
--				  struct device *dev)
-+				  struct device *dev, struct iommu_domain *old)
- {
- 	struct fsl_dma_domain *dma_domain = to_fsl_dma_domain(domain);
- 	unsigned long flags;
-@@ -298,9 +298,9 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
-  * switches to what looks like BLOCKING.
-  */
- static int fsl_pamu_platform_attach(struct iommu_domain *platform_domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct fsl_dma_domain *dma_domain;
- 	const u32 *prop;
- 	int len;
-@@ -311,11 +311,11 @@ static int fsl_pamu_platform_attach(struct iommu_domain *platform_domain,
- 	 * Hack to keep things working as they always have, only leaving an
- 	 * UNMANAGED domain makes it BLOCKING.
- 	 */
--	if (domain == platform_domain || !domain ||
--	    domain->type != IOMMU_DOMAIN_UNMANAGED)
-+	if (old == platform_domain || !old ||
-+	    old->type != IOMMU_DOMAIN_UNMANAGED)
- 		return 0;
- 
--	dma_domain = to_fsl_dma_domain(domain);
-+	dma_domain = to_fsl_dma_domain(old);
- 
- 	/*
- 	 * Use LIODN of the PCI controller while detaching a
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 77e51712040b0..63ddcf6fde342 100644
+index 63ddcf6fde342..94781f6206803 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -3240,7 +3240,8 @@ void device_block_translation(struct device *dev)
+@@ -3559,13 +3559,13 @@ static int intel_iommu_attach_device(struct iommu_domain *domain,
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = iopf_for_domain_set(domain, dev);
++	ret = iopf_for_domain_replace(domain, old, dev);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ret = dmar_domain_attach_device(to_dmar_domain(domain), dev);
+ 	if (ret)
+-		iopf_for_domain_remove(domain, dev);
++		iopf_for_domain_replace(old, domain, dev);
+ 
+ 	return ret;
  }
+@@ -4439,10 +4439,13 @@ static int identity_domain_attach_dev(struct iommu_domain *domain,
+ 		return 0;
  
- static int blocking_domain_attach_dev(struct iommu_domain *domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
- 
-@@ -3547,7 +3548,8 @@ int paging_domain_compatible(struct iommu_domain *domain, struct device *dev)
- }
- 
- static int intel_iommu_attach_device(struct iommu_domain *domain,
--				     struct device *dev)
-+				     struct device *dev,
-+				     struct iommu_domain *old)
- {
- 	int ret;
- 
-@@ -4423,7 +4425,9 @@ static int device_setup_pass_through(struct device *dev)
- 				      context_setup_pass_through_cb, dev);
- }
- 
--static int identity_domain_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int identity_domain_attach_dev(struct iommu_domain *domain,
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
- 	struct intel_iommu *iommu = info->iommu;
-diff --git a/drivers/iommu/intel/nested.c b/drivers/iommu/intel/nested.c
-index a909ab1a665a3..eb3e6d687e04d 100644
---- a/drivers/iommu/intel/nested.c
-+++ b/drivers/iommu/intel/nested.c
-@@ -19,7 +19,7 @@
- #include "pasid.h"
- 
- static int intel_nested_attach_dev(struct iommu_domain *domain,
--				   struct device *dev)
-+				   struct device *dev, struct iommu_domain *old)
- {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
- 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 1547f3587a4ec..34c06fb26bf5c 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -100,7 +100,7 @@ static int iommu_bus_notifier(struct notifier_block *nb,
- 			      unsigned long action, void *data);
- static void iommu_release_device(struct device *dev);
- static int __iommu_attach_device(struct iommu_domain *domain,
--				 struct device *dev);
-+				 struct device *dev, struct iommu_domain *old);
- static int __iommu_attach_group(struct iommu_domain *domain,
- 				struct iommu_group *group);
- static struct iommu_domain *__iommu_paging_domain_alloc_flags(struct device *dev,
-@@ -114,6 +114,7 @@ enum {
- static int __iommu_device_set_domain(struct iommu_group *group,
- 				     struct device *dev,
- 				     struct iommu_domain *new_domain,
-+				     struct iommu_domain *old_domain,
- 				     unsigned int flags);
- static int __iommu_group_set_domain_internal(struct iommu_group *group,
- 					     struct iommu_domain *new_domain,
-@@ -543,7 +544,8 @@ static void iommu_deinit_device(struct device *dev)
- 	 * should still avoid touching any hardware configuration either.
+ 	/*
+-	 * No PRI support with the global identity domain. No need to enable or
+-	 * disable PRI in this path as the iommu has been put in the blocking
+-	 * state.
++	 * The identity domain has no iopf_handler, so no IOPF reference is
++	 * taken for it.  The reference held by the old domain must still be
++	 * released here; putting the device in the blocking state above does
++	 * not affect the IOPF reference count.
  	 */
- 	if (!dev->iommu->attach_deferred && ops->release_domain)
--		ops->release_domain->ops->attach_dev(ops->release_domain, dev);
-+		ops->release_domain->ops->attach_dev(ops->release_domain, dev,
-+						     group->domain);
- 
- 	if (ops->release_device)
- 		ops->release_device(dev);
-@@ -628,7 +630,8 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
- 	if (group->default_domain)
- 		iommu_create_device_direct_mappings(group->default_domain, dev);
- 	if (group->domain) {
--		ret = __iommu_device_set_domain(group, dev, group->domain, 0);
-+		ret = __iommu_device_set_domain(group, dev, group->domain, NULL,
-+						0);
- 		if (ret)
- 			goto err_remove_gdev;
- 	} else if (!group->default_domain && !group_list) {
-@@ -2115,14 +2118,14 @@ static void __iommu_group_set_core_domain(struct iommu_group *group)
- }
- 
- static int __iommu_attach_device(struct iommu_domain *domain,
--				 struct device *dev)
-+				 struct device *dev, struct iommu_domain *old)
- {
- 	int ret;
- 
- 	if (unlikely(domain->ops->attach_dev == NULL))
- 		return -ENODEV;
- 
--	ret = domain->ops->attach_dev(domain, dev);
-+	ret = domain->ops->attach_dev(domain, dev, old);
- 	if (ret)
- 		return ret;
- 	dev->iommu->attach_deferred = 0;
-@@ -2171,7 +2174,7 @@ EXPORT_SYMBOL_GPL(iommu_attach_device);
- int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
- {
- 	if (dev->iommu && dev->iommu->attach_deferred)
--		return __iommu_attach_device(domain, dev);
-+		return __iommu_attach_device(domain, dev, NULL);
- 
- 	return 0;
- }
-@@ -2284,6 +2287,7 @@ EXPORT_SYMBOL_GPL(iommu_attach_group);
- static int __iommu_device_set_domain(struct iommu_group *group,
- 				     struct device *dev,
- 				     struct iommu_domain *new_domain,
-+				     struct iommu_domain *old_domain,
- 				     unsigned int flags)
- {
- 	int ret;
-@@ -2309,7 +2313,7 @@ static int __iommu_device_set_domain(struct iommu_group *group,
- 		dev->iommu->attach_deferred = 0;
- 	}
- 
--	ret = __iommu_attach_device(new_domain, dev);
-+	ret = __iommu_attach_device(new_domain, dev, old_domain);
- 	if (ret) {
- 		/*
- 		 * If we have a blocking domain then try to attach that in hopes
-@@ -2319,7 +2323,8 @@ static int __iommu_device_set_domain(struct iommu_group *group,
- 		if ((flags & IOMMU_SET_DOMAIN_MUST_SUCCEED) &&
- 		    group->blocking_domain &&
- 		    group->blocking_domain != new_domain)
--			__iommu_attach_device(group->blocking_domain, dev);
-+			__iommu_attach_device(group->blocking_domain, dev,
-+					      old_domain);
- 		return ret;
- 	}
- 	return 0;
-@@ -2366,7 +2371,7 @@ static int __iommu_group_set_domain_internal(struct iommu_group *group,
- 	result = 0;
- 	for_each_group_device(group, gdev) {
- 		ret = __iommu_device_set_domain(group, gdev->dev, new_domain,
--						flags);
-+						group->domain, flags);
- 		if (ret) {
- 			result = ret;
- 			/*
-@@ -2398,7 +2403,7 @@ static int __iommu_group_set_domain_internal(struct iommu_group *group,
- 		 */
- 		if (group->domain)
- 			WARN_ON(__iommu_device_set_domain(
--				group, gdev->dev, group->domain,
-+				group, gdev->dev, group->domain, new_domain,
- 				IOMMU_SET_DOMAIN_MUST_SUCCEED));
- 		if (gdev == last_gdev)
- 			break;
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index cd3d1380cf6c5..369311f629d1c 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -218,7 +218,7 @@ static inline struct selftest_obj *to_selftest_obj(struct iommufd_object *obj)
- }
- 
- static int mock_domain_nop_attach(struct iommu_domain *domain,
--				  struct device *dev)
-+				  struct device *dev, struct iommu_domain *old)
- {
- 	struct mock_dev *mdev = to_mock_dev(dev);
- 	struct mock_viommu *new_viommu = NULL;
-diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-index 02a2a55ffa0a0..ca848288dbf2a 100644
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -590,7 +590,7 @@ static void ipmmu_domain_free(struct iommu_domain *io_domain)
- }
- 
- static int ipmmu_attach_device(struct iommu_domain *io_domain,
--			       struct device *dev)
-+			       struct device *dev, struct iommu_domain *old)
- {
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct ipmmu_vmsa_device *mmu = to_ipmmu(dev);
-@@ -637,17 +637,17 @@ static int ipmmu_attach_device(struct iommu_domain *io_domain,
- }
- 
- static int ipmmu_iommu_identity_attach(struct iommu_domain *identity_domain,
--				       struct device *dev)
-+				       struct device *dev,
-+				       struct iommu_domain *old)
- {
--	struct iommu_domain *io_domain = iommu_get_domain_for_dev(dev);
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct ipmmu_vmsa_domain *domain;
- 	unsigned int i;
- 
--	if (io_domain == identity_domain || !io_domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
--	domain = to_vmsa_domain(io_domain);
-+	domain = to_vmsa_domain(old);
- 	for (i = 0; i < fwspec->num_ids; ++i)
- 		ipmmu_utlb_disable(domain, fwspec->ids[i]);
- 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 1dfa6f69c28f2..db14cdc0a5087 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -391,7 +391,8 @@ static struct iommu_device *msm_iommu_probe_device(struct device *dev)
- 	return &iommu->iommu;
- }
- 
--static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev,
-+				struct iommu_domain *old)
- {
- 	int ret = 0;
- 	unsigned long flags;
-@@ -441,19 +442,19 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- }
- 
- static int msm_iommu_identity_attach(struct iommu_domain *identity_domain,
--				     struct device *dev)
-+				     struct device *dev,
-+				     struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct msm_priv *priv;
- 	unsigned long flags;
- 	struct msm_iommu_dev *iommu;
- 	struct msm_iommu_ctx_dev *master;
- 	int ret = 0;
- 
--	if (domain == identity_domain || !domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
--	priv = to_msm_priv(domain);
-+	priv = to_msm_priv(old);
- 	free_io_pgtable_ops(priv->iop);
- 
- 	spin_lock_irqsave(&msm_iommu_lock, flags);
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 64ce041238fd3..54d8936d9d11a 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -705,7 +705,7 @@ static void mtk_iommu_domain_free(struct iommu_domain *domain)
- }
- 
- static int mtk_iommu_attach_device(struct iommu_domain *domain,
--				   struct device *dev)
-+				   struct device *dev, struct iommu_domain *old)
- {
- 	struct mtk_iommu_data *data = dev_iommu_priv_get(dev), *frstdata;
- 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
-@@ -773,12 +773,12 @@ static int mtk_iommu_attach_device(struct iommu_domain *domain,
- }
- 
- static int mtk_iommu_identity_attach(struct iommu_domain *identity_domain,
--				     struct device *dev)
-+				     struct device *dev,
-+				     struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct mtk_iommu_data *data = dev_iommu_priv_get(dev);
- 
--	if (domain == identity_domain || !domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
- 	mtk_iommu_config(data, dev, false, 0);
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index ad2dbd29fef8d..0433906ed8f5b 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -303,7 +303,9 @@ static void mtk_iommu_v1_domain_free(struct iommu_domain *domain)
- 	kfree(to_mtk_domain(domain));
- }
- 
--static int mtk_iommu_v1_attach_device(struct iommu_domain *domain, struct device *dev)
-+static int mtk_iommu_v1_attach_device(struct iommu_domain *domain,
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
- 	struct mtk_iommu_v1_data *data = dev_iommu_priv_get(dev);
- 	struct mtk_iommu_v1_domain *dom = to_mtk_domain(domain);
-@@ -329,7 +331,8 @@ static int mtk_iommu_v1_attach_device(struct iommu_domain *domain, struct device
- }
- 
- static int mtk_iommu_v1_identity_attach(struct iommu_domain *identity_domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	struct mtk_iommu_v1_data *data = dev_iommu_priv_get(dev);
- 
-diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
-index c0315c86cd187..1c995463cfb0d 100644
---- a/drivers/iommu/omap-iommu.c
-+++ b/drivers/iommu/omap-iommu.c
-@@ -1431,8 +1431,8 @@ static void omap_iommu_detach_fini(struct omap_iommu_domain *odomain)
- 	odomain->iommus = NULL;
- }
- 
--static int
--omap_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int omap_iommu_attach_dev(struct iommu_domain *domain,
-+				 struct device *dev, struct iommu_domain *old)
- {
- 	struct omap_iommu_arch_data *arch_data = dev_iommu_priv_get(dev);
- 	struct omap_iommu_domain *omap_domain = to_omap_domain(domain);
-@@ -1536,15 +1536,15 @@ static void _omap_iommu_detach_dev(struct omap_iommu_domain *omap_domain,
- }
- 
- static int omap_iommu_identity_attach(struct iommu_domain *identity_domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct omap_iommu_domain *omap_domain;
- 
--	if (domain == identity_domain || !domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
--	omap_domain = to_omap_domain(domain);
-+	omap_domain = to_omap_domain(old);
- 	spin_lock(&omap_domain->lock);
- 	_omap_iommu_detach_dev(omap_domain, dev);
- 	spin_unlock(&omap_domain->lock);
-diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index 1f7b8e46812c9..8f4f06348a7bc 100644
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -1392,7 +1392,8 @@ static bool riscv_iommu_pt_supported(struct riscv_iommu_device *iommu, int pgd_m
- }
- 
- static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
--					    struct device *dev)
-+					    struct device *dev,
-+					    struct iommu_domain *old)
- {
- 	struct riscv_iommu_domain *domain = iommu_domain_to_riscv(iommu_domain);
- 	struct riscv_iommu_device *iommu = dev_to_iommu(dev);
-@@ -1496,7 +1497,8 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
- }
- 
- static int riscv_iommu_attach_blocking_domain(struct iommu_domain *iommu_domain,
--					      struct device *dev)
-+					      struct device *dev,
-+					      struct iommu_domain *old)
- {
- 	struct riscv_iommu_device *iommu = dev_to_iommu(dev);
- 	struct riscv_iommu_info *info = dev_iommu_priv_get(dev);
-@@ -1517,7 +1519,8 @@ static struct iommu_domain riscv_iommu_blocking_domain = {
- };
- 
- static int riscv_iommu_attach_identity_domain(struct iommu_domain *iommu_domain,
--					      struct device *dev)
-+					      struct device *dev,
-+					      struct iommu_domain *old)
- {
- 	struct riscv_iommu_device *iommu = dev_to_iommu(dev);
- 	struct riscv_iommu_info *info = dev_iommu_priv_get(dev);
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 2d0dabb0d101a..309ba78e27d4f 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -968,7 +968,8 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
- }
- 
- static int rk_iommu_identity_attach(struct iommu_domain *identity_domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
- 	struct rk_iommu *iommu;
- 	struct rk_iommu_domain *rk_domain;
-@@ -1013,7 +1014,7 @@ static struct iommu_domain rk_identity_domain = {
- };
- 
- static int rk_iommu_attach_device(struct iommu_domain *domain,
--		struct device *dev)
-+				  struct device *dev, struct iommu_domain *old)
- {
- 	struct rk_iommu *iommu;
- 	struct rk_iommu_domain *rk_domain = to_rk_domain(domain);
-@@ -1034,7 +1035,7 @@ static int rk_iommu_attach_device(struct iommu_domain *domain,
- 	if (iommu->domain == domain)
- 		return 0;
- 
--	ret = rk_iommu_identity_attach(&rk_identity_domain, dev);
-+	ret = rk_iommu_identity_attach(&rk_identity_domain, dev, old);
- 	if (ret)
- 		return ret;
- 
-@@ -1049,8 +1050,17 @@ static int rk_iommu_attach_device(struct iommu_domain *domain,
- 		return 0;
- 
- 	ret = rk_iommu_enable(iommu);
--	if (ret)
--		WARN_ON(rk_iommu_identity_attach(&rk_identity_domain, dev));
-+	if (ret) {
-+		/*
-+		 * Note rk_iommu_identity_attach() might fail before physically
-+		 * attaching the dev to iommu->domain, in which case the actual
-+		 * old domain for this revert should be rk_identity_domain v.s.
-+		 * iommu->domain. Since rk_iommu_identity_attach() does not care
-+		 * about the old domain argument for now, this is not a problem.
-+		 */
-+		WARN_ON(rk_iommu_identity_attach(&rk_identity_domain, dev,
-+						 iommu->domain));
-+	}
- 
- 	pm_runtime_put(iommu->dev);
- 
-diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-index e36d08a0fd1df..97a39b3d6ba9a 100644
---- a/drivers/iommu/s390-iommu.c
-+++ b/drivers/iommu/s390-iommu.c
-@@ -670,7 +670,8 @@ int zpci_iommu_register_ioat(struct zpci_dev *zdev, u8 *status)
- }
- 
- static int blocking_domain_attach_device(struct iommu_domain *domain,
--					 struct device *dev)
-+					 struct device *dev,
-+					 struct iommu_domain *old)
- {
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
- 	struct s390_domain *s390_domain;
-@@ -694,7 +695,8 @@ static int blocking_domain_attach_device(struct iommu_domain *domain,
- }
- 
- static int s390_iommu_attach_device(struct iommu_domain *domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
- 	struct s390_domain *s390_domain = to_s390_domain(domain);
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
-@@ -709,7 +711,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 		domain->geometry.aperture_end < zdev->start_dma))
- 		return -EINVAL;
- 
--	blocking_domain_attach_device(&blocking_domain, dev);
-+	blocking_domain_attach_device(&blocking_domain, dev, old);
- 
- 	/* If we fail now DMA remains blocked via blocking domain */
- 	cc = s390_iommu_domain_reg_ioat(zdev, domain, &status);
-@@ -1133,13 +1135,14 @@ static int __init s390_iommu_init(void)
- subsys_initcall(s390_iommu_init);
- 
- static int s390_attach_dev_identity(struct iommu_domain *domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
- 	u8 status;
- 	int cc;
- 
--	blocking_domain_attach_device(&blocking_domain, dev);
-+	blocking_domain_attach_device(&blocking_domain, dev, old);
- 
- 	/* If we fail now DMA remains blocked via blocking domain */
- 	cc = s390_iommu_domain_reg_ioat(zdev, domain, &status);
-diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
-index c7ca1d8a0b153..555d4505c747a 100644
---- a/drivers/iommu/sprd-iommu.c
-+++ b/drivers/iommu/sprd-iommu.c
-@@ -247,7 +247,8 @@ static void sprd_iommu_domain_free(struct iommu_domain *domain)
- }
- 
- static int sprd_iommu_attach_device(struct iommu_domain *domain,
--				    struct device *dev)
-+				    struct device *dev,
-+				    struct iommu_domain *old)
- {
- 	struct sprd_iommu_device *sdev = dev_iommu_priv_get(dev);
- 	struct sprd_iommu_domain *dom = to_sprd_domain(domain);
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 6306570d57db4..90b26fe218176 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -771,7 +771,8 @@ static void sun50i_iommu_detach_domain(struct sun50i_iommu *iommu,
- }
- 
- static int sun50i_iommu_identity_attach(struct iommu_domain *identity_domain,
--					struct device *dev)
-+					struct device *dev,
-+					struct iommu_domain *old)
- {
- 	struct sun50i_iommu *iommu = dev_iommu_priv_get(dev);
- 	struct sun50i_iommu_domain *sun50i_domain;
-@@ -797,7 +798,8 @@ static struct iommu_domain sun50i_iommu_identity_domain = {
- };
- 
- static int sun50i_iommu_attach_device(struct iommu_domain *domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
- 	struct sun50i_iommu_domain *sun50i_domain = to_sun50i_domain(domain);
- 	struct sun50i_iommu *iommu;
-@@ -813,7 +815,7 @@ static int sun50i_iommu_attach_device(struct iommu_domain *domain,
- 	if (iommu->domain == domain)
- 		return 0;
- 
--	sun50i_iommu_identity_attach(&sun50i_iommu_identity_domain, dev);
-+	sun50i_iommu_identity_attach(&sun50i_iommu_identity_domain, dev, old);
- 
- 	sun50i_iommu_attach_domain(iommu, sun50i_domain);
- 
-diff --git a/drivers/iommu/tegra-smmu.c b/drivers/iommu/tegra-smmu.c
-index f6f26a0728208..c391e7f2cde69 100644
---- a/drivers/iommu/tegra-smmu.c
-+++ b/drivers/iommu/tegra-smmu.c
-@@ -490,7 +490,7 @@ static void tegra_smmu_as_unprepare(struct tegra_smmu *smmu,
- }
- 
- static int tegra_smmu_attach_dev(struct iommu_domain *domain,
--				 struct device *dev)
-+				 struct device *dev, struct iommu_domain *old)
- {
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct tegra_smmu *smmu = dev_iommu_priv_get(dev);
-@@ -524,9 +524,9 @@ static int tegra_smmu_attach_dev(struct iommu_domain *domain,
- }
- 
- static int tegra_smmu_identity_attach(struct iommu_domain *identity_domain,
--				      struct device *dev)
-+				      struct device *dev,
-+				      struct iommu_domain *old)
- {
--	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct tegra_smmu_as *as;
- 	struct tegra_smmu *smmu;
-@@ -535,10 +535,10 @@ static int tegra_smmu_identity_attach(struct iommu_domain *identity_domain,
- 	if (!fwspec)
- 		return -ENODEV;
- 
--	if (domain == identity_domain || !domain)
-+	if (old == identity_domain || !old)
- 		return 0;
- 
--	as = to_smmu_as(domain);
-+	as = to_smmu_as(old);
- 	smmu = as->smmu;
- 	for (index = 0; index < fwspec->num_ids; index++) {
- 		tegra_smmu_disable(smmu, fwspec->ids[index], as->id);
-diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
-index b39d6f134ab28..d314fa5cd8476 100644
---- a/drivers/iommu/virtio-iommu.c
-+++ b/drivers/iommu/virtio-iommu.c
-@@ -730,7 +730,8 @@ static struct iommu_domain *viommu_domain_alloc_identity(struct device *dev)
- 	return domain;
- }
- 
--static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
-+static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev,
-+			     struct iommu_domain *old)
- {
- 	int ret = 0;
- 	struct virtio_iommu_req_attach req;
-@@ -781,7 +782,8 @@ static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- }
- 
- static int viommu_attach_identity_domain(struct iommu_domain *domain,
--					 struct device *dev)
-+					 struct device *dev,
-+					 struct iommu_domain *old)
- {
- 	int ret = 0;
- 	struct virtio_iommu_req_attach req;
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 6e51f5a48c74e..c242712565f63 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -752,7 +752,8 @@ struct iommu_ops {
-  * @free: Release the domain after use.
-  */
- struct iommu_domain_ops {
--	int (*attach_dev)(struct iommu_domain *domain, struct device *dev);
-+	int (*attach_dev)(struct iommu_domain *domain, struct device *dev,
-+			  struct iommu_domain *old);
- 	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
- 			     ioasid_t pasid, struct iommu_domain *old);
- 
++	iopf_for_domain_remove(old, dev);
++
+ 	if (sm_supported(iommu))
+ 		ret = intel_pasid_setup_pass_through(iommu, dev, IOMMU_NO_PASID);
+ 	else
 -- 
 2.53.0
 
