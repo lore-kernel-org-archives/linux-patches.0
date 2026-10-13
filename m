@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC814E2F2A;
-	Tue, 13 Oct 2026 12:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5B24E7802;
+	Tue, 13 Oct 2026 12:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895995; cv=none; b=kn223WKnzhJ6a5h/TyfTZS04pIle1vVMa8Z6Cm0dbslnTzm0tD/L/ihl7dHTA6wzsSv/kOSyIXJ1WrPNZGJkaUMp48VSacRXjQqCaHLtkRqbiJmR9IP50szA54eL+K8cJDiXpTvzMYuycbqcJjHX3UvsZaP/lvJzYo8W8dqZxm0=
+	t=1791895998; cv=none; b=Ka2Zu7TYav9AxX+7YgklW+cF4VWV/yn4krMUeC+sJs105oZY7FlK7f3uy3io+Ph4yMtDpOX20FWkB5g3Y09SWaUfiaN9q7WqQBRCzudksSE+2m1UHSPj6wvFqOPWigqohkxahxHEhNmV+lCrqnTYpRU8wnkTxVUEqZDT72zPW1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895995; c=relaxed/simple;
-	bh=f4wz7fueTSOWng+/He97uppVpzKKtOf1Byh7JM5h4bQ=;
+	s=arc-20240116; t=1791895998; c=relaxed/simple;
+	bh=rLIpCkWyEOMpXJBs4F0h8ShTVg5Nt8mRyl1IYkuBax4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Au+d9HehxxQUJ7yECiS1/sBDQ+Yl1ex6rBdNDWBm5284CK7NvRiGkB7i3+LS1ye8m564vG+y6HN8b8+wmV8MDcn/3Tdg3EK9Q+sue+kM0QwSPfGA3Qo6ZJFmCQeAJr7J0K1q+IgpaOjl9Hx/fvpqsLGafuw2POfGByNkORqIMpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxcMe4ku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A0Ifj3RG4Evsz9VFSetvFFd+fijwdpHdgqW/J3pt4KDjxnfrTXqYmIVVFSBp7b4sPhyAq4ICeQAEmBOGEdY9X2G7QEm5TSIEyhKofzfDnoqDvkJr/NfpqXbSLANCmVn4irC1ax0uzQ1qbNGgsn2FyURwEwqxOgRCMfhY58riJTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO9iBDZF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxcMe4ku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B131F008A5;
-	Tue, 13 Oct 2026 12:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO9iBDZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AE91F000FF;
+	Tue, 13 Oct 2026 12:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895994;
-	bh=LczdJIAsh8bpToc/OOYjVMRNV5aBtSZcO/eDe4WzB3g=;
+	s=korg; t=1791895997;
+	bh=7ArzBJIO5jyP0VZcfGkA5Ac6BWIrTQJHI4v+l3nXtTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NxcMe4ku2NTuEH/5JbjB0mfj3TYyHzqilFYBKFxf2Sb5CEMyZjMHKY3VMJAfsUSuW
-	 Q4xXEKVugd01lX8l2kAHZ7HHrr60ux2oNpRZbsTJ8Q9PkTn1SA7dpsxeLjnSY4GOYA
-	 ueqicpWIvqCj+AZK+rU3PITqrwVNeRGk7aGk1z7Y=
+	b=NO9iBDZFbwo/bJ8OCpvt3g2d5HiwyFarLFdcqoilscvpVVDWUJrTegYSanKAY17Vi
+	 n7hiYr0h6FSGX0KMAtRkdZemtJxUTzcRnlDwyF+4xXHTF8pb5WC6s7Z4ZubkwwH/ku
+	 o3iADJqXgU9h294s1BpaNvEeAHIEP4bFFrGcFmmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.12 418/497] riscv: fix load_unaligned_zeropad() fixup for RV32
-Date: Tue, 13 Oct 2026 13:39:45 +0200
-Message-ID: <20261013112917.809266321@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 419/497] Bluetooth: btintel_pcie: use managed IRQ teardown
+Date: Tue, 13 Oct 2026 13:39:46 +0200
+Message-ID: <20261013112917.832666151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,51 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit d4f25b097e46d82718bb737d4540c99b7ab0a408 upstream.
+commit 25016fe8c1ed0fccae107bd629089139ffbafe08 upstream.
 
-The fixup for load_unaligned_zeropad() runs when REG_L crosses into an
-unmapped page. REG_L is lw on RV32 and ld on RV64, but the fixup assumes
-an 8-byte load: it rounds the address down to 8 bytes and derives the
-shift from three address bits.
+The PCIe driver registers its MSI-X handlers with
+devm_request_threaded_irq(), but remove() uses free_irq() directly. The
+devres actions then retain registrations and attempt to release them again
+during device cleanup.
 
-On RV32, a load starting in the last three bytes of a mapped page selects
-the word four bytes earlier and shifts it by 40, 48, or 56 bits, more than
-the register width. The caller gets earlier bytes instead of the string
-tail followed by zeroes. This affects RV32 MMU kernels built with
-RISCV_EFFICIENT_UNALIGNED_ACCESS=y, which selects DCACHE_WORD_ACCESS
-and lets dcache name hashing and comparison and strscpy() use this
-path.
+Use devm_free_irq() for the remove path and for already registered vectors
+when a later setup request fails. This removes the managed resource at the
+same time as the IRQ is released and keeps MSI-X vector teardown ordered
+after IRQ ownership is gone.
 
-Derive the alignment and offset masks from sizeof(data) instead of a fixed
-8. This makes RV32 use the correct source word. RV64 code is unchanged: the
-complete extable.o is byte-for-byte identical before and after.
-
-Fixes: d0fdc20b0429 ("riscv: select DCACHE_WORD_ACCESS for efficient unaligned access HW")
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260907190750.26303-1-kmehltretter@gmail.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/extable.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btintel_pcie.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/mm/extable.c
-+++ b/arch/riscv/mm/extable.c
-@@ -68,8 +68,8 @@ ex_handler_load_unaligned_zeropad(const
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -902,7 +902,7 @@ static irqreturn_t btintel_pcie_irq_msix
+ static int btintel_pcie_setup_irq(struct btintel_pcie_data *data)
+ {
+ 	int err;
+-	int num_irqs, i;
++	int num_irqs, i, j;
  
- 	addr = regs_get_gpr(regs, reg_addr * sizeof(unsigned long));
+ 	for (i = 0; i < BTINTEL_PCIE_MSIX_VEC_MAX; i++)
+ 		data->msix_entries[i].entry = i;
+@@ -931,6 +931,10 @@ static int btintel_pcie_setup_irq(struct
+ 						KBUILD_MODNAME,
+ 						msix_entry);
+ 		if (err) {
++			for (j = 0; j < i; j++)
++				devm_free_irq(&data->pdev->dev,
++					      data->msix_entries[j].vector,
++					      &data->msix_entries[j]);
+ 			pci_free_irq_vectors(data->pdev);
+ 			data->alloc_vecs = 0;
+ 			return err;
+@@ -1648,7 +1652,7 @@ static void btintel_pcie_remove(struct p
+ 		struct msix_entry *msix_entry;
  
--	offset = addr & 0x7UL;
--	addr &= ~0x7UL;
-+	offset = addr & (sizeof(data) - 1);
-+	addr &= ~(sizeof(data) - 1);
+ 		msix_entry = &data->msix_entries[i];
+-		free_irq(msix_entry->vector, msix_entry);
++		devm_free_irq(&pdev->dev, msix_entry->vector, msix_entry);
+ 	}
  
- 	data = *(unsigned long *)addr >> (offset * 8);
- 
+ 	pci_free_irq_vectors(pdev);
 
 
