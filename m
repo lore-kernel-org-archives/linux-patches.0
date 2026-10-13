@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6E4360EF0;
-	Tue, 13 Oct 2026 12:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D994036B937;
+	Tue, 13 Oct 2026 12:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895322; cv=none; b=BUGQ0rbWcgbB9H2fNKkilK2J7dfpHcajCDgv+RcG9xgwv38zED/AsoN67yoE2SXexfTNuiiQrd/iTv3EK1XouJSMsT5Blslpnv+XTb+SDmIfXteCYPWQXmUfF/9H1uIVge4XD/HhJTYmingnIByptitTAs6jwHX+l+mMiZ9MZ0E=
+	t=1791895325; cv=none; b=cPoSRKkqL/gGZi27xFX5ptCr4m6fh/+R87TwGCj7yLIRoP9cUiIfJZpeR25kTHq/fFQ1I6NE2bkQS+SqRbE+YO5zsIQN84JHNa7+S+Gca3tnterRQB8dvO3FCpT8br1G/zr37W8bdn/t8P+ay316ii6w6fDphbur6m+r21TqdXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895322; c=relaxed/simple;
-	bh=L4OkZb75JX+LV09SyJvSDJBn7kNzzCL/0+I4YBhVQjk=;
+	s=arc-20240116; t=1791895325; c=relaxed/simple;
+	bh=4mdi+U8srcKUgip3mmlicLfo8dS1rGSRr1qIHzlbHPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ol/wvTzqM/xxWqt9K7zVF138mj+ZtJfttGpQg1hgECa+eySVz1xC2MaNQXNZhNcFPU2DHgc7jJlFjNkTCFnRblncqdru32873PLg9MpG295MI8n7U2AGrsn8eI7ephJJLY1NYV+XrXesAh/1K9P+Uwma63IARgeP18eNZzghG0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2+jwwKe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VwqsKzApkTAdK8lBONa1iCF14FX+5Mqk9iQYqTr48wZEn+6nYfAn5TqN7QV6kMWMFTMCGMDH6tS/Qb6GrFJ7RpHj+4Crj0vHeXahn1teK/73HNgqXhAwouRKaekhMH3YIMAV9zcQdIja8TzoQkvoGyi4l6QgnMbLRKPArrEzGZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dozWZ4+b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2+jwwKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957CD1F000FF;
-	Tue, 13 Oct 2026 12:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dozWZ4+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687121F00893;
+	Tue, 13 Oct 2026 12:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895321;
-	bh=dpwSJpVreAkSdoSOYkWxy+PNlzIofsZ0Meh7nbBvANs=;
+	s=korg; t=1791895323;
+	bh=bjBU7TxkNXf9b2JhdXAkX5iY6n36CqBLiFbObkNyNew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d2+jwwKeoedlVcG5Z6ZR0Dp887CDcZuPx93NaK/kCnJTt/BOSMhDHC+yyhwyMNDNE
-	 /Ty2+2UHKfGUukLRue7KeX9moDTumkXC1YuvWcTLv2HOr7wST/95zGnRIQbtnfso5T
-	 uDtY7OlB4XNFiBsQ7AIMq+acMkj0KZhHFjkSMFw4=
+	b=dozWZ4+bI62LtPH6MalCL2VudFTSLhn7mESr3qDkeP3ZFirTcTEm/gyqk+Ezc/sBU
+	 IwqHhPJDHBrcrv5d5X4lTQo9FugZ51AujndVBmaTG5db34bis8M/z4wDPfpz5FT/is
+	 Ntnh6AZWhwnGNobMUI181fy/4M3FyCmwOgIzzvTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 236/497] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
-Date: Tue, 13 Oct 2026 13:36:43 +0200
-Message-ID: <20261013112913.498123607@linuxfoundation.org>
+Subject: [PATCH 6.12 237/497] iio: adc: xilinx-xadc: free IRQ before cancelling the unmask worker on unbind
+Date: Tue, 13 Oct 2026 13:36:44 +0200
+Message-ID: <20261013112913.521897217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,43 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
+commit 0f3f427076240e75ff265e61645627a71ca4918c upstream.
 
-Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
-ever holds a runtime PM usage count. So the pm_runtime_put() in both
-places always triggers the "Runtime PM usage count underflow!" warning
-on every failed probe and every unbind.
+The ZYNQ XADC alarm IRQ handler queues zynq_unmask_work via
+schedule_delayed_work(); that work is cleared by a devm callback.
+Register the devm callback before devm_request_irq() so the devres LIFO
+teardown frees the IRQ first, ensuring the handler can no longer queue
+work by the time the workqueue is cleared. Otherwise the handler could
+re-arm the work and run it after the xadc structure has been freed.
 
-Drop both calls.
+This issue was found by an in-house static analysis tool.
 
-Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 2a9685d1a3b7 ("iio: adc: xilinx: use more devres helpers and remove remove()")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/sun4i-gpadc-iio.c
-+++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -663,7 +663,6 @@ err_map:
- 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
- 		iio_map_array_unregister(indio_dev);
+--- a/drivers/iio/adc/xilinx-xadc-core.c
++++ b/drivers/iio/adc/xilinx-xadc-core.c
+@@ -1402,13 +1402,14 @@ static int xadc_probe(struct platform_de
+ 	}
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	if (irq > 0) {
+-		ret = devm_request_irq(dev, irq, xadc->ops->interrupt_handler,
+-				       0, dev_name(dev), indio_dev);
++		/* Clear out any work queued by the interrupt */
++		ret = devm_add_action_or_reset(dev, xadc_cancel_delayed_work,
++					       &xadc->zynq_unmask_work);
+ 		if (ret)
+ 			return ret;
  
- 	return ret;
-@@ -674,7 +673,6 @@ static void sun4i_gpadc_remove(struct pl
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
- 
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 
- 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
+-		ret = devm_add_action_or_reset(dev, xadc_cancel_delayed_work,
+-					       &xadc->zynq_unmask_work);
++		ret = devm_request_irq(dev, irq, xadc->ops->interrupt_handler,
++				       0, dev_name(dev), indio_dev);
+ 		if (ret)
+ 			return ret;
+ 	}
 
 
