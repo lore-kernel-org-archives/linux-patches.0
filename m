@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565F74BD373;
-	Tue, 13 Oct 2026 12:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8664B95C2;
+	Tue, 13 Oct 2026 12:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893045; cv=none; b=aF+STiquu+7GMsAPeDDtZDRtVJVgRn6vyunWbi/2SPk7vw6HZJsqidb/goTMxvJD5eqC/gewox1BMC8cWmSyKDA79pABzm2dDfxb0q0CP6S4jploAbAWbtkHp08xRtZnFop2E3j1fivRrrHkO8Xv/xMu2TXEKZJzgJFbt99zUio=
+	t=1791893048; cv=none; b=iWNfr4N9BPytvtoo8Bg2b+jffG2bwW3MWRzvgIBMQrZbY+jbqptLPUZRfIuVnxVzQztQ5FoUBDa+KnjdAZOIE14SfQOrz+/38Lq5laXF+lvOflcPOVfaKUF+RNBlAQuW+fkMaJ8Aw67UI7fRuiCusD0PHX3f171kw6jA77USEYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893045; c=relaxed/simple;
-	bh=LeVdB/o6lB8eqNVZtsGZtJ3KRr3gmxSyxmPiXiafKYw=;
+	s=arc-20240116; t=1791893048; c=relaxed/simple;
+	bh=0Vj8o051uQ/gEl9t57nZgdDNAdKwhepIlk1jEns8t04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cI0FiSZ5lrsYW/SJEdMxZPO2586P1iDxWOavJX/YdNZ9IAA2AtqTCn7L1J1kbwSO9Jvkami1noih30nC6R1TQ2DXWNH1ZMMtdGw/xM3CX5BAns4B/WpTKqjXhwBc6pQ/gzZ9B+hrFjqDUah9DFVa2Wz7UThsanKfCf4wXo/mtmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr2X3EUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YO30kJeDPyotRHfKkstLLlOByRa+RdYjyvgpFrMhik6S91WYv8DYmIjEb5lEg+diGozIAqQmP+RqfOifOUxfEJmi8FnbStVmMbO3wWtZY6JkjAi0B+NvktxaPL+F3cOtKvwm5ZSAU3LbgcL0VKcZeBGtdonoRc55jLJ0IsFavdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrMKH2HF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr2X3EUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A693D1F000FF;
-	Tue, 13 Oct 2026 12:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrMKH2HF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7FE1F000FF;
+	Tue, 13 Oct 2026 12:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893044;
-	bh=caKPYQdovkUuHL9laZXrtQQUp3EIwPRjyJmM9ZmSmnk=;
+	s=korg; t=1791893047;
+	bh=5TMBr6OCLMhZH2QVv0RRfoNsmKBoSef8FtcHyekPOvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr2X3EUZvemts5grBISWMais2a+LjWGKVdkjDS+x5Y2/hJlWnuUpXUdHTiwfXLGcm
-	 RGPopUOidkguAKVK9Dm2Yipe+saBMaOY7iRKghx26QlT5WH54Up4jtCUNi2mEG3uzR
-	 1t19yjl/pbC6quxOhU/od9oBeyWbBGBolxZJIf9Y=
+	b=JrMKH2HFR6Bf9F6KEs3ahgxrN7+KifUzBTfJWSqTl1ysGSmlC/3xPNiI2Y36suDst
+	 t3mjHx+5zWyR/Z7SOZxs4H0UYK2xt3He5d4s+a/iPvWi42bwK4SJezL6l+zUl3kCsL
+	 Xi6SwUUOe1GRKYTNlDEpG+4bx2fy3ZPvWZjQrRWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 093/621] pmdomain: rockchip: fix clock leak on domain probe failure
-Date: Tue, 13 Oct 2026 13:31:28 +0200
-Message-ID: <20261013112923.058345620@linuxfoundation.org>
+Subject: [PATCH 6.18 094/621] pmdomain: rockchip: propagate subdomain add errors
+Date: Tue, 13 Oct 2026 13:31:29 +0200
+Message-ID: <20261013112923.081762505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,32 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit d8b3847770661b7109146e6479eeadcdab9cecf0 upstream.
+commit 4c0d69d677cf5b0065ebbb3ceb8ba66fddbec630 upstream.
 
-When of_clk_get() failed in the middle of the loop, the references of
-the clocks acquired so far were leaked instead of being released by
-the error path.
+rockchip_pm_add_subdomain() ignored the return value of its recursive
+call, so a failure deeper in the hierarchy was silently dropped and
+probe still succeeded with an incomplete domain tree.
 
-Fixes: d909072d0521 ("soc: rockchip: power-domain: use clk_bulk APIs")
+Fixes: 6be05b5ec161 ("soc: rockchip: power-domain: add support for sub-power domains")
 Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/rockchip/pm-domains.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/rockchip/pm-domains.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/pmdomain/rockchip/pm-domains.c
 +++ b/drivers/pmdomain/rockchip/pm-domains.c
-@@ -823,7 +823,7 @@ static int rockchip_pm_add_one_domain(st
- 			dev_err(pmu->dev,
- 				"%pOFn: failed to get clk at index %d: %d\n",
- 				node, i, error);
--			return error;
-+			goto err_put_clocks;
+@@ -999,7 +999,9 @@ static int rockchip_pm_add_subdomain(str
+ 				parent_domain->name, child_domain->name);
  		}
+ 
+-		rockchip_pm_add_subdomain(pmu, np);
++		error = rockchip_pm_add_subdomain(pmu, np);
++		if (error)
++			return error;
  	}
  
+ 	return 0;
 
 
