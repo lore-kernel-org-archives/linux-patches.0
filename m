@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00AD2D7380;
-	Tue, 13 Oct 2026 12:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED98A4FDE44;
+	Tue, 13 Oct 2026 12:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893454; cv=none; b=i0ccWCYuMXd7mqTDDMjJdZamHfjN8Wl4n7whdDFijJlkTx5b32EpWBXKrTV061aqQRZ8Jkq/aro+BwvOgen9dvZpWlLZM/r8Jo3SLqyGuIIFo0CQyj9xX4+vh974yYgjhZKG+RzlSMQf2iQAtdorU2AfVD/l4aTeS6XX3uJS5/g=
+	t=1791893459; cv=none; b=okzxYbkYG4HCu3mJ36bShzYKf56yuj+VDafzlSHu9ERMcJDRev7OtSRvV6kGBo9uJd0LoqVXtbDDODAqPrVc2qWuGLKDkWLqyTCP6OEMEpYMzMUy93C9eDeV+vFMk75poRSObrLba5dK/yX4mv93eV0Jav5lGz+8BMl0QSDjgQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893454; c=relaxed/simple;
-	bh=BNyiIvdf+wYhamZogvQlXw60iBb3ScLUb++uSDwHFRo=;
+	s=arc-20240116; t=1791893459; c=relaxed/simple;
+	bh=SJw1xsMhxV8HjwYNW/9GxMzrl2gRwj6SVgdwW8VifB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9wk63QfSymNkrr4aMHzui8W097979s6b6SAiw+zDL3pZyVWhc12mDoqunwzd4su6slI/y2foPQJqZW+x23vNxL0++wDgiuqI6AEQDEa1xoh5adnNkvVAEdhC/bmstYhUrNIDCUVr3jBQ9+ngisODamNAw9ok0zHBD3lJu1NhpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lv3qp+HR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SzU4bUuau4wDC2xXdzKoVwr1cRQ5fmFlb3svisDyB3J/zKDj1SIj650LgSbtakPYAjySmIl8pPFJi8RStIfXhY4HQu98Z60b342KGziv50ObY9Xaa3ZJNdmg93gOL8HM/pmVyB3muJzPlt89DF2YCX6tftBaPzHYux/aBomxgVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsmBKes1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lv3qp+HR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE581F000FF;
-	Tue, 13 Oct 2026 12:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsmBKes1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E861F000FF;
+	Tue, 13 Oct 2026 12:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893453;
-	bh=TNqJbk+J6ICwxTxajcSDdMAJq+LC7h6q+1iv6KSArVw=;
+	s=korg; t=1791893456;
+	bh=xjEZ7c4WM1Nhr+TGWqFE6yDohA/gLY+WkqOLeWFEXTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lv3qp+HRZIu3TzVa4rR/uhddmNQVFnhc7b4soDl6GsiXiGU3qY7QDHysA13CKSu61
-	 Lu0Ofh4bZFmfLI32vweUk8z9/2vMkcj/6nopSdwFMZyFLGpwJg+1g8ZhBsOYHtvScK
-	 g+iar5GWA8nlalSu+0hIpn7AwTpTvgvFUO4MED74=
+	b=YsmBKes15Kxfnhdq3Sj6279bspStD7PppSsuxVj1nMbVy0RwU+yPj+G090dDGf7hz
+	 QUBJV2W+ZuI5ZT4ZwEdRTEq9J/vDy8SuLCDhsLkKcVdAUR/CG9MJFz3hVpGyoBEmQE
+	 +jEOs9E2MkS098+548EPbS8LWDKCqjgELBV2YQVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 204/621] pseries/papr-hvpipe: Fix race with interrupt handler
-Date: Tue, 13 Oct 2026 13:33:19 +0200
-Message-ID: <20261013112925.703187329@linuxfoundation.org>
+Subject: [PATCH 6.18 231/621] drm/amdgpu: fix amdgpu_hmm_range_get_pages
+Date: Tue, 13 Oct 2026 13:33:46 +0200
+Message-ID: <20261013112926.340871496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,111 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 7a4f0846ee6cc8cf44ae0046ed42e3259d1dd45b ]
+[ Upstream commit 962d684b5dc0741dcd93485d41b450de402d5592 ]
 
-While executing ->ioctl handler or ->release handler, if an interrupt
-fires on the same cpu, then we can enter into a deadlock.
+The notifier sequence must only be read once or otherwise we could work
+with invalid pages.
 
-This patch fixes both these handlers to take spin_lock_irq{save|restore}
-versions of the lock to prevent this deadlock.
+While at it also fix the coding style, e.g. drop the pre-initialized
+return value and use the common define for 2G range.
 
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c08972f555945cda57b0adb72272a37910153390)
 Cc: stable@vger.kernel.org
-Fixes: 814ef095f12c9 ("powerpc/pseries: Add papr-hvpipe char driver for HVPIPE interfaces")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/e4ed435c44fc191f2eb23c7907ba6f72f193e6aa.1777606826.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/papr-hvpipe.c b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-index 3d8672642c251..a238db095b4ec 100644
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -449,13 +449,14 @@ static int papr_hvpipe_handle_release(struct inode *inode,
- 				struct file *file)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
+index f60f26470af03..db2bb5cb671d3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
+@@ -51,8 +51,6 @@
+ #include "amdgpu_amdkfd.h"
+ #include "amdgpu_hmm.h"
+ 
+-#define MAX_WALK_BYTE	(2UL << 30)
+-
+ /**
+  * amdgpu_hmm_invalidate_gfx - callback to notify about mm change
+  *
+@@ -172,11 +170,13 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
+ 			       void *owner,
+ 			       struct hmm_range **phmm_range)
  {
- 	struct hvpipe_source_info *src_info;
-+	unsigned long flags;
++	const u64 max_bytes = SZ_2G;
++
+ 	struct hmm_range *hmm_range;
+-	unsigned long end;
+ 	unsigned long timeout;
+ 	unsigned long *pfns;
+-	int r = 0;
++	unsigned long end;
++	int r;
  
- 	/*
- 	 * Hold the lock, remove source from src_list, reset the
- 	 * hvpipe status and release the lock to prevent any race
- 	 * with message event IRQ.
- 	 */
--	spin_lock(&hvpipe_src_list_lock);
-+	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
- 	src_info = file->private_data;
- 	list_del(&src_info->list);
- 	file->private_data = NULL;
-@@ -466,10 +467,10 @@ static int papr_hvpipe_handle_release(struct inode *inode,
- 	 */
- 	if (src_info->hvpipe_status & HVPIPE_MSG_AVAILABLE) {
- 		src_info->hvpipe_status = 0;
--		spin_unlock(&hvpipe_src_list_lock);
-+		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
- 		hvpipe_rtas_recv_msg(NULL, 0);
- 	} else
--		spin_unlock(&hvpipe_src_list_lock);
-+		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
+ 	hmm_range = kzalloc(sizeof(*hmm_range), GFP_KERNEL);
+ 	if (unlikely(!hmm_range))
+@@ -197,8 +197,9 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
+ 	end = start + npages * PAGE_SIZE;
+ 	hmm_range->dev_private_owner = owner;
  
- 	kfree(src_info);
- 	return 0;
-@@ -485,20 +486,21 @@ static const struct file_operations papr_hvpipe_handle_ops = {
- static int papr_hvpipe_dev_create_handle(u32 srcID)
- {
- 	struct hvpipe_source_info *src_info __free(kfree) = NULL;
-+	unsigned long flags;
++	hmm_range->notifier_seq = mmu_interval_read_begin(notifier);
+ 	do {
+-		hmm_range->end = min(hmm_range->start + MAX_WALK_BYTE, end);
++		hmm_range->end = min(hmm_range->start + max_bytes, end);
  
--	spin_lock(&hvpipe_src_list_lock);
-+	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
- 	/*
- 	 * Do not allow more than one process communicates with
- 	 * each source.
- 	 */
- 	src_info = hvpipe_find_source(srcID);
- 	if (src_info) {
--		spin_unlock(&hvpipe_src_list_lock);
-+		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
- 		pr_err("pid(%d) is already using the source(%d)\n",
- 				src_info->tsk->pid, srcID);
- 		return -EALREADY;
- 	}
--	spin_unlock(&hvpipe_src_list_lock);
-+	spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
+ 		pr_debug("hmm range: start = 0x%lx, end = 0x%lx",
+ 			hmm_range->start, hmm_range->end);
+@@ -206,7 +207,6 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
+ 		timeout = jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
  
- 	src_info = kzalloc(sizeof(*src_info), GFP_KERNEL_ACCOUNT);
- 	if (!src_info)
-@@ -515,18 +517,18 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 		return fdf.err;
+ retry:
+-		hmm_range->notifier_seq = mmu_interval_read_begin(notifier);
+ 		r = hmm_range_fault(hmm_range);
+ 		if (unlikely(r)) {
+ 			if (r == -EBUSY && !time_after(jiffies, timeout))
+@@ -216,7 +216,7 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
  
- 	retain_and_null_ptr(src_info);
--	spin_lock(&hvpipe_src_list_lock);
-+	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
- 	/*
- 	 * If two processes are executing ioctl() for the same
- 	 * source ID concurrently, prevent the second process to
- 	 * acquire FD.
- 	 */
- 	if (hvpipe_find_source(srcID)) {
--		spin_unlock(&hvpipe_src_list_lock);
-+		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
- 		return -EALREADY;
- 	}
- 	list_add(&src_info->list, &hvpipe_src_list);
--	spin_unlock(&hvpipe_src_list_lock);
-+	spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
- 	return fd_publish(fdf);
- }
+ 		if (hmm_range->end == end)
+ 			break;
+-		hmm_range->hmm_pfns += MAX_WALK_BYTE >> PAGE_SHIFT;
++		hmm_range->hmm_pfns += max_bytes >> PAGE_SHIFT;
+ 		hmm_range->start = hmm_range->end;
+ 	} while (hmm_range->end < end);
  
 -- 
 2.53.0
