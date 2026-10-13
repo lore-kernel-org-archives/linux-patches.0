@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9A02D7380;
-	Tue, 13 Oct 2026 12:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF502D7380;
+	Tue, 13 Oct 2026 12:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893494; cv=none; b=T1enMX3TmFUiib1g6o5ADUJiYoYbJVUHEaQTxL99htmN0RhhBtf/lEH0WUjSu4UHQFdMi4l3S7o+fTPTcp12bdsh1rydIqRXW+PzmWLK3Yq4HpcnbZpTutVjp+p4pywMVaj/eOQGIngsH0m0v3tS+ryzzBqf+izFDdTfFl73EuE=
+	t=1791893496; cv=none; b=pOzslapJlJYTrqNT0mpcimiPbJlMm8OV3pZAEuLGojSaGUmr5titlrq66NQ6u4EPVusNFyFcY3R8Df47ZYy+RjDWyM1nqdxwx8D62cY0+O6YFqoBQZdHCkVNiIQM2BTrIZUnWX5pecBrSUw6TAYGcfOXr1EZBgk6FR07WxsO+hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893494; c=relaxed/simple;
-	bh=5x0XBuCo9ZZC10nNDBRH3+Z0q4mqqGGe5Jy1fEbD/js=;
+	s=arc-20240116; t=1791893496; c=relaxed/simple;
+	bh=eQMnab2OOoieSB0p5qIatSRH0tlcciLBfVw3HxnUWOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTxj8E4B6svR3b3ac+7wwdzDgQc5eXJmf8yn40Nw/3JO84YqbDkwQpljU3X/KdaR97XhLVV0Ss8Jg+E+/Bk2IRvKG4h0zoCLtscvNNtVbQu+5win/75RgDRuMxqDkKOfB+GTP5PICuXL8bpSAMRGP1PC+XkxJlI/U2oOW+zsyLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrntjsmr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FM20CiNogrKOUIQaPS/fHMHbhnV1HZCsLvjWg/Sn5YBCPJOh/LIR6cruJTjYNoiumk7x1BCDTXZ63We4uxOdh2428tDdOE7X7g2CBOu9TIkTJBPv5Vioti0uTET1MuAdWSQmSJozUNQ5+Dwd5aC0HKbGQwNlv+GDvoVOkh2sCgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UYDSBr8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrntjsmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B161F000FF;
-	Tue, 13 Oct 2026 12:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UYDSBr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DA1F000FF;
+	Tue, 13 Oct 2026 12:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893492;
-	bh=sKfYv48wMUOh7s6mXv6lxp3mzZ7kzpy67jnh94jX1js=;
+	s=korg; t=1791893495;
+	bh=PCOYEHRtaNWKTX/LkTMGQatWU4GMoPX7KpBkJntQJTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrntjsmrChGjysXDql2YcvZJ/ll7wy3BwdzvNhIzzd1gr7fP6Fr1E1rQICRpOrsgt
-	 iQZJJlPx9Z+mRizRWEVsjaAxz7X/aDMH+OTvGk2K4Y9aXuUEeIhwUqzwyLs6TE+oyX
-	 b4FkkAKiOxqMT0YITqExH0d/lQoXei2vzyzwXd0s=
+	b=1UYDSBr8CRi/dDfFpRJjzW4DKG1Ib847bB34hB9i+mNLjnRTW/wpDqlNS+OH0ix8a
+	 G/sgEQsa2z+XxLCQEFySvwl6tImqCub4OrjdvsQ0Jj31ZAbdcdDVq30Bu1ZY5D+THT
+	 +/8ucR+o0SLI+kpal9pYDA67AADQZxzG23px445w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/621] afs: Fix the locking used by afs_get_link()
-Date: Tue, 13 Oct 2026 13:33:57 +0200
-Message-ID: <20261013112926.601247835@linuxfoundation.org>
+Subject: [PATCH 6.18 243/621] netfs: Fix missing barriers when accessing stream->subrequests locklessly
+Date: Tue, 13 Oct 2026 13:33:58 +0200
+Message-ID: <20261013112926.624853554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -56,812 +56,179 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c0410adf3da6db46f3513411fcf95e63c2f1d1ad ]
+[ Upstream commit b5782e2d462c028096f922abca46318cec890670 ]
 
-The afs filesystem in the kernel doesn't do locking correctly for symbolic
-links.  There are a number of problems:
+The list of subrequests attached to stream->subrequests is accessed without
+locks by netfs_collect_read_results() and netfs_collect_write_results(),
+and then they access subreq->flags without taking a barrier after getting
+the subreq pointer from the list.  Relatedly, the functions that build the
+list don't use any sort of write barrier when constructing the list to make
+sure that the NETFS_SREQ_IN_PROGRESS flag is perceived to be set first if
+no lock is taken.
 
- (1) It doesn't do any locking around afs_read_single() to prevent races
-     between multiple ->get_link() calls, thereby allowing the possibility
-     of leaks.
+Fix this by:
 
- (2) It doesn't use RCU barriering when accessing the buffer pointers
-     during RCU pathwalk.
+ (1) Add a new list_add_tail_release() function that uses a release barrier
+     to set the pointer to the new member of the list.
 
- (3) It can race with another thread updating the contents of the symlink
-     if a third party updated it on the server.
+ (2) Add a new list_first_entry_or_null_acquire() function that uses an
+     acquire barrier to read the pointer to the first member in a list (or
+     return NULL).
 
-Fix this by the following means:
+ (3) Use list_add_tail_release() when adding a subreq to ->subrequests.
 
- (0) Move symlink handling into its own file as this makes it more
-     complicated.
+ (4) Use list_first_entry_or_null_acquire() when initially accessing the
+     front of the list (when an item is removed, the pointer to the new
+     front iterm is obtained under the same lock).
 
- (1) Take the validate_lock around afs_read_single() to prevent races
-     between multiple ->get_link() calls.
-
- (2) Keep a separate copy of the symlink contents with an rcu_head.  This
-     is always going to be a lot smaller than a page, so it can be
-     kmalloc'd and save quite a bit of memory.  It also needs a refcount
-     for non-RCU pathwalk.
-
- (3) Split the symlink read and write-to-cache routines in afs from those
-     for directories.
-
- (4) Discard the I/O buffer as soon as the write-to-cache completes as this
-     is a full page (plus a folio_queue).
-
- (5) If there's no cache, discard the I/O buffer immediately after reading
-     and copying if there is no cache.
-
-Fixes: eae9e78951bb ("afs: Use netfslib for symlinks, allowing them to be cached")
-Fixes: 6698c02d64b2 ("afs: Locally initialise the contents of a new symlink on creation")
-Closes: https://sashiko.dev/#/patchset/20260326104544.509518-1-dhowells%40redhat.com
+Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Link: https://sashiko.dev/#/patchset/20260326104544.509518-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-25-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20260512123404.719402-4-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/Makefile     |   1 +
- fs/afs/dir.c        |  68 +++++------
- fs/afs/fsclient.c   |   4 +-
- fs/afs/inode.c      |  96 +--------------
- fs/afs/internal.h   |  34 ++++--
- fs/afs/symlink.c    | 278 ++++++++++++++++++++++++++++++++++++++++++++
- fs/afs/validation.c |  14 ++-
- fs/afs/yfsclient.c  |   4 +-
- 8 files changed, 357 insertions(+), 142 deletions(-)
- create mode 100644 fs/afs/symlink.c
+ fs/netfs/buffered_read.c |  3 ++-
+ fs/netfs/misc.c          |  1 +
+ fs/netfs/read_collect.c  |  6 ++++--
+ fs/netfs/write_collect.c |  6 ++++--
+ fs/netfs/write_issue.c   |  3 ++-
+ include/linux/list.h     | 37 +++++++++++++++++++++++++++++++++++++
+ 6 files changed, 50 insertions(+), 6 deletions(-)
 
-diff --git a/fs/afs/Makefile b/fs/afs/Makefile
-index b49b8fe682f39..0d8f1982d596c 100644
---- a/fs/afs/Makefile
-+++ b/fs/afs/Makefile
-@@ -30,6 +30,7 @@ kafs-y := \
- 	server.o \
- 	server_list.o \
- 	super.o \
-+	symlink.o \
- 	validation.o \
- 	vlclient.o \
- 	vl_alias.o \
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 7c3cef0835a8b..a35148d143954 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -46,6 +46,8 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- static int afs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 		      struct dentry *old_dentry, struct inode *new_dir,
- 		      struct dentry *new_dentry, unsigned int flags);
-+static int afs_dir_writepages(struct address_space *mapping,
-+			      struct writeback_control *wbc);
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index 29868dcd1ec3b..506bfbe467a9d 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -170,7 +170,8 @@ void netfs_queue_read(struct netfs_io_request *rreq,
+ 	 * remove entries off of the front.
+ 	 */
+ 	spin_lock(&rreq->lock);
+-	list_add_tail(&subreq->rreq_link, &stream->subrequests);
++	/* Write IN_PROGRESS before pointer to new subreq */
++	list_add_tail_release(&subreq->rreq_link, &stream->subrequests);
+ 	if (list_is_first(&subreq->rreq_link, &stream->subrequests)) {
+ 		if (!stream->active) {
+ 			stream->collected_to = subreq->start;
+diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
+index 628c45f53d83c..02654b5c53fe3 100644
+--- a/fs/netfs/misc.c
++++ b/fs/netfs/misc.c
+@@ -361,6 +361,7 @@ void netfs_wait_for_in_progress_stream(struct netfs_io_request *rreq,
+ 	DEFINE_WAIT(myself);
  
- const struct file_operations afs_dir_file_operations = {
- 	.open		= afs_dir_open,
-@@ -70,7 +72,7 @@ const struct inode_operations afs_dir_inode_operations = {
- };
+ 	list_for_each_entry(subreq, &stream->subrequests, rreq_link) {
++		smp_rmb(); /* Read ->next before IN_PROGRESS. */
+ 		if (!netfs_check_subreq_in_progress(subreq))
+ 			continue;
  
- const struct address_space_operations afs_dir_aops = {
--	.writepages	= afs_single_writepages,
-+	.writepages	= afs_dir_writepages,
- };
+diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
+index 8ad06678e6883..02a9ad14627a0 100644
+--- a/fs/netfs/read_collect.c
++++ b/fs/netfs/read_collect.c
+@@ -221,8 +221,10 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
+ 	 * in progress.  The issuer thread may be adding stuff to the tail
+ 	 * whilst we're doing this.
+ 	 */
+-	front = list_first_entry_or_null(&stream->subrequests,
+-					 struct netfs_io_subrequest, rreq_link);
++	front = list_first_entry_or_null_acquire(&stream->subrequests,
++						 struct netfs_io_subrequest, rreq_link);
++	/* Read first subreq pointer before IN_PROGRESS flag. */
++
+ 	while (front) {
+ 		size_t transferred;
  
- const struct dentry_operations afs_fs_dentry_operations = {
-@@ -235,22 +237,13 @@ static ssize_t afs_do_read_single(struct afs_vnode *dvnode, struct file *file)
- 	struct iov_iter iter;
- 	ssize_t ret;
- 	loff_t i_size;
--	bool is_dir = (S_ISDIR(dvnode->netfs.inode.i_mode) &&
--		       !test_bit(AFS_VNODE_MOUNTPOINT, &dvnode->flags));
+diff --git a/fs/netfs/write_collect.c b/fs/netfs/write_collect.c
+index b194447f4b111..7fbf50907a7fc 100644
+--- a/fs/netfs/write_collect.c
++++ b/fs/netfs/write_collect.c
+@@ -228,8 +228,10 @@ static void netfs_collect_write_results(struct netfs_io_request *wreq)
+ 		if (!smp_load_acquire(&stream->active))
+ 			continue;
  
- 	i_size = i_size_read(&dvnode->netfs.inode);
--	if (is_dir) {
--		if (i_size < AFS_DIR_BLOCK_SIZE)
--			return afs_bad(dvnode, afs_file_error_dir_small);
--		if (i_size > AFS_DIR_BLOCK_SIZE * 1024) {
--			trace_afs_file_error(dvnode, -EFBIG, afs_file_error_dir_big);
--			return -EFBIG;
--		}
--	} else {
--		if (i_size > AFSPATHMAX) {
--			trace_afs_file_error(dvnode, -EFBIG, afs_file_error_dir_big);
--			return -EFBIG;
--		}
-+	if (i_size < AFS_DIR_BLOCK_SIZE)
-+		return afs_bad(dvnode, afs_file_error_dir_small);
-+	if (i_size > AFS_DIR_BLOCK_SIZE * 1024) {
-+		trace_afs_file_error(dvnode, -EFBIG, afs_file_error_dir_big);
-+		return -EFBIG;
- 	}
- 
- 	/* Expand the storage.  TODO: Shrink the storage too. */
-@@ -279,24 +272,18 @@ static ssize_t afs_do_read_single(struct afs_vnode *dvnode, struct file *file)
- 			 * buffer.
- 			 */
- 			ret = -ESTALE;
--		} else if (is_dir) {
-+		} else {
- 			int ret2 = afs_dir_check(dvnode);
- 
- 			if (ret2 < 0)
- 				ret = ret2;
--		} else if (i_size < folioq_folio_size(dvnode->directory, 0)) {
--			/* NUL-terminate a symlink. */
--			char *symlink = kmap_local_folio(folioq_folio(dvnode->directory, 0), 0);
--
--			symlink[i_size] = 0;
--			kunmap_local(symlink);
- 		}
- 	}
- 
- 	return ret;
+-		front = list_first_entry_or_null(&stream->subrequests,
+-						 struct netfs_io_subrequest, rreq_link);
++		front = list_first_entry_or_null_acquire(&stream->subrequests,
++							 struct netfs_io_subrequest, rreq_link);
++		/* Read first subreq pointer before IN_PROGRESS flag. */
++
+ 		while (front) {
+ 			trace_netfs_collect_sreq(wreq, front);
+ 			//_debug("sreq [%x] %llx %zx/%zx",
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index ceb1a684a758c..10315c9538116 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -206,7 +206,8 @@ void netfs_prepare_write(struct netfs_io_request *wreq,
+ 	 * remove entries off of the front.
+ 	 */
+ 	spin_lock(&wreq->lock);
+-	list_add_tail(&subreq->rreq_link, &stream->subrequests);
++	/* Write IN_PROGRESS before pointer to new subreq */
++	list_add_tail_release(&subreq->rreq_link, &stream->subrequests);
+ 	if (list_is_first(&subreq->rreq_link, &stream->subrequests)) {
+ 		if (!stream->active) {
+ 			stream->collected_to = subreq->start;
+diff --git a/include/linux/list.h b/include/linux/list.h
+index 0121e2f88f890..59f8aa0905d3b 100644
+--- a/include/linux/list.h
++++ b/include/linux/list.h
+@@ -198,6 +198,29 @@ static inline void list_add_tail(struct list_head *new, struct list_head *head)
+ 	__list_add(new, head->prev, head);
  }
  
--ssize_t afs_read_single(struct afs_vnode *dvnode, struct file *file)
-+static ssize_t afs_read_single(struct afs_vnode *dvnode, struct file *file)
- {
- 	ssize_t ret;
- 
-@@ -1774,13 +1761,20 @@ static int afs_link(struct dentry *from, struct inode *dir,
- 	return ret;
- }
- 
-+static void afs_symlink_put(struct afs_operation *op)
-+{
-+	kfree(op->create.symlink);
-+	op->create.symlink = NULL;
-+	afs_create_put(op);
-+}
-+
- static const struct afs_operation_ops afs_symlink_operation = {
- 	.issue_afs_rpc	= afs_fs_symlink,
- 	.issue_yfs_rpc	= yfs_fs_symlink,
- 	.success	= afs_create_success,
- 	.aborted	= afs_check_for_remote_deletion,
- 	.edit_dir	= afs_create_edit_dir,
--	.put		= afs_create_put,
-+	.put		= afs_symlink_put,
- };
- 
- /*
-@@ -1790,7 +1784,9 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 		       struct dentry *dentry, const char *content)
- {
- 	struct afs_operation *op;
-+	struct afs_symlink *symlink;
- 	struct afs_vnode *dvnode = AFS_FS_I(dir);
-+	size_t clen = strlen(content);
- 	int ret;
- 
- 	_enter("{%llx:%llu},{%pd},%s",
-@@ -1802,12 +1798,20 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 		goto error;
- 
- 	ret = -EINVAL;
--	if (strlen(content) >= AFSPATHMAX)
-+	if (clen >= AFSPATHMAX)
-+		goto error;
-+
-+	ret = -ENOMEM;
-+	symlink = kmalloc_flex(struct afs_symlink, content, clen + 1, GFP_KERNEL);
-+	if (!symlink)
- 		goto error;
-+	refcount_set(&symlink->ref, 1);
-+	memcpy(symlink->content, content, clen + 1);
- 
- 	op = afs_alloc_operation(NULL, dvnode->volume);
- 	if (IS_ERR(op)) {
- 		ret = PTR_ERR(op);
-+		kfree(symlink);
- 		goto error;
- 	}
- 
-@@ -1819,7 +1823,7 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 	op->dentry		= dentry;
- 	op->ops			= &afs_symlink_operation;
- 	op->create.reason	= afs_edit_dir_for_symlink;
--	op->create.symlink	= content;
-+	op->create.symlink	= symlink;
- 	op->mtime		= current_time(dir);
- 	ret = afs_do_sync_operation(op);
- 	afs_dir_unuse_cookie(dvnode, ret);
-@@ -2203,15 +2207,13 @@ static int afs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- }
- 
- /*
-- * Write the file contents to the cache as a single blob.
-+ * Write the directory contents to the cache as a single blob.
-  */
--int afs_single_writepages(struct address_space *mapping,
--			  struct writeback_control *wbc)
-+static int afs_dir_writepages(struct address_space *mapping,
-+			      struct writeback_control *wbc)
- {
- 	struct afs_vnode *dvnode = AFS_FS_I(mapping->host);
- 	struct iov_iter iter;
--	bool is_dir = (S_ISDIR(dvnode->netfs.inode.i_mode) &&
--		       !test_bit(AFS_VNODE_MOUNTPOINT, &dvnode->flags));
- 	int ret = 0;
- 
- 	/* Need to lock to prevent the folio queue and folios from being thrown
-@@ -2226,9 +2228,7 @@ int afs_single_writepages(struct address_space *mapping,
- 		down_read(&dvnode->validate_lock);
- 	}
- 
--	if (is_dir ?
--	    test_bit(AFS_VNODE_DIR_VALID, &dvnode->flags) :
--	    atomic64_read(&dvnode->cb_expires_at) != AFS_NO_CB_PROMISE) {
-+	if (test_bit(AFS_VNODE_DIR_VALID, &dvnode->flags)) {
- 		iov_iter_folio_queue(&iter, ITER_SOURCE, dvnode->directory, 0, 0,
- 				     i_size_read(&dvnode->netfs.inode));
- 		ret = netfs_writeback_single(mapping, wbc, &iter);
-diff --git a/fs/afs/fsclient.c b/fs/afs/fsclient.c
-index 2dfcd4a20d107..38709e07b296f 100644
---- a/fs/afs/fsclient.c
-+++ b/fs/afs/fsclient.c
-@@ -889,7 +889,7 @@ void afs_fs_symlink(struct afs_operation *op)
- 	namesz = name->len;
- 	padsz = (4 - (namesz & 3)) & 3;
- 
--	c_namesz = strlen(op->create.symlink);
-+	c_namesz = strlen(op->create.symlink->content);
- 	c_padsz = (4 - (c_namesz & 3)) & 3;
- 
- 	reqsz = (6 * 4) + namesz + padsz + c_namesz + c_padsz + (6 * 4);
-@@ -913,7 +913,7 @@ void afs_fs_symlink(struct afs_operation *op)
- 		bp = (void *) bp + padsz;
- 	}
- 	*bp++ = htonl(c_namesz);
--	memcpy(bp, op->create.symlink, c_namesz);
-+	memcpy(bp, op->create.symlink->content, c_namesz);
- 	bp = (void *) bp + c_namesz;
- 	if (c_padsz > 0) {
- 		memset(bp, 0, c_padsz);
-diff --git a/fs/afs/inode.c b/fs/afs/inode.c
-index f8d9ceb914cee..e170315f54717 100644
---- a/fs/afs/inode.c
-+++ b/fs/afs/inode.c
-@@ -25,96 +25,6 @@
- #include "internal.h"
- #include "afs_fs.h"
- 
--void afs_init_new_symlink(struct afs_vnode *vnode, struct afs_operation *op)
--{
--	size_t size = strlen(op->create.symlink) + 1;
--	size_t dsize = 0;
--	char *p;
--
--	if (netfs_alloc_folioq_buffer(NULL, &vnode->directory, &dsize, size,
--				      mapping_gfp_mask(vnode->netfs.inode.i_mapping)) < 0)
--		return;
--
--	vnode->directory_size = dsize;
--	p = kmap_local_folio(folioq_folio(vnode->directory, 0), 0);
--	memcpy(p, op->create.symlink, size);
--	kunmap_local(p);
--	set_bit(AFS_VNODE_DIR_READ, &vnode->flags);
--	netfs_single_mark_inode_dirty(&vnode->netfs.inode);
--}
--
--static void afs_put_link(void *arg)
--{
--	struct folio *folio = virt_to_folio(arg);
--
--	kunmap_local(arg);
--	folio_put(folio);
--}
--
--const char *afs_get_link(struct dentry *dentry, struct inode *inode,
--			 struct delayed_call *callback)
--{
--	struct afs_vnode *vnode = AFS_FS_I(inode);
--	struct folio *folio;
--	char *content;
--	ssize_t ret;
--
--	if (!dentry) {
--		/* RCU pathwalk. */
--		if (!test_bit(AFS_VNODE_DIR_READ, &vnode->flags) || !afs_check_validity(vnode))
--			return ERR_PTR(-ECHILD);
--		goto good;
--	}
--
--	if (test_bit(AFS_VNODE_DIR_READ, &vnode->flags))
--		goto fetch;
--
--	ret = afs_validate(vnode, NULL);
--	if (ret < 0)
--		return ERR_PTR(ret);
--
--	if (!test_and_clear_bit(AFS_VNODE_ZAP_DATA, &vnode->flags) &&
--	    test_bit(AFS_VNODE_DIR_READ, &vnode->flags))
--		goto good;
--
--fetch:
--	ret = afs_read_single(vnode, NULL);
--	if (ret < 0)
--		return ERR_PTR(ret);
--	set_bit(AFS_VNODE_DIR_READ, &vnode->flags);
--
--good:
--	folio = folioq_folio(vnode->directory, 0);
--	folio_get(folio);
--	content = kmap_local_folio(folio, 0);
--	set_delayed_call(callback, afs_put_link, content);
--	return content;
--}
--
--int afs_readlink(struct dentry *dentry, char __user *buffer, int buflen)
--{
--	DEFINE_DELAYED_CALL(done);
--	const char *content;
--	int len;
--
--	content = afs_get_link(dentry, d_inode(dentry), &done);
--	if (IS_ERR(content)) {
--		do_delayed_call(&done);
--		return PTR_ERR(content);
--	}
--
--	len = umin(strlen(content), buflen);
--	if (copy_to_user(buffer, content, len))
--		len = -EFAULT;
--	do_delayed_call(&done);
--	return len;
--}
--
--static const struct inode_operations afs_symlink_inode_operations = {
--	.get_link	= afs_get_link,
--	.readlink	= afs_readlink,
--};
--
- static noinline void dump_vnode(struct afs_vnode *vnode, struct afs_vnode *parent_vnode)
- {
- 	static unsigned long once_only;
-@@ -214,7 +124,7 @@ static int afs_inode_init_from_status(struct afs_operation *op,
- 			inode->i_mode	= S_IFLNK | status->mode;
- 			inode->i_op	= &afs_symlink_inode_operations;
- 		}
--		inode->i_mapping->a_ops	= &afs_dir_aops;
-+		inode->i_mapping->a_ops	= &afs_symlink_aops;
- 		inode_nohighmem(inode);
- 		mapping_set_release_always(inode->i_mapping);
- 		break;
-@@ -755,13 +665,15 @@ void afs_evict_inode(struct inode *inode)
- 			.range_end = LLONG_MAX,
- 		};
- 
--		afs_single_writepages(inode->i_mapping, &wbc);
-+		inode->i_mapping->a_ops->writepages(inode->i_mapping, &wbc);
- 	}
- 
- 	flush_delayed_work(&vnode->lock_work);
- 	netfs_wait_for_outstanding_io(inode);
- 	truncate_inode_pages_final(&inode->i_data);
- 	netfs_free_folioq_buffer(vnode->directory);
-+	if (vnode->symlink)
-+		afs_evict_symlink(vnode);
- 
- 	afs_set_cache_aux(vnode, &aux);
- 	netfs_clear_inode_writeback(inode, &aux);
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index 25b5fb3eda95f..61cba72f0c40c 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -712,6 +712,7 @@ struct afs_vnode {
- #define AFS_VNODE_DIR_READ	11		/* Set if we've read a dir's contents */
- 
- 	struct folio_queue	*directory;	/* Directory contents */
-+	struct afs_symlink __rcu *symlink;	/* Symlink content */
- 	struct list_head	wb_keys;	/* List of keys available for writeback */
- 	struct list_head	pending_locks;	/* locks waiting to be granted */
- 	struct list_head	granted_locks;	/* locks granted on this file */
-@@ -778,6 +779,15 @@ struct afs_permits {
- 	struct afs_permit	permits[] __counted_by(nr_permits);	/* List of permits sorted by key pointer */
- };
- 
-+/*
-+ * Copy of symlink content for normal use.
-+ */
-+struct afs_symlink {
-+	struct rcu_head		rcu;
-+	refcount_t		ref;
-+	char			content[];
-+};
-+
- /*
-  * Error prioritisation and accumulation.
-  */
-@@ -889,7 +899,7 @@ struct afs_operation {
- 		struct {
- 			int	reason;		/* enum afs_edit_dir_reason */
- 			mode_t	mode;
--			const char *symlink;
-+			struct afs_symlink *symlink;
- 		} create;
- 		struct {
- 			bool	need_rehash;
-@@ -1100,13 +1110,10 @@ extern const struct inode_operations afs_dir_inode_operations;
- extern const struct address_space_operations afs_dir_aops;
- extern const struct dentry_operations afs_fs_dentry_operations;
- 
--ssize_t afs_read_single(struct afs_vnode *dvnode, struct file *file);
- ssize_t afs_read_dir(struct afs_vnode *dvnode, struct file *file)
- 	__acquires(&dvnode->validate_lock);
- extern void afs_d_release(struct dentry *);
- extern void afs_check_for_remote_deletion(struct afs_operation *);
--int afs_single_writepages(struct address_space *mapping,
--			  struct writeback_control *wbc);
- 
- /*
-  * dir_edit.c
-@@ -1256,10 +1263,6 @@ extern void afs_fs_probe_cleanup(struct afs_net *);
-  */
- extern const struct afs_operation_ops afs_fetch_status_operation;
- 
--void afs_init_new_symlink(struct afs_vnode *vnode, struct afs_operation *op);
--const char *afs_get_link(struct dentry *dentry, struct inode *inode,
--			 struct delayed_call *callback);
--int afs_readlink(struct dentry *dentry, char __user *buffer, int buflen);
- extern void afs_vnode_commit_status(struct afs_operation *, struct afs_vnode_param *);
- extern int afs_fetch_status(struct afs_vnode *, struct key *, bool, afs_access_t *);
- extern int afs_ilookup5_test_by_fid(struct inode *, void *);
-@@ -1610,6 +1613,21 @@ void afs_detach_volume_from_servers(struct afs_volume *volume, struct afs_server
- extern int __init afs_fs_init(void);
- extern void afs_fs_exit(void);
- 
-+/*
-+ * symlink.c
-+ */
-+extern const struct inode_operations afs_symlink_inode_operations;
-+extern const struct address_space_operations afs_symlink_aops;
-+
-+void afs_invalidate_symlink(struct afs_vnode *vnode);
-+void afs_evict_symlink(struct afs_vnode *vnode);
-+void afs_init_new_symlink(struct afs_vnode *vnode, struct afs_operation *op);
-+const char *afs_get_link(struct dentry *dentry, struct inode *inode,
-+			 struct delayed_call *callback);
-+int afs_readlink(struct dentry *dentry, char __user *buffer, int buflen);
-+int afs_symlink_writepages(struct address_space *mapping,
-+			   struct writeback_control *wbc);
-+
- /*
-  * validation.c
-  */
-diff --git a/fs/afs/symlink.c b/fs/afs/symlink.c
-new file mode 100644
-index 0000000000000..ed5868369f372
---- /dev/null
-+++ b/fs/afs/symlink.c
-@@ -0,0 +1,278 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/* AFS filesystem symbolic link handling
++/**
++ * list_add_tail_release - add a new entry with release barrier
++ * @new: new entry to be added
++ * @head: list head to add it before
 + *
-+ * Copyright (C) 2026 Red Hat, Inc. All Rights Reserved.
-+ * Written by David Howells (dhowells@redhat.com)
++ * Insert a new entry before the specified head, using a release barrier to set
++ * the ->next pointer that points to it.  This is useful for implementing
++ * queues, in particular one that the elements will be walked through forwards
++ * locklessly.
 + */
-+
-+#include <linux/kernel.h>
-+#include <linux/fs.h>
-+#include <linux/namei.h>
-+#include <linux/pagemap.h>
-+#include <linux/iov_iter.h>
-+#include "internal.h"
-+
-+static void afs_put_symlink(struct afs_symlink *symlink)
++static inline void list_add_tail_release(struct list_head *new,
++					 struct list_head *head)
 +{
-+	if (refcount_dec_and_test(&symlink->ref))
-+		kfree_rcu(symlink, rcu);
++	struct list_head *prev = head->prev;
++
++	if (__list_add_valid(new, prev, head)) {
++		new->next = head;
++		new->prev = prev;
++		head->prev = new;
++		smp_store_release(&prev->next, new);
++	}
 +}
 +
-+static void afs_replace_symlink(struct afs_vnode *vnode, struct afs_symlink *symlink)
-+{
-+	struct afs_symlink *old;
-+
-+	old = rcu_replace_pointer(vnode->symlink, symlink,
-+				  lockdep_is_held(&vnode->validate_lock));
-+	if (old)
-+		afs_put_symlink(old);
-+}
-+
-+/*
-+ * In the event that a third-party update of a symlink occurs, dispose of the
-+ * copy of the old contents.  Called under ->validate_lock.
-+ */
-+void afs_invalidate_symlink(struct afs_vnode *vnode)
-+{
-+	afs_replace_symlink(vnode, NULL);
-+}
-+
-+/*
-+ * Dispose of a symlink copy during inode deletion.
-+ */
-+void afs_evict_symlink(struct afs_vnode *vnode)
-+{
-+	struct afs_symlink *old;
-+
-+	old = rcu_replace_pointer(vnode->symlink, NULL, true);
-+	if (old)
-+		afs_put_symlink(old);
-+
-+}
-+
-+/*
-+ * Set up a locally created symlink inode for immediate write to the cache.
-+ */
-+void afs_init_new_symlink(struct afs_vnode *vnode, struct afs_operation *op)
-+{
-+	struct afs_symlink *symlink = op->create.symlink;
-+	size_t dsize = 0;
-+	size_t size = strlen(symlink->content) + 1;
-+	char *p;
-+
-+	rcu_assign_pointer(vnode->symlink, symlink);
-+	op->create.symlink = NULL;
-+
-+	if (!fscache_cookie_enabled(netfs_i_cookie(&vnode->netfs)))
-+		return;
-+
-+	if (netfs_alloc_folioq_buffer(NULL, &vnode->directory, &dsize, size,
-+				      mapping_gfp_mask(vnode->netfs.inode.i_mapping)) < 0)
-+		return;
-+
-+	vnode->directory_size = dsize;
-+	p = kmap_local_folio(folioq_folio(vnode->directory, 0), 0);
-+	memcpy(p, symlink->content, size);
-+	kunmap_local(p);
-+	netfs_single_mark_inode_dirty(&vnode->netfs.inode);
-+}
-+
-+/*
-+ * Read a symlink in a single download.
-+ */
-+static ssize_t afs_do_read_symlink(struct afs_vnode *vnode)
-+{
-+	struct afs_symlink *symlink;
-+	struct iov_iter iter;
-+	ssize_t ret;
-+	loff_t i_size;
-+
-+	i_size = i_size_read(&vnode->netfs.inode);
-+	if (i_size > PAGE_SIZE - 1) {
-+		trace_afs_file_error(vnode, -EFBIG, afs_file_error_dir_big);
-+		return -EFBIG;
-+	}
-+
-+	if (!vnode->directory) {
-+		size_t cur_size = 0;
-+
-+		ret = netfs_alloc_folioq_buffer(NULL,
-+						&vnode->directory, &cur_size, PAGE_SIZE,
-+						mapping_gfp_mask(vnode->netfs.inode.i_mapping));
-+		vnode->directory_size = PAGE_SIZE - 1;
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	iov_iter_folio_queue(&iter, ITER_DEST, vnode->directory, 0, 0, PAGE_SIZE);
-+
-+	/* AFS requires us to perform the read of a symlink as a single unit to
-+	 * avoid issues with the content being changed between reads.
-+	 */
-+	ret = netfs_read_single(&vnode->netfs.inode, NULL, &iter);
-+	if (ret >= 0) {
-+		i_size = ret;
-+		if (i_size > PAGE_SIZE - 1) {
-+			trace_afs_file_error(vnode, -EFBIG, afs_file_error_dir_big);
-+			return -EFBIG;
-+		}
-+		vnode->directory_size = i_size;
-+
-+		/* Copy the symlink. */
-+		symlink = kmalloc_flex(struct afs_symlink, content, i_size + 1,
-+				       GFP_KERNEL);
-+		if (!symlink)
-+			return -ENOMEM;
-+
-+		refcount_set(&symlink->ref, 1);
-+		symlink->content[i_size] = 0;
-+
-+		const char *s = kmap_local_folio(folioq_folio(vnode->directory, 0), 0);
-+
-+		memcpy(symlink->content, s, i_size);
-+		kunmap_local(s);
-+
-+		afs_replace_symlink(vnode, symlink);
-+	}
-+
-+	if (!fscache_cookie_enabled(netfs_i_cookie(&vnode->netfs))) {
-+		netfs_free_folioq_buffer(vnode->directory);
-+		vnode->directory = NULL;
-+		vnode->directory_size = 0;
-+	}
-+
-+	return ret;
-+}
-+
-+static ssize_t afs_read_symlink(struct afs_vnode *vnode)
-+{
-+	ssize_t ret;
-+
-+	fscache_use_cookie(afs_vnode_cache(vnode), false);
-+	ret = afs_do_read_symlink(vnode);
-+	fscache_unuse_cookie(afs_vnode_cache(vnode), NULL, NULL);
-+	return ret;
-+}
-+
-+static void afs_put_link(void *arg)
-+{
-+	afs_put_symlink(arg);
-+}
-+
-+const char *afs_get_link(struct dentry *dentry, struct inode *inode,
-+			 struct delayed_call *callback)
-+{
-+	struct afs_symlink *symlink;
-+	struct afs_vnode *vnode = AFS_FS_I(inode);
-+	ssize_t ret;
-+
-+	if (!dentry) {
-+		/* RCU pathwalk. */
-+		symlink = rcu_dereference(vnode->symlink);
-+		if (!symlink || !afs_check_validity(vnode))
-+			return ERR_PTR(-ECHILD);
-+		set_delayed_call(callback, NULL, NULL);
-+		return symlink->content;
-+	}
-+
-+	if (vnode->symlink) {
-+		ret = afs_validate(vnode, NULL);
-+		if (ret < 0)
-+			return ERR_PTR(ret);
-+
-+		down_read(&vnode->validate_lock);
-+		if (vnode->symlink)
-+			goto good;
-+		up_read(&vnode->validate_lock);
-+	}
-+
-+	if (down_write_killable(&vnode->validate_lock) < 0)
-+		return ERR_PTR(-ERESTARTSYS);
-+	if (!vnode->symlink) {
-+		ret = afs_read_symlink(vnode);
-+		if (ret < 0) {
-+			up_write(&vnode->validate_lock);
-+			return ERR_PTR(ret);
-+		}
-+	}
-+
-+	downgrade_write(&vnode->validate_lock);
-+	
-+good:
-+	symlink = rcu_dereference_protected(vnode->symlink,
-+					    lockdep_is_held(&vnode->validate_lock));
-+	refcount_inc(&symlink->ref);
-+	up_read(&vnode->validate_lock);
-+
-+	set_delayed_call(callback, afs_put_link, symlink);
-+	return symlink->content;
-+}
-+
-+int afs_readlink(struct dentry *dentry, char __user *buffer, int buflen)
-+{
-+	DEFINE_DELAYED_CALL(done);
-+	const char *content;
-+	int len;
-+
-+	content = afs_get_link(dentry, d_inode(dentry), &done);
-+	if (IS_ERR(content)) {
-+		do_delayed_call(&done);
-+		return PTR_ERR(content);
-+	}
-+
-+	len = umin(strlen(content), buflen);
-+	if (copy_to_user(buffer, content, len))
-+		len = -EFAULT;
-+	do_delayed_call(&done);
-+	return len;
-+}
-+
-+/*
-+ * Write the symlink contents to the cache as a single blob.  We then throw
-+ * away the page we used to receive it.
-+ */
-+int afs_symlink_writepages(struct address_space *mapping,
-+			   struct writeback_control *wbc)
-+{
-+	struct afs_vnode *vnode = AFS_FS_I(mapping->host);
-+	struct iov_iter iter;
-+	int ret = 0;
-+
-+	if (!down_read_trylock(&vnode->validate_lock)) {
-+		if (wbc->sync_mode == WB_SYNC_NONE) {
-+			/* The VFS will have undirtied the inode. */
-+			netfs_single_mark_inode_dirty(&vnode->netfs.inode);
-+			return 0;
-+		}
-+		down_read(&vnode->validate_lock);
-+	}
-+
-+	if (vnode->directory &&
-+	    atomic64_read(&vnode->cb_expires_at) != AFS_NO_CB_PROMISE) {
-+		iov_iter_folio_queue(&iter, ITER_SOURCE, vnode->directory, 0, 0,
-+				     i_size_read(&vnode->netfs.inode));
-+		ret = netfs_writeback_single(mapping, wbc, &iter);
-+	}
-+
-+	if (ret == 0) {
-+		mutex_lock(&vnode->netfs.wb_lock);
-+		netfs_free_folioq_buffer(vnode->directory);
-+		vnode->directory = NULL;
-+		vnode->directory_size = 0;
-+		mutex_unlock(&vnode->netfs.wb_lock);
-+	} else if (ret == 1) {
-+		ret = 0; /* Skipped write due to lock conflict. */
-+	}
-+
-+	up_read(&vnode->validate_lock);
-+	return ret;
-+}
-+
-+const struct inode_operations afs_symlink_inode_operations = {
-+	.get_link	= afs_get_link,
-+	.readlink	= afs_readlink,
-+};
-+
-+const struct address_space_operations afs_symlink_aops = {
-+	.writepages	= afs_symlink_writepages,
-+};
-diff --git a/fs/afs/validation.c b/fs/afs/validation.c
-index 0ba8336c90250..e997563af658b 100644
---- a/fs/afs/validation.c
-+++ b/fs/afs/validation.c
-@@ -465,11 +465,17 @@ int afs_validate(struct afs_vnode *vnode, struct key *key)
- 	vnode->cb_ro_snapshot = cb_ro_snapshot;
- 	vnode->cb_scrub = cb_scrub;
+ /*
+  * Delete a list entry by making the prev/next entries
+  * point to each other.
+@@ -651,6 +674,20 @@ static inline void list_splice_tail_init(struct list_head *list,
+ 	pos__ != head__ ? list_entry(pos__, type, member) : NULL; \
+ })
  
--	/* if the vnode's data version number changed then its contents are
--	 * different */
-+	/* If the vnode's data version number changed then its contents are
-+	 * different.  Note that afs_apply_status() doesn't set ZAP_DATA on
-+	 * directories.
-+	 */
- 	zap |= test_and_clear_bit(AFS_VNODE_ZAP_DATA, &vnode->flags);
--	if (zap)
--		afs_zap_data(vnode);
-+	if (zap) {
-+		if (S_ISREG(vnode->netfs.inode.i_mode))
-+			afs_zap_data(vnode);
-+		else if (S_ISLNK(vnode->netfs.inode.i_mode))
-+			afs_invalidate_symlink(vnode);
-+	}
- 	up_write(&vnode->validate_lock);
- 	_leave(" = 0");
- 	return 0;
-diff --git a/fs/afs/yfsclient.c b/fs/afs/yfsclient.c
-index febf13a49f0bf..21fba9c309eec 100644
---- a/fs/afs/yfsclient.c
-+++ b/fs/afs/yfsclient.c
-@@ -960,7 +960,7 @@ void yfs_fs_symlink(struct afs_operation *op)
- 
- 	_enter("");
- 
--	contents_sz = strlen(op->create.symlink);
-+	contents_sz = strlen(op->create.symlink->content);
- 	call = afs_alloc_flat_call(op->net, &yfs_RXYFSSymlink,
- 				   sizeof(__be32) +
- 				   sizeof(struct yfs_xdr_RPCFlags) +
-@@ -981,7 +981,7 @@ void yfs_fs_symlink(struct afs_operation *op)
- 	bp = xdr_encode_u32(bp, 0); /* RPC flags */
- 	bp = xdr_encode_YFSFid(bp, &dvp->fid);
- 	bp = xdr_encode_name(bp, name);
--	bp = xdr_encode_string(bp, op->create.symlink, contents_sz);
-+	bp = xdr_encode_string(bp, op->create.symlink->content, contents_sz);
- 	bp = xdr_encode_YFSStoreStatus(bp, &mode, &op->mtime);
- 	yfs_check_req(call, bp);
- 
++/**
++ * list_first_entry_or_null_acquire - get the first element from a list with barrier
++ * @ptr:	the list head to take the element from.
++ * @type:	the type of the struct this is embedded in.
++ * @member:	the name of the list_head within the struct.
++ *
++ * Note that if the list is empty, it returns NULL.
++ */
++#define list_first_entry_or_null_acquire(ptr, type, member) ({ \
++	struct list_head *head__ = (ptr); \
++	struct list_head *pos__ = smp_load_acquire(&head__->next); \
++	pos__ != head__ ? list_entry(pos__, type, member) : NULL; \
++})
++
+ /**
+  * list_last_entry_or_null - get the last element from a list
+  * @ptr:	the list head to take the element from.
 -- 
 2.53.0
 
