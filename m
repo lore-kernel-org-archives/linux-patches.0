@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEF74F4D18;
-	Tue, 13 Oct 2026 12:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99874FD27D;
+	Tue, 13 Oct 2026 12:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895762; cv=none; b=SZhyXs+EQRAWjXxOyotOQtj3TCHsOoeCPRsENoKXmlU0AAUnydgLQJFbzRAFskNPT5garVXJqbFo2Tdi6NxGmZ2kv7bYYxzPYXEoFOG13BYhktKqun4LnTeSE5fEL2dE8p5F2nsAxV/wVch8jisaGHLKTXY0aUi6jnaYwKlAV5k=
+	t=1791895766; cv=none; b=CnvLvzy6CAn39SS+yqdtIgf80OfvAE2kBfplyJSiMGE9PNzl/Nju5K+DTB6PagnqmRSdky4/m4nk1adZJ7t8gdO3K/PKDDSr9toLHq0AY+pGRylbWbwk8GUnXnM7e9V5jzFbwLZ353YcEFL4dH4VH4631y3b/bz6wDWkwR/DMmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895762; c=relaxed/simple;
-	bh=qxoM5LvdOBnuGG6x1gDha5wHtOD1e22VmM2xuOOShPI=;
+	s=arc-20240116; t=1791895766; c=relaxed/simple;
+	bh=RA3I66BTDgyz7oDxNfEmnddhWGLY8Sp5R6OOyzuEl44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rW2WyQeinko1CXZhXq94TrPyX7j1misE3meVOh+OETPiQKEi0gIo3liyopJvpUha61H6oLqIsFYpOdi8cuwzTw04tr81QtUfAT+Pvl9lyfoGYDP/A9PDSqHubUiy5dMG2albGpPOZzYKdPNUDKvtw48CjNaSs512G0ZNlhXFqiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ALr1SkV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rVH13DDzbegviLvlMBgwEovI1E6GRraWaR+Mx9ojWmoO+aQ4gZek+nQGl2w8jZDltQK7j3T+Q1+0eJH24BIAfzcsVfxLrJeTA9zPRLImowb9gfaStlxJIqiE0PlwCEewP/4TjcydB9xPl+iGfL2R6lqW0xhPwB5LViitId3O8i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rgv7/CC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ALr1SkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00921F000FF;
-	Tue, 13 Oct 2026 12:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rgv7/CC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3EE1F000FF;
+	Tue, 13 Oct 2026 12:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895761;
-	bh=qvmy8ORR7/40Qm3zPhlaJ1xxqetlEVKHDj4FfILtaMg=;
+	s=korg; t=1791895764;
+	bh=VPmyuYbuy+pEY1CjzoHwj0/sR6860R5P+zrIrV27Nu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ALr1SkVm8LsrEhhVgeHl7qIK//an8kwtyXMpY+Q4p87grYcdZS9G1vgvUGStG31e
-	 XgTKgCa18izNA0fmG3O8ibWtOCld1KLPf8ERgHXoAcTNqmDOcjD7+1XkQSVnCZlF3S
-	 R5RpfuypJCEiAVQhy15PJTxqC7FnwHGtaA+u9bCY=
+	b=Rgv7/CC9IFukUSMnpFeNoiGWlCiBgbjRTHjLzJ2bx6mmOz4v9paNHOmXNJS8saSbt
+	 /VlInv2F8tyNuN2dATUIXPtsu0eJw1aizab+vnr3IPbvrPUAGn/d0LrZaeXVz+aUld
+	 Msngf8olcHWQHCGeVIxeuQjOxUITFzw1z8KHxf7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Dave Marquardt <davemarq@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 385/497] ibmveth: h_free logical LAN on open-fail after register
-Date: Tue, 13 Oct 2026 13:39:12 +0200
-Message-ID: <20261013112917.032809491@linuxfoundation.org>
+	Michele Dionisio <michele.dionisio@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 368/497] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
+Date: Tue, 13 Oct 2026 13:38:55 +0200
+Message-ID: <20261013112916.635503173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,52 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Michele Dionisio <michele.dionisio@gmail.com>
 
-commit af0524bf4ce1a4cbd2946aa81751582951cfcab5 upstream.
+commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 upstream.
 
-ibmveth_open() registers the logical LAN, then allocates the RX
-buffer pools. A pool failure jumps to out_free_buffer_pools without
-h_free_logical_lan(), so PHYP still owns the buffer-list page when
-it is unmapped. request_irq() failure already issued the hypercall
-before taking the same label.
+When the driver is removed while the user space process that created
+the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
+interface is removed twice and the kernel crashes.
 
-Move that h_free to the shared post-register unwind so both paths
-deregister before the buffer list is unmapped.
+The two paths are:
 
-Fixes: d43732ce021f ("ibmveth: properly unwind on init errors")
+ - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
+   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
+   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
+   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
+   which unregisters the wdev and frees the vif and the ifp.
+
+ - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
+   and calls brcmf_remove_interface(ifp, false) for the same ifp.
+   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
+   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
+   cfg80211_unregister_wdev() on the wdev that was already unregistered
+   and freed.
+
+The second list_del_rcu() of wdev->list faults on LIST_POISON2:
+
+  brcmfmac: brcmf_p2p_del_vif delete P2P vif
+  brcmfmac: brcmf_p2p_deinit_discovery enter
+  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
+  brcmfmac: brcmf_detach Enter
+  brcmfmac: brcmf_bus_change_state 1 -> 0
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  [1.5 s later, brcmf_p2p_del_vif() timed out]
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  Unable to handle kernel paging request at virtual address dead000000000122
+  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
+  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+  Call trace:
+   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
+   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
+   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
+   brcmf_detach+0x88/0x180 [brcmfmac]
+   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
+   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
+   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
+   sdio_bus_remove+0x38/0x144
+   device_release_driver_internal+0x1e8/0x2c0
+   device_release_driver+0x14/0x20
+   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
+   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
+   __exit_compat+0x18/0x418 [brcmfmac_cyw]
+   __arm64_sys_delete_module+0x1ac/0x244
+
+The log was taken with debug=0x406 on an i.MX 8M Plus board with a
+CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
+brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
+in mainline.
+
+To reproduce:
+
+  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
+     P2P device (iw dev shows "type P2P-device").
+  2. Stop wpa_supplicant and remove the driver without waiting for
+     wpa_supplicant to exit:
+
+       kill $(pidof wpa_supplicant)
+       rmmod brcmfmac_cyw brcmfmac
+
+The crash is reproducible on that board.
+
+For the interface without a netdev (the P2P device), take RTNL and the
+wiphy mutex in brcmf_detach() before reading iflist, and remove it with
+locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
+slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
+any more. The interfaces with a netdev are removed as before, because
+brcmf_del_if() takes RTNL on its own for the primary interface.
+
+Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
-Link: https://patch.msgid.link/7a56fbfb9e0674f011f4e310fbd7dfd8e67c30aa.1790357373.git.mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: claude-opus-5-5
+Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |   27 ++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -607,10 +607,6 @@ static int ibmveth_open(struct net_devic
- 	if (rc != 0) {
- 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
- 			   netdev->irq, rc);
--		do {
--			lpar_rc = h_free_logical_lan(adapter->vdev->unit_address);
--		} while (H_IS_LONG_BUSY(lpar_rc) || (lpar_rc == H_BUSY));
--
- 		goto out_free_buffer_pools;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -1482,8 +1482,31 @@ void brcmf_detach(struct device *dev)
+ 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
+ 	/* make sure primary interface removed last */
+ 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
+-		if (drvr->iflist[i])
+-			brcmf_remove_interface(drvr->iflist[i], false);
++		struct brcmf_if *ifp = drvr->iflist[i];
++
++		if (!ifp)
++			continue;
++
++		if (ifp->ndev) {
++			brcmf_remove_interface(ifp, false);
++			continue;
++		}
++
++		/* The P2P device interface has no netdev. Its removal can
++		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
++		 * process that is exiting (e.g. wpa_supplicant), which ends
++		 * in brcmf_p2p_del_vif() under RTNL and the wiphy mutex. If
++		 * both paths remove the interface, the wdev is unregistered
++		 * twice and the vif is used after being freed. Take the same
++		 * locks and re-read iflist, so only one path removes it.
++		 */
++		rtnl_lock();
++		wiphy_lock(drvr->wiphy);
++		ifp = drvr->iflist[i];
++		if (ifp)
++			brcmf_remove_interface(ifp, true);
++		wiphy_unlock(drvr->wiphy);
++		rtnl_unlock();
  	}
+ 	brcmf_bus_stop(drvr->bus_if);
  
-@@ -626,6 +622,9 @@ static int ibmveth_open(struct net_devic
- 	return 0;
- 
- out_free_buffer_pools:
-+	do {
-+		lpar_rc = h_free_logical_lan(adapter->vdev->unit_address);
-+	} while (H_IS_LONG_BUSY(lpar_rc) || (lpar_rc == H_BUSY));
- 	while (--i >= 0) {
- 		if (adapter->rx_buff_pool[i].active)
- 			ibmveth_free_buffer_pool(adapter,
 
 
