@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C44E3B7747;
-	Tue, 13 Oct 2026 12:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710FF31AF1F;
+	Tue, 13 Oct 2026 12:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895691; cv=none; b=lIv3QpZ5oRqgv4QWFsszkx4fwmHyA5TA1nxezTMPWRRO3bWjD7kMfi+BC64wbCcwJb5zQFvuHl3LnGkQdW/ZKOkZC0Cc2/bIc6VZ+Hs9uvBTBz1Yg8EqCx9ruwYZCjgeNmvvRUl8MmYPx0FKVZLAmxrL5FhNdnxkptuUOjucEmg=
+	t=1791895694; cv=none; b=oNTfsazLQI6T615dWLBWujlJeor9K79cArPeF0AK06zGJMu2rTnsBcKLoR5gRuWRp4SERc8Ik+ODrqEOvhhv4r9iFBJI4WfgspinNFqsrG0xW2ZpRosXagRO2AbMmsyN2LRlGh5bE1WpIaqa05SjM51qA7ntoFv6UNzz5sBFMZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895691; c=relaxed/simple;
-	bh=z6rHlw8cz2Ide3uR+aIxcAZubAJW3/JT4H0Sh9rbiDc=;
+	s=arc-20240116; t=1791895694; c=relaxed/simple;
+	bh=8/vi4a+kBD9YGjDdCOZRjCgRhVRx5Ffj1PVGAKYKDdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mitqez3yzDSud1T2gzlq/tbn2+CktKsxGixQCpFLEzczOXFqkkpSAoVGzfpRoiIGqr6cY5+txnsdAKbC5aNzQ9euhZa2kXdi+cFE4IdHhZ7S/Ouvkod9N3yIK+wqIikNqaGfXjZGpVxr6iMbGTSpRwSUF/vuIIR0Faj+i9k51H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/W4Tojj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SqlR0EysHmKUnYVl4+3unXdc/BFJ5iKptMjEbdwihpOJXT0/44SLorIlxSARBs5Rh/6zWC6N4kxuOYEl4xpmBNZ1/+Y0+8Wj2SuCHXUdrWeTQ9zPmTybcqp5VDvS20mVEeY3bwf8We0AHlOOC2r/mzrGD5NzeGci2bYooWCDNJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keTUjEI1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/W4Tojj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F0E1F000FF;
-	Tue, 13 Oct 2026 12:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keTUjEI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7461F000FF;
+	Tue, 13 Oct 2026 12:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895690;
-	bh=4wWsEEiNk/icl2eMtazEhnPndAOtcX6TBh2VRRznT4E=;
+	s=korg; t=1791895693;
+	bh=4rCtpf39nkchC+b+rhBPHfc/O/3QaX9JAqJXDU0KD6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/W4Tojj2xBekROTYyIt0lq4Ewh2XW720+Cdi+QHqfVqYmKnVlh5LCAxyRiRfvNb5
-	 osOcyOshYlJufJBUOUR7TSSkz8W88KG7qsyZcM+TxbbW0khSHtZtSdv7Bd0j71PFoM
-	 xMtVFzd7YUd20z0DJCiXh4eHD6DF5Ew1AgOr5StY=
+	b=keTUjEI1Zv8mISUsp9HUa481+rkL8MSnVpuelZgRHRQnRJdTj/iE8wyDpfGrmM4s6
+	 ORzzqenPFQD1+ab7J+UXkcqIbaluJ/6VzbROHcq+1+fEEmLSmBHxpQAZWs/++j6+C+
+	 meE15+dtolUke8R0rDT9G2/GPlcOqA+BKeBok7iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 323/497] net: mana: remove double CQ cleanup in mana_create_rxq error path
-Date: Tue, 13 Oct 2026 13:38:10 +0200
-Message-ID: <20261013112915.570258869@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 359/497] Input: ati_remote2 - fix type confusion in device attribute handlers
+Date: Tue, 13 Oct 2026 13:38:46 +0200
+Message-ID: <20261013112916.427010679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -48,61 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 3985c9a56da49af8b2e45cb1fa55c03c89b1d471 ]
+commit f321cc430c49b6c1be0d53f2ef19d8342d8029cc upstream.
 
-In mana_create_rxq(), the error cleanup path calls mana_destroy_rxq()
-followed by mana_deinit_cq(). This is incorrect for two reasons:
+Previously, the channel_mask and mode_mask attributes were registered on
+the parent usb_device via sysfs_create_group(). When commit b20d6bf8014b
+("Input: ati-remote2 - use driver core to instantiate device
+attributes") converted the driver to let the driver core manage them via
+dev_groups in struct usb_driver, the attributes moved to the bound
+usb_interface devices, but the show and store callbacks were not updated
+accordingly.
 
-1. mana_destroy_rxq() already calls mana_deinit_cq() internally,
-   so the CQ's GDMA queue is destroyed twice.
+As a result, the callbacks still invoked to_usb_device() on a device
+pointer belonging to a struct usb_interface, producing an invalid
+usb_device pointer.
 
-2. mana_destroy_rxq() frees the rxq via kfree(rxq) before returning.
-   The subsequent mana_deinit_cq(apc, cq) then operates on freed memory
-   since cq points to &rxq->rx_cq, which is embedded in the
-   already-freed rxq structure — a use-after-free.
+Use to_usb_interface() directly in the attribute handlers to obtain the
+interface and its driver data.
 
-Remove the redundant mana_deinit_cq() call from the error path since
-mana_destroy_rxq() already handles CQ cleanup. mana_deinit_cq() is
-itself safe for an uninitialized CQ as it checks for a NULL gdma_cq
-before proceeding.
-
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Link: https://patch.msgid.link/20260430035935.1859220-4-dipayanroy@linux.microsoft.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b20d6bf8014b ("Input: ati-remote2 - use driver core to instantiate device attributes")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20261009040302.3087205-1-vulab@iscas.ac.cn
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/input/misc/ati_remote2.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 46726f743d322..bd1ae41df552d 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2317,9 +2317,6 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
+--- a/drivers/input/misc/ati_remote2.c
++++ b/drivers/input/misc/ati_remote2.c
+@@ -682,8 +682,7 @@ static ssize_t ati_remote2_show_channel_
+ 					     struct device_attribute *attr,
+ 					     char *buf)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
  
- 	mana_destroy_rxq(apc, rxq, false);
+ 	return sprintf(buf, "0x%04x\n", ar2->channel_mask);
+@@ -693,8 +692,7 @@ static ssize_t ati_remote2_store_channel
+ 					      struct device_attribute *attr,
+ 					      const char *buf, size_t count)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 	unsigned int mask;
+ 	int r;
+@@ -732,8 +730,7 @@ static ssize_t ati_remote2_show_mode_mas
+ 					  struct device_attribute *attr,
+ 					  char *buf)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
  
--	if (cq)
--		mana_deinit_cq(apc, cq);
--
- 	return NULL;
- }
- 
--- 
-2.53.0
-
+ 	return sprintf(buf, "0x%02x\n", ar2->mode_mask);
+@@ -743,8 +740,7 @@ static ssize_t ati_remote2_store_mode_ma
+ 					   struct device_attribute *attr,
+ 					   const char *buf, size_t count)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 	unsigned int mask;
+ 	int err;
 
 
