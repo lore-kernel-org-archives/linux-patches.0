@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CC520125F;
-	Tue, 13 Oct 2026 12:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836A91DF98F;
+	Tue, 13 Oct 2026 12:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896010; cv=none; b=WegF1HNffWwSK+ccY0dUDATH10wy7H0bSQS+Y4DH9xQTCQO6vC2kfl+RuZO9N6sZj4wF/cGTO3patb2/QrTL8MzlVER+0iuloKPSWBsQOSj45rNzcYkbb0flxD5KDCXswNIwJOiDMH0MM7y/c9vCoaaqord/ZjUXWCEHIfeLUEg=
+	t=1791896013; cv=none; b=MHw+fgG1XqdTk+4Tuo9VFFv3Wa0ozmtUnoXE8vmFOuJeBXpdH9mYTISNvLsvHeca0mrqKSs9P0QDormZL51iOuwkXR1+nEUjX6KJ4+ZumplErmfHW+vcIRi6sFxZZI964m+e3oyH6OVk0QDD9fDqh+YCFinVQT2hFJ5L3GwGmxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896010; c=relaxed/simple;
-	bh=ZeAIffLWwazMANkcFcCtLpqkJrTWfkOiFu4cf2oEP7U=;
+	s=arc-20240116; t=1791896013; c=relaxed/simple;
+	bh=uPrANX9Wf3p+jsdXvPO0G5RfVKrgBDJhcLSeDSEgg9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aF0+Gz3K29H091g5a58mlLgmL9MWwfx8a8r9qfYK6pWKSuPNi9j1kFI5hDUxpX4LlmXDO3rWGPO8P+oWJwsZw4dVkbX4m9iVXWmzTFWheCFTnkePlitoUnNPbQk5GNg7IZfj6DvJogDwbVtzXaHTvXn0XK89FPqZrEDU5sFm+zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEE7jwxx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hHunEBKEQv31x5oid/g9GEJ5bDXg+RGSLXU+ju1vEtJ6pyfyK2PfS5ujkVzYwpYf20et8U1w3iMvQr1aTiV9k2LLcCFjTKfoXW6b+G0+pEsCyuT5VysLrdOe5T+anllrvzc7Ol1SnFLIlTxsJ47+aYv7E9+LTARv5uPsy3hKAEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KM+lLFu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEE7jwxx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002F61F00893;
-	Tue, 13 Oct 2026 12:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KM+lLFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4931F000FF;
+	Tue, 13 Oct 2026 12:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791896009;
-	bh=rtwQdoV4dvEijnUEG7RtASRNt8D+djx8TL7C907hQAI=;
+	s=korg; t=1791896012;
+	bh=VR28V/fFvZ/UJrhGK52Z80na0+i8XXztD6aVmXhNNIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEE7jwxxQyk6CXBEPVv079aJOepCPLJR/LtevMievfCjwcxIcJrLXyjVoV6HVWlf7
-	 5RqSeizd3ffGJRFKzvdOHxLcN2UhRJsPd+YGSLPmwa1rO7gl4MtMERUHf/AK6dWOX6
-	 lHd0prtc+1tb1YmT+AlQIp+u4bSfdHXMAF+UQmp0=
+	b=0KM+lLFuY9Mhtd1sp0TKxBG7hDANuOvAZY+uRsQ3r1NVpbfpMa2z/AJCQ3rLzVCcI
+	 u30K3VNy/5+GRuQBzU/xqKLXQS03QyrOb0W953uefYcV+EDhOvbvglm7anMeeHqlY9
+	 J9yks07rgXlYkicS3YeDQehq5GF3r3yYOlM/onQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 413/497] pmdomain: rockchip: dont ignore clock lookup errors on attach
-Date: Tue, 13 Oct 2026 13:39:40 +0200
-Message-ID: <20261013112917.692649373@linuxfoundation.org>
+	Changyul Lee <lcy8047@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 461/497] nvmet: use the local P2P device on metadata allocation failure
+Date: Tue, 13 Oct 2026 13:40:28 +0200
+Message-ID: <20261013112918.823221342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,48 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-commit 4c66c423593e26273ea0d644906ed007630c6f6d upstream.
+[ Upstream commit 4aa9c0f377a4de5e8fddce76b34ee4529639a1ff ]
 
-rockchip_pd_attach_dev() treated every of_clk_get() error as the end
-of the clock list, so a clock that exists but is not available yet
-(e.g. -EPROBE_DEFER) was silently skipped and the device ended up
-without pm_clk management.  Only -ENOENT means there are no more
-clocks.
+nvmet_req_alloc_p2pmem_sgls() assigns req->p2p_dev only after the data
+and metadata SGL allocations succeed. If the data allocation succeeds
+but the metadata allocation fails, out_free_sg passes req->p2p_dev to
+pci_p2pmem_free_sgl() before that assignment has taken place.
 
-Fixes: 7c696693a4f5 ("soc: rockchip: power-domain: Add power domain driver")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Pass the local p2p_dev argument instead, so cleanup uses the same PCI
+device as the successful data allocation.
+
+Fixes: bcd9a0797d73 ("nvmet: fix freeing unallocated p2pmem")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/rockchip/pm-domains.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/nvme/target/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/rockchip/pm-domains.c
-+++ b/drivers/pmdomain/rockchip/pm-domains.c
-@@ -640,7 +640,19 @@ static int rockchip_pd_attach_dev(struct
- 	}
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 6267c6d576db9..5950635d6f58d 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1099,7 +1099,7 @@ static int nvmet_req_alloc_p2pmem_sgls(struct pci_dev *p2p_dev,
  
- 	i = 0;
--	while ((clk = of_clk_get(dev->of_node, i++)) && !IS_ERR(clk)) {
-+	while (1) {
-+		clk = of_clk_get(dev->of_node, i++);
-+		if (IS_ERR(clk)) {
-+			error = PTR_ERR(clk);
-+			if (error == -ENOENT)
-+				break;
-+
-+			dev_err(dev, "failed to get clock %d: %d\n", i - 1,
-+				error);
-+			pm_clk_destroy(dev);
-+			return error;
-+		}
-+
- 		dev_dbg(dev, "adding clock '%pC' to list of PM clocks\n", clk);
- 		error = pm_clk_add_clk(dev, clk);
- 		if (error) {
+ 	return 0;
+ out_free_sg:
+-	pci_p2pmem_free_sgl(req->p2p_dev, req->sg);
++	pci_p2pmem_free_sgl(p2p_dev, req->sg);
+ out_err:
+ 	return -ENOMEM;
+ }
+-- 
+2.53.0
+
 
 
