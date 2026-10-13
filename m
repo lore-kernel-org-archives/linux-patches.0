@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E94F5DFD;
-	Tue, 13 Oct 2026 12:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADD64ED1B4;
+	Tue, 13 Oct 2026 12:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893596; cv=none; b=OTC53B/e0FMcjtjn6LoHlqBfwJMR7u/5pjtXDzkju/ngYdCPBU2gpK7PS+4Sw690dP9XFUkLZ9YkiIom3WJIbvdtdFbnT/y0IZgsYGlNHs+4KMEs8SULqShf98NqNrw+KOdNjZWH4pZJaCIgtqp54CC+9wG7Ulzk5bjCwRRkrsI=
+	t=1791893599; cv=none; b=Le48HDi6q8xVU6kmKKQkXpwz5PIyOxaio//2pHCv6koLzBP1yiUnr/9q2xhxmSGfDzeNe/2AYVpRsg1fXCLHQR+wUW3wB/6yMAsFg38PxyrV12RSuZ+/9Av34mAh34qqts8Ii7RjBmXMKHpnTQMlHmSAFbbLBgbKeEhu213A73U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893596; c=relaxed/simple;
-	bh=+JECHkX1IpaaR+4Zz5BCz8bA0uM3t+u4StrApDTYmJs=;
+	s=arc-20240116; t=1791893599; c=relaxed/simple;
+	bh=ynUjDjqQ6e6Rj4mt7gbHkzS9/2GVkJ931LiRr/2+nOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjcSSEGCTfOGleoBkjGU3JlEHdiAEG9Fb/TN5MwslKPoUHSynd5ejqBSoL5Q06Bk+mehLsRzsOa3HJ8scRHwgHZ7m3jjPUzda92XBYb9kO9Jabsw6TT3akUwlg1pxfhNcQHk5Rge4vMVwvB4/LrQ3F1KkVm5haWFjtaMovuBwpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i35xYIuJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AeqrCeyIsR1jUFtXLyF/e77dRD69pcs8sgSQRJOllhSVFSCYdCs8u3EUQiqfCtwg7l1KiI5yZg9fY1jI6wqwD+70PWxPiLuybw344B9JdliJRzdiUsYV+6BKhFf6N2sHlE7DtFvu+0quFRqolne+SDjiD3o33jccRDc2RGVDCuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13XiU7ys; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i35xYIuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E141F000FF;
-	Tue, 13 Oct 2026 12:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13XiU7ys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DB1F000FF;
+	Tue, 13 Oct 2026 12:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893594;
-	bh=Kg73AhzXi2iAcevZFY/l9qUATXilD/gdhNebfBy9LA4=;
+	s=korg; t=1791893598;
+	bh=ROafOc1EagFSZmkMB8Xn8ik10E7mnkwg6bFEQoPIYbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i35xYIuJZuiGXZTDjzVLG9xlnBcH36PUFmdugzVpNQhppqB/XjR3yxMZcC2ncs5bg
-	 xrizdMDCpwbcLp5n/7l4ukyjM2LiMve+Lt4orn/4/dN2Danv5hB8O1R3PGMz8/Rbjg
-	 E0YJL7DOIlelcW7gh6LHvSGY7k5wX2T3fKnTCP34=
+	b=13XiU7ysi4OQm27yGGv6XbpK4uLfoL1mZx+3a1BnqGvGxjzbdNaF14jYZPlUI2Un3
+	 2CpGZBXQZpGKwhvBuxwXLUmzCJlR2vZASDfokx9RqzOmqhuz7foKcv1rDXL3T0uqqx
+	 BqV8afgYN3HFowLuSy6gNw+SyUENdPJRrnPDRqbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 251/621] netfs: Fix zeropoint update where i_size > remote_i_size
-Date: Tue, 13 Oct 2026 13:34:06 +0200
-Message-ID: <20261013112926.818120005@linuxfoundation.org>
+Subject: [PATCH 6.18 278/621] accel/amdxdna: Fill invalid payload for failed command
+Date: Tue, 13 Oct 2026 13:34:33 +0200
+Message-ID: <20261013112927.457091633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -55,74 +51,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 4543a4d737944134a1394afe797622546fbcc98a ]
+[ Upstream commit 89ff45359abbf9d8d3c4aa3f5a57ed0be82b5a12 ]
 
-Fix the update of the zero point[*] by netfs_release_folio() when there is
-uncommitted data in the pagecache beyond the folio being released but the
-on-server EOF is in this folio (ie. i_size > remote_i_size).  The update
-needs to limit zero_point to remote_i_size, not i_size as i_size is a local
-phenomenon reflecting updates made locally to the pagecache, not stuff
-written to the server.  remote_i_size tracks the server's i_size.
+Newer userspace applications may read the payload of a failed command
+to obtain detailed error information. However, the driver and old firmware
+versions may not support returning advanced error information.
+In this case, initialize the command payload with an invalid value so
+userspace can detect that no detailed error information is available.
 
-[*] The zero point is the file position from which we can assume that the
-    server will just return zeros, so we can avoid generating reads.
-
-Note that netfs_invalidate_folio() probably doesn't need fixing as
-zero_point should be updated by setattr after truncation or fallocate.
-
-Found with:
-
-    fsx -q -N 1000000 -p 10000 -o 128000 -l 600000 \
-        /xfstest.test/junk --replay-ops=junk.fsxops
-
-using the following as junk.fsxops:
-
-    truncate 0x0 0x1bbae 0x82864
-    write 0x3ef2e 0xf9c8 0x1bbae
-    write 0x67e05 0xcb5a 0x4e8f6
-    mapread 0x57781 0x85b6 0x7495f
-    copy_range 0x5d3d 0x10329 0x54fac 0x7495f
-    write 0x64710 0x1c2b 0x7495f
-    mapread 0x64000 0x1000 0x7495f
-
-on cifs with the default cache option.
-
-It shows read-gaps on folio 0x64 failing with a short read (ie. it hits
-EOF) if the FMODE_READ check is commented out in netfs_perform_write():
-
-                if (//(file->f_mode & FMODE_READ) ||
-                    netfs_is_cache_enabled(ctx)) {
-
-and no fscache.  This was initially found with the generic/522 xfstest.
-
-Fixes: cce6bfa6ca0e ("netfs: Fix trimming of streaming-write folios in netfs_inval_folio()")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-7-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260227004841.3080241-1-lizhi.hou@amd.com
+Stable-dep-of: 1ba02717e821 ("accel/amdxdna: Fix VMA access race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/aie2_ctx.c    | 23 ++++++++---------------
+ drivers/accel/amdxdna/amdxdna_ctx.c | 27 +++++++++++++++++++++++++++
+ drivers/accel/amdxdna/amdxdna_ctx.h |  3 +++
+ 3 files changed, 38 insertions(+), 15 deletions(-)
 
-diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 02654b5c53fe3..d8a67ea348f7f 100644
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -303,7 +303,7 @@ bool netfs_release_folio(struct folio *folio, gfp_t gfp)
- 	if (folio_test_dirty(folio))
- 		return false;
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 92a09b06309da..6d8a79978c381 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -204,13 +204,13 @@ aie2_sched_resp_handler(void *handle, void __iomem *data, size_t size)
+ 	cmd_abo = job->cmd_bo;
  
--	end = umin(folio_pos(folio) + folio_size(folio), i_size_read(&ctx->inode));
-+	end = umin(folio_pos(folio) + folio_size(folio), ctx->remote_i_size);
- 	if (end > ctx->zero_point)
- 		ctx->zero_point = end;
+ 	if (unlikely(job->job_timeout)) {
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
++		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_TIMEOUT);
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
  
+ 	if (unlikely(!data) || unlikely(size != sizeof(u32))) {
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
++		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ABORT);
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+@@ -220,7 +220,7 @@ aie2_sched_resp_handler(void *handle, void __iomem *data, size_t size)
+ 	if (status == AIE2_STATUS_SUCCESS)
+ 		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_COMPLETED);
+ 	else
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ERROR);
++		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ERROR);
+ 
+ out:
+ 	aie2_sched_notify(job);
+@@ -264,13 +264,13 @@ aie2_sched_cmdlist_resp_handler(void *handle, void __iomem *data, size_t size)
+ 	cmd_abo = job->cmd_bo;
+ 
+ 	if (unlikely(job->job_timeout)) {
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
++		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_TIMEOUT);
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+ 
+ 	if (unlikely(!data) || unlikely(size != sizeof(u32) * 3)) {
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
++		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ABORT);
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+@@ -290,19 +290,12 @@ aie2_sched_cmdlist_resp_handler(void *handle, void __iomem *data, size_t size)
+ 		 fail_cmd_idx, fail_cmd_status);
+ 
+ 	if (fail_cmd_status == AIE2_STATUS_SUCCESS) {
+-		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
++		amdxdna_cmd_set_error(cmd_abo, job, fail_cmd_idx, ERT_CMD_STATE_ABORT);
+ 		ret = -EINVAL;
+-		goto out;
++	} else {
++		amdxdna_cmd_set_error(cmd_abo, job, fail_cmd_idx, ERT_CMD_STATE_ERROR);
+ 	}
+-	amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ERROR);
+-
+-	if (amdxdna_cmd_get_op(cmd_abo) == ERT_CMD_CHAIN) {
+-		struct amdxdna_cmd_chain *cc = amdxdna_cmd_get_payload(cmd_abo, NULL);
+ 
+-		cc->error_index = fail_cmd_idx;
+-		if (cc->error_index >= cc->command_count)
+-			cc->error_index = 0;
+-	}
+ out:
+ 	aie2_sched_notify(job);
+ 	return ret;
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index db94a8d0e4bb0..feac65f2cab76 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -135,6 +135,33 @@ int amdxdna_cmd_get_cu_idx(struct amdxdna_gem_obj *abo)
+ 	return -1;
+ }
+ 
++int amdxdna_cmd_set_error(struct amdxdna_gem_obj *abo,
++			  struct amdxdna_sched_job *job, u32 cmd_idx,
++			  enum ert_cmd_state error_state)
++{
++	struct amdxdna_client *client = job->hwctx->client;
++	struct amdxdna_cmd *cmd = abo->mem.kva;
++	struct amdxdna_cmd_chain *cc = NULL;
++
++	cmd->header &= ~AMDXDNA_CMD_STATE;
++	cmd->header |= FIELD_PREP(AMDXDNA_CMD_STATE, error_state);
++
++	if (amdxdna_cmd_get_op(abo) == ERT_CMD_CHAIN) {
++		cc = amdxdna_cmd_get_payload(abo, NULL);
++		cc->error_index = (cmd_idx < cc->command_count) ? cmd_idx : 0;
++		abo = amdxdna_gem_get_obj(client, cc->data[cc->error_index], AMDXDNA_BO_CMD);
++		if (!abo)
++			return -EINVAL;
++		cmd = abo->mem.kva;
++	}
++
++	memset(cmd->data, 0xff, abo->mem.size - sizeof(*cmd));
++	if (cc)
++		amdxdna_gem_put_obj(abo);
++
++	return 0;
++}
++
+ /*
+  * This should be called in close() and remove(). DO NOT call in other syscalls.
+  * This guarantee that when hwctx and resources will be released, if user
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
+index 383f3f15fac8c..d54ccf1a3b6f2 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.h
++++ b/drivers/accel/amdxdna/amdxdna_ctx.h
+@@ -139,6 +139,9 @@ amdxdna_cmd_get_state(struct amdxdna_gem_obj *abo)
+ 
+ void *amdxdna_cmd_get_payload(struct amdxdna_gem_obj *abo, u32 *size);
+ int amdxdna_cmd_get_cu_idx(struct amdxdna_gem_obj *abo);
++int amdxdna_cmd_set_error(struct amdxdna_gem_obj *abo,
++			  struct amdxdna_sched_job *job, u32 cmd_idx,
++			  enum ert_cmd_state error_state);
+ 
+ void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job);
+ void amdxdna_hwctx_remove_all(struct amdxdna_client *client);
 -- 
 2.53.0
 
