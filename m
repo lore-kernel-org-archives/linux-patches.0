@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8837D1DE8AE;
-	Tue, 13 Oct 2026 12:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715B01DE8AE;
+	Tue, 13 Oct 2026 12:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895609; cv=none; b=KYah5Jo2xhAXtcM57THIqDoZnNp8aaBUKIxUW+NgIqPNy8MwISWelB5ZPLoTJ4hLwxUSrLEtwnLZnmmf3iIWrbOKGC8VdAEpCXuziaDm/JyuxUZ2u0DkwxQ2qFFDy89jQfoAQx/gCYjxiSM4oPS+6crNV9pqQglVZlsfTpuIIv0=
+	t=1791895613; cv=none; b=YAwLjSkcdJvGH3z7JXVHdgy3BNdyjul6o9f6US5+vkULQydIoBxJ9N4T+73xn/cNNcJSwf68u9cFA13svyIe23T2iVoG1jFV58Qp85wtkIVR7d6icBpzyfUTWBVFUWdKfzgNNG3Rrg1RKTLtuWZtkqImcSRouRuomg1erQgyzRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895609; c=relaxed/simple;
-	bh=BXrl0kr52ZWtxxij2dPisNeRdQjE5fSJr4qSTavZqvA=;
+	s=arc-20240116; t=1791895613; c=relaxed/simple;
+	bh=GCLcXN1rULBTlV6tolM324odRii00O9G7WaZ8J/+IMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6SU7n+uprAkXHNAt9Uj/tCoZxg+JdYpUkeigr3i8hObhDjQuW1igCwJFRfMrOwWqEtSzzjxv8Qj7RWUUfYGs8zLrrIJFiHPPPXvVF1WK8+PPRhkG+t7qOw7qwmZGkCx4MAW4IJZG6vUGSTUMB0iVrCczafftNxKbuUAIfDU7aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYiLELuo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvNspr/BJOcl/FQ9f/fz7J3RxFGTF/fl/Lhcf7BLPPEmHMEcIcpoHdgopf2BPbyl+zh/CeoOuhZzHS4WlILiJZhgAaHjip+NncZ+ZIMQPcytK25KqsIBGLQqQD4ksuD/BsbPbVDrckts6qUhPzmg7aAbHfBn6GdJBgkppp+4AEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmNQRNnF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYiLELuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EF81F000FF;
-	Tue, 13 Oct 2026 12:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmNQRNnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C648A1F000FF;
+	Tue, 13 Oct 2026 12:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895608;
-	bh=3FANWSEzXJQtjpCJiu2S4xwyBzC387qAWdPFvQ4NquU=;
+	s=korg; t=1791895611;
+	bh=IrXF9HMvRx8vKu0G5dVTj8ITZIl0C91tHFBh4doeGHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yYiLELuojm0ZL2HiPknTcf3j4veMn8faiIjXokDWie9xSwPe169vZVbPpP1FRvz8u
-	 /sIoXI9SBcPxpPGQ16Y9A27f4ZSBBSJclhA4Tujr9BvAzwMPXocSXzcd+VKkV+GVWV
-	 VQp9op7pfT3JIXXtvjHe2tLwLJ47QIg5FG3/OyRo=
+	b=kmNQRNnF1ozogWDHl5a7n7ITzLMhVTP0c7q71P9Pmyh0KJyW34CmQ0u/1QEhsqbh1
+	 /7y4UPoseVqCxa16VmrJXwjA2dWGI+wADNyuHcSQIK/iEFIiy+HsYZkEYJJ0fFTZJ1
+	 /wWULf5tmZVPm3lLPxpCUiteig1Yg221CiKBvn5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladyslav Ivashchenko <cactucatu4eckuu@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/497] iio: adc: axp288: Add TS bias override for Haier HV103H
-Date: Tue, 13 Oct 2026 13:38:20 +0200
-Message-ID: <20261013112915.808591781@linuxfoundation.org>
+Subject: [PATCH 6.12 334/497] iio: adc: stm32-adc: fix possible division by zero in processed channel
+Date: Tue, 13 Oct 2026 13:38:21 +0200
+Message-ID: <20261013112915.833125752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,52 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladyslav Ivashchenko <cactucatu4eckuu@gmail.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 0f300db7b7315b2c7ea0e2d4437b88de162d191f ]
+[ Upstream commit c5de6a6f855fdcf1e0ea549fb227a316db51c405 ]
 
-The Haier HV103H firmware configures the AXP288 TS pin bias
-current to 60 uA. This causes the battery temperature reading to
-cross the charging temperature threshold under load, incorrectly
-stopping battery charging.
+In case the conversion has failed or returned zero, processing *val
+can lead to a division by zero. Need to check for errors, or converted
+value is zero, before processing the data. In case the converted value
+is zero, e.g. the Vrefint channel, this should be considered as invalid
+in all cases.
 
-Setting the TS bias current to 80 uA fixes the temperature
-measurement and prevents charging from being incorrectly disabled.
-
-Add a DMI quirk to use the 80 uA TS bias current on the Haier
-HV103H.
-
-Fixes: 9bcf15f75cac ("iio: adc: axp288: Fix TS-pin handling")
-Fixes: 048058399f19 ("iio: adc: axp288: Override TS pin bias current for some models") # Add necessary infrastructure
-Signed-off-by: Vladyslav Ivashchenko <cactucatu4eckuu@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Fixes: 0e346b2cfa85 ("iio: adc: stm32-adc: add vrefint calibration support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260911161555.244F31F000FF@smtp.kernel.org/
 Cc: stable@vger.kernel.org
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: Adjusted context to preserve the existing `{}` DMI table terminator instead of `{ }`. ]
+[ sashal: Changed iio_device_release_direct() to iio_device_release_direct_mode(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/axp288_adc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iio/adc/stm32-adc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/axp288_adc.c b/drivers/iio/adc/axp288_adc.c
-index 8c3acc0cd7e99..9cfe2e8c8484a 100644
---- a/drivers/iio/adc/axp288_adc.c
-+++ b/drivers/iio/adc/axp288_adc.c
-@@ -207,6 +207,14 @@ static const struct dmi_system_id axp288_adc_ts_bias_override[] = {
- 		},
- 		.driver_data = (void *)(uintptr_t)AXP288_ADC_TS_BIAS_80UA,
- 	},
-+	{
-+		/* Haier HV103H */
-+		.matches = {
-+		  DMI_MATCH(DMI_SYS_VENDOR, "Haier"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "HV103H"),
-+		},
-+		.driver_data = (void *)(uintptr_t)AXP288_ADC_TS_BIAS_80UA,
-+	},
- 	{}
- };
+diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
+index db8dd129b0614..2513146639171 100644
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -1478,11 +1478,16 @@ static int stm32_adc_read_raw(struct iio_dev *indio_dev,
+ 			ret = stm32_adc_single_conv(indio_dev, chan, val);
+ 		else
+ 			ret = -EINVAL;
++		iio_device_release_direct_mode(indio_dev);
++		if (ret < 0)
++			return ret;
  
+-		if (mask == IIO_CHAN_INFO_PROCESSED)
++		if (mask == IIO_CHAN_INFO_PROCESSED) {
++			if (*val == 0)
++				return -EINVAL;
+ 			*val = STM32_ADC_VREFINT_VOLTAGE * adc->vrefint.vrefint_cal / *val;
++		}
+ 
+-		iio_device_release_direct_mode(indio_dev);
+ 		return ret;
+ 
+ 	case IIO_CHAN_INFO_SCALE:
 -- 
 2.53.0
 
