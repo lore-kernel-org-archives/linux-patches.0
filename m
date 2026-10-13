@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C181A47604A;
-	Tue, 13 Oct 2026 12:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF22243CEF3;
+	Tue, 13 Oct 2026 12:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893825; cv=none; b=tOX+OFmfX7qK/uNFmBJNwVIgPJp72wRTmVRf2TDziYQC61qBHxB0TtC7l7UiMCrTWEzJ46C7o7MQRVfebjiz4gKjR5yM0W9/FDfyPEjBY/0IVJ6sJA4XGtgowV4EyZ9E6eRFcnoFLVZZbh2xJikBuJUfacFSSPKZFap2Bb9y8xI=
+	t=1791893828; cv=none; b=uDvaA5ORSWckZhr3BoQuTNwOWVjp45dy/kmB8XK1wjDn74W3Rc2LLpLAyBzksSeZ0WCdiBYcoivo/CR+v2P4t8UsiW1VFGUWhIXDdc0xCVCx+sQWvQelyXzb6TnwT/mRjx8EOWGUKQpcq8cDNR+WMTASPYycHJfDUZ5Bji8NhfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893825; c=relaxed/simple;
-	bh=YXXGbSjKKgK0AgliHbwCoy2w8mIHwOJhwdI76a30kxg=;
+	s=arc-20240116; t=1791893828; c=relaxed/simple;
+	bh=+yF/xi6p1JDl33nJDzMekwUWXrXypdDunFPCRtBBQ5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlHI573acBw+ZSGQIwKDh/AsfB7KYg/NfuaKBk9/8U62keg5o7j3NUube/xqOw4jTDPCQrRP1MownDMuOW/HiNBXcSnL25KmLplZ9KvKbdo7h474tNpP1bBqs8QLnhZQrsJRfK+Ywe+TO/1izRq/uRMxy5m8WfYXNBO9E9JsR/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpGhboF0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5OQtPffVgY3m66vdQjtPi5dzzizmBMkXRHnhIS1gDvgVGv7gvDBX8Y+KN5LpxjmZ3sQvG1ynooE3VcAClpnejVVlcshl3H7GNBR1I6sfRVo5tcEYv+VRgm90PsedLfSAhlzPOFWtanj81taGZL5lOTohNB/x1Mnrd+B2okbHB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkM/t3/t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpGhboF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D61D1F000FF;
-	Tue, 13 Oct 2026 12:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkM/t3/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE771F000FF;
+	Tue, 13 Oct 2026 12:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893824;
-	bh=g4Bwwof32R0ixRcUU07tXkB251LgZMUDNDuyY5YKpJY=;
+	s=korg; t=1791893827;
+	bh=YYSgV4Jj78rvBGqMy7N0H3qqgM7D2YgXaWM4Xzh/GFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpGhboF0SkOKF0sWkg9aerqPkJEQLDKCFP9QOkVn+n3DMWEZRb91RYwaLXWh3CtOD
-	 +CTmhIrUC4289t8lq9njNn4PhyHh/pdcMus4+06OMTEWregdN+vxE6B/H4R+9kJSaR
-	 uYJCb1IbuuDnRJ/xE4cFDTdAeEg5yfi+poPMFkt4=
+	b=jkM/t3/tL51erN/38Uh963RL8DSy3iwUKxPZsz43NCJp3JbKCnt4Ri9GcYcJNnn2G
+	 VR/9hU6BXjNFpBaGlB/SP+r3wvGOiYKod0eev1VeVnne4kxeZ/wZt3y24/Zl6qbQKk
+	 j4CUFqJFS4StfFvj+6OExrThzcmdn8oO3CP913X4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 356/621] soc: xilinx: Fix race condition in event registration
-Date: Tue, 13 Oct 2026 13:35:51 +0200
-Message-ID: <20261013112929.297491727@linuxfoundation.org>
+Subject: [PATCH 6.18 357/621] Bluetooth: hci_sync: hold conn in hci_connect_acl/le_sync() callbacks
+Date: Tue, 13 Oct 2026 13:35:52 +0200
+Message-ID: <20261013112929.320292479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,108 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit fb445935338405110baca8f541a2df3b4cb8d712 ]
+[ Upstream commit 2f5d635ad5906b0235bc0c870e8beba3116e1e98 ]
 
-The zynqmp_power driver registers handlers for suspend and subsystem
-restart events using register_event(). However, the work structures
-(zynqmp_pm_init_suspend_work and zynqmp_pm_init_restart_work) used by
-these handlers were allocated and initialized after the registration
-call.
+There is theoretical UAF if the conn is freed while the hci_sync task
+is running.
 
-This created a race window where, if the firmware triggered an event
-immediately after registration but before allocation, the callback
-(suspend_event_callback or subsystem_restart_event_callback) would
-dereference a NULL pointer in work_pending(), leading to a crash.
+Hold refcount to avoid that.
 
-Fix this by allocating and initializing the work structures before
-registering the events.
-
-Fixes: fcf544ac6439 ("soc: xilinx: Add cb event for subsystem restart")
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20260320060306.1540928-1-ptsm@linux.microsoft.com
+Fixes: 881559af5f5c ("Bluetooth: hci_sync: Attempt to dequeue connection attempt")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/zynqmp_power.c | 43 ++++++++++++-------------------
- 1 file changed, 17 insertions(+), 26 deletions(-)
+ net/bluetooth/hci_sync.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
-index 26cbb52049d8d..e5d5c4f8cbdbd 100644
---- a/drivers/soc/xilinx/zynqmp_power.c
-+++ b/drivers/soc/xilinx/zynqmp_power.c
-@@ -303,18 +303,18 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 	 * is not available to use) or -ENODEV(Xilinx Event Manager not compiled),
- 	 * then use ipi-mailbox or interrupt method.
- 	 */
-+	zynqmp_pm_init_suspend_work = devm_kzalloc(&pdev->dev,
-+						   sizeof(struct zynqmp_pm_work_struct),
-+						   GFP_KERNEL);
-+	if (!zynqmp_pm_init_suspend_work)
-+		return -ENOMEM;
-+
-+	INIT_WORK(&zynqmp_pm_init_suspend_work->callback_work,
-+		  zynqmp_pm_init_suspend_work_fn);
-+
- 	ret = register_event(&pdev->dev, PM_INIT_SUSPEND_CB, 0, 0, false,
- 			     suspend_event_callback);
- 	if (!ret) {
--		zynqmp_pm_init_suspend_work = devm_kzalloc(&pdev->dev,
--							   sizeof(struct zynqmp_pm_work_struct),
--							   GFP_KERNEL);
--		if (!zynqmp_pm_init_suspend_work)
--			return -ENOMEM;
--
--		INIT_WORK(&zynqmp_pm_init_suspend_work->callback_work,
--			  zynqmp_pm_init_suspend_work_fn);
--
- 		ret = zynqmp_pm_get_family_info(&pm_family_code);
- 		if (ret < 0)
- 			return ret;
-@@ -326,14 +326,6 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 		else
- 			return -ENODEV;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index b7ac42d8f79f7..de329178900e8 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -7140,12 +7140,23 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 	return err;
+ }
  
--		ret = register_event(&pdev->dev, PM_NOTIFY_CB, node_id, EVENT_SUBSYSTEM_RESTART,
--				     false, subsystem_restart_event_callback);
--		if (ret) {
--			dev_err(&pdev->dev, "Failed to Register with Xilinx Event manager %d\n",
--				ret);
--			return ret;
--		}
--
- 		zynqmp_pm_init_restart_work = devm_kzalloc(&pdev->dev,
- 							   sizeof(struct zynqmp_pm_work_struct),
- 							   GFP_KERNEL);
-@@ -342,19 +334,18 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 
- 		INIT_WORK(&zynqmp_pm_init_restart_work->callback_work,
- 			  zynqmp_pm_subsystem_restart_work_fn);
++static void hci_acl_create_conn_sync_complete(struct hci_dev *hdev, void *data,
++					      int err)
++{
++	struct hci_conn *conn = data;
 +
-+		ret = register_event(&pdev->dev, PM_NOTIFY_CB, node_id, EVENT_SUBSYSTEM_RESTART,
-+				     false, subsystem_restart_event_callback);
-+		if (ret) {
-+			dev_err(&pdev->dev, "Failed to Register with Xilinx Event manager %d\n",
-+				ret);
-+			return ret;
-+		}
- 	} else if (ret != -EACCES && ret != -ENODEV) {
- 		dev_err(&pdev->dev, "Failed to Register with Xilinx Event manager %d\n", ret);
- 		return ret;
- 	} else if (of_property_present(pdev->dev.of_node, "mboxes")) {
--		zynqmp_pm_init_suspend_work =
--			devm_kzalloc(&pdev->dev,
--				     sizeof(struct zynqmp_pm_work_struct),
--				     GFP_KERNEL);
--		if (!zynqmp_pm_init_suspend_work)
--			return -ENOMEM;
--
--		INIT_WORK(&zynqmp_pm_init_suspend_work->callback_work,
--			  zynqmp_pm_init_suspend_work_fn);
- 		client = devm_kzalloc(&pdev->dev, sizeof(*client), GFP_KERNEL);
- 		if (!client)
- 			return -ENOMEM;
++	hci_conn_put(conn);
++}
++
+ int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
+-				      NULL);
++	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync,
++				      hci_conn_get(conn),
++				      hci_acl_create_conn_sync_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+@@ -7156,36 +7167,41 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
+ 	if (err == -ECANCELED)
+-		return;
++		goto done;
+ 
+ 	hci_dev_lock(hdev);
+ 
+ 	if (!hci_conn_valid(hdev, conn))
+-		goto done;
++		goto unlock;
+ 
+ 	if (!err) {
+ 		hci_connect_le_scan_cleanup(conn, 0x00);
+-		goto done;
++		goto unlock;
+ 	}
+ 
+ 	/* Check if connection is still pending */
+ 	if (conn != hci_lookup_le_connect(hdev))
+-		goto done;
++		goto unlock;
+ 
+ 	/* Flush to make sure we send create conn cancel command if needed */
+ 	flush_delayed_work(&conn->le_conn_timeout);
+ 	hci_conn_failed(conn, bt_status(err));
+ 
+-done:
++unlock:
+ 	hci_dev_unlock(hdev);
++done:
++	hci_conn_put(conn);
+ }
+ 
+ int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
++	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync,
++				      hci_conn_get(conn),
+ 				      create_le_conn_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
 -- 
 2.53.0
 
