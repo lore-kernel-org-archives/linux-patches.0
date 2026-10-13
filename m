@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DD323643F;
-	Tue, 13 Oct 2026 12:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE88F282F2A;
+	Tue, 13 Oct 2026 12:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894631; cv=none; b=Hiz81uF/Tw294nUChWCB2vMEWDYGw/b8r3m3Ca1FBAi3sOvxGlXN0nDfgWVRrVk6G25P1vKHC/pLajgvOsc64Lr/qLAs+9Rpur1oJ8NNZoElU7lWdcMEjClxq8KRjokD+PXF+yez+Xbf5Si8B6obfntLjlx3r6mmuPjsjSUigBs=
+	t=1791894634; cv=none; b=Lt95aE6faCVziyx5mpNkNMxUxYEXBzK3/rWGFcPVSJARN7sQT42RMohsAEDpWtENuV/6iX+MHFvy1ypxX9eQ8OpJA6rvW9isXs63jDeiQfKLMedbNj7B/LI0l67zdsUFUV/zkYxe7UnJ1br2SDsX8SFj3E/b6otI+KwxgtFiGgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894631; c=relaxed/simple;
-	bh=sN8ILVqE5+/wk2q8gd9QxhHjxpiHI/foQswAEst3hgU=;
+	s=arc-20240116; t=1791894634; c=relaxed/simple;
+	bh=+yqNQRbKSLJTOdgbVGC6X6f+nMoqRswqItuE2y7IZG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TyKpL/x87ZXzeMYDlIvYVMht9/U2eSGfxW5b2xpuYRobBWNvqiBs0qu/CoNon7QHbc4u4/oXTBFyhH7t1Lms5KBvVe1twhd0UlZBbWCf5qJEhdOOGksRc9izkqc/oI177cXAnn8o+8FOI2K4yl9qZ9Y1BuSwuZpx/GC4RNDUq6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OfMxmcmR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYNlIKxAnGfJYhtHSb7cpe52vygEM271YZqyqvMFVDPHDpG4P0kYGH9+lpI0esps+q0JDaskygE85jiNgwCRRqkZ7dv/QCLlCOzsi4Lw3Nlilv62YcsMUgpXAGtO3owhOknpFxX21CoGzBEox10zcp+e9tUZc68qoPGEjh27WA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqpXvOAX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfMxmcmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2A11F000FF;
-	Tue, 13 Oct 2026 12:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqpXvOAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F761F000FF;
+	Tue, 13 Oct 2026 12:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894630;
-	bh=yxVx6+WW5mjS4QQNvqsK7RjzcCEvS7y4wtikAAihSCc=;
+	s=korg; t=1791894632;
+	bh=doduISBU8cN+F7mNlmTX1yDHzgNN14yso9/pA2FkXmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OfMxmcmRPFGUMUnuojjRL7abZt28v8cWZkfI1CySWCo0EfQsvCyZMZx/TGeEtVgSU
-	 Xyhd7nDfIl781PbUlvlc6L56uLvr5B410jcJrmTQO9cXL7Z8EwO2dt+dPEej8d2vyk
-	 ULREcmkqSn/It8YDSU42zp/SG8uQgURMm1p7p+VY=
+	b=jqpXvOAX5gGuFnr8kSaCIu2yGFxondcx57ysvHaD1GEzFtpUgKjIbODXlipo/8Ybw
+	 aaUDl96qw/v9kljAkFH1ECT+bfbcTPiIMPBHTsCT7lPyOPBVK/fjuTldf30sX8SxM1
+	 QSKFgWvkrRUFQ09EWXj4gTkWJcuiQDtKblJiwXqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haishuang Yan <yanhaishuang@cmss.chinamobile.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 582/621] devlink: fix devlink_rel reference leak when notify work is pending
-Date: Tue, 13 Oct 2026 13:39:37 +0200
-Message-ID: <20261013112934.616259760@linuxfoundation.org>
+Subject: [PATCH 6.18 583/621] net/sched: cls_route: reject change with no routing attribute
+Date: Tue, 13 Oct 2026 13:39:38 +0200
+Message-ID: <20261013112934.639206000@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,69 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haishuang Yan <yanhaishuang@cmss.chinamobile.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit c5381ae1cd1481cc431c2bd79460472c6f1d3ce3 ]
+[ Upstream commit b72e025ac556984766392001e74b7587e145bcd0 ]
 
-devlink_rel_nested_in_notify_work_schedule() takes a reference on the
-devlink_rel for the notify work and then queues the work, ignoring the
-return value of schedule_delayed_work(). If the work is already pending,
-nothing new is queued, the work runs only once and drops only one
-reference, so the extra one is leaked together with the devlink_rel and
-its index in devlink_rels.
+route4_change on a filter change that supplies no routing attribute
+at all (no to/from/iif) reaches route4_set_parms with fold set, so the
+handle-mismatch check -- which only fires when creating -- is skipped.
+nhandle is built as the all-wildcard bucket (0x8000 | 0xFFFF << 16) and
+the filter is rekeyed to 0xFFFF8000, so the handle userspace already
+stored no longer addresses the filter. (The netlink reply carries the
+new handle; what goes stale is the handle the caller holds.)
 
-This is easy to hit. devl_register() of a nested instance queues the
-work, and if the instance is unregistered before the work has run,
-devlink_rel_put() queues it again while it is still pending. The work
-also keeps rescheduling itself for as long as the parent devlink lock
-cannot be taken, which widens the window. Registering and unregistering
-a nested devlink instance 100 times while holding the parent lock leaks
-all 100 devlink_rel objects.
+The rekey actually misclassifies the packets. The new handle's from_hash
+is the wildcard chain (route4_hash_wild), whose filters route4_classify
+applies without any id/iif comparison, and its bucket (256) is reached
+by every packet through the h < 256 restart. A filter that matched only
+a specific realm therefore becomes an unconditional catch-all that applies
+its classid and actions to all otherwise-unmatched traffic.
 
-The reschedule path in devlink_rel_nested_in_notify_work() has the same
-problem: if the work was queued again while it was running, the
-reference it holds is never dropped.
+Reject a change that would rekey the filter this way, with the
+routing-attributes-required error. A change that names at least one of
+to/from/iif, and an in-place replace that keeps the routing identity via
+a supplied attribute, are unaffected. A change of a filter that already
+sits at the wildcard handle is a metadata-only update and remains valid,
+so only a change that actually moves the handle is rejected.
 
-Drop the reference in both places when the work was already pending.
-The pending work holds its own reference, so this can not be the last
-one.
+This is a follow-up to commit 41e85e54e564 ("net/sched: cls_route: Fix
+in-place replace"); this patch closes the no-routing-attribute variant
+that the parent series did not address.
 
-Fixes: c137743bce02 ("devlink: introduce object and nested devlink relationship infra")
-Signed-off-by: Haishuang Yan <yanhaishuang@cmss.chinamobile.com>
+Conditions to recreate the bug:
+  tc qdisc add dev lo clsact
+  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
+  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
+      route classid 1:2
+  tc filter show dev lo ingress   # handle became 0xffff8000; iproute2's
+                                  # stored 0x10001 no longer addresses it
+
+A change of a filter already at the wildcard handle, e.g. one created by
+"tc filter add dev lo ingress protocol ip pref 100 route classid 1:1"
+(iproute2 defaults the handle to 0xffff8000), stays a valid metadata-only
+update.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260907192133.2639067-1-victor@mojatatu.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261001042232.222987-1-yanhaishuang@cmss.chinamobile.com
+Link: https://patch.msgid.link/QDISC-0JB3.v1.20260929143022@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/sched/cls_route.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/devlink/core.c b/net/devlink/core.c
-index d8f875b229897..0a31f28c8128c 100644
---- a/net/devlink/core.c
-+++ b/net/devlink/core.c
-@@ -96,13 +96,19 @@ static void devlink_rel_nested_in_notify_work(struct work_struct *work)
- 	return;
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index ac32c083f6335..1a41237d07aac 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -434,6 +434,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
+ 		nhandle |= handle & 0x7F00;
  
- reschedule_work:
--	schedule_delayed_work(&rel->nested_in.notify_work, 1);
-+	/* The work may have been queued again meanwhile, which took its own
-+	 * reference. Drop ours in that case.
-+	 */
-+	if (!schedule_delayed_work(&rel->nested_in.notify_work, 1))
-+		__devlink_rel_put(rel);
- }
- 
- static void devlink_rel_nested_in_notify_work_schedule(struct devlink_rel *rel)
- {
- 	__devlink_rel_get(rel);
--	schedule_delayed_work(&rel->nested_in.notify_work, 0);
-+	/* The pending work holds a reference already, drop the new one. */
-+	if (!schedule_delayed_work(&rel->nested_in.notify_work, 0))
-+		__devlink_rel_put(rel);
- }
- 
- static struct devlink_rel *devlink_rel_alloc(void)
++	if (fold && !tb[TCA_ROUTE4_TO] && !tb[TCA_ROUTE4_FROM] &&
++	    !tb[TCA_ROUTE4_IIF] && nhandle != fold->handle) {
++		NL_SET_ERR_MSG(extack, "Routing attributes required");
++		return -EINVAL;
++	}
++
+ 	if (handle && !fold && nhandle != handle) {
+ 		NL_SET_ERR_MSG_FMT(extack,
+ 				   "Handle mismatch constructed: %x (expected: %x)",
 -- 
 2.53.0
 
