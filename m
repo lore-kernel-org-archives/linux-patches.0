@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7D94EF15A;
-	Tue, 13 Oct 2026 12:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7882031353C;
+	Tue, 13 Oct 2026 12:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894604; cv=none; b=jI8IZT88CLH7EJ0pAg45+XPgMnwhJQZms0vSNwlQtlYZD6Xw9ViO2viZaqpvxFLm9e/iumiR+9pEpAlERM1SOCyHoFQKV1JrbS++7Rmxi1+kkAhGuKpYQLTOVgjEKmOTiSqQst7tVeiF+x2eStM/o2jUY95zNTYuu8+syUNBdSU=
+	t=1791894607; cv=none; b=B/fA3LWYo680YD8adQmTrytVpRfkZUqBoNao4hNXf/TearZMP3Talnr3ooZEfssenSGBAwgIp1BUSDodjxrfjxL92Ok7IsfVaxRD8O7MDn9smtsUhuFuiBnUIhJHs6Wtqn0YnuP1aus9CE5b8joYu4r6X6oh/4m9qPVEjI1sIBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894604; c=relaxed/simple;
-	bh=MeT4p62Vg3W5rEOMLU5gGEQ/qWtpbUn23PWoxTiRh9A=;
+	s=arc-20240116; t=1791894607; c=relaxed/simple;
+	bh=ypcOqb7HpkBdpJHHzH73LKwAahVm7M4VOqk0JSmzvK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/XEsjAVbCkuDY1zq9eQOxrDT+t8ymUimiQpuEcoQfbWPuf3xifAcVlTxulVazat1CO0+jGlbKVd7ZcTt0uf1CNTq8cFuoDa6T5UgoFFQ6fr0rGL4DLXuNQM/7xBuK05bmPJ9e79QmuvvIaMsD0pspKkzCVCTYJh3LbGyjN/AXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KL3PmDik; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EnX9dKWdrwZtRvAR3ZoNgbcDiU/oghoIfgIhIqfQEDVkrlZB7K+WjbDbMPp7n48s3oVupvXwS9h2OVkwpvjs/xPOMWocGb0TcI1T8fOj2DwHA/+oD7bY7D/09Q7kVdjrogQJiGvi75QOK0iaVu/z552gtW1IDaFf1DoeO+208Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkKmHP4c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KL3PmDik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B871F00893;
-	Tue, 13 Oct 2026 12:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkKmHP4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECA51F00893;
+	Tue, 13 Oct 2026 12:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894603;
-	bh=C86D0YeBf+bWlF8ovWGmDGxZVo9faZXFQYyj64qSZ6s=;
+	s=korg; t=1791894606;
+	bh=VarfkDE1m6uIwapMB+X3XpiFokRiLIbxbz8TEd1Bt08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KL3PmDikS/2s9m/RH0h+W6EMI42as2VccegFKpIgz0iFeqIfrwGs80HYafxmL6BEp
-	 FHOWNwnTPNpAgb6/MXYy4OzVVHlcxvTFPIwWfhx6up2Sh8ZuNjNvqz1BahVF+c2A+I
-	 Yw6KOZK0LM8OuPL4gLwZXQnRyN7UZVEOOIfq0qzs=
+	b=VkKmHP4cTxbrFBEjAdui/IbQjjw+uikP0KC9g8vEmzAgsNJUF9v2fEwSlY0G3QlhH
+	 MmRgJX9KrPaHHqg9+FqVZOW+Fs9fcpL1jBXyfRoyh2l9Irs0TEx8nZh7E9FzAjWbdz
+	 mXCVPNIfqwvKt8itZ3ZnNtw5z7aeDOGApGPLWqLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.18 615/621] s390/zcrypt: Pad trailing CCA or EP11 message with zeros
-Date: Tue, 13 Oct 2026 13:40:10 +0200
-Message-ID: <20261013112935.394530370@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 580/621] flow_dissector: avoid u16 truncation of skb->len when computing thoff
+Date: Tue, 13 Oct 2026 13:39:35 +0200
+Message-ID: <20261013112934.568823285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,55 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-commit eb363254472493e3458156fc11fd56dca92f4333 upstream.
+[ Upstream commit 99bda1ecbd56905f8bd934b9cdccd3bd251192b1 ]
 
-The both functions xcrb_msg_to_type6cprb_msgx() and
-xcrb_msg_to_type6_ep11cprb_msgx() copy the user space message into a
-kernel buffer based on the message length. But on further processing
-the message is supposed to be 4 byte length adjusted. Thus up to 3
-bytes of uninitialized kernel memory are forwarded to further
-processing steps and may unwanted expose kernel memory to the crypto
-card firmware.
+__skb_flow_dissect() computes key_control->thoff using:
 
-This patch contains code to pad the gap between user space copied
-message and message buffer length sent down to further processing of
-the CCA or EP11 message to zeros.
+  key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
 
-Fixes: e2c6d91eb8b1 ("s390/zcrypt: Rework domain processing within zcrypt device driver")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 7.1+
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+min_t(u16, ...) casts both arguments to u16 before comparing them.
+Whenever skb->len (or hlen) modulo 65536 is smaller than nhoff, the
+truncated length wins and thoff is set to a bogus small value, even
+when the dissection succeeded. For example, an IPv4/TCP frame with
+skb->len == 65540 and nhoff == 34 gets thoff == 4, so callers such as
+skb_probe_transport_header() point the transport header inside the
+Ethernet header.
+
+Such skbs are not exotic:
+- At the time of commit d0c081b49137 ("flow_dissector: properly cap
+  thoff field"), AF_PACKET with PACKET_VNET_HDR could already build GSO
+  skbs larger than 64KB (MTU checks are skipped for GSO, and
+  alloc_skb_with_frags() accepted up to MAX_SKB_FRAGS (17) order-0
+  pages on top of the linear part).
+- BIG TCP now makes skbs larger than 64KB common.
+- The following patch makes tun_get_user() dissect IFF_TAP frames
+  before eth_type_trans() pulls the Ethernet header, so a GSO frame
+  carrying a 65522..65535 byte L3 packet will be dissected with
+  skb->len in [65536, 65549].
+
+Compare as u32 instead. If the resulting offset cannot be represented
+in the u16 key_control->thoff, cap it to U16_MAX and report the
+dissection as failed rather than silently returning a wrong transport
+offset. thoff is still set on failure, as some callers (such as
+eth_get_headlen()) use it regardless of the return value.
+
+Fixes: d0c081b49137 ("flow_dissector: properly cap thoff field")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261001191140.2818991-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/flow_dissector.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -399,6 +399,10 @@ static int xcrb_msg_to_type6cprb_msgx(bo
- 			     xcrb->request_control_blk_addr,
- 			     xcrb->request_control_blk_length))
- 		return -EFAULT;
-+	/* pad tail with 0 up to req_cblen */
-+	if (xcrb->request_control_blk_length < req_cblen)
-+		memset(msg->userdata + xcrb->request_control_blk_length,
-+		       0, req_cblen - xcrb->request_control_blk_length);
- 	/* copy subfunction code into AP msg type 6 function code field */
- 	if (msg->cprbx.cprb_len > req_cblen - sizeof(msg->hdr.function_code))
- 		return -EINVAL;
-@@ -544,6 +548,10 @@ static int xcrb_msg_to_type6_ep11cprb_ms
- 	if (z_copy_from_user(userspace, msg->userdata,
- 			     (char __force __user *)xcrb->req, xcrb->req_len))
- 		return -EFAULT;
-+	/* pad tail with 0 up to req_len */
-+	if (xcrb->req_len < req_len)
-+		memset(msg->userdata + xcrb->req_len, 0,
-+		       req_len - xcrb->req_len);
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 8aa4f9b4df810..27d8a01bc9230 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1071,6 +1071,7 @@ bool __skb_flow_dissect(const struct net *net,
+ 	int mpls_lse = 0;
+ 	int num_hdrs = 0;
+ 	u8 ip_proto = 0;
++	u32 thoff;
+ 	bool ret;
  
- 	pld = msg->userdata + sizeof(struct ep11_cprb);
- 	pld_len = msg->cprbx.payload_len;
+ 	if (!data) {
+@@ -1692,7 +1693,13 @@ bool __skb_flow_dissect(const struct net *net,
+ 	ret = true;
+ 
+ out:
+-	key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
++	thoff = min_t(u32, nhoff, skb ? skb->len : hlen);
++	if (unlikely(thoff > U16_MAX)) {
++		/* Cannot be represented in key_control->thoff. */
++		thoff = U16_MAX;
++		ret = false;
++	}
++	key_control->thoff = thoff;
+ 	key_basic->n_proto = proto;
+ 	key_basic->ip_proto = ip_proto;
+ 
+-- 
+2.53.0
+
 
 
