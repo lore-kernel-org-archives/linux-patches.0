@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C241348C4B;
-	Tue, 13 Oct 2026 12:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E10F348C4B;
+	Tue, 13 Oct 2026 12:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895659; cv=none; b=eAT5jVZszq6oFbwHeNhu47SlcCJsl95o86EHNRGNMGOcfY7fEsI8cKFgpqSzDEilrQVsZhh4z87qDn3zLwNMfWYVqHAw366wgiAz4kCwKF7BcfsnmOMyCFe7HN/8ggJae/E2H23RULbT4jxdAN2uN1HVvwVoyec+C1NxagDM4dw=
+	t=1791895662; cv=none; b=ksYlbUqkIB1GBBlsjjFTEvUJvCbOEpzaLYTpjabd+3FXe/IbnQWmori31I5uqKp56UWS9UNDVQmpFEOUDYCKrOABkYxRXlBfdmfIuIawnGV3HFr2LapC0yIvJ8qgglUw0ZFu3OS/XL1aRl1a/05Il9Rmp+USfHq3h0MWgrt7qdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895659; c=relaxed/simple;
-	bh=S6lN8x+kgK2a4Xbxcu5a0+K3xjZpWuh0AIxlocr2FdI=;
+	s=arc-20240116; t=1791895662; c=relaxed/simple;
+	bh=Onvs2IuvEzVMPJTKt25igScIxPkUdzgASkqceVz2/70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ely5PA0moFVLcsQej2o7vlPwJ8Ezt7BjhYnPy9Mxl1Dh2s7xM9mavC6XWjyxNZvFFgqutnqz4yqDVe9FQ0JvarsIzmf8Z/uNokLj4jtJstcn329TgE/At7lgjhNTpavLSpGymT/i0yaiDFHNbsqJOemPdTN53sBBsvK9N07LjQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejnm92RF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzfn3fhnPhvMcbvy3u7VN9Awk5aU3I3kZvRQksOQVq1Z2fGONygQvYFjJTim74OxrmMFz3lkw9113GGlqJuEVI7rRd2pkLWIPuzeDOpoNGtgSnNLPefi9CStBGP+jH9iCJDXUPdHHSwhrIWjVpB7ESrSpcffwAu0f2o1ohiARE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulWB9bqY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejnm92RF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E910F1F000FF;
-	Tue, 13 Oct 2026 12:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulWB9bqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BFE1F000FF;
+	Tue, 13 Oct 2026 12:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895658;
-	bh=jCorcF9aSmCa1azo4jJams7Ab9BT3ZSE38yNXMs1qI8=;
+	s=korg; t=1791895661;
+	bh=5l8ty9h2HGinmIQwvPChIKcYh4qEl0lpNLuV5z2i6FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejnm92RFYR3BMrRpLTDlb3mD6pEXeGugrqH8qio5Oer4EnzLsyc0Dl+hQJQ0A42IB
-	 KC7N2IQrQHI3joEOXPRowcbbNyWongB0l35ojTLQV59FARDMI/uhZ56I0XDS8qVTC1
-	 jWiVK0e3F7YwTBeOOLGCQvbxxu/+i1G/eleBwIQ8=
+	b=ulWB9bqY6hVqTSEgXXHOPiFHQFqzfYArH0Zw3+CxgN20IGeiwE6HJmqlQoMCfIFCo
+	 2YtGUdTbdHcE0PRMuEK6dTAhKgX+5RTG9za0W/+P6ljWRPDqWNfgNddSu3r5cmeS0t
+	 u94ievkIgPrm0UZjHFVWEzLYHuVmpGDfUzfKiHHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 322/497] net: mana: Skip WQ object destruction for uninitialized RXQ
-Date: Tue, 13 Oct 2026 13:38:09 +0200
-Message-ID: <20261013112915.546077036@linuxfoundation.org>
+Subject: [PATCH 6.12 349/497] mm/damon/core: fix unconditionally skip last region
+Date: Tue, 13 Oct 2026 13:38:36 +0200
+Message-ID: <20261013112916.189301261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,48 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
-[ Upstream commit 2a1c691182823a5c149d502ac153e249ee697b4a ]
+[ Upstream commit b3723b596b548c837a766aae3553c14a7b15af2b ]
 
-In mana_destroy_rxq(), mana_destroy_wq_obj() is called unconditionally
-even when the WQ object was never created (rxobj is still
-INVALID_MANA_HANDLE). When mana_create_rxq() fails before
-mana_create_wq_obj() succeeds, the error path calls mana_destroy_rxq()
-which sends a bogus destroy command to the hardware:
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can be
+skipped even when it has not been processed.
 
-    mana 7870:00:00.0: HWC: Failed hw_channel req: 0x1d
-    mana 7870:00:00.0: Failed to send mana message: -71, 0x1d
-    mana 7870:00:00.0 eth7: Failed to destroy WQ object: -71
+Example:
 
-Guard mana_destroy_wq_obj() with an INVALID_MANA_HANDLE check so that
-mana_destroy_rxq() is safe to call at any stage of RXQ initialization.
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 100 bytes per window.
+    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+       addr}_from is saved at (Target, 100).
+    4. Window 2: The loop reaches R2.  Because R2 is
+       damon_last_region(t), the old code unconditionally returns true,
+       skipping R2 entirely and resetting the charge_{target,addr}_from.
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Link: https://patch.msgid.link/20260430035935.1859220-3-dipayanroy@linux.microsoft.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+    Result: R2 is permanently skipped even though it has never been
+    processed.
+
+However, it is important to note that this is a very minor issue.  This is
+because it is triggered only when the previous window saved/kept
+charge_{target,addr}_from, and in the next window, all regions except the
+last region were skipped by damos_skip_charged_region().
+
+Fix this by only resetting the charge_{target,addr}_from when last region
+is reached, only skipping when it is applied or cannot split.
+
+Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # v5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 0da960bc11de7..46726f743d322 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2047,7 +2047,8 @@ static void mana_destroy_rxq(struct mana_port_context *apc,
- 	if (xdp_rxq_info_is_reg(&rxq->xdp_rxq))
- 		xdp_rxq_info_unreg(&rxq->xdp_rxq);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4c96582d827f8..81d44e41de210 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1323,36 +1323,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ {
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
++	bool skip = false;
  
--	mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
-+	if (rxq->rxobj != INVALID_MANA_HANDLE)
-+		mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
+ 	/* Skip previously charged regions */
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (r == damon_last_region(t)) {
+-			quota->charge_target_from = NULL;
+-			quota->charge_addr_from = 0;
+-			return true;
+-		}
+ 		if (quota->charge_addr_from &&
+-				r->ar.end <= quota->charge_addr_from)
+-			return true;
++				r->ar.end <= quota->charge_addr_from) {
++			skip = true;
++			goto out;
++		}
  
- 	mana_deinit_cq(apc, &rxq->rx_cq);
+ 		if (quota->charge_addr_from && r->ar.start <
+ 				quota->charge_addr_from) {
+ 			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
+ 					r->ar.start, DAMON_MIN_REGION);
+ 			if (!sz_to_skip) {
+-				if (damon_sz_region(r) <= DAMON_MIN_REGION)
+-					return true;
++				if (damon_sz_region(r) <= DAMON_MIN_REGION) {
++					skip = true;
++					goto out;
++				}
+ 				sz_to_skip = DAMON_MIN_REGION;
+ 			}
+ 			damon_split_region_at(t, r, sz_to_skip);
+-			return true;
++			skip = true;
+ 		}
++	}
++out:
++	if (r == damon_last_region(t)) {
+ 		quota->charge_target_from = NULL;
+ 		quota->charge_addr_from = 0;
+ 	}
+-	return false;
++	return skip;
+ }
  
+ static void damos_update_stat(struct damos *s,
 -- 
 2.53.0
 
