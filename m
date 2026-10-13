@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71614EB863;
-	Tue, 13 Oct 2026 12:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941BE3B059F;
+	Tue, 13 Oct 2026 12:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894781; cv=none; b=jZTeCOLqBmhuBl3rmMCbfsHy5BPUopcfDlmg7IB4/kdHyiQI/wc/xxQV4FQ8SyhAi86m7TESYXIQoZ29TVn39yK+dOFOLdaONqlgaYwhFtH8Ox3xwnI2BvVxy4kDnY+q0oY5ZzRRWDfs7aBdk2A9heAoiajBBYciSJ8SAFQLnUc=
+	t=1791894784; cv=none; b=FjGKDoy87OJqDvPgR2V0BeewBh7UL/9BN53I4HBm+fzR4rsE3dE8wm2JTeW/UrAnO3OXkFy5I26w+8X6FYxb/ZiUilERV1ncIqAtig4mQEi3LnCMQL7+PxWfDt079HqlOkDrHe//iyeHatM77EBEBFfyAVsxnBMTCzZzR5F5ipI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894781; c=relaxed/simple;
-	bh=oZrS6dWhplmovHvRirRn99vfjHIcXx6C59JEimTwc5U=;
+	s=arc-20240116; t=1791894784; c=relaxed/simple;
+	bh=aqJUyaK0jmAhL4KO8zRgxKu0bgVpYaXaxiHITzyPux0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBJmWzfwE3TAdwkV1quTeAz0WFulvnYBPnI/sk/pzOgS/X8k5hV7RbqKzSaJJaDO0xLYQhnwgBl0/Ds6lhq/yjiSHfPu7drvHDrE4iV+asm+xCeAlZIjCBHNCEb5Y3njCHvVomqanmADNjBiHqe/CBRd/0abIixcjKXHtK8XVgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCZba7+y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F215BgmmRZgnWjNc8YQGoJWjFeZ4mOeI3qPOby68b+7UemiDkkUkRa/Xx0FyiYzB752St1b8QBE1NOwLH42eg5XSuBLX4YKKTt7xfnimQYKE2WCPpcQfeWIC+oE6xOp98+TudrvDYbcBHMA4OXHL9DspFqaS8ur/gTo4LH+fUZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrVz1D0x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCZba7+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014B51F000FF;
-	Tue, 13 Oct 2026 12:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrVz1D0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DFA1F000FF;
+	Tue, 13 Oct 2026 12:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894780;
-	bh=jMWW1BrzJKLOgjLJYDfyQPMAeO5Q3ZXvdkiyq4Slq2I=;
+	s=korg; t=1791894783;
+	bh=usA3HopQWKiVrGVQKCJoN57eMe9Wt1wLDN5sPVGOt4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lCZba7+yfKyjAIiKoF7s6G8RoDfJuwB34Yc7LVnK0NA2a5Fw1kDP6hZ1wdK7oUeEz
-	 54eJLe17HNcoIxf93aKbl0gMtxbf02UecpybUuhGpPBEafQkJizC53ruz0zer02hTK
-	 oTrHg07Ff0lQp+MYhkVReVr4kFrA3DLq/lcrFVJA=
+	b=TrVz1D0x8UtmFvpV9Ry+HqNzDiMVvUpKqNS59kNbvKTsp+GETVUccW+xGZ2/m1IUZ
+	 fHptA17ECntl/4ji7IWYBcnx4k3bdianBysdS0dKVJftm7O7qWOGtGIfdNs/X46iZB
+	 1cnmzvwxjBOChNo8k3iZ8msWBuHHgHWbrdW44VU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/497] ASoC: tegra: Fix ASRC Stream6 input threshold control
-Date: Tue, 13 Oct 2026 13:33:42 +0200
-Message-ID: <20261013112909.192999748@linuxfoundation.org>
+Subject: [PATCH 6.12 056/497] wifi: ath11k: reset ar->num_stations on hardware start
+Date: Tue, 13 Oct 2026 13:33:43 +0200
+Message-ID: <20261013112909.217000950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,40 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 75fc8a3ee5aee72f2fea3b6436170fae175f7f19 ]
+[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
 
-The Stream6 Input Threshold control points at stream index 4, which is
-already used by Stream5. The threshold get and put callbacks derive the
-lane ID from the register offset, so the duplicate index makes Stream6
-operate on lane 4 and leaves lane 5 inaccessible from userspace.
+When (multiple) hw restart occurs, we end up in a situation where we
+cannot accept new stations / mesh peers. This seems to be the
+'num_stations' in 'struct ath11k' that did not get reset properly in
+this case. In ath11k_mac_op_start(), it was indeed the only accounting var
+that did not get reset so let's clear it too.
 
-Use stream index 5 for Stream6.
+This avoids problems like those:
 
-Fixes: a2df8c2d5b36 ("ASoC: tegra: Add Tegra186 based ASRC driver")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260921085704.1248920-2-sheetal@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
+	[1248828.088115] Call trace:
+	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
+	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
+	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
+	[1248828.088127]  process_one_work+0x178/0x3c0
+	[1248828.088130]  worker_thread+0x280/0x440
+	[1248828.088133]  kthread+0xe0/0xf8
+	[1248828.088137]  ret_from_fork+0x10/0x20
+	[1248828.088141] ---[ end trace 0000000000000000 ]---
+	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
+	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
+
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra186_asrc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
-index d914dba560135..2b6c4ab26d6c1 100644
---- a/sound/soc/tegra/tegra186_asrc.c
-+++ b/sound/soc/tegra/tegra186_asrc.c
-@@ -830,7 +830,7 @@ static const struct snd_kcontrol_new tegra186_asrc_controls[] = {
- 		       tegra186_asrc_put_input_threshold),
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 53bc1b90bab3c..2d0c6f9f3f763 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -6396,6 +6396,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
+ 	ar->num_started_vdevs = 0;
+ 	ar->num_created_vdevs = 0;
+ 	ar->num_peers = 0;
++	ar->num_stations = 0;
+ 	ar->allocated_vdev_map = 0;
  
- 	SOC_SINGLE_EXT("Stream6 Input Threshold",
--		       ASRC_STREAM_REG(TEGRA186_ASRC_RX_THRESHOLD, 4), 0, 3, 0,
-+		       ASRC_STREAM_REG(TEGRA186_ASRC_RX_THRESHOLD, 5), 0, 3, 0,
- 		       tegra186_asrc_get_input_threshold,
- 		       tegra186_asrc_put_input_threshold),
- 
+ 	/* Configure monitor status ring with default rx_filter to get rx status
 -- 
 2.53.0
 
