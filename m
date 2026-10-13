@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E83390CB7;
-	Tue, 13 Oct 2026 12:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D5390CB7;
+	Tue, 13 Oct 2026 12:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893876; cv=none; b=ok9x4VclSw12AYiHFtqyTq1vor9BG2yBZCUHMAb0055sgzj2/72HWn6oB73cRMLQyneYO/w82OjHmJFYW4I2Z/pkuVm2nxN+L0mvmXjdAz1nKt+Nyes/dVgHRqPQ8lDKPgbh+zzaghsge6O5z0G8FBnDHEAm4ujYeKlW1Vx5ji0=
+	t=1791893880; cv=none; b=l0o9ldHsy3r0kGsN1OR1zO3RqCACmp5Ye+VolAw5leQyh/ZeITYekLB2o1zWZNbNLkWsVLDg90lOS35QU3pIAUmRxEn/MJLza1vN2Dn7AeiaKV1nE8mPle3GKaXnhYWDe0eSK4ht2hK/pytjc3nh+zxtsYjclABpSVkncTu/YNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893876; c=relaxed/simple;
-	bh=xWBCs3EKEu/sJoMLhEhuJc7KQdrofFc3GMA5wcet5xI=;
+	s=arc-20240116; t=1791893880; c=relaxed/simple;
+	bh=khSM8rKF3Opky0kVidHoiIsIRTJEUYfrlz6y6QA77TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+QJISLyErC2EjHdvfOpKQX6OTdu/RHvJX1vtiEa/NnNFYlOE4teBuYSeLLAnTpM5RA/4jazvYsMzN1pmNdsH3hofFg2ke+kAtxRHgLQTF8fXblztB+epT4aVcy5FRXnTd3619pmlUhefldUeG5+hmchohzZ74ddwJJ3Lkf1eHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmlinG+j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/XftwuDp9PGY13Ciqgn/g8uyp4wTMs8tWlT8umUHQ3fBKr3JhIv5qxQ9uxaucWbwBmQMuQ2NVfkpKdHfEsp2/IH51/gl+JxqO/kPG2C+SStAg1Qlqcsaa3rcH5OFrAt14IQMtM+q3vTsvcKtCVnpsEJ0kK0wGphE6Ox+OhksIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbcZBjlv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmlinG+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298271F000FF;
-	Tue, 13 Oct 2026 12:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbcZBjlv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED521F000FF;
+	Tue, 13 Oct 2026 12:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893875;
-	bh=65JBofYumWjsQqsh3kc8UtZjvdULhgp3A5xyWVoCd6k=;
+	s=korg; t=1791893878;
+	bh=YDzouOISQxUi9YdRKvw1Qfo0c8Rs68u744zwE4yQkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rmlinG+jy1q2vZBYV9X9q9WU11SoQb5JYmMp6IilLEmK6j5QxHTGMthB65ekv4jld
-	 nbYVGzaSTeUwI0n8oGsGPqQCwlor/KTg1ol8Cik8yWT7mR0dR9WRG6DPBGLq+M8KwL
-	 tXQoEkj01Ku9VmDCKEIBMmOs0071Cmg9QwiJ+lFE=
+	b=VbcZBjlvv2ro4dRBHBB6FgOoPgmOa3SXzodjy1Mt992x4SS772sUWNXlHyTYwKBN2
+	 pe96PWcKmD3XHOOXBSLKqwzz8FfaIC/nimTFtZET8+vDS8oAjXA1bycRF4uvN1fT9P
+	 UB/JU6Rfb4S+BgJYrPIrTSm7/sWKqnimmwsSeT+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 345/621] gpio: pca953x: fix pca953x_irq_bus_sync_unlock regmap lock
-Date: Tue, 13 Oct 2026 13:35:40 +0200
-Message-ID: <20261013112929.038270230@linuxfoundation.org>
+Subject: [PATCH 6.18 372/621] svcrdma: wake sq waiters when the transport closes
+Date: Tue, 13 Oct 2026 13:36:07 +0200
+Message-ID: <20261013112929.677267206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,86 +51,240 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 9dc325327babe7f159e84cbe9380a45342da0585 ]
+[ Upstream commit e5248a7426030db1e126363f72afdb3b71339a5c ]
 
-Locking is disabled in the regmap config as this driver uses its own
-lock. This means that all calls to regmap functions (read or write) must
-hold the i2c_lock. The function pca953x_irq_bus_sync_unlock() did not do
-this, and it was therefore possible that multiple threads could cause an
-incorrect register to be read/written.
+Threads parked in svc_rdma_sq_wait() on sc_sq_ticket_wait or
+sc_send_wait can hang indefinitely in TASK_UNINTERRUPTIBLE state
+across transport teardown, pinning svc_xprt references and
+blocking svc_rdma_free().
 
-A previous patch partly fixed this, but only protected the write to the
-interrupt mask register, and not the read from the direction register.
+The close path sets XPT_CLOSE before invoking xpo_detach and both
+wait_event predicates include an XPT_CLOSE term, but the
+predicates are re-evaluated only on wakeup. sc_sq_ticket_wait has
+no completion-driven wake path; it is advanced solely by the
+chained ticket handoff inside svc_rdma_sq_wait() itself. Without
+an explicit wake at close, parked threads never observe
+XPT_CLOSE, hold their svc_xprt_get reference forever, and
+svc_rdma_free() blocks on xpt_ref dropping to zero.
 
-Fixes: bfc6444b57dc ("gpio: pca953x: fix pca953x_irq_bus_sync_unlock race")
+Two close entry points reach this transport. Local teardown runs
+svc_rdma_detach() from svc_handle_xprt() -> svc_delete_xprt() ->
+xpo_detach() on a worker thread. A remote disconnect arrives at
+svc_rdma_cma_handler(), which calls svc_xprt_deferred_close():
+that sets XPT_CLOSE and enqueues the transport but does not
+access either RDMA waitqueue, so a worker already parked in
+svc_rdma_sq_wait() never re-evaluates its predicate. With every
+worker parked on this transport, no thread is available to run
+the local teardown either, and the wake site there is
+unreachable.
+
+Introduce svc_rdma_xprt_deferred_close(), a thin svcrdma wrapper
+that calls svc_xprt_deferred_close() and then wakes both
+sc_sq_ticket_wait and sc_send_wait. Convert the svcrdma producers
+that called svc_xprt_deferred_close() directly:
+svc_rdma_cma_handler(), qp_event_handler(),
+svc_rdma_post_send_err(), svc_rdma_wc_send(), the sendto drop
+path, the rw completion error paths, and the recvfrom flush and
+read-list error paths.
+
+Wake both waitqueues from svc_rdma_detach() as well. The
+synchronous svc_xprt_close() path (backchannel ENOTCONN, device
+removal via svc_rdma_xprt_done) reaches detach without flowing
+through svc_xprt_deferred_close() and therefore does not invoke
+the new helper.
+
+Fixes: ccc89b9d1ed2 ("svcrdma: Add fair queuing for Send Queue access")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Link: https://patch.msgid.link/20260709045116.2304246-1-mark.tomlinson@alliedtelesis.co.nz
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+[ cel: add svc_rdma_xprt_deferred_close() to complete the fix ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+
+[ Adapted for this tree: it has no ticket-based Send Queue waiting, so
+  only sc_send_wait is woken; all svc_xprt_deferred_close() callers in
+  svcrdma are converted to the new wrapper. ]
+
+Stable-dep-of: 01500306e1d5 ("svcrdma: Clear sc_cm_id when ADDR_CHANGE replacement fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/linux/sunrpc/svc_rdma.h          |  1 +
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c  |  4 ++--
+ net/sunrpc/xprtrdma/svc_rdma_rw.c        |  8 +++----
+ net/sunrpc/xprtrdma/svc_rdma_sendto.c    |  6 ++---
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 28 ++++++++++++++++++++++--
+ 5 files changed, 36 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index b18a2d0f6984e..4eeac12ad0ed3 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -605,20 +605,28 @@ static int pca953x_read_regs(struct pca953x_chip *chip, int reg, unsigned long *
+diff --git a/include/linux/sunrpc/svc_rdma.h b/include/linux/sunrpc/svc_rdma.h
+index b447473ed0016..6e1cdc3335e0a 100644
+--- a/include/linux/sunrpc/svc_rdma.h
++++ b/include/linux/sunrpc/svc_rdma.h
+@@ -318,6 +318,7 @@ extern int svc_rdma_result_payload(struct svc_rqst *rqstp, unsigned int offset,
+ 				   unsigned int length);
+ 
+ /* svc_rdma_transport.c */
++extern void svc_rdma_xprt_deferred_close(struct svcxprt_rdma *rdma);
+ extern struct svc_xprt_class svc_rdma_class;
+ #ifdef CONFIG_SUNRPC_BACKCHANNEL
+ extern struct svc_xprt_class svc_rdma_bc_class;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index 1075bfd9fed61..a7c09041cc9b9 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -376,7 +376,7 @@ static void svc_rdma_wc_receive(struct ib_cq *cq, struct ib_wc *wc)
+ 		trace_svcrdma_wc_recv_err(wc, &ctxt->rc_cid);
+ dropped:
+ 	svc_rdma_recv_ctxt_put(rdma, ctxt);
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
+ }
+ 
+ /**
+@@ -1018,7 +1018,7 @@ int svc_rdma_recvfrom(struct svc_rqst *rqstp)
+ 		if (ret == -EINVAL)
+ 			svc_rdma_send_error(rdma_xprt, ctxt, ret);
+ 		svc_rdma_recv_ctxt_put(rdma_xprt, ctxt);
+-		svc_xprt_deferred_close(xprt);
++		svc_rdma_xprt_deferred_close(rdma_xprt);
+ 		return ret;
+ 	}
  	return 0;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+index 5c2f848e9622f..371ec8278d518 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+@@ -292,7 +292,7 @@ static void svc_rdma_reply_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		trace_svcrdma_wc_reply_err(wc, &cc->cc_cid);
+ 	}
+ 
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
  }
  
--static int pca953x_gpio_direction_input(struct gpio_chip *gc, unsigned off)
-+static int pca953x_gpio_direction_input_unlocked(struct gpio_chip *gc,
-+						 unsigned int off)
- {
- 	struct pca953x_chip *chip = gpiochip_get_data(gc);
- 	u8 dirreg = chip->recalc_addr(chip, chip->regs->direction, off);
- 	u8 bit = pca953x_get_bit_mask(chip, off);
- 
--	guard(mutex)(&chip->i2c_lock);
--
- 	if (PCA_CHIP_TYPE(chip->driver_data) == TCA6418_TYPE)
- 		return regmap_update_bits(chip->regmap, dirreg, bit, 0);
- 
- 	return regmap_update_bits(chip->regmap, dirreg, bit, bit);
+ /**
+@@ -324,7 +324,7 @@ static void svc_rdma_write_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	 * some of the outgoing RPC message. Signal the loss
+ 	 * to the client by closing the connection.
+ 	 */
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
  }
  
-+static int pca953x_gpio_direction_input(struct gpio_chip *gc, unsigned int off)
+ /**
+@@ -369,7 +369,7 @@ static void svc_rdma_wc_read_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	 */
+ 	svc_rdma_cc_release(rdma, cc, DMA_FROM_DEVICE);
+ 	svc_rdma_recv_ctxt_put(rdma, ctxt);
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
+ }
+ 
+ /*
+@@ -422,7 +422,7 @@ static int svc_rdma_post_chunk_ctxt(struct svcxprt_rdma *rdma,
+ 	} while (1);
+ 
+ 	trace_svcrdma_sq_post_err(rdma, &cc->cc_cid, ret);
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
+ 
+ 	/* If even one was posted, there will be a completion. */
+ 	if (bad_wr != first_wr)
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_sendto.c b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+index b48a57fbb1ccc..4c376b0b19313 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+@@ -326,7 +326,7 @@ static void svc_rdma_wc_send(struct ib_cq *cq, struct ib_wc *wc)
+ 	else
+ 		trace_svcrdma_wc_send_flush(wc, &ctxt->sc_cid);
+ 	svc_rdma_send_ctxt_put(rdma, ctxt);
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
+ }
+ 
+ /**
+@@ -387,7 +387,7 @@ int svc_rdma_post_send(struct svcxprt_rdma *rdma,
+ 		ret = ib_post_send(rdma->sc_qp, first_wr, &bad_wr);
+ 		if (ret) {
+ 			trace_svcrdma_sq_post_err(rdma, &cid, ret);
+-			svc_xprt_deferred_close(&rdma->sc_xprt);
++			svc_rdma_xprt_deferred_close(rdma);
+ 
+ 			/* If even one WR was posted, there will be a
+ 			 * Send completion that bumps sc_sq_avail.
+@@ -1097,7 +1097,7 @@ int svc_rdma_sendto(struct svc_rqst *rqstp)
+ 	svc_rdma_send_ctxt_put(rdma, sctxt);
+ drop_connection:
+ 	trace_svcrdma_send_err(rqstp, ret);
+-	svc_xprt_deferred_close(&rdma->sc_xprt);
++	svc_rdma_xprt_deferred_close(rdma);
+ 	return -ENOTCONN;
+ }
+ 
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index 1f9d14e46c9df..e82c9ebf7426d 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -99,10 +99,26 @@ struct svc_xprt_class svc_rdma_class = {
+ 	.xcl_ident = XPRT_TRANSPORT_RDMA,
+ };
+ 
++/**
++ * svc_rdma_xprt_deferred_close - Close an RDMA transport (deferred)
++ * @rdma: transport to close
++ */
++void svc_rdma_xprt_deferred_close(struct svcxprt_rdma *rdma)
 +{
-+	struct pca953x_chip *chip = gpiochip_get_data(gc);
++	svc_xprt_deferred_close(&rdma->sc_xprt);
 +
-+	guard(mutex)(&chip->i2c_lock);
-+
-+	return pca953x_gpio_direction_input_unlocked(gc, off);
++	/* Release parked sc_send_wait waiters.
++	 * Once XPT_CLOSE is observed each returns -ENOTCONN.
++	 */
++	wake_up_all(&rdma->sc_send_wait);
 +}
 +
- static int pca953x_gpio_direction_output(struct gpio_chip *gc,
- 		unsigned off, int val)
+ /* QP event handler */
+ static void qp_event_handler(struct ib_event *event, void *context)
  {
-@@ -856,9 +864,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	DECLARE_BITMAP(reg_direction, MAX_LINE);
- 	int level;
+ 	struct svc_xprt *xprt = context;
++	struct svcxprt_rdma *rdma =
++		container_of(xprt, struct svcxprt_rdma, sc_xprt);
  
--	if (chip->driver_data & PCA_PCAL) {
--		guard(mutex)(&chip->i2c_lock);
-+	guard(mutex)(&chip->i2c_lock);
- 
-+	if (chip->driver_data & PCA_PCAL) {
- 		/* Enable latch on interrupt-enabled inputs */
- 		pca953x_write_regs(chip, PCAL953X_IN_LATCH, chip->irq_mask);
- 
-@@ -879,7 +887,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 
- 	/* Look for any newly setup interrupt */
- 	for_each_set_bit(level, irq_mask, gc->ngpio)
--		pca953x_gpio_direction_input(&chip->gpio_chip, level);
-+		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
- 
- 	mutex_unlock(&chip->irq_lock);
+ 	trace_svcrdma_qp_error(event, (struct sockaddr *)&xprt->xpt_remote);
+ 	switch (event->event) {
+@@ -120,7 +136,7 @@ static void qp_event_handler(struct ib_event *event, void *context)
+ 	case IB_EVENT_QP_ACCESS_ERR:
+ 	case IB_EVENT_DEVICE_FATAL:
+ 	default:
+-		svc_xprt_deferred_close(xprt);
++		svc_rdma_xprt_deferred_close(rdma);
+ 		break;
+ 	}
  }
+@@ -344,7 +360,7 @@ static int svc_rdma_cma_handler(struct rdma_cm_id *cma_id,
+ 		svc_xprt_enqueue(xprt);
+ 		break;
+ 	case RDMA_CM_EVENT_DISCONNECTED:
+-		svc_xprt_deferred_close(xprt);
++		svc_rdma_xprt_deferred_close(rdma);
+ 		break;
+ 	default:
+ 		break;
+@@ -617,6 +633,14 @@ static void svc_rdma_detach(struct svc_xprt *xprt)
+ 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
+ 
+ 	rdma_disconnect(rdma->sc_cm_id);
++
++	/*
++	 * Most close paths go through svc_rdma_xprt_deferred_close(),
++	 * which wakes the SQ waitqueue. svc_xprt_close() reaches
++	 * detach without that helper, so wake any threads parked in
++	 * the Send Queue here as well.
++	 */
++	wake_up_all(&rdma->sc_send_wait);
+ }
+ 
+ /**
 -- 
 2.53.0
 
