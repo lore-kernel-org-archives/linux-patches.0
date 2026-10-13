@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029141A6829;
-	Tue, 13 Oct 2026 12:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D01198A17;
+	Tue, 13 Oct 2026 12:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895730; cv=none; b=ppj0ZnFyK2q7R6HZuR78Jj0slrA1/4FoNFA4uh4wKMPb226jd02ZfYHYidpxYAbwunWbbxHmsvlxHns5R8xvb2I4N20LIDJcBXADPQ6twhld/JImeXQPV15BmBInsU976VxD1wfUP0zStKzT9nU+WPWFSUAQhpm+6LHmCxOlp7M=
+	t=1791895732; cv=none; b=D2OIIVGmHMX9BMhyFydfwtlMIwzcoH6BrfVfpZpOOu+s2cfDhh7YOHVcYkCsvu5yj9+H2r9DMDfnvbF0y/yXlpijJC705echK7joaqQnjW4SSI5OzF2SAQ6QDi8jvbTm/O3qrGmIH1jiz2taEryvHsBzIWXOAU71L7PR8NRBuQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895730; c=relaxed/simple;
-	bh=mRigAjw9w/uV2mGaakcW9Ywg5okpS3apX8wn07pvBI8=;
+	s=arc-20240116; t=1791895732; c=relaxed/simple;
+	bh=aTh9aJdFqUyIfFVrJmnH1WjP0gLm3xme3dc3qtCFk/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcnzbw5sHsCWXlPEuLH7C5XHLPR8yhD03H/Cw7ejjpJFPBjls+rsCNJLvOI1ipgxJQ69HMw1OlygYcwKYowsSjYtH60ZV4BgqalCo8H80smZwNWEdEUSmX91ns35Ppo+Cmp9w5MgHqk6gdu7Ie0/x+eHLgjjIK0mPIWQD5PmXoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwykPp72; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UqWVadwcmYYq/BrnVVA75ECXWGNMEO6IQFjsjDUR+rFwm6jqJX6JWqwu+DMed1C7TWBSuYplc5YjBIeYohK+wGolwKFWpKt65i+LuXVMD2TZ9x9ivjS8jQyyUdGq8/O1jq/wViMMb7exnHhsV3mF3vzzp067u9nPFTiDvKWXzko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wRTWeoV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwykPp72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2661F000FF;
-	Tue, 13 Oct 2026 12:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wRTWeoV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444891F000FF;
+	Tue, 13 Oct 2026 12:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895728;
-	bh=jfNYm4Kv73Il/sen6QMdJv73LuouQTstrP2NZgAdmJk=;
+	s=korg; t=1791895731;
+	bh=zfrpYJz8/4nYnXYKoeXcYD+88vhiNKheZ4Kls41CI/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fwykPp72gVbpAOj3V1yUpNms7b1l5z4o/S23esCwRUdD4WYybzrLFiezOcciUjwW+
-	 LAsREFfdWdC67IL1K6NqbNIouD0CkAUrclk1pgiSz16cLMvJYDf46nSvohUb09Lkh3
-	 smrzWF9ZrOaCpL71QCcWX7pP2MAddyaHzonTjPEE=
+	b=0wRTWeoVjjgxIAkFD2FtEfgqdMk/dmguxaUvpzkmMrCiCZFxMPgc24tTVIW155zkz
+	 CIzEahlrSwLt60Yi375jIxIzGy7B4R5D3CEinh1A50ZODyiEKpucEmqX8wqccwCJcu
+	 pVVhjxoHjWOZ6RcpZgdq2s5LaVbewJXUEyDmZKq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jerome Tollet <jtollet@cisco.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/497] net/mlx5e: Prevent stale XSK buffer release on refill retry
-Date: Tue, 13 Oct 2026 13:38:06 +0200
-Message-ID: <20261013112915.475181892@linuxfoundation.org>
+	Luigi Leonardi <leonardi@redhat.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 367/497] vsock/virtio: account only unread bytes in read_skb()
+Date: Tue, 13 Oct 2026 13:38:54 +0200
+Message-ID: <20261013112916.611857283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,64 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Tollet <jtollet@cisco.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit e01620844c5c88b6fcf819d171df8e3976a0e76f ]
+commit a463f55c791b96cfd12df8b10ea737d45c80bb18 upstream.
 
-When an XDP redirect to an AF_XDP socket fails because its RX ring is
-full, the XSK core frees the buffer. During the subsequent batched refill
-of a legacy cyclic RQ, mlx5e also releases the WQE's XSK buffer before
-allocating a replacement. If that refill succeeds only partially, a WQE
-left without a replacement retains its old buffer pointer.
+After a partial stream receive, rx_bytes tracks the unread suffix while
+buf_used and peer credit still cover the whole packet.
+virtio_transport_read_skb() dequeues that packet but passes pkt_len for
+both counters, underflowing rx_bytes.
 
-The buffer can meanwhile be allocated to another WQE. A later refill
-retry can then free the live buffer through the stale pointer and publish
-the same UMEM frame twice.
+On a connected CID_LOCAL stream with an SK_SKB verdict, a 40-byte read
+from a 100-byte packet made SIOCINQ report -40, an empty recv return
+ELOOP, and poll report the empty socket readable.  After verdict detach,
+receiving 40 bytes wrapped the counter to zero and hid those queued bytes
+until one more byte arrived.  The fixed run kept the counter balanced
+and exposed all queued data immediately.
 
-Mark the WQE as released immediately after the driver-side free. The flag
-is already cleared when a replacement buffer is assigned, so refill
-retries no longer release stale pointers.
+This was found during an LLM-assisted manual source audit of VSOCK
+receive accounting while re-evaluating virtio_transport_read_skb() after
+CVE-2024-50169.
 
-The failure is silent and produces no kernel warning or splat. A
-standalone legacy cyclic-RQ zero-copy libxsk reproducer, using 64-byte UDP
-traffic offered at 12 Mpps, detected it: stock stopped after 2,854,914
-packets in 4.094 seconds, with 4,542 xdp_rx_ring_full events and 64
-ownership/double-publication errors. With this change it processed
-356,904,225 packets in 30 seconds despite 571,405 xdp_rx_ring_full events,
-with no ownership or data errors.
+Subtract only skb->len minus the VSOCK offset from rx_bytes.  Retain the
+full packet length for buf_used and peer credit.
 
-Fixes: 3f93f82988bc ("net/mlx5e: RX, Defer page release in legacy rq for better recycling")
+Fixes: 45ca7e9f0730 ("vsock/virtio: fix `rx_bytes` accounting for stream sockets")
 Cc: stable@vger.kernel.org
-Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Jerome Tollet <jtollet@cisco.com>
-Link: https://patch.msgid.link/20260824141645.23700-2-jtollet@cisco.com
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261001151310.4101006-1-4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index eaa5d6c83a828..9ab7d00fc04c3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -382,8 +382,11 @@ static inline void mlx5e_free_rx_wqe(struct mlx5e_rq *rq,
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1921,6 +1921,7 @@ int virtio_transport_read_skb(struct vso
+ 	struct sock *sk = sk_vsock(vsk);
+ 	struct virtio_vsock_hdr *hdr;
+ 	struct sk_buff *skb;
++	u32 bytes_read;
+ 	u32 pkt_len;
+ 	int off = 0;
+ 	int err;
+@@ -1940,7 +1941,8 @@ int virtio_transport_read_skb(struct vso
+ 		vvs->msg_count--;
  
- static void mlx5e_xsk_free_rx_wqe(struct mlx5e_wqe_frag_info *wi)
- {
--	if (!(wi->flags & BIT(MLX5E_WQE_FRAG_SKIP_RELEASE)))
--		xsk_buff_free(*wi->xskp);
-+	if (wi->flags & BIT(MLX5E_WQE_FRAG_SKIP_RELEASE))
-+		return;
-+
-+	xsk_buff_free(*wi->xskp);
-+	wi->flags |= BIT(MLX5E_WQE_FRAG_SKIP_RELEASE);
- }
+ 	pkt_len = le32_to_cpu(hdr->len);
+-	virtio_transport_dec_rx_pkt(vvs, pkt_len, pkt_len);
++	bytes_read = skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset;
++	virtio_transport_dec_rx_pkt(vvs, bytes_read, pkt_len);
+ 	spin_unlock_bh(&vvs->rx_lock);
  
- static void mlx5e_dealloc_rx_wqe(struct mlx5e_rq *rq, u16 ix)
--- 
-2.53.0
-
+ 	virtio_transport_send_credit_update(vsk);
 
 
