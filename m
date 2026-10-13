@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A75D33D6F8;
-	Tue, 13 Oct 2026 12:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19E54F7CCD;
+	Tue, 13 Oct 2026 12:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895927; cv=none; b=SWzWvyl74lf+A+//j5dZa1NwmC2IE5RuB2hXbY6UbJ1xKixr2IcYtPnj6MZV1Od2pTriCno/hoinyoiUgI8fq/YAnNqbD9IbNMNIjj7lq/8utBnfWBAaV31dFFem6cNX1MAhBARumFErom64Bm67d602NSyFl+NYIhVbr5Dqb50=
+	t=1791895930; cv=none; b=jsVhKek3P4us68pzWeI/p6kbMmGO+lTFMkDOjqQuZEEexB9Z977VKw9crZlKiW37IAFCQlRD4JRvg4uscrR8nV8kcuDmdrKP7c/Yt7pasKkarKYuacjzpqxmzXfe4vkgpuTn0CFz5apIQnEfxEsfEYKx8NQIn/plNAr7fgDLkzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895927; c=relaxed/simple;
-	bh=O9Mr5c/8OFVCRM/92Blg9T7sQqodk7o8jwYe10R7rr8=;
+	s=arc-20240116; t=1791895930; c=relaxed/simple;
+	bh=uAVQv3Cqsgppyq4Lij6GEOs+zmBEJHOO9BW4Y53GhVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCa6gcnk1S/sytDvxfV594qTNRPl0dkKnOvtL2gKiVBFn0OnHu5KJV0pnOHHXTiRx/mSWlrpBFrlCuIVSWq/TwLsaUTAHLcczkfovpkBzAu44fRxwtwEpamlMNWx65fuL9Das+DQIxQPrMAnVwF17MSkUJBKn7fThDn4NXWR7MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfJ9zdkp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VYTJlZJABBpzVssToFZzrUUllvEa1qGwWgG4lrll1LGEQZxRj7fP7lRQdswDvdD1Q3xQF7zvGVxidXgN1E0cL+O3rDGuXDWDxDwGmbKIMl5tlukL8Ai+vVRfviisrdd+sylA8NnUd8MTYIGYyT3OBceulQiyIWjFr/dn/svNvAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipC5C9Tk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfJ9zdkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F6D1F000FF;
-	Tue, 13 Oct 2026 12:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipC5C9Tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220421F000FF;
+	Tue, 13 Oct 2026 12:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895925;
-	bh=3FrWFGt6lhe0HePU/v2kqDqTlbzjtg8hbgJxt7y+Kdk=;
+	s=korg; t=1791895928;
+	bh=j3CeXyPH8aB3zI7Dtiud1jF1/JUE5oglcwa8Hl5yelQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cfJ9zdkpT5y0Mq3WwPx/62qwZWePiFZ0r9645+5/S5FuFPMp1J+yyglL7FuCo/9Ro
-	 HD6ETNGqORX38XSaZnb0tjqC1tjX/YeUuAiVf8lK+RAkuyHp/PRSYI5rwxsp0bt8rI
-	 n7QSYelF6eMy46tovn5HWkI9cHDwNEiudZm3Yy1U=
+	b=ipC5C9Tk02+iq9UyBfr5drm18c7WMTj4ZwRVAJC+kz2Tlp0n2B/7vopJPCDrhdTdS
+	 3ffBrEFn7K0Yl12M9bWl6SAbHdFbcixZb/DtFgKBHJA2LtGlNTkudms5qzv3CFzRNS
+	 YDXE6wKZBSuB3RLmdv8wWaTrU9r4CGxYU5A47UFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 439/497] fs: refuse fspick() on internal superblocks
-Date: Tue, 13 Oct 2026 13:40:06 +0200
-Message-ID: <20261013112918.302757628@linuxfoundation.org>
+Subject: [PATCH 6.12 440/497] namespace: check a submount for references right before unmounting it
+Date: Tue, 13 Oct 2026 13:40:07 +0200
+Message-ID: <20261013112918.327107032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,32 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 02587a4af82adccaef8e3b3624b4e7f1c401632d upstream.
+commit 32bf92416614a1e3ff3524fc6b780259c7aad3ef upstream.
 
-There's a few instances where a internal superblock is reachable by
-fspick(). Block that. graft_tree() and fsmount() already refuse them.
-fanotify refuses mount and superblock marks on them for the same reason.
+shrink_submounts() and mark_mounts_for_expiry() first collect all the
+mounts they are allowed to unmount and then unmount them.
 
-Fixes: cf3cba4a429b ("vfs: syscall: Add fspick() to select a superblock for reconfiguration")
-Cc: stable@vger.kernel.org # v5.2+
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-6-f357abf3d17b@kernel.org
+Whether a mount is busy is decided by propagate_mount_busy() on the
+tree. But unmounting the first mount changes the tree that the second
+one propagates into. propagate_umount()
+moves a surviving overmount off a copy it unmounts and mounts it where
+the copy was mounted. If that's where the propagated copy of the second
+victim is looked up the overmount becomes a candidate of the second
+umount_tree(). It's childless and so trim_one() commits it without
+looking at its reference count.
+
+So a synchronous umount pulls out a busy mount that is in use somewhere
+else and marks it MNT_SYNC_UMOUNT while it has users:
+
+  umount2(/tmp/plshrink/p1, 0) = 0 errno 0
+  cwd is (unreachable)
+
+The same two umounts requested one after the other fail with EBUSY.
+This needs a mount with MNT_SHRINKABLE, i.e., automounted submounts of
+NFS, AFS and CIFS or the tracefs mount below debugfs. Bind mounts
+inherit the flag.
+
+Check each mount right before it is unmounted under the same hold of
+namespace_sem and mount_lock as the umount itself. Make sure that the
+algorithm stays linear.
+
+Fixes: 1064f874abc0 ("mnt: Tuck mounts under others instead of creating shadow/side mounts.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-2-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fsopen.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/namespace.c |   78 ++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 53 insertions(+), 25 deletions(-)
 
---- a/fs/fsopen.c
-+++ b/fs/fsopen.c
-@@ -190,6 +190,9 @@ SYSCALL_DEFINE3(fspick, int, dfd, const
- 	ret = -EINVAL;
- 	if (target.mnt->mnt_root != target.dentry)
- 		goto err_path;
-+	/* kernel-internal superblocks are nobody's to reconfigure */
-+	if (target.dentry->d_sb->s_flags & SB_NOUSER)
-+		goto err_path;
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3684,6 +3684,11 @@ void mark_mounts_for_expiry(struct list_
+ 	}
+ 	while (!list_empty(&graveyard)) {
+ 		mnt = list_first_entry(&graveyard, struct mount, mnt_expire);
++		/* an earlier umount_tree() may have moved a busy mount here */
++		if (propagate_mount_busy(mnt, 1)) {
++			list_move(&mnt->mnt_expire, mounts);
++			continue;
++		}
+ 		touch_mnt_namespace(mnt->mnt_ns);
+ 		umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
+ 	}
+@@ -3694,16 +3699,36 @@ void mark_mounts_for_expiry(struct list_
+ EXPORT_SYMBOL_GPL(mark_mounts_for_expiry);
  
- 	fc = fs_context_for_reconfigure(target.dentry, 0, 0);
- 	if (IS_ERR(fc)) {
+ /*
++ * Unmount @mnt if it's a shrinkable mount without children that nobody uses.
++ *
++ * mount_lock must be held for write
++ */
++static bool shrink_submount(struct mount *mnt)
++{
++	if (propagate_mount_busy(mnt, 1))
++		return false;
++	touch_mnt_namespace(mnt->mnt_ns);
++	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
++	return true;
++}
++
++/*
+  * Ripoff of 'select_parent()'
+  *
+- * search the list of submounts for a given mountpoint, and move any
+- * shrinkable submounts to the 'graveyard' list.
++ * unmount the shrinkable submounts of @parent that aren't busy, children
++ * before their parent, and say whether anything went
++ *
++ * The cursor into the children of @this_parent survives the umount of a
++ * child mount without child mounts. The mounts that get umounted together with
++ * it are located under receiving mounts of @this_parent and never under
++ * @this_parent itself. The one exception is @this_parent getting unmounted
++ * then the walk starts over.
+  */
+-static int select_submounts(struct mount *parent, struct list_head *graveyard)
++static bool __shrink_submounts(struct mount *parent)
+ {
+ 	struct mount *this_parent = parent;
+ 	struct list_head *next;
+-	int found = 0;
++	bool shrunk = false;
+ 
+ repeat:
+ 	next = this_parent->mnt_mounts.next;
+@@ -3722,42 +3747,45 @@ resume:
+ 			this_parent = mnt;
+ 			goto repeat;
+ 		}
+-
+-		if (!propagate_mount_busy(mnt, 1)) {
+-			list_move_tail(&mnt->mnt_expire, graveyard);
+-			found++;
+-		}
++		if (!shrink_submount(mnt))
++			continue;
++		shrunk = true;
++		if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
++			return true;
+ 	}
+ 	/*
+ 	 * All done at this level ... ascend and resume the search
+ 	 */
+ 	if (this_parent != parent) {
+-		next = this_parent->mnt_child.next;
+-		this_parent = this_parent->mnt_parent;
++		struct mount *mnt = this_parent;
++
++		next = mnt->mnt_child.next;
++		this_parent = mnt->mnt_parent;
++		/* its children are gone, maybe it can go as well */
++		if (shrink_submount(mnt)) {
++			shrunk = true;
++			if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
++				return true;
++		}
+ 		goto resume;
+ 	}
+-	return found;
++	return shrunk;
+ }
+ 
+ /*
+- * process a list of expirable mountpoints with the intent of discarding any
+- * submounts of a specific parent mountpoint
++ * unmount the shrinkable submounts of @mnt that aren't busy
++ *
++ * The busy check and the umount of a mount are adjacent. An umount can
++ * still empty or move a mount in a part of the tree that was walked
++ * already, so walk again until nothing goes.
+  *
+  * mount_lock must be held for write
+  */
+ static void shrink_submounts(struct mount *mnt)
+ {
+-	LIST_HEAD(graveyard);
+-	struct mount *m;
+-
+-	/* extract submounts of 'mountpoint' from the expiration list */
+-	while (select_submounts(mnt, &graveyard)) {
+-		while (!list_empty(&graveyard)) {
+-			m = list_first_entry(&graveyard, struct mount,
+-						mnt_expire);
+-			touch_mnt_namespace(m->mnt_ns);
+-			umount_tree(m, UMOUNT_PROPAGATE|UMOUNT_SYNC);
+-		}
++	for (;;) {
++		if (!__shrink_submounts(mnt))
++			break;
+ 	}
+ }
+ 
 
 
