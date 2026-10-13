@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D244F85C7;
-	Tue, 13 Oct 2026 12:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D66A4F93CA;
+	Tue, 13 Oct 2026 12:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894474; cv=none; b=dXjyH2+mJH+1bJ9N/nkQmJoy9Ea6OYqQp9YKF4LvA+/7i2YVmuHmIXo8JoW50uztMojLOp7SOR7YexfKFQdYSQxwQ2+GIubRpzVDfV93GkAjJhD3GXrOcKRGriU+Uwcs6/iKCoqHEjp4Jujl/cJxp2TgOgGPyu1urgAzgF4aSbs=
+	t=1791894477; cv=none; b=NCkPIgBCzDFSxckQB5ecl2x/XtBPjJMvOru1dqCaJNn7aKYTlmhaE1i+1Vh5AHjQN5Ma6QHxKV4z6XJgbLV4FL/7M5HoRJJPKBTSmNOclGv9OibCqPHQbnbacjjHl9MXr13nbLu/V22b7LLTbKHmbBuhlD7EM3JVX2UAp4/TGSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894474; c=relaxed/simple;
-	bh=gHINkOPIV0X16vJsZMya7amXP3SmTG8YcGv7jiVCvW0=;
+	s=arc-20240116; t=1791894477; c=relaxed/simple;
+	bh=Mpf5H/b/iNoM6okt+PDY9h4LbM9MWjPGSZTjg9yzWBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PetKmm0Qr8cp74N1RV5lDgkkmdSNrhABo/ELloq0rskORllNTu23aKHBXrFQSoNww4sJeQKik7nWi5HTWIfi2vkxfo+Qp3tpk97bkZtjNHGPy8GyrFpAFsjd8e0ZKIxLTAvTpgZrNXIvXmC6novTcZf1dkmqFTfCVK0ITeruDX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCRRjny5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fYGUhXt6OnKuBqcbt4TXoG8DzKnODV1ZHBzVTHIdsBRGoSEKJvgUTcxDCpI7PYxJrmR6h0rPXKBU53C6hwm019+aF5w7bElBBh36K7ulvWsrJGMpWV0xqUhLqJ7tED/ikD50pWuyJclnLJs4e/3mPl6rhAUupJ7+LHhfVzyfjCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Ih70t9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCRRjny5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3841F000FF;
-	Tue, 13 Oct 2026 12:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Ih70t9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DE91F00893;
+	Tue, 13 Oct 2026 12:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894472;
-	bh=CJWkuBEt9xOWTLOUOHjd3BfjSx6Ta20k415hbrISb2M=;
+	s=korg; t=1791894476;
+	bh=LuiWIrcSJI0uGpdUY7SRm2alK4ml8IZFO+mBoQsyoz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rCRRjny5L1LaOVFYGlWTbJ0qGgtm1I9gmVgTrzvkYjm7Vn01TpAVEu0nXz6mLcJGw
-	 UHPJ4K4cRsHDnTrh1HRgQ73KkqlsQiEbb/zKuKipeM9tC+QNhewV3iC5vjLOgjSTWT
-	 /Z0bARMykZ7xKo+8KP4AdOOwxa3n9S979F7hjej8=
+	b=X6Ih70t9RhhlSMezXfY7ft/Lnio9jQM64LgQXds0VtVZxGlI1pGQ1lMjJ/hQCwulH
+	 fcx2gaO+fOkZWvnWQHotmq8Ous1X218HskWsDYKREay4r8HljqJrNCUIxtSQCtOFF4
+	 HU1MUk5L6f59hoQeq8VO/CcorHbGtPRZsehfVkUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Huy Nguyen Dinh Quang <huynguyendinhquang@gmail.com>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Cristian Fleischer <cristian.fleischer@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 570/621] wifi: mt76: mt7925: dont put the band auto marker in TGID
-Date: Tue, 13 Oct 2026 13:39:25 +0200
-Message-ID: <20261013112934.332667747@linuxfoundation.org>
+Subject: [PATCH 6.18 571/621] wifi: mt76: mt792x: treat 0xff ACPI SAR entries as no limit
+Date: Tue, 13 Oct 2026 13:39:26 +0200
+Message-ID: <20261013112934.356006095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,54 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit 5796b2bf9ff718342773ac760d86eb126c112a4f ]
+[ Upstream commit 45f53d98cbaa078907b6a300ff3974dfb5ae8776 ]
 
-band_idx starts out as 0xff, which tells the firmware to pick the band on
-its own. A remain-on-channel grant normally writes a real index over it
-before anything else looks. Two cases never see that: an MLD station
-throws the grant away, and an AP has no association to trigger one.
+Some ASUS firmware carries 0xff in MTGS power slots. The driver narrows
+the byte to s8, so the slot reads as -1 in its 0.5 dBm units, wins the
+min() against the regulatory limit and caps every rate the driver
+programs. On an ASUS Zenbook 14 UM3406HA (MT7922) all six MTGS tables
+hold 0xff in every power byte, and txpower_sku shows tmac 3 on every
+supported OFDM/HT/VHT/HE rate against EEPROM entries of 25-39, under
+both the FR and the world regulatory domain. Huy Nguyen Dinh Quang saw
+the same clamp on a Vivobook S 14 M5406WA, with 5 GHz TX at ~40 Mbps,
+and proposed skipping the geo entry.
 
-The TX descriptor reads the same field into a two-bit slot, so the marker
-comes out as 3. Every data frame from those two goes out tagged band 3.
-Beacons are fine, they reach the firmware separately and never build a
-descriptor.
+Skip a geo entry whose power byte is 0xff. The MTDS entry is narrowed
+the same way on its way into the geo lookup, so give it the same
+treatment, and clamp the dynamic value plus offset at 127 so a no-limit
+entry cannot wrap.
 
-Same numbers on an MT7925 and on a Netgear A9000:
-
-                        stock         patched
-  station, one link     0x00000001    0x00000001
-  station, two links    0x00003001    0x00000001
-  AP                    0x00003013    0x00000013
-  real band index, STA  0x00001001    0x00001001
-  real band index, AP   0x00001013    0x00001013
-
-Only the marker cases move.
-
-Fixes: 0cb349d742d1 ("wifi: mt76: mt7925: update mt7925_mac_link_bss_add for MLO")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260911024428.65244-1-lucid_duck@justthetip.ca
+Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2515420
+Reported-by: Huy Nguyen Dinh Quang <huynguyendinhquang@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/20260827134820.2607530-1-huynguyendinhquang@gmail.com/
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Cristian Fleischer <cristian.fleischer@gmail.com>
+Link: https://patch.msgid.link/acb947435fc78d5c06039c7bd5609c735468b0ee.1789002236.git.junjie.cao@intel.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../wireless/mediatek/mt76/mt792x_acpi_sar.c   | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index a8572fdba634a..ce81ac1c2c635 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -780,7 +780,8 @@ mt7925_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 	val = FIELD_PREP(MT_TXD1_WLAN_IDX, wcid->idx) |
- 	      FIELD_PREP(MT_TXD1_OWN_MAC, omac_idx);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
+index d1aebadd50aac..939e4eead808a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
+@@ -279,10 +279,18 @@ mt792x_asar_get_geo_pwr(struct mt792x_phy *phy,
+ 	if (idx >= max)
+ 		return dyn_power;
  
--	if (band_idx)
-+	/* 0xff means BAND_AUTO to the firmware, and TGID cannot encode it */
-+	if (band_idx && band_idx != 0xff)
- 		val |= FIELD_PREP(MT_TXD1_TGID, band_idx);
+-	geo_power = (band_pwr + idx)->pwr;
+-	dyn_power += (band_pwr + idx)->offset;
++	band_pwr += idx;
  
- 	txwi[1] = cpu_to_le32(val);
+-	return min(geo_power, dyn_power);
++	/* Some OEM tables carry 0xff here; narrowed to s8 that is -1 and
++	 * wins the min() below. Take it as no limit.
++	 */
++	if (band_pwr->pwr == 0xff)
++		return dyn_power;
++
++	geo_power = band_pwr->pwr;
++
++	return min_t(int, geo_power,
++		     min_t(int, dyn_power + band_pwr->offset, 127));
+ }
+ 
+ static s8
+@@ -315,7 +323,9 @@ mt792x_asar_range_pwr(struct mt792x_phy *phy,
+ 	else
+ 		band = NL80211_BAND_2GHZ;
+ 
+-	return mt792x_asar_get_geo_pwr(phy, band, limit[idx]);
++	/* 0xff: no dynamic limit, see mt792x_asar_get_geo_pwr() */
++	return mt792x_asar_get_geo_pwr(phy, band,
++				       limit[idx] == 0xff ? 127 : limit[idx]);
+ }
+ 
+ int mt792x_init_acpi_sar_power(struct mt792x_phy *phy, bool set_default)
 -- 
 2.53.0
 
