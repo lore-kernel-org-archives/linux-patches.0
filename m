@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCEA4FD7A7;
-	Tue, 13 Oct 2026 12:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71614EB863;
+	Tue, 13 Oct 2026 12:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894778; cv=none; b=LvlJVfH6HyWbhlR4QDUpnwjk/n2P7O0QLT3xNUYLJZNhd3B0bb4pLQjqpFV36j2VedZBfj3ayx6fbUDbnUVEpF6SN0Uw4nJBxdIP0E4wK8dg4keb+3utX/naAoliiaEbYioq0s7FOgbBrpE1CYdqQYOOsettuWUiU3f010jIh18=
+	t=1791894781; cv=none; b=jZTeCOLqBmhuBl3rmMCbfsHy5BPUopcfDlmg7IB4/kdHyiQI/wc/xxQV4FQ8SyhAi86m7TESYXIQoZ29TVn39yK+dOFOLdaONqlgaYwhFtH8Ox3xwnI2BvVxy4kDnY+q0oY5ZzRRWDfs7aBdk2A9heAoiajBBYciSJ8SAFQLnUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894778; c=relaxed/simple;
-	bh=smkk2OrGXJMv86PuZtPIh6QdJ9Umu3YrtuprKfcyeVU=;
+	s=arc-20240116; t=1791894781; c=relaxed/simple;
+	bh=oZrS6dWhplmovHvRirRn99vfjHIcXx6C59JEimTwc5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5dBU3tpek1LIS9HsYA9okhOMqZZ9h6BhD2tkatOIXle2NbbF5N3Yf/Lsg9+RFH5Cz3hSuXInacW+qOs2dswqGNLTdh9Ss6IgkLOxciGFTRYiqv444zyVbPqQJSO+OwYo/Ibb98ryXZXYMjTV/Akeb5DXZHvU9X/iQEZxM040gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+cmlj6n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BBJmWzfwE3TAdwkV1quTeAz0WFulvnYBPnI/sk/pzOgS/X8k5hV7RbqKzSaJJaDO0xLYQhnwgBl0/Ds6lhq/yjiSHfPu7drvHDrE4iV+asm+xCeAlZIjCBHNCEb5Y3njCHvVomqanmADNjBiHqe/CBRd/0abIixcjKXHtK8XVgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCZba7+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+cmlj6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102F61F000FF;
-	Tue, 13 Oct 2026 12:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCZba7+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014B51F000FF;
+	Tue, 13 Oct 2026 12:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894777;
-	bh=pFIkrUyeO+hRM6wKyx48AbOjLdbL4XakpSD6NXJ+hzM=;
+	s=korg; t=1791894780;
+	bh=jMWW1BrzJKLOgjLJYDfyQPMAeO5Q3ZXvdkiyq4Slq2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D+cmlj6nlSRxG0OqlNCbZJCg9VYzP0gWjzoRpoRyrG6PQxZA9ijBbkON0ecIdS83H
-	 pmFSdj4iVstLyTn1Mxc+VZ1/hDOVtjDWDMSZ0EhHCtNXX/LtQDfXYxXsaaEQe6mbeM
-	 dNpv7nrnwDkzkLuJcHdL2odaH5anoG+N6d6HoOro=
+	b=lCZba7+yfKyjAIiKoF7s6G8RoDfJuwB34Yc7LVnK0NA2a5Fw1kDP6hZ1wdK7oUeEz
+	 54eJLe17HNcoIxf93aKbl0gMtxbf02UecpybUuhGpPBEafQkJizC53ruz0zer02hTK
+	 oTrHg07Ff0lQp+MYhkVReVr4kFrA3DLq/lcrFVJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sheetal <sheetal@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/497] wifi: wfx: validate MIB read length before copying to caller
-Date: Tue, 13 Oct 2026 13:33:41 +0200
-Message-ID: <20261013112909.169297214@linuxfoundation.org>
+Subject: [PATCH 6.12 055/497] ASoC: tegra: Fix ASRC Stream6 input threshold control
+Date: Tue, 13 Oct 2026 13:33:42 +0200
+Message-ID: <20261013112909.192999748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,46 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Sheetal <sheetal@nvidia.com>
 
-[ Upstream commit ce67ebe9d8629776ce38e6995ae72fb903c828db ]
+[ Upstream commit 75fc8a3ee5aee72f2fea3b6436170fae175f7f19 ]
 
-wfx_hif_read_mib() copies reply->length bytes from the firmware
-response into the caller-provided buffer without checking that
-reply->length does not exceed val_len. A firmware response with
-a length field larger than expected overruns the caller buffer and
-reads past the end of the reply allocation.
+The Stream6 Input Threshold control points at stream index 4, which is
+already used by Stream5. The threshold get and put callbacks derive the
+lane ID from the register offset, so the duplicate index makes Stream6
+operate on lane 4 and leaves lane 5 inaccessible from userspace.
 
-Replace the dead -ENOMEM check with an active validation that
-reply->length fits within val_len before the memcpy.
+Use stream index 5 for Stream6.
 
-Fixes: f95a29d40782 ("staging: wfx: add HIF commands helpers")
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB000155034FC391A2A54B9803C8BD2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a2df8c2d5b36 ("ASoC: tegra: Add Tegra186 based ASRC driver")
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260921085704.1248920-2-sheetal@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/hif_tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/tegra/tegra186_asrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/hif_tx.c b/drivers/net/wireless/silabs/wfx/hif_tx.c
-index 9f403d275cb13..9efb108bd877d 100644
---- a/drivers/net/wireless/silabs/wfx/hif_tx.c
-+++ b/drivers/net/wireless/silabs/wfx/hif_tx.c
-@@ -207,9 +207,11 @@ int wfx_hif_read_mib(struct wfx_dev *wdev, int vif_id, u16 mib_id, void *val, si
- 		dev_warn(wdev->dev, "%s: confirmation mismatch request\n", __func__);
- 		ret = -EIO;
- 	}
--	if (ret == -ENOMEM)
-+	if (!ret && le16_to_cpu(reply->length) > val_len) {
- 		dev_err(wdev->dev, "buffer is too small to receive %s (%zu < %d)\n",
- 			wfx_get_mib_name(mib_id), val_len, le16_to_cpu(reply->length));
-+		ret = -EIO;
-+	}
- 	if (!ret)
- 		memcpy(val, &reply->mib_data, le16_to_cpu(reply->length));
- 	else
+diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
+index d914dba560135..2b6c4ab26d6c1 100644
+--- a/sound/soc/tegra/tegra186_asrc.c
++++ b/sound/soc/tegra/tegra186_asrc.c
+@@ -830,7 +830,7 @@ static const struct snd_kcontrol_new tegra186_asrc_controls[] = {
+ 		       tegra186_asrc_put_input_threshold),
+ 
+ 	SOC_SINGLE_EXT("Stream6 Input Threshold",
+-		       ASRC_STREAM_REG(TEGRA186_ASRC_RX_THRESHOLD, 4), 0, 3, 0,
++		       ASRC_STREAM_REG(TEGRA186_ASRC_RX_THRESHOLD, 5), 0, 3, 0,
+ 		       tegra186_asrc_get_input_threshold,
+ 		       tegra186_asrc_put_input_threshold),
+ 
 -- 
 2.53.0
 
