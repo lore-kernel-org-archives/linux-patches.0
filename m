@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817CB4EA367;
-	Tue, 13 Oct 2026 12:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D57B4E66B8;
+	Tue, 13 Oct 2026 12:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893700; cv=none; b=owcrIxWbioc+q9kuJgI3WDBHkXbNZ2d3zpckksp8bRK9deCnNNIiSRX2FHQ8eluatupcMPBWUAkMWpCb9B7z73XxHCZtbz4poE4srRzen9KVaUVB1pbpdoBoRGoCK/cdw6IbIS0scxcjtiU6w6SPlRNSIYZ0iYBumPL/cfA5pbU=
+	t=1791893703; cv=none; b=Wc2qbgatkBeSVO3+qA45nJJZ/QURSTC+RcecuCkMzShOWXMDSUN7l0hAJgV1qWgBPf29crQuoK1bmkI8Ao7fjuilIcDueeghIE9ub8VUgDe4x0lJ7RISHpo4z86LjebXfBI+cxR3bxV982xUik/+AvXTWEA/wJMRipaWGNrPir8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893700; c=relaxed/simple;
-	bh=iwhMCuDETr4yZaxmtIhlolY0j6fP7zbas9iioY5B2mM=;
+	s=arc-20240116; t=1791893703; c=relaxed/simple;
+	bh=3EBkey0ujreIdrquWZz0hrSnPFx5bu0PGl7lk/xD1M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGtJauO3X84oYJYBZbjPaWMFdTrSel9Ieei/2KXYNo7q6EX/3TgNsBDrifAWyLt4HMlHKWm2nlWkztyiS8b9hDWGAFwTBoqrgv8OsoIcy+EgmJzE8gCQHXr6MalJxZVkfdudUXHxzUo+0lduQocVaV94aTfypn32XNLMGjo5mjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWjO8u1q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cxjuGzm34VHF6jzeHEOz+nwBwUSEWoiqq5/DEaxJ8spRoosiQpMJgspvcynA2BxW5RXkWk5KPO4Vc1sESAn+tz1tjyVGwEkUbxPdJPkSfEtSjYc3B769pAlLNCJAvgHmjqywWmr/BNIW7X5qdmONUfZZTF5Yb+5BC5fNDfHms6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXafqrus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWjO8u1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816151F000FF;
-	Tue, 13 Oct 2026 12:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXafqrus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582481F000FF;
+	Tue, 13 Oct 2026 12:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893699;
-	bh=cJXeY71XhzPemwjYwFvftGXwTKxO9geuUv99JZR7oF4=;
+	s=korg; t=1791893701;
+	bh=m6qrbwXaa1eZOJBcALg0mJoJYyZHXy1sEpkApEJenXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bWjO8u1qn97Nj+SasG/irzMJa1zU/2W3wKC1LXfKjN8zc3BcOIH37KPFrJGqiC+0K
-	 kLu/6v3P8xKEEBkQILQo8lme6dJT2MS2auz8iJssVlzco/9I3m24+ZDf70QQ0NYLQ0
-	 B1GoJ50DFhLKg47cod0jUXV+Bfz4EDby/RRVS3qw=
+	b=xXafqrus4RY0P+qp7BAsoJvp/GtwfVp1hlvxv8pTwUtSKE6SXzYS4Qs2abOElLUyK
+	 oCcqaa2pv0QaUefq0QcVq96Vvk15vhMTO8T3t8c89RdEBjh9VJaHIMlNtRP5mGlami
+	 J/j/0U3cfBgKBi+mxfm0Lw1b1+c86V2ni+0diKwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Xiao Ni <xiao@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
+	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 314/621] md/raid1,raid10: fix deadlock in read error recovery path
-Date: Tue, 13 Oct 2026 13:35:09 +0200
-Message-ID: <20261013112928.306027292@linuxfoundation.org>
+Subject: [PATCH 6.18 297/621] RDMA/bnxt_re: Add a max slot check for SQ
+Date: Tue, 13 Oct 2026 13:34:52 +0200
+Message-ID: <20261013112927.903448938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,89 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 7b15c24f805339a585cfe7d72f446b7e88b9bcc0 ]
+[ Upstream commit dc95931b7e1326dacae547874bf38c092e5960d8 ]
 
-raid1d and raid10d may resubmit a split md cloned bio while handling
-a read error. In this case, resubmitting the bio can lead to a deadlock
-if the array is suspended before md_handle_request() acquires an
-active_io reference via percpu_ref_tryget_live().
+The variable WQE mode must be validated against
+the maximum slots supported by HW. The max supported
+value is 64K. Adding a max and min check and fail if user
+supplied value is more than the max supported and zero.
 
-Since the cloned bio already holds an active_io reference,
-trying to acquire another reference via percpu_ref_tryget_live()
-can lead to a deadlock while the array is suspended.
-
-Fix this by using percpu_ref_get() for md cloned bios.
-
-Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
-Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260501114652.590037-2-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Stable-dep-of: ba976e350111 ("md/raid1,raid10: fix bio accounting for split md cloned bios")
+Fixes: d8ea645d6984 ("RDMA/bnxt_re: Handle variable WQE support for user applications")
+Link: https://patch.msgid.link/r/20260615224751.232802-10-selvin.xavier@broadcom.com
+Reviewed-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 25 ++++++++++++++++---------
- drivers/md/md.h |  5 +++++
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 3 +++
+ drivers/infiniband/hw/bnxt_re/qplib_sp.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 8e96a0ff2b267..ee147b265a661 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -396,17 +396,24 @@ static bool is_suspended(struct mddev *mddev, struct bio *bio)
- bool md_handle_request(struct mddev *mddev, struct bio *bio)
- {
- check_suspended:
--	if (is_suspended(mddev, bio)) {
--		/* Bail out if REQ_NOWAIT is set for the bio */
--		if (bio->bi_opf & REQ_NOWAIT) {
--			bio_wouldblock_error(bio);
--			return true;
-+	if (unlikely(md_cloned_bio(mddev, bio))) {
-+		/*
-+		 * This bio is an MD cloned bio and already holds an
-+		 * active_io reference, so percpu_ref_get() is safe here.
-+		 */
-+		percpu_ref_get(&mddev->active_io);
-+	} else {
-+		if (is_suspended(mddev, bio)) {
-+			/* Bail out if REQ_NOWAIT is set for the bio */
-+			if (bio->bi_opf & REQ_NOWAIT) {
-+				bio_wouldblock_error(bio);
-+				return true;
-+			}
-+			wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
- 		}
--		wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
-+		if (!percpu_ref_tryget_live(&mddev->active_io))
-+			goto check_suspended;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 64b6e572e7047..48d5133671c4b 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1473,6 +1473,9 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
  	}
--	if (!percpu_ref_tryget_live(&mddev->active_io))
--		goto check_suspended;
--
- 	if (!mddev->pers->make_request(mddev, bio)) {
- 		percpu_ref_put(&mddev->active_io);
- 		if (!mddev->gendisk && mddev->pers->prepare_suspend)
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index bba0f6790c035..cab3d7360b098 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -1043,6 +1043,11 @@ void mddev_update_io_opt(struct mddev *mddev, unsigned int nr_stripes);
+ 	qplqp->type = (u8)qptype;
+ 	qplqp->wqe_mode = bnxt_re_is_var_size_supported(rdev, uctx);
++	if (uctx && qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_VARIABLE &&
++	    (!ureq->sq_slots || ureq->sq_slots > BNXT_RE_MAX_SQ_SLOTS))
++		return -EINVAL;
+ 	if (init_attr->qp_type == IB_QPT_RC) {
+ 		qplqp->max_rd_atomic = dev_attr->max_qp_rd_atom;
+ 		qplqp->max_dest_rd_atomic = dev_attr->max_qp_init_rd_atom;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+index 5a45c55c6464c..7e332aca50161 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+@@ -367,6 +367,7 @@ int bnxt_qplib_destroy_flow(struct bnxt_qplib_res *res);
+ #define BNXT_VAR_MAX_SLOT_ALIGN 256
+ #define BNXT_VAR_MAX_SGE        13
+ #define BNXT_RE_MAX_RQ_WQES     65536
++#define BNXT_RE_MAX_SQ_SLOTS    65536
  
- extern const struct block_device_operations md_fops;
+ #define BNXT_STATIC_MAX_SGE	6
  
-+static inline bool md_cloned_bio(struct mddev *mddev, struct bio *bio)
-+{
-+	return bio->bi_pool == &mddev->io_clone_set;
-+}
-+
- /*
-  * MD devices can be used undeneath by DM, in which case ->gendisk is NULL.
-  */
 -- 
 2.53.0
 
