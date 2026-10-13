@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598422BFC85;
-	Tue, 13 Oct 2026 11:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FDF4E4C5A;
+	Tue, 13 Oct 2026 11:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892166; cv=none; b=YYXszXITaKSbqc9Yiub/ABRLmGNf4f75DfeByzFrhya9+P3ayKNNl31Ynr3rUA2TRZUIh8doeLcF4lhvcZi5n1NyYeOzt2IpxOGRAjuIqTZEL7MAOUQ6UDNtq0hY1wLgFV4tysIKeQ7MFIvKjPDPdNGuDeCyYzGAGZLhagGoWWQ=
+	t=1791892169; cv=none; b=pMotpthcSzi89WECgW4r8Oz4aj/9WtpWeZAuyZJ9k+9BVLSxh9GGp2w3LVWlzNxxesedkUcc3NjDB/SmbxcGRYPshtolmEGOBnqj8Y4voIpEQwaorjcjkOnLZPhPs3bB/H7YvKR14T9u9W9to8a+OQyBrzfGsROgMQvyuadXu8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892166; c=relaxed/simple;
-	bh=tH1D/SLKcYSIBSK1ifOS2C7jdVW8wxW5+Q1UU+26UrU=;
+	s=arc-20240116; t=1791892169; c=relaxed/simple;
+	bh=xtfdS3fquHodZOe5mSdqm1pqle/HA7IjnzmoQJNiyws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tAvguSLLW/crDrlUIkcXCEkeEDE5bIkHKN3oGFD2LjMdpMDBT7etlcTEa/Nwd4Oe2EgiHwe5/5OgWggvXC7Fh+dk2H6i651EIHUfgnTrc4z7d3rZCncjImeDl5aeB2ORAO4e8OT77aJnP0o1l4bG/GLQNjz/neJlIQaC/p8FbwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEieBPft; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BtqB6t9ZbcumWnzUmpGzh/oiZ9sPMXAk7MFEUu6BJ/dHuAr7aAGJikZfYqmJWI8KBtmSH08LNhdupxpC0LxLRYizcW6dhQLfrPtznLGap7mPp5l2Nwzn2clASh3qZJVFVBmysd4h0I5+V2cI/aMElStdUvsOgp4Bb7OoiwojS8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOKU97R3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEieBPft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7D51F000FF;
-	Tue, 13 Oct 2026 11:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOKU97R3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370691F000FF;
+	Tue, 13 Oct 2026 11:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892165;
-	bh=D1i8OAi7XBm0ucZwlk5YR/j9CM54C/UnYdLseITA46M=;
+	s=korg; t=1791892167;
+	bh=sBTkWO4itTyZuc0LS/XPWqgzREIyNTUDF/61sYd9FWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEieBPftJc3MU9jEjTDrZZ4A0V+ohD4xNYVw0Q4FUEVF09FgCYf0o76nApYVf+pS8
-	 R+cqfry4GQAYeCIlLozGgJlVQUpaQf8fUfl7vCpba545kq8w9g0DpEtB/zUXxGoRFz
-	 PNlYhJmwqmPQWiA1fuNPwmc3Ap0GBlIXWbDGhbKs=
+	b=DOKU97R3BINV6jr4A1mVVY/8Btps6gCza6EWRExTsIbMbmeNYroBzP8CjdYtJBC2E
+	 71/5Ef3KePiNmMOUdBspKKHyA99MxwOjuDWKspZSlByFug7/ntYi3rU0lnQ4CydQLJ
+	 uHmwh6Gypn9Kv4haUVTSFhZUW/FT2vwqrkgGAgGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ondrej=20Mosn=C3=A1=C4=8Dek?= <omosnacek@gmail.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 027/281] cipso: adjust cached option offsets when removing CIPSO
-Date: Tue, 13 Oct 2026 13:35:43 +0200
-Message-ID: <20261013112855.711436895@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
+Subject: [PATCH 7.2 076/281] dm: fix reading free memory in do_resume
+Date: Tue, 13 Oct 2026 13:36:32 +0200
+Message-ID: <20261013112856.975122771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -46,60 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 6d25ffca055a77787c21a36b66c253f76239411b upstream.
+commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 upstream.
 
-cipso_v4_skbuff_delattr() removes the CIPSO bytes but does not adjust
-cached offsets for options that follow them.
+When do_resume calls dm_table_get_mode(new_map), the call is done without
+holding any locks (it only holds a reference to the md). It may be
+possible that another concurrent ioctl on the same device will swap table
+after dm_swap_table and before dm_table_get_mode. In this case,
+dm_table_get_mode(new_map) reads freed memory.
 
-For example, with a valid 10-byte CIPSO option followed by a seven-byte
-RR option, parsing records rr at offset 30.  Removing CIPSO moves RR to
-offset 20, while the cached offset remains 30.  Consumers such as
-ip_forward_options() and __ip_options_echo() then access the wrong bytes;
-the latter may interpret packet data as the option length and copy it into
-fixed-size option storage.
+This race condition was triggered by syzbot.
 
-Mirror cipso_v4_delopt() and subtract cipso_len from the srr, rr, ts and
-router_alert offsets when they follow CIPSO.  cipso_len is the distance
-the first memmove() shifts those options.  The later header move and
-network-header reset relocate the bytes and their offset base together.
+This commit fixes the race by reading mode of the new table before
+dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
+but this function doesn't attempt to dereference it, so this call should
+be safe.
 
-Fixes: 89aa3619d141 ("cipso: make cipso_v4_skbuff_delattr() fully remove the CIPSO options")
+Note that this is not a security bug because only root can trigger it and
+the commonly used tools such as lvm or cryptsetup do not call the ioctls
+concurrently, so that they can't trigger it acceidentally.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Ondrej Mosnáček <omosnacek@gmail.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20261006035108.3101440-1-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/cipso_ipv4.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-ioctl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/cipso_ipv4.c
-+++ b/net/ipv4/cipso_ipv4.c
-@@ -2287,6 +2287,14 @@ int cipso_v4_skbuff_delattr(struct sk_bu
- 	       new_hdr_len - new_hdr_len_actual);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1295,6 +1295,7 @@ static int do_resume(struct dm_ioctl *pa
+ 	/* Do we need to load a new map ? */
+ 	if (new_map) {
+ 		sector_t old_size, new_size;
++		blk_mode_t new_map_mode;
  
- 	opt->optlen -= hdr_len_delta;
-+	if (opt->srr > opt->cipso)
-+		opt->srr -= cipso_len;
-+	if (opt->rr > opt->cipso)
-+		opt->rr -= cipso_len;
-+	if (opt->ts > opt->cipso)
-+		opt->ts -= cipso_len;
-+	if (opt->router_alert > opt->cipso)
-+		opt->router_alert -= cipso_len;
- 	opt->cipso = 0;
- 	opt->is_changed = 1;
- 	if (hdr_len_delta != 0) {
+ 		dm_ima_context_table_op(md, ima_context, DM_IMA_TABLE_SAVE);
+ 		/* Suspend if it isn't already suspended */
+@@ -1327,6 +1328,7 @@ static int do_resume(struct dm_ioctl *pa
+ 			}
+ 		}
+ 
++		new_map_mode = dm_table_get_mode(new_map);
+ 		old_size = dm_get_size(md);
+ 		old_map = dm_swap_table(md, new_map);
+ 		if (IS_ERR(old_map)) {
+@@ -1342,7 +1344,7 @@ static int do_resume(struct dm_ioctl *pa
+ 		if (old_size && new_size && old_size != new_size)
+ 			need_resize_uevent = true;
+ 
+-		if (dm_table_get_mode(new_map) & BLK_OPEN_WRITE)
++		if (new_map_mode & BLK_OPEN_WRITE)
+ 			set_disk_ro(dm_disk(md), 0);
+ 		else
+ 			set_disk_ro(dm_disk(md), 1);
 
 
