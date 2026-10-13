@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E844F055E;
-	Tue, 13 Oct 2026 11:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C9A4E533A;
+	Tue, 13 Oct 2026 11:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892076; cv=none; b=Cy73URWumCUJzI2sCmvFfpWPAZYOr/Vx+66d94Dhnlykyee4v9YvINoVLg1kNL7febmcABqR6Le7TjUDmCVK+TE0IBg8fp4SjlM9MWhOG3Mx/4wGQq1a4fgCuSy6xRw0vdlaEk/2U2afgchvS+ytf5MN9c4uNmG7IB+foO2Dwvo=
+	t=1791892079; cv=none; b=coQNGxyXLiKhjuDNCXy60qAbmQ3tpzlKegTJN4gjM0GNfqYdJv0K/VgScsC6tHRv7xVYEIJyEJlMqI7Hk0+mlGbbF6DNky+3o26ngeFfST1ymnWDCFcwk7692ezY4WlGhVIIzc5zC9Bn27F/Zuc/fPKu1ed6yY4fNBtk3p4mzX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892076; c=relaxed/simple;
-	bh=AL/JyGRN1i1Gv0WYNr8ncHTrePqCloAYb+7b78SG+Yg=;
+	s=arc-20240116; t=1791892079; c=relaxed/simple;
+	bh=+faK5tVqpgBIZIvTZ6LoeRFpvVY11kP1xK6w70gpmVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lk0J1IhW86U1yZYtrZhoKb5WP0g/CtBCSS6fnNpbhUBNjgsGxDAQHjvf7JzESRojRzrm+q9gEddYvWYZrTcNZejVbBMNaBpeKXqIULOBAyFIsM0ubihqnX9TsqmaqQj+PeuC3fAhlQBA2mrInAYu3VQrHyRCi4GSBoDmlBo3O7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7Hgy1h0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kcwy5vhqMBGwi3kkeXbOejMwaFLlLHh3rrB286S6UnvCqNLL9XE2rtFokYoA2lX4sAnlISap+AX9L7/2b0wcSaiTkzt4/4EoQUHn/k58Qal395ok0bJ758kzXhLPO5Q9gSDEtSZgGybmgWk1v0klNQAp7uAjya407/UuFO/vCyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJazyb3T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7Hgy1h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2181F000FF;
-	Tue, 13 Oct 2026 11:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJazyb3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9DD1F000FF;
+	Tue, 13 Oct 2026 11:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892075;
-	bh=y4W8GSFXgE78eYE7zG1OH4rumqm2aZQE1Pg8y4SJx7s=;
+	s=korg; t=1791892078;
+	bh=kQPcHPfHCSl9LvDQ9q3NVD1UTpQjzZ51+Y4+WlGrXsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7Hgy1h0rseafmvcEcAHOJS9eJDVLJJU5r/9VLdx/0+F1Fo83Q+c/OB6VPWm4UWHK
-	 LzB4tfNgydq7k2Sg5aq6HlWhxL3F0JVC8sou6jT/l4XxjV2g13FbFa0PRHK1/i5Q0K
-	 GyaA6GdPpZRmydxMaKRc+e+BncauDEzcBEsTMq6M=
+	b=yJazyb3TOrCzL8A6B8qdP5snrgg+WZ6FgXUfMyNqNru9cCKheRwstg9pNS0OL3oM+
+	 PPvPryJa8m7Gz1flbrm4uoC/IcTnX5QviW8mfID8C7QRvxTerd/qzTUThEAY4KiMqX
+	 +uLLdz09fkbuNKvZ/jXUKqSQr0CbQUmtn8YQx0sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Vishal Badole <Vishal.Badole@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.2 052/281] EDAC/amd64: Mask UMC chip select to the four implemented selects
-Date: Tue, 13 Oct 2026 13:36:08 +0200
-Message-ID: <20261013112856.314558553@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 7.2 053/281] fsverity: RCU-delay the freeing of struct fsverity_info
+Date: Tue, 13 Oct 2026 13:36:09 +0200
+Message-ID: <20261013112856.339213295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,55 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Badole <Vishal.Badole@amd.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 7484bc43ba6b8e189b482db5b75e7842890a82b1 upstream.
+commit e58c3805ed325fe2d4ae2dd467c0486cc860b733 upstream.
 
-For DRAM ECC errors, the chip select value can be found in the
-MCA_SYND[ErrorInformation] field.
+__fsverity_get_info() calls rhashtable_lookup_fast(), which just uses
+rcu_read_lock() and doesn't directly synchronize with
+fsverity_remove_info().
 
-ErrorInformation[2:0] was first documented in Zen1. The 3 bit field
-implied that up to 8 chip selects may be used.
+For the same inode this isn't a problem: its fsverity_info is removed
+only at inode eviction time or upon failure to enable verity, when the
+inode no longer needs its fsverity_info and it will no longer be
+accessed via that inode.
 
-However, all Zen-based systems have only ever had up to 4 chip selects.
-So only bits [1:0] would contain a valid chip select value.
+However, this is broken and can cause a use-after-free for concurrent
+__fsverity_get_info() for *different* inodes.  Those rely on following
+fsverity_info::rhash_head in the rhashtable under rcu_read_lock() only.
+They also use fsverity_info::inode to do the key comparison.
 
-Future systems are redefining the field to ErrorInformation[1:0]. This
-matches the existing 'up to 4 chip selects' implementations. And it
-frees up the extra bit for other decoding.
+Fix this by RCU-delaying the freeing of 'struct fsverity_info' after
+it's been removed from the rhashtable.
 
-Change the current chip select mask from 0x7 to 0x3 to prepare for the
-decode change.
-
-Fixes: 713ad54675fd ("EDAC, amd64: Define and register UMC error decode function")
-Suggested-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261002113204.3358815-2-Vishal.Badole@amd.com
+Fixes: f77f281b6118 ("fsverity: use a hashtable to find the fsverity_info")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sandeep Dhavale <dhavale@google.com>
+Link: https://patch.msgid.link/20261001171349.81454-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/amd64_edac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/verity/fsverity_private.h |   15 ++++++++++++++-
+ fs/verity/open.c             |   13 ++++++++++++-
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -2796,13 +2796,13 @@ static inline void decode_bus_error(int
-  * the instance_id. For example, instance_id=0xYXXXXX where Y is the channel
-  * number.
-  *
-- * For DRAM ECC errors, the Chip Select number is given in bits [2:0] of
-+ * For DRAM ECC errors, the Chip Select number is given in bits [1:0] of
-  * the MCA_SYND[ErrorInformation] field.
-  */
- static void umc_get_err_info(struct mce *m, struct err_info *err)
- {
- 	err->channel = (m->ipid & GENMASK(31, 0)) >> 20;
--	err->csrow = m->synd & 0x7;
-+	err->csrow = m->synd & 0x3;
+--- a/fs/verity/fsverity_private.h
++++ b/fs/verity/fsverity_private.h
+@@ -11,6 +11,7 @@
+ #define pr_fmt(fmt) "fs-verity: " fmt
+ 
+ #include <linux/fsverity.h>
++#include <linux/rcupdate.h>
+ #include <linux/rhashtable.h>
+ 
+ /*
+@@ -76,7 +77,19 @@ struct merkle_tree_params {
+ struct fsverity_info {
+ 	struct rhash_head rhash_head;
+ 	struct merkle_tree_params tree_params;
+-	u8 root_hash[FS_VERITY_MAX_DIGEST_SIZE];
++	union {
++		u8 root_hash[FS_VERITY_MAX_DIGEST_SIZE];
++
++		/*
++		 * Used for final freeing of the struct, in which case root_hash
++		 * is no longer needed.  Specifically, the only fields needed
++		 * besides the rcu_head are those needed by fsverity_free_info()
++		 * itself, and those that can be accessed by fsverity_get_info()
++		 * (rhash_head and inode) during the RCU-protected rhashtable
++		 * chain search trying to find another inode's fsverity_info.
++		 */
++		struct rcu_head rcu_head;
++	};
+ 	u8 file_digest[FS_VERITY_MAX_DIGEST_SIZE];
+ 	struct inode *inode;
+ 	unsigned long *hash_block_verified;
+--- a/fs/verity/open.c
++++ b/fs/verity/open.c
+@@ -399,11 +399,22 @@ void fsverity_free_info(struct fsverity_
+ 	kmem_cache_free(fsverity_info_cachep, vi);
  }
  
- static void decode_umc_error(int node_id, struct mce *m)
++static void fsverity_free_info_rcu(struct rcu_head *head)
++{
++	fsverity_free_info(container_of(head, struct fsverity_info, rcu_head));
++}
++
+ void fsverity_remove_info(struct fsverity_info *vi)
+ {
+ 	rhashtable_remove_fast(&fsverity_info_hash, &vi->rhash_head,
+ 			       fsverity_info_hash_params);
+-	fsverity_free_info(vi);
++	/*
++	 * The freeing must be RCU-delayed because __fsverity_get_info() for a
++	 * *different* inode's fsverity_info in the same rhashtable hash chain
++	 * can still be accessing *this* fsverity_info's rhash_head and inode
++	 * fields as part of the RCU-protected hash chain search.
++	 */
++	call_rcu(&vi->rcu_head, fsverity_free_info_rcu);
+ }
+ 
+ void fsverity_cleanup_inode(struct inode *inode)
 
 
