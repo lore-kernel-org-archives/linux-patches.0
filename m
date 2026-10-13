@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908474EFFD4;
-	Tue, 13 Oct 2026 11:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CA24F30DC;
+	Tue, 13 Oct 2026 11:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892404; cv=none; b=W5mvY9wQNaWDXu4tsGZsIGe04sy7/aXRh48ghcXpmLuYGn2GunEy8ZLpkr0oCCxwljlJ3ys7iEB7x0LKbkehnQf+zP2kBYoMg5txVI3PIkyIb6as7SNBm82Yj8yWVAoROZ6qBpc+kmtHrOHyO9SspkF8CuzqdhZLRcNFesTBSSY=
+	t=1791892407; cv=none; b=Bd3XooxaedZ/v+93PIsO0qzKjq8Rg9AkvvUxIL+DWt9dLKMz6GLpeFH8tcIhg7QH6n8QiJByjqjk8jBgYNt8P0uwI3SawfzE8kw16jx71GBVcSy1Bzfw33XYILzzTBQwmO2PyWpNNyjH0HpZwAaQCl8HYdOutJhLIOYD4yn5eS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892404; c=relaxed/simple;
-	bh=5mj/VPaKiMkbTNQm7dGOsjZnZ6WHDHK1GWRMufKfnNE=;
+	s=arc-20240116; t=1791892407; c=relaxed/simple;
+	bh=Itz3rqad8RjvZWFZXD+WeFiI0CYSXGrd/+4ryd8IKrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iV8VI2uLjgMgla7QNZOATwHBcQBvusLL9/uk0EEKxyB2gVAdYirE3nEQKUStPSvFhSAVGhpcVlSkUzSU5q9lwRh0AeZ6i0akxnVMRJ3jxsenPlPCHTazFpJ4sAZw04P2FhrD/ivLeDQb7iwKh1oprvqRNkoC1rDm77by3XW8jGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB5uupGi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HxtjU6SVbGvSBANzCKAAQIIMyelwfoJKvTGRoBO79JxnAyw5KR9RvZk3dbEGWFAkfjSr+r330SLxGR377aKl09zTLU1nSVxLjn1HZQ5ETzfNA4hGZIdHduOBPWvzp+zQIKLE7PleSm9I4Qe8XFKUun1eVMvdlvwjvaGo7RQPPPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtxB72uP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB5uupGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E841E1F000FF;
-	Tue, 13 Oct 2026 11:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtxB72uP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5EB1F00898;
+	Tue, 13 Oct 2026 11:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892401;
-	bh=PjWzWxM/gXsFyy+xrxfxQJm+7fugIGjdIBbrGoxDtho=;
+	s=korg; t=1791892404;
+	bh=yxIv6Jdj50mZtDRg7O+7wYPWppUXPFFrOqyPd3j+SL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dB5uupGimuED5BVoS51WyBNL3bAHxP6FiWVaHb4TGjvuHlkpSOt5dBgqQLC9JbeFc
-	 4jhqjN9Oe2UeFvBgeMW43SMT1xJza99+kYWFkQU7f0JwjGOd26G4NFe9wSa8VtfSrh
-	 3MPH2nCjdNsndmequ2MpMAqtI/bXcr57nlUHImD0=
+	b=XtxB72uPCfnd1sotAZZYoc6TJbZsukQI58Nl61Li1EPsmohTywV++rPX0I3i+J1Kj
+	 Hypccze/pzwiQW7Mn3Rf5eaqni1CSLHE9aCd3QXIrvuUowv11LMIKduE8PublrnAy8
+	 m0Tp+YRUZopFOtAIK/hxeXtD1UV/aYsO8nUXgLKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 160/281] namespace: dont reconfigure internal superblocks via remount and umount
-Date: Tue, 13 Oct 2026 13:37:56 +0200
-Message-ID: <20261013112859.047369040@linuxfoundation.org>
+Subject: [PATCH 7.2 161/281] namespace: remove the fsnotify marks of a mount namespace in process context
+Date: Tue, 13 Oct 2026 13:37:57 +0200
+Message-ID: <20261013112859.070494729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,65 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit d791606bb915a8f27e36657696fd1d9a216c5c08 upstream.
+commit 1a116222acdcc1bc1a8350727ae6f28907d44594 upstream.
 
-Commit 02587a4af82a ("fs: refuse fspick() on internal superblocks")
-blocked fspick() on SB_NOUSER superblocks. But that's not the only way
-to reconfigure_super(). mount(MS_REMOUNT) and umount() of the caller's
-root without MNT_DETACH. The root of an empty mount namespace is a
-nullfs mount and all mount namespaces share that superblock:
+mnt_ns_release() drops the last passive reference of a mount namespace
+and removes its fanotify marks via fsnotify_mntns_delete(). That takes
+the mutex of every group with a mark on the namespace and the spinlock
+of the connector. Fine from process context. But mnt_ns_tree_remove()
+hands the reference the namespace was allocated with to call_rcu() and
+so the marks are removed from the RCU softirq:
 
-  nullfs: fspick: FAIL errno=22 (Invalid argument)
-  nullfs: mount(MS_REMOUNT|MS_RDONLY): ok(0)
-  nullfs after remount: statfs(/): magic=0x4e554c4c flags=0x21 RDONLY
-  nullfs: umount2("/", 0): ok(0)
+  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:623
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/3
+   __mutex_lock+0x113/0x24b0
+   fsnotify_destroy_marks+0x11b/0x3d0
+   mnt_ns_release_rcu+0x57/0xa0
+   rcu_core+0x6b6/0x1e40
 
-Refuse both like fspick() does. Only root in the initial user namespace
-can do this and nullfs is empty and immutable so the flags don't buy
-anything. But they show up in statfs() for the root of every mount
-namespace on the host.
+and lockdep complains about the connector lock being taken from softirq
+context. A fanotify group with a FAN_MARK_MNTNS mark on the mount
+namespace of another task is all that's needed. Root in a user
+namespace can do that for a mount namespace it owns. The task exits and
+the namespace is freed with the mark still on it.
 
-Fixes: 9d4e752a24f7 ("namespace: allow creating empty mount namespaces")
-Cc: stable@vger.kernel.org # v7.1+
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-11-be34c83956ae@kernel.org
+Remove the marks in free_mnt_ns() before the namespace is handed to RCU.
+That runs in process context once the last active reference is gone. A
+mark is added through a file descriptor to the namespace which holds an
+active reference so no mark can show up after that.
+
+Fixes: bf630c401641 ("vfs: add notifications for mount attach and detach")
+Cc: stable@vger.kernel.org # v6.15+
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-13-be34c83956ae@kernel.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs_context.c | 4 ++++
- fs/fsopen.c     | 3 ---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ fs/namespace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs_context.c b/fs/fs_context.c
-index 23ad66cd94e1..a50584df97be 100644
---- a/fs/fs_context.c
-+++ b/fs/fs_context.c
-@@ -315,6 +315,10 @@ struct fs_context *fs_context_for_reconfigure(struct dentry *dentry,
- 					unsigned int sb_flags,
- 					unsigned int sb_flags_mask)
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -130,7 +130,6 @@ static void mnt_ns_release(struct mnt_na
  {
-+	/* kernel-internal superblocks are nobody's to reconfigure */
-+	if (dentry->d_sb->s_flags & SB_NOUSER)
-+		return ERR_PTR(-EINVAL);
-+
- 	return alloc_fs_context(dentry->d_sb->s_type, dentry, sb_flags,
- 				sb_flags_mask, FS_CONTEXT_FOR_RECONFIGURE);
+ 	/* keep alive for {list,stat}mount() */
+ 	if (ns && refcount_dec_and_test(&ns->passive)) {
+-		fsnotify_mntns_delete(ns);
+ 		put_user_ns(ns->user_ns);
+ 		kfree(ns);
+ 	}
+@@ -4257,6 +4256,8 @@ static void free_mnt_ns(struct mnt_names
+ 	if (!is_anon_ns(ns))
+ 		ns_common_free(ns);
+ 	dec_mnt_namespaces(ns->ucounts);
++	/* the last active reference is gone, no mark can show up anymore */
++	fsnotify_mntns_delete(ns);
+ 	mnt_ns_tree_remove(ns);
  }
-diff --git a/fs/fsopen.c b/fs/fsopen.c
-index 9d5a7a22b529..ae19e5136598 100644
---- a/fs/fsopen.c
-+++ b/fs/fsopen.c
-@@ -190,9 +190,6 @@ SYSCALL_DEFINE3(fspick, int, dfd, const char __user *, path, unsigned int, flags
- 	ret = -EINVAL;
- 	if (target.mnt->mnt_root != target.dentry)
- 		goto err_path;
--	/* kernel-internal superblocks are nobody's to reconfigure */
--	if (target.dentry->d_sb->s_flags & SB_NOUSER)
--		goto err_path;
  
- 	fc = fs_context_for_reconfigure(target.dentry, 0, 0);
- 	if (IS_ERR(fc)) {
--- 
-2.56.0
-
 
 
