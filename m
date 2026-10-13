@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBC54FDA49;
-	Tue, 13 Oct 2026 12:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7E24FC329;
+	Tue, 13 Oct 2026 12:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895089; cv=none; b=c4a1lHPoWvgJ0vLJz9kpdYWLpXeFYZgx0lbOVGaY6oOV137tibpOeUZnOP31tG23UZjwZReqreKUk07CN6gyJ8VUXL+H0836/ditgB0vZb4aCLopK8F1xWG4XbXB37eMkGCRjbWcaEYYiWYZVaV+J5ePSzG61CCBqc+WXa7Do3c=
+	t=1791895092; cv=none; b=qbwnn8z4gFl5HzUPYOzD0JnpJ9NGJt8AXrgWeujzo5c1Os/P6csLqAITp5hccgPLzqw8XSp1U9m0lp8+IsaHNKiHRGgnNUp4EyThYhrJYhqvawp7mfM99ovY40v8D/feMFKnv/y4zFQ/z9ItSO1kyCHeRNciTGKZp43a5rxuICA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895089; c=relaxed/simple;
-	bh=WYPCJqzSZidbVgt66jR1gSfQBiYbqWmnpeaANN21/Eo=;
+	s=arc-20240116; t=1791895092; c=relaxed/simple;
+	bh=5SfPMcMxHAFMZHKYVK1Jo+XSXl4tI530NQwP4rmN3dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7GmxTVx6TxA2DrKe9/gCTACiR2/QWtiCkQ25GXZM0bf+Lr7vBiapmIMPOcvY0cSH6dUwuMBmuRNjhzHL/MHiCETtZgu5p/IP/P6B7Qy1XbjCSkHIXJ3otsTduBB5M+9/+UstjkgpW7NEsQLEAx/1DAxH2INQ/RariWGJ48Okhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUvTA2/N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LhLePDrpGwH4IHJRPFfzr9hY56GOe4SRBBHDg0s4f/ei7mdIv3jyOF7+wFTBkN+fqtovzHs7MDD5NL0j8O7mvTgnVPWi9i5l9Sgc9wGLj8REF/a3HtAtispNU0co3cSYVgoXYs7gLp8PsIkrIHncAWtfkisijHZjGrzybnynn1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlMByTlA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUvTA2/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A907E1F000FF;
-	Tue, 13 Oct 2026 12:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlMByTlA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A9C1F000FF;
+	Tue, 13 Oct 2026 12:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895087;
-	bh=9jEs83rgIlT/nm7UY/fISoKSPHYvLtLg58+b1SZX6NE=;
+	s=korg; t=1791895090;
+	bh=8UVn1dlGndvWRpvOu+TcNhVWcXh9x+8a9ruh22UNu/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wUvTA2/NPEkh7oxc/ssIW9B49bC5PmQgUux5zOZLNmuWbKg5ylIiHn5ypyQBjak9O
-	 XoBzWSAq+CLmthuv1/amQQty5290MHIoHnoZM3A/ZBNVeyirt8fabE+j+CcklE2s9E
-	 IyN20WhzOX+kjZdfYwIe2OWRbA0NpPdeYmGIXJcQ=
+	b=YlMByTlA4tl7VKuvLseo+ky9lGZwET/HNKa7ULEHHofQJDcym7aTPp/rbuNXJJueL
+	 S6le99prYYvku2m0EqL+H1Ee/dUMoKdkCUCqpst3QaJz2K1l8Nj6lJ0lNADOgHxC6H
+	 76E2O9RcFhMhRxvgvs2y1UT1Ihdw9F0eTYRnjg8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sicong Huang <congei42@163.com>,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Jie Deng <dengjie03@kylinos.cn>,
 	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.12 157/497] usb: cdns3: fix use-after-free in cdns3_gadget_exit()
-Date: Tue, 13 Oct 2026 13:35:24 +0200
-Message-ID: <20261013112911.614903050@linuxfoundation.org>
+Subject: [PATCH 6.12 158/497] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
+Date: Tue, 13 Oct 2026 13:35:25 +0200
+Message-ID: <20261013112911.637980717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,55 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-commit ebe9b68c396792c15d0ac690d592e449e74ed804 upstream.
+commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
 
-cdns3_gadget_start() arms two works on system_freezable_wq:
-pending_status_wq for the deferred ep0 status stage and aligned_buf_wq
-for realigned request buffers. Both handlers use the cdns3_device the
-works are embedded in, and cdns3_pending_setup_status_handler() also
-calls the ep0 request completion.
+The Cadence USBSS controller is a two-function PCI device. The first
+probed function allocates the driver data and stores it with
+pci_set_drvdata(), while the second function reuses it via
+pci_get_drvdata() when pci_is_enabled() reports that the first
+function has already been probed.
 
-cdns3_gadget_exit() does not wait for these works. It frees all
-endpoints and aligned buffers and drops the last reference to the
-gadget device, which frees priv_dev, so a work queued before the exit
-can run after the free.
+When the second function is probed while the first one has been
+enabled but has not yet set its driver data, pci_get_drvdata()
+returns NULL, and the subsequent wrap->devfn assignment dereferences
+a NULL pointer and crashes the kernel.
+logs:
+Call trace:
+  cdns3_pci_probe+0xa4/0x300
+  local_pci_probe+0x44/0xa8
+  pci_call_probe+0x54/0x158
+  pci_device_probe+0x84/0x100
+  really_probe+0x184/0x3d0
+  __driver_probe_device+0x80/0x178
+  driver_probe_device+0x44/0xe8
+  __driver_attach+0xec/0x1f8
+  bus_for_each_dev+0x7c/0xe0
+  driver_attach+0x28/0x38
+  bus_add_driver+0x110/0x238
+  driver_register+0x64/0x128
+  __pci_register_driver+0x50/0x60
+  cdns3_pci_driver_init+0x28/0x38
+  do_one_initcall+0x5c/0x280
+  do_initcalls+0x104/0x1d8
+  kernel_init_freeable+0x140/0x218
+  kernel_init+0x28/0x1f8
+  ret_from_fork+0x10/0x20
 
-Fix this by waiting for both works after the gadget driver is unbound
-and the IRQ is freed, when no new work can be queued, and before the
-endpoints and buffers are released.
-
-This issue was found by an in-house static analysis tool.
+Return -EPROBE_DEFER in this case so that probing is retried after
+the first function has completed its probe.
 
 Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Reported-by: Sicong Huang <congei42@163.com>
-Closes: https://lore.kernel.org/linux-usb/7f5719b.8700.18f67b324d3.Coremail.congei42@163.com/
-Suggested-by: Sicong Huang <congei42@163.com>
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
 Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260909095655.694527-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -3270,6 +3270,10 @@ static void cdns3_gadget_exit(struct cdn
- 	usb_del_gadget(&priv_dev->gadget);
- 	devm_free_irq(cdns->dev, cdns->dev_irq, priv_dev);
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -98,6 +98,11 @@ static int cdns3_pci_probe(struct pci_de
  
-+	/* The works can still be queued until the IRQ is freed. */
-+	cancel_work_sync(&priv_dev->pending_status_wq);
-+	cancel_work_sync(&priv_dev->aligned_buf_wq);
-+
- 	cdns3_free_all_eps(priv_dev);
- 
- 	while (!list_empty(&priv_dev->aligned_buf_list)) {
+ 	if (pci_is_enabled(func)) {
+ 		wrap = pci_get_drvdata(func);
++		if (!wrap) {
++			dev_err(&pdev->dev,
++				"second function not initialized, retrying\n");
++			return -EPROBE_DEFER;
++		}
+ 	} else {
+ 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
+ 		if (!wrap)
 
 
