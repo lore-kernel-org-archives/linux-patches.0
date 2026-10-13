@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28CD4EF13A;
-	Tue, 13 Oct 2026 11:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F094F3ED5;
+	Tue, 13 Oct 2026 11:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892198; cv=none; b=RruxDfSxHNrk0OolynFvIfzrqDnC2xouh64KKJF1umd71lGhLMvRanJzK3H64OOltMLuxu1d2Ej26INt/xr6UtNN2wkP4MhWuma+lZzSQ2J8gPJN1q4gTKK7X9hZP8Ogva9b0TDJ/MIwbeTAMw4fpEnAjBvF/PxPn9H5tmZhKQ4=
+	t=1791892203; cv=none; b=Wp7B3Vb5V6Bi+0U/lr8lQTGOmV1nSqFDWhkJwmpAtl0677Y0aC8QKyWxSonldZUgXfyLXmWJPZCDB46gPMc+sQ/raIdlywm7Az5R2zoJIX9djitcBP7VjfTj00H4dKQeWRUIEYoVd+6Kln1mMzWKHSH6v7hO9rKd1OqdfCmMWOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892198; c=relaxed/simple;
-	bh=pQvPVUZbvIvil/zbmnQHKxNVnbhZ6yEV5UDUofF7YXw=;
+	s=arc-20240116; t=1791892203; c=relaxed/simple;
+	bh=Lzxw2loZz8k1kDgN2PxjUAzMtAW4uBej0Xo8y1pRVJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JW8V2sATOHT0+Z6yjAvqE+DVQETQW0zIhPWbgataMKZUO8DM4iokX+GdcYgdvm0G0fa3O2Vcwm31JGrH5hBEwHnqmUkbjLzCUd8N2Jt6GcZB0lX2k3AjqdrwejzKACsfVYZMAc26DyTmu6ASApXaGHSYly1olp1fJ2H2DY+EAxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ22SnZf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ULSzFQX5OM0S0y+kD4/7mLoe5VALYgIq+R+Ps9ZDbpSR8DH5CD3NlaFeRsdJHkUQ8XYwnudmH3Thmkt1WBZtA7aqyZ4ndAHKxdd5IRObCEDc2E71le45GFeH2dhiFEdBPgSRt9S5/lhcYkc7dbYzWzic+WHvrKv3NhAk5MOwitE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpKz1Ysa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ22SnZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375181F000FF;
-	Tue, 13 Oct 2026 11:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpKz1Ysa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2731F000FF;
+	Tue, 13 Oct 2026 11:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892197;
-	bh=35mC5/WUcnK4ffdp2l8eezh4TgmUnmup6ljgCn9juwE=;
+	s=korg; t=1791892200;
+	bh=AwPoGWIBtRh3jYZNAA1Q9pQCA/kCvCCS5GE0WtVbC6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZ22SnZfIr7cdEW0k4XtCMokPKH2i/KWYmv8+hlatw3AjkDOe/2JsyFXcxes/py+w
-	 6VHl0gjdJwfnXcAxzu6bLiK3S5ikL63IOhkwwnaap8okbxDMzJr9nIC5S8Ft8I4KwT
-	 Os0rzRSpG82NeGREaH3aSLpVCAdGDrcRxwSaNVY0=
+	b=QpKz1Ysa1JbX1wKxAGlmGu45hT+JAUflB9qByazhJMuIKlUjUNqjxuMgOB85qkoRk
+	 c+NBUgzIfX6wFbajUIEPWA3yTu/S8Blc5ZAPWCXXdlPygOH86gxT7GeSEuuTOkhr/i
+	 m5honqJ3zOCMOL8o+SChu1z7nALdu2cgJ8Qjqs/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.2 094/281] power: sequencing: pcie-m2: Fix leaking array from of_regulator_bulk_get_all()
-Date: Tue, 13 Oct 2026 13:36:50 +0200
-Message-ID: <20261013112857.417552096@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 077/281] mmc: cavium-octeon: destroy slot platform devices on remove
+Date: Tue, 13 Oct 2026 13:36:33 +0200
+Message-ID: <20261013112856.999667328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 0d6c5794fd633427f0d4ad8b51d94061295649da upstream.
+commit 0f4d4424fc1d651ec3fa63a0a8060ba9087eb0ec upstream.
 
-of_regulator_bulk_get_all() allocates the consumers array and hands it to
-the caller, who is expected to free it at an appropriate time.
-pwrseq-pcie-m2.c never did, leading to a memory leak.
+octeon_mmc_probe() creates host->slot_pdev[i] with
+of_platform_device_create(), while octeon_mmc_remove() does not destroy
+the child platform devices.
 
-Add an explicit kfree() for the consumers array.
+The probe failure path removes each MMC slot and destroys its associated
+platform device, but the normal remove path only removes the MMC slot.
+As a result, the child platform devices remain registered after the
+Octeon MMC controller is removed.
 
+Destroy each slot platform device during removal after cleaning up the
+corresponding MMC slot, matching the probe failure cleanup path.
+
+This issue was found by manual code inspection.
+
+Fixes: 01d95843335c ("mmc: cavium: Add MMC support for Octeon SOCs.")
 Cc: stable@vger.kernel.org
-Fixes: 52e7b5bd62ba ("power: sequencing: Add the Power Sequencing driver for the PCIe M.2 connectors")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260930-m2-pwrseq-kfree-v1-1-82678b02c126@flipper.net
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/sequencing/pwrseq-pcie-m2.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/cavium-octeon.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -562,6 +562,7 @@ err_destroy_mutex:
- 	mutex_destroy(&ctx->list_lock);
- err_free_regulators:
- 	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+	kfree(ctx->regs);
+--- a/drivers/mmc/host/cavium-octeon.c
++++ b/drivers/mmc/host/cavium-octeon.c
+@@ -301,9 +301,12 @@ static void octeon_mmc_remove(struct pla
+ 	u64 dma_cfg;
+ 	int i;
  
- 	return ret;
- }
-@@ -575,6 +576,7 @@ static void pwrseq_pcie_m2_remove(struct
- 	mutex_destroy(&ctx->list_lock);
+-	for (i = 0; i < CAVIUM_MAX_MMC; i++)
++	for (i = 0; i < CAVIUM_MAX_MMC; i++) {
+ 		if (host->slot[i])
+ 			cvm_mmc_of_slot_remove(host->slot[i]);
++		if (host->slot_pdev[i])
++			of_platform_device_destroy(&host->slot_pdev[i]->dev, NULL);
++	}
  
- 	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+	kfree(ctx->regs);
- }
- 
- static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
+ 	dma_cfg = readq(host->dma_base + MIO_EMM_DMA_CFG(host));
+ 	dma_cfg &= ~MIO_EMM_DMA_CFG_EN;
 
 
