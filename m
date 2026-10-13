@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B263E0C57;
-	Tue, 13 Oct 2026 12:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8133E0C57;
+	Tue, 13 Oct 2026 12:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894422; cv=none; b=VII/6kziEQgjI2KxoKavPurI0Ej+3T+6/rS215Bxo7hm5qr17ZRkM2SfYgfdgLvCxBQ/sEeOPa11RpLdl5w89s35d3igkZjtNARXr2r1P9TgSdNXPJ018uG0f1hKrk0hOpy8qsOFhEc0oF3vSFktIZXM7Ye0RL6sTEvB9dQi7Xo=
+	t=1791894425; cv=none; b=RVcSgJMoAjlyCmni00zO08TKRFndpnZ7+b0lKcmROBfcRmW/e5srTEUD+woSTyyvQM8xDthGgAk0jo67kjJeO5zbVNbj5k5OimyjO9lWrNVC729irW3pPcsHqnetnZe+sGbjJrCsH9H9B5RLPs+rkDaybON9h5fbxnrgpVob0kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894422; c=relaxed/simple;
-	bh=xCSbLglmoi2xMRmR7/GnMmbzWrO8MWQtSlwr+ieIEFQ=;
+	s=arc-20240116; t=1791894425; c=relaxed/simple;
+	bh=mB2O2H4T/29gdLIzHW9U/3RNIyKVit+M3Q+9RfUz5nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+MHolt78umemmuLb7cWh6Y4NMNfbzBnWon2v2UsU2RWd6+je3hOQr0sqV8G1olVJHfpUbfBHJNmKYrH7L9gSpcpIlhDYsJ2YOyStYYQlFuT7yw3/oCC1a47GqyK5W7w4Qk7l5G9nJPVw+/amRXMxmObqJknxLacdgMVxV6diaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvk6J85F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sX8pOmXIxyYRTSKOZ+9Wui8hTWC1qYa3IbIpdkjss+4Mg8Q2K7YL8W8Fk4U5dcsrLkv3SLDDqlf6wZH+rdfWkwu5HEoWgbbRkB0hHfl7hwihulRYBFkTmcNdcbZvEa/RkW+XoQ2vYyGVjE418IikQlqYqMXJbFOYnkZ6m6yXzO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJzFRfdV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvk6J85F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6AD1F000FF;
-	Tue, 13 Oct 2026 12:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJzFRfdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102801F000FF;
+	Tue, 13 Oct 2026 12:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894421;
-	bh=1KH46zVhieTXoCsjLottZa+neFmheRoo6pZqz0H7ZMI=;
+	s=korg; t=1791894424;
+	bh=OC9z3/PxHpEyX+KDcigS8XJw0c4aqBDtoHu+oy+qITE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zvk6J85FPoVLrinM3EceF5HB0+1R9STFvBPVjcIrLEsMyKXFlfp4ZP7R7DFW53GVB
-	 ub0jO4zNelj2C8qzVQNeBPXmp0t2du/eXbEYeh6Oo1f7EFWy4/1Tavq7hiH7MnBbjg
-	 PPdhl86p6oYo34nlF5qfQZiCt+rH904VkgUuSYM0=
+	b=OJzFRfdV5uJVrH0OfSVODNcDEbXq1x1ZyzhX+r9kRgKaSutANanNlQxINsmccEfnN
+	 RLDR33cs+FqGA5GXyHWKcMAyTG9j/s+xh3JZDxYvghbB3U9zUpPFRHKl0f7MqYySrr
+	 Y42GMBeBMEWX1DSnMIe6X/8K1krnfpfE6nlTD5RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 555/621] btrfs: fix lost error return value in btrfs_listxattr()
-Date: Tue, 13 Oct 2026 13:39:10 +0200
-Message-ID: <20261013112933.983384714@linuxfoundation.org>
+Subject: [PATCH 6.18 556/621] drm/xe/mmio: Fix xe_mmio_wait32() to honor delay/sleep maximums
+Date: Tue, 13 Oct 2026 13:39:11 +0200
+Message-ID: <20261013112934.006240990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,47 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alan Previn <alan.previn.teres.alexis@intel.com>
 
-[ Upstream commit 41c8899d59898f6fa51ceebd2b6e55257191a8ee ]
+[ Upstream commit e7ed652b1312ffcb9ea2153946615856b5097c78 ]
 
-If the input buffer does not have enough space to store the current xattr,
-we set 'iter_ret' to -ERANGE and then do "break", but that only exits the
-while loop over the xattrs in the current btrfs_dir_item, and then we
-continue the btrfs_for_each_slot() iteration, which overwrites the value
-of 'iter_ret' causing us to lose the error return value and proceed as if
-the buffer has enough space.
+Check for overflow in udelay use in __xe_mmio_wait32 and
+avoid growing delays becoming intollerably large by capping the
+in-loop wait time.
 
-Fix this by returning -ERANGE directly (the path is automatically freed)
-instead of breaking from the while loop.
+v7: - Change assisted-by to "LLM" (Rodrigo).
+    - Move the max-wait macro to outside the function (Rodrigo).
+v6: - Fix commit message to remove items dropped in v5. Fix the
+      use of MAX_UDELAY_MS for microsecond unit. (Shasiko review).
+v5: - Simplify: don't introduce additional redesign and
+      use min_t with a backoff to cap wait. (Rodrigo).
+v4: - Simplify using poll_timeout_us and poll_timeout_us_atomic and
+      update all callers to never use a param for atomic (Jani)
+v3: - Use div64_s64 kernel API for 32-bit vs 64-bit division.
+v2: - Fixed checkpatch failure.
+    - Added helper for 64-bit DIV_ROUND_UP on 32-bit CPU (Shasiko
+      review). Fixed bug max range in usleep_range(Shasiko review)
 
-Fixes: 184b3d190087 ("btrfs: use btrfs_for_each_slot in btrfs_listxattr")
-Assisted-by: LLM (found the bug)
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 5c09bd6ccd41 ("drm/xe/mmio: Move xe_mmio_wait32() to xe_mmio.c")
+Signed-off-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/20260929192037.2233429-2-alan.previn.teres.alexis@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 70dab9ee7d620e6018a64798aed065d14e9baed1)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/xattr.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_mmio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/xattr.c b/fs/btrfs/xattr.c
-index e8762e12f3e1e..cb001a211f557 100644
---- a/fs/btrfs/xattr.c
-+++ b/fs/btrfs/xattr.c
-@@ -329,10 +329,8 @@ ssize_t btrfs_listxattr(struct dentry *dentry, char *buffer, size_t size)
- 			if (!size)
- 				goto next;
+diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
+index 6752881af093a..079a707217da7 100644
+--- a/drivers/gpu/drm/xe/xe_mmio.c
++++ b/drivers/gpu/drm/xe/xe_mmio.c
+@@ -283,6 +283,7 @@ u64 xe_mmio_read64_2x32(struct xe_mmio *mmio, struct xe_reg reg)
+ 	return (u64)udw << 32 | ldw;
+ }
  
--			if (!buffer || (name_len + 1) > size_left) {
--			        iter_ret = -ERANGE;
--				break;
--			}
-+			if (!buffer || (name_len + 1) > size_left)
-+				return -ERANGE;
++#define __XE_MMIO_WAIT_MAX_BACKOFF_100MS (100 * USEC_PER_MSEC)
+ static int __xe_mmio_wait32(struct xe_mmio *mmio, struct xe_reg reg, u32 mask, u32 val,
+ 			    u32 timeout_us, u32 *out_val, bool atomic, bool expect_match)
+ {
+@@ -313,10 +314,10 @@ static int __xe_mmio_wait32(struct xe_mmio *mmio, struct xe_reg reg, u32 mask, u
+ 			wait = ktime_us_delta(end, cur);
  
- 			read_extent_buffer(leaf, buffer, name_ptr, name_len);
- 			buffer[name_len] = '\0';
+ 		if (atomic)
+-			udelay(wait);
++			udelay(min_t(s64, wait, (MAX_UDELAY_MS * 1000)));
+ 		else
+ 			usleep_range(wait, wait << 1);
+-		wait <<= 1;
++		wait = min_t(s64, wait << 1, __XE_MMIO_WAIT_MAX_BACKOFF_100MS);
+ 	}
+ 
+ 	if (ret != 0) {
 -- 
 2.53.0
 
