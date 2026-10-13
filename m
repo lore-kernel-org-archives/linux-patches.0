@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0274D7D30;
-	Tue, 13 Oct 2026 11:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ED64EFFA2;
+	Tue, 13 Oct 2026 11:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892261; cv=none; b=gHB2aGJq4aOIrq1s/jHUoljaEUmN6U38w1o/P0jpUHHHRdSWnTJa9PW8geXtjwthBWBovhdMtt3aX/QeOp82INFv0FvnFMVOqlhUZvyCaDPr3MbLJ7iRle71NUjODKWwoDdW//bB6xtp8YD34nTd1L3f9eaNGLoaHy19UMnTw8c=
+	t=1791892266; cv=none; b=TmU3uHLjEAyd9lr0/GafsDcypVsHsUzrtTQbRWuL2IKD/3BcgTbe3Ng/TD4J1TwU+ZgFxIRySgeu1pUmNlKyemlWuyzfgqwmwL5zCw9r2q8uXutwODZg03lwLTGtQh4XZrmghy6lxwJttlqVvZuXEg74zkSOMbdKGMBAHqKlwCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892261; c=relaxed/simple;
-	bh=K5+MiId7cGx+m3d7ASQBb6cuKSfzG+fo6jsJtIWS6QQ=;
+	s=arc-20240116; t=1791892266; c=relaxed/simple;
+	bh=IFDrSJn1x4mfaUYPRfDPDq8R3rSqZY9/9/+fGkyBP6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7wXId18OZS342NiXZ3F7xLK65Wp7N3G0MUHwKmZ2nr/NzIIv3ok9+YnSDHIpsK2X56njK90JhzIU6gxOarWZzl7tKyn1Fzg8V4ELny2zwoPd5rVUwDwXvy0WE+gLi2SPoZcINmG5tcqzmiz0+J1rHI8gpVDcJ7SZrIWuEnvBLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljOwFtVX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OupJt5lMloeeaNm4e3MhomY5XqJTIbtluraSNDxvTR+/9A2wdP5N9VdiNihQaE7ON+PA5fSyRsOVLj1WNqx8Ls1Rm0kC1bo0C1Vyp43CSY4dhJwarOhZV4dBJ9dPFsBaN/BIVni8iRLMeLW6aZ3zo2h78J+ZQZUBaCeOzTanO4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EX4BOSL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljOwFtVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A371F000FF;
-	Tue, 13 Oct 2026 11:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EX4BOSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4001F000FF;
+	Tue, 13 Oct 2026 11:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892260;
-	bh=Midb7FQ8E27OsSlJVIhtU2bHR2mgHqJTQbtM1d5PYFc=;
+	s=korg; t=1791892263;
+	bh=fwFtpP0WP3XhBwmLWhZExmWMYFsiOal19z43UOvVrMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ljOwFtVXXP5ZpHJWXiiF4B6U+X50P8WtQFVRZJpsEBdYIkyKi/MrlvfAv04J9VZo8
-	 +zF4K5P2o5TmeQADQRvKhKCT5rOoXwZSSdqgEtGZNMOETY7SMMKR9AhAqMeX4h7Mje
-	 +uPfyX0CHWCkbyWm2u8yuvaE/6TvNaowgQXALA7c=
+	b=1EX4BOSLWtL63n5DQoJHzHq5py2jv7NpcFi232DtgDdspTkLNiAQgfrQezE1kb9su
+	 uwAXIU7igjiAdbXgJ/X0fgxyjA6pUg8ZNgM5GGVh+v2tjn4YZI5WYfNGTvucC/CeYU
+	 mKAHyhkxERQYYmIo93Qr3LFggtoAmlgCyl1CNIOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Pei <cp0613@linux.alibaba.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.2 113/281] riscv: ptrace: reject CFI regset access when extensions are absent
-Date: Tue, 13 Oct 2026 13:37:09 +0200
-Message-ID: <20261013112857.891315749@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.2 114/281] Bluetooth: btintel_pcie: use managed IRQ teardown
+Date: Tue, 13 Oct 2026 13:37:10 +0200
+Message-ID: <20261013112857.915700476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,52 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit adadf6df0bd55aa40ccbc6519fb443133e103227 upstream.
+commit 25016fe8c1ed0fccae107bd629089139ffbafe08 upstream.
 
-riscv_cfi_get() and riscv_cfi_set() do not check whether the Zicfilp
-or Zicfiss extensions are present. On systems without them,
-PTRACE_GETREGSET on REGSET_CFI still succeeds and returns a zeroed
-user_cfi_state, misleading debuggers into believing the register set
-is available, and PTRACE_SETREGSET silently accepts writes that have
-no effect (e.g. clearing SR_ELP).
+The PCIe driver registers its MSI-X handlers with
+devm_request_threaded_irq(), but remove() uses free_irq() directly. The
+devres actions then retain registrations and attempt to release them again
+during device cleanup.
 
-Reject the access with -EINVAL when neither branch landing pads nor
-shadow stack is available to userspace, using the same availability
-helpers as the prctl path.
+Use devm_free_irq() for the remove path and for already registered vectors
+when a later setup request fails. This removes the managed resource at the
+same time as the IRQ is released and keeps MSI-X vector teardown ordered
+after IRQ ownership is gone.
 
-Fixes: 2af7c9cf021c ("riscv/ptrace: expose riscv CFI status and state via ptrace and in core files")
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Link: https://patch.msgid.link/20260820063233.2567-1-cp0613@linux.alibaba.com
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/ptrace.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/bluetooth/btintel_pcie.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/kernel/ptrace.c
-+++ b/arch/riscv/kernel/ptrace.c
-@@ -299,6 +299,9 @@ static int riscv_cfi_get(struct task_str
- 	struct user_cfi_state user_cfi;
- 	struct pt_regs *regs;
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1715,7 +1715,7 @@ static irqreturn_t btintel_pcie_irq_msix
+ static int btintel_pcie_setup_irq(struct btintel_pcie_data *data)
+ {
+ 	int err;
+-	int num_irqs, i;
++	int num_irqs, i, j;
  
-+	if (!is_user_lpad_enabled() && !is_user_shstk_enabled())
-+		return -EINVAL;
-+
- 	memset(&user_cfi, 0, sizeof(user_cfi));
- 	regs = task_pt_regs(target);
+ 	for (i = 0; i < BTINTEL_PCIE_MSIX_VEC_MAX; i++)
+ 		data->msix_entries[i].entry = i;
+@@ -1744,6 +1744,10 @@ static int btintel_pcie_setup_irq(struct
+ 						KBUILD_MODNAME,
+ 						msix_entry);
+ 		if (err) {
++			for (j = 0; j < i; j++)
++				devm_free_irq(&data->pdev->dev,
++					      data->msix_entries[j].vector,
++					      &data->msix_entries[j]);
+ 			pci_free_irq_vectors(data->pdev);
+ 			data->alloc_vecs = 0;
+ 			return err;
+@@ -3003,7 +3007,7 @@ static void btintel_pcie_remove(struct p
+ 		struct msix_entry *msix_entry;
  
-@@ -337,6 +340,9 @@ static int riscv_cfi_set(struct task_str
- 	struct user_cfi_state user_cfi;
- 	struct pt_regs *regs;
+ 		msix_entry = &data->msix_entries[i];
+-		free_irq(msix_entry->vector, msix_entry);
++		devm_free_irq(&pdev->dev, msix_entry->vector, msix_entry);
+ 	}
  
-+	if (!is_user_lpad_enabled() && !is_user_shstk_enabled())
-+		return -EINVAL;
-+
- 	regs = task_pt_regs(target);
- 
- 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &user_cfi, 0, -1);
+ 	pci_free_irq_vectors(pdev);
 
 
