@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B404D7D4D;
-	Tue, 13 Oct 2026 12:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B6B4F799A;
+	Tue, 13 Oct 2026 12:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895026; cv=none; b=pzR5tywwb9moDPg9a13n/cWMGDnRzZDGofXqEpCMZ1GB+LjSc0ARJ9CNXMLgUPTJulVOUxtlf7IzPXtX/TVXbIBN5cn6KNuXTuOWuC/Loie1Ii4hwq+oBXAvGpNHplfycKIxDDQGLRnNtsrnfnEz0JX470VzfdVk6tCtyrJIuv8=
+	t=1791895029; cv=none; b=THaaDAQjiZlP9JA/NCJGcH2UaEPiXasb7wZytbFMEerZWfALaKGZC3h78bgoSjOyBUZsTnbrGX+VPy5JFzJSWawtVZT1B9SWADPm8E0WHFb6rFL9O0Rw2VeGXVLKRC75azmHgvrj0iy/WzfbTzQbHh7meLfc49BwenMeCiofAro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895026; c=relaxed/simple;
-	bh=AeXXrJ84r4d1/5BXGtdfzPq38e4AOqX/eQx2xjVSsGY=;
+	s=arc-20240116; t=1791895029; c=relaxed/simple;
+	bh=QiXepk9QWS0wWfteEpcUj8Zs6bR57iD2eBCj+NMmKRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3QP5OiKIjoJLj30YQbq1bKQdqX0V1sw71sAX2e43vcAe9wK0OALpXNLbCnpiyRrIXeLBt+NLboc0bPjYBA+pKW76/jjpyHd0elDWGU+K2mvVgu3JvYt9TnyOtGFcrVMUEr2A7AmtHVhdoNUc4xSOAh0dQMbAPettkzPcCoaTn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpqvD5dC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TeysObtYc3h4memP7qo/Kgs0drS/zTvU0sZhKhG2UJCc3Ze9POi3/SdWzGHmMkkcRaoV755Fd3W3jO7YXkXzCstUUJ4MwUNCVLh01FNLVs5TdZq36baqz+BPmjrhTpAtdw3eNXYU7wOLRFPSb4A8DATqw/VIyduNM+uH7NUObUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLFFWqrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpqvD5dC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE591F000FF;
-	Tue, 13 Oct 2026 12:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLFFWqrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6971F00893;
+	Tue, 13 Oct 2026 12:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895024;
-	bh=KcmUtUJh29aRjTCbPfOrrW+81WmfJaK/u4iu17y9+5c=;
+	s=korg; t=1791895028;
+	bh=al+mdvEJ/pst6o4x3H4cYfbxdDtBRrm+qbvEqZ4XlCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KpqvD5dChf+FGfuZw8BrktInT+5I5eVBLaLtJdkEpi6iJweuBA5SbVPl486hMhNQG
-	 T0tL9gWX+HgyqRAHWloAQtBQlK75MiN1WfOnnLJsaucHgn+RHj7ej2piy9b6T4fdVc
-	 LnKcpl0YFmYYDSK42mfc0sJPsHmjcQ+IO6ncXC54=
+	b=VLFFWqrQzxs4utvYFksbLKeyjYRIzGslDUZMqPDk7kjots3MJp2ZToXgxfGq0Mhfi
+	 VSn5kfjLpsjA+8AJQQ4ASgbQAuncaSZkYU5fr/9lwkOFH54HNtacFnZVQ1R/rJMAJg
+	 kbSPU09Tog6mIw9reHIAkCIqbYx5qmojzSShaopw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Sandeep Haemoon <sandeeph@loljews.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/497] net: cap skb->queue_mapping when the tx queue is picked
-Date: Tue, 13 Oct 2026 13:34:19 +0200
-Message-ID: <20261013112910.074285920@linuxfoundation.org>
+Subject: [PATCH 6.12 093/497] net: ethernet: mtk_eth_soc: allocate dummy netdev sooner
+Date: Tue, 13 Oct 2026 13:34:20 +0200
+Message-ID: <20261013112910.099041263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -54,272 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Sandeep Haemoon <sandeeph@loljews.com>
 
-[ Upstream commit ea4d4b5dddb5121e64f56fd8e0720bd8b447b63d ]
+[ Upstream commit 6f0c2c4f5e7143eba75153ecc8af3a03f7b6a98b ]
 
-skbedit can set skb->queue_mapping and raise the per-CPU skip_txqueue
-flag so __dev_queue_xmit() honours the mapping. __dev_queue_xmit()
-cleared the flag before sch_handle_egress() and only read it afterwards,
-so the flag was not confined to the xmit that set it: a nested xmit
-(mirred redirect or mirror, or a drop after skbedit) could set the flag
-and the outer xmit would consume it for an skb that never went through
-skbedit.
+The RX rings and the shared NAPI are carried by an internal "dummy" netdev
+(eth->dummy_dev). mtk_probe() creates that dummy device, and adds the
+shared tx/rx NAPI to it, only after the MAC netdevs have been registered.
+That order has been there since the MT7623 support was added and leaves a
+window in which the netdevs are visible to the network core before the
+shared NAPI and the dummy device exist.
 
-A forwarded packet still carries the ingress NIC's rx_queue + 1 in
-skb->queue_mapping, so the outer device then indexes its tx queue state
-with that stale value. Taprio's child array q->qdiscs[] is sized to the
-device's queue count, so taprio_enqueue() indexes past its allocation
-and dereferences the result as a struct Qdisc *.
+If anything brings the first netdev up during that window (e.g. netifd
+opening the WAN link the instant the interface is registered), the
+first-open path runs without them. On NETSYS v2 and later SoCs
+mtk_rx_alloc() -> __xdp_rxq_info_reg() then dereferences eth->dummy_dev ==
+NULL:
 
-We (ab)use the skb->nf_skip_egress which means "skip netfilter egress
-for this packet" to tag to "am I in tc egress?". Despite the overload
-I dont see it as a conflict since the marker is set only around the
-single sch_handle_egress() call and ingress path is guarded by
-tc_at_ingress.
-I will send a followup(net-next) patch once this hits net-next to
-rename the skb->nf_skip_egress bit/flag to skb->skip_egress
+  WARNING: CPU: ... Missing net_device from driver
 
-Arm the flag only from the egress classifier that can use it: raise
-skip_txqueue from tcf_skbedit_act() only when it runs inside
-sch_handle_egress(), thanks to skb->nf_skip_egress. An egress qdisc
-classifier runs in q->enqueue(), after the tx queue has been picked,
-so a mapping it sets cannot affect the current packet; arming the flag
-there only pollutes it for a later xmit. Then own the flag for the xmit
-frame the egress hook runs in: save the incoming value and clear it just
-before sch_handle_egress(), and restore it after the hook - on the
-consumed (drop) path, or, in the same call that reads it, on the
-surviving path. The save and the restores stay inside the
-egress_needed_key static branch, so a packet pays for them only when
-egress hooks are active (2f1e85b1aee4).
+in net/core/xdp.c and mtk_open() fails with -ENODEV. On NETSYS v1 SoCs
+(MT7621/MT7622/MT7623/MT7629) there is no page pool, so the same open
+instead calls napi_enable() on a napi_struct that netif_napi_add() has not
+initialised yet and dereferences a NULL napi->dev.
 
-Store the value netdev_cap_txqueue() selected back into skb->queue_mapping
-in netdev_tx_queue_mapping(), as netdev_core_pick_tx() already does, so
-the skip_txqueue path never hands a later reader on the xmit path a
-mapping the device cannot serve. A store made still later in the same
-frame, by a tc BPF program attached to a transmit qdisc, is outside this
-path and is not re-capped; a separate followup will resolve that path.
+Allocate the dummy netdev and add the shared tx/rx NAPI to it before the
+register_netdev() loop. Both the dummy-allocation failure and a
+register_netdev() failure now unwind through mtk_unreg_dev(), which
+unregisters the net_device notifiers and the netdevs registered so far,
+stopping a concurrently-opened netdev (ndo_stop) and its NAPI before the
+dummy carrier is freed.
 
-netdev_xmit_skip_txqueue() returns the previous flag value so the
-save-and-clear is one call, and a no-op stub is provided when
-CONFIG_NET_EGRESS is disabled. skb->nf_skip_egress is compiled under
-CONFIG_NET_EGRESS rather than CONFIG_NETFILTER_SKIP_EGRESS, so
-skb_at_tc_egress() is valid whenever the egress path is built.
+A netdev that opened during the window can also have queued the
+frame-engine reset worker (via the tx watchdog or phylink), so the probe
+error path now cancels eth->pending_work before freeing the shared state,
+as mtk_cleanup() already does on remove.
 
-A local user in a network namespace can redirect a packet from a device
-with more TX queues to one with fewer after setting a mapping valid only
-on the larger device. That reaches these reads and, under KASAN, faults
-with "slab-out-of-bounds in taprio_enqueue".
-
-Conditions to recreate the bug: the report's own trigger is a local user
-with CAP_NET_ADMIN in a network namespace, so no eBPF program is needed.
-With CONFIG_NET_SCH_TAPRIO=y, CONFIG_NET_ACT_SKBEDIT=y,
-CONFIG_NET_ACT_MIRRED=y, CONFIG_NET_CLS_MATCHALL=y,
-CONFIG_NET_SCH_PRIO=y and KASAN enabled, create qa (3 queues), qb
-(2 queues) and qc (1 queue) as dummy devices; put a taprio root on qb
-(num_tc 1, queues 2@0) and clsact on all three; then add an egress
-matchall filter on every device. On qa: "action skbedit queue_mapping 2
-pipe action mirred egress redirect dev qb". On qb: "action mirred egress
-mirror dev qc". On qc: "action skbedit queue_mapping 0 pipe". Send one
-packet out qa. qc's skbedit sets the flag while qb's outer xmit is in
-flight; without the fix qb consumes it and reads its two-entry taprio
-child array with the forwarded packet's stale mapping. A qc whose
-skbedit is instead installed in a transmit-qdisc classifier (a matchall
-filter on the qc root qdisc) reaches the same code path the same way
-without the fix.
-
-Testing: on a KASAN build with panic_on_warn=1 the unfixed kernel panics
-with "BUG: KASAN: slab-out-of-bounds in taprio_enqueue", a read 0 bytes
-past a 16-byte taprio_init() allocation, for the clsact-setter and the
-transmit-qdisc-classifier reproducers and for a clsact skbedit-then-tc-BPF
-store; the fixed kernel runs all three with no report, and the BPF store
-variant additionally shows the expected "selects TX queue" clamp notice
-from the write-back.
-
-Fixes: 2f1e85b1aee4 ("net: sched: use queue_mapping to pick tx queue")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Link: https://lore.kernel.org/netdev/CANn89iLwYx8nCVf0pCEk_MmEiyC6kQaMwCQT9WkQVeeNzNQHqQ@mail.gmail.com/
-Link: https://lore.kernel.org/netdev/179008581937.2160803.7117814290574262942@kernel.org/
-Link: https://lore.kernel.org/netdev/179033713973.2160803.4914570693994398206@kernel.org/
-Link: https://lore.kernel.org/netdev/20260925180407.63647514@kernel.org/
-Link: https://lore.kernel.org/netdev/CANn89i+k-mZKDQVtvws_MEXeuMTAdaCcOXFZE-RfhcGTu90sjA@mail.gmail.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/QDISC-9R8V.v4.20260928081529@mojatatu.com
+Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
+Signed-off-by: Sandeep Haemoon <sandeeph@loljews.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/patch-e52c13380b0768fec63af04c80e4b487@loljews.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter_netdev.h |  2 +-
- include/linux/rtnetlink.h        |  7 ++++++-
- include/linux/skbuff.h           |  2 +-
- include/net/sch_generic.h        |  9 +++++++++
- net/core/dev.c                   | 31 ++++++++++++++++++++++++-------
- net/sched/act_skbedit.c          |  5 ++---
- 6 files changed, 43 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 38 ++++++++++++++-------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/netfilter_netdev.h b/include/linux/netfilter_netdev.h
-index 8676316547cc4..f2496ea52754b 100644
---- a/include/linux/netfilter_netdev.h
-+++ b/include/linux/netfilter_netdev.h
-@@ -132,7 +132,7 @@ static inline struct sk_buff *nf_hook_egress(struct sk_buff *skb, int *rc,
- 
- static inline void nf_skip_egress(struct sk_buff *skb, bool skip)
- {
--#ifdef CONFIG_NETFILTER_SKIP_EGRESS
-+#ifdef CONFIG_NET_EGRESS
- 	skb->nf_skip_egress = skip;
- #endif
- }
-diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
-index f1d8f59640284..91eaee7cd5e38 100644
---- a/include/linux/rtnetlink.h
-+++ b/include/linux/rtnetlink.h
-@@ -174,7 +174,12 @@ void net_dec_ingress_queue(void);
- #ifdef CONFIG_NET_EGRESS
- void net_inc_egress_queue(void);
- void net_dec_egress_queue(void);
--void netdev_xmit_skip_txqueue(bool skip);
-+bool netdev_xmit_skip_txqueue(bool skip);
-+#else
-+static inline bool netdev_xmit_skip_txqueue(bool skip)
-+{
-+	return false;
-+}
- #endif
- 
- void rtnetlink_init(void);
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 84f2f6f112799..df548a3d60657 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1001,7 +1001,7 @@ struct sk_buff {
- #ifdef CONFIG_NET_REDIRECT
- 	__u8			from_ingress:1;
- #endif
--#ifdef CONFIG_NETFILTER_SKIP_EGRESS
-+#ifdef CONFIG_NET_EGRESS
- 	__u8			nf_skip_egress:1;
- #endif
- #ifdef CONFIG_SKB_DECRYPTED
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 2c1bb37c929ee..4f38a7a5dd6a6 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -772,6 +772,15 @@ static inline bool skb_at_tc_ingress(const struct sk_buff *skb)
- #endif
- }
- 
-+static inline bool skb_at_tc_egress(const struct sk_buff *skb)
-+{
-+#ifdef CONFIG_NET_EGRESS
-+	return skb->nf_skip_egress && !skb_at_tc_ingress(skb);
-+#else
-+	return false;
-+#endif
-+}
-+
- static inline bool skb_skip_tc_classify(struct sk_buff *skb)
- {
- #ifdef CONFIG_NET_CLS_ACT
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 97be4f9dfa771..a4554020076f4 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4063,9 +4063,14 @@ EXPORT_SYMBOL(dev_loopback_xmit);
- static struct netdev_queue *
- netdev_tx_queue_mapping(struct net_device *dev, struct sk_buff *skb)
- {
--	int qm = skb_get_queue_mapping(skb);
-+	int queue = skb_get_queue_mapping(skb);
-+	int capped;
- 
--	return netdev_get_tx_queue(dev, netdev_cap_txqueue(dev, qm));
-+	capped = netdev_cap_txqueue(dev, queue);
-+	if (unlikely(capped != queue))
-+		skb_set_queue_mapping(skb, capped);
-+
-+	return netdev_get_tx_queue(dev, capped);
- }
- 
- #ifndef CONFIG_PREEMPT_RT
-@@ -4074,9 +4079,13 @@ static bool netdev_xmit_txqueue_skipped(void)
- 	return __this_cpu_read(softnet_data.xmit.skip_txqueue);
- }
- 
--void netdev_xmit_skip_txqueue(bool skip)
-+bool netdev_xmit_skip_txqueue(bool skip)
- {
-+	bool prev = netdev_xmit_txqueue_skipped();
-+
- 	__this_cpu_write(softnet_data.xmit.skip_txqueue, skip);
-+
-+	return prev;
- }
- EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
- 
-@@ -4086,9 +4095,13 @@ static bool netdev_xmit_txqueue_skipped(void)
- 	return current->net_xmit.skip_txqueue;
- }
- 
--void netdev_xmit_skip_txqueue(bool skip)
-+bool netdev_xmit_skip_txqueue(bool skip)
- {
-+	bool prev = netdev_xmit_txqueue_skipped();
-+
- 	current->net_xmit.skip_txqueue = skip;
-+
-+	return prev;
- }
- EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
- #endif
-@@ -4475,21 +4488,25 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
- 	tcx_set_ingress(skb, false);
- #ifdef CONFIG_NET_EGRESS
- 	if (static_branch_unlikely(&egress_needed_key)) {
-+		bool skip_txq;
-+
- 		if (nf_hook_egress_active()) {
- 			skb = nf_hook_egress(skb, &rc, dev);
- 			if (!skb)
- 				goto out;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 4c9ebbb1b4f18..489c909e7327f 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -5125,6 +5125,22 @@ static int mtk_probe(struct platform_device *pdev)
  		}
- 
--		netdev_xmit_skip_txqueue(false);
-+		skip_txq = netdev_xmit_skip_txqueue(false);
- 
- 		nf_skip_egress(skb, true);
- 		skb = sch_handle_egress(skb, &rc, dev);
--		if (!skb)
-+		if (!skb) {
-+			netdev_xmit_skip_txqueue(skip_txq);
- 			goto out;
-+		}
- 		nf_skip_egress(skb, false);
- 
--		if (netdev_xmit_txqueue_skipped())
-+		if (netdev_xmit_skip_txqueue(skip_txq))
- 			txq = netdev_tx_queue_mapping(dev, skb);
  	}
- #endif
-diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
-index 5450c1293eb50..4cddf2674373f 100644
---- a/net/sched/act_skbedit.c
-+++ b/net/sched/act_skbedit.c
-@@ -72,9 +72,8 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
+ 
++	/* we run 2 devices on the same DMA ring so we need a dummy device
++	 * for NAPI to work. Allocate it before registering the netdevs so a
++	 * concurrent ndo_open (e.g. netifd bringing the first netdev up the
++	 * instant it is registered) never observes eth->dummy_dev == NULL in
++	 * mtk_dma_init() -> mtk_rx_alloc() -> __xdp_rxq_info_reg() (net/core/xdp.c
++	 * "Missing net_device from driver") and fails the first open.
++	 */
++	eth->dummy_dev = alloc_netdev_dummy(0);
++	if (!eth->dummy_dev) {
++		err = -ENOMEM;
++		dev_err(eth->dev, "failed to allocated dummy device\n");
++		goto err_unreg_netdev;
++	}
++	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
++	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
++
+ 	for (i = 0; i < MTK_MAX_DEVS; i++) {
+ 		if (!eth->netdev[i])
+ 			continue;
+@@ -5139,18 +5155,6 @@ static int mtk_probe(struct platform_device *pdev)
+ 				   eth->netdev[i]->base_addr, eth->irq[MTK_FE_IRQ_SHARED]);
  	}
- 	if (params->flags & SKBEDIT_F_QUEUE_MAPPING &&
- 	    skb->dev->real_num_tx_queues > params->queue_mapping) {
--#ifdef CONFIG_NET_EGRESS
--		netdev_xmit_skip_txqueue(true);
--#endif
-+		if (skb_at_tc_egress(skb))
-+			netdev_xmit_skip_txqueue(true);
- 		skb_set_queue_mapping(skb, tcf_skbedit_hash(params, skb));
- 	}
- 	if (params->flags & SKBEDIT_F_MARK) {
+ 
+-	/* we run 2 devices on the same DMA ring so we need a dummy device
+-	 * for NAPI to work
+-	 */
+-	eth->dummy_dev = alloc_netdev_dummy(0);
+-	if (!eth->dummy_dev) {
+-		err = -ENOMEM;
+-		dev_err(eth->dev, "failed to allocated dummy device\n");
+-		goto err_unreg_netdev;
+-	}
+-	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
+-	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
+-
+ 	platform_set_drvdata(pdev, eth);
+ 	schedule_delayed_work(&eth->reset.monitor_work,
+ 			      MTK_DMA_MONITOR_TIMEOUT);
+@@ -5160,6 +5164,16 @@ static int mtk_probe(struct platform_device *pdev)
+ err_unreg_netdev:
+ 	mtk_unreg_dev(eth);
+ err_deinit_ppe:
++	/* A netdev opened while probe was still registering can have queued
++	 * the frame-engine reset worker, which takes rtnl and drives the
++	 * hardware; cancel it before anything below is torn down.
++	 */
++	cancel_work_sync(&eth->pending_work);
++	if (eth->dummy_dev) {
++		netif_napi_del(&eth->tx_napi);
++		netif_napi_del(&eth->rx_napi);
++		free_netdev(eth->dummy_dev);
++	}
+ 	mtk_ppe_deinit(eth);
+ 	mtk_mdio_cleanup(eth);
+ err_free_dev:
 -- 
 2.53.0
 
