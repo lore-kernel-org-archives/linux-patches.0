@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2B0199FAB;
-	Tue, 13 Oct 2026 12:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DD71DD9AC;
+	Tue, 13 Oct 2026 12:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895061; cv=none; b=AIQsbZEOeTPKHK/zaKWLkdF05u7T/sAAYp3agRaEzr6KS3nGVlE//Erkw9BaojNDUpJhaliLs6m/Fws7zC/1Qa9HYP4MJ6518t753gO4AthrZnjuHVtr/g+A1xhcyj4b8gV1HUWfgdD7+LluU20WZRiqVyWQYX5H6DC8T3uTHPQ=
+	t=1791895065; cv=none; b=KtltAd77M6QJWWmH0CnZ7W3GR0AeXsM0oAjSFr1C6qiC8NM2r4wOCNEAQ7yl/wIEElPWBzhd30xeV7IXaVoDi6mFsb68Mz6ocTeppMIhjeokh2jAOxINzIy7iwHirjt5KnoyzHpqKr/Qsu/S4EWVAd2gnSs0lSihBN8dGySFTNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895061; c=relaxed/simple;
-	bh=hjIXZEQooQ3bbJutYdvtafagEHnKCzJ6d/yLU4FtzYc=;
+	s=arc-20240116; t=1791895065; c=relaxed/simple;
+	bh=WXPZeTKRUxRgarTPOFErZDk9qNUwReCSkxQNNdM4r9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXWbAkYUgDMyheeogLLkBdR1LghU+fmkx2Fwbt1dlNAnGS8Q5/8//1HhHvPkNvwVkjBbd8AykGv3YO4VWJBTRheOcV9JqCRK8JAHvirdIxIBJ4Qv0QGbOT94xF+FJew0PuZNnfVTIzG9CD8T8W/rZpTU1ipBjc146ApdM1FvRCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxKvI075; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lW0AToxQJoLD6MeGrFsjaQDzbyfmW+zwybOLwNTMiS2O+I2K+DqO+PNhkghxttUALRy/GZBNk7KP+RF0nNmphisIFs1nPhTHAYHDYwqQj6qDHyyixCJqYtALbjnetbdYrHcPODs6vaqfhtGitVrXeNyCWxKph0/1b9lHu4/UiY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrTWHzjQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxKvI075"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB381F000FF;
-	Tue, 13 Oct 2026 12:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrTWHzjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12211F00898;
+	Tue, 13 Oct 2026 12:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895060;
-	bh=LPB7NIeSh/gc+F+LO9NxyeJhFcerB88l/IDw1adv9sM=;
+	s=korg; t=1791895063;
+	bh=flZkMZa7hWoREsO1WkUws66TYoagc/ah2Q8qtxlUnPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JxKvI075vjSxZRSge6+1MyBSxWtAdspypOxJ3IfYeL1VlPMd77m+tSS9b2o0zohHx
-	 /3HdulYILmvUmlHxf2Ek/WR2d7yw8jmPZq3m9fo4XCzqVNbi2wnongliw5zY8sgKAf
-	 phLcIBu99WMHamiYmooVNU/aK/0uEHqvOYqMo/Y4=
+	b=xrTWHzjQgVdgd9MmZFUWY/nQWAj/gOZU/Q1s1gZancRpcIvQ6yo7679cucJg4K5Ja
+	 UEHZKarFtrSsy8jdRl5lKenZohAD//l+LnyDnPA4LlaGwcJfcgbY0m0MCNmuLu0MBd
+	 h8SP07E4lOOY0BLrGx/Lf5qvu47qj8PvPll3QgL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.12 149/497] usb: chipidea: tegra: disable runtime PM on resume failure
-Date: Tue, 13 Oct 2026 13:35:16 +0200
-Message-ID: <20261013112911.424414234@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.12 150/497] usb: core: clear both ep_in and ep_out for non-ep0 control endpoints
+Date: Tue, 13 Oct 2026 13:35:17 +0200
+Message-ID: <20261013112911.447625782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,48 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit f1d6f7d25fe88ee49aaad96c8649e090fc3a4b68 upstream.
+commit 0e8baa78d872f2db440d8b9ded946ab8dceb89eb upstream.
 
-tegra_usb_probe() enables runtime PM before resuming the device. If
-pm_runtime_resume_and_get() fails, probe returns without disabling runtime
-PM. The later error paths reach pm_runtime_force_suspend(), but this early
-return bypasses that cleanup.
+In usb_enable_endpoint(), non-zero control endpoints (where
+usb_endpoint_xfer_control(&ep->desc) is true) populate both
+dev->ep_in[epnum] and dev->ep_out[epnum] with the same struct
+usb_host_endpoint pointer.
 
-Disable runtime PM before returning the resume error. Do not use the
-fail_power_off path: the failed resume did not retain a usage reference,
-so its pm_runtime_put_sync_suspend() would be unbalanced.
+However, usb_disable_endpoint() only clears either dev->ep_out[epnum] or
+dev->ep_in[epnum] depending on the direction bit of epaddr when
+reset_hardware is set, leaving the opposite direction's array slot
+pointing to the disabled/freed endpoint.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Clear both dev->ep_out[epnum] and dev->ep_in[epnum] when disabling a
+non-ep0 control endpoint with reset_hardware set, and update the
+function kerneldoc accordingly.
 
-Fixes: 8b85e11c1a7a ("usb: chipidea: tegra: Add runtime PM and OPP support")
+Tested in QEMU against Linux 7.3.0-rc3 using dummy_hcd and raw-gadget to
+enumerate a USB device with a non-zero control endpoint
+(bEndpointAddress 0x01, bmAttributes USB_ENDPOINT_XFER_CONTROL),
+verifying that both dev->ep_in[1] and dev->ep_out[1] are cleared when
+the interface is disabled.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable <stable@kernel.org>
-Assisted-by: OpenAI:GPT-5.6
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260913041033.25144-1-mhun512@gmail.com
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260920231702.110963-1-benquike@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci_hdrc_tegra.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/core/message.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_tegra.c
-+++ b/drivers/usb/chipidea/ci_hdrc_tegra.c
-@@ -306,8 +306,10 @@ static int tegra_usb_probe(struct platfo
- 
- 	pm_runtime_enable(&pdev->dev);
- 	err = pm_runtime_resume_and_get(&pdev->dev);
--	if (err)
-+	if (err) {
-+		pm_runtime_disable(&pdev->dev);
- 		return err;
-+	}
- 
- 	if (device_property_present(&pdev->dev, "nvidia,needs-double-reset"))
- 		usb->needs_double_reset = true;
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -1335,7 +1335,8 @@ static void remove_intf_ep_devs(struct u
+  *
+  * Disables the endpoint for URB submission and nukes all pending URBs.
+  * If @reset_hardware is set then also deallocates hcd/hardware state
+- * for the endpoint.
++ * for the endpoint (clearing both ep_in and ep_out pointers for
++ * bidirectional non-ep0 control endpoints).
+  */
+ void usb_disable_endpoint(struct usb_device *dev, unsigned int epaddr,
+ 		bool reset_hardware)
+@@ -1356,6 +1357,11 @@ void usb_disable_endpoint(struct usb_dev
+ 			dev->ep_in[epnum] = NULL;
+ 	}
+ 	if (ep) {
++		if (reset_hardware && epnum != 0 &&
++		    usb_endpoint_xfer_control(&ep->desc)) {
++			dev->ep_out[epnum] = NULL;
++			dev->ep_in[epnum] = NULL;
++		}
+ 		ep->enabled = 0;
+ 		usb_hcd_flush_endpoint(dev, ep);
+ 		if (reset_hardware)
 
 
