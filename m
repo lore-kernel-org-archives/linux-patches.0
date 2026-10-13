@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369EA4F4CE6;
-	Tue, 13 Oct 2026 12:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1BD4F4CE6;
+	Tue, 13 Oct 2026 12:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892923; cv=none; b=Zc77JqJ4HwqDWOI0aqRXunAtmnHMSMZwt/KClbP2edj8WhOvTIgNiMMx1ApSqbjgu+fDhfMIryFr++Gin0Yl7NkkcJ7KVY3YDO1CC2QCj6lhOCDe6Ab4q2X7GzMwDG2sSG2Ew75UMdAsN1oeMegLEk3rky+NvNymTENMlmO0aXE=
+	t=1791892926; cv=none; b=jhbiuU0Uv8v7J8t5LXSb5tKQjCz8OCemEUK1yEVrnJnLh7Tb8iNj/VU36bbuDc/tQ0HEsInmtB9KUunjGJgPhnznTnsNM6e+bDB3wp5gNgcqT2rNg4d5CYEEWK2C9U3E9HqyUhCUkBimjnIJ8j60AYXnnSs87hEOBF/XkFKqVms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892923; c=relaxed/simple;
-	bh=9HgVSoGCLMXUJ/T19BLzwooIWEUFHILV7wWaRahGVPs=;
+	s=arc-20240116; t=1791892926; c=relaxed/simple;
+	bh=SVk6yH6djxhIBTE26V06it6Pug5bUwZPVxclYE8i2CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmBESA1Aam60JJhe5kff/zgi7AM5NgsoGjO9aqgG6iGtw5maXFRf0XbtiF898WVkYjd+wmfqShGu0Umrs6IO9unFV9g05GNU9djDBJ8+HjCTYM88YVT63geza3gTaEw3F8zzFjLisSM5J5HFa+XLVxmg9yVoQ/fRLN9igIv/ylI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLRyzqO0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FNSEsVC6ADFoANVT/jUS8IzaqIKIAkuqSaSXxJjTkrmbVNYxbDCT43kvwQIzAxyAe81BOAl4ZCosxY/jWVBLmycLgktzH41TRhdbmQmkFsD5FUAP0OWQeqj3KXybf+3/dAxaq7DsXk4R8WwJJyuw6TJVxGvjfV3l7SAsV0DSfAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vukUfAzM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLRyzqO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D72D1F000FF;
-	Tue, 13 Oct 2026 12:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vukUfAzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6A51F000FF;
+	Tue, 13 Oct 2026 12:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892922;
-	bh=zqKBcP/Qls793kQg35rfNv6dqCn+AdixnoDMsyg98s0=;
+	s=korg; t=1791892925;
+	bh=06N8NMrGJplN53Js1Bv5pa6p8zTvpc6iD/WQ/1VPCb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLRyzqO0RsbPpseM+vtdD47S9IGSg99YamnqJ2FFyg/QfVxin6QVE3uC6CDdV1EBc
-	 MgYEGIllwJQHvXvENPudLtOrRwfL+UW32G4ioGjFB619eWlr7mUMkng2KRHUnXPctg
-	 qdO2Cw2s3yUWF/O4x12QNDwuLeD0s3sdvroYOcnw=
+	b=vukUfAzMo9Ak0xZqUAgRGMDTGALQIywvDNxiNMDsYgO/EZC2hlzN9XPlOMmdGDciR
+	 O2R49UTx8Dk2FjGTXrfotlsc8ztZVJvYfr/DT8U3qbCuuA1AJcyjF1PLJkNTLRQUdQ
+	 pZfHxXthAbsIb42BAri59DKgnQBHxuUBXIDRbJhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 052/621] selinux: preserve NATIVE_LABELS on already-initialized sb in set_mnt_opts
-Date: Tue, 13 Oct 2026 13:30:47 +0200
-Message-ID: <20261013112922.098256936@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 017/621] rust_binder: reschedule node refcount update on thread exit
+Date: Tue, 13 Oct 2026 13:30:12 +0200
+Message-ID: <20261013112921.273182429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,67 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 28b7260548af3d35773477993ad4e4de41578dd7 upstream.
+commit 2a74ccd1bcc170e66525f34e9de8652b57e2cf3d upstream.
 
-When an NFSv4 filesystem exported with security_label is mounted a
-second time, sget_fc() returns the existing superblock and
-nfs_get_root() calls security_sb_set_mnt_opts() again on it. Since the
-superblock is already SB_INITIALIZED, selinux_set_mnt_opts() takes an
-early exit without setting SECURITY_LSM_NATIVE_LABELS in
-*set_kern_flags. nfs_get_root() then sees kflags without
-SECURITY_LSM_NATIVE_LABELS set and clears NFS_CAP_SECURITY_LABEL on
-the shared nfs_server, silently disabling per-file labeling for both
-the new and the original mount.
+When a thread exits via BINDER_THREAD_EXIT, its pending work items are
+cancelled. If a thread exits while holding a pending node refcount
+increment (e.g. pushed as deferred work to that thread), the refcount
+increment was previously dropped because Node::cancel() and
+NodeWrapper::cancel() were no-ops.
 
-Commit 3815a245b501 ("security/selinux: fix SECURITY_LSM_NATIVE_LABELS
-on reused superblock") fixed the same problem in
-selinux_sb_clone_mnt_opts().  The reused-superblock path for a plain
-second mount now goes through sb_set_mnt_opts rather than
-sb_clone_mnt_opts, so it needs the same treatment: on both
-SE_SBINITIALIZED early exits, set SECURITY_LSM_NATIVE_LABELS in
-*set_kern_flags when the superblock was already using
-SECURITY_FS_USE_NATVE.
+Dropping the refcount update leaves the node's delivery state and count
+state desynchronized, and userspace will not receive the notification,
+which can cause the node to never be freed from the process's nodes tree
+when all external references are dropped.
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/SELinuxProject/selinux-kernel/issues/69
-Closes: https://github.com/SELinuxProject/selinux-kernel/issues/70
-Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/91
-Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/92
-Fixes: eb9ae686507b ("SELinux: Add new labeling type native labels")
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fix this by implementing DeliverToRead::cancel() for Node and NodeWrapper
+to move the pending refcount update to the process's work queue on thread
+exit so another thread can deliver it to userspace.
+
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260903-binder-thread-exit-node-v1-1-be09ff14f6a4@google.com
+[ Dropped first argument in calls to `push_work()` to adjust to the
+  existing form without mainline commit dbb17c9ea756 ("rust_binder: move
+  (e)poll wait queue to Process"). - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/android/binder/node.rs         |   20 ++++++++++++++++---
+ drivers/android/binder/node/wrapper.rs |   34 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -686,8 +686,12 @@ static int selinux_set_mnt_opts(struct s
- 	 * will be used for both mounts)
- 	 */
- 	if ((sbsec->flags & SE_SBINITIALIZED) && (sb->s_type->fs_flags & FS_BINARY_MOUNTDATA)
--	    && !opts)
-+		&& !opts) {
-+		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
-+		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
-+			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
- 		goto out;
-+	}
+--- a/drivers/android/binder/node.rs
++++ b/drivers/android/binder/node.rs
+@@ -49,9 +49,9 @@ pub(crate) struct CouldNotDeliverCritica
+ ///   about to drop the weak reference, then the strong increment could be processed after the
+ ///   other thread has already exited, which would be too late.
+ ///
+-/// Note that trying to create a `ListArc` to the node can succeed even if `has_normal_push` is
++/// Note that trying to create a `ListArc` to the node can succeed even if `has_pushed_node` is
+ /// set. This is because another thread might just have popped the node from a todo list, but not
+-/// yet called `do_work`. However, if `has_normal_push` is false, then creating a `ListArc` should
++/// yet called `do_work`. However, if `has_pushed_node` is false, then creating a `ListArc` should
+ /// always succeed.
+ ///
+ /// Like the other fields in `NodeInner`, the delivery state is protected by the process lock.
+@@ -725,7 +725,21 @@ impl DeliverToRead for Node {
+         self.do_work_locked(writer, owner_inner)
+     }
  
- 	root_isec = backing_inode_security_novalidate(root);
+-    fn cancel(self: DArc<Self>) {}
++    fn cancel(self: DArc<Self>) {
++        let _drop_outside_lock;
++        let mut owner_inner = self.owner.inner.lock();
++
++        // We only do something on BINDER_THREAD_EXIT, not process exit.
++        if owner_inner.is_dead {
++            return;
++        }
++
++        // If BINDER_THREAD_EXIT is invoked on a thread with a pending node refcount update, we
++        // should move ourselves to ensure the refcount update is still delivered.
++        if let Some(node) = ListArc::try_from_arc_borrow(self.as_arc_borrow()) {
++            _drop_outside_lock = owner_inner.push_work(node);
++        }
++    }
  
-@@ -731,6 +735,9 @@ static int selinux_set_mnt_opts(struct s
- 		/* previously mounted with options, but not on this attempt? */
- 		if ((sbsec->flags & SE_MNTMASK) && !opts)
- 			goto out_double_mount;
-+		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
-+		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
-+			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
- 		rc = 0;
- 		goto out;
- 	}
+     fn should_sync_wakeup(&self) -> bool {
+         false
+--- a/drivers/android/binder/node/wrapper.rs
++++ b/drivers/android/binder/node/wrapper.rs
+@@ -57,7 +57,39 @@ impl DeliverToRead for NodeWrapper {
+         node.do_work_locked(writer, owner_inner)
+     }
+ 
+-    fn cancel(self: DArc<Self>) {}
++    fn cancel(self: DArc<Self>) {
++        let _drop_outside_lock;
++        let node = &self.node;
++        let mut owner_inner = node.owner.inner.lock();
++
++        // We only do something on BINDER_THREAD_EXIT, not process exit.
++        if owner_inner.is_dead {
++            return;
++        }
++
++        // We transfer the responsibility of the node refcount update to the scheduled Node because
++        // NodeWrapper has no way to re-create the ListArc.
++        let inner = node.inner.access_mut(&mut owner_inner);
++
++        let ds = &mut inner.delivery_state;
++        assert!(ds.has_pushed_wrapper);
++        assert!(ds.has_strong_zero2one);
++        ds.has_pushed_wrapper = false;
++
++        // We are changing the state to one where the Node is the strong zero2one update instead of
++        // the wrapper.
++        ds.has_weak_zero2one = false;
++
++        if !ds.has_pushed_node {
++            if let Some(node2) = ListArc::try_from_arc_borrow(node.as_arc_borrow()) {
++                ds.has_pushed_node = true;
++                _drop_outside_lock = owner_inner.push_work(node2);
++            } else {
++                // This can't actually happen.
++                ds.has_strong_zero2one = false;
++            }
++        }
++    }
+ 
+     fn should_sync_wakeup(&self) -> bool {
+         false
 
 
