@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF624F4D06;
-	Tue, 13 Oct 2026 12:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300374E4C5E;
+	Tue, 13 Oct 2026 12:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893560; cv=none; b=AYDX7GobM/nlCE6iDB9MlPpdKcYMkdYEbFbOOOFi8c87unC1CDtMcUuwGC6v/yPtEElpuPpxU0MaxPsvwsSf6RBcrlnpSviQtWFfscU0iz9oRHuwPYVSuzMyOcOFpw3lzkR1unKCial21cMjRwZnIgE0tqYuqhgtjL+1wO9G2Q8=
+	t=1791893564; cv=none; b=kaPM9TgR5UxuVvyiwcV0uAndjKwz6EGp7MGBUlTiR1Kg0PYZu+pHBDabweG5kyZTDl8OSCTkYXtVnPZcK3yg1sikdoTEF8Q9j6F1xpy9eZ8BxGN+IP5noDFVF6Y77TTxxz9vPtT7nU3KdEaZgDo6WRMvvvWix+8IWOipBZ+rU8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893560; c=relaxed/simple;
-	bh=Ca9Oe47tSW7FemOF4SPHnQ4rklExym61VlxTRb0RJbA=;
+	s=arc-20240116; t=1791893564; c=relaxed/simple;
+	bh=CSJ7vGFU+n8hcof2AxyPtY6rpf0hdaDKTuoLj9LByrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ESwO6IG9u9RbP37zdz6gombfYCyOEL58SkL1ivk2aTU5u1jMtwhfRt1HTvrdPgWKtD+RAiZCQhUQuz2Dv4gH2o3pvVdrITBx64j7d3gTcwEQL+DD+CZ259gesJ1Xfxs+j2mkwjBrFWweQyuuEDfzuXEF4yN40kLeA64PzVqbzCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMa2lTas; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BusgvKGlJTUrZYj8XERmGmZzXlZKpymX9X8L9W89xMEbozyak/y7wBK7W25ZA4H9TRrANY+HzzQEbmyyCnJfsS4apdxD9uKCayshIxQtszBeaesw+lCUbPGVJ8otPjkTZ58rE+d6zOiEwp3ztQUj7NX5buAvYTzwiNwdyEbjYy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8qey5w0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMa2lTas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B031F00893;
-	Tue, 13 Oct 2026 12:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8qey5w0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE851F000FF;
+	Tue, 13 Oct 2026 12:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893558;
-	bh=oH17Lv5qNB60RM9l3PSyLojZgPq6j/JV1YEKrvDilyI=;
+	s=korg; t=1791893562;
+	bh=RKSstbHwAZb/SfVC9eqRgfZB67G3eaRB5jHB7DwY+1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMa2lTasEyhey5y58dzhmhF8EUty9rQzk26/WOlyf4OIWC8IcIIwit8IYYwlOXhUy
-	 ke6c41RUQ5E7Z6n7yTQn2zCtuInMWTX9nmOIAAiTN0jm/zOiWgZm4vP5JMCTXIdBqY
-	 0vIGI3TW9Kh3uLSjhBW5Tlnh0OLfeiaQJ+NqHi+U=
+	b=P8qey5w0R7TpZjTPOME8rg1mcSTmvjBGe3JvpX7FmtZcT7PRyQcfxizvXmNZ/S0vM
+	 nV4NykXNvHuCx/Mor8S8qwl/OQhjIQRNsqhzeg8D/3K9v52FQVc+xPQvIz4K1hDm8U
+	 wtgw8C90bUeYNaMVi5FUK1XmiEc9sSuUWiE4zrq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 267/621] drm/xe/guc: Keep scheduler timeline name alive
-Date: Tue, 13 Oct 2026 13:34:22 +0200
-Message-ID: <20261013112927.196260573@linuxfoundation.org>
+Subject: [PATCH 6.18 250/621] drm/msm/adreno: Fix a reference leak in a6xx_gpu_init()
+Date: Tue, 13 Oct 2026 13:34:05 +0200
+Message-ID: <20261013112926.795220696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,87 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 299bc6d50b1bed7d1f408391736712f01a0855e2 ]
+[ Upstream commit e64bca63647db1d5518198d6c5ca2dbcc66b182b ]
 
-The scheduler keeps a pointer to the timeline name, but q->name
-is freed with the exec queue while scheduler fences can still
-reference it.
+In a6xx_gpu_init(), node is obtained via of_parse_phandle().
+While there was a manual of_node_put() at the end of the
+common path, several early error returns would bypass this call,
+resulting in a reference leak.
+Fix this by using the __free(device_node) cleanup handler to
+release the reference when the variable goes out of scope.
 
-Store the name in struct xe_guc_exec_queue so it shares
-the scheduler's RCU-deferred lifetime.
-
-Fixes: 6bd90e700b42 ("drm/xe: Make dma-fences compliant with the safe access rules")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Acked-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260714064402.2457257-1-arvind.yadav@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 41075f0eb5dcbd3b065d15f15ef7bbe9315188e8)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/700661/
+Message-ID: <20260124-a6xx_gpu-v1-1-fa0c8b2dcfb1@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_exec_queue_types.h | 5 +++++
- drivers/gpu/drm/xe/xe_guc_submit.c           | 4 +++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-index c30c0e3ccbbb9..107e136a90848 100644
---- a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
-@@ -10,6 +10,7 @@
- #include <linux/workqueue.h>
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index d1eaa849b1978..f56ac2e0adbe1 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2633,7 +2633,6 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct platform_device *pdev = priv->gpu_pdev;
+ 	struct adreno_platform_config *config = pdev->dev.platform_data;
+-	struct device_node *node;
+ 	struct a6xx_gpu *a6xx_gpu;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+@@ -2653,7 +2652,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	adreno_gpu->registers = NULL;
  
- #include "xe_gpu_scheduler_types.h"
-+#include "xe_hw_fence_types.h"
+ 	/* Check if there is a GMU phandle and set it up */
+-	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
++	struct device_node *node __free(device_node) =
++		of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
+ 	/* FIXME: How do we gracefully handle this? */
+ 	BUG_ON(!node);
  
- struct dma_fence;
- struct xe_exec_queue;
-@@ -24,6 +25,10 @@ struct xe_guc_exec_queue {
- 	struct rcu_head rcu;
- 	/** @sched: GPU scheduler for this xe_exec_queue */
- 	struct xe_gpu_scheduler sched;
-+	/**
-+	 * @name: Scheduler timeline name, kept with @sched until RCU free.
-+	 */
-+	char name[MAX_FENCE_NAME_LEN];
- 	/** @entity: Scheduler entity for this xe_exec_queue */
- 	struct xe_sched_entity entity;
- 	/**
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 37be39eb96fda..693d3b3051c7b 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1684,7 +1684,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 	err = xe_sched_init(&ge->sched, &drm_sched_ops, &xe_sched_ops,
- 			    NULL, q->lrc[0]->ring.size / MAX_JOB_SIZE_BYTES, 64,
- 			    timeout, guc_to_gt(guc)->ordered_wq, NULL,
--			    q->name, gt_to_xe(q->gt)->drm.dev);
-+			    ge->name, gt_to_xe(q->gt)->drm.dev);
- 	if (err)
- 		goto err_free;
- 
-@@ -1711,6 +1711,8 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 
- 	xe_exec_queue_assign_name(q, q->guc->id);
- 
-+	strscpy(ge->name, q->name, sizeof(ge->name));
-+
- 	trace_xe_exec_queue_create(q);
- 
- 	return 0;
+@@ -2701,7 +2701,6 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
+ 	else
+ 		ret = a6xx_gmu_init(a6xx_gpu, node);
+-	of_node_put(node);
+ 	if (ret) {
+ 		a6xx_destroy(&(a6xx_gpu->base.base));
+ 		return ERR_PTR(ret);
 -- 
 2.53.0
 
