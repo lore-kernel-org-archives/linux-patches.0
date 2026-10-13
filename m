@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FEF33F5BC;
-	Tue, 13 Oct 2026 12:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DAF3D5C06;
+	Tue, 13 Oct 2026 12:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895544; cv=none; b=dIvwl/sZVYIgsdt/xyW2LTcwIo/Xc9s7gkF11qHB5P07rVOJNiut03fhxa1gPW1aETjAe3gpofRf9EBHsGzDdxv0h4S5X1V8tfwhq2h6WsM2vFeiu0jGM6wTmjiK+P+up1msDlJ6bLT2GSgzEtBPAxVFSa4c8YMINpW0a+ufcPQ=
+	t=1791895547; cv=none; b=Ge9phoskT6jEmM9/gnWpXu0ABiW4WZmJwR9EqTHCn/bMbd3jwOsnbrGWJkpOrkB5GqsvKg52PKaGUUlkOytqO3QSa60MJqXpYUyYqbPjfPt6yMsY4NdlnYwhlQlnTXrpMYrVwWzKj3G/JOih3i1njQvMriG2cXQIZwMJBcr4dkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895544; c=relaxed/simple;
-	bh=cqpVcbxdlEgwEuVTA0NYh5X2TxHn7KE0im5brt0+Wek=;
+	s=arc-20240116; t=1791895547; c=relaxed/simple;
+	bh=UXWd/0mJWdynkISIkNIobXK9PFrxfn82oKDT82+okcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mQsJinRtxb3j5C9h/CUekPd5TUFO5kPRNOzVqE+j3Uv0buNqWx4DZSllDQOOjnAglnUtU2T2pBL9+qXDhR3dh0sgoVAjKSAPO4tohmYW53xIV9Sdg/yGbv6kdKalx43dKA9nEex+JhNH5cGGzZiYqmoXBPhIIypWg9ICi1l3jlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1691KR38; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XIC7S/4azggT9tiVvYyMA85wot+NmBIVPwNOsgJhG96u4VQ7Jd8p2hLmHvO9+eELHenFkyusT63LS8IGs2dvwjGQTGwZMubwDvs3YEy8gaEUSD2x2+y3TqHsjcTd21DSxymLqSixTXdmrBiQsC+ofpQPco+MMdMsa566Y7OylbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjaFZNUV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1691KR38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1206C1F000FF;
-	Tue, 13 Oct 2026 12:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjaFZNUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0311F000FF;
+	Tue, 13 Oct 2026 12:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895543;
-	bh=QSR39lNPaLVC4vrmzjFYj5B3HwLMhjeP4ouPCA1q2Hs=;
+	s=korg; t=1791895546;
+	bh=w8IXNGku3dAYtn/c3i+GsMECUGtFd98rf7/ezBh1mu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1691KR389sYV5p58/Z5FqtLeXE0RakOm5PQYnMWWkmXe4Y69pMjuM3zTS4X/LQ7L7
-	 lsvzpR6guVsMtNLdbo+S6V0tNBetkGM0Y2VkQSTC1dgP6qT7UFxeM7Bsuk7ro4qE0D
-	 jm63/LSR64LhWNjH5zsTN/r0joteLiFnv7EfmLGg=
+	b=kjaFZNUVUlzAfw4R72zBjKV5ho2Ji7lwC7qijkkbl+EkOzYeZpc8MVUHj+Ml/S4xw
+	 jfMAzZ9ht7quhop6Q1tFjAK3ymnQ4RJYovIOrgRsmTTa19Sp2i/AibesvZctJHib3W
+	 MaFv7oZQRIk9ikaaiO8FbK89HQhOR/sTfCQFYgLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/497] mtd: spinand: fix NULL pointer dereference with no ECC engine
-Date: Tue, 13 Oct 2026 13:37:56 +0200
-Message-ID: <20261013112915.235676381@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 310/497] wifi: mac80211: shut down RX BA session timer on teardown
+Date: Tue, 13 Oct 2026 13:37:57 +0200
+Message-ID: <20261013112915.259908619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,52 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit b890e6163761ddb580cc74f43e15f8bbde15647e ]
+[ Upstream commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e ]
 
-When "nand-no-ecc-engine" is set in DT, nanddev_get_ecc_engine() takes
-the NAND_ECC_ENGINE_TYPE_NONE path and returns success while leaving
-nand->ecc.engine NULL. The SPI-NAND code nevertheless dereferences it
-unconditionally to test for a pipelined engine, so probing such a
-device oopses immediately.
+Tearing down an RX BA session can leave the session timer queued on a
+freed tid_rx. Later timer-wheel processing and the timer callback itself
+then run against freed memory.
 
-Rather than open-coding the test three times, add a
-nand_ecc_is_pipelined() helper to the NAND core that folds the NULL
-check into the integration comparison, and use it everywhere. Future
-callers then cannot reintroduce the problem.
+An RX BAR handler can dereference tid_rx under RCU before teardown
+unpublishes it and stay in its read-side critical section while teardown
+deletes the session timer. The stale handler can then rearm the timer
+after timer_delete_sync() returns and before the RCU callback frees
+tid_rx.
 
-Fixes: f9d7c7265bcf ("mtd: spinand: Create direct mapping descriptors for ECC operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-[ sashal: Replaced the nand_ecc_is_pipelined() helper with an inline NULL guard in spinand_create_dirmap(). ]
+Use timer_shutdown_sync() so rearm attempts become ineffective once
+teardown starts. Keep reorder_timer unchanged: teardown marks the session
+removed under reorder_lock and its release path checks that state before
+rearming. session_timer has no equivalent guard because
+ieee80211_rx_h_ctrl() rearms it before taking reorder_lock.
+
+Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
+Cc: stable@kernel.org # 5.15+
+Assisted-by: LLM sparse kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Adapted the replacement to the existing del_timer_sync() call instead of timer_delete_sync(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/agg-rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index a41f2fd47379c..cb10cc573d9ae 100644
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1108,7 +1108,8 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+diff --git a/net/mac80211/agg-rx.c b/net/mac80211/agg-rx.c
+index fe7eab4b681b0..05815bf30c220 100644
+--- a/net/mac80211/agg-rx.c
++++ b/net/mac80211/agg-rx.c
+@@ -103,7 +103,7 @@ void __ieee80211_stop_rx_ba_session(struct sta_info *sta, u16 tid,
+ 	if (!tid_rx)
+ 		return;
  
- 	spinand->dirmaps[plane].rdesc = desc;
+-	del_timer_sync(&tid_rx->session_timer);
++	timer_shutdown_sync(&tid_rx->session_timer);
  
--	if (nand->ecc.engine->integration != NAND_ECC_ENGINE_INTEGRATION_PIPELINED) {
-+	if (!nand->ecc.engine ||
-+	    nand->ecc.engine->integration != NAND_ECC_ENGINE_INTEGRATION_PIPELINED) {
- 		spinand->dirmaps[plane].wdesc_ecc = spinand->dirmaps[plane].wdesc;
- 		spinand->dirmaps[plane].rdesc_ecc = spinand->dirmaps[plane].rdesc;
- 
+ 	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
+ 	spin_lock_bh(&tid_rx->reorder_lock);
 -- 
 2.53.0
 
