@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1854F3ED3;
-	Tue, 13 Oct 2026 11:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F5F4F30D7;
+	Tue, 13 Oct 2026 11:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892039; cv=none; b=TgCB8+pyZnDGI4gxPe6X19D9Z3qOrn8R6p9cTUUCbKps3igGvIi3PdOLz6IyTC8mh1vKONqVXqGqDf+Pkj9E0BesR5FYuiClswZ5C6Oa+8w7vG8zn8kV6wd9eauFRmqYeW3dI4Qe3SoqGhQ2bWpA3aapAlFVuohghJcjfOpKydM=
+	t=1791892040; cv=none; b=awf3ePFqgI7zwWFCEMI4/45dawyAD9Yr47UlLvpo2VaRnoNVKpeDqAKW/R6H5ojpAp+/EUXQvJeEE0st5ukJNjBnqxgxMTR0/Pk7HAxOlWGIZW87rIzrRGrMzJoA/SqbDfzJA2yvdLT73eaha5JpGeszZtQam2G3IhZo0kMROWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892039; c=relaxed/simple;
-	bh=i1l8GKyAU0RPlQK0KQpHLanhB/AxZwJb7NCkH1XE1z0=;
+	s=arc-20240116; t=1791892040; c=relaxed/simple;
+	bh=XzoAG+iJpPYQV2ADxhjqU8kdmVkHh5tUgshAyrIgkqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QU5ACLY38T7AhT+TVtrLV6nG1VywOaQYAV9lM4ib6bP33xJTowSGLJoCSMTw2SwCMoCER2oApyOdBxU6orXxVeGxqKfuJ19wQZUTwtjPk+T9CENcS/nkxjmnhvoLUDmzFSvPvIAcGR6Rx0iiXPBpmXpROm1rYxFFmwJqwTmJ4zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvDimffQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PnKQ6KCR8+WZtdr7O/hP7RacTEYfcf35487ES6sXTk8vdsH1wARruJq+6TAQxlNsy1eGGHp949piaj117iOzJFmxMiSQ1Yy/xYzJmXj6WC1A6h/6qZxIwy9UtTTICpDR6y/V6gJAJ5DcMYYG4q7/XrM3lRf/4oDTbeNbqzkieW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwuCZYpA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvDimffQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD9E1F00898;
-	Tue, 13 Oct 2026 11:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwuCZYpA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23A01F000FF;
+	Tue, 13 Oct 2026 11:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892036;
-	bh=xFWnu0odv02kuPDMFMwPCzWM9ptNyiHnfcj0jeJ8Tok=;
+	s=korg; t=1791892030;
+	bh=ToP+JvDR6hlbacpaHpB3YC8eE6Qx0kjAETgywC5n4iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvDimffQgwPauqJ+6qRBu/lWdnqHttthILquZUR0yncXuf8Y/SsqgodztAlEDQwMD
-	 oDMX+b2uefBttMyD83o8bICcPK5hPkYyGoPFeQPDv1drK61VhyJ4ipYYkgFdcbWi6P
-	 OJc4M1gF1VszXwRsqa9w4QHtsEEG9SnGsWASy3HA=
+	b=MwuCZYpADVhTLlQxE55kjhot0faPg5dtuicoub7ohF83/OsvThoCcdochjgK+SEU/
+	 qG8ZECL0x8Qusse+xwUkRdCxOru/LAXYveB75xxT+vKcf4YcL5JkZTevjhcrfiP/rI
+	 dISCPRWNZiViSjpdKnj7xRMNchJ8eOWdswgfzcfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Juergen Gross <jgross@suse.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 040/281] strparser: make sure __strp_recv isnt running before tearing down the parser
-Date: Tue, 13 Oct 2026 13:35:56 +0200
-Message-ID: <20261013112856.025248275@linuxfoundation.org>
+Subject: [PATCH 7.2 038/281] xen/netfront: dont leak the skb when xennet_fill_frags() fails
+Date: Tue, 13 Oct 2026 13:35:54 +0200
+Message-ID: <20261013112855.976899932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,100 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 0984ebc631792acf8fff105112ee74a6b8f1efcc upstream.
+commit 93ccaf1c26e2133396173b76a071e59024daa622 upstream.
 
-The comment above strp_done() claims that if strp is stopped,
-strp_recv will no longer be called. That's only true if the caller has
-a mechanism (eg locking) to guarantee that strp_recv() calls that
-started before strp_stop() have completed by the time we call
-strp_done().
+When a response chain has more slots than fit in the skb's frags,
+xennet_fill_frags() returns an error and xennet_poll() jumps to its
+error path.  That path moves what's left on tmpq to errq to be freed,
+but the skb being filled was already dequeued from tmpq, so it's never
+freed.  Each chain that overflows leaks the skb and the pages attached
+to it as frags, and the backend decides how many slots it sends.
 
-This adds a dummy lock_sock/release_sock pair to guarantee that any
-in-flight strp_recv() (which runs under either bh_lock_sock or
-lock_sock, depending if it's called from ->sk_data_ready or strp_work)
-has completed.
+Put the skb back on tmpq before taking the error path, like the
+xennet_set_skb_gso() failure just above it does.
 
-Only espintcp can be affected by this race condition, but this patch
-makes sure no future user of strp can have the bug.
-
-This could crash on strp->sk ("general mode" of strp), but this mode
-has been here for 9 years and has never been used. It'll be gone soon,
-no point worrying about it.
-
-Switch the stopped/paused/etc bits to u8's to avoid races between
-strp_stop() and strp_pause/unpause().
-
-A reproducer has been published and turns the possible UAF into an
-exploit [1].
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/all/aZLn2Faeg1FB7XOf@v4bel/
-Link: https://lore.kernel.org/all/aZgpkyTDU3aXe_V0@v4bel/
-Link: https://github.com/m0x41nos/RustyTux [1]
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Fixes: ad4f15dc2c70 ("xen/netfront: don't bug in case of too many frags")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/425d9d926709b542ed5331110c19fee4aee1f28d.1791206940.git.sd@queasysnail.net
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-fill-frags-leak-v1-1-a8a01ff9cd52@toxicpanda.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/strparser.rst |    2 +-
- include/net/strparser.h                |   10 +++++-----
- net/strparser/strparser.c              |    6 +++++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/xen-netfront.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/Documentation/networking/strparser.rst
-+++ b/Documentation/networking/strparser.rst
-@@ -77,7 +77,7 @@ Functions
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1346,8 +1346,10 @@ err:
+ 		skb->data_len = rx->status;
+ 		skb->len += rx->status;
  
-      strp_done is called to release any resources held by the stream
-      parser instance. This must be called after the stream processor
--     has been stopped.
-+     has been stopped. The socket lock must not be held.
+-		if (unlikely(xennet_fill_frags(queue, skb, &tmpq)))
++		if (unlikely(xennet_fill_frags(queue, skb, &tmpq))) {
++			__skb_queue_head(&tmpq, skb);
+ 			goto err;
++		}
  
-      ::
- 
---- a/include/net/strparser.h
-+++ b/include/net/strparser.h
-@@ -91,11 +91,11 @@ static inline struct strp_msg *strp_msg(
- struct strparser {
- 	struct sock *sk;
- 
--	u32 stopped : 1;
--	u32 paused : 1;
--	u32 aborted : 1;
--	u32 interrupted : 1;
--	u32 unrecov_intr : 1;
-+	u8 stopped;
-+	u8 paused;
-+	u8 aborted;
-+	u8 interrupted;
-+	u8 unrecov_intr;
- 
- 	struct sk_buff **skb_nextp;
- 	struct sk_buff *skb_head;
---- a/net/strparser/strparser.c
-+++ b/net/strparser/strparser.c
-@@ -505,12 +505,16 @@ void strp_unpause(struct strparser *strp
- EXPORT_SYMBOL_GPL(strp_unpause);
- 
- /* strp must already be stopped so that strp_recv will no longer be called.
-- * Note that strp_done is not called with the lower socket held.
-+ * Note that strp_done must not be called with the lower socket held.
-  */
- void strp_done(struct strparser *strp)
- {
- 	WARN_ON(!strp->stopped);
- 
-+	lock_sock(strp->sk);
-+	/* sync with pending strp_recv */
-+	release_sock(strp->sk);
-+
- 	cancel_delayed_work_sync(&strp->msg_timer_work);
- 	cancel_work_sync(&strp->work);
- 
+ 		if (rx->flags & XEN_NETRXF_csum_blank)
+ 			skb->ip_summed = CHECKSUM_PARTIAL;
 
 
