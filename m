@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136F547604A;
-	Tue, 13 Oct 2026 12:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397AA43CEF3;
+	Tue, 13 Oct 2026 12:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894057; cv=none; b=Il3Rqr2wL2KbmZB1VraIM3h9xXuZZb/2DYHnC/ap6/4thOgMeWARPrgEgaYd6SY8d/20NITMQ/nswTyF9vKF701dfrYzLSsRYqdpriXi40un46vVew8DjA+zs0ola0NF1gsOTuadIA6JrVS5Rgnnctwd78WWzk6Bdr2JXHXBEP0=
+	t=1791894060; cv=none; b=aERVLJlg4VQ5evAZZWxBRQLgn+TuZ1D2ttPj7+XZFdt8jOylJ/Xs/XUISz46/GJsvSawYXMMDCNDrZ/1zzE2cNp78vNNnjX4v0E3/9C9YJqTCBzAq53eZnDXf1s0q2UsVYwueOjELUABez7egUzJ5orgg7tO7boW1apxlK8gzZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894057; c=relaxed/simple;
-	bh=WC8SsjZTxVwyS17CecXlGmU/G9I6LWnPEu/G7jQBNIs=;
+	s=arc-20240116; t=1791894060; c=relaxed/simple;
+	bh=75cniNS21cMbxZIwPm2r65ch+CmpG94DUfvnjQZ7uhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s1xhStWPtjlhxNMG3TvPR6LERz8IsZw9/HqYt7zv6UAGeDmu4k/8hP6qOucRBajI5Awc7RCsfEIE079sJ1QGvttyz0zCXUal0uqoOOaeAz1UptRWkFy+Ff9+M91mPLHHtFMIjE2LKhTzamErhr5RSY2vKZcDHjmjzr/UNf2r4bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEOZtebS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jjT+z+F9no9JIMfiZ7MroIbMBkH4xcJdTULeY5tOMscaU80idnMmr7VKyrkPRTBfrQ2aAHyrA7HVEKuGh/I3mC1mjqAvYEh7CppofAM2JQgmAmdnFBV2GOGX688uoG3sfdTq6fcaD9h0BxJ/mD9FKsAiTdc6NGtRirU0Kf+s7AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awmnKv91; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEOZtebS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E0A1F00898;
-	Tue, 13 Oct 2026 12:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awmnKv91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818BE1F000FF;
+	Tue, 13 Oct 2026 12:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894056;
-	bh=k62WtmIvBxIwRSf0ViCk6KL4gpibDndlizaREslI6P8=;
+	s=korg; t=1791894059;
+	bh=ixIQb6iDZ7/MHGRwPq2zjBDo6K4RPqSJ7rO4VuAT9H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tEOZtebS5TGjX437LheD3fTE+Wx0qS+XWmdf0vo3Mj5rOsxCb0sOc0f2B7VYwGQG6
-	 lB4k6FJ6jmpJA/sb7IVfjRZS19aCHebYdAlKOb999JZikKVKtMT/CnNH1nXQzEZg9B
-	 8a9XFfK1pftW93ynJ9NcjPhmRIkye6Vc/YXsmbnw=
+	b=awmnKv91Hb2oVP7BQS0U82VYFoPpfEIRNKyqLBQS4eLNE/mJUT7xwGsrRuNL/F2W9
+	 NO4rYwRJO+7rZ5AeYnK/nn5yTpRgAaAuvZgmWvcLIoFt0B7r2skKcGTjbFWjB6BwA+
+	 di3yyqXakjiNlsqmzM1/GNmmEsz5h8isyr49vljs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Peter Wang <peter.wang@mediatek.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 430/621] scsi: core: sysfs: Make use of bus callbacks
-Date: Tue, 13 Oct 2026 13:37:05 +0200
-Message-ID: <20261013112931.039536547@linuxfoundation.org>
+Subject: [PATCH 6.18 431/621] scsi: sd: Convert to SCSI bus methods
+Date: Tue, 13 Oct 2026 13:37:06 +0200
+Message-ID: <20261013112931.063838370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -56,146 +55,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit f7d4f1bf5724e52de049c619beddd53c62206624 ]
+[ Upstream commit 63b541f054e7147f5a19fcd964677c189bad7cff ]
 
-Introduce a bus-specific probe, remove and shutdown function. For now
-this only allows to get rid of a cast of the generic device to a SCSI
-device in the drivers and changes the remove prototype to return
-void---a non-zero return value is ignored anyhow.
-
-The objective is to get rid of users of struct device_driver callbacks
-.probe(), .remove() and .shutdown() to eventually remove these. Until
-all SCSI drivers are converted, this results in a runtime warning about
-the drivers needing an update because there is a bus probe function and
-a driver probe function. The in-tree drivers are fixed by the following
-commits.
+The SCSI subsystem has implemented dedicated callbacks for probe, remove
+and shutdown. Make use of them. This fixes a runtime warning about the
+driver needing to be converted to the bus probe method.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/a54e363a3fd2054fb924afd7df44bca7f444b5f1.1766133330.git.u.kleine-koenig@baylibre.com
+Link: https://patch.msgid.link/8ad5a00c2ad2a64b81350ae3fab02fbe430f306d.1766133330.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_sysfs.c  | 73 ++++++++++++++++++++++++++++++++++++--
- include/scsi/scsi_driver.h |  3 ++
- 2 files changed, 74 insertions(+), 2 deletions(-)
+ drivers/scsi/sd.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index f2d62f71c8af7..343c1f9098af3 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -554,10 +554,48 @@ static int scsi_bus_uevent(const struct device *dev, struct kobj_uevent_env *env
- 	return 0;
- }
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 5d746645283d2..66fb3dd18f4b9 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -108,7 +108,7 @@ static void sd_config_write_same(struct scsi_disk *sdkp,
+ 		struct queue_limits *lim);
+ static void  sd_revalidate_disk(struct gendisk *);
+ static void sd_unlock_native_capacity(struct gendisk *disk);
+-static void sd_shutdown(struct device *);
++static void sd_shutdown(struct scsi_device *);
+ static void scsi_disk_release(struct device *cdev);
  
-+static int scsi_bus_probe(struct device *dev)
-+{
-+	struct scsi_device *sdp = to_scsi_device(dev);
-+	struct scsi_driver *drv = to_scsi_driver(dev->driver);
-+
-+	if (drv->probe)
-+		return drv->probe(sdp);
-+	else
-+		return 0;
-+}
-+
-+static void scsi_bus_remove(struct device *dev)
-+{
-+	struct scsi_device *sdp = to_scsi_device(dev);
-+	struct scsi_driver *drv = to_scsi_driver(dev->driver);
-+
-+	if (drv->remove)
-+		drv->remove(sdp);
-+}
-+
-+static void scsi_bus_shutdown(struct device *dev)
-+{
-+	struct scsi_device *sdp = to_scsi_device(dev);
-+	struct scsi_driver *drv;
-+
-+	if (!dev->driver)
-+		return;
-+
-+	drv = to_scsi_driver(dev->driver);
-+
-+	if (drv->shutdown)
-+		drv->shutdown(sdp);
-+}
-+
-+
- const struct bus_type scsi_bus_type = {
--        .name		= "scsi",
--        .match		= scsi_bus_match,
-+	.name		= "scsi",
-+	.match		= scsi_bus_match,
- 	.uevent		= scsi_bus_uevent,
-+	.probe		= scsi_bus_probe,
-+	.remove		= scsi_bus_remove,
-+	.shutdown	= scsi_bus_shutdown,
- #ifdef CONFIG_PM
- 	.pm		= &scsi_bus_pm_ops,
- #endif
-@@ -1609,6 +1647,30 @@ void scsi_remove_target(struct device *dev)
- }
- EXPORT_SYMBOL(scsi_remove_target);
- 
-+static int scsi_legacy_probe(struct scsi_device *sdp)
-+{
-+	struct device *dev = &sdp->sdev_gendev;
-+	struct device_driver *driver = dev->driver;
-+
-+	return driver->probe(dev);
-+}
-+
-+static void scsi_legacy_remove(struct scsi_device *sdp)
-+{
-+	struct device *dev = &sdp->sdev_gendev;
-+	struct device_driver *driver = dev->driver;
-+
-+	driver->remove(dev);
-+}
-+
-+static void scsi_legacy_shutdown(struct scsi_device *sdp)
-+{
-+	struct device *dev = &sdp->sdev_gendev;
-+	struct device_driver *driver = dev->driver;
-+
-+	driver->shutdown(dev);
-+}
-+
- int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
+ static DEFINE_IDA(sd_index_ida);
+@@ -3894,7 +3894,7 @@ static int sd_format_disk_name(char *prefix, int index, char *buf, int buflen)
+  *	sd_probe - called during driver initialization and whenever a
+  *	new scsi device is attached to the system. It is called once
+  *	for each scsi device (not just disks) present.
+- *	@dev: pointer to device object
++ *	@sdp: pointer to device object
+  *
+  *	Returns 0 if successful (or not interested in this scsi device 
+  *	(e.g. scanner)); 1 when there is an error.
+@@ -3908,9 +3908,9 @@ static int sd_format_disk_name(char *prefix, int index, char *buf, int buflen)
+  *	Assume sd_probe is not re-entrant (for time being)
+  *	Also think about sd_probe() and sd_remove() running coincidentally.
+  **/
+-static int sd_probe(struct device *dev)
++static int sd_probe(struct scsi_device *sdp)
  {
- 	struct device_driver *drv = &sdrv->gendrv;
-@@ -1616,6 +1678,13 @@ int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
- 	drv->bus = &scsi_bus_type;
- 	drv->owner = owner;
+-	struct scsi_device *sdp = to_scsi_device(dev);
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp;
+ 	struct gendisk *gd;
+ 	int index;
+@@ -4051,15 +4051,16 @@ static int sd_probe(struct device *dev)
+  *	sd_remove - called whenever a scsi disk (previously recognized by
+  *	sd_probe) is detached from the system. It is called (potentially
+  *	multiple times) during sd module unload.
+- *	@dev: pointer to device object
++ *	@sdp: pointer to device object
+  *
+  *	Note: this function is invoked from the scsi mid-level.
+  *	This function potentially frees up a device name (e.g. /dev/sdc)
+  *	that could be re-used by a subsequent sd_probe().
+  *	This function is not called when the built-in sd driver is "exit-ed".
+  **/
+-static int sd_remove(struct device *dev)
++static void sd_remove(struct scsi_device *sdp)
+ {
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
  
-+	if (!sdrv->probe && drv->probe)
-+		sdrv->probe = scsi_legacy_probe;
-+	if (!sdrv->remove && drv->remove)
-+		sdrv->remove = scsi_legacy_remove;
-+	if (!sdrv->shutdown && drv->shutdown)
-+		sdrv->shutdown = scsi_legacy_shutdown;
-+
- 	return driver_register(drv);
+ 	scsi_autopm_get_device(sdkp->device);
+@@ -4067,10 +4068,9 @@ static int sd_remove(struct device *dev)
+ 	device_del(&sdkp->disk_dev);
+ 	del_gendisk(sdkp->disk);
+ 	if (!sdkp->suspended)
+-		sd_shutdown(dev);
++		sd_shutdown(sdp);
+ 
+ 	put_disk(sdkp->disk);
+-	return 0;
  }
- EXPORT_SYMBOL(__scsi_register_driver);
-diff --git a/include/scsi/scsi_driver.h b/include/scsi/scsi_driver.h
-index 40aba9a9349a6..249cea724abd1 100644
---- a/include/scsi/scsi_driver.h
-+++ b/include/scsi/scsi_driver.h
-@@ -12,6 +12,9 @@ struct request;
- struct scsi_driver {
- 	struct device_driver	gendrv;
  
-+	int (*probe)(struct scsi_device *);
-+	void (*remove)(struct scsi_device *);
-+	void (*shutdown)(struct scsi_device *);
- 	int (*resume)(struct device *);
- 	void (*rescan)(struct device *);
- 	blk_status_t (*init_command)(struct scsi_cmnd *);
+ static void scsi_disk_release(struct device *dev)
+@@ -4157,8 +4157,9 @@ static int sd_start_stop_device(struct scsi_disk *sdkp, int start)
+  * the normal SCSI command structure.  Wait for the command to
+  * complete.
+  */
+-static void sd_shutdown(struct device *dev)
++static void sd_shutdown(struct scsi_device *sdp)
+ {
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+ 
+ 	if (!sdkp)
+@@ -4326,12 +4327,12 @@ static const struct dev_pm_ops sd_pm_ops = {
+ };
+ 
+ static struct scsi_driver sd_template = {
++	.probe = sd_probe,
++	.remove = sd_remove,
++	.shutdown = sd_shutdown,
+ 	.gendrv = {
+ 		.name		= "sd",
+-		.probe		= sd_probe,
+ 		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
+-		.remove		= sd_remove,
+-		.shutdown	= sd_shutdown,
+ 		.pm		= &sd_pm_ops,
+ 	},
+ 	.rescan			= sd_rescan,
 -- 
 2.53.0
 
