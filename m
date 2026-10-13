@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E3B4F4CF3;
-	Tue, 13 Oct 2026 12:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2470B49C4CC;
+	Tue, 13 Oct 2026 12:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892941; cv=none; b=gwGENaI4dbnm9VK3w46qK2qlsqKr/WmgniTixc0hfBgYBBf96nIgfGYqFTFRr4r5vzTmRlnZ6U9i5XeviHo5e5s43SlZ0I5B4IGQ9PgZH2ydHAQfXHh/Nnlfvd8PQ9jYokH1Ia8Cv1BZbk0w/BFk95JGjm8VWkU8cSBtmyKZOVQ=
+	t=1791892944; cv=none; b=EIKN8Fqudc6KpG57TmYbHuXqcNAGq+KIzmG4gkDMBv1wuifuA84xISoH+VpwAV8OcTOfYitvPeHyzDQACFB3i5Ks/4lJnJj3KTUk42x8BM7/gupJoO16OUOYdzJARRPnA/O9q4jsLErKOMot68j8NR6GWDRh1KhGeJzYAOSDYCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892941; c=relaxed/simple;
-	bh=4leYayuxS6A48ZhisD2TZyA0bcrAg+r12ZkV4moKO+s=;
+	s=arc-20240116; t=1791892944; c=relaxed/simple;
+	bh=06ncSP1IqSTjBfK6GMRzbPlxul2n4Jn5pdJ4uN8Qr1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+kVSwTPNcyVlUgkpgR2QTmNR+ZKkWjLI/EU8fy0FLSLbKkZX20dxdWOuINda1a4mRhFazADgRCpuTSocPvol5PmBgInR86jHhe6lscOxFnbIz6lYIYMjfgUuI/EP9WxS4ZKpYKoyef1ciac8Dd4Z51/A4rjUtan6TTtxnsCpMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhbPJwVM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PFmv6x0ma+R/uPkVZ8dxm2ZnFm447ElFscpG7yBQ4MhIOQpnQs7GqQbiban0YbC8M/ylAkRaAzLJJOR8yzyvACI3ALVOsgC5KkET+FGNo3RAgLJwzMZnNp8FFDNxlNCZRTiFOm6eDVK1Xve+jLKwRXsj04zdCahWNDnPhnYrTrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaFaMUG3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhbPJwVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6321F000FF;
-	Tue, 13 Oct 2026 12:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaFaMUG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7189F1F000FF;
+	Tue, 13 Oct 2026 12:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892940;
-	bh=4w7K5o2I/FoYNbuPQw85JGN+K0W3O4MGo/eAox/kkFg=;
+	s=korg; t=1791892943;
+	bh=yN90vCKvD7ixYroKTryTybOmIYdhEMeQpqCF/9uzPVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhbPJwVMZ5M1U6W0tQlBleTj+CL6Q84IYdjsQZuv+ZDy0TnD6YsW+M1JbxQi8JVMT
-	 I48sst/f/PQwpLmzl8iLRnBocZo6vZQNdwEWdDpJN7dwFBIFh39SZc0UfyFOzad8dI
-	 Or7lPZgGzF5w0H9v9t5omXwjUXcEaigdYGuwwZj8=
+	b=WaFaMUG39jOTeDwA9xocP0MjMMONKdIs7waSXhp3zjngTF+8IOMbOpxjZ2KIihEl0
+	 Ccgsr7ICgUykhiyW6jko0EjENQxtJHiAeTbPNIlgWq3TeRbZ8Iktm0b5hw11jz/7G6
+	 ZNC04/x1Sjo3PnCTA4OMO1gL6F2KPzICw/Tz4LBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Tim Hostetler <thostet@google.com>,
 	Jordan Rhee <jordanrhee@google.com>,
 	Joshua Washington <joshwash@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 057/621] gve: fix napi_disable deadlock when attempting to disable XSK pools
-Date: Tue, 13 Oct 2026 13:30:52 +0200
-Message-ID: <20261013112922.216648115@linuxfoundation.org>
+Subject: [PATCH 6.18 058/621] gve: fix XSK buffer leak when rings are stopped
+Date: Tue, 13 Oct 2026 13:30:53 +0200
+Message-ID: <20261013112922.240216859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,54 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Washington <joshwash@google.com>
 
-commit 0cb6939a4dfefa822007b7a71986e06bc4f61f54 upstream.
+commit 73670ddb91a4d22e1deb3efd962242de1ec48e90 upstream.
 
-When disabling XSK pools, GVE calls the unlocked versions of
-napi_disable and napi_enable. However, the netdev lock has already been
-acquired before ndo_bpf is called because GVE supports queue management
-ops. Calling the unlocked versions of napi_disable/enable results in a
-deadlock when attempting to disable XSK pools, as the thread attempts to
-re-acquire a lock it already holds.
+GVE does not free XSK buffers when resetting ring state as a part of
+stopping queues. This causes all XSK buffers which are posted to the
+NIC to be leaked.
 
-Update the NAPI calls to use the locked versions.
+Free XSK buffers attached to an allocated buf_state when stopping rings.
 
-This issue was found in production.
+This issue was hit in production.
 
-Fixes: 606048cbd834 ("net: designate XSK pool pointers in queues as "ops protected"")
+Fixes: c1fffc5d66a7 ("gve: implement DQO RX datapath and control path for AF_XDP zero-copy")
 Cc: stable@vger.kernel.org
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Tim Hostetler <thostet@google.com>
 Reviewed-by: Jordan Rhee <jordanrhee@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20260930214735.3288780-4-joshwash@google.com
+Link: https://patch.msgid.link/20260930214735.3288780-2-joshwash@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1663,17 +1663,17 @@ static int gve_xsk_pool_disable(struct n
+diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+index 5cf242b28557..a2c4a08ce68d 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -113,6 +113,12 @@ static void gve_rx_reset_ring_dqo(struct gve_priv *priv, int idx)
+ 				gve_free_to_page_pool(rx, bs, false);
+ 			else
+ 				gve_free_qpl_page_dqo(bs);
++
++			if (gve_buf_state_is_allocated(rx, bs) &&
++			    bs->xsk_buff) {
++				xsk_buff_free(bs->xsk_buff);
++				bs->xsk_buff = NULL;
++			}
+ 		}
  	}
  
- 	napi_rx = &priv->ntfy_blocks[priv->rx[qid].ntfy_id].napi;
--	napi_disable(napi_rx); /* make sure current rx poll is done */
-+	napi_disable_locked(napi_rx); /* make sure current rx poll is done */
- 
- 	tx_qid = gve_xdp_tx_queue_id(priv, qid);
- 	napi_tx = &priv->ntfy_blocks[priv->tx[tx_qid].ntfy_id].napi;
--	napi_disable(napi_tx); /* make sure current tx poll is done */
-+	napi_disable_locked(napi_tx); /* make sure current tx poll is done */
- 
- 	gve_unreg_xsk_pool(priv, qid);
- 	smp_mb(); /* Make sure it is visible to the workers on datapath */
- 
--	napi_enable(napi_rx);
--	napi_enable(napi_tx);
-+	napi_enable_locked(napi_rx);
-+	napi_enable_locked(napi_tx);
- 	if (gve_is_gqi(priv)) {
- 		if (gve_rx_work_pending(&priv->rx[qid]))
- 			napi_schedule(napi_rx);
+-- 
+2.56.0
+
 
 
