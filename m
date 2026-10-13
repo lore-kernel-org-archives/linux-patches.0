@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC64F93B3;
-	Tue, 13 Oct 2026 12:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CEB20125F;
+	Tue, 13 Oct 2026 12:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895452; cv=none; b=s+6W9ehshmQ4sxtGo/mQNl16TnqTL8Ke9kIQSwjGApDIpdkN6KyllyvahjoUvWriysWEf8gk8Q/salhO2pX18tGwSXLnz9lJGpKdyyLLjAM9/dQH5hGHFn4rR64O2KdP3KmBhk0ISGmbUIw9nS3fEgpAJF1QjQr94dtcRBdJ2l8=
+	t=1791895455; cv=none; b=GqeWtw87LMw4Bn7B3DsSoYvDdaKPpg/ycUqQ6D1xXsRRPqyQptdMgxMBCADJ327KfchOyRGUl/XX8EWtismhx4xQafGpB8bDMrR0HvoM97DNhrqaoAGMt0HFXL0rfz4y3hX/Zy4dVeqYrJTK5E3QRf57DU/bgbHiASVEHnHhrhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895452; c=relaxed/simple;
-	bh=nPBX70sDMAyVepWl5RuKjhgqPzga3uiTE8KNAUHwqgE=;
+	s=arc-20240116; t=1791895455; c=relaxed/simple;
+	bh=6ugOny2DEpTbba3letvP2fgUlOj5vwIn7oxa06tKwQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKoVvYcVUIges8nfSY4FpjvpXTDPI86VSLkSMfsFzbETz9g3yb51Z+CpCTK9q8NYZs4Ub7PwAj2iRD1v7rrUxaN1W8Icz0MuEgmX1JwOaODDbhefhADPQLDOOENVq6Txgq7vRvclFm/vWTigVQ2iMZ0070yVXKeCRbaJ4KB0384=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16IFIXXj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CNSh9wH0eJ4WKnUs0KUvaAPa8048Ik5p3/Nmx85Z/RdqMFb4artny9uR9iHVvIY7+tbK+1/QRDb5P8ZMSJpTVmHqHIAlNckC+fD8je0Qab2w7rh3jdavJJnzwZ52C1aj5xB1vUR06FzH/KpVHgLf7lIONxLemv59nbtRo/0r+zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfldWRMn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16IFIXXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DA41F000FF;
-	Tue, 13 Oct 2026 12:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfldWRMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E791F000FF;
+	Tue, 13 Oct 2026 12:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895450;
-	bh=rRU+Zp8gSIMyrb/iuVuT5MUPTsHH418iCyi+bF0SwQg=;
+	s=korg; t=1791895453;
+	bh=HO7sk2QFU+Eip7TrYiMwjJLXuembQbLSnakIzEIgdaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=16IFIXXjRbdHgWtJlL5DNpa4L/sgqtBlRuS2hqH9W7X0T1LkIS3PRBFkRvYTBFfPS
-	 FMRL/yV6bVgBjHl1cUuCyiK5R1zsENS9nP5W2LXJzQb30gjbnwa7Eg39lf3bylItBd
-	 dCM8VFFeAYquqAOrdeaAXhSrDZXmmUXtTkpupMNk=
+	b=AfldWRMn0GW8XLdXBXH9mD1znXtsdJNzKmfkHZSpoArnbDg3PpEDbyKX2Zr++BBo5
+	 hGaeILE4cXk7HrD72cKERj8HtPuXXpX04b74YmiVv9F5y7993qzJD3+1QXU9aPuJlb
+	 FvhdjsJUtjskmyR5rGL7OjcTWtZPnubSp5cu8HDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 225/497] thunderbolt: Fix KASAN reported use-after-free when request is canceled
-Date: Tue, 13 Oct 2026 13:36:32 +0200
-Message-ID: <20261013112913.234646949@linuxfoundation.org>
+	Gilberto Conde <gilbertorconde@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 273/497] net: usb: qmi_wwan: add Quectel EG120K-EA
+Date: Tue, 13 Oct 2026 13:37:20 +0200
+Message-ID: <20261013112914.372461158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,245 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Gilberto Conde <gilbertorconde@gmail.com>
 
-commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
+commit 0f2fd31f63c65c409bd336af3a42d478a9207c1f upstream.
 
-Alan reported that when doing stress testing sometimes KASAN notices
-use-after-free during control channel operation (stripped down keeping
-the relevant parts):
+Add support for the Quectel EG120K-EA LTE Cat.12 module (USB ID
+2c7c:030b). Its QMI interface (interface 4) uses class/subclass/protocol
+ff/ff/ff like the other recent Quectel modules, so match it the same way.
 
- BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
- Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
-  <TASK>
-  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+The product ID is shared with the EM060K, which the option driver
+already knows and uses to claim the serial interfaces. Without a
+qmi_wwan entry the data interface is left unbound.
 
- Allocated by task 1760:
-  __kmalloc_cache_noprof+0x1ee/0x550
-  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
+Tested on a GL.iNet GL-X2000, where the module is soldered down and
+enumerates at SuperSpeed: cdc-wdm0 and wwan0 appear and ModemManager
+brings up a data session.
 
- Freed by task 926:
-  kfree+0x18f/0x4a0
-  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
-  tb_cfg_request_work+0x82/0x120 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030b Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=EG120K-EA
+S:  SerialNumber=45546267
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#=12 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
- Second to last potentially related work creation:
-  __queue_work+0x575/0xd00
-  queue_work_on+0x77/0x80
-  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
-  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
-The last stack trace is helpful because it shows that we are cancelling
-a request and looking at tb_cfg_request_cancel() what might happen is
-that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
-starts and because of this it will call schedule_work() queueing the
-same work to run again. However, it is already removed from the
-request_queue and reference count is dropped so when
-tb_cfg_request_work() triggers again it will access memory that is
-already released.
-
-Fix this so that we first make sure a cancelled request is not handed
-away from tb_cfg_request_find() or scheduled to run. Then instead of
-relying on the worker to clean up the request we will do it in
-tb_cfg_request_cancel() after the work is canceled from running. Make
-tb_cfg_request_dequeue() release the request only if it was actually
-removed from the queue.
-
-Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
+Link: https://patch.msgid.link/20260921093426.2870266-1-gilbertorconde@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -70,7 +70,6 @@ struct tb_ctl {
- #define tb_ctl_dbg(ctl, format, arg...) \
- 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
- 
--static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
- /* Serializes access to request kref_get/put */
- static DEFINE_MUTEX(tb_cfg_request_lock);
- 
-@@ -128,41 +127,42 @@ void tb_cfg_request_put(struct tb_cfg_re
- static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
- 				  struct tb_cfg_request *req)
- {
-+	tb_cfg_request_get(req);
-+
- 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
- 	WARN_ON(req->ctl);
- 
--	mutex_lock(&ctl->request_queue_lock);
-+	guard(mutex)(&ctl->request_queue_lock);
- 	if (!ctl->running) {
--		mutex_unlock(&ctl->request_queue_lock);
-+		tb_cfg_request_put(req);
- 		return -ENOTCONN;
- 	}
- 	req->ctl = ctl;
- 	list_add_tail(&req->list, &ctl->request_queue);
- 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	mutex_unlock(&ctl->request_queue_lock);
- 	return 0;
- }
- 
--static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
-+static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
- {
--	struct tb_ctl *ctl = req->ctl;
--
--	mutex_lock(&ctl->request_queue_lock);
--	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
--		mutex_unlock(&ctl->request_queue_lock);
--		return;
--	}
-+	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+}
- 
--	list_del(&req->list);
--	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
--		wake_up(&tb_cfg_request_cancel_queue);
--	mutex_unlock(&ctl->request_queue_lock);
-+static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
-+{
-+	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
- }
- 
--static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
-+static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
- {
--	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+	struct tb_ctl *ctl = req->ctl;
-+
-+	guard(mutex)(&ctl->request_queue_lock);
-+	if (tb_cfg_request_is_active(req)) {
-+		list_del(&req->list);
-+		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+		tb_cfg_request_put(req);
-+	}
- }
- 
- static struct tb_cfg_request *
-@@ -173,7 +173,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
- 	mutex_lock(&pkg->ctl->request_queue_lock);
- 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
- 		tb_cfg_request_get(iter);
--		if (iter->match(iter, pkg)) {
-+		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
- 			req = iter;
- 			break;
- 		}
-@@ -507,8 +507,11 @@ static void tb_ctl_rx_callback(struct tb
- 	trace_tb_rx(pkg->ctl->index, frame->eof, pkg->buffer, frame->size, !req);
- 
- 	if (req) {
--		if (req->copy(req, pkg))
--			schedule_work(&req->work);
-+		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
-+			if (!tb_cfg_request_is_canceled(req) &&
-+			    req->copy(req, pkg))
-+				schedule_work(&req->work);
-+		}
- 		tb_cfg_request_put(req);
- 	}
- 
-@@ -520,11 +523,10 @@ static void tb_cfg_request_work(struct w
- {
- 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
- 
--	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
-+	if (!tb_cfg_request_is_canceled(req))
- 		req->callback(req->callback_data);
- 
- 	tb_cfg_request_dequeue(req);
--	tb_cfg_request_put(req);
- }
- 
- /**
-@@ -548,10 +550,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 	INIT_WORK(&req->work, tb_cfg_request_work);
- 	INIT_LIST_HEAD(&req->list);
- 
--	tb_cfg_request_get(req);
- 	ret = tb_cfg_request_enqueue(ctl, req);
- 	if (ret)
--		goto err_put;
-+		return ret;
- 
- 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
- 			req->request_type);
-@@ -565,9 +566,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 
- err_dequeue:
- 	tb_cfg_request_dequeue(req);
--err_put:
--	tb_cfg_request_put(req);
--
- 	return ret;
- }
- 
-@@ -581,9 +579,10 @@ err_put:
-  */
- void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
- {
--	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
--	schedule_work(&req->work);
--	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
-+	scoped_guard(mutex, &req->ctl->request_queue_lock)
-+		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
-+	cancel_work_sync(&req->work);
-+	tb_cfg_request_dequeue(req);
- 	req->result.err = err;
- }
- 
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1085,6 +1085,7 @@ static const struct usb_device_id produc
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
++	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x030b)},	/* Quectel EM060K/EG120K-EA */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0620)},	/* Quectel EM160R-GL */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0800)},	/* Quectel RM500Q-GL */
 
 
