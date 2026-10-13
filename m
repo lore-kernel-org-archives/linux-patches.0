@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48C74F85BC;
-	Tue, 13 Oct 2026 12:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005794EC65A;
+	Tue, 13 Oct 2026 12:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893761; cv=none; b=jdTvJ7/3Ff19LxF1klWMod1l3Cq3HuTScxBurCM/4p0zfQJfixraIAqrEQvp0R9/gMM1v636k4k5ut6IudJajZ1lmQJxJwDvmTtGVj3dab2xFCzwnkQyQp/5Rf6iopA1Q6FRMBSJgu6Xt7wBTbtvwisRS0HvtWCN6Mq9ML3yQcM=
+	t=1791893763; cv=none; b=gseXr3mSRSTuTI5nYGJKP0b5KXhpqE2zlgbRsKJdxQym4RuluuxRuz2sEolLjKdoj0FfmVTx6uuaCunLxrZdmzaG8XCK7EmaAnv2+Z2Yqn3YqqgQd92UcSDH9B/s894LgcPIBYiYo4xvSjxCgXiDlDRZtLJzMvEsZhCyoAxxxKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893761; c=relaxed/simple;
-	bh=uMGiJ316hAVEq0zjaK/r2DHahg51DgVnoiB7FUBI6a0=;
+	s=arc-20240116; t=1791893763; c=relaxed/simple;
+	bh=T1aXq5SwTzxVcvFp6v6wjLJYTa3NJVCUb2ziFLFwaXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXSVg+QGRQrl/jh8rpkEZ7iXJkSnnXyAqoOfioTkvBeXGL3dUmMdqOp3vj3Q6onRvIWJLxYnr+fLE7XzCi/NYoUj/aiLk6G5DjZKz/Q7j7OHxWijo21GTsloXDv/SH9EXRT+QSdLjvAlRmh/rEKT56a8YmSe8MAT/Cc57nlIIn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZkDvP+b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ItO1mgIrIc1ZPtxYCIU106GeoW6OtfcBssVmDf0p9nLSUVyOd377hBSFrOLRw6nfECyLx6XuF0HrRYQRMoC3hY68p9Htjk28Yyiu0mktog3G/ifduzcYj96WUkCj7NKyFiKuQ1lrVmHRvFiMDugNrLqd1djgjo/yKcYNz4Znm48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LymFJfFC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZkDvP+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D98B1F000FF;
-	Tue, 13 Oct 2026 12:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LymFJfFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B1D1F000FF;
+	Tue, 13 Oct 2026 12:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893758;
-	bh=gW63FK51mUVRttx8itfHAtDgCTPj6tExyq/lOwVcWAE=;
+	s=korg; t=1791893761;
+	bh=9fcQTwUztA4RihxmniRBFr/59x3a+EUzlcfL9u/epbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZkDvP+bRxBcz0ukZVWb8ozBHt9Y3ZAQ7X+30xThD8sJ8QGLue20eVC++UivuFr/H
-	 1GXxQRy2neR2Dj9Bp8ePhWELZhitNPNb+o2QhlC8zMSG6h61JeGV5JGfwMcwwQLidF
-	 hij01pBwcrlNa7heEgl5/CUDbB+Wx1fpVPZv77lQ=
+	b=LymFJfFCO7KsI0qrtRkHN5KCJa2kb11l6rCAJ26eByeI/fH+Oyx/B+1OsXr7g71iR
+	 0FYqZAiAR1HHGL1+QQ1mHfwwMZxWr/Qowm7/dUOyUETl0obPECziijflErC0YCNNpZ
+	 sWVcS21dORR7Vxbu/7Pb6GeSquChyT/AHpm/KO4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 332/621] nexthop: take nh->lock for f6i_list walks in replace check and notify
-Date: Tue, 13 Oct 2026 13:35:27 +0200
-Message-ID: <20261013112928.731417305@linuxfoundation.org>
+Subject: [PATCH 6.18 333/621] KVM: arm64: vgic: Fix race between LPI release and re-registration
+Date: Tue, 13 Oct 2026 13:35:28 +0200
+Message-ID: <20261013112928.755134912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -47,90 +45,198 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Carlos López <clopez@suse.de>
 
-[ Upstream commit 072cd1f21819dedd2252e704d255de3b0cfc61a7 ]
+[ Upstream commit cbfe2b24a1ea9de35032dbdd100fdc700f5be92d ]
 
-fib6_check_nh_list() and __nexthop_replace_notify() walk nh->f6i_list
-during an RTNL-serialized nexthop replace without holding nh->lock. IPv6
-RTM_NEWROUTE/RTM_DELROUTE run without RTNL and mutate that list under
-nh->lock (fib6_add_rt2node_nh(), fib6_purge_rt()), so both walks race a
-concurrent route delete that unlinks and frees a fib6_info:
+Fix a potential race between decrementing an LPI's reference count and
+evicting that structure from the LPI xarray.
 
-  BUG: KASAN: slab-use-after-free in rt6_fill_node.isra.0 (net/ipv6/route.c:5799)
-  Read of size 4 at addr ffff888014607e64 by task exploit/143
-   rt6_fill_node.isra.0 (net/ipv6/route.c:5799)
-   fib6_rt_update (net/ipv6/route.c:6412)
-   __nexthop_replace_notify (net/ipv4/nexthop.c:2542)
-   rtm_new_nexthop (net/ipv4/nexthop.c:2554)
-   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+LPI structures are maintained in the VGIC LPI xarray (dist->lpi_xa).
+When the reference count of an LPI structure drops to zero,
+vgic_release_lpi_locked() removes the structure from the xarray and
+frees it under the xarray lock.
 
-  BUG: KASAN: slab-use-after-free in fib6_check_nh_list (net/ipv4/nexthop.c:1605)
-  Read of size 8 at addr ffff888014a7d068 by task exploit/142
-   fib6_check_nh_list (net/ipv4/nexthop.c:1605)
-   rtm_new_nexthop (net/ipv4/nexthop.c:2575)
-   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+However, the release of an LPI can race with a concurrent LPI
+re-registration with the same INTID via vgic_add_lpi() on another CPU,
+since the reference count drop and the xarray eviction are not performed
+in a single atomic step. This can happen e.g. if the guest issues a
+DISCARD while the LPI is still referenced from a vCPU's active-pending
+list (ap_list), and the same INTID is re-mapped via MAPTI.
 
-Both walks only read the entries and take no tb6_lock, so protect them
-with nh->lock; fib6_rt_update() uses gfp_any(), which returns GFP_ATOMIC
-under the lock.
+Particularly, vgic_release_lpi_locked() is called from two distinct
+paths: direct release via vgic_put_irq(), and deferred release via
+vgic_release_deleted_lpis(). During direct release, the issue can result
+in deleting a newly registered LPI from the xarray:
 
-Fixes: 081efd18326e ("ipv6: Protect nh->f6i_list with spinlock and flag.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260722002951.2614721-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  CPU0 (Releasing LPI)                    CPU1 (Adding new LPI)
+  ====================                    =====================
+  vgic_put_irq()
+      __vgic_put_irq()
+          refcount_dec_and_test()
+                                          vgic_add_lpi()
+                                              xa_lock_irqsave()
+                                              old_irq = xa_load(.., intid)
+                                              vgic_try_get_irq_ref(old_irq) == false
+                        new IRQ inserted -->  __xa_store(.., intid, ..)
+                                              xa_unlock_irqrestore()
+  xa_lock_irqsave();
+  vgic_release_lpi_locked()
+      __xa_erase(.., irq->intid)   <-- BUG: new IRQ is erased
+      kfree_rcu(old_irq)
+
+During the deferred release path, the old IRQ can be leaked:
+
+  CPU0 (Releasing LPI)                    CPU1 (Adding new LPI)
+  ====================                    =====================
+  vgic_put_irq_norelease()
+      __vgic_put_irq()
+          refcount_dec_and_test()
+      irq->pending_release = true
+                                          vgic_add_lpi()
+                                              xa_lock_irqsave()
+                                              old_irq = xa_load(.., intid)
+                                              vgic_try_get_irq_ref(oldirq) == false
+                 BUG: old IRQ overwritten --> __xa_store(.., intid, ..)
+                                              xa_unlock_irqrestore()
+
+  vgic_release_deleted_lpis()
+      xa_lock_irqsave()
+      xa_for_each() { .. } <-- old IRQ with pending_release = true
+                               is gone, so it cannot be released
+
+To fix the direct release path, move the reference count drop inside
+the xarray lock, making sure that vgic_add_lpi() never encounters the
+to-be-released LPI.
+
+In the deferred release path, the refcount drop must happen under a raw
+spinlock, so the xarray lock cannot be grabbed, and the same solution
+does not work. Instead, update vgic_add_lpi(), so that if it evicts
+an LPI from the xarray, it takes on the responsibility of freeing it.
+Consequently, an LPI may now be freed concurrently after a deferred
+release drops the refcount, so accessing the pending_release field is no
+longer safe from use-after-free. Delete all uses of the flag, and update
+vgic_release_deleted_lpis() to identify orphaned LPIs purely based on
+their refcount.
+
+Reported-by: Claude:claude-opus-4-6
+Fixes: 3a08a6ca7c37 ("KVM: arm64: vgic-v3: Use bare refcount for VGIC LPIs")
+Fixes: d54594accf73 ("KVM: arm64: vgic-v3: Erase LPIs from xarray outside of raw spinlocks")
+Signed-off-by: Carlos López <clopez@suse.de>
+Link: https://patch.msgid.link/20260715105137.3973823-4-clopez@suse.de
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c | 24 ++++++++++++++++--------
+ arch/arm64/kvm/vgic/vgic.c     | 18 ++++++++----------
+ include/kvm/arm_vgic.h         |  3 ---
+ 3 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 7adec5cc263e4..21bd8b66e2fe9 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1600,14 +1600,21 @@ static int fib6_check_nh_list(struct nexthop *old, struct nexthop *new,
- 			      struct netlink_ext_ack *extack)
- {
- 	struct fib6_info *f6i;
-+	int err = 0;
+diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+index e3c182352ffca..7ce07c8eb5b7e 100644
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -116,18 +116,26 @@ static struct vgic_irq *vgic_add_lpi(struct kvm *kvm, u32 intid,
+ 		kfree(irq);
+ 		irq = oldirq;
+ 	} else {
+-		ret = xa_err(__xa_store(&dist->lpi_xa, intid, irq, 0));
+-	}
+-
+-	xa_unlock_irqrestore(&dist->lpi_xa, flags);
++		/*
++		 * The entry is either empty or contains a dead LPI (refcount=0)
++		 * from the deferred release path, pending cleanup by
++		 * vgic_release_deleted_lpis(). Evict and free it if present.
++		 */
++		oldirq = __xa_store(&dist->lpi_xa, intid, irq, 0);
++		ret = xa_err(oldirq);
++		if (ret) {
++			xa_unlock_irqrestore(&dist->lpi_xa, flags);
++			kfree(irq);
  
- 	if (list_empty(&old->f6i_list))
- 		return 0;
+-	if (ret) {
+-		xa_release(&dist->lpi_xa, intid);
+-		kfree(irq);
++			return ERR_PTR(ret);
++		}
  
-+	spin_lock_bh(&old->lock);
- 	list_for_each_entry(f6i, &old->f6i_list, nh_list) {
--		if (check_src_addr(&f6i->fib6_src.addr, extack) < 0)
--			return -EINVAL;
-+		err = check_src_addr(&f6i->fib6_src.addr, extack);
-+		if (err)
-+			break;
+-		return ERR_PTR(ret);
++		if (oldirq && !WARN_ON_ONCE(refcount_read(&oldirq->refcount)))
++			kfree_rcu(oldirq, rcu);
  	}
-+	spin_unlock_bh(&old->lock);
+ 
++	xa_unlock_irqrestore(&dist->lpi_xa, flags);
 +
-+	if (err)
-+		return err;
+ 	/*
+ 	 * We "cache" the configuration table entries in our struct vgic_irq's.
+ 	 * However we only have those structs for mapped IRQs, so we read in
+diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+index 5ba673289ef43..7c8ec44824157 100644
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -131,11 +131,7 @@ static __must_check bool __vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
  
- 	return fib6_check_nexthop(new, NULL, extack);
+ static __must_check bool vgic_put_irq_norelease(struct kvm *kvm, struct vgic_irq *irq)
+ {
+-	if (!__vgic_put_irq(kvm, irq))
+-		return false;
+-
+-	irq->pending_release = true;
+-	return true;
++	return __vgic_put_irq(kvm, irq);
  }
-@@ -2524,8 +2531,10 @@ static void __nexthop_replace_notify(struct net *net, struct nexthop *nh,
- 			fi->nh_updated = false;
+ 
+ void vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
+@@ -152,12 +148,14 @@ void vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
+ 		guard(spinlock_irqsave)(&dist->lpi_xa.xa_lock);
  	}
  
-+	spin_lock_bh(&nh->lock);
- 	list_for_each_entry(f6i, &nh->f6i_list, nh_list)
- 		ipv6_stub->fib6_rt_update(net, f6i, info);
-+	spin_unlock_bh(&nh->lock);
+-	if (!__vgic_put_irq(kvm, irq))
++	if (irq->intid < VGIC_MIN_LPI)
+ 		return;
+ 
+-	xa_lock_irqsave(&dist->lpi_xa, flags);
+-	vgic_release_lpi_locked(dist, irq);
+-	xa_unlock_irqrestore(&dist->lpi_xa, flags);
++	if (refcount_dec_and_lock_irqsave(&irq->refcount,
++					  &dist->lpi_xa.xa_lock, &flags)) {
++		vgic_release_lpi_locked(dist, irq);
++		xa_unlock_irqrestore(&dist->lpi_xa, flags);
++	}
  }
  
- /* send RTM_NEWROUTE with REPLACE flag set for all FIB entries
+ static void vgic_release_deleted_lpis(struct kvm *kvm)
+@@ -169,7 +167,7 @@ static void vgic_release_deleted_lpis(struct kvm *kvm)
+ 	xa_lock_irqsave(&dist->lpi_xa, flags);
+ 
+ 	xa_for_each(&dist->lpi_xa, intid, irq) {
+-		if (irq->pending_release)
++		if (!refcount_read(&irq->refcount))
+ 			vgic_release_lpi_locked(dist, irq);
+ 	}
+ 
+diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+index 7a0b972eb1b12..25eb6ba9dd23c 100644
+--- a/include/kvm/arm_vgic.h
++++ b/include/kvm/arm_vgic.h
+@@ -140,9 +140,6 @@ struct vgic_irq {
+ 					 * the pending state for both level
+ 					 * and edge triggered IRQs. */
+ 	bool active;
+-	bool pending_release;		/* Used for LPIs only, unreferenced IRQ
+-					 * pending a release */
+-
+ 	bool enabled;
+ 	bool hw;			/* Tied to HW IRQ */
+ 	refcount_t refcount;		/* Used for LPIs */
 -- 
 2.53.0
 
