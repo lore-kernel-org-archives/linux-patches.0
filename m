@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA9F3B1EE7;
-	Tue, 13 Oct 2026 11:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA45E3B1EE7;
+	Tue, 13 Oct 2026 11:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892067; cv=none; b=n7eBqP64Y0lXdUG9kVCjlvBNTJpJ293CgAKSA57NC8//hlVEgbeq+HKag8JZ4FAZSIYFA7Vj1OJ5TlQgoBKJVJcrtqVvtDTwtLHswcAFNk2jeTSJATflcxMMlHv517e5+lUGPUpL5rM43uqaNJZdBsBYZmnXZKBDgdqn1w9Dzbw=
+	t=1791892070; cv=none; b=LPp2EFPgz08eL+BDm6eCwk9qMXQF5KonPal/pjfEv7KBY30eNI4yHPmyZBY6/ydl547xB+cx8G8ArFLv4mNpViplVltZxwymK2eU9IhuRpTiQgsQ446+vVIK+EGGio4S1vc/lI41u00wz1ar1Ne61WaoZ8dfZhqR+qqIzfK7+L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892067; c=relaxed/simple;
-	bh=lWvJk62lbTVh+eTZsYEjyNkeuZuF0dhMtQw8uQy/l0g=;
+	s=arc-20240116; t=1791892070; c=relaxed/simple;
+	bh=U6LIqb2eXWDzETPQuTzfWt3s+2aCjY2tWVVp2XKcjqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6xeMeJCYYetvUxRnxmRzCtH6r3ymxUHJYBH0E7U5z1v/AAo34ft8g6HOfxbLsM9lMHTVJxhzizx1sDFb7ZGNexyUCG+4SF90XzEdW52tDYA6Lz6JitmkLfC9w+tJRD4fh7OqU4+R0kC1lB7s6a+0W3D4GsH2wLwKD7UDi0at58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhNnMqtX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mZI3xyt56Qjzu5eHaKjgODqZwhLVjabAAwVXr3FF26Zd3NYZqXStN6ZbqnytWOcFPdIT9DBww2tOD2Y2Rg/6tD7jeN9EYqOj7qjgyV+EDIxAdScEnM2DOGQmeb3Fpsb70U2FlfLPgcNXBCPinH6FrWfos1InNvKIzhEtULmAyJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSkVnGxO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhNnMqtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09261F00893;
-	Tue, 13 Oct 2026 11:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSkVnGxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9311F00893;
+	Tue, 13 Oct 2026 11:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892066;
-	bh=Pg11Im2o3SVePBt8MRnsIy5NFZdLBinfj7HUBNzil1E=;
+	s=korg; t=1791892069;
+	bh=jwBNDY5HE4Vlkszv+5DiFh0uDpQloLoqSDCT1Ez9LsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhNnMqtXZc3uerBUNWB1x2fMnSENTNO23D96JHISgH30uojGO/Rft81TXG0vr5/nD
-	 DKha/I6WOts0vGsvtwGuhvDb8C4Dc8ulb7/TWJ3zl9Dt5Y+pye4ga/sE3tasHhZXrP
-	 PP/5u2KomkS4fudboYAeeVg37dEZLgKQHOV6DKWs=
+	b=BSkVnGxOLVUKgtIGpc6X9xnFXOlUWNMNoc09XqgfCumQMh9OkvJfSD6EXMb1UTjBu
+	 5RtSHBTE2ugbfKDWvdbJM0tGJeCLTRvWJT2sIRaIZSU3oWeuF6EGDDOYbHbe7mIvDC
+	 looi5EoUwBpN2PjUkYA3Q5LS/YWi6hB8DiJ3/X4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Hui Peng <benquike@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 049/281] sctp: copy zeroed stats to user in sctp_getsockopt_pr_streamstatus() when !streamoute
-Date: Tue, 13 Oct 2026 13:36:05 +0200
-Message-ID: <20261013112856.241362539@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	SJ Park <sj@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Shuah Khan <shuah@kernel.org>
+Subject: [PATCH 7.2 050/281] selftests/mm: cleanup -Wformat issues in hugetlb-mmap
+Date: Tue, 13 Oct 2026 13:36:06 +0200
+Message-ID: <20261013112856.266045533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,55 +60,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 538b529509c7ab0d909cb65bb7264edca1788d30 upstream.
+commit 28eed9906e01d01cbdfb352e799413b2e8b33b76 upstream.
 
-When an SCTP stream output extension structure (streamoute) has not yet
-been allocated, sctp_getsockopt_pr_streamstatus() sets the local stack
-variables params.sprstat_abandoned_unsent = 0 and
-params.sprstat_abandoned_sent = 0, but then immediately jumps to 'out:',
-bypassing copy_to_user(). As a result, when an uninitialized user buffer
-is passed to getsockopt(SCTP_PR_STREAM_STATUS), the kernel returns
-success (0) without copying the zeroed stats back to user space, leaving
-uninitialized data in the user buffer.
+Commit ae571cd6015c ("selftests/mm: hugetlb-mmap: add setup of HugeTLB
+pages") and commit 9c5a65f374f8 ("selftests/mm: merge map_hugetlb into
+hugepage-mmap") added logs of 'hugepage_size' which has a size_t type.
+However, the incorrect format specifier '%lu' was used which triggers
+-Wformat warnings when building for 32-bit:
 
-Refactor the !streamoute check into an if-else chain so that when
-streamoute is NULL, params is zeroed and falls through to copy_to_user(),
-copying the zeroed stats to user space and setting retval = 0 once before
-returning.
+  hugetlb-mmap.c:125:55: warning: format specifies type 'unsigned long'
+  but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
+    125 | ksft_print_msg("Default size hugepages (%lu kB)\n", hugepage_size >> 10);
+        |                                         ~~~         ^~~~~~~~~~~~~~~~~~~
+        |                                         %zu
 
-Tested in QEMU against Linux 7.3.0-rc3 using an uninitialized
-sctp_prstatus user struct passed to getsockopt(SCTP_PR_STREAM_STATUS) on a
-freshly created stream: on the unfixed kernel the user struct contains
-uninitialized stack garbage; whereas with this fix applied, getsockopt()
-copies zeroed stats into user space and returns 0.
+  hugetlb-mmap.c:134:47: warning: format specifies type 'unsigned long'
+  but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
+    134 | ksft_exit_skip("Not enough %lu Kb pages\n", hugepage_size >> 10);
+        |                            ~~~              ^~~~~~~~~~~~~~~~~~~
+        |                            %zu
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Fixes: f952be79cebd ("sctp: introduce struct sctp_stream_out_ext")
-Link: https://patch.msgid.link/20260930044611.204739-1-benquike@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by switching to the expected '%zu' format specifier.
+
+Link: https://lore.kernel.org/20260927162419.820609-1-cmllamas@google.com
+Fixes: ae571cd6015c ("selftests/mm: hugetlb-mmap: add setup of HugeTLB pages")
+Fixes: 9c5a65f374f8 ("selftests/mm: merge map_hugetlb into hugepage-mmap")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ tools/testing/selftests/mm/hugetlb-mmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -7569,11 +7569,7 @@ static int sctp_getsockopt_pr_streamstat
- 		/* Not allocated yet, means all stats are 0 */
- 		params.sprstat_abandoned_unsent = 0;
- 		params.sprstat_abandoned_sent = 0;
--		retval = 0;
--		goto out;
--	}
--
--	if (policy == SCTP_PR_SCTP_ALL) {
-+	} else if (policy == SCTP_PR_SCTP_ALL) {
- 		params.sprstat_abandoned_unsent = 0;
- 		params.sprstat_abandoned_sent = 0;
- 		for (policy = 0; policy <= SCTP_PR_INDEX(MAX); policy++) {
+diff --git a/tools/testing/selftests/mm/hugetlb-mmap.c b/tools/testing/selftests/mm/hugetlb-mmap.c
+index 0f2aad1b7dbd..2edbc992e6bc 100644
+--- a/tools/testing/selftests/mm/hugetlb-mmap.c
++++ b/tools/testing/selftests/mm/hugetlb-mmap.c
+@@ -122,7 +122,7 @@ int main(int argc, char **argv)
+ 		hugepage_size = default_huge_page_size();
+ 		if (!hugepage_size)
+ 			ksft_exit_skip("Could not detect default hugetlb page size.");
+-		ksft_print_msg("Default size hugepages (%lu kB)\n", hugepage_size >> 10);
++		ksft_print_msg("Default size hugepages (%zu kB)\n", hugepage_size >> 10);
+ 	}
+ 
+ 	/* munmap will fail if the length is not page aligned */
+@@ -131,7 +131,7 @@ int main(int argc, char **argv)
+ 
+ 	hugetlb_set_nr_pages(hugepage_size, nr);
+ 	if (hugetlb_free_pages(hugepage_size) < nr)
+-		ksft_exit_skip("Not enough %lu Kb pages\n", hugepage_size >> 10);
++		ksft_exit_skip("Not enough %zu Kb pages\n", hugepage_size >> 10);
+ 
+ 	ksft_set_plan(2);
+ 	ksft_print_msg("Mapping %lu Mbytes\n", (unsigned long)length >> 20);
+-- 
+2.56.0
+
 
 
