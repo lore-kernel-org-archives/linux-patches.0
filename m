@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5394FC8D8;
-	Tue, 13 Oct 2026 12:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE95184;
+	Tue, 13 Oct 2026 12:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895043; cv=none; b=XVgXEFryoOwS4waFY6UaKRarwIx7cvwev/qAdMnGD8WDZqSiilEaDMdYC0BXOGrJmFqb7omMN9yf2ZdV9ifipVGVQrKaQqOU5B0QHSF1q17lKjZbAt9w7MB8AlCeBT1+hAGH6RtbWpMUc9ksiTZy06/Ym+59+3qowQEi9S1CUZk=
+	t=1791895047; cv=none; b=lCxNhaEGIVZwNdPjrx6JCM3cWu0qpDP0RjZbKZ2fExROJK3HH7AzVhjBvI/9z436o8X5AU9SIwO6oAbDVI3jmOEGpmBIoxeApYJoN4/DSQNvYRUtqwLVDdMMOSsCTRAkNxKb03cnHcOu8lofaPtNqEOR4eLKoLvnb6R6zSKQZIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895043; c=relaxed/simple;
-	bh=1IFqTLvNXdpKaBTTC0Mugk5HejZrlmG3GFvpk1xDsuw=;
+	s=arc-20240116; t=1791895047; c=relaxed/simple;
+	bh=s2lN3J9AXmOPVzYAjP59N5A/Lj7ykDImOMjY4frpMVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHdAefjOPVWfzFAq8RAcKUJ5fhLvS1j/0drH5R3WW8vNwjsJVBTxTKn+qo5TPDdVW5XDSk+FxTYHV/ZptFjRlNjtqWbbVqsNBFPSPXrQaFrxM4sfe1Mj5VnyQNH3Lwf87OWYZswQiHpJB291gXTztdCephJJPoOTDeIHYiqu0EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X21utSYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yt6s0cSmr+q2EUgkHsmmlBAeeT1lrqGnGebTwzVcyWEEq2gtE4IbOb7l225cGphMEVZpzjS/+opNRzZ+vqI7LZN2Q4VjGMs035L5FIfSOtyjcQe+LYQmgS97vOdW+/1NQ5tyLqBNp9Igj6k8JrJnbeg+rhg4v5/rZEeJtIbJZys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIr24WKC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X21utSYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412501F000FF;
-	Tue, 13 Oct 2026 12:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIr24WKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F25B1F000FF;
+	Tue, 13 Oct 2026 12:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895042;
-	bh=rcuZnbhDJtvk6HMeaAWnZIrB10FVp96awjdaawuUf/I=;
+	s=korg; t=1791895045;
+	bh=iUxavweJYM+rEZHDjQp8qiFQ1k88XEhpyEsRpt2/Kf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X21utSYicK93Z6vF2GNI20ECN8ZxIAcUncuUDH18xYaSZuVWvsh/c7NNMbTak9tpr
-	 xM4zD96LK8PfYTQCOTwgle+HaY43Z0c8EOUFShHGuYiyfhD22pEyGqtYh++7YuPN+X
-	 sboE8tToKpCmyLVzBPmna7wvjk7ZWX9bOfc6jKOU=
+	b=IIr24WKCyytMg9ZTvJti23V54HErwuzjKZ0n0lvCDCKOtO7pjZt76y3EzU1PdINBF
+	 4KSY4mcYUE5vOjQgW9gbjJlmCBMdrNMDxAH83NJC5ak1+gXtMLt11zUVEoOWEn5fH/
+	 nF1XruwlFCAsYQI1iADwQaa3ZuPJ8ttpECd/hC3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Liu Chao <liuc63@xiaopeng.com>,
-	Ivy Lopez <skunkolee@gmail.com>
-Subject: [PATCH 6.12 143/497] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
-Date: Tue, 13 Oct 2026 13:35:10 +0200
-Message-ID: <20261013112911.282315974@linuxfoundation.org>
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 144/497] usb: typec: anx7411 - stop the IRQ before destroying the workqueue
+Date: Tue, 13 Oct 2026 13:35:11 +0200
+Message-ID: <20261013112911.305489395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,59 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Chao <liuc63@xiaopeng.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
+commit 469600d5d292b1482c90dd6853555821d11b8c5f upstream.
 
-generic_set_cmd() and generic_get_cmd() use the low nibble of
-ctrl->bRequest as an index into con->data[]:
+The IRQ is devm-managed, so it can still queue plat->work while
+remove() is tearing the queue down. Disable it first.
 
-    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
-    ...
-    con->data[cmd] = value;            /* OOB when cmd >= 5 */
-
-struct usb_audio_control (include/linux/usb/audio.h) declares data as
-a 5-element array, so indices 5 through 15 write (or read) up to 44
-bytes past the end of the array on the heap.
-
-A malicious USB host can craft a class-specific SET_CUR / GET_CUR
-request with an arbitrary bRequest value, triggering the out-of-bounds
-access from an IRQ completion handler with no further preconditions.
-
-Add an ARRAY_SIZE() guard to both functions.
-
-Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
+Fixes: fe6d8a9c8e64 ("usb: typec: anx7411: Add Analogix PD ANX7411 support")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
-Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
-Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
-Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260910011150.2966843-1-gonglinkai@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/typec/anx7411.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_uac1_legacy.c
-+++ b/drivers/usb/gadget/function/f_uac1_legacy.c
-@@ -797,6 +797,9 @@ fail:
+--- a/drivers/usb/typec/anx7411.c
++++ b/drivers/usb/typec/anx7411.c
+@@ -1567,8 +1567,11 @@ static void anx7411_i2c_remove(struct i2
+ 	anx7411_partner_unregister_altmode(plat);
+ 	anx7411_unregister_partner(plat);
  
- static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
- {
-+	if (cmd >= ARRAY_SIZE(con->data))
-+		return -EINVAL;
-+
- 	con->data[cmd] = value;
+-	if (plat->workqueue)
++	if (plat->workqueue) {
++		disable_irq(plat->intp_irq);
++		cancel_work_sync(&plat->work);
+ 		destroy_workqueue(plat->workqueue);
++	}
  
- 	return 0;
-@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
- 
- static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
- {
-+	if (cmd >= ARRAY_SIZE(con->data))
-+		return -EINVAL;
-+
- 	return con->data[cmd];
- }
+ 	i2c_unregister_device(plat->spi_client);
  
 
 
