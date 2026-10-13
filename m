@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA124F054D;
-	Tue, 13 Oct 2026 12:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42934E50BB;
+	Tue, 13 Oct 2026 12:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895133; cv=none; b=jVUPUeOIfcpWHrJjifabRr6/1wD9weLG3of+ELcFm5yhYkj+aGKzEIQ38MQRCk6rgkktbTYvYn3BX75Dj1dwcbPwwHoyoJr+MZw7J351vJBmfSJq16CY4c2OpZDE7UoD8wZb9ds++uRuW10PQSGKlx93ZhpPJ84B0Zyh7eWdrgI=
+	t=1791895136; cv=none; b=j3ei2JsZeloUinw0yokXjtl2u8Gi0RG3ywe0kFguBTj14J8u2YvyJv+9+Ssfwxlp5aWhk1HxLVVrj85tbsA0b2m3xwnREI4IoK8hexkqmy0x3l25w0cwmyCFsnm7294ZpLiZdvOipzxq7R9ek2PBwMeIgA1st7A5Qp5tgUQMXCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895133; c=relaxed/simple;
-	bh=nwKMr/Ss+MxBm+VM+TN7UigOF9YKUN28fMGFmPx56YU=;
+	s=arc-20240116; t=1791895136; c=relaxed/simple;
+	bh=zgbrOTHlgA+DGuLJh+u7aNWJ29beHOM2436wSZjIDG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kthbb8KritmHtpXBq8bknlMjrJSr2feDf8wH/m+jaEsb52lDTlqr4dgRAcW67X3MNsYLt/kNVArP0Wn61Lrl82mpNf02XoI8em3JCqURXk8TtnaQPJ/NVhmgnlEsweBf/Ybu+ea1GqwRtTolbAYfOE+QOlxVOhuze50Hi5hic2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kr5S+AT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SwQ9xdYn1JzJ3lCYoR5GJAPwv+ck+Lr7XWdI58nA6yTsG7CY5uZyXYIJ/VFiXIcPEBOkb+009GbWlA7fbuknXy621q8USSUNfbK+T/fVrlDO8Fkz/S9dbEbmjLGcblj9HMejlO66oAXh9MVldATu2hIiZYF/1njdoQoJP9PBKuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opDolWVh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kr5S+AT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1941F000FF;
-	Tue, 13 Oct 2026 12:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opDolWVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C54E1F000FF;
+	Tue, 13 Oct 2026 12:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895131;
-	bh=QGP+VuYZwzR4hSVDN+O/09WwlCZ+x6J/uDkXB79bah8=;
+	s=korg; t=1791895134;
+	bh=xed9m7DxQTp4bokv+5ssUueWW0lOFmKrvaPfez3+Yos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kr5S+AT50bGFQtPZrb/m36o5oVTzciSQ9IQ+KjwXfoNmnE+lLZaomCxVzNpwWySg5
-	 1Hf201REdpdpyKBZM6gXUnjHYKQ3bepB7JAFxFx6B4ZW0xPZY4tp9BBdbqQXjuSXr3
-	 8x1TLKfBtyDcFkBECaVnU7BId+IhGo053LLe+lEo=
+	b=opDolWVhJCqBIFpTGYJRbmRs+qZ+tAW7oXukRYxBOlJ+J02agtb7pxmALr8QZwdFN
+	 q5ix/FYiFQrvcwCOrxxrZcBGiJK2dqcAS6g8NE8oTYt1mx3qdm7i9ZOxOvkoCIQfaf
+	 UmWg2fahRmHyJZtD046lfmKlUcZCLKg8CsPY9yGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 135/497] USB: serial: fix port tear down use-after-free
-Date: Tue, 13 Oct 2026 13:35:02 +0200
-Message-ID: <20261013112911.093899035@linuxfoundation.org>
+	stable@kernel.org,
+	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
+	Joachim Knorr <joachim.knorr@ziehl-abegg.de>,
+	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Subject: [PATCH 6.12 171/497] serial: sc16is7xx: fix TX gap caused by kfifo circular buffer wrap-around
+Date: Tue, 13 Oct 2026 13:35:38 +0200
+Message-ID: <20261013112911.948513120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,55 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
 
-commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
+commit abfafa6fc3c17b7dffa5dce3acc8dba70ed656b9 upstream.
 
-Some drivers for multiport devices access port driver data from
-completion handlers of shared URBs submitted at attach() or first open()
-and stopped at disconnect() or last close(), respectively.
+kfifo_out_linear_ptr() returns only one contiguous linear segment of the
+xmit kfifo. When transmit data wraps around the end of the kfifo, only
+the first segment up to the buffer end is sent. The remaining data at
+the start of the kfifo is not sent until the next TX interrupt fires,
+resulting in a visible mid-frame TX gap on the wire.
 
-A simple NULL check before accessing the driver data makes sure that a
-port state container has at least been allocated, but a completion
-handler can still race with port tear down.
+The resulting gap is unintended: data remains queued in the xmit kfifo,
+but the hardware TX FIFO drains empty before the remaining segment is
+sent. Such gaps can break timing-sensitive serial protocols such as
+Modbus RTU.
 
-Reorder the disconnect handling so that ports are not deregistered (and
-their driver data freed) until after all ports have been hung up and the
-driver disconnect() callback has run so that all I/O has been stopped.
+Modbus RTU requires a message to be transmitted as a continuous stream.
+For baud rates above 19200, the Modbus Serial Line guide recommends a
+fixed 750 us inter-character timeout. On the tested 115200-baud system,
+oscilloscope measurements showed mid-frame gaps exceeding that value.
+Receivers using the recommended timeout may therefore discard the
+incomplete message.
 
-Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
-Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
-Cc: stable@vger.kernel.org	# 2.6.30
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+The incomplete transfer also causes unnecessary TX interrupts: instead
+of using all available hardware TX FIFO space in one go, the driver
+requires an extra interrupt to send the remaining segment after the
+wrap.
+
+After the tty xmit buffer was converted to a kfifo, the driver used
+uart_fifo_out() to copy data into a linear staging buffer, allowing a
+transfer to span the kfifo wrap-around boundary. Commit 133f4c00b8b2
+("serial: sc16is7xx: fix TX fifo corruption") replaced uart_fifo_out()
+with a single kfifo_out_linear_ptr() call to remove the shared TX/RX
+buffer. Since kfifo_out_linear_ptr() exposes only one contiguous
+segment, that change lost the wrap-around handling.
+
+Fix this by calling kfifo_out_linear_ptr() in a loop, advancing through
+all contiguous segments until the available hardware TX FIFO space is
+exhausted or the xmit kfifo is empty.
+
+This fixes the kfifo wrap-around gap independently of the stale-TXLVL
+refill issue.
+
+Tested on SC16IS752 over SPI driving RS-485 at 115200 baud 8N1 on an
+i.MX6ULL-based board. Oscilloscope measurements confirmed mid-frame
+breaks at the kfifo wrap-around boundary before the fix; no such breaks
+were observed afterward.
+
+Fixes: 133f4c00b8b2 ("serial: sc16is7xx: fix TX fifo corruption")
+Cc: stable@kernel.org
+Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
+Reviewed-by: Joachim Knorr <joachim.knorr@ziehl-abegg.de>
+Link: https://lore.kernel.org/linux-serial/20260623112225.82386-2-paultyson.mbewe@ziehl-abegg.de/
+Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Link: https://patch.msgid.link/20260930143207.542930-1-paultyson.mbewe@ziehl-abegg.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -1194,12 +1194,17 @@ static void usb_serial_disconnect(struct
- 		usb_serial_port_poison_urbs(port);
- 		wake_up_interruptible(&port->port.delta_msr_wait);
- 		cancel_work_sync(&port->work);
--		if (device_is_registered(&port->dev))
--			device_del(&port->dev);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -696,7 +696,6 @@ static void sc16is7xx_handle_tx(struct u
+ 	struct tty_port *tport = &port->state->port;
+ 	unsigned long flags;
+ 	unsigned int txlen;
+-	unsigned char *tail;
+ 
+ 	if (unlikely(port->x_char)) {
+ 		sc16is7xx_port_write(port, SC16IS7XX_THR_REG, port->x_char);
+@@ -721,9 +720,19 @@ static void sc16is7xx_handle_tx(struct u
+ 		txlen = 0;
  	}
-+
- 	if (serial->type->disconnect)
- 		serial->type->disconnect(serial);
  
-+	for (i = 0; i < serial->num_ports; ++i) {
-+		port = serial->port[i];
-+		if (device_is_registered(&port->dev))
-+			device_del(&port->dev);
+-	txlen = kfifo_out_linear_ptr(&tport->xmit_fifo, &tail, txlen);
+-	sc16is7xx_fifo_write(port, tail, txlen);
+-	uart_xmit_advance(port, txlen);
++	/* Handle circular buffer wrap-around by sending multiple segments */
++	while (txlen > 0 && !kfifo_is_empty(&tport->xmit_fifo)) {
++		unsigned char *tail;
++		unsigned int to_send;
++
++		to_send = kfifo_out_linear_ptr(&tport->xmit_fifo, &tail, txlen);
++		if (!to_send)
++			break;
++
++		sc16is7xx_fifo_write(port, tail, to_send);
++		uart_xmit_advance(port, to_send);
++		txlen -= to_send;
 +	}
-+
- 	release_sibling(serial, interface);
  
- 	/* let the last holder of this object cause it to be cleaned up */
+ 	uart_port_lock_irqsave(port, &flags);
+ 	if (kfifo_len(&tport->xmit_fifo) < WAKEUP_CHARS)
 
 
