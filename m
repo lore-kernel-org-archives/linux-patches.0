@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D14F390D;
-	Tue, 13 Oct 2026 12:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BBE3B47CD;
+	Tue, 13 Oct 2026 12:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893089; cv=none; b=pZGrz+QAJNT9YShpef1xA8O6BG+BrjbkCl8OCvuYSbGFbecGKp6ft9kHjM3hxKCXN0KhT9V1z3cXG1j0+qbWQT3dTr7JcSv447pv8tpz2RuEPk4Ll3EcEBOjV2wlKWTXAHTp0qqjjYl19x4h7TEVO0KcX/qV1EzyjpJLPA887To=
+	t=1791893092; cv=none; b=giSukGjG5vKHu/q9Vmow7UFLvzlaTPCizYh/biBp9XACFGkPmapinE+bVRZSW6YLefffpCkCqx81VUKHA76l499geQkMLdNxO7uDNV/RoAZLAAlRj+0MZXVDAuUWCI7S7FIqEOFDF1s+bT2OrKsxnZ16sseClqDNxy5e7UNEt+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893089; c=relaxed/simple;
-	bh=0np0DPIF2lacCffwV9/KXYMmiTk6AtL33mn09yHQmPM=;
+	s=arc-20240116; t=1791893092; c=relaxed/simple;
+	bh=9Nk6LGGA36sLRKYDF0dwnHXVqxvKmVWhEYgmEQ0tO/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1gXoJAswZ/ajfRh53fTspMeBPWCDw22oW7+z/UlQimCyAyTOU+8xTr5R6LMZW1hvK9Lb7QWGuAK9GLTWUG/pR6B2SHu0gjL2XOECj5UvWk3j9w/iyKAz+x1SUiYKAWcfDyOPpLGYcecT5f819rCMpIoF3sS053qGRf2QiEYXrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF6QUALK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oK5YYXwluXqMqX4KAQkYWl3GE5PXAKL1EQaUu6q9jzC8FqwYab86+BhKNBwGln4OUCQZHKp8dAsIPE2Ck55EbE24Lg5xnpvfKhJVp4Qm8KysIRDsYmZ61+DdPhL1aJ1aerSiL92iaY6oZjnqhRMEStZwsuwEvy6hQp6RCDVraLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/rkopX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF6QUALK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A087D1F000FF;
-	Tue, 13 Oct 2026 12:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/rkopX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D853A1F000FF;
+	Tue, 13 Oct 2026 12:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893088;
-	bh=0VhRkEuT/M6PA8IOYElwcuWSFny/uOMMMuIeJB+ILmQ=;
+	s=korg; t=1791893091;
+	bh=NQmXuFJLSJmfaJpE2IYS9BgozwR23OBsz7WGNb+vJEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GF6QUALKnuQ5YETrXE1oEwUUaaiG3RFcYzDocW3iKT6sGPP9Xb0/dorNiK2sGKkWg
-	 fZq3M5XGsdnUtzHaR+x5vP2dL7EUjH3SIKDb4UpyEOh/8P65MJLaNh0BYP+4XsJpKj
-	 dP+XiUv9xxQcjc8bDeHFgjupScOBl4c8nUf8utT0=
+	b=V/rkopX1NiWdPi2aw16OWiqzgyA1f5Yvah2SZ3xB6Wv9uLOyVokLmRv5cLVquLo0v
+	 lGaYpW+sM4+zUS3gbzKPVoIwO6bW9ltoomEp9LBBpsJXoJyBR0pB1MMuGvcZXOMxLw
+	 ztgiz/39K4VcAp61t4/eKQp65sZJTEP9tzXW/1ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 107/621] Bluetooth: SCO: serialise sco_conn lifetime against sco_recv_scodata()
-Date: Tue, 13 Oct 2026 13:31:42 +0200
-Message-ID: <20261013112923.388973617@linuxfoundation.org>
+	=?UTF-8?q?=EC=84=B1=EB=B3=91=EC=B0=AC?= <tjdqudcks0424@naver.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 065/621] KEYS: Fix add_key() race with keyring restriction
+Date: Tue, 13 Oct 2026 13:31:00 +0200
+Message-ID: <20261013112922.403368039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,250 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: 성병찬 <tjdqudcks0424@naver.com>
 
-commit 816fb1590a4c8cf8d05cd076057616be02e276f0 upstream.
+commit dd3ea3fcba7c75493760cdbccd35f029597e8d5e upstream.
 
-sco_recv_scodata() upgrades the weak hcon->sco_data back-pointer to a
-strong reference under hdev->lock:
+__key_create_or_update() snapshots keyring->restrict_link before taking
+the destination keyring's semaphore.  keyring_restrict() installs a
+restriction while holding that semaphore.
 
-    hci_dev_lock(hdev);
-    hcon = hci_conn_hash_lookup_handle(hdev, handle);
-    ...
-    conn = sco_conn_hold_unless_zero(hcon->sco_data);
-    hci_dev_unlock(hdev);
+This allows a writer to observe no restriction, wait for the keyring
+owner to install a reject-all restriction and return successfully, and
+then link a key using the stale NULL snapshot.  The writer only needs
+write permission on the destination keyring.
 
-but the pointer is cleared from the other side without that lock. When
-the last sco_conn reference is dropped, sco_conn_free() ran
+Move the restrict_link read after __key_link_lock() and
+__key_link_begin().  The read and the subsequent restriction check are
+then serialized with restriction installation by keyring->sem.
 
-    conn->hcon->sco_data = NULL;
+The race was reproduced on v7.2.8 in 19 executions where restriction
+installation returned before the link completed.  All 19 linked the key
+despite the reject-all restriction.  With this change, 312 executions
+reached the same ordering and every add_key() call failed with -EPERM.
 
-with no hdev->lock held, so the RX path could read hcon->sco_data and
-call kref_get_unless_zero() on an sco_conn that was concurrently freed:
+The issue was found by manual concurrency analysis assisted by AI-based
+analysis and independently verified with a QEMU reproducer and kernel
+instrumentation.
 
-    BUG: KASAN: slab-use-after-free in sco_conn_hold_unless_zero+0xbe/0x160
-    Write of size 4 by task kworker/u17:0
-    Workqueue: hci0 hci_rx_work
-    Call Trace:
-     sco_conn_hold_unless_zero+0xbe/0x160
-     sco_recv_scodata+0x13f/0x490
-     hci_rx_work+0x3af/0x730
-
-kref_get_unless_zero() only guards against a zero refcount, not against
-the backing memory already being freed.
-
-Give hcon->sco_data an actual reference on the sco_conn it points to, so
-the object cannot be freed while the pointer is still installed, and only
-clear and drop it from sco_conn_del(), which runs under hdev->lock (its
-callers, sco_connect_cfm() and sco_disconn_cfm(), hold it). The reader in
-sco_recv_scodata() also takes hdev->lock, so the store and the read are
-now serialised: the RX path either observes NULL or a reference that is
-guaranteed to stay valid until it drops its own.
-
-sco_conn_add() no longer hands its kref_init() reference to the caller as
-the connection's only reference; that initial reference is the one owned
-by hcon->sco_data, and callers get their own via sco_conn_hold().
-
-Because the sco_conn can now outlive the socket (the association keeps it
-alive until the link goes down), the hci_conn can no longer be dropped
-from sco_conn_free() without regressing socket close: closing a connected
-SCO socket must still tear the link down. Move hci_conn ownership to the
-socket instead: __sco_chan_add() takes an hci_conn reference and it is
-released from sco_chan_del() and sco_sock_destruct(), exactly once. The
-sco_conn no longer owns an hci_conn reference, so sco_conn_add() stops
-consuming one and sco_connect() drops the hci_connect_sco() reference on
-every path; sco_connect_cfm() no longer needs its hci_conn_hold() dance.
-
-Fixes: e6720779ae61 ("Bluetooth: SCO: Use kref to track lifetime of sco_conn")
+Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
 Cc: stable@vger.kernel.org
-Suggested-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: 성병찬 <tjdqudcks0424@naver.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260930041802.6114-1-tjdqudcks0424@naver.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/sco.c |   87 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 65 insertions(+), 22 deletions(-)
+ security/keys/key.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -86,12 +86,14 @@ static void sco_conn_free(struct kref *r
- 	if (conn->sk)
- 		sco_pi(conn->sk)->conn = NULL;
+--- a/security/keys/key.c
++++ b/security/keys/key.c
+@@ -840,9 +840,6 @@ static key_ref_t __key_create_or_update(
  
--	if (conn->hcon) {
--		conn->hcon->sco_data = NULL;
--		hci_conn_drop(conn->hcon);
--	}
-+	/* hcon->sco_data is cleared and the association's reference on the
-+	 * sco_conn is dropped in sco_conn_del() under hdev->lock, and the
-+	 * hci_conn is now owned by the socket (held in __sco_chan_add() and
-+	 * dropped in sco_chan_del()/sco_sock_destruct()), so there is nothing
-+	 * left to release towards hcon here.
-+	 */
+ 	key_check(keyring);
  
--	/* Ensure no more work items will run since hci_conn has been dropped */
-+	/* Ensure no more work items will run before the connection is freed */
- 	disable_delayed_work_sync(&conn->timeout_work);
- 
- 	kfree(conn);
-@@ -190,25 +192,19 @@ static void sco_sock_clear_timer(struct
- }
- 
- /* ---- SCO connections ---- */
--/* Consumes a reference on @hcon, which the returned sco_conn owns until it is
-- * freed. On failure (NULL return) the reference is left for the caller to drop.
-+/* Returns a new reference the caller must drop with sco_conn_put(). The
-+ * hcon->sco_data association holds its own reference on the sco_conn for the
-+ * connection's lifetime; it is dropped in sco_conn_del() under hdev->lock.
-+ * @hcon is not consumed: the hci_conn reference is taken and owned by the
-+ * socket in __sco_chan_add().
-  */
- static struct sco_conn *sco_conn_add(struct hci_conn *hcon)
- {
- 	struct sco_conn *conn = hcon->sco_data;
- 
- 	conn = sco_conn_hold_unless_zero(conn);
--	if (conn) {
--		if (!conn->hcon) {
--			sco_conn_lock(conn);
--			conn->hcon = hcon;
--			sco_conn_unlock(conn);
--		} else {
--			/* conn already owns a reference on hcon */
--			hci_conn_drop(hcon);
--		}
-+	if (conn)
- 		return conn;
--	}
- 
- 	conn = kzalloc(sizeof(struct sco_conn), GFP_KERNEL);
- 	if (!conn)
-@@ -229,7 +225,10 @@ static struct sco_conn *sco_conn_add(str
- 
- 	BT_DBG("hcon %p conn %p", hcon, conn);
- 
--	return conn;
-+	/* kref_init() above set the association reference owned by
-+	 * hcon->sco_data; hand the caller its own reference.
-+	 */
-+	return sco_conn_hold(conn);
- }
- 
- /* Delete channel.
-@@ -244,6 +243,19 @@ static void sco_chan_del(struct sock *sk
- 	BT_DBG("sk %p, conn %p, err %d", sk, conn, err);
- 
- 	if (conn) {
-+		struct hci_conn *hcon;
-+
-+		sco_conn_lock(conn);
-+		hcon = conn->hcon;
-+		sco_conn_unlock(conn);
-+
-+		/* Drop the socket's hci_conn reference BEFORE clearing
-+		 * conn->sk, so sco_conn_del() on another CPU cannot free
-+		 * the hci_conn while we still hold a pointer to it.
-+		 */
-+		if (hcon)
-+			hci_conn_drop(hcon);
-+
- 		sco_conn_lock(conn);
- 		conn->sk = NULL;
- 		sco_conn_unlock(conn);
-@@ -268,6 +280,13 @@ static void sco_conn_del(struct hci_conn
- 
- 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
- 
-+	/* Detach from the hci_conn and drop the association's reference.
-+	 * The caller holds hdev->lock, which serialises this against the
-+	 * read of hcon->sco_data in sco_recv_scodata().
-+	 */
-+	hcon->sco_data = NULL;
-+	sco_conn_put(conn);
-+
- 	sco_conn_lock(conn);
- 	sk = sco_sock_hold(conn);
- 	sco_conn_unlock(conn);
-@@ -292,6 +311,11 @@ static void __sco_chan_add(struct sco_co
- 	sco_pi(sk)->conn = sco_conn_hold(conn);
- 	conn->sk = sk;
- 
-+	/* The socket owns an hci_conn reference for as long as it stays
-+	 * attached; it is dropped in sco_chan_del()/sco_sock_destruct().
-+	 */
-+	hci_conn_hold(conn->hcon);
-+
- 	if (parent)
- 		bt_accept_enqueue(parent, sk, true);
- }
-@@ -373,6 +397,7 @@ static int sco_connect(struct sock *sk)
- 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
- 		release_sock(sk);
- 		sco_conn_put(conn);
-+		hci_conn_drop(hcon);
- 		err = -EBADFD;
- 		goto unlock;
- 	}
-@@ -381,9 +406,13 @@ static int sco_connect(struct sock *sk)
- 	sco_conn_put(conn);
- 	if (err) {
- 		release_sock(sk);
-+		hci_conn_drop(hcon);
- 		goto unlock;
+-	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
+-		restrict_link = keyring->restrict_link;
+-
+ 	key_ref = ERR_PTR(-ENOTDIR);
+ 	if (keyring->type != &key_type_keyring)
+ 		goto error_put_type;
+@@ -880,6 +877,9 @@ static key_ref_t __key_create_or_update(
+ 		goto error_link_end;
  	}
  
-+	/* __sco_chan_add() took its own hci_conn reference; drop ours. */
-+	hci_conn_drop(hcon);
++	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
++		restrict_link = keyring->restrict_link;
 +
- 	/* Update source addr of the socket */
- 	bacpy(&sco_pi(sk)->src, &hcon->src);
- 
-@@ -497,9 +526,25 @@ static struct sock *sco_get_sock_listen(
- 
- static void sco_sock_destruct(struct sock *sk)
- {
-+	struct sco_conn *conn = sco_pi(sk)->conn;
-+
- 	BT_DBG("sk %p", sk);
- 
--	sco_conn_put(sco_pi(sk)->conn);
-+	/* If the channel was not already torn down via sco_chan_del(), drop
-+	 * the socket's own references here.
-+	 */
-+	if (conn) {
-+		struct hci_conn *hcon;
-+
-+		sco_conn_lock(conn);
-+		hcon = conn->hcon;
-+		sco_conn_unlock(conn);
-+
-+		if (hcon)
-+			hci_conn_drop(hcon);
-+		sco_pi(sk)->conn = NULL;
-+		sco_conn_put(conn);
-+	}
- 
- 	skb_queue_purge(&sk->sk_receive_queue);
- 	skb_queue_purge(&sk->sk_write_queue);
-@@ -1511,12 +1556,10 @@ static void sco_connect_cfm(struct hci_c
- 	if (!status) {
- 		struct sco_conn *conn;
- 
--		conn = sco_conn_add(hci_conn_hold(hcon));
-+		conn = sco_conn_add(hcon);
- 		if (conn) {
- 			sco_conn_ready(conn);
- 			sco_conn_put(conn);
--		} else {
--			hci_conn_drop(hcon);
- 		}
- 	} else
- 		sco_conn_del(hcon, bt_to_errno(status));
+ 	if (restrict_link && restrict_link->check) {
+ 		ret = restrict_link->check(keyring, index_key.type,
+ 					   &prep.payload, restrict_link->key);
 
 
