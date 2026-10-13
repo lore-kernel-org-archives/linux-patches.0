@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BF54F55B5;
-	Tue, 13 Oct 2026 12:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991C4F93DA;
+	Tue, 13 Oct 2026 12:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893262; cv=none; b=XOx3SRYPSdUTU1DhU4qcVN6wxUGlFE3u9XS+VjzDB65a52r9szCM4hHAP8DU2ue9e4u9de1Iv43YiyX+AH28359Q4pTMGM3f58ACBxGt2Avc1VFB860hJe8LcOOoAYNujSKKVx/+JuQ76REfeZUO9vloK5CwcCIaXw1F1V/ReFA=
+	t=1791893266; cv=none; b=ublLnasM2kVFLKdc+9ZHr0r0WVJA6qb76DMK2izHC3jNLvqYt++SkE7kV5fr1cpI8v+w1FXcRr6n5JNBp1QJoNgTN2rvnUJnPr2HK9qrzBT0IS8DWD3xQI47920Bts9WqkzzUuUxOfPnlgdhcHMT0ZDdfPliOttf5IbBFY30EN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893262; c=relaxed/simple;
-	bh=P6Zivs3kc6+DhWwlBbLbV0hb1OC4NaLiltn7PxTBcmI=;
+	s=arc-20240116; t=1791893266; c=relaxed/simple;
+	bh=KlDM/I1X3ajRoryr0l520aTEFzmqo52RjYZo0vZMjpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7nfuRmtqtoteyDH8glX0Plg8lbIlyF0P3ZQTBZtBE5fo+4fLewZZR6s9ixGjHr/WMWwP/XFNQLPeWwGdQ0p8y2QL1s9Lv3jadlC4i9WXbG7ao0jT1Y36NddOEUqw9StFuAUVVm+vVt8WQGE/EiMRp5LFy4+olXgNk2Oe9n1jOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvnMG2AO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L3BLeA1mYSQXey0TJzwFB2/aAVqUL54fyoRGotmA6fOOnOb8rO/KVJtHNwHCEj7uyz7+YhWdIbaoWdZ1pmWcN8SUMRLluJIe+sY3tdj6B26n30FMEBC1F43+7IAvQjSVCNflTak+L7e2yPPvdAqwb/mXaauqJL9OdzLJ4CZ7Lz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cpb7V2TG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvnMG2AO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B471F000FF;
-	Tue, 13 Oct 2026 12:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cpb7V2TG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF77B1F000FF;
+	Tue, 13 Oct 2026 12:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893261;
-	bh=LQAQ/MH0ZiLeArWrtz3ZkGDsltDLt2LbJV+d+3WqIsI=;
+	s=korg; t=1791893264;
+	bh=vNDcYzJ0Hy152y1TGCzOY8WomtO0RmTKhsaSjcatn+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvnMG2AOwGi1Q/B1gmXdYv/9/g1H7xZ2L9QzyiT2J2zS1Kwso9R9BEfT/rbL8mzlo
-	 /m6Qp0xPMv6atCoDR7QKpkdfNBp4e6q8FpvgshRISpjtcjTcgN8KHpk+64Yv0TNZ+K
-	 iBi3Rac/qlBjB3JKwk5pLF/VpUnXc2gSEocKaHyc=
+	b=Cpb7V2TGOAd5vzghnUAVYQ3XylJFXHrn5GGs5CDKaaaaq9wrGnUOYZTVb5AVjmXaW
+	 XxQkyV0k7Z0xuwvJMkmgJymwKTZZnlWyv3s57jGbZ7Hc1wTydtmMYrSA3KvnvA53L/
+	 US77nCt3kW95SNblkc2Z77/8jUwJQb1Xm8+pXEJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Harin Lee <me@harin.net>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/621] ALSA: ctxfi: Use explicit output flag for DAIO resources
-Date: Tue, 13 Oct 2026 13:32:43 +0200
-Message-ID: <20261013112924.849068377@linuxfoundation.org>
+Subject: [PATCH 6.18 169/621] ALSA: ctxfi: Refactor resource alloc for sparse mappings
+Date: Tue, 13 Oct 2026 13:32:44 +0200
+Message-ID: <20261013112924.873376569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,141 +53,214 @@ Content-Transfer-Encoding: 8bit
 
 From: Harin Lee <me@harin.net>
 
-[ Upstream commit 9bb003a1f98b11b80238d522778115ad07355149 ]
+[ Upstream commit a2dbaeb5c61ef110ceefe0d48fe94d428d3bcf16 ]
 
-Replace the index-based type check with an explicit output flag in
-struct daio and struct daio_desc.
+Refactor atc_get_resources(), atc_connect_resources(), and
+atc_release_resources() to allocate resources based on maximum type
+definitions.
 
-This allows handling DAIO resource types correctly regardless of their
-index. This is necessary for hardware variants where resource types do
-not follow a sequential order.
+This allows specific resources to be conditionally skipped based on
+capabilities. This is necessary for hardware variants where resource
+allocations do not follow a sequential order.
 
 Signed-off-by: Harin Lee <me@harin.net>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251124180501.2760421-4-me@harin.net
+Link: https://patch.msgid.link/20251124180501.2760421-5-me@harin.net
 Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctatc.c  |  3 ++-
- sound/pci/ctxfi/ctdaio.c | 14 +++++++-------
- sound/pci/ctxfi/ctdaio.h |  2 ++
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ sound/pci/ctxfi/ctatc.c | 60 ++++++++++++++++++++++++-----------------
+ sound/pci/ctxfi/ctatc.h |  4 ---
+ 2 files changed, 35 insertions(+), 29 deletions(-)
 
 diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
-index d65c7dd738069..9f7d577701717 100644
+index 9f7d577701717..7cb33d7c43d2f 100644
 --- a/sound/pci/ctxfi/ctatc.c
 +++ b/sound/pci/ctxfi/ctatc.c
-@@ -1164,7 +1164,7 @@ static int atc_release_resources(struct ct_atc *atc)
+@@ -25,6 +25,9 @@
+ #include <sound/control.h>
+ #include <sound/asoundef.h>
+ 
++#define NUM_ATC_SRCS	6
++#define NUM_ATC_PCM		(2 * 4)
++
+ #define MONO_SUM_SCALE	0x19a8	/* 2^(-0.5) in 14-bit floating format */
+ #define MAX_MULTI_CHN	8
+ 
+@@ -1162,8 +1165,10 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->daios) {
  		daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
- 		for (i = 0; i < atc->n_daio; i++) {
+-		for (i = 0; i < atc->n_daio; i++) {
++		for (i = 0; i < NUM_DAIOTYP; i++) {
  			daio = atc->daios[i];
--			if (daio->type < LINEIM) {
-+			if (daio->output) {
++			if (!daio)
++				continue;
+ 			if (daio->output) {
  				dao = container_of(daio, struct dao, daio);
  				dao->ops->clear_left_input(dao);
- 				dao->ops->clear_right_input(dao);
-@@ -1394,6 +1394,7 @@ static int atc_get_resources(struct ct_atc *atc)
- 	for (i = 0, atc->n_daio = 0; i < num_daios; i++) {
+@@ -1177,8 +1182,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->pcm) {
+ 		sum_mgr = atc->rsc_mgrs[SUM];
+-		for (i = 0; i < atc->n_pcm; i++)
+-			sum_mgr->put_sum(sum_mgr, atc->pcm[i]);
++		for (i = 0; i < NUM_ATC_PCM; i++)
++			if (atc->pcm[i])
++				sum_mgr->put_sum(sum_mgr, atc->pcm[i]);
+ 
+ 		kfree(atc->pcm);
+ 		atc->pcm = NULL;
+@@ -1186,8 +1192,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->srcs) {
+ 		src_mgr = atc->rsc_mgrs[SRC];
+-		for (i = 0; i < atc->n_src; i++)
+-			src_mgr->put_src(src_mgr, atc->srcs[i]);
++		for (i = 0; i < NUM_ATC_SRCS; i++)
++			if (atc->srcs[i])
++				src_mgr->put_src(src_mgr, atc->srcs[i]);
+ 
+ 		kfree(atc->srcs);
+ 		atc->srcs = NULL;
+@@ -1195,7 +1202,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->srcimps) {
+ 		srcimp_mgr = atc->rsc_mgrs[SRCIMP];
+-		for (i = 0; i < atc->n_srcimp; i++) {
++		for (i = 0; i < NUM_ATC_SRCS; i++) {
++			if (!atc->srcimps[i])
++				continue;
+ 			srcimp = atc->srcimps[i];
+ 			srcimp->ops->unmap(srcimp);
+ 			srcimp_mgr->put_srcimp(srcimp_mgr, atc->srcimps[i]);
+@@ -1368,30 +1377,32 @@ static int atc_get_resources(struct ct_atc *atc)
+ 	struct srcimp_mgr *srcimp_mgr;
+ 	struct sum_desc sum_dsc = {0};
+ 	struct sum_mgr *sum_mgr;
+-	int err, i, num_srcs, num_daios;
++	struct capabilities cap;
++	int err, i;
+ 
+-	num_daios = ((atc->model == CTSB1270) ? 8 : 7);
+-	num_srcs = ((atc->model == CTSB1270) ? 6 : 4);
++	cap = atc->capabilities(atc);
+ 
+-	atc->daios = kcalloc(num_daios, sizeof(void *), GFP_KERNEL);
++	atc->daios = kcalloc(NUM_DAIOTYP, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->daios)
+ 		return -ENOMEM;
+ 
+-	atc->srcs = kcalloc(num_srcs, sizeof(void *), GFP_KERNEL);
++	atc->srcs = kcalloc(NUM_ATC_SRCS, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->srcs)
+ 		return -ENOMEM;
+ 
+-	atc->srcimps = kcalloc(num_srcs, sizeof(void *), GFP_KERNEL);
++	atc->srcimps = kcalloc(NUM_ATC_SRCS, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->srcimps)
+ 		return -ENOMEM;
+ 
+-	atc->pcm = kcalloc(2 * 4, sizeof(void *), GFP_KERNEL);
++	atc->pcm = kcalloc(NUM_ATC_PCM, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->pcm)
+ 		return -ENOMEM;
+ 
+ 	daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
+ 	da_desc.msr = atc->msr;
+-	for (i = 0, atc->n_daio = 0; i < num_daios; i++) {
++	for (i = 0; i < NUM_DAIOTYP; i++) {
++		if ((i == MIC) && !cap.dedicated_mic)
++			continue;
  		da_desc.type = (atc->model != CTSB073X) ? i :
  			     ((i == SPDIFIO) ? SPDIFI1 : i);
-+		da_desc.output = i < LINEIM;
- 		err = daio_mgr->get_daio(daio_mgr, &da_desc,
- 					(struct daio **)&atc->daios[i]);
- 		if (err) {
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index 9fd4f18a867e4..c439411fb1fe1 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -18,8 +18,6 @@
- #include <linux/slab.h>
- #include <linux/kernel.h>
- 
--#define DAIO_OUT_MAX		SPDIFOO
--
- struct daio_usage {
- 	unsigned short data;
- };
-@@ -334,7 +332,7 @@ static int daio_rsc_init(struct daio *daio,
- 		goto error1;
- 
- 	/* Set daio->rscl/r->ops to daio specific ones */
--	if (desc->type <= DAIO_OUT_MAX) {
-+	if (desc->output) {
- 		daio->rscl.ops = daio->rscr.ops = &daio_out_rsc_ops;
- 	} else {
- 		switch (hw->chip_type) {
-@@ -349,6 +347,7 @@ static int daio_rsc_init(struct daio *daio,
+ 		da_desc.output = i < LINEIM;
+@@ -1403,42 +1414,39 @@ static int atc_get_resources(struct ct_atc *atc)
+ 				i);
+ 			return err;
  		}
+-		atc->n_daio++;
  	}
- 	daio->type = desc->type;
-+	daio->output = desc->output;
+ 
+ 	src_mgr = atc->rsc_mgrs[SRC];
+ 	src_dsc.multi = 1;
+ 	src_dsc.msr = atc->msr;
+ 	src_dsc.mode = ARCRW;
+-	for (i = 0, atc->n_src = 0; i < num_srcs; i++) {
++	for (i = 0; i < NUM_ATC_SRCS; i++) {
++		if (((i > 3) && !cap.dedicated_mic))
++			continue;
+ 		err = src_mgr->get_src(src_mgr, &src_dsc,
+ 					(struct src **)&atc->srcs[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_src++;
+ 	}
+ 
+ 	srcimp_mgr = atc->rsc_mgrs[SRCIMP];
+ 	srcimp_dsc.msr = 8;
+-	for (i = 0, atc->n_srcimp = 0; i < num_srcs; i++) {
++	for (i = 0; i < NUM_ATC_SRCS; i++) {
++		if (((i > 3) && !cap.dedicated_mic))
++			continue;
+ 		err = srcimp_mgr->get_srcimp(srcimp_mgr, &srcimp_dsc,
+ 					(struct srcimp **)&atc->srcimps[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_srcimp++;
+ 	}
+ 
+ 	sum_mgr = atc->rsc_mgrs[SUM];
+ 	sum_dsc.msr = atc->msr;
+-	for (i = 0, atc->n_pcm = 0; i < (2*4); i++) {
++	for (i = 0; i < NUM_ATC_PCM; i++) {
+ 		err = sum_mgr->get_sum(sum_mgr, &sum_dsc,
+ 					(struct sum **)&atc->pcm[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_pcm++;
+ 	}
  
  	return 0;
+@@ -1491,9 +1499,11 @@ static void atc_connect_resources(struct ct_atc *atc)
+ 	struct sum *sum;
+ 	struct ct_mixer *mixer;
+ 	struct rsc *rscs[2] = {NULL};
++	struct capabilities cap;
+ 	int i, j;
  
-@@ -438,6 +437,7 @@ static int dao_rsc_reinit(struct dao *dao, const struct dao_desc *desc)
- 	dsc.type = dao->daio.type;
- 	dsc.msr = desc->msr;
- 	dsc.passthru = desc->passthru;
-+	dsc.output = dao->daio.output;
- 	dao_rsc_uninit(dao);
- 	return dao_rsc_init(dao, &dsc, mgr);
- }
-@@ -523,7 +523,7 @@ static int get_daio_rsc(struct daio_mgr *mgr,
+ 	mixer = atc->mixer;
++	cap = atc->capabilities(atc);
  
- 	err = -ENOMEM;
- 	/* Allocate mem for daio resource */
--	if (desc->type <= DAIO_OUT_MAX) {
-+	if (desc->output) {
- 		struct dao *dao = kzalloc(sizeof(*dao), GFP_KERNEL);
- 		if (!dao)
- 			goto error;
-@@ -570,7 +570,7 @@ static int put_daio_rsc(struct daio_mgr *mgr, struct daio *daio)
- 		daio_mgr_put_rsc(&mgr->mgr, daio->type);
- 	}
+ 	for (i = MIX_WAVE_FRONT, j = LINEO1; i <= MIX_SPDIF_OUT; i++, j++) {
+ 		mixer->get_output_ports(mixer, i, &rscs[0], &rscs[1]);
+@@ -1511,7 +1521,7 @@ static void atc_connect_resources(struct ct_atc *atc)
+ 	src = atc->srcs[3];
+ 	mixer->set_input_right(mixer, MIX_LINE_IN, &src->rsc);
  
--	if (daio->type <= DAIO_OUT_MAX) {
-+	if (daio->output) {
- 		dao_rsc_uninit(container_of(daio, struct dao, daio));
- 		kfree(container_of(daio, struct dao, daio));
- 	} else {
-@@ -585,7 +585,7 @@ static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
+-	if (atc->model == CTSB1270) {
++	if (cap.dedicated_mic) {
+ 		/* Titanium HD has a dedicated ADC for the Mic. */
+ 		dai = container_of(atc->daios[MIC], struct dai, daio);
+ 		atc_connect_dai(atc->rsc_mgrs[SRC], dai,
+diff --git a/sound/pci/ctxfi/ctatc.h b/sound/pci/ctxfi/ctatc.h
+index 0bc7b71d910b0..671edc46bd503 100644
+--- a/sound/pci/ctxfi/ctatc.h
++++ b/sound/pci/ctxfi/ctatc.h
+@@ -132,10 +132,6 @@ struct ct_atc {
+ 	void **pcm;		/* SUMs for collecting all pcm stream */
+ 	void **srcs;		/* Sample Rate Converters for input signal */
+ 	void **srcimps;		/* input mappers for SRCs */
+-	unsigned char n_daio;
+-	unsigned char n_src;
+-	unsigned char n_srcimp;
+-	unsigned char n_pcm;
  
--	if (DAIO_OUT_MAX >= daio->type) {
-+	if (daio->output) {
- 		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
- 				daio_device_index(daio->type, hw));
- 	} else {
-@@ -599,7 +599,7 @@ static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
+ 	struct ct_timer *timer;
  
--	if (DAIO_OUT_MAX >= daio->type) {
-+	if (daio->output) {
- 		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
- 				daio_device_index(daio->type, hw));
- 	} else {
-diff --git a/sound/pci/ctxfi/ctdaio.h b/sound/pci/ctxfi/ctdaio.h
-index 15147fe5f74a0..b337da2de8b50 100644
---- a/sound/pci/ctxfi/ctdaio.h
-+++ b/sound/pci/ctxfi/ctdaio.h
-@@ -43,6 +43,7 @@ struct daio {
- 	struct rsc rscl;	/* Basic resource info for left TX/RX */
- 	struct rsc rscr;	/* Basic resource info for right TX/RX */
- 	enum DAIOTYP type;
-+	unsigned char output;
- };
- 
- struct dao {
-@@ -91,6 +92,7 @@ struct daio_desc {
- 	unsigned int type:4;
- 	unsigned int msr:4;
- 	unsigned int passthru:1;
-+	unsigned int output:1;
- };
- 
- struct daio_mgr {
 -- 
 2.53.0
 
