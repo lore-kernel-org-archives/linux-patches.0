@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E1B4F4753;
-	Tue, 13 Oct 2026 12:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772134F4733;
+	Tue, 13 Oct 2026 12:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895595; cv=none; b=uyGMNJu5t7KFtNculhV3eEKNENeLhSkIxXYfC2dDPLAEK7YiWCIyWoIM5i4X458kfsG8emuwMHTwFJTNI93DXuH09KtoMygxiH5DRTV6bEjMgeWOdFdwZoONXHLbapDed/sWE1x9FYf04TD1Kf/8j16hku0KBDpVvTbwDueHD5A=
+	t=1791895600; cv=none; b=AcBawIi41LW7TzdqlYehPKlU/8yOakGCSgcCM4q3sEnp+uFfY9HdERC9t3+9u10J31EkqWGG6ao0i952GNDwuyNuOOH5dxENJV6376yEQbncv5nDtgXY3S6nwhyU56iHER+ZilNCbbMDX0qSkl29V2+UqNn9L05sb0yiBeCIDpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895595; c=relaxed/simple;
-	bh=Y4pnLEwd/WmlPxn1qnqBX2yMdczEkLmrXPMFVxXllw4=;
+	s=arc-20240116; t=1791895600; c=relaxed/simple;
+	bh=PwMy82NeWzcoqOECXct0ySaOGTpTFGIfxZtaj3er/cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CapWa3d98mQJYcTwYSkSBzvE5pzrIxMmtCWIZ8nuT4/TS92HoilQt4qL4srui1aVxmpKvx2pTPWPUf8VieLFZq0/S2hLVa0QvHwHufHrtKVTDW8pN17fR5aPH+WUyiHSZcmvkQhV/TknrCXGxfEzSG3rXrnemNcC5xCWR8z2qyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUnt8wxZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ihFC7XHgBC71wygAYKdWRxL12rJS8FwjuH+ybFOhjwfllEyigE+kdkBVuEUZpiOD1EKq72TMEhkXWh2/fth7tzQ566BcjB58driF5e0Ikb2xijOZmCnOOcAUk5CtxDd4V4Q2/ytqoOl/1s0iOceQkUcEUm3NWKmpRHz8hl6GwdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ts6B78qS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUnt8wxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ADC1F00893;
-	Tue, 13 Oct 2026 12:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ts6B78qS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869841F000FF;
+	Tue, 13 Oct 2026 12:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895594;
-	bh=BcOB6kUSiaFsWzuxIOotdSIcecTbK9xlsiPDvR/oZ8Q=;
+	s=korg; t=1791895597;
+	bh=kqSRRyc+AS6MPhEsAbGwDVRup50Rbq+VTPhzyF1HsvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QUnt8wxZceX6EfdvoRkpk06yWhycPjqCVOYYWa2fezjbqCnIEQjo25lS4qH6vrHSq
-	 BszmiRkEaGvCw9bWHfrN8LqcE1n22m9DjfcPVAPhGbOdt80kzjFiO/4Zozt6wDzPRv
-	 oP51pKNtDMaW+NM5JAWfLmifX8f4n+UHKgKBhNEk=
+	b=Ts6B78qS5D2Wf+Si9VC95mXP8lBvQLHytQCIuCPUckZ+Mu9QxHv6UujccNuq5HfhK
+	 B2nhwwF9h90Q7z+a/Us/kbEmge2IbhROV5yJRvrpFihq143ztLtd0bYbr5bS484yMl
+	 M2T1y+tgnbxZGzrYXIUv3RSeHcDaaNTtEgBJe9hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Tollet <jtollet@cisco.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/497] net/mlx5e: Prevent stale XSK buffer release on MPWQE refill retry
-Date: Tue, 13 Oct 2026 13:38:07 +0200
-Message-ID: <20261013112915.499138667@linuxfoundation.org>
+Subject: [PATCH 6.12 329/497] iio: adc: ad_sigma_delta: fix use-after-free on unbind
+Date: Tue, 13 Oct 2026 13:38:16 +0200
+Message-ID: <20261013112915.713366562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -46,69 +47,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Tollet <jtollet@cisco.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 63811edf512584c946e5e96b100e9e280703bbb5 ]
+[ Upstream commit 9ee8306121495d2a25aa5d1bfd519f2748786b83 ]
 
-With AF_XDP on a striding RQ, mlx5e defers releasing XSK buffers until
-an MPWQE is refilled. If XSK allocation then returns -ENOMEM,
-actual_wq_head is not advanced and a later NAPI poll retries the same
-WQE.
+ad_sd_buffer_postenable() allocates sigma_delta->samples_buf with
+devm_krealloc() at runtime, so its devres entry sits after all
+probe-time entries of the driver. devm resources are released in
+reverse allocation order, which means unbind frees samples_buf before
+iio_device_unregister() disables the buffers and detaches the trigger
+pollfunc. The data ready IRQ is still enabled at that point, so
+ad_sd_trigger_handler() can still run and memcpy() incoming samples
+into the freed samples_buf.
 
-mlx5e_free_rx_mpwqe() leaves each released slot marked as releasable. On
-retry it can therefore call xsk_buff_free() again through stale pointers
-after the frames have returned to the XSK pool and been reallocated.
+Fix this by preallocating the buffer in
+devm_ad_sd_setup_buffer_and_trigger(), before the triggered buffer and
+the IRQ are set up, so it is freed only after iio_device_unregister()
+has drained the trigger handler via free_irq(). Size it for the worst
+case of all sequencer slots being active; ad_sd_validate_scan_mask()
+already caps the number of active channels at num_slots.
 
-Set all skip_release_bitmap bits in the common error path of
-mlx5e_xsk_alloc_rx_mpwqe(). This matches mlx5e_alloc_rx_mpwqe(). A
-successful allocation already clears the bitmap after replacing every
-buffer, so retries become idempotent without changing the success path.
+This issue was found by an in-house static analysis tool.
 
-Fault injection forced three consecutive failures for one selected MPWQE.
-Both an early allocation failure and a partial 8-of-16-buffer unwind
-released the original 16 XSK buffers only once. Each error left a full
-bitmap, the following NAPI retry skipped the release, and a later
-successful allocation cleared it. A 20-second AF_XDP zero-copy pressure
-run exercised 1,575,262 buffer allocation failures without invalid
-descriptors, WQE errors, or kernel warnings.
-
-Fixes: 4c2a13236807 ("net/mlx5e: RX, Defer page release in striding rq for better recycling")
+Fixes: 8bea9af887de ("iio: adc: ad_sigma_delta: Add sequencer support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jerome Tollet <jtollet@cisco.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://patch.msgid.link/20260824141645.23700-3-jtollet@cisco.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: Made the allocation unconditional because the offload conditional is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ad_sigma_delta.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
-index 1b7132fa70de2..8dd3deb050f83 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 5d0bfabc69ea9..00be58118931f 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -344,9 +344,8 @@ EXPORT_SYMBOL_NS_GPL(ad_sigma_delta_single_conversion, IIO_AD_SIGMA_DELTA);
+ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
+-	unsigned int i, slot, samples_buf_size;
++	unsigned int i, slot;
+ 	unsigned int channel;
+-	uint8_t *samples_buf;
+ 	int ret;
  
- #include "rx.h"
- #include "en/xdp.h"
-+#include <linux/bitmap.h>
- #include <net/xdp_sock_drv.h>
- #include <linux/filter.h>
+ 	if (sigma_delta->num_slots == 1) {
+@@ -379,15 +378,6 @@ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ 			return ret;
+ 	}
  
-@@ -153,6 +154,7 @@ int mlx5e_xsk_alloc_rx_mpwqe(struct mlx5e_rq *rq, u16 ix)
- 		xsk_buff_free(xsk_buffs[batch]);
+-	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits / 8, 8);
+-	samples_buf_size += sizeof(int64_t);
+-	samples_buf = devm_krealloc(&sigma_delta->spi->dev, sigma_delta->samples_buf,
+-				    samples_buf_size, GFP_KERNEL);
+-	if (!samples_buf)
+-		return -ENOMEM;
+-
+-	sigma_delta->samples_buf = samples_buf;
+-
+ 	spi_bus_lock(sigma_delta->spi->controller);
+ 	sigma_delta->bus_locked = true;
+ 	sigma_delta->keep_cs_asserted = true;
+@@ -626,6 +616,8 @@ static int devm_ad_sd_probe_trigger(struct device *dev, struct iio_dev *indio_de
+ int devm_ad_sd_setup_buffer_and_trigger(struct device *dev, struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
++	const struct iio_scan_type *scan_type = &indio_dev->channels[0].scan_type;
++	unsigned int samples_buf_size;
+ 	int ret;
  
- err:
-+	bitmap_fill(wi->skip_release_bitmap, rq->mpwqe.pages_per_wqe);
- 	rq->stats->buff_alloc_err++;
- 	return -ENOMEM;
- }
+ 	sigma_delta->slots = devm_kcalloc(dev, sigma_delta->num_slots,
+@@ -633,6 +625,19 @@ int devm_ad_sd_setup_buffer_and_trigger(struct device *dev, struct iio_dev *indi
+ 	if (!sigma_delta->slots)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Worst-case size: all sequencer slots can be active, capped
++	 * at num_slots by ad_sd_validate_scan_mask().
++	 */
++	samples_buf_size =
++		ALIGN(sigma_delta->num_slots *
++		      BITS_TO_BYTES(scan_type->storagebits),
++		      sizeof(s64));
++	samples_buf_size += sizeof(s64);
++	sigma_delta->samples_buf = devm_kzalloc(dev, samples_buf_size, GFP_KERNEL);
++	if (!sigma_delta->samples_buf)
++		return -ENOMEM;
++
+ 	ret = devm_iio_triggered_buffer_setup(dev, indio_dev,
+ 					      &iio_pollfunc_store_time,
+ 					      &ad_sd_trigger_handler,
 -- 
 2.53.0
 
