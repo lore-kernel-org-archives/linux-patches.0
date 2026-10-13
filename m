@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35B44F68B4;
-	Tue, 13 Oct 2026 12:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90034F68B0;
+	Tue, 13 Oct 2026 12:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894294; cv=none; b=jZlrMZjAjWa/kOmXOrNEnwTA4MJzIaF/J/GHXer0VJvMr0f+Pg25ygsxa7dM46xV9R1oI/42AVJb2KhMPNNvqzXY8f1vF7vESRRr1YajyJAKW5ZBsbPjiMuLCZf1E1oNUi+PON1KdGb8XqIP6OJw8x8VWHVU0H+F7IsbD8/kpdk=
+	t=1791894297; cv=none; b=WdsUtYHJVn14XQDGXKIWQU/Vnaksg6CWRQRYczlyMvRh1khOTWLulcb4+dyVt1QkMVCRxFLF1DI0OkSEHAYQhKuBSnFiDzOKrnCJsYoKq5OVCDmys5dSvoueHJqas58cWWLGjyBd96B/KF42LCCmKfWomEUAlNjhvgHQ3Sq0diE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894294; c=relaxed/simple;
-	bh=vupzbVJRE6PWDWZONT2ZG2PR/qNFL7w+FODvlA8KO8Y=;
+	s=arc-20240116; t=1791894297; c=relaxed/simple;
+	bh=QYumpdsdy8+eyYTQgXS2AAwkqgzs7orlXSlYOiKibpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IqXpZH/2SqpPmcYlI0PgLZ+UvmQkDOEAJuAqDmwnrYeP8DVh9nE99d/ppi03xe4jOhty9EIzyGf6GwZIlDa3730Zzav4NvR/g8V8aAnWImL8vNHh77gV4QSFaRCLXWVcC/hlg6PJnXaJGT6R4gzXoVtM9AGwYnzlTWlJdDpgnQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQOZ+JJC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sKWgcct1Kh21k61J6SpBY87Ysa0ubfNV/3nMDvdtpryv1AVcD6RduyqxkXURFq2CVKp9gAFLU2okkW0+ASDCzMnHC6rznF6RHkD482iDy9oknU3g/k8MsqKYRccTmuY+Us9BxGq7BVJxa520bjqnvYbDM8sFvz4PSPgRvexDNVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ljxsiE+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQOZ+JJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26C21F00893;
-	Tue, 13 Oct 2026 12:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ljxsiE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3971F000FF;
+	Tue, 13 Oct 2026 12:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894293;
-	bh=GnWbyW1lJ/BOJf+7ANQJskg8pnKghMqJr6paa1+ndgw=;
+	s=korg; t=1791894296;
+	bh=g5uFXJHOIRgkD60Xj2IL4BwxeS4hTfR6/+9P1ZOCl/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQOZ+JJC6WkmB08LUCI6Pp/Yv885gqcG9iOGVyzQXVnzrAGA3JcR0WjOpFjd9NdlL
-	 F3wCH/svtmCW+bepev80FnVjCGWvxcebGju51JIg3B9Aet0sNQJTP0dcFVNhs87/Bl
-	 S7vLb4d6Spj92WusbHKp1jMw7iZM0dXWPogdP0JQ=
+	b=2ljxsiE+t+08bw+qU/zGPJ/n8rZPt4H4FFjfbn18Y7MvZ+QqpyB5kzJvuH62B28kF
+	 YJzBELdixYpbY5NWKhozqI3gk5BcEsf6bZqn7DsoUIatyGIbSGJxcm9ajXBZ6J5hoO
+	 iAgdpoMAJkxazZjRqLAMrMtuYthniZTuUb4Z94jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
+	Nicholas Carlini <npc@anthropic.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Amery Hung <ameryhung@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 485/621] bpf: Reject writes through untrusted BTF pointers
-Date: Tue, 13 Oct 2026 13:38:00 +0200
-Message-ID: <20261013112932.341023619@linuxfoundation.org>
+Subject: [PATCH 6.18 512/621] bpf: Mark NULL kptr stores precise
+Date: Tue, 13 Oct 2026 13:38:27 +0200
+Message-ID: <20261013112932.977076891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,55 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit ac65c710cc643cbc52b899627577357867249530 ]
+[ Upstream commit ecdc5043794c9184aa8e6c814603899479c46b35 ]
 
-check_ptr_to_btf_access() lets program-type btf_struct_access callbacks
-validate writes before the default BTF access path rejects non-read
-accesses. That bypasses the read-only policy for untrusted BTF pointers
-created by helpers such as bpf_rdonly_cast().
+check_map_kptr_access() permits a scalar store into an untrusted kptr
+field only when the register is known to contain zero. Unlike other
+verifier checks whose outcome depends on a scalar value, it does not mark
+that register precise.
 
-Reject non-read accesses through PTR_UNTRUSTED BTF pointers at the
-common entry point, before the callback branch to handle all cases.
+A state checkpoint reached with an imprecise zero can therefore prune a
+second path that reaches the store with an arbitrary nonzero scalar. The
+program can write attacker-controlled bits into the kptr field and load
+them back as a PTR_TO_BTF_ID.
 
-Fixes: 282de143ead9 ("bpf: Introduce allocated objects support")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Call mark_chain_precision() before accepting a known-zero register. This
+forces state equivalence to compare its scalar range and makes the verifier
+visit and reject a path carrying a nonzero value.
+
+Fixes: 61df10c7799e ("bpf: Allow storing unreferenced kptr in map")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260904104203.345917-6-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 47549e988f2c7..696e1b8d06608 100644
+index abf063979b63f..e887b6cc2cbae 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -7372,6 +7372,11 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 		return -EACCES;
- 	}
- 
-+	if (atype != BPF_READ && (type_flag(reg->type) & PTR_UNTRUSTED)) {
-+		verbose(env, "only read is supported\n");
-+		return -EACCES;
-+	}
-+
- 	if (env->ops->btf_struct_access && !type_is_alloc(reg->type) && atype == BPF_WRITE) {
- 		if (!btf_is_kernel(reg->btf)) {
- 			verifier_bug(env, "reg->btf must be kernel btf");
-@@ -7380,8 +7385,7 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 		ret = env->ops->btf_struct_access(&env->log, reg, off, size);
- 	} else {
- 		/* Writes are permitted with default btf_struct_access for
--		 * program allocated objects (which always have ref_obj_id > 0),
--		 * but not for untrusted PTR_TO_BTF_ID | MEM_ALLOC.
-+		 * program allocated objects (which always have ref_obj_id > 0).
- 		 */
- 		if (atype != BPF_READ && !type_is_ptr_alloc_obj(reg->type)) {
- 			verbose(env, "only read is supported\n");
+@@ -6097,8 +6097,15 @@ static int check_map_kptr_access(struct bpf_verifier_env *env, u32 regno,
+ 			return ret;
+ 	} else if (class == BPF_STX) {
+ 		val_reg = reg_state(env, value_regno);
+-		if (!register_is_null(val_reg) &&
+-		    map_kptr_match_type(env, kptr_field, val_reg, value_regno))
++		if (register_is_null(val_reg)) {
++			/*
++			 * This store is valid only because the scalar is known to be
++			 * zero. Mark it precise so another scalar cannot be pruned
++			 * against this state.
++			 */
++			return mark_chain_precision(env, value_regno);
++		}
++		if (map_kptr_match_type(env, kptr_field, val_reg, value_regno))
+ 			return -EACCES;
+ 	} else if (class == BPF_ST) {
+ 		if (insn->imm) {
 -- 
 2.53.0
 
