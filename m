@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB05501295;
-	Tue, 13 Oct 2026 12:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA093B9DA7;
+	Tue, 13 Oct 2026 12:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895769; cv=none; b=j410Z43dDO0K8mqqk69RkrU1Iki30AqNZABe39cSbIXfGI49o3xnOpzeqUQ/WJUGaYBfBYdNeIHiBUA0umWZ5KM8OC4b4nk1jCPJayarZ4SETgLnbBwn9peEJv8gnAsryO3EKCOmacohFYonURmN54fqZ4d4Ptt3vOZo/e7JFF0=
+	t=1791895771; cv=none; b=rikxqmHHHqmTsz6e5GGjdy5r1RyvKJdhB64NXLD0BEMBMVvt8EI2atkeDn1l/s9KONeQSvCwIauqo68JcMaSHUtVH2qnNK3cLfGRqkWCEhLgUtljbcBESwHr+V/F7PO5cfgkQ6pgA/6732USVxjNm+EDP+nmlNq8VHl4ul4SXKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895769; c=relaxed/simple;
-	bh=r1hyOOAF/dvmJPoizUpnx6oDvrgJ7MNWvyolni/BG8I=;
+	s=arc-20240116; t=1791895771; c=relaxed/simple;
+	bh=/JoQLAdkC9kM/2PF+6c74QVsmGdFjQufsSzm4NKSA9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehs4eSMe9hCsAavxKShg8T5GG0Gz7WXFXxCQFByn28PVxCCouPLkoaQzTMZV4F+iI8Rkkb/jMcmUD92PYKkllNFbWn/SQzMBxF/VVAZ3sPSyNTYgOKkDcbFBn63eZE9GHBiMgSBUtq4bAIwTKJhJqG6s9nWW22jZDses8J2L+QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fquPtoVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mRT0fVuBc+q+7cs/6hqKrEYska2t+aQO1NNmhCnNr5Mub6H0XldOS+Xgvlra9bEPMq+wBxtHg90d3WUa28z2sbj6L9DlQnXCEIxKZPGjVjBtNz0XoYme3ANpC9MEXaaXIhP29mByxKRWcfxqH7e8+sObiGElisa8kZuZ+G3Ok2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiMg6G88; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fquPtoVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE831F00893;
-	Tue, 13 Oct 2026 12:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiMg6G88"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4261F000FF;
+	Tue, 13 Oct 2026 12:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895767;
-	bh=dalQsKk6I9qb/GNFWobNyR7YIP9lZ21QduPFWMC991A=;
+	s=korg; t=1791895770;
+	bh=hkZ+uxCThIC71IqtKpUZHTNfin4E9qHSB9SW/YQ6MMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fquPtoVIKZoC/0gYmSqOMiAnHz+0WuERkaNNAyZDO5A3By+pU4CMEhMxjL/9rorVC
-	 huxOZQhRYZCK4AX76kKBx4z3RrTAqjTpBuXs+FG870YwSJ90qCIX7hGTtX/SdGgXqC
-	 jNYsHFIuD6U4yzRk+AagbKzuBIQKVNMvA2rZKC5U=
+	b=KiMg6G884n6qcvhbLStRXQBL0hMA7VSD/IlJ+48CvygAoBrn/GUs3Eh/fCmtp9YYF
+	 n0v+QTbdf0A7RrcomXZRmJYfTMooC8vsnN/fSLAG+ccXrh8H2qrpwl8xVhd0AHlWDs
+	 nZFPjDtR3cLdgHBV0iNY4AHB/TcM+bmPAZFqZIQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Dave Marquardt <davemarq@linux.ibm.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 386/497] ibmveth: fix TX LTB and filter unwind on open-fail
-Date: Tue, 13 Oct 2026 13:39:13 +0200
-Message-ID: <20261013112917.056047268@linuxfoundation.org>
+Subject: [PATCH 6.12 387/497] ice: fix metadata_dst refcount handling on representor teardown
+Date: Tue, 13 Oct 2026 13:39:14 +0200
+Message-ID: <20261013112917.080435681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,70 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 84bec0bf035258a1073ffd6f6dc8ea61806aa7d4 upstream.
+commit 58858b8f14803a7eeac297b3ce20f3b21bf2ff66 upstream.
 
-out_free_buffer_pools reuses open()'s loop index for the TX LTB
-walk. After the pool unwind i is -1, so the TX buffers allocated
-earlier are leaked. request_irq() failure has the same leak.
+ice_eswitch_release_repr() uses metadata_dst_free() to release the
+representor's metadata_dst.  metadata_dst_free() directly frees the
+underlying memory without checking the dst_entry refcount.
 
-The TX-fail goto on that walk also skips dma_unmap of the filter
-list (pre-existing since the LTB was added). Rewrite the TX walk
-to real_num_tx_queues with a pointer check, and unmap the filter
-list before those frees.
+When ice_eswitch_port_start_xmit() processes a packet, it takes a
+reference via dst_hold() and attaches the metadata_dst to the skb.
+If the representor is torn down while packets are still queued on
+the lower device (e.g. in a qdisc), the metadata_dst is freed while
+references are still held.
 
-Fixes: d926793c1de9 ("ibmveth: Implement multi queue on xmit")
+Use dst_release() instead, which correctly decrements the refcount
+and only frees the object when all references are dropped.  The dst
+subsystem already handles metadata_dst cleanup in dst_destroy() when
+DST_METADATA is set.
+
+Other drivers sharing this pattern (nfp, airoha, bnxt) already use
+dst_release() for their metadata_dst lifecycle.
+
+Fixes: f5396b8a663f7 ("ice: switchdev slow path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
-Link: https://patch.msgid.link/d14314c2b10f125f5e578782484ba3cc50564d53.1790357373.git.mmc@linux.ibm.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260928230429.495442-5-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_eswitch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -442,10 +442,15 @@ static void ibmveth_rxq_harvest_buffer(s
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -94,7 +94,7 @@ ice_eswitch_release_repr(struct ice_pf *
+ 		return;
  
- static void ibmveth_free_tx_ltb(struct ibmveth_adapter *adapter, int idx)
- {
-+	void *ptr = adapter->tx_ltb_ptr[idx];
-+
-+	if (!ptr)
-+		return;
-+
-+	adapter->tx_ltb_ptr[idx] = NULL;
- 	dma_unmap_single(&adapter->vdev->dev, adapter->tx_ltb_dma[idx],
- 			 adapter->tx_ltb_size, DMA_TO_DEVICE);
--	kfree(adapter->tx_ltb_ptr[idx]);
--	adapter->tx_ltb_ptr[idx] = NULL;
-+	kfree(ptr);
- }
- 
- static int ibmveth_allocate_tx_ltb(struct ibmveth_adapter *adapter, int idx)
-@@ -556,7 +561,7 @@ static int ibmveth_open(struct net_devic
- 
- 	for (i = 0; i < netdev->real_num_tx_queues; i++) {
- 		if (ibmveth_allocate_tx_ltb(adapter, i))
--			goto out_free_tx_ltb;
-+			goto out_unmap_filter_list;
- 	}
- 
- 	adapter->rx_queue.index = 0;
-@@ -634,10 +639,8 @@ out_unmap_filter_list:
- 	dma_unmap_single(dev, adapter->filter_list_dma, 4096,
- 			 DMA_BIDIRECTIONAL);
- 
--out_free_tx_ltb:
--	while (--i >= 0) {
-+	for (i = netdev->real_num_tx_queues - 1; i >= 0; i--)
- 		ibmveth_free_tx_ltb(adapter, i);
--	}
- 
- out_unmap_buffer_list:
- 	dma_unmap_single(dev, adapter->buffer_list_dma, 4096,
+ 	ice_vsi_update_security(vsi, ice_vsi_ctx_set_antispoof);
+-	metadata_dst_free(repr->dst);
++	dst_release(&repr->dst->dst);
+ 	repr->dst = NULL;
+ 	ice_fltr_add_mac_and_broadcast(vsi, repr->parent_mac,
+ 				       ICE_FWD_TO_VSI);
 
 
