@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8738336E466;
-	Tue, 13 Oct 2026 12:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A73AA1BC;
+	Tue, 13 Oct 2026 12:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894005; cv=none; b=AZXKeH+xkL4rczcrtJNNg1u3cjiyMcAEHcY79pblXyUkqfJXG6znfJqzSaaH/Y9vh37THJRV0mLPCUDzsTW+S8shlZw8VnLliwu3G63Q5faQZEliJYiICZVwQa7569YHFnLz3zXrTzx291J3clITxi5uf/03eEIdh3kmXgRv0Lc=
+	t=1791894008; cv=none; b=tWVILQP0y9JrFwHWVXlR9G2q8JKwq7Oca+Cr2OnqLoyg8LDzamn5TRtHeEiqpkih7YWkwq1FEs1GmTb/KGiRuX56fvokr7wEtP2L1uNKF7mU2Ye7d7Sn2bAv3IIs1W0Ho37DNQ9fwUs47wZvB9y0OcJUSSy2M0skxenEjr0HY14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894005; c=relaxed/simple;
-	bh=pKw+PhUEcpvW5v07p4Vfz5Uk1KNOHmskQNoUKDqkPnc=;
+	s=arc-20240116; t=1791894008; c=relaxed/simple;
+	bh=e59AOWwIvDwmbsGv+9SzwX758SMk5zYrJAn3kDNKOzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pl7dt70aD5RLWYx2HaV4kGgOd4iCglzqlhl3JlGTcTEVwF3sRbTIQAQuRjeFpNv4HumYDCmp6aWermfDliNU3zKEE15xgePL/JWT5XjPFfxvBSDCsgf+X7zzqlvnvmdlDP9gT752WfYbSNkKalzmldGSQgmSD6weIi2jaL7rbpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPjcU1VM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AQ87CLI5oIHMJKOajxIE3zgiv5atOsmXo/MOf3K/XhZAEd8pkZ+loHAUG0kt8WrGmiDhgpXrC13h487/XfddcZEisAX1m+GNhPL28LgMAHIk0fGb0P6pG3ySxiXpXHRQWkadkLAZ/9kMcwOq3DS9wEFOTw29S2h9V2h3mK1qupg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQV+EAKB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPjcU1VM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E581F000FF;
-	Tue, 13 Oct 2026 12:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQV+EAKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93F01F00893;
+	Tue, 13 Oct 2026 12:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894004;
-	bh=MKWjaQ/A+HvDpSj7zS8miiMwhdprQQnysiplevwOutg=;
+	s=korg; t=1791894007;
+	bh=AyJpZTgGm5CNkfRthTCVrnnJzwAUXPxYH1hjwN84REM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPjcU1VMdMuRCM3NwyXa4S2FiJUXyb3reJR7D+4UhxtmDMRyeQ3I0ExpzsQ8EGXMG
-	 dMifAeilsYxS87DzXL3UbgHgz8+f4w5hxa46NCtTzTCFtKNTj48hkbaNv/zm+kV5Sr
-	 57jvycb7rTPI49Gom2IbqLLg3N/wKTYQysLjDLpc=
+	b=sQV+EAKBUkkz6kBCQtPvFrsBNIZpMTKkvKUJHkfjOJbvMembCxEy/Vge+K9MHZtQP
+	 +7UGMN3vGXSZxyT15U1GwzLA8e3kE76TN/HWMHFL1JK74QYqg7+/sgL27kOONbGjyK
+	 QmI1ZW8gLF7dENdauwr/TXwtyIa7w+y6nUDQBwq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 415/621] bpf: Check pointer type for all atomic RMW paths
-Date: Tue, 13 Oct 2026 13:36:50 +0200
-Message-ID: <20261013112930.683563592@linuxfoundation.org>
+Subject: [PATCH 6.18 416/621] blk-cgroup: delay freeing policy data after rcu grace period
+Date: Tue, 13 Oct 2026 13:36:51 +0200
+Message-ID: <20261013112930.707826677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,49 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 4bc49ae344d65cfcef738f281ac575cf73ca2fc5 ]
+[ Upstream commit 0af3fedb8c8ed3c07b4f76927bd7fc88f6f82efb ]
 
-Atomic RMW verification records an instruction pointer type only when the
-current destination is PTR_TO_ARENA. A second path can therefore reach the
-same instruction with an ordinary pointer without comparing it against the
-saved arena type.
+Currently blkcg_print_blkgs() must hold RCU to iterate blkgs from a
+blkcg, and prfill() must hold queue_lock to prevent policy data from
+being freed by policy deactivation. As a consequence, queue_lock has to
+be nested under RCU from blkcg_print_blkgs().
 
-The post-verification fixup uses the saved type to rewrite the instruction
-to BPF_PROBE_ATOMIC for every path. Record the actual destination type for
-all atomic RMW paths so the existing mismatch check rejects incompatible
-uses of one instruction.
+Delay freeing policy data until after an RCU grace period so prfill() can
+be protected by RCU alone.
 
-Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
-Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260816-bpf-next-038-mixed-atomic-v1-v2-1-4644c1886dbc@mails.tsinghua.edu.cn
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/e20e5d984b41a026d61851966bed35eb094c4bff.1780621988.git.yukuai@fygo.io
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 97cb95d21488 ("blk-iocost: clear delay state when freeing policy data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ block/bfq-cgroup.c    |  9 ++++++++-
+ block/blk-cgroup.h    |  2 ++
+ block/blk-iocost.c    | 14 ++++++++++++--
+ block/blk-iolatency.c | 10 +++++++++-
+ block/blk-throttle.c  | 13 +++++++++++--
+ 5 files changed, 42 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 34ebabc01fa1e..8cd9526c0dac9 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8036,11 +8036,9 @@ static int check_atomic_rmw(struct bpf_verifier_env *env,
- 	if (err)
- 		return err;
+diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
+index 6a75fe1c7a5c0..2e7cfaac7b214 100644
+--- a/block/bfq-cgroup.c
++++ b/block/bfq-cgroup.c
+@@ -548,14 +548,21 @@ static void bfq_pd_init(struct blkg_policy_data *pd)
+ 	bfqg->rq_pos_tree = RB_ROOT;
+ }
  
--	if (is_arena_reg(env, insn->dst_reg)) {
--		err = save_aux_ptr_type(env, PTR_TO_ARENA, false);
--		if (err)
--			return err;
--	}
-+	err = save_aux_ptr_type(env, reg_state(env, insn->dst_reg)->type, false);
-+	if (err)
-+		return err;
- 	/* Check whether we can write into the same memory. */
- 	err = check_mem_access(env, env->insn_idx, insn->dst_reg, insn->off,
- 			       BPF_SIZE(insn->code), BPF_WRITE, -1, true, false);
+-static void bfq_pd_free(struct blkg_policy_data *pd)
++static void bfqg_release(struct rcu_head *rcu)
+ {
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct bfq_group *bfqg = pd_to_bfqg(pd);
+ 
+ 	bfqg_stats_exit(&bfqg->stats);
+ 	bfqg_put(bfqg);
+ }
+ 
++static void bfq_pd_free(struct blkg_policy_data *pd)
++{
++	call_rcu(&pd->rcu_head, bfqg_release);
++}
++
+ static void bfq_pd_reset_stats(struct blkg_policy_data *pd)
+ {
+ 	struct bfq_group *bfqg = pd_to_bfqg(pd);
+diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
+index 1cce3294634d1..fd206d1fa3c98 100644
+--- a/block/blk-cgroup.h
++++ b/block/blk-cgroup.h
+@@ -140,6 +140,8 @@ struct blkg_policy_data {
+ 	struct blkcg_gq			*blkg;
+ 	int				plid;
+ 	bool				online;
++
++	struct rcu_head			rcu_head;
+ };
+ 
+ /*
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index ecf4969125050..e1901c98c4af5 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -3017,6 +3017,16 @@ static void ioc_pd_init(struct blkg_policy_data *pd)
+ 	spin_unlock_irqrestore(&ioc->lock, flags);
+ }
+ 
++static void iocg_release(struct rcu_head *rcu)
++{
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
++	struct ioc_gq *iocg = pd_to_iocg(pd);
++
++	free_percpu(iocg->pcpu_stat);
++	kfree(iocg);
++}
++
+ static void ioc_pd_free(struct blkg_policy_data *pd)
+ {
+ 	struct ioc_gq *iocg = pd_to_iocg(pd);
+@@ -3041,8 +3051,8 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
+ 
+ 		hrtimer_cancel(&iocg->waitq_timer);
+ 	}
+-	free_percpu(iocg->pcpu_stat);
+-	kfree(iocg);
++
++	call_rcu(&pd->rcu_head, iocg_release);
+ }
+ 
+ static void ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index 45bd18f68541b..ce25fbb8aaf66 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -1031,13 +1031,21 @@ static void iolatency_pd_offline(struct blkg_policy_data *pd)
+ 	iolatency_clear_scaling(blkg);
+ }
+ 
+-static void iolatency_pd_free(struct blkg_policy_data *pd)
++static void iolat_release(struct rcu_head *rcu)
+ {
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct iolatency_grp *iolat = pd_to_lat(pd);
++
+ 	free_percpu(iolat->stats);
+ 	kfree(iolat);
+ }
+ 
++static void iolatency_pd_free(struct blkg_policy_data *pd)
++{
++	call_rcu(&pd->rcu_head, iolat_release);
++}
++
+ static struct cftype iolatency_files[] = {
+ 	{
+ 		.name = "latency",
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index c19d052a8f2f1..64e78c79a7b47 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -358,16 +358,25 @@ static void throtl_pd_online(struct blkg_policy_data *pd)
+ 	tg_update_has_rules(tg);
+ }
+ 
+-static void throtl_pd_free(struct blkg_policy_data *pd)
++static void tg_release(struct rcu_head *rcu)
+ {
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct throtl_grp *tg = pd_to_tg(pd);
+ 
+-	timer_delete_sync(&tg->service_queue.pending_timer);
+ 	blkg_rwstat_exit(&tg->stat_bytes);
+ 	blkg_rwstat_exit(&tg->stat_ios);
+ 	kfree(tg);
+ }
+ 
++static void throtl_pd_free(struct blkg_policy_data *pd)
++{
++	struct throtl_grp *tg = pd_to_tg(pd);
++
++	timer_delete_sync(&tg->service_queue.pending_timer);
++	call_rcu(&pd->rcu_head, tg_release);
++}
++
+ static struct throtl_grp *
+ throtl_rb_first(struct throtl_service_queue *parent_sq)
+ {
 -- 
 2.53.0
 
