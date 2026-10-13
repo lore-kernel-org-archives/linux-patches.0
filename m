@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253F54EE858;
-	Tue, 13 Oct 2026 12:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0C54BD373;
+	Tue, 13 Oct 2026 12:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893907; cv=none; b=GtvtbnbyAAlLm0xoa+AEgVMhk5jv1MiHtqtIRTmpAqjHycBoSONM7NvlMe4DKPZFHGC8NoJVVV0NbnM6qVW14g8inErDKhLBrFZL07Uvcjp1nNF/ppJmJdw6p89pBuXahF4VnxLNxPbwQAFFJiKsfmdmlN9yivdNEvgLUReb+do=
+	t=1791893910; cv=none; b=JfN6wZy+IAOHnQH3Qk3avyjQSXhtI/WIZTO7fgGiEozzkbALFS45eQD2TGDuf/qruvO3xowD89yqhNpBDZuw/eF27yjN1s9W9ASSewKlCc0a4GJ9849CaNE7ssLmQa8PgcJk3o1k5BPzSJezgaty7WxuQiapBaVPfzFvoVODeuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893907; c=relaxed/simple;
-	bh=ptivWu3L1EetIwU4pTWnIc4CdZoACzDe5B8Q8O4l5/0=;
+	s=arc-20240116; t=1791893910; c=relaxed/simple;
+	bh=QTMNUXE01n+NBIqT5BnmH/mDVleNjxDs8cgyjq8iUdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLxMiQHG3zeGgPnALX9i6ddL5A7PbbIprBhj6BuoShcXQ1Ldz3MseW661Vt4dpas+6GUEw9UrevAJfw2Q9tZOthY9InSN7te2DdU1GLJaS1qrz7EdMyd9lwchuXzJUVWnSbM171Qb1b151sWrQyliFlVlMnOt0a2VqhFF3mg1c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFE5kZnm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EKZb5/cdRv3fp5QEd9QMII0GwR1FAaGhb8N8RIpNuV0+AO9qjzWehLyoIxJKrf2yaVHmmGX87LQRpXPUBGdcxPAMhYAIUKPoYnPxjtolXODJHnk45s8M8ZP0tj9h2AlBzN8JOcOu+lXsWujDzFAqK1ULzBv1v92e5f+97pYXnbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6XBvcZh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFE5kZnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F961F000FF;
-	Tue, 13 Oct 2026 12:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6XBvcZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A53C1F000FF;
+	Tue, 13 Oct 2026 12:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893906;
-	bh=15C0YlzZbXg3+ii0OAf+NGg34r7LV9W2lrs7XO2rvCw=;
+	s=korg; t=1791893909;
+	bh=06H7kr4ap1UDF++vHEAZDLvUZjB7b50lXcoICrbgX6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hFE5kZnmHKKUNEGrjzODrUFk9I02ltxan2bPFq9SZCGhl6+jKajpfsnPVGjb3cRyg
-	 9wycf0ujCL6n9naz7lnjRvhTH7xfXdy0EltiL3a7CtZwocQz5hlYgNsQQeg6nycc3W
-	 iuWTjAsYD9jTvI+2jv/O99E1KHk8FH5bLWpLh1Q4=
+	b=J6XBvcZhByN/kFklRcyklWEC5Xd/cn2DxIZpIC/VXP5CqvhAJ1l8LHMsBJZIM6iHx
+	 uzWpWma1INNKjlk4EO/L6qijLDxG0Xwc7UeC9+BYJJtk6D6chMqoGsvIboC4XqUEhj
+	 ZSyw4g1WH5kz79Dl10QZYGIvCuwBtbSEaTdmj0TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 381/621] SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2
-Date: Tue, 13 Oct 2026 13:36:16 +0200
-Message-ID: <20261013112929.886672318@linuxfoundation.org>
+Subject: [PATCH 6.18 346/621] eth: bnxt: decrease indent in bnxt_request_irq()
+Date: Tue, 13 Oct 2026 13:35:41 +0200
+Message-ID: <20261013112929.062563369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,68 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b94f6719dcd9f7a609bc5f459f85795900e77d25 ]
+[ Upstream commit 0fd562c7b9e48e7958f7405e54bf98e8e22ad184 ]
 
-gss_krb5_verify_mic_v2() reads the token ID at ptr[0..1], the flags
-byte at ptr[2], and padding at ptr[3..7], then passes
-ptr + GSS_KRB5_TOK_HDR_LEN and cksum_len to gss_krb5_mic_build_sg().
-None of these accesses check read_token->len first.
+bnxt_request_irq() has unnecessary level of indentation.
+Use continue instead. No need to re-fetch NUMA node for
+each IRQ, move to the function level.
 
-The minimum safe token size is GSS_KRB5_TOK_HDR_LEN (16) plus
-ctx->krb5e->cksum_len (12-24, depending on the enctype).  All callers
-accept shorter tokens from the wire:
+No functional changes.
 
- - gss_unwrap_resp_integ() enforces only an upper bound
-   (offset + len <= rcv_buf->len) before allocating
-   mic.data = kmalloc(len) and passing it to gss_verify_mic().
-   A malicious NFS server can therefore supply a short checksum
-   opaque, producing a small slab allocation that the Kerberos MIC
-   verifier reads past.
-
- - gss_validate() enforces only len <= RPC_MAX_AUTH_SIZE (400)
-   before passing the wire-supplied length to
-   gss_validate_seqno_mic(), which constructs a mic xdr_netobj
-   and calls gss_verify_mic().
-
- - svcauth_gss_verify_header() enforces only
-   checksum.len >= XDR_UNIT (4 bytes) before dispatching to
-   gss_verify_mic().
-
- - svcauth_gss_unwrap_integ() checks only that the checksum fits
-   in gsd->gsd_scratch.
-
-Add a length guard at the top of gss_krb5_verify_mic_v2(), before any
-ptr[] access or scatterlist construction.  Well-formed MIC tokens from
-gss_krb5_get_mic_v2() already have exactly GSS_KRB5_TOK_HDR_LEN +
-cksum_len bytes, so valid traffic is unaffected.
-
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260523165237.510204-1-cel@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260803193135.2030368-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 51e96fa31f7e ("eth: bnxt: avoid deadlock when canceling IRQ affinity notifier")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_unseal.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 46 +++++++++++------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/gss_krb5_unseal.c b/net/sunrpc/auth_gss/gss_krb5_unseal.c
-index b5fb70419faaa..4d12d49434c28 100644
---- a/net/sunrpc/auth_gss/gss_krb5_unseal.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_unseal.c
-@@ -89,6 +89,9 @@ gss_krb5_verify_mic_v2(struct krb5_ctx *ctx, struct xdr_buf *message_buffer,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 4738c0b510bdf..35c8684d1b4ca 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11768,6 +11768,7 @@ static void bnxt_free_irq(struct bnxt *bp)
  
- 	dprintk("RPC:       %s\n", __func__);
+ static int bnxt_request_irq(struct bnxt *bp)
+ {
++	const int numa_node = dev_to_node(&bp->pdev->dev);
+ 	struct cpu_rmap *rmap = NULL;
+ 	int i, j, rc = 0;
+ 	unsigned long flags = 0;
+@@ -11792,6 +11793,7 @@ static int bnxt_request_irq(struct bnxt *bp)
+ 	for (i = 0, j = 0; i < bp->cp_nr_rings; i++) {
+ 		int map_idx = bnxt_cp_num_to_irq_num(bp, i);
+ 		struct bnxt_irq *irq = &bp->irq_tbl[map_idx];
++		u16 tag;
  
-+	if (read_token->len < GSS_KRB5_TOK_HDR_LEN + cksum_len)
-+		return GSS_S_DEFECTIVE_TOKEN;
-+
- 	memcpy(&be16_ptr, (char *) ptr, 2);
- 	if (be16_to_cpu(be16_ptr) != KG2_TOK_MIC)
- 		return GSS_S_DEFECTIVE_TOKEN;
+ 		if (IS_ENABLED(CONFIG_RFS_ACCEL) &&
+ 		    rmap && bp->bnapi[i]->rx_ring) {
+@@ -11810,33 +11812,31 @@ static int bnxt_request_irq(struct bnxt *bp)
+ 		netif_napi_set_irq_locked(&bp->bnapi[i]->napi, irq->vector);
+ 		irq->requested = 1;
+ 
+-		if (zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL)) {
+-			int numa_node = dev_to_node(&bp->pdev->dev);
+-			u16 tag;
++		if (!zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL))
++			continue;
+ 
+-			irq->have_cpumask = 1;
+-			irq->msix_nr = map_idx;
+-			irq->ring_nr = i;
+-			cpumask_set_cpu(cpumask_local_spread(i, numa_node),
+-					irq->cpu_mask);
+-			rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
+-			if (rc) {
+-				netdev_warn(bp->dev,
+-					    "Update affinity hint failed, IRQ = %d\n",
+-					    irq->vector);
+-				break;
+-			}
++		irq->have_cpumask = 1;
++		irq->msix_nr = map_idx;
++		irq->ring_nr = i;
++		cpumask_set_cpu(cpumask_local_spread(i, numa_node),
++				irq->cpu_mask);
++		rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
++		if (rc) {
++			netdev_warn(bp->dev,
++				    "Update affinity hint failed, IRQ = %d\n",
++				    irq->vector);
++			break;
++		}
+ 
+-			bnxt_register_irq_notifier(bp, irq);
++		bnxt_register_irq_notifier(bp, irq);
+ 
+-			/* Init ST table entry */
+-			if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
+-						cpumask_first(irq->cpu_mask),
+-						&tag))
+-				continue;
++		/* Init ST table entry */
++		if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
++					cpumask_first(irq->cpu_mask),
++					&tag))
++			continue;
+ 
+-			pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
+-		}
++		pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
+ 	}
+ 	return rc;
+ }
 -- 
 2.53.0
 
