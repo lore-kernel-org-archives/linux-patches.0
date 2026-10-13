@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DD71DD9AC;
-	Tue, 13 Oct 2026 12:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA5E1DF980;
+	Tue, 13 Oct 2026 12:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895065; cv=none; b=KtltAd77M6QJWWmH0CnZ7W3GR0AeXsM0oAjSFr1C6qiC8NM2r4wOCNEAQ7yl/wIEElPWBzhd30xeV7IXaVoDi6mFsb68Mz6ocTeppMIhjeokh2jAOxINzIy7iwHirjt5KnoyzHpqKr/Qsu/S4EWVAd2gnSs0lSihBN8dGySFTNI=
+	t=1791895067; cv=none; b=qy+uiwYSataT1OW0hBtanxzkDF8ghca1sy2330UbSK9onyejVT0ObPmM9434yOK45c/fF/KzhD5yiDYxMjZKXCitvJiiI4lSqiSaAY2ro5QJfAsew4eE/mP8Dz7FQDhR91/yiwZ5SLise/iPK060YnNffnsbwerNamsylHLXsbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895065; c=relaxed/simple;
-	bh=WXPZeTKRUxRgarTPOFErZDk9qNUwReCSkxQNNdM4r9s=;
+	s=arc-20240116; t=1791895067; c=relaxed/simple;
+	bh=e7OpwA4GeSAdYl+yD2pXdrz/Of5/7WAMw6Kyu9vshqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lW0AToxQJoLD6MeGrFsjaQDzbyfmW+zwybOLwNTMiS2O+I2K+DqO+PNhkghxttUALRy/GZBNk7KP+RF0nNmphisIFs1nPhTHAYHDYwqQj6qDHyyixCJqYtALbjnetbdYrHcPODs6vaqfhtGitVrXeNyCWxKph0/1b9lHu4/UiY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrTWHzjQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6Px0yvn8IGbESpb6BEXe7IyRP4pR8ZfdMVk7P6QrgGY6ihpelCV8oLh7Uvw02qB7V0qLVSB1zOeO/NPuwTtJOh/h9T8Fm169igGeKWM804AMXv0X5LYQfp6Smi9Cawnmk1snuuc/Nnm6OmDNj3fwT0o7JHEBPZ6M7/H6BO0xEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYqXHjmk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrTWHzjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12211F00898;
-	Tue, 13 Oct 2026 12:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYqXHjmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1DC1F000FF;
+	Tue, 13 Oct 2026 12:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895063;
-	bh=flZkMZa7hWoREsO1WkUws66TYoagc/ah2Q8qtxlUnPQ=;
+	s=korg; t=1791895066;
+	bh=lIPtWmilHIP2jO2joaoN2f0ygw3JxmlmvygK8W8bXbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xrTWHzjQgVdgd9MmZFUWY/nQWAj/gOZU/Q1s1gZancRpcIvQ6yo7679cucJg4K5Ja
-	 UEHZKarFtrSsy8jdRl5lKenZohAD//l+LnyDnPA4LlaGwcJfcgbY0m0MCNmuLu0MBd
-	 h8SP07E4lOOY0BLrGx/Lf5qvu47qj8PvPll3QgL0=
+	b=KYqXHjmkJLBbjf5sv9LTPMDombodNwe79W/pYSEobUJhuOv/VeF/iqdNQ+Fem37Yi
+	 eMPbG6hjUeUPv990iGjSU2Kib4WNq6KRKxFRw5yvgSse13uIfkFhRrOV9Qkd/o0c/t
+	 kSNXMxUgdMie/R2zff7YeCY9r4n05/ZycyXsxzbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Hui Peng <benquike@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 150/497] usb: core: clear both ep_in and ep_out for non-ep0 control endpoints
-Date: Tue, 13 Oct 2026 13:35:17 +0200
-Message-ID: <20261013112911.447625782@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 133/497] USB: cdc-acm: fix racy TIOCMIWAIT implementation
+Date: Tue, 13 Oct 2026 13:35:00 +0200
+Message-ID: <20261013112911.048335819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,64 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 0e8baa78d872f2db440d8b9ded946ab8dceb89eb upstream.
+commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
 
-In usb_enable_endpoint(), non-zero control endpoints (where
-usb_endpoint_xfer_control(&ep->desc) is true) populate both
-dev->ep_in[epnum] and dev->ep_out[epnum] with the same struct
-usb_host_endpoint pointer.
+Check the wakeup condition after adding the task to the waitqueue and
+updating the task state to avoid missing a racing modem status update or
+disconnect.
 
-However, usb_disable_endpoint() only clears either dev->ep_out[epnum] or
-dev->ep_in[epnum] depending on the direction bit of epaddr when
-reset_hardware is set, leaving the opposite direction's array slot
-pointing to the disabled/freed endpoint.
+Store the old icount on entry and do not update it in the completion
+handler to avoid missing events or reporting spurious ones (due to modem
+status changes before TIOCMIWAIT was called).
 
-Clear both dev->ep_out[epnum] and dev->ep_in[epnum] when disabling a
-non-ep0 control endpoint with reset_hardware set, and update the
-function kerneldoc accordingly.
-
-Tested in QEMU against Linux 7.3.0-rc3 using dummy_hcd and raw-gadget to
-enumerate a USB device with a non-zero control endpoint
-(bEndpointAddress 0x01, bmAttributes USB_ENDPOINT_XFER_CONTROL),
-verifying that both dev->ep_in[1] and dev->ep_out[1] are cleared when
-the interface is disabled.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260920231702.110963-1-benquike@gmail.com
+Cc: Oliver Neukum <oneukum@suse.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/message.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
+ drivers/usb/class/cdc-acm.h |    1 -
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -1335,7 +1335,8 @@ static void remove_intf_ep_devs(struct u
-  *
-  * Disables the endpoint for URB submission and nukes all pending URBs.
-  * If @reset_hardware is set then also deallocates hcd/hardware state
-- * for the endpoint.
-+ * for the endpoint (clearing both ep_in and ep_out pointers for
-+ * bidirectional non-ep0 control endpoints).
-  */
- void usb_disable_endpoint(struct usb_device *dev, unsigned int epaddr,
- 		bool reset_hardware)
-@@ -1356,6 +1357,11 @@ void usb_disable_endpoint(struct usb_dev
- 			dev->ep_in[epnum] = NULL;
- 	}
- 	if (ep) {
-+		if (reset_hardware && epnum != 0 &&
-+		    usb_endpoint_xfer_control(&ep->desc)) {
-+			dev->ep_out[epnum] = NULL;
-+			dev->ep_in[epnum] = NULL;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -331,7 +331,6 @@ static void acm_process_notification(str
+ 
+ 		spin_lock_irqsave(&acm->read_lock, flags);
+ 		acm->ctrlin = newctrl;
+-		acm->oldcount = acm->iocount;
+ 
+ 		if (difference & USB_CDC_SERIAL_STATE_DSR)
+ 			acm->iocount.dsr++;
+@@ -1027,11 +1026,16 @@ static int wait_serial_change(struct acm
+ 	DECLARE_WAITQUEUE(wait, current);
+ 	struct async_icount old, new;
+ 
+-	do {
++	spin_lock_irq(&acm->read_lock);
++	old = acm->iocount;
++	spin_unlock_irq(&acm->read_lock);
++
++	add_wait_queue(&acm->wioctl, &wait);
++	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		spin_lock_irq(&acm->read_lock);
+-		old = acm->oldcount;
+ 		new = acm->iocount;
+-		acm->oldcount = new;
+ 		spin_unlock_irq(&acm->read_lock);
+ 
+ 		if ((arg & TIOCM_DSR) &&
+@@ -1044,22 +1048,20 @@ static int wait_serial_change(struct acm
+ 			old.rng != new.rng)
+ 			break;
+ 
+-		add_wait_queue(&acm->wioctl, &wait);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule();
+-		remove_wait_queue(&acm->wioctl, &wait);
+ 		if (acm->disconnected) {
+-			if (arg & TIOCM_CD)
+-				break;
+-			else
+-				rv = -ENODEV;
+-		} else {
+-			if (signal_pending(current))
+-				rv = -ERESTARTSYS;
++			rv = -ENODEV;
++			break;
+ 		}
+-	} while (!rv);
+ 
+-	
++		schedule();
++
++		if (signal_pending(current)) {
++			rv = -ERESTARTSYS;
++			break;
 +		}
- 		ep->enabled = 0;
- 		usb_hcd_flush_endpoint(dev, ep);
- 		if (reset_hardware)
++	}
++	__set_current_state(TASK_RUNNING);
++	remove_wait_queue(&acm->wioctl, &wait);
+ 
+ 	return rv;
+ }
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -90,7 +90,6 @@ struct acm {
+ 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
+ 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
+ 	struct async_icount iocount;			/* counters for control line changes */
+-	struct async_icount oldcount;			/* for comparison of counter */
+ 	wait_queue_head_t wioctl;			/* for ioctl */
+ 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
+ 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
 
 
