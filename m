@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8515E4F30F8;
-	Tue, 13 Oct 2026 12:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE983B841B;
+	Tue, 13 Oct 2026 12:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893346; cv=none; b=NS0fDeRr8u14toFYToON7OH0TbCjEnjMZc53p6co3u7T1HnvU9O/1YKkBtiDB2U6D9hD0zBDHXK+P5bUtsRLOGjdcmbLhCOXLPwY7sAv2yxDTbNrKHHEv+ddIobWVmcs7GckGHDqhEOhkYil+HaVHN89Dtqf0kssHwmVrz1EoGw=
+	t=1791893349; cv=none; b=OHRKVT3qf5YRoXiV7XgUSlxDAKOOUlY69xFc9RBnPm001D4bC1rcdGQg2fMpjldWpzu5lut4PN6N52lG49ZMxDp+WR7ZKYaExko5UyJceArCQeKjmigaay+oE1J6rr4iVnXvqBtyDo+mp/w5pQ5NXId52YL78c8lUASNUdu+d9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893346; c=relaxed/simple;
-	bh=/SMW0FQbQbKLcjLo1FnnP50Van9k7d+E+9eZHPDPX5U=;
+	s=arc-20240116; t=1791893349; c=relaxed/simple;
+	bh=EnHMfPfExr2cHs3B1Li1IaZrwD16uvWzyFml1QzHe8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHNDUNwTqRbbiGsAKUVTapgpb3bJR2igq9ATQlIyz/SedQplWJoENcuf+UYXaqaDeT9cIjBMdWB70xy9u4rSYCRFOjJrVD6G+WPUFP8zsILxJwC+1b3gTC3e1UdPx7PZrZi0/G/JwcNp55L8B7gO2dwQnff2kCvNeiVayerIfuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCmNUUaZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VHeeS7Y1qlNKipFGTYxoPQ9svWgjJe21Qp/4vbOWDmL211qFJzEsjxuRXf1nP7njdhZZFasY914dvVD0LKO1cAylboDzsT77wcnuHjVwuAO2vd0qLwCUTIoPJnUFOLNgdPA2h2LXKEo1giGjRmqBub8oUlR5z5ETxa7KsLs7t88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEUkC3Xa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCmNUUaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5341F000FF;
-	Tue, 13 Oct 2026 12:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEUkC3Xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA1A1F000FF;
+	Tue, 13 Oct 2026 12:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893345;
-	bh=0NG4pv7gYe1sEEZ+FxTu19z+L6eraKZ7KDzvjkaROyg=;
+	s=korg; t=1791893348;
+	bh=RQn6vGDJ3NXr8mFu6uezJkqnb4ORIqsQ+HkKTbhpKIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wCmNUUaZT/rQdyUkSXFwjrtafuSuRS3EBIDWIkjM70d18OdlfNuAR1V2WhSzD7zT0
-	 XwOBUV2wdxWRbHapNBQ0k3B1PlzRKJ0p84JFsTVPQnCelgarmz8FR197DmEBjKk0MW
-	 8xi/fCzF5JkyskODqo3XciVPp+jutDf+dHnTr5Cc=
+	b=JEUkC3XaLa9qAYADzSmKTMaTVrsFcs5ogRaQDtgIxhQmZSd1QYsGvfY+6XpqtlToR
+	 tEyysniSsj91Cp8VUPEhor91XsG+17LBgDdtqCBQhJAoNJi+xJMGdqAh6RyUK6btJ9
+	 z3Z2gnPdb1S93HcDVE9f9JUk9iNUy7Ye8p6CYNyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 194/621] gfs2: Asynchronous withdraw
-Date: Tue, 13 Oct 2026 13:33:09 +0200
-Message-ID: <20261013112925.466373294@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 159/621] ice: fix crash in ethtool offline loopback test
+Date: Tue, 13 Oct 2026 13:32:34 +0200
+Message-ID: <20261013112924.630464901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,158 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 9c4a3de6cd5b46aa743c460b86eb58fe5f93daec ]
+[ Upstream commit a9c354e656597aededa027d63d2ff0973f6b033f ]
 
-So far, withdraws are carried out in the context of the calling task.
-When another task tries to withdraw while a withdraw is already
-underway, that task blocks as well.  Change that to carry out withdraws
-asynchronously in workqueue context and don't block the task triggering
-the withdraw anymore.
+Since the conversion of ice to page pool, the ethtool loopback test
+crashes:
 
-Fixes: syzbot+6b156e132970e550194c@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: da6f5bbc2e79 ("gfs2: fix memory leaks in gfs2_fill_super error path")
+ BUG: kernel NULL pointer dereference, address: 000000000000000c
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 1100f1067 P4D 0
+ Oops: Oops: 0002 [#1] SMP NOPTI
+ CPU: 23 UID: 0 PID: 5904 Comm: ethtool Kdump: loaded Not tainted 6.19.0-0.rc7.260128g1f97d9dcf5364.49.eln154.x86_64 #1 PREEMPT(lazy)
+ Hardware name: [...]
+ RIP: 0010:ice_alloc_rx_bufs+0x1cd/0x310 [ice]
+ Code: 83 6c 24 30 01 66 41 89 47 08 0f 84 c0 00 00 00 41 0f b7 dc 48 8b 44 24 18 48 c1 e3 04 41 bb 00 10 00 00 48 8d 2c 18 8b 04 24 <89> 45 0c 41 8b 4d 00 49 d3 e3 44 3b 5c 24 24 0f 83 ac fe ff ff 44
+ RSP: 0018:ff7894738aa1f768 EFLAGS: 00010246
+ RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: 0000000000000700 RDI: 0000000000000000
+ RBP: 0000000000000000 R08: ff16dcae79880200 R09: 0000000000000019
+ R10: 0000000000000001 R11: 0000000000001000 R12: 0000000000000000
+ R13: 0000000000000000 R14: 0000000000000000 R15: ff16dcae6c670000
+ FS:  00007fcf428850c0(0000) GS:ff16dcb149710000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000000000000000c CR3: 0000000121227005 CR4: 0000000000773ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  ice_vsi_cfg_rxq+0xca/0x460 [ice]
+  ice_vsi_cfg_rxqs+0x54/0x70 [ice]
+  ice_loopback_test+0xa9/0x520 [ice]
+  ice_self_test+0x1b9/0x280 [ice]
+  ethtool_self_test+0xe5/0x200
+  __dev_ethtool+0x1106/0x1a90
+  dev_ethtool+0xbe/0x1a0
+  dev_ioctl+0x258/0x4c0
+  sock_do_ioctl+0xe3/0x130
+  __x64_sys_ioctl+0xb9/0x100
+  do_syscall_64+0x7c/0x700
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [...]
+
+It crashes because we have not initialized libeth for the rx ring.
+
+Fix it by treating ICE_VSI_LB VSIs slightly more like normal PF VSIs and
+letting them have a q_vector. It's just a dummy, because the loopback
+test does not use interrupts, but it contains a napi struct that can be
+passed to libeth_rx_fq_create() called from ice_vsi_cfg_rxq() ->
+ice_rxq_pp_create().
+
+Fixes: 93f53db9f9dc ("ice: switch to Page Pool")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: e142dc4ef0f4 ("ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/incore.h     |  1 +
- fs/gfs2/ops_fstype.c |  2 ++
- fs/gfs2/super.c      |  2 +-
- fs/gfs2/util.c       | 55 +++++++++++++++++++++++++-------------------
- fs/gfs2/util.h       |  2 ++
- 5 files changed, 37 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c    |  5 ++++-
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |  4 ++++
+ drivers/net/ethernet/intel/ice/ice_lib.c     | 15 ++++++++++-----
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index 5a0ea416cfdae..db0e72adb9996 100644
---- a/fs/gfs2/incore.h
-+++ b/fs/gfs2/incore.h
-@@ -716,6 +716,7 @@ struct gfs2_sbd {
- 	struct gfs2_glock *sd_rename_gl;
- 	struct gfs2_glock *sd_freeze_gl;
- 	struct work_struct sd_freeze_work;
-+	struct work_struct sd_withdraw_work;
- 	wait_queue_head_t sd_kill_wait;
- 	wait_queue_head_t sd_async_glock_wait;
- 	atomic_t sd_glock_disposal;
-diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
-index f748d320fa148..c42982bdd4b20 100644
---- a/fs/gfs2/ops_fstype.c
-+++ b/fs/gfs2/ops_fstype.c
-@@ -1215,6 +1215,8 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- 	if (error)
- 		goto fail_debug;
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index fee58f879d9e1..f0aa26144deb5 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -123,6 +123,8 @@ static int ice_vsi_alloc_q_vector(struct ice_vsi *vsi, u16 v_idx)
+ 	if (vsi->type == ICE_VSI_VF) {
+ 		ice_calc_vf_reg_idx(vsi->vf, q_vector);
+ 		goto out;
++	} else if (vsi->type == ICE_VSI_LB) {
++		goto skip_alloc;
+ 	} else if (vsi->type == ICE_VSI_CTRL && vsi->vf) {
+ 		struct ice_vsi *ctrl_vsi = ice_get_vf_ctrl_vsi(pf, vsi);
  
-+	INIT_WORK(&sdp->sd_withdraw_work, gfs2_withdraw_func);
-+
- 	error = init_locking(sdp, &mount_gh, DO);
- 	if (error)
- 		goto fail_lm;
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 7b5fcd78a3a1a..3985da448a41d 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -603,7 +603,7 @@ static void gfs2_put_super(struct super_block *sb)
- 		gfs2_quota_cleanup(sdp);
- 	}
+@@ -627,7 +629,8 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 	u32 rx_buf_len;
+ 	int err;
  
--	WARN_ON(gfs2_withdrawing(sdp));
-+	flush_work(&sdp->sd_withdraw_work);
+-	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF) {
++	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF ||
++	    ring->vsi->type == ICE_VSI_LB) {
+ 		if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index d98e351f09ec0..b2429f85f2e0d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -1277,6 +1277,10 @@ static u64 ice_loopback_test(struct net_device *netdev)
+ 	test_vsi->netdev = netdev;
+ 	tx_ring = test_vsi->tx_rings[0];
+ 	rx_ring = test_vsi->rx_rings[0];
++	/* Dummy q_vector and napi. Fill the minimum required for
++	 * ice_rxq_pp_create().
++	 */
++	rx_ring->q_vector->napi.dev = netdev;
  
- 	/*  At this point, we're through modifying the disk  */
+ 	if (ice_lbtest_prepare_rings(test_vsi)) {
+ 		ret = 2;
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 851fab1812510..6fabc02ba118c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -107,10 +107,6 @@ static int ice_vsi_alloc_arrays(struct ice_vsi *vsi)
+ 	if (!vsi->rxq_map)
+ 		goto err_rxq_map;
  
-diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index 27fdcbce2d754..c454bea101dec 100644
---- a/fs/gfs2/util.c
-+++ b/fs/gfs2/util.c
-@@ -309,43 +309,50 @@ void gfs2_lm(struct gfs2_sbd *sdp, const char *fmt, ...)
- 	va_end(args);
- }
- 
--void gfs2_withdraw(struct gfs2_sbd *sdp)
-+void gfs2_withdraw_func(struct work_struct *work)
- {
-+	struct gfs2_sbd *sdp = container_of(work, struct gfs2_sbd, sd_withdraw_work);
- 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
- 	const struct lm_lockops *lm = ls->ls_ops;
- 
-+	if (test_bit(SDF_KILL, &sdp->sd_flags))
-+		return;
-+
-+	BUG_ON(sdp->sd_args.ar_debug);
-+
-+	signal_our_withdraw(sdp);
-+
-+	kobject_uevent(&sdp->sd_kobj, KOBJ_OFFLINE);
-+
-+	if (!strcmp(sdp->sd_lockstruct.ls_ops->lm_proto_name, "lock_dlm"))
-+		wait_for_completion(&sdp->sd_wdack);
-+
-+	if (lm->lm_unmount)
-+		lm->lm_unmount(sdp, false);
-+	fs_err(sdp, "file system withdrawn\n");
-+	clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
-+}
-+
-+void gfs2_withdraw(struct gfs2_sbd *sdp)
-+{
- 	if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW) {
- 		unsigned long old = READ_ONCE(sdp->sd_flags), new;
- 
- 		do {
--			if (old & BIT(SDF_WITHDRAWN)) {
--				wait_on_bit(&sdp->sd_flags,
--					    SDF_WITHDRAW_IN_PROG,
--					    TASK_UNINTERRUPTIBLE);
-+			if (old & BIT(SDF_WITHDRAWN))
- 				return;
--			}
- 			new = old | BIT(SDF_WITHDRAWN) | BIT(SDF_WITHDRAW_IN_PROG);
- 		} while (unlikely(!try_cmpxchg(&sdp->sd_flags, &old, new)));
- 
--		fs_err(sdp, "about to withdraw this file system\n");
--		BUG_ON(sdp->sd_args.ar_debug);
+-	/* There is no need to allocate q_vectors for a loopback VSI. */
+-	if (vsi->type == ICE_VSI_LB)
+-		return 0;
 -
--		signal_our_withdraw(sdp);
--
--		kobject_uevent(&sdp->sd_kobj, KOBJ_OFFLINE);
--
--		if (!strcmp(sdp->sd_lockstruct.ls_ops->lm_proto_name, "lock_dlm"))
--			wait_for_completion(&sdp->sd_wdack);
--
--		if (lm->lm_unmount) {
--			fs_err(sdp, "telling LM to unmount\n");
--			lm->lm_unmount(sdp, false);
--		}
--		fs_err(sdp, "File system withdrawn\n");
- 		dump_stack();
--		clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
--		smp_mb__after_atomic();
--		wake_up_bit(&sdp->sd_flags, SDF_WITHDRAW_IN_PROG);
-+		/*
-+		 * There is no need to withdraw when the superblock hasn't been
-+		 * fully initialized, yet.
-+		 */
-+		if (!(sdp->sd_vfs->s_flags & SB_BORN))
-+			return;
-+		fs_err(sdp, "about to withdraw this file system\n");
-+		schedule_work(&sdp->sd_withdraw_work);
- 	}
+ 	/* allocate memory for q_vector pointers */
+ 	vsi->q_vectors = devm_kcalloc(dev, vsi->num_q_vectors,
+ 				      sizeof(*vsi->q_vectors), GFP_KERNEL);
+@@ -239,6 +235,8 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
+ 	case ICE_VSI_LB:
+ 		vsi->alloc_txq = 1;
+ 		vsi->alloc_rxq = 1;
++		/* A dummy q_vector, no actual IRQ. */
++		vsi->num_q_vectors = 1;
+ 		break;
+ 	default:
+ 		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi_type);
+@@ -2425,14 +2423,21 @@ static int ice_vsi_cfg_def(struct ice_vsi *vsi)
+ 		}
+ 		break;
+ 	case ICE_VSI_LB:
+-		ret = ice_vsi_alloc_rings(vsi);
++		ret = ice_vsi_alloc_q_vectors(vsi);
+ 		if (ret)
+ 			goto unroll_vsi_init;
  
- 	if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
-diff --git a/fs/gfs2/util.h b/fs/gfs2/util.h
-index da0373b1e82b9..f424ef2523c43 100644
---- a/fs/gfs2/util.h
-+++ b/fs/gfs2/util.h
-@@ -232,6 +232,8 @@ gfs2_tune_get_i(&(sdp)->sd_tune, &(sdp)->sd_tune.field)
- 
- __printf(2, 3)
- void gfs2_lm(struct gfs2_sbd *sdp, const char *fmt, ...);
++		ret = ice_vsi_alloc_rings(vsi);
++		if (ret)
++			goto unroll_alloc_q_vector;
 +
-+void gfs2_withdraw_func(struct work_struct *work);
- void gfs2_withdraw(struct gfs2_sbd *sdp);
+ 		ret = ice_vsi_alloc_ring_stats(vsi);
+ 		if (ret)
+ 			goto unroll_vector_base;
  
- #endif /* __UTIL_DOT_H__ */
++		/* Simply map the dummy q_vector to the only rx_ring */
++		vsi->rx_rings[0]->q_vector = vsi->q_vectors[0];
++
+ 		break;
+ 	default:
+ 		/* clean up the resources and exit */
 -- 
 2.53.0
 
