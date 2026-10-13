@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02324FDE6D;
-	Tue, 13 Oct 2026 12:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808564FE2CE;
+	Tue, 13 Oct 2026 12:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893478; cv=none; b=A122hu2aqpcJOrgFtrQp0uWm6U7VnF5HDWjc5PYHRjwiWBRkgz9FU4nRzCk/P0oY6f0RqjGxkrNWGEi95zD4HNqDh8cogCpux5eHQWI7RCoDm3g62SXa3bYWgc0uFVXXuvOMBaBpnJUkG7Opx92+hOCWz2Id8ZCQGVLfJVElvs8=
+	t=1791893481; cv=none; b=sUE7hZpVCa/4OavS8/hnBflcu9Cg/1Rx1644vYnzIBrDFqhpzEsZSLJQgiDDKdZFQMY9a4eW/QzboybmJjBZx3VlWSaHXvXZGhujnRTXtGFBSCKLyI6SoDJRvEams3CC7KbX7Bw0qRg5XHLRctStFjFfTmPiKrujonQ5lbk/tpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893478; c=relaxed/simple;
-	bh=hmnAhchcJ6/2cZN/Z4GtLMpKvPyR/BsH1VfOSuWNPPQ=;
+	s=arc-20240116; t=1791893481; c=relaxed/simple;
+	bh=22gxvxORiGKVFtTYETvWOjMiqQ2fE/IaX50jz5JvaXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+gPsN9y5sYZ26u2xcJtX/sX58oSJtdJAIK45G4JoyxCXHRY0RP+VFOKmn1usxqHRBbRCU9TSQZ46s6i7COX0Vu45CV9yT32x/6x+VGFwsT5j56Utdu2DLqFvSxrMGzuPjjhHtn8LLBLdeZlB5Unpzs431S8N0LHa5Nm28u31rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm2rGVCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVHIIbV1WlL8k/Cfj+kYsofsR2vsc6fc531yoiqDdhofazY5m121BsK6bdP5lTCYrFLgGJJBETKFz974TuPf3DJiLnaDKU0an894ifRjyx1IqlMmROvOgWzrsX8ZgA/DTVQDwmWB312GyKpWpqOeuIIb6nXIjj5khRUxBabbqS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDPmIm+4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm2rGVCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098971F000FF;
-	Tue, 13 Oct 2026 12:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDPmIm+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D568F1F000FF;
+	Tue, 13 Oct 2026 12:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893477;
-	bh=Hs1k57M27aEyOk1jpNCfOgLK3CXBqzW49TTkiIAcZpI=;
+	s=korg; t=1791893480;
+	bh=8Tdcb1yNcmSpUb+bYA5m+lc88hliwC1skzpP/EZ79kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jm2rGVCLmq5gSE0XZY8pLK4bNlMc+Kc3aPYAh0qmxIyfTGZzVx6vC/ADkmIK6x9e7
-	 da8KuxmjcK+a14JHoNeErNk5JZnmAVzuUwOfOAiNs6pP3KVXs/V8dJVRH0kSq2z7x6
-	 Vetab6qkdNG7Qu5hvhHodgSTix/FG5iTcgR9iX3A=
+	b=fDPmIm+4oyxGhdiEKyEm2FXTxHHWUHQcUGwCTgS2SfeoKa5G+uQGjGRZhb9bu7Pn/
+	 y/9YxS81XyAM85jW11M+iWxl43CcK6tMmi01LSBbfVSS3NeQLGY/xc7g7ePtmUDYOV
+	 cHiw0gSGwMln3RaBC95dFzx41tfcMuvypeiiNnzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 238/621] ACPI: button: Fix ACPI GPE handler leak during removal
-Date: Tue, 13 Oct 2026 13:33:53 +0200
-Message-ID: <20261013112926.505573843@linuxfoundation.org>
+Subject: [PATCH 6.18 239/621] nvme-pci: fix dma mapping leak on data setup error
+Date: Tue, 13 Oct 2026 13:33:54 +0200
+Message-ID: <20261013112926.529467253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,44 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit fe80251152fed5b185f795ef2cd9f7fe9c3162e0 ]
+[ Upstream commit 1bf86336e4b6cf40873fda47a7fe191446864937 ]
 
-Commit a7e23ec17fee ("ACPI: button: Install notifier for system events
-as well") changed the ACPI notify handler type for ACPI buttons to
-ACPI_ALL_NOTIFY, but it forgot to update acpi_button_remove() to reflect
-that change.  This leads to leaking the notify handler past driver
-removal, which may cause a kernel crash to occur if ACPI notify on
-the given device is triggered after removing the driver, and causes a
-subsequent probe of the given device with the same driver to fail.
+We're leaking the initial DMA mapping during iteration if we fail to
+allocate the tracking descriptor for both PRP and SGL. Unmap the
+iterator directly; we can't use the existing unmap helper because it
+depends on the tracking descriptor being successfully allocated, so a
+new one for an in-use iterator is provided.
 
-Address this by updating the acpi_remove_notify_handler() call in
-acpi_button_remove() as appropriate.
+The mappings were also leaking when the driver detects an invalid
+bio_vec when mapping PRPs, so fix that too.
 
-Fixes: a7e23ec17fee ("ACPI: button: Install notifier for system events as well")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Cc: 6.15+ <stable@vger.kernel.org> # 6.15+
-Link: https://patch.msgid.link/7954431.EvYhyI6sBW@rafael.j.wysocki
+Fixes: b8b7570a7ec87 ("nvme-pci: fix dma unmapping when using PRPs and not using the IOVA mapping")
+Fixes: 7ce3c1dd78fca ("nvme-pci: convert the data mapping to blk_rq_dma_map")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/button.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
-index 63beaeb9f7cc7..384caea90ce5f 100644
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -683,7 +683,7 @@ static void acpi_button_remove(struct platform_device *pdev)
- 						acpi_button_event);
- 		break;
- 	default:
--		acpi_remove_notify_handler(adev->handle, ACPI_DEVICE_NOTIFY,
-+		acpi_remove_notify_handler(adev->handle, ACPI_ALL_NOTIFY,
- 					   button->type == ACPI_BUTTON_TYPE_LID ?
- 						acpi_lid_notify :
- 						acpi_button_notify);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index f424cfba833e4..993dc5c9cd68c 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -827,6 +827,17 @@ static bool nvme_pci_prp_iter_next(struct request *req, struct device *dma_dev,
+ 	return nvme_pci_prp_save_mapping(req, dma_dev, iter);
+ }
+ 
++static void nvme_unmap_iter(struct request *req, struct blk_dma_iter *iter,
++			    struct dma_iova_state *state)
++{
++	struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
++	struct device *dev = nvmeq->dev->dev;
++
++	if (!blk_dma_unmap(req, dev, state, iter->len,
++			   iter->p2pdma.map == PCI_P2PDMA_MAP_BUS_ADDR))
++		dma_unmap_page(dev, iter->addr, iter->len, rq_dma_dir(req));
++}
++
+ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
+ 		struct blk_dma_iter *iter)
+ {
+@@ -837,8 +848,10 @@ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
+ 	unsigned int prp_len, i;
+ 	__le64 *prp_list;
+ 
+-	if (!nvme_pci_prp_save_mapping(req, nvmeq->dev->dev, iter))
++	if (!nvme_pci_prp_save_mapping(req, nvmeq->dev->dev, iter)) {
++		nvme_unmap_iter(req, iter, &iod->dma_state);
+ 		return iter->status;
++	}
+ 
+ 	/*
+ 	 * PRP1 always points to the start of the DMA transfers.
+@@ -943,6 +956,7 @@ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
+ 	dev_err_once(nvmeq->dev->dev,
+ 		"Incorrectly formed request for payload:%d nents:%d\n",
+ 		blk_rq_payload_bytes(req), blk_rq_nr_phys_segments(req));
++	nvme_unmap_data(req);
+ 	return BLK_STS_IOERR;
+ }
+ 
+@@ -986,8 +1000,11 @@ static blk_status_t nvme_pci_setup_data_sgl(struct request *req,
+ 
+ 	sg_list = dma_pool_alloc(nvme_dma_pool(nvmeq, iod), GFP_ATOMIC,
+ 			&sgl_dma);
+-	if (!sg_list)
++	if (!sg_list) {
++		nvme_unmap_iter(req, iter, &iod->dma_state);
+ 		return BLK_STS_RESOURCE;
++	}
++
+ 	iod->descriptors[iod->nr_descriptors++] = sg_list;
+ 
+ 	do {
+@@ -1119,8 +1136,10 @@ static blk_status_t nvme_pci_setup_meta_iter(struct request *req)
+ 
+ 	sg_list = dma_pool_alloc(nvmeq->descriptor_pools.small, GFP_ATOMIC,
+ 			&sgl_dma);
+-	if (!sg_list)
++	if (!sg_list) {
++		nvme_unmap_iter(req, &iter, &iod->meta_dma_state);
+ 		return BLK_STS_RESOURCE;
++	}
+ 
+ 	iod->meta_descriptor = sg_list;
+ 	iod->meta_dma = sgl_dma;
 -- 
 2.53.0
 
