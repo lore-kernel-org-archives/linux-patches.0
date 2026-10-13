@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB124EE842;
-	Tue, 13 Oct 2026 11:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105A13E1203;
+	Tue, 13 Oct 2026 11:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892238; cv=none; b=Nol263RQPyy4q8y5OUCTLHeqSTssK38eMa86zyXwqnKRN79WZD9oIcDpp3oBOx/sRKCEiEQz3ZpRg4COGAsBV/utI7eCgqAUX47ilISkT4J7V+gYyC/zqi0E9IRS76OENzI9MXSeYv9Ho8v7Qgr0PM+DgzufKWeiTDlo9qVCdPs=
+	t=1791892241; cv=none; b=gplAqDk3VkIo1z9iKtEf/STh1k0lld193CFz9FkBdHm/h4MK5okHeNqSx1WmjnXfnv6SR5avG84R0v0/TgQcsrDW+P3oqXis8iBEARD++jLKzvxgKU98v6AnbKgq5hymVpSp6E3mZ/xpu4xLcYJOH2jDahuPXgzWCkr10JbPDwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892238; c=relaxed/simple;
-	bh=NVdO0qSz3AZDICO3KzjSbbsolzOMCM9h4HEH92LRI2A=;
+	s=arc-20240116; t=1791892241; c=relaxed/simple;
+	bh=RJv0oaZaM9xNSEezYJ12muancfIGhfRUmbsG5oCKqCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tq76XzQpS1DuEHrVtUCePj2pV9ytDFba27YevRv7FGDb5rqycUlCLGGgRT/vtBPnaW4Dv/pTKHTCqnaZx+Woko8CMAMTER5VO3r/4K+AdrOn8R/EWJKUCSshoI33Z+Zx2p7vxfoil2Dle5cMlu4pVOLLGDoxNrzBSuV7BMBvaCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lxfLhcs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fCZRbWe7AY0J+H3npJLtVFGzkrGQ75KpUZRvcm5ZeY8/9lVnwD6tQxeX692Qt8bGtvaFAT1uhcxMR1BbJ4Tx6wEGaZ58I1/dGk7nVXEaXL9M39/b1lyKqaqlrsYfqN6TB25cQqXirZPS/c1sCXf58iSlGEqHm7ytZj7Y/ddSpfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNnrZUn4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lxfLhcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8671F000FF;
-	Tue, 13 Oct 2026 11:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNnrZUn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6231F000FF;
+	Tue, 13 Oct 2026 11:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892237;
-	bh=fd2XOkCqBnUPaPTY9DvTZE7VX7LHJEUNtasq+MHTc9Y=;
+	s=korg; t=1791892240;
+	bh=ibHfxL6kI0GFod4pH6Nyt2qrvOy0ltkxCQfgFazkqm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1lxfLhcso2ZuBgb60n6Zk8x0p9MXTS5pELv4D45G96lVkTdeJIr1O49/37Y/rpoTg
-	 QuRsUDkkl5zi8rvt0scTFQtHn3aciJ8PGnTC2IGYyzfYoGGJ0/zWlWoZEmeRtieUmu
-	 GAzj265ew7Bm80IKL2/Q1ey64F8PP48Di3Av4y5s=
+	b=CNnrZUn4VpWMQIqDjiYcqg4YziaOyhVS/uhIWJthjK0EEgm/e6CLQw2JJQCZ0qT/h
+	 Xb2hAnTwPN59i7I9gEK9OSujExURvl+nAkwMOjVahoMqCAXvQ4pEVDXKax6ckgWg41
+	 InxnRTiJoJLKlAnb5oD7y+9FTMY8HiGzJ3DyNMEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 105/281] scsi: ufs: core: Decouple CQ sweep from request iterator in MCQ
-Date: Tue, 13 Oct 2026 13:37:01 +0200
-Message-ID: <20261013112857.690426376@linuxfoundation.org>
+	Ziyi Guo <guoziyi114@gmail.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 7.2 106/281] riscv: entry: gate shadow call stack reload on sstatus.SPP, not tp
+Date: Tue, 13 Oct 2026 13:37:02 +0200
+Message-ID: <20261013112857.715108399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,96 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Ziyi Guo <guoziyi114@gmail.com>
 
-commit 469fa055664bfd8717b087a80d59c03055789c17 upstream.
+commit 4d0697f192975dab5985e921989be1d85cf580e9 upstream.
 
-In MCQ mode, ufshcd_mcq_compl_pending_transfer() uses
-blk_mq_tagset_busy_iter() to iterate over busy requests during error
-recovery and host reset. However, both iterator callbacks perform
-whole-queue operations redundantly for each visited request:
+Under CONFIG_SHADOW_CALL_STACK, handle_exception() reloads the kernel
+shadow call stack pointer (gp) only when the trap came from userspace.
+It made that decision with scs_load_current_if_task_changed, which
+compares the trap-time tp (read back from sscratch into s5) against the
+current tp:
 
- - force_compl == true: ufshcd_mcq_force_compl_one() calls
-   ufshcd_mcq_compl_all_cqes_lock() on every busy request, sweeping the
-   entire completion ring (hwq->max_entries slots) once per active request
-   under spin_lock_irqsave even though the first sweep already cleared all
-   completion entries.
+	beq	\prev, tp, _skip_scs
+	scs_load_current
+_skip_scs:
 
- - force_compl == false: ufshcd_mcq_compl_one() acquires cq_lock and polls
-   CQTPy over MMIO via ufshcd_mcq_poll_cqe_lock() for every busy request
-   without doing any per-request work.
+tp is a user-writable register.  A user task that sets tp to the
+linear-map address of its own task_struct (&current) before trapping
+makes the comparison succeed (can achieve by brute force with KASLR
+enable under our test), so the kernel skips scs_load_current and
+keeps running with the gp that userspace left in place.  Under
+CONFIG_SHADOW_CALL_STACK gp is the shadow call stack pointer and
+load_global_pointer is a no-op, so the compiler-emitted
+"sd ra, -8(gp)" / "ld ra, -8(gp)" in every non-leaf function then write
+to, and return through, an attacker-controlled address -- an
+unprivileged kernel arbitrary-write and control-flow-hijack primitive.
+The poisoned gp is saved to task_struct.scs_sp on return, so the reload
+is skipped on every subsequent entry as well.
 
-Sweep or poll each hardware queue (hba->uhq[i]) once at the start of
-ufshcd_mcq_compl_pending_transfer(). When force_compl is true, run
-blk_mq_tagset_busy_iter() afterward to complete residual in-flight
-requests with DID_REQUEUE, and remove the now-unused
-ufshcd_mcq_compl_one() callback.
+Decide "came from userspace" from the hardware sstatus.SPP bit (already
+in s1 at this point) instead of from tp, mirroring the check that
+ret_from_exception already uses a few instructions later.  SPP is
+written by hardware on trap entry and cannot be forged from U-mode.
+Legitimate behaviour is unchanged: user entries (SPP=0) reload the task
+shadow call stack, nested kernel entries (SPP=1) skip it.
 
-Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
+Fixes: d1584d791a29 ("riscv: Implement Shadow Call Stack")
+Signed-off-by: Ziyi Guo <guoziyi114@gmail.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20261001135711.934152-1-guoziyi114@gmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260928035816.1294326-3-stanleyjhu@google.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |   31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ arch/riscv/include/asm/scs.h |   17 +++++++++++++----
+ arch/riscv/kernel/entry.S    |    2 +-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5975,8 +5975,6 @@ static bool ufshcd_mcq_force_compl_one(s
- 	if (blk_mq_is_reserved_rq(rq) || !hwq)
- 		return true;
+--- a/arch/riscv/include/asm/scs.h
++++ b/arch/riscv/include/asm/scs.h
+@@ -4,6 +4,7 @@
  
--	ufshcd_mcq_compl_all_cqes_lock(hba, hwq);
--
- 	/*
- 	 * For those cmds of which the cqes are not present in the cq, complete
- 	 * them explicitly.
-@@ -5992,19 +5990,6 @@ static bool ufshcd_mcq_force_compl_one(s
- 	return true;
- }
+ #ifdef __ASSEMBLER__
+ #include <asm/asm-offsets.h>
++#include <asm/csr.h>
  
--static bool ufshcd_mcq_compl_one(struct request *rq, void *priv)
--{
--	struct scsi_device *sdev = rq->q->queuedata;
--	struct Scsi_Host *shost = sdev->host;
--	struct ufs_hba *hba = shost_priv(shost);
--	struct ufs_hw_queue *hwq = ufshcd_mcq_req_to_hwq(hba, rq);
--
--	if (!blk_mq_is_reserved_rq(rq) && hwq)
--		ufshcd_mcq_poll_cqe_lock(hba, hwq);
--
--	return true;
--}
--
- /**
-  * ufshcd_mcq_compl_pending_transfer - MCQ mode function. It is
-  * invoked from the error handler context or ufshcd_host_reset_and_restore()
-@@ -6019,10 +6004,18 @@ static bool ufshcd_mcq_compl_one(struct
- static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
- 					      bool force_compl)
- {
--	blk_mq_tagset_busy_iter(&hba->host->tag_set,
--				force_compl ? ufshcd_mcq_force_compl_one :
--					      ufshcd_mcq_compl_one,
--				NULL);
-+	int i;
-+
-+	for (i = 0; i < hba->nr_hw_queues; i++) {
-+		if (force_compl)
-+			ufshcd_mcq_compl_all_cqes_lock(hba, &hba->uhq[i]);
-+		else
-+			ufshcd_mcq_poll_cqe_lock(hba, &hba->uhq[i]);
-+	}
-+
-+	if (force_compl)
-+		blk_mq_tagset_busy_iter(&hba->host->tag_set,
-+					ufshcd_mcq_force_compl_one, NULL);
- }
+ #ifdef CONFIG_SHADOW_CALL_STACK
  
- /**
+@@ -22,9 +23,17 @@
+ 	REG_L	gp, TASK_TI_SCS_SP(tp)
+ .endm
+ 
+-/* Load task_scs_sp(current) to gp, but only if tp has changed. */
+-.macro scs_load_current_if_task_changed prev
+-	beq	\prev, tp, _skip_scs
++/*
++ * Load task_scs_sp(current) to gp, but only when the trap came from U-mode.
++ * The source privilege level is taken from the saved sstatus.SPP bit (written
++ * by hardware on trap entry), not by comparing tp.  tp is a user-writable
++ * register, so gating the shadow call stack reload on it let a user task that
++ * set tp == &current skip the reload and run the kernel with an attacker
++ * controlled gp (the shadow call stack pointer).
++ */
++.macro scs_load_current_if_from_user status, tmp
++	andi	\tmp, \status, SR_SPP
++	bnez	\tmp, _skip_scs
+ 	scs_load_current
+ _skip_scs:
+ .endm
+@@ -42,7 +51,7 @@ _skip_scs:
+ .endm
+ .macro scs_load_current
+ .endm
+-.macro scs_load_current_if_task_changed prev
++.macro scs_load_current_if_from_user status, tmp
+ .endm
+ .macro scs_save_current
+ .endm
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -208,7 +208,7 @@ SYM_CODE_START(handle_exception)
+ 	load_global_pointer
+ 
+ 	/* Load the kernel shadow call stack pointer if coming from userspace */
+-	scs_load_current_if_task_changed s5
++	scs_load_current_if_from_user s1, s5
+ 
+ #ifdef CONFIG_RISCV_ISA_V_PREEMPTIVE
+ 	move a0, sp
 
 
