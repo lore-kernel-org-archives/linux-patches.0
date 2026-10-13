@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25AA509F07;
-	Tue, 13 Oct 2026 12:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC2950AC1C;
+	Tue, 13 Oct 2026 12:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892998; cv=none; b=t2OoUrgACuyS2FkIbgAXbKUeBL4S+bJ3yaxYc0FzI6kw+hddrf3ynISeBUlMyE58bn/TXQPRUvQTCvlfL95K03/tnXi4tJZVKNr2xgjAZJUg3EjR8U9nDWFmlTSrMLxGUP+sBf3w7p8JRgzaPvw00Be+fA4JNrM54GNUhf+wh/0=
+	t=1791893001; cv=none; b=HBAQl7VLUTi4tUJNXML4pQfUSaITaocpE/p/HnWsgx7XsPN8HIcHElyvSV0RrFnyJoL0GO10kOjmFEHGHYoKOX6kEtBPrUpSDf7NG5Tsrxua/veL9zpUnqpVXOxCZycD5W1R8wJupZ4/84MbEf+UefBfvwfrdbKz1zdSXViaxRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892998; c=relaxed/simple;
-	bh=HsgHHu25+mn+RjU/o9/S5r4cnUl9GMMVRh8yQm2+sb8=;
+	s=arc-20240116; t=1791893001; c=relaxed/simple;
+	bh=CZU/70TEoKacqnBJ85gmTVIa5Vjm2zLc2/2iJoo2DhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZDEj0vSasi2+TERfjEhNz3+haeNnt/OAYtrVE6A/Ot9g2yT306Tj7T1oiLxoh2NfRNta6IA+9e//u3Hy5kVlhAxzid7nMkq1HwZnp6YNFZEvhZ9ubUoj6NQYoUf/LcSYQy5hFgdN+GzzdQGfICyadd6dVS3oTgDUuo+fFgnxDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nidcyq1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Db4zGKyDp1wgHNo+iMcLtJgim6Auzu6y9e5ZP4Mlcnlusmk/cQLh2S2m1oslWe091vuF5MlSnSabdTyxw1qKQK0jQ+xgxD4gSKHuhcVpveAlrTVcNkiHP/uPMcTXZKy2+HJpoQ0+DfB2kRok2YTOGTUxl5jwQL70sv8aYvSeK3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+kPwg37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nidcyq1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E151B1F00893;
-	Tue, 13 Oct 2026 12:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+kPwg37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C2B1F000FF;
+	Tue, 13 Oct 2026 12:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892996;
-	bh=lGNVLE7z+N1EDSJyvnkdL+ocVVfMzy7B+9fivNJ+yHA=;
+	s=korg; t=1791892999;
+	bh=nbv3+ev18Td1T/zSlRkoT7/D6wzplblevF2LOMm670s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nidcyq1EtFMdkKR5Gw47pjEMKnUdZ8GwWU6KdYJ9QcDk+3KNBpaFYygLS8LUNI3oi
-	 KQpt3PIzZn4drCR3R+VEzmO5NgyCYRm0PundA87G8KhvKlhAlz/ePrd2oS4c6squYp
-	 X+AiQ/pkh9RGc592gOTzS3lJTSzXswK34+69UqJg=
+	b=H+kPwg37H6CnBfJX6w+XnRtHKSCBxsi4srGJO7v8q+o9DjO3hzcwa7C0TT0+0sciV
+	 XeNOcbomkYcTfhBPiR9lsZ3jmqJOuIsjGFki/jpNeuxSOg/xDX9DowwqVBRhfjOjes
+	 hm/ktc2/RJV3SkbKY1gED3vrxs7neztP7fKJ8m0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.18 079/621] net: bridge: avoid recursive multicast port cleanup
-Date: Tue, 13 Oct 2026 13:31:14 +0200
-Message-ID: <20261013112922.730821877@linuxfoundation.org>
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 062/621] ice: fix use-after-free in dynamic port cleanup
+Date: Tue, 13 Oct 2026 13:30:57 +0200
+Message-ID: <20261013112922.333760827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,91 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 5158353121bae4f552cb677ce8c5c3ef52f93a0d upstream.
+commit 1402fc67d2f4e2e1fc7bf8ee0825b8ad994557ff upstream.
 
-br_multicast_sg_del_exclude_ports() removes automatically added STAR_EXCL
-port groups by calling br_multicast_del_pg(). For S,G entries, that
-deletion calls back into br_multicast_sg_del_exclude_ports(), so a large
-number of STAR_EXCL ports consumes one kernel stack frame per port and can
-hit the stack guard page.
+ice_dealloc_dynamic_port() uses dyn_port->vsi->idx to erase the dynamic
+port from pf->dyn_ports. However, it frees the VSI before reading the
+index for the erase, resulting in a use-after-free.
 
-Keep the complete port-group deletion path for cleanup, but suppress the
-S,G exclude-port cleanup while that helper is already walking the same
-entry. Normal deletion callers retain the existing behavior.
+Follow the reverse of the allocation order in ice_alloc_dynamic_port()
+by erasing the xarray entry before freeing the VSI.
 
-Fixes: 8266a0491e92 ("net: bridge: mcast: handle port group filter modes")
+Fixes: eda69d654c7e ("ice: add basic devlink subfunctions support")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260928230429.495442-3-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/devlink/port.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -81,6 +81,10 @@ __br_multicast_add_group(struct net_brid
- 			 bool blocked);
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg);
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports);
- static void __br_multicast_stop(struct net_bridge_mcast *brmctx);
+--- a/drivers/net/ethernet/intel/ice/devlink/port.c
++++ b/drivers/net/ethernet/intel/ice/devlink/port.c
+@@ -590,8 +590,8 @@ static void ice_dealloc_dynamic_port(str
  
- static int br_mc_disabled_update(struct net_device *dev, bool value,
-@@ -458,7 +462,7 @@ static void br_multicast_sg_del_exclude_
- 	for (pp = &sgmp->ports;
- 	     (p = mlock_dereference(*pp, sgmp->br)) != NULL;) {
- 		if (!(p->flags & MDB_PG_FLAGS_PERMANENT))
--			br_multicast_del_pg(sgmp, p, pp);
-+			__br_multicast_del_pg(sgmp, p, pp, false);
- 		else
- 			pp = &p->next;
- 	}
-@@ -799,9 +803,10 @@ static void br_multicast_destroy_port_gr
- 	kfree_rcu(pg, rcu);
+ 	xa_erase(&pf->sf_nums, devlink_port->attrs.pci_sf.sf);
+ 	ice_eswitch_detach_sf(pf, dyn_port);
+-	ice_vsi_free(dyn_port->vsi);
+ 	xa_erase(&pf->dyn_ports, dyn_port->vsi->idx);
++	ice_vsi_free(dyn_port->vsi);
+ 	kfree(dyn_port);
  }
  
--void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
--			 struct net_bridge_port_group *pg,
--			 struct net_bridge_port_group __rcu **pp)
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports)
- {
- 	struct net_bridge *br = pg->key.port->br;
- 	struct net_bridge_group_src *ent;
-@@ -816,7 +821,8 @@ void br_multicast_del_pg(struct net_brid
- 	if (!br_multicast_is_star_g(&mp->addr)) {
- 		rhashtable_remove_fast(&br->sg_port_tbl, &pg->rhnode,
- 				       br_sg_port_rht_params);
--		br_multicast_sg_del_exclude_ports(mp);
-+		if (sg_del_exclude_ports)
-+			br_multicast_sg_del_exclude_ports(mp);
- 	} else {
- 		br_multicast_star_g_handle_mode(pg, MCAST_INCLUDE);
- 	}
-@@ -828,6 +834,13 @@ void br_multicast_del_pg(struct net_brid
- 		mod_timer(&mp->timer, jiffies);
- }
- 
-+void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+			 struct net_bridge_port_group *pg,
-+			 struct net_bridge_port_group __rcu **pp)
-+{
-+	__br_multicast_del_pg(mp, pg, pp, true);
-+}
-+
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg)
- {
 
 
