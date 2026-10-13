@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD77501F59;
-	Tue, 13 Oct 2026 12:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6B0501F5E;
+	Tue, 13 Oct 2026 12:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895789; cv=none; b=WWzYUtjQIZ6cp82jUdETnVySRZTnfa9ooc0qENYGrw2UpBNZpYYXvHQFYkj5HX3ySv9eqQ+9jiZqo3yen8nXM9nk3XAfnO2Mppok0AdwBpQOriybEHM0Wdnk35c+V6kH/ZZE8n0Rtr2sDb5UwcAiiNN7prkiKTXxO7LmJTwwHVg=
+	t=1791895792; cv=none; b=ueB++3wHEzejk7ZEJGErCJryED5zQdvdy75hduPXwoMZ0eNYP/LmfCpIxweP4PGCpexvhU1XSf/q36XgU31tR1OOKY30IrEJgu5RausTO+/UtxIR2HfFbHPZU+8ZXoBMwrLag6MqCwaXvm0ARA35eh4SSMrvRqXoUMjrd87L0JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895789; c=relaxed/simple;
-	bh=RKE5m6X17YWh4sQsqIoEdcBfc4lUFOTEDIi21hzFX38=;
+	s=arc-20240116; t=1791895792; c=relaxed/simple;
+	bh=CVDQSWM5b1Vns7Eb1T3T1Y1hHWX4x0ahUFOXMsCs5FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLB167NJQDf/XguGl1MYHLs9YNgCiH0Aq+DquyGzvwjX4PDt2zRTiH8cssiQieIjYy7/y7wTDY5EfqwlNtRqf1Pu9i6LglUDelFYih/xz2F+7NPSklWdFIUUzBqhvddSOyN4erXkcXx+lAuOpsE54827gikdiu2dphCTM2oLUlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM0pClV/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qJ+59/co5Ps4m82YnYhaYjKmlW5kd/QFyF/KyMhHnSKWl85NsCi5FrhZfNy0xSaBgVsTEY8dFsYvArgk+1Yi2qBx5mFNUpDOl8pgY5Py3o89eGomETUk/oAiQyMU+Cb/jXa66QfpzoDkXy5zAEtXw1/ze6zgu+qgSd4IEmJWh04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsniTWs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM0pClV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968961F0089A;
-	Tue, 13 Oct 2026 12:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsniTWs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B555B1F00898;
+	Tue, 13 Oct 2026 12:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895788;
-	bh=3uewdpeHXrdtJxE36FMP567u9MXCgOuUz1rE8uRNaj0=;
+	s=korg; t=1791895791;
+	bh=7CGei2oBttUdPVSZsvCsZblUkCPxSt7U87CdmKYYx5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM0pClV/dtIu4txgvhfshekxUlcnDoPxwcJ6dJZ0mMvX6axNaRdJpTshlvt8+es0E
-	 hQK7ZeUAK9dgMeCpJof+I++Wqo8ElI4rHh8CH91ApaJnSwth6m59d/aWBR0dK98krD
-	 yJF2QzZhDt/pyosDhEZ52UNL5XGZ3zmGKrwHigBM=
+	b=dsniTWs7r4fQvFIDxMeamRGixsrmHsMVCD7VXNRWhr+XfhRW7vyZ8rund9G2gPhN7
+	 guwhJ6uu7FY3NS1L5PKqYpEmLRZbcPHqCK1pOD0yiScrOu600t1N0dqgna07r7696o
+	 w2rVFmDWL6v/Qfz8YmzCr8yyGZnfu4LbGLpRfzDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Xinmeng <1564938642@qq.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 393/497] dm-snap: reject the transient exception store for snapshot-merge
-Date: Tue, 13 Oct 2026 13:39:20 +0200
-Message-ID: <20261013112917.220633931@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
+Subject: [PATCH 6.12 394/497] dm: fix reading free memory in do_resume
+Date: Tue, 13 Oct 2026 13:39:21 +0200
+Message-ID: <20261013112917.244868483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,63 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Xinmeng <1564938642@qq.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit fcbde6227fcc53c73f08c56b2539e462d545cac6 upstream.
+commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 upstream.
 
-snapshot_merge_next_chunks() calls s->store->type->prepare_merge() without
-checking it. The transient store ("N") implements neither prepare_merge nor
-commit_merge, and snapshot_ctr() validates those callbacks only on the handover
-path (__validate_exception_handover()), so a directly constructed snapshot-merge
-calls a NULL prepare_merge on resume:
+When do_resume calls dm_table_get_mode(new_map), the call is done without
+holding any locks (it only holds a reference to the md). It may be
+possible that another concurrent ioctl on the same device will swap table
+after dm_swap_table and before dm_table_get_mode. In this case,
+dm_table_get_mode(new_map) reads freed memory.
 
-  snapshot_merge_resume -> snapshot_merge_next_chunks -> prepare_merge(...)
+This race condition was triggered by syzbot.
 
-commit_merge() is NULL for the same reason. Userspace only issues documented
-device-mapper ioctls (CAP_SYS_ADMIN); this is a misconfiguration the kernel must
-reject rather than oops on.
+This commit fixes the race by reading mode of the new table before
+dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
+but this function doesn't attempt to dereference it, so this call should
+be safe.
 
-Reject the combination in snapshot_ctr() at table-load time (-EINVAL), the same
-check the handover path already performs; this also covers the commit_merge()
-call site, which a guard local to the prepare_merge call would miss.
+Note that this is not a security bug because only root can trigger it and
+the commonly used tools such as lvm or cryptsetup do not call the ioctls
+concurrently, so that they can't trigger it acceidentally.
 
-Tested on Linux v6.6.157 KASAN: unpatched, the dmsetup reproducer oopses in
-snapshot_merge_next_chunks(); with this patch, the table load fails with -EINVAL
-and no oops. Also present on v6.6.145; still present on the linux-dm tree
-(555f3d7be91a) and on torvalds/linux master (62f4c998b297) as of 2026-09-22.
-
-Note that this is not a security bug because only root can trigger it.
-
-Signed-off-by: Ma Xinmeng <1564938642@qq.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-snap.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/md/dm-ioctl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -1298,6 +1298,20 @@ static int snapshot_ctr(struct dm_target
- 		goto bad_store;
- 	}
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1181,6 +1181,7 @@ static int do_resume(struct dm_ioctl *pa
+ 	/* Do we need to load a new map ? */
+ 	if (new_map) {
+ 		sector_t old_size, new_size;
++		blk_mode_t new_map_mode;
  
-+	/*
-+	 * snapshot-merge requires the optional prepare_merge/commit_merge
-+	 * callbacks; the transient exception store does not implement them.
-+	 * The handover path checks this in __validate_exception_handover(),
-+	 * but a directly constructed snapshot-merge never goes through it.
-+	 */
-+	if (dm_target_is_snapshot_merge(ti) &&
-+	    (!s->store->type->prepare_merge ||
-+	     !s->store->type->commit_merge)) {
-+		ti->error = "Snapshot exception store does not support snapshot-merge.";
-+		r = -EINVAL;
-+		goto bad_hash_tables;
-+	}
-+
- 	argv += args_used;
- 	argc -= args_used;
+ 		/* Suspend if it isn't already suspended */
+ 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
+@@ -1208,6 +1209,7 @@ static int do_resume(struct dm_ioctl *pa
+ 			}
+ 		}
  
++		new_map_mode = dm_table_get_mode(new_map);
+ 		old_size = dm_get_size(md);
+ 		old_map = dm_swap_table(md, new_map);
+ 		if (IS_ERR(old_map)) {
+@@ -1220,7 +1222,7 @@ static int do_resume(struct dm_ioctl *pa
+ 		if (old_size && new_size && old_size != new_size)
+ 			need_resize_uevent = true;
+ 
+-		if (dm_table_get_mode(new_map) & BLK_OPEN_WRITE)
++		if (new_map_mode & BLK_OPEN_WRITE)
+ 			set_disk_ro(dm_disk(md), 0);
+ 		else
+ 			set_disk_ro(dm_disk(md), 1);
 
 
