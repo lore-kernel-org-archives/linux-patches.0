@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFD14F475B;
-	Tue, 13 Oct 2026 12:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B404D7D4D;
+	Tue, 13 Oct 2026 12:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895023; cv=none; b=QVlgz85JZRYP+inRkeW7TiWmJRgk5On0H7L2H4gFfCSYQSsmkO5KYXGePpyJQuLP9Zn6Iyup9uAXqco02kNjLe+96VNNNoUIdlU0b4rn4gog2Vn8YfJqZcC3AZQZ99qy6SSYqAQh6vtvM2hYjUBihD6YGXPHOrwdD+Vn15O5cUQ=
+	t=1791895026; cv=none; b=pzR5tywwb9moDPg9a13n/cWMGDnRzZDGofXqEpCMZ1GB+LjSc0ARJ9CNXMLgUPTJulVOUxtlf7IzPXtX/TVXbIBN5cn6KNuXTuOWuC/Loie1Ii4hwq+oBXAvGpNHplfycKIxDDQGLRnNtsrnfnEz0JX470VzfdVk6tCtyrJIuv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895023; c=relaxed/simple;
-	bh=IwlCIA7/0XqbmnIut8BvC4Qdfk+MCQFKcAIJ3ObSxnE=;
+	s=arc-20240116; t=1791895026; c=relaxed/simple;
+	bh=AeXXrJ84r4d1/5BXGtdfzPq38e4AOqX/eQx2xjVSsGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldAMuw5OEWE0Bjdewn1pEoTTrxi6v2m34A3nDcQoZ7BA6liTPwcIpCY2UVO2r5tGo4i0SidG/2haGNSfA+UZZca0Rr/p5TWlJXjkRXtWxbWE6s0mJqFBt1tGd9Am0++SP3bEp2YZm2gA9zG3RRojaF6z/u5JvcOPQax1LZWV91A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSW4Uqzc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3QP5OiKIjoJLj30YQbq1bKQdqX0V1sw71sAX2e43vcAe9wK0OALpXNLbCnpiyRrIXeLBt+NLboc0bPjYBA+pKW76/jjpyHd0elDWGU+K2mvVgu3JvYt9TnyOtGFcrVMUEr2A7AmtHVhdoNUc4xSOAh0dQMbAPettkzPcCoaTn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpqvD5dC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSW4Uqzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601751F00893;
-	Tue, 13 Oct 2026 12:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpqvD5dC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE591F000FF;
+	Tue, 13 Oct 2026 12:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895022;
-	bh=241cbVCCOupJ7d7sYbeSVMAa1zghH74z3k0m8GE9WWs=;
+	s=korg; t=1791895024;
+	bh=KcmUtUJh29aRjTCbPfOrrW+81WmfJaK/u4iu17y9+5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSW4UqzceMZGMb9/Wpk1YwJqHuaQhVRiCGJ3LyJQFQvgpUXYKyio1PI8se8oePv3M
-	 xx6QNy4gJ0NJXBI1c2TQyoq1njvvjAyRDzjOqKkJCy5a3UDxmQIAqsk674mG7NpqP/
-	 vltA3jTW0NQXWI8+HQW13JNVWPNI1Fu8MtDpjJ2w=
+	b=KpqvD5dChf+FGfuZw8BrktInT+5I5eVBLaLtJdkEpi6iJweuBA5SbVPl486hMhNQG
+	 T0tL9gWX+HgyqRAHWloAQtBQlK75MiN1WfOnnLJsaucHgn+RHj7ej2piy9b6T4fdVc
+	 LnKcpl0YFmYYDSK42mfc0sJPsHmjcQ+IO6ncXC54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/497] net: bcmgenet: fix NULL dereference in set_coalesce before first open
-Date: Tue, 13 Oct 2026 13:34:18 +0200
-Message-ID: <20261013112910.050447772@linuxfoundation.org>
+Subject: [PATCH 6.12 092/497] net: cap skb->queue_mapping when the tx queue is picked
+Date: Tue, 13 Oct 2026 13:34:19 +0200
+Message-ID: <20261013112910.074285920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,68 +54,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 19419faf58dfe5bcc8a9e60e622976c5f8e3ddc1 ]
+[ Upstream commit ea4d4b5dddb5121e64f56fd8e0720bd8b447b63d ]
 
-The Rx ring priv and index are only set in bcmgenet_init_rx_ring(),
-which runs at open. Setting the Rx coalescing parameters on an interface
-that was never opened, e.g. "ethtool -C eth0 rx-usecs 50", dereferences
-a NULL ring->priv. The oops happens with RTNL held, so networking
-stays stuck until a reboot:
+skbedit can set skb->queue_mapping and raise the per-CPU skip_txqueue
+flag so __dev_queue_xmit() honours the mapping. __dev_queue_xmit()
+cleared the flag before sch_handle_egress() and only read it afterwards,
+so the flag was not confined to the xmit that set it: a nested xmit
+(mirred redirect or mirror, or a drop after skbedit) could set the flag
+and the outer xmit would consume it for an skb that never went through
+skbedit.
 
-  Unable to handle kernel paging request at virtual address 0000000000002788
-  pc : bcmgenet_set_rx_coalesce.isra.0+0x10/0x88
-  lr : bcmgenet_set_coalesce+0xe8/0x180
-  Call trace:
-   bcmgenet_set_rx_coalesce.isra.0+0x10/0x88 (P)
-   __ethnl_set_coalesce.isra.0+0x490/0x570
-   ethnl_set_coalesce+0x48/0xc0
-   ethnl_default_set_doit+0xf4/0x230
-   genl_family_rcv_msg_doit+0xe8/0x160
-   genl_rcv_msg+0x220/0x2a0
-   netlink_rcv_skb+0x68/0x140
-   genl_rcv+0x40/0x60
-   netlink_unicast+0x338/0x3c0
-   netlink_sendmsg+0x19c/0x3f8
-   __sock_sendmsg+0x64/0xc0
-   __sys_sendto+0x124/0x198
-   __arm64_sys_sendto+0x30/0x48
+A forwarded packet still carries the ingress NIC's rx_queue + 1 in
+skb->queue_mapping, so the outer device then indexes its tx queue state
+with that stale value. Taprio's child array q->qdiscs[] is sized to the
+device's queue count, so taprio_enqueue() indexes past its allocation
+and dereferences the result as a struct Qdisc *.
 
-Set priv and index at probe. Writing the registers while the interface
-is down is harmless because open resets the MAC and
-bcmgenet_init_rx_coalesce() reapplies the stored values.
+We (ab)use the skb->nf_skip_egress which means "skip netfilter egress
+for this packet" to tag to "am I in tc egress?". Despite the overload
+I dont see it as a conflict since the marker is set only around the
+single sch_handle_egress() call and ingress path is guarded by
+tc_at_ingress.
+I will send a followup(net-next) patch once this hits net-next to
+rename the skb->nf_skip_egress bit/flag to skb->skip_egress
 
-It was observed on a Raspberry Pi CM4, but should apply to all other
-genet devices.
+Arm the flag only from the egress classifier that can use it: raise
+skip_txqueue from tcf_skbedit_act() only when it runs inside
+sch_handle_egress(), thanks to skb->nf_skip_egress. An egress qdisc
+classifier runs in q->enqueue(), after the tx queue has been picked,
+so a mapping it sets cannot affect the current packet; arming the flag
+there only pollutes it for a later xmit. Then own the flag for the xmit
+frame the egress hook runs in: save the incoming value and clear it just
+before sch_handle_egress(), and restore it after the hook - on the
+consumed (drop) path, or, in the same call that reads it, on the
+surviving path. The save and the restores stay inside the
+egress_needed_key static branch, so a packet pays for them only when
+egress hooks are active (2f1e85b1aee4).
 
-Fixes: 9f4ca05827a2 ("net: bcmgenet: Add support for adaptive RX coalescing")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260928105642.856210-1-nb@tipi-net.de
+Store the value netdev_cap_txqueue() selected back into skb->queue_mapping
+in netdev_tx_queue_mapping(), as netdev_core_pick_tx() already does, so
+the skip_txqueue path never hands a later reader on the xmit path a
+mapping the device cannot serve. A store made still later in the same
+frame, by a tc BPF program attached to a transmit qdisc, is outside this
+path and is not re-capped; a separate followup will resolve that path.
+
+netdev_xmit_skip_txqueue() returns the previous flag value so the
+save-and-clear is one call, and a no-op stub is provided when
+CONFIG_NET_EGRESS is disabled. skb->nf_skip_egress is compiled under
+CONFIG_NET_EGRESS rather than CONFIG_NETFILTER_SKIP_EGRESS, so
+skb_at_tc_egress() is valid whenever the egress path is built.
+
+A local user in a network namespace can redirect a packet from a device
+with more TX queues to one with fewer after setting a mapping valid only
+on the larger device. That reaches these reads and, under KASAN, faults
+with "slab-out-of-bounds in taprio_enqueue".
+
+Conditions to recreate the bug: the report's own trigger is a local user
+with CAP_NET_ADMIN in a network namespace, so no eBPF program is needed.
+With CONFIG_NET_SCH_TAPRIO=y, CONFIG_NET_ACT_SKBEDIT=y,
+CONFIG_NET_ACT_MIRRED=y, CONFIG_NET_CLS_MATCHALL=y,
+CONFIG_NET_SCH_PRIO=y and KASAN enabled, create qa (3 queues), qb
+(2 queues) and qc (1 queue) as dummy devices; put a taprio root on qb
+(num_tc 1, queues 2@0) and clsact on all three; then add an egress
+matchall filter on every device. On qa: "action skbedit queue_mapping 2
+pipe action mirred egress redirect dev qb". On qb: "action mirred egress
+mirror dev qc". On qc: "action skbedit queue_mapping 0 pipe". Send one
+packet out qa. qc's skbedit sets the flag while qb's outer xmit is in
+flight; without the fix qb consumes it and reads its two-entry taprio
+child array with the forwarded packet's stale mapping. A qc whose
+skbedit is instead installed in a transmit-qdisc classifier (a matchall
+filter on the qc root qdisc) reaches the same code path the same way
+without the fix.
+
+Testing: on a KASAN build with panic_on_warn=1 the unfixed kernel panics
+with "BUG: KASAN: slab-out-of-bounds in taprio_enqueue", a read 0 bytes
+past a 16-byte taprio_init() allocation, for the clsact-setter and the
+transmit-qdisc-classifier reproducers and for a clsact skbedit-then-tc-BPF
+store; the fixed kernel runs all three with no report, and the BPF store
+variant additionally shows the expected "selects TX queue" clamp notice
+from the write-back.
+
+Fixes: 2f1e85b1aee4 ("net: sched: use queue_mapping to pick tx queue")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Link: https://lore.kernel.org/netdev/CANn89iLwYx8nCVf0pCEk_MmEiyC6kQaMwCQT9WkQVeeNzNQHqQ@mail.gmail.com/
+Link: https://lore.kernel.org/netdev/179008581937.2160803.7117814290574262942@kernel.org/
+Link: https://lore.kernel.org/netdev/179033713973.2160803.4914570693994398206@kernel.org/
+Link: https://lore.kernel.org/netdev/20260925180407.63647514@kernel.org/
+Link: https://lore.kernel.org/netdev/CANn89i+k-mZKDQVtvws_MEXeuMTAdaCcOXFZE-RfhcGTu90sjA@mail.gmail.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/QDISC-9R8V.v4.20260928081529@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/netfilter_netdev.h |  2 +-
+ include/linux/rtnetlink.h        |  7 ++++++-
+ include/linux/skbuff.h           |  2 +-
+ include/net/sch_generic.h        |  9 +++++++++
+ net/core/dev.c                   | 31 ++++++++++++++++++++++++-------
+ net/sched/act_skbedit.c          |  5 ++---
+ 6 files changed, 43 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 14e891db97ea8..7da4a2114a771 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -4075,8 +4075,11 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
+diff --git a/include/linux/netfilter_netdev.h b/include/linux/netfilter_netdev.h
+index 8676316547cc4..f2496ea52754b 100644
+--- a/include/linux/netfilter_netdev.h
++++ b/include/linux/netfilter_netdev.h
+@@ -132,7 +132,7 @@ static inline struct sk_buff *nf_hook_egress(struct sk_buff *skb, int *rc,
  
- 	/* Set default coalescing parameters */
--	for (i = 0; i <= priv->hw_params->rx_queues; i++)
-+	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
-+		priv->rx_rings[i].priv = priv;
-+		priv->rx_rings[i].index = i;
- 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
-+	}
+ static inline void nf_skip_egress(struct sk_buff *skb, bool skip)
+ {
+-#ifdef CONFIG_NETFILTER_SKIP_EGRESS
++#ifdef CONFIG_NET_EGRESS
+ 	skb->nf_skip_egress = skip;
+ #endif
+ }
+diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
+index f1d8f59640284..91eaee7cd5e38 100644
+--- a/include/linux/rtnetlink.h
++++ b/include/linux/rtnetlink.h
+@@ -174,7 +174,12 @@ void net_dec_ingress_queue(void);
+ #ifdef CONFIG_NET_EGRESS
+ void net_inc_egress_queue(void);
+ void net_dec_egress_queue(void);
+-void netdev_xmit_skip_txqueue(bool skip);
++bool netdev_xmit_skip_txqueue(bool skip);
++#else
++static inline bool netdev_xmit_skip_txqueue(bool skip)
++{
++	return false;
++}
+ #endif
  
- 	/* Initialize u64 stats seq counter for 32bit machines */
- 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
+ void rtnetlink_init(void);
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 84f2f6f112799..df548a3d60657 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1001,7 +1001,7 @@ struct sk_buff {
+ #ifdef CONFIG_NET_REDIRECT
+ 	__u8			from_ingress:1;
+ #endif
+-#ifdef CONFIG_NETFILTER_SKIP_EGRESS
++#ifdef CONFIG_NET_EGRESS
+ 	__u8			nf_skip_egress:1;
+ #endif
+ #ifdef CONFIG_SKB_DECRYPTED
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 2c1bb37c929ee..4f38a7a5dd6a6 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -772,6 +772,15 @@ static inline bool skb_at_tc_ingress(const struct sk_buff *skb)
+ #endif
+ }
+ 
++static inline bool skb_at_tc_egress(const struct sk_buff *skb)
++{
++#ifdef CONFIG_NET_EGRESS
++	return skb->nf_skip_egress && !skb_at_tc_ingress(skb);
++#else
++	return false;
++#endif
++}
++
+ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
+ {
+ #ifdef CONFIG_NET_CLS_ACT
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 97be4f9dfa771..a4554020076f4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4063,9 +4063,14 @@ EXPORT_SYMBOL(dev_loopback_xmit);
+ static struct netdev_queue *
+ netdev_tx_queue_mapping(struct net_device *dev, struct sk_buff *skb)
+ {
+-	int qm = skb_get_queue_mapping(skb);
++	int queue = skb_get_queue_mapping(skb);
++	int capped;
+ 
+-	return netdev_get_tx_queue(dev, netdev_cap_txqueue(dev, qm));
++	capped = netdev_cap_txqueue(dev, queue);
++	if (unlikely(capped != queue))
++		skb_set_queue_mapping(skb, capped);
++
++	return netdev_get_tx_queue(dev, capped);
+ }
+ 
+ #ifndef CONFIG_PREEMPT_RT
+@@ -4074,9 +4079,13 @@ static bool netdev_xmit_txqueue_skipped(void)
+ 	return __this_cpu_read(softnet_data.xmit.skip_txqueue);
+ }
+ 
+-void netdev_xmit_skip_txqueue(bool skip)
++bool netdev_xmit_skip_txqueue(bool skip)
+ {
++	bool prev = netdev_xmit_txqueue_skipped();
++
+ 	__this_cpu_write(softnet_data.xmit.skip_txqueue, skip);
++
++	return prev;
+ }
+ EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
+ 
+@@ -4086,9 +4095,13 @@ static bool netdev_xmit_txqueue_skipped(void)
+ 	return current->net_xmit.skip_txqueue;
+ }
+ 
+-void netdev_xmit_skip_txqueue(bool skip)
++bool netdev_xmit_skip_txqueue(bool skip)
+ {
++	bool prev = netdev_xmit_txqueue_skipped();
++
+ 	current->net_xmit.skip_txqueue = skip;
++
++	return prev;
+ }
+ EXPORT_SYMBOL_GPL(netdev_xmit_skip_txqueue);
+ #endif
+@@ -4475,21 +4488,25 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	tcx_set_ingress(skb, false);
+ #ifdef CONFIG_NET_EGRESS
+ 	if (static_branch_unlikely(&egress_needed_key)) {
++		bool skip_txq;
++
+ 		if (nf_hook_egress_active()) {
+ 			skb = nf_hook_egress(skb, &rc, dev);
+ 			if (!skb)
+ 				goto out;
+ 		}
+ 
+-		netdev_xmit_skip_txqueue(false);
++		skip_txq = netdev_xmit_skip_txqueue(false);
+ 
+ 		nf_skip_egress(skb, true);
+ 		skb = sch_handle_egress(skb, &rc, dev);
+-		if (!skb)
++		if (!skb) {
++			netdev_xmit_skip_txqueue(skip_txq);
+ 			goto out;
++		}
+ 		nf_skip_egress(skb, false);
+ 
+-		if (netdev_xmit_txqueue_skipped())
++		if (netdev_xmit_skip_txqueue(skip_txq))
+ 			txq = netdev_tx_queue_mapping(dev, skb);
+ 	}
+ #endif
+diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
+index 5450c1293eb50..4cddf2674373f 100644
+--- a/net/sched/act_skbedit.c
++++ b/net/sched/act_skbedit.c
+@@ -72,9 +72,8 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
+ 	}
+ 	if (params->flags & SKBEDIT_F_QUEUE_MAPPING &&
+ 	    skb->dev->real_num_tx_queues > params->queue_mapping) {
+-#ifdef CONFIG_NET_EGRESS
+-		netdev_xmit_skip_txqueue(true);
+-#endif
++		if (skb_at_tc_egress(skb))
++			netdev_xmit_skip_txqueue(true);
+ 		skb_set_queue_mapping(skb, tcf_skbedit_hash(params, skb));
+ 	}
+ 	if (params->flags & SKBEDIT_F_MARK) {
 -- 
 2.53.0
 
