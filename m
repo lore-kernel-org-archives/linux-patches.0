@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA654F93D5;
-	Tue, 13 Oct 2026 12:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71214F93D8;
+	Tue, 13 Oct 2026 12:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894770; cv=none; b=CxXQvD0Nwezf2cCcDPKrnjdihwmEQA6c3IGtWVHsSF+ZbjCLdKXL8wKc4eqrHJS5dzS54nwswYg5f7F3mcDAErry7OkeuwJiz2QcJuPHBwfXiRC8tkvDzoWyMXoSgh57Ec7aPRa/Zmz919QeLgfmF7kbaR/K+dBcCIlLAhI9MpU=
+	t=1791894773; cv=none; b=EnBelQtIODj7I6Hzd5uUSKQdALnt+XDpfb7BqlmHEIca+Ko9aqpnap3ift5aWL0qLvvdCAU7YnY0QaxeOLCJEok8EoZ+gk9oUq8fA04A+mVWM6m2xbSMN6Yh88D7h5Z115nPbCW4PDfV71BjY7B+KcSc47rs+vZN0OF5L32gC8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894770; c=relaxed/simple;
-	bh=gQVn8BW7Ie9akYNLwJhzORP7n9A1xWN3m69l/TbxYsc=;
+	s=arc-20240116; t=1791894773; c=relaxed/simple;
+	bh=eieYo1RXg5X6vlbYuW1H3zrk6ZUq9EWbMW62PtxCBV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uS+RrVJBRTAKhCibqDQccCWIQv4dWS4bo8TJojic02WkSSvvsYe8+qsf70UsSkQQw/4v72fPaWfy5BuCCxS8cRqAu8PdbLWrgflBtS3Ahcj9xt3ESqDQtQHI6yt2+1CGu2m8PI9EFx5I7BhFDie+xq7Z+LyNuXm0DVh5O1yM464=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX/RF1nT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FRxXoVKzZIgraVPn+uNVBtEFamHmNcHkSfI2zKgJiNym1DF2AnIJ2X8vuEFzBZ7MWOEk01F5PnC3tZlRsic2giorUeVDSZlyBSpaFTx5m7zt81xZDQEszm9wrSj6xedOUwaEq9cLU/eUoD/kjiXUxFqkTmHCICwcLNVPH2JBEs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5JbucBR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX/RF1nT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AFD81F000FF;
-	Tue, 13 Oct 2026 12:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5JbucBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEC81F00893;
+	Tue, 13 Oct 2026 12:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894768;
-	bh=+zhsTC5h87NrqpOciVAgS22P5odFxM0BW5T+NnZYQC8=;
+	s=korg; t=1791894771;
+	bh=+sr2lRPorgQl5WTwTDJ1JxWBqW3IDAjulTLB0+ovs7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vX/RF1nTZMmm4UX2LrWeUPYZboB3VfskVggNWbqIKNp7lmZjVtUU2SaRZ45eZPoOv
-	 dpED0tuhrd+jYHPql5A4CkuM3BTlXTP0AUCxhfAMjul8DTWI6wc6VdTZKK6c7PM6Cn
-	 j12DLh3dae3f6c1DYj4bZF8aJYmXOb2AZZxy7z6o=
+	b=V5JbucBRtqIMRUM3SgEMzJ22Zu3NgJA+jLHMJGKI9O2c/B0ixC9zzsfEDPg+pTGpc
+	 ESqPqs/wGGnoNiEBmlMA98410LpDkmy0lcfx95T2UNPko4xJfiPjVPzbiAd2uqvqN5
+	 UogzI5G4DpD5bnC+DMhQC9j7qyo9XS0ON/BNurGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/497] of/overlay: dont leak fragment references when changeset init fails
-Date: Tue, 13 Oct 2026 13:33:38 +0200
-Message-ID: <20261013112909.099380537@linuxfoundation.org>
+Subject: [PATCH 6.12 052/497] of/overlay: dont create "//" paths for fragments targeting the root
+Date: Tue, 13 Oct 2026 13:33:39 +0200
+Message-ID: <20261013112909.122042180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -54,48 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 1d62f0f2bc7edb12ed09f71203df0e47fa4efca4 ]
+[ Upstream commit 21c89ff1fc86ffa517f3a9ca1ba5c48e9e37c1ba ]
 
-init_overlay_changeset() stores the number of initialized fragments
-in ovcs->count only on full success. When find_target() or the
-__symbols__ lookup fails partway through, the target and overlay
-references taken for the fragments initialized so far are never
-dropped: free_overlay_changeset() bounds its cleanup loop by
-ovcs->count, which is still 0.
+dup_and_fixup_symbol_prop() rewrites a symbol value by replacing its
+"/fragment/__overlay__" prefix with the fragment's target path. When
+the fragment targets the root node the target path is "/" and the
+result starts with "//", which __of_find_node_by_full_path() cannot
+resolve: symbols pointing into such fragments silently stop
+resolving.
 
-Store the running count on the error path so free_overlay_changeset()
-puts whatever was set up. The store is guarded by ovcs->fragments
-because on the allocation-failure path cnt still holds the counting
-pass total while there is no fragments array; everywhere else cnt
-only counts fully-initialized fragments.
+Drop the target path when it is the root and the tail is non-empty. A
+value naming the fragment root itself (empty tail) keeps the "/".
 
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/20260805204009.CF3891F000E9@smtp.kernel.org
-Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
-Assisted-by: Claude:claude-opus-4-8 [Claude Code]
+Fixes: d1651b03c2df ("of: overlay: add overlay symbols to live device tree")
+Assisted-by: Claude:claude-fable-5 [Claude Code]
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-6-02754604805a@nexthop.ai
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-7-02754604805a@nexthop.ai
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/overlay.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/of/overlay.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
-index 2118f11718d39..c4a8e925754d4 100644
+index c4a8e925754d4..adc6a0277d6b7 100644
 --- a/drivers/of/overlay.c
 +++ b/drivers/of/overlay.c
-@@ -849,6 +849,10 @@ static int init_overlay_changeset(struct overlay_changeset *ovcs,
- err_out:
- 	pr_err("%s() failed, ret = %d\n", __func__, ret);
+@@ -250,6 +250,9 @@ static struct property *dup_and_fixup_symbol_prop(
+ 	if (!target_path)
+ 		return NULL;
+ 	target_path_len = strlen(target_path);
++	/* a root target renders as "/"; drop it to avoid "//" results */
++	if (target_path_len == 1 && target_path[0] == '/' && path_tail_len)
++		target_path_len = 0;
  
-+	/* let free_overlay_changeset() put the fragments set up so far */
-+	if (ovcs->fragments)
-+		ovcs->count = cnt;
-+
- 	return ret;
- }
- 
+ 	new_prop = kzalloc(sizeof(*new_prop), GFP_KERNEL);
+ 	if (!new_prop)
 -- 
 2.53.0
 
