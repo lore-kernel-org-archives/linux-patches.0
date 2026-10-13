@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2A44EF13A;
-	Tue, 13 Oct 2026 11:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22F34F4D14;
+	Tue, 13 Oct 2026 11:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892753; cv=none; b=rcNWEUD7qNCuUM1/64alpdHwmzTctvh8ZPsybaxM+lx80HiFQRrRJ8rxf6Ao89wXHbP4XScgXcAvCJhAYXK6UkbYDPR31yzx0s+Mj614hiA+fGRM6a54F+Wb5Vv2oQmnZCx0giYmVMliw+43qOw7sXmB0yuvE7mBjWI9YfUAf5k=
+	t=1791892756; cv=none; b=Hbk6mZK7j+CbhRtGP6aDlZNFRpWW99etkmbzmEPXzi6PnEoA0AE2xL+JClivopI8FOIclRZIqIE3L20+y75JO+H0o6dOn4sy3g8OztMIW4h7Gk7fduCr30F/p90JQUKwCNJK/kbGx9AZgvtpYTMxgSVNeC9Bl2ZwbTZe7LGm93o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892753; c=relaxed/simple;
-	bh=vPE+ssIbvnyBbfERLl2nKaUQ1bWkdulXL0v8DGBo2J0=;
+	s=arc-20240116; t=1791892756; c=relaxed/simple;
+	bh=w4SLJftnPtnGKoDtGbRgLVgskWwTNEiSDckgm1jvcD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eb6NgZ8VpVrI5QyTUrXohR9CMecB6iVyFnERbzLpXTu2itOXKWRwzZTYJwGi42rWrmEzoEr2VSnU3WmcySIaRR9PbUr5l8MIWsVvqLL1Sa0QBCwKVG3mAi4w6qXpK/WrEWwRSE10VxQBryM4e06j+yyI3NXlbvjIondCAytHSlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq50Qjz6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g3+xfEoDLgwkJmGNByzsjK42dTu0TKjHUxSiLsgLY+7aRoZlduzCG7J5dVY2SlSTx4uWdqVBzVx/HPLMJTzb62OqjM0DQo2VJ91cADoW/DffFj+tqWdGtKwdDJrSWPqU8LcaSsXwdZBNgsMfY7c2kNV8vuyrRVJHZSkqmKmylXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7VGG2gg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq50Qjz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1265C1F00893;
-	Tue, 13 Oct 2026 11:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7VGG2gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AF11F000FF;
+	Tue, 13 Oct 2026 11:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892751;
-	bh=gEkmUrF8kUq6WE5o3Yilf1UFmaZJaiEE2lu0boT6mJ0=;
+	s=korg; t=1791892754;
+	bh=mp3m+8WxFDcEOc6ouXd7b8xY8A1a+quWf3xXZX2qKW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bq50Qjz67YAB22JYd7VqQul7zHtRFiN8zcACeuDwaA5aEtu3ZpZ9RpktSDPSqlotM
-	 mS9XvIbCCrGBcbq3xBZcOEDSZDoV94pmqGEZmq2wQqr2HlOPKg8WFt4jS775BsWm59
-	 W2LckyqHfVzeq46htAaDbrl3BeuByRn15r77Evu4=
+	b=S7VGG2gg46CAas/RglC2hqtEkFijdNQPNFysGIfXgfMheF/I8W0S5Bf8LiJ1B1Lk4
+	 auVGwJCMpYkcFd6DWLuxyBdxnxSH/7hP++gGmDx9j8RTU4Ta4C9D0PNoyb0jXMRbyX
+	 ikbIEdou1PFsZN28w0CO8AuPGw+kz1oyAfOejTBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hengyu Liang <hengyul@cs.unc.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 279/281] io_uring: do not charge the SQ/CQ rings to RLIMIT_MEMLOCK
-Date: Tue, 13 Oct 2026 13:39:55 +0200
-Message-ID: <20261013112901.910257550@linuxfoundation.org>
+Subject: [PATCH 7.2 280/281] io_uring/kbuf: dont charge provided buffer rings to RLIMIT_MEMLOCK
+Date: Tue, 13 Oct 2026 13:39:56 +0200
+Message-ID: <20261013112901.936147094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,210 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit b59cabf9b4acb65f3f9968087ca0e18010d85076 ]
+[ Upstream commit cde56daf4b93f474dc256dbcc5205035223ae6f5 ]
 
-Commit 8078486e1d53 ("io_uring: use region api for SQ") and commit
-81a4058e0cd0 ("io_uring: use region api for CQ") made io_uring_setup()
-allocate the rings with io_create_region().
+Just like with the SQ and CQ rings, the provided buffer rings were also
+not charged against the memlock limit prior to the below mentioned
+commit. Restore that behavior.
 
-However, io_create_region() charges the memory to RLIMIT_MEMLOCK, and
-the rings had been exempt from that limit since commit 26bfa89e25f4
-("io_uring: place ring SQ/CQ arrays under memcg memory limits"). As of
-now, a user without CAP_IPC_LOCK gets ENOMEM from io_uring_setup() when
-their rings exceed the limit, which is 8 MiB by default. PostgreSQL
-developers have already hit this in their io_uring tests [1].
-
-The issue can be reproduced with a simple liburing program, run as an
-unprivileged user:
-
-    #include <liburing.h>
-    #include <stdio.h>
-
-    int main(void)
-    {
-            static struct io_uring ring[64];
-            int i;
-
-            for (i = 0; i < 64; i++)
-                    if (io_uring_queue_init(4096, &ring[i], 0) < 0)
-                            break;
-            printf("%d rings\n", i);
-            return 0;
-    }
-
-Before those commits (v6.13), it prints "64 rings". After those commits
-(v6.14), it prints "21 rings".
-
-This patch makes io_create_region() take the user to charge, and passes
-no user for the SQ/CQ rings.
-
-Link: https://www.postgresql.org/message-id/flat/667f7dcf-404b-4898-a426-57ca6e0617f6@gmail.com [1]
-Fixes: 8078486e1d53 ("io_uring: use region api for SQ")
-Fixes: 81a4058e0cd0 ("io_uring: use region api for CQ")
+Fixes: ef62de3c4ad5 ("io_uring/kbuf: use region api for pbuf rings")
+Reported-by: Hengyu Liang <hengyul@cs.unc.edu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Link: https://lore.kernel.org/io-uring/20261006125732.3425762-1-hengyul@cs.unc.edu/
+Tested-by: Hengyu Liang <hengyul@cs.unc.edu>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   10 ++++++----
- io_uring/kbuf.c     |    2 +-
- io_uring/memmap.c   |   10 +++++-----
- io_uring/memmap.h   |    2 +-
- io_uring/register.c |   12 +++++++-----
- io_uring/zcrx.c     |    2 +-
- 6 files changed, 21 insertions(+), 17 deletions(-)
+Depends on <20261012153857.1014795-1-sashal@kernel.org>
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2077,8 +2077,9 @@ int io_submit_sqes(struct io_ring_ctx *c
- 
- static void io_rings_free(struct io_ring_ctx *ctx)
- {
--	io_free_region(ctx->user, &ctx->sq_region);
--	io_free_region(ctx->user, &ctx->ring_region);
-+	/* ring memory is not charged to RLIMIT_MEMLOCK, hence no user */
-+	io_free_region(NULL, &ctx->sq_region);
-+	io_free_region(NULL, &ctx->ring_region);
- 	ctx->rings = NULL;
- 	RCU_INIT_POINTER(ctx->rings_rcu, NULL);
- 	ctx->sq_sqes = NULL;
-@@ -2742,7 +2743,8 @@ static __cold int io_allocate_scq_urings
- 		rd.user_addr = p->cq_off.user_addr;
- 		rd.flags |= IORING_MEM_REGION_TYPE_USER;
- 	}
--	ret = io_create_region(ctx, &ctx->ring_region, &rd, IORING_OFF_CQ_RING);
-+	/* ring memory is not charged to RLIMIT_MEMLOCK, hence no user */
-+	ret = io_create_region(NULL, &ctx->ring_region, &rd, IORING_OFF_CQ_RING);
- 	if (ret)
- 		return ret;
- 	ctx->rings = rings = io_region_get_ptr(&ctx->ring_region);
-@@ -2756,7 +2758,7 @@ static __cold int io_allocate_scq_urings
- 		rd.user_addr = p->sq_off.user_addr;
- 		rd.flags |= IORING_MEM_REGION_TYPE_USER;
- 	}
--	ret = io_create_region(ctx, &ctx->sq_region, &rd, IORING_OFF_SQES);
-+	ret = io_create_region(NULL, &ctx->sq_region, &rd, IORING_OFF_SQES);
- 	if (ret) {
- 		io_rings_free(ctx);
- 		return ret;
+ io_uring/kbuf.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 --- a/io_uring/kbuf.c
 +++ b/io_uring/kbuf.c
+@@ -458,7 +458,7 @@ static int io_remove_buffers_legacy(stru
+ static void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
+ {
+ 	if (bl->flags & IOBL_BUF_RING)
+-		io_free_region(ctx->user, &bl->region);
++		io_free_region(NULL, &bl->region);
+ 	else
+ 		io_remove_buffers_legacy(ctx, bl, -1U);
+ 
 @@ -675,7 +675,7 @@ int io_register_pbuf_ring(struct io_ring
  		rd.user_addr = reg.ring_addr;
  		rd.flags |= IORING_MEM_REGION_TYPE_USER;
  	}
--	ret = io_create_region(ctx, &bl->region, &rd, mmap_offset);
-+	ret = io_create_region(ctx->user, &bl->region, &rd, mmap_offset);
+-	ret = io_create_region(ctx->user, &bl->region, &rd, mmap_offset);
++	ret = io_create_region(NULL, &bl->region, &rd, mmap_offset);
  	if (ret)
  		goto fail;
  	br = io_region_get_ptr(&bl->region);
---- a/io_uring/memmap.c
-+++ b/io_uring/memmap.c
-@@ -204,7 +204,7 @@ done:
- 	return 0;
- }
- 
--int io_create_region(struct io_ring_ctx *ctx, struct io_mapped_region *mr,
-+int io_create_region(struct user_struct *user, struct io_mapped_region *mr,
- 		     struct io_uring_region_desc *reg,
- 		     unsigned long mmap_offset)
- {
-@@ -230,8 +230,8 @@ int io_create_region(struct io_ring_ctx
- 		return -EOVERFLOW;
- 
- 	nr_pages = reg->size >> PAGE_SHIFT;
--	if (ctx->user) {
--		ret = __io_account_mem(ctx->user, nr_pages);
-+	if (user) {
-+		ret = __io_account_mem(user, nr_pages);
- 		if (ret)
- 			return ret;
- 	}
-@@ -240,7 +240,7 @@ int io_create_region(struct io_ring_ctx
- 	if (reg->flags & IORING_MEM_REGION_TYPE_USER)
- 		ret = io_region_pin_pages(mr, reg);
- 	else
--		ret = io_region_allocate_pages(mr, reg, mmap_offset, ctx->user);
-+		ret = io_region_allocate_pages(mr, reg, mmap_offset, user);
- 	if (ret)
- 		goto out_free;
- 
-@@ -249,7 +249,7 @@ int io_create_region(struct io_ring_ctx
- 		goto out_free;
- 	return 0;
- out_free:
--	io_free_region(ctx->user, mr);
-+	io_free_region(user, mr);
+@@ -708,7 +708,7 @@ int io_register_pbuf_ring(struct io_ring
+ 	if (!ret)
+ 		return 0;
+ fail:
+-	io_free_region(ctx->user, &bl->region);
++	io_free_region(NULL, &bl->region);
+ 	kfree(bl);
  	return ret;
  }
- 
---- a/io_uring/memmap.h
-+++ b/io_uring/memmap.h
-@@ -18,7 +18,7 @@ unsigned long io_uring_get_unmapped_area
- int io_uring_mmap(struct file *file, struct vm_area_struct *vma);
- 
- void io_free_region(struct user_struct *user, struct io_mapped_region *mr);
--int io_create_region(struct io_ring_ctx *ctx, struct io_mapped_region *mr,
-+int io_create_region(struct user_struct *user, struct io_mapped_region *mr,
- 		     struct io_uring_region_desc *reg,
- 		     unsigned long mmap_offset);
- 
---- a/io_uring/register.c
-+++ b/io_uring/register.c
-@@ -480,8 +480,9 @@ struct io_ring_ctx_rings {
- static void io_register_free_rings(struct io_ring_ctx *ctx,
- 				   struct io_ring_ctx_rings *r)
- {
--	io_free_region(ctx->user, &r->sq_region);
--	io_free_region(ctx->user, &r->ring_region);
-+	/* ring memory is not charged to RLIMIT_MEMLOCK, hence no user */
-+	io_free_region(NULL, &r->sq_region);
-+	io_free_region(NULL, &r->ring_region);
- }
- 
- #define swap_old(ctx, o, n, field)		\
-@@ -529,7 +530,7 @@ static int io_register_resize_rings(stru
- 		rd.user_addr = p->cq_off.user_addr;
- 		rd.flags |= IORING_MEM_REGION_TYPE_USER;
- 	}
--	ret = io_create_region(ctx, &n.ring_region, &rd, IORING_OFF_CQ_RING);
-+	ret = io_create_region(NULL, &n.ring_region, &rd, IORING_OFF_CQ_RING);
- 	if (ret)
- 		return ret;
- 
-@@ -559,7 +560,7 @@ static int io_register_resize_rings(stru
- 		rd.user_addr = p->sq_off.user_addr;
- 		rd.flags |= IORING_MEM_REGION_TYPE_USER;
- 	}
--	ret = io_create_region(ctx, &n.sq_region, &rd, IORING_OFF_SQES);
-+	ret = io_create_region(NULL, &n.sq_region, &rd, IORING_OFF_SQES);
- 	if (ret) {
- 		io_register_free_rings(ctx, &n);
- 		return ret;
-@@ -730,7 +731,8 @@ static int io_register_mem_region(struct
- 	    !(ctx->flags & IORING_SETUP_R_DISABLED))
- 		return -EINVAL;
- 
--	ret = io_create_region(ctx, &region, &rd, IORING_MAP_OFF_PARAM_REGION);
-+	ret = io_create_region(ctx->user, &region, &rd,
-+			       IORING_MAP_OFF_PARAM_REGION);
- 	if (ret)
- 		return ret;
- 	if (copy_to_user(rd_uptr, &rd, sizeof(rd))) {
---- a/io_uring/zcrx.c
-+++ b/io_uring/zcrx.c
-@@ -398,7 +398,7 @@ static int io_allocate_rbuf_ring(struct
- 	mmap_offset = IORING_MAP_OFF_ZCRX_REGION;
- 	mmap_offset += (u64)id << IORING_OFF_ZCRX_SHIFT;
- 
--	ret = io_create_region(ctx, &ifq->rq_region, rd, mmap_offset);
-+	ret = io_create_region(ctx->user, &ifq->rq_region, rd, mmap_offset);
- 	if (ret < 0)
- 		return ret;
- 
 
 
