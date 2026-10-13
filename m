@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7AD1DD0EF;
-	Tue, 13 Oct 2026 12:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC6F4FDA59;
+	Tue, 13 Oct 2026 12:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894829; cv=none; b=lBcw4XJaxWl8qxkZqBwaYTKl0A00QccVIB28B/opvTiKaFxOqIx8JsewN00Sjx9EK9GLJJOkDfeqE4VTSvaqvefbji33S33MTm55AzD29D3cU2xMxwfbS7pTng/QOl2j9JajqgmsdO6G5CKKV/eKCXK7O+rYpkGxv4mfHlSZz8g=
+	t=1791894832; cv=none; b=r0KAzWStTnpwiHFgRYpQqcDFuwEoGU2dHjRmOAX4SF2SRxOU306N6y81G1O1/8iZNVZORlsJahBgZ3v4mtfBmdGVYyBVZDhlUXoBeBa+CqXFPbM/Jdl0FCGbFx/HKbosOa2cc/cwsz+q2FYxe127rLrKANU8J6AuqKCWKqBRQJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894829; c=relaxed/simple;
-	bh=LjbheaKm4mu9sC1R8C6p1x2YvgC6r/LUQJTAYWa0b2k=;
+	s=arc-20240116; t=1791894832; c=relaxed/simple;
+	bh=I/uUvKBTFrLP/HzkOhRTB1RcVCJ5yfWG70ax0ndJ5Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKl+Ai6IzEp44e64qb3j9v03so4hhYIGFr85KY4IaML3GP2oIFwolzPZ//C5dYIyon3qDSLJTYfjWmsI7AcueOCDFy8SgPvGCbX+UdbrOXvfSl/3pMsumooKWalWpV3zH7iAmq/zWKu0Dbex904CpW5BprVDL50pblR07d63JM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ad1Vg/+8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pB7QmZjNUm5DuRId6WwT9lbNJlBp4Xa/ArI3VBm8end/01Fw7a/3PozUMcZQnxQrDEdWFdqUv8xLlYxEE7MiBgrhXs6rGmhl6/peBIz5P8QCdh5p1Gr0rp60xrGfqaM0V7SBev8Y3uzoNvs+d7T+BxpgJmK71aKpOLQlRSWgfmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwHGgrJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ad1Vg/+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5212A1F000FF;
-	Tue, 13 Oct 2026 12:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwHGgrJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370F81F000FF;
+	Tue, 13 Oct 2026 12:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894827;
-	bh=DvMwHTTm6x+iv0/c2Pu8bXw2iOM+nO6BNVRGLh3yuaA=;
+	s=korg; t=1791894830;
+	bh=1ZdkbcuBEEWcTYso4wOlyDBHa3fyg9UtU86mjUxrq7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ad1Vg/+8Nzq3yRg6w858ClY3Va5eHVEaPIfMSA4C7zRj0Xtk96bytRs0alYjKrVaP
-	 ta/bw4eMRwiHzbwadQeqwulEZIyEnzQySxCM807v1TFADZ51ngReEngKqTLyYWAbgS
-	 y8y4027mtSXsQ7xDms+jfbeYXdaMeGzIukeVzok4=
+	b=RwHGgrJMQNtqCd3cWUahEz5Ht2hTgnsBknJcdFkJjpR6xo4vdmt+vB327SRhk2KYj
+	 uogesI96R9D0tSibcH1r9LfZsVcqCnVelt1+AFZgnkIcl6CLD7/vsGr1MZgWkhU4wY
+	 +az1rIv7zB0Kj9/5PeqndzQch4JE5NAR4ZN8pTi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
+	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/497] Bluetooth: hci_core: free the HCI ID if naming fails
-Date: Tue, 13 Oct 2026 13:33:56 +0200
-Message-ID: <20261013112909.523707706@linuxfoundation.org>
+Subject: [PATCH 6.12 070/497] Bluetooth: btintel: validate DDC record lengths
+Date: Tue, 13 Oct 2026 13:33:57 +0200
+Message-ID: <20261013112909.546673375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,44 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
 
-[ Upstream commit d1ac915fb4184faad1b62148be50f317de7c24b5 ]
+[ Upstream commit c9c15d4d8956df8c564f7c210e4dc5b9b820d97a ]
 
-hci_register_dev() allocates an ID before calling dev_set_name().
-If naming fails, it returns without releasing that ID. The device has
-not been registered and hdev->id has not been assigned, so the normal
-unregister path cannot release it.
+Parse DDC record lengths in unsigned storage so 0xFF does not wrap.
+Reject records smaller than the mandatory three-byte header, records
+exceeding U8_MAX, and records exceeding remaining firmware bytes before
+issuing Intel_Write_DDC.
 
-Free the allocated ID before returning the naming error.
+This issue was reported by Claude Mythos.
 
-Fixes: dcda165706b9 ("Bluetooth: hci_core: Fix build warnings")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reported-by: Changyul Lee <lcy8047@gmail.com>
+Fixes: 145f2368c5fd ("Bluetooth: btintel: Add Device Configuration support")
+Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index a85c77ed4a13e..9f152db1e627d 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2615,8 +2615,10 @@ int hci_register_dev(struct hci_dev *hdev)
- 		return id;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index daec8a65c4915..d60756a6968c7 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -387,8 +387,16 @@ int btintel_load_ddc_config(struct hci_dev *hdev, const char *ddc_name)
+ 	/* DDC file contains one or more DDC structure which has
+ 	 * Length (1 byte), DDC ID (2 bytes), and DDC value (Length - 2).
+ 	 */
+-	while (fw->size > fw_ptr - fw->data) {
+-		u8 cmd_plen = fw_ptr[0] + sizeof(u8);
++	while (fw->size > (size_t)(fw_ptr - fw->data)) {
++		size_t remaining = fw->size - (fw_ptr - fw->data);
++		unsigned int cmd_plen = fw_ptr[0] + 1U;
++
++		if (cmd_plen < 3 || cmd_plen > U8_MAX || cmd_plen > remaining) {
++			bt_dev_err(hdev, "Malformed DDC record (plen=%u, remaining=%zu)",
++				   cmd_plen, remaining);
++			release_firmware(fw);
++			return -EINVAL;
++		}
  
- 	error = dev_set_name(&hdev->dev, "hci%u", id);
--	if (error)
-+	if (error) {
-+		ida_free(&hci_index_ida, id);
- 		return error;
-+	}
- 
- 	hdev->name = dev_name(&hdev->dev);
- 	hdev->id = id;
+ 		skb = __hci_cmd_sync(hdev, 0xfc8b, cmd_plen, fw_ptr,
+ 				     HCI_INIT_TIMEOUT);
 -- 
 2.53.0
 
