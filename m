@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3776D442B06;
-	Tue, 13 Oct 2026 12:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299EC4EB862;
+	Tue, 13 Oct 2026 12:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894951; cv=none; b=sZuDdM7W7PCUx/lvCLXOwShUVfF4gvgEGPm9rLCaDAXIIdXulQfP0+UFvzN0PohjCMohhc9m6aSjsRpR4RsXaLwCq1mIHNGcVekO/CdfGHgEOXjYIUF8ve/P9qjKlO7WIxr9cQuIUhw7jR06kc/wCKPT475wLOd8Bxzj+6YuLo8=
+	t=1791894954; cv=none; b=VZOJJbO5dSFkWdj9OsGZNQ/KYDJIUdM7eAXVUZMqAyB7my4q4QwWaVdYB437bil3dMkzjkZT9XD9WqNUBSdBVe5xzoBHQiF1C5mG8nQsXY1x3CF02JPwaqgODlf3asGgqg30LK3AK3QzsUJoBl7QzYGwZ7CWnwFeJkK2F20bSsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894951; c=relaxed/simple;
-	bh=SO9m0sqGr1v3DXDV+HAfsQQPGR3R9jNjQ6Ec00gVJ/Y=;
+	s=arc-20240116; t=1791894954; c=relaxed/simple;
+	bh=udcU4aBWs8gLZt42+tRSl3uUnkv2Ha+TgisnreVpmVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEOM0yeQGdFxEEvOHoI378kOCjK9QyHPCSlL0hJMYGDcSTBHTwtYq003z41ULeSCWoRxhSpYx2/DrM95DgCYxxBRpCjGD0a3szOEhMSbtI4LjKpqGDI8bEOwm1RiaOuziIerJahcOOFZIZ+kp4Ec//ncjullfufVuthFlvRroEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9DHK66T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JelN72YgdrZOXSV4yvsObj3FMF9/BKUQJckb/SXoiE8aFU9zJmIx/MOu+M1a5CXpDE6zBFPLPfB/lPZ6zhIWpukMW4MIF41XJFYvl9cTmMbalq4GdykPPBVvRSAy+N07OalzCQvrht1v29py+Um282wwElU05BWu8cfxsW5HLos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAqKcCoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9DHK66T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1571F000FF;
-	Tue, 13 Oct 2026 12:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAqKcCoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE871F000FF;
+	Tue, 13 Oct 2026 12:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894950;
-	bh=MIp9Nc/fab68jIbArG1orIj5FA0znrXYXJ+2cdfS2xk=;
+	s=korg; t=1791894953;
+	bh=T7iCEUWGTP3DwlzEVLjGv6O7wCUGqKE6d2HCCJrELaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9DHK66Tt5yDJpupX80jXNhoJwGQ2iolJ7PqyIYtHfA+UQj2HMs73ibYH4iY9FJmb
-	 6zbLLP6NfRTPdvjYy2sd4gcBJuy2pkPFVXXynOia4vSlBmwK1W0uvVKGSabYeIFJsV
-	 pTqoH0xQ7V6qaXcJ9f5W4IeYIxKKq9YHekpEbe5c=
+	b=BAqKcCoKkMQnA97Xuds/Ox01iJmzy5S+TXr4dT38Y6APngWA0W/pokQBykcvjGdbE
+	 gGAWodbchIMlNRvzB4ltR68Y31W/6TCM039wjoWoF9uG3QMbW0VgjPPxz9TXeXtnY/
+	 oYHHxR3zMDjAA5GgFatc3W7Bktd4NAPlv5qEHRJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Nikola Prica <nikola.prica@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/497] ALSA: ice1712: Fix the error handling via auto-cleanup at probe
-Date: Tue, 13 Oct 2026 13:34:38 +0200
-Message-ID: <20261013112910.525625686@linuxfoundation.org>
+Subject: [PATCH 6.12 112/497] PCI: Accept AtomicOps already enabled by the hypervisor
+Date: Tue, 13 Oct 2026 13:34:39 +0200
+Message-ID: <20261013112910.548997665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -44,46 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nikola Prica <nikola.prica@amd.com>
 
-[ Upstream commit e6229c0402ea4863ec74802d79d5b52b9398d66c ]
+[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
 
-We used the auto-cleanup via snd_card_unref() for errors at probe of
-ice1712 driver, but this may be problematic in a subtle way when an
-error happens at snd_card_register(); since snd_card_unref() skips the
-snd_card_disconnect() call, it may miss some resource clearance.
+pci_enable_atomic_ops_to_root() currently fails when no Root Port is
+visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
+is assigned to the VM, but the Root Port above it is not visible in the
+guest topology.
 
-For fixing the issue, use the new __free(snd_card_free) instead, which
-does call snd_card_free() explicitly at errors for avoiding such a
-pitfall.
+In those setups the hypervisor may already have enabled AtomicOp Requester
+Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
+as already enabled and return success instead of failing the Root Port
+walk.
 
-Fixes: d736eba9c453 ("ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup")
-Link: https://patch.msgid.link/20261001151039.592033-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
+them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
+Port is not visible, so drivers don't use atomics when they could.  On
+systems where the Root Port is not visible but *does* support AtomicOps,
+this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
+endpoint and returned success.
+
+Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
+Signed-off-by: Nikola Prica <nikola.prica@amd.com>
+[bhelgaas: commit log, code comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ice1712/ice1712.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/ice1712/ice1712.c b/sound/pci/ice1712/ice1712.c
-index 45cb3e7b8d214..ce1758ad7200c 100644
---- a/sound/pci/ice1712/ice1712.c
-+++ b/sound/pci/ice1712/ice1712.c
-@@ -2549,7 +2549,7 @@ static int snd_ice1712_probe(struct pci_dev *pci,
- 			     const struct pci_device_id *pci_id)
- {
- 	static int dev;
--	struct snd_card *card __free(snd_card_unref) = NULL;
-+	struct snd_card *card __free(snd_card_free) = NULL;
- 	struct snd_ice1712 *ice;
- 	int pcm_dev = 0, err;
- 	const struct snd_ice1712_card_info * const *tbl, *c;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 4364ed7cdc27b..0d33b30ec2f67 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3764,8 +3764,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+ 	}
+ 
+ 	root = pcie_find_root_port(dev);
+-	if (!root)
++	if (!root) {
++
++		/*
++		 * A hypervisor may expose a topology with the root port
++		 * not visible to the guest.  If the hypervisor has already
++		 * set AtomicOp Requester Enable in the endpoint, we assume
++		 * it has verified support in the root port, so it is safe
++		 * for the driver to use AtomicOps.
++		 */
++		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
++		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
++			return 0;
++
+ 		return -EINVAL;
++	}
+ 
+ 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
+ 	if ((cap & cap_mask) != cap_mask)
 -- 
 2.53.0
 
