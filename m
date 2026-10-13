@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC83313267;
-	Tue, 13 Oct 2026 12:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97283321A2;
+	Tue, 13 Oct 2026 12:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894643; cv=none; b=FJ9vf5HunChTak9BEorsmjDDUBbUd72KhSvFkiExjQG0sipL6e559QqRoTIbOZj5LCYL9nCXbrW2fa33Wdg4xJPWuA1OssFPeVHXJnUZ8o7iCv6EoMjMNXFb3GIHdjOB9x3jswIT+wKqgIII5neV8yKjAtCSybn1iL+jJbjtmJ8=
+	t=1791894645; cv=none; b=XyjusJdq2l+FTQWDcjNLZYEFhaQE8wN5OuDBNjLTT8fuBWfKUH+icaybmEjK/KVCGgZmIRHuMXV0o//9yGvx/pYo07YhqcGLjkO8vvV6Y97DlUv+pyCSXpOxSQGlL2jPbrWuZS9mqk5ZsoGZ7xGTU5Jf7fLY3E5hFo5ttI1kCAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894643; c=relaxed/simple;
-	bh=j1l1lvuV1JSmXXbeoRpzVvi0AHp1nwb/ALbPIqFNiww=;
+	s=arc-20240116; t=1791894645; c=relaxed/simple;
+	bh=QUZ102Zfdspo2VnbBWcbxYvv7we57eyu2XdSVNau1RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4P8Xy/goU5sGvSoCvFAuEqaXZKAWrdxkGjXXpOAI6V+Eb5V8NWSUjSz5+Y41YfU9R/vu30Sr3+7A9JJV0OEiz7J+GLzKAOymX5DwzocEo0hcGP0gdF6qPRheYV9J+nlfdqgOHAcoEBv9a7Pm8gksTQRVR8SUGMIm3eJ/VAUtrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5oIDF4a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zh4LNew3d69A0PqLTDpNkPJyjE5E/uP6pUqS9GUYzCZHTjLfooqUJsHfjsKcMIUHhmD9NVAoDGk9U1nJmCYxH0XV0jpuDAOi9wZdkfCCoNZ0JiC8bjMeN8m6nlEXUvWDAYd8Ia8latB5UyZhEJxdxM6EfM0NKeBkh+t9/pzywvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aADI3ovw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5oIDF4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCC21F000FF;
-	Tue, 13 Oct 2026 12:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aADI3ovw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC4C1F000FF;
+	Tue, 13 Oct 2026 12:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894641;
-	bh=RrX+rHfrnv6rvDCD+M1qlzasZoYRbWoBe8J6/6CbQEM=;
+	s=korg; t=1791894644;
+	bh=/A8x3gU4CtRoI6vnXOVQnuj2ce6I1/GiYBBBtt6s4/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5oIDF4aC2g9L87pk9w5cKl815DutC/yVnkj/roIFlT7R5CAcaOOonlalNlXxLHUd
-	 Y4YfrZVCZEsDv8Ks0LGbv9PrArSUkezQd5mAfkEpx9MohSw41bNuZJQHgb9xjtYAWF
-	 pCm+/z+u2LQXpbb9DAaEa7JVTPntTWVC/iBX8SGc=
+	b=aADI3ovwlwwWbWeZxtGX9qSyGWA4T1K8jmyWp+YhsOhNTXknzvdb5/3jeUiFZKxRe
+	 Cs0SysdBB0kgrx/CnH9Y5QoiuOxa5C01uPH1iopwXFAHnFHVtRj1q0OcLesBrCA0/z
+	 hiBE9a3QXRil5igPbj/PQDx/toU6Axu0CdlmuZOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Claude Opus 5.5" <noreply@anthropic.com>
-Subject: [PATCH 6.18 576/621] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
-Date: Tue, 13 Oct 2026 13:39:31 +0200
-Message-ID: <20261013112934.476952916@linuxfoundation.org>
+	Shen Yongchao <grayhat@foxmail.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/497] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
+Date: Tue, 13 Oct 2026 13:32:48 +0200
+Message-ID: <20261013112907.905470497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
-References: <20261013112920.855194808@linuxfoundation.org>
+In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
+References: <20261013112907.864180619@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +49,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
+[ Upstream commit 6343c1da561962688f203362d80d6a3bfa39fa1b ]
 
-The probe function puts the device into the runtime PM active state with
-only the "iis" bus clock enabled, but it also sets priv->op_clk to the
-parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
-callback disables both clocks, so the first runtime suspend after probe
-disables op_clk once more than it was enabled.
+coalesce_t2() computes data pointers directly from server-supplied
+DataOffset fields with no validation against buffer bounds:
 
-On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
-so this triggers the following warning during boot:
-
- WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
- i2s_bus already disabled
- ...
- Workqueue: pm pm_runtime_work
- Call trace:
+  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+  data_area_of_tgt += total_in_tgt;
   ...
-  clk_core_disable from clk_disable+0x28/0x34
-  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
-  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
-  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
-  __rpm_callback from rpm_callback+0x4c/0x50
-  rpm_callback from rpm_suspend+0xf4/0x718
-  rpm_suspend from pm_runtime_work+0x9c/0xa0
-  ...
+  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
 
-Fix this by enabling op_clk in probe right after getting it, so the clock
-state matches the runtime PM active state, and by disabling it in remove.
+A small DataOffset can push a pointer below the actual byte area,
+overwriting header fields; a large one can push it past the buffer
+end, causing out-of-bounds heap reads (source) or writes (target).
+The BCC overflow guard does not prevent this: BCC reflects how much
+data is present, while DataOffset controls where in the buffer it
+starts.
 
-Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
-Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The "validate target area" comment present since the function was
+first written in 2005 was a placeholder that was never implemented.
+
+Add lower- and upper-bound checks for both data pointers before the
+memcpy, and before any target header fields are modified.
+
+Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
+Cc: stable@vger.kernel.org
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ transplanted the bounds validation to coalesce_t2() in smb1ops.c due to code relocation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/i2s.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/smb/client/smb1ops.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
-index 140907a41a70d..7bb80d73bd661 100644
---- a/sound/soc/samsung/i2s.c
-+++ b/sound/soc/samsung/i2s.c
-@@ -1543,9 +1543,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index eafdf6c38796a..5556601abfe9e 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -325,12 +325,31 @@ coalesce_t2(char *second_buf, struct smb_hdr *target_hdr)
+ 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
  
- 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
-+	ret = clk_prepare_enable(priv->op_clk);
-+	if (ret < 0) {
-+		priv->op_clk = NULL;
-+		goto err_unregister_clk;
+-	/* validate target area */
+ 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+ 
+ 	data_area_of_tgt += total_in_tgt;
+ 
++	/*
++	 * DataOffset fields are server-supplied and not validated against
++	 * buffer bounds; check both data pointers before mutating the
++	 * target header.
++	 */
++	if (data_area_of_tgt < (char *)target_hdr +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_tgt + total_in_src >
++	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
++		return -EPROTO;
 +	}
- 
- 	return 0;
- 
-+err_unregister_clk:
-+	i2s_unregister_clock_provider(priv);
- err_disable_pm:
- 	pm_runtime_disable(&pdev->dev);
- err_del_sec:
-@@ -1568,6 +1575,7 @@ static void samsung_i2s_remove(struct platform_device *pdev)
- 
- 	i2s_unregister_clock_provider(priv);
- 	i2s_delete_secondary_device(priv);
-+	clk_disable_unprepare(priv->op_clk);
- 	clk_disable_unprepare(priv->clk);
- 
- 	pm_runtime_put_noidle(&pdev->dev);
++	if (data_area_of_src < second_buf +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_src + total_in_src >
++	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
++		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
++		return -EPROTO;
++	}
++
+ 	total_in_tgt += total_in_src;
+ 	/* is the result too big for the field? */
+ 	if (total_in_tgt > USHRT_MAX) {
 -- 
 2.53.0
 
