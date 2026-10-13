@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE2E329E79;
-	Tue, 13 Oct 2026 12:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E16342C80;
+	Tue, 13 Oct 2026 12:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896055; cv=none; b=sPMBgt+gb08tohkfpbqbYTLdt4v4d4p6CTdLBeX2zgXuOg+ktIIt6i8Ex5GvbAKr3MzWvaH+PC1tpATDLaWxsVqTgDUUXWSIfiKvh8bTRa2oVOD287eJTDy/zxlBIWURa4u8kqQ7CiPCRnJKprybcSNA3aKjK/m0ZlSdUkgiEw4=
+	t=1791896058; cv=none; b=F5shj3Cn+vuCMBcKSuAtnqHcN+3kblVuwyzkyJfFM4UrmPuazJCHVYjn2EYGvWHYUYzn8OZfr7zYPZoE/xkGwWkIEb2DccBf1ftUPxDLzMH4sdPzq6C0muAW0s0R/CkKIJ+5rhgERINwyZenUgE1VryhV8582IE6dqI9bqE6JOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896055; c=relaxed/simple;
-	bh=ZaFE0uVWMQhoWhxlrPqnr3IfsNvqKWxcvONaBwavA+g=;
+	s=arc-20240116; t=1791896058; c=relaxed/simple;
+	bh=K5iES6AbZT3m4/138stg1kmnp/hFZ0U2d/s2tK0mZgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guINuCyiVaarR0zIB8SXNNdJmrQIKnR7KuQMvl7YAiJmaYv4menOK3XaIr1I/fFXBGRn3gFCHrDNCdpM/NTpzAI8gpaeup54Lox3HpPOaKbKX5exh06QlkUJMCNOW0xmZlfUJBAPO2GDE4Jmtf6lxTNptF7qAhUrn9WFW/qVeYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFkn5m/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ol57oMJK/r/dR93AxqiAhJh/khlwTsxoNIBN5f+fzn3Bk0JJR0woZpzyBmX64NyYQi8FS6wpq9c8dYXO+7lAARi3naIgllWeCi8MxLOo9NruhH1m/TikR5cY8CjYhC5p/yB45y1v6tY7s91cvkkkcYwRX+8YUfsW/YEf22Wcj1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghfaZYBE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFkn5m/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441171F000FF;
-	Tue, 13 Oct 2026 12:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghfaZYBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4611C1F000FF;
+	Tue, 13 Oct 2026 12:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791896053;
-	bh=ZcLElSIshGAXoYIgjwnify2E6FxH+jHg0Ty4qCtUdks=;
+	s=korg; t=1791896056;
+	bh=AloGYN8IzVMJLXenl+MgEMBDWRjCxR7BghpBMDNm9rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wFkn5m/7lRHLu1q1z2GnTJm3uHFgeVcyBh114bIFoqpJjiGpovQyiqV1kcN8IZzX7
-	 S+jRdROXjgIMhtSeIcACOM7W7ywJOQlKg+6y8OFg6PEJyHgoX/800aM+Xyx+oyQRCv
-	 oghkxo0Tiw3mDAlOSABdXRlZ4CifWIZMFn+hj9mg=
+	b=ghfaZYBElmE4T0malWxniUjvtOCHYzMD8Hr0ZgpvGQiIiV8bQ1lff40ZNdo9B3T4x
+	 +yr2WhBV7RZWT3suE0r/JSgFQLJAkQ2ZYjF7taoOA6Yst/ABiMr9NRNyUhSzaqm1gx
+	 fzfQ1y+rA7TpD64Y43caV7Pk9ghQqSwrIl2KcDHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gyeyoung Baek <gye976@gmail.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 482/497] flow_dissector: avoid u16 truncation of hlen in bpf_flow_dissect()
-Date: Tue, 13 Oct 2026 13:40:49 +0200
-Message-ID: <20261013112919.316337536@linuxfoundation.org>
+Subject: [PATCH 6.12 483/497] drm/imagination: Fix reference and vm_bo handling in remap()
+Date: Tue, 13 Oct 2026 13:40:50 +0200
+Message-ID: <20261013112919.340134482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,50 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Gyeyoung Baek <gye976@gmail.com>
 
-[ Upstream commit f202578efc738b883cfa04889eb97328914265a7 ]
+[ Upstream commit 196d4d10c1b33ae176685ff42a9994a5952b1d0f ]
 
-bpf_flow_dissect() sanitizes the offsets returned by the BPF program
-with clamp_t(u16, ..., hlen).
+When a map overlaps part of an existing mapping, pvr_vm_gpuva_remap()
+splits the mapping into prev/next parts covering what the request did
+not take, instead of creating something new. It gets two things wrong.
 
-If hlen is bigger than 65535, the upper bound is truncated before
-the comparison. For instance, with hlen == 65536, both nhoff and
-thoff are forced to zero, even if the program returned sane values.
+- A GEM reference is taken for each part but it's never needed and never
+  dropped, so it leaks one reference per split (remap-next-in-2m in
+  tests/imagination/pvr_vm_map.c):
 
-This is the same class of bug as the one fixed in commit 99bda1ecbd56
-("flow_dissector: avoid u16 truncation of skb->len when computing
-thoff"). That fix does not cover the BPF path, because
-__skb_flow_dissect() returns early when a BPF flow dissector
-handles the packet.
+    CRITICAL: 33558528 bytes of shmem still held after close
 
-struct bpf_flow_keys stores nhoff and thoff as u16, so cap hlen
-to U16_MAX before clamping.
+- The parts still belong to the original object being split, but
+  pvr_vm_gpuva_remap() links them to ctx->gpuvm_bo, the new object's
+  vm_bo:
 
-Found by sashiko while reviewing the commit above.
+    prev_va --obj--> BO_A          BO_B <--obj-- vm_bo (ctx->gpuvm_bo)
+            \___________link___________/  (mismatch: BO_A != BO_B)
 
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261007045616.445596-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  drm_gpuva_link() catches the mismatch:
+
+    WARNING: drivers/gpu/drm/drm_gpuvm.c:2108 at drm_gpuva_link+0x2ec/0x310
+      drm_WARN_ON(obj != vm_bo->obj)
+    Call trace:
+     drm_gpuva_link
+     pvr_vm_gpuva_remap
+     __drm_gpuvm_sm_map
+     pvr_vm_map
+     pvr_ioctl_vm_map
+
+  Link them to op->remap.unmap->va->vm_bo instead.
+
+The locking of the GPUVA lists of the other objects touched by a split is
+not addressed here; it is handled by switching the GPUVM to immediate
+mode.
+
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
+Reviewed-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Link: https://patch.msgid.link/20261001-pvr-fixes-a-v2-1-f58254e5dfb8@gmail.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/imagination/pvr_vm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index c212f77499fb3..dc43742d881b3 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1023,6 +1023,8 @@ u32 bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
+diff --git a/drivers/gpu/drm/imagination/pvr_vm.c b/drivers/gpu/drm/imagination/pvr_vm.c
+index 5a4aca8be71fd..53fa5a4cc2049 100644
+--- a/drivers/gpu/drm/imagination/pvr_vm.c
++++ b/drivers/gpu/drm/imagination/pvr_vm.c
+@@ -412,6 +412,8 @@ pvr_vm_gpuva_unmap(struct drm_gpuva_op *op, void *op_ctx)
+ static int
+ pvr_vm_gpuva_remap(struct drm_gpuva_op *op, void *op_ctx)
+ {
++	/* The split parts belong to the object of the mapping being split. */
++	struct drm_gpuvm_bo *vm_bo = op->remap.unmap->va->vm_bo;
+ 	struct pvr_vm_bind_op *ctx = op_ctx;
+ 	u64 va_start = 0, va_range = 0;
+ 	int err;
+@@ -427,14 +429,12 @@ pvr_vm_gpuva_remap(struct drm_gpuva_op *op, void *op_ctx)
+ 	drm_gpuva_remap(&ctx->prev_va->base, &ctx->next_va->base, &op->remap);
  
- 	result = bpf_prog_run_pin_on_cpu(prog, ctx);
+ 	if (op->remap.prev) {
+-		pvr_gem_object_get(gem_to_pvr_gem(ctx->prev_va->base.gem.obj));
+-		drm_gpuva_link(&ctx->prev_va->base, ctx->gpuvm_bo);
++		drm_gpuva_link(&ctx->prev_va->base, vm_bo);
+ 		ctx->prev_va = NULL;
+ 	}
  
-+	/* bpf_flow_keys offsets are u16: do not let @hlen be truncated. */
-+	hlen = min_t(int, hlen, U16_MAX);
- 	flow_keys->nhoff = clamp_t(u16, flow_keys->nhoff, nhoff, hlen);
- 	flow_keys->thoff = clamp_t(u16, flow_keys->thoff,
- 				   flow_keys->nhoff, hlen);
+ 	if (op->remap.next) {
+-		pvr_gem_object_get(gem_to_pvr_gem(ctx->next_va->base.gem.obj));
+-		drm_gpuva_link(&ctx->next_va->base, ctx->gpuvm_bo);
++		drm_gpuva_link(&ctx->next_va->base, vm_bo);
+ 		ctx->next_va = NULL;
+ 	}
+ 
 -- 
 2.53.0
 
