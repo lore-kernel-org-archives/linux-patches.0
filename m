@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADD64ED1B4;
-	Tue, 13 Oct 2026 12:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3424F3910;
+	Tue, 13 Oct 2026 12:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893599; cv=none; b=Le48HDi6q8xVU6kmKKQkXpwz5PIyOxaio//2pHCv6koLzBP1yiUnr/9q2xhxmSGfDzeNe/2AYVpRsg1fXCLHQR+wUW3wB/6yMAsFg38PxyrV12RSuZ+/9Av34mAh34qqts8Ii7RjBmXMKHpnTQMlHmSAFbbLBgbKeEhu213A73U=
+	t=1791893602; cv=none; b=n8LRoggXSEykEgugu0dezlUos0CkxVbh4vnVqjrIqneMaAj9yhBC3pdiJUultCmrZerSnghjCxbcMzkGmwBqqhaei9fxh0Vl4epBtk/7Ffbh+zSUQzbEdtDcWJCZ35UdwXLv2YkqgWNwJIrfBUJDqvq+pWEPxFBorTskscITLDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893599; c=relaxed/simple;
-	bh=ynUjDjqQ6e6Rj4mt7gbHkzS9/2GVkJ931LiRr/2+nOI=;
+	s=arc-20240116; t=1791893602; c=relaxed/simple;
+	bh=+0HtPojRgzO9Iy3zVfee53uDazo//JBlXPlkRvifOkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeqrCeyIsR1jUFtXLyF/e77dRD69pcs8sgSQRJOllhSVFSCYdCs8u3EUQiqfCtwg7l1KiI5yZg9fY1jI6wqwD+70PWxPiLuybw344B9JdliJRzdiUsYV+6BKhFf6N2sHlE7DtFvu+0quFRqolne+SDjiD3o33jccRDc2RGVDCuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13XiU7ys; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNLQ9a7DRJCzI0uWI0/K+53gWPaQ9ZwBPd1Rnx872ZwN0MdsgNYRF5tp8bD2fcTtfX8Lw5hOF/T7R+z1CjuHHrWdbUrX4Fuc4nkNZSFNtlJQXBe8rQFw2e4wDeatIaIs5lFyJHM6AO9B8VSTBgo1QmLKEbM3g2IsepeMoOGBc7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRxBAI7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13XiU7ys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DB1F000FF;
-	Tue, 13 Oct 2026 12:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRxBAI7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DFA1F000FF;
+	Tue, 13 Oct 2026 12:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893598;
-	bh=ROafOc1EagFSZmkMB8Xn8ik10E7mnkwg6bFEQoPIYbg=;
+	s=korg; t=1791893601;
+	bh=mKSlwrnqj2mnM06fZB/+BYdCJkKz8mdM8X258VRLy8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13XiU7ysi4OQm27yGGv6XbpK4uLfoL1mZx+3a1BnqGvGxjzbdNaF14jYZPlUI2Un3
-	 2CpGZBXQZpGKwhvBuxwXLUmzCJlR2vZASDfokx9RqzOmqhuz7foKcv1rDXL3T0uqqx
-	 BqV8afgYN3HFowLuSy6gNw+SyUENdPJRrnPDRqbg=
+	b=tRxBAI7Yj7h6ef3bhDfn24s/dOQa6QC9olo9TZB35YjuXoyaX/5yhS9TjYCs7AiiP
+	 zRY3vLhBtXqytG3xqBzVz5EiDQOMKRowowEZdrK4F/N719ATbXR/jiT10p1XAZjmDX
+	 AuqQuHn3PK1b14UyRp4Zlc74lUZN+Ah7Tw9pdmDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
 	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 278/621] accel/amdxdna: Fill invalid payload for failed command
-Date: Tue, 13 Oct 2026 13:34:33 +0200
-Message-ID: <20261013112927.457091633@linuxfoundation.org>
+Subject: [PATCH 6.18 279/621] accel/amdxdna: Refactor GEM BO handling and add helper APIs for address retrieval
+Date: Tue, 13 Oct 2026 13:34:34 +0200
+Message-ID: <20261013112927.480430112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,148 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Max Zhen <max.zhen@amd.com>
 
-[ Upstream commit 89ff45359abbf9d8d3c4aa3f5a57ed0be82b5a12 ]
+[ Upstream commit d76856beb4a4a6c42244054cd780c00f2d33de4e ]
 
-Newer userspace applications may read the payload of a failed command
-to obtain detailed error information. However, the driver and old firmware
-versions may not support returning advanced error information.
-In this case, initialize the command payload with an invalid value so
-userspace can detect that no detailed error information is available.
+Refactor amdxdna GEM buffer object (BO) handling to simplify address
+management and unify BO type semantics.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Introduce helper APIs to retrieve commonly used BO addresses:
+- User virtual address (UVA)
+- Kernel virtual address (KVA)
+- Device address (IOVA/PA)
+
+These helpers centralize address lookup logic and avoid duplicating
+BO-specific handling across submission and execution paths. This also
+improves readability and reduces the risk of inconsistent address
+handling in future changes.
+
+As part of the refactor:
+- Rename SHMEM BO type to SHARE to better reflect its usage.
+- Merge CMD BO handling into SHARE, removing special-case logic for
+  command buffers.
+- Consolidate BO type handling paths to reduce code duplication and
+  simplify maintenance.
+
+No functional change is intended. The refactor prepares the driver for
+future enhancements by providing a cleaner abstraction for BO address
+management.
+
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Max Zhen <max.zhen@amd.com>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260227004841.3080241-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260320210615.1973016-1-lizhi.hou@amd.com
+
+Only the user-mapping bookkeeping part of the refactor is carried here:
+umap_release() resets the cached user address once the last mapping is
+gone, and hmm_register() records it when the first mapping is added,
+both under notifier_lock. The remaining address-helper, BO type and
+UAPI changes are not needed by the follow-up fix and are dropped.
+
 Stable-dep-of: 1ba02717e821 ("accel/amdxdna: Fix VMA access race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c    | 23 ++++++++---------------
- drivers/accel/amdxdna/amdxdna_ctx.c | 27 +++++++++++++++++++++++++++
- drivers/accel/amdxdna/amdxdna_ctx.h |  3 +++
- 3 files changed, 38 insertions(+), 15 deletions(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 92a09b06309da..6d8a79978c381 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -204,13 +204,13 @@ aie2_sched_resp_handler(void *handle, void __iomem *data, size_t size)
- 	cmd_abo = job->cmd_bo;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 95d04af2b9933..0e9f70c2fa515 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -160,16 +160,19 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
+ static void amdxdna_umap_release(struct kref *ref)
+ {
+ 	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
++	struct amdxdna_gem_obj *abo = mapp->abo;
+ 	struct vm_area_struct *vma = mapp->vma;
+ 	struct amdxdna_dev *xdna;
  
- 	if (unlikely(job->job_timeout)) {
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
-+		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_TIMEOUT);
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	mmu_interval_notifier_remove(&mapp->notifier);
+-	if (is_import_bo(mapp->abo) && vma->vm_file && vma->vm_file->f_mapping)
++	if (is_import_bo(abo) && vma->vm_file && vma->vm_file->f_mapping)
+ 		mapping_clear_unevictable(vma->vm_file->f_mapping);
  
- 	if (unlikely(!data) || unlikely(size != sizeof(u32))) {
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
-+		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ABORT);
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -220,7 +220,7 @@ aie2_sched_resp_handler(void *handle, void __iomem *data, size_t size)
- 	if (status == AIE2_STATUS_SUCCESS)
- 		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_COMPLETED);
- 	else
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ERROR);
-+		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ERROR);
+ 	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
+ 	down_write(&xdna->notifier_lock);
+ 	list_del(&mapp->node);
++	if (list_empty(&abo->mem.umap_list))
++		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
+ 	up_write(&xdna->notifier_lock);
  
- out:
- 	aie2_sched_notify(job);
-@@ -264,13 +264,13 @@ aie2_sched_cmdlist_resp_handler(void *handle, void __iomem *data, size_t size)
- 	cmd_abo = job->cmd_bo;
+ 	kvfree(mapp->range.hmm_pfns);
+@@ -202,7 +205,7 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+ 	if (!xdna->dev_info->ops->hmm_invalidate)
+ 		return 0;
  
- 	if (unlikely(job->job_timeout)) {
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
-+		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_TIMEOUT);
- 		ret = -EINVAL;
- 		goto out;
- 	}
+-	mapp = kzalloc(sizeof(*mapp), GFP_KERNEL);
++	mapp = kzalloc_obj(*mapp);
+ 	if (!mapp)
+ 		return -ENOMEM;
  
- 	if (unlikely(!data) || unlikely(size != sizeof(u32) * 3)) {
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
-+		amdxdna_cmd_set_error(cmd_abo, job, 0, ERT_CMD_STATE_ABORT);
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -290,19 +290,12 @@ aie2_sched_cmdlist_resp_handler(void *handle, void __iomem *data, size_t size)
- 		 fail_cmd_idx, fail_cmd_status);
+@@ -232,13 +235,13 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+ 	mapp->abo = abo;
+ 	kref_init(&mapp->refcnt);
  
- 	if (fail_cmd_status == AIE2_STATUS_SUCCESS) {
--		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
-+		amdxdna_cmd_set_error(cmd_abo, job, fail_cmd_idx, ERT_CMD_STATE_ABORT);
- 		ret = -EINVAL;
--		goto out;
-+	} else {
-+		amdxdna_cmd_set_error(cmd_abo, job, fail_cmd_idx, ERT_CMD_STATE_ERROR);
- 	}
--	amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ERROR);
--
--	if (amdxdna_cmd_get_op(cmd_abo) == ERT_CMD_CHAIN) {
--		struct amdxdna_cmd_chain *cc = amdxdna_cmd_get_payload(cmd_abo, NULL);
+-	if (abo->mem.userptr == AMDXDNA_INVALID_ADDR)
+-		abo->mem.userptr = addr;
+ 	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
+ 	if (is_import_bo(abo) && vma->vm_file && vma->vm_file->f_mapping)
+ 		mapping_set_unevictable(vma->vm_file->f_mapping);
  
--		cc->error_index = fail_cmd_idx;
--		if (cc->error_index >= cc->command_count)
--			cc->error_index = 0;
--	}
- out:
- 	aie2_sched_notify(job);
- 	return ret;
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index db94a8d0e4bb0..feac65f2cab76 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -135,6 +135,33 @@ int amdxdna_cmd_get_cu_idx(struct amdxdna_gem_obj *abo)
- 	return -1;
- }
+ 	down_write(&xdna->notifier_lock);
++	if (list_empty(&abo->mem.umap_list))
++		abo->mem.userptr = addr;
+ 	list_add_tail(&mapp->node, &abo->mem.umap_list);
+ 	up_write(&xdna->notifier_lock);
  
-+int amdxdna_cmd_set_error(struct amdxdna_gem_obj *abo,
-+			  struct amdxdna_sched_job *job, u32 cmd_idx,
-+			  enum ert_cmd_state error_state)
-+{
-+	struct amdxdna_client *client = job->hwctx->client;
-+	struct amdxdna_cmd *cmd = abo->mem.kva;
-+	struct amdxdna_cmd_chain *cc = NULL;
-+
-+	cmd->header &= ~AMDXDNA_CMD_STATE;
-+	cmd->header |= FIELD_PREP(AMDXDNA_CMD_STATE, error_state);
-+
-+	if (amdxdna_cmd_get_op(abo) == ERT_CMD_CHAIN) {
-+		cc = amdxdna_cmd_get_payload(abo, NULL);
-+		cc->error_index = (cmd_idx < cc->command_count) ? cmd_idx : 0;
-+		abo = amdxdna_gem_get_obj(client, cc->data[cc->error_index], AMDXDNA_BO_CMD);
-+		if (!abo)
-+			return -EINVAL;
-+		cmd = abo->mem.kva;
-+	}
-+
-+	memset(cmd->data, 0xff, abo->mem.size - sizeof(*cmd));
-+	if (cc)
-+		amdxdna_gem_put_obj(abo);
-+
-+	return 0;
-+}
-+
- /*
-  * This should be called in close() and remove(). DO NOT call in other syscalls.
-  * This guarantee that when hwctx and resources will be released, if user
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
-index 383f3f15fac8c..d54ccf1a3b6f2 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.h
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.h
-@@ -139,6 +139,9 @@ amdxdna_cmd_get_state(struct amdxdna_gem_obj *abo)
- 
- void *amdxdna_cmd_get_payload(struct amdxdna_gem_obj *abo, u32 *size);
- int amdxdna_cmd_get_cu_idx(struct amdxdna_gem_obj *abo);
-+int amdxdna_cmd_set_error(struct amdxdna_gem_obj *abo,
-+			  struct amdxdna_sched_job *job, u32 cmd_idx,
-+			  enum ert_cmd_state error_state);
- 
- void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job);
- void amdxdna_hwctx_remove_all(struct amdxdna_client *client);
 -- 
 2.53.0
 
