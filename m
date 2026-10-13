@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C899C3AE18C;
-	Tue, 13 Oct 2026 11:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A1D3D45E5;
+	Tue, 13 Oct 2026 11:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892130; cv=none; b=T1Huayx1tY6vHk9MoxKZ/VmBgasUmlJlMge9WwWwcZOvklYeRIBLTkhitb3FCsaVCoW9ZIzwjCasJxjPGSvT2IctHuoNdaan225v71pOtYWBJ+1YXMlQy9viGQ5wE4tRQV9yuZz2ClxZwP6e3Q9ka6mG7SbLEgohQK35pBRIteU=
+	t=1791892133; cv=none; b=rWE1SBp32meAgZEsFyANoMHWUIHILC3Za0O5G1heNuTBSY2OHpu2iUOzdvzGrVLRfVGJ2didMpEcPZslo4WzdN+0LGygaHMXE142zl05fef6WQFbyOsBxeT1vA6TXbBV3Nr4rfjrDOEJwtVFJGo99aP2soLacru8GbRL+CcPX6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892130; c=relaxed/simple;
-	bh=qEmfESYbH+piFuceYDWVJ3G+UWTT8YiDLX46ss+ddUc=;
+	s=arc-20240116; t=1791892133; c=relaxed/simple;
+	bh=VZU1zRQHjP4RcRpirPiPDsW0unfebGCEDGb3z3dbVCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OzbBxoZi1jlI/L1jrmqpJ/TTu/TWaNI1NOWiUlweaXVgGv/lpNBAgftGLRX6aZcb5U9nEMP6VTD4/RVzOvT2eraemcC1q59oNJBdXC6ngZ3d2DfDqf8OT0jEaX69yUiAj0S8x4m+/g9mT7bC5/n9vn48oN+OJrlwLpfZa2RvHfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrFz0aub; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tGlu1uUos+EGb95gD+151yRZwdsomq2rWoFOXV+hqr+3IVazB/P+RmLWVWamf/HB/rqu6iwx6/2rVyyIuffpdnMEPeyvLTivEVQIKWDIc9I7LGXe+Q4+ycZ1V6s+uF414gLOetJuNK51nBkp0Uu8pP8uPvKUN0cNH46nvX0yU4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO6AjnX4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrFz0aub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFE51F000FF;
-	Tue, 13 Oct 2026 11:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO6AjnX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DFE1F000FF;
+	Tue, 13 Oct 2026 11:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892129;
-	bh=NqnqQhz8Pnf3KH5tsfPFp+O1ybAJnm81lVnyccRUsK0=;
+	s=korg; t=1791892132;
+	bh=Bw3fnTOILZmfPjVJg8CgYdzn6u14ULECinGBOVx3w2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RrFz0aubQyw36otWSZTsLZgqbXz3hMi2YNNgG/LAFTC8nBgiHrW2zzZqDgJnh09/h
-	 Tdv47kCrXPb3NdzF3ld12AfbpouIDg5yKMJnuIQaGR+LgySASq+UKMTnk5i926fjZI
-	 A8QmtGPJL64fux0L6GqQLS8TaO+G+69skCs57JzQ=
+	b=iO6AjnX4YAl+VCRBqLvp7Vp+aZYpfbHoe57Q1dWgIiAk7A5QHf5iYVsJFitVPWTk4
+	 RfZcm+lYgMNHWWPSRK+h40iy2devL9c872zAQZ4GDu9q8TrF5UN5Y0ZdjFkxM29Rji
+	 GCFNlu7Decj6qFWLwxxaR+bltzv8TMhKMfOzeF44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=EC=84=B1=EB=B3=91=EC=B0=AC?= <tjdqudcks0424@naver.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.2 068/281] KEYS: Fix add_key() race with keyring restriction
-Date: Tue, 13 Oct 2026 13:36:24 +0200
-Message-ID: <20261013112856.780681969@linuxfoundation.org>
+	syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com,
+	Raj Ojha <rajojha047@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 069/281] memstick: core: wait for request completion before freeing card
+Date: Tue, 13 Oct 2026 13:36:25 +0200
+Message-ID: <20261013112856.804668509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -44,71 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 성병찬 <tjdqudcks0424@naver.com>
+From: Raj Ojha <rajojha047@gmail.com>
 
-commit dd3ea3fcba7c75493760cdbccd35f029597e8d5e upstream.
+commit aa0a37b5024d921e96ac4f8f487c8bfbf1f1a582 upstream.
 
-__key_create_or_update() snapshots keyring->restrict_link before taking
-the destination keyring's semaphore.  keyring_restrict() installs a
-restriction while holding that semaphore.
+In memstick_alloc_card() and memstick_set_rw_addr(),
+wait_for_completion_timeout() is used to wait for device identification
+and address configuration requests to complete.
 
-This allows a writer to observe no restriction, wait for the keyring
-owner to install a reject-all restriction and return successfully, and
-then link a key using the stale NULL snapshot.  The writer only needs
-write permission on the destination keyring.
+The memstick subsystem does not provide an abort or cancellation
+callback in struct memstick_host for in-flight requests. If
+wait_for_completion_timeout() expires (for instance, when a USB transfer
+or command retry is delayed), memstick_alloc_card() returns an error and
+frees the memstick_dev structure via kfree(card).
 
-Move the restrict_link read after __key_link_lock() and
-__key_link_begin().  The read and the subsequent restriction check are
-then serialized with restriction installation by keyring->sem.
+However, the host controller driver (such as rtsx_usb_ms) is still
+running the request asynchronously in worker context. When the transfer
+eventually finishes, the driver writes into host->req->data, which
+points to memory inside the already freed card structure. This leads to
+a KASAN slab-use-after-free write:
 
-The race was reproduced on v7.2.8 in 19 executions where restriction
-installation returned before the link completed.  All 19 linked the key
-despite the reject-all restriction.  With this change, 312 executions
-reached the same ordering and every add_key() call failed with -EPERM.
+  BUG: KASAN: slab-use-after-free in ms_read_bytes+0x8fe/0x990
+  Write of size 1 at addr ffff88813c188079 by task kworker/1:5/5239
+  Workqueue: events rtsx_usb_ms_handle_req
+  Call Trace:
+   ms_read_bytes+0x8fe/0x990 drivers/memstick/host/rtsx_usb_ms.c:450
+   rtsx_usb_ms_issue_cmd drivers/memstick/host/rtsx_usb_ms.c:477 [inline]
+   rtsx_usb_ms_handle_req+0x557/0x1a00 drivers/memstick/host/rtsx_usb_ms.c:531
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
+   worker_thread+0x5ef/0xe50 kernel/workqueue.c:3560
+   kthread+0x373/0x450 kernel/kthread.c:436
 
-The issue was found by manual concurrency analysis assisted by AI-based
-analysis and independently verified with a QEMU reproducer and kernel
-instrumentation.
+  Allocated by task 1662:
+   memstick_alloc_card drivers/memstick/core/memstick.c:383 [inline]
+   memstick_check+0x2c1/0x10d0 drivers/memstick/core/memstick.c:452
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
 
-Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
+  Freed by task 1662:
+   kfree+0x20c/0x650 mm/slub.c:6792
+   memstick_alloc_card drivers/memstick/core/memstick.c:420 [inline]
+   memstick_check+0x72b/0x10d0 drivers/memstick/core/memstick.c:452
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
+
+Host controller drivers (rtsx_usb_ms, jmb38x_ms, tifm_ms, r592) already
+implement their own hardware and bus timeouts, and callers in
+mspro_block and ms_block already rely on wait_for_completion()
+unconditionally.
+
+Replace wait_for_completion_timeout() with wait_for_completion() in
+memstick_set_rw_addr() and memstick_alloc_card() so that the card
+structure is never freed while an asynchronous request is in flight.
+
+Fixes: baf8532a147d ("memstick: initial commit for Sony MemoryStick support")
+Reported-by: syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ccffdf05833ebdaeae70
 Cc: stable@vger.kernel.org
-Signed-off-by: 성병찬 <tjdqudcks0424@naver.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260930041802.6114-1-tjdqudcks0424@naver.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Raj Ojha <rajojha047@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/key.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/memstick/core/memstick.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/security/keys/key.c
-+++ b/security/keys/key.c
-@@ -840,9 +840,6 @@ static key_ref_t __key_create_or_update(
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -370,9 +370,7 @@ int memstick_set_rw_addr(struct memstick
+ {
+ 	card->next_request = h_memstick_set_rw_addr;
+ 	memstick_new_req(card->host);
+-	if (!wait_for_completion_timeout(&card->mrq_complete,
+-			msecs_to_jiffies(500)))
+-		card->current_mrq.error = -ETIMEDOUT;
++	wait_for_completion(&card->mrq_complete);
  
- 	key_check(keyring);
+ 	return card->current_mrq.error;
+ }
+@@ -405,9 +403,7 @@ static struct memstick_dev *memstick_all
  
--	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
--		restrict_link = keyring->restrict_link;
--
- 	key_ref = ERR_PTR(-ENOTDIR);
- 	if (keyring->type != &key_type_keyring)
- 		goto error_put_type;
-@@ -880,6 +877,9 @@ static key_ref_t __key_create_or_update(
- 		goto error_link_end;
- 	}
+ 		card->next_request = h_memstick_read_dev_id;
+ 		memstick_new_req(host);
+-		if (!wait_for_completion_timeout(&card->mrq_complete,
+-				msecs_to_jiffies(500)))
+-			card->current_mrq.error = -ETIMEDOUT;
++		wait_for_completion(&card->mrq_complete);
  
-+	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
-+		restrict_link = keyring->restrict_link;
-+
- 	if (restrict_link && restrict_link->check) {
- 		ret = restrict_link->check(keyring, index_key.type,
- 					   &prep.payload, restrict_link->key);
+ 		if (card->current_mrq.error)
+ 			goto err_out;
 
 
