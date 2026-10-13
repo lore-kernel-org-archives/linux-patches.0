@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E520397B09;
-	Tue, 13 Oct 2026 12:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1669E3D9DA8;
+	Tue, 13 Oct 2026 12:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894322; cv=none; b=PQoWYK1uk60crq0iB+0WBLUNqM/9RHxfmkEesrrhvqth3MBiaxmU2xIat3VGPZzso72iaNeere9nQCS9UtJt3QcbjA2u0CnDHem0Zs8fZkfNXQYM2HmBKp4bkMV/R31d2O6gNmXLFztjxQ8j05vbLMzH6EJgEXWsvGmzgWMgTaw=
+	t=1791894325; cv=none; b=iL1AhaQge1iLYNY4393lAhSQKzBJetuaDmId+4eqy0F1/E7bzin8ovDatcqILDpP37WUYON3mVHilBKj2zB4bvZunwm1b9XZ5usvvoP16EsItReWFwSgNUDJazo9Ken4pt0RZuIfhqjdeF9Z4LaaoxfS8EKKzswtr/UxupZdTHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894322; c=relaxed/simple;
-	bh=dRtygC4e87Tt9d8C+4OXITB7cPZPLTYxO/7/l/gSy8Y=;
+	s=arc-20240116; t=1791894325; c=relaxed/simple;
+	bh=RAAcXmip+vbNJTDyG1aQcuZZL8nnLPl8qwTQJuVt9is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gdrz/zXxRu5o+Mvg1lzBxTXj/VIey7UD8UU5fC41+nQEP2zK9Wj4bOGubg1AYLVTm06sp1U+usQcxxV55+9NALF45qPI2BYU5sUcBHB9B5Kx9DdwHNDvwT5olZ5bpIpGg6CYbfA3baxWTRbtNIRIM7zV/B7AC4/EktJC9UgKxp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pswGpblo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=njHMCOJ/xnsDHZrelhyOZI7NKckmjCH7G9itBPioT2QJIyZ0HUG+2jYiAabQoSjfp0q7z5uCiv3BwKn8kAmfW5itdNfnENiWzHYQwfUv/OG9D6omeFPbvHjuUKkdbUaODc4Hq1npYjFMBzhKqIVnwjUGbN66zHuTZ3xlEzmum/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxhX7uSk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pswGpblo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290EF1F00893;
-	Tue, 13 Oct 2026 12:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxhX7uSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A72C1F000FF;
+	Tue, 13 Oct 2026 12:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894320;
-	bh=TPKWjoJ+ORuqQKuNef9cJY3kRp/rnJ3vzSUf8Jx7jGY=;
+	s=korg; t=1791894323;
+	bh=D5SBPxnFnmjZBEIPTcBL1nkKgTnrmohYS3e4yRkPHLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pswGpblonVghHJnkcL5zQo+xy+xglE2ug83OedzJTGJycrW75f+NxIE9pEJk1sZSf
-	 BJfYu4Mew2th2wLvZRzV/12nWyT/LTRXNFnC15f5IhIIjgouBl30yzHFq1pnYJyR7X
-	 5012JNf6vWmbOqjuwiXrjkuUBeE6vYlxM7xeiRFI=
+	b=CxhX7uSkZsWjQ3qqQ1HjW3fqa9/fsXrdCFgcT+JElt2/Fz2mWraX72DvQisXyPXId
+	 CdwX0VOsuEchFR24yi3YjTCEmVhEyGKHdmuuQPlVnwgR8deh12nBIdDy1YNeO64vV3
+	 1ARgnuboCURcpwk/lbcVHBpMYQ6jG5288KQuhFxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nicholas Carlini <npc@anthropic.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 520/621] bpf: backtracking shouldnt clear outer frame R1-R5 for callbacks
-Date: Tue, 13 Oct 2026 13:38:35 +0200
-Message-ID: <20261013112933.162903055@linuxfoundation.org>
+Subject: [PATCH 6.18 521/621] bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge
+Date: Tue, 13 Oct 2026 13:38:36 +0200
+Message-ID: <20261013112933.186217617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,104 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit e3e4f66cc4b72333d0886ae2673c360248987889 ]
+[ Upstream commit 387b1baefbb776e3f48dc2261e77a49213f470f7 ]
 
-When processing calls to bpf_loop() verifier marks R1 (and R4) as
-precise. R1 tracks loop iterations number and because of the
-'callback_depth < R1' mechanics in check_helper_call() must be marked
-precise. However, precision propagation for R1 was broken,
-when bpf_loop() call was verified on a second iteration.
+Nicholas Carlini reported a bug in precision backtracking mechanism
+for BPF_LD | BPF_{IND,ABS} instructions. These instructions are
+modelled as two branches:
+- fallthrough;
+- implicit exit from current subprogram.
 
-Consider the following verification trace:
-- main: bpf_loop(nr_loops, callback ...)
-- callback: BPF_EXIT
-- main: bpf_loop(nr_loops, callback ...)
-- ...
+The implicit exit case was not handled by the backtrack_insn()
+function. When backtracking such a path backtrack_insn() did not
+call bt_subprog_enter(), which meant that backtracking continued
+manipulating precision marks in a caller frame, while looking at
+instructions in a callee frame.
 
-While the first visit of the call to bpf_loop() propagated R1
-precision as expected, the second call to mark_chain_precision() in
-the check_helper_call() set R1, but it was immediately reset when
-backtrack_insn() processed preceding BPF_EXIT in the loop deleted in
-this patch.
+This lead to segmentation faults during verification (see the
+selftest), or unsound state pruning.
 
-Because of that, the second visit of the call to bpf_loop() injected
-checkpoint with R1 not marked as precise. Which could trick the
-verifier into accepting unsafe programs. See the next patch for an
-example of such program.
-
-Commit is structured in a way to minimize conflicts when
-'bpf' would be eventually merged with 'bpf-next'.
-
-Fixes: ab5cfac139ab ("bpf: verify callbacks as if they are called unknown number of times")
+Fixes: ee861486e377 ("bpf: Fix ld_{abs,ind} failure path analysis in subprogs")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
 Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260831-bug-015-backtrack-cb-args-precise-v1-1-68a8e2a821e0@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260901-bug-016-backtrack-ld-abs-v1-1-59368f1be435@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ kernel/bpf/verifier.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 494a3144c6a7a..faa4f8d69cbbb 100644
+index faa4f8d69cbbb..59f1f570e4a57 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -4514,37 +4514,34 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 					return -EFAULT;
- 			}
- 		} else if (opcode == BPF_EXIT) {
--			bool r0_precise;
-+			bool from_subprog_call, r0_precise;
-+
-+			/* BPF_EXIT in subprog or callback always returns
-+			 * right after the call instruction, so by checking
-+			 * whether the instruction at subseq_idx-1 is subprog
-+			 * call or not we can distinguish actual exit from
-+			 * *subprog* from exit from *callback*. In the former
-+			 * case, we need to propagate r0 precision, if
-+			 * necessary. In the former we never do that.
-+			 */
-+			from_subprog_call = subseq_idx - 1 >= 0 &&
-+					    bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]);
-+
-+			r0_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_0);
- 
- 			/* Backtracking to a nested function call, 'idx' is a part of
- 			 * the inner frame 'subseq_idx' is a part of the outer frame.
- 			 * In case of a regular function call, instructions giving
- 			 * precision to registers R1-R5 should have been found already.
--			 * In case of a callback, it is ok to have R1-R5 marked for
--			 * backtracking, as these registers are set by the function
--			 * invoking callback.
-+			 * In case of a callback from bpf_loop(), R{1,4} in the calling
-+			 * frame would be set as precise and that is correct.
- 			 */
--			if (subseq_idx >= 0 && bpf_calls_callback(env, subseq_idx))
--				for (i = BPF_REG_1; i <= BPF_REG_5; i++)
--					bt_clear_reg(bt, i);
--			if (bt_reg_mask(bt) & BPF_REGMASK_ARGS) {
-+			if (from_subprog_call && (bt_reg_mask(bt) & BPF_REGMASK_ARGS)) {
- 				verifier_bug(env, "backtracking exit unexpected regs %x",
- 					     bt_reg_mask(bt));
- 				return -EFAULT;
- 			}
- 
--			/* BPF_EXIT in subprog or callback always returns
--			 * right after the call instruction, so by checking
--			 * whether the instruction at subseq_idx-1 is subprog
--			 * call or not we can distinguish actual exit from
--			 * *subprog* from exit from *callback*. In the former
--			 * case, we need to propagate r0 precision, if
--			 * necessary. In the former we never do that.
--			 */
--			r0_precise = subseq_idx - 1 >= 0 &&
--				     bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]) &&
--				     bt_is_reg_set(bt, BPF_REG_0);
--
- 			bt_clear_reg(bt, BPF_REG_0);
- 			if (bt_subprog_enter(bt))
- 				return -EFAULT;
+@@ -4573,16 +4573,29 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			  */
+ 		}
+ 	} else if (class == BPF_LD) {
+-		if (!bt_is_reg_set(bt, dreg))
+-			return 0;
+-		bt_clear_reg(bt, dreg);
+ 		/* It's ld_imm64 or ld_abs or ld_ind.
+ 		 * For ld_imm64 no further tracking of precision
+ 		 * into parent is necessary
+ 		 */
+-		if (mode == BPF_IND || mode == BPF_ABS)
+-			/* to be analyzed */
+-			return -ENOTSUPP;
++		if (mode == BPF_IMM) {
++			bt_clear_reg(bt, dreg);
++			return 0;
++		}
++		/*
++		 * BPF_{IND,ABS} are modelled as two branches:
++		 * - fallthrough;
++		 * - implicit subprogram exit.
++		 * It is necessary to switch current frame if
++		 * implicit subprogram exit branch is backtracked.
++		 */
++		if (mode == BPF_IND || mode == BPF_ABS) {
++			if (bt_is_reg_set(bt, dreg))
++				return -ENOTSUPP;
++			if (subseq_idx != idx + 1)
++				if (bt_subprog_enter(bt))
++					return -EFAULT;
++			return 0;
++		}
+ 	}
+ 	/* Propagate precision marks to linked registers, to account for
+ 	 * registers marked as precise in this function.
 -- 
 2.53.0
 
