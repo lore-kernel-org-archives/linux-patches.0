@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0A74D98E6;
-	Tue, 13 Oct 2026 12:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3337D4EF146;
+	Tue, 13 Oct 2026 12:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893898; cv=none; b=TXyX2z/NUjyLPEGgmKxU+HbZ1C6HlXwjlzscRNpY2O80gDiBVUEqeP3/ylDiAmAEnjX2kJa+ZPulABP70XtwbqnEdyA23QzOTDDjUfPVEzNyhhhI/Q0AqNABfPe5VDbS1Tyul0vbwx4i/WxTjSnJk0jOdG66Sgktd/pcKn/Fy18=
+	t=1791893901; cv=none; b=GyTYkrI40H6xUqBu06Bz0kIy85BTUfofEhm1nE/8e8zYCZJ+hVVvr4VwnaSg2j7kInM2nR8feGkmWESacNDsRqlyD8+xNwZFNNRw7dfT6sQJOjNn/g9MlBoEx10PP6tU4gbbDuvaDF3aUBxMNhVeha6To+oszASUsVgRGEQDrRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893898; c=relaxed/simple;
-	bh=+67nfNZOZ39SS3L1vU89M0L7pLJudb4ZfA0mGEZfRWQ=;
+	s=arc-20240116; t=1791893901; c=relaxed/simple;
+	bh=KzNPIl3qZnfT4jZ5yxoZLydtlh6i/0rauU7smlARMA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0zWgIbJywkBQjhmGQBfT6iposM8dECQkXLqCNlgttolKnzjIPMetaSPOPFgyaJmJkhamXYMgBUjxjw+UELlUiECsz88JgLwb2rvI+smcZdrZGm8ZfTij/cyC0DbZmwdHIRd9IXkuqpnfq1WJMjdsKM47pQEreC9ZdfrJHVFzk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1v1cXEkD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qEbwXW8wNx37VjcLeWQ8flELFhhGL83uxbdSuRJ6dZKMeHNO8Hqc8BtxPMz3deesUanAMAb7okket1qLxQ9M4GFISbF9hnElvF3YCb3jkX1ljEQDftoD8rVjS4sER2n3k9aEdjZKUJmwA28ZAlO+Siz0i8v4p8qLT6OqZM8HF3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gL6EOwIP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1v1cXEkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683D81F000FF;
-	Tue, 13 Oct 2026 12:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gL6EOwIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8182C1F000FF;
+	Tue, 13 Oct 2026 12:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893897;
-	bh=yzGXiEWep6gr4vDv8TyMUgTZaIuXf64hj4yMw6O3yoc=;
+	s=korg; t=1791893900;
+	bh=5ojTaMQlw0vke/FX3G0XTD0I0VryVNx/JxQ6PBWqqeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1v1cXEkDmTdH+dlnuGrHHZ0LY2lkJMtwdPi2/H8Xr6Js7lQ6Xmy5xoAqq66Wq8VZD
-	 UhHPCK9MtUoT5kutubGqW1qitVHG0UpZyQxvt9NMoN3MlJ8aCqXgTlKmYtr4PNry8b
-	 7dXZUeHERrSB/lL8xbCGOP7LXlG+4bks64g92y78=
+	b=gL6EOwIPtoxp4YF3klxLrZ827AnL1e6k3d2JrmSCIpGrp0nvHy3SkwhgCc10dxIl9
+	 L/gNvh7W/DTYLf5KbhTTv+Foh1+rwGL0QxeIId7Orlmh1/EF2z/D4RFeffaPpwuNOb
+	 t2kQiUsUFmW0c760OxN4oeCHQWWwoanWbi6l+WX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 378/621] SUNRPC: Switch wrap token decryption to crypto/krb5
-Date: Tue, 13 Oct 2026 13:36:13 +0200
-Message-ID: <20261013112929.816601230@linuxfoundation.org>
+Subject: [PATCH 6.18 379/621] SUNRPC: Switch MIC token generation to crypto/krb5
+Date: Tue, 13 Oct 2026 13:36:14 +0200
+Message-ID: <20261013112929.838931426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,18 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 598de25deaffb80758ad8bdce5b4bacbbea59582 ]
+[ Upstream commit a9b9eb085884cd50de41b8ecb8d0fb9d3268cdfb ]
 
-Replace the per-enctype .decrypt callbacks (gss_krb5_aes_decrypt
-and krb5_etm_decrypt) with a single gss_krb5_aead_decrypt()
-wrapper that delegates to crypto_krb5_decrypt().
+gss_krb5_get_mic_v2() currently computes the MIC checksum by
+driving a crypto_ahash directly, calling gss_krb5_checksum()
+with the message body and GSS token header. Replace this with
+a call to crypto_krb5_get_mic(), which performs the same keyed
+hash operation through the crypto/krb5 library.
 
-The new wrapper builds a scatterlist covering the secured
-region (confounder through checksum), passes it to the AEAD
-decrypt operation, and derives the confounder and checksum
-lengths from the data offset and length that
-crypto_krb5_decrypt() reports. The caller's token header
-verification and buffer adjustment logic is unchanged.
+RFC 4121 Section 4.2.4 specifies that the checksum covers the
+message body followed by the token header. Because the
+crypto/krb5 metadata parameter is hashed before the data, the
+GSS header cannot be passed as metadata. Instead, the header
+is appended to the scatterlist after the body data, producing
+the correct hash input ordering without using the metadata
+parameter.
+
+The scatterlist layout is:
+  [checksum_output | message_body | gss_header]
+
+The first scatterlist entry points directly into the
+token buffer, so the checksum is written in place.
+
+A shared helper, gss_krb5_mic_build_sg(), is introduced in
+gss_krb5_crypto.c to construct this scatterlist layout. The
+helper handles overflow allocation and scatterlist chaining
+for large xdr_buf page arrays. It is reused by the verify_mic
+counterpart in the following commit.
 
 Assisted-by: Claude:claude-opus-4-6
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
@@ -74,111 +89,206 @@ Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: b94f6719dcd9 ("SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_crypto.c | 53 +++++++++++++++++++++++++++
- net/sunrpc/auth_gss/gss_krb5_mech.c   |  8 ++--
- 2 files changed, 57 insertions(+), 4 deletions(-)
+ net/sunrpc/auth_gss/gss_krb5_crypto.c   | 82 +++++++++++++++++++++++++
+ net/sunrpc/auth_gss/gss_krb5_internal.h |  6 ++
+ net/sunrpc/auth_gss/gss_krb5_seal.c     | 45 ++++++++++----
+ 3 files changed, 121 insertions(+), 12 deletions(-)
 
 diff --git a/net/sunrpc/auth_gss/gss_krb5_crypto.c b/net/sunrpc/auth_gss/gss_krb5_crypto.c
-index 85425d4a28c23..31c2c86b873fc 100644
+index 31c2c86b873fc..3a8e6710a51bc 100644
 --- a/net/sunrpc/auth_gss/gss_krb5_crypto.c
 +++ b/net/sunrpc/auth_gss/gss_krb5_crypto.c
-@@ -1050,3 +1050,56 @@ gss_krb5_aead_encrypt(struct krb5_ctx *kctx, u32 offset,
- 
+@@ -1103,3 +1103,85 @@ gss_krb5_aead_decrypt(struct krb5_ctx *kctx, u32 offset, u32 len,
+ 	*tailskip = sec_len - data_offset - data_len;
  	return GSS_S_COMPLETE;
  }
 +
 +/**
-+ * gss_krb5_aead_decrypt - Decrypt a wrap token using crypto/krb5
-+ * @kctx: Kerberos context
-+ * @offset: byte offset of the GSS token header in @buf
-+ * @len: total length of the GSS token
-+ * @buf: ciphertext buffer, decrypted in-place
-+ * @headskip: OUT: confounder length, in octets
-+ * @tailskip: OUT: checksum length, in octets
++ * gss_krb5_mic_build_sg - Build scatterlist for MIC token operations
++ * @body: xdr_buf containing the message body
++ * @cksum: pointer to checksum area in the token buffer
++ * @cksum_len: length of checksum area
++ * @hdr: pointer to GSS token header
++ * @sg_head: caller-provided scatterlist array; if more than
++ *	XDR_BUF_TO_SG_NENTS entries are needed, an overflow
++ *	scatterlist is allocated and chained automatically
++ * @sg_overflow: OUT: overflow scatterlist, caller must kfree
 + *
-+ * Return values:
-+ *   %GSS_S_COMPLETE: Decryption and integrity verification succeeded
-+ *   %GSS_S_BAD_SIG: Integrity checksum did not match
-+ *   %GSS_S_DEFECTIVE_TOKEN: Token is malformed or truncated
-+ *   %GSS_S_FAILURE: Decryption failed
++ * Per RFC 4121 Section 4.2.4, MIC token checksums cover the
++ * message body followed by the token header. The checksum
++ * output or received checksum occupies the first scatterlist
++ * entry.  This layout cannot be constructed by
++ * xdr_buf_to_sg_alloc() because the checksum area and the GSS
++ * header lie outside the xdr_buf.
++ *
++ * Returns the number of scatterlist entries on success, or a
++ * negative errno on failure.
 + */
-+u32
-+gss_krb5_aead_decrypt(struct krb5_ctx *kctx, u32 offset, u32 len,
-+		      struct xdr_buf *buf, u32 *headskip, u32 *tailskip)
++int gss_krb5_mic_build_sg(const struct xdr_buf *body,
++			  void *cksum, unsigned int cksum_len,
++			  void *hdr,
++			  struct scatterlist *sg_head,
++			  struct scatterlist **sg_overflow)
 +{
-+	const struct krb5_enctype *krb5 = kctx->krb5e;
-+	struct crypto_aead *aead = kctx->initiate ?
-+		kctx->acceptor_enc_aead : kctx->initiator_enc_aead;
-+	unsigned int sec_offset, sec_len;
-+	size_t data_offset, data_len;
-+	struct scatterlist sg[XDR_BUF_TO_SG_NENTS];
-+	struct scatterlist *sg_overflow = NULL;
-+	int nsg, ret;
++	struct scatterlist *entry;
++	int body_max, body_nsg, nsg;
 +
-+	/* Secured region starts after the GSS token header */
-+	sec_offset = offset + GSS_KRB5_TOK_HDR_LEN;
-+	if (len < sec_offset)
-+		return GSS_S_DEFECTIVE_TOKEN;
-+	sec_len = len - sec_offset;
++	*sg_overflow = NULL;
 +
-+	nsg = xdr_buf_to_sg_alloc(buf, sec_offset, sec_len,
-+				  sg, ARRAY_SIZE(sg),
-+				  &sg_overflow, GFP_NOFS);
++	body_max = 2;
++	if (body->page_len)
++		body_max += DIV_ROUND_UP(body->page_len +
++					 offset_in_page(body->page_base),
++					 PAGE_SIZE);
++	nsg = 1 + body_max + 1;
++	if (nsg <= XDR_BUF_TO_SG_NENTS) {
++		sg_init_table(sg_head, nsg);
++	} else {
++		unsigned int overflow_nents =
++			nsg - XDR_BUF_TO_SG_NENTS + 1;
++
++		*sg_overflow = kmalloc_array(overflow_nents,
++					     sizeof(**sg_overflow),
++					     GFP_NOFS);
++		if (!*sg_overflow)
++			return -ENOMEM;
++
++		sg_init_table(sg_head, XDR_BUF_TO_SG_NENTS);
++		sg_init_table(*sg_overflow, overflow_nents);
++		sg_chain(sg_head, XDR_BUF_TO_SG_NENTS, *sg_overflow);
++	}
++
++	sg_set_buf(&sg_head[0], cksum, cksum_len);
++	body_nsg = xdr_buf_to_sg(body, 0, body->len,
++				 sg_next(&sg_head[0]), body_max);
++	if (body_nsg < 0)
++		goto out_err;
++
++	/*
++	 * xdr_buf_to_sg marks the last body entry as end-of-list;
++	 * clear it so the trailing header entry is reachable.
++	 */
++	if (body_nsg > 0) {
++		entry = sg_last(sg_next(&sg_head[0]), body_nsg);
++		sg_unmark_end(entry);
++		entry = sg_next(entry);
++	} else {
++		entry = sg_next(&sg_head[0]);
++	}
++	sg_set_buf(entry, hdr, GSS_KRB5_TOK_HDR_LEN);
++	sg_mark_end(entry);
++	return 1 + body_nsg + 1;
++
++out_err:
++	kfree(*sg_overflow);
++	*sg_overflow = NULL;
++	return body_nsg;
++}
+diff --git a/net/sunrpc/auth_gss/gss_krb5_internal.h b/net/sunrpc/auth_gss/gss_krb5_internal.h
+index ce43e1be75779..83e969494b543 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_internal.h
++++ b/net/sunrpc/auth_gss/gss_krb5_internal.h
+@@ -186,6 +186,12 @@ u32 krb5_etm_decrypt(struct krb5_ctx *kctx, u32 offset, u32 len,
+ 
+ u32 gss_krb5_errno_to_status(int err);
+ 
++int gss_krb5_mic_build_sg(const struct xdr_buf *body,
++			  void *cksum, unsigned int cksum_len,
++			  void *hdr,
++			  struct scatterlist *sg_head,
++			  struct scatterlist **sg_overflow);
++
+ u32 gss_krb5_aead_encrypt(struct krb5_ctx *kctx, u32 offset,
+ 			  struct xdr_buf *buf, struct page **pages);
+ u32 gss_krb5_aead_decrypt(struct krb5_ctx *kctx, u32 offset, u32 len,
+diff --git a/net/sunrpc/auth_gss/gss_krb5_seal.c b/net/sunrpc/auth_gss/gss_krb5_seal.c
+index ce540df9bce46..66c1793370294 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_seal.c
++++ b/net/sunrpc/auth_gss/gss_krb5_seal.c
+@@ -64,6 +64,8 @@
+ #include <linux/random.h>
+ #include <linux/crypto.h>
+ #include <linux/atomic.h>
++#include <linux/scatterlist.h>
++#include <linux/slab.h>
+ 
+ #include "gss_krb5_internal.h"
+ 
+@@ -78,10 +80,10 @@ setup_token_v2(struct krb5_ctx *ctx, struct xdr_netobj *token)
+ 	void *krb5_hdr;
+ 	u8 *p, flags = 0x00;
+ 
+-	if ((ctx->flags & KRB5_CTX_FLAG_INITIATOR) == 0)
+-		flags |= 0x01;
++	if (!ctx->initiate)
++		flags |= KG2_TOKEN_FLAG_SENTBYACCEPTOR;
+ 	if (ctx->flags & KRB5_CTX_FLAG_ACCEPTOR_SUBKEY)
+-		flags |= 0x04;
++		flags |= KG2_TOKEN_FLAG_ACCEPTORSUBKEY;
+ 
+ 	/* Per rfc 4121, sec 4.2.6.1, there is no header,
+ 	 * just start the token.
+@@ -97,7 +99,7 @@ setup_token_v2(struct krb5_ctx *ctx, struct xdr_netobj *token)
+ 	*ptr++ = 0xffff;
+ 	*ptr = 0xffff;
+ 
+-	token->len = GSS_KRB5_TOK_HDR_LEN + ctx->gk5e->cksumlength;
++	token->len = GSS_KRB5_TOK_HDR_LEN + ctx->krb5e->cksum_len;
+ 	return krb5_hdr;
+ }
+ 
+@@ -105,14 +107,17 @@ u32
+ gss_krb5_get_mic_v2(struct krb5_ctx *ctx, struct xdr_buf *text,
+ 		    struct xdr_netobj *token)
+ {
+-	struct crypto_ahash *tfm = ctx->initiate ?
+-				   ctx->initiator_sign : ctx->acceptor_sign;
+-	struct xdr_netobj cksumobj = {
+-		.len =	ctx->gk5e->cksumlength,
+-	};
++	const struct krb5_enctype *krb5 = ctx->krb5e;
++	struct crypto_shash *shash = ctx->initiate ?
++		ctx->initiator_sign_shash : ctx->acceptor_sign_shash;
++	unsigned int cksum_len = krb5->cksum_len;
++	struct scatterlist sg_head[XDR_BUF_TO_SG_NENTS];
++	struct scatterlist *sg_overflow;
+ 	__be64 seq_send_be64;
+ 	void *krb5_hdr;
+ 	time64_t now;
++	ssize_t ret;
++	int nsg;
+ 
+ 	dprintk("RPC:       %s\n", __func__);
+ 
+@@ -123,9 +128,25 @@ gss_krb5_get_mic_v2(struct krb5_ctx *ctx, struct xdr_buf *text,
+ 	seq_send_be64 = cpu_to_be64(atomic64_fetch_inc(&ctx->seq_send64));
+ 	memcpy(krb5_hdr + 8, (char *) &seq_send_be64, 8);
+ 
+-	cksumobj.data = krb5_hdr + GSS_KRB5_TOK_HDR_LEN;
+-	if (gss_krb5_checksum(tfm, krb5_hdr, GSS_KRB5_TOK_HDR_LEN,
+-			      text, 0, &cksumobj))
++	/*
++	 * The checksum is written directly into the token buffer.
++	 * This is safe: crypto_krb5_get_mic uses shash (software
++	 * hash), so the scatterlist is never DMA-mapped.
++	 */
++	nsg = gss_krb5_mic_build_sg(text,
++				    krb5_hdr + GSS_KRB5_TOK_HDR_LEN,
++				    cksum_len, krb5_hdr,
++				    sg_head, &sg_overflow);
 +	if (nsg < 0)
 +		return GSS_S_FAILURE;
 +
-+	data_offset = 0;
-+	data_len = sec_len;
-+	ret = crypto_krb5_decrypt(krb5, aead, sg, nsg,
-+				  &data_offset, &data_len);
++	ret = crypto_krb5_get_mic(krb5, shash, NULL, sg_head, nsg,
++				  cksum_len + text->len +
++					GSS_KRB5_TOK_HDR_LEN,
++				  cksum_len,
++				  text->len + GSS_KRB5_TOK_HDR_LEN);
 +	kfree(sg_overflow);
 +	if (ret < 0)
-+		return gss_krb5_errno_to_status(ret);
-+
-+	*headskip = data_offset;
-+	*tailskip = sec_len - data_offset - data_len;
-+	return GSS_S_COMPLETE;
-+}
-diff --git a/net/sunrpc/auth_gss/gss_krb5_mech.c b/net/sunrpc/auth_gss/gss_krb5_mech.c
-index cdc710962e629..8e61be0e8ec5b 100644
---- a/net/sunrpc/auth_gss/gss_krb5_mech.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_mech.c
-@@ -44,7 +44,7 @@ static const struct gss_krb5_enctype supported_gss_krb5_enctypes[] = {
- 	  .cksum_name = "hmac(sha1)",
- 	  .derive_key = krb5_derive_key_v2,
- 	  .encrypt = gss_krb5_aead_encrypt,
--	  .decrypt = gss_krb5_aes_decrypt,
-+	  .decrypt = gss_krb5_aead_decrypt,
+ 		return GSS_S_FAILURE;
  
- 	  .get_mic = gss_krb5_get_mic_v2,
- 	  .verify_mic = gss_krb5_verify_mic_v2,
-@@ -73,7 +73,7 @@ static const struct gss_krb5_enctype supported_gss_krb5_enctypes[] = {
- 	  .cksum_name = "hmac(sha1)",
- 	  .derive_key = krb5_derive_key_v2,
- 	  .encrypt = gss_krb5_aead_encrypt,
--	  .decrypt = gss_krb5_aes_decrypt,
-+	  .decrypt = gss_krb5_aead_decrypt,
- 
- 	  .get_mic = gss_krb5_get_mic_v2,
- 	  .verify_mic = gss_krb5_verify_mic_v2,
-@@ -167,7 +167,7 @@ static const struct gss_krb5_enctype supported_gss_krb5_enctypes[] = {
- 
- 		.derive_key	= krb5_kdf_hmac_sha2,
- 		.encrypt	= gss_krb5_aead_encrypt,
--		.decrypt	= krb5_etm_decrypt,
-+		.decrypt	= gss_krb5_aead_decrypt,
- 
- 		.get_mic	= gss_krb5_get_mic_v2,
- 		.verify_mic	= gss_krb5_verify_mic_v2,
-@@ -193,7 +193,7 @@ static const struct gss_krb5_enctype supported_gss_krb5_enctypes[] = {
- 
- 		.derive_key	= krb5_kdf_hmac_sha2,
- 		.encrypt	= gss_krb5_aead_encrypt,
--		.decrypt	= krb5_etm_decrypt,
-+		.decrypt	= gss_krb5_aead_decrypt,
- 
- 		.get_mic	= gss_krb5_get_mic_v2,
- 		.verify_mic	= gss_krb5_verify_mic_v2,
+ 	now = ktime_get_real_seconds();
 -- 
 2.53.0
 
