@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40584F4D0A;
-	Tue, 13 Oct 2026 12:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E1A3EFFD4;
+	Tue, 13 Oct 2026 12:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895887; cv=none; b=IC4NNdLRpYrppK/b1X+d01SVPgJsr/oylsfybncldaV5SON3o37IVNeNCbUVJF7m4lpaeABNEtXKsUJiyD3M267zuWLUQF1QlhFu9KRNvZcx9Q/ZpA4otWAYBZDzhEI7F7dMfmYnKE8iD9REmcl21ckhG5IjxDZG9kNCMzSb6lE=
+	t=1791895890; cv=none; b=iFOO2zV+X41uQuhdbWAV4eG4gukLFxG98Wjcc/hVTcuvqcBKgBvHHBgOu9C19YpbsmD2NFyGSLv6XGi/sw6TegU7tPw2IeGE3GBr1iWRekDiGHUc/CLZBmQbaxxwLNNZUyaXYNQTjOvnIlgZUoTMnWU7Gc/I4kBnE5/BT4g3y1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895887; c=relaxed/simple;
-	bh=HKJXs9Qk1wW+QqeOHm5hIa+ocX9TB7S01PO5rcSRml4=;
+	s=arc-20240116; t=1791895890; c=relaxed/simple;
+	bh=MSM7Vvh02BJNM/+naNC9l8maRM9nucLg6ESKB8cNKrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/pqSk8LA3luJmkHb7MKi5PZe5gWnF76U3mPxz0fzWO4J9cqEEB/NQCIHq2BSOfxlmU/YcDN6qnE9kPgkyH1BRg5F8yyCsBQbmk4DIZ9G54JU//Nw0fkHVd4IO/rspR9YgbIH6vDXxNvqeFjQwOq1ib3ZDjbRxxKDoMjlo1GUPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=penhFU16; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I0LAsOVlzk+hzJgBo6uvrqM35PiNbNRs+j/dAUOplp3aRAdTTBjcHB8aOAWwZ1TGOshqN+c00HzC4K1+j0ONDSPlAUEdcjxgUhrmk/mNBRhaQ1SHufFJsq3GdrGJOC0TUNcGEe3ydX9c4m0nWA/hSU6J/bExrmUWPf0ppm+3vT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WteySL1G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="penhFU16"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDCF1F000FF;
-	Tue, 13 Oct 2026 12:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WteySL1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B261F000FF;
+	Tue, 13 Oct 2026 12:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895886;
-	bh=m60IGOoMB4kq1garOP2RGF7BWxx58CctEVkfKYpvqW8=;
+	s=korg; t=1791895889;
+	bh=mqq+d6AAfJyvIu5Tnb5djlny5mWSDL2L+NGg1vMfYq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=penhFU16I5DIkJjfx5L7qRuldMXeyiCZg9T8JFxCsxCcf32tGfzJ6engBB3vw4kxD
-	 5PJQwuZyunlImDn/DNRtK+qWeC4YIpjx3JJ79HVaXcn75T1FRv4b8+/XywwLZ+Qcda
-	 x92Z0K8nHjK2cJPoHhiDXYWAzIzbgqK9VjAZ6dkg=
+	b=WteySL1GtWFduWnJYuPkzgrhWqVgnYCeFV8E5CCJ7pChIW+NzL/hpZVRGLUBEuU2y
+	 x/li8610LanA06/glf4d4rywWykdutmmCoAmbKgPU5+3ny+FnOd6GGKYJUQof5mVt7
+	 pRUY41AfYMQpoAlpA+QYJ8/DG1GN3RvEnY8OOwEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sajal Gupta <sajal2005gupta@gmail.com>,
-	Ruben Wauters <rubenru09@aol.com>
-Subject: [PATCH 6.12 427/497] drm/gud: dont keep a connector without a CRTC as connector_state
-Date: Tue, 13 Oct 2026 13:39:54 +0200
-Message-ID: <20261013112918.021819765@linuxfoundation.org>
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.12 428/497] drm/i915/gem: Prevent overstepping exec array boundary
+Date: Tue, 13 Oct 2026 13:39:55 +0200
+Message-ID: <20261013112918.044710962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,44 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sajal Gupta <sajal2005gupta@gmail.com>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-commit 71ec70ea26e399eb8371fe9d2d5bf5dab09570fb upstream.
+commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
 
-If the 'for_each_new_connector_in_state()' loop finishes without
-hitting the break, connector_state is left pointing at the last
-connector visited, which has no CRTC, instead of
-staying NULL.
+It is possible for eb_relocate_parse_slow() to call kvfree() on
+entries outside the original exec array during following
+scenario inside eb_relocate_parse_slow():
 
-That skips the "if (!connector_state)" fallback below the loop, which
-looks up the active connector when the state contains none. The
-function then carries on with a connector that is not driven.
+1) eb_copy_relocations() allocates as many as eb->buffer_count
+   copies for exec entries;
+2) eb_parse() appends up to two VMAs, right after incrementing
+   eb->buffer_count;
+3) cleanup under "out" label uses this incremented buffer_count
+   to release relocation pointers from exec array via kvfree(),
+   not from VMA array.
 
-Fix by resetting connector_state to NULL for each connector visited that
-has no CRTC, so that it is NULL when none was found and the fallback runs.
+To amend this problem, ensure that relocation cleanup uses the
+original exec object count, excluding the VMAs appended by the
+command parser.
 
-Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260902123254.36987-1-sajal2005gupta@gmail.com?part=1
-Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
-Acked-by: Ruben Wauters <rubenru09@aol.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ruben Wauters <rubenru09@aol.com>
-Link: https://patch.msgid.link/20260922084026.15481-1-sajal2005gupta@gmail.com
+Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Assisted-by: GitHub-Copilot:gpt-6-astra
+Cc: stable@vger.kernel.org # 5.10+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
+(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gud/gud_pipe.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/gud/gud_pipe.c
-+++ b/drivers/gpu/drm/gud/gud_pipe.c
-@@ -486,6 +486,7 @@ int gud_pipe_check(struct drm_simple_dis
- 	for_each_new_connector_in_state(state, connector, connector_state, i) {
- 		if (connector_state->crtc)
- 			break;
-+		connector_state = NULL;
- 	}
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -1765,6 +1765,7 @@ static int eb_reinit_userptr(struct i915
  
- 	/*
+ static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb)
+ {
++	const unsigned int count = eb->buffer_count;
+ 	bool have_copy = false;
+ 	struct eb_vma *ev;
+ 	int err = 0;
+@@ -1867,7 +1868,6 @@ err:
+ 
+ out:
+ 	if (have_copy) {
+-		const unsigned int count = eb->buffer_count;
+ 		unsigned int i;
+ 
+ 		for (i = 0; i < count; i++) {
 
 
