@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101804F93A4;
-	Tue, 13 Oct 2026 12:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5394FC8D8;
+	Tue, 13 Oct 2026 12:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895041; cv=none; b=jSZLUIdiS4eJrdvxC4TcEuLqG7lpL2D/MT81O8LU4Vlb7h0/tybhgxErHQWdoWnPb9UD38JT7Z2VjtK08L+RGioKFQZQclKAhmYHvhB4+49oVvUTUAWgOLDeR51BjolP3CWzs18hXDX+6LQmyRJS9VgQ3EneQrmmH+YhX471XBg=
+	t=1791895043; cv=none; b=XVgXEFryoOwS4waFY6UaKRarwIx7cvwev/qAdMnGD8WDZqSiilEaDMdYC0BXOGrJmFqb7omMN9yf2ZdV9ifipVGVQrKaQqOU5B0QHSF1q17lKjZbAt9w7MB8AlCeBT1+hAGH6RtbWpMUc9ksiTZy06/Ym+59+3qowQEi9S1CUZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895041; c=relaxed/simple;
-	bh=hcKDyi1wAjf/3fuH/NJ7eFJcABTiHSLxK+YrcvjrFn8=;
+	s=arc-20240116; t=1791895043; c=relaxed/simple;
+	bh=1IFqTLvNXdpKaBTTC0Mugk5HejZrlmG3GFvpk1xDsuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgbt+O2Yxkx/PxleKjwTOoXTxCG5rJ7QSbvEVfAn/g5jyOfz0nGlsW03nC4mXJ/1se2GvgO6JrZtbX8m8nsQ59NwH+3tcIUZHiibNgXJ2R14LZVSUZHcmco4VQiLawvjJSq98theGIs1OPXed+82egHVey8vht6MA5+b7XaGXR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7flnWuZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XHdAefjOPVWfzFAq8RAcKUJ5fhLvS1j/0drH5R3WW8vNwjsJVBTxTKn+qo5TPDdVW5XDSk+FxTYHV/ZptFjRlNjtqWbbVqsNBFPSPXrQaFrxM4sfe1Mj5VnyQNH3Lwf87OWYZswQiHpJB291gXTztdCephJJPoOTDeIHYiqu0EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X21utSYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7flnWuZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5686D1F000FF;
-	Tue, 13 Oct 2026 12:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X21utSYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412501F000FF;
+	Tue, 13 Oct 2026 12:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895040;
-	bh=qkEZhw1k7yCRgRzFq0x9kPFeIzYRBZkekrW1CqYvfY8=;
+	s=korg; t=1791895042;
+	bh=rcuZnbhDJtvk6HMeaAWnZIrB10FVp96awjdaawuUf/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7flnWuZOOJj2iUMKTCtw8Pj0A2b4bQKdHR7D6jwA7eHs20V/8cZ05x75sb+9BGZN
-	 DgSSzOPY0e3Or25lVYG6DrLlF3lFK+4SpBJ3ZFeuuSilfXhxGHiXpcMD7DVOpO2fD0
-	 3F3dJCwXdsJ1gfXiIypwkZ+M7yb2NHDevsPcx3zo=
+	b=X21utSYicK93Z6vF2GNI20ECN8ZxIAcUncuUDH18xYaSZuVWvsh/c7NNMbTak9tpr
+	 xM4zD96LK8PfYTQCOTwgle+HaY43Z0c8EOUFShHGuYiyfhD22pEyGqtYh++7YuPN+X
+	 sboE8tToKpCmyLVzBPmna7wvjk7ZWX9bOfc6jKOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@sina.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 142/497] usb: gadget: midi2: Fix the jack descriptor array sizes
-Date: Tue, 13 Oct 2026 13:35:09 +0200
-Message-ID: <20261013112911.258782253@linuxfoundation.org>
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Ivy Lopez <skunkolee@gmail.com>
+Subject: [PATCH 6.12 143/497] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
+Date: Tue, 13 Oct 2026 13:35:10 +0200
+Message-ID: <20261013112911.282315974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,47 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-commit 310c2d4608d8c1a2baa57db1dfd319c5c40cf4a1 upstream.
+commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
 
-The jack in/out descriptor arrays in struct f_midi2_usb_config have
-the size of MAX_CABLES, which look reasonable -- but it turned out to
-be incorrect.  Namely, the entries for those arrays are added from
-both inputs and outputs, hence for each loop cycle, it adds two, ended
-up with as twice as the expected size.  This inconsistency may result
-in potential OOB when a large number of jacks are set up via configfs,
-although the max number of cables (the loop count) is limited to
-MAX_CABLES.
+generic_set_cmd() and generic_get_cmd() use the low nibble of
+ctrl->bRequest as an index into con->data[]:
 
-For addressing it, correct the jack_ins & jack_outs array sizes to
-twice, MAX_CABLES * 2.
+    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
+    ...
+    con->data[cmd] = value;            /* OOB when cmd >= 5 */
 
-Fixes: 856fa444b098 ("usb: gadget: midi2: Dynamically create MIDI 1.0 altset descriptors")
+struct usb_audio_control (include/linux/usb/audio.h) declares data as
+a 5-element array, so indices 5 through 15 write (or read) up to 44
+bytes past the end of the array on the heap.
+
+A malicious USB host can craft a class-specific SET_CUR / GET_CUR
+request with an arbitrary bRequest value, triggering the out-of-bounds
+access from an IRQ completion handler with no further preconditions.
+
+Add an ARRAY_SIZE() guard to both functions.
+
+Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
 Cc: stable <stable@kernel.org>
-Reported-by: syzbot+c35f34092a4bc9855be6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c35f34092a4bc9855be6
-Link: https://lore.kernel.org/20260826134606.127250-1-eadavis@sina.com
-Cc: Edward Adam Davis <eadavis@sina.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260901145512.785142-1-tiwai@suse.de
+Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
+Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi2.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/gadget/function/f_midi2.c
-+++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -1636,8 +1636,8 @@ struct f_midi2_usb_config {
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -797,6 +797,9 @@ fail:
  
- 	/* MIDI 1.0 jacks */
- 	unsigned char jack_in, jack_out, jack_id;
--	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES];
--	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES];
-+	struct usb_midi_in_jack_descriptor jack_ins[MAX_CABLES * 2];
-+	struct usb_midi_out_jack_descriptor_1 jack_outs[MAX_CABLES * 2];
- };
+ static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	con->data[cmd] = value;
  
- static int append_config(struct f_midi2_usb_config *config, void *d)
+ 	return 0;
+@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
+ 
+ static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	return con->data[cmd];
+ }
+ 
 
 
