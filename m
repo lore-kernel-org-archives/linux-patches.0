@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEB83EFFCC;
-	Tue, 13 Oct 2026 12:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E314EDCC1;
+	Tue, 13 Oct 2026 12:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894283; cv=none; b=QzPtNo/gxwQJsXWSjTIZ1nqQGl/ihQzT/NMw3OUNi3dlWp1VlzfV5UTOxxiI9DMcYyIsjk1KQnYtBN1QxnhEQNfFiIa6KSOkZSsZ7hkra2UxthXQcBi1gvjE8V1WD/LKyPQ9DdYjQlsnKRpYDEpQXptuxQT3QlFL8nYldODsU/I=
+	t=1791894286; cv=none; b=Hz2Jdji1iaEg1ph+7BSNJOL4CaoVJhh8IjjaEUpmX9Txyc4VLW+TYbR3kVRi9cWZlR1FmEaJuHF4+0Pm3OIiMfINrjH9pkKY1Zcg8sBFQRASYGgZvAjHfAsWuDRz1+/U7GUbo+wW0LMnD0J3tnkoLcC6H7joxWmUFgxsYqKtgvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894283; c=relaxed/simple;
-	bh=TWqxbStImzY038acwjFjnBFGC8S+jM5opp6aK86yXVA=;
+	s=arc-20240116; t=1791894286; c=relaxed/simple;
+	bh=xncnNhYyzMA8EcKgLj5Dd+rUYihbJtF2ZL22fbdlL1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVdWKeBorVuLZNmHsJSpfNTFKH8FfEsZqTykbShs3c7Ny9KhNDAtTzXOY8xZuGezhM2LnhCE3gfxaEjQjS4VEIlUhcH9olOrBvtPP9TYvKLMgR8ONUf50VeYIISYbHp+gakkiO40pS3/CPc3/w/xE48VvWY1vaHxdMlfBf5GZ2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvYcRWDc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NuxMDvE+KjlZXvdFu6nzxML5WPMsphovwzwxgSQ2dbVRpE3KtYMVSg78OWdy+8sblY7lt5JJNe2AgiS6MOPaSr9Pc1Jq0bdP3dmHyDcaWIHxaTOJ+fH6wqzRXX0AFo//4rtrkXPSqV0KgEc6kYKtGIwJM1xNuV/m2nyaSSY+nRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPT6yzTR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvYcRWDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D16E1F0089A;
-	Tue, 13 Oct 2026 12:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPT6yzTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAD61F000FF;
+	Tue, 13 Oct 2026 12:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894281;
-	bh=QAHACHN4VWDcvSCttcXARMgIhcp1x2B+IxeA2QKv4wc=;
+	s=korg; t=1791894284;
+	bh=GzflZrV2FcVG2sAO1FYk8Am2gZiAqdf8W0Jgol1sLi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvYcRWDcp6CEm9H8IGnZP5i1sYqnqOwjkGgT6+cxv3hN/O/7hMiykoTMcf09HY3g3
-	 XJuVOuI7UzF5phpdiMsvIYwtmr/Ae5D+ZCBstPQMYSD3T2evFXd7Z7SWCXFV1IhcPh
-	 46SRF7OL7zpdmzT8q/KlQnKgVlKwTXpfrOGQ5U04=
+	b=BPT6yzTROIvpL8M51ojvr0D0GTA4por+Rn+8hlnGermbUWoxfcZoD+cMnLExBM18T
+	 2HMdluwIdzKY9YFnmsiYP0/hu8ME77QvgEiaOwFEr9BRPpZtuuV9JVBFzibUCB1vov
+	 7/NAlDKanE+FCZZkFqPkKNeUah122mOxhbqWB1XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 508/621] iommu/riscv: Serialize command queue publishing
-Date: Tue, 13 Oct 2026 13:38:23 +0200
-Message-ID: <20261013112932.881003059@linuxfoundation.org>
+Subject: [PATCH 6.18 509/621] bpf: mark a NULL call argument precise
+Date: Tue, 13 Oct 2026 13:38:24 +0200
+Message-ID: <20261013112932.905754737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,161 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit ca58afa40946acd252a50fa4d4a86f15847a3d7d ]
+[ Upstream commit 1a3a10b030c96ea88868ccc060a16827c01eaa5a ]
 
-Serialize command queue publishing so software producer state advances only
-after a command is written and the hardware tail is updated. Wait for
-hardware consumption outside the queue lock when the command queue is full
-so other CPUs are not blocked behind a long poll.
+check_func_arg() allows bpf_register_is_null() for nullable arguments
+w/o marking the underlying scalar register precise. Hence a checkpoint
+created on such a path would prune against arbitrary scalar value.
 
-Fixes: 856c0cfe5c5f ("iommu/riscv: Command and fault queue support")
-Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+check_helper_call() enforces second parameter of the
+bpf_get_local_storage() to be zero, w/o marking the underlying scalar
+register precise. Hence a checkpoint created on such a path would
+prune against arbitrary scalar value.
+
+Grouping these two into one patch, as they share the same fixes tag.
+
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260904-register-is-null-precise-fixes-v1-1-0f5a360ff15d@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu.c | 100 +++++++++++++++++++++---------------
- 1 file changed, 58 insertions(+), 42 deletions(-)
+ kernel/bpf/verifier.c                                |  9 ++++++++-
+ .../selftests/bpf/progs/verifier_subprog_precision.c | 12 ++++++------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index 8f4f06348a7bc..890a31262b190 100644
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -381,75 +381,91 @@ static int riscv_iommu_queue_wait(struct riscv_iommu_queue *queue,
- 				 (int)(cons - index) > 0, 0, timeout_us);
- }
- 
--/* Enqueue an entry and wait to be processed if timeout_us > 0
-- *
-- * Error handling for IOMMU hardware not responding in reasonable time
-- * will be added as separate patch series along with other RAS features.
-- * For now, only report hardware failure and continue.
-- */
-+static int riscv_iommu_queue_wait_for_space(struct riscv_iommu_queue *queue,
-+						   unsigned int last)
-+{
-+	unsigned int head;
-+	unsigned int tail;
-+	unsigned int hw_head;
-+	unsigned long flags;
-+	int ret;
-+
-+	ret = riscv_iommu_readl_timeout(queue->iommu, Q_HEAD(queue), hw_head,
-+					      !(hw_head & ~queue->mask) && hw_head != last,
-+					      0, RISCV_IOMMU_QUEUE_TIMEOUT);
-+	if (ret)
-+		return ret;
-+
-+	raw_spin_lock_irqsave(&queue->lock, flags);
-+	head = atomic_read(&queue->head);
-+	tail = atomic_read(&queue->tail);
-+	if ((tail - head) >= queue->mask) {
-+		last = Q_ITEM(queue, head);
-+		/*
-+		 * Re-read hw_head under the lock so that it is consistent with
-+		 * the freshly computed 'last'.  Using the pre-lock snapshot
-+		 * could produce a stale value that wraps around relative to the
-+		 * new 'last', advancing the shadow head past entries that have
-+		 * not yet been consumed by the hardware.
-+		 */
-+		hw_head = riscv_iommu_readl(queue->iommu, Q_HEAD(queue));
-+		if (!(hw_head & ~queue->mask) && hw_head != last)
-+			atomic_add((hw_head - last) & queue->mask, &queue->head);
-+	}
-+	raw_spin_unlock_irqrestore(&queue->lock, flags);
-+
-+	return 0;
-+}
-+
-+/* Enqueue an entry and publish it to the hardware queue. */
- static unsigned int riscv_iommu_queue_send(struct riscv_iommu_queue *queue,
- 					   void *entry, size_t entry_size)
- {
- 	unsigned int prod;
- 	unsigned int head;
--	unsigned int tail;
- 	unsigned long flags;
-+	int ret;
- 
--	/* Do not preempt submission flow. */
--	local_irq_save(flags);
-+	/* 1. Wait for space availability and reserve the next slot. */
-+	for (;;) {
-+		raw_spin_lock_irqsave(&queue->lock, flags);
- 
--	/* 1. Allocate some space in the queue */
--	prod = atomic_inc_return(&queue->prod) - 1;
--	head = atomic_read(&queue->head);
-+		prod = atomic_read(&queue->tail);
-+		head = atomic_read(&queue->head);
- 
--	/* 2. Wait for space availability. */
--	if ((prod - head) > queue->mask) {
--		if (readx_poll_timeout(atomic_read, &queue->head,
--				       head, (prod - head) < queue->mask,
--				       0, RISCV_IOMMU_QUEUE_TIMEOUT))
--			goto err_busy;
--	} else if ((prod - head) == queue->mask) {
--		const unsigned int last = Q_ITEM(queue, head);
-+		if ((prod - head) < queue->mask)
-+			break;
-+
-+		head = Q_ITEM(queue, head);
-+		raw_spin_unlock_irqrestore(&queue->lock, flags);
- 
--		if (riscv_iommu_readl_timeout(queue->iommu, Q_HEAD(queue), head,
--					      !(head & ~queue->mask) && head != last,
--					      0, RISCV_IOMMU_QUEUE_TIMEOUT))
-+		ret = riscv_iommu_queue_wait_for_space(queue, head);
-+		if (ret)
- 			goto err_busy;
--		atomic_add((head - last) & queue->mask, &queue->head);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 419455fe03267..a5c8826e36896 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9871,11 +9871,15 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 			return err;
  	}
  
--	/* 3. Store entry in the ring buffer */
-+	/* 2. Store entry in the ring buffer. */
- 	memcpy(queue->base + Q_ITEM(queue, prod) * entry_size, entry, entry_size);
+-	if (register_is_null(reg) && type_may_be_null(arg_type))
++	if (register_is_null(reg) && type_may_be_null(arg_type)) {
+ 		/* A NULL register has a SCALAR_VALUE type, so skip
+ 		 * type checking.
+ 		 */
++		err = mark_chain_precision(env, regno);
++		if (err)
++			return err;
+ 		goto skip_type_check;
++	}
  
--	/* 4. Wait for all previous entries to be ready */
--	if (readx_poll_timeout(atomic_read, &queue->tail, tail, prod == tail,
--			       0, RISCV_IOMMU_QUEUE_TIMEOUT))
--		goto err_busy;
--
--	/*
--	 * 5. Make sure the ring buffer update (whether in normal or I/O memory) is
--	 *    completed and visible before signaling the tail doorbell to fetch
--	 *    the next command. 'fence ow, ow'
--	 */
-+	/* 3. Make sure the entry is visible before updating the queue tail. */
- 	dma_wmb();
- 	riscv_iommu_writel(queue->iommu, Q_TAIL(queue), Q_ITEM(queue, prod + 1));
- 
- 	/*
--	 * 6. Make sure the doorbell write to the device has finished before updating
--	 *    the shadow tail index in normal memory. 'fence o, w'
-+	 * 4. Make sure the doorbell write to the device has finished before
-+	 *    updating the shadow tail index in normal memory. 'fence o, w'
- 	 */
- 	mmiowb();
--	atomic_inc(&queue->tail);
-+	atomic_set(&queue->tail, prod + 1);
-+	atomic_set(&queue->prod, prod + 1);
- 
--	/* 7. Complete submission and restore local interrupts */
--	local_irq_restore(flags);
-+	raw_spin_unlock_irqrestore(&queue->lock, flags);
- 
- 	return prod;
- 
- err_busy:
--	local_irq_restore(flags);
-+	/* Report the failure and continue; full RAS recovery is not implemented. */
- 	dev_err_once(queue->iommu->dev, "Hardware error: command enqueue failed\n");
--
- 	return prod;
- }
- 
+ 	/* arg_btf_id and arg_size are in a union. */
+ 	if (base_type(arg_type) == ARG_PTR_TO_BTF_ID ||
+@@ -11811,6 +11815,9 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+ 			verbose(env, "get_local_storage() doesn't support non-zero flags\n");
+ 			return -EINVAL;
+ 		}
++		err = mark_chain_precision(env, BPF_REG_2);
++		if (err)
++			return err;
+ 		break;
+ 	case BPF_FUNC_for_each_map_elem:
+ 		err = push_callback_call(env, insn, insn_idx, meta.subprogno,
+diff --git a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+index ac3e418c2a961..d55fd063dc59e 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
++++ b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+@@ -287,9 +287,9 @@ __msg("17: (b7) r0 = 0")
+ __msg("18: (95) exit")
+ __msg("returning from callee:")
+ __msg("to caller at 9:")
+-__msg("frame 0: propagating r1,r4")
++__msg("frame 0: propagating r1,r3,r4")
+ __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4 stack= before 18: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4 stack= before 18: (95) exit")
+ __msg("from 18 to 9: safe")
+ __naked int callback_result_precise(void)
+ {
+@@ -419,9 +419,9 @@ __msg("to caller at 9:")
+ /* r1, r4 are always precise for bpf_loop(),
+  * r6 was marked before backtracking to callback body.
+  */
+-__msg("frame 0: propagating r1,r4,r6")
++__msg("frame 0: propagating r1,r3,r4,r6")
+ __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4,r6 stack= before 16: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4,r6 stack= before 16: (95) exit")
+ __msg("mark_precise: frame1: regs= stack= before 15: (b7) r0 = 0")
+ __msg("mark_precise: frame1: regs= stack= before 9: (85) call bpf_loop")
+ __msg("mark_precise: frame0: parent state regs= stack=:")
+@@ -575,9 +575,9 @@ __msg("to caller at 10:")
+ /* r1, r4 are always precise for bpf_loop(),
+  * fp-8 was marked before backtracking to callback body.
+  */
+-__msg("frame 0: propagating r1,r4,fp-8")
++__msg("frame 0: propagating r1,r3,r4,fp-8")
+ __msg("mark_precise: frame0: last_idx 10 first_idx 10 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4 stack=-8 before 18: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4 stack=-8 before 18: (95) exit")
+ __msg("mark_precise: frame1: regs= stack= before 17: (b7) r0 = 0")
+ __msg("mark_precise: frame1: regs= stack= before 10: (85) call bpf_loop#181")
+ __msg("mark_precise: frame0: parent state regs= stack=:")
 -- 
 2.53.0
 
