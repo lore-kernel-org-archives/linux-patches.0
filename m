@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959AA3AE18C;
-	Tue, 13 Oct 2026 12:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8924FB9BB;
+	Tue, 13 Oct 2026 12:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893287; cv=none; b=sK1IvDnzHPpDOts0deAdWzyVXsFbflB6bh1O68iNTJCeaZPVm/+fRLqVN86yP7lq7zmNlh8Ta3zNPN2gx8XHhiBn4eDZ7V4g1LDSPd9AMg8V+HD5fKmdydhOYagoV8mfhlPY1Wa3BG5iDrUuL6/V0bVtpFTsxpXBypfaIAoFafY=
+	t=1791893289; cv=none; b=iMciqSjXsgaT5ZfZE3R+Wbrwv01mV1qdFbfdf2Yk/yHVigxdPG1JummPr5AkTth2vAKSB2OA0OYoaYmH6UuQAaxoOf8pnzTOkapezjV553o/gsep0o3Nf7rZJ3WAKOigwBpGLQqTtVF8ttSLw2BpwxxR5LY6/Zeu+Om+YYlmJvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893287; c=relaxed/simple;
-	bh=etuIVz7W3mZt4Lo1JlVlpCH34B7j8j4yaAwtHzuNzXg=;
+	s=arc-20240116; t=1791893289; c=relaxed/simple;
+	bh=QjEIe4KlSAKyttdgA2i0KxB7sTup8g9KDeTUUk0ScXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kow0uuV7QNJSs+XI/Ov4Z6FRamcYDC9xYcWPjErf3QDU7+KN8LtpNX1MTfvdiD8KceFC/37pJbObrCTFvWaTppD9EbGNIFnk6t1kJIrmwEwmtef5X0FMtAPAMfdMosFnfNM6YKybaFDrO8KcujU5HF0CO4pfkAf8KPvr4QkXJ5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuSEBbjF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BRxiv/2B9B09qm07+HSvPLG0HgUXx3QSUJf1c1l5tI1sKo+nbW1yqtwtrL/p0t6Kn9u6T8xmB15BlcrTlD7JSOnlHkXtycDR1fZugRGqfAjtOIrhmRvs7KsmKaWGYT9F7QLZ1ejVoTmZRgIPO2h1j9tOjRkxM+vBo83S9EWz0yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUhApReY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuSEBbjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91A1F000FF;
-	Tue, 13 Oct 2026 12:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUhApReY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FF1F000FF;
+	Tue, 13 Oct 2026 12:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893285;
-	bh=3xfvY4KtyxsDXs5kM5iG4O7fcmLvEHgv0DAEkQSsTws=;
+	s=korg; t=1791893288;
+	bh=YSLxG7D2qWO+1v5+sO+e7leo8yIqfIiO3Xwp5Rnuyes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KuSEBbjFJr9tFpzvO6ZNsu6/OVPIbxPlODmb2H8lZ101jniF805AMLM75UPP2qTz7
-	 f4/Jg4JL5KoMDOMSiGx/USWYhFtZSfVmUOECLikKgOGuSd+0YDqk7GIdWQK3c6xdJO
-	 sGTNv5HpB1rSjbY3kBXoQ2NjLDYqQvM9wMefCJJE=
+	b=oUhApReYykP2N7mYGzaBnz+Fv/wRs1xelsdL4+X5Ko3fzvb7k3aT5/+Sz6LdoqrjN
+	 2Qpo+dxB0ujR6owZACi/E5zKFLhbDNryQZlILvTaUXnnYWWwJzDPY8YWSRbL5m8gYW
+	 5tenLGl6+VCEFkS+Q1KkT64bd1MK+87iw2O0GlCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/621] mshv: Move region management to mshv_regions.c
-Date: Tue, 13 Oct 2026 13:32:50 +0200
-Message-ID: <20261013112925.014759797@linuxfoundation.org>
+Subject: [PATCH 6.18 176/621] mshv: Fix error handling in mshv_region_pin
+Date: Tue, 13 Oct 2026 13:32:51 +0200
+Message-ID: <20261013112925.039207659@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -55,479 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit e950c30a1051d27fd6dd9a48c53ffbc41ee773f2 ]
+[ Upstream commit c0e296f257671ba10249630fe58026f29e4804d9 ]
 
-Refactor memory region management functions from mshv_root_main.c into
-mshv_regions.c for better modularity and code organization.
+The current error handling has two issues:
 
-Adjust function calls and headers to use the new implementation. Improve
-maintainability and separation of concerns in the mshv_root module.
+First, pin_user_pages_fast() can return a short pin count (less than
+requested but greater than zero) when it cannot pin all requested pages.
+This is treated as success, leading to partially pinned regions being
+used, which causes memory corruption.
+
+Second, when an error occurs mid-loop, already pinned pages from the
+current batch are not properly accounted for before calling
+mshv_region_invalidate_pages(), causing a page reference leak.
+
+Treat short pins as errors and fix partial batch accounting before
+cleanup.
 
 Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Reviewed-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Stable-dep-of: c0e296f25767 ("mshv: Fix error handling in mshv_region_pin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/Makefile         |   2 +-
- drivers/hv/mshv_regions.c   | 175 +++++++++++++++++++++++++++++++++++
- drivers/hv/mshv_root.h      |  10 ++
- drivers/hv/mshv_root_main.c | 176 +++---------------------------------
- 4 files changed, 198 insertions(+), 165 deletions(-)
- create mode 100644 drivers/hv/mshv_regions.c
+ drivers/hv/mshv_regions.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hv/Makefile b/drivers/hv/Makefile
-index 1a1677bf4daca..344ddaf377105 100644
---- a/drivers/hv/Makefile
-+++ b/drivers/hv/Makefile
-@@ -13,7 +13,7 @@ hv_vmbus-y := vmbus_drv.o \
- hv_vmbus-$(CONFIG_HYPERV_TESTING)	+= hv_debugfs.o
- hv_utils-y := hv_util.o hv_kvp.o hv_snapshot.o hv_utils_transport.o
- mshv_root-y := mshv_root_main.o mshv_synic.o mshv_eventfd.o mshv_irq.o \
--	       mshv_root_hv_call.o mshv_portid_table.o
-+	       mshv_root_hv_call.o mshv_portid_table.o mshv_regions.o
- 
- # Code that must be built-in
- obj-$(CONFIG_HYPERV) += hv_common.o
 diff --git a/drivers/hv/mshv_regions.c b/drivers/hv/mshv_regions.c
-new file mode 100644
-index 0000000000000..35b866670840e
---- /dev/null
+index 35b866670840e..5372b7ec1871a 100644
+--- a/drivers/hv/mshv_regions.c
 +++ b/drivers/hv/mshv_regions.c
-@@ -0,0 +1,175 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2025, Microsoft Corporation.
-+ *
-+ * Memory region management for mshv_root module.
-+ *
-+ * Authors: Microsoft Linux virtualization team
-+ */
-+
-+#include <linux/mm.h>
-+#include <linux/vmalloc.h>
-+
-+#include <asm/mshyperv.h>
-+
-+#include "mshv_root.h"
-+
-+struct mshv_mem_region *mshv_region_create(u64 guest_pfn, u64 nr_pages,
-+					   u64 uaddr, u32 flags,
-+					   bool is_mmio)
-+{
-+	struct mshv_mem_region *region;
-+
-+	region = vzalloc(sizeof(*region) + sizeof(struct page *) * nr_pages);
-+	if (!region)
-+		return ERR_PTR(-ENOMEM);
-+
-+	region->nr_pages = nr_pages;
-+	region->start_gfn = guest_pfn;
-+	region->start_uaddr = uaddr;
-+	region->hv_map_flags = HV_MAP_GPA_READABLE | HV_MAP_GPA_ADJUSTABLE;
-+	if (flags & BIT(MSHV_SET_MEM_BIT_WRITABLE))
-+		region->hv_map_flags |= HV_MAP_GPA_WRITABLE;
-+	if (flags & BIT(MSHV_SET_MEM_BIT_EXECUTABLE))
-+		region->hv_map_flags |= HV_MAP_GPA_EXECUTABLE;
-+
-+	/* Note: large_pages flag populated when we pin the pages */
-+	if (!is_mmio)
-+		region->flags.range_pinned = true;
-+
-+	return region;
-+}
-+
-+int mshv_region_share(struct mshv_mem_region *region)
-+{
-+	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_SHARED;
-+
-+	if (region->flags.large_pages)
-+		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
-+
-+	return hv_call_modify_spa_host_access(region->partition->pt_id,
-+			region->pages, region->nr_pages,
-+			HV_MAP_GPA_READABLE | HV_MAP_GPA_WRITABLE,
-+			flags, true);
-+}
-+
-+int mshv_region_unshare(struct mshv_mem_region *region)
-+{
-+	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_EXCLUSIVE;
-+
-+	if (region->flags.large_pages)
-+		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
-+
-+	return hv_call_modify_spa_host_access(region->partition->pt_id,
-+			region->pages, region->nr_pages,
-+			0,
-+			flags, false);
-+}
-+
-+static int mshv_region_remap_pages(struct mshv_mem_region *region,
-+				   u32 map_flags,
-+				   u64 page_offset, u64 page_count)
-+{
-+	if (page_offset + page_count > region->nr_pages)
-+		return -EINVAL;
-+
-+	if (region->flags.large_pages)
-+		map_flags |= HV_MAP_GPA_LARGE_PAGE;
-+
-+	return hv_call_map_gpa_pages(region->partition->pt_id,
-+				     region->start_gfn + page_offset,
-+				     page_count, map_flags,
-+				     region->pages + page_offset);
-+}
-+
-+int mshv_region_map(struct mshv_mem_region *region)
-+{
-+	u32 map_flags = region->hv_map_flags;
-+
-+	return mshv_region_remap_pages(region, map_flags,
-+				       0, region->nr_pages);
-+}
-+
-+static void mshv_region_invalidate_pages(struct mshv_mem_region *region,
-+					 u64 page_offset, u64 page_count)
-+{
-+	if (region->flags.range_pinned)
-+		unpin_user_pages(region->pages + page_offset, page_count);
-+
-+	memset(region->pages + page_offset, 0,
-+	       page_count * sizeof(struct page *));
-+}
-+
-+void mshv_region_invalidate(struct mshv_mem_region *region)
-+{
-+	mshv_region_invalidate_pages(region, 0, region->nr_pages);
-+}
-+
-+int mshv_region_pin(struct mshv_mem_region *region)
-+{
-+	u64 done_count, nr_pages;
-+	struct page **pages;
-+	__u64 userspace_addr;
-+	int ret;
-+
-+	for (done_count = 0; done_count < region->nr_pages; done_count += ret) {
-+		pages = region->pages + done_count;
-+		userspace_addr = region->start_uaddr +
-+				 done_count * HV_HYP_PAGE_SIZE;
-+		nr_pages = min(region->nr_pages - done_count,
-+			       MSHV_PIN_PAGES_BATCH_SIZE);
-+
-+		/*
-+		 * Pinning assuming 4k pages works for large pages too.
-+		 * All page structs within the large page are returned.
-+		 *
-+		 * Pin requests are batched because pin_user_pages_fast
-+		 * with the FOLL_LONGTERM flag does a large temporary
-+		 * allocation of contiguous memory.
-+		 */
-+		ret = pin_user_pages_fast(userspace_addr, nr_pages,
-+					  FOLL_WRITE | FOLL_LONGTERM,
-+					  pages);
-+		if (ret < 0)
-+			goto release_pages;
-+	}
-+
-+	if (PageHuge(region->pages[0]))
-+		region->flags.large_pages = true;
-+
-+	return 0;
-+
-+release_pages:
-+	mshv_region_invalidate_pages(region, 0, done_count);
-+	return ret;
-+}
-+
-+void mshv_region_destroy(struct mshv_mem_region *region)
-+{
-+	struct mshv_partition *partition = region->partition;
-+	u32 unmap_flags = 0;
-+	int ret;
-+
-+	hlist_del(&region->hnode);
-+
-+	if (mshv_partition_encrypted(partition)) {
-+		ret = mshv_region_share(region);
-+		if (ret) {
-+			pt_err(partition,
-+			       "Failed to regain access to memory, unpinning user pages will fail and crash the host error: %d\n",
-+			       ret);
-+			return;
-+		}
-+	}
-+
-+	if (region->flags.large_pages)
-+		unmap_flags |= HV_UNMAP_GPA_LARGE_PAGE;
-+
-+	/* ignore unmap failures and continue as process may be exiting */
-+	hv_call_unmap_gpa_pages(partition->pt_id, region->start_gfn,
-+				region->nr_pages, unmap_flags);
-+
-+	mshv_region_invalidate(region);
-+
-+	vfree(region);
-+}
-diff --git a/drivers/hv/mshv_root.h b/drivers/hv/mshv_root.h
-index db6b42db2fdc6..e1d38deaae5bd 100644
---- a/drivers/hv/mshv_root.h
-+++ b/drivers/hv/mshv_root.h
-@@ -308,4 +308,14 @@ extern struct mshv_root mshv_root;
- extern enum hv_scheduler_type hv_scheduler_type;
- extern u8 * __percpu *hv_synic_eventring_tail;
- 
-+struct mshv_mem_region *mshv_region_create(u64 guest_pfn, u64 nr_pages,
-+					   u64 uaddr, u32 flags,
-+					   bool is_mmio);
-+int mshv_region_share(struct mshv_mem_region *region);
-+int mshv_region_unshare(struct mshv_mem_region *region);
-+int mshv_region_map(struct mshv_mem_region *region);
-+void mshv_region_invalidate(struct mshv_mem_region *region);
-+int mshv_region_pin(struct mshv_mem_region *region);
-+void mshv_region_destroy(struct mshv_mem_region *region);
-+
- #endif /* _MSHV_ROOT_H_ */
-diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
-index 97672a331e691..6c62db222210a 100644
---- a/drivers/hv/mshv_root_main.c
-+++ b/drivers/hv/mshv_root_main.c
-@@ -1039,117 +1039,6 @@ static void mshv_async_hvcall_handler(void *data, u64 *status)
- 	*status = partition->async_hypercall_status;
- }
- 
--static int
--mshv_partition_region_share(struct mshv_mem_region *region)
--{
--	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_SHARED;
--
--	if (region->flags.large_pages)
--		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
--
--	return hv_call_modify_spa_host_access(region->partition->pt_id,
--			region->pages, region->nr_pages,
--			HV_MAP_GPA_READABLE | HV_MAP_GPA_WRITABLE,
--			flags, true);
--}
--
--static int
--mshv_partition_region_unshare(struct mshv_mem_region *region)
--{
--	u32 flags = HV_MODIFY_SPA_PAGE_HOST_ACCESS_MAKE_EXCLUSIVE;
--
--	if (region->flags.large_pages)
--		flags |= HV_MODIFY_SPA_PAGE_HOST_ACCESS_LARGE_PAGE;
--
--	return hv_call_modify_spa_host_access(region->partition->pt_id,
--			region->pages, region->nr_pages,
--			0,
--			flags, false);
--}
--
--static int
--mshv_region_remap_pages(struct mshv_mem_region *region, u32 map_flags,
--			u64 page_offset, u64 page_count)
--{
--	if (page_offset + page_count > region->nr_pages)
--		return -EINVAL;
--
--	if (region->flags.large_pages)
--		map_flags |= HV_MAP_GPA_LARGE_PAGE;
--
--	/* ask the hypervisor to map guest ram */
--	return hv_call_map_gpa_pages(region->partition->pt_id,
--				     region->start_gfn + page_offset,
--				     page_count, map_flags,
--				     region->pages + page_offset);
--}
--
--static int
--mshv_region_map(struct mshv_mem_region *region)
--{
--	u32 map_flags = region->hv_map_flags;
--
--	return mshv_region_remap_pages(region, map_flags,
--				       0, region->nr_pages);
--}
--
--static void
--mshv_region_invalidate_pages(struct mshv_mem_region *region,
--			     u64 page_offset, u64 page_count)
--{
--	if (region->flags.range_pinned)
--		unpin_user_pages(region->pages + page_offset, page_count);
--
--	memset(region->pages + page_offset, 0,
--	       page_count * sizeof(struct page *));
--}
--
--static void
--mshv_region_invalidate(struct mshv_mem_region *region)
--{
--	mshv_region_invalidate_pages(region, 0, region->nr_pages);
--}
--
--static int
--mshv_region_pin(struct mshv_mem_region *region)
--{
--	u64 done_count, nr_pages;
--	struct page **pages;
--	__u64 userspace_addr;
--	int ret;
--
--	for (done_count = 0; done_count < region->nr_pages; done_count += ret) {
--		pages = region->pages + done_count;
--		userspace_addr = region->start_uaddr +
--				 done_count * HV_HYP_PAGE_SIZE;
--		nr_pages = min(region->nr_pages - done_count,
--			       MSHV_PIN_PAGES_BATCH_SIZE);
--
--		/*
--		 * Pinning assuming 4k pages works for large pages too.
--		 * All page structs within the large page are returned.
--		 *
--		 * Pin requests are batched because pin_user_pages_fast
--		 * with the FOLL_LONGTERM flag does a large temporary
--		 * allocation of contiguous memory.
--		 */
--		ret = pin_user_pages_fast(userspace_addr, nr_pages,
--					  FOLL_WRITE | FOLL_LONGTERM,
--					  pages);
+@@ -130,7 +130,7 @@ int mshv_region_pin(struct mshv_mem_region *region)
+ 		ret = pin_user_pages_fast(userspace_addr, nr_pages,
+ 					  FOLL_WRITE | FOLL_LONGTERM,
+ 					  pages);
 -		if (ret < 0)
--			goto release_pages;
--	}
--
--	if (PageHuge(region->pages[0]))
--		region->flags.large_pages = true;
--
--	return 0;
--
--release_pages:
--	mshv_region_invalidate_pages(region, 0, done_count);
--	return ret;
--}
--
- static struct mshv_mem_region *
- mshv_partition_region_by_gfn(struct mshv_partition *partition, u64 gfn)
- {
-@@ -1173,7 +1062,7 @@ static int mshv_partition_create_region(struct mshv_partition *partition,
- 					struct mshv_mem_region **regionpp,
- 					bool is_mmio)
- {
--	struct mshv_mem_region *region, *rg;
-+	struct mshv_mem_region *rg;
- 	u64 nr_pages = HVPFN_DOWN(mem->size);
- 
- 	/* Reject overlapping regions */
-@@ -1189,26 +1078,15 @@ static int mshv_partition_create_region(struct mshv_partition *partition,
- 		return -EEXIST;
++		if (ret != nr_pages)
+ 			goto release_pages;
  	}
  
--	region = vzalloc(sizeof(*region) + sizeof(struct page *) * nr_pages);
--	if (!region)
--		return -ENOMEM;
--
--	region->nr_pages = nr_pages;
--	region->start_gfn = mem->guest_pfn;
--	region->start_uaddr = mem->userspace_addr;
--	region->hv_map_flags = HV_MAP_GPA_READABLE | HV_MAP_GPA_ADJUSTABLE;
--	if (mem->flags & BIT(MSHV_SET_MEM_BIT_WRITABLE))
--		region->hv_map_flags |= HV_MAP_GPA_WRITABLE;
--	if (mem->flags & BIT(MSHV_SET_MEM_BIT_EXECUTABLE))
--		region->hv_map_flags |= HV_MAP_GPA_EXECUTABLE;
-+	rg = mshv_region_create(mem->guest_pfn, nr_pages,
-+				mem->userspace_addr, mem->flags,
-+				is_mmio);
-+	if (IS_ERR(rg))
-+		return PTR_ERR(rg);
- 
--	/* Note: large_pages flag populated when we pin the pages */
--	if (!is_mmio)
--		region->flags.range_pinned = true;
-+	rg->partition = partition;
- 
--	region->partition = partition;
--
--	*regionpp = region;
-+	*regionpp = rg;
- 
+@@ -140,8 +140,10 @@ int mshv_region_pin(struct mshv_mem_region *region)
  	return 0;
- }
-@@ -1246,7 +1124,7 @@ static int mshv_prepare_pinned_region(struct mshv_mem_region *region)
- 	 * access to guest memory regions.
- 	 */
- 	if (mshv_partition_encrypted(partition)) {
--		ret = mshv_partition_region_unshare(region);
-+		ret = mshv_region_unshare(region);
- 		if (ret) {
- 			pt_err(partition,
- 			       "Failed to unshare memory region (guest_pfn: %llu): %d\n",
-@@ -1259,7 +1137,7 @@ static int mshv_prepare_pinned_region(struct mshv_mem_region *region)
- 	if (ret && mshv_partition_encrypted(partition)) {
- 		int shrc;
  
--		shrc = mshv_partition_region_share(region);
-+		shrc = mshv_region_share(region);
- 		if (!shrc)
- 			goto invalidate_region;
- 
-@@ -1340,36 +1218,6 @@ mshv_map_user_memory(struct mshv_partition *partition,
- 	return ret;
+ release_pages:
++	if (ret > 0)
++		done_count += ret;
+ 	mshv_region_invalidate_pages(region, 0, done_count);
+-	return ret;
++	return ret < 0 ? ret : -ENOMEM;
  }
  
--static void mshv_partition_destroy_region(struct mshv_mem_region *region)
--{
--	struct mshv_partition *partition = region->partition;
--	u32 unmap_flags = 0;
--	int ret;
--
--	hlist_del(&region->hnode);
--
--	if (mshv_partition_encrypted(partition)) {
--		ret = mshv_partition_region_share(region);
--		if (ret) {
--			pt_err(partition,
--			       "Failed to regain access to memory, unpinning user pages will fail and crash the host error: %d\n",
--			       ret);
--			return;
--		}
--	}
--
--	if (region->flags.large_pages)
--		unmap_flags |= HV_UNMAP_GPA_LARGE_PAGE;
--
--	/* ignore unmap failures and continue as process may be exiting */
--	hv_call_unmap_gpa_pages(partition->pt_id, region->start_gfn,
--				region->nr_pages, unmap_flags);
--
--	mshv_region_invalidate(region);
--
--	vfree(region);
--}
--
- /* Called for unmapping both the guest ram and the mmio space */
- static long
- mshv_unmap_user_memory(struct mshv_partition *partition,
-@@ -1390,7 +1238,7 @@ mshv_unmap_user_memory(struct mshv_partition *partition,
- 	    region->nr_pages != HVPFN_DOWN(mem.size))
- 		return -EINVAL;
- 
--	mshv_partition_destroy_region(region);
-+	mshv_region_destroy(region);
- 
- 	return 0;
- }
-@@ -1790,7 +1638,7 @@ static void destroy_partition(struct mshv_partition *partition)
- 
- 	hlist_for_each_entry_safe(region, n, &partition->pt_mem_regions,
- 				  hnode)
--		mshv_partition_destroy_region(region);
-+		mshv_region_destroy(region);
- 
- 	/* Withdraw and free all pages we deposited */
- 	hv_call_withdraw_memory(U64_MAX, NUMA_NO_NODE, partition->pt_id);
+ void mshv_region_destroy(struct mshv_mem_region *region)
 -- 
 2.53.0
 
