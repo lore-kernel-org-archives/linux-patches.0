@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FAC4E4C5A;
-	Tue, 13 Oct 2026 11:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE79D4F30DC;
+	Tue, 13 Oct 2026 11:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892174; cv=none; b=XYkBM9mTRg0x7jx1N8DEsEy4d2wNI3zbHi3pqS7nfQSWlqroEpIsXUl/qhV6vGvqSy0ekCRA3kTk5mjJfr5dCo0lNoHy9+D5dcuPuL5yvIk7AXK5zGlAevGhzkiNAs1ccaJe0+5aVelCQEUla9ImWgTs4t7YkwxILSiSubeomr4=
+	t=1791892178; cv=none; b=nwpWCSU61xYAl9+kXRpBGo3OfkVLKQWqO1nluDCtQpw3GCtXNpu1VTCAoWD1+YEXBN9N57iMre2V7aLGtpfsIWWxj9QfZvwAg3apAGQo+TilsawOg9YeurvtMm6naWNkRfuUEtpSE7Cj0F4LdJoUgz7kIg+V7op10rnisMH9cAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892174; c=relaxed/simple;
-	bh=+tXBhPEVrEaxafocQOsT7SVCjXtOEiFsFO+5be6VRpQ=;
+	s=arc-20240116; t=1791892178; c=relaxed/simple;
+	bh=9kTIkSLI0nZavANUzW4IaHbRask1Pcqr7eHj9kmEMuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NF58MbKfsiDGYEg9vDRh0XnLHGsQjs1AUZTWgCIwuILZdTB23eYhqc1rDIVMmusmjhYSLAug8c8WJm1kp43XVRqvU4xstLxoY35T0Oc6y172GrtAkPF+J0ihnb3kN7+fbFf4nut+Q78A1D3/m11RsTRPNqTL4dhHE7TnFrGEjiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L0Npvt6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jRYFNEOyeCjdoMyTgs58QmWfroZHPoqXTYd7OGKJFhbKn1u0CdA5jt/8S9SkoLJxQ+456l2cGrigwvVNkOEXO55CI6MWfMHoFHELsh52CmBPbzf1CS27/qdegd/fUjvJ29xPsr89UjJ/2GappCftqH30K1PdspTT9umOzl85Bao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLNcg6FM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L0Npvt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0251F000FF;
-	Tue, 13 Oct 2026 11:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLNcg6FM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020C51F000FF;
+	Tue, 13 Oct 2026 11:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892173;
-	bh=yHr4GNYAmyehqPgYGmkon3VFV5nO2jNfWqjwKOWEPts=;
+	s=korg; t=1791892176;
+	bh=fGQgaQsWMdr/4uP3lsj5vJnZ1LQX3ZOkknjYKMh38jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0L0Npvt66xRGL0wcp0rYOv4N6XuKb4SC3iGLY9/rIUvDHRH/YpqPq/NHhWabkiEIt
-	 a//OuD9JMN4aGJTXb9tVZO56hNsoVJtW/MTP9/QW/90htG5oWt4Ff+ajm0+Nm7beic
-	 sRE977xJiW5JfZ8AReIgzYGsAEsHy+YH6zRvaQx8=
+	b=mLNcg6FMV48hVCYf1o3nwouY1yhnpNK2ibhykkrDBajEeE4VvWo96VhfsSqR+0tFO
+	 ySGNPN5G2ZebyeAPRi09WdlL1b4od1q6t8/cPwT+nndWaWXTVqmqlpGWMKKZrEvKGC
+	 HAhV7QVvsYiPejsgsNl1ViCd7NMycerupEj4vtb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Fredrik Nyberg <fredrik.nyberg@volvocars.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 086/281] net: sparx5: free the matchall entry on destroy
-Date: Tue, 13 Oct 2026 13:36:42 +0200
-Message-ID: <20261013112857.219673628@linuxfoundation.org>
+Subject: [PATCH 7.2 087/281] net: usb: ax88179_178a: fix rx frame length for non-last packets
+Date: Tue, 13 Oct 2026 13:36:43 +0200
+Message-ID: <20261013112857.245564514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,42 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
 
-commit 2b82e16d6084cbc651e3c902198f1945408ee1a5 upstream.
+commit 9b6c20f788472d2042717a3c2f1bc60b2b77083e upstream.
 
-sparx5_tc_matchall_replace() allocates a struct sparx5_mall_entry for
-every offloaded matchall filter and adds it to sparx5->mall_entries.
-sparx5_tc_matchall_destroy() removes the entry from the list, but never
-frees it, so the entry of every deleted mirror and goto matchall filter
-is leaked.
+Commit 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about
+skb->truesize") replaced skb_clone() with a copy into a new skb for
+every packet of a bulk-in transfer except the last one. The copy skips
+the 2-byte IP alignment pseudo header but still copies pkt_len bytes,
+and pkt_len includes that header. Each of these frames is therefore
+delivered with two extra trailing bytes: the 0xeeee pseudo header of
+the next slot when the frame ends on an 8-byte boundary, or slot
+padding otherwise. The last packet is still trimmed to pkt_len - 2.
 
-Free the entry after unlinking it.
+IPv4 and IPv6 trim the extra bytes, so most traffic is unaffected.
+Anything that relies on the frame length is not. MACsec takes the ICV
+from the last 16 bytes and drops every such frame as InPktsNotValid. In
+our setup that was 0.2-1.2% of received MACsec frames, depending on how
+many frames shared a transfer, including service discovery multicast.
 
-The leak was discovered by an AI code review agent, and reproduced with
-kmemleak on a lan969x EV board (EV23X71A) by repeatedly adding and
-deleting matchall mirror and goto filters. With the fix, kmemleak no
-longer reports the leak.
+Allocate and copy pkt_len - 2 bytes, like the last-packet path.
 
+Fixes: 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about skb->truesize")
 Cc: stable@vger.kernel.org
-Fixes: 1ede4acf045c ("net: sparx5: add bookkeeping code for matchall rules")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261007-sparx5-matchall-kfree-net-v1-1-c8918685b337@microchip.com
+Signed-off-by: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261002-ax88179-rx-len-v1-1-f01a2a295079@volvocars.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/ax88179_178a.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c
-@@ -160,6 +160,7 @@ static int sparx5_tc_matchall_destroy(st
- 	}
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1457,11 +1457,11 @@ static int ax88179_rx_fixup(struct usbne
+ 			return 1;
+ 		}
  
- 	list_del(&entry->list);
-+	kfree(entry);
+-		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
++		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len - 2);
+ 		if (!ax_skb)
+ 			return 0;
+-		skb_put(ax_skb, pkt_len);
+-		memcpy(ax_skb->data, skb->data + 2, pkt_len);
++		skb_put(ax_skb, pkt_len - 2);
++		memcpy(ax_skb->data, skb->data + 2, pkt_len - 2);
  
- 	return err;
- }
+ 		ax88179_rx_checksum(ax_skb, pkt_hdr);
+ 		usbnet_skb_return(dev, ax_skb);
 
 
