@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3B54EFFD4;
-	Tue, 13 Oct 2026 11:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908474EFFD4;
+	Tue, 13 Oct 2026 11:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892400; cv=none; b=uNTGCoTWMdAchPS6uXMzp2+XiwQmQ2eFqb6UtQgWgLws9i1kJwp4Y9C2CUoEThvPD4MloTjbrUBekKpXXvtURVaCSs2ZZH5RNTp4jjUOlB37sQbeDqmgseHDgz+DO5XIaD0hUEhIyC4rvLRj83/+goTX5M52GHHDUDcH8TlPcYg=
+	t=1791892404; cv=none; b=W5mvY9wQNaWDXu4tsGZsIGe04sy7/aXRh48ghcXpmLuYGn2GunEy8ZLpkr0oCCxwljlJ3ys7iEB7x0LKbkehnQf+zP2kBYoMg5txVI3PIkyIb6as7SNBm82Yj8yWVAoROZ6qBpc+kmtHrOHyO9SspkF8CuzqdhZLRcNFesTBSSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892400; c=relaxed/simple;
-	bh=2nu29N876E+x34lcUvIbQrJwIecmWDfhZGDbRURGAS4=;
+	s=arc-20240116; t=1791892404; c=relaxed/simple;
+	bh=5mj/VPaKiMkbTNQm7dGOsjZnZ6WHDHK1GWRMufKfnNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qr/Y89yUpJN9tqbAl5YEQbulsRUU8Lgf/OGpZPOlgT2VK4SyRkKtOigBW8o0nK3r3N6RJ4xTXZe3JZJLnIOSa0m6yypkW6iMCYyG+lGp+Evkb9+HINYhSt+qhig+OzcDxhMsDFtLOKHId/6DfjT5UQo54KCkbpk0AhVB3GIU+mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4PydLPP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iV8VI2uLjgMgla7QNZOATwHBcQBvusLL9/uk0EEKxyB2gVAdYirE3nEQKUStPSvFhSAVGhpcVlSkUzSU5q9lwRh0AeZ6i0akxnVMRJ3jxsenPlPCHTazFpJ4sAZw04P2FhrD/ivLeDQb7iwKh1oprvqRNkoC1rDm77by3XW8jGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB5uupGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4PydLPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A2D1F000FF;
-	Tue, 13 Oct 2026 11:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB5uupGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E841E1F000FF;
+	Tue, 13 Oct 2026 11:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892398;
-	bh=SYypajybukrhES/3NLr233YxwAreGQm0mNKF0ANFTyQ=;
+	s=korg; t=1791892401;
+	bh=PjWzWxM/gXsFyy+xrxfxQJm+7fugIGjdIBbrGoxDtho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g4PydLPP2M3mDtG+wMSgDPEETo5phPoTAikNpfKcv4OWVq5KNtkYhQgMfZmLPNK94
-	 w7eXqM47pEIjH95YlbGgwQkUdSekVWz7nb7kC276T5HXwS2Bc4yaIthLc9QSOXXYos
-	 YVwI57TrpK599qFxujjUkGVpnjvjVckHbpz5hCcA=
+	b=dB5uupGimuED5BVoS51WyBNL3bAHxP6FiWVaHb4TGjvuHlkpSOt5dBgqQLC9JbeFc
+	 4jhqjN9Oe2UeFvBgeMW43SMT1xJza99+kYWFkQU7f0JwjGOd26G4NFe9wSa8VtfSrh
+	 3MPH2nCjdNsndmequ2MpMAqtI/bXcr57nlUHImD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 159/281] namespace: look at the topmost mount for a mount namespace file
-Date: Tue, 13 Oct 2026 13:37:55 +0200
-Message-ID: <20261013112859.022194808@linuxfoundation.org>
+Subject: [PATCH 7.2 160/281] namespace: dont reconfigure internal superblocks via remount and umount
+Date: Tue, 13 Oct 2026 13:37:56 +0200
+Message-ID: <20261013112859.047369040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,60 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 8714b44adac7b10506e1db3ef1710689751f0f10 upstream.
+commit d791606bb915a8f27e36657696fd1d9a216c5c08 upstream.
 
-attach_recursive_mnt() preallocates a mountpoint for the root of the
-topmost mount of the source so that a mount that already sits at the
-destination can be put on top of the source or on top of one of its
-propagated copies.
+Commit 02587a4af82a ("fs: refuse fspick() on internal superblocks")
+blocked fspick() on SB_NOUSER superblocks. But that's not the only way
+to reconfigure_super(). mount(MS_REMOUNT) and umount() of the caller's
+root without MNT_DETACH. The root of an empty mount namespace is a
+nullfs mount and all mount namespaces share that superblock:
 
-The copies are made without CL_COPY_MNT_NS_FILE so their chain of
-overmounts is shorter than the source's. It ends below the first bind
-mount of a mount namespace file. So while the loop walks up the chain of
-the source it remembers the mountpoint of that mount in "shorter" and
-the existing mount is put there for the copies.
+  nullfs: fspick: FAIL errno=22 (Invalid argument)
+  nullfs: mount(MS_REMOUNT|MS_RDONLY): ok(0)
+  nullfs after remount: statfs(/): magic=0x4e554c4c flags=0x21 RDONLY
+  nullfs: umount2("/", 0): ok(0)
 
-But the loop ends at the topmost mount without ever looking at it. If
-the topmost mount is the only mount namespace file in the chain
-"shorter" stays NULL and mnt_change_mountpoint() attaches the existing
-mount of the copy below the root of the mount namespace file. That's a
-dentry of nsfs. No path walk in the copy's mount namespace ever gets
-there. The mount is gone until its parent goes and the copy that took
-its place can't be unmounted synchronously because it has a child:
+Refuse both like fspick() does. Only root in the initial user namespace
+can do this and nullfs is empty and immutable so the flags don't buy
+anything. But they show up in statfs() for the root of every mount
+namespace on the host.
 
-  S      bind mount of a file
-  N      bind mount of a mount namespace file on top of S
-  A      shared mount, B a slave of A, Q mounted on B/file
-
-  move_mount(S, A/file)
-  cat B/file          -> the content of S instead of Q
-  umount B/file       -> EBUSY
-
-Look at every mount of the chain including the topmost one.
-
-Fixes: 96f5d2e05165 ("attach_recursive_mnt(): unify the mnt_change_mountpoint() logics")
-Cc: stable@vger.kernel.org # v6.17+
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-8-be34c83956ae@kernel.org
+Fixes: 9d4e752a24f7 ("namespace: allow creating empty mount namespaces")
+Cc: stable@vger.kernel.org # v7.1+
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-11-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/fs_context.c | 4 ++++
+ fs/fsopen.c     | 3 ---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2602,9 +2602,11 @@ static int attach_recursive_mnt(struct m
- 	 * Preallocate a mountpoint in case the new mounts need to be
- 	 * mounted beneath mounts on the same mountpoint.
- 	 */
--	for (top = source_mnt; unlikely(top->overmount); top = top->overmount) {
-+	for (top = source_mnt; ; top = top->overmount) {
- 		if (!shorter && is_mnt_ns_file(top->mnt.mnt_root))
- 			shorter = top->mnt_mp;
-+		if (likely(!top->overmount))
-+			break;
- 	}
- 	err = get_mountpoint(top->mnt.mnt_root, &root);
- 	if (err)
+diff --git a/fs/fs_context.c b/fs/fs_context.c
+index 23ad66cd94e1..a50584df97be 100644
+--- a/fs/fs_context.c
++++ b/fs/fs_context.c
+@@ -315,6 +315,10 @@ struct fs_context *fs_context_for_reconfigure(struct dentry *dentry,
+ 					unsigned int sb_flags,
+ 					unsigned int sb_flags_mask)
+ {
++	/* kernel-internal superblocks are nobody's to reconfigure */
++	if (dentry->d_sb->s_flags & SB_NOUSER)
++		return ERR_PTR(-EINVAL);
++
+ 	return alloc_fs_context(dentry->d_sb->s_type, dentry, sb_flags,
+ 				sb_flags_mask, FS_CONTEXT_FOR_RECONFIGURE);
+ }
+diff --git a/fs/fsopen.c b/fs/fsopen.c
+index 9d5a7a22b529..ae19e5136598 100644
+--- a/fs/fsopen.c
++++ b/fs/fsopen.c
+@@ -190,9 +190,6 @@ SYSCALL_DEFINE3(fspick, int, dfd, const char __user *, path, unsigned int, flags
+ 	ret = -EINVAL;
+ 	if (target.mnt->mnt_root != target.dentry)
+ 		goto err_path;
+-	/* kernel-internal superblocks are nobody's to reconfigure */
+-	if (target.dentry->d_sb->s_flags & SB_NOUSER)
+-		goto err_path;
+ 
+ 	fc = fs_context_for_reconfigure(target.dentry, 0, 0);
+ 	if (IS_ERR(fc)) {
+-- 
+2.56.0
+
 
 
