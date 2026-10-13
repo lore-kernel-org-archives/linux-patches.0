@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F9733B97B;
-	Tue, 13 Oct 2026 12:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6831831E845;
+	Tue, 13 Oct 2026 12:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895474; cv=none; b=YIJjmFa/2VvpsfW6ox3V2VfnzsotnJoV4rPJGF7yqveEmInrAKtImSvClYwkTeXp+eoKzbm7iAgi9TNOxjztE6NlhuvrX8UgXvtPVy8tamG+ISsdOy/bq5C9rPFVqhMMDc3Nfziaep9HlWXiuGYXazVoWpF6/l3iztQitcsytFc=
+	t=1791895476; cv=none; b=vFbwuGgOeAMyTYeD+AWJl70K0K7UG1i5kcV4I5xL3BfqokuW6sUuT2HXJw3u+B264Ft0e/fprF9PkI9RUtit/MhDOhtNtBd9FpKW6SUSzjfS1LEjSCVwvRhTW1DX9Ez7SarS3Cw7B8Dij9/53GdNmB7e1jSgq0OmDBhARsu8UJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895474; c=relaxed/simple;
-	bh=UMvIlBJHS6T70x8BA1uASjvz4hlFj4NYB5N6rH4wUrI=;
+	s=arc-20240116; t=1791895476; c=relaxed/simple;
+	bh=Ni0O+AhEAmhFTvii0o8eHBGeXJaJjLw5nI/p59/pGTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPiAqTzszXCP7+zCrR7slYjrkS1jYrHKACe+WCegrhdIakViH6XGOh71LZYH9tRfwqvV4+vJZ8rvDZ5jwLtxTyM8Ry882vrZISyJpLw1Jxo8p/gkX1UMXMzusTR0YI62iH52a5o1qPsg58Hnh+WCC81KEFDqelicdZaz0sfhya8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg5I6Xsu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QN5q2NACwwD1sI7f48FWzIcSCMDJIlYhAdMewCjeYx5XGMaZQ8LwUHTRjQV8XzvjKCYgxurRe4w8G940vBVYKQhR7mwEegv7cWVttEWIpwZR8nrebaBHkuIhvF+EjO+mK/XFI6cTImOoNvalwT5apz39YIeyk1qjHCiTCZvpH8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMfdm/m9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg5I6Xsu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DF81F000FF;
-	Tue, 13 Oct 2026 12:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMfdm/m9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5271F000FF;
+	Tue, 13 Oct 2026 12:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895472;
-	bh=b071fzrDqNpIBsCfCr29xg3k0aOZeBd8TbP+1lSfTR4=;
+	s=korg; t=1791895475;
+	bh=9FDYO8FOB57hRx9Ov87adlY1Y4WFIWAzMFIQOyk6z9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kg5I6XsuZzvyNUDikFPOcBZwW4qsgh7A+lBVh4NnfE/gYZK7jBSYxmGJhrO+5jjIn
-	 uF4CaJ+BsGwV2ovj0KxUzJTge9xt9yFc6yd+KfMtAdQfOGswsbC6i4JyZIB4IhqNmz
-	 aThxeg9L03/BmTiOtLYolpwSfku2JV5bi+k4Bte8=
+	b=WMfdm/m9QstKYuUEq6PZAI61PxQoypyqYl1Nk4k+t6d3IqnZWtrtL+/fLAxUkuO1W
+	 i5OrEx6YbjZoOgku+gIr38Bv0Op7+YB+2+7kYO+qErGz33xFZBaLTOY9OYmfSjsFYf
+	 QdDgQpjp1IVi5VdmXfPcbYf9pR6CmeuhSQF1+7tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 287/497] Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown
-Date: Tue, 13 Oct 2026 13:37:34 +0200
-Message-ID: <20261013112914.707179500@linuxfoundation.org>
+Subject: [PATCH 6.12 288/497] Bluetooth: Serialize SMP remote OOB data access
+Date: Tue, 13 Oct 2026 13:37:35 +0200
+Message-ID: <20261013112914.730686250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,156 +53,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 848a7a91c7f03675d3bd8db6f7721cbf9cb50e21 ]
+[ Upstream commit 81a2345f1984f0b36d3226571bc196316a01b648 ]
 
-hci_low_sent() selects a connection under RCU but drops the read lock
-before calculating its quota and returning it to the scheduler. The
-connection is then used without lifetime protection by hci_sched_iso()
-and hci_sched_sco().
-
-After the TX worker drops the RCU read lock, hci_abort_conn_sync() on
-hdev->req_workqueue can remove the connection from the hash, complete
-synchronize_rcu(), purge its queues and release it. The TX worker on
-hdev->workqueue can then access the freed connection in hci_quote_sent()
-or while dequeuing packets and updating conn->sent.
+build_pairing_cmd() looks up remote OOB data and copies its contents
+without holding hdev->lock, which serializes the list's writers. After
+SMP finds an entry, a concurrent management Remove Remote OOB Data
+command can unlink and free it before SMP reads its present flag or
+copies its random and confirmation values. Removal can also invalidate
+an entry while the lookup is still traversing the list.
 
 KASAN reported:
 
-  BUG: KASAN: slab-use-after-free in hci_low_sent+0x730/0x840
-  Workqueue: hci0 hci_tx_work
+  BUG: KASAN: slab-use-after-free in build_pairing_cmd+0x948/0x9b0
   Call Trace:
-   hci_low_sent+0x730/0x840
-   hci_sched_iso+0x25e/0x4d0
-   hci_tx_work+0x239/0xcb0
+   build_pairing_cmd+0x948/0x9b0
+   smp_recv_cb+0x459f/0x8110
+   l2cap_recv_frame+0xf14/0x9190
+   l2cap_recv_acldata+0xa64/0xd40
+   hci_rx_work+0x4ca/0x730
 
-  Allocated by task 93:
-   __hci_conn_add+0x16f/0x1b40
-   hci_bind_bis+0x782/0x17b0
-   hci_connect_bis+0xa0/0x510
-   iso_sock_connect+0x589/0x1050
+  Allocated by task 87:
+   hci_add_remote_oob_data+0x11d/0x530
+   add_remote_oob_data+0x282/0x400
+   hci_sock_sendmsg+0x1033/0x1ea0
 
-  Freed by task 88:
-   kfree+0x131/0x3c0
-   device_release+0xc8/0x240
-   kobject_put+0x14d/0x280
-   hci_conn_del+0x55a/0xe80
-   hci_disconnect_sync+0x156/0x180
-   hci_abort_conn_sync+0x3e7/0x940
-   hci_cmd_sync_work+0x13c/0x290
+  Freed by task 93:
+   hci_remote_oob_data_clear+0x108/0x1c0
+   remove_remote_oob_data+0x198/0x220
+   hci_sock_sendmsg+0x1033/0x1ea0
 
-Hold hci_dev_lock() across connection selection and transmission in both
-SCO and ISO scheduling, serializing them with connection teardown. This
-also prevents queuing completion timestamps after the connection queues
-have been purged. Extending RCU across transmission would be unsafe
-because the transmit path can sleep. Keep the ISO timeout check outside
-the mutex since hci_link_tx_to() takes it itself.
+Taking hdev->lock in build_pairing_cmd() would recurse for callers that
+already hold it and invert the device-to-L2CAP lock order on the receive
+path. Add a per-device remote_oob_lock instead, held across the SMP
+lookup and copies and by the add, remove and clear helpers. Cover
+initialization and in-place updates as well, so SMP cannot read partially
+initialized or updated OOB values. Release the mutex on allocation
+failure, preserving the existing error return.
 
-The preceding channel fix already holds this mutex in the ACL and LE
-schedulers, which call the SCO scheduler between packets. Move the SCO
-body to __hci_sched_sco(), assert that its caller holds the mutex, and
-use it directly from these locked paths. Keep a locking hci_sched_sco()
-wrapper for the direct calls from hci_tx_work(). This avoids recursively
-acquiring the device mutex while preserving the scheduling order.
+The new critical sections acquire no device, connection or channel locks.
+Writers retain their existing hdev->lock protection, which continues to
+serialize the other readers without changing their locking or behavior.
 
-Remove the obsolete claim that connection removal disables TX.
-
-Fixes: bf4c63252490 ("Bluetooth: convert conn hash to RCU")
+Link: https://lore.kernel.org/r/00660cd3-7d71-13a4-f617-229e6defb701@gmail.com
+Fixes: 02b05bd8b0a6 ("Bluetooth: Set SMP OOB flag if OOB data is available")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
 Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Adjusted hci_sched_iso() lock placement around existing ISO/LE/ACL credit selection with no ISO timeout check. ]
+[ sashal: adjusted context for kmalloc() instead of kmalloc_obj() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_core.c         | 12 +++++++++++-
+ net/bluetooth/smp.c              |  2 ++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 9465633f438fb..763f003ac29e3 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -554,6 +554,7 @@ struct hci_dev {
+ 	struct list_head	link_keys;
+ 	struct list_head	long_term_keys;
+ 	struct list_head	identity_resolving_keys;
++	struct mutex		remote_oob_lock;
+ 	struct list_head	remote_oob_data;
+ 	struct list_head	le_accept_list;
+ 	struct list_head	le_resolv_list;
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 4f973e22ce86e..253ee56d7bf66 100644
+index 253ee56d7bf66..95900c2325631 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -3450,9 +3450,6 @@ static struct hci_conn *hci_low_sent(struct hci_dev *hdev, __u8 type,
- 	struct hci_conn *conn = NULL, *c;
- 	unsigned int num = 0, min = ~0;
+@@ -1527,8 +1527,10 @@ int hci_remove_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
  
--	/* We don't have to lock device here. Connections are always
--	 * added and removed with TX task disabled. */
--
- 	rcu_read_lock();
+ 	BT_DBG("%s removing %pMR (%u)", hdev->name, bdaddr, bdaddr_type);
  
- 	list_for_each_entry_rcu(c, &h->list, list) {
-@@ -3640,13 +3637,15 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt, u8 type)
++	mutex_lock(&hdev->remote_oob_lock);
+ 	list_del(&data->list);
+ 	kfree(data);
++	mutex_unlock(&hdev->remote_oob_lock);
+ 
+ 	return 0;
  }
- 
- /* Schedule SCO */
--static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
-+static void __hci_sched_sco(struct hci_dev *hdev, __u8 type)
+@@ -1537,10 +1539,12 @@ void hci_remote_oob_data_clear(struct hci_dev *hdev)
  {
- 	struct hci_conn *conn;
- 	struct sk_buff *skb;
- 	int quote, *cnt;
- 	unsigned int pkts = hdev->sco_pkts;
+ 	struct oob_data *data, *n;
  
-+	lockdep_assert_held(&hdev->lock);
-+
- 	bt_dev_dbg(hdev, "type %u", type);
- 
- 	if (!hci_conn_num(hdev, type) || !pkts)
-@@ -3681,6 +3680,13 @@ static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
- 		queue_work(hdev->workqueue, &hdev->tx_work);
++	mutex_lock(&hdev->remote_oob_lock);
+ 	list_for_each_entry_safe(data, n, &hdev->remote_oob_data, list) {
+ 		list_del(&data->list);
+ 		kfree(data);
+ 	}
++	mutex_unlock(&hdev->remote_oob_lock);
  }
  
-+static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
-+{
-+	hci_dev_lock(hdev);
-+	__hci_sched_sco(hdev, type);
-+	hci_dev_unlock(hdev);
-+}
-+
- static void hci_sched_acl_pkt(struct hci_dev *hdev)
+ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
+@@ -1549,11 +1553,14 @@ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
  {
- 	unsigned int cnt = hdev->acl_cnt;
-@@ -3716,8 +3722,8 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
- 			chan->conn->sent++;
+ 	struct oob_data *data;
  
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev, SCO_LINK);
--			hci_sched_sco(hdev, ESCO_LINK);
-+			__hci_sched_sco(hdev, SCO_LINK);
-+			__hci_sched_sco(hdev, ESCO_LINK);
- 		}
- 	}
++	mutex_lock(&hdev->remote_oob_lock);
+ 	data = hci_find_remote_oob_data(hdev, bdaddr, bdaddr_type);
+ 	if (!data) {
+ 		data = kmalloc(sizeof(*data), GFP_KERNEL);
+-		if (!data)
++		if (!data) {
++			mutex_unlock(&hdev->remote_oob_lock);
+ 			return -ENOMEM;
++		}
  
-@@ -3776,8 +3782,8 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			chan->conn->sent++;
+ 		bacpy(&data->bdaddr, bdaddr);
+ 		data->bdaddr_type = bdaddr_type;
+@@ -1586,6 +1593,8 @@ int hci_add_remote_oob_data(struct hci_dev *hdev, bdaddr_t *bdaddr,
  
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev, SCO_LINK);
--			hci_sched_sco(hdev, ESCO_LINK);
-+			__hci_sched_sco(hdev, SCO_LINK);
-+			__hci_sched_sco(hdev, ESCO_LINK);
- 		}
- 	}
+ 	BT_DBG("%s for %pMR", hdev->name, bdaddr);
  
-@@ -3801,6 +3807,9 @@ static void hci_sched_iso(struct hci_dev *hdev, __u8 type)
- 
- 	cnt = hdev->iso_pkts ? &hdev->iso_cnt :
- 		hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
++	mutex_unlock(&hdev->remote_oob_lock);
 +
-+	hci_dev_lock(hdev);
-+
- 	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
- 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
- 			BT_DBG("skb %p len %d", skb, skb->len);
-@@ -3812,6 +3821,8 @@ static void hci_sched_iso(struct hci_dev *hdev, __u8 type)
- 			(*cnt)--;
- 		}
- 	}
-+
-+	hci_dev_unlock(hdev);
+ 	return 0;
  }
  
- static void hci_tx_work(struct work_struct *work)
+@@ -2543,6 +2552,7 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+ 	mutex_init(&hdev->lock);
+ 	mutex_init(&hdev->req_lock);
+ 	mutex_init(&hdev->mgmt_pending_lock);
++	mutex_init(&hdev->remote_oob_lock);
+ 
+ 	ida_init(&hdev->unset_handle_ida);
+ 
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 078d5a19a846e..c093797962266 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -683,6 +683,7 @@ static void build_pairing_cmd(struct l2cap_conn *conn,
+ 		else
+ 			bdaddr_type = BDADDR_LE_RANDOM;
+ 
++		mutex_lock(&hdev->remote_oob_lock);
+ 		oob_data = hci_find_remote_oob_data(hdev, &hcon->dst,
+ 						    bdaddr_type);
+ 		if (oob_data && oob_data->present) {
+@@ -693,6 +694,7 @@ static void build_pairing_cmd(struct l2cap_conn *conn,
+ 			SMP_DBG("OOB Remote Confirmation: %16phN", smp->pcnf);
+ 			SMP_DBG("OOB Remote Random: %16phN", smp->rr);
+ 		}
++		mutex_unlock(&hdev->remote_oob_lock);
+ 
+ 	} else {
+ 		authreq &= ~SMP_AUTH_SC;
 -- 
 2.53.0
 
