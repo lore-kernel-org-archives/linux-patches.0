@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A397B3F23A6;
-	Tue, 13 Oct 2026 12:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9AE3F23A6;
+	Tue, 13 Oct 2026 12:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895112; cv=none; b=dKUEtyuFg+XgKZrb5i/CV+miKb6C35PQ+4vpWvxLHQ4VF+byrMymkAPqMwN6KRs+p1OEn2EN5o7Xh+OfII7YnMISh4RLzk7vRFGXAx1qcg/rzzTN6vgpho6xOEEMU/xSk6meT0pV3kCZ6pu/kiweqS3G+Akr+NRKBfVWgZXODTQ=
+	t=1791895115; cv=none; b=VxCLC39YOMa/kS0DF2vP5Pkv1cRsijcHt4pwUGRFDLoV2DkxtPQ5PacwkOsQwoFrN/suNEvlDEyEr9CHeKws4ukITP6bXj5xeQnuD9enkNExwfCElx6qdmTBt4niWkZ721gX7pa+I6+vB1xpZogSrBSSl//wXds+8vHAYXNUlBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895112; c=relaxed/simple;
-	bh=dgEvSnww9dH+7atvQ1w+U2b4naHWHgXLPhLkORgEG8g=;
+	s=arc-20240116; t=1791895115; c=relaxed/simple;
+	bh=k6awn3OkSWkEDx9D9hTNWC5RpBsFnHbubbXpKsuSbKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqb1CjQoAGNzF9fVftZivgx++Bd83p82dDnOiw78eAtIfWmxC8FNx2TdB0n0xcwmTUTjksIrdarEfvGIss6XbBJ7fouqqyOtzdb/aEpfbPoSQorl//qZ+tIa1eAiU+CN1dVFUJLfAr7YLWi2QK2BDwcw0kTPHcLmr1KJKHNnWIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYVE4Sat; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dzW6pRmGwVp2NcZrN3PbjSlYEH1Y2yfaukGLZNlky/oh47jh2xMnVoFHJwumpZ8AMPce36fc1DNYtiTA4Ak38aTajBu8PejmE7jo33RHtr2n3+2eG5YsLB1IPlp3gSCRN1rNJL6PXDFXO7oTkUNj36oPKpcaF/+/9zlji/ne9zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTAInnMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYVE4Sat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD34B1F000FF;
-	Tue, 13 Oct 2026 12:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTAInnMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A352D1F000FF;
+	Tue, 13 Oct 2026 12:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895111;
-	bh=s9lVdm6hsGMfQJViEJwpJ59N0XdtXlx7Wg++SGwzeEE=;
+	s=korg; t=1791895114;
+	bh=006gzJSqkHFioHzYK8j7dpzmNcyAJAY8alixCBu3aMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dYVE4SatR6j/V26STIbGiKzrHtZkoUBvYx5rWKyPhCuuAXg5dXwfNKQLWkTk0uV7L
-	 VlKsOEyA3MFHD2kkMOq9uCfyztC2d27k/d5rRr8GCwHejz4LXEIjWTpltrRe8SzE6i
-	 9BULWIFFiJzdmqic09S0Crf3xzZipq8OW+x4uYyw=
+	b=uTAInnMv6Ob1VfbZxMzQViYWXujHoZoH5veSzcw3KjGscjTCAj4tb1/jmq7NmONrj
+	 lnThutCMo4NOQQxH3azapLcqdRCj2c7ROj6Xl3q1lQOu/6Sdq3j2pULxrLlydWGJz4
+	 8xRkHQmLyzEAxqYeNcSTnxTfCJgPPTxezaluhgkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 164/497] tty: abort break signalling on hangup
-Date: Tue, 13 Oct 2026 13:35:31 +0200
-Message-ID: <20261013112911.781955110@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	stable@kernel.org
+Subject: [PATCH 6.12 165/497] tty: serial: max3100: shut down timer before freeing port
+Date: Tue, 13 Oct 2026 13:35:32 +0200
+Message-ID: <20261013112911.805585356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,124 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
+commit db0949bbd06db0a75b4b1076f1e25194be7d956a upstream.
 
-The break ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+max3100_shutdown() stops the polling timer but returns early during
+system suspend. If the SPI device is unbound before resume, the serial
+core does not call max3100_shutdown() again, so max3100_remove() frees
+the port while the timer remains armed. max3100_timeout() may then
+access the freed port and re-arm the timer.
 
-Drivers must handle this race, but TCSBRK and TCSBRKP should still be
-aborted to avoid calling back into the driver after a user-controlled
-timeout (possibly even after the tty has been reopened).
+Add final timer teardown to max3100_remove() and use
+timer_shutdown_sync() to prevent a racing callback from re-arming it.
+Also free the IRQ and destroy the workqueue there before freeing the
+port. Keep timer_delete_sync() in max3100_shutdown() so that a
+subsequent open() can re-arm the timer.
 
-Note that drivers should disable any break state on shutdown so just
-return on hangup (calling break_ctl() again is racy and will most likely
-fail for drivers handling the race).
+The workqueue is created before request_irq() and destroyed on both
+request_irq() failure and normal shutdown. Its presence at remove thus
+identifies the IRQ left registered when suspend bypasses shutdown.
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+Free the IRQ before destroying the workqueue, in both
+max3100_shutdown() and max3100_remove(), and cancel the pending work
+in between. free_irq() waits for a running interrupt handler to
+finish and no new handler can start afterwards, so a racing handler
+cannot queue work on a workqueue that is being destroyed; the
+force_end_work check in max3100_dowork() only narrows that window, as
+a handler delayed between the check and queue_work() could still run
+after the teardown has cleared the workqueue pointer. Cancelling the
+work also keeps destroy_workqueue() from waiting on a queued work item
+in case remove() ever runs while the freezable workqueue is still
+frozen, e.g. device removal during the resume window, before
+workqueues are thawed.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7831d56b0a35 ("tty: MAX3100")
+Cc: stable@kernel.org # 6.2+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260927055957.561030-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
- include/linux/tty.h  |    1 +
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ drivers/tty/serial/max3100.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -623,6 +623,8 @@ static void __tty_hangup(struct tty_stru
+--- a/drivers/tty/serial/max3100.c
++++ b/drivers/tty/serial/max3100.c
+@@ -535,11 +535,11 @@ static void max3100_shutdown(struct uart
+ 	del_timer_sync(&s->timer);
  
- 	tty_ldisc_hangup(tty, cons_filp != NULL);
- 
-+	wake_up_interruptible(&tty->break_wait);
-+
- 	spin_lock_irq(&tty->ctrl.lock);
- 	clear_bit(TTY_THROTTLED, &tty->flags);
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-@@ -2468,6 +2470,7 @@ static int tiocgetd(struct tty_struct *t
-  * send_break - performed time break
-  * @tty: device to break on
-  * @duration: timeout in mS
-+ * @file: file object
-  *
-  * Perform a timed break on hardware that lacks its own driver level timed
-  * break functionality.
-@@ -2475,8 +2478,9 @@ static int tiocgetd(struct tty_struct *t
-  * Locking:
-  *	@tty->atomic_write_lock serializes
-  */
--static int send_break(struct tty_struct *tty, unsigned int duration)
-+static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
- {
-+	long timeout;
- 	int retval;
- 
- 	if (tty->ops->break_ctl == NULL)
-@@ -2490,13 +2494,26 @@ static int send_break(struct tty_struct
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (!retval) {
--		msleep_interruptible(duration);
--		retval = tty->ops->break_ctl(tty, 0);
--	} else if (retval == -EOPNOTSUPP) {
--		/* some drivers can tell only dynamically */
--		retval = 0;
-+	if (retval) {
-+		if (retval == -EOPNOTSUPP) {
-+			/* some drivers can tell only dynamically */
-+			retval = 0;
-+		}
-+		goto out_unlock;
-+	}
-+
-+	timeout = msecs_to_jiffies(duration);
-+	timeout = wait_event_interruptible_timeout(tty->break_wait,
-+						   tty_hung_up_p(file),
-+						   timeout);
-+	/* return early on hangup only */
-+	if (timeout > 0) {
-+		retval = -EIO;
-+		goto out_unlock;
+ 	if (s->workqueue) {
++		free_irq(port->irq, s);
++		cancel_work_sync(&s->work);
+ 		destroy_workqueue(s->workqueue);
+ 		s->workqueue = NULL;
  	}
+-	if (port->irq)
+-		free_irq(port->irq, s);
+ 
+ 	/* set shutdown mode to save power */
+ 	max3100_sr(s, MAX3100_WC | MAX3100_SHDN, &rx);
+@@ -752,6 +752,15 @@ static void max3100_remove(struct spi_de
+ 		if (max3100s[i] == s) {
+ 			dev_dbg(&spi->dev, "%s: removing port %d\n", __func__, i);
+ 			uart_remove_one_port(&max3100_uart_driver, &max3100s[i]->port);
 +
-+	retval = tty->ops->break_ctl(tty, 0);
-+out_unlock:
- 	tty_write_unlock(tty);
- 
- 	if (signal_pending(current))
-@@ -2765,10 +2782,10 @@ long tty_ioctl(struct file *file, unsign
- 		 * This is used by the tcdrain() termios function.
- 		 */
- 		if (!arg)
--			return send_break(tty, 250);
-+			return send_break(file, tty, 250);
- 		return 0;
- 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
--		return send_break(tty, arg ? arg*100 : 250);
-+		return send_break(file, tty, arg ? arg * 100 : 250);
- 
- 	case TIOCMGET:
- 		return tty_tiocmget(tty, p);
-@@ -3131,6 +3148,7 @@ struct tty_struct *alloc_tty_struct(stru
- 	init_ldsem(&tty->ldisc_sem);
- 	init_waitqueue_head(&tty->write_wait);
- 	init_waitqueue_head(&tty->read_wait);
-+	init_waitqueue_head(&tty->break_wait);
- 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
- 	mutex_init(&tty->atomic_write_lock);
- 	spin_lock_init(&tty->ctrl.lock);
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -230,6 +230,7 @@ struct tty_struct {
- 	struct fasync_struct *fasync;
- 	wait_queue_head_t write_wait;
- 	wait_queue_head_t read_wait;
-+	wait_queue_head_t break_wait;
- 	struct work_struct hangup_work;
- 	void *disc_data;
- 	void *driver_data;
++			s->force_end_work = 1;
++			timer_shutdown_sync(&s->timer);
++			if (s->workqueue) {
++				free_irq(s->port.irq, s);
++				cancel_work_sync(&s->work);
++				destroy_workqueue(s->workqueue);
++				s->workqueue = NULL;
++			}
+ 			kfree(max3100s[i]);
+ 			max3100s[i] = NULL;
+ 			break;
 
 
