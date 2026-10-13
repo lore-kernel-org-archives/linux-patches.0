@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A622D7380;
-	Tue, 13 Oct 2026 12:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2D938F62F;
+	Tue, 13 Oct 2026 12:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893514; cv=none; b=Q6R5nyZ17LQ/dGf7X8l7fhXsPE5ApJMMBwwDSJmQbh9dMgQ14TAr3FQqcJH86Z6hs36cnNO4+sRVgu/n64ACJkoDycFmC1BG052+JKkqwprmSEnj+GfdeE3AcKkVxze2GRgK5IP3+oY/X0hwRKw6YnjJmJ3QmGf/7V6MPsX769s=
+	t=1791893517; cv=none; b=qYisknfRFl7URY02dmmfT9egS8l+d8YMLxd3JFB12mVWerMnCYkjU+jBlQ1RjFS2vZ/o1lux1XkihofMZnkfWGTtxE+GZl4Td+dfJG7365b1kU1zK+AOXyhMA7t00vvL2Vm4zaMapYURZ0nTd8fiFsQLVJnxrv/tboSJNyesp5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893514; c=relaxed/simple;
-	bh=BlxpZZnsC8I529uP53I+AFWxz0fOx7FtZw55oQPLI8s=;
+	s=arc-20240116; t=1791893517; c=relaxed/simple;
+	bh=DwCZkORCYG+MnifrbuiLS2zV8wsOEDsZBxLS/idsCyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JncwvfR6aUBeHuurDtkf35FhnF1vgyhLjhPVJBTljZ4rzPFNO2b3H0vL+AexwjnWRYYF9D2O23U7R/bIb2ZXGIVq622Ll5VsmauU8hYBybVf1oVdBY3inGSr8TpTqyhO61HdoK+ZFlOdjAxgiHJ8XsaXomlW063rQVoSOar05PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCDvzXp+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tKHMS8NLkBj6XSP7iwe+7iSNnOFV9pRIEDKKBS+5kXsFjT9lRyrWQWu3hq+DVYz+3lceS09oiUIlIohX9jRf27hUa+tLJd41W8RhyEfAwcmvvJrm4N4HsieP0fZZLBEpuzoUnDSOuZOZZKiHfnjaEAlisr/l0b28j3cSfQ6V0ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/+lg1ha; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCDvzXp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23621F000FF;
-	Tue, 13 Oct 2026 12:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/+lg1ha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D3A1F000FF;
+	Tue, 13 Oct 2026 12:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893513;
-	bh=zOkc/l6koR2m86btVdLXNHN6N8T6mfQeDjLv7FobC0I=;
+	s=korg; t=1791893516;
+	bh=JZM1XQK5fsQtpzhovP1/MD1pRYYnqJrKHspzO2Pz/i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCDvzXp+suVF1+DX9cKrCnNGm0rM7Sg6akLSSPIUDmjQMzDI/igazQdxe2D8P4zGq
-	 k27kE/JL7wdM1tKF3vXaJdFW7coVXLyd8OOPP3e0og4a6qYGWNLjOO+lFOMA72coOS
-	 jnFRjdwdueO4SsCy456mOXeoSFREuIdTLCQcUztw=
+	b=U/+lg1ha2i5YKhGrD3hxz1EBXfGrmneKp+lhNDlIJM3zd2pWftjQQFy0SD2KPbahu
+	 GzjhqWjFIRN0seB4YJU48e7q+Qks6TAyWYaIInmZ/5Fo0LsT4ePtoQxgx3ihc5Tfv1
+	 abovn7L0FpsazAUw2/lBnvoojxXil6vSwzwl0N4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jatin Kataria <jkataria@netflix.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
 	dri-devel@lists.freedesktop.org,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Boqun Feng <boqun@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 207/621] drm/ttm: Fix ttm_bo_swapout() infinite LRU walk on swapout failure
-Date: Tue, 13 Oct 2026 13:33:22 +0200
-Message-ID: <20261013112925.773214291@linuxfoundation.org>
+Subject: [PATCH 6.18 208/621] drm/ttm: Fix ttm_bo_shrink() infinite LRU walk on backup failure
+Date: Tue, 13 Oct 2026 13:33:23 +0200
+Message-ID: <20261013112925.797014221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -58,110 +59,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit b2ed01e7ad3de80333e9b962a44024b094bc0b2b ]
+[ Upstream commit 1d59f36e95f7f7134db0e313c9d787cb0adb2153 ]
 
-When ttm_tt_swapout() fails, the current code calls
-ttm_resource_add_bulk_move() followed by ttm_resource_move_to_lru_tail()
-to restore the resource's bulk_move membership.
+Apply the same fix as b2ed01e7ad ("drm/ttm: Fix ttm_bo_swapout()
+infinite LRU walk on swapout failure") to the ttm_bo_shrink() path.
 
-However, ttm_resource_move_to_lru_tail() places the resource at the tail
-of the LRU list which, relative to the walk cursor's hitch node (placed
-immediately after the resource when it was yielded), puts the resource
-*in front of the* the hitch. The next list_for_each_entry_continue() from
-the hitch finds the same resource again, causing an infinite loop.
+Move del_bulk_move from before the backup to after success only,
+using ttm_resource_del_bulk_move_unevictable() since the resource
+is now unevictable once fully backed up.
 
-Fix by deferring del_bulk_move to the success path only.
-
-On the success path, TTM_TT_FLAG_SWAPPED has just been set by
-ttm_tt_swapout() but the resource is still tracked in the bulk_move range,
-so ttm_resource_del_bulk_move()'s !ttm_resource_unevictable() guard would
-incorrectly skip the removal. Introduce
-ttm_resource_del_bulk_move_unevictable() which bypasses that guard.
-
-Reported-by: Jatin Kataria <jkataria@netflix.com>
-Fixes: fc5d96670eb2 ("drm/ttm: Move swapped objects off the manager's LRU list")
+Fixes: 70d645deac98 ("drm/ttm: Add helpers for shrinking")
 Cc: Christian König <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
 Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <dri-devel@lists.freedesktop.org>
-Cc: <stable@vger.kernel.org> # v6.13+
-Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: stable@vger.kernel.org # v6.15+
+Assisted-by: GitHub_Copilot:claude-opus-4.6
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260511162443.24352-1-thomas.hellstrom@linux.intel.com
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Tested-by: Boqun Feng <boqun@kernel.org>
-Link: https://patch.msgid.link/20260428094442.16985-1-thomas.hellstrom@linux.intel.com
-Stable-dep-of: 1d59f36e95f7 ("drm/ttm: Fix ttm_bo_shrink() infinite LRU walk on backup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c       | 16 ++++++----------
- drivers/gpu/drm/ttm/ttm_resource.c | 13 +++++++++++++
- include/drm/ttm/ttm_resource.h     |  2 ++
- 3 files changed, 21 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo_util.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
-index d7a722d875cbc..493471012820e 100644
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -1175,17 +1175,13 @@ ttm_bo_swapout_cb(struct ttm_lru_walk *walk, struct ttm_buffer_object *bo)
- 		bdev->funcs->swap_notify(bo);
+diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
+index 85bb9f9f1f616..7aa35899e33ce 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -1094,19 +1094,14 @@ long ttm_bo_shrink(struct ttm_operation_ctx *ctx, struct ttm_buffer_object *bo,
+ 	if (lret < 0)
+ 		return lret;
  
- 	if (ttm_tt_is_populated(tt)) {
+-	if (bo->bulk_move) {
 -		spin_lock(&bdev->lru_lock);
 -		ttm_resource_del_bulk_move(bo->resource, bo);
 -		spin_unlock(&bdev->lru_lock);
+-	}
 -
- 		ret = ttm_tt_swapout(bdev, tt, swapout_walk->gfp_flags);
--
--		spin_lock(&bdev->lru_lock);
--		if (ret)
--			ttm_resource_add_bulk_move(bo->resource, bo);
--		ttm_resource_move_to_lru_tail(bo->resource);
--		spin_unlock(&bdev->lru_lock);
-+		if (!ret) {
-+			spin_lock(&bdev->lru_lock);
-+			ttm_resource_del_bulk_move_unevictable(bo->resource, bo);
-+			ttm_resource_move_to_lru_tail(bo->resource);
-+			spin_unlock(&bdev->lru_lock);
-+		}
+ 	lret = ttm_tt_backup(bdev, bo->ttm, (struct ttm_backup_flags)
+ 			     {.purge = flags.purge,
+ 			      .writeback = flags.writeback});
+ 
+-	if (lret <= 0 && bo->bulk_move) {
++	if (lret > 0) {
+ 		spin_lock(&bdev->lru_lock);
+-		ttm_resource_add_bulk_move(bo->resource, bo);
++		ttm_resource_del_bulk_move_unevictable(bo->resource, bo);
++		ttm_resource_move_to_lru_tail(bo->resource);
+ 		spin_unlock(&bdev->lru_lock);
  	}
  
- out:
-diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
-index 8396cab34cb03..a6a948fa0b83c 100644
---- a/drivers/gpu/drm/ttm/ttm_resource.c
-+++ b/drivers/gpu/drm/ttm/ttm_resource.c
-@@ -291,6 +291,19 @@ void ttm_resource_del_bulk_move(struct ttm_resource *res,
- 		ttm_lru_bulk_move_del(bo->bulk_move, res);
- }
- 
-+/*
-+ * Remove a resource from its bulk_move, bypassing the unevictable check.
-+ * Use only when the resource is known to still be tracked in the range despite
-+ * the BO having just become unevictable; asserts that this is the case.
-+ */
-+void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
-+					    struct ttm_buffer_object *bo)
-+{
-+	WARN_ON_ONCE(!ttm_resource_unevictable(res, bo));
-+	if (bo->bulk_move)
-+		ttm_lru_bulk_move_del(bo->bulk_move, res);
-+}
-+
- /* Move a resource to the LRU or bulk tail */
- void ttm_resource_move_to_lru_tail(struct ttm_resource *res)
- {
-diff --git a/include/drm/ttm/ttm_resource.h b/include/drm/ttm/ttm_resource.h
-index f49daa504c36a..a4e3f0447d384 100644
---- a/include/drm/ttm/ttm_resource.h
-+++ b/include/drm/ttm/ttm_resource.h
-@@ -434,6 +434,8 @@ void ttm_resource_add_bulk_move(struct ttm_resource *res,
- 				struct ttm_buffer_object *bo);
- void ttm_resource_del_bulk_move(struct ttm_resource *res,
- 				struct ttm_buffer_object *bo);
-+void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
-+					    struct ttm_buffer_object *bo);
- void ttm_resource_move_to_lru_tail(struct ttm_resource *res);
- 
- void ttm_resource_init(struct ttm_buffer_object *bo,
 -- 
 2.53.0
 
