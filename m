@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715B01DE8AE;
-	Tue, 13 Oct 2026 12:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998CA4A35;
+	Tue, 13 Oct 2026 12:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895613; cv=none; b=YAwLjSkcdJvGH3z7JXVHdgy3BNdyjul6o9f6US5+vkULQydIoBxJ9N4T+73xn/cNNcJSwf68u9cFA13svyIe23T2iVoG1jFV58Qp85wtkIVR7d6icBpzyfUTWBVFUWdKfzgNNG3Rrg1RKTLtuWZtkqImcSRouRuomg1erQgyzRc=
+	t=1791895615; cv=none; b=bkigW/T+/9bR0rF8AwilUoEKNl9r/hIzEwVi1nrYpwDVT6qH7uGQtUtvgqAyzmpd0rnmmD9J5hbj74oRhf5+R4jlPO0YPKDWDRm9x1UfnoDV3ir5emsMJJQoxH2P+UNxYIhOV4s5KX6PLgAF1GCfwuuTDaItUvJVIp5I95boSpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895613; c=relaxed/simple;
-	bh=GCLcXN1rULBTlV6tolM324odRii00O9G7WaZ8J/+IMs=;
+	s=arc-20240116; t=1791895615; c=relaxed/simple;
+	bh=ro3RivbK+WoAoZOnc9U4j+BHfkcS4IALx8j08IwxgK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvNspr/BJOcl/FQ9f/fz7J3RxFGTF/fl/Lhcf7BLPPEmHMEcIcpoHdgopf2BPbyl+zh/CeoOuhZzHS4WlILiJZhgAaHjip+NncZ+ZIMQPcytK25KqsIBGLQqQD4ksuD/BsbPbVDrckts6qUhPzmg7aAbHfBn6GdJBgkppp+4AEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmNQRNnF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gaYCbyzsg8pdkNHhdcE6k1RIq5BakF1k+0up7SndSf+66+XBfrG1Ayxna5XtNkHrESW62x32kzuUD7QDWh0ce//AkdQStTLahJ3PlpGkjoCKBZs/rCZJnA+j+iATjD6SgCpTLnA7cTkEswuWcNc9yme2mfGxj+rBlZ5waz2Ph/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yvg289WX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmNQRNnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C648A1F000FF;
-	Tue, 13 Oct 2026 12:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yvg289WX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B9B1F00893;
+	Tue, 13 Oct 2026 12:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895611;
-	bh=IrXF9HMvRx8vKu0G5dVTj8ITZIl0C91tHFBh4doeGHE=;
+	s=korg; t=1791895614;
+	bh=ff51v1hCzvzN93Klr7Q5Eg6EN3xm7ZIVb0WeDYSneLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kmNQRNnF1ozogWDHl5a7n7ITzLMhVTP0c7q71P9Pmyh0KJyW34CmQ0u/1QEhsqbh1
-	 /7y4UPoseVqCxa16VmrJXwjA2dWGI+wADNyuHcSQIK/iEFIiy+HsYZkEYJJ0fFTZJ1
-	 /wWULf5tmZVPm3lLPxpCUiteig1Yg221CiKBvn5o=
+	b=Yvg289WXt+LH+g1rGjh5qzxTBAtgPsrg3cebB8/3XRZlwtVClo8W+lQSWdgk3a20C
+	 dTJUIYL7uXaYYaL7Tk0nKQkLWKJd+oSfSoDI5cTnd50zFOGxtZL2p7VZJ4SNX10IRe
+	 k/uThSUCfUBYsVrm61/W7R+6VuPn1iKJ1JUJKxH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 334/497] iio: adc: stm32-adc: fix possible division by zero in processed channel
-Date: Tue, 13 Oct 2026 13:38:21 +0200
-Message-ID: <20261013112915.833125752@linuxfoundation.org>
+Subject: [PATCH 6.12 335/497] smb: client: only require read lease for size-extending preallocate
+Date: Tue, 13 Oct 2026 13:38:22 +0200
+Message-ID: <20261013112915.856172533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,52 +58,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit c5de6a6f855fdcf1e0ea549fb227a316db51c405 ]
+[ Upstream commit b5d59e7270d078ab28a9c4b4d11dc3eb24671988 ]
 
-In case the conversion has failed or returned zero, processing *val
-can lead to a division by zero. Need to check for errors, or converted
-value is zero, before processing the data. In case the converted value
-is zero, e.g. the Vrefint channel, this should be considered as invalid
-in all cases.
+smb3_simple_falloc() refuses any fallocate that clears FALLOC_FL_KEEP_SIZE
+with -EOPNOTSUPP whenever the inode is not read caching:
 
-Fixes: 0e346b2cfa85 ("iio: adc: stm32-adc: add vrefint calibration support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260911161555.244F31F000FF@smtp.kernel.org/
+	/* if file not oplocked can't be sure whether asking to extend size */
+	if (!CIFS_CACHE_READ(cifsi))
+		if (!keep_size) {
+			...
+			return rc;
+		}
+
+As with smb3_zero_range(), the read lease is only needed to trust the
+cached size when deciding whether the request extends the file. When it
+is not held, the size can instead be fetched from the server, which is
+authoritative, rather than refusing the request outright: after
+flushing, query the server's end of file and take the larger of it and
+the cached size for the interior-vs-extend decision. The larger of the
+two is used because the server's end of file reflects another client's
+growth while the cached size reflects this client's own writes that may
+not have reached the server yet; using the server size alone would
+wrongly treat an interior request as extending when a range flush left
+an extending write unwritten.
+
+smb3_simple_fallocate_range(), which performs the actual interior
+emulation, decided whether the range already lies past EOF from its own
+i_size_read(inode) rather than the old_eof computed above. In the
+leaseless case, that is exactly the stale, undershooting size this
+patch works around: a genuinely interior range can read as past EOF by
+that stale count, which skips the FSCTL_QUERY_ALLOCATED_RANGES check
+entirely and overwrites already-allocated server data with zeroes
+instead of only filling the holes. Pass old_eof into
+smb3_simple_fallocate_range() and use it for that comparison instead of
+re-deriving a second, inconsistent one.
+
+Rejecting interior requests is observed as generic/363 randomly failing
+against Windows Server with
+
+	do_preallocate: fallocate: Operation not supported
+
+fsx issues an interior, non-KEEP_SIZE preallocate while the inode is
+transiently not read caching: the server had just downgraded the file's
+lease from RWH to RH after breaking the write caching, and the ensuing
+handle reopen/revalidation left CIFS_CACHE_READ momentarily clear. The
+range sat within the server's end of file, so no extend was needed, yet
+it was refused and fsx aborted. This keeps the emulation correct even
+when a genuine lease break from another client leaves the inode
+without read caching -- the case the -EOPNOTSUPP guard turned into a
+hard failure. The extra flush and round trip only happen when both
+keep_size is false and no read lease is held; every other case is
+unchanged.
+
+Fixes: 9ccf3216238c ("Add support for original fallocate")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: Changed iio_device_release_direct() to iio_device_release_direct_mode(). ]
+[ sashal: Replaced unavailable query_server_eof() with an equivalent SMB2_query_info() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-adc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
-index db8dd129b0614..2513146639171 100644
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -1478,11 +1478,16 @@ static int stm32_adc_read_raw(struct iio_dev *indio_dev,
- 			ret = stm32_adc_single_conv(indio_dev, chan, val);
- 		else
- 			ret = -EINVAL;
-+		iio_device_release_direct_mode(indio_dev);
-+		if (ret < 0)
-+			return ret;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 417d0873dae32..55484d38ffe98 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3779,28 +3779,47 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
+ 	struct cifsFileInfo *cfile = file->private_data;
+ 	long rc = -EOPNOTSUPP;
+ 	unsigned int xid;
+-	loff_t new_eof;
++	loff_t old_eof, new_eof;
  
--		if (mask == IIO_CHAN_INFO_PROCESSED)
-+		if (mask == IIO_CHAN_INFO_PROCESSED) {
-+			if (*val == 0)
-+				return -EINVAL;
- 			*val = STM32_ADC_VREFINT_VOLTAGE * adc->vrefint.vrefint_cal / *val;
+ 	xid = get_xid();
+ 
+ 	inode = d_inode(cfile->dentry);
+ 	cifsi = CIFS_I(inode);
++	old_eof = i_size_read(inode);
+ 
+ 	trace_smb3_falloc_enter(xid, cfile->fid.persistent_fid, tcon->tid,
+ 				tcon->ses->Suid, off, len);
+-	/* if file not oplocked can't be sure whether asking to extend size */
+-	if (!CIFS_CACHE_READ(cifsi))
+-		if (keep_size == false) {
++
++	if (!keep_size && !CIFS_CACHE_READ(cifsi)) {
++		struct smb2_file_all_info file_inf = {};
++		unsigned long long server_eof;
++
++		rc = filemap_write_and_wait(inode->i_mapping);
++		if (rc) {
++			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
++				tcon->tid, tcon->ses->Suid, off, len, rc);
++			free_xid(xid);
++			return rc;
 +		}
++		netfs_wait_for_outstanding_io(inode);
++
++		rc = SMB2_query_info(xid, tcon, cfile->fid.persistent_fid,
++				     cfile->fid.volatile_fid, &file_inf);
++		if (rc) {
+ 			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
+ 				tcon->tid, tcon->ses->Suid, off, len, rc);
+ 			free_xid(xid);
+ 			return rc;
+ 		}
++		server_eof = le64_to_cpu(file_inf.EndOfFile);
++		/* Only use the larger EOF to decide whether we're extending. */
++		old_eof = max_t(loff_t, old_eof, server_eof);
++	}
  
--		iio_device_release_direct_mode(indio_dev);
- 		return ret;
+ 	/*
+ 	 * Extending the file
+ 	 */
+-	if ((keep_size == false) && i_size_read(inode) < off + len) {
++	if (!keep_size && old_eof < off + len) {
+ 		rc = inode_newsize_ok(inode, off + len);
+ 		if (rc)
+ 			goto out;
+@@ -3848,7 +3867,7 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
+ 		}
+ 	}
  
- 	case IIO_CHAN_INFO_SCALE:
+-	if ((keep_size == true) || (i_size_read(inode) >= off + len)) {
++	if (keep_size || old_eof >= off + len) {
+ 		/*
+ 		 * At this point, we are trying to fallocate an internal
+ 		 * regions of a sparse file. Since smb2 does not have a
+@@ -3877,7 +3896,7 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
+ 		 * ie potentially making a few extra pages at the beginning
+ 		 * or end of the file non-sparse via set_sparse is harmless.
+ 		 */
+-		if ((off > 8192) || (off + len + 8192 < i_size_read(inode))) {
++		if (off > 8192 || off + len + 8192 < old_eof) {
+ 			rc = -EOPNOTSUPP;
+ 			goto out;
+ 		}
 -- 
 2.53.0
 
