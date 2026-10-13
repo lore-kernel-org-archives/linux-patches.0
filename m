@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCF42C4FA;
-	Tue, 13 Oct 2026 12:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9D53A1E81;
+	Tue, 13 Oct 2026 12:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893934; cv=none; b=GCNuvvW4yJysv7CPDHQx/UdWM1VXaZsGelwdMQaXlYRswM9OkUhOf5mzmefyAso8nPtHgeCuZQCsmWYLHJkNjn8ujCFkY+3QYZX373P4208QxFQKBacXX4c/386rvCm1D1k/TWU2GEsb9Ddk0mezFDZEViModbZuRC23QUoVIHE=
+	t=1791893937; cv=none; b=dNs47M+/BQFjdc15nmrnzMlfDYR8I+vWDynBJWOHWxyCw75ihVTc7XpIbbTH1udjqPNzKPaIS0mkW6T89LPkvGgWiXj1+gNO7XLs0ZSz+85GNTIjdV67FNYVuMil+vW0Sib4czKxZBS/0eKsPnVb0mECOLulxb4mignj6VosUPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893934; c=relaxed/simple;
-	bh=s/2HSCXOwxpuT9XwUrTRydMGtI6Al0EAdnCI44/DnxA=;
+	s=arc-20240116; t=1791893937; c=relaxed/simple;
+	bh=3CL2I3/gXkHbk8KgKzPSWAMh65U3PKvwlfmobHauIss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+ElViY9XC+fQLHS7ZGWSDEabuL476B2ynpEisvQsvfrneRaVYP9TFRj21i1IM+wlv9MMWkaPWMfuB14/m2yp6U2RW7o0YHZaHT7ba5gryrD6i4ENeD1dz5w2SX2e+P8yunvZNcCWTmLs+Pt7wsGwggGxqiIkmvJbW4Xc1xlM2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQrLSDf1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WA4jzxizZWbdeIYrXB7TavAcd2KgymJxF+jEXBNGTKy7pgiV6eUO/EceBlOIu93F7vrehD+8ZmqRX8JirV0JSBbnli7efEnKdVCgaxjBVvFEVHZ5QgJBRY7QRzS9J2FzU8Fz8TY4C68anBSYc4Z4dE3hjjKDdcOiCCr8ShsSqSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osHlEPRJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQrLSDf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B761F000FF;
-	Tue, 13 Oct 2026 12:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osHlEPRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526FA1F000FF;
+	Tue, 13 Oct 2026 12:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893933;
-	bh=26BDMIYuv6GVr3PNh4HHNzT1vCAHyjx6tDUZNiVMYY8=;
+	s=korg; t=1791893935;
+	bh=WDJYYATJ8c7qlimpnOi5d6jWjWxCXtm0v5CyHKSVZeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQrLSDf1a39IbwLUzQ4wPsGpRoJwVLzWJfXasEb+lh6HCSJJhHQrIhNCTqgK1q2hY
-	 tKsdRZT0oyWQx7ihoY8KWSKKYWalrefBaW2Y3LalmPwXlWbjriBIeKkHOGSyigAvp7
-	 2owN2u0johyGzqcp1HDtrisk4KogG3s3J1BjfAZA=
+	b=osHlEPRJhFWs/OJR7uM2fHyoNfsdLSl0dSFVLQGwgaXzrMDk1StGpmeUlqocV+4zZ
+	 WfKmEQTQo2xzFl8dxk01AH2LX0ti4j6FcQngltzjAgExRUtoJzkCl/tEgcH00eaukU
+	 TGecJ9/EEw+l7CqDBMZBbmeXYN5A8PBNHsAiy7xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/621] ipvs: revalidate ihl to prevent out-of-bounds access
-Date: Tue, 13 Oct 2026 13:35:43 +0200
-Message-ID: <20261013112929.110045353@linuxfoundation.org>
+Subject: [PATCH 6.18 349/621] ovpn: defer key slot crypto freeing to workqueue
+Date: Tue, 13 Oct 2026 13:35:44 +0200
+Message-ID: <20261013112929.133232875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,103 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
+[ Upstream commit 2da3dfa1ddfe55a065f484750c83660e3bd4ac00 ]
 
-While the outer IP header is already pulled into the skb head,
-we must be careful and revalidate the embedded headers after
-reading them from the skb frags to prevent out-of-bounds
-access.
+Key slots are released through a kref and the existing release path
+frees the AEAD transforms from an RCU callback. That is not safe for all
+crypto implementations: crypto_free_aead can sleep, for example when an
+async or hardware implementation has teardown work to complete.
 
-One such place reported by Sashiko is ip_vs_nat_icmp() where
-local process can change the ihl field and after
-skb_ensure_writable() we can see larger value which is a
-problem for the ip_send_check(cih) calls.
+Use queue_rcu_work for key-slot release. This keeps the RCU grace period
+needed by lockless key-slot readers, but runs the actual crypto teardown
+from workqueue context where sleeping is allowed. Once the rcu_work
+callback runs, pre-existing RCU readers are gone, and the final kref put
+already proves that no transform user remains, so the worker can release
+the AEAD transforms and free the slot directly.
 
-Add check to drop the packet if the ihl field is changed.
+The previous patch drains ovpn_wq during module exit, so queued key-slot
+teardown work cannot outlive module text.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8534731dbf2d ("ovpn: implement packet processing")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             |  2 +-
- net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
- net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ovpn/crypto.c      | 10 +---------
+ drivers/net/ovpn/crypto.h      |  4 +++-
+ drivers/net/ovpn/crypto_aead.c | 19 ++++++++++++++-----
+ drivers/net/ovpn/crypto_aead.h |  1 -
+ 4 files changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 94dfc3a265ee5..955185eff1307 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1726,7 +1726,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
- 	return fwd;
- }
+diff --git a/drivers/net/ovpn/crypto.c b/drivers/net/ovpn/crypto.c
+index 2e95f29514fc4..7e545428900a9 100644
+--- a/drivers/net/ovpn/crypto.c
++++ b/drivers/net/ovpn/crypto.c
+@@ -18,20 +18,12 @@
+ #include "crypto_aead.h"
+ #include "crypto.h"
  
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph);
- 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 4e30a903f4bdc..401159a660750 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -745,7 +745,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
-  * Packet has been made sufficiently writable in caller
-  * - inout: 1=in->out, 0=out->in
-  */
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph)
+-static void ovpn_ks_destroy_rcu(struct rcu_head *head)
+-{
+-	struct ovpn_crypto_key_slot *ks;
+-
+-	ks = container_of(head, struct ovpn_crypto_key_slot, rcu);
+-	ovpn_aead_crypto_key_slot_destroy(ks);
+-}
+-
+ void ovpn_crypto_key_slot_release(struct kref *kref)
  {
-@@ -753,6 +753,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
- 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
+ 	struct ovpn_crypto_key_slot *ks;
  
-+	/* Before now we may used ihl from skb frag, revalidate it after
-+	 * copying it into skb head to prevent out-of-bounds access
-+	 */
-+	if (cih->ihl * 4 != ciph->len - ciph->off)
-+		return false;
- 	if (inout) {
- 		iph->saddr = cp->vaddr.ip;
- 		ip_send_check(iph);
-@@ -786,6 +791,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	else
- 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
- 			      "Forwarding altered incoming ICMP");
-+	return true;
+ 	ks = container_of(kref, struct ovpn_crypto_key_slot, refcount);
+-	call_rcu(&ks->rcu, ovpn_ks_destroy_rcu);
++	queue_rcu_work(ovpn_wq, &ks->free_work);
  }
  
- #ifdef CONFIG_IP_VS_IPV6
-@@ -877,7 +883,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
- 	else
- #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
-+		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
-+			goto out;
+ /* can only be invoked when all peer references have been dropped (i.e. RCU
+diff --git a/drivers/net/ovpn/crypto.h b/drivers/net/ovpn/crypto.h
+index 0e284fec3a75a..e3feb16d54985 100644
+--- a/drivers/net/ovpn/crypto.h
++++ b/drivers/net/ovpn/crypto.h
+@@ -10,6 +10,8 @@
+ #ifndef _NET_OVPN_OVPNCRYPTO_H_
+ #define _NET_OVPN_OVPNCRYPTO_H_
  
- 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
- 		goto out;
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 7db74b2ea358c..fa66e31685504 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1577,7 +1577,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
++#include <linux/workqueue.h>
++
+ #include "pktid.h"
+ #include "proto.h"
  
--	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
-+	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
-+		goto tx_error;
+@@ -45,8 +47,8 @@ struct ovpn_crypto_key_slot {
  
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
+ 	struct ovpn_pktid_recv pid_recv ____cacheline_aligned_in_smp;
+ 	struct ovpn_pktid_xmit pid_xmit ____cacheline_aligned_in_smp;
++	struct rcu_work free_work;
+ 	struct kref refcount;
+-	struct rcu_head rcu;
+ };
+ 
+ struct ovpn_crypto_state {
+diff --git a/drivers/net/ovpn/crypto_aead.c b/drivers/net/ovpn/crypto_aead.c
+index 2cca759feffac..aa3cd9837cc03 100644
+--- a/drivers/net/ovpn/crypto_aead.c
++++ b/drivers/net/ovpn/crypto_aead.c
+@@ -9,6 +9,7 @@
+ 
+ #include <crypto/aead.h>
+ #include <linux/skbuff.h>
++#include <linux/workqueue.h>
+ #include <net/ip.h>
+ #include <net/ipv6.h>
+ #include <net/udp.h>
+@@ -294,13 +295,19 @@ static struct crypto_aead *ovpn_aead_init(const char *title,
+ 	return ERR_PTR(ret);
+ }
+ 
+-void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks)
++static void ovpn_aead_crypto_key_slot_free(struct ovpn_crypto_key_slot *ks)
+ {
+-	if (!ks)
+-		return;
+-
+ 	crypto_free_aead(ks->encrypt);
+ 	crypto_free_aead(ks->decrypt);
++}
++
++static void ovpn_aead_crypto_key_slot_free_work(struct work_struct *work)
++{
++	struct ovpn_crypto_key_slot *ks;
++
++	ks = container_of(to_rcu_work(work), struct ovpn_crypto_key_slot,
++			  free_work);
++	ovpn_aead_crypto_key_slot_free(ks);
+ 	kfree(ks);
+ }
+ 
+@@ -334,6 +341,7 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
+ 
+ 	ks->encrypt = NULL;
+ 	ks->decrypt = NULL;
++	INIT_RCU_WORK(&ks->free_work, ovpn_aead_crypto_key_slot_free_work);
+ 	kref_init(&ks->refcount);
+ 	ks->key_id = kc->key_id;
+ 
+@@ -367,7 +375,8 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
+ 	return ks;
+ 
+ destroy_ks:
+-	ovpn_aead_crypto_key_slot_destroy(ks);
++	ovpn_aead_crypto_key_slot_free(ks);
++	kfree(ks);
+ 	return ERR_PTR(ret);
+ }
+ 
+diff --git a/drivers/net/ovpn/crypto_aead.h b/drivers/net/ovpn/crypto_aead.h
+index 65a2ff3078986..fae3b585a43b3 100644
+--- a/drivers/net/ovpn/crypto_aead.h
++++ b/drivers/net/ovpn/crypto_aead.h
+@@ -22,7 +22,6 @@ int ovpn_aead_decrypt(struct ovpn_peer *peer, struct ovpn_crypto_key_slot *ks,
+ 
+ struct ovpn_crypto_key_slot *
+ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc);
+-void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks);
+ 
+ enum ovpn_cipher_alg ovpn_aead_crypto_alg(struct ovpn_crypto_key_slot *ks);
+ 
 -- 
 2.53.0
 
