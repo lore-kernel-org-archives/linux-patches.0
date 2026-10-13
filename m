@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2595F155C87;
-	Tue, 13 Oct 2026 11:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFA23AFD03;
+	Tue, 13 Oct 2026 11:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892531; cv=none; b=uXEyXp3hfZLye1JYHF/c0mtYMotXBJyGhonprd0AzJ0dhZx1YmP8gq2YXCmpdZcjH0Ca7YSNP+RYF/JXiJgTc1hHjJlX/jQ/+lJGAJ3RYGEOLzyilvOV2MCY0vgvZg/E4U6HWrTGnItOX87XzO8XxxfQfhvLBei7KkLbqWm44DI=
+	t=1791892534; cv=none; b=RJUqeNtmAVZNPyITDh2YqIpJnywxI6t+oDzdjVddpZUtrIF/N3LDWJjATh5qM61/0QZYFDzHy/FUYSXf+Z+boyTxqLsVOe59CBw3RqzqdSNW3IkVUMR3+Wei/RzHRmHdqsNLfhBXqn6NYLuWBG2kqaB4qvDNXK7m5LVyspScQ4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892531; c=relaxed/simple;
-	bh=XVS2vp+GfDdrnHnewzJWHHdeqTeOFrEUM/++i5aSXnc=;
+	s=arc-20240116; t=1791892534; c=relaxed/simple;
+	bh=8wKREZSAL5g5tUFaKLWWNHlzEfcwu6coj38pcDSKrH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZk+LHzwAJ4vbjPmrLzURnUd6kCjYYxBphZ8/zvhXiY9+5kOiThwVzQ9qIxERxEqtscaLUWUOYqqZVedntZ7n57s5+QmRW4nC3RTjWzhPfopJMOalr+qMmHNtRFYf3/+Kb2+RGX6PeeaqqqsnKeaVQbtF0ot8jVhriHc0v3wUuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEOpGJRR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dbfu4as/waJN5vVHM+gfqBsPGgHSkW5PrMuStdybAhxAo2cK0IQYd5ugaEF9mRw5MKrU/YijXCw16QsJTsJfYVd11vgPB+ElIqOH3nxKrflgxbKbAmEe7/qR0wGDVNi0VP+4950DHa3rMWp7W0uNxPJffZCaNiYgj5VI8dnoEFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTuOHN+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEOpGJRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BC81F000FF;
-	Tue, 13 Oct 2026 11:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTuOHN+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2941F000FF;
+	Tue, 13 Oct 2026 11:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892530;
-	bh=A6uT35kWl79PVJKDyK6vyryBVgUT9mhMaPuRjUDXCrI=;
+	s=korg; t=1791892533;
+	bh=V26QKUmzKzsnSdWnCj16O4JYcjajOPkav8B1/L3f6to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEOpGJRR90Ruve3pvS6L8wFJmxNGn+9L+YAIdPCuSCOOejSXs/nfdmHoh9PBGRUUa
-	 62yEtw8n+s+EmiRq5ILs4RjwVZGKqCHrLKh/KotyLerL0WABBy/CCK5iR97itwZy84
-	 tlwgkGsgFP3bmfjYK00i2WkWpU9bI3bFXJ2ry0lk=
+	b=iTuOHN+Uts83Uz5iUvCEvm6R6ryOTx5h0i1PycYCALgZ+RUTsA2BVbdxTP/D/LWbs
+	 AdHCECIbwhVkz9iT6aNUDOd4iuTykAT1/nHzuk9XevIBWsIuEME6SsYrOjdB2Z8BAP
+	 BacJzglYRINbKiJOz0BpeawrW6Q4Ed16EhwGg1TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	James Hurley <jahurley@nvidia.com>,
-	Dave Thompson <davthompson@nvidia.com>,
-	Mahantesh Salimath <mahantesh@nvidia.com>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@oss.qualcomm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 203/281] tee: optee: ffa: support shared memory offsets on large-page kernels
-Date: Tue, 13 Oct 2026 13:38:39 +0200
-Message-ID: <20261013112900.088980444@linuxfoundation.org>
+Subject: [PATCH 7.2 204/281] bonding: fix the program leak when XDP is replaced
+Date: Tue, 13 Oct 2026 13:38:40 +0200
+Message-ID: <20261013112900.113254115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -55,117 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahantesh Salimath <mahantesh@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 3c0d2f1f431c51a11253f28763be723ac782fd7a ]
+[ Upstream commit 184b5ddf82d45d6f75cc83719a2e453392512bd2 ]
 
-OP-TEE FF-A memory objects use 4 KiB pages, while the kernel page
-size may be larger. Consequently, tee_shm->offset can be greater than
-or equal to FFA_PAGE_SIZE, but OP-TEE rejects such a value in
-internal_offs.
+We need to release the reference on the old BPF prog, whether
+we are going to no-prog, or replacing the prog with another.
 
-Do not encode the excess page offset in offs_low/offs_high. Those
-fields describe the logical memref offset and are copied back into
-tee_param->shm_offs on return. Folding the page offset into them breaks
-parameter round trips when a memref is reused. They are also ignored by
-the OPTEE_RPC_CMD_SHM_ALLOC response path, which uses only global_id and
-internal_offs to construct the shared-memory mobj.
+Spotted by AI while running tests for the propagation series
+(leaked programs were accumulating). Selftest will come in
+the net-next series to avoid conflicts.
 
-Instead, start the FF-A descriptor at the 4 KiB page containing the
-shared buffer, the same approach as optee_fill_pages_list() in the SMC
-ABI. Store the remaining in-page offset in internal_offs and preserve
-shm_offs in offs_low/offs_high. This keeps internal_offs within the
-FF-A page size, maps RPC allocations at the correct address, and
-preserves normal memref offsets across repeated invocations.
-
-Tested on ARMv8-A with 64 KiB PAGE_SIZE. OP-TEE OS ran as a secure
-partition under Hafnium (SPMC) over FF-A. Verified registered shared
-memory with tee_shm->offset >= 4 KiB, memref reuse on the same
-TEEC_Operation, and RPC OPTEE_RPC_CMD_SHM_ALLOC (xtest regression
-6007-6009). optee_hello_world, optee_aes, and xtest regression 1005,
-1007, 1008, 4001-4003 and 6001-6003 also passed.
-
-Fixes: 4615e5a34b95 ("optee: add FF-A support")
-Acked-by: Liming Sun <limings@nvidia.com>
-Acked-by: James Hurley <jahurley@nvidia.com>
-Acked-by: Dave Thompson <davthompson@nvidia.com>
-Signed-off-by: Mahantesh Salimath <mahantesh@nvidia.com>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
+Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
+Fixes: 6d5f1ef83868 ("bonding: Fix negative jump label count on nested bonding")
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261001012639.298690-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/ffa_abi.c   | 22 ++++++++++++++++++----
- drivers/tee/optee/optee_msg.h |  4 ++--
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-index d3cc7c5fc1e99..d027fe7ce86fd 100644
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -198,7 +198,8 @@ static int to_msg_param_ffa_mem(struct optee_msg_param *mp,
- 	if (shm) {
- 		u64 shm_offs = p->u.memref.shm_offs;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 34c5bbbed9aee..507d655eca21e 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -5738,12 +5738,12 @@ static int bond_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+ 			bpf_prog_inc(prog);
+ 	}
  
--		mp->u.fmem.internal_offs = shm->offset;
-+		mp->u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
-+					   (FFA_PAGE_SIZE - 1);
+-	if (prog) {
++	if (prog && !old_prog)
+ 		static_branch_inc(&bpf_master_redirect_enabled_key);
+-	} else if (old_prog) {
+-		bpf_prog_put(old_prog);
++	else if (!prog && old_prog)
+ 		static_branch_dec(&bpf_master_redirect_enabled_key);
+-	}
++	if (old_prog)
++		bpf_prog_put(old_prog);
  
- 		mp->u.fmem.offs_low = shm_offs;
- 		mp->u.fmem.offs_high = shm_offs >> 32;
-@@ -284,14 +285,26 @@ static int optee_ffa_shm_register(struct tee_context *ctx, struct tee_shm *shm,
- 		.nattrs = 1,
- 	};
- 	struct sg_table sgt;
-+	size_t ffa_offs;
- 	int rc;
+ 	return 0;
  
-+	if (!num_pages)
-+		return -EINVAL;
-+
- 	rc = optee_check_mem_type(start, num_pages);
- 	if (rc)
- 		return rc;
- 
--	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, 0,
--				       num_pages * PAGE_SIZE, GFP_KERNEL);
-+	/*
-+	 * Start the FF-A descriptor at the 4 KiB page containing the shared
-+	 * buffer, skipping unused leading 4 KiB pages when PAGE_SIZE is
-+	 * larger. Same approach as optee_fill_pages_list() in the SMC ABI.
-+	 * This leaves only the offset into that 4 KiB page for internal_offs.
-+	 */
-+	ffa_offs = round_down(tee_shm_get_page_offset(shm), FFA_PAGE_SIZE);
-+	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, ffa_offs,
-+				       num_pages * PAGE_SIZE - ffa_offs,
-+				       GFP_KERNEL);
- 	if (rc)
- 		return rc;
- 	args.sg = sgt.sgl;
-@@ -458,7 +471,8 @@ static void handle_ffa_rpc_func_cmd_shm_alloc(struct tee_context *ctx,
- 		.attr = OPTEE_MSG_ATTR_TYPE_FMEM_OUTPUT,
- 		.u.fmem.size = tee_shm_get_size(shm),
- 		.u.fmem.global_id = shm->sec_world_id,
--		.u.fmem.internal_offs = shm->offset,
-+		.u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
-+					(FFA_PAGE_SIZE - 1),
- 	};
- 
- 	arg->ret = TEEC_SUCCESS;
-diff --git a/drivers/tee/optee/optee_msg.h b/drivers/tee/optee/optee_msg.h
-index 7d9b12e71c035..6c3043f8da33c 100644
---- a/drivers/tee/optee/optee_msg.h
-+++ b/drivers/tee/optee/optee_msg.h
-@@ -136,8 +136,8 @@ struct optee_msg_param_rmem {
-  * struct optee_msg_param_fmem - FF-A memory reference parameter
-  * @offs_low:		lower bits of offset into shared memory reference
-  * @offs_high:		higher bits of offset into shared memory reference
-- * @internal_offs:	internal offset into the first page of shared memory
-- *			reference
-+ * @internal_offs:	offset into the first 4 KiB page of the FF-A shared
-+ *			memory region
-  * @size:		size of the buffer
-  * @global_id:		global identifier of the shared memory
-  */
 -- 
 2.53.0
 
