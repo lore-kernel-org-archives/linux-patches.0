@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB84F4D18;
-	Tue, 13 Oct 2026 12:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B35360EF0;
+	Tue, 13 Oct 2026 12:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895878; cv=none; b=AodXU7DcOr7lR6Vvz7JP1di4yZfvyMGW2lXMRiL/J1PH9u6QJIvICdNDvnCQimpZHiVphM5RIr4BF0C9jxE3nuxeo2IkeQg0v52SWXxsv1XpBCgJqCWFj7ZT6t1YzqXknI4aD8DUWaUWbZPrV8Hse8dqvSwPSj7/UgnI9b4QDf0=
+	t=1791895881; cv=none; b=XVUivSf76AGbktqhUwS6FGhPus6sA+gv5ZQ/r6EFA9QEnL8bFauFtxyIEq//6CimE5XzkidlMRGW1zIqvPpgGiqbYGiqOuy/Z/OUHdhYZ8CocNTxhHWwp2lgT+1AtauxfGWKGUMYQGoYlCgvUP1ALi2uqyJjnsMUQJJjOptU7Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895878; c=relaxed/simple;
-	bh=ulG/9YcHrpPlwt6+y4BEvCyOUVWYFzzGsjWUvT1hJkc=;
+	s=arc-20240116; t=1791895881; c=relaxed/simple;
+	bh=M057j4qNXClItljmftUIwt2GxV7tRXGxdSgv9WyJ3f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUaoSH/vT+mE+TIj0Rmv65QQSgapWFAOC81hATu5/SxevJbwp5tGKrDEbL+W1AxFyYkAjCj4nt16Wmj6BH09RHjk4sapU6pNrd8NeeVSzMyvdqPdcjQO3szugDaGDIXaL7MwZ/Va89Arl4S0KvRUDbNp1B3UU0hSbgWi5gkSp74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zimMX5us; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QBvLdpUBqZ4ORMu+gI7rIeQnlGA/gnvud5NxpDalMxSvDqwr7fH96DDrC0L/iC7meOMvXABKjLGAs0YVytk6HgPBNrRiHDy3s9M4A7vmINdW2vRAsrUQpA80WqxsUgEAi5+J/1zttlQCgyKCxXmUzIL+zeSA5KXmJS4oLF0ko9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akVxSdF1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zimMX5us"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76721F000FF;
-	Tue, 13 Oct 2026 12:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akVxSdF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065511F000FF;
+	Tue, 13 Oct 2026 12:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895877;
-	bh=c1astO0salw+88o+yAvyGAP0LcF9P80iVKtlHR8UXfE=;
+	s=korg; t=1791895880;
+	bh=jv2PfZB0ExSq5pQA+Iak+T5uBE7kTikZN1MpFXbsFTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zimMX5usOfXVHCrZoejTq9BNccM9X+a71ZHN14imV8EP6OFJLQ64cUkNLf7Vu9s81
-	 5VOtWnkIm+mlkHCAzzsyjtVU905PL2rYUnBYak1UuxA0g3x7wgZj1/aPy13yrFe8J7
-	 Po4PAvat2JKCmJX9+wWUufWxaq39BacwUpPnJLCs=
+	b=akVxSdF1ws7TFUOI2T/0yTx6nSIBaDqPhTjNY+o8639OC4JLx81TZddAekjqR8Doe
+	 D8qhkLDjYdMYsDhxrjdtqpvlhTDLVZCTkeJo7/uZrtnl50kwHNg4wrR61n9yV2V8w9
+	 KjkWDIwFlRRHmKEtsJZu0KwLrUFj5gVpb7KKbTyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	syzbot+4a807caf7680652d53b6@syzkaller.appspotmail.com,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 424/497] Bluetooth: RFCOMM: free the skb when the DLC has no owner
-Date: Tue, 13 Oct 2026 13:39:51 +0200
-Message-ID: <20261013112917.951109208@linuxfoundation.org>
+Subject: [PATCH 6.12 425/497] Bluetooth: RFCOMM: Fix NULL tty_dev dereference in rfcomm_dev_shutdown
+Date: Tue, 13 Oct 2026 13:39:52 +0200
+Message-ID: <20261013112917.975079223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,69 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-commit 9d1afbf60ed53c5b051cd124153e0ae3078c8b93 upstream.
+commit 08e90633377f1b2567ab5ad6810b74c552246a07 upstream.
 
-rfcomm_recv_data() hands the skb to d->data_ready() and returns 0
-without freeing it, so the callback owns the skb from that point on.
-The tty implementation frees it when the DLC has been detached from its
-device:
+syzbot hit a NULL pointer dereference in rfcomm_dev_shutdown() when an
+RFCOMM tty is closed.
 
-  static void rfcomm_dev_data_ready(struct rfcomm_dlc *dlc,
-                                    struct sk_buff *skb)
-  {
-          struct rfcomm_dev *dev = dlc->owner;
+rfcomm_dev_add() puts the new device on rfcomm_dev_list first and only
+then registers the tty device and saves it in dev->tty_dev. If that
+registration fails, dev->tty_dev is never set at all. The device can be
+looked up in the meantime, so an open() of /dev/rfcommN gets through
+rfcomm_tty_install() and attaches to it. When that tty is closed again,
+rfcomm_dev_shutdown() uses dev->tty_dev without checking it:
 
-          if (!dev) {
-                  kfree_skb(skb);
-                  return;
-          }
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
+  RIP: 0010:rfcomm_dev_shutdown+0x48/0xb0 net/bluetooth/rfcomm/tty.c:131
+  Call Trace:
+   tty_port_shutdown+0x1bf/0x220 drivers/tty/tty_port.c:372
+   tty_port_close+0x4e/0x150 drivers/tty/tty_port.c:705
+   tty_release+0x359/0x1670 drivers/tty/tty_io.c:1718
+   __fput+0x418/0xa50 fs/file_table.c:512
 
-The socket implementation returns without freeing it, and the skb is
-leaked.
+rfcomm_dev_destruct() already copes with a NULL dev->tty_dev. Add the
+same check to rfcomm_dev_shutdown(), so the tty device is only moved
+when it was actually registered.
 
-A connected DLC can have no owner: rfcomm_sock_destruct() clears
-d->owner, while the DLC itself stays on the session until it is closed.
-Data frames that arrive in that window still find d->state ==
-BT_CONNECTED in rfcomm_recv_data() and are handed to the callback, one
-leaked skb each.
-
-The leak does not stop on its own either.  The remote runs out of
-credits only once RFCOMM_RX_THROTTLED is set, and for a socket the only
-place that sets it is rfcomm_sk_data_ready() itself, below the return.
-rfcomm_process_dlcs() keeps granting credits, so the remote keeps
-sending and the leak keeps growing.
-
-Free the skb, as the tty side does.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Closes: https://lore.kernel.org/linux-bluetooth/CABXGCsPe5wykd8Aj-hm+SJ7SGQyb8yoGNnx3XDpPmBathj+EGg@mail.gmail.com/
+Fixes: cad348a17e17 ("Bluetooth: Implement .activate, .shutdown and .carrier_raised methods")
+Reported-by: syzbot+4a807caf7680652d53b6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4a807caf7680652d53b6
 Cc: stable@vger.kernel.org
-Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/rfcomm/tty.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -50,8 +50,11 @@ static void rfcomm_sock_kill(struct sock
- static void rfcomm_sk_data_ready(struct rfcomm_dlc *d, struct sk_buff *skb)
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -131,7 +131,7 @@ static void rfcomm_dev_shutdown(struct t
  {
- 	struct sock *sk = d->owner;
--	if (!sk)
-+
-+	if (!sk) {
-+		kfree_skb(skb);
- 		return;
-+	}
+ 	struct rfcomm_dev *dev = container_of(port, struct rfcomm_dev, port);
  
- 	atomic_add(skb->len, &sk->sk_rmem_alloc);
- 	skb_queue_tail(&sk->sk_receive_queue, skb);
+-	if (dev->tty_dev->parent)
++	if (dev->tty_dev && dev->tty_dev->parent)
+ 		device_move(dev->tty_dev, NULL, DPM_ORDER_DEV_LAST);
+ 
+ 	/* close the dlc */
 
 
