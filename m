@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24873CFF6F;
-	Tue, 13 Oct 2026 11:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB924EF13A;
+	Tue, 13 Oct 2026 11:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892301; cv=none; b=aVlmgXnAgD5KDMnn1slGaiKfcy6acWhNbpgdT8wspkHY+8NSYBWe5qxHaP710fjbjvXZR13tFE+jDYd+uqVAyu1kEkOucrybABDCeUtT8BhfJrGBTENRV85JZVbwcwExDMzFAMfMRMUj7XJBIC4H4GzeLiP/oI91Izg6AJxDF3I=
+	t=1791892305; cv=none; b=s4bSIsee1rri0QNKzg7V1mOm+7i/f9WBlS2Iib7UYyIJivAbhLp6JR9B5xs1aS+lVNHKz4v4mfOSZNv6VLsOhxEhfBEL7ljDt8bR7zzL+HLGXns6yTb/+yIfdd2ycYKEgN0awUM1vSFXnuhWw7+7Hh25irBT2fyj79+/7ubleEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892301; c=relaxed/simple;
-	bh=RaIQZDmyWK2Rurvs88KOdarj8q/Fvv/OISr/8ViPn6Y=;
+	s=arc-20240116; t=1791892305; c=relaxed/simple;
+	bh=3n9dj4333u09W88IHNk0fV4vlxPBteUMLctXXuZxmUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOR3+oiWROXPOn1M/Y/YcGT+K2dFfS4vUUXo/ZvdEesKo3OIJof5yr7M7JmRRutcUXvCoIfuuTMeVrCkatKjgKQyrleCCBYmNxTOoS42EZ2NWZwQ7Hkj2HqPmh2wbYWpP4pf9UiaBmjh0sfpO6DBRHB7jHhJBIz9Hi2jJBYUDV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzxjUqhS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nVHwY81RZUVscpOMlM/oM915rBQEVURPciALpgqNwZY2qw5im2Q4DruNd0yBl9NyU09iN2HC936er++5JSLd2um//feVeWiiNwI7AznWgpKPR5vItnyfYpO6XUvbONw/nCZCtLxjjXj0pEm3qHW+lhJaqJOFx7QE7C8LD6YI31A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jryMbWaz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzxjUqhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479291F000FF;
-	Tue, 13 Oct 2026 11:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jryMbWaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED3E1F00893;
+	Tue, 13 Oct 2026 11:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892299;
-	bh=h4uT5v6ejCzNbWOVLR+pf6Yn+4sFvQUe16NBkKgOTTw=;
+	s=korg; t=1791892302;
+	bh=c+/tljVJxxq9Fr8Mi5O7hoD9duMIbA1jiWPMly4JCGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzxjUqhSissW5qZgR9cCHpQ68NBmTTvYtMyTk30JU//u4BVNCDfLCksfWFCnAlhbT
-	 HPIp7gep80iSgXHhVQrxNiHAK3mw+N0WY0lIDnRWAC/3ut29k6pe1UejsbZFyZh39I
-	 yCr3FWGpiHKkG/a1BAa/eJ8Hzthd6gNAX5Dro8ck=
+	b=jryMbWazv5HxoyXf9Kd44h62Rq3qOfbe3l6BVn/90YYeh04dOkn663cAf9InKiv1H
+	 bnTM8fJeFfx4tpKFioApXFjCf6H/JSks7bVtwcGgsDvsDXs+r+pnpdChDr4eHioccu
+	 gJfUMqW3pwi7V9pXazRiuwWvaOja/qDcrpvCDG9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 7.2 083/281] net: bridge: avoid recursive multicast port cleanup
-Date: Tue, 13 Oct 2026 13:36:39 +0200
-Message-ID: <20261013112857.146601780@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Sebastien Royen <sebastien.royen@armadeus.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 084/281] net: dsa: microchip: fix KSZ8765 fiber detection
+Date: Tue, 13 Oct 2026 13:36:40 +0200
+Message-ID: <20261013112857.170912586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,91 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Sebastien Royen <sebastien.royen@armadeus.com>
 
-commit 5158353121bae4f552cb677ce8c5c3ef52f93a0d upstream.
+commit fc13ba44da197a186f2f4d77c5b7d73d0f99f053 upstream.
 
-br_multicast_sg_del_exclude_ports() removes automatically added STAR_EXCL
-port groups by calling br_multicast_del_pg(). For S,G entries, that
-deletion calls back into br_multicast_sg_del_exclude_ports(), so a large
-number of STAR_EXCL ports consumes one kernel stack frame per port and can
-hit the stack guard page.
+The KSZ8765 is similar to the KSZ8795 but has two fiber ports.
 
-Keep the complete port-group deletion path for cleanup, but suppress the
-S,G exclude-port cleanup while that helper is already walking the same
-entry. Normal deletion callers retain the existing behavior.
+KSZ8_PORT_STATUS_0 is used to detect fiber mode. It is currently
+defined as 0x08, which is the Global Control 6 MIB Control register
+and has bit 7 defined as Flush Counter.
 
-Fixes: 8266a0491e92 ("net: bridge: mcast: handle port group filter modes")
+Set KSZ8_PORT_STATUS_0 to 0x18, which is the Port 1 Status 0 register
+where bit 7 is the Fiber Mode bit.
+
+This issue was discovered when upgrading an embedded device from kernel
+5.10 to 6.16. The device was using a KSZ8765 device tree configuration
+and the corresponding hardware, but during boot the kernel incorrectly
+detected it as a KSZ8795. The relevant boot messages were:
+
+  ksz-switch spi0.0: found switch: KSZ8795, rev 0
+  ksz-switch spi0.0: Device tree specifies chip KSZ8765 but found KSZ8795, please fix it!
+
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 91a98917a883 ("net: dsa: microchip: move switch chip_id detection to ksz_common")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Sebastien Royen <sebastien.royen@armadeus.com>
+Link: https://patch.msgid.link/20261007080557.15719-1-sebastien.royen@armadeus.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -81,6 +81,10 @@ __br_multicast_add_group(struct net_brid
- 			 bool blocked);
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg);
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports);
- static void __br_multicast_stop(struct net_bridge_mcast *brmctx);
+--- a/drivers/net/dsa/microchip/ksz_common.h
++++ b/drivers/net/dsa/microchip/ksz_common.h
+@@ -778,7 +778,7 @@ static inline bool ksz_is_sgmii_port(str
+ #define KSZ88_FAMILY_ID			0x88
+ #define KSZ8895_FAMILY_ID		0x95
  
- static int br_mc_disabled_update(struct net_device *dev, bool value,
-@@ -458,7 +462,7 @@ static void br_multicast_sg_del_exclude_
- 	for (pp = &sgmp->ports;
- 	     (p = mlock_dereference(*pp, sgmp->br)) != NULL;) {
- 		if (!(p->flags & MDB_PG_FLAGS_PERMANENT))
--			br_multicast_del_pg(sgmp, p, pp);
-+			__br_multicast_del_pg(sgmp, p, pp, false);
- 		else
- 			pp = &p->next;
- 	}
-@@ -799,9 +803,10 @@ static void br_multicast_destroy_port_gr
- 	kfree_rcu(pg, rcu);
- }
+-#define KSZ8_PORT_STATUS_0		0x08
++#define KSZ8_PORT_STATUS_0		0x18
+ #define KSZ8_PORT_FIBER_MODE		BIT(7)
  
--void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
--			 struct net_bridge_port_group *pg,
--			 struct net_bridge_port_group __rcu **pp)
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports)
- {
- 	struct net_bridge *br = pg->key.port->br;
- 	struct net_bridge_group_src *ent;
-@@ -816,7 +821,8 @@ void br_multicast_del_pg(struct net_brid
- 	if (!br_multicast_is_star_g(&mp->addr)) {
- 		rhashtable_remove_fast(&br->sg_port_tbl, &pg->rhnode,
- 				       br_sg_port_rht_params);
--		br_multicast_sg_del_exclude_ports(mp);
-+		if (sg_del_exclude_ports)
-+			br_multicast_sg_del_exclude_ports(mp);
- 	} else {
- 		br_multicast_star_g_handle_mode(pg, MCAST_INCLUDE);
- 	}
-@@ -828,6 +834,13 @@ void br_multicast_del_pg(struct net_brid
- 		mod_timer(&mp->timer, jiffies);
- }
- 
-+void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+			 struct net_bridge_port_group *pg,
-+			 struct net_bridge_port_group __rcu **pp)
-+{
-+	__br_multicast_del_pg(mp, pg, pp, true);
-+}
-+
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg)
- {
+ #define SW_CHIP_ID_M			GENMASK(7, 4)
 
 
