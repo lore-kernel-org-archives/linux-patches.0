@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277DC4F3937;
-	Tue, 13 Oct 2026 12:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E1B4F4753;
+	Tue, 13 Oct 2026 12:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895593; cv=none; b=MR2u6GJTqohpvC2z2vbE2nyaFs9xmWRG3XbrpBsOU+XocE3grgGkF3oe67im/wH1jYjP9TT3bGZOb1ifEefIV0bIojoKjd9mMhD6aTEgsu+DDTpJnNJVgSIi+r/Jf7wMgJPUNwrABb0Xsuz7YnwUJnzcYMj8mgkjgzgEaSTwK74=
+	t=1791895595; cv=none; b=uyGMNJu5t7KFtNculhV3eEKNENeLhSkIxXYfC2dDPLAEK7YiWCIyWoIM5i4X458kfsG8emuwMHTwFJTNI93DXuH09KtoMygxiH5DRTV6bEjMgeWOdFdwZoONXHLbapDed/sWE1x9FYf04TD1Kf/8j16hku0KBDpVvTbwDueHD5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895593; c=relaxed/simple;
-	bh=jVht4KgzVAFV+gl14qMQrFWaAgU4Fcpsmt5nDjpCTXk=;
+	s=arc-20240116; t=1791895595; c=relaxed/simple;
+	bh=Y4pnLEwd/WmlPxn1qnqBX2yMdczEkLmrXPMFVxXllw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgurk1owyQX5sJYjjM5m4dnyKTM4rswrOsbV3hKnB6b8gowvKOXhSp4C/8WirRsCdI32BewTuCKihVfEFPJV/eNd+Lyl/OIR0dBNx/4FhINgZFFG6y+qbZ6ZQeC5dtd9f/AHNbCHMoujuoiASaA8xON4eeZzAdYIjd4lCIcQDcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng9tFqn3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CapWa3d98mQJYcTwYSkSBzvE5pzrIxMmtCWIZ8nuT4/TS92HoilQt4qL4srui1aVxmpKvx2pTPWPUf8VieLFZq0/S2hLVa0QvHwHufHrtKVTDW8pN17fR5aPH+WUyiHSZcmvkQhV/TknrCXGxfEzSG3rXrnemNcC5xCWR8z2qyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUnt8wxZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng9tFqn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8643A1F000FF;
-	Tue, 13 Oct 2026 12:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUnt8wxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ADC1F00893;
+	Tue, 13 Oct 2026 12:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895591;
-	bh=Adpi6jKuDnV0r2enq+l26CxOX1Py0fbcVPZtIZ697og=;
+	s=korg; t=1791895594;
+	bh=BcOB6kUSiaFsWzuxIOotdSIcecTbK9xlsiPDvR/oZ8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ng9tFqn3WXVtJiOwdcdKkuIO2sgV9s6/hLjvPsrzyAz7fNnkjPBhLpeteyARklyTA
-	 TX56Ks/XqYzPrRDTq0yIsPZGR7SHTXkrYTaVhayQNNKGd9qQyI0hegy16GDReleJzX
-	 dRMojqd/1z+kAzGB+HyvhcWR3ph6jmZx5h9XiBOU=
+	b=QUnt8wxZceX6EfdvoRkpk06yWhycPjqCVOYYWa2fezjbqCnIEQjo25lS4qH6vrHSq
+	 BszmiRkEaGvCw9bWHfrN8LqcE1n22m9DjfcPVAPhGbOdt80kzjFiO/4Zozt6wDzPRv
+	 oP51pKNtDMaW+NM5JAWfLmifX8f4n+UHKgKBhNEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
-	Mikhail Mirkin <mmirkin@nppct.ru>
-Subject: [PATCH 6.12 272/497] cifs: Fix handling of a beyond-EOF DIO/unbuffered read over SMB1
-Date: Tue, 13 Oct 2026 13:37:19 +0200
-Message-ID: <20261013112914.348170131@linuxfoundation.org>
+	Jerome Tollet <jtollet@cisco.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 320/497] net/mlx5e: Prevent stale XSK buffer release on MPWQE refill retry
+Date: Tue, 13 Oct 2026 13:38:07 +0200
+Message-ID: <20261013112915.499138667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -56,58 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jerome Tollet <jtollet@cisco.com>
 
-commit 9d85ac939d52e93d80efb01a299c6f0bedb30487 upstream.
+[ Upstream commit 63811edf512584c946e5e96b100e9e280703bbb5 ]
 
-If a DIO read or an unbuffered read request extends beyond the EOF, the
-server will return a short read and a status code indicating that EOF was
-hit, which gets translated to -ENODATA.  Note that the client does not cap
-the request at i_size, but asks for the amount requested in case there's a
-race on the server with a third party.
+With AF_XDP on a striding RQ, mlx5e defers releasing XSK buffers until
+an MPWQE is refilled. If XSK allocation then returns -ENOMEM,
+actual_wq_head is not advanced and a later NAPI poll retries the same
+WQE.
 
-Now, on the client side, the request will get split into multiple
-subrequests if rsize is smaller than the full request size.  A subrequest
-that starts before or at the EOF and returns short data up to the EOF will
-be correctly handled, with the NETFS_SREQ_HIT_EOF flag being set,
-indicating to netfslib that we can't read more.
+mlx5e_free_rx_mpwqe() leaves each released slot marked as releasable. On
+retry it can therefore call xsk_buff_free() again through stale pointers
+after the frames have returned to the XSK pool and been reallocated.
 
-If a subrequest, however, starts after the EOF and not at it, HIT_EOF will
-not be flagged, its error will be set to -ENODATA and it will be abandoned.
-This will cause the request as a whole to fail with -ENODATA.
+Set all skip_release_bitmap bits in the common error path of
+mlx5e_xsk_alloc_rx_mpwqe(). This matches mlx5e_alloc_rx_mpwqe(). A
+successful allocation already clears the bitmap after replacing every
+buffer, so retries become idempotent without changing the success path.
 
-Fix this by setting NETFS_SREQ_HIT_EOF on any subrequest that lies beyond
-the EOF marker.
+Fault injection forced three consecutive failures for one selected MPWQE.
+Both an early allocation failure and a partial 8-of-16-buffer unwind
+released the original 16 XSK buffers only once. Each error left a full
+bitmap, the following NAPI retry skipped the release, and a later
+successful allocation cleared it. A 20-second AF_XDP zero-copy pressure
+run exercised 1,575,262 buffer allocation failures without invalid
+descriptors, WQE errors, or kernel warnings.
 
-This can be reproduced by mounting with "cache=none,sign,vers=1.0" and
-doing a read of a file that's significantly bigger than the size of the
-file (e.g. attempting to read 64KiB from a 16KiB file).
-
-Fixes: a68c74865f51 ("cifs: Fix SMB1 readv/writev callback in the same way as SMB2/3")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[Mikhail Mirkin: Adopted for 6.12]
-Signed-off-by: Mikhail Mirkin <mmirkin@nppct.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4c2a13236807 ("net/mlx5e: RX, Defer page release in striding rq for better recycling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jerome Tollet <jtollet@cisco.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Link: https://patch.msgid.link/20260824141645.23700-3-jtollet@cisco.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1321,7 +1321,7 @@ cifs_readv_callback(struct mid_q_entry *
- 	} else {
- 		size_t trans = rdata->subreq.transferred + rdata->got_bytes;
- 		if (trans < rdata->subreq.len &&
--		    rdata->subreq.start + trans == ictx->remote_i_size) {
-+		    rdata->subreq.start + trans >= ictx->remote_i_size) {
- 			__set_bit(NETFS_SREQ_HIT_EOF, &rdata->subreq.flags);
- 			rdata->result = 0;
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
+index 1b7132fa70de2..8dd3deb050f83 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
+@@ -3,6 +3,7 @@
+ 
+ #include "rx.h"
+ #include "en/xdp.h"
++#include <linux/bitmap.h>
+ #include <net/xdp_sock_drv.h>
+ #include <linux/filter.h>
+ 
+@@ -153,6 +154,7 @@ int mlx5e_xsk_alloc_rx_mpwqe(struct mlx5e_rq *rq, u16 ix)
+ 		xsk_buff_free(xsk_buffs[batch]);
+ 
+ err:
++	bitmap_fill(wi->skip_release_bitmap, rq->mpwqe.pages_per_wqe);
+ 	rq->stats->buff_alloc_err++;
+ 	return -ENOMEM;
+ }
+-- 
+2.53.0
+
 
 
