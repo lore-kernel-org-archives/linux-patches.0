@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C0C4D98E6;
-	Tue, 13 Oct 2026 11:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAF4155C87;
+	Tue, 13 Oct 2026 11:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892492; cv=none; b=PIBqwTclgxx/DFG4lIFnC5fFp6W3dryIp+RA4jeAUe4s6uLeQ0mvgcgoGOB/5S3BIXnWkI64Pat0SoS5esFnKsox4j0n2uOfwmsC5skcmN1J7yon8keCb+QzCnyveYN5GXAMXoHR89DP2aZVc99aRlkb1SP8iMMPCEfKL9ZE3uU=
+	t=1791892495; cv=none; b=WiA8zjzJNDjkRXE3LfcUsMoaOVyDXKEfeWDHUOjEaodDdPGqQARRVxUEvughO7uyRYkxfKGMjnaN6rFE1IF9pip9/r6Wk24/CwjJQqzxmO0kOp01XeLWG01RKUaXYQtt/UbdC6KjoVWIX4Qo2lBUlT5B7OEUIaVnI3Q6LR7mgIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892492; c=relaxed/simple;
-	bh=hsZKHge1CFhc1A+kGoF+GCMzXsqpzpHn36dsTU/U9mM=;
+	s=arc-20240116; t=1791892495; c=relaxed/simple;
+	bh=03tZcbIp7qXiUDDHqTNOZ2YaaHUJd8WZmWeUy/taYGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBGeBvenSMmQY1IaUMT4xCCZWAD7isIFjGJ+9+UmqcSdvAzL0nq5R02NwHBghVdtTCFbM0zpXt1hhV3ir2g2zc0qQhDThoFxdxxEHV9AyhTaMF2VVQGCojvxhWj5NPSpdMUwzlwebUxcGfkY+/100iuuyHs2kiSiRcqtIMJPyOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhysAsRK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ultIl9FU/pj87X88o+GlFWF86Wj3sAbSx8EabD7obrcX2SRuqgrQhJtkvHvIlzvmXXe9LO5oe3oQcKm+kUKZDqUqJXEJTo8czo6Wi/yqyk5SZFPIF+T6LNmoex/2FbdL/9d/4Tc5wDMwJ1w6w8XaBuwtI7Dw6g7jaQ7etDhCvlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzjphQIK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhysAsRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162451F000FF;
-	Tue, 13 Oct 2026 11:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzjphQIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EDF1F000FF;
+	Tue, 13 Oct 2026 11:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892491;
-	bh=VE+ce63qBxdliHxclhXiQ5qNGrJGDEFE4gQHNtIxEkk=;
+	s=korg; t=1791892494;
+	bh=k+Hxz6oyKfKmv3OhRzIk/5GOex/muq4aJQk6mYLXcAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhysAsRKi4TcxPlXNdkW406i4QVy9skeNdQvz9Yk2zfGUuqofyY4kYcjXOP6m4DwG
-	 T88klZ+dxGU2X18GjrhrH6FG2Kud598kJ1FeiHCaGLoHaIRtv3EBZAcfQKmsoSGd8Z
-	 aw7tJ4XrEu/jXf29gghxwg4muNHx3TjtTVrWPcqU=
+	b=uzjphQIKPIFMV8BXDT+qvXTnIbluVlZGE0Cw5uUGgYojHVFLDgX5qCb3cnFyVjfe+
+	 fLDLTPacg2wE7EIcd6uDOngijyeByrViqN8r8GJXqt28fzP6srwHlqSVUSWGqmpe6j
+	 D2V+DhG/d9kFh5SVoYcWSlo/C6UPhU69iuk35g8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Oleg Keri <okerixx@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 191/281] cgroup/cpuset: Dont access cpuset_cgrp_subsys.root in is_in_v2_mode()
-Date: Tue, 13 Oct 2026 13:38:27 +0200
-Message-ID: <20261013112859.801386780@linuxfoundation.org>
+Subject: [PATCH 7.2 192/281] drm/dp: dont mark the AUX backlight enabled when enabling failed
+Date: Tue, 13 Oct 2026 13:38:28 +0200
+Message-ID: <20261013112859.825399660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -53,68 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Oleg Keri <okerixx@gmail.com>
 
-[ Upstream commit e06b678e3b4e12fdaa0b51a7a5a54abc5dbd6469 ]
+[ Upstream commit 707ce102521496c67860d81221b20c56d8255f2f ]
 
-After seeing the patch [1] to guard is_in_v2_mode() with RCU, it makes
-me realize that is_in_v2_mode() may be called in a context where a new
-cgroup filesystem is being rebound with stale cpuset_cgrp_subsys.root
-pointer. Avoid this potential UaF situation by adding a new cpuset_v2_mode
-flag which is set when the cpuset_v2_mode mount option is used. This
-flag is written into only when cpuset_bind() is being called with a
-stable cpuset_cgrp_subsys.root value. The is_in_v2_mode() helper is
-modified to read the new cpuset_v2_mode flag instead of accessing
-cpuset_cgrp_subsys.root directly.
+If drm_edp_backlight_enable() fails, dp_aux_backlight_update_status()
+still marks the backlight as enabled. From then on every brightness
+change only updates the level and the enable is never retried, so the
+panel stays dark until something blanks and unblanks the backlight.
 
-[1] https://lore.kernel.org/lkml/20260929084124.626693-2-arighi@nvidia.com
+Return the error instead, so the next update tries to enable again.
 
-Fixes: b8d1b8ee93df ("cpuset: Allow v2 behavior in v1 cgroup")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 10f7b40e4f30 ("drm/panel: add basic DP AUX backlight support")
+Signed-off-by: Oleg Keri <okerixx@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260925132558.27518-1-okerixx@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/display/drm_dp_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 2b86b76dba56b..16c554df4a50e 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -151,6 +151,12 @@ static cpumask_var_t	isolated_cpus;		/* CSCB */
-  */
- static bool		update_housekeeping;	/* RWCS */
+diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+index e623ccb4c1d8a..488fd123a01ad 100644
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -4634,7 +4634,9 @@ static int dp_aux_backlight_update_status(struct backlight_device *bd)
  
-+/*
-+ * Set if "cpuset_v2_mode" mount option is used
-+ * Cached at bind time and not lock protected; accessed via {READ,WRITE}_ONCE
-+ */
-+static bool		cpuset_v2_mode;
-+
- /*
-  * Copy of isolated_cpus to be passed to housekeeping_update()
-  */
-@@ -403,8 +409,7 @@ static inline bool cpuset_v2(void)
-  */
- static inline bool is_in_v2_mode(void)
- {
--	return cpuset_v2() ||
--	      (cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE);
-+	return cpuset_v2() || READ_ONCE(cpuset_v2_mode);
- }
- 
- /**
-@@ -3602,6 +3607,8 @@ static void cpuset_bind(struct cgroup_subsys_state *root_css)
- 	mutex_lock(&cpuset_mutex);
- 	spin_lock_irq(&callback_lock);
- 
-+	WRITE_ONCE(cpuset_v2_mode,
-+		   !!(cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE));
- 	if (is_in_v2_mode()) {
- 		cpumask_copy(top_cpuset.cpus_allowed, cpu_possible_mask);
- 		cpumask_copy(top_cpuset.effective_xcpus, cpu_possible_mask);
+ 	if (!backlight_is_blank(bd)) {
+ 		if (!bl->enabled) {
+-			drm_edp_backlight_enable(bl->aux, &bl->info, brightness);
++			ret = drm_edp_backlight_enable(bl->aux, &bl->info, brightness);
++			if (ret)
++				return ret;
+ 			bl->enabled = true;
+ 			return 0;
+ 		}
 -- 
 2.53.0
 
