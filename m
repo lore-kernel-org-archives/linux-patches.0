@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4D5389104;
-	Tue, 13 Oct 2026 12:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD574F68BC;
+	Tue, 13 Oct 2026 12:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893634; cv=none; b=Ibv6VaVWUu66Q/F+KhrU8rx97dgkfK/B+RPayQAYOixFgKYv+kLLrEbB5OCy377SKxBPuTKofl9gAkINMZkQtYDzHQqEBBXIPWD6TPKMTiZ/u3JWIlqh1TiHKRAydQCkiSYqKsB/MHHi8DRqoMR4RbEQVaZJxCyOLPFQBYuHQ5c=
+	t=1791893637; cv=none; b=A/63gtzpkk0oFGNd0+91+2SHkZISyw9K89OKhkZalyTR3RSqRnCX4otRVv4k9aKzXbR7yfqw8UrQSpcUbQ4olxSp5ZYPBTzL1hc65shdHzlWTiryGX0cbGADO1vphx1E9+DUb23qO7X9wk8+xp+P2HmcIddskWgT4hY2WQMxXLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893634; c=relaxed/simple;
-	bh=Qs9QbBszsSH2iQ9qmV5YSFsUHzI728uiSNH0BRNgXfk=;
+	s=arc-20240116; t=1791893637; c=relaxed/simple;
+	bh=LPcJrDrElzA7ik3/KBdiydZGB0/2S1fKL+VbpYDkMso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=To0U4EEU86R9xFILMeQFUX0+6qpz2RcGHdhlzicdVmIouu+y/lXs/G5ujh65nivMPJgjaEmKlBEOu5AhOp5XTOCCJ4gZXPLn/Ea44G63NiqDG53JJhlDyfMrEkGgG+uPHbVq7OS/kGEZTWU77q4W/XKahIJSN5S7s7aeyWNYdn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPP+iiBX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p7RtgGDl5jKf35qpdgBdije8BhKICxoK50K/DwtywcWBc1KrE5FvViKrYGNXRjZV/tvV/2JYXT1IuPjY91eMz0eb07RnSrWw5vp9F1iznFgOe+m/fs+/RZYeM5cqWKiVF0TSc6UQkzt928kaLFpEMZ8c0WRgAf+x/qj2qT+7kmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X646tCay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPP+iiBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BFF1F000FF;
-	Tue, 13 Oct 2026 12:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X646tCay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D471F000FF;
+	Tue, 13 Oct 2026 12:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893633;
-	bh=jn8P9aLPHO2u6NRo7XHLdTXLI+aZRKTeWpZMNuP/Arw=;
+	s=korg; t=1791893636;
+	bh=snrnzl72eofBeJbZ+bl7IICXMnuGx+WzWoRpJ24QlaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPP+iiBXl4beTygj2Aqjxo4XcHuAjP+2kwZdFDETtCF/ghRcRmVwWFQyXjS/LTJ+B
-	 MBC43pjDuzwFFTTuETuAlpHX5yic93gMeB+6TbfZD2IXlBNF4bzOmE/dj+jjW732EL
-	 fiIogda6U3ZSzYdXa0mGGXqDLfNtmoNsr78/d6EE=
+	b=X646tCaynhKNn2xVJkfGGrLLPpmsBhWjzUjkEtxspz4Z3u9jjZDWpK05giyttPlzi
+	 vmnZCLUq0mYSzyDswM4AH1sD6gshE0Sv9g3LYsUQW6dsIWFj0ZsySf0lADgNuqKovC
+	 RWmmC79GzL0Tqv2Kqmv/N7QV5KwcE616k/2I2YIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 289/621] md/raid10: fix writes_pending leak on write request failures
-Date: Tue, 13 Oct 2026 13:34:44 +0200
-Message-ID: <20261013112927.718232168@linuxfoundation.org>
+Subject: [PATCH 6.18 290/621] md/raid1: fix writes_pending and barrier reference leaks on write failures
+Date: Tue, 13 Oct 2026 13:34:45 +0200
+Message-ID: <20261013112927.741452549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,44 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit e045d6ed33f8faa3e3dd6dc33c62ec01e3ad275d ]
+[ Upstream commit 8e065a1602511282fc0da2dc89445e0eb71a681c ]
 
-raid10_make_request() acquires a writes_pending reference with
-md_write_start() before dispatching write requests. Several failure
-paths in raid10_write_request() complete the bio and return without
+raid1_make_request() acquires a writes_pending reference with
+md_write_start() before calling raid1_write_request(). Several failure
+paths in raid1_write_request() complete the bio and return without
 reaching the normal write completion path, causing the corresponding
 md_write_end() to be skipped.
 
-Make raid10_write_request() return a status indicating whether the write
-request was successfully queued. This allows raid10_make_request() to
-release the writes_pending reference with md_write_end() when a write
-request fails.
+Make raid1_write_request() return a status indicating whether the write
+request was successfully queued. This allows raid1_make_request() to
+call md_write_end() when raid1_write_request() fails.
 
-Fixes: 4cf58d952909 ("md/raid10: Handle bio_split() errors")
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
+Additionally, if wait_blocked_rdev() fails after wait_barrier()
+succeeds, the associated barrier reference is not released.
+
+Call allow_barrier() before returning from that path to keep the barrier
+accounting balanced.
+
+Fixes: b1a7ad8b5c4f ("md/raid1: Handle bio_split() errors")
+Fixes: f2a38abf5f1c ("md/raid1: Atomic write support")
+Fixes: 5aa705039c4f ("md: raid1 add nowait support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
+Closes: https://sashiko.dev/#/patchset/20260611132500.763528-1-abd.masalkhi@gmail.com?part=1
 Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260613182810.1317258-3-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260613182810.1317258-2-abd.masalkhi@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/md/raid1.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index a60e4ba919a76..425ea36da24f2 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1341,7 +1341,7 @@ static void wait_blocked_dev(struct mddev *mddev, struct r10bio *r10_bio)
- 	}
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 1370be1e5cc7b..333ac4fbe59bc 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1482,7 +1482,7 @@ static void raid1_start_write_behind(struct mddev *mddev, struct r1bio *r1_bio,
+ 
  }
  
--static void raid10_write_request(struct mddev *mddev, struct bio *bio,
-+static bool raid10_write_request(struct mddev *mddev, struct bio *bio,
- 				 struct r10bio *r10_bio)
+-static void raid1_write_request(struct mddev *mddev, struct bio *bio,
++static bool raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 				int max_write_sectors)
  {
- 	struct r10conf *conf = mddev->private;
-@@ -1358,7 +1358,7 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 		/* Bail out if REQ_NOWAIT is set for the bio */
+ 	struct r1conf *conf = mddev->private;
+@@ -1493,6 +1493,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 	int max_sectors;
+ 	bool write_behind = false;
+ 	bool is_discard = (bio_op(bio) == REQ_OP_DISCARD);
++	sector_t sector = bio->bi_iter.bi_sector;
+ 
+ 	if (mddev_is_clustered(mddev) &&
+ 	    mddev->cluster_ops->area_resyncing(mddev, WRITE,
+@@ -1501,7 +1502,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 		DEFINE_WAIT(w);
  		if (bio->bi_opf & REQ_NOWAIT) {
  			bio_wouldblock_error(bio);
 -			return;
@@ -98,73 +116,52 @@ index a60e4ba919a76..425ea36da24f2 100644
  		}
  		for (;;) {
  			prepare_to_wait(&conf->wait_barrier,
-@@ -1374,7 +1374,7 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 	sectors = r10_bio->sectors;
- 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
- 		free_r10bio(r10_bio);
+@@ -1523,12 +1524,13 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 	if (!wait_barrier(conf, bio->bi_iter.bi_sector,
+ 				bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
 -		return;
 +		return false;
  	}
  
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
-@@ -1391,7 +1391,7 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 		if (bio->bi_opf & REQ_NOWAIT) {
- 			allow_barrier(conf);
- 			bio_wouldblock_error(bio);
--			return;
-+			return false;
- 		}
- 		mddev_add_trace_msg(conf->mddev,
- 			"raid10 wait reshape metadata");
-@@ -1500,7 +1500,8 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 			raid10_write_one_disk(mddev, r10_bio, bio, true, i);
+ 	if (!wait_blocked_rdev(mddev, bio)) {
+ 		bio_wouldblock_error(bio);
+-		return;
++		allow_barrier(conf, sector);
++		return false;
  	}
- 	one_write_done(r10_bio);
+ 
+ 	r1_bio = alloc_r1bio(mddev, bio);
+@@ -1687,7 +1689,8 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 
+ 	/* In case raid1d snuck in to freeze_array */
+ 	wake_up_barrier(conf);
 -	return;
 +	return true;
 +
  err_handle:
- 	for (k = 0;  k < i; k++) {
- 		int d = r10_bio->devs[k].devnum;
-@@ -1518,10 +1519,12 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 	for (k = 0; k < i; k++) {
+ 		if (r1_bio->bios[k]) {
+@@ -1697,6 +1700,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
  	}
  
- 	raid_end_bio_io(r10_bio);
+ 	raid_end_bio_io(r1_bio);
 +	return false;
  }
  
--static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
-+static bool __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- {
-+	bool ret;
- 	struct r10conf *conf = mddev->private;
- 	struct r10bio *r10_bio;
- 
-@@ -1537,10 +1540,13 @@ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) *
- 			conf->geo.raid_disks);
- 
-+	ret = true;
+ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
+@@ -1720,8 +1724,9 @@ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
  	if (bio_data_dir(bio) == READ)
- 		raid10_read_request(mddev, bio, r10_bio, true);
- 	else
--		raid10_write_request(mddev, bio, r10_bio);
-+		ret = raid10_write_request(mddev, bio, r10_bio);
-+
-+	return ret;
+ 		raid1_read_request(mddev, bio, sectors, NULL);
+ 	else {
+-		md_write_start(mddev,bio);
+-		raid1_write_request(mddev, bio, sectors);
++		md_write_start(mddev, bio);
++		if (!raid1_write_request(mddev, bio, sectors))
++			md_write_end(mddev);
+ 	}
+ 	return true;
  }
- 
- static void raid_end_discard_bio(struct r10bio *r10bio)
-@@ -1891,7 +1897,8 @@ static bool raid10_make_request(struct mddev *mddev, struct bio *bio)
- 		sectors = chunk_sects -
- 			(bio->bi_iter.bi_sector &
- 			 (chunk_sects - 1));
--	__make_request(mddev, bio, sectors);
-+	if (!__make_request(mddev, bio, sectors))
-+		md_write_end(mddev);
- 
- 	/* In case raid10d snuck in to freeze_array */
- 	wake_up_barrier(conf);
 -- 
 2.53.0
 
