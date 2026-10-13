@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74338282F2A;
-	Tue, 13 Oct 2026 12:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F0123643F;
+	Tue, 13 Oct 2026 12:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895238; cv=none; b=XC2P0RGRi4yc1xv1qL0MfRgIVArQZP3NBfBlMmcgo4BwptyLt6/fQE6sZ5vA9xAooXkQGwFOmiLC/5qMMuZt+0Pkg50/c2r3bPXnGKTV0eT7HIHfAFPcXJCRndBK4pCufAEwdFab7DdnUcfMmeAOEvczymYjj+Vbq9WwB8TCDUA=
+	t=1791895241; cv=none; b=ALwWoK8ruNcLJ29HKh8FLfzt2S6pWxpbpTYRMPC2KKVXmgCXtZnnwbfBY+rOJ1vYTGCe2q6cjZv7rZZSmPff2lnI+skaJwQx3XHc5uq2hHu2OE9ooXvchEbfbKhzgjHumDVIXBDb4giGjej9LRL0TNUAHEbJcql7BGnnMXwN6pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895238; c=relaxed/simple;
-	bh=ssJUe8y7xTkshVius6v66U/m8xTwG/rF88TpTUywWfM=;
+	s=arc-20240116; t=1791895241; c=relaxed/simple;
+	bh=xlZClaR5om4p9HzYE9wqT0iPS6xb7NwvV2DslVhH7K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVg5soz1bPRrKAC0m+3H3AnRxu1+Yx+1Nsgk3VXTrBLQvqaZa2hImTvhFTjzxa9mrRhmA/XboIUznRbhlYqoOCzwRZ86XgnIlZ4pKwkGdmMTCCZWur9aPOjK9Wx0rfSWjLEkX7nrlvPxKtd3EXE3xP1F0sV9vQpv+O1ctGThR4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkdJytxy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mb53oKup9K+Td2THgGLO2Cmt/ddZkH4Zf97wXrCzZEGOw/wJ3GfodLOYOeXsKONaxe3IVY2Br8IzdPVBnH6omIktoStqz5jgbxycw0wAvtjBrm6WKmJr/eXWrwSLlLUry3RnVUEelWO4SJk6NFYuF3HwLUKqt+Uj747H9A77xO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwwHfseT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkdJytxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38981F000FF;
-	Tue, 13 Oct 2026 12:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwwHfseT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F361F000FF;
+	Tue, 13 Oct 2026 12:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895237;
-	bh=Lqt1o0NYC8yEJ+/fc4BymFLKTM3Pbn8G8dRD85RmReo=;
+	s=korg; t=1791895240;
+	bh=JQny5lF103m9xPykyTgpcIpad3BdDR2wXN50Ljd1n+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkdJytxyF5e/ZxG4IGXHK77Y09+6BbL+U7/imFYj0T7L6BrmcJdXjeofCumcmp7cD
-	 d8K6DtLeFBkTdLvGGudebomgTo9zP614FKAHDaem/Y38aeSTQnzbReuuphJS4jErIB
-	 6a7WUmzewy8AQzTNI+DXyq2Yn9gBFhyPRgBFghUo=
+	b=LwwHfseTKwKuJRyCY/UCHod1e6wp6ZwcHphZbh4F8qdIN6WbeOtPvdHmUQ8SX6fwy
+	 jiOxUtKNl/l69dmGxbiq5iJrunBjF+nPoxNwZxytFu1V/qw2gv0+lmwkrOLWOU3vFq
+	 GCMgMNBIvCA19NLkdVr6ELRZABd9QxPf+i0CLv3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 207/497] wifi: mac80211: account proxy paths against the mesh path limit
-Date: Tue, 13 Oct 2026 13:36:14 +0200
-Message-ID: <20261013112912.803238491@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 181/497] Bluetooth: hci_sync: Fix inquiry cache use-after-free
+Date: Tue, 13 Oct 2026 13:35:48 +0200
+Message-ID: <20261013112912.185602938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,69 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b upstream.
+commit 8ed67535fdff40ca652bcd4ac7da68d11d01bd34 upstream.
 
-Proxy-path churn can drive the interface path counter negative and let
-later mesh path additions exceed MESH_MAX_MPATHS.
+The sync command worker holds hdev->req_lock, but inquiry-cache updates
+and flushes use hdev->lock. Both hci_acl_create_conn_sync() and
+hci_stop_discovery_sync() look up entries and read their fields without
+taking hdev->lock.
 
-mesh_path_free_rcu() decrements the interface mpaths counter for entries
-from both the mesh and proxy path tables, but mpp_path_add() never
-reserves a slot in that counter. Removing or expiring a proxy path
-therefore returns a slot that was never charged.
+After either lookup returns, a concurrent HCIINQUIRY ioctl can acquire
+hdev->lock and flush the cache, freeing the entry. The worker then reads
+the freed entry while preparing a create-connection or remote-name-cancel
+command. The list traversal also races with cache updates and removal.
 
-mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
-it falls below the number of installed paths the limit no longer holds.
+KASAN reported these accesses:
 
-Reserve the shared quota before allocating a proxy path and release it on
-every unsuccessful addition. Mesh and proxy paths now share one
-1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
+  BUG: KASAN: slab-use-after-free in hci_acl_create_conn_sync+0x5f1/0x650
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_acl_create_conn_sync+0x5f1/0x650
+   hci_cmd_sync_work+0x13c/0x290
 
-Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
+  Allocated by task 90:
+   hci_inquiry_cache_update+0x3e6/0x7d0
+   hci_inquiry_result_evt+0x3cb/0x560
+
+  Freed by task 93:
+   hci_inquiry_cache_flush+0x111/0x2b0
+   hci_inquiry+0x2f2/0x780
+   hci_sock_ioctl+0x269/0x5f0
+
+  BUG: KASAN: slab-use-after-free in hci_stop_discovery_sync+0x3b1/0x3c0
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_stop_discovery_sync+0x3b1/0x3c0
+   hci_cmd_sync_work+0x173/0x300
+
+  Allocated by task 86:
+   hci_inquiry_cache_update+0x483/0x940
+   hci_inquiry_result_evt+0x3cb/0x560
+
+  Freed by task 91:
+   hci_inquiry_cache_flush+0x13e/0x2f0
+   hci_inquiry+0x2f2/0x780
+   hci_sock_ioctl+0x269/0x5f0
+
+Hold hdev->lock across each lookup and all reads from its result. Copy the
+remote address before unlocking so discovery cancellation does not retain
+a cache entry pointer. Release the lock before sending synchronous HCI
+commands, since their completion handlers may need the same lock.
+
+Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
+Fixes: 45340097ce6e ("Bluetooth: hci_conn: Only do ACL connections sequentially")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_pathtbl.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_sync.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -733,10 +733,15 @@ int mpp_path_add(struct ieee80211_sub_if
- 	if (is_multicast_ether_addr(dst))
- 		return -EOPNOTSUPP;
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5577,6 +5577,7 @@ int hci_stop_discovery_sync(struct hci_d
+ {
+ 	struct discovery_state *d = &hdev->discovery;
+ 	struct inquiry_entry *e;
++	bdaddr_t addr;
+ 	int err;
  
-+	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
-+		return -ENOSPC;
+ 	bt_dev_dbg(hdev, "state %u", hdev->discovery.state);
+@@ -5612,15 +5613,21 @@ int hci_stop_discovery_sync(struct hci_d
+ 		return 0;
+ 
+ 	if (d->state == DISCOVERY_RESOLVING || d->state == DISCOVERY_STOPPING) {
++		hci_dev_lock(hdev);
+ 		e = hci_inquiry_cache_lookup_resolve(hdev, BDADDR_ANY,
+ 						     NAME_PENDING);
+-		if (!e)
++		if (!e) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
 +
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
++		bacpy(&addr, &e->data.bdaddr);
++		hci_dev_unlock(hdev);
  
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return -ENOMEM;
-+	}
+ 		/* Ignore cancel errors since it should interfere with stopping
+ 		 * of the discovery.
+ 		 */
+-		hci_remote_name_cancel_sync(hdev, &e->data.bdaddr);
++		hci_remote_name_cancel_sync(hdev, &addr);
+ 	}
  
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
- 	tbl = &sdata->u.mesh.mpp_paths;
-@@ -749,10 +754,12 @@ int mpp_path_add(struct ieee80211_sub_if
- 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
+ 	return 0;
+@@ -7054,6 +7061,7 @@ static int hci_acl_create_conn_sync(stru
+ 	bacpy(&cp.bdaddr, &conn->dst);
+ 	cp.pscan_rep_mode = 0x02;
  
--	if (ret)
-+	if (ret) {
- 		kfree(new_mpath);
--	else
-+		atomic_dec(&sdata->u.mesh.mpaths);
-+	} else {
- 		mesh_fast_tx_flush_addr(sdata, dst);
-+	}
++	hci_dev_lock(hdev);
+ 	ie = hci_inquiry_cache_lookup(hdev, &conn->dst);
+ 	if (ie) {
+ 		if (inquiry_entry_age(ie) <= INQUIRY_ENTRY_AGE_MAX) {
+@@ -7065,6 +7073,7 @@ static int hci_acl_create_conn_sync(stru
  
- 	sdata->u.mesh.mpp_paths_generation++;
- 	return ret;
+ 		memcpy(conn->dev_class, ie->data.dev_class, 3);
+ 	}
++	hci_dev_unlock(hdev);
+ 
+ 	cp.pkt_type = cpu_to_le16(conn->pkt_type);
+ 	if (lmp_rswitch_capable(hdev) && !(hdev->link_mode & HCI_LM_MASTER))
 
 
