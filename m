@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B454F5E06;
-	Tue, 13 Oct 2026 12:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750CE4F55DD;
+	Tue, 13 Oct 2026 12:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893855; cv=none; b=uFnW/OLjVBE6+46Fxd+oH8nG14uyvsJkK5QEHw2iq8irUft7RYvTJS9gNMQm9wZm5Di0FUyjwmMIrxnCXZUTTEecJMZ9k90UGs1gnRbYdquQL6gHhXEit5Y28FJLGOsdFq+NxgdeowIX0Z4yVrnx5woLp2RRXi9u1Sip6MQcPGQ=
+	t=1791893858; cv=none; b=i82GNWxdTQzB145UZdM/oJhYHmFuTYht3IsH8tHxaZkDkNYBdvm2xOD5kWhylBOg4KDDWpA27qwjXMrw/rIbggI9mYAtkuAtywDXMLubBsr6mocJiwSK4DffM2GSrwf+YQbCb183mmP38XPmrPqwPt/sl297Af0Ke8L1mdgdh2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893855; c=relaxed/simple;
-	bh=zfER/T9UOTcMo/HqhgNlLlg5fcFiTAwROIBM7oHUucg=;
+	s=arc-20240116; t=1791893858; c=relaxed/simple;
+	bh=p67OOlt4+KA8kDEhAE24zF7era3gt7FGn4PZIsVOSNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJdW3BQmfmc2nO+hqOwuxF/vPBfk+9Rkdb/mXw4jU8uybr2IWpy9Hu1TEsNtwvltpDQCPDPykn4JGbjRulUlMOE37NN1BhTiY2lm4dflRSC2HDTfpIbD3/Drc07mNSCTEgWxsmP4I/ItaQCVTqcv2HMe1B4k6GMs6D+eHYbTkx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0/hWxrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iqbe7+yIUBjHSZwBDtlIhZVvT8P5mfrlXsFl+TN5MjnnyTT1iF/yYc4zkxmvvvjy9WZaFljzt/XpqAXgzJFfY6Lpo76aR0iaUn0V1jUwuF8DOFWRCaegIIFqgAXhARwN600Vo7B1uwASG0371IOmiXmKeHmsWHoJwCW09KGFe+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVEiUlxn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0/hWxrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0E91F000FF;
-	Tue, 13 Oct 2026 12:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVEiUlxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D932C1F000FF;
+	Tue, 13 Oct 2026 12:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893854;
-	bh=8J/O1gHqzQ/z3/H2HTsrppG9gWU3sGj63nF9hhshG/0=;
+	s=korg; t=1791893857;
+	bh=DR5XVBpVoVSFzb/O7VG6Z+IU10TnRvkPPxzbjJNWGmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N0/hWxrQumc0hmfjBZCuTKUljJBqOwgRveC2xJasVuNdzfMdGpIzmnis57c9UDL+m
-	 PTaYOChHGBqZ3Huus7lBPM9ejmD7J77MK24nV/lvmtXZYHgS9qfHDiobXkEGCRE1Kc
-	 Fnfd5BGzhnIA3NmQi1fvvYEoA0i2/lc6ULVickYw=
+	b=kVEiUlxn+EGpmHKYE1V8+hDsm8HrP6cWoSYJ1Id8kFOXTVyfYTe8iLr1Lj+AAXGKh
+	 UyHIdBaWWst8Ia/d1GoZbqMLyarpb73JRMIFjDdGK1iHEMMljswpFmBi1+SpxY2NKe
+	 fF//zlmW2RRrUFbvqCSO0e611uj7tsr67FvreBU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	tipc-discussion@lists.sourceforge.net,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/621] tipc: avoid busy looping in tipc_exit_net()
-Date: Tue, 13 Oct 2026 13:36:00 +0200
-Message-ID: <20261013112929.512156437@linuxfoundation.org>
+Subject: [PATCH 6.18 366/621] NTB: core: Add .get_dma_dev() callback to ntb_dev_ops
+Date: Tue, 13 Oct 2026 13:36:01 +0200
+Message-ID: <20261013112929.535725901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,88 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit c1481c94e74c955e0448ddf46b8615a44d840c1e ]
+[ Upstream commit 362a4549f2acfb03390ddfcd91041e65a11a739f ]
 
-Blamed commit introduced a busy-wait loop in tipc_exit_net()
-to wait for pending UDP bearer cleanup works to complete:
+Some NTB implementations are backed by a PCI function that is not the right
+struct device to use with DMA API helpers (e.g. due to IOMMU topology, or
+because the NTB device is virtual).
 
-       while (atomic_read(&tn->wq_count))
-               cond_resched();
+Add an optional .get_dma_dev() callback to struct ntb_dev_ops and provide a
+helper, ntb_get_dma_dev(), so NTB clients can use the appropriate struct
+device for DMA allocations and mappings.
 
-This loop can busy-wait for a long time if cond_resched() is a NOP. This
-typically happens if the netns exit is executed by a high priority task,
-or under kernels configured without preemption (CONFIG_PREEMPT_NONE). In
-such cases, it wastes CPU cycles and can lead to soft lockups.
+If the callback is not implemented, ntb_get_dma_dev() returns the current
+default (ntb->dev.parent). Drivers that implement .get_dma_dev() must
+return a non-NULL device.
 
-Fix this by replacing the busy loop with wait_var_event(), allowing the
-thread to sleep properly until the work queue count reaches zero.
-
-Accordingly, update cleanup_bearer() to use atomic_dec_and_test() and
-wake_up_var() to wake up the waiter when the count drops to zero.
-
-This uses the global wait queue hash table, avoiding the need to bloat
-struct tipc_net with a wait_queue_head_t. The atomic_dec_and_test()
-provides the necessary memory barrier to ensure the wakeup is not missed.
-
-Fixes: 04c26faa51d1 ("tipc: wait and exit until all work queues are done")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jon Maloy <jmaloy@redhat.com>
-Cc: tipc-discussion@lists.sourceforge.net
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260623173030.2925059-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: format doc]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260306031443.1911860-2-den@valinux.co.jp
+Stable-dep-of: da6d997ac556 ("ntb: Store original DMA address for future release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/core.c      | 4 ++--
- net/tipc/udp_media.c | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ include/linux/ntb.h | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/net/tipc/core.c b/net/tipc/core.c
-index 1ddecea1df6e9..315975c3be818 100644
---- a/net/tipc/core.c
-+++ b/net/tipc/core.c
-@@ -45,6 +45,7 @@
- #include "crypto.h"
+diff --git a/include/linux/ntb.h b/include/linux/ntb.h
+index 191b524e5c0dc..5c29e904a9c52 100644
+--- a/include/linux/ntb.h
++++ b/include/linux/ntb.h
+@@ -256,6 +256,7 @@ static inline int ntb_ctx_ops_is_valid(const struct ntb_ctx_ops *ops)
+  * @msg_clear_mask:	See ntb_msg_clear_mask().
+  * @msg_read:		See ntb_msg_read().
+  * @peer_msg_write:	See ntb_peer_msg_write().
++ * @get_dma_dev:	See ntb_get_dma_dev().
+  */
+ struct ntb_dev_ops {
+ 	int (*port_number)(struct ntb_dev *ntb);
+@@ -329,6 +330,7 @@ struct ntb_dev_ops {
+ 	int (*msg_clear_mask)(struct ntb_dev *ntb, u64 mask_bits);
+ 	u32 (*msg_read)(struct ntb_dev *ntb, int *pidx, int midx);
+ 	int (*peer_msg_write)(struct ntb_dev *ntb, int pidx, int midx, u32 msg);
++	struct device *(*get_dma_dev)(struct ntb_dev *ntb);
+ };
  
- #include <linux/module.h>
-+#include <linux/wait_bit.h>
- 
- /* configurable TIPC parameters */
- unsigned int tipc_net_id __read_mostly;
-@@ -118,8 +119,7 @@ static void __net_exit tipc_exit_net(struct net *net)
- #ifdef CONFIG_TIPC_CRYPTO
- 	tipc_crypto_stop(&tipc_net(net)->crypto_tx);
- #endif
--	while (atomic_read(&tn->wq_count))
--		cond_resched();
-+	wait_var_event(&tn->wq_count, atomic_read(&tn->wq_count) == 0);
+ static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
+@@ -391,6 +393,8 @@ static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
+ 		/* !ops->msg_clear_mask == !ops->msg_count	&& */
+ 		!ops->msg_read == !ops->msg_count		&&
+ 		!ops->peer_msg_write == !ops->msg_count		&&
++
++		/* ops->get_dma_dev is optional */
+ 		1;
  }
  
- static void __net_exit tipc_pernet_pre_exit(struct net *net)
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index a777d1521b7ee..d732afaeab3db 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -40,6 +40,7 @@
- #include <linux/igmp.h>
- #include <linux/kernel.h>
- #include <linux/workqueue.h>
-+#include <linux/wait_bit.h>
- #include <linux/list.h>
- #include <net/sock.h>
- #include <net/ip.h>
-@@ -827,7 +828,8 @@ static void cleanup_bearer(struct work_struct *work)
- 	synchronize_net();
- 
- 	dst_cache_destroy(&ub->rcast.dst_cache);
--	atomic_dec(&tn->wq_count);
-+	if (atomic_dec_and_test(&tn->wq_count))
-+		wake_up_var(&tn->wq_count);
- 	kfree(ub);
+@@ -1563,6 +1567,26 @@ static inline int ntb_peer_msg_write(struct ntb_dev *ntb, int pidx, int midx,
+ 	return ntb->ops->peer_msg_write(ntb, pidx, midx, msg);
  }
  
++/**
++ * ntb_get_dma_dev() - get the device to use for DMA allocations/mappings
++ * @ntb:	NTB device context.
++ *
++ * Return a struct device suitable for DMA API allocations and mappings.
++ * This is typically the parent of the NTB device, but may be overridden by a
++ * driver by implementing .get_dma_dev().
++ *
++ * Drivers that implement .get_dma_dev() must return a non-NULL pointer.
++ *
++ * Return: device pointer to use for DMA operations.
++ */
++static inline struct device *ntb_get_dma_dev(struct ntb_dev *ntb)
++{
++	if (!ntb->ops->get_dma_dev)
++		return ntb->dev.parent;
++
++	return ntb->ops->get_dma_dev(ntb);
++}
++
+ /**
+  * ntb_peer_resource_idx() - get a resource index for a given peer idx
+  * @ntb:	NTB device context.
 -- 
 2.53.0
 
