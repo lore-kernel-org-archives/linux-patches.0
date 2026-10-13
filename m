@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E61389104;
-	Tue, 13 Oct 2026 12:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD77501F59;
+	Tue, 13 Oct 2026 12:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895786; cv=none; b=LScqaAjY7nJVbF5+u+JfzJDcvF7zT1HGJ79pyKUURhCSXtL5iVmowZaXGj1io6NfQmNNkyRicR4fTFeACsENKslefP/O/jHBdoBtjG3SjKtpI3OwsYqU6fsZadOeymBFDjzq/TXqJwqIZLolE+/HcTORdH7PjOs6RzKhQAdZegg=
+	t=1791895789; cv=none; b=WWzYUtjQIZ6cp82jUdETnVySRZTnfa9ooc0qENYGrw2UpBNZpYYXvHQFYkj5HX3ySv9eqQ+9jiZqo3yen8nXM9nk3XAfnO2Mppok0AdwBpQOriybEHM0Wdnk35c+V6kH/ZZE8n0Rtr2sDb5UwcAiiNN7prkiKTXxO7LmJTwwHVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895786; c=relaxed/simple;
-	bh=dS2Sxpbr6U76DuZqaVnAJCRFeVMi+cmJsK+JPd7N0ZU=;
+	s=arc-20240116; t=1791895789; c=relaxed/simple;
+	bh=RKE5m6X17YWh4sQsqIoEdcBfc4lUFOTEDIi21hzFX38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwRGqMp5lSMNcT57qbXuGbDE/TPrDmuWDhFQ2PpKfIzne7Fb+QByeYzae7BChellrSr4Cs9aqB0yyZrOvOkGj/+9T7sf5riaKkuAEhn2y6uzfUvUI/2Ng/aCkGr1s98r/tnoZXdkfJSoOk3DsOo9hyaS2CbbbQU6AnIeSnAyVRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLKasAN1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PLB167NJQDf/XguGl1MYHLs9YNgCiH0Aq+DquyGzvwjX4PDt2zRTiH8cssiQieIjYy7/y7wTDY5EfqwlNtRqf1Pu9i6LglUDelFYih/xz2F+7NPSklWdFIUUzBqhvddSOyN4erXkcXx+lAuOpsE54827gikdiu2dphCTM2oLUlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM0pClV/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLKasAN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D7A1F000FF;
-	Tue, 13 Oct 2026 12:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM0pClV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968961F0089A;
+	Tue, 13 Oct 2026 12:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895785;
-	bh=gYKOxB7X/CC2aeJ4cQYOr4yhHvVT56ylNgCkN5/Npk0=;
+	s=korg; t=1791895788;
+	bh=3uewdpeHXrdtJxE36FMP567u9MXCgOuUz1rE8uRNaj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dLKasAN1LEkWyWpXegqQHlPmAyPKtz5mM5AOv9su8uJH8YU2DpTTvlXJlYQn3/irm
-	 hKp0wS0IgWttpdoVY0OOdIC20ROOs/N5SGqdep8XL/7z/D335+wpLgRk2TK26221jH
-	 E1CoCv4mdfOiV1+2wWrdowF9XkGwQt9mSKgNpb5E=
+	b=cM0pClV/dtIu4txgvhfshekxUlcnDoPxwcJ6dJZ0mMvX6axNaRdJpTshlvt8+es0E
+	 hQK7ZeUAK9dgMeCpJof+I++Wqo8ElI4rHh8CH91ApaJnSwth6m59d/aWBR0dK98krD
+	 yJF2QzZhDt/pyosDhEZ52UNL5XGZ3zmGKrwHigBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Cressey <ben@cressey.dev>,
+	Ma Xinmeng <1564938642@qq.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 392/497] dm-crypt: reject the lmk IV mode with AEAD ciphers
-Date: Tue, 13 Oct 2026 13:39:19 +0200
-Message-ID: <20261013112917.197637726@linuxfoundation.org>
+Subject: [PATCH 6.12 393/497] dm-snap: reject the transient exception store for snapshot-merge
+Date: Tue, 13 Oct 2026 13:39:20 +0200
+Message-ID: <20261013112917.220633931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,51 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cressey <ben@cressey.dev>
+From: Ma Xinmeng <1564938642@qq.com>
 
-commit 3195e0daf590683992edb4eed32269e569e04924 upstream.
+commit fcbde6227fcc53c73f08c56b2539e462d545cac6 upstream.
 
-A "capi:" table line that pairs an AEAD cipher with the lmk IV mode,
-for example "capi:gcm(aes)-lmk" with the integrity:28:aead option,
-causes an oops when it is loaded. lmk sets tfms_count to 64, but
-crypt_alloc_tfms_aead only allocates one transform, so crypt_setkey
-reads past the end of the tfms_aead array and calls crypto_aead_setkey
-on the values it finds there.
+snapshot_merge_next_chunks() calls s->store->type->prepare_merge() without
+checking it. The transient store ("N") implements neither prepare_merge nor
+commit_merge, and snapshot_ctr() validates those callbacks only on the handover
+path (__validate_exception_handover()), so a directly constructed snapshot-merge
+calls a NULL prepare_merge on resume:
 
-lmk exists for compatibility with Loop-AES, which uses CBC, so refuse
-it with an AEAD cipher rather than allocate 64 AEAD transforms. The
-check cannot go in crypt_iv_lmk_ctr with the other lmk checks, because
-the IV constructor runs after crypt_set_key.
+  snapshot_merge_resume -> snapshot_merge_next_chunks -> prepare_merge(...)
 
-Note that this is not a security bug because the memory corruption can
-only be triggered by root.
+commit_merge() is NULL for the same reason. Userspace only issues documented
+device-mapper ioctls (CAP_SYS_ADMIN); this is a misconfiguration the kernel must
+reject rather than oops on.
 
-Fixes: 33d2f09fcb35 ("dm crypt: introduce new format of cipher with "capi:" prefix")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: LLM
+Reject the combination in snapshot_ctr() at table-load time (-EINVAL), the same
+check the handover path already performs; this also covers the commit_merge()
+call site, which a guard local to the prepare_merge call would miss.
+
+Tested on Linux v6.6.157 KASAN: unpatched, the dmsetup reproducer oopses in
+snapshot_merge_next_chunks(); with this patch, the table load fails with -EINVAL
+and no oops. Also present on v6.6.145; still present on the linux-dm tree
+(555f3d7be91a) and on torvalds/linux master (62f4c998b297) as of 2026-09-22.
+
+Note that this is not a security bug because only root can trigger it.
+
+Signed-off-by: Ma Xinmeng <1564938642@qq.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/md/dm-snap.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -2995,8 +2995,13 @@ static int crypt_ctr_cipher_new(struct d
- 		}
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -1298,6 +1298,20 @@ static int snapshot_ctr(struct dm_target
+ 		goto bad_store;
  	}
  
--	if (*ivmode && !strcmp(*ivmode, "lmk"))
-+	if (*ivmode && !strcmp(*ivmode, "lmk")) {
-+		if (crypt_integrity_aead(cc)) {
-+			ti->error = "AEAD transforms not supported for LMK";
-+			return -EINVAL;
-+		}
- 		cc->tfms_count = 64;
++	/*
++	 * snapshot-merge requires the optional prepare_merge/commit_merge
++	 * callbacks; the transient exception store does not implement them.
++	 * The handover path checks this in __validate_exception_handover(),
++	 * but a directly constructed snapshot-merge never goes through it.
++	 */
++	if (dm_target_is_snapshot_merge(ti) &&
++	    (!s->store->type->prepare_merge ||
++	     !s->store->type->commit_merge)) {
++		ti->error = "Snapshot exception store does not support snapshot-merge.";
++		r = -EINVAL;
++		goto bad_hash_tables;
 +	}
++
+ 	argv += args_used;
+ 	argc -= args_used;
  
- 	if (*ivmode && !strcmp(*ivmode, "essiv")) {
- 		if (!*ivopts) {
 
 
