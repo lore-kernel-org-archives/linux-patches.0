@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75A13E1203;
-	Tue, 13 Oct 2026 11:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8E04F402E;
+	Tue, 13 Oct 2026 11:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892029; cv=none; b=sdiKT33t18BSghPstDB3sxFo4VSRgu5w46oJsD8kQgpVxtGm5Rd3yMleGEBx03i7RB2+WxrHDsT/DMEaV52l3O56KkteLKIVqn5uUb4FJ1N8BjIZ+Flos2qMTGBCIOQTEsH4JsEOFdJpTkObym4z4rbU+H9q5Kto3GmYzWiBD58=
+	t=1791892036; cv=none; b=kMD190ZuA78EQt1CzN//epoPS33oT/9GXC7KDMLObah5pYnQCQh0p1pn0Wohfk17w8mbY8odBOq8BQ5KMh1osjXtpvS7EqDSiUvVLqCKIWTK4wBJoYawOJBGSQ6hSDTozoKU2FnePQ0lwAUFlDTPSXRTVjzBIqi5FdjSG5UsmbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892029; c=relaxed/simple;
-	bh=d23D3aoo43Qm6Z3WB6BFBMMKUFRv0LQynOqhvy4K/aU=;
+	s=arc-20240116; t=1791892036; c=relaxed/simple;
+	bh=xlk6FS05rSi+HvQHhd415qQH7dlfVwIrnaPYsjA6Bvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKpbf4VS2IbeFg38Uc24adD/cjtgeD0BSoNERmOF7vZ2AMb08Ax6DSoeF6tmln/OVB4i3m3bZFA4pA7o9zrfLJhA0kFGUfyQEyYwki6mJJBxpTpicVwJBoQG/b5gYtqvcfFfKUpN1P2sUB79zM+NLMTYEpDKBHAtb5XLxiD+urI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETd3JwMD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZigHhMTD8tdJdvoWyT1rDMTY3IAdQtLDXM95/rQOnzcFrgPuusVt7Xf44gsSj8EJZF1+HpHiGCnv564GF/5v6FppuyeAqmINjlDmX/JvlO0h3aMc0oJOYuXERlhIHBQHjb3tDa+SC2gXw3W09DbyDQWGM3oBiT1pcCAAltr3CXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2j3LzZjK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETd3JwMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8D71F000FF;
-	Tue, 13 Oct 2026 11:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2j3LzZjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFC91F00893;
+	Tue, 13 Oct 2026 11:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892027;
-	bh=hJ/Snt8Rhl80/tvgszQWjAg4XIBon0L/uAlJeOvYnvA=;
+	s=korg; t=1791892033;
+	bh=QTnga3thlGetdWAyf1yoh+9UtL0yJvS5MQ90PQG6AHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ETd3JwMDbCO8BDGUWm7fvfYDZv7DjLDYc0/kt5ltov6jloYenBbmTb3jUwjSwmWVx
-	 ai8S68b5L9lrYhCh2w3eItnGGLcthwRmvl+R33mM/g9mE8R0EEE0pZ9ozg3DjIOX6p
-	 PHMWPh/ky26hlvV6IlM5sQVEHzY2ertncW4aRVrI=
+	b=2j3LzZjKeW/AB0afhmTfsAWIRia0IRhH2fNBoMrUA+ALTX8lR72Rw6CdLCY5nIscz
+	 AGDRr8svkUTCXyRfiM07fh+u8wOxjvMPgAzwN/z9arEdxfhTcFKfqDXvihNEhhf6as
+	 fIaPdM3HoGnwNXPkTc+1fY36C5gwIw1e6SEnQP0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Rik van Riel <riel@surriel.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 7.2 037/281] x86/CPU/AMD: Fix AMD TLBI Erratum #1718
-Date: Tue, 13 Oct 2026 13:35:53 +0200
-Message-ID: <20261013112855.953112200@linuxfoundation.org>
+	lvc-project@linuxtesting.org,
+	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@oss.qualcomm.com>
+Subject: [PATCH 7.2 039/281] tee: shm: reject zero-sized allocations in tee_dyn_shm_alloc_helper()
+Date: Tue, 13 Oct 2026 13:35:55 +0200
+Message-ID: <20261013112856.001356928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,75 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Georgiy Osokin <g.osokin@auroraos.dev>
 
-commit 87db7795cbaaf636ae22ae031f4906db7bb77803 upstream.
+commit b7f925fd5226deb953c8dcdc9677d3fcc2717c00 upstream.
 
-The processor may fail to invalidate a TLB entry while executing an
-INVLPGB/TLBSYNC instruction pair.
+tee_dyn_shm_alloc_helper() derives nr_pages from a caller-supplied size
+and passes it to alloc_pages_exact() without checking it. For size == 0
+nr_pages is 0, and alloc_pages_exact(0) calls get_order(0), which is
+documented as undefined and returns BITS_PER_LONG - PAGE_SHIFT. The page
+allocator then trips its order > MAX_PAGE_ORDER warning and fails the
+allocation; on a panic_on_warn kernel that ends the boot.
 
-Detect the erratum and apply a software workaround when a microcode fix
-is not present.
+This can be triggered by TEE_IOC_SHM_ALLOC with struct
+tee_ioctl_shm_alloc_data where size is 0.
 
-Fixes: 82378c6c2f43 ("x86/mm: Use INVLPGB for kernel TLB flushes")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Rik van Riel <riel@surriel.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20261002211617.1001617-1-bp@kernel.org
+Reject a zero page count, as register_shm_helper() already does for the
+register path.
+
+Fixes: cf4441503e20 ("tee: optee: Move pool_op helper functions")
+Cc: stable@vger.kernel.org
+Cc: lvc-project@linuxtesting.org
+Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    3 +++
- arch/x86/include/asm/tlb.h         |    6 ++++++
- arch/x86/kernel/cpu/amd.c          |    4 ++++
- 3 files changed, 13 insertions(+)
+ drivers/tee/tee_shm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -465,6 +465,8 @@
- #define X86_FEATURE_NO_NESTED_DATA_BP	(20*32+ 0) /* No Nested Data Breakpoints */
- #define X86_FEATURE_WRMSR_XX_BASE_NS	(20*32+ 1) /* WRMSR to {FS,GS,KERNEL_GS}_BASE is non-serializing */
- #define X86_FEATURE_LFENCE_RDTSC	(20*32+ 2) /* LFENCE always serializing / synchronizes RDTSC */
-+
-+#define X86_FEATURE_TLBSYNC_SFW_NO	(20*32+ 4) /* TLBI Erratum #1718 fixed in microcode */
- #define X86_FEATURE_VERW_CLEAR		(20*32+ 5) /* The memory form of VERW mitigates TSA */
- #define X86_FEATURE_NULL_SEL_CLR_BASE	(20*32+ 6) /* Null Selector Clears Base */
+--- a/drivers/tee/tee_shm.c
++++ b/drivers/tee/tee_shm.c
+@@ -343,6 +343,10 @@ int tee_dyn_shm_alloc_helper(struct tee_
+ 	unsigned int i;
+ 	int rc = 0;
  
-@@ -575,4 +577,5 @@
- #define X86_BUG_TSA			X86_BUG( 1*32+ 9) /* "tsa" CPU is affected by Transient Scheduler Attacks */
- #define X86_BUG_VMSCAPE			X86_BUG( 1*32+10) /* "vmscape" CPU is affected by VMSCAPE attacks from guests */
- #define X86_BUG_SEAMRET_INVD_VMCS	X86_BUG( 1*32+11) /* "seamret_invd_vmcs" SEAMRET from P-SEAMLDR clears the current VMCS */
-+#define X86_BUG_TLBI			X86_BUG( 1*32+12) /* "tlbi" AMD TLBI Erratum #1718 */
- #endif /* _ASM_X86_CPUFEATURES_H */
---- a/arch/x86/include/asm/tlb.h
-+++ b/arch/x86/include/asm/tlb.h
-@@ -110,6 +110,12 @@ static inline void __tlbsync(void)
- 
- 	/* TLBSYNC: supported in binutils >= 0.36. */
- 	asm volatile(".byte 0x0f, 0x01, 0xff" ::: "memory");
++	/* get_order(0) is undefined and exceeds MAX_PAGE_ORDER. */
++	if (!nr_pages)
++		return -EINVAL;
 +
-+	if (!static_cpu_has_bug(X86_BUG_TLBI))
-+		return;
-+
-+	/* TLBSYNC: supported in binutils >= 0.36. */
-+	asm volatile(".byte 0x0f, 0x01, 0xff" ::: "memory");
- }
- #else
- /* Some compilers (I'm looking at you clang!) simply can't do DCE */
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1047,6 +1047,10 @@ static void init_amd_zen5(struct cpuinfo
- 		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
- 		pr_emerg_once("RDSEED32 is broken. Disabling the corresponding CPUID bit.\n");
- 	}
-+
-+	if (cpu_has(c, X86_FEATURE_INVLPGB) &&
-+	    !cpu_has(c, X86_FEATURE_TLBSYNC_SFW_NO))
-+		set_cpu_bug(c, X86_BUG_TLBI);
- }
- 
- static void init_amd(struct cpuinfo_x86 *c)
+ 	/*
+ 	 * Ignore alignment since this is already going to be page aligned
+ 	 * and there's no need for any larger alignment.
 
 
