@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9914B95C0;
-	Tue, 13 Oct 2026 11:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7734F30D8;
+	Tue, 13 Oct 2026 11:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891960; cv=none; b=Uq/NsudwbTgystfLwvbDrG1rmzVYQo3eLP9b3CX2mUBAJDKvxn2D3mmDZpxkTi1picaRzQVfC6EhkAUj39VJlUerYSWzzRV8aXZ9hN/OZmRlsluJCI/VKZRviG9m+8M7URfUWKUs1EuJfG1Ob6Pjpp/LrUb75qi2emr3aEBOk8o=
+	t=1791891963; cv=none; b=UaPsVQvI5/bwUQYKfk33JicjQ6wVNyL1SF+5ptXHVwl26D2Il9QoZrBljrk16pvbuUVdLzkEZhQVzvC00fr7sEge4T5wbQGL8DDhqm+eaw4QUV1ccI7SOgPsDJGdtq8i/NQJOOYF67RW8jCHZOhhaO0WcqEJsBI1wHARdmsuqNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891960; c=relaxed/simple;
-	bh=WB6ijJEvSFGHJtlaf9/GW+9ri+rMONXFbQS+aTZFlvk=;
+	s=arc-20240116; t=1791891963; c=relaxed/simple;
+	bh=4f1SIPp07FpK04soh0baljmjPSdXAblSLQDzJrt9Fns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttxfgFx0bE7GDB8HYwGQjZPBpmKwzdIXdWEzCF3K2TPkUGbT94DSlNNcrXddgvlwJ6wk/texIT4gJPHAEHp4hy+0Lzz6UDBedOj+vfYevmkQF0OT3dUrbE17abJtTXO8blZufOvEREg366uN4eV+gRs2YJq7w3i8OqAIaQCuAlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6k/7+Hu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g8VssNLYYQbCiRWGXMadieXd34cSd/LutUCvDGGt/wbNT1/mRfjVUP8oF+eBo4MxGxsUQW+Y6FnqJUeti+TBLIoqsBDfOguisp9Zq23vqtdPJnAvOQ9OiWSlY6e4sIycWtMaspah5OueTH2XDt4B8QLSVR5th22SJAeCKay2ldc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfOn6XAi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6k/7+Hu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A9A1F00893;
-	Tue, 13 Oct 2026 11:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfOn6XAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188B61F000FF;
+	Tue, 13 Oct 2026 11:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891958;
-	bh=QKwwIdw3R/qvwYMyOlDdN6Yxc5hfLyS2Y6ynBNsGv0U=;
+	s=korg; t=1791891961;
+	bh=l5ojVmlthKmB0eOrWeb3mpGzoVH7QFuTMX+GD3Ybxpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6k/7+HuGIvprE2s3fjRs7nZI0zu8GpHKYbXQvOpbz3UGzmtN2CHryDfrno6phSyO
-	 T4RkPTemRWsW1v8ikzo8GApbJQjQQb2XzteQuJ11iCctel6QHRL7byYxeyEkOHy4eE
-	 SAvPG2qZTrp93s0g6gJ2h5wCHBneKb/Nbvghs+nQ=
+	b=xfOn6XAidBfdQVBdZ0v6b2vUOAmkx74QDEpe34++0f/Jbmffa9/IMnUY4LBFyJ958
+	 2OVmoHb81i1WdicGXVm45BpqrI480MBN3XsDaLhcX6gBGSuxXlw3dvx2KzqwzOWvlK
+	 7t68TpaPKI0b1dJqVGqe4DLyE6kqGExO+arY0qdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 014/281] ipv6: do not warn on route notification size race
-Date: Tue, 13 Oct 2026 13:35:30 +0200
-Message-ID: <20261013112855.395241390@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.2 015/281] Input: ati_remote2 - fix type confusion in device attribute handlers
+Date: Tue, 13 Oct 2026 13:35:31 +0200
+Message-ID: <20261013112855.418751967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,42 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit c97426ec649d99596d8969e1a052c16b14b7b485 upstream.
+commit f321cc430c49b6c1be0d53f2ef19d8342d8029cc upstream.
 
-fib6_info_hw_flags_set() sizes the skb with rt6_nlmsg_size() and later
-fills it with rt6_fill_node().  With nexthop compatibility mode enabled,
-a concurrent replacement can grow the group between these independent
-snapshots.  rt6_fill_node() can then legitimately return -EMSGSIZE, so
-the warning does not prove a sizing bug.
+Previously, the channel_mask and mode_mask attributes were registered on
+the parent usb_device via sysfs_create_group(). When commit b20d6bf8014b
+("Input: ati-remote2 - use driver core to instantiate device
+attributes") converted the driver to let the driver core manage them via
+dev_groups in struct usb_driver, the attributes moved to the bound
+usb_interface devices, but the show and store callbacks were not updated
+accordingly.
 
-Remove the warning.  The existing error path still frees the skb and
-reports the error to listeners.
+As a result, the callbacks still invoked to_usb_device() on a device
+pointer belonging to a struct usb_interface, producing an invalid
+usb_device pointer.
 
-Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/netdev/20261007114003.GA1011260@shredder/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Use to_usb_interface() directly in the attribute handlers to obtain the
+interface and its driver data.
+
+Fixes: b20d6bf8014b ("Input: ati-remote2 - use driver core to instantiate device attributes")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20261009040302.3087205-1-vulab@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/4012604727e5ba80b69ccd4d08796511397ddaef.1791423190.git.4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/input/misc/ati_remote2.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6474,8 +6474,6 @@ void fib6_info_hw_flags_set(struct net *
- 	err = rt6_fill_node(net, skb, f6i, NULL, NULL, NULL, 0, RTM_NEWROUTE, 0,
- 			    0, 0);
- 	if (err < 0) {
--		/* -EMSGSIZE implies BUG in rt6_nlmsg_size() */
--		WARN_ON(err == -EMSGSIZE);
- 		kfree_skb(skb);
- 		goto errout;
- 	}
+--- a/drivers/input/misc/ati_remote2.c
++++ b/drivers/input/misc/ati_remote2.c
+@@ -672,8 +672,7 @@ static ssize_t ati_remote2_show_channel_
+ 					     struct device_attribute *attr,
+ 					     char *buf)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 
+ 	return sprintf(buf, "0x%04x\n", ar2->channel_mask);
+@@ -683,8 +682,7 @@ static ssize_t ati_remote2_store_channel
+ 					      struct device_attribute *attr,
+ 					      const char *buf, size_t count)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 	unsigned int mask;
+ 	int r;
+@@ -720,8 +718,7 @@ static ssize_t ati_remote2_show_mode_mas
+ 					  struct device_attribute *attr,
+ 					  char *buf)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 
+ 	return sprintf(buf, "0x%02x\n", ar2->mode_mask);
+@@ -731,8 +728,7 @@ static ssize_t ati_remote2_store_mode_ma
+ 					   struct device_attribute *attr,
+ 					   const char *buf, size_t count)
+ {
+-	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
++	struct usb_interface *intf = to_usb_interface(dev);
+ 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
+ 	unsigned int mask;
+ 	int err;
 
 
