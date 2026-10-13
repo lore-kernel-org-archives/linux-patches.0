@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E414E8E08;
-	Tue, 13 Oct 2026 11:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80714F30CF;
+	Tue, 13 Oct 2026 11:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892211; cv=none; b=rOJFq3JZTflg24Y9CXdGQIrI1w95MVPIhwo6Bt2iQCa4uzhkcWj2VDyP/s3FtJe5rEQJmSFywJWbqjcL3Azkr4btwok1/TjIOLg5NJ1FshoalHd9AN4wKWxBfsHJIkrAoa/F9dHoANIrst4i+Tjf2MARUh6NYX5MEKO7CUO9xmE=
+	t=1791892214; cv=none; b=JgsCkY2EfCxMh2RZTPcosCDTkryIAPUMSgyVtAvuSkzOJ5dF1V7IA/NvfubXWZcT95MqZ+Ylmh5fc1W6c9Qnbjr9ZeTEnSAogj8m91bVSHq4hriCRSe8qAzkRwBka61hpz6Y9E3XOyXFXSGUguy6GInFYsGePldN3pRzXTnLFHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892211; c=relaxed/simple;
-	bh=XLiKXauYLKnXV7wcXiKlm18eNYaR0jNy2T/YuoDHTxw=;
+	s=arc-20240116; t=1791892214; c=relaxed/simple;
+	bh=z60Ba5SQ+PlfetOjmu1BuYDINx0A0PxF7ewJmugofro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1snwaT7GQW8p+s57kEcZyMhlkx/9YVOP6DpoZrdVeJIcb/WbtSv5Zv/BpulPBdkYMixSHYF3iu3C8b5SRgDU4eNVhmYV2kh5nO4Cybpp2fcz9fCPBlIejDbXVbN2FS2zokQD1AYcDH0+nX2gQbtpvwLKBr3lVt5OJyglZ+sfxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2YDqKqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B6EWZL+Esd+Jppco6UkI1RcB55JDm17g9wTRc/rzjAV30njiBPbFGDcsSnSTmGxzbqKEu1/hAH2coQcTaG2bAk7FYYLcC5rJ8Wi79gw+h5Z62BjDX8HL29drpKRt5T5r8b5eDKz7F4VgAMQVrecVlw8itqaxO8KvLx8dknp7yCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avDvOP2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2YDqKqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6DF1F000FF;
-	Tue, 13 Oct 2026 11:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avDvOP2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4868A1F000FF;
+	Tue, 13 Oct 2026 11:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892209;
-	bh=6Qdf7mAcBqWFqfTalzb4HqoJA+xm1KtObGk3r0Z4Qtw=;
+	s=korg; t=1791892212;
+	bh=2QShgbRAsJoQb88/JpjFr4M7fIsvLf7X2Uv7NHe64vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2YDqKqwJYGWyIoiyLmQEp57lJVN2WX5ONNtoBmibwhbnHjcIMxqYLiYzRE3B/2vL
-	 PrPmzN3yZHGepQcWrpFXl1i2nSlKjKL0dg/2Ew5xahupY86uwcg6QZDpmNAVWD/YfS
-	 4oh5nz85dfpTkH8ewdZTLvOEIeYpk7e5y99PV4KM=
+	b=avDvOP2Q0swddST4+mXMDJpDkRjO1jKKZDWNPOS3p+3f4dSQNL1mDYbbSW9M6L+/i
+	 6IOfWjNr1ZEfHxAtnNJNkpG/nogP8pHThHXRhgDkPEkU8pCsStDtodyQOpUFvIvW8y
+	 voxTIZwvwQWpDX3Hv8WGGe4KrmWahjPs1rcl4SFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 097/281] regulator: tps6594-regulator: Fix n_linear_ranges for TPS65224 BUCK2-4
-Date: Tue, 13 Oct 2026 13:36:53 +0200
-Message-ID: <20261013112857.492500548@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 098/281] pmdomain: imx8m-blk-ctrl: Serialize power on/off across sibling domains
+Date: Tue, 13 Oct 2026 13:36:54 +0200
+Message-ID: <20261013112857.517435260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,59 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit 2f15518682c779b1014552cb2ccb4a2052f85f27 upstream.
+commit 51c2db3ef0cb89a49ab7f47a40efd5d5b074ce8d upstream.
 
-The TPS65224 BUCK2, BUCK3 and BUCK4 descriptors pass 4 as
-n_linear_ranges, but tps65224_bucks_2_3_4_ranges[] only has two
-entries, covering selectors 0x00-0x45.
+On i.MX8MP the VPU blk-ctrl exposes G1, G2 and VC8000E as three separate
+genpds, each serialized only by its own genpd lock, so their power_on and
+power_off callbacks can run concurrently on SMP.
 
-The linear range helpers loop over n_linear_ranges entries, so any
-lookup of a selector above 0x45 reads past the end of the array and
-treats whatever follows it as two more ranges. This happens on the
-normal registration path when the core checks the voltage constraints
-against every selector. TPS652G1 uses the same descriptors and is
-affected too.
+The sequences are not independent: they share the VPUMIX bus domain, the
+VPU_NOC and the ADB400 handshake. On power up the GPC cannot ack-verify
+the ADB400 handshake - the ack only completes once blk-ctrl sets the bus
+clk-en bit - so it just waits a fixed delay instead of polling hskack. A
+sibling transition landing inside another domain's reset window disturbs
+that shared clock and handshake timing, the victim's reset does not take
+effect, and its block registers read back all zeros: the decoder times
+out or the encoder fails its format check.
 
-Use ARRAY_SIZE() so the count always matches the table.
+Serialize the blk-ctrl reset sequence with a per-blk-ctrl mutex; the
+driver deliberately avoids a genpd hierarchy, so the genpd core gives no
+cross-sibling serialization.
 
-Fixes: 00c826525fba ("regulator: tps6594-regulator: Add TI TPS65224 PMIC regulators")
+Fixes: a1a5f15f7f6c ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260930105333.3522412-1-khurana.ridham222@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/tps6594-regulator.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/regulator/tps6594-regulator.c
-+++ b/drivers/regulator/tps6594-regulator.c
-@@ -241,21 +241,21 @@ static const struct regulator_desc tps65
- 			  TPS65224_MASK_BUCKS_VSET,
- 			  TPS6594_REG_BUCKX_CTRL(1),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
--			  4, 0, 0, NULL, 0, 0),
-+			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
- 	TPS6594_REGULATOR("BUCK3", "buck3", TPS6594_BUCK_3,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
- 			  TPS6594_REG_BUCKX_VOUT_1(2),
- 			  TPS65224_MASK_BUCKS_VSET,
- 			  TPS6594_REG_BUCKX_CTRL(2),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
--			  4, 0, 0, NULL, 0, 0),
-+			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
- 	TPS6594_REGULATOR("BUCK4", "buck4", TPS6594_BUCK_4,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
- 			  TPS6594_REG_BUCKX_VOUT_1(3),
- 			  TPS65224_MASK_BUCKS_VSET,
- 			  TPS6594_REG_BUCKX_CTRL(3),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
--			  4, 0, 0, NULL, 0, 0),
-+			  ARRAY_SIZE(tps65224_bucks_2_3_4_ranges), 0, 0, NULL, 0, 0),
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -15,6 +15,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/clk.h>
++#include <linux/mutex.h>
+ 
+ #include <dt-bindings/power/imx8mm-power.h>
+ #include <dt-bindings/power/imx8mn-power.h>
+@@ -34,6 +35,12 @@ struct imx8m_blk_ctrl {
+ 	struct regmap *regmap;
+ 	struct imx8m_blk_ctrl_domain *domains;
+ 	struct genpd_onecell_data onecell_data;
++	/*
++	 * Serializes the blk-ctrl reset/clock sequence across sibling domains;
++	 * their transitions interact through the shared VPUMIX bus domain,
++	 * VPU_NOC and the not-ack-verified ADB400 handshake (ERR050531).
++	 */
++	struct mutex power_lock;
  };
  
- static const struct tps6594_regulator_irq_type tps6594_buck1_irq_types[] = {
+ struct imx8m_blk_ctrl_domain_data {
+@@ -98,6 +105,8 @@ static int imx8m_blk_ctrl_power_on(struc
+ 	struct imx8m_blk_ctrl *bc = domain->bc;
+ 	int ret;
+ 
++	guard(mutex)(&bc->power_lock);
++
+ 	/* make sure bus domain is awake */
+ 	ret = pm_runtime_get_sync(bc->bus_power_dev);
+ 	if (ret < 0) {
+@@ -164,6 +173,8 @@ static int imx8m_blk_ctrl_power_off(stru
+ 	const struct imx8m_blk_ctrl_domain_data *data = domain->data;
+ 	struct imx8m_blk_ctrl *bc = domain->bc;
+ 
++	guard(mutex)(&bc->power_lock);
++
+ 	/* put devices into reset and disable clocks */
+ 	if (data->mipi_phy_rst_mask)
+ 		regmap_clear_bits(bc->regmap, BLK_MIPI_RESET_DIV, data->mipi_phy_rst_mask);
+@@ -202,6 +213,10 @@ static int imx8m_blk_ctrl_probe(struct p
+ 
+ 	bc->dev = dev;
+ 
++	ret = devm_mutex_init(dev, &bc->power_lock);
++	if (ret)
++		return ret;
++
+ 	bc_data = of_device_get_match_data(dev);
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
 
 
