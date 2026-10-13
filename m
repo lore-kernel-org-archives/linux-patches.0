@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB748442B06;
-	Tue, 13 Oct 2026 12:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6513E0C67;
+	Tue, 13 Oct 2026 12:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894557; cv=none; b=X/aWt5Wcdz3RxcmtsBYaT+BvkIHOt6U9P31gLKt/G4AdCYtu7KfQu5+2hy3hOMnSu0mDVjkLKGU7HbLwXFxxWf1VBeiVjGiiY79IJgwPidJL05L0wEr/5zxf7ssFT0YQKuLhlcnY66qS8xlliLDWA7HY4iBaV0PtP30Xe0Ad0YQ=
+	t=1791894560; cv=none; b=gFYuzOL2wWSiRvJ3M+MVn4nAgzqMqkYFv0NimEpSpSk5JcTtdB37f+AhfDKdC+mc1fNcd708+RbLlihbLAYfIXUxll/IDCEjaQNrH3zrvHZBOyIMtVmcX08ZZAvBuDcfpn6tKOU23787h3o2SiOPJnmaIiBj6SCvBSHF9qEy0FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894557; c=relaxed/simple;
-	bh=R6jRHD62/BF7uqwd80nNmyaexB6f5rgOHb4Ey6pMY/w=;
+	s=arc-20240116; t=1791894560; c=relaxed/simple;
+	bh=d3oYgJRfW0BkYCt/EFJKXHtPjWwGMP3IrPT0qu1mpvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6jl89a9gylTmV/ocbQsDaXsOl9OfQQvvvzqrqSR6m3e9jqG3oeh/ytenThdsy4DRYTzwRComBLdSDXnWZ9lNTm75cKX5xB5wbDDEAmhJq7FTgGsUd7PGn2r2lxHmYo2r1LzMkc4X3ZnKRobeuJEK3oXHbtA0LsJJ3iJxmdGLWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaIwolnQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IZ3DSgsfGMq2HHmPryvhgzAKInTUogas1YPQJqvyW84rQYn+msVW8ENVh9xKwV1kJ302QDgcZu/ON7Hxyo44Phq7wBNKtoIB2Obo6wY77uHo6SzGXc0UrYXy4DkiH+S63N2fYws+fAXEFiU4Zr5bSdEepmaJjn1H0HrMidReaCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKpAMP4/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaIwolnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A581F000FF;
-	Tue, 13 Oct 2026 12:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKpAMP4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397631F0089A;
+	Tue, 13 Oct 2026 12:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894555;
-	bh=ZgwNWm3JGsnDSVCj780LbRkasS4nJNNoQ8u01rkvrC4=;
+	s=korg; t=1791894558;
+	bh=Qy+NdJ4TvRDpzJ7xbHckIgHjpXwqvCRC//IWp0AyscY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zaIwolnQN6OeSoV9nIC18gi0MIK7/SYR9hkt0+0vVmWttKNi1SEAVy49XO8ZQFGV1
-	 ILYSKnQqvkT0lYb8PedkNXczrbR4Tui3Elvc3JVXlJkQqGvMAutk5YrEEYdXwdOo/b
-	 dtstnbn1l3YgWwEnzUTwyQQtMFxuE6ThBA6toO/Q=
+	b=hKpAMP4/4C39F/oUVy9wMIjbUgO90imWixm2VqDgMAqhtc1p48Ki5TfhophfxFgne
+	 jZPkwdBDtlzQAsjr/CG0Jc3ndvkXHhN0bC71YGfxidVdg3L9ajaXChY8n7Z23j3FPU
+	 WCwVKd0eV2DyBX44nIPf2ar1stPe0gAmNknyAU3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 600/621] vsock: Fix memory leak in vmci_transport_recv_dgram_cb()
-Date: Tue, 13 Oct 2026 13:39:55 +0200
-Message-ID: <20261013112935.039783864@linuxfoundation.org>
+Subject: [PATCH 6.18 601/621] drm/vc4: Fix binner slot allocation failing on an idle GPU
+Date: Tue, 13 Oct 2026 13:39:56 +0200
+Message-ID: <20261013112935.062518507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -46,100 +45,206 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 7c24a4e87e219072e5e106f6791146cbf3b056b3 ]
+[ Upstream commit cca01232d94adcb10f7c8c5bb8ce072b045fcb58 ]
 
-During the closure of a datagram socket, the vmci_transport_recv_dgram_cb()
-function may be called, which will add the packets
-to the socket's backlog; then, after the receive queue is cleared,
-the __release_sock() function will move the packet back from the socket's
-backlog to the receive queue, which will lead to a memory leak.
+A job's binner slots are returned to bin_alloc_used by vc4_complete_exec(),
+which runs from the job_done workqueue, but the seqno
+vc4_v3d_get_bin_slot() waits on is incremented earlier, in the function
+vc4_irq_finish_render_job(). Therefore, a waiter can wake, retry, and still
+find the pool full because the worker has not run. By then, the job might
+have left the render_job_list, so no seqno remains to wait on and the
+allocation fails returning -ENOMEM.
 
-sock_close
-  __sock_release
-    __vsock_release
-      // take ownership by user-space
-      lock_sock_nested
-      sock_set_flag(sk, SOCK_DEAD)
-      vmci_transport_release
-                                      vmci_dispatch_dgs
-                                        vmci_datagram_invoke_guest_handler
-                                          vmci_transport_recv_dgram_cb
-                                            sk_receive_skb
-                                              if (!sock_owned_by_user(sk))
-                                                  [...]
-                                         (!)  else if sk_add_backlog()
-                                                  [...]
-  (!) skb_queue_purge(&sk->sk_receive_queue)
+This scenario can be reproduced on a Raspberry Pi 3 by using a burst of
+small jobs (e.g. Piglit's `quick_gl` suite), with userspace seeing a
+rejected submit for a pool about to become free.
 
-      release_sock
-        __release_sock
-          // move all packets from the backlog
-          // to the receive queue
-   (!)    sk_backlog_rcv
-            vsock_queue_rcv_skb
-            [...]
-              __sock_queue_rcv_skb
-                if (!sock_flag(sk, SOCK_DEAD))
-                  // Since the socket is "dead", the function will not
-                  // be called
-                  sk->sk_data_ready(sk)
-        sock_release_ownership(sk);
-        sock_put
+Note that the slots are held from validation until the render completes,
+so the pool can also be exhausted by jobs still queued on bin_job_list,
+leaving render_job_list empty and nothing to wait on.
 
-Add a receive queue cleanup in the socket destructor to fix this.
+Release the slots from the FRDONE handler and wait on the pool instead of
+on one job's seqno. This bounds the wait to the actual resource. Also, by
+claiming the slot inside the wait condition, another submit is unable to
+take the slot between the wakeup and the retry. vc4_complete_exec() keeps
+clearing the slots for jobs that never completed, and now wakes the
+waiters too.
 
-syzkaller report:
+Note that the wait takes a deadline, since the two callers need different
+ones. The submit path is a user task and can be interrupted, so it waits
+without one. On the other hand, vc4_overflow_mem_work() runs on a worker
+and never sees a signal, so it needs a deadline. During a reset,
+vc4_irq_disable() masks V3D_DRIVER_IRQS before draining the worker, and
+with those masked nothing can release a slot. This deadlocks: the worker
+would wait for slots that only the reset can free, while the reset waits
+in cancel_work_sync() for the worker.
 
-unreferenced object 0xffff8880117bfb80 (size 240):
-  comm "irq/56-vmw_vmci", pid 205, jiffies 4295064448 (age 73.992s)
-  hex dump (first 32 bytes):
-    78 dc 26 1e 80 88 ff ff 78 dc 26 1e 80 88 ff ff  x.&.....x.&.....
-    00 00 00 00 00 00 00 00 c0 da 26 1e 80 88 ff ff  ..........&.....
-  backtrace:
-    [<ffffffff82be8d97>] __alloc_skb+0x287/0x330 net/core/skbuff.c:505
-    [<ffffffffa114bcbd>] vmci_transport_recv_dgram_cb+0xbd/0x210 [vmw_vsock_vmci_transport]
-    [<ffffffffa05072c6>] vmci_datagram_invoke_guest_handler+0x366/0x450 [vmw_vmci]
-    [<ffffffffa050ad75>] vmci_dispatch_dgs+0x235/0x490 [vmw_vmci]
-    [<ffffffffa050b025>] vmci_interrupt+0x55/0x290 [vmw_vmci]
-    [<ffffffff8137ad2b>] irq_thread_fn+0x8b/0x1a0 kernel/irq/manage.c:1205
-    [<ffffffff8137c7ae>] irq_thread+0x28e/0x530 kernel/irq/manage.c:1314
-    [<ffffffff81253dd6>] kthread+0x2e6/0x3a0 kernel/kthread.c:376
-    [<ffffffff81004392>] ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:295
-
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with Syzkaller.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Link: https://patch.msgid.link/20261008144046.90853-1-Ilia.Gavrilov@infotecs.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260930182204.1877361-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_drv.h      |  2 +-
+ drivers/gpu/drm/vc4/vc4_gem.c      |  8 +++++-
+ drivers/gpu/drm/vc4/vc4_irq.c      |  6 +++-
+ drivers/gpu/drm/vc4/vc4_v3d.c      | 44 ++++++++++++++----------------
+ drivers/gpu/drm/vc4/vc4_validate.c |  2 +-
+ 5 files changed, 34 insertions(+), 28 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 5d1eb07ddc326..a540b3d29f9b5 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -890,6 +890,8 @@ static void vsock_sk_destruct(struct sock *sk)
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
+index 221d8e01d5391..d9ef519d6b021 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.h
++++ b/drivers/gpu/drm/vc4/vc4_drv.h
+@@ -1054,7 +1054,7 @@ void vc4_plane_async_set_fb(struct drm_plane *plane,
+ /* vc4_v3d.c */
+ extern struct platform_driver vc4_v3d_driver;
+ extern const struct of_device_id vc4_v3d_dt_match[];
+-int vc4_v3d_get_bin_slot(struct vc4_dev *vc4);
++int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout);
+ int vc4_v3d_bin_bo_get(struct vc4_dev *vc4, bool *used);
+ void vc4_v3d_bin_bo_put(struct vc4_dev *vc4);
+ int vc4_v3d_pm_get(struct vc4_dev *vc4);
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index 6887631f2d8be..5eadf11f289a8 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -877,11 +877,17 @@ vc4_complete_exec(struct drm_device *dev, struct vc4_exec_info *exec)
+ 		drm_gem_object_put(&bo->base.base);
+ 	}
+ 
+-	/* Free up the allocation of any bin slots we used. */
++	/* Free up the allocation of any bin slots we used. Jobs that ran to
++	 * completion had their slots released in vc4_irq_finish_render_job().
++	 * Only jobs that never completed still have slots to be released here.
++	 */
+ 	spin_lock_irqsave(&vc4->job_lock, irqflags);
+ 	vc4->bin_alloc_used &= ~exec->bin_slots;
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+ 
++	/* Let anyone waiting on the binner pool retry. */
++	wake_up_all(&vc4->job_wait_queue);
++
+ 	/* Release the reference on the binner BO if needed. */
+ 	if (exec->bin_bo_used)
+ 		vc4_v3d_bin_bo_put(vc4);
+diff --git a/drivers/gpu/drm/vc4/vc4_irq.c b/drivers/gpu/drm/vc4/vc4_irq.c
+index 4fdad88e53e10..7d783441ffe26 100644
+--- a/drivers/gpu/drm/vc4/vc4_irq.c
++++ b/drivers/gpu/drm/vc4/vc4_irq.c
+@@ -74,7 +74,7 @@ vc4_overflow_mem_work(struct work_struct *work)
+ 
+ 	bo = vc4->bin_bo;
+ 
+-	bin_bo_slot = vc4_v3d_get_bin_slot(vc4);
++	bin_bo_slot = vc4_v3d_get_bin_slot(vc4, msecs_to_jiffies(500));
+ 	if (bin_bo_slot < 0) {
+ 		drm_err(&vc4->base, "Couldn't allocate binner overflow mem\n");
+ 		goto complete;
+@@ -165,6 +165,10 @@ vc4_irq_finish_render_job(struct drm_device *dev)
+ 	trace_vc4_rcl_end_irq(dev, exec->seqno);
+ 
+ 	vc4->finished_seqno++;
++
++	vc4->bin_alloc_used &= ~exec->bin_slots;
++	exec->bin_slots = 0;
++
+ 	list_move_tail(&exec->head, &vc4->job_done_list);
+ 
+ 	nextbin = vc4_first_bin_job(vc4);
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 63af545a44b34..03589596b7fd9 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -171,46 +171,42 @@ static void vc4_v3d_init_hw(struct drm_device *dev)
+ 	V3D_WRITE(V3D_VPMBASE, 0);
+ }
+ 
+-int vc4_v3d_get_bin_slot(struct vc4_dev *vc4)
++static int bin_slot_try_alloc(struct vc4_dev *vc4)
  {
- 	struct vsock_sock *vsk = vsock_sk(sk);
+-	struct drm_device *dev = &vc4->base;
+-	unsigned long irqflags;
+ 	int slot;
+-	uint64_t seqno = 0;
+-	struct vc4_exec_info *exec;
  
-+	/* Socket buffers may remain in the queue in VMCI datagram mode */
-+	__skb_queue_purge(&sk->sk_receive_queue);
- 	/* Flush MSG_ZEROCOPY leftovers. */
- 	__skb_queue_purge(&sk->sk_error_queue);
+-	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
+-		return -ENODEV;
++	guard(spinlock_irqsave)(&vc4->job_lock);
  
+-try_again:
+-	spin_lock_irqsave(&vc4->job_lock, irqflags);
+ 	slot = ffs(~vc4->bin_alloc_used);
+ 	if (slot != 0) {
+ 		/* Switch from ffs() bit index to a 0-based index. */
+ 		slot--;
+ 		vc4->bin_alloc_used |= BIT(slot);
+-		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+-		return slot;
++	} else {
++		slot = -ENOMEM;
+ 	}
+ 
+-	/* Couldn't find an open slot.  Wait for render to complete
+-	 * and try again.
+-	 */
+-	exec = vc4_last_render_job(vc4);
+-	if (exec)
+-		seqno = exec->seqno;
+-	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
++	return slot;
++}
+ 
+-	if (seqno) {
+-		int ret = vc4_wait_for_seqno(dev, seqno, ~0ull, true);
++int vc4_v3d_get_bin_slot(struct vc4_dev *vc4, long timeout)
++{
++	int slot;
++	long ret;
+ 
+-		if (ret == 0)
+-			goto try_again;
++	if (WARN_ON_ONCE(vc4->gen > VC4_GEN_4))
++		return -ENODEV;
+ 
++	/* If the pool is full, wait for a job to release its slots. */
++	ret = wait_event_interruptible_timeout(vc4->job_wait_queue,
++					       (slot = bin_slot_try_alloc(vc4)) >= 0,
++					       timeout);
++	if (ret < 0)
+ 		return ret;
+-	}
++	if (ret == 0)
++		return -ENOMEM;
+ 
+-	return -ENOMEM;
++	return slot;
+ }
+ 
+ /*
+diff --git a/drivers/gpu/drm/vc4/vc4_validate.c b/drivers/gpu/drm/vc4/vc4_validate.c
+index 205d360a007a2..140a525b9e59d 100644
+--- a/drivers/gpu/drm/vc4/vc4_validate.c
++++ b/drivers/gpu/drm/vc4/vc4_validate.c
+@@ -401,7 +401,7 @@ validate_tile_binning_config(VALIDATE_ARGS)
+ 		return -EINVAL;
+ 	}
+ 
+-	bin_slot = vc4_v3d_get_bin_slot(vc4);
++	bin_slot = vc4_v3d_get_bin_slot(vc4, MAX_SCHEDULE_TIMEOUT);
+ 	if (bin_slot < 0) {
+ 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
+ 			drm_err(dev, "Failed to allocate binner memory: %d\n",
 -- 
 2.53.0
 
