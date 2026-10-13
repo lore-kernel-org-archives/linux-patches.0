@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A7E503BD4;
-	Tue, 13 Oct 2026 12:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4034E503BEB;
+	Tue, 13 Oct 2026 12:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893423; cv=none; b=U8nJhutuj9//PHGzUH9KTDcvrUdwqYoTmpJY+n/a7ZRPMtk0FHze5YCSQKdC1aEb5lIvoTjwSms1TZuCT97z9ZdB+eOk/dOvUdxEb633vA6d6s+rOuT9V+d5lu/uibqpZ4g08PXnAL3KTKHgWK9hHW6OIt+KZSoYLNNTFqI/NKM=
+	t=1791893426; cv=none; b=J6PyaIt0hG5SHU37bc1SdRro+h5Mwrjy0b0/uuQ6sLXSG03iLtU5Aq1cEjGHhG1oYUcvrOOQ3OeDvoFN9u7JXTYVwSK7Hq5flZlyKFtHjJ623PDpCkm4un00yMRVWW9oqBmWWL4Z/c2Iauw51q5XK2D1Q5ji2EOUKFDnLwdEq5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893423; c=relaxed/simple;
-	bh=IdF0yQzlWabAR9TDgohcXrxJwOicStM7/GA2FqITnyQ=;
+	s=arc-20240116; t=1791893426; c=relaxed/simple;
+	bh=p35y9XtTBQ5svzkCyQWPmvgTdqRtZ+m5vPyxxFb+42Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bA/bK3iX2bhkT9oGn2nHJfMwHtX1hmSEgiw2tP/GXuuYgXTFWYjpv/z1UM00o/R8VOlHv36dSsvr1icSwYztit9HqjbEuZaMXlOx1GpMHC8QMHGD9ks+XFO+/FMZytooZRXtv+Oy84CY2o3h9phO3VpGP8dmIsyWtA2w4pw9+SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjJDRmrw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F5F6GNGIouoyWlErRGppG6RG6Gv1qVn4BEh3ATEWpc5JaQIZ0hopSqKfxYpGJ5p9uyZMu9ApBmVIKxX13RBYub61YoV0mqMcxgiB7heHyANUvVwho/vViuh8yn4Ld7JWiqjDxBNCAEJ8IjvbqbMlnYv1iyJoC9nM5ywp8W3kcbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kevuwEOU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjJDRmrw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554BA1F0089A;
-	Tue, 13 Oct 2026 12:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kevuwEOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1AE1F000FF;
+	Tue, 13 Oct 2026 12:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893420;
-	bh=1fJoYoNyqjrDyVOBofG0o9sQBvyikQ1qEGtkswRTVYQ=;
+	s=korg; t=1791893423;
+	bh=D3+Q2Xvu5V1qI87fJE7wqBYd3CiPWAzHYkpxpnfKjlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bjJDRmrwTV/5+JdK11BIiaPVlm3eaYOOBj6QYjB1ZAvpOJGRuLrmhM9FPpJzZcMvC
-	 HkTyqoKayRxCwHTwYjdZjD4+MuxGNC8oRgqQonqHuXIBSXuOMnfMX63Ig7ZJ0bQ4Sx
-	 zfxOFz2yPwhNY2YSqAumqtiGbUK7UVCCrLDHkOsw=
+	b=kevuwEOU5crM8FkLGH5PSIxWxBQ4j1jzN9VKsTa81XeFsP4a5yIxFhJFH+TTz9Y6V
+	 5jYp7fSAkRN2XHTtPIREqNEcQh4Yd1Stqp3dWz6uHM4ggJraNpCH2zhRKdvp780Tw7
+	 Dy7n/BubhnZVqYyU/mdBCdgqOmE44y6n5Gyp3Igo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 203/621] papr-hvpipe: convert papr_hvpipe_dev_create_handle() to FD_PREPARE()
-Date: Tue, 13 Oct 2026 13:33:18 +0200
-Message-ID: <20261013112925.679743162@linuxfoundation.org>
+Subject: [PATCH 6.18 221/621] wifi: cfg80211: enforce HE/EHT cap/oper consistency
+Date: Tue, 13 Oct 2026 13:33:36 +0200
+Message-ID: <20261013112926.105596790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,88 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 6d3789d347a7af5c4b0b2da3af47b8d9da607ab2 ]
+[ Upstream commit cb9959ab5f99611d27a06586add84811fe8102dc ]
 
-Fixes a UAF for src_info as well.
+Xiang Mei reports that mac80211 could crash if eht_cap is set
+but eht_oper isn't. Rather than fixing that for the individual
+user(s), enforce that both HE/EHT have consistent elements.
 
-Link: https://patch.msgid.link/20251123-work-fd-prepare-v4-33-b6efa1706cfd@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 7a4f0846ee6c ("pseries/papr-hvpipe: Fix race with interrupt handler")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 22c64f37e1d4 ("wifi: mac80211: Update MCS15 support in link_conf")
+Link: https://patch.msgid.link/20260603091812.101894-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c | 39 +++++---------------
- 1 file changed, 9 insertions(+), 30 deletions(-)
+ net/wireless/nl80211.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/papr-hvpipe.c b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-index 431f6a3da4c5a..3d8672642c251 100644
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -484,10 +484,7 @@ static const struct file_operations papr_hvpipe_handle_ops = {
- 
- static int papr_hvpipe_dev_create_handle(u32 srcID)
- {
--	struct hvpipe_source_info *src_info;
--	struct file *file;
--	long err;
--	int fd;
-+	struct hvpipe_source_info *src_info __free(kfree) = NULL;
- 
- 	spin_lock(&hvpipe_src_list_lock);
- 	/*
-@@ -511,20 +508,13 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 	src_info->tsk = current;
- 	init_waitqueue_head(&src_info->recv_wqh);
- 
--	fd = get_unused_fd_flags(O_RDONLY | O_CLOEXEC);
--	if (fd < 0) {
--		err = fd;
--		goto free_buf;
--	}
--
--	file = anon_inode_getfile("[papr-hvpipe]",
--			&papr_hvpipe_handle_ops, (void *)src_info,
--			O_RDWR);
--	if (IS_ERR(file)) {
--		err = PTR_ERR(file);
--		goto free_fd;
--	}
-+	FD_PREPARE(fdf, O_RDONLY | O_CLOEXEC,
-+		   anon_inode_getfile("[papr-hvpipe]", &papr_hvpipe_handle_ops,
-+				      (void *)src_info, O_RDWR));
-+	if (fdf.err)
-+		return fdf.err;
- 
-+	retain_and_null_ptr(src_info);
- 	spin_lock(&hvpipe_src_list_lock);
- 	/*
- 	 * If two processes are executing ioctl() for the same
-@@ -533,22 +523,11 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 	 */
- 	if (hvpipe_find_source(srcID)) {
- 		spin_unlock(&hvpipe_src_list_lock);
--		err = -EALREADY;
--		goto free_file;
-+		return -EALREADY;
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 356b612d935f6..ad36fa03c69ee 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -6532,6 +6532,12 @@ static int nl80211_calculate_ap_params(struct cfg80211_ap_settings *params)
+ 			return -EINVAL;
  	}
- 	list_add(&src_info->list, &hvpipe_src_list);
- 	spin_unlock(&hvpipe_src_list_lock);
--
--	fd_install(fd, file);
--	return fd;
--
--free_file:
--	fput(file);
--free_fd:
--	put_unused_fd(fd);
--free_buf:
--	kfree(src_info);
--	return err;
-+	return fd_publish(fdf);
+ 
++	if (!!params->he_cap != !!params->he_oper)
++		return -EINVAL;
++
++	if (!!params->eht_cap != !!params->eht_oper)
++		return -EINVAL;
++
+ 	return 0;
  }
  
- /*
 -- 
 2.53.0
 
