@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0319D4EE842;
-	Tue, 13 Oct 2026 12:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC324F3937;
+	Tue, 13 Oct 2026 12:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894702; cv=none; b=S6NMfZeEzMIdwxqW8Er8xrVnqfa5RBUv00snVTYEKobCnwKyFPooim1N6gBUQa4UNMS5klwvqK6YGaij80o0o8x8BkYmZSth/PL6X5ro6cKGg21m0qgbQtUoXzprtiNkf5nMEoJrshp0Ye0y/Xb5y4Ewb+RudCVBrpJCymuAjxU=
+	t=1791894705; cv=none; b=ZRzevzZolGnlwJFb7+zdpKVNPoPJ2fULjqw23PiWCZhsr23V2EAgv5edfYlWDPoVs96lfxortHM7uzUd7jZN3g6gl21341H4wlYoriQLhtUcSo11UDRO0Dh6Ngbcb3eDhZmhfAUdVIcPmzV24ks1XcpxHtTNTJMS6e0SbT0qddM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894702; c=relaxed/simple;
-	bh=tlYd7yucW9JfIylUUhU3QjcNSwQ3mmn3VZKZyWtTZ1Q=;
+	s=arc-20240116; t=1791894705; c=relaxed/simple;
+	bh=5T0SJqiEIEUlLb3hpHQULlThG1mCHn8CyI9LPQ4EKuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/UCvpitGjIJB+/biua/Codw/Angz7sD4d7ESVO00Tur3fhYjBxdZkGqcovQmQW2a8zyBQla85c61KkR82XzIzDU9pf8JOz4/Lu8cV3+DbOriCVhT5kU/kBV7SFhLgl6w8NNz5F7aqB1I/j94DCOYDP1GdmdqDKghhOMf44+Z5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OB5oOo5Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=asMEU/7jRmilCIFjMR0j3U/TcLRET8heXm8+XWLs7IlAHuQdUJkANqDFYAdpGWBiH+cSJXYx4d0oaopx9uI8S/p9DqTF3xPHXOB+kW2vKPSqKk4pWwlA4qCkL4T6RUin5xzruS4xtx+RvjhYe3nOP4QyeHH1nQyIHI06jmrPbeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erf43IiK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB5oOo5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AC01F00899;
-	Tue, 13 Oct 2026 12:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erf43IiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FFA1F000FF;
+	Tue, 13 Oct 2026 12:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894700;
-	bh=r+k7x/V2xfzZgw0Lh7Y6n+Iv79noryFrDBQ5yj0QXI4=;
+	s=korg; t=1791894703;
+	bh=IJkJo0eFyOZndA08L3ksP4kEfWnN8T7XF9r7vM8Lrhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OB5oOo5QrX1Dsy57scc/euPnzSY3zUI2YgZbHIjiKsa8bmt60bnz3cqjMpRC1X2D0
-	 y/g5aITcM1KNydNFvC6cfV+8WR/N0GObc7D4mxh/gchpbI0oVhVt+foosvJ56atccZ
-	 CoPsh1II9GIpsb99RVL4L82KyNSMsxc7D+P7W67U=
+	b=erf43IiKbDjZXwiwLHOx1Kz/Xc2m5UjVHzRVWeZTNVCYDODDdJ9hvSaI7XyFJZX60
+	 jbeCkr67QlXrUzpDO51fkN8keIMF1qN7uKQZC984JrgO1AK6ypbTgQk3GYcUzdFcUU
+	 isjl+TYSKWPaMrA/UVhQNJ/yd5qg2bHP+WfSY+Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 027/497] of/overlay: put property on deadprops only after changeset add succeeds
-Date: Tue, 13 Oct 2026 13:33:14 +0200
-Message-ID: <20261013112908.529703383@linuxfoundation.org>
+Subject: [PATCH 6.12 028/497] of/overlay: only treat a positive changeset id as registered
+Date: Tue, 13 Oct 2026 13:33:15 +0200
+Message-ID: <20261013112908.554248110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,50 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 814f2da6995772c07a7c9c2cc6028b6e3f3ecc9c upstream.
+commit 44081d708b5b885487bac792db78324b7b4c267d upstream.
 
-add_changeset_property() links a new property of a not-yet-live
-target node into the node's deadprops list before handing it to
-of_changeset_add_property(). If that fails, the error path frees the
-property but leaves the freed pointer linked in deadprops, and
-of_node_release() frees it a second time when the aborted overlay's
-node is released.
+of_overlay_fdt_apply() stores the idr_alloc() return value in
+ovcs->id before checking it. On failure the stored id is negative,
+free_overlay_changeset()'s "if (ovcs->id)" check passes, idr_remove()
+is called with a negative id and list_del() runs on ovcs->ovcs_list,
+which is not initialized until after the id allocation. An allocation
+failure at that point dereferences NULL.
 
-Record the changeset entry first and link the property into deadprops
-only on success. of_changeset_add_property() never looks at the
-node's property lists, so the order of the two steps is otherwise
-immaterial, and the error path frees a property that nothing
-references.
+Make free_overlay_changeset() treat only a strict-positive id as
+registered. The rest of the function already copes with a
+partially-initialized ovcs, so the error path stays a plain
+goto err_free_ovcs.
 
-Fixes: f96278810150 ("of: overlay: set node fields from properties when add new overlay node")
+Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
 Cc: stable@vger.kernel.org
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Assisted-by: Claude:claude-fable-5 [Claude Code]
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-4-02754604805a@nexthop.ai
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-5-02754604805a@nexthop.ai
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/overlay.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/of/overlay.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/of/overlay.c
 +++ b/drivers/of/overlay.c
-@@ -353,12 +353,13 @@ static int add_changeset_property(struct
- 		return -ENOMEM;
+@@ -859,7 +859,8 @@ static void free_overlay_changeset(struc
+ 	if (ovcs->cset.entries.next)
+ 		of_changeset_destroy(&ovcs->cset);
  
- 	if (!prop) {
--		if (!target->in_livetree) {
-+		ret = of_changeset_add_property(&ovcs->cset, target->np,
-+						new_prop);
-+		/* the detached node owns the property until the apply */
-+		if (!ret && !target->in_livetree) {
- 			new_prop->next = target->np->deadprops;
- 			target->np->deadprops = new_prop;
- 		}
--		ret = of_changeset_add_property(&ovcs->cset, target->np,
--						new_prop);
- 	} else {
- 		ret = of_changeset_update_property(&ovcs->cset, target->np,
- 						   new_prop);
+-	if (ovcs->id) {
++	/* a failed idr_alloc() leaves its negative error in ovcs->id */
++	if (ovcs->id > 0) {
+ 		idr_remove(&ovcs_idr, ovcs->id);
+ 		list_del(&ovcs->ovcs_list);
+ 		ovcs->id = 0;
 
 
