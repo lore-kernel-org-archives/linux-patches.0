@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747244F3EB0;
-	Tue, 13 Oct 2026 12:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548004F4739;
+	Tue, 13 Oct 2026 12:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894972; cv=none; b=NltNAwLKLlZe7T7dV+t6Hd6YPWahO0To7ChQkFi158zTrdfXLlnwnw9cvE7p7ozTVUw76nf5HZ7pl81EGmSvGM+KLKh9UOgeGPJdlU8K2dLJ3WrPWIlOkULRfXKU2V6G1Za2ggVq6IPtAisNHqzOGrv0ZVTCQP3VvvDlhU3pHHY=
+	t=1791894975; cv=none; b=QshXwLOVWqg9GhIBy4IXFc1HvJwkRpQ05LplOnDF/ntrvaL01EBw9m0uVvGtFeSVZY7I5bvvfsf2JONmqtKZs0skRN/671quZz5y7GErIsVyD//L5ijDP46sUF56p95c8QAZKpTDC6NWiMWeTx2tsD5jVjzlNz0nBxAEL+7FkNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894972; c=relaxed/simple;
-	bh=bzDdk9cgofP1OahgFRCxMadDiCGwkkUp5MO+ksWCFtA=;
+	s=arc-20240116; t=1791894975; c=relaxed/simple;
+	bh=57ZpmSDVZZtZD+zsI8lWXu3SL+T/KzV3GNNzQ5qI60M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=heMpskt/mnu4h3vS/eHKYhwGtW2TxhYVk+zu3h6u93FRQ++rTvsPFKRELvfKbDyp4oDXobJ/m3k0PVlo2SygKxC4J0i35CUbC1JQs5gWCOQRS/iUeHhf64iLEfVvQut6Oe7rlKGt4vpXMDnXhwgR3Iy3P97xo17mU5QjPiLEH0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlA/T9S1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CXaVU8Y+BQOPPevFxdJ7VKtKjLZ1ADttPARKbF5SOBuyZ7VY6YRHkwqer9lkuVIMOfaCNlWEjehM2dhq3/Vam3S3BWh1UG4EqVs+a6AtTERWBJnx7Y+wBsenM6Rf/PZXcekWMXi1L0g1LCPLgTIkkKzRc6lerfSORuXCmK+552M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGg0yzar; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlA/T9S1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34231F00898;
-	Tue, 13 Oct 2026 12:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGg0yzar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7CA1F00898;
+	Tue, 13 Oct 2026 12:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894971;
-	bh=uHPg40WvYJDYY/BoxX89HpbA9dm7XTH/sYfaUV3pbQI=;
+	s=korg; t=1791894974;
+	bh=NSLSWvzynReU/7XpWg+wrZnGxi82wHHTrqacfyv0ejU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlA/T9S1mqoDb1DtY8CBE6UdIHqa+d1yWF7dSKdEtZ5kN8ix4XGD6FvLcyxdAoMs5
-	 t36aHWmFTB8g158mohEVC7VQr6/VBzE7iK0QyR6e0Ng0Vhzx5uOfPWbqLxba1Q7gLe
-	 vAhMk+VWApndeXbSO0CGxv46ZPSLoTMInj8reFH0=
+	b=qGg0yzarbhdH4+mr4pigNgAWLaZ8ilRgnYcFMIY1tPXNbm+W+7LUOwUPiYLNE4Juh
+	 xtCi7yoIyghOoI5I2LvSCejAXTC9cdnT2LNTeT60TRC/W11ogGtGcbgPYicO8PMDOE
+	 VSgLXOMhhWww3cxVwUBZauHCD7gEpbPdfdMUInBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 117/497] drm/radeon: Read the VRAM VBIOS signature with readb()
-Date: Tue, 13 Oct 2026 13:34:44 +0200
-Message-ID: <20261013112910.667354161@linuxfoundation.org>
+	Haojie Li <lihaojie@kylinos.cn>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.12 118/497] drm/mediatek: Add missing IS_ERR check for ovl_adaptor platform device
+Date: Tue, 13 Oct 2026 13:34:45 +0200
+Message-ID: <20261013112910.692093230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Haojie Li <lihaojie@kylinos.cn>
 
-commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
+commit bce7698e2e6565bb765bd0522337f29f5f312624 upstream.
 
-igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
-__iomem load, which faults on sparc64 before the copy runs at all.
-radeon_read_bios() already reads its two signature bytes with
-readb() ahead of its own copy; use the same accessor here, keeping
-the check before the allocation.
+platform_device_register_data() can fail and return an ERR_PTR, but the
+return value is used without checking, leading to an invalid pointer
+being stored in ddp_comp[].dev and passed to component_match_add() and
+mtk_ddp_comp_init(), which could result in a kernel crash.
 
-Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
+Add an IS_ERR() check to jump to the error handling path on failure.
+
+Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
 Cc: stable@vger.kernel.org
+Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260825100845.438893-1-lihaojie@kylinos.cn/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -49,6 +49,7 @@
- static bool igp_read_bios_from_vram(struct radeon_device *rdev)
- {
- 	uint8_t __iomem *bios;
-+	uint8_t val1, val2;
- 	resource_size_t vram_base;
- 	resource_size_t size = 256 * 1024; /* ??? */
- 
-@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
- 		return false;
- 	}
- 
--	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
-+	val1 = readb(&bios[0]);
-+	val2 = readb(&bios[1]);
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -873,6 +873,9 @@ static int mtk_drm_probe(struct platform
+ 							    PLATFORM_DEVID_AUTO,
+ 							    (void *)private->mmsys_dev,
+ 							    sizeof(*private->mmsys_dev));
++		if (IS_ERR(ovl_adaptor))
++			return PTR_ERR(ovl_adaptor);
 +
-+	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
- 		iounmap(bios);
- 		return false;
- 	}
+ 		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev = &ovl_adaptor->dev;
+ 		mtk_ddp_comp_init(dev, NULL, &private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR],
+ 				  DDP_COMPONENT_DRM_OVL_ADAPTOR);
 
 
