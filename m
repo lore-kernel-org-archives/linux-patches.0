@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A4F4E4302;
-	Tue, 13 Oct 2026 11:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CBE4EE84D;
+	Tue, 13 Oct 2026 11:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892565; cv=none; b=hnictvd0dXD0H0eDtuNHHp9OowP+3y1OQetxjTgc2vi38THkZIWasnqw1bkx0HF9or+yHM4oYohjHtiZ21mYHN5O8TCYn8LEMh6mKF1aUBhXSwt7YameUALWSoezDq05FENgG9l1BTOBC3tRtFOZdeZS8T3D8lREZjldhjpRlPs=
+	t=1791892568; cv=none; b=PkR1SyJQnqj+ltxgjxJsAgK7eLawjf82f/gu9VJi4RfUjXcxH/ehylPYGepa8/nJ5IU/MgwbOu0fJ/urbu11Jx+Oabk+6Mn2NJugSZEy4lwK2i7IKgenXgMjQVUyhGbUnUC0ZWyjEFqhGJbig5Ek2SCXa6j/NIVH8eUaQMUb+pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892565; c=relaxed/simple;
-	bh=lITi+6kCEcFwGc/LxgwiVhcTHSokd3Og847Kf7bvrUk=;
+	s=arc-20240116; t=1791892568; c=relaxed/simple;
+	bh=5NczHcSdVkoupB+Q++tOo26l9vKFIQelimtosM7Bx6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sy3ksrJKVzIa8FBUb/rzEpFHwXCFwhnRzYxmAcW1qCJb1qAZQcIAtsPBR9ze3mVD8NgMULP36dlQAWzdRttLt0CEWvJ2lmyvu3hgtTbVWqIDd5/8qZYEzN9XKvqXrW01xaMBPQZ4JlL4ylFMR727wcx+mnZO1XzWFaLDm0cOR2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6aYNjPc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dJ7oR+l5Ue0VRwwGyqNOEC7+Z97tuJ9NxNHVQI/llMfoMecbiAH3v1a2PcU13T2gji8Pzd6sbaTYNf00zHk6X+JxuJSy2IBA+VdvZE5OtGxmTcbrKGRSOt7QPFt3gd9gw2UmZ2eHjYe32lb4lecVNCrBBF6TIZdTBqb0OglfiFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkjeGBTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6aYNjPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D994C1F000FF;
-	Tue, 13 Oct 2026 11:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkjeGBTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023A81F00893;
+	Tue, 13 Oct 2026 11:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892563;
-	bh=8N5sc5FQqp+zlAb3726RcphhnmPaNKYk8UxbjZ/c/jE=;
+	s=korg; t=1791892566;
+	bh=1sZf4n8g8SYfe8iZ1uz47AdNx40Nwa/EnA3Hmb3TCNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6aYNjPcerPAqWqJ0sxzd3JUu0lJDH155eWyKFNLO1e6lyNMVWvGFkXeno0J2/AHQ
-	 JQ2lUY0H9H4duYr4Ch2SBwji3p67P94YTd401C4nSOslvEdf4Lwa4vCOc4NnypTrs/
-	 suBPl0Sc57l+kKoO1VjXLXrL1vIJjUP6gVs4peQU=
+	b=MkjeGBTtHK9qHNRN5KaDI2sOxWMtVH75Sh+vOKcxxw+I2ReisqpurGbVwk/fb1ALs
+	 GnDq6sVCEAdknN6hgc7/3DCUMC1ByjThzMsBiQDW/rRYN/6Pvt4PLghLmeCKlesCkD
+	 9siV0SXrbc0GhKGJ+OC5XE5nFxfQC2gZZqSJJ360=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <quwenruo.btrfs@gmx.com>,
-	Qu Wenruo <wqu@suse.com>,
 	Yang Xiuwei <yangxiuwei@kylinos.cn>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 213/281] btrfs: unlock inode and extent in caller when io_uring read extent fails
-Date: Tue, 13 Oct 2026 13:38:49 +0200
-Message-ID: <20261013112900.331019394@linuxfoundation.org>
+Subject: [PATCH 7.2 214/281] btrfs: dont stash io_uring encoded data across -EAGAIN
+Date: Tue, 13 Oct 2026 13:38:50 +0200
+Message-ID: <20261013112900.355510982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -55,67 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit b6e8add5d79d1f6f819a054c833bab452bd7365d ]
+[ Upstream commit 51562a8cb11628d3a5e105b4c347ec5473e5745f ]
 
-btrfs_uring_read_extent() runs only after btrfs_encoded_read() has taken
-the inode shared lock and the extent lock.  On failure it used to unlock
-in out_fail, and a pages-array allocation failure returned -ENOMEM
-without unlocking at all.
+Returning -EAGAIN while leaving btrfs_uring_encoded_data in the cmd PDU
+leaks if the request is cancelled or the ring exits before reissue.
+io_uring does not free driver PDU allocations on cleanup.
 
-Unlock in the caller instead on all failure returns, matching the
-copy_to_user() error path.  The deferred -EIOCBQUEUED path still unlocks
-in btrfs_uring_read_finished().
+Write: io_queue_sqe() always issues with IO_URING_F_NONBLOCK first, so
+return -EAGAIN before allocating and free data on every exit.
+
+Read: free on nowait -EAGAIN too; only -EIOCBQUEUED keeps the allocation
+for btrfs_uring_read_finished().
 
 Fixes: 34310c442e17 ("btrfs: add io_uring command for encoded reads (ENCODED_READ ioctl)")
-Suggested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+Fixes: e32dcdb0af9f ("btrfs: add io_uring interface for encoded writes")
 Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/btrfs/ioctl.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 0ac2f449134a0..1c2e17bade5e5 100644
+index 1c2e17bade5e5..833052306964b 100644
 --- a/fs/btrfs/ioctl.c
 +++ b/fs/btrfs/ioctl.c
-@@ -4559,7 +4559,7 @@ static void btrfs_uring_read_finished(struct io_tw_req tw_req, io_tw_token_t tw)
- 	size_t page_offset;
- 	ssize_t ret;
+@@ -4792,7 +4792,7 @@ static int btrfs_uring_encoded_read(struct io_uring_cmd *cmd, unsigned int issue
+ 	ret = btrfs_encoded_read(&kiocb, &data->iter, &data->args, &cached_state,
+ 				 &disk_bytenr, &disk_io_size);
+ 	if (ret == -EAGAIN)
+-		goto out_acct;
++		goto out_free;
+ 	if (ret < 0 && ret != -EIOCBQUEUED)
+ 		goto out_free;
  
--	/* The inode lock has already been acquired in btrfs_uring_read_extent.  */
-+	/* The inode lock has already been acquired in btrfs_encoded_read(). */
- 	btrfs_lockdep_inode_acquire(inode, i_rwsem);
+@@ -4834,8 +4834,10 @@ static int btrfs_uring_encoded_read(struct io_uring_cmd *cmd, unsigned int issue
+ 		add_rchar(current, ret);
+ 	inc_syscr(current);
  
- 	if (priv->err) {
-@@ -4625,7 +4625,6 @@ static int btrfs_uring_read_extent(struct kiocb *iocb, struct iov_iter *iter,
- 				   struct iovec *iov, struct io_uring_cmd *cmd)
- {
- 	struct btrfs_inode *inode = BTRFS_I(file_inode(iocb->ki_filp));
--	struct extent_io_tree *io_tree = &inode->io_tree;
- 	struct page **pages = NULL;
- 	struct btrfs_uring_priv *priv = NULL;
- 	unsigned long nr_pages;
-@@ -4681,8 +4680,6 @@ static int btrfs_uring_read_extent(struct kiocb *iocb, struct iov_iter *iter,
- 	return -EIOCBQUEUED;
+-	if (ret != -EIOCBQUEUED && ret != -EAGAIN)
++	if (ret != -EIOCBQUEUED) {
+ 		kfree(data);
++		bc->data = NULL;
++	}
  
- out_fail:
--	btrfs_unlock_extent(io_tree, start, lockend, &cached_state);
--	btrfs_inode_unlock(inode, BTRFS_ILOCK_SHARED);
- 	kfree(priv);
- 	for (int i = 0; i < nr_pages; i++) {
- 		if (pages[i])
-@@ -4825,6 +4822,8 @@ static int btrfs_uring_encoded_read(struct io_uring_cmd *cmd, unsigned int issue
- 					      data->iov, cmd);
- 		if (ret == -EIOCBQUEUED)
- 			goto out_acct;
-+		btrfs_unlock_extent(io_tree, start, lockend, &cached_state);
-+		btrfs_inode_unlock(inode, BTRFS_ILOCK_SHARED);
+ 	return ret;
+ }
+@@ -4864,6 +4866,11 @@ static int btrfs_uring_encoded_write(struct io_uring_cmd *cmd, unsigned int issu
+ 		goto out_acct;
  	}
  
- out_free:
++	if (issue_flags & IO_URING_F_NONBLOCK) {
++		ret = -EAGAIN;
++		goto out_acct;
++	}
++
+ 	if (!data) {
+ 		data = kzalloc_obj(*data, GFP_NOFS);
+ 		if (!data) {
+@@ -4932,11 +4939,6 @@ static int btrfs_uring_encoded_write(struct io_uring_cmd *cmd, unsigned int issu
+ 		}
+ 	}
+ 
+-	if (issue_flags & IO_URING_F_NONBLOCK) {
+-		ret = -EAGAIN;
+-		goto out_acct;
+-	}
+-
+ 	pos = data->args.offset;
+ 	ret = rw_verify_area(WRITE, file, &pos, data->args.len);
+ 	if (ret < 0)
+@@ -4962,8 +4964,8 @@ static int btrfs_uring_encoded_write(struct io_uring_cmd *cmd, unsigned int issu
+ 		add_wchar(current, ret);
+ 	inc_syscw(current);
+ 
+-	if (ret != -EAGAIN)
+-		kfree(data);
++	kfree(data);
++	bc->data = NULL;
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
