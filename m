@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6171A9FA8;
-	Tue, 13 Oct 2026 12:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DEF1C84BC;
+	Tue, 13 Oct 2026 12:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895076; cv=none; b=g2eqKSS4L5brWDExk/98lHCDuhj0QwiqJ1kjKom9j7cDNy+DOIz20TCYBP1kjdxsJc6P4m0oex89anUMqiII7iIoMu+iUPGR0YW2U+vTk/FLaS9LyWKCr6VOWC/5wDf6lvKdDV/YL+Duna5HEp+ecwh9Gk0rExjX+Mh/qT96k3I=
+	t=1791895080; cv=none; b=e4b1VM5UJJo6/jdGmLWahztJmZClTWjT2wK+taqW4IkMJPRA3bAmYtLRGYsCc7eFDZf09bL6XD4ap5HNHRXoDMq74/76X0PlzqYZKEn1iRcXavE/l2r7O26ensOxhKU5FPF+yoNmbjXIeK6yGWclsEqTH38q6trPdWowiBSYytA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895076; c=relaxed/simple;
-	bh=j78MpLB2sHFhrojqvWAwRdXkoV2kJ3+byntFeLAT92U=;
+	s=arc-20240116; t=1791895080; c=relaxed/simple;
+	bh=0YcARGfen9QuIVt9GvgnGBhBYusFk2QKaD6J59kc0tE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P39PxbvlJdz2s8DC+8wrv3mQT9ALbgkqExJfB7mdA2z0uZsbxa5YAdfhwmIKwpL8QVOg56BDb952mt0h7lcrOdG5uCUKpk92SSg6QrxAEI4ioqgzGzxuiiV7q/J82PnIizdFV2+R5Dk8n1/nVEDz5r9wI41bDW1SPnJa8NolBkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ecnay2hb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPQ4utdAazwDoybIvSyTGIWiDDzrBWi0slH3HkSnO92/Bf62Ihw7f6RSrDVaoMAeRktQUYWjTsnddhdEahtC31bVtVV/2RS1lauSdRNKfo/AnGB7VzwfEPSTxtcGBOEIdXU/5ysRqzDZUthgbWy+wUM0tSwsav5T/0jjJ1hReUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L25VBnm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ecnay2hb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A0B1F000FF;
-	Tue, 13 Oct 2026 12:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L25VBnm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1111F000FF;
+	Tue, 13 Oct 2026 12:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895075;
-	bh=6Wk83Na992VcwFsrsnk+zJZ274ubqnoJV5LlzGi2tzE=;
+	s=korg; t=1791895078;
+	bh=dTNkglNI0tQbIL4wHEG25tOb4BFqdFBFJDzIe6pIjNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ecnay2hbV31d8FIIz5h2qGeqr5Lm3dYsZPRXxGvJQc7GWn4DCJB7f+D+li1EcpP9S
-	 /6OsH+sQ9Eos4PQ5yBw4RlNW+IxRdxHg7Y3xGZc4yxjqHEzclQKXC/jHyy6LDUi3qM
-	 TmhfKIyK7mk50X9+N7y3jGrq0Al+MAKRIA3c7RVo=
+	b=L25VBnm9ZkFBKQLLfV21iEMf6c6CcO9m46seoHonree1xHh4DUUKysi+5MerE+HsH
+	 QLQIZZgIMSP3W1JsSB7VX8mPuSkHErD23QgBaoIRFl7gNkO0DSg0k7T/5oqrWLH7ZF
+	 Wti3r4n788vKbkWqU4VSQAjbVS6jdQn+tYXp41I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 153/497] usb: typec: tipd: fix uninitialized typec_partner_desc in tps6598x_connect()
-Date: Tue, 13 Oct 2026 13:35:20 +0200
-Message-ID: <20261013112911.517985583@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 154/497] usb: typec: ucsi: glink: fix use-after-free of ucsi on remove
+Date: Tue, 13 Oct 2026 13:35:21 +0200
+Message-ID: <20261013112911.543456690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,51 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit c4b27b3605788bbf9e4251f3cd4ab94645ab036f upstream.
+commit 63b269ec537dc0fd26d0bd64872c26860d108c9d upstream.
 
-tps6598x_connect() passes a stack-allocated typec_partner_desc to
-typec_register_partner() after initializing only usb_pd, accessory and
-identity.
+The pmic_glink client is released by the devres cleanup, which runs
+after pmic_glink_ucsi_remove() has returned, so its notification
+callbacks can queue work until then. Work that runs after
+ucsi_unregister() has been called touches freed state: it dereferences
+the connector array that ucsi_unregister() freed, or registers and
+unregisters the instance a second time.
 
-typec_register_partner() copies attach and deattach from the descriptor
-into the partner. With those fields left unset, garbage function pointers
-may be stored and later invoked from typec_partner_link_device() when a USB
-device is linked to the port. Uninitialized pd_revision and usb_capability
-similarly leak stack data through partner sysfs.
+Disable both work items with disable_work_sync() before unregistering,
+and unregister only if the instance is still registered.
 
-Zero-initialize the descriptor so optional callbacks remain NULL and the
-remaining fields are zero.
+This issue was found by an in-house static analysis tool.
 
-Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
-Cc: stable <stable@kernel.org> # 5.15+
+Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Link: https://lore.kernel.org/r/20260227190430.889-1-nathan.c.rebello@gmail.com
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260906131942.83153-2-radhey.shyam.pandey@amd.com
+Link: https://patch.msgid.link/20260908060216.616045-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_glink.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -268,7 +268,7 @@ static void tps6598x_set_data_role(struc
- 
- static int tps6598x_connect(struct tps6598x *tps, u32 status)
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -297,6 +297,10 @@ static void pmic_glink_ucsi_destroy(void
  {
--	struct typec_partner_desc desc;
-+	struct typec_partner_desc desc = { };
- 	enum typec_pwr_opmode mode;
- 	int ret;
+ 	struct pmic_glink_ucsi *ucsi = data;
  
-@@ -279,7 +279,6 @@ static int tps6598x_connect(struct tps65
++	/* Drain the work items before ucsi_destroy() frees the ucsi instance */
++	cancel_work_sync(&ucsi->notify_work);
++	cancel_work_sync(&ucsi->register_work);
++
+ 	/* Protect to make sure we're not in a middle of a transaction from a glink callback */
+ 	mutex_lock(&ucsi->lock);
+ 	ucsi_destroy(ucsi->ucsi);
+@@ -401,8 +405,15 @@ static void pmic_glink_ucsi_remove(struc
+ {
+ 	struct pmic_glink_ucsi *ucsi = dev_get_drvdata(&adev->dev);
  
- 	desc.usb_pd = mode == TYPEC_PWR_MODE_PD;
- 	desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
--	desc.identity = NULL;
+-	/* Unregister first to stop having read & writes */
+-	ucsi_unregister(ucsi->ucsi);
++	/* Callbacks can queue work until devres releases the client */
++	disable_work_sync(&ucsi->notify_work);
++	disable_work_sync(&ucsi->register_work);
++
++	/* register_work may have unregistered the instance already */
++	if (ucsi->ucsi_registered) {
++		ucsi->ucsi_registered = false;
++		ucsi_unregister(ucsi->ucsi);
++	}
+ }
  
- 	if (desc.usb_pd) {
- 		ret = tps6598x_read_partner_identity(tps);
+ static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
 
 
