@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9044F3EC2;
-	Tue, 13 Oct 2026 11:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E5138B125;
+	Tue, 13 Oct 2026 11:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892408; cv=none; b=Wm64apq/jr0RBUkiHir9a3b57pvUUTXJqa0F7rGDJrn6RMDfWhF+AGQUXTb/Ytm5ocPcbiqNZKGSrvXRDrwZ/Dm3xF1RKauTQ/mzUig0Y+MU1E3Ht0RZrio2aQTV/71D2jJ3mYPGUtZOe7mGU4hkeoqcYvsbDfpBXz4kubCGjUo=
+	t=1791892411; cv=none; b=rfpNtRc/uxh0RvAsxb/NNutvqDp4FEH4r6aYIr+Bm+vqj0qeoof/zqxGQ7HXqOKRWHVzcVqbiehpgGkp82sNO80OqNztz5vCP2hsEA6WX+woBkfFvwS1VaFjYpayTAgcA1ZEYtikqStLQ5Ua9176BAVo+xIrqizDcxmBAzbqIwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892408; c=relaxed/simple;
-	bh=+BJIqyGXCkD1zJrNQ7l+vexwhU+xS5vslzKVWZ3F90c=;
+	s=arc-20240116; t=1791892411; c=relaxed/simple;
+	bh=R8lCoY9zsQj+2JHcsNJ0gOH0Dxu48PmE9JBr/rQOqc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wlh7+4Y3Ljub26W7+qM3FwqBUS37K8EZYlLVw6QCA6Q9jai+mp/dMrHL0mF6aaKFUeZ5JStLldS7qtRxd51q0y6zd4IIi1P1dUYoYsd0PVyGslovNszHSs9m1eEFczTHA9ShSm9JqS6rlkiLxqxmyK7D1HesqezsMOeGjykeBGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpjQpt5A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UC4QbVCnhmvKhYnIPlXRty7W2gBpQOHUHpL/t/qv9j923CO0vtBxCZZBhzJlI6yIMQXNBsdUDBSWZbuSZ1YHHUevSe0HiRA3Ho/vFsVMtdTLYAvc1zNy98K5VqSfS4ogYixTjwd39hsLXbHvhxDE7Ts8ruckwyPTjlJd/cVQekw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfN0d1xR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpjQpt5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BEA1F000FF;
-	Tue, 13 Oct 2026 11:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfN0d1xR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBCD1F000FF;
+	Tue, 13 Oct 2026 11:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892407;
-	bh=tyrpXM3BsMXPBZgEfvI3gQh3kk2lFfAV6BFlZRd3aw8=;
+	s=korg; t=1791892410;
+	bh=5kDnVc1z+P/3uWbN36PZh6KdHqM4Lgn5ALjJ6G/AQig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PpjQpt5A/O/EUsHWkaiFT0Ijpruk4Iro5Ewz8ma/9fiX300qGuvp6nxmgdoBXXKxI
-	 MFFi2s1Q6qw1JoujdU5CoLpKzpU5xF1v94ugJoTLIgYLTSurV3M02wQRaY9q3OqkJw
-	 o9YmPKJCi9LPP9W+IyiooW3mKn/tybV3ikENo86s=
+	b=tfN0d1xRrRupYhEslTZBTL0RareA+TJrLySk+3VdE2btCvr8Qq1iN6GrsUK1fXa0w
+	 fsULuZHhIcGbbwhQanKgpsyLV30YBI3IImt1vE1RrYLkJT7eZ431acZ6xqoUnEZlnT
+	 mCkrOww1xRRNzX9zNsZ+eVc2muIyogOX6oeCtaDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 7.2 126/281] drm/i915/gem: Prevent overstepping exec array boundary
-Date: Tue, 13 Oct 2026 13:37:22 +0200
-Message-ID: <20261013112858.207195590@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 162/281] namespace: check the mounts before reading their parents in pivot_root()
+Date: Tue, 13 Oct 2026 13:37:58 +0200
+Message-ID: <20261013112859.096859435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,57 +49,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
+commit 6b7c001eb5857fa09041f47673666060a2e5fc1c upstream.
 
-It is possible for eb_relocate_parse_slow() to call kvfree() on
-entries outside the original exec array during following
-scenario inside eb_relocate_parse_slow():
+path_pivot_root() reads the parents of new_root and of the caller's root
+and checks whether they are shared before it checks that either mount is
+in the caller's mount namespace. Only namespace_sem is held. That's fine
+for a mount that is in the caller's mount namespace.
 
-1) eb_copy_relocations() allocates as many as eb->buffer_count
-   copies for exec entries;
-2) eb_parse() appends up to two VMAs, right after incrementing
-   eb->buffer_count;
-3) cleanup under "out" label uses this incremented buffer_count
-   to release relocation pointers from exec array via kvfree(),
-   not from VMA array.
+But new_root can be a file descriptor to a mount that has been unmounted
+and that only the file descriptor keeps alive. If that mount stayed
+attached to its parent when it was unmounted nothing pins the parent for
+it. The final mntput() of the parent unhooks the children under
+mount_lock alone and frees the parent afterwards:
 
-To amend this problem, ensure that relocation cleanup uses the
-original exec object count, excluding the VMAs appended by the
-command parser.
+  pivot_root()                     close(fd), last ref on the parent
+  ------------                     ---------------------------------
+  ex_parent = new_mnt->mnt_parent
+                                   mntput_no_expire_slowpath()
+                                     __umount_mnt(new_mnt)
+                                   cleanup_mnt()
+                                     call_rcu()
+  IS_MNT_SHARED(ex_parent)
 
-Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Cc: stable@vger.kernel.org # 5.10+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
-(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+  BUG: KASAN: slab-use-after-free in path_pivot_root+0xf1a/0x1840
+  Read of size 4 at addr ffff8881047382f8 by task pivot_widen/157
+   path_pivot_root+0xf1a/0x1840
+   __x64_sys_pivot_root+0x165/0x190
+
+The same goes for the caller's root via chroot(). Both outcomes of the
+check end in EINVAL so nothing but the read itself goes wrong. It's the
+same thing commit bb4609405752 ("statmount: read the parent of an
+unmounted mount under mount_lock") fixed for statmount().
+
+Check that both mounts are in the caller's namespace before their
+parents are read. Every path returns EINVAL either way.
+
+Fixes: e0c9c0afd2fc ("mnt: Update detach_mounts to leave mounts connected")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-10-be34c83956ae@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/namespace.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -1766,6 +1766,7 @@ static int eb_reinit_userptr(struct i915
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4759,14 +4759,15 @@ int path_pivot_root(struct path *new, st
  
- static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb)
- {
-+	const unsigned int count = eb->buffer_count;
- 	bool have_copy = false;
- 	struct eb_vma *ev;
- 	int err = 0;
-@@ -1868,7 +1869,6 @@ err:
- 
- out:
- 	if (have_copy) {
--		const unsigned int count = eb->buffer_count;
- 		unsigned int i;
- 
- 		for (i = 0; i < count; i++) {
+ 	new_mnt = real_mount(new->mnt);
+ 	root_mnt = real_mount(root.mnt);
++	/* only a mounted mount has a parent that namespace_sem pins */
++	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
++		return -EINVAL;
+ 	ex_parent = new_mnt->mnt_parent;
+ 	root_parent = root_mnt->mnt_parent;
+ 	if (IS_MNT_SHARED(old_mnt) ||
+ 		IS_MNT_SHARED(ex_parent) ||
+ 		IS_MNT_SHARED(root_parent))
+ 		return -EINVAL;
+-	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
+-		return -EINVAL;
+ 	if (new_mnt->mnt.mnt_flags & MNT_LOCKED)
+ 		return -EINVAL;
+ 	if (d_unlinked(new->dentry))
 
 
