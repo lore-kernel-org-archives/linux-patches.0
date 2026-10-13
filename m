@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACABA4F3EAF;
-	Tue, 13 Oct 2026 11:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C574F3EDE;
+	Tue, 13 Oct 2026 11:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892600; cv=none; b=IAmZn/YbYTXbJiGgmoeDCtRj8lSWoZlHQ/HkWyxAf/vNFLQw9IBIyeiNemkcf0d0ZMsa63TuuxjEyThrUd3Yq6uslcxRgUK6RvL2uTAnlqWdDNta70BbWjiMlUN2BfljxSAEN92arHk2mz0r9KofB7LDZu+RPn5nq6arQVli/AU=
+	t=1791892604; cv=none; b=CQZK3yGSfFypMxVhJcxZOvWlPeWIF3Bo/VcxukvgykxGWfQb4x9+yZQU8PgMscfr0H8/A58oAAHqUtCUttLzKSC5KSLl/aRm3Ga00FF18gBK6qtfNZLv9DEqg35wggo9h7AT3nw3PyVoAIhP5vStPxwwB6ytDftzdLlgfqgghyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892600; c=relaxed/simple;
-	bh=dB6/ZH2TJC4XK6NqfQAqrfDyMU1cOGO8b5LaOa7MZAE=;
+	s=arc-20240116; t=1791892604; c=relaxed/simple;
+	bh=4MlE2kFlYNQd7iYH/9t7/8PmQhUUuHeYgggwD+ltwe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCDQHTwDqOxlUZA4+2RSq7q4dyfUeITywHz9V/PrigRIZNo8lfYB7UwiYpe435YytZJ2ziYa+1cvXNKZ5Kmkr/B1wA7jIOf0gj1epefo2INpqZbcR41qpgyV0Es+wIL8z75jek6cmnwbnGl1d/8o/xFBTkwcsBYuuooI2ZSecjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG5sM+/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KbBG4GlLSUY0+2dBKZCZYYekhbc7OOKlb2P5uGTQvsp1bg1Dv6/xrdXhPXVNXz5SbdpL4Ufzppz16zHefFypBuSC5Egrzel7ev/1qM+1dAiqko9bngRG0ZNJddWaIvcMEVR9tlfG66WSi3Q+AgMGqOrhmFYU9JaShuG2iVOTDP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLe15+5F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG5sM+/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8AB1F000FF;
-	Tue, 13 Oct 2026 11:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLe15+5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203391F000FF;
+	Tue, 13 Oct 2026 11:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892599;
-	bh=j81G3BOq2/7183B+WTFTJaKFxBJJ5Mkurm2A+4ZniNI=;
+	s=korg; t=1791892602;
+	bh=CpnsreHKEd4uaXYKw4Xy8MEaXTxqJyvPfyNkQpJ4FkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RG5sM+/7wOXn0vvUc66XWgqGRgfMgquk0ZR3xCHGDZufOoFo4Mk0lztxnZC6g9ko1
-	 dWA6u3dXliieT+Xk/92NQPd3Nzoe4xAmIpDhojWQ3ae72Dq9KNHAfBjNtR1gfNouq3
-	 hUuBC0Kj5WNmnno7nGghlHcwykBzdlpaHWGJiWu4=
+	b=yLe15+5FaQmH278IRLpdKuOlf5guBLE4gnGdeuL8YBcZe4eSMyows3BjOKU8+Fawq
+	 1UrVJoIBQ3/cMoT78isoElS+XF3tA82V7HfayvUuHXtMMJvQPBl4ILD1bsIcNSsHHy
+	 65fe0nmgG5xfNW3jKjyTi/ooCA0rs0SbuDoW3h34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 228/281] wifi: mt76: mt7996: take over connection monitoring
-Date: Tue, 13 Oct 2026 13:39:04 +0200
-Message-ID: <20261013112900.687303796@linuxfoundation.org>
+Subject: [PATCH 7.2 229/281] wifi: mac80211: add AQL support for multicast packets
+Date: Tue, 13 Oct 2026 13:39:05 +0200
+Message-ID: <20261013112900.710687723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,41 +53,328 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 0ec14f8c8c5da1c9c314bce4f0bf53c009fbc998 ]
+[ Upstream commit 836c1addd3bf42d47ca5f7a5780a7ec52abf332e ]
 
-mt76 runs its own beacon monitor. mt76_beacon_mon_check() counts a miss
-for each affiliated link of an MLD, and it stops the count while the phy
-is off channel. mt7996 supplies it through mt76_rx_beacon(), but it does
-not set CONNECTION_MONITOR. Therefore mac80211 also starts its legacy
-monitor.
+Excessive multicast traffic with little competing unicast traffic can easily
+flood hardware queues, leading to throughput issues. Additionally, filling
+the hardware queues with too many packets breaks FQ for multicast data.
+Fix this by enabling AQL for multicast packets.
 
-The legacy monitor knows one interface, not a set of links. It also
-counts while the radio serves a different link. After seven beacon
-intervals it removes an association that still carries traffic on the
-other links.
-
-Set the CONNECTION_MONITOR flag to disable the legacy monitor.
-
-Fixes: 4df75606ece5 ("wifi: mt76: add per-link beacon monitoring for MLO")
-Link: https://patch.msgid.link/20260818125825.395538-3-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260724115429.3921457-3-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 752770d7a58c ("wifi: mt76: account non-AQL frames per peer rather than per link")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/cfg80211.h     |  1 +
+ include/net/mac80211.h     |  3 ++-
+ net/mac80211/debugfs.c     | 13 ++++++++--
+ net/mac80211/ieee80211_i.h |  2 ++
+ net/mac80211/main.c        |  1 +
+ net/mac80211/sta_info.c    | 17 ++++++++++++-
+ net/mac80211/sta_info.h    |  3 ++-
+ net/mac80211/status.c      |  5 ++--
+ net/mac80211/tx.c          | 52 ++++++++++++++++++++------------------
+ 9 files changed, 66 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index be6e105f5f063..95fb30404b857 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -536,6 +536,7 @@ mt7996_init_wiphy(struct ieee80211_hw *hw, struct mtk_wed_device *wed)
- 	ieee80211_hw_set(hw, NO_VIRTUAL_MONITOR);
- 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
- 	ieee80211_hw_set(hw, CHANCTX_STA_CSA);
-+	ieee80211_hw_set(hw, CONNECTION_MONITOR);
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index f5abf1db7558b..7354ba079363a 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -3722,6 +3722,7 @@ enum wiphy_params_flags {
+ /* The per TXQ device queue limit in airtime */
+ #define IEEE80211_DEFAULT_AQL_TXQ_LIMIT_L	5000
+ #define IEEE80211_DEFAULT_AQL_TXQ_LIMIT_H	12000
++#define IEEE80211_DEFAULT_AQL_TXQ_LIMIT_MC	50000
  
- 	hw->max_tx_fragments = 4;
- 	wiphy->txq_memory_limit = 32 << 20; /* 32 MiB */
+ /* The per interface airtime threshold to switch to lower queue limit */
+ #define IEEE80211_AQL_THRESHOLD			24000
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 36055d40172a1..8007d3e5a8483 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -1317,6 +1317,7 @@ ieee80211_rate_get_vht_nss(const struct ieee80211_tx_rate *rate)
+  * @status_data: internal data for TX status handling, assigned privately,
+  *	see also &enum ieee80211_status_data for the internal documentation
+  * @status_data_idr: indicates status data is IDR allocated ID for ack frame
++ * @tx_time_mc: TX time estimate is for a multicast frame, used internally
+  * @tx_time_est: TX time estimate in units of 4us, used internally
+  * @control: union part for control data
+  * @control.rates: TX rates array to try
+@@ -1354,8 +1355,8 @@ struct ieee80211_tx_info {
+ 	    status_data_idr:1,
+ 	    status_data:13,
+ 	    hw_queue:4,
++	    tx_time_mc:1,
+ 	    tx_time_est:10;
+-	/* 1 free bit */
+ 
+ 	union {
+ 		struct {
+diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
+index f36cc25903050..3a671225c1277 100644
+--- a/net/mac80211/debugfs.c
++++ b/net/mac80211/debugfs.c
+@@ -210,11 +210,13 @@ static ssize_t aql_pending_read(struct file *file,
+ 			"VI     %u us\n"
+ 			"BE     %u us\n"
+ 			"BK     %u us\n"
++			"MC     %u us\n"
+ 			"total  %u us\n",
+ 			atomic_read(&local->aql_ac_pending_airtime[IEEE80211_AC_VO]),
+ 			atomic_read(&local->aql_ac_pending_airtime[IEEE80211_AC_VI]),
+ 			atomic_read(&local->aql_ac_pending_airtime[IEEE80211_AC_BE]),
+ 			atomic_read(&local->aql_ac_pending_airtime[IEEE80211_AC_BK]),
++			atomic_read(&local->aql_mc_pending_airtime),
+ 			atomic_read(&local->aql_total_pending_airtime));
+ 	return simple_read_from_buffer(user_buf, count, ppos,
+ 				       buf, len);
+@@ -239,7 +241,8 @@ static ssize_t aql_txq_limit_read(struct file *file,
+ 			"VO	%u		%u\n"
+ 			"VI	%u		%u\n"
+ 			"BE	%u		%u\n"
+-			"BK	%u		%u\n",
++			"BK	%u		%u\n"
++			"MC	%u\n",
+ 			local->aql_txq_limit_low[IEEE80211_AC_VO],
+ 			local->aql_txq_limit_high[IEEE80211_AC_VO],
+ 			local->aql_txq_limit_low[IEEE80211_AC_VI],
+@@ -247,7 +250,8 @@ static ssize_t aql_txq_limit_read(struct file *file,
+ 			local->aql_txq_limit_low[IEEE80211_AC_BE],
+ 			local->aql_txq_limit_high[IEEE80211_AC_BE],
+ 			local->aql_txq_limit_low[IEEE80211_AC_BK],
+-			local->aql_txq_limit_high[IEEE80211_AC_BK]);
++			local->aql_txq_limit_high[IEEE80211_AC_BK],
++			local->aql_txq_limit_mc);
+ 	return simple_read_from_buffer(user_buf, count, ppos,
+ 				       buf, len);
+ }
+@@ -273,6 +277,11 @@ static ssize_t aql_txq_limit_write(struct file *file,
+ 	else
+ 		buf[count] = '\0';
+ 
++	if (sscanf(buf, "mcast %u", &q_limit_low) == 1) {
++		local->aql_txq_limit_mc = q_limit_low;
++		return count;
++	}
++
+ 	if (sscanf(buf, "%u %u %u", &ac, &q_limit_low, &q_limit_high) != 3)
+ 		return -EINVAL;
+ 
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 011ec7fbb7118..2854dcc86b21b 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1464,10 +1464,12 @@ struct ieee80211_local {
+ 	spinlock_t handle_wake_tx_queue_lock;
+ 
+ 	u16 airtime_flags;
++	u32 aql_txq_limit_mc;
+ 	u32 aql_txq_limit_low[IEEE80211_NUM_ACS];
+ 	u32 aql_txq_limit_high[IEEE80211_NUM_ACS];
+ 	u32 aql_threshold;
+ 	atomic_t aql_total_pending_airtime;
++	atomic_t aql_mc_pending_airtime;
+ 	atomic_t aql_ac_pending_airtime[IEEE80211_NUM_ACS];
+ 
+ 	const struct ieee80211_ops *ops;
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 8edfef2b57f80..d5ef44f2b3f2d 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -988,6 +988,7 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
+ 	spin_lock_init(&local->rx_path_lock);
+ 	spin_lock_init(&local->queue_stop_reason_lock);
+ 
++	local->aql_txq_limit_mc = IEEE80211_DEFAULT_AQL_TXQ_LIMIT_MC;
+ 	for (i = 0; i < IEEE80211_NUM_ACS; i++) {
+ 		INIT_LIST_HEAD(&local->active_txqs[i]);
+ 		spin_lock_init(&local->active_txq_lock[i]);
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 01d70f71c43ec..ce7a3f839ce2e 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -2493,13 +2493,28 @@ EXPORT_SYMBOL(ieee80211_sta_recalc_aggregates);
+ 
+ void ieee80211_sta_update_pending_airtime(struct ieee80211_local *local,
+ 					  struct sta_info *sta, u8 ac,
+-					  u16 tx_airtime, bool tx_completed)
++					  u16 tx_airtime, bool tx_completed,
++					  bool mcast)
+ {
+ 	int tx_pending;
+ 
+ 	if (!wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL))
+ 		return;
+ 
++	if (mcast) {
++		if (!tx_completed) {
++			atomic_add(tx_airtime, &local->aql_mc_pending_airtime);
++			return;
++		}
++
++		tx_pending = atomic_sub_return(tx_airtime,
++					       &local->aql_mc_pending_airtime);
++		if (tx_pending < 0)
++			atomic_cmpxchg(&local->aql_mc_pending_airtime,
++				       tx_pending, 0);
++		return;
++	}
++
+ 	if (!tx_completed) {
+ 		if (sta)
+ 			atomic_add(tx_airtime,
+diff --git a/net/mac80211/sta_info.h b/net/mac80211/sta_info.h
+index 5da3142d8516e..ee0d32877c5b4 100644
+--- a/net/mac80211/sta_info.h
++++ b/net/mac80211/sta_info.h
+@@ -147,7 +147,8 @@ struct airtime_info {
+ 
+ void ieee80211_sta_update_pending_airtime(struct ieee80211_local *local,
+ 					  struct sta_info *sta, u8 ac,
+-					  u16 tx_airtime, bool tx_completed);
++					  u16 tx_airtime, bool tx_completed,
++					  bool mcast);
+ 
+ struct sta_info;
+ 
+diff --git a/net/mac80211/status.c b/net/mac80211/status.c
+index e10e5bcc279b6..a9da9fe87cf15 100644
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -774,7 +774,7 @@ static void ieee80211_report_used_skb(struct ieee80211_local *local,
+ 		ieee80211_sta_update_pending_airtime(local, sta,
+ 						     skb_get_queue_mapping(skb),
+ 						     tx_time_est,
+-						     true);
++						     true, info->tx_time_mc);
+ 		rcu_read_unlock();
+ 	}
+ 
+@@ -1255,10 +1255,11 @@ void ieee80211_tx_status_ext(struct ieee80211_hw *hw,
+ 		/* Do this here to avoid the expensive lookup of the sta
+ 		 * in ieee80211_report_used_skb().
+ 		 */
++		bool mcast = IEEE80211_SKB_CB(skb)->tx_time_mc;
+ 		ieee80211_sta_update_pending_airtime(local, sta,
+ 						     skb_get_queue_mapping(skb),
+ 						     tx_time_est,
+-						     true);
++						     true, mcast);
+ 		ieee80211_info_set_tx_time_est(IEEE80211_SKB_CB(skb), 0);
+ 	}
+ 
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 65c5a6519b895..546646aabb41c 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4083,20 +4083,20 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ encap_out:
+ 	info->control.vif = vif;
+ 
+-	if (tx.sta &&
+-	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
+-		bool ampdu = txq->ac != IEEE80211_AC_VO;
++	if (wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
++		bool ampdu = txq->sta && txq->ac != IEEE80211_AC_VO;
+ 		u32 airtime;
+ 
+ 		airtime = ieee80211_calc_expected_tx_airtime(hw, vif, txq->sta,
+ 							     skb->len, ampdu);
+-		if (airtime) {
+-			airtime = ieee80211_info_set_tx_time_est(info, airtime);
+-			ieee80211_sta_update_pending_airtime(local, tx.sta,
+-							     txq->ac,
+-							     airtime,
+-							     false);
+-		}
++		if (!airtime)
++			return skb;
++
++		airtime = ieee80211_info_set_tx_time_est(info, airtime);
++		info->tx_time_mc = !tx.sta;
++		ieee80211_sta_update_pending_airtime(local, tx.sta, txq->ac,
++						     airtime, false,
++						     info->tx_time_mc);
+ 	}
+ 
+ 	return skb;
+@@ -4148,6 +4148,7 @@ struct ieee80211_txq *ieee80211_next_txq(struct ieee80211_hw *hw, u8 ac)
+ 	struct ieee80211_txq *ret = NULL;
+ 	struct txq_info *txqi = NULL, *head = NULL;
+ 	bool found_eligible_txq = false;
++	bool aql_check;
+ 
+ 	spin_lock_bh(&local->active_txq_lock[ac]);
+ 
+@@ -4171,26 +4172,28 @@ struct ieee80211_txq *ieee80211_next_txq(struct ieee80211_hw *hw, u8 ac)
+ 	if (!head)
+ 		head = txqi;
+ 
++	aql_check = ieee80211_txq_airtime_check(hw, &txqi->txq);
++	if (aql_check)
++		found_eligible_txq = true;
++
+ 	if (txqi->txq.sta) {
+ 		struct sta_info *sta = container_of(txqi->txq.sta,
+ 						    struct sta_info, sta);
+-		bool aql_check = ieee80211_txq_airtime_check(hw, &txqi->txq);
+-		s32 deficit = ieee80211_sta_deficit(sta, txqi->txq.ac);
+ 
+-		if (aql_check)
+-			found_eligible_txq = true;
+-
+-		if (deficit < 0)
++		if (ieee80211_sta_deficit(sta, txqi->txq.ac) < 0) {
+ 			sta->airtime[txqi->txq.ac].deficit +=
+ 				sta->airtime_weight;
+ 
+-		if (deficit < 0 || !aql_check) {
+-			list_move_tail(&txqi->schedule_order,
+-				       &local->active_txqs[txqi->txq.ac]);
+-			goto begin;
++			aql_check = false;
+ 		}
+ 	}
+ 
++	if (!aql_check) {
++		list_move_tail(&txqi->schedule_order,
++				   &local->active_txqs[txqi->txq.ac]);
++		goto begin;
++	}
++
+ 	if (txqi->schedule_round == local->schedule_round[ac])
+ 		goto out;
+ 
+@@ -4257,7 +4260,8 @@ bool ieee80211_txq_airtime_check(struct ieee80211_hw *hw,
+ 		return true;
+ 
+ 	if (!txq->sta)
+-		return true;
++		return atomic_read(&local->aql_mc_pending_airtime) <
++		       local->aql_txq_limit_mc;
+ 
+ 	if (unlikely(txq->tid == IEEE80211_NUM_TIDS))
+ 		return true;
+@@ -4306,15 +4310,15 @@ bool ieee80211_txq_may_transmit(struct ieee80211_hw *hw,
+ 
+ 	spin_lock_bh(&local->active_txq_lock[ac]);
+ 
+-	if (!txqi->txq.sta)
+-		goto out;
+-
+ 	if (list_empty(&txqi->schedule_order))
+ 		goto out;
+ 
+ 	if (!ieee80211_txq_schedule_airtime_check(local, ac))
+ 		goto out;
+ 
++	if (!txqi->txq.sta)
++		goto out;
++
+ 	list_for_each_entry_safe(iter, tmp, &local->active_txqs[ac],
+ 				 schedule_order) {
+ 		if (iter == txqi)
 -- 
 2.53.0
 
