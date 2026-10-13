@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CD84E80B5;
-	Tue, 13 Oct 2026 11:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108FF4EFFC8;
+	Tue, 13 Oct 2026 11:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892186; cv=none; b=BnQSaR3ty2w2sg936TOQT5uvOji1R/2OzjQlueuM9sUbn1DYtgcOyR2tvGIzT4jgWwPMONP3YtZ6Nhin5YsK2iB6h0W+ouVeOS0PtWWUutaBIN3vZu8Uvvjif/useMfgoip9rQob5CnSZpjpBPVzNsuI5YJIoPU7fz3c+yDOfQk=
+	t=1791892190; cv=none; b=n+6y/+eOxFf9O+p8wpHpa5lueCpYxvRd2+SpHl7CLtm81dCGltwqvumAblw1vSoaOoHP7V8VbG8npCzi6mtplu9bpH7AyMHj4ec66PU0vmuSSliBnA9PUZC3WjA+NCXUiiM6f/632kE5zq1vjwZoYr8O3W+oX/yPhW0vtMF10m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892186; c=relaxed/simple;
-	bh=7Pv6bxRH71z+rYBBJFgQl+Ol9+Hylht2y/g4pC2pTt8=;
+	s=arc-20240116; t=1791892190; c=relaxed/simple;
+	bh=tqaUukSglNF4NhSVdu7Mo6qC2nM1dTXabZp0VthA/IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQdxlTs7pdejWNG0NE+rR3MiqdDUG40L+6BsV5rn/iNbxFWntZxcc8HnWP+b6KWhtuDfOPSIBpLE1dFL80puFoqhPL1J9budt4GPrwO1AooB8ouuQ7nb2gzI+KFpZs/GvDVS9zOyNHaB5VLvBxipTqGT/jEaz86zKJIf72001Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZI19Tq4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fPZYQPPsC2pvvvOS+OYsPWkJZc6COGd8jfoaKggzE6R9HieO1Jx3ZFgb4FwAqGt3jYfUnUa/z52tXuenIhIZAIFtO7aqp/JnyicnyTb1j2nQLZ/8t/CM1OqUaDjjS+DaL1jUIlForudqy81rihGs9tY9k9OzfRwCc3chVrp7ty0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wInltfzb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZI19Tq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0966D1F0089A;
-	Tue, 13 Oct 2026 11:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wInltfzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D63C1F00893;
+	Tue, 13 Oct 2026 11:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892185;
-	bh=QIu6Y+Gni1p2H8n9005oyw8WyDpPOD2n1DcszhcM5nM=;
+	s=korg; t=1791892188;
+	bh=XyL7Vd19Ylr5SovMM1Te2ILDA1L/kuPEX5uxL1Rf62E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZI19Tq4ExP05t3/7b9HDD1UhPseOmHXJnz3sonFnYDgjY1cvLHerXOGbEEhc/Juo
-	 BZ1LpZhzqcWnvrk4+3IDdZD8UR8+OBQVmOzMWor+9nMF1whOdTa6/BFY5Jf+4ksli0
-	 aLjAmKT2T5zuVKEYMb4QeCk0Kzk85DlRzdD31DtY=
+	b=wInltfzbnfw/sKskL2Rbw2a5sW7z2Bg/lQ8Ox78N35ki/IkURa2/2zQYjLPUhaRlZ
+	 qugniqieHKrRz2yzM6sc1zGi6svmcJ2/3KPXF8/lIhd5qujKgLNqHCXXJgLSZZxGxz
+	 AdYgbmjRow/RuhVrx5FwVV9y07wSMs8fA7mTmheQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 090/281] net: team: free skb when broadcast has no txable port
-Date: Tue, 13 Oct 2026 13:36:46 +0200
-Message-ID: <20261013112857.319701790@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Karl Bonde Torp <k.torp@samsung.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 091/281] nvme: fix swapped ZRASF zone state values for full and read only
+Date: Tue, 13 Oct 2026 13:36:47 +0200
+Message-ID: <20261013112857.343233928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,42 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Karl Bonde Torp <k.torp@samsung.com>
 
-commit 489114c9ecae44e523361a4b3e610ee5ebd9189c upstream.
+commit 564e46d9f6e87912effa03f123d37a511d520f09 upstream.
 
-bc_transmit() sends the original skb through the last txable port.
-When no port is txable, it returns false without consuming the skb, but
-team_xmit() still returns NETDEV_TX_OK. AF_PACKET sends then retain the
-skb and its socket write-memory charge.
+The Zone Management Receive command Zone Receive Action Specific (ZRASF)
+reporting option values for the Full and Read Only zone states are swapped
+compared to the NVM Express Zoned Namespace Command Set Specification,
+Revision 1.5, Figure 35:
 
-A TX-enabled, link-down port keeps the broadcast transmit op installed.
-Carrier can stay up through a second link-up, TX-disabled port or be
-forced on by userspace. Free the original skb on the no-port path while
-leaving the existing drop accounting intact.
+- 5h lists the zones in the ZSF:Full state.
+- 6h lists the zones in the ZSRO:Read Only state.
 
-Discovered by Sashiko during review of previous commit.
+The nvmet ZNS backend uses these constants to map the ZRASF value received
+from the host to a block layer zone condition when filtering zones in
+Report Zones. Because of the swap, a host asking for full zones was given
+the read only zones, and a host asking for read only zones was given the
+full zones.
 
+Swap the values of NVME_ZRASF_ZONE_STATE_FULL and
+NVME_ZRASF_ZONE_STATE_READONLY to match the specification.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
 Cc: stable@vger.kernel.org
-Fixes: 5fc889911a99 ("team: add broadcast mode")
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261001182326.572045-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Karl Bonde Torp <k.torp@samsung.com>
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team_mode_broadcast.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/nvme.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/team/team_mode_broadcast.c
-+++ b/drivers/net/team/team_mode_broadcast.c
-@@ -37,6 +37,8 @@ static bool bc_transmit(struct team *tea
- 		ret = !team_dev_queue_xmit(team, last, skb);
- 		if (!sum_ret)
- 			sum_ret = ret;
-+	} else {
-+		dev_kfree_skb_any(skb);
- 	}
- 	return sum_ret;
- }
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1266,8 +1266,8 @@ enum {
+ 	NVME_ZRASF_ZONE_STATE_IMP_OPEN	= 0x02,
+ 	NVME_ZRASF_ZONE_STATE_EXP_OPEN	= 0x03,
+ 	NVME_ZRASF_ZONE_STATE_CLOSED	= 0x04,
+-	NVME_ZRASF_ZONE_STATE_READONLY	= 0x05,
+-	NVME_ZRASF_ZONE_STATE_FULL	= 0x06,
++	NVME_ZRASF_ZONE_STATE_FULL	= 0x05,
++	NVME_ZRASF_ZONE_STATE_READONLY	= 0x06,
+ 	NVME_ZRASF_ZONE_STATE_OFFLINE	= 0x07,
+ 	NVME_REPORT_ZONE_PARTIAL	= 1,
+ };
 
 
