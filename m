@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F214F68DD;
-	Tue, 13 Oct 2026 11:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C884F30F2;
+	Tue, 13 Oct 2026 11:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892699; cv=none; b=Lk+idZhZDGEl7aj2IOsOL/cy021hgaLh5knWgmeLPU7sML8rVNCIaKykM5bF7rJAYWL9hWw+ks7dXY+0MDEyDARJMeZvF3gnqCpT86ND98V+vgelKhyqf8cVQHO4EhTrDPjDD3MObbtAkn5CxrdP+ad6TqwhIcHnfwfLsFc1eAw=
+	t=1791892702; cv=none; b=iDyf1nmGFBqUBUxtG4/X2JB/mv1cHFbTK9a4QBfkN7ZamNjPAOhPJwWyfto2/cvAAegaEZXhD60QgbNiAJ50WqLjqAwCHZsFzgDGrhPia/tFWPMHh71yzTpZ3dzX2N96HlrFtoa18SE0Mj1Q9zIxDqKzhOeCsIxp06rK9vT8Zhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892699; c=relaxed/simple;
-	bh=9ef0gxvB8w460qSJL48uDs7rDjU/mHZ8nzh+N7ks8sY=;
+	s=arc-20240116; t=1791892702; c=relaxed/simple;
+	bh=cWui0Jz8hbuBE7+v0va1ZrZgdX9aKMFvOduSHx55D2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6S2kszabGdOti3KHVYdyYCyOXZr8NjXjJB6BM4A8mVAr+VIBopeb1v6e7Ycih8dR7fYhOC8RwdVtDv2WDNtbXQtWCPHsHp+r173wNNnwmilSV2PIWpJtEBazBeHknnei89nD0lbYFl61nj4XuM/fhPJW/JBaDUVeimcg0Kb7wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1owAIa4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilvBmMl8nR7IrJjo7g0OV6zTO6gtYRavrXKWEGNnKpodmlMDvjxHUyqGn83a57tqmoDKX8mBVl/ozMO7uMQmkv0w4cEDaE39ehk1GZ8LZ7cV0ArnTxos0nTR19/MzXmEU11RXfYZ83xyKCgaloaDq/E79E799zrsJ5S+015KHzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdGZgHl7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1owAIa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39891F00893;
-	Tue, 13 Oct 2026 11:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdGZgHl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D911F00893;
+	Tue, 13 Oct 2026 11:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892698;
-	bh=NlONJvlfS56nZFgqJxoRZrPXqzlDiQN0N9MkeLodb50=;
+	s=korg; t=1791892701;
+	bh=uaFv05PUDj19youPSsMsiuSGxTgQOd5QIuRU3kRxEgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1owAIa4aHzeeHiXX7AeusWSUYWkNZmZ/r7NdCo/zUndD10y3hs2R0fkY3sRXEKz8
-	 cYwDGTJxm0lNJwS5KXD9Rmp/TdzPXxWp5yNLzupOrRqvV0mqWJXZ/vXhGcQs0Zvv4V
-	 6eucqRNd14NNKI68vuA9ozw3HSx1Kj/Fk0YMymXY=
+	b=RdGZgHl7B7wAY6KTxCssinL2CPAYJhc5TkjxYjyNEQ9ApbPPiGzFcHw0JaqQy10wG
+	 mysP4wVflQY4HP1MaiisIp9PgVbzi+rw+aA752+v2mT8UZRzS9q1u3y1yYRJbqqdch
+	 uN35zVfVBWj3UjjPmyr5Fg59y9RmXwnRTZWeVKKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yu-Chi Liang <leo.liang@sifive.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 258/281] riscv: fix NR_CPUS range leaking 64-bit default onto 32-bit builds
-Date: Tue, 13 Oct 2026 13:39:34 +0200
-Message-ID: <20261013112901.404292328@linuxfoundation.org>
+Subject: [PATCH 7.2 259/281] riscv: ptrace: Zero-initialize regset buffers before copyin
+Date: Tue, 13 Oct 2026 13:39:35 +0200
+Message-ID: <20261013112901.428055072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,53 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yu-Chi Liang <leo.liang@sifive.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit 07e23d0b6f58eec351e52058b9a0a8af7b019c09 ]
+[ Upstream commit 59052a88ba5fe4a7bb34b3a0a42aa5d453d3bb97 ]
 
-rv32_defconfig is built in two stages:
+user_regset_copyin() only copies `count` bytes, so a PTRACE_SETREGSET
+request with a short iov_len leaves the rest of the stack buffer
+uninitialized. In riscv_vr_set() that garbage is validated and copied
+into the target's vstate, and in riscv_cfi_set() it can be stored as
+the target's shadow stack pointer. Zero both buffers, as the get path
+already does.
 
-- the generic (64-bit-oriented) "defconfig" target runs first
-  and resolves a concrete NR_CPUS value using the 64BIT default.
-- then 32-bit.config is merged on top via merge_config.sh,
-  which does not touch NR_CPUS.
-
-The final "make olddefconfig" pass sees NR_CPUS=256 is still within
-the "2 512" range therefore never recalculates it against the 32BIT
-default of 32, silently keeping the leaked 64-bit-stage value.
-
-The NR_CPUS-scaled regions (percpu areas, ...etc) of the resulting
-CONFIG_NR_CPUS=256 on a 32-bit build bloats and does not fit in the
-percpu/stack layout for rv32 and hangs early boot on QEMU's virt machine.
-
-Fix this by explicitly specify the range for 32/64 and SBI_V01/!SBI_V01.
-
-Fixes: 0fa749771993 ("riscv: Raise default NR_CPUS for 64BIT to 256")
-Signed-off-by: Leo Yu-Chi Liang <leo.liang@sifive.com>
-Link: https://patch.msgid.link/20261007045229.36114-1-leo.liang@sifive.com
+Fixes: 9300f0043974 ("RISC-V: Add ptrace support for vectors")
+Fixes: 2af7c9cf021c ("riscv/ptrace: expose riscv CFI status and state via ptrace and in core files")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://patch.msgid.link/20260826115711.86861-1-min_halo@163.com
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/ptrace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index f7028caaeae06..e5166df510bb6 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -450,9 +450,10 @@ config SMP
- config NR_CPUS
- 	int "Maximum number of CPUs (2-512)"
- 	depends on SMP
--	range 2 512 if !RISCV_SBI_V01
--	range 2 32 if RISCV_SBI_V01 && 32BIT
-+	range 2 512 if !RISCV_SBI_V01 && 64BIT
-+	range 2 128 if !RISCV_SBI_V01 && 32BIT
- 	range 2 64 if RISCV_SBI_V01 && 64BIT
-+	range 2 32 if RISCV_SBI_V01 && 32BIT
- 	default "32" if 32BIT
- 	default "64" if RISCV_SBI_V01 && 64BIT
- 	default "256" if !RISCV_SBI_V01 && 64BIT
+diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
+index 566856e42f658..a0055743d3ba5 100644
+--- a/arch/riscv/kernel/ptrace.c
++++ b/arch/riscv/kernel/ptrace.c
+@@ -230,6 +230,7 @@ static int riscv_vr_set(struct task_struct *target,
+ 		return -ENODATA;
+ 
+ 	/* Copy rest of the vstate except datap */
++	memset(&ptrace_vstate, 0, sizeof(ptrace_vstate));
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ptrace_vstate, 0,
+ 				 sizeof(struct __riscv_v_regset_state));
+ 	if (unlikely(ret))
+@@ -345,6 +346,7 @@ static int riscv_cfi_set(struct task_struct *target,
+ 
+ 	regs = task_pt_regs(target);
+ 
++	memset(&user_cfi, 0, sizeof(user_cfi));
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &user_cfi, 0, -1);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
