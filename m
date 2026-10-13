@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DEE4F68B0;
-	Tue, 13 Oct 2026 12:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD0A4F7995;
+	Tue, 13 Oct 2026 12:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895893; cv=none; b=PiNzDl2m0gxYQdaPWnCMunCQglEgqP+0qglBZe6xJyUxDOdDFKDTQhKHSlV4WufB/6n37kJpoTilMJJM24aLcacEUDeVKRib5Nk+eNg8U43B/P1YVe9p/Pg1wVTQUhVybFtl7s3zsrvCIim758JDZ6j2bcCiOsEBjRTvuEVkG3s=
+	t=1791895897; cv=none; b=nC2POLy+KeE2iQqiDer5vkas85OEAPBuJT5GIzvWnDrymU63dRglG3KRXBBpfJGWXkZ5JNMDH/AaVDHIk0VrhxJqG6CI+c9jr3UpD9fTYicX15yb2s3E9Cy5ezNYRqIzeyu/DbGVpTO6oxSH7E481sg+EJvXKECaxNUvCA0rDmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895893; c=relaxed/simple;
-	bh=ndZWvKhE7NTn1m/sG81SaGv5hlDTBeWngAA3z1R59do=;
+	s=arc-20240116; t=1791895897; c=relaxed/simple;
+	bh=tx+Va8Xpx8Cbrx5/KcDS4FoZaneAYjyQ5GBRihUMxQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+9nSkA2aSYfrKhrzycXVNG+7rSApFL7vVsPLPes5bifN0qZmzyEJyxX6DdJm5ynrMCoIVddejHVzkMT2u/UcNHAH6i+4oUH0sLgvRhMl0Y5oxGw6swflI481xmljZAzRhut21TmICeDTG+u8Z1t0WCB0h8XjNRAfJcq+GUflA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUxJkWFW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KMPaRFE7BMmxhTpbSZxM8o3uc1VA6r4wHBJGAzZ6lVaY6KdUFEIHvv+nPii+W9of+iQCgh85bo87aBuUTHUR15qHLb0spYKELGqo5Ynusn5pEgeWEK3SU5y8scKf9bpRPtB/Gp4nPfK2cNwE18ZJdF3y+bsneAzAGWtJivMK3Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZF+2b8A9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUxJkWFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0611F000FF;
-	Tue, 13 Oct 2026 12:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZF+2b8A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0271F000FF;
+	Tue, 13 Oct 2026 12:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895892;
-	bh=EOWI2A11H5neRA7Nr34wgq9joiIvdirXkfNRoYjnZzo=;
+	s=korg; t=1791895895;
+	bh=jhPrcB0ldwBkhh+lF/aVqFh1YOfAXe6FeCwc/OFbhUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUxJkWFWHuuz7rHeAVYM6oSl7FqB/x/14e+Iw96/cuhmeKF464U9EX1d8iQppqAcm
-	 5s68k1MPxHf0sWgjRm9ewkcRlfNytc3hdbTpeW5l0FyU7kR1u+8e+Rmo3QfcrgUY0Y
-	 BlRjq7WhaL4dR8IcQJWsvkryCW4QgSKbOa4UvgHA=
+	b=ZF+2b8A93IDnIh/X+8c4xguRuTVePXPrpB3bXEd2VM3mPNQABP/ZbtsHLixUto6Qh
+	 2Hb0nIJPaUblS6e0Kvu0ChKMHUKz0HmAZswGrlr5LJ+wMNGiVrDowsbvOjTs6L+On/
+	 ThoCvt6uEJjyZ5q/JDu9WyyPT2CnZ5LDRUSKM93I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 429/497] drm/i915/gt: Unmask interrupts only when ACTIVE is true
-Date: Tue, 13 Oct 2026 13:39:56 +0200
-Message-ID: <20261013112918.068426206@linuxfoundation.org>
+	Gyeyoung Baek <gye976@gmail.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>
+Subject: [PATCH 6.12 430/497] drm/imagination: Size page table preallocation by device address
+Date: Tue, 13 Oct 2026 13:39:57 +0200
+Message-ID: <20261013112918.093062570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,117 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Gyeyoung Baek <gye976@gmail.com>
 
-commit 5346b1cec6afa4f9b4b49a9f84e3cfef95a3f7bb upstream.
+commit 789f290b2e81d42820bddcb4010ffbc2ae2ded54 upstream.
 
-There is a small race window between intel_rps_boost() reading
-a stale ACTIVE state and queuing rps->work, where ACTIVE may be
-changed via asynchronous calls triggered by wakeref drop.
-This means that rps_work() could be triggered after the GT has
-been parked, so unmasking RPS PM interrupts would happen without
-holding PM wakelock. This sequence of events may be observed
-during live_rc6_ctx_wa() selftest:
+Commit 0a8224058a58 ("drm/imagination: Fix page count for page table for
+map() interface") passed the device address to
+pvr_mmu_op_context_create(), but the preallocation is still sized from
+device_addr + sgt_offset with an exclusive end. The offset into the
+object's pages has no place in a device-virtual range, and the exclusive
+end allocates one table too many when the range ends on a table
+boundary.
 
-1) live_rc6_ctx_wa()
-   -> intel_engine_pm_put()
-      -> wakeref_put()
+Count the tables from device_addr and the inclusive end of the range.
 
-ASYNC1) wakeref_put() callback
-          -> __engine_park()
-             -> intel_gt_pm_put_async()
-                -> intel_gt_pm_put_async_untracked()
-                   -> intel_wakeref_put_async()
+The new calculation does not take page table indices into account. This
+fixes another issue with the previous implementation, where the
+difference between start and end indices could underflow when a mapping
+crossed a page table boundary. This would lead to the driver
+preallocating a huge number of MMU pages, exhausting system memory and
+triggering an out of memory panic.
 
-ASYNC2) wakeref_put_async() callback
-          -> __gt_park()
-             -> intel_rps_park()
-                -> intel_rps_clear_active() [clear ACTIVE]
-                WITH INTERRUPTS:
-                -> rps_disable_interrupts()
-                   -> cancel_work_sync(rps->work)
-                   -> rps_reset_interrupts() [rps->pm_iir = 0]
-                WITHOUT INTERRUPTS (TIMER mode):
-                -> rps_stop_timer()
-                   -> cancel_work_sync(rps->work)
-
-2) live_rc6_ctx_wa()
-   -> intel_gt_wait_for_idle()
-      -> intel_gt_retire_requests_timeout()
-         -> dma_fence_wait_timeout()
-            -> ops->wait() [i915_fence_wait()]
-               -> i915_request_wait_timeout()
-                  -> intel_rps_boost()
-                     -> intel_rps_is_active() [check ACTIVE]
-                        [OPEN RACE WINDOW]
-                     -> queue_work(rps->work)
-         -> retire_requests()
-            -> i915_request_retire()
-               -> intel_rps_dec_waiters() [from 1 to 0]
-
-If ASYNC1 and ASYNC2 would execute during [OPEN RACE WINDOW],
-then:
-
-3) rps_work() executes from the workqueue and may satisfy
-   "(!pm_iir && !client_boost)" test (in TIMER mode rps->pm_iir
-   is zeroed by an earlier rps_work() call or never gets a new
-   value after previous intel_rps_unpark() event), so it jumps
-   to "out" label, bypassing intel_rps_is_active() guard and
-   executes gen6_gt_pm_unmask_irq();
-
-4) GT is parked and runtime PM wakelock is dropped, so only
-   a raw reference in __gt_park() ->
-   intel_display_power_put_async() remains for 100ms, then the
-   MMIO write in gen6_gt_pm_unmask_irq() detects missing
-   wakelock via assert_rpm_wakelock_held() and emits
-   "RPM wakelock ref not held during HW access" tainting kernel.
-
-Commit 3e7abf814193 ("drm/i915: Extract GT render power state management")
-dropped the "if (rps->interrupts_enabled)" guard that
-gen6_pm_rps_work() had around this unmask in i915_irq.c.
-INTEL_RPS_ACTIVE brackets the same window, since it is set in
-intel_rps_unpark() before rps_enable_interrupts() and
-rps_start_timer() and cleared in intel_rps_park() before
-rps_stop_timer() and rps_disable_interrupts().
-
-Skip unmasking when RPS is no longer active (reaching unmask
-operation is independent of INTERRUPT mode). This does not
-prevent RPS operation from resuming on the next unpark.
-In interrupt mode, intel_rps_unpark() calls
-rps_enable_interrupts(), which enables and unmasks the PM
-interrupts. In timer mode, it calls rps_start_timer(),
-restarting periodic engine-busyness evaluation. The timer
-generates software RPS events and queues rps_work() directly,
-independently of PM interrupt delivery. Neither mode requires
-the late worker to unmask interrupts while the GT is parked
-
-Fixes: 3e7abf814193 ("drm/i915: Extract GT render power state management")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/16562
-Cc: stable@vger.kernel.org # v5.5+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260910081329.3300417-1-krzysztof.karas@intel.com
-(cherry picked from commit ca4a6deadad15b91ee083afe445fa6bdbfb68206)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 0a8224058a58 ("drm/imagination: Fix page count for page table for map() interface")
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
+Reviewed-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Cc: stable@vger.kernel.org
+[Alessio: add paragraph to point out OOM bug being fixed, cc stable]
+Link: https://patch.msgid.link/20261001-pvr-fixes-a-v2-2-f58254e5dfb8@gmail.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_mmu.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_rps.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rps.c
-@@ -1887,7 +1887,8 @@ static void rps_work(struct work_struct
+--- a/drivers/gpu/drm/imagination/pvr_mmu.c
++++ b/drivers/gpu/drm/imagination/pvr_mmu.c
+@@ -2333,7 +2333,7 @@ void pvr_mmu_op_context_destroy(struct p
+  * @ctx: MMU context associated with owning VM context.
+  * @sgt: Scatter gather table containing pages pinned for use by this context.
+  * @device_addr: Virtual device address at the start of the requested mapping.
+- * @sgt_offset: Start offset of the requested device-virtual memory mapping.
++ * @sgt_offset: Offset into @sgt of the start of the requested mapping.
+  * @size: Size in bytes of the requested device-virtual memory mapping. For an
+  * unmapping, this should be zero so that no page tables are allocated.
+  *
+@@ -2346,7 +2346,6 @@ struct pvr_mmu_op_context *
+ pvr_mmu_op_context_create(struct pvr_mmu_context *ctx, struct sg_table *sgt,
+ 			  u64 device_addr, u64 sgt_offset, u64 size)
+ {
+-	u64 start_addr = device_addr + sgt_offset;
+ 	int err;
  
- out:
- 	spin_lock_irq(gt->irq_lock);
--	gen6_gt_pm_unmask_irq(gt, rps->pm_events);
-+	if (intel_rps_is_active(rps))
-+		gen6_gt_pm_unmask_irq(gt, rps->pm_events);
- 	spin_unlock_irq(gt->irq_lock);
- }
+ 	struct pvr_mmu_op_context *op_ctx =
+@@ -2362,18 +2361,18 @@ pvr_mmu_op_context_create(struct pvr_mmu
  
+ 	if (size) {
+ 		/*
+-		 * The number of page table objects we need to prealloc is
+-		 * indicated by the mapping size, start address and the sizes
+-		 * of the areas mapped per PT or PD. The range calculation is
+-		 * identical to that for the index into a table for a device
+-		 * address, so we reuse those functions here.
++		 * The page tables needed are set by the device-virtual range
++		 * being mapped: one level 1 table per 1GiB region and one
++		 * level 0 table per 2MiB region the range touches. Tables that
++		 * already exist are not consumed, so this is an upper bound.
+ 		 */
+-		const u32 l1_start_idx = pvr_page_table_l2_idx(start_addr);
+-		const u32 l1_end_idx = pvr_page_table_l2_idx(start_addr + size);
+-		const u32 l1_count = l1_end_idx - l1_start_idx + 1;
+-		const u32 l0_start_idx = pvr_page_table_l1_idx(start_addr);
+-		const u32 l0_end_idx = pvr_page_table_l1_idx(start_addr + size);
+-		const u32 l0_count = l0_end_idx - l0_start_idx + 1;
++		const u64 last_addr = device_addr + size - 1;
++		const u64 l1_count =
++			(last_addr >> ROGUE_MMUCTRL_VADDR_PC_INDEX_SHIFT) -
++			(device_addr >> ROGUE_MMUCTRL_VADDR_PC_INDEX_SHIFT) + 1;
++		const u64 l0_count =
++			(last_addr >> ROGUE_MMUCTRL_VADDR_PD_INDEX_SHIFT) -
++			(device_addr >> ROGUE_MMUCTRL_VADDR_PD_INDEX_SHIFT) + 1;
+ 
+ 		/*
+ 		 * Alloc and push page table entries until we have enough of
 
 
