@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3015012A7;
-	Tue, 13 Oct 2026 12:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACF4FE2D4;
+	Tue, 13 Oct 2026 12:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893247; cv=none; b=Vj+ihdWo+OJ8vIcgFIpFqDDxh+as5KZJik+TUPUCjQomm4lTGTbsvsVmmN1MIqypU//cToK1klOyPTUAq8OMuUnvbtEiB3u8tc1f7kj1Ifm0V5v/T/ymMUnH9DTCwtV8qvHtj8nyoLh2D8AT3mX8cK9LsW2cZIXqEkwTE671E6c=
+	t=1791893251; cv=none; b=ZGBld2qIMdS2KsDwKP1jbgmlwqAuPof5Sq7oqBr+XSBODKQKUSAmMJGysNIcxQSAWgr3658Rus4PLVcVL7nAa3BI0au16rLvjsH9AqpVhq0nClfbX1dMZC8Dg5SZmY6xJK/o1UZF4Vc82Hoo1vG8T/aQjss35qtJLgfJuy2ZXCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893247; c=relaxed/simple;
-	bh=5Duyyzd1aMJ4w4ZNfgU2m7X0OlJkUb6Jp1hu4PE84Y8=;
+	s=arc-20240116; t=1791893251; c=relaxed/simple;
+	bh=vStI/WIP0vcbGUMA5MRUb+IcRK9tNfIRpfOISL59+vQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYCD7HR629yMBzl9p/nC57h5dK8buZGgbtMt5epNe66TVQuYupiVniY1WbVb9h9eL0Brwcc8e8mM52+RfPv3yDq3OtZ63XyfkSNfg491Y5NZb49FOwyzvEvq8O/5n2g81JNLYzEQuZk1q4NioIn2b3HnD4CU/uWqM+uq5nhpwug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtOlFvKB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3uQlW/cdIqMIq7Y4tbhCn+sp0bx5pVGl37FHmHJebrlG8dOkUxzibn2vSuS2+iq/34F5iUKOthrvVnI+R+dU3co+KWdtD3SmP02VyHvnTujkw1ghEpzsSR17Z4hvDeZIBuRqdYmmButuoeLrnlfNInRQuK1MJXaDQ8zsxeD0/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW1CXBHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtOlFvKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB221F000FF;
-	Tue, 13 Oct 2026 12:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW1CXBHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235F01F000FF;
+	Tue, 13 Oct 2026 12:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893246;
-	bh=vI6QKwL6g9HcfUWKZGZ/MYOsxd5Cxagvd0DYOHGJBf4=;
+	s=korg; t=1791893249;
+	bh=m9Mx8cFQ1O86Lct2WIDNE7NSkbSfekfm5zU6/csGxFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jtOlFvKBLDTXqsbw8ihF4XgLqbcBQXSG2EL/HiVcKoba3Zy3ZBUJuLTJA1Mxs0k5u
-	 3+tq39b2fOkaWkHyP1Ti8r0r++nlWq2NGWL4DfeG8z+E+7kviIcBZi4c/5n/ysKO/p
-	 av6PfqWp3e0pGyIhco+V1p5KlIoX7BlOuQmaI1TQ=
+	b=wW1CXBHbCEenSfFnTBrBJeyer9U15HkcbhCWO27FfdBvFvvqM2a544QsQaQNHIt4V
+	 rdEqt66df4Scdr8h2h2In9RTaoTfcnzlT5VdLJ8yhtoDwg19NqG5mV+TztTfFEDyGB
+	 w9GljJVKd0fqFH/+1W6vWVKYXOX43Xu8Spi4OHek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Maxim Skokov <skokovmaksimevg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 108/621] Bluetooth: RFCOMM: free the skb when the DLC has no owner
-Date: Tue, 13 Oct 2026 13:31:43 +0200
-Message-ID: <20261013112923.413539086@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 156/621] blktrace: fix __this_cpu_read/write in preemptible context
+Date: Tue, 13 Oct 2026 13:32:31 +0200
+Message-ID: <20261013112924.556223799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,69 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-commit 9d1afbf60ed53c5b051cd124153e0ae3078c8b93 upstream.
+[ Upstream commit da46b5dfef48658d03347cda21532bcdbb521e67 ]
 
-rfcomm_recv_data() hands the skb to d->data_ready() and returns 0
-without freeing it, so the callback owns the skb from that point on.
-The tty implementation frees it when the DLC has been detached from its
-device:
+tracing_record_cmdline() internally uses __this_cpu_read() and
+__this_cpu_write() on the per-CPU variable trace_cmdline_save, and
+trace_save_cmdline() explicitly asserts preemption is disabled via
+lockdep_assert_preemption_disabled(). These operations are only safe
+when preemption is off, as they were designed to be called from the
+scheduler context (probe_wakeup_sched_switch() / probe_wakeup()).
 
-  static void rfcomm_dev_data_ready(struct rfcomm_dlc *dlc,
-                                    struct sk_buff *skb)
-  {
-          struct rfcomm_dev *dev = dlc->owner;
+__blk_add_trace() was calling tracing_record_cmdline(current) early in
+the blk_tracer path, before ring buffer reservation, from process
+context where preemption is fully enabled. This triggers the following
+using blktests/blktrace/002:
 
-          if (!dev) {
-                  kfree_skb(skb);
-                  return;
-          }
+blktrace/002 (blktrace ftrace corruption with sysfs trace)   [failed]
+    runtime  0.367s  ...  0.437s
+    something found in dmesg:
+    [   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+    [   81.239580] null_blk: disk nullb1 created
+    [   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+    [   81.362842] caller is tracing_record_cmdline+0x10/0x40
+    [   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+    [   81.362877] Tainted: [N]=TEST
+    [   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+    [   81.362881] Call Trace:
+    [   81.362884]  <TASK>
+    [   81.362886]  dump_stack_lvl+0x8d/0xb0
+    ...
+    (See '/mnt/sda/blktests/results/nodev/blktrace/002.dmesg' for the entire message)
 
-The socket implementation returns without freeing it, and the skb is
-leaked.
+[   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+[   81.239580] null_blk: disk nullb1 created
+[   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+[   81.362842] caller is tracing_record_cmdline+0x10/0x40
+[   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+[   81.362877] Tainted: [N]=TEST
+[   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[   81.362881] Call Trace:
+[   81.362884]  <TASK>
+[   81.362886]  dump_stack_lvl+0x8d/0xb0
+[   81.362895]  check_preemption_disabled+0xce/0xe0
+[   81.362902]  tracing_record_cmdline+0x10/0x40
+[   81.362923]  __blk_add_trace+0x307/0x5d0
+[   81.362934]  ? lock_acquire+0xe0/0x300
+[   81.362940]  ? iov_iter_extract_pages+0x101/0xa30
+[   81.362959]  blk_add_trace_bio+0x106/0x1e0
+[   81.362968]  submit_bio_noacct_nocheck+0x24b/0x3a0
+[   81.362979]  ? lockdep_init_map_type+0x58/0x260
+[   81.362988]  submit_bio_wait+0x56/0x90
+[   81.363009]  __blkdev_direct_IO_simple+0x16c/0x250
+[   81.363026]  ? __pfx_submit_bio_wait_endio+0x10/0x10
+[   81.363038]  ? rcu_read_lock_any_held+0x73/0xa0
+[   81.363051]  blkdev_read_iter+0xc1/0x140
+[   81.363059]  vfs_read+0x20b/0x330
+[   81.363083]  ksys_read+0x67/0xe0
+[   81.363090]  do_syscall_64+0xbf/0xf00
+[   81.363102]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   81.363106] RIP: 0033:0x7f281906029d
+[   81.363111] Code: 31 c0 e9 c6 fe ff ff 50 48 8d 3d 66 63 0a 00 e8 59 ff 01 00 66 0f 1f 84 00 00 00 00 00 80 3d 41 33 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 48 83 ec
+[   81.363113] RSP: 002b:00007ffca127dd48 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[   81.363120] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f281906029d
+[   81.363122] RDX: 0000000000001000 RSI: 0000559f8bfae000 RDI: 0000000000000000
+[   81.363123] RBP: 0000000000001000 R08: 0000002863a10a81 R09: 00007f281915f000
+[   81.363124] R10: 00007f2818f77b60 R11: 0000000000000246 R12: 0000559f8bfae000
+[   81.363126] R13: 0000000000000000 R14: 0000000000000000 R15: 000000000000000a
+[   81.363142]  </TASK>
 
-A connected DLC can have no owner: rfcomm_sock_destruct() clears
-d->owner, while the DLC itself stays on the session until it is closed.
-Data frames that arrive in that window still find d->state ==
-BT_CONNECTED in rfcomm_recv_data() and are handed to the callback, one
-leaked skb each.
+The same BUG fires from blk_add_trace_plug(), blk_add_trace_unplug(),
+and blk_add_trace_rq() paths as well.
 
-The leak does not stop on its own either.  The remote runs out of
-credits only once RFCOMM_RX_THROTTLED is set, and for a socket the only
-place that sets it is rfcomm_sk_data_ready() itself, below the return.
-rfcomm_process_dlcs() keeps granting credits, so the remote keeps
-sending and the leak keeps growing.
+The purpose of tracing_record_cmdline() is to cache the task->comm for
+a given PID so that the trace can later resolve it. It is only
+meaningful when a trace event is actually being recorded. Ring buffer
+reservation via ring_buffer_lock_reserve() disables preemption, and
+preemption remains disabled until the event is committed :-
 
-Free the skb, as the tty side does.
+__blk_add_trace()
+       	__trace_buffer_lock_reserve()
+       		__trace_buffer_lock_reserve()
+       			ring_buffer_lock_reserve()
+       				preempt_disable_notrace();  <---
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Closes: https://lore.kernel.org/linux-bluetooth/CABXGCsPe5wykd8Aj-hm+SJ7SGQyb8yoGNnx3XDpPmBathj+EGg@mail.gmail.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With this fix blktests for blktrace pass:
+
+  blktests (master) # ./check blktrace
+  blktrace/001 (blktrace zone management command tracing)      [passed]
+      runtime  3.650s  ...  3.647s
+  blktrace/002 (blktrace ftrace corruption with sysfs trace)   [passed]
+      runtime  0.411s  ...  0.384s
+
+Fixes: 7ffbd48d5cab ("tracing: Cache comms only after an event occurred")
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/blktrace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -50,8 +50,11 @@ static void rfcomm_sock_kill(struct sock
- static void rfcomm_sk_data_ready(struct rfcomm_dlc *d, struct sk_buff *skb)
- {
- 	struct sock *sk = d->owner;
--	if (!sk)
-+
-+	if (!sk) {
-+		kfree_skb(skb);
- 		return;
-+	}
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index 6941145b50589..da7303a5a7969 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -251,8 +251,6 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 	cpu = raw_smp_processor_id();
  
- 	atomic_add(skb->len, &sk->sk_rmem_alloc);
- 	skb_queue_tail(&sk->sk_receive_queue, skb);
+ 	if (blk_tracer) {
+-		tracing_record_cmdline(current);
+-
+ 		buffer = blk_tr->array_buffer.buffer;
+ 		trace_ctx = tracing_gen_ctx_flags(0);
+ 		event = trace_buffer_lock_reserve(buffer, TRACE_BLK,
+@@ -260,6 +258,8 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 						  trace_ctx);
+ 		if (!event)
+ 			return;
++
++		tracing_record_cmdline(current);
+ 		t = ring_buffer_event_data(event);
+ 		goto record_it;
+ 	}
+-- 
+2.53.0
+
 
 
