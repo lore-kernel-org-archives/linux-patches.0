@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B88D4F7CCD;
-	Tue, 13 Oct 2026 11:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5AF4E4302;
+	Tue, 13 Oct 2026 11:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892721; cv=none; b=D0z0Pu0co6u4Tg748a96Di2d4woIksoIrtrM76OyKADbqXtLYqL32rXcKMXs51CW0KMqBSLn/58a/SuPEWeKK049zMyDu/fRKc8jnR6GaN8yXTYxxGogpQjue3CgbVf2XAHwLSwrx+yiRAZlj1m6Nzce5eCjmlNsndXm3EaFE8Y=
+	t=1791892723; cv=none; b=oCTWk0SJ3US06AEin+2cCKlDgAjX80Bg2VPChlS9Wn8fExlfLaZOc1l1Gu1uF3Awlq3WSKEZ5QUXrlFGLs4k30pZ7rTUYdz8T0ErNM72PXCtl5YL2wdTlrQpTraf5RyGvGuMjqdS1ShGeqTYFnsYG9OdB7FVNwzXlwLLjAh4bG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892721; c=relaxed/simple;
-	bh=q56iSok/paUq/LbUvT+u3oQ62Vzl9+SQHqyOyk3oz1s=;
+	s=arc-20240116; t=1791892723; c=relaxed/simple;
+	bh=ayq7wAD6ISR5fm/BSFG4CD1gOuqwOwzNmxvUTyYmjK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B/6mdfjzM+X8qdk7Yx0D6TT+v3x58mn5FpPHIFP90b64xasxK27bTMwxGB6fXvJibCBpHSqVhleYLUtmGgNLGjNn78yFHyOsUl3fG7g8NR4DpGK3uBzNsVbIcGDbME6XHmqAILJwWtC8e5N9JEOM0JTExYplWqu9VNRdq2K+jRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7BX8Y/t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hYHTM2FLxIWQ2DIImjzMPuzyqaWu1oFhZs2E0Qzdr+ATUddkEwWvFnTbVs5U4xpLCwhUJT1lhxId5XcQJ3eF02xEbK5vKq9qzaxP4+tm+m0aR+puz4vpxKrrdCUJOKMbIPEHQFP2IWobNLQ+HrUbD0IoBW2RsfdU+CIz8mNnDzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM9/XQRA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7BX8Y/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA3B1F000FF;
-	Tue, 13 Oct 2026 11:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM9/XQRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D081F008A2;
+	Tue, 13 Oct 2026 11:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892719;
-	bh=pVn7MpRY6ohBlXviPhrYz6ScF6T4bkRLCOQlqSdaI/M=;
+	s=korg; t=1791892722;
+	bh=uaSQMKpz4QWux+CD72ZMlOrcokS/PpNhcJmwgwJUeGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7BX8Y/tUceJlAj8cG5K4OV2T5WPTLCqpakUcVo1SR4stQj1ENdgEZf+1fDOtQd1t
-	 oPfddyAVZJjTG5aoU0028il2p1yHG6iI/0ctS9AFbQ0j/zc240gS/LxKt6Q0yd+rgz
-	 TcQLzfVkDek98a+vTqaCBWZIrlNXUyEsc25uqSlA=
+	b=CM9/XQRAZlM/OT3dgsiZh9HHst9vzI1TrkH5sGgAVc6VBirzug1enQmKRb6KGmt9h
+	 NGy24jHWcufHrrj0mKENE+yyvFqvLdS2RM+mQLVgXTHrGTPkFu9APgiHVPvmiPW3Op
+	 JDOjH9Zo5OSkGpyyxamHBTbRlNWFRMPDcGRmA5s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Leto=20Liu=20 ?= <Leto.Liu@airoha.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	"GUO Ren (XuanTie)" <guoren@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Andy Chiu <tchiu@tenstorrent.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 223/281] net: airoha: Add retry mechanism to airoha_qdma_set_trtcm_param()
-Date: Tue, 13 Oct 2026 13:38:59 +0200
-Message-ID: <20261013112900.568618216@linuxfoundation.org>
+Subject: [PATCH 7.2 224/281] riscv: vector: Fix data pointer constraints in context save/restore
+Date: Tue, 13 Oct 2026 13:39:00 +0200
+Message-ID: <20261013112900.591369103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -46,98 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leto Liu (刘涛) <Leto.Liu@airoha.com>
+From: Troy Mitchell <troy.mitchell@linux.dev>
 
-[ Upstream commit 7e170da2edec9fb0717543571cc14b0aabee2b46 ]
+[ Upstream commit 572b25f3a6453d8e7fc28cc0cefe41ed15be166c ]
 
-CPU accesses QDMA via the bus. When multiple modules are using the bus
-simultaneously, CPU access to QDMA may encounter bus timeouts and fails,
-resulting in QDMA configuration failures and potentially causing packet
-transmission issues. In order to mitigate the issue, introduce a retry
-mechanism to airoha_qdma_set_trtcm_param routine in order to ensure the
-configuration is correctly applied to the hardware.
+The standard vector save/restore asm advances datap but declares it as
+input-only. An inlined caller reusing the original pointer may therefore
+use the advanced address instead.
 
-It's enough to try a second time for the TRTCM config to be actually
-applied to make sure we are not in the middle of bucket handling as it does
-operate on fixed time slot internally.
+Declare datap as read-write so the compiler can preserve the original
+pointer when needed.
 
-Fixes: ef1ca9271313b ("net: airoha: Add sched HTB offload support")
-Signed-off-by: Leto Liu (刘涛) <Leto.Liu@airoha.com>
-[ improve commit description, drop memory block, apply better loop logic]
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://patch.msgid.link/20260930065855.46171-1-ansuelsmth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 03c3fcd9941a ("riscv: Introduce struct/helpers to save/restore per-task Vector state")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: GUO Ren (XuanTie) <guoren@kernel.org>
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Andy Chiu <tchiu@tenstorrent.com>
+Link: https://patch.msgid.link/20260908-riscv-vector-asm-fix-v1-1-147f314efb2b@linux.dev
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 32 +++++++++++++++++++-----
- drivers/net/ethernet/airoha/airoha_eth.h |  2 ++
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ arch/riscv/include/asm/vector.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 2fc8c91f210c6..d4faf4503487e 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2716,14 +2716,34 @@ static int airoha_qdma_set_trtcm_param(struct airoha_qdma *qdma, int channel,
- 		     FIELD_PREP(TRTCM_METER_GROUP_MASK, group) |
- 		     FIELD_PREP(TRTCM_PARAM_INDEX_MASK, idx) |
- 		     FIELD_PREP(TRTCM_PARAM_RATE_TYPE_MASK, mode);
-+	int i;
- 
--	airoha_qdma_wr(qdma, REG_TRTCM_DATA_LOW(addr), val);
--	airoha_qdma_wr(qdma, REG_TRTCM_CFG_PARAM(addr), config);
-+	/*
-+	 * HW might be in the middle of bucket handling and might
-+	 * require an additional try to actually apply the new TRTCM
-+	 * config.
-+	 */
-+	for (i = 0; i < TRTCM_CONFIG_RETRY_MAX; i++) {
-+		u32 data = 0;
- 
--	return read_poll_timeout(airoha_qdma_rr, val,
--				 val & TRTCM_PARAM_RW_DONE_MASK,
--				 USEC_PER_MSEC, 10 * USEC_PER_MSEC, true,
--				 qdma, REG_TRTCM_CFG_PARAM(addr));
-+		airoha_qdma_wr(qdma, REG_TRTCM_DATA_LOW(addr), val);
-+		airoha_qdma_wr(qdma, REG_TRTCM_CFG_PARAM(addr), config);
-+
-+		if (read_poll_timeout(airoha_qdma_rr, data,
-+				      data & TRTCM_PARAM_RW_DONE_MASK,
-+				      USEC_PER_MSEC, 10 * USEC_PER_MSEC,
-+				      true, qdma, REG_TRTCM_CFG_PARAM(addr)))
-+			continue;
-+
-+		if (airoha_qdma_get_trtcm_param(qdma, channel, addr, param,
-+						mode, &data, NULL))
-+			continue;
-+
-+		if (data == val)
-+			return 0;
-+	}
-+
-+	return -EBUSY;
+diff --git a/arch/riscv/include/asm/vector.h b/arch/riscv/include/asm/vector.h
+index 00cb9c0982b1a..e94f81cedda56 100644
+--- a/arch/riscv/include/asm/vector.h
++++ b/arch/riscv/include/asm/vector.h
+@@ -225,7 +225,7 @@ static inline void __riscv_v_vstate_save(struct __riscv_v_ext_state *save_to,
+ 			"add		%1, %1, %0\n\t"
+ 			"vse8.v		v24, (%1)\n\t"
+ 			".option pop\n\t"
+-			: "=&r" (vl) : "r" (datap) : "memory");
++			: "=&r" (vl), "+r" (datap) : : "memory");
+ 	}
+ 	riscv_v_disable();
  }
- 
- static int airoha_qdma_set_trtcm_config(struct airoha_qdma *qdma, int channel,
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index 70f16189b2582..dc0c29001f810 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.h
-+++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -171,6 +171,8 @@ enum trtcm_param {
- #define TRTCM_TOKEN_RATE_MASK			GENMASK(23, 6)
- #define TRTCM_TOKEN_RATE_FRACTION_MASK		GENMASK(5, 0)
- 
-+#define TRTCM_CONFIG_RETRY_MAX			2
-+
- enum airoha_dma_map_type {
- 	AIROHA_DMA_UNMAPPED,
- 	AIROHA_DMA_MAP_SINGLE,
+@@ -261,7 +261,7 @@ static inline void __riscv_v_vstate_restore(struct __riscv_v_ext_state *restore_
+ 			"add		%1, %1, %0\n\t"
+ 			"vle8.v		v24, (%1)\n\t"
+ 			".option pop\n\t"
+-			: "=&r" (vl) : "r" (datap) : "memory");
++			: "=&r" (vl), "+r" (datap) : : "memory");
+ 	}
+ 	__vstate_csr_restore(restore_from);
+ 	riscv_v_disable();
 -- 
 2.53.0
 
