@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1525B501F4B;
-	Tue, 13 Oct 2026 12:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAF15013D9;
+	Tue, 13 Oct 2026 12:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892950; cv=none; b=EPncBhZHxG/l6aNz72MZY8w8H6A5UnlQuWvuq8CDCfbIm0WQSmGdE/HU274OY6Aap/pyeuFdnPuF9dEftdKahDz3NY849r4S0WzOUYgghi0eWfVk9SPXTpFQKh6ejf1pcMUKDrHQUWr6gMLqO6Ta8tf0pPAMQUqasfxQU0d5fIs=
+	t=1791892952; cv=none; b=hB9I/scNOOmAhiEtsXPuOpMG7RiBVxMswgFhpIJCdyyjEkdHOO9xU/QhlbkBgGxq2l4EK1ztdjqHbnHBeXj/guzTRKdfN+RxLz8CzDuWFxjftjzeL0heV955FqUDxk09fpZR3F5x/roxBo4D0T8/sgaIr/oHl91EoKwwI2k80vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892950; c=relaxed/simple;
-	bh=d8T/9drZhi0nRfmp/UQXjsrUp/SIjuPCnkbYDFzpWok=;
+	s=arc-20240116; t=1791892952; c=relaxed/simple;
+	bh=70i6CRlEEo29xH2TCd0lLxQv4NSSU96LyaXIg+ER29s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVpz21E14qzDvlB7R3EKEoWrjhRe+bjX7w+Jlz6ML0Fh+DNqiZcKcVR/kgvp4LzUZFJPBNqkv6VcqbgJs3tDkD5RHV0yqroHePvlJwVRgrTYqR0btg3heyYSMO+lG2qDA7u2ZezUlKagYbSF2tAFfRxB9dMG7mOXfsQ7Q5PTt3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2ilguWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yz8wYp46NwHuv3rCi5VX/4Q0vbS8btOTa0cqJcesVWn1s/InvY661h8kD7sjLBvbxKRMtb2l4buBFXjmGJTzvKiXgJrrsC8uLYObFGnzlK/nSKW40J0tpcz/NHqv7uRgzPHx0fmX2x990k+eqQzK64CyedeKm4iKYMM4ERmli50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPOjzBH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2ilguWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD3E1F0089A;
-	Tue, 13 Oct 2026 12:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPOjzBH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3331F00898;
+	Tue, 13 Oct 2026 12:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892949;
-	bh=Aoy5hy2SdR8Tbp5UwXyahlNPLqF5x2T93+ahzulF+Ms=;
+	s=korg; t=1791892951;
+	bh=tr8y6X9lE7hNwRaZtN57xO2bZ3JnV00yItDynNAd520=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H2ilguWcDcWH+rq439+0gA/Yvd9dOfRi/sBVqyxCYZJwN83kn5gO/qQur/H/i8QDq
-	 Y+EhhpkCxOBhh3KDA3ZFjLyxAHm5q4Wq3gBZBf3/iO7Lr/wPDj7blNo5iyEOvI1fWw
-	 drjp99vQzAVUHhXmNxEKGdIqiWJxp0rrCy6ze/wM=
+	b=oPOjzBH4kFYKCqkUG4AQ/qvsCHWJSj+TmIzCLaAurHPDzbT3Ype9WIuZGRtQvfUtu
+	 Ay2STa2fifgcb2K0n1miGu4NVbXWsrI14lUZH0TnFEaPbeiIDtY3jp2juT/nljMdEZ
+	 Hor915t+S1V46GF6xxI6hktdLsT+U/7C2IVmcKKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 018/621] ipv4: stop PMTU walk when nexthop group shrinks
-Date: Tue, 13 Oct 2026 13:30:13 +0200
-Message-ID: <20261013112921.296972845@linuxfoundation.org>
+Subject: [PATCH 6.18 019/621] ipv4: stop exception dump when nexthop group shrinks
+Date: Tue, 13 Oct 2026 13:30:14 +0200
+Message-ID: <20261013112921.320552625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,55 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 6619e01855e65ef35723685a557e3eb106f4ecf5 upstream.
+commit 4f4afc07dcb2edd4f9afa36595373f8cdb9b58c2 upstream.
 
-Commit 7d3f3b4367f3 ("net: ipv4: Cache pmtu for all packet paths if
-multipath enabled") made __ip_rt_update_pmtu() update every path.
+Commit 4ce5dc9316de ("inet: switch inet_dump_fib() to RCU
+protection") allowed IPv4 FIB dumps to run concurrently with nexthop
+replacement.
 
-For nexthop objects, fib_info_num_path() and fib_info_nhc()
-independently load nh->nh_grp.  RCU protects each group's lifetime but
-does not make the loads observe the same group.  If replacement shrinks
-the group after the loop accepts an index, fib_info_nhc() returns NULL
-and update_or_create_fnhe() dereferences it.
+fib_dump_info_fnhe() uses fib_info_num_path() as the loop bound,
+then fib_info_nhc() independently reloads nh->nh_grp. If
+RTM_NEWNEXTHOP replaces a group with fewer paths between those loads,
+fib_info_nhc() returns NULL and the dump dereferences it through
+nhc_flags.
 
-A deterministic probe only widened the existing window between the real
-operations.  On v7.2, an RTM_NEWNEXTHOP replacement published a
-one-member group after the PMTU reader accepted index 1 from a two-member
-group, producing:
+Stop the walk when the indexed path is absent. Nexthop groups are
+dense, so the current snapshot has no later path.
 
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: update_or_create_fnhe+0x45/0x15b0
-
-Stop when the indexed path is absent.  Groups are dense, so no later
-index exists in that snapshot.  The same real-writer window completed
-114,423 PMTU iterations without an oops with this check.  A reproducer
-is available on request.
-
-Replacement requires CAP_NET_ADMIN in the network namespace.  Where
-unprivileged user namespaces are permitted, a local user can obtain it
-in a new user and network namespace.
-
-Fixes: 7d3f3b4367f3 ("net: ipv4: Cache pmtu for all packet paths if multipath enabled")
+Fixes: 4ce5dc9316de ("inet: switch inet_dump_fib() to RCU protection")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/netdev/20261001170513.GA1657889@shredder/
 Cc: stable@vger.kernel.org
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/4fb87ed994dfc067178fc845cdd8bc9b5446b039.1790915964.git.4ncienth@gmail.com
+Link: https://patch.msgid.link/5bb7bd97411eb9db454464bf449107395e760f26.1790915964.git.4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/route.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/ipv4/route.c
 +++ b/net/ipv4/route.c
-@@ -1080,6 +1080,8 @@ static void __ip_rt_update_pmtu(struct r
+@@ -3168,6 +3168,9 @@ int fib_dump_info_fnhe(struct sk_buff *s
+ 		struct fnhe_hash_bucket *bucket;
+ 		int err;
  
- 			for (nhsel = 0; nhsel < fib_info_num_path(res.fi); nhsel++) {
- 				nhc = fib_info_nhc(res.fi, nhsel);
-+				if (!nhc)
-+					break;
- 				update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
- 						      jiffies + net->ipv4.ip_rt_mtu_expires);
- 			}
++		if (!nhc)
++			break;
++
+ 		if (nhc->nhc_flags & RTNH_F_DEAD)
+ 			continue;
+ 
 
 
