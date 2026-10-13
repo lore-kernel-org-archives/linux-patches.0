@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CA24F30DC;
-	Tue, 13 Oct 2026 11:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9044F3EC2;
+	Tue, 13 Oct 2026 11:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892407; cv=none; b=Bd3XooxaedZ/v+93PIsO0qzKjq8Rg9AkvvUxIL+DWt9dLKMz6GLpeFH8tcIhg7QH6n8QiJByjqjk8jBgYNt8P0uwI3SawfzE8kw16jx71GBVcSy1Bzfw33XYILzzTBQwmO2PyWpNNyjH0HpZwAaQCl8HYdOutJhLIOYD4yn5eS4=
+	t=1791892408; cv=none; b=Wm64apq/jr0RBUkiHir9a3b57pvUUTXJqa0F7rGDJrn6RMDfWhF+AGQUXTb/Ytm5ocPcbiqNZKGSrvXRDrwZ/Dm3xF1RKauTQ/mzUig0Y+MU1E3Ht0RZrio2aQTV/71D2jJ3mYPGUtZOe7mGU4hkeoqcYvsbDfpBXz4kubCGjUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892407; c=relaxed/simple;
-	bh=Itz3rqad8RjvZWFZXD+WeFiI0CYSXGrd/+4ryd8IKrE=;
+	s=arc-20240116; t=1791892408; c=relaxed/simple;
+	bh=+BJIqyGXCkD1zJrNQ7l+vexwhU+xS5vslzKVWZ3F90c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxtjU6SVbGvSBANzCKAAQIIMyelwfoJKvTGRoBO79JxnAyw5KR9RvZk3dbEGWFAkfjSr+r330SLxGR377aKl09zTLU1nSVxLjn1HZQ5ETzfNA4hGZIdHduOBPWvzp+zQIKLE7PleSm9I4Qe8XFKUun1eVMvdlvwjvaGo7RQPPPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtxB72uP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wlh7+4Y3Ljub26W7+qM3FwqBUS37K8EZYlLVw6QCA6Q9jai+mp/dMrHL0mF6aaKFUeZ5JStLldS7qtRxd51q0y6zd4IIi1P1dUYoYsd0PVyGslovNszHSs9m1eEFczTHA9ShSm9JqS6rlkiLxqxmyK7D1HesqezsMOeGjykeBGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpjQpt5A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtxB72uP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5EB1F00898;
-	Tue, 13 Oct 2026 11:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpjQpt5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BEA1F000FF;
+	Tue, 13 Oct 2026 11:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892404;
-	bh=yxIv6Jdj50mZtDRg7O+7wYPWppUXPFFrOqyPd3j+SL8=;
+	s=korg; t=1791892407;
+	bh=tyrpXM3BsMXPBZgEfvI3gQh3kk2lFfAV6BFlZRd3aw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XtxB72uPCfnd1sotAZZYoc6TJbZsukQI58Nl61Li1EPsmohTywV++rPX0I3i+J1Kj
-	 Hypccze/pzwiQW7Mn3Rf5eaqni1CSLHE9aCd3QXIrvuUowv11LMIKduE8PublrnAy8
-	 m0Tp+YRUZopFOtAIK/hxeXtD1UV/aYsO8nUXgLKY=
+	b=PpjQpt5A/O/EUsHWkaiFT0Ijpruk4Iro5Ewz8ma/9fiX300qGuvp6nxmgdoBXXKxI
+	 MFFi2s1Q6qw1JoujdU5CoLpKzpU5xF1v94ugJoTLIgYLTSurV3M02wQRaY9q3OqkJw
+	 o9YmPKJCi9LPP9W+IyiooW3mKn/tybV3ikENo86s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 161/281] namespace: remove the fsnotify marks of a mount namespace in process context
-Date: Tue, 13 Oct 2026 13:37:57 +0200
-Message-ID: <20261013112859.070494729@linuxfoundation.org>
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 7.2 126/281] drm/i915/gem: Prevent overstepping exec array boundary
+Date: Tue, 13 Oct 2026 13:37:22 +0200
+Message-ID: <20261013112858.207195590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,63 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-commit 1a116222acdcc1bc1a8350727ae6f28907d44594 upstream.
+commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
 
-mnt_ns_release() drops the last passive reference of a mount namespace
-and removes its fanotify marks via fsnotify_mntns_delete(). That takes
-the mutex of every group with a mark on the namespace and the spinlock
-of the connector. Fine from process context. But mnt_ns_tree_remove()
-hands the reference the namespace was allocated with to call_rcu() and
-so the marks are removed from the RCU softirq:
+It is possible for eb_relocate_parse_slow() to call kvfree() on
+entries outside the original exec array during following
+scenario inside eb_relocate_parse_slow():
 
-  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:623
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/3
-   __mutex_lock+0x113/0x24b0
-   fsnotify_destroy_marks+0x11b/0x3d0
-   mnt_ns_release_rcu+0x57/0xa0
-   rcu_core+0x6b6/0x1e40
+1) eb_copy_relocations() allocates as many as eb->buffer_count
+   copies for exec entries;
+2) eb_parse() appends up to two VMAs, right after incrementing
+   eb->buffer_count;
+3) cleanup under "out" label uses this incremented buffer_count
+   to release relocation pointers from exec array via kvfree(),
+   not from VMA array.
 
-and lockdep complains about the connector lock being taken from softirq
-context. A fanotify group with a FAN_MARK_MNTNS mark on the mount
-namespace of another task is all that's needed. Root in a user
-namespace can do that for a mount namespace it owns. The task exits and
-the namespace is freed with the mark still on it.
+To amend this problem, ensure that relocation cleanup uses the
+original exec object count, excluding the VMAs appended by the
+command parser.
 
-Remove the marks in free_mnt_ns() before the namespace is handed to RCU.
-That runs in process context once the last active reference is gone. A
-mark is added through a file descriptor to the namespace which holds an
-active reference so no mark can show up after that.
-
-Fixes: bf630c401641 ("vfs: add notifications for mount attach and detach")
-Cc: stable@vger.kernel.org # v6.15+
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-13-be34c83956ae@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Assisted-by: GitHub-Copilot:gpt-6-astra
+Cc: stable@vger.kernel.org # 5.10+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
+(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -130,7 +130,6 @@ static void mnt_ns_release(struct mnt_na
- {
- 	/* keep alive for {list,stat}mount() */
- 	if (ns && refcount_dec_and_test(&ns->passive)) {
--		fsnotify_mntns_delete(ns);
- 		put_user_ns(ns->user_ns);
- 		kfree(ns);
- 	}
-@@ -4257,6 +4256,8 @@ static void free_mnt_ns(struct mnt_names
- 	if (!is_anon_ns(ns))
- 		ns_common_free(ns);
- 	dec_mnt_namespaces(ns->ucounts);
-+	/* the last active reference is gone, no mark can show up anymore */
-+	fsnotify_mntns_delete(ns);
- 	mnt_ns_tree_remove(ns);
- }
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -1766,6 +1766,7 @@ static int eb_reinit_userptr(struct i915
  
+ static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb)
+ {
++	const unsigned int count = eb->buffer_count;
+ 	bool have_copy = false;
+ 	struct eb_vma *ev;
+ 	int err = 0;
+@@ -1868,7 +1869,6 @@ err:
+ 
+ out:
+ 	if (have_copy) {
+-		const unsigned int count = eb->buffer_count;
+ 		unsigned int i;
+ 
+ 		for (i = 0; i < count; i++) {
 
 
