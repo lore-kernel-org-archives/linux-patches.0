@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321274EDCB6;
-	Tue, 13 Oct 2026 12:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8AF47AF65;
+	Tue, 13 Oct 2026 12:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893131; cv=none; b=HJRrxD7jRxN70jEvTr1B8Q+gjhc4XBoizKJ0dg3X+LKlDYKp/iADT47EGxYEctX0wdzan8weCGu3SyCLWyu1O7FYhALqJ9+NcwsczuMW0eneRA0RFxm2rqwnbX1yqtOYArraBFLR9pvGEUhVlSG4nMsgCxCPhxf7s6e2BzjPnF4=
+	t=1791893134; cv=none; b=HRZQAB2dJJKaflY02awFhWAtFO0oLKA2ZRsnaIb4XPEQTHFqQAJ5XaE/dhzJ+mPDmdLHTwEsKYEGiOhbYJ+iZiiErd2wQfjBuWVDGtDqQe0ou3SB1cHKO58BURKgR91gkwC9PqyyeNzEuMqt/cbJf2oga8UInZJwydYxEhylp1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893131; c=relaxed/simple;
-	bh=ijiYQzLaopr2O+MKJtH9ua9kRZtGzFF4oJEWR0B/sOE=;
+	s=arc-20240116; t=1791893134; c=relaxed/simple;
+	bh=cDqaeoymDZ6FEqDajH4/C65vp0MnQFS/SiZMvhEsWD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L5chN12M1YfdSRNjkatby/bBE14ZBuwUYvoI5d16tSLR6bRoOjyww3+cZOLCtAnYvj5mhw6q8W3Aiql7gaYTysgHBT7QUsCpkkoIqQd/jB9w50Zov6NsNWcvu471EDxofuwOvQvApATiwi7gUsI8/4dS/ZM02mpWz0fW71QnPOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CICwfLM8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YlaN+U+nEYRb3kho/RR0zdQ7dXL67JZFxbMNg3e12UChlyT1d/he0T1l/s1YQb/kGJtiUKJAHsrJ5PvM+Zzs/Es3/2cF92teWjaA/5ilZaRLHz+6Jxw67c3yJaSVqjTh3qsKqarty3gb39rFB8Uf26Uatzq8ecL9QsqIB94HYik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsvh9aSo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CICwfLM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF631F000FF;
-	Tue, 13 Oct 2026 12:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsvh9aSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A33E1F000FF;
+	Tue, 13 Oct 2026 12:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893130;
-	bh=HbDQQH24EuiDoEv44TYtqQw+XS+1+tQrmA9bYQ3s4oY=;
+	s=korg; t=1791893133;
+	bh=pJe3YDOoaxD90NdqjPLoxumf/w5Z307S4/PfhD5YvwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CICwfLM8P2t315tKmkfe+JiPcOUP5M9TaIe7QEIqvMlcUHdf7ESOzmYeZunbA7DoB
-	 o6muZTiJ8jSLPqF8ixCVBpb4KRU0DMmabjm75CylSpEQjQC29lf/WO4y5uwQZNLTmg
-	 g+/W9U6O15SyNB+ezk8DDj5P2ab5JTHorg2mX8Pc=
+	b=jsvh9aSo9GZr6B3o6ZvqdR6jUEQ9G0xK6rOjSxB7lkbVgiLFgLBxZa+SN6uft2k1K
+	 G0xmjS1pUzqefGHJOUoTFhYDwMxztDbMiixLPrOgA7M9NiMa/Q2DR7q7/EQ0cH6yKf
+	 fjUe7A4dTyqPMEV4+cunexXvAA1RtqRRdRAg1o5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Tom St Denis <tom.stdenis@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 124/621] drm/amdgpu: copy debugfs register data outside the GRBM/SRBM locks
-Date: Tue, 13 Oct 2026 13:31:59 +0200
-Message-ID: <20261013112923.800714442@linuxfoundation.org>
+Subject: [PATCH 6.18 125/621] drm/amdgpu/userq: only accept doorbell BOs as queue doorbell
+Date: Tue, 13 Oct 2026 13:32:00 +0200
+Message-ID: <20261013112923.824429304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,201 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit 16c64495859f13f75602f439588883f2a4a4d6a6 upstream.
+commit 7f7c88dbf4d543f6703e53bdeed380e886733167 upstream.
 
-Reading or writing a register through the amdgpu_regs2 debugfs file
-with GRBM bank selection, which umr does for every banked access (a
-single "umr -b x x x -r <reg>" is enough, as is the wave dump with
-"-O halt_waves"), makes lockdep report a circular locking dependency,
-after which lockdep stays off until reboot:
+amdgpu_userq_get_doorbell_index() pins any BO passed as doorbell_handle
+into the doorbell domain. For a regular BO, TTM moves it with
+ttm_bo_move_null() and its contents are lost. Since an importer on the
+same device gets the exporter's GEM object, a client can do this to a
+buffer another client shared with it.
 
-  WARNING: possible circular locking dependency detected
-  umr/63306 is trying to acquire lock:
-  ffff8882cf4b8350 (&mm->mmap_lock){++++}-{4:4}, at: __might_fault+0x9b/0x140
-  but task is already holding lock:
-  ffff8881aec010d0 (&amdgpu_grbm_lock_key){+.+.}-{4:4}, at: amdgpu_debugfs_regs2_op.isra.0+0x20d/0xd00 [amdgpu]
-  ...
-  Chain exists of:
-    &mm->mmap_lock --> &amdgpu_srbm_lock_key --> &amdgpu_grbm_lock_key
-  ...
-   __might_fault+0xc5/0x140
-   amdgpu_debugfs_regs2_op.isra.0+0x441/0xd00 [amdgpu]
-   full_proxy_write+0x10e/0x1d0
-   vfs_write+0x1d0/0xf50
-   ksys_write+0x116/0x250
+Reject BOs that were not created in the doorbell domain.
 
-amdgpu_debugfs_regs2_op() and amdgpu_debugfs_process_reg_op() call
-get_user()/put_user() for every dword while holding grbm_idx_mutex or
-srbm_mutex, and pm.mutex if requested, so a fault there takes mmap_lock
-inside those locks. The lock hierarchy in amdgpu_lockdep.c puts
-srbm_mutex and grbm_idx_mutex below notifier_lock, which
-amdgpu_cs_submit() takes with the BO reservations held, and
-dma_resv_lockdep() orders the reservations inside mmap_lock. So
-mmap_lock is outside grbm_idx_mutex and srbm_mutex, and these two
-debugfs paths nest it the other way round. The copies under the locks
-are as old as the bank selection in both files; commit 1d0f5838b126
-("drm/amdgpu: Add lockdep annotations for lock ordering validation")
-only made them visible to lockdep.
+v2: drop the error message, use a local abo variable (Christian)
 
-Copy the user buffer in before any of the locks is taken and the result
-out after all of them are dropped, as amdgpu_debugfs_wave_read(),
-amdgpu_debugfs_gpr_read() and amdgpu_debugfs_gprwave_read() already do.
-The buffer is sized by the count passed to read() or write(), so an
-access larger than PAGE_SIZE is now rejected with -EINVAL; umr reads and
-writes one register at a time. A fault on the user buffer of a write now
-fails with -EFAULT before any register is written, instead of after a
-partial write.
-
-Fixes: 566281595037 ("drm/amd/amdgpu: Add bank selection for MMIO debugfs (v3)")
-Fixes: 37df9560cd3e ("drm/amd/amdgpu: New debugfs interface for MMIO registers (v5)")
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Tom St Denis <tom.stdenis@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Fixes: f09c1e6077ab ("drm/amdgpu: generate doorbell index for userqueue")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ccf9e35ed6811f2c25ba6368e7dc6481da17159d)
+(cherry picked from commit f7497bbc19db4821c62b9d97b31c9086feb2d917)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   77 ++++++++++++++++------------
- 1 file changed, 46 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -114,6 +114,20 @@ static int  amdgpu_debugfs_process_reg_o
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -317,6 +317,7 @@ amdgpu_userq_get_doorbell_index(struct a
+ 	uint64_t index;
+ 	struct drm_gem_object *gobj;
+ 	struct amdgpu_userq_obj *db_obj = db_info->db_obj;
++	struct amdgpu_bo *abo;
+ 	int r, db_size;
  
- 	*pos &= (1UL << 22) - 1;
- 
-+	if (size > PAGE_SIZE)
-+		return -EINVAL;
-+
-+	/*
-+	 * Access the user buffer only while none of the locks below are held:
-+	 * a fault takes mmap_lock, and grbm_idx_mutex and srbm_mutex nest
-+	 * inside it.
-+	 */
-+	u32 *data __free(kfree) = kmalloc(size, GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+	if (!read && copy_from_user(data, buf, size))
-+		return -EFAULT;
-+
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
- 	if (r < 0) {
- 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
-@@ -146,28 +160,16 @@ static int  amdgpu_debugfs_process_reg_o
- 		mutex_lock(&adev->pm.mutex);
- 
- 	while (size) {
--		uint32_t value;
--
--		if (read) {
--			value = RREG32(*pos >> 2);
--			r = put_user(value, (uint32_t *)buf);
--		} else {
--			r = get_user(value, (uint32_t *)buf);
--			if (!r)
--				amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, value, 0);
--		}
--		if (r) {
--			result = r;
--			goto end;
--		}
-+		if (read)
-+			data[result >> 2] = RREG32(*pos >> 2);
-+		else
-+			amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, data[result >> 2], 0);
- 
- 		result += 4;
--		buf += 4;
- 		*pos += 4;
- 		size -= 4;
- 	}
- 
--end:
- 	if (use_bank) {
- 		amdgpu_gfx_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff, 0);
- 		mutex_unlock(&adev->grbm_idx_mutex);
-@@ -183,6 +185,10 @@ end:
- 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
- 
- 	amdgpu_virt_disable_access_debugfs(adev);
-+
-+	if (read && copy_to_user(buf, data, result))
-+		return -EFAULT;
-+
- 	return result;
- }
- 
-@@ -233,11 +239,24 @@ static ssize_t amdgpu_debugfs_regs2_op(s
- 	struct amdgpu_device *adev = rd->adev;
- 	ssize_t result = 0;
- 	int r;
--	uint32_t value;
- 
- 	if (size & 0x3 || offset & 0x3)
+ 	gobj = drm_gem_object_lookup(filp, db_info->doorbell_handle);
+@@ -325,7 +326,17 @@ amdgpu_userq_get_doorbell_index(struct a
  		return -EINVAL;
- 
-+	if (size > PAGE_SIZE)
-+		return -EINVAL;
-+
-+	/*
-+	 * Access the user buffer only while none of the locks below are held:
-+	 * a fault takes mmap_lock, and grbm_idx_mutex and srbm_mutex nest
-+	 * inside it.
-+	 */
-+	u32 *data __free(kfree) = kmalloc(size, GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+	if (write_en && copy_from_user(data, buf, size))
-+		return -EFAULT;
-+
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
- 	if (r < 0) {
- 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
-@@ -277,24 +296,16 @@ static ssize_t amdgpu_debugfs_regs2_op(s
- 		mutex_lock(&adev->pm.mutex);
- 
- 	while (size) {
--		if (!write_en) {
--			value = RREG32(offset >> 2);
--			r = put_user(value, (uint32_t *)buf);
--		} else {
--			r = get_user(value, (uint32_t *)buf);
--			if (!r)
--				amdgpu_mm_wreg_mmio_rlc(adev, offset >> 2, value, rd->id.xcc_id);
--		}
--		if (r) {
--			result = r;
--			goto end;
--		}
-+		if (!write_en)
-+			data[result >> 2] = RREG32(offset >> 2);
-+		else
-+			amdgpu_mm_wreg_mmio_rlc(adev, offset >> 2, data[result >> 2],
-+						rd->id.xcc_id);
- 		offset += 4;
- 		size -= 4;
- 		result += 4;
--		buf += 4;
  	}
--end:
-+
- 	if (rd->id.use_grbm) {
- 		amdgpu_gfx_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff, rd->id.xcc_id);
- 		mutex_unlock(&adev->grbm_idx_mutex);
-@@ -314,6 +325,10 @@ end:
- 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
  
- 	amdgpu_virt_disable_access_debugfs(adev);
+-	db_obj->obj = amdgpu_bo_ref(gem_to_amdgpu_bo(gobj));
++	/*
++	 * Pinning a regular BO into the doorbell domain would discard its
++	 * contents, possibly those of a buffer shared by another client.
++	 */
++	abo = gem_to_amdgpu_bo(gobj);
++	if (!(abo->preferred_domains & AMDGPU_GEM_DOMAIN_DOORBELL)) {
++		drm_gem_object_put(gobj);
++		return -EINVAL;
++	}
 +
-+	if (!write_en && copy_to_user(buf, data, result))
-+		return -EFAULT;
-+
- 	return result;
- }
++	db_obj->obj = amdgpu_bo_ref(abo);
+ 	drm_gem_object_put(gobj);
  
+ 	r = amdgpu_bo_reserve(db_obj->obj, true);
 
 
