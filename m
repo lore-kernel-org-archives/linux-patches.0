@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B0A3AFD03;
-	Tue, 13 Oct 2026 11:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB4B49C4CC;
+	Tue, 13 Oct 2026 11:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892586; cv=none; b=Wimq25Ih14NcpRPqBZn9qf6EOoAML5v/NHnwQQsyGYVcE0LzW1yo6GzvZeKKTIAg+ElGhhMOuWSxpNkq2FJ906exc2vE28nEDCONpiA5tnOugOWZ1NIIG/FLl9YIMm2Iqitw0F/26Lhulnrf+u9D/dWkzAyAjxoxkqhlb1rUknc=
+	t=1791892589; cv=none; b=pcz5fjQtT30Gyki+HngfVbYimq98SFPQrGS7vsVaDOPEzbjS3ovG9RH35If8TpX6kD/vocvrL6KjqJQmRoXhgSJNR2/Khx2G7w59fSAE3o6W9S2qC6PlC0x4JKB542TEF+ldLI3p3OIC9TEWYsQI6B3hK0pfHUG5JgPAhiHDxqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892586; c=relaxed/simple;
-	bh=2frUz7OIGGFnwi72Hiw2xs6ki6/d+AhoAs6SA7uYEMM=;
+	s=arc-20240116; t=1791892589; c=relaxed/simple;
+	bh=fMXx7Zmk32i2VqUn2t00jTr2Don30w9id5V54Y8X5vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUGRuF3rygW1tHm0gyEfFo1F32nIwqePKi0QdiPdtOB3MKERhtld02oW6ITFa2jqlzJdr6xnQLdeK6SOKgCIKzeYYx5EKocg2a2lrWFmzqiEMJxUAPuIsZCv/7AiRBr5sMN+6jyxooRA9ZkL4EBvMW9hX/qgq/RP+1ji0JBPWP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyhGr6Fx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aV1JQGvjCm5a7KsqAUG4H9ucYHa5UO5Kh2HC7QHrPHSF9FuEKvJyUdLKYjOV02SWmnXXRHvTXssUdhssemDdXUtvut9geH8qk7GyvfO2fkD5sRKSdApm8TUttkkCCvKcLjJV/XRqGymKGhquvccMorI1LYbbjVCEFhBj92482x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zih+YubZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyhGr6Fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525D11F000FF;
-	Tue, 13 Oct 2026 11:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zih+YubZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3F91F000FF;
+	Tue, 13 Oct 2026 11:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892584;
-	bh=1hajsRJGUZdkpmtn8l2eDMFbjN/WmsIMZeh3KU1koi4=;
+	s=korg; t=1791892587;
+	bh=7p3hU2J7wrwkJ1ppBJacL7UImBZBwyaVHwFwoC1CxQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyhGr6Fx5wyhtnNeBDk9akuCYqZgyTk84YiZSKB9ZjOkT9yCc24l4dCbIOjJTbn6h
-	 S54jM833k87ESS2bQi1TmVw9p+T+t4xmriAdhSTMY7mY3yfgI2So8oEPvAOtD6WwOf
-	 NoLv2Gsq0Fa3NxAqllyDJstwCiNViZxiOVgfVytg=
+	b=Zih+YubZ1SN1TGhV3hTb0vB/FIorBV7g0yzr/pMv6LuBN5eZfIctffg9RcMrc3jvw
+	 B4vpj57JXZwsbVmd4zgfGsQclSg18PgbzVinBosQ8XDjEBCJUQufnmUa//ADtmQStR
+	 1ddUI88qINgbQ6z0fRN6CbzASTVwlJ8bQN+lfji0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 178/281] clk: qcom: gpucc-glymur: Mark the GPU CX GDSC as votable
-Date: Tue, 13 Oct 2026 13:38:14 +0200
-Message-ID: <20261013112859.485849632@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 169/281] namespace: refuse an automount below a mount that is in no namespace
+Date: Tue, 13 Oct 2026 13:38:05 +0200
+Message-ID: <20261013112859.268099055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,43 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 8f3f88309fa4e975ac27368ee945c2c202251a7c ]
+commit ba985ce08471c555af2a2fbe217c1bc2e72a6d8c upstream.
 
-The GPU CX GDSC on Glymur is a votable power domain and hence should
-not be polled for power-off status during GDSC disable. Also, its
-power-on status should be read from the GDS hardware control register.
+It's possible to add autmounts even when the parent mount isn't in the
+mount namespace of the caller. The only requirement we have is that the
+parent mount namespace must not be NULL, i.e., unmounted.
 
-Accommodate this by removing POLL_CFG_GDSCR and adding the VOTABLE
-flag for the GPU CX GDSC, similar to other platforms (e.g. SM8750 and
-Milos).
+Problem is that clone_private_mount() has MNT_NS_INTERNAL which makes
+that trivially true. So that passes the test and attach_recursive_mnt()
+accepts that as a mount point and funny enough, count_mounts()
+dereferences MNT_NS_INTERNAL. The problem is it is an error pointer...
 
-Fixes: 67e645285dd0 ("clk: qcom: Add support for GPUCC and GXCLK for Glymur")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260801-kaanapali-gpu-voteable-v1-1-fe804d24d2e9@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So we can reach this in userspace via fanotify. A filesystem mark on the
+lower filesystem of an overlay reports paths on the layer clone and
+reading the event hands out a descriptor on it. For example with debugfs
+as the lower layer it goes kaboom:
+
+  openat(evfd, "tracing", O_DIRECTORY)
+
+  Oops: general protection fault
+  KASAN: null-ptr-deref in range [0x1d0-0x1d7]
+  RIP: 0010:count_mounts+0x35/0x200
+   attach_recursive_mnt
+   finish_automount
+
+And since that sleeping beauty happens under namespace_sem held for
+writing every mount operation on the system blocks from then on.
+Congrats.
+
+Use is_mounted() instead which rejects unmounted and internal mounts
+alike. The open fails with EINVAL just as it did before
+clone_private_mount() used MNT_NS_INTERNAL.
+
+Fixes: df820f8de4e4 ("ovl: make private mounts longterm")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-5-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gpucc-glymur.c | 2 +-
+ fs/namespace.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gpucc-glymur.c b/drivers/clk/qcom/gpucc-glymur.c
-index 001b2454786a0..cac51de20b295 100644
---- a/drivers/clk/qcom/gpucc-glymur.c
-+++ b/drivers/clk/qcom/gpucc-glymur.c
-@@ -510,7 +510,7 @@ static struct gdsc gpu_cc_cx_gdsc = {
- 		.name = "gpu_cc_cx_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = RETAIN_FF_ENABLE | VOTABLE,
- };
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3784,7 +3784,7 @@ static int do_add_mount(struct mount *ne
+ 		if (!(mnt_flags & MNT_SHRINKABLE))
+ 			return -EINVAL;
+ 		/* ... and for those we'd better have mountpoint still alive */
+-		if (!parent->mnt_ns)
++		if (!is_mounted(&parent->mnt))
+ 			return -EINVAL;
+ 	}
  
- static struct clk_regmap *gpu_cc_glymur_clocks[] = {
--- 
-2.53.0
-
 
 
