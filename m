@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5714E7816;
-	Tue, 13 Oct 2026 11:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE73A3D5241;
+	Tue, 13 Oct 2026 11:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892474; cv=none; b=l+yNj6UTOy+KHv+P45YOdfOITc3EOvyQaacFyq3JjjRJ+mPY0TdhZAinhtxamZtRiVT4F8oCj4A5RqNT9BYwNX+fGcOVqiiZW239eLcsBZqIM/SnKq8d4AYdDLEuQgWNxsazArZn56o570qxUaO4XgDCVVWVEqwB5UyW+11f0zI=
+	t=1791892477; cv=none; b=UAN+9BYa3KqQDNmJmAMo0fnkMshJtP12rlPThCL/bSRTpkkQp+EOb3cEvELAeCVPSLggi8RcQVdez73A3W45tk5J8olP1TRGzyYaOEstn7ekcpuwteoq3JtCKRa1TCKzbcHMHxUkoqquRg9zA9x+0145+B/wRU1lE/eV0Uich0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892474; c=relaxed/simple;
-	bh=r4dJCHdjNlxkqSRZk31tabf5d5TuqNfrPv+85ZasakY=;
+	s=arc-20240116; t=1791892477; c=relaxed/simple;
+	bh=Zvk35JGF8kCzJuNgKcJ8m6aEomvXKpDvNasWmj+ueIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRhcE4qT+dNjw4wiYNnnm0+njKVljtoAkqChllBZPo/f6IlRdzk7cMOaAGDubewUtPLE3H62Hm/slBPou48t4KB2lco0meOz5mdHdMMIiHXuSqHo+20njk9IzFId06/RfrBzlpkFnFbyKPRvxLgVf72QdRM9UiJxv1mKJFAva1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgtpU9xH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lgzs7NebYdx3pvHajjnmAyY+tSBz64x+m6qa4B+zTM21kosgT1Br0/S7/8De/8MAX2yQIUBQ2hQ34aqu2r/LiqLNDuCxjwV7UhMBACg1lu8FyQoPovpLVD5DYfTDwnlkHMe5V5OweXGjUuzvbZscpzOhg55BQuHpe+v77dcEurY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jX2d7hPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgtpU9xH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8091F000FF;
-	Tue, 13 Oct 2026 11:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jX2d7hPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE831F000FF;
+	Tue, 13 Oct 2026 11:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892473;
-	bh=Ldxy5qR5Bab5fEBMhPO+dXG+PF3UU8wJnonCZcsf8+c=;
+	s=korg; t=1791892476;
+	bh=0iR6On0bSYTZeXJczWzGMqteFOBnDk+1peiMOcFqHfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QgtpU9xHtgKHTOVnHcULX3jGH1NywIZpWjGDH3FFcMRf8+kFhBNfiMLLmTF6EOjP9
-	 51dpUgyJKP1jus81cPQm2x6100Yae3Ygwj3YvMA3rB/qs2mcndNvTSaLznL58X8jPh
-	 aLbSrogcMtcdECkskEh/LAdEhKQ/DLU3jyka2DPc=
+	b=jX2d7hPhAsMbgUo7yJ8ScHIrYMYa7xXip0IW3in8Nun/pAZG/faEhFcZRzVq54A3N
+	 tQNf8x2A6UHIcp1cn8TPkwe0T2YWU9dkirh5J5NJKZqm+u5CZ63ph0yNelywJow9X+
+	 bH43LusyjEG8beYO/stJD1zI8+Ulu7llYUYZFzys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naomi Chu <naomi.chu@mediatek.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Ravindra <ravindra@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 186/281] scsi: ufs: core: Hold a clock reference across the probe
-Date: Tue, 13 Oct 2026 13:38:22 +0200
-Message-ID: <20261013112859.679448262@linuxfoundation.org>
+Subject: [PATCH 7.2 187/281] Bluetooth: btintel_pcie: fix TX descriptor bounds check
+Date: Tue, 13 Oct 2026 13:38:23 +0200
+Message-ID: <20261013112859.703206229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,146 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naomi Chu <naomi.chu@mediatek.com>
+From: Ravindra <ravindra@intel.com>
 
-[ Upstream commit 02a3178319639f650428164d4d003de4dc03e326 ]
+[ Upstream commit baa53af641c9e3644e717b8dfd1b95a55a0c111b ]
 
-Clock gating becomes possible as soon as ufshcd_init_clk_gating() has run,
-and from that point on the probe keeps accessing host registers without
-ever taking a clock reference. This has been safe only because of the state
-check in __ufshcd_release(): gate_work is not queued unless
-hba->ufshcd_state is UFSHCD_STATE_OPERATIONAL, and the promotion to that
-state used to happen after the last register access of the probe, at the
-end of ufshcd_probe_hba().
+btintel_pcie_prepare_tx() uses tfd_index to access the TFD and data
+buffer arrays before the index is advanced modulo txq->count. An index
+equal to txq->count is one past the end of both arrays, so reject it in
+the bounds check.
 
-That is fragile: it only works while the promotion happens after the
-register accesses. Commit a390e6677f41 ("scsi: ufs: core: Expand the
-ufshcd_device_init(hba, true) call") changed that ordering by moving the
-promotion into ufshcd_init(), which schedules ufshcd_async_scan()
-afterwards. ufshcd_probe_hba() therefore now runs with the state already
-promoted, and it accesses host registers without holding a clock reference:
-
- - On hosts with UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH it calls
-   ufshcd_hba_stop() and ufshcd_hba_enable() before ufshcd_device_init()
-   sets the state back to UFSHCD_STATE_RESET, and both read
-   REG_CONTROLLER_ENABLE, so gated clocks stall there instead of just
-   losing a write.
-
- - It ends with an ufshcd_configure_auto_hibern8() write, which its other
-   callers do take a clock reference for.
-
-Take a clock reference as soon as clock gating has been initialised and
-keep it until the probe is over. It then does not matter who drops a clock
-reference while the probe is running, and the register accesses of the
-probe no longer depend on hba->ufshcd_state. The reference is dropped by
-ufshcd_async_scan() once the scan has finished, or by the new out_release
-label if the probe fails after it was taken.
-
-Fixes: a390e6677f41 ("scsi: ufs: core: Expand the ufshcd_device_init(hba, true) call")
-Signed-off-by: Naomi Chu <naomi.chu@mediatek.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260909091045.1134956-1-naomi.chu@mediatek.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
+Signed-off-by: Ravindra <ravindra@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index fb5f119b19772..0a9366f21483f 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9484,6 +9484,7 @@ static void ufshcd_async_scan(void *data, async_cookie_t cookie)
- 	ret = ufshcd_add_lus(hba);
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index ed2a6286892c5..34899a5507339 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -401,7 +401,7 @@ static int btintel_pcie_send_sync(struct btintel_pcie_data *data,
  
- out:
-+	ufshcd_release(hba);
- 	pm_runtime_put_sync(hba->dev);
+ 	tfd_index = data->ia.tr_hia[BTINTEL_PCIE_TXQ_NUM];
  
- 	if (ret)
-@@ -11206,6 +11207,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+-	if (tfd_index > txq->count)
++	if (tfd_index >= txq->count)
+ 		return -ERANGE;
  
- 	ufshcd_init_clk_gating(hba);
- 
-+	/* Released by ufshcd_async_scan(), or by out_release on failure. */
-+	ufshcd_hold(hba);
-+
- 	ufshcd_init_clk_scaling(hba);
- 
- 	/*
-@@ -11226,7 +11230,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
- 	if (err) {
- 		dev_err(hba->dev, "request irq failed\n");
--		goto out_disable;
-+		goto out_release;
- 	} else {
- 		hba->is_irq_enabled = true;
- 	}
-@@ -11242,7 +11246,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 		dev_err(hba->dev, "Host controller enable failed\n");
- 		ufshcd_print_evt_hist(hba);
- 		ufshcd_print_host_state(hba);
--		goto out_disable;
-+		goto out_release;
- 	}
- 
- 	INIT_DELAYED_WORK(&hba->rpm_dev_flush_recheck_work, ufshcd_rpm_dev_flush_recheck_work);
-@@ -11256,7 +11260,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 
- 	err = ufshcd_add_scsi_host(hba);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	/* Hold auto suspend until async scan completes */
- 	pm_runtime_get_sync(dev);
-@@ -11276,7 +11280,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 
- 	err = ufshcd_link_startup(hba);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	if (hba->mcq_enabled)
- 		ufshcd_config_mcq(hba);
-@@ -11293,23 +11297,23 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	/* Verify device initialization by sending NOP OUT UPIU */
- 	err = ufshcd_verify_dev_init(hba);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	/* Initiate UFS initialization, and waiting until completion */
- 	err = ufshcd_complete_dev_init(hba);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	err = ufshcd_device_params_init(hba);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	err = ufshcd_post_device_init(hba);
- 
- initialized:
- 	ufshcd_process_probe_result(hba, probe_start, err);
- 	if (err)
--		goto out_disable;
-+		goto out_release;
- 
- 	ufs_sysfs_add_nodes(hba->dev);
- 	hba->dme_qos_sysfs_handle = sysfs_get_dirent(hba->dev->kobj.sd,
-@@ -11320,6 +11324,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	ufshcd_pm_qos_init(hba);
- 	return 0;
- 
-+out_release:
-+	ufshcd_release(hba);
- out_disable:
- 	hba->is_irq_enabled = false;
- 	ufshcd_hba_exit(hba);
+ 	if (skb->len > BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN) {
 -- 
 2.53.0
 
