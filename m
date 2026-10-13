@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8412E4F3910;
-	Tue, 13 Oct 2026 11:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9807F4F3916;
+	Tue, 13 Oct 2026 11:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892058; cv=none; b=Hwl74j0jJ+TuIlH/a77fdxW8UiI9JbaKormt0sc6oE0lbT2nBnGzqgIMO1dvdJ4A5Lt1lRCq7D2RaBzQKI+1teMeHk34eYrr4N6/qBfdmfh/hCu4BA8BkcuZW9ckOG0A5wp17wkZ5xKA2k6lyqPsO6Hd0W8gPhDqxARTwUO0b0g=
+	t=1791892061; cv=none; b=uo+r80a+16vTIykpJgaGM+hchC6abUr3R8c9xe+QULXek8w4lByy5AkSmjcODpTaiNftZRVMBC1n9naSgI3Eg9Y9Ps4wztts3CEeC1C7mpa2ioilXg+erg/QxO1J5mfHOdU99TK3FhZH9pM0s+7QNggyWAfkDZnYlCfOl7LnEmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892058; c=relaxed/simple;
-	bh=ruxuJ4b5xoAgRNXFHoXUtks57jwMLTMMpcjzz+1Sx/4=;
+	s=arc-20240116; t=1791892061; c=relaxed/simple;
+	bh=2cPbhScRV6QoFwW9Qd6lPoN9sF8rr/fhzYH/VC5ffok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIfuzMvHejb+KQjgDw59n7uFn0xmUVXXD2JlNgfwjUCma90e/N9gW0RsZc/UDSekTfR3+x5uhGCJtNqmJ7TboFzQMUzqpZNdlXcRyl9igLYWdNOHrix/NWbkqgIyeHzv9PQ8BnsMdAIRykxBlcNWsagO9Xf7af0chfEaIyDp/HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGalha3O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IE0B8ES4/LdgIxW5QKH85QW0Hw1/Bj4B9kgWxMkrZCEnS2DTd0zI8DKYJXZiTD0au2OIlKwUwLf/zZYYhhrWOYDNV/xBH4Z3VLKawM4aZoWWttjeYvyiBqRgcjW/D4mO8mAcfuRRUWqt0MYKzOdDOjXym9cTPd9itPNaetunwhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDYjf+7D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGalha3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BC81F00893;
-	Tue, 13 Oct 2026 11:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDYjf+7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBB71F00898;
+	Tue, 13 Oct 2026 11:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892057;
-	bh=InYJ0V5YzVWY+gwl1v2yG0cfe0ftOLYeTLHijtw8vmQ=;
+	s=korg; t=1791892060;
+	bh=b4TmhmM5Vg676da3loJ3inBKn/CYJrkKC6dGKcZIm20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGalha3O78yXZ2EL6oA32FISFnbRwky4LCxkNnN5NptwPRMsy5yXjiW/jAtePJTkX
-	 XhqgPJtxT6awEKVN9G7C5z1hNx1ZAZ9UKrvzkbsbxpHWL3yAyZIyP4rSUkHHtH48+t
-	 G6L/FTdVxVvPq/2TAA8QvhfImdc2OXe07lCzsrfo=
+	b=wDYjf+7Dn5N9rd4eKp4X1kVXuYRvRuY2JLYvpyCUa4d5YSkASmrT+O70sw/Z6Rbyi
+	 6p4T68rq17YYprp2Qg7y35naiCv5hyfd4IVvGUN4fIzrNixkTWvHqTwQYhHkD0jkx4
+	 fq8Aq6h/+WdVAV6VLU9z/81i6LcNH7klw1czx7QA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dynetrex, Admin" <admin@dynetrex.com>,
-	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
-	Drew Willey <dwilley@google.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.2 029/281] usb: f81604: fix struct f81604_int_data size mismatch
-Date: Tue, 13 Oct 2026 13:35:45 +0200
-Message-ID: <20261013112855.760545037@linuxfoundation.org>
+	syzbot+a7f7cb0737bd91aa698c@syzkaller.appspotmail.com,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 7.2 047/281] selinux: fix data race on AVC latest_notif
+Date: Tue, 13 Oct 2026 13:36:03 +0200
+Message-ID: <20261013112856.192886064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -46,66 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-commit 7f85d1170575645f9f327062d78017a23b2714eb upstream.
+commit 1ca924044bf0de879a1648be93a56939652267d3 upstream.
 
-The struct f81604_int_data defines 9 bytes of interrupt data:
-- Byte 0: Status register (sr)
-- Byte 1: Interrupt register (isrc)
-- Byte 2: Interrupt enable register (ier)
-- Byte 3: Arbitration lost capture (alc)
-- Byte 4: Error code capture (ecc)
-- Byte 5: Error warning limit register (ewlr)
-- Byte 6: RX error counter (rxerr)
-- Byte 7: TX error counter (txerr)
-- Byte 8: Reserved (val)
+avc_policy_seqno() reads latest_notif without holding notif_lock, while
+avc_latest_notif_update() can update it under that lock. KCSAN reports
+these concurrent accesses during policy boolean updates and permission
+checks.
 
-The hardware sends exactly 9 bytes for the interrupt endpoint.
-However, the struct was defined with __aligned(4) attribute which
-caused the compiler to pad the struct to 12 bytes.
+Use READ_ONCE() for the lockless read and WRITE_ONCE() for the update.
+The spinlock continues to serialize the comparison and update against
+other writers. Reads made while holding notif_lock cannot race with a
+writer and can remain plain accesses.
 
-This causes a problem in f81604_read_int_callback() where the short
-URB check compares urb->actual_length against sizeof(*data). When
-sizeof(struct f81604_int_data) is 12 but the hardware only sends 9
-bytes, the check fails and valid interrupt messages are discarded.
+This marks both sides of the intentional concurrent access and constrains
+compiler transformations, without suppressing checking with data_race().
 
-This results in the driver only being able to transmit once because
-the TX complete interrupt is never processed.
-
-Fix this by removing the __aligned(4) attribute so the struct size
-matches the actual hardware data size of 9 bytes.
-
-Fixes: 7299b1b39a25 ("can: usb: f81604: handle short interrupt urb messages properly")
 Cc: stable@vger.kernel.org
-Reported-by: Dynetrex, Admin <admin@dynetrex.com>
-Closes: https://lore.kernel.org/all/A3834A07-5639-4779-844F-C5843DFC3928@dynetrex.com/
-Signed-off-by: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Tested-by: Drew Willey <dwilley@google.com>
-Link: https://patch.msgid.link/20260824-f81604-fix-v2-1-fc9be5581394@fintek.com.tw
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 788e7dd4c22e ("SELinux: Improve read/write performance")
+Reported-by: syzbot+a7f7cb0737bd91aa698c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a7f7cb0737bd91aa698c
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/f81604.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/selinux/avc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/f81604.c
-+++ b/drivers/net/can/usb/f81604.c
-@@ -169,7 +169,7 @@ struct f81604_int_data {
- 	u8 rxerr;
- 	u8 txerr;
- 	u8 val;
--} __packed __aligned(4);
-+} __packed;
+--- a/security/selinux/avc.c
++++ b/security/selinux/avc.c
+@@ -579,7 +579,7 @@ static int avc_latest_notif_update(u32 s
+ 		}
+ 	} else {
+ 		if (seqno > selinux_avc.avc_cache.latest_notif)
+-			selinux_avc.avc_cache.latest_notif = seqno;
++			WRITE_ONCE(selinux_avc.avc_cache.latest_notif, seqno);
+ 	}
+ 	spin_unlock_irqrestore(&notif_lock, flag);
  
- struct f81604_sff {
- 	__be16 id;
+@@ -1207,5 +1207,6 @@ int avc_has_perm(u32 ssid, u32 tsid, u16
+ 
+ u32 avc_policy_seqno(void)
+ {
+-	return selinux_avc.avc_cache.latest_notif;
++	/* Writers hold notif_lock; readers only sample the sequence number. */
++	return READ_ONCE(selinux_avc.avc_cache.latest_notif);
+ }
 
 
