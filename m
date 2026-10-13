@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7373438A1;
-	Tue, 13 Oct 2026 12:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64162566F7;
+	Tue, 13 Oct 2026 12:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895855; cv=none; b=J+seL92HIT0O+xwk/8QUC96IsRRal8RWGc4XYQIyLrop4y4YcP3eOBcuptSQwH3ooq8AECqaLjMVKvABAeu8FlLvv0FX3qHLZW7Xjbo/w1BeB3O227fcvbz5l+CIeupmbABiWxw+yzXSuYaujeoBig978UaB39LuvqTUydFlPH8=
+	t=1791895857; cv=none; b=vGRLwIUsrw5UV//0X3kALod7zsVzvkyzGlXQ1SDR01apMVFejm4fhqJaeGOWnRbESwN0LwY0pLx2A2G5zfyr39NfbDupPD7RLZtXOB0gEUPvcXJVtHP/VftT/hUAMjkKxvkjm/55DVusVGT7trANMyepGbEGr6afveEIR0tm+KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895855; c=relaxed/simple;
-	bh=teAFy+5q2lX0caKykspWOl4Ti3IqlJKWSya3a9g3nKg=;
+	s=arc-20240116; t=1791895857; c=relaxed/simple;
+	bh=40EIc5kIGcOKUXSHqlN7/qrWJgKPfPddiNK6uBz+6V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vx0y++dtFuD04wHGRgs+csaxeCtQFlAMoRpd/9HbknOBmGPgQQ2qAMvtyLsqfxR223uycpoKgmH45tBnqZm/DvQca/2/RDI6tVvZWzZtJXeyfjpvsEZ4L1nDvU5U1EnCYldBhRPOTEc8+1gZqbwEu7H8cqrHKqs8yUzkuRZ2t3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFHko7zE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LlkbCIhveLMHZjmQlp8uIUm9sQ6CGruLeBarOZ4q1w3tm3YN0W66wlXkM+pBTqdJr2RRgQpbfZHtrrjTJceA7JiJmZFJI8gqijVVJc14R6UyJlnndRAI+xAOMBib68XG4RdHlXFxBj+DGctw5bA/hUfP3JPrFgRSRbdtS8wjCjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zZJdGOa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFHko7zE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CBB1F000FF;
-	Tue, 13 Oct 2026 12:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zZJdGOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDAF1F000FF;
+	Tue, 13 Oct 2026 12:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895853;
-	bh=YkAoUOm2QXZ2pffaRu6hP8N/ywfXcEzOnaMUgeXOv4E=;
+	s=korg; t=1791895856;
+	bh=iTu1Hoa/OcaT0//JX/OaZtXXp1SRLGOFy6Nc56MWTNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFHko7zEIghffYZog0za0zYAjWTqaIxCEFEFAqoscXGq9JVTtYvzeA+sv+if7gZc/
-	 q1hs/7M+3Ye2MYjMWpBVcGDwxyG/ZtaPsIE/a7zEDXvaBQvcfP9EMVmP9nZjiOxhHw
-	 h9oh+UjlSicGw3auVOuPLx34HN4AooACZKggAikQ=
+	b=1zZJdGOasMQMEB3E6GNGI98NFRs4/MhAFCOF6ZYoAi/gVrFuPBAne+Oiq2DJEiv7b
+	 DCC/ou/AwXL4OOjVm/hi4OqojoT29pIKUdiiVnzMOa8VYQ2+4Nho6QuTZeXtTVqO2o
+	 cWMPYtk72PKy5wqraBgZwZjY7buPIDObbNvOU3XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 371/497] workqueue: Fix NULL current_pwq deref in chained work check
-Date: Tue, 13 Oct 2026 13:38:58 +0200
-Message-ID: <20261013112916.705198978@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Juergen Gross <jgross@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 372/497] xen/netfront: dont leak the skb when xennet_fill_frags() fails
+Date: Tue, 13 Oct 2026 13:38:59 +0200
+Message-ID: <20261013112916.728417907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,44 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 980db94e3eeefdd8a1c46f86412c33a7f7806f51 upstream.
+commit 93ccaf1c26e2133396173b76a071e59024daa622 upstream.
 
-current_wq_worker() only tells us that %current is a kworker. It does
-not guarantee that the worker is currently executing a work item, as
-worker->current_pwq is populated only while process_one_work() is running
-the work function.
+When a response chain has more slots than fit in the skb's frags,
+xennet_fill_frags() returns an error and xennet_poll() jumps to its
+error path.  That path moves what's left on tmpq to errq to be freed,
+but the skb being filled was already dequeued from tmpq, so it's never
+freed.  Each chain that overflows leaks the skb and the pages attached
+to it as frags, and the backend decides how many slots it sends.
 
-is_chained_work() can be reached while queueing on a draining or
-destroying workqueue. If a kworker outside work-item execution reaches
-that path, current_wq_worker() returns a worker but worker->current_pwq is
-NULL, and the chained-work test can fault before it emits the intended
-warning.
+Put the skb back on tmpq before taking the error path, like the
+xennet_set_skb_gso() failure just above it does.
 
-Guard the chained-work test with worker->current_pwq. A kworker without
-current_pwq is not executing work on the target workqueue, so the helper
-should return false and let the draining/destroying warning fire.
-
-Fixes: 8d03ecfe4718 ("workqueue: reimplement is_chained_work() using current_wq_worker()")
+Fixes: ad4f15dc2c70 ("xen/netfront: don't bug in case of too many frags")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-fill-frags-leak-v1-1-a8a01ff9cd52@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/xen-netfront.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -2236,7 +2236,7 @@ static bool is_chained_work(struct workq
- 	 * Return %true iff I'm a worker executing a work item on @wq.  If
- 	 * I'm @worker, it's safe to dereference it without locking.
- 	 */
--	return worker && worker->current_pwq->wq == wq;
-+	return worker && worker->current_pwq && worker->current_pwq->wq == wq;
- }
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1345,8 +1345,10 @@ err:
+ 		skb->data_len = rx->status;
+ 		skb->len += rx->status;
  
- /*
+-		if (unlikely(xennet_fill_frags(queue, skb, &tmpq)))
++		if (unlikely(xennet_fill_frags(queue, skb, &tmpq))) {
++			__skb_queue_head(&tmpq, skb);
+ 			goto err;
++		}
+ 
+ 		if (rx->flags & XEN_NETRXF_csum_blank)
+ 			skb->ip_summed = CHECKSUM_PARTIAL;
 
 
