@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EC74E73C0;
-	Tue, 13 Oct 2026 11:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97F94E4C5A;
+	Tue, 13 Oct 2026 11:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892247; cv=none; b=Dh1S3wC+EAjyiUk7DjtrKo2NwFPQyPSGRIucqS5cQPjm59CbHU4zqTu1m1sdBLlYwGi9wB+oRIVAYpqCQQHJa1AshYv+7smUx/MVTOc7wd6Z1HGShE2d9WEGVQODliV8NOUpjDBeJXcGsYhYDzQlaw0nq3hst6LnkSRQ0YplFY0=
+	t=1791892249; cv=none; b=Qzusc3gKIp2Bm+VRxbe9oOCsyVm6Ghcrp6yJfGKRqnB/KjFWE24rHTpzPwjH0OkqZ6giPtsfrQkVsEuepEQPVxOIk5zUBOT9PzkpQPzlR9vj8V3kdQZIOili9v7MX4a9rxDlXiToI49WO/9U7M7NMauKspFbgbrZi0IR9DGBND4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892247; c=relaxed/simple;
-	bh=cbX8B36mnUJ75Lrp/l6p4IlXJydC/cwqnJ/PFD0h7A0=;
+	s=arc-20240116; t=1791892249; c=relaxed/simple;
+	bh=DBiCRo8kBbd6exXP8ppjnuVlEIMC/Qyupov49uuCfMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhyJa8AadihvAHu6JSLDKEwSMkkT3pioqpPly+bqMTJZekD2aoaQ+t/sZtYjmWmazYc8VA23DOWy8x7TiAOJpdbn5goPgiC5iAYYiyWdJz0tT+URSU+nGommFJ/lyy9E0LhTjxMox/JwQABcBpf7WbOI7yzbrKaFYtUxMfbgrx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVAOeDUC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TduklV6TgN/AhYt/AcyI6omu4uBi90tE4Rn6E4mUW4kZ3x24PzT6BKiSxPMryXp/as/ZFJ/SIqXeOK9pGLx1+x2UnEz6iEHkUjFYcG+/rze5VhPbscv3X3M0P7nop5+OBFOyKo3sODyHJsLxzAM6Kf7dqPtQT7C64seXFt002Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNYV3Wdc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVAOeDUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481A51F000FF;
-	Tue, 13 Oct 2026 11:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNYV3Wdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA9B1F000FF;
+	Tue, 13 Oct 2026 11:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892245;
-	bh=OokFJdJxBXl1E7LtmM2s8xOKm/6CRNmNXLLvzogYKxA=;
+	s=korg; t=1791892248;
+	bh=0SAhyPd5qEbg3GKUJMdrL6gWRJGSH1Pv3/mU8Nx2YfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MVAOeDUCPKhdvZnkM3t7plNXa6/+pY9F4k2TVSA8Mo8GFqlri+TzXzaYutlM8B3LT
-	 zKuP1OxDnbU8IdwwAZXzs5taRlmE+Q+9WdladPlzDnbszLmnlsnmqgz+JKbSKDqZN8
-	 OBJ+d6qghBU5G564qUG/BFNPN6fkS6FhPi5SxTlc=
+	b=VNYV3WdcC9u2i3MSdHEaicY9gHUKjPvHZEl2gVaBo+qkR0rUJiP+AMyNiAifghiL9
+	 zc4SyNckz5lHGVWdv1oUZ3xo4zGXrY84AHayBiO9x8Pqmf0ofZcpjb7k8ZMvSnq5W2
+	 qAzcfx5dCGvV39a46TbDUtD0ES8mRsEQAw6xAWaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Ziyi Guo <guoziyi114@gmail.com>,
 	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.2 108/281] riscv: fix load_unaligned_zeropad() fixup for RV32
-Date: Tue, 13 Oct 2026 13:37:04 +0200
-Message-ID: <20261013112857.764690653@linuxfoundation.org>
+Subject: [PATCH 7.2 109/281] riscv: futex: untag the user pointer before the atomic access
+Date: Tue, 13 Oct 2026 13:37:05 +0200
+Message-ID: <20261013112857.789227588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,51 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Ziyi Guo <guoziyi114@gmail.com>
 
-commit d4f25b097e46d82718bb737d4540c99b7ab0a408 upstream.
+commit 405290be962b32eec842776fbe3bdf81f15b1676 upstream.
 
-The fixup for load_unaligned_zeropad() runs when REG_L crosses into an
-unmapped page. REG_L is lw on RV32 and ld on RV64, but the fixup assumes
-an 8-byte load: it rounds the address down to 8 bytes and derives the
-shift from three address bits.
+access_ok() checks untagged_addr(uaddr), but arch_futex_atomic_op_inuser()
+and futex_atomic_cmpxchg_inatomic() hand the raw uaddr to the inline asm
+amoswap/amoadd/.../lr.w+sc.w through the "+m" (*uaddr) operand.  When the
+tagged address ABI is enabled (CONFIG_RISCV_ISA_SUPM, prctl
+PR_SET_TAGGED_ADDR_CTRL with PMLEN != 0), those two addresses differ: a
+user pointer whose top PMLEN bits hold a tag passes access_ok() after
+untagging, but the atomic is then performed on the still-tagged raw
+address.
 
-On RV32, a load starting in the last three bytes of a mapped page selects
-the word four bytes earlier and shifts it by 40, 48, or 56 bits, more than
-the register width. The caller gets earlier bytes instead of the string
-tail followed by zeroes. This affects RV32 MMU kernels built with
-RISCV_EFFICIENT_UNALIGNED_ACCESS=y, which selects DCACHE_WORD_ACCESS
-and lets dcache name hashing and comparison and strscpy() use this
-path.
+Supervisor-mode data accesses are not subject to the U-mode pointer
+masking (that is governed by menvcfg.PMM, which the kernel does not set),
+so hardware does not strip the tag for the kernel's own access.  With
+Sv57 and PMLEN=16 the tag bits overlap the canonical-address bits, so a
+tagged pointer can name a canonical kernel virtual address (e.g. in the
+linear map) whose untagged form is a valid user address.  An unprivileged
+process can thus make FUTEX_WAKE_OP perform an atomic read-modify-write on
+an arbitrary kernel address, with the matching FUTEX_OP_CMP_* result
+serving as a read oracle.
 
-Derive the alignment and offset masks from sizeof(data) instead of a fixed
-8. This makes RV32 use the correct source word. RV64 code is unchanged: the
-complete extable.o is byte-for-byte identical before and after.
+get_user()/put_user()/raw_copy_{to,from}_user() already untag the pointer
+after the access_ok() check; do the same in the futex helpers so the
+atomic operates on the address that was actually validated.
 
-Fixes: d0fdc20b0429 ("riscv: select DCACHE_WORD_ACCESS for efficient unaligned access HW")
+Fixes: 2e1743085887 ("riscv: Add support for the tagged address ABI")
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Ziyi Guo <guoziyi114@gmail.com>
+Link: https://patch.msgid.link/20261006140200.877263-1-guoziyi114@gmail.com
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260907190750.26303-1-kmehltretter@gmail.com
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/extable.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/futex.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/riscv/mm/extable.c
-+++ b/arch/riscv/mm/extable.c
-@@ -68,8 +68,8 @@ ex_handler_load_unaligned_zeropad(const
+--- a/arch/riscv/include/asm/futex.h
++++ b/arch/riscv/include/asm/futex.h
+@@ -40,6 +40,7 @@ arch_futex_atomic_op_inuser(int op, int
  
- 	addr = regs_get_gpr(regs, reg_addr * sizeof(unsigned long));
+ 	if (!access_ok(uaddr, sizeof(u32)))
+ 		return -EFAULT;
++	uaddr = untagged_addr(uaddr);
  
--	offset = addr & 0x7UL;
--	addr &= ~0x7UL;
-+	offset = addr & (sizeof(data) - 1);
-+	addr &= ~(sizeof(data) - 1);
+ 	switch (op) {
+ 	case FUTEX_OP_SET:
+@@ -82,6 +83,7 @@ futex_atomic_cmpxchg_inatomic(u32 *uval,
  
- 	data = *(unsigned long *)addr >> (offset * 8);
+ 	if (!access_ok(uaddr, sizeof(u32)))
+ 		return -EFAULT;
++	uaddr = untagged_addr(uaddr);
  
+ 	__enable_user_access();
+ 	__asm__ __volatile__ (
 
 
