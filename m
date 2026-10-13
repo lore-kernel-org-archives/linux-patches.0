@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243A94F5DE1;
-	Tue, 13 Oct 2026 11:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF0D4F5DF1;
+	Tue, 13 Oct 2026 11:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892622; cv=none; b=f11kraKyV7YMLVqJoTEIbTZxIvZEvUP+WV8/iDnihlzSO7SMqJw6/uDU3IqAZ/aux59bJsCDPrMpKpK+mTA6PPEtS4xiMMFQnEaax7W9AMVtBrETZkbic1wFVJkXnlNRVGcph5OOtWe52YW/nKLIpByfM/EPeJo5ZAWrhXsH+J8=
+	t=1791892625; cv=none; b=Fm9YjSmewV5/6TuPg6cayWFcaXFYphnp1/0g1Z37LotfThR/PoQ/xCE1Z2cFC+OpFKgHwhPo3L/Yvv3eFR8QxeXOLELTElXB1ljX1cPEMKGFNeWWRbHG1TSrb+mt+YwHh03byH2VFCN7I4jGx3T+CDnLsZLSrMwF1V1+UJ3keoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892622; c=relaxed/simple;
-	bh=sUKLmcCaJubcjErh07r9wGmWZrbEmyytHGhHUnjSbtk=;
+	s=arc-20240116; t=1791892625; c=relaxed/simple;
+	bh=tNbcdZH5oc6NIBKIKN18oxbfqKQnAKrqoEWUE4FKS78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOM5p+WK4BTnuayd9AeeGjIx8nB6gFXaXSkHR1IdaFhwIvlKJ0ILsN98pMVa2wEO5o4x3U/cmUDEQHs0ERLk6gNpuTn+ejuPMzEMzcXN8aps8z8tdh7I4fAImmHBKFqdfZoIKsr5i1PFT2ms9/XOMbYaQbrJpfTsJ3PPW3wnlSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObyNw/cL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VJFa7gr7xBOiFIEJREj9/MZJdv/LHeWHJts1TSbf9fB2gc4Bs3v6Lolpeo1eDA8Y/D25rIO5waMu7GmAVjWVjMDiPNRQJ4e3KijJNmR1M1QlrGUWGJG129W0KQHfUlo0MNNCE9xb+5OQE7n5MQsSnWaoap40YXxfMAwn/kN9DcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFJE5Ub2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObyNw/cL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77861F000FF;
-	Tue, 13 Oct 2026 11:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFJE5Ub2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D5B1F000FF;
+	Tue, 13 Oct 2026 11:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892621;
-	bh=F19WYtpP6RBNqmyAa8RGMsVYN/rnDueOfYMk7US7BGk=;
+	s=korg; t=1791892624;
+	bh=kWjYNVZ5OJK7J7ezTf8NeOMVM1q+5Ul7k2ZnpelUbKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ObyNw/cLnBcqJKs3FFVnWpn4wMExiGUKV1NsMlviOd4C4YUhV8S6nx4rbwQFghO75
-	 +NGl3dq1lwAqrAZTJDcrHxQk6tET+cCAXYREmn3zso9N58EKShOFlaO732jZYqzV/g
-	 GBITXaZVKnfZOEhqjb/B/pIXglz3Krszb+GyFHNg=
+	b=jFJE5Ub24nHMzea/osHIIx8k/M2uYNceEXbEKNFiPNWXwK+3oRwrh/PNQ4pln1k/l
+	 4+tXoLqR+N19EG7tqQ5G9qRIHBd8Cd+dwa1OxfpPSwb/aAhq/eEVYqtTiwNeJTemnf
+	 rBpHdQNmTkg+OtaXtZMzASPT4xmNvYxd0n8oBW10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Gong <gongtao0607@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 235/281] wifi: mt76: mt7996: fix struct mt7996_mcu_wed_rro_ba_delete_event layout
-Date: Tue, 13 Oct 2026 13:39:11 +0200
-Message-ID: <20261013112900.852370379@linuxfoundation.org>
+Subject: [PATCH 7.2 218/281] drm/xe: Do not emit Wa_16010904313 twice
+Date: Tue, 13 Oct 2026 13:38:54 +0200
+Message-ID: <20261013112900.450981398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,51 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Gong <gongtao0607@gmail.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit 9c9e4e4c8b45873e53774ab8207825b37b7565ec ]
+[ Upstream commit f7fc61e66041b1f8300cad87005ba84604bfefd9 ]
 
-Correct the definition of struct mt7996_mcu_wed_rro_ba_delete_event to
-match the 12-byte event record layout observed from firmware.
+During development of commit e8372edec948 ("drm/xe/xelp: Implement
+Wa_16010904313")
+one of the interim patch versions contained an incorrect rebase on top of
+some upstream changes, which caused Wa_16010904313 to be emitted both from
+the indirect context and from the workaround batch buffer.
 
-The event TLV sent by firmware is 12 bytes in length rather than 8 bytes.
-It contains an additional 4 bytes that appear to be wlan_id and tid.
-For example, a captured batch deletion of sessions 8, 9, and 10 (TIDs 6,
-0, and 1) shows:
+As this workaround needs to be emitted from the indirect context for rcs
+and ccs, but from the workaround batch buffer for bcs, vcs and vecs, we
+need to pass the location as an input parameter to setup_timestamp_wa() so
+it can decide whether to emit itself or not.
 
-  00000000: 02 00 0c 00 08 00 01 00 06 00 00 00 02 00 0c 00
-  00000010: 09 00 01 00 00 00 00 00 02 00 0c 00 0a 00 01 00
-  00000020: 01 00 00 00
-
-The previous 8-byte structure corrupts the parsing of subsequent TLVs,
-leading to unhandled delete events and erroneous session deletions.
-Consequently, clients that create and tear down BA sessions in batches
-(such as Apple Wi-Fi clients) fail to properly clean up stale sessions,
-causing HW_RRO to be lost upon subsequent reassociations.
-
-Fixes: a5d028d66836 ("wifi: mt76: mt7996: add wed rro delete session garbage collector")
-Signed-off-by: Tao Gong <gongtao0607@gmail.com>
-Link: https://patch.msgid.link/20260823053739.186748-1-gongtao0607@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: e8372edec948 ("drm/xe/xelp: Implement Wa_16010904313")
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patch.msgid.link/20260925080016.64802-1-tvrtko.ursulin@igalia.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo: small adjustments on commit message for check-patch]
+(cherry picked from commit 38631a7bce195b88814b93bf2b6d3e48c827fef2)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_lrc.c | 38 ++++++++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-index c673e986ecb52..288b923750c0d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-@@ -284,6 +284,9 @@ struct mt7996_mcu_wed_rro_ba_delete_event {
- 	__le16 len;
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index 9f8217ff1904c..224e64bccaebc 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -1099,8 +1099,7 @@ static void xe_lrc_finish(struct xe_lrc *lrc)
+ #define CONTEXT_ACTIVE XE_LRC_CTX_TIMESTAMP_ACTIVE
+ static ssize_t setup_utilization_wa(struct xe_lrc *lrc,
+ 				    struct xe_hw_engine *hwe,
+-				    u32 *batch,
+-				    size_t max_len)
++				    u32 *batch, size_t max_len, bool indirect)
+ {
+ 	u32 *cmd = batch;
  
- 	__le16 session_id;
-+	__le16 wlan_id;
-+	u8 tid;
-+	u8 __rsv1;
- 	u8 __rsv2[2];
- } __packed;
+@@ -1131,19 +1130,25 @@ static ssize_t setup_utilization_wa(struct xe_lrc *lrc,
+ }
  
+ static ssize_t setup_timestamp_wa(struct xe_lrc *lrc, struct xe_hw_engine *hwe,
+-				  u32 *batch, size_t max_len)
++				  u32 *batch, size_t max_len, bool indirect)
+ {
+ 	const u32 ts_addr = __xe_lrc_ctx_timestamp_ggtt_addr(lrc);
+ 	u32 *cmd = batch;
+ 
+-	if (!XE_GT_WA(lrc->gt, 16010904313) ||
+-	    !(hwe->class == XE_ENGINE_CLASS_RENDER ||
+-	      hwe->class == XE_ENGINE_CLASS_COMPUTE ||
+-	      hwe->class == XE_ENGINE_CLASS_COPY ||
++	if (!XE_GT_WA(lrc->gt, 16010904313))
++		return 0;
++
++	if (!indirect &&
++	    !(hwe->class == XE_ENGINE_CLASS_COPY ||
+ 	      hwe->class == XE_ENGINE_CLASS_VIDEO_DECODE ||
+ 	      hwe->class == XE_ENGINE_CLASS_VIDEO_ENHANCE))
+ 		return 0;
+ 
++	if (indirect &&
++	    !(hwe->class == XE_ENGINE_CLASS_RENDER ||
++	      hwe->class == XE_ENGINE_CLASS_COMPUTE))
++		return 0;
++
+ 	if (xe_gt_WARN_ON(lrc->gt, max_len < 12))
+ 		return -ENOSPC;
+ 
+@@ -1169,7 +1174,8 @@ static ssize_t setup_timestamp_wa(struct xe_lrc *lrc, struct xe_hw_engine *hwe,
+ 
+ static ssize_t setup_configfs_post_ctx_restore_bb(struct xe_lrc *lrc,
+ 						  struct xe_hw_engine *hwe,
+-						  u32 *batch, size_t max_len)
++						  u32 *batch, size_t max_len,
++						  bool indirect)
+ {
+ 	struct xe_device *xe = gt_to_xe(lrc->gt);
+ 	const u32 *user_batch;
+@@ -1198,7 +1204,8 @@ static ssize_t setup_configfs_post_ctx_restore_bb(struct xe_lrc *lrc,
+ 
+ static ssize_t setup_configfs_mid_ctx_restore_bb(struct xe_lrc *lrc,
+ 						 struct xe_hw_engine *hwe,
+-						 u32 *batch, size_t max_len)
++						 u32 *batch, size_t max_len,
++						 bool indirect)
+ {
+ 	struct xe_device *xe = gt_to_xe(lrc->gt);
+ 	const u32 *user_batch;
+@@ -1227,7 +1234,8 @@ static ssize_t setup_configfs_mid_ctx_restore_bb(struct xe_lrc *lrc,
+ 
+ static ssize_t setup_invalidate_state_cache_wa(struct xe_lrc *lrc,
+ 					       struct xe_hw_engine *hwe,
+-					       u32 *batch, size_t max_len)
++					       u32 *batch, size_t max_len,
++					       bool indirect)
+ {
+ 	u32 *cmd = batch;
+ 
+@@ -1247,7 +1255,8 @@ static ssize_t setup_invalidate_state_cache_wa(struct xe_lrc *lrc,
+ 
+ static ssize_t setup_invalidate_auxccs_wa(struct xe_lrc *lrc,
+ 					  struct xe_hw_engine *hwe,
+-					  u32 *batch, size_t max_len)
++					  u32 *batch, size_t max_len,
++					  bool indirect)
+ {
+ 	struct xe_gt *gt = lrc->gt;
+ 	u32 *(*emit)(struct xe_gt *gt, u32 *cmd) =
+@@ -1264,7 +1273,7 @@ static ssize_t setup_invalidate_auxccs_wa(struct xe_lrc *lrc,
+ 
+ struct bo_setup {
+ 	ssize_t (*setup)(struct xe_lrc *lrc, struct xe_hw_engine *hwe,
+-			 u32 *batch, size_t max_size);
++			 u32 *batch, size_t max_size, bool indirect);
+ };
+ 
+ struct bo_setup_state {
+@@ -1273,6 +1282,7 @@ struct bo_setup_state {
+ 	struct xe_hw_engine	*hwe;
+ 	size_t			max_size;
+ 	size_t                  reserve_dw;
++	bool			indirect;
+ 	unsigned int		offset;
+ 	const struct bo_setup	*funcs;
+ 	unsigned int		num_funcs;
+@@ -1298,7 +1308,8 @@ static int setup_bo(struct bo_setup_state *state)
+ 
+ 	for (size_t i = 0; i < state->num_funcs; i++) {
+ 		ssize_t len = state->funcs[i].setup(state->lrc, state->hwe,
+-						    state->ptr, remain);
++						    state->ptr, remain,
++						    state->indirect);
+ 
+ 		remain -= len;
+ 
+@@ -1404,6 +1415,7 @@ setup_indirect_ctx(struct xe_lrc *lrc, struct xe_hw_engine *hwe)
+ 	struct bo_setup_state state = {
+ 		.lrc = lrc,
+ 		.hwe = hwe,
++		.indirect = true,
+ 		.max_size = (63 * 64) /* max 63 cachelines */,
+ 		.buffer = NULL,
+ 		.offset = __xe_lrc_indirect_ctx_offset(lrc),
 -- 
 2.53.0
 
