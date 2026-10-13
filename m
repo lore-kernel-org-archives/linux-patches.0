@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F95F4FD279;
-	Tue, 13 Oct 2026 12:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E38E4FDE40;
+	Tue, 13 Oct 2026 12:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893778; cv=none; b=DcxpdscAWgaiCnaTAAoaHx0Ja4eZPndTdhz9mqUvj8neyLwiXwBcIK9nGlqptOgPEtiFW1A1AQG7yXnp6+fg51LaYzFchUZEp2XAXGofTcIRiUnRryDfba64kp+kb90HBYwTNM/sjialaFcKb/kx1VA4Lp9lXELiVsWGdY7Ol2g=
+	t=1791893781; cv=none; b=b0WAI1rPPoHnmMd1FNDauEpeyfqCJDMGjUzMkzA6wblQdRYVkysYN8AJRmFWRG9OhxFJXMZRHLOGB3grqjBixZswSvOdH7ywuYCwZfRC/NP+aOU3IN9ccXscx48HfaEBJxI3lcZPIIpHPaZJzgXQJJcSDHOS3fsUA+8L+8NWV8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893778; c=relaxed/simple;
-	bh=OK8YncUDL+nYUfrtxfUWa4fZsqnK0kJyxujfQEl/ytA=;
+	s=arc-20240116; t=1791893781; c=relaxed/simple;
+	bh=bjFPzxsqJNNt3MzuUIRZ10BbUzqMq6b2elm7SS6Z218=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBQyye+FnpknxHjkDPiKQdpMBZiKoj6WUnqZSIHuaPLSnInei4gVE5KaJtScWTg6DSvJ/zG6NAmHmduakY+bc5XPRuuLi0IQ5a2ICevZCZYCJ92AcZ0/zvMTYqnYDghCqQ2MFnGGBToTTupC3QFcPN3Rk0izv//R+g0ZVcZ1ehU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiyKNYE8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MSat97r+kdV8sMcMziLNDmtZ7ia7HNAwyxm7WYLO8TUXUyLUrGhiTi9pVFzCAbmq5xsHwMh+AmESEb9rWSxGcN6fzmUFUKsRdyjs5XGA2QSDRlnz+lDksMHtLQYkU4TUOsImS8Ir0ZnTMqAgqCWbHp6WfTiADossDzALnWCll/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcId0FjI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiyKNYE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838961F000FF;
-	Tue, 13 Oct 2026 12:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcId0FjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804F21F000FF;
+	Tue, 13 Oct 2026 12:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893777;
-	bh=GBlx4S1uQR66y1J93qXEyTnP7/Is6wYYBMivwW0CblU=;
+	s=korg; t=1791893780;
+	bh=iBeDkwCIf8YGfp42fgVyjU47pGH0TVOa3k5D6xALxPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YiyKNYE8K6wm5mNRPg/4hm0vt0bGBqOwclANZhGH93PCCZmssV8+HoF9UI7A/XBMs
-	 seHrX6L9SUrM8FPUVTLoLjqF3i956ANBz6cmUhpvF9fau1b4o+sl1GCPJ9FVoRmXvU
-	 q3cuASdUQ0YZfmfRSy8VIljimOTi/PdAsb255PKA=
+	b=HcId0FjILTuXZ6YP+3FPMXbXdzo3v2S4hrYTDHAuRYw9ajx0dLj0rD3RH8G8ach7/
+	 EY6CWCqoz9CwKFKMvc/GCuEi1BRA0OYJTWsRoUY/NUkBQaMRZ7NyTlsbbyKkE5yHSW
+	 wk1ss9qhMxRcvLU0RLHR1G57aqwn0rlDItkHFmYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Dongjiang Zhu <zhudongjiang@fnnas.com>,
-	David Sterba <dsterba@suse.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 337/621] btrfs: skip global block reserve accounting for rescue mounts
-Date: Tue, 13 Oct 2026 13:35:32 +0200
-Message-ID: <20261013112928.850456686@linuxfoundation.org>
+Subject: [PATCH 6.18 338/621] eventfs: Use children field for rcu head and add memory barriers
+Date: Tue, 13 Oct 2026 13:35:33 +0200
+Message-ID: <20261013112928.874900451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,135 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongjiang Zhu <zhudongjiang@fnnas.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 51a0e8399858621442807a26057bcd1cd3ced046 ]
+[ Upstream commit f0ece16ffca7384787b692431961ce202907acf5 ]
 
-[BUG]
-Mounting with rescue=ibadroots after corrupting the block group tree
-root triggers a NULL pointer dereference:
+When an eventfs inode is freed, it sets ei->is_freed and then uses its
+ei->list to add it to the srcu link list as the list field is a union with
+the rcu list head. As the ei->list is used to iterate over an SRCU
+protected list without taking the eventfs_mutex, there's nothing stopping
+the iteration over that list to see the ei->rcu instead of the ei->list
+and it will read a corrupt target.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000100
-  RIP: 0010:btrfs_update_global_block_rsv+0x9d/0x1c0 [btrfs]
-  Call Trace:
-   fill_dummy_bgs+0xd4/0x120 [btrfs]
-   open_ctree+0xc6e/0x1ca0 [btrfs]
-   btrfs_get_tree+0x50d/0xa40 [btrfs]
+To fix this, change the union of the rcu list head with the children list.
+On freeing the eventfs inode, set the is_free and execute a smp_wmb()
+before adding the eventfs inode to the SRCU list.
 
-The same crash occurs with a corrupted raid stripe tree root, via
-btrfs_read_block_groups() instead of fill_dummy_bgs().
+On iteration of the ei->children list, at the start, execute a smp_rmb()
+and then read the is_freed of the ei to see if the children list is still
+valid. If is_freed is set, then the ei_child read is not valid and the
+loop should exit immediately.
 
-[CAUSE]
-With rescue=ibadroots, btrfs_read_roots() allows the mount to continue
-when either root cannot be read, leaving the corresponding root pointer
-NULL while its on-disk feature bit remains set.
-
-btrfs_update_global_block_rsv() then dereferences the missing root based
-on the feature bit alone.
-
-[FIX]
-Rescue mounts are fully read-only and cannot start transactions, so the
-global reserve is never consumed. Under btrfs_is_full_ro(), mark the
-reserve as full and return before performing the accounting.
-
-And since we need to check if the fs is mount fully RO, export
-fs_is_full_ro() as btrfs_is_full_ro(), and move it to fs.h.
-
-Fixes: 8dbfc14fc736 ("btrfs: account block group tree when calculating global reserve size")
-Fixes: 515020900d44 ("btrfs: read raid stripe tree from disk")
-Suggested-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Dongjiang Zhu <zhudongjiang@fnnas.com>
-[ Squash the fs_is_full_ro() export commit into this one. ]
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260808094215.4252430d@robin
+Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-rsv.c | 19 +++++++++++++++++--
- fs/btrfs/disk-io.c   | 11 +----------
- fs/btrfs/fs.h        |  9 +++++++++
- 3 files changed, 27 insertions(+), 12 deletions(-)
+ fs/tracefs/event_inode.c | 24 ++++++++++++++++++++++++
+ fs/tracefs/internal.h    |  4 ++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
-index fc378d2038a2d..fbe75b7e9511c 100644
---- a/fs/btrfs/block-rsv.c
-+++ b/fs/btrfs/block-rsv.c
-@@ -324,10 +324,25 @@ void btrfs_block_rsv_add_bytes(struct btrfs_block_rsv *block_rsv,
- void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
+diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
+index a7b082a665bd1..abb0ea57601b6 100644
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -124,7 +124,17 @@ static inline void put_ei(struct eventfs_inode *ei)
+ static inline void free_ei(struct eventfs_inode *ei)
  {
- 	struct btrfs_block_rsv *block_rsv = &fs_info->global_block_rsv;
--	struct btrfs_space_info *sinfo = block_rsv->space_info;
-+	struct btrfs_space_info *sinfo;
- 	struct btrfs_root *root, *tmp;
--	u64 num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
- 	unsigned int min_items = 1;
-+	u64 num_bytes;
-+
-+	/*
-+	 * A full read-only mount (rescue options) cannot start transactions,
-+	 * so the global reserve is never consumed. Mark it as full and skip
-+	 * the accounting.
-+	 */
-+	if (btrfs_is_full_ro(fs_info)) {
-+		spin_lock(&block_rsv->lock);
-+		block_rsv->full = true;
-+		spin_unlock(&block_rsv->lock);
-+		return;
-+	}
-+
-+	sinfo = block_rsv->space_info;
-+	num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
- 
- 	/*
- 	 * The global block rsv is based on the size of the extent tree, the
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index b163482f72f14..4cda905bb6308 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3258,15 +3258,6 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
+ 	if (ei) {
++		/* The ei should have no children if it is being freed. */
++		WARN_ON_ONCE(!list_empty(&ei->children));
+ 		ei->is_freed = 1;
++		/*
++		 * The SRCU iteration has a smp_rmb() to make sure it
++		 * sees a child (that may have already been freed)
++		 * before it reads is_free. If is_free is set, it must
++		 * not use the child it acquired from ei->children, as
++		 * the list may be used for SRCU.
++		 */
++		smp_wmb();
+ 		put_ei(ei);
+ 	}
  }
+@@ -649,6 +659,20 @@ static int eventfs_iterate(struct file *file, struct dir_context *ctx)
+ 	list_for_each_entry_srcu(ei_child, &ei->children, list,
+ 				 srcu_read_lock_held(&eventfs_srcu)) {
  
--static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
--{
--	if (!sb_rdonly(fs_info->sb))
--		return false;
--	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
--		return true;
--	return false;
--}
--
- /*
-  * Try to wait for any metadata readahead, and invalidate all btree folios.
-  *
-@@ -3425,7 +3416,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 		WRITE_ONCE(fs_info->fs_error, -EUCLEAN);
- 
- 	/* If the fs has any rescue options, no transaction is allowed. */
--	if (fs_is_full_ro(fs_info))
-+	if (btrfs_is_full_ro(fs_info))
- 		WRITE_ONCE(fs_info->fs_error, -EROFS);
- 
- 	/* Set up fs_info before parsing mount options */
-diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
-index a50d11df93f8c..8687cf6952d00 100644
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -1096,6 +1096,15 @@ void __btrfs_clear_fs_compat_ro(struct btrfs_fs_info *fs_info, u64 flag,
- #define btrfs_test_opt(fs_info, opt)	((fs_info)->mount_opt & \
- 					 BTRFS_MOUNT_##opt)
- 
-+static inline bool btrfs_is_full_ro(const struct btrfs_fs_info *fs_info)
-+{
-+	if (!sb_rdonly(fs_info->sb))
-+		return false;
-+	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-+		return true;
-+	return false;
-+}
++		/*
++		 * If the ei is being freed, then the ei->children may be
++		 * being used as the rcu list, which means the next element
++		 * may be garbage. The ei->is_free is set before switching
++		 * the ei->children over to ei->rcu. The read memory barrier
++		 * here makes sure the ei_child is read before is_free is
++		 * updated.
++		 *
++		 * Matches the smp_wmb() in free_ei()
++		 */
++		smp_rmb();
++		if (ei->is_freed)
++			return -EINVAL;
 +
- static inline bool btrfs_fs_closing(const struct btrfs_fs_info *fs_info)
- {
- 	return unlikely(test_bit(BTRFS_FS_CLOSING_START, &fs_info->flags));
+ 		if (c > 0) {
+ 			c--;
+ 			continue;
+diff --git a/fs/tracefs/internal.h b/fs/tracefs/internal.h
+index a4a7f8431affb..c61481d04c8ee 100644
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -46,11 +46,11 @@ struct eventfs_attr {
+  * @ino:	The saved inode number
+  */
+ struct eventfs_inode {
++	struct list_head	list;
+ 	union {
+-		struct list_head	list;
++		struct list_head	children;
+ 		struct rcu_head		rcu;
+ 	};
+-	struct list_head		children;
+ 	const struct eventfs_entry	*entries;
+ 	const char			*name;
+ 	struct eventfs_attr		*entry_attrs;
 -- 
 2.53.0
 
