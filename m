@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2B64FDA59;
-	Tue, 13 Oct 2026 12:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB5B4FDE40;
+	Tue, 13 Oct 2026 12:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895956; cv=none; b=ONbQ/dC2XPZaN9phOL07P8n66DHbmQLklEexN/tDO9Kam6GKFQ3FfVW7cpapelLFZ0joJHswJEtxv0iAHu3mC2AwW0svvnWINbrGgY4Ycep1ohEHP8LuB20eRUlisCUZ92VPoQ52ve7IuFGyOgyoLHprg9CduChtdjnic+HtwiI=
+	t=1791895959; cv=none; b=cXCTEY8xW7Nsikpun8wrxlPSSq0lCXKG/xyjg98IY41ZOTMHrVlGf04t5jUNs6ewUIa87lNmqB8HiUD3FGJfbwn2k87Z2y59cQnSiePR5mE4zApvw+xfj+WzvGzWfmUoHrteZNOoZiPXspKNP+doSVQQBzU6RFYPC7oLQV9u62g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895956; c=relaxed/simple;
-	bh=M2AAmWripVfLBVxIpZ8fKkGgkDWg6JdHEIYlMX+4qfo=;
+	s=arc-20240116; t=1791895959; c=relaxed/simple;
+	bh=BMjHOSTq8GgtL4Eoqw9UuB5z8MrHFE+EpWCtqu++42Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoIxqOF2453iYGih7+waQk8ZplLixyhlPoInnA/KUC8o/ZfIRZUf4VSLxtiL/QtULdiQGvM9yaAcIj3hQzKLzkRcpMT80zA6PElurtmfOPav+75np91WgWSe882iXTwpFqBDVTa5c8JdyfFLVdqsGLAuXDxl7JM06COZxq8rX9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9QuiLhs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WjpIUAtB77kBIO9V6UMHa6GAjIvNrjM4klce4FZP9f3YJffouFUeZlOwO3O4iz7bBdEBh5s/d0Wh1iqWPoPdKdDSdz9lhtUVcHjd9WG5o1i1lMlIn4EY4j6bEgZCAHZDQ3rL2gBzo2eMVQsHj3PtO82OL0/Jiob/fF+ZqSSDtvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vM7K7mLn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9QuiLhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C951A1F000FF;
-	Tue, 13 Oct 2026 12:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM7K7mLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FEB1F000FF;
+	Tue, 13 Oct 2026 12:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895955;
-	bh=k28s8Q+VBvgFQ/8H4eacuXDLDZhiTcuyauICPVeS08s=;
+	s=korg; t=1791895958;
+	bh=UTebW1dO6MvXC+weKTCmz0eY/jTDtFUgzdExQE3gbpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9QuiLhswzdwZcbcTwH1X0OSn6Eisk2BnHIFfqcSIkTCBO7mdecLbQ9EDkwgEe9fH
-	 xtCl5uzZRgzq6h5n/66UVokWZ+z3lmytVMhXvSyE5P9pgbFHxnPjFxuiGFRSttM38g
-	 ZClCbSA0lFcUPHigbgb22pksWsU7BOjNwSUq56Rc=
+	b=vM7K7mLncxhvTkJfzNOOWm2+84R+iTYMxj3SDrZ0t0PILdVyAWDww+usC7bRAvgeu
+	 lFXv3aIaWD5DQUnE9WY7wlYBdMdjdQOVEg2OPU40d+Z1zFjAEVYC3W8QuvtYNN83wb
+	 McpS/wPPAXTQujTvrj+9LWAKFU8KXaNhot/WcgMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 448/497] Bluetooth: btintel_pcie: fix TX descriptor bounds check
-Date: Tue, 13 Oct 2026 13:40:15 +0200
-Message-ID: <20261013112918.515315819@linuxfoundation.org>
+Subject: [PATCH 6.12 449/497] Bluetooth: btintel_pcie: Add recovery mechanism
+Date: Tue, 13 Oct 2026 13:40:16 +0200
+Message-ID: <20261013112918.539305574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,36 +51,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit baa53af641c9e3644e717b8dfd1b95a55a0c111b ]
+[ Upstream commit a430c2a10c743dab5a3a07bc4e9544c55bd010fd ]
 
-btintel_pcie_prepare_tx() uses tfd_index to access the TFD and data
-buffer arrays before the index is advanced modulo txq->count. An index
-equal to txq->count is one past the end of both arrays, so reject it in
-the bounds check.
+This patch adds a recovery mechanism to recover controller if firmware
+download fails due to unresponsive controller, command timeout, firmware
+signature verification failure etc. Driver attmepts maximum of 5 times
+before giving up.
 
-Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
-Signed-off-by: Ravindra <ravindra@intel.com>
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 1465494e8d07 ("Bluetooth: btintel_pcie: Add shared HW reset for clean start")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c      |  14 ++++
+ drivers/bluetooth/btintel_pcie.c | 109 +++++++++++++++++++++----------
+ drivers/bluetooth/btintel_pcie.h |   2 +
+ 3 files changed, 91 insertions(+), 34 deletions(-)
 
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 9cfa98145a48b..5a0b30006d2b6 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -1301,6 +1301,12 @@ static void btintel_reset_to_bootloader(struct hci_dev *hdev)
+ 	struct intel_reset params;
+ 	struct sk_buff *skb;
+ 
++	/* PCIe transport uses shared hardware reset mechanism for recovery
++	 * which gets triggered in pcie *setup* function on error.
++	 */
++	if (hdev->bus == HCI_PCI)
++		return;
++
+ 	/* Send Intel Reset command. This will result in
+ 	 * re-enumeration of BT controller.
+ 	 *
+@@ -1316,6 +1322,7 @@ static void btintel_reset_to_bootloader(struct hci_dev *hdev)
+ 	 * boot_param:    Boot address
+ 	 *
+ 	 */
++
+ 	params.reset_type = 0x01;
+ 	params.patch_enable = 0x01;
+ 	params.ddc_reload = 0x01;
+@@ -2851,6 +2858,13 @@ int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
+ 	 */
+ 	boot_param = 0x00000000;
+ 
++	/* In case of PCIe, this function might get called multiple times with
++	 * same hdev instance if there is any error on firmware download.
++	 * Need to clear stale bits of previous firmware download attempt.
++	 */
++	for (int i = 0; i < __INTEL_NUM_FLAGS; i++)
++		btintel_clear_flag(hdev, i);
++
+ 	btintel_set_flag(hdev, INTEL_BOOTLOADER);
+ 
+ 	err = btintel_prepare_fw_download_tlv(hdev, ver, &boot_param);
 diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 735ebf2c33798..68e22f6022afe 100644
+index 68e22f6022afe..647e7a727520e 100644
 --- a/drivers/bluetooth/btintel_pcie.c
 +++ b/drivers/bluetooth/btintel_pcie.c
-@@ -145,7 +145,7 @@ static int btintel_pcie_send_sync(struct btintel_pcie_data *data,
+@@ -76,24 +76,6 @@ static inline void ipc_print_urbd1(struct hci_dev *hdev, struct urbd1 *urbd1,
+ 		   index, urbd1->frbd_tag, urbd1->status, urbd1->fixed);
+ }
  
- 	tfd_index = data->ia.tr_hia[BTINTEL_PCIE_TXQ_NUM];
+-static int btintel_pcie_poll_bit(struct btintel_pcie_data *data, u32 offset,
+-				 u32 bits, u32 mask, int timeout_us)
+-{
+-	int t = 0;
+-	u32 reg;
+-
+-	do {
+-		reg = btintel_pcie_rd_reg32(data, offset);
+-
+-		if ((reg & mask) == (bits & mask))
+-			return t;
+-		udelay(POLL_INTERVAL_US);
+-		t += POLL_INTERVAL_US;
+-	} while (t < timeout_us);
+-
+-	return -ETIMEDOUT;
+-}
+-
+ static struct btintel_pcie_data *btintel_pcie_get_data(struct msix_entry *entry)
+ {
+ 	u8 queue = entry->entry;
+@@ -254,10 +236,47 @@ static void btintel_pcie_reset_ia(struct btintel_pcie_data *data)
+ 	memset(data->ia.cr_tia, 0, sizeof(u16) * BTINTEL_PCIE_NUM_QUEUES);
+ }
  
--	if (tfd_index > txq->count)
-+	if (tfd_index >= txq->count)
- 		return -ERANGE;
+-static void btintel_pcie_reset_bt(struct btintel_pcie_data *data)
++static int btintel_pcie_reset_bt(struct btintel_pcie_data *data)
+ {
+-	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG,
+-			      BTINTEL_PCIE_CSR_FUNC_CTRL_SW_RESET);
++	u32 reg;
++	int retry = 3;
++
++	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++
++	reg &= ~(BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_ENA |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_INIT);
++	reg |= BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_DISCON;
++
++	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
++
++	do {
++		reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++		if (reg & BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_STS)
++			break;
++		usleep_range(10000, 12000);
++
++	} while (--retry > 0);
++	usleep_range(10000, 12000);
++
++	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++
++	reg &= ~(BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_ENA |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_INIT);
++	reg |= BTINTEL_PCIE_CSR_FUNC_CTRL_SW_RESET;
++	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
++	usleep_range(10000, 12000);
++
++	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++	bt_dev_dbg(data->hdev, "csr register after reset: 0x%8.8x", reg);
++
++	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_BOOT_STAGE_REG);
++
++	/* If shared hardware reset is success then boot stage register shall be
++	 * set to 0
++	 */
++	return reg == 0 ? 0 : -ENODEV;
+ }
  
- 	/* Prepare for TX. It updates the TFD with the length of data and
+ static bool btintel_pcie_is_blazariw(struct pci_dev *pdev)
+@@ -274,6 +293,7 @@ static bool btintel_pcie_is_blazariw(struct pci_dev *pdev)
+ static int btintel_pcie_enable_bt(struct btintel_pcie_data *data)
+ {
+ 	int err;
++	u32 reg;
+ 
+ 	data->gp0_received = false;
+ 
+@@ -297,22 +317,17 @@ static int btintel_pcie_enable_bt(struct btintel_pcie_data *data)
+ 	data->boot_stage_cache = 0x0;
+ 
+ 	/* Set MAC_INIT bit to start primary bootloader */
+-	btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
++	reg &= ~(BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_INIT |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_DISCON |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_SW_RESET);
++	reg |= (BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_ENA |
++			BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT);
+ 
+-	btintel_pcie_set_reg_bits(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG,
+-				  BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT);
+-
+-	/* Wait until MAC_ACCESS is granted */
+-	err = btintel_pcie_poll_bit(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG,
+-				    BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_STS,
+-				    BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_STS,
+-				    BTINTEL_DEFAULT_MAC_ACCESS_TIMEOUT_US);
+-	if (err < 0)
+-		return -ENODEV;
++	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
+ 
+ 	/* MAC is ready. Enable BT FUNC */
+ 	btintel_pcie_set_reg_bits(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG,
+-				  BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_ENA |
+ 				  BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_INIT);
+ 
+ 	btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
+@@ -1436,7 +1451,7 @@ static void btintel_pcie_release_hdev(struct btintel_pcie_data *data)
+ 	data->hdev = NULL;
+ }
+ 
+-static int btintel_pcie_setup(struct hci_dev *hdev)
++static int btintel_pcie_setup_internal(struct hci_dev *hdev)
+ {
+ 	const u8 param[1] = { 0xFF };
+ 	struct intel_version_tlv ver_tlv;
+@@ -1527,6 +1542,32 @@ static int btintel_pcie_setup(struct hci_dev *hdev)
+ 	return err;
+ }
+ 
++static int btintel_pcie_setup(struct hci_dev *hdev)
++{
++	int err, fw_dl_retry = 0;
++	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
++
++	while ((err = btintel_pcie_setup_internal(hdev)) && fw_dl_retry++ < 1) {
++		bt_dev_err(hdev, "Firmware download retry count: %d",
++			   fw_dl_retry);
++		err = btintel_pcie_reset_bt(data);
++		if (err) {
++			bt_dev_err(hdev, "Failed to do shr reset: %d", err);
++			break;
++		}
++		usleep_range(10000, 12000);
++		btintel_pcie_reset_ia(data);
++		btintel_pcie_config_msix(data);
++		err = btintel_pcie_enable_bt(data);
++		if (err) {
++			bt_dev_err(hdev, "Failed to enable hardware: %d", err);
++			break;
++		}
++		btintel_pcie_start_rx(data);
++	}
++	return err;
++}
++
+ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
+ {
+ 	int err;
+diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
+index ee0eec0237afd..85e218ef281ec 100644
+--- a/drivers/bluetooth/btintel_pcie.h
++++ b/drivers/bluetooth/btintel_pcie.h
+@@ -23,6 +23,8 @@
+ #define BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_INIT		(BIT(6))
+ #define BTINTEL_PCIE_CSR_FUNC_CTRL_FUNC_INIT		(BIT(7))
+ #define BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_STS	(BIT(20))
++#define BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_STS	(BIT(28))
++#define BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_DISCON	(BIT(29))
+ #define BTINTEL_PCIE_CSR_FUNC_CTRL_SW_RESET		(BIT(31))
+ 
+ /* Value for BTINTEL_PCIE_CSR_BOOT_STAGE register */
 -- 
 2.53.0
 
