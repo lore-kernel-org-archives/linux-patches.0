@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE95184;
-	Tue, 13 Oct 2026 12:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42BC199FAB;
+	Tue, 13 Oct 2026 12:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895047; cv=none; b=lCxNhaEGIVZwNdPjrx6JCM3cWu0qpDP0RjZbKZ2fExROJK3HH7AzVhjBvI/9z436o8X5AU9SIwO6oAbDVI3jmOEGpmBIoxeApYJoN4/DSQNvYRUtqwLVDdMMOSsCTRAkNxKb03cnHcOu8lofaPtNqEOR4eLKoLvnb6R6zSKQZIc=
+	t=1791895049; cv=none; b=WXxD1UTJFfTvMMoslbmTq3xU2phZ/yza3K0nHHW8Svqu9gl8uh2x55JdJtNoPWItJRxR0TD2E70y0LwPrFOcT6EmI8r95+hBlCdKYNhrEye1LoVlBoB5TUUkEkxM2+hn1SfpVzY3pO8ROFmRNEEg7hkVSods0QuvMCAMNgTsvbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895047; c=relaxed/simple;
-	bh=s2lN3J9AXmOPVzYAjP59N5A/Lj7ykDImOMjY4frpMVQ=;
+	s=arc-20240116; t=1791895049; c=relaxed/simple;
+	bh=++JeObfdB5JQ42U4mt8FrNbNKfwmesP6BPj7bv2qvQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yt6s0cSmr+q2EUgkHsmmlBAeeT1lrqGnGebTwzVcyWEEq2gtE4IbOb7l225cGphMEVZpzjS/+opNRzZ+vqI7LZN2Q4VjGMs035L5FIfSOtyjcQe+LYQmgS97vOdW+/1NQ5tyLqBNp9Igj6k8JrJnbeg+rhg4v5/rZEeJtIbJZys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIr24WKC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LfUxUnI1Y/fevzAYzPzujMyhri86GrGTtYADkCc+Khlhtp65BSqGETjqiYledjhz599QbA9LO23Q6bYbw4VWPe3GogvCI5rPBc3PH+l69Nig8k8VoZCu3rQlVY/q2ugon47miwyELxEO74t2cJYsa102jk7lZHlT/VWi5Roh2PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FXsnTO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIr24WKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F25B1F000FF;
-	Tue, 13 Oct 2026 12:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FXsnTO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289AD1F000FF;
+	Tue, 13 Oct 2026 12:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895045;
-	bh=iUxavweJYM+rEZHDjQp8qiFQ1k88XEhpyEsRpt2/Kf4=;
+	s=korg; t=1791895048;
+	bh=VxP0nZzPR9zDytOvgAuukVn8edloK6bGXBMPnZlHTsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIr24WKCyytMg9ZTvJti23V54HErwuzjKZ0n0lvCDCKOtO7pjZt76y3EzU1PdINBF
-	 4KSY4mcYUE5vOjQgW9gbjJlmCBMdrNMDxAH83NJC5ak1+gXtMLt11zUVEoOWEn5fH/
-	 nF1XruwlFCAsYQI1iADwQaa3ZuPJ8ttpECd/hC3Y=
+	b=1FXsnTO4VGAMGC8kGser2vlqwrjnliudPy7i31N9s6cVNA2DQiX5V/4t/sPNBnxfM
+	 LDeCrqrZit/zmBRsc+zVwungwCbLR2dGn+ACjGDFVWiV2xJXGCcF/NbZWOBVsRmxzq
+	 zKxnlpb1oriidTa5EYvNPb78CpSjD5T1aDDO/19w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 144/497] usb: typec: anx7411 - stop the IRQ before destroying the workqueue
-Date: Tue, 13 Oct 2026 13:35:11 +0200
-Message-ID: <20261013112911.305489395@linuxfoundation.org>
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 145/497] usb: dwc3: am62: Fix runtime PM usage count leak on probe error path
+Date: Tue, 13 Oct 2026 13:35:12 +0200
+Message-ID: <20261013112911.328505570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit 469600d5d292b1482c90dd6853555821d11b8c5f upstream.
+commit 3d9bbf0ffeb9b7ac1b6ad06b52e037870a7e0c63 upstream.
 
-The IRQ is devm-managed, so it can still queue plat->work while
-remove() is tearing the queue down. Disable it first.
+dwc3_ti_probe() takes a runtime PM reference with pm_runtime_get_noresume()
+before creating the dwc3 core child device, and releases it with
+pm_runtime_put_autosuspend() once probe has succeeded. The err_pm_disable
+error path only disables runtime PM, so the reference taken a few lines
+earlier is never dropped.
 
-Fixes: fe6d8a9c8e64 ("usb: typec: anx7411: Add Analogix PD ANX7411 support")
+The usage counter lives in struct device and is not reset when the driver
+is unbound, so the leaked reference outlives the failed probe. If the
+device is probed again, through a manual rebind or a module reload, the
+counter starts at one instead of zero and the pm_runtime_put_autosuspend()
+on the success path can no longer bring it back down. The wrapper then
+stays runtime resumed for good and autosuspend never kicks in.
+
+Drop the reference before disabling runtime PM, matching the ordering
+already used in dwc3_ti_remove().
+
+Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260910011150.2966843-1-gonglinkai@kylinos.cn
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260902-dwc3-am62-rpm-fix-v1-1-7a2807e33307@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/anx7411.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-am62.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/anx7411.c
-+++ b/drivers/usb/typec/anx7411.c
-@@ -1567,8 +1567,11 @@ static void anx7411_i2c_remove(struct i2
- 	anx7411_partner_unregister_altmode(plat);
- 	anx7411_unregister_partner(plat);
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -288,6 +288,7 @@ static int dwc3_ti_probe(struct platform
  
--	if (plat->workqueue)
-+	if (plat->workqueue) {
-+		disable_irq(plat->intp_irq);
-+		cancel_work_sync(&plat->work);
- 		destroy_workqueue(plat->workqueue);
-+	}
- 
- 	i2c_unregister_device(plat->spi_client);
- 
+ err_pm_disable:
+ 	clk_disable_unprepare(am62->usb2_refclk);
++	pm_runtime_put_noidle(dev);
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_suspended(dev);
+ 	return ret;
 
 
