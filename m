@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586A94F5E0A;
-	Tue, 13 Oct 2026 12:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A41501F28;
+	Tue, 13 Oct 2026 12:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893328; cv=none; b=gM1rBTaJ3PrmixkYexwYkBhwWXxV49dssHq5EWYs8+H3e7UglyMgefQd7z7ZzsMRXUoFJfPFpE+VgLam/E572/n96X1pSOjpeULMYljw6pFsorQBFWxHtBsB45bql/sN//a6zYOXB9t8RqdRnH7eoAR23mryVfv6eMNtJHbQWaI=
+	t=1791893331; cv=none; b=R8z4xkVhTrooH0Ikpo2cQM9nBNnb98PtzRPmviJYYEXD8J2f7Do/4EUPX9xiFQjJ9o0WLiuz/+yMGgXlDuXv4ocypAfyZ+pgNBl7LGRn2j+bTaJxPYlPSta0qnSWmyIVTmj10U6HJ/Z3QGpjQjqNqMTxYJEZdaE8dAtlXxzk/xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893328; c=relaxed/simple;
-	bh=nZhlmzuzy0KRpQgAOcxyNo8Rs03QPK8oz5Y/33+CJMI=;
+	s=arc-20240116; t=1791893331; c=relaxed/simple;
+	bh=Uw8ZsBLds7uhlxqgRHoNvvavZkWARRJ7vuxCDQI1VuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzV1f4VeHH3mHXhJqGhVRdredJ+G/c/eKsd0Nl6ALxPRDV/zk/XeqcTvIvMTBySS47LrBPXIO+iQOV5bfsqA+Q89WwMEx/eO8kDYDtRU6BFvmj3cHP55r5pyR/MGbfV3TthJHmIvkgs1TtGfv9uywEm938Ae6bo/xsb1COPZqqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjBZrBIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kFZ/nFxcemEvegXnPJZpCcagRY2ijLxIY6KvDKMjz3pSOwhSfZAe0ZiQqoi3fSheN2RX74UlxOQvl6tRoFlzntkv/n+Jue6OcqDSHRj1wwMRS0jrxpl8Ewh6MWWDpXtoTGkC/umsS/ttFH6u/RsWPUeocXYUXNOV47adDcJ6MA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAfx10FR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjBZrBIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27C61F000FF;
-	Tue, 13 Oct 2026 12:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAfx10FR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1191F000FF;
+	Tue, 13 Oct 2026 12:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893327;
-	bh=BQ4CZUS3bLhRXrvKuC0wOHIWdxNMLMache6swMh0dPM=;
+	s=korg; t=1791893330;
+	bh=rUcwrrgBgWxBkzxW5QkSkrILJD/jSyFKeWEz41OITRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BjBZrBIRDVApy/YfxbMSJBeyCg+AbWZhgwQyeixr0my3Q4lEsbov3af146tIdzcj5
-	 GiVzC17ztv/1h6ryOtQoGMQpGzv5PgHh3/F3dkDN4ppMb6j2l+4PNa9w3+PzIeOwP2
-	 iyFfCbsgJ3I9GumLKhZcORDrGZ3A6fJe+w51MOeQ=
+	b=ZAfx10FRnw7X3r8HSfAUVSUfg+tEJyC55sZHCdLVeB4sHamW8+whjFrldUXnETwDx
+	 Megx+MjvOw65yQCP4YEnBgLlIshezXzmeqmjO245wi4S4pQAVkl9VsUxyfIX06mEDo
+	 OdMMF0jTdsu199m1cYcneII33AbTfNNTcC4n3/FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petlozu Pravareshwar <petlozup@nvidia.com>,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	Farhat Abbas <fabbas@cloudlinux.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 188/621] soc/tegra: pmc: Fix unsafe generic_handle_irq() call
-Date: Tue, 13 Oct 2026 13:33:03 +0200
-Message-ID: <20261013112925.324750207@linuxfoundation.org>
+Subject: [PATCH 6.18 189/621] scsi: qla2xxx: Completely fix fcport double free
+Date: Tue, 13 Oct 2026 13:33:04 +0200
+Message-ID: <20261013112925.347950438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,204 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit e6d96073af681780820c94079b978474a8a44413 ]
+[ Upstream commit c0b7da13a04bd70ef6070bfb9ea85f582294560a ]
 
-Currently, when resuming from system suspend on Tegra platforms,
-the following warning is observed:
+In qla24xx_els_dcmd_iocb() sp->free is set to qla2x00_els_dcmd_sp_free().
+When an error happens, this function is called by qla2x00_sp_release(),
+when kref_put() releases the first and the last reference.
 
-WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
-Call trace:
- handle_irq_desc+0x20/0x58 (P)
- tegra186_pmc_wake_syscore_resume+0xe4/0x15c
- syscore_resume+0x3c/0xb8
- suspend_devices_and_enter+0x510/0x540
- pm_suspend+0x16c/0x1d8
+qla2x00_els_dcmd_sp_free() frees fcport by calling qla2x00_free_fcport().
+Doing it one more time after kref_put() is a bad idea.
 
-The warning occurs because generic_handle_irq() is being called from
-a non-interrupt context which is considered as unsafe.
-
-Fix this warning by deferring generic_handle_irq() call to an IRQ work
-which gets executed in hard IRQ context where generic_handle_irq()
-can be called safely.
-
-When PREEMPT_RT kernels are used, regular IRQ work (initialized with
-init_irq_work) is deferred to run in per-CPU kthreads in preemptible
-context rather than hard IRQ context. Hence, use the IRQ_WORK_INIT_HARD
-variant so that with PREEMPT_RT kernels, the IRQ work is processed in
-hardirq context instead of being deferred to a thread which is required
-for calling generic_handle_irq().
-
-On non-PREEMPT_RT kernels, both init_irq_work() and IRQ_WORK_INIT_HARD()
-execute in IRQ context, so this change has no functional impact for
-standard kernel configurations.
-
-Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-[treding@nvidia.com: miscellaneous cleanups]
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 82f522ae0d97 ("scsi: qla2xxx: Fix double free of fcport")
+Fixes: 4895009c4bb7 ("scsi: qla2xxx: Prevent command send on chip reset")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Farhat Abbas <fabbas@cloudlinux.com>
+Link: https://patch.msgid.link/aYsDln9NFQQsPDgg@vova-pc
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/pmc.c | 104 ++++++++++++++++++++++++++++------------
- 1 file changed, 74 insertions(+), 30 deletions(-)
+ drivers/scsi/qla2xxx/qla_iocb.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 93bbebd680017..911085d8a04b8 100644
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -28,6 +28,7 @@
- #include <linux/iopoll.h>
- #include <linux/irqdomain.h>
- #include <linux/irq.h>
-+#include <linux/irq_work.h>
- #include <linux/kernel.h>
- #include <linux/of_address.h>
- #include <linux/of_clk.h>
-@@ -467,6 +468,10 @@ struct tegra_pmc {
- 	unsigned long *wake_sw_status_map;
- 	unsigned long *wake_cntrl_level_map;
- 	struct syscore syscore;
-+
-+	/* Pending wake IRQ processing */
-+	struct irq_work wake_work;
-+	u32 *wake_status;
- };
- 
- static struct tegra_pmc *pmc = &(struct tegra_pmc) {
-@@ -1904,6 +1909,50 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
- 	return 0;
- }
- 
-+/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
-+static void tegra186_pmc_wake_handler(struct irq_work *work)
-+{
-+	struct tegra_pmc *pmc = container_of(work, struct tegra_pmc, wake_work);
-+	unsigned int i, wake;
-+
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
-+		unsigned long status = pmc->wake_status[i];
-+
-+		for_each_set_bit(wake, &status, 32) {
-+			irq_hw_number_t hwirq = wake + (i * 32);
-+			struct irq_desc *desc;
-+			unsigned int irq;
-+
-+			irq = irq_find_mapping(pmc->domain, hwirq);
-+			if (!irq) {
-+				dev_warn(pmc->dev,
-+					 "No IRQ found for WAKE#%lu!\n",
-+					 hwirq);
-+				continue;
-+			}
-+
-+			dev_dbg(pmc->dev,
-+				"Resume caused by WAKE#%lu mapped to IRQ#%u\n",
-+				hwirq, irq);
-+
-+			desc = irq_to_desc(irq);
-+			if (!desc) {
-+				dev_warn(pmc->dev,
-+					 "No descriptor found for IRQ#%u\n",
-+					 irq);
-+				continue;
-+			}
-+
-+			if (!desc->action || !desc->action->name)
-+				continue;
-+
-+			generic_handle_irq(irq);
-+		}
-+
-+		pmc->wake_status[i] = 0;
-+	}
-+}
-+
- static int tegra_pmc_init(struct tegra_pmc *pmc)
- {
- 	if (pmc->soc->max_wake_events > 0) {
-@@ -1922,6 +1971,18 @@ static int tegra_pmc_init(struct tegra_pmc *pmc)
- 		pmc->wake_cntrl_level_map = bitmap_zalloc(pmc->soc->max_wake_events, GFP_KERNEL);
- 		if (!pmc->wake_cntrl_level_map)
- 			return -ENOMEM;
-+
-+		pmc->wake_status = kcalloc(pmc->soc->max_wake_vectors, sizeof(u32), GFP_KERNEL);
-+		if (!pmc->wake_status)
-+			return -ENOMEM;
-+
-+		/*
-+		 * Initialize IRQ work for processing wake IRQs. Must use
-+		 * HARD_IRQ variant to run in hard IRQ context on PREEMPT_RT
-+		 * because we call generic_handle_irq() which requires hard
-+		 * IRQ context.
-+		 */
-+		pmc->wake_work = IRQ_WORK_INIT_HARD(tegra186_pmc_wake_handler);
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 5ad867c6f26eb..9a3adf40e0d7c 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2758,7 +2758,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
+ 	if (!elsio->u.els_logo.els_logo_pyld) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
+-		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
  	}
  
- 	if (pmc->soc->init)
-@@ -3121,47 +3182,30 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
+@@ -2783,7 +2782,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
+ 	if (rval != QLA_SUCCESS) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
+-		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
  	}
- }
  
--/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
--static void tegra186_pmc_process_wake_events(struct tegra_pmc *pmc, unsigned int index,
--					     unsigned long status)
--{
--	unsigned int wake;
--
--	dev_dbg(pmc->dev, "Wake[%d:%d]  status=%#lx\n", (index * 32) + 31, index * 32, status);
--
--	for_each_set_bit(wake, &status, 32) {
--		irq_hw_number_t hwirq = wake + 32 * index;
--		struct irq_desc *desc;
--		unsigned int irq;
--
--		irq = irq_find_mapping(pmc->domain, hwirq);
--
--		desc = irq_to_desc(irq);
--		if (!desc || !desc->action || !desc->action->name) {
--			dev_dbg(pmc->dev, "Resume caused by WAKE%ld, IRQ %d\n", hwirq, irq);
--			continue;
--		}
--
--		dev_dbg(pmc->dev, "Resume caused by WAKE%ld, %s\n", hwirq, desc->action->name);
--		generic_handle_irq(irq);
--	}
--}
--
- static void tegra186_pmc_wake_syscore_resume(void *data)
- {
--	u32 status, mask;
- 	unsigned int i;
-+	u32 mask;
- 
- 	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
- 		mask = readl(pmc->wake + WAKE_AOWAKE_TIER2_ROUTING(i));
--		status = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
--
--		tegra186_pmc_process_wake_events(pmc, i, status);
-+		pmc->wake_status[i] = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
- 	}
-+
-+	/* Schedule IRQ work to process wake IRQs (if any) */
-+	irq_work_queue(&pmc->wake_work);
- }
- 
- static int tegra186_pmc_wake_syscore_suspend(void *data)
- {
-+	unsigned int i;
-+
-+	/* Check if there are unhandled wake IRQs */
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++)
-+		if (pmc->wake_status[i])
-+			dev_warn(pmc->dev,
-+				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
-+				 i, pmc->wake_status[i]);
- 	wke_read_sw_wake_status(pmc);
- 
- 	/* flip the wakeup trigger for dual-edge triggered pads
 -- 
 2.53.0
 
