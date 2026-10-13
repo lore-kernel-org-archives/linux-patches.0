@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813F1334692;
-	Tue, 13 Oct 2026 12:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3464FD786;
+	Tue, 13 Oct 2026 12:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895274; cv=none; b=EDWy4zKTyaTmVnVGT1b0XrX71Bs+dtlIAZSFeWgEiLbPNIDYy0qP6+7VAMpKZlKdHYS5VIAzFk+VvJNtZjO7zv1RYmEPTEa/Bwr8VehE/GCM4g+E/IYfFEwwgbAn2FD1UOs7XA8QZqAh12GMu7u95PIZFAzy1hfGVWAxnaGugPk=
+	t=1791895277; cv=none; b=mM0OEgC3FW2ZODzJokB7RBs4GbRZGZ1841GGYCZwCMhAF7S5uv0Q5iLJJ88ZpXwckkWhjq+qTxMka3ASGzVWD0CGiD06sNPYPEv0iwKR5sr6cMojKiEY8xpz7BJiR+2UmeG6atew0DrJuaGRmXisL38MhAjj1J1VkqDLCr4oG4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895274; c=relaxed/simple;
-	bh=b3eEm23jG2vIjZSP+HvY+waDKMzfR7lEb6zfrQtZ2zY=;
+	s=arc-20240116; t=1791895277; c=relaxed/simple;
+	bh=0rOW9Q75scAa2UmUZ6LdM+cztcJmVIGQf3SdYmblgRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtvTneJzwRXqGbgcAmtzgCzBskBShZiGZmBdWxDagYRF1aYnDZWmAqVCYkWet6RwSPHwdfO3I4TJnim8i3y65nSzcqdt2QXp1U6hpwG2Po/FP3+sQ2AsCG9hlImSOSt9S+yvROILks7CkVqD5ZD+zCYeuCvpixOX+zScXmPbuOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9OB7cZk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kKWK2zERY1LkVgmllCYPot7l4x3VyuJGXg3u1HTdfN1SeQ35arjHuuIdtyVHUAT1NQkJA4FhdDzcxMaPvlaIxdqR0KyZMmexRPIlWPwIeiWM6KNMq4DVQlI2c7rFkCs+TGFdRA5E0OSEhrpL+taivB152UG1OZIqJezk4pnO6ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVJKy3yj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9OB7cZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1831F000FF;
-	Tue, 13 Oct 2026 12:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVJKy3yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFEA1F000FF;
+	Tue, 13 Oct 2026 12:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895273;
-	bh=JmDKM1nScDdOeRV5qLU1VzSOuu7LQzYSXZmiUXnWeQY=;
+	s=korg; t=1791895276;
+	bh=FEXXtbpRHjYUamxgU5loa0Pd0ZUtJsUo/ICYQdI2jB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G9OB7cZktQGasoILZHzp1DOCr4Gmiu2cll/j1t4hhIWcCSeZ0348l5R4SRs+VAWfZ
-	 7tDKVFV/g615uSatjvFlZO1t68Ts+TH9cNemfU0/wf4r2x89lLqRx94sG4KA9YKVss
-	 LPvSBEUQCTnEZwL9q9qsigPhzD1KeMbptacRKCXQ=
+	b=YVJKy3yjj+W0O/rRZpQoxC2981QGBlnD63zyJxFMnSuZ57x8rZHUlDodfaw53HtG3
+	 Ov3TIEy0Qa9xFGlzN/P/s1+5irAzObsv9IWQSYefu+n5y7edJcctVnJ6442I88Hh+W
+	 l5OIFbIXTKMHrGJLpmFcqT8jMaWrvPEa/LbPhC3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 182/497] Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
-Date: Tue, 13 Oct 2026 13:35:49 +0200
-Message-ID: <20261013112912.209280295@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 218/497] USB: serial: fix driver deregistration order
+Date: Tue, 13 Oct 2026 13:36:25 +0200
+Message-ID: <20261013112913.068899985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,148 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 024e05f73a4c1263d031614bc36700ec135eecb4 upstream.
+commit 646e5b28b4fdbc1b828a2398d6ced2c1dd308a46 upstream.
 
-Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
+USB serial driver modules register one driver for the USB bus and one or
+more drivers for the ports on the USB serial bus.
 
-hci_enhanced_setup_sync() runs on the request workqueue without the
-hci_dev_lock held by its caller when setup was queued. Its CVSD
-capability check and find_next_esco_param() dereference conn->parent
-while the receive workqueue can unlink and release that parent.
+When unloading a driver module, the USB driver must be deregistered
+before the USB serial bus drivers so that I/O is stopped before
+unbinding the ports to avoid use-after-free in completion handlers
+accessing port data.
 
-The following interleaving can cause a use-after-free:
+Note that the "new_id" attributes must first be removed to prevent new
+ids from being added and triggering a probe of the USB driver after it
+has been deregistered.
 
-  hci_enhanced_setup_sync()       hci_disconn_complete_evt()
-  load conn->parent
-                                 hci_dev_lock()
-                                 hci_conn_del(ACL parent)
-                                   unlink SCO child
-                                   drop link's parent reference
-                                   clear child->parent
-                                   release ACL parent
-                                     bt_link_release()
-                                       kfree(parent)
-                                 hci_dev_unlock()
-  read parent->features[0][3]
-
-The reference held for the queued SCO child does not keep its ACL parent
-alive after unlinking. Commit 42de40abe25d ("Bluetooth: hci_conn: fix the
-SCO setup context lifetime") protects the child stored in the queued
-context, but leaves these parent accesses unprotected.
-
-With a 40 ms diagnostic delay after loading conn->parent, an instrumented
-kernel based on fd179f8a05be, which already contains 42de40abe25d,
-reported:
-
-  BUG: KASAN: slab-use-after-free in hci_enhanced_setup_sync+0xda5/0xdf0
-  Read of size 1 at addr ffff888102204047 by task kworker/u17:0/93
-  Call Trace:
-   hci_enhanced_setup_sync+0xda5/0xdf0
-   hci_cmd_sync_work+0x13c/0x290
-   process_one_work+0x6b4/0x10e0
-
-  Allocated by task 92:
-   __hci_conn_add+0x304/0x1df0
-   hci_connect_acl+0x349/0x3e0
-   hci_connect_sco+0x3b/0x9a0
-   sco_sock_connect+0x475/0xca0
-
-  Freed by task 94:
-   kfree+0x121/0x3c0
-   bt_link_release+0x79/0xa0
-   device_release+0xc8/0x240
-   kobject_put+0x14d/0x280
-   hci_conn_del+0x524/0xe30
-   hci_disconn_complete_evt+0x403/0x8c0
-   hci_event_packet+0x71b/0xb20
-   hci_rx_work+0x293/0x730
-
-The accessed address is 71 bytes into the freed ACL parent, at its
-features[0][3] byte; the queued SCO child is a different object. The
-diagnostic preserves the loaded parent across the delay, matching the
-unmodified compiled capability check, and does not change the parent
-references or teardown path.
-
-Hold hci_dev_lock() across the codec switch, including every call to
-find_next_esco_param(), and release it on all selection errors. Keep
-configure_datapath_sync() outside the critical section because it waits
-for HCI events. Preserve parameter selection and existing return values.
-
-Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
-Cc: stable@vger.kernel.org
-Assisted-by: GPT-6-Astra
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 765e0ba62613 ("usb-serial: new API for driver registration")
+Cc: stable@vger.kernel.org	# 3.4
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/usb/serial/bus.c        |    4 ++++
+ drivers/usb/serial/usb-serial.c |   21 ++++++++++++++++++---
+ include/linux/usb/serial.h      |    1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -306,11 +306,13 @@ static int hci_enhanced_setup_sync(struc
- 	cp.tx_bandwidth   = cpu_to_le32(0x00001f40);
- 	cp.rx_bandwidth   = cpu_to_le32(0x00001f40);
- 
-+	hci_dev_lock(hdev);
-+
- 	switch (conn->codec.id) {
- 	case BT_CODEC_MSBC:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return -EINVAL;
-+			goto unlock;
- 
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x05;
-@@ -336,7 +338,7 @@ static int hci_enhanced_setup_sync(struc
- 	case BT_CODEC_TRANSPARENT:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return -EINVAL;
-+			goto unlock;
- 
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x03;
-@@ -363,11 +365,11 @@ static int hci_enhanced_setup_sync(struc
- 		if (conn->parent && lmp_esco_capable(conn->parent)) {
- 			if (!find_next_esco_param(conn, esco_param_cvsd,
- 						  ARRAY_SIZE(esco_param_cvsd)))
--				return -EINVAL;
-+				goto unlock;
- 			param = &esco_param_cvsd[conn->attempt - 1];
- 		} else {
- 			if (conn->attempt > ARRAY_SIZE(sco_param_cvsd))
--				return -EINVAL;
-+				goto unlock;
- 			param = &sco_param_cvsd[conn->attempt - 1];
- 		}
- 		cp.tx_coding_format.id = 2;
-@@ -390,9 +392,11 @@ static int hci_enhanced_setup_sync(struc
- 		cp.out_transport_unit_size = 16;
- 		break;
- 	default:
--		return -EINVAL;
-+		goto unlock;
- 	}
- 
-+	hci_dev_unlock(hdev);
-+
- 	cp.retrans_effort = param->retrans_effort;
- 	cp.pkt_type = __cpu_to_le16(param->pkt_type);
- 	cp.max_latency = __cpu_to_le16(param->max_latency);
-@@ -401,6 +405,10 @@ static int hci_enhanced_setup_sync(struc
- 		return -EIO;
- 
- 	return 0;
-+
-+unlock:
-+	hci_dev_unlock(hdev);
-+	return -EINVAL;
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -169,3 +169,7 @@ void usb_serial_bus_deregister(struct us
+ 	free_dynids(driver);
  }
  
- static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver)
++{
++	driver_remove_file(&driver->driver, &driver_attr_new_id);
++}
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1472,7 +1472,7 @@ int __usb_serial_register_drivers(struct
+ {
+ 	int rc;
+ 	struct usb_driver *udriver;
+-	struct usb_serial_driver * const *sd;
++	struct usb_serial_driver * const *sd, * const *s;
+ 
+ 	/*
+ 	 * udriver must be registered before any of the serial drivers,
+@@ -1525,9 +1525,11 @@ int __usb_serial_register_drivers(struct
+ 	return 0;
+ 
+ err_deregister_drivers:
++	for (s = serial_drivers; s < sd; ++s)
++		usb_serial_bus_remove_new_id(*s);
++	usb_deregister(udriver);
+ 	while (sd-- > serial_drivers)
+ 		usb_serial_deregister(*sd);
+-	usb_deregister(udriver);
+ err_free_driver:
+ 	kfree(udriver);
+ 	return rc;
+@@ -1545,10 +1547,23 @@ EXPORT_SYMBOL_GPL(__usb_serial_register_
+ void usb_serial_deregister_drivers(struct usb_serial_driver *const serial_drivers[])
+ {
+ 	struct usb_driver *udriver = (*serial_drivers)->usb_driver;
++	struct usb_serial_driver * const *sd;
++
++	/*
++	 * udriver must be deregistered before the serial drivers so that
++	 * I/O is stopped before unbinding the ports.
++	 *
++	 * Remove the new_id attributes to prevent ids from being added and
++	 * triggering a probe of udriver after it has been deregistered.
++	 */
++	for (sd = serial_drivers; *sd; ++sd)
++		usb_serial_bus_remove_new_id(*sd);
++
++	usb_deregister(udriver);
+ 
+ 	for (; *serial_drivers; ++serial_drivers)
+ 		usb_serial_deregister(*serial_drivers);
+-	usb_deregister(udriver);
++
+ 	kfree(udriver);
+ }
+ EXPORT_SYMBOL_GPL(usb_serial_deregister_drivers);
+--- a/include/linux/usb/serial.h
++++ b/include/linux/usb/serial.h
+@@ -380,6 +380,7 @@ void usb_serial_handle_dcd_change(struct
+ 
+ int usb_serial_bus_register(struct usb_serial_driver *device);
+ void usb_serial_bus_deregister(struct usb_serial_driver *device);
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver);
+ 
+ extern const struct bus_type usb_serial_bus_type;
+ extern struct tty_driver *usb_serial_tty_driver;
 
 
