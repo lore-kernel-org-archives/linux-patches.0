@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCC64F68AD;
-	Tue, 13 Oct 2026 12:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9EC4F7983;
+	Tue, 13 Oct 2026 12:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895186; cv=none; b=g3bi2iyZCKrzSwlrLQOgFKPp/btamNYBXEPoZce2egWlHXxfzVKVPFmus3fhDIuMlKbaUsW4Jreh0HMYJ94KeNf/HZYrAn7hcpwCEkHgoZyjlfwVALGBuvgVZ4+lw6uTX8gel5v6wvd7+vPbQoUIqHmEDbU4rm7WHx+kG5sYn+o=
+	t=1791895190; cv=none; b=AcB/xWrTFpNMZZ9v9eQe2HrbxYVaQip8kp9QrJ5+L25cFSWtXb1Qbf1Qxbkg5rVB1Cp5t4xWwav8hqkaa3FfzhfdxaK8w9uT+cX8xmi90KOJJenoDqQ2cXq7ySWgiY7NyCVnEBosp4gfxhixtauBkEbVfvYPwEgHj1pW7H+DcsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895186; c=relaxed/simple;
-	bh=VHm0QtDqoQKPIp5YHN8cFhOTHiLGjSdsac2nHJxTFCM=;
+	s=arc-20240116; t=1791895190; c=relaxed/simple;
+	bh=lOMNmUTqS2RLxL9gdU/wlKiPRAeEIPK4a/+EzqgrTnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbLM7XnElZSVFddk6EDShkckKfjXotua0jE5j/LsOWZlsU5OmOUcRzCQYH7OyKca0qp3d605P1XNppPoWPAhVpOI4Sa+FhX4Xqlzp3nOCLhf7K0NRmE9tCCv8yGvq19thG+NiyELpmaqJmYwvUdGVE1KpTJCbOTxdzsg7LGEfIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKEwdyOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hJD6FdGLKnDKlgEZjyCwp1HAaWHddVCrt8jwV+JvZ0s13+QNfVrypdCg5X9i/GYvEoWruR8yunbAmPzcVh4KQ6i/Kzt3sdegsh1/PpH1wRgAsBycd6YcabfDYz1488MdSHTWzQp2tfoBKxkI0Li5asOid8xoJRwLERFeFzkjItk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEa/NnOm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKEwdyOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424061F000FF;
-	Tue, 13 Oct 2026 12:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEa/NnOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C781F0089A;
+	Tue, 13 Oct 2026 12:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895185;
-	bh=X3a/HB9sKhM7d4hEV7CvJEsMAFQb4pHdixBxyOx+Akg=;
+	s=korg; t=1791895188;
+	bh=4FrvmTVxF+KfXahp8eS71ikmWcjREKQviKJ1RyWHkow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rKEwdyOJi0J8GpXBclf+fHZoZn2tLhh394sA4JMm/FOaJZWSN0UuCydUcGj9XEhs5
-	 gi6SHKRY09DZ8hd7L8E5Ymr84t/D6GPU/2sNLJetIgWn6R2sLuxjNt1NqzBqThlCgM
-	 y8pG992evMXfsmiSeVAlGkTMFHL9aTqcL2yeSQ0M=
+	b=sEa/NnOmhIDhD3bgzZISjz1eQXJg3O/bGqD14ywueUwz3A4r5K1aUBtl2YsF8r4bx
+	 ePgbdCpSbD52lVFe7aO+RN3VINV7hWGUDXTVq3WQkj/722CCWsuWFx+mwkt70T1Nc0
+	 fuMXzTa0vhfjj0j/D4LiUKVkeU80SyvgIRZXQRCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/497] HID: multitouch: stop the release timer from being rearmed on remove
-Date: Tue, 13 Oct 2026 13:35:58 +0200
-Message-ID: <20261013112912.425095560@linuxfoundation.org>
+Subject: [PATCH 6.12 192/497] net: extend IPv6 exthdr detection of tunneled packets
+Date: Tue, 13 Oct 2026 13:35:59 +0200
+Message-ID: <20261013112912.449287077@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,74 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 5acb2dace582f061aab5e14c399ac9480315f44b ]
+[ Upstream commit 5f0764cb1c81a9712bce605d38efe6d844a70b29 ]
 
-mt_remove() quiesces the sticky-finger timer before stopping the
-hardware:
+Commit c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM
+GSO fallback") split skb_gso_has_extension_hdr() into mutually exclusive
+branches on skb->encapsulation. This did not yet address all paths:
 
-    timer_delete_sync(&td->release_timer);
+1. With skb->encapsulation set, the outer header is not checked. IPv6
+   tunnels such as ip6_gre and ip6_tunnel add an outer Destination
+   Options header by default (encap_limit). Their GSO packets skip
+   software GSO, then skb_csum_hwoffload_help() sees the outer extension
+   header and calls skb_checksum_help() on the GSO skb, which warns and
+   drops it.
 
-    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
-    hid_hw_stop(hdev);
+2. Tunnels over IPv6 without an outer transport header, such as
+   ip6_tunnel, leave skb->transport_header at the inner transport
+   header. skb_network_header_len() then spans the outer IPv6, tunnel
+   and inner IP headers, a false positive.
 
-timer_delete_sync() waits for a running callback and dequeues the timer,
-but it does not stop the timer from being armed again. The transport is
-still delivering reports at that point, and the report path rearms it:
+3. UDP tunnels without an inner network header, such as SCTP-in-UDP or
+   PSP, have no inner IPv6 header to check. Decide on the outer header
+   alone.
 
-    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
-        if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-            mod_timer(&td->release_timer,
-                      jiffies + msecs_to_jiffies(100));
+4. Directly dereferencing inner_ip_hdr(skb)->version without
+   skb_header_pointer() is unsafe.
 
-A report that arrives after timer_delete_sync() has returned therefore
-leaves the timer queued. td is allocated with devm_kzalloc() against
-hdev->dev, so it is freed when the driver is unbound, after mt_remove()
-returns. When the timer fires afterwards, mt_expired_timeout()
-dereferences the freed td:
+Instead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if
+set, on the inner IPv6 header. Read the headers with skb_header_pointer().
+Keep the skb_network_header_len() check when !skb->encapsulation to also
+catch encapsulated packets without skb->encapsulation (e.g., virtio).
 
-    struct mt_device *td = timer_container_of(td, t, release_timer);
-    struct hid_device *hdev = td->hdev;
+Use the same helper in skb_csum_hwoffload_help(). Its open coded test
+has the false positive of (2) and ignores the inner header.
 
-    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
+Background: checksum offload of tunneled packets invariants:
 
-Simply moving the teardown after hid_hw_stop() does not fix this on its
-own, because mt_expired_timeout() calls mt_release_contacts(), which
-walks hdev->inputs; the timer still has to be quiesced before
-hid_hw_stop() tears the input devices down.
+Non-GSO skb:
+- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes
+  the outer checksum in software and the device offloads only the inner L4
+  checksum.
+- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,
+  Remote Checksum Offload), the device offloads the outer UDP or GRE
+  checksum instead.
 
-Use timer_shutdown_sync() instead, which additionally makes any later
-mod_timer() a no-op, so neither ordering constraint has to be traded off
-against the other. This is the final-teardown pattern the function was
-introduced for, and hid-wiimote already uses it for the same reason.
+GSO skb:
+- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM
+  computes both inner and outer checksums per segment.
+  The outer checksum is seeded with only the pseudo-header checksum.
 
-Fixes: 4f4001bc76fd ("HID: multitouch: fix rare Win 8 cases when the touch up event gets missing")
+A NETIF_F_IPV6_CSUM device must parse through the outer headers to
+reach the inner ones.
+
+Fixes: c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260723224211.613112-1-you@example.com?part=1
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-[ sashal: Adapted the patch to replace del_timer_sync() instead of timer_delete_sync(). ]
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260926140506.2335137-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: kept the !ipv6_has_hopopt_jumbo() exemptions; this tree still inserts the BIG TCP HBH jumbo header ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 49 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 454bb8b9b732f..a95e26cbccd1f 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2118,7 +2118,7 @@ static void mt_remove(struct hid_device *hdev)
- {
- 	struct mt_device *td = hid_get_drvdata(hdev);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index a4554020076f4..48f099f9e804c 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3579,20 +3579,36 @@ static netdev_features_t dflt_features_check(struct sk_buff *skb,
+ 	return vlan_features_check(skb, features);
+ }
  
--	del_timer_sync(&td->release_timer);
-+	timer_shutdown_sync(&td->release_timer);
+-static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
+-{
+-	if (!skb->encapsulation)
+-		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
+-			skb_transport_header_was_set(skb) &&
+-			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
+-	else
+-		return (!skb_inner_network_header_was_set(skb) ||
+-			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-			   inner_ip_hdr(skb)->version == 6)) &&
+-			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
++static bool __skb_has_ipv6_ext_hdr(const struct sk_buff *skb, int nhoff)
++{
++	const struct ipv6hdr *ip6h;
++	struct ipv6hdr _ip6h;
++
++	ip6h = skb_header_pointer(skb, nhoff, sizeof(_ip6h), &_ip6h);
++	return ip6h && ip6h->version == 6 && ipv6_ext_hdr(ip6h->nexthdr);
++}
++
++static bool skb_has_ipv6_extension_hdr(const struct sk_buff *skb)
++{
++	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6)) {
++		if (__skb_has_ipv6_ext_hdr(skb, skb_network_offset(skb)))
++			return true;
++
++		/* Catch tunnels without skb->encapsulation (e.g., virtio). */
++		if (!skb->encapsulation &&
++		    skb_transport_header_was_set(skb) &&
++		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
++			return true;
++	}
++
++	/* Tunnels without an inner network header, such as SCTP-in-UDP or
++	 * PSP, have no inner IP header and thus no inner extension header.
++	 */
++	if (skb->encapsulation && skb_inner_network_header_was_set(skb) &&
++	    __skb_has_ipv6_ext_hdr(skb, skb_inner_network_offset(skb)))
++		return true;
++
++	return false;
+ }
  
- 	sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);
- 	hid_hw_stop(hdev);
+ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+@@ -3641,7 +3657,7 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 	 * so neither does TSO that depends on it.
+ 	 */
+ 	if (features & NETIF_F_IPV6_CSUM &&
+-	    skb_gso_has_extension_hdr(skb) &&
++	    skb_has_ipv6_extension_hdr(skb) &&
+ 	    !ipv6_has_hopopt_jumbo(skb))
+ 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
+ 
+@@ -3744,8 +3760,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		return 0;
+ 
+ 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
+-		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
+-		    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++		if (skb_has_ipv6_extension_hdr(skb) &&
+ 		    !ipv6_has_hopopt_jumbo(skb))
+ 			goto sw_checksum;
+ 
 -- 
 2.53.0
 
