@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FCE4F55B8;
-	Tue, 13 Oct 2026 12:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D95F4F93B8;
+	Tue, 13 Oct 2026 12:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894238; cv=none; b=MCgvGbQFAKBPzm0ozT083tx3LfzFZQNVoG7zSczw69qGuWXfZKB4rGQ98Wmpzwet/kYE2ynxkAf3+I+qyT3VssT7B7jwEg/dit+Ri22CGKg/+/gYl5Fh4coRlFoNgvQS2JLMTPcAk8rqri6kTixoprz8QZPL1Wa6pRr7symxAGs=
+	t=1791894241; cv=none; b=kwyEexUuaqBkecoiDXpTFMz8CkAFTtZqyQlkYjk2OyPL4f/FobBMBAywKkXabW2If4DoyrNZgFn4sUTr93H3f395ccZkWqgaovaQou6SfI77j5cvshhidwpu0aYMByjhQh3qzdWd8S4xfebzz3HsFbatNI6GAbCeUXuoNbVLu7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894238; c=relaxed/simple;
-	bh=oO1d3yddTBOEw6bkDi/9mLOtqAj1PfiNdqbkrLfW8TQ=;
+	s=arc-20240116; t=1791894241; c=relaxed/simple;
+	bh=M8pSsClGnHTvJ2gC+wcPC9RvtBgojmRCKldms3uzxOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnwQOdi0xPfRR/OW4bJXFGcjt8wKeCtHeoiQIVuoUU7Ivout3ZaV7odYLWGix6Zrofaiu9BOQUZ4v8CV/ClS+Gym9OmBzOTIEM5lXtYjVy0QLd2MOKFpkA+qAlyIMsJqGBwbYKK8M8ntYbarLMoEwG7lp3vEnIWOgbaij7FjCOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIQv5zT/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B7S1TuxeLZL/+KBy3TgvZq/goMlhGaZ/KpBe8QaJDOgWklmtcj7GPy64nJdpFQhKajFx6lqtPa9zBPvwgxkyoROMK1voyXuzWsDrr9PsRLDzAKldJtd/s38Mky4wa1DEaQq4tgZJ18WIzcXeDDt9epMS+ej1+tLowAtAw1KeddQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSX1zahS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIQv5zT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9C01F000FF;
-	Tue, 13 Oct 2026 12:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSX1zahS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC7E1F000FF;
+	Tue, 13 Oct 2026 12:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894237;
-	bh=o5gDxetn/wdkEVCwZnB8R66iZWOLiSI9ph78YZHO83g=;
+	s=korg; t=1791894240;
+	bh=oJhS8OvqO2CAJWF6Y4K3qXs+qZAojgdkTcPfIGdCNQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gIQv5zT/0H9l7Zd5XaSqxs2fY+Vn8c8FlCSgFE9uwhbX1D30UvQ8/1RpM5IMcSwnd
-	 46rlT2oqbIQ10hdx3nGNjvWsfi6PuYF+klJglSRc2yToX9a5009rW4oVGMyQVEbOHR
-	 WfPKjXypSGscr8RruuB4ed83M4a6Vr2WwP/M0rgk=
+	b=BSX1zahSiSpF2Vldf4XMkF+WePnpoS2RxmLW8W87xIoTuqldYmNZdrlUntnvDpCue
+	 S7sC7kFGwZyZt7ivMexh7hA3/R2DvbBPmG5lrRH5CbVEC4G3VtYaDcPtkCjUSk2TEP
+	 MpKizY0wmvb2uKQCUA6h+EuIyQ9rQMT5mkJRzMVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 494/621] drm/xe: dont WARN on kernel job timeout when device already wedged
-Date: Tue, 13 Oct 2026 13:38:09 +0200
-Message-ID: <20261013112932.552475742@linuxfoundation.org>
+Subject: [PATCH 6.18 495/621] ACPI: bus: Introduce acpi_bus_get_primary_device()
+Date: Tue, 13 Oct 2026 13:38:10 +0200
+Message-ID: <20261013112932.575676934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,72 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 13087ad7817e6e5f210064518bfc4d6d58a9c2f3 ]
+[ Upstream commit 72530e1f72b0515a73fd88292254d04fecf03649 ]
 
-igt@xe_wedged@wedged-at-any-timeout wedges the device in mode 2
-(UPON_ANY_HANG_NO_RESET) and then rebinds the driver. During unbind,
-a GSC proxy kernel submission can still time out; with the device wedged
-and the GuC CT stopped it can never complete, so its kernel job times out.
+The function used for obtaining the first "physical" device for which
+the given ACPI one is the ACPI companion, acpi_get_first_physical_node(),
+may return a stale device pointer (mostly in theory) because
+acpi_unbind_one() may run as a whole after dropping the ACPI device's
+physical_node_lock in acpi_get_first_physical_node() and before it
+returns.  The last reference to the "physical" device may be dropped
+then before the pointer to it is returned to the caller.
 
-  Tile0: GT1: Kernel-submitted job timed out
-  WARNING: drivers/gpu/drm/xe/xe_guc_submit.c:...
-	   at guc_exec_queue_timedout_job()
-  Workqueue: gt-ordered-wq drm_sched_job_timedout
+If that happens and the acpi_get_first_physical_node() caller invokes
+get_device() on the pointer obtained from it, which is done by the
+majority of its callers, a use-after-free will occur.
 
-Killed queues skip guc_submit_hint_wedged(), leaving 'wedged' false even
-though the device is already wedged. The timeout handler then treats the
-kernel queue timeout as unexpected and taints the kernel.
+To prepare for addressing this problem, introduce a new function for
+getting the first "physical" device associated with the given ACPI one
+(the "primary physical device") that will also reference count the
+device in question before returning a pointer to it.
 
-Honour an already-wedged device even for killed queues so the expected
-teardown timeout no longer trips the WARN.
+Make that new function and acpi_get_first_physical_node() share the
+physical node list lookup code.
 
-Fixes: 5a2f117a80c2 ("drm/xe: Do not wedge device on killed exec queues")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patch.msgid.link/20260814074106.92670-2-nitin.r.gote@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit a1c1dbd0f047bb05de6aaf6abe9103031179bf19)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/2843318.mvXUDI8C0e@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/acpi/bus.c      | 54 +++++++++++++++++++++++++++++------------
+ include/acpi/acpi_bus.h |  6 +++++
+ 2 files changed, 44 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 693d3b3051c7b..cd0e160ac5b07 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1279,8 +1279,14 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 	 * doesn't work for SRIOV. For now assuming timeouts in wedged mode are
- 	 * genuine timeouts.
- 	 */
-+	/*
-+	 * Killed queues must not newly wedge the device, but preserve an
-+	 * already-wedged state to avoid warning on teardown timeouts.
-+	 */
- 	if (!exec_queue_killed(q))
- 		wedged = guc_submit_hint_wedged(exec_queue_to_guc(q));
-+	else
-+		wedged = xe_device_wedged(xe);
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 222a6bc616448..16bd24125a23d 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -747,30 +747,52 @@ static int __init acpi_setup_sb_notify_handler(void)
+                              Device Matching
+    -------------------------------------------------------------------------- */
  
- 	/* Engine state now stable, disable scheduling to check timestamp */
- 	if (!wedged && exec_queue_registered(q)) {
-@@ -1374,9 +1380,10 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 	 * Kernel jobs should never fail, nor should VM jobs if they do
- 	 * somethings has gone wrong and the GT needs a reset
- 	 */
--	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_KERNEL,
-+	xe_gt_WARN(q->gt, !wedged && q->flags & EXEC_QUEUE_FLAG_KERNEL,
- 		   "Kernel-submitted job timed out\n");
--	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q),
-+	xe_gt_WARN(q->gt, !wedged && q->flags & EXEC_QUEUE_FLAG_VM &&
-+		   !exec_queue_killed(q),
- 		   "VM job timed out on non-killed execqueue\n");
- 	if (!wedged && (q->flags & EXEC_QUEUE_FLAG_KERNEL ||
- 			(q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q)))) {
++
++static struct device *primary_physical_device(struct acpi_device *adev)
++{
++	struct acpi_device_physical_node *pn;
++
++	pn = list_first_entry_or_null(&adev->physical_node_list,
++				      struct acpi_device_physical_node, node);
++	if (pn)
++		return pn->dev;
++
++	return NULL;
++}
++
+ /**
+- * acpi_get_first_physical_node - Get first physical node of an ACPI device
++ * acpi_bus_get_primary_device - Get first physical device for a given ACPI one
++ * @adev: ACPI device to get the first physical device for.
++ *
++ * Find the first physical device for which @adev is the ACPI companion and
++ * reference count it if present.
++ *
++ * Return: Pointer to the first physical counterpart of @adev or NULL if there
++ * are none.  Callers are responsible for invoking put_device() on the returned
++ * device.
++ */
++struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
++{
++	if (!adev)
++		return NULL;
++
++	guard(mutex)(&adev->physical_node_lock);
++
++	return get_device(primary_physical_device(adev));
++}
++EXPORT_SYMBOL_GPL(acpi_bus_get_primary_device);
++
++/**
++ * acpi_get_first_physical_node - Find first physical node of an ACPI device
+  * @adev:	ACPI device in question
+  *
+  * Return: First physical node of ACPI device @adev
+  */
+ struct device *acpi_get_first_physical_node(struct acpi_device *adev)
+ {
+-	struct mutex *physical_node_lock = &adev->physical_node_lock;
+-	struct device *phys_dev;
+-
+-	mutex_lock(physical_node_lock);
+-	if (list_empty(&adev->physical_node_list)) {
+-		phys_dev = NULL;
+-	} else {
+-		const struct acpi_device_physical_node *node;
++	guard(mutex)(&adev->physical_node_lock);
+ 
+-		node = list_first_entry(&adev->physical_node_list,
+-					struct acpi_device_physical_node, node);
+-
+-		phys_dev = node->dev;
+-	}
+-	mutex_unlock(physical_node_lock);
+-	return phys_dev;
++	return primary_physical_device(adev);
+ }
+ EXPORT_SYMBOL_GPL(acpi_get_first_physical_node);
+ 
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 9a8a796a870d1..66fc14f869cb9 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -677,6 +677,7 @@ void acpi_bus_unregister_driver(struct acpi_driver *driver);
+ int acpi_bus_scan(acpi_handle handle);
+ void acpi_bus_trim(struct acpi_device *start);
+ acpi_status acpi_bus_get_ejd(acpi_handle handle, acpi_handle * ejd);
++struct device *acpi_bus_get_primary_device(struct acpi_device *adev);
+ int acpi_match_device_ids(struct acpi_device *device,
+ 			  const struct acpi_device_id *ids);
+ void acpi_set_modalias(struct acpi_device *adev, const char *default_id,
+@@ -1000,6 +1001,11 @@ int acpi_scan_add_dep(acpi_handle handle, struct acpi_handle_list *dep_devices);
+ u32 arch_acpi_add_auto_dep(acpi_handle handle);
+ #else	/* CONFIG_ACPI */
+ 
++static inline struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
++{
++	return NULL;
++}
++
+ static inline int register_acpi_bus_type(void *bus) { return 0; }
+ static inline int unregister_acpi_bus_type(void *bus) { return 0; }
+ 
 -- 
 2.53.0
 
