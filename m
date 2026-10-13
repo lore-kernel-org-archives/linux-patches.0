@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108FF4EFFC8;
-	Tue, 13 Oct 2026 11:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E454F3EAE;
+	Tue, 13 Oct 2026 11:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892190; cv=none; b=n+6y/+eOxFf9O+p8wpHpa5lueCpYxvRd2+SpHl7CLtm81dCGltwqvumAblw1vSoaOoHP7V8VbG8npCzi6mtplu9bpH7AyMHj4ec66PU0vmuSSliBnA9PUZC3WjA+NCXUiiM6f/632kE5zq1vjwZoYr8O3W+oX/yPhW0vtMF10m4=
+	t=1791892193; cv=none; b=jNu+MhoFhV/zHOOlOu1jRuGbCxcSGQgWJYAwx7Wt3PJXgi9RWn4G8hzSLqUr6/E6Dgh1TNAkVcRCeFU9SOham3mSVka0mFRVLtZplVpmpFFSysoOVZaYGZ9y92E7yQPAzoW6nfXPi8m9t1ME27WrL/1/TPsc/ZZkWPKC8JcbUi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892190; c=relaxed/simple;
-	bh=tqaUukSglNF4NhSVdu7Mo6qC2nM1dTXabZp0VthA/IU=;
+	s=arc-20240116; t=1791892193; c=relaxed/simple;
+	bh=fuzin2aObD/sWkPWGHpOmf6p9i2+V5D3rPktTJ7qc0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPZYQPPsC2pvvvOS+OYsPWkJZc6COGd8jfoaKggzE6R9HieO1Jx3ZFgb4FwAqGt3jYfUnUa/z52tXuenIhIZAIFtO7aqp/JnyicnyTb1j2nQLZ/8t/CM1OqUaDjjS+DaL1jUIlForudqy81rihGs9tY9k9OzfRwCc3chVrp7ty0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wInltfzb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ES6EJPrDNVB25WRxEhlG6CqFHisbhO8qsHeFh3rxfiHI+h/TnLuQrYXNAMpcrm+o2/OyySSvePX8Cg6py70FfOFKbI22tIjZQdwhZJc4RM1FZwgyf23W0N3ziRX/7gMV6ZWWS+7G9zdOkjZr8pxuGeOYl/6BW5cwtN7Hol7J49E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztM3xkCh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wInltfzb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D63C1F00893;
-	Tue, 13 Oct 2026 11:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztM3xkCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5246B1F00893;
+	Tue, 13 Oct 2026 11:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892188;
-	bh=XyL7Vd19Ylr5SovMM1Te2ILDA1L/kuPEX5uxL1Rf62E=;
+	s=korg; t=1791892191;
+	bh=+YpYDrQ3v/2FjPQkUbqPTl8KZE0IfuxL35pByK5qNZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wInltfzbnfw/sKskL2Rbw2a5sW7z2Bg/lQ8Ox78N35ki/IkURa2/2zQYjLPUhaRlZ
-	 qugniqieHKrRz2yzM6sc1zGi6svmcJ2/3KPXF8/lIhd5qujKgLNqHCXXJgLSZZxGxz
-	 AdYgbmjRow/RuhVrx5FwVV9y07wSMs8fA7mTmheQ=
+	b=ztM3xkChnULYZLYBHq6a63Iq9lMMgytmUKXL/FuW0YWA3ynFGZViNp3ex8v6xBIE8
+	 IZeQrIg2ipAzA7H0zl70sQm3aMwGZSBdqd4NQcrm8kn22qB5ROdnwkdb98wkegxlrS
+	 1e3+suFv1yydcOS7s8SoQtx5LFbrQ4fG7dVZZvds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Karl Bonde Torp <k.torp@samsung.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 091/281] nvme: fix swapped ZRASF zone state values for full and read only
-Date: Tue, 13 Oct 2026 13:36:47 +0200
-Message-ID: <20261013112857.343233928@linuxfoundation.org>
+	"Denis V. Lunev" <den@openvz.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 7.2 092/281] openvswitch: fix soft lockup in the netlink flow dump
+Date: Tue, 13 Oct 2026 13:36:48 +0200
+Message-ID: <20261013112857.368339407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,50 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Bonde Torp <k.torp@samsung.com>
+From: Denis V. Lunev <den@openvz.org>
 
-commit 564e46d9f6e87912effa03f123d37a511d520f09 upstream.
+commit aaaaf87ea99b8766c9a8aa0e71aa42e6bc8a5320 upstream.
 
-The Zone Management Receive command Zone Receive Action Specific (ZRASF)
-reporting option values for the Full and Read Only zone states are swapped
-compared to the NVM Express Zoned Namespace Command Set Specification,
-Revision 1.5, Figure 35:
+A production compute node carrying a few thousand datapath flows hit a
+soft lockup inside a single netlink flow dump and panicked.
 
-- 5h lists the zones in the ZSF:Full state.
-- 6h lists the zones in the ZSRO:Read Only state.
+ovs_flow_cmd_dump() calls ovs_flow_stats_get() for every flow it
+emits, and that releases stats->lock with spin_unlock_bh() once per
+CPU that has touched the flow. Every release is a local_bh_enable(),
+and each one runs the pending softirq backlog in the dumping thread's
+own context.
 
-The nvmet ZNS backend uses these constants to map the ZRASF value received
-from the host to a block layer zone condition when filtering zones in
-Report Zones. Because of the swap, a host asking for full zones was given
-the read only zones, and a host asking for read only zones was given the
-full zones.
+The skb bounds the flows one callback emits, but not the softirq work
+it absorbs. On a CPU that carries the box's packet load the backlog
+refills as fast as it drains, so the dumping thread becomes that CPU's
+softirq engine. It never sleeps and it has no reschedule point, so
+under voluntary preemption nothing can take the CPU away from it:
+neither the ksoftirqd the kernel woke to take the work over, nor the
+stopper thread the softlockup detector dispatches to refresh its
+timestamp.
 
-Swap the values of NVME_ZRASF_ZONE_STATE_FULL and
-NVME_ZRASF_ZONE_STATE_READONLY to match the specification.
+Hold BH off across the whole callback instead, the way
+ctnetlink_dump_table() does, so the nested spin_unlock_bh() stop
+draining softirqs. The loop already runs under rcu_read_lock() and
+cannot sleep. What it gives up is preemption under CONFIG_PREEMPT,
+since a BH-off region is not preemptible outside PREEMPT_RT. The
+region stays short: the skb caps the flows one callback emits, and
+empty buckets cost no skb space but are each visited once per dump, as
+the cursor only moves forward. The table grows on insert and shrinks
+only on flush, so the walk is bounded by the largest flow count the
+datapath has held. The softirq backlog the callback used to absorb has
+no bound at all.
 
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Fixes: 63e7959c4b9b ("openvswitch: Per NUMA node flow stats.")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Karl Bonde Torp <k.torp@samsung.com>
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/nvme.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/datapath.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -1266,8 +1266,8 @@ enum {
- 	NVME_ZRASF_ZONE_STATE_IMP_OPEN	= 0x02,
- 	NVME_ZRASF_ZONE_STATE_EXP_OPEN	= 0x03,
- 	NVME_ZRASF_ZONE_STATE_CLOSED	= 0x04,
--	NVME_ZRASF_ZONE_STATE_READONLY	= 0x05,
--	NVME_ZRASF_ZONE_STATE_FULL	= 0x06,
-+	NVME_ZRASF_ZONE_STATE_FULL	= 0x05,
-+	NVME_ZRASF_ZONE_STATE_READONLY	= 0x06,
- 	NVME_ZRASF_ZONE_STATE_OFFLINE	= 0x07,
- 	NVME_REPORT_ZONE_PARTIAL	= 1,
- };
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1529,6 +1529,12 @@ static int ovs_flow_cmd_dump(struct sk_b
+ 		return -ENODEV;
+ 	}
+ 
++	/*
++	 * Not needed for safety. Stops every spin_unlock_bh() in
++	 * ovs_flow_stats_get() from running the softirq backlog.
++	 */
++	local_bh_disable();
++
+ 	ti = rcu_dereference(dp->table.ti);
+ 	for (;;) {
+ 		struct sw_flow *flow;
+@@ -1549,6 +1555,8 @@ static int ovs_flow_cmd_dump(struct sk_b
+ 		cb->args[0] = bucket;
+ 		cb->args[1] = obj;
+ 	}
++
++	local_bh_enable();
+ 	rcu_read_unlock();
+ 	return skb->len;
+ }
 
 
