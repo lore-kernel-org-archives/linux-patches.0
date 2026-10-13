@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DEF1C84BC;
-	Tue, 13 Oct 2026 12:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B50344D88;
+	Tue, 13 Oct 2026 12:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895080; cv=none; b=e4b1VM5UJJo6/jdGmLWahztJmZClTWjT2wK+taqW4IkMJPRA3bAmYtLRGYsCc7eFDZf09bL6XD4ap5HNHRXoDMq74/76X0PlzqYZKEn1iRcXavE/l2r7O26ensOxhKU5FPF+yoNmbjXIeK6yGWclsEqTH38q6trPdWowiBSYytA=
+	t=1791895082; cv=none; b=KRFeW6D/BMGqb/ORv1cD5r9o6ACDD0+fQDsLxICHjafIsWqBamNO+dl9LwCL2mY5CpGdWwLJkCbJLYrANVc9Ini04HBPGOP0RNh5OUii3zDaubzptuPQOXE9VTFV1Q16FRKEcsao34Sj36aCzoj7mA3caXc6kNvucwN5GHlyjTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895080; c=relaxed/simple;
-	bh=0YcARGfen9QuIVt9GvgnGBhBYusFk2QKaD6J59kc0tE=;
+	s=arc-20240116; t=1791895082; c=relaxed/simple;
+	bh=o75F/NJrrS59A1J8fHdwNdOSyDotw68x4+u93a7nYkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPQ4utdAazwDoybIvSyTGIWiDDzrBWi0slH3HkSnO92/Bf62Ihw7f6RSrDVaoMAeRktQUYWjTsnddhdEahtC31bVtVV/2RS1lauSdRNKfo/AnGB7VzwfEPSTxtcGBOEIdXU/5ysRqzDZUthgbWy+wUM0tSwsav5T/0jjJ1hReUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L25VBnm9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1z+RNDO1/O3Wl8S8xrr2Uxha8dClUQvt/qHUqR4dfXXjyKp0A9NfbfYBnGd2vwzPEmQQvoNfV2EhYSFqhXhi4P8lbufB8+J4c8eeuerDDrILC3tCejl7poEIiDnM2P/kA0UElcAUH/AYEb+uXH7m6JxBGxtEz3vPlaCGKRUXlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spPL54zY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L25VBnm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1111F000FF;
-	Tue, 13 Oct 2026 12:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spPL54zY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AE41F0089B;
+	Tue, 13 Oct 2026 12:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895078;
-	bh=dTNkglNI0tQbIL4wHEG25tOb4BFqdFBFJDzIe6pIjNg=;
+	s=korg; t=1791895081;
+	bh=Y9JueEWkjlT9QBCnr2NOMvrRuDkBzT39pXHLnihE/Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L25VBnm9ZkFBKQLLfV21iEMf6c6CcO9m46seoHonree1xHh4DUUKysi+5MerE+HsH
-	 QLQIZZgIMSP3W1JsSB7VX8mPuSkHErD23QgBaoIRFl7gNkO0DSg0k7T/5oqrWLH7ZF
-	 Wti3r4n788vKbkWqU4VSQAjbVS6jdQn+tYXp41I4=
+	b=spPL54zYz28TLTuwsLlnT3IkK8LAjEtSXShcrMnQa+PWhNgQ8o0/gUwgxdQdD6ai0
+	 xcjmMasr2lcJDREYOPTWXGpRCQR5kmYjkn7+kUF0/B60+wyMkmGYA3OvEBqyChiHDH
+	 r7Nppbul+Y6ialyLH2rv8uQXj3JYzAjYFyfXYJ+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 154/497] usb: typec: ucsi: glink: fix use-after-free of ucsi on remove
-Date: Tue, 13 Oct 2026 13:35:21 +0200
-Message-ID: <20261013112911.543456690@linuxfoundation.org>
+Subject: [PATCH 6.12 155/497] usb: typec: ucsi: Get the connector fwnode based on reg value
+Date: Tue, 13 Oct 2026 13:35:22 +0200
+Message-ID: <20261013112911.566865824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,66 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit 63b269ec537dc0fd26d0bd64872c26860d108c9d upstream.
+commit 6c51f09c6db5868a5090e8dd4d7764660c87f1ad upstream.
 
-The pmic_glink client is released by the devres cleanup, which runs
-after pmic_glink_ucsi_remove() has returned, so its notification
-callbacks can queue work until then. Work that runs after
-ucsi_unregister() has been called touches freed state: it dereferences
-the connector array that ucsi_unregister() freed, or registers and
-unregisters the instance a second time.
+ucsi_find_fwnode() currently maps UCSI connectors to Device tree
+connector nodes based on the order in which connector child nodes
+are described in DT.
 
-Disable both work items with disable_work_sync() before unregistering,
-and unregister only if the instance is still registered.
+This can fail because the ordering of child nodes isn't guaranteed
+in Device-tree. For example, DTB may contain connector@1 before
+connector@0, causing connector numbers to be associated with the wrong
+fwnode. As a result, role switch and Type-C notifications can be
+delivered to the wrong remote endpoints.
 
-This issue was found by an in-house static analysis tool.
+Fix this by using the "reg" property of each connector to match
+its corresponding fwnode. While at it, if the reg property isn't
+present, then fall back to the old method.
 
-Fixes: 62b5412b1f4a ("usb: typec: ucsi: add PMIC Glink UCSI driver")
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
 Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.6
-Link: https://lore.kernel.org/r/20260227190430.889-1-nathan.c.rebello@gmail.com
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260908060216.616045-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260916042808.2879079-1-prashanth.k@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -297,6 +297,10 @@ static void pmic_glink_ucsi_destroy(void
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1542,10 +1542,21 @@ static struct fwnode_handle *ucsi_find_f
  {
- 	struct pmic_glink_ucsi *ucsi = data;
+ 	struct fwnode_handle *fwnode;
+ 	int i = 1;
++	int ret;
++	u32 port;
  
-+	/* Drain the work items before ucsi_destroy() frees the ucsi instance */
-+	cancel_work_sync(&ucsi->notify_work);
-+	cancel_work_sync(&ucsi->register_work);
+-	device_for_each_child_node(con->ucsi->dev, fwnode)
+-		if (i++ == con->num)
+-			return fwnode;
++	device_for_each_child_node(con->ucsi->dev, fwnode) {
++		ret = fwnode_property_read_u32(fwnode, "reg", &port);
++		if (ret < 0) {
++			if (i == con->num)
++				return fwnode;
++		} else {
++			if (port == con->num - 1)
++				return fwnode;
++		}
 +
- 	/* Protect to make sure we're not in a middle of a transaction from a glink callback */
- 	mutex_lock(&ucsi->lock);
- 	ucsi_destroy(ucsi->ucsi);
-@@ -401,8 +405,15 @@ static void pmic_glink_ucsi_remove(struc
- {
- 	struct pmic_glink_ucsi *ucsi = dev_get_drvdata(&adev->dev);
- 
--	/* Unregister first to stop having read & writes */
--	ucsi_unregister(ucsi->ucsi);
-+	/* Callbacks can queue work until devres releases the client */
-+	disable_work_sync(&ucsi->notify_work);
-+	disable_work_sync(&ucsi->register_work);
-+
-+	/* register_work may have unregistered the instance already */
-+	if (ucsi->ucsi_registered) {
-+		ucsi->ucsi_registered = false;
-+		ucsi_unregister(ucsi->ucsi);
++		i++;
 +	}
+ 	return NULL;
  }
  
- static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
 
 
