@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762954FDA77;
-	Tue, 13 Oct 2026 12:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E244FECC3;
+	Tue, 13 Oct 2026 12:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893785; cv=none; b=lC2U9DlWtHhnSE6PxhLXiU2qopN3thpsX56edY+t4xJeRd1HMsqen8WYdZocZwTPdfKO6xeoBtQ/cB91zfidhQVHlRHOwt3tEkMufFU6MzD+d9R6AKbkzdlAGKz8hIOgV73B328GILxZl7YYtCxKpOLZREKP4JSS+vH6KnyhQU4=
+	t=1791893787; cv=none; b=UmWTgjLLn5xXZJKfQ8AcAfADMZxbv5Qtn2mImSQz7zZVU4NWnbsKrd2m5s+9PMAL37CgvYR0pfgcPoWR5s1W87sTfKFfhofQJbC1XtY5USw+RB+EwrEOl3tPXxWjmg1i4bQ6NNKrfrsmjnkqipKe9mgKNrDbtwe0YyLUchR8jzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893785; c=relaxed/simple;
-	bh=Jcojvq6ZSSDANKRfpXOqZDb5V00gx7TMGYPgorEYQYI=;
+	s=arc-20240116; t=1791893787; c=relaxed/simple;
+	bh=5iyw+ItSuXi0nRUTvCrUE/KYpQ+BAniOjSj/mzHvtK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KfvLKtxYHv0GNVk6d9uvVSPHZ1qEXSWAhsw29omQ/XI6A8R/dc6TgwJghCnsn7RV6mzrQftHK1tL3TZy+LBoyYqbLFg7w7xlOfcUP5NWNppI/ipNlXbNohfwhO4PFw3wUKpt31io4fUKFq5cQORO4CFMcvAZEc3c7/L8jRYx+KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkfeZG+3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RCP/Gg1v9D0TkwG35pokXP/JLXZlu/cvqjpsjJHxV4A5QXqCigOIsC+t9KYCVVNAHNwnNubPdl08C5IvGQzWDymHaCekyZZpJnXJ9M/9WZelTpjfoRsXiRXtFvgQ+Z8spQJRjbfo7gosPh6chRXNUpeNoanU5pGqBsTW3DvaTHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6onWIKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkfeZG+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8831C1F000FF;
-	Tue, 13 Oct 2026 12:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6onWIKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872611F000FF;
+	Tue, 13 Oct 2026 12:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893783;
-	bh=6XTn3rqLcvhtQ9hhF8G0mux5E/WfNt7kCdWG4FW0XUw=;
+	s=korg; t=1791893786;
+	bh=OGLPl0Wgz18KaT8aJ+6ShZojv4klEpiTaio5nA8hcWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkfeZG+31jmhwj35+gX3PtKmU8e/PErjeR6a00q0kcZHsYGRSlMTB07I0sffFZuHA
-	 h+3Ww0Tnk7wA6KFb25lA8k7kA3Ir3q8BTSQqJ3EwwaJuxFlknFiZQNSd1HuMxhOFIM
-	 e0bXkJkaOXoUFBuhXrhjEAbS7uBh+OZXvLLH+EUU=
+	b=i6onWIKnsx3sQfWs829RjshaXfhYU7u5bPjhxULQaUzcJiVQatBafPe+QCqw2RFMK
+	 qYtoUmql3NB4/HsMWpQkyRXkXRKtzZYJrYMEzzpGXakmDrHddOwH/td/H7C2BCTQd3
+	 PY/BnvgD3D/N+u9upxsdjjgCVKMKz74r+VzoW50w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 339/621] vhost_iotlb: bound map allocation in add_range
-Date: Tue, 13 Oct 2026 13:35:34 +0200
-Message-ID: <20261013112928.899124528@linuxfoundation.org>
+Subject: [PATCH 6.18 340/621] bpf: Fix netns reference imbalance in conntrack kfuncs
+Date: Tue, 13 Oct 2026 13:35:35 +0200
+Message-ID: <20261013112928.922751188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,364 +46,213 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 1ed35ac7f3fe2b4396bdd29ac3a7f0ebc0829e94 ]
+[ Upstream commit fdeba03fea78407a8c52faa99177c9f7f29f90eb ]
 
-vhost_iotlb_add_range_ctx() only retires an old entry when the table
-has a non-zero limit, has exactly reached that limit and has
-VHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating
-entries after reaching their configured limit.
+The opts argument of the BPF conntrack kfuncs can point to a shared
+map value.  __bpf_nf_ct_lookup() and __bpf_nf_ct_alloc_entry() read
+opts->netns_id separately when acquiring and releasing the network
+namespace reference.
 
-Existing vhost devices allocate their IOTLB with max_iotlb_entries from
-vhost.c, which defaults to 2048 and is tunable by module parameter. Use
-the caller-provided limit at the allocation point instead of adding a
-separate default in the common IOTLB helper, and reject non-positive
-values in vhost paths that can report an error.
+The reference imbalance can occur as follows:
 
-Other vhost IOTLB users should not create zero-limit tables when entries
-can be populated from userspace or guest-controlled requests. Add
-caller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and
-vhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require
-at least two entries for vdpa_sim and mlx5 vDPA paths that install
-full-range mappings, since those mappings are split into two IOTLB
-entries.
+  CPU 0                                  CPU 1
+  read opts->netns_id (-1)
+  skip get_net_ns_by_id()
+                                         write opts->netns_id (id)
+  read opts->netns_id (id)
+  put_net(net) /* no matching get */
 
-Handle full-range mappings in the common helper by checking that the
-IOTLB can hold both split entries before inserting the first half. This
-avoids returning an error after leaving a half mapping behind.
+The reverse transition leaks the reference.  Repeating the unmatched put
+can destroy a live namespace and crash later users.
 
-When the table is full, keep the existing retire behavior for retiring
-tables and return -ENOSPC for non-retiring tables. Reuse the retired map
-node instead of freeing it and allocating a replacement, so a stream of
-IOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table
-has reached its limit. If a zero-limit IOTLB still reaches the common
-helper, treat it as a configuration error and return -EINVAL.
+The kernel reported:
 
-I found this bug myself, though the patch was written with AI assistance.
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [0x00000000000000e8-0x00000000000000ef]
+  RIP: 0010:bpf_prog_test_run_xdp+0x52c/0x1700
+  Call Trace:
+   __sys_bpf+0x1662/0x50c0
+   __x64_sys_bpf+0x73/0xb0
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: 0bbe30668d89 ("vhost: factor out IOTLB")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
-Message-ID: <AMYAtgAiKmgYcSQT5ukl-4qq.3.1781960405943.Hmail.241270009@hdu.edu.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Snapshot every input field of opts with READ_ONCE() before validating or
+using it.  The netns_id snapshot keeps the namespace get/put pair
+balanced, while the other snapshots keep the remaining options from
+changing partway through an invocation.  The individual reads can still
+observe an inconsistent combination during a concurrent update, but each
+selected field value remains stable for that invocation.
+
+Fixes: aed8ee7feb44 ("net: netfilter: Deduplicate code in bpf_{xdp,skb}_ct_lookup")
+Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260731160921.3245840-1-nicoyip.dev@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mlx5_vdpa.h   |  2 ++
- drivers/vdpa/mlx5/core/mr.c          |  5 ++-
- drivers/vdpa/mlx5/core/resources.c   | 11 ++++++-
- drivers/vdpa/vdpa_sim/vdpa_sim.c     | 14 ++++++---
- drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++-
- drivers/vhost/iotlb.c                | 47 +++++++++++++++++++---------
- drivers/vhost/vdpa.c                 |  9 +++++-
- drivers/vhost/vhost.c                |  8 +++++
- 8 files changed, 85 insertions(+), 22 deletions(-)
+ net/netfilter/nf_conntrack_bpf.c | 72 +++++++++++++++++++++-----------
+ 1 file changed, 48 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-index 2cedf7e2dbc49..42f2f44b383c7 100644
---- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-+++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-@@ -11,6 +11,8 @@
- 
- #define MLX5V_ETH_HARD_MTU (ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN)
- 
-+extern int mlx5_vdpa_max_iotlb_entries;
-+
- struct mlx5_vdpa_direct_mr {
- 	u64 start;
- 	u64 end;
-diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
-index 5ec01d6724815..d46125309df99 100644
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -778,6 +778,9 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
- {
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index 16c3729485376..aef1770255121 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -121,42 +121,54 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
+ 	struct nf_conntrack_tuple otuple, rtuple;
+ 	struct nf_conntrack_zone ct_zone;
+ 	struct nf_conn *ct;
++	u8 ct_zone_dir = 0;
++	u16 ct_zone_id;
++	s32 netns_id;
++	u8 l4proto;
  	int err;
  
-+	if (mlx5_vdpa_max_iotlb_entries < 2)
-+		return -EINVAL;
-+
- 	if (iotlb)
- 		err = create_user_mr(mvdev, mr, iotlb);
- 	else
-@@ -786,7 +789,7 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
- 	if (err)
- 		return err;
- 
--	mr->iotlb = vhost_iotlb_alloc(0, 0);
-+	mr->iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
- 	if (!mr->iotlb) {
- 		err = -ENOMEM;
- 		goto err_mr;
-diff --git a/drivers/vdpa/mlx5/core/resources.c b/drivers/vdpa/mlx5/core/resources.c
-index aeae31d0cefae..28a4d7a35bf4e 100644
---- a/drivers/vdpa/mlx5/core/resources.c
-+++ b/drivers/vdpa/mlx5/core/resources.c
-@@ -3,8 +3,14 @@
- 
- #include <linux/iova.h>
- #include <linux/mlx5/driver.h>
-+#include <linux/moduleparam.h>
- #include "mlx5_vdpa.h"
- 
-+int mlx5_vdpa_max_iotlb_entries = 2048;
-+module_param_named(max_iotlb_entries, mlx5_vdpa_max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- static int alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid)
- {
- 	struct mlx5_core_dev *mdev = dev->mdev;
-@@ -229,7 +235,10 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey)
- 
- static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
- {
--	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
-+	if (mlx5_vdpa_max_iotlb_entries < 2)
-+		return -EINVAL;
-+
-+	mvdev->cvq.iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
- 	if (!mvdev->cvq.iotlb)
- 		return -ENOMEM;
- 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 445c45080d453..9df300c467452 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -34,7 +34,7 @@ MODULE_PARM_DESC(batch_mapping, "Batched mapping 1 -Enable; 0 - Disable");
- static int max_iotlb_entries = 2048;
- module_param(max_iotlb_entries, int, 0444);
- MODULE_PARM_DESC(max_iotlb_entries,
--		 "Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048)");
-+		 "Maximum number of iotlb entries for each address space. (default: 2048)");
- 
- static bool use_va = true;
- module_param(use_va, bool, 0444);
-@@ -201,6 +201,8 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 
- 	if (!dev_attr->alloc_size)
+ 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
  		return ERR_PTR(-EINVAL);
-+	if (max_iotlb_entries < 2)
-+		return ERR_PTR(-EINVAL);
- 
- 	if (config->mask & BIT_ULL(VDPA_ATTR_DEV_FEATURES)) {
- 		if (config->device_features &
-@@ -264,10 +266,14 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 	if (!vdpasim->iommu_pt)
- 		goto err_iommu;
- 
--	for (i = 0; i < vdpasim->dev_attr.nas; i++) {
-+	for (i = 0; i < vdpasim->dev_attr.nas; i++)
- 		vhost_iotlb_init(&vdpasim->iommu[i], max_iotlb_entries, 0);
--		vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX, 0,
--				      VHOST_MAP_RW);
 +
-+	for (i = 0; i < vdpasim->dev_attr.nas; i++) {
-+		ret = vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX,
-+					    0, VHOST_MAP_RW);
-+		if (ret)
-+			goto err_iommu;
- 		vdpasim->iommu_pt[i] = true;
++	netns_id = READ_ONCE(opts->netns_id);
++	l4proto = READ_ONCE(opts->l4proto);
++	ct_zone_id = READ_ONCE(opts->ct_zone_id);
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
++		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
++		if (READ_ONCE(opts->reserved[0]) ||
++		    READ_ONCE(opts->reserved[1]) ||
++		    READ_ONCE(opts->reserved[2]))
+ 			return ERR_PTR(-EINVAL);
+ 	} else {
+-		if (opts->ct_zone_id)
++		if (ct_zone_id)
+ 			return ERR_PTR(-EINVAL);
  	}
  
-diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
-index ec743bed361c1..e8b837df328f0 100644
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -12,11 +12,17 @@
- #include <linux/file.h>
- #include <linux/anon_inodes.h>
- #include <linux/highmem.h>
-+#include <linux/moduleparam.h>
- #include <linux/vmalloc.h>
- #include <linux/vdpa.h>
+-	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
++	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
+ 		return ERR_PTR(-EINVAL);
  
- #include "iova_domain.h"
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_ORIGINAL, &otuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
  
-+static int max_iotlb_entries = 2048;
-+module_param(max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- static int vduse_iotlb_add_range(struct vduse_iova_domain *domain,
- 				 u64 start, u64 last,
- 				 u64 addr, unsigned int perm,
-@@ -622,11 +628,14 @@ vduse_domain_create(unsigned long iova_limit, size_t bounce_size)
- 	if (iova_limit <= bounce_size)
- 		return NULL;
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_REPLY, &rtuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
  
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
-+
- 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
- 	if (!domain)
- 		return NULL;
- 
--	domain->iotlb = vhost_iotlb_alloc(0, 0);
-+	domain->iotlb = vhost_iotlb_alloc(max_iotlb_entries, 0);
- 	if (!domain->iotlb)
- 		goto err_iotlb;
- 
-diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
-index ea61330a34310..a6228dd249316 100644
---- a/drivers/vhost/iotlb.c
-+++ b/drivers/vhost/iotlb.c
-@@ -20,6 +20,14 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
- 		     rb, __u64, __subtree_last,
- 		     START, LAST, static inline, vhost_iotlb_itree);
- 
-+static void vhost_iotlb_map_unlink(struct vhost_iotlb *iotlb,
-+				   struct vhost_iotlb_map *map)
-+{
-+	vhost_iotlb_itree_remove(map, &iotlb->root);
-+	list_del(&map->link);
-+	iotlb->nmaps--;
-+}
-+
- /**
-  * vhost_iotlb_map_free - remove a map node and free it
-  * @iotlb: the IOTLB
-@@ -28,10 +36,8 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
- void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
- 			  struct vhost_iotlb_map *map)
- {
--	vhost_iotlb_itree_remove(map, &iotlb->root);
--	list_del(&map->link);
-+	vhost_iotlb_map_unlink(iotlb, map);
- 	kfree(map);
--	iotlb->nmaps--;
- }
- EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
- 
-@@ -57,14 +63,25 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
- 	if (last < start)
- 		return -EFAULT;
- 
-+	if (!iotlb->limit)
-+		return -EINVAL;
-+
- 	/* If the range being mapped is [0, ULONG_MAX], split it into two entries
- 	 * otherwise its size would overflow u64.
- 	 */
- 	if (start == 0 && last == ULONG_MAX) {
- 		u64 mid = last / 2;
--		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
--				perm, opaque);
-+		int err;
-+
-+		if (iotlb->limit < 2)
-+			return -ENOSPC;
- 
-+		if (!(iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) &&
-+		    iotlb->nmaps > iotlb->limit - 2)
-+			return -ENOSPC;
-+
-+		err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
-+						perm, opaque);
- 		if (err)
- 			return err;
- 
-@@ -72,17 +89,19 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
- 		start = mid + 1;
+-	if (opts->netns_id >= 0) {
+-		net = get_net_ns_by_id(net, opts->netns_id);
++	if (netns_id >= 0) {
++		net = get_net_ns_by_id(net, netns_id);
+ 		if (unlikely(!net))
+ 			return ERR_PTR(-ENONET);
  	}
  
--	if (iotlb->limit &&
--	    iotlb->nmaps == iotlb->limit &&
--	    iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
--		map = list_first_entry(&iotlb->list, typeof(*map), link);
--		vhost_iotlb_map_free(iotlb, map);
-+	if (iotlb->nmaps >= iotlb->limit) {
-+		if (iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
-+			map = list_first_entry(&iotlb->list, typeof(*map), link);
-+			vhost_iotlb_map_unlink(iotlb, map);
-+		} else {
-+			return -ENOSPC;
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->ct_zone_dir == 0)
+-			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
+-		nf_ct_zone_init(&ct_zone,
+-				opts->ct_zone_id, opts->ct_zone_dir, 0);
++		if (ct_zone_dir == 0) {
++			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
++			opts->ct_zone_dir = ct_zone_dir;
 +		}
-+	} else {
-+		map = kmalloc(sizeof(*map), GFP_ATOMIC);
-+		if (!map)
-+			return -ENOMEM;
++		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
+ 	} else {
+ 		ct_zone = nf_ct_zone_dflt;
+ 	}
+@@ -170,7 +182,7 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
+ 	__nf_ct_set_timeout(ct, timeout * HZ);
+ 
+ out:
+-	if (opts->netns_id >= 0)
++	if (netns_id >= 0)
+ 		put_net(net);
+ 
+ 	return ct;
+@@ -185,46 +197,58 @@ static struct nf_conn *__bpf_nf_ct_lookup(struct net *net,
+ 	struct nf_conntrack_tuple tuple;
+ 	struct nf_conntrack_zone ct_zone;
+ 	struct nf_conn *ct;
++	u8 ct_zone_dir = 0;
++	u16 ct_zone_id;
++	s32 netns_id;
++	u8 l4proto;
+ 	int err;
+ 
+ 	if (!opts || !bpf_tuple)
+ 		return ERR_PTR(-EINVAL);
+ 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
+ 		return ERR_PTR(-EINVAL);
++
++	netns_id = READ_ONCE(opts->netns_id);
++	l4proto = READ_ONCE(opts->l4proto);
++	ct_zone_id = READ_ONCE(opts->ct_zone_id);
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
++		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
++		if (READ_ONCE(opts->reserved[0]) ||
++		    READ_ONCE(opts->reserved[1]) ||
++		    READ_ONCE(opts->reserved[2]))
+ 			return ERR_PTR(-EINVAL);
+ 	} else {
+-		if (opts->ct_zone_id)
++		if (ct_zone_id)
+ 			return ERR_PTR(-EINVAL);
+ 	}
+-	if (unlikely(opts->l4proto != IPPROTO_TCP && opts->l4proto != IPPROTO_UDP))
++	if (unlikely(l4proto != IPPROTO_TCP && l4proto != IPPROTO_UDP))
+ 		return ERR_PTR(-EPROTO);
+-	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
++	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_ORIGINAL, &tuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+-	if (opts->netns_id >= 0) {
+-		net = get_net_ns_by_id(net, opts->netns_id);
++	if (netns_id >= 0) {
++		net = get_net_ns_by_id(net, netns_id);
+ 		if (unlikely(!net))
+ 			return ERR_PTR(-ENONET);
  	}
  
--	map = kmalloc(sizeof(*map), GFP_ATOMIC);
--	if (!map)
--		return -ENOMEM;
--
- 	map->start = start;
- 	map->size = last - start + 1;
- 	map->last = last;
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 2dd2a5ccd09ee..219af4f0d06a8 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -34,6 +34,11 @@ enum {
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->ct_zone_dir == 0)
+-			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
+-		nf_ct_zone_init(&ct_zone,
+-				opts->ct_zone_id, opts->ct_zone_dir, 0);
++		if (ct_zone_dir == 0) {
++			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
++			opts->ct_zone_dir = ct_zone_dir;
++		}
++		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
+ 	} else {
+ 		ct_zone = nf_ct_zone_dflt;
+ 	}
  
- #define VHOST_VDPA_DEV_MAX (1U << MINORBITS)
- 
-+static int max_iotlb_entries = 2048;
-+module_param(max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- #define VHOST_VDPA_IOTLB_BUCKETS 16
- 
- struct vhost_vdpa_as {
-@@ -112,12 +117,14 @@ static struct vhost_vdpa_as *vhost_vdpa_alloc_as(struct vhost_vdpa *v, u32 asid)
- 
- 	if (asid >= v->vdpa->nas)
- 		return NULL;
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
- 
- 	as = kmalloc(sizeof(*as), GFP_KERNEL);
- 	if (!as)
- 		return NULL;
- 
--	vhost_iotlb_init(&as->iotlb, 0, 0);
-+	vhost_iotlb_init(&as->iotlb, max_iotlb_entries, 0);
- 	as->id = asid;
- 	hlist_add_head(&as->hash_link, head);
- 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 583fa2ec9bc30..bad8a30eb979f 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1141,6 +1141,9 @@ EXPORT_SYMBOL_GPL(vhost_dev_set_owner);
- 
- static struct vhost_iotlb *iotlb_alloc(void)
- {
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
-+
- 	return vhost_iotlb_alloc(max_iotlb_entries,
- 				 VHOST_IOTLB_FLAG_RETIRE);
- }
-@@ -1985,6 +1988,8 @@ static long vhost_set_memory(struct vhost_dev *d, struct vhost_memory __user *m)
- 		return -EOPNOTSUPP;
- 	if (mem.nregions > max_mem_regions)
- 		return -E2BIG;
-+	if (max_iotlb_entries <= 0)
-+		return -EINVAL;
- 	newmem = kvzalloc(struct_size(newmem, regions, mem.nregions),
- 			GFP_KERNEL);
- 	if (!newmem)
-@@ -2288,6 +2293,9 @@ int vhost_init_device_iotlb(struct vhost_dev *d)
- 	struct vhost_iotlb *niotlb, *oiotlb;
- 	int i;
- 
-+	if (max_iotlb_entries <= 0)
-+		return -EINVAL;
-+
- 	niotlb = iotlb_alloc();
- 	if (!niotlb)
- 		return -ENOMEM;
+ 	hash = nf_conntrack_find_get(net, &ct_zone, &tuple);
+-	if (opts->netns_id >= 0)
++	if (netns_id >= 0)
+ 		put_net(net);
+ 	if (!hash)
+ 		return ERR_PTR(-ENOENT);
 -- 
 2.53.0
 
