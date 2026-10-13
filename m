@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAFF4F3937;
-	Tue, 13 Oct 2026 11:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA524F3922;
+	Tue, 13 Oct 2026 11:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892339; cv=none; b=QG5V7vVr37DlglxAkFT1E/p1Sfdq7YhgHm8qxb1yYfzyllFeU8ck0U45SNAQOtXguL3cDg9RvnWidboMCI1dOs1O8XykMlqVFX69x8/m/47s6HEk67WNE0eKThuv4XIO3LHVpVysEajaMZHLm/R+YbuM3biO0iMWfsPyaKyURT0=
+	t=1791892343; cv=none; b=kQrRdFGYAtJtpsPNqOm2klfO2CYnMmR65veL62RBuQxWbq21fFdOeNLKZm9suxpQ4+krb9xCthdy7RY+UazutbwJDyCKblju/8JY8xVuT/l97kqtgw7oeDutgdDH/9sXU2hvinhuWaEVnnGAFgUqaT7RvYpllS5hiymJHykn8dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892339; c=relaxed/simple;
-	bh=UgsgKVhxJiJKaZmPCczgd6nX+Z4eo8uktpcBQ68T4Q0=;
+	s=arc-20240116; t=1791892343; c=relaxed/simple;
+	bh=BS9rxo6ZaszmvpNVkjDbAAyc7FtrNB8YHmRdKxq5tC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CDM0hYib5Ob9UgMXRvbEx/YkMSaUd3ci8tf+jz2ZDPj3bKRj1RxuhoO2MDhJrdxs+gOk9V967EDrADkQkjwuIrCotC1kS35GdGURk2pwAEUNcFqdfGF6oERXl87fLoIVGqavlASTNaXXT0F96mh8Ejy3TDVu0a/jX7+/935Kfn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4VNbPkN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r+oOxRwtp748wkYhCwWD651VBt5ZyNenZ8ofGXm2LpRLFLtzmRMehUlC30mR0xOChwhjq5c6DsOU9Sm3gMtC8VtW9dbenejSHIpRjFyJZnqgApC/82GGJ7ZDbPAwAfRSw4tBWUtpNZiLyZm/8Mz7z3aIdswPWK3KnABTHun53KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcDT5ojZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4VNbPkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80E11F00893;
-	Tue, 13 Oct 2026 11:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcDT5ojZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64951F0089B;
+	Tue, 13 Oct 2026 11:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892338;
-	bh=EmeS/2Bn/5/M2JwYn9/e8ZHaNFOljDD33z9mFuQZ0dg=;
+	s=korg; t=1791892341;
+	bh=eckxmhMilkwUVj9a+Ey8kLciWBZKh7Swyls4SrNvnl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4VNbPkN1lt01mjRu7uXGBLXkiqCAhkVIXAb6Y92F1TvsoM/ltD6us3t/zlZIaF2R
-	 o+mRQ7f5zOMR4FNnjuFTmWqzlHbZqku0zbxK4y8DMnG3GBEF2g6MhSpenjDKwG87af
-	 PI+O3FZnECZxS/vJQN1obJ6T8CirtJoAoxjQj/jw=
+	b=kcDT5ojZdL7jbqX4fhYnSN3vTD7W+Vupo/uJAH42ySLE5wGKyONUbd3RPJESMFOFv
+	 DgSv56HrFslUV2myu5VAG1hAphm7m47NzwMKx+35D84NntsjUxyh6huZC99c+WXWK3
+	 pUS38UvRnubx4S9XitpbjSWXNuMZW92klFyRucRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ayhan=20=C3=87i=C3=A7ek?= <ayhancicek@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 141/281] drm/amdgpu: make Mac FB workaround generic
-Date: Tue, 13 Oct 2026 13:37:37 +0200
-Message-ID: <20261013112858.579887026@linuxfoundation.org>
+	syzbot+ca23c8570669ead78867@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 7.2 124/281] drm/fb-helper: defer setup when fbdev_probe() fails, not just on -EAGAIN
+Date: Tue, 13 Oct 2026 13:37:20 +0200
+Message-ID: <20261013112858.159527618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -44,59 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-commit c7f44ec5c4ec760e74351f1843dcb8322f67cbf6 upstream.
+commit 755c94d178b7e972bb766199d34e4ba4f63a89eb upstream.
 
-Rather than adding a case of every chip where this is seen
-just check if the FB is at 0 and the ssid is apple.  This
-should cover all chips which fall into this case.
+__drm_fb_helper_initial_config_and_unlock() calls
+drm_client_modeset_probe() first, which already fills in each
+mode_set->mode/num_connectors for every connected output, and only
+afterwards calls drm_fb_helper_single_fb_probe() to create
+fb_helper->fb and wire it into those mode_sets via
+drm_setup_crtcs_fb().
 
-Tested-by: Ayhan Çiçek <ayhancicek@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c54e4d10507722398dc90cf3c532e50b86cf425a)
+If drm_fb_helper_single_fb_probe() fails with anything other than
+-EAGAIN (e.g. dev->driver->fbdev_probe() itself fails), the function
+bails out before drm_setup_crtcs_fb() runs and before setting
+fb_helper->deferred_setup. The client is left with mode_sets that
+have a mode and connectors but mode_set->fb == NULL, and nothing
+marks this fb_helper as needing a retry.
+
+__drm_fb_helper_restore_fbdev_mode_unlocked() only skips committing
+when fb_helper->deferred_setup is set, so a later .restore() call
+(drm_lastclose() on process exit, in this report) commits the stale
+mode_set through drm_client_modeset_commit() ->
+drm_client_modeset_commit_atomic() -> __drm_atomic_helper_set_config(),
+which hits WARN_ON(!set->fb).
+
+Mark fb_helper->deferred_setup on any drm_fb_helper_single_fb_probe()
+failure, not just -EAGAIN, so restore keeps skipping the commit until
+a later hotplug event successfully re-probes and re-populates
+mode_set->fb. The real error code is still returned to the caller
+unchanged.
+
+Reported-by: syzbot+ca23c8570669ead78867@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ca23c8570669ead78867
+Fixes: ca91a2758fce ("drm/fb-helper: Support deferred setup")
 Cc: stable@vger.kernel.org
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260927075434.72658-1-ngocthang2710.1999@gmail.com
+Link: https://patch.msgid.link/20260917154743.1621-1-shechenglong@xfusion.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |   17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/drm_fb_helper.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -1089,20 +1089,17 @@ void amdgpu_gmc_init_vga_resv_regions(st
- 	case CHIP_RENOIR:
- 		adev->mman.keep_stolen_vga_memory = true;
- 		break;
--	case CHIP_POLARIS10:
--	case CHIP_POLARIS11:
--	case CHIP_POLARIS12:
--		/* MacBookPros with switchable graphics put VRAM at 0 when
--		 * the iGPU is enabled which results in cursor issues if
--		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
--		 */
--		if (adev->gmc.vram_start == 0)
--			adev->mman.keep_stolen_vga_memory = true;
--		break;
- 	default:
- 		adev->mman.keep_stolen_vga_memory = false;
- 		break;
- 	}
-+	/* MacBookPros with switchable graphics put VRAM at 0 when
-+	 * the iGPU is enabled which results in cursor issues if
-+	 * the cursor ends up at 0.  Reserve vram at 0 in that case.
-+	 */
-+	if ((adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
-+	    (adev->gmc.vram_start == 0))
-+		adev->mman.keep_stolen_vga_memory = true;
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -1724,10 +1724,10 @@ __drm_fb_helper_initial_config_and_unloc
  
- 	if (amdgpu_sriov_vf(adev) ||
- 	    !amdgpu_device_has_display_hardware(adev)) {
+ 	ret = drm_fb_helper_single_fb_probe(fb_helper);
+ 	if (ret < 0) {
+-		if (ret == -EAGAIN) {
+-			fb_helper->deferred_setup = true;
++		/* modesets are probed but fb_helper->fb isn't; defer restore too */
++		fb_helper->deferred_setup = true;
++		if (ret == -EAGAIN)
+ 			ret = 0;
+-		}
+ 		mutex_unlock(&fb_helper->lock);
+ 
+ 		goto err_drm_fb_helper_release_info;
 
 
