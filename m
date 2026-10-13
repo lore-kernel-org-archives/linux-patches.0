@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ADD4E4C4C;
-	Tue, 13 Oct 2026 12:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A55B4EDCD6;
+	Tue, 13 Oct 2026 12:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893685; cv=none; b=K8JLKeGDCEUasZ6LeXtvSp9bANjusHilfOAJJLNNzw0UkEL2xxpHoIxkxrGKyG0qnYtIYHBJPXhsdDodSA4KCcifNwwDFOAP1qHDWAQi2yWT7VkqjOnGuI2OitLt+55kCPyC4pXHyEME9//x/B55MQ1fDybjDqmBIaQMbaFTPIg=
+	t=1791893688; cv=none; b=Y3S2n+6rektdKCMEmydsB4YhHNl1i+Y/xMxJNtV9RxIed9Zdu+iws7J9FbhQmKnL2lzUn1klKI5ZVRpwxg55DfgGnG0wpGbVBf9L4gYVAz3EWWJg1YTglZVPxkAbScK1TFkUVSHsyfQTMQnaKTaBoRzaqGNgyzQKUoRKjHDI4EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893685; c=relaxed/simple;
-	bh=fnL47PTfcerAvt7dSRKnmYOIHTckwmLuwq0YYnAVx4g=;
+	s=arc-20240116; t=1791893688; c=relaxed/simple;
+	bh=fW7FVUJEBjil6w7U5Rf1FyysQurnLWZmx1RY52Tdct8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HfMw/mgeZfBJdPsh4LCFjYC8si/ouJJ9bZN+Xjwz/BS6OzNkMzZhL8r3kuzpkJaBsnGdD4pd3HLC0HMpKW7ECqNtJJB3WmaO8/bJ7Hqcc0cqmf+c4Q+rrbxqsW416tZM7SlUVjJqeuAr1uYkbWiqReE08/FRdyoIAGegIRQei4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vAOGLTu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ODfGy9c1uDoiHpCJY8yD5E3su/j0Bvl3yJ1JhU8oeH6mbWfNTWHng8RYWmmMYeVKfidG/p3rbyerR27hi3wBTAE1iv/THYwviKKGecNnuJpOMBVQIM35l4pLFTwb4rFA60YXpKLndPQ4hdcJfFGjFfe2iP5p7JF5cjlV4EfUNYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOu6tN+P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAOGLTu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700DE1F000FF;
-	Tue, 13 Oct 2026 12:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOu6tN+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C5D1F000FF;
+	Tue, 13 Oct 2026 12:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893684;
-	bh=aqa25g6QiCNbx7sNQensEfOdpPoleinUf5ddmm0eO5w=;
+	s=korg; t=1791893687;
+	bh=qP5bI2mEfvr5mG7aS3E5eYR9VXRIIsXPZ4kOgNOo7gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vAOGLTu0ORQLU+CdV9Rb2u7zA++/dIQLn4wf8A9WKZm3/VTH1c9bDcvovFA2JJJdz
-	 fhi8bmmLrDKKypr/24Jqp5zqW+36Ql8er9YPZ/AW9p1aiCgetOgrRvRni7Z4ScbyUF
-	 tpEqmzSdb+KC9d98uxJK/RwjSxb+Kn9rjzKvZcXo=
+	b=eOu6tN+PbqhS8ykrdu8zm6kYsAGQGVNhXKba0g5TKG2Z3QpxKdakLFxfqthbhEdv/
+	 k4bLzKdJXMwMj3tIb983Y6iLUYv0SB9DFuodia8XFXTvRPrLxdvlDPaPa92ClvKUOY
+	 dwLNTezlC90yIhUhcnac3sZ2BdXsz3/2TnRNi0e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Windsor <dwindsor@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 309/621] bpf: Reject sleepable BPF_LSM_CGROUP programs at load time
-Date: Tue, 13 Oct 2026 13:35:04 +0200
-Message-ID: <20261013112928.187554311@linuxfoundation.org>
+Subject: [PATCH 6.18 310/621] ocfs2: validate fast symlink target during inode read
+Date: Tue, 13 Oct 2026 13:35:05 +0200
+Message-ID: <20261013112928.211317005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,71 +59,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Windsor <dwindsor@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 5b038319be442c620f774e6fc9e9283deeca1c75 ]
+[ Upstream commit e234973f286ed2e8961a24561ec91594ec3e3ff8 ]
 
-The cgroup shim runs under rcu_read_lock_dont_migrate(), so we should
-not attach any sleepable BPF programs there. Add support to the verifier
-to explicitly reject attempts to load sleepable BPF programs destined
-for LSM cgroup attachment.
+ocfs2_validate_inode_block() already rejects several inconsistent
+self-contained dinodes before they are exposed to the rest of the
+filesystem.  Fast symlinks need the same treatment.
 
-Without this, we get the following splat from a BPF_LSM_CGROUP
-program marked BPF_F_SLEEPABLE attached to file_open when it calls
-bpf_get_dentry_xattr():
+A zero-cluster symlink is treated as a fast symlink and later read through
+page_get_link() and ocfs2_fast_symlink_read_folio().  That path uses
+strnlen() on the inline payload and then copies len + 1 bytes into the
+folio.  If a corrupt dinode stores an i_size that does not fit the inline
+area or omits the terminating NUL at i_size, that copy reads past the end
+of the inode block buffer.
 
-  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1567
-  in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 34317, name: load
-  preempt_count: 0, expected: 0
-  RCU nest depth: 2, expected: 0
-  Call Trace:
-   down_read+0x76/0x480
-   ext4_xattr_get+0x11f/0x700
-   __vfs_getxattr+0xf0/0x150
-   bpf_get_dentry_xattr+0xbb/0xf0
-   bpf_prog_e76a298dac9218c6_test_open+0x6a/0x85
-   __cgroup_bpf_run_lsm_current+0x326/0x840
-   bpf_trampoline_6442534646+0x62/0x14d
-   security_file_open+0x34/0x60
-   do_dentry_open+0x340/0x1260
-   vfs_open+0x7a/0x440
-   path_openat+0x1bac/0x30a0
+Reject zero-cluster symlink dinodes whose i_size exceeds the inline
+fast-symlink capacity or whose inline payload is not NUL-terminated
+exactly at i_size when the inode block is validated.  This keeps malformed
+fast symlinks from reaching the read path.
 
-libbpf provides a .s named section variant for every sleepable
-program type except lsm_cgroup, reflecting that per-cgroup LSM programs
-are intended to only run in a non-sleepable context.
+Validation reproduced this kernel report:
+KASAN use-after-free in ocfs2_fast_symlink_read_folio+0x12c/0x1f0
+RIP: 0033:0x7f5c6d859aa7
+Read of size 3905
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  ocfs2_fast_symlink_read_folio+0x12c/0x1f0 (fs/ocfs2/inode.c:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x19f/0x330 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  kasan_check_range+0x105/0x1b0 (?:?)
+  __asan_memcpy+0x23/0x60 (?:?)
+  filemap_read_folio+0x27/0xe0 (?:?)
+  filemap_read_folio+0x35/0xe0 (?:?)
+  do_read_cache_folio+0x138/0x230 (?:?)
+  __page_get_link+0x26/0x110 (?:?)
+  page_get_link+0x2e/0x70 (?:?)
+  vfs_readlink+0x15e/0x250 (?:?)
+  touch_atime+0x4d/0x370 (?:?)
+  do_readlinkat+0x186/0x200 (?:?)
+  do_user_addr_fault+0x65a/0x890 (?:?)
+  __x64_sys_readlink+0x46/0x60 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
 
-The above splat was obtained by bypassing libbpf by using bpf(2)
-directly.
-
-Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
-Signed-off-by: David Windsor <dwindsor@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20260605145707.608579-1-dwindsor@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/20260528151230.361127-1-rollkingzzc@gmail.com
+Fixes: ea022dfb3c2a ("ocfs: simplify symlink handling")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Gui-Dong Han <2045gemini@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ocfs2/inode.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9247549b5a772..34ebabc01fa1e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -24479,8 +24479,10 @@ static bool can_be_sleepable(struct bpf_prog *prog)
- 			return false;
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 9ec3a7657b5b6..835c00b90b7c8 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1665,6 +1665,29 @@ int ocfs2_validate_inode_block(struct super_block *sb,
  		}
  	}
--	return prog->type == BPF_PROG_TYPE_LSM ||
--	       prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
-+	if (prog->type == BPF_PROG_TYPE_LSM)
-+		return prog->expected_attach_type != BPF_LSM_CGROUP;
-+
-+	return prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
- 	       prog->type == BPF_PROG_TYPE_STRUCT_OPS;
- }
  
++	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
++	    !le32_to_cpu(di->i_clusters)) {
++		int max_inline = ocfs2_fast_symlink_chars(sb);
++		u64 i_size = le64_to_cpu(di->i_size);
++
++		if (i_size >= max_inline) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink i_size %llu exceeds max %d\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size,
++					 max_inline - 1);
++			goto bail;
++		}
++
++		if (strnlen((char *)di->id2.i_symlink, i_size + 1) != i_size) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink is not NUL-terminated at i_size %llu\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size);
++			goto bail;
++		}
++	}
++
+ 	if (ocfs2_dinode_has_extents(di)) {
+ 		struct ocfs2_extent_list *el = &di->id2.i_list;
+ 		u16 count = le16_to_cpu(el->l_count);
 -- 
 2.53.0
 
