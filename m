@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629704F7CC7;
-	Tue, 13 Oct 2026 11:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4DF4F85B0;
+	Tue, 13 Oct 2026 11:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892637; cv=none; b=UAAP2QfZ1nLvFS8R/OMPz3qjs4KlCWQunwixfJedXwDl1Tocpmrfek5CjghGkOQewC8hTB29DLjtla3aw6ULJA48v52dXqao5JDvIvVSoU+Q00rf3aYNlU387UtVsayRo1+WwVA8iGP9bimd8GSADAEE1tufneERDpsu1qDyRJU=
+	t=1791892640; cv=none; b=jM1aAgbjpcfN76kxr4i4v/JELGh1GFPSamqXHyKSwCZYgqJKq5IKnIxUkUT1B7FtMhxzxCSdyaP0DKU5ASJXJ59hrsxvDkiDeEg+yVMx3XC1g0dumx1RhiXp9HkXIXB0epSNe13pdw+R5FWrK4//vLb9rx1O06N0JqmS7xW8cu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892637; c=relaxed/simple;
-	bh=Jz2650VkAMyHvrt73iyKBzZEL8r2JqAOgknsvukDzhs=;
+	s=arc-20240116; t=1791892640; c=relaxed/simple;
+	bh=ZPtvUJ7eulHfol2zsFMJjGHLmJonePUyyF6q5TDPk9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MoNhaCUWTOym0nNVEx6m3d/kETBm3IsXRoaVMEwa5dYYmjqsTI9d4dDybsd+JBAwR6DvIoJqlMpp7HnMVttgutLld3SshCG0q3EiWSw3POvnuB+qEViTTIF+Gxu9qe1bZ1BGT5QrJ2JW3t7X2tI8/j4npR+0QcPiuV2WlXkBqQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJKWDDga; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LtgU8ejAepxjm+EJ/RiJlYIY5U7f5ZoJPj3QZqQOtZHG7YHswCJtQSE07cw/bEaru8C4aXGc6cxd8F9+4JM9yn0fjpX21TJXiz3+7EpTMas+XBKTJBTiwbmaymk+yyR4XILjRJ8ClVOoTT3jepApvHHB6NCeiBkW9SHzL4uJXQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQDHkOfv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJKWDDga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A611F00893;
-	Tue, 13 Oct 2026 11:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQDHkOfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903381F00899;
+	Tue, 13 Oct 2026 11:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892636;
-	bh=wCZlX7p5864VYIUC+XPmz0eEe1FeLCv4cCydpNyt1XA=;
+	s=korg; t=1791892639;
+	bh=DLTTG0TpqrpCkTdZaf2X+Uu3ggx47C2kGayf+Yhr3QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aJKWDDgaERp/RzHlO4JFcsjlbs/XppPrFh3k2HgXee4GaHC6bTe02HewQYKBvXPF6
-	 Pts6mkIkhfjSx5E0IkFJErj2JPiyM1Q39uCvg4orDW3O29DKjWLCj9RoEVd/jWJd5b
-	 eJsc3TCUqqwGW9D3x3nXxjOGrwJhfs6FxZDwu2Ng=
+	b=FQDHkOfvXilbLvZLsHoB0cq6kwTeQBn+y6C9dqvvNo2D8Id6PMlI6UBBqatjpOTkd
+	 X3/mQXOnScuFCGZFTevcdL6PcltIAcNLyJNaZ5aDNk8o+2sMQfuUH9wEyk9Iber4Tw
+	 U7+DYw9Wd/ob3Q4YK2lFiTMM50KoX7WozKMWxfjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagun Kayastha <sgn.kayastha@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
+	Anoop Vijay <anoop.c.vijay@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 239/281] wifi: mt76: mt792x: pick the SAR table layout from the table itself
-Date: Tue, 13 Oct 2026 13:39:15 +0200
-Message-ID: <20261013112900.950323900@linuxfoundation.org>
+Subject: [PATCH 7.2 240/281] drm/xe/sysctrl: Fix mailbox header handling
+Date: Tue, 13 Oct 2026 13:39:16 +0200
+Message-ID: <20261013112900.974568467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,224 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
 
-[ Upstream commit af97bf5a7e72da9026de184676df8e2fa57e1058 ]
+[ Upstream commit f0a4447789ef28ba1aded2db19543d69c640b5e5 ]
 
-The SAR power tables are parsed with a version byte from a different
-ACPI table, never their own.
+The mailbox header was defined as __le32, which required
+cpu_to_le32() and le32_to_cpu() conversions whenever it was
+write or read.
 
-Some firmware declares version 1 and ships version 2 tables. The
-entries then start a byte early, and the 6 GHz limits the table
-carries are dropped, because the older layout has no room for them.
+These conversions are unnecessary because the header is always
+handled as a 32-bit value, not as raw bytes. It is written with
+xe_mmio_write32() and read with xe_mmio_read32(), which already
+handle any required byte-order conversion through the underlying
+writel()/readl() accessors.
 
-  ASUS GA503RM, MTCL declares v1:
-  MTGS  28 bytes   v1: (28-6) % 5 = 2, no fit   v2: 3 tables
-  MTDS  19 bytes   v1: (19-6) % 6 = 1, no fit   v2: 1 table
+As a result, the header value is already in CPU byte order when
+used by the driver. Keeping the extra conversions had no effect
+on little-endian systems and could cause an incorrect on
+big-endian systems.
 
-The layouts accept disjoint lengths, so take whichever one fits and
-keep it per table.
+So use u32 for the mailbox header and remove the unnecessary
+endianness conversions.
 
-Reported-by: Sagun Kayastha <sgn.kayastha@gmail.com>
-Closes: https://github.com/morrownr/mt76/issues/62
-Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260905013551.24635-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 1f95f618182b ("drm/xe/xe_sysctrl: Add System Controller mailbox communication support")
+Suggested-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+Tested-by: Anoop Vijay <anoop.c.vijay@intel.com>
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Link: https://patch.msgid.link/20260924060900.146167-18-mallesh.koujalagi@intel.com
+(cherry picked from commit 5137b391599579371c32f555958d3cf55e19bd88)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt792x_acpi_sar.c  | 110 +++++++++++-------
- .../wireless/mediatek/mt76/mt792x_acpi_sar.h  |   2 +
- 2 files changed, 73 insertions(+), 39 deletions(-)
+ drivers/gpu/drm/xe/xe_sysctrl_mailbox.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-index 9f0ea3d23e0f5..ce5d5909d838d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-@@ -108,68 +108,98 @@ mt792x_asar_acpi_read_mtcl(struct mt792x_dev *dev, u8 **table, u8 *version)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/xe/xe_sysctrl_mailbox.c b/drivers/gpu/drm/xe/xe_sysctrl_mailbox.c
+index 72baf1aa4b3ad..a0179e62abaaf 100644
+--- a/drivers/gpu/drm/xe/xe_sysctrl_mailbox.c
++++ b/drivers/gpu/drm/xe/xe_sysctrl_mailbox.c
+@@ -19,20 +19,20 @@
+ #include "xe_sysctrl_mailbox_types.h"
  
-+/* A table's layout is decided by the version byte in MTCL, but some firmware
-+ * labels a version 2 table as version 1.  Accept whichever layout the table
-+ * actually has: for every accepted entry count the two do not overlap, since
-+ * one is 6 + 5n bytes and the other 7 + 7n.
-+ */
-+static bool
-+mt792x_asar_fits(u8 *table, int len, int prelen, int sarlen, int nr_off,
-+		 int min, int max)
-+{
-+	int tblcnt;
-+
-+	if (len < prelen || (len - prelen) % sarlen)
-+		return false;
-+
-+	tblcnt = (len - prelen) / sarlen;
-+	if (tblcnt < min || tblcnt > max)
-+		return false;
-+
-+	return tblcnt == table[nr_off];
-+}
-+
- /* MTDS : Dynamic SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
- {
--	int len, ret, sarlen, prelen, tblcnt;
--	bool enable;
-+	int len, ret;
-+	u8 *t;
+ struct xe_sysctrl_mailbox_msg_hdr {
+-	__le32 data;
+-} __packed;
++	u32 data;
++};
  
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTDS, table, &len);
- 	if (ret)
- 		return ret;
+ #define XE_SYSCTRL_HDR_GROUP_ID(hdr) \
+-	FIELD_GET(SYSCTRL_HDR_GROUP_ID_MASK, le32_to_cpu((hdr)->data))
++	FIELD_GET(SYSCTRL_HDR_GROUP_ID_MASK, (hdr)->data)
  
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		enable = ((struct mt792x_asar_dyn *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit);
--		prelen = sizeof(struct mt792x_asar_dyn);
--		break;
--	case 2:
--		enable = ((struct mt792x_asar_dyn_v2 *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit_v2);
--		prelen = sizeof(struct mt792x_asar_dyn_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn),
-+			     sizeof(struct mt792x_asar_dyn_limit),
-+			     offsetof(struct mt792x_asar_dyn, nr_tbl),
-+			     MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn_v2),
-+				  sizeof(struct mt792x_asar_dyn_limit_v2),
-+				  offsetof(struct mt792x_asar_dyn_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
+ #define XE_SYSCTRL_HDR_COMMAND(hdr) \
+-	FIELD_GET(SYSCTRL_HDR_COMMAND_MASK, le32_to_cpu((hdr)->data))
++	FIELD_GET(SYSCTRL_HDR_COMMAND_MASK, (hdr)->data)
  
--	tblcnt = (len - prelen) / sarlen;
--	if (!enable ||
--	    tblcnt > MT792x_ASAR_MAX_DYN || tblcnt < MT792x_ASAR_MIN_DYN)
-+	if (!t[offsetof(struct mt792x_asar_dyn, enable)])
- 		return -EINVAL;
+ #define XE_SYSCTRL_HDR_IS_RESPONSE(hdr) \
+-	FIELD_GET(SYSCTRL_HDR_IS_RESPONSE, le32_to_cpu((hdr)->data))
++	FIELD_GET(SYSCTRL_HDR_IS_RESPONSE, (hdr)->data)
  
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTDS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
-+
- 	return 0;
- }
+ #define XE_SYSCTRL_HDR_RESULT(hdr) \
+-	FIELD_GET(SYSCTRL_HDR_RESULT_MASK, le32_to_cpu((hdr)->data))
++	FIELD_GET(SYSCTRL_HDR_RESULT_MASK, (hdr)->data)
  
- /* MTGS : Geo SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
- {
--	int len, ret, sarlen, prelen, tblcnt;
-+	int len, ret;
-+	u8 *t;
+ static bool sysctrl_wait_bit_clear(struct xe_sysctrl *sc, u32 bit_mask,
+ 				   unsigned int timeout_ms)
+@@ -126,8 +126,8 @@ static int sysctrl_prepare_command(struct xe_device *xe,
+ 		return -ENOMEM;
  
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTGS, table, &len);
- 	if (ret)
- 		return ret;
+ 	hdr = (struct xe_sysctrl_mailbox_msg_hdr *)buffer;
+-	hdr->data = cpu_to_le32(FIELD_PREP(SYSCTRL_HDR_GROUP_ID_MASK, group_id) |
+-				     FIELD_PREP(SYSCTRL_HDR_COMMAND_MASK, command));
++	hdr->data = FIELD_PREP(SYSCTRL_HDR_GROUP_ID_MASK, group_id) |
++		    FIELD_PREP(SYSCTRL_HDR_COMMAND_MASK, command);
  
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		sarlen = sizeof(struct mt792x_asar_geo_limit);
--		prelen = sizeof(struct mt792x_asar_geo);
--		break;
--	case 2:
--		sarlen = sizeof(struct mt792x_asar_geo_limit_v2);
--		prelen = sizeof(struct mt792x_asar_geo_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo),
-+			     sizeof(struct mt792x_asar_geo_limit),
-+			     offsetof(struct mt792x_asar_geo, nr_tbl),
-+			     MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo_v2),
-+				  sizeof(struct mt792x_asar_geo_limit_v2),
-+				  offsetof(struct mt792x_asar_geo_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
- 
--	tblcnt = (len - prelen) / sarlen;
--	if (tblcnt > MT792x_ASAR_MAX_GEO || tblcnt < MT792x_ASAR_MIN_GEO)
--		return -EINVAL;
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTGS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
- 
- 	return 0;
- }
-@@ -205,14 +235,16 @@ int mt792x_init_acpi_sar(struct mt792x_dev *dev)
- 		asar->countrylist = NULL;
- 	}
- 
--	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver,
-+					 &asar->dyn_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->dyn);
- 		asar->dyn = NULL;
- 	}
- 
- 	/* MTGS is optional */
--	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver,
-+					 &asar->geo_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->geo);
- 		asar->geo = NULL;
-@@ -254,7 +286,7 @@ mt792x_asar_get_geo_pwr(struct mt792x_phy *phy,
- 		break;
- 	}
- 
--	if (asar->ver == 1) {
-+	if (asar->geo_ver == 1) {
- 		band_pwr = &asar->geo->tbl[idx].band[0];
- 		max = ARRAY_SIZE(asar->geo->tbl[idx].band);
- 	} else {
-@@ -305,7 +337,7 @@ mt792x_asar_range_pwr(struct mt792x_phy *phy,
- 	if (!capa)
- 		return 127;
- 
--	if (asar->ver == 1) {
-+	if (asar->dyn_ver == 1) {
- 		limit = &asar->dyn->tbl[0].frp[0];
- 		max = ARRAY_SIZE(asar->dyn->tbl[0].frp);
- 	} else {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-index 4740330738315..1d42f24b05f66 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-@@ -105,6 +105,8 @@ struct mt792x_asar_fg {
- 
- struct mt792x_acpi_sar {
- 	u8 ver;
-+	u8 dyn_ver;
-+	u8 geo_ver;
- 	union {
- 		struct mt792x_asar_dyn *dyn;
- 		struct mt792x_asar_dyn_v2 *dyn_v2;
+ 	if (data_in && data_in_len)
+ 		memcpy(buffer + sizeof(*hdr), data_in, data_in_len);
 -- 
 2.53.0
 
