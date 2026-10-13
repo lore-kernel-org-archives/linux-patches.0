@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F574EE858;
-	Tue, 13 Oct 2026 11:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4E4EFFC9;
+	Tue, 13 Oct 2026 11:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891984; cv=none; b=D8/CrxBga8LyqF+xYhjbw1pwZXlkgHTOfZ9H9VBPWBWdBzYjI/3XW/iqD1ZsOQZTpY00qZ236rB49cRypHZYrePRFCrEcH33MI5WLeTn9Oaj+hh51iV+6FtEogd52Iz+Z0mHW3/sCujx7Jy4z/QTTZa86SR8r9cuH1VGyNnVdno=
+	t=1791891986; cv=none; b=SpKSi7RgYgwdvxkVNEZYjpoioYNHcyXGv+mlszsZ9Pf4OXlvn+k3v+OfkrOFy+eL+5kS8PNN4s52/7dyYGb+EcQDPE15nQjlPfUhv4187eFkRm+gw+qcEgRKf3mGuew4+uGkzFn+ZWXZLh4Og0ihcrN69dcE42juFi7X+1+pjIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891984; c=relaxed/simple;
-	bh=iro2Z4CVlwyacRK7+jSH6TUlXNPfBgjh93MtvnAMDXA=;
+	s=arc-20240116; t=1791891986; c=relaxed/simple;
+	bh=2SS114JJ8I7lddLw/w0o81SIFN+GdAvKMgR1hy0iqvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7k/BRl6FOO5x5HA7N0NYOW1Ax+fNcyxCtoInl+bGyUXpvHxSxAK0jrFu6YrgYx2rwnwOJgCEFTYzjjEK5L+cPDpBDLtEL67akZLHmvssjR3OWemNe4POaHQSsvmf5g2tc6TSGaoQU/MJldyvxVCec4wcalr1osPRBhuoP8ZOAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkqAZIC/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TUBiirdzxcrJ+HYdKiX5sB9mpYOPslGKpP/6Ca8g1syhjxE1ok2Plyav7r1xSPPdKsvYgec6lV92Mx/Yhh58MswG5Aw8qTonxWIBn10d4WZaDLj3jfZxj1bfAFqfvmt7lnz0YSePTNQRrkqEIY2QhQsQ+wN314mqAKs2E5VdcPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdLq6oqU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkqAZIC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F881F000FF;
-	Tue, 13 Oct 2026 11:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdLq6oqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9D61F000FF;
+	Tue, 13 Oct 2026 11:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891982;
-	bh=r9y1nEW7YwAzwiKEXblA3sSl1Pn19+Lu45O8T8b4UUo=;
+	s=korg; t=1791891985;
+	bh=rDSYLFpnFALZhWG6XpRWOL3iQ6zlNSnUG4DQtkIXzmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pkqAZIC/2I669el05DgkYAzSQnI6A0TrOq5FSu+kn3JSqIaIjP4hoXv+ooSG0Ybap
-	 a9hll4XLfTTMhoZIgF3/pZuifVnAPhzmJJqRDa+jSrFUuXqnxSd5fy7CdkBHH0HCM9
-	 dwdc50Y9XG3BJWK8LQCX7R4HtgCgkdd6iK4Bedq4=
+	b=MdLq6oqUjK478ii6GAK1jnrqhtrPYRvAO4kHw8AQgqRx7UiTZVPA3o/WmSP92TvZy
+	 hZS8EUw5i06BH9l7UNIpt8Cd+fa1K8GkrN84hn/f6GP6zTeoyUHNq8/gp+WKYAhv04
+	 cJFgnkQSEgW1oCJXknCUgI4n0iVPUV5d8QHnbnEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Garland <minimelkav@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 021/281] ASoC: amd: yc: Add DMI quirk for Acer Aspire Go 15 (AG15-21P)
-Date: Tue, 13 Oct 2026 13:35:37 +0200
-Message-ID: <20261013112855.564502163@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 7.2 022/281] ata: libata-scsi: do not lose CHECK CONDITION for failed ATAPI commands
+Date: Tue, 13 Oct 2026 13:35:38 +0200
+Message-ID: <20261013112855.588294762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,43 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Garland <minimelkav@gmail.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-commit d0cb7a7b2a490c381ad97f53155d02a748b60dea upstream.
+commit bc8ce2cea5f77c4bd1a5184705e300e83546c0c4 upstream.
 
-The Acer Aspire Go 15 (AG15-21P, board MDC Herbag2_MDU) has two PDM
-DMICs connected to the ACP. The BIOS does not set the AcpDmicConnected
-_DSD property, so the acp6x machine driver never registers the DMIC
-card. The existing Herbag_MDU entry does not match this board name, so
-add a DMI quirk for it.
+Since commit 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands
+on time out"), atapi_qc_complete() sets SAM_STAT_CHECK_CONDITION for a
+failed command only if cmd->result is zero, so that the DID_TIME_OUT or
+DID_REQUEUE host byte of a terminated command is preserved.
 
-Tested on BIOS V1.11: the acp6x DMIC capture device is registered and
-records audio on both channels.
+However, cmd->result can also be non-zero for a regular failed ATAPI
+command completed through libata EH: ata_eh_analyze_tf() calls
+ata_eh_decide_disposition(), that is, scsi_check_sense(), on the sense
+data obtained with REQUEST SENSE, and scsi_check_sense() sets the SCSI
+midlayer internal byte of the result for some sense codes, e.g.
+SCSIML_STAT_TGT_FAILURE for ILLEGAL REQUEST with ASC 0x20 (INVALID
+COMMAND OPERATION CODE) or 0x24 (INVALID FIELD IN CDB), or
+SCSIML_STAT_MED_ERROR for MEDIUM ERROR with ASC 0x11 (UNRECOVERED READ
+ERROR). For such commands, atapi_qc_complete() keeps the result as is and
+the command completes with a GOOD status byte, even though it failed and
+valid sense data is available.
 
+As a result, passthrough users see these failed ATAPI commands as
+successful. For example, with the emulated IDE CD-ROM drive of QEMU and
+no medium loaded, a PLAY AUDIO MSF command issued with SG_IO completes
+with status 0x00 (and no DRIVER_SENSE) instead of 0x02 (CHECK CONDITION)
+with sense key ILLEGAL REQUEST, ASC/ASCQ 0x20/0x00, and the CDROM ioctls
+CDROMPLAYTRKIND, CDROMSUBCHNL, CDROMPAUSE, CDROMRESUME, CDROMPLAYMSF and
+CDROM_GET_MCN return 0 instead of -ENOMEDIUM or -EOPNOTSUPP.
+
+Fix this by setting the status byte to SAM_STAT_CHECK_CONDITION whenever
+the host byte is not set. Use set_status_byte() rather than overwriting
+the whole result, so that the SCSI midlayer internal byte set by
+scsi_check_sense() is preserved, as ata_scsi_qc_complete() already does
+for ATA commands.
+
+Fixes: 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands on time out")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Garland <minimelkav@gmail.com>
-Link: https://patch.msgid.link/20261005-acp6x-herbag2-quirk-v1-1-a1f2683d758f@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260929164135.266708-1-hengyul@cs.unc.edu
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/ata/libata-scsi.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -762,6 +762,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "MDC"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Herbag2_MDU"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "System76"),
- 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang12"),
- 		}
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3026,10 +3026,15 @@ static void atapi_qc_complete(struct ata
+ 		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
+ 			qc->dev->sdev->locked = 0;
+ 
+-		if (cmd->result)
+-			ata_scsi_qc_done(qc, false, 0);
+-		else
+-			ata_scsi_qc_done(qc, true, SAM_STAT_CHECK_CONDITION);
++		/*
++		 * Report CHECK CONDITION unless the command was terminated
++		 * with a host byte set. Only set the status byte, so that the
++		 * SCSI midlayer internal byte, which scsi_check_sense() may
++		 * have set from the sense data, is preserved.
++		 */
++		if (get_host_byte(cmd) == DID_OK)
++			set_status_byte(cmd, SAM_STAT_CHECK_CONDITION);
++		ata_scsi_qc_done(qc, false, 0);
+ 		goto schedule_deferred;
+ 	}
+ 
 
 
