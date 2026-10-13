@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB23D47CA69;
-	Tue, 13 Oct 2026 11:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C05247CA69;
+	Tue, 13 Oct 2026 11:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892333; cv=none; b=CvWobgheX6uuK8zX064QMl/czAiRoxlDMU9nu0eCe2DLjC3HBdFElg5VA8ZTrYsYl7Imv8fPgrwS+DEfoGv/JSz1V4mfgR5i7HIVEEFwEHsIYHCh9aFVrP7EOrBvnmFozSDB5wZFoaSassvnoKSr2pEUyC9pna2HDGYBemm9vh8=
+	t=1791892338; cv=none; b=twtY2DIAj7PbxYpymC8cXfZrp1nfsk58j215/fBd8csh9UrX7pCWa22UgbQwFG3YUzboO3HTVLEWge0ewgZePsjUqBaxXeHYr6t0FmKw7PyJdCxm496FkBAGcRKUWOr63wF51kZUoVTA7mCpNOyZ9iFmYLQHJNW1CcRfB0QptGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892333; c=relaxed/simple;
-	bh=Fs/AKcjmR3MGD+gqgkuhD42gXLOubCxFTmcFo3VtVig=;
+	s=arc-20240116; t=1791892338; c=relaxed/simple;
+	bh=Sk/uIQJSHaTuSDm5LbgwHNCNCyN0y2zaav8NDFACPnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FB42+DiEPrlNXW+lCWvgnch7Op15Vzmvp8PgqgXr3tVo84qR/5bpRuk0AD5HjY0mrVneb08mS7fB8TU8j7J6d4OPdpIrF0/eJfVB3Ohdu5QI5WFIf/cV3Y/lBDvE5XVQ8G3h94apMk5PEgEQ/JmRExhbAW9LwaBxVN7r+Lbn2FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPiDQFHr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DzQdTBk8OfRZA07wj4RZwb09IugF1wIMLMzikRaC/0EQcwLOJpCuXec5zKoIeEduN0ehlHxoznCYSbABHK2VLIeC7Ft9eglAAyBmUGppLQilO0Jj0zG5aZkd7re35RDEDIRZL9wojoH51KissfdL2QoMLAL1q3RcRuwXQP8OdF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMCIb++i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPiDQFHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234E81F000FF;
-	Tue, 13 Oct 2026 11:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMCIb++i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2318E1F000FF;
+	Tue, 13 Oct 2026 11:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892332;
-	bh=sDRatuuF28ABe9gDqtgk9p6Pm/G/QIVZc6lJALw0kHA=;
+	s=korg; t=1791892335;
+	bh=wafaINqwVlgJKRk0Xfq1d0UvRD3Jsqdvv6hk0+mdAPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPiDQFHrC43DHLjebRnyG5HRpHVkpXCe2PzQUMUYd960jTXqR317y/zquCq7xSUyF
-	 oeLikPZ1VpAGKwrtRr9BYREkNT6X66RfY2sAjUg7P8n/B8XIaB5i28VCTSu3PN6gtw
-	 OaEpeW+isBBgMfMqKYhiXP401w/Oefwxp+8x+F+g=
+	b=AMCIb++illyX0Uqv07EuuBC+0RoXmvzNMbJN7wrh6Hd9fg/Q+MtqsKksv3Abx87wS
+	 aQKd0F3ysUmymJ4dozOhLlba0wJDa43Tvhdl50WGUL0t7JtPGsF01AdiGcY5+TwuJ6
+	 FMKkIQmQ9hsFdrWRJL6gmWS2AClP9qc8VMXu3J/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haojie Li <lihaojie@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 139/281] drm/amdkfd: fix dma_buf reference leak in get_dmabuf_info
-Date: Tue, 13 Oct 2026 13:37:35 +0200
-Message-ID: <20261013112858.525555241@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Sunpeng Li <sunpeng.li@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>
+Subject: [PATCH 7.2 140/281] drm/amdgpu: serialize vblank counter reads against GPU reset
+Date: Tue, 13 Oct 2026 13:37:36 +0200
+Message-ID: <20261013112858.554647778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -44,58 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haojie Li <lihaojie@kylinos.cn>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-commit e6895021a328594368a2a19406a53ffca1ce51c7 upstream.
+commit 1a6023edfbb5673f55fab6348f135fb3b1428ea5 upstream.
 
-When kzalloc fails for metadata_buffer in
-amdgpu_amdkfd_get_dmabuf_info(), the function returns -ENOMEM directly
-without calling dma_buf_put(), leaking the dma_buf reference obtained
-earlier via dma_buf_get().
+The vblank counter callback reads display registers and scanout
+position without holding reset_domain->sem. During GPU recovery,
+display commit work can call the callback while reset owns the
+semaphore for writing. The hardware access then triggers the
+lockdep_assert_held() in amdgpu_device_skip_hw_access() and sets
+TAINT_WARN when lockdep is enabled.
 
-Fix both issues by:
-- Adding an error check after the first amdgpu_bo_get_metadata() call
-- Replacing the direct return with r = -ENOMEM and goto out_put to
-  ensure dma_buf_put() is called on all error paths
+Try to acquire the reset semaphore for reading before accessing the
+hardware, and hold it across the counter and scanout-position reads.
+If reset is already in progress, return DRM's cached software vblank
+count instead. This avoids blocking behind reset and avoids accessing
+display hardware while it is being reset.
 
-Fixes: f54ce9e8cbd3 ("drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl")
-Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
+The cached count is less accurate than the hardware count, but is
+used only when reset prevents a safe hardware read. This addresses
+the reset-time warning from this vblank path; it does not suppress or
+fix unrelated lockdep warnings.
+
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Sunpeng Li <sunpeng.li@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Sunpeng Li <sunpeng.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ffa699553332f8caf8688d312279ddcea9e3c141)
+(cherry picked from commit 51a4359f7431a4be5e42803c8bdaf7e0e5be2934)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -597,14 +597,18 @@ int amdgpu_amdkfd_get_dmabuf_info(struct
- 		/* first get metadata_size by buffer = NULL */
- 		r = amdgpu_bo_get_metadata(bo, NULL, 0,
- 					   metadata_size, NULL);
-+		if (r)
-+			goto out_put;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -30,6 +30,7 @@
+ #include <drm/amdgpu_drm.h>
+ #include <drm/drm_drv.h>
+ #include <drm/drm_fb_helper.h>
++#include <drm/drm_vblank.h>
+ #include "amdgpu_uvd.h"
+ #include "amdgpu_vce.h"
+ #include "atom.h"
+@@ -1631,6 +1632,9 @@ u32 amdgpu_get_vblank_counter_kms(struct
+ 		DRM_ERROR("Invalid crtc %u\n", pipe);
+ 		return -EINVAL;
+ 	}
++	if (!down_read_trylock(&adev->reset_domain->sem))
++		return drm_crtc_vblank_count(crtc);
++
  
- 		/* user buf_size is bigger than bo metadata_size
- 		 * allocate a buf at kernel space and copy */
- 		if (*metadata_size <= buffer_size) {
- 			*metadata_buffer = kzalloc(*metadata_size, GFP_KERNEL);
+ 	/* The hw increments its frame counter at start of vsync, not at start
+ 	 * of vblank, as is required by DRM core vblank counter handling.
+@@ -1676,6 +1680,7 @@ u32 amdgpu_get_vblank_counter_kms(struct
+ 		DRM_DEBUG_VBL("NULL mode info! Returned count may be wrong.\n");
+ 	}
  
--			if (!*metadata_buffer)
--				return -ENOMEM;
-+			if (!*metadata_buffer) {
-+				r = -ENOMEM;
-+				goto out_put;
-+			}
++	up_read(&adev->reset_domain->sem);
+ 	return count;
+ }
  
- 			r = amdgpu_bo_get_metadata(bo, *metadata_buffer, *metadata_size,
- 						   NULL, &metadata_flags);
 
 
