@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61374E4302;
-	Tue, 13 Oct 2026 11:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D4C3D5241;
+	Tue, 13 Oct 2026 11:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892480; cv=none; b=cisrIUMLNNWh3AfymkLj5fzdbL+PYiXY6Raxq0BJpWJVOaaW800cTfjDuDTdmGZB6jpTmO191J+iKQO09+BNoFg3PxibMxYj81RNXYkZgfQvME5/6Feqy+il5xD8zGDyWEZ+dsO0pGTsV6EWW88BmB9uiQkqSGha0E+Yy5FhAcI=
+	t=1791892483; cv=none; b=dDGjM1eSILoEnR9/GO8cZh4+3y5RELFjMkDd4N7yylutpWafGsgZzZfo/gUeW2Gb+pwAac59MfEvQhEuhv+Q2KCdXMqfV4OtoyOzTI9NoRGsR48HaZvMBHxgFHr0T8sumDR5GFUag5kfbI2Xk1oUDMHhV4I/+ZEoD2Lm1qVCgkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892480; c=relaxed/simple;
-	bh=Vlfs4SJ6Qhu4o/hPpVdjGXcMNjtW5jZsARUDP0T/ooo=;
+	s=arc-20240116; t=1791892483; c=relaxed/simple;
+	bh=0ZfEcoe6r9TDmH1n117RLAAx8sXSM380b8BEtyBZdH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzLGA+X44UwSCeC4POMg3d2tcgmrHSiUk9Kt9ANErCCyrGKBAeyOp6XGVXuvA6NsKhJLpxE/yJjbN3q+sLEKrxGX6Fc0Whd1wVRs/BS0pydP4qD16DEHsCFooXioC0R1ZGedMKv2PYRtDCkoLIHSxEeG6RWCBOt63gTUUT7sxG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOB/NxZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rEmxCnc5C+8cocKVFRgGNWxiAHgXPQmdIAQGSR1LQOZkk5cXOVCFsW8kzFM9fUyFrPIpxi/i7dgCwJrVhyVtK2D5SdBvmUiBhgNO1mkRuLfRoo2Zb5d7EbMGvzqA9L+Ca0j8s5NvlvAjUDCXNFCOewYlH60M0l+FHiXoX1EMlO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoSgMWtu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOB/NxZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA4E1F000FF;
-	Tue, 13 Oct 2026 11:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoSgMWtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184761F000FF;
+	Tue, 13 Oct 2026 11:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892479;
-	bh=wgSQCKwEb5SwJx5/gpj/Tswu/URwMcZNzZwd5WfpssQ=;
+	s=korg; t=1791892482;
+	bh=p8CXrIOZPZ3I87v2IsL+3uW6sX59JrZFh32mYXGMcEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOB/NxZ1YXDc3nOYGqNtnofoiZxmXKvhqMeV3fVdAh9Y8p8FT/JBMQ5v/rHvAb0Oc
-	 EnH1iYfF6+uyYrb2P2HpG7VwWetzDNEAZiGkYk0dHWioWge6Mfq9nGCYhkaf/nkmNY
-	 BGyK8Ny9ReQAWCx872f9YAnTJbVLvdkEN4yG0++M=
+	b=WoSgMWtuInruxo+b5y+O9z0CifqnBpzn4SSWgCIO92CDKUW0hH6Nw57d4zTWYUbEd
+	 uGa9PUI7ClY47HX7aQKZQpjmuslZ3KjNxOsqiNEXJH9nlYJjNGIYNwfHIqGuT8hgBs
+	 6ybUAbFeVNzJyiCr/G0cFyAtLS/802YuxU1pt8mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 188/281] Bluetooth: btintel_pcie: Add shared HW reset for clean start
-Date: Tue, 13 Oct 2026 13:38:24 +0200
-Message-ID: <20261013112859.727702654@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 171/281] namespace: never expire a locked mount
+Date: Tue, 13 Oct 2026 13:38:07 +0200
+Message-ID: <20261013112859.316249681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,45 +49,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 1465494e8d07426fa41c0021530cccb2a1ac38fa ]
+commit f78ddcc872248c7aa1d7e904928441a0be4c6d5d upstream.
 
-Reset shared Bluetooth hardware after mapping the BAR and before setting
-up MSI-X interrupts, so stale device state is cleared before IRQ handlers
-and interrupt masks are configured.
+Locked mounts are special. They protect the underlying files and
+directories from being revealed. do_umount() refuses to unmount locked
+mounts but shrink_submounts() doesn't.
 
-Propagate reset errors so probe aborts rather than continuing when the
-reset fails.
+A shrinkable mount can become locked once the owner of a user namespace
+puts it beneath a locked mount with MOVE_MOUNT_BENEATH. The locked
+property now moves to the mount at the bottom making it possible to
+unmount the top mount.
 
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
-Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So umount() of an unlocked ancestor now expires the bottom mount first
+and the covered directory is revealed:
+
+  move_mount(c -> x/hidden, MOVE_MOUNT_BENEATH) = 0
+  the cover after the lock moved:  umount2(x/hidden) = 0
+  the holder of the lock:          umount2(x/hidden) = EINVAL
+  the root of the copy, busy:      umount2(x) = EBUSY
+  reads x/hidden/secret: "covered-by-root"
+
+So leave a locked mount alone as it dies together with its parent. A
+plain umount() of an unlocked mount with a locked one below it is EBUSY
+from now on. It's the same for any other locked child. A lazy umount
+still takes the whole tree.
+
+mark_mounts_for_expiry() never sees a locked mount. lock_mnt_tree()
+leaves a mount on an expiry list alone and nothing else puts a locked
+one on such a list. Add an assert for this.
+
+Fixes: 5ff9d8a65ce8 ("vfs: Lock in place mounts from more privileged users")
+Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-8-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/namespace.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 34899a5507339..ed4ba2e469ac7 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1819,6 +1819,13 @@ static int btintel_pcie_config_pcie(struct pci_dev *pdev,
- 	if (IS_ERR(data->base_addr))
- 		return PTR_ERR(data->base_addr);
- 
-+	/* Do shared hardware reset to ensure a clean start before
-+	 * configuring interrupts.
-+	 */
-+	err = btintel_pcie_reset_bt(data);
-+	if (err)
-+		return err;
-+
- 	err = btintel_pcie_setup_irq(data);
- 	if (err)
- 		return err;
--- 
-2.53.0
-
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3994,6 +3994,8 @@ void mark_mounts_for_expiry(struct list_
+ 	list_for_each_entry_safe(mnt, next, mounts, mnt_expire) {
+ 		if (!is_mounted(&mnt->mnt))
+ 			continue;
++		/* lock_mnt_tree() leaves expirable mounts alone */
++		VFS_WARN_ON_ONCE(IS_MNT_LOCKED(mnt));
+ 		if (!xchg(&mnt->mnt_expiry_mark, 1) ||
+ 			propagate_mount_busy(mnt, 1))
+ 			continue;
+@@ -4020,7 +4022,8 @@ EXPORT_SYMBOL_GPL(mark_mounts_for_expiry
+  */
+ static bool shrink_submount(struct mount *mnt)
+ {
+-	if (propagate_mount_busy(mnt, 1))
++	/* not the kernel's to remove either */
++	if (IS_MNT_LOCKED(mnt) || propagate_mount_busy(mnt, 1))
+ 		return false;
+ 	touch_mnt_namespace(mnt->mnt_ns);
+ 	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
 
 
