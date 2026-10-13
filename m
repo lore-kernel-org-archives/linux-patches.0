@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA454F4CE5;
-	Tue, 13 Oct 2026 12:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2043339061C;
+	Tue, 13 Oct 2026 12:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895154; cv=none; b=Sn82daf7LQvkTlaf5FAREwr0vhk4ziThMuBGzOQyxiTV2TKygv0Y2+IpAwOloead0iO06j0EChVz1Fva0QqeY+GBNP17a0ZVcELMaPPUGMCzpUr2clITht6nL311tQDTSxN3JWsT7Am4wVqR/RV+mRK92+gPKgYlByH0Pz43kKQ=
+	t=1791895157; cv=none; b=q300prFMiUOOp11Ff4cguJCBXL0kLPmnnCFahvCV5t7H8dddF25viL3wmIp8XnHxWrBDkWKAxZ4tqpCFFD0CNQT/FwLo0Y+Kf4Ijp1HceNK1acMmjdY1BuHox4Qnn13FjnFo0L+eUJFt/W0nE5wcAYfEZcP06dNZlmqs7XUn4Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895154; c=relaxed/simple;
-	bh=/M0G6h4+io843FKkGWuWeGeHqpHfTFc1SDtYWf3NNyw=;
+	s=arc-20240116; t=1791895157; c=relaxed/simple;
+	bh=SaOY1SlH+AcmfZmFdWnzeCdAd5iCGnDlYP+lcn6JkP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGpg2VcixBw7DEHvKsOY2azQ6kT4xC5K/DymmTaMqspEtezJIM/6WBX99bIoIwwMhr7aj1knABGir5EH3WIVljIAK6f2rbiSccrW/Al4TpAPZzXGLvU/3IWZ78KJ4TKnISv3NzpFdbzAe2PmXlWUO2k17o9Wa61kNoprIvwhDQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScxU1Gwe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQKr8K+xjhgXd4PHSxvh/loD1u6n/DR3frTlUOOGTNNQ6aPiu7J3DTTw1PEEkmUjVTGmutHZEpyBVlP75/Yi9lv1unB3SjxzDyPdLeMw1ckI7PwY+TWUsv44RMX11WddUA0bos2sohX8jMfvxbJKSSDsRr37SlTx/kSW007x1fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACUWXVFp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScxU1Gwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E781F000FF;
-	Tue, 13 Oct 2026 12:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACUWXVFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6DD1F000FF;
+	Tue, 13 Oct 2026 12:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895152;
-	bh=vAq1au9BGEIVOEWtbwmz9GH0O5Ll+P4O69hgvuMxASA=;
+	s=korg; t=1791895155;
+	bh=3NyrCXIWWcEgAKeKQxlZ95K6n8kaCSkdRG/Fnh7bJBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ScxU1GweTNG29UmK6hhxkNGBzBWVf89yIvgTeXodUllH9YLEASGno3ea3SFxL0tFm
-	 JTkG9y5UXnn0zklJn3xELoIA2WPFsgSx07sYaSDrvzllxWP+0P/c07+CHEw7B1UvCY
-	 p7jdS9lseMYdHmqQN1MRY446MpWE1QCFJv3XaNxM=
+	b=ACUWXVFpsyMbC1hDYoWIU6vnz+Ns1RR4Wv8jWfKUVRcNYLT6vwzOAZ97m7ItFq8rZ
+	 fqtijZDQGI+VZgy0HpL63wjJkXsYNy3nOeBGY7rMU+UqZCX5NH7VmfX76szWXNE5Eq
+	 CuOKmwZp5bGVsXmLDzLt5B6WuDsyXn3l9uSTHvSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24304d323d28f156@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 177/497] ALSA: ua101: reject mismatched capture/playback packet sizes
-Date: Tue, 13 Oct 2026 13:35:44 +0200
-Message-ID: <20261013112912.092389877@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
+Subject: [PATCH 6.12 136/497] usb: storage: sierra_ms: reject short SWoC info transfers
+Date: Tue, 13 Oct 2026 13:35:03 +0200
+Message-ID: <20261013112911.118257453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,83 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
 
-commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
+commit 8a0200d14acd9db388b85cd016e68a4e60d900ec upstream.
 
-detect_usb_format() cross-checks bSubframeSize, bBitResolution and
-tSamFreq between the capture and playback interfaces, but never relates
-the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
-gets a buffer of ua->playback.max_packet_bytes, while the number of
-bytes written into it is derived from the capture stream:
-capture_urb_complete() computes frames from the received capture packet
-and capture.frame_bytes, and start_usb_playback() and playback_work()
-multiply that by playback.frame_bytes.
+sierra_get_swoc_info() requests sizeof(struct swoc_info) (60) bytes
+from the device via usb_control_msg(), but its callers only treat a
+negative return value as failure. A device that answers the
+vendor-specific GetSwocInfo request with a short IN transfer is
+therefore accepted, leaving the tail of the freshly allocated
+(kmalloc(), non-zeroing) swoc_info buffer uninitialized.
 
-A device declaring a large capture wMaxPacketSize with few capture
-channels and a small playback wMaxPacketSize with many playback channels
-therefore memset()s and memcpy()s past the end of the playback buffer,
-in open() of the PCM node the driver registers during probe.
-usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
--EMSGSIZE, but only after the write.
+truinst_show() subsequently prints swocInfo->rev, swocInfo->LinuxSKU
+and swocInfo->LinuxVer from that buffer into the world-readable
+(0444) "truinst" sysfs attribute. An emulated/malicious USB device
+(VID 0x1199, PID 0x0fff) can exploit this to disclose up to 5 bytes
+of stale kernel heap memory (kmalloc-64) to unprivileged userspace,
+once per sysfs read, indefinitely. On kernels built without
+init_on_alloc this leaks recently freed heap contents.
 
-Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
-declares proportional packet sizes and is unaffected.
+Only accept the transfer when the full structure was received.
+sierra_ms_init() already retries failed queries, so well-behaved
+devices are unaffected.
 
-  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
-  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
-  Call Trace:
-   __asan_memset (mm/kasan/shadow.c:84)
-   start_usb_playback (sound/usb/misc/ua101.c:586)
-   playback_pcm_open (sound/usb/misc/ua101.c:679)
-   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
-   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
-   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
-   snd_open (sound/core/sound.c:166)
-   chrdev_open (fs/char_dev.c:411)
-   do_dentry_open (fs/open.c:996)
-   vfs_open (fs/open.c:1101)
-   path_openat (fs/namei.c:4837 fs/namei.c:5000)
-   do_file_open (fs/namei.c:5029)
-   do_sys_openat2 (fs/open.c:1417)
-   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  The buggy address belongs to the object at ffff8881098f3c00
-   which belongs to the cache kmalloc-192 of size 192
-  The buggy address is located 0 bytes inside of
-   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
-
-Cc: stable@vger.kernel.org
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Reported-by: <co+24304d323d28f156@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 32fe5e393455 ("USB Storage Sierra: TRU-Install feature update")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
+Assisted-by: Kimi:K2 [Kimi Code CLI]
+Link: https://patch.msgid.link/20260910140343.49371-1-syedlabeeq@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/storage/sierra_ms.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -1022,6 +1022,15 @@ static int detect_usb_format(struct ua10
- 	}
- 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
- 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
-+
-+	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
-+	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
-+		dev_err(&ua->dev->dev,
-+			"playback packet size %u too small for %u capture frames\n",
-+			ua->playback.max_packet_bytes,
-+			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
-+		return -ENXIO;
-+	}
- 	return 0;
- }
+--- a/drivers/usb/storage/sierra_ms.c
++++ b/drivers/usb/storage/sierra_ms.c
+@@ -77,6 +77,13 @@ static int sierra_get_swoc_info(struct u
+ 			sizeof(struct swoc_info),	/* __u16 size 	     */
+ 			USB_CTRL_SET_TIMEOUT);		/* int timeout 	     */
  
++	/*
++	 * A short IN transfer leaves the tail of swocInfo uninitialized;
++	 * only a full transfer is valid.
++	 */
++	if (result != sizeof(struct swoc_info))
++		return -EIO;
++
+ 	swocInfo->LinuxSKU = le16_to_cpu(swocInfo->LinuxSKU);
+ 	swocInfo->LinuxVer = le16_to_cpu(swocInfo->LinuxVer);
+ 	return result;
 
 
