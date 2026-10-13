@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6963FD955;
-	Tue, 13 Oct 2026 12:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C854F93C0;
+	Tue, 13 Oct 2026 12:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893182; cv=none; b=ICzEFmwSswEwx42tgQdxKjFFAMVvUCnlntFXz9u70NYXeatwCfS8zBsgB3DoAHTbd0M5yj0pNIA96aXPWtzXslmwIJQUWQCssM15lXeeh3Lrw3IfB8pv1V4G1AhQ2GMHja0T49KKLxzdvVX3htA75NlUPHz3jnJRqVK0jOqBn+g=
+	t=1791893185; cv=none; b=n2kD2KGh/fqtXATnuRGII1/8jLU52mAVzIQdePdCE31Tjp4+OjFL8gVIQC7h+VHxq6kBgZxMkg9xNx4S5QPzi7K70jrFkOO9vEIt34EwbrODSUNtUdBW+vFkriLY609QXw26fPihEzaL31iAHxu3Zk25h+OArh4luiwNxxGPITk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893182; c=relaxed/simple;
-	bh=mVAOuX0aZ+YYHoVuXLZC2nsNyLCM9+F9cpVjNuOlqK8=;
+	s=arc-20240116; t=1791893185; c=relaxed/simple;
+	bh=0lmTwFps8WdJ2QGLgOZAYKHLkkwYZf7Qg+ZD1hUvyaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbRE0cFpqFBOr5RaRvafuy8mbyHWE1pIx1U+SwV4lcv+c94iulDHEMNZpNZiHN8NuYi10QRfpT4Ie2qN3sj2pUZbBqYGiNXN6zfmLhNVnoDhBQJlA02preLDNwnzGz1nWGnZv3BJr8RbIawU25Egnq1Uioc2VSGLCe5DbM25lYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0feKLBW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cr7ZSx/Crev8CHPWJj1rIyERmQOy4Iidyd/diCFlO2E32wibgBObHIVMrzFmjYBudthoJkYR3jiGNd/N45v2msNhcqSac8+UG0ciCyU/sTNrluWU0Onm9x+y1bVMRNEy2CYkWt2bZf0SL5wIFn42a4yDzt1B/wnnqwgitRv/VJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPyZc9XY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0feKLBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184E51F000FF;
-	Tue, 13 Oct 2026 12:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPyZc9XY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB801F000FF;
+	Tue, 13 Oct 2026 12:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893180;
-	bh=qGLqZd20dpEXtUIt3l63SDImP5cukLIElTfCrpI6PdY=;
+	s=korg; t=1791893183;
+	bh=/c5StEwhTnX86SrlPR65SgMlp0cMQF08sKD1BKroMF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0feKLBWnIjNT73keZEhpHXyGqoj8EWr57QxZ7AV2z+IU3pGsRfzMvX6TKynbmKpE
-	 gAL0k+CTKQRvhQeLznRiTdNHFLgeZRvlldRUUQ/lGrHBZgkTgB2Rc9fRHtzSqtuoFK
-	 3Y8nREGW4vesd8Nb6l+OgRrXHcc31iBmpArKZCkg=
+	b=JPyZc9XYynR3zjMflyGJkva7Jg0SIkhC5JIzGVRnI0ni0UlCfTJCIReNlc4qyIuzP
+	 TJ4UfKhfg9Z2PMJCax7lWb32nMLicVCtLloV9PUA5W+3T1ggLBDQ+47eRaJuu0zEYj
+	 fjhYanFgKvdOwOr1y1LxAzokk4ewE4nVQMkzivPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 139/621] namespace: remove the fsnotify marks of a mount namespace in process context
-Date: Tue, 13 Oct 2026 13:32:14 +0200
-Message-ID: <20261013112924.155394708@linuxfoundation.org>
+Subject: [PATCH 6.18 140/621] namespace: check the mounts before reading their parents in pivot_root()
+Date: Tue, 13 Oct 2026 13:32:15 +0200
+Message-ID: <20261013112924.178441819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,61 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 1a116222acdcc1bc1a8350727ae6f28907d44594 upstream.
+commit 6b7c001eb5857fa09041f47673666060a2e5fc1c upstream.
 
-mnt_ns_release() drops the last passive reference of a mount namespace
-and removes its fanotify marks via fsnotify_mntns_delete(). That takes
-the mutex of every group with a mark on the namespace and the spinlock
-of the connector. Fine from process context. But mnt_ns_tree_remove()
-hands the reference the namespace was allocated with to call_rcu() and
-so the marks are removed from the RCU softirq:
+path_pivot_root() reads the parents of new_root and of the caller's root
+and checks whether they are shared before it checks that either mount is
+in the caller's mount namespace. Only namespace_sem is held. That's fine
+for a mount that is in the caller's mount namespace.
 
-  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:623
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/3
-   __mutex_lock+0x113/0x24b0
-   fsnotify_destroy_marks+0x11b/0x3d0
-   mnt_ns_release_rcu+0x57/0xa0
-   rcu_core+0x6b6/0x1e40
+But new_root can be a file descriptor to a mount that has been unmounted
+and that only the file descriptor keeps alive. If that mount stayed
+attached to its parent when it was unmounted nothing pins the parent for
+it. The final mntput() of the parent unhooks the children under
+mount_lock alone and frees the parent afterwards:
 
-and lockdep complains about the connector lock being taken from softirq
-context. A fanotify group with a FAN_MARK_MNTNS mark on the mount
-namespace of another task is all that's needed. Root in a user
-namespace can do that for a mount namespace it owns. The task exits and
-the namespace is freed with the mark still on it.
+  pivot_root()                     close(fd), last ref on the parent
+  ------------                     ---------------------------------
+  ex_parent = new_mnt->mnt_parent
+                                   mntput_no_expire_slowpath()
+                                     __umount_mnt(new_mnt)
+                                   cleanup_mnt()
+                                     call_rcu()
+  IS_MNT_SHARED(ex_parent)
 
-Remove the marks in free_mnt_ns() before the namespace is handed to RCU.
-That runs in process context once the last active reference is gone. A
-mark is added through a file descriptor to the namespace which holds an
-active reference so no mark can show up after that.
+  BUG: KASAN: slab-use-after-free in path_pivot_root+0xf1a/0x1840
+  Read of size 4 at addr ffff8881047382f8 by task pivot_widen/157
+   path_pivot_root+0xf1a/0x1840
+   __x64_sys_pivot_root+0x165/0x190
 
-Fixes: bf630c401641 ("vfs: add notifications for mount attach and detach")
-Cc: stable@vger.kernel.org # v6.15+
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-13-be34c83956ae@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+The same goes for the caller's root via chroot(). Both outcomes of the
+check end in EINVAL so nothing but the read itself goes wrong. It's the
+same thing commit bb4609405752 ("statmount: read the parent of an
+unmounted mount under mount_lock") fixed for statmount().
+
+Check that both mounts are in the caller's namespace before their
+parents are read. Every path returns EINVAL either way.
+
+Fixes: e0c9c0afd2fc ("mnt: Update detach_mounts to leave mounts connected")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-10-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -136,7 +136,6 @@ static void mnt_ns_release(struct mnt_na
- {
- 	/* keep alive for {list,stat}mount() */
- 	if (ns && refcount_dec_and_test(&ns->passive)) {
--		fsnotify_mntns_delete(ns);
- 		put_user_ns(ns->user_ns);
- 		kfree(ns);
- 	}
-@@ -4112,6 +4111,8 @@ static void free_mnt_ns(struct mnt_names
- 	if (!is_anon_ns(ns))
- 		ns_common_free(ns);
- 	dec_mnt_namespaces(ns->ucounts);
-+	/* the last active reference is gone, no mark can show up anymore */
-+	fsnotify_mntns_delete(ns);
- 	mnt_ns_tree_remove(ns);
- }
+@@ -4635,14 +4635,15 @@ SYSCALL_DEFINE2(pivot_root, const char _
  
+ 	new_mnt = real_mount(new.mnt);
+ 	root_mnt = real_mount(root.mnt);
++	/* only a mounted mount has a parent that namespace_sem pins */
++	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
++		return -EINVAL;
+ 	ex_parent = new_mnt->mnt_parent;
+ 	root_parent = root_mnt->mnt_parent;
+ 	if (IS_MNT_SHARED(old_mnt) ||
+ 		IS_MNT_SHARED(ex_parent) ||
+ 		IS_MNT_SHARED(root_parent))
+ 		return -EINVAL;
+-	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
+-		return -EINVAL;
+ 	if (new_mnt->mnt.mnt_flags & MNT_LOCKED)
+ 		return -EINVAL;
+ 	if (d_unlinked(new.dentry))
 
 
