@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2CF3B1EE7;
-	Tue, 13 Oct 2026 12:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883A3D891D;
+	Tue, 13 Oct 2026 12:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894265; cv=none; b=POvlvDb8kEeanr9E4AWCONTwBDVfmjsaEFI/QeRHE0EerosRczYB7Q74wj3YZ4AobdBKMyvpyH1L1r+/nmqQk6b4B0OrTGWrKRWHUbHvxPrunu7HavDYzTPRSxmsLRrN03YZFfyCctq+Rq2c+mA68XA02H7pHL7lTfj8PE8X5QY=
+	t=1791894268; cv=none; b=i5GiT3RKHqnctmy2I6qEnh+hR/jgOonxYPATpZLPBJQ/mh85PyjdGghREvrdCpR/Q1yJyknfHhpwUm8MSHF6KbG9RfHY0jRhzNfXEPs/OCQUucxHhABinrDu4rPSFRK+IrHxx63RmF5Pvh31xk/T22O5tyQSCI5lP+ylizQgdLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894265; c=relaxed/simple;
-	bh=nhzgl8rfFNX4lN8lUTc6x7zZ6gEwm9FkQviNrEH/i+Q=;
+	s=arc-20240116; t=1791894268; c=relaxed/simple;
+	bh=24NZNJZEFmIjm89kuysLXju0SWtqy8/U6M4f9GeyVjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofHEJu5gytQVyHAEv8RhsWXYgnYLBIAjG8J/3lyHCv98jTpz2kZ4QJFifZD4JB4uYTnlnyX3SOFujMHvdazROUGTiGYUR5SNj4wk157qrs4qTZy1QUDN968Qhq4RD+Furv2NAugAjexPGC18ELJOftwneThrRRJc5A+lcTojLaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIDGJZPr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FD/fxr5aWPjytzjoBBPBei4BADvm46eQEeo8ClMSC7QoJZOqAiw7BUf6ElUiCl4p/QQ7p4vjIBPmpfBvyPMvR9BCAsRzA3SQ5X9sh1XD2m9J5KkAW3P+EojfHUyBtBAROKt1haYg9E/4hCUPPNU37ACpKhjvIFnMBa1b4q6rL7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ6nSGd3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIDGJZPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5840D1F00898;
-	Tue, 13 Oct 2026 12:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ6nSGd3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D761F000FF;
+	Tue, 13 Oct 2026 12:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894263;
-	bh=504vt99x8Uw4VZazgY2k7Gc5ZYN0lFo2qUFDeqF/Zcc=;
+	s=korg; t=1791894267;
+	bh=TfhKZiUf8lYWC6c5anq3R5lh/gQnP3YWtXFLeYDfI+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIDGJZPr2U7DwOcxFyywZsgaMQk85bns0axOBaoi+aVTDgD5ffC2FjrBudEVoF74J
-	 IQvRCqaYS/H9TlQr3xnVVkgNsVfInQbIzvyw4yS9P29YHjt7VsetNBYIsEiaKfPkhm
-	 ST6HhY0+SjibDYQgcyvo7eHZtnFA8LkFNIubDfFE=
+	b=JQ6nSGd3SdSulCXXXft+ov6t0M0X3b/cFkloLptBQ2Gcvz03WFXvorl7lqfKH1Cgw
+	 0hIPfkD2ASbNPmN2mi0tVSAgEht5poHhgECCXnqEgswYfvo4PjHw8LzcOj5dMdGECO
+	 wWXSp3jwYdeb5NYzur6pmO31ZdxjCFytRH85pGgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 502/621] smb: client: honor forceuid/forcegid when mapping SIDs to uid/gid
-Date: Tue, 13 Oct 2026 13:38:17 +0200
-Message-ID: <20261013112932.740516997@linuxfoundation.org>
+Subject: [PATCH 6.18 503/621] drm/amdgpu: skip the VMID 0 flush for VRAM
+Date: Tue, 13 Oct 2026 13:38:18 +0200
+Message-ID: <20261013112932.763832331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -49,158 +47,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
 
-[ Upstream commit 18a72975e9f35aadecc75b031f693f2d1f49308f ]
+[ Upstream commit 87ceb8cba73d0b3c4025ff42495bccd8164acaed ]
 
-When the administrator mounts with forceuid or forcegid (uid=/gid=
-mount options), they expect all files to appear owned by the specified
-user/group.  However, several code paths unconditionally called
-sid_to_id() to overwrite cf_uid/cf_gid with server-provided values,
-ignoring the administrator's explicit override:
+Clear-on-release only runs on VRAM, which amdgpu_ttm_map_buffer() reaches
+via its direct MC address without programming a GART window, yet the wipe
+still forces a VMID 0 flush. On GFX11 (e.g. Navi33) that spurious SDMA
+flush can wedge the engine; only flush when a GART window is actually used.
 
-  - smb311_posix_info_to_fattr() (stat via POSIX extensions)
-  - cifs_posix_to_fattr() (readdir via POSIX extensions)
-  - parse_sec_desc() (CIFS ACL ownership mapping)
+v2: Let amdgpu_ttm_map_buffer() return whether the VMID 0 flush is needed,
+    and drive the clear and copy paths from that. (Christian)
+v3: Make the vm_needs_flush output parameter mandatory instead of
+    allowing NULL. (Christian)
 
-This allowed an untrusted server to dictate local file ownership even
-when the mount was configured to force specific uid/gid values.
-
-Fix all three call sites to check CIFS_MOUNT_OVERR_UID and
-CIFS_MOUNT_OVERR_GID before calling sid_to_id(), following the
-same pattern already used by cifs_unix_basic_to_fattr() for unix
-extensions.
-
-Closes: https://sashiko.dev/#/patchset/20260906155816.603278-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5413
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit a306e406e570b74318ff7d80e5b07b540ca1d3a9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 28 ++++++++++++++++++----------
- fs/smb/client/inode.c   |  9 +++++++--
- fs/smb/client/readdir.c |  7 +++++--
- 3 files changed, 30 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index ef72ec55c60f9..b03560f5cd878 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1314,6 +1314,7 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index c48c266cc7a75..08c31d78b3fae 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -175,6 +175,8 @@ static void amdgpu_evict_flags(struct ttm_buffer_object *bo,
+  * @tmz: if we should setup a TMZ enabled mapping
+  * @size: in number of bytes to map, out number of bytes mapped
+  * @addr: resulting address inside the MC address space
++ * @vm_needs_flush: out, set true if a GART window was programmed (VMID 0 flush
++ *		    needed) or false for a direct address
+  *
+  * Setup one of the GART windows to access a specific piece of memory or return
+  * the physical address for local memory.
+@@ -183,7 +185,8 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
+ 				 struct ttm_resource *mem,
+ 				 struct amdgpu_res_cursor *mm_cur,
+ 				 unsigned int window, struct amdgpu_ring *ring,
+-				 bool tmz, uint64_t *size, uint64_t *addr)
++				 bool tmz, uint64_t *size, uint64_t *addr,
++				 bool *vm_needs_flush)
  {
- 	int rc = 0;
- 	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
-+	unsigned int sbflags = cifs_sb_flags(cifs_sb);
- 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
- 	char *end_of_acl = ((char *)pntsd) + acl_len;
- 	__u32 dacloffset;
-@@ -1331,16 +1332,21 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
- 		 le32_to_cpu(pntsd->gsidoffset),
- 		 le32_to_cpu(pntsd->sacloffset), dacloffset);
- /*	cifs_dump_mem("owner_sid: ", owner_sid_ptr, 64); */
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+
- 	rc = parse_sid(owner_sid_ptr, end_of_acl);
- 	if (rc) {
- 		cifs_dbg(FYI, "%s: Error %d parsing Owner SID\n", __func__, rc);
- 		return rc;
- 	}
--	rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
--	if (rc) {
--		cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
--			 __func__, rc);
--		return rc;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_UID)) {
-+		rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
-+		if (rc) {
-+			cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
-+				 __func__, rc);
-+			return rc;
-+		}
+ 	struct amdgpu_device *adev = ring->adev;
+ 	unsigned int offset, num_pages, num_dw, num_bytes;
+@@ -204,9 +207,12 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
+ 	if (!tmz && mem->start != AMDGPU_BO_INVALID_OFFSET) {
+ 		*addr = amdgpu_ttm_domain_start(adev, mem->mem_type) +
+ 			mm_cur->start;
++		*vm_needs_flush = false;
+ 		return 0;
  	}
  
- 	rc = parse_sid(group_sid_ptr, end_of_acl);
-@@ -1349,11 +1355,13 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
- 			 __func__, rc);
- 		return rc;
- 	}
--	rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
--	if (rc) {
--		cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
--			 __func__, rc);
--		return rc;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_GID)) {
-+		rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
-+		if (rc) {
-+			cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
-+				 __func__, rc);
-+			return rc;
-+		}
- 	}
++	/* A GART window is programmed below, so its VMID 0 TLB needs a flush */
++	*vm_needs_flush = true;
  
- 	if (dacloffset) {
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index ade7ecb3f350b..ec6d27ba4083d 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -849,6 +849,7 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
- 	struct smb311_posix_qinfo *info = &data->posix_fi;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
-+	unsigned int sbflags = cifs_sb_flags(cifs_sb);
+ 	/*
+ 	 * If start begins at an offset inside the page, then adjust the size
+@@ -316,6 +322,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
+ 	while (src_mm.remaining) {
+ 		uint64_t from, to, cur_size, tiling_flags;
+ 		uint32_t num_type, data_format, max_com, write_compress_disable;
++		bool src_vm_flush, dst_vm_flush;
+ 		struct dma_fence *next;
  
- 	memset(fattr, 0, sizeof(*fattr));
+ 		/* Never copy more than 256MiB at once to avoid a timeout */
+@@ -323,12 +330,12 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
  
-@@ -893,8 +894,12 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
- 		fattr->cf_symlink_target = data->symlink_target;
- 		data->symlink_target = NULL;
- 	}
--	sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
--	sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
-+		sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
-+	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
-+		sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
+ 		/* Map src to window 0 and dst to window 1. */
+ 		r = amdgpu_ttm_map_buffer(src->bo, src->mem, &src_mm,
+-					  0, ring, tmz, &cur_size, &from);
++					  0, ring, tmz, &cur_size, &from, &src_vm_flush);
+ 		if (r)
+ 			goto error;
  
- 	cifs_dbg(FYI, "POSIX query info: mode 0x%x uniqueid 0x%llx nlink %d\n",
- 		fattr->cf_mode, fattr->cf_uniqueid, fattr->cf_nlink);
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index fb537a1ceb8b4..0cc5ed56571a6 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -242,6 +242,7 @@ static void
- cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		    struct cifs_sb_info *cifs_sb)
- {
-+	unsigned int sbflags = cifs_sb_flags(cifs_sb);
- 	struct smb2_posix_info_parsed parsed;
- 	int rc;
+ 		r = amdgpu_ttm_map_buffer(dst->bo, dst->mem, &dst_mm,
+-					  1, ring, tmz, &cur_size, &to);
++					  1, ring, tmz, &cur_size, &to, &dst_vm_flush);
+ 		if (r)
+ 			goto error;
  
-@@ -288,8 +289,10 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
- 			 __func__, rc);
- 	} else {
--		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
--		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
-+		if (!(sbflags & CIFS_MOUNT_OVERR_UID))
-+			sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
-+		if (!(sbflags & CIFS_MOUNT_OVERR_GID))
-+			sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
- 	}
- }
+@@ -356,7 +363,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
+ 		}
+ 
+ 		r = amdgpu_copy_buffer(ring, from, to, cur_size, resv,
+-				       &next, false, true, copy_flags);
++				       &next, false, src_vm_flush || dst_vm_flush, copy_flags);
+ 		if (r)
+ 			goto error;
+ 
+@@ -2419,6 +2426,7 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+ 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
+ 	struct amdgpu_res_cursor cursor;
++	bool vm_needs_flush = false;
+ 	u64 addr;
+ 	int r = 0;
+ 
+@@ -2446,12 +2454,12 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
+ 		size = min(cursor.size, 256ULL << 20);
+ 
+ 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &cursor,
+-					  1, ring, false, &size, &addr);
++					  1, ring, false, &size, &addr, &vm_needs_flush);
+ 		if (r)
+ 			goto err;
+ 
+ 		r = amdgpu_ttm_fill_mem(ring, 0, addr, size, resv,
+-					&next, true, true,
++					&next, vm_needs_flush, true,
+ 					AMDGPU_KERNEL_JOB_ID_TTM_CLEAR_BUFFER);
+ 		if (r)
+ 			goto err;
+@@ -2478,6 +2486,7 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
+ 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
+ 	struct dma_fence *fence = NULL;
+ 	struct amdgpu_res_cursor dst;
++	bool vm_needs_flush = false;
+ 	int r;
+ 
+ 	if (!adev->mman.buffer_funcs_enabled) {
+@@ -2497,12 +2506,12 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
+ 		cur_size = min(dst.size, 256ULL << 20);
+ 
+ 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &dst,
+-					  1, ring, false, &cur_size, &to);
++					  1, ring, false, &cur_size, &to, &vm_needs_flush);
+ 		if (r)
+ 			goto error;
+ 
+ 		r = amdgpu_ttm_fill_mem(ring, src_data, to, cur_size, resv,
+-					&next, true, delayed, k_job_id);
++					&next, vm_needs_flush, delayed, k_job_id);
+ 		if (r)
+ 			goto error;
  
 -- 
 2.53.0
