@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC2F4F85C7;
-	Tue, 13 Oct 2026 12:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F02184;
+	Tue, 13 Oct 2026 12:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894817; cv=none; b=eb6WSE0QCYi4Zdg5cu1ozWBM9j07nJyCQi6ghY0YBakP78sSb09GSVCnD3zAZL+Zm1uJRf8d4G+WSoCqIVh2w6Je2Lf474DrgvYZTgnvbX3v3s1KyFXlfhcxYdMY+n6CZwdXVvn0EJRmELI3mdCdMQfkqIT2uZOj6/EFLgvZcME=
+	t=1791894820; cv=none; b=hOdWo7uAf/k6mKKpGouJmrWsOiFivXqAwMbM1itTsTLVpgpXDlDhpekZzEJ+YpQ8f0j0UWw6uNWgLWI2E1rIXKF+mCmu84SsBPiRNJRYfv/qgo9JWnGA8yOjYHEnXklwKiGE7gyeOCdbYulokTC8tdXSqSU1lE1kTw8IO4sKrGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894817; c=relaxed/simple;
-	bh=AeUqFdPF6Mb4cKoOphqE2AoOXKm8odJ4e7G4lGEwE98=;
+	s=arc-20240116; t=1791894820; c=relaxed/simple;
+	bh=jErbDRg5HpyA537Jlnvgha7F8dmWgL/r8lHTwdA7x7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDHMoH19QVts6kbK7hv70ID/hrl9kIc9sikSoqi48umMaqvKzMdHh/yBD4C8fKJLKM1vrIsEegwRP6nYR/NsxO67Jr+Aw64XX/2+PnybHnHQX9xCAQAyAXm+HpeSSGCsJAyipXLT3e2hgA2Xzh6AJwAveIA+DbHgZfHGMKSqlc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OA/qEuCn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NldYqtXEKe0Zb35gcK6qI6qHRzB2r+jmFH1FT+jELa+LJ6cIkeB13mYNhKkhoboZ43pPfsBb9SPMnkuuc2UdvuALYEHawR27brPerzKbzZTBHO1WqBSdFQLhfLgiX9DX8sHFoR6oHg9P3IbvUn5GnYZ/YvoHHYurQ+9F71V+QUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h++BNl2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OA/qEuCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CA61F000FF;
-	Tue, 13 Oct 2026 12:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h++BNl2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4281F000FF;
+	Tue, 13 Oct 2026 12:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894816;
-	bh=dWUJ93dM2Hb3Wv6+BCbtNOsQ2x6mXjQBZMfMTMx17z8=;
+	s=korg; t=1791894819;
+	bh=1mIerYskdwJGNI/WASEEbA0U47m42va94Ze6nBz1alI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OA/qEuCn7y0L/f6bAr9jWHJ1xmSnMTz+Fcs/w6h/uRFX6UUOHHgvHj3Lm3/0VhSBp
-	 VTZb63gIBOgY4e8eCe0Si4uHiVVq3V/BUG20UYXhPB644JxS73oagMDP9c8ygUzqVN
-	 G7D/6cNS0Y+1UglaO+t+IJY17BqfNjWcoF9wRQTM=
+	b=h++BNl2StinodH1Ah21b93Hzm2obNzX/dRQm1LMT/EPrspTS5qBRquATEuMl3RoZY
+	 708AtQ/s5H013EJ21tykZh9lXeo/GQFftq2uwielYiL+oo2fTmU/Iui/wnaJ+rIXHx
+	 EWDK4vyZQYDXl6qHhOZKDoXE3j/9dtXXJp2/vo60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/497] wifi: mac80211: prevent AP VLAN tx from other interfaces
-Date: Tue, 13 Oct 2026 13:33:53 +0200
-Message-ID: <20261013112909.452006403@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 040/497] wifi: wlcore: Fix runtime PM leak in wlcore_remove()
+Date: Tue, 13 Oct 2026 13:33:27 +0200
+Message-ID: <20261013112908.841752670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,129 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7f93ca31f7fd9b42e7d692f59514436d448ac908 ]
+commit a8b8881d0c1aff544fae190469d86db7b07f43a9 upstream.
 
-Since the station lookup was factored out of ieee80211_build_hdr(),
-ieee80211_lookup_ra_sta() uses sta_info_get_bss() for all AP and AP VLAN
-frames, not only for control port frames. A unicast frame sent on one
-interface thus matches a station of a different VLAN of the same BSS and
-is transmitted to it.
+pm_runtime_get_sync() keeps the runtime PM usage counter elevated even
+when it returns an error, so the reference taken at the beginning of
+wlcore_remove() has to be dropped on every exit path. When the device
+was not initialized the function returned early without doing so,
+leaking the reference.
 
-Only match stations of the interface the frame is sent on, except for
-control port frames, since those may be sent for VLAN stations directly
-on the BSS interface.
+Release it with pm_runtime_put_noidle() as done on the other early error
+paths of this driver.
 
-Fixes: 97ffe75791b3 ("mac80211: factor out station lookup from ieee80211_build_hdr()")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260916094833.164219-1-nbd@nbd.name
+Fixes: fa2648a34e73f ("wlcore: Add support for runtime PM")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917122325.2150910-1-vulab@iscas.ac.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h |  2 +-
- net/mac80211/tx.c          | 24 +++++++++++++++---------
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ drivers/net/wireless/ti/wlcore/main.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 3486f3d55c42e..c0e7db6fbec38 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2325,7 +2325,7 @@ void __ieee80211_tx_skb_tid_band(struct ieee80211_sub_if_data *sdata,
- /* sta_out needs to be checked for ERR_PTR() before using */
- int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
- 			    struct sk_buff *skb,
--			    struct sta_info **sta_out);
-+			    struct sta_info **sta_out, bool bss);
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -6831,8 +6831,10 @@ void wlcore_remove(struct platform_devic
  
- static inline void
- ieee80211_tx_skb_tid_band(struct ieee80211_sub_if_data *sdata,
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 9fa30980a3802..e07bf5ba9b7a7 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2501,7 +2501,7 @@ static inline bool ieee80211_is_tdls_setup(struct sk_buff *skb)
+ 	if (pdev_data->family && pdev_data->family->nvs_name)
+ 		wait_for_completion(&wl->nvs_loading_complete);
+-	if (!wl->initialized)
++	if (!wl->initialized) {
++		pm_runtime_put_noidle(wl->dev);
+ 		return;
++	}
  
- int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
- 			    struct sk_buff *skb,
--			    struct sta_info **sta_out)
-+			    struct sta_info **sta_out, bool bss)
- {
- 	struct sta_info *sta;
- 
-@@ -2522,7 +2522,10 @@ int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
- 			*sta_out = ERR_PTR(-ENOENT);
- 			return 0;
- 		}
--		sta = sta_info_get_bss(sdata, skb->data);
-+		if (bss)
-+			sta = sta_info_get_bss(sdata, skb->data);
-+		else
-+			sta = sta_info_get(sdata, skb->data);
- 		break;
- #ifdef CONFIG_MAC80211_MESH
- 	case NL80211_IFTYPE_MESH_POINT:
-@@ -4340,7 +4343,8 @@ void __ieee80211_subif_start_xmit(struct sk_buff *skb,
- 	    ieee80211_mesh_xmit_fast(sdata, skb, ctrl_flags))
- 		goto out;
- 
--	if (ieee80211_lookup_ra_sta(sdata, skb, &sta))
-+	if (ieee80211_lookup_ra_sta(sdata, skb, &sta,
-+				    skb->protocol == sdata->control_port_protocol))
- 		goto out_free;
- 
- 	if (IS_ERR(sta))
-@@ -4766,7 +4770,10 @@ static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
- 
- 	rcu_read_lock();
- 
--	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
-+	if (unlikely(sdata->control_port_protocol == ehdr->h_proto))
-+		goto skip_offload;
-+
-+	if (ieee80211_lookup_ra_sta(sdata, skb, &sta, false)) {
- 		kfree_skb(skb);
- 		goto out;
- 	}
-@@ -4787,8 +4794,7 @@ static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
- 		link = &sdata->deflink;
- 		key = rcu_dereference(link->default_multicast_key);
- 	} else if (unlikely(IS_ERR_OR_NULL(sta) || !sta->uploaded ||
--		   !test_sta_flag(sta, WLAN_STA_AUTHORIZED) ||
--	    sdata->control_port_protocol == ehdr->h_proto)) {
-+		   !test_sta_flag(sta, WLAN_STA_AUTHORIZED))) {
- 		goto skip_offload;
- 	} else {
- 		key = rcu_dereference(sta->ptk[sta->ptk_idx]);
-@@ -4849,7 +4855,7 @@ ieee80211_build_data_template(struct ieee80211_sub_if_data *sdata,
- 
- 	rcu_read_lock();
- 
--	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
-+	if (ieee80211_lookup_ra_sta(sdata, skb, &sta, false)) {
- 		kfree_skb(skb);
- 		skb = ERR_PTR(-EINVAL);
- 		goto out;
-@@ -4920,7 +4926,7 @@ static bool ieee80211_tx_pending_skb(struct ieee80211_local *local,
- 		}
- 		result = ieee80211_tx(sdata, NULL, skb, true);
- 	} else if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
--		if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
-+		if (ieee80211_lookup_ra_sta(sdata, skb, &sta, true)) {
- 			dev_kfree_skb(skb);
- 			return true;
- 		}
-@@ -6327,7 +6333,7 @@ int ieee80211_tx_control_port(struct wiphy *wiphy, struct net_device *dev,
- 	 * AF_PACKET
- 	 */
- 	rcu_read_lock();
--	err = ieee80211_lookup_ra_sta(sdata, skb, &sta);
-+	err = ieee80211_lookup_ra_sta(sdata, skb, &sta, true);
- 	if (err) {
- 		dev_kfree_skb(skb);
- 		rcu_read_unlock();
--- 
-2.53.0
-
+ 	if (wl->wakeirq >= 0) {
+ 		dev_pm_clear_wake_irq(wl->dev);
 
 
