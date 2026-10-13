@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610584EB863;
-	Tue, 13 Oct 2026 12:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104D74156C6;
+	Tue, 13 Oct 2026 12:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894217; cv=none; b=oi7aKEpB+YWNcnGQSjFFXRgsxh4A52t8T4j3wPEpKkWI5FcKIbqVjzdfl0lQ9tkivdyUqkmLLz5BeR1mxIydJ4MQsjsjDCOll7+T1N6YD8yQk2KOuvFlgZXekCkufJyDtT36/r8si2V7GJoMP0s/viSvBK3Ynt6TqqCE6u0D3zE=
+	t=1791894220; cv=none; b=XjObOA8EHlPtkQVEhL+TsMnY7fDpNTBKqApim8A8pd4IY3me8qN/Jb4ztZQUxRQLBU7L4MX0DwGT6GB0cfLz4p12A61n89K7nK8XNiUF3UybWlPDIJ0AZLBCluPI0VuzhSSCd6uojjXy0sAhOieJWZK+h2t8KHbYH73SI1BuXbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894217; c=relaxed/simple;
-	bh=wNW56sc+maeCRyJj5p3ekIL1UR7rBOWdPpNjc+AlwoU=;
+	s=arc-20240116; t=1791894220; c=relaxed/simple;
+	bh=qj+OZPVslAH5PG4TMyCFSrGJS3PpuMRzhpmGK4dkOjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgJfserEAcxB54ntUgYKMwHnEV2VXrZ+FUS24R7rcw8YA4HXwzvZxQ+85CHjifoR4O6qqlj0j8GC8d+UBO4Ug8FSuzrzzZAYLxbcAkFjwlKgR1z6lQPnbFP/WvSIyorWdycZva/V+/7CiOeppJ370J/Nmnbp1XUIu5TVMPJ1BtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM4yEQMk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j91rj1f4tUXwcJWNY6Hf2vzuVDg0LFzV0urFQubcNuaOA0xiwAYjZdY706aPRMg/yZRyOgTnS2P187dGwnqC3AT8U0JkQkouadS2Y/0gnnhMZY54cvUm58rHGeTLaeV4vrfUUQS68vs6kC+w7YuAEEdtcKFqk7yanI/TM6geXwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL3bo2eO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM4yEQMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43BE1F000FF;
-	Tue, 13 Oct 2026 12:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL3bo2eO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6637F1F000FF;
+	Tue, 13 Oct 2026 12:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894216;
-	bh=j8VNVVX38ug8rjC86Sw9BasFvPXXXWe8/YCgv6gVfck=;
+	s=korg; t=1791894219;
+	bh=NLwmZjnjhAP00+tn9lY4pIh3SKK+ABsAXdFXzvIrUFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mM4yEQMkKMOHyolompNmyny9KGeZZOMV9PssEpHLVzFIFLhjEyHlbaZfQj3hHv9TB
-	 rs6WBATPwp5k4ZstZ/OvDXRjKmbh7tVaAKPP+s5UoJg3lmzWifvVlGnyO0b8UAo9kf
-	 0PeyIiioznPNcMOkoHqg/EniaviEA0ltbYG7SCLU=
+	b=wL3bo2eOz9MIScbkUgtWLSUrM5MK+l2AB0P+gJgi99ESkVs/Pn5A/RVfOYWfpJIUH
+	 lckOrKB8ZMZ7ECTZ6NqqvmUmQkSGq4AxybDpkcSrLH5IuN8vKp7BTGnTc2hFG+w/Mu
+	 Wi6eK2qUR8EpgYiiHgMQQsui+Xk/QlOpTNdMFF4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufan Chen <ericterminal@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 442/621] ocfs2/heartbeat: fix slot mapping rollback leaks on error paths
-Date: Tue, 13 Oct 2026 13:37:17 +0200
-Message-ID: <20261013112931.321152657@linuxfoundation.org>
+Subject: [PATCH 6.18 443/621] ocfs2: o2hb: quiesce negotiate handlers and timeout work
+Date: Tue, 13 Oct 2026 13:37:18 +0200
+Message-ID: <20261013112931.345545556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -58,29 +58,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yufan Chen <ericterminal@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5686459423d03d192134166f0ec45f98bb2d5d57 ]
+[ Upstream commit 011291b70ba4832e136b7b581825b2bc0f525bf6 ]
 
-o2hb_map_slot_data() allocates hr_tmp_block, hr_slots, hr_slot_data, and
-pages in stages.  If a later allocation fails, the current code returns
-without unwinding the earlier allocations.
+Heartbeat regions publish struct o2hb_region as the private data for the
+NEGO_TIMEOUT and NEGO_APPROVE o2net handlers as soon as make_item()
+creates the configfs region.  The approve handler can call
+o2hb_arm_timeout(), so a peer can touch the region timeout work before
+dev_store() has finished building the heartbeat runtime, or after teardown
+has started to shut that runtime back down.
 
-o2hb_region_dev_store() also leaves slot mapping resources behind when
-setup aborts, and it keeps hr_aborted_start/hr_node_deleted set across
-retries.  That leaves stale state behind after a failed start.
+The final configfs put also has to keep reg alive until the last in-flight
+o2net callback drops its handler reference.
+o2net_unregister_handler_list() blocks future handler lookups, but it does
+not wait for sc_rx_work that already passed o2net_handler_get().  That
+drain needs to cover local listener teardown as well, where the o2net
+ordered workqueue may already be inside destroy_workqueue().
 
-Factor the slot cleanup into o2hb_unmap_slot_data(), use it from both
-o2hb_map_slot_data() and o2hb_region_release(), and call it from the
-dev_store() rollback after stopping a started heartbeat thread.  While
-freeing pages, clear each hr_slot_data entry as it is released, and reset
-the start state before each new setup attempt.
+Fix the lifetime rule in both directions.  Initialize the region delayed
+works before publishing reg through the o2net handler table, keep new or
+stopping regions non-armable with hr_stopping, and quiesce both delayed
+works on failed-start and teardown paths even when no heartbeat thread is
+left to call o2hb_disarm_timeout().  Then unregister handlers before
+tearing down handler-visible region state and make the drain wait for the
+active or destroying o2net ordered workqueue before release frees reg.
 
-This closes the slot mapping leak on allocation/setup failure paths and
-keeps failed setup attempts retryable.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Link: https://lkml.kernel.org/r/20260330153428.19586-1-yufan.chen@linux.dev
-Signed-off-by: Yufan Chen <ericterminal@gmail.com>
+region lifecycle:                late negotiate callback:
+1. make_item() registers the     1. o2net_process_message() gets a
+   region handlers before           heartbeat handler for reg.
+   dev_store() has built a       2. The callback runs after the lookup
+   runnable heartbeat context.      lock is dropped and dereferences reg.
+2. A failed start or rmdir       3. An approve or timeout path tries to
+   stops the heartbeat thread,      queue reg's delayed work, or release
+   quiesces existing work, and      races the callback body after handler
+   drops the final configfs ref.    unregister.
+3. region_release() must drain   4. The callback or delayed work can
+   handler-visible o2net rx work    outlive reg unless lifecycle code
+   before freeing reg.              keeps the region non-armable and
+                                    drains the active-or-destroying
+                                    o2net workqueue.
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in __run_timers+0x22c/0x5b0
+Write of size 8
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  __run_timers+0x22c/0x5b0
+  kasan_report+0xe0/0x110
+  _raw_spin_unlock_irqrestore+0x27/0x60
+  try_to_wake_up+0x191/0xf70
+  timer_expire_remote+0xae/0xf0
+  run_timer_softirq+0x19b/0x1a0
+  handle_softirqs+0x156/0x660
+  __irq_exit_rcu+0xc4/0x160
+  irq_exit_rcu+0xe/0x20
+  sysvec_apic_timer_interrupt+0x6c/0x80
+  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  o2hb_heartbeat_group_make_item+0x3c/0x600
+
+Link: https://lore.kernel.org/20260624095310.763763-3-zzzccc427@gmail.com
+Fixes: 34069b886f95 ("ocfs2: o2hb: add NEGO_TIMEOUT message")
+Fixes: e76f8237a2f7 ("ocfs2: o2hb: add NEGOTIATE_APPROVE message")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: Codex:gpt-5.5
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -89,203 +139,356 @@ Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 011291b70ba4 ("ocfs2: o2hb: quiesce negotiate handlers and timeout work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 83 ++++++++++++++++++++++++------------
- 1 file changed, 56 insertions(+), 27 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c |  56 ++++++++++++++++---
+ fs/ocfs2/cluster/tcp.c       | 103 ++++++++++++++++++++++++++++++-----
+ fs/ocfs2/cluster/tcp.h       |   1 +
+ 3 files changed, 138 insertions(+), 22 deletions(-)
 
 diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 38bf8fadb346e..b391a557f4e31 100644
+index b391a557f4e31..2779f5fad59d4 100644
 --- a/fs/ocfs2/cluster/heartbeat.c
 +++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1532,33 +1532,45 @@ static struct o2hb_region *to_o2hb_region(struct config_item *item)
- 	return item ? container_of(item, struct o2hb_region, hr_item) : NULL;
- }
+@@ -15,6 +15,7 @@
+ #include <linux/file.h>
+ #include <linux/kthread.h>
+ #include <linux/configfs.h>
++#include <linux/mutex.h>
+ #include <linux/random.h>
+ #include <linux/crc32.h>
+ #include <linux/time.h>
+@@ -266,6 +267,9 @@ struct o2hb_region {
+ 	/* Message key for negotiate timeout message. */
+ 	unsigned int		hr_key;
+ 	struct list_head	hr_handler_list;
++	/* Serializes timeout arming against failed-start and teardown. */
++	struct mutex		hr_arming_mutex;
++	bool			hr_stopping;
  
--/* drop_item only drops its ref after killing the thread, nothing should
-- * be using the region anymore.  this has to clean up any state that
-- * attributes might have built up. */
--static void o2hb_region_release(struct config_item *item)
-+static void o2hb_unmap_slot_data(struct o2hb_region *reg)
+ 	/* last hb status, 0 for success, other value for error. */
+ 	int			hr_last_hb_status;
+@@ -330,9 +334,14 @@ static void o2hb_write_timeout(struct work_struct *work)
+ 
+ static void o2hb_arm_timeout(struct o2hb_region *reg)
  {
- 	int i;
- 	struct page *page;
--	struct o2hb_region *reg = to_o2hb_region(item);
--
--	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg_bdev(reg));
--
--	kfree(reg->hr_tmp_block);
- 
- 	if (reg->hr_slot_data) {
- 		for (i = 0; i < reg->hr_num_pages; i++) {
- 			page = reg->hr_slot_data[i];
--			if (page)
-+			if (page) {
- 				__free_page(page);
-+				reg->hr_slot_data[i] = NULL;
-+			}
- 		}
- 		kfree(reg->hr_slot_data);
-+		reg->hr_slot_data = NULL;
- 	}
- 
-+	kfree(reg->hr_slots);
-+	reg->hr_slots = NULL;
++	mutex_lock(&reg->hr_arming_mutex);
 +
-+	kfree(reg->hr_tmp_block);
-+	reg->hr_tmp_block = NULL;
++	if (reg->hr_stopping)
++		goto out_unlock;
++
+ 	/* Arm writeout only after thread reaches steady state */
+ 	if (atomic_read(&reg->hr_steady_iterations) != 0)
+-		return;
++		goto out_unlock;
+ 
+ 	mlog(ML_HEARTBEAT, "Queue write timeout for %u ms\n",
+ 	     O2HB_MAX_WRITE_TIMEOUT_MS);
+@@ -351,6 +360,18 @@ static void o2hb_arm_timeout(struct o2hb_region *reg)
+ 	schedule_delayed_work(&reg->hr_nego_timeout_work,
+ 			      msecs_to_jiffies(O2HB_NEGO_TIMEOUT_MS));
+ 	bitmap_zero(reg->hr_nego_node_bitmap, O2NM_MAX_NODES);
++
++out_unlock:
++	mutex_unlock(&reg->hr_arming_mutex);
 +}
 +
-+/* drop_item only drops its ref after killing the thread, nothing should
-+ * be using the region anymore.  this has to clean up any state that
-+ * attributes might have built up.
-+ */
-+static void o2hb_region_release(struct config_item *item)
++static void o2hb_queue_nego_timeout(struct o2hb_region *reg,
++				    unsigned long delay)
 +{
-+	struct o2hb_region *reg = to_o2hb_region(item);
-+
-+	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg_bdev(reg));
-+
-+	o2hb_unmap_slot_data(reg);
-+
- 	if (reg->hr_bdev_file)
- 		fput(reg->hr_bdev_file);
- 
--	kfree(reg->hr_slots);
--
- 	debugfs_remove_recursive(reg->hr_debug_dir);
- 	kfree(reg->hr_db_livenodes);
- 	kfree(reg->hr_db_regnum);
-@@ -1711,6 +1723,7 @@ static void o2hb_init_region_params(struct o2hb_region *reg)
- static int o2hb_map_slot_data(struct o2hb_region *reg)
- {
- 	int i, j;
-+	int ret = -ENOMEM;
- 	unsigned int last_slot;
- 	unsigned int spp = reg->hr_slots_per_page;
- 	struct page *page;
-@@ -1718,15 +1731,15 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	struct o2hb_disk_slot *slot;
- 
- 	reg->hr_tmp_block = kmalloc(reg->hr_block_bytes, GFP_KERNEL);
--	if (reg->hr_tmp_block == NULL)
--		return -ENOMEM;
-+	if (!reg->hr_tmp_block)
-+		goto out;
- 
- 	reg->hr_slots = kcalloc(reg->hr_blocks,
- 				sizeof(struct o2hb_disk_slot), GFP_KERNEL);
--	if (reg->hr_slots == NULL)
--		return -ENOMEM;
-+	if (!reg->hr_slots)
-+		goto out;
- 
--	for(i = 0; i < reg->hr_blocks; i++) {
-+	for (i = 0; i < reg->hr_blocks; i++) {
- 		slot = &reg->hr_slots[i];
- 		slot->ds_node_num = i;
- 		INIT_LIST_HEAD(&slot->ds_live_item);
-@@ -1741,12 +1754,12 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	reg->hr_slot_data = kcalloc(reg->hr_num_pages, sizeof(struct page *),
- 				    GFP_KERNEL);
- 	if (!reg->hr_slot_data)
--		return -ENOMEM;
-+		goto out;
- 
--	for(i = 0; i < reg->hr_num_pages; i++) {
-+	for (i = 0; i < reg->hr_num_pages; i++) {
- 		page = alloc_page(GFP_KERNEL);
- 		if (!page)
--			return -ENOMEM;
-+			goto out;
- 
- 		reg->hr_slot_data[i] = page;
- 
-@@ -1766,6 +1779,10 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	}
- 
- 	return 0;
-+
-+out:
-+	o2hb_unmap_slot_data(reg);
-+	return ret;
++	mutex_lock(&reg->hr_arming_mutex);
++	if (!reg->hr_stopping)
++		schedule_delayed_work(&reg->hr_nego_timeout_work, delay);
++	mutex_unlock(&reg->hr_arming_mutex);
  }
  
- /* Read in all the slots available and populate the tracking
-@@ -1856,9 +1873,11 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 		     "blocksize %u incorrect for device, expected %d",
- 		     reg->hr_block_bytes, sectsize);
- 		ret = -EINVAL;
--		goto out3;
-+		goto out;
+ static void o2hb_disarm_timeout(struct o2hb_region *reg)
+@@ -359,6 +380,19 @@ static void o2hb_disarm_timeout(struct o2hb_region *reg)
+ 	cancel_delayed_work_sync(&reg->hr_nego_timeout_work);
+ }
+ 
++static void o2hb_set_region_stopping(struct o2hb_region *reg, bool stopping)
++{
++	mutex_lock(&reg->hr_arming_mutex);
++	reg->hr_stopping = stopping;
++	mutex_unlock(&reg->hr_arming_mutex);
++}
++
++static void o2hb_quiesce_timeout(struct o2hb_region *reg)
++{
++	o2hb_set_region_stopping(reg, true);
++	o2hb_disarm_timeout(reg);
++}
++
+ static int o2hb_send_nego_msg(int key, int type, u8 target, u8 node_num)
+ {
+ 	struct o2hb_nego_msg msg;
+@@ -408,8 +442,7 @@ static void o2hb_nego_timeout(struct work_struct *work)
+ 			/* check negotiate bitmap every second to do timeout
+ 			 * approve decision.
+ 			 */
+-			schedule_delayed_work(&reg->hr_nego_timeout_work,
+-				msecs_to_jiffies(1000));
++			o2hb_queue_nego_timeout(reg, msecs_to_jiffies(1000));
+ 
+ 			return;
+ 		}
+@@ -1566,6 +1599,8 @@ static void o2hb_region_release(struct config_item *item)
+ 
+ 	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg_bdev(reg));
+ 
++	o2hb_quiesce_timeout(reg);
++	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ 	o2hb_unmap_slot_data(reg);
+ 
+ 	if (reg->hr_bdev_file)
+@@ -1581,7 +1616,6 @@ static void o2hb_region_release(struct config_item *item)
+ 	list_del(&reg->hr_all_item);
+ 	spin_unlock(&o2hb_live_lock);
+ 
+-	o2net_unregister_handler_list(&reg->hr_handler_list);
+ 	kfree(reg);
+ }
+ 
+@@ -1898,9 +1932,6 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 		goto out;
  	}
  
-+	reg->hr_aborted_start = 0;
-+	reg->hr_node_deleted = 0;
- 	o2hb_init_region_params(reg);
+-	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+-	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-
+ 	/*
+ 	 * A node is considered live after it has beat LIVE_THRESHOLD
+ 	 * times.  We're not steady until we've given them a chance
+@@ -1920,6 +1951,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 	atomic_set(&reg->hr_steady_iterations, live_threshold);
+ 	/* unsteady_iterations is triple the steady_iterations */
+ 	atomic_set(&reg->hr_unsteady_iterations, (live_threshold * 3));
++	o2hb_set_region_stopping(reg, false);
  
- 	/* Generation of zero is invalid */
-@@ -1870,13 +1889,13 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	ret = o2hb_map_slot_data(reg);
- 	if (ret) {
- 		mlog_errno(ret);
--		goto out3;
-+		goto out;
- 	}
+ 	hb_task = kthread_run(o2hb_thread, reg, "o2hb-%s",
+ 			      reg->hr_item.ci_name);
+@@ -1969,6 +2001,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
  
- 	ret = o2hb_populate_slot_data(reg);
- 	if (ret) {
- 		mlog_errno(ret);
--		goto out3;
-+		goto out;
- 	}
- 
- 	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
-@@ -1907,7 +1926,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	if (IS_ERR(hb_task)) {
- 		ret = PTR_ERR(hb_task);
- 		mlog_errno(ret);
--		goto out3;
-+		goto out;
- 	}
- 
- 	spin_lock(&o2hb_live_lock);
-@@ -1924,12 +1943,12 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 
- 	if (reg->hr_aborted_start) {
- 		ret = -EIO;
--		goto out3;
-+		goto out;
- 	}
- 
- 	if (reg->hr_node_deleted) {
- 		ret = -EINVAL;
--		goto out3;
-+		goto out;
- 	}
- 
- 	/* Ok, we were woken.  Make sure it wasn't by drop_item() */
-@@ -1948,8 +1967,18 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 		printk(KERN_NOTICE "o2hb: Heartbeat started on region %s (%pg)\n",
- 		       config_item_name(&reg->hr_item), reg_bdev(reg));
- 
--out3:
-+out:
+ out:
  	if (ret < 0) {
-+		spin_lock(&o2hb_live_lock);
-+		hb_task = reg->hr_task;
-+		reg->hr_task = NULL;
-+		spin_unlock(&o2hb_live_lock);
++		o2hb_quiesce_timeout(reg);
 +
-+		if (hb_task)
-+			kthread_stop(hb_task);
+ 		spin_lock(&o2hb_live_lock);
+ 		hb_task = reg->hr_task;
+ 		reg->hr_task = NULL;
+@@ -2108,6 +2142,10 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
++	mutex_init(&reg->hr_arming_mutex);
++	reg->hr_stopping = true;
++	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
++	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+ 	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+@@ -2128,7 +2166,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	return &reg->hr_item;
+ 
+ unregister_handler:
+-	o2net_unregister_handler_list(&reg->hr_handler_list);
++	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+ 	list_del(&reg->hr_all_item);
+@@ -2147,6 +2185,8 @@ static void o2hb_heartbeat_group_drop_item(struct config_group *group,
+ 	struct o2hb_region *reg = to_o2hb_region(item);
+ 	int quorum_region = 0;
+ 
++	o2hb_quiesce_timeout(reg);
 +
-+		o2hb_unmap_slot_data(reg);
+ 	/* stop the thread when the user removes the region dir */
+ 	spin_lock(&o2hb_live_lock);
+ 	hb_task = reg->hr_task;
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index 76ea302e182b0..d65a445535a32 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -38,6 +38,8 @@
+  */
+ 
+ #include <linux/kernel.h>
++#include <linux/completion.h>
++#include <linux/mutex.h>
+ #include <linux/sched/mm.h>
+ #include <linux/jiffies.h>
+ #include <linux/slab.h>
+@@ -102,9 +104,14 @@ static struct socket *o2net_listen_sock;
+  * quorum work is queued as sock containers are shutdown.. stop_listening
+  * tears down all the node's sock containers, preventing future shutdowns
+  * and queued quorum work, before canceling delayed quorum work and
+- * destroying the work queue.
++ * destroying the work queue.  Handler teardown can also race local listener
++ * shutdown, so keep a waitable destroying pointer until the old ordered
++ * queue has finished draining.
+  */
+ static struct workqueue_struct *o2net_wq;
++static struct workqueue_struct *o2net_wq_destroying;
++static DEFINE_MUTEX(o2net_wq_mutex);
++static DECLARE_COMPLETION(o2net_wq_destroyed);
+ /* Heartbeat callbacks stay registered across local-node off/on. */
+ static bool o2net_listening;
+ static struct work_struct o2net_listen_work;
+@@ -886,6 +893,27 @@ void o2net_unregister_handler_list(struct list_head *list)
+ }
+ EXPORT_SYMBOL_GPL(o2net_unregister_handler_list);
+ 
++static void o2net_flush_wq(void)
++{
++	mutex_lock(&o2net_wq_mutex);
++	if (o2net_wq_destroying) {
++		mutex_unlock(&o2net_wq_mutex);
++		wait_for_completion(&o2net_wq_destroyed);
++		return;
++	}
 +
- 		fput(reg->hr_bdev_file);
- 		reg->hr_bdev_file = NULL;
++	if (o2net_wq)
++		flush_workqueue(o2net_wq);
++	mutex_unlock(&o2net_wq_mutex);
++}
++
++void o2net_unregister_and_flush_handler_list(struct list_head *list)
++{
++	o2net_unregister_handler_list(list);
++	o2net_flush_wq();
++}
++EXPORT_SYMBOL_GPL(o2net_unregister_and_flush_handler_list);
++
+ static struct o2net_msg_handler *o2net_handler_get(u32 msg_type, u32 key)
+ {
+ 	struct o2net_msg_handler *nmh;
+@@ -1717,12 +1745,10 @@ void o2net_disconnect_node(struct o2nm_node *node)
+ 	o2net_set_nn_state(nn, NULL, 0, -ENOTCONN);
+ 	spin_unlock(&nn->nn_lock);
+ 
+-	if (o2net_wq) {
+-		cancel_delayed_work(&nn->nn_connect_expired);
+-		cancel_delayed_work(&nn->nn_connect_work);
+-		cancel_delayed_work(&nn->nn_still_up);
+-		flush_workqueue(o2net_wq);
+-	}
++	cancel_delayed_work(&nn->nn_connect_expired);
++	cancel_delayed_work(&nn->nn_connect_work);
++	cancel_delayed_work(&nn->nn_still_up);
++	o2net_flush_wq();
+ }
+ 
+ static void o2net_hb_node_down_cb(struct o2nm_node *node, int node_num,
+@@ -2067,6 +2093,36 @@ static int o2net_open_listening_sock(__be32 addr, __be16 port)
+ 	return ret;
+ }
+ 
++static void o2net_destroy_wq(void)
++{
++	struct workqueue_struct *wq;
++
++	mutex_lock(&o2net_wq_mutex);
++	if (o2net_wq_destroying) {
++		mutex_unlock(&o2net_wq_mutex);
++		wait_for_completion(&o2net_wq_destroyed);
++		return;
++	}
++
++	wq = o2net_wq;
++	if (!wq) {
++		mutex_unlock(&o2net_wq_mutex);
++		return;
++	}
++
++	reinit_completion(&o2net_wq_destroyed);
++	o2net_wq_destroying = wq;
++	mutex_unlock(&o2net_wq_mutex);
++
++	destroy_workqueue(wq);
++
++	mutex_lock(&o2net_wq_mutex);
++	o2net_wq = NULL;
++	o2net_wq_destroying = NULL;
++	complete_all(&o2net_wq_destroyed);
++	mutex_unlock(&o2net_wq_mutex);
++}
++
+ /*
+  * called from node manager when we should bring up our network listening
+  * socket.  node manager handles all the serialization to only call this
+@@ -2077,24 +2133,44 @@ static int o2net_open_listening_sock(__be32 addr, __be16 port)
+ int o2net_start_listening(struct o2nm_node *node)
+ {
+ 	int ret = 0;
++	struct workqueue_struct *wq;
+ 
+ 	if (WARN_ON_ONCE(READ_ONCE(o2net_listening)))
+ 		return -EBUSY;
+-	BUG_ON(o2net_wq != NULL);
++
++	mutex_lock(&o2net_wq_mutex);
++	if (o2net_wq_destroying) {
++		mutex_unlock(&o2net_wq_mutex);
++		return -EBUSY;
++	}
++	if (WARN_ON_ONCE(o2net_wq)) {
++		mutex_unlock(&o2net_wq_mutex);
++		return -EBUSY;
++	}
++	mutex_unlock(&o2net_wq_mutex);
++
+ 	BUG_ON(o2net_listen_sock != NULL);
+ 
+ 	mlog(ML_KTHREAD, "starting o2net thread...\n");
+-	o2net_wq = alloc_ordered_workqueue("o2net", WQ_MEM_RECLAIM);
+-	if (o2net_wq == NULL) {
++	wq = alloc_ordered_workqueue("o2net", WQ_MEM_RECLAIM);
++	if (!wq) {
+ 		mlog(ML_ERROR, "unable to launch o2net thread\n");
+ 		return -ENOMEM; /* ? */
  	}
+ 
++	mutex_lock(&o2net_wq_mutex);
++	if (unlikely(o2net_wq_destroying || o2net_wq)) {
++		mutex_unlock(&o2net_wq_mutex);
++		destroy_workqueue(wq);
++		return -EBUSY;
++	}
++	o2net_wq = wq;
++	mutex_unlock(&o2net_wq_mutex);
++
+ 	ret = o2net_open_listening_sock(node->nd_ipv4_address,
+ 					node->nd_ipv4_port);
+ 	if (ret) {
+-		destroy_workqueue(o2net_wq);
+-		o2net_wq = NULL;
++		o2net_destroy_wq();
+ 	} else
+ 		o2quo_conn_up(node->nd_num);
+ 
+@@ -2130,8 +2206,7 @@ void o2net_stop_listening(struct o2nm_node *node)
+ 
+ 	/* finish all work and tear down the work queue */
+ 	mlog(ML_KTHREAD, "waiting for o2net thread to exit....\n");
+-	destroy_workqueue(o2net_wq);
+-	o2net_wq = NULL;
++	o2net_destroy_wq();
+ 
+ 	sock_release(o2net_listen_sock);
+ 	o2net_listen_sock = NULL;
+diff --git a/fs/ocfs2/cluster/tcp.h b/fs/ocfs2/cluster/tcp.h
+index 2e86d42b5faf9..a11bcee289479 100644
+--- a/fs/ocfs2/cluster/tcp.h
++++ b/fs/ocfs2/cluster/tcp.h
+@@ -89,6 +89,7 @@ int o2net_register_handler(u32 msg_type, u32 key, u32 max_len,
+ 			   o2net_post_msg_handler_func *post_func,
+ 			   struct list_head *unreg_list);
+ void o2net_unregister_handler_list(struct list_head *list);
++void o2net_unregister_and_flush_handler_list(struct list_head *list);
+ 
+ void o2net_fill_node_map(unsigned long *map, unsigned bytes);
+ 
 -- 
 2.53.0
 
