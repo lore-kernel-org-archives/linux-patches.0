@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFB53D5657;
-	Tue, 13 Oct 2026 12:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5DB4F4736;
+	Tue, 13 Oct 2026 12:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895862; cv=none; b=b5hvE3HaEBYfLwA5sMJnTIlXu1U0xyPaoR9G+O389jUUh7KGsPaGojvXBmZqIfsIADUc3yspAp6B/JEJffbh6+h8gexc7B4VGjLKykDsvlXdSA0G1q8zgCdj4p6xhGpC4o0TEGZbKRO0xfHNo+DqDzhUgV/gAMNz7dbGwJ4u8c8=
+	t=1791895864; cv=none; b=arsCxTD0Egeeh/lAkyE6WrWUZKywNMWxLwPwmkcBnWFHAJZ1nm0XgjX8KpyQ2TYQS3Kc8iavS/kdqWZJstKo4ySa1YTczLNe/aZICs/JG6QAi1rzCsmmEyYA9LxX7ijvWShKWh7jpXIkZy3E5tT4oCu81uwzQHwDyyZItkBEQc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895862; c=relaxed/simple;
-	bh=a4pV7tVmkt7tlNJmbYivsKwAeLXRKvR2tVGjHEBtfvk=;
+	s=arc-20240116; t=1791895864; c=relaxed/simple;
+	bh=kWpLl0lrtXbrau9sn9aQCG+W53J2wXgw8iWT/8R4LP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZifmaOCGPPGWmTERWxnFMiF+tYOZaNrZR39Ag8T13OCPma3EnB4nZGZBNaYFUfzIcS267bsCAA4V54UAI5oCtA7u3qNRtdfcRBSdoEvMSWQjDGejlKixX+qGdHqLvX2pVbpObGSMk2McWVldIxJUQrqOX1NzfTj1hnRQzLLiI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08px4qA0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V1EOQLqWDIen2QBH8LAHBimhYkxDYpiXaQH/VstnPXrJTPe+11AToYuuzy5ll4pIWovPVNhMsSxAfHXKddcRXzVAvMtqNJ7D2V8HPxpxIOrUHTJrZOwssOQZds78hGMjJX2TfRXsGsRKw1OAU9czNYZvMNy9JZeIyGnWZq/fCnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb1V1KgL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08px4qA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E7F1F000FF;
-	Tue, 13 Oct 2026 12:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb1V1KgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B961F00893;
+	Tue, 13 Oct 2026 12:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895859;
-	bh=umRx8HwEK0dguMLe/PkSkCLOvl5g3o64V/EdteJqhlY=;
+	s=korg; t=1791895862;
+	bh=Cek8xXZlNKLR6kjttLPYhiMnaBjcmlCB0LQWpoUZUcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=08px4qA0DpwBOvx1ElTFelSp+xvAcVxHgQS8/n2KJ13YBX6SiHSTbx+ooCb2r5sLX
-	 uDMLAE6m7EK4EaGdFscFaWr8vL4uCkpXX7lBjLKsEeBwmCsqh2FtLvbHhtl0QKxzTY
-	 0FXdTce1JPNhb0/btDjyV60H1e1HATRq0RJ+bxEs=
+	b=vb1V1KgLZiwTU9cN9fQdEwM1SCcuTkMvyaxyOjMfhCBxBvu0o1dk+fTPpQe8lNlS0
+	 Uv0xJ+hQYXdhgmhgyKUvYn3y2Z+Iv1piRk3hhxf8sHmyRej3ntzAx6ess0yNf6D9uJ
+	 i43QlulBoW4SFsL2nJqMp1qn5KGdj3EdI+tjJAhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lvc-project@linuxtesting.org,
-	Georgiy Osokin <g.osokin@auroraos.dev>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@oss.qualcomm.com>
-Subject: [PATCH 6.12 373/497] tee: shm: reject zero-sized allocations in tee_dyn_shm_alloc_helper()
-Date: Tue, 13 Oct 2026 13:39:00 +0200
-Message-ID: <20261013112916.751870426@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 374/497] strparser: make sure __strp_recv isnt running before tearing down the parser
+Date: Tue, 13 Oct 2026 13:39:01 +0200
+Message-ID: <20261013112916.776298529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,46 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgiy Osokin <g.osokin@auroraos.dev>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit b7f925fd5226deb953c8dcdc9677d3fcc2717c00 upstream.
+commit 0984ebc631792acf8fff105112ee74a6b8f1efcc upstream.
 
-tee_dyn_shm_alloc_helper() derives nr_pages from a caller-supplied size
-and passes it to alloc_pages_exact() without checking it. For size == 0
-nr_pages is 0, and alloc_pages_exact(0) calls get_order(0), which is
-documented as undefined and returns BITS_PER_LONG - PAGE_SHIFT. The page
-allocator then trips its order > MAX_PAGE_ORDER warning and fails the
-allocation; on a panic_on_warn kernel that ends the boot.
+The comment above strp_done() claims that if strp is stopped,
+strp_recv will no longer be called. That's only true if the caller has
+a mechanism (eg locking) to guarantee that strp_recv() calls that
+started before strp_stop() have completed by the time we call
+strp_done().
 
-This can be triggered by TEE_IOC_SHM_ALLOC with struct
-tee_ioctl_shm_alloc_data where size is 0.
+This adds a dummy lock_sock/release_sock pair to guarantee that any
+in-flight strp_recv() (which runs under either bh_lock_sock or
+lock_sock, depending if it's called from ->sk_data_ready or strp_work)
+has completed.
 
-Reject a zero page count, as register_shm_helper() already does for the
-register path.
+Only espintcp can be affected by this race condition, but this patch
+makes sure no future user of strp can have the bug.
 
-Fixes: cf4441503e20 ("tee: optee: Move pool_op helper functions")
+This could crash on strp->sk ("general mode" of strp), but this mode
+has been here for 9 years and has never been used. It'll be gone soon,
+no point worrying about it.
+
+Switch the stopped/paused/etc bits to u8's to avoid races between
+strp_stop() and strp_pause/unpause().
+
+A reproducer has been published and turns the possible UAF into an
+exploit [1].
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/all/aZLn2Faeg1FB7XOf@v4bel/
+Link: https://lore.kernel.org/all/aZgpkyTDU3aXe_V0@v4bel/
+Link: https://github.com/m0x41nos/RustyTux [1]
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
 Cc: stable@vger.kernel.org
-Cc: lvc-project@linuxtesting.org
-Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/425d9d926709b542ed5331110c19fee4aee1f28d.1791206940.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/tee_shm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/networking/strparser.rst |    2 +-
+ include/net/strparser.h                |   10 +++++-----
+ net/strparser/strparser.c              |    6 +++++-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -215,6 +215,10 @@ int tee_dyn_shm_alloc_helper(struct tee_
- 	unsigned int i;
- 	int rc = 0;
+--- a/Documentation/networking/strparser.rst
++++ b/Documentation/networking/strparser.rst
+@@ -77,7 +77,7 @@ Functions
  
-+	/* get_order(0) is undefined and exceeds MAX_PAGE_ORDER. */
-+	if (!nr_pages)
-+		return -EINVAL;
+      strp_done is called to release any resources held by the stream
+      parser instance. This must be called after the stream processor
+-     has been stopped.
++     has been stopped. The socket lock must not be held.
+ 
+      ::
+ 
+--- a/include/net/strparser.h
++++ b/include/net/strparser.h
+@@ -91,11 +91,11 @@ static inline struct strp_msg *strp_msg(
+ struct strparser {
+ 	struct sock *sk;
+ 
+-	u32 stopped : 1;
+-	u32 paused : 1;
+-	u32 aborted : 1;
+-	u32 interrupted : 1;
+-	u32 unrecov_intr : 1;
++	u8 stopped;
++	u8 paused;
++	u8 aborted;
++	u8 interrupted;
++	u8 unrecov_intr;
+ 
+ 	struct sk_buff **skb_nextp;
+ 	struct sk_buff *skb_head;
+--- a/net/strparser/strparser.c
++++ b/net/strparser/strparser.c
+@@ -518,12 +518,16 @@ void strp_unpause(struct strparser *strp
+ EXPORT_SYMBOL_GPL(strp_unpause);
+ 
+ /* strp must already be stopped so that strp_recv will no longer be called.
+- * Note that strp_done is not called with the lower socket held.
++ * Note that strp_done must not be called with the lower socket held.
+  */
+ void strp_done(struct strparser *strp)
+ {
+ 	WARN_ON(!strp->stopped);
+ 
++	lock_sock(strp->sk);
++	/* sync with pending strp_recv */
++	release_sock(strp->sk);
 +
- 	/*
- 	 * Ignore alignment since this is already going to be page aligned
- 	 * and there's no need for any larger alignment.
+ 	cancel_delayed_work_sync(&strp->msg_timer_work);
+ 	cancel_work_sync(&strp->work);
+ 
 
 
