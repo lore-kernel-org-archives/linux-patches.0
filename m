@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364304EE870;
-	Tue, 13 Oct 2026 12:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FDA4F5E19;
+	Tue, 13 Oct 2026 12:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893608; cv=none; b=HKIBA5c4ivo1QgR2xzU+gBPduZobDnPoVg4esKRsRwKFAaHoxQ8Oh8md7Zp7bUNefNYstLR4nrwgZDX6sdOfsmy8NM6Y+Y2wAmmfGxh6LqNtkm3JDGbtTwXJogYbkk/S3zVFi10bnT/v28abAALyAR+C+NkMJGvvZOYjJWTCub0=
+	t=1791893611; cv=none; b=pKUs1JnbDNnpj5JfdiF+pwclJyb7I6MKrOGgqLQjJSFH/ahBVWa6FbXNtLd1ex6hosE02vQyEvo4geKl2XJ2CGSju1hFskmdWZadDDBjjThJ1+UKOBB2/8FZtDRWGy4dPGQgU+yrzdr0oAKYITkMAY+4+Admx2jd1yRz0EE4FGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893608; c=relaxed/simple;
-	bh=3MC8DiIHHCsW4WIQ0wot4VMtQ2K6U+vHK7AcRni7msA=;
+	s=arc-20240116; t=1791893611; c=relaxed/simple;
+	bh=ebWarcB9cP5N0xL4bM+Lz8HwSbzAdqW/tMqnaaI7o40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Un39vqUzPorXGC32erdiLw73W2sIkJ4zC7uRY6b2qL4X0/XGRkunaIsbmixvO9bGBZ0wgNhmCbYUA5nYDm2Wfu84kP44Wqd6EPRTHDUKgBPFM34m/J5GmrnOKgeh/qMnW5x4hh4NR3+dFXiVst6so01Zr8HHOPytlUqXdeDlgJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBT4Ievh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6k6zGxJh9psTl6q1eM4kiNdCWgREkchFLsiZ8a2Ky8E+iA7RZguNtLWbfbAKz2GR+TkFo2B/a5+IJ+rJJHJ7/8RSPC8pkeUYRbndAQuk3ioTHGYh7UxTIhGdQe/BS1JwvMJLE9T2YXOK1oInSE4W2kAg40ELJOTJcY7B+WkGOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQhc9Rs9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBT4Ievh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1741F000FF;
-	Tue, 13 Oct 2026 12:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQhc9Rs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1FE1F000FF;
+	Tue, 13 Oct 2026 12:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893607;
-	bh=KZpSisFKJAnTy7kpY/B/BcYeMfMfYYrEKXPPN+skSY8=;
+	s=korg; t=1791893610;
+	bh=gfT0kNRLK3cIywNHel1Y7mfE3DEjmwICtwIX2LADlUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBT4Ievh+sqC4uWfHELnE4Mer64mrAsDZauB8RlITbhv1jGi/rGlwB6UJCYH+EOum
-	 8mgQzmJKZlToCgKGa+oG/P42CnHEyocyt/LBBVQF100iokj6P2B94TBLwZs+xRYG/D
-	 eM3ZoE/y67QtkUBimrfy4M2+9LS+C2eEm4BPEtBY=
+	b=oQhc9Rs9LGVht0Po9Rw4UEjaWKj/XwnVcZINrtR0QzNidig0sx54c7n+Rsg8e9Rl6
+	 462vH58RrEPSL56ri/EGYVD+LvLPbd2mTlREmZ5Cwb/0eTQ+HgJ5AUay4H/yrOPeof
+	 Xr2NPwAjEMKyVaj+S/VewakHRlL2j7juKbG6tiJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/621] Bluetooth: 6lowpan: avoid untracked enable work
-Date: Tue, 13 Oct 2026 13:34:36 +0200
-Message-ID: <20261013112927.528412055@linuxfoundation.org>
+Subject: [PATCH 6.18 282/621] net/mlx5: LAG, Fix off-by-one in single-FDB error rollback
+Date: Tue, 13 Oct 2026 13:34:37 +0200
+Message-ID: <20261013112927.551944344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,106 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 352a59dc1f4a41314b6f827c17e16af7ca88271a ]
+[ Upstream commit 0f0e4ae6975c773f7854fc48932a267f6c79088f ]
 
-lowpan_enable_set() allocates a temporary work item and schedules
-do_enable_set() on system_wq, then returns to debugfs. The debugfs active
-operation has ended at that point, but the worker still executes module
-text and manipulates enable_6lowpan and listen_chan.
+On failure at index i, the reverse cleanup loop in
+mlx5_lag_create_single_fdb() starts from i, so the failed index
+itself is rolled back. That can operate on uninitialized state or
+double-tear-down a rule the add_one path already self-rolled-back.
 
-bt_6lowpan_exit() removes the debugfs files and immediately closes and
-puts listen_chan. It has no pointer to the queued work item, so it cannot
-cancel or flush it before tearing down the state that the worker uses.
+Start the rollback from i - 1 so only successfully-installed entries
+are undone.
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-debugfs enable write              module exit
-1. lowpan_enable_set() allocates  1. bt_6lowpan_exit() removes
-   set_enable work                   the debugfs file
-2. schedule_work() queues         2. bt_6lowpan_exit() closes
-   do_enable_set()                   and puts listen_chan
-3. the write operation returns    3. module teardown can continue
-4. do_enable_set() later runs
-   against stale state
-
-Run the enable state transition synchronously in lowpan_enable_set()
-instead. The simple debugfs setter can sleep, and this file already handles
-the 6LoWPAN control write synchronously under the same set_lock. Once the
-setter returns, debugfs removal covers the whole operation and exit can no
-longer race with an untracked work item.
-
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in do_enable_set+0x113/0x2e0
-Workqueue: events do_enable_set [bluetooth_6lowpan]
-The buggy address belongs to the object at ffff888109cb8000
-
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ddbb5ddc43ad ("net/mlx5: LAG, Refactor lag logic")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260630112917.698313-2-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 27 ++++-----------------------
- 1 file changed, 4 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index e5e84941c6521..3733f408d2e40 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1068,23 +1068,15 @@ static void disconnect_all_peers(void)
- 	} while (nchans);
- }
- 
--struct set_enable {
--	struct work_struct work;
--	bool flag;
--};
--
--static void do_enable_set(struct work_struct *work)
-+static void do_enable_set(bool flag)
- {
--	struct set_enable *set_enable = container_of(work,
--						     struct set_enable, work);
--
--	if (!set_enable->flag || enable_6lowpan != set_enable->flag)
-+	if (!flag || enable_6lowpan != flag)
- 		/* Disconnect existing connections if 6lowpan is
- 		 * disabled
- 		 */
- 		disconnect_all_peers();
- 
--	enable_6lowpan = set_enable->flag;
-+	enable_6lowpan = flag;
- 
- 	mutex_lock(&set_lock);
- 	if (listen_chan) {
-@@ -1096,22 +1088,11 @@ static void do_enable_set(struct work_struct *work)
- 
- 	listen_chan = bt_6lowpan_listen();
- 	mutex_unlock(&set_lock);
--
--	kfree(set_enable);
- }
- 
- static int lowpan_enable_set(void *data, u64 val)
- {
--	struct set_enable *set_enable;
--
--	set_enable = kzalloc(sizeof(*set_enable), GFP_KERNEL);
--	if (!set_enable)
--		return -ENOMEM;
--
--	set_enable->flag = !!val;
--	INIT_WORK(&set_enable->work, do_enable_set);
--
--	schedule_work(&set_enable->work);
-+	do_enable_set(!!val);
- 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 353101dee4dcf..17b9a5078f6c4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -685,7 +685,7 @@ static int mlx5_lag_create_single_fdb(struct mlx5_lag *ldev)
+ 	}
  	return 0;
- }
+ err:
+-	mlx5_ldev_for_each_reverse(j, i, first_idx + 1, ldev)
++	mlx5_ldev_for_each_reverse(j, i - 1, first_idx + 1, ldev)
+ 		mlx5_eswitch_offloads_single_fdb_del_one(master_esw,
+ 							 ldev->pf[j].dev->priv.eswitch);
+ 	return err;
 -- 
 2.53.0
 
