@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEFE4F3939;
-	Tue, 13 Oct 2026 12:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E89D4F475B;
+	Tue, 13 Oct 2026 12:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894984; cv=none; b=oxo2bmyutpKNh9yjbqwK4jH2tB2VAkb0uwPS+hb860ZeEwqK6Stm7sfPaqBkOXkGDvYYghRzjU0BGR5RDafn8Ii4KEk2xTwqOm39kmLVSy55SHjqjs6hSaJ2N4hCAzrEFobUl6L+KOeH1W9cIdJru+4whGKBZSmo40j+aK+VCa0=
+	t=1791894987; cv=none; b=XFfRoG5y2blvXv/6mTG69CwuVTySqnM3xAVWen5NQEG9PPmSN0/4Apf8rZrz6//v1hHMUQRlS9Sje6DE4vc+nztIvVQr3JBgIOnOnj0Exy4qfpSdxB9SOb4kwroCLs3F7Dz0q4yBVT7TijkgB8YW7J8pCYveEit/yy1eXFObUCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894984; c=relaxed/simple;
-	bh=jj42+RMO/Ro1dxivJJosoYa8xSx9fCmnZB4FyU9tKyk=;
+	s=arc-20240116; t=1791894987; c=relaxed/simple;
+	bh=REsiFBirugwBq26eG34E/rhukV3Q1CsndJevtWTgsns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5yFJzPjS3BZaFHcoKcjYg26RDF74SHf3Ko+xRJW4DmEDNTKcsoSSloeN26OFiJFiEUKiAuH7w8ddIh3D9lAD88wTPUkhtCOqf8cDmwdX7GbyQ+tJo9IE26wSV/iTMNw/YYwjccm8fH3tYfj41GTgnszar+2IDHM57KUPz0Mv+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtTl1VZS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W5cBESLCKbZNKOiVhvyCOPqmIwlnR/fIvS1rALw0eEpfkAlnD8VtAQDUy22PbrIPwyNdqp3kfoyTqTQ45tlcleDXlKxTPhnhH2beQu0aLkDbNAV0b8XoKRmReByaEvdPDWCcjerEL6xQBAvUViEjIqq0uMfFdMCN+dlp5cXcksc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McvXw0Mf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtTl1VZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960BC1F00893;
-	Tue, 13 Oct 2026 12:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McvXw0Mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD131F000FF;
+	Tue, 13 Oct 2026 12:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894983;
-	bh=du+O3VnjaBdfWrcScRv4k6LuxfFo/A+EXaR7QYKPTVo=;
+	s=korg; t=1791894986;
+	bh=GDR/pnUQ8uRzXOG2478ci5lXbQ3LywHuH73ppbUe6ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtTl1VZSabwXhMt0i+MpvTC7BSDcgW6F0/01hY4+tWc0UBy2k4685CIVahr8LP156
-	 rXGyunMaruKqlzTG/L+tve8fo+/bSiSJVZtFKfZRbkMQU/z/cPci/oPAv58OWFCv/b
-	 hBjIDskr3gtEy/4a8mnxaDZ6G36xjL/UiUc6ncaU=
+	b=McvXw0MfplZ6ZVudkK9uwCqMXviMgu+CWdqwXkKfdhzPWE1rhRkNcrlFssNIHF0+T
+	 E0mDrx/TAqnjl1W+oDVyO5B1FXHKxV1EKBT5Gu3jTZPslWa9q+Q+yWJdGpQ1D69gY1
+	 hBbxQySSNYr9O2zd1zfdFAJijvKinj+7Wqrt3QU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
 	Guangshuo Li <lgs201920130244@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 121/497] drm/amdgpu: fix IP instance memory leak on kobject add failure
-Date: Tue, 13 Oct 2026 13:34:48 +0200
-Message-ID: <20261013112910.763912029@linuxfoundation.org>
+Subject: [PATCH 6.12 122/497] drm/amdgpu: fix ACP MFD device leak on init failure
+Date: Tue, 13 Oct 2026 13:34:49 +0200
+Message-ID: <20261013112910.786995545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,47 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit f5a5add3605935163dd0f75749b6a7869e9765af upstream.
+commit f0013046151b7467e62c471c1c83d63ea255799c upstream.
 
-amdgpu_discovery_sysfs_ips() allocates ip_hw_instance with
-kzalloc_flex() and initializes its embedded kobject before calling
-kobject_add().
+acp_hw_init() registers ACP child devices with mfd_add_devices() before
+attaching them to the ACP power domain and initializing the hardware.
 
-If kobject_add() fails, the return value is ignored and execution
-continues without dropping the initial kobject reference. The failed
-kobject is not retained in the kset list, so the normal sysfs teardown
-path cannot find it. As a result, ip_hw_instance_release() is never
-called and the ip_hw_instance allocation is leaked.
+If attaching a child to the power domain fails, or if the ACP reset or
+clock enable operation times out, the failure path frees only the
+source cell, resource, and platform-data allocations. The child
+platform devices already registered by mfd_add_devices() remain
+registered and are never released.
 
-Call kobject_put() when kobject_add() fails so the initial reference is
-dropped and ip_hw_instance_release() can free the allocation. Keep the
-existing best-effort sysfs behavior by continuing with the remaining IP
-entries after the failed registration.
+Remove the children from the power domain and unregister the MFD
+devices on failures that occur after mfd_add_devices() succeeds. Keep
+mfd_add_devices() failures on the existing cleanup path since the MFD
+core already rolls back partially registered children itself.
 
 The issue was identified by a static analysis tool I developed and
 confirmed by manual review.
 
-Fixes: a6c40b178092 ("drm/amdgpu: Show IP discovery in sysfs")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: 25030321ba28 ("drm/amd: add pm domain for ACP IP sub blocks")
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5c75fbcca8af1096d8d9415b91d8ea6212c22ee1)
+(cherry picked from commit 63da68d6a2279ec945581c990c5a59a5ae8b5560)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -1130,6 +1130,8 @@ static int amdgpu_discovery_sysfs_ips(st
- 			ip_hw_instance->kobj.kset = &ip_hw_id->hw_id_kset;
- 			res = kobject_add(&ip_hw_instance->kobj, NULL,
- 					  "%d", ip_hw_instance->num_instance);
-+			if (res)
-+				kobject_put(&ip_hw_instance->kobj);
- next_ip:
- 			if (reg_base_64)
- 				ip_offset += struct_size(ip, base_address_64,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
+@@ -324,7 +324,7 @@ static int acp_hw_init(void *handle)
+ 		r = device_for_each_child(adev->acp.parent, &adev->acp.acp_genpd->gpd,
+ 					  acp_genpd_add_device);
+ 		if (r)
+-			goto failure;
++			goto failure_remove_mfd;
+ 		break;
+ 	}
+ 	default:
+@@ -446,7 +446,7 @@ static int acp_hw_init(void *handle)
+ 		r = device_for_each_child(adev->acp.parent, &adev->acp.acp_genpd->gpd,
+ 					  acp_genpd_add_device);
+ 		if (r)
+-			goto failure;
++			goto failure_remove_mfd;
+ 	}
+ 
+ 	/* Assert Soft reset of ACP */
+@@ -464,7 +464,7 @@ static int acp_hw_init(void *handle)
+ 		if (--count == 0) {
+ 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
+ 			r = -ETIMEDOUT;
+-			goto failure;
++			goto failure_remove_mfd;
+ 		}
+ 		udelay(100);
+ 	}
+@@ -482,7 +482,7 @@ static int acp_hw_init(void *handle)
+ 		if (--count == 0) {
+ 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
+ 			r = -ETIMEDOUT;
+-			goto failure;
++			goto failure_remove_mfd;
+ 		}
+ 		udelay(100);
+ 	}
+@@ -492,6 +492,11 @@ static int acp_hw_init(void *handle)
+ 	cgs_write_register(adev->acp.cgs_device, mmACP_SOFT_RESET, val);
+ 	return 0;
+ 
++failure_remove_mfd:
++	device_for_each_child(adev->acp.parent, NULL,
++			      acp_genpd_remove_device);
++	mfd_remove_devices(adev->acp.parent);
++
+ failure:
+ 	kfree(i2s_pdata);
+ 	kfree(adev->acp.acp_res);
 
 
