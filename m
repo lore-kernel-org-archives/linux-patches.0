@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C134F5DEF;
-	Tue, 13 Oct 2026 12:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BAB4F4736;
+	Tue, 13 Oct 2026 12:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893861; cv=none; b=IL/tf+EKLrOMFqf5zK9rld8TZqo+uEI8CRH4KZFVb/aJrRXu8kKdXbU0hHSrKiCOqrssKb2WG+6z9McVSep1mBvc+9ri6K1CNHn9ierSG+ys4N8mu6GGqsGV7Oz98vjlQtWTiLkk1Ab+NffN/PisRa+EFQZHUSRIiGKQ2/qk0L0=
+	t=1791893865; cv=none; b=iZF3SdJVgLO9qPXh2uKv/agQaLyWCyE4NhFJSWCYfUbHRTHihFzbLEC29mvyGCbrxMq/jehqCVdQ1sufBpDDP5hQgqUOoY5sPOz5cxMpJIOQLMRKOwytaxmboXWQDTo8bQdJMqxrBjX173nqq30TqEiIGulm/sMu/mE6j5SNE/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893861; c=relaxed/simple;
-	bh=SI0FZXVRw8QUVp1RGLUt6Yh3li2ccZ2ut/ixyk5JJgk=;
+	s=arc-20240116; t=1791893865; c=relaxed/simple;
+	bh=1dybX1Tgg5sSYvI0EBVLMbZSHTfJxC96qQfxTbAJAHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uphEoa29UiLYS3H20DrXNFC4Ley9Ll5NbzNamuGXhGwaBRA6/w5LrN0e3W8mYnl+R9xi7J40VSIH6Gtx/sagNatwr8ALHm8RqgAkyI85+6RgsPaJHrQ+fADy3w9kSNVMTYiUPIo+Kw8yi9CTop/l4S7xS2EmR7lnqRYMtnapaY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+cA4+nr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jPIM3PboT5JnarDBfQUNVFPgxlk5xJvY640qZDtB61EL8+8FY1YIIlBSF+8c8kVbwA/gT2gXcY7692BZBq2lcsGDx/Gd/UWQ6vyKkjFxrxP8JRRbsJDaStm9RSiiAGYJCnpkR5MTXVijGiiIovr4mkmYaY23yfu+0JlGCPo/OjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGP3EIEz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+cA4+nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72251F000FF;
-	Tue, 13 Oct 2026 12:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGP3EIEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118A31F000FF;
+	Tue, 13 Oct 2026 12:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893860;
-	bh=dbqeUgXKAxDYwAPhVU29ha87VCHmmaxI6ow+UIVGL6o=;
+	s=korg; t=1791893863;
+	bh=llSp+q+5faGNAPbTKZs+ApviwSwpfQeWAJt3PDvomXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j+cA4+nrEqDbEVLSGpTPRzC62po/pMJIdqS7TsSJ2QZWCl6mprXDDk8sccOa6MVrU
-	 +INnpqr2Mre4b0FbAHFzl4TRmhkxgQWaYbfj0qIs/OKP04H69h2ql/MlRCea39XtMz
-	 /xYmNGI43sGXDbqA06IQlA/lVMk3A8LHzcpYcL6c=
+	b=VGP3EIEzYhtcqvW5ui4UhusKa8mAMabL7NATQuodU+Nd157JAPsgwpzZ2KePzUIkO
+	 Zln7SPbV/tmEYg7kCHHE2sIIKV5gwo66bghj9Luc8sAxwb4hom0a5jP+Nhu6oeAWZF
+	 gjbuL4fN0haK4RR9ugXHybWo0fdqKABj8yiWHLtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 367/621] NTB: ntb_transport: Use ntb_get_dma_dev() for DMA buffers
-Date: Tue, 13 Oct 2026 13:36:02 +0200
-Message-ID: <20261013112929.559453894@linuxfoundation.org>
+Subject: [PATCH 6.18 368/621] ntb: Store original DMA address for future release
+Date: Tue, 13 Oct 2026 13:36:03 +0200
+Message-ID: <20261013112929.582908346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,84 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 852b94ff92cbe26a0dbb15eed9474f5493767f3b ]
+[ Upstream commit da6d997ac556479c112554ab5d95cbd04683eb11 ]
 
-ntb_transport currently uses ndev->pdev->dev for coherent allocations
-and frees.
+The DMA API requires that dma_free_attrs receive the exact dma_handle
+originally returned by the allocation function. Do not modify it.
 
-Switch the coherent buffer allocation/free paths to use
-ntb_get_dma_dev(), so ntb_transport can work with NTB implementations
-where the NTB PCI function is not the right device to use for DMA
-mappings.
-
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: fc5d1829f9bf ("NTB: transport: Try harder to alloc an aligned MW buffer")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260306031443.1911860-3-den@valinux.co.jp
-Stable-dep-of: da6d997ac556 ("ntb: Store original DMA address for future release")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260501-dma-attrs-debug-v2-1-8dbac75cd501@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/ntb/ntb_transport.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index aea63fab2ea37..8f78f553d9f31 100644
+index 8f78f553d9f31..4cba659a657d6 100644
 --- a/drivers/ntb/ntb_transport.c
 +++ b/drivers/ntb/ntb_transport.c
-@@ -797,13 +797,13 @@ static void ntb_transport_msi_desc_changed(void *data)
- static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
- {
- 	struct ntb_transport_mw *mw = &nt->mw_vec[num_mw];
--	struct pci_dev *pdev = nt->ndev->pdev;
-+	struct device *dma_dev = ntb_get_dma_dev(nt->ndev);
+@@ -212,6 +212,7 @@ struct ntb_transport_mw {
+ 	void *alloc_addr;
+ 	void *virt_addr;
+ 	dma_addr_t dma_addr;
++	dma_addr_t original_dma_addr;
+ };
  
- 	if (!mw->virt_addr)
- 		return;
+ struct ntb_transport_client_dev {
+@@ -804,7 +805,7 @@ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
  
  	ntb_mw_clear_trans(nt->ndev, PIDX, num_mw);
--	dma_free_coherent(&pdev->dev, mw->alloc_size,
-+	dma_free_coherent(dma_dev, mw->alloc_size,
- 			  mw->alloc_addr, mw->dma_addr);
+ 	dma_free_coherent(dma_dev, mw->alloc_size,
+-			  mw->alloc_addr, mw->dma_addr);
++			  mw->alloc_addr, mw->original_dma_addr);
  	mw->xlat_size = 0;
  	mw->buff_size = 0;
-@@ -873,7 +873,7 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
- 		      resource_size_t size)
- {
- 	struct ntb_transport_mw *mw = &nt->mw_vec[num_mw];
--	struct pci_dev *pdev = nt->ndev->pdev;
-+	struct device *dma_dev = ntb_get_dma_dev(nt->ndev);
- 	size_t xlat_size, buff_size;
- 	resource_size_t xlat_align;
- 	resource_size_t xlat_align_size;
-@@ -902,12 +902,12 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
- 	mw->buff_size = buff_size;
- 	mw->alloc_size = buff_size;
- 
--	rc = ntb_alloc_mw_buffer(mw, &pdev->dev, xlat_align);
-+	rc = ntb_alloc_mw_buffer(mw, dma_dev, xlat_align);
- 	if (rc) {
- 		mw->alloc_size *= 2;
--		rc = ntb_alloc_mw_buffer(mw, &pdev->dev, xlat_align);
-+		rc = ntb_alloc_mw_buffer(mw, dma_dev, xlat_align);
- 		if (rc) {
--			dev_err(&pdev->dev,
-+			dev_err(dma_dev,
- 				"Unable to alloc aligned MW buff\n");
- 			mw->xlat_size = 0;
- 			mw->buff_size = 0;
-@@ -920,7 +920,7 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
- 	rc = ntb_mw_set_trans(nt->ndev, PIDX, num_mw, mw->dma_addr,
- 			      mw->xlat_size);
- 	if (rc) {
--		dev_err(&pdev->dev, "Unable to set mw%d translation", num_mw);
-+		dev_err(dma_dev, "Unable to set mw%d translation", num_mw);
- 		ntb_free_mw(nt, num_mw);
- 		return -EIO;
+ 	mw->alloc_size = 0;
+@@ -840,6 +841,7 @@ static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
+ 		return -ENOMEM;
  	}
+ 	virt_addr = alloc_addr;
++	mw->original_dma_addr = dma_addr;
+ 
+ 	/*
+ 	 * we must ensure that the memory address allocated is BAR size
 -- 
 2.53.0
 
