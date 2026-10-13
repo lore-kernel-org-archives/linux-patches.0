@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFE81C862D;
-	Tue, 13 Oct 2026 12:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CA641D11F;
+	Tue, 13 Oct 2026 12:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894428; cv=none; b=Q7WXk2ZhJ6LBG9XEhV6MiRhPINd6BXnINXwg/OwiW3unvoLzXtATloXdUIK1BGAE+WiSbe0IRllDHfjV0AdIPHQ9dEmWFih37Rt1dejmWeFSGCfmPGLxEKCua/1jDjmiaBJGI5QJN6ouE0hkIUAo5xoIQOyLUACep+nQ15Sixhk=
+	t=1791894431; cv=none; b=Dfv4XTbl2L9v+slii0iPUKqj7fUCqbZ2FH6WUgS8BX4w9WZS/nSMvJnSAlbjJXFORBQ33V4Nm33TOutrXqYUsgFKtAJ09WmyTu2s91K+p/G3udSnbbFGwGVhI4rW2jcZuAR4hM6e0z43LAtxLzC2DeNym0Hi8H+nYg4LHUvLOKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894428; c=relaxed/simple;
-	bh=jfAzAHJwbM5P0i/eyQWu/SXZuJQQ1y5souzzCEEOiSs=;
+	s=arc-20240116; t=1791894431; c=relaxed/simple;
+	bh=pvCm+QqefFRR5htKWpIuUBoXgtJCnwe6BORMw4VWyYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYPC3acohOxazqFOoSIR4esN85EZkKEjb/d/gRfxxXf+KmJsLte7LRTUrF85GyUWoj2fJ/1ikOwa96Dj2fzDPdz6pNVS1f+VTWT8VdwPpBh8LposmvfrYnqSkdoG9SNnjYMxLr6cdbpY19Mjn8NeS64bNK+C4Dx88gEtr6S2qlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AH+k/3F6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SogoGI/ZiBjD4uXvEWg3XoSRGfy3XxBFSj3D96SPSaK238123S7OjyQbD4M7c+VdrknBuyd4Fb96yi40WkEvnZy7dO0axa2jqocqvzG/9KnQm8JCGMRATQ4TIY+kNTvV7cEWKp2NuIVK8LPVWA9b/VrXpZEf0LA9ZBQHCsIuk4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlo2EURl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AH+k/3F6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104D51F000FF;
-	Tue, 13 Oct 2026 12:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlo2EURl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F01F00893;
+	Tue, 13 Oct 2026 12:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894427;
-	bh=fr1d9LRIM7Ui/w9rk+0Aviw1W8tsavhqP4eG1wSp+Xw=;
+	s=korg; t=1791894430;
+	bh=YO5CrfwaaYERcHioRa3MQlioge/IViJKa+ydANKN28o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AH+k/3F6cQoC/Vh8UeRZUzMGsx0P0bhtOm6vNW/KiXdcaJNhQmd43W0S83LiJfqAe
-	 yM6D4aL1xnx7+OZ2k6qDvsbSXnk1HUY6BKK0Gz8fLselfxyaKGaSzt+eau3R/ga/Tf
-	 BUb0NlW0UwEbCEdDK1Y5d717xHOBVNRD5e6IZa/Q=
+	b=rlo2EURlk72gphFF+qjnEtcaX6tiC020TtBH1aYaIiEJHHfc47zEH/uN2x7rP1xF2
+	 Zi6auwwHaCyyOdQRNewdUW7T6R2X7qClAPI0t/rzNwKu5F9VJJF3MvuQxjtKzhXKXH
+	 WKhQf+WArMUlZaC2+1ML4LNlW4wdmIsZ4tN2nMO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	"GUO Ren (XuanTie)" <guoren@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Andy Chiu <tchiu@tenstorrent.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 557/621] net: make dev_xdp_sb_prog_count() see programs attached through a link
-Date: Tue, 13 Oct 2026 13:39:12 +0200
-Message-ID: <20261013112934.029254741@linuxfoundation.org>
+Subject: [PATCH 6.18 558/621] riscv: vector: Fix data pointer constraints in context save/restore
+Date: Tue, 13 Oct 2026 13:39:13 +0200
+Message-ID: <20261013112934.052583134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,73 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Troy Mitchell <troy.mitchell@linux.dev>
 
-[ Upstream commit d333c8bca6dc3c5e978f6698d39dd799f3b0dc8d ]
+[ Upstream commit 572b25f3a6453d8e7fc28cc0cefe41ed15be166c ]
 
-ethtool refuses to enable tcp-data-split on a device running
-a single-buffer XDP program (which can't deal with the payload
-landing in a separate buffer). dev_xdp_sb_prog_count() only looks
-at xdp_state[].prog though, ignoring bpf_link integration.
-Get the prog pointer from dev_xdp_prog(), which will consult both.
+The standard vector save/restore asm advances datap but declares it as
+input-only. An inlined caller reusing the original pointer may therefore
+use the advanced address instead.
 
-bpf_xdp_link_update() needs a bit of a touch-up, too, since
-ethtool calls dev_xdp_sb_prog_count() with just the instance
-lock (for ops-locked devices) - we now have to make sure the
-link updates happen under that lock.
+Declare datap as read-write so the compiler can preserve the original
+pointer when needed.
 
-Spotted by AI while reviewing the XDP propagation series,
-verified and tested on netdevsim with a C test along these lines:
-
-  link = bpf_program__attach_xdp(prog, ifindex);
-  system("ethtool -G eth0 tcp-data-split on")
-
-Fixes: 197258f0ef68 ("net: ethtool: add hds_config member in ethtool_netdev_state")
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20261001012559.297751-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 03c3fcd9941a ("riscv: Introduce struct/helpers to save/restore per-task Vector state")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: GUO Ren (XuanTie) <guoren@kernel.org>
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Andy Chiu <tchiu@tenstorrent.com>
+Link: https://patch.msgid.link/20260908-riscv-vector-asm-fix-v1-1-147f314efb2b@linux.dev
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/riscv/include/asm/vector.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index b963fe9bd73ec..079352a20cb99 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10206,13 +10206,15 @@ EXPORT_SYMBOL_GPL(dev_xdp_prog_count);
- 
- u8 dev_xdp_sb_prog_count(struct net_device *dev)
- {
-+	struct bpf_prog *prog;
- 	u8 count = 0;
- 	int i;
- 
--	for (i = 0; i < __MAX_XDP_MODE; i++)
--		if (dev->xdp_state[i].prog &&
--		    !dev->xdp_state[i].prog->aux->xdp_has_frags)
-+	for (i = 0; i < __MAX_XDP_MODE; i++) {
-+		prog = dev_xdp_prog(dev, i);
-+		if (prog && !prog->aux->xdp_has_frags)
- 			count++;
-+	}
- 	return count;
+diff --git a/arch/riscv/include/asm/vector.h b/arch/riscv/include/asm/vector.h
+index b61786d43c205..c612d54846b8d 100644
+--- a/arch/riscv/include/asm/vector.h
++++ b/arch/riscv/include/asm/vector.h
+@@ -224,7 +224,7 @@ static inline void __riscv_v_vstate_save(struct __riscv_v_ext_state *save_to,
+ 			"add		%1, %1, %0\n\t"
+ 			"vse8.v		v24, (%1)\n\t"
+ 			".option pop\n\t"
+-			: "=&r" (vl) : "r" (datap) : "memory");
++			: "=&r" (vl), "+r" (datap) : : "memory");
+ 	}
+ 	riscv_v_disable();
  }
- 
-@@ -10592,11 +10594,12 @@ static int bpf_xdp_link_update(struct bpf_link *link, struct bpf_prog *new_prog,
- 	bpf_op = dev_xdp_bpf_op(xdp_link->dev, mode);
- 	err = dev_xdp_install(xdp_link->dev, mode, bpf_op, NULL,
- 			      xdp_link->flags, new_prog);
-+	if (!err)
-+		old_prog = xchg(&link->prog, new_prog);
- 	netdev_unlock_ops(xdp_link->dev);
- 	if (err)
- 		goto out_unlock;
- 
--	old_prog = xchg(&link->prog, new_prog);
- 	bpf_prog_put(old_prog);
- 
- out_unlock:
+@@ -260,7 +260,7 @@ static inline void __riscv_v_vstate_restore(struct __riscv_v_ext_state *restore_
+ 			"add		%1, %1, %0\n\t"
+ 			"vle8.v		v24, (%1)\n\t"
+ 			".option pop\n\t"
+-			: "=&r" (vl) : "r" (datap) : "memory");
++			: "=&r" (vl), "+r" (datap) : : "memory");
+ 	}
+ 	__vstate_csr_restore(restore_from);
+ 	riscv_v_disable();
 -- 
 2.53.0
 
