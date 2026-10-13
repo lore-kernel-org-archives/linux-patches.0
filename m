@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D6F38F62F;
-	Tue, 13 Oct 2026 12:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAE92D7380;
+	Tue, 13 Oct 2026 12:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894039; cv=none; b=EhJ/eijD2p3OpSm1GB+NZ3H72BJEmeJkgxspsguToiirklEEsF5NtlQ680SFsln3P2Dk2PQ2sPxk47FVDsbxd9cUSwA/AKqezCNaSZsTeSqytfMwnzAyazDs8vfbGXq79QbYJETcQ1d0S6mxoUCIwGrOaxvF9MQbG1+KIRyftRs=
+	t=1791894042; cv=none; b=AY2yzbeHSb1Pav9WsajWQ2tDDhBXWJJQvTQozfNh9EuWCNzu7Llqvq5r/mM5HwQfvo2w4aUHZ3F6UtkGY7X20TSRmrFuXp4grli2v5encVdPUlC6ymQbei5baah6c18QOsYzKUgnCDMNKHE8o0fAxU6TpQ/NgCFcTpGcBi2H72Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894039; c=relaxed/simple;
-	bh=1EYNxbilZpSUaXMtjSUG75kzyMcItYI7hIP9Fug95Ng=;
+	s=arc-20240116; t=1791894042; c=relaxed/simple;
+	bh=ufgfyiSdkmYLrDUGKn7Y7nURwgbYxAiOx/4wjSW+Y54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+Dio8l0RTxJmhc+T0EGG9iGaGsxuFlLEneZCv9Ess5HDUkoYvhQGal6u8SitCzES/qA2F3qDbZgeoBdmUIllfbKYymrik6zhpvJpPqwNdjutKexR/5NU8GMApC4LXKECjVAl9ww8Bxhe0vja+5laBAwsn1Ic25nbDC+JpIwp2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzVglZsN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HqW0CjVsEHEFDdiaY+r5GEpXIL+WLmG2DYSrFxTmE01cvJn6CVrcx6CqWqPCklZHi/pJSu93rbXtSBt6egAulw5TRBw37uj8uQxG5jMZyuYaAjL+YzPkqAOkb8S/Ikoie5zra9Rd5eJUDVF8CmjX/IiAcyZ7P6gLjmb0MI52CJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbbUfOw5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzVglZsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA381F00893;
-	Tue, 13 Oct 2026 12:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbbUfOw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396BC1F000FF;
+	Tue, 13 Oct 2026 12:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894037;
-	bh=tUjiENZsYoA8/dx2Tf12ay5gWmZ9C0zXvjZnFqLXWdM=;
+	s=korg; t=1791894040;
+	bh=jdHb/Ph1e+gCQvdQnMD+1pbpUAdmZqUmpW7C5598Wzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzVglZsNG1vug5zSRExN9f5fmYXj7H6bKrWOcI/Y492TGfQE/nYj0aDD763c2W7QZ
-	 EPmp+xOoxN7/ljnlDexuXbkuHDVQai3t6oBVdH7oMTOxT3JjC4/Sy3LZwmj6DXcafT
-	 egCBA833OLbhWKRjEXZ4AIwbRNdCRdCsOcV9n86s=
+	b=SbbUfOw57Sy4sRlKpX1e2uwgdYt5QALPt4TCMyk5m7QeQrxvoMdcGlRatexzIl7rC
+	 CHjRwMkuuFJltt2H7WjMaY0EVI1NMH8/IidO09lMj3DLxpb4Ytjdl11bN2WkiBqLsr
+	 5U3oMpwwXBWrUIYkbMZeAy0OZ0Ga2T05dSsLwook=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Boris Burkov <boris@bur.io>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 425/621] iommu/vt-d: Fix iopf_refcount leak on RID domain replacement
-Date: Tue, 13 Oct 2026 13:37:00 +0200
-Message-ID: <20261013112930.919775033@linuxfoundation.org>
+Subject: [PATCH 6.18 426/621] btrfs: zoned: flush active metadata block group at btree_writepages() start
+Date: Tue, 13 Oct 2026 13:37:01 +0200
+Message-ID: <20261013112930.942759641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,81 +52,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 236dd58fabd2e951b940a6ad88b81147899ed311 ]
+[ Upstream commit ecc05eda9a346848ae01a6c8bfa3f0bec133bd8b ]
 
-intel_iommu_attach_device() enables IOPF for the new domain but never
-disables it for the old one.  device_block_translation(), called at the
-start of the function, tears down translation but does not touch any IOPF
-state; blocking_domain_attach_dev() has to call iopf_for_domain_remove()
-explicitly before invoking it for exactly this reason.
+btree_writepages() writes the btree inode's dirty metadata in ascending
+logical address order. On a zoned filesystem only one metadata and one
+system block group is active for writing at a time, and
+check_bg_is_active() (via btrfs_check_meta_write_pointer()) pivots the
+active block group as writeback moves from one block group to the next.
 
-identity_domain_attach_dev() has the same problem.  Its comment claims
-that no PRI handling is needed because the device has been put in the
-blocking state, but the blocking state and the IOPF reference count are
-independent of each other.
+If the active block group sits at a higher logical address than another
+block group that also holds dirty metadata, the ascending walk reaches
+the lower one first and, to write it, has to finish the active block
+group and activate the lower one. It cannot finish a block group that
+still has unsent IO, and during WB_SYNC_ALL && !for_sync (commit)
+writeback it deliberately refuses to wait for that IO under
+fs_info->zoned_meta_io_lock, as that can deadlock. The pivot thus cannot
+issue the submission itself either, so it gives up:
+btrfs_check_meta_write_pointer() returns -EAGAIN, which
+btrfs_write_and_wait_transaction() treats as fatal and aborts the
+transaction, forcing the filesystem read-only. This happens
+intermittently under metadata-heavy relocation (e.g. fstests btrfs/187).
 
-As a result, replacing a domain that has an iopf_handler with another
-domain at RID level leaks a reference in info->iopf_refcount.  The count
-never drops back to zero, so iopf_queue_remove_device() is never called
-and iommu_disable_pci_pri() triggers its WARN_ON(info->iopf_refcount)
-when the device is released.
+Flush the active metadata and system block groups at the start of
+btree_writepages(), under the fs_info->zoned_meta_io_lock it already
+holds, so they have no unsent IO left and the later pivot can finish
+them and make forward progress.
 
-The PASID paths already handle this correctly by way of
-iopf_for_domain_replace(); convert the two RID paths to do the same.
-Using the replace helper rather than a bare remove keeps the enable
-before the disable, so the reference count does not transiently reach
-zero and evict the device from the IOPF queue.
-
-Fixes: 17fce9d2336d ("iommu/vt-d: Put iopf enablement in domain attach path")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260602233426.357499-1-baolu.lu%40linux.intel.com
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 13bb483d32ab ("btrfs: zoned: activate metadata block group on write time")
+Assisted-by: LLM (debugging, commit message)
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/btrfs/extent_io.c | 113 +++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 92 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 63ddcf6fde342..94781f6206803 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3559,13 +3559,13 @@ static int intel_iommu_attach_device(struct iommu_domain *domain,
- 	if (ret)
- 		return ret;
- 
--	ret = iopf_for_domain_set(domain, dev);
-+	ret = iopf_for_domain_replace(domain, old, dev);
- 	if (ret)
- 		return ret;
- 
- 	ret = dmar_domain_attach_device(to_dmar_domain(domain), dev);
- 	if (ret)
--		iopf_for_domain_remove(domain, dev);
-+		iopf_for_domain_replace(old, domain, dev);
- 
- 	return ret;
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index b6c0a012b86b4..a76fbb286b13a 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -2316,6 +2316,76 @@ void btrfs_btree_wait_writeback_range(struct btrfs_fs_info *fs_info, u64 start,
+ 	}
  }
-@@ -4439,10 +4439,13 @@ static int identity_domain_attach_dev(struct iommu_domain *domain,
- 		return 0;
  
- 	/*
--	 * No PRI support with the global identity domain. No need to enable or
--	 * disable PRI in this path as the iommu has been put in the blocking
--	 * state.
-+	 * The identity domain has no iopf_handler, so no IOPF reference is
-+	 * taken for it.  The reference held by the old domain must still be
-+	 * released here; putting the device in the blocking state above does
-+	 * not affect the IOPF reference count.
- 	 */
-+	iopf_for_domain_remove(old, dev);
++static int write_meta_extent_buffer(struct btrfs_eb_write_context *ctx,
++				    struct writeback_control *wbc)
++{
++	struct extent_buffer *eb = ctx->eb;
++	int ret;
 +
- 	if (sm_supported(iommu))
- 		ret = intel_pasid_setup_pass_through(iommu, dev, IOMMU_NO_PASID);
++	ret = btrfs_check_meta_write_pointer(eb->fs_info, ctx);
++	if (ret)
++		return ret;
++
++	if (!lock_extent_buffer_for_io(eb, wbc))
++		return 0;
++
++	/* Implies write in zoned mode. */
++	if (ctx->zoned_bg) {
++		/* Mark the last eb in the block group. */
++		btrfs_schedule_zone_finish_bg(ctx->zoned_bg, eb);
++		ctx->zoned_bg->meta_write_pointer += eb->len;
++	}
++	write_one_eb(eb, wbc);
++	return 0;
++}
++
++/*
++ * On a zoned filesystem, write out the currently dirty metadata extent buffers
++ * of @bg. Used to flush the active metadata/system block group before the
++ * ascending-address walk in btree_writepages(), so that walk can pivot the
++ * active block group away (finishing it) instead of aborting the commit; see
++ * the caller for details.
++ */
++static void flush_active_meta_bg(struct address_space *mapping,
++				 struct writeback_control *wbc,
++				 struct btrfs_eb_write_context *ctx,
++				 struct btrfs_block_group *bg)
++{
++	struct btrfs_fs_info *fs_info = inode_to_fs_info(mapping->host);
++	unsigned long index = bg->start >> fs_info->nodesize_bits;
++	unsigned long end = (btrfs_block_group_end(bg) - 1) >> fs_info->nodesize_bits;
++	struct eb_batch batch;
++	unsigned int nr_ebs;
++
++	ASSERT(btrfs_is_zoned(fs_info));
++	lockdep_assert_held(&fs_info->zoned_meta_io_lock);
++
++	eb_batch_init(&batch);
++	while (index <= end &&
++	       (nr_ebs = buffer_tree_get_ebs_tag(fs_info, &index, end,
++						 PAGECACHE_TAG_DIRTY, &batch))) {
++		struct extent_buffer *eb;
++
++		while ((eb = eb_batch_next(&batch)) != NULL) {
++			ctx->eb = eb;
++
++			/*
++			 * If the eb is behind the write pointer (-EBUSY, e.g.
++			 * already being written by someone else) skip it and
++			 * carry on. Only a hole at the write pointer (-EAGAIN)
++			 * stops the flush. The main walk in btree_writepages()
++			 * then deals with it.
++			 */
++			if (write_meta_extent_buffer(ctx, wbc) == -EAGAIN) {
++				eb_batch_release(&batch);
++				return;
++			}
++		}
++		eb_batch_release(&batch);
++		cond_resched();
++	}
++}
++
+ int btree_writepages(struct address_space *mapping, struct writeback_control *wbc)
+ {
+ 	struct btrfs_eb_write_context ctx = { .wbc = wbc };
+@@ -2351,6 +2421,22 @@ int btree_writepages(struct address_space *mapping, struct writeback_control *wb
  	else
+ 		tag = PAGECACHE_TAG_DIRTY;
+ 	btrfs_zoned_meta_io_lock(fs_info);
++
++	/*
++	 * On a zoned filesystem, flush the currently active metadata/system
++	 * block group(s) first, under this same lock, so the ascending-address
++	 * walk below can pivot the active block group instead of aborting the
++	 * transaction commit with -EAGAIN.
++	 */
++	if (btrfs_is_zoned(fs_info) && wbc->sync_mode == WB_SYNC_ALL &&
++	    !wbc->for_sync) {
++		if (fs_info->active_meta_bg)
++			flush_active_meta_bg(mapping, wbc, &ctx,
++					     fs_info->active_meta_bg);
++		if (fs_info->active_system_bg)
++			flush_active_meta_bg(mapping, wbc, &ctx,
++					     fs_info->active_system_bg);
++	}
+ retry:
+ 	if (wbc->sync_mode == WB_SYNC_ALL)
+ 		buffer_tree_tag_for_writeback(fs_info, index, end);
+@@ -2361,28 +2447,13 @@ int btree_writepages(struct address_space *mapping, struct writeback_control *wb
+ 		while ((eb = eb_batch_next(&batch)) != NULL) {
+ 			ctx.eb = eb;
+ 
+-			ret = btrfs_check_meta_write_pointer(eb->fs_info, &ctx);
+-			if (ret) {
+-				if (ret == -EBUSY)
+-					ret = 0;
+-
+-				if (ret) {
+-					done = 1;
+-					break;
+-				}
+-				continue;
+-			}
+-
+-			if (!lock_extent_buffer_for_io(eb, wbc))
+-				continue;
+-
+-			/* Implies write in zoned mode. */
+-			if (ctx.zoned_bg) {
+-				/* Mark the last eb in the block group. */
+-				btrfs_schedule_zone_finish_bg(ctx.zoned_bg, eb);
+-				ctx.zoned_bg->meta_write_pointer += eb->len;
++			ret = write_meta_extent_buffer(&ctx, wbc);
++			if (ret == -EBUSY) {
++				ret = 0;
++			} else if (ret) {
++				done = 1;
++				break;
+ 			}
+-			write_one_eb(eb, wbc);
+ 		}
+ 		nr_to_write_done = (wbc->nr_to_write <= 0);
+ 		eb_batch_release(&batch);
 -- 
 2.53.0
 
