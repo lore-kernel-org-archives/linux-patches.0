@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525604F7980;
-	Tue, 13 Oct 2026 12:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088334F7980;
+	Tue, 13 Oct 2026 12:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895014; cv=none; b=UkbTV0uczsZ0yzq1UpfBAfrzcatJwbA73HoCeVUE2QnCHmRmT7HamSf4S5lZuoopAItZTK2lIw6veB/38ydICXb1TfFjpmDKlfbihYLoWfOAHAAyyKbuCADKjGEjbMhhA2TPQY7DfjNFs2wG20Y4+aXPudV6irGJiz68Eu4ytJQ=
+	t=1791895017; cv=none; b=Bf8N2M9vPyCmnx7mvlU0az48c0DjCZgaTLQxG8odl4o70vweLi2DJ3ymqTqjlD+O2gkPnOG/6A1KVojPcZD+5d1Dvi3xN62tNYAPl7HNH8PvuHE+l0hUSE/uQDzShDJ/OXRWdHnxTBrQnmIxbD5NKB/bQPFCxGRu0y/SWuJDjDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895014; c=relaxed/simple;
-	bh=Vr4cpSs1e72ioVVYxPPnMdwfUngcd4TGKAB3bk79b4U=;
+	s=arc-20240116; t=1791895017; c=relaxed/simple;
+	bh=bTBMaO64OeG2oMBXSa3vUajqwkcDye4WRKM4yH1TyQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M0f5vJ2+kLDlu0pBKQtctXG1ZV6c7gvbilrDLBubOETlcG2zudsK13Z4ulFF5N8bF1qapbElBL6Ycvz2VsqbSzIWp8PLK506CF2n2Kye3Bf2IsqLYcmNKfGRwv/fSDh1GfOkv7F+OPGDrDcgY+BMZVcCBlOoIn8CQJEP53Hb5sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUjcAl8A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Na1qp6f7XUU/NV3J2vfNhwbwZ1Jl96JIT5lfSZ83MUb3e9NxWxZ0pV0ZrA6Ynbbng9pImVSk9DPo6sFFFPCbEUy7L35i89AzbNyEYx5KPsnjD88gcquCUnEL0L9xLGAwMXnzbGBZkd+/E8GZ8oDuTKpRr3VNAIM54I5TYHboCZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTNACaSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUjcAl8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6868E1F000FF;
-	Tue, 13 Oct 2026 12:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTNACaSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF921F000FF;
+	Tue, 13 Oct 2026 12:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895013;
-	bh=MViipT/eRPNte7h8yk8Wy0rbbtLoXwuvwLWDcgH+0rw=;
+	s=korg; t=1791895015;
+	bh=KEzFUt1yirqs723j5xFvPNImAkYzLS2dZODs2Rklots=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UUjcAl8AkjMNSfkZhC3tO9wSK7EH5ZmhTNY5dr+h6RjS0H/qpeC1/+TfwBBt11xbB
-	 ZxP02iA2/PEmPG+7FMesDfE0JKmwTgYjHbGou1vqGTmA/I7f7nNVvomZfrRCJZGQEb
-	 LIBO2toSR6Gk3hCGtVzjk4Mj3P4hNycQOZqv4kD0=
+	b=KTNACaSVl94P35O83K7ipikEQgYx0A+YXIRmj5K/peQ6R0G1KWwFHHWDDPAywimAS
+	 jh6M3SHnIR+ETtyi8Mv798/wCmuqKa/bYQKypRrgohWScdLaakQsIR63Uj6ST4FHvI
+	 9swL37PhzXRsMF5RwxzHEx5ieI/nN4R2cZepy1BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Salmun <salmundani@gmail.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 130/497] Input: synaptics - limit T440p InterTouch quirk to LEN0036
-Date: Tue, 13 Oct 2026 13:34:57 +0200
-Message-ID: <20261013112910.975677311@linuxfoundation.org>
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 089/497] net/sched: sch_codel: match the no-drop threshold to the packet size
+Date: Tue, 13 Oct 2026 13:34:16 +0200
+Message-ID: <20261013112910.002058137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,56 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphaël Larocque <rlarocque@disroot.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
+[ Upstream commit 54518e0e827f4ca9229ae657022c60bf60f5c1bf ]
 
-The ThinkPad L440 also uses board id 2722, but does not have the SMBus
-initialization problem seen on the T440p. On the L440, the SMBus
-companion becomes available shortly after psmouse probes, allowing the
-touchpad to use SMBus/RMI4 normally.
+commit 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid
+disabling CoDel") clamped q->params.mtu to [256, 1 << 20]. The value is
+the CoDel no-drop threshold (codel_impl.h "*backlog <= params->mtu"), so
+on a link whose maximum transmitted packet size is below 256 the floor
+extends CoDel's minimum-backlog exemption beyond one packet and delays
+drop or mark eligibility by several small packets.
 
-The T440p's quirk is currently applied to all Synaptics touchpads with
-board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
-as reported by Daniel Salmun.
+Keep the upper bound that guards the original overflow (psched_mtu()
+wrapping to ~2 GiB on a huge-MTU device) but drop the 256 floor, so the
+threshold tracks the real device packet size.
 
-Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
-that other devices sharing board id 2722 retain their normal
-SMBus/RMI4 operation.
+Conditions to recreate the bug: attach a codel qdisc on a link whose
+MTU plus hard_header_len is below 256 (e.g. a CAN interface). At that
+MTU the no-drop threshold must equal the device MTU plus its
+hard-header length; before this patch it was forced to 256.
+Requires CAP_NET_ADMIN in a user namespace.
 
-Reported-by: Daniel Salmun <salmundani@gmail.com>
-Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
-Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
-Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid disabling CoDel")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com.2
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sched/sch_codel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1839,8 +1839,10 @@ static int synaptics_setup_intertouch(st
- 			return -ENXIO;
- 		}
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index d6819c4e41982..f12a8f491108e 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -203,7 +203,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	codel_params_init(&q->params);
+ 	codel_vars_init(&q->vars);
+ 	codel_stats_init(&q->stats);
+-	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
++	q->params.mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), 1 << 20);
  
--		/* Disable intertouch on known-broken board revisions */
--		if (info->board_id == 2722) {
-+		/* Disable intertouch on known-broken T440p board revisions */
-+		if (info->board_id == 2722 &&
-+		    psmouse_matches_pnp_id(psmouse,
-+					   (const char * const []){"LEN0036", NULL})) {
- 			psmouse_info(psmouse,
- 				     "Disabling intertouch for board id %u\n",
- 				     info->board_id);
+ 	if (opt) {
+ 		int err = codel_change(sch, opt, extack);
+-- 
+2.53.0
+
 
 
