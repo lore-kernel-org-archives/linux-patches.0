@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A73AA1BC;
-	Tue, 13 Oct 2026 12:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5864FD289;
+	Tue, 13 Oct 2026 12:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894008; cv=none; b=tWVILQP0y9JrFwHWVXlR9G2q8JKwq7Oca+Cr2OnqLoyg8LDzamn5TRtHeEiqpkih7YWkwq1FEs1GmTb/KGiRuX56fvokr7wEtP2L1uNKF7mU2Ye7d7Sn2bAv3IIs1W0Ho37DNQ9fwUs47wZvB9y0OcJUSSy2M0skxenEjr0HY14=
+	t=1791894011; cv=none; b=JPJJ8HAwoD2k5B/g1kcFOOStC1yQu2LS9l1QpbSDbROYOuU8lW2BzkpTDUrOzeT8ZiZScBHVi7Uy1CMI2c7CxR7XbgzEy3SLQZiM77i7FiunPowW08u7HCc8RbOuKlHd6wCaMs8FbkbDMqABu/oG2mR09kvpXyHkcS2/AHOBgAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894008; c=relaxed/simple;
-	bh=e59AOWwIvDwmbsGv+9SzwX758SMk5zYrJAn3kDNKOzE=;
+	s=arc-20240116; t=1791894011; c=relaxed/simple;
+	bh=H1hZFMXyO7rAS2L842OZvLH2NPcKyf9QkZ4Lfb/nUxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQ87CLI5oIHMJKOajxIE3zgiv5atOsmXo/MOf3K/XhZAEd8pkZ+loHAUG0kt8WrGmiDhgpXrC13h487/XfddcZEisAX1m+GNhPL28LgMAHIk0fGb0P6pG3ySxiXpXHRQWkadkLAZ/9kMcwOq3DS9wEFOTw29S2h9V2h3mK1qupg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQV+EAKB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PnKD/1/afbDsrk6LbbxApxd11DfknOHtYpuybpZ1nqv+oTK3igWer+J4GhV67n8wF+ptRaOHnE8/riK+qGxEsOPN9Sx9Gd9qOOaAlqPMfwE780rPYO+ALCNvUrvO2cX1MF2Rh4QzL5XOgo33Qj9mZFYOO8+VcRvPzHUFLCTLCIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abpuIK4D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQV+EAKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93F01F00893;
-	Tue, 13 Oct 2026 12:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abpuIK4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A846F1F00893;
+	Tue, 13 Oct 2026 12:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894007;
-	bh=AyJpZTgGm5CNkfRthTCVrnnJzwAUXPxYH1hjwN84REM=;
+	s=korg; t=1791894010;
+	bh=5s4IvZOl9qtg8qD9vPT3Yits4JhuYrhpiCUhaFXuGYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sQV+EAKBUkkz6kBCQtPvFrsBNIZpMTKkvKUJHkfjOJbvMembCxEy/Vge+K9MHZtQP
-	 +7UGMN3vGXSZxyT15U1GwzLA8e3kE76TN/HWMHFL1JK74QYqg7+/sgL27kOONbGjyK
-	 QmI1ZW8gLF7dENdauwr/TXwtyIa7w+y6nUDQBwq0=
+	b=abpuIK4D88szTX32kDLIIwmkSf2uMtRmJomvwidodkG2cJ2743sMIglevNLwf6fE7
+	 Li3tl6ygyaStQLqLlAU0I04NkGrHELMexmTdFMoT1bFXxANS5yIF89t4RcW0RxOQpT
+	 qBMHMS1YXT+cadP71tFymKcQzRH7nywTBjVckOv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
+	Usama Arif <usama.arif@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 416/621] blk-cgroup: delay freeing policy data after rcu grace period
-Date: Tue, 13 Oct 2026 13:36:51 +0200
-Message-ID: <20261013112930.707826677@linuxfoundation.org>
+Subject: [PATCH 6.18 417/621] blk-iocost: clear delay state when freeing policy data
+Date: Tue, 13 Oct 2026 13:36:52 +0200
+Message-ID: <20261013112930.731445085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,162 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Usama Arif <usama.arif@linux.dev>
 
-[ Upstream commit 0af3fedb8c8ed3c07b4f76927bd7fc88f6f82efb ]
+[ Upstream commit 97cb95d2148835ae86ff916b145aef332d40439d ]
 
-Currently blkcg_print_blkgs() must hold RCU to iterate blkgs from a
-blkcg, and prfill() must hold queue_lock to prevent policy data from
-being freed by policy deactivation. As a consequence, queue_lock has to
-be nested under RCU from blkcg_print_blkgs().
+iocg_kick_delay() turns sufficiently large debt into an explicit
+block-cgroup delay with blkcg_set_delay(), setting blkg->use_delay to
+-1 and incrementing blkcg->congestion_count.  Clearing it again depends
+on iocg_kick_delay() running from the period timer, the waitq timer or
+the issue path.
 
-Delay freeing policy data until after an RCU grace period so prfill() can
-be protected by RCU alone.
+ioc_pd_free() removes the iocg from active_iocgs and cancels its waitq
+timer, and no further bios can arrive, so once it has run nothing is
+left which can reduce the debt and clear the delay.  The blkcg stays
+marked congested for the rest of its life.
 
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/e20e5d984b41a026d61851966bed35eb094c4bff.1780621988.git.yukuai@fygo.io
+blk_cgroup_congested() then returns true for every task in that cgroup
+and its descendants: page_cache_sync_ra() cuts readahead to a single
+page, page_cache_async_ra() skips it altogether, and
+__folio_throttle_swaprate() takes swap_avail_lock and schedules a
+throttle on anonymous folio allocation.
+
+Clear it explicitly, after the list removal and the synchronous
+hrtimer_cancel() so that neither timer processing nor an I/O path can
+re-arm it.  The free callback can also see policy data which was never
+attached to a blkg, hence the pd->blkg check.
+
+Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20260814165712.510132-3-usama.arif@linux.dev
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 97cb95d21488 ("blk-iocost: clear delay state when freeing policy data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-cgroup.c    |  9 ++++++++-
- block/blk-cgroup.h    |  2 ++
- block/blk-iocost.c    | 14 ++++++++++++--
- block/blk-iolatency.c | 10 +++++++++-
- block/blk-throttle.c  | 13 +++++++++++--
- 5 files changed, 42 insertions(+), 6 deletions(-)
+ block/blk-iocost.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index 6a75fe1c7a5c0..2e7cfaac7b214 100644
---- a/block/bfq-cgroup.c
-+++ b/block/bfq-cgroup.c
-@@ -548,14 +548,21 @@ static void bfq_pd_init(struct blkg_policy_data *pd)
- 	bfqg->rq_pos_tree = RB_ROOT;
- }
- 
--static void bfq_pd_free(struct blkg_policy_data *pd)
-+static void bfqg_release(struct rcu_head *rcu)
- {
-+	struct blkg_policy_data *pd =
-+		container_of(rcu, struct blkg_policy_data, rcu_head);
- 	struct bfq_group *bfqg = pd_to_bfqg(pd);
- 
- 	bfqg_stats_exit(&bfqg->stats);
- 	bfqg_put(bfqg);
- }
- 
-+static void bfq_pd_free(struct blkg_policy_data *pd)
-+{
-+	call_rcu(&pd->rcu_head, bfqg_release);
-+}
-+
- static void bfq_pd_reset_stats(struct blkg_policy_data *pd)
- {
- 	struct bfq_group *bfqg = pd_to_bfqg(pd);
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index 1cce3294634d1..fd206d1fa3c98 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -140,6 +140,8 @@ struct blkg_policy_data {
- 	struct blkcg_gq			*blkg;
- 	int				plid;
- 	bool				online;
-+
-+	struct rcu_head			rcu_head;
- };
- 
- /*
 diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index ecf4969125050..e1901c98c4af5 100644
+index e1901c98c4af5..d0b13580c6b62 100644
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
-@@ -3017,6 +3017,16 @@ static void ioc_pd_init(struct blkg_policy_data *pd)
- 	spin_unlock_irqrestore(&ioc->lock, flags);
- }
- 
-+static void iocg_release(struct rcu_head *rcu)
-+{
-+	struct blkg_policy_data *pd =
-+		container_of(rcu, struct blkg_policy_data, rcu_head);
-+	struct ioc_gq *iocg = pd_to_iocg(pd);
-+
-+	free_percpu(iocg->pcpu_stat);
-+	kfree(iocg);
-+}
-+
+@@ -3030,6 +3030,7 @@ static void iocg_release(struct rcu_head *rcu)
  static void ioc_pd_free(struct blkg_policy_data *pd)
  {
  	struct ioc_gq *iocg = pd_to_iocg(pd);
-@@ -3041,8 +3051,8 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
++	struct blkcg_gq *blkg = pd_to_blkg(pd);
+ 	struct ioc *ioc = iocg->ioc;
+ 	unsigned long flags;
  
+@@ -3052,6 +3053,12 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
  		hrtimer_cancel(&iocg->waitq_timer);
  	}
--	free_percpu(iocg->pcpu_stat);
--	kfree(iocg);
+ 
++	/* off ->active_iocgs and timer gone, so nothing can re-arm the delay */
++	iocg->delay = 0;
++	iocg->indelay_since = 0;
++	if (blkg)
++		blkcg_clear_delay(blkg);
 +
-+	call_rcu(&pd->rcu_head, iocg_release);
+ 	call_rcu(&pd->rcu_head, iocg_release);
  }
  
- static void ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 45bd18f68541b..ce25fbb8aaf66 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -1031,13 +1031,21 @@ static void iolatency_pd_offline(struct blkg_policy_data *pd)
- 	iolatency_clear_scaling(blkg);
- }
- 
--static void iolatency_pd_free(struct blkg_policy_data *pd)
-+static void iolat_release(struct rcu_head *rcu)
- {
-+	struct blkg_policy_data *pd =
-+		container_of(rcu, struct blkg_policy_data, rcu_head);
- 	struct iolatency_grp *iolat = pd_to_lat(pd);
-+
- 	free_percpu(iolat->stats);
- 	kfree(iolat);
- }
- 
-+static void iolatency_pd_free(struct blkg_policy_data *pd)
-+{
-+	call_rcu(&pd->rcu_head, iolat_release);
-+}
-+
- static struct cftype iolatency_files[] = {
- 	{
- 		.name = "latency",
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index c19d052a8f2f1..64e78c79a7b47 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -358,16 +358,25 @@ static void throtl_pd_online(struct blkg_policy_data *pd)
- 	tg_update_has_rules(tg);
- }
- 
--static void throtl_pd_free(struct blkg_policy_data *pd)
-+static void tg_release(struct rcu_head *rcu)
- {
-+	struct blkg_policy_data *pd =
-+		container_of(rcu, struct blkg_policy_data, rcu_head);
- 	struct throtl_grp *tg = pd_to_tg(pd);
- 
--	timer_delete_sync(&tg->service_queue.pending_timer);
- 	blkg_rwstat_exit(&tg->stat_bytes);
- 	blkg_rwstat_exit(&tg->stat_ios);
- 	kfree(tg);
- }
- 
-+static void throtl_pd_free(struct blkg_policy_data *pd)
-+{
-+	struct throtl_grp *tg = pd_to_tg(pd);
-+
-+	timer_delete_sync(&tg->service_queue.pending_timer);
-+	call_rcu(&pd->rcu_head, tg_release);
-+}
-+
- static struct throtl_grp *
- throtl_rb_first(struct throtl_service_queue *parent_sq)
- {
 -- 
 2.53.0
 
