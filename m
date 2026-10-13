@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EB84F93D0;
-	Tue, 13 Oct 2026 12:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C614F93DB;
+	Tue, 13 Oct 2026 12:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893193; cv=none; b=F0W0loKv9KA9Wkjka9YZaus0mGk5cdwCZkyW1v4nGn9mQm/nXnqMQ4sV3A8Ck/Ivk33IqTfQjaYv7K6XOHO3Jpx3EObpBaHT+PruCT31W9lIr5CP/Hd22Hy+yqhLGBXEEv1cVpUulwox3T7lPzO3OqxbhnCqnK2gcwu6DB5zyVg=
+	t=1791893196; cv=none; b=g/RVfBBvRyweUvtEFIiqirL3XIv99CRXDHq6Gzv9P3C744NCztCAMWALGr236jBnawuh32t2kcXra9nBVgY+CgDyE1HjasVGIGuCRe1n1glWkZ/dbPyPlvXy1M5lAzdn9v4tdKFl372n1l6GX/HHW+ch1mL4aHJ/b6J9oEGpSSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893193; c=relaxed/simple;
-	bh=OLoRK+6Z0Ci4qWI2G8S0Gt72wZnPe4eLtRfrKa7LJSA=;
+	s=arc-20240116; t=1791893196; c=relaxed/simple;
+	bh=9GDbFav7qtJNwwsQgAcTj8i7YG0eMaDLOnTC5kzF5zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfGssymEDF6H0lUz7waV8tM58uO95IJgzazu6M3YNqmUSrbxLIiDHgVQK/Ty+oSMHh1jclR8enmDHXByrmfm08xuCKTSQAMpcOul8uRmUbR9flW8LeaiMuzfSKzSzWyo8O9tL3gqZx1QuiVIwGXwjAMdSifcJpJXkVrdlF5HpiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yj1VeBWo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p3l/b7dTNCMUtrlgbIe/Dje3uGDcXWWKFsNKMHB0ZPID03BSn3RjEiNitgMvgXC0P8nVhjfgbDHaG/v7qeqMPrsfcpAhonMGqF2Ivge+IvIZXgg9wDYBorD7tQKa3Wh/Oa7/dEFng2EVhBaOqe57gh19NPse7+KdkWsoWSzM438=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm//pOTw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yj1VeBWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97481F00893;
-	Tue, 13 Oct 2026 12:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm//pOTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9C41F00893;
+	Tue, 13 Oct 2026 12:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893192;
-	bh=1suY2O5EoYXzgfkp1vXQ/K8rdFh4N12zaVsJMOSL+iw=;
+	s=korg; t=1791893195;
+	bh=8qbSfecOHanfIhZFVq//pveOo/rXDRllPcjdcu3RXOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yj1VeBWo0QxXWJYsJcqoJOelG4pjS0JGzlZqySb+Dd4VC/vmtXF/2rRShp5T38ZuA
-	 gvdvRNU0XI45MtVw1SUBoPDoy7X5UmSrn6Cmxfbal/T2k3tByxid1tRtPyuw9Eksgk
-	 g1TLnETlvoMeR0JZYRPnsiLMG9O3px8R1gYpvWtk=
+	b=bm//pOTw33o8aGulnmYSbVQbuWKJu531z5BFnJjdzm2umhswn99tAw9y1Z6XnJDrf
+	 dUX0nfG+He2uugHnqqGM9ZqJv/FGsKnzGYq8I5Uq9wBMmbh2KXgQwKu2OIcVLFyW8E
+	 WJ49CUxcQ3R6RnXhQNQFE7AmKuDRQuVvRc1iDdqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 143/621] namespace: unhash a dentry before detaching the mounts on it
-Date: Tue, 13 Oct 2026 13:32:18 +0200
-Message-ID: <20261013112924.248700279@linuxfoundation.org>
+Subject: [PATCH 6.18 144/621] namei: dont reveal overmounted entries in refwalk
+Date: Tue, 13 Oct 2026 13:32:19 +0200
+Message-ID: <20261013112924.271958617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,60 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 528b383dc35d1e5caf64ddf5d35f983ae543b0d0 upstream.
+commit 8189ab688f5a2c745dc90b63374da02f213d6994 upstream.
 
-unlink(), rmdir() and rename() remove the entry from the filesystem,
-call detach_mounts() on the entry with the inode locked and then call
-d_delete() once the inode is unlocked.
+In rcuwalk the dentry is validated before it is accepted. step_into()
+step_into() rechecks d_seq and __follow_mount_rcu() rechecks mount_lock.
+An entry that gets unlinked in between causes the lookup to retry and
+miss.
 
-The thing is that between detach_mounts() and d_delete() the dentry is
-still hashed and positive. But after detach_mounts() nothing covers the
-dentry anymore. A lookup that finds this dentry in the dcache can
-uncover what the mounts hid.
+A refwalk doesn't do this. lookup_fast() takes a reference on the hashed
+dentry and simply accepts it. So an unlink that happens after the
+reference was taken isn't seen by refwalk. That's fine for a simple
+file. We just happened to open it before it was unlinked, no problem.
 
-That's a problem when unlinking files or directories that are
-mountpoints in other mount namespaces. Everybody who had the underlying
-entry covered can race the detach_mount() call until d_delete() has run.
+For a mountpoint and specifically a locked mountpoint it very much
+isn't. The unlink detaches all mounts and then removes the name. Any
+refwalk that hasn't traversed the mounts yet simply reveals the
+underlying entry. It's a very narrow window but it can be hit:
 
-The race window isn't all that small. It encompasses namespace_unlock()
-with a full synchronize_rcu_expedited() grace period and the
-inode_unlock() of the entry.
+  reads of a covered file in 60 s, 3 walkers, ~15000 unlinks
+    no widening            27
+    that step + 200 us   3741
 
-In my experiments three walkers that kept trying read an overmounted
-file in 11938 of the 16140 unlinks that removed its mountpoint from a
-bind mount of the filesystem within a minute.
+See the appended patch for a more reliable reproducer.
 
-Fun fact, d_invalidate() has the same ordering problem but gets it
-right. It unhashes the dentry first and detaches the mounts afterwards.
-Let's do the same in __detach_mounts():
+So check the entry after step_into(). unlink(), rmdir() and rename()
+mark the dentry with dont_mount() before they detach the mounts and
+remove the dentry.
 
-- A lookup that hasn't found the dentry yet misses it in the dcache and
-  waits for the directory lock that the caller holds until the name is
-  gone for good.
+So a dentry that is marked with DCACHE_CANT_MOUNT and is unhashed by the
+time its mounts were looked at is a name that was unlinked under the
+refwalk. DCACHE_CANT_MOUNT is read after the mounts were looked up and
+it is set before they are detached by detach_mounts(). A refwalk that
+missed the mounts will see DCACHE_CANT_MOUNT.
 
-- A lockless lookup that found it already fails the mount_lock check
-  while the dentry still counts as a mountpoint and the d_seq check once
-  it doesn't, and retries.
+Plain d_unlinked() is fine. A rename takes the dentry off its hash chain
+but ___d_drop() leaves d_hash.pprev set. So only __d_drop() and a rename
+over the dentry unhash it. The only move that flips IS_ROOT splices in a
+disconnected alias. That doesn't have DCACHE_CANT_MOUNT set.
 
-This fixes the lockless path. We still need to fix the reference count
-lookup in a follow-up patch.
-
-So d_drop() the dentry. The dentry stays positive and held but can't be
-found anymore. Then proceed with the detach and unlink.
-
-Reproducer:
-
-The reads were counted with the program below, three walkers for 60 s
-in a VM with 4 CPUs. The race window is stretched with the debug patch
-pasted here. fs.detach_race_walk_us sleeps in lookup_fast() once it
-found a mountpoint dentry and before its mounts are crossed.
-fs.detach_race_unlink_us sleeps in vfs_unlink() between detach_mounts()
-and d_delete().
+Add the to step_into_slowpath(). ".." and LOOKUP_DOWN may legitimately
+land on an unhashed directory. A refwalk that crossed onto a mount has
+path.mnt different from nd->path.mnt. A dentry that a filesystem dropped
+on its own (d_invalidate(), d_drop()) doesn't have the flag set and is
+treated as before.
 
   // SPDX-License-Identifier: GPL-2.0
   /*
    * unlink_covered: unlink a file that is a mountpoint in a detached copy of
-   * its mount, against lookups that open it through that copy.
+   * its mount, against walkers that open it through that copy.
    *
    * A is a tmpfs with the file f1 (content SECRET_F) and the plain file
    * MARK_A. A' is an open_tree(OPEN_TREE_CLONE) copy of A with MARK_A bound
@@ -418,33 +412,57 @@ and d_delete().
 
 Fixes: 8ed936b5671b ("vfs: Lazily remove mounts on unlinked files and directories.")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-1-dd44b89d44ce@kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-2-dd44b89d44ce@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/namei.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -1979,6 +1979,9 @@ out:
-  * detach_mounts allows lazily unmounting those mounts instead of
-  * leaking them.
-  *
-+ * The dentry is unhashed before the mounts go so that no lookup finds
-+ * what they covered. The caller removes it for good afterwards.
-+ *
-  * The caller may hold dentry->d_inode->i_rwsem.
-  */
- void __detach_mounts(struct dentry *dentry)
-@@ -1992,6 +1995,8 @@ void __detach_mounts(struct dentry *dent
- 	if (!lookup_mountpoint(dentry, &mp))
- 		return;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -1974,6 +1974,33 @@ all_done: // pure jump
+ }
  
-+	/* the name goes first, what covered it goes second */
-+	d_drop(dentry);
- 	event++;
- 	while (mp.node.next) {
- 		mnt = hlist_entry(mp.node.next, struct mount, mnt_mp_list);
+ /*
++ * Be careful in case the dentry is unlinked or renamed. Any mounts
++ * stacked on top of it are going away. We need to make sure that we
++ * don't reveal the underyling dentry during refwalk. In rcuwalk we
++ * catch this via d_seq and another lookup for the name. Give the same
++ * guarantee in refwalk.
++ */
++static bool unlink_may_reveal(struct nameidata *nd, int flags,
++			      struct path *path, struct dentry *dentry)
++{
++	/* ".." and LOOKUP_DOWN may land on an unhashed directory */
++	if (flags & WALK_NOFOLLOW)
++		return false;
++	if (nd->flags & LOOKUP_REVAL)
++		return false;
++	/* We crossed onto a mount and the name led us here while it still existed */
++	if (path->mnt != nd->path.mnt)
++		return false;
++	/* only a name on its way out is flagged */
++	if (likely(!cant_mount(dentry)))
++		return false;
++	if (!d_unlinked(dentry))
++		return false;
++	dput(no_free_ptr(path->dentry));
++	return true;
++}
++
++/*
+  * Do we need to follow links? We _really_ want to be able
+  * to do this check without having to look at inode->i_op,
+  * so we keep a cache of "no, this doesn't need follow_link"
+@@ -2001,6 +2028,8 @@ static const char *step_into(struct name
+ 			if (unlikely(!inode))
+ 				return ERR_PTR(-ENOENT);
+ 		} else {
++			if (unlikely(unlink_may_reveal(nd, flags, &path, dentry)))
++				return ERR_PTR(-ESTALE);
+ 			dput(nd->path.dentry);
+ 			if (nd->path.mnt != path.mnt)
+ 				mntput(nd->path.mnt);
 
 
