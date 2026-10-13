@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ED04FD280;
-	Tue, 13 Oct 2026 12:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2B64FDA59;
+	Tue, 13 Oct 2026 12:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895953; cv=none; b=ElT5KTUjE3JxTGxFns5xaAUBz2Zs9qRLAxi//DThKZWB5lUfslhyOsqpoTRv4/LPsQVXC/kGlHoZUOiXWhNKY0eGgJF1lR0018G4mSlVYAgty2HOe2uQgukVA2Uv9L9c/3OcDNZVGmsgsH7Yexg+FSQeIG0i8T7TAmTF1xgTYPU=
+	t=1791895956; cv=none; b=ONbQ/dC2XPZaN9phOL07P8n66DHbmQLklEexN/tDO9Kam6GKFQ3FfVW7cpapelLFZ0joJHswJEtxv0iAHu3mC2AwW0svvnWINbrGgY4Ycep1ohEHP8LuB20eRUlisCUZ92VPoQ52ve7IuFGyOgyoLHprg9CduChtdjnic+HtwiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895953; c=relaxed/simple;
-	bh=RsWx6f6dentlW4zHcRMoy9kJG4xfDceL30xWsplduP8=;
+	s=arc-20240116; t=1791895956; c=relaxed/simple;
+	bh=M2AAmWripVfLBVxIpZ8fKkGgkDWg6JdHEIYlMX+4qfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxJskQR/rBWOh35OMwkG1IPST5+z5u6H2BWOU2zjXvoK4xJ0GBaWyO8pYPCXSsQO06gJh3uDcaoOHZKcadQa4oxDGxiaTx8YzAmzuTz/ppEx9PFT25lsC8w6QhpUy//Akk+oW2v/0BOBkS2XyDVYMEFUBL5DNj2Hp3Eat9V5az0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/IAWEgV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RoIxqOF2453iYGih7+waQk8ZplLixyhlPoInnA/KUC8o/ZfIRZUf4VSLxtiL/QtULdiQGvM9yaAcIj3hQzKLzkRcpMT80zA6PElurtmfOPav+75np91WgWSe882iXTwpFqBDVTa5c8JdyfFLVdqsGLAuXDxl7JM06COZxq8rX9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9QuiLhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/IAWEgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71691F000FF;
-	Tue, 13 Oct 2026 12:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9QuiLhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C951A1F000FF;
+	Tue, 13 Oct 2026 12:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895952;
-	bh=2HfvjFu+REZ2i4BPhxdH0PtbVeyR7CVX64FTuKGCsts=;
+	s=korg; t=1791895955;
+	bh=k28s8Q+VBvgFQ/8H4eacuXDLDZhiTcuyauICPVeS08s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c/IAWEgVUz0pjyHIRW/6XhTZloYA7p/ntHbHGYrsMhuHvk+ZVgdH4WF+C2qsxMI4Y
-	 iF0EwAuphs3NmD+XHMSXkqNyg5weMxPJR8rva85SqNEcp5wk62qRxbhL5kxMcEIsKc
-	 KQYQdOvNoHsaJuNFM3dKi0tC8y72w/zRYfEstsYw=
+	b=o9QuiLhswzdwZcbcTwH1X0OSn6Eisk2BnHIFfqcSIkTCBO7mdecLbQ9EDkwgEe9fH
+	 xtCl5uzZRgzq6h5n/66UVokWZ+z3lmytVMhXvSyE5P9pgbFHxnPjFxuiGFRSttM38g
+	 ZClCbSA0lFcUPHigbgb22pksWsU7BOjNwSUq56Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Vincent Jardin <vjardin@free.fr>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ravindra <ravindra@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 447/497] arm64: dts: lx2160a: fix the iic5 spi3 pinmux offset and value
-Date: Tue, 13 Oct 2026 13:40:14 +0200
-Message-ID: <20261013112918.491824121@linuxfoundation.org>
+Subject: [PATCH 6.12 448/497] Bluetooth: btintel_pcie: fix TX descriptor bounds check
+Date: Tue, 13 Oct 2026 13:40:15 +0200
+Message-ID: <20261013112918.515315819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,53 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Ravindra <ravindra@intel.com>
 
-[ Upstream commit f14f4dc8ea3810f8ed4f0f3ea13f8bba3e2b0f04 ]
+[ Upstream commit baa53af641c9e3644e717b8dfd1b95a55a0c111b ]
 
-The iic5-spi3-pins node has both of its first two cells wrong.
+btintel_pcie_prepare_tx() uses tfd_index to access the TFD and data
+buffer arrays before the index is advanced modulo txq->count. An index
+equal to txq->count is one past the end of both arrays, so reject it in
+the bounds check.
 
-The offset selects the register within the node's reg range, where:
-  0x0 is RCWSR12,
-  0x4 is RCWSR13,
-  0x8 is RCWSR14.
-
-An offset of 0x3 is not one of them and is not even aligned for the
-declared 32 bit register width. It is the only node in this pinmux that
-does not use 0x0, 0x4 neither 0x8.
-
-The value is wrong too:
-  IIC5_PMUX is RCWSR12[11:9] and it encodes 0b000 for IIC5,
-  0b001 for GPIO_1[25:24],
-  0b010 for SDHC1_CLK_SYNC_OUT/IN,
-  0b011 for {IIC5_SCL,IIC5_SDA} = {SPI3_SOUT,SPI3_SIN}.
-
-This node selects the last of those, so it needs 0x3, not the 0x2, which
-is the value of the neighbouring sdhc1 clock sync node it was copied
-from.
-
-Fixes: 284ad7064aaa ("arm64: dts: lx2160a: complete pinmux for rcwsr12 configuration word")
-Reviewed-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
+Signed-off-by: Ravindra <ravindra@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 2 +-
+ drivers/bluetooth/btintel_pcie.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index 96b312dfc5a05..5a85bbd27bf6a 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1779,7 +1779,7 @@ esdhc0_clksync_pins: iic5-sdhc-clk-pins {
- 			};
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 735ebf2c33798..68e22f6022afe 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -145,7 +145,7 @@ static int btintel_pcie_send_sync(struct btintel_pcie_data *data,
  
- 			dspi2_miso_mosi_pins: iic5-spi3-pins {
--				pinctrl-single,bits = <0x3 (0x2 << 9) (0x7 << 9)>;
-+				pinctrl-single,bits = <0x0 (0x3 << 9) (0x7 << 9)>;
- 			};
+ 	tfd_index = data->ia.tr_hia[BTINTEL_PCIE_TXQ_NUM];
  
- 			i2c5_pins: iic6-i2c-pins {
+-	if (tfd_index > txq->count)
++	if (tfd_index >= txq->count)
+ 		return -ERANGE;
+ 
+ 	/* Prepare for TX. It updates the TFD with the length of data and
 -- 
 2.53.0
 
