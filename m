@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA164F3EAE;
-	Tue, 13 Oct 2026 11:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D424F3922;
+	Tue, 13 Oct 2026 11:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892417; cv=none; b=quQS4sEaBCeSAARec7iKBxOSqDCH8OXGlgRx1D0WmCNN6sTAliZJCf2Mg8nSYmMeW0Vavz/gCigKxV+pDMQkcpwgg9hd23ZwiAt8M/aAOT4HFmBmeP9065u+e0+s75vuU3RFzumSk5XfZYwwKJHW4EDuVKYtc74F4/d3Szr0eHk=
+	t=1791892420; cv=none; b=AnRVh4tWMEj7XyhTDeRTFKA4ae97M20jH7vzI6X1T5f0LWYfZ21dfpgKVqV4Cu0y+WNT6fUBrSrslz7plkimAnxMIdkylH2WMy0MgKEnQNlBKbByffObSyb0Wtx4vhfpESjSfnz3JJUjq0qW/zoJguMOFPmFGCFcMCt97fDjDqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892417; c=relaxed/simple;
-	bh=iwbsmd6zl0K79DCZ4hxO+CE6PYndt4pJ/ZmkYH6lYUg=;
+	s=arc-20240116; t=1791892420; c=relaxed/simple;
+	bh=iTbUeIuFz+ztNFwSp0MiSCQ3UpYVIre5emP3y+D4nPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfcZf+X68GL6I7jMivPajLe6ptcuXiqrIAJHqC9uVGSGT39+eoSwzxn6bAjyDCipTnrl3obxo/aWQ7Vti4p6ZzPUj8L9jBKORUMn345EJFuUDrCZUu41TyP+EqmOCNUv8Dq4nswudp0poHlRdT9Q3TgoMgGTrKOHzm2CtwyrWn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2yxFgwf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCLgQUKZqIp1MiCUz/+Js8TAVIuljy1JLXyl+9+t7F8hKOWp3McTvF71tY3uZfnk4ZrlEAOA33Ox2XxgsbHmWFcBw6CxmdCJzgP+xEG46Bg1bb4yii2I+BpOGbcSsHKqjlRCAtlYh4GT4+BTO6DdBPFfH4J9EkkyoQvr8AegovQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gV6TpjWd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2yxFgwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122561F000FF;
-	Tue, 13 Oct 2026 11:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gV6TpjWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5691F000FF;
+	Tue, 13 Oct 2026 11:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892416;
-	bh=1If8CSDHrZDiO3Mj/Jq38yRNsE/UgbjHCbQ7o8MzWOE=;
+	s=korg; t=1791892419;
+	bh=rFNHjqRW5nYMbwgi8HEFKVYEWilvMXNk/rKAgKci3DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2yxFgwfWJi//l5N8AqyBf0r0LBLd8wRlg0GNCxTWNvtnLuZyVziuz6jAdfKs8ifC
-	 TZ8mFpmMZ++IWk00ARv/8YY/fNJogpli4i3Ph0e02KWhHFJwqNV/XRlBQZNvTaCinz
-	 xrUBfJpCA3tdLMEYD3rmWnH1i41+5KvEiy5h54vE=
+	b=gV6TpjWdYcNa8u2wl7Abxdsu4uhzuw5JPMlvtsku2xvJZtmSNRh0K5nUUUVcdt1gs
+	 E7ZHwnPI1z3ulzgf/rgf5PN1kLk063oFCxj2/gzrO9hixvmz7pthiV/pqyKrxaOnqN
+	 3Kp4sO3ed+gpT5eWwRD4oWVcNHACaaxr/4QbAdWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 164/281] unshare: dont drop active namespace references that were never taken
-Date: Tue, 13 Oct 2026 13:38:00 +0200
-Message-ID: <20261013112859.144120878@linuxfoundation.org>
+Subject: [PATCH 7.2 165/281] namespace: dont let a pseudo dentry become the root of a mount
+Date: Tue, 13 Oct 2026 13:38:01 +0200
+Message-ID: <20261013112859.170352365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,79 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 0b6f31a3c0b16066f812e94b52a704174a6f23cd upstream.
+commit b138e16fb1e81376cea89f727dda7bfccd140de4 upstream.
 
-Active references on the namespaces of an nsproxy are taken when the
-nsproxy is installed into a task in switch_task_namespaces() and
-copy_namespaces() and dropped again by put_nsproxy() through
-deactivate_nsproxy().
+d_alloc_pseudo() hands out dentries for pipes, sockets and other files
+that are never anyone's child or parent. They carry DCACHE_NORCU and
+dentry_free() frees them right away because no lockless path walk can
+ever reach them. That holds as long as such a dentry isn't the root of
+a mount. But bind mounting /proc/self/fd/<fd> of such a file does
+exactly that.
 
-But ksys_unshare() calls put_nsproxy() on an nsproxy that was never
-installed when set_cred_ucounts() fails. The new namespaces of that
-nsproxy go from zero to minus one and the namespaces shared with the
-caller lose a reference that belongs to the nsproxy the caller keeps
-using:
+Most callers of alloc_file_pseudo() put their files on kernel-internal
+mounts and may_copy_tree() refuses those. bpf_token_create() doesn't. It
+places the token file on the bpffs mount the caller handed it and that
+mount is in the caller's mount namespace so the clone goes through:
 
-  WARNING: kernel/nscommon.c:171 at __ns_ref_active_put+0x1cd/0x230
-   nsproxy_ns_active_put
-   deactivate_nsproxy
-   ksys_unshare
+  mount --bind /proc/self/fd/<token> <file>
+  open_tree(tokfd, "", AT_EMPTY_PATH | OPEN_TREE_CLONE) + move_mount()
 
-Afterwards the namespaces the caller lives in aren't listed by listns()
-anymore. set_cred_ucounts() only fails when alloc_ucounts() can't
-allocate and it only allocates when the real uid of the caller differs
-from its effective uid.
+__follow_mount_rcu() then loads ->mnt_root of that mount, reads d_seq
+and d_flags of the dentry and only then checks mount_lock. The dentry
+can be gone by then. The final mntput() of an unmounted parent unhooks
+a child that stayed attached to it under mount_lock alone. When the
+child's holder does the final put right after that the root is dput()
+and freed immediately while a walker that found the mount hashed still
+looks at it.
 
-Commit cefd55bd2159 ("nsproxy: fix free_nsproxy() and simplify
-create_new_namespaces()") separated the two cases on purpose.
-nsproxy_free() frees an nsproxy that was prepared but never installed
-and that's what a failed setns() uses in put_nsset(). Export it and use
-it for a failed unshare() as well.
+Refuse to clone a mount with a DCACHE_NORCU dentry as its root. Nothing
+sensible can be done with a bind mount of a bpf token anyway.
 
-Fixes: a98621a0f187 ("unshare: fix nsproxy leak in ksys_unshare() on set_cred_ucounts() failure")
-Cc: stable@vger.kernel.org # v7.1+
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-16-be34c83956ae@kernel.org
+Fixes: 35f96de04127 ("bpf: Introduce BPF token object")
+Cc: stable@vger.kernel.org # v6.9+
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-17-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/nsproxy.h |    1 +
- kernel/fork.c           |    3 ++-
- kernel/nsproxy.c        |    2 +-
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ fs/namespace.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/nsproxy.h
-+++ b/include/linux/nsproxy.h
-@@ -100,6 +100,7 @@ void exit_cred_namespaces(struct task_st
- void switch_task_namespaces(struct task_struct *tsk, struct nsproxy *new);
- int exec_task_namespaces(void);
- void deactivate_nsproxy(struct nsproxy *ns);
-+void nsproxy_free(struct nsproxy *ns);
- int unshare_nsproxy_namespaces(unsigned long, struct nsproxy **,
- 	struct cred *, struct fs_struct *);
- int __init nsproxy_cache_init(void);
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -3326,8 +3326,9 @@ int ksys_unshare(unsigned long unshare_f
- 	perf_event_namespaces(current);
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3008,6 +3008,10 @@ static struct mount *__do_loopback(const
+ 	if (!may_copy_tree(old_path))
+ 		return ERR_PTR(-EINVAL);
  
- bad_unshare_cleanup_nsproxy:
-+	/* never installed, so no active references to drop */
- 	if (new_nsproxy)
--		put_nsproxy(new_nsproxy);
-+		nsproxy_free(new_nsproxy);
- bad_unshare_cleanup_cred:
- 	if (new_cred)
- 		put_cred(new_cred);
---- a/kernel/nsproxy.c
-+++ b/kernel/nsproxy.c
-@@ -61,7 +61,7 @@ static inline struct nsproxy *create_nsp
- 	return nsproxy;
- }
++	/* a pseudo dentry is freed without an RCU delay, no walk may find it */
++	if (old_path->dentry->d_flags & DCACHE_NORCU)
++		return ERR_PTR(-EINVAL);
++
+ 	if (recurse && !old->mnt_ns)
+ 		return ERR_PTR(-EINVAL);
  
--static inline void nsproxy_free(struct nsproxy *ns)
-+void nsproxy_free(struct nsproxy *ns)
- {
- 	put_mnt_ns(ns->mnt_ns);
- 	put_uts_ns(ns->uts_ns);
 
 
