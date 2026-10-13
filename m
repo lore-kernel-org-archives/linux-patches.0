@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E184EBAD7;
-	Tue, 13 Oct 2026 11:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C899A4F4CF9;
+	Tue, 13 Oct 2026 11:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892370; cv=none; b=MQaavIbCPpdBUrno1X0oCSix2onseE0oDzeq51kCe1bKBs64FJDdu9vccRAkVvW3VTF9r9gb4LQog5MM06Rr82VwiZFzTz4ETUsfhGuSMxCfYD3dhxOKnPTGiviIX2H34+WeG9SNgT3AcLxAk+UfFT94hL/QfvSqh/DgCFe3EUg=
+	t=1791892373; cv=none; b=L8drZjDf5P3h4hVyVJqmVNtbTtWU962oiQic1VFSYeit8D2zIz4+C/45gpGc/+JMhOoE03ucL3PuMd9XheI7GEMUmAuPVqfNn2oCUqAxxdrTdaNjCZdKf0nD5Dxaci94QKq8Nb3G7XoVHDHZfQxPsvc8juLQm/LrTw9o0yV3lP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892370; c=relaxed/simple;
-	bh=kgs9ogSNJy0prs0WUA2UFbfQWfeLjRhh8LUyl+D6tJg=;
+	s=arc-20240116; t=1791892373; c=relaxed/simple;
+	bh=52eZhyJoU0Nfd/eHLEI2m6rWcSSFsEaeCI+BLgc62Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YUCFWCLrcRvqN5Ox0qWs+3q4yTlaVFE5INNMOlu+Le4Xs9tE7VPuu/VUYujryThEFSckiQuwi42be94jz0FZgkXCbNYZEeFXdG9TRlSfa1mEorIj0XKicuka4A8w+gshY4LYNN7NoL2bPIXlfrv7EOgraobp/2+6ECi7XeS9H8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiXAgEv9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uo3Brvlo7mp84DpzTDoxIXPgV6mh4UObrCcDCXtqcjPBLfVhXx9PAFibeRptp3Z+8xtpjXxyjbwFbtr8SHZXjnTRy9hvq0W1NVkTfe10Qsq4LqrbHv6G5wSXTZuvRcsCqvyUS+NmV3q9OoMuujm7aZtS9vc5yLeNQ/ho2FBeBk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyE/Rabf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiXAgEv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A631F000FF;
-	Tue, 13 Oct 2026 11:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyE/Rabf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264D01F000FF;
+	Tue, 13 Oct 2026 11:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892368;
-	bh=1GLbVTxTFE+6Dxp/2b0vqbZEUEhRIXcDNZ0QcqHlCW4=;
+	s=korg; t=1791892371;
+	bh=Lzs+rD7SIA20z+fxxtbvC8NV1Bj7y4132qQ4liPJI9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HiXAgEv9UFNiUfgU8YOTd9tLf8q8j+FQ2esdSNAuFqFfeqtolOcbnt6+fJlcNh9D2
-	 pr3ggDC/hONP9fh0KMrXn745jj3iia6Bxdj+KD7hlArkyJAprPuyZDJczFBBUczGEl
-	 7jzatF4kXy6RDAfpmG3xIx2BSDSL9gpp+fobkYLI=
+	b=eyE/Rabf1VWwwhp4NMEEDxc38Un9U6xPFA69J8coCHD74qlAupAbxMqWvIuenV/bS
+	 69nzFpL6KZC7HtpK0oGqwN5gMzekbdtoZkH30i/thrXGoC95AyJj+gG8OhCh3Pys+X
+	 k2U9RBg5poLqU9hInEgQ7A6lnpd2lte8CeIfXZt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 150/281] statmount: read the parent of an unmounted mount under mount_lock
-Date: Tue, 13 Oct 2026 13:37:46 +0200
-Message-ID: <20261013112858.799942260@linuxfoundation.org>
+Subject: [PATCH 7.2 151/281] namespace: dont inherit MNT_UMOUNT in clone_mnt()
+Date: Tue, 13 Oct 2026 13:37:47 +0200
+Message-ID: <20261013112858.824688339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,66 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit bb46094057520304073130920c223451c2a694a7 upstream.
+commit e2c6d326216642011da318b9edfd5d57ebd5a56f upstream.
 
-statmount_mnt_basic() reads the ids of the parent through m->mnt_parent
-with namespace_sem held for reading. That's fine for a mount that is
-in a namespace. Everything above it is pinned by that namespace.
+MNT_UMOUNT gets raised on a mount that umount_tree() or umount_one() has
+taken out of its namespace. It's never cleared. __detach_mounts()
+unhooks a mount that carries it instead of unmounting it.
 
-STATMOUNT_BY_FD also accepts a file descriptor on a mount that has
-been unmounted on purpose and that only the file descriptor keeps alive.
-If that mount stayed attached to its parent when it was unmounted the
-parent is unmounted as well and nothing pins it for the child.
+disconnect_mount() lets an unmounted child stay attached only if its
+parent carries it. propagate_umount() takes it as the sign that a mount
+is going to be unmounted when it decides what else can be unmounted,
+where a chain of locked mounts ends and where a for reparenting an
+overmount.
 
-The final mntput() unmounts the children under mount_lock alone and
-frees the parent afterwards. Concurrently, statmount_mnt_basic() reads
-m->mnt_parent twice while that can happen and can easily dereference a
-mount that's already gone.
+clone_mnt() copies the flags of the source and only masks
+MNT_INTERNAL_FLAGS which doesn't include MNT_UMOUNT. A mount that was
+lazily unmounted but is kept alive by a file descriptor can still be
+copied when its root is an nsfs or pidfs file because may_copy_tree()
+accepts those before checking whether the source is mounted at all:
 
-Read the parent of an unmounted mount under mount_lock. The parent
-can't be put while it is held and both ids come from the same mount. A
-mounted mount's parent is pinned by the namespace and a mount can't
-leave its namespace while namespace_sem is held, so the common case
-takes no global lock.
+  mount --bind /proc/self/ns/net /tmp/x
+  exec 3< /tmp/x
+  umount -l /tmp/x
+  mount --bind /proc/self/fd/3 /tmp/y
 
-Fixes: 0e5032237ee5 ("statmount: accept fd as a parameter")
-Cc: stable@vger.kernel.org # v7.0+
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-2-f357abf3d17b@kernel.org
+The mount on /tmp/y is attached to the caller's namespace with
+MNT_UMOUNT already set and every copy of it inherits the flag again.
+
+That causes a number of bugs:
+
+- Unlink its mountpoint from a mount namespace where it isn't one.
+  __detach_mounts() takes it for a mount that was unmounted earlier,
+  unhooks it from its parent and drops the reference the namespace
+  holds on it. It stays in the namespace with one reference too few
+  and as its own parent, so it can't be unmounted through the file
+  descriptor anymore and the namespace never finds it again. When the
+  namespace goes away it's leaked and points to a freed struct
+  mnt_namespace that may_change_propagation() and anon_ns_root() read
+  on the next propagation change or mount_setattr() through the file
+  descriptor.
+
+- Make it shared and unmount a peer. trace_transfers() follows the
+  flag from the peer into it and strips it from its peer group.
+
+- Let a propagated umount reach it. gather_candidates() marks it with
+  T_UMOUNT_CANDIDATE but never puts it on the candidate list, so the
+  mark is never cleared and every later propagated umount skips it. If
+  it's the parent of a locked mount handle_locked() takes it as the
+  cutoff and commits the locked child that should have stayed and
+  disconnect_mount() leaves that child attached to it, unmounted under
+  a mounted parent, which is what disconnect_mount() exists to
+  prevent. When the namespace goes away umount_tree() visits the child
+  a second time. And once __detach_mounts() has made it its own parent
+  reparent() never finds the end of the chain of unmounted parents.
+
+A clone is a new mount that has never been unmounted. Add MNT_UMOUNT
+to MNT_INTERNAL_FLAGS so clone_mnt() never copies it. And warn when
+umount_tree() reaches a mount that already has it set.
+
+Fixes: 590ce4bcbfb4 ("mnt: Add MNT_UMOUNT flag")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-3-f357abf3d17b@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/namespace.c        |    2 ++
+ include/linux/mount.h |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -5316,15 +5316,25 @@ static void statmount_sb_basic(struct ks
- 	s->sm.sb_flags = sb->s_flags & (SB_RDONLY|SB_SYNCHRONOUS|SB_DIRSYNC|SB_LAZYTIME);
- }
+@@ -1787,6 +1787,8 @@ static void umount_tree(struct mount *mn
  
-+static void statmount_mnt_parent(struct kstatmount *s, const struct mount *m)
-+{
-+	s->sm.mnt_parent_id = m->mnt_parent->mnt_id_unique;
-+	s->sm.mnt_parent_id_old = m->mnt_parent->mnt_id;
-+}
-+
- static void statmount_mnt_basic(struct kstatmount *s)
- {
- 	struct mount *m = real_mount(s->mnt);
+ 	/* Gather the mounts to umount */
+ 	for (p = mnt; p; p = next_mnt(p, mnt)) {
++		/* A mount is unmounted once. */
++		VFS_WARN_ON_ONCE(p->mnt.mnt_flags & MNT_UMOUNT);
+ 		p->mnt.mnt_flags |= MNT_UMOUNT;
+ 		if (mnt_ns_attached(p))
+ 			move_from_ns(p);
+--- a/include/linux/mount.h
++++ b/include/linux/mount.h
+@@ -52,7 +52,7 @@ enum mount_flags {
+ 	MNT_ATIME_MASK = MNT_NOATIME | MNT_NODIRATIME | MNT_RELATIME,
  
- 	s->sm.mask |= STATMOUNT_MNT_BASIC;
- 	s->sm.mnt_id = m->mnt_id_unique;
--	s->sm.mnt_parent_id = m->mnt_parent->mnt_id_unique;
- 	s->sm.mnt_id_old = m->mnt_id;
--	s->sm.mnt_parent_id_old = m->mnt_parent->mnt_id;
-+	/* An unmounted mount is cut loose from its parent under mount_lock alone. */
-+	if (likely(is_mounted(s->mnt)))
-+		statmount_mnt_parent(s, m);
-+	else
-+		scoped_guard(mount_locked_reader)
-+			statmount_mnt_parent(s, m);
- 	s->sm.mnt_attr = mnt_to_attr_flags(&m->mnt);
- 	s->sm.mnt_propagation = mnt_to_propagation_flags(m);
- 	s->sm.mnt_peer_group = m->mnt_group_id;
+ 	MNT_INTERNAL_FLAGS = MNT_INTERNAL | MNT_DOOMED |
+-			     MNT_SYNC_UMOUNT | MNT_LOCKED
++			     MNT_SYNC_UMOUNT | MNT_LOCKED | MNT_UMOUNT
+ };
+ 
+ struct vfsmount {
 
 
