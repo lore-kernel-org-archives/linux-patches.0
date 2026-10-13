@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5544EFFC8;
-	Tue, 13 Oct 2026 12:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E75E50254F;
+	Tue, 13 Oct 2026 12:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893410; cv=none; b=uDnit5YKzc3PBEarhlBqakpS2Opx7LvSVJ/SMGhfOKxfgU9sFmblp9yoizOhSHN96gMi5O24Gcr/Wj80Ge3k3n/jI0xxFwM8JfyvIhY8TuJTakLhw/Ou8q6TagAc5cASv9VzDDp/lNXsKAzsWCXWmCoC8QD52CZ7SQ7wI3XodLk=
+	t=1791893414; cv=none; b=m74VrNWJqsJoI2T0mLXDCjPwUHsEAX8Se0QKvHLbVj0QnrJXRcksIWc5yfrQbst1j0SLyC9JBZCepVogVDYqmpzwHXZboDzPf//US8ejV3ocEO089wFrWov+3+Ub2LWmbyioB79Pl8YI/IV91jjJDwSAvVJXlgvahia6Mt031yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893410; c=relaxed/simple;
-	bh=zA5gKP6+puT9Ax44B//tlwRSZY5dX/N1EBxOObiiGXU=;
+	s=arc-20240116; t=1791893414; c=relaxed/simple;
+	bh=tYLismnAIzQ6O6AAAJyTQh8VEFVgo9AJjr5ZQtNguTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ks9vEHFolxHZYKOn1ZFd1R6HUP1Iq8rKuK+AbdwGadMHuoIvaSJZ/ZlDLlfiehdoXIsmgUBDVcdYw35YXJP2ErSneZilDhDDSJwtB4aVfzneoQHU9j/jIht+MAsKfpEbAIAMNG1U7ZJZRD15S3FN36BQRRtUKP/SU/WaaC0AeWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdXuE1DY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGJVQ2Hx6ApFVI4YAk5TpaUjk25qPbGd/RtqAeDNBG3hgF8ka/g7SXcoSGipQ7v5JOJoX+L6Ozh4w88GU9QjSGNIzlLQGmUPYEzaIffHTFdFIjXIiBoAjuGZoqaRLWap3Yf/RpxWNObo111rb/YudHV5TgGAZkRQJ8ZKFn+QrhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTvf9o+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdXuE1DY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554231F000FF;
-	Tue, 13 Oct 2026 12:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTvf9o+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A781F00899;
+	Tue, 13 Oct 2026 12:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893409;
-	bh=qL4MpWKKrIg9lymz3Kur+y5XkKMwIVug5twKAIqtS+o=;
+	s=korg; t=1791893412;
+	bh=eFiS8Hw1hXK5DdGAVzFQprYHWy0ux981MqqXiYm6CCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdXuE1DYJOzDxx5y690hgN0Z0nM1q1I/tKQh5l7gMyklGjrCHJ+K6HNiqQ5kAosTM
-	 CqPIlswZ0E2a6GqXPAfEwlFAzPD9F6JmjJQJQcUdyWyVJ5uIiwMAQyfMOxAMBdjvdG
-	 X5Sx5MO+CCPvxNHPSxV1LkQMthKyd1edKgiQiz3Q=
+	b=MTvf9o+L589A9cSjwTHzWXGRl8ATSaCxRUBXbl5TOLDpWTfgiI4g/WLulJ+L6sD7g
+	 UmtaOwNDHZjypsdVtc8CFWKz0QnF/textwbhSf4DCqabFYbbJuwt0W4LN0HYFKibKM
+	 KHvJzyj2lNryKOsExJJyF31JYzNiymXMJkJ7GLkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavithra Prakash <pavrampu@linux.vnet.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"zhang, the-essence-of-life" <zhangweize9@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 217/621] powerpc/64s: Fix unmap race with PMD migration entries
-Date: Tue, 13 Oct 2026 13:33:32 +0200
-Message-ID: <20261013112926.010808836@linuxfoundation.org>
+Subject: [PATCH 6.18 218/621] ublk: reset per-IO canceled flag on each fetch
+Date: Tue, 13 Oct 2026 13:33:33 +0200
+Message-ID: <20261013112926.034474545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,170 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Uday Shankar <ushankar@purestorage.com>
 
-[ Upstream commit bbcbf045d6c778e82b47a35fc8728387708e9a3d ]
+[ Upstream commit 0842186d2c4e67d2f8c8c2d1d779e8acffd41b5b ]
 
-The following race is possible with migration swap entries or
-device-private THP entries. e.g. when move_pages is called on a PMD THP
-page, then there maybe an intermediate state, where PMD entry acts as
-a migration swap entry (pmd_present() is true). Then if an munmap
-happens at the same time, then this VM_BUG_ON() can happen in
-pmdp_huge_get_and_clear_full().
+If a ublk server starts recovering devices but dies before issuing fetch
+commands for all IOs, cancellation of the fetch commands that were
+successfully issued may never complete. This is because the per-IO
+canceled flag can remain set even after the fetch for that IO has been
+submitted - the per-IO canceled flags for all IOs in a queue are reset
+together only once all IOs for that queue have been fetched. So if a
+nonempty proper subset of the IOs for a queue are fetched when the ublk
+server dies, the IOs in that subset will never successfully be canceled,
+as their canceled flags remain set, and this prevents ublk_cancel_cmd
+from actually calling io_uring_cmd_done on the commands, despite the
+fact that they are outstanding.
 
-This patch fixes that.
+Fix this by resetting the per-IO cancel flags immediately when each IO
+is fetched instead of waiting for all IOs for the queue (which may never
+happen).
 
-Thread A: move_pages() syscall
-  add_folio_for_migration()
-    mmap_read_lock(mm)
-    folio_isolate_lru(folio)
-    mmap_read_unlock(mm)
-
-  do_move_pages_to_node()
-    migrate_pages()
-      try_to_migrate_one()
-        spin_lock(ptl)
-        set_pmd_migration_entry()
-          pmdp_invalidate()     # PMD: _PAGE_INVALID | _PAGE_PTE | pfn
-          set_pmd_at()          # PMD: migration swap entry (pmd_present=0)
-        spin_unlock(ptl)
-        [page copy phase]       # <--- RACE WINDOW -->
-
-Thread B: munmap()
-  mmap_write_downgrade(mm)
-  unmap_vmas() -> zap_pmd_range()
-    zap_huge_pmd()
-      __pmd_trans_huge_lock()
-        pmd_is_huge():          # !pmd_present && !pmd_none -> TRUE (swap entry)
-        pmd_lock() -> 		# spin_lock(ptl), waits for Thread A to release ptl
-      pmdp_huge_get_and_clear_full()
-        VM_BUG_ON(!pmd_present(*pmdp))  # HITS!
-
-[  287.738700][ T1867] ------------[ cut here ]------------
-[  287.743843][ T1867] kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:187!
-cpu 0x0: Vector: 700 (Program Check) at [c00000044037f4f0]
-    pc: c000000000094ca4: pmdp_huge_get_and_clear_full+0x6c/0x23c
-    lr: c000000000645dec: zap_huge_pmd+0xb0/0x868
-    sp: c00000044037f790
-   msr: 800000000282b033
-  current = 0xc0000004032c1a00
-  paca    = 0xc000000004fe0000   irqmask: 0x03   irq_happened: 0x09
-    pid   = 1867, comm = a.out
-kernel BUG at :187!
-Linux version 6.19.0-12136-g14360d4f917c-dirty (powerpc64le-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #27 SMP PREEMPT Sun Feb 22 10:38:56 IST 2026
-enter ? for help
-[link register   ] c000000000645dec zap_huge_pmd+0xb0/0x868
-[c00000044037f790] c00000044037f7d0 (unreliable)
-[c00000044037f7d0] c000000000645dcc zap_huge_pmd+0x90/0x868
-[c00000044037f840] c0000000005724cc unmap_page_range+0x176c/0x1f40
-[c00000044037fa00] c000000000572ea0 unmap_vmas+0xb0/0x1d8
-[c00000044037fa90] c0000000005af254 unmap_region+0xb4/0x128
-[c00000044037fb50] c0000000005af400 vms_complete_munmap_vmas+0x138/0x310
-[c00000044037fbe0] c0000000005b0f1c do_vmi_align_munmap+0x1ec/0x238
-[c00000044037fd30] c0000000005b3688 __vm_munmap+0x170/0x1f8
-[c00000044037fdf0] c000000000587f74 sys_munmap+0x2c/0x40
-[c00000044037fe10] c000000000032668 system_call_exception+0x128/0x350
-[c00000044037fe50] c00000000000d05c system_call_vectored_common+0x15c/0x2ec
----- Exception: 3000 (System Call Vectored) at 0000000010064a2c
-SP (7fff9b1ee9c0) is in userspace
-0:mon> zh
-
-commit a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages"),
-enabled migration for device-private PMD entries. Hence this is one
-other path where this warning could get trigger from.
-
- ------------[ cut here ]------------
- WARNING: arch/powerpc/mm/book3s64/hash_pgtable.c:199 at hash__pmd_hugepage_update+0x48/0x284, CPU#3: hmm-tests/1905
- Modules linked in: test_hmm
- CPU: 3 UID: 0 PID: 1905 Comm: hmm-tests Tainted: G    B   W    L   N  7.0.0-rc1-01438-g7e2f0ee7581c #21 PREEMPT
- Tainted: [B]=BAD_PAGE, [W]=WARN, [L]=SOFTLOCKUP, [N]=TEST
- Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries
- NIP [c000000000096b70] hash__pmd_hugepage_update+0x48/0x284
- LR [c000000000096e7c] hash__pmdp_huge_get_and_clear+0xd0/0xd4
- Call Trace:
- [c000000604707670] [c000000004e102b8] 0xc000000004e102b8 (unreliable)
- [c000000604707700] [c00000000064ec3c] set_pmd_migration_entry+0x414/0x498
- [c000000604707760] [c00000000063e5a4] migrate_vma_collect_pmd+0x12e8/0x16c4
- [c000000604707890] [c00000000059282c] walk_pgd_range+0x7fc/0xd2c
- [c000000604707990] [c000000000592e40] __walk_page_range+0xe4/0x2ac
- [c000000604707a10] [c000000000593534] walk_page_range_mm_unsafe+0x204/0x2a4
- [c000000604707ab0] [c00000000063af10] migrate_vma_setup+0x1dc/0x2e8
- [c000000604707b10] [c008000006a21838] dmirror_migrate_to_system.constprop.0+0x210/0x4b0 [test_hmm]
- [c000000604707c30] [c008000006a245b0] dmirror_fops_unlocked_ioctl+0x454/0xa5c [test_hmm]
- [c000000604707d20] [c0000000006aab84] sys_ioctl+0x4ec/0x1178
- [c000000604707e10] [c0000000000326a8] system_call_exception+0x128/0x350
- [c000000604707e50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
- ---- interrupt: 3000 at 0x7fffbe44f50c
-
-Fixes: 75358ea359e7c ("powerpc/mm/book3s64: Fix MADV_DONTNEED and parallel page fault race")
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Reported-by: Pavithra Prakash <pavrampu@linux.vnet.ibm.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/9437e5ef28d1e2f5cbdd7f8286350ce93c1d43c5.1773078178.git.ritesh.list@gmail.com
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: zhang, the-essence-of-life <zhangweize9@gmail.com>
+Link: https://patch.msgid.link/20260405-cancel-v2-1-02d711e643c2@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/64/pgtable.h | 15 +++++++++++++++
- arch/powerpc/mm/book3s64/pgtable.c           | 13 +++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/block/ublk_drv.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
-index aac8ce30cd3b3..7a218159ff15b 100644
---- a/arch/powerpc/include/asm/book3s/64/pgtable.h
-+++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
-@@ -1284,6 +1284,21 @@ extern int pudp_test_and_clear_young(struct vm_area_struct *vma,
- static inline pmd_t pmdp_huge_get_and_clear(struct mm_struct *mm,
- 					    unsigned long addr, pmd_t *pmdp)
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index a11805b29b630..d1959b4445710 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2141,30 +2141,28 @@ static void ublk_stop_dev(struct ublk_device *ub)
+ /* reset ublk io_uring queue & io flags */
+ static void ublk_reset_io_flags(struct ublk_device *ub)
  {
-+	/*
-+	 * Non-present PMDs can be migration entries or device-private THP
-+	 * entries. This can happen at 2 places:
-+	 * - When the address space is being unmapped zap_huge_pmd(), and we
-+	 *   encounter non-present pmds.
-+	 * - migrate_vma_collect_huge_pmd() could calls this during migration
-+	 *   of device-private pmd entries.
-+	 */
-+	if (!pmd_present(*pmdp)) {
-+		pmd_t old_pmd = READ_ONCE(*pmdp);
-+
-+		pmd_clear(pmdp);
-+		return old_pmd;
-+	}
-+
- 	if (radix_enabled())
- 		return radix__pmdp_huge_get_and_clear(mm, addr, pmdp);
- 	return hash__pmdp_huge_get_and_clear(mm, addr, pmdp);
-diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
-index c9431ae7f78a0..47c7d2d9a0534 100644
---- a/arch/powerpc/mm/book3s64/pgtable.c
-+++ b/arch/powerpc/mm/book3s64/pgtable.c
-@@ -202,16 +202,21 @@ pmd_t pmdp_huge_get_and_clear_full(struct vm_area_struct *vma,
- 				   unsigned long addr, pmd_t *pmdp, int full)
- {
- 	pmd_t pmd;
-+	bool was_present = pmd_present(*pmdp);
-+
- 	VM_BUG_ON(addr & ~HPAGE_PMD_MASK);
--	VM_BUG_ON((pmd_present(*pmdp) && !pmd_trans_huge(*pmdp)) ||
--		   !pmd_present(*pmdp));
-+	VM_BUG_ON(was_present && !pmd_trans_huge(*pmdp));
-+	/*
-+	 * Check pmdp_huge_get_and_clear() for non-present pmd case.
-+	 */
- 	pmd = pmdp_huge_get_and_clear(vma->vm_mm, addr, pmdp);
- 	/*
- 	 * if it not a fullmm flush, then we can possibly end up converting
- 	 * this PMD pte entry to a regular level 0 PTE by a parallel page fault.
--	 * Make sure we flush the tlb in this case.
-+	 * Make sure we flush the tlb in this case. TLB flush not needed for
-+	 * non-present case.
- 	 */
--	if (!full)
-+	if (was_present && !full)
- 		flush_pmd_tlb_range(vma, addr, addr + HPAGE_PMD_SIZE);
- 	return pmd;
+-	int i, j;
+-
+-	for (i = 0; i < ub->dev_info.nr_hw_queues; i++) {
+-		struct ublk_queue *ubq = ublk_get_queue(ub, i);
++	int i;
+ 
+-		/* UBLK_IO_FLAG_CANCELED can be cleared now */
+-		spin_lock(&ubq->cancel_lock);
+-		for (j = 0; j < ubq->q_depth; j++)
+-			ubq->ios[j].flags &= ~UBLK_IO_FLAG_CANCELED;
+-		spin_unlock(&ubq->cancel_lock);
+-		ubq->fail_io = false;
+-	}
++	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
++		ublk_get_queue(ub, i)->fail_io = false;
+ 	mutex_lock(&ub->cancel_mutex);
+ 	ublk_set_canceling(ub, false);
+ 	mutex_unlock(&ub->cancel_mutex);
  }
+ 
+ /* device can only be started after all IOs are ready */
+-static void ublk_mark_io_ready(struct ublk_device *ub)
++static void ublk_mark_io_ready(struct ublk_device *ub, struct ublk_queue *ubq,
++			       struct ublk_io *io)
+ 	__must_hold(&ub->mutex)
+ {
+ 	if (!ub->unprivileged_daemons && !capable(CAP_SYS_ADMIN))
+ 		ub->unprivileged_daemons = true;
+ 
++	/* UBLK_IO_FLAG_CANCELED can be cleared now */
++	spin_lock(&ubq->cancel_lock);
++	io->flags &= ~UBLK_IO_FLAG_CANCELED;
++	spin_unlock(&ubq->cancel_lock);
++
+ 	ub->nr_io_ready++;
+ 	if (ublk_dev_ready(ub)) {
+ 		/*
+@@ -2370,7 +2368,7 @@ static int ublk_check_fetch_buf(const struct ublk_device *ub, __u64 buf_addr)
+ }
+ 
+ static int ublk_fetch(struct io_uring_cmd *cmd, struct ublk_device *ub,
+-		      struct ublk_io *io, __u64 buf_addr)
++		      struct ublk_queue *ubq, struct ublk_io *io, __u64 buf_addr)
+ {
+ 	int ret = 0;
+ 
+@@ -2400,7 +2398,7 @@ static int ublk_fetch(struct io_uring_cmd *cmd, struct ublk_device *ub,
+ 		goto out;
+ 
+ 	WRITE_ONCE(io->task, get_task_struct(current));
+-	ublk_mark_io_ready(ub);
++	ublk_mark_io_ready(ub, ubq, io);
+ out:
+ 	mutex_unlock(&ub->mutex);
+ 	return ret;
+@@ -2505,7 +2503,7 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		ret = ublk_check_fetch_buf(ub, addr);
+ 		if (ret)
+ 			goto out;
+-		ret = ublk_fetch(cmd, ub, io, addr);
++		ret = ublk_fetch(cmd, ub, ubq, io, addr);
+ 		if (ret)
+ 			goto out;
+ 
 -- 
 2.53.0
 
