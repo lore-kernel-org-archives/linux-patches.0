@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D464CC294;
-	Tue, 13 Oct 2026 12:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1548F4DDB33;
+	Tue, 13 Oct 2026 12:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791896120; cv=none; b=XUCeoMG+VRBuuy+T/d4Db38mLCyNf9YkEAs8FC4AjyL2JvF/eTb4hLv6UWEIhf3GHcu66yri8ZVJU30RHiai+7Tnh7FYuh74WT5uVWxlQKuhFzax2eNJ5a+gz/ripYxpp8xuwTOTduydR1Y5P23tzaYtWgnnLgIk6w4uND8KNU4=
+	t=1791896125; cv=none; b=QRaIm4XI2lPz1WU7E/kKZuuV971H5azydR4/fZAmRUsK8+W64DZ7+ygdHeERw0ixjhA85BCL9KweHfag/Oy0AvbDWd2kuTbsHJyI150dbq8fJJZbI4gyP4XeJyJxPD9Wlb29LwrSaYIzV6RglMiIW+FoonRwqCO1sK1+8+jC4hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791896120; c=relaxed/simple;
-	bh=t5nnjzgryDWJ0dijt75wwrBTd+RqstVEX4n9zpxrWlY=;
+	s=arc-20240116; t=1791896125; c=relaxed/simple;
+	bh=L6EUXG6ln7nBzGXjb0z7pVy47Z9IHz+FgLxmfbiN3jU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/elS9xwp7HG6+jbe3F4VfGdqdfFZ/4GcTKqVGL7bgRoriruBD/dbPigZaTfPjwQ4l6YakIJnSXr3iQ60hLT98ox2vW3cTeXjsEOzBNEun4PJFFTe73d+6q6djHgcxgUaWE5382k/bg1yD2K6UdJTz0Ncx+PNfeJ7rPY7gQCco4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGs5spGE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZK8Yr+jVgZCrQ5gbiBe02/SCKE2LIxDEdQ66wOjFxHfT55LuGcoN5WkI+UPhD6oDmd+CgWXA1tnJWR7JNerTEJeUPmKOCD8lKPSNWEDz5vTAvc2artqHoGA1xecnNYJMViU/Zt5j0q8XVG8K7VpvvRom/qufH2XBzMaLwpPO1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppLT1w8B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGs5spGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E0A1F00893;
-	Tue, 13 Oct 2026 12:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppLT1w8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEC51F00893;
+	Tue, 13 Oct 2026 12:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791896119;
-	bh=iiQDUZni0ONyQBwGHsja2+tbLoAxcrBiobQ3ir3Py8w=;
+	s=korg; t=1791896122;
+	bh=1p2TfY1CGMQSIVolAGPTIY5jVar0ynj1HXZHCSKq/Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGs5spGEeS+ghOXpgP3leV3W0/lAhdyxQAHKkALpisQPHc+4JeLuiBiqr/ovJk9Jn
-	 m7CVJqz4T5Ya9YIAkhka3Xjf2cH27qswgafQ8rOhAo+6b5bIhD7onqTAr8QQ0dCsnQ
-	 LRiWreb3duy+Eg4rW0KIOMk1xDIksi83kzbNR+LU=
+	b=ppLT1w8Bq/FwxEjfZuS21CBYez6Z2c31hb6yMSPVW5a1EuPxqjrpnqBK3TbsCDjOY
+	 FnaYDlLeCwkkNUWfEqoM1LtMPtavG9ITFtnonOBe/Qb+gPmx0ICmv08XLk/RJ8xkMs
+	 UmU6UzNNqsZzkNtMBZ9wCFUb3Ktm3aiHoarJItts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huy Nguyen Dinh Quang <huynguyendinhquang@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Cristian Fleischer <cristian.fleischer@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Liming Sun <limings@nvidia.com>,
+	James Hurley <jahurley@nvidia.com>,
+	Dave Thompson <davthompson@nvidia.com>,
+	Mahantesh Salimath <mahantesh@nvidia.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 469/497] wifi: mt76: mt792x: treat 0xff ACPI SAR entries as no limit
-Date: Tue, 13 Oct 2026 13:40:36 +0200
-Message-ID: <20261013112919.013353042@linuxfoundation.org>
+Subject: [PATCH 6.12 460/497] tee: optee: ffa: support shared memory offsets on large-page kernels
+Date: Tue, 13 Oct 2026 13:40:27 +0200
+Message-ID: <20261013112918.799482493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,75 +55,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Mahantesh Salimath <mahantesh@nvidia.com>
 
-[ Upstream commit 45f53d98cbaa078907b6a300ff3974dfb5ae8776 ]
+[ Upstream commit 3c0d2f1f431c51a11253f28763be723ac782fd7a ]
 
-Some ASUS firmware carries 0xff in MTGS power slots. The driver narrows
-the byte to s8, so the slot reads as -1 in its 0.5 dBm units, wins the
-min() against the regulatory limit and caps every rate the driver
-programs. On an ASUS Zenbook 14 UM3406HA (MT7922) all six MTGS tables
-hold 0xff in every power byte, and txpower_sku shows tmac 3 on every
-supported OFDM/HT/VHT/HE rate against EEPROM entries of 25-39, under
-both the FR and the world regulatory domain. Huy Nguyen Dinh Quang saw
-the same clamp on a Vivobook S 14 M5406WA, with 5 GHz TX at ~40 Mbps,
-and proposed skipping the geo entry.
+OP-TEE FF-A memory objects use 4 KiB pages, while the kernel page
+size may be larger. Consequently, tee_shm->offset can be greater than
+or equal to FFA_PAGE_SIZE, but OP-TEE rejects such a value in
+internal_offs.
 
-Skip a geo entry whose power byte is 0xff. The MTDS entry is narrowed
-the same way on its way into the geo lookup, so give it the same
-treatment, and clamp the dynamic value plus offset at 127 so a no-limit
-entry cannot wrap.
+Do not encode the excess page offset in offs_low/offs_high. Those
+fields describe the logical memref offset and are copied back into
+tee_param->shm_offs on return. Folding the page offset into them breaks
+parameter round trips when a memref is reused. They are also ignored by
+the OPTEE_RPC_CMD_SHM_ALLOC response path, which uses only global_id and
+internal_offs to construct the shared-memory mobj.
 
-Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2515420
-Reported-by: Huy Nguyen Dinh Quang <huynguyendinhquang@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/20260827134820.2607530-1-huynguyendinhquang@gmail.com/
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Cristian Fleischer <cristian.fleischer@gmail.com>
-Link: https://patch.msgid.link/acb947435fc78d5c06039c7bd5609c735468b0ee.1789002236.git.junjie.cao@intel.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Instead, start the FF-A descriptor at the 4 KiB page containing the
+shared buffer, the same approach as optee_fill_pages_list() in the SMC
+ABI. Store the remaining in-page offset in internal_offs and preserve
+shm_offs in offs_low/offs_high. This keeps internal_offs within the
+FF-A page size, maps RPC allocations at the correct address, and
+preserves normal memref offsets across repeated invocations.
+
+Tested on ARMv8-A with 64 KiB PAGE_SIZE. OP-TEE OS ran as a secure
+partition under Hafnium (SPMC) over FF-A. Verified registered shared
+memory with tee_shm->offset >= 4 KiB, memref reuse on the same
+TEEC_Operation, and RPC OPTEE_RPC_CMD_SHM_ALLOC (xtest regression
+6007-6009). optee_hello_world, optee_aes, and xtest regression 1005,
+1007, 1008, 4001-4003 and 6001-6003 also passed.
+
+Fixes: 4615e5a34b95 ("optee: add FF-A support")
+Acked-by: Liming Sun <limings@nvidia.com>
+Acked-by: James Hurley <jahurley@nvidia.com>
+Acked-by: Dave Thompson <davthompson@nvidia.com>
+Signed-off-by: Mahantesh Salimath <mahantesh@nvidia.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt792x_acpi_sar.c   | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/tee/optee/ffa_abi.c   | 22 ++++++++++++++++++----
+ drivers/tee/optee/optee_msg.h |  4 ++--
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-index 9317f8ff2070f..1cd4c7f6cbf4b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-@@ -248,10 +248,18 @@ mt792x_asar_get_geo_pwr(struct mt792x_phy *phy,
- 	if (idx >= max)
- 		return dyn_power;
+diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
+index 5f56f451ba864..c08aedc95e853 100644
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -198,7 +198,8 @@ static int to_msg_param_ffa_mem(struct optee_msg_param *mp,
+ 	if (shm) {
+ 		u64 shm_offs = p->u.memref.shm_offs;
  
--	geo_power = (band_pwr + idx)->pwr;
--	dyn_power += (band_pwr + idx)->offset;
-+	band_pwr += idx;
+-		mp->u.fmem.internal_offs = shm->offset;
++		mp->u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
++					   (FFA_PAGE_SIZE - 1);
  
--	return min(geo_power, dyn_power);
-+	/* Some OEM tables carry 0xff here; narrowed to s8 that is -1 and
-+	 * wins the min() below. Take it as no limit.
+ 		mp->u.fmem.offs_low = shm_offs;
+ 		mp->u.fmem.offs_high = shm_offs >> 32;
+@@ -284,14 +285,26 @@ static int optee_ffa_shm_register(struct tee_context *ctx, struct tee_shm *shm,
+ 		.nattrs = 1,
+ 	};
+ 	struct sg_table sgt;
++	size_t ffa_offs;
+ 	int rc;
+ 
++	if (!num_pages)
++		return -EINVAL;
++
+ 	rc = optee_check_mem_type(start, num_pages);
+ 	if (rc)
+ 		return rc;
+ 
+-	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, 0,
+-				       num_pages * PAGE_SIZE, GFP_KERNEL);
++	/*
++	 * Start the FF-A descriptor at the 4 KiB page containing the shared
++	 * buffer, skipping unused leading 4 KiB pages when PAGE_SIZE is
++	 * larger. Same approach as optee_fill_pages_list() in the SMC ABI.
++	 * This leaves only the offset into that 4 KiB page for internal_offs.
 +	 */
-+	if (band_pwr->pwr == 0xff)
-+		return dyn_power;
-+
-+	geo_power = band_pwr->pwr;
-+
-+	return min_t(int, geo_power,
-+		     min_t(int, dyn_power + band_pwr->offset, 127));
- }
++	ffa_offs = round_down(tee_shm_get_page_offset(shm), FFA_PAGE_SIZE);
++	rc = sg_alloc_table_from_pages(&sgt, pages, num_pages, ffa_offs,
++				       num_pages * PAGE_SIZE - ffa_offs,
++				       GFP_KERNEL);
+ 	if (rc)
+ 		return rc;
+ 	args.sg = sgt.sgl;
+@@ -458,7 +471,8 @@ static void handle_ffa_rpc_func_cmd_shm_alloc(struct tee_context *ctx,
+ 		.attr = OPTEE_MSG_ATTR_TYPE_FMEM_OUTPUT,
+ 		.u.fmem.size = tee_shm_get_size(shm),
+ 		.u.fmem.global_id = shm->sec_world_id,
+-		.u.fmem.internal_offs = shm->offset,
++		.u.fmem.internal_offs = tee_shm_get_page_offset(shm) &
++					(FFA_PAGE_SIZE - 1),
+ 	};
  
- static s8
-@@ -284,7 +292,9 @@ mt792x_asar_range_pwr(struct mt792x_phy *phy,
- 	else
- 		band = NL80211_BAND_2GHZ;
- 
--	return mt792x_asar_get_geo_pwr(phy, band, limit[idx]);
-+	/* 0xff: no dynamic limit, see mt792x_asar_get_geo_pwr() */
-+	return mt792x_asar_get_geo_pwr(phy, band,
-+				       limit[idx] == 0xff ? 127 : limit[idx]);
- }
- 
- int mt792x_init_acpi_sar_power(struct mt792x_phy *phy, bool set_default)
+ 	arg->ret = TEEC_SUCCESS;
+diff --git a/drivers/tee/optee/optee_msg.h b/drivers/tee/optee/optee_msg.h
+index 7d9b12e71c035..6c3043f8da33c 100644
+--- a/drivers/tee/optee/optee_msg.h
++++ b/drivers/tee/optee/optee_msg.h
+@@ -136,8 +136,8 @@ struct optee_msg_param_rmem {
+  * struct optee_msg_param_fmem - FF-A memory reference parameter
+  * @offs_low:		lower bits of offset into shared memory reference
+  * @offs_high:		higher bits of offset into shared memory reference
+- * @internal_offs:	internal offset into the first page of shared memory
+- *			reference
++ * @internal_offs:	offset into the first 4 KiB page of the FF-A shared
++ *			memory region
+  * @size:		size of the buffer
+  * @global_id:		global identifier of the shared memory
+  */
 -- 
 2.53.0
 
