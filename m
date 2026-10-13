@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E5F389104;
-	Tue, 13 Oct 2026 12:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A976F4D98E6;
+	Tue, 13 Oct 2026 12:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893353; cv=none; b=ulUIsdRwDnFUcFgngWviAZfFcG+8kDDNo/7nGDjiqOkbLuPHNZxnNo3G8NJoPQFTLVi5Gs4igukEPWv9WWTkpUHKGuyBc51CA79cMURCHMP34iLsaU0r/drLZiarvkK8F3zDtGkUmGwRSoXq0e9h8uA0yUHTmoz9ikvZydssgp8=
+	t=1791893356; cv=none; b=FT7exB/jrNyJy0FVef7LuzMAqJsxCICSybmrLMYelMGqoRfJWNlhU+mYbMOUSzwy6dsE7jZfZpyo2FDyJMfOps7IVFhb3JfRmAbwWofZhS9xBBEFodjufLFptC8CqiqxoRfTR7fJsaY87aXZ5tNEnKM9EAknfOJ1k/KiJhvVmE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893353; c=relaxed/simple;
-	bh=DzUHkJnCC8384B42oJwqGIA3sLE3Wh6aIBqr97a8sgA=;
+	s=arc-20240116; t=1791893356; c=relaxed/simple;
+	bh=n5vNNPc3BzAm6uYCbXP0bfR3tgluaK3eZhHdNMPEiCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5I+VtnSUQTCbnbJVK71eJDagFvJaPq+IZBPAn7S8wER14melUOFu54q0Rl9a2tiHTjOWNJ9CRKRbOtzQS2NDrZSxKngN6kDColkxN9aWsr8IA5EHMQZYt8Hv2XOw0MxSih8cpIBXJ/0SM406AbYWkfvwuFNzPBKDl+XzRxSAJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sQATss5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aExVO5WALDQHiOClsm6i4weXB69op/kOUQe1cTHDO+U6V5EJdSmb5GXvkkSp3CCp6C9XnHWzi1RqU58G7XdzYXow5DEbQiZq3KY7KPypRMmB1KEdtSYR+3n0xUpg93Dl8qWBvNjnZHXjMlRGPFDRWdbnnH/znuBlLgOPZognvRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBZiFGIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sQATss5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D091F000FF;
-	Tue, 13 Oct 2026 12:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBZiFGIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BE01F000FF;
+	Tue, 13 Oct 2026 12:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893351;
-	bh=ei8cARPM+t3KXZUboNRjLtMQtktXd90MYbCdY0Oi80k=;
+	s=korg; t=1791893354;
+	bh=bc/JH47qaijBkD4FD57hH180FHAS0xrAo5GHVtyLEuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0sQATss5zI7igidlXdAheSeliWuWNeBivgXw9pmWgSJHyW0ZkdM+NgJ359qertG2N
-	 RCEL7gmUDOCbQM2XDdMwbtas+h/qRS8j7tHyEb5wh4VTtggJLe2dmxHenIO07HmoT8
-	 cQQhhUd25w4TBGO4WF15xRQawS37t1ktcUZ/ZVvA=
+	b=SBZiFGIFyr2v4PAlKhpF0HtEZdO5vOuKMPWGV/qEBt4T+MeybSuYGgcWQKXV4SMgw
+	 LTfI0sSVMSZxA77CZFcOniD1Yd7nz3SDxMAURADz3JPmkn6IDTYul9RkDXPqU7gKsn
+	 QC/rBhP13/1/PH4QqxoyHXRoCBECIA8gCuwUS5Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/621] gfs2: Get rid of delayed withdraws
-Date: Tue, 13 Oct 2026 13:33:10 +0200
-Message-ID: <20261013112925.491043058@linuxfoundation.org>
+Subject: [PATCH 6.18 196/621] gfs2: Rename gfs2_{withdrawing_or_ => }withdrawn
+Date: Tue, 13 Oct 2026 13:33:11 +0200
+Message-ID: <20261013112925.515382147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,306 +52,457 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 8daf6c2b3d8ceea5559cceb8ed7e1275ee72a7be ]
+[ Upstream commit 1b7d498dcab489c4bcbc46870264fbeaf81c16e7 ]
 
-Now that gfs2_withdraw() is asynchronous, is can be called in any
-context and there is no more need for gfs2_withdraw_delayed() or for
-turning delayed withdraws into actual withdraws.  Remove the
-now-obsolete code.
+With delayed withdraws and the SDF_WITHDRAWING flag gone, we can now
+rename gfs2_withdrawing_or_withdrawn() back to gfs2_withdrawn().
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Stable-dep-of: da6f5bbc2e79 ("gfs2: fix memory leaks in gfs2_fill_super error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c  |  2 +-
- fs/gfs2/glops.c  | 11 ++++-------
- fs/gfs2/incore.h |  1 -
- fs/gfs2/log.c    | 21 +++++----------------
- fs/gfs2/lops.c   |  2 +-
- fs/gfs2/sys.c    |  2 --
- fs/gfs2/util.c   | 15 ++-------------
- fs/gfs2/util.h   | 36 +++---------------------------------
- 8 files changed, 16 insertions(+), 74 deletions(-)
+ fs/gfs2/aops.c       |  2 +-
+ fs/gfs2/file.c       |  2 +-
+ fs/gfs2/glock.c      |  8 ++++----
+ fs/gfs2/glops.c      |  2 +-
+ fs/gfs2/lock_dlm.c   |  8 ++++----
+ fs/gfs2/log.c        | 22 +++++++++++-----------
+ fs/gfs2/meta_io.c    |  6 +++---
+ fs/gfs2/ops_fstype.c |  2 +-
+ fs/gfs2/quota.c      |  8 ++++----
+ fs/gfs2/recovery.c   |  2 +-
+ fs/gfs2/super.c      | 10 +++++-----
+ fs/gfs2/sys.c        |  2 +-
+ fs/gfs2/trans.c      |  2 +-
+ fs/gfs2/util.c       |  4 ++--
+ fs/gfs2/util.h       |  5 ++---
+ 15 files changed, 42 insertions(+), 43 deletions(-)
 
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index eafe0488b10d4..2174688ff7a21 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -436,7 +436,7 @@ static int gfs2_read_folio(struct file *file, struct folio *folio)
+ 		error = mpage_read_folio(folio, gfs2_block_map);
+ 	}
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		return -EIO;
+ 
+ 	return error;
+diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
+index ef57d6aa42ebb..b430bbd917f19 100644
+--- a/fs/gfs2/file.c
++++ b/fs/gfs2/file.c
+@@ -1456,7 +1456,7 @@ static int gfs2_lock(struct file *file, int cmd, struct file_lock *fl)
+ 
+ 	if (!(fl->c.flc_flags & FL_POSIX))
+ 		return -ENOLCK;
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		if (lock_is_unlock(fl))
+ 			locks_lock_file_wait(file, fl);
+ 		return -EIO;
 diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 7aec6cfdfd91d..fef2c41995a17 100644
+index fef2c41995a17..281470d72a586 100644
 --- a/fs/gfs2/glock.c
 +++ b/fs/gfs2/glock.c
-@@ -756,7 +756,7 @@ __acquires(&gl->gl_lockref.lock)
+@@ -154,7 +154,7 @@ static bool glock_blocked_by_withdraw(struct gfs2_glock *gl)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+ 
+-	if (!gfs2_withdrawing_or_withdrawn(sdp))
++	if (!gfs2_withdrawn(sdp))
+ 		return false;
+ 	if (gl->gl_ops->go_flags & GLOF_NONDISK)
+ 		return false;
+@@ -270,7 +270,7 @@ static void __gfs2_glock_put(struct gfs2_glock *gl)
+ 	GLOCK_BUG_ON(gl, !list_empty(&gl->gl_holders));
+ 	if (mapping) {
+ 		truncate_inode_pages_final(mapping);
+-		if (!gfs2_withdrawing_or_withdrawn(sdp))
++		if (!gfs2_withdrawn(sdp))
+ 			GLOCK_BUG_ON(gl, !mapping_empty(mapping));
+ 	}
+ 	trace_gfs2_glock_put(gl);
+@@ -755,7 +755,7 @@ __acquires(&gl->gl_lockref.lock)
+ 	 * gfs2_gl_hash_clear calls clear_glock) and recovery is complete
  	 * then it's okay to tell dlm to unlock it.
  	 */
- 	if (unlikely(sdp->sd_log_error) && !gfs2_withdrawing_or_withdrawn(sdp))
--		gfs2_withdraw_delayed(sdp);
-+		gfs2_withdraw(sdp);
+-	if (unlikely(sdp->sd_log_error) && !gfs2_withdrawing_or_withdrawn(sdp))
++	if (unlikely(sdp->sd_log_error) && !gfs2_withdrawn(sdp))
+ 		gfs2_withdraw(sdp);
  	if (glock_blocked_by_withdraw(gl) &&
  	    (target != LM_ST_UNLOCKED ||
- 	     test_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags))) {
+@@ -803,7 +803,7 @@ __acquires(&gl->gl_lockref.lock)
+ 			 */
+ 		} else {
+ 			fs_err(sdp, "lm_lock ret %d\n", ret);
+-			GLOCK_BUG_ON(gl, !gfs2_withdrawing_or_withdrawn(sdp));
++			GLOCK_BUG_ON(gl, !gfs2_withdrawn(sdp));
+ 			return;
+ 		}
+ 	}
 diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 0c68ab4432b08..28b22cbfb5074 100644
+index 28b22cbfb5074..242e47926b39d 100644
 --- a/fs/gfs2/glops.c
 +++ b/fs/gfs2/glops.c
-@@ -45,7 +45,7 @@ static void gfs2_ail_error(struct gfs2_glock *gl, const struct buffer_head *bh)
- 	       gl->gl_name.ln_type, gl->gl_name.ln_number,
- 	       gfs2_glock2aspace(gl));
- 	gfs2_lm(sdp, "AIL error\n");
--	gfs2_withdraw_delayed(sdp);
-+	gfs2_withdraw(sdp);
- }
+@@ -175,7 +175,7 @@ static int gfs2_rgrp_metasync(struct gfs2_glock *gl)
  
- /**
-@@ -83,9 +83,6 @@ static void __gfs2_ail_flush(struct gfs2_glock *gl, bool fsync,
- 	GLOCK_BUG_ON(gl, !fsync && atomic_read(&gl->gl_ail_count));
- 	spin_unlock(&sdp->sd_ail_lock);
- 	gfs2_log_unlock(sdp);
--
--	if (gfs2_withdrawing(sdp))
--		gfs2_withdraw(sdp);
- }
+ 	filemap_fdatawrite_range(metamapping, start, end);
+ 	error = filemap_fdatawait_range(metamapping, start, end);
+-	WARN_ON_ONCE(error && !gfs2_withdrawing_or_withdrawn(sdp));
++	WARN_ON_ONCE(error && !gfs2_withdrawn(sdp));
+ 	mapping_set_error(metamapping, error);
+ 	if (error)
+ 		gfs2_io_error(sdp);
+diff --git a/fs/gfs2/lock_dlm.c b/fs/gfs2/lock_dlm.c
+index c18e732a04bd1..301e17345f52d 100644
+--- a/fs/gfs2/lock_dlm.c
++++ b/fs/gfs2/lock_dlm.c
+@@ -1195,7 +1195,7 @@ static void gdlm_recover_prep(void *arg)
+ 	struct gfs2_sbd *sdp = arg;
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
  
- 
-@@ -608,10 +605,10 @@ static int freeze_go_xmote_bh(struct gfs2_glock *gl)
- 		j_gl->gl_ops->go_inval(j_gl, DIO_METADATA);
- 
- 		error = gfs2_find_jhead(sdp->sd_jdesc, &head);
--		if (gfs2_assert_withdraw_delayed(sdp, !error))
-+		if (gfs2_assert_withdraw(sdp, !error))
- 			return error;
--		if (gfs2_assert_withdraw_delayed(sdp, head.lh_flags &
--						 GFS2_LOG_HEAD_UNMOUNT))
-+		if (gfs2_assert_withdraw(sdp, head.lh_flags &
-+					 GFS2_LOG_HEAD_UNMOUNT))
- 			return -EIO;
- 		gfs2_log_pointers_init(sdp, &head);
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_err(sdp, "recover_prep ignored due to withdraw.\n");
+ 		return;
  	}
-diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index db0e72adb9996..5dfdd1f3c5da6 100644
---- a/fs/gfs2/incore.h
-+++ b/fs/gfs2/incore.h
-@@ -599,7 +599,6 @@ enum {
- 	SDF_SKIP_DLM_UNLOCK	= 8,
- 	SDF_FORCE_AIL_FLUSH     = 9,
- 	SDF_FREEZE_INITIATOR	= 10,
--	SDF_WITHDRAWING		= 11, /* Will withdraw eventually */
- 	SDF_WITHDRAW_IN_PROG	= 12, /* Withdraw is in progress */
- 	SDF_REMOTE_WITHDRAW	= 13, /* Performing remote recovery */
- 	SDF_WITHDRAW_RECOVERY	= 14, /* Wait for journal recovery when we are
+@@ -1221,7 +1221,7 @@ static void gdlm_recover_slot(void *arg, struct dlm_slot *slot)
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+ 	int jid = slot->slot - 1;
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_err(sdp, "recover_slot jid %d ignored due to withdraw.\n",
+ 		       jid);
+ 		return;
+@@ -1250,7 +1250,7 @@ static void gdlm_recover_done(void *arg, struct dlm_slot *slots, int num_slots,
+ 	struct gfs2_sbd *sdp = arg;
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_err(sdp, "recover_done ignored due to withdraw.\n");
+ 		return;
+ 	}
+@@ -1281,7 +1281,7 @@ static void gdlm_recovery_result(struct gfs2_sbd *sdp, unsigned int jid,
+ {
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_err(sdp, "recovery_result jid %d ignored due to withdraw.\n",
+ 		       jid);
+ 		return;
 diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index ecc5c59b87008..56b6435c90d93 100644
+index 56b6435c90d93..84cd9d6ad2622 100644
 --- a/fs/gfs2/log.c
 +++ b/fs/gfs2/log.c
-@@ -114,7 +114,7 @@ __acquires(&sdp->sd_ail_lock)
- 			}
- 			if (!cmpxchg(&sdp->sd_log_error, 0, -EIO)) {
- 				gfs2_io_error_bh(sdp, bh);
--				gfs2_withdraw_delayed(sdp);
-+				gfs2_withdraw(sdp);
+@@ -118,7 +118,7 @@ __acquires(&sdp->sd_ail_lock)
  			}
  		}
  
-@@ -326,7 +326,7 @@ static int gfs2_ail1_empty_one(struct gfs2_sbd *sdp, struct gfs2_trans *tr,
- 		if (!buffer_uptodate(bh) &&
- 		    !cmpxchg(&sdp->sd_log_error, 0, -EIO)) {
- 			gfs2_io_error_bh(sdp, bh);
--			gfs2_withdraw_delayed(sdp);
-+			gfs2_withdraw(sdp);
+-		if (gfs2_withdrawing_or_withdrawn(sdp)) {
++		if (gfs2_withdrawn(sdp)) {
+ 			gfs2_remove_from_ail(bd);
+ 			continue;
  		}
- 		/*
- 		 * If we have space for revokes and the bd is no longer on any
-@@ -808,9 +808,6 @@ void gfs2_flush_revokes(struct gfs2_sbd *sdp)
- 	gfs2_log_lock(sdp);
- 	gfs2_ail1_empty(sdp, max_revokes);
- 	gfs2_log_unlock(sdp);
--
--	if (gfs2_withdrawing(sdp))
--		gfs2_withdraw(sdp);
- }
+@@ -835,7 +835,7 @@ void gfs2_write_log_header(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
+ 	struct super_block *sb = sdp->sd_vfs;
+ 	u64 dblock;
  
- /**
-@@ -988,9 +985,6 @@ static void empty_ail1_list(struct gfs2_sbd *sdp)
- 		if (gfs2_withdrawing_or_withdrawn(sdp))
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		return;
+ 
+ 	page = mempool_alloc(gfs2_page_pool, GFP_NOIO);
+@@ -982,7 +982,7 @@ static void empty_ail1_list(struct gfs2_sbd *sdp)
+ 		gfs2_ail1_wait(sdp);
+ 		empty = gfs2_ail1_empty(sdp, 0);
+ 
+-		if (gfs2_withdrawing_or_withdrawn(sdp))
++		if (gfs2_withdrawn(sdp))
  			break;
  	}
--
--	if (gfs2_withdrawing(sdp))
--		gfs2_withdraw(sdp);
  }
+@@ -1045,7 +1045,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 	 * Do this check while holding the log_flush_lock to prevent new
+ 	 * buffers from being added to the ail via gfs2_pin()
+ 	 */
+-	if (gfs2_withdrawing_or_withdrawn(sdp) ||
++	if (gfs2_withdrawn(sdp) ||
+ 	    !test_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags))
+ 		goto out;
  
- /**
-@@ -1072,7 +1066,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
- 			sdp->sd_log_tr = NULL;
- 			tr->tr_first = first_log_head;
- 			if (unlikely(frozen)) {
--				if (gfs2_assert_withdraw_delayed(sdp,
-+				if (gfs2_assert_withdraw(sdp,
- 				       !tr->tr_num_buf_new && !tr->tr_num_databuf_new))
- 					goto out_withdraw;
- 			}
-@@ -1097,7 +1091,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
- 		clear_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
- 
- 	if (unlikely(frozen))
--		if (gfs2_assert_withdraw_delayed(sdp, !reserved_revokes))
-+		if (gfs2_assert_withdraw(sdp, !reserved_revokes))
+@@ -1095,14 +1095,14 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
  			goto out_withdraw;
  
  	gfs2_ordered_write(sdp);
-@@ -1152,12 +1146,10 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
- 		reserved_blocks += (reserved_revokes - sdp->sd_ldptrs) / sdp->sd_inptrs;
- out:
- 	if (used_blocks != reserved_blocks) {
--		gfs2_assert_withdraw_delayed(sdp, used_blocks < reserved_blocks);
-+		gfs2_assert_withdraw(sdp, used_blocks < reserved_blocks);
- 		gfs2_log_release(sdp, reserved_blocks - used_blocks);
- 	}
- 	gfs2_trans_free(sdp, tr);
--	if (gfs2_withdrawing(sdp))
--		gfs2_withdraw(sdp);
- 	trace_gfs2_log_flush(sdp, 0, flags);
- 	return;
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		goto out_withdraw;
+ 	lops_before_commit(sdp, tr);
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		goto out_withdraw;
+ 	if (sdp->sd_jdesc)
+ 		gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		goto out_withdraw;
  
-@@ -1359,9 +1351,6 @@ int gfs2_logd(void *data)
+ 	if (sdp->sd_log_head != sdp->sd_log_flush_head) {
+@@ -1110,7 +1110,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 	} else if (sdp->sd_log_tail != sdp->sd_log_flush_tail && !sdp->sd_log_idle) {
+ 		log_write_header(sdp, flags);
+ 	}
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		goto out_withdraw;
+ 	lops_after_commit(sdp, tr);
+ 
+@@ -1128,7 +1128,7 @@ static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
+ 	if (!(flags & GFS2_LOG_HEAD_FLUSH_NORMAL)) {
+ 		if (!sdp->sd_log_idle) {
+ 			empty_ail1_list(sdp);
+-			if (gfs2_withdrawing_or_withdrawn(sdp))
++			if (gfs2_withdrawn(sdp))
+ 				goto out_withdraw;
+ 			log_write_header(sdp, flags);
+ 		}
+@@ -1303,7 +1303,7 @@ int gfs2_logd(void *data)
+ 
+ 	set_freezable();
+ 	while (!kthread_should_stop()) {
+-		if (gfs2_withdrawing_or_withdrawn(sdp))
++		if (gfs2_withdrawn(sdp))
+ 			break;
+ 
+ 		/* Check for errors writing to the journal */
+@@ -1346,7 +1346,7 @@ int gfs2_logd(void *data)
+ 				gfs2_ail_flush_reqd(sdp) ||
+ 				gfs2_jrnl_flush_reqd(sdp) ||
+ 				sdp->sd_log_error ||
+-				gfs2_withdrawing_or_withdrawn(sdp) ||
++				gfs2_withdrawn(sdp) ||
+ 				kthread_should_stop(),
  				t);
  	}
+diff --git a/fs/gfs2/meta_io.c b/fs/gfs2/meta_io.c
+index 7fb11ff71b5a9..3ee90a4452b9d 100644
+--- a/fs/gfs2/meta_io.c
++++ b/fs/gfs2/meta_io.c
+@@ -263,7 +263,7 @@ int gfs2_meta_read(struct gfs2_glock *gl, u64 blkno, int flags,
+ 	struct buffer_head *bh, *bhs[2];
+ 	int num = 0;
  
--	if (gfs2_withdrawing(sdp))
--		gfs2_withdraw(sdp);
--
- 	return 0;
+-	if (gfs2_withdrawing_or_withdrawn(sdp) &&
++	if (gfs2_withdrawn(sdp) &&
+ 	    !gfs2_withdraw_in_prog(sdp)) {
+ 		*bhp = NULL;
+ 		return -EIO;
+@@ -322,7 +322,7 @@ int gfs2_meta_read(struct gfs2_glock *gl, u64 blkno, int flags,
+ 
+ int gfs2_meta_wait(struct gfs2_sbd *sdp, struct buffer_head *bh)
+ {
+-	if (gfs2_withdrawing_or_withdrawn(sdp) &&
++	if (gfs2_withdrawn(sdp) &&
+ 	    !gfs2_withdraw_in_prog(sdp))
+ 		return -EIO;
+ 
+@@ -334,7 +334,7 @@ int gfs2_meta_wait(struct gfs2_sbd *sdp, struct buffer_head *bh)
+ 			gfs2_io_error_bh_wd(sdp, bh);
+ 		return -EIO;
+ 	}
+-	if (gfs2_withdrawing_or_withdrawn(sdp) &&
++	if (gfs2_withdrawn(sdp) &&
+ 	    !gfs2_withdraw_in_prog(sdp))
+ 		return -EIO;
+ 
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index c42982bdd4b20..3138cc4658d3d 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -1040,7 +1040,7 @@ static int gfs2_lm_mount(struct gfs2_sbd *sdp, int silent)
+ void gfs2_lm_unmount(struct gfs2_sbd *sdp)
+ {
+ 	const struct lm_lockops *lm = sdp->sd_lockstruct.ls_ops;
+-	if (!gfs2_withdrawing_or_withdrawn(sdp) && lm->lm_unmount)
++	if (!gfs2_withdrawn(sdp) && lm->lm_unmount)
+ 		lm->lm_unmount(sdp, true);
  }
  
-diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-index 9c8c305a75c46..0ed81a685fcd0 100644
---- a/fs/gfs2/lops.c
-+++ b/fs/gfs2/lops.c
-@@ -209,7 +209,7 @@ static void gfs2_end_log_write(struct bio *bio)
- 		if (!cmpxchg(&sdp->sd_log_error, 0, err))
- 			fs_err(sdp, "Error %d writing to journal, jid=%u\n",
- 			       err, sdp->sd_jdesc->jd_jid);
--		gfs2_withdraw_delayed(sdp);
-+		gfs2_withdraw(sdp);
- 		/* prevent more writes to the journal */
- 		clear_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index c301901ac392c..56dab2f0ae010 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -125,7 +125,7 @@ static void gfs2_qd_dispose(struct gfs2_quota_data *qd)
+ 	hlist_bl_del_rcu(&qd->qd_hlist);
+ 	spin_unlock_bucket(qd->qd_hash);
+ 
+-	if (!gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (!gfs2_withdrawn(sdp)) {
+ 		gfs2_assert_warn(sdp, !qd->qd_change);
+ 		gfs2_assert_warn(sdp, !qd->qd_slot_ref);
+ 		gfs2_assert_warn(sdp, !qd->qd_bh_count);
+@@ -1564,7 +1564,7 @@ static void quotad_error(struct gfs2_sbd *sdp, const char *msg, int error)
+ {
+ 	if (error == 0 || error == -EROFS)
+ 		return;
+-	if (!gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (!gfs2_withdrawn(sdp)) {
+ 		if (!cmpxchg(&sdp->sd_log_error, 0, error))
+ 			fs_err(sdp, "gfs2_quotad: %s error %d\n", msg, error);
  		wake_up(&sdp->sd_logd_waitq);
+@@ -1596,7 +1596,7 @@ int gfs2_quotad(void *data)
+ 	while (!kthread_should_stop()) {
+ 		unsigned long t;
+ 
+-		if (gfs2_withdrawing_or_withdrawn(sdp))
++		if (gfs2_withdrawn(sdp))
+ 			break;
+ 
+ 		now = jiffies;
+@@ -1627,7 +1627,7 @@ int gfs2_quotad(void *data)
+ 		t = min(statfs_deadline - now, quotad_deadline - now);
+ 		wait_event_freezable_timeout(sdp->sd_quota_wait,
+ 				sdp->sd_statfs_force_sync ||
+-				gfs2_withdrawing_or_withdrawn(sdp) ||
++				gfs2_withdrawn(sdp) ||
+ 				kthread_should_stop(),
+ 				t);
+ 
+diff --git a/fs/gfs2/recovery.c b/fs/gfs2/recovery.c
+index 24250478b085d..4873b1c0e1bdf 100644
+--- a/fs/gfs2/recovery.c
++++ b/fs/gfs2/recovery.c
+@@ -408,7 +408,7 @@ void gfs2_recover_func(struct work_struct *work)
+ 	int error = 0;
+ 	int jlocked = 0;
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_err(sdp, "jid=%u: Recovery not attempted due to withdraw.\n",
+ 		       jd->jd_jid);
+ 		goto fail;
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 3985da448a41d..0e08d2c5c1555 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -137,7 +137,7 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 	int error;
+ 
+ 	j_gl->gl_ops->go_inval(j_gl, DIO_METADATA);
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		return -EIO;
+ 
+ 	if (sdp->sd_log_sequence == 0) {
+@@ -147,7 +147,7 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 	}
+ 
+ 	error = gfs2_quota_init(sdp);
+-	if (!error && gfs2_withdrawing_or_withdrawn(sdp))
++	if (!error && gfs2_withdrawn(sdp))
+ 		error = -EIO;
+ 	if (!error)
+ 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+@@ -491,7 +491,7 @@ static void gfs2_dirty_inode(struct inode *inode, int flags)
+ 	if (unlikely(!ip->i_gl))
+ 		return;
+ 
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		return;
+ 	if (!gfs2_glock_is_locked_by_me(ip->i_gl)) {
+ 		ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_EXCLUSIVE, 0, &gh);
+@@ -597,7 +597,7 @@ static void gfs2_put_super(struct super_block *sb)
+ 	if (!sb_rdonly(sb))
+ 		gfs2_make_fs_ro(sdp);
+ 	else {
+-		if (gfs2_withdrawing_or_withdrawn(sdp))
++		if (gfs2_withdrawn(sdp))
+ 			gfs2_destroy_threads(sdp);
+ 
+ 		gfs2_quota_cleanup(sdp);
+@@ -777,7 +777,7 @@ static int gfs2_freeze_fs(struct super_block *sb)
+ 	if (test_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags)) {
+ 		gfs2_log_flush(sdp, NULL, GFS2_LOG_HEAD_FLUSH_FREEZE |
+ 			       GFS2_LFC_FREEZE_GO_SYNC);
+-		if (gfs2_withdrawing_or_withdrawn(sdp))
++		if (gfs2_withdrawn(sdp))
+ 			return -EIO;
+ 	}
+ 	return 0;
 diff --git a/fs/gfs2/sys.c b/fs/gfs2/sys.c
-index 1213f97419f64..8093a596661ec 100644
+index 8093a596661ec..5439a65549af7 100644
 --- a/fs/gfs2/sys.c
 +++ b/fs/gfs2/sys.c
-@@ -84,7 +84,6 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
- 		     "Force AIL Flush:          %d\n"
- 		     "FS Freeze Initiator:      %d\n"
- 		     "FS Frozen:                %d\n"
--		     "Withdrawing:              %d\n"
- 		     "Withdraw In Prog:         %d\n"
- 		     "Remote Withdraw:          %d\n"
- 		     "Withdraw Recovery:        %d\n"
-@@ -117,7 +116,6 @@ static ssize_t status_show(struct gfs2_sbd *sdp, char *buf)
- 		     test_bit(SDF_FORCE_AIL_FLUSH, &f),
- 		     test_bit(SDF_FREEZE_INITIATOR, &f),
- 		     test_bit(SDF_FROZEN, &f),
--		     test_bit(SDF_WITHDRAWING, &f),
- 		     test_bit(SDF_WITHDRAW_IN_PROG, &f),
- 		     test_bit(SDF_REMOTE_WITHDRAW, &f),
- 		     test_bit(SDF_WITHDRAW_RECOVERY, &f),
+@@ -191,7 +191,7 @@ static ssize_t freeze_store(struct gfs2_sbd *sdp, const char *buf, size_t len)
+ 
+ static ssize_t withdraw_show(struct gfs2_sbd *sdp, char *buf)
+ {
+-	unsigned int b = gfs2_withdrawing_or_withdrawn(sdp);
++	unsigned int b = gfs2_withdrawn(sdp);
+ 	return sysfs_emit(buf, "%u\n", b);
+ }
+ 
+diff --git a/fs/gfs2/trans.c b/fs/gfs2/trans.c
+index 075f7e9abe47c..f0cfdb5c5f2d0 100644
+--- a/fs/gfs2/trans.c
++++ b/fs/gfs2/trans.c
+@@ -289,7 +289,7 @@ void gfs2_trans_add_meta(struct gfs2_glock *gl, struct buffer_head *bh)
+ 		       (unsigned long long)bd->bd_bh->b_blocknr);
+ 		BUG();
+ 	}
+-	if (gfs2_withdrawing_or_withdrawn(sdp)) {
++	if (gfs2_withdrawn(sdp)) {
+ 		fs_info(sdp, "GFS2:adding buf while withdrawn! 0x%llx\n",
+ 			(unsigned long long)bd->bd_bh->b_blocknr);
+ 		goto out_unlock;
 diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index c454bea101dec..e15e11f6f1616 100644
+index e15e11f6f1616..4c3b44eafc9f7 100644
 --- a/fs/gfs2/util.c
 +++ b/fs/gfs2/util.c
-@@ -364,8 +364,7 @@ void gfs2_withdraw(struct gfs2_sbd *sdp)
-  */
- 
+@@ -366,7 +366,7 @@ void gfs2_withdraw(struct gfs2_sbd *sdp)
  void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
--			    const char *function, char *file, unsigned int line,
--			    bool delayed)
-+			    const char *function, char *file, unsigned int line)
+ 			    const char *function, char *file, unsigned int line)
  {
- 	if (gfs2_withdrawing_or_withdrawn(sdp))
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
  		return;
-@@ -375,17 +374,7 @@ void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
- 	       "function = %s, file = %s, line = %u\n",
- 	       assertion, function, file, line);
  
--	/*
--	 * If errors=panic was specified on mount, it won't help to delay the
--	 * withdraw.
--	 */
--	if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
--		delayed = false;
--
--	if (delayed)
--		gfs2_withdraw_delayed(sdp);
--	else
--		gfs2_withdraw(sdp);
-+	gfs2_withdraw(sdp);
- 	dump_stack();
- }
+ 	fs_err(sdp,
+@@ -524,7 +524,7 @@ void gfs2_io_error_bh_i(struct gfs2_sbd *sdp, struct buffer_head *bh,
+ 			const char *function, char *file, unsigned int line,
+ 			bool withdraw)
+ {
+-	if (gfs2_withdrawing_or_withdrawn(sdp))
++	if (gfs2_withdrawn(sdp))
+ 		return;
  
+ 	fs_err(sdp, "fatal: I/O error - "
 diff --git a/fs/gfs2/util.h b/fs/gfs2/util.h
-index f424ef2523c43..51347a467b897 100644
+index 51347a467b897..832c6c6eef414 100644
 --- a/fs/gfs2/util.h
 +++ b/fs/gfs2/util.h
-@@ -37,24 +37,14 @@ do { \
- 
- 
- void gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
--			    const char *function, char *file, unsigned int line,
--			    bool delayed);
-+			    const char *function, char *file, unsigned int line);
- 
- #define gfs2_assert_withdraw(sdp, assertion) \
- 	({ \
- 		bool _bool = (assertion); \
- 		if (unlikely(!_bool)) \
- 			gfs2_assert_withdraw_i((sdp), #assertion, \
--					__func__, __FILE__, __LINE__, false); \
--		!_bool; \
--	})
--
--#define gfs2_assert_withdraw_delayed(sdp, assertion) \
--	({ \
--		bool _bool = (assertion); \
--		if (unlikely(!_bool)) \
--			gfs2_assert_withdraw_i((sdp), #assertion, \
--					__func__, __FILE__, __LINE__, true); \
-+					__func__, __FILE__, __LINE__); \
- 		!_bool; \
- 	})
- 
-@@ -192,15 +182,6 @@ static inline unsigned int gfs2_tune_get_i(struct gfs2_tune *gt,
- 	return x;
+@@ -183,11 +183,10 @@ static inline unsigned int gfs2_tune_get_i(struct gfs2_tune *gt,
  }
  
--/**
-- * gfs2_withdraw_delayed - withdraw as soon as possible without deadlocks
-- * @sdp: the superblock
-- */
--static inline void gfs2_withdraw_delayed(struct gfs2_sbd *sdp)
--{
--	set_bit(SDF_WITHDRAWING, &sdp->sd_flags);
--}
--
  /**
-  * gfs2_withdrawing_or_withdrawn - test whether the file system is withdrawing
-  *                                 or withdrawn
-@@ -208,18 +189,7 @@ static inline void gfs2_withdraw_delayed(struct gfs2_sbd *sdp)
+- * gfs2_withdrawing_or_withdrawn - test whether the file system is withdrawing
+- *                                 or withdrawn
++ * gfs2_withdrawn - test whether the file system is withdrawn
+  * @sdp: the superblock
   */
- static inline bool gfs2_withdrawing_or_withdrawn(struct gfs2_sbd *sdp)
+-static inline bool gfs2_withdrawing_or_withdrawn(struct gfs2_sbd *sdp)
++static inline bool gfs2_withdrawn(struct gfs2_sbd *sdp)
  {
--	return unlikely(test_bit(SDF_WITHDRAWN, &sdp->sd_flags) ||
--			test_bit(SDF_WITHDRAWING, &sdp->sd_flags));
--}
--
--/**
-- * gfs2_withdrawing - check if a withdraw is pending
-- * @sdp: the superblock
-- */
--static inline bool gfs2_withdrawing(struct gfs2_sbd *sdp)
--{
--	return unlikely(test_bit(SDF_WITHDRAWING, &sdp->sd_flags) &&
--			!test_bit(SDF_WITHDRAWN, &sdp->sd_flags));
-+	return unlikely(test_bit(SDF_WITHDRAWN, &sdp->sd_flags));
+ 	return unlikely(test_bit(SDF_WITHDRAWN, &sdp->sd_flags));
  }
- 
- static inline bool gfs2_withdraw_in_prog(struct gfs2_sbd *sdp)
 -- 
 2.53.0
 
