@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8246B4F3EDE;
-	Tue, 13 Oct 2026 11:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80014F5DFB;
+	Tue, 13 Oct 2026 12:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892799; cv=none; b=M4darvmRtC3j/YPkrF9ZOm0z9d0RC/cMe2FkxdGr6a3fMOWR/YEPQXLSN8LydiLttY8D8NSr/o6v46cQaurQvA6Mc8f/sfASvUPay2lPggXZXmU+7N9EmLGwqWNYfWsVRgN+lga4wMg8SsclOfh8J7aoDQYr3xWhr7MldHLa39o=
+	t=1791892804; cv=none; b=XfPVcbgME+PlUNMLQunjjCdL6CZHX6fSwp7MR2VPnLWuIChfqSRtcra9XkVpBM9pZiEO69WWBVNmfBmlO2nkcvZNyR7Dv+d0AuFDSzJrA/8EqcGgp+xXVmCbj+srty/Dz3AgaUggXwhUIICt9GaQIhlWDBUMqC0uvCmGGFvlevM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892799; c=relaxed/simple;
-	bh=PVBAqCAX2BWH/Zl9U92cd1oaLwgbXMTR0LF2p0sfSYM=;
+	s=arc-20240116; t=1791892804; c=relaxed/simple;
+	bh=/m3BQhggb9giUBmTNgrJHgjjDJWjHqlISvGqapnzLII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOJr2oIvH5Us+sLZ3cPuOFz5NmdcxN2U10Kkr6mXVBBl47m6/XoO5XIoeYXlxSrypTtIKs8xi/6WNHpoL7JB7eq3ApdhF0ZJzzaZmEUpBtH6iuCAeLMqkjq+hYmiB4iyV3LfRe6bbBvnyTci+J7RgQgrHGy7uubRrhHDorAHMuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1vCxpG4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjZwqste4kr1dWP+jipCuqsmbSnn8qqvsKjF0KRxXOawQAl4V1C7Q+XLclDgA83WF6jpTPeYmG4o3tGz5RJoPxDNY/G9bQ/iSyfO3zoExNvYpqncBv0348C9kSEcSisIlj3eRmvqREg961UaiYsrfytKOjI+RCSoqFr9bEWGEzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdhIzJpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1vCxpG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D181F000FF;
-	Tue, 13 Oct 2026 11:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdhIzJpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF551F000FF;
+	Tue, 13 Oct 2026 12:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892798;
-	bh=8YOhnB3A2QNXZu8fcAIUX5v5/qWH3yarQ2Ukkn+WsY8=;
+	s=korg; t=1791892802;
+	bh=Tu9Wk+rNvB+u9/eQmA4x0Md7MOBEJevoP3ESQoOGeZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1vCxpG4Gc0tkAMdnwfggkLbvW5x4Jl7ZXEeVEu7PoJcLYgXgb+iYtuYd05gViis7
-	 kW459Ugie3aljwlyZ6a3TRZ5TEYB+Yvc5QLxsAX4doDV1phG89yFFmSmvkOlL7RhiK
-	 32+aR52NTCjfhZHeb9XIV3+QRQ117cXVOYglnZaE=
+	b=IdhIzJpKxC40X4/jVpOjMSxYJl/qhV12gS9p6eFC+AvjjL8tCkaY2bhYsBL2UYB8r
+	 3CceUoGd0kLolegr469g2It/vsJGdvtdlkHbAaZpBnjsAW95aSEIIfisXAf64k72Xj
+	 GbERR2wRLmD2jW+Xus11nFHd2PhLTpJXGWz0/4lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Dave Jones <davej@codemonkey.org.uk>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Jerome Tollet <jtollet@cisco.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/621] fs: Free any excess xarray nodes in clear_inode()
-Date: Tue, 13 Oct 2026 13:29:57 +0200
-Message-ID: <20261013112920.919091677@linuxfoundation.org>
+Subject: [PATCH 6.18 003/621] net/mlx5e: Prevent stale XSK buffer release on refill retry
+Date: Tue, 13 Oct 2026 13:29:58 +0200
+Message-ID: <20261013112920.942350976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -55,66 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Jerome Tollet <jtollet@cisco.com>
 
-[ Upstream commit ee3f011250104129893d8e9599147e457d4d7280 ]
+[ Upstream commit e01620844c5c88b6fcf819d171df8e3976a0e76f ]
 
-For many years we've had a hard to hit leak of xarray nodes.  Hugh
-documented it well in commit 786b31121a2c.  Recently people and
-syzbot have found ways to force it to happen with madvise.  Rather
-than fix the leaks where they happen, just call xa_destroy() which
-has the side-effect of cycling the i_pages lock.
+When an XDP redirect to an AF_XDP socket fails because its RX ring is
+full, the XSK core frees the buffer. During the subsequent batched refill
+of a legacy cyclic RQ, mlx5e also releases the WQE's XSK buffer before
+allocating a replacement. If that refill succeeds only partially, a WQE
+left without a replacement retains its old buffer pointer.
 
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Dave Jones <davej@codemonkey.org.uk>
-Link: https://lore.kernel.org/all/20260121062243.1893129-1-tujinjiang@huawei.com/
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://patch.msgid.link/20260623192850.1595958-1-willy@infradead.org
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+The buffer can meanwhile be allocated to another WQE. A later refill
+retry can then free the live buffer through the stale pointer and publish
+the same UMEM frame twice.
+
+Mark the WQE as released immediately after the driver-side free. The flag
+is already cleared when a replacement buffer is assigned, so refill
+retries no longer release stale pointers.
+
+The failure is silent and produces no kernel warning or splat. A
+standalone legacy cyclic-RQ zero-copy libxsk reproducer, using 64-byte UDP
+traffic offered at 12 Mpps, detected it: stock stopped after 2,854,914
+packets in 4.094 seconds, with 4,542 xdp_rx_ring_full events and 64
+ownership/double-publication errors. With this change it processed
+356,904,225 packets in 30 seconds despite 571,405 xdp_rx_ring_full events,
+with no ownership or data errors.
+
+Fixes: 3f93f82988bc ("net/mlx5e: RX, Defer page release in legacy rq for better recycling")
+Cc: stable@vger.kernel.org
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Jerome Tollet <jtollet@cisco.com>
+Link: https://patch.msgid.link/20260824141645.23700-2-jtollet@cisco.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 44891fb7cd436..24762fd1f2f77 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -745,21 +745,18 @@ void dump_mapping(const struct address_space *mapping)
- void clear_inode(struct inode *inode)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 17b74a97138b5..e688ce9d383c5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -383,8 +383,11 @@ static inline void mlx5e_free_rx_wqe(struct mlx5e_rq *rq,
+ 
+ static void mlx5e_xsk_free_rx_wqe(struct mlx5e_wqe_frag_info *wi)
  {
- 	/*
--	 * We have to cycle the i_pages lock here because reclaim can be in the
--	 * process of removing the last page (in __filemap_remove_folio())
--	 * and we must not free the mapping under it.
-+	 * We have to cycle the i_pages lock here because reclaim
-+	 * can be in the process of removing the last page (in
-+	 * __filemap_remove_folio()) and we must not free the mapping
-+	 * under it.  We also remove nodes which are empty; these
-+	 * can occur in two different ways.  The first is that radix
-+	 * tree expansion can fail partway and the second is that THP
-+	 * collapse_file() can allocate some temporary nodes and not
-+	 * clean them up.
- 	 */
--	xa_lock_irq(&inode->i_data.i_pages);
-+	xa_destroy(&inode->i_data.i_pages);
+-	if (!(wi->flags & BIT(MLX5E_WQE_FRAG_SKIP_RELEASE)))
+-		xsk_buff_free(*wi->xskp);
++	if (wi->flags & BIT(MLX5E_WQE_FRAG_SKIP_RELEASE))
++		return;
 +
- 	BUG_ON(inode->i_data.nrpages);
--	/*
--	 * Almost always, mapping_empty(&inode->i_data) here; but there are
--	 * two known and long-standing ways in which nodes may get left behind
--	 * (when deep radix-tree node allocation failed partway; or when THP
--	 * collapse_file() failed). Until those two known cases are cleaned up,
--	 * or a cleanup function is called here, do not BUG_ON(!mapping_empty),
--	 * nor even WARN_ON(!mapping_empty).
--	 */
--	xa_unlock_irq(&inode->i_data.i_pages);
- 	BUG_ON(!list_empty(&inode->i_data.i_private_list));
- 	BUG_ON(!(inode->i_state & I_FREEING));
- 	BUG_ON(inode->i_state & I_CLEAR);
++	xsk_buff_free(*wi->xskp);
++	wi->flags |= BIT(MLX5E_WQE_FRAG_SKIP_RELEASE);
+ }
+ 
+ static void mlx5e_dealloc_rx_wqe(struct mlx5e_rq *rq, u16 ix)
 -- 
 2.53.0
 
