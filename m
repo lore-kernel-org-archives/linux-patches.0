@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DA64F3EA5;
-	Tue, 13 Oct 2026 12:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE984A205A;
+	Tue, 13 Oct 2026 12:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894592; cv=none; b=UKspax3L2zFel1GXmPQGFPC2ni5/F79L7RfzS9aa5jhoH0EwgdabO4F5jB+926CzljEea+vkX4dWC9nisLxQETqSEetwB4cahLe8CzPxQKss8fC699y3lpiPfAJNeMpcdl2OBOelOAuGgQacPVskSL9WsbxmNv1Cbp1x2+/Lm7w=
+	t=1791894595; cv=none; b=d4HZ7bqAEDeomHDyZ4DOFtJNQ0VytZ8wczU4Z5JXBmUu9j62Vfx2GIflguuNQyI656xLL0Tasq4cYUWtD4dQYs7RBwL9Lod972N0AhqAGCT4YgXLwhoP464fm6HmaXlzDMkjwYOjhh8tZI/Gb8OMnbJMA3uwGWvzy2qyvnR6nNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894592; c=relaxed/simple;
-	bh=+hKLdiy3vV506XAeIY68MOhuNCG0fnqyQbbbFv7yhkw=;
+	s=arc-20240116; t=1791894595; c=relaxed/simple;
+	bh=+EhLQj1bUIBYkZqTIZ7matsJF79jkiAg/TXj4hBVwCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o99novlMkkoEJra41jIoVTQmH5caqg8BnV2KwK5q8FlbYqjG3ZKg6LHL2pHxzFOOi/fKHF86FscYgJp2Tg1vUAPettYzx/JwN5AbhlmGDLxxIZWMHy5JjRDsqRuiRU8lb4vEdDp8JvcJ2yA81In1MY3AY4XEwlzfCuQKlbsGhqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mox6btTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i2AmQnoFtgyTX2NOGMyKFmXl/slncRorm0XowFL7qrbAeoFGdlx/LsxezB/nNzhOAoyJPk4T29HisGbqrmsFaIRqQ7CR3BmAVidSlMcaGsCAjqZuFJ8YKdAXmPW0flNgTYngdd3o3Luf+x2qeBzGMxjESoTgdaGbT1dbeQlJZkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+57t8CO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mox6btTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998961F000FF;
-	Tue, 13 Oct 2026 12:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+57t8CO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8142F1F000FF;
+	Tue, 13 Oct 2026 12:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894591;
-	bh=GEF1+QWPY/IX5vqpooRzt4mpovlZjtHO3D5y01kAzBY=;
+	s=korg; t=1791894594;
+	bh=7e38523VNearjxua7Z5StnCingDOF3j1DRzLqQlFaJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mox6btTc8fG7os9cyr/P9nO8DK2IRRszeHRmBcT5KsLVvZnt7ZQ6wZOjqzZ2p9aYN
-	 wW1KAKh5ZpdkuX8ex1+AAEm6DdTIOhAPniUBFMludJ1G3rB5IeJXLO05hHRmh+cahu
-	 rbfwwsihrGzyPLHsVGbHLGgqnqoiQo1H6fsGnniA=
+	b=o+57t8COdcWWYlT8tssFB0KQIsOvJNT06X+V42PY6844r2+MiKSOLrAJagcnTMjS9
+	 B+jgkdy/IElBNdYxJjl3D6+jAIFR/UtI3KMibZ3iKNOfRETxT8UFsQ8Z/n8cmczqMr
+	 xNZO+S4CqS6smBEytbowF3woLD+ho/auS0ZXEDrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Slepecki <jakub.slepecki@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 611/621] ice: fix broken Rx on VFs
-Date: Tue, 13 Oct 2026 13:40:06 +0200
-Message-ID: <20261013112935.297304431@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.18 612/621] s390/zcrypt: Improve CCA CPRB length and overflow checks
+Date: Tue, 13 Oct 2026 13:40:07 +0200
+Message-ID: <20261013112935.321093465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,47 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 436fa8e7d1a119ec90f39e7c2ce0f3a146652899 upstream.
+commit 35ac6754ba6da45fd193f5ce3f665f7490b830d5 upstream.
 
-Since the tagged commit, ice stopped respecting Rx buffer length
-passed from VFs.
-At that point, the buffer length was hardcoded in ice, so VFs still
-worked up to some point (until, for example, a VF wanted an MTU
-larger than its PF).
-The next commit 93f53db9f9dc ("ice: switch to Page Pool"), broke
-Rx on VFs completely since ice started accounting per-queue buffer
-lengths again, but now VF queues always had their length zeroed, as
-ice was already ignoring what iavf was passing to it.
+The xcrb_msg_to_type6cprb_msgx() function lacks proper input
+validation, creating security vulnerabilities:
+1. Integer overflow after CEIL4 alignment: Signed int variables could
+   overflow during 4-byte boundary alignment, causing undersized
+   buffer allocations or incorrect bounds checking.
+2. Missing minimum size validation: The CPRBX structure is copied from
+   userspace without verifying sufficient buffer length. Undersized
+   buffers cause uninitialized memory access when reading structure
+   fields like cprbx.cprb_len and cprbx.domain.
+3. Arithmetic overflow in sum calculations: Adding control block and
+   data block sizes could overflow, bypassing size checks and enabling
+   buffer overflows.
 
-Restore the line that initializes the buffer length on VF queues
-basing on the virtchnl messages.
+Fix by using size_t for length calculations, adding U32_MAX boundary
+checks after alignment, validating minimum control block size before
+copying from userspace, and detecting sum calculation overflows.
 
-Fixes: 3a4f419f7509 ("ice: drop page splitting and recycling")
-Reported-by: Jakub Slepecki <jakub.slepecki@intel.com>
-Reviewed-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Jakub Slepecki <jakub.slepecki@intel.com>
-Link: https://patch.msgid.link/20251124170735.3077425-1-aleksander.lobakin@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e2c6d91eb8b1 ("s390/zcrypt: Rework domain processing within zcrypt device driver")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 7.1+
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/virt/queues.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/s390/crypto/zcrypt_msgtype6.c |   81 +++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 44 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/virt/queues.c
-+++ b/drivers/net/ethernet/intel/ice/virt/queues.c
-@@ -863,6 +863,9 @@ int ice_vc_cfg_qs_msg(struct ice_vf *vf,
- 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
- 			     qpi->rxq.databuffer_size < 128))
- 				goto error_param;
+--- a/drivers/s390/crypto/zcrypt_msgtype6.c
++++ b/drivers/s390/crypto/zcrypt_msgtype6.c
+@@ -343,49 +343,39 @@ static int xcrb_msg_to_type6cprb_msgx(bo
+ 		};
+ 	} __packed * msg = ap_msg->msg;
+ 
+-	int rcblen = CEIL4(xcrb->request_control_blk_length);
+-	int req_sumlen, resp_sumlen;
+-	char *req_data = ap_msg->msg + sizeof(struct type6_hdr) + rcblen;
+-	char *function_code;
+-
+-	if (CEIL4(xcrb->request_control_blk_length) <
+-			xcrb->request_control_blk_length)
+-		return -EINVAL; /* overflow after alignment*/
+-
+-	/* length checks */
+-	ap_msg->len = sizeof(struct type6_hdr) +
+-		CEIL4(xcrb->request_control_blk_length) +
+-		xcrb->request_data_length;
++	size_t req_cblen, rep_cblen, req_sumlen, rep_sumlen;
++	char *function_code, *req_data;
 +
-+			ring->rx_buf_len = qpi->rxq.databuffer_size;
-+
- 			if (qpi->rxq.max_pkt_size > max_frame_size ||
- 			    qpi->rxq.max_pkt_size < 64)
- 				goto error_param;
++	/* request length and overflow checks */
++	if (xcrb->request_control_blk_length < sizeof(struct CPRBX))
++		return -EINVAL;
++	req_cblen = CEIL4((size_t)xcrb->request_control_blk_length);
++	if (req_cblen > U32_MAX)
++		return -EINVAL;
++	req_sumlen = req_cblen + xcrb->request_data_length;
++	if (req_sumlen > U32_MAX)
++		return -EINVAL;
++	ap_msg->len = sizeof(struct type6_hdr) + req_sumlen;
+ 	if (ap_msg->len > ap_msg->bufsize)
+ 		return -EINVAL;
+-
+-	/*
+-	 * Overflow check
+-	 * sum must be greater (or equal) than the largest operand
+-	 */
+-	req_sumlen = CEIL4(xcrb->request_control_blk_length) +
+-			xcrb->request_data_length;
+-	if ((CEIL4(xcrb->request_control_blk_length) <=
+-	     xcrb->request_data_length) ?
++	if (req_cblen <= xcrb->request_data_length ?
+ 	    req_sumlen < xcrb->request_data_length :
+-	    req_sumlen < CEIL4(xcrb->request_control_blk_length)) {
++	    req_sumlen < req_cblen) {
+ 		return -EINVAL;
+ 	}
+ 
+-	if (CEIL4(xcrb->reply_control_blk_length) <
+-			xcrb->reply_control_blk_length)
+-		return -EINVAL; /* overflow after alignment*/
+-
+-	/*
+-	 * Overflow check
+-	 * sum must be greater (or equal) than the largest operand
+-	 */
+-	resp_sumlen = CEIL4(xcrb->reply_control_blk_length) +
+-			xcrb->reply_data_length;
+-	if ((CEIL4(xcrb->reply_control_blk_length) <=
+-	     xcrb->reply_data_length) ?
+-	    resp_sumlen < xcrb->reply_data_length :
+-	    resp_sumlen < CEIL4(xcrb->reply_control_blk_length)) {
++	/* reply length and overflow checks */
++	if (xcrb->reply_control_blk_length < sizeof(struct CPRBX))
++		return -EINVAL;
++	rep_cblen = CEIL4((size_t)xcrb->reply_control_blk_length);
++	if (rep_cblen > U32_MAX)
++		return -EINVAL;
++	rep_sumlen = rep_cblen + xcrb->reply_data_length;
++	if (rep_sumlen > U32_MAX)
++		return -EINVAL;
++	if (rep_cblen <= xcrb->reply_data_length ?
++	    rep_sumlen < xcrb->reply_data_length :
++	    rep_sumlen < rep_cblen) {
+ 		return -EINVAL;
+ 	}
+ 
+@@ -394,7 +384,7 @@ static int xcrb_msg_to_type6cprb_msgx(bo
+ 	memcpy(msg->hdr.agent_id, &xcrb->agent_ID, sizeof(xcrb->agent_ID));
+ 	msg->hdr.tocardlen1 = xcrb->request_control_blk_length;
+ 	if (xcrb->request_data_length) {
+-		msg->hdr.offset2 = msg->hdr.offset1 + rcblen;
++		msg->hdr.offset2 = msg->hdr.offset1 + req_cblen;
+ 		msg->hdr.tocardlen2 = xcrb->request_data_length;
+ 	}
+ 	msg->hdr.fromcardlen1 = xcrb->reply_control_blk_length;
+@@ -405,8 +395,8 @@ static int xcrb_msg_to_type6cprb_msgx(bo
+ 			     xcrb->request_control_blk_addr,
+ 			     xcrb->request_control_blk_length))
+ 		return -EFAULT;
+-	if (msg->cprbx.cprb_len + sizeof(msg->hdr.function_code) >
+-	    xcrb->request_control_blk_length)
++	/* copy subfunction code into AP msg type 6 function code field */
++	if (msg->cprbx.cprb_len > req_cblen - sizeof(msg->hdr.function_code))
+ 		return -EINVAL;
+ 	function_code = ((unsigned char *)&msg->cprbx) + msg->cprbx.cprb_len;
+ 	memcpy(msg->hdr.function_code, function_code,
+@@ -438,10 +428,13 @@ static int xcrb_msg_to_type6cprb_msgx(bo
+ 	}
+ 
+ 	/* copy data block */
+-	if (xcrb->request_data_length &&
+-	    z_copy_from_user(userspace, req_data, xcrb->request_data_address,
+-			     xcrb->request_data_length))
+-		return -EFAULT;
++	if (xcrb->request_data_length) {
++		req_data = ap_msg->msg + sizeof(struct type6_hdr) + req_cblen;
++		if (z_copy_from_user(userspace, req_data,
++				     xcrb->request_data_address,
++				     xcrb->request_data_length))
++			return -EFAULT;
++	}
+ 
+ 	return 0;
+ }
 
 
