@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300374E4C5E;
-	Tue, 13 Oct 2026 12:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4FD375F88;
+	Tue, 13 Oct 2026 12:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893564; cv=none; b=kaPM9TgR5UxuVvyiwcV0uAndjKwz6EGp7MGBUlTiR1Kg0PYZu+pHBDabweG5kyZTDl8OSCTkYXtVnPZcK3yg1sikdoTEF8Q9j6F1xpy9eZ8BxGN+IP5noDFVF6Y77TTxxz9vPtT7nU3KdEaZgDo6WRMvvvWix+8IWOipBZ+rU8c=
+	t=1791893566; cv=none; b=fCAfFUED+nw5TKMzLmJgk1gA2qeH6aR3EuILDDlgpp4YeQ2SlnEe1leqj0dol8tIh1XlH0/R77Ge0JIJftUJ9ykoN1mhrUFnyXK+ctwfC5N6aaGaZf4I1NVL0LHklq2kcYVMZ454eDA2epuzsbmknUeJbOHidp48QBwh4YYbyb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893564; c=relaxed/simple;
-	bh=CSJ7vGFU+n8hcof2AxyPtY6rpf0hdaDKTuoLj9LByrA=;
+	s=arc-20240116; t=1791893566; c=relaxed/simple;
+	bh=9w7Nm3kBlNwUoL2BSBxUIwnYAVY/HcehTEQeJJ4eVRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BusgvKGlJTUrZYj8XERmGmZzXlZKpymX9X8L9W89xMEbozyak/y7wBK7W25ZA4H9TRrANY+HzzQEbmyyCnJfsS4apdxD9uKCayshIxQtszBeaesw+lCUbPGVJ8otPjkTZ58rE+d6zOiEwp3ztQUj7NX5buAvYTzwiNwdyEbjYy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8qey5w0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F54vjb3Qcf/KJFUN22d2ex/SRgi1BUDUhhw+92HA5DlmC6Viqk/t1yENEboEkFHyUxi9DXnAUqlXsiObg3EBE5SCJvHhjvcxLn+h11HXDwSrfOQ0ioxms5m8+0XKQafDI9Eq25zw+g2cBASuoYNYcJ9zWjHE8WaEoWm0YhcumZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcp7scS7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8qey5w0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE851F000FF;
-	Tue, 13 Oct 2026 12:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcp7scS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9971F000FF;
+	Tue, 13 Oct 2026 12:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893562;
-	bh=RKSstbHwAZb/SfVC9eqRgfZB67G3eaRB5jHB7DwY+1U=;
+	s=korg; t=1791893565;
+	bh=QoNQbHn1xlJdYYzsDNvD5QOvC47+7w46WWjIFdTvph8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8qey5w0R7TpZjTPOME8rg1mcSTmvjBGe3JvpX7FmtZcT7PRyQcfxizvXmNZ/S0vM
-	 nV4NykXNvHuCx/Mor8S8qwl/OQhjIQRNsqhzeg8D/3K9v52FQVc+xPQvIz4K1hDm8U
-	 wtgw8C90bUeYNaMVi5FUK1XmiEc9sSuUWiE4zrq4=
+	b=qcp7scS7taYmG8yVn7gdyQNhRQ6xirnBFCairT1zyd7Fw42/YIERzUxYvXpy1CxyT
+	 TnsKVSO4S5C4spKM6Nd0KUhfDSnEPhLtsxYpa3IO+cY5/nkBgk4C/uX2UGwPj3XCMt
+	 a1O6j2GXkFsii8lT+yfUHAD2kKUolL1FT74aapGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 250/621] drm/msm/adreno: Fix a reference leak in a6xx_gpu_init()
-Date: Tue, 13 Oct 2026 13:34:05 +0200
-Message-ID: <20261013112926.795220696@linuxfoundation.org>
+Subject: [PATCH 6.18 268/621] bpf: Use rcu_read_lock_dont_migrate in bpf_sk_storage.c
+Date: Tue, 13 Oct 2026 13:34:23 +0200
+Message-ID: <20261013112927.222356446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit e64bca63647db1d5518198d6c5ca2dbcc66b182b ]
+[ Upstream commit 0db4941d9dae159d887e7e2eac7e54e60c3aac87 ]
 
-In a6xx_gpu_init(), node is obtained via of_parse_phandle().
-While there was a manual of_node_put() at the end of the
-common path, several early error returns would bypass this call,
-resulting in a reference leak.
-Fix this by using the __free(device_node) cleanup handler to
-release the reference when the variable goes out of scope.
+Use rcu_read_lock_dont_migrate() and rcu_read_unlock_migrate() in
+bpf_sk_storage.c to obtain better performance when PREEMPT_RCU is
+not enabled.
 
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/700661/
-Message-ID: <20260124-a6xx_gpu-v1-1-fa0c8b2dcfb1@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251007074011.12916-1-wangfushuai@baidu.com
+Stable-dep-of: 7cbd0c4cebe4 ("bpf: Fix UAF in sock clone early bailouts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/core/bpf_sk_storage.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index d1eaa849b1978..f56ac2e0adbe1 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2633,7 +2633,6 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
- 	struct adreno_platform_config *config = pdev->dev.platform_data;
--	struct device_node *node;
- 	struct a6xx_gpu *a6xx_gpu;
- 	struct adreno_gpu *adreno_gpu;
- 	struct msm_gpu *gpu;
-@@ -2653,7 +2652,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	adreno_gpu->registers = NULL;
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index 2e538399757fe..d3fbaf89a698d 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -50,16 +50,14 @@ void bpf_sk_storage_free(struct sock *sk)
+ {
+ 	struct bpf_local_storage *sk_storage;
  
- 	/* Check if there is a GMU phandle and set it up */
--	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
-+	struct device_node *node __free(device_node) =
-+		of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
- 	/* FIXME: How do we gracefully handle this? */
- 	BUG_ON(!node);
+-	migrate_disable();
+-	rcu_read_lock();
++	rcu_read_lock_dont_migrate();
+ 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
+ 	if (!sk_storage)
+ 		goto out;
  
-@@ -2701,7 +2701,6 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
- 	else
- 		ret = a6xx_gmu_init(a6xx_gpu, node);
--	of_node_put(node);
- 	if (ret) {
- 		a6xx_destroy(&(a6xx_gpu->base.base));
- 		return ERR_PTR(ret);
+ 	bpf_local_storage_destroy(sk_storage);
+ out:
+-	rcu_read_unlock();
+-	migrate_enable();
++	rcu_read_unlock_migrate();
+ }
+ 
+ static void bpf_sk_storage_map_free(struct bpf_map *map)
+@@ -161,8 +159,7 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
+ 
+ 	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
+ 
+-	migrate_disable();
+-	rcu_read_lock();
++	rcu_read_lock_dont_migrate();
+ 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
+ 
+ 	if (!sk_storage || hlist_empty(&sk_storage->list))
+@@ -213,8 +210,7 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
+ 	}
+ 
+ out:
+-	rcu_read_unlock();
+-	migrate_enable();
++	rcu_read_unlock_migrate();
+ 
+ 	/* In case of an error, don't free anything explicitly here, the
+ 	 * caller is responsible to call bpf_sk_storage_free.
 -- 
 2.53.0
 
