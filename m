@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AC94F473D;
-	Tue, 13 Oct 2026 11:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363EC4F052F;
+	Tue, 13 Oct 2026 11:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892610; cv=none; b=l9hOOPksPtpK1hI5DbM/sHtfLtUAZWsWh8bvtN5Cld8m+G6umM9bvANAR9U8tPAtiKLAqoXOAbrPokKMDfTaokIJo2ZoQx2vLbQFufziPFUVd4tyYgzp9HKomw04fof8s0/YDyz8yhROiJydJes67buPM/fa7hdgbqDUJge6xJk=
+	t=1791892613; cv=none; b=jgziyyJXoOnZS0LgQhgqGQGToMB2jmWYy0he1oAPNoW7ZgCSU/CdwK/xj2GeB23X52kwJ23SO2gE0ga7hmmH+BTMuWchnNE1zOd2Wbj7aDksrvgElllazf9HHvFno/cYIyja8IqTARDrfCq7Y12wjLhYoaG5EtEK7A520doHaCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892610; c=relaxed/simple;
-	bh=TpibDACyLEUiesezbwgP/5FTAOsoQQgLPUSz/+70z4o=;
+	s=arc-20240116; t=1791892613; c=relaxed/simple;
+	bh=TcZwcS8CZ/D0Zty1u1a4+480vsm3DrowPbJ3V10605Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyzTTHnyXKDxNaigwM6vaOy9SmyVxTP3bIOYl+5gB5L9KRyAHyxy5rcM9c2q9ztl6TKtAbn2++HeQgG+YZonLQ5cSSNmmkK4Okxb89A4MaoF7qu6YR3MMDFxNCEL9YtGKgcZRgJgeHwpJRZPf/0T3QzPO9HIKcCNuN+9Luj7LCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efRgSPaC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JNB+RZNEFQNie7U0asZnnsWsIKrrIW94aAoo0eO+DuYZ5Gjn/FCk9+7OVte9/iq8dG+hcC4N6OnufrU9hk7w5+7bBRcuokp/XvIYsI6Zmjnu5f0Gq1VY8QLewwbNzaJV6EeiZk541PBeWh9JHSJjMIScRW73SijBFuPCtyPrvBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNB4Y30i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efRgSPaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F041F000FF;
-	Tue, 13 Oct 2026 11:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNB4Y30i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6D71F00893;
+	Tue, 13 Oct 2026 11:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892609;
-	bh=hrx9pz+cRB02OAEbO6vnQTwt+V/VUrhWwmOLXec07hM=;
+	s=korg; t=1791892612;
+	bh=iorMrP6HQYofKGazz17vmqjftsIVXJhOQlB2F8PFXcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efRgSPaC5nymJzFb8oRn0uY2W6lYS8UT4ydGe1JgAdjeWRJTt20e8UQjqfVl6PR9N
-	 uJSjnJE7j45DPI7fXMJqHQmcezDuvD5eUlAc/N0DPBgjSXGSHhj+wkLhM9FOOt1ZtH
-	 a9LFJAv0Fe27fi9hk8hqDOB+Xh+Dln6vpqAkA6Z0=
+	b=fNB4Y30iVe/p/FkEE87P8QvLyDYos0AtjLKRkstpJr/8Pyn+RMFaNOYQTQOotw8K+
+	 ubSOJHcrEu9MBM7bNMsb3lvPFmFyk5bWLBHPDohs/hvOWuK8KU3a3nrLIoCjkX4ZFy
+	 h+htKGa+U5qxynQB/4aEMwB0LKFZsIo98Wx5L2vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 231/281] wifi: mt76: add PS buffering support for HW-managed TIM drivers
-Date: Tue, 13 Oct 2026 13:39:07 +0200
-Message-ID: <20261013112900.758511369@linuxfoundation.org>
+Subject: [PATCH 7.2 232/281] wifi: mt76: account non-AQL frames per peer rather than per link
+Date: Tue, 13 Oct 2026 13:39:08 +0200
+Message-ID: <20261013112900.781636297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,190 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a547b414bf7ea9877456b5630573293cc0e2cae7 ]
+[ Upstream commit 752770d7a58c821c17909c3ca67f9f14ab146a40 ]
 
-Add MT_DRV_HW_PS_BUFFERING flag for drivers where firmware controls
-the TIM bit based on buffered frames. Instead of blocking all TX to
-PS stations (which starves firmware and prevents TIM from being set),
-allow limited frame delivery using AQL pending airtime as the
-throttle. Replenish the firmware buffer on TX completion.
+The driver increments wcid->non_aql_packets when a frame goes to the
+hardware queue. The completion path decrements the counter again.
 
-Add mt76_sta_ps_transition() helper for drivers to call from MCU
-PS sync events.
+For an MLO peer, the hardware reports the completion on the link that it
+used for the transmission. This link can differ from the link that the
+driver queued the frame on. In that case, the increment and the
+decrement go to different link wcids, and the count drifts upwards until
+it blocks the station.
 
-Link: https://patch.msgid.link/20260801145334.1166751-1-nbd@nbd.name
+Keep the count on the wcid of the primary link, like the other peer-wide
+state.
+
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Link: https://patch.msgid.link/20260818125825.395538-5-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 752770d7a58c ("wifi: mt76: account non-AQL frames per peer rather than per link")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h     |  3 +
- .../wireless/mediatek/mt76/mt76_connac_mcu.h  |  1 +
- drivers/net/wireless/mediatek/mt76/tx.c       | 77 +++++++++++++++++--
- 3 files changed, 75 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h |  7 +++++++
+ drivers/net/wireless/mediatek/mt76/tx.c   | 11 ++++++++---
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 476578e2fbf0c..61ef1b80feb85 100644
+index 61ef1b80feb85..9188a27e78652 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt76.h
 +++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -539,6 +539,7 @@ struct mt76_hw_cap {
- #define MT_DRV_HW_MGMT_TXQ		BIT(4)
- #define MT_DRV_AMSDU_OFFLOAD		BIT(5)
- #define MT_DRV_IGNORE_TXS_FAILED	BIT(6)
-+#define MT_DRV_HW_PS_BUFFERING		BIT(7)
+@@ -1425,6 +1425,13 @@ mtxq_to_txq(struct mt76_txq *mtxq)
+ 	return container_of(ptr, struct ieee80211_txq, drv_priv);
+ }
  
- struct mt76_driver_ops {
- 	u32 drv_flags;
-@@ -1541,6 +1542,8 @@ void mt76_release_buffered_frames(struct ieee80211_hw *hw,
- 				  u16 tids, int nframes,
- 				  enum ieee80211_frame_release_type reason,
- 				  bool more_data);
-+void mt76_sta_ps_transition(struct mt76_dev *dev, struct mt76_wcid *wcid,
-+			    bool ps);
- bool mt76_has_tx_pending(struct mt76_phy *phy);
- int mt76_update_channel(struct mt76_phy *phy);
- void mt76_update_survey(struct mt76_phy *phy);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-index a9a4a87ae0a76..fe03bc70e63a4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-@@ -1068,6 +1068,7 @@ enum {
- 	MCU_UNI_EVENT_IE_COUNTDOWN = 0x09,
- 	MCU_UNI_EVENT_COREDUMP = 0x0a,
- 	MCU_UNI_EVENT_BSS_BEACON_LOSS = 0x0c,
-+	MCU_UNI_EVENT_PS_SYNC = 0x0d,
- 	MCU_UNI_EVENT_SCAN_DONE = 0x0e,
- 	MCU_UNI_EVENT_RDD_REPORT = 0x11,
- 	MCU_UNI_EVENT_ROC = 0x27,
++/* peer-wide state uses the wcid of the primary link */
++static inline struct mt76_wcid *
++mt76_wcid_primary(struct mt76_wcid *wcid)
++{
++	return wcid->def_wcid ? wcid->def_wcid : wcid;
++}
++
+ static inline struct ieee80211_sta *
+ wcid_to_sta(struct mt76_wcid *wcid)
+ {
 diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index b03be0eb47128..12c615b1294b4 100644
+index 12c615b1294b4..c6245b10abb0c 100644
 --- a/drivers/net/wireless/mediatek/mt76/tx.c
 +++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -267,6 +267,21 @@ void __mt76_tx_complete_skb(struct mt76_dev *dev, u16 wcid_idx, struct sk_buff *
- 	wcid = __mt76_wcid_ptr(dev, wcid_idx);
- 	mt76_tx_check_non_aql(dev, wcid, skb);
+@@ -234,6 +234,8 @@ mt76_tx_check_non_aql(struct mt76_dev *dev, struct mt76_wcid *wcid,
+ 	if (!wcid || info->tx_time_est)
+ 		return;
  
-+	if (wcid && (dev->drv->drv_flags & MT_DRV_HW_PS_BUFFERING) &&
-+	    test_bit(MT_WCID_FLAG_PS, &wcid->flags)) {
-+		struct ieee80211_sta *sta = wcid_to_sta(wcid);
++	wcid = mt76_wcid_primary(wcid);
 +
-+		if (sta) {
-+			struct ieee80211_hw *hw = mt76_phy_hw(dev, wcid->phy_idx);
-+			int i;
-+
-+			for (i = 0; i < ARRAY_SIZE(sta->txq); i++)
-+				if (sta->txq[i])
-+					ieee80211_schedule_txq(hw, sta->txq[i]);
-+			mt76_worker_schedule(&dev->tx_worker);
-+		}
-+	}
-+
- #ifdef CONFIG_NL80211_TESTMODE
- 	if (mt76_is_testmode_skb(dev, skb, &hw)) {
- 		struct mt76_phy *phy = hw->priv;
-@@ -476,8 +491,12 @@ mt76_txq_send_burst(struct mt76_phy *phy, struct mt76_queue *q,
- 	bool stop = false;
- 	int idx;
- 
--	if (test_bit(MT_WCID_FLAG_PS, &wcid->flags))
--		return 0;
-+	if (test_bit(MT_WCID_FLAG_PS, &wcid->flags)) {
-+		if (!(dev->drv->drv_flags & MT_DRV_HW_PS_BUFFERING))
-+			return 0;
-+		if (ieee80211_txq_aql_pending(phy->hw, txq))
-+			return 0;
-+	}
- 
- 	if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
- 		return 0;
-@@ -497,6 +516,9 @@ mt76_txq_send_burst(struct mt76_phy *phy, struct mt76_queue *q,
- 	if (idx < 0)
+ 	pending = atomic_dec_return(&wcid->non_aql_packets);
+ 	if (pending < 0)
+ 		atomic_cmpxchg(&wcid->non_aql_packets, pending, 0);
+@@ -344,7 +346,8 @@ __mt76_tx_queue_skb(struct mt76_phy *phy, int qid, struct sk_buff *skb,
+ 	if (!non_aql)
  		return idx;
  
-+	if (test_bit(MT_WCID_FLAG_PS, &wcid->flags))
-+		goto out;
-+
- 	do {
- 		if (test_bit(MT76_RESET, &phy->state) || phy->offchannel)
- 			break;
-@@ -522,6 +544,7 @@ mt76_txq_send_burst(struct mt76_phy *phy, struct mt76_queue *q,
- 		n_frames++;
- 	} while (1);
+-	pending = atomic_inc_return(&wcid->non_aql_packets);
++	/* the hardware can report the completion on a different link */
++	pending = atomic_inc_return(&mt76_wcid_primary(wcid)->non_aql_packets);
+ 	if (stop && pending >= MT_MAX_NON_AQL_PKT)
+ 		*stop = true;
  
-+out:
- 	spin_lock(&q->lock);
- 	dev->queue_ops->kick(dev, q);
- 	spin_unlock(&q->lock);
-@@ -548,10 +571,7 @@ mt76_txq_schedule_list(struct mt76_phy *phy, enum mt76_txq_id qid)
+@@ -498,7 +501,8 @@ mt76_txq_send_burst(struct mt76_phy *phy, struct mt76_queue *q,
+ 			return 0;
+ 	}
  
- 		mtxq = (struct mt76_txq *)txq->drv_priv;
- 		wcid = __mt76_wcid_ptr(dev, mtxq->wcid);
--		if (!wcid || test_bit(MT_WCID_FLAG_PS, &wcid->flags))
--			continue;
--
+-	if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
++	if (atomic_read(&mt76_wcid_primary(wcid)->non_aql_packets) >=
++	    MT_MAX_NON_AQL_PKT)
+ 		return 0;
+ 
+ 	skb = mt76_txq_dequeue(phy, mtxq);
+@@ -595,7 +599,8 @@ mt76_txq_schedule_list(struct mt76_phy *phy, enum mt76_txq_id qid)
+ 			continue;
+ 		}
+ 
 -		if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
-+		if (!wcid)
++		if (atomic_read(&mt76_wcid_primary(wcid)->non_aql_packets) >=
++		    MT_MAX_NON_AQL_PKT)
  			continue;
- 
- 		phy = mt76_dev_phy(dev, wcid->phy_idx);
-@@ -559,6 +579,24 @@ mt76_txq_schedule_list(struct mt76_phy *phy, enum mt76_txq_id qid)
- 			continue;
- 
- 		q = phy->q_tx[qid];
-+
-+		if (test_bit(MT_WCID_FLAG_PS, &wcid->flags)) {
-+			if (!(dev->drv->drv_flags & MT_DRV_HW_PS_BUFFERING))
-+				continue;
-+
-+			if (!mt76_txq_stopped(q))
-+				n_frames = mt76_txq_send_burst(phy, q, mtxq, wcid);
-+
-+			ieee80211_return_txq(phy->hw, txq, false);
-+
-+			if (unlikely(n_frames < 0))
-+				return n_frames;
-+			ret += n_frames;
-+			continue;
-+		}
-+
-+		if (atomic_read(&wcid->non_aql_packets) >= MT_MAX_NON_AQL_PKT)
-+			continue;
  		if (dev->queue_ops->tx_cleanup &&
  		    q->queued + 2 * MT_TXQ_FREE_THR >= q->ndesc) {
- 			dev->queue_ops->tx_cleanup(dev, q, false);
-@@ -765,6 +803,33 @@ void mt76_stop_tx_queues(struct mt76_phy *phy, struct ieee80211_sta *sta,
- }
- EXPORT_SYMBOL_GPL(mt76_stop_tx_queues);
- 
-+void mt76_sta_ps_transition(struct mt76_dev *dev, struct mt76_wcid *wcid,
-+			    bool ps)
-+{
-+	struct ieee80211_sta *sta;
-+	struct ieee80211_hw *hw;
-+	int i;
-+
-+	if (ps) {
-+		set_bit(MT_WCID_FLAG_PS, &wcid->flags);
-+		mt76_worker_schedule(&dev->tx_worker);
-+		return;
-+	}
-+
-+	clear_bit(MT_WCID_FLAG_PS, &wcid->flags);
-+
-+	sta = wcid_to_sta(wcid);
-+	if (!sta)
-+		return;
-+
-+	hw = mt76_phy_hw(dev, wcid->phy_idx);
-+	for (i = 0; i < ARRAY_SIZE(sta->txq); i++)
-+		if (sta->txq[i])
-+			ieee80211_schedule_txq(hw, sta->txq[i]);
-+	mt76_worker_schedule(&dev->tx_worker);
-+}
-+EXPORT_SYMBOL_GPL(mt76_sta_ps_transition);
-+
- void mt76_wake_tx_queue(struct ieee80211_hw *hw, struct ieee80211_txq *txq)
- {
- 	struct mt76_phy *phy = hw->priv;
 -- 
 2.53.0
 
