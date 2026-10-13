@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC324F3937;
-	Tue, 13 Oct 2026 12:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECBA4F3EAF;
+	Tue, 13 Oct 2026 12:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894705; cv=none; b=ZRzevzZolGnlwJFb7+zdpKVNPoPJ2fULjqw23PiWCZhsr23V2EAgv5edfYlWDPoVs96lfxortHM7uzUd7jZN3g6gl21341H4wlYoriQLhtUcSo11UDRO0Dh6Ngbcb3eDhZmhfAUdVIcPmzV24ks1XcpxHtTNTJMS6e0SbT0qddM=
+	t=1791894707; cv=none; b=NmoxuCoDFa7VCO+N3QT4RHAY3dZLqimwwXTDgVyf+pwQlTHP8oVPbZkrNH+KYMuZ+uwJWenrT5Mp/N/j4dvdv7MS1dGRuf1sjB46ZJoNG8OLQdRDGJzn4CWG/En6cS9w2W57km+HdVqtm9YG3Y05ZJX2t4Qh//c3QGinMdA0uqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894705; c=relaxed/simple;
-	bh=5T0SJqiEIEUlLb3hpHQULlThG1mCHn8CyI9LPQ4EKuQ=;
+	s=arc-20240116; t=1791894707; c=relaxed/simple;
+	bh=x557hSaH463ZkS7PiSu3/GKk33WQVE4/znu8tFSpfbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asMEU/7jRmilCIFjMR0j3U/TcLRET8heXm8+XWLs7IlAHuQdUJkANqDFYAdpGWBiH+cSJXYx4d0oaopx9uI8S/p9DqTF3xPHXOB+kW2vKPSqKk4pWwlA4qCkL4T6RUin5xzruS4xtx+RvjhYe3nOP4QyeHH1nQyIHI06jmrPbeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erf43IiK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nNoaeMOJDJOSz5kBCL5Yi4DZSF9QWGX6cye1zOTbCsd/6WTxvYejUkvUw0FtTi5RMztQkooVRcfs/pmFTQX9+9dtTR6e0Nubp+fe+qZEbfQzSwaMIBcFLsZzkBpyoZi0OGxkGWsC6kQ9FsX34EAiVY/zxdB1t5yB0Wpgcv/L+n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0TXiqjt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erf43IiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FFA1F000FF;
-	Tue, 13 Oct 2026 12:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0TXiqjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7261F000FF;
+	Tue, 13 Oct 2026 12:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894703;
-	bh=IJkJo0eFyOZndA08L3ksP4kEfWnN8T7XF9r7vM8Lrhs=;
+	s=korg; t=1791894706;
+	bh=wYuhcOG48JOBKceKOpURMZ8fVMftS2n5tfWY/LONWKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=erf43IiKbDjZXwiwLHOx1Kz/Xc2m5UjVHzRVWeZTNVCYDODDdJ9hvSaI7XyFJZX60
-	 jbeCkr67QlXrUzpDO51fkN8keIMF1qN7uKQZC984JrgO1AK6ypbTgQk3GYcUzdFcUU
-	 isjl+TYSKWPaMrA/UVhQNJ/yd5qg2bHP+WfSY+Ak=
+	b=l0TXiqjtt0HgSLZBRvA72YUdx20De5hHOnx1qBXFbGYsFcOIGXMi3a+7r2Sx9Uci5
+	 NcQEXOGfblHlH0IhI1CFPmd/3EU5+hnEmPYKHlhL2d3dLbefW5KxwNZ6CeNollxA0E
+	 BkX02C/mf/OGXbMMOx/HOWINZjrXRtp3oyVTrITM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 028/497] of/overlay: only treat a positive changeset id as registered
-Date: Tue, 13 Oct 2026 13:33:15 +0200
-Message-ID: <20261013112908.554248110@linuxfoundation.org>
+	Alireza Asgari <alireza@asgari.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 029/497] net: fix checksum offsets in skb_splice_from_iter()
+Date: Tue, 13 Oct 2026 13:33:16 +0200
+Message-ID: <20261013112908.577538065@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,46 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Alireza Asgari <alireza@asgari.net>
 
-commit 44081d708b5b885487bac792db78324b7b4c267d upstream.
+commit febec6a7076499d16b37f556724a942633a270a6 upstream.
 
-of_overlay_fdt_apply() stores the idr_alloc() return value in
-ovcs->id before checking it. On failure the stored id is negative,
-free_overlay_changeset()'s "if (ovcs->id)" check passes, idr_remove()
-is called with a negative id and list_del() runs on ovcs->ovcs_list,
-which is not initialized until after the id allocation. An allocation
-failure at that point dereferences NULL.
+skb_splice_from_iter() appends multiple page fragments before updating
+skb->len. However, skb_splice_csum_page() uses that unchanged length as the
+offset for every fragment checksum. If bytes already appended during the
+call have an odd total length, a later fragment's checksum is combined
+with the wrong parity.
 
-Make free_overlay_changeset() treat only a strict-positive id as
-registered. The rest of the function already copes with a
-partially-initialized ovcs, so the error path stays a plain
-goto err_free_ovcs.
+For example, prime a UDP socket with sendto(MSG_MORE) and splice two
+distinct pipe buffers containing "abc" and "DEFGH". Uncorking reports
+success, but the receiver discards the packet for a bad checksum.
+This also affects IPv6 and fragments beginning near a page boundary.
 
-Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
+Pass the initial skb length plus the bytes already spliced to the checksum
+helper. Keep the existing final length update and partial-progress error
+handling unchanged. CHECKSUM_PARTIAL does not use this helper and remains
+unaffected.
+
+Fixes: 2e910b95329c ("net: Add a function to splice pages into an skbuff for MSG_SPLICE_PAGES")
 Cc: stable@vger.kernel.org
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Assisted-by: Claude:claude-fable-5 [Claude Code]
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-5-02754604805a@nexthop.ai
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Alireza Asgari <alireza@asgari.net>
+Link: https://patch.msgid.link/20260924-fix-udp-splice-checksum-v1-1-fe61d65447a8@asgari.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/overlay.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/skbuff.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -859,7 +859,8 @@ static void free_overlay_changeset(struc
- 	if (ovcs->cset.entries.next)
- 		of_changeset_destroy(&ovcs->cset);
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -7258,7 +7258,8 @@ nodefer:	kfree_skb_napi_cache(skb);
+ }
  
--	if (ovcs->id) {
-+	/* a failed idr_alloc() leaves its negative error in ovcs->id */
-+	if (ovcs->id > 0) {
- 		idr_remove(&ovcs_idr, ovcs->id);
- 		list_del(&ovcs->ovcs_list);
- 		ovcs->id = 0;
+ static void skb_splice_csum_page(struct sk_buff *skb, struct page *page,
+-				 size_t offset, size_t len)
++				 size_t offset, size_t len,
++				 unsigned int csum_offset)
+ {
+ 	const char *kaddr;
+ 	__wsum csum;
+@@ -7266,7 +7267,7 @@ static void skb_splice_csum_page(struct
+ 	kaddr = kmap_local_page(page);
+ 	csum = csum_partial(kaddr + offset, len, 0);
+ 	kunmap_local(kaddr);
+-	skb->csum = csum_block_add(skb->csum, csum, skb->len);
++	skb->csum = csum_block_add(skb->csum, csum, csum_offset);
+ }
+ 
+ /**
+@@ -7327,7 +7328,8 @@ ssize_t skb_splice_from_iter(struct sk_b
+ 			}
+ 
+ 			if (skb->ip_summed == CHECKSUM_NONE)
+-				skb_splice_csum_page(skb, page, off, part);
++				skb_splice_csum_page(skb, page, off, part,
++						     skb->len + spliced);
+ 
+ 			off = 0;
+ 			spliced += part;
 
 
