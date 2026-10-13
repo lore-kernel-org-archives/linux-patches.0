@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE44B38B125;
-	Tue, 13 Oct 2026 11:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4383D5241;
+	Tue, 13 Oct 2026 11:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892580; cv=none; b=enlvP9EGAn4XbXV5b4l7n79nZtvVbE/qsIyDldRQxGiYP5a1/TTZ9DWU4M4lwlJZ/XWXcvxcydnXpKvr+TnJ1IKC8hJU0wDsEEANtD0PluxXdyJlr9Th92h/GmMTHqQNUBl+hJcvpjILNpmEUOwOidl9LjnmbqRYyr95Naayw5M=
+	t=1791892582; cv=none; b=c9OKSA2fVcguVZPUq9QtEIofHgbxmgTq0dNePBeCDrJrNEqLD/uQTnc7XJXyD6tPGkcyXqpvISAd1eA7zPZLmhAlGrBRbRBMt1mkyCqJF/GxU/cWpoAipzckVxmioxKUbbrNq4d101sVdygN7MMV17jwwlD1t/ov9C9V0cbi5FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892580; c=relaxed/simple;
-	bh=g1kF5G1SQlCNJAklyhRLu4IhDFllQq/s5kjivKW7gcQ=;
+	s=arc-20240116; t=1791892582; c=relaxed/simple;
+	bh=ObJCP5bjre/xy0jorAYx6wdaoSgR4Oos/keezXMeIj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YF/JHm6b26j+Q5ieNbjBzzcf1CrJJkXLhRiY6G9EVbAmbNMwfX/stchbAptQ78ezTFsz0Tm+ili/+wYkzdh7TYG3JO7HmEHcBu46FzSJkejhij2weNrWzfcORrVtoa6fIocttwnwVjgcCb1Bkw+BiQWbHl7fsmiEpJNJ/VUZwPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSTluWKP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WV3s9LWWlDvBRY5EZsbLx4a347x/lTzrGg55lSHCdQQ0h7h5SBnVVfTqaJJtf3fYWKki8OZRlMdi4fn/wSy4QJHrBewFFW6Y7d6uDhC08NsQQxXXe77tysiGV+/0IZlWCOHQNgt5A0D5l45vwLjpDuibph+WBj7KeJHXb5L4zB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpxXPVnJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSTluWKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AD41F000FF;
-	Tue, 13 Oct 2026 11:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpxXPVnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393EA1F000FF;
+	Tue, 13 Oct 2026 11:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892578;
-	bh=k9+xWW4RQxkOIVSAzPfPvSFq7JDi+agYsnYeOov2de8=;
+	s=korg; t=1791892581;
+	bh=3j/iQZqBZZKUFLNilWow3jW43tGOdbfF1kIhkDLPO10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSTluWKPiWHKZ9U2zXhscRN9Hwryvbs8jLNDKCTEnEZxqpKksoxf2dOVN786bM3KH
-	 pkbKojgf0QgXJA73mXAdwie7Ybnu2R7zp5gYLnYOdRfO99GzGQX/xAPvSOh2maCqca
-	 nogCWqyYOTiR2v/F7UBtNWQ+WWxVpKP2dak8jceE=
+	b=VpxXPVnJZ8kSOg0ijIB5txDBjQTFU0POFHa2Pq4Pqlaf4IyEkC+GZweZHeShQRDNx
+	 1xVXUJdWihOYYxDNowRnS9TsSneDf0k4NMAFweFYXfaYiaazoUE8sM7WC1n5o3Ogde
+	 d0LnwhI7Dw/gynhUuam9odgAtSQ2cfZAFM1z+rVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luca Weiss <luca.weiss@fairphone.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 176/281] clk: qcom: gcc-eliza: Fix always-enabling PCIE_RSCC clocks
-Date: Tue, 13 Oct 2026 13:38:12 +0200
-Message-ID: <20261013112859.437619817@linuxfoundation.org>
+Subject: [PATCH 7.2 177/281] clk: qcom: gcc-kaanapali: Fix always-enabling PCIE_RSCC clocks
+Date: Tue, 13 Oct 2026 13:38:13 +0200
+Message-ID: <20261013112859.461162071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -54,48 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 5ffd02d16f4e2f0566b8f31d5610538987e1944c ]
+[ Upstream commit 0bfb542fc3368371cefb4cf45ef21c3ba2d37c3f ]
 
 The critical_cbrcrs array will get qcom_branch_set_clk_en() called on
 each entry which will set BIT(0) to enable the clock. This is however
 wrong for these two PCIE_RSCC clocks which need BIT(20) and BIT(21) set
 respectively to enable them.
 
-Fixes: 3d356ab4a1ec ("clk: qcom: Add support for Global clock controller on Eliza")
+Fixes: d1919c375f21 ("clk: qcom: Add support for Global clock controller on Kaanapali")
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260807-various-pcie-clk-fix-v1-1-5caf78a599d7@fairphone.com
+Link: https://lore.kernel.org/r/20260807-various-pcie-clk-fix-v1-3-5caf78a599d7@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-eliza.c | 6 ++++--
+ drivers/clk/qcom/gcc-kaanapali.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-eliza.c b/drivers/clk/qcom/gcc-eliza.c
-index 3e26c7a1e5b54..fe18942a59ac4 100644
---- a/drivers/clk/qcom/gcc-eliza.c
-+++ b/drivers/clk/qcom/gcc-eliza.c
-@@ -3010,8 +3010,6 @@ static const u32 gcc_eliza_critical_cbcrs[] = {
- 	0x26034, /* GCC_CAMERA_XO_CLK */
- 	0x27004, /* GCC_DISP_AHB_CLK */
+diff --git a/drivers/clk/qcom/gcc-kaanapali.c b/drivers/clk/qcom/gcc-kaanapali.c
+index 842c1a70c6916..5bcbcd1786577 100644
+--- a/drivers/clk/qcom/gcc-kaanapali.c
++++ b/drivers/clk/qcom/gcc-kaanapali.c
+@@ -3464,8 +3464,6 @@ static const u32 gcc_kaanapali_critical_cbcrs[] = {
+ 	0x9f004, /* GCC_EVA_AHB_CLK */
+ 	0x9f024, /* GCC_EVA_XO_CLK */
  	0x71004, /* GCC_GPU_CFG_AHB_CLK */
 -	0x52010, /* GCC_PCIE_RSCC_CFG_AHB_CLK */
 -	0x52010, /* GCC_PCIE_RSCC_XO_CLK */
  	0x32004, /* GCC_VIDEO_AHB_CLK */
- 	0x32038, /* GCC_VIDEO_XO_CLK */
+ 	0x32040, /* GCC_VIDEO_XO_CLK */
  };
-@@ -3045,6 +3043,10 @@ static const struct regmap_config gcc_eliza_regmap_config = {
+@@ -3480,6 +3478,10 @@ static const struct regmap_config gcc_kaanapali_regmap_config = {
  
- static void clk_eliza_regs_configure(struct device *dev, struct regmap *regmap)
+ static void clk_kaanapali_regs_configure(struct device *dev, struct regmap *regmap)
  {
 +	/* Keep clocks always enabled */
 +	regmap_update_bits(regmap, 0x52010, BIT(20), BIT(20)); /* GCC_PCIE_RSCC_CFG_AHB_CLK */
 +	regmap_update_bits(regmap, 0x52010, BIT(21), BIT(21)); /* GCC_PCIE_RSCC_XO_CLK */
 +
- 	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
+ 	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
  	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
+ }
 -- 
 2.53.0
 
