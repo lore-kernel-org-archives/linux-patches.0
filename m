@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EE43515F1;
-	Tue, 13 Oct 2026 12:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0233D6F8;
+	Tue, 13 Oct 2026 12:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894891; cv=none; b=t9rjp5IKpl1bwtbe6Hh6p/DzNcRAL6XLNaXad2W9OapNDHJzk3FLr++ZSHXFGumfeLY0JJ4a0pyaSSh4fItLX+utZUBFGpDgm1QMH8yGvlUVKVu+zuk+ZKAQpWrGApoLy7EpM8JG37wzYE13dFm/szKTUvsdvL6/YyRAELJnOns=
+	t=1791894894; cv=none; b=hTX7n9FKFS5ZhdAshsvSpV8HzvD6a6gXeSD3h6wEpsJjNNpFTZK9IU4wX7+H2XCPeOyJNuaaX63ahYJBvFz4IaBOcDAtjVaYDoAfoHCwBwDjCzanzRidp6NczkW9YXqAHDh6sd3RsvH0RVQWhc1PEz/XJ9tcmtqc37bHda8KhpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894891; c=relaxed/simple;
-	bh=2Reo4TYkTIJi97sVd8aWAbloQnDxtMBAF0G9x+CEqng=;
+	s=arc-20240116; t=1791894894; c=relaxed/simple;
+	bh=jEutVfdAGy35HBScfMmw0PzxBxCTGLBCDAjR4ZaRnLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqIUeSiffQa7qyzI9bBzWh3CJGmoYsELRlccPqFMcjk35KWTxm7xpLAiCRtXz2gSeYC1AGPLmGij21NW76FYTW4hWZ3wb6NofjVzzYDb4JI3aZ1XhxSec+OesXeDtwSsPqspAh2AokXa80iDdztdp4mWPjAKgou29bKZnW1WKT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZUthWli; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNACLsh7hc1cFK5vpIrdsmU04YQdo2DPwx1ScWXiF/2HnixjdnbeREdYBL94Ye6B2MBUcF0YmhzIxCt7SZNz2/KAqp4gVwmNZlTHXmwgjbQG3XHu07qf3XXNRjFqWjUxwsqMmr5WdcXl2qo9MEHg78NOK5oqrTHbzBi2ZfpDTjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rd6cAy/f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZUthWli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728D51F000FF;
-	Tue, 13 Oct 2026 12:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rd6cAy/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EEA1F000FF;
+	Tue, 13 Oct 2026 12:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894890;
-	bh=jbijNf+ecrtHSylTn/HDtlLUsqqbGT733If50C4gJcY=;
+	s=korg; t=1791894892;
+	bh=94DobuZe+djGkY4D/X+F6I4mkSvfOPyQ4v1Duv6U7hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZUthWligQljfEw0aZ8OsgFeyTnXWHMOMeoy1tENW9C48lwsCrLibglO3pzxx8MA0
-	 5lMEo2eXP+kbE8cIiGZiwnrceK+lHgHa56dpLAhLa3y5aHj2g+cqpPxBojfN5Qju28
-	 U7e+7kn7ueh8XkrxakQW4ffCEjtHa4T6+gRmkgZU=
+	b=Rd6cAy/f1z9vpqyV8oDH9+Rbqsy0/nGvdIKRNp5fm3PqFcd/rPsELo3rezdSIcbt+
+	 6uQhFmGIPc7Ftd66Tt/s/7xaSiDnjk5tPcDxggMpvDyZREJZB+17+4ny/a83qjzqMA
+	 DotWgw9rDjkChYySTpZILzPQ02mWPJzotAjTv9rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/497] smb: client: clear setuid/setgid bit on write with cifsacl/modefromsid/posix extensions
-Date: Tue, 13 Oct 2026 13:33:24 +0200
-Message-ID: <20261013112908.770236855@linuxfoundation.org>
+Subject: [PATCH 6.12 085/497] net-memcg: Introduce mem_cgroup_from_sk().
+Date: Tue, 13 Oct 2026 13:34:12 +0200
+Message-ID: <20261013112909.905582062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,112 +54,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit b8e5dc4f95e5484159b343903f302eb6d783f2e6 upstream.
+[ Upstream commit f7161b234f2ec7f18999009c4becc04eeb6b12a7 ]
 
-When a file has the setuid or setgid bit set and is written to, the VFS
-strips those bits and issues a setattr with ATTR_KILL_SUID/ATTR_KILL_SGID
-together with an ATTR_MODE carrying the already-cleared mode.
+We will store a flag in the lowest bit of sk->sk_memcg.
 
-Both cifs_setattr_unix() and cifs_setattr_nounix() unconditionally dropped
-ATTR_MODE in that case:
+Then, directly dereferencing sk->sk_memcg will be illegal, and we
+do not want to allow touching the raw sk->sk_memcg in many places.
 
-	/* skip mode change if it's just for clearing setuid/setgid */
-	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-		attrs->ia_valid &= ~ATTR_MODE;
+Let's introduce mem_cgroup_from_sk().
 
-This is fine for the default mount, where the mode is only emulated via
-the DOS read-only attribute and cannot represent the setuid/setgid bits
-anyway.  However, with the "cifsacl" or "modefromsid" mount options the
-mode is stored on the server through an ACL (id_mode_to_cifs_acl()), with
-the SMB3.1.1 POSIX extensions the mode is sent to the server directly,
-and with the SMB1 Unix extensions (cifs_setattr_unix) the mode is sent
-via CIFSSMBUnixSetPathInfo().  In all those cases dropping ATTR_MODE means
-the cleared mode is never pushed to the server, so the setuid/setgid bit
-survives the write.
+Other places accessing the raw sk->sk_memcg will be converted later.
 
-This is a security issue: on local filesystems the setuid bit is stripped
-when a file is written, but over these cifs.ko mounts the bit persists on
-the server, potentially allowing an unexpected privilege escalation on
-subsequent execution.
+Note that we cannot define the helper as an inline function in
+memcontrol.h as we cannot access any fields of struct sock there
+due to circular dependency, so it is placed in sock.h.
 
-Fix this in two places:
-
-  1. cifs_setattr_nounix(): only take the "skip mode change" shortcut
-     when the mode is emulated via the DOS read-only attribute (i.e.
-     neither cifsacl/modefromsid nor the SMB3.1.1 POSIX extensions are
-     in effect), so that the cleared mode is propagated to the server
-     in the ACL / POSIX cases.
-
-  2. cifs_setattr_unix(): this function is only called when Unix
-     extensions are in effect, so the mode is always stored on the
-     server.  Remove the shortcut entirely so that the cleared mode is
-     always pushed.
-
-Fixes: d32c4f2626ac ("CIFS: ignore mode change if it's just for clearing setuid/setgid bits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-
-[ Backport note for 6.12: no sbflags local exists here, so test
-  cifs_sb->mnt_cifs_flags directly (same flag bits); uses existing "bool posix". ]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Assisted-by: opencode:kimi-k3
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-7-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 37e02c42a00b ("net: restrict SO_RESERVE_MEM to TCP sockets and cap max value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ include/net/sock.h              | 12 ++++++++++++
+ mm/memcontrol.c                 | 13 +++++++++----
+ net/ipv4/inet_connection_sock.c |  2 +-
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index b67b316538b83..7c4828580076c 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3117,9 +3117,13 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
- 			goto out;
- 	}
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 73353ee313ad2..6738c6cd3ff5a 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2582,6 +2582,18 @@ static inline gfp_t gfp_memcg_charge(void)
+ 	return in_softirq() ? GFP_ATOMIC : GFP_KERNEL;
+ }
  
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
--		attrs->ia_valid &= ~ATTR_MODE;
-+	/*
-+	 * This function is only called when Unix extensions are in effect,
-+	 * so the mode is always sent to and stored on the server.  Do not
-+	 * skip the mode change when clearing setuid/setgid bits: dropping
-+	 * ATTR_MODE here would leave those bits set on the server after a
-+	 * write, which is a security issue.
-+	 */
++#ifdef CONFIG_MEMCG
++static inline struct mem_cgroup *mem_cgroup_from_sk(const struct sock *sk)
++{
++	return sk->sk_memcg;
++}
++#else
++static inline struct mem_cgroup *mem_cgroup_from_sk(const struct sock *sk)
++{
++	return NULL;
++}
++#endif
++
+ static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
+ {
+ 	return noblock ? 0 : sk->sk_rcvtimeo;
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 473e9696e47c6..50a1fd9087fae 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4846,19 +4846,24 @@ void mem_cgroup_sk_alloc(struct sock *sk)
  
- 	args = kmalloc(sizeof(*args), GFP_KERNEL);
- 	if (args == NULL) {
-@@ -3307,8 +3311,24 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
- 	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_SET_UID))
- 		attrs->ia_valid &= ~(ATTR_UID | ATTR_GID);
+ void mem_cgroup_sk_free(struct sock *sk)
+ {
+-	if (sk->sk_memcg)
+-		css_put(&sk->sk_memcg->css);
++	struct mem_cgroup *memcg = mem_cgroup_from_sk(sk);
++
++	if (memcg)
++		css_put(&memcg->css);
+ }
  
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-+	/*
-+	 * Skip the mode change if it is only being done to clear the
-+	 * setuid/setgid bits *and* the mode is emulated via the DOS
-+	 * read-only attribute (the default, non-ACL case), which cannot
-+	 * represent the setuid/setgid bits anyway.
-+	 *
-+	 * When the mode is instead stored on the server - i.e. with the
-+	 * cifsacl or modefromsid mount options (via an ACL) or with the
-+	 * SMB3.1.1 POSIX extensions - the cleared mode must be pushed to
-+	 * the server.  Dropping ATTR_MODE here would leave the setuid/
-+	 * setgid bit set on the server after a write, which is a security
-+	 * issue (the bits are not stripped as they are on local
-+	 * filesystems).
-+	 */
-+	if ((attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID)) &&
-+	    !((cifs_sb->mnt_cifs_flags &
-+	       (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
-+	      posix))
- 		attrs->ia_valid &= ~ATTR_MODE;
+ void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk)
+ {
++	struct mem_cgroup *memcg;
++
+ 	if (sk->sk_memcg == newsk->sk_memcg)
+ 		return;
  
- 	if (attrs->ia_valid & ATTR_MODE) {
+ 	mem_cgroup_sk_free(newsk);
+ 
+-	if (sk->sk_memcg)
+-		css_get(&sk->sk_memcg->css);
++	memcg = mem_cgroup_from_sk(sk);
++	if (memcg)
++		css_get(&memcg->css);
+ 
+ 	newsk->sk_memcg = sk->sk_memcg;
+ }
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index bd671653273e7..eeee6f7583376 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -707,7 +707,7 @@ struct sock *inet_csk_accept(struct sock *sk, struct proto_accept_arg *arg)
+ 		lock_sock(newsk);
+ 
+ 		mem_cgroup_sk_alloc(newsk);
+-		if (newsk->sk_memcg) {
++		if (mem_cgroup_from_sk(newsk)) {
+ 			/* The socket has not been accepted yet, no need
+ 			 * to look at newsk->sk_wmem_queued.
+ 			 */
 -- 
 2.53.0
 
