@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E465C389104;
-	Tue, 13 Oct 2026 11:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22913E0C57;
+	Tue, 13 Oct 2026 11:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892486; cv=none; b=Gx5yLUMXbtGWbkgWmCSJJNptx9SUdSasUj3Jk0dOv9DrrcACDjlfDKmECMCCLvDB0UQMUqNrBQ5T2ZqDfEujo8ntLgJtgDk7kC1Ev8AAO9NHr9CZmkDqNe1Sag+ISPzNw9uLuFn+gMM92/umQk76T4H8rSSrdtWCi51K4A2ine4=
+	t=1791892489; cv=none; b=lvo6vaXZfuIdp1myx0Iz8BJqzAgYYMxGFpG9jK8uLlFIoJoeiKzCVavNk8+4uNlxHRk6Zh67P+Lld6MxsLfCE1usYxSNANlzpgN/FodzUeIMzCwiSD06uTRDaIFAa+Pf8MkmrX5f4cuyCiMex1NrTKKBfTLB8JG6C66irQABrbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892486; c=relaxed/simple;
-	bh=WDPfADuhVYkW/OJnODZsL6H4X8QSiUmW0h2g8atuaLo=;
+	s=arc-20240116; t=1791892489; c=relaxed/simple;
+	bh=j7viy39oYrRzQdew+0TDGHKLK5C5VYOdaVcnJokH+Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C3hvzhLDeItiWXFRBUiwbHEH/sUWVEvuv/0LlhkJX6KLfQpml6+HbybPlUMfywCagq90IfeQceV1iLD9PJOEAjrju1oeZFZ1kedzuTqBMJz7s7wPPSf8y2lIqb1zBqfPrTr1KD0XJG7JVduDPtvd3S1YxXvGOyMwAbIl66N0OQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0Mv0YNE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jLQsLE/Q78Xmhy/Z9OgBI5eM4/S+lFRdyollvlM9YaT/nRf8YviTUDQzBC1avYH1tFnPUC9urwPq6Ar03y0mGv/Sbx80/6qynTXOQ4mvMXKgyDplbCHo+JydSDfqcO73A7V3IwjUDYto9HRQIm3pHn0XyRsBRl5PXOcYWJgkHHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X14z11Lf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0Mv0YNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393801F000FF;
-	Tue, 13 Oct 2026 11:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X14z11Lf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343611F000FF;
+	Tue, 13 Oct 2026 11:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892485;
-	bh=6X2o8+IypYjx1NlIqNRXxTlZ1pnZs3hGrnAXvN+guD4=;
+	s=korg; t=1791892488;
+	bh=BRx8JhPWTxzt2GXac9vtXEMZFU5aYYpOXijNLD4bIUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o0Mv0YNEo9Tstz1jbb8YKXU2AgNrHvseRh1JajGuRGFPXcGXaKMDKURdCaCu8yiVL
-	 oc+O5QcsLDekHhpEaWW8WdziT+xlWQhEWQLDdcxO2nEMp1rHNR6kNcANm1/A0Cq5bF
-	 bNl25yX/8o3182P5rFMa9oJ2fLb8sryXhGMxWjAs=
+	b=X14z11LfgGH34qSkez96EfMysC9hFQQBybhBz4HOMbEQRGtz6nA+Xg0Yd5H9XYSR2
+	 y3xCVOgpIE1t0RtIKGIcdB4oo9lwMhr8ZLbc8lARH+aryrKDjicT0y6Tk+JVPZqcbR
+	 GVm0vWf94JLdtD/R42RqIUgTDyrUDBLKH1Um4T2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	=?UTF-8?q?Robin=20R=C3=A4ber?= <robin.raebi@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.2 189/281] drm/bridge: Fix unlocked list_del in drm_bridge_add()
-Date: Tue, 13 Oct 2026 13:38:25 +0200
-Message-ID: <20261013112859.750614362@linuxfoundation.org>
+Subject: [PATCH 7.2 190/281] drm/bridge: Fix unlocked list access in drm_bridge_attach()
+Date: Tue, 13 Oct 2026 13:38:26 +0200
+Message-ID: <20261013112859.777558618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -57,48 +56,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit b62e3db8cdc1680e1c3390591e872f485148541a ]
+[ Upstream commit 57889076afd1be890150c32ffde3b691fe5707c8 ]
 
-When re-adding a bridge that was previously removed, drm_bridge_add()
-drops it from bridge_lingering_list without holding bridge_lock.
+drm_bridge_attach() inspects bridge->list to warn about bridges being
+attached without a previous drm_bridge_add() call, but it does so
+without holding bridge_lock.
 
-Both bridge_list and bridge_lingering_list are protected by bridge_lock,
-as they are concurrently modified by drm_bridge_remove() and
-__drm_bridge_free(), and walked by the debugfs 'bridges' file.  Running
-the list_empty() test and the list_del_init() outside of the lock may
-therefore corrupt either list.
+The list head can be concurrently written by drm_bridge_add(),
+drm_bridge_remove() and __drm_bridge_free() while they operate on
+neighbouring entries of bridge_list or bridge_lingering_list, all of
+them under bridge_lock.  Hence the unlocked read is a data race, even
+though it is unlikely to change the outcome of list_empty() in practice.
 
-Perform both under bridge_lock.
+Perform the check with bridge_lock held.
 
-Fixes: 17805a15d175 ("drm/bridge: add list of removed refcounted bridges")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260723015004.1F5711F000E9@smtp.kernel.org/
+Fixes: 76f1a9711b83 ("drm/bridge: add warning for bridges attached without being added")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # RK3588 Orange Pi 5 Plus, dual HDMI
 Tested-by: Robin Räber <robin.raebi@gmail.com>
-Link: https://patch.msgid.link/20260901-dw-hdmi-qp-scramb-v11-12-bc12954a0688@collabora.com
+Link: https://patch.msgid.link/20260901-dw-hdmi-qp-scramb-v11-14-bc12954a0688@collabora.com
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_bridge.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 687b36eea0c70..3618cb12483e2 100644
+index 3618cb12483e2..9124cbe1ff889 100644
 --- a/drivers/gpu/drm/drm_bridge.c
 +++ b/drivers/gpu/drm/drm_bridge.c
-@@ -414,8 +414,10 @@ void drm_bridge_add(struct drm_bridge *bridge)
- 	 * in bridge_lingering_list. Remove it or bridge_lingering_list will be
- 	 * corrupted when adding this bridge to bridge_list below.
- 	 */
-+	mutex_lock(&bridge_lock);
- 	if (!list_empty(&bridge->list))
- 		list_del_init(&bridge->list);
-+	mutex_unlock(&bridge_lock);
+@@ -558,8 +558,10 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
+ 	if (!bridge->container)
+ 		DRM_WARN("DRM bridge corrupted or not allocated by devm_drm_bridge_alloc()\n");
  
- 	mutex_init(&bridge->hpd_mutex);
+-	if (list_empty(&bridge->list))
+-		DRM_WARN("Missing drm_bridge_add() before attach\n");
++	scoped_guard(mutex, &bridge_lock) {
++		if (list_empty(&bridge->list))
++			DRM_WARN("Missing drm_bridge_add() before attach\n");
++	}
+ 
+ 	drm_bridge_get(bridge);
  
 -- 
 2.53.0
