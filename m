@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729E14EF154;
-	Tue, 13 Oct 2026 12:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBCD3CB2EA;
+	Tue, 13 Oct 2026 12:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894458; cv=none; b=NbMKnbowLccsB6afTTh6x1kYnD4doU/tfoZAUND+aknJYcP7lAQbBGIEuDW9wVy+NjptopgFUAkcvb2F+XOxjONkQKZDrbe+TFDDMpDqJvLyQSqhMEWUWOl70xO0nMBqufckMhQnntuw5QTsDoQLhbvyCa6vEUkO/KXJ+meRuTo=
+	t=1791894461; cv=none; b=iFvWYmtiubLULmlbb34BbVkc04YuAe+LkYPP6WLjblDoyKSy7Yrrtdb6TCOQ+gITxCxftfv++bE8s2Vv/PT8S4zS449QSeWUDsKlT4DjJkzp7poZvfwXNIw4ZE/AzQLqkwxorx3Uh54lWuWcywt1L8EYRwP2wbb9FGDzs+8gAmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894458; c=relaxed/simple;
-	bh=QU+9Xbq1n9BzKD/6UHuUAquXl2Ya2Re3FjcJ6XKNCAU=;
+	s=arc-20240116; t=1791894461; c=relaxed/simple;
+	bh=Fq3Fl7cwKF08RhCDQ7eX0d4+XUXc/l/zy1IIeZfBIb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RK29O0YxK8zxo79EJB6jxOiuQPcSHxwWNgXcPDpc+AIyB/pe4M1wSO+dC8vJmU2w1EIwSb/QPS/C4W/HlMbDjYAEm+FLA+kqBHqa4jKPAQujBSpz8GeZci+XI4Z6+dvENiXeeHraMGfbu6GeAhTqQmIvAQ0V0kRuG0QLrZm1nTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bgu8PTnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KbeShOSbHNU8zTB8CJABs3nTuW+YjlHyVUJLR8tvS55LKgL3ejhAzzYnce+UGPVTg+oU06LChILyzV0sjIgZoexDe3jvkqrw2eVZvjtcyFa0uSfYLo00/gTJOX2gLiFiqfpPWa6L5ymiRPYZEqATooH0WdJGS//DHwtBl6fNTEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImYgDq8q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bgu8PTnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9891F000FF;
-	Tue, 13 Oct 2026 12:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImYgDq8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CB81F000FF;
+	Tue, 13 Oct 2026 12:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894457;
-	bh=XI8rrM2bsk1eBp6+eXqfqgBHQoDnfAKgkfe+0Mp3K48=;
+	s=korg; t=1791894460;
+	bh=NrmCcwOiUepWexwUwaB0Ol+SRITXVaxx31T/R/kv/9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bgu8PTnfTyMEsX3QkNYiNpZjW/BX5IpFz0WP0v7XctYW1rm8H3mhHEyN+2PHjgbcw
-	 rq11kGCpvAx6MH4JNCzfh+BPCCgbasVEY8zPhZmisPlF5jRqY0Lc5Yytt/5yToHZKj
-	 AAR3wRo3TIyzQhFCNh+NlzkUiL/ciPXbryEvH3x8=
+	b=ImYgDq8qDuiOZIunuprgkCSZDp+g9rL+6lghjCnFXZ5pY4I6kq3yEu/QL0qAdZ8MY
+	 QDelDuT5jBUZKph89sTJcjx0Dz0Z7uCdF068j/o71uFjQeNoyjX4hUl1dTBUw6FXFF
+	 5BRMDYZ3yPUfKDRBDP5dUwTqP9EcloYNjy7SDJkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Aaron Ma <aaron.ma@canonical.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 566/621] wifi: mt76: use ALTX queue for packets to disassociated stations
-Date: Tue, 13 Oct 2026 13:39:21 +0200
-Message-ID: <20261013112934.238810559@linuxfoundation.org>
+Subject: [PATCH 6.18 567/621] wifi: mt76: mt7925: restore the legacy BSS after MLO teardown
+Date: Tue, 13 Oct 2026 13:39:22 +0200
+Message-ID: <20261013112934.261396900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,71 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 7c2e6b43c3082c2242ecfa5875b2b4b2cd06140f ]
+[ Upstream commit 8f9e5807671ee97cacf1957f4a09e43f4f1017a9 ]
 
-Running these packets through regular buffering queues could cause them
-to hang, especially when the packets were for stations that in disassoc
-state.
+Removing the last link of an MLD interface leaves the firmware with the
+MLD BSS and DEV entry: the removal loop skips the deflink, and the
+hweight16(mvif->valid_links) fallback reads the stale pre-update
+valid_links, which is still non-zero. The entry keeps the per-link MAC
+address, so every subsequent legacy association fails authentication
+until the interface is removed or the module is reloaded.
 
-Fixes: dedf2ec30fe4 ("wifi: mt76: fix queue assignment for deauth packets")
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260901092232.461379-1-nbd@nbd.name
+Remove the deflink BSS and add it back as a legacy BSS on the transition
+to zero links.
+
+Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Link: https://patch.msgid.link/20260826043658.2255553-1-aaron.ma@canonical.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 ++
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 1 +
- drivers/net/wireless/mediatek/mt76/tx.c          | 3 ++-
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 9d546eb8022ac..ff14085dc331e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -802,6 +802,7 @@ __mt7915_drop_sta(void *ptr, u8 *mac, struct ieee80211_vif *vif)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 0075d726afd77..7c63c7f5caf3e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -2089,6 +2089,18 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
  
- 	msta = (struct mt7915_sta *)sta->drv_priv;
- 	mt7915_mcu_add_sta(data->dev, vif, sta, CONN_STATE_DISCONNECT, false);
-+	msta->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
- 	msta->wcid.sta_disabled = 1;
- 	msta->wcid.sta = 0;
- }
-@@ -866,6 +867,7 @@ int mt7915_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 			mt7915_mac_twt_teardown_flow(dev, msta, i);
+ 	mvif->valid_links = new_links;
  
- 		mt7915_mcu_add_sta(dev, vif, sta, CONN_STATE_DISCONNECT, false);
-+		msta->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
- 		msta->wcid.sta_disabled = 1;
- 		msta->wcid.sta = 0;
- 		return 0;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index c6d7088b15cab..7812f03b3d385 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1274,6 +1274,7 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 			else if (sta->mlo && links == BIT(link_id)) /* last link */
- 				mt7996_mcu_teardown_mld_sta(dev, link,
- 							    msta_link);
-+			msta_link->wcid.tx_info &= ~MT_WCID_TX_INFO_SET;
- 			msta_link->wcid.sta_disabled = 1;
- 			msta_link->wcid.sta = 0;
- 			links = links & ~BIT(link_id);
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 8af03dfd9e764..731caeda72b52 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -672,7 +672,8 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
- 		if ((dev->drv->drv_flags & MT_DRV_HW_MGMT_TXQ) &&
- 		    !(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) &&
- 		    !ieee80211_is_data_present(hdr->frame_control) &&
--		    (!ieee80211_is_bufferable_mmpdu(skb) ||
-+		    (!(wcid->tx_info & MT_WCID_TX_INFO_SET) ||
-+		     !ieee80211_is_bufferable_mmpdu(skb) ||
- 		     ieee80211_is_deauth(hdr->frame_control) ||
- 		     ieee80211_is_disassoc(hdr->frame_control) ||
- 		     head == &wcid->tx_offchannel))
++	/* Restore the legacy BSS after disabling MLO */
++	if (old_links && !new_links) {
++		mt792x_mac_link_bss_remove(dev, &mvif->bss_conf,
++					   &mvif->sta.deflink);
++		err = mt7925_mac_link_bss_add(dev, &vif->bss_conf,
++					      &mvif->sta.deflink);
++		if (err < 0) {
++			mt792x_mutex_release(dev);
++			return err;
++		}
++	}
++
+ 	mt792x_mutex_release(dev);
+ 
+ 	return 0;
 -- 
 2.53.0
 
