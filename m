@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69054F4CEB;
-	Tue, 13 Oct 2026 12:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFB34EFFA2;
+	Tue, 13 Oct 2026 12:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893544; cv=none; b=Ay2mk01gLKydRFYbduI12RaOxGTOEMaIs8OuxPpoZEXxSZFCADNhykHT2ZnMLg90ImIMtpnpADbX0T9y09KQEuMHTdhecnmU1lc2OUnZ5TiQmkpKAHAoMW8u+tDMLwR2NdEVllmBt2qoYOm4owD2zXKO2dcsyJ2JRJ8jG76h2j8=
+	t=1791893549; cv=none; b=BPoBtxdgk2nLJJG/y1i3+aVk2V9xQevO31P9oDKkoItR05W7GSPKDulVhdP0DPJ8sXCyt/Lij7weQGL+NlCMT3tAER1lBTbL4H1ny8B97kvQ7RIA2Hvk5UaUcVSoKXDE/o7FVQ//+ON81vj7sm//DZDSXb2pxgPcXYUOP2+wUOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893544; c=relaxed/simple;
-	bh=q3Rzsbv8QB/teit0KL+8teTAWYCt4cZFGemxd1/u1dU=;
+	s=arc-20240116; t=1791893549; c=relaxed/simple;
+	bh=XZClN/aktDho0N9BhqcYbPeTVPOlVy2PsEYmWeSmDnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlYS/5qGQEtQkvQGUYZu/D2yLhmKpU5O93FDJscxdQf3TVQg6IVbMtJOGiYbkgujAvY7hjOcS/5liEaWiyKxuiNhYAXGX2LQEMY620Tx6p+L95aP9jIuDoFR034qldWMM1DBTt5ojLeXnOv/EHZXlMahH1jxvhtEU4Xud1NLmA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGFd/a+B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTW1O9dDA8e30IasyjshJIkWJSV0RA2/8feL2ogWek/PwZP7PKEJfhePmqGIcTt0T7H0DgEiR2Zpa2yiElGUtsDksBni/m6OrAvrQQG201KFeDMEJaPHrzB9hkXKJs7I33bbc5sTqgZnl5IG1oTDvyHzS9Mq0G0kHcfN5glV3Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rhi/Bd5M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGFd/a+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA081F000FF;
-	Tue, 13 Oct 2026 12:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rhi/Bd5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD0B1F000FF;
+	Tue, 13 Oct 2026 12:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893543;
-	bh=8H/Md9VXboRyydBYj2nYIyrwefImg3JWwtnTtcXfC1w=;
+	s=korg; t=1791893546;
+	bh=Dv3lz4WZ0yhIZWLi5tZ2ahg/qD9D+j04UIiKb6KlCXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGFd/a+BiY4c1CpWzRo/YOI9+oiS6zHnFHlzR/VQH1nKb9KSxSOLa70NUYTA/8L0A
-	 aNf+56HN9xoFfX+qOAcNzLXOKZg/RgCk0/N3Qkhhv6XDWHnKLF4C8B8r4PtImGkTtw
-	 +yI1PIdDS8cmvRwmAtqYx9nViCB54ag35gndsbgA=
+	b=Rhi/Bd5Mg13CLhp7FUsM6YgJ1ffd7agSu9uqr2b2/mP7cMbHlvjrjtnmR831AAil3
+	 dJ7eZiiSofHlwE3vPCt7Mi/GRsI+VatfT0SMyhsQhZttMPdKdrdsZDTA7zc8oZQelv
+	 NfyDrEEsECGMh5/+sF6DCh9cx5TjlhHB3/moFrds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 262/621] cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths
-Date: Tue, 13 Oct 2026 13:34:17 +0200
-Message-ID: <20261013112927.077919159@linuxfoundation.org>
+Subject: [PATCH 6.18 263/621] tipc: serialize udp bearer replicast list updates
+Date: Tue, 13 Oct 2026 13:34:18 +0200
+Message-ID: <20261013112927.100783997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,145 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit c2f2e83e3bbc5483730fd4ee903182761f1ae50f ]
+[ Upstream commit 350e592ff4e30e48ffb55e142d11a73e63f4869c ]
 
-In cifs_close_deferred_file(), cifs_close_all_deferred_files(), and
-cifs_close_deferred_file_under_dentry(), when a pending deferred close
-is cancelled via cancel_delayed_work(), the subsequent kmalloc_obj() to
-add the file to the local processing list may fail under memory pressure.
-The loop breaks immediately, but the cancelled work is no longer pending
-(it would have called _cifsFileInfo_put()), and the cfile is never added
-to file_head for processing.  The cifsFileInfo reference and the open
-server handle both leak.
+tipc_udp_rcast_add() and cleanup_bearer() both update ub->rcast.list with
+list_add_rcu() / list_del_rcu(), but nothing serializes them. The add runs
+from the encap receive softirq (via tipc_udp_rcast_disc()) without
+rtnl_lock(), so it can race the cleanup delete and corrupt the list:
 
-Fix by saving the cfile that failed allocation in a local variable,
-breaking as before, and calling _cifsFileInfo_put() on it after
-releasing the lock.  Any files later in the iteration are unaffected
-since their deferred work is still pending and will fire normally.
+  list_del corruption. prev->next should be ffff8880298d7ab8,
+    but was ffff88802449ad38. (prev=ffff888027e3ec98)
+  kernel BUG at lib/list_debug.c:62!
+  RIP: __list_del_entry_valid_or_report+0x17a/0x200
+  Workqueue: events cleanup_bearer
+  Call Trace:
+   cleanup_bearer (net/tipc/udp_media.c:811)
+   process_one_work (kernel/workqueue.c:3302)
+   worker_thread (kernel/workqueue.c:3466)
 
-Fixes: e3fc065682eb ("cifs: Deferred close performance improvements")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The bearer can be enabled from an unprivileged user namespace, as the
+TIPCv2 generic-netlink ops carry no GENL_ADMIN_PERM.
+
+Add a spinlock to struct udp_bearer and take it around the list_add_rcu()
+in tipc_udp_rcast_add() and the list_del_rcu() loop in cleanup_bearer() so
+the two writers can no longer corrupt the list.
+
+Reject a duplicate peer under the same lock before allocating, and remove
+tipc_udp_is_known_peer(). The old lockless pre-check in
+tipc_udp_rcast_disc() was racy: two softirqs discovering the same peer
+could both find it absent and add it twice.
+
+cleanup_bearer() runs from a workqueue after tipc_udp_disable() clears the
+bearer's up bit, so an encap softirq can still reach tipc_udp_rcast_add()
+and add a peer after cleanup_bearer() has already emptied the list, leaking
+that entry when the bearer is freed. Mark the bearer disabled under
+rcast_lock once the list is emptied and refuse further additions.
+
+Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260716025203.9332-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 45 ++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ net/tipc/udp_media.c | 56 +++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 0703e06aba1ed..cbbd7ac83c5f7 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -776,7 +776,7 @@ cifs_del_deferred_close(struct cifsFileInfo *cfile)
- void
- cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index b85ab0fb3b8cc..4a1b73a1943dd 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -94,6 +94,8 @@ struct udp_replicast {
+  * @ifindex:	local address scope
+  * @work:	used to schedule deferred work on a bearer
+  * @rcast:	associated udp_replicast container
++ * @rcast_lock:	serialize updates to @rcast.list against concurrent updaters
++ * @disabled:	bearer is being torn down; reject further @rcast.list additions
+  */
+ struct udp_bearer {
+ 	struct tipc_bearer __rcu *bearer;
+@@ -101,6 +103,8 @@ struct udp_bearer {
+ 	u32 ifindex;
+ 	struct work_struct work;
+ 	struct udp_replicast rcast;
++	spinlock_t rcast_lock;
++	bool disabled;
+ };
+ 
+ static int tipc_udp_is_mcast_addr(struct udp_media_addr *addr)
+@@ -279,26 +283,6 @@ static int tipc_udp_send_msg(struct net *net, struct sk_buff *skb,
+ 	return err;
+ }
+ 
+-static bool tipc_udp_is_known_peer(struct tipc_bearer *b,
+-				   struct udp_media_addr *addr)
+-{
+-	struct udp_replicast *rcast, *tmp;
+-	struct udp_bearer *ub;
+-
+-	ub = rcu_dereference_rtnl(b->media_ptr);
+-	if (!ub) {
+-		pr_err_ratelimited("UDP bearer instance not found\n");
+-		return false;
+-	}
+-
+-	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+-		if (!memcmp(&rcast->addr, addr, sizeof(struct udp_media_addr)))
+-			return true;
+-	}
+-
+-	return false;
+-}
+-
+ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 			      struct udp_media_addr *addr)
  {
--	struct cifsFileInfo *cfile = NULL;
-+	struct cifsFileInfo *cfile = NULL, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	LIST_HEAD(file_head);
+@@ -309,16 +293,34 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 	if (!ub)
+ 		return -ENODEV;
  
-@@ -793,8 +793,10 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 
- 				tmp_list = kmalloc_obj(struct file_list,
- 						       GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -802,6 +804,15 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 	}
- 	spin_unlock(&cifs_inode->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
++	spin_lock_bh(&ub->rcast_lock);
++	if (ub->disabled) {
++		spin_unlock_bh(&ub->rcast_lock);
++		return 0;
++	}
++	list_for_each_entry(rcast, &ub->rcast.list, list) {
++		if (!memcmp(&rcast->addr, addr, sizeof(*addr))) {
++			spin_unlock_bh(&ub->rcast_lock);
++			return 0;
 +		}
-+		_cifsFileInfo_put(failed_cfile, false, false);
 +	}
 +
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
-@@ -819,7 +830,7 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- void
- cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- {
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	LIST_HEAD(file_head);
- 
-@@ -833,8 +844,10 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 
- 				tmp_list = kmalloc_obj(struct file_list,
- 						       GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -842,6 +855,15 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 	}
- 	spin_unlock(&tcon->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
+ 	rcast = kmalloc(sizeof(*rcast), GFP_ATOMIC);
+-	if (!rcast)
++	if (!rcast) {
++		spin_unlock_bh(&ub->rcast_lock);
+ 		return -ENOMEM;
 +	}
-+
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
  
-@@ -897,7 +919,7 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
- 					   struct dentry *dentry)
- {
- 	struct file_list *tmp_list, *tmp_next_list;
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	LIST_HEAD(file_head);
- 
- 	spin_lock(&tcon->open_file_lock);
-@@ -910,14 +932,25 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
- 			spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
- 
- 			tmp_list = kmalloc_obj(struct file_list, GFP_ATOMIC);
--			if (tmp_list == NULL)
-+			if (tmp_list == NULL) {
-+				failed_cfile = cfile;
- 				break;
-+			}
- 			tmp_list->cfile = cfile;
- 			list_add_tail(&tmp_list->list, &file_head);
- 		}
+ 	if (dst_cache_init(&rcast->dst_cache, GFP_ATOMIC)) {
++		spin_unlock_bh(&ub->rcast_lock);
+ 		kfree(rcast);
+ 		return -ENOMEM;
  	}
- 	spin_unlock(&tcon->open_file_lock);
  
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
-+	}
-+
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
+ 	memcpy(&rcast->addr, addr, sizeof(struct udp_media_addr));
++	list_add_rcu(&rcast->list, &ub->rcast.list);
++	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
++	spin_unlock_bh(&ub->rcast_lock);
+ 
+ 	if (ntohs(addr->proto) == ETH_P_IP)
+ 		pr_info("New replicast peer: %pI4\n", &rcast->addr.ipv4);
+@@ -326,8 +328,6 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 	else if (ntohs(addr->proto) == ETH_P_IPV6)
+ 		pr_info("New replicast peer: %pI6\n", &rcast->addr.ipv6);
+ #endif
+-	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
+-	list_add_rcu(&rcast->list, &ub->rcast.list);
+ 	return 0;
+ }
+ 
+@@ -362,9 +362,6 @@ static int tipc_udp_rcast_disc(struct tipc_bearer *b, struct sk_buff *skb)
+ 		return 0;
+ 	}
+ 
+-	if (likely(tipc_udp_is_known_peer(b, &src)))
+-		return 0;
+-
+ 	return tipc_udp_rcast_add(b, &src);
+ }
+ 
+@@ -646,9 +643,6 @@ int tipc_udp_nl_bearer_add(struct tipc_bearer *b, struct nlattr *attr)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (tipc_udp_is_known_peer(b, &addr))
+-		return 0;
+-
+ 	return tipc_udp_rcast_add(b, &addr);
+ }
+ 
+@@ -680,6 +674,7 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
+ 		return -ENOMEM;
+ 
+ 	INIT_LIST_HEAD(&ub->rcast.list);
++	spin_lock_init(&ub->rcast_lock);
+ 
+ 	if (!attrs[TIPC_NLA_BEARER_UDP_OPTS])
+ 		goto err;
+@@ -809,11 +804,14 @@ static void cleanup_bearer(struct work_struct *work)
+ 	struct udp_replicast *rcast, *tmp;
+ 	struct tipc_net *tn;
+ 
++	spin_lock_bh(&ub->rcast_lock);
+ 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+ 		dst_cache_destroy(&rcast->dst_cache);
+ 		list_del_rcu(&rcast->list);
+ 		kfree_rcu(rcast, rcu);
+ 	}
++	ub->disabled = true;
++	spin_unlock_bh(&ub->rcast_lock);
+ 
+ 	tn = tipc_net(sock_net(ub->ubsock->sk));
  
 -- 
 2.53.0
