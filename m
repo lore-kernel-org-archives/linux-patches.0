@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E68C4E36C0;
-	Tue, 13 Oct 2026 12:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386A54EFFCF;
+	Tue, 13 Oct 2026 12:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895568; cv=none; b=ilHbh2G0yW37677e8j5+0zntVmSV0cycUTao/d2LttnB+ok+xRIuW73u0gaBwAfp5YHooEoXHmdslEKqul3H4PMziaOKz8JsCigWdClUUlun/rghpzfLw/ZNzEjeMbl9WmoNGeFQGAE/bLiQSvdnXvHNjFte12ZoBVFwLAP72vk=
+	t=1791895571; cv=none; b=gG5ZCoI6LSjuiLqR3ZPoV9+BuQKXPNpfmC+DGbfrRwkhwgqQqjDaHS9gVfmlQi4mSws60PAkR0/Q7RTgFDPBcTu4G/h+nqwtoPky1MHdUfFJRvcfc+Q839VQzYIs3NjrIK5jXARUIeiKkG5pVd75x+Q8F0J3mGgwulJC/AyZhkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895568; c=relaxed/simple;
-	bh=G+Kv+FryJQ4sD6ZqmFnVt7jcGsH8pFOhAjzoqYXykNI=;
+	s=arc-20240116; t=1791895571; c=relaxed/simple;
+	bh=D379gCYFGj2xm0Bq07hxrtfgWMWPQgC4QGJZ+KgaFTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLaOvm8JnM5k32TFvPnG31MrlD9HDiSG9SJvybryKy1iORCJWq7+bwjHOKTdVOGyldB8BhXxTMA9GA9diw7B7Pa4zilXturouGLQGA5E/0povkJMQk6KEOtaY2kE511kvcy5PvuuKMQ7LlqTaE7ZKT/inszk7KfraWslEQFjD/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVF9HDY8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kbV4VNgXaviMel2+TuRHJBlqlAZpLXNjwURm5bHAFCBPsIu6JRhNhbAhY1MMbc+fRMf9xwC+iHTaxUnc/4fg+jq8eJ8vfqx/5jfltCGRyvuQbIWbse90Pxuo1Zn5XclbYXX4Y8x3txCScDLBryPDU4khtZZUS5FGN3CEC33kv8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1NKu5xa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVF9HDY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9EF1F000FF;
-	Tue, 13 Oct 2026 12:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1NKu5xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FAE1F000FF;
+	Tue, 13 Oct 2026 12:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895567;
-	bh=7cX8KHTPA1/6GDYYj62QZNdR3BoXopYChbrEeHWrsak=;
+	s=korg; t=1791895570;
+	bh=Y2nNEMALZql58NNZyFJc8m51sqhEqh2uhrKyrqbNx7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVF9HDY88NMZwIAGHReMUOPqhHI0EpEmf+vrkcpZBmN/lB2nF6M6mznt8LBCZWSsI
-	 7k8u3CiUUsHiPuXhfkoAxahwBrnNU1mwPn4XEJjwNfzharfsG8k3PCtLeSYISTYVnV
-	 c2SvKlB7dIhQmup30pf+bK5COKD9NlhGZiV4bkUM=
+	b=Z1NKu5xa3Ag0Xxwy1VWmyrw3z5sdzAEhRm9D/PRTxJ+jmsjv08qDUSyVT/xjWVK7X
+	 gJBVzv+mq0dSGaKZnZLy0ycaUZs7TyxYQDW5mNfp7OKk2m+nPAEiRQaTQG7uKoLSaW
+	 PUA1PxHStrN8J3jHDSZcgJDAJJ00gubIBlzqQjtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com,
-	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.12 316/497] tty: port: fix tty_port_tty_vhangup() race
-Date: Tue, 13 Oct 2026 13:38:03 +0200
-Message-ID: <20261013112915.401974650@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 317/497] wifi: mac80211: count only matching reservations in reserved switch
+Date: Tue, 13 Oct 2026 13:38:04 +0200
+Message-ID: <20261013112915.427389442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,208 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit b48820de8c1a596c5b99775524dfce73c6576c5d ]
+[ Upstream commit 437f3727b4fd715266c296435c116288f82666fd ]
 
-Drivers rely on tty_port_tty_vhangup() to synchronously hang up their
-ports before tearing down resources as part of deregistration (e.g. on
-physical disconnect).
+ieee80211_vif_use_reserved_switch() validates a replacement by counting
+assigned links on ctx->replace_ctx and treating reservations too
+broadly. A link can still be assigned to the old channel context while
+holding a reservation that belongs to a different replacement
+operation.
 
-If tty_port_tty_vhangup() races with another hangup it may however
-return before the port has been shut down. This is in turn can lead to
-use-after-free and NULL-pointer dereferences in racing ioctls (including
-a synchronous hangup) and in processing of racing asynchronous hangups
-(carrier loss).
+That can make the current replacement appear complete too early. If
+another link finalizes first, the function can free the
+WILL_BE_REPLACED chanctx while the unmatched link and driver still use
+it, leading to a use-after-free in later beacon generation.
 
-Add the missing serialisation to tty_port_tty_vhangup() and
-tty_port_hangup() so that the former does not return until the port has
-been shut down also when there is a racing hangup.
+Require an in-place reservation to point at the current replacement
+context, and require the reserved and assigned contexts to be the
+matching replacement pair, before counting or moving the link.
 
-Note that serial core does not use tty_port_hangup(), but it already
-holds the port mutex when clearing port->tty and shutting down the port
-in uart_hangup().
-
-Fixes: 7ca0ff9ab321 ("tty: Add a full port_close function")
-Cc: stable@kernel.org	# 2.6.32: 2b5eac0f8c6e: tty: introduce and use tty_port_tty_vhangup() helper
-Cc: stable@kernel.org	# 2.6.32
-Reported-by: syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/6a944641.4d659fcc.734b4.003c.GAE@google.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910125114.640880-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/4b6c4b8648ab1920c38a40be32c0b1a2797b4ac6.1785726007.git.zhilinz@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: adapted iter.link-based channel-context iteration to direct link-list traversal. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_port.c   | 87 ++++++++++++++++++++++++++--------------
- include/linux/tty_port.h | 22 +---------
- 2 files changed, 60 insertions(+), 49 deletions(-)
+ net/mac80211/chan.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/tty/tty_port.c b/drivers/tty/tty_port.c
-index 10d707e3c0344..9a1bcea3597ac 100644
---- a/drivers/tty/tty_port.c
-+++ b/drivers/tty/tty_port.c
-@@ -339,19 +339,9 @@ void tty_port_tty_set(struct tty_port *port, struct tty_struct *tty)
+diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
+index b156f12daacbb..aea060719a1ea 100644
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -1441,7 +1441,8 @@ ieee80211_link_use_reserved_assign(struct ieee80211_link_data *link)
  }
- EXPORT_SYMBOL(tty_port_tty_set);
  
--/**
-- * tty_port_shutdown - internal helper to shutdown the device
-- * @port: tty port to be shut down
-- * @tty: the associated tty
-- *
-- * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-- * shutdown the device if it was initialized (note consoles remain
-- * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-- * @port->ops->shutdown().
-- */
--static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+static void tty_port_shutdown_locked(struct tty_port *port, struct tty_struct *tty)
+ static bool
+-ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
++ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link,
++					struct ieee80211_chanctx *ctx)
  {
--	guard(mutex)(&port->mutex);
-+	lockdep_assert_held(&port->mutex);
+ 	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_chanctx *old_ctx, *new_ctx;
+@@ -1451,6 +1452,9 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
+ 	new_ctx = link->reserved_chanctx;
+ 	old_ctx = ieee80211_link_get_chanctx(link);
  
- 	if (port->console)
- 		return;
-@@ -371,6 +361,23 @@ static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
- 		port->ops->shutdown(port);
++	if (new_ctx != ctx)
++		return false;
++
+ 	if (!old_ctx)
+ 		return false;
+ 
+@@ -1463,6 +1467,12 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
+ 	if (new_ctx->replace_state != IEEE80211_CHANCTX_REPLACES_OTHER)
+ 		return false;
+ 
++	if (new_ctx->replace_ctx != old_ctx)
++		return false;
++
++	if (old_ctx->replace_ctx != new_ctx)
++		return false;
++
+ 	return true;
  }
  
-+/**
-+ * tty_port_shutdown - internal helper to shutdown the device
-+ * @port: tty port to be shut down
-+ * @tty: the associated tty
-+ *
-+ * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-+ * shutdown the device if it was initialized (note consoles remain
-+ * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-+ * @port->ops->shutdown().
-+ */
-+static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+{
-+	guard(mutex)(&port->mutex);
-+
-+	tty_port_shutdown_locked(port, tty);
-+}
-+
- /**
-  * tty_port_hangup		-	hangup helper
-  * @port: tty port
-@@ -384,36 +391,58 @@ void tty_port_hangup(struct tty_port *port)
- {
- 	struct tty_struct *tty;
+@@ -1492,7 +1502,7 @@ static int ieee80211_chsw_switch_vifs(struct ieee80211_local *local,
  
--	scoped_guard(spinlock_irqsave, &port->lock) {
--		port->count = 0;
--		tty = port->tty;
--		if (tty)
--			set_bit(TTY_IO_ERROR, &tty->flags);
--		port->tty = NULL;
--	}
-+	scoped_guard(mutex, &port->mutex) {
-+		scoped_guard(spinlock_irqsave, &port->lock) {
-+			port->count = 0;
-+			tty = port->tty;
-+			if (tty)
-+				set_bit(TTY_IO_ERROR, &tty->flags);
-+			port->tty = NULL;
-+		}
+ 		list_for_each_entry(link, &ctx->reserved_links,
+ 				    reserved_chanctx_list) {
+-			if (!ieee80211_link_has_in_place_reservation(link))
++			if (!ieee80211_link_has_in_place_reservation(link, ctx))
+ 				continue;
  
--	tty_port_set_active(port, false);
--	tty_port_shutdown(port, tty);
-+		tty_port_set_active(port, false);
-+		tty_port_shutdown_locked(port, tty);
-+	}
- 	tty_kref_put(tty);
- 	wake_up_interruptible(&port->open_wait);
- 	wake_up_interruptible(&port->delta_msr_wait);
- }
- EXPORT_SYMBOL(tty_port_hangup);
+ 			old_ctx = ieee80211_link_get_chanctx(link);
+@@ -1595,7 +1605,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
+ 		list_for_each_entry(link, &ctx->replace_ctx->assigned_links,
+ 				    assigned_chanctx_list) {
+ 			n_assigned++;
+-			if (link->reserved_chanctx) {
++			if (ieee80211_link_has_in_place_reservation(link, ctx)) {
+ 				n_reserved++;
+ 				if (link->reserved_ready)
+ 					n_ready++;
+@@ -1616,7 +1626,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
+ 		ctx->conf.radar_enabled = false;
+ 		list_for_each_entry(link, &ctx->reserved_links,
+ 				    reserved_chanctx_list) {
+-			if (ieee80211_link_has_in_place_reservation(link) &&
++			if (ieee80211_link_has_in_place_reservation(link, ctx) &&
+ 			    !link->reserved_ready)
+ 				return -EAGAIN;
  
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async)
-+/**
-+ * tty_port_tty_hangup - helper to hang up a tty asynchronously
-+ * @port: tty port
-+ * @check_clocal: hang only ttys with %CLOCAL unset?
-+ */
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
- {
- 	scoped_guard(tty_port_tty, port) {
- 		struct tty_struct *tty = scoped_tty();
+@@ -1658,7 +1668,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
  
--		if (!check_clocal || !C_CLOCAL(tty)) {
--			if (async)
--				tty_hangup(tty);
--			else
--				tty_vhangup(tty);
--		}
-+		if (!check_clocal || !C_CLOCAL(tty))
-+			tty_hangup(tty);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(tty_port_tty_hangup);
-+
-+/**
-+ * tty_port_tty_vhangup - helper to hang up a tty synchronously
-+ * @port: tty port
-+ */
-+void tty_port_tty_vhangup(struct tty_port *port)
-+{
-+	struct tty_struct *tty;
-+
-+	mutex_lock(&port->mutex);
-+	tty = tty_port_tty_get(port);
-+	mutex_unlock(&port->mutex);
-+
-+	if (tty) {
-+		tty_vhangup(tty);
-+		tty_kref_put(tty);
- 	}
- }
--EXPORT_SYMBOL_GPL(__tty_port_tty_hangup);
-+EXPORT_SYMBOL_GPL(tty_port_tty_vhangup);
+ 		list_for_each_entry(link, &ctx->reserved_links,
+ 				    reserved_chanctx_list) {
+-			if (!ieee80211_link_has_in_place_reservation(link))
++			if (!ieee80211_link_has_in_place_reservation(link, ctx))
+ 				continue;
  
- /**
-  * tty_port_tty_wakeup - helper to wake up a tty
-diff --git a/include/linux/tty_port.h b/include/linux/tty_port.h
-index 5e2cd738aceaf..7d4e7789e6cbb 100644
---- a/include/linux/tty_port.h
-+++ b/include/linux/tty_port.h
-@@ -235,7 +235,8 @@ bool tty_port_carrier_raised(struct tty_port *port);
- void tty_port_raise_dtr_rts(struct tty_port *port);
- void tty_port_lower_dtr_rts(struct tty_port *port);
- void tty_port_hangup(struct tty_port *port);
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async);
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal);
-+void tty_port_tty_vhangup(struct tty_port *port);
- void tty_port_tty_wakeup(struct tty_port *port);
- int tty_port_block_til_ready(struct tty_port *port, struct tty_struct *tty,
- 		struct file *filp);
-@@ -254,25 +255,6 @@ static inline int tty_port_users(struct tty_port *port)
- 	return port->count + port->blocked_open;
- }
+ 			ieee80211_chan_bw_change(local,
+@@ -1707,7 +1717,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
+ 			struct ieee80211_bss_conf *link_conf = link->conf;
+ 			u64 changed = 0;
  
--/**
-- * tty_port_tty_hangup - helper to hang up a tty asynchronously
-- * @port: tty port
-- * @check_clocal: hang only ttys with %CLOCAL unset?
-- */
--static inline void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
--{
--	__tty_port_tty_hangup(port, check_clocal, true);
--}
--
--/**
-- * tty_port_tty_vhangup - helper to hang up a tty synchronously
-- * @port: tty port
-- */
--static inline void tty_port_tty_vhangup(struct tty_port *port)
--{
--	__tty_port_tty_hangup(port, false, false);
--}
--
- #ifdef CONFIG_TTY
- void tty_kref_put(struct tty_struct *tty);
- __DEFINE_CLASS_IS_CONDITIONAL(tty_port_tty, true);
+-			if (!ieee80211_link_has_in_place_reservation(link))
++			if (!ieee80211_link_has_in_place_reservation(link, ctx))
+ 				continue;
+ 
+ 			rcu_assign_pointer(link_conf->chanctx_conf,
+@@ -1761,7 +1771,8 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
+ 		 */
+ 		list_for_each_entry_safe(link, link_tmp, &ctx->reserved_links,
+ 					 reserved_chanctx_list) {
+-			if (WARN_ON(ieee80211_link_has_in_place_reservation(link)))
++			if (WARN_ON(ieee80211_link_has_in_place_reservation(link,
++									    ctx)))
+ 				continue;
+ 
+ 			if (WARN_ON(link->reserved_chanctx != ctx))
 -- 
 2.53.0
 
