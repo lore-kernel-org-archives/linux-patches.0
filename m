@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52B14F96A6;
-	Tue, 13 Oct 2026 12:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1B34FD290;
+	Tue, 13 Oct 2026 12:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893227; cv=none; b=DSiwUd2fpITpcJniyh0YrLa9ZdLvZXhmfHLU5LBpcKcftSJa78PBOJyHd43+dVIgDDoKjqXLW57OsNMXZKMiS8mOrfgi/ak1Xfz6x4FCawxkQKB16DGFucWCzHQio6ERuLJ0OZ8nrswvAlkItrmOICWrqvjF3eR4yNNiNUbNaYw=
+	t=1791893229; cv=none; b=JTuwaOjZANCmB8EYQJnzEoxibdAXScxJeYX3bTgNbtgi7Hae8/G+XsPkWKGMB7qpcQD7IVnLbXfDdelBb4T4wSzl23I2T9nhpEWGSTNSCx5qvnkpTrfWCfbO9mtUggZdloy32bHmJ17QFVqNsdC5zVKeOgVrZYRz3Rh6VuHtju4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893227; c=relaxed/simple;
-	bh=oCIPQbJtPPfF/u3+cyU0UAYZ5SQOG/7x0rr1xZMSYsE=;
+	s=arc-20240116; t=1791893229; c=relaxed/simple;
+	bh=N/EFyZpWLSVJeNNntO2oLWIZBI1o6zlpS4xJ2+k9agI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmfsgOmtPccRhyvsOzbg6n3jyrqIsYgew005dgyeYpgIQZWxgOspX45/uFF14xZjD9tuSdvkB/tDztAHd6fMIHV393faiczSjNlvKs2+l48vlZhaBze4/BS1aymTH6wxD8b7DKBhjgJoYP0cqdWenSuUwGfhcLBMbSGRSde8Em8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTtb61T3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r2DFJpqYIIvz/D3jkyda+MBSvJdGgl8az+QgrADy6dxCuoeX6/DUPZglWbiiwxsKSEFkiLWsXYjGXMhYFbplWLtAcZswpZgQbFuLxRCrbEZt9yKSKjAyVYAOdh87KFGqBdbRxcLVNJmfbGFnXBp6uGEl8fXJ99u4qXdF0svOWbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fwjdg4zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTtb61T3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183871F000FF;
-	Tue, 13 Oct 2026 12:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fwjdg4zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF111F000FF;
+	Tue, 13 Oct 2026 12:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893225;
-	bh=ka376qzOokL89443Rxbrb7RPXi1EZdyq6y2X/nG8Eoo=;
+	s=korg; t=1791893228;
+	bh=QESofUzkiWoaAYBRvDiv6W+yPUfFRGF+sFfMvrcxr3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dTtb61T3S4n2J9tvsdpbW9XVXIls5jV3lVRay8q32olDpwnFIgdnVFEKdr3ZHdfA+
-	 freB74sIvDlmNNOq3rhI5WG8/Z/Kc9SUgOe+POuIfK9RIBWg3g6yrYVlEJFMNH6TWy
-	 fUzQtIA+6ISsH7vm1OM9x7Y7hMHhtJ25g3zB0dbw=
+	b=Fwjdg4zh5pKtorMhEqzg0h5DeC6Hkzc6rVXsic6DRdHGrlWrrli79Y3DNCrxH+QFG
+	 ZsArPPIe6zkbFjT7Op5RxyL/JeEgDHk9rY1KbANQVgnY8CFfHVR/SbcN2g75WIm9oV
+	 e00Nj5hUwETzkpzEgsMZdAlJZ8UNntwxk0xZpj90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/621] PCI: Add WQ_PERCPU to alloc_workqueue() users
-Date: Tue, 13 Oct 2026 13:32:28 +0200
-Message-ID: <20261013112924.484380954@linuxfoundation.org>
+Subject: [PATCH 6.18 154/621] PCI: endpoint: Add missing NULL check for alloc_workqueue()
+Date: Tue, 13 Oct 2026 13:32:29 +0200
+Message-ID: <20261013112924.509183708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,142 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 78f5d0d5a23dd81106cbe999d9dcd522964a8f1a ]
+[ Upstream commit 03f336a869b3a3f119d3ae52ac9723739c7fb7b6 ]
 
-Currently work items enqueued by schedule_delayed_work() use "system_wq" (a
-per-CPU wq), while queue_delayed_work() uses WORK_CPU_UNBOUND (used when a
-CPU is not specified). The same applies to schedule_work() that is using
-system_wq and queue_work(), that makes use again of WORK_CPU_UNBOUND.  This
-lack of consistency cannot be addressed without refactoring the API.
+alloc_workqueue() can return NULL on memory allocation failure. Without
+proper error checking, this may lead to a NULL pointer dereference when
+queue_work() is later called with the NULL workqueue pointer in
+epf_ntb_epc_init().
 
-alloc_workqueue() treats all queues as per-CPU by default, while unbound
-workqueues must opt-in via WQ_UNBOUND.
+Add a NULL check immediately after alloc_workqueue() and return -ENOMEM on
+failure to prevent the driver from loading with an invalid workqueue
+pointer.
 
-This default is suboptimal: most workloads benefit from unbound queues,
-allowing the scheduler to place worker threads where they're needed and
-reducing noise when CPUs are isolated.
-
-This continues the effort to refactor workqueue APIs, which began with the
-introduction of new workqueues and a new alloc_workqueue() flag in:
-
-  128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
-  930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
-
-Add WQ_PERCPU to explicitly request alloc_workqueue() to be per-CPU when
-WQ_UNBOUND has not been specified.
-
-With the introduction of the WQ_PERCPU flag (equivalent to !WQ_UNBOUND),
-any alloc_workqueue() caller that doesn't explicitly specify WQ_UNBOUND
-must now use WQ_PERCPU.
-
-Once migration is complete, WQ_UNBOUND can be removed and unbound will
-become the implicit default.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-[bhelgaas: squash similar commits]
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251107142526.234685-1-marco.crivellari@suse.com
-Link: https://patch.msgid.link/20251107142835.237636-1-marco.crivellari@suse.com
-Link: https://patch.msgid.link/20251107143108.240025-1-marco.crivellari@suse.com
-Link: https://patch.msgid.link/20251107143335.242342-1-marco.crivellari@suse.com
-Link: https://patch.msgid.link/20251107143624.244978-1-marco.crivellari@suse.com
-Stable-dep-of: 03f336a869b3 ("PCI: endpoint: Add missing NULL check for alloc_workqueue()")
+Link: https://patch.msgid.link/20251110040446.2065-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-mhi.c  | 2 +-
- drivers/pci/endpoint/functions/pci-epf-ntb.c  | 4 ++--
- drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 4 ++--
- drivers/pci/hotplug/pnv_php.c                 | 2 +-
- drivers/pci/hotplug/shpchp_core.c             | 3 ++-
- 6 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-ntb.c  | 5 +++++
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 2f077d0b7957f..191f4e6c30f97 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -690,7 +690,7 @@ static int pci_epf_mhi_dma_init(struct pci_epf_mhi *epf_mhi)
- 		goto err_release_tx;
- 	}
- 
--	epf_mhi->dma_wq = alloc_workqueue("pci_epf_mhi_dma_wq", 0, 0);
-+	epf_mhi->dma_wq = alloc_workqueue("pci_epf_mhi_dma_wq", WQ_PERCPU, 0);
- 	if (!epf_mhi->dma_wq) {
- 		ret = -ENOMEM;
- 		goto err_release_rx;
 diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-index d12cf226f3282..33cafce06e633 100644
+index 33cafce06e633..5314aca2188a0 100644
 --- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
 +++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-@@ -2073,8 +2073,8 @@ static int __init epf_ntb_init(void)
- {
- 	int ret;
+@@ -2075,6 +2075,11 @@ static int __init epf_ntb_init(void)
  
--	kpcintb_workqueue = alloc_workqueue("kpcintb", WQ_MEM_RECLAIM |
--					    WQ_HIGHPRI, 0);
-+	kpcintb_workqueue = alloc_workqueue("kpcintb",
-+				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
+ 	kpcintb_workqueue = alloc_workqueue("kpcintb",
+ 				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
++	if (!kpcintb_workqueue) {
++		pr_err("Failed to allocate kpcintb workqueue\n");
++		return -ENOMEM;
++	}
++
  	ret = pci_epf_register_driver(&epf_ntb_driver);
  	if (ret) {
  		destroy_workqueue(kpcintb_workqueue);
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 9bc6d283eae25..97e0037822161 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -1191,7 +1191,7 @@ static int __init pci_epf_test_init(void)
- 	int ret;
- 
- 	kpcitest_workqueue = alloc_workqueue("kpcitest",
--					     WQ_MEM_RECLAIM | WQ_HIGHPRI, 0);
-+				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
- 	if (!kpcitest_workqueue) {
- 		pr_err("Failed to allocate the kpcitest work queue\n");
- 		return -ENOMEM;
 diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index d3d0780fb4816..fadebe86417b6 100644
+index fadebe86417b6..68110855ea1c7 100644
 --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
 +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -1513,8 +1513,8 @@ static int __init epf_ntb_init(void)
- {
- 	int ret;
+@@ -1515,6 +1515,11 @@ static int __init epf_ntb_init(void)
  
--	kpcintb_workqueue = alloc_workqueue("kpcintb", WQ_MEM_RECLAIM |
--					    WQ_HIGHPRI, 0);
-+	kpcintb_workqueue = alloc_workqueue("kpcintb",
-+				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
+ 	kpcintb_workqueue = alloc_workqueue("kpcintb",
+ 				    WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU, 0);
++	if (!kpcintb_workqueue) {
++		pr_err("Failed to allocate kpcintb workqueue\n");
++		return -ENOMEM;
++	}
++
  	ret = pci_epf_register_driver(&epf_ntb_driver);
  	if (ret) {
  		destroy_workqueue(kpcintb_workqueue);
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index e9c8f7fb22134..44fca95864535 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -802,7 +802,7 @@ static struct pnv_php_slot *pnv_php_alloc_slot(struct device_node *dn)
- 	}
- 
- 	/* Allocate workqueue for this slot's interrupt handling */
--	php_slot->wq = alloc_workqueue("pciehp-%s", 0, 0, php_slot->name);
-+	php_slot->wq = alloc_workqueue("pciehp-%s", WQ_PERCPU, 0, php_slot->name);
- 	if (!php_slot->wq) {
- 		SLOT_WARN(php_slot, "Cannot alloc workqueue\n");
- 		kfree(php_slot->name);
-diff --git a/drivers/pci/hotplug/shpchp_core.c b/drivers/pci/hotplug/shpchp_core.c
-index 0c341453afc60..56308515ecbaf 100644
---- a/drivers/pci/hotplug/shpchp_core.c
-+++ b/drivers/pci/hotplug/shpchp_core.c
-@@ -80,7 +80,8 @@ static int init_slots(struct controller *ctrl)
- 		slot->device = ctrl->slot_device_offset + i;
- 		slot->number = ctrl->first_slot + (ctrl->slot_num_inc * i);
- 
--		slot->wq = alloc_workqueue("shpchp-%d", 0, 0, slot->number);
-+		slot->wq = alloc_workqueue("shpchp-%d", WQ_PERCPU, 0,
-+					   slot->number);
- 		if (!slot->wq) {
- 			retval = -ENOMEM;
- 			goto error_slot;
 -- 
 2.53.0
 
