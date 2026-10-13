@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD75B4ED1B4;
-	Tue, 13 Oct 2026 11:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FAC4E4C5A;
+	Tue, 13 Oct 2026 11:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892171; cv=none; b=Kdbk//3aiQS6jW52Z+3DMjUz9wlPJIBcXWTA4CUcEpylznjtZFKZYq5PFdjvm23E1HWJ+ZdeDJ5JhdPXfC9YZ8QcPoE1RjQ3HAGFm6RKKdgXWUeuWhEBoIZQ1fVNmQbP68blyuvwa3esQ1EODDxkUuRvzM70LXLHKmDhwDHD2Eg=
+	t=1791892174; cv=none; b=XYkBM9mTRg0x7jx1N8DEsEy4d2wNI3zbHi3pqS7nfQSWlqroEpIsXUl/qhV6vGvqSy0ekCRA3kTk5mjJfr5dCo0lNoHy9+D5dcuPuL5yvIk7AXK5zGlAevGhzkiNAs1ccaJe0+5aVelCQEUla9ImWgTs4t7YkwxILSiSubeomr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892171; c=relaxed/simple;
-	bh=Ou5A/oP8cCP6ZP71aPEHlS3X2jx9+bnkLGes9W/rXRM=;
+	s=arc-20240116; t=1791892174; c=relaxed/simple;
+	bh=+tXBhPEVrEaxafocQOsT7SVCjXtOEiFsFO+5be6VRpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKGC9ThlYKydKjhpBbOu/YlKlEbsJmklk/xNdos63apJU6tRZzY3aElAhmaEs58XvFZyyY5VgRb1h4laWU6g24Tlex3MmrbqUchr0qEJ83HB2MXoZe8UW49721tRge+X7mrdIsYC71gGyaYVRQ8M3h0OGy31AyTMCYB/vRxsohc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrOY1EHH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NF58MbKfsiDGYEg9vDRh0XnLHGsQjs1AUZTWgCIwuILZdTB23eYhqc1rDIVMmusmjhYSLAug8c8WJm1kp43XVRqvU4xstLxoY35T0Oc6y172GrtAkPF+J0ihnb3kN7+fbFf4nut+Q78A1D3/m11RsTRPNqTL4dhHE7TnFrGEjiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L0Npvt6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrOY1EHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103B21F000FF;
-	Tue, 13 Oct 2026 11:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L0Npvt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0251F000FF;
+	Tue, 13 Oct 2026 11:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892170;
-	bh=ezeI5f2UdSD1+wCqsy2T7QDqfsg6HYjq3ggeSsmRWuE=;
+	s=korg; t=1791892173;
+	bh=yHr4GNYAmyehqPgYGmkon3VFV5nO2jNfWqjwKOWEPts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VrOY1EHHVh1VDl5WjxFaXdFBXfRiFjFNmMT9H2ZRJZNelrkAie+ngjLPS5E0kfFrL
-	 Kq8ISiNEwjNXxAEaYqgsXAdSvlmLps1EgEWotJPdvie0YHiaHboBNUgjSfYMFA4CVE
-	 PxtAAR0n4RYiSyEFXvX1PsuJHtjO12+TYVK8BVVQ=
+	b=0L0Npvt66xRGL0wcp0rYOv4N6XuKb4SC3iGLY9/rIUvDHRH/YpqPq/NHhWabkiEIt
+	 a//OuD9JMN4aGJTXb9tVZO56hNsoVJtW/MTP9/QW/90htG5oWt4Ff+ajm0+Nm7beic
+	 sRE977xJiW5JfZ8AReIgzYGsAEsHy+YH6zRvaQx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Mina Almasry <almasrymina@google.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 085/281] net: skbuff: dont leave stale bytes in skb_copy_and_csum_bits()
-Date: Tue, 13 Oct 2026 13:36:41 +0200
-Message-ID: <20261013112857.195384064@linuxfoundation.org>
+Subject: [PATCH 7.2 086/281] net: sparx5: free the matchall entry on destroy
+Date: Tue, 13 Oct 2026 13:36:42 +0200
+Message-ID: <20261013112857.219673628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,49 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-commit ab9414ed70bd783e902a85c350620dee269bcb2b upstream.
+commit 2b82e16d6084cbc651e3c902198f1945408ee1a5 upstream.
 
-When skb_copy_and_csum_bits() reaches unreadable frags it returns 0
-after copying only the linear part, and the rest of the caller's buffer
-is left as it was.  The callers copy into a buffer that is about to go
-out on the wire: an ICMP error quoting the offending packet, or a
-driver's TX bounce buffer in skb_copy_and_csum_dev().  Neither buffer
-is zeroed beforehand, so whatever was in memory there gets sent.
+sparx5_tc_matchall_replace() allocates a struct sparx5_mall_entry for
+every offloaded matchall filter and adds it to sparx5->mall_entries.
+sparx5_tc_matchall_destroy() removes the entry from the list, but never
+frees it, so the entry of every deleted mirror and goto matchall filter
+is leaked.
 
-Zero the part of the buffer we didn't fill.  The checksum usually
-won't match the data any more, so the receiver will usually drop the
-packet, but either way it no longer carries anything it shouldn't.
-Only zero for a positive @len, a negative one from a broken caller must
-not turn into a huge memset().
+Free the entry after unlinking it.
 
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
+The leak was discovered by an AI code review agent, and reproduced with
+kmemleak on a lan969x EV board (EV23X71A) by repeatedly adding and
+deleting matchall mirror and goto filters. With the fix, kmemleak no
+longer reports the leak.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20261007-b4-skb-copy-csum-stale-bytes-v1-1-adbbde033fb3@toxicpanda.com
+Fixes: 1ede4acf045c ("net: sparx5: add bookkeeping code for matchall rules")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261007-sparx5-matchall-kfree-net-v1-1-c8918685b337@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3633,8 +3633,12 @@ __wsum skb_copy_and_csum_bits(const stru
- 		pos	= copy;
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_matchall.c
+@@ -160,6 +160,7 @@ static int sparx5_tc_matchall_destroy(st
  	}
  
--	if (!skb_frags_readable(skb))
-+	if (!skb_frags_readable(skb)) {
-+		/* Don't hand the caller a buffer with stale bytes in it. */
-+		if (len > 0)
-+			memset(to, 0, len);
- 		return 0;
-+	}
+ 	list_del(&entry->list);
++	kfree(entry);
  
- 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
- 		int end;
+ 	return err;
+ }
 
 
