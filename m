@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A574F4029;
-	Tue, 13 Oct 2026 11:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B548F4F054D;
+	Tue, 13 Oct 2026 11:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892040; cv=none; b=D1V+prZLvd7DT3Dfoq+7BwO+QKFtE3I5ON6URv4NYeaK9G+dxJh8NJK8QpbCw+eo0Kd1Gw1pqCLLXC/E/ZEG0wLQQSttiQhc5S1wjTxmjyqg5jeIseyWvFZ31EQNOrDEq2qneZuK4mI4h9ntm+btIJv2Nkdm/JWmajXfe2/3AX4=
+	t=1791892043; cv=none; b=HB/b3bduJ0/5Tt93dWVEeUKVMWu1W1PPDKI5kU4aYdkqnxv+I3pJiaJVrGA0dhIN7i6lw9C2dYO0zEYUf4oF98WoFfjFaI8Nma9Vx6618kh5XKphEVp+Q29iLXquZ98iH1///WzJtzNZVzKD52A+pPdl8hcAreyZ86EPjI31f7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892040; c=relaxed/simple;
-	bh=hJIY5eGeLLYCY2z5C3aQf7aLbHz7PZ9Ot5oGfCBogY8=;
+	s=arc-20240116; t=1791892043; c=relaxed/simple;
+	bh=xIJnQe0A7rMo68yRUwKx/dHOa5MkAxtua1XXMFJpdQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBIjjJjVpysyDwnErSsEmggLC58FbG7k/3lQNOYPnG51xYqX4OQRanIAFnXnCkZABPw68u/uzBtGLUKtH3Hcn8Lh2nXT6MQEKi3dKCuQbqWgkfMT6woevUEZUfsCDkTcbNpsjNeZl+m3SmkzTP0hNqIL4PKCaobTyEbO+rdwqw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsEN77mT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YNFBtejXr5203Fq5pjZvWD7QoK6pS4LBeMV9Vb0rzf4WYVB7Rj970twK90XAJCKJp7Xiz1ObHbNlt2KLmjyDzzV8EWabvTIGW1AisR+aHTnfmjy8y/TwQopI2jwheU6AZuZZsuhJh5miG7u9KMB4gzYYHe9WfApnaoC+rQ4j7aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Baj32pR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsEN77mT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9691F00893;
-	Tue, 13 Oct 2026 11:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Baj32pR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09811F00893;
+	Tue, 13 Oct 2026 11:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892039;
-	bh=mdXwzV2S0TaLpa9ZG1HeL10jc2hlIcUvpgFA+F/Wwao=;
+	s=korg; t=1791892042;
+	bh=Aq8AHRgq1OZqc9u7X5QdZzxpnUhx/8p3xIzre3dy0n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AsEN77mTOWNmTFETnSoSgsYkfGq+8+6E1rWh88yWCmIUWMkJjeTus3A9O5lwiCqE1
-	 1pMNyC8R8XbEC21uL9T/ppzwwYoRpSG9y5BT7lyYVpMH4BrBJTI0B0EbIye+8K24p4
-	 8Xtv+u3uckevuIrnghAsk+IsMTadKHS5eESfvd9I=
+	b=0Baj32pR+95a/2XKW+22MV2Wp1FRNCmNTonA5JWo69f8i5ni4A4CS6xOw/t4dTuIZ
+	 gq68/Pq9s6cwoPZ7nmXy7nNFiosorTKhPGbsQ1j1hz98xHQkhOg94q57yS7JYfHwda
+	 Z3cwSsprc7caMNov/S1pcuS425m5AkxCteB1vCC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Greve <andreas.greve@a-greve.de>,
-	James Dingwall <james@dingwall.me.uk>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	"Claude Opus 5.5 (1M context)" <noreply@anthropic.com>
-Subject: [PATCH 7.2 041/281] swiotlb: fix default_swiotlb_limit() for non-growable default pool
-Date: Tue, 13 Oct 2026 13:35:57 +0200
-Message-ID: <20261013112856.050555666@linuxfoundation.org>
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 042/281] tcp: reject net_iov in zerocopy receive mapping hints
+Date: Tue, 13 Oct 2026 13:35:58 +0200
+Message-ID: <20261013112856.075181104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,57 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 911655ab1dfb9d526978a75df3b210132620d30a upstream.
+commit 8b1f0af1fd5fd113432233ed8a3862ee7c30a84f upstream.
 
-Commit ad96ce3252db ("swiotlb: determine potential physical address
-limit") changed default_swiotlb_limit() to return the maximum physical
-address that could ever be used by dynamically allocated pools, so that
-the value stays constant when CONFIG_SWIOTLB_DYNAMIC=y. However,
-io_tlb_default_mem.phys_limit is returned even when the default pool
-cannot grow, e.g. when swiotlb_init_remap() is called with a remap
-callback.
+After copying a readable prefix, receive_fallback_to_copy() asks
+tcp_zerocopy_set_hint_for_skb() where page mapping can resume. If the
+next skb is unreadable, find_next_mappable_frag() passes its net_iov
+fragment to can_map_frag().
 
-This breaks Xen dom0 on x86: pci_xen_swiotlb_init() passes SWIOTLB_ANY
-and xen_swiotlb_fixup(), so phys_limit is set to the top of dom0 memory,
-although xen_swiotlb_fixup() makes the default pool below the 32-bit
-boundary. xen_swiotlb_dma_supported() then rejects 32-bit DMA masks,
-even though the bounce buffer is perfectly usable by such devices.
+skb_frag_page() returns NULL for a net_iov, but can_map_frag()
+dereferences it in PageCompound(). A v7.2 KASAN run on a connected TCP
+socket with 64 readable bytes followed by a 4096-byte NET_IOV_DMABUF
+fragment reported:
 
-Return phys_limit only if the default pool can actually grow, otherwise
-report the real end of the default pool, like in the
-!CONFIG_SWIOTLB_DYNAMIC case.
+  BUG: KASAN: null-ptr-deref in can_map_frag
+  tcp_zerocopy_receive -> can_map_frag
+  Kernel panic - not syncing: KASAN: panic_on_warn set
 
-Reported-by: Andreas Greve <andreas.greve@a-greve.de>
-Reported-by: James Dingwall <james@dingwall.me.uk>
-Fixes: ad96ce3252db ("swiotlb: determine potential physical address limit")
-Closes: https://lore.kernel.org/xen-devel/f74668db-52fd-4575-8372-7bfdf10d62ac@a-greve.de/
+The diagnostic inserted the net_iov directly because the test host has
+no devmem-capable NIC. Hardware end-to-end reachability remains untested
+and requires CONFIG_NET_DEVMEM plus a supported DMA-buf-bound RX queue.
+
+Reject all net_iov fragments before skb_frag_page(). This covers both
+DMABUF and IOURING net_iov types while leaving page-backed checks
+unchanged. With the guard, the same queue copied the readable prefix,
+returned a 4096-byte skip hint, and completed without a fault.
+
+Fixes: 9f6b619edf2e ("net: support non paged skb frags")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
-Tested-by: James Dingwall <james@dingwall.me.uk>
-Link: https://lore.kernel.org/all/20261005070518.1590097-1-m.szyprowski@samsung.com/
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20260930102524.1659847-1-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/swiotlb.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -1680,10 +1680,10 @@ phys_addr_t default_swiotlb_base(void)
- phys_addr_t default_swiotlb_limit(void)
- {
- #ifdef CONFIG_SWIOTLB_DYNAMIC
--	return io_tlb_default_mem.phys_limit;
--#else
--	return io_tlb_default_mem.defpool.end - 1;
-+	if (io_tlb_default_mem.can_grow)
-+		return io_tlb_default_mem.phys_limit;
- #endif
-+	return io_tlb_default_mem.defpool.end - 1;
- }
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1908,6 +1908,8 @@ static bool can_map_frag(const skb_frag_
  
- #ifdef CONFIG_DEBUG_FS
+ 	if (skb_frag_size(frag) != PAGE_SIZE || skb_frag_off(frag))
+ 		return false;
++	if (skb_frag_is_net_iov(frag))
++		return false;
+ 
+ 	page = skb_frag_page(frag);
+ 
 
 
