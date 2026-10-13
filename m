@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7754F4D14;
-	Tue, 13 Oct 2026 11:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EEA4F93D0;
+	Tue, 13 Oct 2026 11:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892652; cv=none; b=RxTmXRLS37RxhOVXMAGJ+rGrnM4iH4DOiBmBRwJL3Sv7AL4HuJ6iW9/QyvrpeghaUbPsSUJW1z0ELKP4OphRKvuA9PJqzWCQqnhVM2HugN8aH15htisZG7akxWUN6px2Slwi/JrMGJpcz1sQYIfWQ0pTH6zJPffUIXQr8yDcUAE=
+	t=1791892655; cv=none; b=NR3khH8/7XW5b4+lP7rBKWr43+b3yUcNCnHKiNXsTu0/6U+l4Ho+NCb3IFgU5eLLZXA4kCCTeDfxkxBZGDHGRUzX2lKuUeSQoAow3spbi2UkUScAeDrKqHepcdkCtR4Y034eiW9xMlOmMZgfXMXdtLE/i2olBq2yCi/t8FfEweY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892652; c=relaxed/simple;
-	bh=HRugoI9t8cuaVDo0X3V1mz0R87vhLQprLp07L3VNg4w=;
+	s=arc-20240116; t=1791892655; c=relaxed/simple;
+	bh=NslqmJImAM/MU/XeDIO729D74MjeuUi7Y3MJ/E1E98Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOe1JX7AtQFJdQuv0Rdpb0NZERZoc18/1mKXQ+N4sYjf+LMUlngsYKMXjBDnc/pVzYxZJDQlu535Ht2Nw8AQsgpXaQuDhqusdgS5EwL3Jox68pEA/Nc0FHcT4274Mim4Fs7yOixLHpnpkBip3ip08S2oezi3iKkcSNFycLnmRrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RP7CLO4r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FJOv4S5IUWxz6i77p5LfCXdQ8euo56nyj6GrINXvjw3ZgNjSMzG+Yc1n1qDKhdMuVYHTomkpLhmDy5xi4QQCrIPmCT+JfIeXV1qFjSH90S3VCjg4Pkbdh13/SGE7vLPBTR1IWH0dfWRQQ+6AjPyStipvt9NWl8xux6U6iWKLShg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzxRmsi1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RP7CLO4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC141F000FF;
-	Tue, 13 Oct 2026 11:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzxRmsi1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C9B1F000FF;
+	Tue, 13 Oct 2026 11:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892651;
-	bh=CsuuM69j8hSSAr6MhtMXHCtR3jccATI18Ux5LYkj9zQ=;
+	s=korg; t=1791892654;
+	bh=QYIFE7hQ3m8rHQ2VZ/kdLQGFJLyZnRawVXL1z9EMWdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RP7CLO4r9qcywsfWgZNWC3CnAJPFFlOd/r2lOS+ZmtBcq2crP4sVcX69pc0GeeqRT
-	 rLa2zqfErfArXlaMxZrDnkFT6KUieD0VWxw1ohMYrqx4uhqMQ+JSIJC1c0/ORDxnkl
-	 JuCfEKBxjCKJf9c+ty7NXwZOeIKScO0sgcy69FKs=
+	b=yzxRmsi1a/moGqOo59HLK6U41gyWUn0BwxyEF8z0rRnv7+qyjxdbLmJS1Z97MdFhz
+	 ROYmUM6wF2A41x2JMslWvrD1MRLViUnF1DFyo0+wMMf9VtRw87lwWiFCcWSn4aimm/
+	 fOsOc4g8uihdML2f9eYuZUhBOyA+pSq5OWKrZzEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Han Gao <gaohan@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Claude Opus 5.5" <noreply@anthropic.com>
-Subject: [PATCH 7.2 244/281] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
-Date: Tue, 13 Oct 2026 13:39:20 +0200
-Message-ID: <20261013112901.069306786@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 245/281] spi: sg2044-nor: Return transfer errors
+Date: Tue, 13 Oct 2026 13:39:21 +0200
+Message-ID: <20261013112901.093152454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,76 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
+[ Upstream commit e130c54fbb603f9aeacf5029789b4a2c8c48f416 ]
 
-The probe function puts the device into the runtime PM active state with
-only the "iis" bus clock enabled, but it also sets priv->op_clk to the
-parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
-callback disables both clocks, so the first runtime suspend after probe
-disables op_clk once more than it was enabled.
+The transfer helpers return errors, but both dispatchers discard them.
+Return these errors to the SPI memory layer instead of reporting success.
 
-On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
-so this triggers the following warning during boot:
-
- WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
- i2s_bus already disabled
- ...
- Workqueue: pm pm_runtime_work
- Call trace:
-  ...
-  clk_core_disable from clk_disable+0x28/0x34
-  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
-  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
-  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
-  __rpm_callback from rpm_callback+0x4c/0x50
-  rpm_callback from rpm_suspend+0xf4/0x718
-  rpm_suspend from pm_runtime_work+0x9c/0xa0
-  ...
-
-Fix this by enabling op_clk in probe right after getting it, so the clock
-state matches the runtime PM active state, and by disabling it in remove.
-
-Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
-Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
+Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://patch.msgid.link/20261001-fix-sg204xspi-v2-1-014dbaf22b5e@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/i2s.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-sg2044-nor.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
-index f80e8d4981565..525126ecb0c30 100644
---- a/sound/soc/samsung/i2s.c
-+++ b/sound/soc/samsung/i2s.c
-@@ -1518,9 +1518,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
- 
- 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
-+	ret = clk_prepare_enable(priv->op_clk);
-+	if (ret < 0) {
-+		priv->op_clk = NULL;
-+		goto err_unregister_clk;
-+	}
- 
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index f3bcb8a1b92bb..ff026ca0f7663 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -307,15 +307,15 @@ static ssize_t sg2044_spifmc_tran_cmd(struct sg2044_spifmc *spifmc,
  	return 0;
+ }
  
-+err_unregister_clk:
-+	i2s_unregister_clock_provider(priv);
- err_disable_pm:
- 	pm_runtime_disable(&pdev->dev);
- err_del_sec:
-@@ -1543,6 +1550,7 @@ static void samsung_i2s_remove(struct platform_device *pdev)
+-static void sg2044_spifmc_trans(struct sg2044_spifmc *spifmc,
+-				const struct spi_mem_op *op)
++static int sg2044_spifmc_trans(struct sg2044_spifmc *spifmc,
++			       const struct spi_mem_op *op)
+ {
+ 	if (op->data.dir == SPI_MEM_DATA_IN)
+-		sg2044_spifmc_read(spifmc, op);
++		return sg2044_spifmc_read(spifmc, op);
+ 	else if (op->data.dir == SPI_MEM_DATA_OUT)
+-		sg2044_spifmc_write(spifmc, op);
++		return sg2044_spifmc_write(spifmc, op);
+ 	else
+-		sg2044_spifmc_tran_cmd(spifmc, op);
++		return sg2044_spifmc_tran_cmd(spifmc, op);
+ }
  
- 	i2s_unregister_clock_provider(priv);
- 	i2s_delete_secondary_device(priv);
-+	clk_disable_unprepare(priv->op_clk);
- 	clk_disable_unprepare(priv->clk);
+ static ssize_t sg2044_spifmc_trans_reg(struct sg2044_spifmc *spifmc,
+@@ -389,19 +389,20 @@ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+ 	struct sg2044_spifmc *spifmc;
++	int ret;
  
- 	pm_runtime_put_noidle(&pdev->dev);
+ 	spifmc = spi_controller_get_devdata(mem->spi->controller);
+ 
+ 	mutex_lock(&spifmc->lock);
+ 
+ 	if (op->addr.nbytes == 0)
+-		sg2044_spifmc_trans_reg(spifmc, op);
++		ret = sg2044_spifmc_trans_reg(spifmc, op);
+ 	else
+-		sg2044_spifmc_trans(spifmc, op);
++		ret = sg2044_spifmc_trans(spifmc, op);
+ 
+ 	mutex_unlock(&spifmc->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct spi_controller_mem_ops sg2044_spifmc_mem_ops = {
 -- 
 2.53.0
 
