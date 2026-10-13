@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2470B49C4CC;
-	Tue, 13 Oct 2026 12:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FB05013A7;
+	Tue, 13 Oct 2026 12:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892944; cv=none; b=EIKN8Fqudc6KpG57TmYbHuXqcNAGq+KIzmG4gkDMBv1wuifuA84xISoH+VpwAV8OcTOfYitvPeHyzDQACFB3i5Ks/4lJnJj3KTUk42x8BM7/gupJoO16OUOYdzJARRPnA/O9q4jsLErKOMot68j8NR6GWDRh1KhGeJzYAOSDYCk=
+	t=1791892947; cv=none; b=g6jVrcSa22qP6Zb4YlVC9E1mSmlSxdkmFqhOQkXqHDAWUMw0G4ZE4cBAt3KrPwwGAxcKMExg0OBGWNHBSJDzvjoNbca1Jx+V3RHsX2Vc/I92ypA0pDCVuAVRMwh+JgaGyyYPL/p0SXdWJvHIdIjv2+sahs2bJHiwOZ4H8kZOXFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892944; c=relaxed/simple;
-	bh=06ncSP1IqSTjBfK6GMRzbPlxul2n4Jn5pdJ4uN8Qr1c=;
+	s=arc-20240116; t=1791892947; c=relaxed/simple;
+	bh=8Wr9ufKQIV6xKWJw5/50dHis7vivSRQ7pnSLXPKwQW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFmv6x0ma+R/uPkVZ8dxm2ZnFm447ElFscpG7yBQ4MhIOQpnQs7GqQbiban0YbC8M/ylAkRaAzLJJOR8yzyvACI3ALVOsgC5KkET+FGNo3RAgLJwzMZnNp8FFDNxlNCZRTiFOm6eDVK1Xve+jLKwRXsj04zdCahWNDnPhnYrTrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaFaMUG3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKa4vuBfb9dBdh6o32yArJ1QmipSkhMD/3Fty1jFciWmgm0m4ZRX3W5277Hu9QzWBq9k8VaTxqXeVjfvHqhSZBFB6A/8FuapVfJE8YmhDg7/0EklxV2V+5qUrMMq3fSu9mafEhwn87Sayl6bqLvSo8wJeJgowtAxOK62V+nt+b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8TA4h83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaFaMUG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7189F1F000FF;
-	Tue, 13 Oct 2026 12:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8TA4h83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733EF1F00A0A;
+	Tue, 13 Oct 2026 12:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892943;
-	bh=yN90vCKvD7ixYroKTryTybOmIYdhEMeQpqCF/9uzPVU=;
+	s=korg; t=1791892946;
+	bh=TmXPfpYH/is5fwoSmjMGH0co3qQeuJgItme8lgRBMmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WaFaMUG39jOTeDwA9xocP0MjMMONKdIs7waSXhp3zjngTF+8IOMbOpxjZ2KIihEl0
-	 Ccgsr7ICgUykhiyW6jko0EjENQxtJHiAeTbPNIlgWq3TeRbZ8Iktm0b5hw11jz/7G6
-	 ZNC04/x1Sjo3PnCTA4OMO1gL6F2KPzICw/Tz4LBM=
+	b=q8TA4h83CFtbJu0zUqBAxe3xEXLtAR4eIFJyMzflLRbCmj6njTgx5Z9P5J3INbWlI
+	 MHOzRYwCDHJVsqowevNLduCxNRcIlYHGfbW8DVqs2TiCRr99ow8ZvIOIs6+WtCnoAN
+	 pddFSs/EPOI52HTN/GVtdMl0qkNOrUxSA7S1jgdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Hostetler <thostet@google.com>,
 	Jordan Rhee <jordanrhee@google.com>,
+	Tim Hostetler <thostet@google.com>,
 	Joshua Washington <joshwash@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 058/621] gve: fix XSK buffer leak when rings are stopped
-Date: Tue, 13 Oct 2026 13:30:53 +0200
-Message-ID: <20261013112922.240216859@linuxfoundation.org>
+Subject: [PATCH 6.18 059/621] gve: fix XSK buffer leak on error descriptor
+Date: Tue, 13 Oct 2026 13:30:54 +0200
+Message-ID: <20261013112922.263598832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,47 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Washington <joshwash@google.com>
 
-commit 73670ddb91a4d22e1deb3efd962242de1ec48e90 upstream.
+commit 9fed6a8ab8a5bacba2c709cb19d2dd6d2fa9112e upstream.
 
-GVE does not free XSK buffers when resetting ring state as a part of
-stopping queues. This causes all XSK buffers which are posted to the
-NIC to be leaked.
+When the error bit is set in the RX completion descriptor, the buf_state
+and its attached buffer should be freed. In the case of AF_XDP ZC, the
+XSK buffer was not freed, leading to a leak.
 
-Free XSK buffers attached to an allocated buf_state when stopping rings.
-
-This issue was hit in production.
+This issue was caught by LLM.
 
 Fixes: c1fffc5d66a7 ("gve: implement DQO RX datapath and control path for AF_XDP zero-copy")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tim Hostetler <thostet@google.com>
 Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Reviewed-by: Tim Hostetler <thostet@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20260930214735.3288780-2-joshwash@google.com
+Link: https://patch.msgid.link/20260930214735.3288780-3-joshwash@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-index 5cf242b28557..a2c4a08ce68d 100644
 --- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
 +++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -113,6 +113,12 @@ static void gve_rx_reset_ring_dqo(struct gve_priv *priv, int idx)
- 				gve_free_to_page_pool(rx, bs, false);
- 			else
- 				gve_free_qpl_page_dqo(bs);
-+
-+			if (gve_buf_state_is_allocated(rx, bs) &&
-+			    bs->xsk_buff) {
-+				xsk_buff_free(bs->xsk_buff);
-+				bs->xsk_buff = NULL;
-+			}
- 		}
+@@ -818,7 +818,12 @@ static int gve_rx_dqo(struct napi_struct
  	}
  
--- 
-2.56.0
-
+ 	if (unlikely(compl_desc->rx_error)) {
+-		gve_free_buffer(rx, buf_state);
++		if (buf_state->xsk_buff) {
++			xsk_buff_free(buf_state->xsk_buff);
++			gve_free_buf_state(rx, buf_state);
++		} else {
++			gve_free_buffer(rx, buf_state);
++		}
+ 		return -EINVAL;
+ 	}
+ 
 
 
