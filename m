@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80FC399372;
-	Tue, 13 Oct 2026 12:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A853C343E;
+	Tue, 13 Oct 2026 12:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894667; cv=none; b=V4Jw+RUQZrJyBKDzSqWMdBdCY90LcE4FXKYzrT9rYP8RIZV7qzgGe06UuUvB9CTBmXsA9rZuWi1Pxr/lNy007KJ85JsW9VTJFxpaYG81sl4jENwk2z8i5BFuqODaFE8X0MtXhO8Rad04ZWMhawSl3bzD6VMC+sCg5dJoWqaYsVc=
+	t=1791894669; cv=none; b=RM4L/4HSTiZZ1WIEKV1ev73JjJHRkGtb+FdcQoTsZzwRcDNFmXbW3wazkAj4wwGdAtce4EcGUUIhLrAMoFjG/8hAAtxU1KVN5aIp6ZZiNIQb1PVuG3NrAMKNukHjfY98KXA9wVhhw/HYp/g6DegDNNkgwtbRKHQHSZMQdaKgaiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894667; c=relaxed/simple;
-	bh=Y1rws8Jq6SO4GgHZIfi6dkoyE+++o5PKLJNYXqYTOvQ=;
+	s=arc-20240116; t=1791894669; c=relaxed/simple;
+	bh=YzmmawRp3+4sQfDnYEJrdtVpyayHwmrRqVLfmlN7Yc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucqg53mhiA1n2UYL0b56zusf20PyoCvmfGiTl7fqOJt2pDZT/zTMwexUPSDlGvt3GWVlLS3/+MhzQUQtM0Sgl22uesh2wN8CJ0X4Zyj73R+uelU0wVZZXyM5ztK5AII+1Um7FLHTkIy4FojgU5u2FWPwO2zm50Jbu/pdgUS59ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWxIgv2s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qE9u8WdRdwGCCwqUQuDwK0efLPFY8pb8QXOvGroPm23nG6cyrA7XhFIwk10CAjkURj1Ziooh1C4Bkil3EbstOHqYjYLVgW20w8nC8jkX0f0J5mTK+LfKvD7ieHxdwwYh/9sV6YdJuCQw/GC3ozas6HTYnPNuTjcDKFXRITLIou8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axrBFkHR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWxIgv2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD771F00893;
-	Tue, 13 Oct 2026 12:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axrBFkHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC411F000FF;
+	Tue, 13 Oct 2026 12:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894665;
-	bh=0v7n+wPcOKyMXfnX5d85ay6MfEeyx4VTBSYJ9OTFZ1Q=;
+	s=korg; t=1791894668;
+	bh=wr72YYfCbfYzdZWP4Go2dNa9o0aFgoWtJDF+csPpLfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWxIgv2sjlBukw5F8cPLA9NmXGT4/bGy0pU0FCWTSCTWl7+ultP+VQoRCrd+FGMuD
-	 amNZ/xKQK/MKaXflYe4+rDLVwXNiwGPACXQPzgoo+NWRspjOeEFl0g3lEs+2v8x5ca
-	 L4enXVVWmbg7w3C7HSA7GLRPWyXpLYszPWeP6hJc=
+	b=axrBFkHRA6NMOCeY02HjSOhV+9rSoKPIprw5Ob7tjYNuBHvgq0mlnxPq6cfE+T2Rs
+	 l8l+KkFeFH7eQxVNOOiL6IzWR/sH++iPcIVcaflmkibPJMAybyD/LjmMqahCW0O+m/
+	 adw9hx3peYAzZEEF6bkjqJjdAShCRy7kh6ACzL4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/497] smb: client: close handle after create-context parsing failure
-Date: Tue, 13 Oct 2026 13:33:03 +0200
-Message-ID: <20261013112908.264550761@linuxfoundation.org>
+Subject: [PATCH 6.12 017/497] Bluetooth: ISO: Fix data-race on iso_pi(sk) in socket and HCI event paths
+Date: Tue, 13 Oct 2026 13:33:04 +0200
+Message-ID: <20261013112908.288134417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -54,46 +51,352 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-[ Upstream commit 566820af017e81497fb5e9d3ad6e7ffe2828bc8b ]
+[ Upstream commit f958c7805b18e9d69f6b322b231ecee46ec6f331 ]
 
-SMB2_open() accounts a successful CREATE response as a remote open before
-parsing its create contexts.  If smb2_parse_contexts() rejects malformed
-context data, SMB2_open() returns without closing the handle, leaving the
-server-side handle open and num_remote_opens elevated.
+Several iso_pi(sk) fields (qos, qos_user_set, bc_sid, base, base_len,
+sync_handle, bc_num_bis) are written under lock_sock in
+iso_sock_setsockopt() and iso_sock_bind(), but read and written under
+hci_dev_lock only in two other paths:
 
-Close the handle after a post-CREATE context parsing failure so the error
-path releases the remote resource and balances the open count.
+  - iso_connect_bis() / iso_connect_cis(), invoked from connect(2),
+    read qos/base/bc_sid and reset qos to default_qos on the
+    qos_user_set validation failure -- all without lock_sock.
 
-Fixes: af1689a9b770 ("smb: client: fix potential OOBs in smb2_parse_contexts()")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+  - iso_connect_ind(), invoked from hci_rx_work, writes sync_handle,
+    bc_sid, qos.bcast.encryption, bc_num_bis, base and base_len on
+    PA_SYNC_ESTABLISHED / PAST_RECEIVED / BIG_INFO_ADV_REPORT /
+    PER_ADV_REPORT events. The BIG_INFO handler additionally passes
+    &iso_pi(sk)->qos together with sync_handle / bc_num_bis / bc_bis
+    to hci_conn_big_create_sync() while setsockopt may be mutating
+    them.
+
+Acquire lock_sock around the affected accesses in both paths.
+
+The locking order hci_dev_lock -> lock_sock matches the existing
+iso_conn_big_sync() precedent, whose comment documents the same
+requirement for hci_conn_big_create_sync(). The HCI connect/bind
+helpers do not wait for command completion -- they enqueue work via
+hci_cmd_sync_queue{,_once}() / hci_le_create_cis_pending() and
+return -- so the added hold time is comparable to iso_conn_big_sync().
+
+KCSAN report:
+
+BUG: KCSAN: data-race in iso_connect_cis / iso_sock_setsockopt
+
+read to 0xffffa3ae8ce3cdc8 of 1 bytes by task 335 on cpu 0:
+ iso_connect_cis+0x49f/0xa20
+ iso_sock_connect+0x60e/0xb40
+ __sys_connect_file+0xbd/0xe0
+ __sys_connect+0xe0/0x110
+ __x64_sys_connect+0x40/0x50
+ x64_sys_call+0xcad/0x1c60
+ do_syscall_64+0x133/0x590
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+write to 0xffffa3ae8ce3cdc8 of 60 bytes by task 334 on cpu 1:
+ iso_sock_setsockopt+0x69a/0x930
+ do_sock_setsockopt+0xc3/0x170
+ __sys_setsockopt+0xd1/0x130
+ __x64_sys_setsockopt+0x64/0x80
+ x64_sys_call+0x1547/0x1c60
+ do_syscall_64+0x133/0x590
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 UID: 0 PID: 334 Comm: iso_setup_race Not tainted 7.0.0-10949-g8541d8f725c6 #44 PREEMPT(lazy)
+
+The iso_connect_ind() races were found by inspection.
+
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+Stable adaptation for 6.12:
+- Omit the PAST_RECEIVED locking hunk: this tree has neither that event
+  path nor iso_match_sid_past(). Keep locking for the existing connect,
+  PA sync, BIG info, and periodic advertising paths.
+- Fold in the connection lifetime prerequisites from aa9f7cb2bd3a2 and
+  fdfde532ab1ca. Give each socket association its own iso_conn reference,
+  balance temporary references at all iso_conn_add() callers, and detach
+  hcon explicitly during teardown. Use kref_get() directly instead of
+  adding the upstream iso_conn_hold() helper.
+
+These prerequisites let 0fcd4dad555c96e0bd3a1b8c569f989be85c7341 apply
+unchanged with the reference ownership it expects. Its seven-line fix
+is intentionally left for the target commit.
+
+Stable-dep-of: 0fcd4dad555c ("Bluetooth: ISO: release unused CIS holds after channel attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/iso.c | 96 +++++++++++++++++++++++++++------------------
+ 1 file changed, 58 insertions(+), 38 deletions(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 31b427d5702e5..1dbf8d28bdf76 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3320,6 +3320,9 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 3cf4ef291bf54..b3df3a5137fee 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -106,9 +106,6 @@ static void iso_conn_free(struct kref *ref)
  
- 	rc = smb2_parse_contexts(server, &rsp_iov, &oparms->fid->epoch,
- 				 oparms->fid->lease_key, oplock, file_info, posix);
-+	if (rc)
-+		SMB2_close(xid, tcon, oparms->fid->persistent_fid,
-+			   oparms->fid->volatile_fid);
+ 	BT_DBG("conn %p", conn);
  
- 	trace_smb3_open_done(xid, rsp->PersistentFileId, tcon->tid, ses->Suid,
- 			     oparms->create_options, oparms->desired_access,
+-	if (conn->sk)
+-		iso_pi(conn->sk)->conn = NULL;
+-
+ 	if (conn->hcon) {
+ 		conn->hcon->iso_data = NULL;
+ 		if (!test_and_set_bit(ISO_CONN_DROPPED, conn->flags))
+@@ -208,7 +205,6 @@ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
+ 			conn->hcon = hcon;
+ 			iso_conn_unlock(conn);
+ 		}
+-		iso_conn_put(conn);
+ 		return conn;
+ 	}
+ 
+@@ -261,6 +257,7 @@ static void iso_chan_del(struct sock *sk, int err)
+ }
+ 
+ static void iso_conn_del(struct hci_conn *hcon, int err)
++	__must_hold(&hcon->hdev->lock)
+ {
+ 	struct iso_conn *conn = hcon->iso_data;
+ 	struct sock *sk;
+@@ -275,12 +272,9 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 	iso_conn_lock(conn);
+ 	sk = iso_sock_hold(conn);
+ 	iso_conn_unlock(conn);
+-	iso_conn_put(conn);
+ 
+-	if (!sk) {
+-		iso_conn_put(conn);
+-		return;
+-	}
++	if (!sk)
++		goto done;
+ 
+ 	iso_sock_disable_timer(sk);
+ 
+@@ -289,6 +283,15 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 	release_sock(sk);
+ 	iso_sock_kill(sk);
+ 	sock_put(sk);
++
++done:
++	/* No sk access to conn->hcon any more (lock_sock + hdev->lock) */
++	iso_conn_lock(conn);
++	conn->hcon = NULL;
++	hcon->iso_data = NULL;
++	iso_conn_unlock(conn);
++
++	iso_conn_put(conn);
+ }
+ 
+ static int __iso_chan_add(struct iso_conn *conn, struct sock *sk,
+@@ -304,6 +307,12 @@ static int __iso_chan_add(struct iso_conn *conn, struct sock *sk,
+ 		return -EBUSY;
+ 	}
+ 
++	if (!conn->hcon) {
++		BT_ERR("conn->hcon missing");
++		return -EIO;
++	}
++
++	kref_get(&conn->ref);
+ 	iso_pi(sk)->conn = conn;
+ 	conn->sk = sk;
+ 	clear_bit(ISO_CONN_DROPPED, conn->flags);
+@@ -357,6 +366,7 @@ static int iso_connect_bis(struct sock *sk)
+ 		return -EHOSTUNREACH;
+ 
+ 	hci_dev_lock(hdev);
++	lock_sock(sk);
+ 
+ 	if (!bis_capable(hdev)) {
+ 		err = -EOPNOTSUPP;
+@@ -407,13 +417,10 @@ static int iso_connect_bis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
+-	lock_sock(sk);
+-
+ 	err = iso_chan_add(conn, sk, NULL);
+-	if (err) {
+-		release_sock(sk);
++	iso_conn_put(conn);
++	if (err)
+ 		goto unlock;
+-	}
+ 
+ 	/* Update source addr of the socket */
+ 	bacpy(&iso_pi(sk)->src, &hcon->src);
+@@ -429,9 +436,8 @@ static int iso_connect_bis(struct sock *sk)
+ 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
+ 	}
+ 
+-	release_sock(sk);
+-
+ unlock:
++	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 	return err;
+@@ -459,6 +465,7 @@ static int iso_connect_cis(struct sock *sk)
+ 		return -EHOSTUNREACH;
+ 
+ 	hci_dev_lock(hdev);
++	lock_sock(sk);
+ 
+ 	if (!cis_central_capable(hdev)) {
+ 		err = -EOPNOTSUPP;
+@@ -504,13 +511,10 @@ static int iso_connect_cis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
+-	lock_sock(sk);
+-
+ 	err = iso_chan_add(conn, sk, NULL);
+-	if (err) {
+-		release_sock(sk);
++	iso_conn_put(conn);
++	if (err)
+ 		goto unlock;
+-	}
+ 
+ 	/* Update source addr of the socket */
+ 	bacpy(&iso_pi(sk)->src, &hcon->src);
+@@ -526,9 +530,8 @@ static int iso_connect_cis(struct sock *sk)
+ 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
+ 	}
+ 
+-	release_sock(sk);
+-
+ unlock:
++	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 	return err;
+@@ -1211,10 +1214,9 @@ static int iso_listen_bis(struct sock *sk)
+ 	}
+ 
+ 	err = iso_chan_add(conn, sk, NULL);
+-	if (err) {
+-		hci_conn_drop(hcon);
++	iso_conn_put(conn);
++	if (err)
+ 		goto unlock;
+-	}
+ 
+ unlock:
+ 	release_sock(sk);
+@@ -2164,8 +2166,10 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
+ 				  iso_match_sid, ev1);
+ 		if (sk && !ev1->status) {
++			lock_sock(sk);
+ 			iso_pi(sk)->sync_handle = le16_to_cpu(ev1->handle);
+ 			iso_pi(sk)->bc_sid = ev1->sid;
++			release_sock(sk);
+ 		}
+ 
+ 		goto done;
+@@ -2192,27 +2196,35 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 					  ev2);
+ 
+ 		if (sk) {
+-			int err;
+-			struct hci_conn	*hcon = iso_pi(sk)->conn->hcon;
++			int err = 0;
++			bool big_sync;
++			struct hci_conn *hcon;
++
++			lock_sock(sk);
+ 
++			hcon = iso_pi(sk)->conn->hcon;
+ 			iso_pi(sk)->qos.bcast.encryption = ev2->encryption;
+ 
+ 			if (ev2->num_bis < iso_pi(sk)->bc_num_bis)
+ 				iso_pi(sk)->bc_num_bis = ev2->num_bis;
+ 
+-			if (!test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags) &&
+-			    !test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
++			big_sync = !test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags) &&
++				   !test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags);
++
++			if (big_sync)
+ 				err = hci_conn_big_create_sync(hdev, hcon,
+ 							       &iso_pi(sk)->qos,
+ 							       iso_pi(sk)->sync_handle,
+ 							       iso_pi(sk)->bc_num_bis,
+ 							       iso_pi(sk)->bc_bis);
+-				if (err) {
+-					bt_dev_err(hdev, "hci_le_big_create_sync: %d",
+-						   err);
+-					sock_put(sk);
+-					sk = NULL;
+-				}
++
++			release_sock(sk);
++
++			if (big_sync && err) {
++				bt_dev_err(hdev, "hci_le_big_create_sync: %d",
++					   err);
++				sock_put(sk);
++				sk = NULL;
+ 			}
+ 		}
+ 
+@@ -2266,8 +2278,10 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 			if (!base || base_len > BASE_MAX_LENGTH)
+ 				goto done;
+ 
++			lock_sock(sk);
+ 			memcpy(iso_pi(sk)->base, base, base_len);
+ 			iso_pi(sk)->base_len = base_len;
++			release_sock(sk);
+ 		} else {
+ 			/* This is a PA data fragment. Keep pa_data_len set to 0
+ 			 * until all data has been reassembled.
+@@ -2292,6 +2306,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ }
+ 
+ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
++	__must_hold(&hcon->hdev->lock)
+ {
+ 	if (hcon->type != CIS_LINK && hcon->type != BIS_LINK &&
+ 	    hcon->type != PA_LINK) {
+@@ -2303,8 +2318,10 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
+ 			struct hci_link *link, *t;
+ 
+ 			list_for_each_entry_safe(link, t, &hcon->link_list,
+-						 list)
++						 list) {
++				lockdep_assert_held(&link->conn->hdev->lock);
+ 				iso_conn_del(link->conn, bt_to_errno(status));
++			}
+ 
+ 			return;
+ 		}
+@@ -2326,14 +2343,17 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
+ 		struct iso_conn *conn;
+ 
+ 		conn = iso_conn_add(hcon);
+-		if (conn)
++		if (conn) {
+ 			iso_conn_ready(conn);
++			iso_conn_put(conn);
++		}
+ 	} else {
+ 		iso_conn_del(hcon, bt_to_errno(status));
+ 	}
+ }
+ 
+ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
++	__must_hold(&hcon->hdev->lock)
+ {
+ 	if (hcon->type != CIS_LINK && hcon->type !=  BIS_LINK &&
+ 	    hcon->type != PA_LINK)
 -- 
 2.53.0
 
