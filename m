@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBA11A0B0E;
-	Tue, 13 Oct 2026 12:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AD81DD0EF;
+	Tue, 13 Oct 2026 12:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895217; cv=none; b=KgViNn+FSkKGPV7zRkTtTFaBInOZTX8486LYxloI7OA8o7tfqqZ9lVFoSey4hywWPjHimTOyrOFwjMcxvt5AwagP5soOhnLpP0oUQED4pOxiZAj3Lc3zkkrPi+TKLnA1Ik5Do86o7ZZPPwVelu3WpPyqnjzfl4D23Hefsr00DQ0=
+	t=1791895220; cv=none; b=lb4pRi/Y2H4imYFa1ivxZ+unnYuqhceSNz4tuudGr75D0DsaiywpKgiQFk1u3QHwvRCcctixU2rpDl1ht40J4ZIGrV/0hzdOzbp1s6YnuFpxR9EXOo23ER/8DDUpE5CnDIi6vmAsz9Ysw+sA/8sX8zuZDzLiD4tQWbbXv99JAp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895217; c=relaxed/simple;
-	bh=fdz2yivJ6wOvefUzb62GeeAQKGktdJVXePouU/jf4Ew=;
+	s=arc-20240116; t=1791895220; c=relaxed/simple;
+	bh=gTuEnT2TPg8xZvMKs4yXf2KJXnACuQfhI7zoAVQxHAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZzCxyyOvSBVnTawBP1cwcFQsXk/OpxSZc/J9UZroRH+7pZKZgH6aqahpniTnZeDu9WbdNMznod89mwHNDcW7IrK5+u27WlIQUzf55gDHgKv4iFaL3iif6PMh8x1YR467UxDGY57tljmQbAoQ7K5D/L0ys+4asWLFGeFc5JrR5gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDvUK8DI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sMK8Mb50SFtEYc5pZD/F7IbyKcLxJwN0LNoWjNHQVcaqgsHoZ+gEg71yYEPg9dDKyFtu0/ggVhnGGz+fJ1SPGc+kBZTjfRNUzg1pdf95ZyD4P/3QNzcD3LZ8axKMAsoxKNQqhHCJxPr+HCtaue/hckqtar8ThMJci548++XyJeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBF3SIjl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDvUK8DI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6EA1F000FF;
-	Tue, 13 Oct 2026 12:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBF3SIjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4490E1F0089E;
+	Tue, 13 Oct 2026 12:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895215;
-	bh=24kSBWPuOQzdRJ6UaZW8CFMd00a+D7l7TQZLPtRKNow=;
+	s=korg; t=1791895218;
+	bh=59QV7rHxvScX9Yh/ehFOo07AKz47aNdY+4CYTzT63RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDvUK8DIS04PRrx4F1tmX2eb69WAyxNmohurx6qq7p8LkwaHP8Qx1Hlsc/wouylQr
-	 9biSEY75lWQIiEY3huyEkUpuK7b5314MxOM/45myYfGyQJO1v7VUGGlVk51N7H1Evn
-	 957sKIlsHcF/ZLlpnajRjtsjypPzxZ2fw3mnLlTE=
+	b=vBF3SIjlbnvLUvVjs0WUMVeZ7Xr2KN9iWtDTTrzzfe9xfRYjoiRGExh+J4+VcMEwg
+	 xDJVJ86w/qFEyspJnZbtTCAG2nVjPLsDnQqDdf7zwL18YQRYqgtk5xJt2/d1pfDGl5
+	 xMwidafisJW+LMNxSZcm31zO7dtEOyLkY5IFSj9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 200/497] mtd: spinand: fix zero oobavail when no ECC engine is used
-Date: Tue, 13 Oct 2026 13:36:07 +0200
-Message-ID: <20261013112912.639467821@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 201/497] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
+Date: Tue, 13 Oct 2026 13:36:08 +0200
+Message-ID: <20261013112912.662334001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -44,65 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 636fe10d8f3559210ff63108a208d39ea2e9c3bd upstream.
+commit 2abb25273c82061dd4670690c81c319c03740bf6 upstream.
 
-Commit 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no
-ECC engine") made the OOB free bytes count conditional on having an
-ECC engine so that probing would not fail when none is requested.
-However mtd->oobavail is still assigned from ret just after that
-block, and ret is 0 there, so the device ends up advertising no
-available OOB bytes at all.
+Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
+runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
+If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
+then runs the same L2 with TPR virtualization disabled, KVM will fail to
+refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
+virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
+L1 by proxy) read and write L0's TPR.
 
-mtd_oobavail() returns mtd->oobavail for MTD_OPS_AUTO_OOB, so a zero
-value makes every automatic OOB access fail with -EINVAL. JFFS2 fares
-worse: it keeps its cleanmarker in the OOB area on NAND and refuses to
-mount outright, reporting "inconsistent device description".
-
-No ECC engine also means no ooblayout was ever installed, which would
-make the count return -ENOTSUPP, so install the same fallback layout
-the on-die path already uses before counting unconditionally.
-
-Fixes: 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no ECC engine")
+Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1511,12 +1511,17 @@ static int spinand_init(struct spinand_d
- 	mtd->_max_bad_blocks = nanddev_mtd_max_bad_blocks;
- 	mtd->_resume = spinand_mtd_resume;
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1665,6 +1665,9 @@ static void copy_vmcs12_to_shadow(struct
+ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
+ {
+ #ifdef CONFIG_KVM_HYPERV
++	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
++				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
+ 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
+ 	struct hv_enlightened_vmcs *evmcs = nested_vmx_evmcs(vmx);
+ 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(&vmx->vcpu);
+@@ -1673,6 +1676,9 @@ static void copy_enlightened_to_vmcs12(s
+ 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
+ 	vmcs12->guest_rip = evmcs->guest_rip;
  
--	if (nand->ecc.engine) {
--		ret = mtd_ooblayout_count_freebytes(mtd);
--		if (ret < 0)
--			goto err_cleanup_ecc_engine;
-+	if (!nand->ecc.engine) {
-+		if (spinand->eccinfo.ooblayout)
-+			mtd_set_ooblayout(mtd, spinand->eccinfo.ooblayout);
-+		else
-+			mtd_set_ooblayout(mtd, &spinand_noecc_ooblayout);
- 	}
- 
-+	ret = mtd_ooblayout_count_freebytes(mtd);
-+	if (ret < 0)
-+		goto err_cleanup_ecc_engine;
++	if ((hv_clean_fields & runtime_controls) != runtime_controls)
++		vmx->nested.force_msr_bitmap_recalc = true;
 +
- 	mtd->oobavail = ret;
- 
- 	/* Propagate ECC information to mtd_info */
+ 	if (unlikely(!(hv_clean_fields &
+ 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_ENLIGHTENMENTSCONTROL))) {
+ 		hv_vcpu->nested.pa_page_gpa = evmcs->partition_assist_page;
 
 
