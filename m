@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE1D4F93A8;
-	Tue, 13 Oct 2026 12:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCC64F3EDB;
+	Tue, 13 Oct 2026 12:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893840; cv=none; b=PC7YEUsAGmDk9rvG+3oEBhjgddh6WzBFDvPDtiEGckcdeFsRAXpROYjJbKAysTXORW9TbprPQZtJDoy7Ivj54b7+oMX8u2baBsJfDxG/QA/ZVGymzUmJtZ3SRjwq7I0L52gaJoipOVth44imiZh9UQapIK2774kJ0T0/FO4c7R8=
+	t=1791893843; cv=none; b=SIxG6/TubnqexAiWm+FU9ay/XUSFTxW8M3JsNGOwxJiFmM6LECJgTY93EwnNCOeke8/Tkul9tLpZuIPiYCoz3GBfAv+oJXFT/LGwYcjGUyxEJCV12CaZ0WVz8WeysVssMVNEzJxpGx+LTXVMpqBqk3SH3y0/V50UHtl+qoWaf5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893840; c=relaxed/simple;
-	bh=CiG1Jgdv/GbMpeBMZ+kBzBKxBZ/Ms2Tx2QBkQNO/W14=;
+	s=arc-20240116; t=1791893843; c=relaxed/simple;
+	bh=tBDDHSbUmSSfIoZrYX+Q8pg12gvbPByjNBrb5sfO88Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbAxwCuuhrEi5szscQzsSyChGPw0TNNs+/gdQJToMz00YYj1OQk7asLyWh6uE9Ojt190ejzJrTetmxTEUtWyiMxXQVP5eeDbBfttk0VRA1g06vc9QHW+zTKILZcVlOpUwkoZVRlT3R44eFfwAJ8IrxhMS+ajHAGPhEjsJfAwvpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s52jI6Mw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Do1mCtPI2OaZAS//mO5JHh+Hc7foiljgkKI3K3Adj2Y/BM33dkoDcrUnevzsTgwyhqIho9icg9ynldWClLI5WkP3Nq0HIfTv4At+0G0uxpbclVyTCX5mDvEJLKdG2dO9tKbQlxBsFlg9EfS37hdSXc5N2zVraO2ctCkeGzTqi5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKbsrGIA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s52jI6Mw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEFD1F000FF;
-	Tue, 13 Oct 2026 12:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKbsrGIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66971F000FF;
+	Tue, 13 Oct 2026 12:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893839;
-	bh=NURsNRIvXRsuGKoDww61mLFcHou3LiXjGuyP3zaHKHA=;
+	s=korg; t=1791893842;
+	bh=g8itwd0nl+Pt1BA32eR8/ZwojsBepVElVVu03ESN1js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s52jI6MwvdRuEhsLbR2cRf/AKDiEjwade7PxDR6ep4ZCFfsmuHYFblZrZz3INgpqh
-	 iMxcgAionyCPrlcI6o1xq74ZSiTCQ4pf1Ir319qCa0wPKAZf6hgBiKo+atkSFHzQAi
-	 GAj4SAiREZmnaU3Xy5NOz7VEnDka75rf35cyJ3TY=
+	b=cKbsrGIAFSYLhcK/ykb1dugjbjYH92xMUSapCuaXs5S8ybn7NBBfMKE6ZGqYtGgNK
+	 9HR8txk/k6BRII1sS/cjmJVY+ytAG+mACkSjJARqbHpT77u3I+KdbKOx6uqJc6uwat
+	 U9WLXQHc/jHyAxwdgAsS8SkPrTvHvkRvYTx1fYeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Karthikeyan KS <karthiproffesional@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 361/621] bpf: Check sk_state before sk_protocol in bpf_tcp_*_syncookie
-Date: Tue, 13 Oct 2026 13:35:56 +0200
-Message-ID: <20261013112929.415223887@linuxfoundation.org>
+Subject: [PATCH 6.18 344/621] soc: aspeed: lpc-snoop: Fix usercopy overflow in snoop_file_read
+Date: Tue, 13 Oct 2026 13:35:39 +0200
+Message-ID: <20261013112929.016050799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -55,55 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Karthikeyan KS <karthiproffesional@gmail.com>
 
-[ Upstream commit 31a420a822ff92e2090bd5d65efe8e34e2d6d9b8 ]
+[ Upstream commit 1acef6d85bfd98bd9dfe1f08bffa397a4dda8a6f ]
 
-bpf_tcp_gen_syncookie and bpf_tcp_check_syncookie accept a socket pointer
-'sk' with argument type ARG_PTR_TO_BTF_ID_SOCK_COMMON. However, they access
-sk->sk_protocol without validating whether 'sk' represents a full socket.
+put_fifo_with_discard() acts as both producer and consumer on the kfifo:
+it calls kfifo_skip() (advances out) and kfifo_put() (advances in) from
+the IRQ handler without synchronizing with snoop_file_read(), which also
+consumes via kfifo_to_user(). On SMP systems this concurrent access can
+leave (in - out) larger than the ring buffer, so __kfifo_to_user()'s clamp
+to (in - out) is ineffective and kfifo_copy_to_user() can attempt a
+copy_to_user() past the kmalloc-2k backing store:
 
-Fix this issue by checking sk->sk_state != TCP_LISTEN before inspecting
-sk->sk_protocol in both bpf_tcp_gen_syncookie and bpf_tcp_check_syncookie.
-Since mini-sockets are never in the TCP_LISTEN state, the condition
-short-circuits and prevents dereferencing fullsock-specific fields.
+  usercopy: Kernel memory exposure attempt detected from SLUB object
+  'kmalloc-2k' (offset 0, size 2049)!
+  kernel BUG at mm/usercopy.c!
+  Call trace:
+   usercopy_abort
+   __check_heap_object
+   __check_object_size
+   kfifo_copy_to_user
+   __kfifo_to_user
+   snoop_file_read
+   vfs_read
 
-Fixes: 399040847084 ("bpf: add helper to check for a valid SYN cookie")
-Fixes: 70d66244317e ("bpf: add bpf_tcp_gen_syncookie helper")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://lore.kernel.org/bpf/6218aa3534d0d2d3f448fde70a8dc2769d7a8201.1785823138.git.rakukuip@gmail.com
+Serialize kfifo access with a per-channel spinlock shared between the
+IRQ handler (producer) and the file reader (consumer).  Annotate @fifo
+with __guarded_by(&lock) and opt the driver into context analysis so the
+compiler enforces that all fifo access holds the lock.
+
+Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
+Signed-off-by: Karthikeyan KS <karthiproffesional@gmail.com>
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 29 +++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 308b86abe4608..6926903163592 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7541,7 +7541,7 @@ BPF_CALL_5(bpf_tcp_check_syncookie, struct sock *, sk, void *, iph, u32, iph_len
- 		return -EINVAL;
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index b03310c0830d2..486d43406bc6d 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -11,6 +11,7 @@
+  */
  
- 	/* sk_listener() allows TCP_NEW_SYN_RECV, which makes no sense here. */
--	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
-+	if (sk->sk_state != TCP_LISTEN || sk->sk_protocol != IPPROTO_TCP)
- 		return -EINVAL;
+ #include <linux/bitops.h>
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/dev_printk.h>
+ #include <linux/interrupt.h>
+@@ -74,6 +75,7 @@ struct aspeed_lpc_snoop_channel_cfg {
+ struct aspeed_lpc_snoop_channel {
+ 	const struct aspeed_lpc_snoop_channel_cfg *cfg;
+ 	bool enabled;
++	spinlock_t		lock;
+ 	struct kfifo		fifo;
+ 	wait_queue_head_t	wq;
+ 	struct miscdevice	miscdev;
+@@ -114,6 +116,7 @@ static ssize_t snoop_file_read(struct file *file, char __user *buffer,
+ 				size_t count, loff_t *ppos)
+ {
+ 	struct aspeed_lpc_snoop_channel *chan = snoop_file_to_chan(file);
++	u8 *buf __free(kfree) = NULL;
+ 	unsigned int copied;
+ 	int ret = 0;
  
- 	if (!READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_syncookies))
-@@ -7614,7 +7614,7 @@ BPF_CALL_5(bpf_tcp_gen_syncookie, struct sock *, sk, void *, iph, u32, iph_len,
- 	if (unlikely(!sk || th_len < sizeof(*th) || th_len != th->doff * 4))
- 		return -EINVAL;
+@@ -125,9 +128,16 @@ static ssize_t snoop_file_read(struct file *file, char __user *buffer,
+ 		if (ret == -ERESTARTSYS)
+ 			return -EINTR;
+ 	}
+-	ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
+-	if (ret)
+-		return ret;
++
++	count = min_t(size_t, count, SNOOP_FIFO_SIZE);
++
++	buf = kmalloc(count, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	copied = kfifo_out_spinlocked(&chan->fifo, buf, count, &chan->lock);
++	if (copied && copy_to_user(buffer, buf, copied))
++		return -EFAULT;
  
--	if (sk->sk_protocol != IPPROTO_TCP || sk->sk_state != TCP_LISTEN)
-+	if (sk->sk_state != TCP_LISTEN || sk->sk_protocol != IPPROTO_TCP)
- 		return -EINVAL;
+ 	return copied;
+ }
+@@ -151,11 +161,13 @@ static const struct file_operations snoop_fops = {
+ /* Save a byte to a FIFO and discard the oldest byte if FIFO is full */
+ static void put_fifo_with_discard(struct aspeed_lpc_snoop_channel *chan, u8 val)
+ {
+-	if (!kfifo_initialized(&chan->fifo))
+-		return;
+-	if (kfifo_is_full(&chan->fifo))
+-		kfifo_skip(&chan->fifo);
+-	kfifo_put(&chan->fifo, val);
++	scoped_guard(spinlock, &chan->lock) {
++		if (!kfifo_initialized(&chan->fifo))
++			return;
++		if (kfifo_is_full(&chan->fifo))
++			kfifo_skip(&chan->fifo);
++		kfifo_put(&chan->fifo, val);
++	}
+ 	wake_up_interruptible(&chan->wq);
+ }
  
- 	if (!READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_syncookies))
+@@ -239,6 +251,7 @@ static int aspeed_lpc_enable_snoop(struct device *dev,
+ 	if (!channel->miscdev.name)
+ 		return -ENOMEM;
+ 
++	spin_lock_init(&channel->lock);
+ 	rc = kfifo_alloc(&channel->fifo, SNOOP_FIFO_SIZE, GFP_KERNEL);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
