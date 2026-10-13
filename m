@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81724F3EA5;
-	Tue, 13 Oct 2026 11:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB8E4F3EDE;
+	Tue, 13 Oct 2026 11:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891974; cv=none; b=dgyWmmtfzSapl3x/WRzKDKWnEf4mqOY4rNkot7xVL9OFeJw8I20KjEJqbcMsSzNuNmmMdL6ljwmp5phQQMsRjhbxPFMGMOCVKS2lD/4REPvF9EyIMGeFzytFTyuQgomQp2lqnujz1KD0y1JIRKqfRTEMOhhu9jIVOHTo9O0X9OM=
+	t=1791891977; cv=none; b=IPLcSg5knwXF1JYow/CYpGNrlgGwnAzTFD7PYkA5SU/ISBAzYVn9N5hQe5dG4R6ZYqQGSTyf9Wry9kU/3+qnmnmUSlmHJ9WexwKWMHDkXiBTRDzsoQ9lyDtdSESuztAlaMjnVmUxUWMVwKNE4mCdX035U4zvCMbL0Thq7lTBtN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891974; c=relaxed/simple;
-	bh=EeOPVZuqC5W4UlMCSrNE7f9zs+o5OOCpEt6D4Z7yTDE=;
+	s=arc-20240116; t=1791891977; c=relaxed/simple;
+	bh=2HUWsTN+bUoTI4PtfAKqYSNRlpjRyuFsff5uudMO4t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpIhmoFKlzac8Vtc21vunp0BiAB46d4jB8afHiD9S11QqkgwSL9710s4gVbW6vqUV3/o5FqE0uzf8KSN4ZJh03z6WSoCKIjx6aZJSgZkS2pmkq4wrgdDyq5xjMd0xslCkghqWyN4tFTBj0Eep2BAA3bp8ho4Z6YhQBiTxHnzcWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfU+8rFi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s99DD8AD3xBVKt4Mwc2e113bFGrbM24+t5gRKL4oKh+faHqJMg76NtxwcaTGO7Y/ELPL0X50lP1ZTtLRyEJr845C+8zjoPXp4V9090tbF5nTzkVR1TGPPZTuet1/ZCOVgYd4ptdXJwGfDQvEQDhbYZTPQeALfJ48fm4lD5nTMI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjxmpLnW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfU+8rFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087DA1F00898;
-	Tue, 13 Oct 2026 11:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjxmpLnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2811F000FF;
+	Tue, 13 Oct 2026 11:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891973;
-	bh=uAl7eFebQvdhuri1/WaZ1W8yhPBr7QTxAltL+MLJ+xE=;
+	s=korg; t=1791891976;
+	bh=drZkbrF7ucPURab2aC5+yYuIhJpW9+DTXwDd/NPdEvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfU+8rFiDsQsxujj4AMbnCNrDwfa/DF+n9HGCU/BE8vsfWaNlk7VwC4Nu8VT9d130
-	 uWp3hHMgXTJEotZGYKNImBSqr2ArZRBKUDGHnK6r3VoDdWM2OxSGDRslqdKXRqur0h
-	 NsFbrJjJH00jNKzrr7p5YKBnQ3mIUyX2a/skbnFc=
+	b=GjxmpLnW3nkDmTy2zbmlpuaxp62/LzH1YbRni3UHQZF87a+pWnB7Ff8q3Rd1ZgmhB
+	 y9tQIHxuRq1mUDwxFqCRLcuVbD+TZCnQhGUwnoVUvWTSBUd8tbobk4I6AQ47VHI4wb
+	 /+A2NYYWlXLK4oEuaWROrnVH8wIo2jolzaeDquw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Yassine Jebabli <med.jebabli@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 019/281] ALSA: hda/tas2781: Accept V1 calibration data without CRC
-Date: Tue, 13 Oct 2026 13:35:35 +0200
-Message-ID: <20261013112855.516431406@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Dave Jones <davej@codemonkey.org.uk>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 002/281] fs: Free any excess xarray nodes in clear_inode()
+Date: Tue, 13 Oct 2026 13:35:18 +0200
+Message-ID: <20261013112855.109875978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,60 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Yassine Jebabli <med.jebabli@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 408249089c48df1a4d23f60b831be3f3c311e6d1 upstream.
+[ Upstream commit ee3f011250104129893d8e9599147e457d4d7280 ]
 
-Some Lenovo BIOSes (e.g. Legion Pro 7 16IRX9H, SSID 17aa:38cd) store
-valid V1 calibration data in the CALI_DATA EFI variable but leave the
-TimeStamp and CRC fields zeroed. The driver rejects such data, so the
-amplifiers always run with default parameters on these machines.
+For many years we've had a hard to hit leak of xarray nodes.  Hugh
+documented it well in commit 786b31121a2c.  Recently people and
+syzbot have found ways to force it to happen with madvise.  Rather
+than fix the leaks where they happen, just call xa_destroy() which
+has the side-effect of cycling the i_pages lock.
 
-The rejection was silent until
-commit 4fe238513407 ("ALSA: hda/tas2781: Move and unified the
-calibrated-data getting function for SPI and I2C into the tas2781_hda lib")
-turned it into "V1 CRC error".
-
-The stored values are consistent (R0 = 3.82/3.83 ohm, 1/R0 matching
-within 1e-4), so accept V1 data when both TimeStamp and CRC are zero
-and the first device entry is non-zero, and emit a warning.
-
-Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mohamed Yassine Jebabli <med.jebabli@gmail.com>
-Link: https://patch.msgid.link/20261001-tas2781-v1-nocrc-v1-1-ff0c1032ce76@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Dave Jones <davej@codemonkey.org.uk>
+Link: https://lore.kernel.org/all/20260121062243.1893129-1-tujinjiang@huawei.com/
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://patch.msgid.link/20260623192850.1595958-1-willy@infradead.org
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/inode.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/sound/hda/codecs/side-codecs/tas2781_hda.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda.c
-@@ -139,9 +139,21 @@ static void tas2781_apply_calib(struct t
- 		 */
- 		crc = crc32(~0, data, 84) ^ ~0;
- 		if (crc != tmp_val[21]) {
--			cali_data->total_sz = 0;
--			dev_err(p->dev, "%s: V1 CRC error\n", __func__);
--			return;
-+			/*
-+			 * Some Lenovo BIOSes (e.g. Legion Pro 7 16IRX9H,
-+			 * SSID 17aa:38cd) store valid V1 calibration data
-+			 * but leave TimeStamp and CRC zeroed.
-+			 */
-+			if (!tmp_val[20] && !tmp_val[21] &&
-+			    tmp_val[0] && tmp_val[1]) {
-+				dev_warn(p->dev,
-+					 "%s: V1 data without CRC, accepting\n",
-+					 __func__);
-+			} else {
-+				cali_data->total_sz = 0;
-+				dev_err(p->dev, "%s: V1 CRC error\n", __func__);
-+				return;
-+			}
- 		}
+diff --git a/fs/inode.c b/fs/inode.c
+index c6b08e8c5f627..efa801f3eb110 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -763,21 +763,18 @@ void clear_inode(struct inode *inode)
+ 		fsverity_cleanup_inode(inode);
  
- 		for (j = p->ndev - 1; j >= 0; j--) {
+ 	/*
+-	 * We have to cycle the i_pages lock here because reclaim can be in the
+-	 * process of removing the last page (in __filemap_remove_folio())
+-	 * and we must not free the mapping under it.
++	 * We have to cycle the i_pages lock here because reclaim
++	 * can be in the process of removing the last page (in
++	 * __filemap_remove_folio()) and we must not free the mapping
++	 * under it.  We also remove nodes which are empty; these
++	 * can occur in two different ways.  The first is that radix
++	 * tree expansion can fail partway and the second is that THP
++	 * collapse_file() can allocate some temporary nodes and not
++	 * clean them up.
+ 	 */
+-	xa_lock_irq(&inode->i_data.i_pages);
++	xa_destroy(&inode->i_data.i_pages);
++
+ 	BUG_ON(inode->i_data.nrpages);
+-	/*
+-	 * Almost always, mapping_empty(&inode->i_data) here; but there are
+-	 * two known and long-standing ways in which nodes may get left behind
+-	 * (when deep radix-tree node allocation failed partway; or when THP
+-	 * collapse_file() failed). Until those two known cases are cleaned up,
+-	 * or a cleanup function is called here, do not BUG_ON(!mapping_empty),
+-	 * nor even WARN_ON(!mapping_empty).
+-	 */
+-	xa_unlock_irq(&inode->i_data.i_pages);
+ 	BUG_ON(!(inode_state_read_once(inode) & I_FREEING));
+ 	BUG_ON(inode_state_read_once(inode) & I_CLEAR);
+ 	BUG_ON(!list_empty(&inode->i_wb_list));
+-- 
+2.53.0
+
 
 
