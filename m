@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679AE1A9FA8;
-	Tue, 13 Oct 2026 12:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6171A9FA8;
+	Tue, 13 Oct 2026 12:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895073; cv=none; b=X3tYgQSJPc+6AtM6WwG/3Rk1wzFhIFmUi9eEwYKlZ8NeMMWslg/k3jxDLO5qsfesKh2qvbeEQD/fvDtAIDJwcRVqOfyt9Ds1HHRVUnwdt6eGALnLHE9dhMqnTcMeYepBngq/SxFh4fAIBwHwwzKvubyITZICV5e2+tzqspv0dpo=
+	t=1791895076; cv=none; b=g2eqKSS4L5brWDExk/98lHCDuhj0QwiqJ1kjKom9j7cDNy+DOIz20TCYBP1kjdxsJc6P4m0oex89anUMqiII7iIoMu+iUPGR0YW2U+vTk/FLaS9LyWKCr6VOWC/5wDf6lvKdDV/YL+Duna5HEp+ecwh9Gk0rExjX+Mh/qT96k3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895073; c=relaxed/simple;
-	bh=PfJbQ1tQpE06a1V+yrf9UfrWe+ZdK37SF+Hb/pemr4g=;
+	s=arc-20240116; t=1791895076; c=relaxed/simple;
+	bh=j78MpLB2sHFhrojqvWAwRdXkoV2kJ3+byntFeLAT92U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2iKx7OsvuoNdSiCKwidJpAYcT5xMD+JsgYsL9cVg5uxYKvWPIa3FBt8KbiuzftdBEkTSwcruO1PW1gsqGrwplZlQfmxB/lCVNYfFhSv44A6fJeIH4U18Yp74hfdUkTsS9nPtxmf27TsSa5yZ+Chrmy+TNoZK/sSfyO3gmOOovg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLxoEZ/W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P39PxbvlJdz2s8DC+8wrv3mQT9ALbgkqExJfB7mdA2z0uZsbxa5YAdfhwmIKwpL8QVOg56BDb952mt0h7lcrOdG5uCUKpk92SSg6QrxAEI4ioqgzGzxuiiV7q/J82PnIizdFV2+R5Dk8n1/nVEDz5r9wI41bDW1SPnJa8NolBkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ecnay2hb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLxoEZ/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50371F000FF;
-	Tue, 13 Oct 2026 12:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ecnay2hb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A0B1F000FF;
+	Tue, 13 Oct 2026 12:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895072;
-	bh=joxJIqJnuERLbYPsHb9UyJ0zX7xXJOyRuy37HQ9s27U=;
+	s=korg; t=1791895075;
+	bh=6Wk83Na992VcwFsrsnk+zJZ274ubqnoJV5LlzGi2tzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLxoEZ/WoAwLfZa6hQEILfNqn6BnFMYCOlSkuSX5ldqGmOtdH6nV+MiNPxljvFefF
-	 NU568OwkWcFGtKftYgnhrAxsh/9KbefFnQcVQVivhCnYIRuIFRKoVRqjyop+tsjgXr
-	 atvB+wiauMNKUg0B1GlkSVB7lOEmFYfgULUDFXvI=
+	b=Ecnay2hbV31d8FIIz5h2qGeqr5Lm3dYsZPRXxGvJQc7GWn4DCJB7f+D+li1EcpP9S
+	 /6OsH+sQ9Eos4PQ5yBw4RlNW+IxRdxHg7Y3xGZc4yxjqHEzclQKXC/jHyy6LDUi3qM
+	 TmhfKIyK7mk50X9+N7y3jGrq0Al+MAKRIA3c7RVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Marian Rotariu <marian.c.rotariu@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 152/497] usb: typec: tipd: dont send GAID when probe fails in APP mode
-Date: Tue, 13 Oct 2026 13:35:19 +0200
-Message-ID: <20261013112911.494382728@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 153/497] usb: typec: tipd: fix uninitialized typec_partner_desc in tps6598x_connect()
+Date: Tue, 13 Oct 2026 13:35:20 +0200
+Message-ID: <20261013112911.517985583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,61 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marian Rotariu <marian.c.rotariu@gmail.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit c5df31f10880737d13b75eff42faee7accb9f956 upstream.
+commit c4b27b3605788bbf9e4251f3cd4ab94645ab036f upstream.
 
-When probe fails after the chip was already in APP mode (booted from
-EEPROM), the err_reset_controller path unconditionally calls
-tps->data->reset(), which for tps25750 sends the GAID 4CC command.
-GAID transitions the chip from APP back to PTCH, causing a second
-probe attempt that sees PTCH mode and tries to load the firmware from
-/lib/firmware, instead of reading the EEPROM as it should.
+tps6598x_connect() passes a stack-allocated typec_partner_desc to
+typec_register_partner() after initializing only usb_pd, accessory and
+identity.
 
-The err_reset_controller path can be triggered by -EPROBE_DEFER from
-the probe sequence. GAID should only be sent when the controller
-actually loaded firmware at probe time.
+typec_register_partner() copies attach and deattach from the descriptor
+into the partner. With those fields left unset, garbage function pointers
+may be stored and later invoked from typec_partner_link_device() when a USB
+device is linked to the port. Uninitialized pd_revision and usb_capability
+similarly leak stack data through partner sysfs.
 
-The abnormal behavior was seen on a tps25751d that has an EEPROM
-connected to it.
+Zero-initialize the descriptor so optional callbacks remain NULL and the
+remaining fields are zero.
 
-Fixes: d49f90822015 ("usb: typec: tipd: add init and reset functions to tipd_data")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Marian Rotariu <marian.c.rotariu@gmail.com>
+Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
+Cc: stable <stable@kernel.org> # 5.15+
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260806085302.1307606-1-marian.c.rotariu@gmail.com
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260906131942.83153-2-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tipd/core.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/drivers/usb/typec/tipd/core.c
 +++ b/drivers/usb/typec/tipd/core.c
-@@ -1295,6 +1295,7 @@ static int tps6598x_probe(struct i2c_cli
- 	struct device_node *np = client->dev.of_node;
- 	struct tps6598x *tps;
- 	struct fwnode_handle *fwnode;
-+	bool patch_loaded = false;
- 	u32 status;
- 	u32 vid;
+@@ -268,7 +268,7 @@ static void tps6598x_set_data_role(struc
+ 
+ static int tps6598x_connect(struct tps6598x *tps, u32 status)
+ {
+-	struct typec_partner_desc desc;
++	struct typec_partner_desc desc = { };
+ 	enum typec_pwr_opmode mode;
  	int ret;
-@@ -1359,6 +1360,7 @@ static int tps6598x_probe(struct i2c_cli
- 		return ret;
  
- 	if (ret == TPS_MODE_PTCH) {
-+		patch_loaded = true;
- 		ret = tps->data->init(tps);
- 		if (ret)
- 			return ret;
-@@ -1447,7 +1449,8 @@ err_clear_mask:
- 	tps6598x_write64(tps, TPS_REG_INT_MASK1, 0);
- err_reset_controller:
- 	/* Reset PD controller to remove any applied patch */
--	tps->data->reset(tps);
-+	if (patch_loaded)
-+		tps->data->reset(tps);
+@@ -279,7 +279,6 @@ static int tps6598x_connect(struct tps65
  
- 	return ret;
- }
+ 	desc.usb_pd = mode == TYPEC_PWR_MODE_PD;
+ 	desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
+-	desc.identity = NULL;
+ 
+ 	if (desc.usb_pd) {
+ 		ret = tps6598x_read_partner_identity(tps);
 
 
