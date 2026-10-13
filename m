@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30204F68BD;
-	Tue, 13 Oct 2026 12:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E3C4F68CD;
+	Tue, 13 Oct 2026 12:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895900; cv=none; b=iCgg98T4v4+ST0Y7ZkO0h5H66gaAg9w4u8sdTlu32kvCk0p6hrmW3xVuKPRK5XakJAHYLvQErL/c8uLypS+PzMLQy07KMy9nB4icReLcp/tFcHynF6bv1a9+pneD9WYgJl9vkO/o8wHeMcSaZ97zkip4JnpA9o8qFzMeZ5qFndk=
+	t=1791895903; cv=none; b=ub3i5JvSkkEL/SXZnZuN+/Ce39pByqtW8+zGcsT6NG0arS85+hsGQSjFQjg1Br+zeihwfJNx89yIP0++H/23dhuHsmOlqdA5m2H44vJzuPfKFfluN0tX/K1SGvBG4+3AQnzfwUaqQgpJDletJ5fAfxSFAXNqc9VpQ/W1F5DeHnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895900; c=relaxed/simple;
-	bh=/7fel7MLSWDWepat/7ksFkquUwfm3nvqLCuh5BYACpc=;
+	s=arc-20240116; t=1791895903; c=relaxed/simple;
+	bh=IfKaEPmkCbDQDefH21rMZVDFj/+X5OT4lFhKGha5yEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nE7kFf1cbYJ7dDLZUX8zw5BUpJSQwg3VtnHUuNtNLqN+05O31rqMfdAEwYny2iZbAlT7uRfA7kmZizFfQHIGXGoDx2O5WocKeBhMWxBtBuFRIg65O/DrBcwTG2uK41Kr/yuoILMuiVbZDmeh8LKAbCSs/6Unyz2u6WvgFXA4Cms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJzUMXHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLWKCh3bn0qQFdOQ1NNC1O826NtKsRdlr2SkY6Cbx5gy0Qc6/+5/eyYnciBKI0frM/bo5stN2AXhGpM9luQRs1ef1NzJAQw82LsNDNorkCYjyPS/n9onuetfVeVOUnSBDYvz84c6HAVWkkCmjeXpdeCtAxlmZi5wxvUvti8JjEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFcJjILo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJzUMXHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271F61F000FF;
-	Tue, 13 Oct 2026 12:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFcJjILo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEDC1F000FF;
+	Tue, 13 Oct 2026 12:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895898;
-	bh=9m1Se4M4TK29CIXHvyPWelVN4oQcvvx32dBNWHjFu/0=;
+	s=korg; t=1791895901;
+	bh=M3s/yLE0nHCrl7UpF8QVJ6iTqauqM9M+fnAjg/l28go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tJzUMXHh+e2HfVXqXs6SI6MDJPBIVYIlftfujENB4k8GjV9FkxslJ1IS6G3yuEbzC
-	 z4oYdKmK+jp5vXA9abuZ8F+g1ZQJRPqJpL7itzzHDYO5fvrwlGYPaIFcXZgY9lUoGu
-	 ZXfKD01dy3kgZT2Y8fnsBcb/LDGDsSduqrjfsuiw=
+	b=TFcJjILotdO3SJUgyyLj2SmGHeI/jHdiQfpWBy4iXbvxgKTgI1844dVSC0wOSW+D4
+	 +ERkDiabtPoLZh1xtRXEgTRcskOxDzWiL61/0Q2VdrySMeg96c/75ylF/EB50STgGR
+	 bXWTwv7albkk5HBsMI5yIXKXINU162R+QlpfSrG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.12 431/497] drm/vc4: drain the hangcheck timer and works on V3D unbind
-Date: Tue, 13 Oct 2026 13:39:58 +0200
-Message-ID: <20261013112918.115855190@linuxfoundation.org>
+	Saleel Kudchadker <Saleel.Kudchadker@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 432/497] drm/amdkfd: align SDMA doorbell base for shader doorbell writes
+Date: Tue, 13 Oct 2026 13:39:59 +0200
+Message-ID: <20261013112918.140246427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,72 +45,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
 
-commit 94cf5971b1d04c6382437387c4dc3836cc7a1437 upstream.
+commit f145d5b3f740de05d85257acdc82f6877180f5c6 upstream.
 
-Nothing stops the hangcheck timer that submitted jobs arm, or the
-job_done_work that the render-done interrupt queues, at teardown:
-vc4_irq_disable() cancels only overflow_mem_work, and vc4_gem_destroy()
-runs from the drm-managed release, after vc4_v3d_unbind() has already
-uninstalled the V3D interrupt and cleared vc4->v3d. A timer still armed
-by then reads V3D registers through the NULL vc4->v3d pointer, and the
-late callbacks run on the vc4_dev embedding them after it has been
-freed.
+On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
+routed to an SDMA engine at 32-byte (4 doorbell index) granularity.
+SDMA engine doorbell ranges are 10 indices apart, so the range of every
+odd engine starts 2 indices into a 4-index block that begins in the
+previous engine's range. A shader ringing the doorbell of a queue on an
+odd engine therefore rings the previous engine instead. The intended
+queue never sees the doorbell, so its work stalls and the application
+hangs.
 
-Drain them in vc4_v3d_unbind(): shut the timer down and cancel
-reset_work before the interrupt is taken down, because its
-vc4_irq_reset() re-enables it, then flush job_done_work so that
-completions queued at teardown still release their jobs.
+Align the per-engine doorbell base up to a 4-index boundary on these
+ASICs. Each engine only uses 4 of its 10 indices, so the aligned base
+plus the queue offset stays within the engine's range. Even engines are
+already aligned, so only the doorbell IDs of odd-engine queues change.
 
-This issue was found by an in-house static analysis tool.
+Only doorbells rung by the device itself are routed this way. Doorbell
+writes from the host, including the kernel's own SDMA rings, are not
+affected.
 
-Fixes: d5b1a78a772f ("drm/vc4: Add support for drawing 3D frames.")
-Cc: stable@vger.kernel.org # 6.2+
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260915095103.156007-1-fanwu01@zju.edu.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+The doorbell ID of an SDMA queue is saved in CRIU checkpoints and
+checked again on restore. A checkpoint taken before this change that
+contains an SDMA queue on an odd engine will fail to restore with
+-EINVAL. This is intentional: the restored process still holds the old
+doorbell address, so accepting the stale ID would bring back the same
+stall.
+
+Tested on MI300X with a shader-rung SDMA doorbell test: queues on odd
+engines hung before this change and complete with it.
+
+v2: use u32 instead of uint32_t for the new locals (checkpatch)
+v3: name the routing granularity, use dev->node_id, document the
+    layout invariants, describe impact
+v4: express the granularity in doorbell indices, drop unrelated
+    cleanups, explain the CRIU restore behavior, add test note
+
+Fixes: 6df442a03d1a ("drm/amdgpu: add new doorbell assignment table for aqua_vanjaram")
+Signed-off-by: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ee1379e6d7da47bdf7a8d5b89c2d1b28473701fb)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_v3d.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   32 ++++++++++++++----
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h                 |    7 +++
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -9,6 +9,7 @@
- #include <linux/component.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
-+#include <linux/timer.h>
- 
- #include "vc4_drv.h"
- #include "vc4_regs.h"
-@@ -495,8 +496,15 @@ static void vc4_v3d_unbind(struct device
- 	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
- 
-+	/* A straggler vc4_reset() re-enables the interrupt. */
-+	timer_shutdown_sync(&vc4->hangcheck.timer);
-+	cancel_work_sync(&vc4->hangcheck.reset_work);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -424,12 +424,32 @@ static int allocate_doorbell(struct qcm_
+ 		 * we need the physical sdma engine id in order to get the
+ 		 * correct doorbell offset.
+ 		 */
+-		uint32_t valid_id = idx_offset[qpd->dqm->dev->node_id *
+-					       get_num_all_sdma_engines(qpd->dqm) +
+-					       q->properties.sdma_engine_id]
+-						+ (q->properties.sdma_queue_id & 1)
+-						* KFD_QUEUE_DOORBELL_MIRROR_OFFSET
+-						+ (q->properties.sdma_queue_id >> 1);
++		u32 engine_base = idx_offset[dev->node_id *
++					     get_num_all_sdma_engines(qpd->dqm) +
++					     q->properties.sdma_engine_id];
++		u32 valid_id;
 +
- 	vc4_irq_uninstall(drm);
- 
-+	/* Flush rather than cancel, so queued completions release their jobs. */
-+	flush_work(&vc4->job_done_work);
++		/*
++		 * With the aqua_vanjaram doorbell layout, a shader doorbell
++		 * write whose 32-byte block starts in the previous engine's
++		 * range rings that engine instead. Engine ranges are 10
++		 * indices apart (sdma_doorbell_range = 20 dwords, halved for
++		 * 8-byte doorbells, in aqua_vanjaram_doorbell_index_init()),
++		 * which puts odd engines 2 indices into a shared block.
++		 * Aligning costs at most 2 indices, and 8 queues per engine use
++		 * only 4 of the 10, so the aligned base stays in range. The
++		 * 512-index mirror offset keeps the alignment.
++		 */
++		if (KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 3) ||
++		    KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 4) ||
++		    KFD_GC_VERSION(dev) == IP_VERSION(9, 5, 0))
++			engine_base = ALIGN(engine_base,
++					    KFD_SDMA_SHADER_DOORBELL_GRANULARITY);
 +
- 	/* Disable the binner's overflow memory address, so the next
- 	 * driver probe (if any) doesn't try to reuse our old
- 	 * allocation.
++		valid_id = engine_base +
++			   (q->properties.sdma_queue_id & 1) *
++			   KFD_QUEUE_DOORBELL_MIRROR_OFFSET +
++			   (q->properties.sdma_queue_id >> 1);
+ 
+ 		if (restore_id && *restore_id != valid_id)
+ 			return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -132,6 +132,13 @@
+  */
+ #define KFD_QUEUE_DOORBELL_MIRROR_OFFSET 512
+ 
++/*
++ * On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
++ * routed to an SDMA engine at 32-byte granularity, i.e. 4 indices with the
++ * 8-byte SDMA doorbells used on SOC15.
++ */
++#define KFD_SDMA_SHADER_DOORBELL_GRANULARITY 4
++
+ /**
+  * enum kfd_ioctl_flags - KFD ioctl flags
+  * Various flags that can be set in &amdkfd_ioctl_desc.flags to control how
 
 
