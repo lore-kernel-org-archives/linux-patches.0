@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41224EBAD7;
-	Tue, 13 Oct 2026 11:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACABA4F3EAF;
+	Tue, 13 Oct 2026 11:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892598; cv=none; b=Bwp764rSzxJmBnFgg9J/U3b7+JFldybDB9K+INX7EEwhx7oEIQ+mnkXSWdklFv84b9bL1TgZGOV9UgiEJ27haJgOJ4fjMjGSErvTG6RQVxeU1o/QKSnyANIl39DTRNVL0Y9yjyqgB+59UrdEPQfopGPHFNZncirNL/DQcohj2Q8=
+	t=1791892600; cv=none; b=IAmZn/YbYTXbJiGgmoeDCtRj8lSWoZlHQ/HkWyxAf/vNFLQw9IBIyeiNemkcf0d0ZMsa63TuuxjEyThrUd3Yq6uslcxRgUK6RvL2uTAnlqWdDNta70BbWjiMlUN2BfljxSAEN92arHk2mz0r9KofB7LDZu+RPn5nq6arQVli/AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892598; c=relaxed/simple;
-	bh=jhbwSbIyl/bEUpl9n1VbggR4T3uTYT7MAIU8+bkibLU=;
+	s=arc-20240116; t=1791892600; c=relaxed/simple;
+	bh=dB6/ZH2TJC4XK6NqfQAqrfDyMU1cOGO8b5LaOa7MZAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVqsJxiBRHaMVkYY5itmDlxMTbR+4KBePD3/RWGIXgu+mQMayZGNyBzq+HxwuP7MMFSvoPKnaabM485BgPXZxSIStA8P/njPgytIlrIAJaKtuFX9Rifwr73Nts9EU51LUztSSbeHgqCp9+0IP0ENLl/cMDSxcv+ug9O8WuiAj1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXYnxcwA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HCDQHTwDqOxlUZA4+2RSq7q4dyfUeITywHz9V/PrigRIZNo8lfYB7UwiYpe435YytZJ2ziYa+1cvXNKZ5Kmkr/B1wA7jIOf0gj1epefo2INpqZbcR41qpgyV0Es+wIL8z75jek6cmnwbnGl1d/8o/xFBTkwcsBYuuooI2ZSecjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG5sM+/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXYnxcwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FF21F00899;
-	Tue, 13 Oct 2026 11:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG5sM+/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8AB1F000FF;
+	Tue, 13 Oct 2026 11:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892596;
-	bh=5GY279LmnRn+L/O30PdZZSLLI0y18+1X59ppH2KgdWM=;
+	s=korg; t=1791892599;
+	bh=j81G3BOq2/7183B+WTFTJaKFxBJJ5Mkurm2A+4ZniNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXYnxcwAkGfZaVN+cfd+XZZYiapib1yDWQwtIs1UuIPDGgJzF3Ww8kEeeOo+Y5htP
-	 Awi3CUbdpUoG1XtcktukXryNALsLbWpnIgwwNN7oGrxFYXPqvkbFgeySEJ8pJ0sIvO
-	 rlhqji0+qQaAdd28B5eywNHj4N0W/kFFIRJq4PoE=
+	b=RG5sM+/7wOXn0vvUc66XWgqGRgfMgquk0ZR3xCHGDZufOoFo4Mk0lztxnZC6g9ko1
+	 dWA6u3dXliieT+Xk/92NQPd3Nzoe4xAmIpDhojWQ3ae72Dq9KNHAfBjNtR1gfNouq3
+	 hUuBC0Kj5WNmnno7nGghlHcwykBzdlpaHWGJiWu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 227/281] scsi: ufs: mediatek: Handle mPHY power-on failures
-Date: Tue, 13 Oct 2026 13:39:03 +0200
-Message-ID: <20261013112900.664220250@linuxfoundation.org>
+Subject: [PATCH 7.2 228/281] wifi: mt76: mt7996: take over connection monitoring
+Date: Tue, 13 Oct 2026 13:39:04 +0200
+Message-ID: <20261013112900.687303796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -53,77 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 78e04810542da416d3bead707b60cec773f1524d ]
+[ Upstream commit 0ec14f8c8c5da1c9c314bce4f0bf53c009fbc998 ]
 
-The MediaTek helper enables VA09 before powering on the mPHY, but ignores
-the PHY result. A failure can leave VA09 enabled and publish
-mphy_powered_on as true, so a later power-on attempt is skipped.
+mt76 runs its own beacon monitor. mt76_beacon_mon_check() counts a miss
+for each affiliated link of an MLD, and it stops the count while the phy
+is off channel. mt7996 supplies it through mt76_rx_beacon(), but it does
+not set CONNECTION_MONITOR. Therefore mac80211 also starts its legacy
+monitor.
 
-Check phy_power_on(), attempt to unwind VA09 on failure, and leave the
-state flag unchanged. Propagate the helper result from host initialization
-as well as its existing resume caller. Keep the original PHY error if the
-supply rollback also fails, and report that rollback separately.
+The legacy monitor knows one interface, not a set of links. It also
+counts while the radio serves a different link. After seven beacon
+intervals it removes an association that still carries traffic on the
+other links.
 
-The issue was found by our static-analysis tool.
+Set the CONNECTION_MONITOR flag to disable the legacy monitor.
 
-Fixes: 561e3a8726b2 ("scsi: ufs-mediatek: Fix unbalanced clock on/off")
-Fixes: cf137b3ea49a ("scsi: ufs-mediatek: Support VA09 regulator operations")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
-Link: https://patch.msgid.link/20260920034953.19535-1-hppiscas@163.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 4df75606ece5 ("wifi: mt76: add per-link beacon monitoring for MLO")
+Link: https://patch.msgid.link/20260818125825.395538-3-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 3991a51263a6d..a2defbe3b7483 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -509,6 +509,7 @@ static int ufs_mtk_mphy_power_on(struct ufs_hba *hba, bool on)
- 	struct ufs_mtk_host *host = ufshcd_get_variant(hba);
- 	struct phy *mphy = host->mphy;
- 	struct arm_smccc_res res;
-+	int err;
- 	int ret = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index be6e105f5f063..95fb30404b857 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -536,6 +536,7 @@ mt7996_init_wiphy(struct ieee80211_hw *hw, struct mtk_wed_device *wed)
+ 	ieee80211_hw_set(hw, NO_VIRTUAL_MONITOR);
+ 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
+ 	ieee80211_hw_set(hw, CHANCTX_STA_CSA);
++	ieee80211_hw_set(hw, CONNECTION_MONITOR);
  
- 	if (!mphy || !(on ^ host->mphy_powered_on))
-@@ -523,7 +524,18 @@ static int ufs_mtk_mphy_power_on(struct ufs_hba *hba, bool on)
- 			usleep_range(200, 210);
- 			ufs_mtk_va09_pwr_ctrl(res, 1);
- 		}
--		phy_power_on(mphy);
-+		ret = phy_power_on(mphy);
-+		if (ret) {
-+			if (ufs_mtk_is_va09_supported(hba)) {
-+				ufs_mtk_va09_pwr_ctrl(res, 0);
-+				err = regulator_disable(host->reg_va09);
-+				if (err)
-+					dev_err(hba->dev,
-+						"failed to unwind va09: %d\n", err);
-+			}
-+			dev_err(hba->dev, "failed to enable mphy: %d\n", ret);
-+			return ret;
-+		}
- 	} else {
- 		phy_power_off(mphy);
- 		if (ufs_mtk_is_va09_supported(hba)) {
-@@ -1295,7 +1307,9 @@ static int ufs_mtk_init(struct ufs_hba *hba)
- 	 *
- 	 * Enable phy clocks specifically here.
- 	 */
--	ufs_mtk_mphy_power_on(hba, true);
-+	err = ufs_mtk_mphy_power_on(hba, true);
-+	if (err)
-+		goto out_variant_clear;
- 
- 	if (ufs_mtk_is_rtff_mtcmos(hba)) {
- 		/* First Restore here, to avoid backup unexpected value */
+ 	hw->max_tx_fragments = 4;
+ 	wiphy->txq_memory_limit = 32 << 20; /* 32 MiB */
 -- 
 2.53.0
 
