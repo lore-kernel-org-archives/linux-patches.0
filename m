@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C414EE858;
-	Tue, 13 Oct 2026 12:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EF23E557D;
+	Tue, 13 Oct 2026 12:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893913; cv=none; b=QgoorPnG8dm0qZmn1gEbPSkU6PlPaDDuJQJBfXaXkaS2FqZeJEl4JU7IGr0NbyO98Yjl9h/e0zOIr1WPAcuP8FqI8z+cpfXBcifcRu0L9Gz72/9h2XxGusQ0ywW56Z1BH/s5gAJIXr4vAt7Ay6pW+gah8aej9EPruKGiAnN44M4=
+	t=1791893915; cv=none; b=jUY2xt1nPVsNMBjeIIExjGfHKdCN09SpmXfyMHseKf2d0FCwdufeIBo1l5YvmdsCVrXcRtyP9MG3SqW2fZ9VpAMR03D23Ei9NHBwY2ENzEzNsXpGSoL+fTJI010uFVl1qxMsV6aRXpgExEnIsiUJG4ummdcKHIR5Blj+rGLDc2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893913; c=relaxed/simple;
-	bh=NFv+eNN8IKm/W8jq+eg0hc+ZU7/HlPu2sXehDJgwKAg=;
+	s=arc-20240116; t=1791893915; c=relaxed/simple;
+	bh=nNpkPAVC+0xwLR4oUF1vgYGaDGYodmVqRde7GphTK4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRKbYeJYKtgSkJz6f5n2RX2SA6cAVfnCpaOJu/MIypMW6/8ruqoIKQIrmyFWA8iDbJoVgTvMolLDoapNLMkcBQ0qRZHMgdH8PPjH6PGEXFVqKXi/K8ZTaxh9HrnOi1Zq9EfOY4nYxnJzg3Eut9V0NRia72l17TNAHVmp5ptoL3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNWHcj/W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmgfuB6NLrsSbIjkZ5FF7x9/yHgHpbJuc0uGCbVFP66MthSGFtiR4pa/hOOf2R/HiEH5fkyXdR9b0NEuK+GYZB99Q+bBYNLBz1chb6K58AJ/Kpz3GMGUl6BpfGIFR5reLw3cBakyxKTMHiVJce9x2Bs0kIoSBvZiS5W5ecSHWV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwU4hDDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNWHcj/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578A71F000FF;
-	Tue, 13 Oct 2026 12:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwU4hDDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437B21F000FF;
+	Tue, 13 Oct 2026 12:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893911;
-	bh=3FJ5NN+xwZ/pNsfXxIOg1mM01Yuc8qBgqFZTYEHeZOo=;
+	s=korg; t=1791893914;
+	bh=hovg89+FDLTCIwgpL0Frs0/+5Xlf1s9VhRE3+3+O+2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BNWHcj/Wp18CHIx+3ygoi/iWrsSiyEs7xbAVLraDfJG4VCYL8FiW4nKkJoNXfFCcx
-	 CDRrN73QsQdp5RC2sq81jNHjzpqYVgchL/iPZdEyWsrvHyC3bujDrY7QjbRs+3HKeS
-	 yoB5kmb1vLB2xz31W7kvUza/oRvFCb+B84IcmU0Y=
+	b=BwU4hDDJ1KidVjvxGCWLYMRbX3wIzTMp98VTbC8FDROXC/1YIW83UQm64EOu1JvP8
+	 aX/aNkyIhNmZeeQ5UjoU43Hd4uhPFfaen6rkRjT7S/qpJIWl0sN2w0GytdFftlwecz
+	 lL/IHl6ZMDvIE8YQrfebln9JyOP40RNr5DrxRyho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 382/621] kho: fix size calculation in kho_preserved_memory_reserve()
-Date: Tue, 13 Oct 2026 13:36:17 +0200
-Message-ID: <20261013112929.909165669@linuxfoundation.org>
+Subject: [PATCH 6.18 383/621] ext2: Fix lost inode updates for IS_SYNC inodes
+Date: Tue, 13 Oct 2026 13:36:18 +0200
+Message-ID: <20261013112929.932601313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,48 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav (Google) <pratyush@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 3a0b8fa2eb36afc88b62a95f33f0c77c71fa5ded ]
+[ Upstream commit 356984d1a5c32e94810cbb6c8dc7d8ff2d4d919a ]
 
-kho_preserved_memory_reserve() calculates the size of a preservation by
-doing 1 << (order + PAGE_SHIFT). Since the '1' is a 32-bit integer, it
-can only be shifted by 31. That is, it will only work for preservations
-up to 2 GiB. Larger preservations will trigger undefined behaviour.
+ext2_setsize() and ext2_xattr_set2() had a construct like:
 
-While preservations larger than 2 GiB can't be obtained via folios
-currently, they can be obtained via kho_preserve_pages().
+	if (IS_SYNC(inode)) {
+		sync_inode_metadata(inode, 1);
+	} else {
+		mark_inode_dirty(inode);
+	}
 
-For example, memblock reserve_mem uses kho_preserve_pages().
-Reservations larger than 2 GiB are valid and will trigger this bug if
-properly aligned.
+which leads to lost inode updates for IS_SYNC inodes because
+sync_inode_metadata() does anything only if the inode is already dirty
+and hence inode updates may be simply lost. Fix the problem by
+unconditionally marking the inode dirty and *then* call
+sync_inode_metadata().
 
-Fix it by using 1UL for shifting.
-
-Fixes: fc33e4b44b27 ("kexec: enable KHO support for memory preservation")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20260727150240.889555-1-pratyush@kernel.org
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260727104923.3828017-26-jack@suse.cz
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_handover.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext2/inode.c | 3 +--
+ fs/ext2/xattr.c | 4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
-index e1a06b4fc17fc..ac9fa7727b5ff 100644
---- a/kernel/kexec_handover.c
-+++ b/kernel/kexec_handover.c
-@@ -425,7 +425,7 @@ static void __init deserialize_bitmap(unsigned int order,
- 	unsigned long bit;
+diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
+index 4aac18942eccd..50d431949fd4b 100644
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -1301,11 +1301,10 @@ static int ext2_setsize(struct inode *inode, loff_t newsize)
+ 	filemap_invalidate_unlock(inode->i_mapping);
  
- 	for_each_set_bit(bit, bitmap->preserve, PRESERVE_BITS) {
--		int sz = 1 << (order + PAGE_SHIFT);
-+		u64 sz = 1UL << (order + PAGE_SHIFT);
- 		phys_addr_t phys =
- 			elm->phys_start + (bit << (order + PAGE_SHIFT));
- 		struct page *page = phys_to_page(phys);
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
++	mark_inode_dirty(inode);
+ 	if (inode_needs_sync(inode)) {
+ 		sync_mapping_buffers(inode->i_mapping);
+ 		sync_inode_metadata(inode, 1);
+-	} else {
+-		mark_inode_dirty(inode);
+ 	}
+ 
+ 	return 0;
+diff --git a/fs/ext2/xattr.c b/fs/ext2/xattr.c
+index c885dcc3bd0d1..5574b601ae09c 100644
+--- a/fs/ext2/xattr.c
++++ b/fs/ext2/xattr.c
+@@ -777,6 +777,7 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
+ 	/* Update the inode. */
+ 	EXT2_I(inode)->i_file_acl = new_bh ? new_bh->b_blocknr : 0;
+ 	inode_set_ctime_current(inode);
++	mark_inode_dirty(inode);
+ 	if (IS_SYNC(inode)) {
+ 		error = sync_inode_metadata(inode, 1);
+ 		/* In case sync failed due to ENOSPC the inode was actually
+@@ -789,8 +790,7 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
+ 			}
+ 			goto cleanup;
+ 		}
+-	} else
+-		mark_inode_dirty(inode);
++	}
+ 
+ 	error = 0;
+ 	if (old_bh && old_bh != new_bh) {
 -- 
 2.53.0
 
