@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E594FDE41;
-	Tue, 13 Oct 2026 12:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7024FDE75;
+	Tue, 13 Oct 2026 12:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895502; cv=none; b=aurDQMooth3i30ojmymZiv7a7c2XqU0rCN3uR2KAHT3w5qQ3uDTayHJN9RFntp5DmoO0Br7flyMuNHlr0fdmUJyYro0Me9d0jdeQu1Hce4tDiRqV4A42/SsG/yAcZV+V1cbrwM/e5qpr0XnKo2IorPJTPcvObJvSGCEBkLqo0Qo=
+	t=1791895505; cv=none; b=Z/nEJLt2dXgA03pA3pqhAVxMs9adTyrG71Eyn5mZuVjqEmj/NtKQxEXZROS1lR3AJpSJaMzhSno0hWhtLxQCUYu26SFN+SKPky4lij0812Ge5HZllC3Q/0ear/ArjsSNfYAugYFvdp2z4e9RzQLCkVq1W57HyR3u+o7BpS4Xpm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895502; c=relaxed/simple;
-	bh=PP42B4bsAzm1Qr1yCLiaHB1kXk0+doEJo6TZKI/Spy4=;
+	s=arc-20240116; t=1791895505; c=relaxed/simple;
+	bh=pECGLrgxAQn5g0pB3mFKZRatXKYMPHWxPaMKvNB2/hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Or6y5BUWRdgU9kfAqBycEZ5gp00C17K7vvyzi7elL5m29u8wuDtqabMFJ1GUW41Saf9tk6QxImQJtahGnTCJ8zp+caLEn28qVbOh7z4hJlrInHCCY9dPzUtvh0RYXjQrL58MlB/lZOjJaLa2q9eULsLseylccXLR3EF7CEPbaU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfNkY7cH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=miycwdpcqEKZ0+F4na12cp+6yEhwC3OSU5m2O/eCLY/NXa+Sk17QXcqsbQhNnTPc2e+Kr91VK27UYHUOQBIseYFEIYqMsneYbmUhNnz/ZA6GDJaJdA6tKYK+g9GB7ZWJg+7OgddZ093QHISxuoggl0bu24qqC90Eja25t6iBGPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ixg/G/NJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfNkY7cH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C31F000FF;
-	Tue, 13 Oct 2026 12:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ixg/G/NJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BC91F000FF;
+	Tue, 13 Oct 2026 12:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895501;
-	bh=HMVQbhaIMZ3SziZdqPUvKoeKtfeoeoLfGqE8pXc1m+4=;
+	s=korg; t=1791895504;
+	bh=P8eqSU0yEFWelB44b1i13CcAYR5jmff0ruJAHVFdeMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfNkY7cHN8Cx+v92KC1UvEY+5ODxi0J+ax+9IsFf3YpuOQULawFL88W60LYVtsGzu
-	 8fCR/RTqARopNI7MsV2G45jA/cSuZX51lfmS+lEsr4eH3A1QRG6wGdFHYFYvAlpfKU
-	 6W0nvnsbPk+p02m43eXfbmFhOSsHOn2JyIZA5ApI=
+	b=Ixg/G/NJboepP6oXMXTh1yMlio5AcdBsUaAuz/+4DrlSp9qkFO/fc/DXcp08S+ceQ
+	 ewV/ABTSpPrml6IQl/THf2NbwWqD9yV8Km4ohSC1uV8MFAQNcbsUktF3zKu//CVFzq
+	 vmwKsLrw1l+LUuQ6mK+5Tnrvia4wdWrs9Gax7ASU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/497] usb: ohci-spear: disable controller wakeup on removal
-Date: Tue, 13 Oct 2026 13:37:43 +0200
-Message-ID: <20261013112914.922626162@linuxfoundation.org>
+Subject: [PATCH 6.12 297/497] USB: dwc2: shut down wakeup timer before freeing HCD state
+Date: Tue, 13 Oct 2026 13:37:44 +0200
+Message-ID: <20261013112914.945988356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,45 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit b1b0f8bdbbc891a4ee7f3b1a878c633e02b7bbeb ]
+[ Upstream commit fd772af9512cdecb83de34a461801533828e77fd ]
 
-Probe enables controller wakeup after the OHCI core marks controllers with
-RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
-wakeup source can remain attached after driver unbind.
+dwc2_wakeup_detected() accesses the DWC2 host state and can rearm the
+wakeup timer.  dwc2_hcd_free() currently deletes the timer only after
+freeing host-owned state, and timer_delete() does not synchronize a
+callback or prevent it from being queued again.
 
-Disable controller wakeup after removing the HCD.
+Stop and shut down the timer in dwc2_hcd_release(), before the HCD
+resources are freed.  This covers both the HCD initialization error path
+and normal HCD removal.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
+Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-4-mhun512@gmail.com
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260904065323.4047026-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted timer_delete() removal to the existing del_timer() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ohci-spear.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc2/hcd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
-index 3192d7ce04fec..f9414b2de65b8 100644
---- a/drivers/usb/host/ohci-spear.c
-+++ b/drivers/usb/host/ohci-spear.c
-@@ -103,6 +103,7 @@ static void spear_ohci_hcd_drv_remove(struct platform_device *pdev)
- 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
+diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
+index 8e295f41fc13b..938b646c4b0f8 100644
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -5082,14 +5082,13 @@ static void dwc2_hcd_free(struct dwc2_hsotg *hsotg)
+ 	}
  
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- 	clk_disable_unprepare(sohci_p->clk);
+ 	cancel_work_sync(&hsotg->phy_reset_work);
+-
+-	del_timer(&hsotg->wkp_timer);
+ }
  
- 	usb_put_hcd(hcd);
+ static void dwc2_hcd_release(struct dwc2_hsotg *hsotg)
+ {
+ 	/* Turn off all host-specific interrupts */
+ 	dwc2_disable_host_interrupts(hsotg);
++	timer_shutdown_sync(&hsotg->wkp_timer);
+ 
+ 	dwc2_hcd_free(hsotg);
+ }
 -- 
 2.53.0
 
