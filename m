@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7D41C862D;
-	Tue, 13 Oct 2026 12:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA71839768F;
+	Tue, 13 Oct 2026 12:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893985; cv=none; b=nzF1CZHOCA+9Qmhhy5trbjXgfsKychP4tE6UErGMbuRtAFQcsfo3Qz3GyE6JB+ARBAFdngCdWO5kzx08dqFjWzdt0MBBzQesyxd8KbkyDPiniDPszDUi65PEuIW4VGM1RYQFSudsULjHrEwZMmFE+c4+Vl5L+sDsyv9i/5mi7SY=
+	t=1791893988; cv=none; b=UMYiXJxe8CP/QhxhqdYGCGH3EsBFSSmj3PP7vN7jTXAqfbpwFVrxV4Bf2aag35Wmexfdo8oN2/Z2cJW6zTUiNwdp+xzkJBNnbZ6shrRUyJXnj/KhQDzNFnxFodhnH+KUZVq8XKgjwSg3oIJ02Mxb0mgyaCPNUd10M2vNfpYA4oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893985; c=relaxed/simple;
-	bh=MumJZrFZn3v/MtY8XpF9OFvvddNDEqp7jD2uIYbgSuM=;
+	s=arc-20240116; t=1791893988; c=relaxed/simple;
+	bh=kKebiDNm2N90GwOsrXA10ZF/hwwlm9Jx0kkl5Rf+4JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCJHvDUYIfU3xmj+Hoc3twKfIHRCwkhHSHx2rq3kHf7KT7KTosvB+mTBtdvm9GfzmUwdx728CbojK+7r/NXDA68qf88b4m9lvDxxdgXLKrK63z91jG2kP0OoK3iZgnScORcNq60iNqSkO9eVd1KOs+mjs2oz6rRxnQS/iAL7m4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUvPp5Vx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKgdIpHWw8bdDAJc0HByWUkqQspUac2ttzfwQ0sXC5YKOudLf57YU4bm/4z8IKaFtE+qPxtHICFr0NAeHY4i5NVFy8dxgYvjP+8IE9p2+quXrgNb3aL5rdip2QX08iTgfHrOIbCBRfAbHNXfsMh4VktVZDIH8F90jGJ0ZHkgW+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZOWgxzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUvPp5Vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEA61F000FF;
-	Tue, 13 Oct 2026 12:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZOWgxzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFDD1F000FF;
+	Tue, 13 Oct 2026 12:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893983;
-	bh=a79naBOWZaEY6iV9rE3vlVceIXl59EdkHqC5UfNn5XY=;
+	s=korg; t=1791893986;
+	bh=GP2YyY8XEO3zroxbmK26li3x1bWiilFG8/diKXdNNHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUvPp5VxQHhuEOaUWrGfSuw22C9DRzNyexxYnJoZjCxN6bmrc4X3Ct5lhal2U+AtI
-	 7Dl2xEz0WhixoYTnBfP/Pnz+vL9PD3OPJXHbIu8xCwU92T7U4UIjsucq9c9CGxFBcL
-	 J96ORxVVBLHwn1LfOx1XtyE/TsU6dFLx3j4oHnXg=
+	b=HZOWgxzp7F5LwUBZd6Ns+3A2MNJPN5DqvRvB0H9PIK0ooIG5aUD38XnsTpdY79rCG
+	 yvmxdLrL3ldodcLJHJAznM1bfMaBVWiP+Mlq99bluAkq0Lo1U0K9SyTeTgmTyuJaPd
+	 0eYwgZfew/0zhfwGtZa/iSErnY8KqMvuP/vv56nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 408/621] dpll: fix NULL deref in dpll_device_ops() during teardown race
-Date: Tue, 13 Oct 2026 13:36:43 +0200
-Message-ID: <20261013112930.522211740@linuxfoundation.org>
+Subject: [PATCH 6.18 409/621] ksmbd: scope session state changes to bound connections
+Date: Tue, 13 Oct 2026 13:36:44 +0200
+Message-ID: <20261013112930.545260503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,321 +50,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 33f016b23a219fe034213849b51436b8e79df251 ]
+[ Upstream commit c50e628122aed077695669e25b842e778511a43d ]
 
-When the last owner of a dpll device unregisters while a foreign driver
-still holds a pin on it via dpll_pin_on_pin_register(), the dpll object
-stays alive with an empty registration list. A pin notification queued
-before the unregister (e.g. ice reacting to zl3073x_i2c removal) then
-walks pin->dpll_refs into dpll_device_ops(), which trips the WARN_ON and
-dereferences the missing registration. dpll_lock cannot help because the
-notification work was queued before the unregistering driver took the
-lock.
+ksmbd_all_conn_set_status() treats every connection whose transient
+binding flag is set as belonging to the target SessionId.  A logoff or
+session replacement can consequently move an unrelated connection to
+NEED_RECONNECT or NEED_SETUP.
 
-Treat the empty registration list as a legitimate transient state. Make
-dpll_priv() and dpll_device_ops() return NULL in that case and make
-every pin netlink path that resolves a device from a pin skip such
-dplls. dpll_cmd_pin_get_one() picks a ref with a live registration and
-returns -ENODEV when there is none, the pin dumpit skips such a pin
-instead of aborting the dump, dpll_msg_add_pin_dplls() and the
-frequency, esync, reference sync and phase adjust set paths skip dead
-refs, and dpll_pin_parent_device_set() validates the parent with
-dpll_device_get_by_id(). dpll_pin_register() is the last caller that
-dereferenced the device ops without a check, so move its frequency
-monitor validation under dpll_lock and tolerate a missing registration
-there as well.
+Pass the target session itself and select connections using either the
+connection-local session xarray or the session's permanent channel list.
+Use the same association test while waiting for requests to drain.
 
-The empty registration list is equivalent to a cleared DPLL_REGISTERED
-mark, both transitions happen under dpll_lock in dpll_device_register()
-and dpll_device_unregister(). A pin notification for a pin whose dplls
-are all gone is now dropped with -ENODEV instead of crashing, all
-callers in the core ignore that return value.
+Serialize session-wide status changes under request_lock and do not
+overwrite EXITING or RELEASING. Protect the shutdown transition with the
+same lock so a concurrent session update cannot revive a closing
+connection.
 
- WARNING: drivers/dpll/dpll_core.c:1092 at dpll_device_ops+0x24/0x40,
- CPU#83: kworker/u576:3/23471
- Modules linked in: ... ice ... zl3073x_i2c(-) ... zl3073x ...
- Workqueue: ice_dpll_wq ice_dpll_pin_notify_work [ice]
- RIP: 0010:dpll_device_ops+0x24/0x40
- Call Trace:
-  <TASK>
-  dpll_cmd_pin_get_one+0x336/0x520
-  dpll_pin_event_send+0x82/0x140
-  dpll_pin_on_pin_unregister+0xbb/0x160
-  ice_dpll_pin_notify_work+0x1bc/0x1f0 [ice]
-  process_one_work+0x19e/0x370
-  worker_thread+0x1a6/0x310
-  kthread+0xe4/0x120
-  ret_from_fork+0x1a1/0x270
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- ---[ end trace 0000000000000000 ]---
- BUG: kernel NULL pointer dereference, address: 0000000000000010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
-
-Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260813140817.1051388-1-poros@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: abcc506a9a71 ("ksmbd: fix racy issue from smb2 close and logoff with multichannel")
+Fixes: c444139cb747 ("ksmbd: rewrite stop_sessions() with restartable iteration")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c    | 12 +++----
- drivers/dpll/dpll_netlink.c | 68 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 71 insertions(+), 9 deletions(-)
+ fs/smb/server/connection.c        | 37 ++++++++++++++++++++++++++-----
+ fs/smb/server/connection.h        |  6 +++--
+ fs/smb/server/mgmt/user_session.c |  8 +++----
+ fs/smb/server/smb2pdu.c           |  6 ++---
+ 4 files changed, 41 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 6fa6a0d8e430d..0a8db4dc25786 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -1009,12 +1009,8 @@ EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
- static struct dpll_device_registration *
- dpll_device_registration_first(struct dpll_device *dpll)
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index ff6cdd720dd43..16fcedf45739f 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -242,15 +242,37 @@ void ksmbd_conn_unlock(struct ksmbd_conn *conn)
+ 	mutex_unlock(&conn->srv_mutex);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
++static bool ksmbd_session_is_bound_to_conn(struct ksmbd_session *sess,
++					   struct ksmbd_conn *conn)
++{
++	bool found;
++
++	rcu_read_lock();
++	found = xa_load(&conn->sessions, sess->id) == sess;
++	rcu_read_unlock();
++	if (found)
++		return true;
++
++	down_read(&sess->chann_lock);
++	found = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++	return found;
++}
++
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status)
  {
--	struct dpll_device_registration *reg;
--
--	reg = list_first_entry_or_null((struct list_head *)&dpll->registration_list,
--				       struct dpll_device_registration, list);
--	WARN_ON(!reg);
--	return reg;
-+	return list_first_entry_or_null((struct list_head *)&dpll->registration_list,
-+					struct dpll_device_registration, list);
+ 	struct ksmbd_conn *conn;
+ 	int bkt;
+ 
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id))
+-			WRITE_ONCE(conn->status, status);
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
++			spin_lock(&conn->request_lock);
++			if (!ksmbd_conn_exiting(conn) &&
++			    !ksmbd_conn_releasing(conn))
++				WRITE_ONCE(conn->status, status);
++			spin_unlock(&conn->request_lock);
++		}
+ 	}
+ 	up_read(&conn_list_lock);
+ }
+@@ -276,7 +298,8 @@ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
+ 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
  }
  
- void *dpll_priv(struct dpll_device *dpll)
-@@ -1022,6 +1018,8 @@ void *dpll_priv(struct dpll_device *dpll)
- 	struct dpll_device_registration *reg;
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess)
+ {
+ 	struct ksmbd_conn *conn;
+ 	int rc, retry_count = 0, max_timeout = 120;
+@@ -288,7 +311,7 @@ int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
  
- 	reg = dpll_device_registration_first(dpll);
-+	if (!reg)
-+		return NULL;
- 	return reg->priv;
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
+ 			rcount = (conn == curr_conn) ? 2 : 1;
+ 			if (atomic_read(&conn->req_running) >= rcount) {
+ 				rc = wait_event_timeout(conn->req_running_q,
+@@ -610,8 +633,10 @@ static void stop_sessions(void)
+ 		 * handler exited its receive loop for an unrelated
+ 		 * reason).
+ 		 */
+-		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
++		spin_lock(&conn->request_lock);
++		if (!ksmbd_conn_releasing(conn))
+ 			ksmbd_conn_set_exiting(conn);
++		spin_unlock(&conn->request_lock);
+ 		target = conn;
+ 		break;
+ 	}
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index ceb1c1aefbf64..d6c116875be99 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -21,6 +21,7 @@
+ #include "ksmbd_work.h"
+ 
+ struct smbdirect_buffer_descriptor_v1;
++struct ksmbd_session;
+ 
+ #define KSMBD_SOCKET_BACKLOG		16
+ 
+@@ -163,7 +164,8 @@ extern struct rw_semaphore conn_list_lock;
+ 
+ bool ksmbd_conn_alive(struct ksmbd_conn *conn);
+ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn);
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id);
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess);
+ struct ksmbd_conn *ksmbd_conn_alloc(void);
+ void ksmbd_conn_free(struct ksmbd_conn *conn);
+ struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
+@@ -268,5 +270,5 @@ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
+ 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
  }
  
-@@ -1030,6 +1028,8 @@ const struct dpll_device_ops *dpll_device_ops(struct dpll_device *dpll)
- 	struct dpll_device_registration *reg;
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status);
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status);
+ #endif /* __CONNECTION_H__ */
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 920eb3963ae9f..03ed052a636be 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -413,16 +413,16 @@ void destroy_previous_session(struct ksmbd_conn *conn,
+ 	    memcmp(user->passkey, prev_user->passkey, user->passkey_sz))
+ 		goto out;
  
- 	reg = dpll_device_registration_first(dpll);
-+	if (!reg)
-+		return NULL;
- 	return reg->ops;
- }
- 
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index d8917150477ee..d3dc16b29ca47 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -66,6 +66,22 @@ static bool dpll_pin_available(struct dpll_pin *pin)
- 	return false;
- }
- 
-+static bool dpll_device_registered(struct dpll_device *dpll)
-+{
-+	return dpll_device_ops(dpll);
-+}
-+
-+static struct dpll_pin_ref *dpll_pin_first_registered_ref(struct dpll_pin *pin)
-+{
-+	struct dpll_pin_ref *ref;
-+	unsigned long i;
-+
-+	xa_for_each(&pin->dpll_refs, i, ref)
-+		if (dpll_device_registered(ref->dpll))
-+			return ref;
-+	return NULL;
-+}
-+
- /**
-  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
-  * @msg: pointer to sk_buff message to attach a pin handle
-@@ -575,6 +591,8 @@ dpll_msg_add_pin_dplls(struct sk_buff *msg, struct dpll_pin *pin,
- 	int ret;
- 
- 	xa_for_each(&pin->dpll_refs, index, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		attr = nla_nest_start(msg, DPLL_A_PIN_PARENT_DEVICE);
- 		if (!attr)
- 			return -EMSGSIZE;
-@@ -612,7 +630,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
- 	int ret;
- 
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
--	ASSERT_NOT_NULL(ref);
-+	if (!ref || !dpll_device_registered(ref->dpll))
-+		ref = dpll_pin_first_registered_ref(pin);
-+	if (!ref)
-+		return -ENODEV;
- 
- 	ret = dpll_msg_add_pin_handle(msg, pin);
- 	if (ret)
-@@ -920,6 +941,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_RECONNECT);
+-	err = ksmbd_conn_wait_idle_sess_id(conn, id);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
++	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
+ 	if (err) {
+-		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 		goto out;
  	}
  
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->frequency_set || !ops->frequency_get) {
- 			NL_SET_ERR_MSG(extack, "frequency set not supported by the device");
-@@ -927,6 +950,10 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 		}
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->frequency_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-@@ -939,6 +966,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 		return 0;
+ 	ksmbd_destroy_file_table(prev_sess);
+ 	prev_sess->state = SMB2_SESSION_EXPIRED;
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 	ksmbd_launch_ksmbd_durable_scavenger();
+ out:
+ 	up_write(&conn->session_lock);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 9cc6110fbcf93..944e33ab87ea8 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2251,7 +2251,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	u64 sess_id;
+ 	int err;
  
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -958,6 +987,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -981,6 +1012,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 	int ret;
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->esync_set || !ops->esync_get) {
- 			NL_SET_ERR_MSG(extack,
-@@ -989,6 +1022,10 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 		}
+ 	WORK_BUFFERS(work, req, rsp);
+@@ -2265,8 +2264,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 		smb2_set_err_rsp(work);
+ 		return -ENOENT;
  	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-@@ -1011,6 +1048,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		void *pin_dpll_priv;
+-	sess_id = le64_to_cpu(req->hdr.SessionId);
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_RECONNECT);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
+ 	ksmbd_conn_unlock(conn);
  
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-@@ -1034,6 +1073,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	ksmbd_close_session_fds(work);
+@@ -2283,7 +2281,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	sess->state = SMB2_SESSION_EXPIRED;
+ 	up_write(&conn->session_lock);
  
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-@@ -1069,7 +1110,10 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 		return -EINVAL;
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
--	ASSERT_NOT_NULL(ref);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	if (!ops->ref_sync_set || !ops->ref_sync_get) {
- 		NL_SET_ERR_MSG(extack, "reference sync not supported by this pin");
-@@ -1087,6 +1131,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 	if (state == old_state)
- 		return 0;
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1109,6 +1155,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1294,6 +1342,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 	}
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
  
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->phase_adjust_set || !ops->phase_adjust_get) {
- 			NL_SET_ERR_MSG(extack, "phase adjust not supported");
-@@ -1301,6 +1351,10 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 		}
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->phase_adjust_get(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1314,6 +1368,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 		return 0;
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->phase_adjust_set(pin,
-@@ -1336,6 +1392,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->phase_adjust_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1365,7 +1423,7 @@ dpll_pin_parent_device_set(struct dpll_pin *pin, struct nlattr *parent_nest,
- 		return -EINVAL;
- 	}
- 	pdpll_idx = nla_get_u32(tb[DPLL_A_PIN_PARENT_ID]);
--	dpll = xa_load(&dpll_device_xa, pdpll_idx);
-+	dpll = dpll_device_get_by_id(pdpll_idx);
- 	if (!dpll) {
- 		NL_SET_ERR_MSG(extack, "parent device not found");
- 		return -EINVAL;
-@@ -1657,6 +1715,10 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 		ret = dpll_cmd_pin_get_one(skb, pin, cb->extack);
- 		if (ret) {
- 			genlmsg_cancel(skb, hdr);
-+			if (ret == -ENODEV) {
-+				ret = 0;
-+				continue;
-+			}
- 			break;
- 		}
- 		genlmsg_end(skb, hdr);
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
 -- 
 2.53.0
 
