@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64C84FC34A;
-	Tue, 13 Oct 2026 12:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D154FC32D;
+	Tue, 13 Oct 2026 12:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893997; cv=none; b=IrEIyE4J54TuLXw1+kUSxI8Ne8hMnM+0HYoBdvY9FIo8WfKUDiM3RgrOhIHoj++mZcRX9zuf7RBF+ygut+hX7kXfw6awlOZVwRjuwqnz1/ypkFYt+sfHzyKPkSyQZlBYal8ukK4+BRIvPxYBNOj9GVG8uaVINI/Efjtr/7dw/oo=
+	t=1791893999; cv=none; b=GNF/VDXujBPZvJIEhv7y0T+mqlJ968yabl/DQrrKwsTezUStvlIR4vpaNQu8c4GoDPUNY8Xy0/7AaLAn+1urJkSVtYVSj2rmGyMF1E/EL7QqXhau0y0k3o9TvmVBccYOkHFAhZw/33oy4P+WA+XBqwvjf0xfPvGhh/Pg6hmrp2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893997; c=relaxed/simple;
-	bh=JgZizbR6rOWwgFITNZCjP5X+EdpFeH2sORbi0tlDaz4=;
+	s=arc-20240116; t=1791893999; c=relaxed/simple;
+	bh=pOqJnjssMooA498SyOLMv6QjKLzNVRCmp67YyRWgw0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEi3ad6Ivyi0uZST4tXWfGbdvAqnPDYTh369z/8vqAC+k7eAnHlFtHtm4frN2AkUWllTpJXXy9lfVjFZXAa91+rCYMD+cbxUeSWpyPeI3CCqISeuMlzX/SeNMWlJQiauonBdtNxp80O20y7c13FJSfqeCaeoL1Mx4DW/IJHhhDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5OzpiHf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3gu6/oFPPVa0oNknPSQwXeHjQoEJ8nsfDHgMEXt0o32LjfLdhOfO9T1MygQSWJhSDBQIlaD6J0SK/KoBYY00NRskZ0MIz4SWy5JzOBruy8vAchsjkrPUsK1OjA3l0u7NViIvbqssZPojBWkHbitQ7pfFk+kKIKeqWfjZxUS+Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+2pKnTj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5OzpiHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD82D1F000FF;
-	Tue, 13 Oct 2026 12:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+2pKnTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAAF1F000FF;
+	Tue, 13 Oct 2026 12:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893995;
-	bh=XjxbyVfbFowMYb099B6G08iwvebTkDeOUcxmkeRkxJU=;
+	s=korg; t=1791893998;
+	bh=6XGj6UyLHxhCIiH/fdDyS+weD5Ao++nOYk9epaDGU1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5OzpiHfCxrgCg2Vs95aCEN5I/DNRgzMULxhv9GBQUq1r+fSCIantJnFQW0oSQJU/
-	 aE/1+b3TrMG6KU4eKwdmSLwleeYWv42Uzy7Jzp1DZp4QRhdFM4n3yUbgO2Q/Cy2qGD
-	 VdaPaf4EPSBt5kvNfZEvMGe/e5iMftabEhl29stM=
+	b=J+2pKnTjGicwdw62zjll7mN9hFSoZpralfGfTz98w5+5wZV7zqan7kEFdax0qygj3
+	 GKRpWrzd6+xr6Jtp69uSOaXVQgQefswKhzP1ilyq9COWcxbOGzvxJEIPLdAUrdWMhU
+	 AINxk6PfScM+WhaRO+Bcb+kX1W1DrGXvvTdXnPR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Dudnik <ilan.dudnik@safebreach.com>,
+	Yunseong Kim <yunseong.kim@est.tech>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 412/621] ksmbd: defer publishing granted locks to prevent UAF/double-free race
-Date: Tue, 13 Oct 2026 13:36:47 +0200
-Message-ID: <20261013112930.613290651@linuxfoundation.org>
+Subject: [PATCH 6.18 413/621] ksmbd: serialize oplock close with pending break ownership
+Date: Tue, 13 Oct 2026 13:36:48 +0200
+Message-ID: <20261013112930.636698343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,100 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Dudnik <ilan.dudnik@safebreach.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 29f74f0f2e6df3b393b7b66e810136d0c64e3c59 ]
+[ Upstream commit b0148dc5625dbfd50596ac63c7487c12e8a8ab03 ]
 
-In smb2_lock(), mid-batch granted locks are published to connection-wide
-(conn->lock_list) and file-wide (fp->lock_list) lists immediately upon
-vfs_lock_file() success, while also remaining tracked on the stack-local
-rollback_list.
+close may abort an in-flight oplock break while another breaker already
+holds an opinfo reference. Releasing pending_break wakes that waiter, but
+without serializing the close transition with bit acquisition it can become
+a new break owner through the test_and_set_bit() fast path. It can then
+overwrite OPLOCK_CLOSING with OPLOCK_ACK_WAIT and continue a break for
+a dying opinfo.
 
-If a subsequent element in the same SMB2_LOCK request array fails
-validation or execution, the thread jumps to out: and walks
-rollback_list to undo previously granted locks. However, because the
-granted lock was already published to conn->lock_list, a concurrent
-UNLOCK request on the same connection can find the lock object and
-kfree() it before the rollback loop executes.
+Make OPLOCK_CLOSING terminal once the opinfo is removed from the inode
+list. Serialize that transition, pending_break acquisition, and
+OPLOCK_ACK_WAIT setup with an opinfo state lock. A breaker which loses
+the race releases its ownership and returns -ENOENT. Explicitly wake
+pending_break waiters during close so they can observe the terminal state.
 
-When the granting thread subsequently walks rollback_list, it
-dereferences and frees the already-freed ksmbd_lock structure, resulting
-in a Use-After-Free and Double-Free (on both ksmbd_lock and struct
-file_lock).
-
-Fix this by deferring the publication of granted locks to
-conn->lock_list and fp->lock_list until after the entire array of lock
-elements has been processed without error. Mid-batch grants remain
-tracked exclusively on the request-local rollback_list until the whole
-batch succeeds, eliminating the race window.
+Also prevent ACK and timeout paths from replacing OPLOCK_CLOSING with
+OPLOCK_STATE_NONE.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Ilan Dudnik <ilan.dudnik@safebreach.com>
+Co-developed-by: Yunseong Kim <yunseong.kim@est.tech>
+Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ fs/smb/server/oplock.c  | 81 ++++++++++++++++++++++++++++++++++-------
+ fs/smb/server/oplock.h  |  1 +
+ fs/smb/server/smb2pdu.c | 12 ++++--
+ 3 files changed, 77 insertions(+), 17 deletions(-)
 
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 6183bd52ca9d1..08e3e4504b03f 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -56,6 +56,7 @@ static struct oplock_info *alloc_opinfo(struct ksmbd_work *work,
+ 	opinfo->conn = ksmbd_conn_get(work->conn);
+ 	opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
+ 	opinfo->op_state = OPLOCK_STATE_NONE;
++	spin_lock_init(&opinfo->state_lock);
+ 	opinfo->pending_break = 0;
+ 	opinfo->fid = id;
+ 	opinfo->Tid = Tid;
+@@ -424,14 +425,23 @@ void close_id_del_oplock(struct ksmbd_file *fp)
+ 	opinfo_del(opinfo);
+ 
+ 	rcu_assign_pointer(fp->f_opinfo, NULL);
+-	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
+-		opinfo->op_state = OPLOCK_CLOSING;
+-		wake_up_interruptible_all(&opinfo->oplock_q);
+-		if (opinfo->is_lease) {
+-			atomic_set(&opinfo->breaking_cnt, 0);
+-			wake_up_interruptible_all(&opinfo->oplock_brk);
+-		}
+-	}
++	spin_lock(&opinfo->state_lock);
++	if (opinfo->op_state == OPLOCK_ACK_WAIT && opinfo->is_lease)
++		atomic_set(&opinfo->breaking_cnt, 0);
++	/*
++	 * An opinfo that has been removed from the inode list is terminal. Keep
++	 * this transition and releasing pending_break under state_lock. a breaker
++	 * takes the same lock before it acquires pending_break or sets ACK_WAIT.
++	 */
++	opinfo->op_state = OPLOCK_CLOSING;
++	clear_bit_unlock(0, &opinfo->pending_break);
++	spin_unlock(&opinfo->state_lock);
++	wake_up_interruptible_all(&opinfo->oplock_q);
++	if (opinfo->is_lease)
++		wake_up_interruptible_all(&opinfo->oplock_brk);
++	/* memory barrier is needed for wake_up_bit() */
++	smp_mb__after_atomic();
++	wake_up_bit(&opinfo->pending_break, 0);
+ 
+ 	opinfo_count_dec(fp);
+ 	atomic_dec(&opinfo->refcount);
+@@ -610,10 +620,16 @@ static void wait_for_break_ack(struct oplock_info *opinfo)
+ 
+ 	/* is this a timeout ? */
+ 	if (!rc) {
++		spin_lock(&opinfo->state_lock);
++		if (opinfo->op_state == OPLOCK_CLOSING) {
++			spin_unlock(&opinfo->state_lock);
++			return;
++		}
+ 		if (opinfo->is_lease)
+ 			opinfo->o_lease->state = SMB2_LEASE_NONE_LE;
+ 		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
+ 		opinfo->op_state = OPLOCK_STATE_NONE;
++		spin_unlock(&opinfo->state_lock);
+ 	}
+ }
+ 
+@@ -625,17 +641,46 @@ static void wake_up_oplock_break(struct oplock_info *opinfo)
+ 	wake_up_bit(&opinfo->pending_break, 0);
+ }
+ 
++static bool oplock_break_set_ack_wait(struct oplock_info *opinfo)
++{
++	bool ret = false;
++
++	spin_lock(&opinfo->state_lock);
++	if (opinfo->op_state != OPLOCK_CLOSING) {
++		opinfo->op_state = OPLOCK_ACK_WAIT;
++		ret = true;
++	}
++	spin_unlock(&opinfo->state_lock);
++
++	return ret;
++}
++
+ static int oplock_break_pending(struct oplock_info *opinfo, int req_op_level)
+ {
+-	while (test_and_set_bit(0, &opinfo->pending_break)) {
++	for (;;) {
++		bool closing;
++
++		spin_lock(&opinfo->state_lock);
++		closing = opinfo->op_state == OPLOCK_CLOSING;
++		if (!closing && !test_and_set_bit(0, &opinfo->pending_break)) {
++			spin_unlock(&opinfo->state_lock);
++			break;
++		}
++		spin_unlock(&opinfo->state_lock);
++		if (closing)
++			return -ENOENT;
++
+ 		wait_on_bit(&opinfo->pending_break, 0, TASK_UNINTERRUPTIBLE);
+ 
+ 		/* Not immediately break to none. */
+ 		opinfo->open_trunc = 0;
+ 
+-		if (opinfo->op_state == OPLOCK_CLOSING)
++		spin_lock(&opinfo->state_lock);
++		closing = opinfo->op_state == OPLOCK_CLOSING;
++		spin_unlock(&opinfo->state_lock);
++		if (closing)
+ 			return -ENOENT;
+-		else if (opinfo->level <= req_op_level) {
++		if (opinfo->level <= req_op_level) {
+ 			if (opinfo->is_lease == false)
+ 				return 1;
+ 
+@@ -1005,7 +1050,11 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
+ 				release_async_work(in_work);
+ 			}
+ 
+-			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
++			if (!oplock_break_set_ack_wait(brk_opinfo)) {
++				atomic_dec_if_positive(&brk_opinfo->breaking_cnt);
++				wake_up_oplock_break(brk_opinfo);
++				return -ENOENT;
++			}
+ 		} else
+ 			atomic_dec(&brk_opinfo->breaking_cnt);
+ 	} else {
+@@ -1014,8 +1063,12 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
+ 			return err < 0 ? err : 0;
+ 
+ 		if (brk_opinfo->level == SMB2_OPLOCK_LEVEL_BATCH ||
+-		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
+-			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
++		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
++			if (!oplock_break_set_ack_wait(brk_opinfo)) {
++				wake_up_oplock_break(brk_opinfo);
++				return -ENOENT;
++			}
++		}
+ 	}
+ 
+ 	if (brk_opinfo->is_lease)
+diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
+index 795a9119dad9a..6e8680c06db97 100644
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -59,6 +59,7 @@ struct oplock_info {
+ 	struct ksmbd_file	*o_fp;
+ 	int                     level;
+ 	int                     op_state;
++	spinlock_t		state_lock;
+ 	unsigned long		pending_break;
+ 	u64			fid;
+ 	atomic_t		breaking_cnt;
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6860d5229e1a9..100ff90b05190 100644
+index 100ff90b05190..33ffe63f26dcd 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -7864,16 +7864,10 @@ int smb2_lock(struct ksmbd_work *work)
- 				rsp->hdr.Status =
- 					STATUS_RANGE_NOT_LOCKED;
- 				kfree(smb_lock);
--				goto out2;
-+				/* rollback_list may still hold earlier grants */
-+				goto out;
- 			} else if (!rc) {
- 				list_add(&smb_lock->llist, &rollback_list);
--				smb_lock->conn = ksmbd_conn_get(work->conn);
--				spin_lock(&work->conn->llist_lock);
--				list_add_tail(&smb_lock->clist,
--					      &work->conn->lock_list);
--				list_add_tail(&smb_lock->flist,
--					      &fp->lock_list);
--				spin_unlock(&work->conn->llist_lock);
- 				ksmbd_debug(SMB, "successful in taking lock\n");
- 			} else {
- 				locks_free_lock(flock);
-@@ -7895,6 +7889,19 @@ int smb2_lock(struct ksmbd_work *work)
- 	if (err)
- 		goto out;
+@@ -8868,7 +8868,10 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
+ 	smb2_set_err_rsp(work);
  
-+	/* publish only once the whole batch has committed */
-+	if (!list_empty(&rollback_list)) {
-+		spin_lock(&work->conn->llist_lock);
-+		list_for_each_entry(smb_lock, &rollback_list, llist) {
-+			smb_lock->conn = ksmbd_conn_get(work->conn);
-+			list_add_tail(&smb_lock->clist,
-+				      &work->conn->lock_list);
-+			list_add_tail(&smb_lock->flist,
-+				      &fp->lock_list);
-+		}
-+		spin_unlock(&work->conn->llist_lock);
-+	}
-+
+ out:
+-	opinfo->op_state = OPLOCK_STATE_NONE;
++	spin_lock(&opinfo->state_lock);
++	if (opinfo->op_state != OPLOCK_CLOSING)
++		opinfo->op_state = OPLOCK_STATE_NONE;
++	spin_unlock(&opinfo->state_lock);
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+ 	opinfo_put(opinfo);
  	ksmbd_fd_put(work, fp);
- 	return 0;
+@@ -8954,9 +8957,12 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
+ 	if (ret)
+ 		goto err_out;
  
-@@ -7922,15 +7929,6 @@ int smb2_lock(struct ksmbd_work *work)
- 		}
- 
- 		list_del(&smb_lock->llist);
--		conn = smb_lock->conn;
--		spin_lock(&conn->llist_lock);
--		if (!list_empty(&smb_lock->flist))
--			list_del(&smb_lock->flist);
--		list_del(&smb_lock->clist);
--		smb_lock->conn = NULL;
--		spin_unlock(&conn->llist_lock);
--		ksmbd_conn_put(conn);
--
- 		smb2_free_lock(smb_lock->fl);
- 		if (rlock)
- 			locks_free_lock(rlock);
+-	opinfo->op_state = OPLOCK_STATE_NONE;
++	spin_lock(&opinfo->state_lock);
++	if (opinfo->op_state != OPLOCK_CLOSING)
++		opinfo->op_state = OPLOCK_STATE_NONE;
++	spin_unlock(&opinfo->state_lock);
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+-	atomic_dec(&opinfo->breaking_cnt);
++	atomic_dec_if_positive(&opinfo->breaking_cnt);
+ 	wake_up_interruptible_all(&opinfo->oplock_brk);
+ 	opinfo_put(opinfo);
+ 	return;
 -- 
 2.53.0
 
