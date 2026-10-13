@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883A3D891D;
-	Tue, 13 Oct 2026 12:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383393D5C06;
+	Tue, 13 Oct 2026 12:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894268; cv=none; b=i5GiT3RKHqnctmy2I6qEnh+hR/jgOonxYPATpZLPBJQ/mh85PyjdGghREvrdCpR/Q1yJyknfHhpwUm8MSHF6KbG9RfHY0jRhzNfXEPs/OCQUucxHhABinrDu4rPSFRK+IrHxx63RmF5Pvh31xk/T22O5tyQSCI5lP+ylizQgdLQ=
+	t=1791894271; cv=none; b=ZYfjr4kEn6XUZ+wWOFoKZ8FRWf+DREsEqaxXPWdgqZAVN5Ov/Egyol/Yg/IuNZBYLcDAq3FUiuDRGnjloOmHhWGvZri9egp6dTKwXXST6/nptajpqG4uNaU0oXf926glPiLDuz7si1QQ3GPTiSsnGJCF7lyuWMERpUOh4QjA4gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894268; c=relaxed/simple;
-	bh=24NZNJZEFmIjm89kuysLXju0SWtqy8/U6M4f9GeyVjs=;
+	s=arc-20240116; t=1791894271; c=relaxed/simple;
+	bh=RMiYIvbmURnkw0HyRJNkLZeFnIwril2F1qpOcsxI1xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FD/fxr5aWPjytzjoBBPBei4BADvm46eQEeo8ClMSC7QoJZOqAiw7BUf6ElUiCl4p/QQ7p4vjIBPmpfBvyPMvR9BCAsRzA3SQ5X9sh1XD2m9J5KkAW3P+EojfHUyBtBAROKt1haYg9E/4hCUPPNU37ACpKhjvIFnMBa1b4q6rL7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ6nSGd3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M76X8xo+mEhPhgLpUD2qVkwY4HgYTfVjoh3zFMAv0Erd00aNnGj6iTROzo+VuPEnS35xChdQPM1gMX7ddcEmZeAddhXvvLLrUPeABppHkJ86N7VDyrTbD8D/kImWI/1CF+yOAZrbKYXo65LulnpRcUq00KGaWVR4vpi5mTWJBXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufr420hf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ6nSGd3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D761F000FF;
-	Tue, 13 Oct 2026 12:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufr420hf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFA31F000FF;
+	Tue, 13 Oct 2026 12:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894267;
-	bh=TfhKZiUf8lYWC6c5anq3R5lh/gQnP3YWtXFLeYDfI+I=;
+	s=korg; t=1791894270;
+	bh=X1kDgAOON/rtX2vbQwF/8unL1Z+AKN2mtc1p3MAyTa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQ6nSGd3SdSulCXXXft+ov6t0M0X3b/cFkloLptBQ2Gcvz03WFXvorl7lqfKH1Cgw
-	 0hIPfkD2ASbNPmN2mi0tVSAgEht5poHhgECCXnqEgswYfvo4PjHw8LzcOj5dMdGECO
-	 wWXSp3jwYdeb5NYzur6pmO31ZdxjCFytRH85pGgg=
+	b=Ufr420hfiDlmrf+8I220JW1S43kdBN2XWeKcPrrsz5lr7op17bkjXhRfQzDWzu7Nu
+	 V36uqGea8BqJrYsX3a6lnh8K1rgl0ZOWha9b7u08bjIEreuQ9bUyscVOE2rJ7qmZ2h
+	 zW8egHk7Q0kTV3i7NH7UvNh4W+5waBcRX6v069rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	sashiko-bot@kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 503/621] drm/amdgpu: skip the VMID 0 flush for VRAM
-Date: Tue, 13 Oct 2026 13:38:18 +0200
-Message-ID: <20261013112932.763832331@linuxfoundation.org>
+Subject: [PATCH 6.18 504/621] tracing: Take trace_array reference when opening a tracer options file
+Date: Tue, 13 Oct 2026 13:38:19 +0200
+Message-ID: <20261013112932.787265651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -47,155 +45,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 87ceb8cba73d0b3c4025ff42495bccd8164acaed ]
+[ Upstream commit ed0aff60f83a9bdc2f6556376ac79c96b3ce7e80 ]
 
-Clear-on-release only runs on VRAM, which amdgpu_ttm_map_buffer() reaches
-via its direct MC address without programming a GART window, yet the wipe
-still forces a VMID 0 flush. On GFX11 (e.g. Navi33) that spurious SDMA
-flush can wedge the engine; only flush when a GART window is actually used.
+When a tracer option file is opened, it is passed a descriptor that points
+to an element on the trace_array's topts array. This element has
+information to find the trace array and other information. It uses this
+element to take a reference of the trace_array so that the trace_array
+does not get removed while this file is opened.
 
-v2: Let amdgpu_ttm_map_buffer() return whether the VMID 0 flush is needed,
-    and drive the clear and copy paths from that. (Christian)
-v3: Make the vm_needs_flush output parameter mandatory instead of
-    allowing NULL. (Christian)
+Unfortunately, there's a race condition where the element itself could be
+freed by the removal of the instance the trace_array represents causing a
+use-after-free as this element that is used to find the trace_array to
+increment its reference counter is also freed when the instance is
+removed.
 
-Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5413
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a306e406e570b74318ff7d80e5b07b540ca1d3a9)
+To solve this, add a trace_array_tracer_options_get() helper function that
+will take the address of the element that is passed to the open function
+by the inode->i_private pointer and search all the trace_arrays under a
+lock to find the one that the element's address is in the range of the
+trace_arrays topts array elements. When a match happens, that trace_array's
+reference would be increased.
+
+Note, there's a race where if an admin was deleting and creating trace
+instances at the same time and the memory of the old trace_array's array
+matched the memory of the new trace_array that it could in theory open the
+option from the wrong trace array. But we do not care because it would be
+stupid to perform that kind of action. As long as the only thing that can
+happen is that the option from the wrong trace array is used and doesn't
+crash the kernel it will only make the user confused. But if they are
+doing something stupid like this, they are already confused, so no harm
+done.
+
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260910221209.62dad8d3@robin
+Fixes: 7e2cfbd2d3c86 ("tracing: Have option files inc the trace array ref count")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260902121918.5a9e9d1b@gandalf.local.home/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ kernel/trace/trace.c | 48 +++++++++++++++++++++++++++++++++++++++++++-
+ kernel/trace/trace.h |  1 +
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index c48c266cc7a75..08c31d78b3fae 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -175,6 +175,8 @@ static void amdgpu_evict_flags(struct ttm_buffer_object *bo,
-  * @tmz: if we should setup a TMZ enabled mapping
-  * @size: in number of bytes to map, out number of bytes mapped
-  * @addr: resulting address inside the MC address space
-+ * @vm_needs_flush: out, set true if a GART window was programmed (VMID 0 flush
-+ *		    needed) or false for a direct address
-  *
-  * Setup one of the GART windows to access a specific piece of memory or return
-  * the physical address for local memory.
-@@ -183,7 +185,8 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
- 				 struct ttm_resource *mem,
- 				 struct amdgpu_res_cursor *mm_cur,
- 				 unsigned int window, struct amdgpu_ring *ring,
--				 bool tmz, uint64_t *size, uint64_t *addr)
-+				 bool tmz, uint64_t *size, uint64_t *addr,
-+				 bool *vm_needs_flush)
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 7f25ae6330942..0c0f31e63d05d 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9279,12 +9279,57 @@ trace_options_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 	return cnt;
+ }
+ 
++static bool tr_option_match(struct trace_array *tr, void *topt)
++{
++	for (int i = 0; i < tr->nr_topts; i++) {
++		struct trace_options *tr_topts = &tr->topts[i];
++
++		if (topt >= (void *)&tr_topts->topts[0] &&
++		    topt < (void *)&tr_topts->topts[tr_topts->nr_topts])
++			return true;
++	}
++	return false;
++}
++
++/*
++ * The topt is the address of a trace_array->topts[] element that holds the
++ * the tracer options descriptor. But since the trace_array reference has not
++ * been taken yet, it cannot be dereferenced as it could have been freed by
++ * a rmdir of the instance the trace_array represents.
++ *
++ * Search the list of trace_arrays and compare the topt to the address of
++ * the entire trace_array topts array for each trace_array in the list.
++ * If one is matched, then take the reference and return it. If not, the
++ * trace_array no longer exits.
++ */
++static int trace_array_tracer_options_get(void *topt)
++{
++	struct trace_array *tr;
++	int ret;
++
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
++
++	if (tracing_disabled)
++		return -ENODEV;
++
++	guard(mutex)(&trace_types_lock);
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		if (tr_option_match(tr, topt)) {
++			tr->ref++;
++			return 0;
++		}
++	}
++	return -ENODEV;
++}
++
+ static int tracing_open_options(struct inode *inode, struct file *filp)
  {
- 	struct amdgpu_device *adev = ring->adev;
- 	unsigned int offset, num_pages, num_dw, num_bytes;
-@@ -204,9 +207,12 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
- 	if (!tmz && mem->start != AMDGPU_BO_INVALID_OFFSET) {
- 		*addr = amdgpu_ttm_domain_start(adev, mem->mem_type) +
- 			mm_cur->start;
-+		*vm_needs_flush = false;
- 		return 0;
- 	}
+ 	struct trace_option_dentry *topt = inode->i_private;
+ 	int ret;
  
-+	/* A GART window is programmed below, so its VMID 0 TLB needs a flush */
-+	*vm_needs_flush = true;
+-	ret = tracing_check_open_get_tr(topt->tr);
++	ret = trace_array_tracer_options_get(topt);
+ 	if (ret)
+ 		return ret;
  
- 	/*
- 	 * If start begins at an offset inside the page, then adjust the size
-@@ -316,6 +322,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
- 	while (src_mm.remaining) {
- 		uint64_t from, to, cur_size, tiling_flags;
- 		uint32_t num_type, data_format, max_com, write_compress_disable;
-+		bool src_vm_flush, dst_vm_flush;
- 		struct dma_fence *next;
+@@ -9568,6 +9613,7 @@ create_trace_option_files(struct trace_array *tr, struct tracer *tracer)
+ 	tr->topts = tr_topts;
+ 	tr->topts[tr->nr_topts].tracer = tracer;
+ 	tr->topts[tr->nr_topts].topts = topts;
++	tr->topts[tr->nr_topts].nr_topts = cnt;
+ 	tr->nr_topts++;
  
- 		/* Never copy more than 256MiB at once to avoid a timeout */
-@@ -323,12 +330,12 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
+ 	for (cnt = 0; opts[cnt].name; cnt++) {
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index ab88b87ac2ee2..39c425a9538a5 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -224,6 +224,7 @@ struct array_buffer {
+ struct trace_options {
+ 	struct tracer			*tracer;
+ 	struct trace_option_dentry	*topts;
++	int				nr_topts;
+ };
  
- 		/* Map src to window 0 and dst to window 1. */
- 		r = amdgpu_ttm_map_buffer(src->bo, src->mem, &src_mm,
--					  0, ring, tmz, &cur_size, &from);
-+					  0, ring, tmz, &cur_size, &from, &src_vm_flush);
- 		if (r)
- 			goto error;
- 
- 		r = amdgpu_ttm_map_buffer(dst->bo, dst->mem, &dst_mm,
--					  1, ring, tmz, &cur_size, &to);
-+					  1, ring, tmz, &cur_size, &to, &dst_vm_flush);
- 		if (r)
- 			goto error;
- 
-@@ -356,7 +363,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
- 		}
- 
- 		r = amdgpu_copy_buffer(ring, from, to, cur_size, resv,
--				       &next, false, true, copy_flags);
-+				       &next, false, src_vm_flush || dst_vm_flush, copy_flags);
- 		if (r)
- 			goto error;
- 
-@@ -2419,6 +2426,7 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
- 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
- 	struct amdgpu_res_cursor cursor;
-+	bool vm_needs_flush = false;
- 	u64 addr;
- 	int r = 0;
- 
-@@ -2446,12 +2454,12 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
- 		size = min(cursor.size, 256ULL << 20);
- 
- 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &cursor,
--					  1, ring, false, &size, &addr);
-+					  1, ring, false, &size, &addr, &vm_needs_flush);
- 		if (r)
- 			goto err;
- 
- 		r = amdgpu_ttm_fill_mem(ring, 0, addr, size, resv,
--					&next, true, true,
-+					&next, vm_needs_flush, true,
- 					AMDGPU_KERNEL_JOB_ID_TTM_CLEAR_BUFFER);
- 		if (r)
- 			goto err;
-@@ -2478,6 +2486,7 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
- 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
- 	struct dma_fence *fence = NULL;
- 	struct amdgpu_res_cursor dst;
-+	bool vm_needs_flush = false;
- 	int r;
- 
- 	if (!adev->mman.buffer_funcs_enabled) {
-@@ -2497,12 +2506,12 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
- 		cur_size = min(dst.size, 256ULL << 20);
- 
- 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &dst,
--					  1, ring, false, &cur_size, &to);
-+					  1, ring, false, &cur_size, &to, &vm_needs_flush);
- 		if (r)
- 			goto error;
- 
- 		r = amdgpu_ttm_fill_mem(ring, src_data, to, cur_size, resv,
--					&next, true, delayed, k_job_id);
-+					&next, vm_needs_flush, delayed, k_job_id);
- 		if (r)
- 			goto error;
- 
+ struct trace_pid_list *trace_pid_list_alloc(void);
 -- 
 2.53.0
 
