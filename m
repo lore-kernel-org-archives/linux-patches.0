@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA45E3B1EE7;
-	Tue, 13 Oct 2026 11:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C98442390;
+	Tue, 13 Oct 2026 11:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892070; cv=none; b=LPp2EFPgz08eL+BDm6eCwk9qMXQF5KonPal/pjfEv7KBY30eNI4yHPmyZBY6/ydl547xB+cx8G8ArFLv4mNpViplVltZxwymK2eU9IhuRpTiQgsQ446+vVIK+EGGio4S1vc/lI41u00wz1ar1Ne61WaoZ8dfZhqR+qqIzfK7+L4=
+	t=1791892074; cv=none; b=jXen8aSwX5vG3NVnxHoGMq6mpwvz6xD/Od/gcVixOs3rUJYNUfNLOgnDevpcXYHVZRiGVMIcNgYgZqQAQkLqvTYQgPQ0wrhIQ3SyKd2KKyJP5Qp7MJhg/mfsJEgDVlwWG+sZGgQ3/cVv2slfBIO9MQ1HMZPISKYdupNk/LsrQCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892070; c=relaxed/simple;
-	bh=U6LIqb2eXWDzETPQuTzfWt3s+2aCjY2tWVVp2XKcjqg=;
+	s=arc-20240116; t=1791892074; c=relaxed/simple;
+	bh=mwGxKhLIdu9z2HmjOwURnefZyS+upCUTKqoA2YFGB8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZI3xyt56Qjzu5eHaKjgODqZwhLVjabAAwVXr3FF26Zd3NYZqXStN6ZbqnytWOcFPdIT9DBww2tOD2Y2Rg/6tD7jeN9EYqOj7qjgyV+EDIxAdScEnM2DOGQmeb3Fpsb70U2FlfLPgcNXBCPinH6FrWfos1InNvKIzhEtULmAyJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSkVnGxO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tzebf4eoiYQIjTnwf803A8n/5OQc7kUmbPE+B79p5U4/h1tT+c/rXW0SbQgKa+ydYEcPFzLbVw5814nD5L04EG9VodkOYGZcTsji7l2DTJaQmwI/6gWSTFPTcM9AqyHLx7hkcVsEHLXmRzm7sH1N7DtCrSLShdB427J1hx7qHmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMRFmUD6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSkVnGxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9311F00893;
-	Tue, 13 Oct 2026 11:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMRFmUD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AF41F000FF;
+	Tue, 13 Oct 2026 11:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892069;
-	bh=jwBNDY5HE4Vlkszv+5DiFh0uDpQloLoqSDCT1Ez9LsA=;
+	s=korg; t=1791892072;
+	bh=+UXWVnzgGmAOEYboY5AcR4pqdZ7RpFC8rV8tbgz4l30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSkVnGxOLVUKgtIGpc6X9xnFXOlUWNMNoc09XqgfCumQMh9OkvJfSD6EXMb1UTjBu
-	 5RtSHBTE2ugbfKDWvdbJM0tGJeCLTRvWJT2sIRaIZSU3oWeuF6EGDDOYbHbe7mIvDC
-	 looi5EoUwBpN2PjUkYA3Q5LS/YWi6hB8DiJ3/X4o=
+	b=KMRFmUD6t0W6tbbjoZF76kpe/RpOEBQJm0DcC+kdihejNTcgqa0IXl+lHMHkx1F8Y
+	 5KXoncKK/wQICBi153c+rbGAabtYc2fyzA8MHYCuaGJUB3EmThyAFVer1tAIyM4/ws
+	 zUCZGX1MN5fYPES7D9zlYrAf281U9dpFOPx4HgRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	SJ Park <sj@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Shuah Khan <shuah@kernel.org>
-Subject: [PATCH 7.2 050/281] selftests/mm: cleanup -Wformat issues in hugetlb-mmap
-Date: Tue, 13 Oct 2026 13:36:06 +0200
-Message-ID: <20261013112856.266045533@linuxfoundation.org>
+	Javier Herrera <javier.herrera@afronta.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 051/281] e1000e: add system to disable K1 list
+Date: Tue, 13 Oct 2026 13:36:07 +0200
+Message-ID: <20261013112856.291499544@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -60,73 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Tony Nguyen <anthony.l.nguyen@intel.com>
 
-commit 28eed9906e01d01cbdfb352e799413b2e8b33b76 upstream.
+commit 1d6500523b8d5112afe0118173ebc8c1ca23784e upstream.
 
-Commit ae571cd6015c ("selftests/mm: hugetlb-mmap: add setup of HugeTLB
-pages") and commit 9c5a65f374f8 ("selftests/mm: merge map_hugetlb into
-hugepage-mmap") added logs of 'hugepage_size' which has a size_t type.
-However, the incorrect format specifier '%lu' was used which triggers
--Wformat warnings when building for 32-bit:
+Javier reports seeing packet loss issues related to the re-enablement
+of K1; disabling it makes the issues go away. Add the reported system
+to have K1 disabled by default.
 
-  hugetlb-mmap.c:125:55: warning: format specifies type 'unsigned long'
-  but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-    125 | ksft_print_msg("Default size hugepages (%lu kB)\n", hugepage_size >> 10);
-        |                                         ~~~         ^~~~~~~~~~~~~~~~~~~
-        |                                         %zu
+Reproduction steps (from the Link):
+Plug the cable and ping the default gateway on the LAN. No suspend/resume
+involved, machine freshly booted and on AC power. Nothing e1000e-related in
+dmesg apart from the link up/down messages; no "Hardware Unit Hang".
 
-  hugetlb-mmap.c:134:47: warning: format specifies type 'unsigned long'
-  but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-    134 | ksft_exit_skip("Not enough %lu Kb pages\n", hugepage_size >> 10);
-        |                            ~~~              ^~~~~~~~~~~~~~~~~~~
-        |                            %zu
+Default (K1 enabled):
 
-Fix this by switching to the expected '%zu' format specifier.
+  $ ping -c 30 192.168.10.1
+  --- 192.168.10.1 ping statistics ---
+  30 packets transmitted, 18 received, 40% packet loss, time 29734ms
+  rtt min/avg/max/mdev = 0.211/0.315/0.384/0.046 ms
 
-Link: https://lore.kernel.org/20260927162419.820609-1-cmllamas@google.com
-Fixes: ae571cd6015c ("selftests/mm: hugetlb-mmap: add setup of HugeTLB pages")
-Fixes: 9c5a65f374f8 ("selftests/mm: merge map_hugetlb into hugepage-mmap")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
+The lost packets are spread over the run (seq 6, 8, 9, 11, 13, 14, 16, 19,
+20, 24, 25, 30), not a single burst. DHCP on this link also takes 1-2
+minutes to get a lease, consistent with incoming packets being dropped.
+
+With K1 disabled at runtime:
+
+  # ethtool --set-priv-flags enp0s31f6 disable-k1 on
+  $ ethtool --show-priv-flags enp0s31f6
+  Private flags for enp0s31f6:
+  s0ix-enabled: on
+  disable-k1  : on
+
+  $ ping -c 30 192.168.10.1
+  --- 192.168.10.1 ping statistics ---
+  30 packets transmitted, 30 received, 0% packet loss, time 29713ms
+  rtt min/avg/max/mdev = 0.169/0.251/0.468/0.054 ms
+
+  $ ping -c 30 192.168.10.1
+  --- 192.168.10.1 ping statistics ---
+  30 packets transmitted, 30 received, 0% packet loss, time 29677ms
+  rtt min/avg/max/mdev = 0.101/0.222/0.360/0.064 ms
+
+I have only compile tested this, but Javier has tested that disabling K1
+on his system (Lenovo ThinkPad P14s Gen 5 (Intel), I219-LM [8086:550a])
+resolves his issues.
+
+Cc: stable@vger.kernel.org
+Fixes: 578294b8b60d ("e1000e: Reconfigure PLL clock gate timeout and re-enable K1 on Meteor Lake")
+Reported-by: Javier Herrera <javier.herrera@afronta.com>
+Link: https://lore.kernel.org/intel-wired-lan/CAKRuCQLWEcci9hPgNUmvq44Bd2H30T5_vP=exMjsknXMN5Yh9A@mail.gmail.com/
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20261001222443.3500206-7-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/hugetlb-mmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/hugetlb-mmap.c b/tools/testing/selftests/mm/hugetlb-mmap.c
-index 0f2aad1b7dbd..2edbc992e6bc 100644
---- a/tools/testing/selftests/mm/hugetlb-mmap.c
-+++ b/tools/testing/selftests/mm/hugetlb-mmap.c
-@@ -122,7 +122,7 @@ int main(int argc, char **argv)
- 		hugepage_size = default_huge_page_size();
- 		if (!hugepage_size)
- 			ksft_exit_skip("Could not detect default hugetlb page size.");
--		ksft_print_msg("Default size hugepages (%lu kB)\n", hugepage_size >> 10);
-+		ksft_print_msg("Default size hugepages (%zu kB)\n", hugepage_size >> 10);
- 	}
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 844f31ab37ad..c282f65199e4 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -67,6 +67,13 @@ static const struct dmi_system_id disable_k1_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro 16 Plus PB16250"),
+ 		},
+ 	},
++	{
++		.ident = "Lenovo ThinkPad P14s Gen 5",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad P14s Gen 5"),
++		},
++	},
+ 	{}
+ };
  
- 	/* munmap will fail if the length is not page aligned */
-@@ -131,7 +131,7 @@ int main(int argc, char **argv)
- 
- 	hugetlb_set_nr_pages(hugepage_size, nr);
- 	if (hugetlb_free_pages(hugepage_size) < nr)
--		ksft_exit_skip("Not enough %lu Kb pages\n", hugepage_size >> 10);
-+		ksft_exit_skip("Not enough %zu Kb pages\n", hugepage_size >> 10);
- 
- 	ksft_set_plan(2);
- 	ksft_print_msg("Mapping %lu Mbytes\n", (unsigned long)length >> 20);
 -- 
 2.56.0
 
