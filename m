@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F62374745;
-	Tue, 13 Oct 2026 12:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C343360EF0;
+	Tue, 13 Oct 2026 12:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895313; cv=none; b=DH9BRIitC5qE+TgWtEb1HTv/mzGXam5t9u+7xOjJcItmts27Es2uaqGYsC7znTu/fSqqRgAO66i2F24DG2IczT/V5DoKxUJAPt+QPL+ARvaWhrcDBfaTp+kms/KSkdGEx7uf0Bj/IGPnNtoFU2Jsg0M46ulM6IfmKAoZQdJD/V4=
+	t=1791895316; cv=none; b=EE8g+ercEPTEjSg6DroAX4Gf2cCPmx+Q2tZ0+F9B6wgFBgf5vHs1lwpBixv96LJT5NALZi2Y7Upm/G+n3wMWcgX7j1JFFWUlqwkM0m/VpRgppNRXPWNulmT2lvg0DEnMyCuCiZjUb4jBa8Zs9wc3q8a53OL+P0bJqEevN8sxSXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895313; c=relaxed/simple;
-	bh=ZhHQ+aqPmhIXf9DV79AsuaME01iegVKHn7eAh+VBXV8=;
+	s=arc-20240116; t=1791895316; c=relaxed/simple;
+	bh=AfqKYkqPmZn5avgjCyVqVqe+rEIvLZ4MjLHO4hmFuJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGfbQNFXoYYmupyf7YJUrXcOqt/ikStlV7dWsXa53uFGvDWkS8JATWyK5rFBnZdwmzAbSzxQlL16x3ZS6OwQJK1q2nlTTfRStdJgarZlwZIzjBu9euQle2SEga67EVR16BKIMQz507DOG1J/eSRTMYYZb1DnbhV+Lu3DYFBHBoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8UoeAGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bSPQ6MuDMC3LErT59cYdaheFdz9lUQXafxH40vnKePaxvVcKCNlSm5djZWWleM5B6OAADFmrTpbPULtzl53UtvKJGJifTfIvUzfDLT0XA3J7BvBn84UNCQ46C0IPIfYimtIPmAQsEVhEXJYm3Bnv0TOdVnPhlffBO5gl04zEhWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iR7OhSaK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8UoeAGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B4E1F000FF;
-	Tue, 13 Oct 2026 12:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iR7OhSaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A507B1F00893;
+	Tue, 13 Oct 2026 12:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895312;
-	bh=lsWDNaFG+HhFsg1XYIKeiS1j2wvebTdRbisrteZ1RPM=;
+	s=korg; t=1791895315;
+	bh=aDTWYTAxTdHdS8Qd0n1g2zGpk9SBLylTUwXsOcv//aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m8UoeAGRUUFpQL635jKKtFXJRUqMl+IQG3nJQcO32lRcTRci1SXSkeIWkpM+2UAEA
-	 DTgX8Vme5zwN2F+rtZH90qgky2jhQhlVGNXKfOWqRFJOUlCVpwV5QVAA3za6qgiI3+
-	 D6fb7xX8btTjLlkMG+gGwGHJ2/ru6LOozAN4LhYM=
+	b=iR7OhSaKhE2WmPsUKJ4NG6x6Fn2vzBrM1mjJLdmNAsCaYciaZDeWBSRGSQr5aqBKZ
+	 vBqT/GabUycrM/UEB0R2r95U6QI/+4MoKmKPuh6Jf/8pXPJNWAiVxzvpk98GpkYhtT
+	 D9tTsiUnDC5U7BXwUyXuRslDn2bmZqeHp6keR7es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 178/497] EDAC/altera: Fix memory leak on dci allocation failure
-Date: Tue, 13 Oct 2026 13:35:45 +0200
-Message-ID: <20261013112912.115101975@linuxfoundation.org>
+	Kurt Lieber <kurt@lieber.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 226/497] thunderbolt: Disable CL states for the Anker Prime TB5 dock
+Date: Tue, 13 Oct 2026 13:36:33 +0200
+Message-ID: <20261013112913.258567710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: Kurt Lieber <kurt@lieber.org>
 
-commit 3e4a10a4718e3d963ee4d6c5f26bc5ad57c1d2b1 upstream.
+commit 395e9f2967a7ac6898026e8f136c369805dc2fd9 upstream.
 
-Sashiko reports:
+The Anker Prime TB5 dock identifies itself in the DROM as 01ea:83b5.
+Its router config space is an Intel Barlow Ridge 80G hub (8087:5786).
+The upstream lane adapter advertises CL0s, CL1, and CL2. With CLx left
+enabled, TMU uni-directional LowRes setup fails with -ENOTCONN, the USB3
+and DisplayPort tunnels are aborted, and the router reconnects in a loop.
+Loading thunderbolt with clx=0 keeps the link up on this machine.
 
-"If devres_open_group() fails, the function returns -ENOMEM without freeing the
-dci structure allocated earlier with edac_device_alloc_ctl_info()."
+Match the DROM id together with the Barlow Ridge hub id and disable CL
+states for this dock only. QUIRK_NO_CLX takes the same early-out as the
+module parameter, without disabling CLx for every other router.
 
-Free the dci structure if devres_open_group() fails.
-
-Fixes: c3eea1942a16 ("EDAC, altera: Add Altera L2 cache and OCRAM support")
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org # 6.18+
-Link: https://patch.msgid.link/20260911120627.2634225-4-dinguyen@kernel.org
+Closes: https://lore.kernel.org/linux-usb/SJ0PR15MB4696D491504DB667AA8E0617A3812@SJ0PR15MB4696.namprd15.prod.outlook.com/
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Kurt Lieber <kurt@lieber.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1534,8 +1534,10 @@ static int altr_portb_setup(struct altr_
- 	altdev = dci->pvt_info;
- 	*altdev = *device;
- 
--	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL))
-+	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL)) {
-+		edac_device_free_ctl_info(dci);
- 		return -ENOMEM;
-+	}
- 
- 	/* Update PortB specific values */
- 	altdev->edac_dev_name = ecc_name;
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -92,6 +92,9 @@ static const struct tb_quirk tb_quirks[]
+ 		  quirk_usb3_maximum_bandwidth },
+ 	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE, 0x0000, 0x0000,
+ 		  quirk_usb3_maximum_bandwidth },
++	/* CLx is unstable on the Anker Prime TB5 dock (DROM 01ea:83b5) */
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE, 0x01ea, 0x83b5,
++		  quirk_clx_disable },
+ 	/*
+ 	 * Block Runtime PM in DP redrive mode for Intel Barlow Ridge host
+ 	 * controllers.
 
 
