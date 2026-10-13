@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBC85012A9;
-	Tue, 13 Oct 2026 12:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E3B4F4CF3;
+	Tue, 13 Oct 2026 12:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892938; cv=none; b=KGRKbB83Tn+DEjj2bJ66L9HwuDWsNhsImMWHjuUSqmjo2aKwqv7MMnJfRTr0jNS282haLDROOzDWDXOw7PFZTW1zgBq3kbnFSD6OnFpC0TkHxQ6HM1V85Vzm10W2SPrIrhyE3zi0lC8relMhk9rWHcCc/QAmb3ce/wUT4Khhi9U=
+	t=1791892941; cv=none; b=gwGENaI4dbnm9VK3w46qK2qlsqKr/WmgniTixc0hfBgYBBf96nIgfGYqFTFRr4r5vzTmRlnZ6U9i5XeviHo5e5s43SlZ0I5B4IGQ9PgZH2ydHAQfXHh/Nnlfvd8PQ9jYokH1Ia8Cv1BZbk0w/BFk95JGjm8VWkU8cSBtmyKZOVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892938; c=relaxed/simple;
-	bh=K/qgeUYu2+stxC1+EXHZeglOr/iA7B9B+qkUGYR+0l4=;
+	s=arc-20240116; t=1791892941; c=relaxed/simple;
+	bh=4leYayuxS6A48ZhisD2TZyA0bcrAg+r12ZkV4moKO+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOanxlXRuomyFIEzwAHIXhfXkpJXa2qpQBfFYly+rd1uahhwhPtmMYo/aamkMcO9p73X4NHRyCLVcuq+9dvomUj5ZdgI0pLLzN+uP0B40jG0O3C/e6KrDf9DT89QTCzWm5GZBnfHdahQVAhxZQCfJy1pd+kbbv01SkKbHWgGPkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/5q3hdh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+kVSwTPNcyVlUgkpgR2QTmNR+ZKkWjLI/EU8fy0FLSLbKkZX20dxdWOuINda1a4mRhFazADgRCpuTSocPvol5PmBgInR86jHhe6lscOxFnbIz6lYIYMjfgUuI/EP9WxS4ZKpYKoyef1ciac8Dd4Z51/A4rjUtan6TTtxnsCpMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhbPJwVM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/5q3hdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672921F000FF;
-	Tue, 13 Oct 2026 12:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhbPJwVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6321F000FF;
+	Tue, 13 Oct 2026 12:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892937;
-	bh=aeVeAvgPMv0fHrbPcWqgiHzYO6gUV1Cyzcc8SCeSTTc=;
+	s=korg; t=1791892940;
+	bh=4w7K5o2I/FoYNbuPQw85JGN+K0W3O4MGo/eAox/kkFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/5q3hdhQP5T8e4OakyfueD3mdBYrSz069yS88K87IBnFHxFBBHVBQNlhz/R4SAtZ
-	 yWr0Gv/qlImEH4aO2gyxOdcsZKdePU0ZWSbpZzwIKYUSBh140sPQyILg9X16d+Odr+
-	 1mTYogp7HHG5nDwe0bEsg+XHnWO/7YzeIAOUdBpE=
+	b=UhbPJwVMZ5M1U6W0tQlBleTj+CL6Q84IYdjsQZuv+ZDy0TnD6YsW+M1JbxQi8JVMT
+	 I48sst/f/PQwpLmzl8iLRnBocZo6vZQNdwEWdDpJN7dwFBIFh39SZc0UfyFOzad8dI
+	 Or7lPZgGzF5w0H9v9t5omXwjUXcEaigdYGuwwZj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 056/621] gpio: xilinx: fix runtime PM leak on request error path
-Date: Tue, 13 Oct 2026 13:30:51 +0200
-Message-ID: <20261013112922.193268575@linuxfoundation.org>
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 057/621] gve: fix napi_disable deadlock when attempting to disable XSK pools
+Date: Tue, 13 Oct 2026 13:30:52 +0200
+Message-ID: <20261013112922.216648115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,48 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Joshua Washington <joshwash@google.com>
 
-commit ff82fc3a4a1d417dee1229681cc5285986edb1fa upstream.
+commit 0cb6939a4dfefa822007b7a71986e06bc4f61f54 upstream.
 
-pm_runtime_get_sync() leaves the usage counter incremented even when it
-fails, and xgpio_request() returns the error without dropping it.
+When disabling XSK pools, GVE calls the unlocked versions of
+napi_disable and napi_enable. However, the netdev lock has already been
+acquired before ndo_bpf is called because GVE supports queue management
+ops. Calling the unlocked versions of napi_disable/enable results in a
+deadlock when attempting to disable XSK pools, as the thread attempts to
+re-acquire a lock it already holds.
 
-gpiolib does not call ->free() when ->request() fails, so xgpio_free(),
-which holds the only matching pm_runtime_put(), never runs. The reference
-is leaked and the controller can no longer runtime-suspend, so its clock
-stays enabled.
+Update the NAPI calls to use the locked versions.
 
-Switch to pm_runtime_resume_and_get(), which only increments the usage
-counter on success.
+This issue was found in production.
 
-Fixes: 26b04774621e ("gpio: gpio-xilinx: Add support for suspend and resume")
+Fixes: 606048cbd834 ("net: designate XSK pool pointers in queues as "ops protected"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260923113905.1409290-1-khurana.ridham222@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Link: https://patch.msgid.link/20260930214735.3288780-4-joshwash@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-xilinx.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/net/ethernet/google/gve/gve_main.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpio/gpio-xilinx.c
-+++ b/drivers/gpio/gpio-xilinx.c
-@@ -271,14 +271,7 @@ static void xgpio_save_regs(struct xgpio
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -1663,17 +1663,17 @@ static int gve_xsk_pool_disable(struct n
+ 	}
  
- static int xgpio_request(struct gpio_chip *chip, unsigned int offset)
- {
--	int ret;
--
--	ret = pm_runtime_get_sync(chip->parent);
--	/*
--	 * If the device is already active pm_runtime_get() will return 1 on
--	 * success, but gpio_request still needs to return 0.
--	 */
--	return ret < 0 ? ret : 0;
-+	return pm_runtime_resume_and_get(chip->parent);
- }
+ 	napi_rx = &priv->ntfy_blocks[priv->rx[qid].ntfy_id].napi;
+-	napi_disable(napi_rx); /* make sure current rx poll is done */
++	napi_disable_locked(napi_rx); /* make sure current rx poll is done */
  
- static void xgpio_free(struct gpio_chip *chip, unsigned int offset)
+ 	tx_qid = gve_xdp_tx_queue_id(priv, qid);
+ 	napi_tx = &priv->ntfy_blocks[priv->tx[tx_qid].ntfy_id].napi;
+-	napi_disable(napi_tx); /* make sure current tx poll is done */
++	napi_disable_locked(napi_tx); /* make sure current tx poll is done */
+ 
+ 	gve_unreg_xsk_pool(priv, qid);
+ 	smp_mb(); /* Make sure it is visible to the workers on datapath */
+ 
+-	napi_enable(napi_rx);
+-	napi_enable(napi_tx);
++	napi_enable_locked(napi_rx);
++	napi_enable_locked(napi_tx);
+ 	if (gve_is_gqi(priv)) {
+ 		if (gve_rx_work_pending(&priv->rx[qid]))
+ 			napi_schedule(napi_rx);
 
 
