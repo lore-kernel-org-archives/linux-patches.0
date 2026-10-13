@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AD1397B09;
-	Tue, 13 Oct 2026 12:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EBB4F93BD;
+	Tue, 13 Oct 2026 12:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894167; cv=none; b=Reg/Drm28YJfm/17YoXMjY1TdHVfleUEQ4/7mpP9CsOFlaodMAlTh+ydm5Pt/x5dNAMizLVMO+aH8kh7Yd99b9ZB2YB5s1hS6IuTQPuAMOzb0elOqCOq/K9OI6X5qJI8VGecPpQG1h59bC9hOMG2cT4aqB9t/9VEJPXUt4XQYv0=
+	t=1791894170; cv=none; b=HBsmqXw7ZgNkqfBLurAMIZKeGTGQEmQqwYGJOmOU0IhP6QaASmALfpFhTaTZJ1m8EqGpqqCYp5KSsEh4IrD7vp75wBGMXf30zfKA1DyMbAU/rPmjleunH+2/yA+FQtJztswfEp7vEUsILr5hmUJ6BbPUbnHLA7vB2QFA4YMAjyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894167; c=relaxed/simple;
-	bh=HCNW2jrDgSfDCnpoM/dMem4bhU0IVAX739Y/snD+Mbw=;
+	s=arc-20240116; t=1791894170; c=relaxed/simple;
+	bh=6VST/gP452uQSMkoRDSjYcwy8WKGIc4bcjAmUapHblI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpHdkvezDHVmPWKHWhCIUMVMnneSfsJj4L0kQFkN2bdADVKlXm1jJM+bLEExAZuz7g9dTUOP3rpJT5y+n5GVLi9Q0ieFfKfxlCWyiWg2pFGTtYll7yh0GknGEhss+4A1dWZ+gpCKdJtcRsxe62jXBH0l7/rsEQGkUauis+12pb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXd+H5VF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WSdYPkv6gzIqeqS4qHH36M8E11saRykeHVievwl4ZMT0zqnU2veaaTyCfSG8Mk+XcrRHhNUwhMFhemaLFQafonAVFRq9c/j32Mx6SRuPnA/op4xq33kGjgD0v0LLXG9nnWtz6KoExanFQ0ebUldp/epv8iMwdD4vWabRNKOOmWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcKmh2tV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXd+H5VF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0071F000FF;
-	Tue, 13 Oct 2026 12:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcKmh2tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64911F000FF;
+	Tue, 13 Oct 2026 12:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894166;
-	bh=zlnevuVGxuKiGRKNYfNG97LQugfC3GugpZzs6Th3NdU=;
+	s=korg; t=1791894169;
+	bh=//ZDfR+bIfZCM73EFmiDogN4yhXu+k+5d+2EzOVyONU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zXd+H5VFFksHQlygn+HI4eZUhOGbDSLw+HKTbrs0NYIin63fVt9+8BzSEyx1rLxTL
-	 JGpJi7lum4YCsabmM2CnrBB6zT8sH4UVpg7qtpebShLxMglFPUAQuy9jMf0cDVHU1R
-	 kMa03uT5KxkzPEqyhZLKu8SD80gzJa/kib7bd3lY=
+	b=AcKmh2tV455PTUR3d+PkvYHRDMmjY6B892O5XxaX35Beh6WnshAfQeSyKNHvJaRi7
+	 UUd4UqowLnojLqWQN6BNamldUyTt9CH1CDQmwPAevhMed57HYLx64ekDeoiE38WISi
+	 ShW81Yyy62LCuXKx/zXmW8c9HoSkENDw/BTA25iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Avri Altman <Avri.Altman@sandisk.com>,
+	Bean Huo <beanhuo@micron.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 468/621] iommu/tegra241-cmdqv: Dont fall back to a freed smmu after devm_krealloc()
-Date: Tue, 13 Oct 2026 13:37:43 +0200
-Message-ID: <20261013112931.939079186@linuxfoundation.org>
+Subject: [PATCH 6.18 469/621] scsi: ufs: core: Convert string descriptor format macros to enum
+Date: Tue, 13 Oct 2026 13:37:44 +0200
+Message-ID: <20261013112931.962124084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,157 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Bean Huo <beanhuo@micron.com>
 
-[ Upstream commit d4d05f55e9da646ec03adfa77260eb46f4163749 ]
+[ Upstream commit 0d9a7085ec24983b5b8a4971c0eb6c756c75f1bf ]
 
-__tegra241_cmdqv_probe() uses devm_krealloc() to grow @smmu into the larger
-tegra241_cmdqv, which frees the original @smmu once it relocates. A failure
-after that returned NULL, and the caller then dereferenced the freed @smmu
-on its fallback path.
+Convert SD_ASCII_STD and SD_RAW from boolean macros to enum values for
+improved code readability. This makes ufshcd_read_string_desc() calls
+self-documenting by using explicit enum values instead of true/false.
 
-Return an int and take @smmu by reference instead, then update *smmu to the
-reallocated pointer after devm_krealloc() succeeds, so the caller and its
-fallback path both use the live @smmu rather than the freed original.
+Move the ufshcd_read_string_desc() declaration from include/ufs/ufshcd.h
+to drivers/ufs/core/ufshcd-priv.h since this function is not exported.
 
-Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Co-developed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Suggested-by: Avri Altman <Avri.Altman@sandisk.com>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Link: https://patch.msgid.link/20251107230518.4060231-2-beanhuo@iokpp.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: d96e83d028d7 ("scsi: ufs: core: Validate string descriptors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    | 54 +++++++++++--------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+ drivers/ufs/core/ufshcd-priv.h | 14 ++++++++++----
+ drivers/ufs/core/ufshcd.c      |  8 +++-----
+ include/ufs/ufshcd.h           |  4 ----
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 2b55a221c35a6..fdbd487848e64 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -1015,16 +1015,22 @@ static int tegra241_cmdqv_init_structures(struct arm_smmu_device *smmu)
- static struct dentry *cmdqv_debugfs_dir;
- #endif
+diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
+index 1f0d38aa37f92..f3eeaf45cfdb8 100644
+--- a/drivers/ufs/core/ufshcd-priv.h
++++ b/drivers/ufs/core/ufshcd-priv.h
+@@ -80,11 +80,17 @@ int ufshcd_try_to_abort_task(struct ufs_hba *hba, int tag);
+ void ufshcd_release_scsi_cmd(struct ufs_hba *hba,
+ 			     struct ufshcd_lrb *lrbp);
  
--static struct arm_smmu_device *
--__tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
--		       int irq)
-+/*
-+ * Probe the CMDQV and reallocate @smmu into the larger cmdqv->smmu.
-+ *
-+ * devm_krealloc() may relocate and free the original @smmu, so update *smmu to
-+ * the new pointer once it succeeds. The error paths after it do the same, so a
-+ * caller falling back keeps a live @smmu instead of the freed original.
+-#define SD_ASCII_STD true
+-#define SD_RAW false
+-int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+-			    u8 **buf, bool ascii);
++/**
++ * enum ufs_descr_fmt - UFS string descriptor format
++ * @SD_RAW: Raw UTF-16 format
++ * @SD_ASCII_STD: Convert to null-terminated ASCII string
 + */
-+static int __tegra241_cmdqv_probe(struct arm_smmu_device **smmu,
-+				  struct resource *res, int irq)
- {
- 	static const struct arm_smmu_impl_ops init_ops = {
- 		.init_structures = tegra241_cmdqv_init_structures,
- 		.device_remove = tegra241_cmdqv_remove,
- 	};
--	struct tegra241_cmdqv *cmdqv = NULL;
--	struct arm_smmu_device *new_smmu;
-+	struct device *dev = (*smmu)->dev;
-+	struct tegra241_cmdqv *cmdqv;
- 	void __iomem *base;
- 	u32 regval;
- 	int ret;
-@@ -1033,25 +1039,28 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
++enum ufs_descr_fmt {
++	SD_RAW = 0,
++	SD_ASCII_STD = 1,
++};
  
- 	base = ioremap(res->start, resource_size(res));
- 	if (!base) {
--		dev_err(smmu->dev, "failed to ioremap\n");
--		return NULL;
-+		dev_err(dev, "failed to ioremap\n");
-+		return -ENOMEM;
++int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum ufs_descr_fmt fmt);
+ int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd);
+ int ufshcd_send_bsg_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd);
+ 
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 0d513d3b32453..e540f53f0d443 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3774,16 +3774,14 @@ static inline char ufshcd_remove_non_printable(u8 ch)
+  * @desc_index: descriptor index
+  * @buf: pointer to buffer where descriptor would be read,
+  *       the caller should free the memory.
+- * @ascii: if true convert from unicode to ascii characters
+- *         null terminated string.
++ * @fmt: if %SD_ASCII_STD, convert from UTF-16 to ASCII
+  *
+  * Return:
+  * *      string size on success.
+  * *      -ENOMEM: on allocation failure
+  * *      -EINVAL: on a wrong parameter
+  */
+-int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+-			    u8 **buf, bool ascii)
++int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum ufs_descr_fmt fmt)
+ {
+ 	struct uc_string_id *uc_str;
+ 	u8 *str;
+@@ -3812,7 +3810,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		goto out;
  	}
  
- 	regval = readl(base + TEGRA241_CMDQV_CONFIG);
- 	if (disable_cmdqv) {
--		dev_info(smmu->dev, "Detected disable_cmdqv=true\n");
-+		dev_info(dev, "Detected disable_cmdqv=true\n");
- 		writel(regval & ~CMDQV_EN, base + TEGRA241_CMDQV_CONFIG);
-+		ret = -ENODEV;
- 		goto iounmap;
- 	}
+-	if (ascii) {
++	if (fmt == SD_ASCII_STD) {
+ 		ssize_t ascii_len;
+ 		int i;
+ 		/* remove header and divide by 2 to move from UTF16 to UTF8 */
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 17fe07dac6a7e..a829db5510808 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -1433,10 +1433,6 @@ static inline int ufshcd_disable_host_tx_lcc(struct ufs_hba *hba)
+ void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit);
+ void ufshcd_fixup_dev_quirks(struct ufs_hba *hba,
+ 			     const struct ufs_dev_quirk *fixups);
+-#define SD_ASCII_STD true
+-#define SD_RAW false
+-int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+-			    u8 **buf, bool ascii);
  
--	cmdqv = devm_krealloc(smmu->dev, smmu, sizeof(*cmdqv), GFP_KERNEL);
--	if (!cmdqv)
-+	cmdqv = devm_krealloc(dev, *smmu, sizeof(*cmdqv), GFP_KERNEL);
-+	if (!cmdqv) {
-+		ret = -ENOMEM;
- 		goto iounmap;
--	new_smmu = &cmdqv->smmu;
-+	}
-+	*smmu = &cmdqv->smmu;
- 
- 	cmdqv->irq = irq;
- 	cmdqv->base = base;
--	cmdqv->dev = smmu->impl_dev;
-+	cmdqv->dev = (*smmu)->impl_dev;
- 	cmdqv->base_phys = res->start;
- 
- 	regval = readl_relaxed(REG_CMDQV(cmdqv, PARAM));
-@@ -1063,8 +1072,10 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
- 
- 	cmdqv->vintfs =
- 		kcalloc(cmdqv->num_vintfs, sizeof(*cmdqv->vintfs), GFP_KERNEL);
--	if (!cmdqv->vintfs)
-+	if (!cmdqv->vintfs) {
-+		ret = -ENOMEM;
- 		goto iounmap;
-+	}
- 
- 	ida_init(&cmdqv->vintf_ids);
- 
-@@ -1093,40 +1104,39 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
- #endif
- 
- 	/* Provide init-level ops only, until tegra241_cmdqv_init_structures */
--	new_smmu->impl_ops = &init_ops;
-+	cmdqv->smmu.impl_ops = &init_ops;
- 
--	return new_smmu;
-+	return 0;
- 
- free_vintfs:
- 	ida_destroy(&cmdqv->vintf_ids);
- 	kfree(cmdqv->vintfs);
- iounmap:
- 	iounmap(base);
--	return NULL;
-+	return ret;
- }
- 
- struct arm_smmu_device *tegra241_cmdqv_probe(struct arm_smmu_device *smmu)
- {
--	struct arm_smmu_device *new_smmu;
- 	struct resource *res = NULL;
--	int irq;
-+	int irq, ret;
- 
- 	if (!smmu->dev->of_node)
- 		res = tegra241_cmdqv_find_acpi_resource(smmu->impl_dev, &irq);
- 	if (!res)
- 		goto out_fallback;
- 
--	new_smmu = __tegra241_cmdqv_probe(smmu, res, irq);
-+	ret = __tegra241_cmdqv_probe(&smmu, res, irq);
- 	kfree(res);
- 
--	if (new_smmu)
--		return new_smmu;
-+	if (!ret)
-+		return smmu;
- 
- out_fallback:
- 	dev_info(smmu->impl_dev, "Falling back to standard SMMU CMDQ\n");
- 	smmu->options &= ~ARM_SMMU_OPT_TEGRA241_CMDQV;
- 	put_device(smmu->impl_dev);
--	return ERR_PTR(-ENODEV);
-+	return smmu;
- }
- 
- /* User space VINTF and VCMDQ Functions */
+ void ufshcd_hold(struct ufs_hba *hba);
+ void ufshcd_release(struct ufs_hba *hba);
 -- 
 2.53.0
 
