@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488244F4047;
-	Tue, 13 Oct 2026 12:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318ED4F5DE4;
+	Tue, 13 Oct 2026 12:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893307; cv=none; b=lV4bTxNNxwXSXtcqUuPv9KbWYXXCHYYewXPw9wTLSnhGRt59APQ9LPkCIxOobqSBWwHJkinOFvjlsS3Jxh8O8PljkZiG3nipDIAK9ru4rPACXXBS7lRYrfFfvVvnq0QG7WQVjH80JE7EpUUus4omQ90aC3/cBTU7r0+JE6s7/iI=
+	t=1791893310; cv=none; b=Jv30xPuMRr7nElvKxWchbwVtZdDD+AhIKo+6pL1IPslMN9Ab8EOzQBik0xCKraKDpGFwgHd+A/1L6YVMBDgPA2QfxvIDW+PTsswVBs5V0Wu6E+3+zN20qpAmbYFjPsAPEICLWAWrlgGbu7h9mfwV9i9ZcKLgMcOfm7p/tLdxrDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893307; c=relaxed/simple;
-	bh=ppIfGfKnSg0PNiwS8eOKGarOkfq/kwi2ykzZD2GVkow=;
+	s=arc-20240116; t=1791893310; c=relaxed/simple;
+	bh=a7zuqYjJQCdZMcvQzfavPKQCiTDgMJltQ0u5o3U0nnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+OgwyKidGg3UOZWxuh1+Xvlu+exbfQHxuQ4UvaTFT3wY9t7ZVnm71cBjWektp1ZByVJELfBuy7V5UaB4fm5rmwR7NTQPYW8nTWHg9/IL/DE4HLr1t0sRsZHmm5uueZCfUVntoKLX/bzDhB18iYQu6+MCW2WKJrCp3IMlNO//pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nttKdIGv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rj7faCd0c3/7D6GVZLsuAuA2/yjhi2Kdv/ecs/JdTXhpWUlkTTqlVfFRbzT3Rq5OgiuxMubv9qSkX91thnHm3tzI9iya7kxq4g2Q33Qbc7rR/qyxzI64mLn34NY+S1lq5C3K1n89s/DsJOCro+eusEce5sZlf+YjM7VFTZ2NUD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdPti+p6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nttKdIGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27771F000FF;
-	Tue, 13 Oct 2026 12:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdPti+p6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813321F000FF;
+	Tue, 13 Oct 2026 12:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893306;
-	bh=mPs+CPAOOU3TabpCng43+yMA84oi3mbgRq4JyD1YDCY=;
+	s=korg; t=1791893309;
+	bh=w4l2QLaTPji3D2Q+7avGA07+F4M91OSgafabR3rVSDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nttKdIGvbKOWhLyk4L1SgXcm88336snvA3umOGYFFIk0UImLqg1QT01V6duZ+N4i4
-	 89Nm3XlzGimql7rXtCYwH13zdIHfEnUKj6BEyb6v6cAY0IpA26vahNXklhJu7e4thz
-	 hF6B3VNUbXLQ68mCmjTgsIa+h+hxVPc8IEDk+t10=
+	b=QdPti+p6MJvzlfsMKzLif5/o//63ixHG+P+ugmDTQC+wy72qmWdCiPSgM1sRHqR4k
+	 Ap6GJLptmTvZ0OoL4f7JgmFz26Z15aM0T3JuJjo9P9SR0sFXIcdPkSXcP5WfEK08k0
+	 Ibrmpw0j3ePrlWeUK0igIjSxA9xZw2W2XvwcTv+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com,
-	Jori Koolstra <jkoolstra@xs4all.nl>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 182/621] hfs: Replace BUG_ON with error handling for CNID count checks
-Date: Tue, 13 Oct 2026 13:32:57 +0200
-Message-ID: <20261013112925.182205377@linuxfoundation.org>
+Subject: [PATCH 6.18 183/621] btrfs: do not ASSERT() when the fs flips RO inside btrfs_repair_io_failure()
+Date: Tue, 13 Oct 2026 13:32:58 +0200
+Message-ID: <20261013112925.206045468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,261 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jori Koolstra <jkoolstra@xs4all.nl>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit b226804532a875c10276168dc55ce752944096bd ]
+[ Upstream commit 8ceaad6cd6e7fa5f73b0b2796a2e85d75d37e9f3 ]
 
-In a06ec283e125 next_id, folder_count, and file_count in the super block
-info were expanded to 64 bits, and BUG_ONs were added to detect
-overflow. This triggered an error reported by syzbot: if the MDB is
-corrupted, the BUG_ON is triggered. This patch replaces this mechanism
-with proper error handling and resolves the syzbot reported bug.
+[BUG]
+There is a bug report that when btrfs hits ENOSPC error in a critical
+path, btrfs flips RO (this part is expected, although the ENOSPC bug
+still needs to be addressed).
 
-Singed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Reported-by: syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=17cc9bb6d8d69b4139f0
-Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20251220191006.2465256-1-jkoolstra@xs4all.nl
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+The problem is after the RO flip, if there is a read repair pending, we
+can hit the ASSERT() inside btrfs_repair_io_failure() like the following:
+
+  BTRFS info (device vdc): relocating block group 30408704 flags metadata|raid1
+  ------------[ cut here ]------------
+  BTRFS: Transaction aborted (error -28)
+  WARNING: fs/btrfs/extent-tree.c:3235 at __btrfs_free_extent.isra.0+0x453/0xfd0, CPU#1: btrfs/383844
+  Modules linked in: kvm_intel kvm irqbypass
+  [...]
+  ---[ end trace 0000000000000000 ]---
+  BTRFS info (device vdc state EA): 2 enospc errors during balance
+  BTRFS info (device vdc state EA): balance: ended with status: -30
+  BTRFS error (device vdc state EA): parent transid verify failed on logical 30556160 mirror 2 wanted 8 found 6
+  BTRFS error (device vdc state EA): bdev /dev/nvme0n1 errs: wr 0, rd 0, flush 0, corrupt 10, gen 0
+  [...]
+  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
+  ------------[ cut here ]------------
+  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
+  kernel BUG at fs/btrfs/bio.c:938!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 868 Comm: kworker/u8:13 Tainted: G        W        N  6.19.0-rc6+ #4788 PREEMPT(full)
+  Tainted: [W]=WARN, [N]=TEST
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+  Workqueue: btrfs-endio simple_end_io_work
+  RIP: 0010:btrfs_repair_io_failure.cold+0xb2/0x120
+  RSP: 0000:ffffc90001d2bcf0 EFLAGS: 00010246
+  RAX: 0000000000000051 RBX: 0000000000001000 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: ffffffff8305cf42 RDI: 00000000ffffffff
+  RBP: 0000000000000002 R08: 00000000fffeffff R09: ffffffff837fa988
+  R10: ffffffff8327a9e0 R11: 6f69747265737361 R12: ffff88813018d310
+  R13: ffff888168b8a000 R14: ffffc90001d2bd90 R15: ffff88810a169000
+  FS:  0000000000000000(0000) GS:ffff8885e752c000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  ------------[ cut here ]------------
+
+[CAUSE]
+The cause of -ENOSPC error during the test case btrfs/124 is still
+unknown, although it's known that we still have cases where metadata can
+be over-committed but can not be fulfilled correctly, thus if we hit
+such ENOSPC error inside a critical path, we have no choice but abort
+the current transaction.
+
+This will mark the fs read-only.
+
+The problem is inside the btrfs_repair_io_failure() path that we require
+the fs not to be mount read-only. This is normally fine, but if we are
+doing a read-repair meanwhile the fs flips RO due to a critical error,
+we can enter btrfs_repair_io_failure() with super block set to
+read-only, thus triggering the above crash.
+
+[FIX]
+Just replace the ASSERT() with a proper return if the fs is already
+read-only.
+
+Reported-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-btrfs/20260126045555.GB31641@lst.de/
+Tested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/dir.c    | 15 +++++++++++----
- fs/hfs/hfs_fs.h |  1 +
- fs/hfs/inode.c  | 30 ++++++++++++++++++++++++------
- fs/hfs/mdb.c    | 31 +++++++++++++++++++++++++++----
- fs/hfs/super.c  |  3 +++
- 5 files changed, 66 insertions(+), 14 deletions(-)
+ fs/btrfs/bio.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
-index 130c2f3a417f0..e585471823fe2 100644
---- a/fs/hfs/dir.c
-+++ b/fs/hfs/dir.c
-@@ -190,8 +190,8 @@ static int hfs_create(struct mnt_idmap *idmap, struct inode *dir,
- 	int res;
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index afe022a3b8fc3..d13a143149225 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -902,7 +902,6 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
+ 	struct bio *bio = NULL;
+ 	int ret = 0;
  
- 	inode = hfs_new_inode(dir, &dentry->d_name, mode);
--	if (!inode)
--		return -ENOMEM;
-+	if (IS_ERR(inode))
-+		return PTR_ERR(inode);
+-	ASSERT(!(fs_info->sb->s_flags & SB_RDONLY));
+ 	BUG_ON(!mirror_num);
  
- 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
- 	if (res) {
-@@ -220,8 +220,8 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 	int res;
+ 	/* Basic alignment checks. */
+@@ -914,6 +913,13 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
+ 	ASSERT(step <= length);
+ 	ASSERT(is_power_of_2(step));
  
- 	inode = hfs_new_inode(dir, &dentry->d_name, S_IFDIR | mode);
--	if (!inode)
--		return ERR_PTR(-ENOMEM);
-+	if (IS_ERR(inode))
-+		return ERR_CAST(inode);
- 
- 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
- 	if (res) {
-@@ -248,11 +248,18 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
-  */
- static int hfs_remove(struct inode *dir, struct dentry *dentry)
- {
-+	struct super_block *sb = dir->i_sb;
- 	struct inode *inode = d_inode(dentry);
- 	int res;
- 
- 	if (S_ISDIR(inode->i_mode) && inode->i_size != 2)
- 		return -ENOTEMPTY;
++	/*
++	 * The fs either mounted RO or hit critical errors, no need
++	 * to continue repairing.
++	 */
++	if (unlikely(sb_rdonly(fs_info->sb)))
++		return 0;
 +
-+	if (unlikely(!is_hfs_cnid_counts_valid(sb))) {
-+	    pr_err("cannot remove file/folder\n");
-+	    return -ERANGE;
-+	}
-+
- 	res = hfs_cat_delete(inode->i_ino, dir, &dentry->d_name);
- 	if (res)
- 		return res;
-diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
-index d9665226f5474..86b5ae62247be 100644
---- a/fs/hfs/hfs_fs.h
-+++ b/fs/hfs/hfs_fs.h
-@@ -198,6 +198,7 @@ extern void hfs_delete_inode(struct inode *inode);
- extern const struct xattr_handler * const hfs_xattr_handlers[];
- 
- /* mdb.c */
-+extern bool is_hfs_cnid_counts_valid(struct super_block *sb);
- extern int hfs_mdb_get(struct super_block *sb);
- extern void hfs_mdb_commit(struct super_block *sb);
- extern void hfs_mdb_close(struct super_block *sb);
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index cd3dd5bd456e0..f1796e4b07e83 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -187,14 +187,21 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	s64 next_id;
- 	s64 file_count;
- 	s64 folder_count;
-+	int err = -ENOMEM;
- 
- 	if (!inode)
--		return NULL;
-+		goto out_err;
-+
-+	err = -ERANGE;
- 
- 	mutex_init(&HFS_I(inode)->extents_lock);
- 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
- 	next_id = atomic64_inc_return(&HFS_SB(sb)->next_id);
--	BUG_ON(next_id > U32_MAX);
-+	if (next_id > U32_MAX) {
-+		atomic64_dec(&HFS_SB(sb)->next_id);
-+		pr_err("cannot create new inode: next CNID exceeds limit\n");
-+		goto out_discard;
-+	}
- 	inode->i_ino = (u32)next_id;
- 	inode->i_mode = mode;
- 	inode->i_uid = current_fsuid();
-@@ -208,7 +215,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	if (S_ISDIR(mode)) {
- 		inode->i_size = 2;
- 		folder_count = atomic64_inc_return(&HFS_SB(sb)->folder_count);
--		BUG_ON(folder_count > U32_MAX);
-+		if (folder_count> U32_MAX) {
-+			atomic64_dec(&HFS_SB(sb)->folder_count);
-+			pr_err("cannot create new inode: folder count exceeds limit\n");
-+			goto out_discard;
-+		}
- 		if (dir->i_ino == HFS_ROOT_CNID)
- 			HFS_SB(sb)->root_dirs++;
- 		inode->i_op = &hfs_dir_inode_operations;
-@@ -218,7 +229,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	} else if (S_ISREG(mode)) {
- 		HFS_I(inode)->clump_blocks = HFS_SB(sb)->clumpablks;
- 		file_count = atomic64_inc_return(&HFS_SB(sb)->file_count);
--		BUG_ON(file_count > U32_MAX);
-+		if (file_count > U32_MAX) {
-+			atomic64_dec(&HFS_SB(sb)->file_count);
-+			pr_err("cannot create new inode: file count exceeds limit\n");
-+			goto out_discard;
-+		}
- 		if (dir->i_ino == HFS_ROOT_CNID)
- 			HFS_SB(sb)->root_files++;
- 		inode->i_op = &hfs_file_inode_operations;
-@@ -242,6 +257,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	hfs_mark_mdb_dirty(sb);
- 
- 	return inode;
-+
-+	out_discard:
-+		iput(inode);
-+	out_err:
-+		return ERR_PTR(err);
- }
- 
- void hfs_delete_inode(struct inode *inode)
-@@ -250,7 +270,6 @@ void hfs_delete_inode(struct inode *inode)
- 
- 	hfs_dbg("ino %lu\n", inode->i_ino);
- 	if (S_ISDIR(inode->i_mode)) {
--		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
- 		atomic64_dec(&HFS_SB(sb)->folder_count);
- 		if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
- 			HFS_SB(sb)->root_dirs--;
-@@ -259,7 +278,6 @@ void hfs_delete_inode(struct inode *inode)
- 		return;
- 	}
- 
--	BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
- 	atomic64_dec(&HFS_SB(sb)->file_count);
- 	if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
- 		HFS_SB(sb)->root_files--;
-diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
-index f28cd24dee842..a97cea35ca2e1 100644
---- a/fs/hfs/mdb.c
-+++ b/fs/hfs/mdb.c
-@@ -64,6 +64,27 @@ static int hfs_get_last_session(struct super_block *sb,
- 	return 0;
- }
- 
-+bool is_hfs_cnid_counts_valid(struct super_block *sb)
-+{
-+	struct hfs_sb_info *sbi = HFS_SB(sb);
-+	bool corrupted = false;
-+
-+	if (unlikely(atomic64_read(&sbi->next_id) > U32_MAX)) {
-+		pr_warn("next CNID exceeds limit\n");
-+		corrupted = true;
-+	}
-+	if (unlikely(atomic64_read(&sbi->file_count) > U32_MAX)) {
-+		pr_warn("file count exceeds limit\n");
-+		corrupted = true;
-+	}
-+	if (unlikely(atomic64_read(&sbi->folder_count) > U32_MAX)) {
-+		pr_warn("folder count exceeds limit\n");
-+		corrupted = true;
-+	}
-+
-+	return !corrupted;
-+}
-+
- /*
-  * hfs_mdb_get()
-  *
-@@ -159,6 +180,11 @@ int hfs_mdb_get(struct super_block *sb)
- 	atomic64_set(&HFS_SB(sb)->file_count, be32_to_cpu(mdb->drFilCnt));
- 	atomic64_set(&HFS_SB(sb)->folder_count, be32_to_cpu(mdb->drDirCnt));
- 
-+	if (!is_hfs_cnid_counts_valid(sb)) {
-+		pr_warn("filesystem possibly corrupted, running fsck.hfs is recommended. Mounting read-only.\n");
-+		sb->s_flags |= SB_RDONLY;
-+	}
-+
- 	/* TRY to get the alternate (backup) MDB. */
- 	sect = part_start + part_size - 2;
- 	bh = sb_bread512(sb, sect, mdb2);
-@@ -212,7 +238,7 @@ int hfs_mdb_get(struct super_block *sb)
- 
- 	attrib = mdb->drAtrb;
- 	if (!(attrib & cpu_to_be16(HFS_SB_ATTRIB_UNMNT))) {
--		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.  mounting read-only.\n");
-+		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.	Mounting read-only.\n");
- 		sb->s_flags |= SB_RDONLY;
- 	}
- 	if ((attrib & cpu_to_be16(HFS_SB_ATTRIB_SLOCK))) {
-@@ -270,15 +296,12 @@ void hfs_mdb_commit(struct super_block *sb)
- 		/* These parameters may have been modified, so write them back */
- 		mdb->drLsMod = hfs_mtime();
- 		mdb->drFreeBks = cpu_to_be16(HFS_SB(sb)->free_ablocks);
--		BUG_ON(atomic64_read(&HFS_SB(sb)->next_id) > U32_MAX);
- 		mdb->drNxtCNID =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->next_id));
- 		mdb->drNmFls = cpu_to_be16(HFS_SB(sb)->root_files);
- 		mdb->drNmRtDirs = cpu_to_be16(HFS_SB(sb)->root_dirs);
--		BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
- 		mdb->drFilCnt =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->file_count));
--		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
- 		mdb->drDirCnt =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->folder_count));
- 
-diff --git a/fs/hfs/super.c b/fs/hfs/super.c
-index df289cbdd4e85..97546d6b41f47 100644
---- a/fs/hfs/super.c
-+++ b/fs/hfs/super.c
-@@ -34,6 +34,7 @@ MODULE_LICENSE("GPL");
- 
- static int hfs_sync_fs(struct super_block *sb, int wait)
- {
-+	is_hfs_cnid_counts_valid(sb);
- 	hfs_mdb_commit(sb);
- 	return 0;
- }
-@@ -65,6 +66,8 @@ static void flush_mdb(struct work_struct *work)
- 	sbi->work_queued = 0;
- 	spin_unlock(&sbi->work_lock);
- 
-+	is_hfs_cnid_counts_valid(sb);
-+
- 	hfs_mdb_commit(sb);
- }
+ 	if (btrfs_repair_one_zone(fs_info, logical))
+ 		return 0;
  
 -- 
 2.53.0
