@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7DD2DF6E9;
-	Tue, 13 Oct 2026 12:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8B023EA8B;
+	Tue, 13 Oct 2026 12:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895232; cv=none; b=HekwT7ojgi9URDCyHyZr2BebkZXtApjwXiUa7cUTFEyjVjuOuII+MVo9LPF6qcUwNe/AkqsBL4z8qfusqT3uHwA12VKsDnWR1nJqtyzVaxJoV3gNUsIxkbfnQJeCDoA4XQwEuvCODMYgIHlhVU33PpIOCX8qK7Ep0bbIMBB93mQ=
+	t=1791895235; cv=none; b=TdnVClgE/ED/aL2FzvbqLaXiVsU7/GTwsXDlQ744rIoQljJAQqq4cIoo624YhKnGC4+MQVLdSHd950tt5YO4oB1WIzD0M0CXeGsE8OUT9XGvxPkpEuLMhypAomOLWbdXDibgk13cxQrfeQ4OEfSes0w/jZm2Bbb6TBSShBMnLN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895232; c=relaxed/simple;
-	bh=i37rZ0gJTZGQEV+p9t/6mh71kBau9WP6aZWKn3QWekk=;
+	s=arc-20240116; t=1791895235; c=relaxed/simple;
+	bh=Fi3cMvxCp4V2QgJSSNXP4zn60p334G6L7PY0qDA5t5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXFXo5HBGuQoZykCvXJVQJGMPjJy0XxF2zgOOoxzxCIdQU4QvSUgmDieb3ZHPW5N05GRmhBLJJgvBtt0fGyR1WfbsCmiGEeRbxgVVQ9pJfQefK34J9aU0tpZ10oMWx9h8fL2xltlGAofvTMo1IvpLqPWckWZwoDsm61KnH7odQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3yB749X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfROeUA6QmsZ9/rmTh7DcgMXjN8BnXNwjGumD7v7YAHDoN2DOgzp2brPsZ+bn95ymCwAzSgsVnfQjsjdIcU0gZQUnhF/zCtTchtu9zIZD6BvZHbleLDtWffj0bQ5BahPcA3pCzigdsI0kWvRNSYsj+93ROyTKfXhNe3ifyTxPLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooZEaw1e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3yB749X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914FF1F00893;
-	Tue, 13 Oct 2026 12:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooZEaw1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DA21F000FF;
+	Tue, 13 Oct 2026 12:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895231;
-	bh=ScENEISnTe9kGT6Hnf77IE0z7wlunDy+bPY8OiL4gJc=;
+	s=korg; t=1791895234;
+	bh=RDMcnNgxN8gE5BkFk2xIcO/pLCgsxmSB9lUMH0QGL94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3yB749XEAIRohdMuXtZDycFLJj0it/JEBENVPMn3mooiH20dMVy80GlXYScsupI+
-	 txEPwXSqCKXhp7LTNvaQfbIVRQyPUb3t1GN1QOAVPJu3Ka7yOapa3vxZXZTgxPX/kR
-	 fF7KiyyJeF2dKqQpizXeI89cCLg+nbd9+pxJzaTo=
+	b=ooZEaw1eSwG3R98XplevTZFyuoulBC4d9uQsKUjkZKi+bOQzajTPYnOXj22WqScuj
+	 pEwwqe9SGgOTaVKdl0XzQOhk8yokJ+cuqj5A6Y59g3xO+Dqvg0tVec1VIQuJoSC61X
+	 XoMZUD36b3nly3XTd3dXO1eohjsAtHrAA2OWWrlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 205/497] wifi: mac80211: keep paired old chanctx alive
-Date: Tue, 13 Oct 2026 13:36:12 +0200
-Message-ID: <20261013112912.757398810@linuxfoundation.org>
+Subject: [PATCH 6.12 206/497] wifi: mac80211: drain PS delivery work during station teardown
+Date: Tue, 13 Oct 2026 13:36:13 +0200
+Message-ID: <20261013112912.779947103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,101 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 3412e9a800786d1dec4a58367db1cba275e7ef11 upstream.
+commit 67a9e80c3ca20c9044cd6ee72cd6278dd19b5023 upstream.
 
-An in-place replacement keeps reciprocal replace_ctx pointers between
-the old WILL_BE_REPLACED chanctx and the new REPLACES_OTHER chanctx.
-However, the early free paths only consider assigned and reserved link
-users when deciding whether to free the old chanctx.
+Removing an AP or mesh station can notify the driver and wake TXQs after
+the station has already been removed from the driver, and can update
+num_sta_ps and the power-save queues after station cleanup has purged
+them.
 
-That lets the old chanctx be freed too early while the replacement
-partner still points back to it, either when the last assigned link is
-released or when that link successfully reassigns to another existing
-context. Later unreserve and switch-finalization paths can then follow a
-stale replace_ctx pointer.
+sta_deliver_ps_frames() tests sta->dead only before it starts delivery. A
+worker that passes that test can be delayed while teardown sets sta->dead
+and removes the station from the driver; when it resumes it still runs the
+full delivery.
 
-Keep a paired old chanctx alive until the replacement pair has been torn
-down. Apply the same check to both __ieee80211_link_release_channel()
-and ieee80211_link_use_reserved_reassign(). If the replacement is later
-abandoned, ieee80211_link_unreserve_chanctx() already tears down the
-pairing before freeing the old chanctx once no users remain.
+The existing cancel_work_sync() sits near the end of
+__cleanup_single_sta(), after the final driver state transition and after
+PS accounting and queue purging, so it drains the worker only once the
+state it has to protect has already changed. Before commit d34ba2168a3c
+("mac80211: don't delay station destruction") cleanup was deferred
+through the same ordered workqueue as the delivery work, which kept the
+two ordered.
 
-Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Cancel the work after setting sta->dead and before moving the driver
+state, and move the existing cancellation to the start of
+__cleanup_single_sta(). The first drain closes the driver-lifetime window;
+driver callbacks during the remaining state transitions can still queue
+drv_deliver_wk through ieee80211_sta_block_awake(), so retain the second
+drain at the start of __cleanup_single_sta(). That drain also covers
+insertion failures, which reach cleanup without setting sta->dead.
+
+Fixes: d34ba2168a3c ("mac80211: don't delay station destruction")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/b9b582b0db3814f641648b8886bb50f9d68f93ac.1785730815.git.zhilinz@nebusec.ai
+Assisted-by: LLM sparse smatch coccinelle kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113735.31029-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/chan.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ net/mac80211/sta_info.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -47,6 +47,13 @@ int ieee80211_chanctx_refcount(struct ie
- 	       ieee80211_chanctx_num_reserved(local, ctx);
- }
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -137,6 +137,8 @@ static void __cleanup_single_sta(struct
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ps_data *ps;
  
-+static bool
-+ieee80211_chanctx_has_replace_partner(struct ieee80211_chanctx *ctx)
-+{
-+	return ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
-+	       ctx->replace_ctx;
-+}
++	cancel_work_sync(&sta->drv_deliver_wk);
 +
- static int ieee80211_num_chanctx(struct ieee80211_local *local, int radio_idx)
- {
- 	struct ieee80211_chanctx *ctx;
-@@ -1063,6 +1070,7 @@ int ieee80211_link_unreserve_chanctx(str
- {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
- 	struct ieee80211_chanctx *ctx = link->reserved_chanctx;
-+	struct ieee80211_chanctx *old_ctx = NULL;
+ 	if (test_sta_flag(sta, WLAN_STA_PS_STA) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DRIVER) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DELIVER)) {
+@@ -166,8 +168,6 @@ static void __cleanup_single_sta(struct
+ 	if (ieee80211_vif_is_mesh(&sdata->vif))
+ 		mesh_sta_cleanup(sta);
  
- 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
+-	cancel_work_sync(&sta->drv_deliver_wk);
+-
+ 	/*
+ 	 * Destroy aggregation state here. It would be nice to wait for the
+ 	 * driver to finish aggregation stop and then clean up, but for now
+@@ -1455,6 +1455,8 @@ static void __sta_info_destroy_part2(str
  
-@@ -1077,6 +1085,7 @@ int ieee80211_link_unreserve_chanctx(str
- 			if (WARN_ON(!ctx->replace_ctx))
- 				return -EINVAL;
+ 	sta->dead = true;
  
-+			old_ctx = ctx->replace_ctx;
- 			WARN_ON(ctx->replace_ctx->replace_state !=
- 			        IEEE80211_CHANCTX_WILL_BE_REPLACED);
- 			WARN_ON(ctx->replace_ctx->replace_ctx != ctx);
-@@ -1087,6 +1096,11 @@ int ieee80211_link_unreserve_chanctx(str
- 
- 			list_del_rcu(&ctx->list);
- 			kfree_rcu(ctx, rcu_head);
++	cancel_work_sync(&sta->drv_deliver_wk);
 +
-+			if (ieee80211_chanctx_refcount(sdata->local,
-+						       old_ctx) == 0)
-+				ieee80211_free_chanctx(sdata->local, old_ctx,
-+						       false);
- 		} else {
- 			ieee80211_free_chanctx(sdata->local, ctx, false);
- 		}
-@@ -1360,7 +1374,8 @@ ieee80211_link_use_reserved_reassign(str
+ 	local->num_sta--;
+ 	local->sta_generation++;
  
- 	ieee80211_check_fast_xmit_iface(sdata);
- 
--	if (ieee80211_chanctx_refcount(local, old_ctx) == 0)
-+	if (ieee80211_chanctx_refcount(local, old_ctx) == 0 &&
-+	    !ieee80211_chanctx_has_replace_partner(old_ctx))
- 		ieee80211_free_chanctx(local, old_ctx, false);
- 
- 	ieee80211_recalc_chanctx_min_def(local, new_ctx, NULL, false);
-@@ -1835,7 +1850,8 @@ void __ieee80211_link_release_channel(st
- 	}
- 
- 	ieee80211_assign_link_chanctx(link, NULL, false);
--	if (ieee80211_chanctx_refcount(local, ctx) == 0)
-+	if (ieee80211_chanctx_refcount(local, ctx) == 0 &&
-+	    !ieee80211_chanctx_has_replace_partner(ctx))
- 		ieee80211_free_chanctx(local, ctx, skip_idle_recalc);
- 
- 	link->radar_required = false;
 
 
