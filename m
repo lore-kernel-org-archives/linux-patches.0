@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94974FC330;
-	Tue, 13 Oct 2026 12:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CB74FC342;
+	Tue, 13 Oct 2026 12:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894480; cv=none; b=kcVnRXPR9R0W3MFf9EePNkk0cQ8MSrnrZ4a7kltcQ8QBmA5QugdbeOGh7tSc7pfVdfk2W7a/dwkIrm3Xg1n1VoOYBIuThO9E+pl1JZ7wstH+cwHJ4oJ1JjJhLb2eiOcEksUdhNQGhD0WjcHpO82H9FX2xngOAIkGYYAswPA8bPQ=
+	t=1791894483; cv=none; b=oVmXzEmKWxXEDbHvA/kv/74xnBtQDfcTog8RJiz6/E7j0BpD0y9tU5MZodLxHbEkPG/S4+clJacGOaRBUaYCVa85L/5QedGqtkdsW/UNy+h3rpQkBX0pLeHYR/BLUrHblgLoFf4l2an1xja6ea24OiVOk0+wvll2i8npdsl7oj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894480; c=relaxed/simple;
-	bh=DOFniCcdJsX/x7Qwr2kUrTfuTfyGeqRwZ4A35sGZk2A=;
+	s=arc-20240116; t=1791894483; c=relaxed/simple;
+	bh=Uw9DmRRKFkwaPsBVcyl6Las23KpYkNSSbMvtLW/gLko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enT9HfHJq1+SSEKnKOUxYi1AKkZQgViWvHiyPJRWj6CP4cxNtHs7is83Xugil8YzcL+iw7qwOhwhSdqGSGB+ZsGVkMw6JE6dMy0+0dwoCZ4SRNg3a3uEeNsl7Eg5NcKufUMiutaHt0Mgmbrm+29RCKmNs8jtxrAybVGuaXXwzTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hckpCt6/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ED3sIhn95Sh4Gj05Bz3rWYFMz/OWMVRatp1V0Tn039rhqG3CezK92nCkV+clCbCQROi5I0zNhNVqASozIEtJv5vk/UQZ0y1PMos57wl+IEcCq7oAtz3PBW34ZLKtXLVBytqPBahiBc5p4GCeKKonRPS3B46uFOVP5Io5jzwraYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5KiRFHx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hckpCt6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434E21F00899;
-	Tue, 13 Oct 2026 12:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5KiRFHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BF11F00899;
+	Tue, 13 Oct 2026 12:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894478;
-	bh=E8ltf8Kog6opvO7f9XxVcSngpnvvsiAPnxMaM5fWUSQ=;
+	s=korg; t=1791894481;
+	bh=/EKEVeqhUBdsc9ojOSIEs3ACTwVKu/DKanMGWa+lE4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hckpCt6/YdGZy9NXdcjSukLudmneOoDAd/L4RHrvTbIizbyO49Y5jz5KEo/MNNHWP
-	 XH8se6rPW77oLaxHeDoVksQXrf4zgVvk9U752a/+4/YOrQ/xvYgdfvJkjwjN+kScbi
-	 ksG3pmgrnHUTIz01eKGjU7m2ng8wpMDHEg04qwx0=
+	b=b5KiRFHx8/pqIkcqnANknQbw7+pHxFudO5wlNvfPxuPu+fCTxo7hwvEWGuVkLZ6SH
+	 vi1MPdCjTyGKYGkRjD0KfmfKBQIkQL+QVew0fb9rRXQzyxVpA+PqRLHPH+XbH+QqBO
+	 8TBZagCZ1lLVk1hmPAWB7BQj1fQxW079QtEmjnIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagun Kayastha <sgn.kayastha@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	Yingying Tang <yingying.tang@oss.qualcomm.com>,
+	Joonhoe Kim <26rote@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 572/621] wifi: mt76: mt792x: pick the SAR table layout from the table itself
-Date: Tue, 13 Oct 2026 13:39:27 +0200
-Message-ID: <20261013112934.380252976@linuxfoundation.org>
+Subject: [PATCH 6.18 573/621] Revert "wifi: ath12k: add panic handler"
+Date: Tue, 13 Oct 2026 13:39:28 +0200
+Message-ID: <20261013112934.403471003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,224 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Yingying Tang <yingying.tang@oss.qualcomm.com>
 
-[ Upstream commit af97bf5a7e72da9026de184676df8e2fa57e1058 ]
+[ Upstream commit 05165f7b3b9ab6817fe216c24f90755b7c5e15f3 ]
 
-The SAR power tables are parsed with a version byte from a different
-ACPI table, never their own.
+ath12k_core_panic_handler() is invoked via atomic_notifier_call_chain(),
+which runs inside an RCU read-side critical section. The current code calls
+ath12k_pci_sw_reset() synchronously from this context, which eventually
+reaches mhi_device_get_sync() and schedule_timeout(), triggering a voluntary
+context switch within RCU.
 
-Some firmware declares version 1 and ships version 2 tables. The
-entries then start a byte early, and the 6 GHz limits the table
-carries are dropped, because the older layout has no room for them.
+Call trace:
+rcu_note_context_switch+0x4c4/0x508 (P)
+__schedule+0xbc/0x1204
+schedule+0x34/0x110
+schedule_timeout+0x84/0x11c
+__mhi_device_get_sync+0x164/0x228 [mhi]
+mhi_device_get_sync+0x1c/0x3c [mhi]
+ath12k_wifi7_pci_bus_wake_up+0x20/0x2c [ath12k_wifi7]
+ath12k_pci_read32+0x58/0x350 [ath12k]
+ath12k_pci_clear_dbg_registers+0x28/0xb8 [ath12k]
+ath12k_pci_panic_handler+0x20/0x44 [ath12k] ath12k_core_panic_handler+0x28/0x3c [ath12k]
+notifier_call_chain+0x78/0x1c0
+atomic_notifier_call_chain+0x3c/0x5c
 
-  ASUS GA503RM, MTCL declares v1:
-  MTGS  28 bytes   v1: (28-6) % 5 = 2, no fit   v2: 3 tables
-  MTDS  19 bytes   v1: (19-6) % 6 = 1, no fit   v2: 1 table
+Revert change "wifi: ath12k: add panic handler" to avoid this issue.
 
-The layouts accept disjoint lengths, so take whichever one fits and
-keep it per table.
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
 
-Reported-by: Sagun Kayastha <sgn.kayastha@gmail.com>
-Closes: https://github.com/morrownr/mt76/issues/62
-Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260905013551.24635-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Yingying Tang <yingying.tang@oss.qualcomm.com>
+Tested-by: Joonhoe Kim <26rote@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Fixes: 809055628bce ("wifi: ath12k: add panic handler")
+Link: https://patch.msgid.link/20260612032332.2278338-1-yingying.tang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt792x_acpi_sar.c  | 110 +++++++++++-------
- .../wireless/mediatek/mt76/mt792x_acpi_sar.h  |   2 +
- 2 files changed, 73 insertions(+), 39 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.c | 33 +-------------------------
+ drivers/net/wireless/ath/ath12k/core.h |  3 ---
+ drivers/net/wireless/ath/ath12k/hif.h  |  9 -------
+ drivers/net/wireless/ath/ath12k/pci.c  |  8 -------
+ 4 files changed, 1 insertion(+), 52 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-index 939e4eead808a..042b4caf2f764 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-@@ -108,68 +108,98 @@ mt792x_asar_acpi_read_mtcl(struct mt792x_dev *dev, u8 **table, u8 *version)
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index a02db6fd23549..dc969b2516ea0 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1733,29 +1733,6 @@ int ath12k_core_pre_init(struct ath12k_base *ab)
+ 	return 0;
+ }
+ 
+-static int ath12k_core_panic_handler(struct notifier_block *nb,
+-				     unsigned long action, void *data)
+-{
+-	struct ath12k_base *ab = container_of(nb, struct ath12k_base,
+-					      panic_nb);
+-
+-	return ath12k_hif_panic_handler(ab);
+-}
+-
+-static int ath12k_core_panic_notifier_register(struct ath12k_base *ab)
+-{
+-	ab->panic_nb.notifier_call = ath12k_core_panic_handler;
+-
+-	return atomic_notifier_chain_register(&panic_notifier_list,
+-					      &ab->panic_nb);
+-}
+-
+-static void ath12k_core_panic_notifier_unregister(struct ath12k_base *ab)
+-{
+-	atomic_notifier_chain_unregister(&panic_notifier_list,
+-					 &ab->panic_nb);
+-}
+-
+ static inline
+ bool ath12k_core_hw_group_create_ready(struct ath12k_hw_group *ag)
+ {
+@@ -2148,18 +2125,13 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 	struct ath12k_hw_group *ag;
+ 	int ret;
+ 
+-	ret = ath12k_core_panic_notifier_register(ab);
+-	if (ret)
+-		ath12k_warn(ab, "failed to register panic handler: %d\n", ret);
+-
+ 	mutex_lock(&ath12k_hw_group_mutex);
+ 
+ 	ag = ath12k_core_hw_group_assign(ab);
+ 	if (!ag) {
+ 		mutex_unlock(&ath12k_hw_group_mutex);
+ 		ath12k_warn(ab, "unable to get hw group\n");
+-		ret = -ENODEV;
+-		goto err_unregister_notifier;
++		return -ENODEV;
+ 	}
+ 
+ 	mutex_unlock(&ath12k_hw_group_mutex);
+@@ -2184,8 +2156,6 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 
+ err_unassign_hw_group:
+ 	ath12k_core_hw_group_unassign(ab);
+-err_unregister_notifier:
+-	ath12k_core_panic_notifier_unregister(ab);
+ 
  	return ret;
  }
- 
-+/* A table's layout is decided by the version byte in MTCL, but some firmware
-+ * labels a version 2 table as version 1.  Accept whichever layout the table
-+ * actually has: for every accepted entry count the two do not overlap, since
-+ * one is 6 + 5n bytes and the other 7 + 7n.
-+ */
-+static bool
-+mt792x_asar_fits(u8 *table, int len, int prelen, int sarlen, int nr_off,
-+		 int min, int max)
-+{
-+	int tblcnt;
-+
-+	if (len < prelen || (len - prelen) % sarlen)
-+		return false;
-+
-+	tblcnt = (len - prelen) / sarlen;
-+	if (tblcnt < min || tblcnt > max)
-+		return false;
-+
-+	return tblcnt == table[nr_off];
-+}
-+
- /* MTDS : Dynamic SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
+@@ -2194,7 +2164,6 @@ void ath12k_core_deinit(struct ath12k_base *ab)
  {
--	int len, ret, sarlen, prelen, tblcnt;
--	bool enable;
-+	int len, ret;
-+	u8 *t;
- 
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTDS, table, &len);
- 	if (ret)
- 		return ret;
- 
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		enable = ((struct mt792x_asar_dyn *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit);
--		prelen = sizeof(struct mt792x_asar_dyn);
--		break;
--	case 2:
--		enable = ((struct mt792x_asar_dyn_v2 *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit_v2);
--		prelen = sizeof(struct mt792x_asar_dyn_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn),
-+			     sizeof(struct mt792x_asar_dyn_limit),
-+			     offsetof(struct mt792x_asar_dyn, nr_tbl),
-+			     MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn_v2),
-+				  sizeof(struct mt792x_asar_dyn_limit_v2),
-+				  offsetof(struct mt792x_asar_dyn_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
- 
--	tblcnt = (len - prelen) / sarlen;
--	if (!enable ||
--	    tblcnt > MT792x_ASAR_MAX_DYN || tblcnt < MT792x_ASAR_MIN_DYN)
-+	if (!t[offsetof(struct mt792x_asar_dyn, enable)])
- 		return -EINVAL;
- 
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTDS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
-+
- 	return 0;
+ 	ath12k_core_hw_group_destroy(ab->ag);
+ 	ath12k_core_hw_group_unassign(ab);
+-	ath12k_core_panic_notifier_unregister(ab);
  }
  
- /* MTGS : Geo SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
- {
--	int len, ret, sarlen, prelen, tblcnt;
-+	int len, ret;
-+	u8 *t;
+ void ath12k_core_free(struct ath12k_base *ab)
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 93cdfcaf95bd2..67ddf84a8a55f 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -15,7 +15,6 @@
+ #include <linux/ctype.h>
+ #include <linux/firmware.h>
+ #include <linux/of_reserved_mem.h>
+-#include <linux/panic_notifier.h>
+ #include <linux/average.h>
+ #include <linux/of.h>
+ #include "qmi.h"
+@@ -1221,8 +1220,6 @@ struct ath12k_base {
  
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTGS, table, &len);
- 	if (ret)
- 		return ret;
+ #endif /* CONFIG_ACPI */
  
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		sarlen = sizeof(struct mt792x_asar_geo_limit);
--		prelen = sizeof(struct mt792x_asar_geo);
--		break;
--	case 2:
--		sarlen = sizeof(struct mt792x_asar_geo_limit_v2);
--		prelen = sizeof(struct mt792x_asar_geo_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo),
-+			     sizeof(struct mt792x_asar_geo_limit),
-+			     offsetof(struct mt792x_asar_geo, nr_tbl),
-+			     MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo_v2),
-+				  sizeof(struct mt792x_asar_geo_limit_v2),
-+				  offsetof(struct mt792x_asar_geo_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
+-	struct notifier_block panic_nb;
+-
+ 	struct ath12k_hw_group *ag;
+ 	struct ath12k_wsi_info wsi_info;
+ 	enum ath12k_firmware_mode fw_mode;
+diff --git a/drivers/net/wireless/ath/ath12k/hif.h b/drivers/net/wireless/ath/ath12k/hif.h
+index e8840fab6061c..42bb00c13ef3d 100644
+--- a/drivers/net/wireless/ath/ath12k/hif.h
++++ b/drivers/net/wireless/ath/ath12k/hif.h
+@@ -30,7 +30,6 @@ struct ath12k_hif_ops {
+ 	void (*ce_irq_enable)(struct ath12k_base *ab);
+ 	void (*ce_irq_disable)(struct ath12k_base *ab);
+ 	void (*get_ce_msi_idx)(struct ath12k_base *ab, u32 ce_id, u32 *msi_idx);
+-	int (*panic_handler)(struct ath12k_base *ab);
+ 	void (*coredump_download)(struct ath12k_base *ab);
+ };
  
--	tblcnt = (len - prelen) / sarlen;
--	if (tblcnt > MT792x_ASAR_MAX_GEO || tblcnt < MT792x_ASAR_MIN_GEO)
--		return -EINVAL;
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTGS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
- 
- 	return 0;
+@@ -149,14 +148,6 @@ static inline void ath12k_hif_power_down(struct ath12k_base *ab, bool is_suspend
+ 	ab->hif.ops->power_down(ab, is_suspend);
  }
-@@ -205,14 +235,16 @@ int mt792x_init_acpi_sar(struct mt792x_dev *dev)
- 		asar->countrylist = NULL;
- 	}
  
--	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver,
-+					 &asar->dyn_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->dyn);
- 		asar->dyn = NULL;
- 	}
+-static inline int ath12k_hif_panic_handler(struct ath12k_base *ab)
+-{
+-	if (!ab->hif.ops->panic_handler)
+-		return NOTIFY_DONE;
+-
+-	return ab->hif.ops->panic_handler(ab);
+-}
+-
+ static inline void ath12k_hif_coredump_download(struct ath12k_base *ab)
+ {
+ 	if (ab->hif.ops->coredump_download)
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 37f41635d3b00..c26c41f62feb6 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1523,13 +1523,6 @@ void ath12k_pci_power_down(struct ath12k_base *ab, bool is_suspend)
+ 	ath12k_pci_sw_reset(ab_pci->ab, false);
+ }
  
- 	/* MTGS is optional */
--	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver,
-+					 &asar->geo_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->geo);
- 		asar->geo = NULL;
-@@ -254,7 +286,7 @@ mt792x_asar_get_geo_pwr(struct mt792x_phy *phy,
- 		break;
- 	}
- 
--	if (asar->ver == 1) {
-+	if (asar->geo_ver == 1) {
- 		band_pwr = &asar->geo->tbl[idx].band[0];
- 		max = ARRAY_SIZE(asar->geo->tbl[idx].band);
- 	} else {
-@@ -305,7 +337,7 @@ mt792x_asar_range_pwr(struct mt792x_phy *phy,
- 	if (!capa)
- 		return 127;
- 
--	if (asar->ver == 1) {
-+	if (asar->dyn_ver == 1) {
- 		limit = &asar->dyn->tbl[0].frp[0];
- 		max = ARRAY_SIZE(asar->dyn->tbl[0].frp);
- 	} else {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-index e45dcd7fbdb18..1a33f66bfd5f6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-@@ -105,6 +105,8 @@ struct mt792x_asar_fg {
- 
- struct mt792x_acpi_sar {
- 	u8 ver;
-+	u8 dyn_ver;
-+	u8 geo_ver;
- 	union {
- 		struct mt792x_asar_dyn *dyn;
- 		struct mt792x_asar_dyn_v2 *dyn_v2;
+-static int ath12k_pci_panic_handler(struct ath12k_base *ab)
+-{
+-	ath12k_pci_sw_reset(ab, false);
+-
+-	return NOTIFY_OK;
+-}
+-
+ static const struct ath12k_hif_ops ath12k_pci_hif_ops = {
+ 	.start = ath12k_pci_start,
+ 	.stop = ath12k_pci_stop,
+@@ -1547,7 +1540,6 @@ static const struct ath12k_hif_ops ath12k_pci_hif_ops = {
+ 	.ce_irq_enable = ath12k_pci_hif_ce_irq_enable,
+ 	.ce_irq_disable = ath12k_pci_hif_ce_irq_disable,
+ 	.get_ce_msi_idx = ath12k_pci_get_ce_msi_idx,
+-	.panic_handler = ath12k_pci_panic_handler,
+ #ifdef CONFIG_ATH12K_COREDUMP
+ 	.coredump_download = ath12k_pci_coredump_download,
+ #endif
 -- 
 2.53.0
 
