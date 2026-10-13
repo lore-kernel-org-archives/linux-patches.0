@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541544E8E08;
-	Tue, 13 Oct 2026 12:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565F74BD373;
+	Tue, 13 Oct 2026 12:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893042; cv=none; b=MkKykdnV3Zm4msF1xv/BE0Sg3ZNh4fdBZA1Ep4dAawOKXv0OVknhrayzvTW2cJBp36/nM4TMWFi8W6DImMdWPa+JXw7W1ywWFhMskhWq6sTXkSHzD8S8MVGrfU8R6xY7ab0je0eziRDmazW2+GwH78lXEqVzp2h+Py0bwGgk0G4=
+	t=1791893045; cv=none; b=aF+STiquu+7GMsAPeDDtZDRtVJVgRn6vyunWbi/2SPk7vw6HZJsqidb/goTMxvJD5eqC/gewox1BMC8cWmSyKDA79pABzm2dDfxb0q0CP6S4jploAbAWbtkHp08xRtZnFop2E3j1fivRrrHkO8Xv/xMu2TXEKZJzgJFbt99zUio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893042; c=relaxed/simple;
-	bh=gM5uUY3jTXWXFTAl4ETiSvFFsN3jQ3MrHzO+oVnzdt4=;
+	s=arc-20240116; t=1791893045; c=relaxed/simple;
+	bh=LeVdB/o6lB8eqNVZtsGZtJ3KRr3gmxSyxmPiXiafKYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mF236mySzz2ivyYRU0bHDOqNz/YssO1FDqvKS35T1YI7u6gNN98MT9cv2mO8XU3ALVEtAzRtFdUkvseqmqJCMo/z0Zt9etk3R1075Yw2ezxZoVQ9kmDlMUE+L3PLiZdSF1VVwfpAThNSxjBmsddBjSmOlJysz4WuvEAzfYHTQiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUZzH04S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cI0FiSZ5lrsYW/SJEdMxZPO2586P1iDxWOavJX/YdNZ9IAA2AtqTCn7L1J1kbwSO9Jvkami1noih30nC6R1TQ2DXWNH1ZMMtdGw/xM3CX5BAns4B/WpTKqjXhwBc6pQ/gzZ9B+hrFjqDUah9DFVa2Wz7UThsanKfCf4wXo/mtmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr2X3EUZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUZzH04S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB251F00898;
-	Tue, 13 Oct 2026 12:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr2X3EUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A693D1F000FF;
+	Tue, 13 Oct 2026 12:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893041;
-	bh=ZIBB2Trs5/fX7aP6ddhitLOPxVCRWd35D3eHz/5jUFs=;
+	s=korg; t=1791893044;
+	bh=caKPYQdovkUuHL9laZXrtQQUp3EIwPRjyJmM9ZmSmnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUZzH04S7Xf4lv45xCSIZG2i8dL7htU9Nd8pIYcx/QJFS+P+jOKRQ+2LVCCdHmeFe
-	 HsRHdK/Aw1ZADZiLTWsxgPd5WCOSWDSiQ45v05m20S6kRLOQACQ9DnlWxQ6ULZqiO6
-	 0gmS63wtLe0pIZccQlAwzNMJUvgusDcwI0K5zemg=
+	b=Yr2X3EUZvemts5grBISWMais2a+LjWGKVdkjDS+x5Y2/hJlWnuUpXUdHTiwfXLGcm
+	 RGPopUOidkguAKVK9Dm2Yipe+saBMaOY7iRKghx26QlT5WH54Up4jtCUNi2mEG3uzR
+	 1t19yjl/pbC6quxOhU/od9oBeyWbBGBolxZJIf9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 092/621] pmdomain: rockchip: dont ignore clock lookup errors on attach
-Date: Tue, 13 Oct 2026 13:31:27 +0200
-Message-ID: <20261013112923.035313301@linuxfoundation.org>
+Subject: [PATCH 6.18 093/621] pmdomain: rockchip: fix clock leak on domain probe failure
+Date: Tue, 13 Oct 2026 13:31:28 +0200
+Message-ID: <20261013112923.058345620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,46 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit 4c66c423593e26273ea0d644906ed007630c6f6d upstream.
+commit d8b3847770661b7109146e6479eeadcdab9cecf0 upstream.
 
-rockchip_pd_attach_dev() treated every of_clk_get() error as the end
-of the clock list, so a clock that exists but is not available yet
-(e.g. -EPROBE_DEFER) was silently skipped and the device ended up
-without pm_clk management.  Only -ENOENT means there are no more
-clocks.
+When of_clk_get() failed in the middle of the loop, the references of
+the clocks acquired so far were leaked instead of being released by
+the error path.
 
-Fixes: 7c696693a4f5 ("soc: rockchip: power-domain: Add power domain driver")
+Fixes: d909072d0521 ("soc: rockchip: power-domain: use clk_bulk APIs")
 Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/rockchip/pm-domains.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/pmdomain/rockchip/pm-domains.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/pmdomain/rockchip/pm-domains.c
 +++ b/drivers/pmdomain/rockchip/pm-domains.c
-@@ -728,7 +728,19 @@ static int rockchip_pd_attach_dev(struct
+@@ -823,7 +823,7 @@ static int rockchip_pm_add_one_domain(st
+ 			dev_err(pmu->dev,
+ 				"%pOFn: failed to get clk at index %d: %d\n",
+ 				node, i, error);
+-			return error;
++			goto err_put_clocks;
+ 		}
  	}
  
- 	i = 0;
--	while ((clk = of_clk_get(dev->of_node, i++)) && !IS_ERR(clk)) {
-+	while (1) {
-+		clk = of_clk_get(dev->of_node, i++);
-+		if (IS_ERR(clk)) {
-+			error = PTR_ERR(clk);
-+			if (error == -ENOENT)
-+				break;
-+
-+			dev_err(dev, "failed to get clock %d: %d\n", i - 1,
-+				error);
-+			pm_clk_destroy(dev);
-+			return error;
-+		}
-+
- 		dev_dbg(dev, "adding clock '%pC' to list of PM clocks\n", clk);
- 		error = pm_clk_add_clk(dev, clk);
- 		if (error) {
 
 
