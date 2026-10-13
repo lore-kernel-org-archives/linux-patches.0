@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962483822BB;
-	Tue, 13 Oct 2026 12:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58413CB2EA;
+	Tue, 13 Oct 2026 12:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894134; cv=none; b=T8kjPOPUaQlVeKM375Y+rih/mgsDqJUat6KujzkVGpsUb/paPA/0Q0xYacK7kiBjQGQG9r/vQj3MNzAO1Xe/1Yf5m/Lx01WQm2WrdVyY5XaBHqwGL4XenaBbmtNhfxQD9u/UwwDBaJetHS+QKtgvQQaCcWEv9/XHzCMj0xHi+2Y=
+	t=1791894137; cv=none; b=p67O9crbAEEoI81zQnc0PQR0oiEnWc2ogNymuyXPIWa5m8/d32hrQ5AE4CCr5VYPrBE/AVdQgxoDaTKRHCRiDgQmnuYASu+YW18EKeXkCAiiZompQ3DtJ54WWTh7rpXzLlgBcyLlN78ul/WYTVRRaYUiEH1E44Ne+HM9NdRhABg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894134; c=relaxed/simple;
-	bh=NZYOMutBmswdU96JQKlJxu38ptEKyJjRyRnk3zSIKTk=;
+	s=arc-20240116; t=1791894137; c=relaxed/simple;
+	bh=ePcyoFTO6PRN4UDO/DVK1KWl+p/dLXBV8mOGMfnJlqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0NRoh3lUhooHE0DS7T+6TkgbfcCqIzf9v2f7tPTwtngjVZL7X7/b7bpe2Vs/sVsrhMhw/z5YDWlj0MiCD/gM0nk2z+cSAtGD2p1TCFZ9cziHrqk9IxF0HkkAq8xCJHVVtnJXsCfIgjEIMwDO+OdxiFIrzzqcFJ61aUCgeaUgBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGm3+3h/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCedLuOqBoJaCWlyBtCbf0WJtA6bvNZo/0ZnCeIeVjAZ2ZxI2LDs4RP5bMpeKVk56HvASLGQ+pnWrr0vNytd6duB5zYzVW9IsAiw7cVF6XB4fWTUbyAgmrFmDcmMv7ey3nsEOruSFrd0UGWvPCmwRyDc+MoB4eJBiwR1FJhPGtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGV/N0Hm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGm3+3h/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71911F000FF;
-	Tue, 13 Oct 2026 12:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGV/N0Hm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4FB1F000FF;
+	Tue, 13 Oct 2026 12:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894133;
-	bh=IWYraSD0nx47fsFTwW5kjCoa0B9wdS7yusp9Lqy37CU=;
+	s=korg; t=1791894136;
+	bh=NqImaaxdGaM+W65aqGQiwzacxtbf8IcVmuE83EqDKQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGm3+3h/GdHqO+BRrnp/xYdIZeINsXy61oOfdAEctKPl1IYRLDQ/DDXVh3ngJFtsJ
-	 yprD6KvMIujHOTz+MJG1L4jKF1ORg8/8Veu5+e6EIilK4u6jqBni2tEXvKnxTUXiPJ
-	 DnDnhslAAEf4Zz+IESLpCxByWECVLS2adenVzB58=
+	b=ZGV/N0HmAX7uCULUKfykUm7XJlAA50VZpQ81nzbyNBDM9jGt1kR9eQ4nzBcBAceMu
+	 8V2wcEXg4yWJqeI6pTyn/4jE1K1EQ06fJSEEWc7jiGPR5owHEAZlrt6iSNxY1eo3Y8
+	 3KNbOdM2Ej8Jf22/s6ZI1wKaV98bzEAMlv5uiLwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eason Lai <Eason.Lai@mediatek.com>,
+	Rex Lu <rex.lu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 458/621] wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete
-Date: Tue, 13 Oct 2026 13:37:33 +0200
-Message-ID: <20261013112931.700630620@linuxfoundation.org>
+Subject: [PATCH 6.18 459/621] wifi: mt76: fix handling channel context with different bands in mt76_switch_vif_chanctx()
+Date: Tue, 13 Oct 2026 13:37:34 +0200
+Message-ID: <20261013112931.724830199@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,101 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eason Lai <Eason.Lai@mediatek.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 217f9e7bb02558759be9d9ecfe532e9708741c50 ]
+[ Upstream commit 70869cc429fffc77de51e7777c0ecb651e8fca07 ]
 
-A use-after-free issue occurs in mt76_rx_poll_complete due to a race
-condition. The STA has already been removed, but the rx_status still
-had a pointer to the wcid in the STA.
+When performing channel switches on different radios within a short
+timeframe, channel contexts with different bands can be carried for
+each struct ieee80211_vif_chanctx_switch.
 
-Set the links' wcid pointers to be NULL for a MLD in
-mt7925_sta_pre_rcu_remove()
+Rework mt76_switch_vif_chanctx() to properly handle this scenario.
 
-BUG: KASAN: invalid-access in mt76_rx_poll_complete+0x280/0x470
-Call trace:
-dump_backtrace+0xec/0x128
-show_stack+0x18/0x28
-dump_stack_lvl+0x40/0xc8
-print_report+0x1b8/0x710
-kasan_report+0xe0/0x144
-do_bad_area+0x120/0x260
-do_tag_check_fault+0x20/0x34
-do_mem_abort+0x54/0xa8
-el1_abort+0x3c/0x5c
-el1h_64_sync_handler+0x40/0xcc
-el1h_64_sync+0x7c/0x80
-mt76_rx_poll_complete+0x280/0x470
-mt76_dma_rx_poll+0x114/0x51c
-mt792x_poll_rx+0x60/0xf8
-napi_threaded_poll_loop+0xe0/0x450
-napi_threaded_poll+0x80/0x9c
-kthread+0x11c/0x158
-ret_from_fork+0x10/0x20
-
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Eason Lai <Eason.Lai@mediatek.com>
-Link: https://patch.msgid.link/20260701010654.956863-1-eason.lai@mediatek.com
+Fixes: 82334623af0c ("wifi: mt76: add chanctx functions for multi-channel phy support")
+Co-developed-by: Rex Lu <rex.lu@mediatek.com>
+Signed-off-by: Rex Lu <rex.lu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20260720090102.190729-1-shayne.chen@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 36 ++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/channel.c | 92 +++++++++++---------
+ 1 file changed, 49 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 1eeb33981c743..0075d726afd77 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -2218,6 +2218,40 @@ static void mt7925_stop(struct ieee80211_hw *hw, bool suspend)
- 	mt792x_stop(hw, suspend);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 6adaeaf63e46a..065e613289e02 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -192,68 +192,74 @@ int mt76_switch_vif_chanctx(struct ieee80211_hw *hw,
+ 			    int n_vifs,
+ 			    enum ieee80211_chanctx_switch_mode mode)
+ {
+-	struct mt76_chanctx *old_ctx = (struct mt76_chanctx *)vifs->old_ctx->drv_priv;
+-	struct mt76_chanctx *new_ctx = (struct mt76_chanctx *)vifs->new_ctx->drv_priv;
+-	struct ieee80211_chanctx_conf *conf = vifs->new_ctx;
+-	struct mt76_phy *old_phy = old_ctx->phy;
+-	struct mt76_phy *phy = hw->priv;
++	struct ieee80211_vif_chanctx_switch *v;
++	struct mt76_chanctx *old_ctx, *new_ctx;
++	struct mt76_phy *old_phy, *phy = hw->priv;
+ 	struct mt76_dev *dev = phy->dev;
+ 	struct mt76_vif_link *mlink;
+-	bool update_chan;
++	bool need_update[__MT_MAX_BAND] = {};
+ 	int i, ret = 0;
  
-+static void mt7925_sta_pre_rcu_remove(struct ieee80211_hw *hw,
-+				      struct ieee80211_vif *vif,
-+				      struct ieee80211_sta *sta)
-+{
-+	struct mt76_phy *phy = hw->priv;
-+	struct mt76_dev *dev = phy->dev;
-+	struct mt76_wcid *wcid = (struct mt76_wcid *)sta->drv_priv;
+-	if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS)
+-		phy = new_ctx->phy = dev->band_phys[conf->def.chan->band];
+-	else
+-		phy = new_ctx->phy;
+-	if (!phy)
+-		return -EINVAL;
++	for (i = 0; i < n_vifs; i++) {
++		v = &vifs[i];
++		new_ctx = (struct mt76_chanctx *)v->new_ctx->drv_priv;
++		if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS)
++			phy = new_ctx->phy = dev->band_phys[v->new_ctx->def.chan->band];
++		else
++			phy = new_ctx->phy;
+ 
+-	update_chan = phy->chanctx != new_ctx;
+-	if (update_chan) {
+-		if (dev->scan.phy == phy)
+-			mt76_abort_scan(dev);
++		if (!phy)
++			return -EINVAL;
+ 
+-		cancel_delayed_work_sync(&phy->mac_work);
++		if (need_update[phy->band_idx])
++			continue;
 +
-+	mutex_lock(&dev->mutex);
-+	spin_lock_bh(&dev->status_lock);
++		if (phy->chanctx != new_ctx) {
++			if (dev->scan.phy == phy)
++				mt76_abort_scan(dev);
 +
-+	if (ieee80211_vif_is_mld(vif)) {
-+		struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
-+		struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+		unsigned long valid = mvif->valid_links;
-+		struct mt792x_link_sta *mlink;
-+		unsigned int link_id;
-+
-+		for_each_set_bit(link_id, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
-+			mlink = mt792x_sta_to_link(msta, link_id);
-+			if (!mlink || !mlink->wcid.sta)
-+				continue;
-+			if (mlink->wcid.idx < ARRAY_SIZE(dev->wcid))
-+				rcu_assign_pointer(dev->wcid[mlink->wcid.idx],
-+						   NULL);
++			cancel_delayed_work_sync(&phy->mac_work);
++			need_update[phy->band_idx] = true;
 +		}
-+	} else {
-+		rcu_assign_pointer(dev->wcid[wcid->idx], NULL);
-+	}
+ 	}
+ 
+ 	mutex_lock(&dev->mutex);
+ 
+-	if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS &&
+-	    phy != old_phy && old_phy->chanctx == old_ctx)
+-		old_phy->chanctx = NULL;
++	for (i = 0; i < n_vifs; i++) {
++		v = &vifs[i];
++		old_ctx = (struct mt76_chanctx *)v->old_ctx->drv_priv;
++		old_phy = old_ctx->phy;
 +
-+	spin_unlock_bh(&dev->status_lock);
-+	mutex_unlock(&dev->mutex);
-+}
-+
- const struct ieee80211_ops mt7925_ops = {
- 	.tx = mt792x_tx,
- 	.start = mt7925_start,
-@@ -2230,7 +2264,7 @@ const struct ieee80211_ops mt7925_ops = {
- 	.start_ap = mt7925_start_ap,
- 	.stop_ap = mt7925_stop_ap,
- 	.sta_state = mt76_sta_state,
--	.sta_pre_rcu_remove = mt76_sta_pre_rcu_remove,
-+	.sta_pre_rcu_remove = mt7925_sta_pre_rcu_remove,
- 	.set_key = mt7925_set_key,
- 	.sta_set_decap_offload = mt7925_sta_set_decap_offload,
- #if IS_ENABLED(CONFIG_IPV6)
++		new_ctx = (struct mt76_chanctx *)v->new_ctx->drv_priv;
++		phy = new_ctx->phy;
+ 
+-	if (update_chan)
+-		ret = mt76_phy_update_channel(phy, vifs->new_ctx);
++		if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS && old_phy->chanctx &&
++		    old_phy->chanctx == old_ctx && phy != old_phy)
++			old_phy->chanctx = NULL;
+ 
+-	if (ret)
+-		goto out;
++		if (need_update[phy->band_idx]) {
++			ret = mt76_phy_update_channel(phy, v->new_ctx);
++			if (ret)
++				goto out;
+ 
+-	if (old_phy == phy)
+-		goto skip_link_replace;
++			need_update[phy->band_idx] = false;
++		}
+ 
+-	for (i = 0; i < n_vifs; i++) {
+-		mlink = mt76_vif_conf_link(dev, vifs[i].vif, vifs[i].link_conf);
++		mlink = mt76_vif_conf_link(dev, v->vif, v->link_conf);
+ 		if (!mlink)
+ 			continue;
+ 
+-		dev->drv->vif_link_remove(old_phy, vifs[i].vif,
+-					  vifs[i].link_conf, mlink);
+-
+-		ret = dev->drv->vif_link_add(phy, vifs[i].vif,
+-					     vifs[i].link_conf, mlink);
+-		if (ret)
+-			goto out;
+-
+-	}
++		if (old_phy != phy) {
++			dev->drv->vif_link_remove(old_phy, v->vif, v->link_conf,
++						  mlink);
+ 
+-skip_link_replace:
+-	for (i = 0; i < n_vifs; i++) {
+-		mlink = mt76_vif_conf_link(dev, vifs[i].vif, vifs[i].link_conf);
+-		if (!mlink)
+-			continue;
++			ret = dev->drv->vif_link_add(phy, v->vif, v->link_conf,
++						     mlink);
++			if (ret)
++				goto out;
++		}
+ 
+-		mlink->ctx = vifs->new_ctx;
++		mlink->ctx = v->new_ctx;
+ 	}
+ 
+ out:
 -- 
 2.53.0
 
