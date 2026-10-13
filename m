@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7985C4D7D4D;
-	Tue, 13 Oct 2026 11:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D274EFFB7;
+	Tue, 13 Oct 2026 11:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892013; cv=none; b=rs5xEYPjmzLUK5vXe7q/AB9I88HVJAW3W4Z77pEPkpgKjPLYqch3b8u2ZEe0Jt+4o1F9rcdekQ+AL9NftEv7TO+SiynFXQSQMchvXAZkLhwBD4fVX+sS4Wgp6O39/m+fZh1DGAGzuVJKWDFeqiqkdJDowJsEv6pFw444GLXbD2Y=
+	t=1791892017; cv=none; b=LGAeFbrxn46ezRXmEEXg7kvVW+fRtNHKpnaLjzuXX/2BaRXpiatUXOn1ZMTUVG3ve3AKeJBur0FPiBvoBljXAiNRuAPn9yXKasDgWWDVIZVpbmE1o1xGicxHRCQmp7msgcnWlY44k5MyZ9Rdwe5tJOEEhhiHSc/mwFdAjuc1lXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892013; c=relaxed/simple;
-	bh=8CJghREZFae02SPf3NM20fEPZFHSIL5hgcCEi3HnyGY=;
+	s=arc-20240116; t=1791892017; c=relaxed/simple;
+	bh=zx7rb4jjAdTJTLllU0luvRKPbyCPEN+NAPd8VoJS1tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvzVHvFC4F6bq1s72hLTn2uucliuMP9qptAzcVgRs+7g11ejg+f2vcQaGDMcFnh3Drbbxd7WbY7iLGfcJ9QzVqnolS7jqa2w4qrnN5zC7EZB59clG5mlTVpCB2noS90yN4x/fDB2ECOzCuq4p8NWPbA3kGFdcWTqoWDNqF7Lt/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ar4kBTCH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cra5uT6nwAj5EJ05pZOM/takWHh6a7XBDe6s6B8ky9RCRBThH/is0sX7dabx4O4BEinadpMqYMfhsxr+Ii69HsvPJ5lt6TC6ADz1hRsZLE9uRb9wBp3/I/OpWieT7eKcwmo+pWsyCawEZG5+y2FAFEHJQsRXcc824tQLn8ELbSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Q4YOMc6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar4kBTCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967821F00893;
-	Tue, 13 Oct 2026 11:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Q4YOMc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA99C1F000FF;
+	Tue, 13 Oct 2026 11:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892012;
-	bh=LZYiP994fq7AU61VSAbz1FAi2eHtyCd74hqzkrMI7WQ=;
+	s=korg; t=1791892015;
+	bh=LqP+p7fQvSCWDuY8I9U/ViSXlIbFx6kD2RVQorxptc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ar4kBTCH09Ei2vm0PJfcPQX0I+xE+Za1D35rV8t2Ay/pVli1RmxtOS6DruIDj8BQT
-	 tmqAisLPcCpUGX8TJxlMALbaPhe13YDBhshZLFX0i1VT8adsl9Ux70/ZvuTCCHuaVf
-	 dmQ1jiKdoECs65ABPv8kFHR4mBggt3H8S8bIy9XA=
+	b=0Q4YOMc60079wPut8c2OPUvWh1tNXFjFScLOnClFn5ZmH3O/c9X0+t48ECHEPVX+o
+	 yIHp9Xd+sDgug06CUR9AqyQv5++SbxeaoOJ8RZAIokGIYXm+WbJsm2LcL84RC8Jk9X
+	 oi8G0sIu+5PREmwNhFHrZCbBlL3UOW+eL8UUNFis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <aksecurity@gmail.com>,
-	Noam Caspi <noam.caspi@mail.huji.ac.il>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 007/281] ipv6: udp: Create exceptions before socket matching
-Date: Tue, 13 Oct 2026 13:35:23 +0200
-Message-ID: <20261013112855.230277391@linuxfoundation.org>
+	Paulos Yibelo <habte.yibelo@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 008/281] ipv4: validate checksum_start before completing checksum
+Date: Tue, 13 Oct 2026 13:35:24 +0200
+Message-ID: <20261013112855.253958493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -54,100 +52,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit ac76cab50e899a7346408b8d3c3a4192c2eefb9f ]
+commit 6785011f8b16abf40b1e9d8b2e332232b3e68822 upstream.
 
-Currently, when ICMPv6 Packet Too Big and Redirect Message packets are
-locally delivered and quote a UDP packet, an exception is only created
-in the IPv6 exception cache if the kernel can match the UDP packet to an
-existing socket.
+If a packet with bad checksum metadata gets into the ipv4 stack,
+skb_checksum_help can corrupt the network header and cause a bunch of
+mischief.
 
-This behavior allows off-path attackers to conduct a side-channel attack
-on the exception cache in order to discover the ephemeral port used by a
-connected UDP socket.
+This was discovered and reported by Paulos, and has been reporoduced
+by others independently since.
 
-Commit 4785305c05b2 ("ipv6: use siphash in rt6_exception_hash()") and
-commit a00df2caffed ("ipv6: make exception cache less predictible") tried
-to mitigate such attacks by making it harder for attackers to discover
-hash collisions in the exception cache and by randomizing the number of
-exceptions a hash bucket can hold, respectively. Unfortunately, both of
-the mitigations can be bypassed.
+We really shouldn't allow such packets in, but as a defence
+in depth measure, let's also check before we complete the checksum.
 
-Instead, mitigate such attacks by always creating an exception, even
-before trying to find a matching socket. Do that by calling
-ip6_update_pmtu() and ip6_redirect(), the helpers used when the quoted
-packet did not originate from a socket.
+A more complete validation at input is forthcoming, but needs more work.
 
-This means that guesses (right or wrong) from an off-path attacker will
-always result in an exception being created or updated in the cache that
-the attacker can observe.
-
-Pass the ifindex of the ingress device and the default uid, in a similar
-fashion to icmpv6_err(). Unlike IPv4, an oif of 0 would not match any
-nexthop in ip6_redirect_nh_match() and no exception would be created in
-response to a Redirect Message.
-
-Note that this does not allow attackers to create exceptions that they
-could not create before, as both helpers can already be reached with
-little to no validation. For example, by sending an ICMPv6 error that
-quotes an ICMPv6 Echo Reply or one that quotes a UDP source port that
-matches a wildcard socket.
-
-Also note that in the good case (matched socket) the above scheme comes
-at the cost of an extra route lookup, as the no socket helpers perform
-their own lookup before the one performed by ip6_sk_update_pmtu() /
-ip6_sk_redirect(). When the two resolve to different nexthops, it also
-results in two exceptions being created for the same destination IP. One
-in the exception cache of the nexthop resolved by the no socket helpers
-and another in the exception cache of the nexthop used by the socket.
-
-Fixes: 2b760fcf5cfb ("ipv6: hook up exception table to store dst cache")
 Cc: stable@vger.kernel.org
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260828192344.2596928-4-idosch@nvidia.com
+Fixes: f43798c27684 ("tun: Allow GSO using virtio_net_hdr")
+Fixes: bfd5f4a3d605 ("packet: Add GSO/csum offload support.")
+Reported-by: Paulos Yibelo <habte.yibelo@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260922030310.8684-2-habte.yibelo@gmail.com/
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/0a012b4923e189c4c593ef4f471e5ff0edbe9030.1791412497.git.mst@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/udp.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/net/ip.h                           |    7 +++++++
+ net/bridge/netfilter/nf_conntrack_bridge.c |   10 +++++++---
+ net/ipv4/ip_output.c                       |   10 +++++++---
+ net/netfilter/nfnetlink_queue.c            |    7 +++++++
+ net/netfilter/xt_CHECKSUM.c                |    6 +++++-
+ net/xfrm/xfrm_output.c                     |   16 +++++++++++-----
+ 6 files changed, 44 insertions(+), 12 deletions(-)
 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 15e032194eccc..b73cf02ac1b6e 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -690,6 +690,17 @@ static struct sock *__udp6_lib_err_encap(struct net *net,
- 	return sk;
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -74,6 +74,13 @@ static inline unsigned int ip_hdrlen(con
+ 	return ip_hdr(skb)->ihl * 4;
  }
  
-+static void udpv6_err_update_exception(struct net *net, struct sk_buff *skb,
-+				       u8 type, __be32 info)
++static inline int ip_check_csum_start(const struct sk_buff *skb)
 +{
-+	if (type == ICMPV6_PKT_TOOBIG)
-+		ip6_update_pmtu(skb, net, info, skb->dev->ifindex, 0,
-+				sock_net_uid(net, NULL));
-+	else if (type == NDISC_REDIRECT)
-+		ip6_redirect(skb, net, skb->dev->ifindex, 0,
-+			     sock_net_uid(net, NULL));
++	if (unlikely(skb->csum_start < skb->network_header + ip_hdrlen(skb)))
++		return -EINVAL;
++	return 0;
 +}
 +
- static int udpv6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 		     u8 type, u8 code, int offset, __be32 info)
- {
-@@ -703,6 +714,8 @@ static int udpv6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	int harderr;
- 	int err;
+ struct ipcm_cookie {
+ 	struct sockcm_cookie	sockc;
+ 	__be32			addr;
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -39,9 +39,13 @@ static int nf_br_ip_fragment(struct net
+ 	int err = 0;
  
-+	udpv6_err_update_exception(net, skb, type, info);
+ 	/* for offloaded checksums cleanup checksum before fragmentation */
+-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
+-	    (err = skb_checksum_help(skb)))
+-		goto blackhole;
++	if (skb->ip_summed == CHECKSUM_PARTIAL) {
++		err = ip_check_csum_start(skb);
++		if (!err)
++			err = skb_checksum_help(skb);
++		if (err)
++			goto blackhole;
++	}
+ 
+ 	iph = ip_hdr(skb);
+ 
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -771,9 +771,13 @@ int ip_do_fragment(struct net *net, stru
+ 	int err = 0;
+ 
+ 	/* for offloaded checksums cleanup checksum before fragmentation */
+-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
+-	    (err = skb_checksum_help(skb)))
+-		goto fail;
++	if (skb->ip_summed == CHECKSUM_PARTIAL) {
++		err = ip_check_csum_start(skb);
++		if (!err)
++			err = skb_checksum_help(skb);
++		if (err)
++			goto fail;
++	}
+ 
+ 	/*
+ 	 *	Point into the IP datagram header.
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -33,6 +33,7 @@
+ #include <linux/rhashtable.h>
+ #include <linux/jhash.h>
+ #include <net/gso.h>
++#include <net/ip.h>
+ #include <net/sock.h>
+ #include <net/tcp_states.h>
+ #include <net/netfilter/nf_queue.h>
+@@ -667,6 +668,12 @@ nla_put_failure:
+ 
+ static int nf_queue_checksum_help(struct sk_buff *entskb)
+ {
++	if (entskb->protocol == htons(ETH_P_IP)) {
++		if (!pskb_network_may_pull(entskb, sizeof(struct iphdr)) ||
++		    ip_check_csum_start(entskb))
++			return -EINVAL;
++	}
 +
- 	daddr = seg6_get_daddr(skb, opt) ? : &hdr->daddr;
- 	saddr = &hdr->saddr;
- 	sk = __udp6_lib_lookup(net, daddr, uh->dest, saddr, uh->source,
--- 
-2.53.0
-
+ 	if (skb_csum_is_sctp(entskb))
+ 		return skb_crc32c_csum_help(entskb);
+ 
+--- a/net/netfilter/xt_CHECKSUM.c
++++ b/net/netfilter/xt_CHECKSUM.c
+@@ -15,6 +15,7 @@
+ 
+ #include <linux/netfilter_ipv4/ip_tables.h>
+ #include <linux/netfilter_ipv6/ip6_tables.h>
++#include <net/ip.h>
+ 
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Michael S. Tsirkin <mst@redhat.com>");
+@@ -25,8 +26,11 @@ MODULE_ALIAS("ip6t_CHECKSUM");
+ static unsigned int
+ checksum_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ {
+-	if (skb->ip_summed == CHECKSUM_PARTIAL && !skb_is_gso(skb))
++	if (skb->ip_summed == CHECKSUM_PARTIAL && !skb_is_gso(skb)) {
++		if (xt_family(par) == NFPROTO_IPV4 && ip_check_csum_start(skb))
++			return NF_DROP;
+ 		skb_checksum_help(skb);
++	}
+ 
+ 	return XT_CONTINUE;
+ }
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -823,16 +823,22 @@ int xfrm_output(struct sock *sk, struct
+ 	}
+ 
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+-		err = skb_checksum_help(skb);
+-		if (err) {
+-			XFRM_INC_STATS(net, LINUX_MIB_XFRMOUTERROR);
+-			kfree_skb(skb);
+-			return err;
++		if (skb->protocol == htons(ETH_P_IP)) {
++			err = ip_check_csum_start(skb);
++			if (err)
++				goto error;
+ 		}
++		err = skb_checksum_help(skb);
++		if (err)
++			goto error;
+ 	}
+ 
+ out:
+ 	return xfrm_output2(net, sk, skb);
++error:
++	XFRM_INC_STATS(net, LINUX_MIB_XFRMOUTERROR);
++	kfree_skb(skb);
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(xfrm_output);
+ 
 
 
