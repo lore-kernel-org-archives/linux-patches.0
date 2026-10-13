@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E8E4F85AB;
-	Tue, 13 Oct 2026 11:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559B04F4CEB;
+	Tue, 13 Oct 2026 11:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892647; cv=none; b=TQdp+CcU25zGu5ZhhNflo6aXH2MiTCtFnaZptAmlFROSyyqxmagxj94wM/5fixLl3rRBoLfi7XGHR3OBrVsmYSeWZVlCa8DNH6tMOcu2m6SJ4lUFEWcPYHiF5e8FeWbdPxaEYzrlNxT3L8/khQwbNpigUdNqvScdqTpp6hwdfRE=
+	t=1791892649; cv=none; b=TTEfiRLCRaaKgd7mV6k6Vvb0QHOrBuaftAE/VSNZZzlFhEUJcAGxWIf7x0i1wOCeSEWD9tnBb8g3nWx27AF7tknqzspD8MQKRkIzadPK3pP5fLgWic+EPx8ZMGT6SEeAgk2fmtvUjuN63/E1j9YeeGaEnWDVB/Ji/ZX7/KQcoJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892647; c=relaxed/simple;
-	bh=KKLfAf5mW9szjv20rrBntb4jubQIgr+WUHdKl3/efJY=;
+	s=arc-20240116; t=1791892649; c=relaxed/simple;
+	bh=7w0oNbuzoemTxYqcYUMf/TYoOWSCO0UGuVG7oIgClcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pmFeeFM6tymwv/7iwhN3wXcEAEPbJ+Ne+TIBRmqkxjfo5xU3CnFr8gJ6NObl/TDjurLcXCi0IqFa7hrWoAHgCon04SWwK4pMgDdUx29fv1Lc1oXU0iAociZbeD6UqthoCUxLGUcab3Ld4itzEo2BYNm0DZUlHmqrObdPE5U2gtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIsQbGgb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Zz6j3wiqsfdz4F2/31hw93dYkfTTBkHYHetgqfM07+6cxnWsYx9jdtUKT45STMmMTyOfMLcPzAwY59KavaH4BC1/UXUowM2mu/MpTp52TNObXNMqzXGOjWmkLKvlO9sUHBmVgrKHCN6KE1wFlOkkrehsewlz1gPbVGvDyPR+OSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1SCPMS/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIsQbGgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9117A1F00893;
-	Tue, 13 Oct 2026 11:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1SCPMS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F96F1F000FF;
+	Tue, 13 Oct 2026 11:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892645;
-	bh=/2LpH+w1OJlSUF7RYbxqNGDnmojD6D6ytCLfYWRNTks=;
+	s=korg; t=1791892648;
+	bh=TV92N6WbKD5wq11JFaY/PCg7DH6BBfpxj7kthgThmyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lIsQbGgb0NW7ZynX6RO5deW/rJGLz8vkin6BmDYm1oVggRcdfeE3tLJRWLQn0JR9d
-	 J6q3pxppes0GDaddAAESD0NJLw1Dv3bOUj+ih98+duZ85wEsuu8PT8ijQX513RBJGR
-	 t/IuoTg8z+67SfKXkzD04qUkel+E7QYQnfG8Yr/U=
+	b=t1SCPMS/MWZFNOYVELkFL7G64AIHbyJ4CenrlIaKrzOyi8ml8WmP9b8JffGvMjJit
+	 7M9M8jNNO3b6P3fHBqvM6VfgKF7dhJdgFzgpGeoY7448lpSikgLULywp6kMGnnx8g1
+	 oc2rZIj5Lg2gaX9Wjywu2ZbeRUWeJX8NVvKqGX/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 242/281] ASoC: adau1372: allow sleepy powerdown GPIOs
-Date: Tue, 13 Oct 2026 13:39:18 +0200
-Message-ID: <20261013112901.022247295@linuxfoundation.org>
+Subject: [PATCH 7.2 243/281] ASoC: adau1372: fix invalid default state of output ASRC and DAC muxes
+Date: Tue, 13 Oct 2026 13:39:19 +0200
+Message-ID: <20261013112901.045314106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -55,56 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Alvin Šipraga <alvin.sipraga@analog.com>
 
-[ Upstream commit 64dd172bbffe6135d79a06ddad53dd2da4d8bd62 ]
+[ Upstream commit 36d0e05815ce84266c8b138cd4f84c3feeaf15f4 ]
 
-gpiod_set_value() emits a WARN when the GPIO provider indicates that it
-can sleep, as is typical for I2C controlled GPIO expanders. Since the
-powerdown GPIO is only manipulated in process context, use the _cansleep
-variant instead. This lets the driver use sleepy GPIOs to power off the
-chip.
+The chip has strange power-on reset values for the registers that
+control the output ASRC and DAC source muxes - the values are actually
+marked "Reserved" in the datasheet [1]. This means that until the
+underlying kcontrols are modified, the codec will not function as
+expected.
+
+The registers in question are:
+
+  register / field       reset value       valid values
+
+  ASRCO_SOURCE_0_1       0x10
+   ASRC_OUT_SOURCE0      0                 4 .. 16
+   ASRC_OUT_SOURCE1      1                 4 .. 16
+  ASRCO_SOURCE_2_3       0x10
+   ASRC_OUT_SOURCE2      2                 4 .. 16
+   ASRC_OUT_SOURCE3      3                 4 .. 16
+  DAC_SOURCE_0_1         0x10
+   DAC_SOURCE_0          0                 12 .. 13
+   DAC_SOURCE_1          1                 12 .. 13
+
+Set some sane defaults during the driver probe:
+
+  ADC Decimator0 -> Output ASRC0
+  ADC Decimator1 -> Output ASRC1
+  ADC Decimator2 -> Output ASRC2
+  ADC Decimator3 -> Output ASRC3
+  Input ASRC0 -> DAC0
+  Input ASRC1 -> DAC1
+
+With this, the chip will behave as advertised by the default kcontrol
+state exposed by the driver.
+
+[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADAU1372.pdf
 
 Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
 Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
 Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-1-599cc17fb5f6@analog.com
+Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-2-599cc17fb5f6@analog.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sound/soc/codecs/adau1372.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index cc174ec3a1f82..b84495371b0b4 100644
+index b84495371b0b4..c3d3be898ba6c 100644
 --- a/sound/soc/codecs/adau1372.c
 +++ b/sound/soc/codecs/adau1372.c
-@@ -798,7 +798,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		if (ret)
- 			return ret;
- 		if (adau1372->pd_gpio)
--			gpiod_set_value(adau1372->pd_gpio, 0);
-+			gpiod_set_value_cansleep(adau1372->pd_gpio, 0);
+@@ -1002,6 +1002,17 @@ int adau1372_probe(struct device *dev, struct regmap *regmap,
  
- 		if (adau1372->switch_mode)
- 			adau1372->switch_mode(adau1372->dev);
-@@ -818,8 +818,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 							   ADAU1372_CLK_CTRL_PLL_EN,
- 							   0);
- 				regcache_cache_only(adau1372->regmap, true);
--				if (adau1372->pd_gpio)
--					gpiod_set_value(adau1372->pd_gpio, 1);
-+				gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
- 				clk_disable_unprepare(adau1372->mclk);
- 				return ret;
- 			}
-@@ -836,7 +835,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 			 * map. No need to do any register writes to manually
- 			 * turn things off.
- 			 */
--			gpiod_set_value(adau1372->pd_gpio, 1);
-+			gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
- 			regcache_mark_dirty(adau1372->regmap);
- 		} else {
- 			regmap_update_bits(adau1372->regmap, ADAU1372_REG_CLK_CTRL,
+ 	regmap_write(regmap, ADAU1372_REG_OP_STAGE_MUTE, 0x0);
+ 
++	/*
++	 * Set sane default values for the Output ASRC and DAC input muxes,
++	 * since the power-on reset defaults are invalid "Reserved" states.
++	 */
++	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_0_1,
++		     0x54); /* Decimator0, Decimator1 */
++	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_2_3,
++		     0x76); /* Decimator2, Decimator3 */
++	regmap_write(regmap, ADAU1372_REG_DAC_SOURCE,
++		     0xdc); /* Input ASRC0, Input ASRC1 */
++
+ 	regmap_write(regmap, 0x7, 0x01); /* CLOCK OUT */
+ 
+ 	return  devm_snd_soc_register_component(dev, &adau1372_driver, &adau1372_dai_driver, 1);
 -- 
 2.53.0
 
