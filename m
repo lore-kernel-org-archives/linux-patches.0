@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E6C4E9C27;
-	Tue, 13 Oct 2026 12:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEA84B95C2;
+	Tue, 13 Oct 2026 12:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893386; cv=none; b=ktly54wNEj2mhcDYiGiY3oY7b7U2saDraA5AWGi0WJ+3wsGVqv+/IuaoaZwQZm567kvwkrnoY9Xhy5C2auwGRQ7Hzp1Ybh/dvUFaPPNi55qe92Ud8RxdL9W21BY1OGLHnbPI0Xj26EgLA68teui+ajkE4PWbFnXShCD8oNA2/3M=
+	t=1791893389; cv=none; b=ZOwRlfAmCzK14fgh9RprT6jXvX6ZkNUilES/zJqxWerpfL15k/BTr4XICrF9RGV5zyqbInoUSB2O45JyxjfC9clKjbGihaYyMuUVUoNFutte5g7gBbC3GGBdfiaVKS+dNJwWkfqTSHQM9Xs9/nJwPitcHAQ5kqUPjm/5eQED4Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893386; c=relaxed/simple;
-	bh=1BT0JAc39wReS64ONM94OFsD4FUqfIkfbgP4pIR+q1U=;
+	s=arc-20240116; t=1791893389; c=relaxed/simple;
+	bh=AcNpz8nrQDoFmBpMvzWP8WrhwrEDAxq6OjCWGNP8XNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cbuax94ywO2pUoERjuozUgZvkrH7csHfj3aWvO71bYaGpp77WsdFRPCCplDD9Kk0e8SMscpeVHVa206NqxaHIn4bIrp02Y65hzoIsy56skEvfyH0PlqGvPnokUoalNTye8CqDRB/5iHNsWFFOSnmuHEnp0utxqWJNsOk83ua7gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1T+vSJR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V9ne8H9aJ3QM/6ACXOQkY2ddThMfH6sJR5Tg3UZ7LEcILyDlJeqU8I1r0L6/mriJQtRGKsWu1X/5b7RKgQMHZ+NJrdTcA2jUI7Wbq8528FlzuGVMzmKxMPOp+Qb44EHjJFmDbPDZMGrYhDiqyYDMTo+Y/bxo6Nff1CDzWxYhsiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loPiLqfx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1T+vSJR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805FC1F000FF;
-	Tue, 13 Oct 2026 12:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loPiLqfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC191F00893;
+	Tue, 13 Oct 2026 12:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893385;
-	bh=8QkCbhsGMTBGqTBgXS3nnflAVlOKxLjvGESDksgsCEg=;
+	s=korg; t=1791893387;
+	bh=V5WcIGaB4uwxGnz3qAo1qCEguyyfsAdcx09k8LowXE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1T+vSJR/iQdDG60RrOhDdlxmCqVzhRUTNd2O4CxSuF8ZKpPlWwx6joaHH7jiKk6Zd
-	 XonUrhsoY0txLBHnn2H1B7iA/jWvsNyE+LfBQX7nx7o8W0oihR27Q29VJ3BnWmvS13
-	 NpMuItd7odFHoGAtpcYBOSigc4esJDJZqJHnNNMM=
+	b=loPiLqfxKqKaIDL4p3cT0P9MDHRKmxtqGgBytdeKBrqskpN6aA0gzlssUZH/lLvoa
+	 +1ENKMcwChG96ePmmcTEEtPfDk8/vbmvTbrlTWgn12hZTXnMAgymXQ4Qaoe5WbpCsk
+	 EPjJe5hAT+VVQdeT0ETUDzaAbPiAd9LplbzNV6AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	ChiaHsuan Chung <chiahsuan.chung@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 155/621] accel/amdxdna: Fix NULL pointer dereference of mgmt_chann
-Date: Tue, 13 Oct 2026 13:32:30 +0200
-Message-ID: <20261013112924.532009147@linuxfoundation.org>
+Subject: [PATCH 6.18 202/621] drm/amd/display: Fix dc_link NULL handling in HPD init
+Date: Tue, 13 Oct 2026 13:33:17 +0200
+Message-ID: <20261013112925.656377994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,106 +53,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 6270ee26e1edd862ea17e3eba148ca8fb2c99dc9 ]
+[ Upstream commit 226a40c06a183abaeb7529a4f54d6c203bd14407 ]
 
-mgmt_chann may be set to NULL if the firmware returns an unexpected
-error in aie2_send_mgmt_msg_wait(). This can later lead to a NULL
-pointer dereference in aie2_hw_stop().
+amdgpu_dm_hpd_init() may see connectors without a valid dc_link.
 
-Fix this by introducing a dedicated helper to destroy mgmt_chann
-and by adding proper NULL checks before accessing it.
+The code already checks dc_link for the polling decision, but later
+unconditionally dereferences it when setting up HPD interrupts.
 
-Fixes: b87f920b9344 ("accel/amdxdna: Support hardware mailbox")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260226213857.3068474-1-lizhi.hou@amd.com
+Assign dc_link early and skip connectors where it is NULL.
+
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c:940 amdgpu_dm_hpd_init()
+error: we previously assumed 'dc_link' could be null (see line 931)
+
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c
+    923                 /*
+    924                  * Analog connectors may be hot-plugged unlike other connector
+    925                  * types that don't support HPD. Only poll analog connectors.
+    926                  */
+    927                 use_polling |=
+    928                         amdgpu_dm_connector->dc_link &&
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The patch adds this NULL check but hopefully it can be removed
+
+    929                         dc_connector_supports_analog(amdgpu_dm_connector->dc_link->link_id.id);
+    930
+    931                 dc_link = amdgpu_dm_connector->dc_link;
+
+dc_link assigned here.
+
+    932
+    933                 /*
+    934                  * Get a base driver irq reference for hpd ints for the lifetime
+    935                  * of dm. Note that only hpd interrupt types are registered with
+    936                  * base driver; hpd_rx types aren't. IOW, amdgpu_irq_get/put on
+    937                  * hpd_rx isn't available. DM currently controls hpd_rx
+    938                  * explicitly with dc_interrupt_set()
+    939                  */
+--> 940                 if (dc_link->irq_source_hpd != DC_IRQ_SOURCE_INVALID) {
+                            ^^^^^^^^^^^^^^^^^^^^^^^ If it's NULL then we are trouble because we dereference it here.
+
+    941                         irq_type = dc_link->irq_source_hpd - DC_IRQ_SOURCE_HPD1;
+    942                         /*
+    943                          * TODO: There's a mismatch between mode_info.num_hpd
+    944                          * and what bios reports as the # of connectors with hpd
+
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Cc: Timur Kristóf <timur.kristof@gmail.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Mario Limonciello <superm1@kernel.org>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: ChiaHsuan Chung <chiahsuan.chung@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_message.c | 17 ++++++++++++-----
- drivers/accel/amdxdna/aie2_pci.c     |  7 ++-----
- drivers/accel/amdxdna/aie2_pci.h     |  1 +
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
-index 932d495230511..41fbe09b8047a 100644
---- a/drivers/accel/amdxdna/aie2_message.c
-+++ b/drivers/accel/amdxdna/aie2_message.c
-@@ -39,11 +39,8 @@ static int aie2_send_mgmt_msg_wait(struct amdxdna_dev_hdl *ndev,
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+index 59c7efc60c901..6cafbd228d874 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+@@ -926,6 +926,8 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
+ 		amdgpu_dm_connector = to_amdgpu_dm_connector(connector);
  
- 	drm_WARN_ON(&xdna->ddev, xdna->rpm_on && !mutex_is_locked(&xdna->dev_lock));
- 	ret = xdna_send_msg_wait(xdna, ndev->mgmt_chann, msg);
--	if (ret == -ETIME) {
--		xdna_mailbox_stop_channel(ndev->mgmt_chann);
--		xdna_mailbox_destroy_channel(ndev->mgmt_chann);
--		ndev->mgmt_chann = NULL;
--	}
-+	if (ret == -ETIME)
-+		aie2_destroy_mgmt_chann(ndev);
+ 		dc_link = amdgpu_dm_connector->dc_link;
++		if (!dc_link)
++			continue;
  
- 	if (!ret && *hdl->data != AIE2_STATUS_SUCCESS) {
- 		XDNA_ERR(xdna, "command opcode 0x%x failed, status 0x%x",
-@@ -54,6 +51,16 @@ static int aie2_send_mgmt_msg_wait(struct amdxdna_dev_hdl *ndev,
- 	return ret;
- }
- 
-+void aie2_destroy_mgmt_chann(struct amdxdna_dev_hdl *ndev)
-+{
-+	if (!ndev->mgmt_chann)
-+		return;
-+
-+	xdna_mailbox_stop_channel(ndev->mgmt_chann);
-+	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
-+	ndev->mgmt_chann = NULL;
-+}
-+
- int aie2_suspend_fw(struct amdxdna_dev_hdl *ndev)
- {
- 	DECLARE_AIE2_MSG(suspend, MSG_OP_SUSPEND);
-diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
-index 6e3698ed45198..884800e5fd38d 100644
---- a/drivers/accel/amdxdna/aie2_pci.c
-+++ b/drivers/accel/amdxdna/aie2_pci.c
-@@ -326,9 +326,7 @@ static void aie2_hw_stop(struct amdxdna_dev *xdna)
- 	}
- 
- 	aie2_mgmt_fw_fini(ndev);
--	xdna_mailbox_stop_channel(ndev->mgmt_chann);
--	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
--	ndev->mgmt_chann = NULL;
-+	aie2_destroy_mgmt_chann(ndev);
- 	drmm_kfree(&xdna->ddev, ndev->mbox);
- 	ndev->mbox = NULL;
- 	aie2_psp_stop(ndev->psp_hdl);
-@@ -437,8 +435,7 @@ static int aie2_hw_start(struct amdxdna_dev *xdna)
- 	return 0;
- 
- destroy_mgmt_chann:
--	xdna_mailbox_stop_channel(ndev->mgmt_chann);
--	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
-+	aie2_destroy_mgmt_chann(ndev);
- stop_psp:
- 	aie2_psp_stop(ndev->psp_hdl);
- fini_smu:
-diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
-index 12fec3cf8c8db..7fbe9b2ebac23 100644
---- a/drivers/accel/amdxdna/aie2_pci.h
-+++ b/drivers/accel/amdxdna/aie2_pci.h
-@@ -260,6 +260,7 @@ int aie2_error_async_events_send(struct amdxdna_dev_hdl *ndev);
- int aie2_error_async_msg_thread(void *data);
- 
- /* aie2_message.c */
-+void aie2_destroy_mgmt_chann(struct amdxdna_dev_hdl *ndev);
- int aie2_suspend_fw(struct amdxdna_dev_hdl *ndev);
- int aie2_resume_fw(struct amdxdna_dev_hdl *ndev);
- int aie2_set_runtime_cfg(struct amdxdna_dev_hdl *ndev, u32 type, u64 value);
+ 		/*
+ 		 * Get a base driver irq reference for hpd ints for the lifetime
 -- 
 2.53.0
 
