@@ -1,61 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C1C4F68A4;
-	Tue, 13 Oct 2026 12:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE10F4F68B1;
+	Tue, 13 Oct 2026 12:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894737; cv=none; b=UtKDwzgjh51IyvMZyzQnP6aDXXKpZdmYOI3x+lr7enWQLn5R74k/q3xrGAMDd8RiBBUaAxURtDKV/7ZBVeSlWtZwn1d7mF9LBNT6uNw08HqCcHLAj62IivpCekf90oZjpWZpjxqpqXu/X4avjoKBC0ovPmy8XG6NDoNfyBZzQ6M=
+	t=1791894740; cv=none; b=X4qq/biJ56ID/Y4oYBeIr8mhiY1LxnL4HxKN7z/IaRxj7g2BMmf5xIiyt7XSNZWnzgysXWNmxongrX98Z66OXr7VvBgwYh7pwsaf86IdJYly9nrKgOo+rsAgSUiwJkMYxKv4IfG0FDEpHrALCeeUrSKu7BrZiGdGG5k8t9SRudw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894737; c=relaxed/simple;
-	bh=fCKNR77W34/trWAheTZSK16EU9eBReKarA3vPtpu2KA=;
+	s=arc-20240116; t=1791894740; c=relaxed/simple;
+	bh=CQ03SIcfcfAV5eFHFq4yytW1Xwlp40fSslxHXPPvaF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSIXnrwx3vRnYZXSNwRJjwov2hW+T8iAZ8tZeprSrIusKOEYY01uqzDQs3iOkoSsNlwaAvUHTPzAwWMK9CNFaHJBh/uzDxZ/CMj9AXlqeWG2n81OvdiaEQU4LKZVUDpSrmApkHTb2VwJMy9WZ0kuJQy7wJzn/HIur6LnWp66z2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrS+w6va; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XFS+Bx/rBitoo4XN4xIBmEIDFNx55NaiWUQMhcoeUFcz4cV1On+wuuQrxckbHjV9SbjCIB5TbGVfC/+KCO0jhXiyS+n46cTm3joPxOCegdCnyuYQqZT5KnQcR4XatVeVwXeUq00BNMSeL6Bak8VRN2j/+zyj+FOnnOp6xTb5mLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlpMAoC1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrS+w6va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554431F000FF;
-	Tue, 13 Oct 2026 12:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlpMAoC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EE71F000FF;
+	Tue, 13 Oct 2026 12:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894735;
-	bh=/N8ivQ/DDpTo6GvddmWU7JRgK8vym9Tjpq7/8GbGKck=;
+	s=korg; t=1791894738;
+	bh=BBTX2BRbPzb4TRrVhsr8tHIlSZ1DaZpsU44fxJID990=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XrS+w6vaH0N9fW/+DR4xxPxZPmTjmsBu+oJgmP3kl6cm6wRJPwDOK+bCLCZNjKeeX
-	 lBcDVwTot+RizKPNNy3BS0CKAKZShV3PUFyXZTPAbEOiDOqFjHWx07yDMbss0ekIxS
-	 ZJ8GLDrZpumqACUtZneh8D0D7mQgQ1TPFVyTZmzs=
+	b=KlpMAoC1OhVpJXGAB1nvoEJRewgsWt466fjx6EwrwA9pVWbrc4QV8gvMTArqZlxTS
+	 N7ynbXcqjSD6VJz8xulwIMO8dvgIDBXNXWODRHQ8mzZSc6K/wR18HJvqjk2aKs17M/
+	 9PMuezWGNagzABQ6jd61yYY09458f56t1e6ltOjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Luiz Capitulino <luizcap@redhat.com>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Liam Howlett <liam@infradead.org>,
-	Li Wang <li.wang@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Nico Pache <npache@redhat.com>,
-	Peter Xu <peterx@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/497] selftests/mm: hugetlb-mremap: add setup of HugeTLB pages
-Date: Tue, 13 Oct 2026 13:32:52 +0200
-Message-ID: <20261013112908.004514122@linuxfoundation.org>
+Subject: [PATCH 6.12 006/497] smb: client: use finish_no_open() for non-regular inodes
+Date: Tue, 13 Oct 2026 13:32:53 +0200
+Message-ID: <20261013112908.030046290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -74,99 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit a914785f6349da754e1226420bf4e51961956769 upstream.
+[ Upstream commit e66cf1625ec4a3fe68346119f371def713fd0a4d ]
 
-hugetlb-mremap test fails if there are no free huge pages prepared by a
-wrapper script.
+An O_CREAT open can find an existing symlink or another non-regular
+inode. cifs_atomic_open() calls finish_open() on it and attaches a
+cifsFileInfo. Symlink inodes have no CIFS release operation, so the
+dentry reference held by cifsFileInfo is leaked. FMODE_OPENED also
+prevents the VFS from following the symlink.
 
-Add setup of HugeTLB pages to the test and make sure that the original
-settings are restored on the test exit.
+Track whether cifs_do_create() returned an open server handle. For
+non-regular inodes, close the handle if present, remove the pending
+open, and call finish_no_open() so the VFS can continue the lookup.
+Do not set FMODE_CREATED unless a regular file was opened. For
+O_NOFOLLOW with __O_REGULAR, return -ELOOP before the VFS's
+-EFTYPE check.
 
-Link: https://lore.kernel.org/20260511162840.375890-42-rppt@kernel.org
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Luiz Capitulino <luizcap@redhat.com>
-Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Donet Tom <donettom@linux.ibm.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Li Wang <li.wang@linux.dev>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Defer closing a legacy POSIX handle on a non-regular inode until
+after inode lookup. This avoids closing it again if lookup fails.
 
-[ Backport-notes: this is a partial backport containing only the aligning
-of 'length' to the hugepage size. The hugepage_settings.h include line and
-the hugetlb_setup_default() call are omitted. Without this fix, the
-uffd_register() call always fails on arm64 with 64K base pages and 512 MiB
-default HugeTLB page size causing the test to fail with the error below as
-'length' is 10 MiB and not aligned to the HugeTLB page size.
-
-  # -------------------------
-  # running ./hugepage-mremap
-  # -------------------------
-  # TAP version 13
-  # 1..1
-  # # Map haddr: Returned address is 0x7eaa40000000
-  # # Map daddr: Returned address is 0x7daa40000000
-  # # Map vaddr: Returned address is 0x7faa40000000
-  # Bail out! ioctl-UFFDIO_REGISTER: Invalid argument
-  # # Planned tests != run tests (1 != 0)
-  # # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:0 error:0
-  # [FAIL]
-  not ok 1 hugepage-mremap # exit=1
-  # NOTE: These hugetlb tests provide minimal coverage.  Use
-  #       https://github.com/libhugetlbfs/libhugetlbfs.git for
-  #       hugetlb regression testing.
-  # SKIP ./uffd-wp-mremap
-]
-Signed-off-by: Luiz Capitulino <luizcap@redhat.com>
-
+Fixes: d2c127197dfc ("cifs: implement i_op->atomic_open()")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org
+[ replaced S_ISREG(inode->i_mode) with d_is_reg(direntry) because the older cifs_do_create() already attaches the inode. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hugepage-mremap.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/dir.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/hugepage-mremap.c b/tools/testing/selftests/mm/hugepage-mremap.c
-index 3070484f9ed0a..164bbda8128f9 100644
---- a/tools/testing/selftests/mm/hugepage-mremap.c
-+++ b/tools/testing/selftests/mm/hugepage-mremap.c
-@@ -87,6 +87,7 @@ static void register_region_with_uffd(char *addr, size_t len)
+diff --git a/fs/smb/client/dir.c b/fs/smb/client/dir.c
+index 6bb0e98462a98..66bf81d159625 100644
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -176,7 +176,8 @@ check_name(struct dentry *direntry, struct cifs_tcon *tcon)
  
- int main(int argc, char *argv[])
+ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 			  struct tcon_link *tlink, unsigned int oflags, umode_t mode, __u32 *oplock,
+-			  struct cifs_fid *fid, struct cifs_open_info_data *buf)
++			  struct cifs_fid *fid, struct cifs_open_info_data *buf,
++			  bool *opened)
  {
-+	unsigned long hugepage_size;
- 	size_t length = 0;
- 	int ret = 0, fd;
+ 	int rc = -ENOENT;
+ 	int create_options = CREATE_NOT_DIR;
+@@ -191,6 +192,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 	struct cifs_open_parms oparms;
+ 	int rdwr_for_fscache = 0;
  
-@@ -104,7 +105,11 @@ int main(int argc, char *argv[])
- 	else
- 		length = DEFAULT_LENGTH_MB;
++	*opened = false;
+ 	*oplock = 0;
+ 	if (tcon->ses->server->oplocks)
+ 		*oplock = REQ_OPLOCK;
+@@ -213,6 +215,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 				     oflags, oplock, &fid->netfid, xid);
+ 		switch (rc) {
+ 		case 0:
++			*opened = true;
+ 			if (newinode == NULL) {
+ 				/* query inode info */
+ 				goto cifs_create_get_file_info;
+@@ -229,11 +232,9 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 				/*
+ 				 * The server may allow us to open things like
+ 				 * FIFOs, but the client isn't set up to deal
+-				 * with that. If it's not a regular file, just
+-				 * close it and proceed as if it were a normal
+-				 * lookup.
++				 * with that. Keep the handle until the caller
++				 * can finish the lookup.
+ 				 */
+-				CIFSSMBClose(xid, tcon, fid->netfid);
+ 				goto cifs_create_get_file_info;
+ 			}
+ 			/* success, no need to query */
+@@ -333,6 +334,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 		}
+ 		goto out;
+ 	}
++	*opened = true;
+ 	if (rdwr_for_fscache == 2)
+ 		cifs_invalidate_cache(inode, FSCACHE_INVAL_DIO_WRITE);
  
-+	hugepage_size = default_huge_page_size();
-+	if (!hugepage_size)
-+		ksft_exit_skip("Could not detect default hugetlb page size\n");
- 	length = MB_TO_BYTES(length);
-+	length = (length + hugepage_size - 1) & ~(hugepage_size - 1);
- 	fd = memfd_create(argv[0], MFD_HUGETLB);
- 	if (fd < 0)
- 		ksft_exit_fail_msg("Open failed: %s\n", strerror(errno));
+@@ -423,7 +425,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 	return rc;
+ 
+ out_err:
+-	if (server->ops->close)
++	if (*opened && server->ops->close)
+ 		server->ops->close(xid, tcon, fid);
+ 	if (newinode)
+ 		iput(newinode);
+@@ -442,6 +444,8 @@ cifs_atomic_open(struct inode *inode, struct dentry *direntry,
+ 	struct cifs_fid fid = {};
+ 	struct cifs_pending_open open;
+ 	__u32 oplock;
++	bool is_regular;
++	bool opened;
+ 	struct cifsFileInfo *file_info;
+ 	struct cifs_open_info_data buf = {};
+ 
+@@ -501,15 +505,28 @@ cifs_atomic_open(struct inode *inode, struct dentry *direntry,
+ 	cifs_add_pending_open(&fid, tlink, &open);
+ 
+ 	rc = cifs_do_create(inode, direntry, xid, tlink, oflags, mode,
+-			    &oplock, &fid, &buf);
++			    &oplock, &fid, &buf, &opened);
+ 	if (rc) {
+ 		cifs_del_pending_open(&open);
+ 		goto out;
+ 	}
+ 
+-	if ((oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
++	is_regular = d_is_reg(direntry);
++	if (!is_regular || !opened) {
++		if (opened && server->ops->close)
++			server->ops->close(xid, tcon, &fid);
++		cifs_del_pending_open(&open);
++	}
++
++	if (is_regular && opened &&
++	    (oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
+ 		file->f_mode |= FMODE_CREATED;
+ 
++	if (!is_regular || !opened) {
++		rc = finish_no_open(file, NULL);
++		goto out;
++	}
++
+ 	rc = finish_open(file, direntry, generic_file_open);
+ 	if (rc) {
+ 		if (server->ops->close)
+@@ -564,6 +581,7 @@ int cifs_create(struct mnt_idmap *idmap, struct inode *inode,
+ 	struct TCP_Server_Info *server;
+ 	struct cifs_fid fid;
+ 	__u32 oplock;
++	bool opened;
+ 	struct cifs_open_info_data buf = {};
+ 
+ 	cifs_dbg(FYI, "cifs_create parent inode = 0x%p name is: %pd and dentry = 0x%p\n",
+@@ -585,8 +603,9 @@ int cifs_create(struct mnt_idmap *idmap, struct inode *inode,
+ 	if (server->ops->new_lease_key)
+ 		server->ops->new_lease_key(&fid);
+ 
+-	rc = cifs_do_create(inode, direntry, xid, tlink, oflags, mode, &oplock, &fid, &buf);
+-	if (!rc && server->ops->close)
++	rc = cifs_do_create(inode, direntry, xid, tlink, oflags, mode,
++			    &oplock, &fid, &buf, &opened);
++	if (!rc && opened && server->ops->close)
+ 		server->ops->close(xid, tcon, &fid);
+ 
+ 	cifs_free_open_info(&buf);
 -- 
 2.53.0
 
