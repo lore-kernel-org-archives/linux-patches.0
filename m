@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBA74F68C5;
-	Tue, 13 Oct 2026 12:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513974EBAD7;
+	Tue, 13 Oct 2026 12:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893644; cv=none; b=jnX8StsUnATSVp41fJmimoYkVmLjjb+XwU5/plxfN3kcq2UOu7YaaJJPmRpSVUAI5mvBgAaDHJr/GVIkuYdI+u2dAWH84DkNw9eF3UQztaMwInHNBogAPQfvIkI2uA19eqlomIes9BHGy1+jR1IaT5/HMe1D56Qva/l0B6obnj0=
+	t=1791893646; cv=none; b=u+WbUFK8ccAwz0A9EStNJDuj+0oJcXvmpEDmAsyZbkw27MV0iQSA9xR07TpweebINnUrnYlkPjaJWNK/AFEPRSxRsnCrBylJaQwkTyIPuF5SkjDaohbEgV8BJb8LR5XUcqDhxHuz7kPuQ7pzOU4RS8HF29LqxVdyG4MZzMKOwAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893644; c=relaxed/simple;
-	bh=HLgpP++AWTy2/l5WgcVOAaaLQEXEnz05WnSAHmXavZ4=;
+	s=arc-20240116; t=1791893646; c=relaxed/simple;
+	bh=Mi77yiL/1e2tAVTgSLk/6rbt6uyNFr5rMrlAGCnPfQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0tJKc1VIBDXwCOenhyGD4+2fMAZJWKBJcehR6AOVPr0orB6hGST8NpOppG9fW9Fqou3svkDpQ4UWTaCrAeYAx3qUiDUEONr1253FRad/T1VJC2D9FEKFAfJTGgepEBhapHpFWJwtLpjO7IW+UwYUla/dhVIUET6J75gmsXnDgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvIRLVd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fvGIR1hmDIVqyYGaF7rWpmrJV4W1u5Zc38aXiWXp94YNhtWJ+Mzk7fiCZPU9RIJmSqJk5SrZ3jBnSA5mR8b6LZKuLY0mFoMsBFHExl1JNDsibQPtCW04am+vfLVj7gjV4fodwFiAH7F+SRhaRltHD+AW57gyPEMXyeiI20I6gOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mamlqCZU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvIRLVd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929581F00893;
-	Tue, 13 Oct 2026 12:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mamlqCZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF5E1F000FF;
+	Tue, 13 Oct 2026 12:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893642;
-	bh=AEnAyRb57GWC1TG111Rt6nWj77Ufjj5pkedojjsN7I8=;
+	s=korg; t=1791893645;
+	bh=Ki7I2b97tC9vhCaZ/jGQ6Cm+21JVKsjcCwqNZ301CF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PvIRLVd8/dbMdH4MK7kZ3qG0LsmiJOnbE3oaYQhvWAMI2Fie+an1TZusAIGjEsBHd
-	 pXBApr03dqFhinJk1RUveoirNgWSWAGoOa5HyEIIzy1Dz30jkMrF/UknpIBi7Wqaxg
-	 iGZAz1uCzzTtcP4gWsRECqZpEdvDGEwcva8pcegI=
+	b=mamlqCZU/Icb/+KBXrDoZYGRKj/QTPWDpeXhbL7SAI5dgS3gTrrMztw80oIPbf6f9
+	 S/s16uz3ELElaNY/9+alRN4l3LkwtSwSfU96tM5J3vyYKJl1tr1cCsF8maTFohWUN/
+	 mwYyE8fyH5jXDo0vptuzNez5l9TrN3fnebqjvtZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+4d8e30dbafb5c1260479@syzkaller.appspotmail.com,
+	Helen Koike <koike@igalia.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 292/621] fs/ntfs3: Reformat code and update terminology
-Date: Tue, 13 Oct 2026 13:34:47 +0200
-Message-ID: <20261013112927.788271108@linuxfoundation.org>
+Subject: [PATCH 6.18 293/621] fs/ntfs3: call _ntfs_bad_inode() when failing to rename
+Date: Tue, 13 Oct 2026 13:34:48 +0200
+Message-ID: <20261013112927.810566833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,272 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit a846cd0d0a05364c6fa5c4988e75d3b639d6dae5 ]
+[ Upstream commit e8ed78f40eecd0176fda71d673f6957c98e7ffbe ]
 
-Reformatted the driver code according to the current .clang-format rules
-and updated description of used terminology. No functional changes
-intended.
+It is safe to call _ntfs_bad_inode on live inodes since:
+  commit 519b078998ce ("fs/ntfs3: Exclude call make_bad_inode for live nodes.")
 
+The WARN_ON was added when it wasn't safe by:
+  commit d99208b91933 ("fs/ntfs3: cancle set bad inode after removing name fails")
+
+Replace the WARN_ON with a call to _ntfs_bad_inode() to prevent further
+operations on the inconsistent inode.
+
+Reported-by: syzbot+4d8e30dbafb5c1260479@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4d8e30dbafb5c1260479
+Fixes: 519b078998ce ("fs/ntfs3: Exclude call make_bad_inode for live nodes.")
+Signed-off-by: Helen Koike <koike@igalia.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: e8ed78f40eec ("fs/ntfs3: call _ntfs_bad_inode() when failing to rename")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c     |  3 +--
- fs/ntfs3/file.c    |  6 +++---
- fs/ntfs3/frecord.c |  7 ++++---
- fs/ntfs3/inode.c   | 19 +++++++++++--------
- fs/ntfs3/namei.c   |  6 +++---
- fs/ntfs3/ntfs_fs.h |  6 +++---
- fs/ntfs3/super.c   | 31 +++++++++++++++++--------------
- 7 files changed, 42 insertions(+), 36 deletions(-)
+ fs/ntfs3/frecord.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index a68eff8cf1d66..6e1d2ad8c12ea 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -334,8 +334,7 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
- 	 * It does additional locks/reads just to get the type of name.
- 	 * Should we use additional mount option to enable branch below?
- 	 */
--	if (fname->dup.extend_data &&
--	    ino != ni->mi.rno) {
-+	if (fname->dup.extend_data && ino != ni->mi.rno) {
- 		struct inode *inode = ntfs_iget5(sbi->sb, &e->ref, NULL);
- 		if (!IS_ERR_OR_NULL(inode)) {
- 			dt_type = fs_umode_to_dtype(inode->i_mode);
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 6a19bb0422080..13d623560120c 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -1114,8 +1114,8 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
- 			size_t cp, tail = PAGE_SIZE - off;
- 
- 			folio = page_folio(pages[ip]);
--			cp = copy_folio_from_iter_atomic(folio, off,
--							min(tail, bytes), from);
-+			cp = copy_folio_from_iter_atomic(
-+				folio, off, min(tail, bytes), from);
- 			flush_dcache_folio(folio);
- 
- 			copied += cp;
-@@ -1312,7 +1312,7 @@ static int ntfs_file_release(struct inode *inode, struct file *file)
- 	if (sbi->options->prealloc &&
- 	    ((file->f_mode & FMODE_WRITE) &&
- 	     atomic_read(&inode->i_writecount) == 1)
--	   /*
-+	    /*
- 	    * The only file when inode->i_fop = &ntfs_file_operations and
- 	    * init_rwsem(&ni->file.run_lock) is not called explicitly is MFT.
- 	    *
 diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 7aa37cf01df5a..af5773c0f210c 100644
+index af5773c0f210c..1cc905a265553 100644
 --- a/fs/ntfs3/frecord.c
 +++ b/fs/ntfs3/frecord.c
 @@ -3072,8 +3072,8 @@ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
  	err = ni_add_name(new_dir_ni, ni, new_de);
  	if (!err) {
  		err = ni_remove_name(dir_ni, ni, de, &de2, &undo);
--		WARN_ON(err && ni_remove_name(new_dir_ni, ni, new_de, &de2,
--			&undo));
-+		WARN_ON(err &&
-+			ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo));
+-		WARN_ON(err &&
+-			ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo));
++		if (err && ni_remove_name(new_dir_ni, ni, new_de, &de2, &undo))
++			_ntfs_bad_inode(&ni->vfs_inode);
  	}
  
  	/*
-@@ -3224,7 +3224,8 @@ static bool ni_update_parent(struct ntfs_inode *ni, struct NTFS_DUP_INFO *dup,
- 		if (attr) {
- 			const struct REPARSE_POINT *rp;
- 
--			rp = resident_data_ex(attr, sizeof(struct REPARSE_POINT));
-+			rp = resident_data_ex(attr,
-+					      sizeof(struct REPARSE_POINT));
- 			/* If ATTR_REPARSE exists 'rp' can't be NULL. */
- 			if (rp)
- 				dup->extend_data = rp->ReparseTag;
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index f34e0a786bb60..120691bc71ee9 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -989,9 +989,9 @@ int ntfs_write_begin(const struct kiocb *iocb, struct address_space *mapping,
- /*
-  * ntfs_write_end - Address_space_operations::write_end.
-  */
--int ntfs_write_end(const struct kiocb *iocb,
--		   struct address_space *mapping, loff_t pos,
--		   u32 len, u32 copied, struct folio *folio, void *fsdata)
-+int ntfs_write_end(const struct kiocb *iocb, struct address_space *mapping,
-+		   loff_t pos, u32 len, u32 copied, struct folio *folio,
-+		   void *fsdata)
- {
- 	struct inode *inode = mapping->host;
- 	struct ntfs_inode *ni = ntfs_i(inode);
-@@ -1113,7 +1113,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 	typeof(rp->SymbolicLinkReparseBuffer) *rs;
- 	bool is_absolute;
- 
--	is_absolute = (strlen(symname) > 1 && symname[1] == ':');
-+	is_absolute = symname[0] && symname[1] == ':';
- 
- 	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2, is_absolute), GFP_NOFS);
- 	if (!rp)
-@@ -1150,17 +1150,19 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 
- 	/* PrintName + SubstituteName. */
- 	rs->SubstituteNameOffset = cpu_to_le16(sizeof(short) * err);
--	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
-+	rs->SubstituteNameLength =
-+		cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
- 	rs->PrintNameLength = rs->SubstituteNameOffset;
- 
- 	/*
- 	 * TODO: Use relative path if possible to allow Windows to
- 	 * parse this path.
--	 * 0-absolute path 1- relative path (SYMLINK_FLAG_RELATIVE).
-+	 * 0-absolute path, 1- relative path (SYMLINK_FLAG_RELATIVE).
- 	 */
- 	rs->Flags = cpu_to_le32(is_absolute ? 0 : SYMLINK_FLAG_RELATIVE);
- 
--	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name, sizeof(short) * err);
-+	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name,
-+		sizeof(short) * err);
- 
- 	if (is_absolute) {
- 		/* Decorate SubstituteName. */
-@@ -1649,7 +1651,8 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
- 		 * Use ni_find_attr cause layout of MFT record may be changed
- 		 * in ntfs_init_acl and ntfs_save_wsl_perm.
- 		 */
--		attr = ni_find_attr(ni, NULL, NULL, ATTR_NAME, NULL, 0, NULL, NULL);
-+		attr = ni_find_attr(ni, NULL, NULL, ATTR_NAME, NULL, 0, NULL,
-+				    NULL);
- 		if (attr) {
- 			struct ATTR_FILE_NAME *fn;
- 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 747a2a66c488d..64cde1a856f44 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -207,13 +207,13 @@ static int ntfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- }
- 
- /*
-- * ntfs_mkdir- inode_operations::mkdir
-+ * ntfs_mkdir - inode_operations::mkdir
-  */
- static struct dentry *ntfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 				 struct dentry *dentry, umode_t mode)
- {
--	return ERR_PTR(ntfs_create_inode(idmap, dir, dentry, NULL, S_IFDIR | mode, 0,
--					 NULL, 0, NULL));
-+	return ERR_PTR(ntfs_create_inode(idmap, dir, dentry, NULL,
-+					 S_IFDIR | mode, 0, NULL, 0, NULL));
- }
- 
- /*
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 7e3d51b8d2ddf..99a78204b9865 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -585,7 +585,8 @@ int ni_add_name(struct ntfs_inode *dir_ni, struct ntfs_inode *ni,
- 		struct NTFS_DE *de);
- 
- int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
--	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de);
-+	      struct ntfs_inode *ni, struct NTFS_DE *de,
-+	      struct NTFS_DE *new_de);
- 
- bool ni_is_dirty(struct inode *inode);
- int ni_write_parents(struct ntfs_inode *ni, int sync);
-@@ -711,8 +712,7 @@ int ntfs_set_size(struct inode *inode, u64 new_size);
- int ntfs_get_block(struct inode *inode, sector_t vbn,
- 		   struct buffer_head *bh_result, int create);
- int ntfs_write_begin(const struct kiocb *iocb, struct address_space *mapping,
--		     loff_t pos, u32 len, struct folio **foliop,
--		     void **fsdata);
-+		     loff_t pos, u32 len, struct folio **foliop, void **fsdata);
- int ntfs_write_end(const struct kiocb *iocb, struct address_space *mapping,
- 		   loff_t pos, u32 len, u32 copied, struct folio *folio,
- 		   void *fsdata);
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 66ad6d82bf5c5..346c52f952076 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -16,6 +16,13 @@
-  * mi  - MFT inode               - One MFT record(usually 1024 bytes or 4K), consists of attributes.
-  * ni  - NTFS inode              - Extends linux inode. consists of one or more mft inodes.
-  * index - unit inside directory - 2K, 4K, <=page size, does not depend on cluster size.
-+ * resident attribute            - Attribute with content stored directly in the MFT record
-+ * non-resident attribute        - Attribute with content stored in clusters
-+ * data_size                     - Size of attribute content in bytes. Equal to inode->i_size
-+ * valid_size                    - Number of bytes written to the non-resident attribute
-+ * allocated_size                - Total size of clusters allocated for non-resident content
-+ * total_size                    - Actual size of allocated clusters for sparse or compressed attributes
-+ *                               - Constraint: valid_size <= data_size <= allocated_size
-  *
-  * WSL - Windows Subsystem for Linux
-  * https://docs.microsoft.com/en-us/windows/wsl/file-permissions
-@@ -289,10 +296,8 @@ static const struct fs_parameter_spec ntfs_fs_parameters[] = {
- /*
-  * Load nls table or if @nls is utf8 then return NULL.
-  *
-- * It is good idea to use here "const char *nls".
-- * But load_nls accepts "char*".
-  */
--static struct nls_table *ntfs_load_nls(char *nls)
-+static struct nls_table *ntfs_load_nls(const char *nls)
- {
- 	struct nls_table *ret;
- 
-@@ -567,10 +572,8 @@ static void ntfs_create_procdir(struct super_block *sb)
- 	if (e) {
- 		struct ntfs_sb_info *sbi = sb->s_fs_info;
- 
--		proc_create_data("volinfo", 0444, e,
--				 &ntfs3_volinfo_fops, sb);
--		proc_create_data("label", 0644, e,
--				 &ntfs3_label_fops, sb);
-+		proc_create_data("volinfo", 0444, e, &ntfs3_volinfo_fops, sb);
-+		proc_create_data("label", 0644, e, &ntfs3_label_fops, sb);
- 		sbi->procdir = e;
- 	}
- }
-@@ -601,10 +604,12 @@ static void ntfs_remove_proc_root(void)
- 	}
- }
- #else
--static void ntfs_create_procdir(struct super_block *sb) {}
--static void ntfs_remove_procdir(struct super_block *sb) {}
--static void ntfs_create_proc_root(void) {}
--static void ntfs_remove_proc_root(void) {}
-+// clang-format off
-+static void ntfs_create_procdir(struct super_block *sb){}
-+static void ntfs_remove_procdir(struct super_block *sb){}
-+static void ntfs_create_proc_root(void){}
-+static void ntfs_remove_proc_root(void){}
-+// clang-format on
- #endif
- 
- static struct kmem_cache *ntfs_inode_cachep;
-@@ -1241,8 +1246,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	sb->s_export_op = &ntfs_export_ops;
- 	sb->s_time_gran = NTFS_TIME_GRAN; // 100 nsec
- 	sb->s_xattr = ntfs_xattr_handlers;
--	if (options->nocase)
--		set_default_d_op(sb, &ntfs_dentry_ops);
-+	set_default_d_op(sb, options->nocase ? &ntfs_dentry_ops : NULL);
- 
- 	options->nls = ntfs_load_nls(options->nls_name);
- 	if (IS_ERR(options->nls)) {
-@@ -1666,7 +1670,6 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- out:
- 	ntfs3_put_sbi(sbi);
- 	kfree(boot2);
--	ntfs3_put_sbi(sbi);
- 	return err;
- }
- 
 -- 
 2.53.0
 
