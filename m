@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EEA4F93D0;
-	Tue, 13 Oct 2026 11:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8134F93DC;
+	Tue, 13 Oct 2026 11:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892655; cv=none; b=NR3khH8/7XW5b4+lP7rBKWr43+b3yUcNCnHKiNXsTu0/6U+l4Ho+NCb3IFgU5eLLZXA4kCCTeDfxkxBZGDHGRUzX2lKuUeSQoAow3spbi2UkUScAeDrKqHepcdkCtR4Y034eiW9xMlOmMZgfXMXdtLE/i2olBq2yCi/t8FfEweY=
+	t=1791892658; cv=none; b=HCNkHF4t9Zz24nT0C3hyf4fgd9Si1uSGgO04wfikJA9DsNyOv1ZlDNiHTve+HTewmf3NPTAhqLz6rNCcQPCd6jEcdl7RBPwoxtSh1NIHT/eQJAyV7H1plJ1+THe9Uyw7dorppu6TYz6nka8v6eaW0ASopvEdMHiTig6Q7Qo6gXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892655; c=relaxed/simple;
-	bh=NslqmJImAM/MU/XeDIO729D74MjeuUi7Y3MJ/E1E98Y=;
+	s=arc-20240116; t=1791892658; c=relaxed/simple;
+	bh=88kwRupNi+dzJyhYlsyni1hSyt7fTfnoo/uD0C5IK9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJOv4S5IUWxz6i77p5LfCXdQ8euo56nyj6GrINXvjw3ZgNjSMzG+Yc1n1qDKhdMuVYHTomkpLhmDy5xi4QQCrIPmCT+JfIeXV1qFjSH90S3VCjg4Pkbdh13/SGE7vLPBTR1IWH0dfWRQQ+6AjPyStipvt9NWl8xux6U6iWKLShg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzxRmsi1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBuE4Tt4t7bjz0WWyoq4Ji3xV9bmVZcM4Fbb9PikW15cSQviUeTBl21qviovijUiw4HUxBPZo1ff13BKBNFT424z0EvO57SZWg++MXOySGovV/Rt3NGq5092ck60whUVWqqBNHyWdUUcM1kRbV6do9EcBPx7kF/9qMWX3810AFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjqKfFVX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzxRmsi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C9B1F000FF;
-	Tue, 13 Oct 2026 11:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjqKfFVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03461F00899;
+	Tue, 13 Oct 2026 11:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892654;
-	bh=QYIFE7hQ3m8rHQ2VZ/kdLQGFJLyZnRawVXL1z9EMWdo=;
+	s=korg; t=1791892657;
+	bh=X1i8gAUNjHNGAg0NjEPOqBe4ml7B0fVtH+T2jYeDKQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzxRmsi1a/moGqOo59HLK6U41gyWUn0BwxyEF8z0rRnv7+qyjxdbLmJS1Z97MdFhz
-	 ROYmUM6wF2A41x2JMslWvrD1MRLViUnF1DFyo0+wMMf9VtRw87lwWiFCcWSn4aimm/
-	 fOsOc4g8uihdML2f9eYuZUhBOyA+pSq5OWKrZzEk=
+	b=CjqKfFVXJS36uKR1+V1IFOgQ1PKsyuVmJ1yY3IsISeFbADR/WRdxSktvimZwDPSZE
+	 8OcW8aBjnR/SuHNDo0Zv20zCRzJlijHOs55xzybT0S+0SIrk9pRT2Ycl2vGmUVlU9V
+	 z8RfKE4C+EjR9WWrOWStG3hn1+bJr1I4KU/+AowY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 245/281] spi: sg2044-nor: Return transfer errors
-Date: Tue, 13 Oct 2026 13:39:21 +0200
-Message-ID: <20261013112901.093152454@linuxfoundation.org>
+Subject: [PATCH 7.2 219/281] net: make dev_xdp_sb_prog_count() see programs attached through a link
+Date: Tue, 13 Oct 2026 13:38:55 +0200
+Message-ID: <20261013112900.474500728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,71 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit e130c54fbb603f9aeacf5029789b4a2c8c48f416 ]
+[ Upstream commit d333c8bca6dc3c5e978f6698d39dd799f3b0dc8d ]
 
-The transfer helpers return errors, but both dispatchers discard them.
-Return these errors to the SPI memory layer instead of reporting success.
+ethtool refuses to enable tcp-data-split on a device running
+a single-buffer XDP program (which can't deal with the payload
+landing in a separate buffer). dev_xdp_sb_prog_count() only looks
+at xdp_state[].prog though, ignoring bpf_link integration.
+Get the prog pointer from dev_xdp_prog(), which will consult both.
 
-Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Link: https://patch.msgid.link/20261001-fix-sg204xspi-v2-1-014dbaf22b5e@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+bpf_xdp_link_update() needs a bit of a touch-up, too, since
+ethtool calls dev_xdp_sb_prog_count() with just the instance
+lock (for ops-locked devices) - we now have to make sure the
+link updates happen under that lock.
+
+Spotted by AI while reviewing the XDP propagation series,
+verified and tested on netdevsim with a C test along these lines:
+
+  link = bpf_program__attach_xdp(prog, ifindex);
+  system("ethtool -G eth0 tcp-data-split on")
+
+Fixes: 197258f0ef68 ("net: ethtool: add hds_config member in ethtool_netdev_state")
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20261001012559.297751-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sg2044-nor.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/core/dev.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
-index f3bcb8a1b92bb..ff026ca0f7663 100644
---- a/drivers/spi/spi-sg2044-nor.c
-+++ b/drivers/spi/spi-sg2044-nor.c
-@@ -307,15 +307,15 @@ static ssize_t sg2044_spifmc_tran_cmd(struct sg2044_spifmc *spifmc,
- 	return 0;
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 6f75d1d1af32c..1a06976e19563 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10356,13 +10356,15 @@ EXPORT_SYMBOL_GPL(dev_xdp_prog_count);
  
--static void sg2044_spifmc_trans(struct sg2044_spifmc *spifmc,
--				const struct spi_mem_op *op)
-+static int sg2044_spifmc_trans(struct sg2044_spifmc *spifmc,
-+			       const struct spi_mem_op *op)
+ u8 dev_xdp_sb_prog_count(struct net_device *dev)
  {
- 	if (op->data.dir == SPI_MEM_DATA_IN)
--		sg2044_spifmc_read(spifmc, op);
-+		return sg2044_spifmc_read(spifmc, op);
- 	else if (op->data.dir == SPI_MEM_DATA_OUT)
--		sg2044_spifmc_write(spifmc, op);
-+		return sg2044_spifmc_write(spifmc, op);
- 	else
--		sg2044_spifmc_tran_cmd(spifmc, op);
-+		return sg2044_spifmc_tran_cmd(spifmc, op);
++	struct bpf_prog *prog;
+ 	u8 count = 0;
+ 	int i;
+ 
+-	for (i = 0; i < __MAX_XDP_MODE; i++)
+-		if (dev->xdp_state[i].prog &&
+-		    !dev->xdp_state[i].prog->aux->xdp_has_frags)
++	for (i = 0; i < __MAX_XDP_MODE; i++) {
++		prog = dev_xdp_prog(dev, i);
++		if (prog && !prog->aux->xdp_has_frags)
+ 			count++;
++	}
+ 	return count;
  }
  
- static ssize_t sg2044_spifmc_trans_reg(struct sg2044_spifmc *spifmc,
-@@ -389,19 +389,20 @@ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
- 				 const struct spi_mem_op *op)
- {
- 	struct sg2044_spifmc *spifmc;
-+	int ret;
+@@ -10742,11 +10744,12 @@ static int bpf_xdp_link_update(struct bpf_link *link, struct bpf_prog *new_prog,
+ 	bpf_op = dev_xdp_bpf_op(xdp_link->dev, mode);
+ 	err = dev_xdp_install(xdp_link->dev, mode, bpf_op, NULL,
+ 			      xdp_link->flags, new_prog);
++	if (!err)
++		old_prog = xchg(&link->prog, new_prog);
+ 	netdev_unlock_ops(xdp_link->dev);
+ 	if (err)
+ 		goto out_unlock;
  
- 	spifmc = spi_controller_get_devdata(mem->spi->controller);
+-	old_prog = xchg(&link->prog, new_prog);
+ 	bpf_prog_put(old_prog);
  
- 	mutex_lock(&spifmc->lock);
- 
- 	if (op->addr.nbytes == 0)
--		sg2044_spifmc_trans_reg(spifmc, op);
-+		ret = sg2044_spifmc_trans_reg(spifmc, op);
- 	else
--		sg2044_spifmc_trans(spifmc, op);
-+		ret = sg2044_spifmc_trans(spifmc, op);
- 
- 	mutex_unlock(&spifmc->lock);
- 
--	return 0;
-+	return ret;
- }
- 
- static const struct spi_controller_mem_ops sg2044_spifmc_mem_ops = {
+ out_unlock:
 -- 
 2.53.0
 
