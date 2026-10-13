@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CEB20125F;
-	Tue, 13 Oct 2026 12:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0D334692;
+	Tue, 13 Oct 2026 12:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895455; cv=none; b=GqeWtw87LMw4Bn7B3DsSoYvDdaKPpg/ycUqQ6D1xXsRRPqyQptdMgxMBCADJ327KfchOyRGUl/XX8EWtismhx4xQafGpB8bDMrR0HvoM97DNhrqaoAGMt0HFXL0rfz4y3hX/Zy4dVeqYrJTK5E3QRf57DU/bgbHiASVEHnHhrhA=
+	t=1791895457; cv=none; b=UEYiORJvtX6yXfcRMmwE/yuaKygNK/WkULlx7px+HFP3YYeqeTz/4hBrlXlQQGn+B+6LT47aeB83py3EQ/cmQbS1buvk5zr52cyIg3m5ZTNNmOAdry/YdglOHWx1Zc+pqggS7lrJRgAXChU1j/qsrZgrIA9QXovJdlJrHIsW9fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895455; c=relaxed/simple;
-	bh=6ugOny2DEpTbba3letvP2fgUlOj5vwIn7oxa06tKwQc=;
+	s=arc-20240116; t=1791895457; c=relaxed/simple;
+	bh=pzGcWJyeJmFRoUaeTvQ1RU+zOjRXX6/T7A3k23q6CAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNSh9wH0eJ4WKnUs0KUvaAPa8048Ik5p3/Nmx85Z/RdqMFb4artny9uR9iHVvIY7+tbK+1/QRDb5P8ZMSJpTVmHqHIAlNckC+fD8je0Qab2w7rh3jdavJJnzwZ52C1aj5xB1vUR06FzH/KpVHgLf7lIONxLemv59nbtRo/0r+zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfldWRMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qjg+Fqmq7XluynHV2in2iqPWQE3MhJdl+kTIZ/wMD9RUAoBIhsIPkIsvsqu9tKnCgmVQp38HZ1fpj9SL3AL6LxQaNc/iJwrEnh3LmuvW1xBFX7VKdyKKGdYj6t7sKc0whZOfo1Ap22Jj+M/SXirMliv1zDhzEBRgXtx4pEv5SsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0er54iH2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfldWRMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E791F000FF;
-	Tue, 13 Oct 2026 12:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0er54iH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC881F000FF;
+	Tue, 13 Oct 2026 12:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895453;
-	bh=HO7sk2QFU+Eip7TrYiMwjJLXuembQbLSnakIzEIgdaE=;
+	s=korg; t=1791895456;
+	bh=9AUbWiSj5W1eLVRXnJeXgcD3n9JmlvZ2C/fHjWtochU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AfldWRMn0GW8XLdXBXH9mD1znXtsdJNzKmfkHZSpoArnbDg3PpEDbyKX2Zr++BBo5
-	 hGaeILE4cXk7HrD72cKERj8HtPuXXpX04b74YmiVv9F5y7993qzJD3+1QXU9aPuJlb
-	 FvhdjsJUtjskmyR5rGL7OjcTWtZPnubSp5cu8HDw=
+	b=0er54iH2sSto1aymIWKIK/wXZgZKzMadVNsMfg3mli3KThKvHK91phjV9xtwnDIdQ
+	 dpm+W6yiHTCatnjaqmDxkBPvDXK5M+Uys6DG7IK7OAynZ8rDynzblq3O64ox5LO9Tx
+	 u0yCTxW2ftzVb4gdKQCVP/MZ3FxMPlHW8vYFI2Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilberto Conde <gilbertorconde@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 273/497] net: usb: qmi_wwan: add Quectel EG120K-EA
-Date: Tue, 13 Oct 2026 13:37:20 +0200
-Message-ID: <20261013112914.372461158@linuxfoundation.org>
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 282/497] perf: Require kernel access for text poke events
+Date: Tue, 13 Oct 2026 13:37:29 +0200
+Message-ID: <20261013112914.587252288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,68 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gilberto Conde <gilbertorconde@gmail.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit 0f2fd31f63c65c409bd336af3a42d478a9207c1f upstream.
+[ Upstream commit 357e8a77a501d96c9517f01f4a211eed5e9c9184 ]
 
-Add support for the Quectel EG120K-EA LTE Cat.12 module (USB ID
-2c7c:030b). Its QMI interface (interface 4) uses class/subclass/protocol
-ff/ff/ff like the other recent Quectel modules, so match it the same way.
+Perf events with exclude_kernel=1 can be opened without kernel perf
+access. However, exclude_kernel does not suppress text-poke sideband
+records. Every PERF_RECORD_TEXT_POKE is marked PERF_RECORD_MISC_KERNEL
+and contains a raw kernel instruction address.
 
-The product ID is shared with the EM060K, which the option driver
-already knows and uses to claim the serial interfaces. Without a
-qmi_wwan entry the data interface is left unbound.
+An unprivileged task can therefore open and mmap a task-local software
+event with text_poke=1. Both opening a count-only tracepoint event and
+configuring UDP GRO for ESP-in-UDP cause updates to inline static calls;
+the observer receives the relocated addresses of the modified instructions.
+For a known kernel image, any such address reveals the runtime kernel
+text base despite KASLR.
 
-Tested on a GL.iNet GL-X2000, where the module is soldered down and
-enumerates at SuperSpeed: cdc-wdm0 and wwan0 appear and ModemManager
-brings up a data session.
+Call perf_allow_kernel() whenever attr.text_poke is set, regardless of
+exclude_kernel. Events that neither monitor kernel execution nor request
+text-poke records retain their existing permissions.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2c7c ProdID=030b Rev= 5.04
-S:  Manufacturer=Quectel
-S:  Product=EG120K-EA
-S:  SerialNumber=45546267
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#=12 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
-Link: https://patch.msgid.link/20260921093426.2870266-1-gilbertorconde@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e17d43b93e54 ("perf: Add perf text poke event")
+Assisted-by: LLM
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/99131354c41e23188f778b92f90363775b482395.1790573390.git.zcliangcn@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1085,6 +1085,7 @@ static const struct usb_device_id produc
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
-+	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x030b)},	/* Quectel EM060K/EG120K-EA */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0620)},	/* Quectel EM160R-GL */
- 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0800)},	/* Quectel RM500Q-GL */
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 3791c84ffe2cf..41f05c932e15b 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -12893,7 +12893,7 @@ SYSCALL_DEFINE5(perf_event_open,
+ 	if (err)
+ 		return err;
+ 
+-	if (!attr.exclude_kernel ||
++	if (!attr.exclude_kernel || attr.text_poke ||
+ 	    ((attr.sample_type & PERF_SAMPLE_CALLCHAIN) &&
+ 	     !attr.exclude_callchain_kernel)) {
+ 		err = perf_allow_kernel();
+-- 
+2.53.0
+
 
 
