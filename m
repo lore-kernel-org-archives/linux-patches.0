@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CF04F390A;
-	Tue, 13 Oct 2026 11:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81724F3EA5;
+	Tue, 13 Oct 2026 11:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891971; cv=none; b=X17WtVRIKvNESb94dDDndBrrVzyiLEqkncWnAR27cCAWkF2G8URe9cRthpsygMXXQTdVxZ71wNh/4vxhyhEiGSAFe2CXoedGvRfWJFJdTYDgNxxteFXkJRty1ZnIK/39fnXFPPMKIWJw/TPlMiGP5juCDKDRktUgxujbd0H5xqw=
+	t=1791891974; cv=none; b=dgyWmmtfzSapl3x/WRzKDKWnEf4mqOY4rNkot7xVL9OFeJw8I20KjEJqbcMsSzNuNmmMdL6ljwmp5phQQMsRjhbxPFMGMOCVKS2lD/4REPvF9EyIMGeFzytFTyuQgomQp2lqnujz1KD0y1JIRKqfRTEMOhhu9jIVOHTo9O0X9OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891971; c=relaxed/simple;
-	bh=oVxLEhzKn+V/jOuapf66qgv0k8gEZE+F0ag5/nFKjF8=;
+	s=arc-20240116; t=1791891974; c=relaxed/simple;
+	bh=EeOPVZuqC5W4UlMCSrNE7f9zs+o5OOCpEt6D4Z7yTDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJ1n0GT8aSBr7KlJqKInbt9XH3kYJrgqbFMZM+d5wFFkBUXqYwVDHfgoeTQe1DW8IPAs6AmGq+jc+1PBnon7Fo1ZQpgSke8bShQmM9ucKuFaGIrQoGeiVSdhJuI+yYRjsyqxK6q70QdxVRcUvjRJu4oRBPz1IRhMcT6ORZBn9GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6NtvHVE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EpIhmoFKlzac8Vtc21vunp0BiAB46d4jB8afHiD9S11QqkgwSL9710s4gVbW6vqUV3/o5FqE0uzf8KSN4ZJh03z6WSoCKIjx6aZJSgZkS2pmkq4wrgdDyq5xjMd0xslCkghqWyN4tFTBj0Eep2BAA3bp8ho4Z6YhQBiTxHnzcWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfU+8rFi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6NtvHVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0D11F00898;
-	Tue, 13 Oct 2026 11:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfU+8rFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087DA1F00898;
+	Tue, 13 Oct 2026 11:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891970;
-	bh=eVlv5NIXRinjfUNNLRTweCG6oNqBIUz3l2B/P8sVerY=;
+	s=korg; t=1791891973;
+	bh=uAl7eFebQvdhuri1/WaZ1W8yhPBr7QTxAltL+MLJ+xE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6NtvHVEtmlBD2DLlLOZrhAl8xRhIs7bAf/MCqZUY/Y3exlrxTOdYJoNdqv6qa8oy
-	 g1o3xiI2VStcN8UEfe41xRYiQufVG5Y6MTG5uYMAKoQw3rxLK4SeC8lkF7xHklTYcC
-	 j2Mph5LU+/GimsEcmarKsY3xf9pzr48XduhnpR8c=
+	b=pfU+8rFiDsQsxujj4AMbnCNrDwfa/DF+n9HGCU/BE8vsfWaNlk7VwC4Nu8VT9d130
+	 uWp3hHMgXTJEotZGYKNImBSqr2ArZRBKUDGHnK6r3VoDdWM2OxSGDRslqdKXRqur0h
+	 NsFbrJjJH00jNKzrr7p5YKBnQ3mIUyX2a/skbnFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
+	Mohamed Yassine Jebabli <med.jebabli@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 018/281] ALSA: ctxfi: Fix memory leakage when clearing DAO input mappers
-Date: Tue, 13 Oct 2026 13:35:34 +0200
-Message-ID: <20261013112855.493005146@linuxfoundation.org>
+Subject: [PATCH 7.2 019/281] ALSA: hda/tas2781: Accept V1 calibration data without CRC
+Date: Tue, 13 Oct 2026 13:35:35 +0200
+Message-ID: <20261013112855.516431406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,52 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Mohamed Yassine Jebabli <med.jebabli@gmail.com>
 
-commit 593d46fc6af9a0178a46e77d6d24b20d2314165f upstream.
+commit 408249089c48df1a4d23f60b831be3f3c311e6d1 upstream.
 
-Commit e576e7843c0d ("ALSA: ctxfi: Simplify dao_clear_{left,right}_input() functions")
-centralized the DAO input mapper clearing logic in
-dao_clear_input(), but omitted the kfree() calls.
+Some Lenovo BIOSes (e.g. Legion Pro 7 16IRX9H, SSID 17aa:38cd) store
+valid V1 calibration data in the CALI_DATA EFI variable but leave the
+TimeStamp and CRC fields zeroed. The driver rejects such data, so the
+amplifiers always run with default parameters on these machines.
 
-It removes the mapper entries from the list and sets their pointers
-to NULL without freeing the allocated array. This leaks memory each
-time dao_clear_input() is called.
+The rejection was silent until
+commit 4fe238513407 ("ALSA: hda/tas2781: Move and unified the
+calibrated-data getting function for SPI and I2C into the tas2781_hda lib")
+turned it into "V1 CRC error".
 
-Store the base pointer of the allocation before clearing the mapper
-entries and free the array after removing entries from the list.
+The stored values are consistent (R0 = 3.82/3.83 ohm, 1/R0 matching
+within 1e-4), so accept V1 data when both TimeStamp and CRC are zero
+and the first device entry is non-zero, and emit a warning.
 
-Fixes: e576e7843c0d ("ALSA: ctxfi: Simplify dao_clear_{left,right}_input() functions")
+Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harin Lee <me@harin.net>
-Link: https://patch.msgid.link/20261001144501.3050667-2-me@harin.net
+Signed-off-by: Mohamed Yassine Jebabli <med.jebabli@gmail.com>
+Link: https://patch.msgid.link/20261001-tas2781-v1-nocrc-v1-1-ff0c1032ce76@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctdaio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/hda/codecs/side-codecs/tas2781_hda.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -221,14 +221,18 @@ static int dao_set_right_input(struct da
+--- a/sound/hda/codecs/side-codecs/tas2781_hda.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda.c
+@@ -139,9 +139,21 @@ static void tas2781_apply_calib(struct t
+ 		 */
+ 		crc = crc32(~0, data, 84) ^ ~0;
+ 		if (crc != tmp_val[21]) {
+-			cali_data->total_sz = 0;
+-			dev_err(p->dev, "%s: V1 CRC error\n", __func__);
+-			return;
++			/*
++			 * Some Lenovo BIOSes (e.g. Legion Pro 7 16IRX9H,
++			 * SSID 17aa:38cd) store valid V1 calibration data
++			 * but leave TimeStamp and CRC zeroed.
++			 */
++			if (!tmp_val[20] && !tmp_val[21] &&
++			    tmp_val[0] && tmp_val[1]) {
++				dev_warn(p->dev,
++					 "%s: V1 data without CRC, accepting\n",
++					 __func__);
++			} else {
++				cali_data->total_sz = 0;
++				dev_err(p->dev, "%s: V1 CRC error\n", __func__);
++				return;
++			}
+ 		}
  
- static int dao_clear_input(struct dao *dao, unsigned int start, unsigned int end)
- {
-+	struct imapper *entry;
- 	unsigned int i;
- 
--	if (!dao->imappers[start])
-+	entry = dao->imappers[start];
-+	if (!entry)
- 		return 0;
-+
- 	for (i = start; i < end; i++) {
- 		dao->mgr->imap_delete(dao->mgr, dao->imappers[i]);
- 		dao->imappers[i] = NULL;
- 	}
-+	kfree(entry);
- 
- 	return 0;
- }
+ 		for (j = p->ndev - 1; j >= 0; j--) {
 
 
