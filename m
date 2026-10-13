@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B0D4FE2F3;
-	Tue, 13 Oct 2026 12:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC174F85C7;
+	Tue, 13 Oct 2026 12:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894586; cv=none; b=jKRGhrDsFhoKMglIWEZDQ8lJJhu2yttdQwqBM44dFYyO67tVN8OS5m2o0OkafvHqvV9UWXr+AUlkeeQIRexbhmQKlCtKQAbCtuoq5psaJNG8Tc6u0ePncXczMqZp8Zy/rOG/xOnAklksLUPnLKU/97QKTS8yU99VELCtwJy7Sdk=
+	t=1791894589; cv=none; b=V9xv2y7SOPQecIWMmD03nMcT4Z/2vSKXuMw0tTYl9iv81ojyXUEhKIbCwpii+J7UYcot9zVZViKV/lTvwzMVNDGYmDeSY6kBAOmPBTXMn54m4ZV3C9DvqibQfPAYuBtSIxXHA+ZWGgeJb2/XSbq+hjVRpNyok0dga6Y5aOQhYF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894586; c=relaxed/simple;
-	bh=1NYoidqQtB6glXzs/X9c3mIdxuGT9XpsYrDc9JJvobE=;
+	s=arc-20240116; t=1791894589; c=relaxed/simple;
+	bh=Cld4bFiUlgixUW1bNHMqY8gqAsuOoAQtGzUh1d9p4ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrSjDrlWirOwovpzjLb6kYxnqzeQifkcvDoDkFxp+nvX6RohQwXr+xQM5DB29KzqVRlxzjFHCRfVwYl1hOx45ctUGt5m3rDvJJrSoMVFaGiDajklKbYVspDelRyP8LyQjVUYIvxvQOzVXfu7XxoQ1j8MnrxFJ5yNP8DzOvabD18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAr8pulm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ldVU+XOc5J9HQiNJjZSsPEmxIR3TosmMgIWpKOTw55kCfc9hYLn+ep9bh1oF5A6YYFnXX/s8m/1Nm+BrRhvWYeg8s8p0nMQXqj+z4krGactPrbzVFeaez1JvfpNTF8zvNA3yW1flM79btrmycEr5paNE1ztYzy3Bff4Bi6KQ3QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VYNGBek; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAr8pulm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0971F000FF;
-	Tue, 13 Oct 2026 12:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VYNGBek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE271F000FF;
+	Tue, 13 Oct 2026 12:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894585;
-	bh=kYjVZcoZiuZflfYHSeOSc/O7Yo7KIvoQr8TJNUIFWeg=;
+	s=korg; t=1791894588;
+	bh=+fkrDtNGtwejUeUSIvjjPdqCmjFAsDn7KwhhiyMGf2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TAr8pulm5JzSKMmr1xFcsTTpuoelPMbGIG6YwxlH3+MMKe661+vbO9v7eMrsP+/z1
-	 +bE7za3Ey1inL9MdsTlqSco+5TIdhNIVX/LDmZEBqzn/azdkj7fsbXiCBwoRwYYacK
-	 Xd8X86Z2841TDkNrLq7a2bKgSZjHDMIYj4kQrIv4=
+	b=0VYNGBek8845EhIW4B6hbXrN8c3h74EXpydYgfS49hk4U9X1T4UA+7xwsc71UOi26
+	 zxoWUSPHY+jy09eCzfCh4uDQhx0w8snRzgqtBZ+cFJb/L5etEG0og0sQ44lOnTT54D
+	 f18dXa5YqpgT+SX312UwTwBb2zocAgcMKAaphM74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Hao Ge <hao.ge@linux.dev>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 609/621] netfs: Fix missing alloc tagging of direct mempool allocations
-Date: Tue, 13 Oct 2026 13:40:04 +0200
-Message-ID: <20261013112935.250137349@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 610/621] workqueue: fix devm_alloc_workqueue() va_list misuse
+Date: Tue, 13 Oct 2026 13:40:05 +0200
+Message-ID: <20261013112935.273421176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,104 +50,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <hao.ge@linux.dev>
+From: Breno Leitao <leitao@debian.org>
 
-commit b78b728e21c32ec4c330b299f657fb1eb02dffc2 upstream.
+commit 0de4cb473aed57ee4ba7e0551ad27bddc19fc519 upstream.
 
-Commit 1d78d56c43ef ("netfs: Fix folio_queue ENOMEM in writeback by
-adding a mempool") added a mempool for the folio_queues and made the
-request, subrequest and folio_queue allocations distinguish between
-writeback and everything else.  Writeback is part of memory reclaim
-and must not fail due to ENOMEM, so it allocates under GFP_NOFS
-through mempool_alloc(), which may dip into the pool's reserve and,
-if that runs empty, wait for elements to be returned.  The
-GFP_KERNEL paths, which can return -ENOMEM to their callers, invoke
-the pool's ->alloc() callback directly instead.
+devm_alloc_workqueue() built a va_list and passed it as a single
+positional argument to the variadic alloc_workqueue() macro:
 
-The direct call, however, skips the alloc_hooks() wrapper that the
-mempool_alloc() macro provides.  The pool callbacks, mempool_alloc_slab()
-and mempool_kmalloc(), call kmem_cache_alloc_noprof() and kmalloc_noprof()
-and rely on current->alloc_tag having been set by the caller.  With
-CONFIG_MEM_ALLOC_PROFILING_DEBUG=y this leads to
+	va_start(args, max_active);
+	wq = alloc_workqueue(fmt, flags, max_active, args);
+	va_end(args);
 
-    current->alloc_tag not set
-    WARNING: ./include/linux/alloc_tag.h:161 at __alloc_tagging_slab_alloc_hook
-    alloc_tag was not set
-    WARNING: ./include/linux/alloc_tag.h:166 at __alloc_tagging_slab_free_hook
+C does not allow forwarding a va_list through a ... parameter.
+alloc_workqueue() expands to alloc_workqueue_noprof(), which runs
+its own va_start() over its ... params, so the inner
+vsnprintf(wq->name, sizeof(wq->name), fmt, args) in
+__alloc_workqueue() received the outer va_list object as the first
+variadic slot rather than the caller's actual format arguments.
 
-at allocation and free time respectively, as reported when reading
-files on a CIFS mount.  The allocations are also missing from
-/proc/allocinfo.
+Add a new static helper alloc_workqueue_va() that wraps
+__alloc_workqueue() and runs wq_init_lockdep() on success, and
+fold both alloc_workqueue_noprof() and devm_alloc_workqueue_noprof()
+onto it as suggested by Tejun.
 
-Wrap the direct ->alloc() invocations in alloc_hooks() with a new
-mempool_alloc_noreserve() helper in include/linux/mempool.h, next to
-the other alloc_hooks()-wrapped macros such as mempool_alloc().  The
-GFP_KERNEL paths keep their failable allocation semantics, they just
-get tagged now.
+The wq_init_lockdep() step is required on the devm path
+too, otherwise __flush_workqueue()'s on-stack
+COMPLETION_INITIALIZER_ONSTACK_MAP would NULL-deref wq->lockdep_map.
 
-Fixes: 1d78d56c43ef ("netfs: Fix folio_queue ENOMEM in writeback by adding a mempool")
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/0b004319-9ef7-437c-a4dd-174d6a9a83db@mailbox.org/
-Tested-by: Erhard Furtner <erhard_f@mailbox.org>
-Suggested-by: Suren Baghdasaryan <surenb@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Hao Ge <hao.ge@linux.dev>
-Link: https://patch.msgid.link/20260923063759.34667-1-hao.ge@linux.dev
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+No caller changes are required. devm_alloc_ordered_workqueue() is
+a macro forwarding to devm_alloc_workqueue() and inherits the fix.
+Two in-tree callers actively trigger the broken path on every probe:
+
+  drivers/power/supply/mt6370-charger.c:889
+  drivers/power/supply/max77705_charger.c:649
+
+both of which use devm_alloc_ordered_workqueue(dev, "%s", 0,
+dev_name(dev)).
+
+A standalone reproducer module is available at[1].
+
+Link: https://github.com/leitao/debug/blob/main/workqueue/valist/wq_va_test.c [1]
+Fixes: 1dfc9d60a69e ("workqueue: devres: Add device-managed allocate workqueue")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/objects.c        |    4 ++--
- fs/netfs/rolling_buffer.c |    2 +-
- include/linux/mempool.h   |    7 +++++++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ include/linux/workqueue.h |    6 ++++--
+ kernel/workqueue.c        |   28 +++++++++++++++++++---------
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
---- a/fs/netfs/objects.c
-+++ b/fs/netfs/objects.c
-@@ -34,7 +34,7 @@ struct netfs_io_request *netfs_alloc_req
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -529,8 +529,10 @@ alloc_workqueue_noprof(const char *fmt,
+  * Pointer to the allocated workqueue on success, %NULL on failure.
+  */
+ __printf(2, 5) struct workqueue_struct *
+-devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
+-		     int max_active, ...);
++devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
++			    unsigned int flags, int max_active, ...);
++#define devm_alloc_workqueue(...)	\
++	alloc_hooks(devm_alloc_workqueue_noprof(__VA_ARGS__))
  
- 		rreq = mempool_alloc(mempool, gfp);
- 	} else {
--		rreq = mempool->alloc(gfp, mempool->pool_data);
-+		rreq = mempool_alloc_noreserve(mempool, gfp);
- 		if (!rreq)
- 			return ERR_PTR(-ENOMEM);
- 	}
-@@ -206,7 +206,7 @@ struct netfs_io_subrequest *netfs_alloc_
- 	struct kmem_cache *cache = mempool->pool_data;
+ #ifdef CONFIG_LOCKDEP
+ /**
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5875,6 +5875,20 @@ err_destroy:
+ 	return NULL;
+ }
  
- 	if (rreq->gfp == GFP_KERNEL)
--		subreq = mempool->alloc(rreq->gfp, mempool->pool_data);
-+		subreq = mempool_alloc_noreserve(mempool, rreq->gfp);
- 	else
- 		subreq = mempool_alloc(mempool, rreq->gfp);
- 	if (!subreq)
---- a/fs/netfs/rolling_buffer.c
-+++ b/fs/netfs/rolling_buffer.c
-@@ -29,7 +29,7 @@ struct folio_queue *netfs_folioq_alloc(u
- 	struct folio_queue *fq;
- 
- 	if (gfp == GFP_KERNEL)
--		fq = netfs_folioq_pool.alloc(gfp, netfs_folioq_pool.pool_data);
-+		fq = mempool_alloc_noreserve(&netfs_folioq_pool, gfp);
- 	else
- 		fq = mempool_alloc(&netfs_folioq_pool, gfp);
- 	if (fq) {
---- a/include/linux/mempool.h
-+++ b/include/linux/mempool.h
-@@ -67,6 +67,13 @@ extern void *mempool_alloc_noprof(mempoo
- #define mempool_alloc(...)						\
- 	alloc_hooks(mempool_alloc_noprof(__VA_ARGS__))
- 
-+/*
-+ * Allocate a new element without dipping into the pool's reserves or
-+ * waiting.  Returns NULL on failure.
-+ */
-+#define mempool_alloc_noreserve(_pool, _gfp)				\
-+	alloc_hooks((_pool)->alloc(_gfp, (_pool)->pool_data))
++static struct workqueue_struct *alloc_workqueue_va(const char *fmt,
++						   unsigned int flags,
++						   int max_active,
++						   va_list args)
++{
++	struct workqueue_struct *wq;
 +
- extern void *mempool_alloc_preallocated(mempool_t *pool) __malloc;
- extern void mempool_free(void *element, mempool_t *pool);
++	wq = __alloc_workqueue(fmt, flags, max_active, args);
++	if (wq)
++		wq_init_lockdep(wq);
++
++	return wq;
++}
++
+ __printf(1, 4)
+ struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
+ 						unsigned int flags,
+@@ -5884,12 +5898,8 @@ struct workqueue_struct *alloc_workqueue
+ 	va_list args;
  
+ 	va_start(args, max_active);
+-	wq = __alloc_workqueue(fmt, flags, max_active, args);
++	wq = alloc_workqueue_va(fmt, flags, max_active, args);
+ 	va_end(args);
+-	if (!wq)
+-		return NULL;
+-
+-	wq_init_lockdep(wq);
+ 
+ 	return wq;
+ }
+@@ -5901,15 +5911,15 @@ static void devm_workqueue_release(void
+ }
+ 
+ __printf(2, 5) struct workqueue_struct *
+-devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
+-		     int max_active, ...)
++devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
++			    unsigned int flags, int max_active, ...)
+ {
+ 	struct workqueue_struct *wq;
+ 	va_list args;
+ 	int ret;
+ 
+ 	va_start(args, max_active);
+-	wq = alloc_workqueue(fmt, flags, max_active, args);
++	wq = alloc_workqueue_va(fmt, flags, max_active, args);
+ 	va_end(args);
+ 	if (!wq)
+ 		return NULL;
+@@ -5920,7 +5930,7 @@ devm_alloc_workqueue(struct device *dev,
+ 
+ 	return wq;
+ }
+-EXPORT_SYMBOL_GPL(devm_alloc_workqueue);
++EXPORT_SYMBOL_GPL(devm_alloc_workqueue_noprof);
+ 
+ #ifdef CONFIG_LOCKDEP
+ __printf(1, 5)
 
 
