@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD5E4E4C5E;
-	Tue, 13 Oct 2026 12:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7EA47604A;
+	Tue, 13 Oct 2026 12:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894223; cv=none; b=qVhemJq5lDrrzpfKtNccDxnQNQqC9Zcu8ihPngNm7QCi6CqKDwo/8yFaCIOEAICLpTkrjH6kMvL49ViO/h1TSJKEJH32lYvd8UAUQ7xuYQez48v8C5okoqP7S6bzJgRfuGWiyX3mtYXsQqtLYMHrFNyLv7w5D2isk38dmKgXtnc=
+	t=1791894226; cv=none; b=f3gwwOlljeBEwHVvIKM9teZ6HC9FEPGtCIeb/u3aqSXFRyKswEz2hDg4kq+yNb3LS61w3K9p5mBEijSL4tsL2plF2mzuGRcNdSHlxhQofbOa6xWIko+hy2I70+PoDs2Sy99+xY2Dq20Wi63xFkYSxuOpvSuVNFApqLorf3gzc9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894223; c=relaxed/simple;
-	bh=e+Dflg95Qq3s0IP96B9EbJZm1iyxzJ7WrcGcxAG+2Xk=;
+	s=arc-20240116; t=1791894226; c=relaxed/simple;
+	bh=NddVZqHJ255AUOSdINf2KFn3nkAIJjjE6vxvCIlVXDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4JPzkFDVrBm5zfDlUFQ7Ucu8q65PxopeJT8Eo/ysU8YJt011waZBkFbr4gEy+Ef/LnXgOGpfv7vjl4VwkD3XVA7oiQWl9nxFps1/bbvdESeACROzON/+LtDJGjPPxG+jSpMUUvpdJl3mBlM5FG5EtMIQGe7i1tukKHku4HXQEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYXNHwm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CQ1TZyXLnqnmOFsEYfXXpls5jl8F7ucmZUC1gi9Au7yalGuGoLFxP0sgzoaAben4PKpu3zSTySrtVfKxYefYkdWe+SxntepBfihf2bN5jogkTkzNPUPPnkPRQawBd0BtoDmtIpngfqI5Oz4nOAnqvwvmhghnk0Nbge0YqgNgrYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IszcJ0LS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYXNHwm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBD61F000FF;
-	Tue, 13 Oct 2026 12:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IszcJ0LS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477B01F000FF;
+	Tue, 13 Oct 2026 12:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894221;
-	bh=W3jRsvMj7uxorx5JxzfFSShnVNyQbFr7fEwP9p1ptds=;
+	s=korg; t=1791894224;
+	bh=kgyOfTr14dQcCqQ4Bd3bWAIHOOf151GCbXekzDb+2SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYXNHwm6fnwywWhAy1KLYIfjfKv0dk4qX0rE/h1Lgr4kPMA4aPJquCGzuZKtmMrHa
-	 CtHXgFLGy70NEfCv49jhXW1ksEIxnoLK+dyFF/K8zMBE/DX+jqdHsKBJA4EHdG6rP8
-	 V59kbEWrX72iPlFh1VVhDqplLHJloPiFpQTWCXMU=
+	b=IszcJ0LSadl4vRYrYGz9LBTVG2KJVjeC4652KHDdJT9qAfV9FeDzIeDy8h8SYm9MI
+	 PqrPzRqYqBeFFDoUROZQp/C4+N1TRevlhFhqP/ySxnDFkprZxdhotJryiBQEHVJzCP
+	 28nxen1BWKoa6isM4ZycM9jY6kabFup1uhaqI8PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 444/621] thermal: hwmon: Remove hwmon class device along with its parent
-Date: Tue, 13 Oct 2026 13:37:19 +0200
-Message-ID: <20261013112931.368263163@linuxfoundation.org>
+Subject: [PATCH 6.18 435/621] coresight: etm4x: missing cscfg_csdev_disable_active_config() in perf enable
+Date: Tue, 13 Oct 2026 13:37:10 +0200
+Message-ID: <20261013112931.156662859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,216 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 2b57e24d34b2dfc43c81942bb359d6315bf302fb ]
+[ Upstream commit 0a47f0be6557b4a851addd430383a4dc7ee08752 ]
 
-The current code creates one hwmon device per thermal zone type and that
-device is registered under the first thermal zone of the given type.
+In the perf enable path, there are missing cases where
+cscfg_csdev_disable_active_config() is not called:
 
-That turns out to be problematic when the thermal zone holding the
-hwmon device is removed.
+  - Branch broadcast is selected but not supported by the hardware
+  - etm4_enable_hw() fails
 
-For example, say that there are two ACPI thermal zones on a system
+This can lead to a leak of config_desc->active_cnt.
+Fix this by properly calling cscfg_csdev_disable_active_config()
+in these error paths.
 
- /sys/devices/virtual/thermal/thermal_zone0/
- /sys/devices/virtual/thermal/thermal_zone1/
-
-The current code registers a hwmon class device for thermal_zone0 only:
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/
-
-because the type is "acpitz" for both of them, but it adds a sysfs
-attribute that belongs to thermal_zone1 under it:
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp2_input
-
-There is also
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-
-which belongs to thermal_zone0.
-
-When thermal_zone0 is removed, say because the ACPI thermal driver is
-unbound from the underlying platform device, thermal_remove_hwmon_sysfs()
-skips the removal of hwmon0 because of the temp2_input attribute
-belonging to thermal_zone1 which effectively prevents thermal_zone0
-removal from making progress.
-
-Address this by making thermal_remove_hwmon_sysfs() remove the entire
-hwmon class device interface for the given thermal zone type when the
-thermal zone device holding it is removed.
-
-To prevent races with thermal_add_hwmon_sysfs() that may interfere
-with this, carry out the entire addition and removal of hwmon sysfs
-interfaces for thermal zones under thermal_hwmon_list_lock.
-
-Also adjust the layout of the labels in thermal_add_hwmon_sysfs() to
-the current kernel coding style to align with the new "unlock" label.
-
-Link: https://lore.kernel.org/linux-pm/20260402021828.16556-1-liujia6264@gmail.com/
-Fixes: f6b6b52ef7a5 ("thermal_hwmon: Pass the originating device down to hwmon_device_register_with_info")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5094738.GXAFRqVoOG@rafael.j.wysocki
+Fixes: 810ac401db1f ("coresight: etm4x: Add complex configuration handlers to etmv4")
+Suggested-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-6-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 87 +++++++++++++--------------------
- 1 file changed, 34 insertions(+), 53 deletions(-)
+ .../coresight/coresight-etm4x-core.c          | 51 +++++++++++--------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index 342a5eb85093c..a136501bca261 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -95,34 +95,12 @@ thermal_hwmon_lookup_by_type(const struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	char type[THERMAL_NAME_LENGTH];
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 522e128174467..be05ef41fd734 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -752,8 +752,7 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+ 	struct etmv4_config *config = &drvdata->config;
+ 	struct perf_event_attr *attr = &event->attr;
+-	unsigned long cfg_hash;
+-	int preset, cc_threshold;
++	int cc_threshold;
  
--	mutex_lock(&thermal_hwmon_list_lock);
- 	list_for_each_entry(hwmon, &thermal_hwmon_list, node) {
- 		strscpy(type, tz->type);
- 		strreplace(type, '-', '_');
--		if (!strcmp(hwmon->type, type)) {
--			mutex_unlock(&thermal_hwmon_list_lock);
-+		if (!strcmp(hwmon->type, type))
- 			return hwmon;
--		}
- 	}
--	mutex_unlock(&thermal_hwmon_list_lock);
--
--	return NULL;
--}
--
--/* Find the temperature input matching a given thermal zone */
--static struct thermal_hwmon_temp *
--thermal_hwmon_lookup_temp(const struct thermal_hwmon_device *hwmon,
--			  const struct thermal_zone_device *tz)
--{
--	struct thermal_hwmon_temp *temp;
--
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_for_each_entry(temp, &hwmon->tz_list, hwmon_node)
--		if (temp->tz == tz) {
--			mutex_unlock(&thermal_hwmon_list_lock);
--			return temp;
--		}
--	mutex_unlock(&thermal_hwmon_list_lock);
+ 	/* Clear configuration from previous run */
+ 	memset(config, 0, sizeof(struct etmv4_config));
+@@ -834,20 +833,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
+ 		/* bit[12], Return stack enable bit */
+ 		config->cfg |= TRCCONFIGR_RS;
  
- 	return NULL;
- }
-@@ -138,7 +116,9 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	struct thermal_hwmon_temp *temp;
- 	int new_hwmon_device = 1;
--	int result;
-+	int result = 0;
-+
-+	mutex_lock(&thermal_hwmon_list_lock);
- 
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (hwmon) {
-@@ -147,8 +127,10 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	hwmon = kzalloc(sizeof(*hwmon), GFP_KERNEL);
--	if (!hwmon)
--		return -ENOMEM;
-+	if (!hwmon) {
-+		result = -ENOMEM;
-+		goto unlock;
-+	}
- 
- 	INIT_LIST_HEAD(&hwmon->tz_list);
- 	strscpy(hwmon->type, tz->type, THERMAL_NAME_LENGTH);
-@@ -196,24 +178,24 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 		temp->temp_crit_present = true;
- 	}
- 
--	mutex_lock(&thermal_hwmon_list_lock);
- 	if (new_hwmon_device)
- 		list_add_tail(&hwmon->node, &thermal_hwmon_list);
- 	list_add_tail(&temp->hwmon_node, &hwmon->tz_list);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	return 0;
-+	goto unlock;
- 
-- unregister_input:
-+unregister_input:
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
-- free_temp_mem:
-+free_temp_mem:
- 	kfree(temp);
-- unregister_name:
-+unregister_name:
- 	if (new_hwmon_device)
- 		hwmon_device_unregister(hwmon->device);
-- free_mem:
-+free_mem:
- 	if (new_hwmon_device)
- 		kfree(hwmon);
-+unlock:
-+	mutex_unlock(&thermal_hwmon_list_lock);
- 
- 	return result;
- }
-@@ -221,8 +203,11 @@ EXPORT_SYMBOL_GPL(thermal_add_hwmon_sysfs);
- 
- void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- {
-+	struct thermal_hwmon_temp *temp, *entry;
- 	struct thermal_hwmon_device *hwmon;
--	struct thermal_hwmon_temp *temp;
-+	bool unregister;
-+
-+	guard(mutex)(&thermal_hwmon_list_lock);
- 
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (unlikely(!hwmon)) {
-@@ -231,29 +216,25 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 		return;
- 	}
- 
--	temp = thermal_hwmon_lookup_temp(hwmon, tz);
--	if (unlikely(!temp)) {
--		/* Should never happen... */
--		dev_dbg(&tz->device, "temperature input lookup failed!\n");
--		return;
+-	/*
+-	 * Set any selected configuration and preset.
+-	 *
+-	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
+-	 * in the perf attributes defined in coresight-etm-perf.c.
+-	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
+-	 * A zero configid means no configuration active, preset = 0 means no preset selected.
+-	 */
+-	if (attr->config2 & GENMASK_ULL(63, 32)) {
+-		cfg_hash = (u32)(attr->config2 >> 32);
+-		preset = attr->config & 0xF;
+-		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
 -	}
-+	unregister = hwmon->device->parent == &tz->device;
+-
+ 	/* branch broadcast - enable if selected and supported */
+ 	if (attr->config & BIT(ETM_OPT_BRANCH_BROADCAST)) {
+ 		if (!drvdata->trcbb) {
+@@ -871,7 +856,9 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 			    struct coresight_path *path)
+ {
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+-	int ret;
++	struct perf_event_attr *attr = &event->attr;
++	unsigned long cfg_hash;
++	int ret, preset;
  
--	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (temp->temp_crit_present)
--		device_remove_file(hwmon->device, &temp->temp_crit.attr);
-+	list_for_each_entry_safe_reverse(temp, entry, &hwmon->tz_list, hwmon_node) {
-+		if (!unregister && temp->tz != tz)
-+			continue;
- 
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_del(&temp->hwmon_node);
--	kfree(temp);
--	if (!list_empty(&hwmon->tz_list)) {
--		mutex_unlock(&thermal_hwmon_list_lock);
--		return;
-+		device_remove_file(hwmon->device, &temp->temp_input.attr);
-+		if (temp->temp_crit_present)
-+			device_remove_file(hwmon->device, &temp->temp_crit.attr);
+ 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id()))
+ 		return -EINVAL;
+@@ -882,7 +869,23 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 	/* Configure the tracer based on the session's specifics */
+ 	ret = etm4_parse_event_config(csdev, event);
+ 	if (ret)
+-		goto out;
++		goto err;
 +
-+		list_del(&temp->hwmon_node);
-+		kfree(temp);
- 	}
--	list_del(&hwmon->node);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	hwmon_device_unregister(hwmon->device);
--	kfree(hwmon);
-+	if (unregister) {
-+		list_del(&hwmon->node);
-+		hwmon_device_unregister(hwmon->device);
-+		kfree(hwmon);
++	/*
++	 * Set any selected configuration and preset.
++	 *
++	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
++	 * in the perf attributes defined in coresight-etm-perf.c.
++	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
++	 * A zero configid means no configuration active, preset = 0 means no preset selected.
++	 */
++	cfg_hash = (u32)(attr->config2 >> 32);
++	if (cfg_hash) {
++		preset = attr->config & 0xF;
++		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
++		if (ret)
++			goto err;
 +	}
+ 
+ 	drvdata->trcid = path->trace_id;
+ 
+@@ -891,11 +894,17 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 
+ 	/* And enable it */
+ 	ret = etm4_enable_hw(drvdata);
++	if (ret) {
++		if (cfg_hash)
++			cscfg_csdev_disable_active_config(csdev);
++		goto err;
++	}
+ 
+-out:
++	return 0;
++
++err:
+ 	/* Failed to start tracer; roll back to DISABLED mode */
+-	if (ret)
+-		coresight_set_mode(csdev, CS_MODE_DISABLED);
++	coresight_set_mode(csdev, CS_MODE_DISABLED);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(thermal_remove_hwmon_sysfs);
  
 -- 
 2.53.0
