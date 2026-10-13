@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B013CA486;
-	Tue, 13 Oct 2026 12:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C895D4156C6;
+	Tue, 13 Oct 2026 12:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894368; cv=none; b=mImbyDimNuIKMDoTRLSTxD+mFAJZqKe14zcrE5HXuQgfg7nysUdvvTaBGU3UgLrfnCvbNzYHso8cTy5gtsV+XnlyGThgoZ/XhwqCO10Tn7oi49xSQBH7RcE/KE8NqLhXJF1yrlM6yeM88B288qgxzzh98umqPTZMHCpZWPCkIs8=
+	t=1791894373; cv=none; b=hCdFob+EN1z7TSOoo4i9IP65rQp55UuYs/RXSy96psjodfQxgOlc5f7aGUKAZcFgDEbe4ISWLQSZj4NK9KkRaknAWxgSu6RJPStwTLNZ7nPo2fNgVpAm4nsEDO8KlrIT6kKlZwMmyiFP9uiov+Vm1GZsWyLhsO8h/fw/SbMboQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894368; c=relaxed/simple;
-	bh=QKzOs4n5MiFTF9Y3Ovr3ECSdJmprY4U8uoL498JpZrU=;
+	s=arc-20240116; t=1791894373; c=relaxed/simple;
+	bh=rbNKInB4wRCZOZ3BVu+9q0gFMGHyfuoYNjz+qDrv/WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y89FZFbMG0yuJfIrWmCvnWyFqw1WEpRQbEpaGsKJqODT2JGYhra4KKoxmKg5CkukTt4fBNEG2Uwla36qPqtRcmkn0zp7kplPPcMWxf0TYTwSNmzd0hcsG+vQRrAGkxLJhkN3QHHNwA3UCTVbr3NR9k2heGaIuG/Kgv6wXNrTqYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvgTwhci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tIWkGPhF5EeDoTLAEZ5Pu/R7mm2f2AzqZDAvr1F4pv9+4FJOD22U82lzrORC5vvTFi1XIB8SKbwLyzGbo3qjoI14+OuAhBdAS1VAsSiGMGDGKt8e2eyH2WBK51jj72b2KxrEiXRGRBpvNuIZZ0jxmyLYQG59eoWw8HUn+NWy4M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miNdQtTg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvgTwhci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BB21F000FF;
-	Tue, 13 Oct 2026 12:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miNdQtTg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F561F000FF;
+	Tue, 13 Oct 2026 12:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894367;
-	bh=3fsh4fIf9Va/Rm+c5AdoDiniz88pESCCxibe+zSkXLc=;
+	s=korg; t=1791894370;
+	bh=lHKDn+7H4GLf2/ktg/DEtILIhhEJNzsGk+zKG3ZPgzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvgTwhci7dyCkUg8ptnHtNIweL9CR9BivZF6uIdPsnkUZr5Cpx2jSHBumED8NFS/p
-	 ir6+sRR4au2jEtYmpcW8co3hZDc53pIVw5oKo/ENRBsDKPD33pTtCKtROymDAzdWvf
-	 agBvr/f5b/NUimeim27GcIREQj1P6/aZxNUqJn30=
+	b=miNdQtTgscbhjtSNaKFW4xbtQCbVP8bEotQZMsVJBHwqrUy0TSQlaxGExFGjDSxCK
+	 a5SLNhQAzl01gaX33bMVHkRzuGjcicESfjojA+p3DoblDLOFvEI8rCZjZDCSSm2YXx
+	 uFevxwqOhnSn05zvpvd05U9zl5R9pWJSClAlADuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 530/621] arm64: dts: lx2160a: fix IIC1 pinmux submask rejected by pinctrl-single
-Date: Tue, 13 Oct 2026 13:38:45 +0200
-Message-ID: <20261013112933.397172564@linuxfoundation.org>
+Subject: [PATCH 6.18 539/621] drm/aspeed: Balance the display clock enable on teardown
+Date: Tue, 13 Oct 2026 13:38:54 +0200
+Message-ID: <20261013112933.610849673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,75 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 6affdda171ca8f2e082e8c4fba56233a2f8c9910 ]
+[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
 
-IIC1_PMUX is a single bit field at RCWSR14 bit 10, so the mask for the
-two iic1 pinmux nodes was narrowed from 0x7 to 0x1 to avoid writing the
-two reserved bits next to it.
+aspeed_gfx_load() enables the display clock without checking the return
+value and never disables it on probe failure or removal. devm_clk_get()
+only releases the clock reference, leaving the enable unbalanced.
 
-With pinctrl-single,bit-per-mux the driver does not take the supplied
-mask as the bits to modify. It derives the field from the node's
-pinctrl-single,function-mask, which is 0x7 here, and then requires the
-supplied mask to match it exactly:
+Use devm_clk_get_enabled() to handle enable failures and automatically
+disable and unprepare the clock on probe failure or removal.
 
-	bit_pos = __ffs(mask);			/* 10 */
-	mask_pos = ((pcs->fmask) << bit_pos);	/* 0x7 << 10 = 0x1c00 */
-	submask = mask & mask_pos;		/* 0x400 */
-	...
-	if (submask != mask_pos) {
-		dev_warn(pcs->dev,
-			 "Invalid submask 0x%x for %pOFn at 0x%x\n",
-			 submask, np, offset);
-		continue;
-	}
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-A one bit mask gives submask 0x400 against mask_pos 0x1c00, so both
-nodes are rejected and the pins are never muxed with this message:
-
-  pinctrl-single 70010012c.pinmux: Invalid submask 0x400 for iic1-i2c-pins
-  pinctrl-single 70010012c.pinmux: Invalid submask 0x400 for iic1-gpio-pins
-
-The values are not changed:
-  - 0x0 selects IIC1
-  - 0x1 << 10 selects GPIO_1[3:2].
-
-Fixes: 7a3cc49ad1fc ("arm64: dts: lx2160a: change i2c0 (iic1) pinmux mask to one bit")
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Reviewed-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index b0150b18ffcaa..7cf7485721a82 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1864,12 +1864,19 @@ i2c6_i2c7_pins: iic8-iic7-i2c-pins {
- 			};
+diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+index 46094cca29747..a226eb2fbbe69 100644
+--- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
++++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+@@ -190,13 +190,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
+ 	}
+ 	reset_control_deassert(priv->rst);
  
- 			/* RCWSR14 */
-+			/*
-+			 * IIC1_PMUX is a single bit at RCWSR14[10], but bit-per-mux
-+			 * uses the mask for the field to clear before applying the
-+			 * value.
-+			 * So bits 11 and 12, which are reserved, are written as 0
-+			 * on every mux switch, it is harmless.
-+			 */
- 			i2c0_pins: iic1-i2c-pins {
--				pinctrl-single,bits = <0x8 0x0 (0x1 << 10)>;
-+				pinctrl-single,bits = <0x8 0x0 (0x7 << 10)>;
- 			};
+-	priv->clk = devm_clk_get(drm->dev, NULL);
++	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
+ 	if (IS_ERR(priv->clk)) {
+ 		dev_err(&pdev->dev,
+-			"missing or invalid clk device tree entry");
++			"failed to get and enable clock\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	clk_prepare_enable(priv->clk);
  
- 			gpio0_3_2_pins: iic1-gpio-pins {
--				pinctrl-single,bits = <0x8 (0x1 << 10) (0x1 << 10)>;
-+				pinctrl-single,bits = <0x8 (0x1 << 10) (0x7 << 10)>;
- 			};
- 		};
- 
+ 	/* Sanitize control registers */
+ 	writel(0, priv->base + CRT_CTRL1);
 -- 
 2.53.0
 
