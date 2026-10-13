@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B9E4FDE44;
-	Tue, 13 Oct 2026 12:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76F83C1D47;
+	Tue, 13 Oct 2026 12:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893790; cv=none; b=VtqdaMFKoDlG+ZIZZsbhwM5bk1QxgQI2UUa77uM6IidWKqRBL0c2iyzvF89n+mZzsNSjqkTcXsyvkZScstYKzN8lNw2CTbDfSi58j1bM01h1V8PiGJaegf0RfX93kNvaOgpxBsDFbDDG9p40u+YH4a0InR0Y47TmPyC46E/HG3c=
+	t=1791893793; cv=none; b=fId1DhZQzkh88MqO9yuJV1gtkaNJ4+Bkg8ePHcKCS4qb2TAoWSnPWdIWn3yIP3jizloDU3bRuSeK0dsWTv38haN9w22KpPmp49jpopHoP94NCcy09uFd83MppKrVbg3YQjKSt3eLqFRzSrVv5+c+RBB+PPXrNwpuAwK7AJNJwQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893790; c=relaxed/simple;
-	bh=kWmepwZ0WnUnUh/BNzaKPq1lUPM9UesMtJdELUcnQDs=;
+	s=arc-20240116; t=1791893793; c=relaxed/simple;
+	bh=C006cHIhM1Nf7z1ZJuMsErFQP3IBJhijI9hzroq8F24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A9vkmoMRUlCvQZEMwP/GQ6wzIpfSoNpRAMKG9BHiQJCZpc3yaGcDiRBiDywKrClF+1e+7Cpz5fYUoUulTfwPwH4PIb3Cnk4xK55+KLNyIVaX2KKz++2CYSN6Ejrk0TfB3EgIv4veQehWwsH30GqjSSeHEdfVE7vZIbOHwbJHosY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDIIQX04; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uaPxMDmm9jhbIpR2oqU5pChL1Dh0dmLU0LVKgaLo8GenyflZfW0FmFhjalD9aIc7z7tzBx4aRU1gEhkXzHOJ0FOL/Uuy6OWCgXExxVXjbWYVIL/OH100wDBWWTFIXURnn/25m+bHLQAowqn4bKFrky+zx8SwcUSzOOtdiiL89DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1z+BCmeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDIIQX04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04C51F000FF;
-	Tue, 13 Oct 2026 12:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z+BCmeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D284E1F000FF;
+	Tue, 13 Oct 2026 12:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893789;
-	bh=13+3S441h5eclF/hETuLuegcUkHidEDKeqXrGZ+5YiA=;
+	s=korg; t=1791893792;
+	bh=pvDLCzy0AtnmCCOiTQATWYGmyyeC/pg3bRxG34CfTjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EDIIQX041PsSuBFRUf0SlAjjYKa62K9n49yB1DKZ4d3ro/JCypzFD1xq3fxkkwKCm
-	 7itC/eGz4k/LM9/blwTeLDe91k7CB7DG0+FX0HhI3elCm22O7kV7C85dgEMt8o/j5r
-	 Sq0CtUIWA6vxPR2agYRVcURMX3tFbDRHS6vdpSDI=
+	b=1z+BCmeJ+AGWJYO3Hfgz8tA4Y+MDjc90XfFZmAI7KFrmH1Jzplo4ukqaTFVmYkqMT
+	 nd08BCmfbog7bhe5hIU4e1Zqs0Vx7trtlkAmNLW+tab9MUBwXmLie4utvGT5C1s+/P
+	 fhSM0Z0SrUBfTog9oi6839BRVHROrTtAkpY1eTWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 341/621] accel/amxdna: Fix page-insertion errors in amdxdna_insert_pages()
-Date: Tue, 13 Oct 2026 13:35:36 +0200
-Message-ID: <20261013112928.945710217@linuxfoundation.org>
+Subject: [PATCH 6.18 300/621] netfilter: nft_fwd_netdev: use recursion counter in neigh egress path
+Date: Tue, 13 Oct 2026 13:34:55 +0200
+Message-ID: <20261013112927.973176742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,91 +46,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 8d51e0fd3e698919d2adeff71936377f0c0d4aa0 ]
+[ Upstream commit 1d47b55b36d2ec73fe6901212c8b28a593c3b27c ]
 
-Two error paths in amdxdna_insert_pages() called vma->vm_ops->close(vma)
-before returning an error code to the caller.  This is incorrect:
-amdxdna_gem_obj_mmap() registers an HMM interval notifier before calling
-amdxdna_insert_pages(), and on a hard error it jumps to hmm_unreg to undo
-that registration.  Calling vm_ops->close() manually — which drops the
-shmem pages_pin_count and the GEM object reference that backs the VMA —
-before the mmap syscall has even returned causes those resources to be
-released while the VMA is still alive.  The kernel VMA teardown will call
-vm_ops->close() a second time when the process later unmaps the range,
-producing a reference count underflow.
+nft_fwd_neigh can be used in egress chains (NF_NETDEV_EGRESS). When the
+forwarding rule targets the same device or two devices forward to each
+other, neigh_xmit() triggers dev_queue_xmit() which re-enters
+nf_hook_egress(), causing infinite recursion and stack overflow.
 
-Replace both hard-error returns with a deferred-fault approach that keeps
-the VMA alive and retries page insertion through the HMM range-fault path.
+Move the nf_get_nf_dup_skb_recursion() accessor and NF_RECURSION_LIMIT
+to the shared header nf_dup_netdev.h as a static inline, so that
+nft_fwd_netdev can use the recursion counter directly without exported
+function call overhead. Guard neigh_xmit() with the same recursion
+limit already used in nf_do_netdev_egress().
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260723074256.2435143-1-lizhi.hou@amd.com
-Stable-dep-of: 4a19f7ab5972 ("accel/amdxdna: Fix locally exploitable BUG_ON in amdxdna_insert_pages()")
+[ Updated to cache the nf_get_nf_dup_skb_recursion pointer. --pablo ]
+
+Fixes: f87b9464d152 ("netfilter: nft_fwd_netdev: Support egress hook")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 2354e975932d ("netfilter: nf_dup_netdev: add nf_dev_xmit_recursion*() helpers and use them")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_dup_netdev.h | 13 +++++++++++++
+ net/netfilter/nf_dup_netdev.c         | 16 ----------------
+ net/netfilter/nft_fwd_netdev.c        |  8 ++++++++
+ 3 files changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 9834b9199ef8c..9e5abad84d86d 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -279,6 +279,23 @@ static void amdxdna_gem_dev_obj_free(struct drm_gem_object *gobj)
- 	amdxdna_gem_destroy_obj(abo);
- }
+diff --git a/include/net/netfilter/nf_dup_netdev.h b/include/net/netfilter/nf_dup_netdev.h
+index b175d271aec95..609bcf422a9b3 100644
+--- a/include/net/netfilter/nf_dup_netdev.h
++++ b/include/net/netfilter/nf_dup_netdev.h
+@@ -3,10 +3,23 @@
+ #define _NF_DUP_NETDEV_H_
  
-+static void amdxdna_mark_mapp_invalid(struct amdxdna_gem_obj *abo,
-+				      struct vm_area_struct *vma)
-+{
-+	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
-+	struct amdxdna_umap *mapp;
+ #include <net/netfilter/nf_tables.h>
++#include <linux/netdevice.h>
++#include <linux/sched.h>
+ 
+ void nf_dup_netdev_egress(const struct nft_pktinfo *pkt, int oif);
+ void nf_fwd_netdev_egress(const struct nft_pktinfo *pkt, int oif);
+ 
++#define NF_RECURSION_LIMIT	2
 +
-+	down_write(&xdna->notifier_lock);
-+	abo->mem.map_invalid = true;
-+	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
-+		if (compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
-+			mapp->invalid = true;
-+			break;
-+		}
-+	}
-+	up_write(&xdna->notifier_lock);
++static inline u8 *nf_get_nf_dup_skb_recursion(void)
++{
++#ifndef CONFIG_PREEMPT_RT
++	return this_cpu_ptr(&softnet_data.xmit.nf_dup_skb_recursion);
++#else
++	return &current->net_xmit.nf_dup_skb_recursion;
++#endif
 +}
 +
- static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 				struct vm_area_struct *vma)
+ struct nft_offload_ctx;
+ struct nft_flow_rule;
+ 
+diff --git a/net/netfilter/nf_dup_netdev.c b/net/netfilter/nf_dup_netdev.c
+index fab8b9011098f..a958a1b0c5bee 100644
+--- a/net/netfilter/nf_dup_netdev.c
++++ b/net/netfilter/nf_dup_netdev.c
+@@ -13,22 +13,6 @@
+ #include <net/netfilter/nf_tables_offload.h>
+ #include <net/netfilter/nf_dup_netdev.h>
+ 
+-#define NF_RECURSION_LIMIT	2
+-
+-#ifndef CONFIG_PREEMPT_RT
+-static u8 *nf_get_nf_dup_skb_recursion(void)
+-{
+-	return this_cpu_ptr(&softnet_data.xmit.nf_dup_skb_recursion);
+-}
+-#else
+-
+-static u8 *nf_get_nf_dup_skb_recursion(void)
+-{
+-	return &current->net_xmit.nf_dup_skb_recursion;
+-}
+-
+-#endif
+-
+ static void nf_do_netdev_egress(struct sk_buff *skb, struct net_device *dev,
+ 				enum nf_dev_hooks hook)
  {
-@@ -300,8 +317,7 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 				      &num_pages);
- 		if (ret) {
- 			XDNA_ERR(xdna, "Failed insert pages %d", ret);
--			vma->vm_ops->close(vma);
--			return ret;
-+			amdxdna_mark_mapp_invalid(abo, vma);
- 		}
+diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
+index 8468bed3e87d2..14c1ac9f20b6a 100644
+--- a/net/netfilter/nft_fwd_netdev.c
++++ b/net/netfilter/nft_fwd_netdev.c
+@@ -95,6 +95,7 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
+ 			      struct nft_regs *regs,
+ 			      const struct nft_pktinfo *pkt)
+ {
++	u8 *nf_dup_skb_recursion = nf_get_nf_dup_skb_recursion();
+ 	struct nft_fwd_neigh *priv = nft_expr_priv(expr);
+ 	void *addr = &regs->data[priv->sreg_addr];
+ 	int oif = regs->data[priv->sreg_dev];
+@@ -152,6 +153,11 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
+ 		goto out;
+ 	}
  
- 		return 0;
-@@ -321,9 +337,9 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 		fault_ret = handle_mm_fault(vma, vma->vm_start + offset,
- 					    FAULT_FLAG_WRITE, NULL);
- 		if (fault_ret & VM_FAULT_ERROR) {
--			vma->vm_ops->close(vma);
- 			XDNA_ERR(xdna, "Fault in page failed");
--			return -EFAULT;
-+			amdxdna_mark_mapp_invalid(abo, vma);
-+			break;
- 		}
++	if (*nf_dup_skb_recursion > NF_RECURSION_LIMIT) {
++		verdict = NF_DROP;
++		goto out;
++	}
++
+ 	dev = dev_get_by_index_rcu(nft_net(pkt), oif);
+ 	if (dev == NULL) {
+ 		verdict = NF_DROP;
+@@ -169,7 +175,9 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
  
- 		offset += PAGE_SIZE;
+ 	skb->dev = dev;
+ 	skb_clear_tstamp(skb);
++	(*nf_dup_skb_recursion)++;
+ 	neigh_xmit(neigh_table, dev, addr, skb);
++	(*nf_dup_skb_recursion)--;
+ out:
+ 	regs->verdict.code = verdict;
+ }
 -- 
 2.53.0
 
