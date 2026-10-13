@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7734F30D8;
-	Tue, 13 Oct 2026 11:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B4D4B95C0;
+	Tue, 13 Oct 2026 11:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791891963; cv=none; b=UaPsVQvI5/bwUQYKfk33JicjQ6wVNyL1SF+5ptXHVwl26D2Il9QoZrBljrk16pvbuUVdLzkEZhQVzvC00fr7sEge4T5wbQGL8DDhqm+eaw4QUV1ccI7SOgPsDJGdtq8i/NQJOOYF67RW8jCHZOhhaO0WcqEJsBI1wHARdmsuqNw=
+	t=1791891965; cv=none; b=CNUBMoD9qfD+XP35Or3EmnmtR4CO1hwxmyG/23TN5JT1YCy2rLOeZhjB3X/3Uow23U4kbi5K8SgUxqLkuBgMeTp6xCI27CfbiDZh5jRjsPM2+pWGkNI0HYRZLU/8e/yS5wbP3LEqANsS+Fqr5iZi9S/g9v4E9v10WEdVyvW2tQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791891963; c=relaxed/simple;
-	bh=4f1SIPp07FpK04soh0baljmjPSdXAblSLQDzJrt9Fns=;
+	s=arc-20240116; t=1791891965; c=relaxed/simple;
+	bh=f4v+vxPxveEGyDzzq+jGUoCZofUEpyOd9kckYgnxw/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8VssNLYYQbCiRWGXMadieXd34cSd/LutUCvDGGt/wbNT1/mRfjVUP8oF+eBo4MxGxsUQW+Y6FnqJUeti+TBLIoqsBDfOguisp9Zq23vqtdPJnAvOQ9OiWSlY6e4sIycWtMaspah5OueTH2XDt4B8QLSVR5th22SJAeCKay2ldc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfOn6XAi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=px6ANvj0+x3QxoQG0uN6XCsPB/bd/c93y+aCCSJSyVbxavO5dIwCiTEKgiXC10CFp6saoaCItJ9hbkCht0zkuOppzo4lo5DadcfyADlSObEbzyHD6g1Qe+01w+VbbpvBzCsp5mG2+5pv16iqya0CCnQ/hID3Df/96MWbsYgROQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4vanO59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfOn6XAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188B61F000FF;
-	Tue, 13 Oct 2026 11:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4vanO59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ECE1F000FF;
+	Tue, 13 Oct 2026 11:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791891961;
-	bh=l5ojVmlthKmB0eOrWeb3mpGzoVH7QFuTMX+GD3Ybxpg=;
+	s=korg; t=1791891964;
+	bh=x8GAwuYGxAk/mDKFjfVXvXg7NVK0/E0m5o/yhatOijE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfOn6XAidBfdQVBdZ0v6b2vUOAmkx74QDEpe34++0f/Jbmffa9/IMnUY4LBFyJ958
-	 2OVmoHb81i1WdicGXVm45BpqrI480MBN3XsDaLhcX6gBGSuxXlw3dvx2KzqwzOWvlK
-	 7t68TpaPKI0b1dJqVGqe4DLyE6kqGExO+arY0qdQ=
+	b=k4vanO59/Gv1RcLpt3WkHJ/bZWsmGQ8j9H9KjpXfStL47WatAoQRyDc9rCzUT72xP
+	 yEdgehoeRv2z0CczjlIYZKwX7B6ZCogR2ZTKdCwrog4ryMAqdxZqtVqRIsNMUndTHz
+	 U+vrlDGfHcWLPglQRkTmJVv+lISSVOSnWTQ94Q4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Bihaan Sen <stevewholikesthings@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.2 015/281] Input: ati_remote2 - fix type confusion in device attribute handlers
-Date: Tue, 13 Oct 2026 13:35:31 +0200
-Message-ID: <20261013112855.418751967@linuxfoundation.org>
+Subject: [PATCH 7.2 016/281] Input: xpad - add support for 8BitDo Pro 2 Wired Controller for Xbox
+Date: Tue, 13 Oct 2026 13:35:32 +0200
+Message-ID: <20261013112855.442935462@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,77 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Bihaan Sen <stevewholikesthings@gmail.com>
 
-commit f321cc430c49b6c1be0d53f2ef19d8342d8029cc upstream.
+commit 41363c27b8509bd4efcba244803edac9ba25d1b5 upstream.
 
-Previously, the channel_mask and mode_mask attributes were registered on
-the parent usb_device via sysfs_create_group(). When commit b20d6bf8014b
-("Input: ati-remote2 - use driver core to instantiate device
-attributes") converted the driver to let the driver core manage them via
-dev_groups in struct usb_driver, the attributes moved to the bound
-usb_interface devices, but the show and store callbacks were not updated
-accordingly.
+The 8BitDo Pro 2 Wired Controller for Xbox is already matched by the
+vendor-wide XPAD_XBOXONE_VENDOR(0x2dc8) entry, but a later hardware
+revision reports product ID 0x201e, which has no entry in the
+xpad_device table. The device therefore binds and functions but is
+exposed to userspace as "Generic X-Box pad".
 
-As a result, the callbacks still invoked to_usb_device() on a device
-pointer belonging to a struct usb_interface, producing an invalid
-usb_device pointer.
+Add the VID/PID pair so the controller is named correctly, and set
+MAP_SHARE_BUTTON to expose the share button as KEY_RECORD.
 
-Use to_usb_interface() directly in the attribute handlers to obtain the
-interface and its driver data.
-
-Fixes: b20d6bf8014b ("Input: ati-remote2 - use driver core to instantiate device attributes")
-Assisted-by: DeepSeek-V4.1-Flash
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20261009040302.3087205-1-vulab@iscas.ac.cn
+Signed-off-by: Bihaan Sen <stevewholikesthings@gmail.com>
+Link: https://patch.msgid.link/20260925114459.110253-1-stevewholikesthings@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ati_remote2.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/input/joystick/xpad.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/misc/ati_remote2.c
-+++ b/drivers/input/misc/ati_remote2.c
-@@ -672,8 +672,7 @@ static ssize_t ati_remote2_show_channel_
- 					     struct device_attribute *attr,
- 					     char *buf)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 
- 	return sprintf(buf, "0x%04x\n", ar2->channel_mask);
-@@ -683,8 +682,7 @@ static ssize_t ati_remote2_store_channel
- 					      struct device_attribute *attr,
- 					      const char *buf, size_t count)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 	unsigned int mask;
- 	int r;
-@@ -720,8 +718,7 @@ static ssize_t ati_remote2_show_mode_mas
- 					  struct device_attribute *attr,
- 					  char *buf)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 
- 	return sprintf(buf, "0x%02x\n", ar2->mode_mask);
-@@ -731,8 +728,7 @@ static ssize_t ati_remote2_store_mode_ma
- 					   struct device_attribute *attr,
- 					   const char *buf, size_t count)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 	unsigned int mask;
- 	int err;
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -379,6 +379,7 @@ static const struct xpad_device {
+ 	{ 0x2993, 0x2001, "TECNO Pocket Go", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x200f, "8BitDo Ultimate 3-mode Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
++	{ 0x2dc8, 0x201e, "8BitDo Pro 2 Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
 
 
