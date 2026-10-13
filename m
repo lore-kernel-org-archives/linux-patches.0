@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDA33A1E81;
-	Tue, 13 Oct 2026 12:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B954F797E;
+	Tue, 13 Oct 2026 12:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893661; cv=none; b=nm3Dc3bg7l6Gd2swOnyl5ncyD/W+Uk7G7eAeANWAL0WF2RbtddFBmdxHkyK3/2YddRZuWoeVSrTbqUBMr6DaPaQfnL0fVS9jtvgbDNfmz6WyLv4MDVJ5PxSTpvWDMRM1rbJafFYPjFsHnZ6Ksf7gVLwjDscsZSVQ/KL6Xgk6zjA=
+	t=1791893664; cv=none; b=aRb3vxKO7zOjIXtlm8od044rKDw2dje+uWE1C5sqp3haxJU+EbEzS0LRVgGjsKJcwsALoGLRdBk37D2pgY64X/J8702f+J7S0aJdWUc/EV6fUPXH1gQk19bO6+zK05neOeHJs21uEsrFfCEYc3haBVto1epcWjHVs/l/lsTZN0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893661; c=relaxed/simple;
-	bh=KrvbGl7d7ONXZMtMro9uSy1q1koc/XAKyijxke+idBg=;
+	s=arc-20240116; t=1791893664; c=relaxed/simple;
+	bh=kHFUxjRGn3eMrepFgmUtvxVH12vHOd0g2YhP4B07hzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMsxEMWl5Qfd4k/9mKvAMteUIXc46+L6oQYLgFUscHu/zJdyibIEwx7A8ipuByLDsMMqpXjUVAe4rAThpX1zdGJI13R/rr1O/52A3K9MmGe3hNw0FW7BruOB9IJEt9DI+iZc5V1QHEpB6sGvC53U+/Lv6X6luzdeMS824uFx/A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jb1UTfne; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FPBZoMwrVp1fJXMkKF/HpM+qMT4HD20FnqKHzDvqEO1oenJqSIEkym93AyPZAQne7YfWyZT6g8Z6iOpuu5TvMt9OzQ19XupZc3bfr2IfVhyKSg3j0hvN+i44Lbh9idKhKicc0JPxUVkSIunEML3E+OeThktltz1ueqSqrDlhKuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBvDxbUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jb1UTfne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6DB1F000FF;
-	Tue, 13 Oct 2026 12:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBvDxbUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95DF1F000FF;
+	Tue, 13 Oct 2026 12:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893660;
-	bh=+LTouxthD5NB8WtV3zbBceFaNEhb6P5wqjZA7r2cRoI=;
+	s=korg; t=1791893663;
+	bh=yTTLs4EThTa5AEvLMbjSXYpIU7HJ/RAPngaGTSYijGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jb1UTfnexadSOWEp5QzfyOuR1kjFBhETf+nxSRSZjHWOBQmzgh0tdFlH4O+mbscMl
-	 pr51gL/tklSVx4Jgd8MQZ+3REDMSTVGjP/8Z1Am4PB4z00Rn9b98aNALOQIhx0w6kU
-	 rRzDEIebz0Gr9I6F5RyuZks280+ulsQ6vZQQcVD8=
+	b=UBvDxbUeJHSB331fLZyOHjzIna3RvNDi1umtcZ8QkARM1HMvTWmovdKzHXCaxJNUC
+	 3R/07I2ts4NWqXSEASt4D17nPtUdWfM6BO3DupFqhomvkCaBOg99NAuakteOhoEKe1
+	 /bgnY3Fkp0tQuoEDYRU2NPIPTke0TgOmTYJG3sIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Martin Hodo <martin.hodo@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 256/621] drm/amdgpu: Fix kernel panic during driver load failure
-Date: Tue, 13 Oct 2026 13:34:11 +0200
-Message-ID: <20261013112926.936794849@linuxfoundation.org>
+Subject: [PATCH 6.18 257/621] drm/i915/gt: Fix NULL deref on sched_engine alloc failure
+Date: Tue, 13 Oct 2026 13:34:12 +0200
+Message-ID: <20261013112926.959576362@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,79 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-[ Upstream commit a279bd143b3c184358b658e43a057e31ee8c4de5 ]
+[ Upstream commit 82ec992c404c3dc774c5e9f3d4aa858e97187675 ]
 
-Avoid kernel panic if MES init fails during driver load. The KIQ ring is
-falsely marked as ready as ASICs that use MES, KIQ is owned by MES.
+Avoid using intel_context_put() before intel_context_init() in
+execlists_create_virtual() as the kref_put() inside would lead
+to NULL deref on the IOCTL path when sched_engine allocation fails.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:gfx_v12_1_wait_reg_mem+0x5a/0x1f0 [amdgpu]
-Call Trace:
- gfx_v12_1_ring_emit_reg_write_reg_wait+0x1f/0x30 [amdgpu]
- amdgpu_gmc_fw_reg_write_reg_wait+0xb2/0x190 [amdgpu]
- amdgpu_gmc_flush_gpu_tlb+0x1cc/0x230 [amdgpu]
- amdgpu_gart_invalidate_tlb+0x81/0xa0 [amdgpu]
- amdgpu_gart_unbind+0x72/0x90 [amdgpu]
- amdgpu_ttm_backend_unbind+0xa4/0xb0 [amdgpu]
- amdgpu_ttm_tt_unpopulate+0x13/0xd0 [amdgpu]
- amdttm_tt_unpopulate+0x29/0x70 [amdttm]
- ttm_bo_put+0x1eb/0x360 [amdttm]
- amdgpu_bo_free_kernel+0xf9/0x1f0 [amdgpu]
- amdgpu_ih_ring_fini+0x5a/0x90 [amdgpu]
- amdgpu_irq_fini_hw+0x58/0x80 [amdgpu]
- amdgpu_device_fini_hw+0x4e0/0x5b0 [amdgpu]
- amdgpu_driver_load_kms+0x60/0xa0 [amdgpu]
- amdgpu_pci_probe+0x28e/0x6d0 [amdgpu]
- pci_device_probe+0x19f/0x220
- really_probe+0x1ed/0x340
- driver_probe_device+0x1e/0x80
- __driver_attach+0xd3/0x1a0
- bus_for_each_dev+0x68/0xa0
- bus_add_driver+0x19f/0x270
- driver_register+0x5d/0xf0
- do_one_initcall+0xac/0x200
- do_init_module+0x1ec/0x280
- __se_sys_finit_module+0x2de/0x310
- do_syscall_64+0x6a/0x250
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Discovered using AI-assisted static analysis confirmed by
+Intel Product Security.
 
-Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4623b958dd6da0f4c3026afdf330626a09ecb0f0)
-Cc: stable@vger.kernel.org
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: 3e28d37146db ("drm/i915: Move priolist to new i915_sched_engine object")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: <stable@vger.kernel.org> # v5.15+
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260701114513.221254-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 4f2a12f2d50e9f48227656e4dcbd6423506be31d)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ .../drm/i915/gt/intel_execlists_submission.c  | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index 5358ee33914e8..433381f806b2b 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -3473,10 +3473,19 @@ static int gfx_v12_0_cp_resume(struct amdgpu_device *adev)
- 		gfx_v12_0_cp_gfx_enable(adev, true);
- 	}
+diff --git a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+index 7f389cb0bde44..e2fc1b1f09794 100644
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3930,11 +3930,11 @@ execlists_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
+ 	struct drm_i915_private *i915 = siblings[0]->i915;
+ 	struct virtual_engine *ve;
+ 	unsigned int n;
+-	int err;
++	int err = -ENOMEM;
  
--	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
-+	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
- 		r = amdgpu_mes_kiq_hw_init(adev);
--	else
-+		/*
-+		 * With MES, GFX KIQ ring is owned by the MES and is never
-+		 * initialized/used directly by the driver, so it must
-+		 * not be left flagged as ready. mes_v12_0_hw_init() clears
-+		 * but clear here if MES init fails
-+		*/
-+		if (r)
-+			adev->gfx.kiq[0].ring.sched.ready = false;
-+	} else {
- 		r = gfx_v12_0_kiq_resume(adev);
-+	}
- 	if (r)
- 		return r;
+ 	ve = kzalloc(struct_size(ve, siblings, count), GFP_KERNEL);
+ 	if (!ve)
+-		return ERR_PTR(-ENOMEM);
++		goto err;
+ 
+ 	ve->base.i915 = i915;
+ 	ve->base.gt = siblings[0]->gt;
+@@ -3966,10 +3966,8 @@ execlists_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
+ 	intel_engine_init_execlists(&ve->base);
+ 
+ 	ve->base.sched_engine = i915_sched_engine_create(ENGINE_VIRTUAL);
+-	if (!ve->base.sched_engine) {
+-		err = -ENOMEM;
+-		goto err_put;
+-	}
++	if (!ve->base.sched_engine)
++		goto err_noput;
+ 	ve->base.sched_engine->private_data = &ve->base;
+ 
+ 	ve->base.cops = &virtual_context_ops;
+@@ -3985,10 +3983,8 @@ execlists_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
+ 	intel_context_init(&ve->context, &ve->base);
+ 
+ 	ve->base.breadcrumbs = intel_breadcrumbs_create(NULL);
+-	if (!ve->base.breadcrumbs) {
+-		err = -ENOMEM;
++	if (!ve->base.breadcrumbs)
+ 		goto err_put;
+-	}
+ 
+ 	for (n = 0; n < count; n++) {
+ 		struct intel_engine_cs *sibling = siblings[n];
+@@ -4063,8 +4059,13 @@ execlists_create_virtual(struct intel_engine_cs **siblings, unsigned int count,
+ 	virtual_engine_initial_hint(ve);
+ 	return &ve->context;
+ 
++err_noput:
++	kfree(ve);
++	goto err;
++
+ err_put:
+ 	intel_context_put(&ve->context);
++err:
+ 	return ERR_PTR(err);
+ }
  
 -- 
 2.53.0
