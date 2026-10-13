@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6416C36B937;
-	Tue, 13 Oct 2026 12:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5091336B937;
+	Tue, 13 Oct 2026 12:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894924; cv=none; b=tfnfhDhKm25wlmclwMemRejEFsMZRAQcJ+pEAQmDJKaCY8U1bAuD28EuAY5DDvXUyv1vOT4fpxUpeqWC+V2LtMRZ8hAqcLlTH7O9EIc/bjxGQJbyURVIJGdGUDoWtGpLT4N6+ycoBDLI0GOhhWlHOPdIM+SVZI6cEXpMyro9oZc=
+	t=1791894927; cv=none; b=itNfHR52M5cuIlEZJ3CrouTRCunJJueP3y5duK4wOAyG3fekkdBDpyMy/hU0fJEsfN53Mp5Ro6unsb5duL8vcwtw96fUMyH5jhVi3Lv2ezfhEM5xMxSbmkgLT1JXieakJ91SOOKtR1jrmPPBuw8Nt0R71TFsnN+JWRSw5opXF3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894924; c=relaxed/simple;
-	bh=EAwFQsOandrWoGAr5GzUi2JcV1UkjwOvKVsg9X7ReHE=;
+	s=arc-20240116; t=1791894927; c=relaxed/simple;
+	bh=OiEKkNSjifSM0/pTbX/B9mYHDoZAjX0k2IBFNsWPB10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aydGKGhZHmE0c0+mKEFW4lAZ5YAdBWwMTD4IZai86XQ+kbEE4vFf9oDwstFPr+tQtw9Rxbh+OFLNJy7pmrQKIzY4FjJJkNvr5ZMt4XtJHiMhpO7XTvbnmDy04zqnqAwtliapdzkwVWyjMcMRaqF/fx0gwAKVhWQyYBU9EQ9x67M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EM1F5qUt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g/idtuwTiLqQTdBseynlYDy9L4HcPVwwW3LA720Z4VM55AWx6iR8+Mszpe2SeWdqT56O2wEfnYOi+MaUh3pGOS+iBsrhHB5qlbzCOzvr//AbHIYB7OHQz+rKsCGG9h9NQF3p4OmsXnfdza9V8g5T4yXC4g+cHO/1zOYJLnYqG4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqcK0J1W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EM1F5qUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0051F000FF;
-	Tue, 13 Oct 2026 12:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqcK0J1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEA11F000FF;
+	Tue, 13 Oct 2026 12:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894923;
-	bh=P31xPRMwOYsgUqq8SH2E86T+AkiMXK4ebe7VnTU9kzo=;
+	s=korg; t=1791894926;
+	bh=8rRiPbAuK/jIz9J0/Tg34we84WXYkGpPJupGybvcyfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EM1F5qUtJ5UtRvo2aZNjVBhzf2Bync9BGkFCZQYYlL279hmVRPfnAFsAPrB+jmX1T
-	 sip0gGdj1F3pd7qY9NAY8FNLkfRW1B+ZEUqRB5i3bku8bNJnM3dlHcPigQnypd4Fjh
-	 91AHFBXqPoaEHYPaq41AXWCw0RyJ5Dhx7A25J6lE=
+	b=EqcK0J1WjcCXT4MIRDY9cDFiqJdiEfxuDpdPi13n91WgT4rZWHiR3FrnVMh/FX2df
+	 jMR99wEri7tWFc751qkPbYIzkD8MIn1/Ny0OwLD/lFhNS2e7PtoLgv/WBNJEXdosYK
+	 VJZVDnq4Dj0MhkHnL4G1YMU8wALD18v6nWE6mqrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Freimanis <quentin@q-lab.dev>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/497] net: sparx5: make ports inherit the switch base mac address type
-Date: Tue, 13 Oct 2026 13:34:30 +0200
-Message-ID: <20261013112910.336166915@linuxfoundation.org>
+Subject: [PATCH 6.12 086/497] net-memcg: Introduce mem_cgroup_sk_enabled().
+Date: Tue, 13 Oct 2026 13:34:13 +0200
+Message-ID: <20261013112909.929648332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,74 +54,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Freimanis <quentin@q-lab.dev>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
+[ Upstream commit 43049b0db03823c2cd003ca7d3dddcd3924da8dc ]
 
-When the switch uses a random base MAC address it does not mark each
-port's address as random:
+The socket memcg feature is enabled by a static key and
+only works for non-root cgroup.
 
-  $ dmesg | grep "MAC addr"
-  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
-  $ cat /sys/class/net/eth0/addr_assign_type
-  0
+We check both conditions in many places.
 
-0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
+Let's factorise it as a helper function.
 
-With a random MAC reported as NET_ADDR_PERM, systemd's
-MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
-gets a new IP address every boot and a static reservation can't be used.
-Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
-address derived from the interface name and machine-id.
-
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-8-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 37e02c42a00b ("net: restrict SO_RESERVE_MEM to TCP sockets and cap max value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
- 3 files changed, 3 insertions(+)
+ include/net/proto_memory.h |  2 +-
+ include/net/sock.h         | 10 ++++++++++
+ include/net/tcp.h          |  2 +-
+ net/core/sock.c            |  6 +++---
+ net/ipv4/tcp_output.c      |  2 +-
+ 5 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 0c4c75b3682fa..5b83cd4b6270b 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -843,6 +843,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
- 		eth_random_addr(sparx5->base_mac);
- 		sparx5->base_mac[5] = 0;
-+		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
- 	}
+diff --git a/include/net/proto_memory.h b/include/net/proto_memory.h
+index a6ab2f4f5e28a..859e63de81c49 100644
+--- a/include/net/proto_memory.h
++++ b/include/net/proto_memory.h
+@@ -31,7 +31,7 @@ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ 	if (!sk->sk_prot->memory_pressure)
+ 		return false;
  
- 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index 3309060b1e4c6..fde3e3d686d17 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -252,6 +252,7 @@ struct sparx5 {
- 	struct notifier_block switchdev_blocking_nb;
- 	/* Switch state */
- 	u8 base_mac[ETH_ALEN];
-+	u8 base_mac_assign_type;
- 	/* Associated bridge device (when bridged) */
- 	struct net_device *hw_bridge_dev;
- 	/* Bridged interfaces */
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-index 705a004b324fd..62025aba558cd 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-@@ -281,6 +281,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
- 	ndev->ethtool_ops = &sparx5_ethtool_ops;
+-	if (mem_cgroup_sockets_enabled && sk->sk_memcg &&
++	if (mem_cgroup_sk_enabled(sk) &&
+ 	    mem_cgroup_under_socket_pressure(sk->sk_memcg))
+ 		return true;
  
- 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
-+	ndev->addr_assign_type = sparx5->base_mac_assign_type;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 6738c6cd3ff5a..efa549885b7f8 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2587,11 +2587,21 @@ static inline struct mem_cgroup *mem_cgroup_from_sk(const struct sock *sk)
+ {
+ 	return sk->sk_memcg;
+ }
++
++static inline bool mem_cgroup_sk_enabled(const struct sock *sk)
++{
++	return mem_cgroup_sockets_enabled && mem_cgroup_from_sk(sk);
++}
+ #else
+ static inline struct mem_cgroup *mem_cgroup_from_sk(const struct sock *sk)
+ {
+ 	return NULL;
+ }
++
++static inline bool mem_cgroup_sk_enabled(const struct sock *sk)
++{
++	return false;
++}
+ #endif
  
- 	return ndev;
+ static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 85f8102aa9da3..ad9af706085ab 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -275,7 +275,7 @@ extern unsigned long tcp_memory_pressure;
+ /* optimized version of sk_under_memory_pressure() for TCP sockets */
+ static inline bool tcp_under_memory_pressure(const struct sock *sk)
+ {
+-	if (mem_cgroup_sockets_enabled && sk->sk_memcg &&
++	if (mem_cgroup_sk_enabled(sk) &&
+ 	    mem_cgroup_under_socket_pressure(sk->sk_memcg))
+ 		return true;
+ 
+diff --git a/net/core/sock.c b/net/core/sock.c
+index e226ebae9a599..5790d18ef2348 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1016,7 +1016,7 @@ static int sock_reserve_memory(struct sock *sk, int bytes)
+ 	bool charged;
+ 	int pages;
+ 
+-	if (!mem_cgroup_sockets_enabled || !sk->sk_memcg || !sk_has_account(sk))
++	if (!mem_cgroup_sk_enabled(sk) || !sk_has_account(sk))
+ 		return -EOPNOTSUPP;
+ 
+ 	if (!bytes)
+@@ -3216,7 +3216,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
+ 	sk_memory_allocated_add(sk, amt);
+ 	allocated = sk_memory_allocated(sk);
+ 
+-	if (mem_cgroup_sockets_enabled && sk->sk_memcg) {
++	if (mem_cgroup_sk_enabled(sk)) {
+ 		memcg = sk->sk_memcg;
+ 		charged = mem_cgroup_charge_skmem(memcg, amt, gfp_memcg_charge());
+ 		if (!charged)
+@@ -3343,7 +3343,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
+ {
+ 	sk_memory_allocated_sub(sk, amount);
+ 
+-	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
++	if (mem_cgroup_sk_enabled(sk))
+ 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 
+ 	if (sk_under_global_memory_pressure(sk) &&
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index aa00a9fb2506c..feb94fd45c594 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3583,7 +3583,7 @@ void sk_forced_mem_schedule(struct sock *sk, int size)
+ 	sk_forward_alloc_add(sk, amt << PAGE_SHIFT);
+ 	sk_memory_allocated_add(sk, amt);
+ 
+-	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
++	if (mem_cgroup_sk_enabled(sk))
+ 		mem_cgroup_charge_skmem(sk->sk_memcg, amt,
+ 					gfp_memcg_charge() | __GFP_NOFAIL);
  }
 -- 
 2.53.0
