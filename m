@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038D4466B58;
-	Tue, 13 Oct 2026 12:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF624F4D06;
+	Tue, 13 Oct 2026 12:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893559; cv=none; b=K03V9pGanFN1r2x7FBXeCOLmEiFrkrKRiczZy/emgsicESRK/NInYfrwzM2DaVif1ltZjWyGq/hkj9Lnf5uxV0dVP/Dnfh1bwl2w63p1PbOyCtGHlxEh3EwF9V26yKnKpKHY3XPWqYrOWiIq9Ki5LWUOJJOtgtjOxGNm79qzgL4=
+	t=1791893560; cv=none; b=AYDX7GobM/nlCE6iDB9MlPpdKcYMkdYEbFbOOOFi8c87unC1CDtMcUuwGC6v/yPtEElpuPpxU0MaxPsvwsSf6RBcrlnpSviQtWFfscU0iz9oRHuwPYVSuzMyOcOFpw3lzkR1unKCial21cMjRwZnIgE0tqYuqhgtjL+1wO9G2Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893559; c=relaxed/simple;
-	bh=fyi3i/XeMrwloDEFj4ENA9QQYruA0zmEB/z5gdu4zno=;
+	s=arc-20240116; t=1791893560; c=relaxed/simple;
+	bh=Ca9Oe47tSW7FemOF4SPHnQ4rklExym61VlxTRb0RJbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pzqUNseV7eGRSqMq6t0hoD/oe2lUOnt8Nyv1H8NAgHqhHbvJSDgazVNbzaaVtBlMRbybkbGSDuLrOzbVvABoy4jw7EhNyil1SNoDuJBuZPixB+hthed7232wa96F0hUcFP+AdgWxOyqk6M6xG4y4MwR5URf5Cm5CyqUy070oRS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xr18+y4D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ESwO6IG9u9RbP37zdz6gombfYCyOEL58SkL1ivk2aTU5u1jMtwhfRt1HTvrdPgWKtD+RAiZCQhUQuz2Dv4gH2o3pvVdrITBx64j7d3gTcwEQL+DD+CZ259gesJ1Xfxs+j2mkwjBrFWweQyuuEDfzuXEF4yN40kLeA64PzVqbzCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMa2lTas; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xr18+y4D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A3E1F000FF;
-	Tue, 13 Oct 2026 12:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMa2lTas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B031F00893;
+	Tue, 13 Oct 2026 12:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893555;
-	bh=y59zuSQIU0k2CvK9nOfyOKl9UlEGyJJxld+lQtRUkLs=;
+	s=korg; t=1791893558;
+	bh=oH17Lv5qNB60RM9l3PSyLojZgPq6j/JV1YEKrvDilyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xr18+y4Drp/jrocqFkr8T3osbPdVVOw9SY8SSms1tRcVVHe5uXlD9PCQeOE37ozYE
-	 +8+DKzDC7L0Oj/g3tQ0kSkr3uWN+5E2CroWniFelUwk44if/V+3fc0GNNL/k61EDH2
-	 n6ye6FI6YLSbRGC7FMli9u3GmTQ7pjnB6hP4Rvcc=
+	b=HMa2lTasEyhey5y58dzhmhF8EUty9rQzk26/WOlyf4OIWC8IcIIwit8IYYwlOXhUy
+	 ke6c41RUQ5E7Z6n7yTQn2zCtuInMWTX9nmOIAAiTN0jm/zOiWgZm4vP5JMCTXIdBqY
+	 0vIGI3TW9Kh3uLSjhBW5Tlnh0OLfeiaQJ+NqHi+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,13 +30,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Arvind Yadav <arvind.yadav@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 266/621] drm/xe/guc: Hold device ref until queue teardown completes
-Date: Tue, 13 Oct 2026 13:34:21 +0200
-Message-ID: <20261013112927.172010948@linuxfoundation.org>
+Subject: [PATCH 6.18 267/621] drm/xe/guc: Keep scheduler timeline name alive
+Date: Tue, 13 Oct 2026 13:34:22 +0200
+Message-ID: <20261013112927.196260573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -58,406 +59,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit 9b7e60184f4b22e893d4ae95234d5f26261a430c ]
+[ Upstream commit 299bc6d50b1bed7d1f408391736712f01a0855e2 ]
 
-GuC exec queue destruction can run asynchronously. If the final device
-put happens from a destroy worker, drmm cleanup can end up draining
-the same workqueue and deadlock.
+The scheduler keeps a pointer to the timeline name, but q->name
+is freed with the exec queue while scheduler fences can still
+reference it.
 
-Hold a drm_device reference for the queue lifetime and drop it after
-queue teardown completes. This keeps drmm cleanup from running while
-async destroy work is still pending.
+Store the name in struct xe_guc_exec_queue so it shares
+the scheduler's RCU-deferred lifetime.
 
-Move GuC destroy work to a module-lifetime Xe workqueue and flush it
-on PCI remove so hot-unbind/rebind still waits for pending destroy work.
-
-With queue-held device refs, guc_submit_sw_fini() cannot run with live
-GuC IDs. Replace the fini wait with an assertion and remove the unused
-fini_wq.
-
-v2:
-  - Rebase
-
-v3:
-  - Switch to queue-lifetime drm_dev_get()/drm_dev_put() model. (Matt)
-  - Queue async teardown on system_dfl_wq instead of xe->destroy_wq. (Matt)
-  - Drop separate deferred drm_dev_put worker.
-  - Remove stale drain_workqueue(xe->destroy_wq) from guc_submit_sw_fini().
-
-v4:
-  - Replace the guc_submit_sw_fini() wait with an assertion and remove
-    the now-unused fini_wq. (sashiko)
-
-v5:
-  - Move destroy work to a module-lifetime Xe workqueue instead of
-    system_dfl_wq. (Matt)
-  - Flush the module-lifetime destroy workqueue during PCI remove to
-    preserve the old device-remove wait semantics.
-
-v6:
-  - Keep SVM pagemap destroy work on the per-device destroy_wq to avoid
-    letting it outlive the xe_device/drm_device. (Sashiko)
-  - Use WQ_MEM_RECLAIM for xe->destroy_wq because SVM pagemap destroy work
-    can be queued from the reclaim path.
-
-v7:
-  - Drop the per-device xe->destroy_wq and use the module-level destroy WQ
-    for SVM pagemap destroy as well. (Matt)
-  - Rename xe_exec_queue_destroy_wq_*() helpers to xe_destroy_wq_*()
-    helpers because the WQ is no longer exec-queue specific. (Matt)
-
-v8:
-  - Rebase.
-
-v9:
-  - Keep SVM pagemap destroy work on the per-device WQ_MEM_RECLAIM
-    destroy_wq because it can be queued from reclaim and embeds
-    the dev_pagemap used by devres teardown. (Sashiko)
-  - Keep the module-level destroy WQ GuC-only and drop WQ_MEM_RECLAIM
-    from it.
-  - Update the module-WQ kdoc to document the GuC/SVM split.
-
-v10:
-  - Keep xe->destroy_wq per-cpu while adding WQ_MEM_RECLAIM to fix the
-    workqueue allocation warning.
-
-v11:
-  - Drop the SVM pagemap destroy comment as it was revision-specific.
-    (Thomas)
-
-v12:
-  - Rebase.
-
-Fixes: 2d2be279f1ca ("drm/xe: fix UAF around queue destruction")
+Fixes: 6bd90e700b42 ("drm/xe: Make dma-fences compliant with the safe access rules")
 Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Link: https://patch.msgid.link/20260716062624.211396-1-arvind.yadav@intel.com
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Acked-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260714064402.2457257-1-arvind.yadav@intel.com
 Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit da1124abac689cc2b1d8995e5f0a816f8a122edb)
+(cherry picked from commit 41075f0eb5dcbd3b065d15f15ef7bbe9315188e8)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c       |  2 +-
- drivers/gpu/drm/xe/xe_device_types.h |  2 +-
- drivers/gpu/drm/xe/xe_guc_submit.c   | 59 +++++++++++++++++-----------
- drivers/gpu/drm/xe/xe_guc_types.h    |  2 -
- drivers/gpu/drm/xe/xe_module.c       | 49 +++++++++++++++++++++++
- drivers/gpu/drm/xe/xe_module.h       |  5 +++
- drivers/gpu/drm/xe/xe_pci.c          |  6 +++
- 7 files changed, 97 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_exec_queue_types.h | 5 +++++
+ drivers/gpu/drm/xe/xe_guc_submit.c           | 4 +++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index 05a84ea6bd6ab..1d5deb149137a 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -487,7 +487,7 @@ struct xe_device *xe_device_create(struct pci_dev *pdev,
- 						       WQ_MEM_RECLAIM);
- 	xe->ordered_wq = alloc_ordered_workqueue("xe-ordered-wq", 0);
- 	xe->unordered_wq = alloc_workqueue("xe-unordered-wq", 0, 0);
--	xe->destroy_wq = alloc_workqueue("xe-destroy-wq", 0, 0);
-+	xe->destroy_wq = alloc_workqueue("xe-destroy-wq", WQ_MEM_RECLAIM, 0);
- 	if (!xe->ordered_wq || !xe->unordered_wq ||
- 	    !xe->preempt_fence_wq || !xe->destroy_wq) {
- 		/*
-diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
-index 2ed03fd074ff5..453a4eb3ffd1d 100644
---- a/drivers/gpu/drm/xe/xe_device_types.h
-+++ b/drivers/gpu/drm/xe/xe_device_types.h
-@@ -452,7 +452,7 @@ struct xe_device {
- 	/** @unordered_wq: used to serialize unordered work */
- 	struct workqueue_struct *unordered_wq;
+diff --git a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
+index c30c0e3ccbbb9..107e136a90848 100644
+--- a/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
++++ b/drivers/gpu/drm/xe/xe_guc_exec_queue_types.h
+@@ -10,6 +10,7 @@
+ #include <linux/workqueue.h>
  
--	/** @destroy_wq: used to serialize user destroy work, like queue */
-+	/** @destroy_wq: used to serialize SVM pagemap destroy work */
- 	struct workqueue_struct *destroy_wq;
+ #include "xe_gpu_scheduler_types.h"
++#include "xe_hw_fence_types.h"
  
- 	/** @tiles: device tiles */
+ struct dma_fence;
+ struct xe_exec_queue;
+@@ -24,6 +25,10 @@ struct xe_guc_exec_queue {
+ 	struct rcu_head rcu;
+ 	/** @sched: GPU scheduler for this xe_exec_queue */
+ 	struct xe_gpu_scheduler sched;
++	/**
++	 * @name: Scheduler timeline name, kept with @sched until RCU free.
++	 */
++	char name[MAX_FENCE_NAME_LEN];
+ 	/** @entity: Scheduler entity for this xe_exec_queue */
+ 	struct xe_sched_entity entity;
+ 	/**
 diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index b846fe013538f..37be39eb96fda 100644
+index 37be39eb96fda..693d3b3051c7b 100644
 --- a/drivers/gpu/drm/xe/xe_guc_submit.c
 +++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -12,6 +12,7 @@
- #include <linux/dma-fence-array.h>
- #include <linux/math64.h>
+@@ -1684,7 +1684,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
+ 	err = xe_sched_init(&ge->sched, &drm_sched_ops, &xe_sched_ops,
+ 			    NULL, q->lrc[0]->ring.size / MAX_JOB_SIZE_BYTES, 64,
+ 			    timeout, guc_to_gt(guc)->ordered_wq, NULL,
+-			    q->name, gt_to_xe(q->gt)->drm.dev);
++			    ge->name, gt_to_xe(q->gt)->drm.dev);
+ 	if (err)
+ 		goto err_free;
  
-+#include <drm/drm_drv.h>
- #include <drm/drm_managed.h>
+@@ -1711,6 +1711,8 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
  
- #include "abi/guc_actions_abi.h"
-@@ -40,6 +41,7 @@
- #include "xe_macros.h"
- #include "xe_map.h"
- #include "xe_mocs.h"
-+#include "xe_module.h"
- #include "xe_pm.h"
- #include "xe_ring_ops_types.h"
- #include "xe_sched_job.h"
-@@ -231,17 +233,9 @@ static bool exec_queue_killed_or_banned_or_wedged(struct xe_exec_queue *q)
- static void guc_submit_fini(struct drm_device *drm, void *arg)
- {
- 	struct xe_guc *guc = arg;
--	struct xe_device *xe = guc_to_xe(guc);
- 	struct xe_gt *gt = guc_to_gt(guc);
--	int ret;
--
--	ret = wait_event_timeout(guc->submission_state.fini_wq,
--				 xa_empty(&guc->submission_state.exec_queue_lookup),
--				 HZ * 5);
+ 	xe_exec_queue_assign_name(q, q->guc->id);
  
--	drain_workqueue(xe->destroy_wq);
--
--	xe_gt_assert(gt, ret);
-+	xe_gt_assert(gt, xa_empty(&guc->submission_state.exec_queue_lookup));
- 
- 	xa_destroy(&guc->submission_state.exec_queue_lookup);
- }
-@@ -309,8 +303,6 @@ int xe_guc_submit_init(struct xe_guc *guc, unsigned int num_ids)
- 
- 	xa_init(&guc->submission_state.exec_queue_lookup);
- 
--	init_waitqueue_head(&guc->submission_state.fini_wq);
--
- 	primelockdep(guc);
- 
- 	guc->submission_state.initialized = true;
-@@ -395,8 +387,7 @@ static void __release_guc_id(struct xe_guc *guc, struct xe_exec_queue *q, u32 xa
- 	xe_guc_id_mgr_release_locked(&guc->submission_state.idm,
- 				     q->guc->id, q->width);
- 
--	if (xa_empty(&guc->submission_state.exec_queue_lookup))
--		wake_up(&guc->submission_state.fini_wq);
-+	mutex_unlock(&guc->submission_state.lock);
- }
- 
- static int alloc_guc_id(struct xe_guc *guc, struct xe_exec_queue *q)
-@@ -1443,6 +1434,7 @@ static void guc_exec_queue_fini(struct xe_exec_queue *q)
- {
- 	struct xe_guc_exec_queue *ge = q->guc;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct drm_device *drm = &guc_to_xe(guc)->drm;
- 
- 	release_guc_id(guc, q);
- 	xe_sched_entity_fini(&ge->entity);
-@@ -1453,16 +1445,24 @@ static void guc_exec_queue_fini(struct xe_exec_queue *q)
- 	 * (timeline name).
- 	 */
- 	kfree_rcu(ge, rcu);
++	strscpy(ge->name, q->name, sizeof(ge->name));
 +
-+	drm_dev_put(drm);
- }
+ 	trace_xe_exec_queue_create(q);
  
--static void __guc_exec_queue_destroy_async(struct work_struct *w)
-+static void guc_exec_queue_do_destroy(struct xe_exec_queue *q)
- {
--	struct xe_guc_exec_queue *ge =
--		container_of(w, struct xe_guc_exec_queue, destroy_async);
--	struct xe_exec_queue *q = ge->q;
-+	struct xe_guc_exec_queue *ge = q->guc;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct xe_device *xe = guc_to_xe(guc);
-+	struct drm_device *drm = &xe->drm;
-+
-+	/*
-+	 * guc_exec_queue_fini() drops the queue's drm_device ref.
-+	 * Keep the device alive until the PM-runtime put.
-+	 */
-+	drm_dev_get(drm);
- 
--	xe_pm_runtime_get(guc_to_xe(guc));
-+	xe_pm_runtime_get(xe);
- 	trace_xe_exec_queue_destroy(q);
- 
- 	if (xe_exec_queue_is_lr(q))
-@@ -1472,21 +1472,28 @@ static void __guc_exec_queue_destroy_async(struct work_struct *w)
- 
- 	xe_exec_queue_fini(q);
- 
--	xe_pm_runtime_put(guc_to_xe(guc));
-+	xe_pm_runtime_put(xe);
-+
-+	drm_dev_put(drm);
- }
- 
--static void guc_exec_queue_destroy_async(struct xe_exec_queue *q)
-+static void __guc_exec_queue_destroy_async(struct work_struct *w)
- {
--	struct xe_guc *guc = exec_queue_to_guc(q);
--	struct xe_device *xe = guc_to_xe(guc);
-+	struct xe_guc_exec_queue *ge =
-+		container_of(w, struct xe_guc_exec_queue, destroy_async);
-+
-+	guc_exec_queue_do_destroy(ge->q);
-+}
- 
-+static void guc_exec_queue_destroy_async(struct xe_exec_queue *q)
-+{
- 	INIT_WORK(&q->guc->destroy_async, __guc_exec_queue_destroy_async);
- 
- 	/* We must block on kernel engines so slabs are empty on driver unload */
- 	if (q->flags & EXEC_QUEUE_FLAG_PERMANENT || exec_queue_wedged(q))
--		__guc_exec_queue_destroy_async(&q->guc->destroy_async);
-+		guc_exec_queue_do_destroy(q);
- 	else
--		queue_work(xe->destroy_wq, &q->guc->destroy_async);
-+		xe_destroy_wq_queue(&q->guc->destroy_async);
- }
- 
- static void __guc_exec_queue_destroy(struct xe_guc *guc, struct xe_exec_queue *q)
-@@ -1651,6 +1658,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- {
- 	struct xe_gpu_scheduler *sched;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct drm_device *drm = &guc_to_xe(guc)->drm;
- 	struct xe_guc_exec_queue *ge;
- 	long timeout;
- 	int err, i;
-@@ -1661,6 +1669,8 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 	if (!ge)
- 		return -ENOMEM;
- 
-+	drm_dev_get(drm);
-+
- 	q->guc = ge;
- 	ge->q = q;
- 	init_rcu_head(&ge->rcu);
-@@ -1712,6 +1722,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 	xe_sched_fini(&ge->sched);
- err_free:
- 	kfree(ge);
-+	drm_dev_put(drm);
- 
- 	return err;
- }
-diff --git a/drivers/gpu/drm/xe/xe_guc_types.h b/drivers/gpu/drm/xe/xe_guc_types.h
-index c7b9642b41ba7..31a2acb63ac34 100644
---- a/drivers/gpu/drm/xe/xe_guc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_types.h
-@@ -100,8 +100,6 @@ struct xe_guc {
- 		 * even initialized - before that not even the lock is valid
- 		 */
- 		bool initialized;
--		/** @submission_state.fini_wq: submit fini wait queue */
--		wait_queue_head_t fini_wq;
- 	} submission_state;
- 
- 	/** @hwconfig: Hardware config state */
-diff --git a/drivers/gpu/drm/xe/xe_module.c b/drivers/gpu/drm/xe/xe_module.c
-index d08338fc3bc1e..88d66bee85c69 100644
---- a/drivers/gpu/drm/xe/xe_module.c
-+++ b/drivers/gpu/drm/xe/xe_module.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/init.h>
- #include <linux/module.h>
-+#include <linux/workqueue.h>
- 
- #include <drm/drm_module.h>
- 
-@@ -101,6 +102,50 @@ static int xe_check_nomodeset(void)
  	return 0;
- }
- 
-+static struct workqueue_struct *xe_destroy_wq;
-+
-+static int __init xe_destroy_wq_module_init(void)
-+{
-+	xe_destroy_wq = alloc_workqueue("xe-guc-destroy-wq", WQ_UNBOUND, 0);
-+	if (!xe_destroy_wq)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+static void xe_destroy_wq_module_exit(void)
-+{
-+	if (xe_destroy_wq)
-+		destroy_workqueue(xe_destroy_wq);
-+	xe_destroy_wq = NULL;
-+}
-+
-+/**
-+ * xe_destroy_wq_queue() - Queue work on the destroy workqueue
-+ * @work: work item to queue
-+ *
-+ * The destroy workqueue has module lifetime and is used for GuC exec queue
-+ * teardown that can outlive a single xe_device. SVM pagemap destroy uses the
-+ * per-device xe->destroy_wq instead.
-+ *
-+ * Return: %true if @work was queued, %false if it was already pending.
-+ */
-+bool xe_destroy_wq_queue(struct work_struct *work)
-+{
-+	return queue_work(xe_destroy_wq, work);
-+}
-+
-+/**
-+ * xe_destroy_wq_flush() - Flush the destroy workqueue
-+ *
-+ * Drains all pending destroy work. Called from PCI remove to ensure
-+ * teardown ordering before the device is destroyed.
-+ */
-+void xe_destroy_wq_flush(void)
-+{
-+	if (xe_destroy_wq)
-+		flush_workqueue(xe_destroy_wq);
-+}
-+
- struct init_funcs {
- 	int (*init)(void);
- 	void (*exit)(void);
-@@ -122,6 +167,10 @@ static const struct init_funcs init_funcs[] = {
- 		.init = xe_sched_job_module_init,
- 		.exit = xe_sched_job_module_exit,
- 	},
-+	{
-+		.init = xe_destroy_wq_module_init,
-+		.exit = xe_destroy_wq_module_exit,
-+	},
- 	{
- 		.init = xe_register_pci_driver,
- 		.exit = xe_unregister_pci_driver,
-diff --git a/drivers/gpu/drm/xe/xe_module.h b/drivers/gpu/drm/xe/xe_module.h
-index b668495392701..75a2b91c54494 100644
---- a/drivers/gpu/drm/xe/xe_module.h
-+++ b/drivers/gpu/drm/xe/xe_module.h
-@@ -8,6 +8,8 @@
- 
- #include <linux/types.h>
- 
-+struct work_struct;
-+
- /* Module modprobe variables */
- struct xe_modparam {
- 	bool force_execlist;
-@@ -27,5 +29,8 @@ struct xe_modparam {
- 
- extern struct xe_modparam xe_modparam;
- 
-+bool xe_destroy_wq_queue(struct work_struct *work);
-+void xe_destroy_wq_flush(void);
-+
- #endif
- 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index b787292117901..10c5d852cf2b9 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -798,6 +798,12 @@ static void xe_pci_remove(struct pci_dev *pdev)
- 		return;
- 
- 	xe_device_remove(xe);
-+
-+	/*
-+	 * Preserve remove-time flush after moving destroy work to module
-+	 * lifetime.
-+	 */
-+	xe_destroy_wq_flush();
- 	xe_pm_fini(xe);
- }
- 
 -- 
 2.53.0
 
