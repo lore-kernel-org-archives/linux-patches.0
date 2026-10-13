@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42BC199FAB;
-	Tue, 13 Oct 2026 12:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BB5199FAB;
+	Tue, 13 Oct 2026 12:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895049; cv=none; b=WXxD1UTJFfTvMMoslbmTq3xU2phZ/yza3K0nHHW8Svqu9gl8uh2x55JdJtNoPWItJRxR0TD2E70y0LwPrFOcT6EmI8r95+hBlCdKYNhrEye1LoVlBoB5TUUkEkxM2+hn1SfpVzY3pO8ROFmRNEEg7hkVSods0QuvMCAMNgTsvbw=
+	t=1791895053; cv=none; b=oll1+6cBqXGnER/0hqg2y/1xsKWgYIiqGaZfQUDThXK/HG6ZN+cmF60vZwlnitg2tMCX6V1VWuOuhe8cetslpRdrp//8U/8Oa5ly/vR7DeewRutGK9W5/lpvWzptbvg8PnVVMyVWotS2ddNSaUqSwVkPru6FTWVoWSCeStYUThY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895049; c=relaxed/simple;
-	bh=++JeObfdB5JQ42U4mt8FrNbNKfwmesP6BPj7bv2qvQU=;
+	s=arc-20240116; t=1791895053; c=relaxed/simple;
+	bh=kfm61iC4N+0hbY3GawTiNb5Q/ld1/62PdiSVSGMvubo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfUxUnI1Y/fevzAYzPzujMyhri86GrGTtYADkCc+Khlhtp65BSqGETjqiYledjhz599QbA9LO23Q6bYbw4VWPe3GogvCI5rPBc3PH+l69Nig8k8VoZCu3rQlVY/q2ugon47miwyELxEO74t2cJYsa102jk7lZHlT/VWi5Roh2PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FXsnTO4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VzuTZubnTXV06L/DI6aG4cXaeDIiJ//geEP4GSgGby4Bc4YajBLBiyEmluKFGxLB56PKkE8kgFW9AwWx0ufioCiPmGXrLPa1j+JeU4A19B8vCqh8xnp6Taj16nxQ/r1CgMuWVPNXiqvn8rK1Ayb/GCt4brY3nEmpPnV1bSrK7Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaTBvmHR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FXsnTO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289AD1F000FF;
-	Tue, 13 Oct 2026 12:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaTBvmHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7641F000FF;
+	Tue, 13 Oct 2026 12:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895048;
-	bh=VxP0nZzPR9zDytOvgAuukVn8edloK6bGXBMPnZlHTsA=;
+	s=korg; t=1791895051;
+	bh=RPorYjWsaek9/d2LQZGdiBT6RQ99CjfEZrs3+deUswM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FXsnTO4VGAMGC8kGser2vlqwrjnliudPy7i31N9s6cVNA2DQiX5V/4t/sPNBnxfM
-	 LDeCrqrZit/zmBRsc+zVwungwCbLR2dGn+ACjGDFVWiV2xJXGCcF/NbZWOBVsRmxzq
-	 zKxnlpb1oriidTa5EYvNPb78CpSjD5T1aDDO/19w=
+	b=YaTBvmHRo5aMjip8hwjqY8uuWLJQEOahtW/c9qR52P1uxaXiO+93sj0QdjXi39kqv
+	 zxF6XYt1gYfUzFBA71djluVzTlPrG1IHugOnUENhPo4PQJDAVzlbJTwQVv4P275Pjp
+	 07H2AiEwJsOf9qjCqhu/VsB4Yaxj/WCHlGo7BBjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 145/497] usb: dwc3: am62: Fix runtime PM usage count leak on probe error path
-Date: Tue, 13 Oct 2026 13:35:12 +0200
-Message-ID: <20261013112911.328505570@linuxfoundation.org>
+	stable@kernel.org,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: [PATCH 6.12 146/497] usb: gadget: aspeed-vhub: cancel wake work on device removal
+Date: Tue, 13 Oct 2026 13:35:13 +0200
+Message-ID: <20261013112911.352327163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,46 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 3d9bbf0ffeb9b7ac1b6ad06b52e037870a7e0c63 upstream.
+commit 20388c8d1d74c203fec8194c45cd31afdfab934e upstream.
 
-dwc3_ti_probe() takes a runtime PM reference with pm_runtime_get_noresume()
-before creating the dwc3 core child device, and releases it with
-pm_runtime_put_autosuspend() once probe has succeeded. The err_pm_disable
-error path only disables runtime PM, so the reference taken a few lines
-earlier is never dropped.
+wake_work is armed from the gadget .wakeup callback to resume suspended
+downstream ports, and it is never cancelled in ast_vhub_remove(), so a
+work item queued before or during removal can run after devm has freed
+vhub and its ports, a use-after-free.
 
-The usage counter lives in struct device and is not reset when the driver
-is unbound, so the leaked reference outlives the failed probe. If the
-device is probed again, through a manual rebind or a module reload, the
-counter starts at one instead of zero and the pm_runtime_put_autosuspend()
-on the success path can no longer bring it back down. The wrapper then
-stays runtime resumed for good and autosuspend never kicks in.
+Cancelling the work alone is not sufficient: usb_gadget_wakeup() takes
+no lock and the unbind path never clears wakeup_en, so a remote-wakeup
+request in flight on another CPU can re-arm the work after the cancel
+and before vhub is freed.
 
-Drop the reference before disabling runtime PM, matching the ordering
-already used in dwc3_ti_remove().
+ast_vhub_del_dev() already clears d->registered under vhub->lock before
+unregistering the gadget. Refuse the wakeup in ast_vhub_udc_wakeup()
+once d->registered is clear: the check and the schedule_work() are then
+atomic against the unbind, so a wakeup that passed before the flag was
+cleared is drained by the cancel_work_sync() after the del_dev loop,
+and one that arrives later returns without arming. Also move INIT_WORK()
+to the top of ast_vhub_probe(), since the probe error path reuses
+ast_vhub_remove() and would otherwise cancel a never-initialized work
+item.
 
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260902-dwc3-am62-rpm-fix-v1-1-7a2807e33307@amd.com
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7ecca2a4080c ("usb/gadget: Add driver for Aspeed SoC virtual hub")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Link: https://patch.msgid.link/20260908041740.613713-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/udc/aspeed-vhub/core.c |    4 ++++
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c  |    2 +-
+ drivers/usb/gadget/udc/aspeed-vhub/hub.c  |    5 +++--
+ drivers/usb/gadget/udc/aspeed-vhub/vhub.h |    1 +
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -288,6 +288,7 @@ static int dwc3_ti_probe(struct platform
+--- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+@@ -266,6 +266,9 @@ static void ast_vhub_remove(struct platf
+ 	for (i = 0; i < vhub->max_ports; i++)
+ 		ast_vhub_del_dev(&vhub->ports[i].dev);
  
- err_pm_disable:
- 	clk_disable_unprepare(am62->usb2_refclk);
-+	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_suspended(dev);
- 	return ret;
++	/* Final drain; the worker takes vhub->lock, so stay outside of it */
++	cancel_work_sync(&vhub->wake_work);
++
+ 	spin_lock_irqsave(&vhub->lock, flags);
+ 
+ 	/* Mask & ack all interrupts  */
+@@ -324,6 +327,7 @@ static int ast_vhub_probe(struct platfor
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&vhub->lock);
++	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 	vhub->pdev = pdev;
+ 	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
+ 				      VHUB_IRQ_DEV1_BIT);
+--- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+@@ -280,7 +280,7 @@ static int ast_vhub_udc_wakeup(struct us
+ 	int rc = -EINVAL;
+ 
+ 	spin_lock_irqsave(&d->vhub->lock, flags);
+-	if (!d->wakeup_en)
++	if (!d->wakeup_en || !d->registered)
+ 		goto err;
+ 
+ 	DDBG(d, "Device initiated wakeup\n");
+--- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+@@ -558,7 +558,7 @@ void ast_vhub_device_connect(struct ast_
+ 		ast_vhub_send_host_wakeup(vhub);
+ }
+ 
+-static void ast_vhub_wake_work(struct work_struct *work)
++void ast_vhub_wake_work(struct work_struct *work)
+ {
+ 	struct ast_vhub *vhub = container_of(work,
+ 					     struct ast_vhub,
+@@ -588,6 +588,8 @@ static void ast_vhub_wake_work(struct wo
+ 
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub)
+ {
++	lockdep_assert_held(&vhub->lock);
++
+ 	/*
+ 	 * A device is trying to wake the world, because this
+ 	 * can recurse into the device, we break the call chain
+@@ -1076,7 +1078,6 @@ static int ast_vhub_init_desc(struct ast
+ int ast_vhub_init_hub(struct ast_vhub *vhub)
+ {
+ 	vhub->speed = USB_SPEED_UNKNOWN;
+-	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 
+ 	return ast_vhub_init_desc(vhub);
+ }
+--- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
++++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
+@@ -546,6 +546,7 @@ void ast_vhub_hub_suspend(struct ast_vhu
+ void ast_vhub_hub_resume(struct ast_vhub *vhub);
+ void ast_vhub_hub_reset(struct ast_vhub *vhub);
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub);
++void ast_vhub_wake_work(struct work_struct *work);
+ 
+ /* dev.c */
+ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx);
 
 
