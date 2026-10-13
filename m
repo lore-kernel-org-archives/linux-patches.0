@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7EA47604A;
-	Tue, 13 Oct 2026 12:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0175147604A;
+	Tue, 13 Oct 2026 12:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894226; cv=none; b=f3gwwOlljeBEwHVvIKM9teZ6HC9FEPGtCIeb/u3aqSXFRyKswEz2hDg4kq+yNb3LS61w3K9p5mBEijSL4tsL2plF2mzuGRcNdSHlxhQofbOa6xWIko+hy2I70+PoDs2Sy99+xY2Dq20Wi63xFkYSxuOpvSuVNFApqLorf3gzc9s=
+	t=1791894229; cv=none; b=bbIZfurY2l7OhXrOhmvfexsZKTmR3PLTbGa3ELTzu3b3MwVowN/20f890QUMxloWZE2xH5a6FGIY9G08M8dtEud7i1lVr3yw7xNKxNT7U2XagzCffEB4LkMN0JXlz0CwdEmp81fiScneEbNJpd0OavgVnw7915l0n2Abea9htc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894226; c=relaxed/simple;
-	bh=NddVZqHJ255AUOSdINf2KFn3nkAIJjjE6vxvCIlVXDk=;
+	s=arc-20240116; t=1791894229; c=relaxed/simple;
+	bh=QCbrdXyG360YF1XQhK09+fkGfHbHRorjlgIzE6jZVL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQ1TZyXLnqnmOFsEYfXXpls5jl8F7ucmZUC1gi9Au7yalGuGoLFxP0sgzoaAben4PKpu3zSTySrtVfKxYefYkdWe+SxntepBfihf2bN5jogkTkzNPUPPnkPRQawBd0BtoDmtIpngfqI5Oz4nOAnqvwvmhghnk0Nbge0YqgNgrYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IszcJ0LS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=stoyut3ZuIsN6xYlRBGPTedQIgZgtyf1BlVJ1fmRp55SHXuygUn4q+llixv2ajW1fkTl7LASXbihbC+K75bN6TcOR2FmDUcDVwdPLv7VKsd57z/5AGP5QS8mYMQpYwtWTlsFXU4O1o6f7kIJBOHWdZw3/lY37tl7G/FmG9yRwf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixOGC9u1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IszcJ0LS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477B01F000FF;
-	Tue, 13 Oct 2026 12:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixOGC9u1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7161F000FF;
+	Tue, 13 Oct 2026 12:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894224;
-	bh=kgyOfTr14dQcCqQ4Bd3bWAIHOOf151GCbXekzDb+2SY=;
+	s=korg; t=1791894227;
+	bh=Zk3MmelrZG3DuKt3hxGScoXoQAuUAE9OD1pkEsX3Cl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IszcJ0LSadl4vRYrYGz9LBTVG2KJVjeC4652KHDdJT9qAfV9FeDzIeDy8h8SYm9MI
-	 PqrPzRqYqBeFFDoUROZQp/C4+N1TRevlhFhqP/ySxnDFkprZxdhotJryiBQEHVJzCP
-	 28nxen1BWKoa6isM4ZycM9jY6kabFup1uhaqI8PY=
+	b=ixOGC9u1/YazM7uPdkZMJ1YwbuXpj4nTMWtGIBMhuHqxZa8518b6iFRLvMf0oki5i
+	 F8W9UpI7FFd+XmceyYJ5oRSVgPqZTjofhd4xFW+knIkk8r2HCXHwqVqpxFzZAsOswx
+	 ylNa5cSWisjLyy/SvyDqnIhie+ygwDyVfOpxdRX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Nicholas Dudar <main.kalliope@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 435/621] coresight: etm4x: missing cscfg_csdev_disable_active_config() in perf enable
-Date: Tue, 13 Oct 2026 13:37:10 +0200
-Message-ID: <20261013112931.156662859@linuxfoundation.org>
+Subject: [PATCH 6.18 483/621] bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
+Date: Tue, 13 Oct 2026 13:37:58 +0200
+Message-ID: <20261013112932.294853152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,122 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Nicholas Dudar <main.kalliope@gmail.com>
 
-[ Upstream commit 0a47f0be6557b4a851addd430383a4dc7ee08752 ]
+[ Upstream commit 2aaf67f0516fde29620d0edfc29c01b9ea7ad430 ]
 
-In the perf enable path, there are missing cases where
-cscfg_csdev_disable_active_config() is not called:
+check_kfunc_args() detects a kfunc argument named rdonly_buf_size or
+rdwr_buf_size and stores reg->var_off.value into meta->r0_size, a u64,
+and does not bound it. check_kfunc_call() later copies that value into
+the returned register's mem_size field:
 
-  - Branch broadcast is selected but not supported by the hardware
-  - etm4_enable_hw() fails
+  meta->r0_size = reg->var_off.value;
+  ...
+  regs[BPF_REG_0].mem_size = meta.r0_size;
 
-This can lead to a leak of config_desc->active_cnt.
-Fix this by properly calling cscfg_csdev_disable_active_config()
-in these error paths.
+regs[BPF_REG_0].mem_size is u32. A constant whose upper 32 bits are set
+gets truncated instead of causing a load-time rejection, so the verifier
+records a PTR_TO_MEM register with an approximately 4 GiB mem_size for
+whatever allocation the kfunc returned. A later access check against
+that register uses the truncated, wrong bound.
 
-Fixes: 810ac401db1f ("coresight: etm4x: Add complex configuration handlers to etmv4")
-Suggested-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260725113645.57519-6-yeoreum.yun@arm.com
+Reject rdonly_buf_size/rdwr_buf_size values that exceed U32_MAX at the
+point meta->r0_size is set.
+
+Fixes: eb1f7f71c126 ("bpf/verifier: allow kfunc to return an allocated mem")
+Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260709155837.1879230-2-main.kalliope@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 51 +++++++++++--------
- 1 file changed, 30 insertions(+), 21 deletions(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 522e128174467..be05ef41fd734 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -752,8 +752,7 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct etmv4_config *config = &drvdata->config;
- 	struct perf_event_attr *attr = &event->attr;
--	unsigned long cfg_hash;
--	int preset, cc_threshold;
-+	int cc_threshold;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index c1e46c0cce981..47549e988f2c7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13410,6 +13410,11 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 				}
  
- 	/* Clear configuration from previous run */
- 	memset(config, 0, sizeof(struct etmv4_config));
-@@ -834,20 +833,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 		/* bit[12], Return stack enable bit */
- 		config->cfg |= TRCCONFIGR_RS;
- 
--	/*
--	 * Set any selected configuration and preset.
--	 *
--	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
--	 * in the perf attributes defined in coresight-etm-perf.c.
--	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
--	 * A zero configid means no configuration active, preset = 0 means no preset selected.
--	 */
--	if (attr->config2 & GENMASK_ULL(63, 32)) {
--		cfg_hash = (u32)(attr->config2 >> 32);
--		preset = attr->config & 0xF;
--		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
--	}
--
- 	/* branch broadcast - enable if selected and supported */
- 	if (attr->config & BIT(ETM_OPT_BRANCH_BROADCAST)) {
- 		if (!drvdata->trcbb) {
-@@ -871,7 +856,9 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 			    struct coresight_path *path)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
--	int ret;
-+	struct perf_event_attr *attr = &event->attr;
-+	unsigned long cfg_hash;
-+	int ret, preset;
- 
- 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id()))
- 		return -EINVAL;
-@@ -882,7 +869,23 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 	/* Configure the tracer based on the session's specifics */
- 	ret = etm4_parse_event_config(csdev, event);
- 	if (ret)
--		goto out;
-+		goto err;
-+
-+	/*
-+	 * Set any selected configuration and preset.
-+	 *
-+	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
-+	 * in the perf attributes defined in coresight-etm-perf.c.
-+	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
-+	 * A zero configid means no configuration active, preset = 0 means no preset selected.
-+	 */
-+	cfg_hash = (u32)(attr->config2 >> 32);
-+	if (cfg_hash) {
-+		preset = attr->config & 0xF;
-+		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
-+		if (ret)
-+			goto err;
-+	}
- 
- 	drvdata->trcid = path->trace_id;
- 
-@@ -891,11 +894,17 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 
- 	/* And enable it */
- 	ret = etm4_enable_hw(drvdata);
-+	if (ret) {
-+		if (cfg_hash)
-+			cscfg_csdev_disable_active_config(csdev);
-+		goto err;
-+	}
- 
--out:
-+	return 0;
-+
-+err:
- 	/* Failed to start tracer; roll back to DISABLED mode */
--	if (ret)
--		coresight_set_mode(csdev, CS_MODE_DISABLED);
-+	coresight_set_mode(csdev, CS_MODE_DISABLED);
- 	return ret;
- }
- 
+ 				meta->r0_size = reg->var_off.value;
++				if (meta->r0_size > U32_MAX) {
++					verbose(env, "R%d rdonly/rdwr_buf_size exceeds u32 max\n",
++						regno);
++					return -EINVAL;
++				}
+ 				ret = mark_chain_precision(env, regno);
+ 				if (ret)
+ 					return ret;
 -- 
 2.53.0
 
