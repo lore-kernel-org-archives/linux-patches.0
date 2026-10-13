@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E894F4CF3;
-	Tue, 13 Oct 2026 11:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E17C4F402E;
+	Tue, 13 Oct 2026 11:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892747; cv=none; b=j1KTJUhpiUC/KaEH1XOpfThw6UOSX33f37upfVlCkus5D/kNNb2kCl3E5oyTC+PvqwwMfY9h2fQfgqrZM38osQae6JOwannrIzJQogbLo3yfGW+ZDCcGDMg/2fOfQave6XHixteumqaF4dYIzXdQLQ3mgVYF96Ct3UOJcTgAmj8=
+	t=1791892750; cv=none; b=cJ8gy814+OD1GsawrdtK9d32jbFObL5yNJc+U3OseiFfI31N4nZqfQZ3C6f7C9QO/6RWZWAh3vQXskeHLSmE061Pbod6rJguGodcIrOaJvt5Th5emYg1MNbI0qV5TM+EISCyHFK837/f8xu5Hyt+PYKF5dpHOHQcflyAQxVHDXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892747; c=relaxed/simple;
-	bh=8MaONlCpzd6dekn+eTFPUmhYFFiJNgv++FM2ireAMvo=;
+	s=arc-20240116; t=1791892750; c=relaxed/simple;
+	bh=sPRcK8aGO7hG9/ELY1DcyXekqKUceyukHgMECJAKPbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5MrWZwQrXW/KUJ8tLclYbbgJ/KheAcOd9KjYVXaPX0BnrUlzRQIHcMIGHmysUbhcvDrrgukLO75sI2exeISrG72MkNUV87CoNRr00JxalTPyX38sfGEBm1d9sgPEy13iUwtxRdUvBnHaFDxaI9HZ/FIa0s+FmR2q4meI+i8sHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1mDfFR4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KwMafcP7zKNW0gkxs5WkxjUiy1/Pify/AEF4NAx2kUE6JpbLZUQRFKKm9xWwfyGITe6dE7HuduDKH/dATbPZybpK6jduNBsL1lxRbR/YXaKTgNPTZic6Wsf1bm0qjs3BRZ3o7vwJ4/3aQGonmqbZe6uhmw3OecOYEPqtp/PGeIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wk6bjAsh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1mDfFR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0901F0089A;
-	Tue, 13 Oct 2026 11:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wk6bjAsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257761F00898;
+	Tue, 13 Oct 2026 11:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892745;
-	bh=YhqPFrTyPv0M/poJIeCnjLhIwPoOyTFg/acmXLqlBLY=;
+	s=korg; t=1791892748;
+	bh=P8L1BMtWUNcJVvR08cQH8X3SODrlRYRM/rxCZDZe32Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P1mDfFR4OzNUrt2tKExPv/LPwp0qeLKXV9U5uxaSbMc0dtpAYJgTJgeCRUJSV3A/+
-	 DWbtYK4zd4Xq46zD0f6fPehKPBf25R5INq+ZNZ668gPVqvYpgCNkyJpjlwjsz1FSV6
-	 ilGEHxM6BWi7pAYPE4g5fmj1JsidWZUrNBtBA7cE=
+	b=wk6bjAshNHvM1JT+0FyP4cQrhcqKYQRCZ5I9/cM1t4Y6CvUzLMqZyL9LJY7l3jvZY
+	 LERZ3sdE8N7K2AJfS4i8XJib4bv2o7G1iMG9GdPhc+ddEDAgeIatv/yWG+7/kBwnQC
+	 lXFURiOK/g8l/NM/lZCxtW6KVluuoQ682rMBBF+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Betschart <adrian.betschart@cinemaone.ch>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 277/281] drm/amd/display: Dont replace a sink mode that shares the native totals
-Date: Tue, 13 Oct 2026 13:39:53 +0200
-Message-ID: <20261013112901.862176889@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 278/281] io_uring/memmap: account the pages a compound region really uses
+Date: Tue, 13 Oct 2026 13:39:54 +0200
+Message-ID: <20261013112901.885405162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,65 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Betschart <adrian.betschart@cinemaone.ch>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 54c998c55fc9cbc391b350d67b86e0c2a0748f1a upstream.
+[ Upstream commit f12f0234cc14886bcfd53ffb7c8df4216dad51f1 ]
 
-decide_crtc_timing_for_drm_display_mode() copies the native mode's CRTC
-timing into the requested mode when clock, htotal and vtotal match.
-That is meant for the modes amdgpu inserts itself:
-amdgpu_dm_create_common_mode() duplicates the native mode and changes
-only hdisplay and vdisplay, so those are sent with the native timing
-and scaled.
+io_mem_alloc_compound() allocates get_order(size) pages, which rounds a
+region size that is not a power of two up to the next order. The pages
+past the region are part of the same allocation and cannot be used for
+anything else, but io_create_region() accounts reg->size >> PAGE_SHIFT,
+so they are never charged against RLIMIT_MEMLOCK. For a ring with 4096
+SQ entries and the default CQ size the region is 37 pages while the
+allocation is 64.
 
-A sink can also offer a real mode with the same clock and totals as
-its native mode. CTA-861 VIC 102 (4096x2160@60) and VIC 97
-(3840x2160@60) both use 594 MHz and 4400x2250. With 3840x2160@60 as
-the preferred mode, a 4096x2160@60 request goes out with the 3840x2160
-timing and the framebuffer scaled into it (dst 3840x2025 at y=67),
-while the AVI InfoFrame still carries VIC 102. A JVC projector then
-reports 3840x2160 and shows a corrupted right edge. 4096x2160@24,
-whose totals differ, is sent and displayed correctly.
+Account the tail pages together with the region, and fall back to the
+exact sized bulk allocation when they do not fit the limit, so a user
+close to their limit still gets the region rather than an error.
+io_free_region() gives the same amount back, the compound case being the
+one that set IO_REGION_F_SINGLE_REF.
 
-Inserted modes keep the native sync positions; a real mode with its
-own active width does not. Compare those too, so only inserted modes
-are patched.
+Counting how many 4096 entry rings an unprivileged user can create under
+a given RLIMIT_MEMLOCK, before and after:
 
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Signed-off-by: Adrian Betschart <adrian.betschart@cinemaone.ch>
-Assisted-by: Claude-Code:claude-opus-5-5
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 22f9a2da101c37f821cd00954f81dc598754f4d5)
-Cc: stable@vger.kernel.org
-[ Adrian: this tree keeps the function in amdgpu_dm.c; dropped the KUnit
-  test, its file does not exist here. ]
-Signed-off-by: Adrian Betschart <adrian.betschart@cinemaone.ch>
-Assisted-by: Claude-Code:claude-opus-5-5
+	limit (pages)	before	after
+	256		2	2
+	300		2	2
+	350		3	2
+	400		3	3
+	512		5	4
+
+Five rings under a 512 page limit really pin 640 pages.
+
+Fixes: dfbbfbf19187 ("io_uring: introduce concept of memory regions")
+Link: https://lore.kernel.org/all/87ik5ncj8d.fsf@mailhost.krisman.be/
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260806180044.275543-1-ali@iusegentoo.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b59cabf9b4ac ("io_uring: do not charge the SQ/CQ rings to RLIMIT_MEMLOCK")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ io_uring/memmap.c |   37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7260,10 +7260,15 @@ decide_crtc_timing_for_drm_display_mode(
- 					const struct drm_display_mode *native_mode,
- 					bool scale_enabled)
+--- a/io_uring/memmap.c
++++ b/io_uring/memmap.c
+@@ -16,8 +16,10 @@
+ #include "zcrx.h"
+ 
+ static bool io_mem_alloc_compound(struct page **pages, int nr_pages,
+-				  size_t size, gfp_t gfp)
++				  size_t size, gfp_t gfp,
++				  struct user_struct *user)
  {
-+	/* Inserted modes copy the native sync; a sink mode with equal totals may not */
- 	if (scale_enabled || (
- 	    native_mode->clock == drm_mode->clock &&
- 	    native_mode->htotal == drm_mode->htotal &&
--	    native_mode->vtotal == drm_mode->vtotal)) {
-+	    native_mode->vtotal == drm_mode->vtotal &&
-+	    native_mode->hsync_start == drm_mode->hsync_start &&
-+	    native_mode->hsync_end == drm_mode->hsync_end &&
-+	    native_mode->vsync_start == drm_mode->vsync_start &&
-+	    native_mode->vsync_end == drm_mode->vsync_end)) {
- 		if (native_mode->crtc_clock)
- 			copy_crtc_timing_for_drm_display_mode(native_mode, drm_mode);
- 	} else {
++	unsigned long nr_compound, extra;
+ 	struct page *page;
+ 	int i, order;
+ 
+@@ -27,9 +29,22 @@ static bool io_mem_alloc_compound(struct
+ 	else if (order)
+ 		gfp |= __GFP_COMP;
+ 
++	/*
++	 * get_order() rounds a non power of two size up, so the allocation
++	 * can hold more pages than the region exposes. Account those too,
++	 * and leave the compound allocation alone if they do not fit.
++	 */
++	nr_compound = 1UL << order;
++	extra = nr_compound - nr_pages;
++	if (extra && user && __io_account_mem(user, extra))
++		return false;
++
+ 	page = alloc_pages(gfp, order);
+-	if (!page)
++	if (!page) {
++		if (extra && user)
++			__io_unaccount_mem(user, extra);
+ 		return false;
++	}
+ 
+ 	for (i = 0; i < nr_pages; i++)
+ 		pages[i] = page + i;
+@@ -105,8 +120,15 @@ void io_free_region(struct user_struct *
+ 	}
+ 	if ((mr->flags & IO_REGION_F_VMAP) && mr->ptr)
+ 		vunmap(mr->ptr);
+-	if (mr->nr_pages && user)
+-		__io_unaccount_mem(user, mr->nr_pages);
++	if (mr->nr_pages && user) {
++		unsigned long nr_accounted = mr->nr_pages;
++
++		/* a compound region was accounted for the whole allocation */
++		if (mr->flags & IO_REGION_F_SINGLE_REF)
++			nr_accounted = 1UL << get_order(io_region_size(mr));
++
++		__io_unaccount_mem(user, nr_accounted);
++	}
+ 
+ 	memset(mr, 0, sizeof(*mr));
+ }
+@@ -151,7 +173,8 @@ static int io_region_pin_pages(struct io
+ 
+ static int io_region_allocate_pages(struct io_mapped_region *mr,
+ 				    struct io_uring_region_desc *reg,
+-				    unsigned long mmap_offset)
++				    unsigned long mmap_offset,
++				    struct user_struct *user)
+ {
+ 	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN;
+ 	size_t size = io_region_size(mr);
+@@ -162,7 +185,7 @@ static int io_region_allocate_pages(stru
+ 	if (!pages)
+ 		return -ENOMEM;
+ 
+-	if (io_mem_alloc_compound(pages, mr->nr_pages, size, gfp)) {
++	if (io_mem_alloc_compound(pages, mr->nr_pages, size, gfp, user)) {
+ 		mr->flags |= IO_REGION_F_SINGLE_REF;
+ 		goto done;
+ 	}
+@@ -217,7 +240,7 @@ int io_create_region(struct io_ring_ctx
+ 	if (reg->flags & IORING_MEM_REGION_TYPE_USER)
+ 		ret = io_region_pin_pages(mr, reg);
+ 	else
+-		ret = io_region_allocate_pages(mr, reg, mmap_offset);
++		ret = io_region_allocate_pages(mr, reg, mmap_offset, ctx->user);
+ 	if (ret)
+ 		goto out_free;
+ 
 
 
