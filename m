@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D154EB863;
-	Tue, 13 Oct 2026 12:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1834F68AD;
+	Tue, 13 Oct 2026 12:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894578; cv=none; b=RoGJ5+IrZdpHAKYCyqev7vxNUpO65q6Cd06YyJ+F2N7wK7CQXUbDhm4YmY0xizziDqRkhalt8b/Y+oE4iIa5N+CWDWDgL7r+ZJGpnpeheq1fEVbh9WUW0gEpHd1lsadxwwqwJ1JjFSlsQvshl39pMIk5MbR8ya/zoeuMXSmGyyo=
+	t=1791894580; cv=none; b=OIg//raDr08k//w0zChQmhORdaZE2qn2rXJQJTNudEQQPZzBUf5pNVs+MpsZ5OaxkS+jq8ffM/nWfCWUHpQTf2wDfr/hreyJP96osOoe0vCNYxoB4D3bXh67CXVxVws4mUt08PhBY49BygYZPmbMAadCiJ0p4vlpIYpQu+NoGjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894578; c=relaxed/simple;
-	bh=h2tEYLJbh89N1xoKrdJelWY3joMHpBfJM6MxGPr3f+k=;
+	s=arc-20240116; t=1791894580; c=relaxed/simple;
+	bh=2L76SwUhNJ7JZbZtFmj8ix9aqX8S76ILeB+N0r4Kv9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptQ35cJDpjNY3kIH2NBaH2Ts24tA1Xk44Q5O92HI4HQuDj8c8PSiVr02RPSkPpzvMPCYTIa4/RoWgJ5bLlOBky/6Y0BeBbYei0LEbgLmAqyqgxu3N0DHZHkslBGusiOn0duq/IEpHqthbD7V2xh/sGYx1WHH7Lrx7QbTdY7KwgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RI+u6qsk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SrziFS7k1t0YmNseG2g+617vHLNhkhEg2mclvXKh+H/sZOxBVuqglFuLkvraGxykNjn6cD+BZuUefD7dkoG81ftpSs59RnzOop4rIxisKFq9d/QmssZt6Z5feWEmCLWm7dy7h5lB2+8MCMWfDkeQx5WsVHN7NSvh0eW9ttuRR+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxmVQ43k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RI+u6qsk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101411F000FF;
-	Tue, 13 Oct 2026 12:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxmVQ43k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26E21F000FF;
+	Tue, 13 Oct 2026 12:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894576;
-	bh=A82Av64ol4GW2UvW2DxkzkGYeS8kBXtm4Fd6L/Dn7Ec=;
+	s=korg; t=1791894579;
+	bh=GQ56N8ULAf9ua4ggqEIeoFirwnFNJyQ4tewQzzo2Ci4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RI+u6qskLBUIvmvhRhHhqdaxqDCNs5Nnz5Ns3kBAhfDfKin41RrSQOb47uowVj/Jw
-	 bo4FQxBBCK6fyqRGukG6GW6KaXKbfMdyrLhC5odpTXVYp7mU4+jTeXjREJDVASJrzS
-	 UBzeP1Bcz50l2DXVkhLvB74Qf2hdmKEmHUNlsuOQ=
+	b=NxmVQ43kwkW8HDBKvB7Sf/in1GpvYOrefT01kRn0wNGZcYakZ/NS9y4FGXxPodY+Z
+	 CtBEwgG69EILkOc2M/NOu25iX/C6m2N5ofGGXaiIivl1LOxXSMiHb8GqJ9a0S3qKkd
+	 7k+lWBU30t4FlPeG7aqshqFs3Af97R184j8GbvCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 606/621] netfs, afs: Fix symlink reading
-Date: Tue, 13 Oct 2026 13:40:01 +0200
-Message-ID: <20261013112935.179179942@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	stable@kernel.org,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 607/621] media: verisilicon: Fix kernel panic due to __initconst misuse
+Date: Tue, 13 Oct 2026 13:40:02 +0200
+Message-ID: <20261013112935.203578009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,45 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit c51e89c5b5db3e1927738fad7cd18b66dde68aed upstream.
+commit e8d97c270cb46a2a88739019d0f8547adc7d97da upstream.
 
-Fix the reading of symlinks from the cache in afs by making netfslib trim
-the amount read down to i_size.  The problem is that afs sets the size of
-the iterator to the size of the buffer (PAGE_SIZE) so that the cache can
-round the read size up to the cache's DIO size.
+Fix a kernel panic when probing the driver as a module:
 
-Note that this also impacts the reading of AFS mountpoints as they're just
-stored as symlinks with an odd file mode.
+  Unable to handle kernel paging request at virtual address
+  ffffd9c18eb05000
+  of_find_matching_node_and_match+0x5c/0x1a0
+  hantro_probe+0x2f4/0x7d0 [hantro_vpu]
 
-Link: https://patch.msgid.link/3912795.1789489319@warthog.procyon.org.uk
-Fixes: c0410adf3da6 ("afs: Fix the locking used by afs_get_link()")
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+The imx8mq_vpu_shared_resources array is referenced by variant
+structures through their shared_devices field. When built as a
+module, __initconst causes this data to be freed after module
+init, but it's later accessed during probe, causing a page fault.
+
+The imx8mq_vpu_shared_resources is referenced from non-init code,
+so keeping __initconst or __initconst_or_module here is wrong.
+
+Drop the __initconst annotation and let it live in the normal .rodata
+section.
+
+A bug of __initconst called from regular non-init probe code
+leading to bugs during probe deferrals or during unbind-bind cycles.
+
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Closes: https://lore.kernel.org/all/68ef934f-baa0-4bf6-93d8-834bbc441e66@kernel.org/
+Reported-by: Franz Schnyder <franz.schnyder@toradex.com>
+Closes: https://lore.kernel.org/all/n3qmcb62tepxltoskpf7ws6yiirc2so62ia23b42rj3wlmpl67@rvkbuirx7kkp/
+Fixes: e0203ddf9af7 ("media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC")
+Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Suggested-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: stable@kernel.org
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/read_collect.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/verisilicon/imx8m_vpu_hw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/netfs/read_collect.c
-+++ b/fs/netfs/read_collect.c
-@@ -409,6 +409,11 @@ static void netfs_rreq_assess_single(str
- 		netfs_single_mark_inode_dirty(rreq->inode);
- 	}
+--- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
++++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
+@@ -343,7 +343,7 @@ const struct hantro_variant imx8mq_vpu_v
+ 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
+ };
  
-+	/* To do DIO, the cache has to round the size up, so we need to undo
-+	 * the rounding.
-+	 */
-+	rreq->transferred = min(rreq->transferred, rreq->i_size);
-+
- 	if (rreq->iocb) {
- 		rreq->iocb->ki_pos += rreq->transferred;
- 		if (rreq->iocb->ki_complete) {
+-static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
++static const struct of_device_id imx8mq_vpu_shared_resources[] = {
+ 	{ .compatible = "nxp,imx8mq-vpu-g1", },
+ 	{ .compatible = "nxp,imx8mq-vpu-g2", },
+ 	{ /* sentinel */ }
 
 
