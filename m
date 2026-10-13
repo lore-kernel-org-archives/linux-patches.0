@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEA84B95C2;
-	Tue, 13 Oct 2026 12:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E293B4FC8E2;
+	Tue, 13 Oct 2026 12:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893389; cv=none; b=ZOwRlfAmCzK14fgh9RprT6jXvX6ZkNUilES/zJqxWerpfL15k/BTr4XICrF9RGV5zyqbInoUSB2O45JyxjfC9clKjbGihaYyMuUVUoNFutte5g7gBbC3GGBdfiaVKS+dNJwWkfqTSHQM9Xs9/nJwPitcHAQ5kqUPjm/5eQED4Wg=
+	t=1791893392; cv=none; b=u+haATsY/VK8UUPwyIP2Os/lWFcbcFt9s2zl7n/2io++NnKM5jREyuisVAbhca4ysYsCt0f6xwtc6+NlZsV1P+IesAJVyUzhemJipapg/0/n3wdp74KmsJAeg6nb7Md97Gq4AUXErAhFKp4UtGB+Ifq92x7j+ypazSWdTBCVHNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893389; c=relaxed/simple;
-	bh=AcNpz8nrQDoFmBpMvzWP8WrhwrEDAxq6OjCWGNP8XNg=;
+	s=arc-20240116; t=1791893392; c=relaxed/simple;
+	bh=BfjeuDzWQhT6eo+hwDmkb+4awTqgHkpgRFl8EaqjLeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V9ne8H9aJ3QM/6ACXOQkY2ddThMfH6sJR5Tg3UZ7LEcILyDlJeqU8I1r0L6/mriJQtRGKsWu1X/5b7RKgQMHZ+NJrdTcA2jUI7Wbq8528FlzuGVMzmKxMPOp+Qb44EHjJFmDbPDZMGrYhDiqyYDMTo+Y/bxo6Nff1CDzWxYhsiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loPiLqfx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NTn2abuyOaQKkdSxHviaBP/B7iVlyOfX+SFM8llxmDOT7B2LDcSZqjdYOY4axlW0N5lHyIgI7w232aNETFrKrZW5FRC5N1A9v5gvTDpCqY9nTeT8ybeWncWp3AqZsshbAJmh2rjOVYAY4XAOW9Uf6/aL8a9oDXO76XTfIM6hX7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlRrBnsL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loPiLqfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC191F00893;
-	Tue, 13 Oct 2026 12:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlRrBnsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC351F0089B;
+	Tue, 13 Oct 2026 12:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893387;
-	bh=V5WcIGaB4uwxGnz3qAo1qCEguyyfsAdcx09k8LowXE0=;
+	s=korg; t=1791893390;
+	bh=lUT1lwC7EV6bk6EZ18YXWZax+eTdDaywSrFxUKKpMVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loPiLqfxKqKaIDL4p3cT0P9MDHRKmxtqGgBytdeKBrqskpN6aA0gzlssUZH/lLvoa
-	 +1ENKMcwChG96ePmmcTEEtPfDk8/vbmvTbrlTWgn12hZTXnMAgymXQ4Qaoe5WbpCsk
-	 EPjJe5hAT+VVQdeT0ETUDzaAbPiAd9LplbzNV6AU=
+	b=MlRrBnsLZgIkMgL/AiGzuizU1UmxMd/N54uaN1RlvhuzO9Vip3kJSAbn/vu1RSAqN
+	 Xgw1Ndn8vZbmXjsdoFc+XUeEmLkzTNRLbJwTl5UHMuyM+dmwWFSsSAXMaL53z76gbk
+	 7qtEfccn3Ir0x4BNX0luzAAzbJ4R/GFoULSmpbiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	ChiaHsuan Chung <chiahsuan.chung@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/621] drm/amd/display: Fix dc_link NULL handling in HPD init
-Date: Tue, 13 Oct 2026 13:33:17 +0200
-Message-ID: <20261013112925.656377994@linuxfoundation.org>
+Subject: [PATCH 6.18 211/621] ice: reshuffle and group Rx and Tx queue fields by cachelines
+Date: Tue, 13 Oct 2026 13:33:26 +0200
+Message-ID: <20261013112925.868199150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,89 +48,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit 226a40c06a183abaeb7529a4f54d6c203bd14407 ]
+[ Upstream commit 24f90786efaf1c573518706408deadcef189e6de ]
 
-amdgpu_dm_hpd_init() may see connectors without a valid dc_link.
+Place the fields in ice_{rx,tx}_ring used in the same pieces of
+hotpath code closer to each other and use
+__cacheline_group_{begin,end}_aligned() to isolate the read mostly,
+read-write, and cold groups into separate cachelines similarly
+to idpf.
 
-The code already checks dc_link for the polling decision, but later
-unconditionally dereferences it when setting up HPD interrupts.
+Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 
-Assign dc_link early and skip connectors where it is NULL.
+Only the Tx ring layout change is carried here; the Rx ring part and the
+next_to_alloc removal depend on the libeth Rx conversion that is not
+present, so they are dropped.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c:940 amdgpu_dm_hpd_init()
-error: we previously assumed 'dc_link' could be null (see line 931)
-
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c
-    923                 /*
-    924                  * Analog connectors may be hot-plugged unlike other connector
-    925                  * types that don't support HPD. Only poll analog connectors.
-    926                  */
-    927                 use_polling |=
-    928                         amdgpu_dm_connector->dc_link &&
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The patch adds this NULL check but hopefully it can be removed
-
-    929                         dc_connector_supports_analog(amdgpu_dm_connector->dc_link->link_id.id);
-    930
-    931                 dc_link = amdgpu_dm_connector->dc_link;
-
-dc_link assigned here.
-
-    932
-    933                 /*
-    934                  * Get a base driver irq reference for hpd ints for the lifetime
-    935                  * of dm. Note that only hpd interrupt types are registered with
-    936                  * base driver; hpd_rx types aren't. IOW, amdgpu_irq_get/put on
-    937                  * hpd_rx isn't available. DM currently controls hpd_rx
-    938                  * explicitly with dc_interrupt_set()
-    939                  */
---> 940                 if (dc_link->irq_source_hpd != DC_IRQ_SOURCE_INVALID) {
-                            ^^^^^^^^^^^^^^^^^^^^^^^ If it's NULL then we are trouble because we dereference it here.
-
-    941                         irq_type = dc_link->irq_source_hpd - DC_IRQ_SOURCE_HPD1;
-    942                         /*
-    943                          * TODO: There's a mismatch between mode_info.num_hpd
-    944                          * and what bios reports as the # of connectors with hpd
-
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Cc: Timur Kristóf <timur.kristof@gmail.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Mario Limonciello <superm1@kernel.org>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: ChiaHsuan Chung <chiahsuan.chung@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: fa28351f970f ("ice: fix potential NULL pointer deref in error path of ice_set_ringparam()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_txrx.h | 55 ++++++++++++++---------
+ 1 file changed, 34 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-index 59c7efc60c901..6cafbd228d874 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-@@ -926,6 +926,8 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
- 		amdgpu_dm_connector = to_amdgpu_dm_connector(connector);
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
+index 3c7830f787de8..5f24dc036575d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.h
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
+@@ -316,43 +316,56 @@ struct ice_rx_ring {
+ } ____cacheline_internodealigned_in_smp;
  
- 		dc_link = amdgpu_dm_connector->dc_link;
-+		if (!dc_link)
-+			continue;
+ struct ice_tx_ring {
+-	/* CL1 - 1st cacheline starts here */
+-	struct ice_tx_ring *next;	/* pointer to next ring in q_vector */
++	__cacheline_group_begin_aligned(read_mostly);
+ 	void *desc;			/* Descriptor ring memory */
+ 	struct device *dev;		/* Used for DMA mapping */
+ 	u8 __iomem *tail;
+ 	struct ice_tx_buf *tx_buf;
++
+ 	struct ice_q_vector *q_vector;	/* Backreference to associated vector */
+ 	struct net_device *netdev;	/* netdev ring maps to */
+ 	struct ice_vsi *vsi;		/* Backreference to associated VSI */
+-	/* CL2 - 2nd cacheline starts here */
+-	dma_addr_t dma;			/* physical address of ring */
+-	struct xsk_buff_pool *xsk_pool;
+-	u16 next_to_use;
+-	u16 next_to_clean;
+-	u16 q_handle;			/* Queue handle per TC */
+-	u16 reg_idx;			/* HW register index of the ring */
++
+ 	u16 count;			/* Number of descriptors */
+ 	u16 q_index;			/* Queue number of ring */
+-	u16 xdp_tx_active;
++
++	u8 flags;
++#define ICE_TX_FLAGS_RING_XDP		BIT(0)
++#define ICE_TX_FLAGS_RING_VLAN_L2TAG1	BIT(1)
++#define ICE_TX_FLAGS_RING_VLAN_L2TAG2	BIT(2)
++#define ICE_TX_FLAGS_TXTIME		BIT(3)
++
++	struct xsk_buff_pool *xsk_pool;
++
+ 	/* stats structs */
+ 	struct ice_ring_stats *ring_stats;
+-	/* CL3 - 3rd cacheline starts here */
++	struct ice_tx_ring *next;	/* pointer to next ring in q_vector */
++
++	struct ice_tstamp_ring *tstamp_ring;
++	struct ice_ptp_tx *tx_tstamps;
++	__cacheline_group_end_aligned(read_mostly);
++
++	__cacheline_group_begin_aligned(read_write);
++	u16 next_to_use;
++	u16 next_to_clean;
++
++	u16 xdp_tx_active;
++	spinlock_t tx_lock;
++	__cacheline_group_end_aligned(read_write);
++
++	__cacheline_group_begin_aligned(cold);
+ 	struct rcu_head rcu;		/* to avoid race on free */
+ 	DECLARE_BITMAP(xps_state, ICE_TX_NBITS);	/* XPS Config State */
+ 	struct ice_channel *ch;
+-	struct ice_ptp_tx *tx_tstamps;
+-	spinlock_t tx_lock;
+-	u32 txq_teid;			/* Added Tx queue TEID */
+-	/* CL4 - 4th cacheline starts here */
+-	struct ice_tstamp_ring *tstamp_ring;
+-#define ICE_TX_FLAGS_RING_XDP		BIT(0)
+-#define ICE_TX_FLAGS_RING_VLAN_L2TAG1	BIT(1)
+-#define ICE_TX_FLAGS_RING_VLAN_L2TAG2	BIT(2)
+-#define ICE_TX_FLAGS_TXTIME		BIT(3)
+-	u8 flags;
++
++	dma_addr_t dma;			/* physical address of ring */
++	u16 q_handle;			/* Queue handle per TC */
++	u16 reg_idx;			/* HW register index of the ring */
+ 	u8 dcb_tc;			/* Traffic class of ring */
++
+ 	u16 quanta_prof_id;
++	u32 txq_teid;			/* Added Tx queue TEID */
++	__cacheline_group_end_aligned(cold);
+ } ____cacheline_internodealigned_in_smp;
  
- 		/*
- 		 * Get a base driver irq reference for hpd ints for the lifetime
+ static inline bool ice_ring_ch_enabled(struct ice_tx_ring *ring)
 -- 
 2.53.0
 
