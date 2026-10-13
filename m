@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8858636E466;
-	Tue, 13 Oct 2026 12:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A248736E466;
+	Tue, 13 Oct 2026 12:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894014; cv=none; b=JxmglFLeIX+bV2YTOgXeKgODLbfOpJ2vgq8X7YFRmoCjfNbJ5c1U471nKdn9x9pyZSOu88rOVX+YqjUa6ZiC6GyFH3PLKYrSmDdTGORQqIa62SkaErMV4/3zLIWZcI5nlQ9696OtNFuKfvfnmJeFpSlLiIIdwid0tjYI+bCleAI=
+	t=1791894017; cv=none; b=FSMoupVe+kZAud9a5HuR9+WBDETURauLbBEKiEwyp5pTApBa9UD28jiMk0zyZXtD2vzB9fzhjW9UiK8LYGwpx3MXofhna1snVtT0gu42Kl2qUIaESxTEZR0Z13SNvO7EYoD/GzdCg4bDMqyGbtMu834zFRYXY8O34krJaVeVDY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894014; c=relaxed/simple;
-	bh=NDlTfzt92Kmy+NF2LQ5/FCKzhlbdmNJaUWzN+sg9+FM=;
+	s=arc-20240116; t=1791894017; c=relaxed/simple;
+	bh=xGPMyWJ2Dy1R1yqfIi/ZRvnVI3up/SlfbV8LE1zdTDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EU53bc45g4ShWc0VllZVAd6jQS3ME5V0kDktHD8NESDplYmOl//G2BHIKFb9/xih5Sia45U65krdoDwMuQxaG5c3agwjWJULJECoWQmQ0RhYwtzMVqR3kvQlwjshqdMvMKuyNgktBYFiBgFcKqF6xKKugBEzirzsTPkWIUTAhmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QVXpstP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=giAbH6IPnCQy3e4hJUndFtFjSv2sz2OxsT+kEXSHr7aEHSQjdeoNDThek/Z7ZTkvblxHu6NUAurFaWoqAJaTp236pkrjckS2FgMpxjqYGwFTJ6lr7Vrvkvqaq8CGMM2LEqdYkaYobvCWIqxs4qamCY0F3t0lKQUbyxOIxc21WnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oJ/oVHI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QVXpstP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F31F000FF;
-	Tue, 13 Oct 2026 12:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oJ/oVHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4F01F000FF;
+	Tue, 13 Oct 2026 12:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894013;
-	bh=asfjfWcnk712y8ns9QCyLwjQQuTCK/t4wdTbhfNRZ+o=;
+	s=korg; t=1791894016;
+	bh=SOk7QZJfxebM5nfHgyPmdrtKUocKufIdsOAgy2MpLYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2QVXpstPkwaS/C6wRI6cRwucpEYKaG9f53ysYQGVkXKbSLdPhFH5DOoa4Ey9cFmK2
-	 TCxL3sHybApCrvz36J/bLl1LC8VB9+0i2MGfoy0TEYLQVMhMk86tH9+Pqu68pPjcCb
-	 K8L//wxoCkEehz/hDu0PKD/9aZqOttEmt/VsV310=
+	b=2oJ/oVHIT2AZRzWCOxkefbKLYV2moja7TyilFosyaFkLQpXBnN22wx2+HZd8faui9
+	 esbUdv53w6N/Hy2zDmxFzxALeNb30nPpgNjIfedZYTdvXa6/HQHCoZPRzi0HibH7sN
+	 AyfWX+pIgmH1wPT6e3VoPZPsCsCw+8ave2SXeIYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Usama Arif <usama.arif@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 391/621] media: chips-media: wave5: Resume device before setting EOS flag
-Date: Tue, 13 Oct 2026 13:36:26 +0200
-Message-ID: <20261013112930.121460365@linuxfoundation.org>
+Subject: [PATCH 6.18 418/621] blk-iolatency: clear delay state when freeing policy data
+Date: Tue, 13 Oct 2026 13:36:53 +0200
+Message-ID: <20261013112930.755792917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,84 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson Lee <jackson.lee@chipsnmedia.com>
+From: Usama Arif <usama.arif@linux.dev>
 
-[ Upstream commit a52e6f7923c17a672135b485ffd96fbd72f46267 ]
+[ Upstream commit 8935bf22c0a0db517a7f72f7097300e05dd852f5 ]
 
-Setting the EOS flag talks to the firmware via send_firmware_command(),
-which accesses VPU registers. Both the STREAMOFF path
-(wave5_vpu_dec_job_abort()) and the V4L2_DEC_CMD_STOP path
-(wave5_vpu_dec_stop()) can run while the device is runtime suspended, so
-those register accesses hit powered-down hardware and the SoC raises an
-asynchronous SError, panicking the kernel:
+io.latency can throttle a group which has no latency target of its own.
+When a sibling misses its target, check_scale_change() scales down its
+peers, and a peer that reaches queue depth one gets blkcg_use_delay()
+called on it on every further scale-down, even with min_lat_nsec == 0.
 
-  SError Interrupt on CPU3, code 0x00000000bf000000 -- SError
-   send_firmware_command+0x2c/0x160 [wave5]
-   wave5_vpu_dec_set_bitstream_flag+0x6c/0x80 [wave5]
-   wave5_vpu_dec_update_bitstream_buffer+0x80/0xec [wave5]
-   wave5_vpu_dec_job_abort+0x44/0xa0 [wave5]
-   v4l2_m2m_cancel_job+0x110/0x19c [v4l2_mem2mem]
-   v4l2_m2m_streamoff+0x24/0x140 [v4l2_mem2mem]
+iolatency_pd_offline() resets the target through
+iolatency_set_min_lat_nsec(), which clears the delay only on a nonzero
+to zero transition, so it never clears such a peer.  Freeing the policy
+data then leaves blkg->use_delay set and blkcg->congestion_count
+elevated with nothing left that can drop it.
 
-Resume the device with pm_runtime_resume_and_get() around the EOS
-firmware command and release it with pm_runtime_put_autosuspend(),
-matching the runtime PM handling already done in
-wave5_vpu_dec_device_run().
+blk_cgroup_congested() then returns true for every task in that cgroup
+and its descendants for as long as the cgroup lives: page_cache_sync_ra()
+cuts readahead to a single page, page_cache_async_ra() skips it
+altogether, and __folio_throttle_swaprate() takes swap_avail_lock and
+schedules a throttle on anonymous folio allocation.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Clear the delay in iolatency_pd_free().  By then bio-held blkg
+references have drained, or the queue is frozen for policy
+deactivation, so check_scale_change() cannot re-arm it.  The free
+callback can also see policy data which was never attached to a blkg,
+hence the pd->blkg check.
+
+Fixes: d70675121546 ("block: introduce blk-iolatency io controller")
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20260814165712.510132-2-usama.arif@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../chips-media/wave5/wave5-vpu-dec.c         | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ block/blk-iolatency.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-index 30f523a5edb15..e1ad685a42e52 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -809,7 +809,15 @@ static int wave5_vpu_dec_stop(struct vpu_instance *inst)
- 		 * calls do not block on a mutex while inside this spinlock.
- 		 */
- 		spin_unlock_irqrestore(&inst->state_spinlock, flags);
-+		/*
-+		 * V4L2_DEC_CMD_STOP can arrive while the device is runtime
-+		 * suspended (e.g. on pipeline teardown). Setting the EOS flag
-+		 * accesses VPU registers via send_firmware_command(), so the
-+		 * device must be resumed first to avoid an asynchronous SError.
-+		 */
-+		pm_runtime_resume_and_get(inst->dev->dev);
- 		ret = wave5_vpu_dec_set_eos_on_firmware(inst);
-+		pm_runtime_put_autosuspend(inst->dev->dev);
- 		if (ret)
- 			return ret;
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index ce25fbb8aaf66..17e530b93c48c 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -1043,6 +1043,15 @@ static void iolat_release(struct rcu_head *rcu)
  
-@@ -1706,10 +1714,21 @@ static void wave5_vpu_dec_job_abort(void *priv)
- 	if (ret)
- 		return;
- 
+ static void iolatency_pd_free(struct blkg_policy_data *pd)
+ {
++	struct blkcg_gq *blkg = pd_to_blkg(pd);
++
 +	/*
-+	 * job_abort() runs from the STREAMOFF path and may be called while the
-+	 * device is runtime suspended. Setting the EOS flag talks to the
-+	 * firmware (send_firmware_command() accesses VPU registers), so the
-+	 * device must be resumed first; otherwise the register access faults
-+	 * with an asynchronous SError.
++	 * Groups throttled as collateral have min_lat_nsec == 0, so
++	 * iolatency_pd_offline() leaves their delay set.  Drop it here, where
++	 * no in-flight bio can re-arm it via check_scale_change().
 +	 */
-+	pm_runtime_resume_and_get(inst->dev->dev);
-+
- 	ret = wave5_vpu_dec_set_eos_on_firmware(inst);
- 	if (ret)
- 		dev_warn(inst->dev->dev,
- 			 "Setting EOS for the bitstream, fail: %d\n", ret);
-+
-+	pm_runtime_put_autosuspend(inst->dev->dev);
++	if (blkg)
++		blkcg_clear_delay(blkg);
+ 	call_rcu(&pd->rcu_head, iolat_release);
  }
  
- static int wave5_vpu_dec_job_ready(void *priv)
 -- 
 2.53.0
 
