@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41D24F68C1;
-	Tue, 13 Oct 2026 12:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EE24F3939;
+	Tue, 13 Oct 2026 12:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895175; cv=none; b=a9OmOVQOXsscOsqKvhU8P9AlNzGi02atGDDmlsZ0jjm26FmCfSn0JBwbWe4WY8Gr7raBx2vy0J394Ud7jPr9giWZpRvKt+iV8t5u7BxYrq2Ho0URM2wgMyUzoortZTVVSC0pIxtuHS8I/5Wj/BfWLAloQ8hajsUzp12YW1Q4wyM=
+	t=1791895177; cv=none; b=TniD/mbnoDju8rATipTBK8G1mMVSrFJL5paDoG/SzlXYes+u8zqadbTbdGsCrd3ItnTETsBU7wyuQTkLggQmjIjoceYvwbrD+uwhv985EW7HEEKjY1rbnu2EYWFPUJj6KB29fn6LIaBOKBuBgE/hVkPnv8AK8w1nnpQryGNilss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895175; c=relaxed/simple;
-	bh=ne55yw1gPQeaZG7203Drqn2KeeHjBzFtTIdK9nghapg=;
+	s=arc-20240116; t=1791895177; c=relaxed/simple;
+	bh=XI1+kAK3AF5kHe//KfiiEnbB9zczTknPV2kxgRs2Hag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPy1Xuba2XTStEkFfuM/S9Fc/mF8Mf8ImEtp+U0hE/n0ZqWGm/tJQfy+dXOd8WxMwgFZpa/TtD35OeqIkYY+kUm23ChuJheT4DYgN4aK+lzUpYUVRQQedcGdLK3caZ80wUDEu95ytJ5Ke6lZygZMEr3R+6LDO29qNza4WmKMQfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msi19qPf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WBW47yBQgs8teW/ogQaOl8YxmcUXAjA9pR6hrPn7nxkfpROldIVE+/IJE08AB3zVayvq2S7LbmvnohRbyH8urp49HCwhfUgrxTNgX2VZFrFgnB9vjLp9qT9R4gHHEWD2k49uetJyLzVxYbUP2PNQBpGKvVFDgwXnq3AAhpAxiMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMx3Kf6T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msi19qPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A151F000FF;
-	Tue, 13 Oct 2026 12:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMx3Kf6T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163F71F000FF;
+	Tue, 13 Oct 2026 12:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895170;
-	bh=/2JQhRBJVFHpLortFj6M4bFSxq4wLZqsVE2Q3eGunC4=;
+	s=korg; t=1791895176;
+	bh=YVxzeniUrw1A4YVMv8loFX61oY23XIg15lE+Pzhi/z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msi19qPfz0UIcvpSdcM5PwMk/tZsKgTnJNiyHddVi6GTso1wYEMYa6cAfkMoisRW1
-	 fu4QI8Tl17tpX21526K4GadEJlMcsWu9w8XeajU3bNGJRBV8QKIBa4afx6NwePmK9T
-	 cHlry72Vj5UX7vEgYkmIJDUVkFx0WfIxWtepR8gs=
+	b=MMx3Kf6TvsAR+cBWOnLE3ApfZEFA9UrVQ8gTV/xnGCVMYg+xWd0AbpY6rF3yxr1rX
+	 xZ8gRTDpt2h+nuz3BA4cV8E7x1z3UthEXfyyFXxEfM89hARdolGNxHGKQTDfWO14ge
+	 k23SJJkZNBRFXDcvuc9yZ9M0OT8HKh7od79XZhco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaofeng Chen <zhaofeng.chen@certik.com>,
-	Yuxiao Wang <yuxiao.wang@certik.com>,
-	Alexander Graf <graf@amazon.com>
-Subject: [PATCH 6.12 131/497] nitro_enclaves: fix use-after-free on SLOT_ALLOC failure
-Date: Tue, 13 Oct 2026 13:34:58 +0200
-Message-ID: <20261013112911.000994096@linuxfoundation.org>
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 188/497] Bluetooth: btintel_pcie: reject oversized TX packets in send_frame()
+Date: Tue, 13 Oct 2026 13:35:55 +0200
+Message-ID: <20261013112912.353183511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,56 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiao Wang <yuxiao.wang@certik.com>
+From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 
-commit 9bc184a2eda8b773c88ecbff934001ad649b9cc1 upstream.
+commit f771f96557a4d953a7e4d045870547271e36e819 upstream.
 
-When ne_create_vm_ioctl() fails the SLOT_ALLOC request after
-anon_inode_getfile() has succeeded, the error path calls
-fput(enclave_file) and then frees ne_enclave.
+btintel_pcie_send_frame() eventually copies skb->data into a fixed
+BTINTEL_PCIE_BUFFER_SIZE (4096) DMA buffer via memcpy() in
+btintel_pcie_prepare_tx(), with a 4-byte PCIe type header prepended.
+A user-space process with HCI_CHANNEL_USER access can inject an
+oversized packet and overflow the buffer.
 
-In normal userspace context, fput() defers the final __fput() via
-task_work. ne_enclave_release() therefore runs after ne_enclave has
-already been freed and dereferences ne_enclave->slot_uid, causing a
-use-after-free: KASAN: slab-use-after-free in ne_enclave_release.
+Reject packets larger than
+BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN on entry.
 
-The enclave has no slot allocated and is not yet linked into the
-enclaves list on this error path, so ne_enclave_release() is expected
-to return early when slot_uid is zero. However, reading slot_uid
-already accesses the freed object.
-
-Clear enclave_file->private_data before fput() on the error path.
-ne_enclave_release() then returns immediately when private_data is
-NULL, leaving the ioctl error path as the sole owner of ne_enclave.
-This is safe because the file has not been fd_install()'d yet.
-
-Tested on an AWS EC2 m5.2xlarge with CONFIG_KASAN=y. Without the
-patch, the reproducer triggers a KASAN slab-use-after-free on every
-SLOT_ALLOC failure. With the patch, no KASAN report is produced and
-the SLOT_ALLOC error is still returned. Normal enclave creation and
-teardown are unaffected.
-
-Fixes: 9c8eb50fe9e2 ("nitro_enclaves: Add logic for terminating an enclave")
+Fixes: 6e65a09f9275 ("Bluetooth: btintel_pcie: Add *setup* function to download firmware")
 Cc: stable@vger.kernel.org
-Co-developed-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Yuxiao Wang <yuxiao.wang@certik.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260909124400.27857-1-graf@amazon.com
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/nitro_enclaves/ne_misc_dev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btintel_pcie.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/virt/nitro_enclaves/ne_misc_dev.c
-+++ b/drivers/virt/nitro_enclaves/ne_misc_dev.c
-@@ -1710,6 +1710,7 @@ static int ne_create_vm_ioctl(struct ne_
- 	return enclave_fd;
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1321,6 +1321,16 @@ static int btintel_pcie_send_frame(struc
+ 	u32 type;
+ 	u32 old_ctxt;
  
- put_file:
-+	enclave_file->private_data = NULL;
- 	fput(enclave_file);
- put_fd:
- 	put_unused_fd(enclave_fd);
++	/* Account for the 4-byte PCIe type header prepended before the
++	 * DMA copy.  Written as a subtraction to avoid wrap-around on
++	 * attacker-controlled skb->len.
++	 */
++	if (skb->len > BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN) {
++		bt_dev_err(hdev, "Packet too large: %u > %u", skb->len,
++			   BTINTEL_PCIE_BUFFER_SIZE - BTINTEL_PCIE_HCI_TYPE_LEN);
++		return -EMSGSIZE;
++	}
++
+ 	/* Due to the fw limitation, the type header of the packet should be
+ 	 * 4 bytes unlike 1 byte for UART. In UART, the firmware can read
+ 	 * the first byte to get the packet type and redirect the rest of data
 
 
