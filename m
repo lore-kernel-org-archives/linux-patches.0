@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678F0389104;
-	Tue, 13 Oct 2026 11:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638B4389104;
+	Tue, 13 Oct 2026 11:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892516; cv=none; b=Kl5swcopiGaHT8kkApJNr9l37Nr0n0/jPFL10hAvWNmDl5j4ek2IoPaqOK/Hv82J9AP5unGmSADnhvAf33+UBjmEzkK4NjDJ/MHbsRlaR0HW4YG/UfPJVdQlZkRzuCzPqIzC0ewCWbWNdtJ3F93W5kUrOScyQLDigcdSF/+gXeo=
+	t=1791892520; cv=none; b=HCfxc7NqyArKE2MXiJZJvUeg7nBnlT7vC2JgVhPerHaxFsfaBQ2N8dUDCm6+9XT5ySbEv3acb2U8NDDm/w+4ChQXyMc8i6jQm8yC7Gqe2CgkQLSxYAh++P2aW3fZtRibgIt7MTBJot/ocupHTBKhg5IUcyOBumaWIfyFS1bvUzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892516; c=relaxed/simple;
-	bh=/uRaeD0SePZjqy80Lv9y6RICGrxe1AjAozCrXU7zaao=;
+	s=arc-20240116; t=1791892520; c=relaxed/simple;
+	bh=sMhZkrfQjQYsQiCHiUEwgBFyWo7WTV6vRdlhMLDTtkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsn8/qpf41m3Sx18jHP6NL73BSTJAxclFdGjY1JvpSbIW6CNJ8/4l9aiKzwl4/MfW9gnqM4xnRD3qfhvWlHwD9Cwrlslhdm4VI/PsCUBa3qdbtaZAKIeiwCy2RBKmdAs50TfqJdtg6uPktITQM86iUtj7yqCiqo4fmn7VOedjts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9sCgiYw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3axV+x6X1L7WIw+agibqYbJSmOqi1YsWI16N4C5MAZMstCSSEzaT+qHJzQJipP37f3+LqyNkKhzA6HbcKLFEyzPK9IH/5zBkHtysSFBuk8BfAud7gNyeaq5btJKI9L1TZtzBOH5j5hLwxGAhLUZCx0WxIw8BSv1epkU+7OH2nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dpbdfVc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9sCgiYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38291F000FF;
-	Tue, 13 Oct 2026 11:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dpbdfVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86341F000FF;
+	Tue, 13 Oct 2026 11:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892515;
-	bh=ZWCAc8Dzb9un1wR+78ImTsS5RdGdhMCdEYFUPGheuM0=;
+	s=korg; t=1791892518;
+	bh=i1VL15RO8h4zXdE366PxepNTS9yKZbk/XEjsjaJcq40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q9sCgiYwNmok+4kUJVFWZ0y1JFA5zQsXJiszbhCbLKvMT/lxWPgTKUPd11295RTpY
-	 e3KfGNB1IU8wwny99hwpn9dAtwdnBDryQ0xNPxjSQK7HvGXFdTe+Xopb4T2zMhGTTu
-	 A0k4wBheAKqjFl7Zst1svAo61ynTMT1An2nlVsT0=
+	b=1dpbdfVc2gqdL/2Tt7hVWRXoNCQvDKglStalKE4n0jwskxqMvDs7WWvQlntNlIpAT
+	 Xn38AAYHJAHWIaasj7tQU7S9F4ln9tauGQhPoGvafXN5Lc/bhLYZJRpu2PiC7Nct+p
+	 kOtqrV68jHzZ7Sl9IDhES3iCVXV07uJ7B7WOtHPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 172/281] namespace: handle mount locking for automounts correctly
-Date: Tue, 13 Oct 2026 13:38:08 +0200
-Message-ID: <20261013112859.339046107@linuxfoundation.org>
+	Shashank Mohan Jain <jain.sm@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 199/281] lib/dim: fix 32-bit overflow in dim_calc_stats() rates
+Date: Tue, 13 Oct 2026 13:38:35 +0200
+Message-ID: <20261013112859.994366632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -49,94 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Shashank Mohan Jain <jain.sm@gmail.com>
 
-commit 33aadc7c72055fca93cb5a3691d836ebf8b31c9b upstream.
+[ Upstream commit 0843b23890642a02ff85c36406224e8874e30664 ]
 
-If mounts are propagated across user namespaces, attach_recursive_mnt()
-locks every copy of the source mount to protect overmounts from
-vanishing and revealing the underlying files or directories.
+dim_calc_stats() computes the per-millisecond rates as
 
-The user namespace is taken from the caller's mount namespaces since
-this is where the mounts end up. Except, that's not always true.
-Automounts may legitimately get popped in by tasks located in a
-different mount and user namespace during path lookup.
+	DIV_ROUND_UP(nbytes * USEC_PER_MSEC, delta_us)
 
-Then check doesn't make sense at that point. The copy in the namespace
-of the parent - which may be the host's - is now locked and the host
-cannot change the flags of its own mounts anymore.
+where nbytes is a u32 and USEC_PER_MSEC is 1000L. On 64-bit the product
+is done in 64-bit long arithmetic, but on 32-bit architectures long is
+32 bits wide and the product wraps as soon as a measurement window
+carries more than 4294967 bytes (about 4.3 MB). The same applies to the
+packet and completion counts, although those need more than 4.29
+million packets or completions per window.
 
-Here's the reproducer:
+A DIM window spans DIM_NEVENTS (64) events. Drivers count events per
+interrupt or per NAPI poll, so under sustained load a window can easily
+carry more than 4.3 MB: 64 full NAPI polls of 64 MTU-sized frames are
+already 6.2 MB, and drivers such as mtk_eth_soc count one event per
+interrupt while NAPI keeps polling with the interrupt masked. On 32-bit
+users of the library (for example mtk_eth_soc on MT7621, bcmgenet and
+bcmsysport on 32-bit ARM, or virtio_net in a 32-bit guest) bpms then
+becomes the product modulo 2^32 divided by the window length, and
+net_dim_stats_compare() makes its BETTER/WORSE decisions on a value
+that has little to do with the real throughput.
 
-- host has debugfs mounted nosuid,nodev,noexec and shared
-- tracefs automount below it is not yet active
-- hand a child process a directory descriptor on that mount
-- child process enters auser and mount namespace
-- child process' namespace now holds a locked copy of the host's debugfs
-  mount that receives propagation from it
-- child process stats "tracing/." through the descriptor
-- lookup runs on the host's mount so the automount lands below the host's mount
-- propagation puts a copy below the child's copy
-- both try to clear the flags on the mount they got, with a bind remount:
+For example, a 1 Gbit/s link at line rate that moves 5 MB in a 40 ms
+window gives bpms = 125000 on 64-bit but 17626 on 32-bit, and 5 million
+packets in 2 s gives ppms = 353 instead of 2500.
 
-    host, on its own automount:            MS_REMOUNT|MS_BIND = EPERM
-    child, on the copy in its namespace:   MS_REMOUNT|MS_BIND = 0
+Widen the products to 64 bits and divide with DIV_ROUND_UP_ULL(). The
+results are unchanged on 64-bit.
 
-So the lock landed on the host's mount instead of the child's copy.
-Congrats. So we need to compare with the owner of the namespace the
-mount actually gets mounted on. For all regular cases that is the
-caller's mount namespace and so nothing changes.
-
-Detached trees in anonymous mount namespaces by be handed over via
-SCM_RIGHTS or inherited in other ways on purpose so the attaching task's
-mount namespace is authoritative, not the creator of the detached tree.
-
-Fixes: 132c94e31b8b ("vfs: Carefully propogate mounts across user namespaces")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-6-dd44b89d44ce@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cb3c7fd4f839 ("net/mlx5e: Support adaptive RX coalescing")
+Fixes: 4c4dbb4a7363 ("net/mlx5e: Move dynamic interrupt coalescing code to include/linux")
+Assisted-by: LLM
+Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ lib/dim/dim.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2589,11 +2589,11 @@ enum mnt_tree_flags_t {
- static int attach_recursive_mnt(struct mount *source_mnt,
- 				const struct pinned_mountpoint *dest)
- {
--	struct user_namespace *user_ns = current->nsproxy->mnt_ns->user_ns;
- 	struct mount *dest_mnt = dest->parent;
- 	struct mountpoint *dest_mp = dest->mp;
- 	HLIST_HEAD(tree_list);
- 	struct mnt_namespace *ns = dest_mnt->mnt_ns;
-+	struct user_namespace *user_ns = ns->user_ns;
- 	struct pinned_mountpoint root = {};
- 	struct mountpoint *shorter = NULL;
- 	struct mount *child, *p;
-@@ -2603,6 +2603,22 @@ static int attach_recursive_mnt(struct m
- 	bool moving = mnt_has_parent(source_mnt);
+diff --git a/lib/dim/dim.c b/lib/dim/dim.c
+index 97c3d084ebf02..7f3eebae73cb9 100644
+--- a/lib/dim/dim.c
++++ b/lib/dim/dim.c
+@@ -69,11 +69,15 @@ bool dim_calc_stats(const struct dim_sample *start,
+ 	if (!delta_us)
+ 		return false;
  
- 	/*
-+	 * A caller in an unprivileged mount namespaces may trigger an
-+	 * automount and propagate locked mounts into privileged mount
-+	 * namespaces. Take ownership from the target mount namespace.
-+	 * It's equivalent for everything but the automount case.
-+	 *
-+	 * Detached trees in anonymous mount namespaces by be handed
-+	 * over via SCM_RIGHTS or inherited in other ways on purpose
-+	 * the attaching task's mount namespace is authoritative, not
-+	 * the creator of the detached tree.
-+	 */
-+	if (is_anon_ns(ns))
-+		user_ns = current->nsproxy->mnt_ns->user_ns;
-+	else
-+		user_ns = ns->user_ns;
-+
-+	/*
- 	 * Preallocate a mountpoint in case the new mounts need to be
- 	 * mounted beneath mounts on the same mountpoint.
- 	 */
+-	curr_stats->ppms = DIV_ROUND_UP(npkts * USEC_PER_MSEC, delta_us);
+-	curr_stats->bpms = DIV_ROUND_UP(nbytes * USEC_PER_MSEC, delta_us);
++	/* u32 * USEC_PER_MSEC overflows a 32-bit long */
++	curr_stats->ppms = DIV_ROUND_UP_ULL((u64)npkts * USEC_PER_MSEC,
++					    delta_us);
++	curr_stats->bpms = DIV_ROUND_UP_ULL((u64)nbytes * USEC_PER_MSEC,
++					    delta_us);
+ 	curr_stats->epms = DIV_ROUND_UP(DIM_NEVENTS * USEC_PER_MSEC,
+ 					delta_us);
+-	curr_stats->cpms = DIV_ROUND_UP(ncomps * USEC_PER_MSEC, delta_us);
++	curr_stats->cpms = DIV_ROUND_UP_ULL((u64)ncomps * USEC_PER_MSEC,
++					    delta_us);
+ 	if (curr_stats->epms != 0)
+ 		curr_stats->cpe_ratio = DIV_ROUND_DOWN_ULL(
+ 			curr_stats->cpms * 100, curr_stats->epms);
+-- 
+2.53.0
+
 
 
