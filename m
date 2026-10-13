@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8134F93DC;
-	Tue, 13 Oct 2026 11:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43894FB9BB;
+	Tue, 13 Oct 2026 11:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892658; cv=none; b=HCNkHF4t9Zz24nT0C3hyf4fgd9Si1uSGgO04wfikJA9DsNyOv1ZlDNiHTve+HTewmf3NPTAhqLz6rNCcQPCd6jEcdl7RBPwoxtSh1NIHT/eQJAyV7H1plJ1+THe9Uyw7dorppu6TYz6nka8v6eaW0ASopvEdMHiTig6Q7Qo6gXk=
+	t=1791892663; cv=none; b=DF9C9TZZe90QLU3/79K9HQJ8uwgXbtuItqJj6wczEb74D0eiqoxkraD+7uMjMVljZEdB3VXBZVzmAa9D0b1jGARteWmviJvGKmOSoTAZ49QJxfq6fpSGPcHT3QB/8MG9aofZ73FlWsDkSrAIypNnm7+LQSTAVTpq0dmIJuRFxxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892658; c=relaxed/simple;
-	bh=88kwRupNi+dzJyhYlsyni1hSyt7fTfnoo/uD0C5IK9U=;
+	s=arc-20240116; t=1791892663; c=relaxed/simple;
+	bh=jv1HsLs6dL2aE2tFYiPP92g+CoRjLMmqGxNVcmTJYxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBuE4Tt4t7bjz0WWyoq4Ji3xV9bmVZcM4Fbb9PikW15cSQviUeTBl21qviovijUiw4HUxBPZo1ff13BKBNFT424z0EvO57SZWg++MXOySGovV/Rt3NGq5092ck60whUVWqqBNHyWdUUcM1kRbV6do9EcBPx7kF/9qMWX3810AFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjqKfFVX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMkTW7etZToi34XDJAgZW9y88EwjICGjvy6J5zJSUUstsjp3TVJXOb7FMOTTL2gYWw+XllQmE/ALymZiz2rjPmCyi4fTCo4ZD/9Z0e4pO0tFr7BThp5IfrU/rUBG9Q8ueoV0GreQpr1n5Js7CY+pCa3IDYzZBHdUmkydJ0AjEfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsJlyGXm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjqKfFVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03461F00899;
-	Tue, 13 Oct 2026 11:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsJlyGXm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C940D1F000FF;
+	Tue, 13 Oct 2026 11:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892657;
-	bh=X1i8gAUNjHNGAg0NjEPOqBe4ml7B0fVtH+T2jYeDKQc=;
+	s=korg; t=1791892660;
+	bh=tLJgOWKU5ZMCr/EvWF2p9zHKw4drxlGDd1YjYREyaKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjqKfFVXJS36uKR1+V1IFOgQ1PKsyuVmJ1yY3IsISeFbADR/WRdxSktvimZwDPSZE
-	 8OcW8aBjnR/SuHNDo0Zv20zCRzJlijHOs55xzybT0S+0SIrk9pRT2Ycl2vGmUVlU9V
-	 z8RfKE4C+EjR9WWrOWStG3hn1+bJr1I4KU/+AowY=
+	b=FsJlyGXmnWLz++CcYVwrNzmH4QRl2qnr45komaVzxuKcv2clALyUbJjFzFubLWGhV
+	 crRO3TeUWu1x3twA9NfxOyvqasy1uf7rC14TczL14BI541Uz98gWiJAMCiz5JSns8B
+	 KmQJgqgg72dcGE9pp4ABo3DRAl2sdLTjocBw+qqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 219/281] net: make dev_xdp_sb_prog_count() see programs attached through a link
-Date: Tue, 13 Oct 2026 13:38:55 +0200
-Message-ID: <20261013112900.474500728@linuxfoundation.org>
+Subject: [PATCH 7.2 246/281] spi: sg2044-nor: Honor SPI clock limits
+Date: Tue, 13 Oct 2026 13:39:22 +0200
+Message-ID: <20261013112901.117007597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,73 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-[ Upstream commit d333c8bca6dc3c5e978f6698d39dd799f3b0dc8d ]
+[ Upstream commit 61d44a2c07b2ad3f7db167f17ff2461ffe78441c ]
 
-ethtool refuses to enable tcp-data-split on a device running
-a single-buffer XDP program (which can't deal with the payload
-landing in a separate buffer). dev_xdp_sb_prog_count() only looks
-at xdp_state[].prog though, ignoring bpf_link integration.
-Get the prog pointer from dev_xdp_prog(), which will consult both.
+The fixed divider ignores device and operation clock limits. Calculate
+the divider before each transfer so SCK does not exceed either limit.
 
-bpf_xdp_link_update() needs a bit of a touch-up, too, since
-ethtool calls dev_xdp_sb_prog_count() with just the instance
-lock (for ops-locked devices) - we now have to make sure the
-link updates happen under that lock.
+Advertise the controller maximum speed so the SPI core supplies a default
+when the device omits its maximum speed. Use the fastest divider when no
+speed limit is supplied.
 
-Spotted by AI while reviewing the XDP propagation series,
-verified and tested on netdevsim with a C test along these lines:
-
-  link = bpf_program__attach_xdp(prog, ifindex);
-  system("ethtool -G eth0 tcp-data-split on")
-
-Fixes: 197258f0ef68 ("net: ethtool: add hds_config member in ethtool_netdev_state")
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20261001012559.297751-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://patch.msgid.link/20261001-fix-sg204xspi-v2-2-014dbaf22b5e@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/spi/spi-sg2044-nor.c | 39 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 6f75d1d1af32c..1a06976e19563 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10356,13 +10356,15 @@ EXPORT_SYMBOL_GPL(dev_xdp_prog_count);
- 
- u8 dev_xdp_sb_prog_count(struct net_device *dev)
- {
-+	struct bpf_prog *prog;
- 	u8 count = 0;
- 	int i;
- 
--	for (i = 0; i < __MAX_XDP_MODE; i++)
--		if (dev->xdp_state[i].prog &&
--		    !dev->xdp_state[i].prog->aux->xdp_has_frags)
-+	for (i = 0; i < __MAX_XDP_MODE; i++) {
-+		prog = dev_xdp_prog(dev, i);
-+		if (prog && !prog->aux->xdp_has_frags)
- 			count++;
-+	}
- 	return count;
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index ff026ca0f7663..bc9a8ee9bce44 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -385,6 +385,29 @@ static ssize_t sg2044_spifmc_trans_reg(struct sg2044_spifmc *spifmc,
+ 	return 0;
  }
  
-@@ -10742,11 +10744,12 @@ static int bpf_xdp_link_update(struct bpf_link *link, struct bpf_prog *new_prog,
- 	bpf_op = dev_xdp_bpf_op(xdp_link->dev, mode);
- 	err = dev_xdp_install(xdp_link->dev, mode, bpf_op, NULL,
- 			      xdp_link->flags, new_prog);
-+	if (!err)
-+		old_prog = xchg(&link->prog, new_prog);
- 	netdev_unlock_ops(xdp_link->dev);
- 	if (err)
- 		goto out_unlock;
++static int sg2044_spifmc_set_speed(struct sg2044_spifmc *spifmc,
++				   unsigned int speed_hz)
++{
++	unsigned long rate = clk_get_rate(spifmc->clk);
++	u64 div;
++	u32 reg;
++
++	if (!rate)
++		return -EINVAL;
++
++	/* SCK = HCLK / (2 * (SckDiv + 1)); round down the resulting SCK. */
++	div = speed_hz ? DIV_ROUND_UP_ULL(rate, 2ULL * speed_hz) : 1;
++	if (div > SPIFMC_CTRL_SCK_DIV_MASK + 1)
++		return -EINVAL;
++
++	reg = readl(spifmc->io_base + SPIFMC_CTRL);
++	reg &= ~SPIFMC_CTRL_SCK_DIV_MASK;
++	reg |= div - 1;
++	writel(reg, spifmc->io_base + SPIFMC_CTRL);
++
++	return 0;
++}
++
+ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+@@ -395,11 +418,18 @@ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
  
--	old_prog = xchg(&link->prog, new_prog);
- 	bpf_prog_put(old_prog);
+ 	mutex_lock(&spifmc->lock);
  
- out_unlock:
++	ret = sg2044_spifmc_set_speed(spifmc, op->max_freq ?
++				    min(op->max_freq, mem->spi->max_speed_hz) :
++				    mem->spi->max_speed_hz);
++	if (ret)
++		goto out_unlock;
++
+ 	if (op->addr.nbytes == 0)
+ 		ret = sg2044_spifmc_trans_reg(spifmc, op);
+ 	else
+ 		ret = sg2044_spifmc_trans(spifmc, op);
+ 
++out_unlock:
+ 	mutex_unlock(&spifmc->lock);
+ 
+ 	return ret;
+@@ -409,6 +439,10 @@ static const struct spi_controller_mem_ops sg2044_spifmc_mem_ops = {
+ 	.exec_op = sg2044_spifmc_exec_op,
+ };
+ 
++static const struct spi_controller_mem_caps sg2044_spifmc_mem_caps = {
++	.per_op_freq = true,
++};
++
+ static void sg2044_spifmc_init(struct sg2044_spifmc *spifmc)
+ {
+ 	u32 tran_csr;
+@@ -448,6 +482,10 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(spifmc->clk))
+ 		return dev_err_probe(dev, PTR_ERR(spifmc->clk), "Cannot get and enable AHB clock\n");
+ 
++	ctrl->max_speed_hz = clk_get_rate(spifmc->clk) / 2;
++	if (!ctrl->max_speed_hz)
++		return dev_err_probe(dev, -EINVAL, "Invalid AHB clock rate\n");
++
+ 	spifmc->dev = &pdev->dev;
+ 	spifmc->ctrl = ctrl;
+ 
+@@ -459,6 +497,7 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	ctrl->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctrl->auto_runtime_pm = false;
+ 	ctrl->mem_ops = &sg2044_spifmc_mem_ops;
++	ctrl->mem_caps = &sg2044_spifmc_mem_caps;
+ 	ctrl->mode_bits = SPI_RX_DUAL | SPI_TX_DUAL | SPI_RX_QUAD | SPI_TX_QUAD;
+ 
+ 	ret = devm_mutex_init(dev, &spifmc->lock);
 -- 
 2.53.0
 
