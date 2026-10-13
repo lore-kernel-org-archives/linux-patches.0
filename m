@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03A24F68AD;
-	Tue, 13 Oct 2026 12:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5544EFFC8;
+	Tue, 13 Oct 2026 12:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893407; cv=none; b=h9olQ5PLO7f2L68MbogArPVsrzHH6XnIPtBseFP8QNHVLbCvG9JOHK8nmT+8TXlEnXKcX4m2Ep0OdeJplm1/HvtAT9drS2fVSyVNZjhKZBgS3r21EQwJ6ScfTpwxa+wVr0nahy0Iq8BnSPR6Ifix2+mmXy6Y9weA9QkhU0tslzQ=
+	t=1791893410; cv=none; b=uDnit5YKzc3PBEarhlBqakpS2Opx7LvSVJ/SMGhfOKxfgU9sFmblp9yoizOhSHN96gMi5O24Gcr/Wj80Ge3k3n/jI0xxFwM8JfyvIhY8TuJTakLhw/Ou8q6TagAc5cASv9VzDDp/lNXsKAzsWCXWmCoC8QD52CZ7SQ7wI3XodLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893407; c=relaxed/simple;
-	bh=HdHl83EzFGDIQpHw2TmJmtp+UVf0nmPBDWA4X3IzhhU=;
+	s=arc-20240116; t=1791893410; c=relaxed/simple;
+	bh=zA5gKP6+puT9Ax44B//tlwRSZY5dX/N1EBxOObiiGXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MG8s6E3noWFnkERZQpWsu3bPelC6cSlpl9pCD7mR/S+oUu+GUI3awdB8Avh7D5iWbhdknq/T/etimobtAHDgelAcZwKL3inKYmWL+LJJ7AR1NpMmhXE8koTxfbVKzsiAJnKoD09/cdqIEwJ/U1V2woADJCFfQNlKVpzxDgC/HMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vND+e5GN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ks9vEHFolxHZYKOn1ZFd1R6HUP1Iq8rKuK+AbdwGadMHuoIvaSJZ/ZlDLlfiehdoXIsmgUBDVcdYw35YXJP2ErSneZilDhDDSJwtB4aVfzneoQHU9j/jIht+MAsKfpEbAIAMNG1U7ZJZRD15S3FN36BQRRtUKP/SU/WaaC0AeWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdXuE1DY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vND+e5GN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9BE1F000FF;
-	Tue, 13 Oct 2026 12:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdXuE1DY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554231F000FF;
+	Tue, 13 Oct 2026 12:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893405;
-	bh=E6zOoN0A553cdAqsO9MCDNi3J7ACbbX19qc0fL6SHP4=;
+	s=korg; t=1791893409;
+	bh=qL4MpWKKrIg9lymz3Kur+y5XkKMwIVug5twKAIqtS+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vND+e5GN4PqomZoEb/PnU4RYHs4XRVYTitLFjKMvqTX91kLiblilqkHx5N8lMstyW
-	 WLaVUJQdEetWgOCCnny94+6Ka8PiKWFJ3L5aLo/djzfBGC398t9MjItJY4GixJLONC
-	 GAVEi+8vAXD62gIkBJFqZ3XicCo5NoPZJ+sLPMus=
+	b=pdXuE1DYJOzDxx5y690hgN0Z0nM1q1I/tKQh5l7gMyklGjrCHJ+K6HNiqQ5kAosTM
+	 CqPIlswZ0E2a6GqXPAfEwlFAzPD9F6JmjJQJQcUdyWyVJ5uIiwMAQyfMOxAMBdjvdG
+	 X5Sx5MO+CCPvxNHPSxV1LkQMthKyd1edKgiQiz3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
+	Pavithra Prakash <pavrampu@linux.vnet.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 216/621] greybus: raw: fix use-after-free on cdev close
-Date: Tue, 13 Oct 2026 13:33:31 +0200
-Message-ID: <20261013112925.987769036@linuxfoundation.org>
+Subject: [PATCH 6.18 217/621] powerpc/64s: Fix unmap race with PMD migration entries
+Date: Tue, 13 Oct 2026 13:33:32 +0200
+Message-ID: <20261013112926.010808836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,192 +47,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Riégel <damien.riegel@silabs.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 983cc2c7efbce04ecbf6328448d895044dd6ab31 ]
+[ Upstream commit bbcbf045d6c778e82b47a35fc8728387708e9a3d ]
 
-This addresses a use-after-free bug when a raw bundle is disconnected
-but its chardev is still opened by an application. When the application
-releases the cdev, it causes the following panic when init on free is
-enabled (CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
+The following race is possible with migration swap entries or
+device-private THP entries. e.g. when move_pages is called on a PMD THP
+page, then there maybe an intermediate state, where PMD entry acts as
+a migration swap entry (pmd_present() is true). Then if an munmap
+happens at the same time, then this VM_BUG_ON() can happen in
+pmdp_huge_get_and_clear_full().
 
-        refcount_t: underflow; use-after-free.
-        WARNING: CPU: 0 PID: 139 at lib/refcount.c:28 refcount_warn_saturate+0xd0/0x130
-         ...
-        Call Trace:
-         <TASK>
-         cdev_put+0x18/0x30
-         __fput+0x255/0x2a0
-         __x64_sys_close+0x3d/0x80
-         do_syscall_64+0xa4/0x290
-         entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This patch fixes that.
 
-The cdev is contained in the "gb_raw" structure, which is freed in the
-disconnect operation. When the cdev is released at a later time,
-cdev_put gets an address that points to freed memory.
+Thread A: move_pages() syscall
+  add_folio_for_migration()
+    mmap_read_lock(mm)
+    folio_isolate_lru(folio)
+    mmap_read_unlock(mm)
 
-To fix this use-after-free, convert the struct device from a pointer to
-being embedded, that makes the lifetime of the cdev and of this device
-the same. Then, use cdev_device_add, which guarantees that the device
-won't be released until all references to the cdev have been released.
-Finally, delegate the freeing of the structure to the device release
-function, instead of freeing immediately in the disconnect callback.
+  do_move_pages_to_node()
+    migrate_pages()
+      try_to_migrate_one()
+        spin_lock(ptl)
+        set_pmd_migration_entry()
+          pmdp_invalidate()     # PMD: _PAGE_INVALID | _PAGE_PTE | pfn
+          set_pmd_at()          # PMD: migration swap entry (pmd_present=0)
+        spin_unlock(ptl)
+        [page copy phase]       # <--- RACE WINDOW -->
 
-Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
-Link: https://patch.msgid.link/20260324140039.40001-1-damien.riegel@silabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thread B: munmap()
+  mmap_write_downgrade(mm)
+  unmap_vmas() -> zap_pmd_range()
+    zap_huge_pmd()
+      __pmd_trans_huge_lock()
+        pmd_is_huge():          # !pmd_present && !pmd_none -> TRUE (swap entry)
+        pmd_lock() -> 		# spin_lock(ptl), waits for Thread A to release ptl
+      pmdp_huge_get_and_clear_full()
+        VM_BUG_ON(!pmd_present(*pmdp))  # HITS!
+
+[  287.738700][ T1867] ------------[ cut here ]------------
+[  287.743843][ T1867] kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:187!
+cpu 0x0: Vector: 700 (Program Check) at [c00000044037f4f0]
+    pc: c000000000094ca4: pmdp_huge_get_and_clear_full+0x6c/0x23c
+    lr: c000000000645dec: zap_huge_pmd+0xb0/0x868
+    sp: c00000044037f790
+   msr: 800000000282b033
+  current = 0xc0000004032c1a00
+  paca    = 0xc000000004fe0000   irqmask: 0x03   irq_happened: 0x09
+    pid   = 1867, comm = a.out
+kernel BUG at :187!
+Linux version 6.19.0-12136-g14360d4f917c-dirty (powerpc64le-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #27 SMP PREEMPT Sun Feb 22 10:38:56 IST 2026
+enter ? for help
+[link register   ] c000000000645dec zap_huge_pmd+0xb0/0x868
+[c00000044037f790] c00000044037f7d0 (unreliable)
+[c00000044037f7d0] c000000000645dcc zap_huge_pmd+0x90/0x868
+[c00000044037f840] c0000000005724cc unmap_page_range+0x176c/0x1f40
+[c00000044037fa00] c000000000572ea0 unmap_vmas+0xb0/0x1d8
+[c00000044037fa90] c0000000005af254 unmap_region+0xb4/0x128
+[c00000044037fb50] c0000000005af400 vms_complete_munmap_vmas+0x138/0x310
+[c00000044037fbe0] c0000000005b0f1c do_vmi_align_munmap+0x1ec/0x238
+[c00000044037fd30] c0000000005b3688 __vm_munmap+0x170/0x1f8
+[c00000044037fdf0] c000000000587f74 sys_munmap+0x2c/0x40
+[c00000044037fe10] c000000000032668 system_call_exception+0x128/0x350
+[c00000044037fe50] c00000000000d05c system_call_vectored_common+0x15c/0x2ec
+---- Exception: 3000 (System Call Vectored) at 0000000010064a2c
+SP (7fff9b1ee9c0) is in userspace
+0:mon> zh
+
+commit a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages"),
+enabled migration for device-private PMD entries. Hence this is one
+other path where this warning could get trigger from.
+
+ ------------[ cut here ]------------
+ WARNING: arch/powerpc/mm/book3s64/hash_pgtable.c:199 at hash__pmd_hugepage_update+0x48/0x284, CPU#3: hmm-tests/1905
+ Modules linked in: test_hmm
+ CPU: 3 UID: 0 PID: 1905 Comm: hmm-tests Tainted: G    B   W    L   N  7.0.0-rc1-01438-g7e2f0ee7581c #21 PREEMPT
+ Tainted: [B]=BAD_PAGE, [W]=WARN, [L]=SOFTLOCKUP, [N]=TEST
+ Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries
+ NIP [c000000000096b70] hash__pmd_hugepage_update+0x48/0x284
+ LR [c000000000096e7c] hash__pmdp_huge_get_and_clear+0xd0/0xd4
+ Call Trace:
+ [c000000604707670] [c000000004e102b8] 0xc000000004e102b8 (unreliable)
+ [c000000604707700] [c00000000064ec3c] set_pmd_migration_entry+0x414/0x498
+ [c000000604707760] [c00000000063e5a4] migrate_vma_collect_pmd+0x12e8/0x16c4
+ [c000000604707890] [c00000000059282c] walk_pgd_range+0x7fc/0xd2c
+ [c000000604707990] [c000000000592e40] __walk_page_range+0xe4/0x2ac
+ [c000000604707a10] [c000000000593534] walk_page_range_mm_unsafe+0x204/0x2a4
+ [c000000604707ab0] [c00000000063af10] migrate_vma_setup+0x1dc/0x2e8
+ [c000000604707b10] [c008000006a21838] dmirror_migrate_to_system.constprop.0+0x210/0x4b0 [test_hmm]
+ [c000000604707c30] [c008000006a245b0] dmirror_fops_unlocked_ioctl+0x454/0xa5c [test_hmm]
+ [c000000604707d20] [c0000000006aab84] sys_ioctl+0x4ec/0x1178
+ [c000000604707e10] [c0000000000326a8] system_call_exception+0x128/0x350
+ [c000000604707e50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
+ ---- interrupt: 3000 at 0x7fffbe44f50c
+
+Fixes: 75358ea359e7c ("powerpc/mm/book3s64: Fix MADV_DONTNEED and parallel page fault race")
+Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
+Reported-by: Pavithra Prakash <pavrampu@linux.vnet.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/9437e5ef28d1e2f5cbdd7f8286350ce93c1d43c5.1773078178.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/raw.c | 67 +++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 34 deletions(-)
+ arch/powerpc/include/asm/book3s/64/pgtable.h | 15 +++++++++++++++
+ arch/powerpc/mm/book3s64/pgtable.c           | 13 +++++++++----
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index 71de6776739c2..e668438e1a2c4 100644
---- a/drivers/staging/greybus/raw.c
-+++ b/drivers/staging/greybus/raw.c
-@@ -21,9 +21,8 @@ struct gb_raw {
- 	struct list_head list;
- 	int list_data;
- 	struct mutex list_lock;
--	dev_t dev;
- 	struct cdev cdev;
--	struct device *device;
-+	struct device dev;
- };
- 
- struct raw_data {
-@@ -148,6 +147,15 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
- 	return retval;
- }
- 
-+static void raw_dev_release(struct device *dev)
-+{
-+	struct gb_raw *raw = container_of(dev, struct gb_raw, dev);
-+
-+	ida_free(&minors, MINOR(raw->dev.devt));
-+
-+	kfree(raw);
-+}
-+
- static int gb_raw_probe(struct gb_bundle *bundle,
- 			const struct greybus_bundle_id *id)
+diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
+index aac8ce30cd3b3..7a218159ff15b 100644
+--- a/arch/powerpc/include/asm/book3s/64/pgtable.h
++++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
+@@ -1284,6 +1284,21 @@ extern int pudp_test_and_clear_young(struct vm_area_struct *vma,
+ static inline pmd_t pmdp_huge_get_and_clear(struct mm_struct *mm,
+ 					    unsigned long addr, pmd_t *pmdp)
  {
-@@ -164,15 +172,30 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	if (cport_desc->protocol_id != GREYBUS_PROTOCOL_RAW)
- 		return -ENODEV;
- 
-+	minor = ida_alloc(&minors, GFP_KERNEL);
-+	if (minor < 0)
-+		return minor;
++	/*
++	 * Non-present PMDs can be migration entries or device-private THP
++	 * entries. This can happen at 2 places:
++	 * - When the address space is being unmapped zap_huge_pmd(), and we
++	 *   encounter non-present pmds.
++	 * - migrate_vma_collect_huge_pmd() could calls this during migration
++	 *   of device-private pmd entries.
++	 */
++	if (!pmd_present(*pmdp)) {
++		pmd_t old_pmd = READ_ONCE(*pmdp);
 +
- 	raw = kzalloc(sizeof(*raw), GFP_KERNEL);
--	if (!raw)
-+	if (!raw) {
-+		ida_free(&minors, minor);
- 		return -ENOMEM;
++		pmd_clear(pmdp);
++		return old_pmd;
 +	}
 +
-+	device_initialize(&raw->dev);
-+	raw->dev.devt = MKDEV(raw_major, minor);
-+	raw->dev.class = &raw_class;
-+	raw->dev.parent = &bundle->dev;
-+	raw->dev.release = raw_dev_release;
-+	retval = dev_set_name(&raw->dev, "gb!raw%d", minor);
-+	if (retval)
-+		goto error_put_device;
- 
- 	connection = gb_connection_create(bundle, le16_to_cpu(cport_desc->id),
- 					  gb_raw_request_handler);
- 	if (IS_ERR(connection)) {
- 		retval = PTR_ERR(connection);
--		goto error_free;
-+		goto error_put_device;
- 	}
- 
- 	INIT_LIST_HEAD(&raw->list);
-@@ -181,46 +204,26 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	raw->connection = connection;
- 	greybus_set_drvdata(bundle, raw);
- 
--	minor = ida_alloc(&minors, GFP_KERNEL);
--	if (minor < 0) {
--		retval = minor;
--		goto error_connection_destroy;
--	}
--
--	raw->dev = MKDEV(raw_major, minor);
- 	cdev_init(&raw->cdev, &raw_fops);
- 
- 	retval = gb_connection_enable(connection);
- 	if (retval)
--		goto error_remove_ida;
-+		goto error_connection_destroy;
- 
--	retval = cdev_add(&raw->cdev, raw->dev, 1);
-+	retval = cdev_device_add(&raw->cdev, &raw->dev);
- 	if (retval)
- 		goto error_connection_disable;
- 
--	raw->device = device_create(&raw_class, &connection->bundle->dev,
--				    raw->dev, raw, "gb!raw%d", minor);
--	if (IS_ERR(raw->device)) {
--		retval = PTR_ERR(raw->device);
--		goto error_del_cdev;
--	}
--
- 	return 0;
- 
--error_del_cdev:
--	cdev_del(&raw->cdev);
--
- error_connection_disable:
- 	gb_connection_disable(connection);
- 
--error_remove_ida:
--	ida_free(&minors, minor);
--
- error_connection_destroy:
- 	gb_connection_destroy(connection);
- 
--error_free:
--	kfree(raw);
-+error_put_device:
-+	put_device(&raw->dev);
- 	return retval;
+ 	if (radix_enabled())
+ 		return radix__pmdp_huge_get_and_clear(mm, addr, pmdp);
+ 	return hash__pmdp_huge_get_and_clear(mm, addr, pmdp);
+diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
+index c9431ae7f78a0..47c7d2d9a0534 100644
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -202,16 +202,21 @@ pmd_t pmdp_huge_get_and_clear_full(struct vm_area_struct *vma,
+ 				   unsigned long addr, pmd_t *pmdp, int full)
+ {
+ 	pmd_t pmd;
++	bool was_present = pmd_present(*pmdp);
++
+ 	VM_BUG_ON(addr & ~HPAGE_PMD_MASK);
+-	VM_BUG_ON((pmd_present(*pmdp) && !pmd_trans_huge(*pmdp)) ||
+-		   !pmd_present(*pmdp));
++	VM_BUG_ON(was_present && !pmd_trans_huge(*pmdp));
++	/*
++	 * Check pmdp_huge_get_and_clear() for non-present pmd case.
++	 */
+ 	pmd = pmdp_huge_get_and_clear(vma->vm_mm, addr, pmdp);
+ 	/*
+ 	 * if it not a fullmm flush, then we can possibly end up converting
+ 	 * this PMD pte entry to a regular level 0 PTE by a parallel page fault.
+-	 * Make sure we flush the tlb in this case.
++	 * Make sure we flush the tlb in this case. TLB flush not needed for
++	 * non-present case.
+ 	 */
+-	if (!full)
++	if (was_present && !full)
+ 		flush_pmd_tlb_range(vma, addr, addr + HPAGE_PMD_SIZE);
+ 	return pmd;
  }
- 
-@@ -231,11 +234,8 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 	struct raw_data *raw_data;
- 	struct raw_data *temp;
- 
--	// FIXME - handle removing a connection when the char device node is open.
--	device_destroy(&raw_class, raw->dev);
--	cdev_del(&raw->cdev);
-+	cdev_device_del(&raw->cdev, &raw->dev);
- 	gb_connection_disable(connection);
--	ida_free(&minors, MINOR(raw->dev));
- 	gb_connection_destroy(connection);
- 
- 	mutex_lock(&raw->list_lock);
-@@ -244,8 +244,7 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 		kfree(raw_data);
- 	}
- 	mutex_unlock(&raw->list_lock);
--
--	kfree(raw);
-+	put_device(&raw->dev);
- }
- 
- /*
 -- 
 2.53.0
 
