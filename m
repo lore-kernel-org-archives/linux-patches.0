@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413A5319601;
-	Tue, 13 Oct 2026 12:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068883D45E5;
+	Tue, 13 Oct 2026 12:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895121; cv=none; b=UV0R0gTnO6zey90NeP72iybTLbh5Ka/SrvYPlUifSQtJKBayY6DdEpKBudDMy8+4/ih2JYRf60B2I6EIBBTKRVWRgFG96DYByxsGckDIggkG9Lsvf0G/TN1sYIJ7BHnzn7qDW4ktkZ1TEBX6o7bEVZz3ZbiHsGWEvkzxeU/Da1g=
+	t=1791895124; cv=none; b=aBv2ekWsCPRdbffmtUM1TAj4d8bD41Sf3F3C/p+YyOIsrCIdPeGBEFmbZWYiEMRBn2pvwXOAE8tSqgYBwwRw3gN1WFMPLt2A9qYVrGQNdDeJQG4uObJ9YEIUS5XKyj04JTQfCmih6erQzI72QaKNlB/ZeP4dfeT88tmj3cz4Zto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895121; c=relaxed/simple;
-	bh=SODjIv0oN6VjC0WFj7DZp9w26pSA5c61tBsxtJSv4T4=;
+	s=arc-20240116; t=1791895124; c=relaxed/simple;
+	bh=f7H3JTte1UYCLrvnhFfxfeFTc6XawUGcD503QxgZh/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elOmIwpD6s50WxxQrjD6N/ChitSeBtWSYt5RNV9wy4NZfqxNZKIAq+OivrFvTfHmpzutjgdsRZv2J2uPQaMHjf9oWSF/ckKKbJxERIyYz41LoEcYY9+oVfFHVVMaIl+cEQNVC+a/UCXLg0y6ot1s55w+tAjJP3AlTMqT3dqbOOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlv6G+TZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EO5SevALpjHN6XPwqdvlRx5x5UVE8bKsilxPdOGxSsZ1Q4RDhl90jAFzfdvnyfiaEJs5E/gSw8Kv/w8+xEqDV+kq/C8Y0RIG8/aLoHqWVg90F2RcNYg67H+gQUhA3DDD3zghyUMe+7T2vLFLXqeKZosOwiARaMcAYxs/rDa+dTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXwNRtSX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlv6G+TZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4191F000FF;
-	Tue, 13 Oct 2026 12:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXwNRtSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2741F000FF;
+	Tue, 13 Oct 2026 12:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895120;
-	bh=RtJVV2oYMLU5q4UNk5W6L1gn/62W7WgYuFmha2vSRoE=;
+	s=korg; t=1791895122;
+	bh=Zq0RpjoGTgL7oCGf7ABZD086RT7rs/iP9SO2r2Adk0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlv6G+TZiKQ89TzWDBvpysywjZfLYe0EbXLtHFsysh7Ece0YNpmroFca23bdbECVN
-	 w6GF0Ws81fLGkWAHUbz0cg0x73xvZmr0GU+YYkK1r0336VhpYOtYkHP4VcNsNGNPMH
-	 v3BwKiY/tx4F4JfbkWbw6/cPBDdo1O4wOYr13XMU=
+	b=lXwNRtSX9GdTLTVYYBYcFYKY+EmsZ9x4ISQ2Nd1DEX/qq8VZrJncPAcxJDEP6Ydhw
+	 fOqmoPQWl+//noPgXtklw+dPa/OKT6JIERspQl3p856tTfL+m/D4RWP1S2ldGM7ONH
+	 mSapfjPyPAxCffIU1xrBEUKd/40y9keXcu7IfHYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	stable@kernel.org,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 167/497] serial: fix TIOCMIWAIT race
-Date: Tue, 13 Oct 2026 13:35:34 +0200
-Message-ID: <20261013112911.853798997@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH 6.12 168/497] serial: ma35d1: Fix clock reference leak in ma35d1serial_probe()
+Date: Tue, 13 Oct 2026 13:35:35 +0200
+Message-ID: <20261013112911.877470364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,40 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 40adffec8c0090533dfaa863ced7901b60bbf1dc upstream.
+commit 98401cf912fe8a081ef8e500c421b6d957b55a99 upstream.
 
-The task state must be updated before checking the wakeup condition to
-avoid missing a racing modem status update.
+of_clk_get() returns a clock with a reference that has to be released
+with clk_put(). ma35d1serial_probe() never does that, so the reference
+is leaked on the probe error paths and also when the port is removed.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/r/20260904115542.E20D11F00A3D@smtp.kernel.org
+Release it on the error paths and in ma35d1serial_remove().
+
+Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
 Cc: stable@kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910130816.642699-4-johan@kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917155650.2161274-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/ma35d1_serial.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1248,12 +1248,12 @@ static int uart_wait_modem_status(struct
+--- a/drivers/tty/serial/ma35d1_serial.c
++++ b/drivers/tty/serial/ma35d1_serial.c
+@@ -728,7 +728,7 @@ static int ma35d1serial_probe(struct pla
  
- 	add_wait_queue(&port->delta_msr_wait, &wait);
- 	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
+ 	ret = clk_prepare_enable(up->clk);
+ 	if (ret)
+-		goto err_iounmap;
++		goto err_put_clk;
+ 
+ 	if (up->port.line != 0)
+ 		up->port.uartclk = clk_get_rate(up->clk);
+@@ -755,6 +755,9 @@ err_free_irq:
+ err_clk_disable:
+ 	clk_disable_unprepare(up->clk);
+ 
++err_put_clk:
++	clk_put(up->clk);
 +
- 		uart_port_lock_irq(uport);
- 		memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
- 		uart_port_unlock_irq(uport);
+ err_iounmap:
+ 	iounmap(up->port.membase);
+ 	return ret;
+@@ -770,6 +773,7 @@ static void ma35d1serial_remove(struct p
  
--		set_current_state(TASK_INTERRUPTIBLE);
--
- 		if (((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
- 		    ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
- 		    ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
+ 	uart_remove_one_port(&ma35d1serial_reg, port);
+ 	clk_disable_unprepare(up->clk);
++	clk_put(up->clk);
+ }
+ 
+ static int ma35d1serial_suspend(struct platform_device *dev, pm_message_t state)
 
 
