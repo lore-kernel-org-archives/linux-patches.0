@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA5E1DF980;
-	Tue, 13 Oct 2026 12:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EC124A06D;
+	Tue, 13 Oct 2026 12:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895067; cv=none; b=qy+uiwYSataT1OW0hBtanxzkDF8ghca1sy2330UbSK9onyejVT0ObPmM9434yOK45c/fF/KzhD5yiDYxMjZKXCitvJiiI4lSqiSaAY2ro5QJfAsew4eE/mP8Dz7FQDhR91/yiwZ5SLise/iPK060YnNffnsbwerNamsylHLXsbY=
+	t=1791895070; cv=none; b=CbIk8JCho4Rwwrwxrnc4DRKXzoGhw7KchN8YYh4dGrqDmu4VQzs3Pb0llpw2VHLW1bt9M9+hc4eCtpSLjTFq6CY1UGqmWwcedL5mB4P/dKACWoUrqdUvLRz/R447fdDtHlz+AqrKpEjwIUtccZ8AnH/Co6MMh4/rdclZEBX63EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895067; c=relaxed/simple;
-	bh=e7OpwA4GeSAdYl+yD2pXdrz/Of5/7WAMw6Kyu9vshqI=;
+	s=arc-20240116; t=1791895070; c=relaxed/simple;
+	bh=NAWULQWfbzU/6UPih0jk3ruBb5KfYKIwd9f3VOSuj8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6Px0yvn8IGbESpb6BEXe7IyRP4pR8ZfdMVk7P6QrgGY6ihpelCV8oLh7Uvw02qB7V0qLVSB1zOeO/NPuwTtJOh/h9T8Fm169igGeKWM804AMXv0X5LYQfp6Smi9Cawnmk1snuuc/Nnm6OmDNj3fwT0o7JHEBPZ6M7/H6BO0xEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYqXHjmk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q7HlW102x1vpw0ogBkznzmjB2c1N3qckU9eUQOBt9mg0+5izT47D6dNjVBVtFG6wGhAoZVcoje8vMBfPpvSG0uKrki17jJreuJEquXQPQGJRVMiaI5Dv7Gis+zuQz9GFdAlLQW8Ahq2toVXXn+3Q4l4rpqUiXg2XRW/iZ/M4LpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nuQVbSC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYqXHjmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1DC1F000FF;
-	Tue, 13 Oct 2026 12:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nuQVbSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51871F000FF;
+	Tue, 13 Oct 2026 12:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895066;
-	bh=lIPtWmilHIP2jO2joaoN2f0ygw3JxmlmvygK8W8bXbo=;
+	s=korg; t=1791895069;
+	bh=mcIExbEx5L4px7paMNwNakczg7a5mNP8kHwbMwC3/zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYqXHjmkJLBbjf5sv9LTPMDombodNwe79W/pYSEobUJhuOv/VeF/iqdNQ+Fem37Yi
-	 eMPbG6hjUeUPv990iGjSU2Kib4WNq6KRKxFRw5yvgSse13uIfkFhRrOV9Qkd/o0c/t
-	 kSNXMxUgdMie/R2zff7YeCY9r4n05/ZycyXsxzbE=
+	b=2nuQVbSCuEP6YrqtKeYdJ64PY6v6LWu4MsBkDLlWcorJ/Ld9CjaKIeMhAEnV/l84p
+	 u+LjGjFuFZKQUprGSqpg05DZXmOpFBAut1iYu3bpYLxAZzXDZtVyl+Ftod1iIeUnHg
+	 DLsueIzYh78onTyQtby95MbCn8eKpiSU4f/DLsnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 133/497] USB: cdc-acm: fix racy TIOCMIWAIT implementation
-Date: Tue, 13 Oct 2026 13:35:00 +0200
-Message-ID: <20261013112911.048335819@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 151/497] usb: typec: tcpm: recover after failure to start the frs ams
+Date: Tue, 13 Oct 2026 13:35:18 +0200
+Message-ID: <20261013112911.470583219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,102 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
+commit 90156585765b29304f07b0e4a1c56a969876fcfc upstream.
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+Reset the port if the tcpm fails to start the FAST_ROLE_SWAP AMS by
+initiating error recovery on it.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+This helps in cases where some cables (incorrectly) signal an FRS to
+an FRS capable port during disconnection. The TCPC autonomously starts
+sourcing VBUS on detecting the FRS signal. However, the VBUS sourcing is
+left on when the FAST_ROLE_SWAP AMS fails to start (as tcpm_sink_tx_ok
+is 0 as CC is open due to the cable disconnect). This is because the
+code sets the state to INVALID_STATE without resetting the port state.
 
-Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
+Log snippet before changes:
+[  101.401960] AMS FAST_ROLE_SWAP start
+[  101.401971] Sink TX No Go
+[  101.401982] sourcing vbus
+[  101.401987] VBUS on
+[  101.402159] VBUS on
+[  109.257809] CC1: 0 -> 0, CC2: 5 -> 0 [state SNK_READY, polarity 1, disconnected]
+[  111.267442] VBUS on
+
+After changes:
+[   70.541211] AMS FAST_ROLE_SWAP start
+[   70.541220] Sink TX No Go
+[   70.541228] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
+[   70.541362] VBUS on
+[   70.541365] sourcing vbus
+[   70.541367] VBUS on
+[   70.541374] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
+[   70.541410] disable vbus discharge ret:0
+[   70.543028] Setting usb_comm capable false
+[   70.544009] Setting voltage/current limit 0 mV 0 mA
+[   70.544034] polarity 0
+[   70.544239] Requesting mux state 0, usb-role 0, orientation 0
+[   70.555550] cc:=0
+[   70.555595] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
+[   70.555697] VBUS off
+[   70.555702] VBUS VSAFE0V
+[   70.555762] CC1: 5 -> 0, CC2: 0 -> 0 [state PORT_RESET, polarity 0, disconnected]
+[   70.587794] VBUS off
+[   70.587799] VBUS VSAFE0V
+[   70.655672] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[   70.655682] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev3 NONE_AMS]
+[   70.655686] Start toggling
+[   70.656274] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
+
+Fixes: 0908c5aca31e ("usb: typec: tcpm: AMS and Collision Avoidance")
 Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260903-frs-error-handling-v1-1-ad0fee541847@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
- drivers/usb/class/cdc-acm.h |    1 -
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -331,7 +331,6 @@ static void acm_process_notification(str
- 
- 		spin_lock_irqsave(&acm->read_lock, flags);
- 		acm->ctrlin = newctrl;
--		acm->oldcount = acm->iocount;
- 
- 		if (difference & USB_CDC_SERIAL_STATE_DSR)
- 			acm->iocount.dsr++;
-@@ -1027,11 +1026,16 @@ static int wait_serial_change(struct acm
- 	DECLARE_WAITQUEUE(wait, current);
- 	struct async_icount old, new;
- 
--	do {
-+	spin_lock_irq(&acm->read_lock);
-+	old = acm->iocount;
-+	spin_unlock_irq(&acm->read_lock);
-+
-+	add_wait_queue(&acm->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&acm->read_lock);
--		old = acm->oldcount;
- 		new = acm->iocount;
--		acm->oldcount = new;
- 		spin_unlock_irq(&acm->read_lock);
- 
- 		if ((arg & TIOCM_DSR) &&
-@@ -1044,22 +1048,20 @@ static int wait_serial_change(struct acm
- 			old.rng != new.rng)
- 			break;
- 
--		add_wait_queue(&acm->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&acm->wioctl, &wait);
- 		if (acm->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
--			else
--				rv = -ENODEV;
--		} else {
--			if (signal_pending(current))
--				rv = -ERESTARTSYS;
-+			rv = -ENODEV;
-+			break;
- 		}
--	} while (!rv);
- 
--	
-+		schedule();
-+
-+		if (signal_pending(current)) {
-+			rv = -ERESTARTSYS;
-+			break;
-+		}
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&acm->wioctl, &wait);
- 
- 	return rv;
- }
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -90,7 +90,6 @@ struct acm {
- 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
- 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
- 	struct async_icount iocount;			/* counters for control line changes */
--	struct async_icount oldcount;			/* for comparison of counter */
- 	wait_queue_head_t wioctl;			/* for ioctl */
- 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
- 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -6379,7 +6379,7 @@ static void tcpm_pd_event_handler(struct
+ 				port->upcoming_state = FR_SWAP_SEND;
+ 				ret = tcpm_ams_start(port, FAST_ROLE_SWAP);
+ 				if (ret == -EAGAIN)
+-					port->upcoming_state = INVALID_STATE;
++					tcpm_set_state(port, ERROR_RECOVERY, 0);
+ 			} else {
+ 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
+ 			}
 
 
