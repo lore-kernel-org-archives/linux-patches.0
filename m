@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8E131AF1F;
-	Tue, 13 Oct 2026 12:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC83313267;
+	Tue, 13 Oct 2026 12:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894640; cv=none; b=Vqtk7zWgqu/dnufEeMmXU/2GkA/nYVdAxG6D1LjKCkkuotJ/vhBbbBe4mucywrSh7Fe6yGFDQ3UcFpOSj65YnjQi2xlzm+Xvqo26dWkZMxob+dm0rIBdtrWhwFT/0Hi8a8VcCHsdRBFvL+60HoITeH4QamdPd5AQDL+R591yShI=
+	t=1791894643; cv=none; b=FJ9vf5HunChTak9BEorsmjDDUBbUd72KhSvFkiExjQG0sipL6e559QqRoTIbOZj5LCYL9nCXbrW2fa33Wdg4xJPWuA1OssFPeVHXJnUZ8o7iCv6EoMjMNXFb3GIHdjOB9x3jswIT+wKqgIII5neV8yKjAtCSybn1iL+jJbjtmJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894640; c=relaxed/simple;
-	bh=OGy9w9tweheiltXjBv19YzFr+Va1ePETtqYHLdibX/M=;
+	s=arc-20240116; t=1791894643; c=relaxed/simple;
+	bh=j1l1lvuV1JSmXXbeoRpzVvi0AHp1nwb/ALbPIqFNiww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfqk9ybuwuQeuovZvH/y+nP5PR0hGVQp2y5iM5gmpO9VPfQYMb6R7ajRJkMQm7YGakilbCWliuFC6dgCLDuWUrYYBJcKHmH1RQYN3hT5nXqh7QUBDgWwQB/Yl9kn5d98NxZKxTphfiK1gdTZFCe0g/VvLtHXJ031v3nybHyOaDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omP+qXwr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n4P8Xy/goU5sGvSoCvFAuEqaXZKAWrdxkGjXXpOAI6V+Eb5V8NWSUjSz5+Y41YfU9R/vu30Sr3+7A9JJV0OEiz7J+GLzKAOymX5DwzocEo0hcGP0gdF6qPRheYV9J+nlfdqgOHAcoEBv9a7Pm8gksTQRVR8SUGMIm3eJ/VAUtrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5oIDF4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omP+qXwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A221F000FF;
-	Tue, 13 Oct 2026 12:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5oIDF4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCC21F000FF;
+	Tue, 13 Oct 2026 12:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894638;
-	bh=bkelsjtB1ITAIlPagPRZn/qbR/wUpZvuvLxwXT6tvBQ=;
+	s=korg; t=1791894641;
+	bh=RrX+rHfrnv6rvDCD+M1qlzasZoYRbWoBe8J6/6CbQEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omP+qXwr4ennyhx/Zsp4aeqfSkzT42uJc486yxvowvPmtDVeOvL6tuB0J2Lr/UbE7
-	 iNd9HSxAi5kOAbrdeGJNv6OrnkLM7OtHEoKUwTJRkNno2wcfiYviKTBgyQ7WtSiCOU
-	 FkCTPeaFTffhoHrRiIPN6NviCkStRLQ1DQ+iptFM=
+	b=h5oIDF4aC2g9L87pk9w5cKl815DutC/yVnkj/roIFlT7R5CAcaOOonlalNlXxLHUd
+	 Y4YfrZVCZEsDv8Ks0LGbv9PrArSUkezQd5mAfkEpx9MohSw41bNuZJQHgb9xjtYAWF
+	 pCm+/z+u2LQXpbb9DAaEa7JVTPntTWVC/iBX8SGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 585/621] net: bcmgenet: if UMAC was suspended in SW_RESET, restore it to SW_RESET
-Date: Tue, 13 Oct 2026 13:39:40 +0200
-Message-ID: <20261013112934.684911690@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 6.18 576/621] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
+Date: Tue, 13 Oct 2026 13:39:31 +0200
+Message-ID: <20261013112934.476952916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,58 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 5857e5a196b069766a39ceb754736326a43bc6bc ]
+[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
 
-When the revised suspend/resume sequence was introduced this led to an edge
-case where the TX is left disabled in the following sequence.
+The probe function puts the device into the runtime PM active state with
+only the "iis" bus clock enabled, but it also sets priv->op_clk to the
+parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
+callback disables both clocks, so the first runtime suspend after probe
+disables op_clk once more than it was enabled.
 
-1. phy link is down, so UMAC is held in reset and then network interface
-   is WoL enabled
-2. Enter suspend, bcmgenet_wol_power_down_cfg() enables UMAC_RX since MAC
-   is in SW_RESET
-4. Enter resume, UMAC_RX is left enabled. Since we only enable UMAC_TX
-   and UMAC_RX in SW_RESET. The UMAC_TX is never enabled again on link up.
+On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
+so this triggers the following warning during boot:
 
-The issue was hit in production and I verified the sequence keeps
-the TX  disabled in my standalone test. I tested on an internal
-development board with bcm77122, but should be reproducible
-on any genet HW that supports power management.
+ WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
+ i2s_bus already disabled
+ ...
+ Workqueue: pm pm_runtime_work
+ Call trace:
+  ...
+  clk_core_disable from clk_disable+0x28/0x34
+  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
+  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
+  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
+  __rpm_callback from rpm_callback+0x4c/0x50
+  rpm_callback from rpm_suspend+0xf4/0x718
+  rpm_suspend from pm_runtime_work+0x9c/0xa0
+  ...
 
-Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260930230634.3132729-1-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by enabling op_clk in probe right after getting it, so the clock
+state matches the runtime PM active state, and by disabling it in remove.
+
+Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/samsung/i2s.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 96d5d4f7f51fe..984432952963a 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -253,6 +253,17 @@ int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
- 	reg &= ~CMD_CRC_FWD;
- 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+
-+	/*
-+	 * Mirror wol_power_down_cfg(). If only UMAC_RX
-+	 * is enabled, then we must place the UMAC back
-+	 * into SW_RESET.
-+	 */
-+	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
-+	if ((reg & CMD_RX_EN) && !(reg & CMD_TX_EN)) {
-+		reg |= CMD_SW_RESET;
-+		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+	}
- 	spin_unlock_bh(&priv->reg_lock);
+diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
+index 140907a41a70d..7bb80d73bd661 100644
+--- a/sound/soc/samsung/i2s.c
++++ b/sound/soc/samsung/i2s.c
+@@ -1543,9 +1543,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
  
- 	/* Resume link status tracking */
+ 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
++	ret = clk_prepare_enable(priv->op_clk);
++	if (ret < 0) {
++		priv->op_clk = NULL;
++		goto err_unregister_clk;
++	}
+ 
+ 	return 0;
+ 
++err_unregister_clk:
++	i2s_unregister_clock_provider(priv);
+ err_disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
+ err_del_sec:
+@@ -1568,6 +1575,7 @@ static void samsung_i2s_remove(struct platform_device *pdev)
+ 
+ 	i2s_unregister_clock_provider(priv);
+ 	i2s_delete_secondary_device(priv);
++	clk_disable_unprepare(priv->op_clk);
+ 	clk_disable_unprepare(priv->clk);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
 -- 
 2.53.0
 
