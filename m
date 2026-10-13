@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318ED4F5DE4;
-	Tue, 13 Oct 2026 12:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDBD4F55C6;
+	Tue, 13 Oct 2026 12:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893310; cv=none; b=Jv30xPuMRr7nElvKxWchbwVtZdDD+AhIKo+6pL1IPslMN9Ab8EOzQBik0xCKraKDpGFwgHd+A/1L6YVMBDgPA2QfxvIDW+PTsswVBs5V0Wu6E+3+zN20qpAmbYFjPsAPEICLWAWrlgGbu7h9mfwV9i9ZcKLgMcOfm7p/tLdxrDc=
+	t=1791893313; cv=none; b=Gia02aIC210NhF+3OA7qG6WZubmi9aC6wSkjgh2fgRNlC8PLigl4eLeXgjHk2DY+cnzYfVtRp6rBN+WfFOyia0/YYYFrnJvEfVMR/bDXyNogQUJ6sfrY3Eoqrt+6nSwi29Y/6JJs498VFnNXZ2ithd8oHqiWz/yIG8+UA59OGZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893310; c=relaxed/simple;
-	bh=a7zuqYjJQCdZMcvQzfavPKQCiTDgMJltQ0u5o3U0nnA=;
+	s=arc-20240116; t=1791893313; c=relaxed/simple;
+	bh=CLT4jPDDkGLpzvAlIEWVf7Cf2AIH/nKuSLkCnvqzJCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rj7faCd0c3/7D6GVZLsuAuA2/yjhi2Kdv/ecs/JdTXhpWUlkTTqlVfFRbzT3Rq5OgiuxMubv9qSkX91thnHm3tzI9iya7kxq4g2Q33Qbc7rR/qyxzI64mLn34NY+S1lq5C3K1n89s/DsJOCro+eusEce5sZlf+YjM7VFTZ2NUD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdPti+p6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/b46blWnMXGdOEq1jIgcBsYFj9otK93h+s15blbVmlpDWtqDyUtdd/+NGwOz/tM+QlTecPGlgAlFRDghgXenkM1YRBchmlW6/pDmG+mWy+4SmupVepT/dh11zzfTTIaEflIUjy+peOWwf124jv6dTUvVoR99YkcRi4eyPzomt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVpLhswI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdPti+p6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813321F000FF;
-	Tue, 13 Oct 2026 12:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVpLhswI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20D1F000FF;
+	Tue, 13 Oct 2026 12:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893309;
-	bh=w4l2QLaTPji3D2Q+7avGA07+F4M91OSgafabR3rVSDQ=;
+	s=korg; t=1791893312;
+	bh=kUzySmpR83N+Vtn+a5JJhpRCdDYTNlNuL1xT6V48a7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdPti+p6MJvzlfsMKzLif5/o//63ixHG+P+ugmDTQC+wy72qmWdCiPSgM1sRHqR4k
-	 Ap6GJLptmTvZ0OoL4f7JgmFz26Z15aM0T3JuJjo9P9SR0sFXIcdPkSXcP5WfEK08k0
-	 Ibrmpw0j3ePrlWeUK0igIjSxA9xZw2W2XvwcTv+A=
+	b=FVpLhswIN07keihWRlZxD/7RoVI97oxR+jpTeIMNT6lpZDOQhCOb35LDR7LIdE+MA
+	 vi4l+CZUuov/Jy57h6uLZ6da1WgRVbQKsUAWyFlqkQ4Nv2VYP2UZXSVT992SBtvvUj
+	 OWTd5hZVE7aRolEKc1aSKeUFO0jqB2v/MwwbEpeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 183/621] btrfs: do not ASSERT() when the fs flips RO inside btrfs_repair_io_failure()
-Date: Tue, 13 Oct 2026 13:32:58 +0200
-Message-ID: <20261013112925.206045468@linuxfoundation.org>
+Subject: [PATCH 6.18 184/621] btrfs: remove reserved argument from btrfs_pin_extent()
+Date: Tue, 13 Oct 2026 13:32:59 +0200
+Message-ID: <20261013112925.228772038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,106 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8ceaad6cd6e7fa5f73b0b2796a2e85d75d37e9f3 ]
+[ Upstream commit 8dcb8e4b110d86aaae2c485622423b6f63a65408 ]
 
-[BUG]
-There is a bug report that when btrfs hits ENOSPC error in a critical
-path, btrfs flips RO (this part is expected, although the ENOSPC bug
-still needs to be addressed).
+All callers pass a value of 1 (true) to it, so remove it.
 
-The problem is after the RO flip, if there is a read repair pending, we
-can hit the ASSERT() inside btrfs_repair_io_failure() like the following:
-
-  BTRFS info (device vdc): relocating block group 30408704 flags metadata|raid1
-  ------------[ cut here ]------------
-  BTRFS: Transaction aborted (error -28)
-  WARNING: fs/btrfs/extent-tree.c:3235 at __btrfs_free_extent.isra.0+0x453/0xfd0, CPU#1: btrfs/383844
-  Modules linked in: kvm_intel kvm irqbypass
-  [...]
-  ---[ end trace 0000000000000000 ]---
-  BTRFS info (device vdc state EA): 2 enospc errors during balance
-  BTRFS info (device vdc state EA): balance: ended with status: -30
-  BTRFS error (device vdc state EA): parent transid verify failed on logical 30556160 mirror 2 wanted 8 found 6
-  BTRFS error (device vdc state EA): bdev /dev/nvme0n1 errs: wr 0, rd 0, flush 0, corrupt 10, gen 0
-  [...]
-  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
-  ------------[ cut here ]------------
-  assertion failed: !(fs_info->sb->s_flags & SB_RDONLY) :: 0, in fs/btrfs/bio.c:938
-  kernel BUG at fs/btrfs/bio.c:938!
-  Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 868 Comm: kworker/u8:13 Tainted: G        W        N  6.19.0-rc6+ #4788 PREEMPT(full)
-  Tainted: [W]=WARN, [N]=TEST
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-  Workqueue: btrfs-endio simple_end_io_work
-  RIP: 0010:btrfs_repair_io_failure.cold+0xb2/0x120
-  RSP: 0000:ffffc90001d2bcf0 EFLAGS: 00010246
-  RAX: 0000000000000051 RBX: 0000000000001000 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: ffffffff8305cf42 RDI: 00000000ffffffff
-  RBP: 0000000000000002 R08: 00000000fffeffff R09: ffffffff837fa988
-  R10: ffffffff8327a9e0 R11: 6f69747265737361 R12: ffff88813018d310
-  R13: ffff888168b8a000 R14: ffffc90001d2bd90 R15: ffff88810a169000
-  FS:  0000000000000000(0000) GS:ffff8885e752c000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  ------------[ cut here ]------------
-
-[CAUSE]
-The cause of -ENOSPC error during the test case btrfs/124 is still
-unknown, although it's known that we still have cases where metadata can
-be over-committed but can not be fulfilled correctly, thus if we hit
-such ENOSPC error inside a critical path, we have no choice but abort
-the current transaction.
-
-This will mark the fs read-only.
-
-The problem is inside the btrfs_repair_io_failure() path that we require
-the fs not to be mount read-only. This is normally fine, but if we are
-doing a read-repair meanwhile the fs flips RO due to a critical error,
-we can enter btrfs_repair_io_failure() with super block set to
-read-only, thus triggering the above crash.
-
-[FIX]
-Just replace the ASSERT() with a proper return if the fs is already
-read-only.
-
-Reported-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/linux-btrfs/20260126045555.GB31641@lst.de/
-Tested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: c7d1d4ff5674 ("btrfs: don't BUG() on unexpected delayed ref type in run_one_delayed_ref()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/bio.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/extent-tree.c | 15 +++++++--------
+ fs/btrfs/extent-tree.h |  3 +--
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index afe022a3b8fc3..d13a143149225 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -902,7 +902,6 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
- 	struct bio *bio = NULL;
- 	int ret = 0;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 7c199d59a5465..cbd57c46d3244 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1764,7 +1764,7 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
  
--	ASSERT(!(fs_info->sb->s_flags & SB_RDONLY));
- 	BUG_ON(!mirror_num);
- 
- 	/* Basic alignment checks. */
-@@ -914,6 +913,13 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
- 	ASSERT(step <= length);
- 	ASSERT(is_power_of_2(step));
- 
-+	/*
-+	 * The fs either mounted RO or hit critical errors, no need
-+	 * to continue repairing.
-+	 */
-+	if (unlikely(sb_rdonly(fs_info->sb)))
-+		return 0;
-+
- 	if (btrfs_repair_one_zone(fs_info, logical))
+ 	if (TRANS_ABORTED(trans)) {
+ 		if (insert_reserved) {
+-			btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
++			btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
+ 			free_head_ref_squota_rsv(trans->fs_info, href);
+ 		}
  		return 0;
+@@ -1783,7 +1783,7 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
+ 	else
+ 		BUG();
+ 	if (ret && insert_reserved)
+-		btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
++		btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
+ 	if (ret < 0)
+ 		btrfs_err(trans->fs_info,
+ "failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
+@@ -1890,7 +1890,7 @@ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
+ 	spin_unlock(&delayed_refs->lock);
  
+ 	if (head->must_insert_reserved) {
+-		btrfs_pin_extent(trans, head->bytenr, head->num_bytes, 1);
++		btrfs_pin_extent(trans, head->bytenr, head->num_bytes);
+ 		if (head->is_data) {
+ 			struct btrfs_root *csum_root;
+ 
+@@ -2607,15 +2607,14 @@ static int pin_down_extent(struct btrfs_trans_handle *trans,
+ 	return 0;
+ }
+ 
+-int btrfs_pin_extent(struct btrfs_trans_handle *trans,
+-		     u64 bytenr, u64 num_bytes, int reserved)
++int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num_bytes)
+ {
+ 	struct btrfs_block_group *cache;
+ 
+ 	cache = btrfs_lookup_block_group(trans->fs_info, bytenr);
+ 	BUG_ON(!cache); /* Logic error */
+ 
+-	pin_down_extent(trans, cache, bytenr, num_bytes, reserved);
++	pin_down_extent(trans, cache, bytenr, num_bytes, 1);
+ 
+ 	btrfs_put_block_group(cache);
+ 	return 0;
+@@ -3524,7 +3523,7 @@ int btrfs_free_extent(struct btrfs_trans_handle *trans, struct btrfs_ref *ref)
+ 	 * tree, just update pinning info and exit early.
+ 	 */
+ 	if (ref->ref_root == BTRFS_TREE_LOG_OBJECTID) {
+-		btrfs_pin_extent(trans, ref->bytenr, ref->num_bytes, 1);
++		btrfs_pin_extent(trans, ref->bytenr, ref->num_bytes);
+ 		ret = 0;
+ 	} else if (ref->type == BTRFS_REF_METADATA) {
+ 		ret = btrfs_add_delayed_tree_ref(trans, ref, NULL);
+@@ -5007,7 +5006,7 @@ int btrfs_alloc_logged_file_extent(struct btrfs_trans_handle *trans,
+ 	ret = alloc_reserved_file_extent(trans, 0, root_objectid, 0, owner,
+ 					 offset, ins, 1, root_objectid);
+ 	if (ret)
+-		btrfs_pin_extent(trans, ins->objectid, ins->offset, 1);
++		btrfs_pin_extent(trans, ins->objectid, ins->offset);
+ 	ret = btrfs_record_squota_delta(fs_info, &delta);
+ 	btrfs_put_block_group(block_group);
+ 	return ret;
+diff --git a/fs/btrfs/extent-tree.h b/fs/btrfs/extent-tree.h
+index e970ac42a871a..e573509c5a71d 100644
+--- a/fs/btrfs/extent-tree.h
++++ b/fs/btrfs/extent-tree.h
+@@ -110,8 +110,7 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 			     struct btrfs_fs_info *fs_info, u64 bytenr,
+ 			     u64 offset, int metadata, u64 *refs, u64 *flags,
+ 			     u64 *owner_root);
+-int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num,
+-		     int reserved);
++int btrfs_pin_extent(struct btrfs_trans_handle *trans, u64 bytenr, u64 num);
+ int btrfs_pin_extent_for_log_replay(struct btrfs_trans_handle *trans,
+ 				    const struct extent_buffer *eb);
+ int btrfs_exclude_logged_extents(struct extent_buffer *eb);
 -- 
 2.53.0
 
