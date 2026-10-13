@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E4F4EF149;
-	Tue, 13 Oct 2026 11:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F214F68DD;
+	Tue, 13 Oct 2026 11:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892696; cv=none; b=HgcWcSl14/OhqO6diFJvoNTX3JTIpSBmOhM8LxadG1o2HIMCsxRoQGNEXSpylfa1J2tymuvdl9JiDdB6UoClzn39p+QweprDgiqE6JOXkI340Ir4r5s7NqPZCU+2pXfxZGshfC4mWc8KJPG5des2UrFKesnDwvo0TbX+aL28lho=
+	t=1791892699; cv=none; b=Lk+idZhZDGEl7aj2IOsOL/cy021hgaLh5knWgmeLPU7sML8rVNCIaKykM5bF7rJAYWL9hWw+ks7dXY+0MDEyDARJMeZvF3gnqCpT86ND98V+vgelKhyqf8cVQHO4EhTrDPjDD3MObbtAkn5CxrdP+ad6TqwhIcHnfwfLsFc1eAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892696; c=relaxed/simple;
-	bh=xCIkdl6ejgHbGhO9TZ4K2rWvhHWLY1dfUGpzFYZtU3M=;
+	s=arc-20240116; t=1791892699; c=relaxed/simple;
+	bh=9ef0gxvB8w460qSJL48uDs7rDjU/mHZ8nzh+N7ks8sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQWz5DjnKW6b8R7xx7BIYl/4r1iBlro+juQOZLKmhwWiGqRjM3KHiF0EAZN8ZLkgzuJnws10dkJ0xDbfZlD+adH0rHuqBW1DbhlpssATJPt9bp7gKZGx0aQ8ZtQCF5YLlV6PtqBkjKOCamiXLopS/j5ptd7B60444/ROsTEb24E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4EsAHOx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W6S2kszabGdOti3KHVYdyYCyOXZr8NjXjJB6BM4A8mVAr+VIBopeb1v6e7Ycih8dR7fYhOC8RwdVtDv2WDNtbXQtWCPHsHp+r173wNNnwmilSV2PIWpJtEBazBeHknnei89nD0lbYFl61nj4XuM/fhPJW/JBaDUVeimcg0Kb7wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1owAIa4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4EsAHOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65861F000FF;
-	Tue, 13 Oct 2026 11:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1owAIa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39891F00893;
+	Tue, 13 Oct 2026 11:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892695;
-	bh=zIp18C4B0knZb9rUELxY9x9LdYGHNBUt69M0PTMIvvM=;
+	s=korg; t=1791892698;
+	bh=NlONJvlfS56nZFgqJxoRZrPXqzlDiQN0N9MkeLodb50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N4EsAHOx3jGhqbNfrLuat4WCDvyMstUgfPe6hqJyqFyaTB1nydaTn2p9PO5l84C53
-	 1YO3zsSWFbeh/nuGu+A3wvmFLFrmG1LIYtiZn5Q1NLtBlaGUznvH8XXcKcB+Z1gW+i
-	 3AgEUVX6jvtSO/pJbojMkRKP5290NEFB1dKDgTMY=
+	b=T1owAIa4aHzeeHiXX7AeusWSUYWkNZmZ/r7NdCo/zUndD10y3hs2R0fkY3sRXEKz8
+	 cYwDGTJxm0lNJwS5KXD9Rmp/TdzPXxWp5yNLzupOrRqvV0mqWJXZ/vXhGcQs0Zvv4V
+	 6eucqRNd14NNKI68vuA9ozw3HSx1Kj/Fk0YMymXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Leo Yu-Chi Liang <leo.liang@sifive.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 257/281] ASoC: sdw_utils: Switch CS35L56/57/62/63 to use OT25 DAI
-Date: Tue, 13 Oct 2026 13:39:33 +0200
-Message-ID: <20261013112901.379086449@linuxfoundation.org>
+Subject: [PATCH 7.2 258/281] riscv: fix NR_CPUS range leaking 64-bit default onto 32-bit builds
+Date: Tue, 13 Oct 2026 13:39:34 +0200
+Message-ID: <20261013112901.404292328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,66 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Leo Yu-Chi Liang <leo.liang@sifive.com>
 
-[ Upstream commit 4b7f393a01f88e8d03cba94cf4948652de14789b ]
+[ Upstream commit 07e23d0b6f58eec351e52058b9a0a8af7b019c09 ]
 
-Change the CS35L56/57/62/63 entries in codec_info_list[] to use
-the OT25 DAI for amp feedback.
+rv32_defconfig is built in two stages:
 
-The AMP feedback was incorrectly using a DAI connected to DP3,
-but that is reserved for SDCA companion amp. The correct amp
-output is DP4, which is the SDCA OT25 feedback output.
+- the generic (64-bit-oriented) "defconfig" target runs first
+  and resolves a concrete NR_CPUS value using the 64BIT default.
+- then 32-bit.config is merged on top via merge_config.sh,
+  which does not touch NR_CPUS.
 
-Fixes: 898cd43bde307 ("ASoC: intel: sof_sdw: Add support for CS35L63 into machine driver")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261005155235.1386525-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The final "make olddefconfig" pass sees NR_CPUS=256 is still within
+the "2 512" range therefore never recalculates it against the 32BIT
+default of 32, silently keeping the leaked 64-bit-stage value.
+
+The NR_CPUS-scaled regions (percpu areas, ...etc) of the resulting
+CONFIG_NR_CPUS=256 on a 32-bit build bloats and does not fit in the
+percpu/stack layout for rv32 and hangs early boot on QEMU's virt machine.
+
+Fix this by explicitly specify the range for 32/64 and SBI_V01/!SBI_V01.
+
+Fixes: 0fa749771993 ("riscv: Raise default NR_CPUS for 64BIT to 256")
+Signed-off-by: Leo Yu-Chi Liang <leo.liang@sifive.com>
+Link: https://patch.msgid.link/20261007045229.36114-1-leo.liang@sifive.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdw_utils/soc_sdw_utils.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index 2570f40673bdf..a47f34afd1d19 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -797,7 +797,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 			},
- 			{
- 				.direction = {false, true},
--				.dai_name = "cs35l56-sdw1c",
-+				.dai_name = "cs35l56-ot25",
- 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
- 				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_AMP_IN_DAI_ID},
- 				.rtd_init = asoc_sdw_cs_spk_feedback_rtd_init,
-@@ -826,7 +826,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 			},
- 			{
- 				.direction = {false, true},
--				.dai_name = "cs35l56-sdw1c",
-+				.dai_name = "cs35l56-ot25",
- 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
- 				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_AMP_IN_DAI_ID},
- 				.rtd_init = asoc_sdw_cs_spk_feedback_rtd_init,
-@@ -855,7 +855,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 			},
- 			{
- 				.direction = {false, true},
--				.dai_name = "cs35l56-sdw1c",
-+				.dai_name = "cs35l56-ot25",
- 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
- 				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_AMP_IN_DAI_ID},
- 				.rtd_init = asoc_sdw_cs_spk_feedback_rtd_init,
-@@ -884,7 +884,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 			},
- 			{
- 				.direction = {false, true},
--				.dai_name = "cs35l56-sdw1c",
-+				.dai_name = "cs35l56-ot25",
- 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
- 				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_AMP_IN_DAI_ID},
- 				.rtd_init = asoc_sdw_cs_spk_feedback_rtd_init,
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index f7028caaeae06..e5166df510bb6 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -450,9 +450,10 @@ config SMP
+ config NR_CPUS
+ 	int "Maximum number of CPUs (2-512)"
+ 	depends on SMP
+-	range 2 512 if !RISCV_SBI_V01
+-	range 2 32 if RISCV_SBI_V01 && 32BIT
++	range 2 512 if !RISCV_SBI_V01 && 64BIT
++	range 2 128 if !RISCV_SBI_V01 && 32BIT
+ 	range 2 64 if RISCV_SBI_V01 && 64BIT
++	range 2 32 if RISCV_SBI_V01 && 32BIT
+ 	default "32" if 32BIT
+ 	default "64" if RISCV_SBI_V01 && 64BIT
+ 	default "256" if !RISCV_SBI_V01 && 64BIT
 -- 
 2.53.0
 
