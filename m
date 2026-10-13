@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC174F85C7;
-	Tue, 13 Oct 2026 12:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DA64F3EA5;
+	Tue, 13 Oct 2026 12:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894589; cv=none; b=V9xv2y7SOPQecIWMmD03nMcT4Z/2vSKXuMw0tTYl9iv81ojyXUEhKIbCwpii+J7UYcot9zVZViKV/lTvwzMVNDGYmDeSY6kBAOmPBTXMn54m4ZV3C9DvqibQfPAYuBtSIxXHA+ZWGgeJb2/XSbq+hjVRpNyok0dga6Y5aOQhYF0=
+	t=1791894592; cv=none; b=UKspax3L2zFel1GXmPQGFPC2ni5/F79L7RfzS9aa5jhoH0EwgdabO4F5jB+926CzljEea+vkX4dWC9nisLxQETqSEetwB4cahLe8CzPxQKss8fC699y3lpiPfAJNeMpcdl2OBOelOAuGgQacPVskSL9WsbxmNv1Cbp1x2+/Lm7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894589; c=relaxed/simple;
-	bh=Cld4bFiUlgixUW1bNHMqY8gqAsuOoAQtGzUh1d9p4ZE=;
+	s=arc-20240116; t=1791894592; c=relaxed/simple;
+	bh=+hKLdiy3vV506XAeIY68MOhuNCG0fnqyQbbbFv7yhkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldVU+XOc5J9HQiNJjZSsPEmxIR3TosmMgIWpKOTw55kCfc9hYLn+ep9bh1oF5A6YYFnXX/s8m/1Nm+BrRhvWYeg8s8p0nMQXqj+z4krGactPrbzVFeaez1JvfpNTF8zvNA3yW1flM79btrmycEr5paNE1ztYzy3Bff4Bi6KQ3QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VYNGBek; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o99novlMkkoEJra41jIoVTQmH5caqg8BnV2KwK5q8FlbYqjG3ZKg6LHL2pHxzFOOi/fKHF86FscYgJp2Tg1vUAPettYzx/JwN5AbhlmGDLxxIZWMHy5JjRDsqRuiRU8lb4vEdDp8JvcJ2yA81In1MY3AY4XEwlzfCuQKlbsGhqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mox6btTc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VYNGBek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE271F000FF;
-	Tue, 13 Oct 2026 12:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mox6btTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998961F000FF;
+	Tue, 13 Oct 2026 12:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894588;
-	bh=+fkrDtNGtwejUeUSIvjjPdqCmjFAsDn7KwhhiyMGf2s=;
+	s=korg; t=1791894591;
+	bh=GEF1+QWPY/IX5vqpooRzt4mpovlZjtHO3D5y01kAzBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VYNGBek8845EhIW4B6hbXrN8c3h74EXpydYgfS49hk4U9X1T4UA+7xwsc71UOi26
-	 zxoWUSPHY+jy09eCzfCh4uDQhx0w8snRzgqtBZ+cFJb/L5etEG0og0sQ44lOnTT54D
-	 f18dXa5YqpgT+SX312UwTwBb2zocAgcMKAaphM74=
+	b=Mox6btTc8fG7os9cyr/P9nO8DK2IRRszeHRmBcT5KsLVvZnt7ZQ6wZOjqzZ2p9aYN
+	 wW1KAKh5ZpdkuX8ex1+AAEm6DdTIOhAPniUBFMludJ1G3rB5IeJXLO05hHRmh+cahu
+	 rbfwwsihrGzyPLHsVGbHLGgqnqoiQo1H6fsGnniA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 610/621] workqueue: fix devm_alloc_workqueue() va_list misuse
-Date: Tue, 13 Oct 2026 13:40:05 +0200
-Message-ID: <20261013112935.273421176@linuxfoundation.org>
+	Jakub Slepecki <jakub.slepecki@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 611/621] ice: fix broken Rx on VFs
+Date: Tue, 13 Oct 2026 13:40:06 +0200
+Message-ID: <20261013112935.297304431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,134 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-commit 0de4cb473aed57ee4ba7e0551ad27bddc19fc519 upstream.
+commit 436fa8e7d1a119ec90f39e7c2ce0f3a146652899 upstream.
 
-devm_alloc_workqueue() built a va_list and passed it as a single
-positional argument to the variadic alloc_workqueue() macro:
+Since the tagged commit, ice stopped respecting Rx buffer length
+passed from VFs.
+At that point, the buffer length was hardcoded in ice, so VFs still
+worked up to some point (until, for example, a VF wanted an MTU
+larger than its PF).
+The next commit 93f53db9f9dc ("ice: switch to Page Pool"), broke
+Rx on VFs completely since ice started accounting per-queue buffer
+lengths again, but now VF queues always had their length zeroed, as
+ice was already ignoring what iavf was passing to it.
 
-	va_start(args, max_active);
-	wq = alloc_workqueue(fmt, flags, max_active, args);
-	va_end(args);
+Restore the line that initializes the buffer length on VF queues
+basing on the virtchnl messages.
 
-C does not allow forwarding a va_list through a ... parameter.
-alloc_workqueue() expands to alloc_workqueue_noprof(), which runs
-its own va_start() over its ... params, so the inner
-vsnprintf(wq->name, sizeof(wq->name), fmt, args) in
-__alloc_workqueue() received the outer va_list object as the first
-variadic slot rather than the caller's actual format arguments.
-
-Add a new static helper alloc_workqueue_va() that wraps
-__alloc_workqueue() and runs wq_init_lockdep() on success, and
-fold both alloc_workqueue_noprof() and devm_alloc_workqueue_noprof()
-onto it as suggested by Tejun.
-
-The wq_init_lockdep() step is required on the devm path
-too, otherwise __flush_workqueue()'s on-stack
-COMPLETION_INITIALIZER_ONSTACK_MAP would NULL-deref wq->lockdep_map.
-
-No caller changes are required. devm_alloc_ordered_workqueue() is
-a macro forwarding to devm_alloc_workqueue() and inherits the fix.
-Two in-tree callers actively trigger the broken path on every probe:
-
-  drivers/power/supply/mt6370-charger.c:889
-  drivers/power/supply/max77705_charger.c:649
-
-both of which use devm_alloc_ordered_workqueue(dev, "%s", 0,
-dev_name(dev)).
-
-A standalone reproducer module is available at[1].
-
-Link: https://github.com/leitao/debug/blob/main/workqueue/valist/wq_va_test.c [1]
-Fixes: 1dfc9d60a69e ("workqueue: devres: Add device-managed allocate workqueue")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 3a4f419f7509 ("ice: drop page splitting and recycling")
+Reported-by: Jakub Slepecki <jakub.slepecki@intel.com>
+Reviewed-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Jakub Slepecki <jakub.slepecki@intel.com>
+Link: https://patch.msgid.link/20251124170735.3077425-1-aleksander.lobakin@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/workqueue.h |    6 ++++--
- kernel/workqueue.c        |   28 +++++++++++++++++++---------
- 2 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/ice/virt/queues.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -529,8 +529,10 @@ alloc_workqueue_noprof(const char *fmt,
-  * Pointer to the allocated workqueue on success, %NULL on failure.
-  */
- __printf(2, 5) struct workqueue_struct *
--devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
--		     int max_active, ...);
-+devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
-+			    unsigned int flags, int max_active, ...);
-+#define devm_alloc_workqueue(...)	\
-+	alloc_hooks(devm_alloc_workqueue_noprof(__VA_ARGS__))
- 
- #ifdef CONFIG_LOCKDEP
- /**
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5875,6 +5875,20 @@ err_destroy:
- 	return NULL;
- }
- 
-+static struct workqueue_struct *alloc_workqueue_va(const char *fmt,
-+						   unsigned int flags,
-+						   int max_active,
-+						   va_list args)
-+{
-+	struct workqueue_struct *wq;
+--- a/drivers/net/ethernet/intel/ice/virt/queues.c
++++ b/drivers/net/ethernet/intel/ice/virt/queues.c
+@@ -863,6 +863,9 @@ int ice_vc_cfg_qs_msg(struct ice_vf *vf,
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+ 			     qpi->rxq.databuffer_size < 128))
+ 				goto error_param;
 +
-+	wq = __alloc_workqueue(fmt, flags, max_active, args);
-+	if (wq)
-+		wq_init_lockdep(wq);
++			ring->rx_buf_len = qpi->rxq.databuffer_size;
 +
-+	return wq;
-+}
-+
- __printf(1, 4)
- struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
- 						unsigned int flags,
-@@ -5884,12 +5898,8 @@ struct workqueue_struct *alloc_workqueue
- 	va_list args;
- 
- 	va_start(args, max_active);
--	wq = __alloc_workqueue(fmt, flags, max_active, args);
-+	wq = alloc_workqueue_va(fmt, flags, max_active, args);
- 	va_end(args);
--	if (!wq)
--		return NULL;
--
--	wq_init_lockdep(wq);
- 
- 	return wq;
- }
-@@ -5901,15 +5911,15 @@ static void devm_workqueue_release(void
- }
- 
- __printf(2, 5) struct workqueue_struct *
--devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
--		     int max_active, ...)
-+devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
-+			    unsigned int flags, int max_active, ...)
- {
- 	struct workqueue_struct *wq;
- 	va_list args;
- 	int ret;
- 
- 	va_start(args, max_active);
--	wq = alloc_workqueue(fmt, flags, max_active, args);
-+	wq = alloc_workqueue_va(fmt, flags, max_active, args);
- 	va_end(args);
- 	if (!wq)
- 		return NULL;
-@@ -5920,7 +5930,7 @@ devm_alloc_workqueue(struct device *dev,
- 
- 	return wq;
- }
--EXPORT_SYMBOL_GPL(devm_alloc_workqueue);
-+EXPORT_SYMBOL_GPL(devm_alloc_workqueue_noprof);
- 
- #ifdef CONFIG_LOCKDEP
- __printf(1, 5)
+ 			if (qpi->rxq.max_pkt_size > max_frame_size ||
+ 			    qpi->rxq.max_pkt_size < 64)
+ 				goto error_param;
 
 
