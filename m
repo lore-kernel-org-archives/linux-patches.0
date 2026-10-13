@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486774F404B;
-	Tue, 13 Oct 2026 11:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAD64F6492;
+	Tue, 13 Oct 2026 11:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892673; cv=none; b=RuNk0hASYuwzPuLAt41r99m7OQTzexao5DiZPrsjob7ZY733meBXVknf8kVEBiwiFCRzk6tBdNU5Hi+8MH0ArwwTwvQa7tkhpTkSx2igBFBMWKxYtkvrk+L6jrITj87DMnwMltmECF/Q1QkhuFDSZGl4STlNWfyIVal61RRUnOQ=
+	t=1791892677; cv=none; b=jEJn+aFD+JYP48yifEVcxBDIa2hYEx6hRHbjIoe83ciJ67Hba8OsYF18hrrDxb0D6cvRLT50rkjTZnparA+VDpzX/P6jdlkZeFndkv/jyEZqPQYO20qYD94+hLSjmjVBZERpeZdZ2qtmhx4/P0aIaOPcJKCQ1sNt0kmhFKeSSRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892673; c=relaxed/simple;
-	bh=Av4UX5mvIjO28QWwBcGVxFKBjrokUwCI0msOGz9GmwA=;
+	s=arc-20240116; t=1791892677; c=relaxed/simple;
+	bh=kb4rn5rvSCg/VRvH12Lk96fCX3+3BM+AInN9DTwphqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYLixF+nitHiY8wMxsvb3Et7JjLK54NLnhWKM6Nq+NH2SYE3l8TfW9PWkdgXZWwUnlUhq8ZplQsgF4tF0+gHlLur3952fDUuAGyF+UdrZPx2xWU7DYcbUGkxajzGE31LkCZoMQfYKz4L2dNSf59uvEoWjYTot/uGfrHR26gDKuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHZtqO1e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TgZsEflaEnLHaQ4b6xHuG5wjjbVfHRLfnRXtjn3bo/2PcMifQEB7wgB/LRhBlTikG8hIP6f+PlqIrpogJ6CD8DftNGCBAn3hM2Ka/YgJynbUdlH3AxX7nn2wpQkvn/gHFXNKk0kTsVIHJunCk5F9ZBYhskpjgUTJSqUHymk+UC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A70Gjska; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHZtqO1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23F11F000FF;
-	Tue, 13 Oct 2026 11:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A70Gjska"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F081F00899;
+	Tue, 13 Oct 2026 11:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892672;
-	bh=yNMm81KJ3YWP8nyzBTAe9loyOHbNeFOMMOhaRJUWDOY=;
+	s=korg; t=1791892675;
+	bh=ng6zpnHvcgSNHjYkBOWcvMqhnAjkMXKTUWklfEeniUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHZtqO1eyhUShWZc4pfmP7mPDQvrXKq+kwX4nR1ZwMonduAJEwoJ+0vP0BEBGv6mO
-	 lEnoF17MYymfpJ+NO/kHk8J3n97Y7P2CFpn4QUdYrhyXFZ7OKnrglpmnWYWqPovjwo
-	 Jr884fWiM3kKTYzOdyy+UTh83lATG5FeKJAg0VTI=
+	b=A70GjskaE7JJqtOX3QZ7CeLcIlZLsENeTa2dSJrIDOSeEzB6w9Wnc7otLFSlI2lPB
+	 GscxQI3emhhVkzjTlZx7I1P4KjlJTaxL5+BKysokudoYjZHrSjbCi7M8E1A5ml/KHy
+	 YWQrl7j9PjBHDlP8YDN7NcsMwhvkMYeHUlZlMajA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Quentin Freimanis <quentin@q-lab.dev>,
+	Haishuang Yan <yanhaishuang@cmss.chinamobile.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 250/281] net: sparx5: start the TOD counters on non-PTP lan969x variants
-Date: Tue, 13 Oct 2026 13:39:26 +0200
-Message-ID: <20261013112901.211614429@linuxfoundation.org>
+Subject: [PATCH 7.2 251/281] devlink: fix devlink_rel reference leak when notify work is pending
+Date: Tue, 13 Oct 2026 13:39:27 +0200
+Message-ID: <20261013112901.234307339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,92 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Freimanis <quentin@q-lab.dev>
+From: Haishuang Yan <yanhaishuang@cmss.chinamobile.com>
 
-[ Upstream commit ca5012757bf027df83d51593a07656cb8c80caee ]
+[ Upstream commit c5381ae1cd1481cc431c2bd79460472c6f1d3ce3 ]
 
-Currently the base non-PTP-capable lan969x variants don't forward any
-Ethernet frames:
+devlink_rel_nested_in_notify_work_schedule() takes a reference on the
+devlink_rel for the notify work and then queues the work, ignoring the
+return value of schedule_delayed_work(). If the work is already pending,
+nothing new is queued, the work runs only once and drops only one
+reference, so the extra one is leaked together with the devlink_rel and
+its index in devlink_rels.
 
-  $ ip link set eth10 up
+This is easy to hit. devl_register() of a nested instance queues the
+work, and if the instance is unregistered before the work has run,
+devlink_rel_put() queues it again while it is still pending. The work
+also keeps rescheduling itself for as long as the parent devlink lock
+cannot be taken, which widens the window. Registering and unregistering
+a nested devlink instance 100 times while holding the parent lock leaks
+all 100 devlink_rel objects.
 
-  $ ip addr add 10.0.0.54/24 dev eth10
+The reschedule path in devlink_rel_nested_in_notify_work() has the same
+problem: if the work was queued again while it was running, the
+reference it holds is never dropped.
 
-  $ ping 10.0.0.1
-  PING 10.0.0.1 (10.0.0.1): 56 data bytes
+Drop the reference in both places when the work was already pending.
+The pending work holds its own reference, so this can not be the last
+one.
 
-  --- 10.0.0.1 ping statistics ---
-  7 packets transmitted, 0 packets received, 100% packet loss
-
-  $ cat /proc/interrupts | grep fdma
-    20:          0  GIC-0  120 Level     sparx5-fdma
-
-  $ ip -s link show dev eth10
-      RX:  bytes packets errors dropped  missed   mcast
-           20828     102      0       0       0      72
-      TX:  bytes packets errors dropped carrier collsns
-               0       0      0       0       0       0
-
-Testing showed that starting the domain 0 TOD counter gets networking
-working again, but start all three for consistency with the PTP variants.
-
-Fixes: 207966787b71 ("net: sparx5: add feature support")
-Suggested-by: Daniel Machon <daniel.machon@microchip.com>
-Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261005052826.14251-1-quentin@q-lab.dev
+Fixes: c137743bce02 ("devlink: introduce object and nested devlink relationship infra")
+Signed-off-by: Haishuang Yan <yanhaishuang@cmss.chinamobile.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261001042232.222987-1-yanhaishuang@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/sparx5/sparx5_ptp.c    | 28 +++++++++++--------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ net/devlink/core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-index 5953e04ef14e6..2826e48af1033 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-@@ -622,18 +622,9 @@ int sparx5_ptp_init(struct sparx5 *sparx5)
- 		sparx5->ptp = 1;
- 	}
+diff --git a/net/devlink/core.c b/net/devlink/core.c
+index fe9f6a0a67d5b..42c16940e4c43 100644
+--- a/net/devlink/core.c
++++ b/net/devlink/core.c
+@@ -96,13 +96,19 @@ static void devlink_rel_nested_in_notify_work(struct work_struct *work)
+ 	return;
  
--	if (!sparx5->ptp)
--		return 0;
--
--	for (i = 0; i < SPARX5_PHC_COUNT; ++i) {
--		err = sparx5_ptp_phc_init(sparx5, i, &sparx5_ptp_clock_info);
--		if (err)
--			return err;
--	}
--
--	spin_lock_init(&sparx5->ptp_clock_lock);
--	spin_lock_init(&sparx5->ptp_ts_id_lock);
--	mutex_init(&sparx5->ptp_lock);
-+	/* The base, non-PTP-capable lan969x variants need the
-+	 * first TOD counter running to forward frames.
+ reschedule_work:
+-	schedule_delayed_work(&rel->nested_in.notify_work, 1);
++	/* The work may have been queued again meanwhile, which took its own
++	 * reference. Drop ours in that case.
 +	 */
++	if (!schedule_delayed_work(&rel->nested_in.notify_work, 1))
++		__devlink_rel_put(rel);
+ }
  
- 	/* Disable master counters */
- 	spx5_wr(PTP_PTP_DOM_CFG_PTP_ENA_SET(0), sparx5, PTP_PTP_DOM_CFG);
-@@ -657,6 +648,19 @@ int sparx5_ptp_init(struct sparx5 *sparx5)
- 	/* Enable master counters */
- 	spx5_wr(PTP_PTP_DOM_CFG_PTP_ENA_SET(0x7), sparx5, PTP_PTP_DOM_CFG);
+ static void devlink_rel_nested_in_notify_work_schedule(struct devlink_rel *rel)
+ {
+ 	__devlink_rel_get(rel);
+-	schedule_delayed_work(&rel->nested_in.notify_work, 0);
++	/* The pending work holds a reference already, drop the new one. */
++	if (!schedule_delayed_work(&rel->nested_in.notify_work, 0))
++		__devlink_rel_put(rel);
+ }
  
-+	if (!sparx5->ptp)
-+		return 0;
-+
-+	for (i = 0; i < SPARX5_PHC_COUNT; ++i) {
-+		err = sparx5_ptp_phc_init(sparx5, i, &sparx5_ptp_clock_info);
-+		if (err)
-+			return err;
-+	}
-+
-+	spin_lock_init(&sparx5->ptp_clock_lock);
-+	spin_lock_init(&sparx5->ptp_ts_id_lock);
-+	mutex_init(&sparx5->ptp_lock);
-+
- 	for (i = 0; i < sparx5->data->consts->n_ports; i++) {
- 		port = sparx5->ports[i];
- 		if (!port)
+ static struct devlink_rel *devlink_rel_alloc(void)
 -- 
 2.53.0
 
