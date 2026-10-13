@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2424F4753;
-	Tue, 13 Oct 2026 11:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554374F392E;
+	Tue, 13 Oct 2026 11:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892761; cv=none; b=j30lqKr7X0daZ4dCVzV2BTcvGl77K47EUAA8Jc+QaBwNuq/oNyvSm0CC6SJKQ67X79G5XOxRCIlSQHaNPtZ3xfbJ5iXZfL4tO1GrMgIv5J09eHVzm0Cs1uTRtBpTGk1GgL2jzljSGvXZlElgCJFbnzabtpNiMPZ8BQlMNUTwQwA=
+	t=1791892764; cv=none; b=TnXxTKZ6oRxJKGRgLY6GguDjztvOVyfuzPwTbHcskV6qWHAQbNMDlnGjy2+tSLSobiTKYe7l3O3dkCgvlToz3Y2R4SsDq/0abPmynm5B4lfgxSElpymYYBYfR39v5VLz9QfREbfLj/VgAz439UidgQZkTFCq4pjYkdyifFpN5po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892761; c=relaxed/simple;
-	bh=y2U/ucUwsvaipqee63PvEcBiEevEOEL7wJ4l6puHDEw=;
+	s=arc-20240116; t=1791892764; c=relaxed/simple;
+	bh=v8k1yXbufOLxy5hunVk7R4qpvbzXOTHKi1BIN5yURv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onYOTJUUGzJnbN4nCS5JDRyeGoHvBIOBwbz5+BB7Dj4qWpyXyB94jOMCbNEyIxkWgUTwR1uo9ZIr22J9NZuyDnPWXjcjX48U42+ur0AU4eBc1paX5nuSUymdz0NMU7R5W08CSnRtDFHMZyn8rRgjzoCVSrRURtWJZ1J6pfDCdbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g56ksn5f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EeWxAs25uGPSpdBkHETFLnqrJPpWmOZyfh1/cgzxNweVMBKig2eK1NnOQvuy26movH0mdXr6dLTHRazmYK8Pyd0vU+L5wt7bBze/Aj1v3niFvW6+BuB6F10GGQDUxuepQNiaR3WdTwWdyNSIzoicI7CywN3q3W2HDrZT2IEe2Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4uO73Jh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g56ksn5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B201F000FF;
-	Tue, 13 Oct 2026 11:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4uO73Jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52C01F000FF;
+	Tue, 13 Oct 2026 11:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892760;
-	bh=IqQqobB0TGpF9vPfGURvjXfg9pu+wDWac7q4F70IV0M=;
+	s=korg; t=1791892763;
+	bh=8jMZL6b7O3wOjLvKWadxVMjhgpaEPJwq7dKRoT8gbNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g56ksn5fBd0pW08HsXfZt7vnxW5SKSKxKa7ofCYwzKX8jP1tTktz0ceNrex0Po1Ew
-	 VrTKwVvGD2Ki3crMZFslpfVMszzrl2C1xpQOontfin5sMNKX8jNZ/m0gBM310DN89v
-	 Q3KO3ZHXjAS5YiFkB6T0faPLs2sd/qDhTFHRNDIc=
+	b=I4uO73JhhNYeLz8kUC0kpjffwrhKaRUJRESGhtvgno2+CVxq3YaNYBWPDYehsdpSC
+	 /vczZySKiFtwgGVHCsa1r1/CvLengZwKIltkjHcHxjH1lFM0xIJxTF9Jq56hEaduSi
+	 JSm5mcBVBVBP6pag2wFEGZkP2jl0E5plsCRwN9q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>,
-	Alessio Belle <alessio.belle@imgtec.com>,
+	Tianyi Gao <tianyi@cloudflare.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 265/281] drm/imagination: Fix reference and vm_bo handling in remap()
-Date: Tue, 13 Oct 2026 13:39:41 +0200
-Message-ID: <20261013112901.573763005@linuxfoundation.org>
+Subject: [PATCH 7.2 266/281] veth: fix peer NETDEV_XDP_ACT_NDO_XMIT after GRO is toggled while down
+Date: Tue, 13 Oct 2026 13:39:42 +0200
+Message-ID: <20261013112901.597387532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -46,90 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Tianyi Gao <tianyi@cloudflare.com>
 
-[ Upstream commit 196d4d10c1b33ae176685ff42a9994a5952b1d0f ]
+[ Upstream commit 3f090039995f609a8e236f37980dee5712dded61 ]
 
-When a map overlaps part of an existing mapping, pvr_vm_gpuva_remap()
-splits the mapping into prev/next parts covering what the request did
-not take, instead of creating something new. It gets two things wrong.
+A veth device advertises NETDEV_XDP_ACT_NDO_XMIT only if its peer has an
+XDP program attached or GRO enabled, that is, only if the peer will have
+NAPI to receive the frames.
 
-- A GEM reference is taken for each part but it's never needed and never
-  dropped, so it leaks one reference per split (remap-next-in-2m in
-  tests/imagination/pvr_vm_map.c):
+veth_set_features() updates the peer's flag when GRO is toggled, but
+returns early if the device is down, and veth_open() only refreshes the
+flags of the device being opened. Toggling GRO while the device is down
+therefore leaves the peer's flag stale after the device comes up.
 
-    CRITICAL: 33558528 bytes of shmem still held after close
+If GRO was enabled while down, the device comes up with NAPI but the
+peer does not advertise NDO_XMIT, and devmap rejects redirects to the
+peer with -EOPNOTSUPP. If GRO was disabled while down, the device comes
+up without NAPI but the peer still advertises NDO_XMIT, so redirects are
+accepted and then dropped in veth_xdp_xmit() with -ENXIO.
 
-- The parts still belong to the original object being split, but
-  pvr_vm_gpuva_remap() links them to ctx->gpuvm_bo, the new object's
-  vm_bo:
+Commit 7a6102aa6df0 ("veth: Update XDP feature set when bringing up
+device") made veth_open() refresh the device's own flags. Refresh the
+peer's flags there too. The peer's flag depends on this device's XDP
+program and GRO setting, not on whether the peer is up, so it is
+correct to set it even if the peer is down.
 
-    prev_va --obj--> BO_A          BO_B <--obj-- vm_bo (ctx->gpuvm_bo)
-            \___________link___________/  (mismatch: BO_A != BO_B)
-
-  drm_gpuva_link() catches the mismatch:
-
-    WARNING: drivers/gpu/drm/drm_gpuvm.c:2108 at drm_gpuva_link+0x2ec/0x310
-      drm_WARN_ON(obj != vm_bo->obj)
-    Call trace:
-     drm_gpuva_link
-     pvr_vm_gpuva_remap
-     __drm_gpuvm_sm_map
-     pvr_vm_map
-     pvr_ioctl_vm_map
-
-  Link them to op->remap.unmap->va->vm_bo instead.
-
-The locking of the GPUVA lists of the other objects touched by a split is
-not addressed here; it is handled by switching the GPUVM to immediate
-mode.
-
-Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Reviewed-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
-Link: https://patch.msgid.link/20261001-pvr-fixes-a-v2-1-f58254e5dfb8@gmail.com
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Fixes: 8267fc71abb2 ("veth: take into account peer device for NETDEV_XDP_ACT_NDO_XMIT xdp_features flag")
+Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261006173241.65945-2-tianyi@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_vm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/veth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_vm.c b/drivers/gpu/drm/imagination/pvr_vm.c
-index 55cc999f3708b..cbdd15ed74fdb 100644
---- a/drivers/gpu/drm/imagination/pvr_vm.c
-+++ b/drivers/gpu/drm/imagination/pvr_vm.c
-@@ -418,6 +418,8 @@ pvr_vm_gpuva_unmap(struct drm_gpuva_op *op, void *op_ctx)
- static int
- pvr_vm_gpuva_remap(struct drm_gpuva_op *op, void *op_ctx)
- {
-+	/* The split parts belong to the object of the mapping being split. */
-+	struct drm_gpuvm_bo *vm_bo = op->remap.unmap->va->vm_bo;
- 	struct pvr_vm_bind_op *ctx = op_ctx;
- 	u64 va_start = 0, va_range = 0;
- 	int err;
-@@ -433,14 +435,12 @@ pvr_vm_gpuva_remap(struct drm_gpuva_op *op, void *op_ctx)
- 	drm_gpuva_remap(&ctx->prev_va->base, &ctx->next_va->base, &op->remap);
- 
- 	if (op->remap.prev) {
--		pvr_gem_object_get(gem_to_pvr_gem(ctx->prev_va->base.gem.obj));
--		drm_gpuva_link(&ctx->prev_va->base, ctx->gpuvm_bo);
-+		drm_gpuva_link(&ctx->prev_va->base, vm_bo);
- 		ctx->prev_va = NULL;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 2780b2dd073d1..4f145c5f686ef 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1414,6 +1414,7 @@ static int veth_open(struct net_device *dev)
  	}
  
- 	if (op->remap.next) {
--		pvr_gem_object_get(gem_to_pvr_gem(ctx->next_va->base.gem.obj));
--		drm_gpuva_link(&ctx->next_va->base, ctx->gpuvm_bo);
-+		drm_gpuva_link(&ctx->next_va->base, vm_bo);
- 		ctx->next_va = NULL;
- 	}
+ 	veth_set_xdp_features(dev);
++	veth_set_xdp_features(peer);
  
+ 	return 0;
+ }
 -- 
 2.53.0
 
