@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532571F91F6;
-	Tue, 13 Oct 2026 12:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCE12E06E4;
+	Tue, 13 Oct 2026 12:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895697; cv=none; b=FzrWjk7hL8lVJbKMoSbK9AkwOpoBhKLbYnWa373qgaxKUQ6hR7/BqFyysWMP5kgwXHT9SXUCmcVp4kwlK8LVbzIYbUOe8VQfAB8UTF7A9KBKS7ukb0gPjRKl7NTUOyqyZDuXsozssohH4onSu4pwYYB/EIYcTXF00cDWTrd8mq0=
+	t=1791895700; cv=none; b=J1qFQM5UqXTVODz/f3xH0e9AIiLaLHnf27JCEatOv8yxGMfVix/ArZHnOUbDUAAhIbDyFBz5+QsXXIkLViATSgqEhi+/MG8rlE6uspPe79jxvdoX6JrFGPiZDnd7FdH+63rkLe8M4WdXS1Ck+2yC0exvEWMdVQpz9zXL+oNKsec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895697; c=relaxed/simple;
-	bh=wUjoccKa0+tu8yXN2Rr36/bq7AE85kdvbZpCTL4NNus=;
+	s=arc-20240116; t=1791895700; c=relaxed/simple;
+	bh=x9mbo80Q6UIBqG7bGID4z9oVJ8LlBTVbRg3PfPKI2IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0q1mHETey8v9gHLyHx1zx+TOJnkGcsfuX4g9+ddzsa7drGZP22GTEVCZvOg13TsmKg31JqjxUFsK83QwN3Lc7/tJ91kjRClYSCB1QAaHmtOclhnR6W6+q/nd7x9VXab+BCndb0YU8VVtX/Xa7ZpRs/Bf1IbF1xlmWSeLcFZbH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCtKK+tC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OPiiu7n9EN1ibJKM8Ungk45PgTB6WIVxo5st4mykmm394yaawUxck6d0c0YHYwbkE9oxaSb1QxhlUqvNixw7kLRGC7IVaNnM02R5kU3keffjbFbzv2frDm+JaRqlF9Uoeeeg+l5L3aibB8XSZx2oXnb0F8TvOW7qihJwZQoKuOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJsRMvwq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCtKK+tC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE01F00893;
-	Tue, 13 Oct 2026 12:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJsRMvwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CC41F000FF;
+	Tue, 13 Oct 2026 12:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895696;
-	bh=ZVFIi6DawUafALin1jRXq/bv4rdrAKlJgQtpnlZqk6U=;
+	s=korg; t=1791895699;
+	bh=Yhye4J3g2nIqTWkeXaE6Cqvtwu2GMWDYTyI7DzRisms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UCtKK+tCvKPyf/uIK0QILd1shj16sVwgwZ1WF2pjL9HpuTRNZ7Z27p6xYZ6VQNnjr
-	 mj336Dkm0hoGuJI5xF4Au2Rgl7HCcpi8UVGciSzUG7Z18IoL5qhyVsMkycVT+bliBo
-	 NFAChfvq4JouLaJt0XyNAeLnzLwTefWaE6e+4i+0=
+	b=SJsRMvwqAJCoK3sHYBrDyd1IeE+w24ie/Go/7/YgKqfxwG8fUG7Lp69ZNCWtWvJsA
+	 sXs9B7ce0u6XS3wb0IT2wQMhHnhTKGk9irSjERhQc23MNkWPrayHpwzyXV24EWCxWW
+	 MHAnNl/aoxbQj/Xq3jE0pugNnKa/Ycu+a478yudE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Furman <krisfur@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 360/497] Input: xpad - add support for Corsair Novablade Pro
-Date: Tue, 13 Oct 2026 13:38:47 +0200
-Message-ID: <20261013112916.449781496@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 361/497] arm64: irq: exclude the softirq stack switch from KCOV
+Date: Tue, 13 Oct 2026 13:38:48 +0200
+Message-ID: <20261013112916.473867955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,50 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Furman <krisfur@proton.me>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit f9282b8aa85a8c97c50d656db75feb6d76fc7cbe upstream.
+commit a9cd14bfb0c113f1cd77be4349784663bec71bb4 upstream.
 
-Add device IDs for the Corsair Novablade Pro leverless fight controller
-in both wired (0x2b1f) and 2.4 GHz receiver (0x2b2b) modes, and add
-Corsair's vendor ID to the Xbox 360 vendor match list.
+On IRQ exit, __irq_exit_rcu() drops HARDIRQ_OFFSET before calling
+invoke_softirq(). The arm64 do_softirq_own_stack() wrapper and its
+____do_softirq() trampoline run before __do_softirq() establishes
+softirq context, so KCOV records their PCs in the interrupted task's
+coverage buffer. They also run outside softirq accounting when
+local_bh_enable() reaches do_softirq().
 
-Outside of its PS4/PS5 modes the controller uses the Xbox 360 protocol
-(vendor-specific class, subclass 93, protocol 1) on interface 0, which
-xpad does not currently bind, so no gamepad device is created. The
-PS4/PS5 modes present a standard HID gamepad and already work with
-hid-generic.
+The IRQ-exit coverage makes the KCOV boot selftest fail even after
+the scheduler and timer coverage leaks are suppressed. The generic
+softirq.o is already excluded from KCOV, but that exclusion does not
+cover the separately compiled arm64 wrappers.
 
-Tested on 7.2.5 with the 2.4 GHz receiver and wired.
+Exclude irq.o from KCOV instrumentation, as is already done for the
+arm64 entry code. This covers both wrappers even with compilers that
+lack the no_sanitize_coverage attribute. The softirq action functions
+remain instrumented for explicit remote coverage.
 
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Krzysztof Furman <krisfur@proton.me>
-Link: https://patch.msgid.link/20261009-xpad-corsair-novablade-v1-1-e58746bef99f@proton.me
+Fixes: 8eb858c44b98 ("arm64: run softirqs on the per-CPU IRQ stack")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    3 +++
+ arch/arm64/kernel/Makefile |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -330,6 +330,8 @@ static const struct xpad_device {
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
-+	{ 0x1b1c, 0x2b1f, "Corsair Novablade Pro (Wired)", 0, XTYPE_XBOX360 },
-+	{ 0x1b1c, 0x2b2b, "Corsair Novablade Pro (2.4 GHz Receiver)", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0130, "Ion Drum Rocker", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
-@@ -565,6 +567,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
-+	XPAD_XBOX360_VENDOR(0x1b1c),		/* Corsair controllers */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
- 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
- 	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
+--- a/arch/arm64/kernel/Makefile
++++ b/arch/arm64/kernel/Makefile
+@@ -25,6 +25,9 @@ KASAN_SANITIZE_stacktrace.o := n
+ KCOV_INSTRUMENT_entry-common.o := n
+ KCOV_INSTRUMENT_idle.o := n
+ 
++# Softirq stack switching can run outside interrupt context.
++KCOV_INSTRUMENT_irq.o := n
++
+ # Object file lists.
+ obj-y			:= debug-monitors.o entry.o irq.o fpsimd.o		\
+ 			   entry-common.o entry-fpsimd.o process.o ptrace.o	\
 
 
