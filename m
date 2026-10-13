@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06182C11E4;
-	Tue, 13 Oct 2026 12:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FBC4D7D30;
+	Tue, 13 Oct 2026 12:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894120; cv=none; b=qGUjcJ2YgU/XDVBl7+Q7i74i+VWa/pIg7bSnTqGNpheWmN7f0FZEC/jeoxRI9ySMrV0pfj7MOziyTtoRNCcOnUEN32xvuOzQdI/D7lj1xww+fAPi4jt0OK35crpUp2SG4jKaYyTwfSTAIQblB0vw7BGLUdh5eM/x4I5ZPQMgvNk=
+	t=1791894123; cv=none; b=FdveckLu341byJc8sExQR7Tjtiax5bJyx3baGtTUqmypOk8JNwie5FH/O7tra6wwlY6ogV1BDIno0WhEaGAtbFb5wJ9qtQ6l0kAIYm8VrQrOAEpa0KS5RJp5IvQ2NwtoZnwFltJNioj4OiY8GCRYjj9Q80x+Qymo6SuQTLuSfns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894120; c=relaxed/simple;
-	bh=aMxl5IhBK3fCmHI0Rmfx/7lF/eEUZv1MauEjYTZDMhM=;
+	s=arc-20240116; t=1791894123; c=relaxed/simple;
+	bh=h/BrrMHm3mh5YnRsz6GmeGTXYc20zhsvuC/J60y6V4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Avg8ayyCDk9e+l15voqsR1GKPzmcD6j4TimCdAaK6bOyMK1J9Q/yS6kXj24Q558jnWt9oijNT/8P6nhRsnvUq8+z9YAvTCB7iZuk5xfiBT7uvEiF3FrW+Vlg+oAPiKMHUn7+5hLPSsmnmrpt8d53KgwULsy1zMVXpGvWq2wUtKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiWxjUje; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qsEnU4YCnd/4jF+O35d4H5cdXTed4KiRRf6G81QJNmXvOlNqSS5OJZJU5Z7W8Q4+GL74vRbV6XfhbI43uCGNB4hLQiaaVSE1y/lczhEX1c4DyCxaShxw22EE2C1OZ3td5ikub1d/amu5iywwX/4engMM2n+GYhBVnGQuXbEqqUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTWq/JsV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiWxjUje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439461F00893;
-	Tue, 13 Oct 2026 12:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTWq/JsV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DC91F00893;
+	Tue, 13 Oct 2026 12:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894118;
-	bh=HwnvHJpheWE5ZU85yd8sH8RDjwSQnpCvE5bl10tHqis=;
+	s=korg; t=1791894121;
+	bh=wTdY0yA1qMnoSMew6viutLwp/dwZyKzqhvgtYMA/9+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RiWxjUjepwIUaYLwvD5oaN8X2BL59xjGJJz5ch/thNsROB8PO6NXPgAypraIYSDA3
-	 zP3/NMfVDp0vIWMjC3QLVi5QM6snwoGEXC3w9196bZsB7jy8S2hdVrWmUbG7ZF0vcd
-	 Do79d5YRRwL6g0rF0BbDN+SzJEMTyP6ynqSmPE0Y=
+	b=DTWq/JsVFpbfWT/t0T8cewa+l7bkRsmUBlOWVRokd7bgsdPHUEDlVrHbLyORRtCHt
+	 lhextQtr9i85Dz5UZ8Fsta+AbR51P+as7iWbPtlbu7Ak5ziQOc6B1HGtwGKOJ+FrXO
+	 MXotd8tDV1UWW4kfk+tQlfoj3T1shySg7rR+pUH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Yiqi Sun <sunyiqixm@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 454/621] arm64: ptrace: Keep orig_x0 in-sync with x0 on syscall entry
-Date: Tue, 13 Oct 2026 13:37:29 +0200
-Message-ID: <20261013112931.604420053@linuxfoundation.org>
+Subject: [PATCH 6.18 437/621] drm/amd/display: Resize MST HDCP per-connector arrays to 32
+Date: Tue, 13 Oct 2026 13:37:12 +0200
+Message-ID: <20261013112931.203279755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,113 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 88b839ce497ccb1ff92f7ae742c78dd2937ba572 ]
+[ Upstream commit 261e0fe4e2c99f687114b64b10b98db964b475f4 ]
 
-Commit e057b9477232 ("arm64: syscall: Ensure saved x0 is kept in-sync
-with tracer updates") attempted to resolve a long-standing issue with
-syscall entry tracing, where a tracer is able to manipulate the first
-syscall argument without being subjected to seccomp or audit checking.
+AMDGPU_DM_MAX_DISPLAY_INDEX is 31. It suggest a maximum number of
+32 connectors. But the way it's used is like MAX_DISPLAY_COUNT.
+Hence we're off by one with DRM core, which supports a max of 32
+connectors.
 
-Unfortunately, that fix was incomplete [1], as it failed to update
-'orig_x0' between a tracer updating x0 during a seccomp ptrace exit
-(SECCOMP_RET_TRACE) and the seccomp filter being re-evaluated.
+Rename AMDGPU_DM_MAX_DISPLAY_INDEX to AMDGPU_DM_MAX_DISPLAY_COUNT
+to match its actual use, and increase the size to 32 to match the
+originally intended size.
 
-Rather than add hooks to the core seccomp code, instead move the
-synchronisation code into the ptrace GPR and syscall setting code so
-that 'orig_x0' is kept up to date with x0 whenever we're stopped on the
-syscall entry path.
-
-Cc: Kees Cook <kees@kernel.org>
-Cc: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Link: https://sashiko.dev/#/patchset/20260716120640.6590-1-will@kernel.org [1]
-Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
-Link: https://lore.kernel.org/all/20260529065444.1336608-1-sunyiqixm@gmail.com/
-Fixes: e057b9477232 ("arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates")
-Fixes: a5cd110cb836 ("arm64/ptrace: run seccomp after ptrace")
-Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
+Assisted-by: Copilot:claude-opus-4.8
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/ptrace.c | 50 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h      |  2 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c | 10 +++++-----
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h |  8 ++++----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index ceb047e7d49f2..8e7f8dedb1cc0 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -560,6 +560,42 @@ static int gpr_get(struct task_struct *target,
- 	return membuf_write(&to, uregs, sizeof(*uregs));
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 284cfcd238a29..ff334d05fd880 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -45,7 +45,7 @@
+  * in amdgpu_dm_kms.h file
+  */
  
-+static void update_syscall_orig_x0_after_ptrace(struct task_struct *target)
-+{
-+	struct pt_regs *regs = task_pt_regs(target);
-+	struct kernel_siginfo *info = target->last_siginfo;
-+
-+	/*
-+	 * Skip the update for NO_SYSCALL (set either by the user or the
-+	 * tracer), as regs[0] holds the return value (see the comment in
-+	 * el0_svc_common()) and can be unwound using syscall_rollback().
-+	 */
-+	if (regs->syscallno == NO_SYSCALL)
-+		return;
-+
-+	/* We should only be called when target is in a ptrace stop */
-+	if (WARN_ON_ONCE(!info))
-+		return;
-+
-+	/*
-+	 * For compat tasks, orig_r0 is provided directly through GPR index
-+	 * 17.
-+	 */
-+	if (is_compat_thread(task_thread_info(target)))
-+		return;
-+
-+	/*
-+	 * Don't update orig_x0 for a syscall-exit-stop, as x0 now contains the
-+	 * return value of the system call.
-+	 */
-+	if ((info->si_code & ~0x80) == SIGTRAP &&
-+	    target->ptrace_message == PTRACE_EVENTMSG_SYSCALL_EXIT) {
-+		return;
-+	}
-+
-+	regs->orig_x0 = regs->regs[0];
-+}
-+
- static int gpr_set(struct task_struct *target, const struct user_regset *regset,
- 		   unsigned int pos, unsigned int count,
- 		   const void *kbuf, const void __user *ubuf)
-@@ -575,6 +611,14 @@ static int gpr_set(struct task_struct *target, const struct user_regset *regset,
- 		return -EINVAL;
+-#define AMDGPU_DM_MAX_DISPLAY_INDEX 31
++#define AMDGPU_DM_MAX_DISPLAY_COUNT 32
  
- 	task_pt_regs(target)->user_regs = newregs;
-+
-+	/*
-+	 * Keep orig_x0 authoritative so that seccomp (via
-+	 * syscall_get_arguments()), audit and the restart path all see the same
-+	 * first argument the syscall is dispatched with, even if it has been
-+	 * updated by a tracer.
-+	 */
-+	update_syscall_orig_x0_after_ptrace(target);
- 	return 0;
- }
+ #define AMDGPU_DM_MAX_CRTC 6
  
-@@ -753,6 +797,12 @@ static int system_call_set(struct task_struct *target,
- 		return ret;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+index 19038f3361553..1b0a242513c31 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -287,7 +287,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
  
- 	task_pt_regs(target)->syscallno = syscallno;
-+
-+	/*
-+	 * Re-sync orig_x0 in case the syscall number has been changed
-+	 * from NO_SYSCALL.
-+	 */
-+	update_syscall_orig_x0_after_ptrace(target);
- 	return ret;
- }
+ 	cancel_delayed_work(&hdcp_w->property_validate_dwork);
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
+ 		hdcp_w->encryption_status[conn_index] =
+ 			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
+ 		if (hdcp_w->aconnector[conn_index]) {
+@@ -334,7 +334,7 @@ static void event_property_update(struct work_struct *work)
+ 	struct drm_connector *connector;
+ 	struct drm_connector_state *conn_state;
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
+ 		aconnector = hdcp_work->aconnector[conn_index];
+ 
+ 		if (!aconnector)
+@@ -403,7 +403,7 @@ static void event_property_validate(struct work_struct *work)
+ 
+ 	guard(mutex)(&hdcp_work->mutex);
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT;
+ 	     conn_index++) {
+ 		aconnector = hdcp_work->aconnector[conn_index];
+ 
+@@ -798,10 +798,10 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev,
+ 
+ 		memset(hdcp_work[i].aconnector, 0,
+ 		       sizeof(struct amdgpu_dm_connector *) *
+-			       AMDGPU_DM_MAX_DISPLAY_INDEX);
++			       AMDGPU_DM_MAX_DISPLAY_COUNT);
+ 		memset(hdcp_work[i].encryption_status, 0,
+ 		       sizeof(enum mod_hdcp_encryption_status) *
+-			       AMDGPU_DM_MAX_DISPLAY_INDEX);
++			       AMDGPU_DM_MAX_DISPLAY_COUNT);
+ 	}
+ 
+ 	cp_psp->funcs.update_stream_config = update_config;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+index 4faa344f196e7..1e31fc92ac719 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+@@ -44,7 +44,7 @@ struct hdcp_workqueue {
+ 	struct delayed_work callback_dwork;
+ 	struct delayed_work watchdog_timer_dwork;
+ 	struct delayed_work property_validate_dwork;
+-	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	struct mutex mutex;
+ 
+ 	struct mod_hdcp hdcp;
+@@ -52,7 +52,7 @@ struct hdcp_workqueue {
+ 	struct mod_hdcp_display display;
+ 	struct mod_hdcp_link link;
+ 
+-	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	/* when display is unplugged from mst hub, connctor will be
+ 	 * destroyed within dm_dp_mst_connector_destroy. connector
+ 	 * hdcp perperties, like type, undesired, desired, enabled,
+@@ -62,9 +62,9 @@ struct hdcp_workqueue {
+ 	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
+ 	 */
+ 	/* un-desired, desired, enabled */
+-	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	/* hdcp1.x, hdcp2.x */
+-	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 
+ 	uint8_t max_link;
  
 -- 
 2.53.0
