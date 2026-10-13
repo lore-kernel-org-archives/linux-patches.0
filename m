@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57C84F93D6;
-	Tue, 13 Oct 2026 12:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8E34F93D6;
+	Tue, 13 Oct 2026 12:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894333; cv=none; b=FWBCu+LWw68m3zpqdC4uK/0GJuOZE187Daz4deZWLgRbgy69rHMlKP/20YAeo5kFuwN0xn2KNbdZWx8V7vIg3zUXispqrX6MdkkEOCS7QQFzHqU5rJUldw9KEeu9jNURcVcz7Qpfy8RLyji38nCexyLLDPLKvTGOvKFhLSr0FYY=
+	t=1791894337; cv=none; b=pnvWwZ9J5ycdIlY55Ayxc7edjBLQsHDoXQharo0imRL1MO4SZXFXXH/J5qza6+SIT7Jqj3ADst4bQ7hKDMk9tnBG0h8TDsKu4sHh4NH4FM9kVT+RFzkzUSdETgxrU5p7XOzvm8VjIzEOEJq4C0o2khmtGgQ0Z8Wz965SYNGk+JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894333; c=relaxed/simple;
-	bh=Am6e2L6Nxxdhh/sjTbMZRDrelvW2TZlcEdMV0m+q4cs=;
+	s=arc-20240116; t=1791894337; c=relaxed/simple;
+	bh=7SuW8Rh8DYI5BtpHoICJSmhrkJWJcPG4NSMpNDOxXzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfEHvg2GIDZTDecfSCAWH6Wb0f2tqkCyNu28ySiZyqrtJYBaoIX8Z7S3f4qMUbRUcUWa65Sgst147Ht+8HL9cQDPhZPoBHHA21BTTEIVUBNRqPUbmbEdvbrfZ6cH3i3XN0U6ora9q2OOHzZNP8NOP4AZB984FZLNW3hVzVQd4Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8WlrBuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGx9t00RW7Il+e+bzYzd1LzNlqhs/xBHDrW79He1mEgBMU2Js3ER/sYvVKl0QToXKlMfgJ/xOAN43WdVeLHBSRim+JJ/qN+BwrkNmda+5IHDa0D48jl073lCCv9+1xbU37x3GYIs92FNM5mzjS1r/MCCohaLFFS3QdQLB15wzTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zeg6h0bi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8WlrBuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CEA1F000FF;
-	Tue, 13 Oct 2026 12:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zeg6h0bi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFE31F000FF;
+	Tue, 13 Oct 2026 12:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894332;
-	bh=Fv1EK5mrP+iBNR1U4akRIfKepXe1N0/9BepUa4WGfp0=;
+	s=korg; t=1791894335;
+	bh=Orhd10FNG5jv+81+OZSqpauuE/Tr9Z82hJdXQB/kRBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8WlrBuVOhnD2F4+1H/qN1WRhFuydbqXesmXO1rc54+npgCkG4nqpewqUPM3PFvtZ
-	 zFdlF8qcu2wDxPrfx10VMeJWbZbQLoGlMh7JPLQx6/8W0Wb8+gvD6zPvGRNBaHTeS1
-	 Y8xzgKkMehwpB5bPwTLubzvlgA8LfX7X42SHCwdQ=
+	b=Zeg6h0bi8F13r5NsoafCA1F+yaUulv+RjjSGoR4K1B8EYppddk5iBL68Lap6gYpaX
+	 NPJcmG3s0KWCBNXK4zP58kmux40h9CkkR2vZp25nyT6V02fh0q1ieTZdqQMLY3Lc7V
+	 2et6qe2GB/4KWpDxzgLHhldV5rrV25DsUao0GnPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 523/621] ipv6: mcast: use rcu_assign_pointer() for __rcu list updates
-Date: Tue, 13 Oct 2026 13:38:38 +0200
-Message-ID: <20261013112933.232380803@linuxfoundation.org>
+Subject: [PATCH 6.18 524/621] net: stmmac: fix dma mapping leak in stmmac_tso_xmit()
+Date: Tue, 13 Oct 2026 13:38:39 +0200
+Message-ID: <20261013112933.256312802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,109 +51,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 0c8f56c583c3250408367880c98e4d6fbc929315 ]
+[ Upstream commit a5d946466a95621fa2769720d59ea336003aa1a5 ]
 
-Several places in net/ipv6/mcast.c update RCU-protected lists
-(np->ipv6_mc_list, idev->mc_list, idev->mc_tomb) using direct pointer
-assignments instead of rcu_assign_pointer():
+In stmmac_tso_xmit(), if the DMA mapping of an skb fragment fails, the
+frame is dropped but the DMA mappings already created for the linear
+part and for the fragments mapped before the failure are never
+unmapped, leaking DMA mappings.
 
-1. In __ipv6_dev_mc_dec(), unlinking a group from idev->mc_list did:
-       *map = ma->next;
-   without rcu_assign_pointer() while concurrent readers traverse
-   idev->mc_list locklessly under rcu_read_lock().
-2. In ipv6_sock_mc_drop() and __ipv6_sock_mc_close(), unlinking a group
-   from np->ipv6_mc_list directly assigned *lnk = mc_lst->next and
-   np->ipv6_mc_list = mc_lst->next without rcu_assign_pointer(), racing
-   with lockless readers in inet6_mc_check().
-3. In __ipv6_sock_mc_join(), mc_lst->next was initialized to
-   np->ipv6_mc_list via raw assignment before publishing mc_lst.
-4. In mld_del_delrec() and __ipv6_dev_mc_inc(), __rcu source pointers
-   passed into rcu_assign_pointer() lacked explicit dereference helpers.
+Fix the leak by walking back over the descriptors used by the frame and
+releasing each of them with stmmac_free_tx_buffer(). Moreover, release
+the descriptors with stmmac_release_tx_desc() unmapping the DMA buffers.
 
-Fix these by consistently using rcu_assign_pointer() along with
-mc_dereference() / sock_dereference().
-
-Fixes: 456b61bca8ee ("ipv6: mcast: RCU conversion")
-Fixes: 88e2ca308094 ("mld: convert ifmcaddr6 to RCU")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828084531.1826790-5-edumazet@google.com
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260826-stmmac_dma_unmap_tso-v1-1-a2753d1576ba@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 67 ++++++++++++-------
+ 1 file changed, 43 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 6d1653da17c4c..f37357f24a88f 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -240,7 +240,8 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 		return err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 8fa378bd591da..63c045616c9b7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4100,6 +4100,7 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
+ /**
+  *  stmmac_tso_allocator - close entry point of the driver
+  *  @priv: driver private structure
++ *  @entry: TX queue buffer index
+  *  @des: buffer start address
+  *  @total_len: total length to fill in descriptors
+  *  @last_segment: condition for the last descriptor
+@@ -4108,8 +4109,9 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
+  *  This function fills descriptor and request new descriptors according to
+  *  buffer length to fill
+  */
+-static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
+-				 int total_len, bool last_segment, u32 queue)
++static void stmmac_tso_allocator(struct stmmac_priv *priv, u32 *entry,
++				 dma_addr_t des, int total_len,
++				 bool last_segment, u32 queue)
+ {
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
+ 	struct dma_desc *desc;
+@@ -4121,14 +4123,13 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
+ 	while (tmp_len > 0) {
+ 		dma_addr_t curr_addr;
+ 
+-		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+-						priv->dma_conf.dma_tx_size);
+-		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
++		*entry = STMMAC_NEXT_ENTRY(*entry, priv->dma_conf.dma_tx_size);
++		WARN_ON(tx_q->tx_skbuff[*entry]);
+ 
+ 		if (tx_q->tbs & STMMAC_TBS_AVAIL)
+-			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
++			desc = &tx_q->dma_entx[*entry].basic;
+ 		else
+-			desc = &tx_q->dma_tx[tx_q->cur_tx];
++			desc = &tx_q->dma_tx[*entry];
+ 
+ 		curr_addr = des + (total_len - tmp_len);
+ 		stmmac_set_desc_addr(priv, desc, curr_addr);
+@@ -4253,7 +4254,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct dma_desc *desc, *first, *mss_desc = NULL;
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+-	unsigned int first_entry, tx_packets;
++	unsigned int first_entry, entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
+ 	int i, first_tx, nfrags, ndesc;
+ 	struct stmmac_tx_queue *tx_q;
+@@ -4328,22 +4329,24 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
  	}
  
--	mc_lst->next = np->ipv6_mc_list;
-+	rcu_assign_pointer(mc_lst->next,
-+			   sock_dereference(np->ipv6_mc_list, sk));
- 	rcu_assign_pointer(np->ipv6_mc_list, mc_lst);
+ 	first_entry = tx_q->cur_tx;
+-	WARN_ON(tx_q->tx_skbuff[first_entry]);
++	entry = first_entry;
++
++	WARN_ON(tx_q->tx_skbuff[entry]);
  
- 	return 0;
-@@ -300,7 +301,8 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
- 	      lnk = &mc_lst->next) {
- 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
- 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
--			*lnk = mc_lst->next;
-+			rcu_assign_pointer(*lnk,
-+					   sock_dereference(mc_lst->next, sk));
- 			__ipv6_sock_mc_drop(sk, mc_lst);
- 			return 0;
- 		}
-@@ -333,7 +335,8 @@ void __ipv6_sock_mc_close(struct sock *sk)
- 	struct ipv6_mc_socklist *mc_lst;
- 
- 	while ((mc_lst = sock_dereference(np->ipv6_mc_list, sk)) != NULL) {
--		np->ipv6_mc_list = mc_lst->next;
-+		rcu_assign_pointer(np->ipv6_mc_list,
-+				   sock_dereference(mc_lst->next, sk));
- 		__ipv6_sock_mc_drop(sk, mc_lst);
- 	}
- }
-@@ -798,9 +801,11 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
- 	if (!pmc)
- 		return;
- 	if (pmc_prev)
--		rcu_assign_pointer(pmc_prev->next, pmc->next);
-+		rcu_assign_pointer(pmc_prev->next,
-+				   mc_dereference(pmc->next, idev));
+ 	if (tx_q->tbs & STMMAC_TBS_AVAIL)
+-		desc = &tx_q->dma_entx[first_entry].basic;
++		desc = &tx_q->dma_entx[entry].basic;
  	else
--		rcu_assign_pointer(idev->mc_tomb, pmc->next);
-+		rcu_assign_pointer(idev->mc_tomb,
-+				   mc_dereference(pmc->next, idev));
+-		desc = &tx_q->dma_tx[first_entry];
++		desc = &tx_q->dma_tx[entry];
+ 	first = desc;
  
- 	im->idev = pmc->idev;
- 	if (im->mca_sfmode == MCAST_INCLUDE) {
-@@ -979,7 +984,7 @@ static int __ipv6_dev_mc_inc(struct net_device *dev,
- 		return -ENOMEM;
+ 	/* first descriptor: fill Headers on Buf1 */
+ 	des = dma_map_single(priv->device, skb->data, skb_headlen(skb),
+ 			     DMA_TO_DEVICE);
+ 	if (dma_mapping_error(priv->device, des))
+-		goto dma_map_err;
++		goto error;
+ 
+ 	stmmac_set_desc_addr(priv, first, des);
+-	stmmac_tso_allocator(priv, des + proto_hdr_len, pay_len,
++	stmmac_tso_allocator(priv, &entry, des + proto_hdr_len, pay_len,
+ 			     (nfrags == 0), queue);
+ 
+ 	/* In case two or more DMA transmit descriptors are allocated for this
+@@ -4358,10 +4361,10 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	 * this DMA buffer right after the DMA engine completely finishes the
+ 	 * full buffer transmission.
+ 	 */
+-	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
+-	tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_headlen(skb);
+-	tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = false;
+-	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
++	tx_q->tx_skbuff_dma[entry].buf = des;
++	tx_q->tx_skbuff_dma[entry].len = skb_headlen(skb);
++	tx_q->tx_skbuff_dma[entry].map_as_page = false;
++	tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
+ 
+ 	/* Prepare fragments */
+ 	for (i = 0; i < nfrags; i++) {
+@@ -4371,16 +4374,17 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 				       skb_frag_size(frag),
+ 				       DMA_TO_DEVICE);
+ 		if (dma_mapping_error(priv->device, des))
+-			goto dma_map_err;
++			goto error_dma_unmap;
+ 
+-		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
++		stmmac_tso_allocator(priv, &entry, des, skb_frag_size(frag),
+ 				     (i == nfrags - 1), queue);
+ 
+-		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
+-		tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_frag_size(frag);
+-		tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
+-		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
++		tx_q->tx_skbuff_dma[entry].buf = des;
++		tx_q->tx_skbuff_dma[entry].len = skb_frag_size(frag);
++		tx_q->tx_skbuff_dma[entry].map_as_page = true;
++		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
  	}
++	tx_q->cur_tx = entry;
  
--	rcu_assign_pointer(mc->next, idev->mc_list);
-+	rcu_assign_pointer(mc->next, mc_dereference(idev->mc_list, idev));
- 	rcu_assign_pointer(idev->mc_list, mc);
+ 	tx_q->tx_skbuff_dma[tx_q->cur_tx].last_segment = true;
  
- 	mld_del_delrec(idev, mc);
-@@ -1013,7 +1018,8 @@ int __ipv6_dev_mc_dec(struct inet6_dev *idev, const struct in6_addr *addr)
+@@ -4477,7 +4481,22 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 			WRITE_ONCE(ma->mca_users, new_users);
- 			if (new_users == 0) {
--				*map = ma->next;
-+				rcu_assign_pointer(*map,
-+						   mc_dereference(ma->next, idev));
+ 	return NETDEV_TX_OK;
  
- 				igmp6_group_dropped(ma);
- 				inet6_ifmcaddr_notify(idev->dev, ma,
+-dma_map_err:
++error_dma_unmap:
++	for (;;) {
++		if (tx_q->tbs & STMMAC_TBS_AVAIL)
++			desc = &tx_q->dma_entx[first_entry].basic;
++		else
++			desc = &tx_q->dma_tx[first_entry];
++		stmmac_release_tx_desc(priv, desc, priv->mode);
++		stmmac_free_tx_buffer(priv, &priv->dma_conf, queue,
++				      first_entry);
++		if (first_entry == entry)
++			break;
++
++		first_entry = STMMAC_NEXT_ENTRY(first_entry,
++						priv->dma_conf.dma_tx_size);
++	}
++error:
+ 	dev_err(priv->device, "Tx dma map failed\n");
+ 	dev_kfree_skb(skb);
+ 	priv->xstats.tx_dropped++;
 -- 
 2.53.0
 
