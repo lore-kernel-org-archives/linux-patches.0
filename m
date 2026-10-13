@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D729C1F4176;
-	Tue, 13 Oct 2026 12:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA5F547071;
+	Tue, 13 Oct 2026 12:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895831; cv=none; b=Uwe3sHI+ijV93ZresCcfZKucvPFuV3C8zN5oEVcPOgCTDMUpsl/BFN8X6wIUpeF6o+cl+Q3eURkF8/I1WFYMq9gPZDYmEBJyzxnoceVc30MXh47KsgvLjVQuie/YWfdA8XJBUvl3MaOvX8KiwcpVNlkAqAHiZfXUTH5Ta6jd1go=
+	t=1791895833; cv=none; b=oJUEa0qx4SKfKpz0aQ0phPF2/Tz0+iFNoDlhr0/Y2rYRPm/j3vhBNJ8gbanB9zcoOdp7EThA6hXqWtN7aYE9u8z7jPzYwO9iYKpSVPFQ6Quc3b6zNzsWQOxPavBOvGIbbUtJ495WY6oIRbq0GRP1RBJPAJJ1zTfc4/S/qxLLITc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895831; c=relaxed/simple;
-	bh=tvXl7/gWS9ySNxsSisQ3XJ3x6ibBI8E8nlQ7c4ZtrIE=;
+	s=arc-20240116; t=1791895833; c=relaxed/simple;
+	bh=v9Yl3NR89qIZrY6RBm66B/Vefxwuvu8yNdprwaBoCqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=isMoiRSQzkn/iGWxOWzZ+Sg6nDtGBEVOeu5IPry8pYpwQNX4iFAt+XJt1+ovdP0MEoUTsD9DzId0CwE7cCpMlZeD8KlL3ThxqjTnzLIThMcCOCliA5wx4gl01zo2hWQiiwt7SswDIGPG9Yph5c5gO5t2e9vcLKElCopQu+e79vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO8d6uHD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXLGT2801VJnmliQNarWqmBGfFXDFK1gDAipkkGZpNnyisnXbC4S0NSao0PyDJDLRW8TwcqieDLm3iMv++QOnkVE+f/fnu23PaGvS4loPBQ3qkgEiEcmOREF0YUigsFpLfKkloofRikacPVGKMnfsSqJsM87/c/wJsYv0nxznXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhzon64l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO8d6uHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECE21F00898;
-	Tue, 13 Oct 2026 12:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhzon64l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC221F00898;
+	Tue, 13 Oct 2026 12:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895829;
-	bh=6r5tpceloxKH9LtnvLidgtv3RIVfrSzcTuNMGChlmdY=;
+	s=korg; t=1791895832;
+	bh=BAo8LxIvKGCnBk1RaljNkeczCEKZbKyLj3ZiTUVziYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jO8d6uHD3IMIO2+w9Bvb67UTXh7oTZoLQGIW86+THCxTnyhsOPnT/AI2/pwBe/bwH
-	 LqrNWebpuZVM4lDwDc2L0Os7/Z0WK6H9udUkOnhBn/hscbUMweVByCfA4ZtvXr6Pdv
-	 uvurLrO4IITVqemWWzR24FYqri26KlERQu5VuN7k=
+	b=vhzon64lRf+jaXL/1kxY92qx6lki6Jsy/TIyOOWo2eYcsxLVMltFFzD6qbHOuc6wt
+	 pHvyQb4dfvwpvNeCSa9i4V2M63DuLxIrBntnFMbnJYZK2cio0ecjSrLJoeLQQpY0+1
+	 QE70AgBwdfM6myUlGkk8L3lOpSoLTdP7u+Bz9fws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 370/497] wireguard: noise: reject response consumption after intermediate initiation
-Date: Tue, 13 Oct 2026 13:38:57 +0200
-Message-ID: <20261013112916.681726339@linuxfoundation.org>
+Subject: [PATCH 6.12 406/497] net: team: free skb when broadcast has no txable port
+Date: Tue, 13 Oct 2026 13:39:33 +0200
+Message-ID: <20261013112917.527762800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,104 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit d0305f8d90029556260c6824b61c493c424eba9e upstream.
+commit 489114c9ecae44e523361a4b3e610ee5ebd9189c upstream.
 
-Two threads begin processing the identical response message, received
-twice. The first thread, A, runs. While it's running, the second one,
-B, gets partway through, and during that slow calculation, or even while
-blocking on down_write(), A completes and then also a handshake
-initiation that's already been queued up runs in thread C, which itself
-takes that same down_write(). The handshake initiation creation
-succeeds, and sets the state back to waiting-for-response, and calls
-up_write(), at which point thread B resumes, because either its finished
-its calculations or was finally allowed to acquire down_write(). Thread
-B then copies the state back to the peer, and begins a new session,
-using that state, which is the same session as the one made in thread A.
+bc_transmit() sends the original skb through the last txable port.
+When no port is txable, it returns false without consuming the skb, but
+team_xmit() still returns NETDEV_TX_OK. AF_PACKET sends then retain the
+skb and its socket write-memory charge.
 
-Thread A			Thread B			Thread C
+A TX-enabled, link-down port keeps the broadcast transmit op installed.
+Carrier can stay up through a second link-up, TX-disabled port or be
+forced on by userspace. Free the original skb on the no-port path while
+leaving the existing drop accounting intact.
 
-down_read()
- sA = handshake->state
- memcpy(cA, handshake->crypto)
-up_read()
-if (sA != 1)
- goto fail
-slow_crypto(cA)
-				down_read()
-				 sB = handshake->state
-				 memcpy(cB, handshake->crypto)
-				up_read()
-				if (sB != 1)
-				 goto fail
-				slow_crypto(cB)
-down_write()
- if (sA != handshake->state)
-  goto fail
- memcpy(handshake->crypto, cA)
- handshake->state = 2
-up_write()
-down_write()
- if (handshake->state != 2)
-  goto fail
- derive_session(handshake->crypto)
-up_write()
-								down_write()
-								 slow_crypto(handshake->crypto)
-								 handshake->state = 1
-								up_write()
-				down_write()
-				 if (sB != handshake->state)
-				   goto fail
-				 memcpy(handshake->crypto, cB)
-				 handshake->state = 2
-				up_write()
-				down_write()
-				 if (handshake->state != 2)
-				  goto fail
-				 derive_session(handshake->crypto)
-				up_write()
-
-This seems basically impossible to hit in a meaningful way in practice,
-but ensure that it absolutely cannot happen by comparing the ephemeral
-private key that's on the stack with the latest one that the peer's
-handshake state has.
+Discovered by Sashiko during review of previous commit.
 
 Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20261008130124.724119-4-Jason@zx2c4.com
+Fixes: 5fc889911a99 ("team: add broadcast mode")
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20261001182326.572045-3-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/noise.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/team/team_mode_broadcast.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireguard/noise.c
-+++ b/drivers/net/wireguard/noise.c
-@@ -784,10 +784,11 @@ wg_noise_handshake_consume_response(stru
- 
- 	/* Success! Copy everything to peer */
- 	down_write(&handshake->lock);
--	/* It's important to check that the state is still the same, while we
--	 * have an exclusive lock.
-+	/* Check that the state is the same and that this is still the
-+	 * initiation we started with, while we have an exclusive lock.
- 	 */
--	if (handshake->state != state) {
-+	if (handshake->state != state ||
-+	    crypto_memneq(handshake->ephemeral_private, ephemeral_private, NOISE_PUBLIC_KEY_LEN)) {
- 		up_write(&handshake->lock);
- 		goto fail;
+--- a/drivers/net/team/team_mode_broadcast.c
++++ b/drivers/net/team/team_mode_broadcast.c
+@@ -37,6 +37,8 @@ static bool bc_transmit(struct team *tea
+ 		ret = !team_dev_queue_xmit(team, last, skb);
+ 		if (!sum_ret)
+ 			sum_ret = ret;
++	} else {
++		dev_kfree_skb_any(skb);
  	}
+ 	return sum_ret;
+ }
 
 
