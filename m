@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6DA4F7975;
-	Tue, 13 Oct 2026 12:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68A54F85CD;
+	Tue, 13 Oct 2026 12:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894761; cv=none; b=bdAYvu3Ai6MpkknnE6iaFxIYn7IMO4g8zVloeMn90bfd1Cu5fWSyodqURsWtlXR9zOL/Cuwe05RtcQRNXmxgodgojyUMnzjlPvXmjXwS+zfqmvlNqOUu815r4WkLcAJEqEKHg9eQYTgMNbEUsUFVEIUDU0LWNpa0G5ffzeMtUmo=
+	t=1791894763; cv=none; b=KVVdCDaxlOa9fbSOLgdXdYj716oPFk3LNGqY7EDWrDtNqJwWhC6AC5ZVsiGeJpAJHFYurZ0+qpx8otG7EloEVuNnP0v2U44tHk21FXBHHUWo6/ctTMRrm0N0sg7Rm+y0g4j8IQG9HcX1NlQrPbJrh7SzPpChSrXel1c2DkCzasc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894761; c=relaxed/simple;
-	bh=ohH/Pla+5I98bke04syqWmXnE5ogttdEJLBJFAkdE7U=;
+	s=arc-20240116; t=1791894763; c=relaxed/simple;
+	bh=hQA9/Sntf7z/9TImNkwTc58JpRIY0hRpclgLgwlaU2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC8c1ehb5S9lTdaz20l1TeYeUH2ng3pqG2KIT70BXYEVhiYwhSWpdq2loky7A4NjIXPD3joc13/lYNjpcWl+x5J4EBq03ZlpECGtzGuOtB4qaGVcmNkqwQ002g7YiruuRLjjbECvc7IusYdFYtvxrz7bRSFk30bLCtZfJ09EVUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW0TSRb1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n1j2LydIfGdaZ/BlAih1IJwvZH5qvR7TcIPGuNpRwsoteqN0MzMuxP9WV7UQ2KsFQ1DCZFlzk5hZuiHF2LizpC7HIcEgxjv3TsRcOr4ow2aXt7kvOlD2Rhn5hlkHHDkL9rU9mAXmsLiznBzmJBbtj/oTPFWNFT0ZdO6XM1ErovQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAOTtaLy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW0TSRb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724691F000FF;
-	Tue, 13 Oct 2026 12:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAOTtaLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8D21F000FF;
+	Tue, 13 Oct 2026 12:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894760;
-	bh=qlhjzsjMp329mq64fqZaAnRg4qF7lpxJXQ6MdylKBM4=;
+	s=korg; t=1791894762;
+	bh=W9rcVIu6tFM9UYNCLZu4WnGU2O7MhA96xW8wpzrJRmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wW0TSRb1QGs6VlonIlbAh8GQhnPyzMHw/Anzt1ZGH5araXuB1C1ynrnwOHq0QVz9m
-	 Qo07dR+0hDfSrF702noHfgxxCra/bj883fDJE8Z8Gqv39P45YDV39YDOSKr4ia2eco
-	 oiqPxmYSiViqIVF0kLn6vQ00WWP29BBmODWOQ2hk=
+	b=NAOTtaLyqogjoe9DX7L0+bWLRYy2qFC1isRKkTdY4rcu5SImF/sDokt4HQTWtgAel
+	 hcRoXCAe0au43kaVLHCTXMPSoovDeZHaLc7dRBspO2SVCfDeZfWIxLVm2tRV5it2RD
+	 bym/kUxSK8aHGPrijSLETbn4aXUDtZLS+W379YvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/497] mtd: core: call _get_device() with the master MTD
-Date: Tue, 13 Oct 2026 13:33:35 +0200
-Message-ID: <20261013112909.027863691@linuxfoundation.org>
+Subject: [PATCH 6.12 049/497] nvmet: preserve device path on allocation failure
+Date: Tue, 13 Oct 2026 13:33:36 +0200
+Message-ID: <20261013112909.052196380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,39 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 12b31d1acd20b3185bb5f0748db0cf6874c8e9d1 ]
+[ Upstream commit 2f271b812170d4cad578bae1f91db72f3c2e36e7 ]
 
-__get_mtd_device() calls the master's _get_device() callback with mtd,
-which may be a partition. __put_mtd_device() passes the master.
+nvmet_ns_device_path_store() frees the old path before allocating its
+replacement, losing the existing configuration if allocation fails.
+Allocate the new path before freeing the old one.
 
-This breaks gluebi partitions because gluebi_get_device() uses
-container_of() and therefore requires the master MTD. Pass the master
-to _get_device(), matching _put_device().
-
-Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 0c8e8eb5f0f3d..12d31ed27b4ec 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -1259,7 +1259,7 @@ int __get_mtd_device(struct mtd_info *mtd)
- 	int err;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index cfbab198693b0..1bec5dc7fc452 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -505,6 +505,7 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	struct nvmet_subsys *subsys = ns->subsys;
+ 	size_t len;
+ 	int ret;
++	char *new_path = NULL;
  
- 	if (master->_get_device) {
--		err = master->_get_device(mtd);
-+		err = master->_get_device(master);
- 		if (err)
- 			return err;
- 	}
+ 	mutex_lock(&subsys->lock);
+ 	ret = -EBUSY;
+@@ -516,12 +517,14 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	if (!len)
+ 		goto out_unlock;
+ 
+-	kfree(ns->device_path);
+ 	ret = -ENOMEM;
+-	ns->device_path = kmemdup_nul(page, len, GFP_KERNEL);
+-	if (!ns->device_path)
++	new_path = kmemdup_nul(page, len, GFP_KERNEL);
++	if (!new_path)
+ 		goto out_unlock;
+ 
++	kfree(ns->device_path);
++	ns->device_path = new_path;
++
+ 	mutex_unlock(&subsys->lock);
+ 	return count;
+ 
 -- 
 2.53.0
 
