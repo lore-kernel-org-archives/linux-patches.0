@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A0A4F6463;
-	Tue, 13 Oct 2026 12:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99014EC66A;
+	Tue, 13 Oct 2026 12:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893003; cv=none; b=jR9Y5ufUH+x+F5DVkh2ByT1YuiOFCqjStQQ/lMuRdTnKK/LrhdjhKU8uQF1af9TLI9dehBtD70ZsVFdgLJFqDn6bfa3ZBhyAISFJnDVGKyhjvjfkxetuDcRG0RBK0gmayPggDntUfVfnxAvF7X3vuppvrax6CfIr2JNuwtOy6MQ=
+	t=1791893007; cv=none; b=ZxweYmtswGcSfhvp/n5axBkGqyZdJDBw9pbKriyoltd2cix9G+ucmSCUWEpyNdCyPq8pmpPU/wWT3g356apLajYeAeU35t13pTBugdNyd8bPGpzohGSe+DtzK+ECn9BckAF7iJlhohUL/b9L5dLiNu5HUTJzrUdStyElJGFQgKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893003; c=relaxed/simple;
-	bh=aZxoMmr8VI1u4PVf+oZsj6HtXKfPH4NEhJCmua5NFCs=;
+	s=arc-20240116; t=1791893007; c=relaxed/simple;
+	bh=QQ3KFsv1Px++fT/zZGZqj0OS32LlsK/+wvbvz4G1jP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6w/HL3xAjepov0RWyAHlUlppkPmZXG7EIkAQBwZqbcvGE4PyK4dUIfj0+A/jixvCMalArtDSyrHqzORXhYQHjBymQgALKvXURHKmAO+n9dbOKY53EDAo2Spyq1zTUaHe4mFdmR6As+4GstaZq/Tbh+5PJf+8WwEe8csBWo794A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXyZ6ix2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CBdOfT4k7b5jOi+EaLz4tbIue+IT6KlsITAt6CLxKrIhjZFv9pTadD5ArQfWniE5iZ/opKTVnOnElH2KfUhJWQe4QUmuFS+hM60elAFqsauNLP8YQbbkifelV1QNBj5cuJfLg9vgxlFWd+/srijyU4B3hmbF0vBsJ52zy/FqwzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1k0aMUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXyZ6ix2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAEB1F000FF;
-	Tue, 13 Oct 2026 12:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1k0aMUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0AF1F000FF;
+	Tue, 13 Oct 2026 12:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893002;
-	bh=/TsIYtfqfDrFHB3dj9w8Qu3UHGP4mLOpqvLkMt04p+E=;
+	s=korg; t=1791893005;
+	bh=I/FiUrznoDZ3jayqEnhfGsIZFy76ZWuwV3ePq4RojH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HXyZ6ix2Tl4zZ+8EKFSUdq8hDoboNy/bKwyisySOX1e6t+66cz5uWSupAMJ3uc3Oh
-	 igmFdK1BsUlxJGlnCRQLb7ok8AfJZ32e7wDuEhvHL0Mbif/Pze+khVE3QDWXyqNciE
-	 XgUPhYTI3XwhUya5WBCHMV0hAM+C8UyFPMV4ucNk=
+	b=U1k0aMUAqUubz/3X50iYaC9Z/n3BgAJuxQrxfOcgdWmJShg27BSuPVzzAy50vc5jn
+	 Yn2XJEiNHZ+X4p4YqHYPSyhTDUJb9bB7L2ID2zdtlzJSTqa9igChTveHZe1St/NfTs
+	 lEN++O3CmQlU7bR2xkmAuATT6MwXDNiO+/c4ezW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Sebastien Royen <sebastien.royen@armadeus.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Mina Almasry <almasrymina@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 080/621] net: dsa: microchip: fix KSZ8765 fiber detection
-Date: Tue, 13 Oct 2026 13:31:15 +0200
-Message-ID: <20261013112922.755205302@linuxfoundation.org>
+Subject: [PATCH 6.18 081/621] net: skbuff: dont leave stale bytes in skb_copy_and_csum_bits()
+Date: Tue, 13 Oct 2026 13:31:16 +0200
+Message-ID: <20261013112922.778287326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastien Royen <sebastien.royen@armadeus.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit fc13ba44da197a186f2f4d77c5b7d73d0f99f053 upstream.
+commit ab9414ed70bd783e902a85c350620dee269bcb2b upstream.
 
-The KSZ8765 is similar to the KSZ8795 but has two fiber ports.
+When skb_copy_and_csum_bits() reaches unreadable frags it returns 0
+after copying only the linear part, and the rest of the caller's buffer
+is left as it was.  The callers copy into a buffer that is about to go
+out on the wire: an ICMP error quoting the offending packet, or a
+driver's TX bounce buffer in skb_copy_and_csum_dev().  Neither buffer
+is zeroed beforehand, so whatever was in memory there gets sent.
 
-KSZ8_PORT_STATUS_0 is used to detect fiber mode. It is currently
-defined as 0x08, which is the Global Control 6 MIB Control register
-and has bit 7 defined as Flush Counter.
+Zero the part of the buffer we didn't fill.  The checksum usually
+won't match the data any more, so the receiver will usually drop the
+packet, but either way it no longer carries anything it shouldn't.
+Only zero for a positive @len, a negative one from a broken caller must
+not turn into a huge memset().
 
-Set KSZ8_PORT_STATUS_0 to 0x18, which is the Port 1 Status 0 register
-where bit 7 is the Fiber Mode bit.
-
-This issue was discovered when upgrading an embedded device from kernel
-5.10 to 6.16. The device was using a KSZ8765 device tree configuration
-and the corresponding hardware, but during boot the kernel incorrectly
-detected it as a KSZ8795. The relevant boot messages were:
-
-  ksz-switch spi0.0: found switch: KSZ8795, rev 0
-  ksz-switch spi0.0: Device tree specifies chip KSZ8765 but found KSZ8795, please fix it!
-
+Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
 Cc: stable@vger.kernel.org
-Fixes: 91a98917a883 ("net: dsa: microchip: move switch chip_id detection to ksz_common")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Sebastien Royen <sebastien.royen@armadeus.com>
-Link: https://patch.msgid.link/20261007080557.15719-1-sebastien.royen@armadeus.com
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20261007-b4-skb-copy-csum-stale-bytes-v1-1-adbbde033fb3@toxicpanda.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_common.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/dsa/microchip/ksz_common.h
-+++ b/drivers/net/dsa/microchip/ksz_common.h
-@@ -775,7 +775,7 @@ static inline bool ksz_is_sgmii_port(str
- #define KSZ88_FAMILY_ID			0x88
- #define KSZ8895_FAMILY_ID		0x95
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3582,8 +3582,12 @@ __wsum skb_copy_and_csum_bits(const stru
+ 		pos	= copy;
+ 	}
  
--#define KSZ8_PORT_STATUS_0		0x08
-+#define KSZ8_PORT_STATUS_0		0x18
- #define KSZ8_PORT_FIBER_MODE		BIT(7)
+-	if (!skb_frags_readable(skb))
++	if (!skb_frags_readable(skb)) {
++		/* Don't hand the caller a buffer with stale bytes in it. */
++		if (len > 0)
++			memset(to, 0, len);
+ 		return 0;
++	}
  
- #define SW_CHIP_ID_M			GENMASK(7, 4)
+ 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
+ 		int end;
 
 
