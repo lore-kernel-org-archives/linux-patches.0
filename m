@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37514DDB5A;
-	Tue, 13 Oct 2026 11:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F314CE699;
+	Tue, 13 Oct 2026 11:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892136; cv=none; b=D3w0IzmuwNPEVyTxcLeMCjT6QGfQlc4v0aYxjMNAAXuyIN1tC//s7ciHSSSQ8rbAn1dp8sWNvocFdAZ7iY60FHbMEEwWV3bxPawvXLAlUU9gPUEp9LUe2xOzmZU5R4Drp0YV24lxO2tnK/CI6APqTk3AmIYB2EA9l+LCY+uaHr0=
+	t=1791892140; cv=none; b=Gxnmk5GNoaeN8yKgaqoMewSSU5XLh9mPuncHG2oAtVFYzI58hwtAuopvbA7R7o8QJShGuVMNzaMR4mi4dOC4CwyF/FzqUVCGHvGpxH1cWhuT2NMnzl4nMz6pHtZdfZoXGbr0iqZqWofeIrzUMDm5ODx1NnhA7TvVsSmvlhgvcoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892136; c=relaxed/simple;
-	bh=vlWg1YXC8naLHo8VQwD1G9g+zHdwIED7VHiLYUKM0Bs=;
+	s=arc-20240116; t=1791892140; c=relaxed/simple;
+	bh=xxn5FEZvQuZj34fOrXGanhKh36InegcPWEzjj3QZ9ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrZ62TL/fiXF+HH0E8uxFqeZYZY/f/h/fhg7r93NG8WbgUPaNGbbURHSMYK0H+PajOa6bT5lFVTwzEQrC25UA/hw8JPqA/Vx9ICbIthQovnqMbuDVmNE6bZTYK+Q/dVB7AaSN/8s7mQ3BzPD+t1btXg5XSzHe8u9K9v7rYCxr30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+TfHTy4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PlYlJdrRufF/YprmrvKIREMGAoTSevaAY9Tb0py/xKDkPJpKeCN5fQRu0uuKwIWaERXQ6OAI8LpLPildvJJPKIs2VR8+Wd6ynp/C6CBBE+0RCeU1bly9rZwEXD26P8oG5//fiu442kZgbvfrN113Ya09hgdSEdPV2qC7l9Gy0fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qa/W7Y5O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+TfHTy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E756C1F000FF;
-	Tue, 13 Oct 2026 11:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qa/W7Y5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0B01F000FF;
+	Tue, 13 Oct 2026 11:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892135;
-	bh=BRnRI+gl6y945/OY46xyZTnc1r8RWOAb4aH7ZPt8bss=;
+	s=korg; t=1791892138;
+	bh=P4zeTqJyLexFIdwzkRWEbzdhEmz/RCAyO79O74Fy+74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+TfHTy4jPyxaqZjly5QF03HirOqKh7SqZ40ty9GabzuW34WFZCRha+wfzc4jutjW
-	 A9w0bP4GuX7LdXi8bH08fW2W+Kfh8VTOKerAxobyhAOReQFA4P3xUVgBkYKMfdJ98j
-	 Q/B8Vd+HGRt1knDXgNXMr7PR3zFXJiuJ/o1JULPo=
+	b=qa/W7Y5Ox8RM0GaSRY68MpI/UYA7QLn0vJNceiZLKYiaVbUB1/waHy1U62LTauxs5
+	 mcL3bYmljlUFdV66oPPAOB1ivBBL4geioOgH8+b/WGScsPTucUmDwagpUcySGAdYmP
+	 j40hDGwZFzphvr1JGE319YWQcQ9M4PDlQ6RfWSGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 070/281] memstick: rtsx_usb_ms: complete requests after eject instead of dropping them
-Date: Tue, 13 Oct 2026 13:36:26 +0200
-Message-ID: <20261013112856.830146185@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@kernel.org>
+Subject: [PATCH 7.2 071/281] mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
+Date: Tue, 13 Oct 2026 13:36:27 +0200
+Message-ID: <20261013112856.853107578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -50,132 +59,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit c96ca94425b076dc398d929366e378d1e22ec794 upstream.
+commit 597e4b9ab48a3f841080f627722064853d3f650e upstream.
 
-memstick_check() can pass its host->removing check just before
-rtsx_usb_ms_drv_remove() sets eject/removing. Its next request is then
-silently dropped: rtsx_usb_ms_request() skips schedule_work() once eject
-is set, and drv_remove's cancel_work_sync() can also cancel a queued
-handle_req before it picks the request up. Nobody completes
-card->mrq_complete.
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
 
-Once memstick core waits for requests without a timeout ("memstick: core:
-wait for request completion before freeing card"), this hangs removal:
-memstick_check() never returns and memstick_remove_host() blocks in
-flush_workqueue():
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
 
-  INFO: task kworker/u10:3:65 blocked for more than 20 seconds.
-  Workqueue: kmemstick memstick_check
-   __wait_for_common
-   memstick_check
+Fix another of these - partial copies.
 
-  INFO: task kworker/1:1:33 blocked for more than 20 seconds.
-  Workqueue: usb_hub_wq hub_event
-   __flush_workqueue
-   memstick_remove_host
-   rtsx_usb_ms_drv_remove
+The long-standing mremap() partial VMA logic has the baked-in assumption
+that the originating VMA is unmapped and thus moved.
 
-Never drop a request. rtsx_usb_ms_request() always schedules handle_req,
-and handle_req fails requests with -ENOMEDIUM once eject is set, without
-touching the device. drv_remove flushes handle_req instead of cancelling
-it, and cancels it only after memstick_remove_host(), when no new
-request can arrive, so it cannot run on a freed host.
+However MREMAP_DONTUNMAP defeats this by performing a partial copy
+instead since it keeps the source VMA around.
 
-The host_mutex drain in drv_remove is removed: handle_req always leaves
-host->req NULL when it finishes, so the drain never had anything to do,
-and it would now race with handle_req.
+An mremap(..., MREMAP_DONTUNMAP) operation disallows resizing of the VMA,
+but the operation can be performed partially:
 
-Fixes: 99451dceeb5f ("memstick: Add realtek USB memstick host driver")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260924204142.607-1-rajojha047@gmail.com/
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+                           |-----------------|
+                           |                 |
+                           |                 v
+                        <------>          <------>
+                        .new_sz.           new_sz
+                     |--.------.--|       |------|
+                     |  .source.  |       | dest |
+                     |--.------.--|       |------|
+                     <------------>
+                         old_sz
+
+The page tables in the specified range are moved, but the original VMA is
+kept intact.
+
+This interacts poorly with mlock()'d VMAs, as the VMA_LOCKED_BIT flag is
+cleared for the entire source VMA and set for the entire destination VMA.
+
+This results in an mm->locked_vm leak as the change is therefore not
+accounted correctly.
+
+The clear solution here is to make the portion of the source VMA which is
+mremap()'d distinct from the rest of it, a.k.a. split it.
+
+Therefore resolve this issue by splitting it ahead of the rest of the
+mremap() operation if the VMA is mlock()'d.
+
+This is valid, as the source VMA will lose its VMA_LOCKED_BIT flag, so if a
+partial remap it will become distinct from the rest of the VMA.
+
+In order to make this change re-expose split_vma() in vma.h for
+CONFIG_MMU (nommu doesn't compile mremap.c and uses a static helper
+instead).
+
+Finally, update the sys_map_count check to account for this case.
+
+Note that the early check does not use needs_pre_split() - this is because
+the VMA has not been looked up by this point, so be conservative and assume
+that the VMA is mlock()'d in this case for the purposes of the
+sys_map_count check.
+
+Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-2-f388985a0f0a@kernel.org
+Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/host/rtsx_usb_ms.c |   31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
+ mm/mremap.c |   62 ++++++++++++++++++++++++++++++++++++++++++++----------------
+ mm/vma.c    |    4 +--
+ mm/vma.h    |    5 ++++
+ 3 files changed, 53 insertions(+), 18 deletions(-)
 
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -27,7 +27,6 @@ struct rtsx_usb_ms {
- 	struct memstick_host	*msh;
- 	struct memstick_request	*req;
- 
--	struct mutex		host_mutex;
- 	struct work_struct	handle_req;
- 	struct delayed_work	poll_card;
- 
-@@ -514,6 +513,13 @@ static void rtsx_usb_ms_handle_req(struc
- 	struct memstick_host *msh = host->msh;
- 	int rc;
- 
-+	/* Fail requests after eject so their waiters are released. */
-+	if (host->eject) {
-+		while (!memstick_next_req(msh, &host->req))
-+			host->req->error = -ENOMEDIUM;
-+		return;
-+	}
-+
- 	if (!host->req) {
- 		pm_runtime_get_sync(ms_dev(host));
- 		do {
-@@ -547,8 +553,7 @@ static void rtsx_usb_ms_request(struct m
- 
- 	dev_dbg(ms_dev(host), "--> %s\n", __func__);
- 
--	if (!host->eject)
--		schedule_work(&host->handle_req);
-+	schedule_work(&host->handle_req);
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1029,6 +1029,7 @@ static void vrm_stat_account(struct vma_
  }
  
- static int rtsx_usb_ms_set_param(struct memstick_host *msh,
-@@ -781,7 +786,6 @@ static int rtsx_usb_ms_drv_probe(struct
- 	host->power_mode = MEMSTICK_POWER_OFF;
- 	platform_set_drvdata(pdev, host);
- 
--	mutex_init(&host->host_mutex);
- 	INIT_WORK(&host->handle_req, rtsx_usb_ms_handle_req);
- 
- 	INIT_DELAYED_WORK(&host->poll_card, rtsx_usb_ms_poll_card);
-@@ -812,27 +816,12 @@ static void rtsx_usb_ms_drv_remove(struc
+ static bool __check_map_count_against_split(struct mm_struct *mm,
++					    bool pre_split,
+ 					    bool before_unmaps)
  {
- 	struct rtsx_usb_ms *host = platform_get_drvdata(pdev);
- 	struct memstick_host *msh = host->msh;
--	int err;
- 
- 	host->eject = true;
- 	msh->removing = true;
--	cancel_work_sync(&host->handle_req);
-+	flush_work(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
- 
--	mutex_lock(&host->host_mutex);
--	if (host->req) {
--		dev_dbg(ms_dev(host),
--			"%s: Controller removed during transfer\n",
--			dev_name(&msh->dev));
--		host->req->error = -ENOMEDIUM;
--		do {
--			err = memstick_next_req(msh, &host->req);
--			if (!err)
--				host->req->error = -ENOMEDIUM;
--		} while (!err);
--	}
--	mutex_unlock(&host->host_mutex);
--
- 	/* Balance possible unbalanced usage count
- 	 * e.g. unconditional module removal
+ 	const int sys_map_count = get_sysctl_max_map_count();
+@@ -1080,26 +1081,42 @@ static bool __check_map_count_against_sp
+ 	 * Therefore we must check to ensure we have headroom of 2 additional
+ 	 * VMAs.
  	 */
-@@ -841,6 +830,8 @@ static void rtsx_usb_ms_drv_remove(struc
+-	return map_count + 2 <= sys_map_count;
++	map_count += 2;
++
++	/* If pre-split, the -1 observed above doesn't apply. */
++	if (pre_split)
++		map_count++;
++
++	return map_count <= sys_map_count;
++}
++
++static bool needs_pre_split(struct vma_remap_struct *vrm)
++{
++	/*
++	 * An MREMAP_DONTUNMAP of a mlock()'d VMA needs to unlock the
++	 * source VMA, so split in this case.
++	 */
++	return (vrm->flags & MREMAP_DONTUNMAP) &&
++		vma_test(vrm->vma, VMA_LOCKED_BIT);
+ }
  
- 	pm_runtime_disable(ms_dev(host));
- 	memstick_remove_host(msh);
-+	/* No card, no new requests; wait for the last failed one to finish. */
-+	cancel_work_sync(&host->handle_req);
- 	dev_dbg(ms_dev(host),
- 		": Realtek USB Memstick controller has been removed\n");
- 	memstick_free_host(msh);
+ /* Do we violate the map count limit if we split VMAs when moving the VMA? */
+-static bool check_map_count_against_split(void)
++static bool check_map_count_against_split(struct vma_remap_struct *vrm)
+ {
+ 	return __check_map_count_against_split(current->mm,
+-					       /*before_unmaps=*/false);
++		needs_pre_split(vrm), /*before_unmaps=*/false);
+ }
+ 
+ /* Do we violate the map count limit if we split VMAs prior to early unmaps? */
+-static bool check_map_count_against_split_early(void)
++static bool check_map_count_against_split_early(struct vma_remap_struct *vrm)
+ {
+ 	return __check_map_count_against_split(current->mm,
+-					       /*before_unmaps=*/true);
++		vrm->flags & MREMAP_DONTUNMAP, /*before_unmaps=*/true);
+ }
+ 
+ /*
+- * Perform checks before attempting to write a VMA prior to it being
+- * moved.
++ * Perform checks and preparation before attempting to write a VMA prior to it
++ * being moved.
+  */
+ static unsigned long prep_move_vma(struct vma_remap_struct *vrm)
+ {
+@@ -1108,19 +1125,17 @@ static unsigned long prep_move_vma(struc
+ 	unsigned long old_addr = vrm->addr;
+ 	unsigned long old_len = vrm->old_len;
+ 	vm_flags_t dummy = vma->vm_flags;
++	const bool split_before = vma->vm_start != old_addr;
++	const bool split_after = vma->vm_end != old_addr + old_len;
+ 
+-	/*
+-	 * We'd prefer to avoid failure later on in do_munmap: we copy a VMA,
+-	 * which may not merge, then (if MREMAP_DONTUNMAP is not set) unmap the
+-	 * source, which may split, causing a net increase of 2 mappings.
+-	 */
+-	if (!check_map_count_against_split())
++	/* Avoid failure later on. */
++	if (!check_map_count_against_split(vrm))
+ 		return -ENOMEM;
+ 
+ 	if (vma->vm_ops && vma->vm_ops->may_split) {
+-		if (vma->vm_start != old_addr)
++		if (split_before)
+ 			err = vma->vm_ops->may_split(vma, old_addr);
+-		if (!err && vma->vm_end != old_addr + old_len)
++		if (!err && split_after)
+ 			err = vma->vm_ops->may_split(vma, old_addr + old_len);
+ 		if (err)
+ 			return err;
+@@ -1138,6 +1153,21 @@ static unsigned long prep_move_vma(struc
+ 	if (err)
+ 		return err;
+ 
++	/*
++	 * To account mlock()'d pages correctly in the MREMAP_DONTUNMAP
++	 * case perform any split ahead of time for an mlock()'d VMA.
++	 */
++	if (needs_pre_split(vrm)) {
++		VMA_ITERATOR(vmi, vma->vm_mm, old_addr);
++
++		if (split_before)
++			err = split_vma(&vmi, vma, old_addr, 1);
++		if (!err && split_after)
++			err = split_vma(&vmi, vma, old_addr + old_len, 0);
++		vrm->vmi_needs_invalidate = true;
++		return err;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1992,7 +2022,7 @@ static unsigned long do_mremap(struct vm
+ 		return -EINTR;
+ 	vrm->mmap_locked = true;
+ 
+-	if (!check_map_count_against_split_early()) {
++	if (!check_map_count_against_split_early(vrm)) {
+ 		mmap_write_unlock(mm);
+ 		return -ENOMEM;
+ 	}
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -590,8 +590,8 @@ out_free_vma:
+  * Split a vma into two pieces at address 'addr', a new vma is allocated
+  * either for the first part or the tail.
+  */
+-static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+-		     unsigned long addr, int new_below)
++int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
++	      unsigned long addr, int new_below)
+ {
+ 	if (vma->vm_mm->map_count >= get_sysctl_max_map_count())
+ 		return -ENOMEM;
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -470,6 +470,11 @@ int do_brk_flags(struct vma_iterator *vm
+ unsigned long unmapped_area(struct vm_unmapped_area_info *info);
+ unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info);
+ 
++#ifdef CONFIG_MMU
++int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
++	      unsigned long addr, int new_below);
++#endif
++
+ static inline bool vma_wants_manual_pte_write_upgrade(struct vm_area_struct *vma)
+ {
+ 	/*
 
 
