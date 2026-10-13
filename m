@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1F74F3910;
-	Tue, 13 Oct 2026 12:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF784F3910;
+	Tue, 13 Oct 2026 12:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893586; cv=none; b=V4n+yLncMTej3sIrXkMz3D3xWURrzEhWt4LE7WBPUoBIvj+w3V8BRxn2oYvdIB7gaWG84aoZPxfCJ671O0x6MIUbwFcsP85I9sFSX2mIT7Rz8BJx7iyGAgXtouThW6Qz1tOoU0iGhltki4dlB/aEIP1NyJpdeorAg5aqjAyGLcM=
+	t=1791893589; cv=none; b=XeGPCF9Lc9gfyBH8H3Ntx92S9rg1vskGLtgsr5Wqtn3egH7tiLRjA7G1ER4UB7i87YLiOulyWp8vs1WhKbbt0FqXK6oYuMLaSiluKCBCBAP7pp7s+s9VDzojgw79cCzGR5srH0cYFDlKC2LUUfLWOCpjFIFWQwu9OkbE2zXi0sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893586; c=relaxed/simple;
-	bh=f8rvwFqo853AMaiZ6ei6YVrEFTEbL4gZnyMkNbl8r6I=;
+	s=arc-20240116; t=1791893589; c=relaxed/simple;
+	bh=JYA8xKov1pjuJZWkT6qO/bL955ocfExjUICU7grNsow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXVUpNcyn2/q432nL8Aj6XuGW+NdoOkBQHR62dZEYukmLHjmQ1uUGRJb+br/vJrV//ofLQsk1FErCZ5TT005gpHJWtSpnWA0oKUYw+8wZH+D/+bD5jhD2ziUSCALU5MUjcUUh4QFy6CmpZwEo+BNmRwY/2Tq4wqnzyk4ozwrp4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3Q/3K1q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QIBAmhG7jx4oXXS2Z4EIlNihBVcuFq78pysb5i5+8tfkccGK86LWcsXUWaUQDvK6CS6Q/WmtrWwDaoBtWE6YhgnW0rbzHIZKypbwKAXbJPs1b/vIM3FnPT5gSvbEm79WoLbA/30ViUKXDtrPHhZ6iBAK7PlxASqF8CeTVZUMSoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XPpGZ5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3Q/3K1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E4A1F000FF;
-	Tue, 13 Oct 2026 12:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XPpGZ5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF2C1F000FF;
+	Tue, 13 Oct 2026 12:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893585;
-	bh=NTu40kM4+R2zFPZaWmFjnlxePUgEwzAxLLyC7phuapQ=;
+	s=korg; t=1791893588;
+	bh=N0xFhaPi4p7ChYd+llcKIiaGiYp8DE0EGnV5gwWCTtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e3Q/3K1qXrkOzWXdphHcFLRQP5EcwH40D/xlxtXcsS90GCsVVXVzlzmncPkeqsAEQ
-	 JJHYetqCiscseHvaBsYvOXIwCwFiDuJxkUEUCsAFNPRjcvFpkrQVHHRe262i7em56n
-	 tMi6MXcM/o9PeohZ+iz3t8pJuc2/ZGUKzYjb9V/8=
+	b=0XPpGZ5CAwqScMdR4FuY9569tdB/wWIDVu3J+31TfntaHWA2Nei+rzOFl0a8oX+Ar
+	 N+xxxB0620Jn2XlM9yfxg7mukqgl6nyQ536OMjgH6v+KVqOtPiyNMDwDQYbhgemsJO
+	 0Lk5IJ0snj5zARLpPqP7PHTP58cCF7nmf90EHyYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 275/621] ata: libata-core: Add NOLPM quirk for PNY CS900 1TB SSD
-Date: Tue, 13 Oct 2026 13:34:30 +0200
-Message-ID: <20261013112927.387787876@linuxfoundation.org>
+Subject: [PATCH 6.18 276/621] accel/amdxdna: reject user command submission without a command BO
+Date: Tue, 13 Oct 2026 13:34:31 +0200
+Message-ID: <20261013112927.411514817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,42 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 462775c620197adaabc983ce847e5b9878ff4cb0 ]
+[ Upstream commit 261c1fe3327ad24508f54552c6366e3e4db82c15 ]
 
-The PNY CS900 1TB SSD (Phison PS3111-S11, DRAM-less) drops off the bus
-after entering Device-Initiated Slumber during idle. With the default
-med_power_with_dipm policy the link goes down (SStatus 1 SControl 300)
-and does not recover, forcing the filesystem read-only. Forcing
-max_performance keeps the link stable across prolonged idle.
+amdxdna_drm_submit_execbuf() passes the user-supplied command BO handle
+straight into amdxdna_cmd_submit() with drv_cmd == NULL. When the handle
+is AMDXDNA_INVALID_BO_HANDLE (0), the block that fetches job->cmd_bo is
+skipped, leaving it NULL, and no check rejects it on the user path (the
+!job->cmd_bo guard lives inside the != INVALID branch).
 
-Add a NOLPM quirk so link power management is disabled for this drive
-specifically, leaving it intact for other devices on the host.
+The job is then armed and pushed to the DRM scheduler.
+aie2_sched_job_run() takes the drv_cmd == NULL path and calls
+amdxdna_cmd_set_state(job->cmd_bo) -> amdxdna_gem_vmap(NULL) ->
+to_gobj(NULL)->dev, a NULL pointer dereference in the drm_sched worker.
+A process with access to the accel node on a system with a probed AMD NPU
+can trigger a kernel oops with a single AMDXDNA_EXEC_CMD ioctl
+(cmd_handles = 0).
 
+Only internal driver commands (SYNC_DEBUG_BO / ATTACH_DEBUG_BO)
+legitimately pass AMDXDNA_INVALID_BO_HANDLE, and they always set drv_cmd.
+Reject the invalid handle for user submissions (drv_cmd == NULL) at the
+submit choke point so every user path is covered.
+
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Found by 0sec automated security-research tooling (https://0sec.ai).
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260713173030.87541-2-doruk@0sec.ai
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/accel/amdxdna/amdxdna_ctx.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 44d53910b8111..cd9c96560ddd3 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4281,6 +4281,9 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	/* Apacer models with LPM issues */
- 	{ "Apacer AS340*",		NULL,	ATA_QUIRK_NOLPM },
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index 6668fc0f250f4..db94a8d0e4bb0 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -423,7 +423,14 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
+ 			goto free_job;
+ 		}
+ 	} else {
+-		job->cmd_bo = NULL;
++		/*
++		 * A command submission with the invalid handle would leave
++		 * job->cmd_bo NULL and later fault when the scheduler
++		 * dereferences it in amdxdna_cmd_set_state().
++		 */
++		XDNA_DBG(xdna, "Command BO handle required for user submission");
++		ret = -EINVAL;
++		goto free_job;
+ 	}
  
-+	/* PNY CS900 (Phison PS3111-S11, DRAM-less) drops the link on DIPM */
-+	{ "PNY CS900 1TB SSD",		NULL,	ATA_QUIRK_NOLPM },
-+
- 	/* Silicon Motion models with LPM issues */
- 	{ "MD619HXCLDE3TC",		"TCVAID", ATA_QUIRK_NOLPM },
- 	{ "MD619GXCLDE3TC",		"TCV35D", ATA_QUIRK_NOLPM },
+ 	ret = amdxdna_arg_bos_lookup(client, job, arg_bo_hdls, arg_bo_cnt);
 -- 
 2.53.0
 
