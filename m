@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005794EC65A;
-	Tue, 13 Oct 2026 12:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048CC3E639D;
+	Tue, 13 Oct 2026 12:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893763; cv=none; b=gseXr3mSRSTuTI5nYGJKP0b5KXhpqE2zlgbRsKJdxQym4RuluuxRuz2sEolLjKdoj0FfmVTx6uuaCunLxrZdmzaG8XCK7EmaAnv2+Z2Yqn3YqqgQd92UcSDH9B/s894LgcPIBYiYo4xvSjxCgXiDlDRZtLJzMvEsZhCyoAxxxKw=
+	t=1791893766; cv=none; b=D8GshQaGMLg70Hj17b6sXIyF/UnHRs1KVFhj/A2kjDXzQUe6MSxhxTHah3swk5XCu6+TJX8LLs2wdKEy0JYhsDiJSG+5haANZaHXEvPQfcIsjj/x2e7kq6Kt+ShA2CGWysxcJ33b5NUskt7fjopmz432GM3eMWLsbjCV7TQP+jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893763; c=relaxed/simple;
-	bh=T1aXq5SwTzxVcvFp6v6wjLJYTa3NJVCUb2ziFLFwaXo=;
+	s=arc-20240116; t=1791893766; c=relaxed/simple;
+	bh=+5SRpsh49ERKZnXvsR3yEbeA8rHDwn9chSuAH3xGdps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ItO1mgIrIc1ZPtxYCIU106GeoW6OtfcBssVmDf0p9nLSUVyOd377hBSFrOLRw6nfECyLx6XuF0HrRYQRMoC3hY68p9Htjk28Yyiu0mktog3G/ifduzcYj96WUkCj7NKyFiKuQ1lrVmHRvFiMDugNrLqd1djgjo/yKcYNz4Znm48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LymFJfFC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gs8AesrcaNzKHyyeRQR+gRMgIz474Cfih14SR+dWIP3G7TJ7GpM8Oq8B8HKW37mNSl4wz3tyNUMGM9gHTgNHCGbayf+fbTbBQR2kltOIFi7eKV+wI7nkhrYNzK/70IhCymdaUUXg2vzVYo4YS6vhybTeTwsJ+CHgNQ/iwPiVNQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eW3eZ0HA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LymFJfFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B1D1F000FF;
-	Tue, 13 Oct 2026 12:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eW3eZ0HA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565881F000FF;
+	Tue, 13 Oct 2026 12:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893761;
-	bh=9fcQTwUztA4RihxmniRBFr/59x3a+EUzlcfL9u/epbo=;
+	s=korg; t=1791893764;
+	bh=oWXiuk0TRq4ImnFSNnFeP+S6vg1bpyehTWBMSUVaRgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LymFJfFCO7KsI0qrtRkHN5KCJa2kb11l6rCAJ26eByeI/fH+Oyx/B+1OsXr7g71iR
-	 0FYqZAiAR1HHGL1+QQ1mHfwwMZxWr/Qowm7/dUOyUETl0obPECziijflErC0YCNNpZ
-	 sWVcS21dORR7Vxbu/7Pb6GeSquChyT/AHpm/KO4w=
+	b=eW3eZ0HA/O1M3dRoQzqIXp3Q6b70SZ9iSF6IO+cUYQCTLdYY8slDaBSqWpFD8j5wa
+	 pDB8PJzUV4F9mrz+c6CHL3j8rK7wiZvGBml8K83/0C7cYm/kTiMv5Z9FZw3ZteXkWr
+	 SJiCjHyIHykPHqqytXAdTmaJ+kH1eFSA0FYc/iKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	Marc Zyngier <maz@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 333/621] KVM: arm64: vgic: Fix race between LPI release and re-registration
-Date: Tue, 13 Oct 2026 13:35:28 +0200
-Message-ID: <20261013112928.755134912@linuxfoundation.org>
+Subject: [PATCH 6.18 334/621] btrfs: split btrfs_fs_closing() and change return type to bool
+Date: Tue, 13 Oct 2026 13:35:29 +0200
+Message-ID: <20261013112928.778513580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,198 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos López <clopez@suse.de>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit cbfe2b24a1ea9de35032dbdd100fdc700f5be92d ]
+[ Upstream commit e582f22030a7a59d4d0bb2881371df259d4a2ecd ]
 
-Fix a potential race between decrementing an LPI's reference count and
-evicting that structure from the LPI xarray.
+There are two tests in btrfs_fs_closing() but checking the
+BTRFS_FS_CLOSING_DONE bit is done only in one place
+load_extent_tree_free(). As this is an inline we can reduce size of the
+generated code. The types can be also changed to bool as this becomes a
+simple condition.
 
-LPI structures are maintained in the VGIC LPI xarray (dist->lpi_xa).
-When the reference count of an LPI structure drops to zero,
-vgic_release_lpi_locked() removes the structure from the xarray and
-frees it under the xarray lock.
+   text    data     bss     dec     hex filename
+1674006  146704   15560 1836270  1c04ee pre/btrfs.ko
+1673772  146704   15560 1836036  1c0404 post/btrfs.ko
 
-However, the release of an LPI can race with a concurrent LPI
-re-registration with the same INTID via vgic_add_lpi() on another CPU,
-since the reference count drop and the xarray eviction are not performed
-in a single atomic step. This can happen e.g. if the guest issues a
-DISCARD while the LPI is still referenced from a vCPU's active-pending
-list (ap_list), and the same INTID is re-mapped via MAPTI.
+DELTA: -234
 
-Particularly, vgic_release_lpi_locked() is called from two distinct
-paths: direct release via vgic_put_irq(), and deferred release via
-vgic_release_deleted_lpis(). During direct release, the issue can result
-in deleting a newly registered LPI from the xarray:
-
-  CPU0 (Releasing LPI)                    CPU1 (Adding new LPI)
-  ====================                    =====================
-  vgic_put_irq()
-      __vgic_put_irq()
-          refcount_dec_and_test()
-                                          vgic_add_lpi()
-                                              xa_lock_irqsave()
-                                              old_irq = xa_load(.., intid)
-                                              vgic_try_get_irq_ref(old_irq) == false
-                        new IRQ inserted -->  __xa_store(.., intid, ..)
-                                              xa_unlock_irqrestore()
-  xa_lock_irqsave();
-  vgic_release_lpi_locked()
-      __xa_erase(.., irq->intid)   <-- BUG: new IRQ is erased
-      kfree_rcu(old_irq)
-
-During the deferred release path, the old IRQ can be leaked:
-
-  CPU0 (Releasing LPI)                    CPU1 (Adding new LPI)
-  ====================                    =====================
-  vgic_put_irq_norelease()
-      __vgic_put_irq()
-          refcount_dec_and_test()
-      irq->pending_release = true
-                                          vgic_add_lpi()
-                                              xa_lock_irqsave()
-                                              old_irq = xa_load(.., intid)
-                                              vgic_try_get_irq_ref(oldirq) == false
-                 BUG: old IRQ overwritten --> __xa_store(.., intid, ..)
-                                              xa_unlock_irqrestore()
-
-  vgic_release_deleted_lpis()
-      xa_lock_irqsave()
-      xa_for_each() { .. } <-- old IRQ with pending_release = true
-                               is gone, so it cannot be released
-
-To fix the direct release path, move the reference count drop inside
-the xarray lock, making sure that vgic_add_lpi() never encounters the
-to-be-released LPI.
-
-In the deferred release path, the refcount drop must happen under a raw
-spinlock, so the xarray lock cannot be grabbed, and the same solution
-does not work. Instead, update vgic_add_lpi(), so that if it evicts
-an LPI from the xarray, it takes on the responsibility of freeing it.
-Consequently, an LPI may now be freed concurrently after a deferred
-release drops the refcount, so accessing the pending_release field is no
-longer safe from use-after-free. Delete all uses of the flag, and update
-vgic_release_deleted_lpis() to identify orphaned LPIs purely based on
-their refcount.
-
-Reported-by: Claude:claude-opus-4-6
-Fixes: 3a08a6ca7c37 ("KVM: arm64: vgic-v3: Use bare refcount for VGIC LPIs")
-Fixes: d54594accf73 ("KVM: arm64: vgic-v3: Erase LPIs from xarray outside of raw spinlocks")
-Signed-off-by: Carlos López <clopez@suse.de>
-Link: https://patch.msgid.link/20260715105137.3973823-4-clopez@suse.de
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 51a0e8399858 ("btrfs: skip global block reserve accounting for rescue mounts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c | 24 ++++++++++++++++--------
- arch/arm64/kvm/vgic/vgic.c     | 18 ++++++++----------
- include/kvm/arm_vgic.h         |  3 ---
- 3 files changed, 24 insertions(+), 21 deletions(-)
+ fs/btrfs/block-group.c |  2 +-
+ fs/btrfs/fs.h          | 18 ++++++++++--------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index e3c182352ffca..7ce07c8eb5b7e 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -116,18 +116,26 @@ static struct vgic_irq *vgic_add_lpi(struct kvm *kvm, u32 intid,
- 		kfree(irq);
- 		irq = oldirq;
- 	} else {
--		ret = xa_err(__xa_store(&dist->lpi_xa, intid, irq, 0));
--	}
--
--	xa_unlock_irqrestore(&dist->lpi_xa, flags);
-+		/*
-+		 * The entry is either empty or contains a dead LPI (refcount=0)
-+		 * from the deferred release path, pending cleanup by
-+		 * vgic_release_deleted_lpis(). Evict and free it if present.
-+		 */
-+		oldirq = __xa_store(&dist->lpi_xa, intid, irq, 0);
-+		ret = xa_err(oldirq);
-+		if (ret) {
-+			xa_unlock_irqrestore(&dist->lpi_xa, flags);
-+			kfree(irq);
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index e9ee10bee2ece..271afe14a6862 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -761,7 +761,7 @@ static int load_extent_tree_free(struct btrfs_caching_control *caching_ctl)
+ 	nritems = btrfs_header_nritems(leaf);
  
--	if (ret) {
--		xa_release(&dist->lpi_xa, intid);
--		kfree(irq);
-+			return ERR_PTR(ret);
-+		}
+ 	while (1) {
+-		if (btrfs_fs_closing(fs_info) > 1) {
++		if (btrfs_fs_closing_done(fs_info)) {
+ 			last = (u64)-1;
+ 			break;
+ 		}
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index eccc61463947b..a50d11df93f8c 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -1096,15 +1096,17 @@ void __btrfs_clear_fs_compat_ro(struct btrfs_fs_info *fs_info, u64 flag,
+ #define btrfs_test_opt(fs_info, opt)	((fs_info)->mount_opt & \
+ 					 BTRFS_MOUNT_##opt)
  
--		return ERR_PTR(ret);
-+		if (oldirq && !WARN_ON_ONCE(refcount_read(&oldirq->refcount)))
-+			kfree_rcu(oldirq, rcu);
- 	}
- 
-+	xa_unlock_irqrestore(&dist->lpi_xa, flags);
-+
- 	/*
- 	 * We "cache" the configuration table entries in our struct vgic_irq's.
- 	 * However we only have those structs for mapped IRQs, so we read in
-diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
-index 5ba673289ef43..7c8ec44824157 100644
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -131,11 +131,7 @@ static __must_check bool __vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
- 
- static __must_check bool vgic_put_irq_norelease(struct kvm *kvm, struct vgic_irq *irq)
+-static inline int btrfs_fs_closing(const struct btrfs_fs_info *fs_info)
++static inline bool btrfs_fs_closing(const struct btrfs_fs_info *fs_info)
  {
--	if (!__vgic_put_irq(kvm, irq))
--		return false;
--
--	irq->pending_release = true;
--	return true;
-+	return __vgic_put_irq(kvm, irq);
+-	/* Do it this way so we only ever do one test_bit in the normal case. */
+-	if (test_bit(BTRFS_FS_CLOSING_START, &fs_info->flags)) {
+-		if (test_bit(BTRFS_FS_CLOSING_DONE, &fs_info->flags))
+-			return 2;
+-		return 1;
+-	}
+-	return 0;
++	return unlikely(test_bit(BTRFS_FS_CLOSING_START, &fs_info->flags));
++}
++
++static inline bool btrfs_fs_closing_done(const struct btrfs_fs_info *fs_info)
++{
++	if (btrfs_fs_closing(fs_info) && test_bit(BTRFS_FS_CLOSING_DONE, &fs_info->flags))
++		return true;
++
++	return false;
  }
  
- void vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
-@@ -152,12 +148,14 @@ void vgic_put_irq(struct kvm *kvm, struct vgic_irq *irq)
- 		guard(spinlock_irqsave)(&dist->lpi_xa.xa_lock);
- 	}
- 
--	if (!__vgic_put_irq(kvm, irq))
-+	if (irq->intid < VGIC_MIN_LPI)
- 		return;
- 
--	xa_lock_irqsave(&dist->lpi_xa, flags);
--	vgic_release_lpi_locked(dist, irq);
--	xa_unlock_irqrestore(&dist->lpi_xa, flags);
-+	if (refcount_dec_and_lock_irqsave(&irq->refcount,
-+					  &dist->lpi_xa.xa_lock, &flags)) {
-+		vgic_release_lpi_locked(dist, irq);
-+		xa_unlock_irqrestore(&dist->lpi_xa, flags);
-+	}
- }
- 
- static void vgic_release_deleted_lpis(struct kvm *kvm)
-@@ -169,7 +167,7 @@ static void vgic_release_deleted_lpis(struct kvm *kvm)
- 	xa_lock_irqsave(&dist->lpi_xa, flags);
- 
- 	xa_for_each(&dist->lpi_xa, intid, irq) {
--		if (irq->pending_release)
-+		if (!refcount_read(&irq->refcount))
- 			vgic_release_lpi_locked(dist, irq);
- 	}
- 
-diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
-index 7a0b972eb1b12..25eb6ba9dd23c 100644
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -140,9 +140,6 @@ struct vgic_irq {
- 					 * the pending state for both level
- 					 * and edge triggered IRQs. */
- 	bool active;
--	bool pending_release;		/* Used for LPIs only, unreferenced IRQ
--					 * pending a release */
--
- 	bool enabled;
- 	bool hw;			/* Tied to HW IRQ */
- 	refcount_t refcount;		/* Used for LPIs */
+ /*
 -- 
 2.53.0
 
