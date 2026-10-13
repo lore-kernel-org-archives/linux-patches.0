@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8FF4F3EAF;
-	Tue, 13 Oct 2026 12:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D14F390D;
+	Tue, 13 Oct 2026 12:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893086; cv=none; b=oPSvdQOF1LSWriqzuWeI4K5ny8foNBvXRzbqDDZotBiW2xlnInuyYm7lupmlZ74ysh0lICPBMiCfJYVLZtGlRw8wyvJpQa3nwRqSBDOK7ZCPsT7zyor2A1VlbeQBLnFjRh2EidmWhiqgcUKwFVTCeNRSzf+N91fNemWyRuPe+Xw=
+	t=1791893089; cv=none; b=pZGrz+QAJNT9YShpef1xA8O6BG+BrjbkCl8OCvuYSbGFbecGKp6ft9kHjM3hxKCXN0KhT9V1z3cXG1j0+qbWQT3dTr7JcSv447pv8tpz2RuEPk4Ll3EcEBOjV2wlKWTXAHTp0qqjjYl19x4h7TEVO0KcX/qV1EzyjpJLPA887To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893086; c=relaxed/simple;
-	bh=FZ3Hbtn3HGB4XrUa7Tz1OA4UfW07ktKrZajzhsab8Bg=;
+	s=arc-20240116; t=1791893089; c=relaxed/simple;
+	bh=0np0DPIF2lacCffwV9/KXYMmiTk6AtL33mn09yHQmPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNE4Ysk3Neo+I7ezUbY/S+bchKHTHkzGHUUVXXJMqwQsPZYg8FVfPJzi1xnteCP42G4wBmklc91xBjV9ghoVY3JdGmczHp5zORQnIU16QXT9LfeMI4qY/Kq3p1nPG7Sx7QtdeT7Id7zzcEMZ8/IN9pDjp3e/yhzF9EYO/Y+G0CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hr/gLJOH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1gXoJAswZ/ajfRh53fTspMeBPWCDw22oW7+z/UlQimCyAyTOU+8xTr5R6LMZW1hvK9Lb7QWGuAK9GLTWUG/pR6B2SHu0gjL2XOECj5UvWk3j9w/iyKAz+x1SUiYKAWcfDyOPpLGYcecT5f819rCMpIoF3sS053qGRf2QiEYXrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF6QUALK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hr/gLJOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878C41F000FF;
-	Tue, 13 Oct 2026 12:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF6QUALK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A087D1F000FF;
+	Tue, 13 Oct 2026 12:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893085;
-	bh=J35eV9BhW20wFGaxytyTtFMBM/Pv484WqNhZz5FLWtI=;
+	s=korg; t=1791893088;
+	bh=0VhRkEuT/M6PA8IOYElwcuWSFny/uOMMMuIeJB+ILmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hr/gLJOHHZ54JVmTrF3gxgRS0GOQ+Tv6j5QVdpWRdyQoiKNn8VYrRoh8g2KFKaa/Y
-	 Jl6TAhEH/znZ8NwqDFTz5xvhT7k8mK4bkpGi9RV4INxOnlqUCmqBGPS6O+ZuebcDLp
-	 eeM34GquKKzB09go1HPUcAKO/0vaAJvUo+71UJ0Q=
+	b=GF6QUALKnuQ5YETrXE1oEwUUaaiG3RFcYzDocW3iKT6sGPP9Xb0/dorNiK2sGKkWg
+	 fZq3M5XGsdnUtzHaR+x5vP2dL7EUjH3SIKDb4UpyEOh/8P65MJLaNh0BYP+4XsJpKj
+	 dP+XiUv9xxQcjc8bDeHFgjupScOBl4c8nUf8utT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iaroslav Voitovych <yaroslav.voytovych@gmail.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 106/621] Bluetooth: MGMT: Fix status of pending commands flushed on power off
-Date: Tue, 13 Oct 2026 13:31:41 +0200
-Message-ID: <20261013112923.365507538@linuxfoundation.org>
+Subject: [PATCH 6.18 107/621] Bluetooth: SCO: serialise sco_conn lifetime against sco_recv_scodata()
+Date: Tue, 13 Oct 2026 13:31:42 +0200
+Message-ID: <20261013112923.388973617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -50,64 +51,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 86ef0f58bdecdedb3a1240971c56d71b7e4ce3fc upstream.
+commit 816fb1590a4c8cf8d05cd076057616be02e276f0 upstream.
 
-cmd_complete_rsp() receives a struct cmd_lookup and, for a pending
-command that has no cmd_complete callback, falls through to
-cmd_status_rsp(cmd, data). cmd_status_rsp() reads data as a u8 *, so
-the status sent comes from the first byte of match->sk's
-representation, not from match->mgmt_status.
+sco_recv_scodata() upgrades the weak hcon->sco_data back-pointer to a
+strong reference under hdev->lock:
 
-commit f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on
-mgmt_index_removed") changed the callers' data from &status to &match
-and updated the cmd_complete branch to match->mgmt_status, but left
-the fall-through passing data unchanged.
+    hci_dev_lock(hdev);
+    hcon = hci_conn_hash_lookup_handle(hdev, handle);
+    ...
+    conn = sco_conn_hold_unless_zero(hcon->sco_data);
+    hci_dev_unlock(hdev);
 
-In mgmt_index_removed() match->sk is NULL, so every such command is
-answered with status 0x00 (Success) instead of
-MGMT_STATUS_INVALID_INDEX. In __mgmt_power_off() it is NULL too,
-unless a Set Powered command was pending: then settings_rsp() has
-stored that command's socket in match->sk, and the byte sent comes
-from the socket pointer. Either way the status the caller set,
-MGMT_STATUS_NOT_POWERED (or MGMT_STATUS_INVALID_INDEX when the device
-is being unregistered), is lost.
+but the pointer is cleared from the other side without that lock. When
+the last sco_conn reference is dropped, sco_conn_free() ran
 
-Pass the status the callers set.
+    conn->hcon->sco_data = NULL;
 
-This was seen on a QCA9377 laptop: bluetoothd's Start Discovery,
-pending when the adapter was powered off, was answered with Command
-Status 0x00 and no parameters, and bluetoothd 5.72 crashed on the
-zero-length success. BlueZ master has since added the length check
-on that path ("adapter: Fix crash on short start discovery reply",
-BlueZ a734b06059cb), but userspace should still be told Not Powered,
-not Success.
+with no hdev->lock held, so the RX path could read hcon->sco_data and
+call kref_get_unless_zero() on an sco_conn that was concurrently freed:
 
-Tested on Ubuntu 7.0.0-31 with a virtual controller (hci_vhci):
-power off is held in HCI Write Scan Enable while a Start Discovery is
-submitted, and the flush answers it with status 0x00 before this
-change and 0x0f (Not Powered) after.
+    BUG: KASAN: slab-use-after-free in sco_conn_hold_unless_zero+0xbe/0x160
+    Write of size 4 by task kworker/u17:0
+    Workqueue: hci0 hci_rx_work
+    Call Trace:
+     sco_conn_hold_unless_zero+0xbe/0x160
+     sco_recv_scodata+0x13f/0x490
+     hci_rx_work+0x3af/0x730
 
-Fixes: f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on mgmt_index_removed")
+kref_get_unless_zero() only guards against a zero refcount, not against
+the backing memory already being freed.
+
+Give hcon->sco_data an actual reference on the sco_conn it points to, so
+the object cannot be freed while the pointer is still installed, and only
+clear and drop it from sco_conn_del(), which runs under hdev->lock (its
+callers, sco_connect_cfm() and sco_disconn_cfm(), hold it). The reader in
+sco_recv_scodata() also takes hdev->lock, so the store and the read are
+now serialised: the RX path either observes NULL or a reference that is
+guaranteed to stay valid until it drops its own.
+
+sco_conn_add() no longer hands its kref_init() reference to the caller as
+the connection's only reference; that initial reference is the one owned
+by hcon->sco_data, and callers get their own via sco_conn_hold().
+
+Because the sco_conn can now outlive the socket (the association keeps it
+alive until the link goes down), the hci_conn can no longer be dropped
+from sco_conn_free() without regressing socket close: closing a connected
+SCO socket must still tear the link down. Move hci_conn ownership to the
+socket instead: __sco_chan_add() takes an hci_conn reference and it is
+released from sco_chan_del() and sco_sock_destruct(), exactly once. The
+sco_conn no longer owns an hci_conn reference, so sco_conn_add() stops
+consuming one and sco_connect() drops the hci_connect_sco() reference on
+every path; sco_connect_cfm() no longer needs its hci_conn_hold() dance.
+
+Fixes: e6720779ae61 ("Bluetooth: SCO: Use kref to track lifetime of sco_conn")
 Cc: stable@vger.kernel.org
-Signed-off-by: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+Suggested-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/sco.c |   87 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 65 insertions(+), 22 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1492,7 +1492,7 @@ static void cmd_complete_rsp(struct mgmt
- 		return;
- 	}
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -86,12 +86,14 @@ static void sco_conn_free(struct kref *r
+ 	if (conn->sk)
+ 		sco_pi(conn->sk)->conn = NULL;
  
--	cmd_status_rsp(cmd, data);
-+	cmd_status_rsp(cmd, &match->mgmt_status);
+-	if (conn->hcon) {
+-		conn->hcon->sco_data = NULL;
+-		hci_conn_drop(conn->hcon);
+-	}
++	/* hcon->sco_data is cleared and the association's reference on the
++	 * sco_conn is dropped in sco_conn_del() under hdev->lock, and the
++	 * hci_conn is now owned by the socket (held in __sco_chan_add() and
++	 * dropped in sco_chan_del()/sco_sock_destruct()), so there is nothing
++	 * left to release towards hcon here.
++	 */
+ 
+-	/* Ensure no more work items will run since hci_conn has been dropped */
++	/* Ensure no more work items will run before the connection is freed */
+ 	disable_delayed_work_sync(&conn->timeout_work);
+ 
+ 	kfree(conn);
+@@ -190,25 +192,19 @@ static void sco_sock_clear_timer(struct
  }
  
- static int generic_cmd_complete(struct mgmt_pending_cmd *cmd, u8 status)
+ /* ---- SCO connections ---- */
+-/* Consumes a reference on @hcon, which the returned sco_conn owns until it is
+- * freed. On failure (NULL return) the reference is left for the caller to drop.
++/* Returns a new reference the caller must drop with sco_conn_put(). The
++ * hcon->sco_data association holds its own reference on the sco_conn for the
++ * connection's lifetime; it is dropped in sco_conn_del() under hdev->lock.
++ * @hcon is not consumed: the hci_conn reference is taken and owned by the
++ * socket in __sco_chan_add().
+  */
+ static struct sco_conn *sco_conn_add(struct hci_conn *hcon)
+ {
+ 	struct sco_conn *conn = hcon->sco_data;
+ 
+ 	conn = sco_conn_hold_unless_zero(conn);
+-	if (conn) {
+-		if (!conn->hcon) {
+-			sco_conn_lock(conn);
+-			conn->hcon = hcon;
+-			sco_conn_unlock(conn);
+-		} else {
+-			/* conn already owns a reference on hcon */
+-			hci_conn_drop(hcon);
+-		}
++	if (conn)
+ 		return conn;
+-	}
+ 
+ 	conn = kzalloc(sizeof(struct sco_conn), GFP_KERNEL);
+ 	if (!conn)
+@@ -229,7 +225,10 @@ static struct sco_conn *sco_conn_add(str
+ 
+ 	BT_DBG("hcon %p conn %p", hcon, conn);
+ 
+-	return conn;
++	/* kref_init() above set the association reference owned by
++	 * hcon->sco_data; hand the caller its own reference.
++	 */
++	return sco_conn_hold(conn);
+ }
+ 
+ /* Delete channel.
+@@ -244,6 +243,19 @@ static void sco_chan_del(struct sock *sk
+ 	BT_DBG("sk %p, conn %p, err %d", sk, conn, err);
+ 
+ 	if (conn) {
++		struct hci_conn *hcon;
++
++		sco_conn_lock(conn);
++		hcon = conn->hcon;
++		sco_conn_unlock(conn);
++
++		/* Drop the socket's hci_conn reference BEFORE clearing
++		 * conn->sk, so sco_conn_del() on another CPU cannot free
++		 * the hci_conn while we still hold a pointer to it.
++		 */
++		if (hcon)
++			hci_conn_drop(hcon);
++
+ 		sco_conn_lock(conn);
+ 		conn->sk = NULL;
+ 		sco_conn_unlock(conn);
+@@ -268,6 +280,13 @@ static void sco_conn_del(struct hci_conn
+ 
+ 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
+ 
++	/* Detach from the hci_conn and drop the association's reference.
++	 * The caller holds hdev->lock, which serialises this against the
++	 * read of hcon->sco_data in sco_recv_scodata().
++	 */
++	hcon->sco_data = NULL;
++	sco_conn_put(conn);
++
+ 	sco_conn_lock(conn);
+ 	sk = sco_sock_hold(conn);
+ 	sco_conn_unlock(conn);
+@@ -292,6 +311,11 @@ static void __sco_chan_add(struct sco_co
+ 	sco_pi(sk)->conn = sco_conn_hold(conn);
+ 	conn->sk = sk;
+ 
++	/* The socket owns an hci_conn reference for as long as it stays
++	 * attached; it is dropped in sco_chan_del()/sco_sock_destruct().
++	 */
++	hci_conn_hold(conn->hcon);
++
+ 	if (parent)
+ 		bt_accept_enqueue(parent, sk, true);
+ }
+@@ -373,6 +397,7 @@ static int sco_connect(struct sock *sk)
+ 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
+ 		release_sock(sk);
+ 		sco_conn_put(conn);
++		hci_conn_drop(hcon);
+ 		err = -EBADFD;
+ 		goto unlock;
+ 	}
+@@ -381,9 +406,13 @@ static int sco_connect(struct sock *sk)
+ 	sco_conn_put(conn);
+ 	if (err) {
+ 		release_sock(sk);
++		hci_conn_drop(hcon);
+ 		goto unlock;
+ 	}
+ 
++	/* __sco_chan_add() took its own hci_conn reference; drop ours. */
++	hci_conn_drop(hcon);
++
+ 	/* Update source addr of the socket */
+ 	bacpy(&sco_pi(sk)->src, &hcon->src);
+ 
+@@ -497,9 +526,25 @@ static struct sock *sco_get_sock_listen(
+ 
+ static void sco_sock_destruct(struct sock *sk)
+ {
++	struct sco_conn *conn = sco_pi(sk)->conn;
++
+ 	BT_DBG("sk %p", sk);
+ 
+-	sco_conn_put(sco_pi(sk)->conn);
++	/* If the channel was not already torn down via sco_chan_del(), drop
++	 * the socket's own references here.
++	 */
++	if (conn) {
++		struct hci_conn *hcon;
++
++		sco_conn_lock(conn);
++		hcon = conn->hcon;
++		sco_conn_unlock(conn);
++
++		if (hcon)
++			hci_conn_drop(hcon);
++		sco_pi(sk)->conn = NULL;
++		sco_conn_put(conn);
++	}
+ 
+ 	skb_queue_purge(&sk->sk_receive_queue);
+ 	skb_queue_purge(&sk->sk_write_queue);
+@@ -1511,12 +1556,10 @@ static void sco_connect_cfm(struct hci_c
+ 	if (!status) {
+ 		struct sco_conn *conn;
+ 
+-		conn = sco_conn_add(hci_conn_hold(hcon));
++		conn = sco_conn_add(hcon);
+ 		if (conn) {
+ 			sco_conn_ready(conn);
+ 			sco_conn_put(conn);
+-		} else {
+-			hci_conn_drop(hcon);
+ 		}
+ 	} else
+ 		sco_conn_del(hcon, bt_to_errno(status));
 
 
