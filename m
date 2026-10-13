@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E423AFD03;
-	Tue, 13 Oct 2026 11:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70380155C87;
+	Tue, 13 Oct 2026 11:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892555; cv=none; b=o8DrL+onAnrvL8pHTUx+PhXMG5YVp4VlWfZ24kulatDFm7EbfYXmSZKsWMv8oAFl3rZEOQ9TDLcJkB/AemB/XBIMyZ6M6bVGLeL8XtoREI5poYbd4a/aYNJnQUPIsqKCFwSKa7xQM9MnvwioEvmQuB5nCOYy93b7WPRRQseZttc=
+	t=1791892558; cv=none; b=R7zN3zHMK8cCKhQxZoCMjfgJvhdBGf4xBefFgzwwoqLwBm3qtMOdxwfeoJEHJe4B3mYLfoYVbdq03vCHA3KN+IXkhW6WTHc0FuIAwpLudwuaXUcuny8r5cDKIe7GoQ8vcCrS1eVGTdCxfQo1Z+Q9YKA7oFWCHqwpfhTwHqP19dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892555; c=relaxed/simple;
-	bh=MDQgfv5qPWXlxlBFCt6/gX9T6DnuaJx17NCzFUd7hoE=;
+	s=arc-20240116; t=1791892558; c=relaxed/simple;
+	bh=eTkJEyIIIVQb4Ox0n5otheQ2gOzRaaD36VzStaz/uvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ddc69MTpbdm118YJYxWefB4t9Y+xSzk9GNGsl+fhs0JX4Y8RJR9CJ7vlvJOkDaZybT7QCtbw/6mI9A4OJTO8QH50CfpqbV4vlgKT6uPJYWPhEg7LOcHmThTiXEv530NAFlFHeyl9mpBTIVgraDtlokCu/6Mw2Pq5VGJFWudyBrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHwLAnVD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jXXEKQ3nYyglLEYWTUbJ9m5Zzf69OhCjSWZrz8tIHR4su97bpeOHadwaIt+VIJmgpKFU0hqAWyMVVaaW5F4SiVhXzG2DCBL+WZ1A5PrYfdrFugjJoOovEkkrrEAsRXzGSLkODvlS+nnbwaBGm34M2l5UkGgFOjvrOzF28/pcCY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOjifoS/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHwLAnVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5AE1F000FF;
-	Tue, 13 Oct 2026 11:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOjifoS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87121F000FF;
+	Tue, 13 Oct 2026 11:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892554;
-	bh=pag2B0p32D33UkG/lWX62mSqMHaqNAgY972/rey/350=;
+	s=korg; t=1791892557;
+	bh=yLIFhKkUF/h5sjnTcX7U3O6mEi1X8NuQaV3q60bxrXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lHwLAnVDMJdts9LhYPo52m5APPPn+s+dOeaEl94SXDPlCulIbs7aT/OTWQbXKQyAe
-	 GHTjf1B6Dv6k9pjJas+Gjy6vD8QwyEzu3C6xY25jlVVJdF08DYYeDHzoAOWdeYcp2I
-	 NlmN4VrW3ar3DdCvccK6d3Ikz9UjIOmfwWNnQFWA=
+	b=zOjifoS/856PPO3mAxw6esAEti6MF/DCkHCEqriD01VxrMO1/RLjZV9k8b5c+/sVE
+	 9DgUdw2UxAHADm2Pgx+mHXoWmMf16eCG+PeXlT9zjDVWhOUDYKowBKh0eT7fdC4p6C
+	 NjeA9c/Gpx7zqY7dorrpz31yMKbgU68QkPhhDHFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Yue Sun <samsun1006219@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 210/281] zloop: zero out only the unread tail of short reads
-Date: Tue, 13 Oct 2026 13:38:46 +0200
-Message-ID: <20261013112900.259309498@linuxfoundation.org>
+Subject: [PATCH 7.2 211/281] btrfs: always return -EIOCBQUEUED after btrfs_uring_read_extent_endio
+Date: Tue, 13 Oct 2026 13:38:47 +0200
+Message-ID: <20261013112900.283629448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -53,86 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 58304e139cb3fa640da74bc02101f0926d0607e2 ]
+[ Upstream commit 80a8dbb30d2b00b9c671b02bd73f700f6d20100f ]
 
-zloop_complete_rq() handles a short read from a zone's backing file by
-zero-filling every bio in the request. This is correct when the entire
-request is beyond the written part of the zone. When a read request
-straddles the boundary between written and unwritten data, read_iter()
-returns a partial byte count and zloop then zeroes the whole request
-even for the partially read area with valid data.
+If all bios finish before btrfs_encoded_read_regular_fill_pages()
+returns, it calls btrfs_uring_read_extent_endio() and previously
+returned the I/O status.  A negative errno then made
+btrfs_uring_read_extent() unlock and free while
+btrfs_uring_read_finished() did the same again.
 
-Such an unexpected zero data read was observed with fio test script
-t/zbd/test-zbd-support and its test case 69, failing with "bad magic
-header 0".
+Return -EIOCBQUEUED so only the deferred path cleans up.
 
-Avoid the unexpected zero data read by zeroing out only the unread tail
-part. When read data size cmd->ret is smaller than the request size,
-call the new helper function zloop_fill_zero_rq() that walks through
-each bio_vec and fills zeros from the specified start offset.
-
-Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://patch.msgid.link/20260916065657.62724-1-shinichiro.kawasaki@opensource.wdc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/linux-btrfs/20260630091609.3414-1-samsun1006219@gmail.com/
+Suggested-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 34310c442e17 ("btrfs: add io_uring command for encoded reads (ENCODED_READ ioctl)")
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zloop.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ fs/btrfs/inode.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
-index 1333fae05ac5d..a011f3e518a55 100644
---- a/drivers/block/zloop.c
-+++ b/drivers/block/zloop.c
-@@ -799,6 +799,27 @@ static void zloop_cmd_workfn(struct work_struct *work)
- 	current->flags = orig_flags;
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 7fe0a63d690a3..579b82e27b5ac 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9622,7 +9622,6 @@ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
+ 	struct completion sync_reads;
+ 	unsigned long i = 0;
+ 	struct btrfs_bio *bbio;
+-	int ret;
  
-+static void zloop_fill_zero_rq(struct request *rq, unsigned int zero_from)
-+{
-+	struct req_iterator iter;
-+	struct bio_vec bv;
-+	unsigned int pos = 0;
-+	unsigned int end, off;
-+
-+	rq_for_each_segment(bv, rq, iter) {
-+		end = pos + bv.bv_len;
-+		if (end > zero_from) {
-+			if (pos < zero_from)
-+				off = zero_from - pos;
-+			else
-+				off = 0;
-+			memzero_page(bv.bv_page, bv.bv_offset + off,
-+				     bv.bv_len - off);
-+		}
-+		pos = end;
-+	}
-+}
-+
- static void zloop_complete_rq(struct request *rq)
- {
- 	struct zloop_cmd *cmd = blk_mq_rq_to_pdu(rq);
-@@ -813,13 +834,9 @@ static void zloop_complete_rq(struct request *rq)
- 			pr_err("Zone %u: failed read sector %llu, %llu sectors\n",
- 			       zone_no, cmd->sector, cmd->nr_sectors);
+ 	/*
+ 	 * Fast path for synchronous reads which completes in this call, io_uring
+@@ -9669,10 +9668,10 @@ int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
  
--		if (cmd->ret >= 0 && cmd->ret != blk_rq_bytes(rq)) {
--			/* short read */
--			struct bio *bio;
--
--			__rq_for_each_bio(bio, rq)
--				zero_fill_bio(bio);
--		}
-+		/* Short read. Zero out the unread tail beyond cmd->ret. */
-+		if (cmd->ret >= 0 && cmd->ret != blk_rq_bytes(rq))
-+			zloop_fill_zero_rq(rq, cmd->ret);
- 		break;
- 	case REQ_OP_WRITE:
- 	case REQ_OP_ZONE_APPEND:
+ 	if (uring_ctx) {
+ 		if (refcount_dec_and_test(&priv->pending_refs)) {
+-			ret = blk_status_to_errno(READ_ONCE(priv->status));
+-			btrfs_uring_read_extent_endio(uring_ctx, ret);
++			int error = blk_status_to_errno(READ_ONCE(priv->status));
++
++			btrfs_uring_read_extent_endio(uring_ctx, error);
+ 			kfree(priv);
+-			return ret;
+ 		}
+ 
+ 		return -EIOCBQUEUED;
 -- 
 2.53.0
 
