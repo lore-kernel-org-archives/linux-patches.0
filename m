@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB1C39768F;
-	Tue, 13 Oct 2026 12:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7D41C862D;
+	Tue, 13 Oct 2026 12:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893981; cv=none; b=UQalesGgskk3ntdrfBXV19NApH9Ut7HDf6rNhd4sz0LDejutIkmhHskEU5t0ZyIoviFjJWWn2R/oabM9vxLV1ahgnbRxZFjrwNbg43+32JOf48iYevHBCWKpF74I6ugm2GoE69eW9UMyZYViWZ521sYXZMmsVmY4U9gg0Nb2MWc=
+	t=1791893985; cv=none; b=nzF1CZHOCA+9Qmhhy5trbjXgfsKychP4tE6UErGMbuRtAFQcsfo3Qz3GyE6JB+ARBAFdngCdWO5kzx08dqFjWzdt0MBBzQesyxd8KbkyDPiniDPszDUi65PEuIW4VGM1RYQFSudsULjHrEwZMmFE+c4+Vl5L+sDsyv9i/5mi7SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893981; c=relaxed/simple;
-	bh=iNBrhsM4TIOAIij6wBDXaxLdz0A0dlayIyJdo4USbbQ=;
+	s=arc-20240116; t=1791893985; c=relaxed/simple;
+	bh=MumJZrFZn3v/MtY8XpF9OFvvddNDEqp7jD2uIYbgSuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irgTdex4R5B9trcrGCMComZfNlWklSaIT9lllQ1yVcw6lcHD2ZyfJgzqPdCmErdLqvxH0o/AOczbQkoBZvBIMRYSs9P+NBzcMRcVKM9Hnw46M5sbu5bmhKL6GZhR+VpRQ1GMalExL5q/OcloAf+NPixXZoht8m7AhR1n5vPtubI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmOVwVtW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aCJHvDUYIfU3xmj+Hoc3twKfIHRCwkhHSHx2rq3kHf7KT7KTosvB+mTBtdvm9GfzmUwdx728CbojK+7r/NXDA68qf88b4m9lvDxxdgXLKrK63z91jG2kP0OoK3iZgnScORcNq60iNqSkO9eVd1KOs+mjs2oz6rRxnQS/iAL7m4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUvPp5Vx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmOVwVtW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B5F1F000FF;
-	Tue, 13 Oct 2026 12:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUvPp5Vx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEA61F000FF;
+	Tue, 13 Oct 2026 12:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893980;
-	bh=gu6SHJFwYer93kDf9Eq34bciMskh5JJZWCn4PwatL88=;
+	s=korg; t=1791893983;
+	bh=a79naBOWZaEY6iV9rE3vlVceIXl59EdkHqC5UfNn5XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zmOVwVtWhaI9vx3XbYjo9veHZ8ubYCMnq+P5vmSExKW4fzv2PEkd3mi1QTi4ZQZcg
-	 HmamgqZ0NgMiFLJTycVbVbcmAY6mwXNAcZa1QhrFPqjLK6Auf2mshDBOSAERl1nhJA
-	 fx7QsGAKDozdcdnGpM6UdWrFV9sJAsvexP/tvhTg=
+	b=oUvPp5VxQHhuEOaUWrGfSuw22C9DRzNyexxYnJoZjCxN6bmrc4X3Ct5lhal2U+AtI
+	 7Dl2xEz0WhixoYTnBfP/Pnz+vL9PD3OPJXHbIu8xCwU92T7U4UIjsucq9c9CGxFBcL
+	 J96ORxVVBLHwn1LfOx1XtyE/TsU6dFLx3j4oHnXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 390/621] drm/amdgpu: force complete the KIQ ring fences on reset
-Date: Tue, 13 Oct 2026 13:36:25 +0200
-Message-ID: <20261013112930.098287896@linuxfoundation.org>
+Subject: [PATCH 6.18 408/621] dpll: fix NULL deref in dpll_device_ops() during teardown race
+Date: Tue, 13 Oct 2026 13:36:43 +0200
+Message-ID: <20261013112930.522211740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -51,53 +53,321 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit fd65d1742992361fc2201ecb4e43411e6e417fcb ]
+[ Upstream commit 33f016b23a219fe034213849b51436b8e79df251 ]
 
-Like the MES scheduler ring, the KIQ ring sets no_scheduler = true and uses a
-polling fence, so it is skipped by the force-completion loop in
-amdgpu_device_pre_asic_reset(). Its hw fence value lives in wb (GTT) memory and
-survives a MODE1 reset while fence_drv.sync_seq keeps advancing, so after a
-reset the first KIQ submission can poll forever on a seq that is never written
-back.
+When the last owner of a dpll device unregisters while a foreign driver
+still holds a pin on it via dpll_pin_on_pin_register(), the dpll object
+stays alive with an empty registration list. A pin notification queued
+before the unregister (e.g. ice reacting to zl3073x_i2c removal) then
+walks pin->dpll_refs into dpll_device_ops(), which trips the WARN_ON and
+dereferences the missing registration. dpll_lock cannot help because the
+notification work was queued before the unregistering driver took the
+lock.
 
-Force complete the KIQ ring fences too so their hw fence is realigned to
-sync_seq.
+Treat the empty registration list as a legitimate transient state. Make
+dpll_priv() and dpll_device_ops() return NULL in that case and make
+every pin netlink path that resolves a device from a pin skip such
+dplls. dpll_cmd_pin_get_one() picks a ref with a live registration and
+returns -ENODEV when there is none, the pin dumpit skips such a pin
+instead of aborting the dump, dpll_msg_add_pin_dplls() and the
+frequency, esync, reference sync and phase adjust set paths skip dead
+refs, and dpll_pin_parent_device_set() validates the parent with
+dpll_device_get_by_id(). dpll_pin_register() is the last caller that
+dereferenced the device ops without a check, so move its frequency
+monitor validation under dpll_lock and tolerate a missing registration
+there as well.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The empty registration list is equivalent to a cleared DPLL_REGISTERED
+mark, both transitions happen under dpll_lock in dpll_device_register()
+and dpll_device_unregister(). A pin notification for a pin whose dplls
+are all gone is now dropped with -ENODEV instead of crashing, all
+callers in the core ignore that return value.
+
+ WARNING: drivers/dpll/dpll_core.c:1092 at dpll_device_ops+0x24/0x40,
+ CPU#83: kworker/u576:3/23471
+ Modules linked in: ... ice ... zl3073x_i2c(-) ... zl3073x ...
+ Workqueue: ice_dpll_wq ice_dpll_pin_notify_work [ice]
+ RIP: 0010:dpll_device_ops+0x24/0x40
+ Call Trace:
+  <TASK>
+  dpll_cmd_pin_get_one+0x336/0x520
+  dpll_pin_event_send+0x82/0x140
+  dpll_pin_on_pin_unregister+0xbb/0x160
+  ice_dpll_pin_notify_work+0x1bc/0x1f0 [ice]
+  process_one_work+0x19e/0x370
+  worker_thread+0x1a6/0x310
+  kthread+0xe4/0x120
+  ret_from_fork+0x1a1/0x270
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
+ BUG: kernel NULL pointer dereference, address: 0000000000000010
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+
+Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260813140817.1051388-1-poros@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/dpll/dpll_core.c    | 12 +++----
+ drivers/dpll/dpll_netlink.c | 68 +++++++++++++++++++++++++++++++++++--
+ 2 files changed, 71 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index ccb14ca65c497..88dda7dd2cd1c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5933,6 +5933,18 @@ int amdgpu_device_pre_asic_reset(struct amdgpu_device *adev,
- 			amdgpu_fence_driver_force_completion(mes_ring, fence);
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 6fa6a0d8e430d..0a8db4dc25786 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -1009,12 +1009,8 @@ EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
+ static struct dpll_device_registration *
+ dpll_device_registration_first(struct dpll_device *dpll)
+ {
+-	struct dpll_device_registration *reg;
+-
+-	reg = list_first_entry_or_null((struct list_head *)&dpll->registration_list,
+-				       struct dpll_device_registration, list);
+-	WARN_ON(!reg);
+-	return reg;
++	return list_first_entry_or_null((struct list_head *)&dpll->registration_list,
++					struct dpll_device_registration, list);
+ }
+ 
+ void *dpll_priv(struct dpll_device *dpll)
+@@ -1022,6 +1018,8 @@ void *dpll_priv(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
+ 
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->priv;
+ }
+ 
+@@ -1030,6 +1028,8 @@ const struct dpll_device_ops *dpll_device_ops(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
+ 
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->ops;
+ }
+ 
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index d8917150477ee..d3dc16b29ca47 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -66,6 +66,22 @@ static bool dpll_pin_available(struct dpll_pin *pin)
+ 	return false;
+ }
+ 
++static bool dpll_device_registered(struct dpll_device *dpll)
++{
++	return dpll_device_ops(dpll);
++}
++
++static struct dpll_pin_ref *dpll_pin_first_registered_ref(struct dpll_pin *pin)
++{
++	struct dpll_pin_ref *ref;
++	unsigned long i;
++
++	xa_for_each(&pin->dpll_refs, i, ref)
++		if (dpll_device_registered(ref->dpll))
++			return ref;
++	return NULL;
++}
++
+ /**
+  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
+  * @msg: pointer to sk_buff message to attach a pin handle
+@@ -575,6 +591,8 @@ dpll_msg_add_pin_dplls(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, index, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		attr = nla_nest_start(msg, DPLL_A_PIN_PARENT_DEVICE);
+ 		if (!attr)
+ 			return -EMSGSIZE;
+@@ -612,7 +630,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
+-	ASSERT_NOT_NULL(ref);
++	if (!ref || !dpll_device_registered(ref->dpll))
++		ref = dpll_pin_first_registered_ref(pin);
++	if (!ref)
++		return -ENODEV;
+ 
+ 	ret = dpll_msg_add_pin_handle(msg, pin);
+ 	if (ret)
+@@ -920,6 +941,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
  	}
  
-+	/*
-+	 * KIQ rings are polling-fence/no_scheduler like MES, so realign their
-+	 * fence too (one ring per XCC), otherwise the first post-reset KIQ
-+	 * submission polls forever on a stale seq.
-+	 */
-+	for (i = 0; i < AMDGPU_MAX_GC_INSTANCES; i++) {
-+		struct amdgpu_ring *kiq_ring = &adev->gfx.kiq[i].ring;
-+
-+		if (kiq_ring->fence_drv.initialized && kiq_ring->sched.ready)
-+			amdgpu_fence_driver_force_completion(kiq_ring, fence);
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->frequency_set || !ops->frequency_get) {
+ 			NL_SET_ERR_MSG(extack, "frequency set not supported by the device");
+@@ -927,6 +950,10 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
 +	}
-+
- 	amdgpu_fence_driver_isr_toggle(adev, false);
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->frequency_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
+@@ -939,6 +966,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		return 0;
  
- 	if (job && job->vm)
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -958,6 +987,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -981,6 +1012,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->esync_set || !ops->esync_get) {
+ 			NL_SET_ERR_MSG(extack,
+@@ -989,6 +1022,10 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
+@@ -1011,6 +1048,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		void *pin_dpll_priv;
+ 
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
+@@ -1034,6 +1073,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
+@@ -1069,7 +1110,10 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 		return -EINVAL;
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
+-	ASSERT_NOT_NULL(ref);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	if (!ops->ref_sync_set || !ops->ref_sync_get) {
+ 		NL_SET_ERR_MSG(extack, "reference sync not supported by this pin");
+@@ -1087,6 +1131,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	if (state == old_state)
+ 		return 0;
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1109,6 +1155,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1294,6 +1342,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	}
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->phase_adjust_set || !ops->phase_adjust_get) {
+ 			NL_SET_ERR_MSG(extack, "phase adjust not supported");
+@@ -1301,6 +1351,10 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->phase_adjust_get(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1314,6 +1368,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		return 0;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->phase_adjust_set(pin,
+@@ -1336,6 +1392,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->phase_adjust_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1365,7 +1423,7 @@ dpll_pin_parent_device_set(struct dpll_pin *pin, struct nlattr *parent_nest,
+ 		return -EINVAL;
+ 	}
+ 	pdpll_idx = nla_get_u32(tb[DPLL_A_PIN_PARENT_ID]);
+-	dpll = xa_load(&dpll_device_xa, pdpll_idx);
++	dpll = dpll_device_get_by_id(pdpll_idx);
+ 	if (!dpll) {
+ 		NL_SET_ERR_MSG(extack, "parent device not found");
+ 		return -EINVAL;
+@@ -1657,6 +1715,10 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
+ 		ret = dpll_cmd_pin_get_one(skb, pin, cb->extack);
+ 		if (ret) {
+ 			genlmsg_cancel(skb, hdr);
++			if (ret == -ENODEV) {
++				ret = 0;
++				continue;
++			}
+ 			break;
+ 		}
+ 		genlmsg_end(skb, hdr);
 -- 
 2.53.0
 
