@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144C3CFF6F;
-	Tue, 13 Oct 2026 11:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87864EB879;
+	Tue, 13 Oct 2026 11:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892291; cv=none; b=VZEggUoiMDffCT0Nb5d0txQabnt5W6sS7ygNFCqStktFQRSYFwlZADB4iZp1r0QOBd0nAJex2QUFEu5LQPQUv2WM9vgiBlk8Wm4zwUdvNkn+ZS9WFCmPlRe97Isv8sjRJAHihPiXpfPbMgMbmTIC5GIj9G/r2XKk1Lg8jQZwMzM=
+	t=1791892294; cv=none; b=oB5mhFP4b83Lo/XHNLmUvehqFNpBllH6U4LVWj4JXl/CnTmst9nI9PYov8OThsLKqaVU/gKz/y08BlCRg4MPT6nKt8IKtoqQm/x3472b+JbPL7kva5L+k4vUkijopei5zTmpFIyjKj++4uvEa6cy+4v/oMRmtraQvWzx4ZorlUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892291; c=relaxed/simple;
-	bh=UonHo+0jbKNmSVopVsyyrvIlZkVelsfsv7oziEM4CFY=;
+	s=arc-20240116; t=1791892294; c=relaxed/simple;
+	bh=uNOSBF37wq5ugpLKrIKbfFVEsJvraiYpgDyr5Vo16+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8bCpSYw2otHFUkgMa52s+0DzMhMhXaAEY6xMhO0BociXNZqX+uGMzDFu78wG3dzdtwWuZBoA+0pWaml6K/BK835tajHo932x5aPvgJpUElNoDPaCqf/sav4e/DymsIoiey746NL6O/Jgy/SdgasatMErNnt/2aX56AKjE86i7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cK+3BrZ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bnszZTVcR0EDPfi+O3ZyGmyJM1GQANnQdVy+0DiE7hr5R3ne+sMUcFv2hOCzYfxC+aHSk61xSIvSn0TpPXg/FjTxOl4cIVTjYoAmbxCAYTmLQmaYsl89Ty4yyoolUjHYaB/kUskjjfCEq7fNP4F0Q3IqT0DARany4HL0m7u0/SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xG6kKMRc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK+3BrZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165EB1F000FF;
-	Tue, 13 Oct 2026 11:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG6kKMRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDD91F000FF;
+	Tue, 13 Oct 2026 11:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892290;
-	bh=z9eWmcwPehFpO8JmURN4vFvKtRFNtQehZSvVZgykDbE=;
+	s=korg; t=1791892293;
+	bh=6e3p7TNIy/dErP6prUO2Cp1UhHHk2Qgi4Q/gYv2soGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cK+3BrZ6uSDp2N/Qs7N47D0RBNiOWCoWQCj91JdhOQl18J5yzEEC/tNfzrVrlWfg7
-	 h2AnVu8V23m0rGgZrcvHm9PEgngiXpRwaMHFjYFxnuj7CFOq9839Q49xSw5nFCrxW4
-	 cBAeSNy4NAMYOs6x9L4L0kBACAjdWGbri6K31WEs=
+	b=xG6kKMRcWH5QVxcgRmx7Bpod9ffWhhYkXj1bzcs4ONBFooDrC3aVX5DAUTrEr4ciM
+	 002bQ65wsNKA7r9+MYxP6vT3wm40Mm0Wi7cSZ54E1nrCVRO2kM70WkWcNU1OLb4dR+
+	 ZFFzkFe+mQAQj2GHopQt/EN/3XjQkLfO9yxZ6JpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 080/281] mmc: sdhci-sprd: disable runtime PM on remove
-Date: Tue, 13 Oct 2026 13:36:36 +0200
-Message-ID: <20261013112857.072500308@linuxfoundation.org>
+	Quchaosheng <quchaosheng000406@163.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 081/281] net/packet: guard the ll header push in packet_rcv_spkt()
+Date: Tue, 13 Oct 2026 13:36:37 +0200
+Message-ID: <20261013112857.096616793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,46 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Quchaosheng <quchaosheng000406@163.com>
 
-commit e1c6c10a6a70a69e29b04fcc1ebe4b9bcbc7a49a upstream.
+commit 28bc1ef699610ee09ce3d46a00552f5a0a0144bd upstream.
 
-sdhci_sprd_probe() enables runtime PM, while sdhci_sprd_remove() does
-not perform the corresponding runtime PM cleanup.
+packet_rcv_spkt() restores the link layer header with
 
-The probe failure path disables runtime PM before disabling the clocks,
-but the normal remove path directly disables clocks that are also
-managed by the runtime PM callbacks. If the device is runtime
-suspended, those clocks may already be disabled.
+	skb_push(skb, skb->data - skb_mac_header(skb));
 
-Resume the device before removal, disable runtime PM and drop the
-temporary runtime PM reference before disabling the clocks.
+That subtraction is only meaningful when the device actually has a link
+layer header.  packet_rcv() and tpacket_rcv() both wrap it in
+dev_has_header(), which is also the predicate the block comment at the
+top of the file states the restore in terms of; packet_rcv_spkt() does
+not.  commit d549699048b4 ("net/packet: fix packet receive on L3
+devices without visible hard header") introduced the helper and changed
+the two call sites, and this one stayed behind.
 
-This issue was found by manual code inspection.
+A device without a visible ll header can leave skb->mac_header at the
+0xFFFF sentinel that __alloc_skb() initialises it to.  A CAN skb does:
+init_can_skb() sets pkt_type and ip_summed but does not reset the
+headers, and commit 9f10374bb024 ("can: remove private CAN skb
+headroom infrastructure") dropped the skb_reset_*_header() calls that
+used to be there.  skb_mac_header() is then 0xFFFF, the length becomes
+a large negative number and skb_push() reports it through
+skb_under_panic() -- from softirq context, so it is a full system panic
+even with panic_on_oops=0:
 
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
+  skbuff: skb_under_panic: text:ffffffff8bd21bc1 len:-65455 put:-65471 head:... data:... tail:0x50 end:0x180 dev:can0
+  kernel BUG at net/core/skbuff.c:214!
+  RIP: 0010:skb_panic+0x50/0x60
+  Call Trace:
+   <IRQ>
+   skb_push+0x38/0x40
+   packet_rcv_spkt+0xe1/0x170
+   __netif_receive_skb_core.constprop.0+0x7e8/0xd30
+   ...
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+The socket type is reachable: packet_create() accepts SOCK_PACKET
+alongside SOCK_RAW and SOCK_DGRAM behind the same CAP_NET_RAW check,
+and neither the socket length nor a capability check keeps it away
+from a CAN interface.
+
+The missing skb_reset_*_header() calls in init_can_skb() are a
+regression in their own right and are being fixed separately, but a
+packet socket should not turn a link layer that did not initialise its
+mac header into a kernel panic.  Guard the push the way the other two
+receive paths do.
+
+Tested on v7.3-rc5 under QEMU with a slcan device on a pty, which is
+the driver RX path: vcan does not reproduce it, because can_send()
+resets the headers on the way out.  One SOCK_PACKET socket bound to
+can0 and one frame written into the line discipline panics an
+unpatched kernel with the trace above; the same image with this patch
+prints no panic and powers off normally.  Both kernels are this tree,
+defconfig plus CONFIG_CAN_SLCAN=y, differing only in this hunk.
+
+Fixes: d549699048b4 ("net/packet: fix packet receive on L3 devices without visible hard header")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Quchaosheng <quchaosheng000406@163.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260928113108.2127215-1-quchaosheng000406@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/packet/af_packet.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -890,6 +890,10 @@ static void sdhci_sprd_remove(struct pla
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
- 	struct sdhci_sprd_host *sprd_host = TO_SPRD_HOST(host);
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1911,7 +1911,8 @@ static int packet_rcv_spkt(struct sk_buf
  
-+	pm_runtime_get_sync(&pdev->dev);
-+	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+
- 	sdhci_remove_host(host, 0);
+ 	spkt = &PACKET_SKB_CB(skb)->sa.pkt;
  
- 	clk_disable_unprepare(sprd_host->clk_sdio);
+-	skb_push(skb, skb->data - skb_mac_header(skb));
++	if (dev_has_header(dev))
++		skb_push(skb, skb->data - skb_mac_header(skb));
+ 
+ 	/*
+ 	 *	The SOCK_PACKET socket receives _all_ frames.
 
 
