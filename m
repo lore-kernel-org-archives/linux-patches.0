@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97B742C4FA;
-	Tue, 13 Oct 2026 12:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70604D7D30;
+	Tue, 13 Oct 2026 12:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893942; cv=none; b=FKeABcGz6O6xQkxS+0m+bGjqAt0/5FzANmrYb6iY2+UwIjNY5c7fAWs3zEq5UalkqQGuXK/sv3ktGH6wUqcdh/6E+QZYVkmxrDBJ4JBhIq0yeXShvHI4W1FUlau4vB3/arvxJXVReatih4gxESubGnRRn49MFYsdAb/iW1KNVy0=
+	t=1791893945; cv=none; b=PTOkJ+2epbiHo6QMNLbS1ahSsZNYRdQX9IZh/wZ9o5GxjAE0+pUZR6lfrihySY2MnIF934NllXHqk7tbraYf7mzMVLYWXdmvyL/urD6ckQw42JsuimlODXSWuA58PtrK/Ra2RowAAqZAcczpK3/YjrKSdAsy6Mitk05aD80pkRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893942; c=relaxed/simple;
-	bh=NUgcTJp3QA9ARN2zYCNu3yE+rfqXeENjSll+L/jFofg=;
+	s=arc-20240116; t=1791893945; c=relaxed/simple;
+	bh=1ubtsfYz4aubIEP/k1fRX6tdAejfKZT1qJ3kPskQ/zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gc5ZjFLdXvFdtuJa6XGKb3LcAbIj4RegwbkoD7omo2CGH34q8XziObv+OBetQuNMhcceW9EwFEKxaad+8yg0FvffFUX1B3fMGtlcs0UJPGruhIqaMW9Txy8+bktvRzH+qsWHoGQR0YiNrcRpif+KdEm5DMFrraB3kGIaFoM2wO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9Bq4hpa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PPbi43Sp03XIHx2vCEYTStwJPj7HLDLq/kgi6PkT/NzUmBYD3sxUHSf1hIt8JfWnViVt09kvYsFPYyobCpcbMQRwTmUqOTdyTq1OJVhSanu5jaQ4T4g/w1kLa/GSWWiUeANBSbZUo5Ywd+OoVhTOm5SNgwTSJ4aJjpvv/VOcAqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He13fUxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9Bq4hpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D221F000FF;
-	Tue, 13 Oct 2026 12:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He13fUxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D741F000FF;
+	Tue, 13 Oct 2026 12:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893941;
-	bh=TgKAqe3tGRA4SrWt0ZXrwThyYuZ/wEVg1QBpUF8bzb4=;
+	s=korg; t=1791893944;
+	bh=Y1HhdBGbBl0W3WnM4ex9HxZOr/46pNiyqlmjcCBuFjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9Bq4hpaVxczjTstoxlhEF/kO0cwR9HIsye5dTY4VEqXD5vIfCDcpJkZbcKWuzm/o
-	 WPdYggE51/860fI2sfpJLcRAJjgI1wtS6quruLxMiiY5eP7w8Grn0hV2f/vXXIX1+W
-	 OBRYrDpdlhURY0x8k1YahGqgTtWD5TrsbP6jXYoM=
+	b=He13fUxERg74EuDkR/GVrAOrycThvZz+kOSrMCcZ2LQZAMbEpwgdkl3c63mS5Rgpn
+	 DY2zULC09oB+EoWmQg7DSGYxZ72lE/yJcT/UzFeIH723SCXSXr11Gs5fLbOrdkDmqk
+	 i6+Loyn2sDHZ4tquqlBMRXS82wC0NGbIi371ZgCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Sebastian Ene <sebastianene@google.com>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jenswi@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 351/621] optee: ffa: Add NULL check in optee_ffa_lend_protmem
-Date: Tue, 13 Oct 2026 13:35:46 +0200
-Message-ID: <20261013112929.180947007@linuxfoundation.org>
+Subject: [PATCH 6.18 342/621] accel/amdxdna: Fix locally exploitable BUG_ON in amdxdna_insert_pages()
+Date: Tue, 13 Oct 2026 13:35:37 +0200
+Message-ID: <20261013112928.969224439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,40 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 650c88738ae8976f46ba71b24dd8aa311adc6fde ]
+[ Upstream commit 4a19f7ab5972ef608b31ae921419bc3e04b3f8ad ]
 
-Sashiko (locally) reports a possible null dereference under memory
-pressure due to the lack of validation of the allocated pointer.
+In amdxdna_insert_pages(), vm_flags_mod() sets VM_MIXEDMAP and clears
+VM_PFNMAP. If an unprivileged userspace process mmaps a non-imported GEM
+object and then calls madvise(MADV_DONTNEED), the PTEs will be
+successfully cleared because VM_MIXEDMAP allows this (unlike VM_PFNMAP).
 
-Fix that by adding the missing check.
+When userspace subsequently accesses the memory, drm_gem_shmem_fault()
+handles the page fault and attempts to map the backing shmem page via
+vmf_insert_pfn() which calls vmf_insert_pfn_prot(). Because the backing
+shmem page is normal system memory (pfn_valid(pfn) is true) and the VMA
+now has VM_MIXEDMAP set, won't this predictably trigger the explicit
+assertion BUG_ON((vma->vm_flags & VM_MIXEDMAP) && pfn_valid(pfn))
 
-Fixes: 2b78d79cdf96 ("optee: FF-A: dynamic protected memory allocation")
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Reviewed-by: Sebastian Ene <sebastianene@google.com>
-Signed-off-by: Jens Wiklander <jenswi@kernel.org>
+Fix by removing the vm_flags_mod() call and replacing the vm_insert_pages()
+pre-population with the handle_mm_fault() loop that was already used for
+the import (dma-buf) path.
+
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260731185955.3449311-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/ffa_abi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/accel/amdxdna/amdxdna_gem.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-index 51e90692ce5cc..058b7b073a903 100644
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -698,6 +698,9 @@ static int optee_ffa_lend_protmem(struct optee *optee, struct tee_shm *protmem,
- 	int rc;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 9e5abad84d86d..147c4c66be4cb 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -310,25 +310,17 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 			XDNA_ERR(xdna, "Failed shmem mmap %d", ret);
+ 			return ret;
+ 		}
+-
+-		/* The buffer is based on memory pages. Fix the flag. */
+-		vm_flags_mod(vma, VM_MIXEDMAP, VM_PFNMAP);
+-		ret = vm_insert_pages(vma, vma->vm_start, abo->base.pages,
+-				      &num_pages);
++	} else {
++		vma->vm_private_data = NULL;
++		vma->vm_ops = NULL;
++		ret = dma_buf_mmap(abo->dma_buf, vma, 0);
+ 		if (ret) {
+-			XDNA_ERR(xdna, "Failed insert pages %d", ret);
+-			amdxdna_mark_mapp_invalid(abo, vma);
++			XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
++			return ret;
+ 		}
  
- 	mem_attr = kcalloc(ma_count, sizeof(*mem_attr), GFP_KERNEL);
-+	if (!mem_attr)
-+		return -ENOMEM;
-+
- 	for (n = 0; n < ma_count; n++) {
- 		mem_attr[n].receiver = mem_attrs[n] & U16_MAX;
- 		mem_attr[n].attrs = mem_attrs[n] >> 16;
+-		return 0;
+-	}
+-
+-	vma->vm_private_data = NULL;
+-	vma->vm_ops = NULL;
+-	ret = dma_buf_mmap(abo->dma_buf, vma, 0);
+-	if (ret) {
+-		XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
+-		return ret;
++		/* Drop the reference drm_gem_mmap_obj() acquired.*/
++		drm_gem_object_put(to_gobj(abo));
+ 	}
+ 
+ 	do {
+@@ -345,9 +337,6 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 		offset += PAGE_SIZE;
+ 	} while (--num_pages);
+ 
+-	/* Drop the reference drm_gem_mmap_obj() acquired.*/
+-	drm_gem_object_put(to_gobj(abo));
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
