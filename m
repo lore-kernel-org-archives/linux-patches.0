@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625EA4F6463;
-	Tue, 13 Oct 2026 12:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6884F0546;
+	Tue, 13 Oct 2026 12:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895005; cv=none; b=YB9JXN8/I63FD4MK8PwxvfFpT//a+FnC4OQibQpEj9DlbAQWq1d55EBaB8nZfiHU9d4ESULkedcBp/cud13cB6ATL/sJ1nWlEbqNZ+2+oYa4UdFk7lBOS6PJLHvZfXPecY8L+OHB1Md3XvBCNvMMunOC4nTVm3wL0ylssgzc21g=
+	t=1791895008; cv=none; b=QL4OSqF8O4mfveV1W+wR5oKeYhcDq5g56UmlzbIclhljKyK9yVwj2dy1JVvP+40RVhtydZfBADkyWYjROxaAekl9ka7YDji/urLWH6o0S5Zj/BDqMgfKcekHoVlQRQob3p+1v79WEhYyFrn6nyMceVYLJxjl6Tu/g0kiVgnjPpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895005; c=relaxed/simple;
-	bh=ZII+TSn9rnqe0I7ayAaOPRqkoi0XNIgPJTPhtNeuEBU=;
+	s=arc-20240116; t=1791895008; c=relaxed/simple;
+	bh=rqXJ5aDXygNviJf8Hfe1bhVb8rjd7w1uAv3ap4kIZtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/DwHOXveW4ijqLcluijBepb9gnkePq/968+djpzYneMvcSu93tWDySLZ7viQwfImcolLMK6ySG2/JneDa25opqUl3HKv58QIh7hfYgUKe9rY4MNZtB4rNnQ25ec6gi1FMFAIDSFB6eqXdCmHbBbBGxzGsuxoV6O/QPDNcWpips=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIDSE0qr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YOvurpU2P7t7zqxuQPcxl/pbDdmeb0QcAQVEDy5eVd+DbHLt+Z6Xd/f2vnwYpzNBbzL50LCQ5byBtJrI3EK+DIXN9qkQXwkn0gEKrgqdusfE4zXpCkjhBqLs3RiKKpHFWe66N7SYuylg9DbBDI3P4CsG7w5C55R8Emm41KsZWBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3SBOrQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIDSE0qr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E68F1F000FF;
-	Tue, 13 Oct 2026 12:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3SBOrQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7868B1F000FF;
+	Tue, 13 Oct 2026 12:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895004;
-	bh=kZMmECSdkYnYcjb0W+O0jnrGR4xuoZsfObDHu6JL7XY=;
+	s=korg; t=1791895007;
+	bh=Rzuz1dhDto8p5sPCLLaQxdgTAFETUP7Xv4u3qbbBNUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIDSE0qrrEPVyvT8E7f5aADe+PX+wf1Rn0/gzImAyDqI8ETNBLvFq19KX9ZAgHthf
-	 ivJxZDKvrx/3llWH3+AST3ZKmyMyw/RiQafUY1JGYoOgvYOUH/vRw7P0PZv6EB28DN
-	 Sh/BbW9OOyN9o+ezJW3lQLPUlo3HmNiI0bqJ8FHM=
+	b=U3SBOrQLukoUyxRoue7u2+h7Pu5xa6CND5/E9lKyv1V8XOHtZa80bgc5bDlsKJhKD
+	 SMvYcbL9zYSo7h4637LUFBZrAW7JRUHfOdjjSYOYaV/eSmsp9lCT3oNy3CId9fcNwn
+	 YhKFDs7D+38VBdiCnjaZ7Nv+14IiEeGdQbQwXJf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Brey <cico0815@gmx.de>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 127/497] Input: i8042 - add nomux quirk for Fujitsu LIFEBOOK U7410
-Date: Tue, 13 Oct 2026 13:34:54 +0200
-Message-ID: <20261013112910.905251040@linuxfoundation.org>
+Subject: [PATCH 6.12 128/497] Input: s6sy761 - fix resume ordering and restore sensing
+Date: Tue, 13 Oct 2026 13:34:55 +0200
+Message-ID: <20261013112910.928995307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,50 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: David Heidelberg <david@ixit.cz>
 
-commit 495cd7f858b45d2ffa9b685bba3a8c23c1ca4dd3 upstream.
+commit a215720959c5450b3699e243904b39c3f8f68888 upstream.
 
-On the Fujitsu LIFEBOOK U7410 the internal keyboard and touchpad die
-shortly after boot if i8042 multiplexing controller is probed and
-switched to muxed mode. These multiplexing setup commands disturb the EC
-emulated keyboard and atkbd reports "Spurious ACK" and "Unknown key
-pressed" warnings, after which both keyboard and touchpad stop
-delivering events. Both touchpad and keyboard work in BIOS and GRUB.
+System suspend powers the controller off and resume powers it back on,
+but the resume path enables the interrupt before s6sy761_power_on()
+checks the boot. The firmware raises its boot-complete event on the
+interrupt line, the threaded handler consumes it, s6sy761_power_on()
+then reads an empty event and resume fails with -ENODEV, skipping the
+touch function setup:
 
-Disabling multiplexer using i8042.nomux=1 makes both devices work on
-warm/cold boot.
+s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
 
-Add a DMI quirk to force nomux mode for this model.
+Power the chip on first and only then unmask the interrupt. Once resume
+completes the boot handshake the chip comes back with sensing off, as
+at probe where input_open() turns it on, so the touchscreen stays dead
+after resume. Send SENSE_ON again when the input device is open.
 
-Reported-by: Heiko Brey <cico0815@gmx.de>
-Link: https://lore.kernel.org/all/89f36f3f5e4c2d07b9ff72bc0b355875c336e498.camel@gmx.de/
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Link: https://patch.msgid.link/20260920113541.1484808-1-lovekeshsolanki00@gmail.com
+Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
+the touch function and sense status match the pre-suspend state.
+
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
+Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/input/touchscreen/s6sy761.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -671,6 +671,15 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
- 	},
- 	{
-+		/* Fujitsu LIFEBOOK U7410 */
-+		/* Mux mode also disturbs the EC keyboard, causing spurious ACKs */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK U7410"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
-+	{
- 		/* Gigabyte M912 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
+--- a/drivers/input/touchscreen/s6sy761.c
++++ b/drivers/input/touchscreen/s6sy761.c
+@@ -500,10 +500,22 @@ static int s6sy761_suspend(struct device
+ static int s6sy761_resume(struct device *dev)
+ {
+ 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
++	int err;
++
++	err = s6sy761_power_on(sdata);
++	if (err)
++		return err;
+ 
+ 	enable_irq(sdata->client->irq);
+ 
+-	return s6sy761_power_on(sdata);
++	guard(mutex)(&sdata->input->mutex);
++
++	if (!input_device_enabled(sdata->input))
++		return 0;
++
++	err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
++
++	return err;
+ }
+ 
+ static const struct dev_pm_ops s6sy761_pm_ops = {
 
 
