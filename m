@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3512247AF65;
-	Tue, 13 Oct 2026 11:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39184389104;
+	Tue, 13 Oct 2026 11:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892507; cv=none; b=Ta7p8QWGcK0b0V43OBKNZ8sBCdQ/rzx1G0e5tzCXwY/1a0dTo26gDpPPMKYm37o5UeKVWHvdbOUx+cdny32YM07+N/wxgeUp+DDOEG3pQewmMNKKUINq9XxgYdoFwHHMWX6mHjaAoxdfDqOENAk4hm3bNZGc7YfNjPzcyB/PiNg=
+	t=1791892510; cv=none; b=OaCF8OiFJrc6tQsYdnoU44DN9ExEaQd6+3W2agRoxTjvDPpVEZiHNz7jfarxdOUu3Rc/DevqrNlQ2G/ocB2Nq+tMo49X+VQaQyUgICu9UnpZ1M/m+NzSpXeZV/A/fKPcclaecb1I2ohvQqcRo6nnSEgwDCSUvenAa0SvNBBpcIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892507; c=relaxed/simple;
-	bh=nIct3ck8M0R4XD3qQxjA95dBZvTR83w2XtbnFwV2PSs=;
+	s=arc-20240116; t=1791892510; c=relaxed/simple;
+	bh=7aSAplnAbUzlv+6OPULybigCHnbF4jWP6sZLRuirXc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JoDLz6YzS373bzolyLT0m/AgblojZAFbdLNtzg8+qT+4+O8h5TSwLw4cPOnoVlAVb55tkV3ebr4Z5Ok2ZPcUe6rg+UtVm6OU2gwu5J6Lp16aeSde/vMvFlVGZcu/mjqSpBkG2GRFhAqnUbWaFd/HDJ/7oIOkFz3PP+TZrwrNZ7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff/GtO01; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tdPlOrLXK5voQEagae9cWLEPfzdDvUEsIxcbMaLDtxjMXF6Ag/BGUPsHbrmClGWOz0fGu28/n2ukRs6jiWNr4owsLfp9+VkTFZujh7stxLJSautwmyI+f+/UuAZRrb8jx9K38RHtPE+JHuVllCa31MKYQEY62UYsovplWa+8QjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScFcHBZw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff/GtO01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867971F000FF;
-	Tue, 13 Oct 2026 11:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScFcHBZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8475F1F000FF;
+	Tue, 13 Oct 2026 11:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892506;
-	bh=nneJhwK1CPGHQ0/GBaVZ0Ga2cUTqNoAKc8Y3DgHND8g=;
+	s=korg; t=1791892509;
+	bh=wYyYBQeYw5mQgI7aAiMbGnTF/crKuYQD2HquMZZgFL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ff/GtO01nfZX88f8aMVjRhl39BHhviWEWk/Tvp3ez5+pT/CuRFIlZcq77XLcyPAE4
-	 E8Q03VvQFOpmXeUqA4NjU/t9YTWMqnWpADnAtyuJc0qsZuS5PQFyB7gTNux/Pth2Rc
-	 x5HRHX0+gDCKMGd9Ol/1gH7xFA1cZbE6t2ZeMzBU=
+	b=ScFcHBZwxfsH5W+cWlOkW7ggfAwFsItSTIYUyKOMfQqLeZiDUpRKjy91NVjuEOn4w
+	 VkFzZW4HVMP1x4WiYH/8dFJVmj64a2q2ieNWSeEG7ue6k8tA1vM8jt4+x2ahyDTL3p
+	 o+/1Aq4d+Uxv8kBZsjVYYWcj0brbjV+hpmM74HGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 196/281] drm/vc4: Use kvmalloc_objs() for the BO cache size list
-Date: Tue, 13 Oct 2026 13:38:32 +0200
-Message-ID: <20261013112859.921468754@linuxfoundation.org>
+Subject: [PATCH 7.2 197/281] net/sched: em_text: reject unterminated algo before autoload
+Date: Tue, 13 Oct 2026 13:38:33 +0200
+Message-ID: <20261013112859.945535685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -45,79 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit bca45af5998a05f34b13a2ef11e639bac9c62643 ]
+[ Upstream commit c9728fcf2e7fb4a7a8d08ebd9524c3b02ae1a021 ]
 
-The BO cache size list has one entry per BO page count, so its size
-scales with the largest BO ever freed. A 64 MiB BO already needs at
-least an order-6 allocation, which fails under fragmentation and
-triggers a warn_alloc() splat on BO close:
+This is a follow-up to commit 9c572a83037a ("net/sched: fix potential
+stack infoleak in em_text_dump()"), which zero-initialised the dump-side
+struct. Sashiko pointed at a pre-existing bug that exposed the change-side
+input-validation gap open.
 
-  page allocation failure: order:7, mode:0x40cc0(GFP_KERNEL|__GFP_COMP)
-  Call trace:
-   ...
-   warn_alloc+0x118/0x190
-   __alloc_pages_slowpath+0x4a8/0x520
-   ...
-   __kmalloc_noprof+0x3ac/0x5d8
-   vc4_free_object+0x128/0x370 [vc4]
-   drm_gem_object_handle_put_unlocked+0xb8/0x158 [drm]
-   drm_gem_object_release_handle+0x74/0xe8 [drm]
-   drm_gem_handle_delete+0x6c/0xa8 [drm]
-   drm_gem_close_ioctl+0x34/0x50 [drm]
+em_text_change() casts the raw netlink attribute payload to struct
+tcf_em_text and passes conf->algo, a 16-byte array with no enforced NUL
+terminator, to textsearch_prepare().  On the TS_AUTOLOAD retry
+textsearch_prepare() calls request_module("ts_%s", algo); vsnprintf()
+walks %s until it finds a NUL, so an algo[] with no NUL reads past the
+array into the adjacent struct fields and payload and feeds those bytes
+to the usermode helper command line.  This is an out-of-bounds read and
+a kernel memory disclosure.
 
-The list doesn't need physically contiguous memory. Use kvmalloc_objs()
-so large lists can fall back to vmalloc(), avoiding the allocation
-failure.
+Reject the attribute when no NUL exists within TC_EM_TEXT_ALGOSIZ bytes,
+matching the check xt_string has had since 3ab720881b6e.
 
-Fixes: c826a6e10644 ("drm/vc4: Add a BO cache.")
-Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Link: https://patch.msgid.link/20260930190721.1897264-2-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Conditions to recreate the bug:
+- CAP_NET_ADMIN on the target netns (namespace-local via unshare -Urn
+  is enough)
+- install clsact on an interface, then add a basic filter with one text
+  ematch whose algo[] is 16 bytes with no NUL (e.g. "A"*16) and
+  pattern_len at least 1
+- the add fails with -ENOENT and the kernel invokes modprobe with a
+  module name made of "ts_" plus the 16 bytes and the adjacent payload
+
+Fixes: d675c989ed2d4 ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
+Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260918133953.12494-1-bernard.ladenthin%40gmail.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2DIU.v1.20260929183844@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/em_text.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index ea1be891ac781..7b8b3364000fc 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -204,7 +204,7 @@ static struct list_head *vc4_get_cache_list_for_size(struct drm_device *dev,
- 		struct list_head *new_list;
- 		uint32_t i;
+diff --git a/net/sched/em_text.c b/net/sched/em_text.c
+index 4132f8c3c5fc9..bc45edb8c03bf 100644
+--- a/net/sched/em_text.c
++++ b/net/sched/em_text.c
+@@ -58,6 +58,9 @@ static int em_text_change(struct net *net, void *data, int len,
+ 	if (len < sizeof(*conf) || len < (sizeof(*conf) + conf->pattern_len))
+ 		return -EINVAL;
  
--		new_list = kmalloc_objs(struct list_head, new_size);
-+		new_list = kvmalloc_objs(struct list_head, new_size);
- 		if (!new_list)
- 			return NULL;
++	if (!memchr(conf->algo, '\0', sizeof(conf->algo)))
++		return -EINVAL;
++
+ 	if (conf->from_layer > conf->to_layer)
+ 		return -EINVAL;
  
-@@ -224,7 +224,7 @@ static struct list_head *vc4_get_cache_list_for_size(struct drm_device *dev,
- 		for (i = vc4->bo_cache.size_list_size; i < new_size; i++)
- 			INIT_LIST_HEAD(&new_list[i]);
- 
--		kfree(vc4->bo_cache.size_list);
-+		kvfree(vc4->bo_cache.size_list);
- 		vc4->bo_cache.size_list = new_list;
- 		vc4->bo_cache.size_list_size = new_size;
- 	}
-@@ -1052,7 +1052,7 @@ static void vc4_bo_cache_destroy(struct drm_device *dev, void *unused)
- 	cancel_work_sync(&vc4->bo_cache.time_work);
- 
- 	vc4_bo_cache_purge(dev);
--	kfree(vc4->bo_cache.size_list);
-+	kvfree(vc4->bo_cache.size_list);
- 
- 	for (i = 0; i < vc4->num_labels; i++) {
- 		if (vc4->bo_labels[i].num_allocated) {
 -- 
 2.53.0
 
