@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105F343CEF3;
-	Tue, 13 Oct 2026 12:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CE23F6C42;
+	Tue, 13 Oct 2026 12:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894259; cv=none; b=W1rdTMJtG/FcFum+lqAypfyCDpkgDEKfwjj/ti7HJAzkz1VASoTlM4eWdsgW38qmo3xDYjDL47kd2xgDUDjGltfxFb+rQQHVo6lrM+L+TV8XkAQMBo8Gfl6cG8Q4/knNMZY+yXLzVBDUkJCbJW1QWvqbVef0DR8W29byoXIET5c=
+	t=1791894263; cv=none; b=MX0EQjzDT3/6FisPlyaKab4Dc5GbtYWK1yueiNmHv3xGsMAV/W1Pp90AuCVgINL1hETfZck6twe0FcZuCnX1ppoHJJbMVV4n/L8/Ue65qb3NNxtl1iROmDAQQYJLY1b518P3bxrfp2UYRPDhbSHHFOCRZQ4UlyaDFwVQLhrkKiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894259; c=relaxed/simple;
-	bh=DPIbo//C1uw+aWPpHiTMnZEbn7nCtP2TM5TR1Y2F7JM=;
+	s=arc-20240116; t=1791894263; c=relaxed/simple;
+	bh=AgPgTHhPaqoEXv2fdn+JaZvuVbENAyks/3RUizjxilI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFDUzxM/g8pHJGj6DX92YiQJZZRIRIJfjMzomsZRfJ2r5xktdW5A5f136gJGdM7L2swq/93977/Zajzfv3axlKxCn4fgEI2Cu81tD4chWawFZdHnbtxVRveBJ5ULILp6TTynjxP4HybNRuYi6yp8n1VdVH0Vkv82zvLJTxLXeOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcdjkfCT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kUbX8NMjh1zQaUeChswxi50XO/OgxjQOfeTswvO5IIeOOGnciQZQ0Yragx0nCqFMAImh6arsMuopGuz+2mMtWVmq2Zddq4spAPkR9JglTRusYfKgCbF5Lkpryf8o43wEvH0TYCtfg9xl163vldJ/+khMxeJiIe2nf2n1OxSfXqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRyrjTAO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcdjkfCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7BC1F000FF;
-	Tue, 13 Oct 2026 12:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRyrjTAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B861F000FF;
+	Tue, 13 Oct 2026 12:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894258;
-	bh=tN5NVrkgW34SUCrys/J4K9ujzsMK/vNn5LIci2c0jJU=;
+	s=korg; t=1791894260;
+	bh=diZ3tidk2l5UVhdV9ktq82/fuZfGFO5NO0DT2VvSPjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EcdjkfCTugwJf5UeFAH6n2W8G/UKIfa+pE0ZC/iKiMCp8kbbotflpWL5Ymsdgns7D
-	 pldgaKVxz5HI5KmLd6oeERK4flhy9zqcw6gYg56uPq/TY+Lg1q3zg17TGlqQ7Sy+q7
-	 J6+HgH85cWQs0l/cJfGiG0aDj1lGuDdMJbVq3/Rw=
+	b=YRyrjTAO9aRtXTacMQG+g089zh4xmVwAN6JcT25YIe3J/E/O2huSaWUU28aYlI70P
+	 Indfa8Rca5yK4/aXxTDekGwYSrXpEfr1ZEmp5M74DYu1F0D1z36jQnqR8A80RKmgI0
+	 ecBIoJ+gvP+7Z/fwTYTZIxGcPMa7s+yHA41HjkXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 501/621] smb: client: avoid using uninitialized SIDs in cifs_posix_to_fattr()
-Date: Tue, 13 Oct 2026 13:38:16 +0200
-Message-ID: <20261013112932.717095114@linuxfoundation.org>
+Subject: [PATCH 6.18 484/621] platform/x86: dell-wmi-base: Fix handling of ultra performance key
+Date: Tue, 13 Oct 2026 13:37:59 +0200
+Message-ID: <20261013112932.318227564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -49,77 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit da6e25842431982d5a53cf00d925b98c690f4467 ]
+[ Upstream commit adfd6846bea13667ff28f8aaf00c32fbd69825ab ]
 
-cifs_posix_to_fattr() ignores the return value of posix_info_parse().
-When a malformed POSIX directory entry is encountered (e.g. invalid
-SID lengths from an untrusted server), posix_info_parse() returns -1
-without populating the 'parsed' struct.  The uninitialized stack
-memory in parsed.owner and parsed.group is then passed to
-sid_to_id(), which processes the garbage bytes and passes them to
-request_key() to construct a SID string, potentially leaking kernel
-stack contents to the userspace idmap daemon.
+The commit message of commit 5fbd827eb9c2 ("platform/x86: dell-wmi: Recognise or support new switches")
+states that the ultra performance key contains additional data
+after the type and code fields. The event data passed to
+dell_wmi_process_key() is already parsed, so "buffer" already
+starts after those two fields.
 
-Fix this by checking the return value and skipping the SID-to-id
-mapping when parsing fails.  The remaining fattr fields (timestamps,
-mode, etc.) are populated directly from the 'info' pointer so they
-are unaffected.
+Use the correct index for accessing the first data field to avoid
+a potential buffer overread.
 
-Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
-Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
+Fixes: 5fbd827eb9c2 ("platform/x86: dell-wmi: Recognise or support new switches")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260612173451.467629-4-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 9ca859a2451ea..fb537a1ceb8b4 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -243,8 +243,9 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		    struct cifs_sb_info *cifs_sb)
- {
- 	struct smb2_posix_info_parsed parsed;
-+	int rc;
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index ba6c88e2a5ec0..1f922559e92fb 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -454,7 +454,7 @@ static int dell_wmi_process_key(struct wmi_device *wdev, int type, int code, u16
+ 			key++;
+ 		used = 1;
+ 	} else if (type == 0x0012 && code == 0x000d && remaining > 0) {
+-		value = (buffer[2] == 2);
++		value = (buffer[0] == 2);
+ 		used = 1;
+ 	}
  
--	posix_info_parse(info, NULL, &parsed);
-+	rc = posix_info_parse(info, NULL, &parsed);
- 
- 	memset(fattr, 0, sizeof(*fattr));
- 	fattr->cf_uniqueid = le64_to_cpu(info->Inode);
-@@ -281,8 +282,15 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		 le32_to_cpu(info->ReparseTag),
- 		 le32_to_cpu(info->Mode));
- 
--	sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
--	sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+	if (rc < 0) {
-+		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
-+			 __func__, rc);
-+	} else {
-+		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
-+		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
-+	}
- }
- 
- static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
 -- 
 2.53.0
 
