@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324A34E7816;
-	Tue, 13 Oct 2026 12:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5CC47AF65;
+	Tue, 13 Oct 2026 12:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894351; cv=none; b=KJE8K9oNiTyySqtRMnuizWVR0iQaDQ3gIemBLHRtTazQxBjIOBMdeb0zivXHEQuBGPM7dmPZGKwdx1RcSNwImDJUYbFJ58qCVFwMlIrwzuh8a2f1Cip0mAbaeQGX9ZtgSLNuhFA7vHUzj+ZMKdlP/NLto8dnIEqAri3jYRyMExk=
+	t=1791894354; cv=none; b=QzTgIxVGzwmXn4ROnKeCIoPOEHVuYQWi011zB3BFVY2cxYqOR9AQdi3bt1cY6DbTtdFwlAN0JqG18wdBpqgA3PgoaShSK8AW+qOrYWtg65ywTnspSgdHytO34nPBXCLoN3aXVz/HdGM77ACtDagXrP0nu974fXhe7xQteVQSTV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894351; c=relaxed/simple;
-	bh=mwIweXRL3m97mjmIjfDmwrjINYNBemfrJ5iVuo5n+6Y=;
+	s=arc-20240116; t=1791894354; c=relaxed/simple;
+	bh=D5mpenJ2EjObmNw+aUin5Eyggu/VzlGhS97vcKJknEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sxAPsP3IRghG/v9MIGfPw0ddz8PHjUIvywLuniUii9YMpfDqjdG5ngpZcEXHlUr+7FcAxmfOaPOCJNxJiWL7aPS37cSdWJ4MpsM68mQ0KkrwEOoWH/Z3/wR6db2rb9qIgDU784fTW0ur6VVndIvLQ4+fTPnhtaEbu9l6tQxPa2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch2bdFIc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BCAIMDpLWk19iTVeO5NJvOkLHLAwtsLCyWDcWEkOaWgwRxDPCF8QcWX8xGpUTKMZ1Q0tOX0jmwiml3EeeCX0Y2aFW3TADAcIf90nWUoh0wUN1RZcAgwoWjH7Pechr0HYOcUaELBJ/9zUJ4OjOnruJoTlhp9uhtyEj2G/Se6+I2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhfUihxO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch2bdFIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758021F000FF;
-	Tue, 13 Oct 2026 12:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhfUihxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3231F000FF;
+	Tue, 13 Oct 2026 12:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894350;
-	bh=6NhYpT1s0SzcSKYpGyybF2OEFgQNBBIMOeHxBJJWCOM=;
+	s=korg; t=1791894353;
+	bh=rKj2p715VMzo/NbHjI3gCj/R06xiqYEF/N/3AW+Bw+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ch2bdFIcdpShPm4ByHaps/0DU+/Qmmt6FbjjTFaWs9fAQfbrwdtpzcKT+3khQO1Gk
-	 cGkp0kxMKcRTYRteFzgfuD1g/VmyqgoExpqJNlr1KtLm8mNha2GSZarusB08zwSrCM
-	 Nb9SL5HP41fQN9ViRH+OXcu9p5wHF7pjNqh67MoM=
+	b=QhfUihxOL3uARHrDC2b35IukNl1aQUwNK3X0DOg4fGA3DHOlUNF45+ALEcWSnVUiq
+	 xCedIW4DKlqDJ9uLsrslQzLCkVn8zazenKkNo7hJEk4C8vRcIClO/P7R0nhBzZxUgk
+	 1lAzcHK6e9lApt67ZUW7kZfE/HYRBcSM1wg7c0N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alex Bereza <alex@bereza.email>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 487/621] uprobes/x86: Move optimized uprobe from nop5 to nop10
-Date: Tue, 13 Oct 2026 13:38:02 +0200
-Message-ID: <20261013112932.387868728@linuxfoundation.org>
+Subject: [PATCH 6.18 488/621] dmaengine: xilinx_dma: Fix CPU stall in xilinx_dma_poll_timeout
+Date: Tue, 13 Oct 2026 13:38:03 +0200
+Message-ID: <20261013112932.410790972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -47,627 +47,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Alex Bereza <alex@bereza.email>
 
-[ Upstream commit 554ba38456dad8053a1a80afe6ae6da9eff745cc ]
+[ Upstream commit aa99c4d1d63bbc26a5fc4c667d89b2595743c19d ]
 
-Andrii reported an issue with optimized uprobes [1] that can clobber
-redzone area with call instruction storing return address on stack
-where user code may keep temporary data without adjusting rsp.
+Currently when calling xilinx_dma_poll_timeout with delay_us=0 and a
+condition that is never fulfilled, the CPU busy-waits for prolonged time
+and the timeout triggers only with a massive delay causing a CPU stall.
 
-Fixing this by moving the optimized uprobes on top of 10-bytes nop
-instruction, so we can squeeze another instruction to escape the
-redzone area before doing the call, like:
+This happens due to a huge underestimation of wall clock time in
+poll_timeout_us_atomic. Commit 7349a69cf312 ("iopoll: Do not use
+timekeeping in read_poll_timeout_atomic()") changed the behavior to no
+longer use ktime_get at the expense of underestimation of wall clock
+time which appears to be very large for delay_us=0. Instead of timing
+out after approximately XILINX_DMA_LOOP_COUNT microseconds, the timeout
+takes XILINX_DMA_LOOP_COUNT * 1000 * (time that the overhead of the for
+loop in poll_timeout_us_atomic takes) which is in the range of several
+minutes for XILINX_DMA_LOOP_COUNT=1000000. Fix this by using a non-zero
+value for delay_us. Use delay_us=10 to keep the delay in the hot path of
+starting DMA transfers minimal but still avoid CPU stalls in case of
+unexpected hardware failures.
 
-  lea -0x80(%rsp), %rsp
-  call tramp
+One-off measurement with delay_us=0 causes the cpu to busy wait around 7
+minutes in the timeout case. After applying this patch with delay_us=10
+the measured timeout was 1053428 microseconds which is roughly
+equivalent to the expected 1000000 microseconds specified in
+XILINX_DMA_LOOP_COUNT.
 
-Note the lea instruction is used to adjust the rsp register without
-changing the flags.
+Add a constant XILINX_DMA_POLL_DELAY_US for delay_us value.
 
-We use nop10 and following transformation to optimized instructions
-above and back as suggested by Peterz [2].
-
-Optimize path (int3_update_optimize):
-
-  1) Initial state after set_swbp() installed the uprobe:
-      cc 2e 0f 1f 84 00 00 00 00 00
-
-     From offset 0 this is INT3 followed by the tail of the original
-     10-byte NOP.
-
-     After a previous unoptimization bytes 5..9 may still contain the
-     old call instruction, which remains valid for threads already there.
-
-  2) Rewrite the LEA tail and call displacement:
-      cc [8d 64 24 80 e8 d0 d1 d2 d3]
-
-     From offset 0 this traps on the uprobe INT3.  Bytes 1..9 are not
-     executable entry points while byte 0 is trapped.
-
-  3) Publish the first LEA byte:
-      [48] 8d 64 24 80 e8 d0 d1 d2 d3
-
-     From offset 0 this is:
-        lea -0x80(%rsp), %rsp
-        call <uprobe-trampoline>
-
-Unoptimize path (int3_update_unoptimize):
-
-  1) Initial optimized state:
-      48 8d 64 24 80 e8 d0 d1 d2 d3
-     Same as 3) above.
-
-  2) Trap new entries before restoring the NOP bytes:
-      [cc] 8d 64 24 80 e8 d0 d1 d2 d3
-
-     From offset 0 this traps. A thread that had already executed the
-     LEA can still reach the intact CALL at offset 5.
-
-  3) Restore bytes 1..4 of the original NOP while keeping byte 0 trapped
-     and byte 5 as CALL.
-      cc [2e 0f 1f 84] e8 d0 d1 d2 d3
-
-     From offset 0 this still traps. Offset 5 is still the CALL for any
-     thread that was already past the first LEA byte.
-
-  4) Publish the first byte of the original NOP:
-      [66] 2e 0f 1f 84 e8 d0 d1 d2 d3
-
-     From offset 0 this is the restored 10-byte NOP; the CALL opcode and
-     displacement are now only NOP operands.  Offset 5 still decodes as
-     CALL for a thread that was already there.
-
-     Tthere is only a single target uprobe-trampoline for the given nop10
-     instruction address, so the CALL instruction will not be changed across
-     unoptimization/optimization cycles.
-     Therefore, any task that is preempted at the CALL instruction is guaranteed
-     to observe that CALL and not anything else.
-
-Note as explained in [2] we need to use following nop10:
-       PF1   PF2   ESC   NOPL  MOD   SIB   DISP32
-NOP10: 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 -- cs nopw 0x00000000(%rax,%rax,1)
-
-which means we need to allow 0x2e prefix which maps to INAT_PFX_CS
-attribute in is_prefix_bad function.
-
-Also changing the uprobe syscall error when called out of uprobe
-trampoline to -EPROTO, so we are able to detect the fixed kernel.
-
-The optimized uprobe performance stays the same:
-
-        uprobe-nop     :    3.129 ± 0.013M/s
-        uprobe-push    :    3.045 ± 0.006M/s
-        uprobe-ret     :    1.095 ± 0.004M/s
-  -->   uprobe-nop10   :    7.170 ± 0.020M/s
-        uretprobe-nop  :    2.143 ± 0.021M/s
-        uretprobe-push :    2.090 ± 0.000M/s
-        uretprobe-ret  :    0.942 ± 0.000M/s
-  -->   uretprobe-nop10:    3.381 ± 0.003M/s
-        usdt-nop       :    3.245 ± 0.004M/s
-  -->   usdt-nop10     :    7.256 ± 0.023M/s
-
-[1] https://lore.kernel.org/bpf/20260509003146.976844-1-andrii@kernel.org/
-[2] https://lore.kernel.org/bpf/20260518104306.GU3102624@noisy.programming.kicks-ass.net/#t
-
-Closes: https://lore.kernel.org/bpf/20260509003146.976844-1-andrii@kernel.org/
-Fixes: ba2bfc97b462 ("uprobes/x86: Add support to optimize uprobes")
-Reported-by: Andrii Nakryiko <andrii@kernel.org>
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260703114917.238144-6-jolsa@kernel.org
+Fixes: 9495f2648287 ("dmaengine: xilinx_vdma: Use readl_poll_timeout instead of do while loop's")
+Fixes: 7349a69cf312 ("iopoll: Do not use timekeeping in read_poll_timeout_atomic()")
+Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Alex Bereza <alex@bereza.email>
+Link: https://patch.msgid.link/20260402-fix-atomic-poll-timeout-regression-v4-1-f30d6a6c13cb@bereza.email
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 292 ++++++++++++++++++++++++++++----------
- 1 file changed, 216 insertions(+), 76 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index ae347e3837851..cff7252752175 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -276,15 +276,9 @@ static bool is_prefix_bad(struct insn *insn)
- 	return false;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 8b010e0e0c5c4..94d2e5398dd69 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -167,6 +167,8 @@
+ 
+ /* Delay loop counter to prevent hardware failure */
+ #define XILINX_DMA_LOOP_COUNT		1000000
++/* Delay between polls (avoid a delay of 0 to prevent CPU stalls) */
++#define XILINX_DMA_POLL_DELAY_US	10
+ 
+ /* AXI DMA Specific Registers/Offsets */
+ #define XILINX_DMA_REG_SRCDSTADDR	0x18
+@@ -1316,7 +1318,8 @@ static int xilinx_dma_stop_transfer(struct xilinx_dma_chan *chan)
+ 
+ 	/* Wait for the hardware to halt */
+ 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				       val & XILINX_DMA_DMASR_HALTED, 0,
++				       val & XILINX_DMA_DMASR_HALTED,
++				       XILINX_DMA_POLL_DELAY_US,
+ 				       XILINX_DMA_LOOP_COUNT);
  }
  
--static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn, bool x86_64)
-+static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn)
- {
--	enum insn_mode m = x86_64 ? INSN_MODE_64 : INSN_MODE_32;
- 	u32 volatile *good_insns;
--	int ret;
--
--	ret = insn_decode(insn, auprobe->insn, sizeof(auprobe->insn), m);
--	if (ret < 0)
--		return -ENOEXEC;
+@@ -1331,7 +1334,8 @@ static int xilinx_cdma_stop_transfer(struct xilinx_dma_chan *chan)
+ 	u32 val;
  
- 	if (is_prefix_bad(insn))
- 		return -ENOTSUPP;
-@@ -293,7 +287,7 @@ static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn, bool
- 	if (insn_masking_exception(insn))
- 		return -ENOTSUPP;
- 
--	if (x86_64)
-+	if (insn->x86_64)
- 		good_insns = good_insns_64;
- 	else
- 		good_insns = good_insns_32;
-@@ -636,9 +630,29 @@ struct uprobe_trampoline {
- 	unsigned long		vaddr;
- };
- 
-+
-+#define LEA_INSN_SIZE		5
-+#define OPT_INSN_SIZE		(LEA_INSN_SIZE + CALL_INSN_SIZE)
-+#define REDZONE_SIZE		0x80
-+
-+static const u8 lea_rsp[] = { 0x48, 0x8d, 0x64, 0x24, 0x80 };
-+
-+static bool is_opt_insns(const uprobe_opcode_t *insn)
-+{
-+	return !memcmp(insn, lea_rsp, LEA_INSN_SIZE) &&
-+	       insn[LEA_INSN_SIZE] == CALL_INSN_OPCODE;
-+}
-+
-+static bool is_swbp_opt_insns(uprobe_opcode_t *insn)
-+{
-+	return is_swbp_insn(&insn[0]) &&
-+	       !memcmp(&insn[1], &lea_rsp[1], LEA_INSN_SIZE - 1) &&
-+	       insn[LEA_INSN_SIZE] == CALL_INSN_OPCODE;
-+}
-+
- static bool is_reachable_by_call(unsigned long vtramp, unsigned long vaddr)
- {
--	long delta = (long)(vaddr + 5 - vtramp);
-+	long delta = (long)(vaddr + OPT_INSN_SIZE - vtramp);
- 
- 	return delta >= INT_MIN && delta <= INT_MAX;
- }
-@@ -651,7 +665,7 @@ static unsigned long find_nearest_trampoline(unsigned long vaddr)
- 	};
- 	unsigned long low_limit, high_limit;
- 	unsigned long low_tramp, high_tramp;
--	unsigned long call_end = vaddr + 5;
-+	unsigned long call_end = vaddr + OPT_INSN_SIZE;
- 
- 	if (check_add_overflow(call_end, INT_MIN, &low_limit))
- 		low_limit = PAGE_SIZE;
-@@ -810,7 +824,7 @@ SYSCALL_DEFINE0(uprobe)
- 
- 	/* Allow execution only from uprobe trampolines. */
- 	if (!in_uprobe_trampoline(regs->ip))
--		return -ENXIO;
-+		return -EPROTO;
- 
- 	err = copy_from_user(&args, (void __user *)regs->sp, sizeof(args));
- 	if (err)
-@@ -826,8 +840,8 @@ SYSCALL_DEFINE0(uprobe)
- 	regs->ax  = args.ax;
- 	regs->r11 = args.r11;
- 	regs->cx  = args.cx;
--	regs->ip  = args.retaddr - 5;
--	regs->sp += sizeof(args);
-+	regs->ip  = args.retaddr - OPT_INSN_SIZE;
-+	regs->sp += sizeof(args) + REDZONE_SIZE;
- 	regs->orig_ax = -1;
- 
- 	sp = regs->sp;
-@@ -844,12 +858,12 @@ SYSCALL_DEFINE0(uprobe)
- 	 */
- 	if (regs->sp != sp) {
- 		/* skip the trampoline call */
--		if (args.retaddr - 5 == regs->ip)
--			regs->ip += 5;
-+		if (args.retaddr - OPT_INSN_SIZE == regs->ip)
-+			regs->ip += OPT_INSN_SIZE;
- 		return regs->ax;
- 	}
- 
--	regs->sp -= sizeof(args);
-+	regs->sp -= sizeof(args) + REDZONE_SIZE;
- 
- 	/* for the case uprobe_consumer has changed ax/r11/cx */
- 	args.ax  = regs->ax;
-@@ -857,7 +871,7 @@ SYSCALL_DEFINE0(uprobe)
- 	args.cx  = regs->cx;
- 
- 	/* keep return address unless we are instructed otherwise */
--	if (args.retaddr - 5 != regs->ip)
-+	if (args.retaddr - OPT_INSN_SIZE != regs->ip)
- 		args.retaddr = regs->ip;
- 
- 	if (shstk_push(args.retaddr) == -EFAULT)
-@@ -891,7 +905,7 @@ asm (
- 	"pop %rax\n"
- 	"pop %r11\n"
- 	"pop %rcx\n"
--	"ret\n"
-+	"ret $" __stringify(REDZONE_SIZE) "\n"
- 	"int3\n"
- 	".balign " __stringify(PAGE_SIZE) "\n"
- 	".popsection\n"
-@@ -909,7 +923,8 @@ late_initcall(arch_uprobes_init);
- 
- enum {
- 	EXPECT_SWBP,
--	EXPECT_CALL,
-+	EXPECT_OPTIMIZED,
-+	EXPECT_SWBP_OPTIMIZED,
- };
- 
- struct write_opcode_ctx {
-@@ -917,30 +932,29 @@ struct write_opcode_ctx {
- 	int expect;
- };
- 
--static int is_call_insn(uprobe_opcode_t *insn)
--{
--	return *insn == CALL_INSN_OPCODE;
--}
--
- /*
-- * Verification callback used by int3_update uprobe_write calls to make sure
-- * the underlying instruction is as expected - either int3 or call.
-+ * Verification callback used by uprobe_write calls to make sure the underlying
-+ * instruction is in the expected stage of the INT3 update sequence.
-  */
- static int verify_insn(struct page *page, unsigned long vaddr, uprobe_opcode_t *new_opcode,
- 		       int nbytes, void *data)
- {
- 	struct write_opcode_ctx *ctx = data;
--	uprobe_opcode_t old_opcode[5];
-+	uprobe_opcode_t old_opcode[OPT_INSN_SIZE];
- 
--	uprobe_copy_from_page(page, ctx->base, (uprobe_opcode_t *) &old_opcode, 5);
-+	uprobe_copy_from_page(page, ctx->base, old_opcode, OPT_INSN_SIZE);
- 
- 	switch (ctx->expect) {
- 	case EXPECT_SWBP:
- 		if (is_swbp_insn(&old_opcode[0]))
- 			return 1;
- 		break;
--	case EXPECT_CALL:
--		if (is_call_insn(&old_opcode[0]))
-+	case EXPECT_OPTIMIZED:
-+		if (is_opt_insns(&old_opcode[0]))
-+			return 1;
-+		break;
-+	case EXPECT_SWBP_OPTIMIZED:
-+		if (is_swbp_opt_insns(&old_opcode[0]))
- 			return 1;
- 		break;
- 	}
-@@ -949,48 +963,122 @@ static int verify_insn(struct page *page, unsigned long vaddr, uprobe_opcode_t *
+ 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				       val & XILINX_DMA_DMASR_IDLE, 0,
++				       val & XILINX_DMA_DMASR_IDLE,
++				       XILINX_DMA_POLL_DELAY_US,
+ 				       XILINX_DMA_LOOP_COUNT);
  }
  
- /*
-- * Modify multi-byte instructions by using INT3 breakpoints on SMP.
-+ * Modify the optimized instruction by using INT3 breakpoints on SMP.
-  * We completely avoid using stop_machine() here, and achieve the
-  * synchronization using INT3 breakpoints and SMP cross-calls.
-  * (borrowed comment from smp_text_poke_batch_finish)
-  *
-- * The way it is done:
-- *   - Add an INT3 trap to the address that will be patched
-- *   - SMP sync all CPUs
-- *   - Update all but the first byte of the patched range
-- *   - SMP sync all CPUs
-- *   - Replace the first byte (INT3) by the first byte of the replacing opcode
-- *   - SMP sync all CPUs
-+ * For optimization (int3_update_optimize):
-+ *   1) Start with the uprobe INT3 trap already installed
-+ *   2) Update everything but the first byte
-+ *   3) Replace the first INT3 by the first byte of the LEA instruction
-+ *
-+ * For unoptimization (int3_update_unoptimize):
-+ *   1) Start with the optimized uprobe lea/call instructions
-+ *   2) Add an INT3 trap to the address that will be patched
-+ *   3) Restore the NOP bytes before the call opcode
-+ *   4) Replace the first INT3 by the first byte of the NOP instruction
-+ *
-+ * Note that unoptimization deliberately keeps the call opcode and displacement
-+ * in bytes 5..9. Those bytes become operands of the restored 10-byte NOP.
-+ *
-+ * Since there is only a single target uprobe-trampoline for the given nop10
-+ * instruction address, the CALL instruction will not be changed across
-+ * unoptimization/optimization cycles.
-+ * Therefore, any task that is preempted at the CALL instruction is guaranteed
-+ * to observe that CALL and not anything else.
-  */
--static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
--		       unsigned long vaddr, char *insn, bool optimize)
-+static int int3_update_optimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
-+				unsigned long vaddr, uprobe_opcode_t *insn)
- {
--	uprobe_opcode_t int3 = UPROBE_SWBP_INSN;
- 	struct write_opcode_ctx ctx = {
- 		.base = vaddr,
- 	};
- 	int err;
+@@ -1348,7 +1352,8 @@ static void xilinx_dma_start(struct xilinx_dma_chan *chan)
  
- 	/*
--	 * Write int3 trap.
-+	 * 1) Initial state after set_swbp() installed the uprobe:
-+	 *    cc 2e 0f 1f 84 00 00 00 00 00
- 	 *
--	 * The swbp_optimize path comes with breakpoint already installed,
--	 * so we can skip this step for optimize == true.
-+	 *    After a previous unoptimization bytes 5..9 may still contain the
-+	 *    old call instruction, which remains valid for threads already there.
- 	 */
--	if (!optimize) {
--		ctx.expect = EXPECT_CALL;
--		err = uprobe_write(auprobe, vma, vaddr, &int3, 1, verify_insn,
--				   true /* is_register */, false /* do_update_ref_ctr */,
--				   &ctx);
--		if (err)
--			return err;
--	}
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 2) Rewrite the LEA tail and call displacement:
-+	 *    cc [8d 64 24 80 e8 d0 d1 d2 d3]
-+	 */
-+	ctx.expect = EXPECT_SWBP;
-+	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1,
-+			   OPT_INSN_SIZE - 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		return err;
-+
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 3) Publish the first LEA byte:
-+	 *    [48] 8d 64 24 80 e8 d0 d1 d2 d3
-+	 *
-+	 *    From offset 0 this is:
-+	 *      lea -0x80(%rsp), %rsp
-+	 *      call <uprobe-trampoline>
-+	 */
-+	ctx.expect = EXPECT_SWBP_OPTIMIZED;
-+	err = uprobe_write(auprobe, vma, vaddr, insn, 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		goto error;
+ 	/* Wait for the hardware to start */
+ 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				      !(val & XILINX_DMA_DMASR_HALTED), 0,
++				      !(val & XILINX_DMA_DMASR_HALTED),
++				      XILINX_DMA_POLL_DELAY_US,
+ 				      XILINX_DMA_LOOP_COUNT);
  
- 	smp_text_poke_sync_each_cpu();
-+	return 0;
+ 	if (err) {
+@@ -1783,7 +1788,8 @@ static int xilinx_dma_reset(struct xilinx_dma_chan *chan)
  
--	/* Write all but the first byte of the patched range. */
-+error:
-+	/*
-+	 * In all intermediate states byte 0 is INT3, so EXPECT_SWBP covers every
-+	 * case. Restore NOP bytes 1..4, but keep the valid CALL at bytes 5..9
-+	 * for a thread that had already executed the LEA before a previous
-+	 * unoptimization.
-+	 */
- 	ctx.expect = EXPECT_SWBP;
--	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1, 4, verify_insn,
-+	uprobe_write(auprobe, vma, vaddr + 1, auprobe->insn + 1,
-+		     LEA_INSN_SIZE - 1, verify_insn, true, false, &ctx);
-+	smp_text_poke_sync_each_cpu();
-+	return err;
-+}
-+
-+static int int3_update_unoptimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
-+				  unsigned long vaddr, uprobe_opcode_t *insn)
-+{
-+	uprobe_opcode_t int3 = UPROBE_SWBP_INSN;
-+	struct write_opcode_ctx ctx = {
-+		.base = vaddr,
-+		.expect = EXPECT_OPTIMIZED,
-+	};
-+	int err;
-+
-+	/*
-+	 * Note the first two uprobe_write calls use is_register=true, because they
-+	 * are intermediate patching states while the probe is still active, so
-+	 * we force the exclusive anonymous page for the update.
-+	 * Also we use do_update_ref_ctr=false because refctr was already updated by
-+	 * the initial int3 install.
-+	 *
-+	 * The last uprobe_write to nop10 instruction is called with is_register=false
-+	 * and do_update_ref_ctr=true to trigger the refctr update and to instruct
-+	 * uprobe_write to zap the anonymous page if it now matches the file page.
-+	 *
-+	 * 1) Initial optimized state:
-+	 *    48 8d 64 24 80 e8 d0 d1 d2 d3
-+	 *
-+	 * 2) Trap new entries before restoring the NOP bytes:
-+	 *    [cc] 8d 64 24 80 e8 d0 d1 d2 d3
-+	 */
-+	err = uprobe_write(auprobe, vma, vaddr, &int3, 1, verify_insn,
- 			   true /* is_register */, false /* do_update_ref_ctr */,
- 			   &ctx);
- 	if (err)
-@@ -999,13 +1087,31 @@ static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 	smp_text_poke_sync_each_cpu();
+ 	/* Wait for the hardware to finish reset */
+ 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMACR, tmp,
+-				      !(tmp & XILINX_DMA_DMACR_RESET), 0,
++				      !(tmp & XILINX_DMA_DMACR_RESET),
++				      XILINX_DMA_POLL_DELAY_US,
+ 				      XILINX_DMA_LOOP_COUNT);
  
- 	/*
--	 * Write first byte.
-+	 * 3) Restore bytes 1..4 of the original NOP while keeping byte 0 trapped
-+	 *    and byte 5 as CALL:
-+	 *    cc [2e 0f 1f 84] e8 d0 d1 d2 d3
-+	 */
-+	ctx.expect = EXPECT_SWBP_OPTIMIZED;
-+	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1,
-+			   LEA_INSN_SIZE - 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		return err;
-+
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 4) Publish the first byte of the original NOP:
-+	 *    [66] 2e 0f 1f 84 e8 d0 d1 d2 d3
- 	 *
--	 * The swbp_unoptimize needs to finish uprobe removal together
--	 * with ref_ctr update, using uprobe_write with proper flags.
-+	 * From offset 0 this is the restored 10-byte NOP; the CALL opcode and
-+	 * displacement are now only NOP operands.  Offset 5 still decodes as
-+	 * CALL for a thread that was already there.
- 	 */
-+	ctx.expect = EXPECT_SWBP;
- 	err = uprobe_write(auprobe, vma, vaddr, insn, 1, verify_insn,
--			   optimize /* is_register */, !optimize /* do_update_ref_ctr */,
-+			   false /* is_register */, true /* do_update_ref_ctr */,
- 			   &ctx);
- 	if (err)
- 		return err;
-@@ -1017,17 +1123,25 @@ static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- static int swbp_optimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 			 unsigned long vaddr, unsigned long tramp)
- {
--	u8 call[5];
-+	u8 insn[OPT_INSN_SIZE], *call = &insn[LEA_INSN_SIZE];
- 
--	__text_gen_insn(call, CALL_INSN_OPCODE, (const void *) vaddr,
-+	/*
-+	 * We have nop10 instruction (with first byte overwritten to int3),
-+	 * changing it to:
-+	 *   lea -0x80(%rsp), %rsp
-+	 *   call tramp
-+	 */
-+	memcpy(insn, lea_rsp, LEA_INSN_SIZE);
-+	__text_gen_insn(call, CALL_INSN_OPCODE,
-+			(const void *) (vaddr + LEA_INSN_SIZE),
- 			(const void *) tramp, CALL_INSN_SIZE);
--	return int3_update(auprobe, vma, vaddr, call, true /* optimize */);
-+	return int3_update_optimize(auprobe, vma, vaddr, insn);
- }
- 
- static int swbp_unoptimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 			   unsigned long vaddr)
- {
--	return int3_update(auprobe, vma, vaddr, auprobe->insn, false /* optimize */);
-+	return int3_update_unoptimize(auprobe, vma, vaddr, auprobe->insn);
- }
- 
- static int copy_from_vaddr(struct mm_struct *mm, unsigned long vaddr, void *dst, int len)
-@@ -1049,19 +1163,19 @@ static bool __is_optimized(struct mm_struct *mm, uprobe_opcode_t *insn, unsigned
- 	struct __packed __arch_relative_insn {
- 		u8 op;
- 		s32 raddr;
--	} *call = (struct __arch_relative_insn *) insn;
-+	} *call = (struct __arch_relative_insn *)(insn + LEA_INSN_SIZE);
- 
--	if (!is_call_insn(insn))
-+	if (!is_opt_insns(insn))
- 		return false;
--	return __in_uprobe_trampoline(mm, vaddr + 5 + call->raddr);
-+	return __in_uprobe_trampoline(mm, vaddr + OPT_INSN_SIZE + call->raddr);
- }
- 
- static int is_optimized(struct mm_struct *mm, unsigned long vaddr)
- {
--	uprobe_opcode_t insn[5];
-+	uprobe_opcode_t insn[OPT_INSN_SIZE];
- 	int err;
- 
--	err = copy_from_vaddr(mm, vaddr, &insn, 5);
-+	err = copy_from_vaddr(mm, vaddr, &insn, OPT_INSN_SIZE);
- 	if (err)
- 		return err;
- 	return __is_optimized(mm, (uprobe_opcode_t *)&insn, vaddr);
-@@ -1131,7 +1245,7 @@ static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct
- void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
- {
- 	struct mm_struct *mm = current->mm;
--	uprobe_opcode_t insn[5];
-+	uprobe_opcode_t insn[OPT_INSN_SIZE];
- 
- 	if (!should_optimize(auprobe))
- 		return;
-@@ -1142,7 +1256,7 @@ void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
- 	 * Check if some other thread already optimized the uprobe for us,
- 	 * if it's the case just go away silently.
- 	 */
--	if (copy_from_vaddr(mm, vaddr, &insn, 5))
-+	if (copy_from_vaddr(mm, vaddr, &insn, OPT_INSN_SIZE))
- 		goto unlock;
- 	if (!is_swbp_insn((uprobe_opcode_t*) &insn))
- 		goto unlock;
-@@ -1181,16 +1295,32 @@ static bool insn_is_nopl(struct insn *insn)
- 	return true;
- }
- 
-+static bool is_optimizable_nop10(struct insn *insn)
-+{
-+	static const u8 nop10_prefix[] = {
-+		0x66, 0x2e, 0x0f, 0x1f, 0x84
-+	};
-+
-+	/*
-+	 * Restrict this to the 10-byte NOP form whose last 5 bytes are
-+	 * SIB/displacement operands. Unoptimization keeps the call opcode and
-+	 * displacement in those bytes, so other NOP encodings are not safe.
-+	 */
-+	return insn->length == OPT_INSN_SIZE &&
-+	       (insn_is_nop(insn) || insn_is_nopl(insn)) &&
-+	       !memcmp(insn->kaddr, nop10_prefix, ARRAY_SIZE(nop10_prefix));
-+}
-+
- static bool can_optimize(struct insn *insn, unsigned long vaddr)
- {
--	if (!insn->x86_64 || insn->length != 5)
-+	if (!insn->x86_64)
- 		return false;
- 
--	if (!insn_is_nop(insn) && !insn_is_nopl(insn))
-+	if (!is_optimizable_nop10(insn))
- 		return false;
- 
- 	/* We can't do cross page atomic writes yet. */
--	return PAGE_SIZE - (vaddr & ~PAGE_MASK) >= 5;
-+	return PAGE_SIZE - (vaddr & ~PAGE_MASK) >= OPT_INSN_SIZE;
- }
- #else /* 32-bit: */
- /*
-@@ -1577,16 +1707,26 @@ static int push_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
-  */
- int arch_uprobe_analyze_insn(struct arch_uprobe *auprobe, struct mm_struct *mm, unsigned long addr)
- {
-+	enum insn_mode m = is_64bit_mm(mm) ? INSN_MODE_64 : INSN_MODE_32;
- 	u8 fix_ip_or_call = UPROBE_FIX_IP;
- 	struct insn insn;
- 	int ret;
- 
--	ret = uprobe_init_insn(auprobe, &insn, is_64bit_mm(mm));
--	if (ret)
--		return ret;
-+	ret = insn_decode(&insn, auprobe->insn, sizeof(auprobe->insn), m);
-+	if (ret < 0)
-+		return -ENOEXEC;
- 
--	if (can_optimize(&insn, addr))
-+	/*
-+	 * No need to check instruction in uprobe_init_insn in case we
-+	 * are on top of optimizable nop10.
-+	 */
-+	if (can_optimize(&insn, addr)) {
- 		set_bit(ARCH_UPROBE_FLAG_CAN_OPTIMIZE, &auprobe->flags);
-+	} else {
-+		ret = uprobe_init_insn(auprobe, &insn);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = branch_setup_xol_ops(auprobe, &insn);
- 	if (ret != -ENOSYS)
+ 	if (err) {
 -- 
 2.53.0
 
