@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA7E48A2C7;
-	Tue, 13 Oct 2026 12:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309DC4D9F7D;
+	Tue, 13 Oct 2026 12:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895342; cv=none; b=LNqcdJQpINWYac5Z8k2im9h+mouR66FhPEbK5Zuxg20yFxVmauV8Z1AumVKoS8iSkmMcPSZ4dZwVdYVlp9e/4SjPBv2MNi4GXOzCjOjUGrjTGo/v4yPZT4RVR5c4H8q9/5wuVflyWzrJ/f13QfivK8MpP+Ddac2BWJU6GprVdoI=
+	t=1791895345; cv=none; b=nb6TY0KqVD7TEPflY9J7BA6MGzTnrYIRUZSVvDbnH57Wh1sVi0tuiYwXKTkBm+NyR63gDC5tff0q/+MlY7jf8xN2VSkqYJ1aqj7zPgRcgTynjy1WO3yatvRCiLJ0eTNJli3ojSFeCeL5+a1FtMDYPCR1+8epx8uGaw7REkqNeTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895342; c=relaxed/simple;
-	bh=tX+td8t8eMAxM/5kgJzENKyg3HA/YSkl2MvLWjs31rY=;
+	s=arc-20240116; t=1791895345; c=relaxed/simple;
+	bh=gBAamRQj4VNVm+wbF1E6uXsO9jmv8DRfEugvwEdiYkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cza/arTvDbl2q4KnwVUH4AL7FNNMEgc4YWbK3uJBUHWSrNKZjRQYg2xmkrOpVd4jK0Epb2FKIdmBRk5+RprgEgGobb/JeKxlstJ72kCO+2CIF1OnJCLJLE8SrxSLhLy9ZklS2pj5jrvuDGZ5BIv/0qoZJy9ReKgmZbiY+eETmwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pirCnUTM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pKK+7vl0eKXBNMKuqeN4zQ/aVX6u005CskeFZVYBZpuXlratdiMXArqdAxBxtZ77kjDlksiVBwmLTy7ljDk7BWPKnc+8jsIqw95GTSp6+VVBoUunHuxDBWb+tsTOr1bQVW36X9+yKFNif92vqczYymaYQZbVHPzL3d/Ft+a1qkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmMmZM4O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pirCnUTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5541F000FF;
-	Tue, 13 Oct 2026 12:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmMmZM4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887771F000FF;
+	Tue, 13 Oct 2026 12:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895341;
-	bh=JIDPbXJKfIVM9xCBjDhoZjDYyfF8gLZs9l3L68o5DY4=;
+	s=korg; t=1791895344;
+	bh=8DVrGo83i7673ACQzcdOUfxwEvKSpB2Q3lJxxP3iPJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pirCnUTMZ1q09WBoDHwRuTyCww4njM1LUWvsdS4CySQvocVTP4sbCvYbtzufTo7Ea
-	 Bzq5wEmlr4HXFSFo919dSnkyMekO6yZ1K6Am4Xfc8P5TbsiS0JVEYLJ0Zk9P45qzaV
-	 pI5tgs9Jn6MWearYuV8NK8O9iNpYWI+CX6+BTwgU=
+	b=bmMmZM4ODYEeAQvmy1UQvIvS899I/xff1Wz/O8XMgjEIOXQfZd3WNSu+VWHeOPOzU
+	 GbHgtqbgkLaLeE8ue1smH8J7NgkdFNX9Ggm8DSa1TEtTQ3LXYIDNrrvoauU154Wz6T
+	 Ziv1AswfNbqPHyOL60G/5v1GqvrMcD8ZJjWxZv3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Marco Chen <marcochen.dev@gmail.com>,
+	Arka Mondal <arkamondalofficial@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 243/497] iio: health: max30102: fix NULL dereference in interrupt handler
-Date: Tue, 13 Oct 2026 13:36:50 +0200
-Message-ID: <20261013112913.663180275@linuxfoundation.org>
+Subject: [PATCH 6.12 244/497] iio: imu: adis16400: fix unprotected debugfs reads
+Date: Tue, 13 Oct 2026 13:36:51 +0200
+Message-ID: <20261013112913.687328687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,58 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Chen <marcochen.dev@gmail.com>
+From: Arka Mondal <arkamondalofficial@gmail.com>
 
-commit f0ea4824deebf21dacfbe397c4b0a5fd3e745a8d upstream.
+commit d94787287a113a1326211647d5e0deed1e9de105 upstream.
 
-The interrupt is requested in max30102_probe() and stays enabled
-for the lifetime of the device, but indio_dev->active_scan_mask is only
-valid while a buffer is enabled. When an interrupt arrives while no
-buffer is enabled, the handler dereferences the NULL active_scan_mask:
+adis16400_serial_number_fops is open coded and never calls
+debugfs_file_get(), so debugfs_remove_recursive() does not wait for a
+read in progress and unbind frees the iio_dev underneath it.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Call trace:
-   __bitmap_weight+0x64/0x98 (P)
-   max30102_interrupt_handler+0x48/0x160 [max30102]
+Commit ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE
+instead of DEFINE_SIMPLE_ATTRIBUTE") converted product_id and
+flash_count to DEFINE_DEBUGFS_ATTRIBUTE, which protects itself, but
+moved all three files to debugfs_create_file_unsafe().
 
-Call max30102_fifo_count() at the top of the handler and return early
-unless it reports a FIFO sample is ready. Because FIFO_RDY is the only
-interrupt source enabled in max30102_chip_init(), an invocation of
-max30102_interrupt_handler() without the FIFO_RDY interrupt status bit
-set carries no data to read and can return before touching
-active_scan_mask. A negative return from max30102_fifo_count()
-indicates a failed interrupt status read and is treated the same way.
+serial_number prints three registers as "%.4x-%.4x-%.4x" and
+DEFINE_DEBUGFS_ATTRIBUTE() formats a single u64, so it cannot be
+converted without changing what the file returns. adis16475 and
+adis16550 already use debugfs_create_file() for their open coded
+files. Use it here too.
 
-Fixes: 90579b69e94b ("iio: health: max30102: Add MAX30105 support")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Marco Chen <marcochen.dev@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE instead of DEFINE_SIMPLE_ATTRIBUTE")
+Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/health/max30102.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/imu/adis16400.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/health/max30102.c
-+++ b/drivers/iio/health/max30102.c
-@@ -292,9 +292,15 @@ static irqreturn_t max30102_interrupt_ha
- {
- 	struct iio_dev *indio_dev = private;
- 	struct max30102_data *data = iio_priv(indio_dev);
--	unsigned int measurements = bitmap_weight(indio_dev->active_scan_mask,
--						  iio_get_masklength(indio_dev));
--	int ret, cnt = 0;
-+	unsigned int measurements;
-+	int ret, cnt;
-+
-+	cnt = max30102_fifo_count(data);
-+	if (cnt <= 0)
-+		return IRQ_HANDLED;
-+
-+	measurements = bitmap_weight(indio_dev->active_scan_mask,
-+				     iio_get_masklength(indio_dev));
+--- a/drivers/iio/imu/adis16400.c
++++ b/drivers/iio/imu/adis16400.c
+@@ -280,7 +280,7 @@ static void adis16400_debugfs_init(struc
+ 		return;
  
- 	mutex_lock(&data->lock);
- 
+ 	if (st->variant->flags & ADIS16400_HAS_SERIAL_NUMBER)
+-		debugfs_create_file_unsafe("serial_number", 0400,
++		debugfs_create_file("serial_number", 0400,
+ 				d, st, &adis16400_serial_number_fops);
+ 	if (st->variant->flags & ADIS16400_HAS_PROD_ID)
+ 		debugfs_create_file_unsafe("product_id", 0400,
 
 
