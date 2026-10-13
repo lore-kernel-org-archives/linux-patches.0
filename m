@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156C84ED1A2;
-	Tue, 13 Oct 2026 12:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EC64F93B3;
+	Tue, 13 Oct 2026 12:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895449; cv=none; b=KB3mUbcyhiUXxkTUXOB9CvLdqDFyAUzW0pwMvzgLgTuPfmYnKtoTMhsNz0ft27/op1lVOjX9MLQd1ScMB/IgChxXTnmZrpSGIKR0Q019/XDAI2cYaEg/wd9g5ruY1jfBXVPCo0Y7dIqqUrA2kc9pzLscQq6fln/9S/bHTWuBF38=
+	t=1791895452; cv=none; b=s+6W9ehshmQ4sxtGo/mQNl16TnqTL8Ke9kIQSwjGApDIpdkN6KyllyvahjoUvWriysWEf8gk8Q/salhO2pX18tGwSXLnz9lJGpKdyyLLjAM9/dQH5hGHFn4rR64O2KdP3KmBhk0ISGmbUIw9nS3fEgpAJF1QjQr94dtcRBdJ2l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895449; c=relaxed/simple;
-	bh=LZ5UVL9GNojB6wMgbsdKDW12QoRaXZoKDLG5WJMQbGA=;
+	s=arc-20240116; t=1791895452; c=relaxed/simple;
+	bh=nPBX70sDMAyVepWl5RuKjhgqPzga3uiTE8KNAUHwqgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2uRx8sXo7aaFmvs3NVFGrz+5EvA1/nl3hKveUE+ACJHBkTgC658+x77M6iex+BSdxaJhSyPMMA7siPkrXED6qTGK9n8mQ/VFQkz1q1AD+COiat1NT2+uNboHqhYtxriH+TFNDZ87Exy1B+7bSWgeJu5MGKp/kvWKbJ+H+TckCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx5zY2bV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKoVvYcVUIges8nfSY4FpjvpXTDPI86VSLkSMfsFzbETz9g3yb51Z+CpCTK9q8NYZs4Ub7PwAj2iRD1v7rrUxaN1W8Icz0MuEgmX1JwOaODDbhefhADPQLDOOENVq6Txgq7vRvclFm/vWTigVQ2iMZ0070yVXKeCRbaJ4KB0384=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16IFIXXj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx5zY2bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221261F000FF;
-	Tue, 13 Oct 2026 12:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16IFIXXj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DA41F000FF;
+	Tue, 13 Oct 2026 12:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895447;
-	bh=o8QumJyoEE2H2rPCBVVnzJjyM6svSYUsbqcSoYaKcBE=;
+	s=korg; t=1791895450;
+	bh=rRU+Zp8gSIMyrb/iuVuT5MUPTsHH418iCyi+bF0SwQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bx5zY2bVgKDO1qKWpgWeCpqXQHOz6AicjIa20xTLN2LoB/ccfxcxJY6vs4V2lvFjy
-	 cxXvKabi8tX7mssbUYpryi4tyJd2OIcUQqlqQLssJiKAHnvfwnokU7KL5Gam9FfY0n
-	 WoDapbs8G/hV5pu6wDPIV+Dj+gB91A0/2jHbf9ZI=
+	b=16IFIXXjRbdHgWtJlL5DNpa4L/sgqtBlRuS2hqH9W7X0T1LkIS3PRBFkRvYTBFfPS
+	 FMRL/yV6bVgBjHl1cUuCyiK5R1zsENS9nP5W2LXJzQb30gjbnwa7Eg39lf3bylItBd
+	 dCM8VFFeAYquqAOrdeaAXhSrDZXmmUXtTkpupMNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 234/497] iio: adc: stm32-adc: fix check on internal channel availability
-Date: Tue, 13 Oct 2026 13:36:41 +0200
-Message-ID: <20261013112913.451900661@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 225/497] thunderbolt: Fix KASAN reported use-after-free when request is canceled
+Date: Tue, 13 Oct 2026 13:36:32 +0200
+Message-ID: <20261013112913.234646949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,94 +50,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 9db3deeb2de485a9d412f0825f9ab4c8e2bccf44 upstream.
+commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
 
-If an unsupported internal channel like vddgpu is requested, the driver
-prints a warning but falls through and assigns it a valid int_ch below.
+Alan reported that when doing stress testing sometimes KASAN notices
+use-after-free during control channel operation (stripped down keeping
+the relevant parts):
 
-This causes a problem later during setup:
-stm32_adc_int_ch_enable() {
-    ...
-    case STM32_ADC_INT_CH_VDDGPU:
-        stm32_adc_set_bits(adc, adc->cfg->regs->or_vddgpu.reg,
-                           adc->cfg->regs->or_vddgpu.mask);
-    ...
-}
+ BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+ Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
+  <TASK>
+  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-Because the register offset is uninitialized (0), this performs a
-read-modify-write on offset 0, which corresponds to the ISR register.
+ Allocated by task 1760:
+  __kmalloc_cache_noprof+0x1ee/0x550
+  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Fix this by returning before a valid int_ch is assigned. Choice is
-made to keep current driver behavior to warn about the channel name.
+ Freed by task 926:
+  kfree+0x18f/0x4a0
+  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
+  tb_cfg_request_work+0x82/0x120 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Fixes: cf0fb80ae167 ("iio: adc: stm32-adc: add stm32mp13 support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260911162602.D323F1F000FF@smtp.kernel.org/
+ Second to last potentially related work creation:
+  __queue_work+0x575/0xd00
+  queue_work_on+0x77/0x80
+  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
+  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+
+The last stack trace is helpful because it shows that we are cancelling
+a request and looking at tb_cfg_request_cancel() what might happen is
+that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
+starts and because of this it will call schedule_work() queueing the
+same work to run again. However, it is already removed from the
+request_queue and reference count is dropped so when
+tb_cfg_request_work() triggers again it will access memory that is
+already released.
+
+Fix this so that we first make sure a cancelled request is not handed
+away from tb_cfg_request_find() or scheduled to run. Then instead of
+relying on the worker to clean up the request we will do it in
+tb_cfg_request_cancel() after the work is canceled from running. Make
+tb_cfg_request_dequeue() release the request only if it was actually
+removed from the queue.
+
+Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/stm32-adc.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2127,33 +2127,37 @@ static int stm32_adc_populate_int_ch(str
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -70,7 +70,6 @@ struct tb_ctl {
+ #define tb_ctl_dbg(ctl, format, arg...) \
+ 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
  
- 	for (i = 0; i < STM32_ADC_INT_CH_NB; i++) {
- 		if (!strncmp(stm32_adc_ic[i].name, ch_name, STM32_ADC_CH_SZ)) {
-+			bool na;
-+
- 			/* Check internal channel availability */
- 			switch (i) {
- 			case STM32_ADC_INT_CH_VDDCORE:
--				if (!adc->cfg->regs->or_vddcore.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddcore.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VDDCPU:
--				if (!adc->cfg->regs->or_vddcpu.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddcpu.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VDDQ_DDR:
--				if (!adc->cfg->regs->or_vddq_ddr.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddq_ddr.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VREFINT:
--				if (!adc->cfg->regs->ccr_vref.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->ccr_vref.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VBAT:
--				if (!adc->cfg->regs->ccr_vbat.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->ccr_vbat.reg;
- 				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
-+			if (na) {
-+				/*
-+				 * Channel label matches an internal STM32 ADC channel.
-+				 * Warn about it, as there's normally no restriction on the
-+				 * name but that's not among available internal channels.
-+				 */
-+				dev_warn(&indio_dev->dev, "no %s internal channel\n", ch_name);
-+				return 0;
- 			}
+-static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
+ /* Serializes access to request kref_get/put */
+ static DEFINE_MUTEX(tb_cfg_request_lock);
  
- 			if (stm32_adc_ic[i].idx != STM32_ADC_INT_CH_VREFINT) {
+@@ -128,41 +127,42 @@ void tb_cfg_request_put(struct tb_cfg_re
+ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
+ 				  struct tb_cfg_request *req)
+ {
++	tb_cfg_request_get(req);
++
+ 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
+ 	WARN_ON(req->ctl);
+ 
+-	mutex_lock(&ctl->request_queue_lock);
++	guard(mutex)(&ctl->request_queue_lock);
+ 	if (!ctl->running) {
+-		mutex_unlock(&ctl->request_queue_lock);
++		tb_cfg_request_put(req);
+ 		return -ENOTCONN;
+ 	}
+ 	req->ctl = ctl;
+ 	list_add_tail(&req->list, &ctl->request_queue);
+ 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	mutex_unlock(&ctl->request_queue_lock);
+ 	return 0;
+ }
+ 
+-static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
++static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
+ {
+-	struct tb_ctl *ctl = req->ctl;
+-
+-	mutex_lock(&ctl->request_queue_lock);
+-	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
+-		mutex_unlock(&ctl->request_queue_lock);
+-		return;
+-	}
++	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++}
+ 
+-	list_del(&req->list);
+-	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+-		wake_up(&tb_cfg_request_cancel_queue);
+-	mutex_unlock(&ctl->request_queue_lock);
++static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
++{
++	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+ }
+ 
+-static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
++static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
+ {
+-	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++	struct tb_ctl *ctl = req->ctl;
++
++	guard(mutex)(&ctl->request_queue_lock);
++	if (tb_cfg_request_is_active(req)) {
++		list_del(&req->list);
++		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++		tb_cfg_request_put(req);
++	}
+ }
+ 
+ static struct tb_cfg_request *
+@@ -173,7 +173,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
+ 	mutex_lock(&pkg->ctl->request_queue_lock);
+ 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
+ 		tb_cfg_request_get(iter);
+-		if (iter->match(iter, pkg)) {
++		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
+ 			req = iter;
+ 			break;
+ 		}
+@@ -507,8 +507,11 @@ static void tb_ctl_rx_callback(struct tb
+ 	trace_tb_rx(pkg->ctl->index, frame->eof, pkg->buffer, frame->size, !req);
+ 
+ 	if (req) {
+-		if (req->copy(req, pkg))
+-			schedule_work(&req->work);
++		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
++			if (!tb_cfg_request_is_canceled(req) &&
++			    req->copy(req, pkg))
++				schedule_work(&req->work);
++		}
+ 		tb_cfg_request_put(req);
+ 	}
+ 
+@@ -520,11 +523,10 @@ static void tb_cfg_request_work(struct w
+ {
+ 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
+ 
+-	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
++	if (!tb_cfg_request_is_canceled(req))
+ 		req->callback(req->callback_data);
+ 
+ 	tb_cfg_request_dequeue(req);
+-	tb_cfg_request_put(req);
+ }
+ 
+ /**
+@@ -548,10 +550,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 	INIT_WORK(&req->work, tb_cfg_request_work);
+ 	INIT_LIST_HEAD(&req->list);
+ 
+-	tb_cfg_request_get(req);
+ 	ret = tb_cfg_request_enqueue(ctl, req);
+ 	if (ret)
+-		goto err_put;
++		return ret;
+ 
+ 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
+ 			req->request_type);
+@@ -565,9 +566,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 
+ err_dequeue:
+ 	tb_cfg_request_dequeue(req);
+-err_put:
+-	tb_cfg_request_put(req);
+-
+ 	return ret;
+ }
+ 
+@@ -581,9 +579,10 @@ err_put:
+  */
+ void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
+ {
+-	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+-	schedule_work(&req->work);
+-	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
++	scoped_guard(mutex, &req->ctl->request_queue_lock)
++		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
++	cancel_work_sync(&req->work);
++	tb_cfg_request_dequeue(req);
+ 	req->result.err = err;
+ }
+ 
 
 
