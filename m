@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDA34F392E;
-	Tue, 13 Oct 2026 12:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AA44EE870;
+	Tue, 13 Oct 2026 12:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893298; cv=none; b=X5LvXoejNVgQ/QemMuLEaTcKj6XjUv4gFkUHwUcY/MYwmz4xx9onQpStxsI9If0iwZJ4NBHkni938VrmeEMCScYgGoxowV12Zc2ZJHsUEHA5SLyUS2w3lLy9Ishbne/Zd4e9Xn6aMZBU97QiAEy3D6mpEkE9E18FVFmyZd4nXhY=
+	t=1791893301; cv=none; b=AEFeGO0UAk14obg5iZkxPSjncC5HcvdLgzEHnDRZK4jpnnnGqmPJ0RYHFf0ioo9QC/iZJ4wFhgul7aUj2aHjnTXmYwc1rhe4cPh0p68hXvv8uIKXzP9MvuIhaHzLgix92ufswonXd3/WCma584OEQAE83UXyfHFFiyDDAzNcrEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893298; c=relaxed/simple;
-	bh=wVhvEu5hZ3bkDEciJnkKVdwvT+DGPTOe/kJ8WZePnr0=;
+	s=arc-20240116; t=1791893301; c=relaxed/simple;
+	bh=Wr/hCu95CWxY4gLmIobo97DZsnhwqb9phxTshgOJCWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CS7PzQke7YcSvqdwx66qBckY6XKuZ9VkfZY/SaI2QY9zJjIhP9+g9Y8AxrYbnetXBpHxcHHl91FJR69+yPHKHCyeWX3IPH2GIjFSvEu4tEL8hEkYndVydOnXjLAqCold3/K5pV8m1oQYWb7cIvwJAlRqV7dOhQYVCwdnjaXuBNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPeiizxA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M1onMp3KufRqxZZSQGx04is0mV5hYyFtBDjFa/PjVrHTIxUeNmh27gZRMVZYumCXxAaHDTAPgg/oNZ0maSb6O2msCqh5UrQFV8ecVQQNfsw+dbB7QcWaK74saWdAZUaHa5MJ7NJnWfykkPjf9wf9zXwU2NtONBSflZr04nWPn+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAxnfBSK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPeiizxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA791F000FF;
-	Tue, 13 Oct 2026 12:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAxnfBSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3AD1F000FF;
+	Tue, 13 Oct 2026 12:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893297;
-	bh=mdrDcJNtjeaYYaSZh6rVNJakqLeW5/zWZ9RcQzfuYQw=;
+	s=korg; t=1791893300;
+	bh=U3FuWc37SE1ej+bZoWoq3uMP22rs1xNPRP4CZRrOrjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VPeiizxADEZ4yGa+GIWie3963MDrf5/BpA1qdlyQqEzMbW7dPXD7aO0JssBXp9wXV
-	 Vp4yhyH2kN7fbgCIjsrHAbgw/ptrhUuG9Jgc4Yx3dICqwea2ZHSVke1DqGw5Ab3WsL
-	 wTctPphiJO8K2RkCLr2Uq0dm8AUT46Xd7X6HoOkc=
+	b=nAxnfBSK+WBG0KmprpL3UI6CT7RzsEALMkjKVn28uMcHJ+DoOAAWyyTmHncC+jxzF
+	 u2uUteuJryya+ThP21N2KiY0236WCb6sxwfHQXL9tgDxJzExJFUoq+cm5Q+/YWuP5g
+	 F3TeSEPQFI7ode21U7TULJlfgnpqlHOUeFGfvq64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihan Zhu <yihan.zhu@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 179/621] drm/amd/display: Adjust PHY FSM transition to TX_EN-to-PLL_ON for TMDS on DCN35
-Date: Tue, 13 Oct 2026 13:32:54 +0200
-Message-ID: <20261013112925.109849883@linuxfoundation.org>
+	Martino Facchin <m.facchin@arduino.cc>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 6.18 180/621] ASoC: qcom: q6asm: handle the responses after closing
+Date: Tue, 13 Oct 2026 13:32:55 +0200
+Message-ID: <20261013112925.132884556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,127 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 75372d75a4e23783583998ed99d5009d555850da ]
+[ Upstream commit a354f030dbce17ab3cf299660a38b162d97f7151 ]
 
-[Why]
-A backport of the change made for DCN401 that addresses an issue where
-we turn off the PHY PLL when disabling TMDS output, which causes the
-OTG to remain stuck.
+For record path, multiple read requests are queued to dsp in advance.
+However when data stream is closed, the pending read requests are rejected
+by the dsp and a response is sent to the driver, this case is not handled
+in the driver resulting in errors like below
 
-The OTG being stuck can lead to a hang in the DCHVM's ability to ACK
-invalidations when it thinks the HUBP is still on but it's not receiving
-global sync.
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
 
-The transition to PLL_ON needs to be atomic as there's no guarantee
-that the thread isn't pre-empted or is able to complete before the
-IOMMU watchdog times out.
+This is same for both write and eos.
 
-[How]
-Backport the implementation from dcn401 back to dcn35.
+Fix this by allowing ASM_DATA_CMD_READ_V2, ASM_DATA_CMD_EOS and
+ASM_DATA_CMD_WRITE_V2 as expected response.
 
-There's a functional difference in when the eDP output is disabled in
-dcn401 code so we don't want to utilize it directly.
-
-Reviewed-by: Yihan Zhu <yihan.zhu@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Martino Facchin <m.facchin@arduino.cc>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-6-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 8a066a81ee0c ("ASoC: qcom: q6asm: drop DSP responses for closed data streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hwss/dcn35/dcn35_hwseq.c   | 52 +++++++++++++++++++
- .../amd/display/dc/hwss/dcn35/dcn35_hwseq.h   |  4 ++
- .../amd/display/dc/hwss/dcn35/dcn35_init.c    |  2 +-
- 3 files changed, 57 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6asm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-index 05011061822cf..8688ed4d72803 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -1592,3 +1592,55 @@ void dcn35_hardware_release(struct dc *dc)
- 	if (dc->hwss.hw_block_power_up)
- 		dc->hwss.hw_block_power_up(dc, &pg_update_state);
- }
-+
-+static void disable_link_output_symclk_on_tx_off(struct dc_link *link, enum dp_link_encoding link_encoding)
-+{
-+	struct dc *dc = link->ctx->dc;
-+	struct pipe_ctx *pipe_ctx = NULL;
-+	uint8_t i;
-+
-+	for (i = 0; i < MAX_PIPES; i++) {
-+		pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[i];
-+		if (pipe_ctx->stream && pipe_ctx->stream->link == link && pipe_ctx->top_pipe == NULL) {
-+			pipe_ctx->clock_source->funcs->program_pix_clk(
-+					pipe_ctx->clock_source,
-+					&pipe_ctx->stream_res.pix_clk_params,
-+					link_encoding,
-+					&pipe_ctx->pll_settings);
+diff --git a/sound/soc/qcom/qdsp6/q6asm.c b/sound/soc/qcom/qdsp6/q6asm.c
+index 67e9ca18883cd..4c3315d4e27da 100644
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -638,6 +638,7 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
+ 			client_event = ASM_CLIENT_EVENT_CMD_OUT_FLUSH_DONE;
+ 			break;
+ 		case ASM_STREAM_CMD_OPEN_WRITE_V3:
++		case ASM_DATA_CMD_WRITE_V2:
+ 		case ASM_STREAM_CMD_OPEN_READ_V3:
+ 		case ASM_STREAM_CMD_OPEN_READWRITE_V2:
+ 		case ASM_STREAM_CMD_SET_ENCDEC_PARAM:
+@@ -654,6 +655,10 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
+ 				goto done;
+ 			}
+ 			break;
++		case ASM_DATA_CMD_EOS:
++		case ASM_DATA_CMD_READ_V2:
++			/* response as result of close stream */
 +			break;
-+		}
-+	}
-+}
-+
-+void dcn35_disable_link_output(struct dc_link *link,
-+		const struct link_resource *link_res,
-+		enum signal_type signal)
-+{
-+	struct dc *dc = link->ctx->dc;
-+	const struct link_hwss *link_hwss = get_link_hwss(link, link_res);
-+	struct dmcu *dmcu = dc->res_pool->dmcu;
-+
-+	if (signal == SIGNAL_TYPE_EDP &&
-+			link->dc->hwss.edp_backlight_control &&
-+			!link->skip_implict_edp_power_control)
-+		link->dc->hwss.edp_backlight_control(link, false);
-+	else if (dmcu != NULL && dmcu->funcs->lock_phy)
-+		dmcu->funcs->lock_phy(dmcu);
-+
-+	if (dc_is_tmds_signal(signal) && link->phy_state.symclk_ref_cnts.otg > 0) {
-+		disable_link_output_symclk_on_tx_off(link, DP_UNKNOWN_ENCODING);
-+		link->phy_state.symclk_state = SYMCLK_ON_TX_OFF;
-+	} else {
-+		link_hwss->disable_link_output(link, link_res, signal);
-+		link->phy_state.symclk_state = SYMCLK_OFF_TX_OFF;
-+	}
-+	/*
-+	 * Add the logic to extract BOTH power up and power down sequences
-+	 * from enable/disable link output and only call edp panel control
-+	 * in enable_link_dp and disable_link_dp once.
-+	 */
-+	if (dmcu != NULL && dmcu->funcs->unlock_phy)
-+		dmcu->funcs->unlock_phy(dmcu);
-+
-+	dc->link_srv->dp_trace_source_sequence(link, DPCD_SOURCE_SEQ_AFTER_DISABLE_LINK_PHY);
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-index 0b1d6f608edd7..7e4f4eeb47501 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-@@ -101,4 +101,8 @@ bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx);
- 
- void dcn35_hardware_release(struct dc *dc);
- 
-+void dcn35_disable_link_output(struct dc_link *link,
-+		const struct link_resource *link_res,
-+		enum signal_type signal);
-+
- #endif /* __DC_HWSS_DCN35_H__ */
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-index f2f16a0bdb4f3..a3bcfc13aa92f 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-@@ -107,7 +107,7 @@ static const struct hw_sequencer_funcs dcn35_funcs = {
- 	.enable_lvds_link_output = dce110_enable_lvds_link_output,
- 	.enable_tmds_link_output = dce110_enable_tmds_link_output,
- 	.enable_dp_link_output = dce110_enable_dp_link_output,
--	.disable_link_output = dcn32_disable_link_output,
-+	.disable_link_output = dcn35_disable_link_output,
- 	.z10_restore = dcn35_z10_restore,
- 	.z10_save_init = dcn31_z10_save_init,
- 	.set_disp_pattern_generator = dcn30_set_disp_pattern_generator,
+ 		default:
+ 			dev_err(ac->dev, "command[0x%x] not expecting rsp\n",
+ 				result->opcode);
 -- 
 2.53.0
 
