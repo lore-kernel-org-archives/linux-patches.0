@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E49B4E36C0;
-	Tue, 13 Oct 2026 12:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F130A4F4D0A;
+	Tue, 13 Oct 2026 12:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893883; cv=none; b=I3qGVOIbHnX5nNWAqjPQtq6zbEsh7quCWREHJ43cvniiyYl6h8G8qjvby2rApMZInXH8/qxmOcOeK92pUdSGsgf+mN/LKqX04bRQTxLZYstRWxKZoOY6VQW5tbS8eGbdvMpwU5ncTUrSB0lzrjPDKJ6Otujf2QXN0wDvkrEGCds=
+	t=1791893886; cv=none; b=H+X/w53cZ6LUSoJOBamrcsdYo2r6t2yEJPX9B5K87B2WcZTkS9ngnlvTMfX+jizl0F69ekaeImljFEhKjyJJafDljd8uo1VIeIxbGGznYXTpT7RHbWnjTBONSNEwJmQY6mS+0bXpuJRC1Pg/zT/xkNPUYcll8AC3DL2IfrALNdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893883; c=relaxed/simple;
-	bh=4jU2rovBBWrXrICWcnETugxU8XtStldwpBE/10rvqrE=;
+	s=arc-20240116; t=1791893886; c=relaxed/simple;
+	bh=+did1WpTeBco7cgXDSr+dOL5OKEtoSavBBwIDZm0ptY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FpTT5IV0W2J9A5EW9i5hJ5q1qUb9L3EiW/+ieFIyJ82HabLGSoR03uJev1yg/NhOpiF6uHZbRoPk559ZXx22q0FQbx0A4hGDHa3LPZkasv8R1hcAI0GrsKu5BcO3WQFet9buUA2NOPbhbZHt+qbyl/cJVLG/EVAGB5+0AVEACyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWixAXqu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnVyuMNE7Rf23ShBkkc29bLjZ5NP+eZ17Rqw3xluXNWrGB1UMv1tffvM/ZMdC3fvVAUW+j+uYdrUVCynn9MRItEH42bK2xcMA6PihjZ3+wX19sk4Rtxmqi+0NauXQQ2f5uPaGomM8D3OYzXZWTV2oB07IAaJIn8W2F94SPM+DOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2fhGDnC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWixAXqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F6D1F00893;
-	Tue, 13 Oct 2026 12:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2fhGDnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4517A1F000FF;
+	Tue, 13 Oct 2026 12:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893881;
-	bh=2QR7mHeEt3TIwkNUiU03xNzwgTdnFMsWcIiiASHUZkc=;
+	s=korg; t=1791893884;
+	bh=WMiAiyTH+oQs9+KcVtlOgBGbDPPlRbH5XLWzPlBIbf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWixAXquI3zEBCjWTmIwzhfVJGFrRCwIm2Crmprs+RTnx944VlfQMYNnKRUaRk9RG
-	 rERVZ14VHIcYkS2oLhg+xgNZeuw2X79V8CseveI1iu1ENtgW+EwOqrViIUYmW0fO8q
-	 XBV43S+NeByAR5T6qvbXeNRvY8iaW7YSpyJKI9t0=
+	b=B2fhGDnC3Ix16xG9t3gLkKdx+x2EPCwJdqXnGlwVfa4LzHCpYjE/CdZhN1QSJ/byU
+	 Q27Eeu5NlhQ+Ipqkx8OZBDJmkyHWsX3mu7z9oUnhohUcBogx/t20LKs/OANVt0exjJ
+	 zBRiHLhYvHIcizwjFq6RN/N4dpiCSrJGb2iawSY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/621] svcrdma: Clear sc_cm_id when ADDR_CHANGE replacement fails
-Date: Tue, 13 Oct 2026 13:36:08 +0200
-Message-ID: <20261013112929.700420066@linuxfoundation.org>
+Subject: [PATCH 6.18 374/621] SUNRPC: Add crypto/krb5 enctype lookup to krb5_ctx
+Date: Tue, 13 Oct 2026 13:36:09 +0200
+Message-ID: <20261013112929.723549701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,52 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 01500306e1d50de7ca7a2cdcdfa28ac0523eb747 ]
+[ Upstream commit f8b942fc380c3b38b8a0e2d97f020b162fa3f3ae ]
 
-When svc_rdma_listen_handler() handles RDMA_CM_EVENT_ADDR_CHANGE,
-it creates a replacement listener cm_id and returns 1, telling
-the CM core to destroy the old one. If the replacement allocation
-fails, sc_cm_id still points at the old cm_id that the CM core is
-about to destroy. Any subsequent dereference of sc_cm_id --
-such as svc_rdma_detach()'s rdma_disconnect() call -- is a
-use-after-free.
+Each krb5_ctx currently points to a gss_krb5_enctype, the
+rpcsec_gss_krb5 module's own enctype descriptor. To begin
+using the common crypto/krb5 library, store a pointer to the
+corresponding struct krb5_enctype (from <crypto/krb5.h>) as
+well.
 
-NULL sc_cm_id on the failure path and guard svc_rdma_detach()'s
-rdma_disconnect() call against NULL so that the listener can
-be torn down safely when the server shuts down.
+The lookup is performed in gss_import_v2_context() immediately
+after the existing gss_krb5_lookup_enctype() call. If
+crypto_krb5_find_enctype() cannot find a matching enctype the
+context import fails, ensuring the module never operates with
+a partially-initialized krb5_ctx.
 
-Fixes: d1b586e75ec6 ("svcrdma: Handle ADDR_CHANGE CM event properly")
-Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-5-1b09bd87b6cd@oracle.com
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: b94f6719dcd9 ("SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/auth_gss/gss_krb5_internal.h | 3 +++
+ net/sunrpc/auth_gss/gss_krb5_mech.c     | 7 +++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index e82c9ebf7426d..4afa662430cae 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -327,6 +327,7 @@ static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
- 		if (IS_ERR(listen_id)) {
- 			pr_err("Listener dead, address change failed for device %s\n",
- 				cma_id->device->name);
-+			cma_xprt->sc_cm_id = NULL;
- 		} else
- 			cma_xprt->sc_cm_id = listen_id;
- 		return 1;
-@@ -632,7 +633,8 @@ static void svc_rdma_detach(struct svc_xprt *xprt)
- 	struct svcxprt_rdma *rdma =
- 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
+diff --git a/net/sunrpc/auth_gss/gss_krb5_internal.h b/net/sunrpc/auth_gss/gss_krb5_internal.h
+index 8769e9e705bfa..11402c3b4972d 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_internal.h
++++ b/net/sunrpc/auth_gss/gss_krb5_internal.h
+@@ -8,6 +8,8 @@
+ #ifndef _NET_SUNRPC_AUTH_GSS_KRB5_INTERNAL_H
+ #define _NET_SUNRPC_AUTH_GSS_KRB5_INTERNAL_H
  
--	rdma_disconnect(rdma->sc_cm_id);
-+	if (rdma->sc_cm_id)
-+		rdma_disconnect(rdma->sc_cm_id);
++#include <crypto/krb5.h>
++
+ /*
+  * The RFCs often specify payload lengths in bits. This helper
+  * converts a specified bit-length to the number of octets/bytes.
+@@ -62,6 +64,7 @@ struct krb5_ctx {
+ 	u32			enctype;
+ 	u32			flags;
+ 	const struct gss_krb5_enctype *gk5e; /* enctype-specific info */
++	const struct krb5_enctype *krb5e; /* crypto/krb5 enctype */
+ 	struct crypto_sync_skcipher *enc;
+ 	struct crypto_sync_skcipher *seq;
+ 	struct crypto_sync_skcipher *acceptor_enc;
+diff --git a/net/sunrpc/auth_gss/gss_krb5_mech.c b/net/sunrpc/auth_gss/gss_krb5_mech.c
+index 3366505bc669a..0879438cd7b66 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_mech.c
++++ b/net/sunrpc/auth_gss/gss_krb5_mech.c
+@@ -432,6 +432,13 @@ gss_import_v2_context(const void *p, const void *end, struct krb5_ctx *ctx,
+ 		p = ERR_PTR(-EINVAL);
+ 		goto out_err;
+ 	}
++	ctx->krb5e = crypto_krb5_find_enctype(ctx->enctype);
++	if (!ctx->krb5e) {
++		dprintk("gss_kerberos_mech: crypto/krb5 missing enctype %u\n",
++			ctx->enctype);
++		p = ERR_PTR(-EINVAL);
++		goto out_err;
++	}
+ 	keylen = ctx->gk5e->keylength;
  
- 	/*
- 	 * Most close paths go through svc_rdma_xprt_deferred_close(),
+ 	p = simple_get_bytes(p, end, ctx->Ksess, keylen);
 -- 
 2.53.0
 
