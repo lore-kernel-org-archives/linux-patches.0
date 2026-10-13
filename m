@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13B44CB8A8;
-	Tue, 13 Oct 2026 12:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA324F3EB0;
+	Tue, 13 Oct 2026 12:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893535; cv=none; b=r+aAJ5CwDjNGU7wzuSKhQqGalPqE73crZXLZY4jvv5lEtyZau3R+qyAN9cEXs+RQ9V9GZL+Cu+A7ZfGDPg3qo5rtS2AfWM5XqF2aYViNXHIWUK4kwAA5Rdquy6HdtXwFU1e/L+wm99VCgE9E8lYLu52UFln2cF0NI3X9qaL3qT0=
+	t=1791893539; cv=none; b=ficgyujQPO80LisymnXnsNG00VzlcNL4W0OXZ+YDWRR3QU+PwCIsD1+vBmN4FfP9lDsNpbePNlv7/N5xA3gJPxZ0D2eyljjzK5LwUlWhsejbCGVjM8HaYLF9U11poTZBbBATlg7872HvofyfKw6JKUVdvPJOGCufDIYVXctwbaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893535; c=relaxed/simple;
-	bh=UzuLFfIBqUGP5QXVQHycJ3WHs31/1ykKZE0ISkfWlnM=;
+	s=arc-20240116; t=1791893539; c=relaxed/simple;
+	bh=hsVzl+mD/jb1iBQ+r9qENnsVMLq2HcZwiMHJTovVqYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJWovWjNRtAg7WhJJBTT92e6vC7ZTbDeuU4luJOsSmZIfkgHkQRrR8FXxcrDAdxeh5vmDivDOI9I67gztiqd7Denly54Fdl1yunECOvClBWidTKCeQLT1tVbQ5ydHSIUkI3QZiVGWR3J/9ICxtDmDMMZGDfkxxA1UjRiqh6XKxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYbWbyYQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qfcDJd+pGIv3R5vxw5ov67eJDJxCVRUL6lWmO6tnCFMPRCgg0iTJ0zPhmjWIKgS3PuJ88d3f8Mxv1ihAY6UuUCwgh6AjrSpY0zsNqe10OQJiKY3KLr6HpEiHDNrOJCfvyiKgtxAg4S+Sj7nBAEbzfVx46Yv4zsPbdpO/atteVHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB7Nps1w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYbWbyYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E885E1F000FF;
-	Tue, 13 Oct 2026 12:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB7Nps1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FB81F000FF;
+	Tue, 13 Oct 2026 12:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893534;
-	bh=kMtinQDbq51dKFe2xyHFYLpzpBI7qJcxrQcTqdlNaI0=;
+	s=korg; t=1791893537;
+	bh=VhZRjynglL1yG5LvvtkZhvvvqpB/gXXJnel+3COwFjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYbWbyYQG6gM/sVZR1r9+XtgXM3PthOcaKo25bcKHReC5Lv6YIqCkiCJZ+74aNI3v
-	 L24wcQXR9qnJY0y76KCaOBZju1IzlhNgnqWvqjR8fBm5U2ByEvoVUVaccLdA5eojKD
-	 VsRdLXNvVNsGKQc98X/zpFvKOc+tu3ywqFZeQSss=
+	b=JB7Nps1wDcIQlJmT88KVEfLJ8JosCFLqRGaQXrT2UvIJjMDYtHa4U9TVNl3HbY6oC
+	 qrfrv0ZguDuZC5zpRIGIC8iIV4HzBBVPJjTNkBihYe35tLkSH1LIfZTf5XwtUyUQqK
+	 zRewhPTn5fUzUA7H7Vl729xSZPimzDM5ltlvWyCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 259/621] LoongArch: BPF: Zero-extend signed ALU32 div/mod results
-Date: Tue, 13 Oct 2026 13:34:14 +0200
-Message-ID: <20261013112927.007854720@linuxfoundation.org>
+Subject: [PATCH 6.18 260/621] drm/xe/vf: Add drm_dev guards when detaching CCS read/write buffers
+Date: Tue, 13 Oct 2026 13:34:15 +0200
+Message-ID: <20261013112927.032005357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -46,78 +47,185 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
 
-[ Upstream commit dacd348b8a993373576fe2ee2d8b114740ba57a6 ]
+[ Upstream commit 4c92afb4c143526d340545ca581e88e6952ea511 ]
 
-ALU32 operations write a 32-bit result and leave the upper 32 bits of
-the BPF register zero. The LoongArch JIT sign-extends the result of
-signed ALU32 BPF_DIV and BPF_MOD (off=1), so a negative 32-bit quotient
-or remainder leaves bits 63:32 set in JITted code while the verifier
-and interpreter model those bits as zero.
+CCS read/write buffers are freed during BO destruction. In some cases,
+BOs may be destroyed after the device is unbound but while the DRM
+structure remains valid, leading to NULL pointer dereferences when
+accessing device resources.
 
-Keep sign-extension on the operands, which signed divide needs, and
-zero-extend the ALU32 result after the divide or modulo instruction,
-matching the unsigned ALU32 div/mod paths and every other ALU32
-operation in this JIT.
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 0 UID: 0 PID: 9376 Comm: xe_pat Not tainted 7.2.0-rc2+ #1 PREEMPT(lazy)
+RIP: 0010:xe_sriov_vf_ccs_rw_update_bb_addr+0x4d/0xa0 [xe]
+RSP: 0018:ffffcf304110b9c8 EFLAGS: 00010246
+RAX: ffff8a85c38a0a00 RBX: 00000000810ef000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8a85c39c1888
+RBP: ffffcf304110b9e8 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a85c39c1888
+R13: 0000000000000000 R14: ffff8a85c39b4f28 R15: ffff8a85c3885000
+FS:  0000000000000000(0000) GS:ffff8a878b809000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000010314a002 CR4: 0000000000772ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ xe_migrate_ccs_rw_copy_clear+0x98/0x120 [xe]
+ xe_sriov_vf_ccs_detach_bo+0x2c/0x60 [xe]
+ xe_ttm_bo_delete_mem_notify+0xc8/0xe0 [xe]
+ ttm_bo_cleanup_memtype_use+0x26/0x80 [ttm]
+ ttm_bo_release+0x29e/0x2d0 [ttm]
+ ttm_bo_fini+0x39/0x70 [ttm]
+ xe_gem_object_free+0x1f/0x30 [xe]
+ drm_gem_object_free+0x1d/0x40
+ ttm_bo_vm_close+0x5f/0x90 [ttm]
+ remove_vma+0x2c/0x70
+ tear_down_vmas+0x63/0xf0
+ exit_mmap+0x20d/0x3f0
+ __mmput+0x45/0x170
+ mmput+0x31/0x40
+ do_exit+0x2ba/0xac0
+ do_group_exit+0x2d/0xb0
+ __x64_sys_exit_group+0x18/0x20
+ x64_sys_call+0x14a0/0x2390
+ do_syscall_64+0xdd/0x640
+ ? count_memcg_events+0xea/0x240
+ ? handle_mm_fault+0x1ec/0x2f0
 
-Fixes: 2425c9e002d2 ("LoongArch: BPF: Support signed div instructions")
-Fixes: 7b6b13d32965 ("LoongArch: BPF: Support signed mod instructions")
-Assisted-by: Claude:claude-opus-4-8
-Acked-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 864690cf4dd6 ("drm/xe/vf: Attach and detach CCS copy commands with BO")
+Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260721052215.2267228-2-satyanarayana.k.v.p@intel.com
+(cherry picked from commit 1ae415a6eefe5004954a1d352b1718faca8844ef)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_migrate.c      | 17 +++++++++++------
+ drivers/gpu/drm/xe/xe_migrate.h      |  3 ++-
+ drivers/gpu/drm/xe/xe_sriov_vf_ccs.c | 14 ++++++++++++--
+ 3 files changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 5b5de4f91eb94..3fb764bc5e1b9 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -620,7 +620,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 			move_reg(ctx, t1, src);
- 			emit_sext_32(ctx, t1, is32);
- 			emit_insn(ctx, divd, dst, dst, t1);
--			emit_sext_32(ctx, dst, is32);
-+			emit_zext_32(ctx, dst, is32);
- 		}
- 		break;
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 1e8c0b92d712a..36e163222c2d3 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -1171,6 +1171,7 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+  * content.
+  * @src_bo: The buffer object @src is currently bound to.
+  * @read_write : Creates BB commands for CCS read/write.
++ * @bound: Device is bound
+  *
+  * Directly clearing the BB lacks atomicity and can lead to undefined
+  * behavior if the vCPU is halted mid-operation during the clearing
+@@ -1183,7 +1184,8 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+  * Returns: None.
+  */
+ void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
+-				  enum xe_sriov_vf_ccs_rw_ctxs read_write)
++				  enum xe_sriov_vf_ccs_rw_ctxs read_write,
++				  bool bound)
+ {
+ 	struct xe_bb *bb = src_bo->bb_ccs[read_write];
+ 	struct xe_device *xe = xe_bo_device(src_bo);
+@@ -1197,13 +1199,16 @@ void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
+ 	bb_pool = ctx->mem.ccs_bb_pool;
  
-@@ -637,7 +637,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 			emit_sext_32(ctx, t1, is32);
- 			emit_sext_32(ctx, dst, is32);
- 			emit_insn(ctx, divd, dst, dst, t1);
--			emit_sext_32(ctx, dst, is32);
-+			emit_zext_32(ctx, dst, is32);
- 		}
- 		break;
+ 	guard(mutex) (xe_sa_bo_swap_guard(bb_pool));
+-	xe_sa_bo_swap_shadow(bb_pool);
  
-@@ -655,7 +655,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 			move_reg(ctx, t1, src);
- 			emit_sext_32(ctx, t1, is32);
- 			emit_insn(ctx, modd, dst, dst, t1);
--			emit_sext_32(ctx, dst, is32);
-+			emit_zext_32(ctx, dst, is32);
- 		}
- 		break;
+-	cs = xe_sa_bo_cpu_addr(bb->bo);
+-	memset(cs, MI_NOOP, bb->len * sizeof(u32));
+-	xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
++	if (bound) {
++		xe_sa_bo_swap_shadow(bb_pool);
  
-@@ -672,7 +672,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
- 			emit_sext_32(ctx, t1, is32);
- 			emit_sext_32(ctx, dst, is32);
- 			emit_insn(ctx, modd, dst, dst, t1);
--			emit_sext_32(ctx, dst, is32);
-+			emit_zext_32(ctx, dst, is32);
- 		}
- 		break;
+-	xe_sa_bo_sync_shadow(bb->bo);
++		cs = xe_sa_bo_cpu_addr(bb->bo);
++		memset(cs, MI_NOOP, bb->len * sizeof(u32));
++		xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
++
++		xe_sa_bo_sync_shadow(bb->bo);
++	}
+ 
+ 	xe_bb_free(bb, NULL);
+ 	src_bo->bb_ccs[read_write] = NULL;
+diff --git a/drivers/gpu/drm/xe/xe_migrate.h b/drivers/gpu/drm/xe/xe_migrate.h
+index 9665a0aff547c..dd0b0f8376819 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.h
++++ b/drivers/gpu/drm/xe/xe_migrate.h
+@@ -137,7 +137,8 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+ 			   enum xe_sriov_vf_ccs_rw_ctxs read_write);
+ 
+ void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
+-				  enum xe_sriov_vf_ccs_rw_ctxs read_write);
++				  enum xe_sriov_vf_ccs_rw_ctxs read_write,
++				  bool bound);
+ 
+ struct xe_lrc *xe_migrate_lrc(struct xe_migrate *migrate);
+ struct xe_exec_queue *xe_migrate_exec_queue(struct xe_migrate *migrate);
+diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+index e03714ef7ae99..167d74ea502d2 100644
+--- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
++++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+@@ -3,6 +3,8 @@
+  * Copyright © 2025 Intel Corporation
+  */
+ 
++#include <drm/drm_drv.h>
++
+ #include "instructions/xe_mi_commands.h"
+ #include "instructions/xe_gpu_commands.h"
+ #include "xe_bb.h"
+@@ -372,7 +374,7 @@ int xe_sriov_vf_ccs_attach_bo(struct xe_bo *bo, struct ttm_resource *new_mem)
+ 	 */
+ 	for_each_ccs_rw_ctx(ctx_id) {
+ 		if (bo->bb_ccs[ctx_id])
+-			xe_migrate_ccs_rw_copy_clear(bo, ctx_id);
++			xe_migrate_ccs_rw_copy_clear(bo, ctx_id, true);
+ 	}
+ 	return err;
+ }
+@@ -392,19 +394,27 @@ int xe_sriov_vf_ccs_detach_bo(struct xe_bo *bo)
+ 	struct xe_device *xe = xe_bo_device(bo);
+ 	enum xe_sriov_vf_ccs_rw_ctxs ctx_id;
+ 	struct xe_bb *bb;
++	bool bound;
++	int idx;
+ 
+ 	xe_assert(xe, IS_VF_CCS_READY(xe));
+ 
+ 	if (!xe_bo_has_valid_ccs_bb(bo))
+ 		return 0;
+ 
++	bound = drm_dev_enter(&xe->drm, &idx);
++
+ 	for_each_ccs_rw_ctx(ctx_id) {
+ 		bb = bo->bb_ccs[ctx_id];
+ 		if (!bb)
+ 			continue;
+ 
+-		xe_migrate_ccs_rw_copy_clear(bo, ctx_id);
++		xe_migrate_ccs_rw_copy_clear(bo, ctx_id, bound);
+ 	}
++
++	if (bound)
++		drm_dev_exit(idx);
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
