@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18829501F26;
-	Tue, 13 Oct 2026 12:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403114F5E0A;
+	Tue, 13 Oct 2026 12:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893319; cv=none; b=SBamlFhDMC8DP8hxIGDRKXl8SptU0M6sdKyEmP1HitxYM++VOFeNodD4BjifLcS7pE1pPmkWJZjTmZAgDG8nsqjLUqeExN+mZw4LxNNoQdhcrT1JfeFmuNRied6qNunhwwwXC8UHkRx5uPjCLsXdBhSKn/Ziih22A0nXKio9gsc=
+	t=1791893323; cv=none; b=SIprgy5DIDuYri53YZq8Btc05D1EcM54w/0ODw3tR9ggFxUmXLayXxzuhxaPPu4/GSRoN8wtvNAfqZ5mM9HeQylNUSThs+ASFol7d6CSYLjEDMGJPqkw/XwBWYMhhSWEd3JlNrt9lwdIbdFo5lOF7kLfnCzn78EF9Ip0w9XJ1b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893319; c=relaxed/simple;
-	bh=E5rjKEwjLCQkKOi7svWesBue4JoWCb0WSVC6Hvroq5Q=;
+	s=arc-20240116; t=1791893323; c=relaxed/simple;
+	bh=3PBIWjiQGPxl+baSbWVvPFeGH5l1UwyU07pGCQqYSr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hm/kclz1MRFDKX+hYPehF0//bmV5Kl+O9F714jEUH5AHNhQ+gTjs8BPba4AQM51bTWDftPPKeNeg9NMV7IRw7ue2lMJFtkMR9QrcVL4yyL0tW70KMgle0gWmY0MAtC59KXOX6szi+OQcSF/2kTKRDxLcHoligzxsvRXIlWcvfSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlMWIb5t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ked4mRiF4+sFlLz4CawyXxBuKEyq9s5YRJVHQZWfsAYt5vUwcGfZ12/R2IyGLl177MpmW2f1Gs03rHJh+mvcyh1FYIbR3S2An0pqFqKMaljO8dXMMjTrwRfIH3GvgNoF33H/cOnFTVRIiBoBvkYg3GgWGSfX+06+8wPQHYj0jYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyzZgsim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlMWIb5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E361F000FF;
-	Tue, 13 Oct 2026 12:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyzZgsim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8701A1F00893;
+	Tue, 13 Oct 2026 12:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893318;
-	bh=G53khGJ/ffCcoTzIA8ZT79yOMav8waEvitGRAretfHw=;
+	s=korg; t=1791893321;
+	bh=SKYzD40y9ZXPKLu8+lSrbrCJeYfNwzkVOd6zx7dPey0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlMWIb5tElGJ+V3SxPw/cZyQ8d9YqIp9ewVN6SHprGb0/DQWJ4jH8lS1rlaTBThY5
-	 axdLZgEqJHW3mb4poSh6qPvPjgwKONZicbt8Gc/x67IPi7QQxnZdRa7rayyQrpKunA
-	 TPVUaYdxeWXKuW4R8MQ63FReuOmSb8ePNFOyGId4=
+	b=yyzZgsimCZI+qBnsoKehDeGgb1Gre3gyokH16pVMlTl7FH0Hjk49E3/bIpSLo3uXX
+	 I/jptaZtVKLvUCQ0i6oV/u7DwiNSAm56IjnSewKlSWo8TE+E+r9hygKRWFgd6KH/x2
+	 vVGea6H+5esXAOUm03a4ahHtjqHvtM+GvGEE9UJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 185/621] btrfs: dont BUG() on unexpected delayed ref type in run_one_delayed_ref()
-Date: Tue, 13 Oct 2026 13:33:00 +0200
-Message-ID: <20261013112925.252572960@linuxfoundation.org>
+Subject: [PATCH 6.18 186/621] media: v4l2-mem2mem: Add a kref to the v4l2_m2m_dev structure
+Date: Tue, 13 Oct 2026 13:33:01 +0200
+Message-ID: <20261013112925.277064127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,72 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit c7d1d4ff56744074e005771aff193b927392d51f ]
+[ Upstream commit db6b97a4f8041e479be9ef4b8b07022636c96f50 ]
 
-There is no need to BUG(), we can just return an error and log an error
-message.
+Adding a reference count to the v4l2_m2m_dev structure allow safely
+sharing it across multiple hardware nodes. This can be used to prevent
+running jobs concurrently on m2m cores that have some internal resource
+sharing.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: fix typos in v4l2_m2m_put documentation]
+Stable-dep-of: e0203ddf9af7 ("media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/media/v4l2-core/v4l2-mem2mem.c | 23 +++++++++++++++++++++++
+ include/media/v4l2-mem2mem.h           | 21 +++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index cbd57c46d3244..4fbdb9542739b 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1760,32 +1760,36 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
- 			       struct btrfs_delayed_extent_op *extent_op,
- 			       bool insert_reserved)
- {
-+	struct btrfs_fs_info *fs_info = trans->fs_info;
- 	int ret = 0;
+diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
+index 21acd9bc86071..bc8218d1cab9f 100644
+--- a/drivers/media/v4l2-core/v4l2-mem2mem.c
++++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
+@@ -90,6 +90,7 @@ static const char * const m2m_entity_name[] = {
+  * @job_work:		worker to run queued jobs.
+  * @job_queue_flags:	flags of the queue status, %QUEUE_PAUSED.
+  * @m2m_ops:		driver callbacks
++ * @kref:		device reference count
+  */
+ struct v4l2_m2m_dev {
+ 	struct v4l2_m2m_ctx	*curr_ctx;
+@@ -109,6 +110,8 @@ struct v4l2_m2m_dev {
+ 	unsigned long		job_queue_flags;
  
- 	if (TRANS_ABORTED(trans)) {
- 		if (insert_reserved) {
- 			btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
--			free_head_ref_squota_rsv(trans->fs_info, href);
-+			free_head_ref_squota_rsv(fs_info, href);
- 		}
- 		return 0;
- 	}
- 
- 	if (node->type == BTRFS_TREE_BLOCK_REF_KEY ||
--	    node->type == BTRFS_SHARED_BLOCK_REF_KEY)
-+	    node->type == BTRFS_SHARED_BLOCK_REF_KEY) {
- 		ret = run_delayed_tree_ref(trans, href, node, extent_op,
- 					   insert_reserved);
--	else if (node->type == BTRFS_EXTENT_DATA_REF_KEY ||
--		 node->type == BTRFS_SHARED_DATA_REF_KEY)
-+	} else if (node->type == BTRFS_EXTENT_DATA_REF_KEY ||
-+		   node->type == BTRFS_SHARED_DATA_REF_KEY) {
- 		ret = run_delayed_data_ref(trans, href, node, extent_op,
- 					   insert_reserved);
--	else if (node->type == BTRFS_EXTENT_OWNER_REF_KEY)
-+	} else if (node->type == BTRFS_EXTENT_OWNER_REF_KEY) {
- 		ret = 0;
--	else
--		BUG();
-+	} else {
-+		ret = -EUCLEAN;
-+		btrfs_err(fs_info, "unexpected delayed ref node type: %u", node->type);
-+	}
+ 	const struct v4l2_m2m_ops *m2m_ops;
 +
- 	if (ret && insert_reserved)
- 		btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
- 	if (ret < 0)
--		btrfs_err(trans->fs_info,
-+		btrfs_err(fs_info,
- "failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
- 			  node->bytenr, node->num_bytes, node->type,
- 			  node->action, node->ref_mod, ret);
++	struct kref kref;
+ };
+ 
+ static struct v4l2_m2m_queue_ctx *get_queue_ctx(struct v4l2_m2m_ctx *m2m_ctx,
+@@ -1206,6 +1209,7 @@ struct v4l2_m2m_dev *v4l2_m2m_init(const struct v4l2_m2m_ops *m2m_ops)
+ 	INIT_LIST_HEAD(&m2m_dev->job_queue);
+ 	spin_lock_init(&m2m_dev->job_spinlock);
+ 	INIT_WORK(&m2m_dev->job_work, v4l2_m2m_device_run_work);
++	kref_init(&m2m_dev->kref);
+ 
+ 	return m2m_dev;
+ }
+@@ -1217,6 +1221,25 @@ void v4l2_m2m_release(struct v4l2_m2m_dev *m2m_dev)
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_release);
+ 
++void v4l2_m2m_get(struct v4l2_m2m_dev *m2m_dev)
++{
++	kref_get(&m2m_dev->kref);
++}
++EXPORT_SYMBOL_GPL(v4l2_m2m_get);
++
++static void v4l2_m2m_release_from_kref(struct kref *kref)
++{
++	struct v4l2_m2m_dev *m2m_dev = container_of(kref, struct v4l2_m2m_dev, kref);
++
++	v4l2_m2m_release(m2m_dev);
++}
++
++void v4l2_m2m_put(struct v4l2_m2m_dev *m2m_dev)
++{
++	kref_put(&m2m_dev->kref, v4l2_m2m_release_from_kref);
++}
++EXPORT_SYMBOL_GPL(v4l2_m2m_put);
++
+ struct v4l2_m2m_ctx *v4l2_m2m_ctx_init(struct v4l2_m2m_dev *m2m_dev,
+ 		void *drv_priv,
+ 		int (*queue_init)(void *priv, struct vb2_queue *src_vq, struct vb2_queue *dst_vq))
+diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
+index 500f81f399dfa..08e3c9c4f1e9d 100644
+--- a/include/media/v4l2-mem2mem.h
++++ b/include/media/v4l2-mem2mem.h
+@@ -544,6 +544,27 @@ v4l2_m2m_register_media_controller(struct v4l2_m2m_dev *m2m_dev,
+  */
+ void v4l2_m2m_release(struct v4l2_m2m_dev *m2m_dev);
+ 
++/**
++ * v4l2_m2m_get() - take a reference to the m2m_dev structure
++ *
++ * @m2m_dev: opaque pointer to the internal data to handle M2M context
++ *
++ * This is used to share the M2M device across multiple devices. This
++ * can be used to avoid scheduling two hardware nodes concurrently.
++ */
++void v4l2_m2m_get(struct v4l2_m2m_dev *m2m_dev);
++
++/**
++ * v4l2_m2m_put() - remove a reference to the m2m_dev structure
++ *
++ * @m2m_dev: opaque pointer to the internal data to handle M2M context
++ *
++ * Once the M2M device has no more references, v4l2_m2m_release() will be
++ * called automatically. Users of this method should never call
++ * v4l2_m2m_release() directly. See v4l2_m2m_get() for more details.
++ */
++void v4l2_m2m_put(struct v4l2_m2m_dev *m2m_dev);
++
+ /**
+  * v4l2_m2m_ctx_init() - allocate and initialize a m2m context
+  *
 -- 
 2.53.0
 
