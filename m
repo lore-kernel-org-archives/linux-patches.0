@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE88F282F2A;
-	Tue, 13 Oct 2026 12:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87EE313267;
+	Tue, 13 Oct 2026 12:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894634; cv=none; b=Lt95aE6faCVziyx5mpNkNMxUxYEXBzK3/rWGFcPVSJARN7sQT42RMohsAEDpWtENuV/6iX+MHFvy1ypxX9eQ8OpJA6rvW9isXs63jDeiQfKLMedbNj7B/LI0l67zdsUFUV/zkYxe7UnJ1br2SDsX8SFj3E/b6otI+KwxgtFiGgQ=
+	t=1791894636; cv=none; b=cbsFc9IxQKmDgHlB6WnsxL6udk5NWBF9gX2OGV0TTI4uneCuDn6lcUR1c63y7jpfKrdXbkcjT/1UoslB3U5+PtCSQ0XjeYQ70R6DfxSjcGgp3M/0NSN/PBOGUfGuJo0XIjj2DcoipCgObijQ4+8pUIjkl8MODlMjPZfp2iuTTKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894634; c=relaxed/simple;
-	bh=+yqNQRbKSLJTOdgbVGC6X6f+nMoqRswqItuE2y7IZG0=;
+	s=arc-20240116; t=1791894636; c=relaxed/simple;
+	bh=jV2K3KlFVHCn307wq/iSFmk3QraTh8XObXlpLL01ytg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYNlIKxAnGfJYhtHSb7cpe52vygEM271YZqyqvMFVDPHDpG4P0kYGH9+lpI0esps+q0JDaskygE85jiNgwCRRqkZ7dv/QCLlCOzsi4Lw3Nlilv62YcsMUgpXAGtO3owhOknpFxX21CoGzBEox10zcp+e9tUZc68qoPGEjh27WA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqpXvOAX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hThbKYbdrShKl4BC4LwyhdRPRlJzZoLDAQzrPzeO2qtDjagSVhgl4WNB/pHEdzcsTyOza6PGGdEKm8wYWJ1wCb3Hx2YeydfajDoVJNQ2geQd7Nm9DqiRBXM5Bv4DQYlK4hyqFYNkrpDSeHb8czelPUtDqbfwXMk8yWPrZPK/pOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJi1Ne+/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqpXvOAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F761F000FF;
-	Tue, 13 Oct 2026 12:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJi1Ne+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318831F000FF;
+	Tue, 13 Oct 2026 12:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894632;
-	bh=doduISBU8cN+F7mNlmTX1yDHzgNN14yso9/pA2FkXmw=;
+	s=korg; t=1791894635;
+	bh=FjPDmi4JN6RSKANY8hhjEMJHyJ7rg7gxIW70lHQqyUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jqpXvOAX5gGuFnr8kSaCIu2yGFxondcx57ysvHaD1GEzFtpUgKjIbODXlipo/8Ybw
-	 aaUDl96qw/v9kljAkFH1ECT+bfbcTPiIMPBHTsCT7lPyOPBVK/fjuTldf30sX8SxM1
-	 QSKFgWvkrRUFQ09EWXj4gTkWJcuiQDtKblJiwXqs=
+	b=PJi1Ne+/KuYA3hFBIwW+S8AMr2A0A5fXFT392+M5EFzT5WY7I7QsyMQqhlIMxRoO0
+	 e6cdi3pXCcyRru7By4YKqNj9JmgDlmzrFHdMjg5yZtxiEZ8duPRnflMCkM5xXAg3Ym
+	 sJX8IuXCEjuglX517pFSRUqhWf+x9zmHHWPOVmCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 583/621] net/sched: cls_route: reject change with no routing attribute
-Date: Tue, 13 Oct 2026 13:39:38 +0200
-Message-ID: <20261013112934.639206000@linuxfoundation.org>
+Subject: [PATCH 6.18 584/621] Revert "net/mlx5: E-Switch, preserve max tx speed on vport state modification"
+Date: Tue, 13 Oct 2026 13:39:39 +0200
+Message-ID: <20261013112934.661788014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,79 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit b72e025ac556984766392001e74b7587e145bcd0 ]
+[ Upstream commit 86b785b18f8f4a6b4a7392d1e2b29d6bb095011a ]
 
-route4_change on a filter change that supplies no routing attribute
-at all (no to/from/iif) reaches route4_set_parms with fold set, so the
-handle-mismatch check -- which only fires when creating -- is skipped.
-nhandle is built as the all-wildcard bucket (0x8000 | 0xFFFF << 16) and
-the filter is rekeyed to 0xFFFF8000, so the handle userspace already
-stored no longer addresses the filter. (The netlink reply carries the
-new handle; what goes stale is the handle the caller holds.)
+This reverts commit ad0ae7aefa7a ("net/mlx5: E-Switch, preserve max tx
+speed on vport state modification").
 
-The rekey actually misclassifies the packets. The new handle's from_hash
-is the wildcard chain (route4_hash_wild), whose filters route4_classify
-applies without any id/iif comparison, and its bucket (256) is reached
-by every packet through the h < 256 restart. A filter that matched only
-a specific realm therefore becomes an unconditional catch-all that applies
-its classid and actions to all otherwise-unmatched traffic.
+mlx5_modify_vport_admin_state() and mlx5_esw_adj_vport_modify() query
+the vport's current max_tx_speed before modifying its state, and
+write that value back, to avoid resetting it to 0 as a side effect
+of an unrelated admin-state change.
 
-Reject a change that would rekey the filter this way, with the
-routing-attributes-required error. A change that names at least one of
-to/from/iif, and an in-place replace that keeps the routing identity via
-a supplied attribute, are unaffected. A change of a filter that already
-sits at the wildcard handle is a metadata-only update and remains valid,
-so only a change that actually moves the handle is rejected.
+That's unnecessary: max_tx_speed is optional in MODIFY_VPORT_STATE -
+FW skips writing it whenever it's 0, treating that as "not provided"
+rather than "reset to zero". Leaving it unset already preserves FW's
+current value, with no query needed.
 
-This is a follow-up to commit 41e85e54e564 ("net/sched: cls_route: Fix
-in-place replace"); this patch closes the no-routing-attribute variant
-that the parent series did not address.
-
-Conditions to recreate the bug:
-  tc qdisc add dev lo clsact
-  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
-  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
-      route classid 1:2
-  tc filter show dev lo ingress   # handle became 0xffff8000; iproute2's
-                                  # stored 0x10001 no longer addresses it
-
-A change of a filter already at the wildcard handle, e.g. one created by
-"tc filter add dev lo ingress protocol ip pref 100 route classid 1:1"
-(iproute2 defaults the handle to 0xffff8000), stays a valid metadata-only
-update.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260907192133.2639067-1-victor@mojatatu.com
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-0JB3.v1.20260929143022@mojatatu.com
+Fixes: ad0ae7aefa7a ("net/mlx5: E-Switch, preserve max tx speed on vport state modification")
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261004083531.216988-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../mellanox/mlx5/core/esw/adj_vport.c        | 20 ----------------
+ .../net/ethernet/mellanox/mlx5/core/vport.c   | 24 -------------------
+ 2 files changed, 44 deletions(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index ac32c083f6335..1a41237d07aac 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -434,6 +434,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
- 		nhandle |= handle & 0x7F00;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
+index 8eaef73f3d77d..bdd07c1c68242 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
+@@ -11,26 +11,6 @@ int mlx5_esw_adj_vport_modify(struct mlx5_core_dev *dev, u16 vport,
  
-+	if (fold && !tb[TCA_ROUTE4_TO] && !tb[TCA_ROUTE4_FROM] &&
-+	    !tb[TCA_ROUTE4_IIF] && nhandle != fold->handle) {
-+		NL_SET_ERR_MSG(extack, "Routing attributes required");
-+		return -EINVAL;
-+	}
-+
- 	if (handle && !fold && nhandle != handle) {
- 		NL_SET_ERR_MSG_FMT(extack,
- 				   "Handle mismatch constructed: %x (expected: %x)",
+ 	lockdep_assert_held(&dev->priv.eswitch->state_lock);
+ 
+-	if (MLX5_CAP_ESW(dev, esw_vport_state_max_tx_speed)) {
+-		u8 op_mod = MLX5_VPORT_STATE_OP_MOD_ESW_VPORT;
+-		struct mlx5_vport *esw_vport;
+-		u32 speed = 0;
+-		int err;
+-
+-		err = mlx5_query_vport_max_tx_speed(dev, op_mod, vport,
+-						    true, &speed, NULL);
+-		if (err) {
+-			esw_vport = mlx5_eswitch_get_vport(dev->priv.eswitch,
+-							   vport);
+-			speed = IS_ERR(esw_vport) ? 0 :
+-				esw_vport->agg_max_tx_speed;
+-			mlx5_core_dbg(dev,
+-				      "Failed to query vport %d max tx speed, err=%d, using cached %u\n",
+-				      vport, err, speed);
+-		}
+-		MLX5_SET(modify_vport_state_in, in, max_tx_speed, speed);
+-	}
+-
+ 	MLX5_SET(modify_vport_state_in, in, opcode,
+ 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
+ 	MLX5_SET(modify_vport_state_in, in, op_mod,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
+index 5d895287df54b..7dfaf3cb963c3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
+@@ -93,30 +93,6 @@ int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
+ 	lockdep_assert_held(&mdev->priv.eswitch->state_lock);
+ #endif
+ 
+-	if (MLX5_CAP_ESW(mdev, esw_vport_state_max_tx_speed) &&
+-	    opmod == MLX5_VPORT_STATE_OP_MOD_ESW_VPORT &&
+-	    vport != MLX5_VPORT_UPLINK) {
+-		u32 speed = 0;
+-		int err;
+-
+-		err = mlx5_query_vport_max_tx_speed(mdev, opmod, vport,
+-						    other_vport, &speed, NULL);
+-		if (err) {
+-#ifdef CONFIG_MLX5_ESWITCH
+-			struct mlx5_vport *esw_vport;
+-
+-			esw_vport = mlx5_eswitch_get_vport(mdev->priv.eswitch,
+-							   vport);
+-			speed = IS_ERR(esw_vport) ? 0 :
+-				esw_vport->agg_max_tx_speed;
+-#endif
+-			mlx5_core_dbg(mdev,
+-				      "Failed to query vport %d max tx speed, err=%d, using cached %u\n",
+-				      vport, err, speed);
+-		}
+-		MLX5_SET(modify_vport_state_in, in, max_tx_speed, speed);
+-	}
+-
+ 	MLX5_SET(modify_vport_state_in, in, opcode,
+ 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
+ 	MLX5_SET(modify_vport_state_in, in, op_mod, opmod);
 -- 
 2.53.0
 
