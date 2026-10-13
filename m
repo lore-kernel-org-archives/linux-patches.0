@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17888502D5E;
-	Tue, 13 Oct 2026 12:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D729C1F4176;
+	Tue, 13 Oct 2026 12:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895828; cv=none; b=IaCbFwmN0IoGD+VZeN0si4DttQQOKOR5A/+2K9XuzfQXw6E5L9GSdbw8CGc4v98ENcGRS1i/tJMFF3l6GT7Usrc1uGBkzCdjNX6/1HUJudBxTjXRTUD2B/1fw8cdnos4aKVACL7WI51CAneIm2HmkUF9807mHrN7GqdhSXaYImo=
+	t=1791895831; cv=none; b=Uwe3sHI+ijV93ZresCcfZKucvPFuV3C8zN5oEVcPOgCTDMUpsl/BFN8X6wIUpeF6o+cl+Q3eURkF8/I1WFYMq9gPZDYmEBJyzxnoceVc30MXh47KsgvLjVQuie/YWfdA8XJBUvl3MaOvX8KiwcpVNlkAqAHiZfXUTH5Ta6jd1go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895828; c=relaxed/simple;
-	bh=pKA/B+aqlZGOKOo6NqLNmAUMi843u2pECqm3eOGS/co=;
+	s=arc-20240116; t=1791895831; c=relaxed/simple;
+	bh=tvXl7/gWS9ySNxsSisQ3XJ3x6ibBI8E8nlQ7c4ZtrIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nR8WbAbPbTL958k1qyfZT4I/CrsIAWwEu0okMbcnZjntDo4P1+xqi11h1ZL6NezSKqAlXyTOguu7OsnVvTrkZs4rUFPBYRSWPpQOQffTyVUPsEUaQ6v4GW3hPEuhUedNEmYrIClMVnOGwW2f7bU7UXjF3umoAbC66YjPQxNQNig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjtVPeCi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=isMoiRSQzkn/iGWxOWzZ+Sg6nDtGBEVOeu5IPry8pYpwQNX4iFAt+XJt1+ovdP0MEoUTsD9DzId0CwE7cCpMlZeD8KlL3ThxqjTnzLIThMcCOCliA5wx4gl01zo2hWQiiwt7SswDIGPG9Yph5c5gO5t2e9vcLKElCopQu+e79vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO8d6uHD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjtVPeCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF331F0089B;
-	Tue, 13 Oct 2026 12:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO8d6uHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECE21F00898;
+	Tue, 13 Oct 2026 12:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895827;
-	bh=JH5gqh0USgJSnSw1DSekvEnk2cRbLwDhO6mNP2yv/CI=;
+	s=korg; t=1791895829;
+	bh=6r5tpceloxKH9LtnvLidgtv3RIVfrSzcTuNMGChlmdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjtVPeCiu3/B8ijckevULTTC8O5wpQYdcHzF/e/JpJCyL93I3pHl3mNsewmvVwnVl
-	 0Jv9vdVZtppQvyMbR20dxTo+2RxS0wGOuwJg++w6AHo+uCIewt+jfZQZpp3byCXxNd
-	 +SeyH27U3q+++VtCNB2hOw8iq4pY/+5pPyMPDKq4=
+	b=jO8d6uHD3IMIO2+w9Bvb67UTXh7oTZoLQGIW86+THCxTnyhsOPnT/AI2/pwBe/bwH
+	 LqrNWebpuZVM4lDwDc2L0Os7/Z0WK6H9udUkOnhBn/hscbUMweVByCfA4ZtvXr6Pdv
+	 uvurLrO4IITVqemWWzR24FYqri26KlERQu5VuN7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredrik Nyberg <fredrik.nyberg@volvocars.com>,
-	Simon Horman <horms@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 405/497] net: usb: ax88179_178a: fix rx frame length for non-last packets
-Date: Tue, 13 Oct 2026 13:39:32 +0200
-Message-ID: <20261013112917.504099475@linuxfoundation.org>
+Subject: [PATCH 6.12 370/497] wireguard: noise: reject response consumption after intermediate initiation
+Date: Tue, 13 Oct 2026 13:38:57 +0200
+Message-ID: <20261013112916.681726339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,60 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 9b6c20f788472d2042717a3c2f1bc60b2b77083e upstream.
+commit d0305f8d90029556260c6824b61c493c424eba9e upstream.
 
-Commit 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about
-skb->truesize") replaced skb_clone() with a copy into a new skb for
-every packet of a bulk-in transfer except the last one. The copy skips
-the 2-byte IP alignment pseudo header but still copies pkt_len bytes,
-and pkt_len includes that header. Each of these frames is therefore
-delivered with two extra trailing bytes: the 0xeeee pseudo header of
-the next slot when the frame ends on an 8-byte boundary, or slot
-padding otherwise. The last packet is still trimmed to pkt_len - 2.
+Two threads begin processing the identical response message, received
+twice. The first thread, A, runs. While it's running, the second one,
+B, gets partway through, and during that slow calculation, or even while
+blocking on down_write(), A completes and then also a handshake
+initiation that's already been queued up runs in thread C, which itself
+takes that same down_write(). The handshake initiation creation
+succeeds, and sets the state back to waiting-for-response, and calls
+up_write(), at which point thread B resumes, because either its finished
+its calculations or was finally allowed to acquire down_write(). Thread
+B then copies the state back to the peer, and begins a new session,
+using that state, which is the same session as the one made in thread A.
 
-IPv4 and IPv6 trim the extra bytes, so most traffic is unaffected.
-Anything that relies on the frame length is not. MACsec takes the ICV
-from the last 16 bytes and drops every such frame as InPktsNotValid. In
-our setup that was 0.2-1.2% of received MACsec frames, depending on how
-many frames shared a transfer, including service discovery multicast.
+Thread A			Thread B			Thread C
 
-Allocate and copy pkt_len - 2 bytes, like the last-packet path.
+down_read()
+ sA = handshake->state
+ memcpy(cA, handshake->crypto)
+up_read()
+if (sA != 1)
+ goto fail
+slow_crypto(cA)
+				down_read()
+				 sB = handshake->state
+				 memcpy(cB, handshake->crypto)
+				up_read()
+				if (sB != 1)
+				 goto fail
+				slow_crypto(cB)
+down_write()
+ if (sA != handshake->state)
+  goto fail
+ memcpy(handshake->crypto, cA)
+ handshake->state = 2
+up_write()
+down_write()
+ if (handshake->state != 2)
+  goto fail
+ derive_session(handshake->crypto)
+up_write()
+								down_write()
+								 slow_crypto(handshake->crypto)
+								 handshake->state = 1
+								up_write()
+				down_write()
+				 if (sB != handshake->state)
+				   goto fail
+				 memcpy(handshake->crypto, cB)
+				 handshake->state = 2
+				up_write()
+				down_write()
+				 if (handshake->state != 2)
+				  goto fail
+				 derive_session(handshake->crypto)
+				up_write()
 
-Fixes: 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about skb->truesize")
+This seems basically impossible to hit in a meaningful way in practice,
+but ensure that it absolutely cannot happen by comparing the ephemeral
+private key that's on the stack with the latest one that the peer's
+handshake state has.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261002-ax88179-rx-len-v1-1-f01a2a295079@volvocars.com
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20261008130124.724119-4-Jason@zx2c4.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ax88179_178a.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireguard/noise.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1463,11 +1463,11 @@ static int ax88179_rx_fixup(struct usbne
- 			return 1;
- 		}
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -784,10 +784,11 @@ wg_noise_handshake_consume_response(stru
  
--		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
-+		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len - 2);
- 		if (!ax_skb)
- 			return 0;
--		skb_put(ax_skb, pkt_len);
--		memcpy(ax_skb->data, skb->data + 2, pkt_len);
-+		skb_put(ax_skb, pkt_len - 2);
-+		memcpy(ax_skb->data, skb->data + 2, pkt_len - 2);
- 
- 		ax88179_rx_checksum(ax_skb, pkt_hdr);
- 		usbnet_skb_return(dev, ax_skb);
+ 	/* Success! Copy everything to peer */
+ 	down_write(&handshake->lock);
+-	/* It's important to check that the state is still the same, while we
+-	 * have an exclusive lock.
++	/* Check that the state is the same and that this is still the
++	 * initiation we started with, while we have an exclusive lock.
+ 	 */
+-	if (handshake->state != state) {
++	if (handshake->state != state ||
++	    crypto_memneq(handshake->ephemeral_private, ephemeral_private, NOISE_PUBLIC_KEY_LEN)) {
+ 		up_write(&handshake->lock);
+ 		goto fail;
+ 	}
 
 
