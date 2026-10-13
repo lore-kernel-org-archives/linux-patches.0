@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C64F799A;
-	Tue, 13 Oct 2026 12:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1254F85B7;
+	Tue, 13 Oct 2026 12:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895421; cv=none; b=AiF3bJ/kj7x47Pje6waT/GqCDDnUfE8iph3epo3y8JHmO3kcdOMUGbxDKAl3/JYsnSyI541B9hS0rPnESwIq0LRjthlMlStJeLLIw+xmwZjGia1XH9ct6kC84sQqX8VdOZRclC8J1fEE5dNM0bXSVFNULinMS1iLgCtB25tNq1c=
+	t=1791895424; cv=none; b=CD+5Is0bULEe++uKmRVC9+0T6T4elVhT99lWZe5J//X2um+K6QmUvvvwUlcs+1dwY25Vj7Q/HT60PTfkljRWOTWf7CLth4tavrf5Y9fxD7cLvR5nJ6DIa2JUf2bKyhRif/RDxqPbN44mQMcXcDI8Kj/sWr+IsjvGsfvJnQAtf7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895421; c=relaxed/simple;
-	bh=BXuPxwnEjLoBhqWMnGPhA4Vuw1+hb6wNLROQhYMIBhA=;
+	s=arc-20240116; t=1791895424; c=relaxed/simple;
+	bh=poADd7scYg5L6H7ero4KSwqrxo1X9LYyfRuZfXs1fRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gd2hnWVLrPHl6je+OGJBPiHz84KMrmSpREFQXvAwdeyRLXebcTma7C7fkmzFYRSZLsamkmOcxAJHGfDePrG1c4t9YUfE8gog3B5KUDe6U8iB+Ixo2i2Bc7RpczYk7QpoDCONSIzcjblA3LK4KB2PK834HUTjWyQfAd64wJB7GfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3rpUgOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PQqSpVheM44aYHKD2w3SIw5XNDEHR5V1pzsT92D/MDzJsL5vCn1gUFBc3BjXopFSiLjupyu5iHBekH8cgxVtU74rgIfHRwpeWrBD/8F+PM/z4tfAEP3lcFywbo8OqBv0sBPp4K/Lhw+ksCTTHKeM/XEQgBvQ2fYznG/AeyH+Zbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef5Fauoy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3rpUgOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359221F000FF;
-	Tue, 13 Oct 2026 12:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef5Fauoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102131F000FF;
+	Tue, 13 Oct 2026 12:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895420;
-	bh=m3nAatqmTexGlYGfBASEOPgACaFJlCKOVcYM0cVM9xA=;
+	s=korg; t=1791895423;
+	bh=mYVAQ4bLaDo3rHokBDEO2MFqth6E7Z+0MflsIJXq4R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3rpUgOuzKsQxTZ19Xka3Zt55ko/29tKzV7vysFK+8flnKKZwkTbeg0Ij8xEsbbsF
-	 4u2LC1HHq3UBG6OajIWzC0dJgS2RSJQO0IhAVDVwU7HYTufWL4t+G0QtEt1kZMPr5X
-	 w/q4O2KXdQd2rf6ShlJ5nov33uYm4v8DRXdxXYDI=
+	b=Ef5Fauoy6sDTK7Rv9kJTOZmh+D/MoEud+lZNE2/+Tj0q5qcKYNPnrCEfp6P+/uA9y
+	 ymmEAdKJpBSpoQP6BrMLSUHf0SMCiPGGlr7RDjR+axQIOmdutNpvuIykQXLKVVMr9J
+	 a8MiT+YnNYWXVUTuW8bXJav/HSy1Q0orHQa8jvv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	David Hildenbrand <david@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
 	Matthew Wilcox <willy@infradead.org>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Hugh Dickins <hughd@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lance Yang <ioworker0@gmail.com>,
 	Ryan Roberts <ryan.roberts@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/497] mm: shmem: remove __shmem_huge_global_enabled()
-Date: Tue, 13 Oct 2026 13:37:14 +0200
-Message-ID: <20261013112914.229857541@linuxfoundation.org>
+Subject: [PATCH 6.12 268/497] mm: factor out the order calculation into a new helper
+Date: Tue, 13 Oct 2026 13:37:15 +0200
+Message-ID: <20261013112914.254061617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -57,112 +59,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-[ Upstream commit 4a9a27fdf7bfd29013491aea45e3512988cc5876 ]
+[ Upstream commit da243c5479add600bdd58c910c9fae3355b4f026 ]
 
-Remove __shmem_huge_global_enabled() since it as only one caller, and
-remove repeated check of VM_NOHUGEPAGE/MMF_DISABLE_THP as they are checked
-in shmem_allowable_huge_orders(), also remove unnecessary vma parameter.
+Patch series "Support large folios for tmpfs", v3.
 
-Link: https://lkml.kernel.org/r/20241017141457.1169092-2-wangkefeng.wang@huawei.com
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Barry Song <baohua@kernel.org>
+Traditionally, tmpfs only supported PMD-sized large folios.  However
+nowadays with other file systems supporting any sized large folios, and
+extending anonymous to support mTHP, we should not restrict tmpfs to
+allocating only PMD-sized large folios, making it more special.  Instead,
+we should allow tmpfs can allocate any sized large folios.
+
+Considering that tmpfs already has the 'huge=' option to control the
+PMD-sized large folios allocation, we can extend the 'huge=' option to
+allow any sized large folios.  The semantics of the 'huge=' mount option
+are:
+
+huge=never: no any sized large folios
+huge=always: any sized large folios
+huge=within_size: like 'always' but respect the i_size
+huge=advise: like 'always' if requested with madvise()
+
+Note: for tmpfs mmap() faults, due to the lack of a write size hint, still
+allocate the PMD-sized large folios if huge=always/within_size/advise is
+set.
+
+Moreover, the 'deny' and 'force' testing options controlled by
+'/sys/kernel/mm/transparent_hugepage/shmem_enabled', still retain the same
+semantics.  The 'deny' can disable any sized large folios for tmpfs, while
+the 'force' can enable PMD sized large folios for tmpfs.
+
+This patch (of 6):
+
+Factor out the order calculation into a new helper, which can be reused by
+shmem in the following patch.
+
+Link: https://lkml.kernel.org/r/cover.1732779148.git.baolin.wang@linux.alibaba.com
+Link: https://lkml.kernel.org/r/5505f9ea50942820c1924d1803bfdd3a524e54f6.1732779148.git.baolin.wang@linux.alibaba.com
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Suggested-by: Matthew Wilcox <willy@infradead.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
 Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lance Yang <ioworker0@gmail.com>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 72c3d682c165 ("mm: shmem: ignore sysfs configs for shmem forced collapse")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 33 ++++++++++-----------------------
- 1 file changed, 10 insertions(+), 23 deletions(-)
+ include/linux/pagemap.h | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 51a0f94e6d9fe..e760dc2d7d41e 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -559,17 +559,15 @@ static int shmem_confirm_swap(struct address_space *mapping, pgoff_t index,
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index 68a5f1ff3301c..01717aa4a054b 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -727,6 +727,16 @@ typedef unsigned int __bitwise fgf_t;
  
- static int shmem_huge __read_mostly = SHMEM_HUGE_NEVER;
+ #define FGP_WRITEBEGIN		(FGP_LOCK | FGP_WRITE | FGP_CREAT | FGP_STABLE)
  
--static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
--					loff_t write_end, bool shmem_huge_force,
--					struct vm_area_struct *vma,
--					unsigned long vm_flags)
-+static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
-+				      loff_t write_end, bool shmem_huge_force,
-+				      unsigned long vm_flags)
++static inline unsigned int filemap_get_order(size_t size)
++{
++	unsigned int shift = ilog2(size);
++
++	if (shift <= PAGE_SHIFT)
++		return 0;
++
++	return shift - PAGE_SHIFT;
++}
++
+ /**
+  * fgf_set_order - Encode a length in the fgf_t flags.
+  * @size: The suggested size of the folio to create.
+@@ -740,11 +750,11 @@ typedef unsigned int __bitwise fgf_t;
+  */
+ static inline fgf_t fgf_set_order(size_t size)
  {
--	struct mm_struct *mm = vma ? vma->vm_mm : NULL;
- 	loff_t i_size;
+-	unsigned int shift = ilog2(size);
++	unsigned int order = filemap_get_order(size);
  
--	if (!S_ISREG(inode->i_mode))
-+	if (HPAGE_PMD_ORDER > MAX_PAGECACHE_ORDER)
- 		return false;
--	if (mm && ((vm_flags & VM_NOHUGEPAGE) || test_bit(MMF_DISABLE_THP, &mm->flags)))
-+	if (!S_ISREG(inode->i_mode))
- 		return false;
- 	if (shmem_huge == SHMEM_HUGE_DENY)
- 		return false;
-@@ -587,7 +585,7 @@ static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
- 			return true;
- 		fallthrough;
- 	case SHMEM_HUGE_ADVISE:
--		if (mm && (vm_flags & VM_HUGEPAGE))
-+		if (vm_flags & VM_HUGEPAGE)
- 			return true;
- 		fallthrough;
- 	default:
-@@ -595,17 +593,6 @@ static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
- 	}
- }
- 
--static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
--		   loff_t write_end, bool shmem_huge_force,
--		   struct vm_area_struct *vma, unsigned long vm_flags)
--{
--	if (HPAGE_PMD_ORDER > MAX_PAGECACHE_ORDER)
--		return false;
--
--	return __shmem_huge_global_enabled(inode, index, write_end,
--					   shmem_huge_force, vma, vm_flags);
--}
--
- #if defined(CONFIG_SYSFS)
- static int shmem_parse_huge(const char *str)
- {
-@@ -783,8 +770,8 @@ static unsigned long shmem_unused_huge_shrink(struct shmem_sb_info *sbinfo,
- }
- 
- static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
--		loff_t write_end, bool shmem_huge_force,
--		struct vm_area_struct *vma, unsigned long vm_flags)
-+				      loff_t write_end, bool shmem_huge_force,
-+				      unsigned long vm_flags)
- {
- 	return false;
- }
-@@ -1224,7 +1211,7 @@ static int shmem_getattr(struct mnt_idmap *idmap,
- 			STATX_ATTR_NODUMP);
- 	generic_fillattr(idmap, request_mask, inode, stat);
- 
--	if (shmem_huge_global_enabled(inode, 0, 0, false, NULL, 0))
-+	if (shmem_huge_global_enabled(inode, 0, 0, false, 0))
- 		stat->blksize = HPAGE_PMD_SIZE;
- 
- 	if (request_mask & STATX_BTIME) {
-@@ -1725,7 +1712,7 @@ unsigned long shmem_allowable_huge_orders(struct inode *inode,
+-	if (shift <= PAGE_SHIFT)
++	if (!order)
  		return 0;
+-	return (__force fgf_t)((shift - PAGE_SHIFT) << 26);
++	return (__force fgf_t)(order << 26);
+ }
  
- 	global_huge = shmem_huge_global_enabled(inode, index, write_end,
--					shmem_huge_force, vma, vm_flags);
-+						shmem_huge_force, vm_flags);
- 	if (!vma || !vma_is_anon_shmem(vma)) {
- 		/*
- 		 * For tmpfs, we now only support PMD sized THP if huge page
+ void *filemap_get_entry(struct address_space *mapping, pgoff_t index);
 -- 
 2.53.0
 
