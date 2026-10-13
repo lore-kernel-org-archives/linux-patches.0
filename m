@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B84330676;
-	Tue, 13 Oct 2026 12:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D8D2C11E4;
+	Tue, 13 Oct 2026 12:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894873; cv=none; b=KZxeGNPEOAffxxZ1cEfkKPbcvO+pBshfdDczcQkDuXVedFvXWh7XHznLQN1/s3PpZIYKCBU+5XMrhOl1r1yfkewM3J6AsDCOuMGfHXN23CscZVNjUCteBDBfv8sz/UAi9UpkpdTjMao8qPhLFXVsc4yaXMs5j07zLYXK5Wc1vv8=
+	t=1791894876; cv=none; b=bzXwjJXK3td06mt/36x9JIMMXuM+ERBC5Bm31rwrgHYkqC0hjFTtMzj44f4bJswkik2wmp/LFlZPX84mben6zqQ2hymG9RdRdPzaYP+fLBdp3FpxwxSxsuUfMcZQNhTQBGBK7tCI1mBqcfRpV3maKXUhgb6qQlZaCguBHYqtShE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894873; c=relaxed/simple;
-	bh=dyGm6tHuvVFrWkAUrCITE46gmX3xTun/5scaRCulytc=;
+	s=arc-20240116; t=1791894876; c=relaxed/simple;
+	bh=oY7zqYBc2D8MAnFmWwHmtSq62Vdf8nhHrvJF99nDKl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1eZ/LoY2O+9S1iacaxM7BDftQZMjII4PpnKyLUmKvmFPQ6d3E1ydhTQs+Ib5Y3quwCNu3eOeaJHNiNPTUVCjKUVxyC1qpBn/ZvqCaGL0rjiPSZfVxgbJzjD6cHodAAD0372vpwj/GBt2DWNT061vhZKLejliiVYSmkcZrtpmik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsbcURYj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IT/GLQdATd+LBHMPmo8NxRLqaciza50kGoVUf5y3krycraz4kEh5XXChOtdGScLeHHoGAPJwQkltMtFFrUzM96BZNjZgGDXfLlxtOuNy+mdvY+hyYNQ9SsZvScH9HXktvfNXQKBEFWQPRNjV6C9Tzr95hH0C0O4vmzmdUw4WpIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hODl7rbV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsbcURYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22A21F000FF;
-	Tue, 13 Oct 2026 12:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hODl7rbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7B71F000FF;
+	Tue, 13 Oct 2026 12:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894872;
-	bh=DppiS0aLsJ59eVOatjtVjbDW18//Xb3m9daPwvQbVCc=;
+	s=korg; t=1791894875;
+	bh=bVAWqtIYIt36dVl/TCEE+nydafxCbvUAs6sDCKCRlUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsbcURYj+d45IANUFknY/GnKcET7Nkv7ZvMoq5HPPWqUw4YgbxqWOWNTVCJz+7Dd/
-	 cR5H4S8qiy2PRGwfX7A/E89eZ4aVyKtRYQWwsCm3z5P80fvfx29pzXXQTIwmBgeHqN
-	 hWr5axI2DEawYsUw2Umb00VDQjbCr2IZhgFjXO88=
+	b=hODl7rbVRFMtsY3RG2AskwOLCYH0eK6FSRM89EJO52cUzGcZvDQwCjGsfWqAQNJP0
+	 MuxnTLHUeK6isohPH12NcGgvox4KQbksZqeCiKacYUaLiwQJCjJs8bxaQ/6gZZCzrJ
+	 gtqbWeWmeMlDc2qTg20rqfb5pNrg7BH3xfZRS3eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/497] mptcp: Fix up subflows memcg when CONFIG_SOCK_CGROUP_DATA=n.
-Date: Tue, 13 Oct 2026 13:34:10 +0200
-Message-ID: <20261013112909.856044907@linuxfoundation.org>
+	co+be8fa7ea6f77fdce@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 042/497] ALSA: line6: reject oversized playback packets
+Date: Tue, 13 Oct 2026 13:33:29 +0200
+Message-ID: <20261013112908.888289727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -54,124 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 68889dfd547bd8eabc5a98b58475d7b901cf5129 ]
+commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
 
-When sk_alloc() allocates a socket, mem_cgroup_sk_alloc() sets
-sk->sk_memcg based on the current task.
+Each playback URB is handed a slice of out.buffer that is exactly
+LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
+endpoint, but the number of bytes written into that slice is never
+compared against it.
 
-MPTCP subflow socket creation is triggered from userspace or
-an in-kernel worker.
+submit_audio_out_urb() takes the frame count from prev_fsize, which
+audio_in_callback() derived from the *IN* endpoint's received packet
+length, and rescales it with the playback frame size; when prev_fsize is
+still zero it synthesizes a length from the sample rate instead.  On a
+device declaring a large IN wMaxPacketSize and a small OUT
+wMaxPacketSize, the resulting memcpy(), or the memset() when the
+playback stream is idle, runs past its slice and, as the reproducer
+below shows, beyond the allocation.
 
-In the latter case, sk->sk_memcg is not what we want.  So, we fix
-it up from the parent socket's sk->sk_memcg in mptcp_attach_cgroup().
+usb_submit_urb() is not a backstop.  max_packet_size_out comes from
+usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
+while USB core validates a high-speed isochronous length against that
+base scaled by usb_endpoint_maxp_mult().  A length of up to three times
+the allocated slice is therefore accepted, and even a rejected URB is
+only rejected after the write.
 
-Although the code is placed under #ifdef CONFIG_MEMCG, it is buried
-under #ifdef CONFIG_SOCK_CGROUP_DATA.
+Reject a packet that does not fit the slice the driver allocated for it.
+Clamping it instead would silently shorten the capture-derived rate
+feedback and desynchronize the two streams.
 
-The two configs are orthogonal.  If CONFIG_MEMCG is enabled without
-CONFIG_SOCK_CGROUP_DATA, the subflow's memory usage is not charged
-correctly.
+  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
+  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
+  Workqueue: events line6_startup_work
+  Call Trace:
+   __asan_memcpy (mm/kasan/shadow.c:106)
+   submit_audio_out_urb (sound/usb/line6/playback.c:229)
+   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
+   line6_stream_start (sound/usb/line6/pcm.c:194)
+   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
+   line6_startup_work (sound/usb/line6/driver.c:728)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Let's move the code out of the wrong ifdef guard.
+  The buggy address belongs to the object at ffff888100bbd400
+   which belongs to the cache kmalloc-256 of size 256
+  The buggy address is located 0 bytes inside of
+   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
 
-Note that sk->sk_memcg is freed in sk_prot_free() and the parent
-sk holds the refcnt of memcg->css here, so we don't need to use
-css_tryget().
-
-Fixes: 3764b0c5651e3 ("mptcp: attach subflow socket to parent cgroup")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20250815201712.1745332-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 37e02c42a00b ("net: restrict SO_RESERVE_MEM to TCP sockets and cap max value")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
+Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/memcontrol.h |  6 ++++++
- mm/memcontrol.c            | 13 +++++++++++++
- net/mptcp/subflow.c        | 11 +++--------
- 3 files changed, 22 insertions(+), 8 deletions(-)
+ sound/usb/line6/playback.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 659ee811c9c2f..8dab6c755e107 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -1669,6 +1669,7 @@ extern struct static_key_false memcg_sockets_enabled_key;
- #define mem_cgroup_sockets_enabled static_branch_unlikely(&memcg_sockets_enabled_key)
- void mem_cgroup_sk_alloc(struct sock *sk);
- void mem_cgroup_sk_free(struct sock *sk);
-+void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk);
+--- a/sound/usb/line6/playback.c
++++ b/sound/usb/line6/playback.c
+@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
  
- #if BITS_PER_LONG < 64
- static inline void mem_cgroup_set_socket_pressure(struct mem_cgroup *memcg)
-@@ -1726,6 +1727,11 @@ void reparent_shrinker_deferred(struct mem_cgroup *memcg);
- #define mem_cgroup_sockets_enabled 0
- static inline void mem_cgroup_sk_alloc(struct sock *sk) { };
- static inline void mem_cgroup_sk_free(struct sock *sk) { };
-+
-+static inline void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk)
-+{
-+}
-+
- static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
- {
- 	return false;
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 6592857d53721..473e9696e47c6 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -4850,6 +4850,19 @@ void mem_cgroup_sk_free(struct sock *sk)
- 		css_put(&sk->sk_memcg->css);
- }
+ 		fsize *= bytes_per_frame;
  
-+void mem_cgroup_sk_inherit(const struct sock *sk, struct sock *newsk)
-+{
-+	if (sk->sk_memcg == newsk->sk_memcg)
-+		return;
++		if (fsize > line6pcm->max_packet_size_out) {
++			dev_err(line6pcm->line6->ifcdev,
++				"playback packet too large: %d > %d\n",
++				fsize, line6pcm->max_packet_size_out);
++			return -EMSGSIZE;
++		}
 +
-+	mem_cgroup_sk_free(newsk);
-+
-+	if (sk->sk_memcg)
-+		css_get(&sk->sk_memcg->css);
-+
-+	newsk->sk_memcg = sk->sk_memcg;
-+}
-+
- /**
-  * mem_cgroup_charge_skmem - charge socket memory
-  * @memcg: memcg to charge
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 2b2d0369009b1..1d0deac2c0fee 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1717,19 +1717,14 @@ static void mptcp_attach_cgroup(struct sock *parent, struct sock *child)
- 	/* only the additional subflows created by kworkers have to be modified */
- 	if (cgroup_id(sock_cgroup_ptr(parent_skcd)) !=
- 	    cgroup_id(sock_cgroup_ptr(child_skcd))) {
--#ifdef CONFIG_MEMCG
--		struct mem_cgroup *memcg = parent->sk_memcg;
--
--		mem_cgroup_sk_free(child);
--		if (memcg && css_tryget(&memcg->css))
--			child->sk_memcg = memcg;
--#endif /* CONFIG_MEMCG */
--
- 		cgroup_sk_free(child_skcd);
- 		*child_skcd = *parent_skcd;
- 		cgroup_sk_clone(child_skcd);
- 	}
- #endif /* CONFIG_SOCK_CGROUP_DATA */
-+
-+	if (mem_cgroup_sockets_enabled)
-+		mem_cgroup_sk_inherit(parent, child);
- }
- 
- static void mptcp_subflow_ops_override(struct sock *ssk)
--- 
-2.53.0
-
+ 		fout->offset = urb_size;
+ 		fout->length = fsize;
+ 		urb_size += fsize;
 
 
