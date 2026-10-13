@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552EF471269;
-	Tue, 13 Oct 2026 12:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A622D7380;
+	Tue, 13 Oct 2026 12:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893511; cv=none; b=Z4olKIxxdPaSiJh/mf/HyMyYP6wZ3hDIOkIvCIuf0zMl+EVfr5CNwf6YMvruMF2fLrqee4kI0423dG4AXptscNK11mmJfHoamp3PbdVX6ret3ZwKYYmAmJEUGyUeBps38KM0FDuxafW7BZyJlH9BTPPodhNmi7JyaoPUdkj7DRM=
+	t=1791893514; cv=none; b=Q6R5nyZ17LQ/dGf7X8l7fhXsPE5ApJMMBwwDSJmQbh9dMgQ14TAr3FQqcJH86Z6hs36cnNO4+sRVgu/n64ACJkoDycFmC1BG052+JKkqwprmSEnj+GfdeE3AcKkVxze2GRgK5IP3+oY/X0hwRKw6YnjJmJ3QmGf/7V6MPsX769s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893511; c=relaxed/simple;
-	bh=ueaBacZhipotuWR2brzI5VafqmsRFPx2MiBpTALFPr8=;
+	s=arc-20240116; t=1791893514; c=relaxed/simple;
+	bh=BlxpZZnsC8I529uP53I+AFWxz0fOx7FtZw55oQPLI8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQsABLF4rAM9MqPTp0Gf9pD0DCb5T2L1zgfb2hVwfZ+QNwEPRdl9DAG33Q8udUzLkp1OhHknICq7vIAkhjmbrHKfO6qwMm1k5cKBAgj3+QmTUPYeohjhQbrDEok2yAlj6aL9rG43Zhow9qLT0tRHfNuQIAWnD7Qxnl38Psli2Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKDlEY3E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JncwvfR6aUBeHuurDtkf35FhnF1vgyhLjhPVJBTljZ4rzPFNO2b3H0vL+AexwjnWRYYF9D2O23U7R/bIb2ZXGIVq622Ll5VsmauU8hYBybVf1oVdBY3inGSr8TpTqyhO61HdoK+ZFlOdjAxgiHJ8XsaXomlW063rQVoSOar05PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCDvzXp+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKDlEY3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8611F000FF;
-	Tue, 13 Oct 2026 12:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCDvzXp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23621F000FF;
+	Tue, 13 Oct 2026 12:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893510;
-	bh=NRZhflA+cDUTEwKI3nRS6xRAR8il0ag9XEMUtd3XI5s=;
+	s=korg; t=1791893513;
+	bh=zOkc/l6koR2m86btVdLXNHN6N8T6mfQeDjLv7FobC0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gKDlEY3EpbUOsA2WmGM8DTFVPA1Z7MIyB2OFgac2I1tf2HhnWz+aeKgOeux8tIPeL
-	 cMzbnJt+KZLmB/P5fOVUqzjTvCKWwlTvMbYDwOYhv1tAMlNuc8rkUY/anYk1ijCo3g
-	 BYYNTtmdr6KjgmouBzCbS/yNsUyUUnCCB7yOBXck=
+	b=LCDvzXp+suVF1+DX9cKrCnNGm0rM7Sg6akLSSPIUDmjQMzDI/igazQdxe2D8P4zGq
+	 k27kE/JL7wdM1tKF3vXaJdFW7coVXLyd8OOPP3e0og4a6qYGWNLjOO+lFOMA72coOS
+	 jnFRjdwdueO4SsCy456mOXeoSFREuIdTLCQcUztw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jatin Kataria <jkataria@netflix.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Boqun Feng <boqun@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 206/621] Revert "net/smc: Introduce TCP ULP support"
-Date: Tue, 13 Oct 2026 13:33:21 +0200
-Message-ID: <20261013112925.749270575@linuxfoundation.org>
+Subject: [PATCH 6.18 207/621] drm/ttm: Fix ttm_bo_swapout() infinite LRU walk on swapout failure
+Date: Tue, 13 Oct 2026 13:33:22 +0200
+Message-ID: <20261013112925.773214291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -49,195 +49,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
+[ Upstream commit b2ed01e7ad3de80333e9b962a44024b094bc0b2b ]
 
-This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
+When ttm_tt_swapout() fails, the current code calls
+ttm_resource_add_bulk_move() followed by ttm_resource_move_to_lru_tail()
+to restore the resource's bulk_move membership.
 
-As reported by Al Viro, the TCP ULP support for SMC is fundamentally
-broken. The implementation attempts to convert an active TCP socket
-into an SMC socket by modifying the underlying `struct file`, dentry,
-and inode in-place, which violates core VFS invariants that assume
-these structures are immutable for an open file, creating a risk of
-use after free errors and general system instability.
+However, ttm_resource_move_to_lru_tail() places the resource at the tail
+of the LRU list which, relative to the walk cursor's hitch node (placed
+immediately after the resource when it was yielded), puts the resource
+*in front of the* the hitch. The next list_for_each_entry_continue() from
+the hitch finds the same resource again, causing an infinite loop.
 
-Given the severity of this design flaw and the fact that cleaner
-alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
-transparency, the correct course of action is to remove this feature
-entirely.
+Fix by deferring del_bulk_move to the success path only.
 
-Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
-Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On the success path, TTM_TT_FLAG_SWAPPED has just been set by
+ttm_tt_swapout() but the resource is still tracked in the bulk_move range,
+so ttm_resource_del_bulk_move()'s !ttm_resource_unevictable() guard would
+incorrectly skip the removal. Introduce
+ttm_resource_del_bulk_move_unevictable() which bypasses that guard.
+
+Reported-by: Jatin Kataria <jkataria@netflix.com>
+Fixes: fc5d96670eb2 ("drm/ttm: Move swapped objects off the manager's LRU list")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <dri-devel@lists.freedesktop.org>
+Cc: <stable@vger.kernel.org> # v6.13+
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Tested-by: Boqun Feng <boqun@kernel.org>
+Link: https://patch.msgid.link/20260428094442.16985-1-thomas.hellstrom@linux.intel.com
+Stable-dep-of: 1d59f36e95f7 ("drm/ttm: Fix ttm_bo_shrink() infinite LRU walk on backup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 91 +++---------------------------------------------
- 1 file changed, 4 insertions(+), 87 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo.c       | 16 ++++++----------
+ drivers/gpu/drm/ttm/ttm_resource.c | 13 +++++++++++++
+ include/drm/ttm/ttm_resource.h     |  2 ++
+ 3 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index b110d21000cc3..1db56310fda01 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3379,11 +3379,10 @@ int smc_create_clcsk(struct net *net, struct sock *sk, int family)
- 	return 0;
+diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
+index d7a722d875cbc..493471012820e 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -1175,17 +1175,13 @@ ttm_bo_swapout_cb(struct ttm_lru_walk *walk, struct ttm_buffer_object *bo)
+ 		bdev->funcs->swap_notify(bo);
+ 
+ 	if (ttm_tt_is_populated(tt)) {
+-		spin_lock(&bdev->lru_lock);
+-		ttm_resource_del_bulk_move(bo->resource, bo);
+-		spin_unlock(&bdev->lru_lock);
+-
+ 		ret = ttm_tt_swapout(bdev, tt, swapout_walk->gfp_flags);
+-
+-		spin_lock(&bdev->lru_lock);
+-		if (ret)
+-			ttm_resource_add_bulk_move(bo->resource, bo);
+-		ttm_resource_move_to_lru_tail(bo->resource);
+-		spin_unlock(&bdev->lru_lock);
++		if (!ret) {
++			spin_lock(&bdev->lru_lock);
++			ttm_resource_del_bulk_move_unevictable(bo->resource, bo);
++			ttm_resource_move_to_lru_tail(bo->resource);
++			spin_unlock(&bdev->lru_lock);
++		}
+ 	}
+ 
+ out:
+diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
+index 8396cab34cb03..a6a948fa0b83c 100644
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -291,6 +291,19 @@ void ttm_resource_del_bulk_move(struct ttm_resource *res,
+ 		ttm_lru_bulk_move_del(bo->bulk_move, res);
  }
  
--static int __smc_create(struct net *net, struct socket *sock, int protocol,
--			int kern, struct socket *clcsock)
-+static int smc_create(struct net *net, struct socket *sock, int protocol,
-+		      int kern)
++/*
++ * Remove a resource from its bulk_move, bypassing the unevictable check.
++ * Use only when the resource is known to still be tracked in the range despite
++ * the BO having just become unevictable; asserts that this is the case.
++ */
++void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
++					    struct ttm_buffer_object *bo)
++{
++	WARN_ON_ONCE(!ttm_resource_unevictable(res, bo));
++	if (bo->bulk_move)
++		ttm_lru_bulk_move_del(bo->bulk_move, res);
++}
++
+ /* Move a resource to the LRU or bulk tail */
+ void ttm_resource_move_to_lru_tail(struct ttm_resource *res)
  {
- 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
--	struct smc_sock *smc;
- 	struct sock *sk;
- 	int rc;
+diff --git a/include/drm/ttm/ttm_resource.h b/include/drm/ttm/ttm_resource.h
+index f49daa504c36a..a4e3f0447d384 100644
+--- a/include/drm/ttm/ttm_resource.h
++++ b/include/drm/ttm/ttm_resource.h
+@@ -434,6 +434,8 @@ void ttm_resource_add_bulk_move(struct ttm_resource *res,
+ 				struct ttm_buffer_object *bo);
+ void ttm_resource_del_bulk_move(struct ttm_resource *res,
+ 				struct ttm_buffer_object *bo);
++void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
++					    struct ttm_buffer_object *bo);
+ void ttm_resource_move_to_lru_tail(struct ttm_resource *res);
  
-@@ -3402,15 +3401,7 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	if (!sk)
- 		goto out;
- 
--	/* create internal TCP socket for CLC handshake and fallback */
--	smc = smc_sk(sk);
--
--	rc = 0;
--	if (clcsock)
--		smc->clcsock = clcsock;
--	else
--		rc = smc_create_clcsk(net, sk, family);
--
-+	rc = smc_create_clcsk(net, sk, family);
- 	if (rc) {
- 		sk_common_release(sk);
- 		sock->sk = NULL;
-@@ -3419,76 +3410,12 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	return rc;
- }
- 
--static int smc_create(struct net *net, struct socket *sock, int protocol,
--		      int kern)
--{
--	return __smc_create(net, sock, protocol, kern, NULL);
--}
--
- static const struct net_proto_family smc_sock_family_ops = {
- 	.family	= PF_SMC,
- 	.owner	= THIS_MODULE,
- 	.create	= smc_create,
- };
- 
--static int smc_ulp_init(struct sock *sk)
--{
--	struct socket *tcp = sk->sk_socket;
--	struct net *net = sock_net(sk);
--	struct socket *smcsock;
--	int protocol, ret;
--
--	/* only TCP can be replaced */
--	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
--	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
--		return -ESOCKTNOSUPPORT;
--	/* don't handle wq now */
--	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
--		return -ENOTCONN;
--
--	if (sk->sk_family == AF_INET)
--		protocol = SMCPROTO_SMC;
--	else
--		protocol = SMCPROTO_SMC6;
--
--	smcsock = sock_alloc();
--	if (!smcsock)
--		return -ENFILE;
--
--	smcsock->type = SOCK_STREAM;
--	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
--	ret = __smc_create(net, smcsock, protocol, 1, tcp);
--	if (ret) {
--		sock_release(smcsock); /* module_put() which ops won't be NULL */
--		return ret;
--	}
--
--	/* replace tcp socket to smc */
--	smcsock->file = tcp->file;
--	smcsock->file->private_data = smcsock;
--	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
--	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
--	tcp->file = NULL;
--
--	return ret;
--}
--
--static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
--			  const gfp_t priority)
--{
--	struct inet_connection_sock *icsk = inet_csk(newsk);
--
--	/* don't inherit ulp ops to child when listen */
--	icsk->icsk_ulp_ops = NULL;
--}
--
--static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
--	.name		= "smc",
--	.owner		= THIS_MODULE,
--	.init		= smc_ulp_init,
--	.clone		= smc_ulp_clone,
--};
--
- unsigned int smc_net_id;
- 
- static __net_init int smc_net_init(struct net *net)
-@@ -3609,21 +3536,13 @@ static int __init smc_init(void)
- 		pr_err("%s: ib_register fails with %d\n", __func__, rc);
- 		goto out_sock;
- 	}
--
--	rc = tcp_register_ulp(&smc_ulp_ops);
--	if (rc) {
--		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
--		goto out_ib;
--	}
- 	rc = smc_inet_init();
- 	if (rc) {
- 		pr_err("%s: smc_inet_init fails with %d\n", __func__, rc);
--		goto out_ulp;
-+		goto out_ib;
- 	}
- 	static_branch_enable(&tcp_have_smc);
- 	return 0;
--out_ulp:
--	tcp_unregister_ulp(&smc_ulp_ops);
- out_ib:
- 	smc_ib_unregister_client();
- out_sock:
-@@ -3659,7 +3578,6 @@ static void __exit smc_exit(void)
- {
- 	static_branch_disable(&tcp_have_smc);
- 	smc_inet_exit();
--	tcp_unregister_ulp(&smc_ulp_ops);
- 	sock_unregister(PF_SMC);
- 	smc_core_exit();
- 	smc_ib_unregister_client();
-@@ -3684,7 +3602,6 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
- MODULE_DESCRIPTION("smc socket address family");
- MODULE_LICENSE("GPL");
- MODULE_ALIAS_NETPROTO(PF_SMC);
--MODULE_ALIAS_TCP_ULP("smc");
- /* 256 for IPPROTO_SMC and 1 for SOCK_STREAM */
- MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 256, 1);
- #if IS_ENABLED(CONFIG_IPV6)
+ void ttm_resource_init(struct ttm_buffer_object *bo,
 -- 
 2.53.0
 
