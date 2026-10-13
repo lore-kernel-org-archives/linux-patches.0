@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6B74ED19E;
-	Tue, 13 Oct 2026 12:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488244F4047;
+	Tue, 13 Oct 2026 12:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893305; cv=none; b=CzT5ntBPoaNU/cZqb5JKrrH4eUwiZXxo2/Pm/+ljGoHO8Z0jCL6pMMLIPAwZbynQOAZWQLJgCBDWivWUCi0oMv03F+AJ11KtAWeIvGcEuDaBcbUI3YUqRakxzFMxf2Ekwmy0/efBLwxnta6B41plOPAjHn4LQDRcSI8MOIXufd8=
+	t=1791893307; cv=none; b=lV4bTxNNxwXSXtcqUuPv9KbWYXXCHYYewXPw9wTLSnhGRt59APQ9LPkCIxOobqSBWwHJkinOFvjlsS3Jxh8O8PljkZiG3nipDIAK9ru4rPACXXBS7lRYrfFfvVvnq0QG7WQVjH80JE7EpUUus4omQ90aC3/cBTU7r0+JE6s7/iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893305; c=relaxed/simple;
-	bh=7Ww0ECYAZy0r6LcVH0lu7qL33E2k9PYzoNIe+kGcGYo=;
+	s=arc-20240116; t=1791893307; c=relaxed/simple;
+	bh=ppIfGfKnSg0PNiwS8eOKGarOkfq/kwi2ykzZD2GVkow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EqZWSt3hKwRIENTfbOamgafwI2v1rFX87a6TiR5vw9uveaNlTgjVCTN94FI25/4Aen1yt5kGLyosQut0APEgKrk4ybXZg14cqN79Wr+nTyMUgFEiiiHz0SV5lTlZGlcYbnuzFXQpM+twg89Ek+qhBIWUwSV1LTo7Y7bfeM9Ol2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efU+JSfi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B+OgwyKidGg3UOZWxuh1+Xvlu+exbfQHxuQ4UvaTFT3wY9t7ZVnm71cBjWektp1ZByVJELfBuy7V5UaB4fm5rmwR7NTQPYW8nTWHg9/IL/DE4HLr1t0sRsZHmm5uueZCfUVntoKLX/bzDhB18iYQu6+MCW2WKJrCp3IMlNO//pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nttKdIGv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efU+JSfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F731F000FF;
-	Tue, 13 Oct 2026 12:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nttKdIGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27771F000FF;
+	Tue, 13 Oct 2026 12:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893303;
-	bh=XivZgAsNFc+B3EcIkDIa/0IXFpjW34WEYDyDLjwnjVs=;
+	s=korg; t=1791893306;
+	bh=mPs+CPAOOU3TabpCng43+yMA84oi3mbgRq4JyD1YDCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efU+JSfiSE1gLR95SVZQB2AaQzuSSnqxwWASZGTKXymkhHZupeLtlJqRVzeZGMWfX
-	 FdbXsrD+iSHbMuQTXTlhuM4htsPrbA0J+e6ULNmEO0o9EbOEpD+AyNP7ztwM0oYqjp
-	 LHa2w/86PrARv/ef/ZzvAf90K+nsunDX+Z8YMYlk=
+	b=nttKdIGvbKOWhLyk4L1SgXcm88336snvA3umOGYFFIk0UImLqg1QT01V6duZ+N4i4
+	 89Nm3XlzGimql7rXtCYwH13zdIHfEnUKj6BEyb6v6cAY0IpA26vahNXklhJu7e4thz
+	 hF6B3VNUbXLQ68mCmjTgsIa+h+hxVPc8IEDk+t10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 181/621] ASoC: qcom: q6asm: drop DSP responses for closed data streams
-Date: Tue, 13 Oct 2026 13:32:56 +0200
-Message-ID: <20261013112925.157988071@linuxfoundation.org>
+Subject: [PATCH 6.18 182/621] hfs: Replace BUG_ON with error handling for CNID count checks
+Date: Tue, 13 Oct 2026 13:32:57 +0200
+Message-ID: <20261013112925.182205377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,57 +46,268 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
+From: Jori Koolstra <jkoolstra@xs4all.nl>
 
-[ Upstream commit 8a066a81ee0c1b6cdbd81393536c3b2d19ccef25 ]
+[ Upstream commit b226804532a875c10276168dc55ce752944096bd ]
 
-'Commit a354f030dbce ("ASoC: qcom: q6asm: handle the responses
-after closing")' attempted to ignore DSP responses arriving
-after a stream had been closed.
+In a06ec283e125 next_id, folder_count, and file_count in the super block
+info were expanded to 64 bits, and BUG_ONs were added to detect
+overflow. This triggered an error reported by syzbot: if the MDB is
+corrupted, the BUG_ON is triggered. This patch replaces this mechanism
+with proper error handling and resolves the syzbot reported bug.
 
-However, those responses were still handled, causing lockups.
-
-Fix this by unconditionally dropping all DSP responses associated with
-closed data streams.
-
-Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
-Link: https://patch.msgid.link/20260102215225.609166-1-cedric.bellegarde@adishatz.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Singed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Reported-by: syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=17cc9bb6d8d69b4139f0
+Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20251220191006.2465256-1-jkoolstra@xs4all.nl
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6asm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/hfs/dir.c    | 15 +++++++++++----
+ fs/hfs/hfs_fs.h |  1 +
+ fs/hfs/inode.c  | 30 ++++++++++++++++++++++++------
+ fs/hfs/mdb.c    | 31 +++++++++++++++++++++++++++----
+ fs/hfs/super.c  |  3 +++
+ 5 files changed, 66 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6asm.c b/sound/soc/qcom/qdsp6/q6asm.c
-index 4c3315d4e27da..60c81edd945d5 100644
---- a/sound/soc/qcom/qdsp6/q6asm.c
-+++ b/sound/soc/qcom/qdsp6/q6asm.c
-@@ -638,7 +638,6 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			client_event = ASM_CLIENT_EVENT_CMD_OUT_FLUSH_DONE;
- 			break;
- 		case ASM_STREAM_CMD_OPEN_WRITE_V3:
--		case ASM_DATA_CMD_WRITE_V2:
- 		case ASM_STREAM_CMD_OPEN_READ_V3:
- 		case ASM_STREAM_CMD_OPEN_READWRITE_V2:
- 		case ASM_STREAM_CMD_SET_ENCDEC_PARAM:
-@@ -657,8 +656,9 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			break;
- 		case ASM_DATA_CMD_EOS:
- 		case ASM_DATA_CMD_READ_V2:
-+		case ASM_DATA_CMD_WRITE_V2:
- 			/* response as result of close stream */
--			break;
-+			goto done;
- 		default:
- 			dev_err(ac->dev, "command[0x%x] not expecting rsp\n",
- 				result->opcode);
+diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
+index 130c2f3a417f0..e585471823fe2 100644
+--- a/fs/hfs/dir.c
++++ b/fs/hfs/dir.c
+@@ -190,8 +190,8 @@ static int hfs_create(struct mnt_idmap *idmap, struct inode *dir,
+ 	int res;
+ 
+ 	inode = hfs_new_inode(dir, &dentry->d_name, mode);
+-	if (!inode)
+-		return -ENOMEM;
++	if (IS_ERR(inode))
++		return PTR_ERR(inode);
+ 
+ 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
+ 	if (res) {
+@@ -220,8 +220,8 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	int res;
+ 
+ 	inode = hfs_new_inode(dir, &dentry->d_name, S_IFDIR | mode);
+-	if (!inode)
+-		return ERR_PTR(-ENOMEM);
++	if (IS_ERR(inode))
++		return ERR_CAST(inode);
+ 
+ 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
+ 	if (res) {
+@@ -248,11 +248,18 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+  */
+ static int hfs_remove(struct inode *dir, struct dentry *dentry)
+ {
++	struct super_block *sb = dir->i_sb;
+ 	struct inode *inode = d_inode(dentry);
+ 	int res;
+ 
+ 	if (S_ISDIR(inode->i_mode) && inode->i_size != 2)
+ 		return -ENOTEMPTY;
++
++	if (unlikely(!is_hfs_cnid_counts_valid(sb))) {
++	    pr_err("cannot remove file/folder\n");
++	    return -ERANGE;
++	}
++
+ 	res = hfs_cat_delete(inode->i_ino, dir, &dentry->d_name);
+ 	if (res)
+ 		return res;
+diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
+index d9665226f5474..86b5ae62247be 100644
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -198,6 +198,7 @@ extern void hfs_delete_inode(struct inode *inode);
+ extern const struct xattr_handler * const hfs_xattr_handlers[];
+ 
+ /* mdb.c */
++extern bool is_hfs_cnid_counts_valid(struct super_block *sb);
+ extern int hfs_mdb_get(struct super_block *sb);
+ extern void hfs_mdb_commit(struct super_block *sb);
+ extern void hfs_mdb_close(struct super_block *sb);
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index cd3dd5bd456e0..f1796e4b07e83 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -187,14 +187,21 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 	s64 next_id;
+ 	s64 file_count;
+ 	s64 folder_count;
++	int err = -ENOMEM;
+ 
+ 	if (!inode)
+-		return NULL;
++		goto out_err;
++
++	err = -ERANGE;
+ 
+ 	mutex_init(&HFS_I(inode)->extents_lock);
+ 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
+ 	next_id = atomic64_inc_return(&HFS_SB(sb)->next_id);
+-	BUG_ON(next_id > U32_MAX);
++	if (next_id > U32_MAX) {
++		atomic64_dec(&HFS_SB(sb)->next_id);
++		pr_err("cannot create new inode: next CNID exceeds limit\n");
++		goto out_discard;
++	}
+ 	inode->i_ino = (u32)next_id;
+ 	inode->i_mode = mode;
+ 	inode->i_uid = current_fsuid();
+@@ -208,7 +215,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 	if (S_ISDIR(mode)) {
+ 		inode->i_size = 2;
+ 		folder_count = atomic64_inc_return(&HFS_SB(sb)->folder_count);
+-		BUG_ON(folder_count > U32_MAX);
++		if (folder_count> U32_MAX) {
++			atomic64_dec(&HFS_SB(sb)->folder_count);
++			pr_err("cannot create new inode: folder count exceeds limit\n");
++			goto out_discard;
++		}
+ 		if (dir->i_ino == HFS_ROOT_CNID)
+ 			HFS_SB(sb)->root_dirs++;
+ 		inode->i_op = &hfs_dir_inode_operations;
+@@ -218,7 +229,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 	} else if (S_ISREG(mode)) {
+ 		HFS_I(inode)->clump_blocks = HFS_SB(sb)->clumpablks;
+ 		file_count = atomic64_inc_return(&HFS_SB(sb)->file_count);
+-		BUG_ON(file_count > U32_MAX);
++		if (file_count > U32_MAX) {
++			atomic64_dec(&HFS_SB(sb)->file_count);
++			pr_err("cannot create new inode: file count exceeds limit\n");
++			goto out_discard;
++		}
+ 		if (dir->i_ino == HFS_ROOT_CNID)
+ 			HFS_SB(sb)->root_files++;
+ 		inode->i_op = &hfs_file_inode_operations;
+@@ -242,6 +257,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 	hfs_mark_mdb_dirty(sb);
+ 
+ 	return inode;
++
++	out_discard:
++		iput(inode);
++	out_err:
++		return ERR_PTR(err);
+ }
+ 
+ void hfs_delete_inode(struct inode *inode)
+@@ -250,7 +270,6 @@ void hfs_delete_inode(struct inode *inode)
+ 
+ 	hfs_dbg("ino %lu\n", inode->i_ino);
+ 	if (S_ISDIR(inode->i_mode)) {
+-		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
+ 		atomic64_dec(&HFS_SB(sb)->folder_count);
+ 		if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
+ 			HFS_SB(sb)->root_dirs--;
+@@ -259,7 +278,6 @@ void hfs_delete_inode(struct inode *inode)
+ 		return;
+ 	}
+ 
+-	BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
+ 	atomic64_dec(&HFS_SB(sb)->file_count);
+ 	if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
+ 		HFS_SB(sb)->root_files--;
+diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
+index f28cd24dee842..a97cea35ca2e1 100644
+--- a/fs/hfs/mdb.c
++++ b/fs/hfs/mdb.c
+@@ -64,6 +64,27 @@ static int hfs_get_last_session(struct super_block *sb,
+ 	return 0;
+ }
+ 
++bool is_hfs_cnid_counts_valid(struct super_block *sb)
++{
++	struct hfs_sb_info *sbi = HFS_SB(sb);
++	bool corrupted = false;
++
++	if (unlikely(atomic64_read(&sbi->next_id) > U32_MAX)) {
++		pr_warn("next CNID exceeds limit\n");
++		corrupted = true;
++	}
++	if (unlikely(atomic64_read(&sbi->file_count) > U32_MAX)) {
++		pr_warn("file count exceeds limit\n");
++		corrupted = true;
++	}
++	if (unlikely(atomic64_read(&sbi->folder_count) > U32_MAX)) {
++		pr_warn("folder count exceeds limit\n");
++		corrupted = true;
++	}
++
++	return !corrupted;
++}
++
+ /*
+  * hfs_mdb_get()
+  *
+@@ -159,6 +180,11 @@ int hfs_mdb_get(struct super_block *sb)
+ 	atomic64_set(&HFS_SB(sb)->file_count, be32_to_cpu(mdb->drFilCnt));
+ 	atomic64_set(&HFS_SB(sb)->folder_count, be32_to_cpu(mdb->drDirCnt));
+ 
++	if (!is_hfs_cnid_counts_valid(sb)) {
++		pr_warn("filesystem possibly corrupted, running fsck.hfs is recommended. Mounting read-only.\n");
++		sb->s_flags |= SB_RDONLY;
++	}
++
+ 	/* TRY to get the alternate (backup) MDB. */
+ 	sect = part_start + part_size - 2;
+ 	bh = sb_bread512(sb, sect, mdb2);
+@@ -212,7 +238,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 
+ 	attrib = mdb->drAtrb;
+ 	if (!(attrib & cpu_to_be16(HFS_SB_ATTRIB_UNMNT))) {
+-		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.  mounting read-only.\n");
++		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.	Mounting read-only.\n");
+ 		sb->s_flags |= SB_RDONLY;
+ 	}
+ 	if ((attrib & cpu_to_be16(HFS_SB_ATTRIB_SLOCK))) {
+@@ -270,15 +296,12 @@ void hfs_mdb_commit(struct super_block *sb)
+ 		/* These parameters may have been modified, so write them back */
+ 		mdb->drLsMod = hfs_mtime();
+ 		mdb->drFreeBks = cpu_to_be16(HFS_SB(sb)->free_ablocks);
+-		BUG_ON(atomic64_read(&HFS_SB(sb)->next_id) > U32_MAX);
+ 		mdb->drNxtCNID =
+ 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->next_id));
+ 		mdb->drNmFls = cpu_to_be16(HFS_SB(sb)->root_files);
+ 		mdb->drNmRtDirs = cpu_to_be16(HFS_SB(sb)->root_dirs);
+-		BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
+ 		mdb->drFilCnt =
+ 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->file_count));
+-		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
+ 		mdb->drDirCnt =
+ 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->folder_count));
+ 
+diff --git a/fs/hfs/super.c b/fs/hfs/super.c
+index df289cbdd4e85..97546d6b41f47 100644
+--- a/fs/hfs/super.c
++++ b/fs/hfs/super.c
+@@ -34,6 +34,7 @@ MODULE_LICENSE("GPL");
+ 
+ static int hfs_sync_fs(struct super_block *sb, int wait)
+ {
++	is_hfs_cnid_counts_valid(sb);
+ 	hfs_mdb_commit(sb);
+ 	return 0;
+ }
+@@ -65,6 +66,8 @@ static void flush_mdb(struct work_struct *work)
+ 	sbi->work_queued = 0;
+ 	spin_unlock(&sbi->work_lock);
+ 
++	is_hfs_cnid_counts_valid(sb);
++
+ 	hfs_mdb_commit(sb);
+ }
+ 
 -- 
 2.53.0
 
