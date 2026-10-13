@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955DF4F4CF8;
-	Tue, 13 Oct 2026 12:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C8D3E0C67;
+	Tue, 13 Oct 2026 12:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894546; cv=none; b=OKyiEWEBZQ4+WerDnno2qvJoWoakzAYzv+G2LVDfUZLaemHqW7V+IOb0k3E69/h9KkeJY4yme+UMjHuC61576F9gequ4Ro11A5EbgciKlvP2He22lni2CU6u12SfcRYAxYzPHen5LlhXcCyW93Qc8c1GLJnu9taRBSzKBIxmJWA=
+	t=1791894548; cv=none; b=H3sEOut4WKMHuVlW3vibF1NPd/4uBXo8cxZLfwQ9gkRFZ+ZU/MT2G+xH4Jep6285YSGbH/Vx1xbSvDaTblBLOmhNTYDQ7ZfSAq4gKckW/LI99+gIbTiGrywvp7y6/QVC8bgGQ+FK0Y61ic1Kq3gqy+UrW3EJAiSXo86lxBDjbfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894546; c=relaxed/simple;
-	bh=7H0Bf5upbq2df+vd+3qdao6xx0ciK4njidsPWyv0iIQ=;
+	s=arc-20240116; t=1791894548; c=relaxed/simple;
+	bh=APhW86b+RCKe71GpDZ0U/Be6mJnK2VYUfvqJpZNV8uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUiR7VJq3p/q5Uxk/cTfzIOtm6Yjhvw5qrRd9sfo5DpkTIkJtLZB25HZ0oktySp9RQCjlJqbKDsOWs2Xl0K5GunJMcfdAWF674zr4hG3fJe1QTJkJ1NBF0WK5GjzwNxdiY27Hn1UdMWMU3gLYWacF+6tWET/Aw16BgjYKJRUXjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HE317+u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dWbOrsNnvzcGHVUq6RG/w54pw6jCzSiKckwCHCwE9y+hzkN187gsCIFzJmb7quoqd35L8uQdLOL5T3X/TyWgTmqG4ElT+71tzF2dTf1KqBj/BoRSOb8kF+h6hFKnbDyAIjpFD+u1Rf3k5Jaq7B/jfAd6WRLPYHoClMKGS0EJms0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erbvFICN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HE317+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1801F000FF;
-	Tue, 13 Oct 2026 12:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erbvFICN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149BE1F000FF;
+	Tue, 13 Oct 2026 12:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894543;
-	bh=DpBqrf0VQSNkj3C18sc6/QPWllgUmY9Iiam8GOdDGSo=;
+	s=korg; t=1791894546;
+	bh=egTe4QKF77GjmWJ51uJnUCkC2o5PWu845Wls+W3q+20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HE317+uofNKl5H0nxhx49HlWPDaD+d00FVhqsc7ERwdvTTgTsu+IJ2JIpfJVnqA8
-	 FAJhVwdrGOb/ZNNSlZUwambNxB0BI9ZTv+YsADXMSpn0+CzGGbx1ugili+TlfLdkNi
-	 8fWbU2EGXKORdENM9exgCnv9Qd7RpWWKtMHrhOnA=
+	b=erbvFICNDFIEpTse4g6jG9tyEcoJSEQ5FniStEa8bjZVRDZN5chDcGCHOarwcvrap
+	 hTHZ9YbJvnSgDcRCd51qu9TYBhSj9OBYuUSAyx902sU2EXWYM8ngsSCIDSwzMdxs/q
+	 51Fr8isBNzvSNtT0v1P3LS0zfJ+P+EvIYyXawHyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Junnan Zhang <zhangjn_dev@163.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 596/621] mlxsw: spectrum_flower: Fix port range register leak in tmplt_create()
-Date: Tue, 13 Oct 2026 13:39:51 +0200
-Message-ID: <20261013112934.944397674@linuxfoundation.org>
+Subject: [PATCH 6.18 597/621] net/packet: call packet_parse_headers after virtio_net_hdr_to_skb
+Date: Tue, 13 Oct 2026 13:39:52 +0200
+Message-ID: <20261013112934.968793317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,106 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 7ea07afb230f1342ab0f9365edd0aae137f425d3 ]
+[ Upstream commit 513e23857a3a64fa73a1deb36a385eecd4ad7690 ]
 
-mlxsw_sp_flower_tmplt_create() parses a flow_cls_offload template
-into a stack-local struct mlxsw_sp_acl_rule_info purely to compute
-rulei.values.elusage. Parsing can acquire port range registers via
-mlxsw_sp_flower_parse_ports_range(), but since this rulei never goes
-through mlxsw_sp_acl_rulei_destroy(), those registers were never
-released, including through chain template deletion.
+SOCK_RAW packet sockets incorrectly drop VLAN-tagged GSO packets
+without VIRTIO_NET_HDR_F_NEEDS_CSUM.
 
-Factor out of mlxsw_sp_acl_rulei_destroy() the code to actually
-release the necessary resources and call from
-mlxsw_sp_flower_tmplt_create() to plug the leak.
+packet_parse_headers() sets skb->protocol to VLAN but advances
+skb->network_header past the VLAN tags. virtio_net_hdr_to_skb()
+then flow dissects these packets, which parses the network header as a
+VLAN tag, and fails.
 
-The issue was found during a review of Wentao Liang's patch referenced
-below.
+Call packet_parse_headers() after virtio_net_hdr_to_skb() instead.
 
-Fixes: fe22f7410527 ("mlxsw: spectrum_flower: Add ability to match on port ranges")
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
-Closes: https://lore.kernel.org/netdev/20260917113236.2149095-1-vulab@iscas.ac.cn/
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/95339cf970ce78e1a74aa86ffcc104ecf7c7762c.1791294384.git.petrm@nvidia.com
+This matches tun_get_user() and tap_get_user() and thus simplifies
+overall complexity.
+
+Commit 01fdecc0480d ("net: packet: fix wrong transport_header when
+sending VLAN-tagged frame") fixed the same issue for the transport
+header probe in packet_parse_headers(). That probe is now skipped if
+virtio_net_hdr_to_skb() already set the transport header, avoiding a
+redundant dissection.
+
+Implementation details:
+- Do not set skb->protocol to the RX wildcard ETH_P_ALL. SOCK_RAW then
+  derives it from the link layer header, as before. SOCK_DGRAM now
+  leaves it 0, or derives it from gso_type for GSO with NEEDS_CSUM.
+- Keep virtio_net_hdr_set_proto() last, so that the link layer protocol
+  takes priority over gso_type.
+
+Reported-by: Junnan Zhang <zhangjn_dev@163.com>
+Closes: https://lore.kernel.org/netdev/20260821085722.24036-1-zhangjn_dev@163.com/
+Fixes: dfed913e8b55 ("net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20261007175816.3138556-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.h        |  2 ++
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c    | 10 ++++++++--
- drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c |  9 +++++++--
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ net/packet/af_packet.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.h b/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-index b03ff9e044f9e..10af08ce72efa 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-@@ -989,6 +989,8 @@ void mlxsw_sp_acl_ruleset_prio_get(struct mlxsw_sp_acl_ruleset *ruleset,
- struct mlxsw_sp_acl_rule_info *
- mlxsw_sp_acl_rulei_create(struct mlxsw_sp_acl *acl,
- 			  struct mlxsw_afa_block *afa_block);
-+void mlxsw_sp_acl_rulei_free(struct mlxsw_sp *mlxsw_sp,
-+			     const struct mlxsw_sp_acl_rule_info *rulei);
- void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
- 				struct mlxsw_sp_acl_rule_info *rulei);
- int mlxsw_sp_acl_rulei_commit(struct mlxsw_sp_acl_rule_info *rulei);
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-index 3e70cee4d2f3e..cac2f15d91c23 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-@@ -340,8 +340,8 @@ mlxsw_sp_acl_rulei_create(struct mlxsw_sp_acl *acl,
- 	return ERR_PTR(err);
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index fc56efe64a28e..560fb35a4b433 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1942,8 +1942,7 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
+ 	/* On TX skb->data is the L2 header; anchor it for all socket types. */
+ 	skb_reset_mac_header(skb);
+ 
+-	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
+-	    sock->type == SOCK_RAW)
++	if (!skb->protocol && sock->type == SOCK_RAW)
+ 		skb->protocol = dev_parse_header_protocol(skb);
+ 
+ 	skb_probe_transport_header(skb);
+@@ -2613,7 +2612,8 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	struct page *page;
+ 	int err;
+ 
+-	skb->protocol = proto;
++	if (proto != htons(ETH_P_ALL))
++		skb->protocol = proto;
+ 	skb->dev = dev;
+ 	skb->priority = sockc->priority;
+ 	skb->mark = sockc->mark;
+@@ -2677,8 +2677,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	if (unlikely(!skb->len))
+ 		return -EINVAL;
+ 
+-	packet_parse_headers(skb, sock);
+-
+ 	return tp_len;
  }
  
--void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
--				struct mlxsw_sp_acl_rule_info *rulei)
-+void mlxsw_sp_acl_rulei_free(struct mlxsw_sp *mlxsw_sp,
-+			     const struct mlxsw_sp_acl_rule_info *rulei)
- {
- 	if (rulei->action_created)
- 		mlxsw_afa_block_destroy(rulei->act_block);
-@@ -351,6 +351,12 @@ void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
- 	if (rulei->dst_port_range_reg_valid)
- 		mlxsw_sp_port_range_reg_put(mlxsw_sp,
- 					    rulei->dst_port_range_reg_index);
-+}
-+
-+void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
-+				struct mlxsw_sp_acl_rule_info *rulei)
-+{
-+	mlxsw_sp_acl_rulei_free(mlxsw_sp, rulei);
- 	kfree(rulei);
- }
+@@ -2918,9 +2916,13 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 				tp_len = -EINVAL;
+ 				goto tpacket_error;
+ 			}
+-			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
  
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-index 353fd9ca89a68..5e4632cb792d5 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-@@ -862,14 +862,19 @@ int mlxsw_sp_flower_tmplt_create(struct mlxsw_sp *mlxsw_sp,
- 	memset(&rulei, 0, sizeof(rulei));
- 	err = mlxsw_sp_flower_parse(mlxsw_sp, block, &rulei, f);
- 	if (err)
--		return err;
-+		goto out;
++		packet_parse_headers(skb, po->sk.sk_socket);
 +
- 	ruleset = mlxsw_sp_acl_ruleset_get(mlxsw_sp, block,
- 					   f->common.chain_index,
- 					   MLXSW_SP_ACL_PROFILE_FLOWER,
- 					   &rulei.values.elusage);
-+	err = PTR_ERR_OR_ZERO(ruleset);
++		if (has_vnet_hdr)
++			virtio_net_hdr_set_proto(skb, &vnet_hdr);
 +
-+out:
-+	mlxsw_sp_acl_rulei_free(mlxsw_sp, &rulei);
+ 		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
+ 		if (unlikely(!uarg)) {
+ 			if (likely(len_sum > 0))
+@@ -3121,7 +3123,8 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+ 		goto out_free;
+ 	}
  
- 	/* keep the reference to the ruleset */
--	return PTR_ERR_OR_ZERO(ruleset);
-+	return err;
- }
+-	skb->protocol = proto;
++	if (proto != htons(ETH_P_ALL))
++		skb->protocol = proto;
+ 	skb->dev = dev;
+ 	skb->priority = sockc.priority;
+ 	skb->mark = sockc.mark;
+@@ -3130,16 +3133,18 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+ 	if (unlikely(extra_len == 4))
+ 		skb->no_fcs = 1;
  
- void mlxsw_sp_flower_tmplt_destroy(struct mlxsw_sp *mlxsw_sp,
+-	packet_parse_headers(skb, sock);
+-
+ 	if (vnet_hdr_sz) {
+ 		err = virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le());
+ 		if (err)
+ 			goto out_free;
+ 		len += vnet_hdr_sz;
+-		virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 	}
+ 
++	packet_parse_headers(skb, sock);
++
++	if (vnet_hdr_sz)
++		virtio_net_hdr_set_proto(skb, &vnet_hdr);
++
+ 	err = packet_xmit(po, skb);
+ 
+ 	if (unlikely(err != 0)) {
 -- 
 2.53.0
 
