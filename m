@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D134F5DF3;
-	Tue, 13 Oct 2026 11:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BB54FC32F;
+	Tue, 13 Oct 2026 11:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892782; cv=none; b=NL6gEZPrKhZAL/VdHczv6WveIBr2ebT6U6YMlSnfG9wDJlrLmjTw9BhJ2mbsVC9ZhD5OstCdzPe9zodMgtdaW+hsiYyyDNwMHfYHphTQR2sCyQNCSJwCL5zgQoTK4GNu9NAKRBHjGhuzYPwbqP3qHBmtAvs/rxsoEIfmnalcBks=
+	t=1791892784; cv=none; b=d8VLh7VWyop352Ws7+IMMKTVI/5n5+8ojzmI0oJPvKNm9YfT9j76ZyYFOOHQ5axSzv7Kv5+YHGCOdXE5oG5VVHGn4M+OuN9cXtqm7bUVzvnPar1gJ2JHGyK1oRiw+ulbHpD3w9ou2ZiStfcBMHYBse2bu24YlLbPEj+jeyLj4bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892782; c=relaxed/simple;
-	bh=XMz/OnaFY0/BpQFnOP0Yd+GiF4w2R4uSnFOoQACyqXw=;
+	s=arc-20240116; t=1791892784; c=relaxed/simple;
+	bh=gZkdjEmnJLRvcsGRh00xj9fEXwiPklL2aPrkc9SPBWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsDj9ITfd6qRRjglKpCz00fGJNcoJUiFCH39Lzl7mTlr8uu5538rahksRnbHkrdgXPXR6+c6FVfgpjTjD4vU0xoz8acnxIIaaiDunVetrNKcAl03/8gWX5wPFEGoZ3KxjmZ4rI0wk1n+bjBvyA6g6M4+eFrrR8hPtGZl7QMU96Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbpZfinz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=If5jzqgJWHW8JtqRpdQaCqSOhWaJeF+w1TkdITfoQn3W8pM6h/UYVENhK2amrDHhhYME+4HCpoxQxCE0fjMmVI5gqo5SsybZ4IAFKNisX2XGtnvSf2tqa0DyNwvfbRxLARb9nF3o5Y8kF1aYiY+KvduGceOD5pKNnhAE3YXtqfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjLgirn9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbpZfinz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AAA1F000FF;
-	Tue, 13 Oct 2026 11:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjLgirn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7761F000FF;
+	Tue, 13 Oct 2026 11:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892780;
-	bh=ss9Zp/uueAixg32BLOXSd9NEOtitdGqLvd6Xo+kHeQY=;
+	s=korg; t=1791892783;
+	bh=NjAAPxnuPN5tVsaW/6exkNRQigdAglF5jHUYy9DQRns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbpZfinzN/VKvTy7/R9x59b1bl77q3KD/zPZ2CIpD0xDyuxUXogjCsRWcqnHBF7z7
-	 C+yfPah4sdrJdF4cp9QqEKk4O9xUBMd/qqJIok6ck8zgJjL5mJxr2QPlPXF54VKnSu
-	 TOqVCbrMF4xU0dDN5idv3PtHwIMV3y6po0mVy/hc=
+	b=RjLgirn9forsAsB9QxVFG9LZUIFYXYPeEhYg2I4mk2F4irhonhJfim1TOsrdxNZXa
+	 /lUbitp0BA9+/GODxidpGrKO56NNtFQ8kTgP9ZxTORcULFDZbmE9eahpqYiSBMaZSM
+	 ouiq65uD2tDano4o1Pnh9FhL6veZxi7z50tFuPU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 272/281] vsock: Fix memory leak in vmci_transport_recv_dgram_cb()
-Date: Tue, 13 Oct 2026 13:39:48 +0200
-Message-ID: <20261013112901.740471480@linuxfoundation.org>
+Subject: [PATCH 7.2 263/281] flow_dissector: avoid u16 truncation of hlen in bpf_flow_dissect()
+Date: Tue, 13 Oct 2026 13:39:39 +0200
+Message-ID: <20261013112901.522456616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -52,94 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 7c24a4e87e219072e5e106f6791146cbf3b056b3 ]
+[ Upstream commit f202578efc738b883cfa04889eb97328914265a7 ]
 
-During the closure of a datagram socket, the vmci_transport_recv_dgram_cb()
-function may be called, which will add the packets
-to the socket's backlog; then, after the receive queue is cleared,
-the __release_sock() function will move the packet back from the socket's
-backlog to the receive queue, which will lead to a memory leak.
+bpf_flow_dissect() sanitizes the offsets returned by the BPF program
+with clamp_t(u16, ..., hlen).
 
-sock_close
-  __sock_release
-    __vsock_release
-      // take ownership by user-space
-      lock_sock_nested
-      sock_set_flag(sk, SOCK_DEAD)
-      vmci_transport_release
-                                      vmci_dispatch_dgs
-                                        vmci_datagram_invoke_guest_handler
-                                          vmci_transport_recv_dgram_cb
-                                            sk_receive_skb
-                                              if (!sock_owned_by_user(sk))
-                                                  [...]
-                                         (!)  else if sk_add_backlog()
-                                                  [...]
-  (!) skb_queue_purge(&sk->sk_receive_queue)
+If hlen is bigger than 65535, the upper bound is truncated before
+the comparison. For instance, with hlen == 65536, both nhoff and
+thoff are forced to zero, even if the program returned sane values.
 
-      release_sock
-        __release_sock
-          // move all packets from the backlog
-          // to the receive queue
-   (!)    sk_backlog_rcv
-            vsock_queue_rcv_skb
-            [...]
-              __sock_queue_rcv_skb
-                if (!sock_flag(sk, SOCK_DEAD))
-                  // Since the socket is "dead", the function will not
-                  // be called
-                  sk->sk_data_ready(sk)
-        sock_release_ownership(sk);
-        sock_put
+This is the same class of bug as the one fixed in commit 99bda1ecbd56
+("flow_dissector: avoid u16 truncation of skb->len when computing
+thoff"). That fix does not cover the BPF path, because
+__skb_flow_dissect() returns early when a BPF flow dissector
+handles the packet.
 
-Add a receive queue cleanup in the socket destructor to fix this.
+struct bpf_flow_keys stores nhoff and thoff as u16, so cap hlen
+to U16_MAX before clamping.
 
-syzkaller report:
+Found by sashiko while reviewing the commit above.
 
-unreferenced object 0xffff8880117bfb80 (size 240):
-  comm "irq/56-vmw_vmci", pid 205, jiffies 4295064448 (age 73.992s)
-  hex dump (first 32 bytes):
-    78 dc 26 1e 80 88 ff ff 78 dc 26 1e 80 88 ff ff  x.&.....x.&.....
-    00 00 00 00 00 00 00 00 c0 da 26 1e 80 88 ff ff  ..........&.....
-  backtrace:
-    [<ffffffff82be8d97>] __alloc_skb+0x287/0x330 net/core/skbuff.c:505
-    [<ffffffffa114bcbd>] vmci_transport_recv_dgram_cb+0xbd/0x210 [vmw_vsock_vmci_transport]
-    [<ffffffffa05072c6>] vmci_datagram_invoke_guest_handler+0x366/0x450 [vmw_vmci]
-    [<ffffffffa050ad75>] vmci_dispatch_dgs+0x235/0x490 [vmw_vmci]
-    [<ffffffffa050b025>] vmci_interrupt+0x55/0x290 [vmw_vmci]
-    [<ffffffff8137ad2b>] irq_thread_fn+0x8b/0x1a0 kernel/irq/manage.c:1205
-    [<ffffffff8137c7ae>] irq_thread+0x28e/0x530 kernel/irq/manage.c:1314
-    [<ffffffff81253dd6>] kthread+0x2e6/0x3a0 kernel/kthread.c:376
-    [<ffffffff81004392>] ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:295
-
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with Syzkaller.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Link: https://patch.msgid.link/20261008144046.90853-1-Ilia.Gavrilov@infotecs.ru
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261007045616.445596-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 ++
+ net/core/flow_dissector.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 4a1dfde8414f4..f271a095996c9 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1021,6 +1021,8 @@ static void vsock_sk_destruct(struct sock *sk)
- {
- 	struct vsock_sock *vsk = vsock_sk(sk);
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 27d8a01bc9230..1be6c739e3c71 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1023,6 +1023,8 @@ u32 bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
  
-+	/* Socket buffers may remain in the queue in VMCI datagram mode */
-+	__skb_queue_purge(&sk->sk_receive_queue);
- 	/* Flush MSG_ZEROCOPY leftovers. */
- 	__skb_queue_purge(&sk->sk_error_queue);
+ 	result = bpf_prog_run_pin_on_cpu(prog, ctx);
  
++	/* bpf_flow_keys offsets are u16: do not let @hlen be truncated. */
++	hlen = min_t(int, hlen, U16_MAX);
+ 	flow_keys->nhoff = clamp_t(u16, flow_keys->nhoff, nhoff, hlen);
+ 	flow_keys->thoff = clamp_t(u16, flow_keys->thoff,
+ 				   flow_keys->nhoff, hlen);
 -- 
 2.53.0
 
