@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466904EE870;
-	Tue, 13 Oct 2026 12:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032D155C87;
+	Tue, 13 Oct 2026 12:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894093; cv=none; b=qvnNiiFTOIlgRgbnXSSAbMFqQwxCoyug5zC72yW5dEoGBS3zWmF7pTLhvEHMJj5o3K5oaj4DHPZb9NHgkNPe3LJmw90pQn1kc6pRXpo4EK2QE8Lontvy20M9/zCrue6HBD2qH6Mv5VCTbdQc9i1OevFy3DO8ONCR4U/a5lGhiU0=
+	t=1791894096; cv=none; b=E6NKPUJs6hs6cqzm08ZYk8vmqrI9CD7IBOLUWJB8G+kqYzKz/eYo5eEsfP8eEaNS0lh34TppTRgprPguglh30QsBrJ8G2CYPojZ4IWkwBfOv/9qJ7n9L9VZYyJ8IBJpKy1E60o//z/9ADdmn62ecVDUpOSsw+IZhaQk+nsCe2TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894093; c=relaxed/simple;
-	bh=ga2HzA4dUVH0BEKzlQsd8cnn59H1w6gih53u9N+YCyA=;
+	s=arc-20240116; t=1791894096; c=relaxed/simple;
+	bh=mOaaHoRJhdIvqhSKhEULmP7v5Y1Y+NqanAbFflnWvsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OZCI1pV/7syLoE00Fz9nuA4RCMDrfVyzZWMlvYyp6Mp92JPVH9sSr6yJyWASLiJEuzWFmNHLG5OFNpZn+UMkyN7t2aCYhpPfCeDodQYehDirHmzdjEGJjCnXWfTSoTAPuIdqS4JVKsTqhZXtSX4n9VzV38aqU8z8Hl/UoPHGICs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyyYpb3Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkdrCxOSS01SD79tze/GWVZ5XJLXHCRwV2GUYkbjPuKVUzTK/9kdhqOHZYZtXKYj7VpRFXoaKK1okJz0ktesSy1Y9ZvvmEZ867KXu9vpKW4pAO/rMG1wzLdb25zjL9m1YucsCIq5xVyzRw4eslh64TQ1DqjIRQL1hxcu8EL8QNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSo6lV/Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyyYpb3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEE01F000FF;
-	Tue, 13 Oct 2026 12:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSo6lV/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B5E1F000FF;
+	Tue, 13 Oct 2026 12:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894092;
-	bh=VP0b8HoOJmft/BJToByvyzBS8qas4RfSEah/bwS6w1o=;
+	s=korg; t=1791894095;
+	bh=AHWprFT/7kyXrkarX/hKhtGdlpHoMkecj5Exr8KrXrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EyyYpb3Q3q+H/GOax1WzXCi4Gn14FCX6uRKY5ehLDhCY25vUaACaNUFSE+EqEZpOm
-	 GXkdMTKjDIVnQ/Kf2s8K0v/sDsDQibl6iDSHkWOtHZJhZatu+uuvb8UwfBlUeG47Dj
-	 YKcKy8ebqUWPxmu996DCvmEWg07mixLgECcsMrKs=
+	b=fSo6lV/ZbUr7E4wWfn8m6UHtdkTFWs1EhzthRynfBP840+ytXeoCu15N8RGMXf4t1
+	 TCNZHANkQtRvDpSDQyfCBsrEgruNl51XJrOZpMis3Xdi0lmZ1LJoynPAu0Okj+BoUj
+	 PWBXfgHM2Toj/UaKdUWi2q0prNWCeFO1nEgg+Zrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Ning Ding <dingning04@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 445/621] PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers
-Date: Tue, 13 Oct 2026 13:37:20 +0200
-Message-ID: <20261013112931.391622623@linuxfoundation.org>
+Subject: [PATCH 6.18 446/621] bpf: Invalidate RCU pointers after final spin unlock
+Date: Tue, 13 Oct 2026 13:37:21 +0200
+Message-ID: <20261013112931.416023124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -45,87 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Ning Ding <dingning04@gmail.com>
 
-[ Upstream commit 747b9bbbbdfdee51aee2456388f9b94b5086de4d ]
+[ Upstream commit 180c7000712db77063b3a26f4c97e7dd9038f449 ]
 
-Currently, the legacy I/O and memory sysfs handlers do not check
-security_locked_down(LOCKDOWN_PCI_ACCESS), leaving the legacy_io and
-legacy_mem files unprotected when the kernel is locked down.
+In a sleepable BPF program, a spin lock can provide the only RCU protection
+for a kptr. The final bpf_spin_unlock() ends that protection, but the
+verifier leaves the pointer valid. Another CPU can then free the object
+before the pointer is used. A capability-limited runtime PoC triggered a
+task_struct use-after-free in __bpf_get_task_stack().
 
-Commit eb627e17727e ("PCI: Lock down BAR access when the kernel is locked
-down") added the check to pci_write_config(), pci_mmap_resource(), and
-pci_write_resource_io() to prevent userspace from programming DMA-capable
-hardware that could be used to modify kernel code, but did not cover the
-legacy handlers.
+Record whether the program is in an RCU-protected context before releasing
+the lock. Invalidate RCU-protected pointers only when the unlock leaves the
+final such context. This preserves valid pointers in non-sleepable programs
+and inside an explicit RCU read-side section.
 
-As a result, root can still write arbitrary I/O ports and map the legacy
-I/O and memory spaces while the kernel is locked down, which is the same
-capability the lockdown is meant to remove.
-
-Add the same check to pci_write_legacy_io(), pci_mmap_legacy_mem(), and
-pci_mmap_legacy_io().
-
-These generic handlers cover both architectures that define HAVE_PCI_LEGACY
-(such as Alpha and PowerPC).
-
-Fixes: eb627e17727e ("PCI: Lock down BAR access when the kernel is locked down")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: add Link]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260720211541.1509744-1-kwilczynski@kernel.org
+Fixes: 5861d1e8dbc4 ("bpf: Allow bpf_spin_{lock,unlock} in sleepable progs")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: ChatGPT:GPT-5.6-Pro
+Signed-off-by: Ning Ding <dingning04@gmail.com>
+Link: https://lore.kernel.org/bpf/20260803112615.3362122-2-dingning04@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-sysfs.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ kernel/bpf/verifier.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index 76966343e0186..178ee8351f662 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -950,6 +950,11 @@ static ssize_t pci_write_legacy_io(struct file *filp, struct kobject *kobj,
- {
- 	struct pci_bus *bus = to_pci_bus(kobj_to_dev(kobj));
- 	u32 val;
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_PCI_ACCESS);
-+	if (ret)
-+		return ret;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 947b501a58aee..d35ac3df9a052 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8585,6 +8585,10 @@ static int process_spin_lock(struct bpf_verifier_env *env, int regno, int flags)
+ 			return err;
+ 		}
+ 	} else {
++		u32 clear_mask = (1 << STACK_SPILL) | (1 << STACK_ITER);
++		struct bpf_func_state *state;
++		struct bpf_reg_state *rcu_reg;
++		bool was_in_rcu_cs;
+ 		void *ptr;
+ 		int type;
  
- 	/* Only support 1, 2 or 4 byte accesses. */
- 	switch (count) {
-@@ -985,6 +990,11 @@ static int pci_mmap_legacy_mem(struct file *filp, struct kobject *kobj,
- 			       struct vm_area_struct *vma)
- {
- 	struct pci_bus *bus = to_pci_bus(kobj_to_dev(kobj));
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_PCI_ACCESS);
-+	if (ret)
-+		return ret;
+@@ -8612,10 +8616,19 @@ static int process_spin_lock(struct bpf_verifier_env *env, int regno, int flags)
+ 			verbose(env, "%s_unlock cannot be out of order\n", lock_str);
+ 			return -EINVAL;
+ 		}
++		was_in_rcu_cs = in_rcu_cs(env);
+ 		if (release_lock_state(cur, type, reg->id, ptr)) {
+ 			verbose(env, "%s_unlock of different lock\n", lock_str);
+ 			return -EINVAL;
+ 		}
++		if (was_in_rcu_cs && !in_rcu_cs(env)) {
++			bpf_for_each_reg_in_vstate_mask(env->cur_state, state, rcu_reg, clear_mask, ({
++				if (rcu_reg->type & MEM_RCU) {
++					rcu_reg->type &= ~(MEM_RCU | PTR_MAYBE_NULL);
++					rcu_reg->type |= PTR_UNTRUSTED;
++				}
++			}));
++		}
  
- 	return pci_mmap_legacy_page_range(bus, vma, pci_mmap_mem);
- }
-@@ -1005,6 +1015,11 @@ static int pci_mmap_legacy_io(struct file *filp, struct kobject *kobj,
- 			      struct vm_area_struct *vma)
- {
- 	struct pci_bus *bus = to_pci_bus(kobj_to_dev(kobj));
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_PCI_ACCESS);
-+	if (ret)
-+		return ret;
- 
- 	return pci_mmap_legacy_page_range(bus, vma, pci_mmap_io);
- }
+ 		invalidate_non_owning_refs(env);
+ 	}
 -- 
 2.53.0
 
