@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE2E472F73;
-	Tue, 13 Oct 2026 12:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C27A4EC675;
+	Tue, 13 Oct 2026 12:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894690; cv=none; b=g+XGM8i+d84k48MBPMynKJ2jsGkhfqFDb5N6YjcYLeYPWOMNRIbyd9HZLiHQqB0luLJclNPfN43gW7WLmGGMGrSI+oGLxxtddo2/ZE6jJrY7/VhYeuuhpRLI/hLJF9qXDGbw3F4E8cF5y1y6ly+5X1b4oOaMbpaxS7o3UTzsZug=
+	t=1791894693; cv=none; b=P1+YUrtzPEOPDEC6NklXyRNYrnkp7rUuI1lW48lPp9Elmet+WoNeW3Pkp5zetNavC+JGueeqNSifnxQWmtFo/d8M+IVSQrAksyl7ukiAkMmXyW33/io1BYfapfDU3s5Goja90M3O3Tg3kISQzD4sNaxNqVblmrXAyt8EZh3VkOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894690; c=relaxed/simple;
-	bh=7ntlTJ9uCra+BTZWGbiHmBj1MpA9fOyKtmksf1o12kg=;
+	s=arc-20240116; t=1791894693; c=relaxed/simple;
+	bh=qVlRZ3LVs6x2IXGZevZq8P7m14ZvVzAcxunPchKefBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lm93y/Dk1vZeE8dSDAAQAbX4+ht5H5wnDovl7hl4w+L6xOY0t4cnl5uJBjw19eyO2nvNiK+NO4PUv+Jaks0X8uk53Q91Iqadin0E+bcuL4he9s/Si1Np8HiFNcwaWNbild3MZY+GL31g825A8wIRwqpjDcq0atIBoF1L3x2J3DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzKDNLus; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uJuou7WlfjpxKHppyYMNBDC959ZKlZzFs8NfRy676pLJ1tbK8aF1J1dD0wJvEEylzevYl+gqfCFGfux/c1ajPURX5BXFLZri0Udioh9A7AjBLCKYA8Oq3UpK2oJrTGrLBO6EDTj+9b2SRsdjUQGyxjI4ZUOA903I8MgXuetkFes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2+RRLeO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzKDNLus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C86F1F00893;
-	Tue, 13 Oct 2026 12:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2+RRLeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921B21F000FF;
+	Tue, 13 Oct 2026 12:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894689;
-	bh=PudqMtOt1iDuFoARrJmeL/L4cKBvlyDuslghGq+QUkc=;
+	s=korg; t=1791894692;
+	bh=5e3UPDcW6o3Pp8WpvRKF+3pMaLRPOFEa/3Gk65MRSKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzKDNLushFg9y08JWruRa/q3DxIK63zMmyDIJXM+vkaEbKX7yKj2vo33DScyn4IBX
-	 2Q9GBHnCRN3WOiZeHZtWmPJBctdl7EfICP3xPfcMUysJr0pyq7vUc4+5173UBNxdU9
-	 Ra0WN5ZhwyztOg8/IDjDcPqgpf39v+Y3up6ksWyY=
+	b=A2+RRLeOBH1Y7ajeBdvli7Wcm50bLDwMefTh5lfx/CcCNebVs57KgAliDa6UpSjhH
+	 1mRD4ixo3gJW6tX1Pi+d1XEbqQekJiXR0vEBeRtUTN0BYP6VQDDVh86FXhFAoGFDVt
+	 GRaPF7rjQKaR+/FhnZ2ft1R7HQW24aQVaf//HkGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 023/497] audit: fix exe mark UAF in kill_rules()
-Date: Tue, 13 Oct 2026 13:33:10 +0200
-Message-ID: <20261013112908.434894648@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.12 024/497] HID: bpf: cast size to ssize_t when checking hid_bpf_hw_request
+Date: Tue, 13 Oct 2026 13:33:11 +0200
+Message-ID: <20261013112908.458355670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -46,94 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
+commit 3afefbfe55c2a8a0c4bdf6f4cc1f773da120027c upstream.
 
-kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
-tree is pruned. It drops entry->rule.exe before removing the rule from
-the RCU-visible filter lists.
+As reported by Sashiko:
+If a transport driver encounters a hardware error and returns a negative
+error code such as -EPIPE, ret is implicitly promoted to size_t when
+compared against size. This causes the negative error code to evaluate
+as a large positive number, making the (ret > size) condition true.
 
-After a rule has been installed with AUDIT_ADD_RULE, which requires
-CAP_AUDIT_CONTROL, removing the watched directory can race with another
-task that is still evaluating the rule. In that case, fsnotify can free
-the executable mark before the reader reaches audit_mark_compare(),
-causing a use-after-free.
+This silently converts the hardware error into a success return value
+and copies the unmodified buffer back, which could leave BPF programs
+operating on uninitialized or stale data.
 
-KASAN reports:
+Fix this by casting size into ssize_t to return the actual negative
+error code.
 
-    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
-
-Unlink the published rules from the RCU-visible lists and retain them
-on tree->rules for cleanup. If any rule has an executable mark, wait for
-a single RCU grace period before removing the marks and scheduling the
-entries for freeing. Otherwise, call_rcu() already provides the required
-deferred freeing without a synchronous wait.
-
+Link: https://lore.kernel.org/all/20260904130354.A79471F00A3D@smtp.kernel.org/
+Fixes: 2b658c1c442e ("HID: bpf: prevent buffer overflow in hid_hw_request")
 Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit_tree.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/hid/bpf/hid_bpf_dispatch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -543,22 +543,38 @@ static void kill_rules(struct audit_cont
- {
- 	struct audit_krule *rule, *next;
- 	struct audit_entry *entry;
-+	bool need_sync = false;
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -459,7 +459,7 @@ hid_bpf_hw_request(struct hid_bpf_ctx *c
+ 					      (u64)(long)ctx,
+ 					      true); /* prevent infinite recursions */
  
- 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
- 		entry = container_of(rule, struct audit_entry, rule);
- 
--		list_del_init(&rule->rlist);
- 		if (rule->tree) {
- 			/* not a half-baked one */
- 			audit_tree_log_remove_rule(context, rule);
--			if (entry->rule.exe)
--				audit_remove_mark(entry->rule.exe);
- 			rule->tree = NULL;
- 			list_del_rcu(&entry->list);
- 			list_del(&entry->rule.list);
--			call_rcu(&entry->rcu, audit_free_rule_rcu);
-+			if (entry->rule.exe)
-+				need_sync = true;
-+		} else {
-+			list_del_init(&rule->rlist);
- 		}
- 	}
-+
-+	if (list_empty(&tree->rules))
-+		return;
-+
-+	if (need_sync)
-+		synchronize_rcu();
-+
-+	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
-+		entry = container_of(rule, struct audit_entry, rule);
-+
-+		list_del_init(&rule->rlist);
-+		if (entry->rule.exe)
-+			audit_remove_mark(entry->rule.exe);
-+		call_rcu(&entry->rcu, audit_free_rule_rcu);
-+	}
- }
- 
- /*
+-	if (ret > size)
++	if (ret > (ssize_t)size)
+ 		ret = size;
+ 	if (ret > 0)
+ 		memcpy(buf, dma_data, ret);
 
 
