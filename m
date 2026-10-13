@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4383D5241;
-	Tue, 13 Oct 2026 11:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B0A3AFD03;
+	Tue, 13 Oct 2026 11:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892582; cv=none; b=c9OKSA2fVcguVZPUq9QtEIofHgbxmgTq0dNePBeCDrJrNEqLD/uQTnc7XJXyD6tPGkcyXqpvISAd1eA7zPZLmhAlGrBRbRBMt1mkyCqJF/GxU/cWpoAipzckVxmioxKUbbrNq4d101sVdygN7MMV17jwwlD1t/ov9C9V0cbi5FU=
+	t=1791892586; cv=none; b=Wimq25Ih14NcpRPqBZn9qf6EOoAML5v/NHnwQQsyGYVcE0LzW1yo6GzvZeKKTIAg+ElGhhMOuWSxpNkq2FJ906exc2vE28nEDCONpiA5tnOugOWZ1NIIG/FLl9YIMm2Iqitw0F/26Lhulnrf+u9D/dWkzAyAjxoxkqhlb1rUknc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892582; c=relaxed/simple;
-	bh=ObJCP5bjre/xy0jorAYx6wdaoSgR4Oos/keezXMeIj0=;
+	s=arc-20240116; t=1791892586; c=relaxed/simple;
+	bh=2frUz7OIGGFnwi72Hiw2xs6ki6/d+AhoAs6SA7uYEMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WV3s9LWWlDvBRY5EZsbLx4a347x/lTzrGg55lSHCdQQ0h7h5SBnVVfTqaJJtf3fYWKki8OZRlMdi4fn/wSy4QJHrBewFFW6Y7d6uDhC08NsQQxXXe77tysiGV+/0IZlWCOHQNgt5A0D5l45vwLjpDuibph+WBj7KeJHXb5L4zB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpxXPVnJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUGRuF3rygW1tHm0gyEfFo1F32nIwqePKi0QdiPdtOB3MKERhtld02oW6ITFa2jqlzJdr6xnQLdeK6SOKgCIKzeYYx5EKocg2a2lrWFmzqiEMJxUAPuIsZCv/7AiRBr5sMN+6jyxooRA9ZkL4EBvMW9hX/qgq/RP+1ji0JBPWP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyhGr6Fx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpxXPVnJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393EA1F000FF;
-	Tue, 13 Oct 2026 11:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyhGr6Fx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525D11F000FF;
+	Tue, 13 Oct 2026 11:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892581;
-	bh=3j/iQZqBZZKUFLNilWow3jW43tGOdbfF1kIhkDLPO10=;
+	s=korg; t=1791892584;
+	bh=1hajsRJGUZdkpmtn8l2eDMFbjN/WmsIMZeh3KU1koi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VpxXPVnJZ8kSOg0ijIB5txDBjQTFU0POFHa2Pq4Pqlaf4IyEkC+GZweZHeShQRDNx
-	 1xVXUJdWihOYYxDNowRnS9TsSneDf0k4NMAFweFYXfaYiaazoUE8sM7WC1n5o3Ogde
-	 d0LnwhI7Dw/gynhUuam9odgAtSQ2cfZAFM1z+rVE=
+	b=MyhGr6Fx5wyhtnNeBDk9akuCYqZgyTk84YiZSKB9ZjOkT9yCc24l4dCbIOjJTbn6h
+	 S54jM833k87ESS2bQi1TmVw9p+T+t4xmriAdhSTMY7mY3yfgI2So8oEPvAOtD6WwOf
+	 NoLv2Gsq0Fa3NxAqllyDJstwCiNViZxiOVgfVytg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 177/281] clk: qcom: gcc-kaanapali: Fix always-enabling PCIE_RSCC clocks
-Date: Tue, 13 Oct 2026 13:38:13 +0200
-Message-ID: <20261013112859.461162071@linuxfoundation.org>
+Subject: [PATCH 7.2 178/281] clk: qcom: gpucc-glymur: Mark the GPU CX GDSC as votable
+Date: Tue, 13 Oct 2026 13:38:14 +0200
+Message-ID: <20261013112859.485849632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -51,48 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 0bfb542fc3368371cefb4cf45ef21c3ba2d37c3f ]
+[ Upstream commit 8f3f88309fa4e975ac27368ee945c2c202251a7c ]
 
-The critical_cbrcrs array will get qcom_branch_set_clk_en() called on
-each entry which will set BIT(0) to enable the clock. This is however
-wrong for these two PCIE_RSCC clocks which need BIT(20) and BIT(21) set
-respectively to enable them.
+The GPU CX GDSC on Glymur is a votable power domain and hence should
+not be polled for power-off status during GDSC disable. Also, its
+power-on status should be read from the GDS hardware control register.
 
-Fixes: d1919c375f21 ("clk: qcom: Add support for Global clock controller on Kaanapali")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20260807-various-pcie-clk-fix-v1-3-5caf78a599d7@fairphone.com
+Accommodate this by removing POLL_CFG_GDSCR and adding the VOTABLE
+flag for the GPU CX GDSC, similar to other platforms (e.g. SM8750 and
+Milos).
+
+Fixes: 67e645285dd0 ("clk: qcom: Add support for GPUCC and GXCLK for Glymur")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260801-kaanapali-gpu-voteable-v1-1-fe804d24d2e9@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-kaanapali.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gpucc-glymur.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-kaanapali.c b/drivers/clk/qcom/gcc-kaanapali.c
-index 842c1a70c6916..5bcbcd1786577 100644
---- a/drivers/clk/qcom/gcc-kaanapali.c
-+++ b/drivers/clk/qcom/gcc-kaanapali.c
-@@ -3464,8 +3464,6 @@ static const u32 gcc_kaanapali_critical_cbcrs[] = {
- 	0x9f004, /* GCC_EVA_AHB_CLK */
- 	0x9f024, /* GCC_EVA_XO_CLK */
- 	0x71004, /* GCC_GPU_CFG_AHB_CLK */
--	0x52010, /* GCC_PCIE_RSCC_CFG_AHB_CLK */
--	0x52010, /* GCC_PCIE_RSCC_XO_CLK */
- 	0x32004, /* GCC_VIDEO_AHB_CLK */
- 	0x32040, /* GCC_VIDEO_XO_CLK */
+diff --git a/drivers/clk/qcom/gpucc-glymur.c b/drivers/clk/qcom/gpucc-glymur.c
+index 001b2454786a0..cac51de20b295 100644
+--- a/drivers/clk/qcom/gpucc-glymur.c
++++ b/drivers/clk/qcom/gpucc-glymur.c
+@@ -510,7 +510,7 @@ static struct gdsc gpu_cc_cx_gdsc = {
+ 		.name = "gpu_cc_cx_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = RETAIN_FF_ENABLE | VOTABLE,
  };
-@@ -3480,6 +3478,10 @@ static const struct regmap_config gcc_kaanapali_regmap_config = {
  
- static void clk_kaanapali_regs_configure(struct device *dev, struct regmap *regmap)
- {
-+	/* Keep clocks always enabled */
-+	regmap_update_bits(regmap, 0x52010, BIT(20), BIT(20)); /* GCC_PCIE_RSCC_CFG_AHB_CLK */
-+	regmap_update_bits(regmap, 0x52010, BIT(21), BIT(21)); /* GCC_PCIE_RSCC_XO_CLK */
-+
- 	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
- }
+ static struct clk_regmap *gpu_cc_glymur_clocks[] = {
 -- 
 2.53.0
 
