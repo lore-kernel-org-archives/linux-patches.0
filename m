@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5DB4F4736;
-	Tue, 13 Oct 2026 12:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F74F4736;
+	Tue, 13 Oct 2026 12:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895864; cv=none; b=arsCxTD0Egeeh/lAkyE6WrWUZKywNMWxLwPwmkcBnWFHAJZ1nm0XgjX8KpyQ2TYQS3Kc8iavS/kdqWZJstKo4ySa1YTczLNe/aZICs/JG6QAi1rzCsmmEyYA9LxX7ijvWShKWh7jpXIkZy3E5tT4oCu81uwzQHwDyyZItkBEQc8=
+	t=1791895866; cv=none; b=ZgDn7LYqSj8HgX3h27Y81OQx7cK672Wqffqfo96f3S35ZqyyXhRaajxFqng+9tlRdXa6Dp7tIUMODtcGW1X59XDnSFsa4KMsVQusUbHwweLTCQODontaZRl/TzrFFwHg4D9qu/E2YpydCxn9wgqrpNKA7eGT5zIh4zOQif+5XTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895864; c=relaxed/simple;
-	bh=kWpLl0lrtXbrau9sn9aQCG+W53J2wXgw8iWT/8R4LP4=;
+	s=arc-20240116; t=1791895866; c=relaxed/simple;
+	bh=YslqZXKr9/ZlS9pL1+8u4IQbzMEu7d/2kxMe9xF2xrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1EOQLqWDIen2QBH8LAHBimhYkxDYpiXaQH/VstnPXrJTPe+11AToYuuzy5ll4pIWovPVNhMsSxAfHXKddcRXzVAvMtqNJ7D2V8HPxpxIOrUHTJrZOwssOQZds78hGMjJX2TfRXsGsRKw1OAU9czNYZvMNy9JZeIyGnWZq/fCnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb1V1KgL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SxFlRvNUZTdDoBus4frmm8erfP8DeG+Ho3gDo63DCggl41/zQBDDq4ZrKXDAvkPYn9HBT17XgUCPd9G63Wys0ARroAkegP0D9r1hXwaMEQzNp+XAGG2Aw4cbkR34RoyE2wyjrsFGxHTJwqwW2O3+fYMEjJXkfjNGFiD7ePKbM8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PST/mfnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb1V1KgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B961F00893;
-	Tue, 13 Oct 2026 12:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PST/mfnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F202C1F000FF;
+	Tue, 13 Oct 2026 12:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895862;
-	bh=Cek8xXZlNKLR6kjttLPYhiMnaBjcmlCB0LQWpoUZUcU=;
+	s=korg; t=1791895865;
+	bh=yPG5/3C3wIMdemmqtXga3iZdkTgorx8sR6Lef5t2gUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vb1V1KgLZiwTU9cN9fQdEwM1SCcuTkMvyaxyOjMfhCBxBvu0o1dk+fTPpQe8lNlS0
-	 Uv0xJ+hQYXdhgmhgyKUvYn3y2Z+Iv1piRk3hhxf8sHmyRej3ntzAx6ess0yNf6D9uJ
-	 i43QlulBoW4SFsL2nJqMp1qn5KGdj3EdI+tjJAhc=
+	b=PST/mfnPIJ3bSkf6ugNmpJIsBqDY4PBCx8iD4P/yZFEJHPYMWs9hdk68Sn/mk8uvp
+	 M3Ezrm3FymZwSdLlMFL11/vvgnecCzlXs5gGVsaYqbfak+0RX2MWaf1Li76t/1KNdY
+	 dAHX84i5GlgxT1qjskHHcMFIVm6nn8kvBVCdclFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 374/497] strparser: make sure __strp_recv isnt running before tearing down the parser
-Date: Tue, 13 Oct 2026 13:39:01 +0200
-Message-ID: <20261013112916.776298529@linuxfoundation.org>
+	Andreas Greve <andreas.greve@a-greve.de>,
+	James Dingwall <james@dingwall.me.uk>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	"Claude Opus 5.5 (1M context)" <noreply@anthropic.com>
+Subject: [PATCH 6.12 375/497] swiotlb: fix default_swiotlb_limit() for non-growable default pool
+Date: Tue, 13 Oct 2026 13:39:02 +0200
+Message-ID: <20261013112916.799891438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,100 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 0984ebc631792acf8fff105112ee74a6b8f1efcc upstream.
+commit 911655ab1dfb9d526978a75df3b210132620d30a upstream.
 
-The comment above strp_done() claims that if strp is stopped,
-strp_recv will no longer be called. That's only true if the caller has
-a mechanism (eg locking) to guarantee that strp_recv() calls that
-started before strp_stop() have completed by the time we call
-strp_done().
+Commit ad96ce3252db ("swiotlb: determine potential physical address
+limit") changed default_swiotlb_limit() to return the maximum physical
+address that could ever be used by dynamically allocated pools, so that
+the value stays constant when CONFIG_SWIOTLB_DYNAMIC=y. However,
+io_tlb_default_mem.phys_limit is returned even when the default pool
+cannot grow, e.g. when swiotlb_init_remap() is called with a remap
+callback.
 
-This adds a dummy lock_sock/release_sock pair to guarantee that any
-in-flight strp_recv() (which runs under either bh_lock_sock or
-lock_sock, depending if it's called from ->sk_data_ready or strp_work)
-has completed.
+This breaks Xen dom0 on x86: pci_xen_swiotlb_init() passes SWIOTLB_ANY
+and xen_swiotlb_fixup(), so phys_limit is set to the top of dom0 memory,
+although xen_swiotlb_fixup() makes the default pool below the 32-bit
+boundary. xen_swiotlb_dma_supported() then rejects 32-bit DMA masks,
+even though the bounce buffer is perfectly usable by such devices.
 
-Only espintcp can be affected by this race condition, but this patch
-makes sure no future user of strp can have the bug.
+Return phys_limit only if the default pool can actually grow, otherwise
+report the real end of the default pool, like in the
+!CONFIG_SWIOTLB_DYNAMIC case.
 
-This could crash on strp->sk ("general mode" of strp), but this mode
-has been here for 9 years and has never been used. It'll be gone soon,
-no point worrying about it.
-
-Switch the stopped/paused/etc bits to u8's to avoid races between
-strp_stop() and strp_pause/unpause().
-
-A reproducer has been published and turns the possible UAF into an
-exploit [1].
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/all/aZLn2Faeg1FB7XOf@v4bel/
-Link: https://lore.kernel.org/all/aZgpkyTDU3aXe_V0@v4bel/
-Link: https://github.com/m0x41nos/RustyTux [1]
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Reported-by: Andreas Greve <andreas.greve@a-greve.de>
+Reported-by: James Dingwall <james@dingwall.me.uk>
+Fixes: ad96ce3252db ("swiotlb: determine potential physical address limit")
+Closes: https://lore.kernel.org/xen-devel/f74668db-52fd-4575-8372-7bfdf10d62ac@a-greve.de/
 Cc: stable@vger.kernel.org
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/425d9d926709b542ed5331110c19fee4aee1f28d.1791206940.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+Tested-by: James Dingwall <james@dingwall.me.uk>
+Link: https://lore.kernel.org/all/20261005070518.1590097-1-m.szyprowski@samsung.com/
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/strparser.rst |    2 +-
- include/net/strparser.h                |   10 +++++-----
- net/strparser/strparser.c              |    6 +++++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ kernel/dma/swiotlb.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/Documentation/networking/strparser.rst
-+++ b/Documentation/networking/strparser.rst
-@@ -77,7 +77,7 @@ Functions
- 
-      strp_done is called to release any resources held by the stream
-      parser instance. This must be called after the stream processor
--     has been stopped.
-+     has been stopped. The socket lock must not be held.
- 
-      ::
- 
---- a/include/net/strparser.h
-+++ b/include/net/strparser.h
-@@ -91,11 +91,11 @@ static inline struct strp_msg *strp_msg(
- struct strparser {
- 	struct sock *sk;
- 
--	u32 stopped : 1;
--	u32 paused : 1;
--	u32 aborted : 1;
--	u32 interrupted : 1;
--	u32 unrecov_intr : 1;
-+	u8 stopped;
-+	u8 paused;
-+	u8 aborted;
-+	u8 interrupted;
-+	u8 unrecov_intr;
- 
- 	struct sk_buff **skb_nextp;
- 	struct sk_buff *skb_head;
---- a/net/strparser/strparser.c
-+++ b/net/strparser/strparser.c
-@@ -518,12 +518,16 @@ void strp_unpause(struct strparser *strp
- EXPORT_SYMBOL_GPL(strp_unpause);
- 
- /* strp must already be stopped so that strp_recv will no longer be called.
-- * Note that strp_done is not called with the lower socket held.
-+ * Note that strp_done must not be called with the lower socket held.
-  */
- void strp_done(struct strparser *strp)
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -1677,10 +1677,10 @@ phys_addr_t default_swiotlb_base(void)
+ phys_addr_t default_swiotlb_limit(void)
  {
- 	WARN_ON(!strp->stopped);
+ #ifdef CONFIG_SWIOTLB_DYNAMIC
+-	return io_tlb_default_mem.phys_limit;
+-#else
+-	return io_tlb_default_mem.defpool.end - 1;
++	if (io_tlb_default_mem.can_grow)
++		return io_tlb_default_mem.phys_limit;
+ #endif
++	return io_tlb_default_mem.defpool.end - 1;
+ }
  
-+	lock_sock(strp->sk);
-+	/* sync with pending strp_recv */
-+	release_sock(strp->sk);
-+
- 	cancel_delayed_work_sync(&strp->msg_timer_work);
- 	cancel_work_sync(&strp->work);
- 
+ #ifdef CONFIG_DEBUG_FS
 
 
