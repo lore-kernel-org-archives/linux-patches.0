@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DD64FECC0;
-	Tue, 13 Oct 2026 12:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14A44F4D04;
+	Tue, 13 Oct 2026 12:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895511; cv=none; b=Ntn7oAk2Yo2CPLKg217BCYz+camv33Z3039xP9IGuG1sRr7uxCbEn3mA01UJB8vfXaNEjO6i6+7880nkjQ/JIVHRssV/aWGtLTFXbUrrdysRw3p7fTcLw+ijDvSJ/UxqsVsmd96L0olQ1aok6cKWry09Cmyl3Re1xfk7331FSQo=
+	t=1791895516; cv=none; b=bn9aV9V7T3dFyCZfvPKA3woSpVni2WIJ9IdQxRSLUXeKM2hDHW7S6T6kDKVw4r3EW7/t7obYfZ68CIWitQcf/sEIXxwRI128Eq43pu2Y6zwRve/Uck/Fu0ixKPzmEfHL9dSc+edYSGvLP+pTXfyG3AGrpBHNGNVsveapwBl6HyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895511; c=relaxed/simple;
-	bh=p1TiPq6xwxxpc2SDSAgqRIBnEQDcLPI3FilyKkfU1yU=;
+	s=arc-20240116; t=1791895516; c=relaxed/simple;
+	bh=QVorhjzAUff+AXStbp+PBF+V7dpyoWErUuBBsNPBt9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjMoAUEMAXtVvUUKrKPI+86bT59OShQUVnHGYceFit5nIUGKuEgYx7wIFP3xwlxVAL8XJw4bu6utExnlxw750fFRBRWIne4ibjzGMPE3e8mDg67/kJEsDkEeQMQkINn9VftPFhGnkt4LaeUZJ0UZbSoB8ohRnhBaZEAlWv6Q030=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBRb38ko; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jz5JhzXhyHy1o5HgbPgSxv8LQPinQf9OWlCV7kGaNLv0wbM9NoNCRC28EFftUWY+Q80S5KyaTLJjWcpdv9tGgoMeBNIRrvj+wFbaA1+GkInA0Iu4bY4dZMofS7Po3LPc2RCmlEPQLN79O+q7mMMrPCW7HghHORR9WMNbSrJEfxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z97gEFKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBRb38ko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5B11F000FF;
-	Tue, 13 Oct 2026 12:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z97gEFKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71901F000FF;
+	Tue, 13 Oct 2026 12:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895510;
-	bh=s9awgyYhYFIM85krBmR0YFdKHwBAlQJoHAvdPIYLhuw=;
+	s=korg; t=1791895513;
+	bh=hVqyn7Pb7aUDwWIzNavtVYRjDmXZfwwI6P5kmby+iB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBRb38koQ+qQxa9AA9EIxwTELbx9Q+l98Je2ye+j6pHcQYu6b1rnxt+Xv22IBKBaD
-	 3wZJQGof5/aqiRhVdxtkep2Pv/RqKcffhkMGEnBqAl0sac95P6zN3xhU8oxy+uhAvZ
-	 qbHbXVJ1x6/KOlHuHJcpVPV007s4oaYk+mz30YtU=
+	b=Z97gEFKxOeJOieb8GZqHHn8gK+9zBfYbLpVIaMzgN5zd/eSwwxu5fnhsIMzDYRZPn
+	 2b8o+txqmKoq7ygGnReAv30EfgzEdoXsC95lJuK8ZwRQyhn7zJXo0G/0IHS/kJU9yw
+	 OxDGL2HQ3wIsdj/UM9Sm2+Yd6Pf8DsA7a31GfnbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 299/497] usb: typec: ucsi: acpi: Assume UCSI 1.2 on Acer Nitro ANV15-41
-Date: Tue, 13 Oct 2026 13:37:46 +0200
-Message-ID: <20261013112914.994184521@linuxfoundation.org>
+Subject: [PATCH 6.12 300/497] tty: introduce tty_port_tty guard()
+Date: Tue, 13 Oct 2026 13:37:47 +0200
+Message-ID: <20261013112915.018279163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,90 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 8c51ea651d043c786c37668c51624bd6b338a0ef ]
+[ Upstream commit e8398b8aed50382c21fcec77e80a5314e7c45c25 ]
 
-The Acer Nitro ANV15-41 exposes a functional UCSI ACPI PPM but
-reports a UCSI VERSION value of zero.
+Having this, guards like these work:
+  scoped_guard(tty_port_tty, port)
+    tty_wakeup(scoped_tty());
 
-ucsi_register() rejects a zero version with -ENODEV, leaving the
-system without registered USB Type-C connectors.
+See e.g. "tty_port: use scoped_guard()" later in this series.
 
-The PPM works correctly when using the UCSI 1.2 layout. With UCSI
-1.2 assumed, both Type-C connectors register correctly and USB Power
-Delivery negotiation works.
+The definitions depend on CONFIG_TTY. It's due to tty_kref_put().
+On !CONFIG_TTY, it is an inline and its declaration would conflict. The
+guards are not needed in that case, of course.
 
-Add a DMI-specific UCSI operation for the Acer Nitro ANV15-41 that
-substitutes UCSI 1.2 only when firmware reports a zero version.
-Preserve any valid non-zero firmware version.
-
-Tested on an Acer Nitro ANV15-41 with BIOS V1.51.
-
-Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260910023338.31816-1-pannarat.wiriyaarritham@danielcorp.dev
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20250814072456.182853-3-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Omitted the .write_message_out initializer because the older ucsi_operations interface lacks that member. ]
+Stable-dep-of: 56964f6a3123 ("tty: tty_port: restore TTY_IO_ERROR on activation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c | 33 ++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ include/linux/tty_port.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
-index db882d44be49c..8c6793361b004 100644
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -105,6 +105,32 @@ static const struct ucsi_operations ucsi_acpi_ops = {
- 	.async_control = ucsi_acpi_async_control
- };
+diff --git a/include/linux/tty_port.h b/include/linux/tty_port.h
+index 41b1c72745ca5..5e2cd738aceaf 100644
+--- a/include/linux/tty_port.h
++++ b/include/linux/tty_port.h
+@@ -273,4 +273,18 @@ static inline void tty_port_tty_vhangup(struct tty_port *port)
+ 	__tty_port_tty_hangup(port, false, false);
+ }
  
-+static int ucsi_acer_read_version(struct ucsi *ucsi, u16 *version)
++#ifdef CONFIG_TTY
++void tty_kref_put(struct tty_struct *tty);
++__DEFINE_CLASS_IS_CONDITIONAL(tty_port_tty, true);
++__DEFINE_UNLOCK_GUARD(tty_port_tty, struct tty_struct, tty_kref_put(_T->lock));
++static inline class_tty_port_tty_t class_tty_port_tty_constructor(struct tty_port *tport)
 +{
-+	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
-+	int ret;
-+
-+	ret = ucsi_acpi_read_version(ucsi, version);
-+	if (ret)
-+		return ret;
-+
-+	if (!*version) {
-+		dev_warn(ua->dev, "UCSI version is zero, assuming 1.2\n");
-+		*version = UCSI_VERSION_1_2;
-+	}
-+
-+	return 0;
++	class_tty_port_tty_t _t = {
++		.lock = tty_port_tty_get(tport),
++	};
++	return _t;
 +}
++#define scoped_tty()	((struct tty_struct *)(__guard_ptr(tty_port_tty)(&scope)))
++#endif
 +
-+static const struct ucsi_operations ucsi_acer_ops = {
-+	.read_version = ucsi_acer_read_version,
-+	.read_cci = ucsi_acpi_read_cci,
-+	.poll_cci = ucsi_acpi_poll_cci,
-+	.read_message_in = ucsi_acpi_read_message_in,
-+	.sync_control = ucsi_sync_control_common,
-+	.async_control = ucsi_acpi_async_control
-+};
-+
- static int ucsi_gram_read_message_in(struct ucsi *ucsi, void *val, size_t val_len)
- {
- 	u16 bogus_change = UCSI_CONSTAT_POWER_LEVEL_CHANGE |
-@@ -158,6 +184,13 @@ static const struct ucsi_operations ucsi_gram_ops = {
- };
- 
- static const struct dmi_system_id ucsi_acpi_quirks[] = {
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
-+		},
-+		.driver_data = (void *)&ucsi_acer_ops,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
+ #endif
 -- 
 2.53.0
 
