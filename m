@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68264F68CE;
-	Tue, 13 Oct 2026 11:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34924FD7A5;
+	Tue, 13 Oct 2026 11:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892709; cv=none; b=YMks1Z6bN0MsDqvBlAbT1tvLkfTlxUU8qcR+NoMxA92ExSdXO31qDf0OA0OyQ+txHcWeAH9vAPY7caw2/SqLyk129sNcnMksSMuTq037U4xG7wSjsez3ov4rfPyPbmJKDnJXXnMjCx5qWTzv2oeUCakyphiS82TIj8+OrB8n60E=
+	t=1791892712; cv=none; b=W8HDEWMZPdOPQHr1nRc2e0yCGFqw1hAAx4v12MbYMajIciZxPl/PMZNfjFIqbFMluSWO179VHG0HcMaHnvCKqzqPhnZAuIIR1By90viBopDDZpA1WedBeogzVgyasaI7lD9GQWgFVC2xlxeUGSCNospN9uYPo6zli2vu7fX7c2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892709; c=relaxed/simple;
-	bh=JHYplfPgeLwg0h/tsSyww7dBzjeojeFwgeeDDtjU3VU=;
+	s=arc-20240116; t=1791892712; c=relaxed/simple;
+	bh=DHUpyeeorFkeJBnqeCHkvFrUyL7mbk1LzEyYFHVnk3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WH30OO9Nsk+2O0muo16ME07TYyQnZRhDsW7do931r/HNqn/A+nRY7l+I4iNVhP03a8EuY2kkMOFlk1SOxD1h9Ku3dJwrIW2pufKSSuMISVLbLRybI7U/YvfFQ+U8teaBmd/sSc/El9zTaa+U89Me95gi0V1b4jGTkSWr1ME1mIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0b42xcE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pvEaloxgJUsTx4HgkbGIgss61hjKM76wE3XN9u1uLLF2aORKSkiE5OUQu/doEit87GOhhp0W9RtF/Kznttob9prK5QU/EFOFhqXcq7QJGuD9TVaunUNw9/gP30taUR8unOIH4GJbnPEA3B2pHie4UuizZXmwk4zynni9Z2C1nVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LypESb+o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0b42xcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CD71F000FF;
-	Tue, 13 Oct 2026 11:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LypESb+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA33B1F00899;
+	Tue, 13 Oct 2026 11:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892707;
-	bh=74XOKIAhzKfXisAxwJlXrWvxjrKv+i8PHlE30/E2Vlk=;
+	s=korg; t=1791892710;
+	bh=b/gqNdILeaxOCg0F8IZCGWtgUv8oxYRWmf4TN9YD0HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0b42xcEnOagx2DaRsywtcl6vR5Gh7br8EjbOaa0jgKd5OWAN6I0CRZFO/ZeC0wXb
-	 rnLTDoIqxtAEXwnalFlQzVkIKHiX/DjJpbJkrSOAOmg7RtHJ72TaitswFWbgW/jLX1
-	 IevM5Pl2mx6wKtISDzG9q5Z+Af8lFLwjBsV2/JXM=
+	b=LypESb+o41OyZo7LRbedAVIKAIekbJ/mKabrNpK4Oc4Y6LpOZArznijkDwLzXS76G
+	 BZ4hZU/tAXJb2EcNeu7TGF+5pstujTmq6dx79MsDFziwNO6HphtvS2n9mS09ZvqGez
+	 ph3/6X6aWQzfVfHRtYFLlm0SBPlWS74XonDwaAN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Scott Branden <scott.branden@broadcom.com>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 261/281] bnxt_en: Fix driver init in kdump kernel
-Date: Tue, 13 Oct 2026 13:39:37 +0200
-Message-ID: <20261013112901.475525318@linuxfoundation.org>
+Subject: [PATCH 7.2 262/281] bnxt_en: Re-write the BARs following any type of PCIe errors
+Date: Tue, 13 Oct 2026 13:39:38 +0200
+Message-ID: <20261013112901.499622304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -54,114 +55,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 386f887c8290f0747dd0180e98ec7a82811bc506 ]
+[ Upstream commit 2e52da27096d9dbc487f303bbc10d44ad837a8c4 ]
 
-Fix and strengthen the FLR sequence when initializing in the kdump
-kernel.  If the NIC is behind a PCIe switch in synthetic (smart)
-mode, the switch may need to see that the BARs have been initialized
-before it will pass mem read/write TLPs to the NIC.
+Currently the driver zeroes the BARs only when fatal PCIe errors
+are reported so that pci_restore_state() restores it.  However
+firmware handles both fatal and non-fatal errors the same way when
+it sees the slot reset resulting from the PCI_ERS_RESULT_NEED_RESET
+return code from the driver.  This means that we must re-write the
+BARs post recovery even during non-fatal errors.  Otherwise we will
+see that every MMIO access returns all-ones and the firmware appears
+dead.
 
-On a Dell system with a PEX89144 PCIe switch, echo c > /proc/sysrq-trigger
-will trigger fatal AER without this patch:
+Zero-out the BARs during PCIe error recovery regardless of type of
+PCIe error, and make the wait after the hot reset unconditional.
 
-bnxt_en 0000:67:00.0: enabling device (0000 -> 0002)
-[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 5
-[Hardware Error]: event severity: recoverable
-[Hardware Error]:  Error 0, type: fatal
-[Hardware Error]:   section_type: PCIe error
-[Hardware Error]:   port_type: 5, upstream switch port
-...
+Disable memory decode and bus mastering before rewriting the BARs so
+the device doesn't decode a half-updated address, bailing out if
+config space is still inaccessible.  Defer pci_enable_device() until
+after the BAR rewrite and restore, so the device isn't re-enabled
+while its BARs are still being rewritten, then re-enable the device
+and re-assert bus mastering.  Guard the same Command register cleanup
+on the re-enable failure path against an inaccessible device.
 
-Add a new bnxt_kdump_reset() to do the expanded FLR sequence in the
-kdump kernel.  We now disable bus master and memory, save the PCI
-state, do the FLR, clear the BARs, and restore the PCI state.  The
-BARs have to be cleared to ensure that they get re-initialized and
-visible to the PCIe switch.
+Skip re-enabling the device in bnxt_io_slot_reset() if it is already
+enabled, so enable_cnt does not go unbalanced.  A concurrent
+bnxt_fw_reset_task() can also be re-enabling the same device in its
+ENABLE_DEV state, so guard that call the same way.
 
-Since it is the kdump kernel, we make every effort to continue in
-the best possible way even if pci_save_state() or pcie_flr() returns
-error.  After FLR, we poll for an additional 5 seconds before
-aborting in case the device is not properly returning CRS.  This is
-similar to the 5-second wait in bnxt_io_slot_reset().
-
-Fixes: 8743db4a9acf ("bnxt_en: Issue PCIe FLR in kdump kernel to cleanup pending DMAs.")
+Fixes: f75d9a0aa967 ("bnxt_en: Re-write PCI BARs after PCI fatal error.")
 Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Scott Branden <scott.branden@broadcom.com>
 Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20261005204246.3822563-3-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20261005204246.3822563-4-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 45 ++++++++++++++++++++---
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 107 ++++++++++++----------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |   1 -
+ 2 files changed, 60 insertions(+), 48 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index da35fec65d1b0..5a2efb262b769 100644
+index 5a2efb262b769..78583cee3414f 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -17074,6 +17074,43 @@ static void bnxt_clear_bars(struct pci_dev *pdev)
- 		pci_write_config_dword(pdev, off, 0);
- }
+@@ -15505,7 +15505,7 @@ static void bnxt_fw_reset_task(struct work_struct *work)
+ 		if (test_and_clear_bit(BNXT_STATE_FW_ACTIVATE_RESET, &bp->state) &&
+ 		    !test_bit(BNXT_STATE_FW_ACTIVATE, &bp->state))
+ 			bnxt_dl_remote_reload(bp);
+-		if (pci_enable_device(bp->pdev)) {
++		if (!pci_is_enabled(bp->pdev) && pci_enable_device(bp->pdev)) {
+ 			netdev_err(bp->dev, "Cannot re-enable PCI device\n");
+ 			rc = -ENODEV;
+ 			goto fw_reset_abort;
+@@ -17557,10 +17557,8 @@ static pci_ers_result_t bnxt_io_error_detected(struct pci_dev *pdev,
+ 	 * so we disable bus master to prevent any potential bad DMAs before
+ 	 * freeing kernel memory.
+ 	 */
+-	if (state == pci_channel_io_frozen) {
+-		set_bit(BNXT_STATE_PCI_CHANNEL_IO_FROZEN, &bp->state);
++	if (state == pci_channel_io_frozen)
+ 		bnxt_fw_fatal_close(bp);
+-	}
  
-+/* Clear any pending DMA transactions from crash kernel while loading driver in
-+ * capture kernel.
-+ */
-+static int bnxt_kdump_reset(struct pci_dev *pdev)
-+{
-+	int rc, i;
+ 	if (netif_running(netdev))
+ 		__bnxt_close_nic(bp, true, true);
+@@ -17590,65 +17588,80 @@ static pci_ers_result_t bnxt_io_slot_reset(struct pci_dev *pdev)
+ 	struct bnxt *bp = netdev_priv(netdev);
+ 	int retry = 0;
+ 	int err = 0;
 +	u16 cmd;
-+
+ 
+ 	netdev_info(bp->dev, "PCI Slot Reset\n");
+ 
+-	if (test_bit(BNXT_STATE_PCI_CHANNEL_IO_FROZEN, &bp->state)) {
+-		/* After DPC, the chip should return CRS when the vendor ID
+-		 * config register is read until it is ready.  On all chips,
+-		 * this is not happening reliably so add a 5-second delay as a
+-		 * workaround.
+-		 */
+-		msleep(5000);
+-	}
++	/* After a PCIe hot reset, the chip should return CRS when the
++	 * vendor ID config register is read until it is ready.  On all
++	 * chips, this is not happening reliably so add a 5-second delay
++	 * as a workaround.
++	 */
++	msleep(5000);
+ 
+ 	netdev_lock(netdev);
+ 
+-	if (pci_enable_device(pdev)) {
 +	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
-+	cmd &= ~(PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY);
-+	pci_write_config_word(pdev, PCI_COMMAND, cmd);
-+
-+	if (pci_save_state(pdev))
-+		dev_warn(&pdev->dev, "Failed to save PCI state, PCI restore may be incomplete\n");
-+
-+	rc = pcie_flr(pdev);
-+	if (rc)
-+		dev_warn(&pdev->dev, "pcie_flr() failed (rc: %d), trying to continue\n",
-+			 rc);
-+
-+	/* In case device is not returning CRS, wait 5 seconds longer */
-+	for (i = 0; i < 50; i++) {
-+		pci_read_config_word(pdev, PCI_COMMAND, &cmd);
-+		if (!PCI_POSSIBLE_ERROR(cmd))
-+			break;
-+		msleep(100);
-+	}
 +	if (PCI_POSSIBLE_ERROR(cmd)) {
-+		dev_err(&pdev->dev, "PCI config space inaccessible after FLR, aborting\n");
-+		return -ENODEV;
+ 		dev_err(&pdev->dev,
+-			"Cannot re-enable PCI device after reset.\n");
+-	} else {
+-		pci_set_master(pdev);
+-		/* Upon fatal error, our device internal logic that latches to
+-		 * BAR value is getting reset and will restore only upon
+-		 * rewriting the BARs.
+-		 *
+-		 * As pci_restore_state() does not re-write the BARs if the
+-		 * value is same as saved value earlier, driver needs to
+-		 * write the BARs to 0 to force restore, in case of fatal error.
+-		 */
+-		if (test_and_clear_bit(BNXT_STATE_PCI_CHANNEL_IO_FROZEN,
+-				       &bp->state))
+-			bnxt_clear_bars(pdev);
+-		pci_restore_state(pdev);
++			"PCI config space inaccessible after reset\n");
++		goto reset_exit;
 +	}
-+
+ 
+-		bnxt_inv_fw_health_reg(bp);
+-		bnxt_try_map_fw_health_reg(bp);
++	/* Upon PCIe error, our device internal logic that latches to
++	 * BAR value is getting reset and will restore only upon
++	 * rewriting the BARs.
++	 *
++	 * As pci_restore_state() does not re-write the BARs if the
++	 * value is same as saved value earlier, driver needs to
++	 * write the BARs to 0 to force restore.
++	 */
++	pci_clear_master(pdev);
++	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
++	cmd &= ~PCI_COMMAND_MEMORY;
++	pci_write_config_word(pdev, PCI_COMMAND, cmd);
+ 
+-		/* In some PCIe AER scenarios, firmware may take up to
+-		 * 10 seconds to become ready in the worst case.
+-		 */
+-		do {
+-			err = bnxt_try_recover_fw(bp);
+-			if (!err)
+-				break;
+-			retry++;
+-		} while (retry < BNXT_FW_SLOT_RESET_RETRY);
 +	bnxt_clear_bars(pdev);
 +	pci_restore_state(pdev);
-+	return 0;
-+}
+ 
+-		if (err) {
+-			dev_err(&pdev->dev, "Firmware not ready\n");
+-			goto reset_exit;
++	if (!pci_is_enabled(pdev) && pci_enable_device(pdev)) {
++		dev_err(&pdev->dev,
++			"Cannot re-enable PCI device after reset.\n");
++		pci_read_config_word(pdev, PCI_COMMAND, &cmd);
++		if (!PCI_POSSIBLE_ERROR(cmd)) {
++			cmd &= ~(PCI_COMMAND_MASTER | PCI_COMMAND_MEMORY);
++			pci_write_config_word(pdev, PCI_COMMAND, cmd);
+ 		}
++		goto reset_exit;
++	}
++	pci_set_master(pdev);
+ 
+-		err = bnxt_hwrm_func_reset(bp);
++	bnxt_inv_fw_health_reg(bp);
++	bnxt_try_map_fw_health_reg(bp);
 +
- static int bnxt_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	struct bnxt_hw_resc *hw_resc;
-@@ -17089,12 +17126,10 @@ static int bnxt_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		return -ENODEV;
++	/* In some PCIe AER scenarios, firmware may take up to
++	 * 10 seconds to become ready in the worst case.
++	 */
++	do {
++		err = bnxt_try_recover_fw(bp);
+ 		if (!err)
+-			result = PCI_ERS_RESULT_RECOVERED;
++			break;
++		retry++;
++	} while (retry < BNXT_FW_SLOT_RESET_RETRY);
+ 
+-		/* IRQ will be initialized later in bnxt_io_resume */
+-		bnxt_ulp_irq_stop(bp);
+-		bnxt_clear_int_mode(bp);
++	if (err) {
++		dev_err(&pdev->dev, "Firmware not ready\n");
++		goto reset_exit;
  	}
  
--	/* Clear any pending DMA transactions from crash kernel
--	 * while loading driver in capture kernel.
--	 */
- 	if (is_kdump_kernel()) {
--		pci_clear_master(pdev);
--		pcie_flr(pdev);
-+		rc = bnxt_kdump_reset(pdev);
-+		if (rc)
-+			return rc;
- 	}
- 
- 	max_irqs = bnxt_get_max_irq(pdev);
++	err = bnxt_hwrm_func_reset(bp);
++	if (!err)
++		result = PCI_ERS_RESULT_RECOVERED;
++
++	/* IRQ will be initialized later in bnxt_io_resume */
++	bnxt_ulp_irq_stop(bp);
++	bnxt_clear_int_mode(bp);
++
+ reset_exit:
+ 	clear_bit(BNXT_STATE_IN_FW_RESET, &bp->state);
+ 	bnxt_clear_reservations(bp, true);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 4dbcd08ef7c32..a939f4ed10079 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2470,7 +2470,6 @@ struct bnxt {
+ #define BNXT_STATE_ABORT_ERR	5
+ #define BNXT_STATE_FW_FATAL_COND	6
+ #define BNXT_STATE_DRV_REGISTERED	7
+-#define BNXT_STATE_PCI_CHANNEL_IO_FROZEN	8
+ #define BNXT_STATE_NAPI_DISABLED	9
+ #define BNXT_STATE_FW_ACTIVATE		11
+ #define BNXT_STATE_RECOVER		12
 -- 
 2.53.0
 
