@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3734F4753;
-	Tue, 13 Oct 2026 12:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A160D4F4D18;
+	Tue, 13 Oct 2026 12:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894716; cv=none; b=XacDwSCqnDVjmoftHOoPH2Y4so2ewJVWpKQ0+UiWcEBg4Dbawk0azMwdnE41jqbzrfHR3WLfJh8+Dbws/5MiuHXc/M7KmzAFNII52Ok4OkAkX8iUL1ds7+WSXav0gQl7o7DdUyhYK8+3c0FEzRAJm5u8r5eA2+XvIDMQAR48c/g=
+	t=1791894719; cv=none; b=frR1p/t2iQEvektkeuu+MiYMoPPF77GMNPZJaUoby/unb3sxiDMUt0LFz+u3KyzK5F4U7ihXfeBSdXU1GmfH4HmvbnsFW5UcAlpWfCOjOYNNKFLtEYfU4NkHsCH7kLrSrejPMiXvmYkdWj/Cg7mhQ4U0OY1jrJNAJFokWx6aRQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894716; c=relaxed/simple;
-	bh=TblQnX31BJvW+0AqkUn6cFqKbj+nrx2FQd0YBhMH/14=;
+	s=arc-20240116; t=1791894719; c=relaxed/simple;
+	bh=/N3o8jBKw1oA7q2eTrXIQ9OFeCLjb686+kSnB0VR3XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yyh90RWhGAPziGlus/3b0HkTpMF/IbSkNHOZk3xB0TsYOaM9c8LBNmiXqTLj6by5MSwScNMsoSZ99Xe3wGQTn+KreFqgnBfPI4rqy8Y40a+EzeEJ+J2TggInvt+qdObxyhMFujQKC8DEpe1L6FypikoUn57/j0f1DUnijWtXGKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDGVXHQS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ALp/agHHQfAQ4jjfMTgjACA0125sWAwu7KGk78oLvNyUxu2I+XlOaOokotJlyWyoDiWB1iUP10hN28/1e0xpO8qQoZM1HIXnB9vy20lK0V9ocw4Gd/h+ZZ46v2lW4WGHh/lCLT/G3owY79ME16+HQ+o9W1SorERIrTco7w4BcRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKZyhF1U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDGVXHQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA021F000FF;
-	Tue, 13 Oct 2026 12:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKZyhF1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019731F000FF;
+	Tue, 13 Oct 2026 12:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894715;
-	bh=I9XRUS/8LH2Uunc8YpDsdviHGh1xU496mHBP1xJM/vQ=;
+	s=korg; t=1791894718;
+	bh=X8/ezTUHgLgHM0HZqyVVpAJj3MP5Ik0fW5vZds6hMNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDGVXHQSaHBPFryISg8N+7CbIaDiiS2caCuPREdKouNx6/PllBQNFq1L7Ed6l6gGI
-	 5kc4eZ6Q33p3z7JW3i3HsjK2woBQKhdJxQTyDREu4323Ym5oPwkU56wphIz3MKr8Sa
-	 i1RHi8U8YzOmFq4fxdbazXK7DH8823cXTaI/yOPo=
+	b=RKZyhF1UE6d+0EybFOeNsmuxDfmpJ8ADJN0BKTPSZibL0vNyDj7X/74uaWD6YvSUe
+	 WVRd1D6G5wjyvdhRttqaDa9TDHSOGr3p5kAD1b4B2RqJzDq1R11VbzxZ8lqn36lcnH
+	 A5Q2H0MfYgBZdDi0xNWMU8BwIGos84CyCTR4hWBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilkka=20Lappetel=C3=A4inen?= <ilkka.lappetelainen@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 031/497] net/packet: prevent TX_RING byte count overflow
-Date: Tue, 13 Oct 2026 13:33:18 +0200
-Message-ID: <20261013112908.626319528@linuxfoundation.org>
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.12 032/497] rtc: ac100: Assign .num before accessing .hws
+Date: Tue, 13 Oct 2026 13:33:19 +0200
+Message-ID: <20261013112908.651332898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,58 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-commit 2cf81fc9505b148b1b70068303ea6ea4b1212403 upstream.
+commit 6a4117eee82dd85f11bf898bf66026764011eeb6 upstream.
 
-tpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds
-each valid packet length to the signed int len_sum. Userspace can
-recycle completed frames concurrently, so a single blocking send call
-is not bounded by the ring size.
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)
+about the number of elements in .hws[], so that it can warn when .hws[]
+is accessed out of bounds. As noted in that change, the __counted_by
+member must be initialized with the number of elements before the first
+array access happens, otherwise there will be a warning from each access
+prior to the initialization because the number of elements is zero.
+This occurs in ac100_rtc_register_clks() due to .num being assigned only
+after every clkout clock has been stored in .hws[]. With
+CONFIG_UBSAN_BOUNDS and a compiler that implements __counted_by (GCC
+15.1+ or Clang 20.1+), this triggers an array-index-out-of-bounds report
+during probe, and with CONFIG_UBSAN_TRAP the first store traps.
 
-After enough successful transmissions len_sum wraps into the negative
-range. In particular, 65536 65535-byte frames followed by a 65007-byte
-frame produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats
-that as an impossible return and triggers a BUG. On systems configured
-to panic on oops, a CAP_NET_RAW holder can panic the host kernel.
+Initialize .num with AC100_CLKOUT_NUM, the number of elements .hws[] was
+allocated with, right after the allocation. That is the value the loop
+counter ends up at on the success path anyway, so the provider's
+behaviour is unchanged.
 
-Stop before the next frame would make the byte count exceed INT_MAX.
-The positive short count leaves that frame pending for a later send
-call.
-
-A two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build
-of Linux 7.3-rc4. With this change, the same reproducer returned the
-expected positive short count without an oops.
-
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260925124829.6595-1-ilkka.lappetelainen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/AS8P251MB00013E724A77A355668B6CCEC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/rtc/rtc-ac100.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2926,6 +2926,9 @@ static int tpacket_snd(struct packet_soc
- 						    vnet_hdr.hdr_len);
- 			has_vnet_hdr = true;
- 		}
-+		/* Prevent the byte count from wrapping into a negative errno */
-+		if (unlikely(tp_len > INT_MAX - len_sum))
-+			break;
- 		copylen = max_t(int, copylen, hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
- 				hlen + tlen + sizeof(struct sockaddr_ll) +
+--- a/drivers/rtc/rtc-ac100.c
++++ b/drivers/rtc/rtc-ac100.c
+@@ -316,6 +316,8 @@ static int ac100_rtc_register_clks(struc
+ 	if (!chip->clk_data)
+ 		return -ENOMEM;
+ 
++	chip->clk_data->num = AC100_CLKOUT_NUM;
++
+ 	chip->rtc_32k_clk = clk_hw_register_fixed_rate(chip->dev,
+ 						       AC100_RTC_32K_NAME,
+ 						       NULL, 0,
+@@ -359,7 +361,6 @@ static int ac100_rtc_register_clks(struc
+ 		chip->clk_data->hws[i] = &clk->hw;
+ 	}
+ 
+-	chip->clk_data->num = i;
+ 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, chip->clk_data);
+ 	if (ret)
+ 		goto err_unregister_rtc_32k;
 
 
