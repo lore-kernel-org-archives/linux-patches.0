@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544A44F85CD;
-	Tue, 13 Oct 2026 12:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804C74FD294;
+	Tue, 13 Oct 2026 12:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894756; cv=none; b=lJJgZVHYhMliWg6fFNwJCOTolOsCoiJR1PHSxikIJkBGL8JQ8g7Ks1lz0Kl9wUS8l6gxR850g2VSbTApKOU1HeLUVnl0uSnpd4d8BWuMLb3aV+uWo7VABfSmmKe5WAbW4nIJ1eQm11NLCZKj/zHWH9KjqyG1jpg07JWOprTDZrA=
+	t=1791894758; cv=none; b=AH5og5WJG4p+0w4SMq6ieU9lh2klLYZMQI+UG9z7adJ+z1LnSFv+HIswGofwUFwCgUrezAVw5lyNZ+LuWF5m1DNZB3epH0DkLkv824tT+T3rEh3L9/jhewHMnUiCJCFBdV/thhnlm2QMZE3cLgGNORLWJYQCmTB6B+AZ2re5pBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894756; c=relaxed/simple;
-	bh=wKRSR/jAsPymeh53FA6G4sPyoyWLe+oR/soajcw7WfQ=;
+	s=arc-20240116; t=1791894758; c=relaxed/simple;
+	bh=a6zr1CRkRyJpmxD9WBsqimawzyc+OnbDswnyosvAyG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQAepkFm8412jZI3WIH/kzxUyqtu7gzLJL7D5M4Mt0arv8eZtPwry2QIbAr9Alw1pfJPFVtRkU3wfbqRdcVLgGapNpSyoh/QntVvXmTm2SE8rgRv7vg5WgBsHI7hvU1FcQFrbyff1ALEdUdqWJ6PLFntRo9J6DMubbDiEqzG+Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/E3lHlA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FC7rIQSd+6dvpy5NWg6CJnKtiS5t43Jka43QZDUV0aMEJdTeI6B3uOrdGd7mk6w+LsjQGxWMkwK1500oKOUTxQcp3GZH5G4nUtHEUjdabYnD7NMX3HE9OuR0zQh5StHqtQEcnaHW5KpeH/WjEHk0Ek2XWVEAajh/Man/X39d3s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHZjoo7c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/E3lHlA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A884F1F00893;
-	Tue, 13 Oct 2026 12:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHZjoo7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BE61F000FF;
+	Tue, 13 Oct 2026 12:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894754;
-	bh=Uc+UF1YJQedv9BLnEDuNFWqvwIh5pT7u/2OIjAhLL5Y=;
+	s=korg; t=1791894757;
+	bh=hg/rT9AJWD3wWngurTRAowD20uhXkEV6wn8hFfLomls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/E3lHlAIuVW3+Nd8AdByqGdINtYnun8yUpssjNpRoiRGFD/1sdNbM7nyKmKhyaiw
-	 aS5k3CtBGlQURn9n8bd3QZUpWrHEfF6wmJRFXD2gxw8s3mNPqQQ3dLt747+nuN5qNZ
-	 GIntl10vBJSMhUqugaWoL92SuTVADXNvVe80cVBA=
+	b=SHZjoo7cY23uylujVUXoH2OCdjRryhRiptzhSpcIDpu8ETv7+rIjMXSo1QpqB5OP8
+	 e4imB4n+7T7ylkjBq8CyWKyL9Uz2GrypX3h3iJ/RiTcxfP6VCh3NNcVf4Sn/ncJxPL
+	 czIs/zM/heWEyOsGBukcPz/G6DokAukyOpFAwFAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/497] rds_tcp: close NULL deref window in rds_tcp_set_callbacks
-Date: Tue, 13 Oct 2026 13:33:25 +0200
-Message-ID: <20261013112908.793711978@linuxfoundation.org>
+Subject: [PATCH 6.12 047/497] iio: accel: kionix-kx022a: Fix array boundary check
+Date: Tue, 13 Oct 2026 13:33:34 +0200
+Message-ID: <20261013112909.004767426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,73 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit d2bfdbb69cf87676981b1043010b6224d84c6d3a upstream.
+[ Upstream commit 0e65412aee4f651d2c9785f542a13e4b44002a75 ]
 
-rds_tcp_set_callbacks() links a new rds_tcp_connection onto
-rds_tcp_tc_list under rds_tcp_tc_list_lock. It releases the
-lock, then assigns tc->t_sock = sock outside the lock.
+The driver performs a sanity check for an array size, when converting a
+register value to an array index. The check incorrectly accepts the
+sizeof(array) as a last index, when last valid index should be
+sizeof(array) - 1.
 
-rds_tcp_tc_info() and rds6_tcp_tc_info() walk rds_tcp_tc_list
-under the same lock. Both dereference tc->t_sock->sk without
-a NULL check.
+Fix the check by bailing out when index >= sizeof(array).
 
-A reader can acquire rds_tcp_tc_list_lock between the writer's
-spin_unlock and the t_sock store. It then sees a list entry
-whose t_sock is NULL. The dereference of tc->t_sock->sk is a
-NULL access.
-
-Move tc->t_sock = sock inside rds_tcp_tc_list_lock, before
-list_add_tail. A reader holding the lock then observes the
-linkage and the t_sock store together.
-
-The restore path is safe. rds_tcp_restore_callbacks() does
-list_del_init inside the lock. The matching tc->t_sock = NULL
-after unlink is harmless to readers holding the lock.
-
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260512142807.1855619-1-maoyi.xie@ntu.edu.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[ achender: resolved context conflict; tc->t_rtn initialization is not
-  present in this tree ]
-Signed-off-by: Allison Henderson <achender@kernel.org>
+Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/iio/accel/kionix-kx022a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index f6d243c4e52cb..eab960d10ab08 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -232,16 +232,19 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
- 	rdsdebug("setting sock %p callbacks to tc %p\n", sock, tc);
- 	write_lock_bh(&sock->sk->sk_callback_lock);
+diff --git a/drivers/iio/accel/kionix-kx022a.c b/drivers/iio/accel/kionix-kx022a.c
+index b6a828a6df934..db78a1945956d 100644
+--- a/drivers/iio/accel/kionix-kx022a.c
++++ b/drivers/iio/accel/kionix-kx022a.c
+@@ -626,7 +626,7 @@ static int kx022a_read_raw(struct iio_dev *idev,
+ 		if (ret)
+ 			return ret;
  
--	/* done under the callback_lock to serialize with write_space */
-+	/* done under the callback_lock to serialize with write_space.
-+	 * Set t_sock inside rds_tcp_tc_list_lock so readers walking
-+	 * rds_tcp_tc_list under the same lock cannot observe an
-+	 * entry whose t_sock is NULL.
-+	 */
- 	spin_lock(&rds_tcp_tc_list_lock);
-+	tc->t_sock = sock;
- 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
- 	spin_unlock(&rds_tcp_tc_list_lock);
- 
- 	/* accepted sockets need our listen data ready undone */
- 	if (sock->sk->sk_data_ready == rds_tcp_listen_data_ready)
- 		sock->sk->sk_data_ready = sock->sk->sk_user_data;
--
--	tc->t_sock = sock;
- 	tc->t_cpath = cp;
- 	tc->t_orig_data_ready = sock->sk->sk_data_ready;
- 	tc->t_orig_write_space = sock->sk->sk_write_space;
+-		if ((regval & KX022A_MASK_ODR) >
++		if ((regval & KX022A_MASK_ODR) >=
+ 		    ARRAY_SIZE(kx022a_accel_samp_freq_table)) {
+ 			dev_err(data->dev, "Invalid ODR\n");
+ 			return -EINVAL;
 -- 
 2.53.0
 
