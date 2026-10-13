@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C528249C4CC;
-	Tue, 13 Oct 2026 11:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37A72BFC85;
+	Tue, 13 Oct 2026 11:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892255; cv=none; b=NwalTwbI9SLQoyPz4HDN3qpQ9LCgwNlpbWi61vnugJOd+pefhe/rOcKynWSETWFkzzx5rvkoe4de9csjvMuvkBoLQ8hI/UZwsZlsCEzx19KLdGaYgEwi9LVMvIcMXYv//zoLvUhLM+FyndMWEKwiFjhu4oaVfH5zNVCtKf+v4SY=
+	t=1791892258; cv=none; b=kzAaY7Vv2Gz+1tXLGv4pSMe1PVQmWVErX+A9U8RLhbtEUINQDoeQfNDLjnrbj0Nt11jDduVtJgz73z1NgxATY0nkHSdMJLbVOLp+Q71OFFG2HGTV62N536/6vw+3g907Z55C6VYWzQUu/Mt/q0qxGkOTvAi7iIondDG75YgQqyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892255; c=relaxed/simple;
-	bh=G0cyGKckN2WstRTQ0EZEzsW8xurMvavCUa+LScBKyVU=;
+	s=arc-20240116; t=1791892258; c=relaxed/simple;
+	bh=/vDWJr3xH5//jqSsre7FLmZydGYVS8Mlf2MgoYoVoeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWnoHtvhEycoGN0+++cICPKJzLTYMCdf2mh3x5YfXQdNRw4Hb9f0sRglotgJybhD9ZZztrqDtHuAPQYBx2NwRoS1ldnfgJc2pWRetLD7FoldBchRV0KC82woDf3blXbpDzwvloMVpHv9Eaau3lB3ABlHi8y4ANisERB1yJRiNA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh50p2kB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bS3L/gzbfH+30fSnzvyinTSmjo8YOgj0ghFqUCnhdEveYu8bWuMMKdVtMH0JnFPfXRle1Fygmv3fOK0Hstm/EJNXe9fgr7YJLtNap7YqE/9e4H3RLHnG8KaMmyRoKbWR+wlLIoujzrNBY8x2fAPX029eVIOosyV+x5MdGCMkb+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrRh6zfD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh50p2kB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2983A1F000FF;
-	Tue, 13 Oct 2026 11:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrRh6zfD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137851F000FF;
+	Tue, 13 Oct 2026 11:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892254;
-	bh=0n/ku7I7SJV1L06UjAweM2WhsQGoo9ZvucgahEgIo3s=;
+	s=korg; t=1791892257;
+	bh=UFw+MxeEkJR3RjgY0aRFIdcZ/LokCayMDYAk6pvvE74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mh50p2kBpzWVZ2i0H/xvu6CQs55JUrx9ZeK0fxRxoPJcife3EEYQAzelelPcQamdz
-	 We5dg4IhbVY4OPz9Z4SK+9oHeOgYn/UbUwucCaTSNXNehE9kQpvzPaZj4jxo38iHQ6
-	 x8Nv+tiCdgNQi5MtQ59QOZMOf6KTLAAE0BqE443w=
+	b=UrRh6zfD/isz/DEs4cwZHISmuftspiGF9D/4pxBOHIfg+bjFqeZZucMZmCzWaBWYY
+	 g8DS9+xnNOI/N0TaHCMlChK6AQGTyiI8LNU5JWWcAznDpYC+N+l3/jvC+SbkUeSAtE
+	 S9ksHhWyneDT2MRXicNqDmoJAIJlWXr2XJ96vc9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Michael Neuling <mikey@neuling.org>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Aurelien Jarno <aurelien@aurel32.net>,
+	Wei-Jie Hung <imbigking12@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
 	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.2 111/281] riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts
-Date: Tue, 13 Oct 2026 13:37:07 +0200
-Message-ID: <20261013112857.841260005@linuxfoundation.org>
+Subject: [PATCH 7.2 112/281] riscv: patch: fix handling of bpf-jit execmem addresses
+Date: Tue, 13 Oct 2026 13:37:08 +0200
+Message-ID: <20261013112857.866578653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -55,83 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Wei-Jie Hung <imbigking12@gmail.com>
 
-commit 282f4a8aa95c5a01b96e55eb5da297560e5f2986 upstream.
+commit a510e1ae8c9030750c2edf7b0bc9b186cd8c7a06 upstream.
 
-The aligned scan boundary is derived from the last valid byte,
-(s + count - 1).  When count is huge (e.g. SIZE_MAX, which FORTIFY
-strcat/strlcat pass when the destination size is not known at compile
-time), s + count wraps around and the boundary lands before s, so the
-ZBB path returns a bogus length.  The original implementation
-(5ba15d419fab) had the same wrap-around in its (s + count) & ~7
-boundary computation; after 5d588c684833 the wrapped boundary is caught
-by the pre-loop guard "bgeu t0, t4, 2f", which then always exits for
-aligned strings of 8 or more characters and strnlen() returns 8
-instead of the real length.
+Commit 8718e5a3090b ("riscv: patch: skip fixmap mapping when kernel text
+is already writable") gated the core_kernel_text() branch of patch_map()
+on CONFIG_STRICT_KERNEL_RWX, and explicitly left the vmalloc branch
+unchanged. That branch has a separate problem.
 
-This silently truncates strings built by fortified strcat: the dm
-sysfs name attribute shows "live-bas" instead of "live-base", the
-truncated name pollutes the udev database, and blivet/anaconda (as
-well as LVM/dm-crypt/multipath userspace) break on RISC-V systems.
+That branch only creates a temporary writable fixmap alias when
+CONFIG_STRICT_MODULE_RWX is enabled, and otherwise assumes the target is
+directly writable and returns the address unchanged. That assumption no
+longer holds: bpf_prog_pack_alloc calls set_memory_rox() on every pack
+unconditionally in alloc_new_pack(), independently of any
+CONFIG_STRICT_*_RWX option, so BPF text in the vmalloc area is read-only
+regardless of what CONFIG_STRICT_MODULE_RWX says.
 
-Detect the wrap-around and saturate the boundary to the top of the
-address space, making the scan equivalent to strlen().  The saturation
-clamps the increment to ~s, so it stays branchless and wrap-free:
+With CONFIG_STRICT_MODULE_RWX=n, patch_map() returns the read-only
+address directly, the subsequent copy_to_kernel_nofault() takes a
+page fault and returns -EFAULT. bpf_arch_text_copy() turns that into
+-EINVAL, which propagates through bpf_jit_binary_pack_finalize() to the
+WARN_ON() in bpf_int_jit_compile() and leaves the program un-JITed.
 
-	s + min(count - 1, ~s) == saturating_add(s, count - 1)
+Note that BPF cannot be fixed the way kprobes was in
+commit bdc46e507b59 ("riscv: mm: make EXECMEM_KPROBES writable without
+CONFIG_STRICT_MODULE_RWX"). EXECMEM_BPF is already PAGE_KERNEL, i.e.
+writable at allocation time; the read-only mapping is established
+afterwards by generic code in alloc_new_pack(), which arch code cannot
+influence. The only place this can be handled is patch_map().
 
-Normal counts are unaffected.
+This is the same problem that was fixed on arm64 by commit b1480ed230ac
+("arm64: patching: fix handling of execmem addresses"), and the fix is
+the same: CONFIG_EXECMEM is what actually tracks whether the vmalloc
+area can hold executable memory that needs a temporary alias to be
+written. CONFIG_BPF_JIT, CONFIG_KPROBES and CONFIG_MODULES all select
+it.
 
-Fixes: 5ba15d419fab ("riscv: lib: add strnlen() implementation")
+Note that this is not limited to CONFIG_MODULES=n. Unlike arm64, riscv
+selects CONFIG_ARCH_OPTIONAL_KERNEL_RWX, so CONFIG_STRICT_MODULE_RWX can
+be disabled with CONFIG_MODULES=y as well, and the bug is reachable in
+that configuration too.
+
+The !CONFIG_MMU build is unaffected: it has its own __patch_insn_set()
+and __patch_insn_write() implementations and never calls patch_map().
+
+Fixes: 2c9e5d4a0082 ("bpf: remove CONFIG_BPF_JIT dependency on CONFIG_MODULES of")
+Signed-off-by: Wei-Jie Hung <imbigking12@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Tested-by: Pu Lehui <pulehui@huawei.com>
+Link: https://patch.msgid.link/20260914115607.350097-1-imbigking12@gmail.com
 Cc: stable@vger.kernel.org
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Suggested-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Acked-by: Michael Neuling <mikey@neuling.org>
-Tested-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Link: https://patch.msgid.link/20260915152656708z04s4oSYY2BGj34F36RZa@zte.com.cn
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/lib/strnlen.S | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/patch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/lib/strnlen.S b/arch/riscv/lib/strnlen.S
-index a8911605c248..5b3bbf0a3098 100644
---- a/arch/riscv/lib/strnlen.S
-+++ b/arch/riscv/lib/strnlen.S
-@@ -87,9 +87,25 @@ strnlen_zbb:
- 	 * Aligned boundary.  Use the address of the last valid byte
- 	 * (s + count - 1) to avoid loading a word past the count
- 	 * boundary in the loop below.  count == 0 is handled above.
-+	 *
-+	 * Saturate the boundary when s + count would wrap around (very
-+	 * large counts, e.g. SIZE_MAX passed by FORTIFY strcat/strlcat
-+	 * with a destination whose size is unknown at compile time).
-+	 * Without this, the wrapped boundary lands before s and the
-+	 * pre-loop guard below always exits, returning a truncated
-+	 * length.
-+	 *
-+	 * Clamping the increment to ~s (== SIZE_MAX - s) keeps the
-+	 * computation branchless and wrap-free:
-+	 *
-+	 *     s + min(count - 1, ~s) == saturating_add(s, count - 1)
-+	 *
-+	 * Saturating makes the scan equivalent to strlen().
- 	 */
--	add	t4, a0, a1
--	addi	t4, t4, -1
-+	addi	t4, a1, -1	/* count - 1 */
-+	not	t1, a0		/* SIZE_MAX - s */
-+	minu	t4, t4, t1	/* clamp, so s + t4 can never wrap */
-+	add	t4, a0, t4	/* saturated s + count - 1 */
- 	andi	t4, t4, -SZREG
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -46,7 +46,7 @@ static __always_inline void *patch_map(v
  
- 	/* Get the first word.  */
--- 
-2.56.0
-
+ 	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr)) {
+ 		phys = __pa_symbol(addr);
+-	} else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX)) {
++	} else if (IS_ENABLED(CONFIG_EXECMEM)) {
+ 		struct page *page = vmalloc_to_page(addr);
+ 
+ 		BUG_ON(!page);
 
 
