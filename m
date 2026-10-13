@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1944156C6;
-	Tue, 13 Oct 2026 12:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF86C3CA486;
+	Tue, 13 Oct 2026 12:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894384; cv=none; b=pPPmZ1c2jhPfYTIr/5+585DzNBOIS0CW7tFUVMRFgOLySXnP3qKknsRJ5QskLnXk8MjgBxZ+v8VVJon5Wiqminwg16q7oF+d6HWTIkjic9Lj7s4UN1h82LkxomocRYEz9mgnS3KjMspMaBAxCClq5YhMW+q6vIxdCgh9oIFoXkA=
+	t=1791894387; cv=none; b=BdQZ0plUodoiA+LYfgRFYaPW/FVhMamBkrfqRcESyQZeTed8sLBCJHqRb6OaX7cixWofpzEsW/7WL4PKQJzX4n2Dx/5znE+i+jvIiUZo/HGY6hdAVC6h76C0AZvAlS3gB+PhFHz7GhowmM3lCm7VjjHOYFWeHfjgLi3yTfjH/HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894384; c=relaxed/simple;
-	bh=F5rLTb6a1hbVnDq1TkAmrxhbF1bpZ9uBS/+qV9t/324=;
+	s=arc-20240116; t=1791894387; c=relaxed/simple;
+	bh=X6M2TB9XQhYZsf7JmYIANXgccH2Wmp58F02pS1ofqy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8gQb3lE/a9vhOIqBl0uu6JER3DbHGLcKOKN53n7G371M6teMiNUF/1iZgJY8jq3HT9GMZTOvNBfo00r+se3/vYZcxsJChySX997PkqQUbRiTz+zD+C2TNUca+2Q4KCKnQVhp6hlKMTx0FF90ClTZacl+MDKzajNrDhCIYO2p88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iP3fOBX4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rGznlNt5KtKI/6b1tzPBdrHUZ+8ZabHn5+NKZZL1NuTZuiF7p6sV7K3/BR8oLClrssni5nuK0BMlC2rRk5WqxW2ORb9rsXZ7fGnAEB9Ov8uFHNRgT+ahYQ3lxsBkHetVzE3wjCYeqMoyLiQ+5ntT7etOmj7YO6PVgmv4Y53D1rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6W0nWtb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iP3fOBX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C871F00898;
-	Tue, 13 Oct 2026 12:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6W0nWtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1457E1F000FF;
+	Tue, 13 Oct 2026 12:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894382;
-	bh=WsRtDrr85vCZ81t9mOho7zpGdPUKHAY7aXdP/l25gQg=;
+	s=korg; t=1791894385;
+	bh=p0SmyI6u6jjX3dKGsRTi4LGJoGLSGzT+x630ioQ7kOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iP3fOBX4SLH8Nubd4SDRCaqWSicOBNc/NYrJvTX3A99FygFUQlADbBOrLXZLGSD/p
-	 8LXHTI1iTXY3CZwjV9gEA2nxLceG3AaESOgvbSUe9j50WNjETg255Ou6sBPvqUNe/F
-	 vt6RgQOqNsGQ+d7DbHnglpllRCZvTAFpKY2DRKT0=
+	b=O6W0nWtbfNMjX90vVXAgXN6BBbhrQYbib/0+7DgaLdS1mPUmTfClO6ca63pn6+Ndo
+	 teVmB4SQXyiBElNn+hdjCKyD+iup+Bh1DzYOLwTgmA+6CP2ofvfG4EedaDFabyBZxa
+	 mSUpmsQdtctiopO6PqULD+iqLG2lgkakyOKc5fAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Ayush Sawal <ayush.sawal@chelsio.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rodrigo Zaiden <rodrigoffzz@gmail.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 543/621] cxgb4/ch_ktls: disable softirqs around tid_list erases
-Date: Tue, 13 Oct 2026 13:38:58 +0200
-Message-ID: <20261013112933.705112038@linuxfoundation.org>
+Subject: [PATCH 6.18 544/621] tee: optee: fix kernel-doc warnings
+Date: Tue, 13 Oct 2026 13:38:59 +0200
+Message-ID: <20261013112933.728400141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -53,54 +52,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Rodrigo Zaiden <rodrigoffzz@gmail.com>
 
-[ Upstream commit 4c9dc0faca98084922caeb689579d338cf3e1c29 ]
+[ Upstream commit 3faa6774ffc5973af39ac9c4f1fe93aa92ec9407 ]
 
-chcr_ktls_cpl_act_open_rpl() inserts into tid_list from the receive path
-using xa_insert_bh().  The array is shared by the adapter's connections
-and initialized with XA_FLAGS_LOCK_BH.  However, chcr_ktls_dev_del() and
-the chcr_ktls_dev_add() error path use xa_erase(), which takes the XArray
-lock without disabling softirqs.
+Fix kernel-doc issues in optee_private.h and optee_msg.h:
 
-When cleanup runs with softirqs enabled, a receive softirq for another
-connection on the same CPU can interrupt the erase and spin on the lock
-held by the interrupted task.  Use xa_erase_bh() at both sites to match
-the insertion path.
+- Add missing documentation for struct members: optee_msg_param_value,
+  optee_msg_param, optee_msg_arg, optee, and optee_ffa;
+- Ensure member descriptions follow the order of declaration;
+- Use consistent formatting (lowercase descriptions and ':' after
+  member names);
+- Adjust indentation for better alignment;
 
-Fixes: 65e302a9bd57 ("cxgb4/ch_ktls: Clear resources when pf4 device is removed")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reviewed-by: Ayush Sawal <ayush.sawal@chelsio.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This resolves kernel-doc warnings such as missing member descriptions
+and incorrect prototype documentation.
+No functional changes.
+
+Signed-off-by: Rodrigo Zaiden <rodrigoffzz@gmail.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Stable-dep-of: 3c0d2f1f431c ("tee: optee: ffa: support shared memory offsets on large-page kernels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tee/optee/optee_msg.h     |  50 +++++++------
+ drivers/tee/optee/optee_private.h | 120 ++++++++++++++++--------------
+ 2 files changed, 92 insertions(+), 78 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-index 4e2096e496844..4da7695db89ba 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-@@ -389,7 +389,7 @@ static void chcr_ktls_dev_del(struct net_device *netdev,
- 		cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
- 				 tx_info->tid, tx_info->ip_family);
+diff --git a/drivers/tee/optee/optee_msg.h b/drivers/tee/optee/optee_msg.h
+index 838e1d4a22f04..7d9b12e71c035 100644
+--- a/drivers/tee/optee/optee_msg.h
++++ b/drivers/tee/optee/optee_msg.h
+@@ -103,9 +103,9 @@
  
--		xa_erase(&u_ctx->tid_list, tx_info->tid);
-+		xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
- 	}
+ /**
+  * struct optee_msg_param_tmem - temporary memory reference parameter
+- * @buf_ptr:	Address of the buffer
+- * @size:	Size of the buffer
+- * @shm_ref:	Temporary shared memory reference, pointer to a struct tee_shm
++ * @buf_ptr:	address of the buffer
++ * @size:	size of the buffer
++ * @shm_ref:	temporary shared memory reference, pointer to a struct tee_shm
+  *
+  * Secure and normal world communicates pointers as physical address
+  * instead of the virtual address. This is because secure and normal world
+@@ -122,9 +122,9 @@ struct optee_msg_param_tmem {
  
- 	port_stats = &tx_info->adap->ch_ktls_stats.ktls_port[tx_info->port_id];
-@@ -577,7 +577,7 @@ static int chcr_ktls_dev_add(struct net_device *netdev, struct sock *sk,
- 	cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
- 			 tx_info->tid, tx_info->ip_family);
+ /**
+  * struct optee_msg_param_rmem - registered memory reference parameter
+- * @offs:	Offset into shared memory reference
+- * @size:	Size of the buffer
+- * @shm_ref:	Shared memory reference, pointer to a struct tee_shm
++ * @offs:	offset into shared memory reference
++ * @size:	size of the buffer
++ * @shm_ref:	shared memory reference, pointer to a struct tee_shm
+  */
+ struct optee_msg_param_rmem {
+ 	u64 offs;
+@@ -134,12 +134,12 @@ struct optee_msg_param_rmem {
  
--	xa_erase(&u_ctx->tid_list, tx_info->tid);
-+	xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
+ /**
+  * struct optee_msg_param_fmem - FF-A memory reference parameter
+- * @offs_lower:	   Lower bits of offset into shared memory reference
+- * @offs_upper:	   Upper bits of offset into shared memory reference
+- * @internal_offs: Internal offset into the first page of shared memory
+- *		   reference
+- * @size:	   Size of the buffer
+- * @global_id:	   Global identifier of the shared memory
++ * @offs_low:		lower bits of offset into shared memory reference
++ * @offs_high:		higher bits of offset into shared memory reference
++ * @internal_offs:	internal offset into the first page of shared memory
++ *			reference
++ * @size:		size of the buffer
++ * @global_id:		global identifier of the shared memory
+  */
+ struct optee_msg_param_fmem {
+ 	u32 offs_low;
+@@ -151,6 +151,9 @@ struct optee_msg_param_fmem {
  
- put_module:
- 	/* release module refcount */
+ /**
+  * struct optee_msg_param_value - opaque value parameter
++ * @a: first opaque value
++ * @b: second opaque value
++ * @c: third opaque value
+  *
+  * Value parameters are passed unchecked between normal and secure world.
+  */
+@@ -168,6 +171,7 @@ struct optee_msg_param_value {
+  * @fmem:	parameter by FF-A registered memory reference
+  * @value:	parameter by opaque value
+  * @octets:	parameter by octet string
++ * @u:		union holding OP-TEE msg parameter
+  *
+  * @attr & OPTEE_MSG_ATTR_TYPE_MASK indicates if tmem, rmem or value is used in
+  * the union. OPTEE_MSG_ATTR_TYPE_VALUE_* indicates value or octets,
+@@ -189,16 +193,18 @@ struct optee_msg_param {
+ 
+ /**
+  * struct optee_msg_arg - call argument
+- * @cmd: Command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
+- * @func: Trusted Application function, specific to the Trusted Application,
+- *	     used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
+- * @session: In parameter for all OPTEE_MSG_CMD_* except
+- *	     OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter instead
+- * @cancel_id: Cancellation id, a unique value to identify this request
+- * @ret: return value
+- * @ret_origin: origin of the return value
+- * @num_params: number of parameters supplied to the OS Command
+- * @params: the parameters supplied to the OS Command
++ * @cmd:	command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
++ * @func:	Trusted Application function, specific to the Trusted
++ *		Application, used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
++ * @session:	in parameter for all OPTEE_MSG_CMD_* except
++ *		OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter
++ *		instead
++ * @cancel_id:	cancellation id, a unique value to identify this request
++ * @pad:	padding for alignment
++ * @ret:	return value
++ * @ret_origin:	origin of the return value
++ * @num_params:	number of parameters supplied to the OS Command
++ * @params:	the parameters supplied to the OS Command
+  *
+  * All normal calls to Trusted OS uses this struct. If cmd requires further
+  * information than what these fields hold it can be passed as a parameter
+diff --git a/drivers/tee/optee/optee_private.h b/drivers/tee/optee/optee_private.h
+index db9ea673fbca1..0c546f8fd0a3f 100644
+--- a/drivers/tee/optee/optee_private.h
++++ b/drivers/tee/optee/optee_private.h
+@@ -47,11 +47,11 @@ typedef void (optee_invoke_fn)(unsigned long, unsigned long, unsigned long,
+ 				unsigned long, unsigned long,
+ 				struct arm_smccc_res *);
+ 
+-/*
++/**
+  * struct optee_call_waiter - TEE entry may need to wait for a free TEE thread
+- * @list_node		Reference in waiters list
+- * @c			Waiting completion reference
+- * @sys_thread		True if waiter belongs to a system thread
++ * @list_node:	reference in waiters list
++ * @c:		waiting completion reference
++ * @sys_thread:	true if waiter belongs to a system thread
+  */
+ struct optee_call_waiter {
+ 	struct list_head list_node;
+@@ -59,13 +59,13 @@ struct optee_call_waiter {
+ 	bool sys_thread;
+ };
+ 
+-/*
++/**
+  * struct optee_call_queue - OP-TEE call queue management
+- * @mutex			Serializes access to this struct
+- * @waiters			List of threads waiting to enter OP-TEE
+- * @total_thread_count		Overall number of thread context in OP-TEE or 0
+- * @free_thread_count		Number of threads context free in OP-TEE
+- * @sys_thread_req_count	Number of registered system thread sessions
++ * @mutex:			serializes access to this struct
++ * @waiters:			list of threads waiting to enter OP-TEE
++ * @total_thread_count:		overall number of thread context in OP-TEE or 0
++ * @free_thread_count:		number of threads context free in OP-TEE
++ * @sys_thread_req_count:	number of registered system thread sessions
+  */
+ struct optee_call_queue {
+ 	/* Serializes access to this struct */
+@@ -96,17 +96,17 @@ struct optee_shm_arg_cache {
+ 
+ /**
+  * struct optee_supp - supplicant synchronization struct
+- * @ctx			the context of current connected supplicant.
+- *			if !NULL the supplicant device is available for use,
+- *			else busy
+- * @mutex:		held while accessing content of this struct
+- * @req_id:		current request id if supplicant is doing synchronous
+- *			communication, else -1
+- * @reqs:		queued request not yet retrieved by supplicant
+- * @idr:		IDR holding all requests currently being processed
+- *			by supplicant
+- * @reqs_c:		completion used by supplicant when waiting for a
+- *			request to be queued.
++ * @mutex:	held while accessing content of this struct
++ * @ctx:	the context of current connected supplicant.
++ *		if !NULL the supplicant device is available for use,
++ *		else busy
++ * @req_id:	current request id if supplicant is doing synchronous
++ *		communication, else -1
++ * @reqs:	queued request not yet retrieved by supplicant
++ * @idr:	IDR holding all requests currently being processed
++ *		by supplicant
++ * @reqs_c:	completion used by supplicant when waiting for a
++ *		request to be queued.
+  */
+ struct optee_supp {
+ 	/* Serializes access to this struct */
+@@ -119,25 +119,25 @@ struct optee_supp {
+ 	struct completion reqs_c;
+ };
+ 
+-/*
++/**
+  * struct optee_pcpu - per cpu notif private struct passed to work functions
+- * @optee		optee device reference
++ * @optee:	optee device reference
+  */
+ struct optee_pcpu {
+ 	struct optee *optee;
+ };
+ 
+-/*
++/**
+  * struct optee_smc - optee smc communication struct
+- * @invoke_fn		handler function to invoke secure monitor
+- * @memremaped_shm	virtual address of memory in shared memory pool
++ * @invoke_fn:		handler function to invoke secure monitor
++ * @memremaped_shm:	virtual address of memory in shared memory pool
+  * @sec_caps:		secure world capabilities defined by
+  *			OPTEE_SMC_SEC_CAP_* in optee_smc.h
+- * @notif_irq		interrupt used as async notification by OP-TEE or 0
+- * @optee_pcpu		per_cpu optee instance for per cpu work or NULL
+- * @notif_pcpu_wq	workqueue for per cpu asynchronous notification or NULL
+- * @notif_pcpu_work	work for per cpu asynchronous notification
+- * @notif_cpuhp_state   CPU hotplug state assigned for pcpu interrupt management
++ * @notif_irq:		interrupt used as async notification by OP-TEE or 0
++ * @optee_pcpu:		per_cpu optee instance for per cpu work or NULL
++ * @notif_pcpu_wq:	workqueue for per cpu asynchronous notification or NULL
++ * @notif_pcpu_work:	work for per cpu asynchronous notification
++ * @notif_cpuhp_state:	CPU hotplug state assigned for pcpu interrupt management
+  */
+ struct optee_smc {
+ 	optee_invoke_fn *invoke_fn;
+@@ -151,13 +151,15 @@ struct optee_smc {
+ };
+ 
+ /**
+- * struct optee_ffa_data -  FFA communication struct
+- * @ffa_dev		FFA device, contains the destination id, the id of
++ * struct optee_ffa -  FFA communication struct
++ * @ffa_dev:		FFA device, contains the destination id, the id of
+  *			OP-TEE in secure world
+- * @bottom_half_value	Notification ID used for bottom half signalling or
++ * @bottom_half_value:	notification ID used for bottom half signalling or
+  *			U32_MAX if unused
+- * @mutex		Serializes access to @global_ids
+- * @global_ids		FF-A shared memory global handle translation
++ * @mutex:		serializes access to @global_ids
++ * @global_ids:		FF-A shared memory global handle translation
++ * @notif_wq:		workqueue for FF-A asynchronous notification
++ * @notif_work:		work for FF-A asynchronous notification
+  */
+ struct optee_ffa {
+ 	struct ffa_device *ffa_dev;
+@@ -204,26 +206,32 @@ struct optee_ops {
+ 
+ /**
+  * struct optee - main service struct
+- * @supp_teedev:	supplicant device
+- * @teedev:		client device
+- * @ops:		internal callbacks for different ways to reach secure
+- *			world
+- * @ctx:		driver internal TEE context
+- * @smc:		specific to SMC ABI
+- * @ffa:		specific to FF-A ABI
+- * @call_queue:		queue of threads waiting to call @invoke_fn
+- * @notif:		notification synchronization struct
+- * @supp:		supplicant synchronization struct for RPC to supplicant
+- * @pool:		shared memory pool
+- * @mutex:		mutex protecting @rpmb_dev
+- * @rpmb_dev:		current RPMB device or NULL
+- * @rpmb_scan_bus_done	flag if device registation of RPMB dependent devices
+- *			was already done
+- * @rpmb_scan_bus_work	workq to for an RPMB device and to scan optee bus
+- *			and register RPMB dependent optee drivers
+- * @rpc_param_count:	If > 0 number of RPC parameters to make room for
+- * @scan_bus_done	flag if device registation was already done.
+- * @scan_bus_work	workq to scan optee bus and register optee drivers
++ * @supp_teedev:		supplicant device
++ * @teedev:			client device
++ * @ops:			internal callbacks for different ways to reach
++ *				secure world
++ * @ctx:			driver internal TEE context
++ * @smc:			specific to SMC ABI
++ * @ffa:			specific to FF-A ABI
++ * @shm_arg_cache:		shared memory cache argument
++ * @call_queue:			queue of threads waiting to call @invoke_fn
++ * @notif:			notification synchronization struct
++ * @supp:			supplicant synchronization struct for RPC to
++ *				supplicant
++ * @pool:			shared memory pool
++ * @rpmb_dev_mutex:		mutex protecting @rpmb_dev
++ * @rpmb_dev:			current RPMB device or NULL
++ * @rpmb_intf:			RPMB notifier block
++ * @rpc_param_count:		if > 0 number of RPC parameters to make room for
++ * @scan_bus_done:		flag if device registation was already done
++ * @rpmb_scan_bus_done:		flag if device registation of RPMB dependent
++ *				devices was already done
++ * @in_kernel_rpmb_routing:	flag if OP-TEE supports in-kernel RPMB routing
++ * @scan_bus_work:		workq to scan optee bus and register optee
++ *				drivers
++ * @rpmb_scan_bus_work:		workq to for an RPMB device and to scan optee
++ *				bus and register RPMB dependent optee drivers
++ * @revision:			OP-TEE OS revision
+  */
+ struct optee {
+ 	struct tee_device *supp_teedev;
 -- 
 2.53.0
 
