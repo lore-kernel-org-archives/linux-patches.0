@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EC124A06D;
-	Tue, 13 Oct 2026 12:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679AE1A9FA8;
+	Tue, 13 Oct 2026 12:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895070; cv=none; b=CbIk8JCho4Rwwrwxrnc4DRKXzoGhw7KchN8YYh4dGrqDmu4VQzs3Pb0llpw2VHLW1bt9M9+hc4eCtpSLjTFq6CY1UGqmWwcedL5mB4P/dKACWoUrqdUvLRz/R447fdDtHlz+AqrKpEjwIUtccZ8AnH/Co6MMh4/rdclZEBX63EU=
+	t=1791895073; cv=none; b=X3tYgQSJPc+6AtM6WwG/3Rk1wzFhIFmUi9eEwYKlZ8NeMMWslg/k3jxDLO5qsfesKh2qvbeEQD/fvDtAIDJwcRVqOfyt9Ds1HHRVUnwdt6eGALnLHE9dhMqnTcMeYepBngq/SxFh4fAIBwHwwzKvubyITZICV5e2+tzqspv0dpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895070; c=relaxed/simple;
-	bh=NAWULQWfbzU/6UPih0jk3ruBb5KfYKIwd9f3VOSuj8Y=;
+	s=arc-20240116; t=1791895073; c=relaxed/simple;
+	bh=PfJbQ1tQpE06a1V+yrf9UfrWe+ZdK37SF+Hb/pemr4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7HlW102x1vpw0ogBkznzmjB2c1N3qckU9eUQOBt9mg0+5izT47D6dNjVBVtFG6wGhAoZVcoje8vMBfPpvSG0uKrki17jJreuJEquXQPQGJRVMiaI5Dv7Gis+zuQz9GFdAlLQW8Ahq2toVXXn+3Q4l4rpqUiXg2XRW/iZ/M4LpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nuQVbSC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2iKx7OsvuoNdSiCKwidJpAYcT5xMD+JsgYsL9cVg5uxYKvWPIa3FBt8KbiuzftdBEkTSwcruO1PW1gsqGrwplZlQfmxB/lCVNYfFhSv44A6fJeIH4U18Yp74hfdUkTsS9nPtxmf27TsSa5yZ+Chrmy+TNoZK/sSfyO3gmOOovg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLxoEZ/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nuQVbSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51871F000FF;
-	Tue, 13 Oct 2026 12:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLxoEZ/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50371F000FF;
+	Tue, 13 Oct 2026 12:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895069;
-	bh=mcIExbEx5L4px7paMNwNakczg7a5mNP8kHwbMwC3/zs=;
+	s=korg; t=1791895072;
+	bh=joxJIqJnuERLbYPsHb9UyJ0zX7xXJOyRuy37HQ9s27U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2nuQVbSCuEP6YrqtKeYdJ64PY6v6LWu4MsBkDLlWcorJ/Ld9CjaKIeMhAEnV/l84p
-	 u+LjGjFuFZKQUprGSqpg05DZXmOpFBAut1iYu3bpYLxAZzXDZtVyl+Ftod1iIeUnHg
-	 DLsueIzYh78onTyQtby95MbCn8eKpiSU4f/DLsnQ=
+	b=aLxoEZ/WoAwLfZa6hQEILfNqn6BnFMYCOlSkuSX5ldqGmOtdH6nV+MiNPxljvFefF
+	 NU568OwkWcFGtKftYgnhrAxsh/9KbefFnQcVQVivhCnYIRuIFRKoVRqjyop+tsjgXr
+	 atvB+wiauMNKUg0B1GlkSVB7lOEmFYfgULUDFXvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
+	Marian Rotariu <marian.c.rotariu@gmail.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 151/497] usb: typec: tcpm: recover after failure to start the frs ams
-Date: Tue, 13 Oct 2026 13:35:18 +0200
-Message-ID: <20261013112911.470583219@linuxfoundation.org>
+Subject: [PATCH 6.12 152/497] usb: typec: tipd: dont send GAID when probe fails in APP mode
+Date: Tue, 13 Oct 2026 13:35:19 +0200
+Message-ID: <20261013112911.494382728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,75 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Marian Rotariu <marian.c.rotariu@gmail.com>
 
-commit 90156585765b29304f07b0e4a1c56a969876fcfc upstream.
+commit c5df31f10880737d13b75eff42faee7accb9f956 upstream.
 
-Reset the port if the tcpm fails to start the FAST_ROLE_SWAP AMS by
-initiating error recovery on it.
+When probe fails after the chip was already in APP mode (booted from
+EEPROM), the err_reset_controller path unconditionally calls
+tps->data->reset(), which for tps25750 sends the GAID 4CC command.
+GAID transitions the chip from APP back to PTCH, causing a second
+probe attempt that sees PTCH mode and tries to load the firmware from
+/lib/firmware, instead of reading the EEPROM as it should.
 
-This helps in cases where some cables (incorrectly) signal an FRS to
-an FRS capable port during disconnection. The TCPC autonomously starts
-sourcing VBUS on detecting the FRS signal. However, the VBUS sourcing is
-left on when the FAST_ROLE_SWAP AMS fails to start (as tcpm_sink_tx_ok
-is 0 as CC is open due to the cable disconnect). This is because the
-code sets the state to INVALID_STATE without resetting the port state.
+The err_reset_controller path can be triggered by -EPROBE_DEFER from
+the probe sequence. GAID should only be sent when the controller
+actually loaded firmware at probe time.
 
-Log snippet before changes:
-[  101.401960] AMS FAST_ROLE_SWAP start
-[  101.401971] Sink TX No Go
-[  101.401982] sourcing vbus
-[  101.401987] VBUS on
-[  101.402159] VBUS on
-[  109.257809] CC1: 0 -> 0, CC2: 5 -> 0 [state SNK_READY, polarity 1, disconnected]
-[  111.267442] VBUS on
+The abnormal behavior was seen on a tps25751d that has an EEPROM
+connected to it.
 
-After changes:
-[   70.541211] AMS FAST_ROLE_SWAP start
-[   70.541220] Sink TX No Go
-[   70.541228] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
-[   70.541362] VBUS on
-[   70.541365] sourcing vbus
-[   70.541367] VBUS on
-[   70.541374] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
-[   70.541410] disable vbus discharge ret:0
-[   70.543028] Setting usb_comm capable false
-[   70.544009] Setting voltage/current limit 0 mV 0 mA
-[   70.544034] polarity 0
-[   70.544239] Requesting mux state 0, usb-role 0, orientation 0
-[   70.555550] cc:=0
-[   70.555595] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
-[   70.555697] VBUS off
-[   70.555702] VBUS VSAFE0V
-[   70.555762] CC1: 5 -> 0, CC2: 0 -> 0 [state PORT_RESET, polarity 0, disconnected]
-[   70.587794] VBUS off
-[   70.587799] VBUS VSAFE0V
-[   70.655672] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
-[   70.655682] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev3 NONE_AMS]
-[   70.655686] Start toggling
-[   70.656274] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
-
-Fixes: 0908c5aca31e ("usb: typec: tcpm: AMS and Collision Avoidance")
+Fixes: d49f90822015 ("usb: typec: tipd: add init and reset functions to tipd_data")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260903-frs-error-handling-v1-1-ad0fee541847@google.com
+Signed-off-by: Marian Rotariu <marian.c.rotariu@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260806085302.1307606-1-marian.c.rotariu@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tipd/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -6379,7 +6379,7 @@ static void tcpm_pd_event_handler(struct
- 				port->upcoming_state = FR_SWAP_SEND;
- 				ret = tcpm_ams_start(port, FAST_ROLE_SWAP);
- 				if (ret == -EAGAIN)
--					port->upcoming_state = INVALID_STATE;
-+					tcpm_set_state(port, ERROR_RECOVERY, 0);
- 			} else {
- 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
- 			}
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -1295,6 +1295,7 @@ static int tps6598x_probe(struct i2c_cli
+ 	struct device_node *np = client->dev.of_node;
+ 	struct tps6598x *tps;
+ 	struct fwnode_handle *fwnode;
++	bool patch_loaded = false;
+ 	u32 status;
+ 	u32 vid;
+ 	int ret;
+@@ -1359,6 +1360,7 @@ static int tps6598x_probe(struct i2c_cli
+ 		return ret;
+ 
+ 	if (ret == TPS_MODE_PTCH) {
++		patch_loaded = true;
+ 		ret = tps->data->init(tps);
+ 		if (ret)
+ 			return ret;
+@@ -1447,7 +1449,8 @@ err_clear_mask:
+ 	tps6598x_write64(tps, TPS_REG_INT_MASK1, 0);
+ err_reset_controller:
+ 	/* Reset PD controller to remove any applied patch */
+-	tps->data->reset(tps);
++	if (patch_loaded)
++		tps->data->reset(tps);
+ 
+ 	return ret;
+ }
 
 
