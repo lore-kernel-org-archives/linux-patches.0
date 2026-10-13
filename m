@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B0C4F7CAF;
-	Tue, 13 Oct 2026 12:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C64F799A;
+	Tue, 13 Oct 2026 12:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895419; cv=none; b=IEduib49ioodt8+qRP/5OseyP/TfarxWUMxWA16sMKpPvQEEHxzzyw9r4IyuXSNPHmXXzdjLyN6t5PG3dzuZY0fuCYOUvZjM3O/PH/u5h8x4y/9x93bt3YxaVsQS1JGig5Nt/XGGoQo14twocxr4TpYP6MLa4+jp8JMDVFEBmHU=
+	t=1791895421; cv=none; b=AiF3bJ/kj7x47Pje6waT/GqCDDnUfE8iph3epo3y8JHmO3kcdOMUGbxDKAl3/JYsnSyI541B9hS0rPnESwIq0LRjthlMlStJeLLIw+xmwZjGia1XH9ct6kC84sQqX8VdOZRclC8J1fEE5dNM0bXSVFNULinMS1iLgCtB25tNq1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895419; c=relaxed/simple;
-	bh=MAntH0+0rhuHWpQgLLsuca5I6VsFGeY97pnpEFSaIyI=;
+	s=arc-20240116; t=1791895421; c=relaxed/simple;
+	bh=BXuPxwnEjLoBhqWMnGPhA4Vuw1+hb6wNLROQhYMIBhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smy9PAxRcj9nxS5R5rX323RZZsmND59JC4P8W1rU+ToSXVqjz0gEc5NCR/LSLF29tijr3vw9vcZ4z9WNXPaWyLh5HnWjXIH4i1o35SzN4hTXearP2DmYx0+xQ6BxCgmhNLylLHHXQAzL7NrQVqpw1J4t1q9zm6NVV09sUtDrI0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpchMwi1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gd2hnWVLrPHl6je+OGJBPiHz84KMrmSpREFQXvAwdeyRLXebcTma7C7fkmzFYRSZLsamkmOcxAJHGfDePrG1c4t9YUfE8gog3B5KUDe6U8iB+Ixo2i2Bc7RpczYk7QpoDCONSIzcjblA3LK4KB2PK834HUTjWyQfAd64wJB7GfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3rpUgOu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpchMwi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4137B1F000FF;
-	Tue, 13 Oct 2026 12:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3rpUgOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359221F000FF;
+	Tue, 13 Oct 2026 12:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895417;
-	bh=CEUKlFsDRFBwoK0i1C8UfpvQD9HjBXRsNe19hd1arOw=;
+	s=korg; t=1791895420;
+	bh=m3nAatqmTexGlYGfBASEOPgACaFJlCKOVcYM0cVM9xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpchMwi14JEKjR8Q5OdS0tC4Jgi94FvvA4s7h3LeBHNnUrO+DuCShaTXVkStjHeKS
-	 2ymIYBStMDYjPIuAP0E/Ol/2nSqK7NvXHsfQ5lMboebiqxz2TBYPhIhrLef4K5w4aX
-	 5W7AbFJisRB2R/3WWnTNDL3/x9lsZY8F7zgemS74=
+	b=j3rpUgOuzKsQxTZ19Xka3Zt55ko/29tKzV7vysFK+8flnKKZwkTbeg0Ij8xEsbbsF
+	 4u2LC1HHq3UBG6OajIWzC0dJgS2RSJQO0IhAVDVwU7HYTufWL4t+G0QtEt1kZMPr5X
+	 w/q4O2KXdQd2rf6ShlJ5nov33uYm4v8DRXdxXYDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	David Hildenbrand <david@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
 	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 266/497] netfs: clear post-EOF pagecache when extending a file via write
-Date: Tue, 13 Oct 2026 13:37:13 +0200
-Message-ID: <20261013112914.204517391@linuxfoundation.org>
+Subject: [PATCH 6.12 267/497] mm: shmem: remove __shmem_huge_global_enabled()
+Date: Tue, 13 Oct 2026 13:37:14 +0200
+Message-ID: <20261013112914.229857541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -58,294 +57,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit 69bf14300b50631e7c2271289d347bbd1b19a06c ]
+[ Upstream commit 4a9a27fdf7bfd29013491aea45e3512988cc5876 ]
 
-Fix netfs to erase the contents of a hole created after the EOF by an
-ordinary write if dirty data has been previously left there by writes
-through an mmapped region.  Neither the buffered nor the unbuffered/DIO
-write path clears that stale pagecache.
+Remove __shmem_huge_global_enabled() since it as only one caller, and
+remove repeated check of VM_NOHUGEPAGE/MMF_DISABLE_THP as they are checked
+in shmem_allowable_huge_orders(), also remove unnecessary vma parameter.
 
-Zero the tail of the folio straddling the EOF before an extending
-write.  That is the only folio that can hold data written past the EOF
-through an mmap, as pages wholly beyond the EOF can't be faulted in.
-The folio is zeroed rather than dropped so a concurrent extending write
-can't lose data.
-
-Both write paths downgrade the i_rwsem to shared, so extending writes
-can run concurrently and the i_size read by the caller may be stale by
-the time the folio is locked.  Re-read i_size under the folio lock and
-clamp the zeroed range up to it, so a racing write that already put
-data into the folio isn't clobbered.
-
-Wait for any writeback on the folio to finish before zeroing it so that
-the pagecache isn't modified while it may still be read by the transport
-during transmission.  Honour IOCB_NOWAIT by returning -EAGAIN rather
-than blocking on the folio lock, on writeback, or in folio_mkclean()'s
-rmap walk when the folio is mapped.
-
-truncate_pagecache() can't be used here: it must be called with the
-i_rwsem held exclusively, but these write paths only hold it shared,
-and it would block unconditionally, breaking IOCB_NOWAIT.
-
-Callers that hold i_rwsem exclusively for the whole resize (truncate,
-setattr, fallocate, clone) exclude any genuine concurrent buffered
-writer, so staleness can instead be decided from the folio's dirty
-state, as pagecache_isize_extended() already does for filesystems that
-serialise writes against truncate/setattr via a single i_rwsem.
-Export netfs_clear_stale_post_isize() helper to handle such case.
-
-The helper is required by the CIFS client to fix generic/363.
-
-Closes: https://sashiko.dev/#/patchset/20260921230755.1133425-1-pc%40manguebit.org
-Fixes: 938e13a73b24 ("netfs: Implement buffered write API")
-Fixes: 153a9961b551 ("netfs: Implement unbuffered/DIO write support")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
+Link: https://lkml.kernel.org/r/20241017141457.1169092-2-wangkefeng.wang@huawei.com
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
 Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
-[ sashal: Replaced `uoff_t` with `unsigned long long` and placed the new functions, prototype and docs section at different spots because the surrounding context differs. ]
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 72c3d682c165 ("mm: shmem: ignore sysfs configs for shmem forced collapse")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/netfs_library.rst | 26 ++++++
- fs/netfs/buffered_write.c                   |  9 ++
- fs/netfs/direct_write.c                     |  9 ++
- fs/netfs/internal.h                         |  2 +
- fs/netfs/misc.c                             | 99 +++++++++++++++++++++
- include/linux/netfs.h                       |  2 +
- 6 files changed, 147 insertions(+)
+ mm/shmem.c | 33 ++++++++++-----------------------
+ 1 file changed, 10 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/filesystems/netfs_library.rst b/Documentation/filesystems/netfs_library.rst
-index 73f0bfd7e903a..ad4362653801d 100644
---- a/Documentation/filesystems/netfs_library.rst
-+++ b/Documentation/filesystems/netfs_library.rst
-@@ -587,6 +587,32 @@ there isn't a read request structure as well, such as writing dirty data to the
- cache.
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 51a0f94e6d9fe..e760dc2d7d41e 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -559,17 +559,15 @@ static int shmem_confirm_swap(struct address_space *mapping, pgoff_t index,
  
+ static int shmem_huge __read_mostly = SHMEM_HUGE_NEVER;
  
-+Clearing Stale Post-EOF Pagecache
-+---------------------------------
-+
-+When a file is extended, data left in the pagecache past the old EOF by a write
-+through an mmap must not be exposed as file content.  Netfslib clears this on
-+its own write paths, and exports a helper so a filesystem can do the same from
-+a resize path (truncate, setattr, fallocate and the like) that holds the
-+inode's ``i_rwsem`` exclusively across the whole resize::
-+
-+	void netfs_clear_stale_post_isize(struct inode *inode, unsigned long long from,
-+					  unsigned long long to);
-+
-+This zeroes any such data within the ``[from, to)`` hole to be made, where
-+@from is the old EOF and @to is the new one, and the caller must have already
-+updated ``i_size`` to @to before calling it.  Only the folio straddling @from
-+can hold data written past the EOF through an mmap, as pages wholly beyond the
-+EOF can't be faulted in, so the zeroing is limited to that folio.  The folio is
-+zeroed rather than dropped so that a concurrent extending write can't lose
-+data.
-+
-+This overlaps with ``pagecache_isize_extended()`` but can't reuse it: that
-+helper is keyed on a sub-page block size and is a no-op when the block size is
-+``>= PAGE_SIZE`` (as on network filesystems), and it doesn't wait for
-+writeback.  As both address the same problem, a change to one should probably
-+be reflected in the other to keep them in sync.
-+
- API Function Reference
- ======================
- 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index 2ce4c6ac52e21..446d25c71acb1 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -465,6 +465,7 @@ ssize_t netfs_buffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *fr
- 					 struct netfs_group *netfs_group)
+-static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
+-					loff_t write_end, bool shmem_huge_force,
+-					struct vm_area_struct *vma,
+-					unsigned long vm_flags)
++static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
++				      loff_t write_end, bool shmem_huge_force,
++				      unsigned long vm_flags)
  {
- 	struct file *file = iocb->ki_filp;
-+	struct inode *inode = file_inode(file);
- 	ssize_t ret;
+-	struct mm_struct *mm = vma ? vma->vm_mm : NULL;
+ 	loff_t i_size;
  
- 	trace_netfs_write_iter(iocb, from);
-@@ -477,6 +478,14 @@ ssize_t netfs_buffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *fr
- 	if (ret)
- 		return ret;
- 
-+	if (iocb->ki_pos > i_size_read(inode)) {
-+		ret = netfs_clear_stale_pre_isize(inode, i_size_read(inode),
-+						  iocb->ki_pos,
-+						  iocb->ki_flags & IOCB_NOWAIT);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return netfs_perform_write(iocb, from, netfs_group);
+-	if (!S_ISREG(inode->i_mode))
++	if (HPAGE_PMD_ORDER > MAX_PAGECACHE_ORDER)
+ 		return false;
+-	if (mm && ((vm_flags & VM_NOHUGEPAGE) || test_bit(MMF_DISABLE_THP, &mm->flags)))
++	if (!S_ISREG(inode->i_mode))
+ 		return false;
+ 	if (shmem_huge == SHMEM_HUGE_DENY)
+ 		return false;
+@@ -587,7 +585,7 @@ static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
+ 			return true;
+ 		fallthrough;
+ 	case SHMEM_HUGE_ADVISE:
+-		if (mm && (vm_flags & VM_HUGEPAGE))
++		if (vm_flags & VM_HUGEPAGE)
+ 			return true;
+ 		fallthrough;
+ 	default:
+@@ -595,17 +593,6 @@ static bool __shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
+ 	}
  }
- EXPORT_SYMBOL(netfs_buffered_write_iter_locked);
-diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
-index 8fbfaf71c154c..59f1b36a43c7c 100644
---- a/fs/netfs/direct_write.c
-+++ b/fs/netfs/direct_write.c
-@@ -172,6 +172,15 @@ ssize_t netfs_unbuffered_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	ret = file_update_time(file);
- 	if (ret < 0)
- 		goto out;
-+
-+	if (iocb->ki_pos > i_size_read(inode)) {
-+		ret = netfs_clear_stale_pre_isize(inode, i_size_read(inode),
-+						  iocb->ki_pos,
-+						  iocb->ki_flags & IOCB_NOWAIT);
-+		if (ret < 0)
-+			goto out;
-+	}
-+
- 	if (iocb->ki_flags & IOCB_NOWAIT) {
- 		/* We could block if there are any pages in the range. */
- 		ret = -EAGAIN;
-diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
-index 8bc461fc671e5..668c4b3f78134 100644
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -64,6 +64,8 @@ int netfs_buffer_append_folio(struct netfs_io_request *rreq, struct folio *folio
- struct folio_queue *netfs_delete_buffer_head(struct netfs_io_request *wreq);
- void netfs_clear_buffer(struct netfs_io_request *rreq);
- void netfs_reset_iter(struct netfs_io_subrequest *subreq);
-+int netfs_clear_stale_pre_isize(struct inode *inode, unsigned long long from,
-+				unsigned long long to, bool nowait);
  
- /*
-  * objects.c
-diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 9672904232ad5..f5f7c0de3a7ca 100644
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include <linux/swap.h>
-+#include <linux/rmap.h>
- #include "internal.h"
- 
- /*
-@@ -329,3 +330,101 @@ bool netfs_release_folio(struct folio *folio, gfp_t gfp)
- 	return true;
+-static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
+-		   loff_t write_end, bool shmem_huge_force,
+-		   struct vm_area_struct *vma, unsigned long vm_flags)
+-{
+-	if (HPAGE_PMD_ORDER > MAX_PAGECACHE_ORDER)
+-		return false;
+-
+-	return __shmem_huge_global_enabled(inode, index, write_end,
+-					   shmem_huge_force, vma, vm_flags);
+-}
+-
+ #if defined(CONFIG_SYSFS)
+ static int shmem_parse_huge(const char *str)
+ {
+@@ -783,8 +770,8 @@ static unsigned long shmem_unused_huge_shrink(struct shmem_sb_info *sbinfo,
  }
- EXPORT_SYMBOL(netfs_release_folio);
-+
-+/**
-+ * netfs_clear_stale_isize - Clear stale pagecache in a to-be-created hole
-+ * @inode: The inode to act upon.
-+ * @from: The base of the hole to be made.
-+ * @to: The top of the hole to be made.
-+ * @nowait: True to return -EAGAIN rather than block.
-+ * @exclusive: True if the caller holds i_rwsem exclusively for the resize.
-+ *
-+ * Zero any data left in the pagecache within the [@from, @to) hole by a
-+ * write through an mmap so that it isn't exposed as file content once the
-+ * file is extended.  Only the uptodate folio straddling @from can hold such
-+ * data as pages wholly beyond the EOF can't be faulted in, so the zeroing
-+ * is limited to that folio.  The folio is zeroed rather than dropped so
-+ * that a concurrent extending write can't lose data.
-+ *
-+ * If @exclusive is false, @from is re-read from i_size and used to clamp
-+ * the zeroed range, for callers that may race with another writer also
-+ * extending the file (eg. multiple buffered writes extending the same file
-+ * under a shared i_rwsem).  If @exclusive is true, for callers that hold
-+ * i_rwsem exclusively across the whole resize and have already updated
-+ * i_size to @to, staleness is decided from the folio's dirty state instead:
-+ * since no genuine concurrent buffered writer can be racing, a lockless
-+ * stat() adopting a server-confirmed size mid-resize has no data behind it
-+ * and never dirties the folio, so it can't fool this check into skipping
-+ * the zeroing the way it could fool the @exclusive false clamp.
-+ *
-+ * pagecache_isize_extended() can't be reused here: it is keyed on a
-+ * sub-page block size (a no-op when the block size is >= PAGE_SIZE, as on
-+ * network filesystems), runs after i_size is updated, can't honour
-+ * @nowait, and doesn't wait for writeback.  Keep the two in sync if either
-+ * is changed.
-+ *
-+ * Return: 0 on success, or -EAGAIN if @nowait is set and the folio is
-+ * mapped or under writeback and so can't be cleaned without blocking.
-+ */
-+static int netfs_clear_stale_isize(struct inode *inode, unsigned long long from,
-+				   unsigned long long to, bool nowait, bool exclusive)
-+{
-+	struct address_space *mapping = inode->i_mapping;
-+	fgf_t fgp = FGP_LOCK;
-+	struct folio *folio;
-+	int ret;
-+
-+	if (from >= to)
-+		return 0;
-+
-+	if (nowait)
-+		fgp |= FGP_NOWAIT;
-+
-+	folio = __filemap_get_folio(mapping, from >> PAGE_SHIFT, fgp, 0);
-+	if (IS_ERR(folio))
-+		return PTR_ERR(folio) == -EAGAIN ? -EAGAIN : 0;
-+
-+	ret = 0;
-+	if (nowait && (folio_mapped(folio) || folio_test_writeback(folio))) {
-+		ret = -EAGAIN;
-+		goto out;
-+	}
-+
-+	folio_wait_writeback(folio);
-+
-+	if (folio_mkclean(folio))
-+		folio_mark_dirty(folio);
-+
-+	if (folio_test_uptodate(folio) &&
-+	    (!exclusive || folio_test_dirty(folio))) {
-+		unsigned long long fpos = folio_pos(folio);
-+
-+		if (!exclusive)
-+			from = umax(from, i_size_read(inode));
-+		if (from < to && from < fpos + folio_size(folio)) {
-+			size_t end = umin(to - fpos, folio_size(folio));
-+			size_t offset = from - fpos;
-+
-+			folio_zero_segment(folio, offset, end);
-+		}
-+	}
-+out:
-+	folio_unlock(folio);
-+	folio_put(folio);
-+	return ret;
-+}
-+
-+/* Clear stale pagecache before an extending buffered/DIO write. */
-+int netfs_clear_stale_pre_isize(struct inode *inode, unsigned long long from,
-+				unsigned long long to, bool nowait)
-+{
-+	return netfs_clear_stale_isize(inode, from, to, nowait, false);
-+}
-+
-+/* Clear stale pagecache when extending a file under an exclusive resize. */
-+void netfs_clear_stale_post_isize(struct inode *inode, unsigned long long from,
-+				  unsigned long long to)
-+{
-+	netfs_clear_stale_isize(inode, from, to, false, true);
-+}
-+EXPORT_SYMBOL(netfs_clear_stale_post_isize);
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index 6f2c504dae82a..f8e0d9fa745a2 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -409,6 +409,8 @@ ssize_t netfs_unbuffered_write_iter(struct kiocb *iocb, struct iov_iter *from);
- ssize_t netfs_unbuffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *iter,
- 					   struct netfs_group *netfs_group);
- ssize_t netfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from);
-+void netfs_clear_stale_post_isize(struct inode *inode, unsigned long long from,
-+				  unsigned long long to);
  
- /* Address operations API */
- struct readahead_control;
+ static bool shmem_huge_global_enabled(struct inode *inode, pgoff_t index,
+-		loff_t write_end, bool shmem_huge_force,
+-		struct vm_area_struct *vma, unsigned long vm_flags)
++				      loff_t write_end, bool shmem_huge_force,
++				      unsigned long vm_flags)
+ {
+ 	return false;
+ }
+@@ -1224,7 +1211,7 @@ static int shmem_getattr(struct mnt_idmap *idmap,
+ 			STATX_ATTR_NODUMP);
+ 	generic_fillattr(idmap, request_mask, inode, stat);
+ 
+-	if (shmem_huge_global_enabled(inode, 0, 0, false, NULL, 0))
++	if (shmem_huge_global_enabled(inode, 0, 0, false, 0))
+ 		stat->blksize = HPAGE_PMD_SIZE;
+ 
+ 	if (request_mask & STATX_BTIME) {
+@@ -1725,7 +1712,7 @@ unsigned long shmem_allowable_huge_orders(struct inode *inode,
+ 		return 0;
+ 
+ 	global_huge = shmem_huge_global_enabled(inode, index, write_end,
+-					shmem_huge_force, vma, vm_flags);
++						shmem_huge_force, vm_flags);
+ 	if (!vma || !vma_is_anon_shmem(vma)) {
+ 		/*
+ 		 * For tmpfs, we now only support PMD sized THP if huge page
 -- 
 2.53.0
 
