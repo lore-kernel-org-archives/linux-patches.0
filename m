@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B484EF154;
-	Tue, 13 Oct 2026 12:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311F933372A;
+	Tue, 13 Oct 2026 12:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894303; cv=none; b=Q60le3OLrLk4GiF+TzYAEH4oQB8ibP67TMa6cSjhUxkiQiTmaj4CNyUU1pY4/6TdGD2w2Sbyqu4DI7lHXbs3z32P+VJBbEJjd1HXTjXUHK7BMl4MOWAqjel9PB46DYRfhYSX9Q3rpWURD5UygzT50Ncn3JDSHzPG+h6rnIFEhIU=
+	t=1791894307; cv=none; b=rSxurnGJRkOus9OMNQG4YgZk1VGvXWGCjnFO21bGwXkWw2dbKWlhSiOls/qFRRAu3I5zODKQcWhzmXm6XsMrCpf+dCfzSS7Vh0W0RBlYJKK3mTAxEO5XhzLmVhrSG2yWxTVj42rcd93bHQSDncNtzZyUdIBnkw9NBLnBuebtox4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894303; c=relaxed/simple;
-	bh=v5/lML4y582aNGEpiYzgt+5evK0R41QYr9plKkaAu7Q=;
+	s=arc-20240116; t=1791894307; c=relaxed/simple;
+	bh=EiMiYblAFOfPnoym7Rp2cXKc9m/yslrizN6kOi4L9oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3Yq7EBVnKPqIxgVFNkGf+QjjPlwkIRmwqGxni+qEetUeVPYvNo93zW//QoA9QYHcCchtYWVVximHX+pr119syKZxS3iCYoN71xGAQFMiWgu+GH3BxOBGAL34Nf+FldoIA223cZQXqZycF10ovsXvsSy2FkOUPiL9DvK3j0PUUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgaAPNkE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hspPkSLORyFNOB4tzaMMDKbVIos7CBXPVKu7XJM7jRXaBceibZ5c2LkCcTEoHlc9Vdft15IxXK7YddJEgdnSOHZPCeNk6hVY3lFTXhXrDwkkWACml2RDofwv7f/jGczGlqSHsLpiPyRfRA3TcN7FuDwGGYkwY8gd5SEovfSKfzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3avtiX0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgaAPNkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1461F000FF;
-	Tue, 13 Oct 2026 12:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3avtiX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCAF1F000FF;
+	Tue, 13 Oct 2026 12:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894302;
-	bh=qjC67kzRwzoZVWCxlnxyMrfs4wayh6q6QTsmxKMseV0=;
+	s=korg; t=1791894305;
+	bh=MJre9XkeEDQc9sJtZ2be7I8IpUievbW+QMRhH8OkEf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgaAPNkECaKfBmv0PYDLluYO3ZLPe9hF+zY641lpjKSN1xzBYr0m7+ZuWNmB69uNB
-	 Bf6MrNbIwbbjOLoSelSwS9jIirRTdjlppwp5CNYHywzzOVnyvYivvxLbfp7uHoRIvj
-	 I/cxqHgn+2+I5c6+emvwsAgK8NitBKYmkO/9US1U=
+	b=j3avtiX0DFlnnMCV+kq1SLoH4wdW1DofsFCvbMwzTtiaNAFC9IOBOZfQIUWrg/9oN
+	 BHSRwblCQsqir8Uo6sQvIcAWxWAwKPguOruTDIy4FXjbB+AURcY2pb33UDFZ36FSXf
+	 ID4CEoFEMMPmSiMbvw7/ZkFHT+MYNFmQLEDbVYLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nicholas Carlini <npc@anthropic.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 514/621] bpf: Dont infer non-NULL from a pointer with an unbounded offset
-Date: Tue, 13 Oct 2026 13:38:29 +0200
-Message-ID: <20261013112933.023415250@linuxfoundation.org>
+Subject: [PATCH 6.18 515/621] bpf: dont rewrite bpf_fastcall patterns entered by a jump
+Date: Tue, 13 Oct 2026 13:38:30 +0200
+Message-ID: <20261013112933.047053077@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,59 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 67b529f521a6676cdfc78b91b0217d7eaa84216b ]
+[ Upstream commit 0b1c83dc3c4401cd7e846548f62e3caf3d06742e ]
 
-reg_not_null() decides that a register holds a non-NULL value by
-looking at its type alone. For pointer types that allow arithmetic the
-type only guarantees a non-NULL base, in case of an unbound offset
-the runtime offset value might still add up to NULL.
-Consider the followng program:
+mark_fastcall_pattern_for_call() must ensure that matched
+"spill; call; fill" instruction series is not interrupted by a jump.
+Otherwise the rewrite applied by bpf_remove_fastcall_spills_fills()
+is not sound.
 
-  r6 = bpf_map_lookup_elem(map, &0);  /* present */
-  if (r6 == 0) return 0;
-  r7 = bpf_map_lookup_elem(map, &1);  /* absent, NULL at runtime */
-  r8 = r7;
-  r8 -= r6;     /* pointer - pointer: unknown scalar, -r6 */
-  r8 <<= 1;
-  r8 >>= 1;     /* any non-negative offset is accepted by */
-                /* check_reg_sane_offset_ptr() */
-  r6 += r8;     /* verifier: map value;    runtime: zero  */
-  if (r7 != r6) return 0;
-  *(u8 *)(r7 + 0);  /* r7 is inferred non-NULL, both are zero */
+Record the instructions targeted by jumps in
+insn_aux_data[*].jump_target when the CFG is built and use this flag
+to stop growing a pattern at such an instruction. Jumps to the first
+spill are fine.
 
-At runtime both registers are zero, the comparison is true and the
-load faults with NULL pointer dereference.
+Note that existing insn_aux_data[*].jmp_point field can't be reused,
+as it marks subprogram return instructions.
 
-Require the offset to be within +-BPF_MAX_VAR_OFF in reg_not_null().
-
-Fixes: cac616db39c2 ("bpf: Verifier track null pointer branch_taken with JNE and JEQ")
+Fixes: 5b5f51bff1b6 ("bpf: no_caller_saved_registers attribute for helper calls")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260904083325.2083493-1-eddyz87@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260903205820.1743087-1-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/bpf_verifier.h |  2 ++
+ kernel/bpf/verifier.c        | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
 
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index d305d30ebe95c..56a6c5b8625d8 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -580,6 +580,8 @@ struct bpf_insn_aux_data {
+ 	 * accepts callback function as a parameter.
+ 	 */
+ 	bool calls_callback;
++	/* true if some jump or call instruction targets this instruction */
++	bool jump_target;
+ 	/*
+ 	 * CFG strongly connected component this instruction belongs to,
+ 	 * zero if it is a singleton SCC.
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9ed6a1298a8ec..0e9218f74cf3c 100644
+index 0e9218f74cf3c..971446e05187c 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -405,6 +405,13 @@ static bool reg_not_null(const struct bpf_reg_state *reg)
- 	if (type_may_be_null(type))
- 		return false;
+@@ -3889,6 +3889,16 @@ static bool is_jmp_point(struct bpf_verifier_env *env, int insn_idx)
+ 	return env->insn_aux_data[insn_idx].jmp_point;
+ }
  
-+	/*
-+	 * The types below guarantee a non-NULL base, an unbounded offset can
-+	 * still wrap base + offset to zero.
-+	 */
-+	if (reg->smin_value <= -BPF_MAX_VAR_OFF || reg->smax_value >= BPF_MAX_VAR_OFF)
-+		return false;
++static void mark_jump_target(struct bpf_verifier_env *env, int idx)
++{
++	env->insn_aux_data[idx].jump_target = true;
++}
 +
- 	type = base_type(type);
- 	return type == PTR_TO_SOCKET ||
- 		type == PTR_TO_TCP_SOCK ||
++static bool bpf_is_jump_target(struct bpf_verifier_env *env, int insn_idx)
++{
++	return env->insn_aux_data[insn_idx].jump_target;
++}
++
+ #define LR_FRAMENO_BITS	3
+ #define LR_SPI_BITS	6
+ #define LR_ENTRY_BITS	(LR_SPI_BITS + LR_FRAMENO_BITS + 1)
+@@ -18012,6 +18022,7 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env)
+ 		/* mark branch target for state pruning */
+ 		mark_prune_point(env, w);
+ 		mark_jmp_point(env, w);
++		mark_jump_target(env, w);
+ 	}
+ 
+ 	if (insn_state[w] == 0) {
+@@ -18206,6 +18217,10 @@ static bool get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call
+  *   r0 = *(u64 *)(r10 - 8);             r0 += r1;
+  *   r0 += r1;                           exit;
+  *   exit;
++ *
++ * Both uses of the marks assume that a pattern is entered at its first
++ * spill and thus executes as a unit, hence a pattern is not grown past
++ * an instruction targeted by a jump.
+  */
+ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 					   struct bpf_subprog_info *subprog,
+@@ -18244,6 +18259,10 @@ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 	for (i = 1, off = lowest_off; i <= ARRAY_SIZE(caller_saved); ++i, off += BPF_REG_SIZE) {
+ 		if (insn_idx - i < 0 || insn_idx + i >= env->prog->len)
+ 			break;
++		/* stx/ldx/call must not be a jump targets, a jump to the first stx is fine */
++		if (bpf_is_jump_target(env, insn_idx - i + 1) ||
++		    bpf_is_jump_target(env, insn_idx + i))
++			break;
+ 		stx = &insns[insn_idx - i];
+ 		ldx = &insns[insn_idx + i];
+ 		/* must be a stack spill/fill pair */
+@@ -18429,6 +18448,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 
+ 		mark_prune_point(env, t + off + 1);
+ 		mark_jmp_point(env, t + off + 1);
++		mark_jump_target(env, t + off + 1);
+ 
+ 		return ret;
+ 
 -- 
 2.53.0
 
