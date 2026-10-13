@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96E53B059F;
-	Tue, 13 Oct 2026 12:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3E74F7CBA;
+	Tue, 13 Oct 2026 12:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894791; cv=none; b=iT7/saYkCpFACn0FWVD4fYriLzPAd3kWbeRSwlJSSGihfK1aIdzCuqbMQ2evb4YmtZeqOjplqOR1PC+w1OMImaO0Gr7mt9G9KNbRqEQI1SJP34UF8xbna6+o3yS20kO9VGFrnGjPVa5p6j+rwM4AjOX+Oo4qkDQRrqYN7Hdd4gY=
+	t=1791894794; cv=none; b=TaKfGPHzSK0ZlLE7JCzg+GN+UDvJNY5RysB8ar3ihElj2IV6jpTu52mv9sOpcCdCPErXqM+D5IbKQbxebDFgqZYeWUyTT2qokDmhVjuHce5dNTnjqY8UMGbjsoLqUvjZCnYLsgEQn4obXRNI0O02c8RVwg8ICEDp71hT5PvRN2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894791; c=relaxed/simple;
-	bh=vBt0QXNYYwDU/byoqgdEKWcl1DK3w/uJzuVrLx0m7LY=;
+	s=arc-20240116; t=1791894794; c=relaxed/simple;
+	bh=sS9FHz3VpUlWUpb/KC3m54JRcXNAyjv+uxQfZYP6C5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMf0s0Wj4fsnIqog9wxKO4uArkgtLcvutH59MgjdMwSNI5bKF+zU+De0iB8z40blJdpfEjFB0bX1AlyyKNbXcEk0D0PZJRryTG0ERM7Wti/I4p3NARarEPq0JzXORGj40jN5Cg9TxjmB/W+eOmuICiuIUFUh/mI00+cZ6v4Wgp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJDr6pmW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=t40SZQxUxWrE5Kbv1GKLdAz+nNNxqwrjDriXRNBHu/BRqZqWdVByx3TycWlnuxbtdRZe8AVWbRXSBoh+mKBJdm/mnUGjLC63A/JTVjpj6uVyDeteRqiTulmIxg3WvYds+uTXEBdauXi393+IeQF0dmKrDzrMH6IQ3s4wNrbc3po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l07+J9eD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJDr6pmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5621F000FF;
-	Tue, 13 Oct 2026 12:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l07+J9eD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7451F000FF;
+	Tue, 13 Oct 2026 12:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894789;
-	bh=301Vh2/fooEVUGqfvbbhOqhCGu0gUqcXG2AkxC17nQ0=;
+	s=korg; t=1791894792;
+	bh=Q7+TCT7ea6v7GUylhpSh0BqqPsKw/tYuy1nLDvVmdrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJDr6pmWMU5KS4yEbr1vDxF7YSomA0jGmMO45UuovQX1Qp3xjYHuBrpanz08WG6hx
-	 etV/NI5+gwFxQ6ATm6ewEXRpa3h4slirXuisAaA+KF6ZagVRW7ZHoj64d4GbcrDFKa
-	 DP9L7J97nLKm8lxsumbjmIKKEZ0v5mQ1LSUT3vLs=
+	b=l07+J9eD8+q3QWWD7kXjmJlN4s/QMqvkFvtNcp/DXfvR5Bp38Ai4mId9WpEg95AzN
+	 cz/rPAc3RfJ260lSyNMK64z8LWQTjy8LYVgPpTuTanldHlE5l4c7N0QgwjnbYSfZl/
+	 /IF2zKuyjkfGrwdihoEt/vhbR7kttMp2z8DfqyqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Georgios Karantzas <gck.kara@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/497] wifi: ath9k: reject short WMI command responses
-Date: Tue, 13 Oct 2026 13:33:44 +0200
-Message-ID: <20261013112909.239893880@linuxfoundation.org>
+Subject: [PATCH 6.12 058/497] wifi: ath9k_htc: bound TX aggregation to MAX_TX_BUF_SIZE
+Date: Tue, 13 Oct 2026 13:33:45 +0200
+Message-ID: <20261013112909.263760010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -45,93 +46,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Georgios Karantzas <gck.kara@gmail.com>
 
-[ Upstream commit 93ce8ea70451e800601bc9444aa33043de15d67b ]
+[ Upstream commit aeaca27c1db3106967ffbb2b517d98c835f6d500 ]
 
-ath9k_wmi_rsp_callback() removes the validated WMI header and copies
-the number of bytes expected by the waiting command into its response
-buffer. A device response shorter than that expectation can therefore
-be read beyond the skb payload.
+__hif_usb_tx() dequeues up to MAX_TX_AGGR_NUM (20) frames into a
+single tx_buf of MAX_TX_BUF_SIZE (32768) bytes, limiting the batch
+by record count but never by cumulative byte length.
 
-Record -EMSGSIZE for a short response, complete the waiter, and return
-the stored status from the command path. This also prevents callers from
-consuming stale response bytes as a successful reply.
+With large frames (MTU 2304), 20 aggregated frames of 2292 bytes
+each exceed the allocation (20 * 2296 = 45920 bytes), so the
+memcpy() in the loop writes up to 13152 bytes past tx_buf->buf
+before usb_submit_urb().
+
+Peek the queue head and stop before copying any record that would
+cross MAX_TX_BUF_SIZE, then dispatch the current batch. Leftover
+skbs remain queued and are drained on the next URB completion.
+
+The byte bound changes the loop's exit semantics: it can now exit
+before i == tx_skb_cnt - 1. Stock only finalized tx_buf->len on
+that last index (len += offset), so an early break would submit a
+URB holding only the last record's length while every dequeued skb
+is freed on completion, silently dropping frames. Make tx_buf->len
+a running total and advance tx_buf->offset per record instead; the
+stride round_up(nskb->len + 4, 4) is identical to the stock stride
+when the loop runs to completion.
+
+Tested on hardware with an MTU 2304 flood: the loop stops at
+record 15 (len = 32144, offset = 32144, within 32768), no
+oversized URB is submitted, and MTU 1500 pings pass 20/20.
 
 Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Assisted-by: LLM
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260814075837.20005-1-pengpeng@iscas.ac.cn
+Signed-off-by: Georgios Karantzas <gck.kara@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260911001143.4507-1-gck.kara@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 16 ++++++++++++++--
- drivers/net/wireless/ath/ath9k/wmi.h |  1 +
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 805ad31edba2b..610717fb83f57 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -206,9 +206,16 @@ static void ath9k_wmi_rsp_callback(struct wmi *wmi, struct sk_buff *skb)
- {
- 	skb_pull(skb, sizeof(struct wmi_cmd_hdr));
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index f9396bf30a617..b1282efd897a4 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -14,6 +14,7 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
  
--	if (wmi->cmd_rsp_buf != NULL && wmi->cmd_rsp_len != 0)
-+	if (wmi->cmd_rsp_buf && wmi->cmd_rsp_len) {
-+		if (skb->len < wmi->cmd_rsp_len) {
-+			wmi->cmd_rsp_status = -EMSGSIZE;
-+			goto complete;
-+		}
- 		memcpy(wmi->cmd_rsp_buf, skb->data, wmi->cmd_rsp_len);
-+	}
-+	wmi->cmd_rsp_status = 0;
++#include <linux/math.h>
+ #include <linux/unaligned.h>
+ #include "htc.h"
  
-+complete:
- 	complete(&wmi->cmd_wait);
- }
+@@ -328,11 +329,14 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 	tx_skb_cnt = min_t(u16, hif_dev->tx.tx_skb_cnt, MAX_TX_AGGR_NUM);
  
-@@ -300,6 +307,7 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	/* record the rsp buffer and length */
- 	wmi->cmd_rsp_buf = rsp_buf;
- 	wmi->cmd_rsp_len = rsp_len;
-+	wmi->cmd_rsp_status = 0;
+ 	for (i = 0; i < tx_skb_cnt; i++) {
+-		nskb = __skb_dequeue(&hif_dev->tx.tx_skb_queue);
++		nskb = skb_peek(&hif_dev->tx.tx_skb_queue);
++		if (!nskb)
++			break;
  
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-@@ -356,9 +364,13 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		return -ETIMEDOUT;
- 	}
+-		/* Should never be NULL */
+-		BUG_ON(!nskb);
++		if (tx_buf->offset + nskb->len + 4 > MAX_TX_BUF_SIZE)
++			break;
  
-+	spin_lock_irqsave(&wmi->wmi_lock, flags);
-+	ret = wmi->cmd_rsp_status;
-+	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-+
- 	mutex_unlock(&wmi->op_mutex);
++		nskb = __skb_dequeue(&hif_dev->tx.tx_skb_queue);
+ 		hif_dev->tx.tx_skb_cnt--;
  
--	return 0;
-+	return ret;
+ 		buf = tx_buf->buf;
+@@ -342,13 +346,8 @@ static int __hif_usb_tx(struct hif_device_usb *hif_dev)
+ 		*hdr++ = cpu_to_le16(ATH_USB_TX_STREAM_MODE_TAG);
+ 		buf += 4;
+ 		memcpy(buf, nskb->data, nskb->len);
+-		tx_buf->len = nskb->len + 4;
+-
+-		if (i < (tx_skb_cnt - 1))
+-			tx_buf->offset += (((tx_buf->len - 1) / 4) + 1) * 4;
+-
+-		if (i == (tx_skb_cnt - 1))
+-			tx_buf->len += tx_buf->offset;
++		tx_buf->len = tx_buf->offset + nskb->len + 4;
++		tx_buf->offset += round_up(nskb->len + 4, 4);
  
- out:
- 	ath_dbg(common, WMI, "WMI failure for: %s\n", wmi_cmd_to_name(cmd_id));
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.h b/drivers/net/wireless/ath/ath9k/wmi.h
-index 5c3b710b8f319..0bb9d31f1a1cc 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.h
-+++ b/drivers/net/wireless/ath/ath9k/wmi.h
-@@ -157,6 +157,7 @@ struct wmi {
- 	u16 tx_seq_id;
- 	u8 *cmd_rsp_buf;
- 	u32 cmd_rsp_len;
-+	int cmd_rsp_status;
- 	bool stopped;
- 
- 	struct list_head pending_tx_events;
+ 		__skb_queue_tail(&tx_buf->skb_queue, nskb);
+ 		TX_STAT_INC(hif_dev, skb_queued);
 -- 
 2.53.0
 
