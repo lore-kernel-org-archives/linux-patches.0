@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA71839768F;
-	Tue, 13 Oct 2026 12:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0123B4F7CA6;
+	Tue, 13 Oct 2026 12:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791893988; cv=none; b=UMYiXJxe8CP/QhxhqdYGCGH3EsBFSSmj3PP7vN7jTXAqfbpwFVrxV4Bf2aag35Wmexfdo8oN2/Z2cJW6zTUiNwdp+xzkJBNnbZ6shrRUyJXnj/KhQDzNFnxFodhnH+KUZVq8XKgjwSg3oIJ02Mxb0mgyaCPNUd10M2vNfpYA4oY=
+	t=1791893991; cv=none; b=HkHO4Y6lgVqk7JnoZ2GtCl37PrVzs0YNbjAXZdCNn/ZhTKU+jDZu3QTX20GkOo7tlOm/zwUgge5PHs4WSAPXpp+vg0lc3qn6OGnSIaHy8KQhP/wRuj7+IWjSv1UQ3utrFWfNfTRE0NhvVOtZdEwryxJkUQCmzHgfAqzpcIVUP3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791893988; c=relaxed/simple;
-	bh=kKebiDNm2N90GwOsrXA10ZF/hwwlm9Jx0kkl5Rf+4JA=;
+	s=arc-20240116; t=1791893991; c=relaxed/simple;
+	bh=HUjTvAp60i17InNz65RJus19/qyCLuWLUlfeBey2IBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKgdIpHWw8bdDAJc0HByWUkqQspUac2ttzfwQ0sXC5YKOudLf57YU4bm/4z8IKaFtE+qPxtHICFr0NAeHY4i5NVFy8dxgYvjP+8IE9p2+quXrgNb3aL5rdip2QX08iTgfHrOIbCBRfAbHNXfsMh4VktVZDIH8F90jGJ0ZHkgW+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZOWgxzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRDZS2rRQechGkxlG9eFf9HmTETMAaMIdNbf+Px6ZdjymIEh3bjOiwAC5grTpfKfzMGumoynQNgo1Av9U+IUqlU0/EWHSaeqDhyF7SfcuRqJYGNLUe9L4dwyqn3AuTwr/RHoFeivHP03DNR+eCicNnwMtuGVG9Pam0hJmsSY+Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfdcNc3b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZOWgxzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFDD1F000FF;
-	Tue, 13 Oct 2026 12:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfdcNc3b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E02F1F000FF;
+	Tue, 13 Oct 2026 12:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791893986;
-	bh=GP2YyY8XEO3zroxbmK26li3x1bWiilFG8/diKXdNNHU=;
+	s=korg; t=1791893989;
+	bh=3FAFUVTKecrjjRSR5R4jo1nJhXq8fhRj6YHgkJmVudY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HZOWgxzp7F5LwUBZd6Ns+3A2MNJPN5DqvRvB0H9PIK0ooIG5aUD38XnsTpdY79rCG
-	 yvmxdLrL3ldodcLJHJAznM1bfMaBVWiP+Mlq99bluAkq0Lo1U0K9SyTeTgmTyuJaPd
-	 0eYwgZfew/0zhfwGtZa/iSErnY8KqMvuP/vv56nA=
+	b=CfdcNc3bU2CyAPApGvqw4tiMqhhSefXJMH/vQPBU1NZNsBB8ZMe7gu6PogrCcbjo2
+	 7mxIt6N1/i6ZFoeqCEzgTR2b3ubJharNw749fTNB8c3uBn663ssVglSpfckWxS9y1K
+	 cgNQvFx8s/ii6RB6VdGt9wSDKS8OM7stvGusn21s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyenghwan Hwang <obnred@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 409/621] ksmbd: scope session state changes to bound connections
-Date: Tue, 13 Oct 2026 13:36:44 +0200
-Message-ID: <20261013112930.545260503@linuxfoundation.org>
+Subject: [PATCH 6.18 410/621] ksmbd: detach blocked lock requests before freeing
+Date: Tue, 13 Oct 2026 13:36:45 +0200
+Message-ID: <20261013112930.567573674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -52,195 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit c50e628122aed077695669e25b842e778511a43d ]
+[ Upstream commit 215e8816b1ac25176d911abb8704390413ccee4b ]
 
-ksmbd_all_conn_set_status() treats every connection whose transient
-binding flag is set as belonging to the target SessionId.  A logoff or
-session replacement can consequently move an unrelated connection to
-NEED_RECONNECT or NEED_SETUP.
+A file_lock retained by ksmbd for byte-range lock bookkeeping can still
+be part of the VFS blocked-request graph. In particular, the VFS can
+chain a new waiter below an already blocked request through
+flc_blocked_requests. The ksmbd_file reference count does not cover that
+graph.
 
-Pass the target session itself and select connections using either the
-connection-local session xarray or the session's permanent channel list.
-Use the same association test while waiting for requests to drain.
+Both __ksmbd_close_fd() and the cross-request unlock path free these
+retained file_lock objects directly. If a dependent waiter is still
+attached, locks_release_private() hits
+BUG_ON(!list_empty(&flc->flc_blocked_requests)). The same lifetime
+mismatch can leave a freed ksmbd_lock reachable through its request-local
+llist.
 
-Serialize session-wide status changes under request_lock and do not
-overwrite EXITING or RELEASING. Protect the shutdown transition with the
-same lock so a concurrent session update cannot revive a closing
-connection.
+Detach the file_lock from the blocked-request graph before freeing it in
+the close, cross-request unlock, and rollback paths. locks_delete_block()
+also wakes requests chained below the object. Remove llist when a
+completed lock is published so a globally visible ksmbd_lock no longer
+points into the submitting worker's stack.
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Fixes: abcc506a9a71 ("ksmbd: fix racy issue from smb2 close and logoff with multichannel")
-Fixes: c444139cb747 ("ksmbd: rewrite stop_sessions() with restartable iteration")
+Fixes: d63528eb0d43 ("ksmbd: free ksmbd_lock when file is closed")
+Reported-by: Kyenghwan Hwang <obnred@gmail.com>
+Tested-by: Kyenghwan Hwang <obnred@gmail.com>
+Tested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c        | 37 ++++++++++++++++++++++++++-----
- fs/smb/server/connection.h        |  6 +++--
- fs/smb/server/mgmt/user_session.c |  8 +++----
- fs/smb/server/smb2pdu.c           |  6 ++---
- 4 files changed, 41 insertions(+), 16 deletions(-)
+ fs/smb/server/smb2pdu.c   | 14 ++++++++++----
+ fs/smb/server/vfs_cache.c |  8 +++++---
+ 2 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index ff6cdd720dd43..16fcedf45739f 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -242,15 +242,37 @@ void ksmbd_conn_unlock(struct ksmbd_conn *conn)
- 	mutex_unlock(&conn->srv_mutex);
- }
- 
--void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
-+static bool ksmbd_session_is_bound_to_conn(struct ksmbd_session *sess,
-+					   struct ksmbd_conn *conn)
-+{
-+	bool found;
-+
-+	rcu_read_lock();
-+	found = xa_load(&conn->sessions, sess->id) == sess;
-+	rcu_read_unlock();
-+	if (found)
-+		return true;
-+
-+	down_read(&sess->chann_lock);
-+	found = xa_load(&sess->ksmbd_chann_list, (long)conn);
-+	up_read(&sess->chann_lock);
-+	return found;
-+}
-+
-+void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status)
- {
- 	struct ksmbd_conn *conn;
- 	int bkt;
- 
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
--		if (conn->binding || xa_load(&conn->sessions, sess_id))
--			WRITE_ONCE(conn->status, status);
-+		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
-+			spin_lock(&conn->request_lock);
-+			if (!ksmbd_conn_exiting(conn) &&
-+			    !ksmbd_conn_releasing(conn))
-+				WRITE_ONCE(conn->status, status);
-+			spin_unlock(&conn->request_lock);
-+		}
- 	}
- 	up_read(&conn_list_lock);
- }
-@@ -276,7 +298,8 @@ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
- 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
- }
- 
--int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
-+int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
-+			      struct ksmbd_session *sess)
- {
- 	struct ksmbd_conn *conn;
- 	int rc, retry_count = 0, max_timeout = 120;
-@@ -288,7 +311,7 @@ int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
- 
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
--		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
-+		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
- 			rcount = (conn == curr_conn) ? 2 : 1;
- 			if (atomic_read(&conn->req_running) >= rcount) {
- 				rc = wait_event_timeout(conn->req_running_q,
-@@ -610,8 +633,10 @@ static void stop_sessions(void)
- 		 * handler exited its receive loop for an unrelated
- 		 * reason).
- 		 */
--		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
-+		spin_lock(&conn->request_lock);
-+		if (!ksmbd_conn_releasing(conn))
- 			ksmbd_conn_set_exiting(conn);
-+		spin_unlock(&conn->request_lock);
- 		target = conn;
- 		break;
- 	}
-diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
-index ceb1c1aefbf64..d6c116875be99 100644
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -21,6 +21,7 @@
- #include "ksmbd_work.h"
- 
- struct smbdirect_buffer_descriptor_v1;
-+struct ksmbd_session;
- 
- #define KSMBD_SOCKET_BACKLOG		16
- 
-@@ -163,7 +164,8 @@ extern struct rw_semaphore conn_list_lock;
- 
- bool ksmbd_conn_alive(struct ksmbd_conn *conn);
- void ksmbd_conn_wait_idle(struct ksmbd_conn *conn);
--int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id);
-+int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
-+			      struct ksmbd_session *sess);
- struct ksmbd_conn *ksmbd_conn_alloc(void);
- void ksmbd_conn_free(struct ksmbd_conn *conn);
- struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
-@@ -268,5 +270,5 @@ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
- 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
- }
- 
--void ksmbd_all_conn_set_status(u64 sess_id, u32 status);
-+void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status);
- #endif /* __CONNECTION_H__ */
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 920eb3963ae9f..03ed052a636be 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -413,16 +413,16 @@ void destroy_previous_session(struct ksmbd_conn *conn,
- 	    memcmp(user->passkey, prev_user->passkey, user->passkey_sz))
- 		goto out;
- 
--	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_RECONNECT);
--	err = ksmbd_conn_wait_idle_sess_id(conn, id);
-+	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
-+	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
- 	if (err) {
--		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
-+		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
- 		goto out;
- 	}
- 
- 	ksmbd_destroy_file_table(prev_sess);
- 	prev_sess->state = SMB2_SESSION_EXPIRED;
--	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
-+	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
- 	ksmbd_launch_ksmbd_durable_scavenger();
- out:
- 	up_write(&conn->session_lock);
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 9cc6110fbcf93..944e33ab87ea8 100644
+index 944e33ab87ea8..5e303942a7510 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2251,7 +2251,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 	struct ksmbd_session *sess = work->sess;
- 	struct smb2_logoff_req *req;
- 	struct smb2_logoff_rsp *rsp;
--	u64 sess_id;
- 	int err;
+@@ -7556,6 +7556,12 @@ static void smb2_remove_blocked_lock(void **argv)
+ 	locks_wake_up(flock);
+ }
  
- 	WORK_BUFFERS(work, req, rsp);
-@@ -2265,8 +2264,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 		smb2_set_err_rsp(work);
- 		return -ENOENT;
++static void smb2_free_lock(struct file_lock *flock)
++{
++	ksmbd_vfs_posix_lock_unblock(flock);
++	locks_free_lock(flock);
++}
++
+ static inline bool lock_defer_pending(struct file_lock *fl)
+ {
+ 	/* check pending lock waiters */
+@@ -7709,14 +7715,14 @@ int smb2_lock(struct ksmbd_work *work)
+ 					    cmp_lock->end == smb_lock->end &&
+ 					    !lock_defer_pending(cmp_lock->fl)) {
+ 						nolock = 0;
+-						list_del(&cmp_lock->flist);
+-						list_del(&cmp_lock->clist);
++						list_del_init(&cmp_lock->flist);
++						list_del_init(&cmp_lock->clist);
+ 						cmp_lock->conn = NULL;
+ 						spin_unlock(&conn->llist_lock);
+ 						up_read(&conn_list_lock);
+ 
+ 						ksmbd_conn_put(conn);
+-						locks_free_lock(cmp_lock->fl);
++						smb2_free_lock(cmp_lock->fl);
+ 						kfree(cmp_lock);
+ 						goto out_check_cl;
+ 					}
+@@ -7914,7 +7920,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 		spin_unlock(&conn->llist_lock);
+ 		ksmbd_conn_put(conn);
+ 
+-		locks_free_lock(smb_lock->fl);
++		smb2_free_lock(smb_lock->fl);
+ 		if (rlock)
+ 			locks_free_lock(rlock);
+ 		kfree(smb_lock);
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index ce6e9886df8be..970b8f185aacd 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -388,8 +388,9 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ 	if (!IS_ERR_OR_NULL(filp))
+ 		fput(filp);
+ 
+-	/* because the reference count of fp is 0, it is guaranteed that
+-	 * there are not accesses to fp->lock_list.
++	/*
++	 * The zero fp reference count serializes access to fp->lock_list, but
++	 * the VFS may still have blocked requests chained below these locks.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+ 		struct ksmbd_conn *conn = smb_lock->conn;
+@@ -402,7 +403,8 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ 			ksmbd_conn_put(conn);
+ 		}
+ 
+-		list_del(&smb_lock->flist);
++		list_del_init(&smb_lock->flist);
++		ksmbd_vfs_posix_lock_unblock(smb_lock->fl);
+ 		locks_free_lock(smb_lock->fl);
+ 		kfree(smb_lock);
  	}
--	sess_id = le64_to_cpu(req->hdr.SessionId);
--	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_RECONNECT);
-+	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
- 	ksmbd_conn_unlock(conn);
- 
- 	ksmbd_close_session_fds(work);
-@@ -2283,7 +2281,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 	sess->state = SMB2_SESSION_EXPIRED;
- 	up_write(&conn->session_lock);
- 
--	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
-+	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
- 
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
 -- 
 2.53.0
 
