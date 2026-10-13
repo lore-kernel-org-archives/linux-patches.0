@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F9C4E36C0;
-	Tue, 13 Oct 2026 12:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424014F3937;
+	Tue, 13 Oct 2026 12:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895580; cv=none; b=ZvKb9ur4vXoSjdI6L6r3cH2Rl1PwEV7GjOSHdzHwI6aCSpIAZb/tFqS5t1eL9l6n5aMxLJX79dskAH21wR/HOgFoHVsP5dg7ghvw4SiyxJhxzh2Fv0/jiVtXSP909m0xt9atYD+0jEOIc3iSOOdQgcztNBYMwcCeLfc7BsZdZP8=
+	t=1791895583; cv=none; b=GT9cbE01Sc0zM5nVe8fbc6rQsvMNcVhxOE3pWckI7FzqBub/cx4w+8pqS89ifrqY/dyBXKhoVONYV2fY4qwmgD5vGsb0Fjvx42p/PCAfpHKroLKW2CoIBWx/ErvX0v7DEba4FCpzAqUep+L9qrJlK6hLqZCPXoX6sWO0rXhCpq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895580; c=relaxed/simple;
-	bh=53IqeXpNBhAvcSxmW6yctIIzDNgfKXAO8UzHxo3O9cU=;
+	s=arc-20240116; t=1791895583; c=relaxed/simple;
+	bh=6pBSt9Z7NG3ClLelqP5hSPXERio72Tk7CO/xgVva/Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWGj14tpJjaFLhnSXXlqN9nhO99KEEGcGqieBP4YtRgV1ebQGITs5z9M6PmjBMKu8KJ7lEGDO5QlKi5ao/7e2RjFcaM9uBYOxQb7olDMp6OtY/YcYBRD+QEvxLbMmA7GBLOyVRgTMSgAQJEM1lUsFhWAOtZgyE8dkVx27nxbvlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJ+BR4eY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pfEPizhU6olObaAWol1Wn/u3BFzLEMhcYv1ay4ka0iAPMgcf5djJa2e50/FAxensL1E9Gux9XUT02vrIFievqo70Umn/dv1UHJW8/+NzLFmFwnS28ioHdOwzqJViFugUewyS0QamnGpSwpRnvSL2e1/XcezJhLXyWFxBe2f+Vqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeYkPtRI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJ+BR4eY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8181F000FF;
-	Tue, 13 Oct 2026 12:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeYkPtRI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972221F000FF;
+	Tue, 13 Oct 2026 12:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895579;
-	bh=8Ul3l+prUR7OBC2wBf2i+j6/Bol4yzzk+oLRs+DzEnE=;
+	s=korg; t=1791895582;
+	bh=zjyieS9PNWyTJmVfoH60MpHFYZpzzpb2hz4F/EkCV1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJ+BR4eY4qrLQo+uFiLWh+9APXTUgRT8K5r3MVTESOqtKVX3L1Oeqvge9DQtEO4DG
-	 0P3f+R3Z4HQJboO0xGnHbdiZvJAOOBFtMsVB9ILN2p2trp01sDis5Gkm8BjgN/yplJ
-	 SPaMumBTZWHeM2+RlrLIxiIkdIl7BZrbGISfPaQo=
+	b=KeYkPtRICCWlTpiPLTcC4WulsGzbbSf5JHQijs6Iv/a4QIbtoIxXN8/yY9KNJj7wu
+	 3i/RLN7kzvrCInLTb0rn24Sezv1ofjooQztuTKqTGs/sK/fm1USfC2v6mQTLDfhnK1
+	 OobcyrGxSr/Vp4CytYeA+fMyvh7S83cX2u14X6MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Jiazi Liu <jiazi.liu1984@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 278/497] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
-Date: Tue, 13 Oct 2026 13:37:25 +0200
-Message-ID: <20261013112914.492024805@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 279/497] tty: fix saved termios reset race
+Date: Tue, 13 Oct 2026 13:37:26 +0200
+Message-ID: <20261013112914.516111796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -46,372 +46,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiazi Liu <jiazi.liu1984@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 1ff77cbefe5a653ea12874c213ea4bd0d72c1067 ]
+[ Upstream commit 8df07fe93573e9e548d6645273e9bcb6eb74059e ]
 
-When dwc3_check_event_buf() reads a GEVNTCOUNT value exceeding the
-event buffer length, commit 63ccd26cd1f6 ("usb: dwc3: gadget: check
-that event count does not exceed event buffer length") returns IRQ_NONE
-without writing back GEVNTCOUNT. Since the DWC3 interrupt is
-level-triggered, the uncleared IRQ source keeps the line asserted,
-causing a tight IRQ storm that accumulates 99,900 unhandled interrupts
-and triggers spurious.c:184 BUG -> kernel panic.
+Resetting saved termios state on device registration is needed where a
+minor number can be reused for an entirely different device and where
+the old settings may prevent the port from even being opened (e.g. when
+CLOCAL is not set).
 
-The resulting call stack:
-  __report_bad_irq+0xac/0xc8
-  note_interrupt+0x340/0x468
-  handle_irq_event+0xac/0xc0
-  handle_fasteoi_irq+0x120/0x228
-  gic_handle_irq+0x68/0x108
-  ...
-  kernel BUG at kernel/irq/spurious.c:184
+Not all TTY drivers guarantee that the minor number is no longer in use
+when registering devices however, something which can lead to a
+use-after-free when closing a TTY (and saving its termios) races with
+re-registration.
 
-To reproduce, write a bogus value exceeding the event buffer length
-directly to the GEVNTCOUNT register:
+Add a new TTY_DRIVER_RESET_SAVED_TERMIOS flag to request that any saved
+termios state is reset on registration and only set it for drivers that
+make sure that the minor number is no longer in use.
 
-  devmem <DWC3_BASE + 0xc40c> 4 0x1004
-
-Write the bogus count back to GEVNTCOUNT to clear the IRQ source,
-consistent with the stale event clearing pattern in
-dwc3_event_buffers_setup(), and schedule error recovery to
-reinitialize the controller.
-
-Fixes: 63ccd26cd1f6 ("usb: dwc3: gadget: check that event count does not exceed event buffer length")
-Cc: stable <stable@kernel.org>
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Jiazi Liu <jiazi.liu1984@gmail.com>
-Link: https://patch.msgid.link/20260915110637.17658-1-jiazi.liu1984@gmail.com
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Fixes: 93857edd9829 ("tty: reset termios state on device registration")
+Reported-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Link: https://lore.kernel.org/20260926184154.3017929-1-nicoyip.dev@gmail.com
+Cc: stable@kernel.org	# 4.12
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260930131845.1809256-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adjusted gadget initialization context for kzalloc() instead of kzalloc_obj(), and changed dwc3_writel() to pass dwc->regs instead of dwc. ]
+[ sashal: adapted the new flag to Greybus’s separate flags assignment and existing macro-based TTY flag definitions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.h   |  19 +++++++
- drivers/usb/dwc3/ep0.c    |   9 ++++
- drivers/usb/dwc3/gadget.c | 108 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 134 insertions(+), 2 deletions(-)
+ drivers/staging/greybus/uart.c  |  3 ++-
+ drivers/tty/tty_io.c            | 18 ++++++++++--------
+ drivers/usb/class/cdc-acm.c     |  2 +-
+ drivers/usb/serial/usb-serial.c |  3 ++-
+ include/linux/tty_driver.h      |  6 ++++++
+ 5 files changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 7ee7228b31eb9..9d6420c06aeec 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -49,6 +49,7 @@
- #define DWC3_ENDPOINTS_NUM	32
- #define DWC3_XHCI_RESOURCES_NUM	2
- #define DWC3_ISOC_MAX_RETRIES	5
-+#define DWC3_ERR_RECOVERY_MAX	3
+diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
+index 413a4f296d899..025b4cda74b9f 100644
+--- a/drivers/staging/greybus/uart.c
++++ b/drivers/staging/greybus/uart.c
+@@ -954,7 +954,8 @@ static int gb_tty_init(void)
+ 	gb_tty_driver->minor_start = 0;
+ 	gb_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
+ 	gb_tty_driver->subtype = SERIAL_TYPE_NORMAL;
+-	gb_tty_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
++	gb_tty_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV |
++			       TTY_DRIVER_RESET_SAVED_TERMIOS;
+ 	gb_tty_driver->init_termios = tty_std_termios;
+ 	gb_tty_driver->init_termios.c_cflag = B9600 | CS8 |
+ 		CREAD | HUPCL | CLOCAL;
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 76f10e8d16857..07e1e901dea59 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -3297,14 +3297,16 @@ struct device *tty_register_device_attr(struct tty_driver *driver,
+ 		goto err_put;
  
- #define DWC3_SCRATCHBUF_SIZE	4096	/* each buffer is assumed to be 4KiB */
- #define DWC3_EVENT_BUFFERS_SIZE	4096
-@@ -841,6 +842,12 @@ enum dwc3_link_state {
- 	DWC3_LINK_STATE_MASK		= 0x0f,
- };
+ 	if (!(driver->flags & TTY_DRIVER_DYNAMIC_ALLOC)) {
+-		/*
+-		 * Free any saved termios data so that the termios state is
+-		 * reset when reusing a minor number.
+-		 */
+-		tp = driver->termios[index];
+-		if (tp) {
+-			driver->termios[index] = NULL;
+-			kfree(tp);
++		if (driver->flags & TTY_DRIVER_RESET_SAVED_TERMIOS) {
++			/*
++			 * Free any saved termios data so that the termios
++			 * state is reset when reusing a minor number.
++			 */
++			tp = driver->termios[index];
++			if (tp) {
++				driver->termios[index] = NULL;
++				kfree(tp);
++			}
+ 		}
  
-+enum dwc3_err_state {
-+	DWC3_ERR_NONE = 0,
-+	DWC3_ERR_RECOVERY,
-+	DWC3_ERR_UNRECOVERABLE,
-+};
-+
- /* TRB Length, PCM and Status */
- #define DWC3_TRB_SIZE_MASK	(0x00ffffff)
- #define DWC3_TRB_SIZE_LENGTH(n)	((n) & DWC3_TRB_SIZE_MASK)
-@@ -1000,6 +1007,7 @@ struct dwc3_scratchpad_array {
- /**
-  * struct dwc3 - representation of our controller
-  * @drd_work: workqueue used for role swapping
-+ * @err_recovery_work: workqueue used for controller error recovery
-  * @ep0_trb: trb which is used for the ctrl_req
-  * @bounce: address of bounce buffer
-  * @setup_buf: used while precessing STD USB requests
-@@ -1009,6 +1017,7 @@ struct dwc3_scratchpad_array {
-  * @ep0_in_setup: one control transfer is completed and enter setup phase
-  * @lock: for synchronizing
-  * @mutex: for mode switching
-+ * @connect_mutex: for the pull-up and err_recovery_work
-  * @dev: pointer to our struct device
-  * @sysdev: pointer to the DMA-capable device
-  * @xhci: pointer to our xHCI child
-@@ -1072,6 +1081,9 @@ struct dwc3_scratchpad_array {
-  * @ep0_next_event: hold the next expected event
-  * @ep0state: state of endpoint zero
-  * @link_state: link state
-+ * @err_state: current error recovery state.
-+ * @err_recovery_count: number of consecutive error recovery attempts until
-+ *		confirmed healthy and reset to 0 on reset event.
-  * @speed: device speed (super, high, full, low)
-  * @hwparams: copy of hwparams registers
-  * @regset: debugfs pointer to regdump file
-@@ -1177,6 +1189,7 @@ struct dwc3_scratchpad_array {
-  */
- struct dwc3 {
- 	struct work_struct	drd_work;
-+	struct work_struct	err_recovery_work;
- 	struct dwc3_trb		*ep0_trb;
- 	void			*bounce;
- 	u8			*setup_buf;
-@@ -1191,6 +1204,9 @@ struct dwc3 {
- 	/* mode switching lock */
- 	struct mutex		mutex;
- 
-+	/* serializes pull-up run/stop vs error recovery */
-+	struct mutex		connect_mutex;
-+
- 	struct device		*dev;
- 	struct device		*sysdev;
- 
-@@ -1314,6 +1330,9 @@ struct dwc3 {
- 	enum dwc3_ep0_next	ep0_next_event;
- 	enum dwc3_ep0_state	ep0state;
- 	enum dwc3_link_state	link_state;
-+	enum dwc3_err_state	err_state;
-+
-+	u32			err_recovery_count;
- 
- 	u16			u2sel;
- 	u16			u2pel;
-diff --git a/drivers/usb/dwc3/ep0.c b/drivers/usb/dwc3/ep0.c
-index 5e4f35e572659..58d80db072954 100644
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -200,6 +200,11 @@ int dwc3_gadget_ep0_queue(struct usb_ep *ep, struct usb_request *request,
- 	int				ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		ret = -ESHUTDOWN;
-+		goto out;
-+	}
-+
- 	if (!dep->endpoint.desc || !dwc->pullups_connected || !dwc->connected) {
- 		dev_err(dwc->dev, "%s: can't queue to disabled endpoint\n",
- 				dep->name);
-@@ -271,6 +276,10 @@ int dwc3_gadget_ep0_set_halt(struct usb_ep *ep, int value)
- 	int				ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	ret = __dwc3_gadget_ep0_set_halt(ep, value);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 077e3ac2de460..d575b2250a720 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1136,6 +1136,10 @@ static int dwc3_gadget_ep_enable(struct usb_ep *ep,
- 		return 0;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	ret = __dwc3_gadget_ep_enable(dep, DWC3_DEPCFG_ACTION_INIT);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-@@ -2049,6 +2053,10 @@ static int dwc3_gadget_ep_queue(struct usb_ep *ep, struct usb_request *request,
- 	int				ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	ret = __dwc3_gadget_ep_queue(dep, req);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-@@ -2281,6 +2289,10 @@ static int dwc3_gadget_ep_set_halt(struct usb_ep *ep, int value)
- 	int				ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	ret = __dwc3_gadget_ep_set_halt(dep, value, false);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-@@ -2295,6 +2307,10 @@ static int dwc3_gadget_ep_set_wedge(struct usb_ep *ep)
- 	int				ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	dep->flags |= DWC3_EP_WEDGE;
- 
- 	if (dep->number == 0 || dep->number == 1)
-@@ -2426,6 +2442,10 @@ static int dwc3_gadget_wakeup(struct usb_gadget *g)
- 	}
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	if (!dwc->gadget->wakeup_armed) {
- 		dev_err(dwc->dev, "not armed for remote wakeup\n");
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-@@ -2453,6 +2473,10 @@ static int dwc3_gadget_func_wakeup(struct usb_gadget *g, int intf_id)
- 	}
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->err_state != DWC3_ERR_NONE) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return -ESHUTDOWN;
-+	}
- 	/*
- 	 * If the link is in U3, signal for remote wakeup and wait for the
- 	 * link to transition to U0 before sending device notification.
-@@ -2819,10 +2843,13 @@ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
- 
- 	synchronize_irq(dwc->irq_gadget);
- 
-+	/* Serialize against dwc3_err_recovery_work() */
-+	mutex_lock(&dwc->connect_mutex);
- 	if (!is_on)
- 		ret = dwc3_gadget_soft_disconnect(dwc);
- 	else
- 		ret = dwc3_gadget_soft_connect(dwc);
-+	mutex_unlock(&dwc->connect_mutex);
- 
- 	pm_runtime_put(dwc->dev);
- 
-@@ -4115,6 +4142,10 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
- 
- 	dwc->suspended = false;
- 
-+	/* The controller is recovered. */
-+	if (dwc->err_state == DWC3_ERR_NONE)
-+		dwc->err_recovery_count = 0;
-+
- 	/*
- 	 * Ideally, dwc3_reset_gadget() would trigger the function
- 	 * drivers to stop any active transfers through ep disable.
-@@ -4602,6 +4633,12 @@ static irqreturn_t dwc3_thread_interrupt(int irq, void *_evt)
- 	return ret;
- }
- 
-+static void dwc3_schedule_err_recovery(struct dwc3 *dwc)
-+{
-+	dwc->err_state = DWC3_ERR_RECOVERY;
-+	schedule_work(&dwc->err_recovery_work);
-+}
-+
- static irqreturn_t dwc3_check_event_buf(struct dwc3_event_buffer *evt)
+ 		retval = tty_cdev_add(driver, devt, index, 1);
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 080a7dc79ecdc..b980cb08d675b 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -2145,7 +2145,7 @@ static int __init acm_init(void)
  {
- 	struct dwc3 *dwc = evt->dwc;
-@@ -4635,9 +4672,21 @@ static irqreturn_t dwc3_check_event_buf(struct dwc3_event_buffer *evt)
- 		return IRQ_NONE;
+ 	int retval;
+ 	acm_tty_driver = tty_alloc_driver(ACM_TTY_MINORS, TTY_DRIVER_REAL_RAW |
+-			TTY_DRIVER_DYNAMIC_DEV);
++			TTY_DRIVER_DYNAMIC_DEV | TTY_DRIVER_RESET_SAVED_TERMIOS);
+ 	if (IS_ERR(acm_tty_driver))
+ 		return PTR_ERR(acm_tty_driver);
+ 	acm_tty_driver->driver_name = "acm",
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index 45c27b18fb459..3cccddaabb51a 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1375,7 +1375,8 @@ static int __init usb_serial_init(void)
+ 	int result;
  
- 	if (count > evt->length) {
--		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
-+		dev_err(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
- 			count, evt->length);
--		return IRQ_NONE;
-+		/*
-+		 * This is a fatal error - the driver and controller are out of
-+		 * sync on which event has been consumed. Reinitializing the
-+		 * controller is required to recover. Write the bogus count back
-+		 * to GEVNTCOUNT to clear the IRQ source, consistent with the
-+		 * stale event clearing in dwc3_event_buffers_setup(), then
-+		 * schedule error recovery.
-+		 */
-+		spin_lock(&dwc->lock);
-+		dwc3_schedule_err_recovery(dwc);
-+		spin_unlock(&dwc->lock);
-+		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), count);
-+		return IRQ_HANDLED;
- 	}
+ 	usb_serial_tty_driver = tty_alloc_driver(USB_SERIAL_TTY_MINORS,
+-			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
++			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV |
++			TTY_DRIVER_RESET_SAVED_TERMIOS);
+ 	if (IS_ERR(usb_serial_tty_driver))
+ 		return PTR_ERR(usb_serial_tty_driver);
  
- 	evt->count = count;
-@@ -4697,6 +4746,57 @@ static void dwc_gadget_release(struct device *dev)
- 	kfree(gadget);
- }
+diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
+index dd4b31ce6d5d4..2173011004cda 100644
+--- a/include/linux/tty_driver.h
++++ b/include/linux/tty_driver.h
+@@ -541,6 +541,11 @@ static inline void tty_set_operations(struct tty_driver *driver,
+  *	Do not create numbered ``/dev`` nodes. For example, create
+  *	``/dev/ttyprintk`` and not ``/dev/ttyprintk0``. Applicable only when a
+  *	driver for a single tty device is being allocated.
++ *
++ * TTY_DRIVER_RESET_SAVED_TERMIOS
++ *	Reset any saved termios settings on device registration when reusing a
++ *	minor number. Must only be set by drivers that guarantee that the minor
++ *	number is no longer in use.
+  */
+ #define TTY_DRIVER_INSTALLED		0x0001
+ #define TTY_DRIVER_RESET_TERMIOS	0x0002
+@@ -550,6 +555,7 @@ static inline void tty_set_operations(struct tty_driver *driver,
+ #define TTY_DRIVER_HARDWARE_BREAK	0x0020
+ #define TTY_DRIVER_DYNAMIC_ALLOC	0x0040
+ #define TTY_DRIVER_UNNUMBERED_NODE	0x0080
++#define TTY_DRIVER_RESET_SAVED_TERMIOS	0x0200
  
-+static void dwc3_err_recovery_work(struct work_struct *work)
-+{
-+	struct dwc3 *dwc = container_of(work, struct dwc3, err_recovery_work);
-+	unsigned long flags;
-+	int ret;
-+
-+	/* serializes against dwc3_gadget_pullup() */
-+	mutex_lock(&dwc->connect_mutex);
-+
-+	ret = dwc3_gadget_soft_disconnect(dwc);
-+
-+	dwc3_disconnect_gadget_sleepable(dwc);
-+
-+	if (ret)
-+		goto err_unrecoverable;
-+
-+	if (dwc->softconnect) {
-+		u32 count;
-+		/*
-+		 * Wait irq to finish before soft_connect resets evt->lpos and
-+		 * the event buffer registers to avoid racing with
-+		 * dwc3_process_event_buf().
-+		 */
-+		synchronize_irq(dwc->irq_gadget);
-+
-+		spin_lock_irqsave(&dwc->lock, flags);
-+		count = ++dwc->err_recovery_count;
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+
-+		if (count > DWC3_ERR_RECOVERY_MAX)
-+			goto err_unrecoverable;
-+
-+		ret = dwc3_gadget_soft_connect(dwc);
-+		if (ret)
-+			goto err_unrecoverable;
-+	}
-+	mutex_unlock(&dwc->connect_mutex);
-+
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	dwc->err_state = DWC3_ERR_NONE;
-+	spin_unlock_irqrestore(&dwc->lock, flags);
-+	return;
-+
-+err_unrecoverable:
-+	dev_err(dwc->dev, "Unable to recover the controller\n");
-+	mutex_unlock(&dwc->connect_mutex);
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	dwc->err_state = DWC3_ERR_UNRECOVERABLE;
-+	spin_unlock_irqrestore(&dwc->lock, flags);
-+}
-+
- /**
-  * dwc3_gadget_init - initializes gadget related registers
-  * @dwc: pointer to our controller context structure
-@@ -4740,6 +4840,8 @@ int dwc3_gadget_init(struct dwc3 *dwc)
- 	}
- 
- 	init_completion(&dwc->ep0_in_setup);
-+	INIT_WORK(&dwc->err_recovery_work, dwc3_err_recovery_work);
-+	mutex_init(&dwc->connect_mutex);
- 	dwc->gadget = kzalloc(sizeof(struct usb_gadget), GFP_KERNEL);
- 	if (!dwc->gadget) {
- 		ret = -ENOMEM;
-@@ -4835,6 +4937,8 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
- 	if (!dwc->gadget)
- 		return;
- 
-+	cancel_work_sync(&dwc->err_recovery_work);
-+	mutex_destroy(&dwc->connect_mutex);
- 	dwc3_enable_susphy(dwc, true);
- 	usb_del_gadget(dwc->gadget);
- 	dwc3_gadget_free_endpoints(dwc);
+ /* tty driver types */
+ #define TTY_DRIVER_TYPE_SYSTEM		0x0001
 -- 
 2.53.0
 
