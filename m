@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC3A4FECD3;
-	Tue, 13 Oct 2026 12:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98B74F93A4;
+	Tue, 13 Oct 2026 12:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895193; cv=none; b=UHfhOU6znWyVlCO0Cz5fPQNkgjbairnyfBclfEe1TsqUEgpLxr3HqoWAkJwnDu1XTqZ/rm+FtHIjVAcYHWiii7LqgE1KPYOugNgyRg1TQ9LRSRA2QVaFLBJHPIDv/c7xDEs/0INTiPIrrjMXpCV6Xe/DS0DXGU2iCYqEhTuz2GA=
+	t=1791895195; cv=none; b=nct3C6kXjU3pbaGtdWaY1/n2RPhNL2+fhsVeUf5s9uYt2MpgVrtDHSRsmVYD2QPT4wilVtaJpMq8q5buERKsjaI9FtKJMvmvlC7uZJ0b8ofKoH8ItpuWkkSLEH+WwUfRqYOz1gE7oGeAUl+20uzeEjsFFd3KM8kWR0hsycck5Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895193; c=relaxed/simple;
-	bh=HvgWgIKJR+BsetEceGf3mQMJRXYD9gxz5WX6xGHsFoc=;
+	s=arc-20240116; t=1791895195; c=relaxed/simple;
+	bh=i77UcrsciVvOpjsRWg7ixILTcn/qYWGpjU/+n+BkO6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QralsO78GqhbO8PvDnSx/tPpbv0YMpNKo25h4s1HylTctRUR1SPiD+WvFPnrxbI+CfpdxsosHWVgQMHQ+8co/Syk8KzYWdQxdFxJG9chmX5Ypg5HPEaflPIvVN1so+Fndr6YzIDcDQjB7mcp9YKHzegvBLdfJgT1xk/uIJ+PucE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaW+MDoH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s8n0CMBObiC1+rMxQ4af8Bi4ofZKd+RBSdjkpXlkmKLk9n9bDj5YToR1/gs+8G/73R2JppS8x8c/m/BY0orMJpHDu1b5aKeVXqKH/ksIbNB7PNpNw0Tk0Kh0u9ujHQ1DjlaWBRxukV6vtHg1okJUbMeZRWXQxb+pDLi/uWx51NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzKuw872; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaW+MDoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F51F000FF;
-	Tue, 13 Oct 2026 12:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzKuw872"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0C01F000FF;
+	Tue, 13 Oct 2026 12:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895191;
-	bh=K4ijIOACzS3MlOiPSkxX/JTvLaFQ1hUcMq+SCJyCsi8=;
+	s=korg; t=1791895194;
+	bh=X2SeMZ71jxx9eaUlGU6kIhKNI7f1ksJSNhiRs8+DWzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaW+MDoHfb+t/GbVIaNs+hQbXQH4AmddOHve6ycYy3jzm/j5OXSfcdoAb+vfdHdS6
-	 X7JjnzFl61Ii9mn7ok1mricjjQi9O7Av7mHxD2vPSqX7OrtOvbG/xn/DD22aEBMgUD
-	 XxV2xvQBFtTxxQPwbDRwuucSCOtgV4mxypSyfmvw=
+	b=nzKuw872oB2/vzKSU/Q7U59SBv6Hj3OZ7ruSQ8kebOyWnhQ1013bxJkq/ZarS2A7+
+	 UhLyM9CgedNvAO5Bk/hTz/Q7kKvWSqFIe8RKua0rgKd/A809HQ/KkSmjD+BweLhL5m
+	 aGA4mJR78af882kTzWQSbroJEW7gXPv+a8VyA2hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/497] tpm: fix off-by-four bounds check in tpm2_get_random()
-Date: Tue, 13 Oct 2026 13:36:00 +0200
-Message-ID: <20261013112912.472717143@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 194/497] nvme-multipath: fix underflow in ANA log bounds checks
+Date: Tue, 13 Oct 2026 13:36:01 +0200
+Message-ID: <20261013112912.497164264@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,48 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 9b522400bf5c082feb9a0037a053ea822a2c7e4d ]
+commit 63fa2d9c9c37020bd2703fe2a6a38027b5abeb15 upstream.
 
-When the response carries the TPM2_ST_SESSIONS tag, tpm2_get_random()
-skips the 4-byte parameter size field before locating the random data,
-but the bounds check still validates the response length against
-TPM_HEADER_SIZE.  A truncated response can pass the check and make
-memcpy() read up to 4 bytes past the response end, so stale buffer
-contents end up in the caller's random bytes.
+The number of ANA groups advertised through Identify Controller sizes the
+ANA log buffer. The ANA log header and group descriptors independently
+supply the number of groups and namespace IDs to parse.
 
-Fix this by checking the response length against 'offset', which
-already includes the skipped parameter size field.
+Both bounds checks subtract an untrusted object size from ana_log_size
+before comparing the current offset. If the object is larger than the
+buffer, the size_t subtraction underflows and lets the parser read beyond
+ana_log_buf.
 
-Cc: stable@vger.kernel.org #  v6.12+
-Fixes: 1b6d7f9eb150 ("tpm: add session encryption protection to tpm2_get_random()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260902074839.417419-1-yijiangshan%40kylinos.cn
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260903035837.219284-1-yijiangshan@kylinos.cn
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Check the current offset before the first subtraction and compare each
+object size with the remaining buffer instead. This rejects inconsistent
+ANA data before dereferencing a truncated group descriptor or walking an
+oversized namespace ID array.
+
+Fixes: 0d0b660f214d ("nvme: add ANA support")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/multipath.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
-index c710128f49b11..63d26aebf55db 100644
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -361,7 +361,7 @@ int tpm2_get_random(struct tpm_chip *chip, u8 *dest, size_t max)
- 		out = (struct tpm2_get_random_out *)&buf.data[offset];
- 		recd = min_t(u32, be16_to_cpu(out->size), num_bytes);
- 		if (tpm_buf_length(&buf) <
--		    TPM_HEADER_SIZE +
-+		    offset +
- 		    offsetof(struct tpm2_get_random_out, buffer) +
- 		    recd) {
- 			err = -EFAULT;
--- 
-2.53.0
-
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -726,7 +726,8 @@ static int nvme_parse_ana_log(struct nvm
+ 		u32 nr_nsids;
+ 		size_t nsid_buf_size;
+ 
+-		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - sizeof(*desc)))
++		if (WARN_ON_ONCE(offset > ctrl->ana_log_size ||
++				 sizeof(*desc) > ctrl->ana_log_size - offset))
+ 			return -EINVAL;
+ 
+ 		nr_nsids = le32_to_cpu(desc->nnsids);
+@@ -742,7 +743,7 @@ static int nvme_parse_ana_log(struct nvm
+ 			return -EINVAL;
+ 
+ 		offset += sizeof(*desc);
+-		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - nsid_buf_size))
++		if (WARN_ON_ONCE(nsid_buf_size > ctrl->ana_log_size - offset))
+ 			return -EINVAL;
+ 
+ 		error = cb(ctrl, desc, data);
 
 
