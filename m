@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C1B4F5E04;
-	Tue, 13 Oct 2026 12:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5704F55DC;
+	Tue, 13 Oct 2026 12:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894539; cv=none; b=p1w4Lgrx0LF3T6toB/9J8QP3SaTXNik6qK0kGQDdDNXaO4dH/uE2QMgmN6zbHDelE1ovnWrCfoA5FRPDnSDu7fpzlNM5XwEn2ccDGBP7vrEAooz4HZgDFlmGtQpvHcOvtInLdhI4gu7libwBXtgw37tKCUHHwtzHkxw0+whkPfc=
+	t=1791894541; cv=none; b=qB6AeszNEv6hd5fPEVJOSYFWPTGc5vuhh4AZEtvC4fJaiiwradNIbErSF25cpoOH3wgVyYLFWTUvawiyZbq0ubl3ePfizIoGPFK1Yadkt928n4t6zMH9ybNSc5mrAqWu0ohUh92RunP9Sdj0HoGCbJaf9LRlQXIInOFxANYnxBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894539; c=relaxed/simple;
-	bh=NzT0IsIa1d6TWus4vELXnwwwVB3P0bWow+ozr3zJuyI=;
+	s=arc-20240116; t=1791894541; c=relaxed/simple;
+	bh=1RxBV3SwavyGHYox5J3mr72UdnQNpc2RiISla1C6TFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxLv4kRL242sJFObMSxvrzu/QBgyyEnGmsHn53JfzbtdcNATiSJAuQEj8eU8FphZ/408tHLE5A911IyR6bfVDyNlwmfdFf2nwrQ0cyD/2sxkJ+Ry07Ppm9ZOKRPHcK2B+gkp8gLScncmOOvKTnQwUERJyk0ZgspyvXtG2LNOi6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep0GpYDB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKlxFba2BuxDyBmiuMrTgNuGNfZQ8hj0D0RS7lQQfyaE6gAyotSh4IJTC+SYBQvFpco4dogQXsYRBvjOlQLcOU5df5GTc9Jo/knvEjF1gWrjQfWQAu+QtKdy5Ng+zO2tdgGDrsmQzOpTjtGvEO6QEaMFoC8UCwBnIoX7/IbZnZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O54NoGys; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep0GpYDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8BD1F00893;
-	Tue, 13 Oct 2026 12:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O54NoGys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02FA1F000FF;
+	Tue, 13 Oct 2026 12:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894537;
-	bh=jcDVHRPHq7Whk91Aqrt/k5god+5gIBVKqSjTlvY6MSw=;
+	s=korg; t=1791894540;
+	bh=+wWFvGMLPl+NIULtglIUXecQWpZT2IWoTbJhodTdKUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ep0GpYDBzcBvf7EsO0TrQZjnqeGFhrwbEF5k2LqU6yJRTR90uWhU2BpB4+upfEOY9
-	 w7l3Hgzip4Q+fBbUB5NJJnBYG6IaGbzaBHBPu/ChGRD9FligBrTHAR7FteukwPWA7Y
-	 PAM0v4JV6C7VeZUBqT5h6GRxcBCQpFC66nVoDHeY=
+	b=O54NoGysGt82sAKkJVanJl9jAe7GBh3znzFBOmgdXFPkU6CIAQgsjXEwG6JUFOawQ
+	 Tt7LmwKbFoGbiDhGF3fegOKO/VsxawTIKg+mzVWQNdkOPtLDv2Ug9FsNJO7Oji4rMj
+	 tB2h3yUXOgsWcHc9nabtunH+PbPokmEI96LRBp5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 595/621] net/mlx5e: Order ICOSQ cc update after CQ doorbell
-Date: Tue, 13 Oct 2026 13:39:50 +0200
-Message-ID: <20261013112934.921557633@linuxfoundation.org>
+Subject: [PATCH 6.18 578/621] spi: sg2044-nor: Honor SPI clock limits
+Date: Tue, 13 Oct 2026 13:39:33 +0200
+Message-ID: <20261013112934.524031295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112920.855194808@linuxfoundation.org>
 References: <20261013112920.855194808@linuxfoundation.org>
@@ -54,51 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-[ Upstream commit b056ca4d3742d0769f91137bb1ce3215428398f7 ]
+[ Upstream commit 61d44a2c07b2ad3f7db167f17ff2461ffe78441c ]
 
-mlx5e_poll_ico_cq() requires sq->cc to be updated only after
-mlx5_cqwq_update_db_record(), otherwise a CQ overrun may occur.
+The fixed divider ignores device and operation clock limits. Calculate
+the divider before each transfer so SCK does not exceed either limit.
 
-The current implementation updates sq->cc before the CQ doorbell
-record, violating this ordering requirement.
+Advertise the controller maximum speed so the SPI core supplies a default
+when the device omits its maximum speed. Use the fastest divider when no
+speed limit is supplied.
 
-Update the CQ doorbell record first and use dma_wmb() before updating
-sq->cc. This ensures that the CQ space is released to the device
-before the corresponding ICOSQ consumer index is updated by software.
-
-Fixes: fd9b4be8002c ("net/mlx5e: RX, Support multiple outstanding UMR posts")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261006105820.257208-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://patch.msgid.link/20261001-fix-sg204xspi-v2-2-014dbaf22b5e@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-sg2044-nor.c | 39 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index e688ce9d383c5..6fced90cae604 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1079,10 +1079,12 @@ int mlx5e_poll_ico_cq(struct mlx5e_cq *cq)
- 		} while (!last_wqe);
- 	} while ((++i < MLX5E_TX_CQ_POLL_BUDGET) && (cqe = mlx5_cqwq_get_cqe(&cq->wq)));
- 
--	sq->cc = sqcc;
--
- 	mlx5_cqwq_update_db_record(&cq->wq);
- 
-+	/* ensure cq space is freed before enabling more cqes */
-+	dma_wmb();
-+
-+	sq->cc = sqcc;
- 	return i;
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index 8aeba7d9a2120..185ab22d0211c 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -385,6 +385,29 @@ static ssize_t sg2044_spifmc_trans_reg(struct sg2044_spifmc *spifmc,
+ 	return 0;
  }
  
++static int sg2044_spifmc_set_speed(struct sg2044_spifmc *spifmc,
++				   unsigned int speed_hz)
++{
++	unsigned long rate = clk_get_rate(spifmc->clk);
++	u64 div;
++	u32 reg;
++
++	if (!rate)
++		return -EINVAL;
++
++	/* SCK = HCLK / (2 * (SckDiv + 1)); round down the resulting SCK. */
++	div = speed_hz ? DIV_ROUND_UP_ULL(rate, 2ULL * speed_hz) : 1;
++	if (div > SPIFMC_CTRL_SCK_DIV_MASK + 1)
++		return -EINVAL;
++
++	reg = readl(spifmc->io_base + SPIFMC_CTRL);
++	reg &= ~SPIFMC_CTRL_SCK_DIV_MASK;
++	reg |= div - 1;
++	writel(reg, spifmc->io_base + SPIFMC_CTRL);
++
++	return 0;
++}
++
+ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+@@ -395,11 +418,18 @@ static int sg2044_spifmc_exec_op(struct spi_mem *mem,
+ 
+ 	mutex_lock(&spifmc->lock);
+ 
++	ret = sg2044_spifmc_set_speed(spifmc, op->max_freq ?
++				    min(op->max_freq, mem->spi->max_speed_hz) :
++				    mem->spi->max_speed_hz);
++	if (ret)
++		goto out_unlock;
++
+ 	if (op->addr.nbytes == 0)
+ 		ret = sg2044_spifmc_trans_reg(spifmc, op);
+ 	else
+ 		ret = sg2044_spifmc_trans(spifmc, op);
+ 
++out_unlock:
+ 	mutex_unlock(&spifmc->lock);
+ 
+ 	return ret;
+@@ -409,6 +439,10 @@ static const struct spi_controller_mem_ops sg2044_spifmc_mem_ops = {
+ 	.exec_op = sg2044_spifmc_exec_op,
+ };
+ 
++static const struct spi_controller_mem_caps sg2044_spifmc_mem_caps = {
++	.per_op_freq = true,
++};
++
+ static void sg2044_spifmc_init(struct sg2044_spifmc *spifmc)
+ {
+ 	u32 tran_csr;
+@@ -448,6 +482,10 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(spifmc->clk))
+ 		return dev_err_probe(dev, PTR_ERR(spifmc->clk), "Cannot get and enable AHB clock\n");
+ 
++	ctrl->max_speed_hz = clk_get_rate(spifmc->clk) / 2;
++	if (!ctrl->max_speed_hz)
++		return dev_err_probe(dev, -EINVAL, "Invalid AHB clock rate\n");
++
+ 	spifmc->dev = &pdev->dev;
+ 	spifmc->ctrl = ctrl;
+ 
+@@ -460,6 +498,7 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	ctrl->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctrl->auto_runtime_pm = false;
+ 	ctrl->mem_ops = &sg2044_spifmc_mem_ops;
++	ctrl->mem_caps = &sg2044_spifmc_mem_caps;
+ 	ctrl->mode_bits = SPI_RX_DUAL | SPI_TX_DUAL | SPI_RX_QUAD | SPI_TX_QUAD;
+ 
+ 	ret = devm_mutex_init(dev, &spifmc->lock);
 -- 
 2.53.0
 
