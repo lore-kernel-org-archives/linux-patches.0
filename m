@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BEE4FC330;
-	Tue, 13 Oct 2026 11:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5C44FC330;
+	Tue, 13 Oct 2026 11:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892667; cv=none; b=ei2sS9G8hB69klCcELbN/RRh7R/9iaB3oewqZi9UId22S6hmBRPw8eltbFLm4/HcutmeVSyQwCoup+PXifP2Io3yxy3IjBXX8TVugU1+gP00+hohhHgZmdoWobhdrIsnUVyqgkHOzIipFA382+BNhB1aGQBMX6VYBe6jCEWzziM=
+	t=1791892671; cv=none; b=ektRDR4W75PTJ0WPNLgZnJ3c1vZPuF+vp0+8azHTfgFGQG7Vt48xeIBsTchq9+CwKQEOCzuueVwZf21pFV6PKGLbbGhKtY5GHiyLAAThL/Jl/JvSFWC0ZoXK/foZRV+d8L2vvWXtsIPDHALmp3xM6Deznd8XMPR8bkg9uc2jwA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892667; c=relaxed/simple;
-	bh=jYTR2zlL4U3P+mjlv9oGVlgV+i0YMTsgRdukJIZVckw=;
+	s=arc-20240116; t=1791892671; c=relaxed/simple;
+	bh=MG4drfOyKBFUh7vjzCAeThC82DynfvLlQ3J1dhb1h6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvmI3jmj7wb71q7K5YUloSHz+FWtWAfvhsR+o9hRKGHk2P7eH2vsF7q6zaClEmUqN+DZiwZ2ysIYtemoCfYFj94zRleybnzzX5FyFz6kS5MXc+AzPTm/zxPax08s5SZ/AL9aGPQKa3bnCxSrls4eD0y0/97Wx7o3PZw9mcHRbmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWP/tYnT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CR5byfbOCBvqRDzDzTv5LcJ2ngf8itXnKX+4+yLIx3glkMT1LJauUhtjKs0vfL/hwNaHzFIkKs5stggDRwVctEcri1idnfk6R5csxD1R6ufbxctrrexSTHwhLN9v4jhf+36lQUXQ88DO+6VQMjH1D4uxby8tmgCX06xSYmp8B3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb4cROBx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWP/tYnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFC61F000FF;
-	Tue, 13 Oct 2026 11:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb4cROBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3C31F000FF;
+	Tue, 13 Oct 2026 11:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892666;
-	bh=P3tINlEu87TTinjZDAkDp3EqMeNBi38bFd6m4rI/ayI=;
+	s=korg; t=1791892669;
+	bh=KdHRC05tidieE+Nb9yr12wugbx09d5ZMPc4VXe1garY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWP/tYnTzcLDLr8UvH2DrFeCagoJr21Ldb73Oofoiwdp5zK2HNj4AlPn8DcN6HqcS
-	 9r1oix4sIaQg0GfCi2X1EY0cjRa5YCRwJxotquJYH4q2JDdvIiajd2391mz8WVdvF8
-	 VfZVsPcrt83MHaNlKjnNQ01uAieQoEkmoOU2oyOw=
+	b=kb4cROBxTNmw8xAmhLmVrsChdje/ZLzvufcHUo8z7Vi6RC1PSUZfb/z8L/HD3YE0i
+	 ib7DiefCKFZSGyJJtQMeCaipMbaxsQP8bxYU0zW8LjNT/K4tBB608FDQ93/optNfd7
+	 FpM5Jmn/zCpPEn4U8WxVyZARvlZjz24R41RJg1ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Weiming Shi <bestswngs@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
 	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 248/281] flow_dissector: avoid u16 truncation of skb->len when computing thoff
-Date: Tue, 13 Oct 2026 13:39:24 +0200
-Message-ID: <20261013112901.163497423@linuxfoundation.org>
+Subject: [PATCH 7.2 249/281] net: always dissect GSO packets in __virtio_net_hdr_to_skb()
+Date: Tue, 13 Oct 2026 13:39:25 +0200
+Message-ID: <20261013112901.187909141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -54,75 +56,246 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 99bda1ecbd56905f8bd934b9cdccd3bd251192b1 ]
+[ Upstream commit 44378d02c5aaae24b60a75fbbb539b4aa4db503d ]
 
-__skb_flow_dissect() computes key_control->thoff using:
+Commit 9e8db5913264 ("net: avoid false positives in untrusted gso
+validation") added a '&& skb->network_header' check before flow-dissecting
+GSO packets without VIRTIO_NET_HDR_F_NEEDS_CSUM in
+__virtio_net_hdr_to_skb(), because some callers (such as tun_get_user(),
+tun_xdp_one(), virtnet_receive_done(), and raw_verify_header()) called
+virtio_net_hdr_*_to_skb() before initializing skb->network_header and
+skb->dev.
 
-  key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
+Because __alloc_skb() and __build_skb_around() zero-initialize
+skb->network_header to 0 (unlike mac_header and transport_header which
+are initialized to ~0U), those four callers always had
+skb->network_header == 0 and bypassed flow dissection in
+__virtio_net_hdr_to_skb(). More generally, skb->network_header is an
+offset from skb->head (where 0 is also a valid offset whenever
+skb_headroom(skb) is 0), not a boolean flag.
 
-min_t(u16, ...) casts both arguments to u16 before comparing them.
-Whenever skb->len (or hlen) modulo 65536 is smaller than nhoff, the
-truncated length wins and thoff is set to a bogus small value, even
-when the dissection succeeded. For example, an IPv4/TCP frame with
-skb->len == 65540 and nhoff == 34 gets thoff == 4, so callers such as
-skb_probe_transport_header() point the transport header inside the
-Ethernet header.
+Whenever the 'if (gso_type && skb->network_header)' branch was skipped,
+the fallback 'else if (gso_type)' only pulled nh_min_len + thlen (40 bytes
+for TCPv4) without dissecting the packet, without validating ip_proto or
+n_proto, and without setting skb->transport_header.
 
-Such skbs are not exotic:
-- At the time of commit d0c081b49137 ("flow_dissector: properly cap
-  thoff field"), AF_PACKET with PACKET_VNET_HDR could already build GSO
-  skbs larger than 64KB (MTU checks are skipped for GSO, and
-  alloc_skb_with_frags() accepted up to MAX_SKB_FRAGS (17) order-0
-  pages on top of the linear part).
-- BIG TCP now makes skbs larger than 64KB common.
-- The following patch makes tun_get_user() dissect IFF_TAP frames
-  before eth_type_trans() pulls the Ethernet header, so a GSO frame
-  carrying a 65522..65535 byte L3 packet will be dissected with
-  skb->len in [65536, 65549].
+If the packet has a malformed network header, it is not rejected and a
+subsequent skb_probe_transport_header() also fails, leaving
+skb->transport_header at ~0U (0xffff). Similarly, if an IPv4 packet
+carries IP options (ihl > 5) or an IPv6 packet carries extension headers,
+pulling only nh_min_len + thlen can leave the TCP header outside
+skb->head. In both cases, tcp_hdrlen(skb) in skb_gso_transport_seglen()
+reads out-of-bounds:
 
-Compare as u32 instead. If the resulting offset cannot be represented
-in the u16 key_control->thoff, cap it to U16_MAX and report the
-dissection as failed rather than silently returning a wrong transport
-offset. thoff is still set on failure, as some callers (such as
-eth_get_headlen()) use it regardless of the return value.
+  BUG: KASAN: slab-out-of-bounds in skb_gso_transport_seglen
+  Read of size 2 by task poc/133
+  skb_gso_transport_seglen (net/core/gso.c:155)
+  skb_gso_validate_mac_len (net/core/gso.c:270)
+  tbf_enqueue (net/sched/sch_tbf.c:260)
+  dev_qdisc_enqueue (net/core/dev.c:4227)
+  __dev_queue_xmit (net/core/dev.c:4884)
 
-Fixes: d0c081b49137 ("flow_dissector: properly cap thoff field")
+In addition, checking virtio_net_hdr_match_proto() only inside
+'if (!skb->protocol)' before flow dissection both skipped validation when
+skb->protocol was pre-set by the caller and rejected VLAN-tagged frames
+whose outer L2 protocol is ETH_P_8021Q or ETH_P_8021AD.
+
+Fix this by:
+1. Initializing skb->dev and skb->network_header (plus skb->protocol for
+   IFF_TUN) before virtio_net_hdr_*_to_skb() in tun_get_user(),
+   tun_xdp_one(), virtnet_receive_done(), and raw_verify_header(). In
+   tun_get_user(), drop the redundant skb_reset_mac_header(skb) in the
+   IFF_TUN case since __virtio_net_hdr_to_skb() unconditionally resets
+   mac_header.
+2. Removing '&& skb->network_header' and the unvalidated
+   'else if (gso_type)' fallback in __virtio_net_hdr_to_skb() so all GSO
+   packets without VIRTIO_NET_HDR_F_NEEDS_CSUM are flow-dissected, have
+   their transport header pulled into linear data, and have
+   skb->transport_header set.
+3. Moving the virtio_net_hdr_match_proto() check to after
+   skb_flow_dissect_flow_keys_basic(), validating keys.basic.n_proto
+   against hdr_gso_type.
+
+Fixes: 9e8db5913264 ("net: avoid false positives in untrusted gso validation")
+Fixes: d5be7f632bad ("net: validate untrusted gso packets without csum offload")
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260927163117.746432-2-bestswngs@gmail.com/
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261001191140.2818991-2-edumazet@kernel.org
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20261001191140.2818991-3-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/um/drivers/vector_transports.c |  1 +
+ drivers/net/tun.c                   | 23 ++++++-----
+ drivers/net/virtio_net.c            |  2 +
+ include/linux/virtio_net.h          | 60 ++++++++++++-----------------
+ 4 files changed, 42 insertions(+), 44 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 8aa4f9b4df810..27d8a01bc9230 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1071,6 +1071,7 @@ bool __skb_flow_dissect(const struct net *net,
- 	int mpls_lse = 0;
- 	int num_hdrs = 0;
- 	u8 ip_proto = 0;
-+	u32 thoff;
- 	bool ret;
+diff --git a/arch/um/drivers/vector_transports.c b/arch/um/drivers/vector_transports.c
+index ddd127ee96785..e1fb2a76fdff5 100644
+--- a/arch/um/drivers/vector_transports.c
++++ b/arch/um/drivers/vector_transports.c
+@@ -209,6 +209,7 @@ static int raw_verify_header(
+ 	if ((vheader->flags & VIRTIO_NET_HDR_F_DATA_VALID) > 0)
+ 		return 1;
  
- 	if (!data) {
-@@ -1692,7 +1693,13 @@ bool __skb_flow_dissect(const struct net *net,
- 	ret = true;
++	skb_set_network_header(skb, ETH_HLEN);
+ 	virtio_net_hdr_to_skb(skb, vheader, virtio_legacy_is_little_endian());
+ 	return 0;
+ }
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 5bbe3123979e0..dcd39815205a9 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1818,12 +1818,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 		}
+ 	}
  
- out:
--	key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
-+	thoff = min_t(u32, nhoff, skb ? skb->len : hlen);
-+	if (unlikely(thoff > U16_MAX)) {
-+		/* Cannot be represented in key_control->thoff. */
-+		thoff = U16_MAX;
-+		ret = false;
+-	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
+-		atomic_long_inc(&tun->rx_frame_errors);
+-		err = -EINVAL;
+-		goto free_skb;
+-	}
+-
++	skb->dev = tun->dev;
+ 	switch (tun->flags & TUN_TYPE_MASK) {
+ 	case IFF_TUN:
+ 		if (tun->flags & IFF_NO_PI) {
+@@ -1848,9 +1843,8 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 			}
+ 		}
+ 
+-		skb_reset_mac_header(skb);
++		skb_reset_network_header(skb);
+ 		skb->protocol = pi.proto;
+-		skb->dev = tun->dev;
+ 		break;
+ 	case IFF_TAP:
+ 		if (!pskb_may_pull(skb, ETH_HLEN)) {
+@@ -1858,10 +1852,19 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 			drop_reason = SKB_DROP_REASON_HDR_TRUNC;
+ 			goto drop;
+ 		}
+-		skb->protocol = eth_type_trans(skb, tun->dev);
++		skb_set_network_header(skb, ETH_HLEN);
+ 		break;
+ 	}
+ 
++	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
++		atomic_long_inc(&tun->rx_frame_errors);
++		err = -EINVAL;
++		goto free_skb;
 +	}
-+	key_control->thoff = thoff;
- 	key_basic->n_proto = proto;
- 	key_basic->ip_proto = ip_proto;
++
++	if ((tun->flags & TUN_TYPE_MASK) == IFF_TAP)
++		skb->protocol = eth_type_trans(skb, tun->dev);
++
+ 	/* copy skb_ubuf_info for callback when skb has no error */
+ 	if (zerocopy) {
+ 		skb_zcopy_init(skb, msg_control);
+@@ -2469,6 +2472,8 @@ static int tun_xdp_one(struct tun_struct *tun,
  
+ 	features = tun_vnet_hdr_guest_features(READ_ONCE(tun->vnet_hdr_sz));
+ 	tnl_hdr = (struct virtio_net_hdr_v1_hash_tunnel *)gso;
++	skb->dev = tun->dev;
++	skb_set_network_header(skb, ETH_HLEN);
+ 	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr)) {
+ 		atomic_long_inc(&tun->rx_frame_errors);
+ 		kfree_skb(skb);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index bf82ef9874abb..daab43ac92ce4 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2515,6 +2515,8 @@ static void virtnet_receive_done(struct virtnet_info *vi, struct receive_queue *
+ 		goto frame_err;
+ 	}
+ 
++	skb->dev = dev;
++	skb_set_network_header(skb, ETH_HLEN);
+ 	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, vi->rx_tnl,
+ 				      vi->rx_tnl_csum,
+ 				      virtio_is_little_endian(vi->vdev))) {
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index c381b916c1b54..d6466f96cdd00 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -111,48 +111,38 @@ static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 		p_off = nh_min_len + thlen;
+ 		if (!pskb_may_pull(skb, p_off))
+ 			return -EINVAL;
+-	} else {
++	} else if (gso_type) {
+ 		/* gso packets without NEEDS_CSUM do not set transport_offset.
+ 		 * probe and drop if does not match one of the above types.
+ 		 */
+-		if (gso_type && skb->network_header) {
+-			struct flow_keys_basic keys;
+-
+-			if (!skb->protocol) {
+-				__be16 protocol = dev_parse_header_protocol(skb);
+-
+-				if (!protocol)
+-					virtio_net_hdr_set_proto(skb, hdr);
+-				else if (!virtio_net_hdr_match_proto(protocol,
+-								 hdr_gso_type))
+-					return -EINVAL;
+-				else
+-					skb->protocol = protocol;
+-			}
++		struct flow_keys_basic keys;
++
++		if (!skb->protocol) {
++			skb->protocol = dev_parse_header_protocol(skb);
++			if (!skb->protocol)
++				virtio_net_hdr_set_proto(skb, hdr);
++		}
+ retry:
+-			if (!skb_flow_dissect_flow_keys_basic(NULL, skb, &keys,
+-							      NULL, 0, 0, 0,
+-							      0)) {
+-				/* UFO does not specify ipv4 or 6: try both */
+-				if (gso_type & SKB_GSO_UDP &&
+-				    skb->protocol == htons(ETH_P_IP)) {
+-					skb->protocol = htons(ETH_P_IPV6);
+-					goto retry;
+-				}
+-				return -EINVAL;
++		if (!skb_flow_dissect_flow_keys_basic(NULL, skb, &keys,
++						      NULL, 0, 0, 0,
++						      0)) {
++			/* UFO does not specify ipv4 or 6: try both */
++			if (gso_type & SKB_GSO_UDP &&
++			    skb->protocol == htons(ETH_P_IP)) {
++				skb->protocol = htons(ETH_P_IPV6);
++				goto retry;
+ 			}
++			return -EINVAL;
++		}
+ 
+-			p_off = keys.control.thoff + thlen;
+-			if (!pskb_may_pull(skb, p_off) ||
+-			    keys.basic.ip_proto != ip_proto)
+-				return -EINVAL;
++		p_off = keys.control.thoff + thlen;
++		if (!pskb_may_pull(skb, p_off) ||
++		    keys.basic.ip_proto != ip_proto ||
++		    !virtio_net_hdr_match_proto(keys.basic.n_proto,
++						hdr_gso_type))
++			return -EINVAL;
+ 
+-			skb_set_transport_header(skb, keys.control.thoff);
+-		} else if (gso_type) {
+-			p_off = nh_min_len + thlen;
+-			if (!pskb_may_pull(skb, p_off))
+-				return -EINVAL;
+-		}
++		skb_set_transport_header(skb, keys.control.thoff);
+ 	}
+ 
+ 	if (hdr_gso_type != VIRTIO_NET_HDR_GSO_NONE) {
 -- 
 2.53.0
 
