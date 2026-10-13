@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97283321A2;
-	Tue, 13 Oct 2026 12:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0D0332EB1;
+	Tue, 13 Oct 2026 12:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791894645; cv=none; b=XyjusJdq2l+FTQWDcjNLZYEFhaQE8wN5OuDBNjLTT8fuBWfKUH+icaybmEjK/KVCGgZmIRHuMXV0o//9yGvx/pYo07YhqcGLjkO8vvV6Y97DlUv+pyCSXpOxSQGlL2jPbrWuZS9mqk5ZsoGZ7xGTU5Jf7fLY3E5hFo5ttI1kCAQ=
+	t=1791894648; cv=none; b=NscKkvC6VRk9CqLaFlMlGw3I+sCdRHZR+dj/FS6SuXwhcCtMKFU5NPSn7Ft6ZinhngMDdyB/mbvhIY0XQmzAW21bdimOcPDBvaB39203kJq2LQfJKBL8155z3bbirFW6ocqrPtW3mkV+AIaaphZQC9aWy5TOcXI8p2J63EhIdoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791894645; c=relaxed/simple;
-	bh=QUZ102Zfdspo2VnbBWcbxYvv7we57eyu2XdSVNau1RA=;
+	s=arc-20240116; t=1791894648; c=relaxed/simple;
+	bh=KkYj+mK/qyY8mz/k/jA+BlzZvFnFtWXh8SieJDaKQvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zh4LNew3d69A0PqLTDpNkPJyjE5E/uP6pUqS9GUYzCZHTjLfooqUJsHfjsKcMIUHhmD9NVAoDGk9U1nJmCYxH0XV0jpuDAOi9wZdkfCCoNZ0JiC8bjMeN8m6nlEXUvWDAYd8Ia8latB5UyZhEJxdxM6EfM0NKeBkh+t9/pzywvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aADI3ovw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rq4xn7cpp7hC5T/TtMYhPzhyiyLT/PrqVCxVB7p51znwVvZz7yIAV4XWaaoUvtiVzSkaLlZ+6YeZIPw5uHi4GcVOghlRaLAXkzkowe0L/BriY+wsjN4rTvdtVb5np2M4SL3Isfkt/V2nyOIHZqVBmUtlXO13EJne0g1I2mxpR58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NA6iltZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aADI3ovw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC4C1F000FF;
-	Tue, 13 Oct 2026 12:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA6iltZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0123F1F00893;
+	Tue, 13 Oct 2026 12:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791894644;
-	bh=/A8x3gU4CtRoI6vnXOVQnuj2ce6I1/GiYBBBtt6s4/0=;
+	s=korg; t=1791894647;
+	bh=Yrg/+ldMVJlCzw5h44ClmmfamrLMhRyq3pqBGEBIuoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aADI3ovwlwwWbWeZxtGX9qSyGWA4T1K8jmyWp+YhsOhNTXknzvdb5/3jeUiFZKxRe
-	 Cs0SysdBB0kgrx/CnH9Y5QoiuOxa5C01uPH1iopwXFAHnFHVtRj1q0OcLesBrCA0/z
-	 hiBE9a3QXRil5igPbj/PQDx/toU6Axu0CdlmuZOg=
+	b=NA6iltZoy/wdkhftrNgq8CIZ8XAanJQV9geirUPxePM82wxCvrriWz9X4ReGJ1zgZ
+	 ZvKwAfkNcyP0Gw4zBeBs3nMZgnMfLWSzYvaq7Y/lMlUKsAp99N6KSaYFlZl87hKD2v
+	 3aXhw8SKwGj4edjGFL0AsNgHzhux+06NJEcRuJ+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shen Yongchao <grayhat@foxmail.com>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/497] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
-Date: Tue, 13 Oct 2026 13:32:48 +0200
-Message-ID: <20261013112907.905470497@linuxfoundation.org>
+Subject: [PATCH 6.12 010/497] ASoC: sdw_utils: Set snd_soc_dai_link_ch_map.codec_ch_mask for capture
+Date: Tue, 13 Oct 2026 13:32:57 +0200
+Message-ID: <20261013112908.124067724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -53,83 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 6343c1da561962688f203362d80d6a3bfa39fa1b ]
+[ Upstream commit 290845e151cd4e307cc1f25319583aaceb4eeb30 ]
 
-coalesce_t2() computes data pointers directly from server-supplied
-DataOffset fields with no validation against buffer bounds:
+In asoc_sdw_hw_params() set the codec_ch_mask member of struct
+snd_soc_dai_link_ch_map for capture streams. ASoC will then pass the
+correct number of channels to each codec hw_params(). This prevents
+trying to enable more channels on the codec DP than have been allocated
+bitslots in the SoundWire frame, which would cause bus clash errors.
 
-  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
-                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
-  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
-                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
-  data_area_of_tgt += total_in_tgt;
-  ...
-  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
+In theory codec_ch_mask could also be set for playback streams, but for
+those the CPU is the only sender so there is no risk of bus clash.
+For playback streams codec_ch_mask is set to 0 to preserve the existing
+behavior and avoid introducing bugs.
 
-A small DataOffset can push a pointer below the actual byte area,
-overwriting header fields; a large one can push it past the buffer
-end, causing out-of-bounds heap reads (source) or writes (target).
-The BCC overflow guard does not prevent this: BCC reflects how much
-data is present, while DataOffset controls where in the buffer it
-starts.
-
-The "validate target area" comment present since the function was
-first written in 2005 was a placeholder that was never implemented.
-
-Add lower- and upper-bound checks for both data pointers before the
-memcpy, and before any target header fields are modified.
-
-Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
-Cc: stable@vger.kernel.org
-Reported-by: Shen Yongchao <grayhat@foxmail.com>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ transplanted the bounds validation to coalesce_t2() in smb1ops.c due to code relocation ]
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260910114500.1586637-5-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb1ops.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ sound/soc/sdw_utils/soc_sdw_utils.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index eafdf6c38796a..5556601abfe9e 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -325,12 +325,31 @@ coalesce_t2(char *second_buf, struct smb_hdr *target_hdr)
- 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
- 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 70a7abede618f..44b132bc10439 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -764,7 +764,7 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai_link_ch_map *ch_maps;
+ 	int ch = params_channels(params);
+-	unsigned int ch_mask;
++	unsigned int cpu_ch_mask, codec_ch_mask;
+ 	int num_codecs;
+ 	int step;
+ 	int i;
+@@ -774,8 +774,9 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
  
--	/* validate target area */
- 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
- 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+ 	/* Identical data will be sent to all codecs in playback */
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+-		ch_mask = GENMASK(ch - 1, 0);
++		cpu_ch_mask = GENMASK(ch - 1, 0);
+ 		step = 0;
++		codec_ch_mask = 0;
+ 	} else {
+ 		num_codecs = rtd->dai_link->num_codecs;
  
- 	data_area_of_tgt += total_in_tgt;
+@@ -785,17 +786,24 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
+ 			return -EINVAL;
+ 		}
  
-+	/*
-+	 * DataOffset fields are server-supplied and not validated against
-+	 * buffer bounds; check both data pointers before mutating the
-+	 * target header.
-+	 */
-+	if (data_area_of_tgt < (char *)target_hdr +
-+				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
-+	    data_area_of_tgt + total_in_src >
-+	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
-+		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
-+		return -EPROTO;
+-		ch_mask = GENMASK(ch / num_codecs - 1, 0);
+-		step = hweight_long(ch_mask);
++		cpu_ch_mask = GENMASK(ch / num_codecs - 1, 0);
++		step = hweight_long(cpu_ch_mask);
++		codec_ch_mask = cpu_ch_mask;
+ 	}
+ 
+ 	/*
+ 	 * The captured data will be combined from each cpu DAI if the dai
+ 	 * link has more than one codec DAIs. Set codec channel mask and
+ 	 * ASoC will set the corresponding channel numbers for each cpu dai.
++	 *
++	 * sdw_stream_add_slave() assigns different payload offsets to each
++	 * codec in a capture stream, so that the same channels on each
++	 * codec map to different channels on the CPU.
+ 	 */
+-	for_each_link_ch_maps(rtd->dai_link, i, ch_maps)
+-		ch_maps->cpu_ch_mask = ch_mask << (i * step);
++	for_each_link_ch_maps(rtd->dai_link, i, ch_maps) {
++		ch_maps->cpu_ch_mask = cpu_ch_mask << (i * step);
++		ch_maps->codec_ch_mask = codec_ch_mask;
 +	}
-+	if (data_area_of_src < second_buf +
-+				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
-+	    data_area_of_src + total_in_src >
-+	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
-+		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
-+		return -EPROTO;
-+	}
-+
- 	total_in_tgt += total_in_src;
- 	/* is the result too big for the field? */
- 	if (total_in_tgt > USHRT_MAX) {
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
