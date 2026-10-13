@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710FF31AF1F;
-	Tue, 13 Oct 2026 12:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532571F91F6;
+	Tue, 13 Oct 2026 12:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895694; cv=none; b=oNTfsazLQI6T615dWLBWujlJeor9K79cArPeF0AK06zGJMu2rTnsBcKLoR5gRuWRp4SERc8Ik+ODrqEOvhhv4r9iFBJI4WfgspinNFqsrG0xW2ZpRosXagRO2AbMmsyN2LRlGh5bE1WpIaqa05SjM51qA7ntoFv6UNzz5sBFMZU=
+	t=1791895697; cv=none; b=FzrWjk7hL8lVJbKMoSbK9AkwOpoBhKLbYnWa373qgaxKUQ6hR7/BqFyysWMP5kgwXHT9SXUCmcVp4kwlK8LVbzIYbUOe8VQfAB8UTF7A9KBKS7ukb0gPjRKl7NTUOyqyZDuXsozssohH4onSu4pwYYB/EIYcTXF00cDWTrd8mq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895694; c=relaxed/simple;
-	bh=8/vi4a+kBD9YGjDdCOZRjCgRhVRx5Ffj1PVGAKYKDdA=;
+	s=arc-20240116; t=1791895697; c=relaxed/simple;
+	bh=wUjoccKa0+tu8yXN2Rr36/bq7AE85kdvbZpCTL4NNus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqlR0EysHmKUnYVl4+3unXdc/BFJ5iKptMjEbdwihpOJXT0/44SLorIlxSARBs5Rh/6zWC6N4kxuOYEl4xpmBNZ1/+Y0+8Wj2SuCHXUdrWeTQ9zPmTybcqp5VDvS20mVEeY3bwf8We0AHlOOC2r/mzrGD5NzeGci2bYooWCDNJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keTUjEI1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r0q1mHETey8v9gHLyHx1zx+TOJnkGcsfuX4g9+ddzsa7drGZP22GTEVCZvOg13TsmKg31JqjxUFsK83QwN3Lc7/tJ91kjRClYSCB1QAaHmtOclhnR6W6+q/nd7x9VXab+BCndb0YU8VVtX/Xa7ZpRs/Bf1IbF1xlmWSeLcFZbH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCtKK+tC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keTUjEI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7461F000FF;
-	Tue, 13 Oct 2026 12:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCtKK+tC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE01F00893;
+	Tue, 13 Oct 2026 12:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895693;
-	bh=4rCtpf39nkchC+b+rhBPHfc/O/3QaX9JAqJXDU0KD6o=;
+	s=korg; t=1791895696;
+	bh=ZVFIi6DawUafALin1jRXq/bv4rdrAKlJgQtpnlZqk6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=keTUjEI1Zv8mISUsp9HUa481+rkL8MSnVpuelZgRHRQnRJdTj/iE8wyDpfGrmM4s6
-	 ORzzqenPFQD1+ab7J+UXkcqIbaluJ/6VzbROHcq+1+fEEmLSmBHxpQAZWs/++j6+C+
-	 meE15+dtolUke8R0rDT9G2/GPlcOqA+BKeBok7iQ=
+	b=UCtKK+tCvKPyf/uIK0QILd1shj16sVwgwZ1WF2pjL9HpuTRNZ7Z27p6xYZ6VQNnjr
+	 mj336Dkm0hoGuJI5xF4Au2Rgl7HCcpi8UVGciSzUG7Z18IoL5qhyVsMkycVT+bliBo
+	 NFAChfvq4JouLaJt0XyNAeLnzLwTefWaE6e+4i+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Krzysztof Furman <krisfur@proton.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 359/497] Input: ati_remote2 - fix type confusion in device attribute handlers
-Date: Tue, 13 Oct 2026 13:38:46 +0200
-Message-ID: <20261013112916.427010679@linuxfoundation.org>
+Subject: [PATCH 6.12 360/497] Input: xpad - add support for Corsair Novablade Pro
+Date: Tue, 13 Oct 2026 13:38:47 +0200
+Message-ID: <20261013112916.449781496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -50,77 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Krzysztof Furman <krisfur@proton.me>
 
-commit f321cc430c49b6c1be0d53f2ef19d8342d8029cc upstream.
+commit f9282b8aa85a8c97c50d656db75feb6d76fc7cbe upstream.
 
-Previously, the channel_mask and mode_mask attributes were registered on
-the parent usb_device via sysfs_create_group(). When commit b20d6bf8014b
-("Input: ati-remote2 - use driver core to instantiate device
-attributes") converted the driver to let the driver core manage them via
-dev_groups in struct usb_driver, the attributes moved to the bound
-usb_interface devices, but the show and store callbacks were not updated
-accordingly.
+Add device IDs for the Corsair Novablade Pro leverless fight controller
+in both wired (0x2b1f) and 2.4 GHz receiver (0x2b2b) modes, and add
+Corsair's vendor ID to the Xbox 360 vendor match list.
 
-As a result, the callbacks still invoked to_usb_device() on a device
-pointer belonging to a struct usb_interface, producing an invalid
-usb_device pointer.
+Outside of its PS4/PS5 modes the controller uses the Xbox 360 protocol
+(vendor-specific class, subclass 93, protocol 1) on interface 0, which
+xpad does not currently bind, so no gamepad device is created. The
+PS4/PS5 modes present a standard HID gamepad and already work with
+hid-generic.
 
-Use to_usb_interface() directly in the attribute handlers to obtain the
-interface and its driver data.
+Tested on 7.2.5 with the 2.4 GHz receiver and wired.
 
-Fixes: b20d6bf8014b ("Input: ati-remote2 - use driver core to instantiate device attributes")
-Assisted-by: DeepSeek-V4.1-Flash
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20261009040302.3087205-1-vulab@iscas.ac.cn
+Assisted-by: Claude Opus 5.5
+Signed-off-by: Krzysztof Furman <krisfur@proton.me>
+Link: https://patch.msgid.link/20261009-xpad-corsair-novablade-v1-1-e58746bef99f@proton.me
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ati_remote2.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/input/joystick/xpad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/input/misc/ati_remote2.c
-+++ b/drivers/input/misc/ati_remote2.c
-@@ -682,8 +682,7 @@ static ssize_t ati_remote2_show_channel_
- 					     struct device_attribute *attr,
- 					     char *buf)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 
- 	return sprintf(buf, "0x%04x\n", ar2->channel_mask);
-@@ -693,8 +692,7 @@ static ssize_t ati_remote2_store_channel
- 					      struct device_attribute *attr,
- 					      const char *buf, size_t count)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 	unsigned int mask;
- 	int r;
-@@ -732,8 +730,7 @@ static ssize_t ati_remote2_show_mode_mas
- 					  struct device_attribute *attr,
- 					  char *buf)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 
- 	return sprintf(buf, "0x%02x\n", ar2->mode_mask);
-@@ -743,8 +740,7 @@ static ssize_t ati_remote2_store_mode_ma
- 					   struct device_attribute *attr,
- 					   const char *buf, size_t count)
- {
--	struct usb_device *udev = to_usb_device(dev);
--	struct usb_interface *intf = usb_ifnum_to_if(udev, 0);
-+	struct usb_interface *intf = to_usb_interface(dev);
- 	struct ati_remote2 *ar2 = usb_get_intfdata(intf);
- 	unsigned int mask;
- 	int err;
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -330,6 +330,8 @@ static const struct xpad_device {
+ 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
++	{ 0x1b1c, 0x2b1f, "Corsair Novablade Pro (Wired)", 0, XTYPE_XBOX360 },
++	{ 0x1b1c, 0x2b2b, "Corsair Novablade Pro (2.4 GHz Receiver)", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0130, "Ion Drum Rocker", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+@@ -565,6 +567,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
+ 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
+ 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
++	XPAD_XBOX360_VENDOR(0x1b1c),		/* Corsair controllers */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
+ 	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
 
 
