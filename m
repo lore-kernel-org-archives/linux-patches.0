@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949E64FD785;
-	Tue, 13 Oct 2026 12:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBC54FDA49;
+	Tue, 13 Oct 2026 12:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895085; cv=none; b=mwtftt1f7cgy8eOga9XXRoWc0Zv4w0Eo7V4fI6/+BMcZFInhxi01TrG1M/0GFf+GecEK8B+HbeKktvv9uqRA01pVkh/uLuKcWexPMDZY9M7bKTFWA+C23AI5g7dZXVUIHRW7HlDfuLpGau3jpcfPc/pevbhEwyF0ZBrCj/ON9r8=
+	t=1791895089; cv=none; b=c4a1lHPoWvgJ0vLJz9kpdYWLpXeFYZgx0lbOVGaY6oOV137tibpOeUZnOP31tG23UZjwZReqreKUk07CN6gyJ8VUXL+H0836/ditgB0vZb4aCLopK8F1xWG4XbXB37eMkGCRjbWcaEYYiWYZVaV+J5ePSzG61CCBqc+WXa7Do3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895085; c=relaxed/simple;
-	bh=zzdrqePcuF+0BZSm5rVuT18dd/Qav8hoWUDs7VhzSyE=;
+	s=arc-20240116; t=1791895089; c=relaxed/simple;
+	bh=WYPCJqzSZidbVgt66jR1gSfQBiYbqWmnpeaANN21/Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AivafF1Py8MJ7/gqGjESjC61mma2uHSg5xR4yk15z70AMy5CgGdXn6iuX0y5zQqP3NKcYcmejh9odhcmcuyomNuRbl/mwktSaxYhODBTYRGVFL2fWBBVOSQ55fDGpCvt1ZtvyOCTD5s+ZiIy6/2ePUi37jPADRFRTdRD3b77xME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fV7IitaZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t7GmxTVx6TxA2DrKe9/gCTACiR2/QWtiCkQ25GXZM0bf+Lr7vBiapmIMPOcvY0cSH6dUwuMBmuRNjhzHL/MHiCETtZgu5p/IP/P6B7Qy1XbjCSkHIXJ3otsTduBB5M+9/+UstjkgpW7NEsQLEAx/1DAxH2INQ/RariWGJ48Okhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUvTA2/N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fV7IitaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAC21F0089A;
-	Tue, 13 Oct 2026 12:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUvTA2/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A907E1F000FF;
+	Tue, 13 Oct 2026 12:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895084;
-	bh=JJbHOAlhh3TC6lFCHi4QJHVHrn1hWLIzCqqtMKrxloM=;
+	s=korg; t=1791895087;
+	bh=9jEs83rgIlT/nm7UY/fISoKSPHYvLtLg58+b1SZX6NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fV7IitaZGS+Hx1t2Fnyy7MzRxJD/PwLybM1r02eQ9nH1apC+s4jr+dih7WNJn9uJM
-	 2pf3U9//UpkYUKMtibeoBFW++NOU7fHFpoM3ewxO176ZVM5ooy2Pf2QZ5unGQSOFZT
-	 kT8PVdloas+ahmEGuRJAXULv7K6JXxivXP5bYEJ4=
+	b=wUvTA2/NPEkh7oxc/ssIW9B49bC5PmQgUux5zOZLNmuWbKg5ylIiHn5ypyQBjak9O
+	 XoBzWSAq+CLmthuv1/amQQty5290MHIoHnoZM3A/ZBNVeyirt8fabE+j+CcklE2s9E
+	 IyN20WhzOX+kjZdfYwIe2OWRbA0NpPdeYmGIXJcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>
-Subject: [PATCH 6.12 156/497] usb: typec: ucsi: displayport: Current CAM OOB index fixup
-Date: Tue, 13 Oct 2026 13:35:23 +0200
-Message-ID: <20261013112911.590612154@linuxfoundation.org>
+	Sicong Huang <congei42@163.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.12 157/497] usb: cdns3: fix use-after-free in cdns3_gadget_exit()
+Date: Tue, 13 Oct 2026 13:35:24 +0200
+Message-ID: <20261013112911.614903050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,45 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit ea31c6498c61307dc0d8ce338a7f268cb8cbdd57 upstream.
+commit ebe9b68c396792c15d0ac690d592e449e74ed804 upstream.
 
-Update ucsi_displayport_enter() to return invalid error when the PPM
-reports an current alternate mode greater than or equal to
-UCSI_MAX_ALTMODES. While here, remove 0xff current cam assignment on
-failed GET_CURRENT_CAM response.
+cdns3_gadget_start() arms two works on system_freezable_wq:
+pending_status_wq for the deferred ep0 status stage and aligned_buf_wq
+for realigned request buffers. Both handlers use the cdns3_device the
+works are embedded in, and cdns3_pending_setup_status_handler() also
+calls the ep0 request completion.
 
-Fixes: 04cec690b1fd ("usb: typec: ucsi: displayport: Fix OOB altmode array index")
+cdns3_gadget_exit() does not wait for these works. It frees all
+endpoints and aligned buffers and drops the last reference to the
+gadget device, which frees priv_dev, so a work queued before the exit
+can run after the free.
+
+Fix this by waiting for both works after the gadget driver is unbound
+and the IRQ is freed, when no new work can be queued, and before the
+endpoints and buffers are released.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Signed-off-by: Jameson Thies <jthies@google.com>
-Link: https://patch.msgid.link/20260917032008.1701888-1-jthies@google.com
+Reported-by: Sicong Huang <congei42@163.com>
+Closes: https://lore.kernel.org/linux-usb/7f5719b.8700.18f67b324d3.Coremail.congei42@163.com/
+Suggested-by: Sicong Huang <congei42@163.com>
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260909095655.694527-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -71,11 +71,14 @@ static int ucsi_displayport_enter(struct
- 	if (ret < 0) {
- 		if (ucsi->version > 0x0100)
- 			goto err_unlock;
--		cur = 0xff;
- 	}
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -3270,6 +3270,10 @@ static void cdns3_gadget_exit(struct cdn
+ 	usb_del_gadget(&priv_dev->gadget);
+ 	devm_free_irq(cdns->dev, cdns->dev_irq, priv_dev);
  
--	if (cur < UCSI_MAX_ALTMODES) {
--		ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
-+	if (cur != 0xff) {
-+		if (cur < UCSI_MAX_ALTMODES)
-+			ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
-+		else
-+			ret = -EINVAL;
++	/* The works can still be queued until the IRQ is freed. */
++	cancel_work_sync(&priv_dev->pending_status_wq);
++	cancel_work_sync(&priv_dev->aligned_buf_wq);
 +
- 		goto err_unlock;
- 	}
+ 	cdns3_free_all_eps(priv_dev);
  
+ 	while (!list_empty(&priv_dev->aligned_buf_list)) {
 
 
