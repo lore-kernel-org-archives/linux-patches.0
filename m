@@ -1,46 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F314CE699;
-	Tue, 13 Oct 2026 11:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605524EB864;
+	Tue, 13 Oct 2026 11:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791892140; cv=none; b=Gxnmk5GNoaeN8yKgaqoMewSSU5XLh9mPuncHG2oAtVFYzI58hwtAuopvbA7R7o8QJShGuVMNzaMR4mi4dOC4CwyF/FzqUVCGHvGpxH1cWhuT2NMnzl4nMz6pHtZdfZoXGbr0iqZqWofeIrzUMDm5ODx1NnhA7TvVsSmvlhgvcoA=
+	t=1791892142; cv=none; b=R9SzIdE4J8NEj3uL4cyOO43Mk0qMakHanzZnnMHt3/Jb8VIJe+K7XwtTu+k4ebZXCK/21hNmohrNgJ2arHHaUxrkMjmM+b/O+SR01LhCHspE/v7HAheNzi7wBmqYZffm8/dvfFnIdAHEYs8eM+JMetrPJBC+k7ztJ1xOHAmMHPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791892140; c=relaxed/simple;
-	bh=xxn5FEZvQuZj34fOrXGanhKh36InegcPWEzjj3QZ9ts=;
+	s=arc-20240116; t=1791892142; c=relaxed/simple;
+	bh=OdRkimAe/e91vhQn/HgrdHoYLiN4UbUjafI+CJJDKvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlYlJdrRufF/YprmrvKIREMGAoTSevaAY9Tb0py/xKDkPJpKeCN5fQRu0uuKwIWaERXQ6OAI8LpLPildvJJPKIs2VR8+Wd6ynp/C6CBBE+0RCeU1bly9rZwEXD26P8oG5//fiu442kZgbvfrN113Ya09hgdSEdPV2qC7l9Gy0fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qa/W7Y5O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYRGrXndbePpyQWsOq8iivSrlxS4A/iRi65lZu1QvQDLP26ss+awPtfmVlIfKL6BPgAPXz88Bprh9JT4tztIvhsU9S8bys/7quJNPy1s5F0s5ur2KxLkaw9z3+t6Vj54mOveTsaiP1ziiMSHWdC705EC8wlyVKQRBuw47JEnt20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVDvEIEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qa/W7Y5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0B01F000FF;
-	Tue, 13 Oct 2026 11:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVDvEIEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C91B1F000FF;
+	Tue, 13 Oct 2026 11:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791892138;
-	bh=P4zeTqJyLexFIdwzkRWEbzdhEmz/RCAyO79O74Fy+74=;
+	s=korg; t=1791892141;
+	bh=8dolBQ8kpDoUTRHAtBi1Rnqd/KlNUwPLAWbgtoCA7vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qa/W7Y5Ox8RM0GaSRY68MpI/UYA7QLn0vJNceiZLKYiaVbUB1/waHy1U62LTauxs5
-	 mcL3bYmljlUFdV66oPPAOB1ivBBL4geioOgH8+b/WGScsPTucUmDwagpUcySGAdYmP
-	 j40hDGwZFzphvr1JGE319YWQcQ9M4PDlQ6RfWSGY=
+	b=qVDvEIEBM0baswdODkCCsFUU3YAs8obWVS7whYV6NIAmUQa8uerbX+ExbFRuT5svV
+	 r+zpsGPJr4JsDPXr3KapKbcIoVgqM+AJlUYDvN3dhFg3Rri+jFvXMtgtcICo6Qopz+
+	 Lf/B0DYGpeicaAJwT5C73MVl/AoLNFIkDECA9Ics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@kernel.org>
-Subject: [PATCH 7.2 071/281] mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
-Date: Tue, 13 Oct 2026 13:36:27 +0200
-Message-ID: <20261013112856.853107578@linuxfoundation.org>
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 072/281] mm: dont schedule deferred kernel page table freeing while booting
+Date: Tue, 13 Oct 2026 13:36:28 +0200
+Message-ID: <20261013112856.876543592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
 References: <20261013112855.045212108@linuxfoundation.org>
@@ -59,231 +64,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 597e4b9ab48a3f841080f627722064853d3f650e upstream.
+commit 2fb552b0bee70c24c092720028ab4620f5eb2646 upstream.
 
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
+Booting with a boot-time function tracer and a filter, for example
 
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
+  ftrace=function ftrace_filter=pud_free_pmd_page
 
-Fix another of these - partial copies.
+panics on 7.3-rc4 as soon as the tracer starts:
 
-The long-standing mremap() partial VMA logic has the baked-in assumption
-that the originating VMA is unmapped and thus moved.
+  [   23.531178] Starting tracer 'function'
+  [   23.675800] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000038: 0000 [#1] SMP KASAN NOPTI
+  [   23.819917] KASAN: null-ptr-deref in range [0x00000000000001c0-0x00000000000001c7]
+  [   23.964025] CPU: 0 UID: 0 PID: 0 Comm: swapper Not tainted 7.3.0-rc4-fe2ec83746e5-with-fixes-v2+ #195 PREEMPT(undef)
+  [   24.252248] RIP: 0010:__queue_work+0xab/0xf00
+  [   25.981629] Call Trace:
+  [   26.125727]  <TASK>
+  [   26.413912]  ? pagetable_free_kernel+0x20/0x120
+  [   26.990283]  queue_work_on+0x97/0xf0
+  [   27.134382]  __cpa_collapse_large_pages+0x501/0x6f0
+  [   27.566662]  cpa_flush+0x394/0x620
+  [   27.998953]  change_page_attr_set_clr+0x321/0x4a0
+  [   29.151729]  set_memory_rox+0xa2/0xf0
+  [   29.584018]  create_trampoline+0x431/0x6f0
+  ...
+  [   44.343347] Kernel panic - not syncing: Attempted to kill the idle task!
 
-However MREMAP_DONTUNMAP defeats this by performing a partial copy
-instead since it keeps the source VMA around.
+The boot-time tracer is started from early_trace_init(), which runs
+before workqueue_init_early().  Making its trampoline read-only splits a
+large page, and CPA collapses it again right away.  The split table has
+been a kernel page table since commit 9e4a3ec3411b
+("x86/mm/pat: Allocate split page tables as kernel page tables"), so the
+collapse frees it through pagetable_free_kernel(), which queues work on
+system_percpu_wq - still NULL at that point.  That commit is correct in
+itself; it only lets CPA reach pagetable_free_kernel() before the
+workqueue that function relies on exists.
 
-An mremap(..., MREMAP_DONTUNMAP) operation disallows resizing of the VMA,
-but the operation can be performed partially:
+Keep putting the table on the list, but don't schedule the work while
+the system is still booting.  A core_initcall schedules it once to free
+whatever was queued by then.
 
-                           |-----------------|
-                           |                 |
-                           |                 v
-                        <------>          <------>
-                        .new_sz.           new_sz
-                     |--.------.--|       |------|
-                     |  .source.  |       | dest |
-                     |--.------.--|       |------|
-                     <------------>
-                         old_sz
-
-The page tables in the specified range are moved, but the original VMA is
-kept intact.
-
-This interacts poorly with mlock()'d VMAs, as the VMA_LOCKED_BIT flag is
-cleared for the entire source VMA and set for the entire destination VMA.
-
-This results in an mm->locked_vm leak as the change is therefore not
-accounted correctly.
-
-The clear solution here is to make the portion of the source VMA which is
-mremap()'d distinct from the rest of it, a.k.a. split it.
-
-Therefore resolve this issue by splitting it ahead of the rest of the
-mremap() operation if the VMA is mlock()'d.
-
-This is valid, as the source VMA will lose its VMA_LOCKED_BIT flag, so if a
-partial remap it will become distinct from the rest of the VMA.
-
-In order to make this change re-expose split_vma() in vma.h for
-CONFIG_MMU (nommu doesn't compile mremap.c and uses a static helper
-instead).
-
-Finally, update the sys_map_count check to account for this case.
-
-Note that the early check does not use needs_pre_split() - this is because
-the VMA has not been looked up by this point, so be conservative and assume
-that the VMA is mlock()'d in this case for the purposes of the
-sys_map_count check.
-
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-2-f388985a0f0a@kernel.org
-Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Link: https://lore.kernel.org/20260925050647.86913-1-mikhail.v.gavrilov@gmail.com
+Link: https://lore.kernel.org/20260924064321.23787-1-mikhail.v.gavrilov@gmail.com
+Fixes: 9e4a3ec3411b ("x86/mm/pat: Allocate split page tables as kernel page tables")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Suggested-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Tested-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Steven Rostedt <rostedt@goodmis.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mremap.c |   62 ++++++++++++++++++++++++++++++++++++++++++++----------------
- mm/vma.c    |    4 +--
- mm/vma.h    |    5 ++++
- 3 files changed, 53 insertions(+), 18 deletions(-)
+ mm/pgtable-generic.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1029,6 +1029,7 @@ static void vrm_stat_account(struct vma_
+--- a/mm/pgtable-generic.c
++++ b/mm/pgtable-generic.c
+@@ -438,12 +438,30 @@ static void kernel_pgtable_work_func(str
+ 		__pagetable_free(pt);
  }
  
- static bool __check_map_count_against_split(struct mm_struct *mm,
-+					    bool pre_split,
- 					    bool before_unmaps)
- {
- 	const int sys_map_count = get_sysctl_max_map_count();
-@@ -1080,26 +1081,42 @@ static bool __check_map_count_against_sp
- 	 * Therefore we must check to ensure we have headroom of 2 additional
- 	 * VMAs.
- 	 */
--	return map_count + 2 <= sys_map_count;
-+	map_count += 2;
-+
-+	/* If pre-split, the -1 observed above doesn't apply. */
-+	if (pre_split)
-+		map_count++;
-+
-+	return map_count <= sys_map_count;
++static void schedule_kernel_pgtable_free(void)
++{
++	schedule_work(&kernel_pgtable_work.work);
 +}
 +
-+static bool needs_pre_split(struct vma_remap_struct *vrm)
+ void pagetable_free_kernel(struct ptdesc *pt)
+ {
+ 	spin_lock(&kernel_pgtable_work.lock);
+ 	list_add(&pt->pt_list, &kernel_pgtable_work.list);
+ 	spin_unlock(&kernel_pgtable_work.lock);
+ 
+-	schedule_work(&kernel_pgtable_work.work);
++	/*
++	 * The workqueue may not exist yet while the system is booting.
++	 * kernel_pgtable_drain_early() schedules the work once it does.
++	 */
++	if (system_state != SYSTEM_BOOTING)
++		schedule_kernel_pgtable_free();
++}
++
++static int __init kernel_pgtable_drain_early(void)
 +{
-+	/*
-+	 * An MREMAP_DONTUNMAP of a mlock()'d VMA needs to unlock the
-+	 * source VMA, so split in this case.
-+	 */
-+	return (vrm->flags & MREMAP_DONTUNMAP) &&
-+		vma_test(vrm->vma, VMA_LOCKED_BIT);
++	/* Free the kernel page tables queued while booting. */
++	schedule_kernel_pgtable_free();
++	return 0;
  }
- 
- /* Do we violate the map count limit if we split VMAs when moving the VMA? */
--static bool check_map_count_against_split(void)
-+static bool check_map_count_against_split(struct vma_remap_struct *vrm)
- {
- 	return __check_map_count_against_split(current->mm,
--					       /*before_unmaps=*/false);
-+		needs_pre_split(vrm), /*before_unmaps=*/false);
- }
- 
- /* Do we violate the map count limit if we split VMAs prior to early unmaps? */
--static bool check_map_count_against_split_early(void)
-+static bool check_map_count_against_split_early(struct vma_remap_struct *vrm)
- {
- 	return __check_map_count_against_split(current->mm,
--					       /*before_unmaps=*/true);
-+		vrm->flags & MREMAP_DONTUNMAP, /*before_unmaps=*/true);
- }
- 
- /*
-- * Perform checks before attempting to write a VMA prior to it being
-- * moved.
-+ * Perform checks and preparation before attempting to write a VMA prior to it
-+ * being moved.
-  */
- static unsigned long prep_move_vma(struct vma_remap_struct *vrm)
- {
-@@ -1108,19 +1125,17 @@ static unsigned long prep_move_vma(struc
- 	unsigned long old_addr = vrm->addr;
- 	unsigned long old_len = vrm->old_len;
- 	vm_flags_t dummy = vma->vm_flags;
-+	const bool split_before = vma->vm_start != old_addr;
-+	const bool split_after = vma->vm_end != old_addr + old_len;
- 
--	/*
--	 * We'd prefer to avoid failure later on in do_munmap: we copy a VMA,
--	 * which may not merge, then (if MREMAP_DONTUNMAP is not set) unmap the
--	 * source, which may split, causing a net increase of 2 mappings.
--	 */
--	if (!check_map_count_against_split())
-+	/* Avoid failure later on. */
-+	if (!check_map_count_against_split(vrm))
- 		return -ENOMEM;
- 
- 	if (vma->vm_ops && vma->vm_ops->may_split) {
--		if (vma->vm_start != old_addr)
-+		if (split_before)
- 			err = vma->vm_ops->may_split(vma, old_addr);
--		if (!err && vma->vm_end != old_addr + old_len)
-+		if (!err && split_after)
- 			err = vma->vm_ops->may_split(vma, old_addr + old_len);
- 		if (err)
- 			return err;
-@@ -1138,6 +1153,21 @@ static unsigned long prep_move_vma(struc
- 	if (err)
- 		return err;
- 
-+	/*
-+	 * To account mlock()'d pages correctly in the MREMAP_DONTUNMAP
-+	 * case perform any split ahead of time for an mlock()'d VMA.
-+	 */
-+	if (needs_pre_split(vrm)) {
-+		VMA_ITERATOR(vmi, vma->vm_mm, old_addr);
-+
-+		if (split_before)
-+			err = split_vma(&vmi, vma, old_addr, 1);
-+		if (!err && split_after)
-+			err = split_vma(&vmi, vma, old_addr + old_len, 0);
-+		vrm->vmi_needs_invalidate = true;
-+		return err;
-+	}
-+
- 	return 0;
- }
- 
-@@ -1992,7 +2022,7 @@ static unsigned long do_mremap(struct vm
- 		return -EINTR;
- 	vrm->mmap_locked = true;
- 
--	if (!check_map_count_against_split_early()) {
-+	if (!check_map_count_against_split_early(vrm)) {
- 		mmap_write_unlock(mm);
- 		return -ENOMEM;
- 	}
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -590,8 +590,8 @@ out_free_vma:
-  * Split a vma into two pieces at address 'addr', a new vma is allocated
-  * either for the first part or the tail.
-  */
--static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
--		     unsigned long addr, int new_below)
-+int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-+	      unsigned long addr, int new_below)
- {
- 	if (vma->vm_mm->map_count >= get_sysctl_max_map_count())
- 		return -ENOMEM;
---- a/mm/vma.h
-+++ b/mm/vma.h
-@@ -470,6 +470,11 @@ int do_brk_flags(struct vma_iterator *vm
- unsigned long unmapped_area(struct vm_unmapped_area_info *info);
- unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info);
- 
-+#ifdef CONFIG_MMU
-+int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-+	      unsigned long addr, int new_below);
-+#endif
-+
- static inline bool vma_wants_manual_pte_write_upgrade(struct vm_area_struct *vma)
- {
- 	/*
++core_initcall(kernel_pgtable_drain_early);
+ #endif
 
 
