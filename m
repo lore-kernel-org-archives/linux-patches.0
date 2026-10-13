@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454AC4F68B4;
-	Tue, 13 Oct 2026 12:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7995F2DECC2;
+	Tue, 13 Oct 2026 12:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895624; cv=none; b=mkuPYT+H3lEiPJfd35O9faSSnyiOJov5Zn2bcF8UrQDJMnfRRPQXJuJf9c4ovIhyBy+Ocd7AVWbSEbKNGrvLKaSkmbnvOwwwap5QnEEFhy7O3lnvOpHPevmUzvEIuaUfiynzeD4m1tiF163g9JF1FgQPiQcE0qnZNjOd0PzJ+5I=
+	t=1791895627; cv=none; b=FwuMSkRByuSw4cZsp14xX36GuOz05zIHCT6y8Yve3HX2ssm+eDvGz44liyiPhnpvxZfy4QoN1s+TJlr40SL23hWn9vurU/ZuDaYrmG13BP9Y2aELMUrlN629K348GQFv46yW+5j85oNUBN/TMdguyn/lG1kpTTrsBknhU84HHWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895624; c=relaxed/simple;
-	bh=6ockP+1DmxqXnoj+GUIC0kl/WO1mCVR1Ck1KzqVkOeU=;
+	s=arc-20240116; t=1791895627; c=relaxed/simple;
+	bh=4hMSrTPI57oDte0EBDYo9I99eRTrYWU29qLsQnEtPI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzBdh4vdogQIUhS8SVKDQpr4iPNK0UbGezMVp8v+uW16XRGr+NHynBJNFzDQkfLRCm6I8vPGReGLybEgT59JtnlUgSBZS78vSfeQkw92GhAA2M3bFv8v7mb2cMRVFhX+VjtjAobGmW60W2jgRQWGUxyHn24/EX6Q7JAU0tQejV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCrxC5lI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WrFzIo1uqqN4yY+v2RUn76eX0k5GTDCAaiOUg9HZi20YNDuEl87jS9DEFsmhN30tXkFDSPHm3MYFwopcAEvJe+xgGRgE83N5jhzhlAhckJHZFPapOT2dKIL+qEQzoNbx5YWUx4QDomJ7b8Qbbqy3jLjk3rJr4lDLWRjm7yDJUJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3VnDjIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCrxC5lI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC34F1F000FF;
-	Tue, 13 Oct 2026 12:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3VnDjIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEA91F000FF;
+	Tue, 13 Oct 2026 12:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895623;
-	bh=cf1joUnjcUpt9tzaBjY9HzWe3jMbGI4rpTBYQB9m/pI=;
+	s=korg; t=1791895626;
+	bh=CUMFhUoHpiHMT01p2Oj+1QtDmhlccR2jVOp68yc6jlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OCrxC5lIgDQTTk1V+qqdB2ztGJirI7gakpwbn/kv7MQktceyiHPoIwCgnMvJAcRk+
-	 44q9uzeGxCJeyl63uViOHCz+aXyGIhzKMx4HAogdsUrRKICBk29bMZFmZTlOEi8JDp
-	 G6dP2NzTi01wl0umt2mRUCBX0vey04V2EbpbM9dI=
+	b=x3VnDjIhPu3IL78c+F7GLXJ+LJmLz3nlPG91N14ijcezZpLqF2CSFRbpGHL3R07nf
+	 jVPsK63JW/eGee2rsawZIjNlJdbbCn23HnuXwCUmLwSM01hOiovT1GsTh7iKypkPRQ
+	 0l/GSjAxMqx/ocoeCaDq7Hr9G051gH/hLb+TetsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 338/497] iio: bu27034: simplify using guard(mutex)
-Date: Tue, 13 Oct 2026 13:38:25 +0200
-Message-ID: <20261013112915.927277111@linuxfoundation.org>
+Subject: [PATCH 6.12 321/497] net: mana: check xdp_rxq registration before unreg in mana_destroy_rxq()
+Date: Tue, 13 Oct 2026 13:38:08 +0200
+Message-ID: <20261013112915.522892458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -52,215 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
 
-[ Upstream commit 439c2cef8157bd3856200effdf4bb4ce3ff8e774 ]
+[ Upstream commit e9e334f8063a991b4f648b8dbb8dac44cf810540 ]
 
-The BU27034 uses mutex for protecting the gain / time / scale changes.
-The clean-up for a few of the functions can be slightly simplified by
-removing the goto-based error handling/unlocking and by utilizing the
-guard(mutex) scoped mutex handling instead.
+When mana_create_rxq() fails at mana_create_wq_obj() or any step before
+xdp_rxq_info_reg() is called, the error path jumps to `out:` which calls
+mana_destroy_rxq(). mana_destroy_rxq() unconditionally calls
+xdp_rxq_info_unreg() on xilinx xdp_rxq that was never registered,
+triggering a WARN_ON in net/core/xdp.c:
 
-Simplify driver by using the scoped mutexes.
+mana 7870:00:00.0: HWC: Failed hw_channel req: 0xc000009a
+mana 7870:00:00.0 eth7: Failed to create RXQ: err = -71
+Driver BUG
+WARNING: CPU: 442 PID: 491615 at ../net/core/xdp.c:150 xdp_rxq_info_unreg+0x44/0x70
+Modules linked in: tcp_bbr xsk_diag udp_diag raw_diag unix_diag af_packet_diag netlink_diag nf_tables nfnetlink tcp_diag inet_diag binfmt_misc rpcsec_gss_krb5 nfsv3 nfs_acl auth_rpcgss nfsv4 dns_resolver nfs lockd ext4 grace crc16 iscsi_tcp mbcache fscache libiscsi_tcp jbd2 netfs rpcrdma af_packet sunrpc rdma_ucm ib_iser rdma_cm iw_cm iscsi_ibft ib_cm iscsi_boot_sysfs libiscsi rfkill scsi_transport_iscsi mana_ib ib_uverbs ib_core mana hyperv_drm(X) drm_shmem_helper intel_rapl_msr drm_kms_helper intel_rapl_common syscopyarea nls_iso8859_1 sysfillrect intel_uncore_frequency_common nls_cp437 vfat fat nfit sysimgblt libnvdimm hv_netvsc(X) hv_utils(X) fb_sys_fops hv_balloon(X) joydev fuse drm dm_mod configfs ip_tables x_tables xfs libcrc32c sd_mod nvme nvme_core nvme_common t10_pi crc64_rocksoft_generic crc64_rocksoft crc64 hid_generic serio_raw pci_hyperv(X) hv_storvsc(X) scsi_transport_fc hyperv_keyboard(X) hid_hyperv(X) pci_hyperv_intf(X) crc32_pclmul
+ crc32c_intel ghash_clmulni_intel aesni_intel crypto_simd cryptd hv_vmbus(X) softdog sg scsi_mod efivarfs
+Supported: Yes, External
+CPU: 442 PID: 491615 Comm: ethtool Kdump: loaded Tainted: G               X    5.14.21-150500.55.136-default #1 SLE15-SP5 a627be1b53abbfd64ad16b2685e4308c52847f42
+Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 07/25/2025
+RIP: 0010:xdp_rxq_info_unreg+0x44/0x70
+Code: e8 91 fe ff ff c7 43 0c 02 00 00 00 48 c7 03 00 00 00 00 5b c3 cc cc cc cc e9 58 3a 1c 00 48 c7 c7 f6 5f 19 97 e8 5c a4 7e ff <0f> 0b 83 7b 0c 01 74 ca 48 c7 c7 d9 5f 19 97 e8 48 a4 7e ff 0f 0b
+RSP: 0018:ff3df6c8f7207818 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ff30d89f94808a80 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: 0000000000000002 RDI: ff30d94bdcca2908
+RBP: 0000000000080000 R08: ffffffff98ed11a0 R09: ff3df6c8f72077a0
+R10: dead000000000100 R11: 000000000000000a R12: 0000000000000000
+R13: 0000000000002000 R14: 0000000000040000 R15: ff30d89f94800000
+FS:  00007fe6d8432b80(0000) GS:ff30d94bdcc80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe6d81a89b1 CR3: 00000b3b6d578001 CR4: 0000000000371ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ mana_destroy_rxq+0x5b/0x2f0 [mana 267acf7006bcb696095bba4d810643d1db3b9e94]
+ mana_create_rxq.isra.55+0x3db/0x720 [mana 267acf7006bcb696095bba4d810643d1db3b9e94]
+ ? simple_lookup+0x36/0x50
+ ? current_time+0x42/0x80
+ ? __d_free_external+0x30/0x30
+ mana_alloc_queues+0x32a/0x470 [mana 267acf7006bcb696095bba4d810643d1db3b9e94]
+ ? _raw_spin_unlock+0xa/0x30
+ ? d_instantiate.part.29+0x2e/0x40
+ ? _raw_spin_unlock+0xa/0x30
+ ? debugfs_create_dir+0xe4/0x140
+ mana_attach+0x5c/0xf0 [mana 267acf7006bcb696095bba4d810643d1db3b9e94]
+ mana_set_ringparam+0xd5/0x1a0 [mana 267acf7006bcb696095bba4d810643d1db3b9e94]
+ ethnl_set_rings+0x292/0x320
+ genl_family_rcv_msg_doit.isra.15+0x11b/0x150
+ genl_rcv_msg+0xe3/0x1e0
+ ? rings_prepare_data+0x80/0x80
+ ? genl_family_rcv_msg_doit.isra.15+0x150/0x150
+ netlink_rcv_skb+0x50/0x100
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x1b6/0x280
+ netlink_sendmsg+0x365/0x4d0
+ sock_sendmsg+0x5f/0x70
+ __sys_sendto+0x112/0x140
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x5b/0x80
+ ? handle_mm_fault+0xd7/0x290
+ ? do_user_addr_fault+0x2d8/0x740
+ ? exc_page_fault+0x67/0x150
+ entry_SYSCALL_64_after_hwframe+0x6b/0xd5
+RIP: 0033:0x7fe6d8122f06
+Code: 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 11 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 72 f3 c3 41 57 41 56 4d 89 c7 41 55 41 54 41
+RSP: 002b:00007fff2b66b068 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 000055771123d2a0 RCX: 00007fe6d8122f06
+RDX: 0000000000000034 RSI: 000055771123d3b0 RDI: 0000000000000003
+RBP: 00007fff2b66b100 R08: 00007fe6d8203360 R09: 000000000000000c
+R10: 0000000000000000 R11: 0000000000000246 R12: 000055771123d350
+R13: 000055771123d340 R14: 0000000000000000 R15: 00007fff2b66b2b0
+ </TASK>
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/4e65a4725c211b166906f70fdb5ba90f2af0f570.1732193263.git.mazziesaccount@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 8065a6c02f62 ("iio: light: rohm-bu27034: Fix infinite delay on error")
+Guard the xdp_rxq_info_unreg() call with xdp_rxq_info_is_reg() so that
+mana_destroy_rxq() is safe to call regardless of how far initialization
+progressed.
+
+Fixes: ed5356b53f07 ("net: mana: Add XDP support")
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+Link: https://patch.msgid.link/20260430035935.1859220-2-dipayanroy@linux.microsoft.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/rohm-bu27034.c | 73 +++++++++++---------------------
- 1 file changed, 25 insertions(+), 48 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/rohm-bu27034.c b/drivers/iio/light/rohm-bu27034.c
-index 29da3313addbd..be3895a9da70c 100644
---- a/drivers/iio/light/rohm-bu27034.c
-+++ b/drivers/iio/light/rohm-bu27034.c
-@@ -7,6 +7,7 @@
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 7d69f939638a4..0da960bc11de7 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2043,7 +2043,9 @@ static void mana_destroy_rxq(struct mana_port_context *apc,
  
- #include <linux/bitfield.h>
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
-@@ -395,30 +396,26 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
- 	int numg = ARRAY_SIZE(gains);
- 	int ret, int_time_old, i;
- 
--	mutex_lock(&data->mutex);
-+	guard(mutex)(&data->mutex);
- 	ret = bu27034_get_int_time(data);
- 	if (ret < 0)
--		goto unlock_out;
-+		return ret;
- 
- 	int_time_old = ret;
- 
- 	if (!iio_gts_valid_time(&data->gts, time_us)) {
- 		dev_err(data->dev, "Unsupported integration time %u\n",
- 			time_us);
--		ret = -EINVAL;
--
--		goto unlock_out;
-+		return -EINVAL;
+ 		netif_napi_del(napi);
  	}
+-	xdp_rxq_info_unreg(&rxq->xdp_rxq);
++
++	if (xdp_rxq_info_is_reg(&rxq->xdp_rxq))
++		xdp_rxq_info_unreg(&rxq->xdp_rxq);
  
--	if (time_us == int_time_old) {
--		ret = 0;
--		goto unlock_out;
--	}
-+	if (time_us == int_time_old)
-+		return 0;
+ 	mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
  
- 	for (i = 0; i < numg; i++) {
- 		ret = bu27034_get_gain(data, gains[i].chan, &gains[i].old_gain);
- 		if (ret)
--			goto unlock_out;
-+			return 0;
- 
- 		ret = iio_gts_find_new_gain_by_old_gain_time(&data->gts,
- 							     gains[i].old_gain,
-@@ -434,7 +431,7 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
- 				gains[i].chan, time_us, scale1, scale2);
- 
- 			if (gains[i].new_gain < 0)
--				goto unlock_out;
-+				return ret;
- 
- 			/*
- 			 * If caller requests for integration time change and we
-@@ -455,7 +452,7 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
- 					 "Total gain increase. Risk of saturation");
- 				ret = iio_gts_get_min_gain(&data->gts);
- 				if (ret < 0)
--					goto unlock_out;
-+					return ret;
- 			}
- 			dev_dbg(data->dev, "chan %u scale changed\n",
- 				 gains[i].chan);
-@@ -468,15 +465,10 @@ static int bu27034_try_set_int_time(struct bu27034_data *data, int time_us)
- 	for (i = 0; i < numg; i++) {
- 		ret = bu27034_set_gain(data, gains[i].chan, gains[i].new_gain);
- 		if (ret)
--			goto unlock_out;
-+			return ret;
- 	}
- 
--	ret = bu27034_set_int_time(data, time_us);
--
--unlock_out:
--	mutex_unlock(&data->mutex);
--
--	return ret;
-+	return bu27034_set_int_time(data, time_us);
- }
- 
- static int bu27034_set_scale(struct bu27034_data *data, int chan,
-@@ -492,10 +484,10 @@ static int bu27034_set_scale(struct bu27034_data *data, int chan,
- 		return -EINVAL;
- 	}
- 
--	mutex_lock(&data->mutex);
-+	guard(mutex)(&data->mutex);
- 	ret = regmap_read(data->regmap, BU27034_REG_MODE_CONTROL1, &time_sel);
- 	if (ret)
--		goto unlock_out;
-+		return ret;
- 
- 	ret = iio_gts_find_gain_sel_for_scale_using_time(&data->gts, time_sel,
- 						val, val2, &gain_sel);
-@@ -518,7 +510,7 @@ static int bu27034_set_scale(struct bu27034_data *data, int chan,
- 
- 		ret = bu27034_get_gain(data, gain.chan, &gain.old_gain);
- 		if (ret)
--			goto unlock_out;
-+			return ret;
- 
- 		/*
- 		 * Iterate through all the times to see if we find one which
-@@ -551,26 +543,20 @@ static int bu27034_set_scale(struct bu27034_data *data, int chan,
- 		if (!found) {
- 			dev_dbg(data->dev,
- 				"Can't set scale maintaining other channel\n");
--			ret = -EINVAL;
--
--			goto unlock_out;
-+			return -EINVAL;
- 		}
- 
- 		ret = bu27034_set_gain(data, gain.chan, gain.new_gain);
- 		if (ret)
--			goto unlock_out;
-+			return ret;
- 
- 		ret = regmap_update_bits(data->regmap, BU27034_REG_MODE_CONTROL1,
- 				  BU27034_MASK_MEAS_MODE, new_time_sel);
- 		if (ret)
--			goto unlock_out;
-+			return ret;
- 	}
- 
--	ret = bu27034_write_gain_sel(data, chan, gain_sel);
--unlock_out:
--	mutex_unlock(&data->mutex);
--
--	return ret;
-+	return bu27034_write_gain_sel(data, chan, gain_sel);
- }
- 
- /*
-@@ -1221,42 +1207,33 @@ static int bu27034_buffer_enable(struct iio_dev *idev)
- 	struct task_struct *task;
- 	int ret;
- 
--	mutex_lock(&data->mutex);
-+	guard(mutex)(&data->mutex);
- 	ret = bu27034_meas_set(data, true);
- 	if (ret)
--		goto unlock_out;
-+		return ret;
- 
- 	task = kthread_run(bu27034_buffer_thread, idev,
- 				 "bu27034-buffering-%u",
- 				 iio_device_id(idev));
--	if (IS_ERR(task)) {
--		ret = PTR_ERR(task);
--		goto unlock_out;
--	}
-+	if (IS_ERR(task))
-+		return PTR_ERR(task);
- 
- 	data->task = task;
- 
--unlock_out:
--	mutex_unlock(&data->mutex);
--
--	return ret;
-+	return 0;
- }
- 
- static int bu27034_buffer_disable(struct iio_dev *idev)
- {
- 	struct bu27034_data *data = iio_priv(idev);
--	int ret;
- 
--	mutex_lock(&data->mutex);
-+	guard(mutex)(&data->mutex);
- 	if (data->task) {
- 		kthread_stop(data->task);
- 		data->task = NULL;
- 	}
- 
--	ret = bu27034_meas_set(data, false);
--	mutex_unlock(&data->mutex);
--
--	return ret;
-+	return bu27034_meas_set(data, false);
- }
- 
- static const struct iio_buffer_setup_ops bu27034_buffer_ops = {
 -- 
 2.53.0
 
