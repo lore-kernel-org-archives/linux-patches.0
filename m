@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7E24FC329;
-	Tue, 13 Oct 2026 12:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7871E367B6D;
+	Tue, 13 Oct 2026 12:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791895092; cv=none; b=qbwnn8z4gFl5HzUPYOzD0JnpJ9NGJt8AXrgWeujzo5c1Os/P6csLqAITp5hccgPLzqw8XSp1U9m0lp8+IsaHNKiHRGgnNUp4EyThYhrJYhqvawp7mfM99ovY40v8D/feMFKnv/y4zFQ/z9ItSO1kyCHeRNciTGKZp43a5rxuICA=
+	t=1791895094; cv=none; b=cgFx/Od1/XtPdFJVTZhFX314L60od3zvRt+82dKsxinRUhCzZdl1N6yzoB11bp07L01K3+qDcXSdXRsYbMfYLBAwFev9ao8+pRg+Zlktg9l6T42HkGzYdgeR7+9TkbGzAQqAsCLe9kUS4YoByfz1HHb8kiwfvjFlmNgYpnlhZtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791895092; c=relaxed/simple;
-	bh=5SfPMcMxHAFMZHKYVK1Jo+XSXl4tI530NQwP4rmN3dI=;
+	s=arc-20240116; t=1791895094; c=relaxed/simple;
+	bh=xpiutFsD59SZN4w9qY/qYnH3tGtC7Ra3+7wbyvk/ELs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhLePDrpGwH4IHJRPFfzr9hY56GOe4SRBBHDg0s4f/ei7mdIv3jyOF7+wFTBkN+fqtovzHs7MDD5NL0j8O7mvTgnVPWi9i5l9Sgc9wGLj8REF/a3HtAtispNU0co3cSYVgoXYs7gLp8PsIkrIHncAWtfkisijHZjGrzybnynn1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlMByTlA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1MyC1koFotzROu6YwMPa3zfny11YB27/l2lwDUwukARDfkJLrPu8zwgu1eQw5gWy1PeAzxFAQlAnOE/WEIziZ3ELhboaVhnypz1Dcyn/FxYrnYpB2NsVCx3/XGRnAvGE1G+hLJ4i64pNtGQNBdOea68ApFXYVwO/CzOnChEBwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzEMOu+n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlMByTlA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A9C1F000FF;
-	Tue, 13 Oct 2026 12:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzEMOu+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC791F000FF;
+	Tue, 13 Oct 2026 12:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791895090;
-	bh=8UVn1dlGndvWRpvOu+TcNhVWcXh9x+8a9ruh22UNu/w=;
+	s=korg; t=1791895093;
+	bh=64ory+kw2m64+wkwNZHfybamTyQht1wsAFYhO4VJIN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YlMByTlA4tl7VKuvLseo+ky9lGZwET/HNKa7ULEHHofQJDcym7aTPp/rbuNXJJueL
-	 S6le99prYYvku2m0EqL+H1Ee/dUMoKdkCUCqpst3QaJz2K1l8Nj6lJ0lNADOgHxC6H
-	 76E2O9RcFhMhRxvgvs2y1UT1Ihdw9F0eTYRnjg8k=
+	b=WzEMOu+nl0GfXUacgUdyLsCPR8uiJi0NqbiNq2SsLwK5EM+TOXtvPrYBrkfPsP5Go
+	 5j8na3roA2AAChpqR+9On0VBpXDu91c5OwgKxDfFUdz3iNVIbUPqeEIeLVmSyyocSU
+	 syhsSpgRPHN1JmHK2psjTzyDX5OnCZJZIMlar2eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jie Deng <dengjie03@kylinos.cn>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.12 158/497] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
-Date: Tue, 13 Oct 2026 13:35:25 +0200
-Message-ID: <20261013112911.637980717@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Subject: [PATCH 6.12 159/497] tty: vt: fix memory leak in vc_allocate()
+Date: Tue, 13 Oct 2026 13:35:26 +0200
+Message-ID: <20261013112911.662514328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013112907.864180619@linuxfoundation.org>
 References: <20261013112907.864180619@linuxfoundation.org>
@@ -51,68 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
+commit 5b114bfc1dfd88f9d50822d532f7f1fce0f7388a upstream.
 
-The Cadence USBSS controller is a two-function PCI device. The first
-probed function allocates the driver data and stores it with
-pci_set_drvdata(), while the second function reuses it via
-pci_get_drvdata() when pci_is_enabled() reports that the first
-function has already been probed.
+If the screen buffer allocation fails in vc_allocate(), the error handling
+path jumps to `err_free`. However, this path fails to release the unicode
+screen map attached to `vc->uni_pagedict_loc`.
 
-When the second function is probed while the first one has been
-enabled but has not yet set its driver data, pci_get_drvdata()
-returns NULL, and the subsequent wrap->devfn assignment dereferences
-a NULL pointer and crashes the kernel.
-logs:
-Call trace:
-  cdns3_pci_probe+0xa4/0x300
-  local_pci_probe+0x44/0xa8
-  pci_call_probe+0x54/0x158
-  pci_device_probe+0x84/0x100
-  really_probe+0x184/0x3d0
-  __driver_probe_device+0x80/0x178
-  driver_probe_device+0x44/0xe8
-  __driver_attach+0xec/0x1f8
-  bus_for_each_dev+0x7c/0xe0
-  driver_attach+0x28/0x38
-  bus_add_driver+0x110/0x238
-  driver_register+0x64/0x128
-  __pci_register_driver+0x50/0x60
-  cdns3_pci_driver_init+0x28/0x38
-  do_one_initcall+0x5c/0x280
-  do_initcalls+0x104/0x1d8
-  kernel_init_freeable+0x140/0x218
-  kernel_init+0x28/0x1f8
-  ret_from_fork+0x10/0x20
+During the early stages of vc_allocate(), the unicode screen map is either
+newly allocated via con_set_default_unimap() or shares the default unicode
+map from a previously initialized console (which increments its refcount).
+If the subsequent kzalloc() for the screen buffer fails, the err_free path
+frees the vc structure but leaves the attached uni_pagedict with an
+elevated refcount. This results in an unreferenced object memory leak, as
+the reference to the dictionary is lost and its refcount can never reach
+zero.
 
-Return -EPROBE_DEFER in this case so that probing is retried after
-the first function has completed its probe.
+This issue was discovered by DevGen (an automated virtual device modeling
+fuzzer based on Syzkaller). During fuzzing with kernel fault injection
+(failslab) enabled, the fuzzer forcefully failed the kzalloc() for the
+screen buffer, exposing this error-handling path leak.
 
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Fix this by checking *vc->uni_pagedict_loc and calling con_free_unimap(vc)
+in the err_free path before kfree(vc). This safely decrements the refcount
+and releases the dictionary memory if this was the last reference. The
+explicit check is added to maintain consistency with other callers.
+
+Fixes: 34902b7f2754 ("tty: vt, get rid of weird source code flow")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20260803144556.163856-1-25181214217@stu.xidian.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/vt/vt.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -98,6 +98,11 @@ static int cdns3_pci_probe(struct pci_de
- 
- 	if (pci_is_enabled(func)) {
- 		wrap = pci_get_drvdata(func);
-+		if (!wrap) {
-+			dev_err(&pdev->dev,
-+				"second function not initialized, retrying\n");
-+			return -EPROBE_DEFER;
-+		}
- 	} else {
- 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
- 		if (!wrap)
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1097,6 +1097,8 @@ int vc_allocate(unsigned int currcons)	/
+ 	return 0;
+ err_free:
+ 	visual_deinit(vc);
++	if (*vc->uni_pagedict_loc)
++		con_free_unimap(vc);
+ 	kfree(vc);
+ 	vc_cons[currcons].d = NULL;
+ 	return err;
 
 
