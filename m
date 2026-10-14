@@ -1,67 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF13499F06;
-	Wed, 14 Oct 2026 09:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5209048125B;
+	Wed, 14 Oct 2026 11:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791968510; cv=none; b=UL5KpH0uRKpSls8Cir3pY9QbOSLAKE4ZmscBqRMttwNSt0Ztmv9pXhbX+iKHj1xHTkgT49HqxmB946+FHSwusYJ1tS5v2HgEPlbkHy5ROEzDJYx5yw0E59nYNuYPEZ2TKuk/SSrbBbX0l7/BzQwE8teAVlr/RMlBfYOFew9xgGI=
+	t=1791978175; cv=none; b=BTIY3dE6uOkctvz0vFylOlU2BNz32OvZpK1NIGHGcqENVuW/53BsdmC/iNk51KOtV1/kkgETSqAB20t8gmmchZdbNp6HZJARb/txLtyldPhvmoMOyxnQctB11/UkBFbkt1duyqMpco3MMrkYXnZ+2dB7dw4w+5yXPQ4Vopws2WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791968510; c=relaxed/simple;
-	bh=fK4EBgbsh8y/ygyHTRLW2d0pik1a4U3geawr9D0Cotw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XJ3D8LaCSV/okzl6y2eilwKUMtfjizkNW6Rv3ekEJ6SidQqkxcZRFHgelv7R3ikKvuUhdoCcJMxwuQ8YOY8FB68XPJwxpc/xjiDGsM0uDN9N6+RUqKTzrH6VebmIdIf0r2rGPyQBQNw0Lw+4/lCEIoRVT8B5iNxS8rdK7ZVYCQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1f7c/Z1; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1f7c/Z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81EB1F000FF;
-	Wed, 14 Oct 2026 09:01:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791968508;
-	bh=d+7qA8mWix34k0BGyINGvUZ3WOquU0CkExvHwCQqckA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Y1f7c/Z1xVNfz7w+aWA4/TrYcE5cspE0wpsRMWXzOqMHpzWtkcqC5hyx2xJbrURxs
-	 owCy6n/murUxKR4gmnmz/8eGz9Myh/MKV+NWrtY24aGMwDykiiF2/jAGfCuePR6oDi
-	 zVu2WqCjnhX3PXW8OibGWSC2JYoTFQYyXmfpfrXQ=
-Date: Wed, 14 Oct 2026 11:01:52 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Brett A C Sheffield <bacs@librecast.net>
-Cc: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/621] 6.18.57-rc1 review
-Message-ID: <2026101445-announcer-unreached-bd03@gregkh>
-References: <as4kGIjqjrKzu0O0@auntie.librecast.net>
- <2026-10-13-1-daily-reply-0014-6-18-rc1-krb5-link-failure@kernel.org>
- <as8_EiojooHC5H-v@karahi.librecast.net>
+	s=arc-20240116; t=1791978175; c=relaxed/simple;
+	bh=bXSzj8xIGUJpxbXfniQ/txbw81gghSL+q2L9CEzjGjU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aeR55cTcE3YZWT+HJtQqRi6q0dO+SD5IEXRqgflfNMN+DHx27eVK8LbdoUBiCltjXKjkutAHZCluCRDwVPUfCp2gswBOmg+K554P0VfivP3o4gjV9OXgCcZMp36QfQCVH6i3HDhE7NDuyc4mIWmXljKfI32zrEaDljGuJWVVe8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 7.2 000/281] 7.2.11-rc1 review
+Date: Wed, 14 Oct 2026 11:42:40 +0000
+Message-ID: <20261014114244.63555-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261013112855.045212108@linuxfoundation.org>
+References: <20261013112855.045212108@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <as8_EiojooHC5H-v@karahi.librecast.net>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 14, 2026 at 10:36:34AM +0200, Brett A C Sheffield wrote:
-> On 2026-10-13 21:27, Sasha Levin wrote:
-> > > Build failing on amd64:
-> > >
-> > > /usr/x86_64-pc-linux-gnu/binutils-bin/2.47/ld: vmlinux.o: in function `gss_krb5_get_mic_v2':
-> > > (.text+0xfc2762): undefined reference to `crypto_krb5_get_mic'
-> > 
-> > Thanks for the report. The krb5 patches in the queue need a select of
-> > CRYPTO_KRB5 that was missing. Queued for 6.18.
-> 
-> Thanks.
-> 
-> Will there be an RC2?
+# Librecast Test Results
 
-Yes, let me work on that today...
+044/044 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
+
+CPU/kernel: Linux auntie 7.2.11-rc1-gc24fcd821ad0 #2 SMP PREEMPT_DYNAMIC Wed Oct 14 11:40:20 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
