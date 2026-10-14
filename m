@@ -1,90 +1,90 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79BA3CAA53
-	for <patches@lists.linux.dev>; Wed, 14 Oct 2026 21:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564B747F78B
+	for <patches@lists.linux.dev>; Wed, 14 Oct 2026 21:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792014295; cv=fail; b=W1Sic3IY2rIVsXOuU8J9a0yb3h6vMbkGhpm73NOY+KvoppSOhOuFO3cMlB2yxXyhuUKywSK68i7DZsJ0H6UnDlcjwNU5k2bfKAk9WUhGQ0dA/HWxmOuV4UHLvnOyqVeAYZiuGAA6mKR9oOk8Qdb2a+rWl0KZ+fxPbML15uJVZzg=
+	t=1792014452; cv=fail; b=dDKRdWchNjCuUP9NtsfK1ET8BM/sxvl3kznYoCsir+4i+H4AeVDcMUy61TiDiTu65IAdRzDTcE1EqsdYQbSDcWcHSM5zVS4sefV7Wvv63vJonUff7yLgbryxThBw9f8XJyPcpuA6aRsNSfwCJemjRjPlyBjenNPatbr2pIvnCws=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792014295; c=relaxed/simple;
-	bh=uugJtpYhm0t1v/o9TKduDXAPIs7vhlITxAs7cFcfrHs=;
+	s=arc-20240116; t=1792014452; c=relaxed/simple;
+	bh=H5RDU7pMHHcSt0VUOZ3WqYPeyX/E19m4zu8lRR+LpNA=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=mSn5d3+AOrveb9x5M5zawXF/KyBAHmWXOFPFfdu+JY+F6+lKpyod2SQFmDLimLvauFNX/mWY7MFPcBaWFs4IFm64TfvbZSIDTCV6lgyycB9RGkY6H8QMXgVu67+N2pFdNXQiA3UmyTXw1bNGRXfaVr2D6Piz32VivYibw5AQe/8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=Rvcj1uzf; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=f/LZJUqh; arc=fail smtp.client-ip=205.220.177.32
+	 Content-Type:MIME-Version; b=SZZvg0vVCcksCLJCIzANU2MqvfSJVDPPTpf+VWP8RUbaQK17AafJ+5kDTviXy/JYjOgdhdjFSsNcF5ySf89nwYLTlHOw0Q8B39yICneamdlWByeiXEnQeuSHmuFNqPhNOrbbGgFmQ3HaLuPDTWqLi+yAuNCDLcz2MrgPM++aiXI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=KXi+7prU; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=PDtezQPi; arc=fail smtp.client-ip=205.220.165.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="Rvcj1uzf";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="f/LZJUqh"
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69ELg1f03438070;
-	Wed, 14 Oct 2026 21:44:49 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="KXi+7prU";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="PDtezQPi"
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69ELftJ01678357;
+	Wed, 14 Oct 2026 21:47:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=MxJjXnWqSHiUvTYCoDpZSZPIYIjMh4Ay1wSFSWbWSX0=; b=
-	Rvcj1uzf93XXISg2JE2O4wF/QJF4tIjxO4IC2u/aCfCpzeFBD9SeZH8jYuOV6HVK
-	jh0IGG3LhlGIzvwX3Kg5E4mo/mr2Qsen6UQ574adeI73zDTiKtEDrXJAHe6aXffh
-	VKyBFpuVxuQg8jyGNnYHBq7T5uP0xZGSfzMJv3LnvfUa/oiAi3aw4NlE8UIhO0IL
-	8GgkDfDixLTaSI9IVpKYFD5B41jHuULpIWq5uO33JezC3E8Oe/l2If6hLLjpTCGC
-	/bzIl9Yg8ZL+damtvF/W+6q/ybkrk4gLb0NCiRvXAPyx3cWIlU9o5jBwRwCzj5hw
-	zSibMmWb1kKvCO1EqnOa2w==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7demq2k7-1
+	corp-2025-04-25; bh=uBLPv2EzbjvfTXHb94j6B4YJ5/DnLwHWq9yaqZinqHk=; b=
+	KXi+7prUw8/mmPu0ywPtZppTJ8nHJnVcSr7cjrVwmKpawZsT1VMR4QQ3yuHAUmjy
+	toX94HbJgl6ld2WSC1k55j0C9mBevl66TSpNcsRkFN+ZxFQ/6Yyfzh3VjvJaaGHy
+	tLMgGaP4fNKhU0eaHPg3+gSDR0BJWmnhVfxyfZv5zF6BCZqaqNVm2mbNsm5E4TKy
+	tcQXfckDcvAOoKUoo+jVq69tT0wYE2txaIhigzxMp7Si5a01TcQQ4A6+NoMEXGPC
+	EPpli/VOvXik0X2TImGECD2hnCZcoqQPfl0Rqg9I5wJShux2R12ItmAobGBu4Pl4
+	ny4rrvUrpDjaQTeIgqwLWQ==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7df7y3jj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 14 Oct 2026 21:44:48 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 69ELahYY022793;
-	Wed, 14 Oct 2026 21:44:47 GMT
-Received: from ph0pr06cu001.outbound.protection.outlook.com (mail-westus3azon11011031.outbound.protection.outlook.com [40.107.208.31])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4h7btb6g3k-1
+	Wed, 14 Oct 2026 21:47:26 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 69ELLLXY012333;
+	Wed, 14 Oct 2026 21:47:26 GMT
+Received: from byapr05cu005.outbound.protection.outlook.com (mail-westusazon11010059.outbound.protection.outlook.com [52.101.85.59])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4h7btc7160-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 14 Oct 2026 21:44:47 +0000 (GMT)
+	Wed, 14 Oct 2026 21:47:26 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W3SA7YHOoQyz8/Di0Evhe/VGofYuF7f3oImcUkr3NOaBxM8x0vXYQ9DlXO1SLtcnSLqNQLO8eMG/jC63B9x51UhAlB7uW3Bkw5KkbCf/TnJ53sFsjs5j5B/nAvoW342mVqMNAndrAkcH3RCIYo22HQDDcpTmxLK9PbrTCRs2WhQfD5wI3/OfjJNccxD1DqcAMi/WQLYXivsUXzZHzAdkzSMqKX+z0hwTdh6Ms2XgBholN0/5V5OrsA0Z2H1PbsOkgWX2VVnxq394EcqPg13ck0t+1vMQUgI/he6IER3H5OIY0zUWp9UKEDTXknGQDoExScuMMz2B9dFCFSaKtUDzpw==
+ b=DVIMob2rmB6uOZoYHfG6bMBZ0eSCf5RvqnS46OWCZtXTPyf4jdF7tjScSvmsMv1J53M9jtrL7Exv047imYr67qo8Jhwvj19cHjKPtBQ6UcGoPiG1HMMmIh9zT7NDR7PyeunrsjVPtiLaK1oKGtttKjYwhgz4D0jXbRYETnQ3Pokt5tEHIsjOa21wgqo8pTpcJualKpnnb7mK42F8EjyfFoJKtWi2UfKEvABJO4wsjpjYtqiwvHGQQCAEANyK9MBKO2XwjcWeYxABBCDI9tk3LcOZUGuJxWoGSMGZHrPYP4mU4wx3Jnh38syqCI8hXVfyU3+ES16aMNVwtENOYh55BQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MxJjXnWqSHiUvTYCoDpZSZPIYIjMh4Ay1wSFSWbWSX0=;
- b=F8ZHmm5BGf2GppGK5HRDcsGGLEh9RCEbl2colhH1HjsTfH1y6s91jOCVtplCu39/ONapD9Q2V7JZxCHhUjFRviZGUoyBJTFoijhNh7srVIYe6m96Z5whHybH5VH5AxdVBCPRxenDfb9EBrjfaWX46NgIKuKJDa+yo2ngZeT5esbngIjUyDwXyHldEDQUDl2+OJeP1Xmf3M8qknDS5BQMpeRuVID9YwDTzYhKDMXoPA0ofFYiVb1Rb9Urg9clwGzX50r1Z89Dm+xYDYd2igs4pTrUUrY4MyLyxtLYr/ki1pOw8sL2oBWVzvxwgn861187/lTIJQp/PL59qG6wAUnj0g==
+ bh=uBLPv2EzbjvfTXHb94j6B4YJ5/DnLwHWq9yaqZinqHk=;
+ b=iGT4slwDwtXxiqbcG1qgeZRqC3hCmlvqGglA7ysG+JCtSA0qTuVMvUf3vQ6WIBLb6dT506KKHKYebUyfCLweO0MZjLf64Xvn9iqPk7ynYqLl5JZEmmAt+b/sAfFxlcM1bMwad9cGCnKrqvBBGxtAFBNY72THLgWcDCKK/DdRrtKTk/HBxp+A4ODEGEKgadXruESHle0QdC0WTrB0mcmtAAW4JLNhMON7cV+xpReZzynVGOQLe5NBTmi6pEzkfwzZ4Ed1BjJWkAgiWoPshbkBEsM5HcVNkDOrGDSgxnBTqxm04gCL9D/M9TJ9LN/ujML3gSjmog0sVgJKJo1Y9mloDw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MxJjXnWqSHiUvTYCoDpZSZPIYIjMh4Ay1wSFSWbWSX0=;
- b=f/LZJUqhtdo8hcOWGOwpXomZDfFptBvPgKKEv+HbFKUguM7qB0u23k9trCbHhN2Xor67tFHNCMbXGJA6e148GKcPZ5YE2tcktghouSDvvGTOEgTswaVL1H4Wx+b/jZQFYPqp9vzJzeOL+8KKVdp12cYUIX9IuxKJq7b27Z4CfHA=
+ bh=uBLPv2EzbjvfTXHb94j6B4YJ5/DnLwHWq9yaqZinqHk=;
+ b=PDtezQPi/gwjJwrNVkBjWeecnM1sI75FPXjM9CtjDgoh6OoysEaRI3gVILuvzabw5mmdVvabA8Bw9HbQ/Th4GX8UPGI/cXJ4B63jeWyjA4cAQb/agquonZKanUygSMc4STJ1polrwYSdLHr21Y2vyXwoaNpmyUaYh4TsQxqO9Vk=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oracle.com;
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
- by MN0PR10MB5933.namprd10.prod.outlook.com (2603:10b6:208:3cf::11) with
+ by MW6PR10MB7637.namprd10.prod.outlook.com (2603:10b6:303:246::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.7; Wed, 14 Oct
- 2026 21:44:43 +0000
+ 2026 21:47:22 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%7]) with mapi id 15.21.0522.011; Wed, 14 Oct 2026
- 21:44:43 +0000
-Message-ID: <fafcf450-8f11-4898-bc36-23233831d4f1@oracle.com>
-Date: Thu, 15 Oct 2026 03:14:36 +0530
+ 21:47:22 +0000
+Message-ID: <3bca6bdf-2620-4f4c-878e-6a3cf0ac673c@oracle.com>
+Date: Thu, 15 Oct 2026 03:17:09 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 459/497] tee: optee: fix kernel-doc warnings
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Rodrigo Zaiden <rodrigoffzz@gmail.com>,
-        Sumit Garg <sumit.garg@oss.qualcomm.com>,
-        Jens Wiklander <jens.wiklander@linaro.org>,
+Subject: Re: [PATCH 6.12 464/497] btrfs: fix lost error return value in
+ btrfs_listxattr()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
         Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Qu Wenruo <wqu@suse.com>,
+        Filipe Manana <fdmanana@suse.com>, David Sterba <dsterba@suse.com>
 References: <20261013112907.864180619@linuxfoundation.org>
- <20261013112918.776447090@linuxfoundation.org>
+ <20261013112918.894044198@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20261013112918.776447090@linuxfoundation.org>
+In-Reply-To: <20261013112918.894044198@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DO0P289CA0001.QATP289.PROD.OUTLOOK.COM
- (2603:1096:790:20::8) To SJ0PR10MB5834.namprd10.prod.outlook.com
+X-ClientProxiedBy: DO0P289CA0010.QATP289.PROD.OUTLOOK.COM
+ (2603:1096:790:20::11) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -93,102 +93,102 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|MN0PR10MB5933:EE_
-X-MS-Office365-Filtering-Correlation-Id: 12ca57a2-cee2-4140-3c57-08df2a3c5b98
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|MW6PR10MB7637:EE_
+X-MS-Office365-Filtering-Correlation-Id: f9e76375-17db-44eb-8780-08df2a3cb9d1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|56012099006|5023799004|4143699003|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|56012099006|5023799004|4143699003|261009223027099003|10067099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	L3GvMKvOZyQqORxik+w/aE/CT+ONBbW50Ixi5jebhuVtqn5zW+PpFtySrFNrLEF1a+9ZfBuHhOWFm62oaqgx4OnhlsqxwPelih+P4Is1XRArf+vn4dxS73ue8dSPMnBGhCYhmYrfCawC0AyK5ZYuwZQOHU4M+ParVqhjOuwPYJCPHYbqd/BT1xNTv5XaBHLiil8QFesb+MUeb366AbwIW4R7ljRdChPCHMsILsIRl9/qWHaHf091FkCy1UrRuZiXVx6sDjiOhdiqFKIDa+In5xjiTRfvcO7S0p3VV5K1N3RB1RsmfjqG33TseQW5qLhZW4XW3AR4Z5Gw5rCY4j0LsnWoaUobXg0JPKe0Ne1bh9LFnJIAhqguceIDLoxsj5GQMCTBkdvMBkGaXPtkdtHkwrM62RMsOC+VLO4ieJ13tfO7w8KsrTzetx5aW89AEDNVVDkqcfPQ+0v8BRzrbT/VFSYiP21X6dJq97hbCl0A3IEYeGe02ENwU2ms8/l4LK+Tegpo88DK2p3brVJXSlGxmwAW68j7RcxaxD3dryazaObdXBQxMVmeAVnIBACLlh+EPswxCcjPk4M4hs59GGMcF9Ir73vH/wQhUT660DzoaP5JRndCfy5+0q+Rlgh+fKZfF65+TLoz5OMfd+pVyVnPczberVazqOEfkDKB/mzPa5U=
+	Gv5/kEUtTHOP1vAKaeiOUyZwYL8l/hZgpxr28QKP3YoF/Z3PXQD4QxSF5jIH8NOZYpXAxshAfTQjwmywCgApk8bESmKGsWt7liTFE96j8/DfyEaAWRLldoV9hdB5fhYVBeGIr6ZpRZ9/VD9PetmDo9/HPrfORUFlBt4mptXVUO7tVCNnVkRNitGtMC5/akSEG11ZG0wQI+a7z0s3lSjogFrPliWgMR+HtEHETNwUp8QqtQaB9q3eZnVA/pBtKTlJOA5kQpXVBNoxF7EudmrChMPpXyTwvbKMGkGMFA5ybxMXAInGaE2KCwrRwyVC9hZ95I7CT1sc/8Y/jW1KOwUO5hz4x4vy+eBmQt8QnTX4bnnss4CPYougf8f8c6mVIkTnuZl15sPXMZAWQGdiVrWWeVCtteNpOBgYUhsNlYZKQvtlJ7dtrjHgRAJmeSCunCVyA9wwpqI3tACT8jeRRvs9e7CuI3FvrNQUZGFM5jvIZBaNOX/8L6mNneasDIwOdo21zthyIkca7pUobfeV/5ArZcmr4sQiWYRuEiaNnu47ydXP7//7EQW75K43wmVQ0UE739N8u638xj7YwRElX4tufW7ERiC7lh92O1a3fc/trHYEFBE0MFITnV36Dw93s0nxsF0yDELsvnDQBTWfoDCiHwmrowHDvVuN8GVh8kB6xhs=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(56012099006)(5023799004)(4143699003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(56012099006)(5023799004)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?MFFza1dudnVGK0w4aGNMOTM4bmdYdWFjU0NGQlVkTThqRFg0MzdxZGhjMzBI?=
- =?utf-8?B?RDRsRm9hYlZNVVFYQUpwcm85VkNpQTdxRi9RdVZWWGQ1Yks5dU51VzRyRVpD?=
- =?utf-8?B?dS9FK24rWW1VY3JXY1Zwc2JpUS9ZNE00azNBaW9veVhEcWkza2FMNEVtMWtk?=
- =?utf-8?B?SksraHliZHRpVUVSdmcxMWw3blNGRVl6OHg2cE9paTg1L2hsLzlhcE5PVUhq?=
- =?utf-8?B?aFVTcCszTm1xamtSeWV3SHRoZEh3TkFRRDA5cUZiV1pWUU82QTY5ZHlqYmpZ?=
- =?utf-8?B?aURYNzhnTkt4LzlLczE5elUxS1h4bHJES2FNTFcrUldwZjIvUlRyM1RqaUFO?=
- =?utf-8?B?V3ptamVubVk2c0VnYzNaa2Y4RjZrY01tZGdrNjgrTEVZZGZBd0VaUzl5VWdI?=
- =?utf-8?B?eGloK3RIc2FXakxGRHp4a2RLZWJTWDl2WjEvZVhTQjJTR21hRFQraG16VGNI?=
- =?utf-8?B?c2R2Y3NCUjhuMFNwQTF0Z2tiRXFxbGRlMVh2eE9WK3pKVUJJRmUzTzNGTStI?=
- =?utf-8?B?NEY2OVZnY2NiQzc2R1lPeEZBeS9vdWs3QzhjYTBDZGtxeXUxMVZzSXZVbjU4?=
- =?utf-8?B?R3VsTFZmdjVydlBQWW11REZQbWgxMEVrNTNVNGVTV1NRVU81WnBKNVVMaUFp?=
- =?utf-8?B?ZVhaaGtPcmVKSGFPMmR5dndWRDR3YWoxbzVsSWN0Mms1bndtSllPbC91Qy90?=
- =?utf-8?B?eXVoclF4dlo1Um5rN01pSW5lRTdldmpjK0l3ckd1cDd1OTNWVy9iNG5CSEpO?=
- =?utf-8?B?M1YvMlZMOUUyYTBKNDYzd2hITkU2MFZ2d3FaT20zMytyVCswYmZaeHZNZWds?=
- =?utf-8?B?bjdmdnV0T0d2V0lxWjN0YXVBZkdzUUEzS2Y4L1ZoaHVzR0k3dW1NZGF2SkNR?=
- =?utf-8?B?bUhicU5DTGFzNmZmMlpkd2ZQUWhPV0JLVzVWS1ZSTHY4WEZhVkFxUWhEMC9P?=
- =?utf-8?B?ZTJYdlJWdEFIR2cwd056QlUvUVBlZTJJWXpYMXlIOHVicUpzTEpERHpmYUx0?=
- =?utf-8?B?bFdhRXJ3alNTRDZKNXlBRXFOd3c2aGErSDIzYTRoUG9KV1greE9lQnNlL1NR?=
- =?utf-8?B?YTFHRmhUdm9pZHA3SDNteVZ0M3dWdEEveHhkeWpqU3lYREliZEhROFdEelZW?=
- =?utf-8?B?RnNtbnRlNCtxWUdvVitmNjNlQUJwRjdFM1M4cE9kMWRRVzE0Vk1kOWM1ZFdI?=
- =?utf-8?B?T29xMy96ZXJRMld4aVRCNHE1a2tPWWZsNFhOYVFXU1JXRVZZR1dhSlV0S2pL?=
- =?utf-8?B?ZDZRUXhLdWZzTndaQkJ6RjV2TDZKcmVKcEh1eStraktoOWkwbU1zSUM5VDFj?=
- =?utf-8?B?SlFGdTRzN2JkejI1TGpZZWVQZGdhcWI1aGIwVXQxOHdGTkQvWjJXV2lUUFhQ?=
- =?utf-8?B?bDBYWFlIaFZPeUVXZjhIYTJsV3VjYkd0bjVBQXRzL2l3c3Y1UVRQVWhrSko5?=
- =?utf-8?B?dHRGZEtnVVJObndsa244YzM0STZ1UGpkSHhLZng2QWlrREpZYkNjM1A3SHo2?=
- =?utf-8?B?cndPUERtd2N6NHJkR0l3Q1Z2ZkhaaFlFdlQxdlhUakVLVVp2RkRqWTBRVFVy?=
- =?utf-8?B?S1ZVY0RNTVV5UzFKdTZuSUFrNTF4V2NrRXBJOWNQUjVkY3lXZlBVTFdMRGZW?=
- =?utf-8?B?Y0VMYzZmZTE5MEM2QkFaYmJ0NVVCcmlOMURFUXg4T0lHZnY1RytqLzBMQzNT?=
- =?utf-8?B?RDljd29wN1RQdkpFTFhiVnRGZXVmUUdzSWtaSURydHJXM0YxNHpTMVluQmo3?=
- =?utf-8?B?NEdyZlIvME9tNFBzUlFGR3NyemhxY0ZtbGJPTmp5dXFDRUE4NmdNWExSQWd2?=
- =?utf-8?B?bnFPQVg3RkREb0ZYZjdmTzdkeTl6am5VTkpIQUlmck5QRnc2V0d3K2JoZm5F?=
- =?utf-8?B?UEZnZ0xEaWpjWEYrS3J6R1hDdFBlOGR4SjduM3U3dHV0QWNqdG1MaHJkQTRv?=
- =?utf-8?B?RzRVa0V2NGNDWnBZSWx6NVlRU3FMMmROMXRTdll0MjFVSFIyKzVHWEV2b0dj?=
- =?utf-8?B?b2g5K2ZXbjBmeGV2WHBoSzRJclhGbERxOGJHdDZlYW5zUlEwaXlwNi90TXJs?=
- =?utf-8?B?Z3Y5b1NzMWp6RExySzZlTWNkUWY3S0NTUklzdWZsMlVJcE1QbmZ4ZW5wZVFj?=
- =?utf-8?B?WnYyS2FhYmYwYlNCeGdVbTV1MmtoVHllNDNmNm1sT2d1ZEpZWnFVZ0JKZGJo?=
- =?utf-8?B?VDdlSUhJdS9hZktnYk92amhqTjJEMnBkSXpUWitIRDBRQWEzNmVLT1J2WDhS?=
- =?utf-8?B?cE1wRUU5L1ZDaE16THdyWWptTVdWN1RwRjYrZmZSRVBGWUZOQmlzOHRTZ2c4?=
- =?utf-8?B?MjZtQ2JNWUE1TTBjWWNQZ2JyamgzSWdYZUk3MEZzbmNuK0xlWWhxbUlzc0FM?=
- =?utf-8?Q?OF2qgXKptHClWcEnrXKNZx99MYivHJ/frX1U5?=
+	=?utf-8?B?bnlMUVhZSlc4VWdqNFcyZXR0aEl6dm5HNnpYZmw4ZFdHaDdRVlZhdlNGU1pW?=
+ =?utf-8?B?NE51VmhTZFdtZlNzS1NFWVZDNU1mK1BQQ3NEb2lRSndTaDFoeUlaQTRWb0lX?=
+ =?utf-8?B?RnVydmJVVVg1ZVJIRHVQTGxaLy9MNkx3dnNqYmp5c3RqSW5PY095WVVzNCsv?=
+ =?utf-8?B?VS9JOHljRXZYc3pOTUErdjBDbk50d2V5d0h3a01xeGJSYzVIbW9heWs1QVhU?=
+ =?utf-8?B?emlCYzljSW1JQ0J0UTZaRno5WWlxNDBEYUg1TFk4dXZiekVBR0tvdmpVdmlZ?=
+ =?utf-8?B?MS9UWHFLcjdsS1VHWElmMTRiSk9YVWpWczFya3RXaTBDM2RIbGxNY29IMzVh?=
+ =?utf-8?B?WXBQaGVMUnU5bDBRV294N2NnZ2IwU2d4NnZzZmR0ZzdsRVlab1NUbTBqZjBW?=
+ =?utf-8?B?c3plWTV0T3Bxa2RwMFJONHJoN1lubXMvN00xRkMvTkVoeE94akhGUnVURnh6?=
+ =?utf-8?B?UEQ3U0J2Q1ZNejhjOUM0K1JLOWZZRlNaNnZnRHVaZDR4RDZlK1lMZXZYcjZN?=
+ =?utf-8?B?M0JIMmdzNVprWmI0enc2UGdxSWg0RlBKQUVURDhqd09ocmJYUnU4UlZPcGsw?=
+ =?utf-8?B?aG5kbXRBakExaHpPSXlaUmRxYy9TdUVWZFhFVkVnQWE1OVdxUGRSd1NiZ1Qv?=
+ =?utf-8?B?ZDh1Q1UvY3pneXpFZjd5ODBEVjMzcUd3c3B3ZGVlVkVFcWZsVlRBUzhtcVJ3?=
+ =?utf-8?B?eVY3RWhDREdVWWRXYU10a3NXSXIyMHo3UVpOblBXdFpqcjVrdWtrbHNMbkxE?=
+ =?utf-8?B?cG54cVhoVUwrN1luR0F2WGFhR0xVNUlqcVliV24xTmkwYWIrei9Ja2Rxdy9k?=
+ =?utf-8?B?d2hNSnpnWFBtK21sKzNHczNIWlVBb1RQKzMzMFZhUHIxT3RBaFgzZFJlYmtj?=
+ =?utf-8?B?ekE0TVd6UGlSc3J0T0FSRjZyYTVmZldoeVh4TlIvQ1kyWk4ybTZCY09EdW1M?=
+ =?utf-8?B?K2xlTHNJdGhtUzNCYTRpNjBwN21tTjd1RlVKc09sQkdiQzd6ZzV6TkpMaDR6?=
+ =?utf-8?B?SktwV3RPYjk2c09PK2NWejduZ3VWM2RUOTNrTmtsc2NtSVcwRlVIZUpxV3FY?=
+ =?utf-8?B?bE1TM3FKR1IwazFZRWJQSzc3THlTV1E5S3RRNnc0bUpVREo0YndidnU3RGx4?=
+ =?utf-8?B?bE1IZmRsQzUxTStmaGg1cEY3VlpTTWhaMUplcGpCaHh1aXAxck9RSGcvY1FP?=
+ =?utf-8?B?bUd4TW12eHVxWCtFYzBibDVEbEhmUFNCakNXNkdIZlNQTi9WSmRROXNhODBP?=
+ =?utf-8?B?WVY5c1FrVUhmczJVYkZ4eDBySzJxQ3IvOTY3RFgra1JUWjhsbVVsR2lCdjJz?=
+ =?utf-8?B?SVRGYUwvN1gzQ2VUTDY5dFU1bGJONWNRY2U4Q0dxU3RVWHFYOWtuRFdnbnVJ?=
+ =?utf-8?B?UVBuMHJkakdtemZDUzFOWHQvS2dyV1dOYkdqdTNxenVYcEJGdVhPbjUyOEMz?=
+ =?utf-8?B?bHhhbDMrc0N4bFBvcWsvanBEQmpFUmtHbm92eUEycVl1QXFuMnFOR2dRVWxp?=
+ =?utf-8?B?SEQ3VmhrYTJ5UHUrSnBlcnRvK0NYUjY5bDZqYWNLV3pwZDQvUkxXVHZsMVlh?=
+ =?utf-8?B?NjhFYkFTYUtKN3p0R3I3VGFNMWY5cWNleEFuYjlwS3EyWFJZUE9pakNxLyta?=
+ =?utf-8?B?WUNJcFZKeDlOUGdocVpjQWxPNnJGbjJ1TGZGdkpMckNtWE9XY3B3Rm9UdGI1?=
+ =?utf-8?B?aWJjUmtZSzlBU0JVdUN4c01Ray84cG00VlFtcXFuc3ExNTlDUktGV3RGK1Zp?=
+ =?utf-8?B?cFdCZGVJK0ZXaHpXaTVKRTBTejJkeTEwSTV0b29MYmlBbUM0TXFkV1VSb1RV?=
+ =?utf-8?B?N2lBMFlpTzN6MzU0Y2VMdFQxK3lUWW9NTC9uVG9FU0dEZ2NFUDBEYXp6YTF4?=
+ =?utf-8?B?aTBoNHlPOHNMY2VhV2hPVU5oVGZPajNsdW9QalkwaHdOZGUyM2hoREwweFpC?=
+ =?utf-8?B?bSsydWJmQ3BuaHJxN0x4UlVZek9lZEY5eXoyNjhiaisrKzNKU21MSlpxTHYx?=
+ =?utf-8?B?UFJFRmZkNmxnZENrVVVIcDhtbUErY1Q0UWRvYWMxVTM3amdvZ01aNzcxdHEz?=
+ =?utf-8?B?K3dOVHpRNStJR09yd2hwN1N5SWJtTFA3WS9aWFBHbnRVcjdpZE5rZFdMb3R4?=
+ =?utf-8?B?bkdUZXlkU29lL0J1US81UEhha1l1YjJsY3dPVjlzQ0xYV2N3djdwb3FucmdW?=
+ =?utf-8?B?OFB2VG5LdUlpdk4rM2VoUCtaRk9lUXcxdjliTktZeFhVdEJwSWtNY0UvREoz?=
+ =?utf-8?B?ZTdkbDZ5cmo3enRrbStMNVIyejRLWG02dHdNc1lQTExnRnpjRVJwaHErQlpE?=
+ =?utf-8?B?ZjQ3eEQvbGhWZisra29PV2Q0aXE4QVBzSDFQUkVoVFB1NUNBMjJmdXVjKzlU?=
+ =?utf-8?Q?gEj+xEffeOm/H9nPciPHKCJRcQVUk5xl71kZO?=
 X-Exchange-RoutingPolicyChecked:
-	M9Swd3pbr0NSigOc9BDDS9h6Pk6bDcfYdSyow2zXDZY92FzJ/2zOSmJR6AGh2WEOG+jcQPW80p1CakaEfEfwe7MoqH2r5LufKPqeKMai2E+uUTC0mX9pidK2tngsAxZU+eSbjgw1rBKjvEfGyAXsSPgIMI3cgdB+g8amy+0lBPzkVTru/WWJKwXxaMUJn+NsDMhSsN0TEXg0idk5B8dghzGuaqDZHu70m3Dic028m7IrGpM5GEFC4zeIBpF1MhmXrcopyS0IzvapezRNQ3YSd85P1P71HU4v5pFQHuXUtWezcxsQNssJo80RlFGb5y567a6Y2lzChx/5NDCp+VCBRg==
+	l2YoXhOfxalp6Kc4MSt7S7NoTtAiL/lafuYDzsm2q+4pS+/9O2cMfHL0z9rVuRm111//PeTk1IOiL+u02BCXijJA931DPHPSj+xpb4MYUFyHJSimM5taAFFsaIfkUFLzPm2JszswW9NVYL7+is66Mu15dDr1fN77Ufqn03/IbC6VMs6qo/Ri5aR7q3g9PmijkJBUgZeqrkBbtgSkqJXQfd8503wqPHwEy7wdMvSi0dDbJbIZv9h/YrktpsVqtm01rM+M+GaJ3GB65eK+u5Nmg57NcvLy6gZ3OxoUA/KhGgfABvP86tBhUx9mK2noH64xOjwFEuokqVDwtak0xSkACQ==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	jFqMHLuHb5S8fkSCBous3ScWj5DEZqkZ5EJrWqIa8WARz7lUcV60Kz4sHETkTmlVD3uq16loGtzz1kp4piu9QioL42a//es9SaI+DXSrIjv/ZpfHhDs3bgjlvMb105HVdArSkxfmjQREGu/uH6o1ZpS9c+BImDjNugFFxKv40cSivzZVx5gOwq2uRt7otK2YRZ1ZcYY82isWmaUb/6JljfG4EvMhR0/3QqXnklb2971ThUfb+NlGxRyVE07A+9xU2bhtY0E1UV4LSL+9j6rUmDmB7XMEeIIpn2FsAPx/OJn7KvfNoh5Lo2/BENQxz5h2lkv+57YwIdpisEUarBVrjrspQ6Gq/8duhQ+HLYDVawbv1KdcYv2C/9DNu3dS57xiZ2UZ5RmXZmpFZq0pM0PJED7eJyEUyNi2v3A+Sob5N4LpQabkhX7Me9K+jDkhNQ9CAWuyf7lwj/tRxvJZJMD4QL9AtbxfZiJ/SVtOhCA6ST8Xp0+eI9BQj5o8G3/p/GpNxRSqcnjfmqHKcLebmyNqvXxLT3wKWhkUtYiMgeg2oUMyvj1l7BGCubte89CDXsmlVtnOxnSkBdiVpqTFGkGLVEg/MYLclaCaTfH0lxHjkUQ=
+	pz4kqSvxfyH7ZG6wU5EfsPGMHwAvAqCugWoc7rODWLnPANquaAFIVNolM4662+QukACUHmVCYQe2ieB+CMVISVKurCqDeQz+WHzLuY0r/rZSQUOi1GF1osIwf1tvHyxylA9cHwSd+/ScvBR277ITHviQeO8AFH3cZnANDfyx5WCffSprsX6S8R8x9y8mZ6eoJlFJHPzaSN+PTdKr6B+sp1/2tts2CQ86YDVN9J02S60+oeVmOrgZUQul2YacT7xWVA9qP3+BrUuF4Ut4cdJb7KUzk8+2l8Oh+AnYB8fkziVf+Ty+IiXrkKTQjjcm2Ia5ojW7MiLbI03wy8KBrN5IV4/nMtiHldmown3PAK7v1fd8AWvU5Fz2icc+NhzhsGyWaaCumk9ugdKGSTZEUTfI8mjsj5PwzeJLU8ge89WNqo2QXqW+OUSKUX9lhgMgRubJdzJLlx5YxL7mqYEbG4ZlyRW9cvawco2cHw5dCvbTLW2owl5AHhgLnFA9yea75Q2BpIot5qrPjvzUD8LB+r/IfdTWb0HyYpUIBk6+7kG51bruLuzJQzVuzhc5PRA/mOt/fQwWPahMV/PmtjPebOKe1Imup+gTcg7DoSihaa5PO7A=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 12ca57a2-cee2-4140-3c57-08df2a3c5b98
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9e76375-17db-44eb-8780-08df2a3cb9d1
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 21:44:43.6098
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 21:47:21.7895
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JNw7EXukQfwSi8Q5GGec24ZDYD1bhQ6w+PXPSB4QTB+bUbN2eAUoDMt/Fsqp9Q9Q/4/zqTBsWPMJ6Msje/SIy+bWYbYTAUrmagi7x6Vej47kJHA9TG0o3ycDY5TxMOa4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR10MB5933
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5zl7ALDtbUJcEkAQzpa/xnX8nUFUtdE5LT5PQzTMvm+wQeNoHdGbxla6woqpbHgEZt7P/qEmN7ptwfs6LVNNLurPrBTNcgYVYgT46OOK7qcelR1t75jMXwVXyR27688Z
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR10MB7637
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- phishscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2610020000 definitions=main-2610140086
-X-Authority-Analysis: v=2.4 cv=CoEq4X4D c=1 sm=1 tr=0 ts=6acff7d0 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ phishscore=0 adultscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610140085
+X-Authority-Analysis: v=2.4 cv=N+a8hG9B c=1 sm=1 tr=0 ts=6acff86f cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=660iZSQnnn4A:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=S91f5UK_8NVTBnn3CtgA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: J173yhDWgOytYGAnCgSnzd9Ik8uMG8e8
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NiBTYWx0ZWRfX2qmPu85i0Sdf
- uQwKR4NMcwSKnvfg9oZC8+xs4NvYfPY6CDJFfLBfERdew9sTelQxwz+bEgNCeCv0GRo7+HJ3sZI
- LnrYzGpW/Xe0sA8cG/H7XlkB3aADws9gkuzVWHLGPI27SejV6HUg
-X-Proofpoint-ORIG-GUID: J173yhDWgOytYGAnCgSnzd9Ik8uMG8e8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NiBTYWx0ZWRfX4SocLOVJiw+Y
- HbHcwSU5bgl0gudrLe33iLab2qpW7k6yXW0Howhpm+OKsjX01KDkgzJuKzIJ1cv4c0oVJaiP06c
- lJtD3hcgSaI86glXvOIriYWk92xSmdvWJYltNTgFXjhPTWkmfNRoeTqcmnQ7EPlOA8IEQfOu1rK
- Iy2mAsiE5Gl6NeF/Fzyl5cxyHWFVuevd9tnbeDKb1nKWs2uVAdEkNhBukzzx7dBkPC2E51fITcw
- 0r+ivdcTeaP3c2fk1G8KalD2m491iNxTEfXhTloG/fM5ds5EYwTDIRwGagyABkwYtIp0wAz3RIa
- U53kOggDaIJK48mL05KRALNX8clf1O9WVS0QWL6Gl3DoUzV+dZME6k2vfXHAAH3+gSwoo6q10QL
- l/MnYhIc7MsGYxXwBzkhUgZb+L9nHDHlUAFteQ2a+wst7uYT/dVdTWFa34/eUIyqkw8gAFnGsZd
- o1VZ5uYwGwH8Ksd6BKA==
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=iox4zFpeAAAA:8
+ a=VwQbUJbxAAAA:8 a=EwYY8IP0Y71ONo3OzC8A:9 a=QEXdDO2ut3YA:10
+ a=WzC6qhA0u3u7Ye7llzcV:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NiBTYWx0ZWRfXyXQRKjS0SRRB
+ jZ3ttVmcg3m5P446t0ugFoGEntHnFjg/FF2/1eWxpV+tsidNt9vSM/+3q/Ou1glS4f7q5SO9OkX
+ u9mVwEjmH8Qbd7bKAD7CVWLIBTpOsLi1XUviLXDtyrhYCTZDl9YRnnOB+q36S7xgUEqDi5pYYDU
+ A2Z2F9uUKa2s/4lOTMNvMtdiARBndLcEp8DlatGVS2yZLnp70yrvh2dwW/vPWXOHggQ84Kcf212
+ BuGKRbzy9iAoz22NDrorKKk5rgg9r29FSizAAFlAnUo5CzR58JAAucWZ8A+73BDNdZE+EANsTsS
+ ATgssOIbp2bxlpybTkVgm7lESdgZWMAjgWIjx9rxmzqvuaktY6DYdh+z+8zE3ztXy6t9svkaLoM
+ xJ/lIojpfXBmwWqwkVPWUJbJbll0whCIVT/yVqxd+auK1BsxSuNRJhZOfZc8e0hr0yLRVRh99vT
+ lrbTJ+iKQTSvqFsUxUw==
+X-Proofpoint-ORIG-GUID: dQheKoJzlKGVSV4Kc-STa9vVuk1UUD5C
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NiBTYWx0ZWRfXzy5FyflISO+k
+ j8YsAs+NxhrqeltMI8Odl4+glZaCXIGB+Hke563bIzP9HuWy6jmxaGvzW30ngdeCnSpmOEwyqmQ
+ NgpJ4O6FlWLnR67JETidjk1eu8hy3KByRgbMpSyczCR2vputx3Ee
+X-Proofpoint-GUID: dQheKoJzlKGVSV4Kc-STa9vVuk1UUD5C
 
 Hi Greg/Sasha,
 
@@ -197,337 +197,77 @@ On 13/10/26 5:10 pm, Greg Kroah-Hartman wrote:
 > 
 > ------------------
 > 
-> From: Rodrigo Zaiden <rodrigoffzz@gmail.com>
+> From: Filipe Manana <fdmanana@suse.com>
 > 
-> [ Upstream commit 3faa6774ffc5973af39ac9c4f1fe93aa92ec9407 ]
+> [ Upstream commit 41c8899d59898f6fa51ceebd2b6e55257191a8ee ]
 > 
-> Fix kernel-doc issues in optee_private.h and optee_msg.h:
+> If the input buffer does not have enough space to store the current xattr,
+> we set 'iter_ret' to -ERANGE and then do "break", but that only exits the
+> while loop over the xattrs in the current btrfs_dir_item, and then we
+> continue the btrfs_for_each_slot() iteration, which overwrites the value
+> of 'iter_ret' causing us to lose the error return value and proceed as if
+> the buffer has enough space.
 > 
-> - Add missing documentation for struct members: optee_msg_param_value,
->    optee_msg_param, optee_msg_arg, optee, and optee_ffa;
-> - Ensure member descriptions follow the order of declaration;
-> - Use consistent formatting (lowercase descriptions and ':' after
->    member names);
-> - Adjust indentation for better alignment;
+> Fix this by returning -ERANGE directly (the path is automatically freed)
+> instead of breaking from the while loop.
 > 
-> This resolves kernel-doc warnings such as missing member descriptions
-> and incorrect prototype documentation.
-> No functional changes.
-> 
-> Signed-off-by: Rodrigo Zaiden <rodrigoffzz@gmail.com>
-> Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-> Stable-dep-of: 3c0d2f1f431c ("tee: optee: ffa: support shared memory offsets on large-page kernels")
+> Fixes: 184b3d190087 ("btrfs: use btrfs_for_each_slot in btrfs_listxattr")
+> Assisted-by: LLM (found the bug)
+> Reviewed-by: Qu Wenruo <wqu@suse.com>
+> Signed-off-by: Filipe Manana <fdmanana@suse.com>
+> Signed-off-by: David Sterba <dsterba@suse.com>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->   drivers/tee/optee/optee_msg.h     |  50 +++++++------
->   drivers/tee/optee/optee_private.h | 120 ++++++++++++++++--------------
->   2 files changed, 92 insertions(+), 78 deletions(-)
+>   fs/btrfs/xattr.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 > 
+> diff --git a/fs/btrfs/xattr.c b/fs/btrfs/xattr.c
+> index a7700083bdbd3..ff218e8ec0ca4 100644
+> --- a/fs/btrfs/xattr.c
+> +++ b/fs/btrfs/xattr.c
+> @@ -344,10 +344,8 @@ ssize_t btrfs_listxattr(struct dentry *dentry, char *buffer, size_t size)
+>   			if (!size)
+>   				goto next;
+>   
+> -			if (!buffer || (name_len + 1) > size_left) {
+> -			        iter_ret = -ERANGE;
+> -				break;
+> -			}
+> +			if (!buffer || (name_len + 1) > size_left)
+> +				return -ERANGE;
+>   
+Hi Greg/Sasha,
 
+An AI-assisted backport review identified an unreleased Btrfs path in
+6.12.113-rc1 patch 464.
 
+fs/btrfs/xattr.c:btrfs_listxattr()
+Downstream:
 
-An AI-assisted review of rc1 patch 459, 4ae9550850d4, flagged a
-kernel-doc mismatch. I checked the 6.12.y and reproduced the warning.
+     struct btrfs_path *path;
+     /* ... */
+     if (!buffer || (name_len + 1) > size_left)
+         return -ERANGE;
 
-drivers/tee/optee/optee_private.h, struct optee:
+Upstream 41c8899d5989:
 
-Downstream 4a8beb0f1e36 documents a member absent from the struct:
+     BTRFS_PATH_AUTO_FREE(path);
+     /* ... */
+     if (!buffer || (name_len + 1) > size_left)
+         return -ERANGE;
 
-      * @revision: OP-TEE OS revision
-      */
-     struct optee {
-         /* ... */
-         struct work_struct rpmb_scan_bus_work;
-     };
+A nonzero buffer too small for an xattr reaches this return with the
+current leaf still read-locked. Downstream skips btrfs_free_path(),
+leaking the allocation, extent-buffer references and lock; a writer
+needing that leaf can then block. The parent reached explicit cleanup.
+Upstream already had automatic cleanup through 7fc35cc559cb
+("btrfs: more trivial BTRFS_PATH_AUTO_FREE conversions");
 
-Upstream 3faa6774ffc5 has the corresponding member:
-
-         struct work_struct rpmb_scan_bus_work;
-         struct optee_revision revision;
-     };
-
-The added description produces "Excess struct member 'revision'
-description in 'optee'"; -Werror makes the check fail. The parent
-has other warnings but not this one, and the upstream header passes
-the same parser. Maybe we should not worry about this but FYI. One 
-option is to get this fixed inplace in the patch.
+Should we fix this inplace or drop this for now?
 
 thanks,
-Harshit> diff --git a/drivers/tee/optee/optee_msg.h 
-b/drivers/tee/optee/optee_msg.h
-> index 838e1d4a22f04..7d9b12e71c035 100644
-> --- a/drivers/tee/optee/optee_msg.h
-> +++ b/drivers/tee/optee/optee_msg.h
-> @@ -103,9 +103,9 @@
->   
->   /**
->    * struct optee_msg_param_tmem - temporary memory reference parameter
-> - * @buf_ptr:	Address of the buffer
-> - * @size:	Size of the buffer
-> - * @shm_ref:	Temporary shared memory reference, pointer to a struct tee_shm
-> + * @buf_ptr:	address of the buffer
-> + * @size:	size of the buffer
-> + * @shm_ref:	temporary shared memory reference, pointer to a struct tee_shm
->    *
->    * Secure and normal world communicates pointers as physical address
->    * instead of the virtual address. This is because secure and normal world
-> @@ -122,9 +122,9 @@ struct optee_msg_param_tmem {
->   
->   /**
->    * struct optee_msg_param_rmem - registered memory reference parameter
-> - * @offs:	Offset into shared memory reference
-> - * @size:	Size of the buffer
-> - * @shm_ref:	Shared memory reference, pointer to a struct tee_shm
-> + * @offs:	offset into shared memory reference
-> + * @size:	size of the buffer
-> + * @shm_ref:	shared memory reference, pointer to a struct tee_shm
->    */
->   struct optee_msg_param_rmem {
->   	u64 offs;
-> @@ -134,12 +134,12 @@ struct optee_msg_param_rmem {
->   
->   /**
->    * struct optee_msg_param_fmem - FF-A memory reference parameter
-> - * @offs_lower:	   Lower bits of offset into shared memory reference
-> - * @offs_upper:	   Upper bits of offset into shared memory reference
-> - * @internal_offs: Internal offset into the first page of shared memory
-> - *		   reference
-> - * @size:	   Size of the buffer
-> - * @global_id:	   Global identifier of the shared memory
-> + * @offs_low:		lower bits of offset into shared memory reference
-> + * @offs_high:		higher bits of offset into shared memory reference
-> + * @internal_offs:	internal offset into the first page of shared memory
-> + *			reference
-> + * @size:		size of the buffer
-> + * @global_id:		global identifier of the shared memory
->    */
->   struct optee_msg_param_fmem {
->   	u32 offs_low;
-> @@ -151,6 +151,9 @@ struct optee_msg_param_fmem {
->   
->   /**
->    * struct optee_msg_param_value - opaque value parameter
-> + * @a: first opaque value
-> + * @b: second opaque value
-> + * @c: third opaque value
->    *
->    * Value parameters are passed unchecked between normal and secure world.
->    */
-> @@ -168,6 +171,7 @@ struct optee_msg_param_value {
->    * @fmem:	parameter by FF-A registered memory reference
->    * @value:	parameter by opaque value
->    * @octets:	parameter by octet string
-> + * @u:		union holding OP-TEE msg parameter
->    *
->    * @attr & OPTEE_MSG_ATTR_TYPE_MASK indicates if tmem, rmem or value is used in
->    * the union. OPTEE_MSG_ATTR_TYPE_VALUE_* indicates value or octets,
-> @@ -189,16 +193,18 @@ struct optee_msg_param {
->   
->   /**
->    * struct optee_msg_arg - call argument
-> - * @cmd: Command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
-> - * @func: Trusted Application function, specific to the Trusted Application,
-> - *	     used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
-> - * @session: In parameter for all OPTEE_MSG_CMD_* except
-> - *	     OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter instead
-> - * @cancel_id: Cancellation id, a unique value to identify this request
-> - * @ret: return value
-> - * @ret_origin: origin of the return value
-> - * @num_params: number of parameters supplied to the OS Command
-> - * @params: the parameters supplied to the OS Command
-> + * @cmd:	command, one of OPTEE_MSG_CMD_* or OPTEE_MSG_RPC_CMD_*
-> + * @func:	Trusted Application function, specific to the Trusted
-> + *		Application, used if cmd == OPTEE_MSG_CMD_INVOKE_COMMAND
-> + * @session:	in parameter for all OPTEE_MSG_CMD_* except
-> + *		OPTEE_MSG_CMD_OPEN_SESSION where it's an output parameter
-> + *		instead
-> + * @cancel_id:	cancellation id, a unique value to identify this request
-> + * @pad:	padding for alignment
-> + * @ret:	return value
-> + * @ret_origin:	origin of the return value
-> + * @num_params:	number of parameters supplied to the OS Command
-> + * @params:	the parameters supplied to the OS Command
->    *
->    * All normal calls to Trusted OS uses this struct. If cmd requires further
->    * information than what these fields hold it can be passed as a parameter
-> diff --git a/drivers/tee/optee/optee_private.h b/drivers/tee/optee/optee_private.h
-> index 9526087f0e680..cea5deab6155d 100644
-> --- a/drivers/tee/optee/optee_private.h
-> +++ b/drivers/tee/optee/optee_private.h
-> @@ -47,11 +47,11 @@ typedef void (optee_invoke_fn)(unsigned long, unsigned long, unsigned long,
->   				unsigned long, unsigned long,
->   				struct arm_smccc_res *);
->   
-> -/*
-> +/**
->    * struct optee_call_waiter - TEE entry may need to wait for a free TEE thread
-> - * @list_node		Reference in waiters list
-> - * @c			Waiting completion reference
-> - * @sys_thread		True if waiter belongs to a system thread
-> + * @list_node:	reference in waiters list
-> + * @c:		waiting completion reference
-> + * @sys_thread:	true if waiter belongs to a system thread
->    */
->   struct optee_call_waiter {
->   	struct list_head list_node;
-> @@ -59,13 +59,13 @@ struct optee_call_waiter {
->   	bool sys_thread;
->   };
->   
-> -/*
-> +/**
->    * struct optee_call_queue - OP-TEE call queue management
-> - * @mutex			Serializes access to this struct
-> - * @waiters			List of threads waiting to enter OP-TEE
-> - * @total_thread_count		Overall number of thread context in OP-TEE or 0
-> - * @free_thread_count		Number of threads context free in OP-TEE
-> - * @sys_thread_req_count	Number of registered system thread sessions
-> + * @mutex:			serializes access to this struct
-> + * @waiters:			list of threads waiting to enter OP-TEE
-> + * @total_thread_count:		overall number of thread context in OP-TEE or 0
-> + * @free_thread_count:		number of threads context free in OP-TEE
-> + * @sys_thread_req_count:	number of registered system thread sessions
->    */
->   struct optee_call_queue {
->   	/* Serializes access to this struct */
-> @@ -96,17 +96,17 @@ struct optee_shm_arg_cache {
->   
->   /**
->    * struct optee_supp - supplicant synchronization struct
-> - * @ctx			the context of current connected supplicant.
-> - *			if !NULL the supplicant device is available for use,
-> - *			else busy
-> - * @mutex:		held while accessing content of this struct
-> - * @req_id:		current request id if supplicant is doing synchronous
-> - *			communication, else -1
-> - * @reqs:		queued request not yet retrieved by supplicant
-> - * @idr:		IDR holding all requests currently being processed
-> - *			by supplicant
-> - * @reqs_c:		completion used by supplicant when waiting for a
-> - *			request to be queued.
-> + * @mutex:	held while accessing content of this struct
-> + * @ctx:	the context of current connected supplicant.
-> + *		if !NULL the supplicant device is available for use,
-> + *		else busy
-> + * @req_id:	current request id if supplicant is doing synchronous
-> + *		communication, else -1
-> + * @reqs:	queued request not yet retrieved by supplicant
-> + * @idr:	IDR holding all requests currently being processed
-> + *		by supplicant
-> + * @reqs_c:	completion used by supplicant when waiting for a
-> + *		request to be queued.
->    */
->   struct optee_supp {
->   	/* Serializes access to this struct */
-> @@ -119,25 +119,25 @@ struct optee_supp {
->   	struct completion reqs_c;
->   };
->   
-> -/*
-> +/**
->    * struct optee_pcpu - per cpu notif private struct passed to work functions
-> - * @optee		optee device reference
-> + * @optee:	optee device reference
->    */
->   struct optee_pcpu {
->   	struct optee *optee;
->   };
->   
-> -/*
-> +/**
->    * struct optee_smc - optee smc communication struct
-> - * @invoke_fn		handler function to invoke secure monitor
-> - * @memremaped_shm	virtual address of memory in shared memory pool
-> + * @invoke_fn:		handler function to invoke secure monitor
-> + * @memremaped_shm:	virtual address of memory in shared memory pool
->    * @sec_caps:		secure world capabilities defined by
->    *			OPTEE_SMC_SEC_CAP_* in optee_smc.h
-> - * @notif_irq		interrupt used as async notification by OP-TEE or 0
-> - * @optee_pcpu		per_cpu optee instance for per cpu work or NULL
-> - * @notif_pcpu_wq	workqueue for per cpu asynchronous notification or NULL
-> - * @notif_pcpu_work	work for per cpu asynchronous notification
-> - * @notif_cpuhp_state   CPU hotplug state assigned for pcpu interrupt management
-> + * @notif_irq:		interrupt used as async notification by OP-TEE or 0
-> + * @optee_pcpu:		per_cpu optee instance for per cpu work or NULL
-> + * @notif_pcpu_wq:	workqueue for per cpu asynchronous notification or NULL
-> + * @notif_pcpu_work:	work for per cpu asynchronous notification
-> + * @notif_cpuhp_state:	CPU hotplug state assigned for pcpu interrupt management
->    */
->   struct optee_smc {
->   	optee_invoke_fn *invoke_fn;
-> @@ -151,13 +151,15 @@ struct optee_smc {
->   };
->   
->   /**
-> - * struct optee_ffa_data -  FFA communication struct
-> - * @ffa_dev		FFA device, contains the destination id, the id of
-> + * struct optee_ffa -  FFA communication struct
-> + * @ffa_dev:		FFA device, contains the destination id, the id of
->    *			OP-TEE in secure world
-> - * @bottom_half_value	Notification ID used for bottom half signalling or
-> + * @bottom_half_value:	notification ID used for bottom half signalling or
->    *			U32_MAX if unused
-> - * @mutex		Serializes access to @global_ids
-> - * @global_ids		FF-A shared memory global handle translation
-> + * @mutex:		serializes access to @global_ids
-> + * @global_ids:		FF-A shared memory global handle translation
-> + * @notif_wq:		workqueue for FF-A asynchronous notification
-> + * @notif_work:		work for FF-A asynchronous notification
->    */
->   struct optee_ffa {
->   	struct ffa_device *ffa_dev;
-> @@ -195,26 +197,32 @@ struct optee_ops {
->   
->   /**
->    * struct optee - main service struct
-> - * @supp_teedev:	supplicant device
-> - * @teedev:		client device
-> - * @ops:		internal callbacks for different ways to reach secure
-> - *			world
-> - * @ctx:		driver internal TEE context
-> - * @smc:		specific to SMC ABI
-> - * @ffa:		specific to FF-A ABI
-> - * @call_queue:		queue of threads waiting to call @invoke_fn
-> - * @notif:		notification synchronization struct
-> - * @supp:		supplicant synchronization struct for RPC to supplicant
-> - * @pool:		shared memory pool
-> - * @mutex:		mutex protecting @rpmb_dev
-> - * @rpmb_dev:		current RPMB device or NULL
-> - * @rpmb_scan_bus_done	flag if device registation of RPMB dependent devices
-> - *			was already done
-> - * @rpmb_scan_bus_work	workq to for an RPMB device and to scan optee bus
-> - *			and register RPMB dependent optee drivers
-> - * @rpc_param_count:	If > 0 number of RPC parameters to make room for
-> - * @scan_bus_done	flag if device registation was already done.
-> - * @scan_bus_work	workq to scan optee bus and register optee drivers
-> + * @supp_teedev:		supplicant device
-> + * @teedev:			client device
-> + * @ops:			internal callbacks for different ways to reach
-> + *				secure world
-> + * @ctx:			driver internal TEE context
-> + * @smc:			specific to SMC ABI
-> + * @ffa:			specific to FF-A ABI
-> + * @shm_arg_cache:		shared memory cache argument
-> + * @call_queue:			queue of threads waiting to call @invoke_fn
-> + * @notif:			notification synchronization struct
-> + * @supp:			supplicant synchronization struct for RPC to
-> + *				supplicant
-> + * @pool:			shared memory pool
-> + * @rpmb_dev_mutex:		mutex protecting @rpmb_dev
-> + * @rpmb_dev:			current RPMB device or NULL
-> + * @rpmb_intf:			RPMB notifier block
-> + * @rpc_param_count:		if > 0 number of RPC parameters to make room for
-> + * @scan_bus_done:		flag if device registation was already done
-> + * @rpmb_scan_bus_done:		flag if device registation of RPMB dependent
-> + *				devices was already done
-> + * @in_kernel_rpmb_routing:	flag if OP-TEE supports in-kernel RPMB routing
-> + * @scan_bus_work:		workq to scan optee bus and register optee
-> + *				drivers
-> + * @rpmb_scan_bus_work:		workq to for an RPMB device and to scan optee
-> + *				bus and register RPMB dependent optee drivers
-> + * @revision:			OP-TEE OS revision
->    */
->   struct optee {
->   	struct tee_device *supp_teedev;
+Harhsit
+
+>   			read_extent_buffer(leaf, buffer, name_ptr, name_len);
+>   			buffer[name_len] = '\0';
 
