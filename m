@@ -1,91 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEA7149C7B;
-	Thu, 15 Oct 2026 00:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E29524E4C6
+	for <patches@lists.linux.dev>; Thu, 15 Oct 2026 01:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792025271; cv=none; b=G7/21sHZJ6phLlAMTTkJPfUpWoe1KeoPqSRYMhefV3w9ad388IY3EMd/a2Z5GB10MHKhQ9btOjfbbSYJlDsS+B768vTVz2Rz6vHsH8/iNAc/FIVbA8fVIr0OOO6wGuYEOUYKq3fimZoW9ocShdVl7ql9E6zBRbX3VbAPDfS2Ar8=
+	t=1792027449; cv=none; b=U/NXkApNVcsmqhEFpcUY8qmr9Voi2uzDp9BTWVguTjSD8NMKB0CIOSWzjS2F2V+1Cgbtto1Kzv8Z/qGP7EPoN8N6SXuD6bmkwNuZncaq9AuMEFfMA3jCk0dWeIoZxdBi02ctli19kqS3Mn9W0Yids97ft5vupOiXwJ2GAvxcaDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792025271; c=relaxed/simple;
-	bh=Jdmh2k9Zpzpdab+Hym7n7mZWRfos+CdbSF3v4xNVA+A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bad/QO0+QIF9kZro7GXua2U5aPCXhrYb19WLgA4dJTRurVzTyM6kybsrlX8ZgeQCmYMkLZaO/+gLRvAeU9XAR4rghYTNyNWxNExxNqRbrb4uR1dZyjJeVgkTm+WUC3Jiy8zOS2YZaDGOq2VIhqMCel3qHFfNj/Ypv8GhtkKY8pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sx8NP5Ft; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792027449; c=relaxed/simple;
+	bh=z9IejdQXBKN2xrBOvxqP4WqQ2XxEUBaD7+MG4NCqXFM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aR3NPAlZIx74Opj1lgCKX76OFsSN1E+v95V+Xyg1XNrV5pcGW7N91HPOjkT6UaNciCDUOIGDMtEF1kCrbNzQXZfRulive7qiXQ34CuNLD69rddlHDjuCiJ56FqHiwVmjRdmYyV5TtHv1FRh9HrJqPCax8/9t5TbpuuLeGcvX/6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NrMnjXpg; arc=none smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sx8NP5Ft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AF11F000C4;
-	Thu, 15 Oct 2026 00:47:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792025269;
-	bh=ck0I1cu2qhraA2RvExDj6Fn2uXukxj3qD78HQeaCDzU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sx8NP5FtVuQxca+Ul4eqj28/qEc8DFULXNiItJxMV9nEmkDNd06EmC0LScAYZNmCq
-	 aWvUKHXmzg8dHDOpi0JRhGqGckq45BmgGTxQzDYoBY5LEEaw+dfSlLAnMn5KXkjnwT
-	 oZufciBd4BqBpg3Bo444dHTWNHBDjS3cl6+qzJi6GYNYf61bvC/d/4ToOqTtzFHlzK
-	 L9i1ZcFFT6d50GieY55plgDhWLGpqYCN1K9p9tHcWF2a2Df9tQ/bDzS8bna40PJ3Mw
-	 WWMafCB+8KwysWixKYsuMH7jFTvoyGxTwOyQJIEA6Icp/+GU6ueTNsTDMKW+AWHLCz
-	 gmltmA5NrR+Qw==
-From: SJ Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 000/505] 6.12.113-rc2 review
-Date: Wed, 14 Oct 2026 17:47:41 -0700
-Message-ID: <20261015004742.4703-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261014123803.944920639@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NrMnjXpg"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-14394530ec6so3930876c88.1
+        for <patches@lists.linux.dev>; Wed, 14 Oct 2026 18:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792027447; x=1792632247; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=pr3YDdQf42YciJbBmqsTzbdgVNlR+zDd5aklF+kUUxw=;
+        b=NrMnjXpgMS/VswaD6fQfAs9uVHeFq8Xd4keN7gybMI7kpH/ZaPvfpdxs+KKIANdWge
+         W3qs6Qi62m/iUGjB06zGUeFDp4Z5+QlBU0KazFoSCjFGYEa+gHNVUskrkOxFvs5qqhYB
+         WE6QqWMSpPlxatmdkRV08gecgPuyUmnuxzejQLPzWAMmNeidacZvLc3q/JDpJAHLFr02
+         XVqZyYCkgmoFd3mzhSUpaxNWcdtSIkmsy1E75fMb62dbjW2aKBmr193z5sX+v5kI5YuW
+         BAhq/Y94Ly925ZuUEZiSEbrL8Bx+cE63WuEt/6QJ5bxALezEc6eR782I+UgLnr7xcC9z
+         iccw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792027447; x=1792632247;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pr3YDdQf42YciJbBmqsTzbdgVNlR+zDd5aklF+kUUxw=;
+        b=AIKpx+RnOdjfnmgic+hEuPAXywxGw6RUOZ0kIyyECou0BwqjOkDLhqUXPsRbI3yxHE
+         qsuoY9M4mru1lpM2qGv2qs+x9o6HtasTZdyXAgX4utKxKiDv+DlolS+rQlaAhpM4KloA
+         IVJ040Q30exxzoy3/XvgpZuGZ/fPijOiZ0V8p4XnzPiaNs3TxKFcZ9OwCW3A+gYfl6zn
+         Ia4AcmhUehwE6O6IGH2qjoH4URBogizKv4Dlpa/wK/fcVIa3L4TWoWRz2pibVBwn1vr7
+         klFBuAhYZK33EhNjrZBTIF+GsnZeDOlBPB0aWdICu4J8v+yMBfoItJOlg7U7W5bbzaKN
+         YUUA==
+X-Forwarded-Encrypted: i=1; AKwUvByMl9C1PGutPC1HRPjFx2+xGQYMy/O4Lejd3FTNwIHbZrhqUt895kZ+RkKNp6A0ElLD68J05Sr4@lists.linux.dev
+X-Gm-Message-State: AFq9FYILHwPTaJHbDDcaxNtQ0PqYiWCWZoaMQEuJ+AUFnOzY+fMRIKGz
+	HTSHlLIhjBE3ztLkFgrty8TftyErVCSx962/pQHcqcmeugQzzjIj+3DB
+X-Gm-Gg: AYBFou2Z9vK71z3/zHFfEJ4uH0U8+dxVHUqyw8ONOd5l3zynVDos+3yncVs15TO3lkC
+	ZspxTUcDGmm12giQFJ7hTMB1PxlqLtBLMhaYy6g079PkRbufCfvMd6ZyYqoiBue/FJSej+PKI18
+	mExhktbEDIyp2VCQxjGodkp/c9T7p69ZlS/1T4vyjXuO1ay/nmarWFJHKvzbY57j2B79bTSHzvm
+	rF5iWFTv2UWNjas5vqh59Em606kIOU5NlWP7OXHUASWH4IhseporPiGRNfggTTEg07M18AW5b0g
+	ymTrkIIxP2iCbLEkKq/dMyArIz/qK70JHxLeMGeTJc5ZT/G4pqOkJDPUX0bpHneQdiiaKGVLZB2
+	LXWLGABIjr9Ax46xStQGda2QeN5atv1bZRTaHmgp6Ag+CqW9r6i6JO7rQUtQRynFeofdejkFAMD
+	rXOYokstWgxkpon+Iu/PAjkQ35iChbgc9v2zbDK+FyxEGOcaKC0IDRybHJzUAmIMvWcHKlwqBl9
+	cJ6trlxTInEO0u2/mt+JoH6t4ddit6Y4CRA64g=
+X-Received: by 2002:a05:7022:5f11:b0:14b:cf58:ce15 with SMTP id a92af1059eb24-16a638513c8mr22744863c88.43.1792027447321;
+        Wed, 14 Oct 2026 18:24:07 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:821:261c:74c2:4177])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1761ed641ddsm24901872c88.1.2026.10.14.18.24.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2026 18:24:06 -0700 (PDT)
+Date: Wed, 14 Oct 2026 18:24:03 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Sasha Levin <sashal@kernel.org>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
+	Daniel Salmun <salmundani@gmail.com>, =?utf-8?Q?Rapha=C3=ABl?= Larocque <rlarocque@disroot.org>
+Subject: Re: [PATCH 6.12 130/497] Input: synaptics - limit T440p InterTouch
+ quirk to LEN0036
+Message-ID: <atAmS2YluELR8LVH@google.com>
+References: <20261013112907.864180619@linuxfoundation.org>
+ <20261013112910.975677311@linuxfoundation.org>
+ <8868e018-3be3-4de1-a066-5bcdf7aaf124@oracle.com>
+ <2d3bf713f9e7457f884f1908@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2d3bf713f9e7457f884f1908@kernel.org>
 
-On Wed, 14 Oct 2026 14:50:30 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.12.113 release.
-> There are 505 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Oct 14, 2026 at 08:08:43PM -0400, Sasha Levin wrote:
+> > An earlier allowlist match can succeed while this second match fails,
+> > allowing board 2722/LEN0036 to reach SMBus setup. The parent rejected
 > 
-> Responses should be made by Fri, 16 Oct 2026 12:37:19 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.113-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
+> Keeping this one in the queue. The kstrndup() failure only matters on board
+> 2722, and only under allocation failure, so c1df7e4e4951 is not needed.
 
-This rc kernel passes DAMON functionality test [1] on my test machine.
+In practice such small allocation will never return failure. 
 
-Tested-by: SJ Park <sj@kernel.org>
+Thanks.
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-
-
-Thanks,
-SJ
-
-[...]
+-- 
+Dmitry
