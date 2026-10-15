@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A9E57ED9F;
-	Thu, 15 Oct 2026 19:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD22A582BAC;
+	Thu, 15 Oct 2026 19:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792092995; cv=none; b=OHrBVpVMEJwkrhK5/VHxXWvbOujue/KlALvPDbr2Ubn13VkKOZ1cBkpfNWdP+WRmTEH7NZEJ9MP2VaoEXpzohAETMM+3orGPlQgXYpMgQJV1mluAExPS63nyIlvhvtfHN0wmdCCDBxA+aNZIBbG7c6ZhA/CVMrYHOJQp1tkkKJ0=
+	t=1792093005; cv=none; b=KUk20N1WGUZcBHdgzzqrE+bLHbtKh0XtfEOvOgS7aG6BEMfmnVypK0N803bea6yUg16RKQs36SxVN3DoyHTucGFVtLDKIJ/VTkiWYaRXoO4yMl24lA1f6dothy/fuUj5ET+BknrmbrVwGdkjyJsSZP+JeNRR97EJr+A2Qe/HZmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792092995; c=relaxed/simple;
-	bh=XkvxgVoEVGYFMWh+hbP84m/M1nGF5fNrFzLWVizBzWs=;
+	s=arc-20240116; t=1792093005; c=relaxed/simple;
+	bh=QVFHuphU4SS+0gzwHHpOlvdAKf609W319rYjho8z2Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2lKNR7iJSk6k23Dg6bMGBY4I4SSNBWMkGRAOVNCfTMeL6zjTsB2jWAdE/vw6QnH74YS+zPeCmEwf4Ulo9cuMr9QRNojoye7gsKpiqcfH2FURNkryzEtKEmBVmEFno1RtOJKjDg5NYmh+SXBK1JuwLTlnJqfJpH1b+pJ75lEBzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVs9iVFE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rk0TVEfLTre30IaxgBc381HxjzCXKZ0PgdDOcjQp2WR65pFIlYcgr2DHbMUYzdVN32KfTzexuQHuLtFiV6hJAVug56EvFDvS8xTnpxlTAb78Esh95d7WqsjRIJBv28ozdX52oB2Rm50XQrQNI1rSLc8ijgNMsTGdIVlv5IjJwto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iUiUkdhg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVs9iVFE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8319B1F000C5;
-	Thu, 15 Oct 2026 19:36:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iUiUkdhg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B67B1F000C5;
+	Thu, 15 Oct 2026 19:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792092993;
-	bh=wSKMutwZ6UIgbi6zHFxoHrLkQZ3IHqj0Nrnh6JlgOJs=;
+	s=k20260515; t=1792093004;
+	bh=tAn77Y0HClmmPwNlmwl14kNKFVqFycKEPSp/esJ/Q00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVs9iVFEEcIAsZJN1YUtF5jjW9kn8pJWWWEJKcXYozLDkV5zU+3BSubcMu2L3jXWY
-	 Zuqpvj0c/wJcf2o1M53ocHy3DiMHjlZ1hIPn4Oi9/G3ixVbpHcuptBsMAowH+kOpDC
-	 +TIf1wlflV7YMfV2wg7m/nqZe3j6jHhB5+wT81dypJSlITNHTfQyBPZ+2AmsDq492a
-	 FpNRw4Qa3ghp6WdmtZKZ2gufOghh5z4jEznDEZT08DnkSTErYMdqwFrkqHYTQogll5
-	 9+FijvDhfIXaLDd9T/z1tVyMkX8sO0hPxCknNnYubW8TY+NrOFJAf3XlEljGi68W5Z
-	 x5GJc25bVqZTw==
+	b=iUiUkdhgB5nq3oObB+giKSAX+GTp1BVvOmGjc90y/CeXShUYo3U3xaz5TyyITGkGA
+	 vW27jsLLR5mIgqcfi8S3jaR4fmWXGjNr6jZc4HLNFKJVNc3LJS/240YdPffK4sl8y5
+	 G93z0mkHtGLLd5xoXbo4MB132fardC8ydPhfMTVUu8/6xCcom4kbNdp5B/yB9hXm0x
+	 /e7RuuAbooCg5VgK/6qbbw8Wch8WATmQ7S6jY//3L9RiowrcbS0BDiHfkSnj0YYHhV
+	 ZpNKgHQAPKi5T4poPSpcYa1v/i5PigRDoOpzjnXpSY0Q7PjDrxMHY4hQ0G+epA+iGS
+	 bmQt/fcx+Xx1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Nikola Prica <nikola.prica@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 465/497] wifi: mt76: mt7925: restore the legacy BSS after MLO teardown
-Date: Thu, 15 Oct 2026 15:35:53 -0400
-Message-ID: <2026-10-15-1-daily-reply-0010-mt76-connac-inactive-bss-prereq@kernel.org>
+Subject: Re: [PATCH 6.12 112/497] PCI: Accept AtomicOps already enabled by the hypervisor
+Date: Thu, 15 Oct 2026 15:36:01 -0400
+Message-ID: <2026-10-15-1-daily-reply-0018-pci-atomicops-rciep-112@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cb60573d-858e-4a86-ab7e-05bbce6227d2@oracle.com>
-References: <cb60573d-858e-4a86-ab7e-05bbce6227d2@oracle.com>
+In-Reply-To: <55fe666e-77e9-45eb-9a9f-0d5a22abbfd6@oracle.com>
+References: <55fe666e-77e9-45eb-9a9f-0d5a22abbfd6@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,12 +50,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> recreation proceed.  04222f980301 ("wifi: mt76: connac: tolerate
-> inactive BSS deactivation") supplies the required tolerance.
+> 03ec922f0025 ("PCI: Do not enable AtomicOps by RCiEPs"), which precedes
+> the upstream patch and has no equivalent at either endpoint.
 >
-> I think we need to queue this prereq first before this patch. Thoughts ?
+> So we need to backport this prereq before this patch I think.
 
-Queued the prereq for 6.18 and 6.12, thanks.
+1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them") is
+already in every stable tree, and an RCiEP has no visible Root Port, so it is
+rejected there unless the hypervisor has already set AtomicOp Requester Enable.
+That is the only case where stable differs from mainline. It keeps working
+atomics today, and 03ec922f0025 would turn it into -EINVAL. The divergence is
+limited to that case and is in the permissive direction, so stable does not
+need the prerequisite.
 
 -- 
 Thanks,
