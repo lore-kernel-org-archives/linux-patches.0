@@ -1,114 +1,124 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F931397
-	for <patches@lists.linux.dev>; Fri, 16 Oct 2026 01:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792114446; cv=none; b=Y4ThF4YG79PenM8uK7DVccplo5P3k5bOaguOuIikfmzC8uitdEjLR4OAU4Fc7Qr16QULFAWo5SZ273VG0v9Nx+YKP5lXUObpySvpBHYFS5B+afbnDH5RzmKvhH2zghY73EukqeJhi3hI9e9+ktzMcNiVyXHiHMa0oP3YDX6k2k0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792114446; c=relaxed/simple;
-	bh=nLgPiYbSq45fhcCwaebsJ2SjYmzyaWlhxU4COKBBfmw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Camyrl5pYE5Z+3ZsC7Sb+Uagman/73aYpHhFKTO4ZA8fGMtPhzwDc8tv0BMxZdvGYr8urHBdS2sBggdLbF7fHU7s758nflu8wzBVpsJkuzJQ4Gni6G/+DZgUDR12pFd8vjXDTtwTWM5w2xFoUDsNJboFeEgd95bHFRYsQJlBx38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ksLJOq/a; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A437D12E
+	for <patches@lists.linux.dev>; Fri, 16 Oct 2026 09:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792144396; cv=pass; b=QAUuDdJEszmUwH1hi1V8O5hfXkCKGFabyUVIGC3UP62VFy8sejl0YuGSoGwqrOyAbnbl5vRC1sqwn5tTGnNWuUsle5So0h0qiK6HZU6sdA/Dcs/VDgHqcWFyBDGuEbAPEdi6DUs4S0zKSPduuM/5p+g8aOcq0VzM17t9QLOZf+I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792144396; c=relaxed/simple;
+	bh=xqN3pfb0UkR3DIFYcIuV6kM3FHfjO1La5ULm2s3cbLs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kfttKUBrd0MYcq5x3aWMIvXfjg5Bp1CFC1Dc5cZ3PFqyYPZ1MDgy87HH/cvzFIAv+MBT/m586+Luj5DX/FSDJUCQEa4lxORvmD/YxrBaVYeptCyUoXIP2CIS8onTEMHuLTQpv/Q167dF0wqn6ecHUzCjS6fpErYg18RLLMyGjgA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ODd+PUxY; arc=pass smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ksLJOq/a"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d8fd7a3f38so16455ad.1
-        for <patches@lists.linux.dev>; Thu, 15 Oct 2026 18:34:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ODd+PUxY"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-486e70f2457so1160657f8f.2
+        for <patches@lists.linux.dev>; Fri, 16 Oct 2026 02:53:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792144394; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GO4bTIPw7EiGGAZpVNCpMxszvffgoF6AEhpfIB7vm1L01yirYW4tQF7XkdD7B1CzvJ
+         8Ur+gxG537RqPKjc6u4MiLU1fS1ZGcklXf59Gan62uHdRQV5bx9sCz/aeeIl4AmHdwZr
+         RktoEewSbdwMgmkruNwp+XSymhNDxZH3Ym0EFF7MNYD3kOa51jNWCUWQwpN+qBBsA/7q
+         l0SZP/WWGz47MCyKgApD1gi2Ho4gZ42npT1GbYHQ3xa0BhQJhbNrf9fD2M+YW/8KVVMG
+         OG6JwLEWMy4eZ2Jo0ZV471nrdoyuta5bEyHkghkNTdqBEHgOhIJvglv4we0KMhCF1s7V
+         6Qew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xqN3pfb0UkR3DIFYcIuV6kM3FHfjO1La5ULm2s3cbLs=;
+        fh=n9cfsakvbKwkDhYqdVkt9A8qD8X1hgqIZswXE1skOM8=;
+        b=fAg9dHdSoNn7gEDfme0HIF19vNZVxPQd0q1LDuoo5H03WSa2gmXpv9SMGbCFVYJbMW
+         x1r3RSuOUpEVAPHK3GegSOjAFtZilDYjYf963+NzTFZdTKNxR5W1rsW5Z6UeJn2DQE39
+         rzTKxe6MUcKnvroQTaKqNHhe604bSclBRsl38HBRDpp4vMB+cm+OipDJo4i+qfBkaRmG
+         ehxEcfmQ7kQqARnaQbjcaggREbdnhWjAv4M0MlmlRtFYVwQI9H+135Oncv3ljRB6+Oma
+         cjDhTQ0uG88u1egqW/V4he34+V6KHGoJV7OnS6Y4oX5np0iECUFZ9RLvgbPp553l/NHh
+         auYA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792114443; x=1792719243; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=google.com; s=20251104; t=1792144394; x=1792749194; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=sdPpN9Xqdtkh9zsXDM/jJFMTNd+EOKXTasm7UxE7C4k=;
-        b=ksLJOq/a85igf03T3u9oirfpcqwqtDaTenXkqSFC+LSSpmyLanRmV5+6npCFZMJett
-         jlKDB50bk9NzMDJeyDVMpnB9S1einyCUuX2jQ/JTwH9oC0CYN2X6kPmRB7DvItTw9rbu
-         A1rePEksFIz5UWHXvE/1/mQrwIVynkL3M8vZfFZKXulYutodtOCCmATxdUBhtoA6HN5a
-         vk6mKWlwr4aXjzF1itrPl9b15CT1k0TCBdqVq4fHdzoatVRBL5GRPJFK2ipLmHN9UlrM
-         JYyo1lcpD3T031p2clCp7QNKIJxpH++2RtB+aObt5e7z2kg3QLZhL+ITXrk6ioe8tQWh
-         iVPQ==
+        bh=xqN3pfb0UkR3DIFYcIuV6kM3FHfjO1La5ULm2s3cbLs=;
+        b=ODd+PUxYr7iyfbb94QWkgH4UgHP2ZAlakfm1KxLLgWrGzn989hPS+dcxqPzMbUItDe
+         6BWik4X8pIMMWlRbezP/gpVnQ81xKubp62m/EWQQCFDYnbbj0dFrd9LMtvwjYBURWjN2
+         AQ37mEZMOeKA6vyJ+8d7B4ht9UJfM6DZsM+kVBu+Dog/pWi8eCcIQQmNvAFZW1tZ7eVX
+         0NyHKiuvp6XxD9taGrwjW9lksrz+zSWEtU/1j0pDHMBJvOXet3zGtpcVX4PmhYxpfMzo
+         Nk4JOqGCfM8aNyeEiGSM5e6qA6MlKXp9VS+CIn31KMfd/aZX1zHHUYOMxVESaayLYAMW
+         3Mag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792114443; x=1792719243;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1792144394; x=1792749194;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sdPpN9Xqdtkh9zsXDM/jJFMTNd+EOKXTasm7UxE7C4k=;
-        b=QbE+L+wuPsvyMxlScOruPh+bYdmX8lXsCm55l3GDZvjuncVN+PWBftyA2QXOq/kY8d
-         s2+KU9FtiywhJamLOj/5t/C34g38XVcs9ADZ6ZbgBme08HsnDKxpq8n+O6JqFCSSDpeB
-         /sXwR5/PS6lTNyaeDNjDKZcouVVX+eEJ2bIbcsIRhpG+0oF8SPRhM6H9HrFATGQCTIED
-         6PI8VBBNkCvUdR+k6B4cZjnnVZ1YI/1ratJLnGhJd5coBXwAGnPRVnm3Ipg9TtHmBT53
-         FeVlytOMVCelhZ6FQS80AURDzWjYqgK5QSUBtFTGinROAQytElwOXVve5EnZXJrTyMwr
-         Y47w==
-X-Forwarded-Encrypted: i=1; AKwUvBysAchCywsp+2MAqhY6ZbPoTw/qbaoIDhuIdOcanZ4z132FpZg1vYA8QKuTKspXmEDnR2zzXkj0@lists.linux.dev
-X-Gm-Message-State: AFq9FYIj1y6jVPb10pMqpVOoOMHwrT7s1u5adgxGJBAZQSeqx8BwXHRV
-	Qle3v33doDafgV42Xg0UFCkbAJ1rlIYOsEi70e8cn3EM18IHNwIE2BlZdmyUW/r6kQ==
-X-Gm-Gg: AYBFou2O9ewGF/t7PvgtbbJpxuFEHN7AKc/Uj4No9x47qhVYl9K89+iaOUlckDNNrFC
-	k0muEG/m+kcbJQeWpqaZkruAcTwDn49RDoH43x5wXZtFPCgfffYlqX3mlrsSc9hI16T44UbZxFf
-	joo3H36ajFPiHx74SARYoJ2JBV9j2G4USMNCUH4FKeXPmATAZkx+2LGXtNtF6/nbTQPP9uofSOu
-	iToCDIWrFGB+YeXCiD9vjbceC+tXiRsYi4tM47MGckJIW+b0tcdajKzJDooZxYlqEuJQMxNruMr
-	SDxfkYtLQrA+T5xAxICf38rNT1jB8rotMO9UtCcNTj/5zM6Eip3ZpprDp1smo3iBoAUH6bLnMZm
-	M5QlYWJUoC2JNlNzmIvzNC11YswGpUMlOJ/DyI0TgrkR29ZWpvAc2FTxQkSII7p4V84+NoClBDW
-	hE8yP2h2esMBUPEGRkGvJW4WTdOoqmZJrZMlmcHMXKgw74b0E5zoMScvSp2PhQPLQ2nGvR5KRJ/
-	NZB/zpHJJkgQJdOnLnP2wF3ujaHp7MZF+OrD2DcUZR1rDsql1wMEncbpNEVkl1eGm4=
-X-Received: by 2002:a17:902:ecc3:b0:2e6:1013:ad57 with SMTP id d9443c01a7336-2e9821d5bafmr1820355ad.12.1792114442559;
-        Thu, 15 Oct 2026 18:34:02 -0700 (PDT)
-Received: from google.com (163.1.145.34.bc.googleusercontent.com. [34.145.1.163])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acd05c9255sm407564a91.2.2026.10.15.18.34.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 18:34:01 -0700 (PDT)
-Date: Fri, 16 Oct 2026 01:33:55 +0000
-From: Samiullah Khawaja <skhawaja@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>, 
-	linux-kselftest@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, 
-	Shuah Khan <shuah@kernel.org>, Will Deacon <will@kernel.org>, 
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Joerg Roedel <joerg.roedel@amd.com>, 
-	Kevin Tian <kevin.tian@intel.com>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
-	patches@lists.linux.dev, Samarth Narang <samarth.colleges@gmail.com>
-Subject: Re: [PATCH] iommupt: Do not allow PTEs to be split when dirty logging
-Message-ID: <atF8QSyk2TK7wlvH@google.com>
-References: <0-v1-5bb926ff73ec+576-iommufd_dirty_jgg@nvidia.com>
+        bh=xqN3pfb0UkR3DIFYcIuV6kM3FHfjO1La5ULm2s3cbLs=;
+        b=evSLyw3xggx8k9AIjnmsR47RPeikxeC6d+uE35h41D96RlAtq+cU4HoZuA02eEYEdu
+         nuHP3bpEYUccmYMDA9l14RbxypDLdw4hdbvWI7BnktTAb2i+gnN7YDv2d60579r9vMaf
+         QREHJK8Q+8WEvvfh3r/5iSDv66qkOyBvnPJW8HGsGxA/9eU33j5ZYIoZC8CsShVmJj+i
+         TqBMt95xZ1LGIY0DGyx9PyboYL8ASManQlIAkxj9p64g1awZ+SzPk+2acLfQQVR0I6KC
+         dSM8GW7mZ8CTA/37vJV+TpvMzdpRqYj4fFTCDvxZMwzbgxjeccjDvGp5gYiq2mqYxL7G
+         ZNmg==
+X-Forwarded-Encrypted: i=1; AKwUvBwj/MsSBtmBQiZKmWyuCYih11vHrRXj9NfzrLHnk4vKfN3WlL2DQ5K1jazLmQhYtFWrZHEcHYm4@lists.linux.dev
+X-Gm-Message-State: AFq9FYKIyDAM5zKu9Ydv0NgR3XY62kvook1GRDpheojbtR15kBDaKk9L
+	f9iFTGXEH1XdERwKrIeliTWLJ94uyFyWbjkRXWvPDYyX/nY7dhyZ7vQNeSRnM7AUAbOYrkgAsIL
+	Vt/dlU40xp9PVV1VgfdNklRfNexWNohqMZbBbiEEL
+X-Gm-Gg: AYBFou3zua//B6+aGstOxJRtbRPdj4NZCeee2mpXrX/2p9ylCOZ/72USwDJQ4yvyTBr
+	hmkwG7w7gqE1I/PegKdxTrNgujXSF/X9qnVZJuUgl2ybE3ddkswELcn3RBuX7JzdieWRGDgVPtx
+	pwNtBBs7wO8NNeFflRsqNpnsBs14XYC1PhFxQ5Wiyk2L3TAqhlfRYVcxFhwV5xqXazUP8pplXs8
+	Mh0EKrN4FP9fDdnu4tLrCXdJud89pw+5MeelIRAf6enLvooSLhU11EWqq7lXaJkuEYXLR5EpPEE
+	PTsDA8GOyof5hOuWg7aEJlLJ+IChr8N3wUwKOFmW1eGBEbFb9bQWYtBduXoiuk1NGaashurbEFR
+	gbI4WQmWvMYiE9Qed92ET0vLbg/JjeXPW3H+fAw6f/lGRgDf+ffPO
+X-Received: by 2002:adf:e64c:0:b0:485:8ee5:5ffa with SMTP id
+ ffacd0b85a97d-48dba9de8f4mr35213414f8f.38.1792144393256; Fri, 16 Oct 2026
+ 02:53:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <0-v1-5bb926ff73ec+576-iommufd_dirty_jgg@nvidia.com>
+References: <20261009140946.008206689@linuxfoundation.org> <20261011111313.27648-1-ojeda@kernel.org>
+ <2026101124-rethink-craftily-cb25@gregkh> <CANiq72ndhLush3bugar1YGPnsein8min1k3_NucBxzFwCWe9Ug@mail.gmail.com>
+ <2026101103-fling-stipulate-084f@gregkh> <CANiq72kjJ__OnsTjmsuQZH8+U-cRDCNnRpSuHU3PwYYT07Xf0Q@mail.gmail.com>
+In-Reply-To: <CANiq72kjJ__OnsTjmsuQZH8+U-cRDCNnRpSuHU3PwYYT07Xf0Q@mail.gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Fri, 16 Oct 2026 11:53:00 +0200
+X-Gm-Features: AclHuK-KZrzl8buAxw5--JIrQ3Q2GlG4ZFRpXT7mWgEiCKlqaDvBAHdKaEgr_aM
+Message-ID: <CAH5fLgjjPmL-hiQ7R5zFG9BwWbxm6j+GnahoC11AiNxM7iyGJQ@mail.gmail.com>
+Subject: Re: [PATCH 7.2 000/428] 7.2.10-rc1 review
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>, Miguel Ojeda <ojeda@kernel.org>, achill@achill.org, 
+	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org, 
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com, 
+	linux-kernel@vger.kernel.org, linux@roeck-us.net, 
+	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
+	pavel@nabladev.com, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
+	torvalds@linux-foundation.org, =?UTF-8?B?QXJ2ZSBIasO4bm5ldsOlZw==?= <arve@android.com>, 
+	Todd Kjos <tkjos@android.com>, Christian Brauner <christian@brauner.io>, 
+	Carlos Llamas <cmllamas@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 15, 2026 at 02:20:10PM -0300, Jason Gunthorpe wrote:
->If a single PTE cannot be stored in the current bitmap that should be a
->failure and reported back to userspace. Allowing a PTE to be split creates
->a possibility that dirty memory will be reported as clean.
+On Sun, Oct 11, 2026 at 6:39=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
->The gather must also cover the entire PTE that is being cleaned, not just
->the part that fits within the bitmap.
+> On Sun, Oct 11, 2026 at 4:17=E2=80=AFPM Greg KH <gregkh@linuxfoundation.o=
+rg> wrote:
+> >
+> > If that works, can you, or someone else, send an updated version of tha=
+t
+> > commit for the next round of stable releases as I dropped it for this
+> > one.
 >
->Fix both issues by computing the full IOVA range of every PTE and using
->that to update the bitmap and the gather. The bitmap code now rejects
->ranges that don't fit in it, and the gather always combined ranges.
+> Done (I didn't add vger).
 >
->The selftest quietly relied on a bug where the CONT was split, that is why
->the half page size for the mock domain saw alternating dirties. Increase
->the dirty test page size to PAGE_SIZE so it still works as intended.
->
->Cc: stable@vger.kernel.org
->Fixes: 4a00f9434891 ("iommupt: Add read_and_clear_dirty op")
->Reported-by: Samarth Narang <samarth.colleges@gmail.com>
->Closes: https://lore.kernel.org/all/20261013165814.309255
->Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->---
-> drivers/iommu/generic_pt/iommu_pt.h     | 30 +++++++------------------
-> tools/testing/selftests/iommu/iommufd.c | 10 ++++-----
-> 2 files changed, 13 insertions(+), 27 deletions(-)
->
->This relies on other changes in the iommufd tree so I will take it
->
+> Alice: please double-check, thanks!
 
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Thanks Miguel
