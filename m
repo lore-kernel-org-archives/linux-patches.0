@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054C43A0B38;
-	Sat, 17 Oct 2026 17:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D58B3A0B38;
+	Sat, 17 Oct 2026 17:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259671; cv=none; b=q4z+BXrUHMGkf45L/icKdIthZmbIjj6sqwStVH7Tig1UWL2ZNhkzesxjliztK3TWbMhpx4egKnfX1oCu+EPz9ts3V7GQw18YsgpeaHRx8WBA7c7PuZzRCyCB58mD6V5szMIAn9wNTNnLk2iFIhqMRC4T8koAaSdnXtsZYktKxwI=
+	t=1792259674; cv=none; b=RsXJxXORutU1GUe2t/BQyoEEp5JGnJxlNmqqssLi0AhcHvP03x5NGcouFu2AK/p09QeCl36Z9NiyLnEnMmHsYAwvQsP8hn6JEu9LhECYVc+zSmtw5amWPVmWtdWJ2VpfINJAn0X8ECG7gCp+Km7sySAiL+hCW07ZiZiKvD+T89c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259671; c=relaxed/simple;
-	bh=WwwXXkgTBwYvvsdSZbk/HJOe0EaLWPCiJvboUSMH8+w=;
+	s=arc-20240116; t=1792259674; c=relaxed/simple;
+	bh=CmsRj3VBPobUdfugvpd5l77NmXIGSufLf7+XJHBgTEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXGy8kVybXjFSkAa13qnk3Y1tDyWZlbLzKOUZNqqg3hRbsspqwzu/WDao0oYcsoiPPcqihrMn/zjaX3kmP/hBcfi88Ss5/y16L+9ARMGB7bN9wfyn2Cbbz63chLrgodkfF3HNMIZ0DOqy1AtMTpDOjZl24BlQH4Xxz8RZkKiHDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxSkeSC0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Er4mFzS/neHkv2XfWJKWPScUMuZpii/hsiL9rK7TMBvP98bnVrQQlKxsOvGzpESToUB/kZjOD1w0GnO21UVwr8WMlKup9neEnATrep2Yt6yf5Gi8hRk7LyH++QacPqso/qQW/fAEP6hahdAb1q71+DkRsYWdMKlhp7Vi7NYyKLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqF3mMZ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxSkeSC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE721F000C4;
-	Sat, 17 Oct 2026 17:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqF3mMZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5EF1F000C4;
+	Sat, 17 Oct 2026 17:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259669;
-	bh=bRPeiAF5cERGpAHQVtta4+8hMg2s4mXEfkPlw/rbSbU=;
+	s=korg; t=1792259672;
+	bh=kyCDIQjaFiYsxatifjlE6U9H2R//oHVIdeFFZMLkwQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxSkeSC0ggZPuGYlzhVvUPz28CEZMpAArKaW8c0woiJ5VmNDNRj77st6omVbYFBTj
-	 I30TlrNj69pTDmQnj1NHdP9amvJSnrtK32yv+RgbJmbZHUzTCcXTqz48I7f71SVNID
-	 DBqsw9jiCh8O3fHZYoYpEXbWL95nvCoY27MySxLY=
+	b=PqF3mMZ0L5zoW/vZo3N+s7Th90/8EO/t/atq47gEXNmIYZmw8g19sD53E7456cv7q
+	 DsyVWUhy1939LRVpadRzDzvg4YUhRxMvqEGJv+bezUAHZ9HSu1AzDGEhICBiSSdjLT
+	 w3LRGCEYvht0aNl7Ub8hQKDVHngXr4EMsxcn3X9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1292/1674] sunrpc: refactor pool_mode setting code
-Date: Sat, 17 Oct 2026 17:59:24 +0200
-Message-ID: <20261017160504.304340558@linuxfoundation.org>
+Subject: [PATCH 6.6 1293/1674] SUNRPC: make various functions static, or not exported.
+Date: Sat, 17 Oct 2026 17:59:25 +0200
+Message-ID: <20261017160504.333292210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,163 +51,273 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 5f71f3c325534da55dfda487a67208e2e0f0cd1b ]
+[ Upstream commit f2b27e1d72527f94f030b6356b3187576e60885b ]
 
-Allow the pool_mode setting code to be called from internal callers
-so we can call it from a new netlink op. Add a new svc_pool_map_get
-function to return the current setting. Change the existing module
-parameter handling to use the new interfaces under the hood.
+Various functions are only used within the sunrpc module, and several
+are only use in the one file.  So clean up:
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+These are marked static, and any EXPORT is removed.
+  svc_rcpb_setup()
+  svc_rqst_alloc()
+  svc_rqst_free()  - also moved before first use
+  svc_rpcbind_set_version()
+  svc_drop() - also moved to svc.c
+
+These are now not EXPORTed, but are not static.
+  svc_authenticate()
+  svc_sock_update_bufs()
+
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: c479bde671cb ("sunrpc: defer rq_argp and rq_resp free until after RCU grace period")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/svc.h |  2 +
- net/sunrpc/svc.c           | 85 ++++++++++++++++++++++++++++----------
- 2 files changed, 66 insertions(+), 21 deletions(-)
+ include/linux/sunrpc/svc.h     |  9 -------
+ include/linux/sunrpc/svcauth.h |  1 -
+ include/linux/sunrpc/svcsock.h |  2 --
+ net/sunrpc/sunrpc.h            |  4 +++
+ net/sunrpc/svc.c               | 48 ++++++++++++++++++----------------
+ net/sunrpc/svc_xprt.c          |  9 -------
+ net/sunrpc/svcauth.c           |  1 -
+ net/sunrpc/svcsock.c           |  1 -
+ 8 files changed, 29 insertions(+), 46 deletions(-)
 
 diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index 3d8b215f32d5b..d4558fefd9b4e 100644
+index d4558fefd9b4e..e1afc35e961d1 100644
 --- a/include/linux/sunrpc/svc.h
 +++ b/include/linux/sunrpc/svc.h
-@@ -395,6 +395,8 @@ struct svc_procedure {
- /*
-  * Function prototypes.
+@@ -397,17 +397,13 @@ struct svc_procedure {
   */
-+int sunrpc_set_pool_mode(const char *val);
-+int sunrpc_get_pool_mode(char *val, size_t size);
- int svc_rpcb_setup(struct svc_serv *serv, struct net *net);
+ int sunrpc_set_pool_mode(const char *val);
+ int sunrpc_get_pool_mode(char *val, size_t size);
+-int svc_rpcb_setup(struct svc_serv *serv, struct net *net);
  void svc_rpcb_cleanup(struct svc_serv *serv, struct net *net);
  int svc_bind(struct svc_serv *serv, struct net *net);
+ struct svc_serv *svc_create(struct svc_program *, unsigned int,
+ 			    int (*threadfn)(void *data));
+-struct svc_rqst *svc_rqst_alloc(struct svc_serv *serv,
+-					struct svc_pool *pool, int node);
+ bool		   svc_rqst_replace_page(struct svc_rqst *rqstp,
+ 					 struct page *page);
+ void		   svc_rqst_release_pages(struct svc_rqst *rqstp);
+-void		   svc_rqst_free(struct svc_rqst *);
+ void		   svc_exit_thread(struct svc_rqst *);
+ struct svc_serv *  svc_create_pooled(struct svc_program *prog,
+ 				     struct svc_stat *stats,
+@@ -443,11 +439,6 @@ int		   svc_generic_rpcbind_set(struct net *net,
+ 					   u32 version, int family,
+ 					   unsigned short proto,
+ 					   unsigned short port);
+-int		   svc_rpcbind_set_version(struct net *net,
+-					   const struct svc_program *progp,
+-					   u32 version, int family,
+-					   unsigned short proto,
+-					   unsigned short port);
+ 
+ #define	RPC_MAX_ADDRBUFLEN	(63U)
+ 
+diff --git a/include/linux/sunrpc/svcauth.h b/include/linux/sunrpc/svcauth.h
+index 61c455f1e1f50..63cf6fb26dcc1 100644
+--- a/include/linux/sunrpc/svcauth.h
++++ b/include/linux/sunrpc/svcauth.h
+@@ -151,7 +151,6 @@ struct auth_ops {
+ 
+ struct svc_xprt;
+ 
+-extern enum svc_auth_status svc_authenticate(struct svc_rqst *rqstp);
+ extern rpc_authflavor_t svc_auth_flavor(struct svc_rqst *rqstp);
+ extern int	svc_authorise(struct svc_rqst *rqstp);
+ extern enum svc_auth_status svc_set_client(struct svc_rqst *rqstp);
+diff --git a/include/linux/sunrpc/svcsock.h b/include/linux/sunrpc/svcsock.h
+index 9e6ecc3526e77..01a547fa447cf 100644
+--- a/include/linux/sunrpc/svcsock.h
++++ b/include/linux/sunrpc/svcsock.h
+@@ -61,8 +61,6 @@ static inline u32 svc_sock_final_rec(struct svc_sock *svsk)
+  */
+ void		svc_recv(struct svc_rqst *rqstp);
+ void		svc_send(struct svc_rqst *rqstp);
+-void		svc_drop(struct svc_rqst *);
+-void		svc_sock_update_bufs(struct svc_serv *serv);
+ int		svc_addsock(struct svc_serv *serv, struct net *net,
+ 			    const int fd, char *name_return, const size_t len,
+ 			    const struct cred *cred);
+diff --git a/net/sunrpc/sunrpc.h b/net/sunrpc/sunrpc.h
+index d4a362c9e4b3b..e3c6e3b63f0ba 100644
+--- a/net/sunrpc/sunrpc.h
++++ b/net/sunrpc/sunrpc.h
+@@ -36,7 +36,11 @@ static inline int sock_is_loopback(struct sock *sk)
+ 	return loopback;
+ }
+ 
++struct svc_serv;
++struct svc_rqst;
+ int rpc_clients_notifier_register(void);
+ void rpc_clients_notifier_unregister(void);
+ void auth_domain_cleanup(void);
++void svc_sock_update_bufs(struct svc_serv *serv);
++enum svc_auth_status svc_authenticate(struct svc_rqst *rqstp);
+ #endif /* _NET_SUNRPC_SUNRPC_H */
 diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 3ac71af655ed0..68f31611c22cc 100644
+index 68f31611c22cc..a5e73b6959373 100644
 --- a/net/sunrpc/svc.c
 +++ b/net/sunrpc/svc.c
-@@ -72,57 +72,100 @@ static struct svc_pool_map svc_pool_map = {
- static DEFINE_MUTEX(svc_pool_map_mutex);/* protects svc_pool_map.count only */
+@@ -32,6 +32,7 @@
+ #include <trace/events/sunrpc.h>
  
- static int
--param_set_pool_mode(const char *val, const struct kernel_param *kp)
-+__param_set_pool_mode(const char *val, struct svc_pool_map *m)
- {
--	int *ip = (int *)kp->arg;
--	struct svc_pool_map *m = &svc_pool_map;
--	int err;
-+	int err, mode;
+ #include "fail.h"
++#include "sunrpc.h"
  
- 	mutex_lock(&svc_pool_map_mutex);
+ #define RPCDBG_FACILITY	RPCDBG_SVCDSP
  
--	err = -EBUSY;
--	if (m->count)
--		goto out;
--
- 	err = 0;
- 	if (!strncmp(val, "auto", 4))
--		*ip = SVC_POOL_AUTO;
-+		mode = SVC_POOL_AUTO;
- 	else if (!strncmp(val, "global", 6))
--		*ip = SVC_POOL_GLOBAL;
-+		mode = SVC_POOL_GLOBAL;
- 	else if (!strncmp(val, "percpu", 6))
--		*ip = SVC_POOL_PERCPU;
-+		mode = SVC_POOL_PERCPU;
- 	else if (!strncmp(val, "pernode", 7))
--		*ip = SVC_POOL_PERNODE;
-+		mode = SVC_POOL_PERNODE;
- 	else
- 		err = -EINVAL;
- 
-+	if (err)
-+		goto out;
-+
-+	if (m->count == 0)
-+		m->mode = mode;
-+	else if (mode != m->mode)
-+		err = -EBUSY;
- out:
- 	mutex_unlock(&svc_pool_map_mutex);
- 	return err;
+@@ -458,7 +459,7 @@ struct svc_pool *svc_pool_for_cpu(struct svc_serv *serv)
+ 	return &serv->sv_pools[pidx];
  }
  
- static int
--param_get_pool_mode(char *buf, const struct kernel_param *kp)
-+param_set_pool_mode(const char *val, const struct kernel_param *kp)
-+{
-+	struct svc_pool_map *m = kp->arg;
-+
-+	return __param_set_pool_mode(val, m);
-+}
-+
-+int sunrpc_set_pool_mode(const char *val)
-+{
-+	return __param_set_pool_mode(val, &svc_pool_map);
-+}
-+EXPORT_SYMBOL(sunrpc_set_pool_mode);
-+
-+/**
-+ * sunrpc_get_pool_mode - get the current pool_mode for the host
-+ * @buf: where to write the current pool_mode
-+ * @size: size of @buf
-+ *
-+ * Grab the current pool_mode from the svc_pool_map and write
-+ * the resulting string to @buf. Returns the number of characters
-+ * written to @buf (a'la snprintf()).
-+ */
-+int
-+sunrpc_get_pool_mode(char *buf, size_t size)
+-int svc_rpcb_setup(struct svc_serv *serv, struct net *net)
++static int svc_rpcb_setup(struct svc_serv *serv, struct net *net)
  {
--	int *ip = (int *)kp->arg;
-+	struct svc_pool_map *m = &svc_pool_map;
+ 	int err;
  
--	switch (*ip)
-+	switch (m->mode)
- 	{
- 	case SVC_POOL_AUTO:
--		return sysfs_emit(buf, "auto\n");
-+		return snprintf(buf, size, "auto");
- 	case SVC_POOL_GLOBAL:
--		return sysfs_emit(buf, "global\n");
-+		return snprintf(buf, size, "global");
- 	case SVC_POOL_PERCPU:
--		return sysfs_emit(buf, "percpu\n");
-+		return snprintf(buf, size, "percpu");
- 	case SVC_POOL_PERNODE:
--		return sysfs_emit(buf, "pernode\n");
-+		return snprintf(buf, size, "pernode");
- 	default:
--		return sysfs_emit(buf, "%d\n", *ip);
-+		return snprintf(buf, size, "%d", m->mode);
+@@ -470,7 +471,6 @@ int svc_rpcb_setup(struct svc_serv *serv, struct net *net)
+ 	svc_unregister(serv, net);
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(svc_rpcb_setup);
+ 
+ void svc_rpcb_cleanup(struct svc_serv *serv, struct net *net)
+ {
+@@ -737,7 +737,20 @@ svc_release_buffer(struct svc_rqst *rqstp)
+ 			put_page(rqstp->rq_pages[i]);
+ }
+ 
+-struct svc_rqst *
++static void
++svc_rqst_free(struct svc_rqst *rqstp)
++{
++	folio_batch_release(&rqstp->rq_fbatch);
++	svc_release_buffer(rqstp);
++	if (rqstp->rq_scratch_page)
++		put_page(rqstp->rq_scratch_page);
++	kfree(rqstp->rq_resp);
++	kfree(rqstp->rq_argp);
++	kfree(rqstp->rq_auth_data);
++	kfree_rcu(rqstp, rq_rcu_head);
++}
++
++static struct svc_rqst *
+ svc_rqst_alloc(struct svc_serv *serv, struct svc_pool *pool, int node)
+ {
+ 	struct svc_rqst	*rqstp;
+@@ -772,7 +785,6 @@ svc_rqst_alloc(struct svc_serv *serv, struct svc_pool *pool, int node)
+ 	svc_rqst_free(rqstp);
+ 	return NULL;
+ }
+-EXPORT_SYMBOL_GPL(svc_rqst_alloc);
+ 
+ static struct svc_rqst *
+ svc_prepare_thread(struct svc_serv *serv, struct svc_pool *pool, int node)
+@@ -1006,24 +1018,6 @@ void svc_rqst_release_pages(struct svc_rqst *rqstp)
  	}
  }
-+EXPORT_SYMBOL(sunrpc_get_pool_mode);
-+
-+static int
-+param_get_pool_mode(char *buf, const struct kernel_param *kp)
-+{
-+	char str[16];
-+	int len;
-+
-+	len = sunrpc_get_pool_mode(str, ARRAY_SIZE(str));
-+
-+	/* Ensure we have room for newline and NUL */
-+	len = min_t(int, len, ARRAY_SIZE(str) - 2);
-+
-+	/* tack on the newline */
-+	str[len] = '\n';
-+	str[len + 1] = '\0';
-+
-+	return sysfs_emit(buf, str);
-+}
  
- module_param_call(pool_mode, param_set_pool_mode, param_get_pool_mode,
--		 &svc_pool_map.mode, 0644);
-+		  &svc_pool_map, 0644);
+-/*
+- * Called from a server thread as it's exiting. Caller must hold the "service
+- * mutex" for the service.
+- */
+-void
+-svc_rqst_free(struct svc_rqst *rqstp)
+-{
+-	folio_batch_release(&rqstp->rq_fbatch);
+-	svc_release_buffer(rqstp);
+-	if (rqstp->rq_scratch_page)
+-		put_page(rqstp->rq_scratch_page);
+-	kfree(rqstp->rq_resp);
+-	kfree(rqstp->rq_argp);
+-	kfree(rqstp->rq_auth_data);
+-	kfree_rcu(rqstp, rq_rcu_head);
+-}
+-EXPORT_SYMBOL_GPL(svc_rqst_free);
+-
+ void
+ svc_exit_thread(struct svc_rqst *rqstp)
+ {
+@@ -1173,6 +1167,7 @@ static int __svc_register(struct net *net, const char *progname,
+ 	return error;
+ }
+ 
++static
+ int svc_rpcbind_set_version(struct net *net,
+ 			    const struct svc_program *progp,
+ 			    u32 version, int family,
+@@ -1183,7 +1178,6 @@ int svc_rpcbind_set_version(struct net *net,
+ 				version, family, proto, port);
+ 
+ }
+-EXPORT_SYMBOL_GPL(svc_rpcbind_set_version);
+ 
+ int svc_generic_rpcbind_set(struct net *net,
+ 			    const struct svc_program *progp,
+@@ -1596,6 +1590,14 @@ svc_process_common(struct svc_rqst *rqstp)
+ 	goto sendit;
+ }
+ 
++/*
++ * Drop request
++ */
++static void svc_drop(struct svc_rqst *rqstp)
++{
++	trace_svc_drop(rqstp);
++}
++
+ /**
+  * svc_process - Execute one RPC transaction
+  * @rqstp: RPC transaction context
+diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
+index 5440d6b50efa5..f44bba40fcf76 100644
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -874,15 +874,6 @@ void svc_recv(struct svc_rqst *rqstp)
+ }
+ EXPORT_SYMBOL_GPL(svc_recv);
+ 
+-/*
+- * Drop request
+- */
+-void svc_drop(struct svc_rqst *rqstp)
+-{
+-	trace_svc_drop(rqstp);
+-}
+-EXPORT_SYMBOL_GPL(svc_drop);
+-
+ /**
+  * svc_send - Return reply to client
+  * @rqstp: RPC transaction context
+diff --git a/net/sunrpc/svcauth.c b/net/sunrpc/svcauth.c
+index 1619211f0960a..93d9e949e2652 100644
+--- a/net/sunrpc/svcauth.c
++++ b/net/sunrpc/svcauth.c
+@@ -98,7 +98,6 @@ enum svc_auth_status svc_authenticate(struct svc_rqst *rqstp)
+ 	rqstp->rq_authop = aops;
+ 	return aops->accept(rqstp);
+ }
+-EXPORT_SYMBOL_GPL(svc_authenticate);
+ 
+ /**
+  * svc_set_client - Assign an appropriate 'auth_domain' as the client
+diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
+index 2c22677563330..e3010eb060930 100644
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -1435,7 +1435,6 @@ void svc_sock_update_bufs(struct svc_serv *serv)
+ 		set_bit(XPT_CHNGBUF, &svsk->sk_xprt.xpt_flags);
+ 	spin_unlock_bh(&serv->sv_lock);
+ }
+-EXPORT_SYMBOL_GPL(svc_sock_update_bufs);
  
  /*
-  * Detect best pool mapping mode heuristically,
+  * Initialize socket for RPC use and create svc_sock struct
 -- 
 2.53.0
 
