@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235503A0E85;
-	Sat, 17 Oct 2026 16:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410F3AE199;
+	Sat, 17 Oct 2026 16:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255172; cv=none; b=oAxfRV68+I1qsPk73PYbGOCqh85L4ej3vTPQR+WJAGiIT6PYEHUSTqMqTk4RQf75TqWiBFkGkFGf1GevtztXAy7gH27Rbukm2Cu2gDRb++LZX7cLtF4zPBCbvJgJFs2SYBkVxWw6WHTCymlM+kkliVYxzQJKrivSfv+fdbq4cSs=
+	t=1792255175; cv=none; b=C24isRl+Rr/dVhaI0nz8vdKTbepwW2/RxPBeMP2wYeIrCWWfhmIUAf28MoXPCUoMxJEPB1xslTtvLsrsAw6dFcb7e/H8QtJOwbd7eZ4hMigKcpPsZkijkD7z7qKTZf4h73jQ0MQAmORt973NlH+DGBy007LmDuAM3G9EkIl5nuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255172; c=relaxed/simple;
-	bh=5tZxZxbNcEYsliXr2Z/G+qAcOpkulXEIw4LB5BUufo0=;
+	s=arc-20240116; t=1792255175; c=relaxed/simple;
+	bh=y91Nzc2GrvkrLhMbnzztU3W9Pc7ivUwY/7eBYzi9NK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9mIzYxsTHM9zhHssrMEYTUAqxNDAz5wiipqi/LFnBt//Cp1VGFyg/75oatpmFHY4Cckba0oKYSQF9HilAwzwxys0M098nJGaKH5QxUG8LhaL/pbYPGD0d3QxfWR59dFlUXtGs1naQM6As2GJV0aEFVb17lyeCMIW7b+grtV9XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo1naZsj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Di2wfd8t5CAZUkzcW5ZZuWMSUXBjkPn+KiyKTDxaeSOd9nDQsZGpDNAqi1Mux9AEkBaTcvXYfnAaq/K/ufMnkc/G8u7XXUpMu66J/ZKmp9iGywaoYA8ihDf9EaGlm+yOQ0ozB1xBDScO6zApGTTTf6TH4jEGQCK0dXFTqsKXmWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpnFEc+A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo1naZsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0441F000CC;
-	Sat, 17 Oct 2026 16:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpnFEc+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3D71F000C6;
+	Sat, 17 Oct 2026 16:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255170;
-	bh=O8jnI3aJqDhA/ozSfoVEho5u6+wWJ+M6oALhtNjpqqY=;
+	s=korg; t=1792255173;
+	bh=meUiAmWhblaVumI9t8L+PFnG7HdbAGhsvldl3GMsjSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zo1naZsj+qJMM7+kVZCkScW7EZp8W5zKhT/rhYyJPHfc12ED+Lxong1DAS8TMypde
-	 yiCTZIjVaKvZa2p5l7ZJbYv6s6FB5TuMvB00Vb8WbWAZe4cIsAMr32Jiy/ZriaypQW
-	 2HB+ZW5O7qR3MNIWMGk6/FHUao/0r7rP4CoIi7uc=
+	b=TpnFEc+AjS35Dp8UCcuFErXyJeP9IeVug6oL3Q8QxNd2PbrDT8Ue+t9ZV0kumOFAQ
+	 MGrNGEIcF9wveRwj/rJf/S7fXiRG5phq8AAJnejCQ+gtaLtHqYLVygb4R9vB+LmWi9
+	 loyBzPoIiMS5cGFz0ElFxfiu99/NYaWhjdWezBmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Brian Masney <bmasney@redhat.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 687/869] PCI: Fix UAF when probe runs concurrent to dyn ID removal
-Date: Sat, 17 Oct 2026 17:58:48 +0200
-Message-ID: <20261017160054.591480837@linuxfoundation.org>
+Subject: [PATCH 6.12 688/869] clk: mediatek: pllfh: Fix IO remapping leak in register_pllfhs error path
+Date: Sat, 17 Oct 2026 17:58:49 +0200
+Message-ID: <20261017160054.614761269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,120 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
 
-[ Upstream commit 3ffc4c9690c33ee28cdb3d0182b12f9c623e3acc ]
+[ Upstream commit 540d91480bcb1b28a62d7023aa70947ea44c55b9 ]
 
-Dynamic IDs are only guaranteed to be valid when dynids.lock is held,
-as remove_id_store() can free the node. Thus, make a copy in
-pci_match_device(). Also, clarify that the id parameter is only valid
-during probe.
+When mtk_clk_register_pllfhs function fails to register a PLL, it
+unregisters all PLLs and cleans up itself in its error path before
+returning, so the function callers don't need to do it.
 
-Fixes: 0994375e9614 ("PCI: add remove_id sysfs entry")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/all/20260619170503.518F61F00A3A@smtp.kernel.org/
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-9-3580726844e1@garyguo.net
+But contrary to mtk_clk_unregister_pllfhs function, that does almost
+the same sequence, it does not free the IO memory mapped on fhctl node,
+leading to a leak.
+
+Fix this leak by factorizing the cleanup sequence in a new private
+function and use it both mtk_clk_register_pllfhs and
+mtk_clk_unregister_pllfhs functions.
+
+Also, change the loop index start value to avoid the -1 operation on
+index at each loop.
+
+Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
+Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 28 +++++++++++++++-------------
- include/linux/pci.h      |  1 +
- 2 files changed, 16 insertions(+), 13 deletions(-)
+ drivers/clk/mediatek/clk-pllfh.c | 98 ++++++++++++++++----------------
+ 1 file changed, 49 insertions(+), 49 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index d684106184c0b..f74299cb10e3e 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -180,6 +180,7 @@ static const struct pci_device_id pci_device_id_any = {
-  * pci_match_device - See if a device matches a driver's list of IDs
-  * @drv: the PCI driver to match against
-  * @dev: the PCI device structure to match against
-+ * @id_copy: place to store copy of pci_device_id for dynamic ID
-  *
-  * Used by a driver to check whether a PCI device is in its list of
-  * supported devices or in the dynids list, which may have been augmented
-@@ -187,9 +188,9 @@ static const struct pci_device_id pci_device_id_any = {
-  * structure or %NULL if there is no match.
-  */
- static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
--						    struct pci_dev *dev)
-+						    struct pci_dev *dev,
-+						    struct pci_device_id *id_copy)
- {
--	struct pci_dynid *dynid;
- 	const struct pci_device_id *found_id = NULL;
- 	struct pci_device_id dev_id;
- 	int ret;
-@@ -201,17 +202,16 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+diff --git a/drivers/clk/mediatek/clk-pllfh.c b/drivers/clk/mediatek/clk-pllfh.c
+index 094ec8a26d668..1e97daeb45e43 100644
+--- a/drivers/clk/mediatek/clk-pllfh.c
++++ b/drivers/clk/mediatek/clk-pllfh.c
+@@ -194,12 +194,56 @@ static void mtk_clk_unregister_pllfh(struct clk_hw *hw)
+ 	kfree(fh);
+ }
  
- 	dev_id = pci_id_from_device(dev);
- 	/* Look at the dynamic ids first, before the static ones */
--	spin_lock(&drv->dynids.lock);
--	list_for_each_entry(dynid, &drv->dynids.list, node) {
--		if (pci_match_one_id(&dynid->id, &dev_id)) {
--			found_id = &dynid->id;
--			break;
-+	scoped_guard(spinlock, &drv->dynids.lock) {
-+		struct pci_dynid *dynid;
++static void mtk_clk_cleanup_pllfhs(void __iomem *iomem_base,
++				   const struct mtk_pll_data *plls, int num_plls,
++				   void __iomem *iomem_fhctl_base,
++				   struct mtk_pllfh_data *pllfhs, int num_fhs,
++				   struct clk_hw_onecell_data *clk_data)
++{
++	void __iomem *base = iomem_base;
++	void __iomem *fhctl_base = iomem_fhctl_base;
++	int i;
 +
-+		list_for_each_entry(dynid, &drv->dynids.list, node) {
-+			if (pci_match_one_id(&dynid->id, &dev_id)) {
-+				*id_copy = dynid->id;
-+				return id_copy;
-+			}
- 		}
- 	}
--	spin_unlock(&drv->dynids.lock);
--
--	if (found_id)
--		return found_id;
- 
- 	found_id = do_pci_match_id(drv->id_table, &dev_id, ret > 0);
- 	if (found_id)
-@@ -438,12 +438,13 @@ static int pci_call_probe(struct pci_driver *drv, struct pci_dev *dev,
- static int __pci_device_probe(struct pci_driver *drv, struct pci_dev *pci_dev)
++	for (i = num_plls - 1; i >= 0; i--) {
++		const struct mtk_pll_data *pll = &plls[i];
++		struct mtk_pllfh_data *pllfh;
++		bool use_fhctl;
++
++		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
++			continue;
++
++		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
++		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
++
++		if (!base)
++			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
++							pll);
++
++		if (use_fhctl) {
++			if (!fhctl_base)
++				fhctl_base = pllfh->state.base;
++			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
++		} else {
++			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
++		}
++
++		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
++	}
++
++	if (fhctl_base)
++		iounmap(fhctl_base);
++
++	if (base)
++		iounmap(base);
++}
++
++
+ int mtk_clk_register_pllfhs(struct device_node *node,
+ 			    const struct mtk_pll_data *plls, int num_plls,
+ 			    struct mtk_pllfh_data *pllfhs, int num_fhs,
+ 			    struct clk_hw_onecell_data *clk_data)
  {
- 	const struct pci_device_id *id;
-+	struct pci_device_id id_copy;
- 	int error = 0;
+-	void __iomem *base;
++	void __iomem *base, *fhctl_base = NULL;
+ 	int i;
+ 	struct clk_hw *hw;
  
- 	if (drv->probe) {
- 		error = -ENODEV;
+@@ -235,24 +279,8 @@ int mtk_clk_register_pllfhs(struct device_node *node,
+ 	return 0;
  
--		id = pci_match_device(drv, pci_dev);
-+		id = pci_match_device(drv, pci_dev, &id_copy);
- 		if (id)
- 			error = pci_call_probe(drv, pci_dev, id);
- 	}
-@@ -1537,12 +1538,13 @@ static int pci_bus_match(struct device *dev, const struct device_driver *drv)
- 	struct pci_dev *pci_dev = to_pci_dev(dev);
- 	struct pci_driver *pci_drv;
- 	const struct pci_device_id *found_id;
-+	struct pci_device_id id_copy;
+ err:
+-	while (--i >= 0) {
+-		const struct mtk_pll_data *pll = &plls[i];
+-		struct mtk_pllfh_data *pllfh;
+-		bool use_fhctl;
+-
+-		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
+-		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
+-
+-		if (use_fhctl)
+-			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
+-		else
+-			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
+-
+-		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
+-	}
+-
+-	iounmap(base);
+-
++	mtk_clk_cleanup_pllfhs(base, plls, i, fhctl_base, pllfhs, num_fhs,
++			       clk_data);
+ 	return PTR_ERR(hw);
+ }
+ EXPORT_SYMBOL_GPL(mtk_clk_register_pllfhs);
+@@ -261,38 +289,10 @@ void mtk_clk_unregister_pllfhs(const struct mtk_pll_data *plls, int num_plls,
+ 			       struct mtk_pllfh_data *pllfhs, int num_fhs,
+ 			       struct clk_hw_onecell_data *clk_data)
+ {
+-	void __iomem *base = NULL, *fhctl_base = NULL;
+-	int i;
+-
+ 	if (!clk_data)
+ 		return;
  
- 	if (!pci_dev->match_driver)
- 		return 0;
- 
- 	pci_drv = (struct pci_driver *)to_pci_driver(drv);
--	found_id = pci_match_device(pci_drv, pci_dev);
-+	found_id = pci_match_device(pci_drv, pci_dev, &id_copy);
- 	if (found_id)
- 		return 1;
- 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index ee27f1ba01b8e..f3051fb5a5e84 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -929,6 +929,7 @@ struct module;
-  *		function returns zero when the driver chooses to
-  *		take "ownership" of the device or an error code
-  *		(negative number) otherwise.
-+ *		The pci_device_id parameter is only valid during probe.
-  *		The probe function always gets called from process
-  *		context, so it can sleep.
-  * @remove:	The remove() function gets called whenever a device
+-	for (i = num_plls; i > 0; i--) {
+-		const struct mtk_pll_data *pll = &plls[i - 1];
+-		struct mtk_pllfh_data *pllfh;
+-		bool use_fhctl;
+-
+-		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
+-			continue;
+-
+-		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
+-		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
+-
+-		if (use_fhctl) {
+-			fhctl_base = pllfh->state.base;
+-			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
+-		} else {
+-			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
+-						    pll);
+-			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
+-		}
+-
+-		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
+-	}
+-
+-	if (fhctl_base)
+-		iounmap(fhctl_base);
+-
+-	iounmap(base);
++	mtk_clk_cleanup_pllfhs(NULL, plls, num_plls, NULL, pllfhs,
++			       num_fhs, clk_data);
+ }
+ EXPORT_SYMBOL_GPL(mtk_clk_unregister_pllfhs);
 -- 
 2.53.0
 
