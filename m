@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6138F29B795;
-	Sat, 17 Oct 2026 16:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F10A39B4A5;
+	Sat, 17 Oct 2026 16:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254795; cv=none; b=VrO4F0xvrmkWyUcXYn0eNHpEDUkA3Il52BMlZGlWR7ghoV+1kbntv2Rt3gEH+bQEWxGRZOvqVzQ968NmYnxWXxAXVvJoa+/xKkIbHo2jLx3WAsS8l1FIKtEpm5zYEYjT9tNahDuQeExid7YF7qYAJ5fokOWS26ycZBvbEDOIDEA=
+	t=1792254798; cv=none; b=SRWZcr5gFDhNjeNLS1SUAzaqVz00rjC3nMKZk5F16UdWxCHPO7hjHNw5hfDHzBL/r8gaiYKVLK4oEPvf2/kMqoWvfcm+yejvI4I9D5N0F7z/DKTfSPOIRItNbyhSKBbE9pkVes2CWerDOs2grrbbaI09f4QOyqH3f+y4jJuFt+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254795; c=relaxed/simple;
-	bh=P2Dyqf6dTe/JsEJEC8LaZDEz+9fPWWeNezUXIO8prw4=;
+	s=arc-20240116; t=1792254798; c=relaxed/simple;
+	bh=fL9wiEk9lyVa84I54PF16WwP6F6mygaXv4fCoHK32Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WvLdgE7e52RF1GLKwoaBBfESo6OpxH16qnva5oYQFwlLDgad0tEgLnTPu+JH3eMd+fu92NkPLe3thncLtVNZcwGP/blM2yF3ltskKwJAkCWC+wwP6Hj6BUqrOcmpWukJO0hN/o2KgP3QEu8l2IJ2XxPONVxTlqwOrf/7/cD74fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMXssu5b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJND5MAq/xVYoILIT4EZK2THEC8pC/2HT8Gaj3gPM09N4lzRGP9dzld6ppNT9xYsHLb4v7/2sI9B6mPk2ENIlgXIyeTeo3W2814+Qz5gOEk/KjkPF/b7hu4Qb3i6aRjsAW7YHWE+d4hrClQcWJ/hLtDLDrQTCoEx5XET8rslgZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPoTkvYQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMXssu5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBFA1F000C4;
-	Sat, 17 Oct 2026 16:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPoTkvYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C04D1F000C4;
+	Sat, 17 Oct 2026 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254794;
-	bh=ElE3VmXjSZrWr8dQQ8/x8axlMpTn3dI2QETPP4j12jM=;
+	s=korg; t=1792254797;
+	bh=T0RBsl/mbkHrLlZjQPK66d1Mo/6nTuVncWIcjP9n/Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMXssu5bH+sOqtwHFdGVEpT/Ffvri17HpFzEWIcd8ToM3oGI/3C3O5A+dKs6AaM/a
-	 BRCchDbpz1pnL99YHNPGfG6Ps7mxa8oMTgIYzGiVL08130dm73ptF8AuSAmEiLnS+n
-	 D7kzDFB0ilp/QcImPUyWePuSbIzKX4DLisXOr7CM=
+	b=DPoTkvYQ1loW93W8q2SMrZ+QNzIQyHe+v/p3g3ty/5ayKEeD4TWKA/wHQlzK2QqhA
+	 z/0kPQbesB7nA76JcvGb8CXYLTasYGECYu4+m9RerLwMKlSNqThvC7mqVim7HY+jsi
+	 6QKuFyhJf7TesduGX1EJbeQ1gZbB39jJ/jVsBfZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 512/869] vhost_iotlb: bound map allocation in add_range
-Date: Sat, 17 Oct 2026 17:55:53 +0200
-Message-ID: <20261017160050.228392341@linuxfoundation.org>
+Subject: [PATCH 6.12 558/869] tap: Keep hdr_len in tap_get_user()
+Date: Sat, 17 Oct 2026 17:56:39 +0200
+Message-ID: <20261017160051.386927646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,359 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-[ Upstream commit 1ed35ac7f3fe2b4396bdd29ac3a7f0ebc0829e94 ]
+[ Upstream commit 74212f20f366db41dd3148b951284ac38ef9bb10 ]
 
-vhost_iotlb_add_range_ctx() only retires an old entry when the table
-has a non-zero limit, has exactly reached that limit and has
-VHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating
-entries after reaching their configured limit.
+hdr_len is repeatedly used so keep it in a local variable.
 
-Existing vhost devices allocate their IOTLB with max_iotlb_entries from
-vhost.c, which defaults to 2048 and is tunable by module parameter. Use
-the caller-provided limit at the allocation point instead of adding a
-separate default in the common IOTLB helper, and reject non-positive
-values in vhost paths that can report an error.
-
-Other vhost IOTLB users should not create zero-limit tables when entries
-can be populated from userspace or guest-controlled requests. Add
-caller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and
-vhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require
-at least two entries for vdpa_sim and mlx5 vDPA paths that install
-full-range mappings, since those mappings are split into two IOTLB
-entries.
-
-Handle full-range mappings in the common helper by checking that the
-IOTLB can hold both split entries before inserting the first half. This
-avoids returning an error after leaving a half mapping behind.
-
-When the table is full, keep the existing retire behavior for retiring
-tables and return -ENOSPC for non-retiring tables. Reuse the retired map
-node instead of freeing it and allocating a replacement, so a stream of
-IOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table
-has reached its limit. If a zero-limit IOTLB still reaches the common
-helper, treat it as a configuration error and return -EINVAL.
-
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 0bbe30668d89 ("vhost: factor out IOTLB")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
-Message-ID: <AMYAtgAiKmgYcSQT5ukl-4qq.3.1781960405943.Hmail.241270009@hdu.edu.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250207-tun-v6-6-fb49cf8b103e@daynix.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: cbb35cbe8db2 ("net: tap: fix wrong transport_header when sending VLAN-tagged frame")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mlx5_vdpa.h   |  2 ++
- drivers/vdpa/mlx5/core/mr.c          |  5 ++-
- drivers/vdpa/mlx5/core/resources.c   | 11 ++++++-
- drivers/vdpa/vdpa_sim/vdpa_sim.c     | 10 ++++--
- drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++-
- drivers/vhost/iotlb.c                | 47 +++++++++++++++++++---------
- drivers/vhost/vdpa.c                 |  9 +++++-
- drivers/vhost/vhost.c                |  8 +++++
- 8 files changed, 82 insertions(+), 21 deletions(-)
+ drivers/net/tap.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-index 2cedf7e2dbc49..42f2f44b383c7 100644
---- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-+++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
-@@ -11,6 +11,8 @@
- 
- #define MLX5V_ETH_HARD_MTU (ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN)
- 
-+extern int mlx5_vdpa_max_iotlb_entries;
-+
- struct mlx5_vdpa_direct_mr {
- 	u64 start;
- 	u64 end;
-diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
-index 25e2c234bcef2..a5b5feb74f26f 100644
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -778,6 +778,9 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
- {
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 018bc2941a967..d5a1ab9b2a37d 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -645,6 +645,7 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
  	int err;
- 
-+	if (mlx5_vdpa_max_iotlb_entries < 2)
-+		return -EINVAL;
-+
- 	if (iotlb)
- 		err = create_user_mr(mvdev, mr, iotlb);
- 	else
-@@ -786,7 +789,7 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
- 	if (err)
- 		return err;
- 
--	mr->iotlb = vhost_iotlb_alloc(0, 0);
-+	mr->iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
- 	if (!mr->iotlb) {
- 		err = -ENOMEM;
- 		goto err_mr;
-diff --git a/drivers/vdpa/mlx5/core/resources.c b/drivers/vdpa/mlx5/core/resources.c
-index aeae31d0cefae..28a4d7a35bf4e 100644
---- a/drivers/vdpa/mlx5/core/resources.c
-+++ b/drivers/vdpa/mlx5/core/resources.c
-@@ -3,8 +3,14 @@
- 
- #include <linux/iova.h>
- #include <linux/mlx5/driver.h>
-+#include <linux/moduleparam.h>
- #include "mlx5_vdpa.h"
- 
-+int mlx5_vdpa_max_iotlb_entries = 2048;
-+module_param_named(max_iotlb_entries, mlx5_vdpa_max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- static int alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid)
- {
- 	struct mlx5_core_dev *mdev = dev->mdev;
-@@ -229,7 +235,10 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey)
- 
- static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
- {
--	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
-+	if (mlx5_vdpa_max_iotlb_entries < 2)
-+		return -EINVAL;
-+
-+	mvdev->cvq.iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
- 	if (!mvdev->cvq.iotlb)
- 		return -ENOMEM;
- 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 825690c6fed19..3bcec8c1e2ab3 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -34,7 +34,7 @@ MODULE_PARM_DESC(batch_mapping, "Batched mapping 1 -Enable; 0 - Disable");
- static int max_iotlb_entries = 2048;
- module_param(max_iotlb_entries, int, 0444);
- MODULE_PARM_DESC(max_iotlb_entries,
--		 "Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048)");
-+		 "Maximum number of iotlb entries for each address space. (default: 2048)");
- 
- static bool use_va = true;
- module_param(use_va, bool, 0444);
-@@ -201,6 +201,8 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 
- 	if (!dev_attr->alloc_size)
- 		return ERR_PTR(-EINVAL);
-+	if (max_iotlb_entries < 2)
-+		return ERR_PTR(-EINVAL);
- 
- 	if (config->mask & BIT_ULL(VDPA_ATTR_DEV_FEATURES)) {
- 		if (config->device_features &
-@@ -266,8 +268,10 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 
- 	for (i = 0; i < vdpasim->dev_attr.nas; i++) {
- 		vhost_iotlb_init(&vdpasim->iommu[i], max_iotlb_entries, 0);
--		vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX, 0,
--				      VHOST_MAP_RW);
-+		ret = vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX,
-+					    0, VHOST_MAP_RW);
-+		if (ret)
-+			goto err_iommu;
- 		vdpasim->iommu_pt[i] = true;
- 	}
- 
-diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
-index ec743bed361c1..e8b837df328f0 100644
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -12,11 +12,17 @@
- #include <linux/file.h>
- #include <linux/anon_inodes.h>
- #include <linux/highmem.h>
-+#include <linux/moduleparam.h>
- #include <linux/vmalloc.h>
- #include <linux/vdpa.h>
- 
- #include "iova_domain.h"
- 
-+static int max_iotlb_entries = 2048;
-+module_param(max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- static int vduse_iotlb_add_range(struct vduse_iova_domain *domain,
- 				 u64 start, u64 last,
- 				 u64 addr, unsigned int perm,
-@@ -622,11 +628,14 @@ vduse_domain_create(unsigned long iova_limit, size_t bounce_size)
- 	if (iova_limit <= bounce_size)
- 		return NULL;
- 
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
-+
- 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
- 	if (!domain)
- 		return NULL;
- 
--	domain->iotlb = vhost_iotlb_alloc(0, 0);
-+	domain->iotlb = vhost_iotlb_alloc(max_iotlb_entries, 0);
- 	if (!domain->iotlb)
- 		goto err_iotlb;
- 
-diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
-index ea61330a34310..a6228dd249316 100644
---- a/drivers/vhost/iotlb.c
-+++ b/drivers/vhost/iotlb.c
-@@ -20,6 +20,14 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
- 		     rb, __u64, __subtree_last,
- 		     START, LAST, static inline, vhost_iotlb_itree);
- 
-+static void vhost_iotlb_map_unlink(struct vhost_iotlb *iotlb,
-+				   struct vhost_iotlb_map *map)
-+{
-+	vhost_iotlb_itree_remove(map, &iotlb->root);
-+	list_del(&map->link);
-+	iotlb->nmaps--;
-+}
-+
- /**
-  * vhost_iotlb_map_free - remove a map node and free it
-  * @iotlb: the IOTLB
-@@ -28,10 +36,8 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
- void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
- 			  struct vhost_iotlb_map *map)
- {
--	vhost_iotlb_itree_remove(map, &iotlb->root);
--	list_del(&map->link);
-+	vhost_iotlb_map_unlink(iotlb, map);
- 	kfree(map);
--	iotlb->nmaps--;
- }
- EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
- 
-@@ -57,14 +63,25 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
- 	if (last < start)
- 		return -EFAULT;
- 
-+	if (!iotlb->limit)
-+		return -EINVAL;
-+
- 	/* If the range being mapped is [0, ULONG_MAX], split it into two entries
- 	 * otherwise its size would overflow u64.
- 	 */
- 	if (start == 0 && last == ULONG_MAX) {
- 		u64 mid = last / 2;
--		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
--				perm, opaque);
-+		int err;
-+
-+		if (iotlb->limit < 2)
-+			return -ENOSPC;
- 
-+		if (!(iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) &&
-+		    iotlb->nmaps > iotlb->limit - 2)
-+			return -ENOSPC;
-+
-+		err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
-+						perm, opaque);
- 		if (err)
- 			return err;
- 
-@@ -72,17 +89,19 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
- 		start = mid + 1;
- 	}
- 
--	if (iotlb->limit &&
--	    iotlb->nmaps == iotlb->limit &&
--	    iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
--		map = list_first_entry(&iotlb->list, typeof(*map), link);
--		vhost_iotlb_map_free(iotlb, map);
-+	if (iotlb->nmaps >= iotlb->limit) {
-+		if (iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
-+			map = list_first_entry(&iotlb->list, typeof(*map), link);
-+			vhost_iotlb_map_unlink(iotlb, map);
-+		} else {
-+			return -ENOSPC;
+ 	struct virtio_net_hdr vnet_hdr = { 0 };
+ 	int vnet_hdr_len = 0;
++	int hdr_len = 0;
+ 	int copylen = 0;
+ 	int depth;
+ 	bool zerocopy = false;
+@@ -663,13 +664,13 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 		if (!copy_from_iter_full(&vnet_hdr, sizeof(vnet_hdr), from))
+ 			goto err;
+ 		iov_iter_advance(from, vnet_hdr_len - sizeof(vnet_hdr));
+-		if ((vnet_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
+-		     tap16_to_cpu(q, vnet_hdr.csum_start) +
+-		     tap16_to_cpu(q, vnet_hdr.csum_offset) + 2 >
+-			     tap16_to_cpu(q, vnet_hdr.hdr_len))
+-			vnet_hdr.hdr_len = cpu_to_tap16(q,
+-				 tap16_to_cpu(q, vnet_hdr.csum_start) +
+-				 tap16_to_cpu(q, vnet_hdr.csum_offset) + 2);
++		hdr_len = tap16_to_cpu(q, vnet_hdr.hdr_len);
++		if (vnet_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) {
++			hdr_len = max(tap16_to_cpu(q, vnet_hdr.csum_start) +
++				      tap16_to_cpu(q, vnet_hdr.csum_offset) + 2,
++				      hdr_len);
++			vnet_hdr.hdr_len = cpu_to_tap16(q, hdr_len);
 +		}
-+	} else {
-+		map = kmalloc(sizeof(*map), GFP_ATOMIC);
-+		if (!map)
-+			return -ENOMEM;
+ 		err = -EINVAL;
+ 		if (tap16_to_cpu(q, vnet_hdr.hdr_len) > len)
+ 			goto err;
+@@ -682,12 +683,7 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 	if (msg_control && sock_flag(&q->sk, SOCK_ZEROCOPY)) {
+ 		struct iov_iter i;
+ 
+-		copylen = vnet_hdr.hdr_len ?
+-			tap16_to_cpu(q, vnet_hdr.hdr_len) : GOODCOPY_LEN;
+-		if (copylen > good_linear)
+-			copylen = good_linear;
+-		else if (copylen < ETH_HLEN)
+-			copylen = ETH_HLEN;
++		copylen = clamp(hdr_len ?: GOODCOPY_LEN, ETH_HLEN, good_linear);
+ 		linear = copylen;
+ 		i = *from;
+ 		iov_iter_advance(&i, copylen);
+@@ -697,11 +693,7 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 
+ 	if (!zerocopy) {
+ 		copylen = len;
+-		linear = tap16_to_cpu(q, vnet_hdr.hdr_len);
+-		if (linear > good_linear)
+-			linear = good_linear;
+-		else if (linear < ETH_HLEN)
+-			linear = ETH_HLEN;
++		linear = clamp(hdr_len, ETH_HLEN, good_linear);
  	}
  
--	map = kmalloc(sizeof(*map), GFP_ATOMIC);
--	if (!map)
--		return -ENOMEM;
--
- 	map->start = start;
- 	map->size = last - start + 1;
- 	map->last = last;
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 789bd8da55052..a940718745def 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -34,6 +34,11 @@ enum {
- 
- #define VHOST_VDPA_DEV_MAX (1U << MINORBITS)
- 
-+static int max_iotlb_entries = 2048;
-+module_param(max_iotlb_entries, int, 0444);
-+MODULE_PARM_DESC(max_iotlb_entries,
-+		 "Maximum number of iotlb entries. (default: 2048)");
-+
- #define VHOST_VDPA_IOTLB_BUCKETS 16
- 
- struct vhost_vdpa_as {
-@@ -112,12 +117,14 @@ static struct vhost_vdpa_as *vhost_vdpa_alloc_as(struct vhost_vdpa *v, u32 asid)
- 
- 	if (asid >= v->vdpa->nas)
- 		return NULL;
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
- 
- 	as = kmalloc(sizeof(*as), GFP_KERNEL);
- 	if (!as)
- 		return NULL;
- 
--	vhost_iotlb_init(&as->iotlb, 0, 0);
-+	vhost_iotlb_init(&as->iotlb, max_iotlb_entries, 0);
- 	as->id = asid;
- 	hlist_add_head(&as->hash_link, head);
- 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index f966fc094f126..22119ec7fd9b7 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1135,6 +1135,9 @@ EXPORT_SYMBOL_GPL(vhost_dev_set_owner);
- 
- static struct vhost_iotlb *iotlb_alloc(void)
- {
-+	if (max_iotlb_entries <= 0)
-+		return NULL;
-+
- 	return vhost_iotlb_alloc(max_iotlb_entries,
- 				 VHOST_IOTLB_FLAG_RETIRE);
- }
-@@ -1979,6 +1982,8 @@ static long vhost_set_memory(struct vhost_dev *d, struct vhost_memory __user *m)
- 		return -EOPNOTSUPP;
- 	if (mem.nregions > max_mem_regions)
- 		return -E2BIG;
-+	if (max_iotlb_entries <= 0)
-+		return -EINVAL;
- 	newmem = kvzalloc(struct_size(newmem, regions, mem.nregions),
- 			GFP_KERNEL);
- 	if (!newmem)
-@@ -2281,6 +2286,9 @@ int vhost_init_device_iotlb(struct vhost_dev *d)
- 	struct vhost_iotlb *niotlb, *oiotlb;
- 	int i;
- 
-+	if (max_iotlb_entries <= 0)
-+		return -EINVAL;
-+
- 	niotlb = iotlb_alloc();
- 	if (!niotlb)
- 		return -ENOMEM;
+ 	skb = tap_alloc_skb(&q->sk, TAP_RESERVE, copylen,
 -- 
 2.53.0
 
