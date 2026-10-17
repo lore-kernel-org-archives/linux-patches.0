@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A08C5B5AB;
-	Sat, 17 Oct 2026 16:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274301C861D;
+	Sat, 17 Oct 2026 16:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253697; cv=none; b=h+bSAgWEVcrn/dvTYx0njWp3VPUN3arL+coLCYnacqHpZqxuAT1Vtx6KcX84smTiQHdkfirxcJi7qN/36pn4MWd8MCf6u9NDlsi2iVcX8IaebE8B2AFUxQkQAtIyukbBdsdxZKBWAH/ARvVPUtUFDryginykzQaymnYxo39Ml1k=
+	t=1792253700; cv=none; b=YVsSQeBlPLQrb7nzRAg2eDqqzixH+e4b2oM+ljeLBPdl4oLcGWug+2D4gfwEZhVyX8AHpbzMj4tdsx/frgeyNVuvPjIfDGe0cq3d1sDkb2WJ+VsoIPqKXOFF4x4PoDI03ygcYAOijBfFYLXU79d2DKhTcLSWJbnXY+whui3vDmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253697; c=relaxed/simple;
-	bh=3/5Baq47IHfF9kMjy2pMM3J4QVRzCBb6FmwR2cB0wuw=;
+	s=arc-20240116; t=1792253700; c=relaxed/simple;
+	bh=UtrwdAUkRayzTntYUNuN7EMHPRvNfEA4hmW63XCLQiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYI3WaqjPtrTxxlPXg2OEQYbO4gEuUXfzTYXnF2nDy4WJFj72726S29UN7N9ZA1ol3hoclvoQVrlEzDDlJ0N4jUQtRdjp29tZ5sUiyM9haenQ0GXbZtLj05BqEs+rPz7eiUzbDz0hWj1u66V6s3TGQSyZgX/UEQYsIOeijppIBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqFE3xP5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iUVirRoYW8OxQfnQ0kdNkKApRGLGSe6EawjSSaPNm/2Xvt29twj0uQ6KwFv8NdwEt2p8mVRRzRkWO4GFTiJnhvOdtm1fRFl3lpLGlDF29PukVwMDyb/s38zJO8hFv+SJQ/Y2bzpcdSr4m1gfmT2as8C1kiCb1CI/CP82Ut4klZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBoaMFFm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqFE3xP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6139A1F000C4;
-	Sat, 17 Oct 2026 16:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBoaMFFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C041F000C4;
+	Sat, 17 Oct 2026 16:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253695;
-	bh=j3KQpaYalpiUb/C6TK3yUcciSIoJXtgsDkZn5C639oE=;
+	s=korg; t=1792253699;
+	bh=1or8INvIEbyEL2BUKc+b1kLFjEsRBeJPoq1rDJS4txM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xqFE3xP5AKnxy0fMxzjIB0a7+eBG31AYZBqnZKhTi96+CH5LeWY0uxKT0dC0RLi5L
-	 SOX+syG9WD+VCSW+VQ/DCxHNfSmWIvCwDnx7CUPFVBaZhmni+SIJzHgHs1OF2tx3t+
-	 I6wffpYPfZz83N1TPRUSdk2I2lagfKiOJUCwVE5o=
+	b=wBoaMFFmivndvXV9l36cdXsON/md4WeYXV+mPQXgJBY4NPbVQLPWTfDALVshiBpxf
+	 gQQNEVnNqGYwEKh0NwF3IzEokgr+I7XnVN6bk5CFYvlSLxwYShLo/B+X1bSSEYfKyI
+	 bHrRrqDCo/ivyCxzJ1s9aEWgI/XltBwilQHf6TCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/869] accel/ivpu: Allow to import single buffer into multiple contexts
-Date: Sat, 17 Oct 2026 17:50:01 +0200
-Message-ID: <20261017160041.147867484@linuxfoundation.org>
+Subject: [PATCH 6.12 161/869] accel/ivpu: Rework bind/unbind of imported buffers
+Date: Sat, 17 Oct 2026 17:50:02 +0200
+Message-ID: <20261017160041.175311224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,124 +52,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-[ Upstream commit 67725f5e8d844e27db4514a76699ec6a7000c627 ]
+[ Upstream commit e0c0891cd63bf8338c25c423e28a5a93aed3d74c ]
 
-Use ivpu_gem_prime_import() based on drm_gem_prime_import_dev()
-for importing buffers, removing optimization for same device
-imports. This optimization reused the same ivpu_bo object in multiple
-contexts but a single buffer can be MMU-mapped only to a single context.
-Each import now creates a new instance of ivpu_bo object that shares
-the same sg_table but have separate MMU mappings.
+Ensure that imported buffers are properly mapped and unmapped in
+the same way as regular buffers to properly handle buffers during
+device's bind and unbind operations to prevent resource leaks and
+inconsistent buffer states.
 
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+Imported buffers are now dma_mapped before submission and
+dma_unmapped in ivpu_bo_unbind(), guaranteeing they are unmapped
+when the device is unbound.
+
+Add also imported buffers to vdev->bo_list for consistent unmapping
+on device unbind. The bo->ctx_id is set in open() so imported
+buffers have a valid context ID.
+
+Debug logs have been updated to match the new code structure.
+The function ivpu_bo_pin() has been renamed to ivpu_bo_bind()
+to better reflect its purpose, and unbind tests have been refactored
+for improved coverage and clarity.
+
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250204084622.2422544-5-jacek.lawrynowicz@linux.intel.com
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://lore.kernel.org/r/20250925145059.1446243-1-maciej.falkowski@linux.intel.com
 Stable-dep-of: 8b694b405a84 ("accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_drv.c |  2 +-
- drivers/accel/ivpu/ivpu_gem.c | 45 ++++++++++++++++++++++++++++++++++-
- drivers/accel/ivpu/ivpu_gem.h |  1 +
- 3 files changed, 46 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_gem.c | 89 ++++++++++++++++++++++-------------
+ drivers/accel/ivpu/ivpu_gem.h |  2 +-
+ drivers/accel/ivpu/ivpu_job.c |  2 +-
+ 3 files changed, 59 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
-index ea2909c4745ab..a811da0634e71 100644
---- a/drivers/accel/ivpu/ivpu_drv.c
-+++ b/drivers/accel/ivpu/ivpu_drv.c
-@@ -446,7 +446,7 @@ static const struct drm_driver driver = {
- 	.postclose = ivpu_postclose,
- 
- 	.gem_create_object = ivpu_gem_create_object,
--	.gem_prime_import_sg_table = drm_gem_shmem_prime_import_sg_table,
-+	.gem_prime_import = ivpu_gem_prime_import,
- 
- 	.ioctls = ivpu_drm_ioctls,
- 	.num_ioctls = ARRAY_SIZE(ivpu_drm_ioctls),
 diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index b4213e63afb43..6f07c1d022b27 100644
+index 6f07c1d022b27..b236a2e32bc0a 100644
 --- a/drivers/accel/ivpu/ivpu_gem.c
 +++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -20,6 +20,8 @@
- #include "ivpu_mmu.h"
- #include "ivpu_mmu_context.h"
- 
-+MODULE_IMPORT_NS(DMA_BUF);
-+
- static const struct drm_gem_object_funcs ivpu_gem_funcs;
- 
+@@ -27,8 +27,8 @@ static const struct drm_gem_object_funcs ivpu_gem_funcs;
  static inline void ivpu_dbg_bo(struct ivpu_device *vdev, struct ivpu_bo *bo, const char *action)
-@@ -177,6 +179,47 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
+ {
+ 	ivpu_dbg(vdev, BO,
+-		 "%6s: bo %8p vpu_addr %9llx size %8zu ctx %d has_pages %d dma_mapped %d mmu_mapped %d wc %d imported %d\n",
+-		 action, bo, bo->vpu_addr, ivpu_bo_size(bo), bo->ctx_id,
++		 "%6s: bo %8p size %9zu ctx %d vpu_addr %9llx pages %d sgt %d mmu_mapped %d wc %d imported %d\n",
++		 action, bo, ivpu_bo_size(bo), bo->ctx_id, bo->vpu_addr,
+ 		 (bool)bo->base.pages, (bool)bo->base.sgt, bo->mmu_mapped, bo->base.map_wc,
+ 		 (bool)bo->base.base.import_attach);
+ }
+@@ -43,22 +43,46 @@ static inline void ivpu_bo_unlock(struct ivpu_bo *bo)
+ 	dma_resv_unlock(bo->base.base.resv);
+ }
+ 
++static struct sg_table *ivpu_bo_map_attachment(struct ivpu_device *vdev, struct ivpu_bo *bo)
++{
++	struct sg_table *sgt = bo->base.sgt;
++
++	drm_WARN_ON(&vdev->drm, !bo->base.base.import_attach);
++
++	ivpu_bo_lock(bo);
++
++	if (!sgt) {
++		sgt = dma_buf_map_attachment(bo->base.base.import_attach, DMA_BIDIRECTIONAL);
++		if (IS_ERR(sgt))
++			ivpu_err(vdev, "Failed to map BO in IOMMU: %ld\n", PTR_ERR(sgt));
++		else
++			bo->base.sgt = sgt;
++	}
++
++	ivpu_bo_unlock(bo);
++
++	return sgt;
++}
++
+ /*
+- * ivpu_bo_pin() - pin the backing physical pages and map them to VPU.
++ * ivpu_bo_bind() - pin the backing physical pages and map them to VPU.
+  *
+  * This function pins physical memory pages, then maps the physical pages
+  * to IOMMU address space and finally updates the VPU MMU page tables
+  * to allow the VPU to translate VPU address to IOMMU address.
+  */
+-int __must_check ivpu_bo_pin(struct ivpu_bo *bo)
++int __must_check ivpu_bo_bind(struct ivpu_bo *bo)
+ {
+ 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
+ 	struct sg_table *sgt;
+ 	int ret = 0;
+ 
+-	ivpu_dbg_bo(vdev, bo, "pin");
++	ivpu_dbg_bo(vdev, bo, "bind");
+ 
+-	sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
++	if (bo->base.base.import_attach)
++		sgt = ivpu_bo_map_attachment(vdev, bo);
++	else
++		sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
+ 	if (IS_ERR(sgt)) {
+ 		ret = PTR_ERR(sgt);
+ 		ivpu_err(vdev, "Failed to map BO in IOMMU: %d\n", ret);
+@@ -99,7 +123,9 @@ ivpu_bo_alloc_vpu_addr(struct ivpu_bo *bo, struct ivpu_mmu_context *ctx,
+ 	ret = ivpu_mmu_context_insert_node(ctx, range, ivpu_bo_size(bo), &bo->mm_node);
+ 	if (!ret) {
+ 		bo->ctx = ctx;
++		bo->ctx_id = ctx->id;
+ 		bo->vpu_addr = bo->mm_node.start;
++		ivpu_dbg_bo(vdev, bo, "vaddr");
+ 	} else {
+ 		ivpu_err(vdev, "Failed to add BO to context %u: %d\n", ctx->id, ret);
+ 	}
+@@ -115,7 +141,7 @@ static void ivpu_bo_unbind_locked(struct ivpu_bo *bo)
+ {
+ 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
+ 
+-	lockdep_assert(dma_resv_held(bo->base.base.resv) || !kref_read(&bo->base.base.refcount));
++	dma_resv_assert_held(bo->base.base.resv);
+ 
+ 	if (bo->mmu_mapped) {
+ 		drm_WARN_ON(&vdev->drm, !bo->ctx);
+@@ -134,9 +160,14 @@ static void ivpu_bo_unbind_locked(struct ivpu_bo *bo)
+ 		return;
+ 
+ 	if (bo->base.sgt) {
+-		dma_unmap_sgtable(vdev->drm.dev, bo->base.sgt, DMA_BIDIRECTIONAL, 0);
+-		sg_free_table(bo->base.sgt);
+-		kfree(bo->base.sgt);
++		if (bo->base.base.import_attach) {
++			dma_buf_unmap_attachment(bo->base.base.import_attach,
++						 bo->base.sgt, DMA_BIDIRECTIONAL);
++		} else {
++			dma_unmap_sgtable(vdev->drm.dev, bo->base.sgt, DMA_BIDIRECTIONAL, 0);
++			sg_free_table(bo->base.sgt);
++			kfree(bo->base.sgt);
++		}
+ 		bo->base.sgt = NULL;
+ 	}
+ }
+@@ -162,6 +193,7 @@ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_m
+ 
+ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size)
+ {
++	struct ivpu_device *vdev = to_ivpu_device(dev);
+ 	struct ivpu_bo *bo;
+ 
+ 	if (size == 0 || !PAGE_ALIGNED(size))
+@@ -176,6 +208,11 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
+ 
+ 	INIT_LIST_HEAD(&bo->bo_list_node);
+ 
++	mutex_lock(&vdev->bo_list_lock);
++	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
++	mutex_unlock(&vdev->bo_list_lock);
++
++	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9zu\n", bo, size);
  	return &bo->base.base;
  }
  
-+struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
-+					     struct dma_buf *dma_buf)
-+{
-+	struct device *attach_dev = dev->dev;
-+	struct dma_buf_attachment *attach;
-+	struct sg_table *sgt;
-+	struct drm_gem_object *obj;
-+	int ret;
-+
-+	attach = dma_buf_attach(dma_buf, attach_dev);
-+	if (IS_ERR(attach))
-+		return ERR_CAST(attach);
-+
-+	get_dma_buf(dma_buf);
-+
-+	sgt = dma_buf_map_attachment_unlocked(attach, DMA_BIDIRECTIONAL);
-+	if (IS_ERR(sgt)) {
-+		ret = PTR_ERR(sgt);
+@@ -184,7 +221,6 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ {
+ 	struct device *attach_dev = dev->dev;
+ 	struct dma_buf_attachment *attach;
+-	struct sg_table *sgt;
+ 	struct drm_gem_object *obj;
+ 	int ret;
+ 
+@@ -194,16 +230,10 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ 
+ 	get_dma_buf(dma_buf);
+ 
+-	sgt = dma_buf_map_attachment_unlocked(attach, DMA_BIDIRECTIONAL);
+-	if (IS_ERR(sgt)) {
+-		ret = PTR_ERR(sgt);
+-		goto fail_detach;
+-	}
+-
+-	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
++	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, NULL);
+ 	if (IS_ERR(obj)) {
+ 		ret = PTR_ERR(obj);
+-		goto fail_unmap;
 +		goto fail_detach;
-+	}
-+
-+	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
-+	if (IS_ERR(obj)) {
-+		ret = PTR_ERR(obj);
-+		goto fail_unmap;
-+	}
-+
-+	obj->import_attach = attach;
-+	obj->resv = dma_buf->resv;
-+
-+	return obj;
-+
-+fail_unmap:
-+	dma_buf_unmap_attachment_unlocked(attach, sgt, DMA_BIDIRECTIONAL);
-+fail_detach:
-+	dma_buf_detach(dma_buf, attach);
-+	dma_buf_put(dma_buf);
-+
-+	return ERR_PTR(ret);
-+}
-+
- static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags, u32 ctx_id)
+ 	}
+ 
+ 	obj->import_attach = attach;
+@@ -211,8 +241,6 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ 
+ 	return obj;
+ 
+-fail_unmap:
+-	dma_buf_unmap_attachment_unlocked(attach, sgt, DMA_BIDIRECTIONAL);
+ fail_detach:
+ 	dma_buf_detach(dma_buf, attach);
+ 	dma_buf_put(dma_buf);
+@@ -220,7 +248,7 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ 	return ERR_PTR(ret);
+ }
+ 
+-static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags, u32 ctx_id)
++static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags)
  {
  	struct drm_gem_shmem_object *shmem;
-@@ -203,7 +246,7 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
- 	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
- 	mutex_unlock(&vdev->bo_list_lock);
+ 	struct ivpu_bo *bo;
+@@ -238,16 +266,9 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
+ 		return ERR_CAST(shmem);
  
--	ivpu_dbg_bo(vdev, bo, "alloc");
-+	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
+ 	bo = to_ivpu_bo(&shmem->base);
+-	bo->ctx_id = ctx_id;
+ 	bo->base.map_wc = flags & DRM_IVPU_BO_WC;
+ 	bo->flags = flags;
  
+-	mutex_lock(&vdev->bo_list_lock);
+-	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
+-	mutex_unlock(&vdev->bo_list_lock);
+-
+-	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
+-
  	return bo;
  }
+ 
+@@ -281,6 +302,8 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
+ 
+ 	ivpu_dbg_bo(vdev, bo, "free");
+ 
++	drm_WARN_ON(&vdev->drm, list_empty(&bo->bo_list_node));
++
+ 	mutex_lock(&vdev->bo_list_lock);
+ 	list_del(&bo->bo_list_node);
+ 
+@@ -289,7 +312,9 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
+ 	drm_WARN_ON(&vdev->drm, ivpu_bo_size(bo) == 0);
+ 	drm_WARN_ON(&vdev->drm, bo->base.vaddr);
+ 
++	ivpu_bo_lock(bo);
+ 	ivpu_bo_unbind_locked(bo);
++	ivpu_bo_unlock(bo);
+ 	mutex_unlock(&vdev->bo_list_lock);
+ 
+ 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
+@@ -327,7 +352,7 @@ int ivpu_bo_create_ioctl(struct drm_device *dev, void *data, struct drm_file *fi
+ 	if (size == 0)
+ 		return -EINVAL;
+ 
+-	bo = ivpu_bo_alloc(vdev, size, args->flags, file_priv->ctx.id);
++	bo = ivpu_bo_alloc(vdev, size, args->flags);
+ 	if (IS_ERR(bo)) {
+ 		ivpu_err(vdev, "Failed to allocate BO: %pe (ctx %u size %llu flags 0x%x)",
+ 			 bo, file_priv->ctx.id, args->size, args->flags);
+@@ -361,7 +386,7 @@ ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
+ 	drm_WARN_ON(&vdev->drm, !PAGE_ALIGNED(range->end));
+ 	drm_WARN_ON(&vdev->drm, !PAGE_ALIGNED(size));
+ 
+-	bo = ivpu_bo_alloc(vdev, size, flags, IVPU_GLOBAL_CONTEXT_MMU_SSID);
++	bo = ivpu_bo_alloc(vdev, size, flags);
+ 	if (IS_ERR(bo)) {
+ 		ivpu_err(vdev, "Failed to allocate BO: %pe (vpu_addr 0x%llx size %llu flags 0x%x)",
+ 			 bo, range->start, size, flags);
+@@ -372,7 +397,7 @@ ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
+ 	if (ret)
+ 		goto err_put;
+ 
+-	ret = ivpu_bo_pin(bo);
++	ret = ivpu_bo_bind(bo);
+ 	if (ret)
+ 		goto err_put;
+ 
 diff --git a/drivers/accel/ivpu/ivpu_gem.h b/drivers/accel/ivpu/ivpu_gem.h
-index df8e65b77ec41..efca279758c8b 100644
+index efca279758c8b..57c9c2db02069 100644
 --- a/drivers/accel/ivpu/ivpu_gem.h
 +++ b/drivers/accel/ivpu/ivpu_gem.h
-@@ -28,6 +28,7 @@ int ivpu_bo_pin(struct ivpu_bo *bo);
+@@ -24,7 +24,7 @@ struct ivpu_bo {
+ 	bool mmu_mapped;
+ };
+ 
+-int ivpu_bo_pin(struct ivpu_bo *bo);
++int ivpu_bo_bind(struct ivpu_bo *bo);
  void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx);
  
  struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size);
-+struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev, struct dma_buf *dma_buf);
- struct ivpu_bo *ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
- 			       struct ivpu_addr_range *range, u64 size, u32 flags);
- struct ivpu_bo *ivpu_bo_create_global(struct ivpu_device *vdev, u64 size, u32 flags);
+diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
+index 172502b71b9cf..3856d9683ed86 100644
+--- a/drivers/accel/ivpu/ivpu_job.c
++++ b/drivers/accel/ivpu/ivpu_job.c
+@@ -668,7 +668,7 @@ ivpu_job_prepare_bos_for_submit(struct drm_file *file, struct ivpu_job *job, u32
+ 
+ 		job->bos[i] = to_ivpu_bo(obj);
+ 
+-		ret = ivpu_bo_pin(job->bos[i]);
++		ret = ivpu_bo_bind(job->bos[i]);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.53.0
 
