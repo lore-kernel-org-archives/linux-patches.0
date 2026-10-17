@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7643921FB;
-	Sat, 17 Oct 2026 17:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9017BED0;
+	Sat, 17 Oct 2026 17:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257951; cv=none; b=gFoPUNAw2hs519fboo/BUVrMo6zUy4xYTxHO1FXIZIKMtl2PWkKGK2RTfbXtnZG/pLc0ukzNvvjreKzRQy0HXJNoYrFrBiEjc1nd+zvPTuE0tY/mPEhD4eDUfAk7OXqgSwnRKaxD5rU+BBRxMhAlV5PV7v0ZCzyyX48Ns+Ivqeg=
+	t=1792257954; cv=none; b=kwzhYRd8E/30Y9kj4hjb6lko1BB1SnZy4z8O6X789fVWSXc03FqVLKPR6KTlwBdcn5d0aNBWWAdASUoiCvhOYqhBV7diLzEhNjXBGK/xvpK0zqFjWtYKBpJnjDwQHaIhaVdYAD80s5bi7pRwCghuUpoi+MT/lveRQVfV7VpJO2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257951; c=relaxed/simple;
-	bh=Noliw5YuXhJC+oWqNWx5mW+BU9VId98MDKpDkpuGhUE=;
+	s=arc-20240116; t=1792257954; c=relaxed/simple;
+	bh=W9Uo1d61SedM8EKGAJXKcQ5oHbWP5G9waKTQ4lrf6kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5PWBVx68FYRNFm3ew7xfsYpqVpGsszHPVnLQpv0cvyuU0DklerZ1cMmeFdK5kZfdLfGImI57VaMj0KjyC7thktvN7Mo6OXmPR/raEjCrhYRfHn5RK3/cUQsQH9SFFytblVlv1rSQQxnu8BbRUXenaAcud3pTesV9MVYq4pHdVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He8B2Tdm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iLwTZDE2mgQm5hAZd+TsRaPpYBwREpeD/OqbeEIglk5n9AFAwCysYSxaWX/plkf4uLeRH3O+wvuzzFFTZQ4SnAplTKTkqRHC2PrAH1NoLQ/aEM09Qvs5Ai7dUK5oBVj7tSmpWw5/5BjgVaGjFUduzVyLMBG3/w0gdX0qviMKElg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zCVu13i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He8B2Tdm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8856B1F000C4;
-	Sat, 17 Oct 2026 17:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zCVu13i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79D41F000C4;
+	Sat, 17 Oct 2026 17:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257950;
-	bh=4B0FR2AnJTpCX3M4izdAcxOsgug8ZScNlo2+Il9j0rE=;
+	s=korg; t=1792257953;
+	bh=MVH7Kja21UzVfGhDAGUfwIJireVcHMRHlCxMT6ccilE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=He8B2TdmKtyBEfHS/tt1ji4G+jjXXd/NjpMdGCEt9mcSqAF/jKU4kKGizLwOne/5r
-	 zdF/wV9QvdFkGfACF+3YhXKsKUwA26DNJzFXRYuH1/+pNeQ4XW9nHfGQ8siekjq1z9
-	 VxJ1ElePXSyYgSjbL4VphtoB6clFZdvYRzHRnprc=
+	b=0zCVu13iIO0kMTxzeeFiq8GzQE1LjVqpYTTPLc4653jS9DcOLh2MbetJJ+1PLo+Wn
+	 io/o5qUCzGCWDdokkbMul+aOQyKb21tgBSvdvWkHheYG9pbSmC6QCyFj056a5ERtwg
+	 lmYWcVxG5f05E43PfMdNfFsJo4vQiVn9mVX5TWI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Poenaru <thevlad@meta.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0723/1674] bpf: Fix kmemleak warning for percpu hashmap
-Date: Sat, 17 Oct 2026 17:49:55 +0200
-Message-ID: <20261017160449.667727424@linuxfoundation.org>
+Subject: [PATCH 6.6 0724/1674] btrfs: allow to run delayed refs by bytes to be released instead of count
+Date: Sat, 17 Oct 2026 17:49:56 +0200
+Message-ID: <20261017160449.694749923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,81 +52,305 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 11ba7ce076e5903e7bdc1fd1498979c331b3c286 ]
+[ Upstream commit 8a526c44daeeb14df0f6e3147a58b4b996968830 ]
 
-Vlad Poenaru reported the following kmemleak issue:
+When running delayed references, through btrfs_run_delayed_refs(), we can
+specify how many to run, run all existing delayed references and keep
+running delayed references while we can find any. This is controlled with
+the value of the 'count' argument, where a value of 0 means to run all
+delayed references that exist by the time btrfs_run_delayed_refs() is
+called, (unsigned long)-1 means to keep running delayed references while
+we are able find any, and any other value to run that exact number of
+delayed references.
 
-  unreferenced object 0x606fd7c44ac8 (size 32):
-    backtrace (crc 0):
-      pcpu_alloc_noprof+0x730/0xeb0
-      bpf_map_alloc_percpu+0x69/0xc0
-      prealloc_init+0x9d/0x1b0
-      htab_map_alloc+0x363/0x510
-      map_create+0x215/0x3a0
-      __sys_bpf+0x16b/0x3e0
-      __x64_sys_bpf+0x18/0x20
-      do_syscall_64+0x7b/0x150
-      entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Typically a specific value other than 0 or -1 is used when flushing space
+to try to release a certain amount of bytes for a ticket. In this case
+we just simply calculate how many delayed reference heads correspond to a
+specific amount of bytes, with calc_delayed_refs_nr(). However that only
+takes into account the space reserved for the reference heads themselves,
+and does not account for the space reserved for deleting checksums from
+the csum tree (see add_delayed_ref_head() and update_existing_head_ref())
+in case we are going to delete a data extent. This means we may end up
+running more delayed references than necessary in case we process delayed
+references for deleting a data extent.
 
-Further investigation shows the reason is due to not 8-byte aligned
-store of percpu pointer in htab_elem_set_ptr():
-  *(void __percpu **)(l->key + key_size) = pptr;
+So change the logic of btrfs_run_delayed_refs() to take a bytes argument
+to specify how many bytes of delayed references to run/release, using the
+special values of 0 to mean all existing delayed references and U64_MAX
+(or (u64)-1) to keep running delayed references while we can find any.
 
-Note that the whole htab_elem alignment is 8 (for x86_64). If the key_size
-is 4, that means pptr is stored in a location which is 4 byte aligned but
-not 8 byte aligned. In mm/kmemleak.c, scan_block() scans the memory based
-on 8 byte stride, so it won't detect above pptr, hence reporting the memory
-leak.
+This prevents running more delayed references than necessary, when we have
+delayed references for deleting data extents, but also makes the upcoming
+changes/patches simpler and it's preparatory work for them.
 
-In htab_map_alloc(), we already have
-
-        htab->elem_size = sizeof(struct htab_elem) +
-                          round_up(htab->map.key_size, 8);
-        if (percpu)
-                htab->elem_size += sizeof(void *);
-        else
-                htab->elem_size += round_up(htab->map.value_size, 8);
-
-So storing pptr with 8-byte alignment won't cause any problem and can fix
-kmemleak too.
-
-The issue can be reproduced with bpf selftest as well:
-  1. Enable CONFIG_DEBUG_KMEMLEAK config
-  2. Add a getchar() before skel destroy in test_hash_map() in prog_tests/for_each.c.
-     The purpose is to keep map available so kmemleak can be detected.
-  3. run './test_progs -t for_each/hash_map &' and a kmemleak should be reported.
-
-Reported-by: Vlad Poenaru <thevlad@meta.com>
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20250224175514.2207227-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 7511e29cf135 ("btrfs: harden block_group::bg_list against list_del() races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/block-group.c |  3 +--
+ fs/btrfs/extent-tree.c | 53 +++++++++++++++++++++++++++---------------
+ fs/btrfs/extent-tree.h |  4 ++--
+ fs/btrfs/space-info.c  | 17 ++------------
+ fs/btrfs/transaction.c |  8 +++----
+ 5 files changed, 43 insertions(+), 42 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index e14a0caa07bfa..fb7f64c494b0e 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -197,12 +197,12 @@ static bool htab_is_percpu(const struct bpf_htab *htab)
- static inline void htab_elem_set_ptr(struct htab_elem *l, u32 key_size,
- 				     void __percpu *pptr)
- {
--	*(void __percpu **)(l->key + key_size) = pptr;
-+	*(void __percpu **)(l->key + roundup(key_size, 8)) = pptr;
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index b93b4ec042272..ebd08aa81760e 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3569,8 +3569,7 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 		cache_save_setup(cache, trans, path);
+ 
+ 		if (!ret)
+-			ret = btrfs_run_delayed_refs(trans,
+-						     (unsigned long) -1);
++			ret = btrfs_run_delayed_refs(trans, U64_MAX);
+ 
+ 		if (!ret && cache->disk_cache_state == BTRFS_DC_SETUP) {
+ 			cache->io_ctl.inode = NULL;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index ebb94ec9f3d70..15fd5d91cf939 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1860,7 +1860,7 @@ static int run_and_cleanup_extent_op(struct btrfs_trans_handle *trans,
+ 	return ret ? ret : 1;
  }
  
- static inline void __percpu *htab_elem_get_ptr(struct htab_elem *l, u32 key_size)
+-void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
++u64 btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
+ 				  struct btrfs_delayed_ref_root *delayed_refs,
+ 				  struct btrfs_delayed_ref_head *head)
  {
--	return *(void __percpu **)(l->key + key_size);
-+	return *(void __percpu **)(l->key + roundup(key_size, 8));
+@@ -1878,10 +1878,13 @@ void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
+ 	}
+ 
+ 	btrfs_delayed_refs_rsv_release(fs_info, nr_items);
++
++	return btrfs_calc_delayed_ref_bytes(fs_info, nr_items);
  }
  
- static void *fd_htab_map_get_ptr(const struct bpf_map *map, struct htab_elem *l)
+ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
+-			    struct btrfs_delayed_ref_head *head)
++			    struct btrfs_delayed_ref_head *head,
++			    u64 *bytes_released)
+ {
+ 
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+@@ -1926,7 +1929,7 @@ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
+ 		}
+ 	}
+ 
+-	btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
++	*bytes_released = btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
+ 
+ 	trace_run_delayed_ref_head(fs_info, head, 0);
+ 	btrfs_delayed_ref_unlock(head);
+@@ -2047,15 +2050,22 @@ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
+  * Returns -ENOMEM or -EIO on failure and will abort the transaction.
+  */
+ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+-					     unsigned long nr)
++					     u64 min_bytes)
+ {
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+ 	struct btrfs_delayed_ref_root *delayed_refs;
+ 	struct btrfs_delayed_ref_head *locked_ref = NULL;
+ 	int ret;
+ 	unsigned long count = 0;
++	unsigned long max_count = 0;
++	u64 bytes_processed = 0;
+ 
+ 	delayed_refs = &trans->transaction->delayed_refs;
++	if (min_bytes == 0) {
++		max_count = delayed_refs->num_heads_ready;
++		min_bytes = U64_MAX;
++	}
++
+ 	do {
+ 		if (!locked_ref) {
+ 			locked_ref = btrfs_obtain_ref_head(trans);
+@@ -2092,11 +2102,14 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 			 */
+ 			return ret;
+ 		} else if (!ret) {
++			u64 bytes_released = 0;
++
+ 			/*
+ 			 * Success, perform the usual cleanup of a processed
+ 			 * head
+ 			 */
+-			ret = cleanup_ref_head(trans, locked_ref);
++			ret = cleanup_ref_head(trans, locked_ref, &bytes_released);
++			bytes_processed += bytes_released;
+ 			if (ret > 0 ) {
+ 				/* We dropped our lock, we need to loop. */
+ 				ret = 0;
+@@ -2113,7 +2126,9 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ again:
+ 		locked_ref = NULL;
+ 		cond_resched();
+-	} while ((nr != -1 && count < nr) || locked_ref);
++	} while ((min_bytes != U64_MAX && bytes_processed < min_bytes) ||
++		 (max_count > 0 && count < max_count) ||
++		 locked_ref);
+ 
+ 	return 0;
+ }
+@@ -2162,24 +2177,27 @@ static u64 find_middle(struct rb_root *root)
+ #endif
+ 
+ /*
+- * this starts processing the delayed reference count updates and
+- * extent insertions we have queued up so far.  count can be
+- * 0, which means to process everything in the tree at the start
+- * of the run (but not newly added entries), or it can be some target
+- * number you'd like to process.
++ * Start processing the delayed reference count updates and extent insertions
++ * we have queued up so far.
++ *
++ * @trans:	Transaction handle.
++ * @min_bytes:	How many bytes of delayed references to process. After this
++ *		many bytes we stop processing delayed references if there are
++ *		any more. If 0 it means to run all existing delayed references,
++ *		but not new ones added after running all existing ones.
++ *		Use (u64)-1 (U64_MAX) to run all existing delayed references
++ *		plus any new ones that are added.
+  *
+  * Returns 0 on success or if called with an aborted transaction
+  * Returns <0 on error and aborts the transaction
+  */
+-int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+-			   unsigned long count)
++int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, u64 min_bytes)
+ {
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+ 	struct rb_node *node;
+ 	struct btrfs_delayed_ref_root *delayed_refs;
+ 	struct btrfs_delayed_ref_head *head;
+ 	int ret;
+-	int run_all = count == (unsigned long)-1;
+ 
+ 	/* We'll clean this up in btrfs_cleanup_transaction */
+ 	if (TRANS_ABORTED(trans))
+@@ -2189,20 +2207,17 @@ int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 		return 0;
+ 
+ 	delayed_refs = &trans->transaction->delayed_refs;
+-	if (count == 0)
+-		count = delayed_refs->num_heads_ready;
+-
+ again:
+ #ifdef SCRAMBLE_DELAYED_REFS
+ 	delayed_refs->run_delayed_start = find_middle(&delayed_refs->root);
+ #endif
+-	ret = __btrfs_run_delayed_refs(trans, count);
++	ret = __btrfs_run_delayed_refs(trans, min_bytes);
+ 	if (ret < 0) {
+ 		btrfs_abort_transaction(trans, ret);
+ 		return ret;
+ 	}
+ 
+-	if (run_all) {
++	if (min_bytes == U64_MAX) {
+ 		btrfs_create_pending_block_groups(trans);
+ 
+ 		spin_lock(&delayed_refs->lock);
+diff --git a/fs/btrfs/extent-tree.h b/fs/btrfs/extent-tree.h
+index ef1c1c99294eb..c155f398fcb66 100644
+--- a/fs/btrfs/extent-tree.h
++++ b/fs/btrfs/extent-tree.h
+@@ -91,8 +91,8 @@ int btrfs_get_extent_inline_ref_type(const struct extent_buffer *eb,
+ 				     enum btrfs_inline_ref_type is_data);
+ u64 hash_extent_data_ref(u64 root_objectid, u64 owner, u64 offset);
+ 
+-int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, unsigned long count);
+-void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
++int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, u64 min_bytes);
++u64 btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
+ 				  struct btrfs_delayed_ref_root *delayed_refs,
+ 				  struct btrfs_delayed_ref_head *head);
+ int btrfs_lookup_data_extent(struct btrfs_fs_info *fs_info, u64 start, u64 len);
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index a50f0db756337..e786078402f8e 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -601,18 +601,6 @@ static inline u64 calc_reclaim_items_nr(const struct btrfs_fs_info *fs_info,
+ 	return nr;
+ }
+ 
+-static inline u64 calc_delayed_refs_nr(const struct btrfs_fs_info *fs_info,
+-				       u64 to_reclaim)
+-{
+-	const u64 bytes = btrfs_calc_delayed_ref_bytes(fs_info, 1);
+-	u64 nr;
+-
+-	nr = div64_u64(to_reclaim, bytes);
+-	if (!nr)
+-		nr = 1;
+-	return nr;
+-}
+-
+ #define EXTENT_SIZE_PER_ITEM	SZ_256K
+ 
+ /*
+@@ -794,10 +782,9 @@ static void flush_space(struct btrfs_fs_info *fs_info,
+ 			break;
+ 		}
+ 		if (state == FLUSH_DELAYED_REFS_NR)
+-			nr = calc_delayed_refs_nr(fs_info, num_bytes);
++			btrfs_run_delayed_refs(trans, num_bytes);
+ 		else
+-			nr = 0;
+-		btrfs_run_delayed_refs(trans, nr);
++			btrfs_run_delayed_refs(trans, 0);
+ 		btrfs_end_transaction(trans);
+ 		break;
+ 	case ALLOC_CHUNK:
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 8f14dc4691e48..e3e6527757d0b 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1346,7 +1346,7 @@ static noinline int commit_cowonly_roots(struct btrfs_trans_handle *trans)
+ 	}
+ 
+ 	/* Now flush any delayed refs generated by updating all of the roots */
+-	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
++	ret = btrfs_run_delayed_refs(trans, U64_MAX);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1361,7 +1361,7 @@ static noinline int commit_cowonly_roots(struct btrfs_trans_handle *trans)
+ 		 * so we want to keep this flushing in this loop to make sure
+ 		 * everything gets run.
+ 		 */
+-		ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
++		ret = btrfs_run_delayed_refs(trans, U64_MAX);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -1579,7 +1579,7 @@ static int qgroup_account_snapshot(struct btrfs_trans_handle *trans,
+ 	 * for now flush the delayed refs to narrow the race window where the
+ 	 * qgroup counters could end up wrong.
+ 	 */
+-	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
++	ret = btrfs_run_delayed_refs(trans, U64_MAX);
+ 	if (ret) {
+ 		btrfs_abort_transaction(trans, ret);
+ 		return ret;
+@@ -2431,7 +2431,7 @@ int btrfs_commit_transaction(struct btrfs_trans_handle *trans)
+ 	if (ret)
+ 		goto unlock_reloc;
+ 
+-	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
++	ret = btrfs_run_delayed_refs(trans, U64_MAX);
+ 	if (ret)
+ 		goto unlock_reloc;
+ 
 -- 
 2.53.0
 
