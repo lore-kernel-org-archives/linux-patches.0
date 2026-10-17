@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E0B38654F;
-	Sat, 17 Oct 2026 16:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC3E38654F;
+	Sat, 17 Oct 2026 16:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256160; cv=none; b=ePR5klXML7iR8mME1GKhKCYvYlcHO/mKUqr1GieShVIyTM+9rHUhYSOZMe4i0prLmYLfLo8loMbNGDywX8uWcL5RCda4qe+vPwYDRXL4pu3E1tarYRfKxrzg5/UwoXcunMVKP/7sYoKV7M8xC6Vozd89AR1UHDuvtzNMPyfuGEM=
+	t=1792256162; cv=none; b=FOzFyRfY2DR16JU9+NDM8ltpyuPxrXdd0TWLzZTWNWsg6RF6gTfZLuR3yKhqbqUpKObuLagA49XjhF3fcny144ZoR0WTqi49mRW4Q3njNzFGic4jyEOOHxwW9sK5PaVULb+Df4mPy00452mCneN9C1nwPFPbWCUp4M7A5y836RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256160; c=relaxed/simple;
-	bh=mDi/SWkGxMUF5xG7eDdV4G5b9ptwNrXyiUJEhAX5ruo=;
+	s=arc-20240116; t=1792256162; c=relaxed/simple;
+	bh=AEh4SP9qw07NXGvhzcsEQkBjQoIDUX7hFgbtXjQin94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzZbUj2f6qctiK+a/U2htN1tvxMrBTuV97Or5wU8VNISdxpo+DfbC1OSDbaBiluwWS13MaL1g91qB+Jj9e6d5HzUv5vkeaslhJ4+uBkJJjVa75kFd+X5dwaVCldfiMTUch8AGW5ySJWEt1lYd1Vj3vrtsAddtytmXYBcyiR0lw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4ii08jc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5RGA9JVTuRNrXPhfTTH9WMOx8hW23nx+nShBbzbUDJiYrnn7/urenWbBeOo3iPGY2YIzmxzH29BXTwK853u1pVoJP3QWr+mRSM+GI2wRp1uVWtSIgHnUc5BSiyvoWX8wWi3sY8R3ED6tbgWOz70NBDfSAxDB0KK3aeUSv9BKvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylEC3shN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4ii08jc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1271F000C4;
-	Sat, 17 Oct 2026 16:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylEC3shN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417411F000C5;
+	Sat, 17 Oct 2026 16:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256157;
-	bh=jPTUqSc0I/GWb14ORwxwLLJXpdnSvmSdhaJUhUcQYZk=;
+	s=korg; t=1792256160;
+	bh=Wr7JQDJa3R81eSt2VgknHUsA+hKGfVEtJRZjWIe9Jvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B4ii08jcn+ZKBM5jR6imMn1N4nXGWZCR8t84vbcU7itkmGFjYlH+P+UYCMb2iWd/Q
-	 t/Y3NO03DH3XWE1A/aZHFvYFdFIPf62SbjD4jbkIc5B+JzUZj40Q5oDbf1YWSLaeLE
-	 TDwKBcKPK0uEj/Eodvcx+EeIny6DRZHWlnBYh0XY=
+	b=ylEC3shNk4MWicKnqbe4r82s4GFNE0gD6ikqBitLODpltomKovtThFCffgDyEhzds
+	 ohtHpxserTkHIyno0V2N+Ewq0nQgrJmWshnO3VKnz0FiCnQqp/L57WVJrsSr6d4/On
+	 LfgVGxXzpzLnJpiOsHCHx687KY6asfChf0q39KEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	David Arinzon <darinzon@amazon.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0117/1674] hwmon: (pwm-fan) Stop RPM timer before freeing tach data
-Date: Sat, 17 Oct 2026 17:39:49 +0200
-Message-ID: <20261017160434.152846197@linuxfoundation.org>
+Subject: [PATCH 6.6 0144/1674] net: ena: Remove autopolling mode
+Date: Sat, 17 Oct 2026 17:40:16 +0200
+Message-ID: <20261017160434.856181044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,89 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Dr. David Alan Gilbert <linux@treblig.org>
 
-[ Upstream commit 26d5ff79768548efb1e604bb6e8697c101e06269 ]
+[ Upstream commit b356b9170815f822394667010d478d53901ff581 ]
 
-sample_timer() rearms the RPM timer and accesses the devm-managed
-ctx->tachs and ctx->pulses_per_revolution arrays. The cleanup action
-which stops the timer is registered before those arrays are allocated.
+This manually reverts
+commit a4e262cde3cd ("net: ena: allow automatic fallback to polling mode")
 
-Since devres releases entries in reverse order, driver detach can free
-the arrays before pwm_fan_cleanup() shuts down the timer. A timer expiry
-in that window accesses the freed tach data.
+which is unused.
 
-With a KASAN kernel, a test-only kprobe delayed entry to
-pwm_fan_cleanup() while normal sysfs unbind ran. Each of three runs
-reported three four-byte reads and two four-byte writes in sample_timer()
-after its backing devm allocations had been freed. The helper did not
-invoke the timer callback, cleanup actions or free functions.
+(I did it manually because there are other minor comment
+and function changes surrounding it).
+Build tested only.
 
-With the fix, three matching unbind runs completed without KASAN, BUG,
-WARNING, Oops or panic. Instrumentation confirmed that timer retirement
-completed before the first timer backing allocation was released.
-
-Split timer retirement from the power cleanup and register its devres
-action after the timer backing data and IRQ actions are installed. This
-preserves the early power rollback action while ensuring the timer is
-retired before its backing data is released. Use timer_shutdown_sync()
-because the callback can rearm itself.
-
-Fixes: 01695410d452 ("hwmon: (pwm-fan) Store tach data separately")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Link: https://patch.msgid.link/20260911071809.130151-1-lhfff@tju.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ Adapted cleanup changes to the older pwm_fan_cleanup() using del_timer_sync() without pwm_shutdown handling. ]
+Suggested-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Link: https://patch.msgid.link/20241103194149.293456-1-linux@treblig.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9476b4468862 ("net: ena: fix MMIO read buffer leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pwm-fan.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c | 25 +++++------------------
+ drivers/net/ethernet/amazon/ena/ena_com.h | 14 -------------
+ 2 files changed, 5 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/hwmon/pwm-fan.c b/drivers/hwmon/pwm-fan.c
-index b67bc9e833c01..90254f8eb56f6 100644
---- a/drivers/hwmon/pwm-fan.c
-+++ b/drivers/hwmon/pwm-fan.c
-@@ -466,12 +466,18 @@ static void pwm_fan_cleanup(void *__ctx)
- {
- 	struct pwm_fan_ctx *ctx = __ctx;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
+index 276f6a8631fb1..a7b98c0b5f285 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -763,25 +763,16 @@ static int ena_com_wait_and_process_admin_cq_interrupts(struct ena_comp_ctx *com
  
--	del_timer_sync(&ctx->rpm_timer);
- 	/* Switch off everything */
- 	ctx->enable_mode = pwm_disable_reg_disable;
- 	pwm_fan_power_off(ctx);
- }
- 
-+static void pwm_fan_timer_cleanup(void *__ctx)
-+{
-+	struct pwm_fan_ctx *ctx = __ctx;
-+
-+	timer_shutdown_sync(&ctx->rpm_timer);
-+}
-+
- static int pwm_fan_probe(struct platform_device *pdev)
- {
- 	struct thermal_cooling_device *cdev;
-@@ -606,6 +612,10 @@ static int pwm_fan_probe(struct platform_device *pdev)
+ 		if (comp_ctx->status == ENA_CMD_COMPLETED) {
+ 			netdev_err(admin_queue->ena_dev->net_device,
+-				   "The ena device sent a completion but the driver didn't receive a MSI-X interrupt (cmd %d), autopolling mode is %s\n",
+-				   comp_ctx->cmd_opcode, admin_queue->auto_polling ? "ON" : "OFF");
+-			/* Check if fallback to polling is enabled */
+-			if (admin_queue->auto_polling)
+-				admin_queue->polling = true;
++				   "The ena device sent a completion but the driver didn't receive a MSI-X interrupt (cmd %d)\n",
++				   comp_ctx->cmd_opcode);
+ 		} else {
+ 			netdev_err(admin_queue->ena_dev->net_device,
+ 				   "The ena device didn't send a completion for the admin cmd %d status %d\n",
+ 				   comp_ctx->cmd_opcode, comp_ctx->status);
+ 		}
+-		/* Check if shifted to polling mode.
+-		 * This will happen if there is a completion without an interrupt
+-		 * and autopolling mode is enabled. Continuing normal execution in such case
+-		 */
+-		if (!admin_queue->polling) {
+-			admin_queue->running_state = false;
+-			ret = -ETIME;
+-			goto err;
+-		}
++		admin_queue->running_state = false;
++		ret = -ETIME;
++		goto err;
  	}
  
- 	if (ctx->tach_count > 0) {
-+		ret = devm_add_action_or_reset(dev, pwm_fan_timer_cleanup, ctx);
-+		if (ret)
-+			return ret;
-+
- 		ctx->sample_start = ktime_get();
- 		mod_timer(&ctx->rpm_timer, jiffies + HZ);
- 
-@@ -647,6 +657,7 @@ static void pwm_fan_shutdown(struct platform_device *pdev)
- {
- 	struct pwm_fan_ctx *ctx = platform_get_drvdata(pdev);
- 
-+	pwm_fan_timer_cleanup(ctx);
- 	pwm_fan_cleanup(ctx);
+ 	ret = ena_com_comp_status_to_errno(admin_queue, comp_ctx->comp_status);
+@@ -1658,12 +1649,6 @@ void ena_com_set_admin_polling_mode(struct ena_com_dev *ena_dev, bool polling)
+ 	ena_dev->admin_queue.polling = polling;
  }
  
+-void ena_com_set_admin_auto_polling_mode(struct ena_com_dev *ena_dev,
+-					 bool polling)
+-{
+-	ena_dev->admin_queue.auto_polling = polling;
+-}
+-
+ int ena_com_mmio_reg_read_request_init(struct ena_com_dev *ena_dev)
+ {
+ 	struct ena_com_mmio_read *mmio_read = &ena_dev->mmio_read;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.h b/drivers/net/ethernet/amazon/ena/ena_com.h
+index 3c5081d9d25d6..bb33fe209eec0 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.h
++++ b/drivers/net/ethernet/amazon/ena/ena_com.h
+@@ -227,9 +227,6 @@ struct ena_com_admin_queue {
+ 	/* Indicate if the admin queue should poll for completion */
+ 	bool polling;
+ 
+-	/* Define if fallback to polling mode should occur */
+-	bool auto_polling;
+-
+ 	u16 curr_cmd_id;
+ 
+ 	/* Indicate that the ena was initialized and can
+@@ -484,17 +481,6 @@ bool ena_com_get_admin_running_state(struct ena_com_dev *ena_dev);
+  */
+ void ena_com_set_admin_polling_mode(struct ena_com_dev *ena_dev, bool polling);
+ 
+-/* ena_com_set_admin_auto_polling_mode - Enable autoswitch to polling mode
+- * @ena_dev: ENA communication layer struct
+- * @polling: Enable/Disable polling mode
+- *
+- * Set the autopolling mode.
+- * If autopolling is on:
+- * In case of missing interrupt when data is available switch to polling.
+- */
+-void ena_com_set_admin_auto_polling_mode(struct ena_com_dev *ena_dev,
+-					 bool polling);
+-
+ /* ena_com_admin_q_comp_intr_handler - admin queue interrupt handler
+  * @ena_dev: ENA communication layer struct
+  *
 -- 
 2.53.0
 
