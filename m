@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF9F380FCA;
-	Sat, 17 Oct 2026 16:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392722F767;
+	Sat, 17 Oct 2026 16:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253454; cv=none; b=nil7PTy2N0vfzbWTpapdNQ7Fa46IUVJuP0tpAlKh5/GhB2uTnEgwDs9eKjEEE2HuggOkx9fnPLClmqFhFV3AEQmoRiXlAay3DyPVZM4YcFquTLQjRkVGrWhemM0wApcZuiJalImuODKarDSjiEFvHygqGjlSUbEwOWMtVod6P7Q=
+	t=1792253457; cv=none; b=EWzVucWvYQJUT/XkMCTUidCJeDx8DgiPsGNIc+h6AkO2q34R5KoC/8G8MdqUA7SYkWQ9kWx7SLuurCvGewm4Gdt2xOEgoZw1mM433FhWd2INGabu4LfmT6QB1Bfov1yx1uwsFHzw0udwfrlYFLYqfGUxg7Vw9olqQWIiWtvdpic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253454; c=relaxed/simple;
-	bh=Uoe+zLEqJM3V3bZNq2c5nUBLzJVA9JILgZU731hPRXY=;
+	s=arc-20240116; t=1792253457; c=relaxed/simple;
+	bh=c3YzrHZJiynxjNYVocrvREmb5H6gpD7sZ2Ur74rZVfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG2A5700iSGLz+io6OVBPJVf8aqMw+uJ4zJ+xoKtjfg5dGcHMrxzaRS/oKn+GJbM9Fvplc9IBxUgrwxiDQr0qV/Cuq5ZlYAJEj7UAJtW7TNgS/8G3epSY6ZWGUCtXQ8bk80Sc7nWsXymNm1B3NVqvwru+087NYJbVdBdJHn1YPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA1rPon7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZaoaZnIbJ3s5NjX9fzGuD4z0pM+mS9/TatAx6TR8AXl5LLt9ArIDJkYusW+2Cf1/WqmbSwbrlVuVwYvoEqoHUP+h43KozWsoxFd7GR17iNoSzupA5zsjoYmyd9uaE5/N91JofCJNYYxtkLTG+sgYfftXLqwNK/naR+hGlFzZEl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSmHXtwd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA1rPon7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DADA1F000C4;
-	Sat, 17 Oct 2026 16:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSmHXtwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593531F000C4;
+	Sat, 17 Oct 2026 16:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253453;
-	bh=iEhhytkcpKvki31qGDJNoT766RU94OA+Kdr4WDHFi6o=;
+	s=korg; t=1792253455;
+	bh=uakqxTBvsDa5gSS+vCRUSjpHbs4OXbIgxvA/Thg67vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UA1rPon7vC1+6yEKGy9kt/L3tjnEIY1qGWUb5kGWn+3inTQsbp55C7AF/rBYoCG9S
-	 BDE85MBo43Iz7xKdZIdmhqPVlmmz5JML0UW8j1i+/PvGjGrz0t2UFfZyaJ+jJLetWV
-	 m3tosTRymeRVQYlQwg51WeNOdJ12o8FFIMakT6Vg=
+	b=BSmHXtwdAeZVDXswZb57zXboHDGzf7D+h8rZQxYmBFy/od7Z9G+2Nw+dozD6c8iOG
+	 0m2snt1ZFYO7PPxhPtJ/KOCEr/mOvyrZK04ujsXOOwK5f/W/pNO7TZWXZNCtAGKyj4
+	 vY6tTc+e8uJF8aEybknGNt6Lka0QWx0xdJeDCdRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/869] smb: client: let recv_done verify data_offset, data_length and remaining_data_length
-Date: Sat, 17 Oct 2026 17:49:25 +0200
-Message-ID: <20261017160040.219693474@linuxfoundation.org>
+Subject: [PATCH 6.12 125/869] iommu/s390: handle IOAT registration based on domain
+Date: Sat, 17 Oct 2026 17:49:26 +0200
+Message-ID: <20261017160040.244166719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,64 +52,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-[ Upstream commit f57e53ea252363234f86674db475839e5b87102e ]
+[ Upstream commit 0ed5967a0a63552e5ca0f2382ce362f84e83801c ]
 
-This is inspired by the related server fixes.
+At this point, the dma_table is really a property of the s390-iommu
+domain.  Rather than checking its contents elsewhere in the codebase,
+move the code that registers the table with firmware into
+s390-iommu and make a decision what to register with firmware based
+upon the type of domain in use for the device in question.
 
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250212213418.182902-4-mjrosato@linux.ibm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 9ffaf5229055 ("iommu/s390: Make attach succeed when the device was surprise removed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/pci.h |  2 ++
+ arch/s390/kvm/pci.c         | 17 ++-------------
+ arch/s390/pci/pci.c         | 35 +++++++++++++++++-------------
+ arch/s390/pci/pci_sysfs.c   | 11 +---------
+ drivers/iommu/s390-iommu.c  | 43 +++++++++++++++++++++++++++++++++++--
+ 5 files changed, 66 insertions(+), 42 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 07f71a9481a36..c4c1435e8114f 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -460,7 +460,10 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct smbd_response *response =
- 		container_of(wc->wr_cqe, struct smbd_response, cqe);
- 	struct smbd_connection *info = response->info;
--	int data_length = 0;
-+	struct smbdirect_socket_parameters *sp = &info->socket.parameters;
-+	u32 data_offset = 0;
-+	u32 data_length = 0;
-+	u32 remaining_data_length = 0;
+diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
+index edf346a148207..1b919f1e0ff7f 100644
+--- a/arch/s390/include/asm/pci.h
++++ b/arch/s390/include/asm/pci.h
+@@ -215,6 +215,7 @@ extern struct airq_iv *zpci_aif_sbv;
+ struct zpci_dev *zpci_create_device(u32 fid, u32 fh, enum zpci_state state);
+ int zpci_add_device(struct zpci_dev *zdev);
+ int zpci_enable_device(struct zpci_dev *);
++int zpci_reenable_device(struct zpci_dev *zdev);
+ int zpci_disable_device(struct zpci_dev *);
+ int zpci_scan_configured_device(struct zpci_dev *zdev, u32 fh);
+ int zpci_deconfigure_device(struct zpci_dev *zdev);
+@@ -243,6 +244,7 @@ void update_uid_checking(bool new);
+ /* IOMMU Interface */
+ int zpci_init_iommu(struct zpci_dev *zdev);
+ void zpci_destroy_iommu(struct zpci_dev *zdev);
++int zpci_iommu_register_ioat(struct zpci_dev *zdev, u8 *status);
  
- 	log_rdma_recv(INFO, "response=0x%p type=%d wc status=%d wc opcode %d byte_len=%d pkey_index=%u\n",
- 		      response, response->type, wc->status, wc->opcode,
-@@ -492,7 +495,22 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	/* SMBD data transfer packet */
- 	case SMBD_TRANSFER_DATA:
- 		data_transfer = smbd_response_payload(response);
-+
-+		if (wc->byte_len <
-+		    offsetof(struct smbdirect_data_transfer, padding))
-+			goto error;
-+
-+		remaining_data_length = le32_to_cpu(data_transfer->remaining_data_length);
-+		data_offset = le32_to_cpu(data_transfer->data_offset);
- 		data_length = le32_to_cpu(data_transfer->data_length);
-+		if (wc->byte_len < data_offset ||
-+		    (u64)wc->byte_len < (u64)data_offset + data_length)
-+			goto error;
-+
-+		if (remaining_data_length > sp->max_fragmented_recv_size ||
-+		    data_length > sp->max_fragmented_recv_size ||
-+		    (u64)remaining_data_length + (u64)data_length > (u64)sp->max_fragmented_recv_size)
-+			goto error;
+ #ifdef CONFIG_PCI
+ static inline bool zpci_use_mio(struct zpci_dev *zdev)
+diff --git a/arch/s390/kvm/pci.c b/arch/s390/kvm/pci.c
+index d9fcbf41025e0..86a8939fc3d9c 100644
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -502,7 +502,6 @@ static void kvm_s390_pci_dev_release(struct zpci_dev *zdev)
+ static int kvm_s390_pci_register_kvm(void *opaque, struct kvm *kvm)
+ {
+ 	struct zpci_dev *zdev = opaque;
+-	u8 status;
+ 	int rc;
  
- 		if (data_length) {
- 			if (info->full_packet_received)
+ 	if (!zdev)
+@@ -549,13 +548,7 @@ static int kvm_s390_pci_register_kvm(void *opaque, struct kvm *kvm)
+ 	 */
+ 	zdev->gisa = (u32)virt_to_phys(&kvm->arch.sie_page2->gisa);
+ 
+-	rc = zpci_enable_device(zdev);
+-	if (rc)
+-		goto clear_gisa;
+-
+-	/* Re-register the IOMMU that was already created */
+-	rc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+-				virt_to_phys(zdev->dma_table), &status);
++	rc = zpci_reenable_device(zdev);
+ 	if (rc)
+ 		goto clear_gisa;
+ 
+@@ -585,7 +578,6 @@ static void kvm_s390_pci_unregister_kvm(void *opaque)
+ {
+ 	struct zpci_dev *zdev = opaque;
+ 	struct kvm *kvm;
+-	u8 status;
+ 
+ 	if (!zdev)
+ 		return;
+@@ -619,12 +611,7 @@ static void kvm_s390_pci_unregister_kvm(void *opaque)
+ 			goto out;
+ 	}
+ 
+-	if (zpci_enable_device(zdev))
+-		goto out;
+-
+-	/* Re-register the IOMMU that was already created */
+-	zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+-			   virt_to_phys(zdev->dma_table), &status);
++	zpci_reenable_device(zdev);
+ 
+ out:
+ 	spin_lock(&kvm->arch.kzdev_list_lock);
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index 2fe5b91c3d90f..554492f07b04e 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -134,14 +134,13 @@ int zpci_register_ioat(struct zpci_dev *zdev, u8 dmaas,
+ 	struct zpci_fib fib = {0};
+ 	u8 cc;
+ 
+-	WARN_ON_ONCE(iota & 0x3fff);
+ 	fib.pba = base;
+ 	/* Work around off by one in ISM virt device */
+ 	if (zdev->pft == PCI_FUNC_TYPE_ISM && limit > base)
+ 		fib.pal = limit + (1 << 12);
+ 	else
+ 		fib.pal = limit;
+-	fib.iota = iota | ZPCI_IOTA_RTTO_FLAG;
++	fib.iota = iota;
+ 	fib.gd = zdev->gisa;
+ 	cc = zpci_mod_fc(req, &fib, status);
+ 	if (cc)
+@@ -709,6 +708,23 @@ int zpci_enable_device(struct zpci_dev *zdev)
+ }
+ EXPORT_SYMBOL_GPL(zpci_enable_device);
+ 
++int zpci_reenable_device(struct zpci_dev *zdev)
++{
++	u8 status;
++	int rc;
++
++	rc = zpci_enable_device(zdev);
++	if (rc)
++		return rc;
++
++	rc = zpci_iommu_register_ioat(zdev, &status);
++	if (rc)
++		zpci_disable_device(zdev);
++
++	return rc;
++}
++EXPORT_SYMBOL_GPL(zpci_reenable_device);
++
+ int zpci_disable_device(struct zpci_dev *zdev)
+ {
+ 	u32 fh = zdev->fh;
+@@ -758,7 +774,6 @@ EXPORT_SYMBOL_GPL(zpci_disable_device);
+  */
+ int zpci_hot_reset_device(struct zpci_dev *zdev)
+ {
+-	u8 status;
+ 	int rc;
+ 
+ 	lockdep_assert_held(&zdev->state_lock);
+@@ -777,19 +792,9 @@ int zpci_hot_reset_device(struct zpci_dev *zdev)
+ 			return rc;
+ 	}
+ 
+-	rc = zpci_enable_device(zdev);
+-	if (rc)
+-		return rc;
+-
+-	if (zdev->dma_table)
+-		rc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+-					virt_to_phys(zdev->dma_table), &status);
+-	if (rc) {
+-		zpci_disable_device(zdev);
+-		return rc;
+-	}
++	rc = zpci_reenable_device(zdev);
+ 
+-	return 0;
++	return rc;
+ }
+ 
+ /**
+diff --git a/arch/s390/pci/pci_sysfs.c b/arch/s390/pci/pci_sysfs.c
+index 1f81f6ff7b954..56df97850c94b 100644
+--- a/arch/s390/pci/pci_sysfs.c
++++ b/arch/s390/pci/pci_sysfs.c
+@@ -51,7 +51,6 @@ static DEVICE_ATTR_RO(mio_enabled);
+ 
+ static int _do_recover(struct pci_dev *pdev, struct zpci_dev *zdev)
+ {
+-	u8 status;
+ 	int ret;
+ 
+ 	pci_stop_and_remove_bus_device(pdev);
+@@ -69,16 +68,8 @@ static int _do_recover(struct pci_dev *pdev, struct zpci_dev *zdev)
+ 			return ret;
+ 	}
+ 
+-	ret = zpci_enable_device(zdev);
+-	if (ret)
+-		return ret;
++	ret = zpci_reenable_device(zdev);
+ 
+-	if (zdev->dma_table) {
+-		ret = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+-					 virt_to_phys(zdev->dma_table), &status);
+-		if (ret)
+-			zpci_disable_device(zdev);
+-	}
+ 	return ret;
+ }
+ 
+diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+index fbdeded3d48b5..007ccfdad4954 100644
+--- a/drivers/iommu/s390-iommu.c
++++ b/drivers/iommu/s390-iommu.c
+@@ -381,6 +381,46 @@ static void zdev_s390_domain_update(struct zpci_dev *zdev,
+ 	spin_unlock_irqrestore(&zdev->dom_lock, flags);
+ }
+ 
++static int s390_iommu_domain_reg_ioat(struct zpci_dev *zdev,
++				      struct iommu_domain *domain, u8 *status)
++{
++	struct s390_domain *s390_domain;
++	int rc = 0;
++	u64 iota;
++
++	switch (domain->type) {
++	case IOMMU_DOMAIN_IDENTITY:
++		rc = zpci_register_ioat(zdev, 0, zdev->start_dma,
++					zdev->end_dma, 0, status);
++		break;
++	case IOMMU_DOMAIN_BLOCKED:
++		/* Nothing to do in this case */
++		break;
++	default:
++		s390_domain = to_s390_domain(domain);
++		iota = virt_to_phys(s390_domain->dma_table) |
++		       ZPCI_IOTA_RTTO_FLAG;
++		rc = zpci_register_ioat(zdev, 0, zdev->start_dma,
++					zdev->end_dma, iota, status);
++	}
++
++	return rc;
++}
++
++int zpci_iommu_register_ioat(struct zpci_dev *zdev, u8 *status)
++{
++	unsigned long flags;
++	int rc;
++
++	spin_lock_irqsave(&zdev->dom_lock, flags);
++
++	rc = s390_iommu_domain_reg_ioat(zdev, zdev->s390_domain, status);
++
++	spin_unlock_irqrestore(&zdev->dom_lock, flags);
++
++	return rc;
++}
++
+ static int blocking_domain_attach_device(struct iommu_domain *domain,
+ 					 struct device *dev)
+ {
+@@ -422,8 +462,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
+ 	blocking_domain_attach_device(&blocking_domain, dev);
+ 
+ 	/* If we fail now DMA remains blocked via blocking domain */
+-	cc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+-				virt_to_phys(s390_domain->dma_table), &status);
++	cc = s390_iommu_domain_reg_ioat(zdev, domain, &status);
+ 	if (cc && status != ZPCI_PCI_ST_FUNC_NOT_AVAIL)
+ 		return -EIO;
+ 	zdev->dma_table = s390_domain->dma_table;
 -- 
 2.53.0
 
