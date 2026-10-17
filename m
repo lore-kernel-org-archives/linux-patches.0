@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42BC34B437;
-	Sat, 17 Oct 2026 18:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF573A7F4D;
+	Sat, 17 Oct 2026 18:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260675; cv=none; b=VgWfxdGcQlxdKhyqbavJbUp9ce3kPIBSUPQ3OSWjxvJeBg7KF1rp72ZX9gx7Y8R+zqZQE49Gc5PXtD+brPCgAk45G0xM1b610EaxP2hA7TdedA1rQQm0LPOMnQ13yq9Yq8qrWmGDn1WJSXx96R668aNQ3pPUgvorFDa4DqwzVr0=
+	t=1792260678; cv=none; b=pjf2OrAeyO2wBOCt6fYc7AFNCoJfDaBlH7wMAT4jGIY4aZeAYP2Tu0ufE7tjTCb5zb0bfq07v0zOtDbPUB+HJfeM9s6y3dc9rff3VezErOkqRTRh5c2JMQrlbp5yc0wYtu+pDLI3xn3hw6juzW9awCQsdPQluw3/29PbxJDYRUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260675; c=relaxed/simple;
-	bh=FqyFPDcD+T4VytoJ1PL1XgH7tbEymVf87BH5LvlEEmU=;
+	s=arc-20240116; t=1792260678; c=relaxed/simple;
+	bh=WeW2Yj8NuoLmJL2KKFa4nQiE4bl99UNAiJNGJk2nlvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEGs/8FhvQ+duATKLDTS+ysNHVFjumkARQicbR2KFmOKfn2YnAK41qGRBVqauVfP+9e6Vemi/dC3hwp/3IZr7luT3ZsIqj3idM6gelgA/zGSzw7jhrra7K7H6j9dtOex+TVM74qGX8OAZdIyMTKIptY+JK0nzb9hPiKSeiKN+l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgLaDIiq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fjeSL7jdAAZ2B8RuVhsevEdtpbIjv1Fh0CxOOBk3HUeARzljyykdBuuC42cYKd5nYCalgNN0wvuIAIwb4ZgZst/X4MXSsiJY/6l6nxNttWr3CfjGJ7V0xePhz9PXYFt57ICU+m9TGvvzjYlcJvZDhojh3MiEBnK1M17YYnrSIJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez8V+AZe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgLaDIiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1451F000C4;
-	Sat, 17 Oct 2026 18:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez8V+AZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24961F000C4;
+	Sat, 17 Oct 2026 18:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260674;
-	bh=pmF2pgsM3O2psg5fc8yhyyqjgKDT8hWqa+5a7P2r75o=;
+	s=korg; t=1792260677;
+	bh=XvilI6ROCoS7+ev6Aa5ejsCdLMlxKzj3oMFrYvalL78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wgLaDIiq235F2It2LggFX/NKNbdUCv8s2sBY8BHTmWQ5HsyM0OCEo1z2hIwM80R4+
-	 2mlpMvmdxzuoLjnHCoQ2OoJ9C0VxsIiC18imQJuODd4mzR2b1Iwpg6HTokb6L3j57o
-	 al4+az/7+QtlfABXMW7xtnDD3WiBPaxOfbaRKnn0=
+	b=ez8V+AZeWtwY9ebuGcV2ORS/YZptcJskgLXc2xweHXgPA2z1mlmxP/zJARV3r7IgN
+	 aJFFkpYVKEAQ023AsSkE23EdqKuqSwp9QkGyeLpFpKs1tE8JK82yk7Lvkg5yK8KApB
+	 O3KgcpW+ZOzJY1hnqjjYEsPRxKw9XK/kps5IrILY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1622/1674] iommu/amd: Do not reallocate GA log buffers on resume
-Date: Sat, 17 Oct 2026 18:04:54 +0200
-Message-ID: <20261017160512.718205278@linuxfoundation.org>
+Subject: [PATCH 6.6 1587/1674] f2fs: accurately adjust free_sections during free_segment_range
+Date: Sat, 17 Oct 2026 18:04:19 +0200
+Message-ID: <20261017160511.824081664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,59 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 00a7dd64888d6dd72110b40e2824a088cf7b7386 ]
+[ Upstream commit 8c963d1738fdca400082ff5f9d99e083de4f4e70 ]
 
-Commit c5e1a1eb9279 ("iommu/amd: Simplify and Consolidate Virtual APIC
-(AVIC) Enablement") moved the GA log allocation from iommu_init_pci()
-to enable_iommus_vapic(), which is called on every resume.
+In free_segment_range(), MAIN_SECS(sbi) is temporarily reduced by `secs`
+to restrict block allocation to the safe remaining main area while valid
+blocks in the truncated range are evacuated by GC.
 
-iommu_init_ga_log() assigns iommu->ga_log and iommu->ga_log_tail
-unconditionally. Each resume therefore replaces the boot-time pointers
-and leaks both old allocations. The function also uses GFP_KERNEL from a
-syscore resume callback, where interrupts are disabled and the non-boot
-CPUs are offline.
+However, FREE_I(sbi)->free_sections tracks the total number of free
+sections across the whole filesystem. If any sections within the
+truncated range were already free upon entering free_segment_range(),
+failing to deduct them from free_sections causes the filesystem to
+overestimate available free sections in the active, reduced main area.
+This leads to inconsistent free section accounting during GC data
+migration and can trigger unexpected allocation failures or assertion
+errors when space is tight.
 
-Return early if both buffers are already allocated. Clear the pointers
-in free_ga_log() so a partial allocation failure cannot leave ga_log
-dangling.
+Fix this by calculating the number of already-free sections in the
+truncated range, deducting them from free_sections upon entering
+free_segment_range(), and restoring them on exit.
 
-Fixes: c5e1a1eb9279 ("iommu/amd: Simplify and Consolidate Virtual APIC (AVIC) Enablement")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/gc.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 7a9119f99e98a..10ab34bed410e 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -958,7 +958,9 @@ static void free_ga_log(struct amd_iommu *iommu)
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 7cb41593462b2..663050f4bc19c 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2091,9 +2091,10 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
+ static int free_segment_range(struct f2fs_sb_info *sbi,
+ 				unsigned int secs, bool dry_run)
  {
- #ifdef CONFIG_IRQ_REMAP
- 	free_pages((unsigned long)iommu->ga_log, get_order(GA_LOG_SIZE));
-+	iommu->ga_log = NULL;
- 	free_pages((unsigned long)iommu->ga_log_tail, get_order(8));
-+	iommu->ga_log_tail = NULL;
- #endif
- }
+-	unsigned int next_inuse, start, end;
++	unsigned int secno, next_inuse, start, end, end_secno;
+ 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
+ 	int gc_mode, gc_type;
++	unsigned int freed_secs = 0;
+ 	int err = 0;
+ 	int type;
  
-@@ -1003,6 +1005,9 @@ static int iommu_init_ga_log(struct amd_iommu *iommu)
- 	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
- 		return 0;
+@@ -2101,6 +2102,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
+ 	MAIN_SECS(sbi) -= secs;
+ 	start = MAIN_SECS(sbi) * SEGS_PER_SEC(sbi);
+ 	end = MAIN_SEGS(sbi) - 1;
++	end_secno = GET_SEC_FROM_SEG(sbi, end);
  
-+	if (iommu->ga_log && iommu->ga_log_tail)
-+		return 0;
+ 	mutex_lock(&DIRTY_I(sbi)->seglist_lock);
+ 	for (gc_mode = 0; gc_mode < MAX_GC_POLICY; gc_mode++)
+@@ -2112,6 +2114,14 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
+ 			sbi->next_victim_seg[gc_type] = NULL_SEGNO;
+ 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
+ 
++	spin_lock(&FREE_I(sbi)->segmap_lock);
++	for (secno = MAIN_SECS(sbi); secno <= end_secno; secno++) {
++		if (!test_bit(secno, FREE_I(sbi)->free_secmap))
++			freed_secs++;
++	}
++	FREE_I(sbi)->free_sections -= freed_secs;
++	spin_unlock(&FREE_I(sbi)->segmap_lock);
 +
- 	iommu->ga_log = (u8 *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
- 					get_order(GA_LOG_SIZE));
- 	if (!iommu->ga_log)
+ 	/* Move out cursegs from the target range */
+ 	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++)
+ 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
+@@ -2133,6 +2143,9 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
+ 		f2fs_bug_on(sbi, 1);
+ 	}
+ out:
++	spin_lock(&FREE_I(sbi)->segmap_lock);
++	FREE_I(sbi)->free_sections += freed_secs;
++	spin_unlock(&FREE_I(sbi)->segmap_lock);
+ 	MAIN_SECS(sbi) += secs;
+ 	return err;
+ }
 -- 
 2.53.0
 
