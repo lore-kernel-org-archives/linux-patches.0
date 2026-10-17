@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3471C3B2FD9;
-	Sat, 17 Oct 2026 17:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0323AEF3F;
+	Sat, 17 Oct 2026 17:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258009; cv=none; b=ABLuN0B4w5w1shQcfH+re+aELMGDXadWZHtX5fHBK4DZmMXBBRBXHj584EUHjgQSBSFhyezlz1c+EMF7lMec/uPRf11RKXEFMS97CY1Oo3SxO866Zn8ksiWfThKZxGYUCFY4uoBfy2+NcbyvDgdq0Nzq+j0atlhl0yTXY7tFfwg=
+	t=1792258012; cv=none; b=R5/W+fJ0+8s0XZvJ6ixSnTEgJfxRl3XyZnjCN1J0yL+8qNVPWwhmmiRGit/bsHNEKNt5EOXM/bX1U3iZxu2lZAvws7nTVV28+skBFZ/cWZTT0LD5tkbBnIU2BVELXvm7qF+QUjeqx3f35Kh239e5lg7P49MC/FLYr5llgxNvvkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258009; c=relaxed/simple;
-	bh=vx1rQcwVI5+SSbXP16auJuhgRAj86T77mHVDoIH5mBo=;
+	s=arc-20240116; t=1792258012; c=relaxed/simple;
+	bh=yuXjYUgZ0/wSFip+Du0yAFmeK8UNSWt3iz8GrZFbUBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vij/FXYw7wqS91z4PKEMsMMxSW5N81evOTsXV0aQLer4+lMFh7BJ+n4aYfdT/Uwm35memSgCWDATvu+V3E2896GUUQiep4xYX2ElYxFmbmUzuROWU/ftf/u8FRQcFvi2uL70ihk7quBBKZ1v//8zD5UGtDtktrN9XQavZouIeFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CJnElup; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lh/Ryjz5u8Nmto8j0wqrXo46Dmseg0L+7FA5n+m+bFUXwMhz/x76aKyOgHp9HmG2Bn1UekO6U8YvckLET4T3YQeheLnWEhOYhOnN+HO6mwaYssxC3TN1Up+MNDPM5+6s/4L20dSFZuI7n2IZ2jcIlE9YFlg0Ywysm/rRR8tbIXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vre0KP+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CJnElup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895F51F000C4;
-	Sat, 17 Oct 2026 17:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vre0KP+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A0B1F000C4;
+	Sat, 17 Oct 2026 17:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258008;
-	bh=MzkjS+NFp/qy2/kAT+HTNlEhSiCIoy+VXTxFrN3WFi8=;
+	s=korg; t=1792258011;
+	bh=3iGre0dFjbwd8av/7dQYmvYJO/C5gTX9UIrzI7KRCmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CJnElupun81of8vjaMr/StDnXd5/HwXgTxfjqQueOKLOUo2dZ2QJtRTdNJbXQVsZ
-	 68IJNJq7TS8/GqC0SdOd80JEowYdXVYDnI/6cokZ9YrBHqBtZj/FvyILRR7+hzdblQ
-	 YsRNIdI1clG2rjUJL5/VOxmhVIVtBQS6p29ACcq8=
+	b=vre0KP+6Xiz2n6fZrVoAWYWuh2AAhMc7sLkINEsru+MpkWOy9an5XDuUBsAOXFpDM
+	 y1hET3D4X1NOXJdt1XeRvZCNxCcjiU8tiSMWXv06bxJ/O9EY+RtQDnoUVp6llMEIiI
+	 Z8CwG49vrQ5n0UmVEKrgY/2PgYipCxeJZeu0VNio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Daniel Axtens <dja@axtens.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Atish Patra <atishp@rivosinc.com>,
+	Anup Patel <anup@brainfault.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0741/1674] kasan: avoid sleepable page allocation from atomic context
-Date: Sat, 17 Oct 2026 17:50:13 +0200
-Message-ID: <20261017160450.118356323@linuxfoundation.org>
+Subject: [PATCH 6.6 0706/1674] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+Date: Sat, 17 Oct 2026 17:49:38 +0200
+Message-ID: <20261017160449.228645821@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,197 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit b6ea95a34cbd014ab6ade4248107b86b0aaf2d6c ]
+[ Upstream commit 2d117e67f318303f6ab699a5511d1fac3f170545 ]
 
-apply_to_pte_range() enters the lazy MMU mode and then invokes
-kasan_populate_vmalloc_pte() callback on each page table walk iteration.
-However, the callback can go into sleep when trying to allocate a single
-page, e.g.  if an architecutre disables preemption on lazy MMU mode enter.
+During a module removal, kvm_exit invokes arch specific disable
+call which disables AIA. However, we invoke aia_exit before kvm_exit
+resulting in the following warning. KVM kernel module can't be inserted
+afterwards due to inconsistent state of IRQ.
 
-On s390 if make arch_enter_lazy_mmu_mode() -> preempt_enable() and
-arch_leave_lazy_mmu_mode() -> preempt_disable(), such crash occurs:
+[25469.031389] percpu IRQ 31 still enabled on CPU0!
+[25469.031732] WARNING: CPU: 3 PID: 943 at kernel/irq/manage.c:2476 __free_percpu_irq+0xa2/0x150
+[25469.031804] Modules linked in: kvm(-)
+[25469.031848] CPU: 3 UID: 0 PID: 943 Comm: rmmod Not tainted 6.14.0-rc5-06947-g91c763118f47-dirty #2
+[25469.031905] Hardware name: riscv-virtio,qemu (DT)
+[25469.031928] epc : __free_percpu_irq+0xa2/0x150
+[25469.031976]  ra : __free_percpu_irq+0xa2/0x150
+[25469.032197] epc : ffffffff8007db1e ra : ffffffff8007db1e sp : ff2000000088bd50
+[25469.032241]  gp : ffffffff8131cef8 tp : ff60000080b96400 t0 : ff2000000088baf8
+[25469.032285]  t1 : fffffffffffffffc t2 : 5249207570637265 s0 : ff2000000088bd90
+[25469.032329]  s1 : ff60000098b21080 a0 : 037d527a15eb4f00 a1 : 037d527a15eb4f00
+[25469.032372]  a2 : 0000000000000023 a3 : 0000000000000001 a4 : ffffffff8122dbf8
+[25469.032410]  a5 : 0000000000000fff a6 : 0000000000000000 a7 : ffffffff8122dc10
+[25469.032448]  s2 : ff60000080c22eb0 s3 : 0000000200000022 s4 : 000000000000001f
+[25469.032488]  s5 : ff60000080c22e00 s6 : ffffffff80c351c0 s7 : 0000000000000000
+[25469.032582]  s8 : 0000000000000003 s9 : 000055556b7fb490 s10: 00007ffff0e12fa0
+[25469.032621]  s11: 00007ffff0e13e9a t3 : ffffffff81354ac7 t4 : ffffffff81354ac7
+[25469.032664]  t5 : ffffffff81354ac8 t6 : ffffffff81354ac7
+[25469.032698] status: 0000000200000100 badaddr: ffffffff8007db1e cause: 0000000000000003
+[25469.032738] [<ffffffff8007db1e>] __free_percpu_irq+0xa2/0x150
+[25469.032797] [<ffffffff8007dbfc>] free_percpu_irq+0x30/0x5e
+[25469.032856] [<ffffffff013a57dc>] kvm_riscv_aia_exit+0x40/0x42 [kvm]
+[25469.033947] [<ffffffff013b4e82>] cleanup_module+0x10/0x32 [kvm]
+[25469.035300] [<ffffffff8009b150>] __riscv_sys_delete_module+0x18e/0x1fc
+[25469.035374] [<ffffffff8000c1ca>] syscall_handler+0x3a/0x46
+[25469.035456] [<ffffffff809ec9a4>] do_trap_ecall_u+0x72/0x134
+[25469.035536] [<ffffffff809f5e18>] handle_exception+0x148/0x156
 
-[    0.663336] BUG: sleeping function called from invalid context at ./include/linux/sched/mm.h:321
-[    0.663348] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 2, name: kthreadd
-[    0.663358] preempt_count: 1, expected: 0
-[    0.663366] RCU nest depth: 0, expected: 0
-[    0.663375] no locks held by kthreadd/2.
-[    0.663383] Preemption disabled at:
-[    0.663386] [<0002f3284cbb4eda>] apply_to_pte_range+0xfa/0x4a0
-[    0.663405] CPU: 0 UID: 0 PID: 2 Comm: kthreadd Not tainted 6.15.0-rc5-gcc-kasan-00043-gd76bb1ebb558-dirty #162 PREEMPT
-[    0.663408] Hardware name: IBM 3931 A01 701 (KVM/Linux)
-[    0.663409] Call Trace:
-[    0.663410]  [<0002f3284c385f58>] dump_stack_lvl+0xe8/0x140
-[    0.663413]  [<0002f3284c507b9e>] __might_resched+0x66e/0x700
-[    0.663415]  [<0002f3284cc4f6c0>] __alloc_frozen_pages_noprof+0x370/0x4b0
-[    0.663419]  [<0002f3284ccc73c0>] alloc_pages_mpol+0x1a0/0x4a0
-[    0.663421]  [<0002f3284ccc8518>] alloc_frozen_pages_noprof+0x88/0xc0
-[    0.663424]  [<0002f3284ccc8572>] alloc_pages_noprof+0x22/0x120
-[    0.663427]  [<0002f3284cc341ac>] get_free_pages_noprof+0x2c/0xc0
-[    0.663429]  [<0002f3284cceba70>] kasan_populate_vmalloc_pte+0x50/0x120
-[    0.663433]  [<0002f3284cbb4ef8>] apply_to_pte_range+0x118/0x4a0
-[    0.663435]  [<0002f3284cbc7c14>] apply_to_pmd_range+0x194/0x3e0
-[    0.663437]  [<0002f3284cbc99be>] __apply_to_page_range+0x2fe/0x7a0
-[    0.663440]  [<0002f3284cbc9e88>] apply_to_page_range+0x28/0x40
-[    0.663442]  [<0002f3284ccebf12>] kasan_populate_vmalloc+0x82/0xa0
-[    0.663445]  [<0002f3284cc1578c>] alloc_vmap_area+0x34c/0xc10
-[    0.663448]  [<0002f3284cc1c2a6>] __get_vm_area_node+0x186/0x2a0
-[    0.663451]  [<0002f3284cc1e696>] __vmalloc_node_range_noprof+0x116/0x310
-[    0.663454]  [<0002f3284cc1d950>] __vmalloc_node_noprof+0xd0/0x110
-[    0.663457]  [<0002f3284c454b88>] alloc_thread_stack_node+0xf8/0x330
-[    0.663460]  [<0002f3284c458d56>] dup_task_struct+0x66/0x4d0
-[    0.663463]  [<0002f3284c45be90>] copy_process+0x280/0x4b90
-[    0.663465]  [<0002f3284c460940>] kernel_clone+0xd0/0x4b0
-[    0.663467]  [<0002f3284c46115e>] kernel_thread+0xbe/0xe0
-[    0.663469]  [<0002f3284c4e440e>] kthreadd+0x50e/0x7f0
-[    0.663472]  [<0002f3284c38c04a>] __ret_from_fork+0x8a/0xf0
-[    0.663475]  [<0002f3284ed57ff2>] ret_from_fork+0xa/0x38
+Invoke aia_exit and other arch specific cleanup functions after kvm_exit
+so that disable gets a chance to be called first before exit.
 
-Instead of allocating single pages per-PTE, bulk-allocate the shadow
-memory prior to applying kasan_populate_vmalloc_pte() callback on a page
-range.
-
-Link: https://lkml.kernel.org/r/c61d3560297c93ed044f0b1af085610353a06a58.1747316918.git.agordeev@linux.ibm.com
-Fixes: 3c5c3cfb9ef4 ("kasan: support backing vmalloc space with real shadow memory")
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Suggested-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Cc: Daniel Axtens <dja@axtens.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 54e43320c2ba ("RISC-V: KVM: Initial skeletal support for AIA")
+Fixes: eded6754f398 ("riscv: KVM: add basic support for host vs guest profiling")
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20250317-kvm_exit_fix-v1-1-aa5240c5dbd2@rivosinc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/shadow.c | 92 +++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 78 insertions(+), 14 deletions(-)
+ arch/riscv/kvm/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
-index d687f09a7ae37..53ba9953f6bb4 100644
---- a/mm/kasan/shadow.c
-+++ b/mm/kasan/shadow.c
-@@ -311,33 +311,99 @@ void __init __weak kasan_populate_early_vm_area_shadow(void *start,
+diff --git a/arch/riscv/kvm/main.c b/arch/riscv/kvm/main.c
+index 48ae0d4b39324..4c03be3038756 100644
+--- a/arch/riscv/kvm/main.c
++++ b/arch/riscv/kvm/main.c
+@@ -131,8 +131,8 @@ module_init(riscv_kvm_init);
+ 
+ static void __exit riscv_kvm_exit(void)
  {
- }
- 
-+struct vmalloc_populate_data {
-+	unsigned long start;
-+	struct page **pages;
-+};
-+
- static int kasan_populate_vmalloc_pte(pte_t *ptep, unsigned long addr,
--				      void *unused)
-+				      void *_data)
- {
--	unsigned long page;
-+	struct vmalloc_populate_data *data = _data;
-+	struct page *page;
- 	pte_t pte;
-+	int index;
- 
- 	if (likely(!pte_none(ptep_get(ptep))))
- 		return 0;
- 
--	page = __get_free_page(GFP_KERNEL);
--	if (!page)
--		return -ENOMEM;
+-	kvm_riscv_aia_exit();
 -
--	__memset((void *)page, KASAN_VMALLOC_INVALID, PAGE_SIZE);
--	pte = pfn_pte(PFN_DOWN(__pa(page)), PAGE_KERNEL);
-+	index = PFN_DOWN(addr - data->start);
-+	page = data->pages[index];
-+	__memset(page_to_virt(page), KASAN_VMALLOC_INVALID, PAGE_SIZE);
-+	pte = pfn_pte(page_to_pfn(page), PAGE_KERNEL);
- 
- 	spin_lock(&init_mm.page_table_lock);
- 	if (likely(pte_none(ptep_get(ptep)))) {
- 		set_pte_at(&init_mm, addr, ptep, pte);
--		page = 0;
-+		data->pages[index] = NULL;
- 	}
- 	spin_unlock(&init_mm.page_table_lock);
--	if (page)
--		free_page(page);
+ 	kvm_exit();
 +
-+	return 0;
-+}
-+
-+static void ___free_pages_bulk(struct page **pages, int nr_pages)
-+{
-+	int i;
-+
-+	for (i = 0; i < nr_pages; i++) {
-+		if (pages[i]) {
-+			__free_pages(pages[i], 0);
-+			pages[i] = NULL;
-+		}
-+	}
-+}
-+
-+static int ___alloc_pages_bulk(struct page **pages, int nr_pages)
-+{
-+	unsigned long nr_populated, nr_total = nr_pages;
-+	struct page **page_array = pages;
-+
-+	while (nr_pages) {
-+		nr_populated = alloc_pages_bulk_array(GFP_KERNEL, nr_pages, pages);
-+		if (!nr_populated) {
-+			___free_pages_bulk(page_array, nr_total - nr_pages);
-+			return -ENOMEM;
-+		}
-+		pages += nr_populated;
-+		nr_pages -= nr_populated;
-+	}
-+
- 	return 0;
++	kvm_riscv_aia_exit();
  }
- 
-+static int __kasan_populate_vmalloc(unsigned long start, unsigned long end)
-+{
-+	unsigned long nr_pages, nr_total = PFN_UP(end - start);
-+	struct vmalloc_populate_data data;
-+	int ret = 0;
-+
-+	data.pages = (struct page **)__get_free_page(GFP_KERNEL | __GFP_ZERO);
-+	if (!data.pages)
-+		return -ENOMEM;
-+
-+	while (nr_total) {
-+		nr_pages = min(nr_total, PAGE_SIZE / sizeof(data.pages[0]));
-+		ret = ___alloc_pages_bulk(data.pages, nr_pages);
-+		if (ret)
-+			break;
-+
-+		data.start = start;
-+		ret = apply_to_page_range(&init_mm, start, nr_pages * PAGE_SIZE,
-+					  kasan_populate_vmalloc_pte, &data);
-+		___free_pages_bulk(data.pages, nr_pages);
-+		if (ret)
-+			break;
-+
-+		start += nr_pages * PAGE_SIZE;
-+		nr_total -= nr_pages;
-+	}
-+
-+	free_page((unsigned long)data.pages);
-+
-+	return ret;
-+}
-+
- int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
- {
- 	unsigned long shadow_start, shadow_end;
-@@ -367,9 +433,7 @@ int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
- 	shadow_start = PAGE_ALIGN_DOWN(shadow_start);
- 	shadow_end = PAGE_ALIGN(shadow_end);
- 
--	ret = apply_to_page_range(&init_mm, shadow_start,
--				  shadow_end - shadow_start,
--				  kasan_populate_vmalloc_pte, NULL);
-+	ret = __kasan_populate_vmalloc(shadow_start, shadow_end);
- 	if (ret)
- 		return ret;
- 
+ module_exit(riscv_kvm_exit);
 -- 
 2.53.0
 
