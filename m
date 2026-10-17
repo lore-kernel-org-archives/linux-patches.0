@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524EA374E60;
-	Sat, 17 Oct 2026 16:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141BD356A12;
+	Sat, 17 Oct 2026 16:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253101; cv=none; b=JBwuYnihNA0W0r/LD2BEcJNoWnzH/05LikYpVhCGhcNzFZbHHmx75SPsJzi2/v03DeOASHheBcIz6nqzOTmgqlkwvf9s3Z8E7ydYnzGIEUISfbiCj7oEc2cv6OAB6C4Ngfi4GhEoK3yAgQEdHx+LEEjDkSqiqRG6rSlmssMowws=
+	t=1792253103; cv=none; b=bOisTPOQxqpgMkLi7ady5zyoYKWcdd0B5KnLseIiem0BL4Wltfjuekk8WzhP8GLDKTMFvXielo5IUg/WQmFRQ0apwKUII0q7NrWc1B2r/L3XLrD0dMacJMFKigdxLxdBtm4WPnD83vT6UVgcrGfRQzuJwURx03l9RTY2dlYhHYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253101; c=relaxed/simple;
-	bh=NEmGmOD0xBp/r0i4Gf4BGWQK4D2hD2KznZGskT5ydoI=;
+	s=arc-20240116; t=1792253103; c=relaxed/simple;
+	bh=uEtBbWPFj7u5XfzHjaCzN+buDK1v1lG7xq/0ynHto7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIoUbQYnPNrvp3ywR9FHdgxKHm0PuG3t/47PRiXtTso5Xbm3ZjfbXdLqNK1mVubqRPf0TnasZM9WmC0SONi1e02/icRb16dDlWA99C4AJ53xCk/5U2h/IxQZkck78JELZMbl+6z0VI6FLihLUTPt4fqruhBCafNR/WXu6yyqd20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMLLOagw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=etxx6KB64hftmfqlCSE3u0AYmgIIXT+z8DIy8B3oFX1QZhw+C/ZBew0n6G9jIllRnWd9JgQnFVnv9jBNLdc/pUIp0FZUnPYsm3XUMSA0lyRRdFlhNwwpTvJG0KGPbfP7LZ1IFqLSblBmA6KirdHpoY5UPXvPScTvTPNqDNSR3FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFqmoNQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMLLOagw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3FB1F000C4;
-	Sat, 17 Oct 2026 16:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFqmoNQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE201F000C4;
+	Sat, 17 Oct 2026 16:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253098;
-	bh=gVTIf+aId0QNgm17dJ3LSDSaApZGqJLPuNIUPMHCutk=;
+	s=korg; t=1792253102;
+	bh=zKW45Y/iiJrMa2RuCiDQmDzT83lHHarWC4vbXzlRIzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rMLLOagwLic2p9klhFaXjnRcOBuoOv2gFav1+dp+/i+CjZODbS8XB5iefNRd37Fxf
-	 jJHY5kWRHFTeDPQMvtHm0zmuUoWXpoKVhu3riEqBdizsLM7OoS292/LHcejmquyi5N
-	 gAi9vYjbmB+ivcllJg8NgfTVLhyfUf09WDIe+9mA=
+	b=ZFqmoNQlvmUdVLIYegG5MGhPwcDAlgLkFw2Q1HdExf9kOTEuorJq3lqnuAUjhup47
+	 7lEhlRxhA8RoQttPzTxJyQwuJjJ4i6bV7V9d0PKd00UrYZR6CtlgZebiVF7/ImR4Qx
+	 /vPMYn5bqyHGmiL0561F/QisFVdC4Zp0J+6I6GUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Maiolino <cem@kernel.org>,
 	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/869] xfs: avoid dquot buffer pin deadlock
-Date: Sat, 17 Oct 2026 17:47:32 +0200
-Message-ID: <20261017160037.294462892@linuxfoundation.org>
+Subject: [PATCH 6.12 012/869] xfs: rearrange code in xfs_buf_item.c
+Date: Sat, 17 Oct 2026 17:47:33 +0200
+Message-ID: <20261017160037.322167285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,434 +55,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit d62016b1a2df24c8608fe83cd3ae8090412881b3 ]
+[ Upstream commit d2fe5c4c8d25999862d615f616aea7befdd62799 ]
 
-On shutdown when quotas are enabled, the shutdown can deadlock
-trying to unpin the dquot buffer buf_log_item like so:
+The code to initialise, release and free items is all the way down
+the bottom of the file. Upcoming fixes need to these functions
+earlier in the file, so move them to the top.
 
-[ 3319.483590] task:kworker/20:0H   state:D stack:14360 pid:1962230 tgid:1962230 ppid:2      task_flags:0x4208060 flags:0x00004000
-[ 3319.493966] Workqueue: xfs-log/dm-6 xlog_ioend_work
-[ 3319.498458] Call Trace:
-[ 3319.500800]  <TASK>
-[ 3319.502809]  __schedule+0x699/0xb70
-[ 3319.512672]  schedule+0x64/0xd0
-[ 3319.515573]  schedule_timeout+0x30/0xf0
-[ 3319.528125]  __down_common+0xc3/0x200
-[ 3319.531488]  __down+0x1d/0x30
-[ 3319.534186]  down+0x48/0x50
-[ 3319.540501]  xfs_buf_lock+0x3d/0xe0
-[ 3319.543609]  xfs_buf_item_unpin+0x85/0x1b0
-[ 3319.547248]  xlog_cil_committed+0x289/0x570
-[ 3319.571411]  xlog_cil_process_committed+0x6d/0x90
-[ 3319.575590]  xlog_state_shutdown_callbacks+0x52/0x110
-[ 3319.580017]  xlog_force_shutdown+0x169/0x1a0
-[ 3319.583780]  xlog_ioend_work+0x7c/0xb0
-[ 3319.587049]  process_scheduled_works+0x1d6/0x400
-[ 3319.591127]  worker_thread+0x202/0x2e0
-[ 3319.594452]  kthread+0x20c/0x240
-
-The CIL push has seen the deadlock, so it has aborted the push and
-is running CIL checkpoint completion to abort all the items in the
-checkpoint. This calls ->iop_unpin(remove = true) to clean up the
-log items in the checkpoint.
-
-When a buffer log item is unpined like this, it needs to lock the
-buffer to run io completion to correctly fail the buffer and run all
-the required completions to fail attached log items as well. In this
-case, the attempt to lock the buffer on unpin is hanging because the
-buffer is already locked.
-
-I suspected a leaked XFS_BLI_HOLD state because of XFS_BLI_STALE
-handling changes I was testing, so I went looking for
-pin events on HOLD buffers and unpin events on locked buffer. That
-isolated this one buffer with these two events:
-
-xfs_buf_item_pin:     dev 251:6 daddr 0xa910 bbcount 0x2 hold 2 pincount 0 lock 0 flags DONE|KMEM recur 0 refcount 1 bliflags HOLD|DIRTY|LOGGED liflags DIRTY
-....
-xfs_buf_item_unpin:   dev 251:6 daddr 0xa910 bbcount 0x2 hold 4 pincount 1 lock 0 flags DONE|KMEM recur 0 refcount 1 bliflags DIRTY liflags ABORTED
-
-Firstly, bbcount = 0x2, which means it is not a single sector
-structure. That rules out every xfs_trans_bhold() case except one:
-dquot buffers.
-
-Then hung task dumping gave this trace:
-
-[ 3197.312078] task:fsync-tester    state:D stack:12080 pid:2051125 tgid:2051125 ppid:1643233 task_flags:0x400000 flags:0x00004002
-[ 3197.323007] Call Trace:
-[ 3197.325581]  <TASK>
-[ 3197.327727]  __schedule+0x699/0xb70
-[ 3197.334582]  schedule+0x64/0xd0
-[ 3197.337672]  schedule_timeout+0x30/0xf0
-[ 3197.350139]  wait_for_completion+0xbd/0x180
-[ 3197.354235]  __flush_workqueue+0xef/0x4e0
-[ 3197.362229]  xlog_cil_force_seq+0xa0/0x300
-[ 3197.374447]  xfs_log_force+0x77/0x230
-[ 3197.378015]  xfs_qm_dqunpin_wait+0x49/0xf0
-[ 3197.382010]  xfs_qm_dqflush+0x55/0x460
-[ 3197.385663]  xfs_qm_dquot_isolate+0x29e/0x4d0
-[ 3197.389977]  __list_lru_walk_one+0x141/0x220
-[ 3197.398867]  list_lru_walk_one+0x10/0x20
-[ 3197.402713]  xfs_qm_shrink_scan+0x6a/0x100
-[ 3197.406699]  do_shrink_slab+0x18a/0x350
-[ 3197.410512]  shrink_slab+0xf7/0x430
-[ 3197.413967]  drop_slab+0x97/0xf0
-[ 3197.417121]  drop_caches_sysctl_handler+0x59/0xc0
-[ 3197.421654]  proc_sys_call_handler+0x18b/0x280
-[ 3197.426050]  proc_sys_write+0x13/0x20
-[ 3197.429750]  vfs_write+0x2b8/0x3e0
-[ 3197.438532]  ksys_write+0x7e/0xf0
-[ 3197.441742]  __x64_sys_write+0x1b/0x30
-[ 3197.445363]  x64_sys_call+0x2c72/0x2f60
-[ 3197.449044]  do_syscall_64+0x6c/0x140
-[ 3197.456341]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Yup, another test run by check-parallel is running drop_caches
-concurrently and the dquot shrinker for the hung filesystem is
-running. That's trying to flush a dirty dquot from reclaim context,
-and it waiting on a log force to complete. xfs_qm_dqflush is called
-with the dquot buffer held locked, and so we've called
-xfs_log_force() with that buffer locked.
-
-Now the log force is waiting for a workqueue flush to complete, and
-that workqueue flush is waiting of CIL checkpoint processing to
-finish.
-
-The CIL checkpoint processing is aborting all the log items it has,
-and that requires locking aborted buffers to cancel them.
-
-Now, normally this isn't a problem if we are issuing a log force
-to unpin an object, because the ->iop_unpin() method wakes pin
-waiters first. That results in the pin waiter finishing off whatever
-it was doing, dropping the lock and then xfs_buf_item_unpin() can
-lock the buffer and fail it.
-
-However, xfs_qm_dqflush() is waiting on the -dquot- unpin event, not
-the dquot buffer unpin event, and so it never gets woken and so does
-not drop the buffer lock.
-
-Inodes do not have this problem, as they can only be written from
-one spot (->iop_push) whilst dquots can be written from multiple
-places (memory reclaim, ->iop_push, xfs_dq_dqpurge, and quotacheck).
-
-The reason that the dquot buffer has an attached buffer log item is
-that it has been recently allocated. Initialisation of the dquot
-buffer logs the buffer directly, thereby pinning it in memory. We
-then modify the dquot in a separate operation, and have memory
-reclaim racing with a shutdown and we trigger this deadlock.
-
-check-parallel reproduces this reliably on 1kB FSB filesystems with
-quota enabled because it does all of these things concurrently
-without having to explicitly write tests to exercise these corner
-case conditions.
-
-xfs_qm_dquot_logitem_push() doesn't have this deadlock because it
-checks if the dquot is pinned before locking the dquot buffer and
-skipping it if it is pinned. This means the xfs_qm_dqunpin_wait()
-log force in xfs_qm_dqflush() never triggers and we unlock the
-buffer safely allowing a concurrent shutdown to fail the buffer
-appropriately.
-
-xfs_qm_dqpurge() could have this problem as it is called from
-quotacheck and we might have allocated dquot buffers when recording
-the quota updates. This can be fixed by calling
-xfs_qm_dqunpin_wait() before we lock the dquot buffer. Because we
-hold the dquot locked, nothing will be able to add to the pin count
-between the unpin_wait and the dqflush callout, so this now makes
-xfs_qm_dqpurge() safe against this race.
-
-xfs_qm_dquot_isolate() can also be fixed this same way but, quite
-frankly, we shouldn't be doing IO in memory reclaim context. If the
-dquot is pinned or dirty, simply rotate it and let memory reclaim
-come back to it later, same as we do for inodes.
-
-This then gets rid of the nasty issue in xfs_qm_flush_one() where
-quotacheck writeback races with memory reclaim flushing the dquots.
-We can lift xfs_qm_dqunpin_wait() up into this code, then get rid of
-the "can't get the dqflush lock" buffer write to cycle the dqlfush
-lock and enable it to be flushed again.  checking if the dquot is
-pinned and returning -EAGAIN so that the dquot walk will revisit the
-dquot again later.
-
-Finally, with xfs_qm_dqunpin_wait() lifted into all the callers,
-we can remove it from the xfs_qm_dqflush() code.
+There is one code change in this move - the parameter to
+xfs_buf_item_relse() is changed from the xfs_buf to the
+xfs_buf_log_item - the thing that the function is releasing.
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-6.12:
-
-Fix conflicts due to following missing commits:
-
-fs/xfs/xfs_buf.c:
-	eb43b0b5cab8 ("xfs: simplify xfs_buf_delwri_pushbuf")
-
-fs/xfs/xfs_qm.c:
-	da0c02516c50 ("mm/list_lru: simplify the list_lru walk callback function")
-	fb56fdf8b9a2 ("mm/list_lru: split the lock to per-cgroup scope")
-
-We delete the code so we don't really need to add them.
-
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf.c   | 55 -----------------------------
- fs/xfs/xfs_buf.h   |  1 -
- fs/xfs/xfs_dquot.c |  4 +--
- fs/xfs/xfs_qm.c    | 87 ++++++++++------------------------------------
- fs/xfs/xfs_trace.h |  1 -
- 5 files changed, 20 insertions(+), 128 deletions(-)
+ fs/xfs/xfs_buf_item.c | 116 +++++++++++++++++++++---------------------
+ fs/xfs/xfs_buf_item.h |   1 -
+ 2 files changed, 58 insertions(+), 59 deletions(-)
 
-diff --git a/fs/xfs/xfs_buf.c b/fs/xfs/xfs_buf.c
-index 1f6b2888bd418..52e3535411b27 100644
---- a/fs/xfs/xfs_buf.c
-+++ b/fs/xfs/xfs_buf.c
-@@ -2389,61 +2389,6 @@ xfs_buf_delwri_submit(
- 	return error;
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index b746a1a0f8dd9..042282a082161 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -32,6 +32,61 @@ static inline struct xfs_buf_log_item *BUF_ITEM(struct xfs_log_item *lip)
+ 	return container_of(lip, struct xfs_buf_log_item, bli_item);
  }
  
--/*
-- * Push a single buffer on a delwri queue.
-- *
-- * The purpose of this function is to submit a single buffer of a delwri queue
-- * and return with the buffer still on the original queue. The waiting delwri
-- * buffer submission infrastructure guarantees transfer of the delwri queue
-- * buffer reference to a temporary wait list. We reuse this infrastructure to
-- * transfer the buffer back to the original queue.
-- *
-- * Note the buffer transitions from the queued state, to the submitted and wait
-- * listed state and back to the queued state during this call. The buffer
-- * locking and queue management logic between _delwri_pushbuf() and
-- * _delwri_queue() guarantee that the buffer cannot be queued to another list
-- * before returning.
-- */
--int
--xfs_buf_delwri_pushbuf(
--	struct xfs_buf		*bp,
--	struct list_head	*buffer_list)
--{
--	LIST_HEAD		(submit_list);
--	int			error;
--
--	ASSERT(bp->b_flags & _XBF_DELWRI_Q);
--
--	trace_xfs_buf_delwri_pushbuf(bp, _RET_IP_);
--
--	/*
--	 * Isolate the buffer to a new local list so we can submit it for I/O
--	 * independently from the rest of the original list.
--	 */
--	xfs_buf_lock(bp);
--	list_move(&bp->b_list, &submit_list);
--	xfs_buf_unlock(bp);
--
--	/*
--	 * Delwri submission clears the DELWRI_Q buffer flag and returns with
--	 * the buffer on the wait list with the original reference. Rather than
--	 * bounce the buffer from a local wait list back to the original list
--	 * after I/O completion, reuse the original list as the wait list.
--	 */
--	xfs_buf_delwri_submit_buffers(&submit_list, buffer_list);
--
--	/*
--	 * The buffer is now locked, under I/O and wait listed on the original
--	 * delwri queue. Wait for I/O completion, restore the DELWRI_Q flag and
--	 * return with the buffer unlocked and on the original queue.
--	 */
--	error = xfs_buf_iowait(bp);
--	bp->b_flags |= _XBF_DELWRI_Q;
--	xfs_buf_unlock(bp);
--
--	return error;
--}
--
- void xfs_buf_set_ref(struct xfs_buf *bp, int lru_ref)
- {
- 	/*
-diff --git a/fs/xfs/xfs_buf.h b/fs/xfs/xfs_buf.h
-index 209a389f2abca..3fd9bc72f8b65 100644
---- a/fs/xfs/xfs_buf.h
-+++ b/fs/xfs/xfs_buf.h
-@@ -334,7 +334,6 @@ extern bool xfs_buf_delwri_queue(struct xfs_buf *, struct list_head *);
- void xfs_buf_delwri_queue_here(struct xfs_buf *bp, struct list_head *bl);
- extern int xfs_buf_delwri_submit(struct list_head *);
- extern int xfs_buf_delwri_submit_nowait(struct list_head *);
--extern int xfs_buf_delwri_pushbuf(struct xfs_buf *, struct list_head *);
- 
- static inline xfs_daddr_t xfs_buf_daddr(struct xfs_buf *bp)
- {
-diff --git a/fs/xfs/xfs_dquot.c b/fs/xfs/xfs_dquot.c
-index 511e7b0d58714..1dd4dde91736b 100644
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1405,11 +1405,9 @@ xfs_qm_dqflush(
- 
- 	ASSERT(XFS_DQ_IS_LOCKED(dqp));
- 	ASSERT(!completion_done(&dqp->q_flush));
-+	ASSERT(atomic_read(&dqp->q_pincount) == 0);
- 
- 	trace_xfs_dqflush(dqp);
--
--	xfs_qm_dqunpin_wait(dqp);
--
- 	fa = xfs_qm_dqflush_check(dqp);
- 	if (fa) {
- 		xfs_alert(mp, "corrupt dquot ID 0x%x in memory at %pS",
-diff --git a/fs/xfs/xfs_qm.c b/fs/xfs/xfs_qm.c
-index 36ed81eb0d6d5..43775ad8ce78c 100644
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -132,6 +132,7 @@ xfs_qm_dqpurge(
- 
- 	dqp->q_flags |= XFS_DQFLAG_FREEING;
- 
-+	xfs_qm_dqunpin_wait(dqp);
- 	xfs_dqflock(dqp);
- 
- 	/*
-@@ -430,6 +431,7 @@ xfs_qm_dquot_isolate(
- 	struct xfs_dquot	*dqp = container_of(item,
- 						struct xfs_dquot, q_lru);
- 	struct xfs_qm_isolate	*isol = arg;
-+	enum lru_status		ret = LRU_SKIP;
- 
- 	if (!xfs_dqlock_nowait(dqp))
- 		goto out_miss_busy;
-@@ -442,6 +444,16 @@ xfs_qm_dquot_isolate(
- 	if (dqp->q_flags & XFS_DQFLAG_FREEING)
- 		goto out_miss_unlock;
- 
-+	/*
-+	 * If the dquot is pinned or dirty, rotate it to the end of the LRU to
-+	 * give some time for it to be cleaned before we try to isolate it
-+	 * again.
-+	 */
-+	ret = LRU_ROTATE;
-+	if (XFS_DQ_IS_DIRTY(dqp) || atomic_read(&dqp->q_pincount) > 0) {
-+		goto out_miss_unlock;
++static void
++xfs_buf_item_get_format(
++	struct xfs_buf_log_item	*bip,
++	int			count)
++{
++	ASSERT(bip->bli_formats == NULL);
++	bip->bli_format_count = count;
++
++	if (count == 1) {
++		bip->bli_formats = &bip->__bli_format;
++		return;
 +	}
 +
- 	/*
- 	 * This dquot has acquired a reference in the meantime remove it from
- 	 * the freelist and try again.
-@@ -457,41 +469,14 @@ xfs_qm_dquot_isolate(
- 	}
- 
- 	/*
--	 * If the dquot is dirty, flush it. If it's already being flushed, just
--	 * skip it so there is time for the IO to complete before we try to
--	 * reclaim it again on the next LRU pass.
-+	 * The dquot may still be under IO, in which case the flush lock will be
-+	 * held. If we can't get the flush lock now, just skip over the dquot as
-+	 * if it was dirty.
++	bip->bli_formats = kzalloc(count * sizeof(struct xfs_buf_log_format),
++				GFP_KERNEL | __GFP_NOFAIL);
++}
++
++static void
++xfs_buf_item_free_format(
++	struct xfs_buf_log_item	*bip)
++{
++	if (bip->bli_formats != &bip->__bli_format) {
++		kfree(bip->bli_formats);
++		bip->bli_formats = NULL;
++	}
++}
++
++static void
++xfs_buf_item_free(
++	struct xfs_buf_log_item	*bip)
++{
++	xfs_buf_item_free_format(bip);
++	kvfree(bip->bli_item.li_lv_shadow);
++	kmem_cache_free(xfs_buf_item_cache, bip);
++}
++
++/*
++ * xfs_buf_item_relse() is called when the buf log item is no longer needed.
++ */
++static void
++xfs_buf_item_relse(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++
++	trace_xfs_buf_item_relse(bp, _RET_IP_);
++
++	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
++	ASSERT(atomic_read(&bip->bli_refcount) == 0);
++
++	bp->b_log_item = NULL;
++	xfs_buf_rele(bp);
++	xfs_buf_item_free(bip);
++}
++
+ /* Is this log iovec plausibly large enough to contain the buffer log format? */
+ bool
+ xfs_buf_log_check_iovec(
+@@ -563,7 +618,7 @@ xfs_buf_item_unpin(
+ 			ASSERT(list_empty(&bp->b_li_list));
+ 		} else {
+ 			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bp);
++			xfs_buf_item_relse(bip);
+ 			ASSERT(bp->b_log_item == NULL);
+ 		}
+ 		xfs_buf_relse(bp);
+@@ -673,7 +728,7 @@ xfs_buf_item_put(
  	 */
- 	if (!xfs_dqflock_nowait(dqp))
- 		goto out_miss_unlock;
- 
--	if (XFS_DQ_IS_DIRTY(dqp)) {
--		struct xfs_buf	*bp = NULL;
--		int		error;
--
--		trace_xfs_dqreclaim_dirty(dqp);
--
--		/* we have to drop the LRU lock to flush the dquot */
--		spin_unlock(lru_lock);
--
--		error = xfs_dquot_use_attached_buf(dqp, &bp);
--		if (!bp || error == -EAGAIN) {
--			xfs_dqfunlock(dqp);
--			goto out_unlock_dirty;
--		}
--
--		/*
--		 * dqflush completes dqflock on error, and the delwri ioend
--		 * does it on success.
--		 */
--		error = xfs_qm_dqflush(dqp, bp);
--		if (error)
--			goto out_unlock_dirty;
--
--		xfs_buf_delwri_queue(bp, &isol->buffers);
--		xfs_buf_relse(bp);
--		goto out_unlock_dirty;
--	}
--
-+	ASSERT(!XFS_DQ_IS_DIRTY(dqp));
- 	xfs_dquot_detach_buf(dqp);
- 	xfs_dqfunlock(dqp);
- 
-@@ -513,14 +498,7 @@ xfs_qm_dquot_isolate(
- out_miss_busy:
- 	trace_xfs_dqreclaim_busy(dqp);
- 	XFS_STATS_INC(dqp->q_mount, xs_qm_dqreclaim_misses);
--	return LRU_SKIP;
--
--out_unlock_dirty:
--	trace_xfs_dqreclaim_busy(dqp);
--	XFS_STATS_INC(dqp->q_mount, xs_qm_dqreclaim_misses);
--	xfs_dqunlock(dqp);
--	spin_lock(lru_lock);
--	return LRU_RETRY;
-+	return ret;
+ 	if (aborted)
+ 		xfs_trans_ail_delete(lip, 0);
+-	xfs_buf_item_relse(bip->bli_buf);
++	xfs_buf_item_relse(bip);
+ 	return true;
  }
  
- static unsigned long
-@@ -1275,7 +1253,6 @@ xfs_qm_flush_one(
- 	struct xfs_dquot	*dqp,
- 	void			*data)
- {
--	struct xfs_mount	*mp = dqp->q_mount;
- 	struct list_head	*buffer_list = data;
- 	struct xfs_buf		*bp = NULL;
- 	int			error = 0;
-@@ -1286,34 +1263,8 @@ xfs_qm_flush_one(
- 	if (!XFS_DQ_IS_DIRTY(dqp))
- 		goto out_unlock;
+@@ -824,33 +879,6 @@ static const struct xfs_item_ops xfs_buf_item_ops = {
+ 	.iop_push	= xfs_buf_item_push,
+ };
  
--	/*
--	 * The only way the dquot is already flush locked by the time quotacheck
--	 * gets here is if reclaim flushed it before the dqadjust walk dirtied
--	 * it for the final time. Quotacheck collects all dquot bufs in the
--	 * local delwri queue before dquots are dirtied, so reclaim can't have
--	 * possibly queued it for I/O. The only way out is to push the buffer to
--	 * cycle the flush lock.
--	 */
--	if (!xfs_dqflock_nowait(dqp)) {
--		/* buf is pinned in-core by delwri list */
--		error = xfs_buf_incore(mp->m_ddev_targp, dqp->q_blkno,
--				mp->m_quotainfo->qi_dqchunklen, 0, &bp);
--		if (error)
--			goto out_unlock;
+-STATIC void
+-xfs_buf_item_get_format(
+-	struct xfs_buf_log_item	*bip,
+-	int			count)
+-{
+-	ASSERT(bip->bli_formats == NULL);
+-	bip->bli_format_count = count;
 -
--		if (!(bp->b_flags & _XBF_DELWRI_Q)) {
--			error = -EAGAIN;
--			xfs_buf_relse(bp);
--			goto out_unlock;
--		}
--		xfs_buf_unlock(bp);
--
--		xfs_buf_delwri_pushbuf(bp, buffer_list);
--		xfs_buf_rele(bp);
--
--		error = -EAGAIN;
--		goto out_unlock;
+-	if (count == 1) {
+-		bip->bli_formats = &bip->__bli_format;
+-		return;
 -	}
-+	xfs_qm_dqunpin_wait(dqp);
-+	xfs_dqflock(dqp);
+-
+-	bip->bli_formats = kzalloc(count * sizeof(struct xfs_buf_log_format),
+-				GFP_KERNEL | __GFP_NOFAIL);
+-}
+-
+-STATIC void
+-xfs_buf_item_free_format(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	if (bip->bli_formats != &bip->__bli_format) {
+-		kfree(bip->bli_formats);
+-		bip->bli_formats = NULL;
+-	}
+-}
+-
+ /*
+  * Allocate a new buf log item to go with the given buffer.
+  * Set the buffer's b_log_item field to point to the new
+@@ -1072,34 +1100,6 @@ xfs_buf_item_dirty_format(
+ 	return false;
+ }
  
- 	error = xfs_dquot_use_attached_buf(dqp, &bp);
- 	if (error)
-diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
-index a53a57b4e365d..526920b41766b 100644
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -493,7 +493,6 @@ DEFINE_BUF_EVENT(xfs_buf_iowait_done);
- DEFINE_BUF_EVENT(xfs_buf_delwri_queue);
- DEFINE_BUF_EVENT(xfs_buf_delwri_queued);
- DEFINE_BUF_EVENT(xfs_buf_delwri_split);
--DEFINE_BUF_EVENT(xfs_buf_delwri_pushbuf);
- DEFINE_BUF_EVENT(xfs_buf_get_uncached);
- DEFINE_BUF_EVENT(xfs_buf_item_relse);
- DEFINE_BUF_EVENT(xfs_buf_iodone_async);
+-STATIC void
+-xfs_buf_item_free(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	xfs_buf_item_free_format(bip);
+-	kvfree(bip->bli_item.li_lv_shadow);
+-	kmem_cache_free(xfs_buf_item_cache, bip);
+-}
+-
+-/*
+- * xfs_buf_item_relse() is called when the buf log item is no longer needed.
+- */
+-void
+-xfs_buf_item_relse(
+-	struct xfs_buf	*bp)
+-{
+-	struct xfs_buf_log_item	*bip = bp->b_log_item;
+-
+-	trace_xfs_buf_item_relse(bp, _RET_IP_);
+-	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
+-
+-	if (atomic_read(&bip->bli_refcount))
+-		return;
+-	bp->b_log_item = NULL;
+-	xfs_buf_rele(bp);
+-	xfs_buf_item_free(bip);
+-}
+-
+ void
+ xfs_buf_item_done(
+ 	struct xfs_buf		*bp)
+@@ -1119,5 +1119,5 @@ xfs_buf_item_done(
+ 	xfs_trans_ail_delete(&bp->b_log_item->bli_item,
+ 			     (bp->b_flags & _XBF_LOGRECOVERY) ? 0 :
+ 			     SHUTDOWN_CORRUPT_INCORE);
+-	xfs_buf_item_relse(bp);
++	xfs_buf_item_relse(bp->b_log_item);
+ }
+diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
+index 7ddda0aa9dac2..8a8a46e698be4 100644
+--- a/fs/xfs/xfs_buf_item.h
++++ b/fs/xfs/xfs_buf_item.h
+@@ -49,7 +49,6 @@ struct xfs_buf_log_item {
+ 
+ int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
+ void	xfs_buf_item_done(struct xfs_buf *bp);
+-void	xfs_buf_item_relse(struct xfs_buf *);
+ bool	xfs_buf_item_put(struct xfs_buf_log_item *);
+ void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
+ bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
 -- 
 2.53.0
 
