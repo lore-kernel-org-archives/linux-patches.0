@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D043A3B8BBB;
-	Sat, 17 Oct 2026 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE763BD63B;
+	Sat, 17 Oct 2026 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257321; cv=none; b=XX+1QUQhS1hsYuInNsXaf4luriBHy2w0UOzwAXbqiJ6dc1ot4yuqZs8jC7kGAebRP6Wf+3+cT5GeTGBHlZE6w/S6XcQkREbQ4+khf6OwJReB+r0pXcAN8K7nlkVwi9E77+lNwd0egaukV4BHE8JmXYt7UYyHrLky/VliXsD1idU=
+	t=1792257324; cv=none; b=sXskFXkqRW133tOD5kGi5fFAEYESiMdZvv67YTivXDJh3/fTEZ3IMuf4pPlFuqtD7aVO5QhfIk3i1tNN39v5HaUyMCe2GImotMSIej1Bp76maBr+zuCF1TfcPpxSYrTcGBpPBGG1enYCd/YeKy8tTl16DvN0Enyb4yLK5hZPGIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257321; c=relaxed/simple;
-	bh=5DZlHAmH4NC8YyoyFIWz1t7dDmZ9cdsAXT7llamHLQ8=;
+	s=arc-20240116; t=1792257324; c=relaxed/simple;
+	bh=3RqrwaElAeI/Zfhk9nRu8MXKOB2vY2L4BTnDf3bi8rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rigvN1Dz+vhGMYsUY+ONqxU9lEiGVMDofw2TZjMi2kWdDN6wqCjgjFpcIaPPDP6q98nt72ccKvrcm9PaFymoc/srVCURTBkpKyoyQkLOBYRJUNyeEUWQLGpBZdsYBD4BG22vPdw1Q0SoTgk4WYZ3sqnTS0Ysmd2JmARaQunYL3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn6yz1qt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CNbczaDgGN5F44+PRy7XZyRF+IPUf8HVwYhKFXWG++gIl65wra2f9kyi9k7Islk4Z/I3/rf/XtUJDPZAisX1IDJwre9KSmDteZAJeeS2pAR1woYJ0vesJPHF9nrKo0UQEPj7SUi+Pyn2GmsJ6NXC5Ger4rxw1icls0N6C7UqP3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nljt8XI+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn6yz1qt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4C31F000C4;
-	Sat, 17 Oct 2026 17:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nljt8XI+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DA41F000C4;
+	Sat, 17 Oct 2026 17:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257320;
-	bh=6cSgUetJ1dZ676F/TzB3/FpaG+y5I4tA5L4pcRYYXBc=;
+	s=korg; t=1792257323;
+	bh=F8AE3bGeW4vAhY5FmKXpC1X+tudZR/Ug3ZemJGs/GRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dn6yz1qthFXbCIgxh7dNOL4kXSHutKAdwILuuD72hlD/8RBpyEWULE2sj4wAmEW3A
-	 m4u1k9AHnU0uREzM/9MTmzh579l4iCeWBcYpSX7uX9FnVtt1kXDYKQBduIOBQYaJSY
-	 2MZL6SCMacsr4xGhkOUMPjLYrpwod1nN4wkEnUDY=
+	b=Nljt8XI+g07sFPRUdgSZJFzi5UeTR0e7tlwv7qassYSZQl/yL8KvNDZ4iNa0259B+
+	 rPE1t5pFMALedOHf7SeSrX6DK3OMA5OAenpEfo/2LIRJxrsaFh6idFjI83Ls4NrrFD
+	 2jqSMDq0KW4MxYQhZUEnUtBJO87vnPLg+Z/ba1Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ca23c8570669ead78867@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.6 0520/1674] drm/fb-helper: defer setup when fbdev_probe() fails, not just on -EAGAIN
-Date: Sat, 17 Oct 2026 17:46:32 +0200
-Message-ID: <20261017160444.454518937@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sajal Gupta <sajal2005gupta@gmail.com>,
+	Ruben Wauters <rubenru09@aol.com>
+Subject: [PATCH 6.6 0521/1674] drm/gud: dont keep a connector without a CRTC as connector_state
+Date: Sat, 17 Oct 2026 17:46:33 +0200
+Message-ID: <20261017160444.478282528@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,65 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Sajal Gupta <sajal2005gupta@gmail.com>
 
-commit 755c94d178b7e972bb766199d34e4ba4f63a89eb upstream.
+commit 71ec70ea26e399eb8371fe9d2d5bf5dab09570fb upstream.
 
-__drm_fb_helper_initial_config_and_unlock() calls
-drm_client_modeset_probe() first, which already fills in each
-mode_set->mode/num_connectors for every connected output, and only
-afterwards calls drm_fb_helper_single_fb_probe() to create
-fb_helper->fb and wire it into those mode_sets via
-drm_setup_crtcs_fb().
+If the 'for_each_new_connector_in_state()' loop finishes without
+hitting the break, connector_state is left pointing at the last
+connector visited, which has no CRTC, instead of
+staying NULL.
 
-If drm_fb_helper_single_fb_probe() fails with anything other than
--EAGAIN (e.g. dev->driver->fbdev_probe() itself fails), the function
-bails out before drm_setup_crtcs_fb() runs and before setting
-fb_helper->deferred_setup. The client is left with mode_sets that
-have a mode and connectors but mode_set->fb == NULL, and nothing
-marks this fb_helper as needing a retry.
+That skips the "if (!connector_state)" fallback below the loop, which
+looks up the active connector when the state contains none. The
+function then carries on with a connector that is not driven.
 
-__drm_fb_helper_restore_fbdev_mode_unlocked() only skips committing
-when fb_helper->deferred_setup is set, so a later .restore() call
-(drm_lastclose() on process exit, in this report) commits the stale
-mode_set through drm_client_modeset_commit() ->
-drm_client_modeset_commit_atomic() -> __drm_atomic_helper_set_config(),
-which hits WARN_ON(!set->fb).
+Fix by resetting connector_state to NULL for each connector visited that
+has no CRTC, so that it is NULL when none was found and the fallback runs.
 
-Mark fb_helper->deferred_setup on any drm_fb_helper_single_fb_probe()
-failure, not just -EAGAIN, so restore keeps skipping the commit until
-a later hotplug event successfully re-probes and re-populates
-mode_set->fb. The real error code is still returned to the caller
-unchanged.
-
-Reported-by: syzbot+ca23c8570669ead78867@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ca23c8570669ead78867
-Fixes: ca91a2758fce ("drm/fb-helper: Support deferred setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260927075434.72658-1-ngocthang2710.1999@gmail.com
-Link: https://patch.msgid.link/20260917154743.1621-1-shechenglong@xfusion.com
+Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260902123254.36987-1-sajal2005gupta@gmail.com?part=1
+Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
+Acked-by: Ruben Wauters <rubenru09@aol.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ruben Wauters <rubenru09@aol.com>
+Link: https://patch.msgid.link/20260922084026.15481-1-sajal2005gupta@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/gud/gud_pipe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -1837,10 +1837,10 @@ __drm_fb_helper_initial_config_and_unloc
+--- a/drivers/gpu/drm/gud/gud_pipe.c
++++ b/drivers/gpu/drm/gud/gud_pipe.c
+@@ -480,6 +480,7 @@ int gud_pipe_check(struct drm_simple_dis
+ 	for_each_new_connector_in_state(state, connector, connector_state, i) {
+ 		if (connector_state->crtc)
+ 			break;
++		connector_state = NULL;
+ 	}
  
- 	ret = drm_fb_helper_single_fb_probe(fb_helper);
- 	if (ret < 0) {
--		if (ret == -EAGAIN) {
--			fb_helper->deferred_setup = true;
-+		/* modesets are probed but fb_helper->fb isn't; defer restore too */
-+		fb_helper->deferred_setup = true;
-+		if (ret == -EAGAIN)
- 			ret = 0;
--		}
- 		mutex_unlock(&fb_helper->lock);
- 
- 		goto err_drm_fb_helper_release_info;
+ 	/*
 
 
