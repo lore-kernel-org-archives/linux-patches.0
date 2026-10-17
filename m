@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB4817BED0;
-	Sat, 17 Oct 2026 16:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34643905EB;
+	Sat, 17 Oct 2026 16:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254655; cv=none; b=A0QSI1Rx6P/QYXT2GMV72Na8NexmPpQecWgyEMj9JJ7/cCifffDBYD8jXhP+riuY+b0pwqKKrVPkmC3MCwtrRphlmu80KkEQL0Iu5FWTc3pfUEHbr0IyCVFZFQVZtY8C+OjyxDbVJhvQpszZEcxp0AH6MuXftsPylHG6h6d01c0=
+	t=1792254662; cv=none; b=lNvFc5Ck6JqDClEtIoRcunFRdAdLc1Kzt2mxKT8Llrv7a/i+XAWv8hFEZ6VLBm8CtpIomdaB73cnK1nzChCHx7wtavanfXgNKLz/BUkvdfN7WzrbrL8Z5o8rDtkqRHz9D5KGK4BjFLrNyczY6O4kww5RsNWnlal4oN2nwR2/TD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254655; c=relaxed/simple;
-	bh=IyWy8sCVZ9iUOw9FtFCwLL4qrsPkhToQs/dy7qxT4pU=;
+	s=arc-20240116; t=1792254662; c=relaxed/simple;
+	bh=P9H8SyCMrk2ZNYci/hBZMNPmGGYkSuypvfl3YQHM+GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5+3ZjTLPX5R5GYIe9N+yM5JDKhW9JhThHmxepq38QQJKKz+km/ArNO3E9vhpipf85xtiNUeX/JttNN8FTean86LFVgL94TkOkHNga5MQrxGimzBdjP8ep9nfMfYP/zIaNslmUDleGeZ1EpAgS3z48O4hGKZesbi/DYp/Q9sJ54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvNuUf+v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y6wIK2P3Iu/bzN+O6FYirVpzwM/Vx9a+w5k0czBz1CbI6yEfS05pg+/HHdTVGR2SEShUBWgNGXlfj+IhowtT3cJe4Lbyg0pdIQlVXr8N3fx5VNQ59fCGhDWfcG2TJUUEDY0ejQZXfCuXp13ufeQnQILWdN8z2uxIwpht/ziMlTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQNcliCo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvNuUf+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D731F000C4;
-	Sat, 17 Oct 2026 16:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQNcliCo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143B81F000C4;
+	Sat, 17 Oct 2026 16:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254654;
-	bh=bFKMJIbGb1Jd41yI5rau133f0lb2LUJq5Sg7YMPhPkw=;
+	s=korg; t=1792254657;
+	bh=XREZuVRPUG5d39+UyIanB4+9ZHPu0jzOiLXOlLo5tC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvNuUf+vJHqQI9MBw51RyYQAw6tVytUJoMfJ0rWSd5fiLZbBcgaB3gkq85QTbVucC
-	 mZhrBw9mMKJWMYChNep59nQ8fDzGCIz1nBs6mV3sRJV7EstWgVChiITwwpLuxiBcYm
-	 YdfXJcQaoAqfd6aGLp8DEvSYfiE2o9TtaZcb430E=
+	b=PQNcliCoAZ3+3KmB03J21BH13187u9K7tsoIPpZgX1EUJuW0ywopvZb/xs4170ZWw
+	 d3UDQfCiXGxeVuj1rOVd2XD5y96+zVFwUDAWxpWlFhE1NgsDurIFrVwGeMOO2IFYxh
+	 Axp6wMAiXkXtgEZFDO5jfnG3wN0HiV+vsxIthpIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Xiao Ni <xiao@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
+	syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com,
+	syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 475/869] md/raid1,raid10: fix bio accounting for split md cloned bios
-Date: Sat, 17 Oct 2026 17:55:16 +0200
-Message-ID: <20261017160049.302478711@linuxfoundation.org>
+Subject: [PATCH 6.12 466/869] net: watchdog: fix refcount tracking races
+Date: Sat, 17 Oct 2026 17:55:07 +0200
+Message-ID: <20261017160049.078503460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,87 +53,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ba976e3501111d11c550848b3b7341a73035f582 ]
+[ Upstream commit 8eed5519e496b7a07f441a0f579cb228a33189f7 ]
 
-Use md_cloned_bio() to control bio accounting instead of relying
-on r1bio_existed in raid1 or the io_accounting flag in raid10.
+Blamed commit converted the untracked dev_hold()/dev_put() calls
+in the watchdog code to use the tracked dev_hold_track()/dev_put_track()
+(which were later renamed/interfaced to netdev_hold() and netdev_put()).
 
-The previous logic does not reliably reflect whether a bio is an
-md cloned bio. When a failed bio is split and resubmitted via
-bio_submit_split_bioset() on the error path, this can lead to either
-double accounting for md cloned bios, or missing accounting for bios
-returned from bio_submit_split_bioset()
+By introducing dev->watchdog_dev_tracker to store the
+reference tracking information without adding synchronization
+between netdev_watchdog_up() and dev_watchdog(), it enabled the
+race condition where this pointer could be overwritten or freed
+concurrently, leading to the list corruption crash syzbot reported:
 
-Fix this by using md_cloned_bio() to detect md cloned bios and
-skip accounting accordingly.
+list_del corruption, ffff888114a18c00->next is NULL
+ kernel BUG at lib/list_debug.c:52 !
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 UID: 0 PID: 91 Comm: kworker/u8:5 Not tainted syzkaller #0 PREEMPT(lazy)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
+Workqueue: events_unbound linkwatch_event
+ RIP: 0010:__list_del_entry_valid_or_report.cold+0x22/0x2a lib/list_debug.c:52
+Call Trace:
+ <TASK>
+  __list_del_entry_valid include/linux/list.h:132 [inline]
+  __list_del_entry include/linux/list.h:246 [inline]
+  list_move_tail include/linux/list.h:341 [inline]
+  ref_tracker_free+0x1a7/0x6c0 lib/ref_tracker.c:329
+  netdev_tracker_free include/linux/netdevice.h:4491 [inline]
+  netdev_put include/linux/netdevice.h:4508 [inline]
+  netdev_put include/linux/netdevice.h:4504 [inline]
+  netdev_watchdog_down net/sched/sch_generic.c:600 [inline]
+  dev_deactivate_many+0x28c/0xfe0 net/sched/sch_generic.c:1363
+  dev_deactivate+0x109/0x1d0 net/sched/sch_generic.c:1397
+  linkwatch_do_dev net/core/link_watch.c:184 [inline]
+  linkwatch_do_dev+0xd3/0x120 net/core/link_watch.c:166
+  __linkwatch_run_queue+0x3a5/0x810 net/core/link_watch.c:240
+  linkwatch_event+0x8f/0xc0 net/core/link_watch.c:314
+  process_one_work+0xa0e/0x1980 kernel/workqueue.c:3314
+  process_scheduled_works kernel/workqueue.c:3397 [inline]
+  worker_thread+0x5ef/0xe50 kernel/workqueue.c:3478
+  kthread+0x370/0x450 kernel/kthread.c:436
+  ret_from_fork+0x69a/0xc80 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
 
-Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
-Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260501114652.590037-4-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+This patch has three coordinated parts:
+
+1) Add dev->watchdog_lock and dev->watchdog_ref_held to serialize watchdog operations.
+
+2) Remove netdev_watchdog_up() call from netif_carrier_on():
+   This ensures netdev_watchdog_up() is only called from process/BH context
+   (via linkwatch workqueue dev_activate()), allowing us to use
+   spin_lock_bh() for synchronization.
+
+3) Synchronize watchdog up and watchdog timer:
+   Protect netdev_watchdog_up() with tx_global_lock and watchdog_lock.
+   Only allocate a new tracker in netdev_watchdog_up() if one is
+   not already present.
+   In dev_watchdog(), ensure we don't release the tracker if the
+   timer was rescheduled either by dev_watchdog() itself or concurrently
+   by netdev_watchdog_up().
+
+Fixes: f12bf6f3f942 ("net: watchdog: add net device refcount tracker")
+Reported-by: syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a26b751.c25708ab.1b19ef.0013.GAE@google.com/T/#u
+Tested-by: syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260611152737.2580480-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 2 +-
- drivers/md/raid10.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/linux/netdevice.h |  4 ++++
+ net/core/dev.c            |  3 ++-
+ net/sched/sch_generic.c   | 48 ++++++++++++++++++++++++++++-----------
+ 3 files changed, 41 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 91ecf50eba402..b365fd4595228 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1400,7 +1400,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	}
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 0aa536df9cb59..58e2f366dfe4d 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1896,6 +1896,8 @@ enum netdev_reg_state {
+  *	@qdisc_hash:		qdisc hash table
+  *	@watchdog_timeo:	Represents the timeout that is used by
+  *				the watchdog (see dev_watchdog())
++ *	@watchdog_lock:		protect watchdog_ref_held
++ *	@watchdog_ref_held:	True if the watchdog device ref is taken.
+  *	@watchdog_timer:	List of timers
+  *
+  *	@proto_down_reason:	reason a netdev interface is held down
+@@ -2285,6 +2287,8 @@ struct net_device {
+ 	/* These may be needed for future network-power-down code. */
+ 	struct timer_list	watchdog_timer;
+ 	int			watchdog_timeo;
++	spinlock_t		watchdog_lock;
++	bool			watchdog_ref_held;
  
- 	r1_bio->read_disk = rdisk;
--	if (!r1bio_existed) {
-+	if (likely(!md_cloned_bio(mddev, bio))) {
- 		md_account_bio(mddev, &bio);
- 		r1_bio->master_bio = bio;
- 	}
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index fc68e6b05ddfe..fe136080a3798 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1143,7 +1143,7 @@ static bool regular_request_wait(struct mddev *mddev, struct r10conf *conf,
+ 	u32                     proto_down_reason;
+ 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 2c058f6a59159..9888affc68df3 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10479,7 +10479,8 @@ static int netif_alloc_netdev_queues(struct net_device *dev)
+ 
+ 	netdev_for_each_tx_queue(dev, netdev_init_one_queue, NULL);
+ 	spin_lock_init(&dev->tx_global_lock);
+-
++	spin_lock_init(&dev->watchdog_lock);
++	dev->watchdog_ref_held = false;
+ 	return 0;
  }
  
- static void raid10_read_request(struct mddev *mddev, struct bio *bio,
--				struct r10bio *r10_bio, bool io_accounting)
-+				struct r10bio *r10_bio)
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 6a61bd0c081c6..7ec650ff9daae 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -542,28 +542,46 @@ static void dev_watchdog(struct timer_list *t)
+ 				dev->netdev_ops->ndo_tx_timeout(dev, i);
+ 				netif_unfreeze_queues(dev);
+ 			}
+-			if (!mod_timer(&dev->watchdog_timer,
+-				       round_jiffies(oldest_start +
+-						     dev->watchdog_timeo)))
+-				release = false;
++			spin_lock(&dev->watchdog_lock);
++			mod_timer(&dev->watchdog_timer,
++				  round_jiffies(oldest_start +
++						dev->watchdog_timeo));
++			release = false;
++			spin_unlock(&dev->watchdog_lock);
+ 		}
+ 	}
+ 	spin_unlock(&dev->tx_global_lock);
+ 
+-	if (release)
++	spin_lock(&dev->watchdog_lock);
++	if (timer_pending(&dev->watchdog_timer))
++		release = false;
++	if (release && dev->watchdog_ref_held) {
+ 		netdev_put(dev, &dev->watchdog_dev_tracker);
++		dev->watchdog_ref_held = false;
++	}
++	spin_unlock(&dev->watchdog_lock);
+ }
+ 
+ void __netdev_watchdog_up(struct net_device *dev)
  {
- 	struct r10conf *conf = mddev->private;
- 	struct bio *read_bio;
-@@ -1220,7 +1220,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+-	if (dev->netdev_ops->ndo_tx_timeout) {
+-		if (dev->watchdog_timeo <= 0)
+-			dev->watchdog_timeo = 5*HZ;
+-		if (!mod_timer(&dev->watchdog_timer,
+-			       round_jiffies(jiffies + dev->watchdog_timeo)))
++	if (!dev->netdev_ops->ndo_tx_timeout)
++		return;
++	if (dev->watchdog_timeo <= 0)
++		dev->watchdog_timeo = 5*HZ;
++	spin_lock_bh(&dev->tx_global_lock);
++
++	spin_lock(&dev->watchdog_lock);
++	if (!mod_timer(&dev->watchdog_timer,
++		       round_jiffies(jiffies + dev->watchdog_timeo))) {
++		if (!dev->watchdog_ref_held) {
+ 			netdev_hold(dev, &dev->watchdog_dev_tracker,
+ 				    GFP_ATOMIC);
++			dev->watchdog_ref_held = true;
++		}
  	}
- 	slot = r10_bio->read_slot;
++	spin_unlock(&dev->watchdog_lock);
++
++	spin_unlock_bh(&dev->tx_global_lock);
+ }
+ EXPORT_SYMBOL_GPL(__netdev_watchdog_up);
  
--	if (io_accounting) {
-+	if (likely(!md_cloned_bio(mddev, bio))) {
- 		md_account_bio(mddev, &bio);
- 		r10_bio->master_bio = bio;
+@@ -575,8 +593,14 @@ static void dev_watchdog_up(struct net_device *dev)
+ static void dev_watchdog_down(struct net_device *dev)
+ {
+ 	netif_tx_lock_bh(dev);
+-	if (del_timer(&dev->watchdog_timer))
++
++	spin_lock(&dev->watchdog_lock);
++	if (timer_delete(&dev->watchdog_timer)) {
+ 		netdev_put(dev, &dev->watchdog_dev_tracker);
++		dev->watchdog_ref_held = false;
++	}
++	spin_unlock(&dev->watchdog_lock);
++
+ 	netif_tx_unlock_bh(dev);
+ }
+ 
+@@ -593,8 +617,6 @@ void netif_carrier_on(struct net_device *dev)
+ 			return;
+ 		atomic_inc(&dev->carrier_up_count);
+ 		linkwatch_fire_event(dev);
+-		if (netif_running(dev))
+-			__netdev_watchdog_up(dev);
  	}
-@@ -1551,7 +1551,7 @@ static bool __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- 
- 	ret = true;
- 	if (bio_data_dir(bio) == READ)
--		raid10_read_request(mddev, bio, r10_bio, true);
-+		raid10_read_request(mddev, bio, r10_bio);
- 	else
- 		ret = raid10_write_request(mddev, bio, r10_bio);
- 
-@@ -2889,7 +2889,7 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
- 
- 	rdev_dec_pending(rdev, mddev);
- 	r10_bio->state = 0;
--	raid10_read_request(mddev, r10_bio->master_bio, r10_bio, false);
-+	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
- 	/*
- 	 * allow_barrier after re-submit to ensure no sync io
- 	 * can be issued while regular io pending.
+ }
+ EXPORT_SYMBOL(netif_carrier_on);
 -- 
 2.53.0
 
