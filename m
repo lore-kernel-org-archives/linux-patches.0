@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2079B39B48D;
-	Sat, 17 Oct 2026 16:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846A0397929;
+	Sat, 17 Oct 2026 16:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253762; cv=none; b=LIx6dvvWYeJqb7X27XbHJgeNsYKhVUIoYoBpahlGMdnhigNQlez2u7jxLRz+emUF+ynvMwf15SW2Dt3bArCyJTHaVV1mj6PSDSScZvOHzJuDoH+GZIHNn0aMOEWwTwixTEraZzFDjs/SOXvMx8guhCDF3Np64tbWSdxM8QpOmX0=
+	t=1792253766; cv=none; b=FtZXcOpg5jFHO1sz/ETq1NjyVruuZHNpxdqrLc40vGD1gwzSlFBKHzsol2nHFeTmMCevkpArACGS/o+hZS3otxeRog1x2zkUnMbw4MI/YdAn1C24T6+IwVFS+JQoZm8xLtY10sCZCxJbk08LAwknNaw/+qh7il39/6pj9KZXadU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253762; c=relaxed/simple;
-	bh=ccSxchj88cbK2wdnrpjLSmKo/HT4yQOT9wFRUYDq7kM=;
+	s=arc-20240116; t=1792253766; c=relaxed/simple;
+	bh=cfFbT1JDFuv2NJ5rzWQxkh2NYI8vDgppnN0s5ijrGDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px8FDbpr102eF5BOLxrcDWFwzC7zf/evRgEOGjJUFcI7Fyf1shradRsVFf+3h4BbBII0b3ZKsuzyqGwj/MbA5Xc7V6/tyQ5us1dyOSwuvo6MhW9UjRk0e59jp5SGH64qCrgj0IXpcAECnf/DOmND7X/jX3DwXmenPoShe95EXUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juLCjlaQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mgYMZAyGlimM2HmtL3k4x0trwZywmHUOguqpQb7rIPY4rWSLXx7NowfNXbp+zjtxSKkO1kFX3xrCETL00ElLMaMWzz2MmPyh6pF+LQoaI41nbbC16yYy1y6BO2NOn3szVkvivt1hF+UKhGFfktmSIKV4PF4wJttEsSDCRq8VLYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MedUarAx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juLCjlaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A381F1F000C4;
-	Sat, 17 Oct 2026 16:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MedUarAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661FC1F000C5;
+	Sat, 17 Oct 2026 16:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253761;
-	bh=1OUUHelXX3eNRTAH3ipb0gc2AEIp2MqbN2ZUCZRmc34=;
+	s=korg; t=1792253764;
+	bh=sNs+unUQKMv4o1aoM1Fp4nU+jfsc+t6szP/09K91Z18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juLCjlaQZiMyhCMZmciJmOY4wdKoRtyn+/lo6CkxnCmO+KmBJAym1rIv9Z5H0N/Rr
-	 KQ8a4948eS413KRWbh/URL1uIYky8/Pr5C946sDk98YJdSC2wVHxBXJTE0/45JFkGU
-	 vhv7oE8m0Dr0R/6xKexUuDnVktfqnowR36Gwht5w=
+	b=MedUarAxb9LX1p4itOnSm4XvPcHmKD0Us78O6UXkhUg7Tqav0SAndn33h6ogjmOIL
+	 VjxIu4BwKMi16Isn3hI+ug5M0qSeHjD33kd7QpZN6vyuay/Wk0Q/+F8dvNI4B80UI3
+	 S5WGX2E/3gosS73VQrfcVaP3ySryzPUzvEs7zYJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/869] mpls: Convert mpls_dump_routes() to RCU.
-Date: Sat, 17 Oct 2026 17:51:05 +0200
-Message-ID: <20261017160042.793021522@linuxfoundation.org>
+Subject: [PATCH 6.12 225/869] mpls: Protect net->mpls.platform_label with a per-netns mutex.
+Date: Sat, 17 Oct 2026 17:51:06 +0200
+Message-ID: <20261017160042.817943884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,116 +54,263 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit dde1b38e873cff70f0af36e884bbeb1b14a536ed ]
+[ Upstream commit e833eb25161aae6cd0caf14782f405d0ed5765ed ]
 
-mpls_dump_routes() sets fib_dump_filter.rtnl_held to true and
-calls __dev_get_by_index() in mpls_valid_fib_dump_req().
+MPLS (re)uses RTNL to protect net->mpls.platform_label,
+but the lock does not need to be RTNL at all.
 
-This is the only RTNL dependant in mpls_dump_routes().
-
-Also, synchronize_rcu() in resize_platform_label_table()
-guarantees that net->mpls.platform_label is alive under RCU.
-
-Let's convert mpls_dump_routes() to RCU and use dev_get_by_index_rcu().
+Let's protect net->mpls.platform_label with a dedicated
+per-netns mutex.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20251029173344.2934622-11-kuniyu@google.com
+Link: https://patch.msgid.link/20251029173344.2934622-13-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 629ec78ef860 ("mpls: add seqcount to protect the platform_label{,s} pair")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ include/net/netns/mpls.h |  1 +
+ net/mpls/af_mpls.c       | 55 ++++++++++++++++++++++++++--------------
+ net/mpls/internal.h      |  7 ++++-
+ 3 files changed, 43 insertions(+), 20 deletions(-)
 
+diff --git a/include/net/netns/mpls.h b/include/net/netns/mpls.h
+index 19ad2574b267c..6682e51513efa 100644
+--- a/include/net/netns/mpls.h
++++ b/include/net/netns/mpls.h
+@@ -16,6 +16,7 @@ struct netns_mpls {
+ 	int default_ttl;
+ 	size_t platform_labels;
+ 	struct mpls_route __rcu * __rcu *platform_label;
++	struct mutex platform_mutex;
+ 
+ 	struct ctl_table_header *ctl;
+ };
 diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 5e060d373d7db..c555005cfcf55 100644
+index c555005cfcf55..c621ab55f3b82 100644
 --- a/net/mpls/af_mpls.c
 +++ b/net/mpls/af_mpls.c
-@@ -2164,7 +2164,7 @@ static int mpls_valid_fib_dump_req(struct net *net, const struct nlmsghdr *nlh,
- 				continue;
- 
- 			ifindex = nla_get_u32(tb[i]);
--			filter->dev = __dev_get_by_index(net, ifindex);
-+			filter->dev = dev_get_by_index_rcu(net, ifindex);
- 			if (!filter->dev)
- 				return -ENODEV;
- 			filter->filter_set = 1;
-@@ -2202,20 +2202,19 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 	struct net *net = sock_net(skb->sk);
+@@ -79,8 +79,8 @@ static struct mpls_route *mpls_route_input(struct net *net, unsigned int index)
+ {
  	struct mpls_route __rcu **platform_label;
- 	struct fib_dump_filter filter = {
--		.rtnl_held = true,
-+		.rtnl_held = false,
- 	};
- 	unsigned int flags = NLM_F_MULTI;
- 	size_t platform_labels;
- 	unsigned int index;
-+	int err;
- 
--	ASSERT_RTNL();
-+	rcu_read_lock();
- 
- 	if (cb->strict_check) {
--		int err;
--
- 		err = mpls_valid_fib_dump_req(net, nlh, &filter, cb);
- 		if (err < 0)
--			return err;
-+			goto err;
- 
- 		/* for MPLS, there is only 1 table with fixed type and flags.
- 		 * If either are set in the filter then return nothing.
-@@ -2223,14 +2222,14 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 		if ((filter.table_id && filter.table_id != RT_TABLE_MAIN) ||
- 		    (filter.rt_type && filter.rt_type != RTN_UNICAST) ||
- 		     filter.flags)
--			return skb->len;
-+			goto unlock;
- 	}
- 
- 	index = cb->args[0];
- 	if (index < MPLS_LABEL_FIRST_UNRESERVED)
- 		index = MPLS_LABEL_FIRST_UNRESERVED;
  
 -	platform_label = rtnl_dereference(net->mpls.platform_label);
-+	platform_label = rcu_dereference(net->mpls.platform_label);
- 	platform_labels = net->mpls.platform_labels;
- 
- 	if (filter.filter_set)
-@@ -2239,7 +2238,7 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 	for (; index < platform_labels; index++) {
- 		struct mpls_route *rt;
- 
--		rt = rtnl_dereference(platform_label[index]);
-+		rt = rcu_dereference(platform_label[index]);
- 		if (!rt)
- 			continue;
- 
-@@ -2254,7 +2253,13 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 	cb->args[0] = index;
- 
-+unlock:
-+	rcu_read_unlock();
- 	return skb->len;
-+
-+err:
-+	rcu_read_unlock();
-+	return err;
+-	return rtnl_dereference(platform_label[index]);
++	platform_label = mpls_dereference(net, net->mpls.platform_label);
++	return mpls_dereference(net, platform_label[index]);
  }
  
- static inline size_t lfib_nlmsg_size(struct mpls_route *rt)
-@@ -2779,7 +2784,8 @@ static struct rtnl_af_ops mpls_af_ops __read_mostly = {
- static const struct rtnl_msg_handler mpls_rtnl_msg_handlers[] __initdata_or_module = {
- 	{THIS_MODULE, PF_MPLS, RTM_NEWROUTE, mpls_rtm_newroute, NULL, 0},
- 	{THIS_MODULE, PF_MPLS, RTM_DELROUTE, mpls_rtm_delroute, NULL, 0},
--	{THIS_MODULE, PF_MPLS, RTM_GETROUTE, mpls_getroute, mpls_dump_routes, 0},
-+	{THIS_MODULE, PF_MPLS, RTM_GETROUTE, mpls_getroute, mpls_dump_routes,
-+	 RTNL_FLAG_DUMP_UNLOCKED},
- 	{THIS_MODULE, PF_MPLS, RTM_GETNETCONF,
- 	 mpls_netconf_get_devconf, mpls_netconf_dump_devconf,
- 	 RTNL_FLAG_DUMP_UNLOCKED},
+ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned int index)
+@@ -579,10 +579,8 @@ static void mpls_route_update(struct net *net, unsigned index,
+ 	struct mpls_route __rcu **platform_label;
+ 	struct mpls_route *rt;
+ 
+-	ASSERT_RTNL();
+-
+-	platform_label = rtnl_dereference(net->mpls.platform_label);
+-	rt = rtnl_dereference(platform_label[index]);
++	platform_label = mpls_dereference(net, net->mpls.platform_label);
++	rt = mpls_dereference(net, platform_label[index]);
+ 	rcu_assign_pointer(platform_label[index], new);
+ 
+ 	mpls_notify_route(net, index, rt, new, info);
+@@ -1462,8 +1460,6 @@ static struct mpls_dev *mpls_add_dev(struct net_device *dev)
+ 	int err = -ENOMEM;
+ 	int i;
+ 
+-	ASSERT_RTNL();
+-
+ 	mdev = kzalloc(sizeof(*mdev), GFP_KERNEL);
+ 	if (!mdev)
+ 		return ERR_PTR(err);
+@@ -1625,6 +1621,8 @@ static int mpls_dev_notify(struct notifier_block *this, unsigned long event,
+ 	unsigned int flags;
+ 	int err;
+ 
++	mutex_lock(&net->mpls.platform_mutex);
++
+ 	if (event == NETDEV_REGISTER) {
+ 		mdev = mpls_add_dev(dev);
+ 		if (IS_ERR(mdev)) {
+@@ -1687,9 +1685,11 @@ static int mpls_dev_notify(struct notifier_block *this, unsigned long event,
+ 	}
+ 
+ out:
++	mutex_unlock(&net->mpls.platform_mutex);
+ 	return NOTIFY_OK;
+ 
+ err:
++	mutex_unlock(&net->mpls.platform_mutex);
+ 	return notifier_from_errno(err);
+ }
+ 
+@@ -1965,6 +1965,7 @@ static int rtm_to_route_config(struct sk_buff *skb,
+ static int mpls_rtm_delroute(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			     struct netlink_ext_ack *extack)
+ {
++	struct net *net = sock_net(skb->sk);
+ 	struct mpls_route_config *cfg;
+ 	int err;
+ 
+@@ -1976,7 +1977,9 @@ static int mpls_rtm_delroute(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (err < 0)
+ 		goto out;
+ 
++	mutex_lock(&net->mpls.platform_mutex);
+ 	err = mpls_route_del(cfg, extack);
++	mutex_unlock(&net->mpls.platform_mutex);
+ out:
+ 	kfree(cfg);
+ 
+@@ -1987,6 +1990,7 @@ static int mpls_rtm_delroute(struct sk_buff *skb, struct nlmsghdr *nlh,
+ static int mpls_rtm_newroute(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			     struct netlink_ext_ack *extack)
+ {
++	struct net *net = sock_net(skb->sk);
+ 	struct mpls_route_config *cfg;
+ 	int err;
+ 
+@@ -1998,7 +2002,9 @@ static int mpls_rtm_newroute(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (err < 0)
+ 		goto out;
+ 
++	mutex_lock(&net->mpls.platform_mutex);
+ 	err = mpls_route_add(cfg, extack);
++	mutex_unlock(&net->mpls.platform_mutex);
+ out:
+ 	kfree(cfg);
+ 
+@@ -2402,6 +2408,8 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
+ 	u8 n_labels;
+ 	int err;
+ 
++	mutex_lock(&net->mpls.platform_mutex);
++
+ 	err = mpls_valid_getroute_req(in_skb, in_nlh, tb, extack);
+ 	if (err < 0)
+ 		goto errout;
+@@ -2445,7 +2453,8 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
+ 			goto errout_free;
+ 		}
+ 
+-		return rtnl_unicast(skb, net, portid);
++		err = rtnl_unicast(skb, net, portid);
++		goto errout;
+ 	}
+ 
+ 	if (tb[RTA_NEWDST]) {
+@@ -2538,12 +2547,14 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
+ 
+ 	err = rtnl_unicast(skb, net, portid);
+ errout:
++	mutex_unlock(&net->mpls.platform_mutex);
+ 	return err;
+ 
+ nla_put_failure:
+ 	nlmsg_cancel(skb, nlh);
+ 	err = -EMSGSIZE;
+ errout_free:
++	mutex_unlock(&net->mpls.platform_mutex);
+ 	kfree_skb(skb);
+ 	return err;
+ }
+@@ -2599,9 +2610,10 @@ static int resize_platform_label_table(struct net *net, size_t limit)
+ 		       lo->addr_len);
+ 	}
+ 
+-	rtnl_lock();
++	mutex_lock(&net->mpls.platform_mutex);
++
+ 	/* Remember the original table */
+-	old = rtnl_dereference(net->mpls.platform_label);
++	old = mpls_dereference(net, net->mpls.platform_label);
+ 	old_limit = net->mpls.platform_labels;
+ 
+ 	/* Free any labels beyond the new table */
+@@ -2632,7 +2644,7 @@ static int resize_platform_label_table(struct net *net, size_t limit)
+ 	net->mpls.platform_labels = limit;
+ 	rcu_assign_pointer(net->mpls.platform_label, labels);
+ 
+-	rtnl_unlock();
++	mutex_unlock(&net->mpls.platform_mutex);
+ 
+ 	mpls_rt_free(rt2);
+ 	mpls_rt_free(rt0);
+@@ -2705,12 +2717,13 @@ static const struct ctl_table mpls_table[] = {
+ 	},
+ };
+ 
+-static int mpls_net_init(struct net *net)
++static __net_init int mpls_net_init(struct net *net)
+ {
+ 	size_t table_size = ARRAY_SIZE(mpls_table);
+ 	struct ctl_table *table;
+ 	int i;
+ 
++	mutex_init(&net->mpls.platform_mutex);
+ 	net->mpls.platform_labels = 0;
+ 	net->mpls.platform_label = NULL;
+ 	net->mpls.ip_ttl_propagate = 1;
+@@ -2736,7 +2749,7 @@ static int mpls_net_init(struct net *net)
+ 	return 0;
+ }
+ 
+-static void mpls_net_exit(struct net *net)
++static __net_exit void mpls_net_exit(struct net *net)
+ {
+ 	struct mpls_route __rcu **platform_label;
+ 	size_t platform_labels;
+@@ -2756,16 +2769,20 @@ static void mpls_net_exit(struct net *net)
+ 	 * As such no additional rcu synchronization is necessary when
+ 	 * freeing the platform_label table.
+ 	 */
+-	rtnl_lock();
+-	platform_label = rtnl_dereference(net->mpls.platform_label);
++	mutex_lock(&net->mpls.platform_mutex);
++
++	platform_label = mpls_dereference(net, net->mpls.platform_label);
+ 	platform_labels = net->mpls.platform_labels;
++
+ 	for (index = 0; index < platform_labels; index++) {
+-		struct mpls_route *rt = rtnl_dereference(platform_label[index]);
+-		RCU_INIT_POINTER(platform_label[index], NULL);
++		struct mpls_route *rt;
++
++		rt = mpls_dereference(net, platform_label[index]);
+ 		mpls_notify_route(net, index, rt, NULL, NULL);
+ 		mpls_rt_free(rt);
+ 	}
+-	rtnl_unlock();
++
++	mutex_unlock(&net->mpls.platform_mutex);
+ 
+ 	kvfree(platform_label);
+ }
+diff --git a/net/mpls/internal.h b/net/mpls/internal.h
+index 324988a77681c..8ddc8b7e6cbd4 100644
+--- a/net/mpls/internal.h
++++ b/net/mpls/internal.h
+@@ -185,6 +185,11 @@ static inline struct mpls_entry_decoded mpls_entry_decode(struct mpls_shim_hdr *
+ 	return result;
+ }
+ 
++#define mpls_dereference(net, p)					\
++	rcu_dereference_protected(					\
++		(p),							\
++		lockdep_is_held(&(net)->mpls.platform_mutex))
++
+ static inline struct mpls_dev *mpls_dev_rcu(const struct net_device *dev)
+ {
+ 	return rcu_dereference(dev->mpls_ptr);
+@@ -193,7 +198,7 @@ static inline struct mpls_dev *mpls_dev_rcu(const struct net_device *dev)
+ static inline struct mpls_dev *mpls_dev_get(const struct net *net,
+ 					    const struct net_device *dev)
+ {
+-	return rcu_dereference_rtnl(dev->mpls_ptr);
++	return mpls_dereference(net, dev->mpls_ptr);
+ }
+ 
+ int nla_put_labels(struct sk_buff *skb, int attrtype,  u8 labels,
 -- 
 2.53.0
 
