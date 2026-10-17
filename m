@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA506391512;
-	Sat, 17 Oct 2026 17:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEE3B14A9;
+	Sat, 17 Oct 2026 17:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256584; cv=none; b=tBLkV5HG0jQwxXaqoQinCuYfZWs+UWrTIScGS4IPIkYX441VjhbQ0bwVCGJ4ycb/F0St8CcMeRfZqyE/1SsXtB4XRLcumCEh6oVi66FS1PoF/AHgy2LEszrNtRfCey0kDH+bRH0UT+g97zmLc7wJdtUctDj4XIYFAn6NjFtCkok=
+	t=1792256587; cv=none; b=J2ABIo7aO6ss/IZm2iSCZbx4U9HhiSZ6DEfqaOGr+afI1f3ovpV3wlUSoZGazBaZWF5v1gZshpfJjXX8S71fUuY/APsr4S/XvMPKzylloUTt5qA4G2r0cQtkybPkfmu9ZxqQz5IlwfVd/+sVWAISFihe6jvoWrMXTFADK5/aOBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256584; c=relaxed/simple;
-	bh=EWfsGgX4kewQcKIHGdIz6/qCasF0Y+qQb6ZHZ3Qfbxo=;
+	s=arc-20240116; t=1792256587; c=relaxed/simple;
+	bh=MkDdSYtqA8HHrVvPBko4RP78LTvWqhVUOwzg1+qLRoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ni78LzPF1YJ3niDN3hn43EhtunOactq/lr84UE4R+QFYf3mPBDlySIBQ3WgUolVuEuUPW7N/jrFDss18/urKjG3j41Os2mukIK31xRj0G3a7AuzMwWaUsUs676RzzmCyKNToENoUkBQbWXp9Oy6lw5ccS1IStb4SUjjzPytKda8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUXuTSmq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tb5O7jbwNs0qFyJocZ0gRm4z6HbeuOj0pMAULVsYFRCZdHsUXIqP+2Kiudg3ahzzfz9N4LL+lrphALbsJW/x7CYdnzxMwI1EKzZPVlldBMbZ8u/UO6hfQ7DV3fkGEpnk+3k1XDQVpZW+XeJRpyZoYhZrZfkuTYCFU6uE5NVRacU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXpBxRXh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUXuTSmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220401F000C4;
-	Sat, 17 Oct 2026 17:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXpBxRXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328941F000C4;
+	Sat, 17 Oct 2026 17:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256583;
-	bh=t5nTmMtdtU04s0lF6FMQ76QgSQ6iEjWa7RvC6NEmgE8=;
+	s=korg; t=1792256586;
+	bh=QkhgyHU0KhHofy4liTmkjNX+jJkFOhowj9dcDGT+kZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUXuTSmqgAloy7iHrIvg2doL7Up0ntSWDeUOHC/Tcwa/gOGQPNE+dKm/QNm38RRCA
-	 2atpzpK4pXrcksiTKswoiaQeQllMQ6HrK4NfHzFsenYPJAPj7SW0TsQBmx6LGQXVdD
-	 2qIjrB2wZVDfmhKn5iyKsyYhutkfPgRvenOw5B9A=
+	b=qXpBxRXhgp81gv1tj4PO+E9PbarsmrXuHQcK/cCejzKm7UwlY3x7kMs5IO4G6X71k
+	 h2G+mANjqKD8K1WpQGeFaJt3uOpdRvLkiujNmkqvnta9LkYZl+YSrBwWPP6Bcgojjc
+	 itiO17x3O82+VoECL+Rpy0DIGxeoHZ2YCHTtpwEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Subject: [PATCH 6.6 0283/1674] tty: serial: qcom_geni_serial: Keep console RX functional after deep idle
-Date: Sat, 17 Oct 2026 17:42:35 +0200
-Message-ID: <20261017160438.377625029@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0284/1674] tty: abort break signalling on hangup
+Date: Sat, 17 Oct 2026 17:42:36 +0200
+Message-ID: <20261017160438.404892795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,44 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 63ef71d1474b5417b5b2dec700cd251c44a570d9 upstream.
+commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
 
-At baud rates up to 115200, the serial console uses only a 1 kBps keepalive
-vote for the GENI_TO_CORE ("qup-core") ICC path. This vote keeps the path
-active but does not request a QUP Core 2X clock rate.
+The break ioctls can race with hangup and end up calling into a tty
+driver for a device that is already gone or powered down.
 
-When the CPU enters a deeper idle state, the missing Core clock vote can
-leave the console RX path unresponsive.
+Drivers must handle this race, but TCSBRK and TCSBRKP should still be
+aborted to avoid calling back into the driver after a user-controlled
+timeout (possibly even after the tty has been reopened).
 
-Use the 19.2 MHz Core 2X vote at low baud rates, while retaining the 50 MHz
-vote at higher baud rates, so that console RX remains functional after deep
-idle transitions.
+Note that drivers should disable any break state on shutdown so just
+return on hangup (calling break_ctl() again is racy and will most likely
+fail for drivers handling the race).
 
-Fixes: 7cf563b2c846 ("tty: serial: qcom_geni_serial: Add interconnect support")
-Cc: stable@kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-2-f78eb611204e@oss.qualcomm.com
+Fixes: f34d7a5b7010 ("tty: The big operations rework")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
+ include/linux/tty.h  |    1 +
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1304,9 +1304,8 @@ static void qcom_geni_serial_set_termios
- 	 * Bump up BW vote on CPU and CORE path as driver supports FIFO mode
- 	 * only.
- 	 */
--	avg_bw_core = (baud > 115200) ? Bps_to_icc(CORE_2X_50_MHZ)
--						: GENI_DEFAULT_BW;
--	port->se.icc_paths[GENI_TO_CORE].avg_bw = avg_bw_core;
-+	avg_bw_core = baud > 115200 ? CORE_2X_50_MHZ : CORE_2X_19_2_MHZ;
-+	port->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(avg_bw_core);
- 	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
- 	geni_icc_set_bw(&port->se);
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -629,6 +629,8 @@ static void __tty_hangup(struct tty_stru
  
+ 	tty_ldisc_hangup(tty, cons_filp != NULL);
+ 
++	wake_up_interruptible(&tty->break_wait);
++
+ 	spin_lock_irq(&tty->ctrl.lock);
+ 	clear_bit(TTY_THROTTLED, &tty->flags);
+ 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
+@@ -2460,6 +2462,7 @@ static int tiocgetd(struct tty_struct *t
+  * send_break	-	performed time break
+  * @tty: device to break on
+  * @duration: timeout in mS
++ * @file: file object
+  *
+  * Perform a timed break on hardware that lacks its own driver level timed
+  * break functionality.
+@@ -2467,8 +2470,9 @@ static int tiocgetd(struct tty_struct *t
+  * Locking:
+  *	@tty->atomic_write_lock serializes
+  */
+-static int send_break(struct tty_struct *tty, unsigned int duration)
++static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
+ {
++	long timeout;
+ 	int retval;
+ 
+ 	if (tty->ops->break_ctl == NULL)
+@@ -2482,13 +2486,26 @@ static int send_break(struct tty_struct
+ 		return -EINTR;
+ 
+ 	retval = tty->ops->break_ctl(tty, -1);
+-	if (!retval) {
+-		msleep_interruptible(duration);
+-		retval = tty->ops->break_ctl(tty, 0);
+-	} else if (retval == -EOPNOTSUPP) {
+-		/* some drivers can tell only dynamically */
+-		retval = 0;
++	if (retval) {
++		if (retval == -EOPNOTSUPP) {
++			/* some drivers can tell only dynamically */
++			retval = 0;
++		}
++		goto out_unlock;
++	}
++
++	timeout = msecs_to_jiffies(duration);
++	timeout = wait_event_interruptible_timeout(tty->break_wait,
++						   tty_hung_up_p(file),
++						   timeout);
++	/* return early on hangup only */
++	if (timeout > 0) {
++		retval = -EIO;
++		goto out_unlock;
+ 	}
++
++	retval = tty->ops->break_ctl(tty, 0);
++out_unlock:
+ 	tty_write_unlock(tty);
+ 
+ 	if (signal_pending(current))
+@@ -2741,10 +2758,10 @@ long tty_ioctl(struct file *file, unsign
+ 		 * This is used by the tcdrain() termios function.
+ 		 */
+ 		if (!arg)
+-			return send_break(tty, 250);
++			return send_break(file, tty, 250);
+ 		return 0;
+ 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
+-		return send_break(tty, arg ? arg*100 : 250);
++		return send_break(file, tty, arg ? arg * 100 : 250);
+ 
+ 	case TIOCMGET:
+ 		return tty_tiocmget(tty, p);
+@@ -3107,6 +3124,7 @@ struct tty_struct *alloc_tty_struct(stru
+ 	init_ldsem(&tty->ldisc_sem);
+ 	init_waitqueue_head(&tty->write_wait);
+ 	init_waitqueue_head(&tty->read_wait);
++	init_waitqueue_head(&tty->break_wait);
+ 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
+ 	mutex_init(&tty->atomic_write_lock);
+ 	spin_lock_init(&tty->ctrl.lock);
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -237,6 +237,7 @@ struct tty_struct {
+ 	struct fasync_struct *fasync;
+ 	wait_queue_head_t write_wait;
+ 	wait_queue_head_t read_wait;
++	wait_queue_head_t break_wait;
+ 	struct work_struct hangup_work;
+ 	void *disc_data;
+ 	void *driver_data;
 
 
