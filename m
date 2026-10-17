@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2D83AF665;
-	Sat, 17 Oct 2026 16:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335DF303A0D;
+	Sat, 17 Oct 2026 16:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255982; cv=none; b=m7w0VUwUMVB2aQ/e4iU0kWz2NVxD5sEh+vGBjQJY2Q4CKnz08jT/8pjltE7Kpw4TogNQU7o7Us05EzaFck1izYGcHz6jW94b6UdZ7sHx/gCf47zmxTNJAsUWXVwrTmtZPgAgxmlrJWP/TPzlGKqsmVQM9Hih72GHUhVC5orJFko=
+	t=1792255985; cv=none; b=HxB4cuBaFoGKTz45j4AFgv4gsWPjCXnp9Bkx2gX1lBrvFsWz5kaMvYYwbtySp9Ed1AYSDl51I1GGExkbjaghbUS3NIiDFMMXJv76ULVGcFlJwsqiVdGwbk02k8XTkz5XKl5eLYgb3wrhd7O8grtwE4x8J4mGjR7b2BiV9gT1GDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255982; c=relaxed/simple;
-	bh=Ju4f6/zJo7nvstPziG+45QWu8+n6ZMhJIacztWDq2rU=;
+	s=arc-20240116; t=1792255985; c=relaxed/simple;
+	bh=SkBNeG4PI7AvLRD3RQopnh4+8XAyW+X+igluHdLqtnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKdtjtfNO/3/uVWhxQgOvoYAJDG9flHGfHMYfUyiEPRCVnXeoWKo+oW9KoehpNVCUZ7FxFCemOAL0fU3IW68f+zwBIxiu7iUBtsEtNwrQP2VC2h+qzGZQGEM/hH5ahvEh4rqAiwadm1mAJPbwZHvwO2240sXh4xl2j4dcUyghW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5nlxWwk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mvY9lHr9dHvswrt9MEMsR+tQ7dOKGnDLY74l0cvALvjDVy7snXnECrTBqITDVDRArfEbdfP3nuqJQL/REJMP/NG5PFuT6uZUP2BhwgVuGOkfcxB0fbKL3qTVIsDvl22kvbBAbaLhuD1ID0ZlW9Zt6oLG1FUeThVJHZOZLMMNWUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjKe0CX4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5nlxWwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589441F000C4;
-	Sat, 17 Oct 2026 16:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjKe0CX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7611F000C4;
+	Sat, 17 Oct 2026 16:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255980;
-	bh=6WhaBi5n5z9EIJKOe7G/n4g8vdrxTBG7Ic2BnLl4Yt4=;
+	s=korg; t=1792255984;
+	bh=SbCAUuWHQP89P61j6niQE9Xjqxgcxv5wsHPOxHrwZbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u5nlxWwkKOf5mKr793fn536/ntaxiFmKlzKjFyH+WCamiabDr89YwBtGcjr8dhyTT
-	 bwkBNEfg66lQUytilAyZ9L3/9y9lQ7S6kiS2gw4InN9C8/SagKIqcwpzD7BwAGBMiN
-	 ihM8PtpLmbkxSlSOuTyOvkfM9RnUPqS6SnBKHPBA=
+	b=VjKe0CX44Gh6CG2LcxXUnfQdBYuAY6AFAxLI8IjAbhSIUk4pHLWc1FpB+qwMdxhiP
+	 Bi326fC2w9ClxU51tuev7/oui7cRf2b24TCFsXc5OIouCkNMPUFC8B1VYZPdrxc/n0
+	 EQynDNpMuc1p1t2NMXXjWY4bxwOc2FgHDuu3NCwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Xu Rao <raoxu@uniontech.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0086/1674] rtc: rzn1: Handle unset alarm weekday in rzn1_rtc_read_alarm
-Date: Sat, 17 Oct 2026 17:39:18 +0200
-Message-ID: <20261017160433.344026945@linuxfoundation.org>
+Subject: [PATCH 6.6 0087/1674] nvme-fabrics: fix DHCHAP secret leak on parse failure
+Date: Sat, 17 Oct 2026 17:39:19 +0200
+Message-ID: <20261017160433.370004608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,78 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 457b5dbce31209e65e1184716ed3af59cb1c0372 ]
+[ Upstream commit afdee49a1b88ed9bb44e2b30e855297c169bcc53 ]
 
-RZN1_RTC_ALW is a weekday bitmask where bit N represents weekday N.
-When no alarm has been configured, the register has its power-on-reset
-value of zero.
+nvmf_parse_options() duplicates dhchap_secret and dhchap_ctrl_secret
+with match_strdup() before validating the DHHC-1: representation.
 
-rzn1_rtc_read_alarm() uses fls() to convert the weekday bitmask into a
-weekday number. When RZN1_RTC_ALW is zero, fls(0) returns zero and
-fls(wday) - 1 evaluates to -1. This invalid weekday is then used to
-calculate the alarm date and can either leave tm_wday set to -1 or
-produce a fabricated alarm date.
+If validation fails, the parser returns -EINVAL before the temporary
+string in p is assigned to opts->dhchap_secret or
+opts->dhchap_ctrl_secret. nvmf_create_ctrl() subsequently frees opts,
+but nvmf_free_options() cannot release the unassigned temporary string.
+Each rejected option therefore leaks one allocation.
 
-Treat a zero RZN1_RTC_ALW value as an unset alarm weekday and return
-without calculating the alarm date. Move reading RZN1_RTC_CTL1 before
-this check so that alrm->enabled is updated for both configured and
-unconfigured alarms.
+This is easy to miss because valid secrets transfer ownership to opts
+and are freed normally, while the malformed-secret path still returns
+the expected -EINVAL to userspace.
 
-Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
+With CONFIG_NVME_HOST_AUTH enabled, the leak is reachable before the
+required-option checks and transport lookup. No NVMe-oF target or
+working transport connection is required; for example, repeatedly
+writing
+
+	dhchap_secret=BAD
+
+or
+
+	dhchap_ctrl_secret=BAD
+
+to /dev/nvme-fabrics deterministically takes the leaking parse path.
+
+Free the temporary string before leaving both validation error paths.
+Use kfree_sensitive() because the copied option may contain secret
+material even when its representation is rejected, matching the
+sensitive cleanup used for stored DHCHAP secrets.
+
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260821211032.13554-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ retained the ALME-only enable check because RZN1_RTC_CTL1_1SE is absent. ]
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rzn1.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/nvme/host/fabrics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
-index c64eaf50bb39a..668935dbcefec 100644
---- a/drivers/rtc/rtc-rzn1.c
-+++ b/drivers/rtc/rtc-rzn1.c
-@@ -193,13 +193,24 @@ static int rzn1_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
- 
-+	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
-+	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
-+
- 	min = readl(rtc->base + RZN1_RTC_ALM);
- 	hour = readl(rtc->base + RZN1_RTC_ALH);
--	wday = readl(rtc->base + RZN1_RTC_ALW);
- 
- 	tm->tm_sec = 0;
- 	tm->tm_min = bcd2bin(min);
- 	tm->tm_hour = bcd2bin(hour);
-+
-+	/*
-+	 * If wday is zero, no bit is set in RZN1_RTC_ALW. This is the
-+	 * register's power-on reset value.
-+	 */
-+	wday = readl(rtc->base + RZN1_RTC_ALW);
-+	if (!wday)
-+		return 0;
-+
- 	delta_days = ((fls(wday) - 1) - tm->tm_wday + 7) % 7;
- 	tm->tm_wday = fls(wday) - 1;
- 
-@@ -208,9 +219,6 @@ static int rzn1_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 		rtc_time64_to_tm(alarm, tm);
- 	}
- 
--	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
--	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
--
- 	return 0;
- }
- 
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index 8adcc8c97c42c..f910db503294a 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -952,6 +952,7 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
+@@ -966,6 +967,7 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
 -- 
 2.53.0
 
