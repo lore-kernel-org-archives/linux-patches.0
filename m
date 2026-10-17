@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992423587DE;
-	Sat, 17 Oct 2026 17:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CBA23394D;
+	Sat, 17 Oct 2026 17:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256635; cv=none; b=o2Sg3AjU/Ri49BDeX2viJve2+aT1ptxuyxXo0Cje16v8T3Z7zI549UYvg7QCOIdyeaBtcHPeiLwDT3eyLx4+URGWU8OM4SOfmkvxrY3EedeiasjL9oVyDZ9nZv5Th52O0QSBedJmmKktLLzpA6cDQn5nPydTePaYQup1R7K0j3E=
+	t=1792256639; cv=none; b=bM5L9qStmWa9pngF5rEK1LhVKFbaReY3Nz/C3Nb7/40FP1+31SxPoUHSWbtNAVmS78bI1R+Hc4z2KiYtzasCtu0bsFXCVJGdC7sXZqCPV7nsKwEgz+msR7lR2ela4t+nwhPfweA1puPZ8/3axrUlROllVsiA96JixzgBGLiV8I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256635; c=relaxed/simple;
-	bh=E1cagARZwYy2miOTASVj3aMYWyvYKsHy6IVwDG67FUg=;
+	s=arc-20240116; t=1792256639; c=relaxed/simple;
+	bh=+H1RnE8eJTEEz8dJgtYBjTYZG8t3ysdE2vaAOAfby1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/c8muLLVEb9jnIyuxEOQQ1RgHUt5dwDRLFMQ8guoJQ90tHjd2m5aq2moWs9Tz2vWxWD7fomp/W+4zsal7RZyRiaquq7npfrBcEf/Sqlyw1mX2GeqBk7MFqg0cLJ1d2SCeFSJrCGctw3f4PrfKQVDaH4T/oqcc5V5qxlR3dC7dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iiW1jDh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XW0mKO2bkx7vihsByfxdOylCeWWr5Ri1+61GbzmVLE7EWAdrdt7pF+uHCRisOVixsTfWtZu/wwPl6LTt435512ayt9xdsXdxZKeozz/Hxu0sp0JMybnvHVyGfSlmtQqkIZ/smFR+a7I9mnGZW+yYbyAKbHMSd4/ABDXXT2HJLK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XP4N4uWF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iiW1jDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75F21F000C4;
-	Sat, 17 Oct 2026 17:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XP4N4uWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40CD1F000C4;
+	Sat, 17 Oct 2026 17:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256634;
-	bh=ZiGHuwncYDH70oe488ngYytsHspxR+rNFUoXi63ZEcA=;
+	s=korg; t=1792256637;
+	bh=FAZw4gmrQT0s8cNkD8fd6Vuh2KN45UYizUXs4Hkonxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2iiW1jDh11FHmbRmrr5FX3hdvsWL6tTauR5W6oVAYRof0jMGFWnppuPBx2NDMDxGH
-	 BidUxo2L8ULZm3yA00tfJz1AZ0tlYuc7PtfzdSZ+nP92SKGAUlCsxbGUnNEPRKsTCA
-	 45uot50semNQzOPVpbVbpcKPBGFmIKd/nQLfaxkw=
+	b=XP4N4uWFpntff3ADVBOsh/KY+oUt0VKHsmcw51zeoKAnAFowggQSisHTrfLojeBH2
+	 ZEqNMHQOxLcTXYDMc2GOAySVxhR1d3YfWFJLS4R1NzMFly0EL7pKbRBgU5QnlQ7EVP
+	 FIRpFtMQIAp7QKj5BtoX7KKkimkVBt+P0ua9Glg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Fluhr <mathieu.fluhr@gmail.com>,
-	stable <stable@kernel.org>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 0259/1674] usb: hub: use shorter 120ms post resume hold for SS root hubs
-Date: Sat, 17 Oct 2026 17:42:11 +0200
-Message-ID: <20261017160437.775381921@linuxfoundation.org>
+	David Heidelberg <david@ixit.cz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 0250/1674] Input: s6sy761 - fix resume ordering and restore sensing
+Date: Sat, 17 Oct 2026 17:42:02 +0200
+Message-ID: <20261017160437.544733809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,64 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: David Heidelberg <david@ixit.cz>
 
-commit 29480b05e6e226594dc11ccf2a036fbd5cdd0e42 upstream.
+commit a215720959c5450b3699e243904b39c3f8f68888 upstream.
 
-Holding a USB3 hub PM runtime reference for 200ms at hub resume triggers
-an AMD platform issue.  Users running Android adb report crashes after
-adb has been polling and waking up the USB subsystem once a second for
-some time.  Vendors are working on a solution.  Disabling USB runtime PM
-is one way to prevent this issue, but it is also proven that reducing the
-hold time to 120ms in resume also mitigates it.  See Link for more
-details.
+System suspend powers the controller off and resume powers it back on,
+but the resume path enables the interrupt before s6sy761_power_on()
+checks the boot. The firmware raises its boot-complete event on the
+interrupt line, the threaded handler consumes it, s6sy761_power_on()
+then reads an empty event and resume fails with -ENODEV, skipping the
+touch function setup:
 
-Reducing the hold time to 120ms for the USB3 roothub is in itself a valid
-change and optimization, as the current 200ms is excessive: a root hub
-has no upstream suspended hub whose wake propagation needs to be
-accounted for, but still need some time for USB3 link training to
-complete.
+s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
 
-Keep the 200ms hold for external hubs that commit 8f5b7e2bec1c
-("usb: hub: fix detection of high tier USB3 devices behind suspended
-hubs") is intended for.
+Power the chip on first and only then unmask the interrupt. Once resume
+completes the boot handshake the chip comes back with sensing off, as
+at probe where input_open() turns it on, so the touchscreen stays dead
+after resume. Send SENSE_ON again when the input device is open.
 
-Reported-by: Mathieu Fluhr <mathieu.fluhr@gmail.com>
-Link: https://lore.kernel.org/all/CAPyJwA_D9qw0T72f8zwM1yKjP+To=maVANbcdsWM7yRmbBxYvw@mail.gmail.com/
-Cc: stable <stable@kernel.org>
-Fixes: 8f5b7e2bec1c ("usb: hub: fix detection of high tier USB3 devices behind suspended hubs")
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260903112903.542719-1-lovekeshsolanki00@gmail.com
+Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
+the touch function and sense status match the pre-suspend state.
+
+Assisted-by: LLM
+Cc: stable@vger.kernel.org
+Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/s6sy761.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -69,8 +69,11 @@
- /*
-  * Give SS hubs 200ms time after wake to train downstream links before
-  * assuming no port activity and allowing hub to runtime suspend back.
-+ * Root hubs have no upstream hub whose wake propagation needs to be
-+ * accounted for, so they need less time, use 120ms for them.
-  */
- #define USB_SS_PORT_U0_WAKE_TIME	200  /* ms */
-+#define USB_SS_RH_PORT_U0_WAKE_TIME     120 /* ms */
+--- a/drivers/input/touchscreen/s6sy761.c
++++ b/drivers/input/touchscreen/s6sy761.c
+@@ -507,10 +507,22 @@ static int s6sy761_suspend(struct device
+ static int s6sy761_resume(struct device *dev)
+ {
+ 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
++	int err;
++
++	err = s6sy761_power_on(sdata);
++	if (err)
++		return err;
  
- /* Protect struct usb_device->state and ->children members
-  * Note: Both are also protected by ->dev.sem, except that ->state can
-@@ -1332,7 +1335,9 @@ static void hub_activate(struct usb_hub
+ 	enable_irq(sdata->client->irq);
  
- 		queue_delayed_work(system_power_efficient_wq,
- 				   &hub->post_resume_work,
--				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
-+				   msecs_to_jiffies(hdev->parent ?
-+				USB_SS_PORT_U0_WAKE_TIME :
-+				USB_SS_RH_PORT_U0_WAKE_TIME));
- 		return;
- 	}
+-	return s6sy761_power_on(sdata);
++	guard(mutex)(&sdata->input->mutex);
++
++	if (!input_device_enabled(sdata->input))
++		return 0;
++
++	err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
++
++	return err;
+ }
  
+ static const struct dev_pm_ops s6sy761_pm_ops = {
 
 
