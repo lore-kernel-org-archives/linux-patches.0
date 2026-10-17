@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253A21FDE31;
-	Sat, 17 Oct 2026 16:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305DD1FDE31;
+	Sat, 17 Oct 2026 16:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256138; cv=none; b=Sqc7aC4n0B9n+AL+KTF8A2eAZRpmeeDszR1bOk/HMu+FnZtdjEPyN2bjA9JESc6sji0S5rp1GGvoH3IMhPrVQyvAaeFG/H53Ze3jO0Eb4ZKIgushWLpHSb/vWthwHVtXQTmDZq1x+WXmq+uSd3hT/zh638mlLabF7BX5Ie7v/H0=
+	t=1792256141; cv=none; b=AraAvM1h7wHVX1/H+knsF4eir5bs86LDuN6cGxRsIWkivf/2VX9lG0j7ijrULkiRlIsSrZyN8+P9XprPDml/Gan3bxPKGoj42XochNxFUMgNpsxGVsMOQE7td5cGVtQ8o4igCo1DamUnyyqjo70wl9yWwAcCidBnQI0Q17L7Jmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256138; c=relaxed/simple;
-	bh=LKdEnJfFTYH3RWM+mGozyJKmxcZYSVEcFL4gXzaTRWg=;
+	s=arc-20240116; t=1792256141; c=relaxed/simple;
+	bh=mkDD+ol+TzGMF/91W6Z9WIKcIqU7hhHshSZQVCND6/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UDB4eq4YaAPpjdYhQg7Q8Nodc60JGhsd6/wC+VanmUBQb3n4yaontBBSDli60AnFkV/jr1atYN4iHuF1M7u4ceVcIThJLNKTfN3ogdAXYZj31Tm4sIvqWowo4UXATzPFCJOl0STq2Zxqb+p8jclmwihUtldBT/2LApCPaMFoM2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSaO/NKR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oNgTnn4qtfi8rDdPgA0ve+SrmW/Pbp5vKRsm43Cel8Pn4P/RL6zpVmC5iTSkiAHsJXUjdoPVGkxYQw+iyH0vJfugvzQnoECWyBX46Aw83qberu6fpwe9nC/Kb1S9BJ67ZeyhUiwnFJx8z6QcphK15GUPkJP2jKZVqZ4gh4lSFB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRbOMboF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSaO/NKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6761F000C4;
-	Sat, 17 Oct 2026 16:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRbOMboF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4731F000C4;
+	Sat, 17 Oct 2026 16:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256137;
-	bh=xZtXNaXlQ+MjxT8b82UqIQqy1H+3qklQ04r1vGO/gXs=;
+	s=korg; t=1792256140;
+	bh=Cg/QA0sItr6qIkww4w1Z0sHa2OFpmO+obrZIAEXujhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSaO/NKRHxksiZcY32E8g98UQAWDBR9n1Te09V4Js2CDwSX3bpmPI6RICgf8wb2VZ
-	 sx8xcfnQh/yQ8NWgvdWeewWIQ4BY2VTdZKZRU8gdCNcK8XTH+ELWHHY7St9MSnB8SF
-	 vTygEQ/evIG1kLLM6ASPDJ+ASf4JKyRHgz/5WZ7Q=
+	b=IRbOMboFBtR+iWif3HgL+9hTyF6qNGphZDsZWDQl/XjMn00ctczyqyJDSIPAGjO0v
+	 6xnog7PEbt1X+wAmzmK0JladmC+8tKRy8JmaRXAL0tX6lYtrzkYW+/0sjvfJScazk9
+	 GPDa20oumPzGvyFcAqqvLh53Ea7Vym6h8Jxo2ZYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Liz Fong-Jones <lizf@honeycomb.io>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0137/1674] PCI: Fix BAR resize for devices on a root bus
-Date: Sat, 17 Oct 2026 17:40:09 +0200
-Message-ID: <20261017160434.673469102@linuxfoundation.org>
+Subject: [PATCH 6.6 0138/1674] net: ipconfig: Remove outdated comment and indent code block
+Date: Sat, 17 Oct 2026 17:40:10 +0200
+Message-ID: <20261017160434.700313681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,133 +45,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liz Fong-Jones <lizf@honeycomb.io>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit d58384c22739848efe14b34e9586e4f1242f33c0 ]
+[ Upstream commit e405b3c9d4aaa10972525fe2ea5cf94224020561 ]
 
-pci_do_resource_release_and_resize() releases device BARs that share a
-bridge window with the BAR being resized, but when the device sits directly
-on a root bus (pdev->bus->self == NULL) it then skips resource assignment
-entirely and returns success, leaving the BARs it just released unassigned
-(IORESOURCE_UNSET).
+The comment has been around ever since commit 1da177e4c3f4
+("Linux-2.6.12-rc2") and can be removed. Remove it and indent the code
+block accordingly.
 
-Skipping pbus_reassign_bridge_resources() is correct in that case -- there
-is no bridge window to adjust -- but the device BARs still have to be
-reassigned. Before the BAR release was consolidated into the PCI core, this
-case worked for amdgpu because the driver released the BARs itself and then
-called pci_assign_unassigned_bus_resources() unconditionally after the
-resize, which assigns unassigned device BARs also on a root bus. Commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call, so nothing assigns the released BARs anymore.
-
-This breaks amdgpu completely on the SolidRun HoneyComb LX2K (NXP LX2160A,
-arm64, ACPI), where ACPI doesn't expose the Root Port so the GPU endpoint
-appears directly on a "root bus" of its segment:
-
-  amdgpu 0004:01:00.0: BAR 0 [mem 0xa400000000-0xa40fffffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: BAR 2 [mem 0xa410000000-0xa4101fffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: sw_init of IP block <gmc_v8_0> failed -19
-  amdgpu 0004:01:00.0: amdgpu_device_ip_init failed
-  amdgpu 0004:01:00.0: Fatal error during GPU init
-
-No error is logged because the resize path reports success; amdgpu then
-finds BAR 0 IORESOURCE_UNSET and bails out with -ENODEV.
-
-When there is no upstream bridge, call pci_bus_assign_resources() on the
-root bus to place the BARs released above, using the same alignment-sorted
-algorithm as normal enumeration instead of a manual per-BAR loop. This also
-walks the rest of the hierarchy under the root bus, as
-pci_assign_unassigned_bus_resources() used to for amdgpu before commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call -- the core-side fix that commit asked for ("such a
-problem should be fixed inside pci_resize_resource() instead").
-
-pci_bus_assign_resources() returns void, so failure is detected by checking
-whether the released BARs are still assigned afterward; if not, roll back
-as in the bridged case. This is stricter than the bridged path -- it fails
-on any unplaced resource, not just required ones -- since a root bus
-typically has one shared window, and failing loudly seemed better than
-leaving something silently unassigned.
-
-The root bus path also had a locking bug that any fix here necessarily
-touches: the old "goto out" jumped to up_read(&pci_bus_sem) without a
-matching down_read() (as does the "goto restore" taken when
-pci_dev_res_add_to_list() fails in the release loop). Take pci_bus_sem
-before the BAR release loop so every path through the function holds it
-exactly once.
-
-Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
-Link: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-7.0/+bug/2159596
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Assisted-by: Claude:claude-fable-5 checkpatch
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260918035633.566823-1-lizf@honeycomb.io
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260109121128.170020-2-thorsten.blum@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e47a1958e12a ("net: ipconfig: bound DHCP option construction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ net/ipv4/ipconfig.c | 89 +++++++++++++++++++++------------------------
+ 1 file changed, 42 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index fc752f5ef3f8d..df39fa8529979 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2304,6 +2304,7 @@ int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size
- 	unsigned long flags = res->flags;
- 	struct pci_dev_resource *dev_res;
- 	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge = pci_upstream_bridge(pdev);
- 	struct resource *b_win, *r;
- 	LIST_HEAD(saved);
- 	unsigned int i;
-@@ -2319,6 +2320,8 @@ int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size
- 	if (ret)
- 		return ret;
+diff --git a/net/ipv4/ipconfig.c b/net/ipv4/ipconfig.c
+index c56b6fe6f0d77..6109ef9e4dd45 100644
+--- a/net/ipv4/ipconfig.c
++++ b/net/ipv4/ipconfig.c
+@@ -679,8 +679,18 @@ static const u8 ic_bootp_cookie[4] = { 99, 130, 83, 99 };
+ static void __init
+ ic_dhcp_init_options(u8 *options, struct ic_device *d)
+ {
+-	u8 mt = ((ic_servaddr == NONE)
+-		 ? DHCPDISCOVER : DHCPREQUEST);
++	static const u8 ic_req_params[] = {
++		1,	/* Subnet mask */
++		3,	/* Default gateway */
++		6,	/* DNS server */
++		12,	/* Host name */
++		15,	/* Domain name */
++		17,	/* Boot path */
++		26,	/* MTU */
++		40,	/* NIS domain name */
++		42,	/* NTP servers */
++	};
++	u8 mt = (ic_servaddr == NONE) ? DHCPDISCOVER : DHCPREQUEST;
+ 	u8 *e = options;
+ 	int len;
  
-+	down_read(&pci_bus_sem);
+@@ -705,51 +715,36 @@ ic_dhcp_init_options(u8 *options, struct ic_device *d)
+ 		e += 4;
+ 	}
+ 
+-	/* always? */
+-	{
+-		static const u8 ic_req_params[] = {
+-			1,	/* Subnet mask */
+-			3,	/* Default gateway */
+-			6,	/* DNS server */
+-			12,	/* Host name */
+-			15,	/* Domain name */
+-			17,	/* Boot path */
+-			26,	/* MTU */
+-			40,	/* NIS domain name */
+-			42,	/* NTP servers */
+-		};
+-
+-		*e++ = 55;	/* Parameter request list */
+-		*e++ = sizeof(ic_req_params);
+-		memcpy(e, ic_req_params, sizeof(ic_req_params));
+-		e += sizeof(ic_req_params);
+-
+-		if (ic_host_name_set) {
+-			*e++ = 12;	/* host-name */
+-			len = strlen(utsname()->nodename);
+-			*e++ = len;
+-			memcpy(e, utsname()->nodename, len);
+-			e += len;
+-		}
+-		if (*vendor_class_identifier) {
+-			pr_info("DHCP: sending class identifier \"%s\"\n",
+-				vendor_class_identifier);
+-			*e++ = 60;	/* Class-identifier */
+-			len = strlen(vendor_class_identifier);
+-			*e++ = len;
+-			memcpy(e, vendor_class_identifier, len);
+-			e += len;
+-		}
+-		len = strlen(dhcp_client_identifier + 1);
+-		/* the minimum length of identifier is 2, include 1 byte type,
+-		 * and can not be larger than the length of options
+-		 */
+-		if (len >= 1 && len < 312 - (e - options) - 1) {
+-			*e++ = 61;
+-			*e++ = len + 1;
+-			memcpy(e, dhcp_client_identifier, len + 1);
+-			e += len + 1;
+-		}
++	*e++ = 55;	/* Parameter request list */
++	*e++ = sizeof(ic_req_params);
++	memcpy(e, ic_req_params, sizeof(ic_req_params));
++	e += sizeof(ic_req_params);
 +
- 	pci_dev_for_each_resource(pdev, r, i) {
- 		if (i >= PCI_BRIDGE_RESOURCES)
- 			break;
-@@ -2340,13 +2343,21 @@ int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size
- 
- 	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
- 
--	if (!bus->self)
--		goto out;
-+	if (bridge) {
-+		ret = pbus_reassign_bridge_resources(bus, res, &saved);
-+		if (ret)
-+			goto restore;
-+	} else {
-+		/* No bridge window to adjust; let the core reassign the bus. */
-+		pci_bus_assign_resources(bus);
- 
--	down_read(&pci_bus_sem);
--	ret = pbus_reassign_bridge_resources(bus, res, &saved);
--	if (ret)
--		goto restore;
-+		list_for_each_entry(dev_res, &saved, list) {
-+			if (!resource_assigned(dev_res->res)) {
-+				ret = -ENOSPC;
-+				goto restore;
-+			}
-+		}
++	if (ic_host_name_set) {
++		*e++ = 12;	/* host-name */
++		len = strlen(utsname()->nodename);
++		*e++ = len;
++		memcpy(e, utsname()->nodename, len);
++		e += len;
 +	}
++	if (*vendor_class_identifier) {
++		pr_info("DHCP: sending class identifier \"%s\"\n",
++			vendor_class_identifier);
++		*e++ = 60;	/* Class-identifier */
++		len = strlen(vendor_class_identifier);
++		*e++ = len;
++		memcpy(e, vendor_class_identifier, len);
++		e += len;
++	}
++	len = strlen(dhcp_client_identifier + 1);
++	/* the minimum length of identifier is 2, include 1 byte type,
++	 * and can not be larger than the length of options
++	 */
++	if (len >= 1 && len < 312 - (e - options) - 1) {
++		*e++ = 61;
++		*e++ = len + 1;
++		memcpy(e, dhcp_client_identifier, len + 1);
++		e += len + 1;
+ 	}
  
- out:
- 	up_read(&pci_bus_sem);
+ 	*e++ = 255;	/* End of the list */
 -- 
 2.53.0
 
