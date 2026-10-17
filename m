@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DC33803DC;
-	Sat, 17 Oct 2026 16:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CC533F8B2;
+	Sat, 17 Oct 2026 16:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254019; cv=none; b=RAWyP2onSMe6Lm703z3CCgRkOnAOmgLFRyYQga5bGI4AnlP+jV+baVkpCUYHt8lCIn3pnK/nQRiaWAHncIBOtZwSZVLN78uyn4MS9q80RpgphYagO1y08yRnkNn2+Vk58z2rkOVg0tUPOr9vDvVAXwx46WooJpt3bUeRYgT3aIk=
+	t=1792254022; cv=none; b=DtZJtNUkWiudLha2BEOQSolcYi+VTUqzJgdhH5jqDbAkxE0Ur9PFbzsbFgkhI9ud1Xh1T9tmE6z9cSLTdRpRqzztQeFQPReAxyGDnjaKGcEFH7BqiU4ZbrXuWmmgmvxFtDpkn43xjkgwNwdgXPkQ75GuDcB7aJOv8GNq57tP9+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254019; c=relaxed/simple;
-	bh=dc2dBPDnTPmS4e7n/Y4e9VFJVXby/n2eQZtTwZUnhiI=;
+	s=arc-20240116; t=1792254022; c=relaxed/simple;
+	bh=zUxUTze5xZV+uvx7hOyfCHNM9Vu6jmku1RHmhUqlFiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4v9uw2JKTA1xmdvMNu+oGJt03f0yLBkfXNUXFyC3v8UWaP9TcCpKFtUwQycThu0AXaxCKxSX0sjjVd2dPI/F2XiT73Y1Zm7fzgg79m+WHrvJzT5LU+EAbuWOe6ASx+r8tNKlnvQGtonvwJTANmVM57Xhxgkmu2WjH/n1hUm8lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZM/TYQr9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UgwRNai4Qni+BwOPZ76uDNoJ1wOgWv2tEztIjLpxSKqoT6kk/OMwCfuWzFDpIIdLKjlTJixpBbDN+viD2oYvxtLUzDwB46xcLS1rJnR9dJDTttUtBj1ufF+y3JeTChnanZqfLn3RBKMNcEZ5tPm/E34tEABN5VMaaNKsU8BAc/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKex86UP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZM/TYQr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE4B1F000C4;
-	Sat, 17 Oct 2026 16:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKex86UP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D90A1F000C4;
+	Sat, 17 Oct 2026 16:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254018;
-	bh=sM5O7k46o/aAaGXGm0tBH5Bgao///hL/8a6fc+Qn8PQ=;
+	s=korg; t=1792254021;
+	bh=HEja6dTaqqrQgixmOvbp/l4HZxjm5Q5BVJ+LXLYbrG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZM/TYQr95wH71XmvUYeeHzjbmXneq/GN+4ufZTG82II+D5DxIo6LqXhaojm/JCJJZ
-	 uC7emhrm02VZz0F5uMBAUlfzGp0R3TgCdeOJKKLPNzkkrEYFdzUax2IairOaGm6SL5
-	 2Iswm4XmXEbghBSOjEGR24Pl6auglkKyI4mYduyE=
+	b=LKex86UPsa0W0koT9wMb/s1hjBBSAN9iB1ahLyMhl1NWN9coHlAg9JH+bg0T9LR0/
+	 rQqrnAryKCvePQg7CEQDxPa8hhDyZCLwBB8d3ZynaRNW/CVe1rGupOQN5jo1GM1dPU
+	 TZqkQmSjrasX7G29R+BDP53mxI3eT8Zm7P6jfwGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Chen Ridong <chenridong@huaweicloud.com>,
-	Tejun Heo <tj@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/869] sched/psi: fix race between file release and pressure write
-Date: Sat, 17 Oct 2026 17:52:30 +0200
-Message-ID: <20261017160044.998014334@linuxfoundation.org>
+Subject: [PATCH 6.12 310/869] netfilter: nat: use kfree_rcu to release ops
+Date: Sat, 17 Oct 2026 17:52:31 +0200
+Message-ID: <20261017160045.024710005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,182 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a5b98009f16d8a5fb4a8ff9a193f5735515c38fa ]
+[ Upstream commit 6eda0d771f94267f73f57c94630aa47e90957915 ]
 
-A potential race condition exists between pressure write and cgroup file
-release regarding the priv member of struct kernfs_open_file, which
-triggers the uaf reported in [1].
+Florian Westphal says:
 
-Consider the following scenario involving execution on two separate CPUs:
+"Historically this is not an issue, even for normal base hooks: the data
+path doesn't use the original nf_hook_ops that are used to register the
+callbacks.
 
-   CPU0					CPU1
-   ====					====
-					vfs_rmdir()
-					kernfs_iop_rmdir()
-					cgroup_rmdir()
-					cgroup_kn_lock_live()
-					cgroup_destroy_locked()
-					cgroup_addrm_files()
-					cgroup_rm_file()
-					kernfs_remove_by_name()
-					kernfs_remove_by_name_ns()
- vfs_write()				__kernfs_remove()
- new_sync_write()			kernfs_drain()
- kernfs_fop_write_iter()		kernfs_drain_open_files()
- cgroup_file_write()			kernfs_release_file()
- pressure_write()			cgroup_file_release()
- ctx = of->priv;
-					kfree(ctx);
- 					of->priv = NULL;
-					cgroup_kn_unlock()
- cgroup_kn_lock_live()
- cgroup_get(cgrp)
- cgroup_kn_unlock()
- if (ctx->psi.trigger)  // here, trigger uaf for ctx, that is of->priv
+However, in v5.14 I added the ability to dump the active netfilter
+hooks from userspace.
 
-The cgroup_rmdir() is protected by the cgroup_mutex, it also safeguards
-the memory deallocation of of->priv performed within cgroup_file_release().
-However, the operations involving of->priv executed within pressure_write()
-are not entirely covered by the protection of cgroup_mutex. Consequently,
-if the code in pressure_write(), specifically the section handling the
-ctx variable executes after cgroup_file_release() has completed, a uaf
-vulnerability involving of->priv is triggered.
+This code will peek back into the nf_hook_ops that are available
+at the tail of the pointer-array blob used by the datapath.
 
-Therefore, the issue can be resolved by extending the scope of the
-cgroup_mutex lock within pressure_write() to encompass all code paths
-involving of->priv, thereby properly synchronizing the race condition
-occurring between cgroup_file_release() and pressure_write().
+The nat hooks are special, because they are called indirectly from
+the central nat dispatcher hook. They are currently invisible to
+the nfnl hook dump subsystem though.
 
-And, if an live kn lock can be successfully acquired while executing
-the pressure write operation, it indicates that the cgroup deletion
-process has not yet reached its final stage; consequently, the priv
-pointer within open_file cannot be NULL. Therefore, the operation to
-retrieve the ctx value must be moved to a point *after* the live kn
-lock has been successfully acquired.
+But once that changes the nat ops structures have to be deferred too."
 
-In another situation, specifically after entering cgroup_kn_lock_live()
-but before acquiring cgroup_mutex, there exists a different class of
-race condition:
+Update nf_nat_register_fn() to deal with partial exposition of the hooks
+from error path which can be also an issue for nfnetlink_hook.
 
-CPU0: write memory.pressure               CPU1: write cgroup.pressure=0
-===========================		  =============================
-
-kernfs_fop_write_iter()
- kernfs_get_active_of(of)
- pressure_write()
-   cgroup_kn_lock_live(memory.pressure)
-     cgroup_tryget(cgrp)
-     kernfs_break_active_protection(kn)
-     ... blocks on cgroup_mutex
-
-                                     	  cgroup_pressure_write()
-                                     	  cgroup_kn_lock_live(cgroup.pressure)
-                                     	  cgroup_file_show(memory.pressure, false)
-                                     	    kernfs_show(false)
-                                     	      kernfs_drain_open_files()
-                                     	        cgroup_file_release(of)
-                                     	          kfree(ctx)
-                                     	            of->priv = NULL
-                                     	  cgroup_kn_unlock()
-
-   ... acquires cgroup_mutex
-   ctx = of->priv;        // may now be NULL
-   if (ctx->psi.trigger)  // NULL dereference
-
-Consequently, there is a possibility that of->priv is NULL, the pressure
-write needs to check for this.
-
-Now that the scope of the cgroup_mutex has been expanded, the original
-explicit cgroup_get/put operations are no longer necessary, this is
-because acquiring/releasing the live kn lock inherently executes a
-cgroup get/put operation.
-
-[1]
-BUG: KASAN: slab-use-after-free in pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
-Call Trace:
- pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
- cgroup_file_write+0x36f/0x790 kernel/cgroup/cgroup.c:4311
- kernfs_fop_write_iter+0x3b0/0x540 fs/kernfs/file.c:352
-
-Allocated by task 9352:
- cgroup_file_open+0x90/0x3a0 kernel/cgroup/cgroup.c:4256
- kernfs_fop_open+0x9eb/0xcb0 fs/kernfs/file.c:724
- do_dentry_open+0x83d/0x13e0 fs/open.c:949
-
-Freed by task 9353:
- cgroup_file_release+0xd6/0x100 kernel/cgroup/cgroup.c:4283
- kernfs_release_file fs/kernfs/file.c:764 [inline]
- kernfs_drain_open_files+0x392/0x720 fs/kernfs/file.c:834
- kernfs_drain+0x470/0x600 fs/kernfs/dir.c:525
-
-Fixes: 0e94682b73bf ("psi: introduce psi monitor")
-Reported-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=33e571025d88efd1312c
-Tested-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ include/linux/netfilter.h         |  2 ++
+ net/ipv4/netfilter/iptable_nat.c  |  4 ++--
+ net/ipv6/netfilter/ip6table_nat.c |  4 ++--
+ net/netfilter/nf_nat_core.c       | 10 ++++++----
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index ce012aca272a5..38fd322ccf2e9 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -3881,33 +3881,41 @@ static int cgroup_cpu_pressure_show(struct seq_file *seq, void *v)
- static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
- 			      size_t nbytes, enum psi_res res)
- {
--	struct cgroup_file_ctx *ctx = of->priv;
-+	struct cgroup_file_ctx *ctx;
- 	struct psi_trigger *new;
- 	struct cgroup *cgrp;
- 	struct psi_group *psi;
-+	ssize_t ret = 0;
+diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
+index 2b8aac2c70ada..9b3357d8d8c3e 100644
+--- a/include/linux/netfilter.h
++++ b/include/linux/netfilter.h
+@@ -95,6 +95,8 @@ enum nf_hook_ops_type {
+ };
  
- 	cgrp = cgroup_kn_lock_live(of->kn, false);
- 	if (!cgrp)
- 		return -ENODEV;
- 
--	cgroup_get(cgrp);
--	cgroup_kn_unlock(of->kn);
-+	ctx = of->priv;
-+	if (!ctx) {
-+		ret = -ENODEV;
-+		goto out_unlock;
-+	}
- 
- 	/* Allow only one trigger per file descriptor */
- 	if (ctx->psi.trigger) {
--		cgroup_put(cgrp);
--		return -EBUSY;
-+		ret = -EBUSY;
-+		goto out_unlock;
- 	}
- 
- 	psi = cgroup_psi(cgrp);
- 	new = psi_trigger_create(psi, buf, res, of->file, of);
- 	if (IS_ERR(new)) {
--		cgroup_put(cgrp);
--		return PTR_ERR(new);
-+		ret = PTR_ERR(new);
-+		goto out_unlock;
- 	}
- 
- 	smp_store_release(&ctx->psi.trigger, new);
--	cgroup_put(cgrp);
+ struct nf_hook_ops {
++	struct rcu_head		rcu;
 +
-+out_unlock:
-+	cgroup_kn_unlock(of->kn);
-+	if (ret)
-+		return ret;
+ 	/* User fills in from here down. */
+ 	nf_hookfn		*hook;
+ 	struct net_device	*dev;
+diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
+index a5db7c67d61be..625a1ca13b1ba 100644
+--- a/net/ipv4/netfilter/iptable_nat.c
++++ b/net/ipv4/netfilter/iptable_nat.c
+@@ -79,7 +79,7 @@ static int ipt_nat_register_lookups(struct net *net)
+ 			while (i)
+ 				nf_nat_ipv4_unregister_fn(net, &ops[--i]);
  
- 	return nbytes;
+-			kfree(ops);
++			kfree_rcu(ops, rcu);
+ 			return ret;
+ 		}
+ 	}
+@@ -100,7 +100,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
+ 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv4_ops); i++)
+ 		nf_nat_ipv4_unregister_fn(net, &ops[i]);
+ 
+-	kfree(ops);
++	kfree_rcu(ops, rcu);
  }
+ 
+ static int iptable_nat_table_init(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
+index e119d4f090cc8..5be723232df8f 100644
+--- a/net/ipv6/netfilter/ip6table_nat.c
++++ b/net/ipv6/netfilter/ip6table_nat.c
+@@ -81,7 +81,7 @@ static int ip6t_nat_register_lookups(struct net *net)
+ 			while (i)
+ 				nf_nat_ipv6_unregister_fn(net, &ops[--i]);
+ 
+-			kfree(ops);
++			kfree_rcu(ops, rcu);
+ 			return ret;
+ 		}
+ 	}
+@@ -102,7 +102,7 @@ static void ip6t_nat_unregister_lookups(struct net *net)
+ 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv6_ops); i++)
+ 		nf_nat_ipv6_unregister_fn(net, &ops[i]);
+ 
+-	kfree(ops);
++	kfree_rcu(ops, rcu);
+ }
+ 
+ static int ip6table_nat_table_init(struct net *net)
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index 34e1ff930e28d..109c12fdc57d7 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1247,9 +1247,11 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		ret = nf_register_net_hooks(net, nat_ops, ops_count);
+ 		if (ret < 0) {
+ 			mutex_unlock(&nf_nat_proto_mutex);
+-			for (i = 0; i < ops_count; i++)
+-				kfree(nat_ops[i].priv);
+-			kfree(nat_ops);
++			for (i = 0; i < ops_count; i++) {
++				priv = nat_ops[i].priv;
++				kfree_rcu(priv, rcu_head);
++			}
++			kfree_rcu(nat_ops, rcu);
+ 			return ret;
+ 		}
+ 
+@@ -1313,7 +1315,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		}
+ 
+ 		nat_proto_net->nat_hook_ops = NULL;
+-		kfree(nat_ops);
++		kfree_rcu(nat_ops, rcu);
+ 	}
+ unlock:
+ 	mutex_unlock(&nf_nat_proto_mutex);
 -- 
 2.53.0
 
