@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052CC39EF2C;
-	Sat, 17 Oct 2026 18:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD2B3B3884;
+	Sat, 17 Oct 2026 18:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260097; cv=none; b=gH8vc1b6pkyygail6ECrhOtJyDweB/wcnNxRSHjyM3rO39VRR2wKNjFTEC5uAoN/6cLHXiXTG68UXH70fCPgjCLmzNL2AzR+JLiDtMDEQ+Rw7RcEQNwsuPryuSAKgdHHSeFu/AAByIxVWFd65M38VXmiRSh/kHusiBozlkDTSfM=
+	t=1792260099; cv=none; b=EqT3KS0SCIXKf3C9HX8BVIHUMN4cMm1DR3azPYBJLHNX7I6SgDDbVOzogprKM7dOvt760JnL0pBEB6l5YgyRxYwOC24cqsCS5wIDUaFHOkl2hDJoNhuIlMviv1+tcSeLRbNNfkMi/+cfaqnAJZ5drAlYFP+pILdZdgh1iFzsM0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260097; c=relaxed/simple;
-	bh=fL3xtYxjeHpgfBKR9vCNCRQQ8tDsY0NQQuios+EyZLo=;
+	s=arc-20240116; t=1792260099; c=relaxed/simple;
+	bh=4f4hRJ32we/PpkyxOgFDRADiIJZ1K+s69cAiFqF7zFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdIZopyCIjRr2FhXp9BEwA5QmzGBzE48q6hBFzi4mrGPbu3w4LwOheLLyp7XJz0PjPsGW2nVsWkV3FlibBgE9/sMiQv5h6TgclyUwDYqob3gkHtmUzaxZhZLhV/WeBsqZDRuadBtwuciv0FladS4QqGt59QQrXKCgNhP4cmUZ3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buXTkVEp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oXEMLlZssl/YHfjDQtiBZNPcsmOJ+eFMgmkQDv1rdJ5VkzLQpKVdFvIJbSCjGkOm/Jsyv/REtgzigXp/syXpdAL2BSJKCBgOIskAYT/fgXL5wQSm/mhuIErzSVMTZVIgRPck31eKSjtP7VIIEt8Nf6DfvNUfVFpZdyK0X6VAucE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I72Usdqp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buXTkVEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EE51F000C4;
-	Sat, 17 Oct 2026 18:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I72Usdqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6901F000C4;
+	Sat, 17 Oct 2026 18:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260095;
-	bh=/7z3gYlL/dnTheFgTJbzqCussfAbnvTDb9ZxcS0UhEQ=;
+	s=korg; t=1792260098;
+	bh=aeTC5ZGcnMt+apW2zsuu6zG+UUBPiG1I00YDJaVYtMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=buXTkVEpO8iuS1mUPt+0aw0RJSifHnolpLuyuGNZhFHNXpBVlLxqI/VjN0mR080ou
-	 7yxDD4fQVw+2q+pe4f9TuxDhjs2i2F8CjBOla2oWmep+ByGL2DhTLgY+iCTtuJipA8
-	 E1DC6tMkmb6FOzje31uwQH2jIr5+qtMSpQ+h4ZMI=
+	b=I72UsdqpbZNqltTHidbkmuG+Yo+Z2+rmyfdbCB1RRn8UndULFmHXfvL9AoKIrfDBU
+	 DGFDDt38wXmTmpssl+0rS26izEPmuboWFtoRQeFbIMV5UgvWWxT3pg9coeHn1+i5F1
+	 MYfaLPsVj5gpuR/LXZWZcTgZ2lE17tEfbVxK9G3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1432/1674] ocfs2: validate inline xattrs during inode block validation
-Date: Sat, 17 Oct 2026 18:01:44 +0200
-Message-ID: <20261017160507.940428408@linuxfoundation.org>
+Subject: [PATCH 6.6 1433/1674] ublk: check import_ubuf() return value
+Date: Sat, 17 Oct 2026 18:01:45 +0200
+Message-ID: <20261017160507.966629060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -58,222 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 8914a3330b72378136c2c02d6328a826f6abdad7 ]
+[ Upstream commit 3831568792af75b6523fa93bb91560e29189cf55 ]
 
-Patch series "ocfs2: validate xattr entry bounds", v7.
+import_ubuf() can fail if the address range (provided by the userspace
+ublk server) is outside the allowed user address space. Return that 0
+bytes were copied if import_ubuf() fails rather than passing an
+uninitialized struct iov_iter to ublk_copy_user_pages().
 
-This series validates OCFS2 xattr entry name/value bounds when xattr
-metadata is read and validated, before getxattr() or listxattr() can walk
-out-of-range entry arrays or offsets from corrupted metadata.
-
-This patch (of 2):
-
-ocfs2_validate_inode_block() verifies a dinode before OCFS2 users walk
-metadata from it, but inline xattr metadata is still checked only in
-operation-specific consumers.  The existing ibody lookup helper validates
-inline header placement and entry count, but inode block validation does
-not reject entry name/value bounds.
-
-Add a flat xattr entry validator and call it from inode block validation
-for inline xattrs.  Keep the operation paths on their existing
-header/count lookup checks; the full entry bounds check now runs when the
-inode block is validated at read time.
-
-Reject corrupted inline xattr metadata before ocfs2_xattr_ibody_get() or
-listxattr() can walk past the inline storage.
-
-Validation reproduced this kernel report:
-BUG: KASAN: use-after-free in ocfs2_xattr_find_entry+0x5a/0x170
-Read of size 2 at addr ffff8881242a2000 by task python3/529
-Call Trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  kasan_report+0xe0/0x110
-  ocfs2_xattr_find_entry+0x5a/0x170
-  ocfs2_xattr_get_nolock+0x20a/0x820
-  ocfs2_xattr_get+0x10c/0x1e0
-  __vfs_getxattr+0xe2/0x130
-  vfs_getxattr+0x185/0x1b0
-
-Link: https://lore.kernel.org/20260705025311.3429854-1-zzzccc427@gmail.com
-Link: https://lore.kernel.org/20260705025311.3429854-2-zzzccc427@gmail.com
-Fixes: cf1d6c763fbc ("ocfs2: Add extended attribute support")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 981f95a571e3 ("ublk: cleanup ublk_copy_user_pages")
+Reported-by: Ming Lei <tom.leiming@gmail.com>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Link: https://patch.msgid.link/20260729171041.45061-2-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c |   4 ++
- fs/ocfs2/xattr.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++
- fs/ocfs2/xattr.h |   2 +
- 3 files changed, 124 insertions(+)
+ drivers/block/ublk_drv.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index b882092b351e0..01e33782f4f6e 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1562,6 +1562,10 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		goto bail;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index c39eab406978e..ad1156e36d8aa 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -938,8 +938,9 @@ static int ublk_map_io(const struct ublk_queue *ubq, const struct request *req,
+ 		struct iovec iov;
+ 		const int dir = ITER_DEST;
+ 
+-		import_single_range(dir, u64_to_user_ptr(io->addr), rq_bytes,
+-				&iov, &iter);
++		if (import_single_range(dir, u64_to_user_ptr(io->addr), rq_bytes,
++				&iov, &iter) < 0)
++			return 0;
+ 
+ 		return ublk_copy_user_pages(req, 0, &iter, dir);
  	}
+@@ -962,8 +963,10 @@ static int ublk_unmap_io(const struct ublk_queue *ubq,
  
-+	rc = ocfs2_validate_inode_xattr(sb, bh->b_blocknr, di);
-+	if (rc)
-+		goto bail;
-+
- 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
- 		struct ocfs2_inline_data *data = &di->id2.i_data;
+ 		WARN_ON_ONCE(io->res > rq_bytes);
  
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index dc3d88a09d106..61ee0fb0c2a04 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -953,6 +953,124 @@ static int ocfs2_xattr_list_entries(struct inode *inode,
- 	return result;
- }
- 
-+static int ocfs2_validate_xattr_entries_flat(struct super_block *sb, u64 blkno,
-+					     struct ocfs2_xattr_header *xh,
-+					     size_t region_size)
-+{
-+	u16 xattr_count = le16_to_cpu(xh->xh_count);
-+	size_t entries_limit = region_size;
-+	size_t nv_limit = region_size;
-+	size_t max_entries;
-+	int i;
+-		import_single_range(dir, u64_to_user_ptr(io->addr), io->res,
+-				&iov, &iter);
++		if (import_single_range(dir, u64_to_user_ptr(io->addr), io->res,
++				&iov, &iter) < 0)
++			return 0;
 +
-+	if (region_size < sizeof(*xh))
-+		return ocfs2_error(sb,
-+				   "Invalid xattr in block %llu: region size %zu is too small\n",
-+				   (unsigned long long)blkno, region_size);
-+
-+	max_entries = (entries_limit - sizeof(*xh)) /
-+		      sizeof(struct ocfs2_xattr_entry);
-+
-+	if (xattr_count > max_entries)
-+		return ocfs2_error(sb,
-+				   "Invalid xattr in block %llu: entry count %u exceeds maximum %zu\n",
-+				   (unsigned long long)blkno,
-+				   xattr_count, max_entries);
-+
-+	for (i = 0; i < xattr_count; i++) {
-+		struct ocfs2_xattr_entry *xe = &xh->xh_entries[i];
-+		size_t name_offset = le16_to_cpu(xe->xe_name_offset);
-+		size_t value_offset;
-+
-+		if (name_offset > nv_limit ||
-+		    xe->xe_name_len > nv_limit - name_offset)
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d name is out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+
-+		value_offset = name_offset + OCFS2_XATTR_SIZE(xe->xe_name_len);
-+		if (value_offset > nv_limit)
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d value starts out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+
-+		if (ocfs2_xattr_is_local(xe)) {
-+			if (le64_to_cpu(xe->xe_value_size) >
-+			    nv_limit - value_offset)
-+				return ocfs2_error(sb,
-+						   "Invalid xattr in block %llu: entry %d value is out of bounds\n",
-+						   (unsigned long long)blkno,
-+						   i);
-+		} else if (sizeof(struct ocfs2_xattr_value_root) >
-+			   nv_limit - value_offset) {
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d value root is out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static int ocfs2_xattr_ibody_lookup_header_raw(struct super_block *sb,
-+					       u64 blkno,
-+					       struct ocfs2_dinode *di,
-+					       struct ocfs2_xattr_header **header,
-+					       u16 *inline_size_ret)
-+{
-+	struct ocfs2_xattr_header *xh;
-+	u16 xattr_count;
-+	size_t max_entries;
-+	u16 inline_size = le16_to_cpu(di->i_xattr_inline_size);
-+
-+	if (inline_size > sb->s_blocksize ||
-+	    inline_size < sizeof(struct ocfs2_xattr_header)) {
-+		ocfs2_error(sb,
-+			    "Invalid inode %llu: xattr inline size %u\n",
-+			    (unsigned long long)blkno, inline_size);
-+		return -EFSCORRUPTED;
-+	}
-+
-+	xh = (struct ocfs2_xattr_header *)
-+		((void *)di + sb->s_blocksize - inline_size);
-+
-+	xattr_count = le16_to_cpu(xh->xh_count);
-+	max_entries = (inline_size - sizeof(struct ocfs2_xattr_header)) /
-+		      sizeof(struct ocfs2_xattr_entry);
-+
-+	if (xattr_count > max_entries) {
-+		ocfs2_error(sb,
-+			    "xattr entry count %u exceeds maximum %zu in inode %llu\n",
-+			    xattr_count, max_entries,
-+			    (unsigned long long)blkno);
-+		return -EFSCORRUPTED;
-+	}
-+
-+	*header = xh;
-+	if (inline_size_ret)
-+		*inline_size_ret = inline_size;
-+
-+	return 0;
-+}
-+
-+int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
-+			       struct ocfs2_dinode *di)
-+{
-+	struct ocfs2_xattr_header *xh;
-+	u16 inline_size;
-+	int ret;
-+
-+	if (!(le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_XATTR_FL))
-+		return 0;
-+
-+	ret = ocfs2_xattr_ibody_lookup_header_raw(sb, blkno, di, &xh,
-+						  &inline_size);
-+	if (ret)
-+		return ret;
-+
-+	return ocfs2_validate_xattr_entries_flat(sb, blkno, xh, inline_size);
-+}
-+
- int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
- 					 struct ocfs2_dinode *di)
- {
-diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
-index 016374e9a147e..2c4d895ed5ebf 100644
---- a/fs/ocfs2/xattr.h
-+++ b/fs/ocfs2/xattr.h
-@@ -43,6 +43,8 @@ int ocfs2_xattr_set_handle(handle_t *, struct inode *, struct buffer_head *,
- 			   struct ocfs2_alloc_context *);
- int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
- 					 struct ocfs2_dinode *di);
-+int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
-+			       struct ocfs2_dinode *di);
- int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
- int ocfs2_init_security_get(struct inode *, struct inode *,
- 			    const struct qstr *,
+ 		return ublk_copy_user_pages(req, 0, &iter, dir);
+ 	}
+ 	return rq_bytes;
 -- 
 2.53.0
 
