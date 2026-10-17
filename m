@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B28392836;
-	Sat, 17 Oct 2026 17:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940631AAE28;
+	Sat, 17 Oct 2026 17:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257846; cv=none; b=coZMSrdklf3g6mAlhIzB5b9ZePXjVL0L8aaJ9M+/Dxb1hVI62Zfsm1yUn1KXcDvQQGJsZ8a8p5RqGIsqrnSXHzMawGPLL40z7uL1iOqB+wOtP40beEDcz2tlY2/7eQv1J1Z10erK+XycqQh0jWyGd/vjwkhj5xrPxnq0TROeEt4=
+	t=1792257849; cv=none; b=GUdyTt2ODqkUfD4yaVlpNzsH2411eVs5HcvlDEVCAe+9DvvIguAP0F2Sm4RN37KwRPA4rfYG8J5SYc6VWit6ZScstb6NvlijiO0/R1bUujV4gD+mY6whg+jCXmtzmqPGjXRzVgkGi2afLsO8epvC3m+Stwe7S8qRPtiHKKMJMs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257846; c=relaxed/simple;
-	bh=UDHBE8tgml/pNyXbKnArW4NefQMt/TcmM2oFyANGG0k=;
+	s=arc-20240116; t=1792257849; c=relaxed/simple;
+	bh=XVfpq8xwD5mH8DF3y1Bkm+vmzWc+UsHFBYWVUXj5S3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emyHGE2GJipm+xumwU6RkqOX+gtSbgfENVRP8Uc7QiC3YxgymgBgBz3ozCpvM2M4gwCB67gCZE2xBYjav9WWrMaj47ZuTzy22H5cSLfnLxZfVJk9vN3U2IcpOOv+myR12KxEwRcXq9mBGEENgQ+hGVo6G3DbNwFWqus9pMH/Ks8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGwDpH6q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YAPZQwn9fpQWk8jpro6PntW01/bOlvuJ16EdAGZn5BoM0w8b3IFsY7FAOoSsSHFhLclhk9e8LTuHDmEDL8p957POsL3NR5YBWKYEfotMxgMH4P+3ILhDm8IzxdCGUyGIhUyey//ocdFgLTanWtqRdRpW1g6HGWTykMLTnRVjSVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+bgqfKG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGwDpH6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00EB1F000C4;
-	Sat, 17 Oct 2026 17:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+bgqfKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DAF1F000C4;
+	Sat, 17 Oct 2026 17:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257845;
-	bh=wUpuPcRtXcDYdSWf743o8cGg4XHTBpqlvL3DnBK1DGs=;
+	s=korg; t=1792257848;
+	bh=XL5pCrUoGpCMBolRkOnbvWx/7/11jaWeRgY4kSMmfjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGwDpH6qTVa2uMhDM8yE9q75A55NktDT2iDA18FOMaryoFdbr1q1rwtnsBOSDML/2
-	 Jw6xZ0V5zAkhcoA8EhGhgluSLsadQmIzismyzHC5h+sguvdpZ1Pk3eAy11jj4QMR2c
-	 tVgHK//3CztFjLUG6x0N5t4GUlR68DIMDrRYwo+4=
+	b=d+bgqfKGrytMtwIMRnSfgbvdBcWv6gfm0nfcE6dG17HFn5tePv44o/4tdWU1HpGnY
+	 euPQLFCLEK5TMD5d9O1PdgrG3XtMtEjGHCrZtTIZrDpdRYMmWZRRyJ5VMYBPqv8NC4
+	 fwvuHdTsPeCcKodCHcpKC2Kla/CEfd/FJPBoOTxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0688/1674] eth: bnxt: fix truesize for mb-xdp-pass case
-Date: Sat, 17 Oct 2026 17:49:20 +0200
-Message-ID: <20261017160448.766521226@linuxfoundation.org>
+Subject: [PATCH 6.6 0689/1674] net: mctp: unshare packets when reassembling
+Date: Sat, 17 Oct 2026 17:49:21 +0200
+Message-ID: <20261017160448.792951548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,122 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 9f7b2aa5034e24d3c49db73d5f760c0435fe31c2 ]
+[ Upstream commit f5d83cf0eeb90fade4d5c4d17d24b8bee9ceeecc ]
 
-When mb-xdp is set and return is XDP_PASS, packet is converted from
-xdp_buff to sk_buff with xdp_update_skb_shared_info() in
-bnxt_xdp_build_skb().
-bnxt_xdp_build_skb() passes incorrect truesize argument to
-xdp_update_skb_shared_info().
-The truesize is calculated as BNXT_RX_PAGE_SIZE * sinfo->nr_frags but
-the skb_shared_info was wiped by napi_build_skb() before.
-So it stores sinfo->nr_frags before bnxt_xdp_build_skb() and use it
-instead of getting skb_shared_info from xdp_get_shared_info_from_buff().
+Ensure that the frag_list used for reassembly isn't shared with other
+packets. This avoids incorrect reassembly when packets are cloned, and
+prevents a memory leak due to circular references between fragments and
+their skb_shared_info.
 
-Splat looks like:
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 0 at net/core/skbuff.c:6072 skb_try_coalesce+0x504/0x590
- Modules linked in: xt_nat xt_tcpudp veth af_packet xt_conntrack nft_chain_nat xt_MASQUERADE nf_conntrack_netlink xfrm_user xt_addrtype nft_coms
- CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 6.14.0-rc2+ #3
- RIP: 0010:skb_try_coalesce+0x504/0x590
- Code: 4b fd ff ff 49 8b 34 24 40 80 e6 40 0f 84 3d fd ff ff 49 8b 74 24 48 40 f6 c6 01 0f 84 2e fd ff ff 48 8d 4e ff e9 25 fd ff ff <0f> 0b e99
- RSP: 0018:ffffb62c4120caa8 EFLAGS: 00010287
- RAX: 0000000000000003 RBX: ffffb62c4120cb14 RCX: 0000000000000ec0
- RDX: 0000000000001000 RSI: ffffa06e5d7dc000 RDI: 0000000000000003
- RBP: ffffa06e5d7ddec0 R08: ffffa06e6120a800 R09: ffffa06e7a119900
- R10: 0000000000002310 R11: ffffa06e5d7dcec0 R12: ffffe4360575f740
- R13: ffffe43600000000 R14: 0000000000000002 R15: 0000000000000002
- FS:  0000000000000000(0000) GS:ffffa0755f700000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f147b76b0f8 CR3: 00000001615d4000 CR4: 00000000007506f0
- PKRU: 55555554
- Call Trace:
-  <IRQ>
-  ? __warn+0x84/0x130
-  ? skb_try_coalesce+0x504/0x590
-  ? report_bug+0x18a/0x1a0
-  ? handle_bug+0x53/0x90
-  ? exc_invalid_op+0x14/0x70
-  ? asm_exc_invalid_op+0x16/0x20
-  ? skb_try_coalesce+0x504/0x590
-  inet_frag_reasm_finish+0x11f/0x2e0
-  ip_defrag+0x37a/0x900
-  ip_local_deliver+0x51/0x120
-  ip_sublist_rcv_finish+0x64/0x70
-  ip_sublist_rcv+0x179/0x210
-  ip_list_rcv+0xf9/0x130
+The upcoming MCTP-over-USB driver uses skb_clone which can trigger the
+problem - other MCTP drivers don't share SKBs.
 
-How to reproduce:
-<Node A>
-ip link set $interface1 xdp obj xdp_pass.o
-ip link set $interface1 mtu 9000 up
-ip a a 10.0.0.1/24 dev $interface1
-<Node B>
-ip link set $interfac2 mtu 9000 up
-ip a a 10.0.0.2/24 dev $interface2
-ping 10.0.0.1 -s 65000
+A kunit test is added to reproduce the issue.
 
-Following ping.py patch adds xdp-mb-pass case. so ping.py is going to be
-able to reproduce this issue.
-
-Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20250309134219.91670-2-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250306-matt-mctp-usb-v1-1-085502b3dd28@codeconstruct.com.au
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 8 ++++++++
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/mctp/route.c           |  10 +++-
+ net/mctp/test/route-test.c | 112 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 120 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 304170ceba7f2..12ab276b91a3a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1797,6 +1797,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	struct rx_cmp_ext *rxcmp1;
- 	u32 tmp_raw_cons = *raw_cons;
- 	u16 cfa_code, cons, prod, cp_cons = RING_CMP(tmp_raw_cons);
-+	struct skb_shared_info *sinfo;
- 	struct bnxt_sw_rx_bd *rx_buf;
- 	unsigned int len;
- 	u8 *data_ptr, agg_bufs, cmp_type;
-@@ -1921,6 +1922,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 							     false);
- 			if (!frag_len)
- 				goto oom_next_rx;
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 6d6e19c049396..acd3cecc8a367 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -298,8 +298,14 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 		& MCTP_HDR_SEQ_MASK;
+ 
+ 	if (!key->reasm_head) {
+-		key->reasm_head = skb;
+-		key->reasm_tailp = &(skb_shinfo(skb)->frag_list);
++		/* Since we're manipulating the shared frag_list, ensure it isn't
++		 * shared with any other SKBs.
++		 */
++		key->reasm_head = skb_unshare(skb, GFP_ATOMIC);
++		if (!key->reasm_head)
++			return -ENOMEM;
 +
- 		}
- 		xdp_active = true;
++		key->reasm_tailp = &(skb_shinfo(key->reasm_head)->frag_list);
+ 		key->last_seq = this_seq;
+ 		return 0;
  	}
-@@ -1930,6 +1932,12 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			rc = 1;
- 			goto next_rx;
- 		}
-+		if (xdp_buff_has_frags(&xdp)) {
-+			sinfo = xdp_get_shared_info_from_buff(&xdp);
-+			agg_bufs = sinfo->nr_frags;
-+		} else {
-+			agg_bufs = 0;
-+		}
- 	}
+diff --git a/net/mctp/test/route-test.c b/net/mctp/test/route-test.c
+index a944490a724d3..ef6a3d6115ca2 100644
+--- a/net/mctp/test/route-test.c
++++ b/net/mctp/test/route-test.c
+@@ -665,6 +665,117 @@ static void mctp_route_input_sk_keys_to_desc(
+ KUNIT_ARRAY_PARAM(mctp_route_input_sk_keys, mctp_route_input_sk_keys_tests,
+ 		  mctp_route_input_sk_keys_to_desc);
  
- 	if (len <= bp->rx_copy_thresh) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index b6320b64b8e7f..fc47d45805b75 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -464,7 +464,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
++/* Input route to socket, using a fragmented message created from clones.
++ */
++static void mctp_test_route_input_cloned_frag(struct kunit *test)
++{
++	/* 5 packet fragments, forming 2 complete messages */
++	const struct mctp_hdr hdrs[5] = {
++		RX_FRAG(FL_S, 0),
++		RX_FRAG(0, 1),
++		RX_FRAG(FL_E, 2),
++		RX_FRAG(FL_S, 0),
++		RX_FRAG(FL_E, 1),
++	};
++	struct mctp_test_route *rt;
++	struct mctp_test_dev *dev;
++	struct sk_buff *skb[5];
++	struct sk_buff *rx_skb;
++	struct socket *sock;
++	size_t data_len;
++	u8 compare[100];
++	u8 flat[100];
++	size_t total;
++	void *p;
++	int rc;
++
++	/* Arbitrary length */
++	data_len = 3;
++	total = data_len + sizeof(struct mctp_hdr);
++
++	__mctp_route_test_init(test, &dev, &rt, &sock);
++
++	/* Create a single skb initially with concatenated packets */
++	skb[0] = mctp_test_create_skb(&hdrs[0], 5 * total);
++	skb[0]->dev = dev->ndev;
++	__mctp_cb(skb[0]);
++	memset(skb[0]->data, 0 * 0x11, skb[0]->len);
++	memcpy(skb[0]->data, &hdrs[0], sizeof(struct mctp_hdr));
++
++	/* Extract and populate packets */
++	for (int i = 1; i < 5; i++) {
++		skb[i] = skb_clone(skb[i - 1], GFP_ATOMIC);
++		KUNIT_ASSERT_TRUE(test, skb[i]);
++		p = skb_pull(skb[i], total);
++		KUNIT_ASSERT_TRUE(test, p);
++		skb_reset_network_header(skb[i]);
++		skb[i]->dev = dev->ndev;
++		__mctp_cb(skb[i]);
++		memcpy(skb[i]->data, &hdrs[i], sizeof(struct mctp_hdr));
++		memset(&skb[i]->data[sizeof(struct mctp_hdr)], i * 0x11, data_len);
++	}
++	for (int i = 0; i < 5; i++)
++		skb_trim(skb[i], total);
++
++	/* SOM packets have a type byte to match the socket */
++	skb[0]->data[4] = 0;
++	skb[3]->data[4] = 0;
++
++	skb_dump("pkt1 ", skb[0], false);
++	skb_dump("pkt2 ", skb[1], false);
++	skb_dump("pkt3 ", skb[2], false);
++	skb_dump("pkt4 ", skb[3], false);
++	skb_dump("pkt5 ", skb[4], false);
++
++	for (int i = 0; i < 5; i++) {
++		KUNIT_EXPECT_EQ(test, refcount_read(&skb[i]->users), 1);
++		/* Take a reference so we can check refcounts at the end */
++		skb_get(skb[i]);
++	}
++
++	/* Feed the fragments into MCTP core */
++	for (int i = 0; i < 5; i++) {
++		rc = mctp_route_input(&rt->rt, skb[i]);
++		KUNIT_EXPECT_EQ(test, rc, 0);
++	}
++
++	/* Receive first reassembled message */
++	rx_skb = skb_recv_datagram(sock->sk, MSG_DONTWAIT, &rc);
++	KUNIT_EXPECT_EQ(test, rc, 0);
++	KUNIT_EXPECT_EQ(test, rx_skb->len, 3 * data_len);
++	rc = skb_copy_bits(rx_skb, 0, flat, rx_skb->len);
++	for (int i = 0; i < rx_skb->len; i++)
++		compare[i] = (i / data_len) * 0x11;
++	/* Set type byte */
++	compare[0] = 0;
++
++	KUNIT_EXPECT_MEMEQ(test, flat, compare, rx_skb->len);
++	KUNIT_EXPECT_EQ(test, refcount_read(&rx_skb->users), 1);
++	kfree_skb(rx_skb);
++
++	/* Receive second reassembled message */
++	rx_skb = skb_recv_datagram(sock->sk, MSG_DONTWAIT, &rc);
++	KUNIT_EXPECT_EQ(test, rc, 0);
++	KUNIT_EXPECT_EQ(test, rx_skb->len, 2 * data_len);
++	rc = skb_copy_bits(rx_skb, 0, flat, rx_skb->len);
++	for (int i = 0; i < rx_skb->len; i++)
++		compare[i] = (i / data_len + 3) * 0x11;
++	/* Set type byte */
++	compare[0] = 0;
++
++	KUNIT_EXPECT_MEMEQ(test, flat, compare, rx_skb->len);
++	KUNIT_EXPECT_EQ(test, refcount_read(&rx_skb->users), 1);
++	kfree_skb(rx_skb);
++
++	/* Check input skb refcounts */
++	for (int i = 0; i < 5; i++) {
++		KUNIT_EXPECT_EQ(test, refcount_read(&skb[i]->users), 1);
++		kfree_skb(skb[i]);
++	}
++
++	__mctp_route_test_fini(test, dev, rt, sock);
++}
++
+ static struct kunit_case mctp_test_cases[] = {
+ 	KUNIT_CASE_PARAM(mctp_test_fragment, mctp_frag_gen_params),
+ 	KUNIT_CASE_PARAM(mctp_test_rx_input, mctp_rx_input_gen_params),
+@@ -673,6 +784,7 @@ static struct kunit_case mctp_test_cases[] = {
+ 			 mctp_route_input_sk_reasm_gen_params),
+ 	KUNIT_CASE_PARAM(mctp_test_route_input_sk_keys,
+ 			 mctp_route_input_sk_keys_gen_params),
++	KUNIT_CASE(mctp_test_route_input_cloned_frag),
+ 	{}
+ };
  
- 	xdp_update_skb_shared_info(skb, num_frags,
- 				   sinfo->xdp_frags_size,
--				   BNXT_RX_PAGE_SIZE * sinfo->nr_frags,
-+				   BNXT_RX_PAGE_SIZE * num_frags,
- 				   xdp_buff_is_frag_pfmemalloc(xdp));
- 	return skb;
- }
 -- 
 2.53.0
 
