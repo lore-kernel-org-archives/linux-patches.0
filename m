@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CB63BE172;
-	Sat, 17 Oct 2026 16:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D424E3AB286;
+	Sat, 17 Oct 2026 16:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255478; cv=none; b=KTD4sFEGdhA8TXlT/Y9yZj5wE/YPY67ytOt8nZpC1U9yZswAsooaRNHUzJxkrFoa3k7I64ixEORmLNIS2K8t8BuAfREfc9x9SDPZ1CGnF6OB1wUMc9pHkl/qKrVs+ARqxGjNsI3Ok1NWAVWJ3Iv0ucuZFOCc6RN1ZAcgwRgmUcg=
+	t=1792255481; cv=none; b=LHaxG2dHP8oDthamx5nIMd0NbsYvwvBQw2ZFzsA2FifWnq4RX5rUovGIu1yyeQHEmLjWsX/wgJcAdllM6r35XFrf82fbmYeWHpCRtU4LvEy5d1JOj7UTQ68cO8b4/CSzT1au6NDMHcWZPwaVzE9C2k/PZF5emjSFlEwtMS+OPb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255478; c=relaxed/simple;
-	bh=5kRNC1dvVx3rRh67lXlhqfLVaUje1VVbG+8SZwq/Vaw=;
+	s=arc-20240116; t=1792255481; c=relaxed/simple;
+	bh=CTu9HmQqdHzwN5asvOMrGmVIu4Q4hRA9hI7QHfTzX2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioQVENOjauzJzPxyw0VCuSpcywM0nG0EZSLUhXRgQuiaIqEMnPX6FRDfo9RVny8c1HcnkK+DOnDGF9PJaipLi43kfebe1gw6lHyboRRF5NVolUMb654lWuEwQfIc7yIs38R5GqGLbvnKK2PIGAHajJYEbDMx+9o1sEYJsiJof8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeKj9pRg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J3/qeo1EGeZctKoWOufLs5HntSV7ObvsKtnOEdmiXbkc1jggPANHrr++AmCaY3n0jCGGMbB+BHFjVFh4sDDH6fiSdpBJj7Iuqf3UV6UGEaAtwf5OPwKLTSsrCv3iRpuW9fD/OvxjUotCLZvIFjTpd53gzv1A0Ap73jyRRmf8lY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSoAnXZq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeKj9pRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3928F1F000C4;
-	Sat, 17 Oct 2026 16:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSoAnXZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8A91F000C4;
+	Sat, 17 Oct 2026 16:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255476;
-	bh=oSOR3M6c9AjM2poQ+DH1QvrYDUHdLQGNQ9xtPwgiKnc=;
+	s=korg; t=1792255479;
+	bh=jEpV9bYzNUYQDUy8DVKfThLaSDaEI6rnJD3ZXaQBv8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jeKj9pRg/CkdW3ox4i/gRV3CS5R7U5yrY/LPqP8WO4WjNnXAgu8OeXmElc+a0JxwS
-	 aYNcUjsLN2LiZjbCvH6+ZW3Xy17pCva6AphM6xdR7v335cEpESbLfdIXn5MX2BW+uA
-	 aHias66V3A47eDufAMBin5GkosT0T7t5C9DZeisw=
+	b=TSoAnXZq6mSt2yOifyHEGjXQYo/oK9/zX5exMevVX+L6qKlK7bzmR4pKeBSV8t/ui
+	 YIX7WvLZWILP68iALfGpyqzb09gpBN8lAPlft9lMf1sAU2YWCIEhhU6gENeUF8sgq0
+	 7v7IOXkaGtlBhbQ7/97uFQocskxgBIChzx0OOcik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Walther, Jens-Uwe" <waltju@amazon.de>,
+	Yann Collet <yann.collet.73@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 787/869] bpf: Mark signal tracepoint siginfo arguments as scalar
-Date: Sat, 17 Oct 2026 18:00:28 +0200
-Message-ID: <20261017160057.088728152@linuxfoundation.org>
+Subject: [PATCH 6.12 788/869] erofs: disable LZ4 rolling decompression for now
+Date: Sat, 17 Oct 2026 18:00:29 +0200
+Message-ID: <20261017160057.112828459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,56 +46,254 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Gao Xiang <xiang@kernel.org>
 
-[ Upstream commit 77515ab12e4983e6416f8c35039a3f0c0822ac70 ]
+[ Upstream commit 82e664cf1219c459c33aae931b222cf951af9cb7 ]
 
-The signal_generate and signal_deliver tracepoints declare their info
-argument as a struct kernel_siginfo pointer. btf_ctx_access() therefore
-treats it as a trusted pointer for tp_btf programs.
+LZ4 rolling decompression [1] was introduced to reduce the memory
+footprint of temporary pages:
 
-Signal delivery also uses SEND_SIG_NOINFO and SEND_SIG_PRIV as special
-values for this argument. Those values are zero and one respectively,
-and are not pointers. A tp_btf program can currently dereference either
-value and fault the kernel. In particular, signal_generate can run from
-timer interrupt context, turning the fault into a kernel panic.
+ For many cases, it is needed for users to read small data within
+ a compressed extent (pcluster), either due to random small read, or
+ since uptodate folios (typically order-0) cannot be reused for
+ decompression again since decompression algorithm refills
+ already-uptodate folios.
 
-Record both tracepoints in raw_tp_null_args[] and mark argument one as
-a non-pointer. This preserves scalar access to the cookie while rejecting
-direct and helper-mediated pointer use. Merely marking it nullable would
-not suffice because SEND_SIG_PRIV is nonzero.
+Rolling decompression works because LZ4 is LZ77-based and only refers
+to the most recent 64 KiB of decompressed data, so in theory only a
+bounded rolling window of temporary pages is needed when decompressing.
 
-Fixes: 838a10bd2ebf ("bpf: Augment raw_tp arguments with PTR_MAYBE_NULL")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260903144433.1716731-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+It can save a lot of temporary memory, e.g.
+ 601,960-byte data can be compressed into a 256k LZ4 compressed extent,
+ which means it needs 146 extra pages per request in the worst case if
+ rolling decompression is disabled.
+
+However, the upstream LZ4 implementation is not under EROFS' control:
+For example, the literal copy memmove() may still **copy long literals
+backward** on x86 based on the address comparison even when the source
+and destination ranges do not overlap (IOWs, inline decompression
+doesn't need to be considered here). That breaks the rolling assumption
+and makes the optimization broken.
+
+Disable it for now to make sure the data correctness first since EROFS
+is used everywhere now: The rolling window approach can be revived once
+we either ensure that the official LZ4 code always copies forward for
+non-overlapping ranges or maintain our own LZ4 implementation in EROFS.
+
+The main impact is a higher runtime memory footprint; However, recent
+commit 0f6273ab4637 ("erofs: add a reserved buffer pool for lz4
+decompression") helps mitigate this when enabled but it's still not
+perfect.
+
+[1] https://www.usenix.org/conference/atc19/presentation/gao
+    § 3.3 Decompression
+
+Reported-by: "Walther, Jens-Uwe" <waltju@amazon.de>
+Closes: https://lore.kernel.org/r/BEZP281MB2102E57CD31862B8D958B33DD2AC2@BEZP281MB2102.DEUP281.PROD.OUTLOOK.COM
+Fixes: 8e6c8fa9f2e9 ("erofs: enable big pcluster feature")
+Cc: Yann Collet <yann.collet.73@gmail.com>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/erofs/decompressor.c | 60 +++++++++--------------------------------
+ fs/erofs/internal.h     |  6 +----
+ fs/erofs/zdata.c        | 18 +++----------
+ 3 files changed, 16 insertions(+), 68 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index cd63c1e27f601..e8a79d92d4afa 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6558,6 +6558,9 @@ static const struct bpf_raw_tp_null_args raw_tp_null_args[] = {
- 	/* rxrpc */
- 	{ "rxrpc_recvdata", 0x1 },
- 	{ "rxrpc_resend", 0x10 },
-+	/* signal */
-+	{ "signal_generate", 0x20 },
-+	{ "signal_deliver", 0x20 },
- 	/* skb */
- 	{"kfree_skb", 0x1000},
- 	/* sunrpc */
+diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
+index d965a3f3073b7..933347416513b 100644
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -7,11 +7,6 @@
+ #include "compress.h"
+ #include <linux/lz4.h>
+ 
+-#ifndef LZ4_DISTANCE_MAX	/* history window size */
+-#define LZ4_DISTANCE_MAX 65535	/* set to maximum value by default */
+-#endif
+-
+-#define LZ4_MAX_DISTANCE_PAGES	(DIV_ROUND_UP(LZ4_DISTANCE_MAX, PAGE_SIZE) + 1)
+ #ifndef LZ4_DECOMPRESS_INPLACE_MARGIN
+ #define LZ4_DECOMPRESS_INPLACE_MARGIN(srcsize)  (((srcsize) >> 8) + 32)
+ #endif
+@@ -21,15 +16,12 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ {
+ 	struct erofs_sb_info *sbi = EROFS_SB(sb);
+ 	struct z_erofs_lz4_cfgs *lz4 = data;
+-	u16 distance;
+ 
+ 	if (lz4) {
+ 		if (size < sizeof(struct z_erofs_lz4_cfgs)) {
+ 			erofs_err(sb, "invalid lz4 cfgs, size=%u", size);
+ 			return -EINVAL;
+ 		}
+-		distance = le16_to_cpu(lz4->max_distance);
+-
+ 		sbi->lz4.max_pclusterblks = le16_to_cpu(lz4->max_pclusterblks);
+ 		if (!sbi->lz4.max_pclusterblks) {
+ 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
+@@ -40,48 +32,27 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 			return -EINVAL;
+ 		}
+ 	} else {
+-		distance = le16_to_cpu(dsb->u1.lz4_max_distance);
+ 		sbi->lz4.max_pclusterblks = 1;
+ 	}
+-
+-	sbi->lz4.max_distance_pages = distance ?
+-					DIV_ROUND_UP(distance, PAGE_SIZE) + 1 :
+-					LZ4_MAX_DISTANCE_PAGES;
+ 	return z_erofs_gbuf_growsize(sbi->lz4.max_pclusterblks);
+ }
+ 
+ /*
+- * Fill all gaps with bounce pages if it's a sparse page list. Also check if
+- * all physical pages are consecutive, which can be seen for moderate CR.
++ * Fill all gaps with bounce pages if it's a sparse page list (for example some
++ * folios are already uptodate and thus can be mapped into userspace). Also
++ * check if pages are physically consecutive, which can be seen for moderate CR.
+  */
+-static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
+-					struct page **pagepool)
++static int z_erofs_oneshot_prepare_dstpages(struct z_erofs_decompress_req *rq,
++					    struct page **pagepool)
+ {
+-	struct page *availables[LZ4_MAX_DISTANCE_PAGES] = { NULL };
+-	unsigned long bounced[DIV_ROUND_UP(LZ4_MAX_DISTANCE_PAGES,
+-					   BITS_PER_LONG)] = { 0 };
+-	unsigned int lz4_max_distance_pages =
+-				EROFS_SB(rq->sb)->lz4.max_distance_pages;
+ 	void *kaddr = NULL;
+-	unsigned int i, j, top;
+-
+-	top = 0;
+-	for (i = j = 0; i < rq->outpages; ++i, ++j) {
+-		struct page *const page = rq->out[i];
+-		struct page *victim;
+-
+-		if (j >= lz4_max_distance_pages)
+-			j = 0;
++	unsigned int i;
+ 
+-		/* 'valid' bounced can only be tested after a complete round */
+-		if (!rq->fillgaps && test_bit(j, bounced)) {
+-			DBG_BUGON(i < lz4_max_distance_pages);
+-			DBG_BUGON(top >= lz4_max_distance_pages);
+-			availables[top++] = rq->out[i - lz4_max_distance_pages];
+-		}
++	for (i = 0; i < rq->outpages; ++i) {
++		struct page *page, *victim;
+ 
++		page = rq->out[i];
+ 		if (page) {
+-			__clear_bit(j, bounced);
+ 			if (!PageHighMem(page)) {
+ 				if (!i) {
+ 					kaddr = page_address(page);
+@@ -93,21 +64,14 @@ static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
+ 					continue;
+ 				}
+ 			}
+-			kaddr = NULL;
+-			continue;
+-		}
+-		kaddr = NULL;
+-		__set_bit(j, bounced);
+-
+-		if (top) {
+-			victim = availables[--top];
+ 		} else {
+ 			victim = __erofs_allocpage(pagepool, rq->gfp, true);
+ 			if (!victim)
+ 				return -ENOMEM;
+ 			set_page_private(victim, Z_EROFS_SHORTLIVED_PAGE);
++			rq->out[i] = victim;
+ 		}
+-		rq->out[i] = victim;
++		kaddr = NULL;
+ 	}
+ 	return kaddr ? 1 : 0;
+ }
+@@ -279,7 +243,7 @@ static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq,
+ 		dst_maptype = 0;
+ 	} else {
+ 		/* general decoding path which can be used for all cases */
+-		ret = z_erofs_lz4_prepare_dstpages(rq, pagepool);
++		ret = z_erofs_oneshot_prepare_dstpages(rq, pagepool);
+ 		if (ret < 0)
+ 			return ret;
+ 		if (ret > 0) {
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 89dfb3736daa4..ed023f14acd3c 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -77,12 +77,8 @@ struct erofs_dev_context {
+ 	bool flatdev;
+ };
+ 
+-/* all filesystem-wide lz4 configurations */
+ struct erofs_sb_lz4_info {
+-	/* # of pages needed for EROFS lz4 rolling decompression */
+-	u16 max_distance_pages;
+-	/* maximum possible blocks for pclusters in the filesystem */
+-	u16 max_pclusterblks;
++	u16 max_pclusterblks;	/* maximum physical blocks for LZ4 pclusters */
+ };
+ 
+ struct erofs_domain {
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index d36562c4afff7..08720efbb1a17 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1237,7 +1237,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 	unsigned int pclusterpages = z_erofs_pclusterpages(pcl);
+ 	const struct z_erofs_decompressor *decomp =
+ 				z_erofs_decomp[pcl->algorithmformat];
+-	int i, j, jtop, err2, err = eio ? -EIO : 0;
++	int i, err2, err = eio ? -EIO : 0;
+ 	struct page *page;
+ 	bool overlapped;
+ 	bool try_free = true;
+@@ -1314,7 +1314,6 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 	    be->compressed_pages >= be->onstack_pages + Z_EROFS_ONSTACK_PAGES)
+ 		kvfree(be->compressed_pages);
+ 
+-	jtop = 0;
+ 	z_erofs_fill_other_copies(be, err);
+ 	for (i = 0; i < be->nr_pages; ++i) {
+ 		page = be->decompressed_pages[i];
+@@ -1322,22 +1321,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 			continue;
+ 
+ 		DBG_BUGON(z_erofs_page_is_invalidated(page));
+-		if (!z_erofs_is_shortlived_page(page)) {
++		if (!z_erofs_is_shortlived_page(page))
+ 			erofs_onlinefolio_end(page_folio(page), err, true);
+-			continue;
+-		}
+-		if (pcl->algorithmformat != Z_EROFS_COMPRESSION_LZ4) {
++		else
+ 			erofs_pagepool_add(be->pagepool, page);
+-			continue;
+-		}
+-		for (j = 0; j < jtop && be->decompressed_pages[j] != page; ++j)
+-			;
+-		if (j >= jtop)	/* this bounce page is newly detected */
+-			be->decompressed_pages[jtop++] = page;
+ 	}
+-	while (jtop)
+-		erofs_pagepool_add(be->pagepool,
+-				   be->decompressed_pages[--jtop]);
+ 	if (be->decompressed_pages != be->onstack_pages)
+ 		kvfree(be->decompressed_pages);
+ 
 -- 
 2.53.0
 
