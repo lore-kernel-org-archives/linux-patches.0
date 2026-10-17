@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8453D994;
-	Sat, 17 Oct 2026 16:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB13377A92;
+	Sat, 17 Oct 2026 16:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254949; cv=none; b=Bn3r7cBQT0Yp/gQSWhAtS+0z1UUKmre68h0P/zdUXWc3yUv0nV40Ec4hBlTtE1GnQiHYAI15NNU5QD2mU8qdnvMGRx68zzcaVZn2P2IThr4SsQ+5UZtIgH+Wru+irrfl0a3cMKF1tWrrPz44rjxm/zq5+z9ISQJmSrZY2X4hr/E=
+	t=1792254953; cv=none; b=bC94JhtNf3dcUJCpeBA/IglNIcoXLzRpfw2FV9bz6VJjLML+x75z1yW4BQyTjScX33YYdyDxjB0DAt0D70Ckle2xDQvUYtnxpmH+Zwy+n2v5q6/EVZBdPczBJBnpV+qXbex2t2IasZXTJCKJzIXmrAUyq+ZE9HreCBRV4Da1f9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254949; c=relaxed/simple;
-	bh=rDDstsmXyu2bfk6ovj7P3j9TX9jD3yL/Ug3ufQ91mWM=;
+	s=arc-20240116; t=1792254953; c=relaxed/simple;
+	bh=hKZ7oW5SXy0KPCHbHvka6hvFSYP55CBQTiv/J86GN9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzPe1riW2BDlKk7oeURUD0V92So5IueAlQjm9V2bmjGPTKKFSPtAemHkuNI4o9BrRD6udWOAFYvhNBgKhrxny1VCRoxq0KGrtTxiJN+2mNDYxtRFAlmE2LNp1wbhYzdk9l1g1idx1VkNH42lk92Ke5LYhw/HfOPIT2vlba/JGqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCHVJihh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fhCVTE4aad3UdKgdqEf3MNce2JhsEnkLcWMD5H9jUgtZTKdE4EdDBymNhdqT5RFX/x6ZDuZDplHluSGQWthVphbbdcSLBCLSHItQRHQVu+QqDxOEoTV4xWFE+gmLsPfXezaGYMfPUWP2R4fBbHmjp7A0xAJ+JJAKpVCKLz3I2Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWx7leIl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCHVJihh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9051F000C4;
-	Sat, 17 Oct 2026 16:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWx7leIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80551F000C4;
+	Sat, 17 Oct 2026 16:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254948;
-	bh=IMAGaawnwwbGTTDAtriGVyDuwDrBvOwVr0HXsVtFr3k=;
+	s=korg; t=1792254952;
+	bh=AZWrSwR7jGBwP9sNqNy4wJ/rEAt3Qk9ElwCrdzVHrHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCHVJihh7rvmhue5nRnX3krHsmgiAN6y5rwDGZJchLvuxEV+sor4r9GbKxYRcF7kg
-	 5vivWr7n7KXuOg0ADrYKfaUOTwuHIrvmDqTTULen1i4OZOJ4y3oduliwr9nCIUnIWm
-	 6coK2wXT1k79h9r1njJP4DbMkMvl5Q5zW+akXBV8=
+	b=mWx7leIlarY+cxb4+yzjjP56EmvbhmW8U0i1RzJ43sWL/0PsDZN82X8wgTlPnPk/p
+	 8kkajBXbDNXlZPCA3aNx0vLrgKjn6jaDvWiThF8Wbf1vsb0KqXbVPoY7hw5p/L7f6q
+	 GH7ck7Dn4op90+WocGl+0GFJOzZSua/alnwa8nIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeuk Kim <jeuk20.kim@samsung.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 616/869] bpf, xdp: move offload check into dev_xdp_install()
-Date: Sat, 17 Oct 2026 17:57:37 +0200
-Message-ID: <20261017160052.826171503@linuxfoundation.org>
+Subject: [PATCH 6.12 617/869] NFSv4/flexfiles: fix NULL dereference for NFSv4.0 data servers
+Date: Sat, 17 Oct 2026 17:57:38 +0200
+Message-ID: <20261017160052.849706652@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,73 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jeuk Kim <jeuk20.kim@gmail.com>
 
-[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
+[ Upstream commit 2b03ebbf8d5e8f6af4ecd6c65375232dd1ec32cc ]
 
-bpf_xdp_link_update() calls dev_xdp_install() directly and skips
-dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
-make an XDP link with a normal program and then swap in an offloaded or
-device-bound program with BPF_LINK_UPDATE, which puts it on the software
-path.
+flexfiles accepts NFSv4.0 data servers, but two NFSv4 code paths assume
+the data server client has a session. Unlike NFSv4.1+, an NFSv4.0 client
+has no session (clp->cl_session is NULL; it uses clp->cl_slot_tbl), so
+I/O to a v4.0 flexfiles DS oopses:
 
-dev_xdp_install() is the one place all three paths go through:
-"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
-BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
-bound to another device, device-bound in generic mode, native vs generic,
-DEVMAP and CPUMAP) there, and keep only the netlink-flag check
-(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
+  - nfs4_init_ds_session() dereferences clp->cl_session->session_state
+    while seeding the DS lease. It also only seeds cl_lease_time when
+    NFS4_SESSION_INITING is set; without a session that never happens, so
+    cl_lease_time stays 0 and nfs4_renew_state() busy-loops, requeuing
+    every 5 seconds. Seed the lease whenever there is no session and
+    return before touching session state.
 
-Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  - ff_layout_async_handle_error_v4() dereferences
+    clp->cl_session->fc_slot_table on every DS I/O error. Fall back to the
+    v4.0 transport slot table (clp->cl_slot_tbl) when there is no session.
+
+Fixes: a7878ca14008 ("nfs: flexfilelayout: remove v3-only data server limitation")
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ fs/nfs/flexfilelayout/flexfilelayout.c |  3 ++-
+ fs/nfs/nfs4session.c                   | 16 +++++++++++-----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 9888affc68df3..8f507292f8ba4 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9627,6 +9627,37 @@ static int dev_xdp_install(struct net_device *dev, enum bpf_xdp_mode mode,
- 		return -EBUSY;
- 	}
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 7de5575f4bee2..61705e7f0be7a 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1154,7 +1154,8 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 	struct pnfs_layout_hdr *lo = lseg->pls_layout;
+ 	struct inode *inode = lo->plh_inode;
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+-	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
++	struct nfs4_slot_table *tbl = nfs4_has_session(clp) ?
++		&clp->cl_session->fc_slot_table : clp->cl_slot_tbl;
  
-+	if (prog) {
-+		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
-+					       ? XDP_MODE_DRV : XDP_MODE_SKB;
-+		bool offload = mode == XDP_MODE_HW;
+ 	switch (op_status) {
+ 	case NFS4_OK:
+diff --git a/fs/nfs/nfs4session.c b/fs/nfs/nfs4session.c
+index 5db460476bf2a..c59e710eb7ccc 100644
+--- a/fs/nfs/nfs4session.c
++++ b/fs/nfs/nfs4session.c
+@@ -634,16 +634,22 @@ int nfs4_init_ds_session(struct nfs_client *clp, unsigned long lease_time)
+ 	int ret;
+ 
+ 	spin_lock(&clp->cl_lock);
+-	if (test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
+-		/*
+-		 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
+-		 * DS lease to be equal to the MDS lease.
+-		 */
++	/*
++	 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
++	 * DS lease to be equal to the MDS lease.
++	 *
++	 * A v4.0 DS has no session, so seed the lease every time.
++	 */
++	if (!session ||
++	    test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
+ 		clp->cl_lease_time = lease_time;
+ 		clp->cl_last_renewal = jiffies;
+ 	}
+ 	spin_unlock(&clp->cl_lock);
+ 
++	if (!session)
++		return 0;
 +
-+		if (!offload && dev_xdp_prog(dev, other_mode)) {
-+			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
-+			return -EEXIST;
-+		}
-+		if (!offload && bpf_prog_is_offloaded(prog->aux)) {
-+			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
-+			return -EINVAL;
-+		}
-+		if (bpf_prog_is_dev_bound(prog->aux) && !bpf_offload_dev_match(prog, dev)) {
-+			NL_SET_ERR_MSG(extack, "Program bound to different device");
-+			return -EINVAL;
-+		}
-+		if (bpf_prog_is_dev_bound(prog->aux) && mode == XDP_MODE_SKB) {
-+			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+	}
-+
- 	memset(&xdp, 0, sizeof(xdp));
- 	xdp.command = mode == XDP_MODE_HW ? XDP_SETUP_PROG_HW : XDP_SETUP_PROG;
- 	xdp.extack = extack;
+ 	ret = nfs41_check_session_ready(clp);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
