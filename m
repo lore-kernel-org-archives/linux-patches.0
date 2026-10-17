@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113AF377A97;
-	Sat, 17 Oct 2026 16:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA8C35C1BC;
+	Sat, 17 Oct 2026 16:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253855; cv=none; b=BZ+PO1mEkiNqxZ5549KzV3D3lm0mgACShapj1YPGku/UagrEqDYFvNbZ0SA+i51VTsy86IqQeWrtjWq81234fmCWBOEGI0Jh+yyVmdUw2Ng4xKMIOuXSW4aJrAU9aMQfo3Z/DRQdqFGa88rWk0C5uvV7EyzfDjReJgQMa8BEOk0=
+	t=1792253858; cv=none; b=l4xx9/f5IpW60lDr1LCQ91wKJEB4pikuJC9fs91CvJWbKCaAB2/Blrna1tD8Xt1BxK81q1xnpUBgxzM+T+J4Cuxcj2QIeTQ3lvpE0+5gMiAmRTOL3v31q3EnSQVlHN0kFZO7Thoau/f4ioqqmvW2anpvUIyfAnr+q+je5E2zDLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253855; c=relaxed/simple;
-	bh=hAVosU6lhe9/ZFuQUCnv/S6BHrHda3AXZxAb7Lo9eww=;
+	s=arc-20240116; t=1792253858; c=relaxed/simple;
+	bh=CVjDbQfdVIwGdexpcVYPfA+g4I2NbQDK+nhfpnyRH2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jkj/hkHUQXS1+EOCUAF/EtkqU50Z1lW9/8lmVsu1mAyve9kxzdF+9TWy6cc5lzJHrdIh+PZcPfskY5hUb+Ad0afJosIrZwKpT9CkvDAYEt4r+rzIzcHI5Gs3p5yP57Az8YLXljjieJeoMDm/UIZw3WM0feRXrNUU9AXb9bfn1Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etGTawOb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bCgvwKoczrBMcu6M88Oi8apH06MthrArN+jDvvL1LlkN/oYsH5oXZPrxxFdUEo8zDPd5jG7EklXiZ9KW6IcHb6/NdVbmg4PAaVnfJhDB8UEdpK4xG19RnXIYwHTFFsBtcsS0bS6zVcCilrtDo44aOm1RKD3hD2wpHvtRXlPZe7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/R11smC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etGTawOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686891F000C4;
-	Sat, 17 Oct 2026 16:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/R11smC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E8E1F000C4;
+	Sat, 17 Oct 2026 16:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253854;
-	bh=c+EaM9R1WD3fmWgOMhQyTcgV6U0fJvUUdU0rogUCffU=;
+	s=korg; t=1792253857;
+	bh=0f0hq54py0v19zHdg6EOGhNPljyPIiOXbwSGRld2/xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=etGTawObJYuTsnXMpjgI0IcPmtOlp6SwWjIjBGkZO++8c8BvispXZOb4LTshw2S7k
-	 DmupFXBv/vm3s1dSacorhKv+Ai2Vr25G0RHXqMv61Nl+N1oDt/LW34u85jfGwdtepR
-	 q/sD4gSH31HriR6eahY3NWiiKATTQ1uO8dXf+nvU=
+	b=u/R11smCG2iLFWu5l8PexrZyNHmVTt/OMoA58oZB8ZJ7o3+vx/SLX4LgbMpnMC8oI
+	 uehODkOZ/+SqTqzVGjZNXACeeCiqBNRlDSQ69sLwSJivBs+p8vglWB1bfdkNzHMbnv
+	 iXBs6uTDWhzC1slYWoBZJVnX5uOwnmodvn7QSVeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 256/869] media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC
-Date: Sat, 17 Oct 2026 17:51:37 +0200
-Message-ID: <20261017160043.619532499@linuxfoundation.org>
+Subject: [PATCH 6.12 257/869] KVM: Export hardware virtualization enabling/disabling functions
+Date: Sat, 17 Oct 2026 17:51:38 +0200
+Message-ID: <20261017160043.644946085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,171 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Kai Huang <kai.huang@intel.com>
 
-[ Upstream commit e0203ddf9af7c8e170e1e99ce83b4dc07f0cd765 ]
+[ Upstream commit 62b1fa69f31969e11d03529d3a80599ddda2d043 ]
 
-For the i.MX8MQ platform, there is a hardware limitation: the g1 VPU and
-g2 VPU cannot decode simultaneously; otherwise, it will cause below bus
-error and produce corrupted pictures, even potentially lead to system hang.
+To support TDX, KVM will need to enable TDX during KVM module loading
+time.  Enabling TDX requires enabling hardware virtualization first so
+that all online CPUs (and the new CPU going online) are in post-VMXON
+state.
 
-[  110.527986] hantro-vpu 38310000.video-codec: frame decode timed out.
-[  110.583517] hantro-vpu 38310000.video-codec: bus error detected.
+KVM by default enables hardware virtualization but that is done in
+kvm_init(), which must be the last step after all initialization is done
+thus is too late for enabling TDX.
 
-Therefore, it is necessary to ensure that g1 and g2 operate alternately.
-This allows for successful multi-instance decoding of H.264 and HEVC.
+Export functions to enable/disable hardware virtualization so that TDX
+code can use them to handle hardware virtualization enabling before
+kvm_init().
 
-To achieve this, g1 and g2 share the same v4l2_m2m_dev, and then the
-v4l2_m2m_dev can handle the scheduling.
-
-Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Kai Huang <kai.huang@intel.com>
+Message-ID: <dfe17314c0d9978b7bc3b0833dff6f167fbd28f5.1731664295.git.kai.huang@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: e6d96073af68 ("soc/tegra: pmc: Fix unsafe generic_handle_irq() call")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro.h   |  2 +
- .../media/platform/verisilicon/hantro_drv.c   | 42 +++++++++++++++++--
- .../media/platform/verisilicon/imx8m_vpu_hw.c |  8 ++++
- 3 files changed, 49 insertions(+), 3 deletions(-)
+ include/linux/kvm_host.h |  8 ++++++++
+ virt/kvm/kvm_main.c      | 18 ++++--------------
+ 2 files changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-index 811260dc3c777..439f0adb4e816 100644
---- a/drivers/media/platform/verisilicon/hantro.h
-+++ b/drivers/media/platform/verisilicon/hantro.h
-@@ -77,6 +77,7 @@ struct hantro_irq {
-  * @double_buffer:		core needs double buffering
-  * @legacy_regs:		core uses legacy register set
-  * @late_postproc:		postproc must be set up at the end of the job
-+ * @shared_devices:		an array of device ids that cannot run concurrently
-  */
- struct hantro_variant {
- 	unsigned int enc_offset;
-@@ -101,6 +102,7 @@ struct hantro_variant {
- 	unsigned int double_buffer : 1;
- 	unsigned int legacy_regs : 1;
- 	unsigned int late_postproc : 1;
-+	const struct of_device_id *shared_devices;
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index b4235e99f0a9d..2b7068685ff2a 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -2528,4 +2528,12 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
+ 				    struct kvm_pre_fault_memory *range);
+ #endif
+ 
++#ifdef CONFIG_KVM_GENERIC_HARDWARE_ENABLING
++int kvm_enable_virtualization(void);
++void kvm_disable_virtualization(void);
++#else
++static inline int kvm_enable_virtualization(void) { return 0; }
++static inline void kvm_disable_virtualization(void) { }
++#endif
++
+ #endif
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 15ad929ec0d0c..b2e76be087121 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -136,8 +136,6 @@ static int kvm_no_compat_open(struct inode *inode, struct file *file)
+ #define KVM_COMPAT(c)	.compat_ioctl	= kvm_no_compat_ioctl,	\
+ 			.open		= kvm_no_compat_open
+ #endif
+-static int kvm_enable_virtualization(void);
+-static void kvm_disable_virtualization(void);
+ 
+ static void kvm_io_bus_destroy(struct kvm_io_bus *bus);
+ 
+@@ -5713,7 +5711,7 @@ static struct syscore_ops kvm_syscore_ops = {
+ 	.shutdown = kvm_shutdown,
  };
  
- /**
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 137ca13eeed7c..01d6ab67a8bf3 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -13,6 +13,7 @@
- #include <linux/clk.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/pm_runtime.h>
-@@ -1038,6 +1039,41 @@ static int hantro_disable_multicore(struct hantro_dev *vpu)
+-static int kvm_enable_virtualization(void)
++int kvm_enable_virtualization(void)
+ {
+ 	int r;
+ 
+@@ -5758,8 +5756,9 @@ static int kvm_enable_virtualization(void)
+ 	--kvm_usage_count;
+ 	return r;
+ }
++EXPORT_SYMBOL_GPL(kvm_enable_virtualization);
+ 
+-static void kvm_disable_virtualization(void)
++void kvm_disable_virtualization(void)
+ {
+ 	guard(mutex)(&kvm_usage_lock);
+ 
+@@ -5770,6 +5769,7 @@ static void kvm_disable_virtualization(void)
+ 	cpuhp_remove_state(CPUHP_AP_KVM_ONLINE);
+ 	kvm_arch_disable_virtualization();
+ }
++EXPORT_SYMBOL_GPL(kvm_disable_virtualization);
+ 
+ static int kvm_init_virtualization(void)
+ {
+@@ -5785,21 +5785,11 @@ static void kvm_uninit_virtualization(void)
+ 		kvm_disable_virtualization();
+ }
+ #else /* CONFIG_KVM_GENERIC_HARDWARE_ENABLING */
+-static int kvm_enable_virtualization(void)
+-{
+-	return 0;
+-}
+-
+ static int kvm_init_virtualization(void)
+ {
  	return 0;
  }
  
-+static struct v4l2_m2m_dev *hantro_get_v4l2_m2m_dev(struct hantro_dev *vpu)
-+{
-+	struct device_node *node;
-+	struct hantro_dev *shared_vpu;
-+
-+	if (!vpu->variant || !vpu->variant->shared_devices)
-+		goto init_new_m2m_dev;
-+
-+	for_each_matching_node(node, vpu->variant->shared_devices) {
-+		struct platform_device *pdev;
-+		struct v4l2_m2m_dev *m2m_dev;
-+
-+		pdev = of_find_device_by_node(node);
-+		if (!pdev)
-+			continue;
-+
-+		shared_vpu = platform_get_drvdata(pdev);
-+		if (IS_ERR_OR_NULL(shared_vpu) || shared_vpu == vpu) {
-+			platform_device_put(pdev);
-+			continue;
-+		}
-+
-+		v4l2_m2m_get(shared_vpu->m2m_dev);
-+		m2m_dev = shared_vpu->m2m_dev;
-+		platform_device_put(pdev);
-+
-+		of_node_put(node);
-+
-+		return m2m_dev;
-+	}
-+
-+init_new_m2m_dev:
-+	return v4l2_m2m_init(&vpu_m2m_ops);
-+}
-+
- static int hantro_probe(struct platform_device *pdev)
+-static void kvm_disable_virtualization(void)
+-{
+-
+-}
+-
+ static void kvm_uninit_virtualization(void)
  {
- 	const struct of_device_id *match;
-@@ -1189,7 +1225,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	}
- 	platform_set_drvdata(pdev, vpu);
  
--	vpu->m2m_dev = v4l2_m2m_init(&vpu_m2m_ops);
-+	vpu->m2m_dev = hantro_get_v4l2_m2m_dev(vpu);
- 	if (IS_ERR(vpu->m2m_dev)) {
- 		v4l2_err(&vpu->v4l2_dev, "Failed to init mem2mem device\n");
- 		ret = PTR_ERR(vpu->m2m_dev);
-@@ -1228,7 +1264,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	hantro_remove_enc_func(vpu);
- err_m2m_rel:
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- err_v4l2_unreg:
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
-@@ -1251,7 +1287,7 @@ static void hantro_remove(struct platform_device *pdev)
- 	hantro_remove_dec_func(vpu);
- 	hantro_remove_enc_func(vpu);
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
- 	reset_control_assert(vpu->resets);
-diff --git a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-index 74fd985a8aad1..cdaac2f18fb54 100644
---- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-@@ -361,6 +361,12 @@ const struct hantro_variant imx8mq_vpu_variant = {
- 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
- };
- 
-+static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
-+	{ .compatible = "nxp,imx8mq-vpu-g1", },
-+	{ .compatible = "nxp,imx8mq-vpu-g2", },
-+	{ /* sentinel */ }
-+};
-+
- const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.dec_fmts = imx8m_vpu_dec_fmts,
- 	.num_dec_fmts = ARRAY_SIZE(imx8m_vpu_dec_fmts),
-@@ -374,6 +380,7 @@ const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_irqs),
- 	.clk_names = imx8mq_g1_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g1_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
- 
- const struct hantro_variant imx8mq_vpu_g2_variant = {
-@@ -389,6 +396,7 @@ const struct hantro_variant imx8mq_vpu_g2_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_g2_irqs),
- 	.clk_names = imx8mq_g2_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g2_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
- 
- const struct hantro_variant imx8mm_vpu_g1_variant = {
 -- 
 2.53.0
 
