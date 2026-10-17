@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C90255E43;
-	Sat, 17 Oct 2026 18:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E540C3C09EE;
+	Sat, 17 Oct 2026 18:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260313; cv=none; b=rUDZsWYZvpc+x0K2qVFKhijFlFXAp0k+wTeCnvAJP7ss4lBqHNqrNd0XArZ+4vfObPLb7JbmXCU0zsYYwngr874heiKqc1aNdWTYAcn0Rs5KExDBgiHGhY6uN040DlNrQDbtAflaZ1IPsFWLeysivj424coB3LIxkpO0hw7HSrQ=
+	t=1792260316; cv=none; b=T4XJfbnhXrQMvOV2zYm50dV6KZ8Za0Dv7HCw2NV8hKg+8SbViWIqgIcg9iXttBAm9PhM6TkWL0MR3uar4IzJ2nHMTiyohLAZ8664Uxo52kZo2VcNah+aAtIiYAGJUIVqfdi7Ith47OkUg3+xDEYJaHNU3Lm4yvD4znFplSR7Jec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260313; c=relaxed/simple;
-	bh=F1cYRq73EWctWRQzQsgyh2fPBBZhfEP68+nJlKvnh0Q=;
+	s=arc-20240116; t=1792260316; c=relaxed/simple;
+	bh=e5eXiu1K6Bc+KkIVeDWL+CSeCOfajxDizWDRfItimwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1MGtG12S9Qe0hvIRfmQ2QTnSxOVoIqbh/uIGMF8Nyn1ms/vpnXcrZPjLDuQRtRBn3iFL6LRWzpA1qI5H8zJ82L4mZhKeNZGlr32/haqT4HqUnNMrB2lvwW8WkprWD40ju7kNKOjqJMb/dF6d0qajWHgg/KXdqkpymfvADSs938=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhZgZFlV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hojLUc7fDKlH8Nrki/sv1LUvWgvZi7zgnVZDHJEnV+5YmtiEWDP7srD2CgtDGXm2S7k0uQ6cho+EDuaBKCcj4FQg6dYpQXIHGaoyq4QFf4q8mEaJQFkPw6cofF3jRWdZyGNySJHPtY4SchZkBnfpF5aaR6qBNBFPwFt0KdQyjZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvDomkw5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhZgZFlV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A7F1F000C4;
-	Sat, 17 Oct 2026 18:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvDomkw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494081F000C4;
+	Sat, 17 Oct 2026 18:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260311;
-	bh=flaunfpspmb2VTWcSEMlvB6Q37cnGTusg1c1OxYs9BE=;
+	s=korg; t=1792260314;
+	bh=oansRFwPLABS4XEOhtZ/2AFfi7CUW0dHDvd3vSGqmMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RhZgZFlVriX9ey+QY6hF2pPuiR7la7VjJc6Sx5Qp6fKf4Z2to0vL5c1A0rkoi4CTb
-	 DoHBVAE9P0jieAOD6uIN0sqSwI8EEOAq0/gj+ptyFysy5oa6R8LGMZLsc/v9MDCujE
-	 c/VsknIdBHGJHVAPiccbMK235IyqjvbA9br+/ryY=
+	b=JvDomkw5rtyBXa+bkMrkngruJVd30Urk4Ke42LIx/+D00Ei4tK4hnNSJt6lwmsAGk
+	 jVe7aQ4ItjYI4EhULkljz4OpnZnSL48yB3ZBnKH/OQSTmmZXONzkaZnAvXSgx0/7ux
+	 j0JFUoRSrJGOPp2HUZnHtEatTwnwicEYUcBsvLz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Israel Batista <linux@israelbatista.dev.br>,
-	David Hildenbrand <david@redhat.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Omar Sandoval <osandov@osandov.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1496/1674] mm: change type of state in struct memory_block
-Date: Sat, 17 Oct 2026 18:02:48 +0200
-Message-ID: <20261017160509.540515826@linuxfoundation.org>
+Subject: [PATCH 6.6 1505/1674] i3c: master: Fix recursive locking during device registration
+Date: Sat, 17 Oct 2026 18:02:57 +0200
+Message-ID: <20261017160509.763781525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -56,61 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Israel Batista <linux@israelbatista.dev.br>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 8bc7ba3d265d6ee698de4b1941b7e8f7d91a0562 ]
+[ Upstream commit 456f832e5fc26fbfd3b8200fd4553eee520cc377 ]
 
-The state of a memory block should be restricted to values specified in
-the documentation of the memory hotplug API.  However, since the state
-field in the memory_block struct was defined as an unsigned long, this
-restriction was not enforced at compile time.
+i3c_master_register_new_i3c_devs() registers newly discovered devices
+while holding i3c_bus_normaluse_lock(), a down_read().  device_register()
+can immediately probe the device, and probe callbacks typically invoke
+I3C helpers that take i3c_bus_normaluse_lock() again, leading to a
+recursive acquisition of the same rwsem.  rwsems do not support recursive
+read locking and can deadlock when a writer is waiting.  See the
+"Recursive read locks" section of Documentation/locking/lockdep-design.rst.
 
-With the introduction of the enum memory_block_state, it is now possible
-to incorporate the desired semantics in the field declaration and enforce
-these restrictions at compile time.
+For example, with Intel LPSS I3C, LOCKDEP generates a WARNING like:
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/unbind
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/bind
+  WARNING: possible recursive locking detected
+  kworker/5:1/94 is trying to acquire lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_device_match_id+0x45/0x370
+  but task is already holding lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_master_reg_work_fn+0x21/0x5f0
 
-[akpm@linux-foundation.org: fix whitespace, per Randy]
-Link: https://lkml.kernel.org/r/20251029195617.2210700-3-linux@israelbatista.dev.br
-Signed-off-by: Israel Batista <linux@israelbatista.dev.br>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Omar Sandoval <osandov@osandov.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 2ebce860bdd7 ("mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug")
+Fix this by separating device creation from device registration.
+Populate desc->dev under the maintenance lock, collect the devices that
+still need registration into a local list, then release the lock before
+calling device_register().  Finally retake the lock and clean up any
+devices that failed to register.
+
+Use the maintenance lock rather than the normal-use lock while adding
+device objects.  A write-side maintenance lock prevents readers from
+observing a partially initialized desc->dev during initial device
+population, or desc->dev disappearing if registration fails.
+
+The local list requires a list node, so add a list node member to struct
+i3c_device.
+
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260807145638.168865-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/memory.c  | 2 +-
- include/linux/memory.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c       | 39 ++++++++++++++++++++++++++------------
+ include/linux/i3c/master.h |  3 +++
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/base/memory.c b/drivers/base/memory.c
-index 468ef9b3983cf..2858a2165d960 100644
---- a/drivers/base/memory.c
-+++ b/drivers/base/memory.c
-@@ -160,7 +160,7 @@ static ssize_t state_show(struct device *dev, struct device_attribute *attr,
- 		break;
- 	default:
- 		WARN_ON(1);
--		return sysfs_emit(buf, "ERROR-UNKNOWN-%ld\n", mem->state);
-+		return sysfs_emit(buf, "ERROR-UNKNOWN-%d\n", mem->state);
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index e2417596f6adb..35d02234471b6 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1620,12 +1620,16 @@ static int i3c_master_early_i3c_dev_add(struct i3c_master_controller *master,
+ static void
+ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ {
++	struct i3c_device *i3cdev, *tmp;
+ 	struct i3c_dev_desc *desc;
++	LIST_HEAD(i3c_unreg_devs);
+ 	int ret;
+ 
+ 	if (!master->init_done)
+ 		return;
+ 
++	i3c_bus_maintenance_lock(&master->bus);
++
+ 	i3c_bus_for_each_i3cdev(&master->bus, desc) {
+ 		if (desc->dev || !desc->info.dyn_addr || desc == master->this)
+ 			continue;
+@@ -1646,15 +1650,30 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ 		if (desc->boardinfo)
+ 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+ 
+-		ret = device_register(&desc->dev->dev);
+-		if (ret) {
+-			dev_err(&master->dev,
+-				"Failed to add I3C device (err = %d)\n", ret);
+-			desc->dev->desc = NULL;
+-			put_device(&desc->dev->dev);
+-			desc->dev = NULL;
+-		}
++		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
++	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		ret = device_register(&i3cdev->dev);
++		if (ret)
++			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
++		else
++			list_del_init(&i3cdev->node);
  	}
++
++	i3c_bus_maintenance_lock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		list_del(&i3cdev->node);
++		desc = i3cdev->desc;
++		i3cdev->desc = NULL;
++		put_device(&i3cdev->dev);
++		desc->dev = NULL;
++	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
+ }
  
- 	return sysfs_emit(buf, "%s\n", output);
-diff --git a/include/linux/memory.h b/include/linux/memory.h
-index f53cfdaaaa416..1028d42406cce 100644
---- a/include/linux/memory.h
-+++ b/include/linux/memory.h
-@@ -66,7 +66,7 @@ struct memory_group {
+ /**
+@@ -1683,9 +1702,7 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
+ 	if (ret)
+ 		return ret;
  
- struct memory_block {
- 	unsigned long start_section_nr;
--	unsigned long state;		/* serialized by the dev->lock */
-+	enum memory_block_state state;	/* serialized by the dev->lock */
- 	int online_type;		/* for passing data to online routine */
- 	int nid;			/* NID for this memory block */
- 	/*
+-	i3c_bus_normaluse_lock(&master->bus);
+ 	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
+ 
+ 	return 0;
+ }
+@@ -2857,9 +2874,7 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	 * register I3C devices discovered during the initial DAA.
+ 	 */
+ 	master->init_done = true;
+-	i3c_bus_normaluse_lock(&master->bus);
+ 	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
+ 
+ 	return 0;
+ 
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index f2eb2452ffa5f..5e689cec1d728 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -220,6 +220,8 @@ struct i3c_dev_desc {
+  *	  every time the I3C device is rediscovered with a different dynamic
+  *	  address assigned
+  * @bus: I3C bus this device is attached to
++ * @node: unregistered device list node, only for use by
++ *	  i3c_master_register_new_i3c_devs(), it is not protected by a lock
+  *
+  * I3C device object exposed to I3C device drivers. The takes care of linking
+  * this object to the relevant &struct_i3c_dev_desc one.
+@@ -230,6 +232,7 @@ struct i3c_device {
+ 	struct device dev;
+ 	struct i3c_dev_desc *desc;
+ 	struct i3c_bus *bus;
++	struct list_head node;
+ };
+ 
+ /*
 -- 
 2.53.0
 
