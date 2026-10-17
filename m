@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4491F16B;
-	Sat, 17 Oct 2026 17:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E003A1E92;
+	Sat, 17 Oct 2026 17:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258585; cv=none; b=S42LjLJL3eJhdfQuFuTlCT8tyuaS4T3fJcNRAJ3/lHO1wTU5/kEhuWdh9PSERPvcWD595YC0BesT2viF1gVkp9kIZzt9zflBTz8tvHxCueWGTOfK0r3qtGSYvdjfRGAg9nDUN/B13Gfy/kaOe/Zldmd83yhWYDxu3ZwtyHbsxEg=
+	t=1792258588; cv=none; b=vFmWkXHREVcmpOZS+Ae1T+N6/6EXhdCgTblEdoICfabCEJ2sVaXULNQHZ0J2YoUIaV1EGDCUeth2iKCZKNLBlHR3AHzWWmN5pwLk4jFFR/+KRfoMw2+p6qHtyLOqBePEu3sI+E8snugT/6nqY2KxjCY2VrFDyX2Ot3/pgE2beVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258585; c=relaxed/simple;
-	bh=2DvlgQcAo/6WEiB7YYatpj4kyrJAGgNiB8qjdl9w8Bw=;
+	s=arc-20240116; t=1792258588; c=relaxed/simple;
+	bh=lNaMpqjPhM9iangWLPeshPupTUrhdxSoW2EsbvxvaKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IheesPgkspVKJueVLkiJUEE3MmyHel09t7/SYmNRTD2ozjPyti6SzF2O0SFRdI3GZoIr+WsR3xf3Lt8ZNXZv62WKmxOOjpJb61Tr5KvLBVtykKnU0/qGS7BlhCsh1eIe11IHJZl6m73HiIMbT84jbAQ+UxkoFv6LTYdt/M0PjAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcLguUQU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iA7zFkjX/+rK1UwB8nGiGTQcrWi253J1ukW+EEp4rdggoyQscvCYlCSKykLIwlExh1tYemHJXmtY4G73BozIavF38Mxq01L35XEWpjCA416qHmRn1hovGG4wwyCvp4Fk7Q0PANT0aToRenRml4Nn7pdoYw1DitzmAS2fuPUZdU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDvbaPeA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcLguUQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6411F000C4;
-	Sat, 17 Oct 2026 17:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDvbaPeA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27311F000C4;
+	Sat, 17 Oct 2026 17:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258584;
-	bh=BKU+u1kAWeGEyGQ3T6vsO3cZVWr2TKQtg7VB7aGqG4Y=;
+	s=korg; t=1792258587;
+	bh=KC1B7JeSMqyaSqYRKBJ6PU4NJMGFFDcHLhU5+xIp32I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fcLguUQUnrzbEV9CZPpOIuBv6tAusA1agRu12yiFcEl66m6nqNYnOC5ilKC6mDr6z
-	 QO1RtdLJqzoKKLx2nspYZhzxfUu/35Pz9wUZ9GX7VjAo95i9FtSZ9haUgbSdXvEp+Q
-	 gWIKfuaYy1DoO8PTItwJQ3FA2ph8szhwwLocJmVY=
+	b=fDvbaPeARmgXmd79+eQu9Y0+QsaeP3Q1f57KikeDbGqfeCI4f0m1+0sK0P5LMhO8S
+	 FPzP3DwO18eH6GG26lGkgA8Cr+BRDpI0F0/XutxarjxFzKcxku3C6sDPlFbbZR4rD8
+	 VbyUibn/E3TSbjPhnG330ypYkm2/G/FTl2Nd+N2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuen-Han Tsai <khtsai@google.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0892/1674] usb: gadget: f_eem: Fix net_device lifecycle with device_move
-Date: Sat, 17 Oct 2026 17:52:44 +0200
-Message-ID: <20261017160454.025183755@linuxfoundation.org>
+Subject: [PATCH 6.6 0883/1674] rxrpc: proc: size address buffers for %pISpc output
+Date: Sat, 17 Oct 2026 17:52:35 +0200
+Message-ID: <20261017160453.779393037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,204 +57,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d9270c9a8118c1535409db926ac1e2545dc97b81 ]
+[ Upstream commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 ]
 
-The net_device is allocated during function instance creation and
-registered during the bind phase with the gadget device as its sysfs
-parent. When the function unbinds, the parent device is destroyed, but
-the net_device survives, resulting in dangling sysfs symlinks:
+The AF_RXRPC procfs helpers format local and remote socket addresses into
+fixed 50-byte stack buffers with "%pISpc".
 
-console:/ # ls -l /sys/class/net/usb0
-lrwxrwxrwx ... /sys/class/net/usb0 ->
-/sys/devices/platform/.../gadget.0/net/usb0
-console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
-ls: .../gadget.0/net/usb0: No such file or directory
+That is too small for the longest current-tree IPv6-with-port form the
+formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
+dotted-quad tail not only for v4mapped addresses, but also for ISATAP
+addresses via ipv6_addr_is_isatap().
 
-Use device_move() to reparent the net_device between the gadget device
-tree and /sys/devices/virtual across bind and unbind cycles. During the
-final unbind, calling device_move(NULL) moves the net_device to the
-virtual device tree before the gadget device is destroyed. On rebinding,
-device_move() reparents the device back under the new gadget, ensuring
-proper sysfs topology and power management ordering.
+As a result, a case such as
 
-To maintain compatibility with legacy composite drivers (e.g., multi.c),
-the bound flag is used to indicate whether the network device is shared
-and pre-registered during the legacy driver's bind phase.
+  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
 
-Fixes: b29002a15794 ("usb: gadget: f_eem: convert to new function interface with backward compatibility")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-5-4886b578161b@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+is possible with the current formatter. That is 50 visible characters, so
+51 bytes including the trailing NUL, which does not fit in the existing
+char[50] buffers used by net/rxrpc/proc.c.
+
+Size the buffers from the formatter's maximum textual form and switch the
+call sites to scnprintf().
+
+Changes since v1:
+- correct the changelog to cite the actual maximum current-tree case
+  explicitly
+- frame the proof around the ISATAP formatting path instead of the earlier
+  mapped-v4 example
+
+Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Anderson Nascimento <anderson@allelesecurity.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_eem.c | 59 +++++++++++++++--------------
- drivers/usb/gadget/function/u_eem.h | 21 +++++++---
- 2 files changed, 46 insertions(+), 34 deletions(-)
+ net/rxrpc/proc.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_eem.c b/drivers/usb/gadget/function/f_eem.c
-index f2478b48a30b2..8480f130db11e 100644
---- a/drivers/usb/gadget/function/f_eem.c
-+++ b/drivers/usb/gadget/function/f_eem.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2009 EF Johnson Technologies
-  */
+diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
+index 55a95f064df08..f698796976c50 100644
+--- a/net/rxrpc/proc.c
++++ b/net/rxrpc/proc.c
+@@ -10,6 +10,10 @@
+ #include <net/af_rxrpc.h>
+ #include "ar-internal.h"
  
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
-@@ -251,24 +252,22 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
- 	struct usb_ep		*ep;
- 
- 	struct f_eem_opts	*eem_opts;
-+	struct net_device	*net __free(detach_gadget) = NULL;
- 
- 	eem_opts = container_of(f->fi, struct f_eem_opts, func_inst);
--	/*
--	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
--	 * configurations are bound in sequence with list_for_each_entry,
--	 * in each configuration its functions are bound in sequence
--	 * with list_for_each_entry, so we assume no race condition
--	 * with regard to eem_opts->bound access
--	 */
--	if (!eem_opts->bound) {
--		mutex_lock(&eem_opts->lock);
--		gether_set_gadget(eem_opts->net, cdev->gadget);
--		status = gether_register_netdev(eem_opts->net);
--		mutex_unlock(&eem_opts->lock);
--		if (status)
--			return status;
--		eem_opts->bound = true;
--	}
++#define RXRPC_PROC_ADDRBUF_SIZE \
++	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
++	 sizeof(":12345"))
 +
-+	scoped_guard(mutex, &eem_opts->lock)
-+		if (eem_opts->bind_count == 0 && !eem_opts->bound) {
-+			if (!device_is_registered(&eem_opts->net->dev)) {
-+				gether_set_gadget(eem_opts->net, cdev->gadget);
-+				status = gether_register_netdev(eem_opts->net);
-+			} else
-+				status = gether_attach_gadget(eem_opts->net, cdev->gadget);
-+
-+			if (status)
-+				return status;
-+			net = eem_opts->net;
-+		}
+ static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
+ 	[RXRPC_CONN_UNUSED]			= "Unused  ",
+ 	[RXRPC_CONN_CLIENT_UNSECURED]		= "ClUnsec ",
+@@ -54,7 +58,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
+ 	enum rxrpc_call_state state;
+ 	unsigned long timeout = 0;
+ 	rxrpc_seq_t acks_hard_ack;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
  
- 	us = usb_gstrings_attach(cdev, eem_strings,
- 				 ARRAY_SIZE(eem_string_defs));
-@@ -279,21 +278,19 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
- 	/* allocate instance-specific interface IDs */
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	eem->ctrl_id = status;
- 	eem_intf.bInterfaceNumber = status;
+ 	if (v == &rxnet->calls) {
+ 		seq_puts(seq,
+@@ -69,11 +73,11 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
  
--	status = -ENODEV;
--
- 	/* allocate instance-specific endpoints */
- 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_in_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	eem->port.in_ep = ep;
- 
- 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_out_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	eem->port.out_ep = ep;
- 
- 	/* support all relevant hardware speeds... we expect that when
-@@ -309,16 +306,14 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
- 	status = usb_assign_descriptors(f, eem_fs_function, eem_hs_function,
- 			eem_ss_function, eem_ss_function);
- 	if (status)
--		goto fail;
-+		return status;
-+
-+	eem_opts->bind_count++;
-+	no_free_ptr(net);
- 
- 	DBG(cdev, "CDC Ethernet (EEM): IN/%s OUT/%s\n",
- 			eem->port.in_ep->name, eem->port.out_ep->name);
- 	return 0;
--
--fail:
--	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
--
--	return status;
- }
- 
- static void eem_cmd_complete(struct usb_ep *ep, struct usb_request *req)
-@@ -597,7 +592,7 @@ static void eem_free_inst(struct usb_function_instance *f)
- 	struct f_eem_opts *opts;
- 
- 	opts = container_of(f, struct f_eem_opts, func_inst);
--	if (opts->bound)
-+	if (device_is_registered(&opts->net->dev))
- 		gether_cleanup(netdev_priv(opts->net));
+ 	local = call->local;
+ 	if (local)
+-		sprintf(lbuff, "%pISpc", &local->srx.transport);
++		scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
  	else
- 		free_netdev(opts->net);
-@@ -640,9 +635,17 @@ static void eem_free(struct usb_function *f)
+ 		strcpy(lbuff, "no_local");
  
- static void eem_unbind(struct usb_configuration *c, struct usb_function *f)
+-	sprintf(rbuff, "%pISpc", &call->dest_srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &call->dest_srx.transport);
+ 
+ 	state = rxrpc_call_state(call);
+ 	if (state != RXRPC_CALL_SERVER_PREALLOC) {
+@@ -144,7 +148,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
+ 	struct rxrpc_connection *conn;
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+ 	const char *state;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == &rxnet->conn_proc_list) {
+ 		seq_puts(seq,
+@@ -163,8 +167,8 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
+ 		goto print;
+ 	}
+ 
+-	sprintf(lbuff, "%pISpc", &conn->local->srx.transport);
+-	sprintf(rbuff, "%pISpc", &conn->peer->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->local->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->peer->srx.transport);
+ print:
+ 	state = rxrpc_is_conn_aborted(conn) ?
+ 		rxrpc_call_completions[conn->completion] :
+@@ -205,7 +209,7 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
  {
-+	struct f_eem_opts *opts;
-+
- 	DBG(c->cdev, "eem unbind\n");
+ 	struct rxrpc_peer *peer;
+ 	time64_t now;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
  
-+	opts = container_of(f->fi, struct f_eem_opts, func_inst);
-+
- 	usb_free_all_descriptors(f);
-+
-+	opts->bind_count--;
-+	if (opts->bind_count == 0 && !opts->bound)
-+		gether_detach_gadget(opts->net);
- }
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -218,9 +222,9 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
  
- static struct usb_function *eem_alloc(struct usb_function_instance *fi)
-diff --git a/drivers/usb/gadget/function/u_eem.h b/drivers/usb/gadget/function/u_eem.h
-index 3bd85dfcd71c8..78ef558152197 100644
---- a/drivers/usb/gadget/function/u_eem.h
-+++ b/drivers/usb/gadget/function/u_eem.h
-@@ -15,17 +15,26 @@
+ 	peer = list_entry(v, struct rxrpc_peer, hash_link);
  
- #include <linux/usb/composite.h>
+-	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
  
-+/**
-+ * struct f_eem_opts - EEM function options
-+ * @func_inst: USB function instance.
-+ * @net: The net_device associated with the EEM function.
-+ * @bound: True if the net_device is shared and pre-registered during the
-+ *         legacy composite driver's bind phase (e.g., multi.c). If false,
-+ *         the EEM function will register the net_device during its own
-+ *         bind phase.
-+ * @bind_count: Tracks the number of configurations the EEM function is
-+ *              bound to, preventing double-registration of the @net device.
-+ * @lock: Protects the data from concurrent access by configfs read/write
-+ *        and create symlink/remove symlink operations.
-+ * @refcnt: Reference counter for the function instance.
-+ */
- struct f_eem_opts {
- 	struct usb_function_instance	func_inst;
- 	struct net_device		*net;
- 	bool				bound;
-+	int				bind_count;
+-	sprintf(rbuff, "%pISpc", &peer->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
  
--	/*
--	 * Read/write access to configfs attributes is handled by configfs.
--	 *
--	 * This is to protect the data from concurrent access by read/write
--	 * and create symlink/remove symlink.
--	 */
- 	struct mutex			lock;
- 	int				refcnt;
- };
+ 	now = ktime_get_seconds();
+ 	seq_printf(seq,
+@@ -330,7 +334,7 @@ const struct seq_operations rxrpc_peer_seq_ops = {
+ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
+ {
+ 	struct rxrpc_local *local;
+-	char lbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -341,7 +345,7 @@ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
+ 
+ 	local = hlist_entry(v, struct rxrpc_local, link);
+ 
+-	sprintf(lbuff, "%pISpc", &local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
+ 
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %3u %3u %3u\n",
 -- 
 2.53.0
 
