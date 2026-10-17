@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C64D2E8DEB;
-	Sat, 17 Oct 2026 15:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357E04CF477;
+	Sat, 17 Oct 2026 15:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252493; cv=none; b=ClhFwWUG77QfWnNXOMaFwqudoRPZMTrEHTfl5Zmt3+LwAmbDy/TnTjLJ8uQluBKChdIYqvg/+1eOGFGwGw+trc5rhIelx2WFB0GJohC3U/s4000Fn6JF+0BVgiByHMnNoOKB1d6r/lYLB5aBdyjW5/lhCMtJYR4WoZON/X1daZc=
+	t=1792252496; cv=none; b=MCj0Kg/+5PMyprdj352HnTkLvFPjyLgZDJgGijJeFEkXGy7oxyBJgrO1d1kQ/v7nN9YdlOFvqSmi8SSnkULDINJhMHt5hxIbsp6KbI7rS/AdqwpVgMPwHwFcO2kiRXL+0GVIZbFvxMjqSoOLgfo1DABmKPdXf5SBZwLe2PoAS5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252493; c=relaxed/simple;
-	bh=pPJRA0My8swRYBJTMEeItVml1TqkSTXYEx13qHnHnEc=;
+	s=arc-20240116; t=1792252496; c=relaxed/simple;
+	bh=ZCiB6RmG1g34TqiUr59cLrQPpqipS91OIUEHvheUN0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQweBA/6CMiIZEdXZvYwg6nHJtYiU2AlhiBTCcLuANt5OQuYMl184xx8NGVGLh0l86bG4U/6BgjrGKDXIe9wt3HFa2leMYQONJgY+HNwItER1Ltoi6g/uBcKueWrC988OxE2EjAD2AhWp2+fwk6EXTAvnJFd8G+fmKLoiTgti7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6ukjDn7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qYhLuHqHMkX4M8Krnu/T4UL/qHwWFL5lIGDcNu+T27YfG91Xzv6DUUzBPYbk47nLEa4NQBv4WkW+GldZK4I1XGinnly2D35x1r0Wqdpwleeh4trFGDfF9wLHcqNMVBjC7CSsOhCPzZ/AT5ON/eWowJ0VuI1xn0v2zIu6kHywREU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l718hWKJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6ukjDn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1B11F000C4;
-	Sat, 17 Oct 2026 15:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l718hWKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBA91F000C4;
+	Sat, 17 Oct 2026 15:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252491;
-	bh=9DziQ/JhXH2a/fQXhSO4g5Sp8pMo/A33yF3caoUOhuI=;
+	s=korg; t=1792252495;
+	bh=QSYbHVlIKHYfKbawbdXosrjtSo7siuMwkqnEs7PMozU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z6ukjDn7NMY1zyDRZB2wsEyChWdkBVFaoeDv9+jDXwuto9+JEVYC0QR/N4+qu56lC
-	 0SpY/dW15DcZAZlo6UYANvHIAA2ms+S8HFi0SpdAgzZySfVSJXlxNB79Hjz3KzVqTc
-	 T/aaRIEfdc7QY771R3ZS8oHoY1W3b7X7Qx+DDG3U=
+	b=l718hWKJEvSgEWfbUTtEo5mzVtYwvOVlcfjR/IBoAtb//wpJuyIix03f5hLX9EgxW
+	 FNzmWOi52XxqOlvVhP2LSqE60Ex2eiNu/XmJyD1X3KDZsLhdGy3Lfecc/iSJVtjV1i
+	 pslFMw35+ANLWpAV8gyqjP0NdLzKIqyYPqP/SgxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 10/10] ASoC: cs35l56: Add DAI for SDCA OT25 stream
-Date: Sat, 17 Oct 2026 17:54:39 +0200
-Message-ID: <20261017155100.069700184@linuxfoundation.org>
+Subject: [PATCH 7.2 02/10] dm-integrity: fix NULL pointer dereference when the R flag is used
+Date: Sat, 17 Oct 2026 17:54:31 +0200
+Message-ID: <20261017155059.792072896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155059.698368299@linuxfoundation.org>
 References: <20261017155059.698368299@linuxfoundation.org>
@@ -51,169 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 86c8360c97f66fa7830fd930e2dc69374007284b ]
+[ Upstream commit 7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84 ]
 
-Add a DAI for the SDCA OT25 stream on SoundWire DP4.
+If the dm-integrity device has the SB_FLAG_DIRTY_BITMAP flag set and the
+user activates the device in the 'R' mode, a crash in dm_integrity_resume
+happens because the function attempts to read the journal containing the
+bitmap.
 
-The SDCA-defined OT25 stream is an amp reference feedback, typically used
-for AEC. The firmware outputs this on DP4. The firmware owns all control
-registers for this stream so there are no mixer controls or any other
-configuration options.
+This patch makes dm-integrity skip any writes to the device in
+dm_integrity_resume if the device is activated in the 'R' mode.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261005155235.1386525-2-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
+Cc: stable@vger.kernel.org
+Stable-dep-of: fc79aeb86a2c ("dm-integrity: validate the superblock on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/cs35l56.h        |  1 +
- sound/soc/codecs/cs35l56-sdw.c |  9 ++++--
- sound/soc/codecs/cs35l56.c     | 54 ++++++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+), 2 deletions(-)
+ drivers/md/dm-integrity.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index 2490b72c0a7a8..07434e644b89d 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -312,6 +312,7 @@ struct snd_ctl_elem_value;
- 
- #define CS35L56_SDW1_PLAYBACK_PORT			1
- #define CS35L56_SDW1_CAPTURE_PORT			3
-+#define CS35L56_OT25_CAPTURE_PORT			4
- 
- #define CS35L56_NUM_BULK_SUPPLIES			3
- #define CS35L56_NUM_DSP_REGIONS				5
-diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
-index a3812ab4c0227..d52209111fe2e 100644
---- a/sound/soc/codecs/cs35l56-sdw.c
-+++ b/sound/soc/codecs/cs35l56-sdw.c
-@@ -295,11 +295,11 @@ static int cs35l56_sdw_read_prop(struct sdw_slave *peripheral)
- 	if (ret == 0)
- 		prop->clk_stop_mode1 = !!clock_stop_1;
- 
--	ports = devm_kcalloc(cs35l56->base.dev, 2, sizeof(*ports), GFP_KERNEL);
-+	ports = devm_kcalloc(cs35l56->base.dev, 3, sizeof(*ports), GFP_KERNEL);
- 	if (!ports)
- 		return -ENOMEM;
- 
--	prop->source_ports = BIT(CS35L56_SDW1_CAPTURE_PORT);
-+	prop->source_ports = BIT(CS35L56_SDW1_CAPTURE_PORT) | BIT(CS35L56_OT25_CAPTURE_PORT);
- 	prop->sink_ports = BIT(CS35L56_SDW1_PLAYBACK_PORT);
- 	prop->paging_support = true;
- 	prop->quirks = SDW_SLAVE_QUIRKS_INVALID_INITIAL_PARITY;
-@@ -315,6 +315,11 @@ static int cs35l56_sdw_read_prop(struct sdw_slave *peripheral)
- 	ports[1].num = CS35L56_SDW1_CAPTURE_PORT;
- 	ports[1].type = SDW_DPN_FULL;
- 	ports[1].ch_prep_timeout = 10;
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 4bda7b5dba1a6..cded0607b39c0 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3874,6 +3874,10 @@ static void dm_integrity_resume(struct dm_target *ti)
+ 	r = sync_rw_sb(ic, REQ_OP_READ);
+ 	if (r)
+ 		dm_integrity_io_error(ic, "reading superblock", r);
 +
-+	/* DP4 - capture */
-+	ports[2].num = CS35L56_OT25_CAPTURE_PORT;
-+	ports[2].type = SDW_DPN_FULL;
-+	ports[2].ch_prep_timeout = 10;
- 	prop->src_dpn_prop = &ports[1];
++	if (ic->mode == 'R')
++		goto skip_writes;
++
+ 	if ((ic->sb->flags & flags) != flags) {
+ 		ic->sb->flags |= flags;
+ 		r = sync_rw_sb(ic, REQ_OP_WRITE | REQ_FUA);
+@@ -3983,6 +3987,7 @@ static void dm_integrity_resume(struct dm_target *ti)
+ 		}
+ 	}
  
- 	dev_dbg(&peripheral->dev, "clock stop mode 1 supported: %s\n",
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 8beef93ac4676..79f0a39d12b96 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -32,6 +32,7 @@
- #include <sound/cs-amp-lib.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
-+#include <sound/sdw.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/tlv.h>
-@@ -323,6 +324,7 @@ static const struct snd_soc_dapm_widget cs35l56_dapm_widgets[] = {
- 	SND_SOC_DAPM_SIGGEN("VDDBMON ADC"),
- 	SND_SOC_DAPM_SIGGEN("VBSTMON ADC"),
- 	SND_SOC_DAPM_SIGGEN("TEMPMON ADC"),
-+	SND_SOC_DAPM_SIGGEN("OT25 Reference"),
- 
- 	SND_SOC_DAPM_INPUT("Calibrate"),
- };
-@@ -387,6 +389,8 @@ static const struct snd_soc_dapm_route cs35l56_audio_map[] = {
- 	{ "SDW1 Capture", NULL, "SDW1 TX2 Source" },
- 	{ "SDW1 Capture", NULL, "SDW1 TX3 Source" },
- 	{ "SDW1 Capture", NULL, "SDW1 TX4 Source" },
-+
-+	{ "OT25", NULL, "OT25 Reference" },
- };
- 
- static int cs35l56_dsp_event(struct snd_soc_dapm_widget *w,
-@@ -711,6 +715,37 @@ static int cs35l56_sdw_dai_set_stream(struct snd_soc_dai *dai,
- 	return 0;
- }
- 
-+static int cs35l56_ot25_dai_hw_params(struct snd_pcm_substream *substream,
-+				      struct snd_pcm_hw_params *params,
-+				      struct snd_soc_dai *dai)
-+{
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(dai->component);
-+	struct sdw_stream_runtime *sdw_stream = snd_soc_dai_get_dma_data(dai, substream);
-+	struct sdw_stream_config sconfig = { };
-+	struct sdw_port_config pconfig = { };
-+	int ret;
-+
-+	dev_dbg(cs35l56->base.dev, "%s: rate %d\n", __func__, params_rate(params));
-+
-+	if (!cs35l56->base.init_done)
-+		return -ENODEV;
-+
-+	if (!sdw_stream)
-+		return -EINVAL;
-+
-+	snd_sdw_params_to_config(substream, params, &sconfig, &pconfig);
-+	pconfig.num = CS35L56_OT25_CAPTURE_PORT;
-+
-+	ret = sdw_stream_add_slave(cs35l56->sdw_peripheral, &sconfig, &pconfig,
-+				   1, sdw_stream);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to add OT25 stream: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct snd_soc_dai_ops cs35l56_sdw_dai_ops = {
- 	.set_tdm_slot = cs35l56_sdw_dai_set_tdm_slot,
- 	.shutdown = cs35l56_sdw_dai_shutdown,
-@@ -719,6 +754,13 @@ static const struct snd_soc_dai_ops cs35l56_sdw_dai_ops = {
- 	.set_stream = cs35l56_sdw_dai_set_stream,
- };
- 
-+static const struct snd_soc_dai_ops cs35l56_ot25_dai_ops = {
-+	.shutdown = cs35l56_sdw_dai_shutdown,
-+	.hw_params = cs35l56_ot25_dai_hw_params,
-+	.hw_free = cs35l56_sdw_dai_hw_free,
-+	.set_stream = cs35l56_sdw_dai_set_stream,
-+};
-+
- static struct snd_soc_dai_driver cs35l56_dai[] = {
- 	{
- 		.name = "cs35l56-asp1",
-@@ -767,6 +809,18 @@ static struct snd_soc_dai_driver cs35l56_dai[] = {
- 		.symmetric_rate = 1,
- 		.ops = &cs35l56_sdw_dai_ops,
- 	},
-+	{
-+		.name = "cs35l56-ot25",
-+		.id = 3,
-+		.capture = {
-+			.stream_name = "OT25",
-+			.channels_min = 1,
-+			.channels_max = 2,
-+			.rates = CS35L56_RATES,
-+			.formats = CS35L56_TX_FORMATS,
-+		},
-+		.ops = &cs35l56_ot25_dai_ops,
-+	},
- };
- 
- static int cs35l56_write_cal(struct cs35l56_private *cs35l56)
++skip_writes:
+ 	ic->reboot_notifier.notifier_call = dm_integrity_reboot;
+ 	ic->reboot_notifier.next = NULL;
+ 	ic->reboot_notifier.priority = INT_MAX - 1;	/* be notified after md and before hardware drivers */
 -- 
 2.53.0
 
