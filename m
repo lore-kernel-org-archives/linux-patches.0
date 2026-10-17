@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB03367F26;
-	Sat, 17 Oct 2026 18:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D838F950;
+	Sat, 17 Oct 2026 18:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260258; cv=none; b=DDh+I78qNYFODcXR2y24Hv5qsNNh42nkZ/hsK/KLMMA9NKDng2ZTMCnXAoeNNh5+pKPWUFVSej5I7gntfOtP7coFImVFu90M+6Tsj9GFc+JIFaRHln01J7KOij4yplFYzVG3yvp7FlwTp0y9ZTDG54qblOPozomCp7hhm7RTzEc=
+	t=1792260261; cv=none; b=dauCMlcJ60i9/L/nWXJwRcxRaNtaf5vhVXbfmtI845Lydjrz4qnlJ30+/egZJvoMP062azWjKv1uG2AngiV1Slt6QFu1sDOuNc++M9LHWJNOGF4Z8eJOKUEsfjH01ElBc1nGVstzL+gjQLiYnDI5uG1/H3CEAx8LsXhACDEmCP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260258; c=relaxed/simple;
-	bh=5Yk1a7jDZyaSuwLq7YBkaHvMjsgX7E9ddmLGtgpqSu4=;
+	s=arc-20240116; t=1792260261; c=relaxed/simple;
+	bh=C7av8CAN8Kz3FDdGP9ZIr3aJ9/r7F7earN+yA5xeR8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRadioPs/mn7o0J1Dab2HZsZ2nnvl/fYrWP9Q4h00Vn+Wz2n8AWknHPhyfzK/KhXeBsbrs5GtRqxPCdHVTp8d7GgmZfzOI1vOSM4N3clOHG03MV1I9sWMchar+HgAJcdo6sqrKpTi7HyzRci0KxCS7jcDbMaTVy2fDu6Um4mOfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWEcuTuG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCpMCYrarr7cdATqVUJCjeiDqHe3VLfWWfQNmef8daoMvsCn9KxN1m1Kis5rz59xCw8FScBh4bY9dK8onYwXGjydtInv7KNSWidShdYtIw1Iu2gY6iRdb7aI/kDEO4+pU0s9bpAyMtMYf/LbXAGC7xfcbA4qvjqq4i3NOZQ2ueY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3Y/ZDIP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWEcuTuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762041F000C4;
-	Sat, 17 Oct 2026 18:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3Y/ZDIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6E31F000C4;
+	Sat, 17 Oct 2026 18:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260257;
-	bh=QUFBnRn9CPzWYtOBo+mdi4goSuXN9x/8C9mVSgihGdw=;
+	s=korg; t=1792260260;
+	bh=RPOigce2bXFpqJmarWIVJrIKNTslixgcfcjOTOu313s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWEcuTuGr8gbCfYAwBCV40TI2wqaNUIWI7EjzNqnv1wRZxdqOHKylCyhAgXMBkzxc
-	 /i0VgpGZB60iS24DNVFzj1qPev8SlQXUmYm2Iahr0Ged0l6w3sjGqLAEU7G2rQUHHL
-	 aC6t7kHbyhEM4e7itHgs16Zf3ZPWhCg5Yaj6s15Q=
+	b=e3Y/ZDIPNPXWaYjVXDemkP51hOyHdKqGZufN8vui6Rnvz6yDzb509jnKh6huMBHk9
+	 v+f25cB0kstkctILQ3FuQO48MpGdDoh59Oht559gzpiWG0uba4hYRBIz1ergL3HX3w
+	 qR4w+Hz1EUEwmH9CBjPUcATHLl0ussKdG2l2BTz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
+	Nicholas Dudar <main.kalliope@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1484/1674] usb: gadget: uac: validate rate list length before storing
-Date: Sat, 17 Oct 2026 18:02:36 +0200
-Message-ID: <20261017160509.237538422@linuxfoundation.org>
+Subject: [PATCH 6.6 1485/1674] bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
+Date: Sat, 17 Oct 2026 18:02:37 +0200
+Message-ID: <20261017160509.264774907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,142 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Nicholas Dudar <main.kalliope@gmail.com>
 
-[ Upstream commit 844d83d5964b87919b958ff48405188c6ddae9cc ]
+[ Upstream commit 2aaf67f0516fde29620d0edfc29c01b9ea7ad430 ]
 
-UAC1 and UAC2 configfs rate-list attributes parse a comma-separated
-list of sampling rates and store each parsed value in fixed-size arrays.
-The arrays have UAC_MAX_RATES entries, but the store paths do not check
-that the input contains at most that many tokens before writing through
-opts->name##s[i++].
+check_kfunc_args() detects a kfunc argument named rdonly_buf_size or
+rdwr_buf_size and stores reg->var_off.value into meta->r0_size, a u64,
+and does not bound it. check_kfunc_call() later copies that value into
+the returned register's mem_size field:
 
-Writing more than ten rates therefore writes past the end of the
-p_srates[] or c_srates[] array in struct f_uac1_opts or struct
-f_uac2_opts.
+  meta->r0_size = reg->var_off.value;
+  ...
+  regs[BPF_REG_0].mem_size = meta.r0_size;
 
-With CONFIG_UBSAN_BOUNDS enabled, writing an 11-entry rate list to the
-UAC1 p_srate attribute reports:
+regs[BPF_REG_0].mem_size is u32. A constant whose upper 32 bits are set
+gets truncated instead of causing a load-time rejection, so the verifier
+records a PTR_TO_MEM register with an approximately 4 GiB mem_size for
+whatever allocation the kfunc returned. A later access check against
+that register uses the truncated, wrong bound.
 
-  UBSAN: array-index-out-of-bounds
-  drivers/usb/gadget/function/f_uac1.c:1669:1
-  index 10 is out of range for type 'int [10]'
-  __ubsan_handle_out_of_bounds.cold
-  f_uac1_opts_p_srate_store
-  configfs_write_iter
-  vfs_write
-  ksys_write
-  do_syscall_64
+Reject rdonly_buf_size/rdwr_buf_size values that exceed U32_MAX at the
+point meta->r0_size is set.
 
-The same reproducer against the UAC2 p_srate attribute reports:
-
-  UBSAN: array-index-out-of-bounds
-  drivers/usb/gadget/function/f_uac2.c:2087:1
-  index 10 is out of range for type 'int [10]'
-  __ubsan_handle_out_of_bounds.cold
-  f_uac2_opts_p_srate_store
-  configfs_write_iter
-  vfs_write
-  ksys_write
-  do_syscall_64
-
-Reject additional tokens once UAC_MAX_RATES entries have been parsed.
-Also keep the original kstrdup() pointer for kfree(), because strsep()
-advances the parsing cursor. Freeing the advanced cursor leaks the
-original buffer on successful parses and can free an interior pointer on
-some error paths.
-
-Fixes: 695d39ffc2b5 ("usb: gadget: f_uac1: Support multiple sampling rates")
-Fixes: a7339e4f5788 ("usb: gadget: f_uac2: Support multiple sampling rates")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Link: https://patch.msgid.link/20260519143319.147494-1-a0yami@mailbox.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eb1f7f71c126 ("bpf/verifier: allow kfunc to return an allocated mem")
+Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260709155837.1879230-2-main.kalliope@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_uac1.c | 13 +++++++++----
- drivers/usb/gadget/function/f_uac2.c | 13 +++++++++----
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_uac1.c b/drivers/usb/gadget/function/f_uac1.c
-index 6f0e1d803dc24..7939dadd52a5a 100644
---- a/drivers/usb/gadget/function/f_uac1.c
-+++ b/drivers/usb/gadget/function/f_uac1.c
-@@ -1521,7 +1521,8 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
- 					  const char *page, size_t len)	\
- {									\
- 	struct f_uac1_opts *opts = to_f_uac1_opts(item);		\
--	char *split_page = NULL;					\
-+	char *buf = NULL;						\
-+	char *split_page;						\
- 	int ret = -EINVAL;						\
- 	char *token;							\
- 	u32 num;							\
-@@ -1535,18 +1536,22 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
- 									\
- 	i = 0;								\
- 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
--	split_page = kstrdup(page, GFP_KERNEL);				\
-+	buf = kstrdup(page, GFP_KERNEL);				\
-+	split_page = buf;						\
- 	while ((token = strsep(&split_page, ",")) != NULL) {		\
- 		ret = kstrtou32(token, 0, &num);			\
- 		if (ret)						\
- 			goto end;					\
--									\
-+		if (i >= UAC_MAX_RATES) {				\
-+			ret = -EINVAL;					\
-+			goto end;					\
-+		}							\
- 		opts->name##s[i++] = num;				\
- 		ret = len;						\
- 	};								\
- 									\
- end:									\
--	kfree(split_page);						\
-+	kfree(buf);							\
- 	mutex_unlock(&opts->lock);					\
- 	return ret;							\
- }									\
-diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
-index eabd10817e1e7..b7d3988caa9c0 100644
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -2003,7 +2003,8 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 					  const char *page, size_t len)	\
- {									\
- 	struct f_uac2_opts *opts = to_f_uac2_opts(item);		\
--	char *split_page = NULL;					\
-+	char *buf = NULL;						\
-+	char *split_page;						\
- 	int ret = -EINVAL;						\
- 	char *token;							\
- 	u32 num;							\
-@@ -2017,18 +2018,22 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 									\
- 	i = 0;								\
- 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
--	split_page = kstrdup(page, GFP_KERNEL);				\
-+	buf = kstrdup(page, GFP_KERNEL);				\
-+	split_page = buf;						\
- 	while ((token = strsep(&split_page, ",")) != NULL) {		\
- 		ret = kstrtou32(token, 0, &num);			\
- 		if (ret)						\
- 			goto end;					\
--									\
-+		if (i >= UAC_MAX_RATES) {				\
-+			ret = -EINVAL;					\
-+			goto end;					\
-+		}							\
- 		opts->name##s[i++] = num;				\
- 		ret = len;						\
- 	};								\
- 									\
- end:									\
--	kfree(split_page);						\
-+	kfree(buf);							\
- 	mutex_unlock(&opts->lock);					\
- 	return ret;							\
- }									\
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ac801a81f1967..6437863ff24c7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -11493,6 +11493,10 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 				}
+ 
+ 				meta->r0_size = reg->var_off.value;
++				if (meta->r0_size > U32_MAX) {
++					verbose(env, "R%d rdonly/rdwr_buf_size exceeds u32 max\n", regno);
++					return -EINVAL;
++				}
+ 				ret = mark_chain_precision(env, regno);
+ 				if (ret)
+ 					return ret;
 -- 
 2.53.0
 
