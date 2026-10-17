@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367C8391E51;
-	Sat, 17 Oct 2026 17:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC3C2E8DEB;
+	Sat, 17 Oct 2026 17:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256749; cv=none; b=V8LTUw5yVfczhD4tQ6t3WtLBbeGViUggIKadw55Z4Q3fabbNJZRWv0AT8yImPg4N+5FT8V3rNXgiCqTol0XPCj6Uz7xNE/SovcZAXgJs/2b4xyVbmFe51LytR6FDBQFOcnGjzyAAaxJMD9Zv4+Zsrhi+onlbaNMSItWwtCCb/7Q=
+	t=1792256752; cv=none; b=AsIQyFTUs+Aob/ItMFkfF5WYPgIHPRw6t7AEfddVB4BsAbISPtplfnA5BkdjNiF64TEFRMJnaWiOyW7KwSH8dBq9J1St1ot+0+R0rA3EYjn98qSl7z73P4nPaQtlpu0iINpNSGIpTzlhpMli4mkpsxbeDCCw8f5x8Ad3u3GLjoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256749; c=relaxed/simple;
-	bh=+J2C28gHhY68GJTB2Y0thPVwPSue2hLSfuI2veAj8aY=;
+	s=arc-20240116; t=1792256752; c=relaxed/simple;
+	bh=wKiIvnhvxrgfoz6eMZs7/kCji0cTappUraHfYFJofuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QlQLua4dgA4ylmpSIAMWm3QlK0m6g1LkU3mcG1MYtJdNMcES+9OwoGuw5+laF+dNj9kVjacTeROwu1IOadAEX2LzhgqVlggDKVIS8Wn127f8AwJKiAPpBc7mvf/lXsqE5HwJxfmA3Co/xFCpt5bQPJ7rPfyj0vmFXWfLDJ7vPCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT0S+cMN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZaUY6GvzPNJzj08/1fLnFYzg6Bh32yyCHg80r1jYGIulynpZ6EPD7aaeHN+ysneOd9Pt/9vWc7KkmJNhYArUe+AmhY43rucjFVaCl+P/Xod386H70GbaBHSkx/hpA279Gwbji+OF/51AHskohVbGh/hU2nTZ/5X1gp5JrTQZec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBSjSRBb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT0S+cMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF201F000C4;
-	Sat, 17 Oct 2026 17:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBSjSRBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6491F000C4;
+	Sat, 17 Oct 2026 17:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256748;
-	bh=Z0itSfJ7SU1VYuaSLV1yo8sedw69eeuMECr3I7xFPik=;
+	s=korg; t=1792256751;
+	bh=ODHmCTPMWe90MSc7PpMw1zDnGChKJXs/FXO6oy5cIpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uT0S+cMNaQx4aJaH9l7NnpQ21DTiJtN6Svq8QHVM38x34VhkdM09mBl33D8nj8vSz
-	 dsNaykpP6JVtauk5znyGEMyyEdqZztn2ESYBLKzmkEA0gmbleoBjL96okIH550tnEp
-	 N0dz2qyWiKaJt6Vfd3fijSDF0JsLhZs9YQn/X5bo=
+	b=QBSjSRBbQ3CDVkxVobbwWTwexnoR7Fq0oIIasSetuMuSOJEHJuBp96pgQ8RTkKKiO
+	 AQW21flxe3eOqWWX6z8i16x3Gp470rQOulPTAAilM35VIcxMilTSEckexGwozTpbLe
+	 CJabJ4KnfkCS2QeJU47LU0UeMt3q239RnfQmfVSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0337/1674] iio: adc: stm32-adc: fix check on internal channel availability
-Date: Sat, 17 Oct 2026 17:43:29 +0200
-Message-ID: <20261017160439.776889175@linuxfoundation.org>
+Subject: [PATCH 6.6 0338/1674] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
+Date: Sat, 17 Oct 2026 17:43:30 +0200
+Message-ID: <20261017160439.801094973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,94 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 9db3deeb2de485a9d412f0825f9ab4c8e2bccf44 upstream.
+commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
 
-If an unsupported internal channel like vddgpu is requested, the driver
-prints a warning but falls through and assigns it a valid int_ch below.
+If devm_thermal_of_zone_register() fails, probe returns without
+unregistering the IIO map array or disabling runtime PM.
 
-This causes a problem later during setup:
-stm32_adc_int_ch_enable() {
-    ...
-    case STM32_ADC_INT_CH_VDDGPU:
-        stm32_adc_set_bits(adc, adc->cfg->regs->or_vddgpu.reg,
-                           adc->cfg->regs->or_vddgpu.mask);
-    ...
-}
+Jump to err_map to release them.
 
-Because the register offset is uninitialized (0), this performs a
-read-modify-write on offset 0, which corresponds to the ISR register.
-
-Fix this by returning before a valid int_ch is assigned. Choice is
-made to keep current driver behavior to warn about the channel name.
-
-Fixes: cf0fb80ae167 ("iio: adc: stm32-adc: add stm32mp13 support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260911162602.D323F1F000FF@smtp.kernel.org/
+Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/stm32-adc.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2127,33 +2127,37 @@ static int stm32_adc_populate_int_ch(str
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -644,10 +644,10 @@ static int sun4i_gpadc_probe(struct plat
+ 		 * thermal because no thermal DT node is found.
+ 		 */
+ 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
+-			dev_err(&pdev->dev,
+-				"could not register thermal sensor: %ld\n",
+-				PTR_ERR(info->tzd));
+-			return PTR_ERR(info->tzd);
++			ret = dev_err_probe(&pdev->dev,
++					    PTR_ERR(info->tzd),
++					    "could not register thermal sensor\n");
++			goto err_map;
+ 		}
+ 	}
  
- 	for (i = 0; i < STM32_ADC_INT_CH_NB; i++) {
- 		if (!strncmp(stm32_adc_ic[i].name, ch_name, STM32_ADC_CH_SZ)) {
-+			bool na;
-+
- 			/* Check internal channel availability */
- 			switch (i) {
- 			case STM32_ADC_INT_CH_VDDCORE:
--				if (!adc->cfg->regs->or_vddcore.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddcore.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VDDCPU:
--				if (!adc->cfg->regs->or_vddcpu.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddcpu.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VDDQ_DDR:
--				if (!adc->cfg->regs->or_vddq_ddr.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->or_vddq_ddr.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VREFINT:
--				if (!adc->cfg->regs->ccr_vref.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->ccr_vref.reg;
- 				break;
- 			case STM32_ADC_INT_CH_VBAT:
--				if (!adc->cfg->regs->ccr_vbat.reg)
--					dev_warn(&indio_dev->dev,
--						 "%s channel not available\n", ch_name);
-+				na = !adc->cfg->regs->ccr_vbat.reg;
- 				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
-+			if (na) {
-+				/*
-+				 * Channel label matches an internal STM32 ADC channel.
-+				 * Warn about it, as there's normally no restriction on the
-+				 * name but that's not among available internal channels.
-+				 */
-+				dev_warn(&indio_dev->dev, "no %s internal channel\n", ch_name);
-+				return 0;
- 			}
- 
- 			if (stm32_adc_ic[i].idx != STM32_ADC_INT_CH_VREFINT) {
 
 
