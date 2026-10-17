@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57402DF126;
-	Sat, 17 Oct 2026 17:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3CE3B19BA;
+	Sat, 17 Oct 2026 17:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258986; cv=none; b=ldO7i8W4vMLlirOjxH9+UxE3RHeUNgZBNKBBr1H2VJimd+AL+aUj23v9Ui5Meg01dI4vdJjePpIZycXRj6KEZ/OusZrN4UVPugYA+Yi+BAALNqo4Hmx4qo9g7ZOnN0ziykUBAQyvn6UCnCpIoh6fXzkmdExdMkbfbXy0h2lwQfs=
+	t=1792258989; cv=none; b=iRKoUJxnYlA9cAT8HbCR6WZQMEHHAMofnWM8BtyNKkiNAwQerEzbC5m08BgI1h4llr7EKxY+TK6EHEzz2z2wYeuGwKZv6CYgOjOy27oyXWwkXARK4Xz4pTxF4oPRYiI3p01Nhs8TleR02i+jyalvnxqlFjeEovacSsLLcFQ43u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258986; c=relaxed/simple;
-	bh=gtbg2Y35vrCJwu/lGHMKE0xpgWqBUNvfmjGHWHs0uw0=;
+	s=arc-20240116; t=1792258989; c=relaxed/simple;
+	bh=KVf7hshaEPfxi+JK2qTbdanj51vDpc/v135+K2Eb8e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQ6eras+bs+XnbaPzIxTIXt96/kbftGKyDmjt4QKHqp6NRLadORwInQ/w4PE04jqujszJLtQMTV13hBAzYD39mz6N6ihoN8CwqHP/A1HJXGjmCFF2etJZH/B5XqM2Qhvb5KTGcgW0YFpLhD699V6cZ/dZAwPBH+PX/hkAZF/uNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLhvoBVY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ceyeFYSUfu8UYhcM2/5cmfG503xb4my7PkXSSS4+/qMv5uROjOZLunqrbZAzyWFMr7ld2mJz/xCc7U2jWxxdFhm8SeyocgS7MM8t+2oHH8rtMqpXusPOR1mZsj8kWP8BMcSeg/eW0HtXqPmlbcR/DqTyG82T/CqrWhedngqxZpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th28vO3m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLhvoBVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9AE81F000C4;
-	Sat, 17 Oct 2026 17:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th28vO3m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35141F000C4;
+	Sat, 17 Oct 2026 17:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258985;
-	bh=drc34hV3CyR4Y6DcIlXsKmKead/qonfTCpoU3s/JCto=;
+	s=korg; t=1792258988;
+	bh=orZ02NSRIXlVeglDSaamy9miZkaJ/cbEQd1+JzHdyP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLhvoBVYkXNSnEuq3vJGbNbC1/JxnuWoCZNblFnVWi6SiarQWQpP8FnniyuUAB2zv
-	 e7NCHft+DosrdsUsuxjgyu+2lEXQeIQOw0yA8n8C+xIfzAshbvbls1qIwhknbMUMdC
-	 BoZieeQYyyGb6NewrabS4mMxlcM3nmBEcr9N6vLc=
+	b=th28vO3mKRjXfhadETIH0TNSw17vWvMgwpBtTJJVRfUqfIzHNoenTKNUxtQ44cpoS
+	 efVW6EpdFKvSq8Zd2ivXdulVS4PmmHjmlLgG9lmAoLXOtI8K2pBcNdF/8PjpViXx+m
+	 7KpeOlkr3gI+nXN9nlhmUcZV4k96Ga80BtqjGeB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Meir Elisha <meir6264@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1023/1674] l2tp: pppol2tp: hold reference to session in pppol2tp_ioctl()
-Date: Sat, 17 Oct 2026 17:54:55 +0200
-Message-ID: <20261017160457.391144729@linuxfoundation.org>
+Subject: [PATCH 6.6 1014/1674] Staging: rtl8723bs: Remove dead code from _rtw_free_network()
+Date: Sat, 17 Oct 2026 17:54:46 +0200
+Message-ID: <20261017160457.161563949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,174 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Meir Elisha <meir6264@gmail.com>
 
-[ Upstream commit a213a8950414c684999dcf03edeea6c46ede172e ]
+[ Upstream commit 6fd529666b9cca0e825479da7bddae4b1ab67eb4 ]
 
-pppol2tp_ioctl() read sock->sk->sk_user_data directly without any
-locks or reference counting.  If a controllable sleep was induced during
-copy_from_user() (e.g. via a userfaultfd page fault sleep), a concurrent
-socket close could trigger pppol2tp_session_close() asynchronously.  This
-frees the l2tp_session structure via the l2tp_session_del_work workqueue.
-Upon resuming, the ioctl thread dereferences the stale session pointer,
-resulting in a Use-After-Free (UAF).
+Clean dead code from is_same_network() and _rtw_free_network().
 
-Fix this by securely fetching the session reference using the RCU-safe,
-refcounted helper pppol2tp_sock_to_session(sk) on entry.  This locks the
-session's refcount across the sleep.  We structured the function to exit
-via standard err breaks, guaranteeing that l2tp_session_put() is cleanly
-called on all return paths to drop the reference.
-
-To preserve existing behavior we validate the session and its magic
-signature only for the specific L2TP commands that require it.  This
-ensures that generic/unknown ioctls called on an unconnected socket
-still return -ENOIOCTLCMD and correctly fall back to generic handlers
-(e.g. in sock_do_ioctl()).
-
-Signed-off-by: Lee Jones <lee@kernel.org>
-Fixes: fd558d186df2 ("l2tp: Split pppol2tp patch into separate l2tp and ppp parts")
-Link: https://patch.msgid.link/20260527133630.2120612-1-lee@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Meir Elisha <meir6264@gmail.com>
+Link: https://lore.kernel.org/r/20240229121445.22257-1-meir6264@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 514ab9836459 ("staging: rtl8723bs: fix buffer over-read in rtw_update_protection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_ppp.c | 82 +++++++++++++++++++++++++++------------------
- 1 file changed, 50 insertions(+), 32 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index 1573edb66ee35..230b1b156465a 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1056,64 +1056,76 @@ static int pppol2tp_ioctl(struct socket *sock, unsigned int cmd,
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index 5ee859ecd6d2b..b5fb0ad08f384 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -169,7 +169,6 @@ void _rtw_free_network(struct	mlme_priv *pmlmepriv, struct wlan_network *pnetwor
  {
- 	struct pppol2tp_ioc_stats stats;
- 	struct l2tp_session *session;
-+	int err = 0;
-+
-+	session = pppol2tp_sock_to_session(sock->sk);
+ 	unsigned int delta_time;
+ 	u32 lifetime = SCANQUEUE_LIFETIME;
+-/* 	_irqL irqL; */
+ 	struct __queue *free_queue = &(pmlmepriv->free_bss_pool);
  
-+	/* Validate session presence and magic integrity ONLY for commands
-+	 * that belong to L2TP and require a valid session.
-+	 */
- 	switch (cmd) {
- 	case PPPIOCGMRU:
- 	case PPPIOCGFLAGS:
--		session = sock->sk->sk_user_data;
-+	case PPPIOCSMRU:
-+	case PPPIOCSFLAGS:
-+	case PPPIOCGL2TPSTATS:
- 		if (!session)
- 			return -ENOTCONN;
+ 	if (!pnetwork)
+@@ -389,7 +388,6 @@ int is_same_network(struct wlan_bssid_ex *src, struct wlan_bssid_ex *dst, u8 fea
+ 	d_cap = le16_to_cpu(tmpd);
  
--		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
-+		if (session->magic != L2TP_SESSION_MAGIC) {
-+			sock_put(sock->sk);
- 			return -EBADF;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
- 
-+	switch (cmd) {
-+	case PPPIOCGMRU:
-+	case PPPIOCGFLAGS:
- 		/* Not defined for tunnels */
--		if (!session->session_id && !session->peer_session_id)
--			return -ENOSYS;
-+		if (!session->session_id && !session->peer_session_id) {
-+			err = -ENOSYS;
-+			break;
-+		}
- 
--		if (put_user(0, (int __user *)arg))
--			return -EFAULT;
-+		if (put_user(0, (int __user *)arg)) {
-+			err = -EFAULT;
-+			break;
-+		}
- 		break;
- 
- 	case PPPIOCSMRU:
- 	case PPPIOCSFLAGS:
--		session = sock->sk->sk_user_data;
--		if (!session)
--			return -ENOTCONN;
--
--		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
--			return -EBADF;
--
- 		/* Not defined for tunnels */
--		if (!session->session_id && !session->peer_session_id)
--			return -ENOSYS;
-+		if (!session->session_id && !session->peer_session_id) {
-+			err = -ENOSYS;
-+			break;
-+		}
- 
--		if (!access_ok((int __user *)arg, sizeof(int)))
--			return -EFAULT;
-+		if (!access_ok((int __user *)arg, sizeof(int))) {
-+			err = -EFAULT;
-+			break;
-+		}
- 		break;
- 
- 	case PPPIOCGL2TPSTATS:
--		session = sock->sk->sk_user_data;
--		if (!session)
--			return -ENOTCONN;
--
--		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
--			return -EBADF;
--
- 		/* Session 0 represents the parent tunnel */
- 		if (!session->session_id && !session->peer_session_id) {
- 			u32 session_id;
--			int err;
- 
- 			if (copy_from_user(&stats, (void __user *)arg,
--					   sizeof(stats)))
--				return -EFAULT;
-+					   sizeof(stats))) {
-+				err = -EFAULT;
-+				break;
-+			}
- 
- 			session_id = stats.session_id;
- 			err = pppol2tp_tunnel_copy_stats(&stats,
- 							 session->tunnel);
- 			if (err < 0)
--				return err;
-+				break;
- 
- 			stats.session_id = session_id;
- 		} else {
-@@ -1123,15 +1135,21 @@ static int pppol2tp_ioctl(struct socket *sock, unsigned int cmd,
- 		stats.tunnel_id = session->tunnel->tunnel_id;
- 		stats.using_ipsec = l2tp_tunnel_uses_xfrm(session->tunnel);
- 
--		if (copy_to_user((void __user *)arg, &stats, sizeof(stats)))
--			return -EFAULT;
-+		if (copy_to_user((void __user *)arg, &stats, sizeof(stats))) {
-+			err = -EFAULT;
-+			break;
-+		}
- 		break;
- 
- 	default:
--		return -ENOIOCTLCMD;
-+		err = -ENOIOCTLCMD;
-+		break;
- 	}
- 
--	return 0;
-+	if (session)
-+		sock_put(sock->sk);
-+
-+	return err;
- }
- 
- /*****************************************************************************
+ 	return (src->ssid.ssid_length == dst->ssid.ssid_length) &&
+-		/* 	(src->configuration.ds_config == dst->configuration.ds_config) && */
+ 			((!memcmp(src->mac_address, dst->mac_address, ETH_ALEN))) &&
+ 			((!memcmp(src->ssid.ssid, dst->ssid.ssid, src->ssid.ssid_length))) &&
+ 			((s_cap & WLAN_CAPABILITY_IBSS) ==
 -- 
 2.53.0
 
