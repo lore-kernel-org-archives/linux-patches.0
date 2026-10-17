@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F313C13E0;
-	Sat, 17 Oct 2026 17:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E284F3C1D64;
+	Sat, 17 Oct 2026 17:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258483; cv=none; b=hmfZvPpSZA6qAlCFwqPvxczRzzeI9QPK/pKnpHkgqjvYqvKM7G6NgEN334l94rpEusbnOAiixjDG0HHGduBiVmIgAKEv765CuvMePO5I6u8WHP532+uRlyXLt05WrCTs9S3xqWrqQ0PfoOHr/yXYs5RXMvJvXOSb7VUVWrXJ0kM=
+	t=1792258485; cv=none; b=UMu6Vg/L6w69uEa6ruWlXz84s829fYfAmaps16sbrBr+7Hchca0dMLX+8nesN0ds7r1fkRJ1oBQjwDlNOtyZj5nZFwm4jIMpimzy3YFx9PKIhlSiytUO8IVZfY5BY4zBx58JsgJ9faGugSIx9gt4h59d3O/cEoyqU4A0wtXrW/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258483; c=relaxed/simple;
-	bh=m2gmhmXhqEfhLEx59VGXrQuNrLz9w5mP6VVSQbP/jlw=;
+	s=arc-20240116; t=1792258485; c=relaxed/simple;
+	bh=2Q+BsSUyegxNXr05B4BA0aiS8KGyGeAjZQNDXRWAjGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvvaWYyg/ZrN0z11deKcwHTtzahkEG706gypgNKCOc2OKaBmcDVcKLdb/786PHmpOJTZMgcfoGFC9eWB9fO/qYrq+tqGPPWrByvKUShDMUrIFiWTdS7ayTyqh6LnZzAh+C0ZFM4H1ZOQIWQcq28dz4wQEsBG9J8wDESMNpeRhUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUqCp4mz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F/MRPNjFInH48hjizxtoR/cdUro5eu91WLchzWQ+KHRLCzTZyBtwfRoTVIzm/U2b2GNjnLHfAfbU4212tpgGgBdq+Q8bectpgMZWn+wCjyKnkeU6oVZMqTnu9o7GwBete3MrlF1e0xAGIVN28+uM3i+sGA9x0e9AgMUUiARIz20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm3YTaCq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUqCp4mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559661F000C4;
-	Sat, 17 Oct 2026 17:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm3YTaCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4501A1F000C4;
+	Sat, 17 Oct 2026 17:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258481;
-	bh=EXplGDBO9Qu0MAlUdtBfHRPXC2XB7ypHn/EdYN45rWM=;
+	s=korg; t=1792258484;
+	bh=MOy6IrlhDBPyjjSii2IU0lPPmzG5jKk2+L7QanpO8IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xUqCp4mza35TjCq4zBsbOkrObXHj7pQyT2py03wr/oJW+L3kF3B+c25Mm/nQdpDFx
-	 RFwJjwHyK5/zOiJ45xWAQrDw+EZbEKiPvtiG5BNpoYMYE/Jlhwtul7cP0IywcuacKj
-	 Jn6lYeEehyxEf6QFCqVpVixZVs0HdJ3jdiHJkT3A=
+	b=Sm3YTaCqocyorUDCduyJP9hge6XjyCEZgsXc08b0XpCKNqBvVAwtov5q3jP2duvGI
+	 ztTifDfyXfVeqtBVgLLWTtHtqnVZOvb1PSd2eFvbqOhgrs74hUte3pI8GlhTYmfk5w
+	 u2fWeFKbviLwwWjHdxzzPq+S8BSDF+WKZoWGGeG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0900/1674] bpf: Fix incorrect pruning due to atomic fetch precision tracking
-Date: Sat, 17 Oct 2026 17:52:52 +0200
-Message-ID: <20261017160454.231214940@linuxfoundation.org>
+Subject: [PATCH 6.6 0901/1674] Bluetooth: hci_sync: hci_cmd_sync_queue_once() return -EEXIST if exists
+Date: Sat, 17 Oct 2026 17:52:53 +0200
+Message-ID: <20261017160454.255145583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,121 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 179ee84a89114b854ac2dd1d293633a7f6c8dac1 ]
+[ Upstream commit 2969554bcfccb5c609f6b6cd4a014933f3a66dd0 ]
 
-When backtrack_insn encounters a BPF_STX instruction with BPF_ATOMIC
-and BPF_FETCH, the src register (or r0 for BPF_CMPXCHG) also acts as
-a destination, thus receiving the old value from the memory location.
+hci_cmd_sync_queue_once() needs to indicate whether a queue item was
+added, so caller can know if callbacks are called, so it can avoid
+leaking resources.
 
-The current backtracking logic does not account for this. It treats
-atomic fetch operations the same as regular stores where the src
-register is only an input. This leads the backtrack_insn to fail to
-propagate precision to the stack location, which is then not marked
-as precise!
+Change the function to return -EEXIST if queue item already exists.
 
-Later, the verifier's path pruning can incorrectly consider two states
-equivalent when they differ in terms of stack state. Meaning, two
-branches can be treated as equivalent and thus get pruned when they
-should not be seen as such.
+Modify all callsites to handle that.
 
-Fix it as follows: Extend the BPF_LDX handling in backtrack_insn to
-also cover atomic fetch operations via is_atomic_fetch_insn() helper.
-When the fetch dst register is being tracked for precision, clear it,
-and propagate precision over to the stack slot. For non-stack memory,
-the precision walk stops at the atomic instruction, same as regular
-BPF_LDX. This covers all fetch variants.
-
-Before:
-
-  0: (b7) r1 = 8                        ; R1=8
-  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
-  2: (b7) r2 = 0                        ; R2=0
-  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
-  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
-  5: (0f) r3 += r2
-  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
-  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
-  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
-  mark_precise: frame0: regs=r2 stack= before 2: (b7) r2 = 0
-  6: R2=8 R3=fp8
-  6: (b7) r0 = 0                        ; R0=0
-  7: (95) exit
-
-After:
-
-  0: (b7) r1 = 8                        ; R1=8
-  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
-  2: (b7) r2 = 0                        ; R2=0
-  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
-  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
-  5: (0f) r3 += r2
-  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
-  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
-  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
-  mark_precise: frame0: regs= stack=-8 before 2: (b7) r2 = 0
-  mark_precise: frame0: regs= stack=-8 before 1: (7b) *(u64 *)(r10 -8) = r1
-  mark_precise: frame0: regs=r1 stack= before 0: (b7) r1 = 8
-  6: R2=8 R3=fp8
-  6: (b7) r0 = 0                        ; R0=0
-  7: (95) exit
-
-Fixes: 5ffa25502b5a ("bpf: Add instructions for atomic_[cmp]xchg")
-Fixes: 5ca419f2864a ("bpf: Add BPF_FETCH field / create atomic_fetch_add instruction")
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260331222020.401848-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_sync.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 68e9660405342..e47fd179abf61 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -677,6 +677,13 @@ static void print_liveness(struct bpf_verifier_env *env,
- 		verbose(env, "D");
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5ad66eb7f6c38..0648da9761258 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -818,7 +818,7 @@ int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 			    void *data, hci_cmd_sync_work_destroy_t destroy)
+ {
+ 	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
+-		return 0;
++		return -EEXIST;
+ 
+ 	return hci_cmd_sync_queue(hdev, func, data, destroy);
+ }
+@@ -3376,6 +3376,8 @@ static int update_passive_scan_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_update_passive_scan(struct hci_dev *hdev)
+ {
++	int err;
++
+ 	/* Only queue if it would have any effect */
+ 	if (!test_bit(HCI_UP, &hdev->flags) ||
+ 	    test_bit(HCI_INIT, &hdev->flags) ||
+@@ -3385,8 +3387,9 @@ int hci_update_passive_scan(struct hci_dev *hdev)
+ 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
+ 		return 0;
+ 
+-	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
+-				       NULL);
++	err = hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
  }
  
-+static bool is_atomic_fetch_insn(const struct bpf_insn *insn)
-+{
-+	return BPF_CLASS(insn->code) == BPF_STX &&
-+	       BPF_MODE(insn->code) == BPF_ATOMIC &&
-+	       (insn->imm & BPF_FETCH);
-+}
-+
- static int __get_spi(s32 off)
- {
- 	return (-off - 1) / BPF_REG_SIZE;
-@@ -3925,10 +3932,22 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 			   * dreg still needs precision before this insn
- 			   */
- 		}
--	} else if (class == BPF_LDX) {
--		if (!bt_is_reg_set(bt, dreg))
-+	} else if (class == BPF_LDX || is_atomic_fetch_insn(insn)) {
-+		u32 load_reg = dreg;
-+
-+		/*
-+		 * Atomic fetch operation writes the old value into
-+		 * a register (sreg or r0) and if it was tracked for
-+		 * precision, propagate to the stack slot like we do
-+		 * in regular ldx.
-+		 */
-+		if (is_atomic_fetch_insn(insn))
-+			load_reg = insn->imm == BPF_CMPXCHG ?
-+				   BPF_REG_0 : sreg;
-+
-+		if (!bt_is_reg_set(bt, load_reg))
- 			return 0;
--		bt_clear_reg(bt, dreg);
-+		bt_clear_reg(bt, load_reg);
+ int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
+@@ -7106,8 +7109,11 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
  
- 		/* scalars can only be spilled into stack w/o losing precision.
- 		 * Load from any other memory can be zero extended.
+ int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
+-				       NULL);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+@@ -7143,8 +7149,11 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
+-				       create_le_conn_complete);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
++				      create_le_conn_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static int hci_acl_cancel_create_conn_sync(struct hci_dev *hdev,
 -- 
 2.53.0
 
