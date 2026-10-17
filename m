@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F553803DC;
-	Sat, 17 Oct 2026 17:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860FC3AEF2D;
+	Sat, 17 Oct 2026 17:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258339; cv=none; b=AXAlK4Nd9gC1JcphNHGy+0TbZP2nVHACdJaR6+rbzV5kwlD4JRSrRI7CiT8BvhGvsWFx00XCj3zgEXC/QmdeEWyL1R5MPvvXQ9WYrGaFgvniT9Yq7vEgX2ZjmgN7kgj9X86uOWhSatlQrp9KBvgSt4pUMwWSs42q/TOoXQDMxQk=
+	t=1792258342; cv=none; b=Z2YQoFSwcQdzS0WKQsB3c13Xxpj7ED9YFgNAbUZKrbJRaIOGsahoBPZE29O3cyg3zM3LKK2IaEKG41nwkU3DO71XF8xTsJdTc8k5JO9xqT5j5T0zloluFz8s/DtSrdf1k0Pv7y8OtQ82OeMnPo/r78kHXFLSONgO2zdJKEylNMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258339; c=relaxed/simple;
-	bh=tUOTnCPbWs+FVD+duUW5574WihJuJI1WiMNHYBz0ulA=;
+	s=arc-20240116; t=1792258342; c=relaxed/simple;
+	bh=csqHF9VTi8E3vJDC0zn1ZCyLkjs98CR3bzxkBhBXwlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fICbQWcRwldXekfw1CSsgN8U8yfII+XeYfkTYW/MhuqTDEk/T6q8Ei164UQixnBoKTWTE9d4HLMeMz3QG4tuuQoFCjLvlcEaqRjSza1TCKnFfcle480EhoLhcvlDR52IdDnLXKu035svhZEZr6fRvmt/6oCoQcH2KOBVGNh8shI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1S5xNsB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rvzjXDI6R2zCUjp6gw/4QPtuEAIPQYzX7C8qoxPPOE81zxWnxIckVCa6JMPfxxIQ+M9VUSrqnKlPs8Fgzo3ktdPoF2zQtrWuMvz7zg7cKF/AB2FnRWdIdnReLG8N/gs3geDp38KFT0InmBpIUfIxyer7pRzuLtnE0cd38fsVP38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5YtmHiS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1S5xNsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FFB1F000C4;
-	Sat, 17 Oct 2026 17:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5YtmHiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC7F1F000C4;
+	Sat, 17 Oct 2026 17:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258338;
-	bh=1hgtpazSVvPXX7gYBAfGtqVQWOoSP9FhtEiKlJDGCys=;
+	s=korg; t=1792258341;
+	bh=qm8WxS9fkfjD9Lk91NFAfi/CtfrZoAGDiSOFz1dFZKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1S5xNsBLva9M87GzgydLxhKVm6v+zxr368Pr0+xUOOkh1fuyVtdWfb4uCCJ1U0ps
-	 XCUNd11KGIWHDdMM9x4rg1MvrxTDrIYxXfg9oXfzI49ZmBcsfrUnOhWfLOHSKI1iSJ
-	 63MCprQzwSs8XUKL9IISs165xth9QmNnVy+Kza5Q=
+	b=w5YtmHiS4O4AYUCnM+3F0TGbSE4ojK1dGCqe0B40W1P8xX9uJBbZrW8HcpwhMUPE5
+	 wdg1vz3eISNIbyHgC0G31qj5sYjHZDKysYU9GnldJxYzWCUJvBgPz71FNW8PqIOUjV
+	 5bX/x8Wpc3LQ0DnmjscS4881UzMFiNrLpiRika0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0852/1674] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
-Date: Sat, 17 Oct 2026 17:52:04 +0200
-Message-ID: <20261017160452.993302209@linuxfoundation.org>
+Subject: [PATCH 6.6 0853/1674] of: unittest: Fix memory leak in unittest_data_add()
+Date: Sat, 17 Oct 2026 17:52:05 +0200
+Message-ID: <20261017160453.017956478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,106 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
+[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
 
-issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
-xmit_frame together with its xmit_buf from the driver's fixed-size
-management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
-is handed to dump_mgntframe(), which transfers ownership and eventually
-returns both objects to their pools (the frame and, for beacons, the buf
-in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
-path).
+In unittest_data_add(), if of_resolve_phandles() fails, the allocated
+unittest_data is not freed, leading to a memory leak.
 
-Several error/edge paths return early after a successful
-alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
-transferred and neither object is freed:
+Fix this by using scope-based cleanup helper __free(kfree) for automatic
+resource cleanup. This ensures unittest_data is automatically freed when
+it goes out of scope in error paths.
 
-  - issue_beacon(): beacon larger than 512 bytes
-  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
-  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
-  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+For the success path, use retain_and_null_ptr() to transfer ownership
+of the memory to the device tree and prevent double freeing.
 
-Because alloc_mgtxmitframe() removes the frame and buf from their free
-lists (list_del_init) without placing them on any pending list, an
-orphaned pair is on no list and referenced by nobody, so it is only
-reclaimed at driver teardown. Repeated hits progressively exhaust the
-management-TX pools until alloc_mgtxmitframe() returns NULL and the
-interface can no longer send beacons or probe/assoc responses.
-
-Free the frame and buffer on these paths, matching the existing correct
-error handling in issue_assocreq().
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
+Suggested-by: Rob Herring <robh@kernel.org>
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/of/unittest.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index 98b46182afd63..9125b6fed82bc 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -2259,8 +2259,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 9af9d3f7418f1..9109667a35105 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -1636,7 +1636,6 @@ static void attach_node_and_children(struct device_node *np)
+  */
+ static int __init unittest_data_add(void)
+ {
+-	void *unittest_data;
+ 	void *unittest_data_align;
+ 	struct device_node *unittest_data_node = NULL, *np;
+ 	/*
+@@ -1655,7 +1654,7 @@ static int __init unittest_data_add(void)
+ 	}
  
- 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
+ 	/* creating copy */
+-	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
++	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
+ 	if (!unittest_data)
+ 		return -ENOMEM;
  
--	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
-+	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
+@@ -1665,12 +1664,10 @@ static int __init unittest_data_add(void)
+ 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
+ 	if (!ret) {
+ 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
+ 	if (!unittest_data_node) {
+ 		pr_warn("%s: testcases tree is empty\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
  
- 	pattrib->last_txcmdsz = pattrib->pktlen;
+@@ -1693,6 +1690,7 @@ static int __init unittest_data_add(void)
+ 		of_aliases = of_find_node_by_path("/aliases");
+ 		of_chosen = of_find_node_by_path("/chosen");
+ 		of_overlay_mutex_unlock();
++		(void)no_free_ptr(unittest_data);
+ 		return 0;
+ 	}
  
-@@ -2323,8 +2326,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 	pframe += pattrib->hdrlen;
+@@ -1715,6 +1713,7 @@ static int __init unittest_data_add(void)
  
+ 	of_overlay_mutex_unlock();
  
--	if (cur_network->ie_length > MAX_IE_SZ)
-+	if (cur_network->ie_length > MAX_IE_SZ) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
++	(void)no_free_ptr(unittest_data);
+ 	return 0;
+ }
  
- 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
- 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
-@@ -2371,8 +2377,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
- 
- 			buf = rtw_zmalloc(MAX_IE_SZ);
--			if (!buf)
-+			if (!buf) {
-+				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+				rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 				return;
-+			}
- 
- 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
- 				(pframe-ies)-_FIXED_IE_LENGTH_);
-@@ -2765,10 +2774,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
- 
- 	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
- 	pmlmeext->mgnt_seq++;
--	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
-+	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
- 		SetFrameSubType(pwlanhdr, pkt_type);
--	else
-+	} else {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
- 
- 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
- 	pattrib->pktlen += pattrib->hdrlen;
 -- 
 2.53.0
 
