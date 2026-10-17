@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4DE17BED0;
-	Sat, 17 Oct 2026 16:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E273803DC;
+	Sat, 17 Oct 2026 16:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253979; cv=none; b=olHJAz5enJZSsLaN9VSr+VY6yRDnuY+viOXvYJYIhR7j8pvqwcuRUk06wpkEZwXNknNJ4ev3orVNCRxKNBMjHjxTD9B2NRvXYRCJITKhPmsP2uZ5SGoypQBGWFCwRV6RZABRtB76xi9u61ivcr7KW7PElFZL+u5aqhQlKYRBrBQ=
+	t=1792253982; cv=none; b=PT+L68G/3iG70q+LEn3jySNIJUHjXvItYsMkccShByyzEKDbXgXjxXq3b+umQgDqDJ5Vq0xT1Q+0VvhqmsFk3WpAayxWMADpBvV6IgaBpcAx/myHyQAIqRm3Ztf0AK2HVyknFxLFlC8EAdWtTUHIupuBKPw86G2lrPNqBSFRpCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253979; c=relaxed/simple;
-	bh=/lvR3BnB+zLvRwZg0scI5i+G8LAqzuISI025HnCpoiE=;
+	s=arc-20240116; t=1792253982; c=relaxed/simple;
+	bh=B2UN32ZAjoC+NVQh4OsHv8MDz0+mHXiUZdZjmsydVLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHCeC63gZKVYW02nsM5ag5bC9jvIeLkPbDa8NZDBbQYLbfc7oU11j1xkFqZmZCeKoWs6zgc1tm9UC+C3m0OQnOT4RhRMCTZ5hbq0JIR7VetrK4ObXUs8sxqxjBv9jLgvUXGIf65SHa0FYFdPxgcNkb+jFGBWPnojGqFz5xvKvBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJP8hPYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VXkZ1310aLx05JxQt6Su/hlE1fyXy2o3VjBm8YATVmVVkiIqvsmf0jc7eHWIZxxxNv4j8Ivflg81NoNzt9YSnK2wlyYUuEtRQZAt+r9HBNu1rqGR1jhxqv1aj9I2laUBBqv+faR9dTUbjGChg0Q8kYSlT09S4Bihmrx78gL8vtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJEXqKiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJP8hPYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C991F000C4;
-	Sat, 17 Oct 2026 16:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJEXqKiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EF61F000C4;
+	Sat, 17 Oct 2026 16:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253978;
-	bh=hMmA90p9LrYzjbWNEa5WzSo03tJZxgNYVsFNLccj4Hs=;
+	s=korg; t=1792253981;
+	bh=YQYk/0xe0q+shKKdj8pokHe9GX1HeZxl/yd9BiuB8GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJP8hPYDFHfkIbQvK4UwrlDsKNF4wPdN5gcmglw0wLijdEvdvu/JhVLjfIym93UW/
-	 7XSxhpDGhJgYtx0yUkf6vRnpBq3mc2LBEfEBksgONyv+yJu1SwZqwHoLkEob6F+Gp1
-	 zqFMKqmGhx7ctKg3GZq9jddBukQyW5+LOMxb2/lk=
+	b=DJEXqKiwLbihEFcditFHMHPIa6XD7RamdZg97nqhqAFsHh77wka4GpbaSIwADrvqi
+	 cboFz3Z1ifrtl0vFCgjbJDjinMBqCZBJ4E0s5lIBaRluLMXld+gqDEfyIyuxFVqesF
+	 tGMvbnGq4O7Z9t6DGVUqbMfYqQtWN43sP4mRdL6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <jth@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	ChiaHsuan Chung <chiahsuan.chung@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 297/869] spi: ch341: fix devres lifetime
-Date: Sat, 17 Oct 2026 17:52:18 +0200
-Message-ID: <20261017160044.690370963@linuxfoundation.org>
+Subject: [PATCH 6.12 298/869] drm/amd/display: Fix dc_link NULL handling in HPD init
+Date: Sat, 17 Oct 2026 17:52:19 +0200
+Message-ID: <20261017160044.715800932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,71 +53,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit abe572f630bc1f0e77041012ab075869036ede4f ]
+[ Upstream commit 226a40c06a183abaeb7529a4f54d6c203bd14407 ]
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+amdgpu_dm_hpd_init() may see connectors without a valid dc_link.
 
-Fix the controller and driver data lifetime so that they are released
-on driver unbind.
+The code already checks dc_link for the polling decision, but later
+unconditionally dereferences it when setting up HPD interrupts.
 
-Note that this also makes sure that the SPI controller is placed
-correctly under the USB interface in the device tree.
+Assign dc_link early and skip connectors where it is NULL.
 
-Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
-Cc: stable@vger.kernel.org	# 6.11
-Cc: Johannes Thumshirn <jth@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260327104305.1309915-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c:940 amdgpu_dm_hpd_init()
+error: we previously assumed 'dc_link' could be null (see line 931)
+
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c
+    923                 /*
+    924                  * Analog connectors may be hot-plugged unlike other connector
+    925                  * types that don't support HPD. Only poll analog connectors.
+    926                  */
+    927                 use_polling |=
+    928                         amdgpu_dm_connector->dc_link &&
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The patch adds this NULL check but hopefully it can be removed
+
+    929                         dc_connector_supports_analog(amdgpu_dm_connector->dc_link->link_id.id);
+    930
+    931                 dc_link = amdgpu_dm_connector->dc_link;
+
+dc_link assigned here.
+
+    932
+    933                 /*
+    934                  * Get a base driver irq reference for hpd ints for the lifetime
+    935                  * of dm. Note that only hpd interrupt types are registered with
+    936                  * base driver; hpd_rx types aren't. IOW, amdgpu_irq_get/put on
+    937                  * hpd_rx isn't available. DM currently controls hpd_rx
+    938                  * explicitly with dc_interrupt_set()
+    939                  */
+--> 940                 if (dc_link->irq_source_hpd != DC_IRQ_SOURCE_INVALID) {
+                            ^^^^^^^^^^^^^^^^^^^^^^^ If it's NULL then we are trouble because we dereference it here.
+
+    941                         irq_type = dc_link->irq_source_hpd - DC_IRQ_SOURCE_HPD1;
+    942                         /*
+    943                          * TODO: There's a mismatch between mode_info.num_hpd
+    944                          * and what bios reports as the # of connectors with hpd
+
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Cc: Timur Kristóf <timur.kristof@gmail.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Mario Limonciello <superm1@kernel.org>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: ChiaHsuan Chung <chiahsuan.chung@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ch341.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
-index ded0935662605..3eaa8f176f63a 100644
---- a/drivers/spi/spi-ch341.c
-+++ b/drivers/spi/spi-ch341.c
-@@ -152,7 +152,7 @@ static int ch341_probe(struct usb_interface *intf,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+index a215234151ac3..82bc3dcd3f652 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
+@@ -913,8 +913,9 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
+ 			continue;
  
--	ctrl = devm_spi_alloc_host(&udev->dev, sizeof(struct ch341_spi_dev));
-+	ctrl = devm_spi_alloc_host(&intf->dev, sizeof(struct ch341_spi_dev));
- 	if (!ctrl)
- 		return -ENOMEM;
+ 		amdgpu_dm_connector = to_amdgpu_dm_connector(connector);
+-
+ 		dc_link = amdgpu_dm_connector->dc_link;
++		if (!dc_link)
++			continue;
  
-@@ -163,7 +163,7 @@ static int ch341_probe(struct usb_interface *intf,
- 	ch341->read_pipe = usb_rcvbulkpipe(udev, usb_endpoint_num(in));
- 
- 	ch341->rx_len = usb_endpoint_maxp(in);
--	ch341->rx_buf = devm_kzalloc(&udev->dev, ch341->rx_len, GFP_KERNEL);
-+	ch341->rx_buf = devm_kzalloc(&intf->dev, ch341->rx_len, GFP_KERNEL);
- 	if (!ch341->rx_buf)
- 		return -ENOMEM;
- 
-@@ -171,8 +171,7 @@ static int ch341_probe(struct usb_interface *intf,
- 	if (!ch341->rx_urb)
- 		return -ENOMEM;
- 
--	ch341->tx_buf =
--		devm_kzalloc(&udev->dev, CH341_PACKET_LENGTH, GFP_KERNEL);
-+	ch341->tx_buf = devm_kzalloc(&intf->dev, CH341_PACKET_LENGTH, GFP_KERNEL);
- 	if (!ch341->tx_buf) {
- 		ret = -ENOMEM;
- 		goto err_free_urb;
+ 		/*
+ 		 * Get a base driver irq reference for hpd ints for the lifetime
 -- 
 2.53.0
 
