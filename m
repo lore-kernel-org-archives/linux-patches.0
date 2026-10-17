@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E0F3AE713;
-	Sat, 17 Oct 2026 16:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62AC3BE165;
+	Sat, 17 Oct 2026 16:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255486; cv=none; b=bfiViS7Ef0DW2iCjtP5jrzi6pfAMPb1v45EraICQE7SUcXbyI8yhRw1uN8d6Mi3tyaqLq48FGTXKnFep1eaxuRULfrQP2uwsoNnY1sIxm5cyjtofw56jENhAOfPU8mt+ct5CTU160RjayTZjh7ffE6iRBHg0rz1QVLNxV5uuoTo=
+	t=1792255489; cv=none; b=EmafvYjGdhxrRtW5dBXAQviwlo4lG3S+Z9wpaqph4pWr4Dkgy4RtfqAb6IzFw5QdRJeLbYrmqsTcVY+MJuoIqOpSZMpDL+5aeKlZDBn6zeeJtPm8F+lZE07rNWxhYxngm/J6qHRTXlIksguXAvWIFoOczz2Qhc79fUbSqdT/3Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255486; c=relaxed/simple;
-	bh=grZ3QGZ/z2rh9S0acFzAJ8VJusdg5QFOZV7Z/6uhbqo=;
+	s=arc-20240116; t=1792255489; c=relaxed/simple;
+	bh=dd4Smb96op+ZZvUPxX3ilOlsdjSdkgLjMfAFSwhTHIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4zg8VdBWz+iSFCfkkECAUswqUP36hQ3YEB3JaGow1M7F6fi0PgKbqjSL+8Nx35x3cOuU7hfba0mFEcy4wCWf1VR+GGk7UxFxgCKjB10H9K1pv+KXZX2HSFlhYY6cZb9g/M+Gaf9GSLjAps0SzuOFA9cjUJmBvZYT7M4/VClQuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKcMw7ph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m8gny9UH1hYKw4+6ADeKgtLI3kPJHAJC8LhBH+zpyyyuL16SOPMUss01/R0OOZNgfqpU/TYWSgwOjP1jqp4qd6/Ak13nuBUw05OQ8buWqcQWBpCWS8AYrMvOhTuyJ/uT37/GtPmpD0YYb9LMoiLzEtZceweMMLOCEFeeislkgOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwpajsNG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKcMw7ph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038E41F000C4;
-	Sat, 17 Oct 2026 16:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwpajsNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E78D1F000C4;
+	Sat, 17 Oct 2026 16:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255485;
-	bh=jS5Ex6nlzu71qik1H3eG2pmAUgMuCLARQAbCTjfvTLw=;
+	s=korg; t=1792255488;
+	bh=b3esC9n3ri/DFEYIy1Rou3YND0xlLIPIjNmogszAm/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GKcMw7phvBE1wU1PmHq+U1AaAxOdfWhaHH+QG1tw/OGitW2iJmjHEwEU9OzzDSEFh
-	 vB1A10J9o+yTotfUg/Ep4IEb82pPbJ8x7rNsD6143SjVAwUhZauvMdC+THcTjHejnG
-	 mIkwk0t7aJ+O0RKjIz2Z/yJnTgk7YbP1mv4SDX+8=
+	b=EwpajsNGe+sZEC2R5AZP7FrYs4Itz8vUv/dynyKaZQs1RodUvmv65dOuLprppmABz
+	 JK8c9ypVMyMa7LYuc7Os2r0o2pVxvRXHsVZbbmhFlXF/iF6V7bDSsB8zRpi4kORT94
+	 7xpGydlPuBbgXspB9FPVcVW0PRMpHC0cWM7RIdNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 790/869] net: plumb extack in __dev_change_net_namespace()
-Date: Sat, 17 Oct 2026 18:00:31 +0200
-Message-ID: <20261017160057.163936192@linuxfoundation.org>
+Subject: [PATCH 6.12 751/869] gpiolib: introduce gpio_chip setters that return values
+Date: Sat, 17 Oct 2026 17:59:52 +0200
+Message-ID: <20261017160056.189883681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,161 +46,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 12b6f7069ba5aa160f3332916408b34ae8e0b0f6 ]
+[ Upstream commit 98ce1eb1fd87ea1b016e0913ef6836ab0139b5c4 ]
 
-It could be hard to understand why the netlink command fails. For example,
-if dev->netns_immutable is set, the error is "Invalid argument".
+Add new variants of the set() and set_multiple() callbacks that have
+integer return values allowing to indicate failures to users of the GPIO
+consumer API. Until we convert all GPIO providers treewide to using
+them, they will live in parallel to the existing ones.
 
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: debac3a20dec ("net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().")
+Make sure that providers cannot define both. Prefer the new ones and
+only use the old ones as fallback.
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250220-gpio-set-retval-v2-5-bc4cfd38dae3@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: c87c9046c4e0 ("pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  5 +++--
- net/core/dev.c            | 43 +++++++++++++++++++++++++++++++--------
- net/core/rtnetlink.c      |  2 +-
- 3 files changed, 38 insertions(+), 12 deletions(-)
+ drivers/gpio/gpiolib.c      | 28 ++++++++++++++++++++++++++--
+ drivers/leds/leds-aw200xx.c |  2 +-
+ include/linux/gpio/driver.h | 10 ++++++++++
+ 3 files changed, 37 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 97db4c477170d..4d1e0b91402d1 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -4022,12 +4022,13 @@ int dev_change_flags(struct net_device *dev, unsigned int flags,
- int dev_set_alias(struct net_device *, const char *, size_t);
- int dev_get_alias(const struct net_device *, char *, size_t);
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
--			       const char *pat, int new_ifindex);
-+			       const char *pat, int new_ifindex,
-+			       struct netlink_ext_ack *extack);
- static inline
- int dev_change_net_namespace(struct net_device *dev, struct net *net,
- 			     const char *pat)
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5f23da5ef8c93..5f73f0c29cf6a 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -945,6 +945,11 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 	int base = 0;
+ 	int ret;
+ 
++	/* Only allow one set() and one set_multiple(). */
++	if ((gc->set && gc->set_rv) ||
++	    (gc->set_multiple && gc->set_multiple_rv))
++		return -EINVAL;
++
+ 	gdev = kzalloc(sizeof(*gdev), GFP_KERNEL);
+ 	if (!gdev)
+ 		return -ENOMEM;
+@@ -2724,11 +2729,21 @@ EXPORT_SYMBOL_GPL(gpiod_direction_input);
+ 
+ static int gpiochip_set(struct gpio_chip *gc, unsigned int offset, int value)
  {
--	return __dev_change_net_namespace(dev, net, pat, 0);
-+	return __dev_change_net_namespace(dev, net, pat, 0, NULL);
++	int ret;
++
+ 	lockdep_assert_held(&gc->gpiodev->srcu);
+ 
+-	if (WARN_ON(unlikely(!gc->set)))
++	if (WARN_ON(unlikely(!gc->set && !gc->set_rv)))
+ 		return -EOPNOTSUPP;
+ 
++	if (gc->set_rv) {
++		ret = gc->set_rv(gc, offset, value);
++		if (ret > 0)
++			ret = -EBADE;
++
++		return ret;
++	}
++
+ 	gc->set(gc, offset, value);
+ 	return 0;
  }
- int __dev_set_mtu(struct net_device *, int);
- int dev_set_mtu(struct net_device *, int);
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 1c406b150477f..e6d907a685f64 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -11729,6 +11729,7 @@ EXPORT_SYMBOL(unregister_netdev);
-  *	      is already taken in the destination network namespace.
-  *	@new_ifindex: If not zero, specifies device index in the target
-  *	              namespace.
-+ *	@extack: netlink extended ack
-  *
-  *	This function shuts down a device interface and moves it
-  *	to a new network namespace. On success 0 is returned, on
-@@ -11738,7 +11739,8 @@ EXPORT_SYMBOL(unregister_netdev);
-  */
+@@ -3426,9 +3441,18 @@ static int gpiochip_set_multiple(struct gpio_chip *gc,
  
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
--			       const char *pat, int new_ifindex)
-+			       const char *pat, int new_ifindex,
-+			       struct netlink_ext_ack *extack)
+ 	lockdep_assert_held(&gc->gpiodev->srcu);
+ 
+-	if (WARN_ON(unlikely(!gc->set_multiple && !gc->set)))
++	if (WARN_ON(unlikely(!gc->set_multiple && !gc->set_multiple_rv &&
++			     !gc->set && !gc->set_rv)))
+ 		return -EOPNOTSUPP;
+ 
++	if (gc->set_multiple_rv) {
++		ret = gc->set_multiple_rv(gc, mask, bits);
++		if (ret > 0)
++			ret = -EBADE;
++
++		return ret;
++	}
++
+ 	if (gc->set_multiple) {
+ 		gc->set_multiple(gc, mask, bits);
+ 		return 0;
+diff --git a/drivers/leds/leds-aw200xx.c b/drivers/leds/leds-aw200xx.c
+index f9d9844e02738..7adf77c0a48a9 100644
+--- a/drivers/leds/leds-aw200xx.c
++++ b/drivers/leds/leds-aw200xx.c
+@@ -379,7 +379,7 @@ static void aw200xx_enable(const struct aw200xx *const chip)
+ 
+ static void aw200xx_disable(const struct aw200xx *const chip)
  {
- 	struct netdev_name_node *name_node;
- 	struct net *net_old = dev_net(dev);
-@@ -11749,12 +11751,16 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+-	return gpiod_set_value_cansleep(chip->hwen, 0);
++	gpiod_set_value_cansleep(chip->hwen, 0);
+ }
  
- 	/* Don't allow namespace local devices to be moved. */
- 	err = -EINVAL;
--	if (dev->netns_immutable)
-+	if (dev->netns_immutable) {
-+		NL_SET_ERR_MSG(extack, "The interface netns is immutable");
- 		goto out;
-+	}
- 
- 	/* Ensure the device has been registered */
--	if (dev->reg_state != NETREG_REGISTERED)
-+	if (dev->reg_state != NETREG_REGISTERED) {
-+		NL_SET_ERR_MSG(extack, "The interface isn't registered");
- 		goto out;
-+	}
- 
- 	/* Get out if there is nothing todo */
- 	err = 0;
-@@ -11767,30 +11773,49 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 	err = -EEXIST;
- 	if (netdev_name_in_use(net, dev->name)) {
- 		/* We get here if we can't use the current device name */
--		if (!pat)
-+		if (!pat) {
-+			NL_SET_ERR_MSG(extack,
-+				       "An interface with the same name exists in the target netns");
- 			goto out;
-+		}
- 		err = dev_prep_valid_name(net, dev, pat, new_name, EEXIST);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "Unable to use '%s' for the new interface name in the target netns",
-+					   pat);
- 			goto out;
-+		}
- 	}
- 	/* Check that none of the altnames conflicts. */
- 	err = -EEXIST;
--	netdev_for_each_altname(dev, name_node)
--		if (netdev_name_in_use(net, name_node->name))
-+	netdev_for_each_altname(dev, name_node) {
-+		if (netdev_name_in_use(net, name_node->name)) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "An interface with the altname %s exists in the target netns",
-+					   name_node->name);
- 			goto out;
-+		}
-+	}
- 
- 	/* Check that new_ifindex isn't used yet. */
- 	if (new_ifindex) {
- 		err = dev_index_reserve(net, new_ifindex);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "The ifindex %d is not available in the target netns",
-+					   new_ifindex);
- 			goto out;
-+		}
- 	} else {
- 		/* If there is an ifindex conflict assign a new one */
- 		err = dev_index_reserve(net, dev->ifindex);
- 		if (err == -EBUSY)
- 			err = dev_index_reserve(net, 0);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Unable to allocate a new ifindex in the target netns");
- 			goto out;
-+		}
- 		new_ifindex = err;
- 	}
- 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 23b0e673fd83f..159a6270d5fb8 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2932,7 +2932,7 @@ static int do_setlink(const struct sk_buff *skb,
- 		else
- 			new_ifindex = 0;
- 
--		err = __dev_change_net_namespace(dev, net, pat, new_ifindex);
-+		err = __dev_change_net_namespace(dev, net, pat, new_ifindex, extack);
- 		put_net(net);
- 		if (err)
- 			goto errout;
+ static int aw200xx_probe_get_display_rows(struct device *dev,
+diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+index 2dd7cb9cc270a..ac42f0164d5f9 100644
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -346,6 +346,10 @@ struct gpio_irq_chip {
+  *	stores them in "bits", returns 0 on success or negative error
+  * @set: assigns output value for signal "offset"
+  * @set_multiple: assigns output values for multiple signals defined by "mask"
++ * @set_rv: assigns output value for signal "offset", returns 0 on success or
++ *          negative error value
++ * @set_multiple_rv: assigns output values for multiple signals defined by
++ *                   "mask", returns 0 on success or negative error value
+  * @set_config: optional hook for all kinds of settings. Uses the same
+  *	packed config format as generic pinconf.
+  * @to_irq: optional hook supporting non-static gpiod_to_irq() mappings;
+@@ -441,6 +445,12 @@ struct gpio_chip {
+ 	void			(*set_multiple)(struct gpio_chip *gc,
+ 						unsigned long *mask,
+ 						unsigned long *bits);
++	int			(*set_rv)(struct gpio_chip *gc,
++					  unsigned int offset,
++					  int value);
++	int			(*set_multiple_rv)(struct gpio_chip *gc,
++						   unsigned long *mask,
++						   unsigned long *bits);
+ 	int			(*set_config)(struct gpio_chip *gc,
+ 					      unsigned int offset,
+ 					      unsigned long config);
 -- 
 2.53.0
 
