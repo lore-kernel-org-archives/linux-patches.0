@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6B6380FCA;
-	Sat, 17 Oct 2026 16:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E49C38F658;
+	Sat, 17 Oct 2026 16:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254036; cv=none; b=ZN3o7J8Yz1NBqxIiVClVVuS1lrJVC+o5GAOV7IoWm1i0p1Ax/h6iUwYpBHyRGBCbpH8tWNtMhsA4DlYNJ1iMUD+pUM37geFoT6BDI8v7ltlTZbIsRORg8rdpuCD9454YOYX+aa4vpV1q7A+V5Nj2xH/p+2MgiqJU/u1/kyOUyqs=
+	t=1792254039; cv=none; b=W3Kq+IvWTfI2r4Ti4N9FqA9mRQ8vPe4K3Wn7kVMNL2k+7ZojkfL1hIEA7EDWbUJdi0Egmla6b5b3DG6Z7h/0uO0FXauFFkEsMLuWJ4EZDRyyBR4GNl5D3cVyyNrTdgu3RyJvd2BdvE220TKokjPmMraP17CzGT21SvthJTr+KBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254036; c=relaxed/simple;
-	bh=Pz0kGMl5ithq8hddej0Cw0797G6VdcsKg0FlmYAzMyA=;
+	s=arc-20240116; t=1792254039; c=relaxed/simple;
+	bh=APaUiGKURwlvbi5eyaDa9FQjw4l8/8XICYyAVoxdtlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vi7qjbca7P8529sgpaVLapJuJVhWRlhPO3bS7EO6LaCfR4viOE2HjTJU1z8uQ8uNn9GpixyHP1Prj3G7VgUtSCLznJnpWxmaWcZxTSU6R44yjhJHWSViqyVXwC238jlDLnDwXVpL+n3CcrJxCqdOtB4nkrmY7ttKugIjU23/4lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQivQ6XZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fs/g5YlPZPIEpDM21Ji99IXv9HBZPaHhvljaZp954OKm1CI9+z6f4/SwTmXdz/fOsCj9cw/uhQlXIGHGRS8JqBMs2Ag7Zoa08bb+w4jwVgJP7IsqfdqzboQLKfrmJ465pkcDdYEJTPqZcHSR/EkXvlWd1k7d0W5zlzxJLQ7RRrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPCiOYs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQivQ6XZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010A41F000C4;
-	Sat, 17 Oct 2026 16:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPCiOYs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FA51F000C4;
+	Sat, 17 Oct 2026 16:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254035;
-	bh=7SX7EOlTqiTrUlf0STZB0M9j0RbC6stjAuFuLso4Dfg=;
+	s=korg; t=1792254038;
+	bh=8dMn1hU7hCQbt5qoN33qHcUbnyk4oDtojOmZLXcmLa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQivQ6XZnPODwAQOu302rZMSzcC8/KMHiFf9/gD1/BoseoFmwZIl7Ko2BgKmF385R
-	 suol26TpHYPZx/BjaDhNDlKaLDN6dkhuyHOz3Muk40JHA9WLp+kB+7Ht8+nNsaM0Gf
-	 RAAQn0wPNPGqUexR6oczwDce0pDOkcogYWteJUEA=
+	b=pPCiOYs6wf3LwWKyAWHEynRKjKhAyO17zok2gIpeYNSG/oO72pBBMqMHoHbJECTdM
+	 SR/xynQ486WiY92IULoXWCtNzybFbrviQSlX0bB4GC/enXdZFnPP9A5+ia0XmWk8c7
+	 Rkng7rmlc9vBHlxVMKqK2vwCrYwpXGe+LPi9AxHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Joe Damato <joe@dama.to>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 314/869] greybus: raw: fix use-after-free on cdev close
-Date: Sat, 17 Oct 2026 17:52:35 +0200
-Message-ID: <20261017160045.125963643@linuxfoundation.org>
+Subject: [PATCH 6.12 315/869] net: pull headers in qdisc_pkt_len_segs_init()
+Date: Sat, 17 Oct 2026 17:52:36 +0200
+Message-ID: <20261017160045.150379266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,192 +46,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Riégel <damien.riegel@silabs.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 983cc2c7efbce04ecbf6328448d895044dd6ab31 ]
+[ Upstream commit 7fb4c19670110f052c04e1ec1d2b953b9f4f57e4 ]
 
-This addresses a use-after-free bug when a raw bundle is disconnected
-but its chardev is still opened by an application. When the application
-releases the cdev, it causes the following panic when init on free is
-enabled (CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
+Most ndo_start_xmit() methods expects headers of gso packets
+to be already in skb->head.
 
-        refcount_t: underflow; use-after-free.
-        WARNING: CPU: 0 PID: 139 at lib/refcount.c:28 refcount_warn_saturate+0xd0/0x130
-         ...
-        Call Trace:
-         <TASK>
-         cdev_put+0x18/0x30
-         __fput+0x255/0x2a0
-         __x64_sys_close+0x3d/0x80
-         do_syscall_64+0xa4/0x290
-         entry_SYSCALL_64_after_hwframe+0x77/0x7f
+net/core/tso.c users are particularly at risk, because tso_build_hdr()
+does a memcpy(hdr, skb->data, hdr_len);
 
-The cdev is contained in the "gb_raw" structure, which is freed in the
-disconnect operation. When the cdev is released at a later time,
-cdev_put gets an address that points to freed memory.
+qdisc_pkt_len_segs_init() already does a dissection of gso packets.
 
-To fix this use-after-free, convert the struct device from a pointer to
-being embedded, that makes the lifetime of the cdev and of this device
-the same. Then, use cdev_device_add, which guarantees that the device
-won't be released until all references to the cdev have been released.
-Finally, delegate the freeing of the structure to the device release
-function, instead of freeing immediately in the disconnect callback.
+Use pskb_may_pull() instead of skb_header_pointer() to make
+sure drivers do not have to reimplement this.
 
-Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
-Link: https://patch.msgid.link/20260324140039.40001-1-damien.riegel@silabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Some malicious packets could be fed, detect them so that we can
+drop them sooner with a new SKB_DROP_REASON_SKB_BAD_GSO drop_reason.
+
+Fixes: e876f208af18 ("net: Add a software TSO helper API")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260403221540.3297753-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/raw.c | 67 +++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 34 deletions(-)
+ include/net/dropreason-core.h |  3 ++
+ net/core/dev.c                | 81 +++++++++++++++++++++--------------
+ 2 files changed, 53 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index 71de6776739c2..e668438e1a2c4 100644
---- a/drivers/staging/greybus/raw.c
-+++ b/drivers/staging/greybus/raw.c
-@@ -21,9 +21,8 @@ struct gb_raw {
- 	struct list_head list;
- 	int list_data;
- 	struct mutex list_lock;
--	dev_t dev;
- 	struct cdev cdev;
--	struct device *device;
-+	struct device dev;
- };
- 
- struct raw_data {
-@@ -148,6 +147,15 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
- 	return retval;
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index 07826c85d31ca..f8f4d2b77e6ac 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -66,6 +66,7 @@
+ 	FN(UNHANDLED_PROTO)		\
+ 	FN(SKB_CSUM)			\
+ 	FN(SKB_GSO_SEG)			\
++	FN(SKB_BAD_GSO)			\
+ 	FN(SKB_UCOPY_FAULT)		\
+ 	FN(DEV_HDR)			\
+ 	FN(DEV_READY)			\
+@@ -331,6 +332,8 @@ enum skb_drop_reason {
+ 	SKB_DROP_REASON_SKB_CSUM,
+ 	/** @SKB_DROP_REASON_SKB_GSO_SEG: gso segmentation error */
+ 	SKB_DROP_REASON_SKB_GSO_SEG,
++	/** @SKB_DROP_REASON_SKB_BAD_GSO: malicious gso packet. */
++	SKB_DROP_REASON_SKB_BAD_GSO,
+ 	/**
+ 	 * @SKB_DROP_REASON_SKB_UCOPY_FAULT: failed to copy data from user space,
+ 	 * e.g., via zerocopy_sg_from_iter() or skb_orphan_frags_rx()
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 48f099f9e804c..388770b88b449 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3862,49 +3862,62 @@ struct sk_buff *validate_xmit_skb_list(struct sk_buff *skb, struct net_device *d
  }
+ EXPORT_SYMBOL_GPL(validate_xmit_skb_list);
  
-+static void raw_dev_release(struct device *dev)
-+{
-+	struct gb_raw *raw = container_of(dev, struct gb_raw, dev);
-+
-+	ida_free(&minors, MINOR(raw->dev.devt));
-+
-+	kfree(raw);
-+}
-+
- static int gb_raw_probe(struct gb_bundle *bundle,
- 			const struct greybus_bundle_id *id)
+-static void qdisc_pkt_len_init(struct sk_buff *skb)
++static enum skb_drop_reason qdisc_pkt_len_init(struct sk_buff *skb)
  {
-@@ -164,15 +172,30 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	if (cport_desc->protocol_id != GREYBUS_PROTOCOL_RAW)
- 		return -ENODEV;
+-	const struct skb_shared_info *shinfo = skb_shinfo(skb);
++	struct skb_shared_info *shinfo = skb_shinfo(skb);
++	unsigned int hdr_len, tlen;
++	u16 gso_segs;
  
-+	minor = ida_alloc(&minors, GFP_KERNEL);
-+	if (minor < 0)
-+		return minor;
+ 	qdisc_skb_cb(skb)->pkt_len = skb->len;
++	if (!shinfo->gso_size)
++		return SKB_NOT_DROPPED_YET;
 +
- 	raw = kzalloc(sizeof(*raw), GFP_KERNEL);
--	if (!raw)
-+	if (!raw) {
-+		ida_free(&minors, minor);
- 		return -ENOMEM;
++	gso_segs = shinfo->gso_segs;
+ 
+ 	/* To get more precise estimation of bytes sent on wire,
+ 	 * we add to pkt_len the headers size of all segments
+ 	 */
+-	if (shinfo->gso_size && skb_transport_header_was_set(skb)) {
+-		u16 gso_segs = shinfo->gso_segs;
+-		unsigned int hdr_len;
+ 
+-		/* mac layer + network layer */
++	/* mac layer + network layer */
++	if (!skb->encapsulation) {
++		if (unlikely(!skb_transport_header_was_set(skb)))
++			return SKB_NOT_DROPPED_YET;
+ 		hdr_len = skb_transport_offset(skb);
++	} else {
++		hdr_len = skb_inner_transport_offset(skb);
 +	}
++	/* + transport layer */
++	if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
++		const struct tcphdr *th;
+ 
+-		/* + transport layer */
+-		if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
+-			const struct tcphdr *th;
+-			struct tcphdr _tcphdr;
+-
+-			th = skb_header_pointer(skb, hdr_len,
+-						sizeof(_tcphdr), &_tcphdr);
+-			if (likely(th))
+-				hdr_len += __tcp_hdrlen(th);
+-		} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
+-			struct udphdr _udphdr;
+-
+-			if (skb_header_pointer(skb, hdr_len,
+-					       sizeof(_udphdr), &_udphdr))
+-				hdr_len += sizeof(struct udphdr);
+-		}
++		if (!pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
+ 
+-		if (unlikely(shinfo->gso_type & SKB_GSO_DODGY)) {
+-			int payload = skb->len - hdr_len;
++		th = (const struct tcphdr *)(skb->data + hdr_len);
++		tlen = __tcp_hdrlen(th);
++		if (tlen < sizeof(*th))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		hdr_len += tlen;
++		if (!pskb_may_pull(skb, hdr_len))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++	} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
++		if (!pskb_may_pull(skb, hdr_len + sizeof(struct udphdr)))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		hdr_len += sizeof(struct udphdr);
++	}
+ 
+-			/* Malicious packet. */
+-			if (payload <= 0)
+-				return;
+-			gso_segs = DIV_ROUND_UP(payload, shinfo->gso_size);
+-		}
+-		qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
++	/* prior pskb_may_pull() might have changed skb->head. */
++	shinfo = skb_shinfo(skb);
++	if (unlikely(shinfo->gso_type & SKB_GSO_DODGY)) {
++		int payload = skb->len - hdr_len;
 +
-+	device_initialize(&raw->dev);
-+	raw->dev.devt = MKDEV(raw_major, minor);
-+	raw->dev.class = &raw_class;
-+	raw->dev.parent = &bundle->dev;
-+	raw->dev.release = raw_dev_release;
-+	retval = dev_set_name(&raw->dev, "gb!raw%d", minor);
-+	if (retval)
-+		goto error_put_device;
- 
- 	connection = gb_connection_create(bundle, le16_to_cpu(cport_desc->id),
- 					  gb_raw_request_handler);
- 	if (IS_ERR(connection)) {
- 		retval = PTR_ERR(connection);
--		goto error_free;
-+		goto error_put_device;
++		/* Malicious packet. */
++		if (payload <= 0)
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		gso_segs = DIV_ROUND_UP(payload, shinfo->gso_size);
  	}
- 
- 	INIT_LIST_HEAD(&raw->list);
-@@ -181,46 +204,26 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	raw->connection = connection;
- 	greybus_set_drvdata(bundle, raw);
- 
--	minor = ida_alloc(&minors, GFP_KERNEL);
--	if (minor < 0) {
--		retval = minor;
--		goto error_connection_destroy;
--	}
--
--	raw->dev = MKDEV(raw_major, minor);
- 	cdev_init(&raw->cdev, &raw_fops);
- 
- 	retval = gb_connection_enable(connection);
- 	if (retval)
--		goto error_remove_ida;
-+		goto error_connection_destroy;
- 
--	retval = cdev_add(&raw->cdev, raw->dev, 1);
-+	retval = cdev_device_add(&raw->cdev, &raw->dev);
- 	if (retval)
- 		goto error_connection_disable;
- 
--	raw->device = device_create(&raw_class, &connection->bundle->dev,
--				    raw->dev, raw, "gb!raw%d", minor);
--	if (IS_ERR(raw->device)) {
--		retval = PTR_ERR(raw->device);
--		goto error_del_cdev;
--	}
--
- 	return 0;
- 
--error_del_cdev:
--	cdev_del(&raw->cdev);
--
- error_connection_disable:
- 	gb_connection_disable(connection);
- 
--error_remove_ida:
--	ida_free(&minors, minor);
--
- error_connection_destroy:
- 	gb_connection_destroy(connection);
- 
--error_free:
--	kfree(raw);
-+error_put_device:
-+	put_device(&raw->dev);
- 	return retval;
++	qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
++	return SKB_NOT_DROPPED_YET;
  }
  
-@@ -231,11 +234,8 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 	struct raw_data *raw_data;
- 	struct raw_data *temp;
+ static int dev_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *q,
+@@ -4485,6 +4498,7 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	struct Qdisc *q;
+ 	int rc = -ENOMEM;
+ 	bool again = false;
++	enum skb_drop_reason reason;
  
--	// FIXME - handle removing a connection when the char device node is open.
--	device_destroy(&raw_class, raw->dev);
--	cdev_del(&raw->cdev);
-+	cdev_device_del(&raw->cdev, &raw->dev);
- 	gb_connection_disable(connection);
--	ida_free(&minors, MINOR(raw->dev));
- 	gb_connection_destroy(connection);
+ 	skb_reset_mac_header(skb);
+ 	skb_assert_len(skb);
+@@ -4492,6 +4506,12 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_SCHED_TSTAMP))
+ 		__skb_tstamp_tx(skb, NULL, NULL, skb->sk, SCM_TSTAMP_SCHED);
  
- 	mutex_lock(&raw->list_lock);
-@@ -244,8 +244,7 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 		kfree(raw_data);
- 	}
- 	mutex_unlock(&raw->list_lock);
--
--	kfree(raw);
-+	put_device(&raw->dev);
- }
++	reason = qdisc_pkt_len_init(skb);
++	if (unlikely(reason)) {
++		dev_core_stats_tx_dropped_inc(dev);
++		kfree_skb_reason(skb, reason);
++		return -EINVAL;
++	}
+ 	/* Disable soft irqs for various locks below. Also
+ 	 * stops preemption for RCU.
+ 	 */
+@@ -4499,7 +4519,6 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
  
- /*
+ 	skb_update_prio(skb);
+ 
+-	qdisc_pkt_len_init(skb);
+ 	tcx_set_ingress(skb, false);
+ #ifdef CONFIG_NET_EGRESS
+ 	if (static_branch_unlikely(&egress_needed_key)) {
 -- 
 2.53.0
 
