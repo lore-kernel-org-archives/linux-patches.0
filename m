@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A3D3A5E77;
-	Sat, 17 Oct 2026 16:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE82438654F;
+	Sat, 17 Oct 2026 16:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253276; cv=none; b=FqZHZvqBhg0jx1yK2oGApgS3EdWAZ/KLo1MiPmpF4acrAznvH72q9/Nkq1LK7r/hKE8kGoDK2bGlP2X716Azsk0EpqM6hG01UB+H9/X3nRRDwyP9AKK1njYTwNzHy//a7ZMk26UxGDKyl7uHwp+CbELUcwnodwgw4SqYOje9EYY=
+	t=1792253278; cv=none; b=hN4Ji6ZCz9bRvDUOj4KZbufd/Mm6AL9jfqsXRu3+9XZYBlGrtZ25Caf06gyFjTM8+OMd5zdT2c8GvQQn13B324DIxNCcPKlmLr7PqdHin8mQLzaRxjNoF/i7mog4t5QYwb5N1925v9UrA+fHYOydt0clzwxKMQDl6LlomfgMq1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253276; c=relaxed/simple;
-	bh=30e3AE112q+UyxgBUz0VSpDqX8MF0LGsEodfppG/8b0=;
+	s=arc-20240116; t=1792253278; c=relaxed/simple;
+	bh=WIT4Yf6IAvWQ1lUAAz36ZftlTZ5yDphsGQY32HGVy9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ5rYw3223u5GDkH5PUCbODK6+vmt2a1h8I4uJmUWHgTg9+WQkn75//2CCctTm1cZ3aLk0HvRQxLbaO15Lcfo4ba9Df9sFc4rnq0Gp9cQkZsZt59FjqD1IJndbje9RO5YooBbptxaHdjEGSl9p745SlLoqxAXaG8r17yAxu9buM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KL6OA0xe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zghyzn6Sk2I93HjlmyL+apAn+2sBQdjxXZMbTbENQFGa7qMl0Y07APFaFOsL8mz/mn8XXDP0oI0z56/g+6aQJWKTIT8+64pfBFxBMkFvh+pRH6T1bT9nuXH7AwBC4yXmCgrNzhgy4FQC0p+A1R7F9pz2LXZT39u/ypbePgBuaDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnlftGls; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KL6OA0xe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DEC1F000C5;
-	Sat, 17 Oct 2026 16:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnlftGls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11821F000C4;
+	Sat, 17 Oct 2026 16:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253271;
-	bh=SpK0NlldIu8BV90+wVBQ7obrmU4SEnHSLTE0rIelwmQ=;
+	s=korg; t=1792253274;
+	bh=ZrHteGo1LJ7qbnNO7tE56zZ9anb5A7hFC5pyBD4/yv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KL6OA0xeqyrP3NiCP26YHXTFftOgyJLFBqF0g7vyfs72OaiLqW73RrPQbzo0CzSym
-	 ZuUj2feOfHuFL8oERX17X1zpPDjkPdlQMcrB9aE2+FVj9atuRvX3CBPmv2jrUp7Hnx
-	 e4WqWRXTwDMqeGqfJjuCy/RmpKWyHMwOGzLi+yZc=
+	b=AnlftGlsqKNqr1grb6t54MR+nhuzI0z5aeGkabLFGiiwlbd1AtKTb+RAqMnQ0lvYy
+	 nD094du2Hm4XbW2NmPxnP8ZnMi22YUjWPXkIHxu+439LgPP3DgXA3I3u24ANt3oVwo
+	 K8wfYdwJ7bpml+A71TUMaMKE00i7QSf2J4MGGrow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <quic_kangyang@quicinc.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/869] wifi: ath12k: fix struct hal_rx_phyrx_rssi_legacy_info
-Date: Sat, 17 Oct 2026 17:48:23 +0200
-Message-ID: <20261017160038.612057698@linuxfoundation.org>
+Subject: [PATCH 6.12 063/869] wifi: ath12k: fix incorrect TID updation in DP monitor status path
+Date: Sat, 17 Oct 2026 17:48:24 +0200
+Message-ID: <20261017160038.638822656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,100 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <quic_kangyang@quicinc.com>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit 04f33114af00317dc3c494e60a7c42292e0ffd7e ]
+[ Upstream commit ebee84cc961cd3947015efbf4a5dbea63b11c5d3 ]
 
-Current struct hal_rx_phyrx_rssi_legacy_info in hal_rx.h is not matched
-with hardware descriptor definition. This hardware descriptor definition
-is determined by hardware. Host shall follow it.
+Currently, an incorrect TID value gets populated in the monitor status Rx
+path due to an incorrect bitmap value given to the ffs() built-in helper
+function. Therefore, avoid the decrement and directly provide the TID
+bitmap to the ffs() built-in helper function for the correct TID update
+in the monitor status Rx path.
 
-So update struct hal_rx_phyrx_rssi_legacy_info and related code.
-
-Both QCN9274 and WCN7850 need this modification.
-
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
 
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241022110831.974-5-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241217084511.2981515-6-quic_periyasa@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 25 ++++++------------------
- drivers/net/wireless/ath/ath12k/hal_rx.h |  9 ++++++---
- 2 files changed, 12 insertions(+), 22 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 7bfd323cdf244..95e9d652c611d 100644
+index 95e9d652c611d..f1377e186518a 100644
 --- a/drivers/net/wireless/ath/ath12k/dp_mon.c
 +++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -731,33 +731,20 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 	case HAL_PHYRX_RSSI_LEGACY: {
- 		struct hal_rx_phyrx_rssi_legacy_info *rssi =
- 			(struct hal_rx_phyrx_rssi_legacy_info *)tlv_data;
--		u32 reception_type = 0;
--		u32 rssi_legacy_info = __le32_to_cpu(rssi->rsvd[0]);
+@@ -612,6 +612,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 	case HAL_RX_PPDU_END_USER_STATS: {
+ 		struct hal_rx_ppdu_end_user_stats *eu_stats =
+ 			(struct hal_rx_ppdu_end_user_stats *)tlv_data;
++		u32 tid_bitmap;
  
- 		info[0] = __le32_to_cpu(rssi->info0);
-+		info[1] = __le32_to_cpu(rssi->info1);
- 
- 		/* TODO: Please note that the combined rssi will not be accurate
- 		 * in MU case. Rssi in MU needs to be retrieved from
- 		 * PHYRX_OTHER_RECEIVE_INFO TLV.
- 		 */
- 		ppdu_info->rssi_comb =
--			u32_get_bits(info[0],
--				     HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RSSI_COMB);
--		reception_type =
--			u32_get_bits(rssi_legacy_info,
--				     HAL_RX_PHYRX_RSSI_LEGACY_INFO_RSVD1_RECEPTION);
--
--		switch (reception_type) {
--		case HAL_RECEPTION_TYPE_ULOFMDA:
--			ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_OFDMA;
--			break;
--		case HAL_RECEPTION_TYPE_ULMIMO:
--			ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
--			break;
--		default:
--			ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
--			break;
--		}
-+			u32_get_bits(info[1],
-+				     HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO1_RSSI_COMB);
-+
-+		ppdu_info->bw = u32_get_bits(info[0],
-+					     HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RX_BW);
- 		break;
- 	}
- 	case HAL_RXPCU_PPDU_END_INFO: {
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
-index 8c37cbc01b1c5..e12734fd56bca 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
-@@ -437,12 +437,15 @@ enum hal_rx_ul_reception_type {
- 	HAL_RECEPTION_TYPE_FRAMELESS
- };
- 
--#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RSSI_COMB	GENMASK(15, 8)
--#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_RSVD1_RECEPTION   GENMASK(3, 0)
-+#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RECEPTION	GENMASK(3, 0)
-+#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO0_RX_BW	GENMASK(7, 5)
-+#define HAL_RX_PHYRX_RSSI_LEGACY_INFO_INFO1_RSSI_COMB	GENMASK(15, 8)
- 
- struct hal_rx_phyrx_rssi_legacy_info {
--	__le32 rsvd[35];
- 	__le32 info0;
-+	__le32 rsvd0[39];
-+	__le32 info1;
-+	__le32 rsvd1;
- } __packed;
- 
- #define HAL_RX_MPDU_START_INFO0_PPDU_ID	GENMASK(31, 16)
+ 		info[0] = __le32_to_cpu(eu_stats->info0);
+ 		info[1] = __le32_to_cpu(eu_stats->info1);
+@@ -624,10 +625,9 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 			u32_get_bits(info[2], HAL_RX_PPDU_END_USER_STATS_INFO2_AST_INDEX);
+ 		ppdu_info->fc_valid =
+ 			u32_get_bits(info[1], HAL_RX_PPDU_END_USER_STATS_INFO1_FC_VALID);
+-		ppdu_info->tid =
+-			ffs(u32_get_bits(info[6],
+-					 HAL_RX_PPDU_END_USER_STATS_INFO6_TID_BITMAP)
+-					 - 1);
++		tid_bitmap = u32_get_bits(info[6],
++					  HAL_RX_PPDU_END_USER_STATS_INFO6_TID_BITMAP);
++		ppdu_info->tid = ffs(tid_bitmap) - 1;
+ 		ppdu_info->tcp_msdu_count =
+ 			u32_get_bits(info[4],
+ 				     HAL_RX_PPDU_END_USER_STATS_INFO4_TCP_MSDU_CNT);
 -- 
 2.53.0
 
