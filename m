@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B1F374E60;
-	Sat, 17 Oct 2026 17:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B063BB133;
+	Sat, 17 Oct 2026 17:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257775; cv=none; b=lPiUJEuTCbQSWxeD87swVgjgVMndwPrsQY2eKKMmMfZi1/yxOIyvV9BunDCTr8YLcOFcSi312PV0HS+pwBLVGz2eZwQt/shGiAPyD9iIBXZPCG3oBQ1h3PXMnj0eC9+J7E1EErzCMtp5v9k0zZft4OG5YZRC0lBAQpsIbsoeDIA=
+	t=1792257779; cv=none; b=P+9VHq8J9qNBztrIssmx30nFC9lA8YiW40Qn9KZzEgiP+2D7WYu8KqgbO40rWJbaCuype5/9Mdgt78MdZWdyWIixWjKlMbwlsL2tUfbsqAOHjkeZNMNVkibqXEZPVY/Sgbk4td8CO3Oimc6KaKOrBDSRbeB6hMbQUEosqarUChw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257775; c=relaxed/simple;
-	bh=IgZ4KfCz1s+6wpQ+LkyMeqdiJMTm6iWMig/CsTxqanE=;
+	s=arc-20240116; t=1792257779; c=relaxed/simple;
+	bh=Q6f2liuyBXJhKWcYZ1Ik837e4tlcTM+dL4NDEPLxtP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mn4nB2rB/wz4CLrD4Jvl9gRX4RAw1U77xTfLuh9YII4UKCfjeDwrll5vBJ7ixocM9aCdH2anA8Wek1GfVh0/15wOuJc8Rzf77DxolNQGEC5rEuJNCCgstnvmE3l09N8BHg92rwoD0Gee2Jq98TwwI9bu81Dz15c6ngFV++araWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Loj6tPxT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MJSAH9vSGMVjllKMY5PUyJrZQ8wthspnbbpgSzkJOG0IQAS4+eSDAJzBkkvLf1c9OfSleZJh/l99kP8sBfamdpzdhTjJvmWQ8BZ/WR/Thi4wgyf0OHHikp8Dg2TRDj6P3mBtTwloiqMQtaiDPobyyIEOf8VM0QQRL1fExHdWQI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtlKhuHf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Loj6tPxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AB51F000C4;
-	Sat, 17 Oct 2026 17:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtlKhuHf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEB81F000C4;
+	Sat, 17 Oct 2026 17:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257773;
-	bh=3rP7vZIEI42ZIMvf3QngxV1p9AqIkRaeNtXhSp7mJGk=;
+	s=korg; t=1792257776;
+	bh=5VSvzJWvn/+f4IOR/9Og1Dj+Or15yXfUEy9Wa+MjdNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Loj6tPxTQerNQq1rIf231TWMHWwWPkeM6fDJSyt4zFaSeVhQ5gezY9ffUGzwq2zDo
-	 i9sdN1iKjh9CyNTG3P6IzHpKftp9XG1vUIW2IrxMCzq8zCKUY9EvDuwIVx4gFnLWLy
-	 OWrXrSM10tbAF06LhgJrybkF79DqTTvth254oH1E=
+	b=WtlKhuHf3ahq9UfQebatNXLtPnTRSxIePiF389v/ULjj8XXST0W4EIIDyzHEeTF48
+	 Hzp/tstKNy5yClqSaKhEV2rv2tmwRwSZom2PDHkU912NL2nz14Yg/WAFhkua1CUYib
+	 nPMBLFEFSHIlGMeJ/HExTPy4l5IQ4QBIQF7EAag4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0667/1674] RDMA/siw: Remove direct link to net_device
-Date: Sat, 17 Oct 2026 17:48:59 +0200
-Message-ID: <20261017160448.228374540@linuxfoundation.org>
+	Ed Santiago <santiago@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	David Gibson <david@gibson.dropbear.id.au>
+Subject: [PATCH 6.6 0668/1674] udp: Deal with race between UDP socket address change and rehash
+Date: Sat, 17 Oct 2026 17:49:00 +0200
+Message-ID: <20261017160448.253577135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,268 +55,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Stefano Brivio <sbrivio@redhat.com>
 
-[ Upstream commit 16b87037b48889d21854c8e97aec8a1baf2642b3 ]
+[ Upstream commit a502ea6fa94b1f7be72a24bcf9e3f5f6b7e6e90c ]
 
-Do not manage a per device direct link to net_device. Rely
-on associated ib_devices net_device management, not doubling
-the effort locally. A badly managed local link to net_device
-was causing a 'KASAN: slab-use-after-free' exception during
-siw_query_port() call.
+If a UDP socket changes its local address while it's receiving
+datagrams, as a result of connect(), there is a period during which
+a lookup operation might fail to find it, after the address is changed
+but before the secondary hash (port and address) and the four-tuple
+hash (local and remote ports and addresses) are updated.
 
-Fixes: bdcf26bf9b3a ("rdma/siw: network and RDMA core interface")
-Reported-by: syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4b87489410b4efd181bf
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://patch.msgid.link/20241212151848.564872-1-bmt@zurich.ibm.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Secondary hash chains were introduced by commit 30fff9231fad ("udp:
+bind() optimisation") and, as a result, a rehash operation became
+needed to make a bound socket reachable again after a connect().
+
+This operation was introduced by commit 719f835853a9 ("udp: add
+rehash on connect()") which isn't however a complete fix: the
+socket will be found once the rehashing completes, but not while
+it's pending.
+
+This is noticeable with a socat(1) server in UDP4-LISTEN mode, and a
+client sending datagrams to it. After the server receives the first
+datagram (cf. _xioopen_ipdgram_listen()), it issues a connect() to
+the address of the sender, in order to set up a directed flow.
+
+Now, if the client, running on a different CPU thread, happens to
+send a (subsequent) datagram while the server's socket changes its
+address, but is not rehashed yet, this will result in a failed
+lookup and a port unreachable error delivered to the client, as
+apparent from the following reproducer:
+
+  LEN=$(($(cat /proc/sys/net/core/wmem_default) / 4))
+  dd if=/dev/urandom bs=1 count=${LEN} of=tmp.in
+
+  while :; do
+  	taskset -c 1 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
+  	sleep 0.1 || sleep 1
+  	taskset -c 2 socat OPEN:tmp.in UDP4:localhost:1337,shut-null
+  	wait
+  done
+
+where the client will eventually get ECONNREFUSED on a write()
+(typically the second or third one of a given iteration):
+
+  2024/11/13 21:28:23 socat[46901] E write(6, 0x556db2e3c000, 8192): Connection refused
+
+This issue was first observed as a seldom failure in Podman's tests
+checking UDP functionality while using pasta(1) to connect the
+container's network namespace, which leads us to a reproducer with
+the lookup error resulting in an ICMP packet on a tap device:
+
+  LOCAL_ADDR="$(ip -j -4 addr show|jq -rM '.[] | .addr_info[0] | select(.scope == "global").local')"
+
+  while :; do
+  	./pasta --config-net -p pasta.pcap -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
+  	sleep 0.2 || sleep 1
+  	socat OPEN:tmp.in UDP4:${LOCAL_ADDR}:1337,shut-null
+  	wait
+  	cmp tmp.in tmp.out
+  done
+
+Once this fails:
+
+  tmp.in tmp.out differ: char 8193, line 29
+
+we can finally have a look at what's going on:
+
+  $ tshark -r pasta.pcap
+      1   0.000000           :: ? ff02::16     ICMPv6 110 Multicast Listener Report Message v2
+      2   0.168690 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      3   0.168767 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      4   0.168806 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      5   0.168827 c6:47:05:8d:dc:04 ? Broadcast    ARP 42 Who has 88.198.0.161? Tell 88.198.0.164
+      6   0.168851 9a:55:9a:55:9a:55 ? c6:47:05:8d:dc:04 ARP 42 88.198.0.161 is at 9a:55:9a:55:9a:55
+      7   0.168875 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      8   0.168896 88.198.0.164 ? 88.198.0.161 ICMP 590 Destination unreachable (Port unreachable)
+      9   0.168926 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+     10   0.168959 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+     11   0.168989 88.198.0.161 ? 88.198.0.164 UDP 4138 60260 ? 1337 Len=4096
+     12   0.169010 88.198.0.161 ? 88.198.0.164 UDP 42 60260 ? 1337 Len=0
+
+On the third datagram received, the network namespace of the container
+initiates an ARP lookup to deliver the ICMP message.
+
+In another variant of this reproducer, starting the client with:
+
+  strace -f pasta --config-net -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc 2>strace.log &
+
+and connecting to the socat server using a loopback address:
+
+  socat OPEN:tmp.in UDP4:localhost:1337,shut-null
+
+we can more clearly observe a sendmmsg() call failing after the
+first datagram is delivered:
+
+  [pid 278012] connect(173, 0x7fff96c95fc0, 16) = 0
+  [...]
+  [pid 278012] recvmmsg(173, 0x7fff96c96020, 1024, MSG_DONTWAIT, NULL) = -1 EAGAIN (Resource temporarily unavailable)
+  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = 1
+  [...]
+  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = -1 ECONNREFUSED (Connection refused)
+
+and, somewhat confusingly, after a connect() on the same socket
+succeeded.
+
+Until commit 4cdeeee9252a ("net: udp: prefer listeners bound to an
+address"), the race between receive address change and lookup didn't
+actually cause visible issues, because, once the lookup based on the
+secondary hash chain failed, we would still attempt a lookup based on
+the primary hash (destination port only), and find the socket with the
+outdated secondary hash.
+
+That change, however, dropped port-only lookups altogether, as side
+effect, making the race visible.
+
+To fix this, while avoiding the need to make address changes and
+rehash atomic against lookups, reintroduce primary hash lookups as
+fallback, if lookups based on four-tuple and secondary hashes fail.
+
+To this end, introduce a simplified lookup implementation, which
+doesn't take care of SO_REUSEPORT groups: if we have one, there are
+multiple sockets that would match the four-tuple or secondary hash,
+meaning that we can't run into this race at all.
+
+v2:
+  - instead of synchronising lookup operations against address change
+    plus rehash, reintroduce a simplified version of the original
+    primary hash lookup as fallback
+
+v1:
+  - fix build with CONFIG_IPV6=n: add ifdef around sk_v6_rcv_saddr
+    usage (Kuniyuki Iwashima)
+  - directly use sk_rcv_saddr for IPv4 receive addresses instead of
+    fetching inet_rcv_saddr (Kuniyuki Iwashima)
+  - move inet_update_saddr() to inet_hashtables.h and use that
+    to set IPv4/IPv6 addresses as suitable (Kuniyuki Iwashima)
+  - rebase onto net-next, update commit message accordingly
+
+Reported-by: Ed Santiago <santiago@redhat.com>
+Link: https://github.com/containers/podman/issues/24147
+Analysed-by: David Gibson <david@gibson.dropbear.id.au>
+Fixes: 30fff9231fad ("udp: bind() optimisation")
+Signed-off-by: Stefano Brivio <sbrivio@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw.h       |  7 +++---
- drivers/infiniband/sw/siw/siw_cm.c    | 27 ++++++++++++++++-----
- drivers/infiniband/sw/siw/siw_main.c  | 15 +-----------
- drivers/infiniband/sw/siw/siw_verbs.c | 35 ++++++++++++++++++---------
- 4 files changed, 49 insertions(+), 35 deletions(-)
+ net/ipv4/udp.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ net/ipv6/udp.c | 50 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw.h b/drivers/infiniband/sw/siw/siw.h
-index 58dddb143b9f0..b79dad8704239 100644
---- a/drivers/infiniband/sw/siw/siw.h
-+++ b/drivers/infiniband/sw/siw/siw.h
-@@ -46,6 +46,9 @@
-  */
- #define SIW_IRQ_MAXBURST_SQ_ACTIVE 4
- 
-+/* There is always only a port 1 per siw device */
-+#define SIW_PORT 1
-+
- struct siw_dev_cap {
- 	int max_qp;
- 	int max_qp_wr;
-@@ -69,16 +72,12 @@ struct siw_pd {
- 
- struct siw_device {
- 	struct ib_device base_dev;
--	struct net_device *netdev;
- 	struct siw_dev_cap attrs;
- 
- 	u32 vendor_part_id;
- 	int numa_node;
- 	char raw_gid[ETH_ALEN];
- 
--	/* physical port state (only one port per device) */
--	enum ib_port_state state;
--
- 	spinlock_t lock;
- 
- 	struct xarray qp_xa;
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 3551824e371a6..565fe7bd5a2d5 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1771,6 +1771,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- {
- 	struct socket *s;
- 	struct siw_cep *cep = NULL;
-+	struct net_device *ndev = NULL;
- 	struct siw_device *sdev = to_siw_dev(id->device);
- 	int addr_family = id->local_addr.ss_family;
- 	int rv = 0;
-@@ -1791,9 +1792,15 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		struct sockaddr_in *laddr = &to_sockaddr_in(id->local_addr);
- 
- 		/* For wildcard addr, limit binding to current device only */
--		if (ipv4_is_zeronet(laddr->sin_addr.s_addr))
--			s->sk->sk_bound_dev_if = sdev->netdev->ifindex;
--
-+		if (ipv4_is_zeronet(laddr->sin_addr.s_addr)) {
-+			ndev = ib_device_get_netdev(id->device, SIW_PORT);
-+			if (ndev) {
-+				s->sk->sk_bound_dev_if = ndev->ifindex;
-+			} else {
-+				rv = -ENODEV;
-+				goto error;
-+			}
-+		}
- 		rv = s->ops->bind(s, (struct sockaddr *)laddr,
- 				  sizeof(struct sockaddr_in));
- 	} else {
-@@ -1809,9 +1816,15 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		}
- 
- 		/* For wildcard addr, limit binding to current device only */
--		if (ipv6_addr_any(&laddr->sin6_addr))
--			s->sk->sk_bound_dev_if = sdev->netdev->ifindex;
--
-+		if (ipv6_addr_any(&laddr->sin6_addr)) {
-+			ndev = ib_device_get_netdev(id->device, SIW_PORT);
-+			if (ndev) {
-+				s->sk->sk_bound_dev_if = ndev->ifindex;
-+			} else {
-+				rv = -ENODEV;
-+				goto error;
-+			}
-+		}
- 		rv = s->ops->bind(s, (struct sockaddr *)laddr,
- 				  sizeof(struct sockaddr_in6));
- 	}
-@@ -1872,6 +1885,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 	}
- 	list_add_tail(&cep->listenq, (struct list_head *)id->provider_data);
- 	cep->state = SIW_EPSTATE_LISTENING;
-+	dev_put(ndev);
- 
- 	siw_dbg(id->device, "Listen at laddr %pISp\n", &id->local_addr);
- 
-@@ -1891,6 +1905,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		siw_cep_set_free_and_put(cep);
- 	}
- 	sock_release(s);
-+	dev_put(ndev);
- 
- 	return rv;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 339d9db972e53..86a1b2c9e71fe 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -421,6 +421,49 @@ u32 udp_ehashfn(const struct net *net, const __be32 laddr, const __u16 lport,
+ 			      udp_ehash_secret + net_hash_mix(net));
  }
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index d4b6e0106851d..c82f0af046afa 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -289,7 +289,6 @@ static struct siw_device *siw_device_create(struct net_device *netdev)
+ 
++/**
++ * udp4_lib_lookup1() - Simplified lookup using primary hash (destination port)
++ * @net:	Network namespace
++ * @saddr:	Source address, network order
++ * @sport:	Source port, network order
++ * @daddr:	Destination address, network order
++ * @hnum:	Destination port, host order
++ * @dif:	Destination interface index
++ * @sdif:	Destination bridge port index, if relevant
++ * @udptable:	Set of UDP hash tables
++ *
++ * Simplified lookup to be used as fallback if no sockets are found due to a
++ * potential race between (receive) address change, and lookup happening before
++ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
++ * result sockets, because if we have one, we don't need the fallback at all.
++ *
++ * Called under rcu_read_lock().
++ *
++ * Return: socket with highest matching score if any, NULL if none
++ */
++static struct sock *udp4_lib_lookup1(struct net *net,
++				     __be32 saddr, __be16 sport,
++				     __be32 daddr, unsigned int hnum,
++				     int dif, int sdif,
++				     const struct udp_table *udptable)
++{
++	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
++	struct udp_hslot *hslot = &udptable->hash[slot];
++	struct sock *sk, *result = NULL;
++	int score, badness = 0;
++
++	sk_for_each_rcu(sk, &hslot->head) {
++		score = compute_score(sk, net,
++				      saddr, sport, daddr, hnum, dif, sdif);
++		if (score > badness) {
++			result = sk;
++			badness = score;
++		}
++	}
++
++	return result;
++}
++
+ /* called with rcu_read_lock() */
+ static struct sock *udp4_lib_lookup2(struct net *net,
+ 				     __be32 saddr, __be16 sport,
+@@ -526,6 +569,19 @@ struct sock *__udp4_lib_lookup(struct net *net, __be32 saddr,
+ 	result = udp4_lib_lookup2(net, saddr, sport,
+ 				  htonl(INADDR_ANY), hnum, dif, sdif,
+ 				  hslot2, skb);
++	if (!IS_ERR_OR_NULL(result))
++		goto done;
++
++	/* Primary hash (destination port) lookup as fallback for this race:
++	 *   1. __ip4_datagram_connect() sets sk_rcv_saddr
++	 *   2. lookup (this function): new sk_rcv_saddr, hashes not updated yet
++	 *   3. rehash operation updating _secondary and four-tuple_ hashes
++	 * The primary hash doesn't need an update after 1., so, thanks to this
++	 * further step, 1. and 3. don't need to be atomic against the lookup.
++	 */
++	result = udp4_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
++				  udptable);
++
+ done:
+ 	if (IS_ERR(result))
  		return NULL;
- 
- 	base_dev = &sdev->base_dev;
--	sdev->netdev = netdev;
- 
- 	if (netdev->addr_len) {
- 		memcpy(sdev->raw_gid, netdev->dev_addr,
-@@ -416,7 +415,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
- 
- 	switch (event) {
- 	case NETDEV_UP:
--		sdev->state = IB_PORT_ACTIVE;
- 		siw_port_event(sdev, 1, IB_EVENT_PORT_ACTIVE);
- 		break;
- 
-@@ -425,7 +423,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
- 		break;
- 
- 	case NETDEV_DOWN:
--		sdev->state = IB_PORT_DOWN;
- 		siw_port_event(sdev, 1, IB_EVENT_PORT_ERR);
- 		break;
- 
-@@ -446,12 +443,8 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
- 		siw_port_event(sdev, 1, IB_EVENT_LID_CHANGE);
- 		break;
- 	/*
--	 * Todo: Below netdev events are currently not handled.
-+	 * All other events are not handled
- 	 */
--	case NETDEV_CHANGEMTU:
--	case NETDEV_CHANGE:
--		break;
--
- 	default:
- 		break;
- 	}
-@@ -481,12 +474,6 @@ static int siw_newlink(const char *basedev_name, struct net_device *netdev)
- 	sdev = siw_device_create(netdev);
- 	if (sdev) {
- 		dev_dbg(&netdev->dev, "siw: new device\n");
--
--		if (netif_running(netdev) && netif_carrier_ok(netdev))
--			sdev->state = IB_PORT_ACTIVE;
--		else
--			sdev->state = IB_PORT_DOWN;
--
- 		rv = siw_device_register(sdev, basedev_name);
- 		if (rv)
- 			ib_dealloc_device(&sdev->base_dev);
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 40e0e0a2486db..236b42fc9761f 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -165,21 +165,29 @@ int siw_query_device(struct ib_device *base_dev, struct ib_device_attr *attr,
- int siw_query_port(struct ib_device *base_dev, u32 port,
- 		   struct ib_port_attr *attr)
- {
--	struct siw_device *sdev = to_siw_dev(base_dev);
-+	struct net_device *ndev;
- 	int rv;
- 
- 	memset(attr, 0, sizeof(*attr));
- 
- 	rv = ib_get_eth_speed(base_dev, port, &attr->active_speed,
- 			 &attr->active_width);
-+	if (rv)
-+		return rv;
-+
-+	ndev = ib_device_get_netdev(base_dev, SIW_PORT);
-+	if (!ndev)
-+		return -ENODEV;
-+
- 	attr->gid_tbl_len = 1;
- 	attr->max_msg_sz = -1;
--	attr->max_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
--	attr->active_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
--	attr->phys_state = sdev->state == IB_PORT_ACTIVE ?
-+	attr->max_mtu = ib_mtu_int_to_enum(ndev->max_mtu);
-+	attr->active_mtu = ib_mtu_int_to_enum(READ_ONCE(ndev->mtu));
-+	attr->phys_state = (netif_running(ndev) && netif_carrier_ok(ndev)) ?
- 		IB_PORT_PHYS_STATE_LINK_UP : IB_PORT_PHYS_STATE_DISABLED;
-+	attr->state = attr->phys_state == IB_PORT_PHYS_STATE_LINK_UP ?
-+		IB_PORT_ACTIVE : IB_PORT_DOWN;
- 	attr->port_cap_flags = IB_PORT_CM_SUP | IB_PORT_DEVICE_MGMT_SUP;
--	attr->state = sdev->state;
- 	/*
- 	 * All zero
- 	 *
-@@ -193,6 +201,7 @@ int siw_query_port(struct ib_device *base_dev, u32 port,
- 	 * attr->subnet_timeout = 0;
- 	 * attr->init_type_repy = 0;
- 	 */
-+	dev_put(ndev);
- 	return rv;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 6df2459f25618..8cb969b4d862b 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -162,6 +162,49 @@ static int compute_score(struct sock *sk, struct net *net,
+ 	return score;
  }
  
-@@ -503,20 +512,23 @@ int siw_query_qp(struct ib_qp *base_qp, struct ib_qp_attr *qp_attr,
- 		 int qp_attr_mask, struct ib_qp_init_attr *qp_init_attr)
- {
- 	struct siw_qp *qp;
--	struct siw_device *sdev;
-+	struct net_device *ndev;
- 
--	if (base_qp && qp_attr && qp_init_attr) {
-+	if (base_qp && qp_attr && qp_init_attr)
- 		qp = to_siw_qp(base_qp);
--		sdev = to_siw_dev(base_qp->device);
--	} else {
-+	else
- 		return -EINVAL;
--	}
++/**
++ * udp6_lib_lookup1() - Simplified lookup using primary hash (destination port)
++ * @net:	Network namespace
++ * @saddr:	Source address, network order
++ * @sport:	Source port, network order
++ * @daddr:	Destination address, network order
++ * @hnum:	Destination port, host order
++ * @dif:	Destination interface index
++ * @sdif:	Destination bridge port index, if relevant
++ * @udptable:	Set of UDP hash tables
++ *
++ * Simplified lookup to be used as fallback if no sockets are found due to a
++ * potential race between (receive) address change, and lookup happening before
++ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
++ * result sockets, because if we have one, we don't need the fallback at all.
++ *
++ * Called under rcu_read_lock().
++ *
++ * Return: socket with highest matching score if any, NULL if none
++ */
++static struct sock *udp6_lib_lookup1(struct net *net,
++				     const struct in6_addr *saddr, __be16 sport,
++				     const struct in6_addr *daddr,
++				     unsigned int hnum, int dif, int sdif,
++				     const struct udp_table *udptable)
++{
++	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
++	struct udp_hslot *hslot = &udptable->hash[slot];
++	struct sock *sk, *result = NULL;
++	int score, badness = 0;
 +
-+	ndev = ib_device_get_netdev(base_qp->device, SIW_PORT);
-+	if (!ndev)
-+		return -ENODEV;
++	sk_for_each_rcu(sk, &hslot->head) {
++		score = compute_score(sk, net,
++				      saddr, sport, daddr, hnum, dif, sdif);
++		if (score > badness) {
++			result = sk;
++			badness = score;
++		}
++	}
 +
- 	qp_attr->cap.max_inline_data = SIW_MAX_INLINE;
- 	qp_attr->cap.max_send_wr = qp->attrs.sq_size;
- 	qp_attr->cap.max_send_sge = qp->attrs.sq_max_sges;
- 	qp_attr->cap.max_recv_wr = qp->attrs.rq_size;
- 	qp_attr->cap.max_recv_sge = qp->attrs.rq_max_sges;
--	qp_attr->path_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
-+	qp_attr->path_mtu = ib_mtu_int_to_enum(READ_ONCE(ndev->mtu));
- 	qp_attr->max_rd_atomic = qp->attrs.irq_size;
- 	qp_attr->max_dest_rd_atomic = qp->attrs.orq_size;
- 
-@@ -531,6 +543,7 @@ int siw_query_qp(struct ib_qp *base_qp, struct ib_qp_attr *qp_attr,
- 
- 	qp_init_attr->cap = qp_attr->cap;
- 
-+	dev_put(ndev);
- 	return 0;
- }
- 
++	return result;
++}
++
+ /* called with rcu_read_lock() */
+ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		const struct in6_addr *saddr, __be16 sport,
+@@ -266,6 +309,13 @@ struct sock *__udp6_lib_lookup(struct net *net,
+ 	result = udp6_lib_lookup2(net, saddr, sport,
+ 				  &in6addr_any, hnum, dif, sdif,
+ 				  hslot2, skb);
++	if (!IS_ERR_OR_NULL(result))
++		goto done;
++
++	/* Cover address change/lookup/rehash race: see __udp4_lib_lookup() */
++	result = udp6_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
++				  udptable);
++
+ done:
+ 	if (IS_ERR(result))
+ 		return NULL;
 -- 
 2.53.0
 
