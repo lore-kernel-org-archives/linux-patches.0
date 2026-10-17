@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729F43A380C;
-	Sat, 17 Oct 2026 18:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ACA255E43;
+	Sat, 17 Oct 2026 18:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260741; cv=none; b=Z1yihCwJdV0Yfep1L7vUaG52sZD8sGKe+7wn2nHJdi794WCgxa86UxPfVROX0fsIs8BhPV6tRTu8Y86LT6TIr3H3r8gBfnG73+OhvzITHr7QEfn66xxP5W4wIVFFFPMO2s3JsZ8I5XDT/fBvaYO4Oi16S1WbIkyUqQmtZMJDTPw=
+	t=1792260744; cv=none; b=CezAzz1Dz+PyzIDI18a0hWT5W9C0uBAmT2FMOWbnmqZxoNZKFf3HULFABjjBBP8eohuK4GYWZ+Za3C1Q2GAJbzlv13kiLgNIk8Ep2hgqN7zDcAqEKwseNc3pMdZdXhayI4bnbsQbmLqFCLyunO0iC75lYLPUHjdwTOyftuy/lYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260741; c=relaxed/simple;
-	bh=AhZXVbAQeNBZ2RXxAKkPT1NT1ZkoF5nOK5nGh3mT4hQ=;
+	s=arc-20240116; t=1792260744; c=relaxed/simple;
+	bh=JRYrh8nz8fwXqC+pJXlgA5lx4HmDhpN7PRcXYCrcMic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGIV6kCrl+v9fdihEQyJ/5CI8YpB2tLdmL4sLLvOeelIPKH3GB+rjwDqInx6N/2BNuDblrsNM6R1psyCSaElfgRKwk4FEBzsJphbDDdIdDbIISvASMmSSaWO+69+2bE+n7xWJi25m4pYCUoWtxTyUMmKM3s5BLt96SZpxB+3rNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypLN3ka3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqkjZRguI+Bqyr/dAIhSCbQTBpPmTf4pmhJZ103JSzH4KSyDjJJ40UkG65No2DfnaZLHI77Ug4N1CWLW6ZUwDAwN/0SZ1igNA6In+407GnHvIR+Wdd2OnErAfau1fWYoYKUxQc5F7hBd6ATCQKe2gS9sKL7mxhfW2+kyojpF37A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1l4Gy22; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypLN3ka3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17151F000C4;
-	Sat, 17 Oct 2026 18:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1l4Gy22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31931F000C4;
+	Sat, 17 Oct 2026 18:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260740;
-	bh=0lbEwQiz24BEvqcjWrWq8W8h84OLGT0VF049bSgy/Mg=;
+	s=korg; t=1792260743;
+	bh=Jg0Pev92PkkfsEy/oLd493hFkEPf9o038u9bPOiULG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypLN3ka3UuC8lHVEBy2m83c08LWbuRyXAgp8pV1a6tdHqLiDyNO+m7ls89cTlayrU
-	 Madj27q+K4whWxcHIJV2Zz5bjKRaikknCAsjSNYgLZk/nPP1NbtlHCIM3hRcaNcMo+
-	 xGFwi+9wWP+pOR4A6ug/CFLWpaBYzDTVn5cuM00g=
+	b=l1l4Gy226F/bos20IvmiiNhelzBf8Xv0aVN7eUyiQLDkyfvhhwVz/U6cYc7FJFJXX
+	 L5jwFsp8ixOM2hhuCm6p8jBsqia382k/2iW4fonHO4bhx3oQKz5SkW0LEp+xsEEk7n
+	 A2e0S6+RTrp6nilPNh8WaIijYuplXAU63dadI/B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1646/1674] tipc: Dont send random pad bytes in RESET/ACTIVATE messages
-Date: Sat, 17 Oct 2026 18:05:18 +0200
-Message-ID: <20261017160513.320798028@linuxfoundation.org>
+Subject: [PATCH 6.6 1629/1674] bpf: generalize is_branch_taken() to work with two registers
+Date: Sat, 17 Oct 2026 18:05:01 +0200
+Message-ID: <20261017160512.895212157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,58 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 81c600c26302a27852ed8b19c5f2f647ea3555c9 ]
+[ Upstream commit c31534267c180f7ed00288d239a501b554885300 ]
 
-The interface name is passed in a fixed length (TIPC_MAX_IF_NAME) buffer.
-Replace the strcpy(data, l->if_name) with memcpy() so that the
-pad bytes are actually written (l->if_name[] is zero padded)
-rather than sending random bytes from the skb to the remote system.
+While still assuming that second register is a constant, generalize
+is_branch_taken-related code to accept two registers instead of register
+plus explicit constant value. This also, as a side effect, allows to
+simplify check_cond_jmp_op() by unifying BPF_K case with BPF_X case, for
+which we use a fake register to represent BPF_K's imm constant as
+a register.
 
-Replace two other strcpy() with strscpy().
-
-Fixes: e74a386d70c7 ("tipc: remove pre-allocated message header in link struct")
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260829115813.188600-1-david.laight.linux@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://lore.kernel.org/r/20231102033759.2541186-13-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: e51179a4e098 ("bpf: Don't predict JMP32 pointer vs zero comparisons")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/link.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 57 ++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
-diff --git a/net/tipc/link.c b/net/tipc/link.c
-index 6c6d8546c5786..9bdb054eafaa4 100644
---- a/net/tipc/link.c
-+++ b/net/tipc/link.c
-@@ -528,7 +528,7 @@ bool tipc_link_create(struct net *net, char *if_name, int bearer_id,
- 	snprintf(l->name, sizeof(l->name), "%s:%s-%s:unknown",
- 		 self_str, if_name, peer_str);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 30751a16f186b..6c088641c276d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14076,9 +14076,13 @@ static void find_good_pkt_pointers(struct bpf_verifier_state *vstate,
+ 	}));
+ }
  
--	strcpy(l->if_name, if_name);
-+	strscpy(l->if_name, if_name, sizeof(l->if_name));
- 	l->addr = peer;
- 	l->peer_caps = peer_caps;
- 	l->net = net;
-@@ -599,7 +599,7 @@ bool tipc_link_bc_create(struct net *net, u32 ownnode, u32 peer, u8 *peer_id,
- 		snprintf(l->name, sizeof(l->name), "%s:%s", tipc_bclink_name,
- 			 peer_str);
- 	} else {
--		strcpy(l->name, tipc_bclink_name);
-+		strscpy(l->name, tipc_bclink_name, sizeof(l->name));
+-static int is_branch32_taken(struct bpf_reg_state *reg1, u32 val, u8 opcode)
++/*
++ * <reg1> <op> <reg2>, currently assuming reg2 is a constant
++ */
++static int is_branch32_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2, u8 opcode)
+ {
+ 	struct tnum subreg = tnum_subreg(reg1->var_off);
++	u32 val = (u32)tnum_subreg(reg2->var_off).value;
+ 	s32 sval = (s32)val;
+ 
+ 	switch (opcode) {
+@@ -14158,8 +14162,12 @@ static int is_branch32_taken(struct bpf_reg_state *reg1, u32 val, u8 opcode)
+ }
+ 
+ 
+-static int is_branch64_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode)
++/*
++ * <reg1> <op> <reg2>, currently assuming reg2 is a constant
++ */
++static int is_branch64_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2, u8 opcode)
+ {
++	u64 val = reg2->var_off.value;
+ 	s64 sval = (s64)val;
+ 
+ 	switch (opcode) {
+@@ -14238,16 +14246,23 @@ static int is_branch64_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode)
+ 	return -1;
+ }
+ 
+-/* compute branch direction of the expression "if (reg opcode val) goto target;"
++/* compute branch direction of the expression "if (<reg1> opcode <reg2>) goto target;"
+  * and return:
+  *  1 - branch will be taken and "goto target" will be executed
+  *  0 - branch will not be taken and fall-through to next insn
+- * -1 - unknown. Example: "if (reg < 5)" is unknown when register value
++ * -1 - unknown. Example: "if (reg1 < 5)" is unknown when register value
+  *      range [0,10]
+  */
+-static int is_branch_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode,
+-			   bool is_jmp32)
++static int is_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2,
++			   u8 opcode, bool is_jmp32)
+ {
++	struct tnum reg2_tnum = is_jmp32 ? tnum_subreg(reg2->var_off) : reg2->var_off;
++	u64 val;
++
++	if (!tnum_is_const(reg2_tnum))
++		return -1;
++	val = reg2_tnum.value;
++
+ 	if (__is_pointer_value(false, reg1)) {
+ 		if (!reg_not_null(reg1))
+ 			return -1;
+@@ -14269,8 +14284,8 @@ static int is_branch_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode,
  	}
- 	trace_tipc_link_reset(l, TIPC_DUMP_ALL, "bclink created!");
- 	tipc_link_reset(l);
-@@ -1923,7 +1923,7 @@ static void tipc_link_build_proto_msg(struct tipc_link *l, int mtyp, bool probe,
- 			msg_set_dest_session(hdr, l->peer_session);
+ 
+ 	if (is_jmp32)
+-		return is_branch32_taken(reg1, val, opcode);
+-	return is_branch64_taken(reg1, val, opcode);
++		return is_branch32_taken(reg1, reg2, opcode);
++	return is_branch64_taken(reg1, reg2, opcode);
+ }
+ 
+ static int flip_opcode(u32 opcode)
+@@ -14805,6 +14820,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
+ 	struct bpf_reg_state *eq_branch_regs;
+ 	struct linked_regs linked_regs = {};
++	struct bpf_reg_state fake_reg = {};
+ 	u8 opcode = BPF_OP(insn->code);
+ 	int insn_flags = 0;
+ 	bool is_jmp32;
+@@ -14849,6 +14865,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+ 			return -EINVAL;
  		}
- 		msg_set_max_pkt(hdr, l->advertised_mtu);
--		strcpy(data, l->if_name);
-+		memcpy(data, l->if_name, TIPC_MAX_IF_NAME);
- 		msg_set_size(hdr, INT_H_SIZE + TIPC_MAX_IF_NAME);
- 		skb_trim(skb, INT_H_SIZE + TIPC_MAX_IF_NAME);
++		src_reg = &fake_reg;
++		src_reg->type = SCALAR_VALUE;
++		__mark_reg_known(src_reg, insn->imm);
  	}
+ 
+ 	if (dst_reg->type == PTR_TO_STACK)
+@@ -14862,31 +14881,19 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 
+ 	if (BPF_SRC(insn->code) == BPF_K) {
+-		pred = is_branch_taken(dst_reg, insn->imm, opcode, is_jmp32);
++		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
+ 	} else if (src_reg->type == SCALAR_VALUE &&
+ 		   is_jmp32 && tnum_is_const(tnum_subreg(src_reg->var_off))) {
+-		pred = is_branch_taken(dst_reg,
+-				       tnum_subreg(src_reg->var_off).value,
+-				       opcode,
+-				       is_jmp32);
++		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
+ 	} else if (src_reg->type == SCALAR_VALUE &&
+ 		   !is_jmp32 && tnum_is_const(src_reg->var_off)) {
+-		pred = is_branch_taken(dst_reg,
+-				       src_reg->var_off.value,
+-				       opcode,
+-				       is_jmp32);
++		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
+ 	} else if (dst_reg->type == SCALAR_VALUE &&
+ 		   is_jmp32 && tnum_is_const(tnum_subreg(dst_reg->var_off))) {
+-		pred = is_branch_taken(src_reg,
+-				       tnum_subreg(dst_reg->var_off).value,
+-				       flip_opcode(opcode),
+-				       is_jmp32);
++		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
+ 	} else if (dst_reg->type == SCALAR_VALUE &&
+ 		   !is_jmp32 && tnum_is_const(dst_reg->var_off)) {
+-		pred = is_branch_taken(src_reg,
+-				       dst_reg->var_off.value,
+-				       flip_opcode(opcode),
+-				       is_jmp32);
++		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
+ 	} else if (reg_is_pkt_pointer_any(dst_reg) &&
+ 		   reg_is_pkt_pointer_any(src_reg) &&
+ 		   !is_jmp32) {
 -- 
 2.53.0
 
