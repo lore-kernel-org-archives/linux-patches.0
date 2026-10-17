@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4738B3A9DA5;
-	Sat, 17 Oct 2026 16:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4328B391E6D;
+	Sat, 17 Oct 2026 16:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255002; cv=none; b=AS8p1u22Y5wbqg96yjVa1zdYsAWYvKwYz5FGWWIp+QQZPdOabuUnXPA4h+j4Pv21QMJP2qbhFYngHywSxZE+zETyhbW8/nlsDNmDmTZort57CqgVZu+l+wi+autQKcLF4smT3QbnQFK6oNZQ6xjDBEd5W0Qd458BYaJjRXKTRis=
+	t=1792255004; cv=none; b=dL09HBVH/EVkvnJQ9i/zBAL7fgjzdQnqjHrtM7Dx/vOdYR2N7IV5Oohs/yWLlaIc0foMenc2TKGej2g75CKLp98uxCjd4ePNpsqdre1wzFpJbeRmjREbqoSFcGiBa2k2SK8G64pytSBaEhnC1j1YKQblhu0gdOgllA5zk9I9y+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255002; c=relaxed/simple;
-	bh=9KomVzeckz7MqhHUosjrGR0sZMay76faT3pA0Z613Mg=;
+	s=arc-20240116; t=1792255004; c=relaxed/simple;
+	bh=y/gEe0hNNMdEIV9QgkFW2qIrUUO3yyvmbbQR/KOQTJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=po4KNfGvcdELk2iDrrMYIR3oqg6xaAi/ymoCQDnxNWJfUYGhns8U8CUGtWqNZpfRbqKW/r9jWWHVgUvuAXY5Fo+BTjOoWFCzBnj91AYfMqgczvMFY17URJJHx68uX5myhR8k+q3QoJMxagmfH4Ro3hDjbuds8YnI/xRISOG3n7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK38Qf0v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iS49k7cdJtUVxzWrIAnS4hsXVIpOwdmQ657Y+0hPi+QVps2b/GcJRqxIrC/aNbRgnMdHjvCL8DutM96xjFPXuMTtpD3hwzR2hB7HvGW4QFMAjAhWKSrd9zG6egQHj4PcpvlI9oJAv2fStf/gnOBGr70gy/u80QFgaycDP5nyt70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy11InEG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK38Qf0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927551F000C4;
-	Sat, 17 Oct 2026 16:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy11InEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ACE1F000C4;
+	Sat, 17 Oct 2026 16:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255000;
-	bh=9bKhHoh5q+k1OuzUinxBTIxcvoP7VZi8uU/P99VTGDQ=;
+	s=korg; t=1792255003;
+	bh=XBo41shGg6pSaT44jeVElhI3uWl3GfYtB7S8I4/d0DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dK38Qf0vkPUraGSX0L4NOgpL2T6ZpfCf3e+Ylu9LGvJMRwiJaGE9AGpvOQUxP70om
-	 U75uZ4jo9tIL2iVr33BIBHMTzxfCMfCVp1LTrANmJtTL+NX9j61VH5ajd87uouV2ub
-	 rOL5FdJ01J/WOKld5dZ91YufDSDj1BSe/Yksy9Oc=
+	b=Hy11InEGCbfBru3MzA+zbIMl6hLdrVEuI2NNycLL2DUqvFyvZZqzByhvoDgyN1nBJ
+	 4yC4dBrapzCW4niFEzS1MXBwtIXWYwu6K6kLQGYNkqUMNZLu6DBVVnC/fHT6WdGz3C
+	 4fcyiAoDnswImY5ot8tnGBbuOQxWdSMa5U764pG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 632/869] nvmet: fix max_qid race between configfs and controller allocation
-Date: Sat, 17 Oct 2026 17:57:53 +0200
-Message-ID: <20261017160053.230399634@linuxfoundation.org>
+Subject: [PATCH 6.12 606/869] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
+Date: Sat, 17 Oct 2026 17:57:27 +0200
+Message-ID: <20261017160052.578443126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,198 +52,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit f1a8846e06388113dfdbb89dee005083fa9afdf9 ]
+[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
 
-The function nvmet_subsys_attr_qid_max_store() can race against
-nvmet_alloc_ctrl() when a subsystem's max_qid limit is modified.
+Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+l2cap_chan::conn has held reference and remains non-NULL also after the
+corresponding hci_conn is deleted.  In this state accessing various
+fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
+l2cap_sock_setsockopt() access of conn->hcon->hdev.
 
-Suppose max_qid is currently 64. If nvmet_alloc_ctrl() executes:
-ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
-and at this exact point, a userspace process changes max_qid to 128,
-nvmet_subsys_attr_qid_max_store() will set the new max_qid value. It
-attempts to delete active controllers to force a reconnect, but the
-new controller won't be deleted because it hasn't been added to the
-subsys->ctrls list yet.
+Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
+trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
+getsockopt/setsockopt to ensure it stays alive, and to avoid data races
+in l2cap_chan fields.
 
-nvmet_alloc_ctrl() then proceeds and adds the new controller to the
-subsys->ctrls list. Later, when nvmet_install_queue() is called, it
-will see max_qid set to 128, but the memory allocated for sqs is only
-sized for 64 entries. This results in a KASAN out-of-bounds warning
-and potential memory corruptions.
-
-Fix this by protecting the queue allocations and list insertion in
-nvmet_alloc_ctrl() with down_read(&nvmet_config_sem). Because
-nvmet_subsys_attr_qid_max_store() acquires down_write(&nvmet_config_sem)
-to modify the attribute, this safely prevents the configfs writer from
-modifying max_qid during controller creation.
-
-Copy the max_qid from the subsystem to the controller's structure
-during the allocation; ctrl->max_qid never changes as long as the
-controller remains in LIVE state, so this will prevent similar race
-conditions.
-
-Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
-Reported-by: syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c   |  8 +++---
- drivers/nvme/target/core.c        | 41 ++++++++++++++++++-------------
- drivers/nvme/target/fabrics-cmd.c |  2 +-
- drivers/nvme/target/nvmet.h       |  6 +++++
- 4 files changed, 35 insertions(+), 22 deletions(-)
+ net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index 0f1956bb6d3c9..72a5de1f8252d 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -828,7 +828,7 @@ u16 nvmet_set_feat_async_event(struct nvmet_req *req, u32 mask)
- 
- void nvmet_execute_set_features(struct nvmet_req *req)
- {
--	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
-+	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
- 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
- 	u32 cdw11 = le32_to_cpu(req->cmd->common.cdw11);
- 	u16 status = 0;
-@@ -847,7 +847,7 @@ void nvmet_execute_set_features(struct nvmet_req *req)
- 			break;
- 		}
- 		nvmet_set_result(req,
--			(subsys->max_qid - 1) | ((subsys->max_qid - 1) << 16));
-+			(ctrl->max_qid - 1) | ((ctrl->max_qid - 1) << 16));
- 		break;
- 	case NVME_FEAT_KATO:
- 		status = nvmet_set_feat_kato(req);
-@@ -902,7 +902,7 @@ void nvmet_get_feat_async_event(struct nvmet_req *req)
- 
- void nvmet_execute_get_features(struct nvmet_req *req)
- {
--	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
-+	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
- 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
- 	u16 status = 0;
- 
-@@ -939,7 +939,7 @@ void nvmet_execute_get_features(struct nvmet_req *req)
- 		break;
- 	case NVME_FEAT_NUM_QUEUES:
- 		nvmet_set_result(req,
--			(subsys->max_qid-1) | ((subsys->max_qid-1) << 16));
-+			(ctrl->max_qid-1) | ((ctrl->max_qid-1) << 16));
- 		break;
- 	case NVME_FEAT_KATO:
- 		nvmet_get_feat_kato(req);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 5950635d6f58d..fa011c16c9b1c 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1479,21 +1479,6 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
- 	if (!ctrl->changed_ns_list)
- 		goto out_free_ctrl;
- 
--	ctrl->sqs = kcalloc(subsys->max_qid + 1,
--			sizeof(struct nvmet_sq *),
--			GFP_KERNEL);
--	if (!ctrl->sqs)
--		goto out_free_changed_ns_list;
--
--	ret = ida_alloc_range(&cntlid_ida,
--			     subsys->cntlid_min, subsys->cntlid_max,
--			     GFP_KERNEL);
--	if (ret < 0) {
--		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
--		goto out_free_sqs;
--	}
--	ctrl->cntlid = ret;
--
- 	/*
- 	 * Discovery controllers may use some arbitrary high value
- 	 * in order to cleanup stale discovery sessions
-@@ -1507,13 +1492,33 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
- 	ctrl->err_counter = 0;
- 	spin_lock_init(&ctrl->error_lock);
- 
--	nvmet_start_keep_alive_timer(ctrl);
--
-+	down_read(&nvmet_config_sem);
- 	mutex_lock(&subsys->lock);
-+
-+	ctrl->max_qid = subsys->max_qid;
-+
-+	ctrl->sqs = kcalloc(ctrl->max_qid + 1,
-+			sizeof(struct nvmet_sq *),
-+			GFP_KERNEL);
-+	if (!ctrl->sqs)
-+		goto out_free_changed_ns_list;
-+
-+	ret = ida_alloc_range(&cntlid_ida,
-+			     subsys->cntlid_min, subsys->cntlid_max,
-+			     GFP_KERNEL);
-+	if (ret < 0) {
-+		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
-+		goto out_free_sqs;
-+	}
-+	ctrl->cntlid = ret;
-+
- 	list_add_tail(&ctrl->subsys_entry, &subsys->ctrls);
- 	nvmet_setup_p2p_ns_map(ctrl, req);
- 	nvmet_debugfs_ctrl_setup(ctrl);
- 	mutex_unlock(&subsys->lock);
-+	up_read(&nvmet_config_sem);
-+
-+	nvmet_start_keep_alive_timer(ctrl);
- 
- 	*ctrlp = ctrl;
- 	return 0;
-@@ -1521,6 +1526,8 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
- out_free_sqs:
- 	kfree(ctrl->sqs);
- out_free_changed_ns_list:
-+	mutex_unlock(&subsys->lock);
-+	up_read(&nvmet_config_sem);
- 	kfree(ctrl->changed_ns_list);
- out_free_ctrl:
- 	kfree(ctrl);
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index a593003c1c20c..66d0dbf7ac733 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -350,7 +350,7 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
- 		goto out;
- 	}
- 
--	if (unlikely(qid > ctrl->subsys->max_qid)) {
-+	if (unlikely(qid > ctrl->max_qid)) {
- 		pr_warn("invalid queue id (%d)\n", qid);
- 		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
- 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 25bba2d097626..408c3cda47436 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -204,6 +204,7 @@ struct nvmet_ctrl {
- 
- 	uuid_t			hostid;
- 	u16			cntlid;
-+	u16			max_qid;
- 	u32			kato;
- 
- 	struct nvmet_port	*port;
-@@ -642,6 +643,11 @@ static inline struct nvmet_subsys *nvmet_req_subsys(struct nvmet_req *req)
- 	return req->sq->ctrl->subsys;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index a44a49c70b2f3..ef3af57e4637f 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -439,11 +439,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
+ 	return -EINVAL;
  }
  
-+static inline struct nvmet_ctrl *nvmet_req_ctrl(struct nvmet_req *req)
++static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
 +{
-+	return req->sq->ctrl;
++	lockdep_assert_held(&chan->lock);
++
++	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
++	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
++	 * remains alive during this chan->lock critical section.
++	 */
++	if (test_bit(FLAG_DEL, &chan->flags))
++		return NULL;
++
++	return chan->conn;
 +}
 +
- static inline bool nvmet_is_disc_subsys(struct nvmet_subsys *subsys)
+ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 				     sockopt_t *sopt)
  {
-     return subsys->type != NVME_NQN_NVME;
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+ 	int err = 0;
+@@ -454,6 +469,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 
+ 	len = sopt->optlen;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -540,9 +556,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++		if (!conn) {
++			err = -ENOTCONN;
++			break;
++		}
++
+ 		memset(&cinfo, 0, sizeof(cinfo));
+-		cinfo.hci_handle = chan->conn->hcon->handle;
+-		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
++		cinfo.hci_handle = conn->hcon->handle;
++		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 
+ 		len = min(len, sizeof(cinfo));
+ 		if (copy_to_iter(&cinfo, len, &sopt->iter_out) != len)
+@@ -556,6 +578,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
++
+ 	return err;
+ }
+ 
+@@ -564,6 +588,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct bt_security sec;
+ 	struct bt_power pwr;
+ 	int len, mode, err = 0;
+@@ -581,6 +606,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 
+ 	len = sopt->optlen;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -592,12 +618,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++
+ 		memset(&sec, 0, sizeof(sec));
+-		if (chan->conn) {
+-			sec.level = chan->conn->hcon->sec_level;
++		if (conn) {
++			sec.level = conn->hcon->sec_level;
+ 
+ 			if (sk->sk_state == BT_CONNECTED)
+-				sec.key_size = chan->conn->hcon->enc_key_size;
++				sec.key_size = conn->hcon->enc_key_size;
+ 		} else {
+ 			sec.level = chan->sec_level;
+ 		}
+@@ -681,12 +709,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PHY:
+-		if (sk->sk_state != BT_CONNECTED) {
++		conn = l2cap_chan_conn(chan);
++
++		if (sk->sk_state != BT_CONNECTED || !conn) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
+ 
+-		opt = hci_conn_get_phy(chan->conn->hcon);
++		opt = hci_conn_get_phy(conn->hcon);
+ 
+ 		if (copy_to_iter(&opt, sizeof(opt), &sopt->iter_out) !=
+ 		    sizeof(opt))
+@@ -722,6 +752,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -752,6 +783,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 
+ 	BT_DBG("sk %p", sk);
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -853,6 +885,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -916,6 +949,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	if (level != SOL_BLUETOOTH)
+ 		return -ENOPROTOOPT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -941,11 +975,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		chan->sec_level = sec.level;
+ 
+-		if (!chan->conn)
++		conn = l2cap_chan_conn(chan);
++		if (!conn)
+ 			break;
+ 
+-		conn = chan->conn;
+-
+ 		/* change security for LE channels */
+ 		if (chan->scid == L2CAP_CID_ATT) {
+ 			if (smp_conn_security(conn->hcon, sec.level)) {
+@@ -1000,7 +1033,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		}
+ 
+ 		if (opt == BT_FLUSHABLE_OFF) {
+-			conn = chan->conn;
++			conn = l2cap_chan_conn(chan);
++
+ 			/* proceed further only when we have l2cap_conn and
+ 			   No Flush support in the LM */
+ 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
+@@ -1124,6 +1158,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
