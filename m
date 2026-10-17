@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDAB3A1A3F;
-	Sat, 17 Oct 2026 17:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004583B7776;
+	Sat, 17 Oct 2026 17:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259168; cv=none; b=AWuGkXIi7DefTDxQunOaw44vjh4CjW6Ie1ELWQhRIL6lOb4BE/WNaLe/xSo5g4/DIRZk5S4mgsHUakI8KL79tdDYMRx0k6KG7BQnFqzrYqwWbH4QjLVitT7U+bOiOqdm4/nhM7z9hTVzd0q4hYTm4mIQggddDByiur2Bf5sEGGM=
+	t=1792259171; cv=none; b=lx0R7YZMNenjonY59v7HewbSeOrVmuBNWrB2qSk5TuF6bczDeX5SRNNEz7nDRnvjRD5fCBMivFEa2XfdcWxQwDltG2EIiLFCqtr4PemS5Boj/3zaA+uoE9/q/sV68UqGYTXH9gziM7Mv10QyoU07GHackp8NNa/4KggrWenbIPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259168; c=relaxed/simple;
-	bh=s4/XmYmrAAI5VKhmUOFzsQa1uylauNBDu7WMo8gjVmg=;
+	s=arc-20240116; t=1792259171; c=relaxed/simple;
+	bh=Kv57jhs3mOKKpj5BZHFWtADO2DOAo2Z8vawpmakqteE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obDxgwesp2LpFJREZ3QiIhFpGMYlezx9yTq3ZaR8PK3Kcb/LRdOs0Pi+5TTF+OjVkkTs3C1DVpYlIiUVjGcbYZmQEnTA8Gy3zJPYrvCOTqY3u89BzRx2UBJ/Mi5r+7XV330/xax0322r2p3tSG8QmO6xb99yavIVIPdaT74lJpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z51suxfk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fqze+0aSpKOZf+ADmj8yBKvS8H0dyOqtgf8u9WZXY2eMlhCBXJhgF7nGd5TcaEIfkFTXPwWsfKIAc1/HGv8wPsR0qM6/pzQ6qHJmftFq29iPDFIDtMvYVA/LJdU6J98SOOca41F3IzThSQU11EeGC6ubWc5WvwlHznrUwi4vZ2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXuG/5cP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z51suxfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A6C1F000C5;
-	Sat, 17 Oct 2026 17:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXuG/5cP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B0A1F000C5;
+	Sat, 17 Oct 2026 17:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259167;
-	bh=4OC2Nb3jBp6RYR2X+PlEPxtIIqM0NOkf0YAi62+6jnw=;
+	s=korg; t=1792259170;
+	bh=7Q26StqOcGJg4oFjLxgWttOwsPrVQ/ws1S6NHMW+ImA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z51suxfkCrb0j4ZUXAZ7zGYVMInzoXPRsYmc+4nS+JtlozkWAbP9qbIPzrB7wPYVv
-	 qJWB7qHzcY6DWz6lILIcWdli1ZfNnCg//4RZCWq7ivhhO+lGt15L4YFvCqIGB1PzHg
-	 mdelMXIfOt4HzIZuFLqmVnrH1z+Hlt3wo1RvFKwc=
+	b=cXuG/5cPIKgsD3fgGGnpUbVfaNktwxnGyeq2NG76s1onCBnAw7b45aHTcOYrAt1NQ
+	 SjhelHEs87RSPFg+JTF+8paGvEpN6LVeSgAcwP2zNx29xbfTqCv3SmtEIVuNEqMKe3
+	 TCmFUeY9XPA/e1sBnC6FbRU10kSgLH6REDHexYGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Tamaki Yanagawa <ty@000ty.net>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1124/1674] KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling
-Date: Sat, 17 Oct 2026 17:56:36 +0200
-Message-ID: <20261017160500.011476246@linuxfoundation.org>
+Subject: [PATCH 6.6 1125/1674] netfilter: nft_lookup: fix catchall element handling with inverted lookups
+Date: Sat, 17 Oct 2026 17:56:37 +0200
+Message-ID: <20261017160500.037077308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,79 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Tamaki Yanagawa <ty@000ty.net>
 
-[ Upstream commit 7258770e5814f15e8308ebda82ac9acf6964ba8e ]
+[ Upstream commit e6107a4c74b54cb33e3bce162a63048ae5a6b198 ]
 
-Hyunwoo Kim reports some really bad races should the following
-situation occur:
+nft_lookup_eval() decides whether a lookup matched (`found`) from the
+direct set lookup and priv->invert before falling back to the
+catchall element used by interval sets (e.g. nft_set_rbtree) for the
+open-ended default range. Since `found` is never recomputed after
+`ext` is replaced by the catchall lookup, inverted lookups
+(NFT_LOOKUP_F_INV, "!= @set") can wrongly match or wrongly skip the
+catchall element, producing the wrong verdict. Fold the catchall
+lookup into `ext` before computing `found`, matching the order
+already used by nft_objref_map_eval().
 
-- LPI-I is pending in vcpu-B's AP list
-- vcpu-A writes to vcpu-B's RD to disable its LPIs
-- vcpu-C moves I from B to C
-
-If the last two race nicely enough, vgic_prune_ap_list() can drop
-the irq and AP list locks, reacquire them, and in the interval
-the irq has been freed. UAF follows.
-
-The fix is two-fold:
-
-- Before dropping the irq and ap_list locks, take a reference on
-  the irq
-
-- Do not try to handle migration of the pending bit: there is no
-  expectation that this state is retained, as per the architecture
-
-With that, we're sure that the interrupt is still around, and we
-safely remove it from the AP list as it has no target at this
-stage (unless another interrupt fires, but that's another story).
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Tested-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/r/ailsCnyoS82r_QRz@v4bel
-Link: https://patch.msgid.link/20260615181625.3029352-1-maz@kernel.org
-Fixes: 5dd4b924e390a ("KVM: arm/arm64: vgic: Add refcounting for IRQs")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
+Signed-off-by: Tamaki Yanagawa <ty@000ty.net>
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/netfilter/nft_lookup.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
-index 6f78baa72fb8d..9a6e2eab84278 100644
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -160,6 +160,7 @@ void vgic_flush_pending_lpis(struct kvm_vcpu *vcpu)
- 	list_for_each_entry_safe(irq, tmp, &vgic_cpu->ap_list_head, ap_list) {
- 		if (irq->intid >= VGIC_MIN_LPI) {
- 			raw_spin_lock(&irq->irq_lock);
-+			irq->pending_latch = false;
- 			list_del(&irq->ap_list);
- 			irq->vcpu = NULL;
- 			raw_spin_unlock(&irq->irq_lock);
-@@ -678,7 +679,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
- 			continue;
- 		}
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index c56cc6f3f8fad..fed08c103ae04 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -65,14 +65,16 @@ void nft_lookup_eval(const struct nft_expr *expr,
+ 	const struct net *net = nft_net(pkt);
+ 	bool found;
  
--		/* This interrupt looks like it has to be migrated. */
-+		/*
-+		 * This interrupt looks like it has to be migrated,
-+		 * make sure it is kept alive while locks are dropped.
-+		 */
-+		vgic_get_irq_kref(irq);
- 
- 		raw_spin_unlock(&irq->irq_lock);
- 		raw_spin_unlock(&vgic_cpu->ap_list_lock);
-@@ -723,6 +728,8 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
- 		raw_spin_unlock(&vcpuB->arch.vgic_cpu.ap_list_lock);
- 		raw_spin_unlock(&vcpuA->arch.vgic_cpu.ap_list_lock);
- 
-+		vgic_put_irq(vcpu->kvm, irq);
+-	found =	nft_set_do_lookup(net, set, &regs->data[priv->sreg], &ext) ^
+-				  priv->invert;
++	found = nft_set_do_lookup(net, set, &regs->data[priv->sreg], &ext);
+ 	if (!found) {
+ 		ext = nft_set_catchall_lookup(net, set);
+-		if (!ext) {
+-			regs->verdict.code = NFT_BREAK;
+-			return;
+-		}
++		found = !!ext;
++	}
 +
- 		if (target_vcpu_needs_kick) {
- 			kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
- 			kvm_vcpu_kick(target_vcpu);
++	found ^= priv->invert;
++	if (!found) {
++		regs->verdict.code = NFT_BREAK;
++		return;
+ 	}
+ 
+ 	if (ext) {
 -- 
 2.53.0
 
