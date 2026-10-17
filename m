@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DEC3A59BC;
-	Sat, 17 Oct 2026 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029FF34C98C;
+	Sat, 17 Oct 2026 18:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260239; cv=none; b=sfotifCFsE3iPN3QDqtLTNlrfdzjq6arBAoc3mkze/6FHioS4CiUhz+/e9Yp6gkNvtePjctKbJHGnN/jvkPuXbqQOf5vnm3/n4ukLiVtf2w9vVgLBENcssJVaKh+QUItDbx6oSIu347iQUZfoDfzdKV/HRmhYRM7+SEwMJknsIA=
+	t=1792260243; cv=none; b=bTKfZx1/hbaDfx8B2EyzKG6NTn/ozlAGJ1hi+an933gDaEalUrChlo+q7r6HYxcMsM3cBVLMMIzXhXqz5whuIf44y43srRTaqky0Xgb/d6ciedwplNAj3x8SzU39jvo8LogTu6PLydcgJHCISoOWpHRY0othnDM2QndwLbNJKLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260239; c=relaxed/simple;
-	bh=nJIrrC0sVPhBvBU1OAvYhbr7ZCZ8xWXNv2o4qKcrQjc=;
+	s=arc-20240116; t=1792260243; c=relaxed/simple;
+	bh=r9ZuBi8DmycKd78wzkY9lmyiN9U9IPT4RzfFbhrwY08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBHdkp111ZCQn17Khhnfai2aVqrLXOCO5XB7180PADbigJC3gzgTHYiiocfGDrg+hlQ4Of2pkrZNIBuhoNqksipIapDsT2/9r7zEI8wdbFceNffKJGGs88EolnGAKvAXESrWCMeOD5qNwWjsJHejbNnjGT+J6E21hylmwTn1iJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTkvJ8kS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nZQmouzKKeHLbXwHCeKvPGCXfEiK4QDtfml1k1tBWN/3gD50nhB65aPxNAYkf5WnBdKwBnFbZmasf4Pp05dZncljFXL/bCmLjnmGGThAiwGPf9b3ya9pg5CcI/GVPVcVZicr0FNO80BJMjjDVWuaqEI/JygvY2hTr+Fa7sN7v8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXyZA4Zy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTkvJ8kS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396BB1F000C4;
-	Sat, 17 Oct 2026 18:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXyZA4Zy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F0A1F000C4;
+	Sat, 17 Oct 2026 18:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260238;
-	bh=8kRpEZNjVRfgOTsgmv6QdWkMS3mDLSNRv5fsPgOdq0s=;
+	s=korg; t=1792260241;
+	bh=NRuad0+XS/Uxz5DSZnsJIJgk+boCHs5benhaJ2bi97U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTkvJ8kS4bk2pEvGJdmdx1afLgZa9QnTINyIVRUPC6RwYV1aP29cPIk/1TOOSh4oN
-	 injuUv8PGF++TkvPFV+0ez+hqx8HezmDW3lHRKgv+aESAxpBIhXccERCJVzYum+QFR
-	 NnJchYQg/MYelPUSIebFS6N6gaMygglDeWNjbgaI=
+	b=sXyZA4ZyOtYgCVsKy1TD8I/4sstXKP5p63iUPnTlM05qCgnDAE7uyOmvRJFUxD8Zn
+	 C/EpRIVq/nOTT+vz3baqTgsR/dqOCyDgtX60byKnwP3fW4yv4f4y7htWsW5QEXcQ8L
+	 umwUyOWaxNmrQXbfxuoQOZkZUxG8kFLv03gyJY78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1479/1674] firmware: arm_scmi: Clean up channels on setup failure
-Date: Sat, 17 Oct 2026 18:02:31 +0200
-Message-ID: <20261017160509.119512842@linuxfoundation.org>
+Subject: [PATCH 6.6 1480/1674] RDMA/rvt: Return NULL after port allocation failure
+Date: Sat, 17 Oct 2026 18:02:32 +0200
+Message-ID: <20261017160509.143296774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,40 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 687d67be3d87894ef12e8a164434612e0b53cfae ]
+[ Upstream commit 2982eaf3b9d2d953318c74cd6f1b7576ea6d7b1f ]
 
-scmi_channels_setup() can fail after the common BASE channel or earlier
-protocol channels have already been registered in the TX/RX IDRs.
+rvt_alloc_device() deallocates the IB device when its port array cannot
+be allocated but then returns the pointer to the released allocation.
+Callers treat any non-NULL value as valid and dereference it, resulting
+in a use-after-free.
 
-Route this failure through the existing channel cleanup label so the
-transport channels, transport devices and IDR state created before the
-failure are released before the probe error path frees the SCMI instance
-ID.
+Return NULL immediately after deallocation so callers can propagate the
+allocation failure.
 
-Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-4-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: ff6acd69518e ("IB/rdmavt: Add device structure allocation")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-1-b9e9641268a5@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rdmavt/vt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index f99cfc49dfcdb..0c2a0dc350ebd 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2830,7 +2830,7 @@ static int scmi_probe(struct platform_device *pdev)
- 	/* Setup all channels described in the DT at first */
- 	ret = scmi_channels_setup(info);
- 	if (ret)
--		goto clear_ida;
-+		goto clear_txrx_setup;
+diff --git a/drivers/infiniband/sw/rdmavt/vt.c b/drivers/infiniband/sw/rdmavt/vt.c
+index d61f8de7f21c2..ddc47691791ee 100644
+--- a/drivers/infiniband/sw/rdmavt/vt.c
++++ b/drivers/infiniband/sw/rdmavt/vt.c
+@@ -54,8 +54,10 @@ struct rvt_dev_info *rvt_alloc_device(size_t size, int nports)
+ 		return rdi;
  
- 	ret = bus_register_notifier(&scmi_bus_type, &info->bus_nb);
- 	if (ret)
+ 	rdi->ports = kcalloc(nports, sizeof(*rdi->ports), GFP_KERNEL);
+-	if (!rdi->ports)
++	if (!rdi->ports) {
+ 		ib_dealloc_device(&rdi->ibdev);
++		return NULL;
++	}
+ 
+ 	return rdi;
+ }
 -- 
 2.53.0
 
