@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FC13AA9F3;
-	Sat, 17 Oct 2026 17:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B9B3B19B9;
+	Sat, 17 Oct 2026 17:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256572; cv=none; b=P7jA/i0WKa4bf7nVk/bW/xtHcdFKhiNIfuUJZhMrjb0hTTFyeI213ayLtv1i7wk2blsBAu2hGxHGTtq7rrI3/AKKA5ogORfytwHarakd8r4cradORZj0q8F2Jc15AZnyyyz3w4UK8GfdxnImeJJopSeq+lLILBF0fs6T+DzNvjo=
+	t=1792256575; cv=none; b=oZGpIrF3Fn3d7SKJAZm6syIBDQSRZ3wx0f4Y9pKLMe9Af823ZQmX//q4ZXvi1T48Ag+fBHYGhen1PZS7EXjhUCgt+HNevnQpM+rbTu2f0+lEH43ELY3pP2V8CYpPgErZ39Vq3he3+b7Yt6w4P+AU9us2By9qwJQ0Lz78o+oAa6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256572; c=relaxed/simple;
-	bh=1EDgHSFkIH1I3trX5FrMG6GZk+BPDck+SLNVWuCTOdM=;
+	s=arc-20240116; t=1792256575; c=relaxed/simple;
+	bh=kFWLHlWA8G0hzeuXYs6uUwapQ1CQqeYiA1bGUq8MLvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIUEiu7fZjWQN+b7yk0PwoojYWR4Ee6TMe1LVyGT8/mHKGH22BOtVT+SUnimzLuB4qpGbOFmUaQIYC541VqDAsg1S1q6rjLw2TOBtoyf9Lhb2fZmBGhsN/I0+A1B3Sl1R28XlvQMWUs55Mu3UdKmGIRKlnE3olh/2dAFxOlnmJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FbQLSyo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdYSSmWzecsdJ+hQJzIibYnQnz+fUTjbEC0aXnn6DjyAWDIjPIBnlMg3d6DUczSbBpxK3ELVl1cFLtQiNNGCYCet3KaVvarxb+0bHiRlm6Ui2IworrP1LQZwQl2ZRBWy6YRGrOt9M/i+Y7oIPMNB5Yb8Nlv/nCuarwagBMbZ3H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtftuRsF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FbQLSyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03121F000C4;
-	Sat, 17 Oct 2026 17:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtftuRsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6F21F000C4;
+	Sat, 17 Oct 2026 17:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256571;
-	bh=D0knYL9jBl82qhesrWchCftI7xN59+qn/rNp0dJbnHg=;
+	s=korg; t=1792256574;
+	bh=0wCB+TTqlPi4MKgAzTeALWLw8Tb6JVzIalHjP6liv5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2FbQLSyomi4jqB9BZjJp4CvduXSAGgECxcLd1Jn9ukt3I2cEJN9PqsT7ln3JWyul0
-	 lDalrLIKS+KHr9yXWChxh3eLxIdnkX+DeU9d/0KIxcqaD9/Lr8ljEGOs1GyhrgbssP
-	 OHJvP5568Lg6YTyLEOYfaNNwyNLOU7EAgewShUY8=
+	b=AtftuRsFC24d5jzMldA83d18YNZG2FGbFjxPx7G3mbYCtIDJIr//c2fSIX2CJ8hzz
+	 bPq7Pi0p9W0m9lBAS0lR8SARn68uKVxQTLbyT0XT5OQgfKf3uIz+02y65VnIrZ1o8+
+	 2c3uWs/z5Eg2WKTo4AhWycfUxwcsN49h0B8nuJlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaofeng Chen <zhaofeng.chen@certik.com>,
-	Yuxiao Wang <yuxiao.wang@certik.com>,
-	Alexander Graf <graf@amazon.com>
-Subject: [PATCH 6.6 0253/1674] nitro_enclaves: fix use-after-free on SLOT_ALLOC failure
-Date: Sat, 17 Oct 2026 17:42:05 +0200
-Message-ID: <20261017160437.621079349@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johan Hovold <johan@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.6 0280/1674] tty: amiserial: fix broken TIOCMIWAIT
+Date: Sat, 17 Oct 2026 17:42:32 +0200
+Message-ID: <20261017160438.301935669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,56 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiao Wang <yuxiao.wang@certik.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9bc184a2eda8b773c88ecbff934001ad649b9cc1 upstream.
+commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
 
-When ne_create_vm_ioctl() fails the SLOT_ALLOC request after
-anon_inode_getfile() has succeeded, the error path calls
-fput(enclave_file) and then frees ne_enclave.
+A change replacing interruptible_sleep_on() inadvertently broke the
+TIOCMIWAIT implementation which now immediately returns -EIO (unless
+there is a racing modem status update).
 
-In normal userspace context, fput() defers the final __fput() via
-task_work. ne_enclave_release() therefore runs after ne_enclave has
-already been freed and dereferences ne_enclave->slot_uid, causing a
-use-after-free: KASAN: slab-use-after-free in ne_enclave_release.
+Replace the old hangup (and signal) detection with a check for the
+TTY_IO_ERROR flag which is set on hangup.
 
-The enclave has no slot allocated and is not yet linked into the
-enclaves list on this error path, so ne_enclave_release() is expected
-to return early when slot_uid is zero. However, reading slot_uid
-already accesses the freed object.
-
-Clear enclave_file->private_data before fput() on the error path.
-ne_enclave_release() then returns immediately when private_data is
-NULL, leaving the ioctl error path as the sole owner of ne_enclave.
-This is safe because the file has not been fd_install()'d yet.
-
-Tested on an AWS EC2 m5.2xlarge with CONFIG_KASAN=y. Without the
-patch, the reproducer triggers a KASAN slab-use-after-free on every
-SLOT_ALLOC failure. With the patch, no KASAN report is produced and
-the SLOT_ALLOC error is still returned. Normal enclave creation and
-teardown are unaffected.
-
-Fixes: 9c8eb50fe9e2 ("nitro_enclaves: Add logic for terminating an enclave")
-Cc: stable@vger.kernel.org
-Co-developed-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Yuxiao Wang <yuxiao.wang@certik.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260909124400.27857-1-graf@amazon.com
+Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
+Cc: stable@kernel.org	# 3.14
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/nitro_enclaves/ne_misc_dev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/amiserial.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/virt/nitro_enclaves/ne_misc_dev.c
-+++ b/drivers/virt/nitro_enclaves/ne_misc_dev.c
-@@ -1710,6 +1710,7 @@ static int ne_create_vm_ioctl(struct ne_
- 	return enclave_fd;
- 
- put_file:
-+	enclave_file->private_data = NULL;
- 	fput(enclave_file);
- put_fd:
- 	put_unused_fd(enclave_fd);
+--- a/drivers/tty/amiserial.c
++++ b/drivers/tty/amiserial.c
+@@ -1140,11 +1140,6 @@ static int rs_ioctl(struct tty_struct *t
+ 				local_irq_save(flags);
+ 				cnow = info->icount; /* atomic copy */
+ 				local_irq_restore(flags);
+-				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
+-				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
+-					ret = -EIO; /* no change => error */
+-					break;
+-				}
+ 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
+ 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
+ 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
+@@ -1152,6 +1147,10 @@ static int rs_ioctl(struct tty_struct *t
+ 					ret = 0;
+ 					break;
+ 				}
++				if (tty_io_error(tty)) {
++					ret = -EIO;
++					break;
++				}
+ 				schedule();
+ 				/* see if a signal did it */
+ 				if (signal_pending(current)) {
 
 
