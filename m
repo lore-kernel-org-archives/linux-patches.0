@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738B03B27C9;
-	Sat, 17 Oct 2026 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B8F23394D;
+	Sat, 17 Oct 2026 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256423; cv=none; b=jjMiTbsRKzAyLGWjhqJbem7deWshsAS7ngju4807vIiHZ8Sxr/+YbdIN4u01ywlHmL8BJCZLhwTVEltR7pS6Jt+BXsEapWumeRDzbLEkVpmyr4OaKYNlNOKvDhP4dSE+Qi1wY19YSJZEcTpPM13qwSmliiLwx8US86u6AjbCFI0=
+	t=1792256426; cv=none; b=WRq0OLmytx3C+vtmdG0sbs+XamdBHMoquUGLjl6QlXPxU7Hh5rKvS2ZhHDE0izX5TXxMyVkcwXwLfRY8UfPXPtSzd6Xdil3UgF+StmdaN4g/gZEWStVpbNj2f8ensZk2Lijx0uNt4a89NR7zLgMCUKCrO3p1fL6sfP75UHfOODI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256423; c=relaxed/simple;
-	bh=uTD18isdmWEeM6Wq75XhEft/mRkA3Rsey6F+MgwMuAs=;
+	s=arc-20240116; t=1792256426; c=relaxed/simple;
+	bh=vnSCsgzOLUgqHlcl8AfU13txMvXurGzNPHgEhekxI8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P25hjGvsYip5HSKUpq2k3O+ppt92UnpApdMEHQ5PgGET8T3svP7UxBWI2JHOO7hfNXo7KfNjRxsrhnO8oYrZz3cj9F/UrSAm0iITZ6HaL9hVFOewh4i5uptcdaoQNp6HMxBz/dVr1HAZEKFLZ6GFaBFegW1fA7kccb5YLWklRuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKYmP7Xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CjGtIYRJEv3ha/lSw3/tmppRPTVe4KO1ruLc7N/x3Uhe5J5nO+C81DigOup3wxAL0eb3ZPiACbTOx9Tlr8NjQIDTwv3f5ADM9ctzRKzxPeblT9vYufR5G9DUnQIgPOEh1zIfycd2SDM7ncyiZfWmQ/baImd4gk7+NgHZFcBIyAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kuuneU7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKYmP7Xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD981F000C4;
-	Sat, 17 Oct 2026 17:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kuuneU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C001F000C4;
+	Sat, 17 Oct 2026 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256422;
-	bh=tJHPhO3kS+uZMfybSKdnqEQDNQkuhL05GNDzv2cXbHQ=;
+	s=korg; t=1792256425;
+	bh=hsokOB4DAkKcTmwUsg5MUMIDwCvO7SmLsGYEdueIKEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKYmP7Xoy1Q9nL6MdEPGXX0xMlsXF2E4BE4L9RTAjrCw5IhtO4mivYkc+02t1pf9o
-	 +x8yrZWdRoGRQJpqm2uxav99Ol8ueE2Eg2FDuQ9EK2kZB/mODdanRqtmml5qYYZS3V
-	 P3NPmSXU6X28V0eVp7BrPa/kYZ76TEIHJYH5EJCw=
+	b=2kuuneU7ffgPnfwy+B2xIkzKc6PbaFps3/ODPesR8ko/THd5GxZq3l2aV0LStRi6F
+	 10e2ZVUNd7BIp2cm3GZXNSEkjOlzg8hq2naRnmb7dlKVvHpxGxlsUSf1KFsnZfK7T+
+	 z24CCguoxcZFKzi55QAlOMiJ2+0JhL10J7dR6Oao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjian Dai <daihongjian@kylinsec.com.cn>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Luo Gengkun <luogengkun2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0231/1674] i2c: at91: release DMA channels when probe defers
-Date: Sat, 17 Oct 2026 17:41:43 +0200
-Message-ID: <20261017160437.067312544@linuxfoundation.org>
+Subject: [PATCH 6.6 0232/1674] perf: Fix race between perf_event_exit_task() and perf_pending_task()
+Date: Sat, 17 Oct 2026 17:41:44 +0200
+Message-ID: <20261017160437.090967102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongjian Dai <daihongjian@kylinsec.com.cn>
+From: Luo Gengkun <luogengkun2@huawei.com>
 
-[ Upstream commit c98bf3b86609a18ab16d067280257326e557c636 ]
+[ Upstream commit ffb684f2aa141eeb0caa6308422e7e05d1ded7c4 ]
 
-at91_twi_probe_master() can return -EPROBE_DEFER from
-at91_init_twi_recovery_info() after at91_twi_configure_dma() has already
-claimed the tx/rx DMA channels. at91_twi_probe() then returns without
-releasing them, and since dma_request_chan() is not devres-managed the
-channels leak on every deferred probe attempt.
+A race condition exists between perf_event_exit_task() and
+perf_pending_task() during begin_new_exec().
 
-Release the channels before deferring the probe.
+During begin_new_exec(), perf_event_exit_task() may be called, and the
+PF_EXITING flag is not set on task. So perf_sigtrap() continues to execute
+and triggers WARN_ON_ONCE(event->ctx->task != current).
 
-Fixes: f7eeb1af8537 ("i2c: at91: release DMA channels on remove and probe error")
-Assisted-by: LLM
-Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/7D85C6CB6BF0A82E+20260929164340.41628-1-daihongjian@kylinsec.com.cn
+Since both task exit and exec paths can call perf_event_exit_task() which
+sets ctx->task to TASK_TOMBSTONE, fix this by explicitly checking if
+event->ctx->task equals TASK_TOMBSTONE and dropping the redundant
+PF_EXITING check.
+
+Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
+Signed-off-by: Luo Gengkun <luogengkun2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260920075026.990582-1-luogengkun2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-at91-master.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/events/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
-index bb9874c08401d..4737feedb940f 100644
---- a/drivers/i2c/busses/i2c-at91-master.c
-+++ b/drivers/i2c/busses/i2c-at91-master.c
-@@ -922,8 +922,14 @@ int at91_twi_probe_master(struct platform_device *pdev,
- 	at91_calc_twi_clock(dev);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 45f439ba7cbfc..a986ed1ad221a 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6809,9 +6809,11 @@ static void perf_sigtrap(struct perf_event *event)
+ {
+ 	/*
+ 	 * Both perf_pending_task() and perf_pending_irq() can race with the
+-	 * task exiting.
++	 * task exiting or exec-ing. We can determine if such a race has
++	 * occurred by checking if perf_event_exit_task(), which will set
++	 * ctx->task to TASK_TOMBSTONE, has already been called.
+ 	 */
+-	if (current->flags & PF_EXITING)
++	if (event->ctx->task == TASK_TOMBSTONE)
+ 		return;
  
- 	rc = at91_init_twi_recovery_info(pdev, dev);
--	if (rc == -EPROBE_DEFER)
-+	if (rc == -EPROBE_DEFER) {
-+		/*
-+		 * The DMA channels were already set up above, release them
-+		 * before deferring the probe so they are not leaked.
-+		 */
-+		at91_twi_dma_release(dev);
- 		return rc;
-+	}
- 
- 	dev->adapter.algo = &at91_twi_algorithm;
- 	dev->adapter.quirks = &at91_twi_quirks;
+ 	/*
 -- 
 2.53.0
 
