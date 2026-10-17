@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ACA255E43;
-	Sat, 17 Oct 2026 18:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28533BAD9B;
+	Sat, 17 Oct 2026 18:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260744; cv=none; b=CezAzz1Dz+PyzIDI18a0hWT5W9C0uBAmT2FMOWbnmqZxoNZKFf3HULFABjjBBP8eohuK4GYWZ+Za3C1Q2GAJbzlv13kiLgNIk8Ep2hgqN7zDcAqEKwseNc3pMdZdXhayI4bnbsQbmLqFCLyunO0iC75lYLPUHjdwTOyftuy/lYk=
+	t=1792260747; cv=none; b=en8uIgsGQIC0FBRIer+Ook52zJREM+4B5QWvIfon00aaExysW8kWli2bCB2j6pmkKnrU6dIBatwZOS09zt2U7UZssuL9NUaEHJ8LcdWbNpSeI3/+Qu2wrkjWfwBsLdH/kdLxYACxxTGybXfBK3LnFAI3Kf+SPGr0OTW+MuZyPrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260744; c=relaxed/simple;
-	bh=JRYrh8nz8fwXqC+pJXlgA5lx4HmDhpN7PRcXYCrcMic=;
+	s=arc-20240116; t=1792260747; c=relaxed/simple;
+	bh=uh86s8buWC/t3kBGbKYK8+iOGTZ7z89ucPxg4oXnvQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqkjZRguI+Bqyr/dAIhSCbQTBpPmTf4pmhJZ103JSzH4KSyDjJJ40UkG65No2DfnaZLHI77Ug4N1CWLW6ZUwDAwN/0SZ1igNA6In+407GnHvIR+Wdd2OnErAfau1fWYoYKUxQc5F7hBd6ATCQKe2gS9sKL7mxhfW2+kyojpF37A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1l4Gy22; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LXTR1ZF+nHbNdrk2CZ1wyJXfF1UoisUPFNp3224CnuZWVFEbl3zkcVWyqld6C6yY4rlNaAMrlszjNzQaqE0Sdl/ICzvmWdn+6QP9aXWfl3PrfUDfDsK1W97fqHdZRbjUK/5icwgHGqjKadsBcaak2idSMQd2lBdNtpX8c7bEKAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeTfpV6U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1l4Gy22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31931F000C4;
-	Sat, 17 Oct 2026 18:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeTfpV6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5741F000C4;
+	Sat, 17 Oct 2026 18:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260743;
-	bh=Jg0Pev92PkkfsEy/oLd493hFkEPf9o038u9bPOiULG8=;
+	s=korg; t=1792260746;
+	bh=RF45f7dirmpXlBQ5F3d8VBSdi9vPMHojY88FKSUfYdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1l4Gy226F/bos20IvmiiNhelzBf8Xv0aVN7eUyiQLDkyfvhhwVz/U6cYc7FJFJXX
-	 L5jwFsp8ixOM2hhuCm6p8jBsqia382k/2iW4fonHO4bhx3oQKz5SkW0LEp+xsEEk7n
-	 A2e0S6+RTrp6nilPNh8WaIijYuplXAU63dadI/B4=
+	b=yeTfpV6UpcWc4XYG01FPxY3Ov8VD6fyhw8AD3LM8P7gpKT/yzu/Pr8sU3CDxDK6Dg
+	 wU4c6Bx34dm+U1tfMhj1Ov9TZHk2zOPlPa39YiUuPfhXQr2vIVTbO/ErOuujaKxSz6
+	 oHaoecNa+ep+lMIySLogX9bNv6mHMeBcgZpMWKuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1629/1674] bpf: generalize is_branch_taken() to work with two registers
-Date: Sat, 17 Oct 2026 18:05:01 +0200
-Message-ID: <20261017160512.895212157@linuxfoundation.org>
+Subject: [PATCH 6.6 1647/1674] ipv6: mcast: use rcu_assign_pointer() for __rcu list updates
+Date: Sat, 17 Oct 2026 18:05:19 +0200
+Message-ID: <20261017160513.347462502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,155 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c31534267c180f7ed00288d239a501b554885300 ]
+[ Upstream commit 0c8f56c583c3250408367880c98e4d6fbc929315 ]
 
-While still assuming that second register is a constant, generalize
-is_branch_taken-related code to accept two registers instead of register
-plus explicit constant value. This also, as a side effect, allows to
-simplify check_cond_jmp_op() by unifying BPF_K case with BPF_X case, for
-which we use a fake register to represent BPF_K's imm constant as
-a register.
+Several places in net/ipv6/mcast.c update RCU-protected lists
+(np->ipv6_mc_list, idev->mc_list, idev->mc_tomb) using direct pointer
+assignments instead of rcu_assign_pointer():
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20231102033759.2541186-13-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e51179a4e098 ("bpf: Don't predict JMP32 pointer vs zero comparisons")
+1. In __ipv6_dev_mc_dec(), unlinking a group from idev->mc_list did:
+       *map = ma->next;
+   without rcu_assign_pointer() while concurrent readers traverse
+   idev->mc_list locklessly under rcu_read_lock().
+2. In ipv6_sock_mc_drop() and __ipv6_sock_mc_close(), unlinking a group
+   from np->ipv6_mc_list directly assigned *lnk = mc_lst->next and
+   np->ipv6_mc_list = mc_lst->next without rcu_assign_pointer(), racing
+   with lockless readers in inet6_mc_check().
+3. In __ipv6_sock_mc_join(), mc_lst->next was initialized to
+   np->ipv6_mc_list via raw assignment before publishing mc_lst.
+4. In mld_del_delrec() and __ipv6_dev_mc_inc(), __rcu source pointers
+   passed into rcu_assign_pointer() lacked explicit dereference helpers.
+
+Fix these by consistently using rcu_assign_pointer() along with
+mc_dereference() / sock_dereference().
+
+Fixes: 456b61bca8ee ("ipv6: mcast: RCU conversion")
+Fixes: 88e2ca308094 ("mld: convert ifmcaddr6 to RCU")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828084531.1826790-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 57 ++++++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ net/ipv6/mcast.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 30751a16f186b..6c088641c276d 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14076,9 +14076,13 @@ static void find_good_pkt_pointers(struct bpf_verifier_state *vstate,
- 	}));
- }
- 
--static int is_branch32_taken(struct bpf_reg_state *reg1, u32 val, u8 opcode)
-+/*
-+ * <reg1> <op> <reg2>, currently assuming reg2 is a constant
-+ */
-+static int is_branch32_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2, u8 opcode)
- {
- 	struct tnum subreg = tnum_subreg(reg1->var_off);
-+	u32 val = (u32)tnum_subreg(reg2->var_off).value;
- 	s32 sval = (s32)val;
- 
- 	switch (opcode) {
-@@ -14158,8 +14162,12 @@ static int is_branch32_taken(struct bpf_reg_state *reg1, u32 val, u8 opcode)
- }
- 
- 
--static int is_branch64_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode)
-+/*
-+ * <reg1> <op> <reg2>, currently assuming reg2 is a constant
-+ */
-+static int is_branch64_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2, u8 opcode)
- {
-+	u64 val = reg2->var_off.value;
- 	s64 sval = (s64)val;
- 
- 	switch (opcode) {
-@@ -14238,16 +14246,23 @@ static int is_branch64_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode)
- 	return -1;
- }
- 
--/* compute branch direction of the expression "if (reg opcode val) goto target;"
-+/* compute branch direction of the expression "if (<reg1> opcode <reg2>) goto target;"
-  * and return:
-  *  1 - branch will be taken and "goto target" will be executed
-  *  0 - branch will not be taken and fall-through to next insn
-- * -1 - unknown. Example: "if (reg < 5)" is unknown when register value
-+ * -1 - unknown. Example: "if (reg1 < 5)" is unknown when register value
-  *      range [0,10]
-  */
--static int is_branch_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode,
--			   bool is_jmp32)
-+static int is_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2,
-+			   u8 opcode, bool is_jmp32)
- {
-+	struct tnum reg2_tnum = is_jmp32 ? tnum_subreg(reg2->var_off) : reg2->var_off;
-+	u64 val;
-+
-+	if (!tnum_is_const(reg2_tnum))
-+		return -1;
-+	val = reg2_tnum.value;
-+
- 	if (__is_pointer_value(false, reg1)) {
- 		if (!reg_not_null(reg1))
- 			return -1;
-@@ -14269,8 +14284,8 @@ static int is_branch_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode,
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 9d8908c7cfa74..971603ee89799 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -229,7 +229,8 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
+ 		return err;
  	}
  
- 	if (is_jmp32)
--		return is_branch32_taken(reg1, val, opcode);
--	return is_branch64_taken(reg1, val, opcode);
-+		return is_branch32_taken(reg1, reg2, opcode);
-+	return is_branch64_taken(reg1, reg2, opcode);
- }
+-	mc_lst->next = np->ipv6_mc_list;
++	rcu_assign_pointer(mc_lst->next,
++			   sock_dereference(np->ipv6_mc_list, sk));
+ 	rcu_assign_pointer(np->ipv6_mc_list, mc_lst);
  
- static int flip_opcode(u32 opcode)
-@@ -14805,6 +14820,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
- 	struct bpf_reg_state *eq_branch_regs;
- 	struct linked_regs linked_regs = {};
-+	struct bpf_reg_state fake_reg = {};
- 	u8 opcode = BPF_OP(insn->code);
- 	int insn_flags = 0;
- 	bool is_jmp32;
-@@ -14849,6 +14865,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
- 			return -EINVAL;
+ 	return 0;
+@@ -289,7 +290,8 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
+ 	      lnk = &mc_lst->next) {
+ 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
+ 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
+-			*lnk = mc_lst->next;
++			rcu_assign_pointer(*lnk,
++					   sock_dereference(mc_lst->next, sk));
+ 			__ipv6_sock_mc_drop(sk, mc_lst);
+ 			return 0;
  		}
-+		src_reg = &fake_reg;
-+		src_reg->type = SCALAR_VALUE;
-+		__mark_reg_known(src_reg, insn->imm);
+@@ -343,7 +345,8 @@ void __ipv6_sock_mc_close(struct sock *sk)
+ 	while ((mc_lst = sock_dereference(np->ipv6_mc_list, sk)) != NULL) {
+ 		struct net_device *dev;
+ 
+-		np->ipv6_mc_list = mc_lst->next;
++		rcu_assign_pointer(np->ipv6_mc_list,
++				   sock_dereference(mc_lst->next, sk));
+ 
+ 		dev = __dev_get_by_index(net, mc_lst->ifindex);
+ 		if (dev) {
+@@ -825,9 +828,11 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
+ 	}
+ 	if (pmc) {
+ 		if (pmc_prev)
+-			rcu_assign_pointer(pmc_prev->next, pmc->next);
++			rcu_assign_pointer(pmc_prev->next,
++					   mc_dereference(pmc->next, idev));
+ 		else
+-			rcu_assign_pointer(idev->mc_tomb, pmc->next);
++			rcu_assign_pointer(idev->mc_tomb,
++					   mc_dereference(pmc->next, idev));
  	}
  
- 	if (dst_reg->type == PTR_TO_STACK)
-@@ -14862,31 +14881,19 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 	if (pmc) {
+@@ -985,7 +990,7 @@ static int __ipv6_dev_mc_inc(struct net_device *dev,
+ 		return -ENOMEM;
+ 	}
  
- 	if (BPF_SRC(insn->code) == BPF_K) {
--		pred = is_branch_taken(dst_reg, insn->imm, opcode, is_jmp32);
-+		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
- 	} else if (src_reg->type == SCALAR_VALUE &&
- 		   is_jmp32 && tnum_is_const(tnum_subreg(src_reg->var_off))) {
--		pred = is_branch_taken(dst_reg,
--				       tnum_subreg(src_reg->var_off).value,
--				       opcode,
--				       is_jmp32);
-+		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
- 	} else if (src_reg->type == SCALAR_VALUE &&
- 		   !is_jmp32 && tnum_is_const(src_reg->var_off)) {
--		pred = is_branch_taken(dst_reg,
--				       src_reg->var_off.value,
--				       opcode,
--				       is_jmp32);
-+		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
- 	} else if (dst_reg->type == SCALAR_VALUE &&
- 		   is_jmp32 && tnum_is_const(tnum_subreg(dst_reg->var_off))) {
--		pred = is_branch_taken(src_reg,
--				       tnum_subreg(dst_reg->var_off).value,
--				       flip_opcode(opcode),
--				       is_jmp32);
-+		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
- 	} else if (dst_reg->type == SCALAR_VALUE &&
- 		   !is_jmp32 && tnum_is_const(dst_reg->var_off)) {
--		pred = is_branch_taken(src_reg,
--				       dst_reg->var_off.value,
--				       flip_opcode(opcode),
--				       is_jmp32);
-+		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
- 	} else if (reg_is_pkt_pointer_any(dst_reg) &&
- 		   reg_is_pkt_pointer_any(src_reg) &&
- 		   !is_jmp32) {
+-	rcu_assign_pointer(mc->next, idev->mc_list);
++	rcu_assign_pointer(mc->next, mc_dereference(idev->mc_list, idev));
+ 	rcu_assign_pointer(idev->mc_list, mc);
+ 
+ 	mca_get(mc);
+@@ -1017,7 +1022,8 @@ int __ipv6_dev_mc_dec(struct inet6_dev *idev, const struct in6_addr *addr)
+ 	     map = &ma->next) {
+ 		if (ipv6_addr_equal(&ma->mca_addr, addr)) {
+ 			if (--ma->mca_users == 0) {
+-				*map = ma->next;
++				rcu_assign_pointer(*map,
++						   mc_dereference(ma->next, idev));
+ 
+ 				igmp6_group_dropped(ma);
+ 				ip6_mc_clear_src(ma);
 -- 
 2.53.0
 
