@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CBB3BE178;
-	Sat, 17 Oct 2026 17:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDAB3A1A3F;
+	Sat, 17 Oct 2026 17:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259166; cv=none; b=MlHhPDOcdEABlhL3EW7fuTnHwXikPHMIaht2S/fkK5i2UnAl23Yy6HEOOJyOO5ySyTY4qQYOVGg826dhc+kPASc30trGj6Rolq9JwHNVDtc2Y5DP0njOP5pZUJ6wp+W7g9mIHqxaJBqOzpBChoqKbRdPhoBtnqEaj0V+60jYeoI=
+	t=1792259168; cv=none; b=AWuGkXIi7DefTDxQunOaw44vjh4CjW6Ie1ELWQhRIL6lOb4BE/WNaLe/xSo5g4/DIRZk5S4mgsHUakI8KL79tdDYMRx0k6KG7BQnFqzrYqwWbH4QjLVitT7U+bOiOqdm4/nhM7z9hTVzd0q4hYTm4mIQggddDByiur2Bf5sEGGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259166; c=relaxed/simple;
-	bh=EXCigqPuGGl62mjfDTQtXC8SGIXRB/xW9wmoga+jH38=;
+	s=arc-20240116; t=1792259168; c=relaxed/simple;
+	bh=s4/XmYmrAAI5VKhmUOFzsQa1uylauNBDu7WMo8gjVmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1nIeD7/yQE+XcO/6+8BWMcPi44zQXB+Cu01B/gfgssbxnDW8QGiThbOrs8Aru8+7Wk/yHM4PxmJ7l3AHwQfmSV2vWZNVPJFucNRoF+WIA7uukw+b9GQOEIMeZ9dqqBT95TtfOBr4L+hh9lCAy9PcYz341QQ8aNtVQF+n7qB8y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMNsVWYS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=obDxgwesp2LpFJREZ3QiIhFpGMYlezx9yTq3ZaR8PK3Kcb/LRdOs0Pi+5TTF+OjVkkTs3C1DVpYlIiUVjGcbYZmQEnTA8Gy3zJPYrvCOTqY3u89BzRx2UBJ/Mi5r+7XV330/xax0322r2p3tSG8QmO6xb99yavIVIPdaT74lJpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z51suxfk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMNsVWYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3411F000C5;
-	Sat, 17 Oct 2026 17:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z51suxfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A6C1F000C5;
+	Sat, 17 Oct 2026 17:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259164;
-	bh=SVE0h9WOAmJhI8TL+fLzZTZffGasf5N2mv4jJGLrhCw=;
+	s=korg; t=1792259167;
+	bh=4OC2Nb3jBp6RYR2X+PlEPxtIIqM0NOkf0YAi62+6jnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMNsVWYSa6ib4cxlxvcdpzzVKMprIpJszCEEo4p7CEcYA/xAVW2RqbxhlN1uh7gxH
-	 EfY5TEikWQI6xeiODPxG9cQafnlzbuBET/ybCAyRb/3O6TXDhVmqUMk+rF1jQJ94km
-	 K60QgqUN59xnl0Kg9XUCRPwkEMhhdjtewLzy6wIY=
+	b=Z51suxfkCrb0j4ZUXAZ7zGYVMInzoXPRsYmc+4nS+JtlozkWAbP9qbIPzrB7wPYVv
+	 qJWB7qHzcY6DWz6lILIcWdli1ZfNnCg//4RZCWq7ivhhO+lGt15L4YFvCqIGB1PzHg
+	 mdelMXIfOt4HzIZuFLqmVnrH1z+Hlt3wo1RvFKwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Mina Almasry <almasrymina@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1123/1674] mm/hugetlb: fix hugetlb cgroup rsvd charge/uncharge mismatch
-Date: Sat, 17 Oct 2026 17:56:35 +0200
-Message-ID: <20261017160459.981446737@linuxfoundation.org>
+Subject: [PATCH 6.6 1124/1674] KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling
+Date: Sat, 17 Oct 2026 17:56:36 +0200
+Message-ID: <20261017160500.011476246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -56,87 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 15807d0ddde37407af72859426b654f3d1972b00 ]
+[ Upstream commit 7258770e5814f15e8308ebda82ac9acf6964ba8e ]
 
-In alloc_hugetlb_folio(), a single h_cg pointer is used for both the rsvd
-and non-rsvd hugetlb cgroup charges.  When map_chg is set,
-hugetlb_cgroup_charge_cgroup_rsvd() stores the charged cgroup in h_cg, but
-the immediately following hugetlb_cgroup_charge_cgroup() overwrites h_cg
-with the non-rsvd cgroup pointer.
+Hyunwoo Kim reports some really bad races should the following
+situation occur:
 
-As a result, hugetlb_cgroup_commit_charge_rsvd() stores the wrong
-(non-rsvd) cgroup pointer into the folio's rsvd slot.
+- LPI-I is pending in vcpu-B's AP list
+- vcpu-A writes to vcpu-B's RD to disable its LPIs
+- vcpu-C moves I from B to C
 
-When the folio is later freed, free_huge_folio() unconditionally calls
-both hugetlb_cgroup_uncharge_folio() and
-hugetlb_cgroup_uncharge_folio_rsvd().  The rsvd uncharge reads back the
-wrong cgroup from the folio and decrements a counter that was never
-charged for that cgroup, causing a page_counter underflow:
+If the last two race nicely enough, vgic_prune_ap_list() can drop
+the irq and AP list locks, reacquire them, and in the interval
+the irq has been freed. UAF follows.
 
-  page_counter underflow: -512 nr_pages=512
-  WARNING: mm/page_counter.c:61 at page_counter_cancel
+The fix is two-fold:
 
-Fix this by introducing a separate h_cg_rsvd pointer exclusively for the
-rsvd charge path, keeping the rsvd and non-rsvd charges fully independent
-through their charge, commit, and error uncharge paths.
+- Before dropping the irq and ap_list locks, take a reference on
+  the irq
 
-Link: https://lore.kernel.org/20260328065534.346053-1-kartikey406@gmail.com
-Fixes: 08cf9faf7558 ("hugetlb_cgroup: support noreserve mappings")
-Reported-by: syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=226c1f947186f8fef796
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+- Do not try to handle migration of the pending bit: there is no
+  expectation that this state is retained, as per the architecture
+
+With that, we're sure that the interrupt is still around, and we
+safely remove it from the AP list as it has no target at this
+stage (unless another interrupt fires, but that's another story).
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Tested-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/r/ailsCnyoS82r_QRz@v4bel
+Link: https://patch.msgid.link/20260615181625.3029352-1-maz@kernel.org
+Fixes: 5dd4b924e390a ("KVM: arm/arm64: vgic: Add refcounting for IRQs")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index cca79f0e78f70..8bfaaa84bb3f7 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3058,6 +3058,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	long gbl_chg;
- 	int ret, idx;
- 	struct hugetlb_cgroup *h_cg = NULL;
-+	struct hugetlb_cgroup *h_cg_rsvd = NULL;
- 	bool deferred_reserve;
+diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+index 6f78baa72fb8d..9a6e2eab84278 100644
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -160,6 +160,7 @@ void vgic_flush_pending_lpis(struct kvm_vcpu *vcpu)
+ 	list_for_each_entry_safe(irq, tmp, &vgic_cpu->ap_list_head, ap_list) {
+ 		if (irq->intid >= VGIC_MIN_LPI) {
+ 			raw_spin_lock(&irq->irq_lock);
++			irq->pending_latch = false;
+ 			list_del(&irq->ap_list);
+ 			irq->vcpu = NULL;
+ 			raw_spin_unlock(&irq->irq_lock);
+@@ -678,7 +679,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+ 			continue;
+ 		}
  
- 	idx = hstate_index(h);
-@@ -3090,7 +3091,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	deferred_reserve = map_chg || avoid_reserve;
- 	if (deferred_reserve) {
- 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
--			idx, pages_per_huge_page(h), &h_cg);
-+			idx, pages_per_huge_page(h), &h_cg_rsvd);
- 		if (ret)
- 			goto out_subpool_put;
- 	}
-@@ -3127,7 +3128,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	 */
- 	if (deferred_reserve) {
- 		hugetlb_cgroup_commit_charge_rsvd(idx, pages_per_huge_page(h),
--						  h_cg, folio);
-+						  h_cg_rsvd, folio);
- 	}
+-		/* This interrupt looks like it has to be migrated. */
++		/*
++		 * This interrupt looks like it has to be migrated,
++		 * make sure it is kept alive while locks are dropped.
++		 */
++		vgic_get_irq_kref(irq);
  
- 	spin_unlock_irq(&hugetlb_lock);
-@@ -3163,7 +3164,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- out_uncharge_cgroup_reservation:
- 	if (deferred_reserve)
- 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
--						    h_cg);
-+						    h_cg_rsvd);
- out_subpool_put:
- 	if (map_chg || avoid_reserve)
- 		hugepage_subpool_put_pages(spool, 1);
+ 		raw_spin_unlock(&irq->irq_lock);
+ 		raw_spin_unlock(&vgic_cpu->ap_list_lock);
+@@ -723,6 +728,8 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+ 		raw_spin_unlock(&vcpuB->arch.vgic_cpu.ap_list_lock);
+ 		raw_spin_unlock(&vcpuA->arch.vgic_cpu.ap_list_lock);
+ 
++		vgic_put_irq(vcpu->kvm, irq);
++
+ 		if (target_vcpu_needs_kick) {
+ 			kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
+ 			kvm_vcpu_kick(target_vcpu);
 -- 
 2.53.0
 
