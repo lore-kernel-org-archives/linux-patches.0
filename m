@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6763B6364;
-	Sat, 17 Oct 2026 17:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB312D3225;
+	Sat, 17 Oct 2026 17:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258225; cv=none; b=a38VwUqfvAXZj3Op8/t4TK7ZonlpHsfkgWEvzTzaf88R58jkH7mKh97D3Mng/qmqBUCuKR4hDaLwAnZTTEDWa8dd8lPTreHPQSXP1+cZ+c+kbP46n1CbrFMhS/8UwqzfyKx7NI484TOJZ2JQ830sXMKKvRdc83yaQkAd8b2444o=
+	t=1792258227; cv=none; b=UGbgAOWhi60xjlw3PabgN7hgnGZoPHsTUC1+kt4gN0nP1yLhxK2Lud4z30pSIfxrtcqUAbWIFmo/SEBd/qbfBvEABtn7GcWfFKUkQNXpyPUkZUVGYbUCaVtdw66eMqLual7uWQ/5+kD70j2idOX3YeG8EFNEpHvKO3oOQdIbGRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258225; c=relaxed/simple;
-	bh=3yknYLBlGynWt1BF6X6mw6ailG71lCMiWvxS/Pj7d14=;
+	s=arc-20240116; t=1792258227; c=relaxed/simple;
+	bh=N3K7yGXOD65kphwth+HnJl1D8lU4cz0h5N9qS5uy0v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHPnq1f5xo9uMkbGOLOPTKKFZ6CsZXmYR5irMAK59q5fjdrN2Mf3RK768C4mZR/zYbjbIKvczDzFRHR0d1TAQeS4ycRuok0aSPuLyqvDtGpAPadqiHDTKdIEwNEZRfoxDRtIIkfWoCa9Sxk32gi1Hl3VqsRYJE42vDuP19euJJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x30bo5Le; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOOM5VZ6XzbNyJHsXqXrHvR6/KnlkJD+aNSiUuNo0fUVkE94hArAIlvHj9rKRHFL4FIVM+C+sAmA1fwIAwVd0dqIEpB5TAU5MCMDQYFdIS0bXxtTGYkee1/1itjRprd/DvfeFQcYIn03RTk37QSO/5GjDZlT2RpfHmo9M6/oOKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7SnKgkC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x30bo5Le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CCE1F000C5;
-	Sat, 17 Oct 2026 17:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7SnKgkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9765E1F000C4;
+	Sat, 17 Oct 2026 17:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258223;
-	bh=t6G49H6cVsHu5X02Fq4lsNdQANONCe82Hzpq553CWOw=;
+	s=korg; t=1792258226;
+	bh=D0rpkb4pNkgeCRiWCiaAFMFAVKHdU66HLWe0ZFyMpXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x30bo5LemHGRsSspQnJIw4aa/ysXuLRrHsVhkaQTftOOaZflxhyep5l+3s8pis9CQ
-	 19AY75FrE7/uEDXlBI6n2F+cgT8fm1sTb9Dvv7eGwQR/f8eQB0gytQCkS+QAvZhOmY
-	 YtwLmBIWzsS7T8whOZBGTmNXt3LxDl4FDL7G4Jlo=
+	b=t7SnKgkCAVfIqHAxjSZ7RRgSEs7qDPO4XhvqlEsXloXopyePLou45+9AHId0OkC61
+	 RZrK/GTfRttn5LFNVzWbDAwI7Joks9CKqmSxTQ6T4EgVDnkqTsLYRz1xjD8KBRvbqP
+	 A1ChbFA7UsgxroOL8vmHpDHBbACRLv2Tw4lVEPBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
+	Cynthia <cynthia@kosmx.dev>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0814/1674] sysfs: Introduce a mechanism to hide static attribute_groups
-Date: Sat, 17 Oct 2026 17:51:26 +0200
-Message-ID: <20261017160452.017236104@linuxfoundation.org>
+Subject: [PATCH 6.6 0815/1674] sysfs: check visibility before changing group attribute ownership
+Date: Sat, 17 Oct 2026 17:51:27 +0200
+Message-ID: <20261017160452.042218983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,259 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit d87c295f599cab2ab3b3df53a9098adba4a6002b ]
+[ Upstream commit c7fbb8218b4ad35fec0bd2256d2b9c8d60331f33 ]
 
-Add a mechanism for named attribute_groups to hide their directory at
-sysfs_update_group() time, or otherwise skip emitting the group
-directory when the group is first registered. It piggybacks on
-is_visible() in a similar manner as SYSFS_PREALLOC, i.e. special flags
-in the upper bits of the returned mode. To use it, specify a symbol
-prefix to DEFINE_SYSFS_GROUP_VISIBLE(), and then pass that same prefix
-to SYSFS_GROUP_VISIBLE() when assigning the @is_visible() callback:
+Since commit 0c17270f9b92 ("net: sysfs: Implement is_visible for
+phys_(port_id, port_name, switch_id)"), __dev_change_net_namespace() can
+hit WARN_ON() when trying to change owner of a file that isn't visible.
+See the trace below:
 
-	DEFINE_SYSFS_GROUP_VISIBLE($prefix)
+ WARNING: CPU: 6 PID: 2938 at net/core/dev.c:12410 __dev_change_net_namespace+0xb89/0xc30
+ CPU: 6 UID: 0 PID: 2938 Comm: incusd Not tainted 6.17.1-1-mainline #1 PREEMPT(full)  4b783b4a638669fb644857f484487d17cb45ed1f
+ Hardware name: Framework Laptop 13 (AMD Ryzen 7040Series)/FRANMDCP07, BIOS 03.07 02/19/2025
+ RIP: 0010:__dev_change_net_namespace+0xb89/0xc30
+ [...]
+ Call Trace:
+  <TASK>
+  ? if6_seq_show+0x30/0x50
+  do_setlink.isra.0+0xc7/0x1270
+  ? __nla_validate_parse+0x5c/0xcc0
+  ? security_capable+0x94/0x1a0
+  rtnl_newlink+0x858/0xc20
+  ? update_curr+0x8e/0x1c0
+  ? update_entity_lag+0x71/0x80
+  ? sched_balance_newidle+0x358/0x450
+  ? psi_task_switch+0x113/0x2a0
+  ? __pfx_rtnl_newlink+0x10/0x10
+  rtnetlink_rcv_msg+0x346/0x3e0
+  ? sched_clock+0x10/0x30
+  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+  netlink_rcv_skb+0x59/0x110
+  netlink_unicast+0x285/0x3c0
+  ? __alloc_skb+0xdb/0x1a0
+  netlink_sendmsg+0x20d/0x430
+  ____sys_sendmsg+0x39f/0x3d0
+  ? import_iovec+0x2f/0x40
+  ___sys_sendmsg+0x99/0xe0
+  __sys_sendmsg+0x8a/0xf0
+  do_syscall_64+0x81/0x970
+  ? __sys_bind+0xe3/0x110
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? sock_alloc_file+0x63/0xc0
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? alloc_fd+0x12e/0x190
+  ? put_unused_fd+0x2a/0x70
+  ? do_sys_openat2+0xa2/0xe0
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? exc_page_fault+0x7e/0x1a0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ [...]
+  </TASK>
 
-	struct attribute_group $prefix_group = {
-		.name = $name,
-		.is_visible = SYSFS_GROUP_VISIBLE($prefix),
-	};
+Fix this by checking is_visible() before trying to touch the attribute.
 
-SYSFS_GROUP_VISIBLE() expects a definition of $prefix_group_visible()
-and $prefix_attr_visible(), where $prefix_group_visible() just returns
-true / false and $prefix_attr_visible() behaves as normal.
-
-The motivation for this capability is to centralize PCI device
-authentication in the PCI core with a named sysfs group while keeping
-that group hidden for devices and platforms that do not meet the
-requirements. In a PCI topology, most devices will not support
-authentication, a small subset will support just PCI CMA (Component
-Measurement and Authentication), a smaller subset will support PCI CMA +
-PCIe IDE (Link Integrity and Encryption), and only next generation
-server hosts will start to include a platform TSM (TEE Security
-Manager).
-
-Without this capability the alternatives are:
-
-* Check if all attributes are invisible and if so, hide the directory.
-  Beyond trouble getting this to work [1], this is an ABI change for
-  scenarios if userspace happens to depend on group visibility absent any
-  attributes. I.e. this new capability avoids regression since it does
-  not retroactively apply to existing cases.
-
-* Publish an empty /sys/bus/pci/devices/$pdev/tsm/ directory for all PCI
-  devices (i.e. for the case when TSM platform support is present, but
-  device support is absent). Unfortunate that this will be a vestigial
-  empty directory in the vast majority of cases.
-
-* Reintroduce usage of runtime calls to sysfs_{create,remove}_group()
-  in the PCI core. Bjorn has already indicated that he does not want to
-  see any growth of pci_sysfs_init() [2].
-
-* Drop the named group and simulate a directory by prefixing all
-  TSM-related attributes with "tsm_". Unfortunate to not use the naming
-  capability of a sysfs group as intended.
-
-In comparison, there is a small potential for regression if for some
-reason an @is_visible() callback had dependencies on how many times it
-was called. Additionally, it is no longer an error to update a group
-that does not have its directory already present, and it is no longer a
-WARN() to remove a group that was never visible.
-
-Link: https://lore.kernel.org/all/2024012321-envious-procedure-4a58@gregkh/ [1]
-Link: https://lore.kernel.org/linux-pci/20231019200110.GA1410324@bhelgaas/ [2]
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 303a42769c4c ("sysfs: add sysfs_group{s}_change_owner()")
+Fixes: 0c17270f9b92 ("net: sysfs: Implement is_visible for phys_(port_id, port_name, switch_id)")
+Reported-by: Cynthia <cynthia@kosmx.dev>
+Closes: https://lore.kernel.org/netdev/01070199e22de7f8-28f711ab-d3f1-46d9-b9a0-048ab05eb09b-000000@eu-central-1.amazonses.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20251016101456.4087-1-fmancera@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/2024013028-deflator-flaring-ec62@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c7fbb8218b4a ("sysfs: check visibility before changing group attribute ownership")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/group.c      | 45 ++++++++++++++++++++++++-------
- include/linux/sysfs.h | 63 ++++++++++++++++++++++++++++++++++---------
- 2 files changed, 87 insertions(+), 21 deletions(-)
+ fs/sysfs/group.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/fs/sysfs/group.c b/fs/sysfs/group.c
-index 724e684ea2612..7e8ee83351554 100644
+index 7e8ee83351554..1b2a8dd1bcda5 100644
 --- a/fs/sysfs/group.c
 +++ b/fs/sysfs/group.c
-@@ -31,6 +31,17 @@ static void remove_files(struct kernfs_node *parent,
- 			kernfs_remove_by_name(parent, (*bin_attr)->attr.name);
+@@ -495,17 +495,26 @@ int compat_only_sysfs_link_entry_to_kobj(struct kobject *kobj,
  }
+ EXPORT_SYMBOL_GPL(compat_only_sysfs_link_entry_to_kobj);
  
-+static umode_t __first_visible(const struct attribute_group *grp, struct kobject *kobj)
-+{
-+	if (grp->attrs && grp->is_visible)
-+		return grp->is_visible(kobj, grp->attrs[0], 0);
-+
-+	if (grp->bin_attrs && grp->is_bin_visible)
-+		return grp->is_bin_visible(kobj, grp->bin_attrs[0], 0);
-+
-+	return 0;
-+}
-+
- static int create_files(struct kernfs_node *parent, struct kobject *kobj,
- 			kuid_t uid, kgid_t gid,
- 			const struct attribute_group *grp, int update)
-@@ -52,6 +63,7 @@ static int create_files(struct kernfs_node *parent, struct kobject *kobj,
- 				kernfs_remove_by_name(parent, (*attr)->name);
- 			if (grp->is_visible) {
- 				mode = grp->is_visible(kobj, *attr, i);
-+				mode &= ~SYSFS_GROUP_INVISIBLE;
- 				if (!mode)
- 					continue;
- 			}
-@@ -81,6 +93,7 @@ static int create_files(struct kernfs_node *parent, struct kobject *kobj,
- 						(*bin_attr)->attr.name);
- 			if (grp->is_bin_visible) {
- 				mode = grp->is_bin_visible(kobj, *bin_attr, i);
-+				mode &= ~SYSFS_GROUP_INVISIBLE;
- 				if (!mode)
- 					continue;
- 			}
-@@ -127,16 +140,31 @@ static int internal_create_group(struct kobject *kobj, int update,
+-static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
++static int sysfs_group_attrs_change_owner(struct kobject *kobj,
++					  struct kernfs_node *grp_kn,
+ 					  const struct attribute_group *grp,
+ 					  struct iattr *newattrs)
+ {
+ 	struct kernfs_node *kn;
+-	int error;
++	int error, i;
++	umode_t mode;
  
- 	kobject_get_ownership(kobj, &uid, &gid);
- 	if (grp->name) {
-+		umode_t mode = __first_visible(grp, kobj);
-+
-+		if (mode & SYSFS_GROUP_INVISIBLE)
-+			mode = 0;
-+		else
-+			mode = S_IRWXU | S_IRUGO | S_IXUGO;
-+
- 		if (update) {
- 			kn = kernfs_find_and_get(kobj->sd, grp->name);
- 			if (!kn) {
--				pr_warn("Can't update unknown attr grp name: %s/%s\n",
--					kobj->name, grp->name);
--				return -EINVAL;
-+				pr_debug("attr grp %s/%s not created yet\n",
-+					 kobj->name, grp->name);
-+				/* may have been invisible prior to this update */
-+				update = 0;
-+			} else if (!mode) {
-+				sysfs_remove_group(kobj, grp);
-+				kernfs_put(kn);
-+				return 0;
- 			}
--		} else {
--			kn = kernfs_create_dir_ns(kobj->sd, grp->name,
--						  S_IRWXU | S_IRUGO | S_IXUGO,
-+		}
-+
-+		if (!update) {
-+			if (!mode)
-+				return 0;
-+			kn = kernfs_create_dir_ns(kobj->sd, grp->name, mode,
- 						  uid, gid, kobj, NULL);
- 			if (IS_ERR(kn)) {
- 				if (PTR_ERR(kn) == -EEXIST)
-@@ -279,9 +307,8 @@ void sysfs_remove_group(struct kobject *kobj,
- 	if (grp->name) {
- 		kn = kernfs_find_and_get(parent, grp->name);
- 		if (!kn) {
--			WARN(!kn, KERN_WARNING
--			     "sysfs group '%s' not found for kobject '%s'\n",
--			     grp->name, kobject_name(kobj));
-+			pr_debug("sysfs group '%s' not found for kobject '%s'\n",
-+				 grp->name, kobject_name(kobj));
- 			return;
- 		}
- 	} else {
-diff --git a/include/linux/sysfs.h b/include/linux/sysfs.h
-index fd3fe5c8c17fc..2bbf0057322f5 100644
---- a/include/linux/sysfs.h
-+++ b/include/linux/sysfs.h
-@@ -61,22 +61,32 @@ do {							\
- /**
-  * struct attribute_group - data structure used to declare an attribute group.
-  * @name:	Optional: Attribute group name
-- *		If specified, the attribute group will be created in
-- *		a new subdirectory with this name.
-+ *		If specified, the attribute group will be created in a
-+ *		new subdirectory with this name. Additionally when a
-+ *		group is named, @is_visible and @is_bin_visible may
-+ *		return SYSFS_GROUP_INVISIBLE to control visibility of
-+ *		the directory itself.
-  * @is_visible:	Optional: Function to return permissions associated with an
-- *		attribute of the group. Will be called repeatedly for each
-- *		non-binary attribute in the group. Only read/write
-+ *		attribute of the group. Will be called repeatedly for
-+ *		each non-binary attribute in the group. Only read/write
-  *		permissions as well as SYSFS_PREALLOC are accepted. Must
-- *		return 0 if an attribute is not visible. The returned value
-- *		will replace static permissions defined in struct attribute.
-+ *		return 0 if an attribute is not visible. The returned
-+ *		value will replace static permissions defined in struct
-+ *		attribute. Use SYSFS_GROUP_VISIBLE() when assigning this
-+ *		callback to specify separate _group_visible() and
-+ *		_attr_visible() handlers.
-  * @is_bin_visible:
-  *		Optional: Function to return permissions associated with a
-  *		binary attribute of the group. Will be called repeatedly
-  *		for each binary attribute in the group. Only read/write
-- *		permissions as well as SYSFS_PREALLOC are accepted. Must
-- *		return 0 if a binary attribute is not visible. The returned
-- *		value will replace static permissions defined in
-- *		struct bin_attribute.
-+ *		permissions as well as SYSFS_PREALLOC (and the
-+ *		visibility flags for named groups) are accepted. Must
-+ *		return 0 if a binary attribute is not visible. The
-+ *		returned value will replace static permissions defined
-+ *		in struct bin_attribute. If @is_visible is not set, Use
-+ *		SYSFS_GROUP_VISIBLE() when assigning this callback to
-+ *		specify separate _group_visible() and _attr_visible()
-+ *		handlers.
-  * @attrs:	Pointer to NULL terminated list of attributes.
-  * @bin_attrs:	Pointer to NULL terminated list of binary attributes.
-  *		Either attrs or bin_attrs or both must be provided.
-@@ -91,13 +101,42 @@ struct attribute_group {
- 	struct bin_attribute	**bin_attrs;
- };
+ 	if (grp->attrs) {
+ 		struct attribute *const *attr;
  
-+#define SYSFS_PREALLOC		010000
-+#define SYSFS_GROUP_INVISIBLE	020000
-+
-+/*
-+ * The first call to is_visible() in the create / update path may
-+ * indicate visibility for the entire group
-+ */
-+#define DEFINE_SYSFS_GROUP_VISIBLE(name)                             \
-+	static inline umode_t sysfs_group_visible_##name(            \
-+		struct kobject *kobj, struct attribute *attr, int n) \
-+	{                                                            \
-+		if (n == 0 && !name##_group_visible(kobj))           \
-+			return SYSFS_GROUP_INVISIBLE;                \
-+		return name##_attr_visible(kobj, attr, n);           \
-+	}
-+
-+/*
-+ * Same as DEFINE_SYSFS_GROUP_VISIBLE, but for groups with only binary
-+ * attributes
-+ */
-+#define DEFINE_SYSFS_BIN_GROUP_VISIBLE(name)                             \
-+	static inline umode_t sysfs_group_visible_##name(                \
-+		struct kobject *kobj, struct bin_attribute *attr, int n) \
-+	{                                                                \
-+		if (n == 0 && !name##_group_visible(kobj))               \
-+			return SYSFS_GROUP_INVISIBLE;                    \
-+		return name##_attr_visible(kobj, attr, n);               \
-+	}
-+
-+#define SYSFS_GROUP_VISIBLE(fn) sysfs_group_visible_##fn
-+
- /*
-  * Use these macros to make defining attributes easier.
-  * See include/linux/device.h for examples..
-  */
+-		for (attr = grp->attrs; *attr; attr++) {
++		for (i = 0, attr = grp->attrs; *attr; i++, attr++) {
++			if (grp->is_visible) {
++				mode = grp->is_visible(kobj, *attr, i);
++				if (mode & SYSFS_GROUP_INVISIBLE)
++					break;
++				if (!mode)
++					continue;
++			}
+ 			kn = kernfs_find_and_get(grp_kn, (*attr)->name);
+ 			if (!kn)
+ 				return -ENOENT;
+@@ -520,7 +529,14 @@ static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
+ 	if (grp->bin_attrs) {
+ 		struct bin_attribute *const *bin_attr;
  
--#define SYSFS_PREALLOC 010000
--
- #define __ATTR(_name, _mode, _show, _store) {				\
- 	.attr = {.name = __stringify(_name),				\
- 		 .mode = VERIFY_OCTAL_PERMISSIONS(_mode) },		\
+-		for (bin_attr = grp->bin_attrs; *bin_attr; bin_attr++) {
++		for (i = 0, bin_attr = grp->bin_attrs; *bin_attr; i++, bin_attr++) {
++			if (grp->is_bin_visible) {
++				mode = grp->is_bin_visible(kobj, *bin_attr, i);
++				if (mode & SYSFS_GROUP_INVISIBLE)
++					break;
++				if (!mode)
++					continue;
++			}
+ 			kn = kernfs_find_and_get(grp_kn, (*bin_attr)->attr.name);
+ 			if (!kn)
+ 				return -ENOENT;
+@@ -570,7 +586,7 @@ int sysfs_group_change_owner(struct kobject *kobj,
+ 
+ 	error = kernfs_setattr(grp_kn, &newattrs);
+ 	if (!error)
+-		error = sysfs_group_attrs_change_owner(grp_kn, grp, &newattrs);
++		error = sysfs_group_attrs_change_owner(kobj, grp_kn, grp, &newattrs);
+ 
+ 	kernfs_put(grp_kn);
+ 
 -- 
 2.53.0
 
