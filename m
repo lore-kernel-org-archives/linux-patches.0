@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C664635E93B;
-	Sat, 17 Oct 2026 18:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E25338F950;
+	Sat, 17 Oct 2026 18:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260411; cv=none; b=pc+FE/H7APrNt4+/shW/yQ3qkefp0arA5ihlrExThAS2RZHwx9FqJ6NAWyTcyoIWDb1uPLm8oQjGvmZYonV5LzdmPtdu9egZCJr3HO/nNMugfGgAjVMf3jGs00tlkYIPqZFjuLiLW/UdTmTM1HgV+uAKbc4F/ZCRbOOL/uQciGk=
+	t=1792260415; cv=none; b=klnyiSOu7S2CoJb4h9CBJo+Awi74okWtV2V7I+k9Z32ncf7KQidhkP7kFNOALUHaoU/iHf0Hl67abYFcDflCy7heWLa9mIUqIbhvCDngjBSHQpd03WsC2Wl+UPiLueSzlzgma2n02Kd8fUwctjQcdozzpGe1smeeKrVvM5tn5Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260411; c=relaxed/simple;
-	bh=5qXFJQQYnXeQamNquTik6t1P8aDqwmy6BXacrJ87ZMM=;
+	s=arc-20240116; t=1792260415; c=relaxed/simple;
+	bh=QDhb2InrQBp8lgY3h1g/uibeGjTcJ9SgMbFvxCPlNN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehwtWvDZkjIJgynIbaz82bom3ANakpp0L30ROSMjUJiZJOGPlEAOzOJeRBaF6neVSzepCXplNWXfsQKMIStVO/FLSdvJBss05i/ZHnOXd5lBprILhijMNbS7KzHrkBHGLSeCI5SWLSgH38UmGtVgruQsv09MPiGGxLVuqtxaA+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXZhCys+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AdG7FYUqq+wtC3QPde3tKuWZrFiB/0QS/zhVTl2zQ63wnV/AQz3M25/35e3ZGhq6gH/SeHExG2reTrPHQLkqAWYaZs6gOoy47O9nzQd06H/1Zi4uzBu2woZj95LtxCMYXadUOfE1+KGJBycYNHbs/YThwS0avUvsItWfUNXrZts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyGUOBTJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXZhCys+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2BF1F000C4;
-	Sat, 17 Oct 2026 18:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyGUOBTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F121F000C4;
+	Sat, 17 Oct 2026 18:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260410;
-	bh=fhXwndhV4VkjmaIVBKgGPcthJ+K9cTyV1ogRwPYPasg=;
+	s=korg; t=1792260413;
+	bh=Deay68CsjZGDUnfAvb2Zi8WYuM4nmif4sDm9K2FbJw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pXZhCys+ORv4vhvloBRw89Hxl/iJG2JLUgblFynSfYt/6tFczNmFftQvDqxmtzaRZ
-	 AWzcJ2UFyh3NiHtD6mJUw9xUA1+DADqJZSm4no+mQbdYjqUoHBkNSgsPzi/af9dWn9
-	 EgDIlKSWL48DQskdL81obdRxFwzY1wn5k7Di70xc=
+	b=eyGUOBTJdNBPebvv8x6ZOgEU3QqXaGg78thr083qGF+AUJl03HKNztMucS+4uKrXg
+	 7XEVLtXAmxA/76bpOt2e5uIHtG4ECo15Y94+wYEuQyjBzw6ah3QcS+nIb/f9QnuEei
+	 9BppmJT9gcLJhoxBEsFvkQD4Dda1AnCZX1zx1gic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgenii Burenchev <evg28bur@yandex.ru>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1499/1674] drm/amd/display: Fix dangling pointer in CRTC reset function
-Date: Sat, 17 Oct 2026 18:02:51 +0200
-Message-ID: <20261017160509.616904223@linuxfoundation.org>
+Subject: [PATCH 6.6 1535/1674] serial: 8250: invert serial8250_register_8250_port() CIR condition
+Date: Sat, 17 Oct 2026 18:03:27 +0200
+Message-ID: <20261017160510.517101150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,59 +45,307 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Evgenii Burenchev <evg28bur@yandex.ru>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 0aeed866cb938943908c3ba46422128e49d2d080 ]
+[ Upstream commit 05b537a175442c530593013ea31b3f48d5624916 ]
 
-amdgpu_dm_crtc_reset_state() frees the old state before allocating
-a new one. If kzalloc() fails, the function returns without updating
-the state pointer, leaving a dangling pointer to already freed memory.
+There is no point in a long 'if' in serial8250_register_8250_port() to
+just return ENOSPC for PORT_8250_CIR ports. Invert the condition and
+return immediately.
 
-Fix this by allocating the new state first. On allocation failure, the
-old state remains untouched and the function safely returns.
+'gpios' variable was moved to its set location.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+And return ENODEV instead of ENOSPC. The latter is a leftover from the
+previous find-uart 'if'. The former makes a lot more sense in this case.
 
-Fixes: e7b07ceef2a6 ("drm/amd/display: Merge amdgpu_dm_crtc and dm_crtc_state")
-Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260629090435.9729-4-evg28bur@yandex.ru
-[adjust for movement around current amd-staging-drm-next]
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611100319.186924-31-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 941c9f84c9b6 ("tty: serial: 8250: protect against NULL uart->port.dev in register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_core.c | 253 ++++++++++++++--------------
+ 1 file changed, 127 insertions(+), 126 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index dab732c6c6c7c..0531ebcf2cd35 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -270,13 +270,13 @@ static void dm_crtc_reset_state(struct drm_crtc *crtc)
- {
- 	struct dm_crtc_state *state;
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index c536028e92dc2..b7fe3056b57fd 100644
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -1034,139 +1034,140 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
+ 		nr_uarts++;
+ 	}
  
--	if (crtc->state)
--		dm_crtc_destroy_state(crtc, crtc->state);
+-	if (uart->port.type != PORT_8250_CIR) {
+-		struct mctrl_gpios *gpios;
 -
- 	state = kzalloc(sizeof(*state), GFP_KERNEL);
--	if (WARN_ON(!state))
-+	if (!state)
- 		return;
+-		if (uart->port.dev)
+-			uart_remove_one_port(&serial8250_reg, &uart->port);
+-
+-		uart->port.ctrl_id	= up->port.ctrl_id;
+-		uart->port.port_id	= up->port.port_id;
+-		uart->port.iobase       = up->port.iobase;
+-		uart->port.membase      = up->port.membase;
+-		uart->port.irq          = up->port.irq;
+-		uart->port.irqflags     = up->port.irqflags;
+-		uart->port.uartclk      = up->port.uartclk;
+-		uart->port.fifosize     = up->port.fifosize;
+-		uart->port.regshift     = up->port.regshift;
+-		uart->port.iotype       = up->port.iotype;
+-		uart->port.flags        = up->port.flags | UPF_BOOT_AUTOCONF;
+-		uart->bugs		= up->bugs;
+-		uart->port.mapbase      = up->port.mapbase;
+-		uart->port.mapsize      = up->port.mapsize;
+-		uart->port.private_data = up->port.private_data;
+-		uart->tx_loadsz		= up->tx_loadsz;
+-		uart->capabilities	= up->capabilities;
+-		uart->port.throttle	= up->port.throttle;
+-		uart->port.unthrottle	= up->port.unthrottle;
+-		uart->port.rs485_config	= up->port.rs485_config;
+-		uart->port.rs485_supported = up->port.rs485_supported;
+-		uart->port.rs485	= up->port.rs485;
+-		uart->rs485_start_tx	= up->rs485_start_tx;
+-		uart->rs485_stop_tx	= up->rs485_stop_tx;
+-		uart->lsr_save_mask	= up->lsr_save_mask;
+-		uart->dma		= up->dma;
+-
+-		/* Take tx_loadsz from fifosize if it wasn't set separately */
+-		if (uart->port.fifosize && !uart->tx_loadsz)
+-			uart->tx_loadsz = uart->port.fifosize;
+-
+-		if (up->port.dev) {
+-			uart->port.dev = up->port.dev;
+-			ret = uart_get_rs485_mode(&uart->port);
+-			if (ret)
+-				goto err;
+-		}
++	if (uart->port.type == PORT_8250_CIR) {
++		ret = -ENODEV;
++		goto unlock;
++	}
  
-+	if (crtc->state)
-+		dm_crtc_destroy_state(crtc, crtc->state);
+-		if (up->port.flags & UPF_FIXED_TYPE)
+-			uart->port.type = up->port.type;
++	if (uart->port.dev)
++		uart_remove_one_port(&serial8250_reg, &uart->port);
 +
- 	__drm_atomic_helper_crtc_reset(crtc, &state->base);
- }
++	uart->port.ctrl_id	= up->port.ctrl_id;
++	uart->port.port_id	= up->port.port_id;
++	uart->port.iobase       = up->port.iobase;
++	uart->port.membase      = up->port.membase;
++	uart->port.irq          = up->port.irq;
++	uart->port.irqflags     = up->port.irqflags;
++	uart->port.uartclk      = up->port.uartclk;
++	uart->port.fifosize     = up->port.fifosize;
++	uart->port.regshift     = up->port.regshift;
++	uart->port.iotype       = up->port.iotype;
++	uart->port.flags        = up->port.flags | UPF_BOOT_AUTOCONF;
++	uart->bugs		= up->bugs;
++	uart->port.mapbase      = up->port.mapbase;
++	uart->port.mapsize      = up->port.mapsize;
++	uart->port.private_data = up->port.private_data;
++	uart->tx_loadsz		= up->tx_loadsz;
++	uart->capabilities	= up->capabilities;
++	uart->port.throttle	= up->port.throttle;
++	uart->port.unthrottle	= up->port.unthrottle;
++	uart->port.rs485_config	= up->port.rs485_config;
++	uart->port.rs485_supported = up->port.rs485_supported;
++	uart->port.rs485	= up->port.rs485;
++	uart->rs485_start_tx	= up->rs485_start_tx;
++	uart->rs485_stop_tx	= up->rs485_stop_tx;
++	uart->lsr_save_mask	= up->lsr_save_mask;
++	uart->dma		= up->dma;
++
++	/* Take tx_loadsz from fifosize if it wasn't set separately */
++	if (uart->port.fifosize && !uart->tx_loadsz)
++		uart->tx_loadsz = uart->port.fifosize;
++
++	if (up->port.dev) {
++		uart->port.dev = up->port.dev;
++		ret = uart_get_rs485_mode(&uart->port);
++		if (ret)
++			goto err;
++	}
  
+-		/*
+-		 * Only call mctrl_gpio_init(), if the device has no ACPI
+-		 * companion device
+-		 */
+-		if (!has_acpi_companion(uart->port.dev)) {
+-			gpios = mctrl_gpio_init(&uart->port, 0);
+-			if (IS_ERR(gpios)) {
+-				ret = PTR_ERR(gpios);
+-				goto err;
+-			} else {
+-				uart->gpios = gpios;
+-			}
+-		}
++	if (up->port.flags & UPF_FIXED_TYPE)
++		uart->port.type = up->port.type;
+ 
+-		serial8250_set_defaults(uart);
+-
+-		/* Possibly override default I/O functions.  */
+-		if (up->port.serial_in)
+-			uart->port.serial_in = up->port.serial_in;
+-		if (up->port.serial_out)
+-			uart->port.serial_out = up->port.serial_out;
+-		if (up->port.handle_irq)
+-			uart->port.handle_irq = up->port.handle_irq;
+-		/*  Possibly override set_termios call */
+-		if (up->port.set_termios)
+-			uart->port.set_termios = up->port.set_termios;
+-		if (up->port.set_ldisc)
+-			uart->port.set_ldisc = up->port.set_ldisc;
+-		if (up->port.get_mctrl)
+-			uart->port.get_mctrl = up->port.get_mctrl;
+-		if (up->port.set_mctrl)
+-			uart->port.set_mctrl = up->port.set_mctrl;
+-		if (up->port.get_divisor)
+-			uart->port.get_divisor = up->port.get_divisor;
+-		if (up->port.set_divisor)
+-			uart->port.set_divisor = up->port.set_divisor;
+-		if (up->port.startup)
+-			uart->port.startup = up->port.startup;
+-		if (up->port.shutdown)
+-			uart->port.shutdown = up->port.shutdown;
+-		if (up->port.pm)
+-			uart->port.pm = up->port.pm;
+-		if (up->port.handle_break)
+-			uart->port.handle_break = up->port.handle_break;
+-		if (up->dl_read)
+-			uart->dl_read = up->dl_read;
+-		if (up->dl_write)
+-			uart->dl_write = up->dl_write;
+-
+-		if (uart->port.type != PORT_8250_CIR) {
+-			if (uart_console_registered(&uart->port))
+-				pm_runtime_get_sync(uart->port.dev);
+-
+-			if (serial8250_isa_config != NULL)
+-				serial8250_isa_config(0, &uart->port,
+-						&uart->capabilities);
+-
+-			serial8250_apply_quirks(uart);
+-			ret = uart_add_one_port(&serial8250_reg,
+-						&uart->port);
+-			if (ret)
+-				goto err;
+-
+-			ret = uart->port.line;
++	/*
++	 * Only call mctrl_gpio_init(), if the device has no ACPI
++	 * companion device
++	 */
++	if (!has_acpi_companion(uart->port.dev)) {
++		struct mctrl_gpios *gpios = mctrl_gpio_init(&uart->port, 0);
++		if (IS_ERR(gpios)) {
++			ret = PTR_ERR(gpios);
++			goto err;
+ 		} else {
+-			dev_info(uart->port.dev,
+-				"skipping CIR port at 0x%lx / 0x%llx, IRQ %d\n",
+-				uart->port.iobase,
+-				(unsigned long long)uart->port.mapbase,
+-				uart->port.irq);
+-
+-			ret = 0;
++			uart->gpios = gpios;
+ 		}
++	}
+ 
+-		if (!uart->lsr_save_mask)
+-			uart->lsr_save_mask = LSR_SAVE_FLAGS;	/* Use default LSR mask */
++	serial8250_set_defaults(uart);
++
++	/* Possibly override default I/O functions.  */
++	if (up->port.serial_in)
++		uart->port.serial_in = up->port.serial_in;
++	if (up->port.serial_out)
++		uart->port.serial_out = up->port.serial_out;
++	if (up->port.handle_irq)
++		uart->port.handle_irq = up->port.handle_irq;
++	/*  Possibly override set_termios call */
++	if (up->port.set_termios)
++		uart->port.set_termios = up->port.set_termios;
++	if (up->port.set_ldisc)
++		uart->port.set_ldisc = up->port.set_ldisc;
++	if (up->port.get_mctrl)
++		uart->port.get_mctrl = up->port.get_mctrl;
++	if (up->port.set_mctrl)
++		uart->port.set_mctrl = up->port.set_mctrl;
++	if (up->port.get_divisor)
++		uart->port.get_divisor = up->port.get_divisor;
++	if (up->port.set_divisor)
++		uart->port.set_divisor = up->port.set_divisor;
++	if (up->port.startup)
++		uart->port.startup = up->port.startup;
++	if (up->port.shutdown)
++		uart->port.shutdown = up->port.shutdown;
++	if (up->port.pm)
++		uart->port.pm = up->port.pm;
++	if (up->port.handle_break)
++		uart->port.handle_break = up->port.handle_break;
++	if (up->dl_read)
++		uart->dl_read = up->dl_read;
++	if (up->dl_write)
++		uart->dl_write = up->dl_write;
+ 
+-		/* Initialise interrupt backoff work if required */
+-		if (up->overrun_backoff_time_ms > 0) {
+-			uart->overrun_backoff_time_ms =
+-				up->overrun_backoff_time_ms;
+-			INIT_DELAYED_WORK(&uart->overrun_backoff,
+-					serial_8250_overrun_backoff_work);
+-		} else {
+-			uart->overrun_backoff_time_ms = 0;
+-		}
++	if (uart->port.type != PORT_8250_CIR) {
++		if (uart_console_registered(&uart->port))
++			pm_runtime_get_sync(uart->port.dev);
++
++		if (serial8250_isa_config != NULL)
++			serial8250_isa_config(0, &uart->port,
++					&uart->capabilities);
++
++		serial8250_apply_quirks(uart);
++		ret = uart_add_one_port(&serial8250_reg,
++					&uart->port);
++		if (ret)
++			goto err;
++
++		ret = uart->port.line;
++	} else {
++		dev_info(uart->port.dev,
++			"skipping CIR port at 0x%lx / 0x%llx, IRQ %d\n",
++			uart->port.iobase,
++			(unsigned long long)uart->port.mapbase,
++			uart->port.irq);
++
++		ret = 0;
++	}
++
++	if (!uart->lsr_save_mask)
++		uart->lsr_save_mask = LSR_SAVE_FLAGS;	/* Use default LSR mask */
++
++	/* Initialise interrupt backoff work if required */
++	if (up->overrun_backoff_time_ms > 0) {
++		uart->overrun_backoff_time_ms =
++			up->overrun_backoff_time_ms;
++		INIT_DELAYED_WORK(&uart->overrun_backoff,
++				serial_8250_overrun_backoff_work);
++	} else {
++		uart->overrun_backoff_time_ms = 0;
+ 	}
+ 
+ unlock:
 -- 
 2.53.0
 
