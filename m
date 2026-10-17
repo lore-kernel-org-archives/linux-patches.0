@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733E93D994;
-	Sat, 17 Oct 2026 16:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8453D994;
+	Sat, 17 Oct 2026 16:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254946; cv=none; b=RrjThCi9QRtfu4ZgXuHnN3exyH2nrH9aBosUwRgehhZkGiPPMQK1ABX/NThuKFdWNajittqPSBFlMM7Bm4qGPTBHVDvl6lytszdd3VfxuJOHmlC0cEJb/hwK9sDZvYMmpNXX2kJwYLGiC021qEE4mEO4kJ2cAZOtQpZTGi6R104=
+	t=1792254949; cv=none; b=Bn3r7cBQT0Yp/gQSWhAtS+0z1UUKmre68h0P/zdUXWc3yUv0nV40Ec4hBlTtE1GnQiHYAI15NNU5QD2mU8qdnvMGRx68zzcaVZn2P2IThr4SsQ+5UZtIgH+Wru+irrfl0a3cMKF1tWrrPz44rjxm/zq5+z9ISQJmSrZY2X4hr/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254946; c=relaxed/simple;
-	bh=EJkwh6CtMlbCq50D6EeF+5lSWo9DzYTYmWqufp0K628=;
+	s=arc-20240116; t=1792254949; c=relaxed/simple;
+	bh=rDDstsmXyu2bfk6ovj7P3j9TX9jD3yL/Ug3ufQ91mWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtKV7a7Kf2rHRGpBcxwUENray4UnAX/fd4J6GviK4QLCyD6k2h2N25sRcgIgzkAVSN8JHki73IrBF2w8bDAebQb6fEpjdtXFoY3lDZn9QdZApBSsrfcPWeFKQo8U5HXRRHoQt0p7IAEJAog5BA9wlQmhYTluY+CcSOmLevWT7DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdEPSNxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uzPe1riW2BDlKk7oeURUD0V92So5IueAlQjm9V2bmjGPTKKFSPtAemHkuNI4o9BrRD6udWOAFYvhNBgKhrxny1VCRoxq0KGrtTxiJN+2mNDYxtRFAlmE2LNp1wbhYzdk9l1g1idx1VkNH42lk92Ke5LYhw/HfOPIT2vlba/JGqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCHVJihh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdEPSNxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA6A1F000C4;
-	Sat, 17 Oct 2026 16:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCHVJihh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9051F000C4;
+	Sat, 17 Oct 2026 16:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254945;
-	bh=SVY+w5BeNuTFwOK7lH7+nbCEV6NBSeKtIoJnvy/d3Do=;
+	s=korg; t=1792254948;
+	bh=IMAGaawnwwbGTTDAtriGVyDuwDrBvOwVr0HXsVtFr3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vdEPSNxlOmcuq7RBeXAbIpezOY5PZaPwMslNpGHZbZpoffKSGSS4l+ifBPISCvd20
-	 kMJxzmhyAVlvPeNSgj3IkFbKtIDqwtdIJWEwO4CI5BE92+q/IHxmi7uZ2kOuA5D0u1
-	 auhG1w8G++xFkwwKk1Klwdz3UU/tiQdlXdWNRfqo=
+	b=LCHVJihh7rvmhue5nRnX3krHsmgiAN6y5rwDGZJchLvuxEV+sor4r9GbKxYRcF7kg
+	 5vivWr7n7KXuOg0ADrYKfaUOTwuHIrvmDqTTULen1i4OZOJ4y3oduliwr9nCIUnIWm
+	 6coK2wXT1k79h9r1njJP4DbMkMvl5Q5zW+akXBV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 615/869] dpll: fix NULL deref in dpll_device_ops() during teardown race
-Date: Sat, 17 Oct 2026 17:57:36 +0200
-Message-ID: <20261017160052.801655240@linuxfoundation.org>
+Subject: [PATCH 6.12 616/869] bpf, xdp: move offload check into dev_xdp_install()
+Date: Sat, 17 Oct 2026 17:57:37 +0200
+Message-ID: <20261017160052.826171503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,321 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 33f016b23a219fe034213849b51436b8e79df251 ]
+[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
 
-When the last owner of a dpll device unregisters while a foreign driver
-still holds a pin on it via dpll_pin_on_pin_register(), the dpll object
-stays alive with an empty registration list. A pin notification queued
-before the unregister (e.g. ice reacting to zl3073x_i2c removal) then
-walks pin->dpll_refs into dpll_device_ops(), which trips the WARN_ON and
-dereferences the missing registration. dpll_lock cannot help because the
-notification work was queued before the unregistering driver took the
-lock.
+bpf_xdp_link_update() calls dev_xdp_install() directly and skips
+dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
+make an XDP link with a normal program and then swap in an offloaded or
+device-bound program with BPF_LINK_UPDATE, which puts it on the software
+path.
 
-Treat the empty registration list as a legitimate transient state. Make
-dpll_priv() and dpll_device_ops() return NULL in that case and make
-every pin netlink path that resolves a device from a pin skip such
-dplls. dpll_cmd_pin_get_one() picks a ref with a live registration and
-returns -ENODEV when there is none, the pin dumpit skips such a pin
-instead of aborting the dump, dpll_msg_add_pin_dplls() and the
-frequency, esync, reference sync and phase adjust set paths skip dead
-refs, and dpll_pin_parent_device_set() validates the parent with
-dpll_device_get_by_id(). dpll_pin_register() is the last caller that
-dereferenced the device ops without a check, so move its frequency
-monitor validation under dpll_lock and tolerate a missing registration
-there as well.
+dev_xdp_install() is the one place all three paths go through:
+"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
+BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
+bound to another device, device-bound in generic mode, native vs generic,
+DEVMAP and CPUMAP) there, and keep only the netlink-flag check
+(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
 
-The empty registration list is equivalent to a cleared DPLL_REGISTERED
-mark, both transitions happen under dpll_lock in dpll_device_register()
-and dpll_device_unregister(). A pin notification for a pin whose dplls
-are all gone is now dropped with -ENODEV instead of crashing, all
-callers in the core ignore that return value.
-
- WARNING: drivers/dpll/dpll_core.c:1092 at dpll_device_ops+0x24/0x40,
- CPU#83: kworker/u576:3/23471
- Modules linked in: ... ice ... zl3073x_i2c(-) ... zl3073x ...
- Workqueue: ice_dpll_wq ice_dpll_pin_notify_work [ice]
- RIP: 0010:dpll_device_ops+0x24/0x40
- Call Trace:
-  <TASK>
-  dpll_cmd_pin_get_one+0x336/0x520
-  dpll_pin_event_send+0x82/0x140
-  dpll_pin_on_pin_unregister+0xbb/0x160
-  ice_dpll_pin_notify_work+0x1bc/0x1f0 [ice]
-  process_one_work+0x19e/0x370
-  worker_thread+0x1a6/0x310
-  kthread+0xe4/0x120
-  ret_from_fork+0x1a1/0x270
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- ---[ end trace 0000000000000000 ]---
- BUG: kernel NULL pointer dereference, address: 0000000000000010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
-
-Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260813140817.1051388-1-poros@redhat.com
+Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c    | 12 +++----
- drivers/dpll/dpll_netlink.c | 68 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 71 insertions(+), 9 deletions(-)
+ net/core/dev.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 6fa6a0d8e430d..0a8db4dc25786 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -1009,12 +1009,8 @@ EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
- static struct dpll_device_registration *
- dpll_device_registration_first(struct dpll_device *dpll)
- {
--	struct dpll_device_registration *reg;
--
--	reg = list_first_entry_or_null((struct list_head *)&dpll->registration_list,
--				       struct dpll_device_registration, list);
--	WARN_ON(!reg);
--	return reg;
-+	return list_first_entry_or_null((struct list_head *)&dpll->registration_list,
-+					struct dpll_device_registration, list);
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 9888affc68df3..8f507292f8ba4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9627,6 +9627,37 @@ static int dev_xdp_install(struct net_device *dev, enum bpf_xdp_mode mode,
+ 		return -EBUSY;
+ 	}
  
- void *dpll_priv(struct dpll_device *dpll)
-@@ -1022,6 +1018,8 @@ void *dpll_priv(struct dpll_device *dpll)
- 	struct dpll_device_registration *reg;
- 
- 	reg = dpll_device_registration_first(dpll);
-+	if (!reg)
-+		return NULL;
- 	return reg->priv;
- }
- 
-@@ -1030,6 +1028,8 @@ const struct dpll_device_ops *dpll_device_ops(struct dpll_device *dpll)
- 	struct dpll_device_registration *reg;
- 
- 	reg = dpll_device_registration_first(dpll);
-+	if (!reg)
-+		return NULL;
- 	return reg->ops;
- }
- 
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index 270ea8f7248a4..3939f03620396 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -66,6 +66,22 @@ static bool dpll_pin_available(struct dpll_pin *pin)
- 	return false;
- }
- 
-+static bool dpll_device_registered(struct dpll_device *dpll)
-+{
-+	return dpll_device_ops(dpll);
-+}
++	if (prog) {
++		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
++					       ? XDP_MODE_DRV : XDP_MODE_SKB;
++		bool offload = mode == XDP_MODE_HW;
 +
-+static struct dpll_pin_ref *dpll_pin_first_registered_ref(struct dpll_pin *pin)
-+{
-+	struct dpll_pin_ref *ref;
-+	unsigned long i;
++		if (!offload && dev_xdp_prog(dev, other_mode)) {
++			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
++			return -EEXIST;
++		}
++		if (!offload && bpf_prog_is_offloaded(prog->aux)) {
++			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
++			return -EINVAL;
++		}
++		if (bpf_prog_is_dev_bound(prog->aux) && !bpf_offload_dev_match(prog, dev)) {
++			NL_SET_ERR_MSG(extack, "Program bound to different device");
++			return -EINVAL;
++		}
++		if (bpf_prog_is_dev_bound(prog->aux) && mode == XDP_MODE_SKB) {
++			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++	}
 +
-+	xa_for_each(&pin->dpll_refs, i, ref)
-+		if (dpll_device_registered(ref->dpll))
-+			return ref;
-+	return NULL;
-+}
-+
- /**
-  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
-  * @msg: pointer to sk_buff message to attach a pin handle
-@@ -534,6 +550,8 @@ dpll_msg_add_pin_dplls(struct sk_buff *msg, struct dpll_pin *pin,
- 	int ret;
- 
- 	xa_for_each(&pin->dpll_refs, index, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		attr = nla_nest_start(msg, DPLL_A_PIN_PARENT_DEVICE);
- 		if (!attr)
- 			return -EMSGSIZE;
-@@ -571,7 +589,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
- 	int ret;
- 
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
--	ASSERT_NOT_NULL(ref);
-+	if (!ref || !dpll_device_registered(ref->dpll))
-+		ref = dpll_pin_first_registered_ref(pin);
-+	if (!ref)
-+		return -ENODEV;
- 
- 	ret = dpll_msg_add_pin_handle(msg, pin);
- 	if (ret)
-@@ -817,6 +838,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 	}
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->frequency_set || !ops->frequency_get) {
- 			NL_SET_ERR_MSG(extack, "frequency set not supported by the device");
-@@ -824,6 +847,10 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 		}
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->frequency_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-@@ -836,6 +863,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 		return 0;
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -855,6 +884,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -878,6 +909,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 	int ret;
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->esync_set || !ops->esync_get) {
- 			NL_SET_ERR_MSG(extack,
-@@ -886,6 +919,10 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 		}
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-@@ -908,6 +945,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		void *pin_dpll_priv;
- 
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-@@ -931,6 +970,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-@@ -966,7 +1007,10 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 		return -EINVAL;
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
--	ASSERT_NOT_NULL(ref);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	if (!ops->ref_sync_set || !ops->ref_sync_get) {
- 		NL_SET_ERR_MSG(extack, "reference sync not supported by this pin");
-@@ -984,6 +1028,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 	if (state == old_state)
- 		return 0;
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1006,6 +1052,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1185,6 +1233,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 	}
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		if (!ops->phase_adjust_set || !ops->phase_adjust_get) {
- 			NL_SET_ERR_MSG(extack, "phase adjust not supported");
-@@ -1192,6 +1242,10 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 		}
- 	}
- 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	if (!ref || !dpll_device_registered(ref->dpll)) {
-+		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
-+		return -ENODEV;
-+	}
- 	ops = dpll_pin_ops(ref);
- 	dpll = ref->dpll;
- 	ret = ops->phase_adjust_get(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1205,6 +1259,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 		return 0;
- 
- 	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		ret = ops->phase_adjust_set(pin,
-@@ -1227,6 +1283,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
- 	xa_for_each(&pin->dpll_refs, i, ref) {
- 		if (ref == failed)
- 			break;
-+		if (!dpll_device_registered(ref->dpll))
-+			continue;
- 		ops = dpll_pin_ops(ref);
- 		dpll = ref->dpll;
- 		if (ops->phase_adjust_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-@@ -1256,7 +1314,7 @@ dpll_pin_parent_device_set(struct dpll_pin *pin, struct nlattr *parent_nest,
- 		return -EINVAL;
- 	}
- 	pdpll_idx = nla_get_u32(tb[DPLL_A_PIN_PARENT_ID]);
--	dpll = xa_load(&dpll_device_xa, pdpll_idx);
-+	dpll = dpll_device_get_by_id(pdpll_idx);
- 	if (!dpll) {
- 		NL_SET_ERR_MSG(extack, "parent device not found");
- 		return -EINVAL;
-@@ -1546,6 +1604,10 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 		ret = dpll_cmd_pin_get_one(skb, pin, cb->extack);
- 		if (ret) {
- 			genlmsg_cancel(skb, hdr);
-+			if (ret == -ENODEV) {
-+				ret = 0;
-+				continue;
-+			}
- 			break;
- 		}
- 		genlmsg_end(skb, hdr);
+ 	memset(&xdp, 0, sizeof(xdp));
+ 	xdp.command = mode == XDP_MODE_HW ? XDP_SETUP_PROG_HW : XDP_SETUP_PROG;
+ 	xdp.extack = extack;
 -- 
 2.53.0
 
