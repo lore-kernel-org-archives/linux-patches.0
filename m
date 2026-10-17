@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F513B3BEF;
-	Sat, 17 Oct 2026 17:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB293B531D;
+	Sat, 17 Oct 2026 17:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257287; cv=none; b=EMlnJex492zRAkRSRgQqMh67E+8hGbgwMcHif2/CwiWjBGX/79hTf98u6ve7Bcd8lVMLOUAZFBx9VMzBL/4D7LbJoE15mq/EL31NRynDCRc116huixuDlFy0UJgW5rSNi9rWrBM/LhNqPjOhGF5ZCWlYbtfIFg9t6gxxxLXli8A=
+	t=1792257290; cv=none; b=g+1x7AeS05A+W66vPxvsRopBjPrwpLaMU9psWK11BkHeJoqIC7PGQlKIX54mM0qybTmjGJeMmERJnm4Zprega75vIDlSyLu8IgUKkp4KwMGsDHcDm3k7gIYy+xApFwfwB6Be1TMt8LO68MG0WtRSPO90yaM5pFkHj8f+jseVGuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257287; c=relaxed/simple;
-	bh=GC5pedpEtiRqh7rdjSPiFYW5L619SK8bC1vda5V+Kag=;
+	s=arc-20240116; t=1792257290; c=relaxed/simple;
+	bh=VzdlZ5f9Dh4ETDx5EdFRZkEQ2zXMfRn6KK+ezWhOEdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNmtLQSTlUG1ksCRBJjAM2yO+yE9f1ut2eMgDvN4nof1v2gkc3UQFt/x17XnScMfKn56OzBHm+vbuuaODgOGbNVTdnEYJdEQEKD9ZZEz3qnXK+7Xm0EvKO02+9ddwvBo/vTxMpV/of34h3hgCkj+sMbSVabcN0TdJUHxsKiaD50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOcpneLx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IEm4icNG7DT3GwGDWPyaU5Lw9fwCUhbtuurQCMRDUXpUocKKBkW83XsvS+kEaZC04EdgVWvQ+HRqgvwAP6FmyOOVZmcI2oVOdFy6tNNpSSsfLG48PvSb5O1+X04Rf+mYmAcfQCtzCh1qdRlCMf3OfMPwFQmB6v5fEjqarZdE5OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3w6KrOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOcpneLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD241F000C4;
-	Sat, 17 Oct 2026 17:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3w6KrOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FC31F000C4;
+	Sat, 17 Oct 2026 17:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257286;
-	bh=F+FgHxMZnlf3PY69s1vKV4VBbhSQhcffxeIC/QYRyl4=;
+	s=korg; t=1792257289;
+	bh=EUFtq3p3S/L0KRxNez4MG1y0CqNUULqR4YefljAi6y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fOcpneLxfL95CkJJrTV5SZTtJhQOXmAO8sMHjFrIS49T+1r+IUliROHJBX9+byQlD
-	 hu5snIPVQEjJrC63PNKBz+RElKlu/Yl+36QZHXHlatH/LGhbzhj+e3dBLYe8mbNVIN
-	 zNd8cJU23Vctbd7oVS2p6nvSLXKhXtN25H+rSKgw=
+	b=B3w6KrOWoGGfKH8H/RkqcxN2Dh82/IOyjfDNL85bfHxfUw8TTmI0vl3Mmj/E2pdwt
+	 sAbMY9AG5GyUPE9FzLvAiJJ9CSjH3u6EsgUEARWq1BnI/slFtkWXwvd96ds1d48mLD
+	 bT4FUJ3hT3g8VQrquWqGemOwARTAaybcr48JgXpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0510/1674] pmdomain: imx8m-blk-ctrl: Serialize power on/off across sibling domains
-Date: Sat, 17 Oct 2026 17:46:22 +0200
-Message-ID: <20261017160444.195597919@linuxfoundation.org>
+Subject: [PATCH 6.6 0511/1674] pmdomain: rockchip: dont ignore clock lookup errors on attach
+Date: Sat, 17 Oct 2026 17:46:23 +0200
+Message-ID: <20261017160444.222653382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,88 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit 51c2db3ef0cb89a49ab7f47a40efd5d5b074ce8d upstream.
+commit 4c66c423593e26273ea0d644906ed007630c6f6d upstream.
 
-On i.MX8MP the VPU blk-ctrl exposes G1, G2 and VC8000E as three separate
-genpds, each serialized only by its own genpd lock, so their power_on and
-power_off callbacks can run concurrently on SMP.
+rockchip_pd_attach_dev() treated every of_clk_get() error as the end
+of the clock list, so a clock that exists but is not available yet
+(e.g. -EPROBE_DEFER) was silently skipped and the device ended up
+without pm_clk management.  Only -ENOENT means there are no more
+clocks.
 
-The sequences are not independent: they share the VPUMIX bus domain, the
-VPU_NOC and the ADB400 handshake. On power up the GPC cannot ack-verify
-the ADB400 handshake - the ack only completes once blk-ctrl sets the bus
-clk-en bit - so it just waits a fixed delay instead of polling hskack. A
-sibling transition landing inside another domain's reset window disturbs
-that shared clock and handshake timing, the victim's reset does not take
-effect, and its block registers read back all zeros: the decoder times
-out or the encoder fails its format check.
-
-Serialize the blk-ctrl reset sequence with a per-blk-ctrl mutex; the
-driver deliberately avoids a genpd hierarchy, so the genpd core gives no
-cross-sibling serialization.
-
-Fixes: a1a5f15f7f6c ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 7c696693a4f5 ("soc: rockchip: power-domain: Add power domain driver")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/pmdomain/rockchip/pm-domains.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -15,6 +15,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/clk.h>
-+#include <linux/mutex.h>
+--- a/drivers/pmdomain/rockchip/pm-domains.c
++++ b/drivers/pmdomain/rockchip/pm-domains.c
+@@ -592,7 +592,19 @@ static int rockchip_pd_attach_dev(struct
+ 	}
  
- #include <dt-bindings/power/imx8mm-power.h>
- #include <dt-bindings/power/imx8mn-power.h>
-@@ -34,6 +35,12 @@ struct imx8m_blk_ctrl {
- 	struct regmap *regmap;
- 	struct imx8m_blk_ctrl_domain *domains;
- 	struct genpd_onecell_data onecell_data;
-+	/*
-+	 * Serializes the blk-ctrl reset/clock sequence across sibling domains;
-+	 * their transitions interact through the shared VPUMIX bus domain,
-+	 * VPU_NOC and the not-ack-verified ADB400 handshake (ERR050531).
-+	 */
-+	struct mutex power_lock;
- };
- 
- struct imx8m_blk_ctrl_domain_data {
-@@ -98,6 +105,8 @@ static int imx8m_blk_ctrl_power_on(struc
- 	struct imx8m_blk_ctrl *bc = domain->bc;
- 	int ret;
- 
-+	guard(mutex)(&bc->power_lock);
+ 	i = 0;
+-	while ((clk = of_clk_get(dev->of_node, i++)) && !IS_ERR(clk)) {
++	while (1) {
++		clk = of_clk_get(dev->of_node, i++);
++		if (IS_ERR(clk)) {
++			error = PTR_ERR(clk);
++			if (error == -ENOENT)
++				break;
 +
- 	/* make sure bus domain is awake */
- 	ret = pm_runtime_get_sync(bc->bus_power_dev);
- 	if (ret < 0) {
-@@ -164,6 +173,8 @@ static int imx8m_blk_ctrl_power_off(stru
- 	const struct imx8m_blk_ctrl_domain_data *data = domain->data;
- 	struct imx8m_blk_ctrl *bc = domain->bc;
- 
-+	guard(mutex)(&bc->power_lock);
++			dev_err(dev, "failed to get clock %d: %d\n", i - 1,
++				error);
++			pm_clk_destroy(dev);
++			return error;
++		}
 +
- 	/* put devices into reset and disable clocks */
- 	if (data->mipi_phy_rst_mask)
- 		regmap_clear_bits(bc->regmap, BLK_MIPI_RESET_DIV, data->mipi_phy_rst_mask);
-@@ -202,6 +213,10 @@ static int imx8m_blk_ctrl_probe(struct p
- 
- 	bc->dev = dev;
- 
-+	ret = devm_mutex_init(dev, &bc->power_lock);
-+	if (ret)
-+		return ret;
-+
- 	bc_data = of_device_get_match_data(dev);
- 
- 	base = devm_platform_ioremap_resource(pdev, 0);
+ 		dev_dbg(dev, "adding clock '%pC' to list of PM clocks\n", clk);
+ 		error = pm_clk_add_clk(dev, clk);
+ 		if (error) {
 
 
