@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CBD3AEF36;
-	Sat, 17 Oct 2026 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886EE3976BA;
+	Sat, 17 Oct 2026 16:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256269; cv=none; b=h+b0suQIpKwWAWIZFFqZpWoFBSaGaqX0quz4NEq1IowUPWL/87OUT0GvxdgRT3bXrBzwS0INoQ2D5G+HLzHfDjlYjls95Bi9ns/cVkKihhMdFrdlfAB4u9nR1h7/gxoS1HwAdKQNdNXzMGf4AbyTg7cuMz7KVOswu/nHjdb67Fw=
+	t=1792256272; cv=none; b=OCV4iFE0gKYk8zbAqadhHOx+P0wRB8TgimMM4QI8tU90TT4KsSNABx484dIcJ6eMk+rf4pBw3Nfk0mHRXyWQcNlxVmFZRIb+1ko2YM9QKpW5is3aUBI7V0dioAC1Vz1GKMxj/Gx5ldROyzb6IrH5CQ7rw7C3eAJ1I+E1PnHBkro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256269; c=relaxed/simple;
-	bh=oYWejdly7dyoP97RKR5AKYUzV5NN8v+CFFnKN7XAOFY=;
+	s=arc-20240116; t=1792256272; c=relaxed/simple;
+	bh=ynUkgTMb5EOro2jEAFVgw2jKCp49H19zHnIIiqrHc9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiQ+dbSsJ7Fph4tPdbs1W6lG0YoyD9qz6+n5tApPZRkLthTB2nBphpNSopcr/Nl5YYldWRyid0EBAtYgaBVX2IV7gdIuCKYQNnhEKrsa38EKuZ/pDTn8fi+89E/e0QGOdOX0DASPCVrCpPZa+SAqPEL4cD8PRDDh7lwt0bC66F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMTh0KcP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A+XqHowcdqgCvhXWJjmJAO2Zyb8XegEIZVsLziKXH5STBRGi7Amyj+newoudqAgxDC6XiaXOrM8EvoYYYz8ROlbor47yHE8rB3+vtjZTIcf5ph1XbEvyQm2zzhk7X642kyp1XkAC5/z6Tj/Q5rrEYkDLjqUt/9vA1pL3QXdbpyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PanlA0SD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMTh0KcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18BA1F000C4;
-	Sat, 17 Oct 2026 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PanlA0SD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEB61F000C4;
+	Sat, 17 Oct 2026 16:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256268;
-	bh=OhkoEWWcWn3RdBBVmqlobT/3GYoHKSw5lM81rrOvDpQ=;
+	s=korg; t=1792256271;
+	bh=Ifg7bDtDtF2nw8ru/ewxhwhF0YLNe5xCQPuItkhk38M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMTh0KcPes62+AmQt+DlWmIsJuaUNRsGxfOo0rNnoxvN07ZcQuqcRGoai3+mYR8RH
-	 m5vg5fjhty/cTi+udxbVC5XqS80pjSsL006ltRg9VY9JhK2Jo8eQwOwGl7S37KQUv/
-	 YzoBq3vNwyOZMODpDPqKrU0DDl8r/yx2TiWmm0bY=
+	b=PanlA0SDhnXXMBJaHMzCVkP06wfmcm4KLS26mQaKtsyO0JFYFo2VUV1afNb6pjh4m
+	 1JMzWKfZpWb7U301ozidqQYZi/XApE+mQJpBRoOo9RosrzX9d3h7sziGs2eVUvLcnS
+	 XOjpTuEAt973fdwRjhX8kAR6BbzHHTFWGdTu9ZMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0180/1674] rds_tcp: close NULL deref window in rds_tcp_set_callbacks
-Date: Sat, 17 Oct 2026 17:40:52 +0200
-Message-ID: <20261017160435.773118075@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>
+Subject: [PATCH 6.6 0181/1674] vt: skip screen update for DEC alignment test on backgroup consoles
+Date: Sat, 17 Oct 2026 17:40:53 +0200
+Message-ID: <20261017160435.798825929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,75 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-commit d2bfdbb69cf87676981b1043010b6224d84c6d3a upstream.
+commit 0928ed9bd7946baee911efa401088697836e3b1e upstream.
 
-rds_tcp_set_callbacks() links a new rds_tcp_connection onto
-rds_tcp_tc_list under rds_tcp_tc_list_lock. It releases the
-lock, then assigns tc->t_sock = sock outside the lock.
+[BUG]
+Recently, we encountered a KASAN warning as follows:
 
-rds_tcp_tc_info() and rds6_tcp_tc_info() walk rds_tcp_tc_list
-under the same lock. Both dereference tc->t_sock->sk without
-a NULL check.
+BUG: KASAN: slab-out-of-bounds in fb_pad_aligned_buffer+0x11f/0x140
+Read of size 1 at addr ff1100015fd9f6a4 by task tty_fbcon_oob/1239
+CPU: 7 UID: 0 PID: 1239 Comm: tty_fbcon_oob Not tainted 7.3.0-rc1 #100 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ ...
+ kasan_report+0xf0/0x120
+ fb_pad_aligned_buffer+0x11f/0x140
+ ccw_putcs+0x86c/0xa80
+ fbcon_putcs+0x338/0x410
+ do_update_region+0x21d/0x450
+ do_con_write+0x1e0e/0x4880
+ con_write+0x13/0x80
+ n_tty_write+0x374/0x1010
+ file_tty_write.isra.0+0x404/0x7a0
+ ...
 
-A reader can acquire rds_tcp_tc_list_lock between the writer's
-spin_unlock and the t_sock store. It then sees a list entry
-whose t_sock is NULL. The dereference of tc->t_sock->sk is a
-NULL access.
+reproduce:
+1) open /dev/tty0, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 8 and op.height = 16 (visible VC1)
+2) open /dev/tty1, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 28 and op.height = 24 (invisible VC2)
+3) echo 3 > /sys/devices/virtual/graphics/fbcon/rotate_all
+4) write EShash8(esc hash8) to tty1
 
-Move tc->t_sock = sock inside rds_tcp_tc_list_lock, before
-list_add_tail. A reader holding the lock then observes the
-linkage and the t_sock store together.
+[CAUSE]
+All VCs render to the framebuffer. setfont only modifies the target VC's
+font without resizing the framebuffer backing buffer (par->rotated.buf);
+the buffer is only resized for the visible VC
+(fbcon_do_set_font -> ... -> vc_do_resize -> update_screen). This relies on
+the con_should_update() check performed before every update_region().
 
-The restore path is safe. rds_tcp_restore_callbacks() does
-list_del_init inside the lock. The matching tc->t_sock = NULL
-after unlink is harmless to readers holding the lock.
+However, the ESC # 8 path (do_con_trol -> do_update_region) omits the
+con_should_update() check. After changing the font size of an invisible VC,
+do_update_region() fills using the new font size against a buffer that was
+never resized, causing an out-of-bounds access.
 
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260512142807.1855619-1-maoyi.xie@ntu.edu.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[FIX]
+Only push the update when the console is visible and not blanked, add
+the con_should_update() check in the do_con_trol() like every other call
+site of do_update_region() (update_region(), invert_screen(), ...).
 
-[ achender: resolved context conflict; tc->t_rtn initialization is not
-  present in this tree ]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260905064337.3083103-1-wozizhi@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/tcp.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/tty/vt/vt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 8f3d09c541db7..245c4c48c56d7 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -231,16 +231,19 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
- 	rdsdebug("setting sock %p callbacks to tc %p\n", sock, tc);
- 	write_lock_bh(&sock->sk->sk_callback_lock);
- 
--	/* done under the callback_lock to serialize with write_space */
-+	/* done under the callback_lock to serialize with write_space.
-+	 * Set t_sock inside rds_tcp_tc_list_lock so readers walking
-+	 * rds_tcp_tc_list under the same lock cannot observe an
-+	 * entry whose t_sock is NULL.
-+	 */
- 	spin_lock(&rds_tcp_tc_list_lock);
-+	tc->t_sock = sock;
- 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
- 	spin_unlock(&rds_tcp_tc_list_lock);
- 
- 	/* accepted sockets need our listen data ready undone */
- 	if (sock->sk->sk_data_ready == rds_tcp_listen_data_ready)
- 		sock->sk->sk_data_ready = sock->sk->sk_user_data;
--
--	tc->t_sock = sock;
- 	tc->t_cpath = cp;
- 	tc->t_orig_data_ready = sock->sk->sk_data_ready;
- 	tc->t_orig_write_space = sock->sk->sk_write_space;
--- 
-2.53.0
-
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -2497,7 +2497,8 @@ static void do_con_trol(struct tty_struc
+ 			csi_J(vc, 2);
+ 			vc->vc_video_erase_char =
+ 				(vc->vc_video_erase_char & 0xff00) | ' ';
+-			do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
++			if (con_should_update(vc))
++				do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
+ 		}
+ 		return;
+ 	case ESsetG0:
 
 
