@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A5038F233;
-	Sat, 17 Oct 2026 17:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBA43B19BA;
+	Sat, 17 Oct 2026 17:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259040; cv=none; b=YRGY1CGU/8zilKVFatnwgBiQzB8GHrwMcGGViVLLBjzZvsErSx7lVk/LOEjbWE6ymFQbLHJTyvkcklSH+uCUbdKeTWdNEdRf82xNLzW/Ao0GHRe542QeJ/DtlHQ8oHvAXjoxeHrdRi7W8pg++KLtbgstV3DHXrxhJbSC9B0NNdA=
+	t=1792259043; cv=none; b=p4/EKjUQ1pl5F1dY1CgYQcJJGs/Zbz5dobWeb3wS73Q3LvFGQDaJ2U2uNIM7sgcoc4r5t7BoyTN54uMvI6+/hWKKdQOxSWbMlGUMVvZb3fxqsfto/RPCMDZjKIrt0Ty9HmKiYg0KH5iOZrtewUecZbDl2HBwGR4dOm2ckm/HLtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259040; c=relaxed/simple;
-	bh=4dOqGsyB9Q2/9s1tdvF3WqMB1m/cuv/S4aqAQsTp6AE=;
+	s=arc-20240116; t=1792259043; c=relaxed/simple;
+	bh=OUdxmrlZJYZ2D8VrY+laE8NNHB0NCjxWMURDaPJI6EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JvzCjATaxA18+Kl/CyC+JBCM4Zgx+mfzciKov5WJcE29j1WPw9GJXj6WeVQXhv4MZzMEPTcfMZtgrOPDp5YoNeu0LFjOBKLbU5cSruoBIhFQ1hhSWEeCUePS/dyMhrzI6ZCvElPBdwVXocjzQUG5tiTnSWFEPikMVBj3BHe6dy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JL6oS/0u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qwHXPo018wDKP2gGpHeJHWo4O/GrxvQjVpHvFpnyjLXDQbTdp9DjQ8jpMAtSavIHTChjwhpGylDWzNSv+EGaDRzDL2zodfwNck95PGwz4b3y0wkOd6T7W6EIgc8Z2xmRpdEkqjkf6k8WrDOxx94lD3UaIsz1yxcJIalvXI5VsIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk49kBlS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JL6oS/0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B30B1F000C4;
-	Sat, 17 Oct 2026 17:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk49kBlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E621F000C4;
+	Sat, 17 Oct 2026 17:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259039;
-	bh=91TPZaCEsGxgZ4B0bEutVFuZw2hGTIA7OBfeUmJaF/c=;
+	s=korg; t=1792259042;
+	bh=CaBajhjC209ZfKb886Sim8fpQqX7xOyED+/rpX9IG3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JL6oS/0uzYLIQvHlqRlkOcBJQf2CVOwETIZUGPD120tYoveNt/Nkdm+DEGnEY0pku
-	 swsDIJj5hs7cLJbQWMAuBPq/MPpPQLtIIyjiwDiPXiCnhOUNhT9W9al0ZKnS/N5ccj
-	 xwxoZIexOIWCBgJbRVCUY0JUg/Y2zn8ZOCLdhLg0=
+	b=Qk49kBlSziOdDM90T98MZROlSwDzu4e/Cr/RKdEvLCqXrd27LeR7gFnRdR9WJl5X3
+	 YPerbnI29i34EWav+D4t9+qaPCUeTb1ZCjXg3wqOT8fp7a11AfQatlNdPIgV35IYol
+	 PtqnliBYOBt2jlJNO48E5N5VyBZVmndaWISgpevQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>
-Subject: [PATCH 6.6 1082/1674] drm/i915/bios: range check LFP Data Block panel_type2
-Date: Sat, 17 Oct 2026 17:55:54 +0200
-Message-ID: <20261017160458.900204897@linuxfoundation.org>
+	David Yat Sin <david.yatsin@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1083/1674] drm/amdkfd: Check bounds on CRIU restore queue type and mqd size
+Date: Sat, 17 Oct 2026 17:55:55 +0200
+Message-ID: <20261017160458.926937274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,114 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit 2084503f2d087bf956198e7f6eb25b03a7049cb2 ]
+[ Upstream commit 47ea05f246bebc81c7796f56265cffd812cf0601 ]
 
-While the panel_type from LFP Data Block is range checked, panel_type2
-is not. Add a few helpers for range checking, and use them to not only
-check panel_type2, but also improve clarity and correctness in the panel
-type selection.
+We weren't checking whether the values provided in the private
+data in kfd CRIU restore were within bounds.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+For queue type, add a KFD_QUEUE_TYPE_MAX and ensure the provided
+type is less than it.
 
-v2:
-- Fix commit message typo (Michał)
-- Add is_panel_type_pnp() (Ville)
+For mqd_size, add new function mqd_size_from_queue_type and confirm
+that the provided mqd_size matches expectations.
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: 6434cf630086 ("drm/i915/bios: calculate panel type as per child device index in VBT")
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Animesh Manna <animesh.manna@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@intel.com>
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com> # v1
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260626140155.1389655-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit c9ebe5d2f25729d6cfbbb1235d640bf67f9275df)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f19d8086f6644083c913d70bfdeee20e1b6f46a5)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c | 36 ++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c |  5 ++++
+ .../drm/amd/amdkfd/kfd_device_queue_manager.h |  2 ++
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h         |  3 ++-
+ .../amd/amdkfd/kfd_process_queue_manager.c    | 24 +++++++++++++------
+ 4 files changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_bios.c b/drivers/gpu/drm/i915/display/intel_bios.c
-index 27d1c49b46ec4..0b7522ad8f3ea 100644
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -617,6 +617,21 @@ static void dump_pnp_id(struct drm_i915_private *i915,
- 		    pnp_id->mfg_week, pnp_id->mfg_year + 1990);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 773a95851ecb9..6b274e4f0af35 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3137,6 +3137,11 @@ int debug_refresh_runlist(struct device_queue_manager *dqm)
+ 	return debug_map_and_unlock(dqm);
  }
  
-+static bool is_panel_type_valid(int panel_type)
++size_t mqd_size_from_queue_type(struct device_queue_manager *dqm, enum kfd_queue_type type)
 +{
-+	return panel_type >= 0 && panel_type < 16;
++	return dqm->mqd_mgrs[get_mqd_type_from_queue_type(type)]->mqd_size;
 +}
 +
-+static bool is_panel_type_pnp(int panel_type)
-+{
-+	return panel_type == 0xff;
-+}
-+
-+static bool is_panel_type_valid_or_pnp(int panel_type)
-+{
-+	return is_panel_type_valid(panel_type) || is_panel_type_pnp(panel_type);
-+}
-+
- static int opregion_get_panel_type(struct drm_i915_private *i915,
- 				   const struct intel_bios_encoder_data *devdata,
- 				   const struct drm_edid *drm_edid, bool use_fallback)
-@@ -634,15 +649,21 @@ static int vbt_get_panel_type(struct drm_i915_private *i915,
- 	if (!lvds_options)
- 		return -1;
+ #if defined(CONFIG_DEBUG_FS)
  
--	if (lvds_options->panel_type > 0xf &&
--	    lvds_options->panel_type != 0xff) {
-+	if (!is_panel_type_valid_or_pnp(lvds_options->panel_type)) {
- 		drm_dbg_kms(&i915->drm, "Invalid VBT panel type 0x%x\n",
- 			    lvds_options->panel_type);
- 		return -1;
+ static void seq_reg_dump(struct seq_file *m,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
+index cf7e182588f80..d6220d77a06cc 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
+@@ -302,6 +302,8 @@ void set_queue_snapshot_entry(struct queue *q,
+ int debug_lock_and_unmap(struct device_queue_manager *dqm);
+ int debug_map_and_unlock(struct device_queue_manager *dqm);
+ int debug_refresh_runlist(struct device_queue_manager *dqm);
++size_t mqd_size_from_queue_type(struct device_queue_manager *dqm,
++				enum kfd_queue_type type);
+ 
+ static inline unsigned int get_sh_mem_bases_32(struct kfd_process_device *pdd)
+ {
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 4904ca5a4932a..8f6fe5312b26e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -433,7 +433,8 @@ enum kfd_queue_type  {
+ 	KFD_QUEUE_TYPE_SDMA,
+ 	KFD_QUEUE_TYPE_HIQ,
+ 	KFD_QUEUE_TYPE_DIQ,
+-	KFD_QUEUE_TYPE_SDMA_XGMI
++	KFD_QUEUE_TYPE_SDMA_XGMI,
++	KFD_QUEUE_TYPE_MAX,
+ };
+ 
+ enum kfd_queue_format {
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 3f6fc8d0984d1..430a79efa0bc5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -946,6 +946,23 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 		goto exit;
  	}
  
--	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2)
-+	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2) {
-+		if (!is_panel_type_valid_or_pnp(lvds_options->panel_type2)) {
-+			drm_dbg_kms(&i915->drm, "Invalid VBT panel type 2 0x%x\n",
-+				    lvds_options->panel_type2);
-+			return -1;
-+		}
-+
- 		return lvds_options->panel_type2;
++	pdd = kfd_process_device_data_by_id(p, q_data->gpu_id);
++	if (!pdd) {
++		pr_err("Failed to get pdd\n");
++		ret = -EINVAL;
++		goto exit;
 +	}
++
++	if (q_data->type >= KFD_QUEUE_TYPE_MAX) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	if (q_data->mqd_size != mqd_size_from_queue_type(pdd->dev->dqm, q_data->type)) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	*priv_data_offset += sizeof(*q_data);
+ 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
  
- 	drm_WARN_ON(&i915->drm, devdata && devdata->child.handle != DEVICE_HANDLE_LFP1);
+@@ -968,13 +985,6 @@ int kfd_criu_restore_queue(struct kfd_process *p,
  
-@@ -755,13 +776,12 @@ static int get_panel_type(struct drm_i915_private *i915,
- 				    panel_types[i].name, panel_types[i].panel_type);
- 	}
+ 	*priv_data_offset += q_extra_data_size;
  
--	if (panel_types[PANEL_TYPE_OPREGION].panel_type >= 0)
-+	if (is_panel_type_valid(panel_types[PANEL_TYPE_OPREGION].panel_type))
- 		i = PANEL_TYPE_OPREGION;
--	else if (panel_types[PANEL_TYPE_VBT].panel_type == 0xff &&
--		 panel_types[PANEL_TYPE_PNPID].panel_type >= 0)
-+	else if (is_panel_type_pnp(panel_types[PANEL_TYPE_VBT].panel_type) &&
-+		 is_panel_type_valid(panel_types[PANEL_TYPE_PNPID].panel_type))
- 		i = PANEL_TYPE_PNPID;
--	else if (panel_types[PANEL_TYPE_VBT].panel_type != 0xff &&
--		 panel_types[PANEL_TYPE_VBT].panel_type >= 0)
-+	else if (is_panel_type_valid(panel_types[PANEL_TYPE_VBT].panel_type))
- 		i = PANEL_TYPE_VBT;
- 	else
- 		i = PANEL_TYPE_FALLBACK;
+-	pdd = kfd_process_device_data_by_id(p, q_data->gpu_id);
+-	if (!pdd) {
+-		pr_err("Failed to get pdd\n");
+-		ret = -EINVAL;
+-		goto exit;
+-	}
+-
+ 	/* data stored in this order: mqd, ctl_stack */
+ 	mqd = q_extra_data;
+ 	ctl_stack = mqd + q_data->mqd_size;
 -- 
 2.53.0
 
