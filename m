@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0646D3A48E4;
-	Sat, 17 Oct 2026 17:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EE3255E43;
+	Sat, 17 Oct 2026 17:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256905; cv=none; b=U1vGGnBFeVIDmfBwDElErtY0eRB7P0XDP2Pflo2iDbOwYExeOXnq3cLV0WedY7WRTo2rhn40KpiGOoUPumporolNSTrH+Mc0D7/K+hJ5gHZcZELP6Dl99sdnkJ8riUx5P8FP8JgzYq5/DBVv9bndqOZgGUfZjIaOv3pn7t4PXCY=
+	t=1792256908; cv=none; b=R7ERM39wKeoliDJP950YuEmV60PIWG1fiROR2lNayKjhOIf+YRS6SLAJWYK+EaE61T4d+q297uWUxfNVYSAgz3ubhSHZv4WmPv68wNhl49/sBSV+071iFVZATqS9bG2CilmgfNyuYklFTyp4F7YgXAMx2mDySKpf5+77McrHFzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256905; c=relaxed/simple;
-	bh=9j97Dj0MGXsTHHwigL8epJW412F/4lhzZa1l6R3uxG4=;
+	s=arc-20240116; t=1792256908; c=relaxed/simple;
+	bh=azgbvX/ZVhCsSgzSHDt7NCHFFGnPTVdjGVun+aDL10I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pyx0cvk72Z24L7UXRS0fTJSxS0pl52PRqeStQ1OUk5F5EKfiCuuIbTNxtKvq6FZ9gxW0QXuKexOp5njlsNvLtnhurKTCOmfPyXfYv80fh2cToZMF/RrO5zK6JAZjCvI2W7iiuMXK1aYcHjv0QQ9TWwfZl/veYOcdEt7JHr+e3vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6kSJORs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XKSzc/uxGQaT+M31tEUSXXWP8qPvbUxK+wWtI9WX31+woBqQvHmyXnxiJVRgoAKXqQ7FrantpMKe7SVpbQob+hGUQDKpBa0e1uafSu89QAj3vOT1UISlyjm+9LOZeVkXykKaaJN6Sm5wExWAehzoTWTasH7gKx6vtGLk8azn/Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJAaNbj1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6kSJORs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544981F000C5;
-	Sat, 17 Oct 2026 17:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJAaNbj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBA81F000C4;
+	Sat, 17 Oct 2026 17:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256903;
-	bh=cmBh51My96gghprL68AtbCG6uN2Azo2oxRW5tZ+Mmpo=;
+	s=korg; t=1792256907;
+	bh=cRHcmTvuUbqyfQF9RL923R9uv7LOK/UhyoDQDJdGuDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6kSJORsz08YYMuD0JHGRG/r8JmgYBGUyhnSwoWuTwnf7Fc+nrhrYQ5PB9LyA7MJd
-	 ClD4tS0csLD0U9XcmBhDtOgUVB3Wr2Z50x5k6OFcmdvUAHiwG49cBwRj+FwDwyG0iA
-	 qWk/W1qUmmE3hLoMhgZlZ7HKw/7LITP+GR/RxsYU=
+	b=qJAaNbj1EcJi7rapdEPQbbyaU6vFWxRGKexRLTOKNGpb/8lkB6siUJzoVzmxxqEYS
+	 Xp09l3XkmDOdJYVkU4mff3oftsBBjg7ock4nYhUtKxG6wEXVVVXgUPQl24f4m8KGSv
+	 OfqtxFqW3AujU3kq8ojFh0tpgy7b6fIZQKKwNiV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arkamondalofficial@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0346/1674] iio: imu: adis16480: fix unprotected debugfs reads
-Date: Sat, 17 Oct 2026 17:43:38 +0200
-Message-ID: <20261017160440.010316866@linuxfoundation.org>
+Subject: [PATCH 6.6 0347/1674] iio: light: gp2ap020a00f: drain irq_work after free_irq
+Date: Sat, 17 Oct 2026 17:43:39 +0200
+Message-ID: <20261017160440.036406537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,40 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arkamondalofficial@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e1dea54496f90a62318cf4eeaa1e9ef8316e92b6 upstream.
+commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
 
-The firmware_revision and firmware_date file operations are open coded
-and never call debugfs_file_get(), which debugfs_create_file_unsafe()
-requires. debugfs_remove_recursive() therefore does not wait for a read
-in progress, and unbind frees the iio_dev underneath it.
+The threaded IRQ handler queues data->work through irq_work_queue() so
+the trigger is polled from a per-CPU context.  free_irq() does not flush
+an irq_work the handler already queued, so after gp2ap020a00f_remove()
+returns that work may still run and call iio_trigger_poll() on data->trig,
+which the devm cleanup has already freed, causing a use-after-free.
 
-Use debugfs_create_file() instead.
+Add irq_work_sync(&data->work) after free_irq() in remove() and in the
+probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
+fix use-after-free on remove").
 
-Fixes: 9bf94f836e32 ("imu:adis16480: fix debugfs_simple_attr.cocci warnings")
-Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Found by an in-house static analysis tool, confirmed by manual review.
+
+Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/adis16480.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/light/gp2ap020a00f.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/imu/adis16480.c
-+++ b/drivers/iio/imu/adis16480.c
-@@ -302,9 +302,9 @@ static int adis16480_debugfs_init(struct
- 	struct adis16480 *adis16480 = iio_priv(indio_dev);
- 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
- 
--	debugfs_create_file_unsafe("firmware_revision", 0400,
-+	debugfs_create_file("firmware_revision", 0400,
- 		d, adis16480, &adis16480_firmware_revision_fops);
--	debugfs_create_file_unsafe("firmware_date", 0400,
-+	debugfs_create_file("firmware_date", 0400,
- 		d, adis16480, &adis16480_firmware_date_fops);
- 	debugfs_create_file_unsafe("serial_number", 0400,
- 		d, adis16480, &adis16480_serial_number_fops);
+--- a/drivers/iio/light/gp2ap020a00f.c
++++ b/drivers/iio/light/gp2ap020a00f.c
+@@ -1565,6 +1565,7 @@ error_trigger_unregister:
+ 	iio_trigger_unregister(data->trig);
+ error_free_irq:
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ error_uninit_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ error_regulator_disable:
+@@ -1587,6 +1588,7 @@ static void gp2ap020a00f_remove(struct i
+ 	iio_device_unregister(indio_dev);
+ 	iio_trigger_unregister(data->trig);
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	regulator_disable(data->vled_reg);
+ }
 
 
