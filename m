@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADFE3A4F58;
-	Sat, 17 Oct 2026 17:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BD03B19B9;
+	Sat, 17 Oct 2026 17:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256438; cv=none; b=e7Sgb5LrVS8JifUFabrxfdcZ8sDGIkHXtgYHOFkIE/5WQr9Ju25yjU1EvkEezG4QeDEAHttan6/KvGqFC7AI3AEDNPsPbHyoDTsD83T5IBrEKZBDsWhz7cuy7idQJpf/AwV92vhAtjm6ZrsdWA2XQ0YQCa3TpkcdSpkf8AFBKFk=
+	t=1792256441; cv=none; b=W/fdBgX6LrM+QfnJM2J2Cvr7XtBvq3lLXqYc+LecXHkmxHiiEsWo0HpMMSAhRxhrvkQ2HoZaPt5utvt6GBuh+rkHbeqxfDCTTNwnMTswExX51DPVCrvWG/x8iY8vECqeW4RqBGzixmfmb2lNGpWbpnoVTdGogEAutN1GVj1K/A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256438; c=relaxed/simple;
-	bh=SM9tKGg5JUa+f+gBC1m/eRcuMuCYhvfQWJK9Bq5s0N8=;
+	s=arc-20240116; t=1792256441; c=relaxed/simple;
+	bh=rBQW111yp4xfvaFscGGo1dbrSenKspyamM4HiaD18Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ph9ciEG8iHqrL8LDQeTZ4QMb9mFVZqGSXVGN++6/JrLYK/obP7PBNsRfla/0RmmotySlYbY/9M5ktbKtRdT168fmijS5sFL2jpPA1+o8/71wuc24QxzrRxgmlhx6/d8eYm4DpeP2G1Pq1EuOYSw8NWvilVoOxelq9Mftq97Vwnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlJPm/XG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NJ8hmZEl7oP9xd+2w7M30/l7eTxF2LPo30+KVUyNk4zyYDc/tXYf9gVzTBE8sNCEQsSrwF8YxgQLXsRpMAotA1Yk/fcUa8vJudUxqXNBAly2kPTOWASAC5v59SbHVIiUUv/b+B8Ueu5BRSiTg4aBgvjHfM33GRTTQz4/LRP939U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KB7yGVU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlJPm/XG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAE31F000C4;
-	Sat, 17 Oct 2026 17:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KB7yGVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5441F000C4;
+	Sat, 17 Oct 2026 17:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256437;
-	bh=nWLZDA0a9rXuXIOm6R/q2aLFeRrL7MzcZZHC79ERb20=;
+	s=korg; t=1792256440;
+	bh=WREqiKq2LUTSbQ5JSXbK6rKtrxqTd87/fBhjFUHreYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlJPm/XGimuX/xC/bhLBTQKmT3yq0lgLgbYFjH1eLVKRR3IGPAkXiulo7GGPOJ1JS
-	 XcpEc8yIN86Ho5nfE9jecgP54B0STh37BVj+MlxS/3KVRFetv2ZhfbWFiaje4AT7wH
-	 3/lj3zYAXwmigJygT807OomBdogFLjq6nVd6bL2w=
+	b=1KB7yGVUNkak1JPQ8MQhUT4fllIuA0FaI96t5iGo5WDxLLJ12DX1tQ0xRRpJzOH62
+	 f1n2hYozeeEJ2hDPpZmvYL//7IiWWFqB4QMhQ/67TE0ZAqNUhIhGBuW4PWXhBIlLwR
+	 D0fu3AfocWC/gg6GEoxt86QQLkbygND+q5Wicuo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikola Prica <nikola.prica@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0235/1674] PCI: Accept AtomicOps already enabled by the hypervisor
-Date: Sat, 17 Oct 2026 17:41:47 +0200
-Message-ID: <20261017160437.167167078@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 0236/1674] drm/amd/pm/si: Check AMD_IS_MOBILITY flag for PPSMC_SYSTEMFLAG_GPIO_DC
+Date: Sat, 17 Oct 2026 17:41:48 +0200
+Message-ID: <20261017160437.192171975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,69 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Prica <nikola.prica@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
+commit cd883d0a3937df82a5ea03709ba8ba623b868419 upstream.
 
-pci_enable_atomic_ops_to_root() currently fails when no Root Port is
-visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
-is assigned to the VM, but the Root Port above it is not visible in the
-guest topology.
+Unfortunately, some desktop boards eg. the FirePro D500
+have the HARDWAREDC platform flag set and also have
+a battery power state configured in their VBIOS.
+This makes no sense for a desktop GPU and results in
+incorrect behaviour: the clocks are stuck at lowest.
 
-In those setups the hypervisor may already have enabled AtomicOp Requester
-Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
-as already enabled and return success instead of failing the Root Port
-walk.
+We observed that the kernel driver can work around
+the issue in two possible ways:
+1. Set PPSMC_SWSTATE_FLAG_DC on all power states
+2. Clear PPSMC_SYSTEMFLAG_GPIO_DC
 
-After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
-them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
-Port is not visible, so drivers don't use atomics when they could.  On
-systems where the Root Port is not visible but *does* support AtomicOps,
-this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
-endpoint and returned success.
+We think that the PPSMC_SYSTEMFLAG_GPIO_DC flag
+makes the SMC assume it's running on battery even
+though this is a desktop machine with no battery,
+and that's why it doesn't do DPM on power states
+without PPSMC_SYSTEMFLAG_GPIO_DC.
 
-Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
-Signed-off-by: Nikola Prica <nikola.prica@amd.com>
-[bhelgaas: commit log, code comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Issue was uncovered by "Fix updating clock limits from
+power states" because previously the limits for the
+battery state were not tracked separately. However,
+battery power state has lower frequencies and voltages,
+so the kernel doesn't set the DC flag on the current
+power state anymore. That causes the SMC to be stuck
+on the lowest clocks.
+
+Let's clear PPSMC_SYSTEMFLAG_GPIO_DC on desktop GPUs.
+We can use the AMD_IS_MOBILITY flag to determine that.
+
+Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16352
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923120354.1027996-1-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 58473c7c49ce9f5f5a4a1c24ffb9aa1d3c8771f4)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index a3fa91d0b5098..b9ef168f52734 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3868,8 +3868,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -5239,7 +5239,8 @@ static int si_init_smc_table(struct amdg
+ 		break;
  	}
  
- 	root = pcie_find_root_port(dev);
--	if (!root)
-+	if (!root) {
-+
-+		/*
-+		 * A hypervisor may expose a topology with the root port
-+		 * not visible to the guest.  If the hypervisor has already
-+		 * set AtomicOp Requester Enable in the endpoint, we assume
-+		 * it has verified support in the root port, so it is safe
-+		 * for the driver to use AtomicOps.
-+		 */
-+		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
-+		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
-+			return 0;
-+
- 		return -EINVAL;
-+	}
+-	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC)
++	if ((adev->flags & AMD_IS_MOBILITY) &&
++	    (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC))
+ 		table->systemFlags |= PPSMC_SYSTEMFLAG_GPIO_DC;
  
- 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
- 	if ((cap & cap_mask) != cap_mask)
--- 
-2.53.0
-
+ 	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_REGULATOR_HOT) {
 
 
