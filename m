@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A672E3C13F9;
-	Sat, 17 Oct 2026 17:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12AB3C345F;
+	Sat, 17 Oct 2026 17:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258404; cv=none; b=rp5XwSVD6uXLMgFg0VLGXErKAs8wmPjsMHFwbLYkBRQi8UzS1Yp84cM9wi1nW4AblhK00bbHsI52cUkYNa8SSx/cOWO/xbgbavQfkfsIb6GcKggGGBMl3nkglhKebNa5b+STUuAfLn+AWLIMp4T3E1IsOHIlLixigEnxpEEyZqI=
+	t=1792258408; cv=none; b=HUBGfqb6qGaWEixc4Ybc/XP+bd0iwIzBCl8ITuP5dNugvLimwhE98dxf8cG5wjE0ifxu/itrxIv/98VcUIKixPThqAVLBCp1t62m41A1PUPq2LplgnYH8RgXJ2N1Hm4IQVjiz3aM4G/xWY91z/vNWiP26Er+a3AF9RuYsW4fXw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258404; c=relaxed/simple;
-	bh=4DgFbDUjsBWJuAEg9fYl35dEJYjpsGvufNoLvssP/0w=;
+	s=arc-20240116; t=1792258408; c=relaxed/simple;
+	bh=vFqMuBFxbleD813718S/6k4lxM5BfyFfKxWJn8JyllA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3UEDMm87c6Zjb/CTsHfVoqqXZK94uNhs2d5BchHiVsYvYR/mL3eXFCl6QEzifQ+tB1eWLcRul6t3lxJxAgvyIMCn6rbbfaEhJr7JKt0J18uE4dwYUG7DRu1NJyWPm8oSKWnZhq6QLNKigb752hDyAhXdXs4RMs45aWwOeJ2b8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPIJFgiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imimOkRDKSiUZWve9NBZLqmQqLoNOTvZsyOqPCuJVgcD2aGovbq9oiE/C3ejQVRvYHOMllnSQzrb7lV/zajRnyYr7acoS3BTOgCPi+fjxQ4k5ZSBEDbJat5OJAMBYmCrIY2TP9M6u4tWcNmufQ4ecPBL1zBO3byy++UupMUQr4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0EiN7Wb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPIJFgiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F781F000C5;
-	Sat, 17 Oct 2026 17:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0EiN7Wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157241F000C6;
+	Sat, 17 Oct 2026 17:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258403;
-	bh=lEVSIk0VE1SBjlIPVznWjNBZGladKC4pBre0eW+r37s=;
+	s=korg; t=1792258406;
+	bh=MZduFSVBJDlvnUgXkCiB0WY5/pEjo6Nr5zmvba67n90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPIJFgiARBnkH7T+D3L6NTR6q6uPlvBfhLxW5YpD1l7O6zcJcIYKxxhCcfK51PrUa
-	 fVNzMj2/jFOQg3xCDjl4Tl9i2ye2P9PINQXSa1UG3Hkm5qSda1YoCp9n8TmzsZZfG0
-	 GCmViN/yre/yALwFMHBzc/sN2ZTM1VQJjH3mhRP8=
+	b=N0EiN7Wbo/pJDehnqV2IxVzgE7hC6YLIskdrfVJPAWUfNLV2SGyjp6ALxFDQ9wjcQ
+	 b7YKeD+1NUYtevOb6869UV5QWvrvX+LWsM2pMnuFtpTou4G9NvlQZxx7AJ5OxXaYmj
+	 JG95BEKIQikvmjX89ONh7GAe+iXhGpGJSXcQBDWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0872/1674] spi: use generic driver_override infrastructure
-Date: Sat, 17 Oct 2026 17:52:24 +0200
-Message-ID: <20261017160453.492967508@linuxfoundation.org>
+Subject: [PATCH 6.6 0873/1674] iavf: fix out-of-bounds writes in iavf_get_ethtool_stats()
+Date: Sat, 17 Oct 2026 17:52:25 +0200
+Message-ID: <20261017160453.522592165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,116 +55,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit cc34d77dd48708d810c12bfd6f5bf03304f6c824 ]
+[ Upstream commit fecacfc95f195b99c71c579a472120d0b4ed65fa ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+iavf incorrectly uses real_num_tx_queues for ETH_SS_STATS. Since the
+value could change in runtime, we should use num_tx_queues instead.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+Moreover iavf_get_ethtool_stats() uses num_active_queues while
+iavf_get_sset_count() and iavf_get_stat_strings() use
+real_num_tx_queues, which triggers out-of-bounds writes when we do
+"ethtool -L" and "ethtool -S" simultaneously [1].
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+For example when we change channels from 1 to 8, Thread 3 could be
+scheduled before Thread 2, and out-of-bounds writes could be triggered
+in Thread 3:
 
-Also note that we do not enable the driver_override feature of struct
-bus_type, as SPI - in contrast to most other buses - passes "" to
-sysfs_emit() when the driver_override pointer is NULL. Thus, printing
-"\n" instead of "(null)\n".
+Thread 1 (ethtool -L)       Thread 2 (work)        Thread 3 (ethtool -S)
+iavf_set_channels()
+...
+iavf_alloc_queues()
+-> num_active_queues = 8
+iavf_schedule_finish_config()
+                                                   iavf_get_sset_count()
+                                                   real_num_tx_queues: 1
+                                                   -> buffer for 1 queue
+                                                   iavf_get_ethtool_stats()
+                                                   num_active_queues: 8
+                                                   -> out-of-bounds!
+                            iavf_finish_config()
+                            -> real_num_tx_queues = 8
 
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 5039563e7c25 ("spi: Add driver_override SPI device attribute")
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260324005919.2408620-12-dakr@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use immutable num_tx_queues in all related functions to avoid the issue.
+
+[1]
+ BUG: KASAN: vmalloc-out-of-bounds in iavf_add_one_ethtool_stat+0x200/0x270
+ Write of size 8 at addr ffffc900031c9080 by task ethtool/5800
+
+ CPU: 1 UID: 0 PID: 5800 Comm: ethtool Not tainted 6.19.0-enjuk-08403-g8137e3db7f1c #241 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6f/0xb0
+  print_report+0x170/0x4f3
+  kasan_report+0xe1/0x180
+  iavf_add_one_ethtool_stat+0x200/0x270
+  iavf_get_ethtool_stats+0x14c/0x2e0
+  __dev_ethtool+0x3d0c/0x5830
+  dev_ethtool+0x12d/0x270
+  dev_ioctl+0x53c/0xe30
+  sock_do_ioctl+0x1a9/0x270
+  sock_ioctl+0x3d4/0x5e0
+  __x64_sys_ioctl+0x137/0x1c0
+  do_syscall_64+0xf3/0x690
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7f7da0e6e36d
+ ...
+  </TASK>
+
+ The buggy address belongs to a 1-page vmalloc region starting at 0xffffc900031c9000 allocated at __dev_ethtool+0x3cc9/0x5830
+ The buggy address belongs to the physical page: page: refcount:1 mapcount:0 mapping:0000000000000000
+ index:0xffff88813a013de0 pfn:0x13a013
+ flags: 0x200000000000000(node=0|zone=2)
+ raw: 0200000000000000 0000000000000000 dead000000000122 0000000000000000
+ raw: ffff88813a013de0 0000000000000000 00000001ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffffc900031c8f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ffffc900031c9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ffffc900031c9080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                    ^
+  ffffc900031c9100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ffffc900031c9180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+
+Fixes: 64430f70ba6f ("iavf: Fix displaying queue statistics shown by ethtool")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c       | 19 +++++++------------
- include/linux/spi/spi.h |  5 -----
- 2 files changed, 7 insertions(+), 17 deletions(-)
+ .../net/ethernet/intel/iavf/iavf_ethtool.c    | 31 +++++++++----------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 79e68b97dfecd..9a011544d1544 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -51,7 +51,6 @@ static void spidev_release(struct device *dev)
- 	struct spi_device	*spi = to_spi_device(dev);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+index 1ac97bd606e38..f2288e2aedb0f 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -334,14 +334,13 @@ static int iavf_get_sset_count(struct net_device *netdev, int sset)
+ {
+ 	/* Report the maximum number queues, even if not every queue is
+ 	 * currently configured. Since allocation of queues is in pairs,
+-	 * use netdev->real_num_tx_queues * 2. The real_num_tx_queues is set
+-	 * at device creation and never changes.
++	 * use netdev->num_tx_queues * 2. The num_tx_queues is set at
++	 * device creation and never changes.
+ 	 */
  
- 	spi_controller_put(spi->controller);
--	kfree(spi->driver_override);
- 	free_percpu(spi->pcpu_statistics);
- 	kfree(spi);
+ 	if (sset == ETH_SS_STATS)
+ 		return IAVF_STATS_LEN +
+-			(IAVF_QUEUE_STATS_LEN * 2 *
+-			 netdev->real_num_tx_queues);
++		       (IAVF_QUEUE_STATS_LEN * 2 * netdev->num_tx_queues);
+ 	else if (sset == ETH_SS_PRIV_FLAGS)
+ 		return IAVF_PRIV_FLAGS_STR_LEN;
+ 	else
+@@ -368,19 +367,19 @@ static void iavf_get_ethtool_stats(struct net_device *netdev,
+ 	iavf_add_ethtool_stats(&data, adapter, iavf_gstrings_stats);
+ 
+ 	rcu_read_lock();
+-	/* As num_active_queues describe both tx and rx queues, we can use
+-	 * it to iterate over rings' stats.
++	/* Use num_tx_queues to report stats for the maximum number of queues.
++	 * Queues beyond num_active_queues will report zero.
+ 	 */
+-	for (i = 0; i < adapter->num_active_queues; i++) {
+-		struct iavf_ring *ring;
++	for (i = 0; i < netdev->num_tx_queues; i++) {
++		struct iavf_ring *tx_ring = NULL, *rx_ring = NULL;
+ 
+-		/* Tx rings stats */
+-		ring = &adapter->tx_rings[i];
+-		iavf_add_queue_stats(&data, ring);
++		if (i < adapter->num_active_queues) {
++			tx_ring = &adapter->tx_rings[i];
++			rx_ring = &adapter->rx_rings[i];
++		}
+ 
+-		/* Rx rings stats */
+-		ring = &adapter->rx_rings[i];
+-		iavf_add_queue_stats(&data, ring);
++		iavf_add_queue_stats(&data, tx_ring);
++		iavf_add_queue_stats(&data, rx_ring);
+ 	}
+ 	rcu_read_unlock();
  }
-@@ -74,10 +73,9 @@ static ssize_t driver_override_store(struct device *dev,
- 				     struct device_attribute *a,
- 				     const char *buf, size_t count)
- {
--	struct spi_device *spi = to_spi_device(dev);
- 	int ret;
+@@ -417,9 +416,9 @@ static void iavf_get_stat_strings(struct net_device *netdev, u8 *data)
+ 	iavf_add_stat_strings(&data, iavf_gstrings_stats);
  
--	ret = driver_set_override(dev, &spi->driver_override, buf, count);
-+	ret = __device_set_driver_override(dev, buf, count);
- 	if (ret)
- 		return ret;
- 
-@@ -87,13 +85,8 @@ static ssize_t driver_override_store(struct device *dev,
- static ssize_t driver_override_show(struct device *dev,
- 				    struct device_attribute *a, char *buf)
- {
--	const struct spi_device *spi = to_spi_device(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", spi->driver_override ? : "");
--	device_unlock(dev);
--	return len;
-+	guard(spinlock)(&dev->driver_override.lock);
-+	return sysfs_emit(buf, "%s\n", dev->driver_override.name ?: "");
- }
- static DEVICE_ATTR_RW(driver_override);
- 
-@@ -383,10 +376,12 @@ static int spi_match_device(struct device *dev, struct device_driver *drv)
- {
- 	const struct spi_device	*spi = to_spi_device(dev);
- 	const struct spi_driver	*sdrv = to_spi_driver(drv);
-+	int ret;
- 
- 	/* Check override first, and if set, only use the named driver */
--	if (spi->driver_override)
--		return strcmp(spi->driver_override, drv->name) == 0;
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret >= 0)
-+		return ret;
- 
- 	/* Attempt an OF style match */
- 	if (of_driver_match_device(dev, drv))
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index e5baf43bcfbb6..3f6ca8052f634 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -153,10 +153,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  * @modalias: Name of the driver to use with this device, or an alias
-  *	for that name.  This appears in the sysfs "modalias" attribute
-  *	for driver coldplugging, and in uevents used for hotplugging
-- * @driver_override: If the name of a driver is written to this attribute, then
-- *	the device will bind to the named driver and only the named driver.
-- *	Do not set directly, because core frees it; use driver_set_override() to
-- *	set or clear it.
-  * @cs_gpiod: GPIO descriptor of the chipselect line (optional, NULL when
-  *	not using a GPIO line)
-  * @word_delay: delay to be inserted between consecutive
-@@ -212,7 +208,6 @@ struct spi_device {
- 	void			*controller_state;
- 	void			*controller_data;
- 	char			modalias[SPI_NAME_SIZE];
--	const char		*driver_override;
- 	struct gpio_desc	*cs_gpiod;	/* Chip select GPIO descriptor */
- 	struct spi_delay	word_delay; /* Inter-word delay */
- 	/* CS delays */
+ 	/* Queues are always allocated in pairs, so we just use
+-	 * real_num_tx_queues for both Tx and Rx queues.
++	 * num_tx_queues for both Tx and Rx queues.
+ 	 */
+-	for (i = 0; i < netdev->real_num_tx_queues; i++) {
++	for (i = 0; i < netdev->num_tx_queues; i++) {
+ 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
+ 				      "tx", i);
+ 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
 -- 
 2.53.0
 
