@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807A8385D7B;
-	Sat, 17 Oct 2026 17:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E0A34C98C;
+	Sat, 17 Oct 2026 17:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259234; cv=none; b=r73iYgd4IriSw6oiLlo89AeMnSwYj/rqIdLjRBGVNlHuiQM1rx5tuSe273QMh6h39gl4FFuqoo/zB8pIfxlU1+jZIXgI78A6D0N2gfbHmAML0d6zgXzfafV69B9BH/KejSMgtSnkscN1TFzzheo2HQcUeCHKywdnyweBIFC0TiU=
+	t=1792259237; cv=none; b=U6A7/WjsRY1R8tLNx3SbaRlwNmIZIOxcY9RVJrhmYsjT2hHMKhOgceZGtgZdit8iu2C/mioNsbi66VDp3Y7Ynha/ZIZjYO9F/YU8ZEnv0fjXFBj0OnLV1hMVRgt7dHE8Bjctm5gzAAAQWM/uufa8i5/+YCW82aouvmX8CQNiaSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259234; c=relaxed/simple;
-	bh=PyOdLhZGUHxzxhXY2u2pyX8KLQBPiwOLy15FQtASoZk=;
+	s=arc-20240116; t=1792259237; c=relaxed/simple;
+	bh=SWZeAHuZJyIEl/BxTY9Gu8eRk5/txDsfeCfRVX9Ewj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0bLOb64KbBNwetGJHVu8Xcs952pEmz24Hny2UQwZPPHUPhtta7jhpgYkMc/dYD3o+H84ejFcNGnaodbz76dN23EGs1Hp2I4Tf3p+/LGw8Qnl7jMQEjyaFtqG+cWeQnN4yo3XmuKTJTJQGB93bJk5aXv8JC/tY1uo4Kfw0560vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+vio3HG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oUX42VPiyA1jUCea9HZjbn1Tw//wQf8a4GSEk0Bw85Em+cd1lZOH7n/3HGM07q7CLOUZznCNtb+r8GntKHknAJC1YZoT4ew8iSeU/nLn0VZTQEAGJxpCHE/Q+Ba1ziqFtG2oJ69I0H0O2blcq3tF+K1M+efKxfSGJ4pcbpq8CbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0FHP+lQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+vio3HG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91C61F000C4;
-	Sat, 17 Oct 2026 17:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0FHP+lQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5521F000C4;
+	Sat, 17 Oct 2026 17:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259233;
-	bh=NHVI/vHmK6NwsGB7pvdp3A8d8cEjC3yW4XvQjGMI0tU=;
+	s=korg; t=1792259236;
+	bh=lJpXLDfIFz+opm6VW/XZTi+TDNlOxoJjlvtGSG0jCd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+vio3HGPWjMP06ZG7zQKD2KXfxPJIT5bbfpjRpYkXrAvAzMc5D3PGEB11K5IlsOy
-	 xQ2D07DrdlEcebx3XOm4hz8dg23pOXfRQYrPhFnhQvfJFetR+2oL78q1RzInU1Y/2a
-	 00OABTE6Yxi0vhobBAiwGo4st0XXL6bAM336YC68=
+	b=h0FHP+lQXbPR6fA55IYIjqACnLWpjN1l36xsxPVfoK4LUATc9MXPEXu24sqDV9SD5
+	 9A7WbAFZqe5XJuSA9PBwuiB/UOeQcELz7X9ZCKl8iLLM9U+sQsC5YcSRi08YY3oEWw
+	 XfDFyN6JGnWoCioYNRiIWURxS73e5xWVF8H1UF4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
 	kernel test robot <lkp@intel.com>,
-	Eric DeVolder <eric_devolder@yahoo.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kexin Liu <liukexin@kylinos.cn>,
+	George Guo <guodongtai@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1107/1674] loongarch, kexec: change dependency of object files
-Date: Sat, 17 Oct 2026 17:56:19 +0200
-Message-ID: <20261017160459.540923628@linuxfoundation.org>
+Subject: [PATCH 6.6 1108/1674] LoongArch: Fix address space mismatch in kexec command line lookup
+Date: Sat, 17 Oct 2026 17:56:20 +0200
+Message-ID: <20261017160459.566574565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,100 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: George Guo <guodongtai@kylinos.cn>
 
-[ Upstream commit 655fc6cd45521aba4a21c6e607533f1a21e06c2e ]
+[ Upstream commit 485ed44db5694d8d2e5027f63ad608e705286f30 ]
 
-Patch series "kexec: fix the incorrect ifdeffery and dependency of
-CONFIG_KEXEC".
+When searching the loaded segments for the "kexec" command line marker,
+the kexec_load(2) path (file_mode == 0) passes the user-space segment
+buffer straight to strncmp() through a bogus (char __user *) cast. This
+dereferences a user pointer in kernel context, which is wrong and is
+flagged by sparse:
 
-The select of KEXEC for CRASH_DUMP in kernel/Kconfig.kexec will be
-dropped, then compiling errors will be triggered if below config items are
-set:
+  arch/loongarch/kernel/machine_kexec.c:84:51: sparse: incorrect type in
+  argument 2 (different address spaces) @@ expected char const * @@ got
+  char [noderef] __user *
 
-===
-CONFIG_CRASH_CORE=y
-CONFIG_KEXEC_CORE=y
-CONFIG_CRASH_DUMP=y
-===
+Here copy the marker-sized prefix of each segment into a small on-stack
+buffer with copy_from_user() before comparing, and skip segments that
+fault. The subsequent copy_from_user() that stages the full command line
+into the safe area is left unchanged.
 
-E.g on mips, below link error are seen:
---------------------------------------------------------------------
-mipsel-linux-ld: kernel/kexec_core.o: in function `kimage_free':
-kernel/kexec_core.c:(.text+0x2200): undefined reference to `machine_kexec_cleanup'
-mipsel-linux-ld: kernel/kexec_core.o: in function `__crash_kexec':
-kernel/kexec_core.c:(.text+0x2480): undefined reference to `machine_crash_shutdown'
-mipsel-linux-ld: kernel/kexec_core.c:(.text+0x2488): undefined reference to `machine_kexec'
-mipsel-linux-ld: kernel/kexec_core.o: in function `kernel_kexec':
-kernel/kexec_core.c:(.text+0x29b8): undefined reference to `machine_shutdown'
-mipsel-linux-ld: kernel/kexec_core.c:(.text+0x29c0): undefined reference to `machine_kexec'
---------------------------------------------------------------------
-
-Here, change the incorrect dependency of building kexec_core related
-object files, and the ifdeffery on architectures from CONFIG_KEXEC to
-CONFIG_KEXEC_CORE.
-
-Testing:
-========
-Passed on mips and loognarch with the LKP reproducer.
-
-This patch (of 5):
-
-Currently, in arch/loongarch/kernel/Makefile, building machine_kexec.o
-relocate_kernel.o depends on CONFIG_KEXEC.
-
-Whereas, since we will drop the select of KEXEC for CRASH_DUMP in
-kernel/Kconfig.kexec, compiling error will be triggered if below config
-items are set:
-
-===
-CONFIG_CRASH_CORE=y
-CONFIG_KEXEC_CORE=y
-CONFIG_CRASH_DUMP=y
-===
-
----------------------------------------------------------------
-loongarch64-linux-ld: kernel/kexec_core.o: in function `.L209':
->> kexec_core.c:(.text+0x1660): undefined reference to `machine_kexec_cleanup'
-   loongarch64-linux-ld: kernel/kexec_core.o: in function `.L287':
->> kexec_core.c:(.text+0x1c5c): undefined reference to `machine_crash_shutdown'
->> loongarch64-linux-ld: kexec_core.c:(.text+0x1c64): undefined reference to `machine_kexec'
-   loongarch64-linux-ld: kernel/kexec_core.o: in function `.L2^B5':
->> kexec_core.c:(.text+0x2090): undefined reference to `machine_shutdown'
-   loongarch64-linux-ld: kexec_core.c:(.text+0x20a0): undefined reference to `machine_kexec'
----------------------------------------------------------------
-
-Here, change the dependency of machine_kexec.o relocate_kernel.o to
-CONFIG_KEXEC_CORE can fix above building error.
-
-Link: https://lkml.kernel.org/r/20231208073036.7884-1-bhe@redhat.com
-Link: https://lkml.kernel.org/r/20231208073036.7884-2-bhe@redhat.com
-Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 4a03b2ac06a5 ("LoongArch: Add kexec support")
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311300946.kHE9Iu71-lkp@intel.com/
-Cc: Eric DeVolder <eric_devolder@yahoo.com>
-Cc: Ignat Korchagin <ignat@cloudflare.com>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 485ed44db569 ("LoongArch: Fix address space mismatch in kexec command line lookup")
+Closes: https://lore.kernel.org/oe-kbuild-all/202605051639.aEPioXdD-lkp@intel.com/
+Co-developed-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/machine_kexec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/Makefile b/arch/loongarch/kernel/Makefile
-index 4fcc168f07323..3c808c6803703 100644
---- a/arch/loongarch/kernel/Makefile
-+++ b/arch/loongarch/kernel/Makefile
-@@ -57,7 +57,7 @@ obj-$(CONFIG_MAGIC_SYSRQ)	+= sysrq.o
+diff --git a/arch/loongarch/kernel/machine_kexec.c b/arch/loongarch/kernel/machine_kexec.c
+index ce4e132ac1373..7c93e9d1f020b 100644
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -62,6 +62,7 @@ static void kexec_image_info(const struct kimage *kimage)
+ int machine_kexec_prepare(struct kimage *kimage)
+ {
+ 	int i;
++	char head[8];
+ 	char *bootloader = "kexec";
+ 	void *cmdline_ptr = (void *)KEXEC_CMDLINE_ADDR;
  
- obj-$(CONFIG_RELOCATABLE)	+= relocate.o
+@@ -72,7 +73,9 @@ int machine_kexec_prepare(struct kimage *kimage)
  
--obj-$(CONFIG_KEXEC)		+= machine_kexec.o relocate_kernel.o
-+obj-$(CONFIG_KEXEC_CORE)	+= machine_kexec.o relocate_kernel.o
- obj-$(CONFIG_CRASH_DUMP)	+= crash_dump.o
- 
- obj-$(CONFIG_UNWINDER_GUESS)	+= unwind_guess.o
+ 	/* Find the command line */
+ 	for (i = 0; i < kimage->nr_segments; i++) {
+-		if (!strncmp(bootloader, (char __user *)kimage->segment[i].buf, strlen(bootloader))) {
++		if (copy_from_user(head, kimage->segment[i].buf, strlen(bootloader)))
++			continue;
++		if (!strncmp(bootloader, head, strlen(bootloader))) {
+ 			if (!copy_from_user(cmdline_ptr, kimage->segment[i].buf, COMMAND_LINE_SIZE))
+ 				kimage->arch.cmdline_ptr = (unsigned long)cmdline_ptr;
+ 			break;
 -- 
 2.53.0
 
