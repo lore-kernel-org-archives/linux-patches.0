@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC63BAD9A;
-	Sat, 17 Oct 2026 17:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0643A1D01;
+	Sat, 17 Oct 2026 17:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257924; cv=none; b=ZYyOPbW/ka/wQ6zhgfowqHC93GAyKhqnrRD7n71oZcBWPfRGry5WLzIAr0LjgHjkqXyi9S4ta7TIz5KwowtxyC3EE01JOy0J5SbRrQoPIYN5moc6tZNXpO9XpjDtnyGfAzOnUEs9TBqY+YoxG2kazflnYqzdN6LvmVD1G3KRXoU=
+	t=1792257927; cv=none; b=gxsWfBQaI54KS377x2b3oyvgtceX3T6Ut1sk+ryU/kDzZbTPE+dmq72IIP/jELuRjbV4asCecgcUmsGx3iouYQH8tJ38TsVG9wdnnjLa7KGOqZ2BdXXLTF+KMn7BJNRHVjIy8/CVFdP+o9eLRAHNHr/ikCl0mthQRNT0S1zeNIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257924; c=relaxed/simple;
-	bh=ks8yyPew0oB58o2/HGy85W3hBa8nPuST7Twi0vTQ/A0=;
+	s=arc-20240116; t=1792257927; c=relaxed/simple;
+	bh=fot4ruM0UJvpVMDThG6X+/ApWaZpFa1071D16Bgb/Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZBD+ewm4XrXnj2AIR46zRX9FVSwLnR8WNCbYi6kUkuni4JSPZ34vdn0LzPqQa4jkCYYlDOHd1grPsH/zAxrU9SrfypXlanUQAWcVcmzzfkIg0xMpUoU+NRN1P6BXQOZXMbbCIn9PJt4sWMyua5O6WP9QA8hm7J2zdHGvUYZjXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7ETXcfa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fbfbf08cuUK1hIFbQhqzOT9Uih+AbYpNsfy0Z/yzaKJlYZnEQnljtLCjqwHoy4B/EtPIvfM3ljx289WGuGZWFrnlDKMBq/+zwTRrNJbilXJV6KYQeG1q998jjgYmwrooWx712W0Bw/oy777KEVZPpczrriBw9FNLCOJrYVZULzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TM0VRMNd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7ETXcfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C62A1F000C4;
-	Sat, 17 Oct 2026 17:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TM0VRMNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1D41F000C4;
+	Sat, 17 Oct 2026 17:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257922;
-	bh=uCWOisVprwlkV1Nde8g3Ds9CYVeCX5odVpE6+iX2qcg=;
+	s=korg; t=1792257925;
+	bh=BKBTu+viAsrO+MU92pgru/zUDwjONVcZn6HdqdudW18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D7ETXcfa4Mev29C9Gg2Scd82T0b5UJx2yvyzOv3E/osCKUeCYFpdmeVvT5f3HY9PN
-	 vVNwPXvefR2wAR9SnOZCNJGSnKR2aZb7yVH0E9ZXyTKS5lylD0jcBgzUU47UB6+Q3N
-	 fQ4kftY3YqUPwBg0e1yQ0k5q0756MYXIfhM1Vdh8=
+	b=TM0VRMNdNud4UW3imzdL8W81Z339A3kqZYpUEzkuutZaz/m3I1V+xsBDLyK1oJUOU
+	 OVBpPlCeI+edMO/Loibxccmb2yptlcN8yW1jxWgPbPNha6aPd5Hb5BMKrIO2UtzLrN
+	 RuMQ/5G2fBLLbIkFxabyhiUeD29JiKWE834PO1eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	"Yi Lai" <yi1.lai@linux.intel.com>,
+	syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0715/1674] wifi: ath12k: Avoid memory leak while enabling statistics
-Date: Sat, 17 Oct 2026 17:49:47 +0200
-Message-ID: <20261017160449.460838325@linuxfoundation.org>
+Subject: [PATCH 6.6 0716/1674] perf: Fix hang while freeing sigtrap event
+Date: Sat, 17 Oct 2026 17:49:48 +0200
+Message-ID: <20261017160449.486404776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,153 +53,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit ecfc131389923405be8e7a6f4408fd9321e4d19b ]
+[ Upstream commit 56799bc035658738f362acec3e7647bb84e68933 ]
 
-Driver uses monitor destination rings for extended statistics mode and
-standalone monitor mode. In extended statistics mode, TLVs are parsed from
-the buffer received from the monitor destination ring and assigned to the
-ppdu_info structure to update per-packet statistics. In standalone monitor
-mode, along with per-packet statistics, the packet data (payload) is
-captured, and the driver updates per MSDU to mac80211.
+Perf can hang while freeing a sigtrap event if a related deferred
+signal hadn't managed to be sent before the file got closed:
 
-When the AP interface is enabled, only extended statistics mode is
-activated. As part of enabling monitor rings for collecting statistics,
-the driver subscribes to HAL_RX_MPDU_START TLV in the filter
-configuration. This TLV is received from the monitor destination ring, and
-kzalloc for the mon_mpdu object occurs, which is not freed, leading to a
-memory leak. The kzalloc for the mon_mpdu object is only required while
-enabling the standalone monitor interface. This causes a memory leak while
-enabling extended statistics mode in the driver.
+perf_event_overflow()
+   task_work_add(perf_pending_task)
 
-Fix this memory leak by removing the kzalloc for the mon_mpdu object in
-the HAL_RX_MPDU_START TLV handling. Additionally, remove the standalone
-monitor mode handlings in the HAL_MON_BUF_ADDR and HAL_RX_MSDU_END TLVs.
-These TLV tags will be handled properly when enabling standalone monitor
-mode in the future.
+fput()
+   task_work_add(____fput())
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+task_work_run()
+    ____fput()
+        perf_release()
+            perf_event_release_kernel()
+                _free_event()
+                    perf_pending_task_sync()
+                        task_work_cancel() -> FAILED
+                        rcuwait_wait_event()
 
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Link: https://patch.msgid.link/20241223060132.3506372-13-quic_ppranees@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Once task_work_run() is running, the list of pending callbacks is
+removed from the task_struct and from this point on task_work_cancel()
+can't remove any pending and not yet started work items, hence the
+task_work_cancel() failure and the hang on rcuwait_wait_event().
+
+Task work could be changed to remove one work at a time, so a work
+running on the current task can always cancel a pending one, however
+the wait / wake design is still subject to inverted dependencies when
+remote targets are involved, as pictured by Oleg:
+
+T1                                                      T2
+
+fd = perf_event_open(pid => T2->pid);                  fd = perf_event_open(pid => T1->pid);
+close(fd)                                              close(fd)
+    <IRQ>                                                  <IRQ>
+    perf_event_overflow()                                  perf_event_overflow()
+       task_work_add(perf_pending_task)                        task_work_add(perf_pending_task)
+    </IRQ>                                                 </IRQ>
+    fput()                                                 fput()
+        task_work_add(____fput())                              task_work_add(____fput())
+
+    task_work_run()                                        task_work_run()
+        ____fput()                                             ____fput()
+            perf_release()                                         perf_release()
+                perf_event_release_kernel()                            perf_event_release_kernel()
+                    _free_event()                                          _free_event()
+                        perf_pending_task_sync()                               perf_pending_task_sync()
+                            rcuwait_wait_event()                                   rcuwait_wait_event()
+
+Therefore the only option left is to acquire the event reference count
+upon queueing the perf task work and release it from the task work, just
+like it was done before 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+but without the leaks it fixed.
+
+Some adjustments are necessary to make it work:
+
+* A child event might dereference its parent upon freeing. Care must be
+  taken to release the parent last.
+
+* Some places assuming the event doesn't have any reference held and
+  therefore can be freed right away must instead put the reference and
+  let the reference counting to its job.
+
+Reported-by: "Yi Lai" <yi1.lai@linux.intel.com>
+Closes: https://lore.kernel.org/all/Zx9Losv4YcJowaP%2F@ly-workstation/
+Reported-by: syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/673adf75.050a0220.87769.0024.GAE@google.com/
+Fixes: 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250304135446.18905-1-frederic@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 64 ++++--------------------
- drivers/net/wireless/ath/ath12k/hal_rx.h |  3 ++
- 2 files changed, 12 insertions(+), 55 deletions(-)
+ include/linux/perf_event.h |  1 -
+ kernel/events/core.c       | 60 ++++++++++++--------------------------
+ 2 files changed, 18 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 90fc77250581c..0116fa963a36a 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -738,7 +738,6 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 	case HAL_RX_MPDU_START: {
- 		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
--		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
- 		u16 peer_id;
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index 58746c090859b..72642a021964e 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -786,7 +786,6 @@ struct perf_event {
+ 	struct irq_work			pending_irq;
+ 	struct callback_head		pending_task;
+ 	unsigned int			pending_work;
+-	struct rcuwait			pending_work_wait;
  
- 		info[1] = __le32_to_cpu(mpdu_start->info1);
-@@ -755,65 +754,17 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO1_PEERID);
+ 	atomic_t			event_limit;
+ 
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 3169742fd98ad..ad0e04e3e5777 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2312,6 +2312,7 @@ event_sched_out(struct perf_event *event, struct perf_event_context *ctx)
+ 		    !event->pending_work &&
+ 		    !task_work_add(current, &event->pending_task, TWA_RESUME)) {
+ 			event->pending_work = 1;
++			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+ 		} else {
+ 			local_dec(&event->ctx->nr_pending);
  		}
+@@ -5226,35 +5227,9 @@ static bool exclusive_event_installable(struct perf_event *event,
+ static void perf_addr_filters_splice(struct perf_event *event,
+ 				       struct list_head *head);
  
--		mon_mpdu = kzalloc(sizeof(*mon_mpdu), GFP_ATOMIC);
--		if (!mon_mpdu)
--			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
+-static void perf_pending_task_sync(struct perf_event *event)
+-{
+-	struct callback_head *head = &event->pending_task;
 -
- 		break;
- 	}
- 	case HAL_RX_MSDU_START:
- 		/* TODO: add msdu start parsing logic */
- 		break;
--	case HAL_MON_BUF_ADDR: {
--		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
--		const struct dp_mon_packet_info *packet_info = tlv_data;
--		int buf_id = u32_get_bits(packet_info->cookie,
--					  DP_RXDMA_BUF_COOKIE_BUF_ID);
--		struct sk_buff *msdu;
--		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
--		struct ath12k_skb_rxcb *rxcb;
--
--		spin_lock_bh(&buf_ring->idr_lock);
--		msdu = idr_remove(&buf_ring->bufs_idr, buf_id);
--		spin_unlock_bh(&buf_ring->idr_lock);
--
--		if (unlikely(!msdu)) {
--			ath12k_warn(ab, "monitor destination with invalid buf_id %d\n",
--				    buf_id);
--			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
--		}
--
--		rxcb = ATH12K_SKB_RXCB(msdu);
--		dma_unmap_single(ab->dev, rxcb->paddr,
--				 msdu->len + skb_tailroom(msdu),
--				 DMA_FROM_DEVICE);
--
--		if (mon_mpdu->tail)
--			mon_mpdu->tail->next = msdu;
--		else
--			mon_mpdu->tail = msdu;
--
--		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
--
--		break;
+-	if (!event->pending_work)
+-		return;
+-	/*
+-	 * If the task is queued to the current task's queue, we
+-	 * obviously can't wait for it to complete. Simply cancel it.
+-	 */
+-	if (task_work_cancel(current, head)) {
+-		event->pending_work = 0;
+-		local_dec(&event->ctx->nr_pending);
+-		return;
 -	}
--	case HAL_RX_MSDU_END: {
--		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
--		bool is_first_msdu_in_mpdu;
--		u16 msdu_end_info;
 -
--		msdu_end_info = __le16_to_cpu(msdu_end->info5);
--		is_first_msdu_in_mpdu = u32_get_bits(msdu_end_info,
--						     RX_MSDU_END_INFO5_FIRST_MSDU);
--		if (is_first_msdu_in_mpdu) {
--			pmon->mon_mpdu->head = pmon->mon_mpdu->tail;
--			pmon->mon_mpdu->tail = NULL;
--		}
--		break;
--	}
-+	case HAL_MON_BUF_ADDR:
-+		return HAL_RX_MON_STATUS_BUF_ADDR;
-+	case HAL_RX_MSDU_END:
-+		return HAL_RX_MON_STATUS_MSDU_END;
- 	case HAL_RX_MPDU_END:
--		list_add_tail(&pmon->mon_mpdu->list, &pmon->dp_rx_mon_mpdu_list);
--		break;
-+		return HAL_RX_MON_STATUS_MPDU_END;
- 	case HAL_DUMMY:
- 		return HAL_RX_MON_STATUS_BUF_DONE;
- 	case HAL_RX_PPDU_END_STATUS_DONE:
-@@ -1190,7 +1141,10 @@ ath12k_dp_mon_parse_rx_dest(struct ath12k_base *ab, struct ath12k_mon_data *pmon
- 		if ((ptr - skb->data) >= DP_RX_BUFFER_SIZE)
- 			break;
+-	/*
+-	 * All accesses related to the event are within the same
+-	 * non-preemptible section in perf_pending_task(). The RCU
+-	 * grace period before the event is freed will make sure all
+-	 * those accesses are complete by then.
+-	 */
+-	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
+-}
+-
+ static void _free_event(struct perf_event *event)
+ {
+ 	irq_work_sync(&event->pending_irq);
+-	perf_pending_task_sync(event);
  
--	} while (hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE);
-+	} while ((hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE) ||
-+		 (hal_status == HAL_RX_MON_STATUS_BUF_ADDR) ||
-+		 (hal_status == HAL_RX_MON_STATUS_MPDU_END) ||
-+		 (hal_status == HAL_RX_MON_STATUS_MSDU_END));
+ 	unaccount_event(event);
  
- 	return hal_status;
+@@ -5379,10 +5354,17 @@ static void perf_remove_from_owner(struct perf_event *event)
+ 
+ static void put_event(struct perf_event *event)
+ {
++	struct perf_event *parent;
++
+ 	if (!atomic_long_dec_and_test(&event->refcount))
+ 		return;
+ 
++	parent = event->parent;
+ 	_free_event(event);
++
++	/* Matches the refcount bump in inherit_event() */
++	if (parent)
++		put_event(parent);
  }
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
-index e9dd121aa4459..e99aa5b4b6526 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
-@@ -107,6 +107,9 @@ enum hal_rx_mon_status {
- 	HAL_RX_MON_STATUS_PPDU_NOT_DONE,
- 	HAL_RX_MON_STATUS_PPDU_DONE,
- 	HAL_RX_MON_STATUS_BUF_DONE,
-+	HAL_RX_MON_STATUS_BUF_ADDR,
-+	HAL_RX_MON_STATUS_MPDU_END,
-+	HAL_RX_MON_STATUS_MSDU_END,
- };
  
- #define HAL_RX_MAX_MPDU		256
+ /*
+@@ -5466,11 +5448,6 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		if (tmp == child) {
+ 			perf_remove_from_context(child, DETACH_GROUP);
+ 			list_move(&child->child_list, &free_list);
+-			/*
+-			 * This matches the refcount bump in inherit_event();
+-			 * this can't be the last reference.
+-			 */
+-			put_event(event);
+ 		} else {
+ 			var = &ctx->refcount;
+ 		}
+@@ -5496,7 +5473,8 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		void *var = &child->ctx->refcount;
+ 
+ 		list_del(&child->child_list);
+-		free_event(child);
++		/* Last reference unless ->pending_task work is pending */
++		put_event(child);
+ 
+ 		/*
+ 		 * Wake any perf_event_free_task() waiting for this event to be
+@@ -5507,7 +5485,11 @@ int perf_event_release_kernel(struct perf_event *event)
+ 	}
+ 
+ no_ctx:
+-	put_event(event); /* Must be the 'last' reference */
++	/*
++	 * Last reference unless ->pending_task work is pending on this event
++	 * or any of its children.
++	 */
++	put_event(event);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(perf_event_release_kernel);
+@@ -6912,11 +6894,6 @@ static void perf_pending_task(struct callback_head *head)
+ 	struct perf_event *event = container_of(head, struct perf_event, pending_task);
+ 	int rctx;
+ 
+-	/*
+-	 * All accesses to the event must belong to the same implicit RCU read-side
+-	 * critical section as the ->pending_work reset. See comment in
+-	 * perf_pending_task_sync().
+-	 */
+ 	preempt_disable_notrace();
+ 	/*
+ 	 * If we 'fail' here, that's OK, it means recursion is already disabled
+@@ -6928,12 +6905,13 @@ static void perf_pending_task(struct callback_head *head)
+ 		event->pending_work = 0;
+ 		perf_sigtrap(event);
+ 		local_dec(&event->ctx->nr_pending);
+-		rcuwait_wake_up(&event->pending_work_wait);
+ 	}
+ 
+ 	if (rctx >= 0)
+ 		perf_swevent_put_recursion_context(rctx);
+ 	preempt_enable_notrace();
++
++	put_event(event);
+ }
+ 
+ #ifdef CONFIG_GUEST_PERF_EVENTS
+@@ -12133,7 +12111,6 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+ 	init_waitqueue_head(&event->waitq);
+ 	init_irq_work(&event->pending_irq, perf_pending_irq);
+ 	init_task_work(&event->pending_task, perf_pending_task);
+-	rcuwait_init(&event->pending_work_wait);
+ 
+ 	mutex_init(&event->mmap_mutex);
+ 	raw_spin_lock_init(&event->addr_filters.lock);
+@@ -13292,8 +13269,7 @@ perf_event_exit_event(struct perf_event *event,
+ 		 * Kick perf_poll() for is_event_hup();
+ 		 */
+ 		perf_event_wakeup(parent_event);
+-		free_event(event);
+-		put_event(parent_event);
++		put_event(event);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
