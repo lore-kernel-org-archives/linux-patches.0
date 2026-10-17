@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8A2DF126;
-	Sat, 17 Oct 2026 18:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038C22DF126;
+	Sat, 17 Oct 2026 18:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260651; cv=none; b=MQlj0d5/dXB3qyXdQbkOGPWWEFJCtS5bLRlYMpFwNIZCfO136neYmo9gqWe4ck9B5PrHUmX2caT9lbusVLUXSyqKWeVt/I0qQmeM5L/F1UzIJw4k1HrxdAdIYLKydwnedLuUKBMC/NGbIlBS72P1uWAL2YoSaIklsrDEsc7qas4=
+	t=1792260654; cv=none; b=RF58hpN30YKYOg1ONolc2v67kVWiATpvkcJfF7AnRbbrj13SWZyb0FLv6ihHhYB8FWtHkM8v5Wpr2IOZkvR53R0XNPy07jSnnCMnQ2v4cllazxJQiEQH4tK24y5sl5Gfnv+dBF6zRD6CDbh24OeGH7nRWvlmEFbvaR9GfRKz3w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260651; c=relaxed/simple;
-	bh=PKERXLQutmzrhWsWYeKaghS/E60FWSb6S1v+SaXS+CA=;
+	s=arc-20240116; t=1792260654; c=relaxed/simple;
+	bh=GGWFwIX3e/FZW0RdUe/014GyPEMtHyPWMcM4RNImk1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADDBO5A2mBdFhqnPp2GiAxilatl0Sh1ZiGpUX9LD/CIJmv7jSPd8LgbJev82Po+80RDJQmHitAjdNp5azpqEIfB6Bh21F6u2Aayr7vAh10DM6IOs2alrDLrHQ9yB7ct9qoMUfRxVlZFw7kefmo7rjUkn3eD8OV1XVhl/HHHxik0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GZZTPfr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A+ZS1Fkn/mTadBCh2lpp8FYCH9v+bZtbD8tMbytEfwLw0aXMMuJfM9jzOnA7RnWUcHl8Bfjf46yidagkaBlyVO3A+nVPazfoVqi3vUJV/AIYcFKOsSyhSaasRvtq3dRBqZqfZ1OM3DLq+aDjbmbF1dv2kSK+bwDTBMf4NHnPLrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt/+hh2f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GZZTPfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCB21F000C4;
-	Sat, 17 Oct 2026 18:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt/+hh2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597E71F000C4;
+	Sat, 17 Oct 2026 18:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260650;
-	bh=4ZFhM6iJH9Y8pF4fgWsmEFhe1RJiWc7SIUMHB3+zqGc=;
+	s=korg; t=1792260652;
+	bh=D1u5/hMcl7OZoG+kIylluJasBXa0Ks6RvjfBcqTQVqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2GZZTPfrf+FEVfslUtsmZmT00rEX9hccvH5hA+orSnZyl8lk3h4lMUWnt+N0LjysN
-	 /CMxNGGyoiy7XHlcQuTjef12VWKCP5zEFBIhrHh/fFPMYn1tJYu4hu5JZkRebr1NCr
-	 WQ5buMP4TpfiqnrdDEEHSOrvK3np8zWaDmvBtu0k=
+	b=pt/+hh2fMg1xxZZ3gdxHPcIvVDODf5hUHUnAdUzsCIx9q+HAlWpMX0zJ6Ntl1eD5+
+	 cRyx0ee46NSZIgUDOMdsRkDtasreeFksOxU0KZdP5Bd7a6l+4v3WedS3s6HAGmU7Gj
+	 xusg8ZJa2fKKPviyixOScPyuJ4+U5fT3MXIbt6Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com,
-	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1614/1674] Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()
-Date: Sat, 17 Oct 2026 18:04:46 +0200
-Message-ID: <20261017160512.512820051@linuxfoundation.org>
+Subject: [PATCH 6.6 1615/1674] eth: ice: dont dereference pointers from TP_printk()
+Date: Sat, 17 Oct 2026 18:04:47 +0200
+Message-ID: <20261017160512.538607872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,105 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 9b851b09b392da68bd715601f10a5adb2d8d19b8 ]
+[ Upstream commit b8bf9bfda5f62e11444e483c2b4aaff90c5cfc6b ]
 
-A NULL pointer dereference in klist_put() occurs when a child device (such
-as a BNEP network device in bnep_session) is concurrently being
-unregistered while hci_conn_del_sysfs() reparents child devices.
+After forwarding net-next during the v7.3 merge window we started
+seeing:
 
-This is caused by a race condition between hci_conn_del_sysfs() and
-concurrent child device unregistration (e.g. bnep_session calling
-unregister_netdev()). During device unregistration, device_del() snapshots
-a non-NULL parent pointer. Concurrently, hci_conn_del_sysfs() finds the
-child device using device_find_any_child() and calls device_move() to
-reparent it to NULL, which removes the node from its parent's klist and
-clears knode_parent. Subsequently, device_del() calls
-klist_del(&dev->p->knode_parent) using the stale parent snapshot, causing
-klist_put() to dereference knode_klist(n)->put on an already removed node,
-resulting in a NULL pointer dereference.
+  TRACE EVENT ERROR: Event ice_tx_dim_work has double dereference in TP_printk: REC->q_vector->tx.tx_ring->q_index
+  WARNING: kernel/trace/trace_events.c:420 at test_double_dereference.cold+0x39/0x4b
 
-This race was introduced by commit 27aabf27fd01 ("Bluetooth: fix
-use-after-free in device_for_each_child()"), which replaced
-device_find_child(..., __match_tty) with device_find_any_child() in
-hci_conn_del_sysfs(). That change was intended to avoid a use-after-free
-where conn->dev outlived its parent hdev->dev when child devices held
-references to conn->dev, because conn->dev only held a reference to
-hdev->dev while registered in sysfs.
+this is due to extra checks added in tracing subsystem in
+commit b5cc230af5e5 ("tracing: Warn when an event dereferences a pointer in TP_printk()").
 
-Fix the issue properly by taking an explicit reference to the parent device
-with get_device(&hdev->dev) in hci_conn_init_sysfs() and dropping it with
-put_device(parent) in bt_link_release() when the conn device is freed. This
-ensures that hdev->dev remains valid for the entire lifecycle of conn->dev,
-resolving the underlying use-after-free. With the parent reference held
-properly, restore the __match_tty filter in hci_conn_del_sysfs() so that
-device_move() is only invoked on persistent RFCOMM TTY devices as
-originally intended, eliminating the race condition with unregistering
-network devices.
+Printing happens long after the event was recorded, by which point
+the pointers may be invalid (the ring or the dim instance).
+Copy the eight scalars into the event instead.
 
-Fixes: 27aabf27fd01 ("Bluetooth: fix use-after-free in device_for_each_child()")
-Assisted-by: Gemini:gemini-3.7-flash syzbot
-Reported-by: syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6df45dd3d03e1a9aca96
-Link: https://syzkaller.appspot.com/ai_job?id=f1c0e740-db21-40af-a9ff-84db0fd8b8bd
-Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3089cf6d3caa ("ice: add tracepoints")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_trace.h | 64 ++++++++++++++--------
+ 1 file changed, 42 insertions(+), 22 deletions(-)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index 60350c6723cb7..feb4f1302b375 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -13,7 +13,10 @@ static const struct class bt_class = {
- static void bt_link_release(struct device *dev)
- {
- 	struct hci_conn *conn = to_hci_conn(dev);
-+	struct device *parent = dev->parent;
-+
- 	kfree(conn);
-+	put_device(parent);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_trace.h b/drivers/net/ethernet/intel/ice/ice_trace.h
+index a41e210a310d1..aac117b8d4438 100644
+--- a/drivers/net/ethernet/intel/ice/ice_trace.h
++++ b/drivers/net/ethernet/intel/ice/ice_trace.h
+@@ -63,23 +63,33 @@
+ DECLARE_EVENT_CLASS(ice_rx_dim_template,
+ 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
+ 		    TP_ARGS(q_vector, dim),
+-		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
+-				     __field(struct dim *, dim)
++		    TP_STRUCT__entry(__field(u16, q_index)
++				     __field(u8, state)
++				     __field(u8, profile_ix)
++				     __field(u8, tune_state)
++				     __field(u8, steps_right)
++				     __field(u8, steps_left)
++				     __field(u8, tired)
+ 				     __string(devname, q_vector->rx.rx_ring->netdev->name)),
  
- static const struct device_type bt_link = {
-@@ -21,6 +24,16 @@ static const struct device_type bt_link = {
- 	.release = bt_link_release,
- };
+-		    TP_fast_assign(__entry->q_vector = q_vector;
+-				   __entry->dim = dim;
++		    TP_fast_assign(__entry->q_index = q_vector->rx.rx_ring->q_index;
++				   __entry->state = dim->state;
++				   __entry->profile_ix = dim->profile_ix;
++				   __entry->tune_state = dim->tune_state;
++				   __entry->steps_right = dim->steps_right;
++				   __entry->steps_left = dim->steps_left;
++				   __entry->tired = dim->tired;
+ 				   __assign_str(devname, q_vector->rx.rx_ring->netdev->name);),
  
-+/*
-+ * The rfcomm tty device will possibly retain even when conn
-+ * is down, and sysfs doesn't support move zombie device,
-+ * so we should move the device before conn device is destroyed.
-+ */
-+static int __match_tty(struct device *dev, void *data)
-+{
-+	return !strncmp(dev_name(dev), "rfcomm", 6);
-+}
-+
- void hci_conn_init_sysfs(struct hci_conn *conn)
- {
- 	struct hci_dev *hdev = conn->hdev;
-@@ -29,7 +42,7 @@ void hci_conn_init_sysfs(struct hci_conn *conn)
+ 		    TP_printk("netdev: %s Rx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
+ 			      __get_str(devname),
+-			      __entry->q_vector->rx.rx_ring->q_index,
+-			      __entry->dim->state,
+-			      __entry->dim->profile_ix,
+-			      __entry->dim->tune_state,
+-			      __entry->dim->steps_right,
+-			      __entry->dim->steps_left,
+-			      __entry->dim->tired)
++			      __entry->q_index,
++			      __entry->state,
++			      __entry->profile_ix,
++			      __entry->tune_state,
++			      __entry->steps_right,
++			      __entry->steps_left,
++			      __entry->tired)
+ );
  
- 	conn->dev.type = &bt_link;
- 	conn->dev.class = &bt_class;
--	conn->dev.parent = &hdev->dev;
-+	conn->dev.parent = get_device(&hdev->dev);
+ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
+@@ -90,23 +100,33 @@ DEFINE_EVENT(ice_rx_dim_template, ice_rx_dim_work,
+ DECLARE_EVENT_CLASS(ice_tx_dim_template,
+ 		    TP_PROTO(struct ice_q_vector *q_vector, struct dim *dim),
+ 		    TP_ARGS(q_vector, dim),
+-		    TP_STRUCT__entry(__field(struct ice_q_vector *, q_vector)
+-				     __field(struct dim *, dim)
++		    TP_STRUCT__entry(__field(u16, q_index)
++				     __field(u8, state)
++				     __field(u8, profile_ix)
++				     __field(u8, tune_state)
++				     __field(u8, steps_right)
++				     __field(u8, steps_left)
++				     __field(u8, tired)
+ 				     __string(devname, q_vector->tx.tx_ring->netdev->name)),
  
- 	device_initialize(&conn->dev);
- }
-@@ -69,7 +82,7 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
- 	while (1) {
- 		struct device *dev;
+-		    TP_fast_assign(__entry->q_vector = q_vector;
+-				   __entry->dim = dim;
++		    TP_fast_assign(__entry->q_index = q_vector->tx.tx_ring->q_index;
++				   __entry->state = dim->state;
++				   __entry->profile_ix = dim->profile_ix;
++				   __entry->tune_state = dim->tune_state;
++				   __entry->steps_right = dim->steps_right;
++				   __entry->steps_left = dim->steps_left;
++				   __entry->tired = dim->tired;
+ 				   __assign_str(devname, q_vector->tx.tx_ring->netdev->name);),
  
--		dev = device_find_any_child(&conn->dev);
-+		dev = device_find_child(&conn->dev, NULL, __match_tty);
- 		if (!dev)
- 			break;
- 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
+ 		    TP_printk("netdev: %s Tx-Q: %d dim-state: %d dim-profile: %d dim-tune: %d dim-st-right: %d dim-st-left: %d dim-tired: %d",
+ 			      __get_str(devname),
+-			      __entry->q_vector->tx.tx_ring->q_index,
+-			      __entry->dim->state,
+-			      __entry->dim->profile_ix,
+-			      __entry->dim->tune_state,
+-			      __entry->dim->steps_right,
+-			      __entry->dim->steps_left,
+-			      __entry->dim->tired)
++			      __entry->q_index,
++			      __entry->state,
++			      __entry->profile_ix,
++			      __entry->tune_state,
++			      __entry->steps_right,
++			      __entry->steps_left,
++			      __entry->tired)
+ );
+ 
+ DEFINE_EVENT(ice_tx_dim_template, ice_tx_dim_work,
 -- 
 2.53.0
 
