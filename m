@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C02A38F253;
-	Sat, 17 Oct 2026 16:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBDC382F25;
+	Sat, 17 Oct 2026 16:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253215; cv=none; b=UPI7TJLLzHkhKclKF3N0l79S2IvreOQ5TE1beWq3g+W++fKYG3fxpllJtfzzgrb3ZxHB9DmmIIERwZL7q5DMj94YGf0JETshJ3Pg+4U8YDzRrVlwQqrYqAB9u2+szRZs6SS52RiYELhu4BTlJe6iDeBH8Yy1I5DiOn3zQn0Z1rw=
+	t=1792253218; cv=none; b=ONsXtLnrfoYf2jfuuHC1MKnzeaaNq93huRmX3XL96+2zE2X+yRv+eHR6iLpxYeaSArconJsT7BMqDVhCEXVEQgC0/kV02sgRAPgy338K4yFXc2dO2+gAX/sYHNqlZ9R7PPvLszJZew+Ts+aAzv3R8aFR/S7Bp2CpfoTyh088jSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253215; c=relaxed/simple;
-	bh=58El7vIF4mnaYQGZ2BxXDiojevhhPEc4KM4OCPQ9MZY=;
+	s=arc-20240116; t=1792253218; c=relaxed/simple;
+	bh=dd/1CFK6b9Aqkq1CCc5mRzRr4xW0WOid6Psewg+RQn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awI6nO15hbcOFpFuEVrDbjDkZpUxvHMzj/sgNMp7uuMtgyYTwSANxXHptbyo3ZmuULsFDX6NIb1HbjbB4Z6EGX4KixYYnOE7T8Ud6ADcTMtbfFZKg9ori8IGBAHe08EQc2H1NV2CI+qQ1shAH4HtdO7FwXUem/AAvKLzLupIW20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mk423AVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TBi4yTnPmV5tOY1AUCURNS0P9UQ9d+cOtNjrwaFlj7BGa9K4QRegR/e6zgH7MxhCdalBO+21weGrBOmlbBpzbD0pxrHmS+B79ImoD+SG+GCRUjGtldYZtf88WKbpXfeWTrDtOW8FRDQIn4gEsx2LfFUm8MYEMmkXUhPf6HXV39g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7H12ciD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mk423AVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8191F000C4;
-	Sat, 17 Oct 2026 16:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7H12ciD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7627B1F000C4;
+	Sat, 17 Oct 2026 16:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253213;
-	bh=VNdvXQ/ng3Jtl9oZa4QhAPdlUFOtlDRyDr9Br0DviHs=;
+	s=korg; t=1792253217;
+	bh=RnhH4Hp74hlHW4j8EmyxdnDRbl3HJ2PW/WuYb/Glht8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mk423AVx3tTgvvcu/CtY0i71HnNHJhsiN3MXf8qQNz6BWfpY30KJ5q0ST/SQxROsk
-	 f59RJicsAbtIo0MkoOnzVKJ8xc/0TU4sB3W5ewRgfIyQ61ZGbNIdfyvaSJ7UXyltN2
-	 SINXYl/EzPjY4sE3j0twBLQYF44wBS9R30juESp8=
+	b=e7H12ciDWcVKomwN2K00iLKsFFX23SAoNCy8oDhEbu4X3oseG2BI0gLK4UZa7PiEx
+	 u8PxEURVD/4RpkbBGChC+uG6c6Cgt1fx9kYEp0wdxp0YipvcBF2VzjsZ4xTq2Wl2/3
+	 7JqWH9NAsSxHnCmbO4bjq8ZMT+Og6NU1hcZW3FVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/869] namespace: check the target before walking it in do_mount_setattr()
-Date: Sat, 17 Oct 2026 17:48:07 +0200
-Message-ID: <20261017160038.197518673@linuxfoundation.org>
+Subject: [PATCH 6.12 047/869] fcntl: refuse F_SET_RW_HINT on an immutable inode
+Date: Sat, 17 Oct 2026 17:48:08 +0200
+Message-ID: <20261017160038.223042058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,64 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 08f4288a37ef4b3d19b4a9599ec3048219cac828 ]
+[ Upstream commit b0d1022b9bdb1e98aa7fb3244fdd50a58c61766c ]
 
-When mount_setattr() changes the propagation type to MS_SHARED
-do_mount_setattr() takes namespace_sem and calls invent_group_ids()
-which walks the whole target tree with next_mnt() and allocates a peer
-group id for every mount that doesn't have one.
+An immutable inode is never written to so write hints are pointless.
+Refuse the hint on an immutable inode the way setattr(), fallocate() and
+etxattr() refuse their changes.
 
-Whether the caller may touch the target at all is only checked
-afterwards under mount_lock. If it may not, cleanup_group_ids() walks
-the tree a second time on the way out to free the ids again.
-
-A detached tree that a file descriptor keeps alive, a mount in another
-mount namespace or a mount below the root of an anonymous mount
-namespace does a bunch of allocation work that is completely useless
-because it will fail and revert right after.
-
-Do the right thing and check the target right after taking namespace_sem
-instead. A mount leaves its namespace only under namespace_sem so the
-mount stays stable. The check under mount_lock stays for the case where
-no propagation change is requested and namespace_sem isn't taken.
-Callers get the same EINVAL as before.
-
-Fixes: 2a1867219c7b ("fs: add mount_setattr()")
+Fixes: c75b1d9421f8 ("fs: add fcntl() interface for setting/getting write life time hints")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-5-f357abf3d17b@kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-3-dd44b89d44ce@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced unavailable anon_ns_root() with equivalent checks using existing mount and namespace helpers. ]
+[ sashal: Adjusted context due to the missing inode_owner_or_capable() check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/fcntl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 5cfceae507098..808a8e79a4863 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -4721,6 +4721,13 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr)
- 		 * propagation.
- 		 */
- 		namespace_lock();
-+		/* invent_group_ids() walks the tree, only walk a mounted one */
-+		if (!is_mounted(&mnt->mnt) ||
-+		    ((mnt_has_parent(mnt) || !is_anon_ns(mnt->mnt_ns)) &&
-+		     !check_mnt(mnt))) {
-+			namespace_unlock();
-+			return -EINVAL;
-+		}
- 		if (kattr->propagation == MS_SHARED) {
- 			err = invent_group_ids(mnt, kattr->recurse);
- 			if (err) {
-@@ -4733,6 +4740,7 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr)
- 	err = -EINVAL;
- 	lock_mount_hash();
+diff --git a/fs/fcntl.c b/fs/fcntl.c
+index c4cdee6a78005..cb40e1f661eb2 100644
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -374,6 +374,9 @@ static long fcntl_set_rw_hint(struct file *file, unsigned int cmd,
+ 	u64 __user *argp = (u64 __user *)arg;
+ 	u64 hint;
  
-+	/* Checked under namespace_sem already if the propagation changes. */
- 	/* Ensure that this isn't anything purely vfs internal. */
- 	if (!is_mounted(&mnt->mnt))
- 		goto out;
++	/* nothing is ever written to it */
++	if (IS_IMMUTABLE(inode))
++		return -EPERM;
+ 	if (copy_from_user(&hint, argp, sizeof(hint)))
+ 		return -EFAULT;
+ 	if (!rw_hint_valid(hint))
 -- 
 2.53.0
 
