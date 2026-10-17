@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EA33D994;
-	Sat, 17 Oct 2026 16:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5E51E520A;
+	Sat, 17 Oct 2026 16:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253123; cv=none; b=m9ozsLvpyaSHJI4NKfWjNH/rQm23TuRujwLboUmGxq7Nvyp02+zryUuDyc9Vpqv0UXS1mVPY+Pm+8Y0qFOsoBPvoFaFt5+kLNadqsi4GmWjvoxiq7PwNcOII1AxyFXcuFfAaF/h4epjYaeuSjSUwVMRnmrVAWht8j9mrbRrYna0=
+	t=1792253126; cv=none; b=iezEcLQ4emGx4ZfpWij9dypwAfEfz4wSER32F8MRoVGdbDyynHx1SxhNNsuYeE12kZgECFHx9DN1Kj5gsRHpWTsAZs6mbfCaZRQsx1sbSKisF37HdeHyAAslwCxrCiVELNeuRcNyNaA61UW77o4ap90pmTgPVynZEQHGg76km8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253123; c=relaxed/simple;
-	bh=y/45CGO1ZGyX1+vgaLYMmifQUdRH0rRDUdIXccu7vHc=;
+	s=arc-20240116; t=1792253126; c=relaxed/simple;
+	bh=RepmmlFNwZJuctBYeMfQyDY9wzp6MBExSxDBBiIz/30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Li48z18oCy34mHJv8qcG0DdfD8lzoYKWOxTDX9iE5KiSd9HWZXVQ+o13V6v408ktSe6HtHs0p5dxwwO1RmYaRx5SV7MD0QKTXDaXJTrTGvH9kdFTCm5MMSF1G2wIEq6KHgKghStOI2tPf06s97LinWuSXJV+3iSAQmiSc14Apao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNllVcwv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tuig1QtZRgEDYAgC887sJ+iIIeLiJggeD6ZvltY14ApdT2Di7G8GY3uNJRoWMn/69gRNplYZRb/KNpajwzYU0jqwq02JyhIxPpPJ8N1b13NZR3QllvKaTiMGmPDE7KSW3z3wVxqFFLymojuBWkc4zFdQCiOeyR4QXsNYV4FAne4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLNRP9NA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNllVcwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0631F000C4;
-	Sat, 17 Oct 2026 16:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLNRP9NA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72211F000C4;
+	Sat, 17 Oct 2026 16:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253122;
-	bh=ecHW/MUVm1+/9PWvqXuEXHPkvcRlF3ziPT2pgWgakmA=;
+	s=korg; t=1792253125;
+	bh=DqniPIpW7Y1hlrl2Xr9dzqSU+LuF3MZ5B2zUXsnTLvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNllVcwvWTDzV/b75pWIX22UBWgDN76WYURJegYSNtaWsq7ih2xw8X/l3584y4GRe
-	 Rz2VA18QSuLyUR1YLwlYx864DROMlcveaBZJXAG2l8pyEErA0Unf5DZpss/ZXm7C0d
-	 BiOTgtalDA11BRi8/w3SMhrEuDMDkHtYqOsN088Y=
+	b=gLNRP9NA+n2ENF6RPuaQlSweq+eKXQOtD5HDOW/S3vLuDJeIGVr9t/XTc5Sdy4qww
+	 QDCx+M/Q4aEu0TiFZ2EOiBNhWpnZ/Jqeh2q9FNNfS0/+4K/m4bPH57DD+U3b6rPqDR
+	 1MaChQ+4zxgGAuAlQnXgAaUyl8+xVEHoOKSNG4MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/869] usb: gadget: f_hid: Add missing error code
-Date: Sat, 17 Oct 2026 17:47:23 +0200
-Message-ID: <20261017160037.053793057@linuxfoundation.org>
+Subject: [PATCH 6.12 003/869] iommu/amd: Disable AMD IOMMU if CMPXCHG16B feature is not supported
+Date: Sat, 17 Oct 2026 17:47:24 +0200
+Message-ID: <20261017160037.080711452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,45 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit 2c863dbbeac7b919d4634ad886978a6731916de3 ]
+[ Upstream commit 82582f85ed22ba6cd27fea76b4248745f3b9fdf7 ]
 
-Currently in cdev_alloc() error path no error code is assigned.
+According to the AMD IOMMU spec, IOMMU hardware reads the entire DTE
+in a single 256-bit transaction. It is recommended to update DTE using
+128-bit operation followed by an INVALIDATE_DEVTAB_ENTYRY command when
+the IV=1b or V=1b before the change.
 
-Assign error code '-ENOMEM'.
+According to the AMD BIOS and Kernel Developer's Guide (BDKG) dated back
+to family 10h Processor [1], which is the first introduction of AMD IOMMU,
+AMD processor always has CPUID Fn0000_0001_ECX[CMPXCHG16B]=1.
+Therefore, it is safe to assume cmpxchg128 is available with all AMD
+processor w/ IOMMU.
 
-Detected by Smatch:
-drivers/usb/gadget/function/f_hid.c:1291 hidg_bind()
-warn: missing error code 'status'
+In addition, the CMPXCHG16B feature has already been checked separately
+before enabling the GA, XT, and GAM modes. Consolidate the detection logic,
+and fail the IOMMU initialization if the feature is not supported.
 
-Fixes: 81ebd43cc0d6d ("usb: gadget: f_hid: don't call cdev_init while cdev in use")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
-Link: https://patch.msgid.link/20260402180008.64233-1-ethantidmore06@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://www.amd.com/content/dam/amd/en/documents/archived-tech-docs/programmer-references/31116.pdf
+
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20241118054937.5203-3-suravee.suthikulpanit@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/init.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 2f4a5d22aca4c..b5702ccb7b2f2 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1272,8 +1272,10 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index b9a14c3ef4402..faa46571f6c68 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1787,13 +1787,8 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
+ 		else
+ 			iommu->mmio_phys_end = MMIO_CNTR_CONF_OFFSET;
  
- 	/* create char device */
- 	hidg->cdev = cdev_alloc();
--	if (!hidg->cdev)
-+	if (!hidg->cdev) {
-+		status = -ENOMEM;
- 		goto fail_free_all;
+-		/*
+-		 * Note: GA (128-bit IRTE) mode requires cmpxchg16b supports.
+-		 * GAM also requires GA mode. Therefore, we need to
+-		 * check cmpxchg16b support before enabling it.
+-		 */
+-		if (!boot_cpu_has(X86_FEATURE_CX16) ||
+-		    ((h->efr_attr & (0x1 << IOMMU_FEAT_GASUP_SHIFT)) == 0))
++		/* GAM requires GA mode. */
++		if ((h->efr_attr & (0x1 << IOMMU_FEAT_GASUP_SHIFT)) == 0)
+ 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
+ 		break;
+ 	case 0x11:
+@@ -1803,13 +1798,8 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
+ 		else
+ 			iommu->mmio_phys_end = MMIO_CNTR_CONF_OFFSET;
+ 
+-		/*
+-		 * Note: GA (128-bit IRTE) mode requires cmpxchg16b supports.
+-		 * XT, GAM also requires GA mode. Therefore, we need to
+-		 * check cmpxchg16b support before enabling them.
+-		 */
+-		if (!boot_cpu_has(X86_FEATURE_CX16) ||
+-		    ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0)) {
++		/* XT and GAM require GA mode. */
++		if ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0) {
+ 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
+ 			break;
+ 		}
+@@ -3106,6 +3096,11 @@ static int __init early_amd_iommu_init(void)
+ 		return -EINVAL;
+ 	}
+ 
++	if (!boot_cpu_has(X86_FEATURE_CX16)) {
++		pr_err("Failed to initialize. The CMPXCHG16B feature is required.\n");
++		return -EINVAL;
 +	}
- 	hidg->cdev->ops = &f_hidg_fops;
- 
- 	status = cdev_device_add(hidg->cdev, &hidg->dev);
++
+ 	/*
+ 	 * Validate checksum here so we don't need to do it when
+ 	 * we actually parse the table
 -- 
 2.53.0
 
