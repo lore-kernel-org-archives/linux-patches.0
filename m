@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0402C1F16B;
-	Sat, 17 Oct 2026 17:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C538F233;
+	Sat, 17 Oct 2026 17:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258516; cv=none; b=Ln90QnSiPHOtIyPhu3BGxRxmwRTOcl2RQfpBD6PdRGZud2IN72Pw5hMPGIjjxnZnVi3HgNQ3Ga/AOP4j3RTRoqPyeg0+1QDmR/Nl/fbM2UAFSX4f6ESnur+GOVkCtqAK+1A53HDQoW1D6cIclXT8CEhrK7MKNl/YKN4gYSO64yo=
+	t=1792258518; cv=none; b=KJauoYpcIXACpwMGYCYxRr+UHG92CMHichUgGNBwJ7IlxLGOAmRoaqe2kUuiV/fXRMxrSgzBNv1ZYU0V3nX1KjZ487RA1jMB3GwZVJb80++hlYvka1TuW5/nv6uxhw+xN7icXJJBL4f20nagFFmy/TGiOLq33oKh3XVIcwdBSRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258516; c=relaxed/simple;
-	bh=nZoI3tgowUf+JTgSvHSI/fsk2i8ib1JjfJsAk2sllHM=;
+	s=arc-20240116; t=1792258518; c=relaxed/simple;
+	bh=YNxLGhyrAx/K5pKZ61tIe9qF53+bHG06nGOgQKadlqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWxktiVnLxb0Fgs22S85mRRyLCrunSbbwfKmH0r1xfiGJkm1fDGcJslJN791RhBJYOFsL1oRe0JYs6ptcEiTkIeFuA5hiPyzoVFBtXfq8ocQuGIkklXKTnVw59dLTbJ+ATS81FguAottExPHo9c9nA5Qr+4iqebuL39AoJLXGgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsdtKAkD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=az3+aTuw4WTovCEnZZptNee3mar1+S2VThtUBkhALGdZisU06i72nFC6BuihVWPy4rDP1Gh5L2sj4ArbviP5icwD7FmNL8ZcOkiyCAh45GzXPovr1+FdX+uOiRlkDC4SYz5MFgJmupImnQBx7qRDqGCQtat++Vr1bQCsA219mTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsjJn2pu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsdtKAkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBF11F000C4;
-	Sat, 17 Oct 2026 17:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsjJn2pu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418B51F000C5;
+	Sat, 17 Oct 2026 17:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258514;
-	bh=QZ1U2v2y13yXbDH4xzDpfvEHzDfs2bZnkpK7qWFxvx4=;
+	s=korg; t=1792258517;
+	bh=0MbZgBaRMu1Z4/Vfy0YtzJslEQJb/tl/PKaGmnyAEmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsdtKAkDZeg6//pLEf0zNxv/fa+SC7uoysu3ntUANh/pgR8Gkhm//jRwMrgyffWYZ
-	 MpqYcCIlOVF1h7Bw+bz+pvFuJPY/Z8M082i1Lgcei9uDX3yppdd70tAvwVtc0G1rgr
-	 cmjq1zKOEPlssiw6KeODPIOxMcTtsX5U5piZpO/w=
+	b=KsjJn2pu+2cRwwBuqBTO+UOrlqZLgdFCMt+BiotqwZhZ5ejUuwfs6REkm1MT40SZA
+	 JnGJK8cfbQdVtPG4qI8XeIwGiqJqHAezdI6zs7dO9rPfFU6Q73x1JaedqJ3lg8RYsg
+	 Cy9wPKwQNmzU2dvgXeWuQeaXZwbbp5k0bpyrZfaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Justin Iurman <justin.iurman@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0910/1674] net: ioam6: fix OOB and missing lock
-Date: Sat, 17 Oct 2026 17:53:02 +0200
-Message-ID: <20261017160454.490622617@linuxfoundation.org>
+Subject: [PATCH 6.6 0911/1674] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
+Date: Sat, 17 Oct 2026 17:53:03 +0200
+Message-ID: <20261017160454.517495983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,63 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b30b1675aa2bcf0491fd3830b051df4e08a7c8ca ]
+[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
 
-When trace->type.bit6 is set:
+We need to check __in6_dev_get() for possible NULL value, as
+suggested by Yiming Qian.
 
-    if (trace->type.bit6) {
-        ...
-        queue = skb_get_tx_queue(dev, skb);
-        qdisc = rcu_dereference(queue->qdisc);
+Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
+and two missing READ_ONCE().
 
-This code can lead to an out-of-bounds access of the dev->_tx[] array
-when is_input is true. In such a case, the packet is on the RX path and
-skb->queue_mapping contains the RX queue index of the ingress device. If
-the ingress device has more RX queues than the egress device (dev) has
-TX queues, skb_get_queue_mapping(skb) will exceed dev->num_tx_queues.
-Add a check to avoid this situation since skb_get_tx_queue() does not
-clamp the index. This issue has also revealed that per queue visibility
-cannot be accurate and will be replaced later as a new feature.
+Note that @dev can't be NULL.
 
-While at it, add missing lock around qdisc_qstats_qlen_backlog(). The
-function __ioam6_fill_trace_data() is called from both softirq and
-process contexts, hence the use of spin_lock_bh() here.
-
-Fixes: b63c5478e9cb ("ipv6: ioam: Support for Queue depth data field")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260403214418.2233266-2-kuba@kernel.org/
-Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260404134137.24553-1-justin.iurman@gmail.com
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/ioam6.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index fee1e23c3ae19..9bf3be3a26c5b 100644
+index 9bf3be3a26c5b..05d8d9a5b3537 100644
 --- a/net/ipv6/ioam6.c
 +++ b/net/ipv6/ioam6.c
-@@ -737,12 +737,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 		struct Qdisc *qdisc;
- 		__u32 qlen, backlog;
+@@ -650,6 +650,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 				    struct ioam6_schema *sc,
+ 				    unsigned int sclen, bool is_input)
+ {
++	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
++	struct net_device *dev = skb_dst_dev_rcu(skb);
++	struct inet6_dev *i_skb_dev, *idev;
+ 	struct timespec64 ts;
+ 	ktime_t tstamp;
+ 	u64 raw64;
+@@ -660,13 +663,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
  
--		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
-+		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK ||
-+		    skb_get_queue_mapping(skb) >= skb_dst(skb)->dev->num_tx_queues) {
- 			*(__be32 *)data = cpu_to_be32(IOAM6_U32_UNAVAILABLE);
- 		} else {
- 			queue = skb_get_tx_queue(skb_dst(skb)->dev, skb);
- 			qdisc = rcu_dereference(queue->qdisc);
+ 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
+ 
++	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
++	idev = __in6_dev_get(dev);
 +
-+			spin_lock_bh(qdisc_lock(qdisc));
- 			qdisc_qstats_qlen_backlog(qdisc, &qlen, &backlog);
-+			spin_unlock_bh(qdisc_lock(qdisc));
+ 	/* hop_lim and node_id */
+ 	if (trace->type.bit0) {
+ 		byte = ipv6_hdr(skb)->hop_limit;
+ 		if (is_input)
+ 			byte--;
  
- 			*(__be32 *)data = cpu_to_be32(backlog);
- 		}
+-		raw32 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id;
++		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
+ 
+ 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
+ 		data += sizeof(__be32);
+@@ -674,18 +680,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id */
+ 	if (trace->type.bit1) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+ 
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -765,7 +771,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw64 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id_wide;
++		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
+ 
+ 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
+ 		data += sizeof(__be64);
+@@ -773,18 +779,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id (wide) */
+ 	if (trace->type.bit9) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+ 
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
 -- 
 2.53.0
 
