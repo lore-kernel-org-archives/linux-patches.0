@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C011380FCA;
-	Sat, 17 Oct 2026 16:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AE22E8DEB;
+	Sat, 17 Oct 2026 16:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253448; cv=none; b=KicZQOvcfiPRsTjmdffyBOWq+H0wgmAw7qc0wKTeC9hNpK/4tfgRFpPQeu3Xi9tqU/VslMIamU90EJ3pr7dkb8oQ0flAu2yu1ZYMlTrEGoC8pmL59qiWZN+P8Jj8bk6/iKhh68o93aQP0Hh9ZVRVzIwhoeEZyiTQLm3pkJOTIiI=
+	t=1792253451; cv=none; b=anaIioCvEMLxxgGb6FEzLL6JF+DRLLQs/6aU1HrFK2R8vGgCfCEeMOXFSecU0of3kpErBqesXyKbEKKMkXZS5enkSFs8/bmVJz7kZlyvWFlCwm2YU5s5irLUhaq6gbS8jdp2eX+IglpqVMJ4iEsrXkQs6mUXlOcrUX9hjsdCD8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253448; c=relaxed/simple;
-	bh=mqUKgyxGYk6e2zPykHiFBCc/UgkftIK6DJ4HRAorFuU=;
+	s=arc-20240116; t=1792253451; c=relaxed/simple;
+	bh=rrZhzULxX/cn0k16l4ZAXBop093HJLjG8b2Ln+VJHp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gnfOVQWLszdHDJF4myewSoEXj05zpG4DO/XfSvfNsjOCO98a9iEuvFSlKvzoYtZDstSjYuGkQ0+Ql5nEMEIdbbBhbg8gVyblXC5xiPvHK+PKBDQSGadG4OEkDuD2A1tY/gUxfss9QasKR6o5WuBnBc8b9vHezlLbYhSg2RZyyOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrhPloEB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qK2JJEjOUKZVIKX9obgTOrrpJpicVH7asVjmUV//YhalVeA8pco/mc22z6UJ4G07/DULb3Cs9vl0u+hjDBwFOjMI/HU5xi8A/V/2EXljvhFdElk4oi7iE/cIgdi4/bJqykBXFgkHYwQESgTqGzS7gyJ3xd9gO6OAy3Ji+3Qd1Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY3U8PrN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrhPloEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958801F000C4;
-	Sat, 17 Oct 2026 16:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY3U8PrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9BB1F000C5;
+	Sat, 17 Oct 2026 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253447;
-	bh=TqZs6rw8f20lR3/ilonSq2f26TfmvxrZqhNKEx7tcqw=;
+	s=korg; t=1792253450;
+	bh=LIkcjuHNPDhiy2s25R4jEa1BEdlApD+bUONFxEFOqPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nrhPloEBGJbP6B+S2aCdD0pLISACNB1sgW8j9Ugp+fm2WKcUJORod+m/H/fJhO5jt
-	 A3Qs7CgS817T5cfqEkRLw6o4ldlnrM0QuDLPn/5l4FdQQNFovtp7gceRM0PpARj/AV
-	 aXrucUHeF9oZK9eoAGiiuqGEhfSTvBlgs72mOVww=
+	b=iY3U8PrNOG+RHO0y8oHzvDWVa2a8RyEKr/cnxMsy5+JmTm4Ae02NEx6JUk6SDGJkd
+	 rZ/oRHAviItk6A7s3h1eEddpAK+j7Vjgs75KlznsEvAR68MDSXFczXh49irrofwR0C
+	 tbESS95F/VCNOrCPecsOocErF7xHx2LFk+aVEAgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	syzbot+3470c9ffee63e4abafeb@syzkaller.appspotmail.com,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Baoquan He <bhe@redhat.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/869] wifi: mt76: mt7915: fix list corruption after hardware restart
-Date: Sat, 17 Oct 2026 17:49:23 +0200
-Message-ID: <20261017160040.169021793@linuxfoundation.org>
+Subject: [PATCH 6.12 123/869] mm/vmalloc, mm/kasan: respect gfp mask in kasan_populate_vmalloc()
+Date: Sat, 17 Oct 2026 17:49:24 +0200
+Message-ID: <20261017160040.194229007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,112 +59,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Uladzislau Rezki (Sony) <urezki@gmail.com>
 
-[ Upstream commit 065c79df595af21d6d1b27d642860faa1d938774 ]
+[ Upstream commit 79357cd06d41d0f5a11b17d7c86176e395d10ef2 ]
 
-Since stations are recreated from scratch, all lists that wcids are added
-to must be cleared before calling ieee80211_restart_hw.
-Set wcid->sta = 0 for each wcid entry in order to ensure that they are
-not added again before they are ready.
+kasan_populate_vmalloc() and its helpers ignore the caller's gfp_mask and
+always allocate memory using the hardcoded GFP_KERNEL flag.  This makes
+them inconsistent with vmalloc(), which was recently extended to support
+GFP_NOFS and GFP_NOIO allocations.
 
-Fixes: 8a55712d124f ("wifi: mt76: mt7915: enable full system reset support")
-Link: https://patch.msgid.link/20250827085352.51636-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Page table allocations performed during shadow population also ignore the
+external gfp_mask.  To preserve the intended semantics of GFP_NOFS and
+GFP_NOIO, wrap the apply_to_page_range() calls into the appropriate
+memalloc scope.
+
+xfs calls vmalloc with GFP_NOFS, so this bug could lead to deadlock.
+
+There was a report here
+https://lkml.kernel.org/r/686ea951.050a0220.385921.0016.GAE@google.com
+
+This patch:
+ - Extends kasan_populate_vmalloc() and helpers to take gfp_mask;
+ - Passes gfp_mask down to alloc_pages_bulk() and __get_free_page();
+ - Enforces GFP_NOFS/NOIO semantics with memalloc_*_save()/restore()
+   around apply_to_page_range();
+ - Updates vmalloc.c and percpu allocator call sites accordingly.
+
+Link: https://lkml.kernel.org/r/20250831121058.92971-1-urezki@gmail.com
+Fixes: 451769ebb7e7 ("mm/vmalloc: alloc GFP_NO{FS,IO} for vmalloc")
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Reported-by: syzbot+3470c9ffee63e4abafeb@syzkaller.appspotmail.com
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 37 +++++++++++++++++++
- drivers/net/wireless/mediatek/mt76/mt76.h     |  1 +
- .../net/wireless/mediatek/mt76/mt7915/mac.c   | 12 +++---
- 3 files changed, 43 insertions(+), 7 deletions(-)
+ include/linux/kasan.h |  6 +++---
+ mm/kasan/shadow.c     | 31 ++++++++++++++++++++++++-------
+ mm/vmalloc.c          |  8 ++++----
+ 3 files changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index e1856664ca5d1..ca1f7b2991c51 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -791,6 +791,43 @@ void mt76_free_device(struct mt76_dev *dev)
- }
- EXPORT_SYMBOL_GPL(mt76_free_device);
+diff --git a/include/linux/kasan.h b/include/linux/kasan.h
+index 5814bf8298b25..ff10e5740a4c3 100644
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -565,7 +565,7 @@ static inline void kasan_init_hw_tags(void) { }
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
  
-+static void mt76_reset_phy(struct mt76_phy *phy)
-+{
-+	if (!phy)
-+		return;
-+
-+	INIT_LIST_HEAD(&phy->tx_list);
-+}
-+
-+void mt76_reset_device(struct mt76_dev *dev)
-+{
-+	int i;
-+
-+	rcu_read_lock();
-+	for (i = 0; i < ARRAY_SIZE(dev->wcid); i++) {
-+		struct mt76_wcid *wcid;
-+
-+		wcid = rcu_dereference(dev->wcid[i]);
-+		if (!wcid)
-+			continue;
-+
-+		wcid->sta = 0;
-+		mt76_wcid_cleanup(dev, wcid);
-+		rcu_assign_pointer(dev->wcid[i], NULL);
-+	}
-+	rcu_read_unlock();
-+
-+	INIT_LIST_HEAD(&dev->wcid_list);
-+	INIT_LIST_HEAD(&dev->sta_poll_list);
-+	dev->vif_mask = 0;
-+	memset(dev->wcid_mask, 0, sizeof(dev->wcid_mask));
-+
-+	mt76_reset_phy(&dev->phy);
-+	for (i = 0; i < ARRAY_SIZE(dev->phys); i++)
-+		mt76_reset_phy(dev->phys[i]);
-+}
-+EXPORT_SYMBOL_GPL(mt76_reset_device);
-+
- static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
+ void kasan_populate_early_vm_area_shadow(void *start, unsigned long size);
+-int kasan_populate_vmalloc(unsigned long addr, unsigned long size);
++int kasan_populate_vmalloc(unsigned long addr, unsigned long size, gfp_t gfp_mask);
+ void kasan_release_vmalloc(unsigned long start, unsigned long end,
+ 			   unsigned long free_region_start,
+ 			   unsigned long free_region_end,
+@@ -577,7 +577,7 @@ static inline void kasan_populate_early_vm_area_shadow(void *start,
+ 						       unsigned long size)
+ { }
+ static inline int kasan_populate_vmalloc(unsigned long start,
+-					unsigned long size)
++					unsigned long size, gfp_t gfp_mask)
  {
- 	struct sk_buff *skb = phy->rx_amsdu[q].head;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index daa78f52c15ea..ffcd4509dfcae 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1168,6 +1168,7 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
- 			 struct ieee80211_rate *rates, int n_rates);
- void mt76_unregister_device(struct mt76_dev *dev);
- void mt76_free_device(struct mt76_dev *dev);
-+void mt76_reset_device(struct mt76_dev *dev);
- void mt76_unregister_phy(struct mt76_phy *phy);
+ 	return 0;
+ }
+@@ -634,7 +634,7 @@ static __always_inline void kasan_vrealloc(const void *start,
+ static inline void kasan_populate_early_vm_area_shadow(void *start,
+ 						       unsigned long size) { }
+ static inline int kasan_populate_vmalloc(unsigned long start,
+-					unsigned long size)
++					unsigned long size, gfp_t gfp_mask)
+ {
+ 	return 0;
+ }
+diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
+index 1cf08821af9d6..53240f7bf4e8f 100644
+--- a/mm/kasan/shadow.c
++++ b/mm/kasan/shadow.c
+@@ -335,13 +335,13 @@ static void ___free_pages_bulk(struct page **pages, int nr_pages)
+ 	}
+ }
  
- struct mt76_phy *mt76_alloc_phy(struct mt76_dev *dev, unsigned int size,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index f165e61ed28f7..147c0fbfbeb84 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1458,17 +1458,15 @@ mt7915_mac_full_reset(struct mt7915_dev *dev)
- 	if (i == 10)
- 		dev_err(dev->mt76.dev, "chip full reset failed\n");
+-static int ___alloc_pages_bulk(struct page **pages, int nr_pages)
++static int ___alloc_pages_bulk(struct page **pages, int nr_pages, gfp_t gfp_mask)
+ {
+ 	unsigned long nr_populated, nr_total = nr_pages;
+ 	struct page **page_array = pages;
  
--	spin_lock_bh(&dev->mt76.sta_poll_lock);
--	while (!list_empty(&dev->mt76.sta_poll_list))
--		list_del_init(dev->mt76.sta_poll_list.next);
--	spin_unlock_bh(&dev->mt76.sta_poll_lock);
+ 	while (nr_pages) {
+-		nr_populated = alloc_pages_bulk_array(GFP_KERNEL, nr_pages, pages);
++		nr_populated = alloc_pages_bulk_array(gfp_mask, nr_pages, pages);
+ 		if (!nr_populated) {
+ 			___free_pages_bulk(page_array, nr_total - nr_pages);
+ 			return -ENOMEM;
+@@ -353,25 +353,42 @@ static int ___alloc_pages_bulk(struct page **pages, int nr_pages)
+ 	return 0;
+ }
+ 
+-static int __kasan_populate_vmalloc(unsigned long start, unsigned long end)
++static int __kasan_populate_vmalloc(unsigned long start, unsigned long end, gfp_t gfp_mask)
+ {
+ 	unsigned long nr_pages, nr_total = PFN_UP(end - start);
+ 	struct vmalloc_populate_data data;
++	unsigned int flags;
+ 	int ret = 0;
+ 
+-	data.pages = (struct page **)__get_free_page(GFP_KERNEL | __GFP_ZERO);
++	data.pages = (struct page **)__get_free_page(gfp_mask | __GFP_ZERO);
+ 	if (!data.pages)
+ 		return -ENOMEM;
+ 
+ 	while (nr_total) {
+ 		nr_pages = min(nr_total, PAGE_SIZE / sizeof(data.pages[0]));
+-		ret = ___alloc_pages_bulk(data.pages, nr_pages);
++		ret = ___alloc_pages_bulk(data.pages, nr_pages, gfp_mask);
+ 		if (ret)
+ 			break;
+ 
+ 		data.start = start;
++
++		/*
++		 * page tables allocations ignore external gfp mask, enforce it
++		 * by the scope API
++		 */
++		if ((gfp_mask & (__GFP_FS | __GFP_IO)) == __GFP_IO)
++			flags = memalloc_nofs_save();
++		else if ((gfp_mask & (__GFP_FS | __GFP_IO)) == 0)
++			flags = memalloc_noio_save();
++
+ 		ret = apply_to_page_range(&init_mm, start, nr_pages * PAGE_SIZE,
+ 					  kasan_populate_vmalloc_pte, &data);
++
++		if ((gfp_mask & (__GFP_FS | __GFP_IO)) == __GFP_IO)
++			memalloc_nofs_restore(flags);
++		else if ((gfp_mask & (__GFP_FS | __GFP_IO)) == 0)
++			memalloc_noio_restore(flags);
++
+ 		___free_pages_bulk(data.pages, nr_pages);
+ 		if (ret)
+ 			break;
+@@ -385,7 +402,7 @@ static int __kasan_populate_vmalloc(unsigned long start, unsigned long end)
+ 	return ret;
+ }
+ 
+-int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
++int kasan_populate_vmalloc(unsigned long addr, unsigned long size, gfp_t gfp_mask)
+ {
+ 	unsigned long shadow_start, shadow_end;
+ 	int ret;
+@@ -414,7 +431,7 @@ int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
+ 	shadow_start = PAGE_ALIGN_DOWN(shadow_start);
+ 	shadow_end = PAGE_ALIGN(shadow_end);
+ 
+-	ret = __kasan_populate_vmalloc(shadow_start, shadow_end);
++	ret = __kasan_populate_vmalloc(shadow_start, shadow_end, gfp_mask);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index e0066c100b794..b11552177f2d7 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2025,6 +2025,8 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
+ 	if (unlikely(!vmap_initialized))
+ 		return ERR_PTR(-EBUSY);
+ 
++	/* Only reclaim behaviour flags are relevant. */
++	gfp_mask = gfp_mask & GFP_RECLAIM_MASK;
+ 	might_sleep();
+ 
+ 	/*
+@@ -2037,8 +2039,6 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
+ 	 */
+ 	va = node_alloc(size, align, vstart, vend, &addr, &vn_id);
+ 	if (!va) {
+-		gfp_mask = gfp_mask & GFP_RECLAIM_MASK;
 -
--	memset(dev->mt76.wcid_mask, 0, sizeof(dev->mt76.wcid_mask));
--	dev->mt76.vif_mask = 0;
- 	dev->phy.omac_mask = 0;
- 	if (phy2)
- 		phy2->omac_mask = 0;
+ 		va = kmem_cache_alloc_node(vmap_area_cachep, gfp_mask, node);
+ 		if (unlikely(!va))
+ 			return ERR_PTR(-ENOMEM);
+@@ -2088,7 +2088,7 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
+ 	BUG_ON(va->va_start < vstart);
+ 	BUG_ON(va->va_end > vend);
  
-+	mt76_reset_device(&dev->mt76);
-+
-+	INIT_LIST_HEAD(&dev->sta_rc_list);
-+	INIT_LIST_HEAD(&dev->twt_list);
-+
- 	i = mt76_wcid_alloc(dev->mt76.wcid_mask, MT7915_WTBL_STA);
- 	dev->mt76.global_wcid.idx = i;
- 	dev->recovery.hw_full_reset = false;
+-	ret = kasan_populate_vmalloc(addr, size);
++	ret = kasan_populate_vmalloc(addr, size, gfp_mask);
+ 	if (ret) {
+ 		free_vmap_area(va);
+ 		return ERR_PTR(ret);
+@@ -4844,7 +4844,7 @@ struct vm_struct **pcpu_get_vm_areas(const unsigned long *offsets,
+ 
+ 	/* populate the kasan shadow space */
+ 	for (area = 0; area < nr_vms; area++) {
+-		if (kasan_populate_vmalloc(vas[area]->va_start, sizes[area]))
++		if (kasan_populate_vmalloc(vas[area]->va_start, sizes[area], GFP_KERNEL))
+ 			goto err_free_shadow;
+ 	}
+ 
 -- 
 2.53.0
 
