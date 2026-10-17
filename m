@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634A3ACEE0;
-	Sat, 17 Oct 2026 17:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481A53A7D9E;
+	Sat, 17 Oct 2026 17:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256614; cv=none; b=UVCUNjj50YBU9VWDmU06UhGKoufYXz3xvYR5JsaPszp+LK0RhMOOAd1gmlru/vp+1t/BQN2g3GHeJkn3cSvAyTlNuuop4yAvhINnbWwZqSInnXjM8L2z/pOVblxhHRXy84fKd9zYK/9Z6lrmZj7chbKRX/yPEaBn0+23JhSnlCo=
+	t=1792256617; cv=none; b=usDqVhlOU3wPvKk1TB6gjh9IANWJ2QTooxpxhP6d6fnYckONjKHO/MGKtNoTay3lnrl0LqSw4FiFbrma6bNhav2mL/8z7IWjYHdSrgc4e4LyLKp1Up7Ib/NiTN2RpLzEg/6y4ZGxbqR+t4dkZA6YkZRcNtn1hgtMIpLSXaT9ooo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256614; c=relaxed/simple;
-	bh=/JPiD1J+B2ZyiIMuKiCsOrYKs07TzZexFxrSIl09DLI=;
+	s=arc-20240116; t=1792256617; c=relaxed/simple;
+	bh=v8bgYQz+EZ9RCnLT17Qw0EY+MayIKzQSwz/X8GIHncI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBpQQFSGBydW2warVb1O0YzZ6AryrtdJRYBogJr+JrknxmXAnWWrkL0drpbEFu46X/sDie4k91sOMgk+Z4qdWHZbB4ROP/ZQHBWCOjnbZqOBV+iYR0wqUiBaUrW4Izi0lplMKJTuFe3Hx4WxwkEksCs6N/o8i0av9r7gTCpEpHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTLWyaYT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uFgzJt8CaJgkJvva/bR0RinPmTpdxf6YfI84/t1B1Ir8CDeSfzOGtMoFRLmKjTfc1elJRyVpAho2DgxS/FHWx9CEdQjg47nA8HXwEPcygUYJEqlHr35ipPzPjb6UC39/hnMGtB4RzhV0J2NiAAxBIjdcNqgMAhMdTZ212bcW6Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6NHcJ1f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTLWyaYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4201F000C4;
-	Sat, 17 Oct 2026 17:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6NHcJ1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F54A1F000C4;
+	Sat, 17 Oct 2026 17:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256613;
-	bh=63Xcd2vreXWpUyIaKxxn1h655VK+xvT+8biHhqD+/fE=;
+	s=korg; t=1792256616;
+	bh=rZaU9xNxzYZ6N3BXV6nQno8UlP5IJcme5sOVhl4xrPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zTLWyaYTRczCZtgVVLvHkf9GSOCgjdyd13XZuezFJs8hmmsmM7lMZPt/OTAhv9hCE
-	 phJ66NORXepbXeB9u68tHSHaa6u3v0gPZdLOJMaJXs3fl+YY2dJXxRnZwcn0eSH4Wd
-	 3DCbNi8VxhuqLxwk/goI55fJbmgpbSvi6I8CIboo=
+	b=X6NHcJ1fCZHcpTmiJCEYzc4L+uQHXlgiJc8i+FPFOD0LdMpYhIyZWR3QVdUzco33Z
+	 0li+OUMNCFI8UO9AT8RPmaig8+HHZTk4y6pEr3AzUhuUFvspwreKNJh1BqvWhNwUnc
+	 LAhxyel02iYezC4og1joKP65AMFOyuNC79Q5PR6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24304d323d28f156@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0292/1674] ALSA: ua101: reject mismatched capture/playback packet sizes
-Date: Sat, 17 Oct 2026 17:42:44 +0200
-Message-ID: <20261017160438.609709318@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Michal Simek <michal.simek@amd.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 0293/1674] i2c: xiic: dont clobber msg->len to signal block-read completion
+Date: Sat, 17 Oct 2026 17:42:45 +0200
+Message-ID: <20261017160438.635292626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,83 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
+commit 840d8acc87925deb3c75566fde9ca81d2f47f98c upstream.
 
-detect_usb_format() cross-checks bSubframeSize, bBitResolution and
-tSamFreq between the capture and playback interfaces, but never relates
-the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
-gets a buffer of ua->playback.max_packet_bytes, while the number of
-bytes written into it is derived from the capture stream:
-capture_urb_complete() computes frames from the received capture packet
-and capture.frame_bytes, and start_usb_playback() and playback_work()
-multiply that by playback.frame_bytes.
+At the end of a SMBus block read the BNB handler force-set
+tx_msg->len = 1 to push xiic_tx_space() to zero so the STATE_DONE
+branch would fire. Two problems:
 
-A device declaring a large capture wMaxPacketSize with few capture
-channels and a small playback wMaxPacketSize with many playback channels
-therefore memset()s and memcpy()s past the end of the playback buffer,
-in open() of the PCM node the driver registers during probe.
-usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
--EMSGSIZE, but only after the write.
+1. tx_msg and rx_msg alias the same i2c_msg struct during a receive
+   (see xiic_start_recv), so overwriting tx_msg->len also changes
+   rx_msg->len. The i2c core's i2c_smbus_check_pec() then reads the
+   PEC from the wrong offset -- buf[0] instead of buf[rxmsg_len + 1]
+   -- and either mis-validates or returns -EBADMSG.
 
-Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
-declares proportional packet sizes and is unaffected.
+2. xiic_start_recv sets tx_pos = msg->len (typically 2 when PEC is
+   enabled). xiic_tx_space() is unsigned msg->len - tx_pos, so
+   setting msg->len = 1 with tx_pos = 2 underflows to 0xFFFFFFFF and
+   xiic_tx_space() never compares equal to 0 -- the STATE_DONE check
+   falls through to STATE_ERROR, giving -EIO.
 
-  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
-  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
-  Call Trace:
-   __asan_memset (mm/kasan/shadow.c:84)
-   start_usb_playback (sound/usb/misc/ua101.c:586)
-   playback_pcm_open (sound/usb/misc/ua101.c:679)
-   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
-   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
-   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
-   snd_open (sound/core/sound.c:166)
-   chrdev_open (fs/char_dev.c:411)
-   do_dentry_open (fs/open.c:996)
-   vfs_open (fs/open.c:1101)
-   path_openat (fs/namei.c:4837 fs/namei.c:5000)
-   do_file_open (fs/namei.c:5029)
-   do_sys_openat2 (fs/open.c:1417)
-   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Instead, advance tx_pos up to msg->len. That drives tx_space to 0
+without touching msg->len, preserving the buffer length that
+xiic_smbus_block_read_setup() already grew to cover the length byte,
+the payload and the optional PEC byte.
 
-  The buggy address belongs to the object at ffff8881098f3c00
-   which belongs to the cache kmalloc-192 of size 192
-  The buggy address is located 0 bytes inside of
-   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
-
-Cc: stable@vger.kernel.org
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Reported-by: <co+24304d323d28f156@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e4c1ff772e1a ("i2c: xiic: Add smbus_block_read functionality")
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Cc: <stable@vger.kernel.org> # v6.3+
+Acked-by: Michal Simek <michal.simek@amd.com>
+Reviewed-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260924-i2c-xiic-v7-3-df7e752332ef@nexthop.ai
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/i2c/busses/i2c-xiic.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -1022,6 +1022,15 @@ static int detect_usb_format(struct ua10
- 	}
- 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
- 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
-+
-+	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
-+	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
-+		dev_err(&ua->dev->dev,
-+			"playback packet size %u too small for %u capture frames\n",
-+			ua->playback.max_packet_bytes,
-+			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
-+		return -ENXIO;
-+	}
- 	return 0;
- }
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -805,8 +805,11 @@ static irqreturn_t xiic_process(int irq,
  
+ 		if (i2c->tx_msg && i2c->smbus_block_read) {
+ 			i2c->smbus_block_read = false;
+-			/* Set requested message len=1 to indicate STATE_DONE */
+-			i2c->tx_msg->len = 1;
++			/*
++			 * Drive xiic_tx_space() to 0 to signal STATE_DONE
++			 * without truncating the rx_msg length.
++			 */
++			i2c->tx_pos = i2c->tx_msg->len;
+ 		}
+ 
+ 		if (!i2c->tx_msg)
 
 
