@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB312D3225;
-	Sat, 17 Oct 2026 17:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B57E37F01B;
+	Sat, 17 Oct 2026 17:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258227; cv=none; b=UGbgAOWhi60xjlw3PabgN7hgnGZoPHsTUC1+kt4gN0nP1yLhxK2Lud4z30pSIfxrtcqUAbWIFmo/SEBd/qbfBvEABtn7GcWfFKUkQNXpyPUkZUVGYbUCaVtdw66eMqLual7uWQ/5+kD70j2idOX3YeG8EFNEpHvKO3oOQdIbGRw=
+	t=1792258230; cv=none; b=lAwBdYihluaMeDMoDX8BdwxBmxVOx92NKTHs90nnmlv8a+VTNddpz3tYGkQCUNtp1/yh6W9bxh8wHxLHuqShoplkmjOQhRXJ+uL6RMaRB5Jj2I1fd9Qp2wQklH19xNtWdnu9ZiLqwSkNszh2fnhyeGjBiSTd+PGW6jH2qWVkTuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258227; c=relaxed/simple;
-	bh=N3K7yGXOD65kphwth+HnJl1D8lU4cz0h5N9qS5uy0v8=;
+	s=arc-20240116; t=1792258230; c=relaxed/simple;
+	bh=P2u+nxKS9qvzZraeCpxaRhsVLbku4RfkFwT1MvwMO80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOOM5VZ6XzbNyJHsXqXrHvR6/KnlkJD+aNSiUuNo0fUVkE94hArAIlvHj9rKRHFL4FIVM+C+sAmA1fwIAwVd0dqIEpB5TAU5MCMDQYFdIS0bXxtTGYkee1/1itjRprd/DvfeFQcYIn03RTk37QSO/5GjDZlT2RpfHmo9M6/oOKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7SnKgkC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcUsl8P7MkIz7NVnfXFzPIp5IbbAq2GTOBhnX7gfk9unyO/ca0+jfkSmx91dB/ZkA0J3BSSu8DVznV8I0GO5baNQF99LrdVDxh4gRXoN8vamcoDSX4NB2YqaNK/45GlSKC5A86FUmuWhJRsPtHy11UaJXo8YGFfgbxhxuj8T8QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyUkBFg7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7SnKgkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9765E1F000C4;
-	Sat, 17 Oct 2026 17:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyUkBFg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B5A1F000C4;
+	Sat, 17 Oct 2026 17:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258226;
-	bh=D0rpkb4pNkgeCRiWCiaAFMFAVKHdU66HLWe0ZFyMpXc=;
+	s=korg; t=1792258229;
+	bh=+Zuh9IC0kZQyl9SJ+13PNBJeELcD6/RTZISWZ+/AA5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7SnKgkCAVfIqHAxjSZ7RRgSEs7qDPO4XhvqlEsXloXopyePLou45+9AHId0OkC61
-	 RZrK/GTfRttn5LFNVzWbDAwI7Joks9CKqmSxTQ6T4EgVDnkqTsLYRz1xjD8KBRvbqP
-	 A1ChbFA7UsgxroOL8vmHpDHBbACRLv2Tw4lVEPBc=
+	b=yyUkBFg7raiBfwp28WfaVQ4ym0Fu58EBuS7FBBP7o3JiGa1cv6QwCw9iJWNh4HXOa
+	 7uIuScVpHbtch1I8l3T9f83Q9ZhZiMr7jxvCYsgk+wSvTHU4Xl5RCHPPLfSKZvfauj
+	 UQGUv+wbOl8S1CLNvra202vktyNrQE3DidCHJOh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cynthia <cynthia@kosmx.dev>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xabier Marquiegui <reibax@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0815/1674] sysfs: check visibility before changing group attribute ownership
-Date: Sat, 17 Oct 2026 17:51:27 +0200
-Message-ID: <20261017160452.042218983@linuxfoundation.org>
+Subject: [PATCH 6.6 0798/1674] ptp: Replace timestamp event queue with linked list
+Date: Sat, 17 Oct 2026 17:51:10 +0200
+Message-ID: <20261017160451.592704789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,134 +52,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Xabier Marquiegui <reibax@gmail.com>
 
-[ Upstream commit c7fbb8218b4ad35fec0bd2256d2b9c8d60331f33 ]
+[ Upstream commit d26ab5a35ad9920940a9e07665130d501b2ae1a3 ]
 
-Since commit 0c17270f9b92 ("net: sysfs: Implement is_visible for
-phys_(port_id, port_name, switch_id)"), __dev_change_net_namespace() can
-hit WARN_ON() when trying to change owner of a file that isn't visible.
-See the trace below:
+Introduce linked lists to access the timestamp event queue.
 
- WARNING: CPU: 6 PID: 2938 at net/core/dev.c:12410 __dev_change_net_namespace+0xb89/0xc30
- CPU: 6 UID: 0 PID: 2938 Comm: incusd Not tainted 6.17.1-1-mainline #1 PREEMPT(full)  4b783b4a638669fb644857f484487d17cb45ed1f
- Hardware name: Framework Laptop 13 (AMD Ryzen 7040Series)/FRANMDCP07, BIOS 03.07 02/19/2025
- RIP: 0010:__dev_change_net_namespace+0xb89/0xc30
- [...]
- Call Trace:
-  <TASK>
-  ? if6_seq_show+0x30/0x50
-  do_setlink.isra.0+0xc7/0x1270
-  ? __nla_validate_parse+0x5c/0xcc0
-  ? security_capable+0x94/0x1a0
-  rtnl_newlink+0x858/0xc20
-  ? update_curr+0x8e/0x1c0
-  ? update_entity_lag+0x71/0x80
-  ? sched_balance_newidle+0x358/0x450
-  ? psi_task_switch+0x113/0x2a0
-  ? __pfx_rtnl_newlink+0x10/0x10
-  rtnetlink_rcv_msg+0x346/0x3e0
-  ? sched_clock+0x10/0x30
-  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
-  netlink_rcv_skb+0x59/0x110
-  netlink_unicast+0x285/0x3c0
-  ? __alloc_skb+0xdb/0x1a0
-  netlink_sendmsg+0x20d/0x430
-  ____sys_sendmsg+0x39f/0x3d0
-  ? import_iovec+0x2f/0x40
-  ___sys_sendmsg+0x99/0xe0
-  __sys_sendmsg+0x8a/0xf0
-  do_syscall_64+0x81/0x970
-  ? __sys_bind+0xe3/0x110
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? sock_alloc_file+0x63/0xc0
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? alloc_fd+0x12e/0x190
-  ? put_unused_fd+0x2a/0x70
-  ? do_sys_openat2+0xa2/0xe0
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? exc_page_fault+0x7e/0x1a0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- [...]
-  </TASK>
-
-Fix this by checking is_visible() before trying to touch the attribute.
-
-Fixes: 303a42769c4c ("sysfs: add sysfs_group{s}_change_owner()")
-Fixes: 0c17270f9b92 ("net: sysfs: Implement is_visible for phys_(port_id, port_name, switch_id)")
-Reported-by: Cynthia <cynthia@kosmx.dev>
-Closes: https://lore.kernel.org/netdev/01070199e22de7f8-28f711ab-d3f1-46d9-b9a0-048ab05eb09b-000000@eu-central-1.amazonses.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20251016101456.4087-1-fmancera@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
+Suggested-by: Richard Cochran <richardcochran@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e9f35294e18d ("ptp: Add a upper bound on max_vclocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/group.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/ptp/ptp_chardev.c | 12 ++++++++++--
+ drivers/ptp/ptp_clock.c   | 26 ++++++++++++++++++++++++--
+ drivers/ptp/ptp_private.h |  4 +++-
+ drivers/ptp/ptp_sysfs.c   |  6 +++++-
+ 4 files changed, 42 insertions(+), 6 deletions(-)
 
-diff --git a/fs/sysfs/group.c b/fs/sysfs/group.c
-index 7e8ee83351554..1b2a8dd1bcda5 100644
---- a/fs/sysfs/group.c
-+++ b/fs/sysfs/group.c
-@@ -495,17 +495,26 @@ int compat_only_sysfs_link_entry_to_kobj(struct kobject *kobj,
- }
- EXPORT_SYMBOL_GPL(compat_only_sysfs_link_entry_to_kobj);
- 
--static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
-+static int sysfs_group_attrs_change_owner(struct kobject *kobj,
-+					  struct kernfs_node *grp_kn,
- 					  const struct attribute_group *grp,
- 					  struct iattr *newattrs)
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index 1ed12e86ee000..92f9447d41b0c 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -460,10 +460,14 @@ __poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
  {
- 	struct kernfs_node *kn;
--	int error;
-+	int error, i;
-+	umode_t mode;
+ 	struct ptp_clock *ptp =
+ 		container_of(pccontext->clk, struct ptp_clock, clock);
++	struct timestamp_event_queue *queue;
  
- 	if (grp->attrs) {
- 		struct attribute *const *attr;
+ 	poll_wait(fp, &ptp->tsev_wq, wait);
  
--		for (attr = grp->attrs; *attr; attr++) {
-+		for (i = 0, attr = grp->attrs; *attr; i++, attr++) {
-+			if (grp->is_visible) {
-+				mode = grp->is_visible(kobj, *attr, i);
-+				if (mode & SYSFS_GROUP_INVISIBLE)
-+					break;
-+				if (!mode)
-+					continue;
-+			}
- 			kn = kernfs_find_and_get(grp_kn, (*attr)->name);
- 			if (!kn)
- 				return -ENOENT;
-@@ -520,7 +529,14 @@ static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
- 	if (grp->bin_attrs) {
- 		struct bin_attribute *const *bin_attr;
+-	return queue_cnt(&ptp->tsevq) ? EPOLLIN : 0;
++	/* Extract only the first element in the queue list */
++	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue, qlist);
++
++	return queue_cnt(queue) ? EPOLLIN : 0;
+ }
  
--		for (bin_attr = grp->bin_attrs; *bin_attr; bin_attr++) {
-+		for (i = 0, bin_attr = grp->bin_attrs; *bin_attr; i++, bin_attr++) {
-+			if (grp->is_bin_visible) {
-+				mode = grp->is_bin_visible(kobj, *bin_attr, i);
-+				if (mode & SYSFS_GROUP_INVISIBLE)
-+					break;
-+				if (!mode)
-+					continue;
-+			}
- 			kn = kernfs_find_and_get(grp_kn, (*bin_attr)->attr.name);
- 			if (!kn)
- 				return -ENOENT;
-@@ -570,7 +586,7 @@ int sysfs_group_change_owner(struct kobject *kobj,
+ #define EXTTS_BUFSIZE (PTP_BUF_TIMESTAMPS * sizeof(struct ptp_extts_event))
+@@ -473,12 +477,16 @@ ssize_t ptp_read(struct posix_clock_context *pccontext, uint rdflags,
+ {
+ 	struct ptp_clock *ptp =
+ 		container_of(pccontext->clk, struct ptp_clock, clock);
+-	struct timestamp_event_queue *queue = &ptp->tsevq;
++	struct timestamp_event_queue *queue;
+ 	struct ptp_extts_event *event;
+ 	unsigned long flags;
+ 	size_t qcnt, i;
+ 	int result;
  
- 	error = kernfs_setattr(grp_kn, &newattrs);
- 	if (!error)
--		error = sysfs_group_attrs_change_owner(grp_kn, grp, &newattrs);
-+		error = sysfs_group_attrs_change_owner(kobj, grp_kn, grp, &newattrs);
++	/* Extract only the first element in the queue list */
++	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
++				 qlist);
++
+ 	if (cnt % sizeof(struct ptp_extts_event) != 0)
+ 		return -EINVAL;
  
- 	kernfs_put(grp_kn);
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index d252d018bfe77..2eac19e231d5b 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -183,12 +183,21 @@ static struct posix_clock_operations ptp_clock_ops = {
+ static void ptp_clock_release(struct device *dev)
+ {
+ 	struct ptp_clock *ptp = container_of(dev, struct ptp_clock, dev);
++	struct timestamp_event_queue *tsevq;
++	unsigned long flags;
  
+ 	ptp_cleanup_pin_groups(ptp);
+ 	kfree(ptp->vclock_index);
+ 	mutex_destroy(&ptp->tsevq_mux);
+ 	mutex_destroy(&ptp->pincfg_mux);
+ 	mutex_destroy(&ptp->n_vclocks_mux);
++	/* Delete first entry */
++	tsevq = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
++				 qlist);
++	spin_lock_irqsave(&tsevq->lock, flags);
++	list_del(&tsevq->qlist);
++	spin_unlock_irqrestore(&tsevq->lock, flags);
++	kfree(tsevq);
+ 	ida_free(&ptp_clocks_map, ptp->index);
+ 	kfree(ptp);
+ }
+@@ -225,6 +234,7 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
+ 				     struct device *parent)
+ {
+ 	struct ptp_clock *ptp;
++	struct timestamp_event_queue *queue = NULL;
+ 	int err = 0, index, major = MAJOR(ptp_devt);
+ 	size_t size;
+ 
+@@ -247,7 +257,12 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
+ 	ptp->info = info;
+ 	ptp->devid = MKDEV(major, index);
+ 	ptp->index = index;
+-	spin_lock_init(&ptp->tsevq.lock);
++	INIT_LIST_HEAD(&ptp->tsevqs);
++	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
++	if (!queue)
++		goto no_memory_queue;
++	spin_lock_init(&queue->lock);
++	list_add_tail(&queue->qlist, &ptp->tsevqs);
+ 	mutex_init(&ptp->tsevq_mux);
+ 	mutex_init(&ptp->pincfg_mux);
+ 	mutex_init(&ptp->n_vclocks_mux);
+@@ -355,6 +370,9 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
+ 	mutex_destroy(&ptp->tsevq_mux);
+ 	mutex_destroy(&ptp->pincfg_mux);
+ 	mutex_destroy(&ptp->n_vclocks_mux);
++	list_del(&queue->qlist);
++	kfree(queue);
++no_memory_queue:
+ 	ida_free(&ptp_clocks_map, index);
+ no_slot:
+ 	kfree(ptp);
+@@ -397,6 +415,7 @@ EXPORT_SYMBOL(ptp_clock_unregister);
+ 
+ void ptp_clock_event(struct ptp_clock *ptp, struct ptp_clock_event *event)
+ {
++	struct timestamp_event_queue *tsevq;
+ 	struct pps_event_time evt;
+ 
+ 	switch (event->type) {
+@@ -405,7 +424,10 @@ void ptp_clock_event(struct ptp_clock *ptp, struct ptp_clock_event *event)
+ 		break;
+ 
+ 	case PTP_CLOCK_EXTTS:
+-		enqueue_external_timestamp(&ptp->tsevq, event);
++		/* Enqueue timestamp on all queues */
++		list_for_each_entry(tsevq, &ptp->tsevqs, qlist) {
++			enqueue_external_timestamp(tsevq, event);
++		}
+ 		wake_up_interruptible(&ptp->tsev_wq);
+ 		break;
+ 
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index e25be08fa6ae9..baf05d55376dd 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -15,6 +15,7 @@
+ #include <linux/ptp_clock.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/time.h>
++#include <linux/list.h>
+ 
+ #define PTP_MAX_TIMESTAMPS 128
+ #define PTP_BUF_TIMESTAMPS 30
+@@ -30,6 +31,7 @@ struct timestamp_event_queue {
+ 	int head;
+ 	int tail;
+ 	spinlock_t lock;
++	struct list_head qlist;
+ };
+ 
+ struct ptp_clock {
+@@ -40,7 +42,7 @@ struct ptp_clock {
+ 	int index; /* index into clocks.map */
+ 	struct pps_device *pps_source;
+ 	long dialed_frequency; /* remembers the frequency adjustment */
+-	struct timestamp_event_queue tsevq; /* simple fifo for time stamps */
++	struct list_head tsevqs; /* timestamp fifo list */
+ 	struct mutex tsevq_mux; /* one process at a time reading the fifo */
+ 	struct mutex pincfg_mux; /* protect concurrent info->pin_config access */
+ 	wait_queue_head_t tsev_wq;
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index aefc06ae5d099..952d3e968bdf9 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -75,12 +75,16 @@ static ssize_t extts_fifo_show(struct device *dev,
+ 			       struct device_attribute *attr, char *page)
+ {
+ 	struct ptp_clock *ptp = dev_get_drvdata(dev);
+-	struct timestamp_event_queue *queue = &ptp->tsevq;
++	struct timestamp_event_queue *queue;
+ 	struct ptp_extts_event event;
+ 	unsigned long flags;
+ 	size_t qcnt;
+ 	int cnt = 0;
+ 
++	/* The sysfs fifo will always draw from the fist queue */
++	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
++				 qlist);
++
+ 	memset(&event, 0, sizeof(event));
+ 
+ 	if (mutex_lock_interruptible(&ptp->tsevq_mux))
 -- 
 2.53.0
 
