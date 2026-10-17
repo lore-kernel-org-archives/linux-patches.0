@@ -1,57 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51D2384CED;
-	Sat, 17 Oct 2026 18:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD7037C109;
+	Sat, 17 Oct 2026 18:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260179; cv=none; b=pDNzF46Y7Lwh653GPz90O5lSI4slIrweewGRZRuh+5BtF5OhWvWorbLeBO0i3FzlYUJY+U33EGNhJwKtA/ASb74CRiSRsXAGU8kgGbM2rzl0SoPHR2m35uZNKIyVg6BvLqloiQv8COfL4RpaAS3z9wWHxRdPme5IgAPi7motOE8=
+	t=1792260182; cv=none; b=V7nXSTot8oBrM6hE0BXQJZeKJN/7Jduucp0jtHLwu54HGzh5KFFUO9b7R2jHiCMHOJe+9VK5WgU22mHztkkFhpLEXXXQ2jL/OMrTXlVzNpl2bK9ADjuvTHJ2pmORCaZ9NrcU0xIo0xRg+asYDOhbgHzA1RUtF5LSrYhPA4OSZqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260179; c=relaxed/simple;
-	bh=ybKJ+UKfhyzGAviopx6rh2wmhQ+bZxqbRdjmLsOKQpU=;
+	s=arc-20240116; t=1792260182; c=relaxed/simple;
+	bh=KvL9VE7CR4/R0BfkuDglaVJYyPcEtw0d/Yp8Pb3AV74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rhw0yqJ6tQUnhT/VLq8yA05tcPSvmjboBzc0i6sj/6mnp1iod+AjDleCIRgqb0xWHK3rvEpWby8Tlnur9LxxL+XB/i4/rsxOMvg2jriYQvisjkX18el3sq0DjPygyP6KS6714gyH9TIBP7YfPFy9HArQxJQqDbs9dCQJU7p8RK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcI4mOm9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EPnJaIQyf6dQn5DL5v1d05Ex3fcZZsOqHFWnkTK5kZbSI+MM44YyjTzpRS200t5eX1V0a0dEiXEO9fdV++jM+TE5Y6pESz6ryzN9e4k8B1w34CzxIoEtBsiVicRNIzja8kgMAcujDvL1lGvNrpv9aQW0pDtbCxbtOHsXhWfhm5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erYy/iXh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcI4mOm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132FA1F000C4;
-	Sat, 17 Oct 2026 18:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erYy/iXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0FB1F000C4;
+	Sat, 17 Oct 2026 18:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260177;
-	bh=8aB1F/HeuPNCJEDdDO9KtJ+oYDURkJcDFQ4NhgIN7Xs=;
+	s=korg; t=1792260180;
+	bh=2D92okpe5sTk7Lb1fg4wsZhv//u961clY38T6nCywtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gcI4mOm97HCz9ykojTm8ehn9jElF6zzaadv8+JzmhtC454oMjAPGZ8/2O/HVUo8Vy
-	 yZDwv7fRtkvTAaONijiwaQ1KUO1W44JFFfYBngPUYXhb2T+Cpa6Iu4cfvJg0nclgTZ
-	 sYbLYZxVAtv53FZUCzJW0KxrrybJDGBj88peuqh0=
+	b=erYy/iXhRF3phjvjkH30+4ZAox4vuEcF22EXn08SKaR10SD/9IzKW2G2VPte55KCo
+	 q1pV2eOxWOs2A751VKIMgxol6IbDtVVZQvHcRP7O+Uvc4FwZYM4c2KN1976wdIaIy2
+	 muVtPETOayz1XCOeUNqfocZvkov+P+YmSyaZ3VX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Kirill A. Shutemov" <kirill@shutemov.name>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Muchun Song <muchun.song@linux.dev>,
-	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Gary Guo <gary@garyguo.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1452/1674] mm/treewide: replace pmd_large() with pmd_leaf()
-Date: Sat, 17 Oct 2026 18:02:04 +0200
-Message-ID: <20261017160508.448610755@linuxfoundation.org>
+Subject: [PATCH 6.6 1461/1674] PCI: Make pci_match_one_device() match on ID instead of device
+Date: Sat, 17 Oct 2026 18:02:13 +0200
+Message-ID: <20261017160508.671276524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -70,590 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 2f709f7bfd3d13f8878070a79e0983b5fac2225f ]
+[ Upstream commit c967b365d7b51c2297d9be5df39ac3e20638faf4 ]
 
-pmd_large() is always defined as pmd_leaf().  Merge their usages.  Chose
-pmd_leaf() because pmd_leaf() is a global API, while pmd_large() is not.
+PCI dynamic ID needs to match IDs against a new ID to see if it already
+exists. Existing APIs can only match IDs against devices, so the dynamic ID
+insertion code creates a temporary device only for matching purposes.
+Rename pci_match_one_device() to pci_match_one_id() so it can be used for
+this purpose instead; add a pci_id_from_device() helper to make it easy to
+convert users.
 
-Link: https://lkml.kernel.org/r/20240305043750.93762-8-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kirill A. Shutemov <kirill@shutemov.name>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 928a8e9f523d ("misc: sgi-gru: remove interrupt-context page-table walks")
+Similarly, convert pci_match_id() to do_pci_match_id(). But keep the
+existing API because there are many users.
+
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260723-pci_id_fix-v4-7-3580726844e1@garyguo.net
+Stable-dep-of: 3ffc4c9690c3 ("PCI: Fix UAF when probe runs concurrent to dyn ID removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/dump.c                       |  4 ++--
- arch/powerpc/mm/book3s64/pgtable.c       |  2 +-
- arch/powerpc/mm/book3s64/radix_pgtable.c |  2 +-
- arch/powerpc/mm/pgtable_64.c             |  2 +-
- arch/s390/boot/vmem.c                    |  2 +-
- arch/s390/include/asm/pgtable.h          |  8 ++++----
- arch/s390/mm/gmap.c                      | 12 ++++++------
- arch/s390/mm/hugetlbpage.c               |  2 +-
- arch/s390/mm/pageattr.c                  |  2 +-
- arch/s390/mm/pgtable.c                   |  6 +++---
- arch/s390/mm/vmem.c                      |  6 +++---
- arch/sparc/mm/init_64.c                  |  4 ++--
- arch/x86/boot/compressed/ident_map_64.c  |  2 +-
- arch/x86/kvm/mmu/mmu.c                   |  2 +-
- arch/x86/mm/fault.c                      |  8 ++++----
- arch/x86/mm/init_32.c                    |  2 +-
- arch/x86/mm/init_64.c                    |  8 ++++----
- arch/x86/mm/kasan_init_64.c              |  2 +-
- arch/x86/mm/mem_encrypt_identity.c       |  4 ++--
- arch/x86/mm/pat/set_memory.c             |  4 ++--
- arch/x86/mm/pgtable.c                    |  2 +-
- arch/x86/mm/pti.c                        |  4 ++--
- arch/x86/power/hibernate.c               |  2 +-
- arch/x86/xen/mmu_pv.c                    |  4 ++--
- drivers/misc/sgi-gru/grufault.c          |  2 +-
- 25 files changed, 49 insertions(+), 49 deletions(-)
+ drivers/pci/pci-driver.c | 38 +++++++++++++++++++++++++----------
+ drivers/pci/pci.h        | 43 +++++++++++++++++++++++++++++-----------
+ drivers/pci/search.c     |  8 +++++---
+ 3 files changed, 64 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm/mm/dump.c b/arch/arm/mm/dump.c
-index a9381095ab366..cd032522d902f 100644
---- a/arch/arm/mm/dump.c
-+++ b/arch/arm/mm/dump.c
-@@ -349,12 +349,12 @@ static void walk_pmd(struct pg_state *st, pud_t *pud, unsigned long start)
- 	for (i = 0; i < PTRS_PER_PMD; i++, pmd++) {
- 		addr = start + i * PMD_SIZE;
- 		domain = get_domain_name(pmd);
--		if (pmd_none(*pmd) || pmd_large(*pmd) || !pmd_present(*pmd))
-+		if (pmd_none(*pmd) || pmd_leaf(*pmd) || !pmd_present(*pmd))
- 			note_page(st, addr, 4, pmd_val(*pmd), domain);
- 		else
- 			walk_pte(st, pmd, addr, domain);
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 7672cd5966cc9..78ae72bc79d37 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -90,6 +90,27 @@ static void pci_free_dynids(struct pci_driver *drv)
+ 	spin_unlock(&drv->dynids.lock);
+ }
  
--		if (SECTION_SIZE < PMD_SIZE && pmd_large(pmd[1])) {
-+		if (SECTION_SIZE < PMD_SIZE && pmd_leaf(pmd[1])) {
- 			addr += SECTION_SIZE;
- 			pmd++;
- 			domain = get_domain_name(pmd);
-diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
-index bddb96dad73d6..5973b9d3b591e 100644
---- a/arch/powerpc/mm/book3s64/pgtable.c
-+++ b/arch/powerpc/mm/book3s64/pgtable.c
-@@ -113,7 +113,7 @@ void set_pmd_at(struct mm_struct *mm, unsigned long addr,
- 
- 	WARN_ON(pte_hw_valid(pmd_pte(*pmdp)) && !pte_protnone(pmd_pte(*pmdp)));
- 	assert_spin_locked(pmd_lockptr(mm, pmdp));
--	WARN_ON(!(pmd_large(pmd)));
-+	WARN_ON(!(pmd_leaf(pmd)));
- #endif
- 	trace_hugepage_set_pmd(addr, pmd_val(pmd));
- 	return set_pte_at(mm, addr, pmdp_ptep(pmdp), pmd_pte(pmd));
-diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index ff643d8c29b32..68da05ae45aaf 100644
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -1001,7 +1001,7 @@ bool vmemmap_can_optimize(struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
- int __meminit vmemmap_check_pmd(pmd_t *pmdp, int node,
- 				unsigned long addr, unsigned long next)
++/**
++ * do_pci_match_id - See if a PCI ID matches a given pci_id table
++ * @ids: array of PCI device ID structures to search in
++ * @dev_id: the actual PCI device ID structure to match against.
++ *
++ * Return: the matching pci_device_id structure or %NULL if there is no match.
++ */
++static const struct pci_device_id *
++do_pci_match_id(const struct pci_device_id *ids,
++		const struct pci_device_id *dev_id)
++{
++	if (ids) {
++		while (ids->vendor || ids->subvendor || ids->class_mask) {
++			if (pci_match_one_id(ids, dev_id))
++				return ids;
++			ids++;
++		}
++	}
++	return NULL;
++}
++
+ /**
+  * pci_match_id - See if a PCI device matches a given pci_id table
+  * @ids: array of PCI device ID structures to search in
+@@ -105,14 +126,9 @@ static void pci_free_dynids(struct pci_driver *drv)
+ const struct pci_device_id *pci_match_id(const struct pci_device_id *ids,
+ 					 struct pci_dev *dev)
  {
--	int large = pmd_large(*pmdp);
-+	int large = pmd_leaf(*pmdp);
+-	if (ids) {
+-		while (ids->vendor || ids->subvendor || ids->class_mask) {
+-			if (pci_match_one_device(ids, dev))
+-				return ids;
+-			ids++;
+-		}
+-	}
+-	return NULL;
++	struct pci_device_id dev_id = pci_id_from_device(dev);
++
++	return do_pci_match_id(ids, &dev_id);
+ }
+ EXPORT_SYMBOL(pci_match_id);
  
- 	if (large)
- 		vmemmap_verify(pmdp_ptep(pmdp), node, addr, next);
-diff --git a/arch/powerpc/mm/pgtable_64.c b/arch/powerpc/mm/pgtable_64.c
-index 5ac1fd30341bb..0456119c9df93 100644
---- a/arch/powerpc/mm/pgtable_64.c
-+++ b/arch/powerpc/mm/pgtable_64.c
-@@ -132,7 +132,7 @@ struct page *pmd_page(pmd_t pmd)
- 		 * enabled so these checks can't be used.
- 		 */
- 		if (!IS_ENABLED(CONFIG_HAVE_ARCH_HUGE_VMAP))
--			VM_WARN_ON(!(pmd_large(pmd) || pmd_huge(pmd)));
-+			VM_WARN_ON(!(pmd_leaf(pmd) || pmd_huge(pmd)));
- 		return pte_page(pmd_pte(pmd));
- 	}
- 	return virt_to_page(pmd_page_vaddr(pmd));
-diff --git a/arch/s390/boot/vmem.c b/arch/s390/boot/vmem.c
-index 14e1a73ffcfe6..978ee19bd8fce 100644
---- a/arch/s390/boot/vmem.c
-+++ b/arch/s390/boot/vmem.c
-@@ -327,7 +327,7 @@ static void pgtable_pmd_populate(pud_t *pud, unsigned long addr, unsigned long e
- 			}
- 			pte = boot_pte_alloc();
- 			pmd_populate(&init_mm, pmd, pte);
--		} else if (pmd_large(*pmd)) {
-+		} else if (pmd_leaf(*pmd)) {
- 			continue;
- 		}
- 		pgtable_pte_populate(pmd, addr, next, mode);
-diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
-index 2cc9d7bb1b2ac..9c09370195d27 100644
---- a/arch/s390/include/asm/pgtable.h
-+++ b/arch/s390/include/asm/pgtable.h
-@@ -730,7 +730,7 @@ static inline int pmd_large(pmd_t pmd)
- 
- static inline int pmd_bad(pmd_t pmd)
+@@ -138,6 +154,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
  {
--	if ((pmd_val(pmd) & _SEGMENT_ENTRY_TYPE_MASK) > 0 || pmd_large(pmd))
-+	if ((pmd_val(pmd) & _SEGMENT_ENTRY_TYPE_MASK) > 0 || pmd_leaf(pmd))
- 		return 1;
- 	return (pmd_val(pmd) & ~_SEGMENT_ENTRY_BITS) != 0;
- }
-@@ -828,8 +828,8 @@ static inline int pte_protnone(pte_t pte)
+ 	struct pci_dynid *dynid;
+ 	const struct pci_device_id *found_id = NULL, *ids;
++	struct pci_device_id dev_id;
+ 	int ret;
  
- static inline int pmd_protnone(pmd_t pmd)
- {
--	/* pmd_large(pmd) implies pmd_present(pmd) */
--	return pmd_large(pmd) && !(pmd_val(pmd) & _SEGMENT_ENTRY_READ);
-+	/* pmd_leaf(pmd) implies pmd_present(pmd) */
-+	return pmd_leaf(pmd) && !(pmd_val(pmd) & _SEGMENT_ENTRY_READ);
- }
- #endif
+ 	/* When driver_override is set, only bind to the matching driver */
+@@ -145,10 +162,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 	if (ret == 0)
+ 		return NULL;
  
-@@ -1389,7 +1389,7 @@ static inline unsigned long pmd_deref(pmd_t pmd)
- 	unsigned long origin_mask;
- 
- 	origin_mask = _SEGMENT_ENTRY_ORIGIN;
--	if (pmd_large(pmd))
-+	if (pmd_leaf(pmd))
- 		origin_mask = _SEGMENT_ENTRY_ORIGIN_LARGE;
- 	return (unsigned long)__va(pmd_val(pmd) & origin_mask);
- }
-diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
-index 1a656db09c9fe..b72facdb49f6e 100644
---- a/arch/s390/mm/gmap.c
-+++ b/arch/s390/mm/gmap.c
-@@ -601,7 +601,7 @@ int __gmap_link(struct gmap *gmap, unsigned long gaddr, unsigned long vmaddr)
- 	pmd = pmd_offset(pud, vmaddr);
- 	VM_BUG_ON(pmd_none(*pmd));
- 	/* Are we allowed to use huge pages? */
--	if (pmd_large(*pmd) && !gmap->mm->context.allow_gmap_hpage_1m)
-+	if (pmd_leaf(*pmd) && !gmap->mm->context.allow_gmap_hpage_1m)
- 		return -EFAULT;
- 	/* Link gmap segment table entry location to page table. */
- 	rc = radix_tree_preload(GFP_KERNEL_ACCOUNT);
-@@ -613,7 +613,7 @@ int __gmap_link(struct gmap *gmap, unsigned long gaddr, unsigned long vmaddr)
- 		rc = radix_tree_insert(&gmap->host_to_guest,
- 				       vmaddr >> PMD_SHIFT, table);
- 		if (!rc) {
--			if (pmd_large(*pmd)) {
-+			if (pmd_leaf(*pmd)) {
- 				*table = (pmd_val(*pmd) &
- 					  _SEGMENT_ENTRY_HARDWARE_BITS_LARGE)
- 					| _SEGMENT_ENTRY_GMAP_UC;
-@@ -943,7 +943,7 @@ static inline pmd_t *gmap_pmd_op_walk(struct gmap *gmap, unsigned long gaddr)
- 	}
- 
- 	/* 4k page table entries are locked via the pte (pte_alloc_map_lock). */
--	if (!pmd_large(*pmdp))
-+	if (!pmd_leaf(*pmdp))
- 		spin_unlock(&gmap->guest_table_lock);
- 	return pmdp;
- }
-@@ -955,7 +955,7 @@ static inline pmd_t *gmap_pmd_op_walk(struct gmap *gmap, unsigned long gaddr)
-  */
- static inline void gmap_pmd_op_end(struct gmap *gmap, pmd_t *pmdp)
- {
--	if (pmd_large(*pmdp))
-+	if (pmd_leaf(*pmdp))
- 		spin_unlock(&gmap->guest_table_lock);
- }
- 
-@@ -1066,7 +1066,7 @@ static int gmap_protect_range(struct gmap *gmap, unsigned long gaddr,
- 		rc = -EAGAIN;
- 		pmdp = gmap_pmd_op_walk(gmap, gaddr);
- 		if (pmdp) {
--			if (!pmd_large(*pmdp)) {
-+			if (!pmd_leaf(*pmdp)) {
- 				rc = gmap_protect_pte(gmap, gaddr, pmdp, prot,
- 						      bits);
- 				if (!rc) {
-@@ -2498,7 +2498,7 @@ void gmap_sync_dirty_log_pmd(struct gmap *gmap, unsigned long bitmap[4],
- 	if (!pmdp)
- 		return;
- 
--	if (pmd_large(*pmdp)) {
-+	if (pmd_leaf(*pmdp)) {
- 		if (gmap_test_and_clear_dirty_pmd(gmap, pmdp, gaddr))
- 			bitmap_fill(bitmap, _PAGE_ENTRIES);
- 	} else {
-diff --git a/arch/s390/mm/hugetlbpage.c b/arch/s390/mm/hugetlbpage.c
-index 5ebd730f1ffbb..a74e1d9788d32 100644
---- a/arch/s390/mm/hugetlbpage.c
-+++ b/arch/s390/mm/hugetlbpage.c
-@@ -235,7 +235,7 @@ pte_t *huge_pte_offset(struct mm_struct *mm,
- 
- int pmd_huge(pmd_t pmd)
- {
--	return pmd_large(pmd);
-+	return pmd_leaf(pmd);
- }
- 
- int pud_huge(pud_t pud)
-diff --git a/arch/s390/mm/pageattr.c b/arch/s390/mm/pageattr.c
-index 44271835c97e7..ec8d3594cfc54 100644
---- a/arch/s390/mm/pageattr.c
-+++ b/arch/s390/mm/pageattr.c
-@@ -185,7 +185,7 @@ static int walk_pmd_level(pud_t *pudp, unsigned long addr, unsigned long end,
- 		if (pmd_none(*pmdp))
- 			return -EINVAL;
- 		next = pmd_addr_end(addr, end);
--		if (pmd_large(*pmdp)) {
-+		if (pmd_leaf(*pmdp)) {
- 			need_split  = !!(flags & SET_MEMORY_4K);
- 			need_split |= !!(addr & ~PMD_MASK);
- 			need_split |= !!(addr + PMD_SIZE > next);
-diff --git a/arch/s390/mm/pgtable.c b/arch/s390/mm/pgtable.c
-index 1fb435b3913cd..2319716ea03c7 100644
---- a/arch/s390/mm/pgtable.c
-+++ b/arch/s390/mm/pgtable.c
-@@ -836,7 +836,7 @@ int set_guest_storage_key(struct mm_struct *mm, unsigned long addr,
- 		return key ? -EFAULT : 0;
- 	}
- 
--	if (pmd_large(*pmdp)) {
-+	if (pmd_leaf(*pmdp)) {
- 		paddr = pmd_val(*pmdp) & HPAGE_MASK;
- 		paddr |= addr & ~HPAGE_MASK;
- 		/*
-@@ -947,7 +947,7 @@ int reset_guest_reference_bit(struct mm_struct *mm, unsigned long addr)
- 		return 0;
- 	}
- 
--	if (pmd_large(*pmdp)) {
-+	if (pmd_leaf(*pmdp)) {
- 		paddr = pmd_val(*pmdp) & HPAGE_MASK;
- 		paddr |= addr & ~HPAGE_MASK;
- 		cc = page_reset_referenced(paddr);
-@@ -1011,7 +1011,7 @@ int get_guest_storage_key(struct mm_struct *mm, unsigned long addr,
- 		return 0;
- 	}
- 
--	if (pmd_large(*pmdp)) {
-+	if (pmd_leaf(*pmdp)) {
- 		paddr = pmd_val(*pmdp) & HPAGE_MASK;
- 		paddr |= addr & ~HPAGE_MASK;
- 		*key = page_get_storage_key(paddr);
-diff --git a/arch/s390/mm/vmem.c b/arch/s390/mm/vmem.c
-index 2d3f65da56eea..68df48d745bf2 100644
---- a/arch/s390/mm/vmem.c
-+++ b/arch/s390/mm/vmem.c
-@@ -229,7 +229,7 @@ static int __ref modify_pmd_table(pud_t *pud, unsigned long addr,
- 		if (!add) {
- 			if (pmd_none(*pmd))
- 				continue;
--			if (pmd_large(*pmd)) {
-+			if (pmd_leaf(*pmd)) {
- 				if (IS_ALIGNED(addr, PMD_SIZE) &&
- 				    IS_ALIGNED(next, PMD_SIZE)) {
- 					if (!direct)
-@@ -274,7 +274,7 @@ static int __ref modify_pmd_table(pud_t *pud, unsigned long addr,
- 			if (!pte)
- 				goto out;
- 			pmd_populate(&init_mm, pmd, pte);
--		} else if (pmd_large(*pmd)) {
-+		} else if (pmd_leaf(*pmd)) {
- 			if (!direct)
- 				vmemmap_use_sub_pmd(addr, next);
- 			continue;
-@@ -597,7 +597,7 @@ pte_t *vmem_get_alloc_pte(unsigned long addr, bool alloc)
- 		if (!pte)
- 			goto out;
- 		pmd_populate(&init_mm, pmd, pte);
--	} else if (WARN_ON_ONCE(pmd_large(*pmd))) {
-+	} else if (WARN_ON_ONCE(pmd_leaf(*pmd))) {
- 		goto out;
- 	}
- 	ptep = pte_offset_kernel(pmd, addr);
-diff --git a/arch/sparc/mm/init_64.c b/arch/sparc/mm/init_64.c
-index d7db4e737218c..1ca9054d9b971 100644
---- a/arch/sparc/mm/init_64.c
-+++ b/arch/sparc/mm/init_64.c
-@@ -1672,7 +1672,7 @@ bool kern_addr_valid(unsigned long addr)
- 	if (pmd_none(*pmd))
- 		return false;
- 
--	if (pmd_large(*pmd))
-+	if (pmd_leaf(*pmd))
- 		return pfn_valid(pmd_pfn(*pmd));
- 
- 	pte = pte_offset_kernel(pmd, addr);
-@@ -2968,7 +2968,7 @@ void update_mmu_cache_pmd(struct vm_area_struct *vma, unsigned long addr,
- 	struct mm_struct *mm;
- 	pmd_t entry = *pmd;
- 
--	if (!pmd_large(entry) || !pmd_young(entry))
-+	if (!pmd_leaf(entry) || !pmd_young(entry))
- 		return;
- 
- 	pte = pmd_val(entry);
-diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
-index d040080d7edbd..71c6e2fdcec77 100644
---- a/arch/x86/boot/compressed/ident_map_64.c
-+++ b/arch/x86/boot/compressed/ident_map_64.c
-@@ -284,7 +284,7 @@ static int set_clr_page_flags(struct x86_mapping_info *info,
- 	pudp = pud_offset(p4dp, address);
- 	pmdp = pmd_offset(pudp, address);
- 
--	if (pmd_large(*pmdp))
-+	if (pmd_leaf(*pmdp))
- 		ptep = split_large_pmd(info, pmdp, address);
- 	else
- 		ptep = pte_offset_kernel(pmdp, address);
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 0044822ade91b..b243cb405808a 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -3135,7 +3135,7 @@ static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn,
- 	if (pmd_none(pmd) || !pmd_present(pmd))
- 		goto out;
- 
--	if (pmd_large(pmd))
-+	if (pmd_leaf(pmd))
- 		level = PG_LEVEL_2M;
- 
- out:
-diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-index 4890cafea7b66..b620033fdcea2 100644
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -250,7 +250,7 @@ static noinline int vmalloc_fault(unsigned long address)
- 	if (!pmd_k)
- 		return -1;
- 
--	if (pmd_large(*pmd_k))
-+	if (pmd_leaf(*pmd_k))
- 		return 0;
- 
- 	pte_k = pte_offset_kernel(pmd_k, address);
-@@ -319,7 +319,7 @@ static void dump_pagetable(unsigned long address)
- 	 * And let's rather not kmap-atomic the pte, just in case
- 	 * it's allocated already:
- 	 */
--	if (!low_pfn(pmd_pfn(*pmd)) || !pmd_present(*pmd) || pmd_large(*pmd))
-+	if (!low_pfn(pmd_pfn(*pmd)) || !pmd_present(*pmd) || pmd_leaf(*pmd))
- 		goto out;
- 
- 	pte = pte_offset_kernel(pmd, address);
-@@ -384,7 +384,7 @@ static void dump_pagetable(unsigned long address)
- 		goto bad;
- 
- 	pr_cont("PMD %lx ", pmd_val(*pmd));
--	if (!pmd_present(*pmd) || pmd_large(*pmd))
-+	if (!pmd_present(*pmd) || pmd_leaf(*pmd))
- 		goto out;
- 
- 	pte = pte_offset_kernel(pmd, address);
-@@ -1011,7 +1011,7 @@ spurious_kernel_fault(unsigned long error_code, unsigned long address)
- 	if (!pmd_present(*pmd))
- 		return 0;
- 
--	if (pmd_large(*pmd))
-+	if (pmd_leaf(*pmd))
- 		return spurious_kernel_fault_check(error_code, (pte_t *) pmd);
- 
- 	pte = pte_offset_kernel(pmd, address);
-diff --git a/arch/x86/mm/init_32.c b/arch/x86/mm/init_32.c
-index b63403d7179df..bb6785472f0ca 100644
---- a/arch/x86/mm/init_32.c
-+++ b/arch/x86/mm/init_32.c
-@@ -463,7 +463,7 @@ void __init native_pagetable_init(void)
++	dev_id = pci_id_from_device(dev);
+ 	/* Look at the dynamic ids first, before the static ones */
+ 	spin_lock(&drv->dynids.lock);
+ 	list_for_each_entry(dynid, &drv->dynids.list, node) {
+-		if (pci_match_one_device(&dynid->id, dev)) {
++		if (pci_match_one_id(&dynid->id, &dev_id)) {
+ 			found_id = &dynid->id;
  			break;
- 
- 		/* should not be large page here */
--		if (pmd_large(*pmd)) {
-+		if (pmd_leaf(*pmd)) {
- 			pr_warn("try to clear pte for ram above max_low_pfn: pfn: %lx pmd: %p pmd phys: %lx, but pmd is big page and is not using pte !\n",
- 				pfn, pmd, __pa(pmd));
- 			BUG_ON(1);
-diff --git a/arch/x86/mm/init_64.c b/arch/x86/mm/init_64.c
-index cf080c96b7dd6..e49bf9b4370a8 100644
---- a/arch/x86/mm/init_64.c
-+++ b/arch/x86/mm/init_64.c
-@@ -548,7 +548,7 @@ phys_pmd_init(pmd_t *pmd_page, unsigned long paddr, unsigned long paddr_end,
  		}
+@@ -158,7 +176,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 	if (found_id)
+ 		return found_id;
  
- 		if (!pmd_none(*pmd)) {
--			if (!pmd_large(*pmd)) {
-+			if (!pmd_leaf(*pmd)) {
- 				spin_lock(&init_mm.page_table_lock);
- 				pte = (pte_t *)pmd_page_vaddr(*pmd);
- 				paddr_last = phys_pte_init(pte, paddr,
-@@ -1145,7 +1145,7 @@ remove_pmd_table(pmd_t *pmd_start, unsigned long addr, unsigned long end,
- 		if (!pmd_present(*pmd))
- 			continue;
+-	for (ids = drv->id_table; (found_id = pci_match_id(ids, dev));
++	for (ids = drv->id_table; (found_id = do_pci_match_id(ids, &dev_id));
+ 	     ids = found_id + 1) {
+ 		/*
+ 		 * The match table is split based on driver_override.
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index 278af5b263bff..c2ab22a353011 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -222,21 +222,40 @@ extern unsigned long pci_hotplug_mmio_pref_size;
+ extern unsigned long pci_hotplug_bus_size;
  
--		if (pmd_large(*pmd)) {
-+		if (pmd_leaf(*pmd)) {
- 			if (IS_ALIGNED(addr, PMD_SIZE) &&
- 			    IS_ALIGNED(next, PMD_SIZE)) {
- 				if (!direct)
-@@ -1553,9 +1553,9 @@ void __meminit vmemmap_set_pmd(pmd_t *pmd, void *p, int node,
- int __meminit vmemmap_check_pmd(pmd_t *pmd, int node,
- 				unsigned long addr, unsigned long next)
- {
--	int large = pmd_large(*pmd);
-+	int large = pmd_leaf(*pmd);
- 
--	if (pmd_large(*pmd)) {
-+	if (pmd_leaf(*pmd)) {
- 		vmemmap_verify((pte_t *)pmd, node, addr, next);
- 		vmemmap_use_sub_pmd(addr, next);
- 	}
-diff --git a/arch/x86/mm/kasan_init_64.c b/arch/x86/mm/kasan_init_64.c
-index fcf508c52bdc5..9dddf19a55716 100644
---- a/arch/x86/mm/kasan_init_64.c
-+++ b/arch/x86/mm/kasan_init_64.c
-@@ -95,7 +95,7 @@ static void __init kasan_populate_pud(pud_t *pud, unsigned long addr,
- 	pmd = pmd_offset(pud, addr);
- 	do {
- 		next = pmd_addr_end(addr, end);
--		if (!pmd_large(*pmd))
-+		if (!pmd_leaf(*pmd))
- 			kasan_populate_pmd(pmd, addr, next, nid);
- 	} while (pmd++, addr = next, addr != end);
- }
-diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
-index 075899e3fc8a4..b922b9fea6b64 100644
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -157,7 +157,7 @@ static void __head sme_populate_pgd_large(struct sme_populate_pgd_data *ppd)
- 		return;
- 
- 	pmd = pmd_offset(pud, ppd->vaddr);
--	if (pmd_large(*pmd))
-+	if (pmd_leaf(*pmd))
- 		return;
- 
- 	set_pmd(pmd, __pmd(ppd->paddr | ppd->pmd_flags));
-@@ -181,7 +181,7 @@ static void __head sme_populate_pgd(struct sme_populate_pgd_data *ppd)
- 		set_pmd(pmd, __pmd(PMD_FLAGS | __pa(pte)));
- 	}
- 
--	if (pmd_large(*pmd))
-+	if (pmd_leaf(*pmd))
- 		return;
- 
- 	pte = pte_offset_kernel(pmd, ppd->vaddr);
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index 525794f1eefb3..8838033aa450f 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -709,7 +709,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
- 		return NULL;
- 
- 	*level = PG_LEVEL_2M;
--	if (pmd_large(*pmd) || !pmd_present(*pmd))
-+	if (pmd_leaf(*pmd) || !pmd_present(*pmd))
- 		return (pte_t *)pmd;
- 
- 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
-@@ -1267,7 +1267,7 @@ static void unmap_pmd_range(pud_t *pud, unsigned long start, unsigned long end)
- 	 * Try to unmap in 2M chunks.
- 	 */
- 	while (end - start >= PMD_SIZE) {
--		if (pmd_large(*pmd))
-+		if (pmd_leaf(*pmd))
- 			pmd_clear(pmd);
- 		else
- 			__unmap_pmd_range(pud, pmd, start, start + PMD_SIZE);
-diff --git a/arch/x86/mm/pgtable.c b/arch/x86/mm/pgtable.c
-index 98aa303ad0546..8bb739e1c2d0e 100644
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -791,7 +791,7 @@ int pud_clear_huge(pud_t *pud)
+ /**
+- * pci_match_one_device - Tell if a PCI device structure has a matching
+- *			  PCI device id structure
+- * @id: single PCI device id structure to match
+- * @dev: the PCI device structure to match against
++ * pci_id_from_device - Obtain a pci_device_id from a PCI device
++ * @dev: the PCI device
+  *
+- * Returns the matching pci_device_id structure or %NULL if there is no match.
++ * Return: a pci_device_id filled.
   */
- int pmd_clear_huge(pmd_t *pmd)
+-static inline const struct pci_device_id *
+-pci_match_one_device(const struct pci_device_id *id, const struct pci_dev *dev)
++static inline struct pci_device_id pci_id_from_device(const struct pci_dev *dev)
  {
--	if (pmd_large(*pmd)) {
-+	if (pmd_leaf(*pmd)) {
- 		pmd_clear(pmd);
+-	if ((id->vendor == PCI_ANY_ID || id->vendor == dev->vendor) &&
+-	    (id->device == PCI_ANY_ID || id->device == dev->device) &&
+-	    (id->subvendor == PCI_ANY_ID || id->subvendor == dev->subsystem_vendor) &&
+-	    (id->subdevice == PCI_ANY_ID || id->subdevice == dev->subsystem_device) &&
+-	    !((id->class ^ dev->class) & id->class_mask))
++	return (struct pci_device_id) {
++		.vendor = dev->vendor,
++		.device = dev->device,
++		.subvendor = dev->subsystem_vendor,
++		.subdevice = dev->subsystem_device,
++		.class = dev->class,
++	};
++}
++
++/**
++ * pci_match_one_id - Tell if a PCI device ID matches a needle PCI device ID
++ * @id: single PCI device id structure to match against (needle)
++ * @dev_id: the actual ID from the PCI device
++ *
++ * ID can be retrieved from device using pci_id_from_device().
++ *
++ * Return: the matching pci_device_id structure or %NULL if there is no match.
++ */
++static inline const struct pci_device_id *
++pci_match_one_id(const struct pci_device_id *id,
++		 const struct pci_device_id *dev_id)
++{
++	if ((id->vendor == PCI_ANY_ID || id->vendor == dev_id->vendor) &&
++	    (id->device == PCI_ANY_ID || id->device == dev_id->device) &&
++	    (id->subvendor == PCI_ANY_ID || id->subvendor == dev_id->subvendor) &&
++	    (id->subdevice == PCI_ANY_ID || id->subdevice == dev_id->subdevice) &&
++	    !((id->class ^ dev_id->class) & id->class_mask))
+ 		return id;
+ 	return NULL;
+ }
+diff --git a/drivers/pci/search.c b/drivers/pci/search.c
+index 53840634fbfc2..705ab725321a8 100644
+--- a/drivers/pci/search.c
++++ b/drivers/pci/search.c
+@@ -243,8 +243,10 @@ static int match_pci_dev_by_id(struct device *dev, const void *data)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+ 	const struct pci_device_id *id = data;
++	struct pci_device_id dev_id;
+ 
+-	if (pci_match_one_device(id, pdev))
++	dev_id = pci_id_from_device(pdev);
++	if (pci_match_one_id(id, &dev_id))
  		return 1;
- 	}
-diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
-index 916247c1d2a36..3dbd8b56f3645 100644
---- a/arch/x86/mm/pti.c
-+++ b/arch/x86/mm/pti.c
-@@ -252,7 +252,7 @@ static pte_t *pti_user_pagetable_walk_pte(unsigned long address, bool late_text)
- 		return NULL;
- 
- 	/* Large PMD mapping found */
--	if (pmd_large(*pmd)) {
-+	if (pmd_leaf(*pmd)) {
- 		/* Clear the PMD if we hit a large mapping from the first round */
- 		if (late_text) {
- 			set_pmd(pmd, __pmd(0));
-@@ -346,7 +346,7 @@ pti_clone_pgtable(unsigned long start, unsigned long end,
- 			continue;
- 		}
- 
--		if (pmd_large(*pmd) || level == PTI_CLONE_PMD) {
-+		if (pmd_leaf(*pmd) || level == PTI_CLONE_PMD) {
- 			target_pmd = pti_user_pagetable_walk_pmd(addr);
- 			if (WARN_ON(!target_pmd))
- 				return;
-diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
-index d8af46e677503..a7ec9b8e2f6b9 100644
---- a/arch/x86/power/hibernate.c
-+++ b/arch/x86/power/hibernate.c
-@@ -175,7 +175,7 @@ int relocate_restore_code(void)
- 		goto out;
- 	}
- 	pmd = pmd_offset(pud, relocated_restore_code);
--	if (pmd_large(*pmd)) {
-+	if (pmd_leaf(*pmd)) {
- 		set_pmd(pmd, __pmd(pmd_val(*pmd) & ~_PAGE_NX));
- 		goto out;
- 	}
-diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
-index 23f30ca52816c..c6fe533ceffce 100644
---- a/arch/x86/xen/mmu_pv.c
-+++ b/arch/x86/xen/mmu_pv.c
-@@ -1112,7 +1112,7 @@ static void __init xen_cleanmfnmap_pmd(pmd_t *pmd, bool unpin)
- 	pte_t *pte_tbl;
- 	int i;
- 
--	if (pmd_large(*pmd)) {
-+	if (pmd_leaf(*pmd)) {
- 		pa = pmd_val(*pmd) & PHYSICAL_PAGE_MASK;
- 		xen_free_ro_pages(pa, PMD_SIZE);
- 		return;
-@@ -1924,7 +1924,7 @@ static phys_addr_t __init xen_early_virt_to_phys(unsigned long vaddr)
- 	if (!pmd_present(pmd))
- 		return 0;
- 	pa = pmd_val(pmd) & PTE_PFN_MASK;
--	if (pmd_large(pmd))
-+	if (pmd_leaf(pmd))
- 		return pa + (vaddr & ~PMD_MASK);
- 
- 	pte = native_make_pte(xen_read_phys_ulong(pa + pte_index(vaddr) *
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index 629edb6486dea..3557d78ee47a2 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -227,7 +227,7 @@ static int atomic_pte_lookup(struct vm_area_struct *vma, unsigned long vaddr,
- 	if (unlikely(pmd_none(*pmdp)))
- 		goto err;
- #ifdef CONFIG_X86_64
--	if (unlikely(pmd_large(*pmdp)))
-+	if (unlikely(pmd_leaf(*pmdp)))
- 		pte = ptep_get((pte_t *)pmdp);
- 	else
- #endif
+ 	return 0;
+ }
+@@ -368,9 +370,9 @@ EXPORT_SYMBOL(pci_get_class);
+  * @class: search for a PCI device with this base class code
+  * @from: Previous PCI device found in search, or %NULL for new search.
+  *
+- * Iterates through the list of known PCI devices. If a PCI device is found
++ * Iterate through the list of known PCI devices. If a PCI device is found
+  * with a matching base class code, the reference count to the device is
+- * incremented. See pci_match_one_device() to figure out how does this works.
++ * incremented. See pci_match_one_id() to figure out how this works.
+  * A new search is initiated by passing %NULL as the @from argument.
+  * Otherwise if @from is not %NULL, searches continue from next device on the
+  * global list. The reference count for @from is always decremented if it is
 -- 
 2.53.0
 
