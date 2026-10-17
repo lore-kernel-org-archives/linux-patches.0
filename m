@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359B64CF49B;
-	Sat, 17 Oct 2026 16:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095201FDE31;
+	Sat, 17 Oct 2026 16:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256335; cv=none; b=DRs0bacevpT4eg/0SG1ZtjZaofliLGH5mC+yA4eeOOgC4zXJ8SdDW6T9ZhkZwzomF10C6C3/fc8ZFW6HF6MK5Ql5eew+14lXJuwvfxYiOa2Wyfou6nIet/gjF6BFOGNdW6FWJv5OtLr8+9vJLnZpOSlC5m/SsC0yP4n64ADn0+8=
+	t=1792256338; cv=none; b=ruQ/WZ6kzKqmCa4BPArdZ6lmud3Kb++sIr+zgCtXijWkpDLpo0YHbt6tw48BdDX5jx5EjJF8TgahzXZjqDrIbvCN1w3C1F/UdXtIWY5FNlIIZSZ+UHsniLI7bbNH94pzzf/0oYY7ygmuE6nAcvI4nuGORbnxo4cTQ9MrkmEizlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256335; c=relaxed/simple;
-	bh=7LvLT/UvQlY5EdzFXZMRBBaNE8tmd5i+nuqDb8WNlng=;
+	s=arc-20240116; t=1792256338; c=relaxed/simple;
+	bh=HPeW7kKpU2kLm/cpn56LvvH5IEhHruLHW3JVpLOCZuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2l5tRN/EczdsxfsKS7wdTKIKYFOFziubf2W2taBzScENOWx7ij5UoqIZkEmVjnpVbcve9VHSmzXdkbS/z6Xk6MwuAyuEgK+WRODbd2YJtuJq76aq6tFUyqXGgFO2AC4uYw57Ve6T79qHCXgIBNgrAC45w1GN4mx25Ob1rvNEt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GufZDJGY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8WR4IKkqCChRvZSmngT3EVLAanu+xujA//kBq3kQ1YMKFaSpuhvNqx4Zz36Yx8CveSwcMVXc86Ey3gG8eWyflVq65qtghVvGeRc1jHIlqkcMnS3frkQowdr+lcARjJWaqL+SMYPA+aQ8OIHcDXUWzg46a67L8BHUsIzvdysOBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeN6wvIa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GufZDJGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6CA1F000C4;
-	Sat, 17 Oct 2026 16:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeN6wvIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5752B1F000C4;
+	Sat, 17 Oct 2026 16:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256333;
-	bh=hWer8QImOhDcVkI267o7VSNkFxW6sadU31kUMCDbFDU=;
+	s=korg; t=1792256336;
+	bh=Cj6Q8YPsrCWEmvdWUSOsi/J8OcAfyUH/egDRs8ujnjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GufZDJGYkPeB6AI/fFxcs1vi0xl5P8DWqWuuvvhaF/NXKBv2Tg/qf2uni/3YDnDzv
-	 0eH/5MGP1A9V0dmiS1/4VBLgSYJfUcEIatVbNLKIWCKoZEVK+1I374Y/TfjcmJHuts
-	 UZTokJq2gSrSA78rczeKFsucKZSewuxPiVia4Hkw=
+	b=IeN6wvIa2u8KwYNJPUdV0SKC9H0dT4rDXAElhewtZRZ2VcB1nyk9a+g1ECNTswmMe
+	 pbAr2FshpBYcUznxv87iqLdT/u62w16VDhbxIvqh9m79+N3Uh3+frLKs9F++s8z5HD
+	 q0wGk/EADEfOVCGWkQop0TXJF0lgVqLGazhuSjtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0200/1674] wifi: mac80211: Add 802.3 multicast encapsulation offload support
-Date: Sat, 17 Oct 2026 17:41:12 +0200
-Message-ID: <20261017160436.286207781@linuxfoundation.org>
+Subject: [PATCH 6.6 0201/1674] wifi: mac80211: prevent AP VLAN tx from other interfaces
+Date: Sat, 17 Oct 2026 17:41:13 +0200
+Message-ID: <20261017160436.310504863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,132 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 4cc0cc0b297c17c2b106d6892bd13d9c32fe66ce ]
+[ Upstream commit 7f93ca31f7fd9b42e7d692f59514436d448ac908 ]
 
-mac80211 converts 802.3 multicast packets to 802.11 format
-before driver TX, even when Ethernet encapsulation offload
-is enabled. This prevents drivers that support multicast
-Ethernet encapsulation offload from receiving frames in
-native 802.3 format.
+Since the station lookup was factored out of ieee80211_build_hdr(),
+ieee80211_lookup_ra_sta() uses sta_info_get_bss() for all AP and AP VLAN
+frames, not only for control port frames. A unicast frame sent on one
+interface thus matches a station of a different VLAN of the same BSS and
+is transmitted to it.
 
-Introduce the IEEE80211_OFFLOAD_ENCAP_MCAST flag to bypass the
-802.11 encapsulation step and pass the multicast packet to the
-driver in 802.3 format. Drivers that support multicast Ethernet
-encapsulation offload can advertise this flag.
+Only match stations of the interface the frame is sent on, except for
+control port frames, since those may be sent for VLAN stations directly
+on the BSS interface.
 
-Disable multicast encapsulation offload in MLO case for drivers not
-advertising MLO_MCAST_MULTI_LINK_TX support for AP mode and for
-3-address AP_VLAN multicast packets.
-
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260604162403.1563729-4-tamizh.raja@oss.qualcomm.com
-[fix unlikely(), indentation]
+Fixes: 97ffe75791b3 ("mac80211: factor out station lookup from ieee80211_build_hdr()")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260916094833.164219-1-nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 7f93ca31f7fd ("wifi: mac80211: prevent AP VLAN tx from other interfaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h |  4 ++++
- net/mac80211/tx.c      | 51 ++++++++++++++++++++++++++++++++++++------
- 2 files changed, 48 insertions(+), 7 deletions(-)
+ net/mac80211/ieee80211_i.h |  2 +-
+ net/mac80211/tx.c          | 24 +++++++++++++++---------
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index faf1fd70ff945..89fe0f0b69fed 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -1786,12 +1786,16 @@ enum ieee80211_vif_flags {
-  * @IEEE80211_OFFLOAD_DECAP_ENABLED: rx encapsulation offload is enabled
-  *	The driver supports passing received 802.11 frames as 802.3 frames to
-  *	mac80211.
-+ * @IEEE80211_OFFLOAD_ENCAP_MCAST: tx multicast encapsulation offload is enabled
-+ *	The driver supports sending multicast frames passed as 802.3 frames
-+ *	by mac80211.
-  */
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index fba2e9109300a..b156e2e991d16 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2270,7 +2270,7 @@ void __ieee80211_tx_skb_tid_band(struct ieee80211_sub_if_data *sdata,
+ /* sta_out needs to be checked for ERR_PTR() before using */
+ int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
+ 			    struct sk_buff *skb,
+-			    struct sta_info **sta_out);
++			    struct sta_info **sta_out, bool bss);
  
- enum ieee80211_offload_flags {
- 	IEEE80211_OFFLOAD_ENCAP_ENABLED		= BIT(0),
- 	IEEE80211_OFFLOAD_ENCAP_4ADDR		= BIT(1),
- 	IEEE80211_OFFLOAD_DECAP_ENABLED		= BIT(2),
-+	IEEE80211_OFFLOAD_ENCAP_MCAST		= BIT(3),
- };
- 
- /**
+ static inline void
+ ieee80211_tx_skb_tid_band(struct ieee80211_sub_if_data *sdata,
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 9450cb7dff54c..62695450ad673 100644
+index 62695450ad673..e5bd558c9ae51 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -4701,11 +4701,32 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 	kfree_skb(skb);
- }
+@@ -2467,7 +2467,7 @@ static inline bool ieee80211_is_tdls_setup(struct sk_buff *skb)
  
-+static bool ieee80211_check_mcast_offload(struct ieee80211_sub_if_data *sdata,
-+					  struct sk_buff *skb)
-+{
-+	struct ethhdr *ehdr = (struct ethhdr *)skb->data;
-+
-+	if ((ieee80211_vif_is_mld(&sdata->vif) &&
-+	     (sdata->vif.type == NL80211_IFTYPE_AP &&
-+	      !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX))) ||
-+	    (sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
-+	     !sdata->wdev.use_4addr))
-+		return false;
-+
-+	if (!is_multicast_ether_addr(skb->data) ||
-+	    !(sdata->vif.offload_flags & IEEE80211_OFFLOAD_ENCAP_MCAST) ||
-+	    sdata->control_port_protocol == ehdr->h_proto)
-+		return false;
-+
-+	return true;
-+}
-+
- static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
- 					      struct net_device *dev)
+ int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
+ 			    struct sk_buff *skb,
+-			    struct sta_info **sta_out)
++			    struct sta_info **sta_out, bool bss)
  {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
- 	struct ethhdr *ehdr = (struct ethhdr *)skb->data;
-+	struct ieee80211_link_data *link;
- 	struct ieee80211_key *key;
  	struct sta_info *sta;
  
-@@ -4716,14 +4737,30 @@ static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
+@@ -2488,7 +2488,10 @@ int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
+ 			*sta_out = ERR_PTR(-ENOENT);
+ 			return 0;
+ 		}
+-		sta = sta_info_get_bss(sdata, skb->data);
++		if (bss)
++			sta = sta_info_get_bss(sdata, skb->data);
++		else
++			sta = sta_info_get(sdata, skb->data);
+ 		break;
+ #ifdef CONFIG_MAC80211_MESH
+ 	case NL80211_IFTYPE_MESH_POINT:
+@@ -4308,7 +4311,8 @@ void __ieee80211_subif_start_xmit(struct sk_buff *skb,
+ 	    ieee80211_mesh_xmit_fast(sdata, skb, ctrl_flags))
+ 		goto out;
+ 
+-	if (ieee80211_lookup_ra_sta(sdata, skb, &sta))
++	if (ieee80211_lookup_ra_sta(sdata, skb, &sta,
++				    skb->protocol == sdata->control_port_protocol))
+ 		goto out_free;
+ 
+ 	if (IS_ERR(sta))
+@@ -4732,7 +4736,10 @@ static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
+ 
+ 	rcu_read_lock();
+ 
+-	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
++	if (unlikely(sdata->control_port_protocol == ehdr->h_proto))
++		goto skip_offload;
++
++	if (ieee80211_lookup_ra_sta(sdata, skb, &sta, false)) {
+ 		kfree_skb(skb);
  		goto out;
  	}
- 
--	if (unlikely(IS_ERR_OR_NULL(sta) || !sta->uploaded ||
--	    !test_sta_flag(sta, WLAN_STA_AUTHORIZED) ||
--	    sdata->control_port_protocol == ehdr->h_proto))
-+	/*
-+	 * If STA is invalid, use the multicast offload path when applicable.
-+	 * In AP mode, drop the frame if there are no associated stations;
-+	 * otherwise use the default link and multicast key for transmission.
-+	 */
-+	if (unlikely(IS_ERR_OR_NULL(sta) &&
-+		     ieee80211_check_mcast_offload(sdata, skb))) {
-+		sta = NULL;
-+		if (ieee80211_vif_get_num_mcast_if(sdata) <= 0) {
-+			/* No associated STAs - no need to send multicast frames. */
-+			kfree_skb(skb);
-+			goto out;
-+		}
-+		link = &sdata->deflink;
-+		key = rcu_dereference(link->default_multicast_key);
-+	} else if (unlikely(IS_ERR_OR_NULL(sta) || !sta->uploaded ||
-+		   !test_sta_flag(sta, WLAN_STA_AUTHORIZED) ||
-+	    sdata->control_port_protocol == ehdr->h_proto)) {
+@@ -4753,8 +4760,7 @@ static void __ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
+ 		link = &sdata->deflink;
+ 		key = rcu_dereference(link->default_multicast_key);
+ 	} else if (unlikely(IS_ERR_OR_NULL(sta) || !sta->uploaded ||
+-		   !test_sta_flag(sta, WLAN_STA_AUTHORIZED) ||
+-	    sdata->control_port_protocol == ehdr->h_proto)) {
++		   !test_sta_flag(sta, WLAN_STA_AUTHORIZED))) {
  		goto skip_offload;
--
--	key = rcu_dereference(sta->ptk[sta->ptk_idx]);
--	if (!key)
--		key = rcu_dereference(sdata->default_unicast_key);
-+	} else {
-+		key = rcu_dereference(sta->ptk[sta->ptk_idx]);
-+		if (!key)
-+			key = rcu_dereference(sdata->default_unicast_key);
-+	}
+ 	} else {
+ 		key = rcu_dereference(sta->ptk[sta->ptk_idx]);
+@@ -4815,7 +4821,7 @@ ieee80211_build_data_template(struct ieee80211_sub_if_data *sdata,
  
- 	if (key && (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE) ||
- 		    key->conf.cipher == WLAN_CIPHER_SUITE_TKIP))
+ 	rcu_read_lock();
+ 
+-	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
++	if (ieee80211_lookup_ra_sta(sdata, skb, &sta, false)) {
+ 		kfree_skb(skb);
+ 		skb = ERR_PTR(-EINVAL);
+ 		goto out;
+@@ -4886,7 +4892,7 @@ static bool ieee80211_tx_pending_skb(struct ieee80211_local *local,
+ 		}
+ 		result = ieee80211_tx(sdata, NULL, skb, true);
+ 	} else if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) {
+-		if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
++		if (ieee80211_lookup_ra_sta(sdata, skb, &sta, true)) {
+ 			dev_kfree_skb(skb);
+ 			return true;
+ 		}
+@@ -6274,7 +6280,7 @@ int ieee80211_tx_control_port(struct wiphy *wiphy, struct net_device *dev,
+ 	 * AF_PACKET
+ 	 */
+ 	rcu_read_lock();
+-	err = ieee80211_lookup_ra_sta(sdata, skb, &sta);
++	err = ieee80211_lookup_ra_sta(sdata, skb, &sta, true);
+ 	if (err) {
+ 		dev_kfree_skb(skb);
+ 		rcu_read_unlock();
 -- 
 2.53.0
 
