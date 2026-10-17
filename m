@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5613BB9ED;
-	Sat, 17 Oct 2026 16:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478CC3BCD15;
+	Sat, 17 Oct 2026 16:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255459; cv=none; b=MSUtifweS99tJit418SEh5hkZnfqpVSTUtjGHLrb7JFuCwwn35hZyz9e/5CKHdRpcd/M5dXGbCiSlcyI+g8RGZ6X/yXBRFab5GhUk/4Y8bZwkD/qykv6ZgYQo3ac+W+SUo8pZXni5AXoM22fBKlP7OhTsooh1it5uQIbqTGLjvA=
+	t=1792255463; cv=none; b=G0gUSwmLZ9sqgK4YP5dTJdxKlEw3U6gdnZ7Wuc3o2H/O/itXep2OcLP/A1K7TaTi9NSMXJAGhgwhCOlaSOmX2DMn8nuElbZSSdHivMYzegginGXxxRrsviQU0wUQgGp6Ox6ybDiT1grV4DaEDCXpuTGe4T9Ilrn3swuquAp3IQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255459; c=relaxed/simple;
-	bh=isVreduTi7qfJ6xqt/yjclopYe9OZ3Q4HnXCx5EYlr4=;
+	s=arc-20240116; t=1792255463; c=relaxed/simple;
+	bh=xy3uaVMKzhypI7Z4Mnze885LIN8CWVfg5Fc1p0R+Ni4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fts0m7BKKobdycfN7C7XTDSf+PjrwWAyfG7OELld9BTLLFUJyDUuy7VgOCBSknANiWrZO1uC08uPM1ivOJ4+eEDcT611wlSGARjYvHb2nekico6BT6VjZylFB11gq/l6wWkAG1v3BAI1zgpSIe+Ml4cyplci+t/m5Y8nH2p0Xi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXTRsd4k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5PJkRUm1DWPDNF5xMtp1pRupQ//6KNXQ79W0Q+qG5OaYqzMDsLC/HKzws9my9xfgm2k3ztrE4jgp7HU/SEnypcpKeKn5775XEnPv6VXceoCUA19bGZJRAtvne035gUjqZYvRMo+rMY92v4tXsXrvanfe7EYpd9jXG16DtDOnR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdOXQEoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXTRsd4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A6F1F000C4;
-	Sat, 17 Oct 2026 16:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdOXQEoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E411F000C4;
+	Sat, 17 Oct 2026 16:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255458;
-	bh=sx4LIi8Jzj4byJy7kmypjYh4SoEWFT2vKML3Ob5C4vw=;
+	s=korg; t=1792255461;
+	bh=tj7cmiFqroSgTZsxjAY10dtyvlMkIfTA3Lp2XQv2m2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXTRsd4kZ+BbSczlkJ3AdS6d/J0BPFTnsvW2JOyQvFc/FypSzi/TOKDXsyMF34aC9
-	 sermM4ov7iKXmTjWR+nhkBFIDXPNsN8atPjl0Y4rAGdnysKes9Ip4M+KPpfDzaRWtZ
-	 DuRT54qzJp+IMt5RZq8SFmR5iSq0ik07vizrGsf8=
+	b=wdOXQEoENCVZJUGaQM1dCc+AVv9GHvb5trJVulx9Im4HEvPVXzjWX/hw/ovX4f+Au
+	 zICYaa0isq+ovjCtJRFtlT7QmD08WWoaom8/0Olr6FdNzASkXmEWRzMcPm0da/ZykT
+	 P2P0KY3ybFpPevYM292EHdE/icX/ZgRmAATKbKrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nicholas Carlini <npc@anthropic.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 782/869] bpf: Check ancestor frames for rbtree callbacks
-Date: Sat, 17 Oct 2026 18:00:23 +0200
-Message-ID: <20261017160056.964423854@linuxfoundation.org>
+Subject: [PATCH 6.12 783/869] bpf: dont rewrite bpf_fastcall patterns entered by a jump
+Date: Sat, 17 Oct 2026 18:00:24 +0200
+Message-ID: <20261017160056.989386933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,84 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 369f4ce734570bdfedaa4b5ca50e2a3f6a892728 ]
+[ Upstream commit 0b1c83dc3c4401cd7e846548f62e3caf3d06742e ]
 
-bpf_rbtree_add() invokes its comparator while the caller holds the root
-lock. The native insertion code retains raw parent and link pointers across
-the callback, so the verifier prohibits unlocking, consuming tree nodes,
-or changing RCU state from that callback.
+mark_fastcall_pattern_for_call() must ensure that matched
+"spill; call; fill" instruction series is not interrupted by a jump.
+Otherwise the rewrite applied by bpf_remove_fastcall_spills_fills()
+is not sound.
 
-in_rbtree_lock_required_cb() only checks the innermost verifier frame.
-Static subprogram calls are permitted while holding a spin lock, and such a
-call pushes a frame without in_callback_fn set. Consequently, all callback
-restrictions disappear in the nested frame. The subprogram can unlock the
-tree, remove and drop the node being compared, then relock. Native insertion
-resumes with the stale parent pointer and links freed memory into the tree.
+Record the instructions targeted by jumps in
+insn_aux_data[*].jump_target when the CFG is built and use this flag
+to stop growing a pattern at such an instruction. Jumps to the first
+spill are fine.
 
-Walk all active frames for the rbtree callback instead. Benign static
-subprograms remain permitted, while callback restrictions follow execution
-into nested frames.
+Note that existing insn_aux_data[*].jmp_point field can't be reused,
+as it marks subprogram return instructions.
 
-Fixes: a44b1334aadd ("bpf: Allow calling static subprogs while holding a bpf_spin_lock")
+Fixes: 5b5f51bff1b6 ("bpf: no_caller_saved_registers attribute for helper calls")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
 Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260903214758.2727663-2-memxor@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260903205820.1743087-1-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ include/linux/bpf_verifier.h |  2 ++
+ kernel/bpf/verifier.c        | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
 
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 48581c4def02c..a0468b6f40b37 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -604,6 +604,8 @@ struct bpf_insn_aux_data {
+ 	 * accepts callback function as a parameter.
+ 	 */
+ 	bool calls_callback;
++	/* true if some jump or call instruction targets this instruction */
++	bool jump_target;
+ };
+ 
+ #define MAX_USED_MAPS 64 /* max number of maps accessed by one eBPF program */
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 424cf2b196f27..106547524c563 100644
+index 106547524c563..1becf8f07415e 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -10424,9 +10424,10 @@ static int set_rbtree_add_callback_state(struct bpf_verifier_env *env,
- 
- static bool is_rbtree_lock_required_kfunc(u32 btf_id);
- 
--/* Are we currently verifying the callback for a rbtree helper that must
-- * be called with lock held? If so, no need to complain about unreleased
-- * lock
-+/*
-+ * Are we currently verifying the callback for an rbtree kfunc that must
-+ * be called with a lock held, or one of that callback's subprogs? If so,
-+ * no need to complain about an unreleased lock.
-  */
- static bool in_rbtree_lock_required_cb(struct bpf_verifier_env *env)
- {
-@@ -10434,17 +10435,19 @@ static bool in_rbtree_lock_required_cb(struct bpf_verifier_env *env)
- 	struct bpf_insn *insn = env->prog->insnsi;
- 	struct bpf_func_state *callee;
- 	int kfunc_btf_id;
-+	u32 frame;
- 
--	if (!state->curframe)
--		return false;
--
--	callee = state->frame[state->curframe];
-+	for (frame = state->curframe; frame; frame--) {
-+		callee = state->frame[frame];
-+		if (!callee->in_callback_fn)
-+			continue;
- 
--	if (!callee->in_callback_fn)
--		return false;
-+		kfunc_btf_id = insn[callee->callsite].imm;
-+		if (is_rbtree_lock_required_kfunc(kfunc_btf_id))
-+			return true;
-+	}
- 
--	kfunc_btf_id = insn[callee->callsite].imm;
--	return is_rbtree_lock_required_kfunc(kfunc_btf_id);
-+	return false;
+@@ -3531,6 +3531,16 @@ static bool is_jmp_point(struct bpf_verifier_env *env, int insn_idx)
+ 	return env->insn_aux_data[insn_idx].jmp_point;
  }
  
- static bool retval_range_within(struct bpf_retval_range range, const struct bpf_reg_state *reg,
++static void mark_jump_target(struct bpf_verifier_env *env, int idx)
++{
++	env->insn_aux_data[idx].jump_target = true;
++}
++
++static bool bpf_is_jump_target(struct bpf_verifier_env *env, int insn_idx)
++{
++	return env->insn_aux_data[insn_idx].jump_target;
++}
++
+ #define LR_FRAMENO_BITS	3
+ #define LR_SPI_BITS	6
+ #define LR_ENTRY_BITS	(LR_SPI_BITS + LR_FRAMENO_BITS + 1)
+@@ -16629,6 +16639,7 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env)
+ 		/* mark branch target for state pruning */
+ 		mark_prune_point(env, w);
+ 		mark_jmp_point(env, w);
++		mark_jump_target(env, w);
+ 	}
+ 
+ 	if (insn_state[w] == 0) {
+@@ -16817,6 +16828,10 @@ static bool is_fastcall_kfunc_call(struct bpf_kfunc_call_arg_meta *meta)
+  *   r0 = *(u64 *)(r10 - 8);             r0 += r1;
+  *   r0 += r1;                           exit;
+  *   exit;
++ *
++ * Both uses of the marks assume that a pattern is entered at its first
++ * spill and thus executes as a unit, hence a pattern is not grown past
++ * an instruction targeted by a jump.
+  */
+ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 					   struct bpf_subprog_info *subprog,
+@@ -16871,6 +16886,10 @@ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 	for (i = 1, off = lowest_off; i <= ARRAY_SIZE(caller_saved); ++i, off += BPF_REG_SIZE) {
+ 		if (insn_idx - i < 0 || insn_idx + i >= env->prog->len)
+ 			break;
++		/* stx/ldx/call must not be a jump targets, a jump to the first stx is fine */
++		if (bpf_is_jump_target(env, insn_idx - i + 1) ||
++		    bpf_is_jump_target(env, insn_idx + i))
++			break;
+ 		stx = &insns[insn_idx - i];
+ 		ldx = &insns[insn_idx + i];
+ 		/* must be a stack spill/fill pair */
+@@ -17036,6 +17055,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 
+ 		mark_prune_point(env, t + off + 1);
+ 		mark_jmp_point(env, t + off + 1);
++		mark_jump_target(env, t + off + 1);
+ 
+ 		return ret;
+ 
 -- 
 2.53.0
 
