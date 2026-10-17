@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4820133F8B2;
-	Sat, 17 Oct 2026 16:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F033A257E;
+	Sat, 17 Oct 2026 16:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253261; cv=none; b=HWmVA8Blu39BtofTcJryA5m36qY91WaPfol0ib2/p7hYeIuS36ieFFGU40SmGgaAXJJ13BPcQ9Ym0APq/2yQx+2nutebeoGpHrV/rd+JHL4dFoBheDaArsJXrpOdWYteWBW7xx4/2Ljx+7a7B/Q//x9oZh4yVB8GYJOjw7vqcYg=
+	t=1792253266; cv=none; b=qPZpILnHoGcr4W+ebG9YBE5qhe+mWgUhqb201eDHcuePeK+3dCbJcc/2nDuw6/+SmgWc8HLVO4fXnfluzqDjd3o0J+KoAll7i44ddCI2UhI8w3v8ylVnlhxjlWyTdSFpDUdpvJ2GT+E2veKd9IQFmdGBGgDAGxDA79T9fPTRkhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253261; c=relaxed/simple;
-	bh=NMBoP2pvaRrn8Js8GAxAZI3xSEvc1oNGXsoZUXCrkfU=;
+	s=arc-20240116; t=1792253266; c=relaxed/simple;
+	bh=K+jpY/lSvReWDThAJ9YilvJjwFNVIpSDz0UxEa3Z3CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J1kLjxpwbflHnuzr3yc8xGmB6kwXLEbxg6GzCs5i79faZtR4twiFmHksjWgolSIETL607Yi8u8DCF/a0uYgXcOGcEeWk0MSizQ1qptAlbVnydK0dxcfqqLUTWHOscNy08HJlVmK11M3hNsT6bxrt1WQtfoX+kOemwCriyErXFz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMyxugtJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L1EUYH+IDZPDOkrOVctOj799PEaIAf95k+QZtvIM5mwS5oYsS63l56MMOU/tkhg4BgP7ii2Yr3C4QDVEYutztbH4oV/w5j8ysQk5q5rT2g2MEZVu6rc4VID7lV4DmWiodfmlLrvdSxjs+ZMD5aJoMHXi/htxureZvUwFX3Zc2WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUrHn5vK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMyxugtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354461F000C4;
-	Sat, 17 Oct 2026 16:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUrHn5vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3AD1F000C5;
+	Sat, 17 Oct 2026 16:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253258;
-	bh=ACL+1ZMg14EuNrgfAFghIaww54c7TAnDG+x9B7OY3i4=;
+	s=korg; t=1792253262;
+	bh=ZTjQCGjU+Xmu8z95n4RqFINAQBQdb4whYlCeqVmLJnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMyxugtJEUeJLVI56aeCJMRw75FcllJpZ653HuXJNwVg8UBca9QF6wHa4uWTjQO2N
-	 ncTLyvZpjhjNop4qcT7zDagkxggTYwzEYQQc4gKjBUFKQvvFjsQiW5xOb9PfhQgsr/
-	 WoSiuPiyNXdX4X2j2031OypIGgHxytcp9WnwdeYM=
+	b=wUrHn5vKWBF4UfOTl9HPElWxfqACY3CXVs0H5U6P6WV6nYYA6x1wwjRHhifA4log7
+	 9x77fLQzLg57/dYFSq1nRmfsKjocMDma9/l5MyoKuzfFrbA8+KzKNk3hyqG73jnDyl
+	 RoitDqgdJnWWc0D93F8nZCZZJx6CKfSkfVaQIXxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/869] drm/i915: Grab intel_display from the encoder to avoid potential oopsies
-Date: Sat, 17 Oct 2026 17:48:19 +0200
-Message-ID: <20261017160038.508023340@linuxfoundation.org>
+Subject: [PATCH 6.12 059/869] ax25: Remove broken autobind
+Date: Sat, 17 Oct 2026 17:48:20 +0200
+Message-ID: <20261017160038.534154207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,83 +46,237 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit dc3806d9eb66d0105f8d55d462d4ef681d9eac59 ]
+[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
 
-Grab the intel_display from 'encoder' rather than 'state'
-in the encoder hooks to avoid the massive footgun that is
-intel_sanitize_encoder(), which passes NULL as the 'state'
-argument to encoder .disable() and .post_disable().
+Binding AX25 socket by using the autobind feature leads to memory leaks
+in ax25_connect() and also refcount leaks in ax25_release(). Memory
+leak was detected with kmemleak:
 
-TODO: figure out how to actually fix intel_sanitize_encoder()...
+================================================================
+unreferenced object 0xffff8880253cd680 (size 96):
+backtrace:
+__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
+kmemdup_noprof (mm/util.c:136)
+ax25_rt_autobind (net/ax25/ax25_route.c:428)
+ax25_connect (net/ax25/af_ax25.c:1282)
+__sys_connect_file (net/socket.c:2045)
+__sys_connect (net/socket.c:2064)
+__x64_sys_connect (net/socket.c:2067)
+do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+================================================================
 
-Fixes: 40eb34c3f491 ("drm/i915/crt: convert to struct intel_display")
-Fixes: ab0b0eb5c85c ("drm/i915/tv: convert to struct intel_display")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241107161123.16269-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+When socket is bound, refcounts must be incremented the way it is done
+in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
+autobind, the refcounts are not incremented.
+
+This bug leads to the following issue reported by Syzkaller:
+
+================================================================
+ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
+------------[ cut here ]------------
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+Modules linked in:
+CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+...
+Call Trace:
+ <TASK>
+ __refcount_dec include/linux/refcount.h:336 [inline]
+ refcount_dec include/linux/refcount.h:351 [inline]
+ ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
+ netdev_tracker_free include/linux/netdevice.h:4302 [inline]
+ netdev_put include/linux/netdevice.h:4319 [inline]
+ ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
+ __sock_release net/socket.c:647 [inline]
+ sock_close+0xbc/0x240 net/socket.c:1398
+ __fput+0x3e9/0x9f0 fs/file_table.c:464
+ __do_sys_close fs/open.c:1580 [inline]
+ __se_sys_close fs/open.c:1565 [inline]
+ __x64_sys_close+0x7f/0x110 fs/open.c:1565
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ...
+ </TASK>
+================================================================
+
+Considering the issues above and the comments left in the code that say:
+"check if we can remove this feature. It is broken."; "autobinding in this
+may or may not work"; - it is better to completely remove this feature than
+to fix it because it is broken and leads to various kinds of memory bugs.
+
+Now calling connect() without first binding socket will result in an
+error (-EINVAL). Userspace software that relies on the autobind feature
+might get broken. However, this feature does not seem widely used with
+this specific driver as it was not reliable at any point of time, and it
+is already broken anyway. E.g. ax25-tools and ax25-apps packages for
+popular distributions do not use the autobind feature for AF_AX25.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_crt.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/net/ax25.h    |  1 -
+ net/ax25/af_ax25.c    | 30 ++++++------------
+ net/ax25/ax25_route.c | 74 -------------------------------------------
+ 3 files changed, 10 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_crt.c b/drivers/gpu/drm/i915/display/intel_crt.c
-index 74c1983fe07ea..1be55bdb48b96 100644
---- a/drivers/gpu/drm/i915/display/intel_crt.c
-+++ b/drivers/gpu/drm/i915/display/intel_crt.c
-@@ -244,7 +244,7 @@ static void hsw_disable_crt(struct intel_atomic_state *state,
- 			    const struct intel_crtc_state *old_crtc_state,
- 			    const struct drm_connector_state *old_conn_state)
- {
--	struct intel_display *display = to_intel_display(state);
-+	struct intel_display *display = to_intel_display(encoder);
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 4ee141aae0a29..a7bba42dde153 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -418,7 +418,6 @@ void ax25_rt_device_down(struct net_device *);
+ int ax25_rt_ioctl(unsigned int, void __user *);
+ extern const struct seq_operations ax25_rt_seqops;
+ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
+-int ax25_rt_autobind(ax25_cb *, ax25_address *);
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
+ 				   ax25_address *, ax25_digi *);
+ void ax25_rt_free(void);
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 9f3b8b682adb2..3ee7dba343100 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
+ 		}
+ 	}
  
- 	drm_WARN_ON(display->drm, !old_crtc_state->has_pch_encoder);
-@@ -257,7 +257,7 @@ static void hsw_post_disable_crt(struct intel_atomic_state *state,
- 				 const struct intel_crtc_state *old_crtc_state,
- 				 const struct drm_connector_state *old_conn_state)
- {
--	struct intel_display *display = to_intel_display(state);
-+	struct intel_display *display = to_intel_display(encoder);
- 	struct intel_crtc *crtc = to_intel_crtc(old_crtc_state->uapi.crtc);
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+-	/*
+-	 *	Must bind first - autobinding in this may or may not work. If
+-	 *	the socket is already bound, check to see if the device has
+-	 *	been filled in, error if it hasn't.
+-	 */
++	/* Must bind first - autobinding does not work. */
+ 	if (sock_flag(sk, SOCK_ZAPPED)) {
+-		/* check if we can remove this feature. It is broken. */
+-		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
+-			current->comm);
+-		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
+-			kfree(digi);
+-			goto out_release;
+-		}
++		kfree(digi);
++		err = -EINVAL;
++		goto out_release;
++	}
  
-@@ -287,7 +287,7 @@ static void hsw_pre_pll_enable_crt(struct intel_atomic_state *state,
- 				   const struct intel_crtc_state *crtc_state,
- 				   const struct drm_connector_state *conn_state)
- {
--	struct intel_display *display = to_intel_display(state);
-+	struct intel_display *display = to_intel_display(encoder);
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+-		ax25_fillin_cb(ax25, ax25->ax25_dev);
+-		ax25_cb_add(ax25);
+-	} else {
+-		if (ax25->ax25_dev == NULL) {
+-			kfree(digi);
+-			err = -EHOSTUNREACH;
+-			goto out_release;
+-		}
++	/* Check to see if the device has been filled in, error if it hasn't. */
++	if (ax25->ax25_dev == NULL) {
++		kfree(digi);
++		err = -EHOSTUNREACH;
++		goto out_release;
+ 	}
  
- 	drm_WARN_ON(display->drm, !crtc_state->has_pch_encoder);
-@@ -300,7 +300,7 @@ static void hsw_pre_enable_crt(struct intel_atomic_state *state,
- 			       const struct intel_crtc_state *crtc_state,
- 			       const struct drm_connector_state *conn_state)
- {
--	struct intel_display *display = to_intel_display(state);
-+	struct intel_display *display = to_intel_display(encoder);
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
- 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
- 	enum pipe pipe = crtc->pipe;
-@@ -319,7 +319,7 @@ static void hsw_enable_crt(struct intel_atomic_state *state,
- 			   const struct intel_crtc_state *crtc_state,
- 			   const struct drm_connector_state *conn_state)
- {
--	struct intel_display *display = to_intel_display(state);
-+	struct intel_display *display = to_intel_display(encoder);
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
- 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
- 	enum pipe pipe = crtc->pipe;
+ 	if (sk->sk_type == SOCK_SEQPACKET &&
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index 69de75db0c9c2..10577434f40bf 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ 	return ax25_rt;
+ }
+ 
+-/*
+- *	Adjust path: If you specify a default route and want to connect
+- *      a target on the digipeater path but w/o having a special route
+- *	set before, the path has to be truncated from your target on.
+- */
+-static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
+-{
+-	int k;
+-
+-	for (k = 0; k < digipeat->ndigi; k++) {
+-		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
+-			break;
+-	}
+-
+-	digipeat->ndigi = k;
+-}
+-
+-
+-/*
+- *	Find which interface to use.
+- */
+-int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+-{
+-	ax25_uid_assoc *user;
+-	ax25_route *ax25_rt;
+-	int err = 0;
+-
+-	ax25_route_lock_use();
+-	ax25_rt = ax25_get_route(addr, NULL);
+-	if (!ax25_rt) {
+-		ax25_route_lock_unuse();
+-		return -EHOSTUNREACH;
+-	}
+-	rcu_read_lock();
+-	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
+-		err = -EHOSTUNREACH;
+-		goto put;
+-	}
+-
+-	user = ax25_findbyuid(current_euid());
+-	if (user) {
+-		ax25->source_addr = user->call;
+-		ax25_uid_put(user);
+-	} else {
+-		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
+-			err = -EPERM;
+-			goto put;
+-		}
+-		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
+-	}
+-
+-	if (ax25_rt->digipeat != NULL) {
+-		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
+-					 GFP_ATOMIC);
+-		if (ax25->digipeat == NULL) {
+-			err = -ENOMEM;
+-			goto put;
+-		}
+-		ax25_adjust_path(addr, ax25->digipeat);
+-	}
+-
+-	if (ax25->sk != NULL) {
+-		local_bh_disable();
+-		bh_lock_sock(ax25->sk);
+-		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
+-		bh_unlock_sock(ax25->sk);
+-		local_bh_enable();
+-	}
+-
+-put:
+-	rcu_read_unlock();
+-	ax25_route_lock_unuse();
+-	return err;
+-}
+ 
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
+ 	ax25_address *dest, ax25_digi *digi)
 -- 
 2.53.0
 
