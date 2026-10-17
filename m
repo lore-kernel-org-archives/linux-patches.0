@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479D33A6418;
-	Sat, 17 Oct 2026 16:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DE6277026;
+	Sat, 17 Oct 2026 16:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256126; cv=none; b=sWLOzS/dZMLShHrQPeHZnuucYMWvkycDg18mmXOx2VA2jV7T/hSie18wxFO4ho+pkio3eS9uKImzNkRWzqtd2YLju7A01rzRyx+qmvkz8N387e9QYOZg5mXptRbL/hgvjEnJu4vL0x76zC9VVv/686DA5KlP5pG0bBpYAhTrv1s=
+	t=1792256129; cv=none; b=G0Y5iwlEtyHYad8RdGT5kszZ5y3+MqBs3eJnmwfr2tLznwwZdU24czieIdBCuX3vAtr8ye+ZZ6DVSTNGdlX0RTSgRlASO1q1JSSGUBTvALOzkeYWx30f1tDBoEuNlewSntXvLTlsGHZWvlepUS08KsDB+Jr2kThusI5N8igjZ7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256126; c=relaxed/simple;
-	bh=QnMKhPFPmZIIu1JVxt3OSjwlzyvfPiXnpqIzJJpZztU=;
+	s=arc-20240116; t=1792256129; c=relaxed/simple;
+	bh=ftBST20dwLuhKdw9+4uIAIWNuqSMEtQ11qDwynlGKek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiV9Qa54d5vbalC431XIAm9UrfpxJYON8QI/5QtnFu2lcQIsmI6QsJZOeKjTEbF2Hd9tkvOzpfNOAcAA12aDqfS8mYu8W/WeHWCjZAXUe9SEoUc1a3e4HHpFo80eBByx9mS5/+qc54uFXps9brWy679mq/eBEcH06/q3snMybI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSHls2LL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KJGVKH1M+g6f5LoDwNp1V3XD60xP1z6MCvW+QRyHchf2JTT57maaX3JrFx7YoR6NPNs11MJfdrk11BDeFo4gtuKGRs0ZC/C8KC7/d+/lCZlkfVEzFbeJIZTeJKuMEXtmc5cE2k4cIVWdsF8TX49bcjrzaTQK2CryAUEaxbOm3SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDk+p/nu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSHls2LL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936381F000C4;
-	Sat, 17 Oct 2026 16:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDk+p/nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7191F000C4;
+	Sat, 17 Oct 2026 16:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256125;
-	bh=QxEDCBc+cvpMeuonQb4bPUvaJ1MQ2VDf55L2RYw0PQE=;
+	s=korg; t=1792256128;
+	bh=6bcMd0+7RonZJhWEl999BKhWYzCPzbR8r4gesd9i27Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZSHls2LL2XAxvtD98YY894p+TWKfkgyi7FvFqgsGKousnWv48wNEk75sxjAa4ucUH
-	 umzrZccryf5Xw+/dORSlDLqamqiREVF6uLkuUFBZVWzSlNsPG8gccS9jh6q9GKGcuY
-	 OcpGMyD8nNCD7OMQEPoEcAHMlNrTU4onBFGvUDN4=
+	b=VDk+p/nu+D7m27eOyXdQ/ADpc13nwS64n8aszbhnTcDQcZH7+SptUlLdRAX7rqscR
+	 fBMCstVegiEPMsSmqENu6ovGYqCYjLoFCWKn+pOsIMbJ+MAYvcn0NEMfLMlP1QJqLx
+	 gK3i9u298wExPsXtEG2wPa2EW9kdZOEJTuXkM/NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	David Sterba <dsterba@suse.com>,
+	Xie Bo <xb@ultrarisc.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0116/1674] btrfs: take commit root semaphore when iterating in mark_block_group_to_copy()
-Date: Sat, 17 Oct 2026 17:39:48 +0200
-Message-ID: <20261017160434.126766290@linuxfoundation.org>
+Subject: [PATCH 6.6 0134/1674] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
+Date: Sat, 17 Oct 2026 17:40:06 +0200
+Message-ID: <20261017160434.600425088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,42 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Xie Bo <xb@ultrarisc.com>
 
-[ Upstream commit 0594e3423f4ba3137c734371169491f9a98e9af4 ]
+[ Upstream commit 8ae12ccaec6ec74945d8c1ef39f2c1b8df779abc ]
 
-mark_block_group_to_copy() iterates over the commit root with
-skip_locking=true. A concurrent transaction commit can swap and free
-the commit root during iteration, causing use-after-free when
-accessing extent buffers.
+KVM device ioctls are not serialized against KVM_RUN. As a result,
+kvm_riscv_aia_imsic_rw_attr() can snapshot the physical CPU and HGEI of
+an IMSIC VS-file before a concurrent vCPU migration releases it.
 
-Fix it by using path->need_commit_sem to protect the commit root search.
+The HGEI can then be allocated to another vCPU before imsic_vsfile_rw()
+uses the stale tuple. A GET or SET attribute may consequently access the
+new owner's interrupt file.
 
-Fixes: 78ce9fc269af ("btrfs: zoned: mark block groups to copy for device-replace")
-CC: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ changed path->need_commit_sem assignment from true to 1 to match the older unsigned bitfield representation. ]
+Serialize the entire IMSIC attribute operation with the target vCPU
+mutex. This prevents the VS-file from being migrated and recycled until
+the attribute access completes. Acquire the mutex killably so that the
+device ioctl remains interruptible while waiting for KVM_RUN to finish.
+
+Fixes: db8b7e97d613 ("RISC-V: KVM: Add in-kernel virtualization of AIA IMSIC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260810-imsic-attr-race-v2-1-00ed95ad321e@ultrarisc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/dev-replace.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kvm/aia_imsic.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/dev-replace.c b/fs/btrfs/dev-replace.c
-index f77ef719a3b11..4f97a9222b74e 100644
---- a/fs/btrfs/dev-replace.c
-+++ b/fs/btrfs/dev-replace.c
-@@ -506,6 +506,7 @@ static int mark_block_group_to_copy(struct btrfs_fs_info *fs_info,
- 	path->reada = READA_FORWARD;
- 	path->search_commit_root = 1;
- 	path->skip_locking = 1;
-+	path->need_commit_sem = 1;
+diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
+index 562890ac5d0b0..22782b009e370 100644
+--- a/arch/riscv/kvm/aia_imsic.c
++++ b/arch/riscv/kvm/aia_imsic.c
+@@ -895,9 +895,14 @@ int kvm_riscv_aia_imsic_rw_attr(struct kvm *kvm, unsigned long type,
+ 	if (!vcpu)
+ 		return -ENODEV;
  
- 	key.objectid = src_dev->devid;
- 	key.type = BTRFS_DEV_EXTENT_KEY;
++	if (mutex_lock_killable(&vcpu->mutex))
++		return -EINTR;
++
+ 	imsic = vcpu->arch.aia_context.imsic_state;
+-	if (!imsic)
+-		return -ENODEV;
++	if (!imsic) {
++		rc = -ENODEV;
++		goto out_unlock;
++	}
+ 	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+ 
+ 	read_lock_irqsave(&imsic->vsfile_lock, flags);
+@@ -921,6 +926,8 @@ int kvm_riscv_aia_imsic_rw_attr(struct kvm *kvm, unsigned long type,
+ 		rc = imsic_vsfile_rw(vsfile_hgei, vsfile_cpu, imsic->nr_eix,
+ 				     isel, write, val);
+ 
++out_unlock:
++	mutex_unlock(&vcpu->mutex);
+ 	return rc;
+ }
+ 
 -- 
 2.53.0
 
