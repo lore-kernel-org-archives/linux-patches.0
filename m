@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EAB3A1A3F;
-	Sat, 17 Oct 2026 17:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D023A542B;
+	Sat, 17 Oct 2026 17:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259962; cv=none; b=IbD/T9rf5Agq1uKylxwU+M0hZAVK4qPlcMS2mIRuCk0HRZvSsb5Of8wHVEVqLxVNrQM5TJOBudMIkiOy2if/iIoCIpVmEmJJ0lVbQdGycYFo6Ek4rHiI2dKcRAedf4zlRuzemV0Yn4Nh1+qIA21leNZKkMz4Y6FUCbQLXyaBHCc=
+	t=1792259965; cv=none; b=M1DxJoWIRoswSxola3qwQzh52Ou/BqlekaXlXipR10ZS8PcyKvw0+LPqvR2KWgtAba6JOSxjjzxKYPUZBEbNsLDaYoXXJMaIVpB1IpEMiYokbyn1CdB7LwyfyVntDWSVFqQSZmdWA3EFJtelVsTyzOrdJ7uYEy14Lc/gwCLmWFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259962; c=relaxed/simple;
-	bh=GqB0eygt0tLj6gNqHQjOuY1qpY9LgprOHAvxOXcByoU=;
+	s=arc-20240116; t=1792259965; c=relaxed/simple;
+	bh=U2dBdLKmHDtTkclE/3tLzmGHy+vkvE4SqnZCTeFJEwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bF+SWfdq4H3DzaivtrSo3KOQZalvOz38UKJKTwBx1IioIfffrJLkZ5JJURGBwj4WecMQiLdZ8qPV+YgJ+IF3z7zhPKmssJFGuGN6gGEB7zHJ3omYTYMpRzk34om/86hOTdaBWyPVmIngYrSptr0EWHFEeLQmOA9jXpSmxGx7kk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkZbhZvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQw2dUBc5clR0TOdWx/i6NKRIyUbChSXGbxlNi4Sd1c1sRQ7W1vO6pfF0YsFLO323e7WKqM9rHdOf24oZwqEV1V0oFbt+CmLpfZnSEhR/apnvUBQK+Q5u3lvFP/Fw6cSOw0FcxfOTt3vOuaQFM0mI9/85dERRUxbpF88RHR1piI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0plz44s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkZbhZvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598871F000C4;
-	Sat, 17 Oct 2026 17:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0plz44s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B46B1F000C4;
+	Sat, 17 Oct 2026 17:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259961;
-	bh=CdTCtmJCkF4R/USNVCUtWwUZ++bEK8QSuow9qz6JjhE=;
+	s=korg; t=1792259963;
+	bh=02kaaMUx1eLPGVHHsnXtnHda9BkZ99VsbpJ+aFiu8ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tkZbhZvIBye0wm/EUR6UyXCw1gnoi7tYYlt78+KrtYzQsABlCMGcH0ki68SN1n+1T
-	 Waa/UHte4TaKjSXBGiH2U8lRHZUnYZdWXBPHuK3Wc1RI6q8sXCasJ9uU9/vvRw/QqK
-	 4y7LkC3UdvqwQWJRqpGJYBu/5H9qivjo1Pmx+V7g=
+	b=f0plz44ssOfi/wtaPX+zX8cjEYyKmQNBFmdRGgewntzJRYtehA1lJ5Wo0o21oe+vN
+	 2IcYmSiO5YcCWXLpYTkLhdE95FzCEELY6RwcpydbatUmLaqkXl+gOXiCLqbMTPkJHu
+	 SSwcdXBfNiXMlo7xgyrmMa4UJucejS0l7lGQJvA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1387/1674] ALSA: mtpav: shut down output timer before card teardown
-Date: Sat, 17 Oct 2026 18:00:59 +0200
-Message-ID: <20261017160506.768052763@linuxfoundation.org>
+Subject: [PATCH 6.6 1388/1674] net: add missing ref_tracker_dir_exit() to alloc_netdev_mqs()
+Date: Sat, 17 Oct 2026 18:01:00 +0200
+Message-ID: <20261017160506.794947775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit c73cb5b7c159246dd572277c668851a56e516019 ]
+[ Upstream commit 0b1c2af8a22c35cb099c735c2f63ea3ba757557d ]
 
-snd_mtpav_output_timer() rearms chip->timer while holding
-chip->spinlock and accesses the card-private mtpav state.
+sashiko is reporting that trying to read /sys/kernel/debug/ref_tracker/*
+causes use-afer-free crash when either alloc_percpu() or dev_addr_init()
+in alloc_netdev_mqs() failed, for commit 4d92b95ff2f9 ("net: add net device
+refcount tracker infrastructure") added ref_tracker_dir_exit() to only
+free_netdev() path.
 
-snd_mtpav_free() currently takes the same lock and calls
-timer_delete() when the timer is active. This only removes a
-pending timer; it does not wait for a callback that is already
-running and does not prevent the callback from rearming the timer.
-
-A callback running on another CPU can therefore continue after
-snd_mtpav_free() releases the lock and access the card-private
-state while the card is being torn down. It can also rearm the
-timer after timer_delete() has returned.
-
-Call timer_shutdown_sync() without holding chip->spinlock. This
-waits for any running callback to finish and prevents further
-rearming before the card-private mtpav state is released.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260820112749.9195-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Closes: https://sashiko.dev/#/patchset/56c707e7-1fb0-43ec-b8fb-cf6f451e513e%40I-love.SAKURA.ne.jp
+Fixes: 4d92b95ff2f9 ("net: add net device refcount tracker infrastructure")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08@I-love.SAKURA.ne.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/mtpav.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/core/dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/drivers/mtpav.c b/sound/drivers/mtpav.c
-index f212f233ea618..1fb6797fa45f8 100644
---- a/sound/drivers/mtpav.c
-+++ b/sound/drivers/mtpav.c
-@@ -663,12 +663,8 @@ static int snd_mtpav_get_RAWMIDI(struct mtpav *mcard)
- static void snd_mtpav_free(struct snd_card *card)
- {
- 	struct mtpav *crd = card->private_data;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&crd->spinlock, flags);
--	if (crd->istimer > 0)
--		snd_mtpav_remove_output_timer(crd);
--	spin_unlock_irqrestore(&crd->spinlock, flags);
-+	timer_shutdown_sync(&crd->timer);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index a389e9e3762fa..bad8765c7f13b 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -11040,6 +11040,7 @@ struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
+ 	free_percpu(dev->pcpu_refcnt);
+ free_dev:
+ #endif
++	ref_tracker_dir_exit(&dev->refcnt_tracker);
+ 	netdev_freemem(dev);
+ 	return NULL;
  }
- 
- /*
 -- 
 2.53.0
 
