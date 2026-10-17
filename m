@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0617E3B19BF;
-	Sat, 17 Oct 2026 16:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263BB394470;
+	Sat, 17 Oct 2026 16:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255626; cv=none; b=mHEP9gxNvpQqISPD/K/ApxxBSXs0TNmVvX8HP75J2dwirI9BWU44oGkDBwBXeY2Pz48f5EaAWjhRwWkUpSTmZOpLpS2IRT0Zx42MwnmG+IMdWzmcTxIzuSuDYN+LhueBJ/LJwSsW25aVzihlgk9iwkyt2sK0F6C0lAfFMlmPLLo=
+	t=1792255630; cv=none; b=uGyXM63KPTjwLKGyEf4X0hBEO47+IUVwHPqeeYf9gYqrT8xLRFkz1Jf1zTD7JTb7RQyTNzfqYS9WkOB03O1z0T6qIgFyCYFeHFerUuQ8xZowUtCwtpFT60zgAVQCWc/hIk8hC6NJVSG+049CyByr23/1pgobc9zFi6hPsJ3WDzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255626; c=relaxed/simple;
-	bh=JR5AbzSUI8tYveRj0Rw/DuOQ8QC4zntKsfXOitxPB8A=;
+	s=arc-20240116; t=1792255630; c=relaxed/simple;
+	bh=2BYd10nIOegFC+HP76QfIza1LffzxNbfI9yqfRLRCKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hq3wHgr2Ap72f5QdZyH1p7u21ga+QKNBL6eWIjOqSayhbjU8P2Lcci8uBqbXeUZIHQcyPpZA/VvMNyKvRYdvomDMRvfEu/dM2l5RwRSTxSNMei4KWnPRJy0rEWRTh8hjUeYVWt5I+fQl/4+y487tyCaNUOU38fnbOXOQL61tEAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ci7E/7AA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a7EJG54MzfQWbg1X+8PymgT5zWLa+J9IbBHJKY7OylI0lRr/ScFGDARftfrZCUHkNnJSq9widRYCvz/qxqAHqgYr0aSfCHwfrAgH91CjsKCysHLAixiin/e2D+JTC14BH8fhJeS401HCgju2MQ/WYqgEuTro6zam6xbaNxwNGYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8/gH9U3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ci7E/7AA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABCB1F000C4;
-	Sat, 17 Oct 2026 16:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8/gH9U3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614651F000C4;
+	Sat, 17 Oct 2026 16:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255625;
-	bh=Ot3ZoIc1YkJWXiK94SeFKhHam50qu/mTvfKpewmWD5I=;
+	s=korg; t=1792255629;
+	bh=HEUNoV7m2EwUhDnZ6a/s54yBKS78X9P7fMTsTBUOXGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ci7E/7AACyJv+/VORSYPgNIiX8bxIqE0GavL3X+YgMkYZe5IJknDISPu1f8ypj57Z
-	 45vdTnbGL4IPoi6fm9sD/0RoE/Tg+48/MkYjWBTd64EEMJ0z0nQSdYMadGAXocGZeG
-	 yHFiHUbFGp1Nw22xSa+GlQwHlQBdS6hwCIHCZhSI=
+	b=X8/gH9U3POE76E3Q5HeQufLNyZC4TV/9j1odP/5FkvgpPK+un16j3nzZOf71vIXsJ
+	 G1d97ut86YSMNHIGQxy/8+jYEJey5PfjQrq2ftURGhHs4QWpnkNe5nuitMQeIBWQi4
+	 q0tUQjXsA9WG9Pr8+v4DPvHtHUfWeJRJ/cPhzWv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 836/869] soc/tegra: pmc: Add kerneldoc for wake-up variables
-Date: Sat, 17 Oct 2026 18:01:17 +0200
-Message-ID: <20261017160058.309229869@linuxfoundation.org>
+Subject: [PATCH 6.12 796/869] smb/client: invalidate fscache for fallocate range operations
+Date: Sat, 17 Oct 2026 18:00:37 +0200
+Message-ID: <20261017160057.313603193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,36 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit e6ad1988e56834d641ba4aa0d58970723c1c9c9b ]
+[ Upstream commit 448ba0ae65ca61064183564d2983c9aa59bd6ba7 ]
 
-Commit e6d96073af68 ("soc/tegra: pmc: Fix unsafe generic_handle_irq()
-call") added the variables 'wake_work' and 'wake_status' to the
-'tegra_pmc' structure but did not add the associated kerneldoc for these
-new variables. Add the kerneldoc for these variables.
+smb3_zero_range(), smb3_punch_hole(), smb3_insert_range(), and
+smb3_collapse_range() modify file contents through server-side range
+operations. These operations discard the affected page cache, but leave
+the FS-Cache cookie valid, so a later read may return data cached before
+the range operation.
 
-Fixes: e6d96073af68 ("soc/tegra: pmc: Fix unsafe generic_handle_irq() call")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fix this by invalidating FS-Cache after outstanding I/O has completed
+and before modifying the file on the server.
+
+Run the following as root on a CIFS mount with fsc enabled and an active
+CacheFiles backend:
+
+        bash -c '
+                MNT=/mnt/cifs
+                FILE="$MNT/repro"
+
+                # Generate four 1 MiB random blocks: [A][B][C][D].
+                dd if=/dev/urandom of=/tmp/src bs=1M count=4 status=none
+
+                # Expected contents after zeroing B: [A][zero][C][D].
+                cp /tmp/src /tmp/expected
+                dd if=/dev/zero of=/tmp/expected bs=1M seek=1 count=1 \
+                        conv=notrunc status=none
+                cp /tmp/src "$FILE"
+
+                # Populate FS-Cache, then discard the page cache.
+                sync
+                echo 1 > /proc/sys/vm/drop_caches
+                cat "$FILE" > /dev/null
+                sync
+                echo 1 > /proc/sys/vm/drop_caches
+
+                fallocate --zero-range -o 1M -l 1M "$FILE"
+
+                if cmp -s /tmp/expected "$FILE"; then
+                        echo "readback: OK"
+                else
+                        echo "readback: STALE DATA"
+                fi
+        '
+
+Before this change, the readback differs from /tmp/expected:
+
+        readback: STALE DATA
+
+After this change, it matches:
+
+        readback: OK
+
+Fixes: 30175628bf7f ("[SMB3] Enable fallocate -z support for SMB3 mounts")
+Fixes: 31742c5a3317 ("enable fallocate punch hole ("fallocate -p") for SMB3")
+Fixes: 5476b5dd82c8 ("cifs: add support for FALLOC_FL_COLLAPSE_RANGE")
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/pmc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/smb2ops.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 40d6ee8c3988c..806167724b26d 100644
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -425,6 +425,8 @@ struct tegra_pmc_soc {
-  * @wake_cntrl_level_map: Bitmap to hold wake levels to be programmed in
-  *     cntrl register associated with each wake during system suspend.
-  * @syscore: syscore suspend/resume callbacks
-+ * @wake_work: IRQ work handler for processing wake-up events.
-+ * @wake_status: Status of wake-up events.
-  */
- struct tegra_pmc {
- 	struct device *dev;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 3bf0b25feed9e..6ef0fcd9a05c2 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3524,6 +3524,9 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
+ 		goto zero_range_exit;
+ 
++	fscache_invalidate(cifs_inode_cookie(inode), NULL,
++			   i_size_read(inode), 0);
++
+ 	rc = smb3_zero_data(file, tcon, offset, len, xid);
+ 	if (rc < 0)
+ 		goto zero_range_exit;
+@@ -3591,6 +3594,8 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 	 */
+ 	truncate_pagecache_range(inode, offset, offset + len - 1);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL,
++			   i_size_read(inode), 0);
+ 
+ 	cifs_dbg(FYI, "Offset %lld len %lld\n", offset, len);
+ 
+@@ -3936,6 +3941,7 @@ static long smb3_collapse_range(struct file *file, struct cifs_tcon *tcon,
+ 	truncate_pagecache_range(inode, off, old_eof);
+ 	ictx->zero_point = old_eof;
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
+ 
+ 	rc = __smb2_copychunk_range(xid, cfile, cfile, off + len,
+ 				    old_eof - off - len, off);
+@@ -3998,6 +4004,7 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
+ 		goto out_2;
+ 	truncate_pagecache_range(inode, off, old_eof);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
+ 
+ 	rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 			  cfile->fid.volatile_fid, cfile->pid, new_eof);
 -- 
 2.53.0
 
