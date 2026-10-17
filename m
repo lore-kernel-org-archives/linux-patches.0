@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216F2382F1E;
-	Sat, 17 Oct 2026 16:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7083876BA;
+	Sat, 17 Oct 2026 16:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253398; cv=none; b=iNR81z+APSDnQKLG9nCwMRkpMMuon3WrRIyNBMNP3TsAsbOQ142MCSRVZ4wcZ8ensFw0xPOPSWgOdZyBv3Hk3B4WEAnz6ye37zDxpEvFIk5q89ZVqut0/wVj7BTqYBEW5tgharisdsxvS4kHB+mmWGUU/m2OonE1298VJnZWKbk=
+	t=1792253401; cv=none; b=JWKn9ZwaUr1y/iLVcrQC6CIh2vvIJ+6zRiSRf9ugmT19gJXnlD9afP600NXtnmGq4LenRKoMxTV2IVS7vpXh2NIN+Z7mRyKVaydNEOTM2V9H5iH2/T7EyKwPdO2bGE7SFzJLeMemqanK0NmM1rVrXLL8cyj0GYJd1YiAbKd8W0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253398; c=relaxed/simple;
-	bh=4Ucppp31Vz1aBAqrT0O04kdzOnaIXD93MEPfAO5oMOk=;
+	s=arc-20240116; t=1792253401; c=relaxed/simple;
+	bh=vBzYFRTHtahA8lBlkJCh7BDy3gOd6BA0ZRe9pnPHHAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0qIZ7a+D0bVi4F7I7bPo0t0rhBfvAgUNcX4itySCyMBGUyEyD5fvFhOYKe8j0D86j1X5BzCzvVjIlGlpeIRDEuST+G6I9hLqegVjoVq557CztiLTGJ1XENOWhrqetsijLfumFhfAhRtB0c0oKf8d3pAmymtoL6+eK62BzmmC9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOigTZt4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=guh9btBwztS4yIUD7CtbvkVy67rBvo6X5Wb1bRxgiY0h7piNMwfZ4xXukvSM/RcuyXmbwO3kx8/2RkMw/IuI6b6odNNcsSjmnb6wsvxbengE8uQ2FavrPiyu7fdme/9meyPfafVM/KB87xKU4wpZagDpZJpLzfaIgVtjK7FlvAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OchQZCWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOigTZt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775C61F000C4;
-	Sat, 17 Oct 2026 16:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OchQZCWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B4C1F000C4;
+	Sat, 17 Oct 2026 16:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253397;
-	bh=MtfWNdmOMPITF/tvzh64C4hcmKWlsh1p4RisbbWEVPo=;
+	s=korg; t=1792253400;
+	bh=pHdVIeSf2IHANFy2rhIg7svMS2YjCZGLVxOMoMcUfQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GOigTZt4xOeFTI+7gJ1QcYF8HwoHhbNYSrZ4bZqinBt3+kbSUaHqLw8ExAkTW527H
-	 ET7xfi8SSQ8V6Z238fEc6NEZTH2YRRwK5ip+QVnxZudWO2XLxwJqSv5tf2YUPorv4i
-	 zDJkNgjBy3UKTZAmBivplFQyGfViiUYVUF/Dw0Q4=
+	b=OchQZCWDNy26MW18+vRDAYfGH1dn+xH1dU9BF8Ts/HqAU/1RRO/VqSjw7rCE5x8vL
+	 NvzsSb3roDI01iO6j8+9dnxU8iUe7JOpEXlnMs5aIb5WXE3mP8LkdJKyVf5z+QbvgN
+	 Vv1C/sUiIbea+LmaC4DdHBztw8PfHqejPl/pV/nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Holzman <jholzman@nvidia.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/869] ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd
-Date: Sat, 17 Oct 2026 17:48:29 +0200
-Message-ID: <20261017160038.768266474@linuxfoundation.org>
+Subject: [PATCH 6.12 104/869] wifi: iwlwifi: Fix error code in iwl_op_mode_dvm_start()
+Date: Sat, 17 Oct 2026 17:49:05 +0200
+Message-ID: <20261017160039.701985509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,95 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f40139fde5278d81af3227444fd6e76a76b9506d ]
+[ Upstream commit cf80c02a9fdb6c5bc8508beb6a0f6a1294fc32f6 ]
 
-ublk_cancel_cmd() calls io_uring_cmd_done() to complete uring_cmd, but
-we may have scheduled task work via io_uring_cmd_complete_in_task() for
-dispatching request, then kernel crash can be triggered.
+Preserve the error code if iwl_setup_deferred_work() fails.  The current
+code returns ERR_PTR(0) (which is NULL) on this path.  I believe the
+missing error code potentially leads to a use after free involving
+debugfs.
 
-Fix it by not trying to canceling the command if ublk block request is
-started.
-
-Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
-Reported-by: Jared Holzman <jholzman@nvidia.com>
-Tested-by: Jared Holzman <jholzman@nvidia.com>
-Closes: https://lore.kernel.org/linux-block/d2179120-171b-47ba-b664-23242981ef19@nvidia.com/
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250425013742.1079549-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 90a0d9f33996 ("iwlwifi: Add missing check for alloc_ordered_workqueue")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/a7a1cd2c-ce01-461a-9afd-dbe535f8df01@sabinyo.mountain
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/dvm/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 6d5523058bed8..bd0b2046981e4 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1552,14 +1552,31 @@ static bool ublk_abort_requests(struct ublk_device *ub, struct ublk_queue *ubq)
- 	return !was_canceled;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+index bc065c7089f71..a4f6e5a8f3a9d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+@@ -1468,7 +1468,8 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+ 	/********************
+ 	 * 6. Setup services
+ 	 ********************/
+-	if (iwl_setup_deferred_work(priv))
++	err = iwl_setup_deferred_work(priv);
++	if (err)
+ 		goto out_uninit_drv;
  
--static void ublk_cancel_cmd(struct ublk_queue *ubq, struct ublk_io *io,
-+static void ublk_cancel_cmd(struct ublk_queue *ubq, unsigned tag,
- 		unsigned int issue_flags)
- {
-+	struct ublk_io *io = &ubq->ios[tag];
-+	struct ublk_device *ub = ubq->dev;
-+	struct request *req;
- 	bool done;
- 
- 	if (!(io->flags & UBLK_IO_FLAG_ACTIVE))
- 		return;
- 
-+	/*
-+	 * Don't try to cancel this command if the request is started for
-+	 * avoiding race between io_uring_cmd_done() and
-+	 * io_uring_cmd_complete_in_task().
-+	 *
-+	 * Either the started request will be aborted via __ublk_abort_rq(),
-+	 * then this uring_cmd is canceled next time, or it will be done in
-+	 * task work function ublk_dispatch_req() because io_uring guarantees
-+	 * that ublk_dispatch_req() is always called
-+	 */
-+	req = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], tag);
-+	if (req && blk_mq_request_started(req))
-+		return;
-+
- 	spin_lock(&ubq->cancel_lock);
- 	done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
- 	if (!done)
-@@ -1582,7 +1599,6 @@ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
- 	struct task_struct *task;
- 	struct ublk_device *ub;
- 	bool need_schedule;
--	struct ublk_io *io;
- 
- 	if (WARN_ON_ONCE(!ubq))
- 		return;
-@@ -1597,9 +1613,8 @@ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
- 	ub = ubq->dev;
- 	need_schedule = ublk_abort_requests(ub, ubq);
- 
--	io = &ubq->ios[pdu->tag];
--	WARN_ON_ONCE(io->cmd != cmd);
--	ublk_cancel_cmd(ubq, io, issue_flags);
-+	WARN_ON_ONCE(ubq->ios[pdu->tag].cmd != cmd);
-+	ublk_cancel_cmd(ubq, pdu->tag, issue_flags);
- 
- 	if (need_schedule) {
- 		if (ublk_nosrv_should_stop_dev(ub))
-@@ -1619,7 +1634,7 @@ static void ublk_cancel_queue(struct ublk_queue *ubq)
- 	int i;
- 
- 	for (i = 0; i < ubq->q_depth; i++)
--		ublk_cancel_cmd(ubq, &ubq->ios[i], IO_URING_F_UNLOCKED);
-+		ublk_cancel_cmd(ubq, i, IO_URING_F_UNLOCKED);
- }
- 
- /* Cancel all pending commands, must be called after del_gendisk() returns */
+ 	iwl_setup_rx_handlers(priv);
 -- 
 2.53.0
 
