@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410F3AE199;
-	Sat, 17 Oct 2026 16:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F6D3A0E85;
+	Sat, 17 Oct 2026 16:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255175; cv=none; b=C24isRl+Rr/dVhaI0nz8vdKTbepwW2/RxPBeMP2wYeIrCWWfhmIUAf28MoXPCUoMxJEPB1xslTtvLsrsAw6dFcb7e/H8QtJOwbd7eZ4hMigKcpPsZkijkD7z7qKTZf4h73jQ0MQAmORt973NlH+DGBy007LmDuAM3G9EkIl5nuk=
+	t=1792255177; cv=none; b=ba64t1kny/+nC7P786oWAdt+diFkRmvo2HOrCyVjk/EVSCNSnm6IwMV7X7BGA0tGEucQ0ZgiAocpjOf4zDdhyTALSzCUGwDBCCeXd3iL59cYeLz4tHHkEHFyu7KMS5TJh/HZs6oqu2lRV2T2pzlWNZs836SUFOD1dYIiGg+OKmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255175; c=relaxed/simple;
-	bh=y91Nzc2GrvkrLhMbnzztU3W9Pc7ivUwY/7eBYzi9NK8=;
+	s=arc-20240116; t=1792255177; c=relaxed/simple;
+	bh=RpGsRz7FxGDUh02Yca8OrG5xzhIMxnhtTxDfCRx8S4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Di2wfd8t5CAZUkzcW5ZZuWMSUXBjkPn+KiyKTDxaeSOd9nDQsZGpDNAqi1Mux9AEkBaTcvXYfnAaq/K/ufMnkc/G8u7XXUpMu66J/ZKmp9iGywaoYA8ihDf9EaGlm+yOQ0ozB1xBDScO6zApGTTTf6TH4jEGQCK0dXFTqsKXmWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpnFEc+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ctqdvkTepFvVh5GI8YOf3kFmE7pDp0E4o8icpkOv2R6YEgIxqmdsyEg0Z396t/+ockjNOeM4zDgpYThJ0vGojHXuE8+i6XCmRMTdfL0VfC7v+3lY7nRvuVaLVzfTlX6NuuOnAAz9q931SRvTwfttftLI7Df/fC6ltQWjacRryZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZsVDVAW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpnFEc+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3D71F000C6;
-	Sat, 17 Oct 2026 16:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZsVDVAW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5881F000C5;
+	Sat, 17 Oct 2026 16:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255173;
-	bh=meUiAmWhblaVumI9t8L+PFnG7HdbAGhsvldl3GMsjSw=;
+	s=korg; t=1792255176;
+	bh=gznqurOHfESxvoHyCTFU0mCj1zdAN/rYMAaFY3nohcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TpnFEc+AjS35Dp8UCcuFErXyJeP9IeVug6oL3Q8QxNd2PbrDT8Ue+t9ZV0kumOFAQ
-	 MGrNGEIcF9wveRwj/rJf/S7fXiRG5phq8AAJnejCQ+gtaLtHqYLVygb4R9vB+LmWi9
-	 loyBzPoIiMS5cGFz0ElFxfiu99/NYaWhjdWezBmw=
+	b=sZsVDVAWK1jzK5pcTviE2euZhbr5haU26ZfSYe+5/aFcg98oHv1xb9Fz4tkb7HgRY
+	 nV0Eb+PNuMfjLo8yN1+yxdZoZVLJpkra/yX9dqxCRBakn8mS+/VxmcxQXM/Jo8P7th
+	 xyzjymdmi1IcdL6NDzwXAqEUn/BsGgldBk3I1qH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	Brian Masney <bmasney@redhat.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 688/869] clk: mediatek: pllfh: Fix IO remapping leak in register_pllfhs error path
-Date: Sat, 17 Oct 2026 17:58:49 +0200
-Message-ID: <20261017160054.614761269@linuxfoundation.org>
+Subject: [PATCH 6.12 689/869] iommu/tegra241-cmdqv: Fix VINTF0 leak on the init-failure path
+Date: Sat, 17 Oct 2026 17:58:50 +0200
+Message-ID: <20261017160054.641732912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,165 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 540d91480bcb1b28a62d7023aa70947ea44c55b9 ]
+[ Upstream commit f40f3144477314b489e4bc209c06cb51679fe82b ]
 
-When mtk_clk_register_pllfhs function fails to register a PLL, it
-unregisters all PLLs and cleans up itself in its error path before
-returning, so the function callers don't need to do it.
+tegra241_cmdqv_init_structures() allocates VINTF0 with kzalloc_obj(), inits
+it, and preallocates its logical VCMDQs. Two of its error paths leak.
 
-But contrary to mtk_clk_unregister_pllfhs function, that does almost
-the same sequence, it does not free the IO memory mapped on fhctl node,
-leading to a leak.
+When tegra241_cmdqv_init_vintf() fails it returns before VINTF0 reaches the
+cmdqv->vintfs[] array, so the devres unwind on probe failure cannot reach
+it; free it directly there.
 
-Fix this leak by factorizing the cleanup sequence in a new private
-function and use it both mtk_clk_register_pllfhs and
-mtk_clk_unregister_pllfhs functions.
+A later VCMDQ preallocation failure instead leaves VINTF0 published, and so
+this time the unwind does reach tegra241_cmdqv_remove_vintf(), which then
+frees it from vintf->hyp_own. But tegra241_vintf_hw_init() sets that flag
+only afterward, from a HW read-back, so the still-uninited VINTF0 reads as
+guest-owned and leaks, with mutex_destroy() and ida_destroy() run on fields
+it never set up.
 
-Also, change the loop index start value to avoid the -1 operation on
-index at each loop.
+Decide ownership from vintf->idx instead, the index assigned when its id is
+allocated: idx 0 is the kernel-owned VINTF0, while idx >= 1 marks a guest
+VINTF. So the in-kernel free decision in tegra241_cmdqv_remove_vintf() and
+tegra241_vintf_free_lvcmdq() now keys on idx too, and hyp_own stays a pure
+HW-readback state.
 
-Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-pllfh.c | 98 ++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clk/mediatek/clk-pllfh.c b/drivers/clk/mediatek/clk-pllfh.c
-index 094ec8a26d668..1e97daeb45e43 100644
---- a/drivers/clk/mediatek/clk-pllfh.c
-+++ b/drivers/clk/mediatek/clk-pllfh.c
-@@ -194,12 +194,56 @@ static void mtk_clk_unregister_pllfh(struct clk_hw *hw)
- 	kfree(fh);
- }
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index 2c7b668c84234..335928aa0ef59 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -778,6 +778,12 @@ static int tegra241_cmdqv_init_structures(struct arm_smmu_device *smmu)
+ 	ret = tegra241_cmdqv_init_vintf(cmdqv, 0, vintf);
+ 	if (ret) {
+ 		dev_err(cmdqv->dev, "failed to init vintf0: %d\n", ret);
++		/*
++		 * tegra241_cmdqv_init_vintf() failed to publish the vintf0 to
++		 * cmdqv->vintfs[], so the probe unwind path that goes through
++		 * cmdqv->vintfs[] would miss it. Free it here.
++		 */
++		kfree(vintf);
+ 		return ret;
+ 	}
  
-+static void mtk_clk_cleanup_pllfhs(void __iomem *iomem_base,
-+				   const struct mtk_pll_data *plls, int num_plls,
-+				   void __iomem *iomem_fhctl_base,
-+				   struct mtk_pllfh_data *pllfhs, int num_fhs,
-+				   struct clk_hw_onecell_data *clk_data)
-+{
-+	void __iomem *base = iomem_base;
-+	void __iomem *fhctl_base = iomem_fhctl_base;
-+	int i;
-+
-+	for (i = num_plls - 1; i >= 0; i--) {
-+		const struct mtk_pll_data *pll = &plls[i];
-+		struct mtk_pllfh_data *pllfh;
-+		bool use_fhctl;
-+
-+		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
-+			continue;
-+
-+		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
-+		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
-+
-+		if (!base)
-+			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
-+							pll);
-+
-+		if (use_fhctl) {
-+			if (!fhctl_base)
-+				fhctl_base = pllfh->state.base;
-+			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
-+		} else {
-+			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
-+		}
-+
-+		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
-+	}
-+
-+	if (fhctl_base)
-+		iounmap(fhctl_base);
-+
-+	if (base)
-+		iounmap(base);
-+}
-+
-+
- int mtk_clk_register_pllfhs(struct device_node *node,
- 			    const struct mtk_pll_data *plls, int num_plls,
- 			    struct mtk_pllfh_data *pllfhs, int num_fhs,
- 			    struct clk_hw_onecell_data *clk_data)
- {
--	void __iomem *base;
-+	void __iomem *base, *fhctl_base = NULL;
- 	int i;
- 	struct clk_hw *hw;
- 
-@@ -235,24 +279,8 @@ int mtk_clk_register_pllfhs(struct device_node *node,
- 	return 0;
- 
- err:
--	while (--i >= 0) {
--		const struct mtk_pll_data *pll = &plls[i];
--		struct mtk_pllfh_data *pllfh;
--		bool use_fhctl;
--
--		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
--		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
--
--		if (use_fhctl)
--			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
--		else
--			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
--
--		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
--	}
--
--	iounmap(base);
--
-+	mtk_clk_cleanup_pllfhs(base, plls, i, fhctl_base, pllfhs, num_fhs,
-+			       clk_data);
- 	return PTR_ERR(hw);
- }
- EXPORT_SYMBOL_GPL(mtk_clk_register_pllfhs);
-@@ -261,38 +289,10 @@ void mtk_clk_unregister_pllfhs(const struct mtk_pll_data *plls, int num_plls,
- 			       struct mtk_pllfh_data *pllfhs, int num_fhs,
- 			       struct clk_hw_onecell_data *clk_data)
- {
--	void __iomem *base = NULL, *fhctl_base = NULL;
--	int i;
--
- 	if (!clk_data)
- 		return;
- 
--	for (i = num_plls; i > 0; i--) {
--		const struct mtk_pll_data *pll = &plls[i - 1];
--		struct mtk_pllfh_data *pllfh;
--		bool use_fhctl;
--
--		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
--			continue;
--
--		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
--		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
--
--		if (use_fhctl) {
--			fhctl_base = pllfh->state.base;
--			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
--		} else {
--			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
--						    pll);
--			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
--		}
--
--		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
--	}
--
--	if (fhctl_base)
--		iounmap(fhctl_base);
--
--	iounmap(base);
-+	mtk_clk_cleanup_pllfhs(NULL, plls, num_plls, NULL, pllfhs,
-+			       num_fhs, clk_data);
- }
- EXPORT_SYMBOL_GPL(mtk_clk_unregister_pllfhs);
 -- 
 2.53.0
 
