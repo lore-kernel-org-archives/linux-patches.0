@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551683B71A7;
-	Sat, 17 Oct 2026 17:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B285F384CED;
+	Sat, 17 Oct 2026 17:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259980; cv=none; b=Ou/FnAel2I7Z5pILLY7Sp8NzUFZiWdGnGVySFxAxKFrfRx70mBkCkBncPBsAr95dlH2wTIadMtsbGFeXxVidILSL7LBAP/cb4hfRSzK4Sp4a9UhNKHoTklTpSJiKoxD+YlVWqo0YjKCoppz/an7aeObDVmPzMhmzmSxVUaAuErQ=
+	t=1792259983; cv=none; b=jxN/QOPLgdWp36zQ/vvlXC8Yd9utm1xnXHfDevsfxXaCJYG+dN8mBZZ9s+yCCrp3xNnGtLSorNSHk6QJjTwY7pUvS9h1GbwKOxTp01gG2DEsD8w3sW6kpLdMqDplxKjdwQENj8m+qNHPfE2HoL1/xIcFNz9J/U5O1ldVFG5DNow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259980; c=relaxed/simple;
-	bh=owxnRr5IF9vjl4l99aDA1XmTxlxA6tN+L2X1oFbBSVo=;
+	s=arc-20240116; t=1792259983; c=relaxed/simple;
+	bh=Bmx6+iSqq646wWuQhQ1Dt69M8oBiUFpmUQ0kswEWHy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcXZEvo4SqXcQ74SVkuZ334gCSF5M0hR2pxOYh6aY5UaT/6pLVWxKuVPoVarkmEp/3Kff//z0WGZqE+Rrfda8qTxxRVWHv8/WIq+OhZRJhVzvQ1tX/8oqV3T9Nzdm8m6y0udtSfO2n5bRpf7bGtgMy4dV9xZzsC4SjB9wdGTzss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lK38DLDX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F1ee8fXbBfdzqrYNVMcRNzVUH9hvgqaOnzxoD3X1/1B/TEYKK0Zbnqa/X7cya0SnUOJAvL2iFcVv6yes153cs3L2k6noxZ/NNGEUB2c4VvL1htdpRESHPycVl5LtNb818gKVZjKYIe2CO8XYN3PIJ5k+SHxobHXuxx/CVLW0c/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LX82ML6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lK38DLDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E771F000C4;
-	Sat, 17 Oct 2026 17:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LX82ML6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44911F000C4;
+	Sat, 17 Oct 2026 17:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259979;
-	bh=HHy+5X8429kcamFj+0uGGPHWkO+cZY7BFmsfwMQWcQU=;
+	s=korg; t=1792259982;
+	bh=rN11ppB7pXhgkqLO205KXpqYpCFu+K2ZyfionyEyLh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lK38DLDXJqqydlvYHO+bsMirXXQTuKpi1GTr46TSxHhB79PgwE3Vrpy2Lo0zrqbHX
-	 AK2N47yGmDR2Ozu0rc2X+kX35+GcPOgE1o2GUZ8dXhy1EnUPepn6EjaGxmwN7M9twi
-	 SXRSdQ9UHk6MWKSUs5y3Sm4NQuEyueubGG3TtydM=
+	b=0LX82ML6yV/dvirYBlwQYey0Jj+OVEHdtH5zIRALpW+iQu1ib+kLfMCmhf+CZfqvA
+	 cWE7vOHcL937pNivbth0k+jORO9xjFVdn46Nhq7AxlxJlQeuuEXFvAWoOBz0DPmkHX
+	 ikTnXASzh0p+hQkXD8ankKnhGTBvYWXJAncDxEck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1366/1674] NFSD: Prevent client use-after-free during blocked-lock reaping
-Date: Sat, 17 Oct 2026 18:00:38 +0200
-Message-ID: <20261017160506.218617053@linuxfoundation.org>
+Subject: [PATCH 6.6 1393/1674] pnfs/blocklayout: Fix device leaks on parse failure
+Date: Sat, 17 Oct 2026 18:01:05 +0200
+Message-ID: <20261017160506.926993891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,96 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 9026932ac8be4d0ae01db47f23619a98cc57b671 ]
+[ Upstream commit c056f817e4200fb18079d5052c273a22f191ff0a ]
 
-A bare lock owner -- its only remaining reference a blocked lock on
-nn->blocked_locks_lru -- holds a raw pointer to its nfs4_client but
-no reference keeping the client alive. When the per-net laundromat
-reaps such a lock, freeing the nbl drops the owner reference
-held through flc_owner, and the final nfs4_put_stateowner()
-takes the client's cl_lock. Because the laundromat detaches the
-nbl first, __destroy_client() no longer finds it, so a concurrent
-force_expire_client() can free the client before nfs4_put_stateowner()
-runs, dereferencing cl_lock in freed memory.
+bl_parse_concat() and bl_parse_stripe() allocate a child device array and
+then parse each child in turn.  If parsing a child fails, the failed child is
+not counted in nr_children and the parent may be left with a children array
+that bl_free_device() will not release when nr_children is zero.
 
-Pin the client with cl_rpc_users before dropping
-nn->blocked_locks_lock, and skip clients already expiring, whose
-blocked locks __destroy_client() frees while holding an owner
-reference. Take nn->client_lock outside nn->blocked_locks_lock.
-Every other site holds nn->blocked_locks_lock as a leaf, acquiring
-no further lock, so placing nn->client_lock outside it cannot form
-a lock-order cycle.
+Release the failed child and the already parsed children before returning the
+error.  Also make bl_free_device() release the child array whenever the
+children pointer is set, so that partially initialised concat or stripe
+devices are cleaned up correctly.
 
-Fixes: 7919d0a27f1e ("nfsd: add a LRU list for blocked locks")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-7-1d519d9be0cb@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+bl_parse_scsi() can also fail after assigning d->bdev_file and dropping the
+file reference.  Clear the pointer after fput() so that an outer cleanup path
+does not put it again.
+
+Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ fs/nfs/blocklayout/dev.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 473368a78434c..2d57a042f3bf1 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -329,6 +329,16 @@ free_blocked_lock(struct nfsd4_blocked_lock *nbl)
- 	kref_put(&nbl->nbl_kref, free_nbl);
- }
- 
-+/* A blocked lock's fl_owner is its nfs4_lockowner. */
-+static struct nfs4_client *
-+nbl_client(struct nfsd4_blocked_lock *nbl)
-+{
-+	struct nfs4_lockowner *lo;
-+
-+	lo = (struct nfs4_lockowner *)nbl->nbl_lock.fl_owner;
-+	return lo->lo_owner.so_client;
-+}
-+
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index 61ee0b6c0fba2..9bb745ad8976c 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -16,12 +16,14 @@
  static void
- remove_blocked_locks(struct nfs4_lockowner *lo)
+ bl_free_device(struct pnfs_block_dev *dev)
  {
-@@ -6392,22 +6402,33 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	 * indefinitely once the lock does become free.
- 	 */
- 	BUG_ON(!list_empty(&reaplist));
-+	spin_lock(&nn->client_lock);
- 	spin_lock(&nn->blocked_locks_lock);
--	while (!list_empty(&nn->blocked_locks_lru)) {
--		nbl = list_first_entry(&nn->blocked_locks_lru,
--					struct nfsd4_blocked_lock, nbl_lru);
-+	list_for_each_safe(pos, next, &nn->blocked_locks_lru) {
-+		nbl = list_entry(pos, struct nfsd4_blocked_lock, nbl_lru);
- 		if (!state_expired(&lt, nbl->nbl_time))
- 			break;
-+		clp = nbl_client(nbl);
-+		if (is_client_expired(clp))
-+			continue;
-+		atomic_inc(&clp->cl_rpc_users);
- 		list_move(&nbl->nbl_lru, &reaplist);
- 		list_del_init(&nbl->nbl_list);
- 	}
- 	spin_unlock(&nn->blocked_locks_lock);
-+	spin_unlock(&nn->client_lock);
+-	if (dev->nr_children) {
++	if (dev->children) {
+ 		int i;
  
- 	while (!list_empty(&reaplist)) {
- 		nbl = list_first_entry(&reaplist,
- 					struct nfsd4_blocked_lock, nbl_lru);
-+		clp = nbl_client(nbl);
- 		list_del_init(&nbl->nbl_lru);
- 		free_blocked_lock(nbl);
-+		if (atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock)) {
-+			if (is_client_expired(clp))
-+				wake_up_all(&expiry_wq);
-+			spin_unlock(&nn->client_lock);
+ 		for (i = 0; i < dev->nr_children; i++)
+ 			bl_free_device(&dev->children[i]);
+ 		kfree(dev->children);
++		dev->children = NULL;
++		dev->nr_children = 0;
+ 	} else {
+ 		if (dev->pr_registered) {
+ 			const struct pr_ops *ops =
+@@ -34,8 +36,10 @@ bl_free_device(struct pnfs_block_dev *dev)
+ 				pr_err("failed to unregister PR key.\n");
+ 		}
+ 
+-		if (dev->bdev)
++		if (dev->bdev) {
+ 			blkdev_put(dev->bdev, NULL);
++			dev->bdev = NULL;
 +		}
  	}
- #ifdef CONFIG_NFSD_V4_2_INTER_SSC
- 	/* service the server-to-server copy delayed unmount list */
+ }
+ 
+@@ -377,6 +381,7 @@ bl_parse_scsi(struct nfs_server *server, struct pnfs_block_dev *d,
+ 
+ out_blkdev_put:
+ 	blkdev_put(d->bdev, NULL);
++	d->bdev = NULL;
+ 	return error;
+ }
+ 
+@@ -412,8 +417,11 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	for (i = 0; i < v->concat.volumes_count; i++) {
+ 		ret = bl_parse_deviceid(server, &d->children[i],
+ 				volumes, v->concat.volumes[i], gfp_mask);
+-		if (ret)
++		if (ret) {
++			bl_free_device(&d->children[i]);
++			bl_free_device(d);
+ 			return ret;
++		}
+ 
+ 		d->nr_children++;
+ 		d->children[i].start += len;
+@@ -441,8 +449,11 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	for (i = 0; i < v->stripe.volumes_count; i++) {
+ 		ret = bl_parse_deviceid(server, &d->children[i],
+ 				volumes, v->stripe.volumes[i], gfp_mask);
+-		if (ret)
++		if (ret) {
++			bl_free_device(&d->children[i]);
++			bl_free_device(d);
+ 			return ret;
++		}
+ 
+ 		d->nr_children++;
+ 		len += d->children[i].len;
 -- 
 2.53.0
 
