@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C242248B3;
-	Sat, 17 Oct 2026 16:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C30A38654F;
+	Sat, 17 Oct 2026 16:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254321; cv=none; b=GlcnyUQtzYmDveuMuws292bn9ziRNtNoj/pVYzzw5Hz9N1dmHasAwVJ/Xr0YR9lfqQRnz7HhdMJNJcdtK5WaG0Jo62sd8KTMNwRvge5K+onsbwJUDiOuwvub0w7CZP5wMiDdU45O7LxmyF9sJ0MX0nAW+KwJwEiMJFAbjDpwNo8=
+	t=1792254324; cv=none; b=kPeTvE76UF0hQVm3U4/7xNeGoJ3E+/JhBoNzjHt3VkUvpsHmHr6DZZ2FWFVhkG65Q9tguo56S0Go8zNX08ahzfvYSIX7R3OJGodPIl9YKtjEOtx/Y+c7O1NRy4e/JTyIEYYYR6JtasyAuC4VKvagmz8kzPUR+icPpA5PpoCY0mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254321; c=relaxed/simple;
-	bh=Gdjpl5S8JihIb71dbT0IMStiAQvcKNQOrQsjfDLW0JY=;
+	s=arc-20240116; t=1792254324; c=relaxed/simple;
+	bh=9IWf4sImVYginIe5WucB9Sj1E9MBDI1ZLrCwRLU6eBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LWGfH2SVSkFq+HKU9uliTzmgZB2tI9MVlKndS3vbunHie50uKYmBWY5RejqVzVPEWWc7QW5oFLq+i4bmGCoo4Zw/tFS/wGtg9KkxncNU59lbzEZRv8vraUPs7U8cURIpsUYlIz1/WSxdJLSglZCjdDgEXa7tm3h7TNsaBRE7OMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMba4GXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=moQpPSwgF9XPxmCQsr/L3V0NvnjHRD+zqgKQfx8uINnVacV2cS/JulXaruERawdC9an2bLEVrVksrLRJPHRUU1JBPCibJ2ev5MHDE1tHsY+Y7QFWhOw8pqGYfy8Rb5502PhUok8CQ6PfUad+BIAC6lYb5rEQBQPs+FB6p9eQ3Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIjajrj9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMba4GXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF201F000C4;
-	Sat, 17 Oct 2026 16:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIjajrj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742951F000C4;
+	Sat, 17 Oct 2026 16:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254320;
-	bh=mXGHsk5zPyJ0dzoqjseHvTE5hWzNKUsBgXhUUA3ekc4=;
+	s=korg; t=1792254323;
+	bh=nODWLaKICrNAKpbyCKSf5qkCjEecRdtsfksQC/lQxpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMba4GXJljbVJV9thWBYcm1q3jd5LO7w2PBfd0A3UpK1e3V+HrknSCeGVg+Eak8MP
-	 Oct6t08wObwcKeAOIXoeCi1zEiaeInRhkK1cv8KLnArkuI/aP1+oMQm5BKtwlO1gfv
-	 0n0Eyh6A6QdnL1AO96wOEElM1Rw1uYI5TP/t8clI=
+	b=TIjajrj9kDCQUVy61o7kIndeXm8nTIcOqKkb5uhAXU/0HSW8RFF3UWlpJsjD1kevY
+	 dfy56CCTaJbGr0zFJ6T1NfY47OZD4WHNXsxDjSXDSgPdRO2+nK7Z1Vx8Yqfe/e1Fvm
+	 SPGgICX3mVvZdJ1XI3xsNo4x8z+0u9exxexKuK48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	David Hu <xuehaohu@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 381/869] drm/vc4: Shut down BO cache timer before teardown
-Date: Sat, 17 Oct 2026 17:53:42 +0200
-Message-ID: <20261017160046.882273991@linuxfoundation.org>
+Subject: [PATCH 6.12 408/869] RDMA/irdma: Prevent user-triggered null deref on QP create
+Date: Sat, 17 Oct 2026 17:54:09 +0200
+Message-ID: <20261017160047.594476746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,51 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 6273dd3ffb54ec581855b82ae77331b66028249c ]
+[ Upstream commit b9b0889071569d43623c260074e159cd8f26adb1 ]
 
-The BO cache timer callback schedules time_work, and time_work can rearm
-the timer through vc4_bo_cache_free_old().
+Previously, the user QP creation path would only attempt to
+populate iwqp->iwpbl if the user-provided req.user_wqe_bufs
+field was non-zero. The problem is that iwqp->iwpbl is
+unconditionally dereferenced later on in irdma_setup_virt_qp.
 
-vc4_bo_cache_destroy() deletes the timer and then cancels the work, which
-does not break that cycle: the work being cancelled can rearm the timer,
-and the timer then queues work again after teardown.
+While there was a check for iwqp->iwpbl != NULL, this check
+would only occur if req.user_wqe_bufs was non-zero. The end
+result is that a user could send a zero user_wqe_bufs value
+and trigger a null ptr deref.
 
-Use timer_shutdown_sync() instead, so the timer cannot be rearmed and the
-cycle ends with cancel_work_sync().
+Fix this by unconditionally calling irdma_get_pbl and bailing
+if it fails, similar to the CQ and SRQ paths.
 
-Fixes: c826a6e10644 ("drm/vc4: Add a BO cache.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260720084426.1632508-1-lilinmao@kylinos.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260617164013.280790-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Reviewed-by: David Hu <xuehaohu@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 212c86acca482..57935b5c640a1 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -1050,7 +1050,7 @@ static void vc4_bo_cache_destroy(struct drm_device *dev, void *unused)
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
- 	int i;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 97fa345635524..f86249226b60e 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -602,18 +602,18 @@ static int irdma_setup_umode_qp(struct ib_udata *udata,
  
--	del_timer(&vc4->bo_cache.time_timer);
-+	timer_shutdown_sync(&vc4->bo_cache.time_timer);
- 	cancel_work_sync(&vc4->bo_cache.time_work);
+ 	iwqp->ctx_info.qp_compl_ctx = req.user_compl_ctx;
+ 	iwqp->user_mode = 1;
+-	if (req.user_wqe_bufs) {
+-		info->qp_uk_init_info.legacy_mode = ucontext->legacy_mode;
+-		spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
+-		iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
+-					    &ucontext->qp_reg_mem_list);
+-		spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
  
- 	vc4_bo_cache_purge(dev);
+-		if (!iwqp->iwpbl) {
+-			ret = -ENODATA;
+-			ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
+-			return ret;
+-		}
++	info->qp_uk_init_info.legacy_mode = ucontext->legacy_mode;
++
++	spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
++	iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
++				    &ucontext->qp_reg_mem_list);
++	spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
++
++	if (!iwqp->iwpbl) {
++		ret = -ENODATA;
++		ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
++		return ret;
+ 	}
+ 
+ 	if (!ucontext->use_raw_attrs) {
 -- 
 2.53.0
 
