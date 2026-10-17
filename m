@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875702E5B2A;
-	Sat, 17 Oct 2026 17:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CB834C98C;
+	Sat, 17 Oct 2026 17:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259714; cv=none; b=O/ej43Ltm07dGrowpKFDsMU9bFUw4d8OotwRU9Kw5Y5xE5ch/gPcGN6rNkCa2HyNipovVTHBsRRj5jOs1Psqr2o5F1jiUrcGJF03IIjCw3L4WDPVh249xpsmkxEghAe3EuYfjptzu7wrTzBmSZuDYdd7WYNH9awdyPOA0KwgttY=
+	t=1792259716; cv=none; b=r1ZS/pwz4D+MkcPMc3wS1yKUYLzo6ljivQAY6NbFv5Hzvx9iLtpOvoj+Vycj2T4BWqcx4n4x9dfK27VWfC8EzXRIxAcutLjv5daNBonJRVveKsr1Zr5Q2yRP0sm8T2o1sOhJV8Q9Cjbg2idk6Jy2qC49UCPsaxCtRojUb6UaFWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259714; c=relaxed/simple;
-	bh=4gEyrVlXZNDnSd3O7yAkaQK/fg7oIaHWbUfHYSslhzk=;
+	s=arc-20240116; t=1792259716; c=relaxed/simple;
+	bh=NnPX0ukyZubyZ/Di2ghRumJDj53AuYLvnUMqFklnpVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0jlh88puOhMIcIsDQ31RcwyvD/i9M74/MHtS6/R6NJPCALORtk5L4JCDYru7/vFwaRr9USJGt0HFqHxD98+/K9aitVTFkKSSM1+JCrva9SqYhKZIpuVBdBwvQpTkEWQsYvBClZD3fZ3rHQGthH1300zxJJf4Spp1NgH3KMnYYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ/FGVnD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ihIkLvXebCFcgAm4SR39VqhSpVgel5woH9i/dGA559XQBJ7DXgjb2i9gv1QJkGOkqYy5G0bU72CvwucluuDEzigI83tce2cmsBlWD5hysMkBGoJyEKh6Fw0AXlHuTA7VZfB7Q99nb4gAb7jCkz6055McWM2K3+7Vc2eIy3IiZQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpPuTg+e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ/FGVnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A7D1F000C4;
-	Sat, 17 Oct 2026 17:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpPuTg+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA441F000C4;
+	Sat, 17 Oct 2026 17:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259712;
-	bh=eWOhPepUv9U83u9iLJZZlUJWxa6699RA9tggJ2arOlw=;
+	s=korg; t=1792259715;
+	bh=+LM+D8lwZXoZvk1O4qFfS7iWxO9xgoKGEU+dLM5FEDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZ/FGVnDwrZTHAF2t3pkh/P2X4xoTiLmPrHzGKUvBTiRcTvdp+NHTQM95I4oeJzDZ
-	 VFDIjcFGYN8F4jBjX6On/YnMIAPzw15TUfUWo5QTLwTt5Yf+hMMqdU0ANXnKEi0Mlu
-	 Z1zeb8/8AqaV1LnF/LglZCaXH8KlWDF19CxBNckU=
+	b=kpPuTg+e5ZXwfWhEPpj7Xek82ook0o3FPI6IlNjyQ7ml4WhAIRrVFRPxiiOCTn8Sa
+	 1IPU6jFDhhvqpv26GVUin+Dx88dtPRDC30XO3G4s83F6jKkK0FRxElyMJUMYpILwT4
+	 iTuArrUnW5RP8nGAY0iKdTCCdtOW5VJExzW6WfqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1305/1674] HID: mcp2221: clear rxbuf after I2C/SMBus transfer completes
-Date: Sat, 17 Oct 2026 17:59:37 +0200
-Message-ID: <20261017160504.643655139@linuxfoundation.org>
+Subject: [PATCH 6.6 1279/1674] lockd: fix NULL dereference on lockowner allocation failure
+Date: Sat, 17 Oct 2026 17:59:11 +0200
+Message-ID: <20261017160503.969684656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,63 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit db2333f88729c8aae062cb171ed058725ff5c901 ]
+[ Upstream commit 4c7fc129db061c7daab841c4f3c342d894832362 ]
 
-mcp_i2c_smbus_read() stores the caller-supplied buffer pointer in
-mcp->rxbuf for the duration of a transfer but never clears it when the
-transfer finishes or times out. Once the caller frees or reuses the
-buffer, mcp->rxbuf becomes a dangling pointer. A delayed or spurious
-MCP2221_I2C_GET_DATA report can then drive mcp2221_raw_event() to
-memcpy device data into the freed memory, causing a write
-use-after-free.
+nlmclnt_locks_init_private() installs NLM file lock operations even when
+nlmclnt_find_lockowner() fails to allocate a lockowner. nlmclnt_proc()
+then returns -ENOMEM, but the VFS still tears down the partially
+initialized file_lock and calls locks_release_private().
 
-Route all return paths through a single exit point that clears
-mcp->rxbuf and mcp->rxbuf_size, so that the existing !mcp->rxbuf guard
-in the raw_event handler can reject any report arriving after the
-transfer has ended.
+That invokes nlmclnt_locks_release_private(), which dereferences
+fl->fl_u.nfs_fl.owner and crashes because the owner was never installed.
 
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+Clear fl_ops before attempting to initialize the NLM private state, and
+install the NLM lock operations only after a lockowner has been allocated
+successfully.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/lockd/clntproc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 075ad0beae6a3..233f27d5ce16f 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -320,7 +320,7 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 
- 	ret = mcp_send_data_req_status(mcp, mcp->txbuf, 4);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	mcp->rxbuf_idx = 0;
- 
-@@ -342,7 +342,7 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 			} else {
- 				usleep_range(980, 1000);
- 				mcp_cancel_last_cmd(mcp);
--				return ret;
-+				goto out;
- 			}
- 		} else {
- 			retries = 0;
-@@ -352,6 +352,10 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 	usleep_range(980, 1000);
- 	ret = mcp_chk_last_cmd_status_free_bus(mcp);
- 
-+out:
-+	mcp->rxbuf = NULL;
-+	mcp->rxbuf_size = 0;
-+
- 	return ret;
+diff --git a/fs/lockd/clntproc.c b/fs/lockd/clntproc.c
+index 78cb1e592d73a..2926002e9020b 100644
+--- a/fs/lockd/clntproc.c
++++ b/fs/lockd/clntproc.c
+@@ -487,9 +487,12 @@ static const struct file_lock_operations nlmclnt_lock_ops = {
+ static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
+ {
+ 	fl->fl_u.nfs_fl.state = 0;
++	fl->fl_ops = NULL;
+ 	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host,
+ 						       fl->c.flc_owner);
+ 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
++	if (!fl->fl_u.nfs_fl.owner)
++		return;
+ 	fl->fl_ops = &nlmclnt_lock_ops;
  }
  
 -- 
