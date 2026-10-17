@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4473C345F;
-	Sat, 17 Oct 2026 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A4439934B;
+	Sat, 17 Oct 2026 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258375; cv=none; b=KkIkxtYHeYxRKSE2taoJ5QLoH4sNtiQqOvAGHmFQGpThZIG0WD+fuYvOLKA/zIHG2H0jfN9DL8vN+8aDP2Ju8I/cJ3ao5QwGkJ0Z5g6yEkjdMgnic8pz9OCDKypyJJOwEcpr1/kl72zrQgo6EEpM5iRqL33dqjXmgRQ4Mbqt1G0=
+	t=1792258378; cv=none; b=UpJzd7P34IFDzhX0cWYjaVSe2yUQzLSK6j3y9yWFz7XfeZJ7BV7w9y5/aCDKaYTPSHD7JUkk3DEGMm3qjK76wRLuB09GoK18/CTgJe7TkSjfoS6hDLXgQs/j2HN3IEjlb/+lsHTzMWGy+eEZ0NornR/rKJ+Sfub9R7yOtsHv+8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258375; c=relaxed/simple;
-	bh=R+oq6uNgMo1lg0qg/IO19lXPLhVOpNRDH9qQx33vE/4=;
+	s=arc-20240116; t=1792258378; c=relaxed/simple;
+	bh=nHB256lG+R6fx7fLspS9s5SmjNi+VG/kbr/bCHPd4xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGaHJOqpAERqQFuw5eEwCjBWY/S0hfEeRcxjVBo7GEYmJQGjgOSkHOwHVw7licE+VxlVgwzhrZBhp1yWHno0rNg0v2cGQAESP1D9Xs5eJIM3DPbunSOsqcrmp8NnHmXh4GjMbM8/2lKddQ9iZwWWJGuA0ehyB2afpgyjPvThy+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWmn94k7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JCZMJ/96kLG3XsGx2sZ1J+AuWHqiZrF2EqThp5/ffv6nM2+459+KLIBx6HHk1A5CDvg5dZo1zWq/IGYvCOSA3EnBQcMuDB2L6eErpIg718sn6Q3x3woB5N8kS22X4Dmm99V2egPkzHIi1OfR+uB+vXxkE2neGkUwQzkoCSbOlYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crdVRxQA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWmn94k7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33111F000C5;
-	Sat, 17 Oct 2026 17:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crdVRxQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2441F000C4;
+	Sat, 17 Oct 2026 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258374;
-	bh=zvTJf2AjeSiLIgPSf7o8YltnhAwmfwXtcIgGgfYBvpQ=;
+	s=korg; t=1792258377;
+	bh=7ccN6R0Zlrd/c6ga/9CIW2ZBEh/NXr5vVnAH0JaAWrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UWmn94k7gazZQLnJuDL7PyQgMhUWpq0S44kn7q3VQ3rKkYgdbu26FaF42R81Va33s
-	 uFOezsU1kTzcDHFIsGk1UCaLKyaUoToaIpUy1Na/kDYNTDD5Bwc5Kb/G0lZHoYGBYe
-	 SMwu/vsNBSuVC1BNOl6yqsGpbunx5FmEzHvrO3JM=
+	b=crdVRxQA0UwzebXtsVK49hWB1IrTvdhnFOJQhxP00axTuvOLJCMA8fKDuG0e7Qwz5
+	 ApN8i/WoireNZ6LCgbFMn/e6m07eLr1D4gJAL6EYZius0SqIauLm1O6TaWYs35OhXU
+	 sZBjoI7NJtLF2JO8GvkqnFc73Bky0pelO8erPLGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruno Goncalves <bgoncalv@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0863/1674] sched/deadline: Fix missing ENQUEUE_REPLENISH during PI de-boosting
-Date: Sat, 17 Oct 2026 17:52:15 +0200
-Message-ID: <20261017160453.267909470@linuxfoundation.org>
+Subject: [PATCH 6.6 0864/1674] ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz
+Date: Sat, 17 Oct 2026 17:52:16 +0200
+Message-ID: <20261017160453.292681951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,108 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit d658686a1331db3bb108ca079d76deb3208ed949 ]
+[ Upstream commit e142dc4ef0f451b7ef99d09aaa84e9389af629d7 ]
 
-Running stress-ng --schedpolicy 0 on an RT kernel on a big machine
-might lead to the following WARNINGs (edited).
+The only user of frag_size field in XDP RxQ info is
+bpf_xdp_frags_increase_tail(). It clearly expects whole buff size instead
+of DMA write size. Different assumptions in ice driver configuration lead
+to negative tailroom.
 
- sched: DL de-boosted task PID 22725: REPLENISH flag missing
+This allows to trigger kernel panic, when using
+XDP_ADJUST_TAIL_GROW_MULTI_BUFF xskxceiver test and changing packet size to
+6912 and the requested offset to a huge value, e.g.
+XSK_UMEM__MAX_FRAME_SIZE * 100.
 
- WARNING: CPU: 93 PID: 0 at kernel/sched/deadline.c:239 dequeue_task_dl+0x15c/0x1f8
- ... (running_bw underflow)
- Call trace:
-  dequeue_task_dl+0x15c/0x1f8 (P)
-  dequeue_task+0x80/0x168
-  deactivate_task+0x24/0x50
-  push_dl_task+0x264/0x2e0
-  dl_task_timer+0x1b0/0x228
-  __hrtimer_run_queues+0x188/0x378
-  hrtimer_interrupt+0xfc/0x260
-  ...
+Due to other quirks of the ZC configuration in ice, panic is not observed
+in ZC mode, but tailroom growing still fails when it should not.
 
-The problem is that when a SCHED_DEADLINE task (lock holder) is
-changed to a lower priority class via sched_setscheduler(), it may
-fail to properly inherit the parameters of potential DEADLINE donors
-if it didn't already inherit them in the past (shorter deadline than
-donor's at that time). This might lead to bandwidth accounting
-corruption, as enqueue_task_dl() won't recognize the lock holder as
-boosted.
+Use fill queue buffer truesize instead of DMA write size in XDP RxQ info.
+Fix ZC mode too by using the new helper.
 
-The scenario occurs when:
-1. A DEADLINE task (donor) blocks on a PI mutex held by another
-   DEADLINE task (holder), but the holder doesn't inherit parameters
-   (e.g., it already has a shorter deadline)
-2. sched_setscheduler() changes the holder from DEADLINE to a lower
-   class while still holding the mutex
-3. The holder should now inherit DEADLINE parameters from the donor
-   and be enqueued with ENQUEUE_REPLENISH, but this doesn't happen
-
-Fix the issue by introducing __setscheduler_dl_pi(), which detects when
-a DEADLINE (proper or boosted) task gets setscheduled to a lower
-priority class. In case, the function makes the task inherit DEADLINE
-parameters of the donoer (pi_se) and sets ENQUEUE_REPLENISH flag to
-ensure proper bandwidth accounting during the next enqueue operation.
-
-Fixes: 2279f540ea7d ("sched/deadline: Fix priority inheritance with multiple scheduling classes")
-Reported-by: Bruno Goncalves <bgoncalv@redhat.com>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260302-upstream-fix-deadline-piboost-b4-v3-1-6ba32184a9e0@redhat.com
+Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260305111253.2317394-5-larysa.zaremba@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_base.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index ed3fcf41bb0f4..91852abd66a0b 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7536,6 +7536,35 @@ static void __setscheduler_params(struct task_struct *p,
- 	set_load_weight(p, true);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 9a0682b05c4ff..f3a2d564da183 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -557,13 +557,16 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 ring->rx_buf_len);
++						 ice_get_frame_sz(ring));
+ 			if (err)
+ 				return err;
+ 		}
  
-+#ifdef CONFIG_RT_MUTEXES
-+static inline void __setscheduler_dl_pi(int newprio, int policy,
-+					struct task_struct *p,
-+					int *queue_flags)
-+{
-+	/*
-+	 * In case a DEADLINE task (either proper or boosted) gets
-+	 * setscheduled to a lower priority class, check if it neeeds to
-+	 * inherit parameters from a potential pi_task. In that case make
-+	 * sure replenishment happens with the next enqueue.
-+	 */
+ 		ring->xsk_pool = ice_xsk_pool(ring);
+ 		if (ring->xsk_pool) {
++			u32 frag_size =
++				xsk_pool_get_rx_frag_step(ring->xsk_pool);
 +
-+	if (dl_prio(newprio) && !dl_policy(policy)) {
-+		struct task_struct *pi_task = rt_mutex_get_top_task(p);
-+
-+		if (pi_task) {
-+			p->dl.pi_se = pi_task->dl.pi_se;
-+			*queue_flags |= ENQUEUE_REPLENISH;
-+		}
-+	}
-+}
-+#else /* !CONFIG_RT_MUTEXES */
-+static inline void __setscheduler_dl_pi(int newprio, int policy,
-+					struct task_struct *p,
-+					int *queue_flags)
-+{
-+}
-+#endif /* !CONFIG_RT_MUTEXES */
-+
- /*
-  * Check the target process has a UID that matches the current process's:
-  */
-@@ -7804,6 +7833,7 @@ static int __sched_setscheduler(struct task_struct *p,
- 	if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
- 		__setscheduler_params(p, attr);
- 		__setscheduler_prio(p, newprio);
-+		__setscheduler_dl_pi(newprio, policy, p, &queue_flags);
- 	}
- 	__setscheduler_uclamp(p, attr);
+ 			xdp_rxq_info_unreg(&ring->xdp_rxq);
  
+ 			ring->rx_buf_len =
+@@ -571,7 +574,7 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 ring->rx_buf_len);
++						 frag_size);
+ 			if (err)
+ 				return err;
+ 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
+@@ -588,7 +591,7 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 				err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 							 ring->q_index,
+ 							 ring->q_vector->napi.napi_id,
+-							 ring->rx_buf_len);
++							 ice_get_frame_sz(ring));
+ 				if (err)
+ 					return err;
+ 			}
 -- 
 2.53.0
 
