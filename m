@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79A835C1BC;
-	Sat, 17 Oct 2026 17:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345A21AAE28;
+	Sat, 17 Oct 2026 17:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258041; cv=none; b=OcftagFygyNgwEv7Ucm6sU0wDXBlwsp0TkDiVBoAiLInJgz5tENP3j9LTXkW65+KYFsfi4fJjRZHFj7YyKlyqsgtVJaeY7oqn84AYj8nbkG5Q1VHNNz2uVvfbd77qjVYDAXd+CT5z87sLsuz5D9lKYaoT7edAUw9FZxvSBNMsw8=
+	t=1792258044; cv=none; b=edrFCjVsLt4CGW/xZXSVach0sIimUKgCjDdwnmeJIjP1lEecJZDuQd/aWjfKt9fnB3w2e+xy/+WLFDzZ0wYjxhXNTtuSgh/NKkevPFbi1TaQygAeynWS8xT5ELSSMxhy5RowoYHsSQ0NgKCSvrBmRlfuJxtPrzK35yooF5bnjCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258041; c=relaxed/simple;
-	bh=FL+mNAb/QPkIm/5hryUUov3LtQiKnk+Tt/EZrp0tX1c=;
+	s=arc-20240116; t=1792258044; c=relaxed/simple;
+	bh=/9TDzSKYLEBHjFJLIebHEma2N5L95A6AfKlfLUWL91s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d57HcPODH/AAIaNlNwawwEQvCIIoI6WXRWcsf3r0IqQ6SSOg3atySvk6toT5gXguJw93+FH7vjE89PUdAeG97bESeCTDLKvxyWVRVvnwb/Z8/Iimsiq6GrGfDLTOiIL9Ry2bXOgaW+ldKoav/D9Dw6N4mZ6TTo9Uq7FbGeeANlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=savJPpWF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NMl0lFzQUpJDvokE79Ue9vC7jUsOsIvoWvQDQBCDp5j3B4vNX5Mbciu+3V1t2zGuYAT3S1DREwhUSQWMDD2/xS+mqX+DFVHhj8OHV5nS0r7xmO15rifuwXwTAM1x3jyzJy4MdJZsNRMt42L8k+yI39GsGdb13AOtBOC8qGCH79M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGgyzHhP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="savJPpWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392451F000C4;
-	Sat, 17 Oct 2026 17:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGgyzHhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427631F000C4;
+	Sat, 17 Oct 2026 17:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258039;
-	bh=uj9kaEczUxIVakhctgzR+KwaOGHIs+JyVknuvP3439U=;
+	s=korg; t=1792258042;
+	bh=iTZn5Xb4LStHHCCnSm4Q+ltYWgmghRoXKQ+PNjIDWKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=savJPpWFsfIEKnvIsXopC7knbwIRLOlnPUZFNeAiIO2K6JBeGfcOal+4TUcF7QVS1
-	 6qN1f1e4Q7g1JWwSsqk9ERhSQcEV7nkhImc6bxRK3pthBfEjtBI2ZegrWuU79xJ6Eg
-	 jj4vIF3ChI9xVitfhTnbFJE7eLbbsx671ftaSYz8=
+	b=vGgyzHhPNC0Q3K6geU5T6+I27EVL8cwk+eSi5UEtf9FHZfF7nwxjeAaYmld45rAb6
+	 2TyezO4D3Of2H9UkzGpxLHFRxG6xIJVLRLtSXlmDCmmWDBgv5PTSavOaVA1+ECwVEL
+	 /JAqCoQHIdICS3smOWpyaFyxltf8rMTA0V/Jm7fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Yunchuan <yunchuan@nfschina.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0707/1674] wifi: ath12k: Remove unnecessary (void*) conversions
-Date: Sat, 17 Oct 2026 17:49:39 +0200
-Message-ID: <20261017160449.254046490@linuxfoundation.org>
+Subject: [PATCH 6.6 0708/1674] wifi: ath12k: avoid explicit mac id argument in Rxdma replenish
+Date: Sat, 17 Oct 2026 17:49:40 +0200
+Message-ID: <20261017160449.277862178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,89 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wu Yunchuan <yunchuan@nfschina.com>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit e5e8b38f0c05a3d0edba76bdee00e753067f4281 ]
+[ Upstream commit d281a574f1332ad185faebe433f790abf4eb3b58 ]
 
-No need cast (void*) to (struct hal_rx_ppdu_end_user_stats *),
-(struct ath12k_rx_desc_info *) or (struct hal_tx_msdu_ext_desc *).
-Change the prototype to remove the local variable.
+Currently all Rxdma replenish callers pass zero for the mac id
+argument, so make it as zero implicitly. To optimize the rx
+data path per packet, avoid the explicit unnecessary argument
+in Rxdma replenish function.
 
-Signed-off-by: Wu Yunchuan <yunchuan@nfschina.com>
-Suggested-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00125-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230919045142.524226-1-yunchuan@nfschina.com
+Link: https://lore.kernel.org/r/20231111043934.20485-2-quic_periyasa@quicinc.com
 Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 12 +++++-------
- drivers/net/wireless/ath/ath12k/dp_rx.c  |  2 +-
- drivers/net/wireless/ath/ath12k/dp_tx.c  |  5 ++---
- 3 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp.c    |  4 ++--
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 16 +++++++---------
+ drivers/net/wireless/ath/ath12k/dp_rx.h |  4 ++--
+ 3 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 69bf75ebd7518..97f068b0ae7f1 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -13,8 +13,7 @@
- static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
- 					       struct hal_rx_user_status *rx_user_status)
- {
--	struct hal_rx_ppdu_end_user_stats *ppdu_end_user =
--				(struct hal_rx_ppdu_end_user_stats *)rx_tlv;
-+	struct hal_rx_ppdu_end_user_stats *ppdu_end_user = rx_tlv;
+diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
+index c918f5d12975c..e9097f5c96855 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.c
++++ b/drivers/net/wireless/ath/ath12k/dp.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
- 	rx_user_status->ul_ofdma_user_v0_word0 =
- 		__le32_to_cpu(ppdu_end_user->usr_resp_ref);
-@@ -23,13 +22,12 @@ static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
- }
+ #include <crypto/hash.h>
+@@ -970,7 +970,7 @@ int ath12k_dp_service_srng(struct ath12k_base *ab,
+ 		struct ath12k_dp *dp = &ab->dp;
+ 		struct dp_rxdma_ring *rx_ring = &dp->rx_refill_buf_ring;
  
- static void
--ath12k_dp_mon_rx_populate_byte_count(void *rx_tlv, void *ppduinfo,
-+ath12k_dp_mon_rx_populate_byte_count(const struct hal_rx_ppdu_end_user_stats *stats,
-+				     void *ppduinfo,
- 				     struct hal_rx_user_status *rx_user_status)
- {
--	struct hal_rx_ppdu_end_user_stats *ppdu_end_user =
--		(struct hal_rx_ppdu_end_user_stats *)rx_tlv;
--	u32 mpdu_ok_byte_count = __le32_to_cpu(ppdu_end_user->mpdu_ok_cnt);
--	u32 mpdu_err_byte_count = __le32_to_cpu(ppdu_end_user->mpdu_err_cnt);
-+	u32 mpdu_ok_byte_count = __le32_to_cpu(stats->mpdu_ok_cnt);
-+	u32 mpdu_err_byte_count = __le32_to_cpu(stats->mpdu_err_cnt);
- 
- 	rx_user_status->mpdu_ok_byte_count =
- 		u32_get_bits(mpdu_ok_byte_count,
+-		ath12k_dp_rx_bufs_replenish(ab, 0, rx_ring, 0,
++		ath12k_dp_rx_bufs_replenish(ab, rx_ring, 0,
+ 					    ab->hw_params->hal_params->rx_buf_rbm,
+ 					    true);
+ 	}
 diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 56dda76d066c3..7fef0e8f9d924 100644
+index 7fef0e8f9d924..525a18ca557de 100644
 --- a/drivers/net/wireless/ath/ath12k/dp_rx.c
 +++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -3808,7 +3808,7 @@ int ath12k_dp_rx_process_wbm_err(struct ath12k_base *ab,
- 			continue;
- 		}
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
--		desc_info = (struct ath12k_rx_desc_info *)err_info.rx_desc;
-+		desc_info = err_info.rx_desc;
- 
- 		/* retry manual desc retrieval if hw cc is not done */
- 		if (!desc_info) {
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index 474e0d4d406ea..dde652dd37cae 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -106,11 +106,10 @@ static struct ath12k_tx_desc_info *ath12k_dp_tx_assign_buffer(struct ath12k_dp *
- 	return desc;
+ #include <linux/ieee80211.h>
+@@ -256,7 +256,7 @@ static int ath12k_dp_purge_mon_ring(struct ath12k_base *ab)
  }
  
--static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab, void *cmd,
-+static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
-+					     struct hal_tx_msdu_ext_desc *tcl_ext_cmd,
- 					     struct hal_tx_info *ti)
- {
--	struct hal_tx_msdu_ext_desc *tcl_ext_cmd = (struct hal_tx_msdu_ext_desc *)cmd;
--
- 	tcl_ext_cmd->info0 = le32_encode_bits(ti->paddr,
- 					      HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO);
- 	tcl_ext_cmd->info1 = le32_encode_bits(0x0,
+ /* Returns number of Rx buffers replenished */
+-int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab, int mac_id,
++int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab,
+ 				struct dp_rxdma_ring *rx_ring,
+ 				int req_entries,
+ 				enum hal_rx_buf_return_buf_manager mgr,
+@@ -337,9 +337,7 @@ int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab, int mac_id,
+ 			spin_unlock_bh(&rx_ring->idr_lock);
+ 			if (buf_id < 0)
+ 				goto fail_dma_unmap;
+-			cookie = u32_encode_bits(mac_id,
+-						 DP_RXDMA_BUF_COOKIE_PDEV_ID) |
+-				 u32_encode_bits(buf_id,
++			cookie = u32_encode_bits(buf_id,
+ 						 DP_RXDMA_BUF_COOKIE_BUF_ID);
+ 		}
+ 
+@@ -437,7 +435,7 @@ static int ath12k_dp_rxdma_ring_buf_setup(struct ath12k_base *ab,
+ 	if ((ringtype == HAL_RXDMA_MONITOR_BUF) || (ringtype == HAL_TX_MONITOR_BUF))
+ 		ath12k_dp_mon_buf_replenish(ab, rx_ring, num_entries);
+ 	else
+-		ath12k_dp_rx_bufs_replenish(ab, 0, rx_ring, num_entries,
++		ath12k_dp_rx_bufs_replenish(ab, rx_ring, num_entries,
+ 					    ab->hw_params->hal_params->rx_buf_rbm,
+ 					    ringtype == HAL_RXDMA_BUF);
+ 	return 0;
+@@ -2746,7 +2744,7 @@ int ath12k_dp_rx_process(struct ath12k_base *ab, int ring_id,
+ 		goto exit;
+ 
+ 	/* TODO: Move to implicit BM? */
+-	ath12k_dp_rx_bufs_replenish(ab, 0, rx_ring, num_buffs_reaped,
++	ath12k_dp_rx_bufs_replenish(ab, rx_ring, num_buffs_reaped,
+ 				    ab->hw_params->hal_params->rx_buf_rbm, true);
+ 
+ 	ath12k_dp_rx_process_received_packets(ab, napi, &msdu_list,
+@@ -3527,7 +3525,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 
+ 	rx_ring = &dp->rx_refill_buf_ring;
+ 
+-	ath12k_dp_rx_bufs_replenish(ab, 0, rx_ring, tot_n_bufs_reaped,
++	ath12k_dp_rx_bufs_replenish(ab, rx_ring, tot_n_bufs_reaped,
+ 				    ab->hw_params->hal_params->rx_buf_rbm, true);
+ 
+ 	return tot_n_bufs_reaped;
+@@ -3867,7 +3865,7 @@ int ath12k_dp_rx_process_wbm_err(struct ath12k_base *ab,
+ 	if (!num_buffs_reaped)
+ 		goto done;
+ 
+-	ath12k_dp_rx_bufs_replenish(ab, 0, rx_ring, num_buffs_reaped,
++	ath12k_dp_rx_bufs_replenish(ab, rx_ring, num_buffs_reaped,
+ 				    ab->hw_params->hal_params->rx_buf_rbm, true);
+ 
+ 	rcu_read_lock();
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.h b/drivers/net/wireless/ath/ath12k/dp_rx.h
+index c955b5c859d14..ef1b172e685c9 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.h
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ #ifndef ATH12K_DP_RX_H
+ #define ATH12K_DP_RX_H
+@@ -116,7 +116,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ int ath12k_dp_rx_process(struct ath12k_base *ab, int mac_id,
+ 			 struct napi_struct *napi,
+ 			 int budget);
+-int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab, int mac_id,
++int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab,
+ 				struct dp_rxdma_ring *rx_ring,
+ 				int req_entries,
+ 				enum hal_rx_buf_return_buf_manager mgr,
 -- 
 2.53.0
 
