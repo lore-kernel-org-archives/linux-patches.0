@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A5F3A9DA5;
-	Sat, 17 Oct 2026 16:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4738B3A9DA5;
+	Sat, 17 Oct 2026 16:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254998; cv=none; b=BN00SbuqzhHbxmaAAUgB4JnQjrKnF/H5p8dsiDiq8IWBrMJdVRbse7/4becM3rhmezJVMvyhvUXuFbzm6Xsq05eZk72gerTTLTAq+ZkRrXp7VOXfitQzjqRHoa/1+lZA2gBKabWwUgK8WYaNNo99Q+tdbceKOTwMUeH+3lgZW38=
+	t=1792255002; cv=none; b=AS8p1u22Y5wbqg96yjVa1zdYsAWYvKwYz5FGWWIp+QQZPdOabuUnXPA4h+j4Pv21QMJP2qbhFYngHywSxZE+zETyhbW8/nlsDNmDmTZort57CqgVZu+l+wi+autQKcLF4smT3QbnQFK6oNZQ6xjDBEd5W0Qd458BYaJjRXKTRis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254998; c=relaxed/simple;
-	bh=2+taCGdEC+lJdTlmExr78/WK/NxbgxeJuNio4GjGFck=;
+	s=arc-20240116; t=1792255002; c=relaxed/simple;
+	bh=9KomVzeckz7MqhHUosjrGR0sZMay76faT3pA0Z613Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhbhZZAEtlkPeycdhX+YN3h9JHsOR/72nwi2WTehQJoEGA9NOyolg9NdZXokY4QRb7TzTb55EsetWuvMfI2Mx9EZlaWbtq2GeJv/qsLGSeFaYweRDPhZaeIMBJvfWSyJbsNyG7DCSTMrBI2/BELpW9+37DRI9SS6ixrbixpp//I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZD9ANOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=po4KNfGvcdELk2iDrrMYIR3oqg6xaAi/ymoCQDnxNWJfUYGhns8U8CUGtWqNZpfRbqKW/r9jWWHVgUvuAXY5Fo+BTjOoWFCzBnj91AYfMqgczvMFY17URJJHx68uX5myhR8k+q3QoJMxagmfH4Ro3hDjbuds8YnI/xRISOG3n7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK38Qf0v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZD9ANOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F0C1F000C4;
-	Sat, 17 Oct 2026 16:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK38Qf0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927551F000C4;
+	Sat, 17 Oct 2026 16:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254997;
-	bh=xekRCb/oAlZh0KQrexY3rwH8mwD+t0DM1YtBQAGUOCA=;
+	s=korg; t=1792255000;
+	bh=9bKhHoh5q+k1OuzUinxBTIxcvoP7VZi8uU/P99VTGDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gZD9ANOJMGDzSgPKAYoVUD9o2Z29Om6vaaYjWzfojwR05Mz5GYhqtd5V6eceow/uc
-	 zmc02jtP3XJ/QeTndQ5UWBiGU1Rp1oXcZMD6VADDs6wcSD1IXLfvHsWjUC2rsPZsmp
-	 mrfo3FGmhQJyinrlS6bzfbPnXG7PlmHeKdcfb54Q=
+	b=dK38Qf0vkPUraGSX0L4NOgpL2T6ZpfCf3e+Ylu9LGvJMRwiJaGE9AGpvOQUxP70om
+	 U75uZ4jo9tIL2iVr33BIBHMTzxfCMfCVp1LTrANmJtTL+NX9j61VH5ajd87uouV2ub
+	 rOL5FdJ01J/WOKld5dZ91YufDSDj1BSe/Yksy9Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 631/869] ocfs2: validate orphan slot during inode read
-Date: Sat, 17 Oct 2026 17:57:52 +0200
-Message-ID: <20261017160053.205049701@linuxfoundation.org>
+Subject: [PATCH 6.12 632/869] nvmet: fix max_qid race between configfs and controller allocation
+Date: Sat, 17 Oct 2026 17:57:53 +0200
+Message-ID: <20261017160053.230399634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -58,91 +52,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b2d31acbd3b182755b019183fb46949ba5e39b9f ]
+[ Upstream commit f1a8846e06388113dfdbb89dee005083fa9afdf9 ]
 
-Patch series "ocfs2: validate active orphan slots during inode read".
+The function nvmet_subsys_attr_qid_max_store() can race against
+nvmet_alloc_ctrl() when a subsystem's max_qid limit is modified.
 
-OCFS2 trusts active ordinary and append-DIO orphan slots read from dinodes.
-A corrupted slot can therefore index osb_orphan_wipes or the slot-local
-system-inode cache outside their allocations before the corruption is
-reported.
+Suppose max_qid is currently 64. If nvmet_alloc_ctrl() executes:
+ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
+and at this exact point, a userspace process changes max_qid to 128,
+nvmet_subsys_attr_qid_max_store() will set the new max_qid value. It
+attempts to delete active controllers to force a reconnect, but the
+new controller won't be deleted because it hasn't been added to the
+subsys->ctrls list yet.
 
-Patch 1 validates the ordinary orphan slot used by inode wipe processing.
-Patch 2 validates the append-DIO orphan slot used by DIO completion and
-orphan recovery.  Both checks reject corrupt metadata at the existing inode
-validation boundary.
+nvmet_alloc_ctrl() then proceeds and adds the new controller to the
+subsys->ctrls list. Later, when nvmet_install_queue() is called, it
+will see max_qid set to 128, but the memory allocated for sqs is only
+sized for 64 entries. This results in a KASAN out-of-bounds warning
+and potential memory corruptions.
 
-This patch (of 2):
+Fix this by protecting the queue allocations and list insertion in
+nvmet_alloc_ctrl() with down_read(&nvmet_config_sem). Because
+nvmet_subsys_attr_qid_max_store() acquires down_write(&nvmet_config_sem)
+to modify the attribute, this safely prevents the configfs writer from
+modifying max_qid during controller creation.
 
-[BUG]
-A corrupted dinode with OCFS2_ORPHANED_FL can carry an
-i_orphaned_slot outside the mounted filesystem slot range.
-ocfs2_wipe_inode() uses it to index osb_orphan_wipes before looking
-up the orphan directory, causing an out-of-bounds memory access.
+Copy the max_qid from the subsystem to the controller's structure
+during the allocation; ctrl->max_qid never changes as long as the
+controller remains in LIVE state, so this will prevent similar race
+conditions.
 
-BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
-Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
-Call Trace:
- ...
- ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
- ocfs2_wipe_inode+0x292/0xf70 fs/ocfs2/inode.c:840
- ocfs2_delete_inode fs/ocfs2/inode.c:1155 [inline]
- ocfs2_evict_inode+0x6c9/0x1170 fs/ocfs2/inode.c:1295
- evict+0x38e/0x8f0 fs/inode.c:810
- iput_final fs/inode.c:1914 [inline]
- iput fs/inode.c:1966 [inline]
- iput+0x55b/0x8b0 fs/inode.c:1926
- ocfs2_recover_orphans+0x610/0xe40 fs/ocfs2/journal.c:2374
- ocfs2_complete_recovery+0x5af/0xd00 fs/ocfs2/journal.c:1373
- ...
-
-[CAUSE]
-ocfs2_validate_inode_block() validates i_suballoc_slot but leaves
-the active ordinary orphan slot unchecked. Downstream consumers
-assume that the value is smaller than osb->max_slots.
-
-[FIX]
-Reject an active i_orphaned_slot outside the slot range during
-dinode validation, before the inode reaches orphan wipe processing.
-
-Link: https://lore.kernel.org/20260803030007.3993199-1-gality369@gmail.com
-Link: https://lore.kernel.org/20260803030007.3993199-2-gality369@gmail.com
-Fixes: b4df6ed8db0c ("[PATCH] ocfs2: fix orphan recovery deadlock")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Reported-by: syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvme/target/admin-cmd.c   |  8 +++---
+ drivers/nvme/target/core.c        | 41 ++++++++++++++++++-------------
+ drivers/nvme/target/fabrics-cmd.c |  2 +-
+ drivers/nvme/target/nvmet.h       |  6 +++++
+ 4 files changed, 35 insertions(+), 22 deletions(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 4cb7d51d4e774..1330ea2473736 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1474,6 +1474,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		goto bail;
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 0f1956bb6d3c9..72a5de1f8252d 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -828,7 +828,7 @@ u16 nvmet_set_feat_async_event(struct nvmet_req *req, u32 mask)
+ 
+ void nvmet_execute_set_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u32 cdw11 = le32_to_cpu(req->cmd->common.cdw11);
+ 	u16 status = 0;
+@@ -847,7 +847,7 @@ void nvmet_execute_set_features(struct nvmet_req *req)
+ 			break;
+ 		}
+ 		nvmet_set_result(req,
+-			(subsys->max_qid - 1) | ((subsys->max_qid - 1) << 16));
++			(ctrl->max_qid - 1) | ((ctrl->max_qid - 1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		status = nvmet_set_feat_kato(req);
+@@ -902,7 +902,7 @@ void nvmet_get_feat_async_event(struct nvmet_req *req)
+ 
+ void nvmet_execute_get_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u16 status = 0;
+ 
+@@ -939,7 +939,7 @@ void nvmet_execute_get_features(struct nvmet_req *req)
+ 		break;
+ 	case NVME_FEAT_NUM_QUEUES:
+ 		nvmet_set_result(req,
+-			(subsys->max_qid-1) | ((subsys->max_qid-1) << 16));
++			(ctrl->max_qid-1) | ((ctrl->max_qid-1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		nvmet_get_feat_kato(req);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 5950635d6f58d..fa011c16c9b1c 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1479,21 +1479,6 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	if (!ctrl->changed_ns_list)
+ 		goto out_free_ctrl;
+ 
+-	ctrl->sqs = kcalloc(subsys->max_qid + 1,
+-			sizeof(struct nvmet_sq *),
+-			GFP_KERNEL);
+-	if (!ctrl->sqs)
+-		goto out_free_changed_ns_list;
+-
+-	ret = ida_alloc_range(&cntlid_ida,
+-			     subsys->cntlid_min, subsys->cntlid_max,
+-			     GFP_KERNEL);
+-	if (ret < 0) {
+-		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
+-		goto out_free_sqs;
+-	}
+-	ctrl->cntlid = ret;
+-
+ 	/*
+ 	 * Discovery controllers may use some arbitrary high value
+ 	 * in order to cleanup stale discovery sessions
+@@ -1507,13 +1492,33 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	ctrl->err_counter = 0;
+ 	spin_lock_init(&ctrl->error_lock);
+ 
+-	nvmet_start_keep_alive_timer(ctrl);
+-
++	down_read(&nvmet_config_sem);
+ 	mutex_lock(&subsys->lock);
++
++	ctrl->max_qid = subsys->max_qid;
++
++	ctrl->sqs = kcalloc(ctrl->max_qid + 1,
++			sizeof(struct nvmet_sq *),
++			GFP_KERNEL);
++	if (!ctrl->sqs)
++		goto out_free_changed_ns_list;
++
++	ret = ida_alloc_range(&cntlid_ida,
++			     subsys->cntlid_min, subsys->cntlid_max,
++			     GFP_KERNEL);
++	if (ret < 0) {
++		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
++		goto out_free_sqs;
++	}
++	ctrl->cntlid = ret;
++
+ 	list_add_tail(&ctrl->subsys_entry, &subsys->ctrls);
+ 	nvmet_setup_p2p_ns_map(ctrl, req);
+ 	nvmet_debugfs_ctrl_setup(ctrl);
+ 	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
++
++	nvmet_start_keep_alive_timer(ctrl);
+ 
+ 	*ctrlp = ctrl;
+ 	return 0;
+@@ -1521,6 +1526,8 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ out_free_sqs:
+ 	kfree(ctrl->sqs);
+ out_free_changed_ns_list:
++	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
+ 	kfree(ctrl->changed_ns_list);
+ out_free_ctrl:
+ 	kfree(ctrl);
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index a593003c1c20c..66d0dbf7ac733 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -350,7 +350,7 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 		goto out;
  	}
  
-+	if ((le32_to_cpu(di->i_flags) & OCFS2_ORPHANED_FL) &&
-+	    le16_to_cpu(di->i_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
-+		rc = ocfs2_error(sb, "Invalid dinode %llu: orphaned slot %u\n",
-+				 (unsigned long long)bh->b_blocknr,
-+				 le16_to_cpu(di->i_orphaned_slot));
-+		goto bail;
-+	}
+-	if (unlikely(qid > ctrl->subsys->max_qid)) {
++	if (unlikely(qid > ctrl->max_qid)) {
+ 		pr_warn("invalid queue id (%d)\n", qid);
+ 		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 25bba2d097626..408c3cda47436 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -204,6 +204,7 @@ struct nvmet_ctrl {
+ 
+ 	uuid_t			hostid;
+ 	u16			cntlid;
++	u16			max_qid;
+ 	u32			kato;
+ 
+ 	struct nvmet_port	*port;
+@@ -642,6 +643,11 @@ static inline struct nvmet_subsys *nvmet_req_subsys(struct nvmet_req *req)
+ 	return req->sq->ctrl->subsys;
+ }
+ 
++static inline struct nvmet_ctrl *nvmet_req_ctrl(struct nvmet_req *req)
++{
++	return req->sq->ctrl;
++}
 +
- 	/*
- 	 * Reject dinodes whose i_mode does not name one of the seven
- 	 * canonical POSIX file types.  ocfs2_populate_inode() copies
+ static inline bool nvmet_is_disc_subsys(struct nvmet_subsys *subsys)
+ {
+     return subsys->type != NVME_NQN_NVME;
 -- 
 2.53.0
 
