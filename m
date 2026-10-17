@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C397374E60;
-	Sat, 17 Oct 2026 17:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412692D3225;
+	Sat, 17 Oct 2026 17:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257756; cv=none; b=MAlcReZs5fkN9U8H+2DHdTsTKIXnnGdrre2kp/L4jCCcfKIv8UtHCoDrF5OYzshQrbz3qDtNGxUkjGHetpHiVSqz9kCfTYRHaksrBzWDTLsNjIxMq/Q9xZiyCIu+pbwFRfcT3Jlb0uUk4/6xFtTQDIB9ORcgSXKr2BqpHXHaIY0=
+	t=1792257760; cv=none; b=Niks30dlm5ReSR8fa5zg0zehTxZm6FESXCN/ByERUxemam1+S3gHSCHbQgdc06DkBxY2+idS1CC4KXn01H2sKCw3uLiTUxnlzCPR29jvlJHgKQtF65yLS0pdAFkksg3qWXLg1PSOn/aJDOvJhmtYEjOenCgge/QCfxKUrWur8YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257756; c=relaxed/simple;
-	bh=ooC4PMAhpQFR5apQ19nk7yTRvk5Vhj+vvcc5j7whsaM=;
+	s=arc-20240116; t=1792257760; c=relaxed/simple;
+	bh=jMnJwJFBcKUblxdgFGhVQzxP8FGfm0T5IhmKzzLDvlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbkGa4bBWYYPl8bf1OE3hR19quq2XAduOcY4wcr8A0uimYKcUkLpMvQdkJaXswo+bWuAg9wpsqAUyICxSI6OGmfg3qVIqZG9xQQr5lLAG9aF1xoNEkDI38HTxTiUfu0lWkEkw9dtSyQTg/8enaSxouP0TyIBUMrXfRjd7vjU7co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b13Ma9ux; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nxy5Aws1OwlUV3a72dwl6vU1KFtbltS1D9lnwKbwFxNsVHir/cKvP6/oSrJM5QfdrYiVmaiWYVnPO1BN9OTrUv82CwpExppOaQJeqP3OkuYJyxAO+bRvQhd4QYTmR5YGU15XPMX4mRBBzb1i6XWZNn3kt4Sv02oI++sDqUHaJ5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jw2zCAyc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b13Ma9ux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697491F000C4;
-	Sat, 17 Oct 2026 17:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jw2zCAyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805411F000C4;
+	Sat, 17 Oct 2026 17:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257755;
-	bh=rGithO/+4ooZup/j0E5s1cpKETJp/Cq21lQM7v7mzKU=;
+	s=korg; t=1792257758;
+	bh=CiHJz/oIw8LUOvVTExEFjbCE8AQ45AviLXYSGlkR0ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b13Ma9uxchmQj4EBa+1Uyl8ssuGJS7bnkSXel8BPdBjHXPSdoPCY+QHw5KT5vFm8L
-	 zhXyxXbmI3crJVo2fboPoWgOpT/m5fmvuhNa6V113p1NFoRQe4UKMewdU5s7UQPVYl
-	 4rEucE8Om+vjaPxteXfpYyos7D+iDjVcatFwadVs=
+	b=jw2zCAycXpy87tYdOWdSlbSLyDtCrdtLbTGz3N9K5j4+w+uLO8DFj/jTZMNNRe1CX
+	 dxDs/QoV65HSF+ROZPqfPiSyvJ2mPizy34JedmxMnQujj/dZx0lXi+rP81KmxuajQT
+	 Fh3zcQlpI+B36d6pk0MeT5yjrutfyCdTaNvjrnxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Shashank Sharma <shashank.sharma@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0618/1674] net: nexthop: Increase weight to u16
-Date: Sat, 17 Oct 2026 17:48:10 +0200
-Message-ID: <20261017160446.940994138@linuxfoundation.org>
+Subject: [PATCH 6.6 0619/1674] drm/amdgpu: change vm->task_info handling
+Date: Sat, 17 Oct 2026 17:48:11 +0200
+Message-ID: <20261017160446.965519475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,233 +53,666 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Shashank Sharma <shashank.sharma@amd.com>
 
-[ Upstream commit b72a6a7ab9573e06d5c2fcb92eaa28614a735bfd ]
+[ Upstream commit b8f67b9ddf4f8fe6dd536590712b5912ad78f99c ]
 
-In CLOS networks, as link failures occur at various points in the network,
-ECMP weights of the involved nodes are adjusted to compensate. With high
-fan-out of the involved nodes, and overall high number of nodes,
-a (non-)ECMP weight ratio that we would like to configure does not fit into
-8 bits. Instead of, say, 255:254, we might like to configure something like
-1000:999. For these deployments, the 8-bit weight may not be enough.
+This patch changes the handling and lifecycle of vm->task_info object.
+The major changes are:
+- vm->task_info is a dynamically allocated ptr now, and its uasge is
+  reference counted.
+- introducing two new helper funcs for task_info lifecycle management
+    - amdgpu_vm_get_task_info: reference counts up task_info before
+      returning this info
+    - amdgpu_vm_put_task_info: reference counts down task_info
+- last put to task_info() frees task_info from the vm.
 
-To that end, in this patch increase the next hop weight from u8 to u16.
+This patch also does logistical changes required for existing usage
+of vm->task_info.
 
-Increasing the width of an integral type can be tricky, because while the
-code still compiles, the types may not check out anymore, and numerical
-errors come up. To prevent this, the conversion was done in two steps.
-First the type was changed from u8 to a single-member structure, which
-invalidated all uses of the field. This allowed going through them one by
-one and audit for type correctness. Then the structure was replaced with a
-vanilla u16 again. This should ensure that no place was missed.
+V2: Do not block all the prints when task_info not found (Felix)
 
-The UAPI for configuring nexthop group members is that an attribute
-NHA_GROUP carries an array of struct nexthop_grp entries:
+V3: Fixed review comments from Felix
+   - Fix wrong indentation
+   - No debug message for -ENOMEM
+   - Add NULL check for task_info
+   - Do not duplicate the debug messages (ti vs no ti)
+   - Get first reference of task_info in vm_init(), put last
+     in vm_fini()
 
-	struct nexthop_grp {
-		__u32	id;	  /* nexthop id - must exist */
-		__u8	weight;   /* weight of this nexthop */
-		__u8	resvd1;
-		__u16	resvd2;
-	};
+V4: Fixed review comments from Felix
+   - fix double reference increment in create_task_info
+   - change amdgpu_vm_get_task_info_pasid
+   - additional changes in amdgpu_gem.c while porting
 
-The field resvd1 is currently validated and required to be zero. We can
-lift this requirement and carry high-order bits of the weight in the
-reserved field:
-
-	struct nexthop_grp {
-		__u32	id;	  /* nexthop id - must exist */
-		__u8	weight;   /* weight of this nexthop */
-		__u8	weight_high;
-		__u16	resvd2;
-	};
-
-Keeping the fields split this way was chosen in case an existing userspace
-makes assumptions about the width of the weight field, and to sidestep any
-endianness issues.
-
-The weight field is currently encoded as the weight value minus one,
-because weight of 0 is invalid. This same trick is impossible for the new
-weight_high field, because zero must mean actual zero. With this in place:
-
-- Old userspace is guaranteed to carry weight_high of 0, therefore
-  configuring 8-bit weights as appropriate. When dumping nexthops with
-  16-bit weight, it would only show the lower 8 bits. But configuring such
-  nexthops implies existence of userspace aware of the extension in the
-  first place.
-
-- New userspace talking to an old kernel will work as long as it only
-  attempts to configure 8-bit weights, where the high-order bits are zero.
-  Old kernel will bounce attempts at configuring >8-bit weights.
-
-Renaming reserved fields as they are allocated for some purpose is commonly
-done in Linux. Whoever touches a reserved field is doing so at their own
-risk. nexthop_grp::resvd1 in particular is currently used by at least
-strace, however they carry an own copy of UAPI headers, and the conversion
-should be trivial. A helper is provided for decoding the weight out of the
-two fields. Forcing a conversion seems preferable to bending backwards and
-introducing anonymous unions or whatever.
-
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/483e2fcf4beb0d9135d62e7d27b46fa2685479d4.1723036486.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Shashank Sharma <shashank.sharma@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nexthop.h        |  4 ++--
- include/uapi/linux/nexthop.h |  7 ++++++-
- net/ipv4/nexthop.c           | 37 ++++++++++++++++++++++--------------
- 3 files changed, 31 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   9 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  |  13 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c     |  18 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c      | 149 ++++++++++++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h      |  21 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c   |   2 +-
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c      |  24 ++--
+ drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c      |  23 +--
+ drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c       |  20 ++-
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c       |  24 ++--
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c      |  23 +--
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c    |  22 +--
+ drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c |  20 +--
+ 13 files changed, 242 insertions(+), 126 deletions(-)
 
-diff --git a/include/net/nexthop.h b/include/net/nexthop.h
-index f7d4239347351..f37e96f93f20b 100644
---- a/include/net/nexthop.h
-+++ b/include/net/nexthop.h
-@@ -97,7 +97,7 @@ struct nh_res_table {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index b7dd399fcfa61..7c304c1c9c6fb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1792,9 +1792,14 @@ static int amdgpu_debugfs_vm_info_show(struct seq_file *m, void *unused)
+ 	list_for_each_entry(file, &dev->filelist, lhead) {
+ 		struct amdgpu_fpriv *fpriv = file->driver_priv;
+ 		struct amdgpu_vm *vm = &fpriv->vm;
++		struct amdgpu_task_info *ti;
++
++		ti = amdgpu_vm_get_task_info_vm(vm);
++		if (ti) {
++			seq_printf(m, "pid:%d\tProcess:%s ----------\n", ti->pid, ti->process_name);
++			amdgpu_vm_put_task_info(ti);
++		}
  
- struct nh_grp_entry {
- 	struct nexthop	*nh;
--	u8		weight;
-+	u16		weight;
+-		seq_printf(m, "pid:%d\tProcess:%s ----------\n",
+-				vm->task_info.pid, vm->task_info.process_name);
+ 		r = amdgpu_bo_reserve(vm->root.bo, true);
+ 		if (r)
+ 			break;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 47d6352c2def4..422d086e4c583 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5142,9 +5142,16 @@ int amdgpu_do_asic_reset(struct list_head *device_list_handle,
+ 				tmp_adev->reset_vram_lost = vram_lost;
+ 				memset(&tmp_adev->reset_task_info, 0,
+ 						sizeof(tmp_adev->reset_task_info));
+-				if (reset_context->job && reset_context->job->vm)
+-					tmp_adev->reset_task_info =
+-						reset_context->job->vm->task_info;
++				if (reset_context->job && reset_context->job->vm) {
++					struct amdgpu_task_info *ti;
++					struct amdgpu_vm *vm = reset_context->job->vm;
++
++					ti = amdgpu_vm_get_task_info_vm(vm);
++					if (ti) {
++						tmp_adev->reset_task_info = *ti;
++						amdgpu_vm_put_task_info(ti);
++					}
++				}
+ 				amdgpu_reset_capture_coredumpm(tmp_adev);
+ #endif
+ 				if (vram_lost) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index 8175d831abd4d..56eb3aa1d9d3e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -35,7 +35,7 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ {
+ 	struct amdgpu_ring *ring = to_amdgpu_ring(s_job->sched);
+ 	struct amdgpu_job *job = to_amdgpu_job(s_job);
+-	struct amdgpu_task_info ti;
++	struct amdgpu_task_info *ti;
+ 	struct amdgpu_device *adev = ring->adev;
+ 	int idx;
+ 	int r;
+@@ -48,7 +48,7 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ 		return DRM_GPU_SCHED_STAT_ENODEV;
+ 	}
  
- 	union {
- 		struct {
-@@ -180,7 +180,7 @@ struct nh_notifier_single_info {
- };
+-	memset(&ti, 0, sizeof(struct amdgpu_task_info));
++
+ 	adev->job_hang = true;
  
- struct nh_notifier_grp_entry_info {
--	u8 weight;
-+	u16 weight;
- 	struct nh_notifier_single_info nh;
- };
+ 	if (amdgpu_gpu_recovery &&
+@@ -58,12 +58,16 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
+ 		goto exit;
+ 	}
  
-diff --git a/include/uapi/linux/nexthop.h b/include/uapi/linux/nexthop.h
-index d8ffa8c9ca784..6b0de563beec1 100644
---- a/include/uapi/linux/nexthop.h
-+++ b/include/uapi/linux/nexthop.h
-@@ -16,10 +16,15 @@ struct nhmsg {
- struct nexthop_grp {
- 	__u32	id;	  /* nexthop id - must exist */
- 	__u8	weight;   /* weight of this nexthop */
--	__u8	resvd1;
-+	__u8	weight_high;	/* high order bits of weight */
- 	__u16	resvd2;
- };
+-	amdgpu_vm_get_task_info(ring->adev, job->pasid, &ti);
+ 	DRM_ERROR("ring %s timeout, signaled seq=%u, emitted seq=%u\n",
+-		  job->base.sched->name, atomic_read(&ring->fence_drv.last_seq),
+-		  ring->fence_drv.sync_seq);
+-	DRM_ERROR("Process information: process %s pid %d thread %s pid %d\n",
+-		  ti.process_name, ti.tgid, ti.task_name, ti.pid);
++		   job->base.sched->name, atomic_read(&ring->fence_drv.last_seq),
++		   ring->fence_drv.sync_seq);
++
++	ti = amdgpu_vm_get_task_info_pasid(ring->adev, job->pasid);
++	if (ti) {
++		DRM_ERROR("Process information: process %s pid %d thread %s pid %d\n",
++			  ti->process_name, ti->tgid, ti->task_name, ti->pid);
++		amdgpu_vm_put_task_info(ti);
++	}
  
-+static inline __u16 nexthop_grp_weight(const struct nexthop_grp *entry)
+ 	if (dma_fence_get_status(&s_job->s_fence->finished) == 0)
+ 		dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 8329b5c600724..5c9c1bbb69f33 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2134,6 +2134,108 @@ long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
+ 	return dma_fence_wait_timeout(vm->last_unlocked, true, timeout);
+ }
+ 
++static void amdgpu_vm_destroy_task_info(struct kref *kref)
 +{
-+	return ((entry->weight_high << 8) | entry->weight) + 1;
++	struct amdgpu_task_info *ti = container_of(kref, struct amdgpu_task_info, refcount);
++
++	kfree(ti);
 +}
 +
- enum {
- 	NEXTHOP_GRP_TYPE_MPATH,  /* hash-threshold nexthop group
- 				  * default type if not specified
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 67f98a136a6d8..dbb12e9d0b48f 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -660,6 +660,7 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
- 	size_t len = nhg->num_nh * sizeof(*p);
- 	struct nlattr *nla;
- 	u16 group_type = 0;
-+	u16 weight;
- 	int i;
- 
- 	if (nhg->hash_threshold)
-@@ -676,9 +677,12 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
- 
- 	p = nla_data(nla);
- 	for (i = 0; i < nhg->num_nh; ++i) {
-+		weight = nhg->nh_entries[i].weight - 1;
++static inline struct amdgpu_vm *
++amdgpu_vm_get_vm_from_pasid(struct amdgpu_device *adev, u32 pasid)
++{
++	struct amdgpu_vm *vm;
++	unsigned long flags;
 +
- 		*p++ = (struct nexthop_grp) {
- 			.id = nhg->nh_entries[i].nh->id,
--			.weight = nhg->nh_entries[i].weight - 1,
-+			.weight = weight,
-+			.weight_high = weight >> 8,
- 		};
++	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
++	vm = xa_load(&adev->vm_manager.pasids, pasid);
++	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
++
++	return vm;
++}
++
++/**
++ * amdgpu_vm_put_task_info - reference down the vm task_info ptr
++ *
++ * @task_info: task_info struct under discussion.
++ *
++ * frees the vm task_info ptr at the last put
++ */
++void amdgpu_vm_put_task_info(struct amdgpu_task_info *task_info)
++{
++	kref_put(&task_info->refcount, amdgpu_vm_destroy_task_info);
++}
++
++/**
++ * amdgpu_vm_get_task_info_vm - Extracts task info for a vm.
++ *
++ * @vm: VM to get info from
++ *
++ * Returns the reference counted task_info structure, which must be
++ * referenced down with amdgpu_vm_put_task_info.
++ */
++struct amdgpu_task_info *
++amdgpu_vm_get_task_info_vm(struct amdgpu_vm *vm)
++{
++	struct amdgpu_task_info *ti = NULL;
++
++	if (vm) {
++		ti = vm->task_info;
++		kref_get(&vm->task_info->refcount);
++	}
++
++	return ti;
++}
++
++/**
++ * amdgpu_vm_get_task_info_pasid - Extracts task info for a PASID.
++ *
++ * @adev: drm device pointer
++ * @pasid: PASID identifier for VM
++ *
++ * Returns the reference counted task_info structure, which must be
++ * referenced down with amdgpu_vm_put_task_info.
++ */
++struct amdgpu_task_info *
++amdgpu_vm_get_task_info_pasid(struct amdgpu_device *adev, u32 pasid)
++{
++	return amdgpu_vm_get_task_info_vm(
++			amdgpu_vm_get_vm_from_pasid(adev, pasid));
++}
++
++static int amdgpu_vm_create_task_info(struct amdgpu_vm *vm)
++{
++	vm->task_info = kzalloc(sizeof(struct amdgpu_task_info), GFP_KERNEL);
++	if (!vm->task_info)
++		return -ENOMEM;
++
++	kref_init(&vm->task_info->refcount);
++	return 0;
++}
++
++/**
++ * amdgpu_vm_set_task_info - Sets VMs task info.
++ *
++ * @vm: vm for which to set the info
++ */
++void amdgpu_vm_set_task_info(struct amdgpu_vm *vm)
++{
++	if (!vm->task_info)
++		return;
++
++	if (vm->task_info->pid == current->pid)
++		return;
++
++	vm->task_info->pid = current->pid;
++	get_task_comm(vm->task_info->task_name, current);
++
++	if (current->group_leader->mm != current->mm)
++		return;
++
++	vm->task_info->tgid = current->group_leader->pid;
++	get_task_comm(vm->task_info->process_name, current->group_leader);
++}
++
+ /**
+  * amdgpu_vm_init - initialize a vm instance
+  *
+@@ -2219,6 +2321,10 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 	if (r)
+ 		goto error_free_root;
+ 
++	r = amdgpu_vm_create_task_info(vm);
++	if (r)
++		DRM_DEBUG("Failed to create task info for VM\n");
++
+ 	amdgpu_bo_unreserve(vm->root.bo);
+ 	amdgpu_bo_unref(&root_bo);
+ 
+@@ -2359,6 +2465,7 @@ void amdgpu_vm_fini(struct amdgpu_device *adev, struct amdgpu_vm *vm)
+ 
+ 	root = amdgpu_bo_ref(vm->root.bo);
+ 	amdgpu_bo_reserve(root, true);
++	amdgpu_vm_put_task_info(vm->task_info);
+ 	amdgpu_vm_set_pasid(adev, vm, 0);
+ 	dma_fence_wait(vm->last_unlocked, false);
+ 	dma_fence_put(vm->last_unlocked);
+@@ -2517,48 +2624,6 @@ int amdgpu_vm_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 	return 0;
+ }
+ 
+-/**
+- * amdgpu_vm_get_task_info - Extracts task info for a PASID.
+- *
+- * @adev: drm device pointer
+- * @pasid: PASID identifier for VM
+- * @task_info: task_info to fill.
+- */
+-void amdgpu_vm_get_task_info(struct amdgpu_device *adev, u32 pasid,
+-			 struct amdgpu_task_info *task_info)
+-{
+-	struct amdgpu_vm *vm;
+-	unsigned long flags;
+-
+-	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
+-
+-	vm = xa_load(&adev->vm_manager.pasids, pasid);
+-	if (vm)
+-		*task_info = vm->task_info;
+-
+-	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
+-}
+-
+-/**
+- * amdgpu_vm_set_task_info - Sets VMs task info.
+- *
+- * @vm: vm for which to set the info
+- */
+-void amdgpu_vm_set_task_info(struct amdgpu_vm *vm)
+-{
+-	if (vm->task_info.pid)
+-		return;
+-
+-	vm->task_info.pid = current->pid;
+-	get_task_comm(vm->task_info.task_name, current);
+-
+-	if (current->group_leader->mm != current->mm)
+-		return;
+-
+-	vm->task_info.tgid = current->group_leader->pid;
+-	get_task_comm(vm->task_info.process_name, current->group_leader);
+-}
+-
+ /**
+  * amdgpu_vm_handle_fault - graceful handling of VM faults.
+  * @adev: amdgpu device pointer
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+index 204ab13184ed1..c5500549ae662 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -183,10 +183,11 @@ struct amdgpu_vm_pte_funcs {
+ };
+ 
+ struct amdgpu_task_info {
+-	char	process_name[TASK_COMM_LEN];
+-	char	task_name[TASK_COMM_LEN];
+-	pid_t	pid;
+-	pid_t	tgid;
++	char		process_name[TASK_COMM_LEN];
++	char		task_name[TASK_COMM_LEN];
++	pid_t		pid;
++	pid_t		tgid;
++	struct kref	refcount;
+ };
+ 
+ /**
+@@ -334,7 +335,7 @@ struct amdgpu_vm {
+ 	uint64_t		pd_phys_addr;
+ 
+ 	/* Some basic info about the task */
+-	struct amdgpu_task_info task_info;
++	struct amdgpu_task_info *task_info;
+ 
+ 	/* Store positions of group of BOs */
+ 	struct ttm_lru_bulk_move lru_bulk_move;
+@@ -466,8 +467,14 @@ bool amdgpu_vm_need_pipeline_sync(struct amdgpu_ring *ring,
+ 				  struct amdgpu_job *job);
+ void amdgpu_vm_check_compute_bug(struct amdgpu_device *adev);
+ 
+-void amdgpu_vm_get_task_info(struct amdgpu_device *adev, u32 pasid,
+-			     struct amdgpu_task_info *task_info);
++struct amdgpu_task_info *
++amdgpu_vm_get_task_info_pasid(struct amdgpu_device *adev, u32 pasid);
++
++struct amdgpu_task_info *
++amdgpu_vm_get_task_info_vm(struct amdgpu_vm *vm);
++
++void amdgpu_vm_put_task_info(struct amdgpu_task_info *task_info);
++
+ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
+ 			    u32 vmid, u32 node_id, uint64_t addr,
+ 			    bool write_fault);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index 026a3db947298..56b619b0933d0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -1037,7 +1037,7 @@ int amdgpu_vm_ptes_update(struct amdgpu_vm_update_params *params,
+ 			trace_amdgpu_vm_update_ptes(params, frag_start, upd_end,
+ 						    min(nptes, 32u), dst, incr,
+ 						    upd_flags,
+-						    vm->task_info.tgid,
++						    vm->task_info ? vm->task_info->tgid : 0,
+ 						    vm->immediate.fence_context);
+ 			amdgpu_vm_pte_update_flags(params, to_amdgpu_bo_vm(pt),
+ 						   cursor.level, pe_start, dst,
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+index 62ecf4d89cb9c..541aa0d1c8007 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -107,7 +107,7 @@ static int gmc_v10_0_process_interrupt(struct amdgpu_device *adev,
+ 	struct amdgpu_vmhub *hub = &adev->vmhub[vmhub_index];
+ 	bool retry_fault = !!(entry->src_data[1] & 0x80);
+ 	bool write_fault = !!(entry->src_data[1] & 0x20);
+-	struct amdgpu_task_info task_info;
++	struct amdgpu_task_info *task_info;
+ 	uint32_t status = 0;
+ 	u64 addr;
+ 
+@@ -155,18 +155,22 @@ static int gmc_v10_0_process_interrupt(struct amdgpu_device *adev,
+ 	if (!printk_ratelimit())
+ 		return 0;
+ 
+-	memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-	amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
+-
+ 	dev_err(adev->dev,
+-		"[%s] page fault (src_id:%u ring:%u vmid:%u pasid:%u, for process %s pid %d thread %s pid %d)\n",
++		"[%s] page fault (src_id:%u ring:%u vmid:%u pasid:%u)\n",
+ 		entry->vmid_src ? "mmhub" : "gfxhub",
+-		entry->src_id, entry->ring_id, entry->vmid,
+-		entry->pasid, task_info.process_name, task_info.tgid,
+-		task_info.task_name, task_info.pid);
++		entry->src_id, entry->ring_id, entry->vmid, entry->pasid);
++	task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++	if (task_info) {
++		dev_err(adev->dev,
++			" in process %s pid %d thread %s pid %d\n",
++			task_info->process_name, task_info->tgid,
++			task_info->task_name, task_info->pid);
++		amdgpu_vm_put_task_info(task_info);
++	}
++
+ 	dev_err(adev->dev, "  in page starting at address 0x%016llx from client 0x%x (%s)\n",
+-		addr, entry->client_id,
+-		soc15_ih_clientid_name[entry->client_id]);
++			addr, entry->client_id,
++			soc15_ih_clientid_name[entry->client_id]);
+ 
+ 	if (!amdgpu_sriov_vf(adev))
+ 		hub->vmhub_funcs->print_l2_protection_fault_status(adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
+index 3d797a1adef3e..88ae81aadce5f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
+@@ -120,19 +120,24 @@ static int gmc_v11_0_process_interrupt(struct amdgpu_device *adev,
  	}
  
-@@ -1062,11 +1066,14 @@ static int nh_check_attr_group(struct net *net,
+ 	if (printk_ratelimit()) {
+-		struct amdgpu_task_info task_info;
+-
+-		memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-		amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
++		struct amdgpu_task_info *task_info;
  
- 	nhg = nla_data(tb[NHA_GROUP]);
- 	for (i = 0; i < len; ++i) {
--		if (nhg[i].resvd1 || nhg[i].resvd2) {
--			NL_SET_ERR_MSG(extack, "Reserved fields in nexthop_grp must be 0");
-+		if (nhg[i].resvd2) {
-+			NL_SET_ERR_MSG(extack, "Reserved field in nexthop_grp must be 0");
- 			return -EINVAL;
- 		}
--		if (nhg[i].weight > 254) {
-+		if (nexthop_grp_weight(&nhg[i]) == 0) {
-+			/* 0xffff got passed in, representing weight of 0x10000,
-+			 * which is too heavy.
-+			 */
- 			NL_SET_ERR_MSG(extack, "Invalid value for weight");
- 			return -EINVAL;
- 		}
-@@ -1655,9 +1662,9 @@ static void nh_res_table_cancel_upkeep(struct nh_res_table *res_table)
- static void nh_res_group_rebalance(struct nh_group *nhg,
- 				   struct nh_res_table *res_table)
- {
--	int prev_upper_bound = 0;
--	int total = 0;
--	int w = 0;
-+	u16 prev_upper_bound = 0;
-+	u32 total = 0;
-+	u32 w = 0;
- 	int i;
- 
- 	INIT_LIST_HEAD(&res_table->uw_nh_entries);
-@@ -1667,11 +1674,12 @@ static void nh_res_group_rebalance(struct nh_group *nhg,
- 
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
--		int upper_bound;
-+		u16 upper_bound;
-+		u64 btw;
- 
- 		w += nhge->weight;
--		upper_bound = DIV_ROUND_CLOSEST(res_table->num_nh_buckets * w,
--						total);
-+		btw = ((u64)res_table->num_nh_buckets) * w;
-+		upper_bound = DIV_ROUND_CLOSEST_ULL(btw, total);
- 		nhge->res.wants_buckets = upper_bound - prev_upper_bound;
- 		prev_upper_bound = upper_bound;
- 
-@@ -1737,8 +1745,8 @@ static void replace_nexthop_grp_res(struct nh_group *oldg,
- 
- static void nh_hthr_group_rebalance(struct nh_group *nhg)
- {
--	int total = 0;
--	int w = 0;
-+	u32 total = 0;
-+	u32 w = 0;
- 	int i;
- 
- 	for (i = 0; i < nhg->num_nh; ++i)
-@@ -1746,7 +1754,7 @@ static void nh_hthr_group_rebalance(struct nh_group *nhg)
- 
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
--		int upper_bound;
-+		u32 upper_bound;
- 
- 		w += nhge->weight;
- 		upper_bound = DIV_ROUND_CLOSEST_ULL((u64)w << 31, total) - 1;
-@@ -2492,7 +2500,8 @@ static struct nexthop *nexthop_create_group(struct net *net,
- 			nhg->has_v4 = true;
- 
- 		nhg->nh_entries[i].nh = nhe;
--		nhg->nh_entries[i].weight = entry[i].weight + 1;
-+		nhg->nh_entries[i].weight = nexthop_grp_weight(&entry[i]);
+ 		dev_err(adev->dev,
+-			"[%s] page fault (src_id:%u ring:%u vmid:%u pasid:%u, for process %s pid %d thread %s pid %d)\n",
++			"[%s] page fault (src_id:%u ring:%u vmid:%u pasid:%u)\n",
+ 			entry->vmid_src ? "mmhub" : "gfxhub",
+-			entry->src_id, entry->ring_id, entry->vmid,
+-			entry->pasid, task_info.process_name, task_info.tgid,
+-			task_info.task_name, task_info.pid);
++			entry->src_id, entry->ring_id, entry->vmid, entry->pasid);
++		task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++		if (task_info) {
++			dev_err(adev->dev,
++				" in process %s pid %d thread %s pid %d)\n",
++				task_info->process_name, task_info->tgid,
++				task_info->task_name, task_info->pid);
++			amdgpu_vm_put_task_info(task_info);
++		}
 +
- 		list_add(&nhg->nh_entries[i].nh_list, &nhe->grp_list);
- 		nhg->nh_entries[i].nh_parent = nh;
+ 		dev_err(adev->dev, "  in page starting at address 0x%016llx from client %d\n",
+-			addr, entry->client_id);
++				addr, entry->client_id);
++
+ 		if (!amdgpu_sriov_vf(adev))
+ 			hub->vmhub_funcs->print_l2_protection_fault_status(adev, status);
  	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
+index ed268c5739eb8..13606e594fa83 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
+@@ -1446,18 +1446,24 @@ static int gmc_v8_0_process_interrupt(struct amdgpu_device *adev,
+ 		gmc_v8_0_set_fault_enable_default(adev, false);
+ 
+ 	if (printk_ratelimit()) {
+-		struct amdgpu_task_info task_info;
++		struct amdgpu_task_info *task_info;
+ 
+-		memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-		amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
++		dev_err(adev->dev, "GPU fault detected: %d 0x%08x\n",
++			entry->src_id, entry->src_data[0]);
++
++		task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++		if (task_info) {
++			dev_err(adev->dev, " for process %s pid %d thread %s pid %d\n",
++				task_info->process_name, task_info->tgid,
++				task_info->task_name, task_info->pid);
++			amdgpu_vm_put_task_info(task_info);
++		}
+ 
+-		dev_err(adev->dev, "GPU fault detected: %d 0x%08x for process %s pid %d thread %s pid %d\n",
+-			entry->src_id, entry->src_data[0], task_info.process_name,
+-			task_info.tgid, task_info.task_name, task_info.pid);
+ 		dev_err(adev->dev, "  VM_CONTEXT1_PROTECTION_FAULT_ADDR   0x%08X\n",
+-			addr);
++				addr);
+ 		dev_err(adev->dev, "  VM_CONTEXT1_PROTECTION_FAULT_STATUS 0x%08X\n",
+ 			status);
++
+ 		gmc_v8_0_vm_decode_fault(adev, status, addr, mc_client,
+ 					 entry->pasid);
+ 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index fdd36e3b2f144..79d0f5c2d7f2a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -550,7 +550,7 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
+ 	bool retry_fault = !!(entry->src_data[1] & 0x80);
+ 	bool write_fault = !!(entry->src_data[1] & 0x20);
+ 	uint32_t status = 0, cid = 0, rw = 0;
+-	struct amdgpu_task_info task_info;
++	struct amdgpu_task_info *task_info;
+ 	struct amdgpu_vmhub *hub;
+ 	const char *mmhub_cid;
+ 	const char *hub_name;
+@@ -625,16 +625,20 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
+ 	if (!printk_ratelimit())
+ 		return 0;
+ 
+-
+-	memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-	amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
+-
+ 	dev_err(adev->dev,
+-		"[%s] %s page fault (src_id:%u ring:%u vmid:%u pasid:%u, for process %s pid %d thread %s pid %d)\n",
+-		hub_name, retry_fault ? "retry" : "no-retry",
+-		entry->src_id, entry->ring_id, entry->vmid,
+-		entry->pasid, task_info.process_name, task_info.tgid,
+-		task_info.task_name, task_info.pid);
++		"[%s] %s page fault (src_id:%u ring:%u vmid:%u pasid:%u)\n", hub_name,
++		retry_fault ? "retry" : "no-retry",
++		entry->src_id, entry->ring_id, entry->vmid, entry->pasid);
++
++	task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++	if (task_info) {
++		dev_err(adev->dev,
++			" for process %s pid %d thread %s pid %d)\n",
++			task_info->process_name, task_info->tgid,
++			task_info->task_name, task_info->pid);
++		amdgpu_vm_put_task_info(task_info);
++	}
++
+ 	dev_err(adev->dev, "  in page starting at address 0x%016llx from IH client 0x%x (%s)\n",
+ 		addr, entry->client_id,
+ 		soc15_ih_clientid_name[entry->client_id]);
+diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+index 6a26428572ec4..a7f81f570fcc6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -2115,7 +2115,7 @@ static int sdma_v4_0_print_iv_entry(struct amdgpu_device *adev,
+ 					      struct amdgpu_iv_entry *entry)
+ {
+ 	int instance;
+-	struct amdgpu_task_info task_info;
++	struct amdgpu_task_info *task_info;
+ 	u64 addr;
+ 
+ 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
+@@ -2127,15 +2127,20 @@ static int sdma_v4_0_print_iv_entry(struct amdgpu_device *adev,
+ 	addr = (u64)entry->src_data[0] << 12;
+ 	addr |= ((u64)entry->src_data[1] & 0xf) << 44;
+ 
+-	memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-	amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
+-
+ 	dev_dbg_ratelimited(adev->dev,
+-		   "[sdma%d] address:0x%016llx src_id:%u ring:%u vmid:%u "
+-		   "pasid:%u, for process %s pid %d thread %s pid %d\n",
+-		   instance, addr, entry->src_id, entry->ring_id, entry->vmid,
+-		   entry->pasid, task_info.process_name, task_info.tgid,
+-		   task_info.task_name, task_info.pid);
++			   "[sdma%d] address:0x%016llx src_id:%u ring:%u vmid:%u pasid:%u\n",
++			   instance, addr, entry->src_id, entry->ring_id, entry->vmid,
++			   entry->pasid);
++
++	task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++	if (task_info) {
++		dev_dbg_ratelimited(adev->dev,
++				    " for process %s pid %d thread %s pid %d\n",
++				    task_info->process_name, task_info->tgid,
++				    task_info->task_name, task_info->pid);
++		amdgpu_vm_put_task_info(task_info);
++	}
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+index 2b9b19b6df5f0..a8927bf9a29eb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+@@ -1624,7 +1624,7 @@ static int sdma_v4_4_2_print_iv_entry(struct amdgpu_device *adev,
+ 					      struct amdgpu_iv_entry *entry)
+ {
+ 	int instance;
+-	struct amdgpu_task_info task_info;
++	struct amdgpu_task_info *task_info;
+ 	u64 addr;
+ 
+ 	instance = sdma_v4_4_2_irq_id_to_seq(entry->client_id);
+@@ -1636,15 +1636,19 @@ static int sdma_v4_4_2_print_iv_entry(struct amdgpu_device *adev,
+ 	addr = (u64)entry->src_data[0] << 12;
+ 	addr |= ((u64)entry->src_data[1] & 0xf) << 44;
+ 
+-	memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-	amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
+-
+ 	dev_dbg_ratelimited(adev->dev,
+-		   "[sdma%d] address:0x%016llx src_id:%u ring:%u vmid:%u "
+-		   "pasid:%u, for process %s pid %d thread %s pid %d\n",
+-		   instance, addr, entry->src_id, entry->ring_id, entry->vmid,
+-		   entry->pasid, task_info.process_name, task_info.tgid,
+-		   task_info.task_name, task_info.pid);
++			    "[sdma%d] address:0x%016llx src_id:%u ring:%u vmid:%u pasid:%u\n",
++			    instance, addr, entry->src_id, entry->ring_id, entry->vmid,
++			    entry->pasid);
++
++	task_info = amdgpu_vm_get_task_info_pasid(adev, entry->pasid);
++	if (task_info) {
++		dev_dbg_ratelimited(adev->dev, " for process %s pid %d thread %s pid %d\n",
++				    task_info->process_name, task_info->tgid,
++				    task_info->task_name, task_info->pid);
++		amdgpu_vm_put_task_info(task_info);
++	}
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+index d9953c2b26614..06ac835190f97 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+@@ -238,16 +238,16 @@ void kfd_smi_event_update_thermal_throttling(struct kfd_node *dev,
+ 
+ void kfd_smi_event_update_vmfault(struct kfd_node *dev, uint16_t pasid)
+ {
+-	struct amdgpu_task_info task_info;
+-
+-	memset(&task_info, 0, sizeof(struct amdgpu_task_info));
+-	amdgpu_vm_get_task_info(dev->adev, pasid, &task_info);
+-	/* Report VM faults from user applications, not retry from kernel */
+-	if (!task_info.pid)
+-		return;
+-
+-	kfd_smi_event_add(0, dev, KFD_SMI_EVENT_VMFAULT, "%x:%s\n",
+-			  task_info.pid, task_info.task_name);
++	struct amdgpu_task_info *task_info;
++
++	task_info = amdgpu_vm_get_task_info_pasid(dev->adev, pasid);
++	if (task_info) {
++		/* Report VM faults from user applications, not retry from kernel */
++		if (task_info->pid)
++			kfd_smi_event_add(0, dev, KFD_SMI_EVENT_VMFAULT, "%x:%s\n",
++					 task_info->pid, task_info->task_name);
++		amdgpu_vm_put_task_info(task_info);
++	}
+ }
+ 
+ void kfd_smi_event_page_fault_start(struct kfd_node *node, pid_t pid,
 -- 
 2.53.0
 
