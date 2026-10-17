@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338682C026C;
-	Sat, 17 Oct 2026 16:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE1238E100;
+	Sat, 17 Oct 2026 16:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254569; cv=none; b=a1M3yOlelDZIWmfoukjFERRybsokWTRbwlw55ql07XFZUHBOLxaXkNYqGQjkpWBYHKQv3ObbmBusUzQS2PWjYtVVW+GwCZpribUQVMol3xRBUaX6cZvb6Mo5WbVxt+Bj+PFhLAI2qWNe8wZk4FujuO9B0Sy186MsxH2slRSriyU=
+	t=1792254572; cv=none; b=EvGlDPIzXOvJrwZMHs3IMmv+8z+Sm0/Gcs5tHOvIxws6quoCPCykZTPKVAYF8dP2kEwsa3iTDXfCnpH7fviDVL7hBeP+T1WICTMf3A0yRBsVDwCVqdR57RuL5aTNwcFIGeTtutLjSIGTQXe7QM8ijuSDvOAmT7bEO6LkeW3go9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254569; c=relaxed/simple;
-	bh=8i8N3sUlyMzm2Nk/eGLwIP78yShmaQf6Pdqw+HVKyeM=;
+	s=arc-20240116; t=1792254572; c=relaxed/simple;
+	bh=JgbaNINiRnCx2Dpo/0pj31x/elhaqIJxkPPOxF3mxos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zyh2oO24bga/Hr4RbdBlLv+ALZgBxMkS1Pz8Q5ywT9i+Fny3NRPbFUimkgP3LCl3yJMiENi8tszm4FJv2/pIlat3mLj/4C3WtaIWfhLhKoUjAYp7JY/NMUlUHOhKs9fnB6Yfcl1fT2Tzt3wV3G/RVLX4hLMbbfbE4B7p2GjOAt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9BqLF/9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zw3JFgIQ1P0t161/zlIp5XQ8mFtsgwnWu1y9dee46BNN3X7LhfuvIbmj0LZ5HNxYOsKmhrxjoPo0RLq48x78qgyROkVqkI5oIUBfVMrH79g4fdYbiU4EamtCzZD3NdF506HRnGBAM6qk5ecEdo7Z+Rz6/Ct7aopVvYj5mUaDOQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a56YRmQy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9BqLF/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA9B1F000C4;
-	Sat, 17 Oct 2026 16:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a56YRmQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725AA1F000C4;
+	Sat, 17 Oct 2026 16:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254567;
-	bh=SoLW1JHOPMaHl8DwykumUg2WyRWuPsDvrupKiDLF56E=;
+	s=korg; t=1792254570;
+	bh=Yz1RSOfmNH+RFrDATcEM6l0mjvyFVOt0IdW7rZZhFNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9BqLF/9Vy4CZjgMHfYvGL3Wi9b7ECg79VW2xOAFPT5/xFps7f5N27Wv0dHwCOTCm
-	 eo5JGOJLEf4oRcgHjtcTgHerO8Ojpm5ULfNNe9qCtO84xbw0xPYB5GZHSCu2RNUtCu
-	 wAjJ9EPRfilXFYajmn9iifPTBs1xSqwOfXjWF20o=
+	b=a56YRmQyyEMRUGd094Ta1FbRYw0wJ5fTFsea2SaC3ssn7vNEA23xf5vXxtVaBHw8k
+	 pIt7a4d6283gNhzH4/KryMf+DGgHpeXdWEIQlyZdoFfOFZnvGAMAzPeQgso3S3LF+5
+	 HxrXxIGlgG+NSgg9qWSVReQCI33qWMyxgYsWKf3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandelkar <rc@rexion.ai>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 490/869] dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister
-Date: Sat, 17 Oct 2026 17:55:31 +0200
-Message-ID: <20261017160049.678368673@linuxfoundation.org>
+Subject: [PATCH 6.12 491/869] iommu/iommufd: Fix IOPF group ownership UAF
+Date: Sat, 17 Oct 2026 17:55:32 +0200
+Message-ID: <20261017160049.700874392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,175 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-[ Upstream commit a10ea943356b9d70c5616a0a06f6fa97cfdaccb1 ]
+[ Upstream commit 738e6f32e61d80b554e37015ecb7bc620b88001c ]
 
-dibs_lo_attach_dmb(), dibs_lo_detach_dmb() and dibs_lo_unregister_dmb()
-look up the dmb_node under dmb_ht_lock, drop the lock and only then
-operate on the node's refcount. Nothing keeps the node alive across
-that window: __dibs_lo_unregister_dmb() removes the node from the hash
-table under the write lock and immediately frees it.
+iopf_group_alloc() links each last-page IOPF group into the generic IOPF
+pending list before invoking the domain fault handler.
+iommufd_fault_iopf_handler() also queued an accepted group in the
+IOMMUFD deliver list without removing it from the generic pending list.
 
-A concurrent final put can therefore free the node between the lookup
-and the refcount operation:
+When detach or HWPT replacement drops the device's IOPF reference count
+to zero, an IOMMU driver may call iopf_queue_remove_device(). That
+function responds to and frees groups through the generic pending list
+without removing the same groups from IOMMUFD's deliver list or response
+xarray. A later read, response, or cleanup can then access the freed
+group and cause a UAF.
 
-CPU0 (attach)                     CPU1 (owner unregisters)
+Fix this by dequeuing an accepted group from the generic pending list
+before IOMMUFD queues it for userspace response.
+Make iopf_group_response() send a response regardless of pending-list
+membership, so the dequeued group can still be completed by IOMMUFD.
 
-read_lock_bh(&dmb_ht_lock)
-find dmb_node (refcnt == 1)
-read_unlock_bh(&dmb_ht_lock)
-                                  refcount_dec_and_test() 1 -> 0
-                                  write_lock_bh(&dmb_ht_lock)
-                                  hash_del(&dmb_node->list)
-                                  write_unlock_bh(&dmb_ht_lock)
-                                  kfree(dmb_node)
-refcount_inc_not_zero(&dmb_node->refcnt)  <-- use-after-free
-
-The same window exists for the refcount_dec_and_test() calls in the
-detach and unregister paths.
-
-Close the race structurally by making hash table membership and the
-refcount transitions atomic with respect to each other:
-
-- Perform the final refcount_dec_and_test() and hash_del() in a single
-  dmb_ht_lock write-side critical section, in both the unregister and
-  the detach path. Freeing the node still happens after the lock is
-  dropped, which is safe because a node whose refcount reached zero has
-  left the hash table and can no longer be found.
-
-- This establishes the invariant that any node found in the hash table
-  holds at least one reference, and that the final reference can only
-  be dropped under the write lock. dibs_lo_attach_dmb() can thus take
-  its reference with a plain refcount_inc() while still holding the
-  read lock; refcount_inc_not_zero() is no longer needed.
-
-__dibs_lo_unregister_dmb() no longer touches the hash table and is
-renamed to dibs_lo_free_dmb() accordingly.
-
-Note: commit cc21191b584c ("dibs: Move data path to dibs layer") moved
-the code to its current location; the race was introduced earlier by
-commit c3a910f2380f ("net/smc: implement DMB-merged operations of
-loopback-ism").
-
-Tested SMC-D via ISM and dibs loopback.
-
+Link: https://patch.msgid.link/r/3CFD314D0FE4D7EC+20260720085017.3998878-2-peiyang_he@smail.nju.edu.cn
+Closes: https://lore.kernel.org/all/B4F28798E2E784CA+d29f723c-b2b5-4b67-8d1c-4f7b9b0b27cb@smail.nju.edu.cn/
+Fixes: 34765cbc679c ("iommufd: Associate fault object with iommufd_hw_pgtable")
 Cc: stable@vger.kernel.org
-Fixes: c3a910f2380f ("net/smc: implement DMB-merged operations of loopback-ism")
-Reported-by: Rahul Chandelkar <rc@rexion.ai>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260727093530.968834-1-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_loopback.c | 45 +++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 23 deletions(-)
+ drivers/iommu/io-pgfault.c    | 24 +++++++++++++++++++-----
+ drivers/iommu/iommufd/fault.c |  2 ++
+ include/linux/iommu.h         |  5 +++++
+ 3 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/net/smc/smc_loopback.c b/net/smc/smc_loopback.c
-index 0bf9e4075f033..cb72ff920578a 100644
---- a/net/smc/smc_loopback.c
-+++ b/net/smc/smc_loopback.c
-@@ -117,14 +117,9 @@ static int smc_lo_register_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb,
- 	return rc;
+diff --git a/drivers/iommu/io-pgfault.c b/drivers/iommu/io-pgfault.c
+index 8b5926c1452ed..afe977235d72f 100644
+--- a/drivers/iommu/io-pgfault.c
++++ b/drivers/iommu/io-pgfault.c
+@@ -332,16 +332,30 @@ void iopf_group_response(struct iopf_group *group,
+ 		.code = status,
+ 	};
+ 
+-	/* Only send response if there is a fault report pending */
+ 	mutex_lock(&fault_param->lock);
+-	if (!list_empty(&group->pending_node)) {
+-		ops->page_response(dev, &group->last_fault, &resp);
+-		list_del_init(&group->pending_node);
+-	}
++	ops->page_response(dev, &group->last_fault, &resp);
++	list_del_init(&group->pending_node);
+ 	mutex_unlock(&fault_param->lock);
  }
+ EXPORT_SYMBOL_GPL(iopf_group_response);
  
--static void __smc_lo_unregister_dmb(struct smc_lo_dev *ldev,
--				    struct smc_lo_dmb_node *dmb_node)
-+static void smc_lo_free_dmb(struct smc_lo_dev *ldev,
-+			    struct smc_lo_dmb_node *dmb_node)
- {
--	/* remove dmb from hash table */
--	write_lock_bh(&ldev->dmb_ht_lock);
--	hash_del(&dmb_node->list);
--	write_unlock_bh(&ldev->dmb_ht_lock);
--
- 	clear_bit(dmb_node->sba_idx, ldev->sba_idx_mask);
- 	folio_put(virt_to_folio(dmb_node->cpu_addr));
- 	kfree(dmb_node);
-@@ -137,9 +132,10 @@ static int smc_lo_unregister_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
- {
- 	struct smc_lo_dmb_node *dmb_node = NULL, *tmp_node;
- 	struct smc_lo_dev *ldev = smcd->priv;
-+	bool last;
- 
- 	/* find dmb from hash table */
--	read_lock_bh(&ldev->dmb_ht_lock);
-+	write_lock_bh(&ldev->dmb_ht_lock);
- 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, dmb->dmb_tok) {
- 		if (tmp_node->token == dmb->dmb_tok) {
- 			dmb_node = tmp_node;
-@@ -147,13 +143,16 @@ static int smc_lo_unregister_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
- 		}
- 	}
- 	if (!dmb_node) {
--		read_unlock_bh(&ldev->dmb_ht_lock);
-+		write_unlock_bh(&ldev->dmb_ht_lock);
- 		return -EINVAL;
- 	}
--	read_unlock_bh(&ldev->dmb_ht_lock);
-+	last = refcount_dec_and_test(&dmb_node->refcnt);
-+	if (last)
-+		hash_del(&dmb_node->list);
-+	write_unlock_bh(&ldev->dmb_ht_lock);
- 
--	if (refcount_dec_and_test(&dmb_node->refcnt))
--		__smc_lo_unregister_dmb(ldev, dmb_node);
-+	if (last)
-+		smc_lo_free_dmb(ldev, dmb_node);
- 	return 0;
- }
- 
-@@ -179,14 +178,9 @@ static int smc_lo_attach_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
- 		read_unlock_bh(&ldev->dmb_ht_lock);
- 		return -EINVAL;
- 	}
-+	refcount_inc(&dmb_node->refcnt);
- 	read_unlock_bh(&ldev->dmb_ht_lock);
- 
--	if (!refcount_inc_not_zero(&dmb_node->refcnt))
--		/* the dmb is being unregistered, but has
--		 * not been removed from the hash table.
--		 */
--		return -EINVAL;
--
- 	/* provide dmb information */
- 	dmb->sba_idx = dmb_node->sba_idx;
- 	dmb->dmb_tok = dmb_node->token;
-@@ -200,9 +194,10 @@ static int smc_lo_detach_dmb(struct smcd_dev *smcd, u64 token)
- {
- 	struct smc_lo_dmb_node *dmb_node = NULL, *tmp_node;
- 	struct smc_lo_dev *ldev = smcd->priv;
-+	bool last;
- 
- 	/* find dmb_node according to dmb->dmb_tok */
--	read_lock_bh(&ldev->dmb_ht_lock);
-+	write_lock_bh(&ldev->dmb_ht_lock);
- 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, token) {
- 		if (tmp_node->token == token) {
- 			dmb_node = tmp_node;
-@@ -210,13 +205,17 @@ static int smc_lo_detach_dmb(struct smcd_dev *smcd, u64 token)
- 		}
- 	}
- 	if (!dmb_node) {
--		read_unlock_bh(&ldev->dmb_ht_lock);
-+		write_unlock_bh(&ldev->dmb_ht_lock);
- 		return -EINVAL;
- 	}
--	read_unlock_bh(&ldev->dmb_ht_lock);
-+	last = refcount_dec_and_test(&dmb_node->refcnt);
-+	if (last)
-+		hash_del(&dmb_node->list);
-+	write_unlock_bh(&ldev->dmb_ht_lock);
++/**
++ * iopf_group_dequeue - Dequeue a page fault group from the pending list
++ * @group: the group to dequeue
++ *
++ * The fault handler is responsible for responding to the group after
++ * this function returns.
++ */
++void iopf_group_dequeue(struct iopf_group *group)
++{
++	struct iommu_fault_param *fault_param = group->fault_param;
 +
-+	if (last)
-+		smc_lo_free_dmb(ldev, dmb_node);
++	mutex_lock(&fault_param->lock);
++	list_del_init(&group->pending_node);
++	mutex_unlock(&fault_param->lock);
++}
++EXPORT_SYMBOL_GPL(iopf_group_dequeue);
++
+ /**
+  * iopf_queue_discard_partial - Remove all pending partial fault
+  * @queue: the queue whose partial faults need to be discarded
+diff --git a/drivers/iommu/iommufd/fault.c b/drivers/iommu/iommufd/fault.c
+index 74e3c93bce6ea..bdaecb6e1f7a3 100644
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -454,6 +454,8 @@ int iommufd_fault_iopf_handler(struct iopf_group *group)
+ 	hwpt = group->attach_handle->domain->fault_data;
+ 	fault = hwpt->fault;
  
--	if (refcount_dec_and_test(&dmb_node->refcnt))
--		__smc_lo_unregister_dmb(ldev, dmb_node);
- 	return 0;
++	iopf_group_dequeue(group);
++
+ 	spin_lock(&fault->lock);
+ 	list_add_tail(&group->node, &fault->deliver);
+ 	spin_unlock(&fault->lock);
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index dc7ceb9406eda..929b9d0d90cde 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -1566,6 +1566,7 @@ void iopf_free_group(struct iopf_group *group);
+ int iommu_report_device_fault(struct device *dev, struct iopf_fault *evt);
+ void iopf_group_response(struct iopf_group *group,
+ 			 enum iommu_page_response_code status);
++void iopf_group_dequeue(struct iopf_group *group);
+ #else
+ static inline int
+ iopf_queue_add_device(struct iopf_queue *queue, struct device *dev)
+@@ -1611,5 +1612,9 @@ static inline void iopf_group_response(struct iopf_group *group,
+ 				       enum iommu_page_response_code status)
+ {
  }
- 
++
++static inline void iopf_group_dequeue(struct iopf_group *group)
++{
++}
+ #endif /* CONFIG_IOMMU_IOPF */
+ #endif /* __LINUX_IOMMU_H */
 -- 
 2.53.0
 
