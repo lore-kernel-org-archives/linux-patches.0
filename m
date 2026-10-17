@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EA930EF8F;
-	Sat, 17 Oct 2026 16:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8ECC18787A;
+	Sat, 17 Oct 2026 16:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253676; cv=none; b=biWSNgChMfBtKmG4eR8YfT8Hqpvpa/1gxXr7qLWT3CPmmMZHhmQIEEiXWyDxMtOcaCiL9TK+vqehBKRhCEmvClgvalA6uEoQpnZaB8mUkc5UAFunbWolZUmCtsUC9yZbvSrISlzPtlwuCkN8mNS32UylRkKTH4/XXGevBZu+HOg=
+	t=1792253678; cv=none; b=bhWFsp6Ruztfr1hBgieNufNXGR5sKR6M5WXpWNiJM7WlsEHgAOqAWAUttqSTOXuSfNitC8lYIwAvQiiIxcxXx+iitEvYMq6uN6tQAGDlkau0g2PnbkdgS0EtfdZIqvYjbN+g7qLN2A7PBgrXUN1FE5xhiItiBfaPkATCzmkQ2xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253676; c=relaxed/simple;
-	bh=6yjPbxnIiLpqYtfZUOinnvPclEEwQVmbgV/RYvS9Fi4=;
+	s=arc-20240116; t=1792253678; c=relaxed/simple;
+	bh=JxiAbLx9ycS05iSGN4dXcdV866zlSegPUyypM6acoCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1dJT6cQBeVfthuZ1gyKFtQTMCI45cf630Z1ATzJ7YtOZUYPkfdDLWsFiiCT5pSRFtqcRVCAXzcCqKJ7X3z7rS8285tqc6SOUzY3HTWtVAbrrtAjap9kaY2udI0QPvNSSl4vdI0QRwi1+omJSuykPKZq6ARA1P2K3NMNcdYwLLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9gF/YRy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBKn+tPshuf6pkpuvHBg+TlLvin6EB/nocpuJIJDvb72QHWAqHriMrOH8lTceRUhRJk7tt/+7wSUeuKZ3sFkWjiV581gCQMqjLINYZA/D+2Vp6nSKbhbqJyT7hc0wC3LhvUr8Go9NCNc3epBXE4xMWZIvD+6+N6kyMp0vsT1G/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnJFF7y8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9gF/YRy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB64D1F000C4;
-	Sat, 17 Oct 2026 16:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnJFF7y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D221F000C4;
+	Sat, 17 Oct 2026 16:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253674;
-	bh=0OTmu2QGMgWpT8KiPeCUjGPqAcKPOYRnW6TYGaPVobA=;
+	s=korg; t=1792253677;
+	bh=CjtCB0QlA2xhmd9tj87zagySmfSUsW/4uzw9U8NC7Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9gF/YRyqQlQ+krbdwQI/G7SbJlA2xdNupLMChKS4xYJ0fcHK0YpwHqQhvm5XS6WO
-	 C/GaKtryvJblLMNKVfN2v0gGqoq7tT5lZidZujk1G2HVtJxcUlvgTtLHcIxQwSfXUM
-	 zaCSZEwDYrF+ooFUkRBoI9TK54ljBPEWkhOYoNJE=
+	b=ZnJFF7y8YrSOX6watfGk1ig14PuTirczgTujfqsWkeWZxUqTQIEz+tFwrYakJsOoU
+	 G+mMexImjP3/5OdEd3QsP8Dovm5Y9NZt5B9JsJ8R7xPBSVIer5aboFme/PP0XGYZi7
+	 1OZ57Amr0RsKTcpTIoCnkHfBr5I1rjlSry0oQB7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kory Maincent (TI.com)" <kory.maincent@bootlin.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 194/869] drm/tilcdc: Fix removal actions in case of failed probe
-Date: Sat, 17 Oct 2026 17:50:35 +0200
-Message-ID: <20261017160042.029898609@linuxfoundation.org>
+Subject: [PATCH 6.12 195/869] net: Factorise setup_net() and cleanup_net().
+Date: Sat, 17 Oct 2026 17:50:36 +0200
+Message-ID: <20261017160042.056647584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,216 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a585c7ef9cabda58088916baedc6573e9a5cd2a7 ]
+[ Upstream commit e333b1c3cf25fca348422c9ad5cc8db40b4243fa ]
 
-The drm_kms_helper_poll_fini() and drm_atomic_helper_shutdown() helpers
-should only be called when the device has been successfully registered.
-Currently, these functions are called unconditionally in tilcdc_fini(),
-which causes warnings during probe deferral scenarios.
+When we roll back the changes made by struct pernet_operations.init(),
+we execute mostly identical sequences in three places.
 
-[    7.972317] WARNING: CPU: 0 PID: 23 at drivers/gpu/drm/drm_atomic_state_helper.c:175 drm_atomic_helper_crtc_duplicate_state+0x60/0x68
-...
-[    8.005820]  drm_atomic_helper_crtc_duplicate_state from drm_atomic_get_crtc_state+0x68/0x108
-[    8.005858]  drm_atomic_get_crtc_state from drm_atomic_helper_disable_all+0x90/0x1c8
-[    8.005885]  drm_atomic_helper_disable_all from drm_atomic_helper_shutdown+0x90/0x144
-[    8.005911]  drm_atomic_helper_shutdown from tilcdc_fini+0x68/0xf8 [tilcdc]
-[    8.005957]  tilcdc_fini [tilcdc] from tilcdc_pdev_probe+0xb0/0x6d4 [tilcdc]
+  * setup_net()
+  * cleanup_net()
+  * free_exit_list()
 
-Fix this by rewriting the failed probe cleanup path using the standard
-goto error handling pattern, which ensures that cleanup functions are
-only called on successfully initialized resources. Additionally, remove
-the now-unnecessary is_registered flag.
+The only difference between the first two is which list and RCU helpers
+to use.
 
-Cc: stable@vger.kernel.org
-Fixes: 3c4babae3c4a ("drm: Call drm_atomic_helper_shutdown() at shutdown/remove time for misc drivers")
-Signed-off-by: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251125090546.137193-1-kory.maincent@bootlin.com
+In setup_net(), an ops could fail on the way, so we need to perform a
+reverse walk from its previous ops in pernet_list.  OTOH, in cleanup_net(),
+we iterate the full list from tail to head.
+
+The former passes the failed ops to list_for_each_entry_continue_reverse().
+It's tricky, but we can reuse it for the latter if we pass list_entry() of
+the head node.
+
+Also, synchronize_rcu() and synchronize_rcu_expedited() can be easily
+switched by an argument.
+
+Let's factorise the rollback part in setup_net() and cleanup_net().
+
+In the next patch, ops_undo_list() will be reused for free_exit_list(),
+and then two arguments (ops_list and hold_rtnl) will differ.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250411205258.63164-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 60a25ef8dacb ("wireguard: device: use exit_rtnl callback instead of manual rtnl_lock in pre_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tilcdc/tilcdc_crtc.c |  2 +-
- drivers/gpu/drm/tilcdc/tilcdc_drv.c  | 53 ++++++++++++++++++----------
- drivers/gpu/drm/tilcdc/tilcdc_drv.h  |  2 +-
- 3 files changed, 37 insertions(+), 20 deletions(-)
+ net/core/net_namespace.c | 106 +++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 55 deletions(-)
 
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_crtc.c b/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
-index b5f60b2b2d0e7..41802c9bd1475 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
-@@ -586,7 +586,7 @@ static void tilcdc_crtc_recover_work(struct work_struct *work)
- 	drm_modeset_unlock(&crtc->mutex);
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index 613b2b07bad9f..25f84a3764f71 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -189,6 +189,53 @@ static void ops_free_list(const struct pernet_operations *ops,
+ 	}
  }
  
--static void tilcdc_crtc_destroy(struct drm_crtc *crtc)
-+void tilcdc_crtc_destroy(struct drm_crtc *crtc)
++static void ops_undo_list(const struct list_head *ops_list,
++			  const struct pernet_operations *ops,
++			  struct list_head *net_exit_list,
++			  bool expedite_rcu, bool hold_rtnl)
++{
++	const struct pernet_operations *saved_ops;
++
++	if (!ops)
++		ops = list_entry(ops_list, typeof(*ops), list);
++
++	saved_ops = ops;
++
++	list_for_each_entry_continue_reverse(ops, ops_list, list)
++		ops_pre_exit_list(ops, net_exit_list);
++
++	/* Another CPU might be rcu-iterating the list, wait for it.
++	 * This needs to be before calling the exit() notifiers, so the
++	 * rcu_barrier() after ops_undo_list() isn't sufficient alone.
++	 * Also the pre_exit() and exit() methods need this barrier.
++	 */
++	if (expedite_rcu)
++		synchronize_rcu_expedited();
++	else
++		synchronize_rcu();
++
++	if (hold_rtnl) {
++		LIST_HEAD(dev_kill_list);
++
++		ops = saved_ops;
++		rtnl_lock();
++		list_for_each_entry_continue_reverse(ops, ops_list, list) {
++			if (ops->exit_batch_rtnl)
++				ops->exit_batch_rtnl(net_exit_list, &dev_kill_list);
++		}
++		unregister_netdevice_many(&dev_kill_list);
++		rtnl_unlock();
++	}
++
++	ops = saved_ops;
++	list_for_each_entry_continue_reverse(ops, ops_list, list)
++		ops_exit_list(ops, net_exit_list);
++
++	ops = saved_ops;
++	list_for_each_entry_continue_reverse(ops, ops_list, list)
++		ops_free_list(ops, net_exit_list);
++}
++
+ /* should be called with nsid_lock held */
+ static int alloc_netid(struct net *net, struct net *peer, int reqid)
  {
- 	struct tilcdc_drm_private *priv = crtc->dev->dev_private;
+@@ -349,9 +396,8 @@ static __net_init void preinit_net(struct net *net, struct user_namespace *user_
+ static __net_init int setup_net(struct net *net)
+ {
+ 	/* Must be called with pernet_ops_rwsem held */
+-	const struct pernet_operations *ops, *saved_ops;
++	const struct pernet_operations *ops;
+ 	LIST_HEAD(net_exit_list);
+-	LIST_HEAD(dev_kill_list);
+ 	int error = 0;
  
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-index cd5eefa06060d..322e02f5a763a 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-@@ -171,8 +171,7 @@ static void tilcdc_fini(struct drm_device *dev)
- 	if (priv->crtc)
- 		tilcdc_crtc_shutdown(priv->crtc);
- 
--	if (priv->is_registered)
--		drm_dev_unregister(dev);
-+	drm_dev_unregister(dev);
- 
- 	drm_kms_helper_poll_fini(dev);
- 	drm_atomic_helper_shutdown(dev);
-@@ -219,21 +218,21 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
- 	priv->wq = alloc_ordered_workqueue("tilcdc", 0);
- 	if (!priv->wq) {
- 		ret = -ENOMEM;
--		goto init_failed;
-+		goto put_drm;
- 	}
- 
- 	priv->mmio = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(priv->mmio)) {
- 		dev_err(dev, "failed to request / ioremap\n");
- 		ret = PTR_ERR(priv->mmio);
--		goto init_failed;
-+		goto free_wq;
- 	}
- 
- 	priv->clk = clk_get(dev, "fck");
- 	if (IS_ERR(priv->clk)) {
- 		dev_err(dev, "failed to get functional clock\n");
- 		ret = -ENODEV;
--		goto init_failed;
-+		goto free_wq;
- 	}
- 
- 	pm_runtime_enable(dev);
-@@ -312,7 +311,7 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
- 	ret = tilcdc_crtc_create(ddev);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to create crtc\n");
--		goto init_failed;
-+		goto disable_pm;
- 	}
- 	modeset_init(ddev);
- 
-@@ -323,46 +322,46 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
- 	if (ret) {
- 		dev_err(dev, "failed to register cpufreq notifier\n");
- 		priv->freq_transition.notifier_call = NULL;
--		goto init_failed;
-+		goto destroy_crtc;
- 	}
- #endif
- 
- 	if (priv->is_componentized) {
- 		ret = component_bind_all(dev, ddev);
- 		if (ret < 0)
--			goto init_failed;
-+			goto unregister_cpufreq_notif;
- 
- 		ret = tilcdc_add_component_encoder(ddev);
- 		if (ret < 0)
--			goto init_failed;
-+			goto unbind_component;
- 	} else {
- 		ret = tilcdc_attach_external_device(ddev);
- 		if (ret)
--			goto init_failed;
-+			goto unregister_cpufreq_notif;
- 	}
- 
- 	if (!priv->external_connector &&
- 	    ((priv->num_encoders == 0) || (priv->num_connectors == 0))) {
- 		dev_err(dev, "no encoders/connectors found\n");
- 		ret = -EPROBE_DEFER;
--		goto init_failed;
-+		goto unbind_component;
- 	}
- 
- 	ret = drm_vblank_init(ddev, 1);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to initialize vblank\n");
--		goto init_failed;
-+		goto unbind_component;
- 	}
- 
- 	ret = platform_get_irq(pdev, 0);
- 	if (ret < 0)
--		goto init_failed;
-+		goto unbind_component;
- 	priv->irq = ret;
- 
- 	ret = tilcdc_irq_install(ddev, priv->irq);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to install IRQ handler\n");
--		goto init_failed;
-+		goto unbind_component;
- 	}
- 
- 	drm_mode_config_reset(ddev);
-@@ -371,15 +370,33 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
- 
- 	ret = drm_dev_register(ddev, 0);
- 	if (ret)
--		goto init_failed;
--	priv->is_registered = true;
-+		goto stop_poll;
- 
- 	drm_fbdev_dma_setup(ddev, bpp);
- 	return 0;
- 
--init_failed:
--	tilcdc_fini(ddev);
-+stop_poll:
-+	drm_kms_helper_poll_fini(ddev);
-+	tilcdc_irq_uninstall(ddev);
-+unbind_component:
-+	if (priv->is_componentized)
-+		component_unbind_all(dev, ddev);
-+unregister_cpufreq_notif:
-+#ifdef CONFIG_CPU_FREQ
-+	cpufreq_unregister_notifier(&priv->freq_transition,
-+				    CPUFREQ_TRANSITION_NOTIFIER);
-+destroy_crtc:
-+#endif
-+	tilcdc_crtc_destroy(priv->crtc);
-+disable_pm:
-+	pm_runtime_disable(dev);
-+	clk_put(priv->clk);
-+free_wq:
-+	destroy_workqueue(priv->wq);
-+put_drm:
- 	platform_set_drvdata(pdev, NULL);
-+	ddev->dev_private = NULL;
-+	drm_dev_put(ddev);
- 
- 	return ret;
+ 	preempt_disable();
+@@ -374,29 +420,7 @@ static __net_init int setup_net(struct net *net)
+ 	 * for the pernet modules whose init functions did not fail.
+ 	 */
+ 	list_add(&net->exit_list, &net_exit_list);
+-	saved_ops = ops;
+-	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+-		ops_pre_exit_list(ops, &net_exit_list);
+-
+-	synchronize_rcu();
+-
+-	ops = saved_ops;
+-	rtnl_lock();
+-	list_for_each_entry_continue_reverse(ops, &pernet_list, list) {
+-		if (ops->exit_batch_rtnl)
+-			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
+-	}
+-	unregister_netdevice_many(&dev_kill_list);
+-	rtnl_unlock();
+-
+-	ops = saved_ops;
+-	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+-		ops_exit_list(ops, &net_exit_list);
+-
+-	ops = saved_ops;
+-	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+-		ops_free_list(ops, &net_exit_list);
+-
++	ops_undo_list(&pernet_list, ops, &net_exit_list, false, true);
+ 	rcu_barrier();
+ 	goto out;
  }
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.h b/drivers/gpu/drm/tilcdc/tilcdc_drv.h
-index b818448c83f61..58b276f82a669 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_drv.h
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.h
-@@ -82,7 +82,6 @@ struct tilcdc_drm_private {
- 	struct drm_encoder *external_encoder;
- 	struct drm_connector *external_connector;
+@@ -594,11 +618,9 @@ static LLIST_HEAD(cleanup_list);
  
--	bool is_registered;
- 	bool is_componentized;
- 	bool irq_enabled;
- };
-@@ -164,6 +163,7 @@ void tilcdc_crtc_set_panel_info(struct drm_crtc *crtc,
- void tilcdc_crtc_set_simulate_vesa_sync(struct drm_crtc *crtc,
- 					bool simulate_vesa_sync);
- void tilcdc_crtc_shutdown(struct drm_crtc *crtc);
-+void tilcdc_crtc_destroy(struct drm_crtc *crtc);
- int tilcdc_crtc_update_fb(struct drm_crtc *crtc,
- 		struct drm_framebuffer *fb,
- 		struct drm_pending_vblank_event *event);
+ static void cleanup_net(struct work_struct *work)
+ {
+-	const struct pernet_operations *ops;
+-	struct net *net, *tmp, *last;
+ 	struct llist_node *net_kill_list;
++	struct net *net, *tmp, *last;
+ 	LIST_HEAD(net_exit_list);
+-	LIST_HEAD(dev_kill_list);
+ 
+ 	/* Atomically snapshot the list of namespaces to cleanup */
+ 	net_kill_list = llist_del_all(&cleanup_list);
+@@ -627,33 +649,7 @@ static void cleanup_net(struct work_struct *work)
+ 		list_add_tail(&net->exit_list, &net_exit_list);
+ 	}
+ 
+-	/* Run all of the network namespace pre_exit methods */
+-	list_for_each_entry_reverse(ops, &pernet_list, list)
+-		ops_pre_exit_list(ops, &net_exit_list);
+-
+-	/*
+-	 * Another CPU might be rcu-iterating the list, wait for it.
+-	 * This needs to be before calling the exit() notifiers, so
+-	 * the rcu_barrier() below isn't sufficient alone.
+-	 * Also the pre_exit() and exit() methods need this barrier.
+-	 */
+-	synchronize_rcu_expedited();
+-
+-	rtnl_lock();
+-	list_for_each_entry_reverse(ops, &pernet_list, list) {
+-		if (ops->exit_batch_rtnl)
+-			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
+-	}
+-	unregister_netdevice_many(&dev_kill_list);
+-	rtnl_unlock();
+-
+-	/* Run all of the network namespace exit methods */
+-	list_for_each_entry_reverse(ops, &pernet_list, list)
+-		ops_exit_list(ops, &net_exit_list);
+-
+-	/* Free the net generic variables */
+-	list_for_each_entry_reverse(ops, &pernet_list, list)
+-		ops_free_list(ops, &net_exit_list);
++	ops_undo_list(&pernet_list, NULL, &net_exit_list, true, true);
+ 
+ 	up_read(&pernet_ops_rwsem);
+ 
 -- 
 2.53.0
 
