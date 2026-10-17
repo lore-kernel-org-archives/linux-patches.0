@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9667B3A6B65;
-	Sat, 17 Oct 2026 17:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC783B8BBB;
+	Sat, 17 Oct 2026 17:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257384; cv=none; b=ZDApwkJpQm3AJuYYkO2q8boss7Pzaz1QxQ0j7bqsQ51kJ5pBB9vbgdRzYFP8LktI5enic78DcoypyeQpOh8ECsgLglVf6PPNF3QTZ6XcKVV2HjhhF+IsiS5JHv2/hRvi4tA2rxDuqwfZr5ja860cXjGslyrUJVBnXWAupbBEFA4=
+	t=1792257387; cv=none; b=uiG5AQRQ+d5rvVQQD3Xoz5TbcqqixqAVkWnrhlEQKqY9F9j3Rm9MQ/Zk2nEwygV+O+gcMxy6ZOuvNPwzYhVZwfBMiPG0jM1RmzhlOYyno8N4nNufiYWsaR/7c/emQ9gimRixh9pDyl5/7apUTgpb+x24NvBMVbWR7jUseT0DcNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257384; c=relaxed/simple;
-	bh=LeRcvaD+YsA41wyU64LaxLIpG4xQiyYT6X3ZqcNHNpI=;
+	s=arc-20240116; t=1792257387; c=relaxed/simple;
+	bh=iwB3gEUSg0P+msQYiIZanuvC/JXUJ5MfuwLbwWTzPrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGdqNFFz5VOgjibQNsflKxWSdIA/urYimaWxcRs9zOlvaCYaSPjO5gS1Pepoy0NFhlJtrutV/x94Q8cWEo9xGuEa8B2dI3RyPbYAZfvLG+AdybKkl3ekdJUh+5MAlLaQVaRnGxo3P4/Rtk4tY6ja9aBRr2XxFmBrwSoRi4yZ9l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwGq/bph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AFuyKFQRkn7fmCmCR8S6NlwuSTMdEyMVoCTiKhh3JZfH/9skOPrsiMlXm/M8w12qdBw8uQAtfcpljoNof062kJnugSmyXNYz2+f6yY2asdRSULGReYwYt0uKlEehgHSYG9gVVeY/Bo174uN7noFe+buHABDDUVZJ8Er8HDvsvf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4BRhVgU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwGq/bph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984221F000C4;
-	Sat, 17 Oct 2026 17:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4BRhVgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9C91F000C4;
+	Sat, 17 Oct 2026 17:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257383;
-	bh=m48XxChLoMVcVu23ROyuti8CjKIZoKmzTMSxMoKTP0I=;
+	s=korg; t=1792257386;
+	bh=lqcF5pF9uHKVvgWQdZWlWD0v+/NeJgNePkNSk+bbgGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwGq/bphUk12w7n5D783bjuMtDeXGHlQfaCpK0AnWCHg2XEfB+IvFCeMaQrfEMEDr
-	 iBbx3LNk2suGqJbXpdDrhWT/evQBA64LZex5Is1SrLH3hpgneIv/fU0G9jiE9zzEPD
-	 C1xbxYK2b85x9uWA26TsqZ9oTpDYWqwDBlESnhSE=
+	b=e4BRhVgU71NflkIUfTOr5lyq99yKrRs3uHGf9LakO5041sDEPpZ93YeMPn4s8UfSr
+	 RiXRz2aVdv7N3fMTsUuLZzkrY8Ba5Vaef+n0ngQh4dRbzFI/gC1WftYzTQZOJVPL4s
+	 8z87pA7/qWrLj3lBOY3FJULPfhmL+cOnQa8pf+T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Changyul Lee <lcy8047@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
 	Sang-Hoon Choi <csh0052@gmail.com>,
-	Ayush Sawal <ayush.sawal@chelsio.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0542/1674] cxgb4/ch_ktls: disable softirqs around tid_list erases
-Date: Sat, 17 Oct 2026 17:46:54 +0200
-Message-ID: <20261017160445.011142351@linuxfoundation.org>
+Subject: [PATCH 6.6 0543/1674] nvmet: use the local P2P device on metadata allocation failure
+Date: Sat, 17 Oct 2026 17:46:55 +0200
+Message-ID: <20261017160445.037617378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,52 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit 4c9dc0faca98084922caeb689579d338cf3e1c29 ]
+[ Upstream commit 4aa9c0f377a4de5e8fddce76b34ee4529639a1ff ]
 
-chcr_ktls_cpl_act_open_rpl() inserts into tid_list from the receive path
-using xa_insert_bh().  The array is shared by the adapter's connections
-and initialized with XA_FLAGS_LOCK_BH.  However, chcr_ktls_dev_del() and
-the chcr_ktls_dev_add() error path use xa_erase(), which takes the XArray
-lock without disabling softirqs.
+nvmet_req_alloc_p2pmem_sgls() assigns req->p2p_dev only after the data
+and metadata SGL allocations succeed. If the data allocation succeeds
+but the metadata allocation fails, out_free_sg passes req->p2p_dev to
+pci_p2pmem_free_sgl() before that assignment has taken place.
 
-When cleanup runs with softirqs enabled, a receive softirq for another
-connection on the same CPU can interrupt the erase and spin on the lock
-held by the interrupted task.  Use xa_erase_bh() at both sites to match
-the insertion path.
+Pass the local p2p_dev argument instead, so cleanup uses the same PCI
+device as the successful data allocation.
 
-Fixes: 65e302a9bd57 ("cxgb4/ch_ktls: Clear resources when pf4 device is removed")
+Fixes: bcd9a0797d73 ("nvmet: fix freeing unallocated p2pmem")
 Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
 Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reviewed-by: Ayush Sawal <ayush.sawal@chelsio.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-index bcdc7fc2f4276..649d05b3fea72 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
-@@ -390,7 +390,7 @@ static void chcr_ktls_dev_del(struct net_device *netdev,
- 		cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
- 				 tx_info->tid, tx_info->ip_family);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 3b1b72022a979..1b7d0d185eb79 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1054,7 +1054,7 @@ static int nvmet_req_alloc_p2pmem_sgls(struct pci_dev *p2p_dev,
  
--		xa_erase(&u_ctx->tid_list, tx_info->tid);
-+		xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
- 	}
- 
- 	port_stats = &tx_info->adap->ch_ktls_stats.ktls_port[tx_info->port_id];
-@@ -581,7 +581,7 @@ static int chcr_ktls_dev_add(struct net_device *netdev, struct sock *sk,
- 	cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
- 			 tx_info->tid, tx_info->ip_family);
- 
--	xa_erase(&u_ctx->tid_list, tx_info->tid);
-+	xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
- 
- put_module:
- 	/* release module refcount */
+ 	return 0;
+ out_free_sg:
+-	pci_p2pmem_free_sgl(req->p2p_dev, req->sg);
++	pci_p2pmem_free_sgl(p2p_dev, req->sg);
+ out_err:
+ 	return -ENOMEM;
+ }
 -- 
 2.53.0
 
