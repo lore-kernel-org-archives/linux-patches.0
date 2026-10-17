@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2F53A7F41;
-	Sat, 17 Oct 2026 17:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9393939A4;
+	Sat, 17 Oct 2026 17:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258326; cv=none; b=ATs5ZYGNgZvded8G5M978W7xs2KBjTheyD5RBmiedyYueSQT7K2SDNqoG23NBIP36zzNq2C2QW05CdsG1XjNEUdVTIpCxcYZxFV+0Ll+26kbLCj/fpC7zeJy/Kf3B2V1aketEwvLq/cARp9QiKV3jUYs7otFiO3hTesIKOtfHP8=
+	t=1792258330; cv=none; b=muQm9lCmBpLpglynK6Y8tgHYV9KsFLbfnnGXcrxArBjaYlG0mJmK0s21TRS5QJPIzIlW8AqRLEsxE1cJYPwveRyF/wQUcAAEVoBdxOTSuKj0b08cfJQUqYD4roPgWD1621GpTR1NxpMwDVODMyn0U5HWKIZ3pIWYx3VPijgY51k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258326; c=relaxed/simple;
-	bh=JqbWYTMZgQPrpBp4eQIMa0l/5fz/+7mkeHCFLVZNgkM=;
+	s=arc-20240116; t=1792258330; c=relaxed/simple;
+	bh=t/7GW+l7BJHU/oi3ZfkZ/yEp1SG7vqOniNGSpYJmDmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+7VO0pPvD+bgZYoTePg4Uwukg4c14/wUvDQOhWCEzzo9VClxgFJmL/Ht5m2RNJGYfk3LFMx814yaz2FIWOngUo3VgXNpEgw3l7TQH2ZBZSc7MfaHrw/6HUhOp0nzy9KFCP3TOpaISTkcEAA7p9lAuqthpO9KXJNbOdT3cdGsm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm5jcmwa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+OPptqp4yB29IbybdMtkE3VxV967VoRODrITngfncycuX6yJ7I+GiYsRlKOJ1MRYxe/gi/lJ7ngFAvW6+CsaCLyt3RyVChU/TC0rANFrVqpVos9pG3rBrDSkAq4W/V+WwsTuYzlde0Xy49/pE1cRfuBi8NvKA2zRvDrb0t5Kjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLo5j02F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm5jcmwa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE32B1F000C4;
-	Sat, 17 Oct 2026 17:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLo5j02F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD42F1F000C4;
+	Sat, 17 Oct 2026 17:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258325;
-	bh=bdZNWTiNPzQz7/hD3kDINmB5q1sRqtkZ998nr+ytZtQ=;
+	s=korg; t=1792258329;
+	bh=GYYr32lixXHDhcR+6tv/2KTRoi5R4qAg/fqZt6Qfyjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lm5jcmwa6SB7BWMwrSUxyvxOC9gdhCRutBEM+YotmENAAsWm4Ng3c/wWmLXHrrWIM
-	 OcKt4RkG3hqv3Nx0RH5UQyVfhS5nIfuPVo6wcjPVVNWRGfPX9LHlqD7rFw0oCFn9Po
-	 xqptXra10xAOnMT06J1mjG/+pDbRbZhfwF4EzgGo=
+	b=PLo5j02Fa2kX7XEsUvCe/+5hT9m3Z2WcCgSeQ37sVwqKi0Crk7wW/ZMRHHqpzT+Qk
+	 zoTslFJ/ZQIBuDEguFdTHSL5J5H8G0skjcVWXM9IEQB3xApMNNjcbeRS0gzF1LdAyh
+	 NWzwyonZZp6ZJ9sKEjymX3+OKjovCIb0ZA0yqoms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0796/1674] bpf: add a get_helper_proto() utility function
-Date: Sat, 17 Oct 2026 17:51:08 +0200
-Message-ID: <20261017160451.539697962@linuxfoundation.org>
+Subject: [PATCH 6.6 0841/1674] functionfs: fix the open/removal races
+Date: Sat, 17 Oct 2026 17:51:53 +0200
+Message-ID: <20261017160452.715898719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,72 +50,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 45cbc7a5e004cf08528ef83633c62120cca3a5ee ]
+[ Upstream commit e5bf5ee266633cb18fff6f98f0b7d59a62819eee ]
 
-Extract the part of check_helper_call() as a utility function allowing
-to query 'struct bpf_func_proto' for a specific helper function id.
+ffs_epfile_open() can race with removal, ending up with file->private_data
+pointing to freed object.
 
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240722233844.1406874-2-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Stable-dep-of: e4414b01c1cd ("bpf: Check the helper function is valid in get_helper_proto")
+There is a total count of opened files on functionfs (both ep0 and
+dynamic ones) and when it hits zero, dynamic files get removed.
+Unfortunately, that removal can happen while another thread is
+in ffs_epfile_open(), but has not incremented the count yet.
+In that case open will succeed, leaving us with UAF on any subsequent
+read() or write().
+
+The root cause is that ffs->opened is misused; atomic_dec_and_test() vs.
+atomic_add_return() is not a good idea, when object remains visible all
+along.
+
+To untangle that
+	* serialize openers on ffs->mutex (both for ep0 and for dynamic files)
+	* have dynamic ones use atomic_inc_not_zero() and fail if we had
+zero ->opened; in that case the file we are opening is doomed.
+	* have the inodes of dynamic files marked on removal (from the
+callback of simple_recursive_removal()) - clear ->i_private there.
+	* have open of dynamic ones verify they hadn't been already removed,
+along with checking that state is FFS_ACTIVE.
+
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/function/f_fs.c | 77 ++++++++++++++++++++++--------
+ 1 file changed, 57 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index c693e6fabe403..958da74f9045e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10071,6 +10071,19 @@ static void update_loop_inline_state(struct bpf_verifier_env *env, u32 subprogno
- 				 state->callback_subprogno == subprogno);
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 253b8d08ce7df..3a2124e3f23d3 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -51,8 +51,8 @@ static struct ffs_data *__must_check ffs_data_new(const char *dev_name)
+ 	__attribute__((malloc));
+ 
+ /* Opened counter handling. */
+-static void ffs_data_opened(struct ffs_data *ffs);
+ static void ffs_data_closed(struct ffs_data *ffs);
++static void ffs_data_reset(struct ffs_data *ffs);
+ 
+ /* Called with ffs->mutex held; take over ownership of data. */
+ static int __must_check
+@@ -613,13 +613,35 @@ static ssize_t ffs_ep0_read(struct file *file, char __user *buf,
+ 
+ static int ffs_ep0_open(struct inode *inode, struct file *file)
+ {
+-	struct ffs_data *ffs = inode->i_private;
++	struct ffs_data *ffs = inode->i_sb->s_fs_info;
++	bool reset;
++	int ret;
++
++	/* Acquire mutex */
++	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
++	if (ret < 0)
++		return ret;
+ 
+-	if (ffs->state == FFS_CLOSING)
++	if (ffs->state == FFS_CLOSING) {
++		mutex_unlock(&ffs->mutex);
+ 		return -EBUSY;
++	}
+ 
++	/*
++	 * ffs_data_reset() ends up taking ffs->mutex via gadget unbind, so
++	 * it can't run under it: count the open without resetting, and
++	 * reset once the mutex is dropped.
++	 */
++	refcount_inc(&ffs->ref);
++	reset = atomic_add_return(1, &ffs->opened) == 1 &&
++		ffs->state == FFS_DEACTIVATED;
++	if (reset)
++		ffs->state = FFS_CLOSING;
++	mutex_unlock(&ffs->mutex);
+ 	file->private_data = ffs;
+-	ffs_data_opened(ffs);
++
++	if (reset)
++		ffs_data_reset(ffs);
+ 
+ 	return stream_open(inode, file);
+ }
+@@ -1177,14 +1199,34 @@ static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
+ static int
+ ffs_epfile_open(struct inode *inode, struct file *file)
+ {
+-	struct ffs_epfile *epfile = inode->i_private;
++	struct ffs_data *ffs = inode->i_sb->s_fs_info;
++	struct ffs_epfile *epfile;
++	int ret;
+ 
+-	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
++	/* Acquire mutex */
++	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
++	if (ret < 0)
++		return ret;
++
++	if (!atomic_inc_not_zero(&ffs->opened)) {
++		mutex_unlock(&ffs->mutex);
+ 		return -ENODEV;
++	}
++	refcount_inc(&ffs->ref);
++	/*
++	 * we want the state to be FFS_ACTIVE; FFS_ACTIVE alone is
++	 * not enough, though - we might have been through FFS_CLOSING
++	 * and back to FFS_ACTIVE, with our file already removed.
++	 */
++	epfile = smp_load_acquire(&inode->i_private);
++	if (unlikely(ffs->state != FFS_ACTIVE || !epfile)) {
++		mutex_unlock(&ffs->mutex);
++		ffs_data_closed(ffs);
++		return -ENODEV;
++	}
++	mutex_unlock(&ffs->mutex);
+ 
+ 	file->private_data = epfile;
+-	ffs_data_opened(epfile->ffs);
+-
+ 	return stream_open(inode, file);
  }
  
-+static int get_helper_proto(struct bpf_verifier_env *env, int func_id,
-+			    const struct bpf_func_proto **ptr)
+@@ -1303,7 +1345,7 @@ static ssize_t ffs_epfile_read_iter(struct kiocb *kiocb, struct iov_iter *to)
+ static int
+ ffs_epfile_release(struct inode *inode, struct file *file)
+ {
+-	struct ffs_epfile *epfile = inode->i_private;
++	struct ffs_epfile *epfile = file->private_data;
+ 
+ 	ffs_data_closed(epfile->ffs);
+ 
+@@ -1696,16 +1738,6 @@ static void ffs_data_get(struct ffs_data *ffs)
+ 	refcount_inc(&ffs->ref);
+ }
+ 
+-static void ffs_data_opened(struct ffs_data *ffs)
+-{
+-	refcount_inc(&ffs->ref);
+-	if (atomic_add_return(1, &ffs->opened) == 1 &&
+-			ffs->state == FFS_DEACTIVATED) {
+-		ffs->state = FFS_CLOSING;
+-		ffs_data_reset(ffs);
+-	}
+-}
+-
+ static void ffs_data_put(struct ffs_data *ffs)
+ {
+ 	if (refcount_dec_and_test(&ffs->ref)) {
+@@ -1926,6 +1958,11 @@ static int ffs_epfiles_create(struct ffs_data *ffs)
+ 	return 0;
+ }
+ 
++static void clear_one(struct dentry *dentry)
 +{
-+	if (func_id < 0 || func_id >= __BPF_FUNC_MAX_ID)
-+		return -ERANGE;
-+
-+	if (!env->ops->get_func_proto)
-+		return -EINVAL;
-+
-+	*ptr = env->ops->get_func_proto(func_id, env->prog);
-+	return *ptr ? 0 : -EINVAL;
++	smp_store_release(&dentry->d_inode->i_private, NULL);
 +}
 +
- static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 			     int *insn_idx_p)
+ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
  {
-@@ -10086,18 +10099,16 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 
- 	/* find function prototype */
- 	func_id = insn->imm;
--	if (func_id < 0 || func_id >= __BPF_FUNC_MAX_ID) {
--		verbose(env, "invalid func %s#%d\n", func_id_name(func_id),
--			func_id);
-+	err = get_helper_proto(env, insn->imm, &fn);
-+	if (err == -ERANGE) {
-+		verbose(env, "invalid func %s#%d\n", func_id_name(func_id), func_id);
- 		return -EINVAL;
+ 	struct ffs_epfile *epfile = epfiles;
+@@ -1934,7 +1971,7 @@ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
+ 		BUG_ON(mutex_is_locked(&epfile->mutex));
+ 		__ffs_epfile_read_buffer_free(epfile);
+ 		if (epfile->dentry) {
+-			simple_recursive_removal(epfile->dentry, NULL);
++			simple_recursive_removal(epfile->dentry, clear_one);
+ 			epfile->dentry = NULL;
+ 		}
  	}
- 
--	if (env->ops->get_func_proto)
--		fn = env->ops->get_func_proto(func_id, env->prog);
--	if (!fn) {
-+	if (err) {
- 		verbose(env, "program of this type cannot use helper %s#%d\n",
- 			func_id_name(func_id), func_id);
--		return -EINVAL;
-+		return err;
- 	}
- 
- 	/* eBPF programs must be GPL compatible to use GPL-ed functions */
 -- 
 2.53.0
 
