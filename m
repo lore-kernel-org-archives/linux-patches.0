@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFEB3A7F41;
-	Sat, 17 Oct 2026 17:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D752E8DEB;
+	Sat, 17 Oct 2026 17:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256689; cv=none; b=E0TmdHY3DEzMEowxDtHBgnXVGZqTc4AE8QclEf+iIf5+lWd59bvrbxDRgYUYhvhrtzgtayvFQEmhOePJjMmlaKdZMcIO5pG1NCDcPfyMRixuLMQOchA0NzXcj/WWq1H8pxyMLvPT9/eRQc0RrZFgzNNg+Mrt3JfQUvWKWp4maKY=
+	t=1792256692; cv=none; b=HCjXL6hyeBydOkDl5ebIjftOhavILUB0LEokT7CNWSHP8wnttcjg0IogLH1SfZOzCb1Pycm5oM32RRnxZjvuf0b6SbP1GYfVBxcQM/5qgU6v3w4R3l21nxliOX3gjJyU1kfeMZ3BFN2jYipbVZ9qDikynbU3xHvpiMEOCAleuTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256689; c=relaxed/simple;
-	bh=OmkodR6mXBfZCgGwKjohFSvdx/vMaZW/RCIjNS1aNXE=;
+	s=arc-20240116; t=1792256692; c=relaxed/simple;
+	bh=DJqvFcaexoMIN98Z40xqKqfH/i2OWduVfz28ck8R3FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfrsKIpzWptT+tlh6/SGUCwsWGJXveHPN6skDwSqGEAxzoE8lV1PDA/OPRdqTEg4N2+BSDAYdVAegvsIV6Q4gzPKw0wpEhH+3uDgpo5K8THQaRUP21rCtUp0i80GXK92gxAq37I0YA1oSTH5b8UoLDbFAAPku+bWZPEeUupoZhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJS6JMC4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YdZYfCRZoD2p/YIxl83uluDKYf96ZQLJVOAIjQ4EUrs4e2cGdVJ1hN/NeTuinzbKv4t554GNgAJHdUAsCAd8kieRAOJE0X9/DJ+9woE6K6piMILuMZB9DWnSDndcv1LogggOH+Svboi/OwD9t72qlrdXAe11r6UCCXt1INtutOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVDD/BIr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJS6JMC4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332A21F000C4;
-	Sat, 17 Oct 2026 17:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVDD/BIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D321F000C4;
+	Sat, 17 Oct 2026 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256688;
-	bh=5MvctYcW0dI9xVmLEP5NF5IejBja1ajHHftCgJhys4Y=;
+	s=korg; t=1792256691;
+	bh=YnY0AfFYbiTa+R0+6U891ODdnS2brhHbJM3398jiyms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJS6JMC4wkb99sIHKgwjviYqW5FzmxJEifa5LgCGMR0uUg7eYFY1Hivflg0a8A1hi
-	 9NZDR9ooYZkxetunMfWmWJdak2oh0aSxykZdSJ28CBlSIzCxq6hAU0sinTCI2AZdew
-	 HPvHL4uCfMvSOk6bENL8u1xmOUyP3rpH1SH6N+u4=
+	b=NVDD/BIrosdUjjZ+C0dNU1jC1xyCH/8XO1el+Cl9xtkJUfRFc2Q7dqpo95DkQSBMh
+	 wqh6StL4Qx/OLjoBJs5Hpv0rJE5hXLFZCPoh1tyaEosrQzgkRX00RwHt09KOEgPelS
+	 1WJHsoPwH70z0PnCJCNO58iP4LmoujgeFRR2wdHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0319/1674] wifi: mac80211: handle empty FILS association request payload
-Date: Sat, 17 Oct 2026 17:43:11 +0200
-Message-ID: <20261017160439.306284049@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Carrat?= <jeremy.carrat@icloud.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0320/1674] USB: serial: cp210x: add Corsair AX1500i Power Supply
+Date: Sat, 17 Oct 2026 17:43:12 +0200
+Message-ID: <20261017160439.331399232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,58 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Jérémy Carrat <jeremy.carrat@icloud.com>
 
-commit 5bfd4b0b40b79781d900cb2f7da0685070f53c67 upstream.
+commit d84e27d87738634b92001500435ae4dadba10a13 upstream.
 
-fils_encrypt_assoc_req() accepts a (Re)Association Request frame whose
-last element is the FILS Session element.  crypt_len is then zero and
-aes_siv_encrypt() is called with an empty plaintext.
+The Corsair AX1500i power supply exposes its Corsair Link monitoring
+interface on a mini-USB port through an on-board CP2103, using a
+Corsair-specific product ID. Without the ID in the table no driver binds
+and no tty is created.
 
-kmemdup() returns ZERO_SIZE_PTR for a zero-length allocation, so the
-unconditional sg_init_one() puts an invalid page into the scatterlist.
-With CONFIG_DEBUG_SG this triggers a kernel BUG in sg_set_buf();
-without the debug check the bogus page is handed to the crypto backend.
+Tested by forcing the driver association with
 
-AES-SIV is defined for empty plaintext and the S2V result is then the
-complete output, so handle this case before the CTR step, which has
-nothing to encrypt.
+  echo 1b1c 1c02 > /sys/bus/usb-serial/drivers/cp210x/new_id
 
-Fixes: 39404feee691 ("mac80211: FILS AEAD protection for station mode association frames")
+and then setting the serial port to 115200 8N1. Adding the ID is sufficient
+to talk to the device: the tty reaches a USB-to-SMBus bridge sitting behind
+the UART, which identifies itself as "USB to SMB Bridge (Firmware by Ross
+Fosler)" version 0.9 and relays PMBus reads to the power supply controller.
+Input voltage and current, input and output power, internal temperature and
+fan speed were all read back on an AX1500i.
+
+  [    7.806181] usb 3-14: New USB device found, idVendor=1b1c, idProduct=1c02, bcdDevice= 1.00
+  [  698.526754] usbcore: registered new interface driver cp210x
+  [  698.526767] usbserial: USB Serial support registered for cp210x
+  [  698.527863] cp210x 3-14:1.0: cp210x converter detected
+  [  698.529263] usb 3-14: cp210x converter now attached to ttyUSB0
+
+The related AX1600i (1b1c:1c11, iProduct "USB API") is expected to be the
+same kind of device but has not been tested here, so it is not added.
+
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Reviewed-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/325c048982d637a3af80d74ac5b36e9369b93f1e.1789751126.git.xuyuqiabc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jérémy Carrat <jeremy.carrat@icloud.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/fils_aead.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/fils_aead.c
-+++ b/net/mac80211/fils_aead.c
-@@ -95,6 +95,14 @@ static int aes_siv_encrypt(const u8 *key
- 	if (res)
- 		return res;
- 
-+	/* With an empty plaintext there is no ciphertext to produce and
-+	 * the S2V result is the complete output.
-+	 */
-+	if (!plain_len) {
-+		memcpy(out, v, AES_BLOCK_SIZE);
-+		return 0;
-+	}
-+
- 	/* Use a temporary buffer of the plaintext to handle need for
- 	 * overwriting this during AES-CTR.
- 	 */
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
+ 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
+ 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
++	{ USB_DEVICE(0x1B1C, 0x1C02) }, /* Corsair AX1500i Power Supply */
+ 	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
+ 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
+ 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
 
 
