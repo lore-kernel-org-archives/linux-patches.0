@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650AF3B531D;
-	Sat, 17 Oct 2026 17:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DAD3911A9;
+	Sat, 17 Oct 2026 17:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256777; cv=none; b=gr/BWjFemIoIRnA8i2Ot+MjvfI9Nrw83G96ntelbcBgvEig438W+8nHCGBq4dmgq/JDt8REBdShngpl2PRpmTwOxX1GuEsQdWQ6QI/Nsf6Dlqxqn0nGJ5D4pr1GUYrR55GrNfU3vNt5II56gpm25QEVT7Jazku/nism8pMURj4Q=
+	t=1792256780; cv=none; b=T6Vr3z3W6LIomohGWcpWXKAhM8VOSkqr/qGkM3nfDNec0j/y/NaGJpPGjVNqyHefaeqLL5CDDoPOARb1n4EmsdQ1TOwdUE3GtEbJB8EZrecTXSfxI79YNH+ArdRU+ucjGwS81ZFpgLXtGV0caMWtFZZvxZJ3kgTFfg9Fg7Pla5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256777; c=relaxed/simple;
-	bh=LN6INRhrUomVd4TbYgK2h0qBxQIhTZTrUsgsnrl4vQw=;
+	s=arc-20240116; t=1792256780; c=relaxed/simple;
+	bh=Cxs9bxPEHV0T7dmqCcSXiyjbSy1TAlPusFd3smq8rwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gidLyLATlseqhVNPxFMbxMmghVU/JOlmbGEksKtCUZs0+/DrWt2L5HrNaX58nctemSeGuiWYVNNMVT2Rs7H4Ges2UQoTD2WeOq4lnmA3UDQL8Uh6ogey3KA+qwcXPPLfiI0aTtaii7DYViMGSFef88F99OcaMSqV5/loYBro1lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBHcZtvS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBaMezjhmuVvIhCKirEfGDh6EKfB3tzLz0+fLafQE9HWuLczHwpMz1+/Iqz/LK+q5iuAWmery9WDDzMuoqQHjXna2C5YES0eY4g6Ods0i3M3MHHLiRVD4a2YdyjvKFz/Hfju3G2HC+vQuNzapIbseH5MlUvVsRRVQnmcaPzCbSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eirr6mXo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBHcZtvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB97C1F000C4;
-	Sat, 17 Oct 2026 17:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eirr6mXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9402B1F000C4;
+	Sat, 17 Oct 2026 17:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256776;
-	bh=on547HeCXuskO0KPZ07kJezfGUOsPxswSLTofcJHQEs=;
+	s=korg; t=1792256779;
+	bh=6zDgjgjG03psvvBQLqiF+SDsHLVGZQNEr8MNju/Z/Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pBHcZtvSbOkRDnVQhp7yRhP3PT2+53O5rmIhDxsSh9HFHgzd1SvFEayD7v33IPqmC
-	 VmGUuNhcRy5X24fbXMVX7pGAj0E4xA0tAApZAZ74gnt1argNE8K1knZIN9wfrlnLz7
-	 eMBsHbCVjCYspe+HfdvDgD06itOJDKZOwEQ6/9iA=
+	b=Eirr6mXoZwmjrGK/BePoOJ7vfRngKCaqWKEmn6Q+siNCD9Pg+svr3dp1imznKIV/x
+	 TQs914kKTFYsKXgDPFoX/UM/6VpFAWzYf8znWgRe907ErEcScfjT6OM4k40magLXcT
+	 W28y6+6d+ab9t2wkmS+9g9bazqy6CBCLcHarrY78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jinseob Kim <kimjinseob88@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Cong Nguyen <congnt264@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0341/1674] iio: buffer: serialize buffer teardown with mode claims
-Date: Sat, 17 Oct 2026 17:43:33 +0200
-Message-ID: <20261017160439.879117265@linuxfoundation.org>
+Subject: [PATCH 6.6 0350/1674] iio: proximity: pulsedlight: fix iio_device left registered on PM setup failure
+Date: Sat, 17 Oct 2026 17:43:42 +0200
+Message-ID: <20261017160440.110937751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,53 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinseob Kim <kimjinseob88@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 84bb0fc46ccf6a545b8fdf57cda83770186ed8dd upstream.
+commit 4daa9ca557b4b98ae1ad38a6d1deaa3e31eb8edf upstream.
 
-Buffer-mode claims hold mlock to guarantee that the device remains in
-buffer mode until the claim is released. Normal buffer updates take
-info_exist_lock followed by mlock in iio_update_buffers().
+pm_runtime_set_active() failing in probe() jumps to error_unreg_buffer,
+which only calls iio_triggered_buffer_cleanup() -- it does not undo the
+iio_device_register() that already succeeded a few lines above. probe()
+then returns the error, the devm-managed indio_dev is freed, but the
+iio core still has it registered: the sysfs/chardev nodes stay live and
+point at freed memory.
 
-However, iio_device_unregister() disables and deactivates all buffers
-without taking mlock. This can invalidate buffer state, including
-active_scan_mask, while a buffer-mode claim is held.
+Add an error_unreg_dev label that unregisters the iio device before
+falling through to the existing buffer cleanup, mirroring the teardown
+order already used in lidar_remove().
 
-Take mlock in iio_disable_all_buffers() so that unregister honors the
-mode-claim lifetime guarantee. The info_exist_lock -> mlock ordering
-matches iio_update_buffers().
-
-Fixes: 0a8565425afd ("iio: core: introduce iio_device_{claim|release}_buffer_mode() APIs")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: 4ac4e086fd8c ("iio: pulsedlight-lidar-lite: add runtime PM")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/proximity/pulsedlight-lidar-lite-v2.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -1294,6 +1294,10 @@ EXPORT_SYMBOL_GPL(iio_update_buffers);
+--- a/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
++++ b/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
+@@ -298,12 +298,14 @@ static int lidar_probe(struct i2c_client
  
- void iio_disable_all_buffers(struct iio_dev *indio_dev)
- {
-+	struct iio_dev_opaque *iio_dev_opaque = to_iio_dev_opaque(indio_dev);
-+
-+	guard(mutex)(&iio_dev_opaque->mlock);
-+
- 	iio_disable_buffers(indio_dev);
- 	iio_buffer_deactivate_all(indio_dev);
- }
+ 	ret = pm_runtime_set_active(&client->dev);
+ 	if (ret)
+-		goto error_unreg_buffer;
++		goto error_unreg_dev;
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_idle(&client->dev);
+ 
+ 	return 0;
+ 
++error_unreg_dev:
++	iio_device_unregister(indio_dev);
+ error_unreg_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 
 
 
