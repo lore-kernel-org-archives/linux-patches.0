@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C753AF66D;
-	Sat, 17 Oct 2026 16:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9B7381AFB;
+	Sat, 17 Oct 2026 16:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255672; cv=none; b=bUi94V//49RSTHNyGVf/J+b6yiM6nkuIyPAMUSILEnAYhfVgRCHPYBuXgXy0UBEPjGCh4pI2+2VVW2HHibsnH242QcL489045cgT/0YW3R412X4ZCAwQzDI3RU9R0qIkuALuodE2FZzrM+uiDmpQz6KocfWo4HTdw1yHAyKR0I0=
+	t=1792255676; cv=none; b=uRHWppKlauUnMTDf5vKMWrJt7UueFWwoIyAEWGjUTXMZfoq6YLFfdzyxGBVi0YxoXbuX/nXyI4yqJtTIq+2HF9YQCJsTD5qwgda2yR0zsn7mpCi+Rwpldqm5g7W+Q1IAfkzzUA55EdKXtkgGdXqTCVkhoD2NbAmbW/EFSFgBhgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255672; c=relaxed/simple;
-	bh=WlKXm3ci9NhRf68kj+vW4Z1kOeKNJe9+UOqF9yVPnJU=;
+	s=arc-20240116; t=1792255676; c=relaxed/simple;
+	bh=ofXw9Gxqj9lO6G43N2XnC292VrlSVE/WscEX2sqqsx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0dvK3kak7DfRT4a7cyOaQr536ZjqrTHi0ZZDvdJBE+Zi1oilmIk+VSzi6SRyOUWUJiUFa7TUdtZpvB2A+RqeRP2HtcHsSuH5QeO2QU05zKkk2TiqMexEPG1O3ZCD7z7ik7+VXtiAmkGk8Xo6cftI5RiGkqaN/cNbXNX1S4lXAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtAN5ofV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VXn6LbF4Dbl6EEGN4SUd79iC2kxEEip+PaRIDqyi7JVrCDQpbXV9u01StP9QkGnHXDqf+0cgJFJYZEQL6Vziy3E4bs8deTEwNpZPF6/HEcfemDyAeKEqY0u1gb/2RaZtrkXWXPNjnVqcEDegwci+T+d/wDbB/Skah6D6HxJo80Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtTEVtQ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtAN5ofV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEF81F000C4;
-	Sat, 17 Oct 2026 16:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtTEVtQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F081F000C4;
+	Sat, 17 Oct 2026 16:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255671;
-	bh=lMfQ2EiIV1tflNQ1tuCLj4/m/F/ZWmTVFNM9lcNNBhI=;
+	s=korg; t=1792255674;
+	bh=HIapBTEhxq7JiK1mqVbb6DslnDYqSQQzU24KMf38Zfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtAN5ofVc1vzG2Y+WURBjALS1q9al3DIPhBAaHyiFJdwXF4lPq2+fU2H1ndTdAI+h
-	 IC7jvIKh3BWGvClaerK73Ay3dMs8SH/lIGw0qGVB4IjlZpX8XUBfeX+sEvxkAooQPZ
-	 DESH6FOAwhtLZFrR3EyiLES4OIrLoP24xlVmWZZs=
+	b=WtTEVtQ7GI8HEvevujuBH1v2cNyq3reZsJr7+J2d7MSIIYpEgO72A/KLpNfOqZ3oV
+	 MaFyjsUUx006b49ktsDybIzmWN20sd8g4ePCvuQ//ylAwe2ipiKDrB3r/jiF7pKan9
+	 En5pRoMz7jT2qANt8f6PyezQrr2XELtP7GD1FMac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shibo Zhu <3499129952@qq.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 854/869] PM: sleep: Unblock runtime PM when device prepare fails
-Date: Sat, 17 Oct 2026 18:01:35 +0200
-Message-ID: <20261017160058.757222591@linuxfoundation.org>
+Subject: [PATCH 6.12 855/869] soundwire: intel_auxdevice: Fix system suspend/resume handling
+Date: Sat, 17 Oct 2026 18:01:36 +0200
+Message-ID: <20261017160058.784180514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,57 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shibo Zhu <3499129952@qq.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit cb258d651d747a7f7063d40f145418bee562ceaf ]
+[ Upstream commit 533a8a67cc3b072a24122d1ea10a8db66a5c9393 ]
 
-device_prepare() blocks runtime PM for a device with runtime PM disabled
-before invoking its system-sleep ->prepare() callback. For a device that
-has never enabled runtime PM, this changes dev->power.last_status from
-RPM_INVALID to RPM_BLOCKED.
+Before commit bca84a7b93fd ("PM: sleep: Use DPM_FLAG_SMART_SUSPEND
+conditionally") the runtime PM status of the device in intel_resume()
+had always been RPM_ACTIVE because setting DPM_FLAG_SMART_SUSPEND had
+caused the core to call pm_runtime_set_active() for that device during
+the "noirq" resume phase.  For this reason, the pm_runtime_suspended()
+check in intel_resume() had never triggered and the code depending on
+it had never run.  That had not caused any observable functional issues
+to appear, so effectively the code in question had never been needed.
 
-If the callback returns an error, dpm_prepare() does not move the device
-to dpm_prepared_list. Consequently, the recovery path through
-dpm_complete() never calls device_complete() for the failing device.
+After commit bca84a7b93fd the core does not call pm_runtime_set_active()
+for all devices with DPM_FLAG_SMART_SUSPEND set any more and the code
+depending on the pm_runtime_suspended() check in intel_resume() runs if
+the device is runtime-suspended prior to a system-wide suspend
+transition.  Unfortunately, when it runs, it breaks things due to the
+attempt to runtime-resume bus->dev which most likely is not ready for a
+runtime resume at that point.
 
-The error path drops the runtime PM usage reference, but does not clear
-RPM_BLOCKED. A later legitimate pm_runtime_enable() then reports:
+It also does other more-or-less questionable things.  Namely, it
+calls pm_runtime_idle() for a device with a nonzero runtime PM usage
+counter which has no effect (all devices have nonzero runtime PM
+usage counters during system-wide suspend and resume).  It also calls
+pm_runtime_mark_last_busy() for the device even though devices cannot
+runtime-suspend during system-wide suspend and resume (because their
+runtime PM usage counters are nonzero) and an analogous call is made
+in the same function later.  Moreover, it sets the runtime PM status
+of the device to RPM_ACTIVE before activating it.
 
-  Attempt to enable runtime PM when it is blocked
+For the reasons listed above, remove that code altogether.
 
-before clearing the stale state.
+On top of that, add a pm_runtime_disable() call to intel_suspend() to
+prevent the device from being runtime-resumed at any point after
+intel_suspend() has started to manipulate it because the changes
+made by that function would be undone by a runtime-suspend of the
+device.
 
-Call pm_runtime_unblock() on the prepare error path before dropping the
-runtime PM reference, matching the cleanup performed by device_complete().
+Next, once runtime PM has been disabled, the runtime PM status of the
+device cannot change, so pm_runtime_status_suspended() can be used
+instead of pm_runtime_suspended() in intel_suspend().
 
-The issue was reproduced with a platform test device whose ->prepare()
-callback returns -EIO while runtime PM has never been enabled. Before
-the fix, last_status remained RPM_BLOCKED after the failed suspend and
-the first pm_runtime_enable() produced the warning above. With the fix,
-last_status is restored to RPM_INVALID and the warning is absent.
+Finally, make intel_resume() call pm_runtime_set_active() at the end to
+set the runtime PM status of the device to "active" because it has just
+been activated and re-enable runtime PM for it after that.
 
-Fixes: 3e5eee147b7b ("PM: Block enabling of runtime PM during system suspend")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Shibo Zhu <3499129952@qq.com>
-Link: https://patch.msgid.link/tencent_C5AC0A02FC01F700E764F8C2E3ECE4F41009@qq.com
+Additionally, drop the setting of DPM_FLAG_SMART_SUSPEND from the
+driver because it has no effect on devices handled by it.
+
+Fixes: bca84a7b93fd ("PM: sleep: Use DPM_FLAG_SMART_SUSPEND conditionally")
+Reported-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Tested-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/12680420.O9o76ZdvQC@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soundwire/intel_auxdevice.c | 36 +++++++++++------------------
+ 1 file changed, 13 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index fab8df1e29e62..ab240ccf7fd41 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -1888,6 +1888,7 @@ static int device_prepare(struct device *dev, pm_message_t state)
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index 078f9eaf5161b..ae1dfce163e25 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -345,9 +345,6 @@ static int intel_link_probe(struct auxiliary_device *auxdev,
+ 	/* use generic bandwidth allocation algorithm */
+ 	sdw->cdns.bus.compute_params = sdw_compute_params;
  
- 	if (ret < 0) {
- 		suspend_report_result(dev, callback, ret);
-+		pm_runtime_unblock(dev);
- 		pm_runtime_put(dev);
+-	/* avoid resuming from pm_runtime suspend if it's not required */
+-	dev_pm_set_driver_flags(dev, DPM_FLAG_SMART_SUSPEND);
+-
+ 	ret = sdw_bus_master_add(bus, dev, dev->fwnode);
+ 	if (ret) {
+ 		dev_err(dev, "sdw_bus_master_add fail: %d\n", ret);
+@@ -632,7 +629,10 @@ static int __maybe_unused intel_suspend(struct device *dev)
+ 		return 0;
+ 	}
+ 
+-	if (pm_runtime_suspended(dev)) {
++	/* Prevent runtime PM from racing with the code below. */
++	pm_runtime_disable(dev);
++
++	if (pm_runtime_status_suspended(dev)) {
+ 		dev_dbg(dev, "pm_runtime status: suspended\n");
+ 
+ 		clock_stop_quirks = sdw->link_res->clock_stop_quirks;
+@@ -640,7 +640,7 @@ static int __maybe_unused intel_suspend(struct device *dev)
+ 		if ((clock_stop_quirks & SDW_INTEL_CLK_STOP_BUS_RESET) ||
+ 		    !clock_stop_quirks) {
+ 
+-			if (pm_runtime_suspended(dev->parent)) {
++			if (pm_runtime_status_suspended(dev->parent)) {
+ 				/*
+ 				 * paranoia check: this should not happen with the .prepare
+ 				 * resume to full power
+@@ -707,7 +707,6 @@ static int __maybe_unused intel_resume(struct device *dev)
+ 	struct sdw_cdns *cdns = dev_get_drvdata(dev);
+ 	struct sdw_intel *sdw = cdns_to_intel(cdns);
+ 	struct sdw_bus *bus = &cdns->bus;
+-	int link_flags;
+ 	int ret;
+ 
+ 	if (bus->prop.hw_disabled || !sdw->startup_done) {
+@@ -716,23 +715,6 @@ static int __maybe_unused intel_resume(struct device *dev)
+ 		return 0;
+ 	}
+ 
+-	if (pm_runtime_suspended(dev)) {
+-		dev_dbg(dev, "pm_runtime status was suspended, forcing active\n");
+-
+-		/* follow required sequence from runtime_pm.rst */
+-		pm_runtime_disable(dev);
+-		pm_runtime_set_active(dev);
+-		pm_runtime_mark_last_busy(dev);
+-		pm_runtime_enable(dev);
+-
+-		pm_runtime_resume(bus->dev);
+-
+-		link_flags = md_flags >> (bus->link_id * 8);
+-
+-		if (!(link_flags & SDW_INTEL_MASTER_DISABLE_PM_RUNTIME_IDLE))
+-			pm_runtime_idle(dev);
+-	}
+-
+ 	ret = sdw_intel_link_power_up(sdw);
+ 	if (ret) {
+ 		dev_err(dev, "%s failed: %d\n", __func__, ret);
+@@ -752,6 +734,14 @@ static int __maybe_unused intel_resume(struct device *dev)
  		return ret;
  	}
+ 
++	/*
++	 * Runtime PM has been disabled in intel_suspend(), so set the status
++	 * to active because the device has just been resumed and re-enable
++	 * runtime PM.
++	 */
++	pm_runtime_set_active(dev);
++	pm_runtime_enable(dev);
++
+ 	/*
+ 	 * after system resume, the pm_runtime suspend() may kick in
+ 	 * during the enumeration, before any children device force the
 -- 
 2.53.0
 
