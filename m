@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F3B3B8124;
-	Sat, 17 Oct 2026 17:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76B43BB9F1;
+	Sat, 17 Oct 2026 17:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258767; cv=none; b=metxbJTh8KmLit0dIewNfNbkJh4owM0JHjA1V8Xm0r1Jnh/iAmHgJqSf1VueTf917D6DIXawekcR1mICMVb2F8vRtt9Itqhz2OJMPm+KZxR63Qfb2H2fivC00APnBmTpCfo8aO7OruZtgvjdRA95M6W7R6B2Y6wGy+AFqFO505M=
+	t=1792258769; cv=none; b=Bo9AfA7ZCAYte/POGPHKwBk8pvN2XZ53ctomnnRyoBZNeoUFRpAmtA0lwPaK+tt9gQmZ3vN9z+tp7qdeEHTYRnvnDdxnWU9LreA9ABbAf1zFaLSilw+wuoSlhRIfU6bTr67FBM8oQItNm/lOsaWuLSqjUTF3X0lN6/UZr6/dAj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258767; c=relaxed/simple;
-	bh=CnrYYf2oKmCmieOY7zRjnf7jFLyxixSwgqoK/yuETLw=;
+	s=arc-20240116; t=1792258769; c=relaxed/simple;
+	bh=/AA5c5OHm8Y/ZL4RCrreT3XPwq0j56SpLfBY3Vrw1kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9bJIx2DzekSZYg0yAaSECdwBzucfgRtDJpS8fJqTaK08A1dCuY+3Gt1KlZyi6AXZsnOG5EyUqkdxoJh43BYKRprTGqrE89W0qFI+X/wvh6c6lLlkyLPpHqTh+AcYfPZrK3TJQz4DzFVXVVBHhxgeyUC3HK23wbEwZWqTwLH6ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcG0oRR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6WV3e/dXQ/H8oeiBi8Yl+obuxywlEbZ+CcvlR7Sh6fPyHSVV0CYd36u/e8Y0t7M8kWLH6XQgUg6vpyxyHhf1RMq71lPnI+Ev0OWR87SM8dSBOwfezikRW2brtIlj16Ne42MrKMdbsGaga+3KA4sJWDntj9RbtrXtvF8Cb1dG74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arXcExSv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcG0oRR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E402E1F000C4;
-	Sat, 17 Oct 2026 17:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arXcExSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105051F000C4;
+	Sat, 17 Oct 2026 17:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258765;
-	bh=Rx8RaeYV+eGuXBfpZgHERkE10/QxE70H3npO+agSIMs=;
+	s=korg; t=1792258768;
+	bh=h/6xen5+gWQYx+oj8J/TfeZXSGKFn+lIsGgsDaQtiKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mcG0oRR+4z/ktUSVpWdNkgwf2cUYpNEik9OFdoteJ0v5w/Jx5v/I+uwsVVGVgLPn1
-	 x5BsLDh0/2y2tEpNCA/r/wnh3uN+3lMHC8QyFZEPw+CntR3Nz+QrOSNc/6/GJe5RMT
-	 vWX/WHcHvoK5rL5k0/xDXGZki2C0BXU6rIuP8mXk=
+	b=arXcExSvzvaeqMIL1Cy+s/ZvEYRtSvFmlKgNJqrff4zx3pI49qy/m35vCeM7S/zOH
+	 o+XuMOm5wJCfc05Q6feE9STrQ3bzdyq/h5uMLRXYU/n2sVrM7YQtC7S/3BveKx3Xoy
+	 ZI5BRW1EM+02iWF083eNpFxlztJg9uvtfyYpkneI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0992/1674] wifi: mt76: mt7996: fix use-after-free bugs in mt7996_mac_dump_work()
-Date: Sat, 17 Oct 2026 17:54:24 +0200
-Message-ID: <20261017160456.581464451@linuxfoundation.org>
+Subject: [PATCH 6.6 0993/1674] wifi: mt76: Fix memory leak after mt76_connac_mcu_alloc_sta_req()
+Date: Sat, 17 Oct 2026 17:54:25 +0200
+Message-ID: <20261017160456.607011944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,51 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit c8f62f73bbced3a79894655bdb0b625462d956fc ]
+[ Upstream commit c41075ce8cf05ed8c0e7b7efef000dce548ffc42 ]
 
-When the mt7996 pci chip is detaching, the mt7996_crash_data is
-released in mt7996_coredump_unregister(). However, the work item
-dump_work may still be running or pending, leading to UAF bugs
-when the already freed crash_data is dereferenced again in
-mt7996_mac_dump_work().
+mt76_connac_mcu_alloc_sta_req() allocates an skb which is expected to
+be freed eventually by mt76_mcu_skb_send_msg(). However, currently if
+an intermediate function fails before sending, the allocated skb is
+leaked.
 
-The race condition can occur as follows:
+Specifically, mt76_connac_mcu_sta_wed_update() and
+mt76_connac_mcu_sta_key_tlv() may fail, leading to an immediate memory
+leak in the error path.
 
-CPU 0 (removal path)               | CPU 1 (workqueue)
-mt7996_pci_remove()                | mt7996_sys_recovery_set()
- mt7996_unregister_device()        |  mt7996_reset()
-  mt7996_coredump_unregister()     |   queue_work()
-   vfree(dev->coredump.crash_data) | mt7996_mac_dump_work()
-                                   |  crash_data-> // UAF
+Fix this by explicitly freeing the skb in these error paths.
+Commit 7c0f63fe37a5 ("wifi: mt76: mt7996: fix memory leak on
+mt7996_mcu_sta_key_tlv error") made a similar change.
 
-Fix this by ensuring dump_work is properly canceled before
-the crash_data is deallocated. Add cancel_work_sync() in
-mt7996_unregister_device() to synchronize with any pending
-or executing dump work.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Fixes: 878161d5d4a4 ("wifi: mt76: mt7996: enable coredump support")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20260131024731.18741-1-duoming@zju.edu.cn
+Fixes: d1369e515efe ("wifi: mt76: connac: introduce mt76_connac_mcu_sta_wed_update utility routine")
+Fixes: 6683d988089c ("mt76: connac: move mt76_connac_mcu_add_key in connac module")
+Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20260116144919.1482558-1-zilin@seu.edu.cn
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c | 16 ++++++++++++----
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c  |  4 +++-
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index fa81a1c30704b..ed066acfbfa92 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -930,6 +930,7 @@ int mt7996_register_device(struct mt7996_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index ef1e68154bb61..c459b18ddc140 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -1261,8 +1261,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
+ 				    wtbl_hdr);
  
- void mt7996_unregister_device(struct mt7996_dev *dev)
- {
-+	cancel_work_sync(&dev->dump_work);
- 	mt7996_unregister_phy(mt7996_phy3(dev), MT_BAND2);
- 	mt7996_unregister_phy(mt7996_phy2(dev), MT_BAND1);
- 	mt7996_coredump_unregister(dev);
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	ret = mt76_mcu_skb_send_msg(dev, skb, cmd, true);
+ 	if (ret)
+@@ -1275,8 +1277,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
+ 	mt76_connac_mcu_sta_ba_tlv(skb, params, enable, tx);
+ 
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(dev, skb, cmd, true);
+ }
+@@ -2775,12 +2779,16 @@ int mt76_connac_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
+ 		return PTR_ERR(skb);
+ 
+ 	ret = mt76_connac_mcu_sta_key_tlv(sta_key_conf, skb, key, cmd);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 6c0ae5715ca6c..e74ff483f2e18 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -1717,8 +1717,10 @@ int mt7915_mcu_add_sta(struct mt7915_dev *dev, struct ieee80211_vif *vif,
+ 	}
+ out:
+ 	ret = mt76_connac_mcu_sta_wed_update(&dev->mt76, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
+ 				     MCU_EXT_CMD(STA_REC_UPDATE), true);
 -- 
 2.53.0
 
