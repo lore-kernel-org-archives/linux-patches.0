@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D415F3AF66D;
-	Sat, 17 Oct 2026 16:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83693AAF69;
+	Sat, 17 Oct 2026 16:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256047; cv=none; b=WjVpTSLdwzLZLCgdKvxNy7teEKh2ccOrpn46ez8eqRtq9J1UA4rjwXrlvwV7cUaBpk/OxjN846ikZNbARUF3W+tWexdg1my2qrb1DmYRRELF9LUb4xmeBrXwr4EOvnrmmK6YzULnvw+jtj+1VvAKUvHuEsZH0TxETfvqR1KRFds=
+	t=1792256048; cv=none; b=ogvkb3YUOXQpl7lRr0OEJ0BO8XUIb9bJQ/Fh3YsNuhLCRmv8VKco/e1eeS5DhUUxNlgkI7Sl2224Ca+eU1B9MvIaqVks8U0sZ+F4uV2gc3ypWwO5sVg4jj+Qo/+xJ9kmG+He8/J7zaCLI5rLsTfGxIoIjrIYHwPXQC0iFFafwro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256047; c=relaxed/simple;
-	bh=bEA4kdnm/OMaWjo9YAiJ11240MGgR6l6ZA4NL7LtVDM=;
+	s=arc-20240116; t=1792256048; c=relaxed/simple;
+	bh=HJ+O2KhAl8WPS/dshtrTWQx/yvzvuA3npiNH48K2z4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+1AwxTExPBIJEc4j0yLlTTZ3rMkgd3CDS8+iCEcFO0pbLpoZd8MoszySFVa5oQNWqLOiNMP6TF6StgOOmwmxaZnNnAyTDhLg8pqCXf4tv5lY3y2sU00R3ceTbV11WQrSZ123Mxz2imPnFhcRR0XsZPEvEDW6I1IZnCZCOz0yZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu3XDft0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WH5WSPrjJDoSfNTHBZlNT0po5WPod70+bRcYGoL6dWBfo7bQbNWx6KulWjTRSPMgDjXnN2zZr0lRjVJFgbcb3wbwxPdv6jxflZbQaqK9i32rrCaOomkSBS1UtYId0VrGUMsh7Kgir7HL6rXUCyyd0PaDGbNJ6gU8NEkOp1bO16c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNdV7J0O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu3XDft0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF95A1F000C4;
-	Sat, 17 Oct 2026 16:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNdV7J0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC001F000C5;
+	Sat, 17 Oct 2026 16:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256044;
-	bh=HMG5HrIthn2LiAImWSVgZfaUeAhWbxnMBYDt2TYFn8E=;
+	s=korg; t=1792256047;
+	bh=nWy58lszbG+cOATf2amOFZ+bBp0VJWL72q5gJ9RgWCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iu3XDft0m7D/XVZF5jePsPY6DR4t24/1NJrV25aoVVmHy92xIi76hDCTA/nK2D2vx
-	 FguLri0effLnGVRcS46lSd1hv0bojcT2vxO4gqp2xGhR6vwqdbsC3ZLv3v0LSbaQzx
-	 0OeZcfqPSzUNKA5w+5WwAQU/ITi+J1sCcF/AoegA=
+	b=fNdV7J0OLjC3qpatL4cWsIuQITgeZSrpKeyEMZxF/NF/TYweR7MDQKbTtMZdJliNz
+	 0QaionMyj/i0LRMq8G47dXHdV7/jfSaU0QNF9eVPm+w1lHAuY0WFDAgs/aEDmdWX4U
+	 JXx84u2195JUWBOewqc8XxGywpt92ubffTdCfYJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiong Weimin <xiongweimin@kylinos.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0105/1674] virtio_mmio: disable IRQ wake before free_irq
-Date: Sat, 17 Oct 2026 17:39:37 +0200
-Message-ID: <20261017160433.844194086@linuxfoundation.org>
+Subject: [PATCH 6.6 0106/1674] net/sched: act_api: release all action references on NEWACTION failure
+Date: Sat, 17 Oct 2026 17:39:38 +0200
+Message-ID: <20261017160433.870007129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,73 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiong Weimin <xiongweimin@kylinos.cn>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit d14d693adb055e98ca705822ba6daebc18602d9a ]
+[ Upstream commit 478eb5abb51931a152abab068f8a717b7ff480fd ]
 
-When the DT node has "wakeup-source", vm_find_vqs() calls
-enable_irq_wake() on the shared IRQ, but vm_del_vqs() freed that IRQ
-without a matching disable_irq_wake(). That leaves a wake reference
-behind and can warn on later free_irq()/request_irq() cycles.
+When a batched RTM_NEWACTION request replaces an existing action,
+tcf_idr_check_alloc() takes a temporary reference on it. If a later
+action fails to initialize, tcf_action_destroy() uses strict release
+semantics to clean up the actions initialized so far. For an action
+bound to a filter, the strict check returns -EPERM without dropping
+the temporary reference.
 
-Record whether enable_irq_wake() succeeded, and disable it in
-vm_del_vqs() before free_irq().
+This error also makes tcf_action_destroy() return before releasing
+subsequent entries. Any new action initialized between the bound
+action and the failing entry is leaked together with its reserved
+IDR slot, preventing reuse of its index.
 
-Fixes: 02213273f72a ("virtio_mmio: add support to set IRQ of a virtio device as wakeup source")
+Use tcf_idr_release() to drop each reference held by the batch without
+rejecting bound actions. This allows cleanup to continue through all
+initialized entries and preserves the module reference release when
+an action is destroyed. Explicit action deletion and flushing retain
+their separate bind-count checks.
+
+Fixes: 55334a5db5cd ("net_sched: act: refuse to remove bound action outside")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260805032937.1606737-1-xiongweimin@kylinos.cn>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260909070336.32979-2-xuanqiang.luo@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_mmio.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ net/sched/act_api.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
-index 33da642ea962a..649e9d5aa1329 100644
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -87,6 +87,9 @@ struct virtio_mmio_device {
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index b00d0b0215f84..2954324f12308 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1144,19 +1144,14 @@ EXPORT_SYMBOL(tcf_action_exec);
  
- 	void __iomem *base;
- 	unsigned long version;
-+
-+	/* True if enable_irq_wake() succeeded for the shared IRQ. */
-+	bool wake_irq_enabled;
- };
- 
- /* Configuration interface */
-@@ -329,11 +332,17 @@ static void vm_del_vqs(struct virtio_device *vdev)
+ int tcf_action_destroy(struct tc_action *actions[], int bind)
  {
- 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
- 	struct virtqueue *vq, *n;
-+	int irq = platform_get_irq(vm_dev->pdev, 0);
+-	const struct tc_action_ops *ops;
+ 	struct tc_action *a;
+ 	int ret = 0, i;
  
- 	list_for_each_entry_safe(vq, n, &vdev->vqs, list)
- 		vm_del_vq(vq);
- 
--	free_irq(platform_get_irq(vm_dev->pdev, 0), vm_dev);
-+	if (vm_dev->wake_irq_enabled) {
-+		disable_irq_wake(irq);
-+		vm_dev->wake_irq_enabled = false;
-+	}
-+
-+	free_irq(irq, vm_dev);
+ 	for (i = 0; i < TCA_ACT_MAX_PRIO && actions[i]; i++) {
+ 		a = actions[i];
+ 		actions[i] = NULL;
+-		ops = a->ops;
+-		ret = __tcf_idr_release(a, bind, true);
+-		if (ret == ACT_P_DELETED)
+-			module_put(ops->owner);
+-		else if (ret < 0)
+-			return ret;
++		/* Drop our reference even if the action is still bound to a filter. */
++		ret = tcf_idr_release(a, bind);
+ 	}
+ 	return ret;
  }
- 
- static void vm_synchronize_cbs(struct virtio_device *vdev)
-@@ -462,8 +471,9 @@ static int vm_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
- 	if (err)
- 		return err;
- 
--	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source"))
--		enable_irq_wake(irq);
-+	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source") &&
-+	    !enable_irq_wake(irq))
-+		vm_dev->wake_irq_enabled = true;
- 
- 	for (i = 0; i < nvqs; ++i) {
- 		if (!names[i]) {
 -- 
 2.53.0
 
