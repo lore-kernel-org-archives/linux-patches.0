@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712903BD643;
-	Sat, 17 Oct 2026 18:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A92D3C0601;
+	Sat, 17 Oct 2026 18:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260466; cv=none; b=WXa1IWgL37Qe3i0/uGGVQrj+tBmZ9AZgx/8LaoBuXQruigrB4gkv/ykjsyb7ihXhrVrJIJ0Mkg1UUOBJKwVbr3DTt+sQDb9v6HXEQiJ7pILlAWiM7vwaRfBlDC3n9E7CQzySSIvHO7s9fD+aW7qM56PU0sUffwd/QbwddLsRq00=
+	t=1792260469; cv=none; b=jOiPuzyhzUwW8wMQZSrBl/joV0i2rZd1lHaf+zFxtfk15q9bb9r3F6pGghIRy2uzgdS9uKt/SpVrCKTHUJJFiCjdc3/SKRBnpS7uBLpI3/vwjSrBq/o92b+ysn6YtOwCLdroLn3nkR8shOtOh/OSJe+e+xXm9XjFpORU6o3+A9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260466; c=relaxed/simple;
-	bh=u9SWe15kdT5V7ghtDpy+gTSxjlAdMqmiW8HYMkiJcUg=;
+	s=arc-20240116; t=1792260469; c=relaxed/simple;
+	bh=jcate1RHnisoZQngo2nIJWRtju2LqUUIYkM1g1oXaJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thWOZsBpAK00tj6QRdbIkb1Use/bugJ4tsSkrv9Xc8WqZAyHUlw3pEUhDMoHCB7imOG+/AJ4Uudh6xNdD5Z8PKxxhuql9+dLaJdsHVjPla9g+zav9/ZQAnK92Iz9TbNdxmjtLGRQxALEvveLuH8vHz0/jhpdhsqo76dFcDP/nbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgmsKJYv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ssImP6HrqbWNcPt9XZVuZBM5vLmX106sgXgwnmuT0ZuWevhunTo8/yXhuTkoPeliavjp2hgvEc/Oyuo1TXsVkxlv66ydJNcaiXNjHa7VKQZst8OaHGHuoDU4uKGRZd2+VA2kiFqutga2ES2Chu58iAmxwRKtUzbNW7evCwDJF7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J000GJn6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgmsKJYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8251F000C4;
-	Sat, 17 Oct 2026 18:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J000GJn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80791F000C4;
+	Sat, 17 Oct 2026 18:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260465;
-	bh=roFgdMr9GYa4OHBej92rR7044zo3faucyGcEl88nOyg=;
+	s=korg; t=1792260468;
+	bh=D3q4nb42F2y1wnpimZ8BfihR2jSszAsx1Vg9yCBtZaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgmsKJYvMr1XaVN40Z9TCcnMTv5VacGxrs4nPaF9cW4En3KxtSKJAOeXqN26kMzSN
-	 rVHl//ujknhNxrJfD5XfUV5AxBaXdEHVzYnANKo01FzS0aPIhPUG7GqxhSYTCc6lN/
-	 5SLCUv3ho3L64YiI0wqz2ZRHZZiBEztvF66K1dDQ=
+	b=J000GJn6LhbxobIzdvht/b0YmhPqMQBVUp9sRXVLWUcRC4tgEUU7KzeH6TbJ4tk1R
+	 gx/YWqVdCy9RE+VA2y0UouEJwS9sPco+9DjbWF51aRyu5kxYbwHsjZ5RGqPxuVBVhl
+	 Xujg9JxmZ8T/PKd4B+DYKFKvuofAMfLQVd4txRq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Kranzdorf <dkkranzd@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1555/1674] ip_tunnel: adapt iptunnel_xmit_stats() to NETDEV_PCPU_STAT_DSTATS
-Date: Sat, 17 Oct 2026 18:03:47 +0200
-Message-ID: <20261017160511.015395247@linuxfoundation.org>
+Subject: [PATCH 6.6 1556/1674] RDMA/efa: Fix use of completion ctx after free
+Date: Sat, 17 Oct 2026 18:03:48 +0200
+Message-ID: <20261017160511.039777877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,56 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit 8431c602f551549f082bbfa67f3003f2d8e3e132 ]
+[ Upstream commit ef3b06742c8a201d0e83edc9a33a89a4fe3009f8 ]
 
-Blamed commits forgot that vxlan/geneve use udp_tunnel[6]_xmit_skb() which
-call iptunnel_xmit_stats().
+On admin queue completion handling, if the admin command completed with
+error we print data from the completion context. The issue is that we
+already freed the completion context in polling/interrupts handler which
+means we print data from context in an unknown state (it might be
+already used again).
+Change the admin submission flow so alloc/dealloc of the context will be
+symmetric and dealloc will be called after any potential use of the
+context.
 
-iptunnel_xmit_stats() was assuming tunnels were only using
-NETDEV_PCPU_STAT_TSTATS.
-
-@syncp offset in pcpu_sw_netstats and pcpu_dstats is different.
-
-32bit kernels would either have corruptions or freezes if the syncp
-sequence was overwritten.
-
-This patch also moves pcpu_stat_type closer to dev->{t,d}stats to avoid
-a potential cache line miss since iptunnel_xmit_stats() needs to read it.
-
-Fixes: 6fa6de302246 ("geneve: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
-Fixes: be226352e8dc ("vxlan: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20260311123110.1471930-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 68fb9f3e312a ("RDMA/efa: Remove redundant NULL pointer check of CQE")
+Reviewed-by: Daniel Kranzdorf <dkkranzd@amazon.com>
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Link: https://patch.msgid.link/20260308165350.18219-1-ynachum@amazon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_tunnels.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/infiniband/hw/efa/efa_com.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index e32e7cbe99167..5e0965212c70e 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -542,6 +542,16 @@ static inline int iptunnel_pull_offloads(struct sk_buff *skb)
- static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
- {
- 	if (pkt_len > 0) {
-+		if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_DSTATS) {
-+			struct pcpu_dstats *dstats = get_cpu_ptr(dev->dstats);
-+
-+			u64_stats_update_begin(&dstats->syncp);
-+			u64_stats_add(&dstats->tx_bytes, pkt_len);
-+			u64_stats_inc(&dstats->tx_packets);
-+			u64_stats_update_end(&dstats->syncp);
-+			put_cpu_ptr(dstats);
-+			return;
-+		}
- 		struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 00e339abc2c13..090279dd0ab9d 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+ /*
+- * Copyright 2018-2024 Amazon.com, Inc. or its affiliates. All rights reserved.
++ * Copyright 2018-2026 Amazon.com, Inc. or its affiliates. All rights reserved.
+  */
  
- 		u64_stats_update_begin(&tstats->syncp);
+ #include "efa_com.h"
+@@ -499,7 +499,6 @@ static int efa_com_wait_and_process_admin_cq_polling(struct efa_comp_ctx *comp_c
+ {
+ 	unsigned long timeout;
+ 	unsigned long flags;
+-	int err;
+ 
+ 	timeout = jiffies + usecs_to_jiffies(aq->completion_timeout);
+ 
+@@ -519,24 +518,20 @@ static int efa_com_wait_and_process_admin_cq_polling(struct efa_comp_ctx *comp_c
+ 			atomic64_inc(&aq->stats.no_completion);
+ 
+ 			clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
+-			err = -ETIME;
+-			goto out;
++			return -ETIME;
+ 		}
+ 
+ 		msleep(aq->poll_interval);
+ 	}
+ 
+-	err = efa_com_comp_status_to_errno(comp_ctx->user_cqe->acq_common_descriptor.status);
+-out:
+-	efa_com_put_comp_ctx(aq, comp_ctx);
+-	return err;
++	return efa_com_comp_status_to_errno(
++		comp_ctx->user_cqe->acq_common_descriptor.status);
+ }
+ 
+ static int efa_com_wait_and_process_admin_cq_interrupts(struct efa_comp_ctx *comp_ctx,
+ 							struct efa_com_admin_queue *aq)
+ {
+ 	unsigned long flags;
+-	int err;
+ 
+ 	wait_for_completion_timeout(&comp_ctx->wait_event,
+ 				    usecs_to_jiffies(aq->completion_timeout));
+@@ -570,14 +565,11 @@ static int efa_com_wait_and_process_admin_cq_interrupts(struct efa_comp_ctx *com
+ 				comp_ctx, aq->sq.pc, aq->sq.cc, aq->cq.cc);
+ 
+ 		clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
+-		err = -ETIME;
+-		goto out;
++		return -ETIME;
+ 	}
+ 
+-	err = efa_com_comp_status_to_errno(comp_ctx->user_cqe->acq_common_descriptor.status);
+-out:
+-	efa_com_put_comp_ctx(aq, comp_ctx);
+-	return err;
++	return efa_com_comp_status_to_errno(
++		comp_ctx->user_cqe->acq_common_descriptor.status);
+ }
+ 
+ /*
+@@ -644,13 +636,13 @@ int efa_com_cmd_exec(struct efa_com_admin_queue *aq,
+ 	if (err) {
+ 		ibdev_err_ratelimited(
+ 			aq->efa_dev,
+-			"Failed to process command %s (opcode %u) comp_status %d err %d\n",
++			"Failed to process command %s (opcode %u) err %d\n",
+ 			efa_com_cmd_str(cmd->aq_common_descriptor.opcode),
+-			cmd->aq_common_descriptor.opcode,
+-			comp_ctx->user_cqe->acq_common_descriptor.status, err);
++			cmd->aq_common_descriptor.opcode, err);
+ 		atomic64_inc(&aq->stats.cmd_err);
+ 	}
+ 
++	efa_com_put_comp_ctx(aq, comp_ctx);
+ 	up(&aq->avail_cmds);
+ 
+ 	return err;
 -- 
 2.53.0
 
