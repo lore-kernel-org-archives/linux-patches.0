@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A772D7D3A;
-	Sat, 17 Oct 2026 17:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201002D7D3A;
+	Sat, 17 Oct 2026 17:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257982; cv=none; b=BGblqWTCIIl/O07OG6ktKuayr2DQDXXfyhPcEG63RSL9tSiwB3wKqtGYN2Ddnq47fudU93ijZb6GUHHO6ebbcHn1gwBPHGR6liKo5StBSYFI30M49jDzbyixxLEYUsZAS8uwIx/Owpef+Swa1/30n5Azya7uiRMidmnIOOFaYCU=
+	t=1792257985; cv=none; b=EnVV7GQN50b4dxq+FHcs5ARWsDHxqb2d/LxnUpIyEZ0xXla2jmICxBFBm7M6me+WP4HQWO7+GqGVYuCQMCqoOTBNWR4oU0EFH7kaj2NtUvoHisXb28xRaZZWGAwRpI/ZEaVWdAi5P3yIDjn89mSKlLKPjcQQx2NkSLqxW5yNAlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257982; c=relaxed/simple;
-	bh=bmae4N198YfRuoM/Cbya7PLd2GNIB4Rk5dT2vbJJdsE=;
+	s=arc-20240116; t=1792257985; c=relaxed/simple;
+	bh=NOaVL3xiEl9Cp0TkHIcsFOoiEcwsr43UNDzWvNUv+eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FGbTu6rNg4NjyECDJJCCGCAwzoFx9rHt4jqUPQcB8fBvdCG5X+id7k5qQmK7MONIkCv8p9xZgPwk2PLTuaP60+lqfEpD75wmB6GA071ML4hYHSFVSTUrs6NDJVipqQlEh0S9WayADP1ntKdMgGdvY6pn1RBc/05zDOTk+fVNvI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1MfzuQH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=deorUiTrapz5WUUZdgVlhKn+D/trmN7f1ufQp2IDNj/M7aVErU9qXDFXVLlXqml183VWYvk7fqE6F1y1letz/X9WJClRPA+noTwFJWIRs7g2dIVzZEFlY1gSaFYq20SOrv6yP4xu3+w0l24PF6w4cZljePShSPhPzw0chYNCKws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1y5fMoW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1MfzuQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE1C1F000C4;
-	Sat, 17 Oct 2026 17:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1y5fMoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418BD1F000C4;
+	Sat, 17 Oct 2026 17:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257980;
-	bh=SedUpIBjEF+4igvlezktoomeDL+xKFwWRbwhTytDAX4=;
+	s=korg; t=1792257983;
+	bh=OF3Glm6l5fYLpCNrmB5fCAxqVVLi48fkqgQ37oKnfD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d1MfzuQHQGxesWMG2P1tau6Rwi0oFe4OtnTo6GzD2FH1ZEgN/ZtpQPw48WY5d0r53
-	 mRzSBkYvSBHOlvG8YD22VFK6zknqio4vQNWRx7/fFzbaQD3KzPbB8B+4Fcn7txjdeG
-	 pQyyER/G6Mt35ZkfvI2xS7B201tlYdGPo1l7RzqI=
+	b=S1y5fMoWwnImqhYL9avC/9zpFSIjtXLFmizzsQvcnpqcbEeXlZu+M30WVPCJiI/TJ
+	 5MN383Rz/FIns6m67uUkuYJA3pZl95w77TFzIft0FRYmD7LtMYmVjbPjV5qCf5V9gk
+	 05WE2lFrmeTG/vVAIrCiNUaqhCLKYM5ZV7Cc2qds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Austin <alex.austin@amd.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
 	Edward Cree <ecree.xilinx@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0732/1674] sfc: Implement ndo_hwtstamp_(get|set)
-Date: Sat, 17 Oct 2026 17:50:04 +0200
-Message-ID: <20261017160449.892389619@linuxfoundation.org>
+Subject: [PATCH 6.6 0733/1674] sfc: rip out MDIO support
+Date: Sat, 17 Oct 2026 17:50:05 +0200
+Message-ID: <20261017160449.918992095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,194 +51,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Austin <alex.austin@amd.com>
+From: Edward Cree <ecree.xilinx@gmail.com>
 
-[ Upstream commit 1ac23674a971d8596648695f72168815c3f52e11 ]
+[ Upstream commit c339fcdd738be78c540407ae78fef5601ba5092a ]
 
-Update efx->ptp_data to use kernel_hwtstamp_config and implement
-ndo_hwtstamp_(get|set). Remove SIOCGHWTSTAMP and SIOCSHWTSTAMP from
-efx_ioctl.
+Unlike Siena, no EF10 board ever had an external PHY, and consequently
+ MDIO handling isn't even built into the firmware.  Since Siena has
+ been split out into its own driver, the MDIO code can be deleted from
+ the sfc driver.
 
-Signed-off-by: Alex Austin <alex.austin@amd.com>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/20231130135826.19018-2-alex.austin@amd.com
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://patch.msgid.link/aa689d192ddaef7abe82709316c2be648a7bd66e.1742493017.git.ecree.xilinx@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 8241ecec1cdc ("sfc: fix NULL dereferences in ef100_process_design_param()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef10.c       |  4 ++--
- drivers/net/ethernet/sfc/efx.c        | 24 ++++++++++++++++-----
- drivers/net/ethernet/sfc/net_driver.h |  2 +-
- drivers/net/ethernet/sfc/ptp.c        | 30 ++++++++++-----------------
- drivers/net/ethernet/sfc/ptp.h        |  7 +++++--
- 5 files changed, 38 insertions(+), 29 deletions(-)
+ drivers/net/ethernet/sfc/ef100_netdev.c     |  1 -
+ drivers/net/ethernet/sfc/efx.c              | 24 ---------
+ drivers/net/ethernet/sfc/mcdi_port.c        | 59 +--------------------
+ drivers/net/ethernet/sfc/mcdi_port_common.c | 11 ----
+ drivers/net/ethernet/sfc/net_driver.h       |  6 +--
+ 5 files changed, 2 insertions(+), 99 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
-index 6dfa062feebcb..8fa6c0e9195b0 100644
---- a/drivers/net/ethernet/sfc/ef10.c
-+++ b/drivers/net/ethernet/sfc/ef10.c
-@@ -3706,13 +3706,13 @@ static int efx_ef10_ptp_set_ts_sync_events(struct efx_nic *efx, bool en,
- }
+diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
+index 7f7d560cb2b4c..d941f073f1ebf 100644
+--- a/drivers/net/ethernet/sfc/ef100_netdev.c
++++ b/drivers/net/ethernet/sfc/ef100_netdev.c
+@@ -452,7 +452,6 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+ 				  NETIF_F_HIGHDMA | NETIF_F_ALL_TSO;
+ 	netif_set_tso_max_segs(net_dev,
+ 			       ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS_DEFAULT);
+-	efx->mdio.dev = net_dev;
  
- static int efx_ef10_ptp_set_ts_config_vf(struct efx_nic *efx,
--					 struct hwtstamp_config *init)
-+					 struct kernel_hwtstamp_config *init)
- {
- 	return -EOPNOTSUPP;
- }
- 
- static int efx_ef10_ptp_set_ts_config(struct efx_nic *efx,
--				      struct hwtstamp_config *init)
-+				      struct kernel_hwtstamp_config *init)
- {
- 	int rc;
- 
+ 	rc = efx_ef100_init_datapath_caps(efx);
+ 	if (rc < 0)
 diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index 19f4b4d0b851b..e9d9de8e648ac 100644
+index e9d9de8e648ac..6395fda5906df 100644
 --- a/drivers/net/ethernet/sfc/efx.c
 +++ b/drivers/net/ethernet/sfc/efx.c
-@@ -495,11 +495,6 @@ static int efx_ioctl(struct net_device *net_dev, struct ifreq *ifr, int cmd)
- 	struct efx_nic *efx = efx_netdev_priv(net_dev);
- 	struct mii_ioctl_data *data = if_mii(ifr);
+@@ -481,28 +481,6 @@ void efx_get_irq_moderation(struct efx_nic *efx, unsigned int *tx_usecs,
+ 	}
+ }
  
--	if (cmd == SIOCSHWTSTAMP)
--		return efx_ptp_set_ts_config(efx, ifr);
--	if (cmd == SIOCGHWTSTAMP)
--		return efx_ptp_get_ts_config(efx, ifr);
+-/**************************************************************************
+- *
+- * ioctls
+- *
+- *************************************************************************/
 -
- 	/* Convert phy_id from older PRTAD/DEVAD format */
- 	if ((cmd == SIOCGMIIREG || cmd == SIOCSMIIREG) &&
- 	    (data->phy_id & 0xfc00) == 0x0400)
-@@ -581,6 +576,23 @@ static int efx_vlan_rx_kill_vid(struct net_device *net_dev, __be16 proto, u16 vi
- 		return -EOPNOTSUPP;
- }
+-/* Net device ioctl
+- * Context: process, rtnl_lock() held.
+- */
+-static int efx_ioctl(struct net_device *net_dev, struct ifreq *ifr, int cmd)
+-{
+-	struct efx_nic *efx = efx_netdev_priv(net_dev);
+-	struct mii_ioctl_data *data = if_mii(ifr);
+-
+-	/* Convert phy_id from older PRTAD/DEVAD format */
+-	if ((cmd == SIOCGMIIREG || cmd == SIOCSMIIREG) &&
+-	    (data->phy_id & 0xfc00) == 0x0400)
+-		data->phy_id ^= MDIO_PHY_ID_C45 | 0x0400;
+-
+-	return mdio_mii_ioctl(&efx->mdio, data, cmd);
+-}
+-
+ /**************************************************************************
+  *
+  * Kernel net device interface
+@@ -600,7 +578,6 @@ static const struct net_device_ops efx_netdev_ops = {
+ 	.ndo_tx_timeout		= efx_watchdog,
+ 	.ndo_start_xmit		= efx_hard_start_xmit,
+ 	.ndo_validate_addr	= eth_validate_addr,
+-	.ndo_eth_ioctl		= efx_ioctl,
+ 	.ndo_change_mtu		= efx_change_mtu,
+ 	.ndo_set_mac_address	= efx_set_mac_address,
+ 	.ndo_set_rx_mode	= efx_set_rx_mode,
+@@ -1096,7 +1073,6 @@ static int efx_pci_probe(struct pci_dev *pci_dev,
+ 	rc = efx_init_struct(efx, pci_dev);
+ 	if (rc)
+ 		goto fail1;
+-	efx->mdio.dev = net_dev;
  
-+static int efx_hwtstamp_set(struct net_device *net_dev,
-+			    struct kernel_hwtstamp_config *config,
-+			    struct netlink_ext_ack *extack)
-+{
-+	struct efx_nic *efx = efx_netdev_priv(net_dev);
-+
-+	return efx_ptp_set_ts_config(efx, config, extack);
-+}
-+
-+static int efx_hwtstamp_get(struct net_device *net_dev,
-+			    struct kernel_hwtstamp_config *config)
-+{
-+	struct efx_nic *efx = efx_netdev_priv(net_dev);
-+
-+	return efx_ptp_get_ts_config(efx, config);
-+}
-+
- static const struct net_device_ops efx_netdev_ops = {
- 	.ndo_open		= efx_net_open,
- 	.ndo_stop		= efx_net_stop,
-@@ -596,6 +608,8 @@ static const struct net_device_ops efx_netdev_ops = {
- 	.ndo_features_check	= efx_features_check,
- 	.ndo_vlan_rx_add_vid	= efx_vlan_rx_add_vid,
- 	.ndo_vlan_rx_kill_vid	= efx_vlan_rx_kill_vid,
-+	.ndo_hwtstamp_set	= efx_hwtstamp_set,
-+	.ndo_hwtstamp_get	= efx_hwtstamp_get,
- #ifdef CONFIG_SFC_SRIOV
- 	.ndo_set_vf_mac		= efx_sriov_set_vf_mac,
- 	.ndo_set_vf_vlan	= efx_sriov_set_vf_vlan,
-diff --git a/drivers/net/ethernet/sfc/net_driver.h b/drivers/net/ethernet/sfc/net_driver.h
-index 27d86e90a3bb5..f2dd7feb0e0cd 100644
---- a/drivers/net/ethernet/sfc/net_driver.h
-+++ b/drivers/net/ethernet/sfc/net_driver.h
-@@ -1473,7 +1473,7 @@ struct efx_nic_type {
- 	void (*ptp_write_host_time)(struct efx_nic *efx, u32 host_time);
- 	int (*ptp_set_ts_sync_events)(struct efx_nic *efx, bool en, bool temp);
- 	int (*ptp_set_ts_config)(struct efx_nic *efx,
--				 struct hwtstamp_config *init);
-+				 struct kernel_hwtstamp_config *init);
- 	int (*sriov_configure)(struct efx_nic *efx, int num_vfs);
- 	int (*vlan_rx_add_vid)(struct efx_nic *efx, __be16 proto, u16 vid);
- 	int (*vlan_rx_kill_vid)(struct efx_nic *efx, __be16 proto, u16 vid);
-diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index f54200f03e15e..f5227ae8cc436 100644
---- a/drivers/net/ethernet/sfc/ptp.c
-+++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -295,7 +295,7 @@ struct efx_ptp_data {
- 	bool reset_required;
- 	struct list_head rxfilters_mcast;
- 	struct list_head rxfilters_ucast;
--	struct hwtstamp_config config;
-+	struct kernel_hwtstamp_config config;
- 	bool enabled;
- 	unsigned int mode;
- 	void (*ns_to_nic_time)(s64 ns, u32 *nic_major, u32 *nic_minor);
-@@ -1847,7 +1847,7 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
- 	return 0;
- }
+ 	pci_info(pci_dev, "Solarflare NIC detected\n");
  
--static int efx_ptp_ts_init(struct efx_nic *efx, struct hwtstamp_config *init)
-+static int efx_ptp_ts_init(struct efx_nic *efx, struct kernel_hwtstamp_config *init)
+diff --git a/drivers/net/ethernet/sfc/mcdi_port.c b/drivers/net/ethernet/sfc/mcdi_port.c
+index ad4694fa3ddae..7b236d291d8c2 100644
+--- a/drivers/net/ethernet/sfc/mcdi_port.c
++++ b/drivers/net/ethernet/sfc/mcdi_port.c
+@@ -17,58 +17,6 @@
+ #include "selftest.h"
+ #include "mcdi_port_common.h"
+ 
+-static int efx_mcdi_mdio_read(struct net_device *net_dev,
+-			      int prtad, int devad, u16 addr)
+-{
+-	struct efx_nic *efx = efx_netdev_priv(net_dev);
+-	MCDI_DECLARE_BUF(inbuf, MC_CMD_MDIO_READ_IN_LEN);
+-	MCDI_DECLARE_BUF(outbuf, MC_CMD_MDIO_READ_OUT_LEN);
+-	size_t outlen;
+-	int rc;
+-
+-	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_BUS, efx->mdio_bus);
+-	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_PRTAD, prtad);
+-	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_DEVAD, devad);
+-	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_ADDR, addr);
+-
+-	rc = efx_mcdi_rpc(efx, MC_CMD_MDIO_READ, inbuf, sizeof(inbuf),
+-			  outbuf, sizeof(outbuf), &outlen);
+-	if (rc)
+-		return rc;
+-
+-	if (MCDI_DWORD(outbuf, MDIO_READ_OUT_STATUS) !=
+-	    MC_CMD_MDIO_STATUS_GOOD)
+-		return -EIO;
+-
+-	return (u16)MCDI_DWORD(outbuf, MDIO_READ_OUT_VALUE);
+-}
+-
+-static int efx_mcdi_mdio_write(struct net_device *net_dev,
+-			       int prtad, int devad, u16 addr, u16 value)
+-{
+-	struct efx_nic *efx = efx_netdev_priv(net_dev);
+-	MCDI_DECLARE_BUF(inbuf, MC_CMD_MDIO_WRITE_IN_LEN);
+-	MCDI_DECLARE_BUF(outbuf, MC_CMD_MDIO_WRITE_OUT_LEN);
+-	size_t outlen;
+-	int rc;
+-
+-	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_BUS, efx->mdio_bus);
+-	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_PRTAD, prtad);
+-	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_DEVAD, devad);
+-	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_ADDR, addr);
+-	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_VALUE, value);
+-
+-	rc = efx_mcdi_rpc(efx, MC_CMD_MDIO_WRITE, inbuf, sizeof(inbuf),
+-			  outbuf, sizeof(outbuf), &outlen);
+-	if (rc)
+-		return rc;
+-
+-	if (MCDI_DWORD(outbuf, MDIO_WRITE_OUT_STATUS) !=
+-	    MC_CMD_MDIO_STATUS_GOOD)
+-		return -EIO;
+-
+-	return 0;
+-}
+ 
+ u32 efx_mcdi_phy_get_caps(struct efx_nic *efx)
+ {
+@@ -97,12 +45,7 @@ int efx_mcdi_port_probe(struct efx_nic *efx)
  {
  	int rc;
  
-@@ -1894,33 +1894,25 @@ void efx_ptp_get_ts_info(struct efx_nic *efx, struct ethtool_ts_info *ts_info)
- 	ts_info->rx_filters = ptp->efx->type->hwtstamp_filters;
- }
- 
--int efx_ptp_set_ts_config(struct efx_nic *efx, struct ifreq *ifr)
-+int efx_ptp_set_ts_config(struct efx_nic *efx,
-+			  struct kernel_hwtstamp_config *config,
-+			  struct netlink_ext_ack __always_unused *extack)
- {
--	struct hwtstamp_config config;
--	int rc;
+-	/* Set up MDIO structure for PHY */
+-	efx->mdio.mode_support = MDIO_SUPPORTS_C45 | MDIO_EMULATE_C22;
+-	efx->mdio.mdio_read = efx_mcdi_mdio_read;
+-	efx->mdio.mdio_write = efx_mcdi_mdio_write;
 -
- 	/* Not a PTP enabled port */
- 	if (!efx->ptp_data)
- 		return -EOPNOTSUPP;
+-	/* Fill out MDIO structure, loopback modes, and initial link state */
++	/* Fill out loopback modes and initial link state */
+ 	rc = efx_mcdi_phy_probe(efx);
+ 	if (rc != 0)
+ 		return rc;
+diff --git a/drivers/net/ethernet/sfc/mcdi_port_common.c b/drivers/net/ethernet/sfc/mcdi_port_common.c
+index 76ea26722ca46..dae684194ac8c 100644
+--- a/drivers/net/ethernet/sfc/mcdi_port_common.c
++++ b/drivers/net/ethernet/sfc/mcdi_port_common.c
+@@ -448,15 +448,6 @@ int efx_mcdi_phy_probe(struct efx_nic *efx)
+ 	efx->phy_data = phy_data;
+ 	efx->phy_type = phy_data->type;
  
--	if (copy_from_user(&config, ifr->ifr_data, sizeof(config)))
--		return -EFAULT;
+-	efx->mdio_bus = phy_data->channel;
+-	efx->mdio.prtad = phy_data->port;
+-	efx->mdio.mmds = phy_data->mmd_mask & ~(1 << MC_CMD_MMD_CLAUSE22);
+-	efx->mdio.mode_support = 0;
+-	if (phy_data->mmd_mask & (1 << MC_CMD_MMD_CLAUSE22))
+-		efx->mdio.mode_support |= MDIO_SUPPORTS_C22;
+-	if (phy_data->mmd_mask & ~(1 << MC_CMD_MMD_CLAUSE22))
+-		efx->mdio.mode_support |= MDIO_SUPPORTS_C45 | MDIO_EMULATE_C22;
 -
--	rc = efx_ptp_ts_init(efx, &config);
--	if (rc != 0)
--		return rc;
--
--	return copy_to_user(ifr->ifr_data, &config, sizeof(config))
--		? -EFAULT : 0;
-+	return efx_ptp_ts_init(efx, config);
- }
+ 	caps = MCDI_DWORD(outbuf, GET_LINK_OUT_CAP);
+ 	if (caps & (1 << MC_CMD_PHY_CAP_AN_LBN))
+ 		mcdi_to_ethtool_linkset(phy_data->media, caps,
+@@ -546,8 +537,6 @@ void efx_mcdi_phy_get_link_ksettings(struct efx_nic *efx, struct ethtool_link_ks
+ 	cmd->base.port = mcdi_to_ethtool_media(phy_cfg->media);
+ 	cmd->base.phy_address = phy_cfg->port;
+ 	cmd->base.autoneg = !!(efx->link_advertising[0] & ADVERTISED_Autoneg);
+-	cmd->base.mdio_support = (efx->mdio.mode_support &
+-			      (MDIO_SUPPORTS_C45 | MDIO_SUPPORTS_C22));
  
--int efx_ptp_get_ts_config(struct efx_nic *efx, struct ifreq *ifr)
-+int efx_ptp_get_ts_config(struct efx_nic *efx,
-+			  struct kernel_hwtstamp_config *config)
- {
-+	/* Not a PTP enabled port */
- 	if (!efx->ptp_data)
- 		return -EOPNOTSUPP;
--
--	return copy_to_user(ifr->ifr_data, &efx->ptp_data->config,
--			    sizeof(efx->ptp_data->config)) ? -EFAULT : 0;
-+	*config = efx->ptp_data->config;
-+	return 0;
- }
+ 	mcdi_to_ethtool_linkset(phy_cfg->media, phy_cfg->supported_cap,
+ 				cmd->link_modes.supported);
+diff --git a/drivers/net/ethernet/sfc/net_driver.h b/drivers/net/ethernet/sfc/net_driver.h
+index f2dd7feb0e0cd..37e7e3059315d 100644
+--- a/drivers/net/ethernet/sfc/net_driver.h
++++ b/drivers/net/ethernet/sfc/net_driver.h
+@@ -15,7 +15,7 @@
+ #include <linux/ethtool.h>
+ #include <linux/if_vlan.h>
+ #include <linux/timer.h>
+-#include <linux/mdio.h>
++#include <linux/mii.h>
+ #include <linux/list.h>
+ #include <linux/pci.h>
+ #include <linux/device.h>
+@@ -914,8 +914,6 @@ struct efx_mae;
+  * @stats_buffer: DMA buffer for statistics
+  * @phy_type: PHY type
+  * @phy_data: PHY private data (including PHY-specific stats)
+- * @mdio: PHY MDIO interface
+- * @mdio_bus: PHY MDIO bus ID (only used by Siena)
+  * @phy_mode: PHY operating mode. Serialised by @mac_lock.
+  * @link_advertising: Autonegotiation advertising flags
+  * @fec_config: Forward Error Correction configuration flags.  For bit positions
+@@ -1090,8 +1088,6 @@ struct efx_nic {
  
- static void ptp_event_failure(struct efx_nic *efx, int expected_frag_len)
-diff --git a/drivers/net/ethernet/sfc/ptp.h b/drivers/net/ethernet/sfc/ptp.h
-index 7b1ef7002b3f0..2f30dbb490d28 100644
---- a/drivers/net/ethernet/sfc/ptp.h
-+++ b/drivers/net/ethernet/sfc/ptp.h
-@@ -18,8 +18,11 @@ void efx_ptp_defer_probe_with_channel(struct efx_nic *efx);
- struct efx_channel *efx_ptp_channel(struct efx_nic *efx);
- void efx_ptp_update_channel(struct efx_nic *efx, struct efx_channel *channel);
- void efx_ptp_remove(struct efx_nic *efx);
--int efx_ptp_set_ts_config(struct efx_nic *efx, struct ifreq *ifr);
--int efx_ptp_get_ts_config(struct efx_nic *efx, struct ifreq *ifr);
-+int efx_ptp_set_ts_config(struct efx_nic *efx,
-+			  struct kernel_hwtstamp_config *config,
-+			  struct netlink_ext_ack *extack);
-+int efx_ptp_get_ts_config(struct efx_nic *efx,
-+			  struct kernel_hwtstamp_config *config);
- void efx_ptp_get_ts_info(struct efx_nic *efx, struct ethtool_ts_info *ts_info);
- bool efx_ptp_is_ptp_tx(struct efx_nic *efx, struct sk_buff *skb);
- int efx_ptp_get_mode(struct efx_nic *efx);
+ 	unsigned int phy_type;
+ 	void *phy_data;
+-	struct mdio_if_info mdio;
+-	unsigned int mdio_bus;
+ 	enum efx_phy_mode phy_mode;
+ 
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(link_advertising);
 -- 
 2.53.0
 
