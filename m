@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E453148B4;
-	Sat, 17 Oct 2026 16:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF2A377A97;
+	Sat, 17 Oct 2026 16:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253919; cv=none; b=pTXUZZuEndbLDau6cHh+BAk19b13Kuw5H+mFxazbXDgcKKtLXHUZnFy+XFv9jHhHT9SOQNmYrJKarFlZL3MDv+VjZfjeTZCvHTecnASq9AW/ZnWpB0fHnE75iZ06mB1WQU3mRwTJzNPVne2y5JoKXAeD1n/eOFja1tVW3CvBZu4=
+	t=1792253922; cv=none; b=jbrqbGrAENn7kK2Z1Ig6qo3UVL7JhpEQ1RjB0FS8pb7Ahl7W4HMRVp2vgqGTLpYXcDq8YCa2LIPrrcdWSxbugWorFE1vBYIVngMmM4/IFHafl+8rQObtqWDU3RBEscd9ub/qtsT8e8+BWDkBQX4lBcbLSHYh2hhd5+7ac4Bc0c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253919; c=relaxed/simple;
-	bh=wcVDJvcGdKOdaetp8SFmenRchLA1rFN9FCABqKT8wZk=;
+	s=arc-20240116; t=1792253922; c=relaxed/simple;
+	bh=TsoATu57ohbFysULtrQwDZJJhZF/ylnalW11RuEuG6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiQIYeOLRrZQCTfk64r8og0mF4EQWT9zuAl5jM+MZxOB7f/z3Hbq7ZsOrGiFSYl7tcq7lR+Pe8BWwrMuu+q4Q5xqFC5BA7CjwZef08VwSZcb7wZ9Ehe4g4djlRMNmT1UizYJ5BpLtmczmaOX57GjbfUVvg5e76wFzBMmZT3Ff9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+Xu4BPE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qXorEZPtaSd5WAgkIKJye/mpnQZaK+edCGGaz8gJYUPtA0h5hn7ULQgwhkt0i6znlQX2FTjeToi4he1kPLTuz2e0CmYHr2qOr39qMHjbMCFKHGIHExaRaHIm0Adl5eB+WUQGRHo3+7n9d2ZkokE7Y42zgAIoRJCcl7bFab3nkHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWzUa+fp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+Xu4BPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD9A1F000C4;
-	Sat, 17 Oct 2026 16:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWzUa+fp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817DF1F000C4;
+	Sat, 17 Oct 2026 16:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253918;
-	bh=gLmjPi1ENA/EZ2XNTJu3Ojk1QWGE5EDl3sSlFf2ciYI=;
+	s=korg; t=1792253921;
+	bh=EqcNk4VSuk8/BeT9i8nm0kyNhYJUCfY5lBp8xhKSdMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+Xu4BPEi/qjSmmL80Svd8yg1fYh7F+s1nUtY52rMpenEzZGnPSCX6/bXZFGX+Nkr
-	 pQphzQmrmwlXlKUbM2AsSsehpZsHB0ykAKh+R2tYd/4Nusi5bezWgSgnSnujdPVnGM
-	 6IQu6s035voq5+0aDtnW+hCvPFoQY+RG6JJkwzM8=
+	b=wWzUa+fp7rX17CplZaHliUYV4OnFb6i43i88s4eKVNWA/GSphm3T3edT0Msn4Wgek
+	 AchAd2F0o2KN94RC+58fUXXfmQdVzUsl3Jja83q/q6RwIByfNbRa1QIPSUhJ+8j46x
+	 NcRCiopvgogOtI3pdpt1iPg/bYV6H/KtSfemG/Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 275/869] drm/exynos: vidi: use priv->vidi_dev for ctx lookup in vidi_connection_ioctl()
-Date: Sat, 17 Oct 2026 17:51:56 +0200
-Message-ID: <20261017160044.118732560@linuxfoundation.org>
+Subject: [PATCH 6.12 276/869] gfs2: fix memory leaks in gfs2_fill_super error path
+Date: Sat, 17 Oct 2026 17:51:57 +0200
+Message-ID: <20261017160044.145462473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,95 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit d3968a0d85b211e197f2f4f06268a7031079e0d0 ]
+[ Upstream commit da6f5bbc2e7902f578b503f2a4c3d8d09ca4b102 ]
 
-vidi_connection_ioctl() retrieves the driver_data from drm_dev->dev to
-obtain a struct vidi_context pointer. However, drm_dev->dev is the
-exynos-drm master device, and the driver_data contained therein is not
-the vidi component device, but a completely different device.
+Fix two memory leaks in the gfs2_fill_super() error handling path when
+transitioning a filesystem to read-write mode fails.
 
-This can lead to various bugs, ranging from null pointer dereferences and
-garbage value accesses to, in unlucky cases, out-of-bounds errors,
-use-after-free errors, and more.
+First leak: kthread objects (thread_struct, task_struct, etc.)
+When gfs2_freeze_lock_shared() fails after init_threads() succeeds, the
+created kernel threads (logd and quotad) are never destroyed. This
+occurs because the fail_per_node label doesn't call
+gfs2_destroy_threads().
 
-To resolve this issue, we need to store/delete the vidi device pointer in
-exynos_drm_private->vidi_dev during bind/unbind, and then read this
-exynos_drm_private->vidi_dev within ioctl() to obtain the correct
-struct vidi_context pointer.
+Second leak: quota bitmap buffer (8192 bytes)
+When gfs2_make_fs_rw() fails after gfs2_quota_init() succeeds but
+before other operations complete, the allocated quota bitmap is never
+freed.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+The fix moves thread cleanup to the fail_per_node label to handle all
+error paths uniformly. gfs2_destroy_threads() is safe to call
+unconditionally as it checks for NULL pointers. Quota cleanup is added
+in gfs2_make_fs_rw() to properly handle the withdrawal case where
+quota initialization succeeds but the filesystem is then withdrawn.
+
+Thread leak backtrace (gfs2_freeze_lock_shared failure):
+  unreferenced object 0xffff88801d7bca80 (size 4480):
+    copy_process+0x3a1/0x4670 kernel/fork.c:2422
+    kernel_clone+0xf3/0x6e0 kernel/fork.c:2779
+    kthread_create_on_node+0x100/0x150 kernel/kthread.c:478
+    init_threads+0xab/0x350 fs/gfs2/ops_fstype.c:611
+    gfs2_fill_super+0xe5c/0x1240 fs/gfs2/ops_fstype.c:1265
+
+Quota leak backtrace (gfs2_make_fs_rw failure):
+  unreferenced object 0xffff88812de7c000 (size 8192):
+    gfs2_quota_init+0xe5/0x820 fs/gfs2/quota.c:1409
+    gfs2_make_fs_rw+0x7a/0xe0 fs/gfs2/super.c:149
+    gfs2_fill_super+0xfbb/0x1240 fs/gfs2/ops_fstype.c:1275
+
+Reported-by: syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=aac438d7a1c44071e04b
+Fixes: 6c7410f44961 ("gfs2: gfs2_freeze_lock_shared cleanup")
+Fixes: b66f723bb552 ("gfs2: Improve gfs2_make_fs_rw error handling")
+Link: https://lore.kernel.org/all/20260131062509.77974-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_drv.h  |  1 +
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 14 +++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ fs/gfs2/ops_fstype.c | 2 +-
+ fs/gfs2/super.c      | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.h b/drivers/gpu/drm/exynos/exynos_drm_drv.h
-index 23646e55f142c..06c29ff2aac0e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.h
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.h
-@@ -199,6 +199,7 @@ struct drm_exynos_file_private {
- struct exynos_drm_private {
- 	struct device *g2d_dev;
- 	struct device *dma_dev;
-+	struct device *vidi_dev;
- 	void *mapping;
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index 4c6d1f15a6a84..243971150973c 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -1281,7 +1281,6 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
  
- 	/* for atomic commit */
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index 8400330dfe3eb..684170f44989e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -231,9 +231,14 @@ ATTRIBUTE_GROUPS(vidi);
- int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
- 				struct drm_file *file_priv)
- {
--	struct vidi_context *ctx = dev_get_drvdata(drm_dev->dev);
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
-+	struct device *dev = priv ? priv->vidi_dev : NULL;
-+	struct vidi_context *ctx = dev ? dev_get_drvdata(dev) : NULL;
- 	struct drm_exynos_vidi_connection *vidi = data;
+ 	if (error) {
+ 		gfs2_freeze_unlock(sdp);
+-		gfs2_destroy_threads(sdp);
+ 		fs_err(sdp, "can't make FS RW: %d\n", error);
+ 		goto fail_per_node;
+ 	}
+@@ -1291,6 +1290,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
  
-+	if (!ctx)
-+		return -ENODEV;
-+
- 	if (!vidi) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "user data for vidi is null.\n");
-@@ -407,6 +412,7 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
- 	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
- 	struct drm_encoder *encoder = &ctx->encoder;
- 	struct exynos_drm_plane *exynos_plane;
- 	struct exynos_drm_plane_config plane_config = { 0 };
-@@ -414,6 +420,8 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
- 	int ret;
+ fail_per_node:
+ 	init_per_node(sdp, UNDO);
++	gfs2_destroy_threads(sdp);
+ fail_inodes:
+ 	init_inodes(sdp, UNDO);
+ fail_sb:
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 3d5d4b8446214..8628121c1ab14 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -157,8 +157,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
+ 	gfs2_log_pointers_init(sdp, head.lh_blkno);
  
- 	ctx->drm_dev = drm_dev;
-+	if (priv)
-+		priv->vidi_dev = dev;
- 
- 	plane_config.pixel_formats = formats;
- 	plane_config.num_pixel_formats = ARRAY_SIZE(formats);
-@@ -459,8 +467,12 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
- static void vidi_unbind(struct device *dev, struct device *master, void *data)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
-+	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
- 
- 	del_timer_sync(&ctx->timer);
-+	if (priv)
-+		priv->vidi_dev = NULL;
- }
- 
- static const struct component_ops vidi_component_ops = {
+ 	error = gfs2_quota_init(sdp);
+-	if (!error && gfs2_withdrawing_or_withdrawn(sdp))
++	if (!error && gfs2_withdrawing_or_withdrawn(sdp)) {
++		gfs2_quota_cleanup(sdp);
+ 		error = -EIO;
++	}
+ 	if (!error)
+ 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
+ 	return error;
 -- 
 2.53.0
 
