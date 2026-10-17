@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A99387373;
-	Sat, 17 Oct 2026 16:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B7A2E8DEB;
+	Sat, 17 Oct 2026 16:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255997; cv=none; b=JI+xe5vpoIN6xgdhQDHBr2pkZHmlK3mAPQgEkEL8+vkTfMAZWuNJQikpQRiXO2Rt6M9Ahhv5/pXmpSqJh2hOVBZ4YFLqQXLCShqN8V0XL3hcIWlCVoTaZ0LW7IgDXXLJc2AMnKHWaVKcguqK7Zw2wEekZzshwjF8ks4/0RYeqto=
+	t=1792255999; cv=none; b=YMEmKDiscSGWoij07nf78ZxQ08yrJbooRrZBvfgTuMNUSJQE42HwT+NCACXG3SMmHCXGD8RdY1PkMfaWu9TWO8xbVEYhhRGAssOe0M3lCB5te6XPywvgRCfv4uGBSij6i20qYogVfdDeCudHt5Yv2egeHL7eavhyWi/vH/h3Qok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255997; c=relaxed/simple;
-	bh=9/J4NSyhEX0IbtSdUFf9MQqi+JDpXtYIRkgZo2jg6rs=;
+	s=arc-20240116; t=1792255999; c=relaxed/simple;
+	bh=6C+/d1FSyZ7ap6q/bLm5K0HF/+1pE54MkmeoPN5ahbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZejc9NBMy9TQJv+kXDF33quCmp5zg104cQ9+Ys8SQClBrwdifkEtk73a5lSZ3GGqLKiMa1vDzf7xEdYyAl+jxXcskEGysfyfWCHBUbNUIMq+/X31mBIxD9S/JQpXIP81Ed4Oz0/SYK6qC9KJsJ/xiIjDQK9A82q4JLniGwhZWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YF9yFPqG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RV6RIkqD9pom57UoaXqkHxvz7+idiUWzsQRUci6CIRTqxT28PA35Hq1S84/PylmeKjKk7VjEBBAF8Cg5dJThMYxXu8oZAwyu/tXnQaw+qdE/PkhZpTbQrTEAlbRsIkRnBy5RDJnwSOfWE0MVIqgMRQRtpkbOPbwqAEOTr5pM8Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1WQRZcj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YF9yFPqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689D81F000C4;
-	Sat, 17 Oct 2026 16:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1WQRZcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523081F000C4;
+	Sat, 17 Oct 2026 16:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255996;
-	bh=q1nac6gxX4/76+XBQJ7y1KePibMlK+UJwPXkj6w42kQ=;
+	s=korg; t=1792255998;
+	bh=J+p/QPBXIG4rrpcLCKLwHisIl8wQ+Us/K0u3fZs/P6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YF9yFPqGG5YqO7sWdbCH6Clie1DJxh1zDmo0V5dluEphOluEpCR7eghCuPkH4rjzM
-	 TVBjkEXeiCphVUbjd6XIEUmI6emxW65bdiz4eN1sUbkOcJBBnRHhBGHXLRFk0+aSj/
-	 H0XJdwUCHKcpFjAbbdPxNuOssMxERx207tgk1ZZ0=
+	b=m1WQRZcjdm1uzQhWPXxeybOCQm5ReLMDlE0dWXByvElSh+E+UxwfwoeDaiLu8TpYP
+	 l3z8/P4yXK9UY7VAvjNAfu9MAemfhsWhoJlXQzYaAmvaSb1LERq463t4RH2Pk5pmsN
+	 r4mGKs3Oq7SvLCwZ5nuyb2r1G5cq1RZ3GKzSDaw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
+	Narasimharao Vadlamudi <ahmisaranrao@gmail.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0090/1674] media: platform: mtk-mdp3: fix NULL deref on failed SCP lookup
-Date: Sat, 17 Oct 2026 17:39:22 +0200
-Message-ID: <20261017160433.449358141@linuxfoundation.org>
+Subject: [PATCH 6.6 0091/1674] media: rkvdec: Propagate platform_get_irq() errors
+Date: Sat, 17 Oct 2026 17:39:23 +0200
+Message-ID: <20261017160433.479855363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,41 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
 
-[ Upstream commit 90368323fb244da0504e3da37a182f8e89bcc3b9 ]
+[ Upstream commit c37aca64206fafe938119e801a3fd10a537a051f ]
 
-Add the missing sanity check after looking up the SCP to avoid
-dereferencing a NULL-pointer in case its driver has not yet been bound.
+platform_get_irq() returns a positive IRQ number on success and a
+negative error code on failure. It no longer returns zero. The driver
+currently returns -ENXIO for all failures, which loses useful errors
+such as -EPROBE_DEFER.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Cc: stable@vger.kernel.org	# 6.1
-Cc: Moudy Ho <moudy.ho@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Return the error from platform_get_irq() directly.
+
+Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
+Reviewed-by: Detlev Casanova <detlev.casanova@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ Adapted NULL-check placement to the older direct platform_get_drvdata() lookup. ]
+[ adjusted the patch path to drivers/staging/media/rkvdec/rkvdec.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/staging/media/rkvdec/rkvdec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-index cc44be10fdb77..50d1458339343 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-@@ -215,6 +215,11 @@ static int mdp_probe(struct platform_device *pdev)
- 		goto err_destroy_clock_wq;
- 	}
- 	mdp->scp = platform_get_drvdata(mm_pdev);
-+	if (!mdp->scp) {
-+		ret = -EPROBE_DEFER;
-+		goto err_destroy_clock_wq;
-+	}
-+
- 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
- 	dev_dbg(&pdev->dev, "MDP rproc_handle: %pK", mdp->rproc_handle);
+diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
+index a1d941b0be00b..85dcabe11bf9e 100644
+--- a/drivers/staging/media/rkvdec/rkvdec.c
++++ b/drivers/staging/media/rkvdec/rkvdec.c
+@@ -1044,8 +1044,8 @@ static int rkvdec_probe(struct platform_device *pdev)
+ 	vb2_dma_contig_set_max_seg_size(&pdev->dev, DMA_BIT_MASK(32));
  
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq <= 0)
+-		return -ENXIO;
++	if (irq < 0)
++		return irq;
+ 
+ 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 					rkvdec_irq_handler, IRQF_ONESHOT,
 -- 
 2.53.0
 
