@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43665355F49;
-	Sat, 17 Oct 2026 16:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305B038C2C0;
+	Sat, 17 Oct 2026 16:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253508; cv=none; b=GxmrZToJMNX3tWPKyLG6ejLa826awJeMSqJCWapUXc5o3J05rLYeBACbghBCjKFkfp7jSE6wm8CEkyr262wIa8Vr7+IdzJ0Xd+CkWU0v9qfDQbRL+uoJ4YXLoMqpexy6gTKZu+8maavxtm4PCbbnP7wRRcrU0XJWqW7uD3JB0nM=
+	t=1792253511; cv=none; b=a3RTP9iF7zPEcBQncpqruY42MFtHMa0pWOt9OpNgTt+7D/hLeuWpWfY1v1F6CSV4YmqHN8wzOBhE86Kf7Cj5FkHzIbxTX/FF1U51LwT9qqgKG72zaIdlYxXEk+9986yFE6NWocNSQEBQFayygpmWf/DAJq3eUyvdM2wFoDBCZOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253508; c=relaxed/simple;
-	bh=4ToOxSU80rN4bH0DjfnPuTqcEjsQgywoJTajgJIUNRg=;
+	s=arc-20240116; t=1792253511; c=relaxed/simple;
+	bh=QCCd2mpes704WUmnHd46cUHLCLgbiZgS7SeABLRfrzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGo1j+OhlbpaJIDo1qV+CP+4E6Ct5r6euR2VvRZ4DSRXyvDAPaDnfIb/onKJVB2f7xQU439sQLE5ygQqQB+gjYm51bsPVEhDLjnE06v/flpXozik4LuUVoMzhUGU78Ba42agxxALfoSAd42g0+9IHCwPNg7CPSYfhHKyUB1O1UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaowFGM3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tF07W/p9in67iFCjUClXBakBbD5mYXhuunsdqIxEszmaCZt3t0BpH3tDMrKi2iNdN1Um7eT360nVcFQ9G5zi3gc69a5hw/vxWJe+WoKIwqqdSSEd72m4a0nCXwk90/0DdfnCngvBhc6Q0lUR107Yh23PI19x+b99wKeorXcZ44w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7MatKIx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaowFGM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B35E1F000C4;
-	Sat, 17 Oct 2026 16:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7MatKIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AF81F000C4;
+	Sat, 17 Oct 2026 16:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253507;
-	bh=fwBflBshdh0pMdZyJolQKr6led0g2jVwd4H+otyOOm0=;
+	s=korg; t=1792253510;
+	bh=e4zrsgAOdWLX823hyHJSqdR9Gla4WdZ+KuY/oyiXeW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CaowFGM3zZSJGU5otRlN4JSR87WKkmaGuyPT8Jv3NsMVUGTQm7qWQLoxJHoTuIF0r
-	 /s39RQ48ik32F/2VT9GvQ6zNbVoL7/sQYTrXOKE1ANqUKm8db1Z1MYHhVIaslhF/IB
-	 Y1QhHLVDABZAXjg+hparXblLD+HjGvYxjYvwhZrQ=
+	b=l7MatKIxIuTYClXbPChLlFCwnlOGqniO/zglP51QbmvljhMGiOj+kqottWKH4ncJ5
+	 rV0KBRdb3qL6rxTDzVtofquSTd9ZtxNwb6v7PF5uqXi8v9gdhc2GPPE0oIwbIQdqYn
+	 3dp37UXemCJjDlXGdh//S6YrKkzmX4FDDz+3cDtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cynthia <cynthia@kosmx.dev>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	"Philip.Yang" <Philip.Yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/869] sysfs: check visibility before changing group attribute ownership
-Date: Sat, 17 Oct 2026 17:49:41 +0200
-Message-ID: <20261017160040.632164578@linuxfoundation.org>
+Subject: [PATCH 6.12 141/869] amd/amdkfd: enhance kfd process check in switch partition
+Date: Sat, 17 Oct 2026 17:49:42 +0200
+Message-ID: <20261017160040.656050518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,133 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit c7fbb8218b4ad35fec0bd2256d2b9c8d60331f33 ]
+[ Upstream commit 45da20e00d5da842e17dfc633072b127504f0d0e ]
 
-Since commit 0c17270f9b92 ("net: sysfs: Implement is_visible for
-phys_(port_id, port_name, switch_id)"), __dev_change_net_namespace() can
-hit WARN_ON() when trying to change owner of a file that isn't visible.
-See the trace below:
+current switch partition only check if kfd_processes_table is empty.
+kfd_prcesses_table entry is deleted in kfd_process_notifier_release, but
+kfd_process tear down is in kfd_process_wq_release.
 
- WARNING: CPU: 6 PID: 2938 at net/core/dev.c:12410 __dev_change_net_namespace+0xb89/0xc30
- CPU: 6 UID: 0 PID: 2938 Comm: incusd Not tainted 6.17.1-1-mainline #1 PREEMPT(full)  4b783b4a638669fb644857f484487d17cb45ed1f
- Hardware name: Framework Laptop 13 (AMD Ryzen 7040Series)/FRANMDCP07, BIOS 03.07 02/19/2025
- RIP: 0010:__dev_change_net_namespace+0xb89/0xc30
- [...]
- Call Trace:
-  <TASK>
-  ? if6_seq_show+0x30/0x50
-  do_setlink.isra.0+0xc7/0x1270
-  ? __nla_validate_parse+0x5c/0xcc0
-  ? security_capable+0x94/0x1a0
-  rtnl_newlink+0x858/0xc20
-  ? update_curr+0x8e/0x1c0
-  ? update_entity_lag+0x71/0x80
-  ? sched_balance_newidle+0x358/0x450
-  ? psi_task_switch+0x113/0x2a0
-  ? __pfx_rtnl_newlink+0x10/0x10
-  rtnetlink_rcv_msg+0x346/0x3e0
-  ? sched_clock+0x10/0x30
-  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
-  netlink_rcv_skb+0x59/0x110
-  netlink_unicast+0x285/0x3c0
-  ? __alloc_skb+0xdb/0x1a0
-  netlink_sendmsg+0x20d/0x430
-  ____sys_sendmsg+0x39f/0x3d0
-  ? import_iovec+0x2f/0x40
-  ___sys_sendmsg+0x99/0xe0
-  __sys_sendmsg+0x8a/0xf0
-  do_syscall_64+0x81/0x970
-  ? __sys_bind+0xe3/0x110
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? sock_alloc_file+0x63/0xc0
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? alloc_fd+0x12e/0x190
-  ? put_unused_fd+0x2a/0x70
-  ? do_sys_openat2+0xa2/0xe0
-  ? syscall_exit_work+0x143/0x1b0
-  ? do_syscall_64+0x244/0x970
-  ? exc_page_fault+0x7e/0x1a0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- [...]
-  </TASK>
+consider two processes:
 
-Fix this by checking is_visible() before trying to touch the attribute.
+Process A (workqueue) -> kfd_process_wq_release -> Access kfd_node member
+Process B switch partition -> amdgpu_xcp_pre_partition_switch -> amdgpu_amdkfd_device_fini_sw
+-> kfd_node tear down.
 
-Fixes: 303a42769c4c ("sysfs: add sysfs_group{s}_change_owner()")
-Fixes: 0c17270f9b92 ("net: sysfs: Implement is_visible for phys_(port_id, port_name, switch_id)")
-Reported-by: Cynthia <cynthia@kosmx.dev>
-Closes: https://lore.kernel.org/netdev/01070199e22de7f8-28f711ab-d3f1-46d9-b9a0-048ab05eb09b-000000@eu-central-1.amazonses.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20251016101456.4087-1-fmancera@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Process A and B may trigger a race as shown in dmesg log.
+
+This patch is to resolve the race by adding an atomic kfd_process counter
+kfd_processes_count, it increment as create kfd process, decrement as
+finish kfd_process_wq_release.
+
+v2: Put kfd_processes_count per kfd_dev, move decrement to kfd_process_destroy_pdds
+and bug fix. (Philip Yang)
+
+[3966658.307702] divide error: 0000 [#1] SMP NOPTI
+[3966658.350818]  i10nm_edac
+[3966658.356318] CPU: 124 PID: 38435 Comm: kworker/124:0 Kdump: loaded Tainted
+[3966658.356890] Workqueue: kfd_process_wq kfd_process_wq_release [amdgpu]
+[3966658.362839]  nfit
+[3966658.366457] RIP: 0010:kfd_get_num_sdma_engines+0x17/0x40 [amdgpu]
+[3966658.366460] Code: 00 00 e9 ac 81 02 00 66 66 2e 0f 1f 84 00 00 00 00 00 90 0f 1f 44 00 00 48 8b 4f 08 48 8b b7 00 01 00 00 8b 81 58 26 03 00 99 <f7> be b8 01 00 00 80 b9 70 2e 00 00 00 74 0b 83 f8 02 ba 02 00 00
+[3966658.380967]  x86_pkg_temp_thermal
+[3966658.391529] RSP: 0018:ffffc900a0edfdd8 EFLAGS: 00010246
+[3966658.391531] RAX: 0000000000000008 RBX: ffff8974e593b800 RCX: ffff888645900000
+[3966658.391531] RDX: 0000000000000000 RSI: ffff888129154400 RDI: ffff888129151c00
+[3966658.391532] RBP: ffff8883ad79d400 R08: 0000000000000000 R09: ffff8890d2750af4
+[3966658.391532] R10: 0000000000000018 R11: 0000000000000018 R12: 0000000000000000
+[3966658.391533] R13: ffff8883ad79d400 R14: ffffe87ff662ba00 R15: ffff8974e593b800
+[3966658.391533] FS:  0000000000000000(0000) GS:ffff88fe7f600000(0000) knlGS:0000000000000000
+[3966658.391534] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[3966658.391534] CR2: 0000000000d71000 CR3: 000000dd0e970004 CR4: 0000000002770ee0
+[3966658.391535] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[3966658.391535] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+[3966658.391536] PKRU: 55555554
+[3966658.391536] Call Trace:
+[3966658.391674]  deallocate_sdma_queue+0x38/0xa0 [amdgpu]
+[3966658.391762]  process_termination_cpsch+0x1ed/0x480 [amdgpu]
+[3966658.399754]  intel_powerclamp
+[3966658.402831]  kfd_process_dequeue_from_all_devices+0x5b/0xc0 [amdgpu]
+[3966658.402908]  kfd_process_wq_release+0x1a/0x1a0 [amdgpu]
+[3966658.410516]  coretemp
+[3966658.434016]  process_one_work+0x1ad/0x380
+[3966658.434021]  worker_thread+0x49/0x310
+[3966658.438963]  kvm_intel
+[3966658.446041]  ? process_one_work+0x380/0x380
+[3966658.446045]  kthread+0x118/0x140
+[3966658.446047]  ? __kthread_bind_mask+0x60/0x60
+[3966658.446050]  ret_from_fork+0x1f/0x30
+[3966658.446053] Modules linked in: kpatch_20765354(OEK)
+[3966658.455310]  kvm
+[3966658.464534]  mptcp_diag xsk_diag raw_diag unix_diag af_packet_diag netlink_diag udp_diag act_pedit act_mirred act_vlan cls_flower kpatch_21951273(OEK) kpatch_18424469(OEK) kpatch_19749756(OEK)
+[3966658.473462]  idxd_mdev
+[3966658.482306]  kpatch_17971294(OEK) sch_ingress xt_conntrack amdgpu(OE) amdxcp(OE) amddrm_buddy(OE) amd_sched(OE) amdttm(OE) amdkcl(OE) intel_ifs iptable_mangle tcm_loop target_core_pscsi tcp_diag target_core_file inet_diag target_core_iblock target_core_user target_core_mod coldpgs kpatch_18383292(OEK) ip6table_nat ip6table_filter ip6_tables ip_set_hash_ipportip ip_set_hash_ipportnet ip_set_hash_ipport ip_set_bitmap_port xt_comment iptable_nat nf_nat iptable_filter ip_tables ip_set ip_vs_sh ip_vs_wrr ip_vs_rr ip_vs nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 sn_core_odd(OE) i40e overlay binfmt_misc tun bonding(OE) aisqos(OE) aisqos_hotfixes(OE) rfkill uio_pci_generic uio cuse fuse nf_tables nfnetlink intel_rapl_msr intel_rapl_common intel_uncore_frequency intel_uncore_frequency_common i10nm_edac nfit x86_pkg_temp_thermal intel_powerclamp coretemp kvm_intel kvm idxd_mdev
+[3966658.491237]  vfio_pci
+[3966658.501196]  vfio_pci vfio_virqfd mdev vfio_iommu_type1 vfio iax_crypto intel_pmt_telemetry iTCO_wdt intel_pmt_class iTCO_vendor_support irqbypass crct10dif_pclmul crc32_pclmul ghash_clmulni_intel rapl intel_cstate snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_seq
+[3966658.508537]  vfio_virqfd
+[3966658.517569]  snd_seq_device ipmi_ssif isst_if_mbox_pci isst_if_mmio pcspkr snd_pcm idxd intel_uncore ses isst_if_common intel_vsec idxd_bus enclosure snd_timer mei_me snd i2c_i801 i2c_smbus mei i2c_ismt soundcore joydev acpi_ipmi ipmi_si ipmi_devintf ipmi_msghandler acpi_power_meter acpi_pad vfat fat
+[3966658.526851]  mdev
+[3966658.536096]  nfsd auth_rpcgss nfs_acl lockd grace slb_vtoa(OE) sunrpc dm_mod hookers mlx5_ib(OE) ast i2c_algo_bit drm_vram_helper drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys_fops drm_ttm_helper ttm mlx5_core(OE) mlxfw(OE)
+[3966658.540381]  vfio_iommu_type1
+[3966658.544341]  nvme mpt3sas tls drm nvme_core pci_hyperv_intf raid_class psample libcrc32c crc32c_intel mlxdevm(OE) i2c_core
+[3966658.551254]  vfio
+[3966658.558742]  scsi_transport_sas wmi pinctrl_emmitsburg sd_mod t10_pi sg ahci libahci libata rdma_ucm(OE) ib_uverbs(OE) rdma_cm(OE) iw_cm(OE) ib_cm(OE) ib_umad(OE) ib_core(OE) ib_ucm(OE) mlx_compat(OE)
+[3966658.563004]  iax_crypto
+[3966658.570988]  [last unloaded: diagnose]
+[3966658.571027] ---[ end trace cc9dbb180f9ae537 ]---
+
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Philip.Yang<Philip.Yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/group.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h |  4 ++--
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c    | 13 ++++++++++++-
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h      |  2 ++
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c   |  4 ++++
+ 5 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/fs/sysfs/group.c b/fs/sysfs/group.c
-index f2b7283e6fa0a..e1b6c38285f7a 100644
---- a/fs/sysfs/group.c
-+++ b/fs/sysfs/group.c
-@@ -495,17 +495,26 @@ int compat_only_sysfs_link_entry_to_kobj(struct kobject *kobj,
- }
- EXPORT_SYMBOL_GPL(compat_only_sysfs_link_entry_to_kobj);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index a89172a696e4c..1a92f04c63ace 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -805,7 +805,7 @@ int amdgpu_amdkfd_send_close_event_drain_irq(struct amdgpu_device *adev,
  
--static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
-+static int sysfs_group_attrs_change_owner(struct kobject *kobj,
-+					  struct kernfs_node *grp_kn,
- 					  const struct attribute_group *grp,
- 					  struct iattr *newattrs)
+ int amdgpu_amdkfd_check_and_lock_kfd(struct amdgpu_device *adev)
  {
- 	struct kernfs_node *kn;
--	int error;
-+	int error, i;
-+	umode_t mode;
+-	return kgd2kfd_check_and_lock_kfd();
++	return kgd2kfd_check_and_lock_kfd(adev->kfd.dev);
+ }
  
- 	if (grp->attrs) {
- 		struct attribute *const *attr;
+ void amdgpu_amdkfd_unlock_kfd(struct amdgpu_device *adev)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index d7de6fe404940..d79c431de2234 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -423,7 +423,7 @@ int kgd2kfd_post_reset(struct kfd_dev *kfd);
+ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry);
+ void kgd2kfd_set_sram_ecc_flag(struct kfd_dev *kfd);
+ void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask);
+-int kgd2kfd_check_and_lock_kfd(void);
++int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd);
+ void kgd2kfd_unlock_kfd(void);
+ int kgd2kfd_start_sched(struct kfd_dev *kfd, uint32_t node_id);
+ int kgd2kfd_stop_sched(struct kfd_dev *kfd, uint32_t node_id);
+@@ -489,7 +489,7 @@ void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask)
+ {
+ }
  
--		for (attr = grp->attrs; *attr; attr++) {
-+		for (i = 0, attr = grp->attrs; *attr; i++, attr++) {
-+			if (grp->is_visible) {
-+				mode = grp->is_visible(kobj, *attr, i);
-+				if (mode & SYSFS_GROUP_INVISIBLE)
-+					break;
-+				if (!mode)
-+					continue;
-+			}
- 			kn = kernfs_find_and_get(grp_kn, (*attr)->name);
- 			if (!kn)
- 				return -ENOENT;
-@@ -520,7 +529,14 @@ static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
- 	if (grp->bin_attrs) {
- 		struct bin_attribute *const *bin_attr;
+-static inline int kgd2kfd_check_and_lock_kfd(void)
++static inline int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd)
+ {
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index b536ec72cffb7..fa95bde45f3c3 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -487,6 +487,7 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf)
+ 	mutex_init(&kfd->doorbell_mutex);
  
--		for (bin_attr = grp->bin_attrs; *bin_attr; bin_attr++) {
-+		for (i = 0, bin_attr = grp->bin_attrs; *bin_attr; i++, bin_attr++) {
-+			if (grp->is_bin_visible) {
-+				mode = grp->is_bin_visible(kobj, *bin_attr, i);
-+				if (mode & SYSFS_GROUP_INVISIBLE)
-+					break;
-+				if (!mode)
-+					continue;
-+			}
- 			kn = kernfs_find_and_get(grp_kn, (*bin_attr)->attr.name);
- 			if (!kn)
- 				return -ENOENT;
-@@ -570,7 +586,7 @@ int sysfs_group_change_owner(struct kobject *kobj,
+ 	ida_init(&kfd->doorbell_ida);
++	atomic_set(&kfd->kfd_processes_count, 0);
  
- 	error = kernfs_setattr(grp_kn, &newattrs);
- 	if (!error)
--		error = sysfs_group_attrs_change_owner(grp_kn, grp, &newattrs);
-+		error = sysfs_group_attrs_change_owner(kobj, grp_kn, grp, &newattrs);
+ 	return kfd;
+ }
+@@ -1430,9 +1431,19 @@ unsigned int kfd_get_num_xgmi_sdma_engines(struct kfd_node *node)
+ 		kfd_get_num_sdma_engines(node);
+ }
  
- 	kernfs_put(grp_kn);
+-int kgd2kfd_check_and_lock_kfd(void)
++int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd)
+ {
+ 	mutex_lock(&kfd_processes_mutex);
++
++	/* kfd_processes_count is per kfd_dev, return -EBUSY without
++	 * further check
++	 */
++	if (!!atomic_read(&kfd->kfd_processes_count)) {
++		pr_debug("process_wq_release not finished\n");
++		mutex_unlock(&kfd_processes_mutex);
++		return -EBUSY;
++	}
++
+ 	if (!hash_empty(kfd_processes_table) || kfd_is_locked()) {
+ 		mutex_unlock(&kfd_processes_mutex);
+ 		return -EBUSY;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 74bd33a9bd092..8f7e44afba635 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -386,6 +386,8 @@ struct kfd_dev {
+ 
+ 	/* bitmap for dynamic doorbell allocation from doorbell object */
+ 	unsigned long *doorbell_bitmap;
++
++	atomic_t kfd_processes_count;
+ };
+ 
+ enum kfd_mempool {
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 64f3a0687f8a2..b9f00b756c509 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1091,6 +1091,8 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
+ 			pdd->runtime_inuse = false;
+ 		}
+ 
++		atomic_dec(&pdd->dev->kfd->kfd_processes_count);
++
+ 		kfree(pdd);
+ 		p->pdds[i] = NULL;
+ 	}
+@@ -1662,6 +1664,8 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
+ 	/* Init idr used for memory handle translation */
+ 	idr_init(&pdd->alloc_idr);
+ 
++	atomic_inc(&dev->kfd->kfd_processes_count);
++
+ 	return pdd;
+ }
  
 -- 
 2.53.0
