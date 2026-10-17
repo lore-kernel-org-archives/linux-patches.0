@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50203A1A3B;
-	Sat, 17 Oct 2026 17:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B8D39D6DD;
+	Sat, 17 Oct 2026 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259886; cv=none; b=ek+pmzRSN69bIzapWHKQ64V62+aZdTHyjrrePhKvRjviSij3ja0yvFIoaoJ1SX0NX+gBgaviMUzxREu88KnjFR05GQXpoQUT4r+aRDFqV1wUu3h6F58hh+mJVj+oCKsIG4tmCs7TSs6nMhbW/4xwk/OcR5gVU39nbhuz4Vae+yM=
+	t=1792259889; cv=none; b=JJzfKpRvsmpjtHEpZTy9ZS24aEWVaRLXQBylbEOAOZ/eStIdIKlc6bK7QpBNo15Mu/2eWcMTAL91ikwRsM+gekYL8AjC2z8s5UMtKWiJSZT69rWyGM2aeAAFLVSKs1f9IkoaK6Bwn9bt8M4wm/iBopo3epn14O9GFq+MIEKRDLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259886; c=relaxed/simple;
-	bh=hbvLzvOi5Nh2/mfBcOt4HGcQdSrKnSEN8qTAlubiC00=;
+	s=arc-20240116; t=1792259889; c=relaxed/simple;
+	bh=XNpxqHGsfCrPs2nMZZv1++V1TEi3Vwi1l7p9nwJQG4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XGnzLfzHdXPPc62zUgkGm0H86S31PjKGb1TTM/sQYbWtfHZZj8wux2PGybotErO4QJRqs+pCS1nH3EGhpScB79xICt+UxV8JkE8pC87YVjWF6xyLMny4/4X43BHrYj1jlZiY1Ymzdqxm+RuXpG7YvdJSot9K5NTRqI+DafD3K24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3CC1OF/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=II+lLPskLiz5sQCJI6OCqoKgoh00A1BXH8Ux+HXnix7CbSP36JDoHfJ0U043Vsr7rVAw3Zpe8KaJR8FUHhwqHzaziQAP/k9Z3MtDGtMtxKgTOO366EOMgnDqMnEYWjB2b/+idN9b6bdwwdd4wF44yyew4hGXNcxYW1ey75XWq6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3U/G2TS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3CC1OF/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4790B1F000C4;
-	Sat, 17 Oct 2026 17:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3U/G2TS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BD61F000C4;
+	Sat, 17 Oct 2026 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259884;
-	bh=d5fptLnotUEQiarar9QSJmCF5jBhJN39ff/cUVp6za0=;
+	s=korg; t=1792259887;
+	bh=gsPT5vLxZdBWLzzwQClkm+ubxoGnz8//bvAKNuLCzuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3CC1OF/cGHFur75nI49scY+2c6he3ABWsT9VDL9ORdtmIBup7G4HyI+PRlFdruMN
-	 TtNgyKTTCdWgjx4IDeiCVYSySifIbJph+Ao9LfLPlr+pBtcYqugq4g+W4RtMsz4VAA
-	 KS9doruwW4rq3B7US38K4WsXYYneHbSC5f6xLi8Y=
+	b=R3U/G2TSFg7axHnENPqIibt7VHdb8dPOJ5UjDeSN0aFcMlcJ6SV58ZspbzeIEI3CX
+	 SDsaGoHKMsPtGs4WSpIu0KJ9uNh92NMfX/1V+a96F46w46NTQoxDbSjywOtfGLwPP7
+	 HiQDltVNv6XPeq4uEbss1RbbR6BFZu63tkrEsdGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Baineng Shou <shoubaineng@gmail.com>,
+	sashiko-bot@kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1360/1674] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
-Date: Sat, 17 Oct 2026 18:00:32 +0200
-Message-ID: <20261017160506.066016918@linuxfoundation.org>
+Subject: [PATCH 6.6 1361/1674] tracing: Take trace_array reference when opening options file
+Date: Sat, 17 Oct 2026 18:00:33 +0200
+Message-ID: <20261017160506.090947564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,251 +45,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
+[ Upstream commit f2951ebd15c36a1ea4820a7f0cbb0b5f1c028b73 ]
 
-DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
-caller's fd table via dma_buf_fd() -> fd_install() before
-dma_heap_ioctl() copies the result back to userspace.  If the trailing
-copy_to_user() fails, userspace never learns the fd number, but the
-fd (and the underlying dma-buf reference) are already visible to
-other threads in the same process and are leaked for the lifetime of
-the process.
+The options files do not take the trace_array reference for the options
+they represent. This could cause a use-after-free kernel crash if one of
+these files is opened by one task and another task removes the instance
+that the option is for. Because it doesn't take a reference upon opening,
+it will not stop the removal which will free the options descriptor that
+is being used.
 
-The obvious "close it on the failure path" fix is unsafe: once
-fd_install() has run, another thread can already dup() the fd, send
-it via SCM_RIGHTS, or close() it and let its number be reused, so a
-subsequent close_fd() from the ioctl path can operate on an unrelated
-file.  This was pointed out by Christian König on v1 [1].
+As the options are somewhat dynamic in their creation at boot up, each
+file represents a flag in the trace_array. The trace_array has an array of
+indexes to represent each of these flags that is stored in the
+trace_flags_index array. The address of the index array element is used to
+pass to the inode->i_private pointer. Then that element is read which
+holds the index (which represents the flag) and then the index is used to
+calculate the trace_array descriptor from its trace_flags_index array.
 
-Restructure the allocation path so that fd_install() is the last,
-unfailable step of a successful ioctl:
+One issue is that the index element can not be referenced until the
+trace_array's reference is taken. To handle this, create a new helper
+function called: trace_array_options_get() that will iterate all the
+existing trace_arrays in the ftrace_trace_arrays list (under the
+trace_types_lock), and compare the passed in address of the index element
+with the entire array of the trace_array's trace_flags_index array.
+If it matches, then up the corresponding trace_array's reference and
+return.
 
-  1. heap->ops->allocate()      creates the dma_buf.
-  2. get_unused_fd_flags()      reserves an fd number in the caller's
-                                fd table without publishing it, so
-                                no other thread can observe it.
-  3. copy_to_user()             delivers the fd number to userspace;
-                                on failure the fd is returned with
-                                put_unused_fd() and the dma_buf
-                                reference is dropped with
-                                dma_buf_put(), leaving no user-
-                                visible state behind.
-  4. dma_buf_fd_install()       publishes the fd and emits the
-                                trace_dma_buf_fd tracepoint -- from
-                                here on the ioctl cannot fail.
-
-A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
-fd_install() together with the DMA_BUF_TRACE() call, preserving the
-export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
-is refactored to return the struct dma_buf * directly (returning
-ERR_PTR on failure) so the caller holds the dmabuf reference across
-steps 3 and 4.
-
-The failure at step 3 is easily reachable from userspace: pass a
-struct dma_heap_allocation_data that lives in a page whose protection
-is flipped to PROT_READ between copy_from_user() and copy_to_user()
-(e.g. via mprotect()).  Before this change each such ioctl leaks one
-dmabuf fd; after it, the fd table is unchanged on failure and only
-/dev/dma_heap/<name> remains open.
-
-No UAPI or heap-driver interface change.
-
-[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
-
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
 Cc: stable@vger.kernel.org
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://patch.msgid.link/20260902121918.5a9e9d1b@gandalf.local.home
+Fixes: 577b785f55168 ("tracing: add tracer dependent options to options directory")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260828135858.2AC501F000E9@smtp.kernel.org/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-buf.c  | 15 +++++++
- drivers/dma-buf/dma-heap.c | 80 +++++++++++++++++++-------------------
- include/linux/dma-buf.h    |  1 +
- 3 files changed, 56 insertions(+), 40 deletions(-)
+ kernel/trace/trace.c | 69 +++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 65 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-index 21916bba77d58..47783225ed021 100644
---- a/drivers/dma-buf/dma-buf.c
-+++ b/drivers/dma-buf/dma-buf.c
-@@ -714,6 +714,21 @@ int dma_buf_fd(struct dma_buf *dmabuf, int flags)
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 47f1e8f47d472..c21133901f1bf 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9016,11 +9016,72 @@ trace_options_core_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 	return cnt;
  }
- EXPORT_SYMBOL_NS_GPL(dma_buf_fd, DMA_BUF);
  
-+/**
-+ * dma_buf_fd_install - install a reserved fd for a dma-buf
-+ * @dmabuf:	[in]	pointer to dma_buf
-+ * @fd:		[in]	fd reserved with get_unused_fd_flags()
++/*
++ * The tr_index is the address of a trace_array->trace_flags_index[]
++ * element that holds the index of the trace flag. But since the
++ * trace_array reference has not been taken yet, it cannot be referenced
++ * as it could have been freed by a rmdir of the instance the trace_array
++ * represents.
 + *
-+ * Publishes a previously reserved fd into the caller's fd table.
-+ * Must only be called after all fallible work (e.g. copy_to_user)
-+ * has succeeded, as it cannot be undone safely once called.
++ * Search the list of trace_arrays and compare the tr_index to the
++ * address of the entire trace_array trace_flags_index array for each
++ * trace_array in the list. If one is matched, then take the reference
++ * and return it. If not, the trace_array no longer exits.
 + */
-+void dma_buf_fd_install(struct dma_buf *dmabuf, int fd)
++static int trace_array_options_get(void *tr_index)
 +{
-+	fd_install(fd, dmabuf->file);
-+}
-+EXPORT_SYMBOL_NS_GPL(dma_buf_fd_install, DMA_BUF);
++	struct trace_array *tr;
++	int ret;
 +
- /**
-  * dma_buf_get - returns the struct dma_buf related to an fd
-  * @fd:	[in]	fd associated with the struct dma_buf to be returned
-diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
-index 84ae708fafe75..baeb3b629eadd 100644
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
- static struct class *dma_heap_class;
- static DEFINE_XARRAY_ALLOC(dma_heap_minors);
- 
--static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
--				 unsigned int fd_flags,
--				 unsigned int heap_flags)
--{
--	struct dma_buf *dmabuf;
--	int fd;
--
--	/*
--	 * Allocations from all heaps have to begin
--	 * and end on page boundaries.
--	 */
--	len = PAGE_ALIGN(len);
--	if (!len)
--		return -EINVAL;
--
--	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
--	if (IS_ERR(dmabuf))
--		return PTR_ERR(dmabuf);
--
--	fd = dma_buf_fd(dmabuf, fd_flags);
--	if (fd < 0) {
--		dma_buf_put(dmabuf);
--		/* just return, as put will call release and that will free */
--	}
--	return fd;
--}
--
- static int dma_heap_open(struct inode *inode, struct file *file)
- {
- 	struct dma_heap *heap;
-@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *inode, struct file *file)
- 	return 0;
- }
- 
--static long dma_heap_ioctl_allocate(struct file *file, void *data)
-+static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
- {
- 	struct dma_heap_allocation_data *heap_allocation = data;
- 	struct dma_heap *heap = file->private_data;
-+	struct dma_buf *dmabuf;
- 	int fd;
-+	size_t len;
- 
- 	if (heap_allocation->fd)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
 +
-+	len = PAGE_ALIGN(heap_allocation->len);
-+	if (!len)
-+		return ERR_PTR(-EINVAL);
++	if (tracing_disabled)
++		return -ENODEV;
 +
-+	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
-+				     heap_allocation->heap_flags);
- 
--	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
--				   heap_allocation->fd_flags,
--				   heap_allocation->heap_flags);
--	if (fd < 0)
--		return fd;
-+	if (IS_ERR(dmabuf))
-+		return dmabuf;
-+
-+	fd = get_unused_fd_flags(heap_allocation->fd_flags);
-+	if (fd < 0) {
-+		dma_buf_put(dmabuf);
-+		return ERR_PTR(fd);
++	guard(mutex)(&trace_types_lock);
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		if (tr_index >= (void *)&tr->trace_flags_index[0] &&
++		    tr_index < (void *)&tr->trace_flags_index[TRACE_FLAGS_MAX_SIZE]) {
++			tr->ref++;
++			return 0;
++		}
 +	}
- 
- 	heap_allocation->fd = fd;
- 
--	return 0;
-+	return dmabuf;
- }
- 
- static unsigned int dma_heap_ioctl_cmds[] = {
-@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
- 	unsigned int in_size, out_size, drv_size, ksize;
- 	int nr = _IOC_NR(ucmd);
- 	int ret = 0;
-+	int fd;
-+	struct dma_buf *dmabuf;
- 
- 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
- 		return -EINVAL;
-@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
- 
- 	switch (kcmd) {
- 	case DMA_HEAP_IOCTL_ALLOC:
--		ret = dma_heap_ioctl_allocate(file, kdata);
-+		dmabuf = dma_heap_ioctl_allocate(file, kdata);
++	return -ENODEV;
++}
 +
-+		if (IS_ERR(dmabuf)) {
-+			ret = PTR_ERR(dmabuf);
-+			break;
-+		}
++static int trace_options_open(struct inode *inode, struct file *filp)
++{
++	void *tr_index = inode->i_private;
 +
-+		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
-+		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
-+			put_unused_fd(fd);
-+			dma_buf_put(dmabuf);
-+			ret = -EFAULT;
-+		} else {
-+			dma_buf_fd_install(dmabuf, fd);
-+		}
++	if (trace_array_options_get(tr_index) < 0)
++		return -ENODEV;
 +
- 		break;
- 	default:
- 		ret = -ENOTTY;
- 		goto err;
- 	}
++	filp->private_data = tr_index;
++
++	return 0;
++}
++
++static int trace_options_release(struct inode *inode, struct file *filp)
++{
++	void *tr_index = filp->private_data;
++	struct trace_array *tr;
++	unsigned int index;
++
++	get_tr_index(tr_index, &tr, &index);
++
++	trace_array_put(tr);
++
++	return 0;
++}
++
+ static const struct file_operations trace_options_core_fops = {
+-	.open = tracing_open_generic,
+-	.read = trace_options_core_read,
+-	.write = trace_options_core_write,
+-	.llseek = generic_file_llseek,
++	.open		= trace_options_open,
++	.read		= trace_options_core_read,
++	.write		= trace_options_core_write,
++	.llseek		= generic_file_llseek,
++	.release	= trace_options_release,
+ };
  
--	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
--		ret = -EFAULT;
- err:
- 	if (kdata != stack_kdata)
- 		kfree(kdata);
-diff --git a/include/linux/dma-buf.h b/include/linux/dma-buf.h
-index 3f31baa3293f9..e29dcab1d2d10 100644
---- a/include/linux/dma-buf.h
-+++ b/include/linux/dma-buf.h
-@@ -606,6 +606,7 @@ void dma_buf_unpin(struct dma_buf_attachment *attach);
- struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
- 
- int dma_buf_fd(struct dma_buf *dmabuf, int flags);
-+void dma_buf_fd_install(struct dma_buf *dmabuf, int fd);
- struct dma_buf *dma_buf_get(int fd);
- void dma_buf_put(struct dma_buf *dmabuf);
- 
+ struct dentry *trace_create_file(const char *name,
 -- 
 2.53.0
 
