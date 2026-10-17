@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA843C1D78;
-	Sat, 17 Oct 2026 17:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03073D3321;
+	Sat, 17 Oct 2026 17:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257473; cv=none; b=nrQLkAB420kxt3FwDhi4sowmH+mMFwlJiVCqe6wKQr5c1kfNFMPW6NLYiMs/L3FM5IsIPXciCU0/7ApPo9mtWS3nzwUQS7FKoytCiU3tvXznxBWTDRTNu6/bqiMGz4kRPj5iVDNyJf75EAItw8fA8iVfv8b1bo0NsxyF2Pyy2Ac=
+	t=1792257477; cv=none; b=AUpYSPw4uKNvjWJsE5znsTlhtYx4pEMVcGUFokLfeDosbAJy8csHLCyDSp7FUtIxKzCUsGXHZiVh80cul1/kAiHL+gqq2oC8THzZx6ObzD3Dmz279s5xmxyE0hroBjuDJN+to6vkLoNAOOpBvGarmNZj3VlncrJxUsTaPeQm2UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257473; c=relaxed/simple;
-	bh=Q45ZwxHcjvEuJI/NPWjtAHIFB6wudyd3Ohepy8JTmxk=;
+	s=arc-20240116; t=1792257477; c=relaxed/simple;
+	bh=INrg5hCcfVg99k7qMsO/V4UQJ1osi8+bpxawsNhZpZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vE/6mHGsfVOzIbLT2HmyJfV6tqmwB6H+bpa4ddAyWILrTJge1rqx73wyAuyPNEEt9q62OaiYEb2JdkNyvuUfAf5FTRHx8P74j8sZfbXmnCc5N+WWNHm6IhQgu2mpGTy+DH9BO7XZd6nKE02JxvLi4YSKw5PQGA8LAMjKy9Tp98o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3WbcfSy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ChOeOA7FHUUisW8Qp0XW0kAr2UIzBnRs0EqChhT2mLxlYRHXmzabZ0UYTE2sIfyy4ZR9893R82v9Z+nFeb3arZoF9KefXjXqcTYTk+1/9VTPhWUn2/3toXN3AcfFFMnHAdYjgalr+hcC9pjM0kOeHJjs9bw/Ok6qok5ZN06NCfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEs5CoN1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3WbcfSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963B11F000C4;
-	Sat, 17 Oct 2026 17:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEs5CoN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC84E1F000C4;
+	Sat, 17 Oct 2026 17:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257472;
-	bh=tXmOKo3NOCQg0S1vLy3egAyFP8HSNomHYkRhNFgzbis=;
+	s=korg; t=1792257475;
+	bh=i82RM/wQEYrPX04wBkBJfbDRSE43Lem0Oys76Mvi3KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3WbcfSyw6jkpqoxauuz9W7kSvz+rXPDh4UwIzVtQg0nwWNPmc2toGoKaF5nNZP43
-	 4ih7Nr0BQNl5dUE3VRk1ARAJ4Or6OKAv4CPzAueopJm9lS2ocBTgPD7p4UxVF8R3/m
-	 fbtJ/c4nvnKSjgWAwtmom74piu2/jMdcU3mJ9vUM=
+	b=aEs5CoN1+GMUztW8Hs00Iwr6lfc3+aTskBPJd37TZa5gRDOfNL/tyReOz7IHJN+TB
+	 S7eVjWAVmV1gZyPFPp2AUvdXMGrVi+k6sVZcPIinHyq7/wOeE9hGzhacZS74DuPf+m
+	 A+5qZGkGOIlKMkPd0Q9QGbEuy2jpr2XuKZTboRoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ayhan=20=C3=87i=C3=A7ek?= <ayhancicek@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tom St Denis <tom.stdenis@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 0528/1674] drm/amdgpu: make Mac FB workaround generic
-Date: Sat, 17 Oct 2026 17:46:40 +0200
-Message-ID: <20261017160444.655991610@linuxfoundation.org>
+Subject: [PATCH 6.6 0529/1674] drm/amdgpu: copy debugfs register data outside the GRBM/SRBM locks
+Date: Sat, 17 Oct 2026 17:46:41 +0200
+Message-ID: <20261017160444.680054326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,52 +54,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit c7f44ec5c4ec760e74351f1843dcb8322f67cbf6 upstream.
+commit 16c64495859f13f75602f439588883f2a4a4d6a6 upstream.
 
-Rather than adding a case of every chip where this is seen
-just check if the FB is at 0 and the ssid is apple.  This
-should cover all chips which fall into this case.
+Reading or writing a register through the amdgpu_regs2 debugfs file
+with GRBM bank selection, which umr does for every banked access (a
+single "umr -b x x x -r <reg>" is enough, as is the wave dump with
+"-O halt_waves"), makes lockdep report a circular locking dependency,
+after which lockdep stays off until reboot:
 
-Tested-by: Ayhan Çiçek <ayhancicek@gmail.com>
+  WARNING: possible circular locking dependency detected
+  umr/63306 is trying to acquire lock:
+  ffff8882cf4b8350 (&mm->mmap_lock){++++}-{4:4}, at: __might_fault+0x9b/0x140
+  but task is already holding lock:
+  ffff8881aec010d0 (&amdgpu_grbm_lock_key){+.+.}-{4:4}, at: amdgpu_debugfs_regs2_op.isra.0+0x20d/0xd00 [amdgpu]
+  ...
+  Chain exists of:
+    &mm->mmap_lock --> &amdgpu_srbm_lock_key --> &amdgpu_grbm_lock_key
+  ...
+   __might_fault+0xc5/0x140
+   amdgpu_debugfs_regs2_op.isra.0+0x441/0xd00 [amdgpu]
+   full_proxy_write+0x10e/0x1d0
+   vfs_write+0x1d0/0xf50
+   ksys_write+0x116/0x250
+
+amdgpu_debugfs_regs2_op() and amdgpu_debugfs_process_reg_op() call
+get_user()/put_user() for every dword while holding grbm_idx_mutex or
+srbm_mutex, and pm.mutex if requested, so a fault there takes mmap_lock
+inside those locks. The lock hierarchy in amdgpu_lockdep.c puts
+srbm_mutex and grbm_idx_mutex below notifier_lock, which
+amdgpu_cs_submit() takes with the BO reservations held, and
+dma_resv_lockdep() orders the reservations inside mmap_lock. So
+mmap_lock is outside grbm_idx_mutex and srbm_mutex, and these two
+debugfs paths nest it the other way round. The copies under the locks
+are as old as the bank selection in both files; commit 1d0f5838b126
+("drm/amdgpu: Add lockdep annotations for lock ordering validation")
+only made them visible to lockdep.
+
+Copy the user buffer in before any of the locks is taken and the result
+out after all of them are dropped, as amdgpu_debugfs_wave_read(),
+amdgpu_debugfs_gpr_read() and amdgpu_debugfs_gprwave_read() already do.
+The buffer is sized by the count passed to read() or write(), so an
+access larger than PAGE_SIZE is now rejected with -EINVAL; umr reads and
+writes one register at a time. A fault on the user buffer of a write now
+fails with -EFAULT before any register is written, instead of after a
+partial write.
+
+Fixes: 566281595037 ("drm/amd/amdgpu: Add bank selection for MMIO debugfs (v3)")
+Fixes: 37df9560cd3e ("drm/amd/amdgpu: New debugfs interface for MMIO registers (v5)")
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Tom St Denis <tom.stdenis@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c54e4d10507722398dc90cf3c532e50b86cf425a)
+(cherry picked from commit ccf9e35ed6811f2c25ba6368e7dc6481da17159d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |   17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   77 ++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 31 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -728,20 +728,17 @@ void amdgpu_gmc_get_vbios_allocations(st
- 	case CHIP_RENOIR:
- 		adev->mman.keep_stolen_vga_memory = true;
- 		break;
--	case CHIP_POLARIS10:
--	case CHIP_POLARIS11:
--	case CHIP_POLARIS12:
--		/* MacBookPros with switchable graphics put VRAM at 0 when
--		 * the iGPU is enabled which results in cursor issues if
--		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
--		 */
--		if (adev->gmc.vram_start == 0)
--			adev->mman.keep_stolen_vga_memory = true;
--		break;
- 	default:
- 		adev->mman.keep_stolen_vga_memory = false;
- 		break;
- 	}
-+	/* MacBookPros with switchable graphics put VRAM at 0 when
-+	 * the iGPU is enabled which results in cursor issues if
-+	 * the cursor ends up at 0.  Reserve vram at 0 in that case.
-+	 */
-+	if ((adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
-+	    (adev->gmc.vram_start == 0))
-+		adev->mman.keep_stolen_vga_memory = true;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -114,6 +114,20 @@ static int  amdgpu_debugfs_process_reg_o
  
- 	if (amdgpu_sriov_vf(adev) ||
- 	    !amdgpu_device_has_display_hardware(adev)) {
+ 	*pos &= (1UL << 22) - 1;
+ 
++	if (size > PAGE_SIZE)
++		return -EINVAL;
++
++	/*
++	 * Access the user buffer only while none of the locks below are held:
++	 * a fault takes mmap_lock, and grbm_idx_mutex and srbm_mutex nest
++	 * inside it.
++	 */
++	u32 *data __free(kfree) = kmalloc(size, GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++	if (!read && copy_from_user(data, buf, size))
++		return -EFAULT;
++
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+@@ -146,28 +160,16 @@ static int  amdgpu_debugfs_process_reg_o
+ 		mutex_lock(&adev->pm.mutex);
+ 
+ 	while (size) {
+-		uint32_t value;
+-
+-		if (read) {
+-			value = RREG32(*pos >> 2);
+-			r = put_user(value, (uint32_t *)buf);
+-		} else {
+-			r = get_user(value, (uint32_t *)buf);
+-			if (!r)
+-				amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, value, 0);
+-		}
+-		if (r) {
+-			result = r;
+-			goto end;
+-		}
++		if (read)
++			data[result >> 2] = RREG32(*pos >> 2);
++		else
++			amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, data[result >> 2], 0);
+ 
+ 		result += 4;
+-		buf += 4;
+ 		*pos += 4;
+ 		size -= 4;
+ 	}
+ 
+-end:
+ 	if (use_bank) {
+ 		amdgpu_gfx_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff, 0);
+ 		mutex_unlock(&adev->grbm_idx_mutex);
+@@ -183,6 +185,10 @@ end:
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+ 
+ 	amdgpu_virt_disable_access_debugfs(adev);
++
++	if (read && copy_to_user(buf, data, result))
++		return -EFAULT;
++
+ 	return result;
+ }
+ 
+@@ -233,11 +239,24 @@ static ssize_t amdgpu_debugfs_regs2_op(s
+ 	struct amdgpu_device *adev = rd->adev;
+ 	ssize_t result = 0;
+ 	int r;
+-	uint32_t value;
+ 
+ 	if (size & 0x3 || offset & 0x3)
+ 		return -EINVAL;
+ 
++	if (size > PAGE_SIZE)
++		return -EINVAL;
++
++	/*
++	 * Access the user buffer only while none of the locks below are held:
++	 * a fault takes mmap_lock, and grbm_idx_mutex and srbm_mutex nest
++	 * inside it.
++	 */
++	u32 *data __free(kfree) = kmalloc(size, GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++	if (write_en && copy_from_user(data, buf, size))
++		return -EFAULT;
++
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+@@ -277,24 +296,16 @@ static ssize_t amdgpu_debugfs_regs2_op(s
+ 		mutex_lock(&adev->pm.mutex);
+ 
+ 	while (size) {
+-		if (!write_en) {
+-			value = RREG32(offset >> 2);
+-			r = put_user(value, (uint32_t *)buf);
+-		} else {
+-			r = get_user(value, (uint32_t *)buf);
+-			if (!r)
+-				amdgpu_mm_wreg_mmio_rlc(adev, offset >> 2, value, rd->id.xcc_id);
+-		}
+-		if (r) {
+-			result = r;
+-			goto end;
+-		}
++		if (!write_en)
++			data[result >> 2] = RREG32(offset >> 2);
++		else
++			amdgpu_mm_wreg_mmio_rlc(adev, offset >> 2, data[result >> 2],
++						rd->id.xcc_id);
+ 		offset += 4;
+ 		size -= 4;
+ 		result += 4;
+-		buf += 4;
+ 	}
+-end:
++
+ 	if (rd->id.use_grbm) {
+ 		amdgpu_gfx_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff, rd->id.xcc_id);
+ 		mutex_unlock(&adev->grbm_idx_mutex);
+@@ -314,6 +325,10 @@ end:
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+ 
+ 	amdgpu_virt_disable_access_debugfs(adev);
++
++	if (!write_en && copy_to_user(buf, data, result))
++		return -EFAULT;
++
+ 	return result;
+ }
+ 
 
 
