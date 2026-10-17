@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E73C4B8D;
-	Sat, 17 Oct 2026 17:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC993D45DE;
+	Sat, 17 Oct 2026 17:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258411; cv=none; b=V4jEnmm3VHkOGucoEWhaUjDTvzRnBuzkpuQ6yXQ4X/a77cKZ/5SyI2ceZtZ+G83dqnCZ+GZrYu2ulnqwoptYEC1+rfDEP5y88S9YLQJPxX2vwnhhXQGS7xdFdlsraH0cmGlYpHmF+WQClSCHoqxLHMERTp5sZyms09pRc2Ak9K4=
+	t=1792258414; cv=none; b=COFwTVxWEokKqbL+hyYk4GcxhgplgGwPNQHyNAw1wVPTk20qZZqZ+ezhL/MViyf8uCVIkp0sqcomES4jSOPLbgRIwxwSTFENNEVtigeUt0jPb1WUlddz6psm32ltn2PQBvHCiUauZAs/1U0xhfs9F9lxuQDEvxBVwzB3+pCdpbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258411; c=relaxed/simple;
-	bh=LlE7MG3bEDy/zLjGUlK+WC9uSeUU9YOUlNTlQH5QCjY=;
+	s=arc-20240116; t=1792258414; c=relaxed/simple;
+	bh=l/2fkeKCGlLP+MzbniE0qsKfJAVw1kfkcMIpvlhvJUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLZoeH5rLNk31EjgjbW8vQlT4/cdedfjXBt4+3r01LJ/hNjiL+DBBC1eY2ot04iVqXJVBmfwucUlzuso3nbTzpHQH3N4wxSVvYmuoZC4Wu0cjBTCCVhLa3/HrNpLUmRUShc1ZAfMgrbqL9s1klrvs6LGE3M3MLScGv4Wf9EftMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZSFkvEe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WrvwR2gD1hlF2Sxdybh8ppmG48xPyzOKVDFO8b405kBWaVFcn/lhwqV8D10UkZ5MIH4lBwS8v7A+mYOM4g0jtGy02PeG6d93D/lQfpUR1l70889qe/3G47zdcYqXdENmMYLrhbwIqQfwggQuTP5X/2Lhr31qZDtAbFWTkGUrnFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0MuL53c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZSFkvEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307741F000C4;
-	Sat, 17 Oct 2026 17:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0MuL53c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522771F000C4;
+	Sat, 17 Oct 2026 17:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258409;
-	bh=W0th0QRTASfkz4/9jR76otIZixIe0HNethfyq5S2GFA=;
+	s=korg; t=1792258412;
+	bh=ydTbcOIfeqxs0RcbjTshRrrmJChCdmo/7vfoupUTb1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZSFkvEelAK6DNMutjRlNaE61nPWgIFNxmWzDuM3OeVj3zfsdKHCvpv4G5yhkEH6q
-	 CdoakA72VAOepvnHSBfjLSSDCz37N6O9ltaYDEY11454u1oRHYsu+91zF4zcMx/sPn
-	 lpVvTqZYtS2uFDj/gASkoQdsAr7hsw2sa7Q/ecgU=
+	b=m0MuL53cQ7+Hs0wOeHeXOSMVhY9GB0laRgIgsjul5qTAqt1znOQyETPrc2zpGzl3A
+	 7GiXwY0It7t22meti8gkSpuhYc8Btoe7UzpIa1DhbwhXtdj8sM2drMUTDQ5FYxpa9Q
+	 Bz3k6FeNOq64gKXB2bL2DW0T4XR0mKztFq3UeiZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0874/1674] net: bcmasp: fix double free of WoL irq
-Date: Sat, 17 Oct 2026 17:52:26 +0200
-Message-ID: <20261017160453.548278100@linuxfoundation.org>
+Subject: [PATCH 6.6 0875/1674] cxl/port: Fix use after free of parent_port in cxl_detach_ep()
+Date: Sat, 17 Oct 2026 17:52:27 +0200
+Message-ID: <20261017160453.574031513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,118 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit cbfa5be2bf64511d49b854a0f9fd6d0b5118621f ]
+[ Upstream commit 19d2f0b97a131198efc2c4ca3eb7f980bba8c2b4 ]
 
-We do not need to free wol_irq since it was instantiated with
-devm_request_irq(). So devres will free for us.
+cxl_detach_ep() is called during bottom-up removal when all CXL memory
+devices beneath a switch port have been removed. For each port in the
+hierarchy it locks both the port and its parent, removes the endpoint,
+and if the port is now empty, marks it dead and unregisters the port
+by calling delete_switch_port(). There are two places during this work
+where the parent_port may be used after freeing:
 
-Fixes: a2f0751206b0 ("net: bcmasp: Add support for WoL magic packet")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260319234813.1937315-2-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+First, a concurrent detach may have already processed a port by the
+time a second worker finds it via bus_find_device(). Without pinning
+parent_port, it may already be freed when we discover port->dead and
+attempt to unlock the parent_port. In a production kernel that's a
+silent memory corruption, with lock debug, it looks like this:
+
+[]DEBUG_LOCKS_WARN_ON(__owner_task(owner) != get_current())
+[]WARNING: kernel/locking/mutex.c:949 at __mutex_unlock_slowpath+0x1ee/0x310
+[]Call Trace:
+[]mutex_unlock+0xd/0x20
+[]cxl_detach_ep+0x180/0x400 [cxl_core]
+[]devm_action_release+0x10/0x20
+[]devres_release_all+0xa8/0xe0
+[]device_unbind_cleanup+0xd/0xa0
+[]really_probe+0x1a6/0x3e0
+
+Second, delete_switch_port() releases three devm actions registered
+against parent_port. The last of those is unregister_port() and it
+calls device_unregister() on the child port, which can cascade. If
+parent_port is now also empty the device core may unregister and free
+it too. So by the time delete_switch_port() returns, parent_port may
+be free, and the subsequent device_unlock(&parent_port->dev) operates
+on freed memory. The kernel log looks same as above, with a different
+offset in cxl_detach_ep().
+
+Both of these issues stem from the absence of a lifetime guarantee
+between a child port and its parent port.
+
+Establish a lifetime rule for ports: child ports hold a reference to
+their parent device until release. Take the reference when the port
+is allocated and drop it when released. This ensures the parent is
+valid for the full lifetime of the child and eliminates the use after
+free window in cxl_detach_ep().
+
+This is easily reproduced with a reload of cxl_acpi in QEMU with CXL
+devices present.
+
+Fixes: 2345df54249c ("cxl/memdev: Fix endpoint port removal")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260226184439.1732841-1-alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 21 ---------------------
- drivers/net/ethernet/broadcom/asp2/bcmasp.h |  2 --
- 2 files changed, 23 deletions(-)
+ drivers/cxl/core/port.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index d9e9ec2e8945d..a419e71608872 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -1118,12 +1118,6 @@ static void bcmasp_enable_wol_shared(struct bcmasp_intf *intf, bool en)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 7f28d1021fa99..f23b5d6cde070 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -527,6 +527,9 @@ static void cxl_port_release(struct device *dev)
+ 	xa_destroy(&port->dports);
+ 	xa_destroy(&port->regions);
+ 	ida_free(&cxl_port_ida, port->id);
++
++	if (!is_cxl_root(port))
++		put_device(dev->parent);
+ 	kfree(port);
+ }
+ 
+@@ -657,6 +660,7 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
+ 		struct cxl_port *iter;
+ 
+ 		dev->parent = &parent_port->dev;
++		get_device(dev->parent);
+ 		port->depth = parent_port->depth + 1;
+ 		port->parent_dport = parent_dport;
+ 
+@@ -1380,8 +1384,8 @@ static void cxl_detach_ep(void *data)
+ 				dev_name(&port->dev));
+ 			delete_switch_port(port);
+ 		}
+-		put_device(&port->dev);
+ 		device_unlock(&parent_port->dev);
++		put_device(&port->dev);
  	}
  }
  
--static void bcmasp_wol_irq_destroy_shared(struct bcmasp_priv *priv)
--{
--	if (priv->wol_irq > 0)
--		free_irq(priv->wol_irq, priv);
--}
--
- static void bcmasp_init_wol_per_intf(struct bcmasp_priv *priv)
- {
- 	struct platform_device *pdev = priv->pdev;
-@@ -1156,16 +1150,6 @@ static void bcmasp_enable_wol_per_intf(struct bcmasp_intf *intf, bool en)
- 	device_set_wakeup_enable(dev, en);
- }
- 
--static void bcmasp_wol_irq_destroy_per_intf(struct bcmasp_priv *priv)
--{
--	struct bcmasp_intf *intf;
--
--	list_for_each_entry(intf, &priv->intfs, list) {
--		if (intf->wol_irq > 0)
--			free_irq(intf->wol_irq, priv);
--	}
--}
--
- static struct bcmasp_hw_info v20_hw_info = {
- 	.rx_ctrl_flush = ASP_RX_CTRL_FLUSH,
- 	.umac2fb = UMAC2FB_OFFSET,
-@@ -1177,7 +1161,6 @@ static struct bcmasp_hw_info v20_hw_info = {
- static const struct bcmasp_plat_data v20_plat_data = {
- 	.init_wol = bcmasp_init_wol_per_intf,
- 	.enable_wol = bcmasp_enable_wol_per_intf,
--	.destroy_wol = bcmasp_wol_irq_destroy_per_intf,
- 	.hw_info = &v20_hw_info,
- };
- 
-@@ -1193,7 +1176,6 @@ static struct bcmasp_hw_info v21_hw_info = {
- static const struct bcmasp_plat_data v21_plat_data = {
- 	.init_wol = bcmasp_init_wol_shared,
- 	.enable_wol = bcmasp_enable_wol_shared,
--	.destroy_wol = bcmasp_wol_irq_destroy_shared,
- 	.hw_info = &v21_hw_info,
- };
- 
-@@ -1267,7 +1249,6 @@ static int bcmasp_probe(struct platform_device *pdev)
- 
- 	priv->init_wol = pdata->init_wol;
- 	priv->enable_wol = pdata->enable_wol;
--	priv->destroy_wol = pdata->destroy_wol;
- 	priv->hw_info = pdata->hw_info;
- 
- 	/* Enable all clocks to ensure successful probing */
-@@ -1331,7 +1312,6 @@ static int bcmasp_probe(struct platform_device *pdev)
- 		if (ret) {
- 			netdev_err(intf->ndev,
- 				   "failed to register net_device: %d\n", ret);
--			priv->destroy_wol(priv);
- 			bcmasp_remove_intfs(priv);
- 			goto of_put_exit;
- 		}
-@@ -1352,7 +1332,6 @@ static int bcmasp_remove(struct platform_device *pdev)
- 	if (!priv)
- 		return 0;
- 
--	priv->destroy_wol(priv);
- 	bcmasp_remove_intfs(priv);
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.h b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-index ec90add6b03e2..985a473339559 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-@@ -371,7 +371,6 @@ struct bcmasp_hw_info {
- struct bcmasp_plat_data {
- 	void (*init_wol)(struct bcmasp_priv *priv);
- 	void (*enable_wol)(struct bcmasp_intf *intf, bool en);
--	void (*destroy_wol)(struct bcmasp_priv *priv);
- 	struct bcmasp_hw_info		*hw_info;
- };
- 
-@@ -389,7 +388,6 @@ struct bcmasp_priv {
- 
- 	void (*init_wol)(struct bcmasp_priv *priv);
- 	void (*enable_wol)(struct bcmasp_intf *intf, bool en);
--	void (*destroy_wol)(struct bcmasp_priv *priv);
- 
- 	void __iomem			*base;
- 	struct	bcmasp_hw_info		*hw_info;
 -- 
 2.53.0
 
