@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F5038C2C0;
-	Sat, 17 Oct 2026 17:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FF63B7767;
+	Sat, 17 Oct 2026 17:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259284; cv=none; b=Mp/4jlhi2XOXUB2vBMeX3DkkqQhKXqIbkOXa2WfjrR+qG170GdeY3TYuuObHa/q6UvweU9IKMk1dAcQZJ4/6JQm/vBcfcSMFPTz9g7MF5gUwlGKGtY6EJRIODD3TUrltrIGYqflzB0ID0JQBBZOgZ0dsN9aATsR7r28EBz8vupI=
+	t=1792259287; cv=none; b=Vx84e2PVXTrROislLDTpBpfVVfMo6LUyJ1XVsLHB8z7po0aWRNtglVaQ3MVdiuDt6gJaiThF5YZFa7le9n7bTWwtE+mZGz+C0+xLRrqBdPsQHR5aRl+hmk/Oa/I/wgDONg5CmQg9vMsRloJUIgVe1Vqyq7VOyoDvNcFmouZgpAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259284; c=relaxed/simple;
-	bh=WTFuA6qWLYJMH/B78RzzGRAFiRp1U3/CmqPBggw0jp8=;
+	s=arc-20240116; t=1792259287; c=relaxed/simple;
+	bh=uUZfLGit21T4RjbmDfGSKLTpiZt4d+s7SsFsgK6ytik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZtnanVneWPk+mg/VDKo0EsLdUeUr8W7mAPn6xiFsaEBLHxyfdN2+ybbFIOTD5txTpxEhplapmSO/6jQNWznEyyyl5PCoazQoePIgS8xmv5tz+wakiz4oXsepgo1moAKOo24kjGs/5YshPpA3pooemjgePDaL2HSYmzbnYWeKjLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kR19Pkc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y6Zx3oKu/v1KdxsHOxO0pv+wcEyXv6LTJo+2Zwvx/dFRG0n573OqMl4GPu3hT9wcH+z1KbGeAKhs1Y/H6rf7o2Ig0PLPSjWtjpIJ2Rjr72lSfQaBC0b5faFaWWxY0t9WbHMKrDkBY0F/YjqUnu/f0L1SKCb9+PiUehjynAzqjKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTMu0t4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kR19Pkc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8611F000C4;
-	Sat, 17 Oct 2026 17:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTMu0t4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCE51F000C5;
+	Sat, 17 Oct 2026 17:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259283;
-	bh=t6hWNotBNZgsi5Z7X7cOGdijzj1alms9cDUkLo741Zo=;
+	s=korg; t=1792259286;
+	bh=XirKqT6HSuFOOm8BVV6TirHUxcigDPkOEuyNBS/VLFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0kR19PkcXe2Gb5TY3kgTDyTrOdKr72oTw9F7GTzCfp44A/NCNY17jUn55M1FCNKRV
-	 b99fmBlk0DojP4piMnh3dPNzi48alPNzv5eKUSjWx/s01E+N3J3x9TScthRcs8glIB
-	 uOd7Edur2butPyr8SxhN7Be0DHuZhQ6i1Y7wkyAo=
+	b=oTMu0t4aEQdcCJdXOUrm6qU7d6CR5xuAAELiGybptR4329Ky0ZM+zrdFvL4M4ZaqZ
+	 fEbZqZ26W8am1dx6j/bsMu9Cg9igbGw8WnV4A9iDCZiGvyuQl47wTjL5Mvk64R6NgO
+	 WTruEPZNcgN9YSJgW6MNTNm+EEJ4j9R8j2NQ9FgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Windsor <dwindsor@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1163/1674] bpf: Reject sleepable BPF_LSM_CGROUP programs at load time
-Date: Sat, 17 Oct 2026 17:57:15 +0200
-Message-ID: <20261017160500.999496235@linuxfoundation.org>
+Subject: [PATCH 6.6 1146/1674] md/raid1: fix writes_pending and barrier reference leaks on write failures
+Date: Sat, 17 Oct 2026 17:56:58 +0200
+Message-ID: <20261017160500.568124608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,71 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Windsor <dwindsor@gmail.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 5b038319be442c620f774e6fc9e9283deeca1c75 ]
+[ Upstream commit 8e065a1602511282fc0da2dc89445e0eb71a681c ]
 
-The cgroup shim runs under rcu_read_lock_dont_migrate(), so we should
-not attach any sleepable BPF programs there. Add support to the verifier
-to explicitly reject attempts to load sleepable BPF programs destined
-for LSM cgroup attachment.
+raid1_make_request() acquires a writes_pending reference with
+md_write_start() before calling raid1_write_request(). Several failure
+paths in raid1_write_request() complete the bio and return without
+reaching the normal write completion path, causing the corresponding
+md_write_end() to be skipped.
 
-Without this, we get the following splat from a BPF_LSM_CGROUP
-program marked BPF_F_SLEEPABLE attached to file_open when it calls
-bpf_get_dentry_xattr():
+Make raid1_write_request() return a status indicating whether the write
+request was successfully queued. This allows raid1_make_request() to
+call md_write_end() when raid1_write_request() fails.
 
-  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1567
-  in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 34317, name: load
-  preempt_count: 0, expected: 0
-  RCU nest depth: 2, expected: 0
-  Call Trace:
-   down_read+0x76/0x480
-   ext4_xattr_get+0x11f/0x700
-   __vfs_getxattr+0xf0/0x150
-   bpf_get_dentry_xattr+0xbb/0xf0
-   bpf_prog_e76a298dac9218c6_test_open+0x6a/0x85
-   __cgroup_bpf_run_lsm_current+0x326/0x840
-   bpf_trampoline_6442534646+0x62/0x14d
-   security_file_open+0x34/0x60
-   do_dentry_open+0x340/0x1260
-   vfs_open+0x7a/0x440
-   path_openat+0x1bac/0x30a0
+Additionally, if wait_blocked_rdev() fails after wait_barrier()
+succeeds, the associated barrier reference is not released.
 
-libbpf provides a .s named section variant for every sleepable
-program type except lsm_cgroup, reflecting that per-cgroup LSM programs
-are intended to only run in a non-sleepable context.
+Call allow_barrier() before returning from that path to keep the barrier
+accounting balanced.
 
-The above splat was obtained by bypassing libbpf by using bpf(2)
-directly.
-
-Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
-Signed-off-by: David Windsor <dwindsor@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20260605145707.608579-1-dwindsor@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: b1a7ad8b5c4f ("md/raid1: Handle bio_split() errors")
+Fixes: f2a38abf5f1c ("md/raid1: Atomic write support")
+Fixes: 5aa705039c4f ("md: raid1 add nowait support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
+Closes: https://sashiko.dev/#/patchset/20260611132500.763528-1-abd.masalkhi@gmail.com?part=1
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260613182810.1317258-2-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/raid1.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e47fd179abf61..c3fd1a2148e9e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -20562,8 +20562,10 @@ static bool can_be_sleepable(struct bpf_prog *prog)
- 			return false;
- 		}
- 	}
--	return prog->type == BPF_PROG_TYPE_LSM ||
--	       prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
-+	if (prog->type == BPF_PROG_TYPE_LSM)
-+		return prog->expected_attach_type != BPF_LSM_CGROUP;
-+
-+	return prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
- 	       prog->type == BPF_PROG_TYPE_STRUCT_OPS;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index bd57fc5ad5dd3..a07a5ed089e37 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1331,7 +1331,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	submit_bio_noacct(read_bio);
  }
  
+-static void raid1_write_request(struct mddev *mddev, struct bio *bio,
++static bool raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 				int max_write_sectors)
+ {
+ 	struct r1conf *conf = mddev->private;
+@@ -1351,7 +1351,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 		DEFINE_WAIT(w);
+ 		if (bio->bi_opf & REQ_NOWAIT) {
+ 			bio_wouldblock_error(bio);
+-			return;
++			return false;
+ 		}
+ 		for (;;) {
+ 			prepare_to_wait(&conf->wait_barrier,
+@@ -1373,7 +1373,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 	if (!wait_barrier(conf, bio->bi_iter.bi_sector,
+ 				bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
+-		return;
++		return false;
+ 	}
+ 
+  retry_write:
+@@ -1463,7 +1463,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 
+ 		if (bio->bi_opf & REQ_NOWAIT) {
+ 			bio_wouldblock_error(bio);
+-			return;
++			return false;
+ 		}
+ 		raid1_log(mddev, "wait rdev %d blocked", blocked_rdev->raid_disk);
+ 		md_wait_for_blocked_rdev(blocked_rdev, mddev);
+@@ -1565,6 +1565,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 
+ 	/* In case raid1d snuck in to freeze_array */
+ 	wake_up_barrier(conf);
++	return true;
+ }
+ 
+ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
+@@ -1590,7 +1591,8 @@ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
+ 	else {
+ 		if (!md_write_start(mddev,bio))
+ 			return false;
+-		raid1_write_request(mddev, bio, sectors);
++		if (!raid1_write_request(mddev, bio, sectors))
++			md_write_end(mddev);
+ 	}
+ 	return true;
+ }
 -- 
 2.53.0
 
