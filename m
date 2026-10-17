@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141833CB572;
-	Sat, 17 Oct 2026 18:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345A73CAE74;
+	Sat, 17 Oct 2026 18:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260089; cv=none; b=Ku+YY3uY/UbNoIjBF+NXx/gmd2IZq1Xlb2kposIWBVme1lUZ1qIbbgui5UvG7Nso21qhfnCgzAieICYih3UuRM09GRNUXGjEOO5dUbyNAYOYGAUrVkA01zdio6yyQqKyQbic5KCyaIjI4lpvjxbyxYrZjjSWMli3PEI8B1QuTkY=
+	t=1792260091; cv=none; b=N6HX7DpTXhJBA/uDmodDVyLdoRBg621xZnNL9Iq2TyQ1O80mHxUuaM2uRiWD8We4eKsfx+Z7XAdPQ1qTmyjeqy92sWbqK3QF84ypOxBqeBt8RxtmxjYE59KSah/wlu0MH3i/jYM8R0hiC7c9k3IilpBrzvIwbzU5XhmvTN2k9Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260089; c=relaxed/simple;
-	bh=jcRBD/k0OiH3Hm7LWji4ii45DBteh1UyXNuecrdPXA4=;
+	s=arc-20240116; t=1792260091; c=relaxed/simple;
+	bh=H7KghDz8xltWlku0hrKHM8MfdUEOxsYDSoU5DjzTiaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9MxDjf+wNcbm4HWxEysT3bqCH8OSsFYRLjWJ/JetII+eWmPMc7v6Lv84fCNCEKKxRPtqHP1L+GP3fdcwXxTqgiCLODXXjiCmVuOiBGinBiPyFk9J1NCqkaNk/gFGr3I9sy8jqCVO1i7Gotx9DaPUUJbjxfCntWusGr+Z+HKQO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO+A8Otx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hVudxSkqca/zGoxHwLIzgvXuql2K1I5AtjRB5d6Fe6DErwMonntvTwMvwW2MKFcuZ703z46kvu3l4N3kgkj59a9Dw4dDOY0HGubXkfT47xKNWbMJTCE0L7vpfYVdWuuuUda9bF1Sr4bjeu+YVoVD3fEVdueitMJHvcjje1WFKaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVe0oi5l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO+A8Otx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0931F000C4;
-	Sat, 17 Oct 2026 18:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVe0oi5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABCE1F000C4;
+	Sat, 17 Oct 2026 18:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260087;
-	bh=GqMLUIAQPhEGRA+zez3x0nDCoOlxsfHQg9kOr2Uoq3E=;
+	s=korg; t=1792260090;
+	bh=4gaJ71GUBCHASPK7cGZPRyWqvuqjDsg/s36J2f1+QCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qO+A8OtxEnXrVyQXVIogxMBFC07zJY9qPt7MRScFRYV8sfEPyi794FoaaYdbVBglC
-	 41lhQRSL+KoC0OHgO3oio3E/xwRDQzLjj2vDWnmB26iAzXJpY2OBt5LFw2a5eMJ3F5
-	 Wk5MbOB1zcGzCXBQ3uG5O9BXoF1I944ywqCK1MFc=
+	b=LVe0oi5l9VshbNIFagOowtr3iITzyTula3fvxIavDeZLlZgxdMJcT4ssuF900H0ff
+	 LDO2HEt6dSxEhZdA+LIRETuMyKWI784rGDR6euXuh2dOXkHdo/ifBUdhKUeQnZb3YJ
+	 yW5cuoFeVJONz2UED0Qps+XQ/gqiE50Od+zZ0ujk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1429/1674] ocfs2: o2hb: quiesce negotiate handlers and timeout work
-Date: Sat, 17 Oct 2026 18:01:41 +0200
-Message-ID: <20261017160507.861847384@linuxfoundation.org>
+Subject: [PATCH 6.6 1430/1674] RDMA/erdma: Hold QP references for AE and CM processing
+Date: Sat, 17 Oct 2026 18:01:42 +0200
+Message-ID: <20261017160507.887919733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -58,439 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 011291b70ba4832e136b7b581825b2bc0f525bf6 ]
+[ Upstream commit a52eeff32024f190b3bdc99088c7becccd4fa60b ]
 
-Heartbeat regions publish struct o2hb_region as the private data for the
-NEGO_TIMEOUT and NEGO_APPROVE o2net handlers as soon as make_item()
-creates the configfs region.  The approve handler can call
-o2hb_arm_timeout(), so a peer can touch the region timeout work before
-dev_store() has finished building the heartbeat runtime, or after teardown
-has started to shut that runtime back down.
+AE QP fatal events and iWARP CM paths load QPs from dev->qp_xa
+and then use or reference them outside the xarray lock.
+erdma_destroy_qp() can drop the destroy-path reference and free QP
+resources while such a lookup is in flight.
 
-The final configfs put also has to keep reg alive until the last in-flight
-o2net callback drops its handler reference.
-o2net_unregister_handler_list() blocks future handler lookups, but it does
-not wait for sc_rx_work that already passed o2net_handler_get().  That
-drain needs to cover local listener teardown as well, where the o2net
-ordered workqueue may already be inside destroy_workqueue().
+Add erdma_qp_get_by_qpn() to acquire a kref under the xarray
+lock with kref_get_unless_zero(). Remove the QP from the xarray
+before dropping the destroy-path reference so no new lookup can acquire
+it while destruction waits for existing users.
 
-Fix the lifetime rule in both directions.  Initialize the region delayed
-works before publishing reg through the o2net handler table, keep new or
-stopping regions non-armable with hr_stopping, and quiesce both delayed
-works on failed-start and teardown paths even when no heartbeat thread is
-left to call o2hb_disarm_timeout().  Then unregister handlers before
-tearing down handler-visible region state and make the drain wait for the
-active or destroying o2net ordered workqueue before release frees reg.
-
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-region lifecycle:                late negotiate callback:
-1. make_item() registers the     1. o2net_process_message() gets a
-   region handlers before           heartbeat handler for reg.
-   dev_store() has built a       2. The callback runs after the lookup
-   runnable heartbeat context.      lock is dropped and dereferences reg.
-2. A failed start or rmdir       3. An approve or timeout path tries to
-   stops the heartbeat thread,      queue reg's delayed work, or release
-   quiesces existing work, and      races the callback body after handler
-   drops the final configfs ref.    unregister.
-3. region_release() must drain   4. The callback or delayed work can
-   handler-visible o2net rx work    outlive reg unless lifecycle code
-   before freeing reg.              keeps the region non-armable and
-                                    drains the active-or-destroying
-                                    o2net workqueue.
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in __run_timers+0x22c/0x5b0
-Write of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  __run_timers+0x22c/0x5b0
-  kasan_report+0xe0/0x110
-  _raw_spin_unlock_irqrestore+0x27/0x60
-  try_to_wake_up+0x191/0xf70
-  timer_expire_remote+0xae/0xf0
-  run_timer_softirq+0x19b/0x1a0
-  handle_softirqs+0x156/0x660
-  __irq_exit_rcu+0xc4/0x160
-  irq_exit_rcu+0xe/0x20
-  sysvec_apic_timer_interrupt+0x6c/0x80
-  asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  __kasan_kmalloc+0xaa/0xb0
-  o2hb_heartbeat_group_make_item+0x3c/0x600
-
-Link: https://lore.kernel.org/20260624095310.763763-3-zzzccc427@gmail.com
-Fixes: 34069b886f95 ("ocfs2: o2hb: add NEGO_TIMEOUT message")
-Fixes: e76f8237a2f7 ("ocfs2: o2hb: add NEGOTIATE_APPROVE message")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://patch.msgid.link/20260730124357.12976-2-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |  56 ++++++++++++++++---
- fs/ocfs2/cluster/tcp.c       | 105 ++++++++++++++++++++++++++++++-----
- fs/ocfs2/cluster/tcp.h       |   1 +
- 3 files changed, 139 insertions(+), 23 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_cm.c    |  6 ++----
+ drivers/infiniband/hw/erdma/erdma_eq.c    |  3 ++-
+ drivers/infiniband/hw/erdma/erdma_verbs.c |  6 +++++-
+ drivers/infiniband/hw/erdma/erdma_verbs.h | 15 +++++++++++++++
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index a3da24a57afd9..48acd923e90f6 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -14,6 +14,7 @@
- #include <linux/file.h>
- #include <linux/kthread.h>
- #include <linux/configfs.h>
-+#include <linux/mutex.h>
- #include <linux/random.h>
- #include <linux/crc32.h>
- #include <linux/time.h>
-@@ -265,6 +266,9 @@ struct o2hb_region {
- 	/* Message key for negotiate timeout message. */
- 	unsigned int		hr_key;
- 	struct list_head	hr_handler_list;
-+	/* Serializes timeout arming against failed-start and teardown. */
-+	struct mutex		hr_arming_mutex;
-+	bool			hr_stopping;
+diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
+index e349e8d2fb50a..c747f77c1bdbd 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cm.c
++++ b/drivers/infiniband/hw/erdma/erdma_cm.c
+@@ -1017,10 +1017,9 @@ int erdma_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (laddr->sa_family != AF_INET || raddr->sa_family != AF_INET)
+ 		return -EAFNOSUPPORT;
  
- 	/* last hb status, 0 for success, other value for error. */
- 	int			hr_last_hb_status;
-@@ -324,9 +328,14 @@ static void o2hb_write_timeout(struct work_struct *work)
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
  
- static void o2hb_arm_timeout(struct o2hb_region *reg)
- {
-+	mutex_lock(&reg->hr_arming_mutex);
-+
-+	if (reg->hr_stopping)
-+		goto out_unlock;
-+
- 	/* Arm writeout only after thread reaches steady state */
- 	if (atomic_read(&reg->hr_steady_iterations) != 0)
--		return;
-+		goto out_unlock;
+ 	ret = sock_create(AF_INET, SOCK_STREAM, IPPROTO_TCP, &s);
+ 	if (ret < 0)
+@@ -1149,10 +1148,9 @@ int erdma_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 		return -ECONNRESET;
+ 	}
  
- 	mlog(ML_HEARTBEAT, "Queue write timeout for %u ms\n",
- 	     O2HB_MAX_WRITE_TIMEOUT_MS);
-@@ -345,6 +354,18 @@ static void o2hb_arm_timeout(struct o2hb_region *reg)
- 	schedule_delayed_work(&reg->hr_nego_timeout_work,
- 			      msecs_to_jiffies(O2HB_NEGO_TIMEOUT_MS));
- 	bitmap_zero(reg->hr_nego_node_bitmap, O2NM_MAX_NODES);
-+
-+out_unlock:
-+	mutex_unlock(&reg->hr_arming_mutex);
-+}
-+
-+static void o2hb_queue_nego_timeout(struct o2hb_region *reg,
-+				    unsigned long delay)
-+{
-+	mutex_lock(&reg->hr_arming_mutex);
-+	if (!reg->hr_stopping)
-+		schedule_delayed_work(&reg->hr_nego_timeout_work, delay);
-+	mutex_unlock(&reg->hr_arming_mutex);
- }
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
  
- static void o2hb_disarm_timeout(struct o2hb_region *reg)
-@@ -353,6 +374,19 @@ static void o2hb_disarm_timeout(struct o2hb_region *reg)
- 	cancel_delayed_work_sync(&reg->hr_nego_timeout_work);
- }
+ 	down_write(&qp->state_lock);
+ 	if (qp->attrs.state > ERDMA_QP_STATE_RTR) {
+diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
+index 3fec9cd18afaf..9d5b75abf06ab 100644
+--- a/drivers/infiniband/hw/erdma/erdma_eq.c
++++ b/drivers/infiniband/hw/erdma/erdma_eq.c
+@@ -65,7 +65,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			erdma_cq_put(cq);
+ 		} else {
+ 			qpn = le32_to_cpu(aeqe->event_data0);
+-			qp = find_qp_by_qpn(dev, qpn);
++			qp = erdma_qp_get_by_qpn(dev, qpn);
+ 			if (!qp)
+ 				continue;
  
-+static void o2hb_set_region_stopping(struct o2hb_region *reg, bool stopping)
-+{
-+	mutex_lock(&reg->hr_arming_mutex);
-+	reg->hr_stopping = stopping;
-+	mutex_unlock(&reg->hr_arming_mutex);
-+}
-+
-+static void o2hb_quiesce_timeout(struct o2hb_region *reg)
-+{
-+	o2hb_set_region_stopping(reg, true);
-+	o2hb_disarm_timeout(reg);
-+}
-+
- static int o2hb_send_nego_msg(int key, int type, u8 target, u8 node_num)
- {
- 	struct o2hb_nego_msg msg;
-@@ -402,8 +436,7 @@ static void o2hb_nego_timeout(struct work_struct *work)
- 			/* check negotiate bitmap every second to do timeout
- 			 * approve decision.
- 			 */
--			schedule_delayed_work(&reg->hr_nego_timeout_work,
--				msecs_to_jiffies(1000));
-+			o2hb_queue_nego_timeout(reg, msecs_to_jiffies(1000));
- 
- 			return;
+@@ -75,6 +75,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			if (qp->ibqp.event_handler)
+ 				qp->ibqp.event_handler(&event,
+ 						       qp->ibqp.qp_context);
++			erdma_qp_put(qp);
  		}
-@@ -1558,6 +1591,8 @@ static void o2hb_region_release(struct config_item *item)
- 
- 	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg->hr_bdev);
- 
-+	o2hb_quiesce_timeout(reg);
-+	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
- 	o2hb_unmap_slot_data(reg);
- 
- 	if (reg->hr_bdev)
-@@ -1573,7 +1608,6 @@ static void o2hb_region_release(struct config_item *item)
- 	list_del(&reg->hr_all_item);
- 	spin_unlock(&o2hb_live_lock);
- 
--	o2net_unregister_handler_list(&reg->hr_handler_list);
- 	kfree(reg);
- }
- 
-@@ -1887,9 +1921,6 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 		goto out3;
  	}
  
--	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
--	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
--
- 	/*
- 	 * A node is considered live after it has beat LIVE_THRESHOLD
- 	 * times.  We're not steady until we've given them a chance
-@@ -1909,6 +1940,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	atomic_set(&reg->hr_steady_iterations, live_threshold);
- 	/* unsteady_iterations is triple the steady_iterations */
- 	atomic_set(&reg->hr_unsteady_iterations, (live_threshold * 3));
-+	o2hb_set_region_stopping(reg, false);
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 066144ae3b248..047f5977c420b 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -1266,6 +1266,7 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
+ 		udata, struct erdma_ucontext, ibucontext);
+ 	struct erdma_qp_attrs qp_attrs;
++	unsigned long flags;
+ 	int err;
+ 	struct erdma_cmdq_destroy_qp_req req;
  
- 	hb_task = kthread_run(o2hb_thread, reg, "o2hb-%s",
- 			      reg->hr_item.ci_name);
-@@ -1958,6 +1990,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+@@ -1284,6 +1285,10 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	if (err)
+ 		return err;
  
- out3:
- 	if (ret < 0) {
-+		o2hb_quiesce_timeout(reg);
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	__xa_erase(&dev->qp_xa, QP_ID(qp));
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
 +
- 		spin_lock(&o2hb_live_lock);
- 		hb_task = reg->hr_task;
- 		reg->hr_task = NULL;
-@@ -2100,6 +2134,10 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	 */
- 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
- 		name, strlen(name));
-+	mutex_init(&reg->hr_arming_mutex);
-+	reg->hr_stopping = true;
-+	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
-+	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
- 	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
- 			sizeof(struct o2hb_nego_msg),
-@@ -2120,7 +2158,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	return &reg->hr_item;
+ 	erdma_qp_put(qp);
+ 	wait_for_completion(&qp->safe_free);
  
- unregister_handler:
--	o2net_unregister_handler_list(&reg->hr_handler_list);
-+	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
- remove_item:
- 	spin_lock(&o2hb_live_lock);
- 	list_del(&reg->hr_all_item);
-@@ -2139,6 +2177,8 @@ static void o2hb_heartbeat_group_drop_item(struct config_group *group,
- 	struct o2hb_region *reg = to_o2hb_region(item);
- 	int quorum_region = 0;
+@@ -1306,7 +1311,6 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
  
-+	o2hb_quiesce_timeout(reg);
-+
- 	/* stop the thread when the user removes the region dir */
- 	spin_lock(&o2hb_live_lock);
- 	hb_task = reg->hr_task;
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index 2008bd8479865..cdfccff3cb77e 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -38,6 +38,8 @@
-  */
+ 	if (qp->cep)
+ 		erdma_cep_put(qp->cep);
+-	xa_erase(&dev->qp_xa, QP_ID(qp));
  
- #include <linux/kernel.h>
-+#include <linux/completion.h>
-+#include <linux/mutex.h>
- #include <linux/sched/mm.h>
- #include <linux/jiffies.h>
- #include <linux/slab.h>
-@@ -101,10 +103,15 @@ static struct socket *o2net_listen_sock;
-  * o2net_wq.  teardown detaches the callbacks before destroying the workqueue.
-  * quorum work is queued as sock containers are shutdown.. stop_listening
-  * tears down all the node's sock containers, preventing future shutdowns
-- * and queued quroum work, before canceling delayed quorum work and
-- * destroying the work queue.
-+ * and queued quorum work, before canceling delayed quorum work and
-+ * destroying the work queue.  Handler teardown can also race local listener
-+ * shutdown, so keep a waitable destroying pointer until the old ordered
-+ * queue has finished draining.
-  */
- static struct workqueue_struct *o2net_wq;
-+static struct workqueue_struct *o2net_wq_destroying;
-+static DEFINE_MUTEX(o2net_wq_mutex);
-+static DECLARE_COMPLETION(o2net_wq_destroyed);
- /* Heartbeat callbacks stay registered across local-node off/on. */
- static bool o2net_listening;
- static struct work_struct o2net_listen_work;
-@@ -886,6 +893,27 @@ void o2net_unregister_handler_list(struct list_head *list)
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(o2net_unregister_handler_list);
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
+index 10b9b8a5f6a8b..687017531b958 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.h
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
+@@ -280,6 +280,21 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
+ 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
+ }
  
-+static void o2net_flush_wq(void)
++static inline struct erdma_qp *erdma_qp_get_by_qpn(struct erdma_dev *dev,
++						   int id)
 +{
-+	mutex_lock(&o2net_wq_mutex);
-+	if (o2net_wq_destroying) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		wait_for_completion(&o2net_wq_destroyed);
-+		return;
-+	}
++	struct erdma_qp *qp;
++	unsigned long flags;
 +
-+	if (o2net_wq)
-+		flush_workqueue(o2net_wq);
-+	mutex_unlock(&o2net_wq_mutex);
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	qp = xa_load(&dev->qp_xa, id);
++	if (qp && !kref_get_unless_zero(&qp->ref))
++		qp = NULL;
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
++
++	return qp;
 +}
 +
-+void o2net_unregister_and_flush_handler_list(struct list_head *list)
-+{
-+	o2net_unregister_handler_list(list);
-+	o2net_flush_wq();
-+}
-+EXPORT_SYMBOL_GPL(o2net_unregister_and_flush_handler_list);
-+
- static struct o2net_msg_handler *o2net_handler_get(u32 msg_type, u32 key)
+ static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
+ 						   int id)
  {
- 	struct o2net_msg_handler *nmh;
-@@ -1716,12 +1744,10 @@ void o2net_disconnect_node(struct o2nm_node *node)
- 	o2net_set_nn_state(nn, NULL, 0, -ENOTCONN);
- 	spin_unlock(&nn->nn_lock);
- 
--	if (o2net_wq) {
--		cancel_delayed_work(&nn->nn_connect_expired);
--		cancel_delayed_work(&nn->nn_connect_work);
--		cancel_delayed_work(&nn->nn_still_up);
--		flush_workqueue(o2net_wq);
--	}
-+	cancel_delayed_work(&nn->nn_connect_expired);
-+	cancel_delayed_work(&nn->nn_connect_work);
-+	cancel_delayed_work(&nn->nn_still_up);
-+	o2net_flush_wq();
- }
- 
- static void o2net_hb_node_down_cb(struct o2nm_node *node, int node_num,
-@@ -2063,6 +2089,36 @@ static int o2net_open_listening_sock(__be32 addr, __be16 port)
- 	return ret;
- }
- 
-+static void o2net_destroy_wq(void)
-+{
-+	struct workqueue_struct *wq;
-+
-+	mutex_lock(&o2net_wq_mutex);
-+	if (o2net_wq_destroying) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		wait_for_completion(&o2net_wq_destroyed);
-+		return;
-+	}
-+
-+	wq = o2net_wq;
-+	if (!wq) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		return;
-+	}
-+
-+	reinit_completion(&o2net_wq_destroyed);
-+	o2net_wq_destroying = wq;
-+	mutex_unlock(&o2net_wq_mutex);
-+
-+	destroy_workqueue(wq);
-+
-+	mutex_lock(&o2net_wq_mutex);
-+	o2net_wq = NULL;
-+	o2net_wq_destroying = NULL;
-+	complete_all(&o2net_wq_destroyed);
-+	mutex_unlock(&o2net_wq_mutex);
-+}
-+
- /*
-  * called from node manager when we should bring up our network listening
-  * socket.  node manager handles all the serialization to only call this
-@@ -2073,24 +2129,44 @@ static int o2net_open_listening_sock(__be32 addr, __be16 port)
- int o2net_start_listening(struct o2nm_node *node)
- {
- 	int ret = 0;
-+	struct workqueue_struct *wq;
- 
- 	if (WARN_ON_ONCE(READ_ONCE(o2net_listening)))
- 		return -EBUSY;
--	BUG_ON(o2net_wq != NULL);
-+
-+	mutex_lock(&o2net_wq_mutex);
-+	if (o2net_wq_destroying) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		return -EBUSY;
-+	}
-+	if (WARN_ON_ONCE(o2net_wq)) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		return -EBUSY;
-+	}
-+	mutex_unlock(&o2net_wq_mutex);
-+
- 	BUG_ON(o2net_listen_sock != NULL);
- 
- 	mlog(ML_KTHREAD, "starting o2net thread...\n");
--	o2net_wq = alloc_ordered_workqueue("o2net", WQ_MEM_RECLAIM);
--	if (o2net_wq == NULL) {
-+	wq = alloc_ordered_workqueue("o2net", WQ_MEM_RECLAIM);
-+	if (!wq) {
- 		mlog(ML_ERROR, "unable to launch o2net thread\n");
- 		return -ENOMEM; /* ? */
- 	}
- 
-+	mutex_lock(&o2net_wq_mutex);
-+	if (unlikely(o2net_wq_destroying || o2net_wq)) {
-+		mutex_unlock(&o2net_wq_mutex);
-+		destroy_workqueue(wq);
-+		return -EBUSY;
-+	}
-+	o2net_wq = wq;
-+	mutex_unlock(&o2net_wq_mutex);
-+
- 	ret = o2net_open_listening_sock(node->nd_ipv4_address,
- 					node->nd_ipv4_port);
- 	if (ret) {
--		destroy_workqueue(o2net_wq);
--		o2net_wq = NULL;
-+		o2net_destroy_wq();
- 	} else
- 		o2quo_conn_up(node->nd_num);
- 
-@@ -2126,8 +2202,7 @@ void o2net_stop_listening(struct o2nm_node *node)
- 
- 	/* finish all work and tear down the work queue */
- 	mlog(ML_KTHREAD, "waiting for o2net thread to exit....\n");
--	destroy_workqueue(o2net_wq);
--	o2net_wq = NULL;
-+	o2net_destroy_wq();
- 
- 	sock_release(o2net_listen_sock);
- 	o2net_listen_sock = NULL;
-diff --git a/fs/ocfs2/cluster/tcp.h b/fs/ocfs2/cluster/tcp.h
-index 2e86d42b5faf9..a11bcee289479 100644
---- a/fs/ocfs2/cluster/tcp.h
-+++ b/fs/ocfs2/cluster/tcp.h
-@@ -89,6 +89,7 @@ int o2net_register_handler(u32 msg_type, u32 key, u32 max_len,
- 			   o2net_post_msg_handler_func *post_func,
- 			   struct list_head *unreg_list);
- void o2net_unregister_handler_list(struct list_head *list);
-+void o2net_unregister_and_flush_handler_list(struct list_head *list);
- 
- void o2net_fill_node_map(unsigned long *map, unsigned bytes);
- 
 -- 
 2.53.0
 
