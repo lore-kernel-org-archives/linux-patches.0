@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD543A900B;
-	Sat, 17 Oct 2026 17:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A313AFCF0;
+	Sat, 17 Oct 2026 17:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256999; cv=none; b=sZrMVAy3IlDglkpli+TshwjBJ5SQefjHm07uP17BjlOAUzuv2/wAfatRYop4TVYVqU+j4fNChQYdtTErUc7EH5ZqsH9dhuH1R+1R5MfAVJwNkygckQP7DMYdU4zDnY4R4FC+B+sZC6oZEkoTx131zWDyHReuy0wNMxLiTo5JP2w=
+	t=1792257002; cv=none; b=GLYSUpn5Vs51V1d7d9uwY5aNvVRSNiZgVhqj/sA3awsBDfg3K47X/9c697gfanSMNs/ycJwc29z5tCCvorLPm+pCwRnVNll0ehI0HcjP+YncB32IZh6XuQFb5ubY+XqHzAsveosAGgsh/Qkg0cdFyknfffJ5XM5zPLSFU4SmvKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256999; c=relaxed/simple;
-	bh=3f7g/zk56rdIiYArv43cMOiveym0sAZTvaQqiAxIRZs=;
+	s=arc-20240116; t=1792257002; c=relaxed/simple;
+	bh=j9LRneYwKhNA6Z+3+/PbbDZGVSaaHEm4IvGwoKzvxTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5UspSCYBXHS+6xZLr6dErzkCHcGGcI2GwjUzHEWku32AlRMITGr0QMSt9Z6tDgI0tKwCW09NmjrMmE4X5F6EejKqqDqohgvmStHQqvJ1cHEUhI1nKy2OsYRQvNg8gWa6Da9TefwInEqfF0i++Hgo+AJxWyKdHB4InIRU54GP2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQit0g54; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ipn3csGnZ0tYGX1gC6VX751FjnTxbziI7gf77SEB1v33sEJ0kqO38RS2qFLHzJ8+UV2Biz0S2ADqnx5wTqVNerYThRrwdYyABAXmEAWpmL5MGD2PTOhW+64iGLqWw+gUFPVwHh988MSv2rNO2ViufR2pAQQ0nMbCYIs8ZfFofjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjYO4ivH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQit0g54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C2F1F000C4;
-	Sat, 17 Oct 2026 17:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjYO4ivH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE031F000C4;
+	Sat, 17 Oct 2026 17:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256997;
-	bh=4N4uKuVflvqG3McaY0IirLcqViqv91DCa6oUROc0wVI=;
+	s=korg; t=1792257001;
+	bh=axRfh+Wt9N4j7eMlSIKLByAapzyPKzcRIXS2WgwvYU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jQit0g54IYe3qZMkYLdWTL941KGfS4STxWxFfR1SHOJ2938p4EGrx06ryF9m7zPsn
-	 PYJthXrCrWE2ec2QeVvxEX3cromCMz+WV/iuY0OxxBnutbDrlsIWVhPctarkLhDyPi
-	 zG7yFugvr3axRz/03tGxd04nyA7VE8mVMOH01mz0=
+	b=KjYO4ivHAJ3jddYuMUcliWyWBHT6IXDCqvWeYBl6v2vtV8wCRSt62pXHQkHdI/bGX
+	 G+RWoxI3QJvsqWMwnMSmsoSCxNGMAhZNP6ntdHKiIRx+wMF1PeXrtzYMa6bjNinFBO
+	 W0s8K0x7YU4XgYJDrKTYxURlVLKehI4YcWRu8iNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0418/1674] ASoC: SOF: ipc4-topology: Harden loops for looking up ALH copiers
-Date: Sat, 17 Oct 2026 17:44:50 +0200
-Message-ID: <20261017160441.858878346@linuxfoundation.org>
+Subject: [PATCH 6.6 0419/1674] erofs: avoid infinite loops due to corrupted subpage compact indexes
+Date: Sat, 17 Oct 2026 17:44:51 +0200
+Message-ID: <20261017160441.886529364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -56,78 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 6fd60136d256b3b948333ebdb3835f41a95ab7ef ]
+[ Upstream commit e13d315ae077bb7c3c6027cc292401bc0f4ec683 ]
 
-Other, non DAI copier widgets could have the same  stream name (sname) as
-the ALH copier and in that case the copier->data is NULL, no alh_data is
-attached, which could lead to NULL pointer dereference.
-We could check for this NULL pointer in sof_ipc4_prepare_copier_module()
-and avoid the crash, but a similar loop in sof_ipc4_widget_setup_comp_dai()
-will miscalculate the ALH device count, causing broken audio.
+Robert reported an infinite loop observed by two crafted images.
 
-The correct fix is to harden the matching logic by making sure that the
-1. widget is a DAI widget - so dai = w->private is valid
-2. the dai (and thus the copier) is ALH copier
+The root cause is that `clusterofs` can be larger than `lclustersize`
+for !NONHEAD `lclusters` in corrupted subpage compact indexes, e.g.:
 
-[ Backport to 6.6.y: Apply both widget-kind and ALH-type predicates to
-  the target loops; the newer node_type local is absent and unused by
-  this implementation. ]
+  blocksize = lclustersize = 512   lcn = 6   clusterofs = 515
 
-Fixes: a150345aa758 ("ASoC: SOF: ipc4-topology: add SoundWire/ALH aggregation support")
-Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Link: https://github.com/thesofproject/sof/pull/9652
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20250206084642.14988-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Move the corresponding check for full compress indexes to
+`z_erofs_load_lcluster_from_disk()` to also cover subpage compact
+compress indexes.
+
+It also fixes the position of `m->type >= Z_EROFS_LCLUSTER_TYPE_MAX`
+check, since it should be placed right after
+`z_erofs_load_{compact,full}_lcluster()`.
+
+[ Backport to 6.6.y: preserve the switch-based full/compact loader and
+  perform the type and cluster-offset validation after either loader
+  using z_logical_clusterbits. ]
+
+Fixes: 8d2517aaeea3 ("erofs: fix up compacted indexes for block size < 4096")
+Fixes: 1a5223c182fd ("erofs: do sanity check on m->type in z_erofs_load_compact_lcluster()")
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/r/35167.1760645886@localhost
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/erofs/zmap.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index 18096aefce13f..8911c075251ca 100644
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -577,10 +577,16 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
- 		}
- 
- 		list_for_each_entry(w, &sdev->widget_list, list) {
--			if (w->widget->sname &&
-+			struct snd_sof_dai *alh_dai;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 76566c2cbf63e..e53d5239f04d6 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -67,10 +67,6 @@ static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m,
+ 		if (advise & Z_EROFS_LI_PARTIAL_REF)
+ 			m->partialref = true;
+ 		m->clusterofs = le16_to_cpu(di->di_clusterofs);
+-		if (m->clusterofs >= 1 << vi->z_logical_clusterbits) {
+-			DBG_BUGON(1);
+-			return -EFSCORRUPTED;
+-		}
+ 		m->pblk = le32_to_cpu(di->di_u.blkaddr);
+ 		break;
+ 	default:
+@@ -276,14 +272,34 @@ static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
+ static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
+ 					   unsigned int lcn, bool lookahead)
+ {
+-	switch (EROFS_I(m->inode)->datalayout) {
++	struct erofs_inode *vi = EROFS_I(m->inode);
++	int err;
 +
-+			if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
- 			    strcmp(w->widget->sname, swidget->widget->sname))
- 				continue;
- 
-+			alh_dai = w->private;
-+			if (alh_dai->type != SOF_DAI_INTEL_ALH)
-+				continue;
++	switch (vi->datalayout) {
+ 	case EROFS_INODE_COMPRESSED_FULL:
+-		return z_erofs_load_full_lcluster(m, lcn);
++		err = z_erofs_load_full_lcluster(m, lcn);
++		break;
+ 	case EROFS_INODE_COMPRESSED_COMPACT:
+-		return z_erofs_load_compact_lcluster(m, lcn, lookahead);
++		err = z_erofs_load_compact_lcluster(m, lcn, lookahead);
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
++	if (err)
++		return err;
 +
- 			blob->alh_cfg.device_count++;
- 		}
++	if (m->type >= Z_EROFS_LCLUSTER_TYPE_MAX) {
++		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %u of nid %llu",
++			  m->type, lcn, vi->nid);
++		DBG_BUGON(1);
++		return -EOPNOTSUPP;
++	}
++	if (m->type != Z_EROFS_LCLUSTER_TYPE_NONHEAD &&
++	    m->clusterofs >= (1 << vi->z_logical_clusterbits)) {
++		DBG_BUGON(1);
++		return -EFSCORRUPTED;
++	}
++	return 0;
+ }
  
-@@ -1692,11 +1698,13 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
- 			 */
- 			i = 0;
- 			list_for_each_entry(w, &sdev->widget_list, list) {
--				if (w->widget->sname &&
-+				if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
- 				    strcmp(w->widget->sname, swidget->widget->sname))
- 					continue;
- 
- 				dai = w->private;
-+				if (dai->type != SOF_DAI_INTEL_ALH)
-+					continue;
- 				alh_copier = (struct sof_ipc4_copier *)dai->private;
- 				alh_data = &alh_copier->data;
- 				blob->alh_cfg.mapping[i].device = alh_data->gtw_cfg.node_id;
+ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
 -- 
 2.53.0
 
