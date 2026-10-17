@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3D73C73EC;
-	Sat, 17 Oct 2026 17:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588B3C6A5C;
+	Sat, 17 Oct 2026 17:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258816; cv=none; b=PV/APmR+L2OgtziYnprIJi7ZhMzuFY0PSygo0my5OLVkMUvqAPWg96s+H+5tAZES0eaRYrapjYn3HPzX0deXh4gtenLa6i05wtYqCEjfT8i7iDeO0W2aiCWKha6Lx0Cmg/PcGNetXIvQ2GcurHELLsa+Z1+3jnao+3cujPKG8X0=
+	t=1792258819; cv=none; b=YcqvqrH75b7dlEPCS4yjJuJpAOQiQ6mNZIf2y/9rmCWEpFx8455H6VnKkv8DXc5TxYur2oYMmumNcya7yc6P52V0ZLAtwRXGIIwaRyWnvzrBWaCn+a/WuEbsPAqu6J22xsASBAKDPexWQ0Uz4qusplJdsYxzKxg2yYhwuoPz9UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258816; c=relaxed/simple;
-	bh=O/m/RG6KO61SND1pKqUdyrJknZVprJ0A34pJYZKKslQ=;
+	s=arc-20240116; t=1792258819; c=relaxed/simple;
+	bh=9DVOCBwYc9jvQWLwcAGx2N/X2wX2h5HmwykolNHRhyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Erpf7XUqI3ndwxibM/eRoKLHbRudiTZP5V+MhJc+6cJFCeqbJqpUqhRwJ2SZEtPqH/7auKtPo63IjmT0Ey+s3UCDmwpzqm20C08WSfPb+1/EXg6FGneMVJlJ/WCzUSBMuAs+23iVq3TXlNPCoOtnKsWgUlpP8KocmWJ7ZiuBN9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wl4a2qf6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M7Uu75tHHbvYECPtPUY15l7wl5DcaBwmCzJ98RNI3UiVp0iDGxEFboWC8QTbxP8dTZdgRZbO7/jMOCljovdtnMhd9nXhe79rjNzFtYFWXrV5+DOj+TIKMIoddc756kG+o1V/8F8Vf+eILWew/NjXFJcwjlnSpDHohSFeiAP86W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR7e7spD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wl4a2qf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836041F000C4;
-	Sat, 17 Oct 2026 17:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR7e7spD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC9D1F000C4;
+	Sat, 17 Oct 2026 17:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258815;
-	bh=5fVPUEHIBj1vQqgeeorLMkKvr0arpmEv6cVKji4CbcI=;
+	s=korg; t=1792258818;
+	bh=WnGNOOzELhTWmpwEIbD32F3gkSstH3IAkNJ/YCAzH9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wl4a2qf6FIjDkS70IiKp+7gYKZid0EN3YH8VMr74lX/Q+sgBRJIcKCMpXSXCJSRLQ
-	 BjfACJ2VF2PGFxC7vlRxzKq7ZBb80OJGcSX7bEjbidE9xfSHK9JBIr5vxiwokE5J58
-	 36m81IPVRE+a6GgGu2CGW7O7EDoZepTSB7RJG/t4=
+	b=tR7e7spDJlOGQXmpGxy0AWWwPYtjK3Pf8SbkogtFqFTYYlSpaptxUOSlCzL+y/mmZ
+	 GJz9XHL0BepXiW0x6MONVu8o/GvR2/uwNJRicHQo2d2nDoK2C5z7RJtkCTvrkoQ5VQ
+	 RVNVBejKSFS3KtaTmeJ75gO5qn6dWUPTSC1gMPYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eric Dumazet <edumazet@google.com>,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	virtualization@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1007/1674] vsock/virtio: fix `rx_bytes` accounting for stream sockets
-Date: Sat, 17 Oct 2026 17:54:39 +0200
-Message-ID: <20261017160456.980752116@linuxfoundation.org>
+Subject: [PATCH 6.6 1008/1674] vsock/virtio: fix potential unbounded skb queue
+Date: Sat, 17 Oct 2026 17:54:40 +0200
+Message-ID: <20261017160457.007728876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,159 +60,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 45ca7e9f0730ae36fc610e675b990e9cc9ca0714 ]
+[ Upstream commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 ]
 
-In `struct virtio_vsock_sock`, we maintain two counters:
-- `rx_bytes`: used internally to track how many bytes have been read.
-  This supports mechanisms like .stream_has_data() and sock_rcvlowat().
-- `fwd_cnt`: used for the credit mechanism to inform available receive
-  buffer space to the remote peer.
+virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
 
-These counters are updated via virtio_transport_inc_rx_pkt() and
-virtio_transport_dec_rx_pkt().
+virtio_transport_recv_enqueue() skips coalescing for packets
+with VIRTIO_VSOCK_SEQ_EOM.
 
-Since the beginning with commit 06a8fc78367d ("VSOCK: Introduce
-virtio_vsock_common.ko"), we call virtio_transport_dec_rx_pkt() in
-virtio_transport_stream_do_dequeue() only when we consume the entire
-packet, so partial reads, do not update `rx_bytes` and `fwd_cnt`.
+If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
+a very large number of packets can be queued
+because vvs->rx_bytes stays at 0.
 
-This is fine for `fwd_cnt`, because we still have space used for the
-entire packet, and we don't want to update the credit for the other
-peer until we free the space of the entire packet. However, this
-causes `rx_bytes` to be stale on partial reads.
+Fix this by estimating the skb metadata size:
 
-Previously, this didn’t cause issues because `rx_bytes` was used only by
-.stream_has_data(), and any unread portion of a packet implied data was
-still available. However, since commit 93b808876682
-("virtio/vsock: fix logic which reduces credit update messages"), we now
-rely on `rx_bytes` to determine if a credit update should be sent when
-the data in the RX queue drops below SO_RCVLOWAT value.
+	(Number of skbs in the queue) * SKB_TRUESIZE(0)
 
-This patch fixes the accounting by updating `rx_bytes` with the number
-of bytes actually read, even on partial reads, while leaving `fwd_cnt`
-untouched until the packet is fully consumed. Also introduce a new
-`buf_used` counter to check that the remote peer is honoring the given
-credit; this was previously done via `rx_bytes`.
-
-Fixes: 93b808876682 ("virtio/vsock: fix logic which reduces credit update messages")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250521121705.196379-1-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
+Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: "Eugenio Pérez" <eperezma@redhat.com>
+Cc: virtualization@lists.linux.dev
+Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_vsock.h            |  1 +
- net/vmw_vsock/virtio_transport_common.c | 26 +++++++++++++++----------
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
-index bf8cac814ae5b..2b0ac38dc3b06 100644
---- a/include/linux/virtio_vsock.h
-+++ b/include/linux/virtio_vsock.h
-@@ -144,6 +144,7 @@ struct virtio_vsock_sock {
- 	u32 last_fwd_cnt;
- 	u32 rx_bytes;
- 	u32 buf_alloc;
-+	u32 buf_used;
- 	struct sk_buff_head rx_queue;
- 	u32 msg_count;
- };
 diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 4f3b14e1b5252..e2a5803c0bbb7 100644
+index e2a5803c0bbb7..24aa9194e6862 100644
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -283,18 +283,20 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
+@@ -283,7 +283,9 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
  static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
  					u32 len)
  {
--	if (vvs->rx_bytes + len > vvs->buf_alloc)
-+	if (vvs->buf_used + len > vvs->buf_alloc)
+-	if (vvs->buf_used + len > vvs->buf_alloc)
++	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
++
++	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
  		return false;
  
  	vvs->rx_bytes += len;
-+	vvs->buf_used += len;
- 	return true;
- }
- 
- static void virtio_transport_dec_rx_pkt(struct virtio_vsock_sock *vvs,
--					u32 len)
-+					u32 bytes_read, u32 bytes_dequeued)
- {
--	vvs->rx_bytes -= len;
--	vvs->fwd_cnt += len;
-+	vvs->rx_bytes -= bytes_read;
-+	vvs->buf_used -= bytes_dequeued;
-+	vvs->fwd_cnt += bytes_dequeued;
- }
- 
- void virtio_transport_inc_tx_pkt(struct virtio_vsock_sock *vvs, struct sk_buff *skb)
-@@ -399,11 +401,11 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 				   size_t len)
- {
- 	struct virtio_vsock_sock *vvs = vsk->trans;
--	size_t bytes, total = 0;
- 	struct sk_buff *skb;
- 	u32 fwd_cnt_delta;
- 	bool low_rx_bytes;
- 	int err = -EFAULT;
-+	size_t total = 0;
- 	u32 free_space;
- 
- 	spin_lock_bh(&vvs->rx_lock);
-@@ -415,6 +417,8 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 	}
- 
- 	while (total < len && !skb_queue_empty(&vvs->rx_queue)) {
-+		size_t bytes, dequeued = 0;
-+
- 		skb = skb_peek(&vvs->rx_queue);
- 
- 		bytes = min_t(size_t, len - total,
-@@ -438,12 +442,12 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 		VIRTIO_VSOCK_SKB_CB(skb)->offset += bytes;
- 
- 		if (skb->len == VIRTIO_VSOCK_SKB_CB(skb)->offset) {
--			u32 pkt_len = le32_to_cpu(virtio_vsock_hdr(skb)->len);
--
--			virtio_transport_dec_rx_pkt(vvs, pkt_len);
-+			dequeued = le32_to_cpu(virtio_vsock_hdr(skb)->len);
- 			__skb_unlink(skb, &vvs->rx_queue);
- 			consume_skb(skb);
- 		}
-+
-+		virtio_transport_dec_rx_pkt(vvs, bytes, dequeued);
- 	}
- 
- 	fwd_cnt_delta = vvs->fwd_cnt - vvs->last_fwd_cnt;
-@@ -599,7 +603,7 @@ static int virtio_transport_seqpacket_do_dequeue(struct vsock_sock *vsk,
- 				msg->msg_flags |= MSG_EOR;
- 		}
- 
--		virtio_transport_dec_rx_pkt(vvs, pkt_len);
-+		virtio_transport_dec_rx_pkt(vvs, pkt_len, pkt_len);
- 		kfree_skb(skb);
- 	}
- 
-@@ -1566,6 +1570,7 @@ int virtio_transport_read_skb(struct vsock_sock *vsk, skb_read_actor_t recv_acto
- 	struct sock *sk = sk_vsock(vsk);
- 	struct virtio_vsock_hdr *hdr;
- 	struct sk_buff *skb;
-+	u32 pkt_len;
- 	int off = 0;
- 	int err;
- 
-@@ -1583,7 +1588,8 @@ int virtio_transport_read_skb(struct vsock_sock *vsk, skb_read_actor_t recv_acto
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count--;
- 
--	virtio_transport_dec_rx_pkt(vvs, le32_to_cpu(hdr->len));
-+	pkt_len = le32_to_cpu(hdr->len);
-+	virtio_transport_dec_rx_pkt(vvs, pkt_len, pkt_len);
- 	spin_unlock_bh(&vvs->rx_lock);
- 
- 	virtio_transport_send_credit_update(vsk);
 -- 
 2.53.0
 
