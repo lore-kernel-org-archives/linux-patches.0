@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274301C861D;
-	Sat, 17 Oct 2026 16:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C90377A92;
+	Sat, 17 Oct 2026 16:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253700; cv=none; b=YVsSQeBlPLQrb7nzRAg2eDqqzixH+e4b2oM+ljeLBPdl4oLcGWug+2D4gfwEZhVyX8AHpbzMj4tdsx/frgeyNVuvPjIfDGe0cq3d1sDkb2WJ+VsoIPqKXOFF4x4PoDI03ygcYAOijBfFYLXU79d2DKhTcLSWJbnXY+whui3vDmI=
+	t=1792253703; cv=none; b=ocEudXezX3xdjImny65XJFMQf2olCbTEDwFYcEWqSmILXBucBWTeX5dR80X00Bgwv2Ok86vXwc5iZmA57hbu/2yQctUElVvcu37FMvk6gCBM2Y2+Z28kxmRZJ338DY/lb2Xbnps+2hM+/FPwvNL6tWodfMhKyUKoNYsfaxCxiCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253700; c=relaxed/simple;
-	bh=UtrwdAUkRayzTntYUNuN7EMHPRvNfEA4hmW63XCLQiA=;
+	s=arc-20240116; t=1792253703; c=relaxed/simple;
+	bh=WEQDFWRTJU/S0rcLIpAaRhplHQxyyjryFVUYfkQ9onM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUVirRoYW8OxQfnQ0kdNkKApRGLGSe6EawjSSaPNm/2Xvt29twj0uQ6KwFv8NdwEt2p8mVRRzRkWO4GFTiJnhvOdtm1fRFl3lpLGlDF29PukVwMDyb/s38zJO8hFv+SJQ/Y2bzpcdSr4m1gfmT2as8C1kiCb1CI/CP82Ut4klZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBoaMFFm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U7HBrePb1SfMGx8i8Bp9h98kLmKEWbsDewEa/W3Ji4/itJKHUu0u1GE+cAxsDr6MVMbyZK4t4B0MMHo2g9wcVL9KiF7236RJUzA6bgJyN6ChtkVCWes7LyVXOsFMI4ueYhkElp+tZ5VtyK3A5F3C11uo+zSbW8WGRZ27O1BfEb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efJk5+ME; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBoaMFFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C041F000C4;
-	Sat, 17 Oct 2026 16:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efJk5+ME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990201F000C4;
+	Sat, 17 Oct 2026 16:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253699;
-	bh=1or8INvIEbyEL2BUKc+b1kLFjEsRBeJPoq1rDJS4txM=;
+	s=korg; t=1792253702;
+	bh=kV54+Znz1sYlhvm+OA8o6pyq/48zveZwWKGaEze9HQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBoaMFFmivndvXV9l36cdXsON/md4WeYXV+mPQXgJBY4NPbVQLPWTfDALVshiBpxf
-	 gQQNEVnNqGYwEKh0NwF3IzEokgr+I7XnVN6bk5CFYvlSLxwYShLo/B+X1bSSEYfKyI
-	 bHrRrqDCo/ivyCxzJ1s9aEWgI/XltBwilQHf6TCY=
+	b=efJk5+ME0MSusXEqHgWGXR4z8bCaT3JG6LoMzB1HZoRNlLPpBQSswf1Ic5+wfC+y4
+	 r5OIw47zoyVWpkdp2retCxM/3+oJKn+Fw+FbcunHZFo7tL3pzfEGPF7D0ED0JkuvXa
+	 KunjI7fM27AAvdNRWShfb7hbPcPUeeFQ0kLwN2ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
 	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 161/869] accel/ivpu: Rework bind/unbind of imported buffers
-Date: Sat, 17 Oct 2026 17:50:02 +0200
-Message-ID: <20261017160041.175311224@linuxfoundation.org>
+Subject: [PATCH 6.12 162/869] accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()
+Date: Sat, 17 Oct 2026 17:50:03 +0200
+Message-ID: <20261017160041.203032176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,296 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-[ Upstream commit e0c0891cd63bf8338c25c423e28a5a93aed3d74c ]
+[ Upstream commit 8b694b405a84696f1d964f6da7cf9721e68c4714 ]
 
-Ensure that imported buffers are properly mapped and unmapped in
-the same way as regular buffers to properly handle buffers during
-device's bind and unbind operations to prevent resource leaks and
-inconsistent buffer states.
+Don't add BO to the vdev->bo_list in ivpu_gem_create_object().
+When failure happens inside drm_gem_shmem_create(), the BO is not
+fully created and ivpu_gem_bo_free() callback will not be called
+causing a deleted BO to be left on the list.
 
-Imported buffers are now dma_mapped before submission and
-dma_unmapped in ivpu_bo_unbind(), guaranteeing they are unmapped
-when the device is unbound.
-
-Add also imported buffers to vdev->bo_list for consistent unmapping
-on device unbind. The bo->ctx_id is set in open() so imported
-buffers have a valid context ID.
-
-Debug logs have been updated to match the new code structure.
-The function ivpu_bo_pin() has been renamed to ivpu_bo_bind()
-to better reflect its purpose, and unbind tests have been refactored
-for improved coverage and clarity.
-
+Fixes: 8d88e4cdce4f ("accel/ivpu: Use GEM shmem helper for all buffers")
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
 Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
 Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://lore.kernel.org/r/20250925145059.1446243-1-maciej.falkowski@linux.intel.com
-Stable-dep-of: 8b694b405a84 ("accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()")
+Link: https://lore.kernel.org/r/20250925145114.1446283-1-maciej.falkowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c | 89 ++++++++++++++++++++++-------------
- drivers/accel/ivpu/ivpu_gem.h |  2 +-
- drivers/accel/ivpu/ivpu_job.c |  2 +-
- 3 files changed, 59 insertions(+), 34 deletions(-)
+ drivers/accel/ivpu/ivpu_gem.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index 6f07c1d022b27..b236a2e32bc0a 100644
+index b236a2e32bc0a..1f66355ffe9fb 100644
 --- a/drivers/accel/ivpu/ivpu_gem.c
 +++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -27,8 +27,8 @@ static const struct drm_gem_object_funcs ivpu_gem_funcs;
- static inline void ivpu_dbg_bo(struct ivpu_device *vdev, struct ivpu_bo *bo, const char *action)
- {
- 	ivpu_dbg(vdev, BO,
--		 "%6s: bo %8p vpu_addr %9llx size %8zu ctx %d has_pages %d dma_mapped %d mmu_mapped %d wc %d imported %d\n",
--		 action, bo, bo->vpu_addr, ivpu_bo_size(bo), bo->ctx_id,
-+		 "%6s: bo %8p size %9zu ctx %d vpu_addr %9llx pages %d sgt %d mmu_mapped %d wc %d imported %d\n",
-+		 action, bo, ivpu_bo_size(bo), bo->ctx_id, bo->vpu_addr,
- 		 (bool)bo->base.pages, (bool)bo->base.sgt, bo->mmu_mapped, bo->base.map_wc,
- 		 (bool)bo->base.base.import_attach);
- }
-@@ -43,22 +43,46 @@ static inline void ivpu_bo_unlock(struct ivpu_bo *bo)
- 	dma_resv_unlock(bo->base.base.resv);
- }
- 
-+static struct sg_table *ivpu_bo_map_attachment(struct ivpu_device *vdev, struct ivpu_bo *bo)
-+{
-+	struct sg_table *sgt = bo->base.sgt;
-+
-+	drm_WARN_ON(&vdev->drm, !bo->base.base.import_attach);
-+
-+	ivpu_bo_lock(bo);
-+
-+	if (!sgt) {
-+		sgt = dma_buf_map_attachment(bo->base.base.import_attach, DMA_BIDIRECTIONAL);
-+		if (IS_ERR(sgt))
-+			ivpu_err(vdev, "Failed to map BO in IOMMU: %ld\n", PTR_ERR(sgt));
-+		else
-+			bo->base.sgt = sgt;
-+	}
-+
-+	ivpu_bo_unlock(bo);
-+
-+	return sgt;
-+}
-+
- /*
-- * ivpu_bo_pin() - pin the backing physical pages and map them to VPU.
-+ * ivpu_bo_bind() - pin the backing physical pages and map them to VPU.
-  *
-  * This function pins physical memory pages, then maps the physical pages
-  * to IOMMU address space and finally updates the VPU MMU page tables
-  * to allow the VPU to translate VPU address to IOMMU address.
-  */
--int __must_check ivpu_bo_pin(struct ivpu_bo *bo)
-+int __must_check ivpu_bo_bind(struct ivpu_bo *bo)
- {
- 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
- 	struct sg_table *sgt;
- 	int ret = 0;
- 
--	ivpu_dbg_bo(vdev, bo, "pin");
-+	ivpu_dbg_bo(vdev, bo, "bind");
- 
--	sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
-+	if (bo->base.base.import_attach)
-+		sgt = ivpu_bo_map_attachment(vdev, bo);
-+	else
-+		sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
- 	if (IS_ERR(sgt)) {
- 		ret = PTR_ERR(sgt);
- 		ivpu_err(vdev, "Failed to map BO in IOMMU: %d\n", ret);
-@@ -99,7 +123,9 @@ ivpu_bo_alloc_vpu_addr(struct ivpu_bo *bo, struct ivpu_mmu_context *ctx,
- 	ret = ivpu_mmu_context_insert_node(ctx, range, ivpu_bo_size(bo), &bo->mm_node);
- 	if (!ret) {
- 		bo->ctx = ctx;
-+		bo->ctx_id = ctx->id;
- 		bo->vpu_addr = bo->mm_node.start;
-+		ivpu_dbg_bo(vdev, bo, "vaddr");
- 	} else {
- 		ivpu_err(vdev, "Failed to add BO to context %u: %d\n", ctx->id, ret);
- 	}
-@@ -115,7 +141,7 @@ static void ivpu_bo_unbind_locked(struct ivpu_bo *bo)
- {
- 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
- 
--	lockdep_assert(dma_resv_held(bo->base.base.resv) || !kref_read(&bo->base.base.refcount));
-+	dma_resv_assert_held(bo->base.base.resv);
- 
- 	if (bo->mmu_mapped) {
- 		drm_WARN_ON(&vdev->drm, !bo->ctx);
-@@ -134,9 +160,14 @@ static void ivpu_bo_unbind_locked(struct ivpu_bo *bo)
- 		return;
- 
- 	if (bo->base.sgt) {
--		dma_unmap_sgtable(vdev->drm.dev, bo->base.sgt, DMA_BIDIRECTIONAL, 0);
--		sg_free_table(bo->base.sgt);
--		kfree(bo->base.sgt);
-+		if (bo->base.base.import_attach) {
-+			dma_buf_unmap_attachment(bo->base.base.import_attach,
-+						 bo->base.sgt, DMA_BIDIRECTIONAL);
-+		} else {
-+			dma_unmap_sgtable(vdev->drm.dev, bo->base.sgt, DMA_BIDIRECTIONAL, 0);
-+			sg_free_table(bo->base.sgt);
-+			kfree(bo->base.sgt);
-+		}
- 		bo->base.sgt = NULL;
- 	}
- }
-@@ -162,6 +193,7 @@ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_m
+@@ -193,7 +193,6 @@ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_m
  
  struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size)
  {
-+	struct ivpu_device *vdev = to_ivpu_device(dev);
+-	struct ivpu_device *vdev = to_ivpu_device(dev);
  	struct ivpu_bo *bo;
  
  	if (size == 0 || !PAGE_ALIGNED(size))
-@@ -176,6 +208,11 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
+@@ -208,20 +207,17 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
  
  	INIT_LIST_HEAD(&bo->bo_list_node);
- 
-+	mutex_lock(&vdev->bo_list_lock);
-+	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
-+	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9zu\n", bo, size);
- 	return &bo->base.base;
- }
- 
-@@ -184,7 +221,6 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- {
- 	struct device *attach_dev = dev->dev;
- 	struct dma_buf_attachment *attach;
--	struct sg_table *sgt;
- 	struct drm_gem_object *obj;
- 	int ret;
- 
-@@ -194,16 +230,10 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 
- 	get_dma_buf(dma_buf);
- 
--	sgt = dma_buf_map_attachment_unlocked(attach, DMA_BIDIRECTIONAL);
--	if (IS_ERR(sgt)) {
--		ret = PTR_ERR(sgt);
--		goto fail_detach;
--	}
--
--	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
-+	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, NULL);
- 	if (IS_ERR(obj)) {
- 		ret = PTR_ERR(obj);
--		goto fail_unmap;
-+		goto fail_detach;
- 	}
- 
- 	obj->import_attach = attach;
-@@ -211,8 +241,6 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 
- 	return obj;
- 
--fail_unmap:
--	dma_buf_unmap_attachment_unlocked(attach, sgt, DMA_BIDIRECTIONAL);
- fail_detach:
- 	dma_buf_detach(dma_buf, attach);
- 	dma_buf_put(dma_buf);
-@@ -220,7 +248,7 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 	return ERR_PTR(ret);
- }
- 
--static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags, u32 ctx_id)
-+static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags)
- {
- 	struct drm_gem_shmem_object *shmem;
- 	struct ivpu_bo *bo;
-@@ -238,16 +266,9 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
- 		return ERR_CAST(shmem);
- 
- 	bo = to_ivpu_bo(&shmem->base);
--	bo->ctx_id = ctx_id;
- 	bo->base.map_wc = flags & DRM_IVPU_BO_WC;
- 	bo->flags = flags;
  
 -	mutex_lock(&vdev->bo_list_lock);
 -	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
 -	mutex_unlock(&vdev->bo_list_lock);
 -
--	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
--
+-	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9zu\n", bo, size);
+ 	return &bo->base.base;
+ }
+ 
+ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ 					     struct dma_buf *dma_buf)
+ {
++	struct ivpu_device *vdev = to_ivpu_device(dev);
+ 	struct device *attach_dev = dev->dev;
+ 	struct dma_buf_attachment *attach;
+ 	struct drm_gem_object *obj;
++	struct ivpu_bo *bo;
+ 	int ret;
+ 
+ 	attach = dma_buf_attach(dma_buf, attach_dev);
+@@ -239,6 +235,14 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
+ 	obj->import_attach = attach;
+ 	obj->resv = dma_buf->resv;
+ 
++	bo = to_ivpu_bo(obj);
++
++	mutex_lock(&vdev->bo_list_lock);
++	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
++	mutex_unlock(&vdev->bo_list_lock);
++
++	ivpu_dbg(vdev, BO, "import: bo %8p size %9zu\n", bo, ivpu_bo_size(bo));
++
+ 	return obj;
+ 
+ fail_detach:
+@@ -269,6 +273,12 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
+ 	bo->base.map_wc = flags & DRM_IVPU_BO_WC;
+ 	bo->flags = flags;
+ 
++	mutex_lock(&vdev->bo_list_lock);
++	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
++	mutex_unlock(&vdev->bo_list_lock);
++
++	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
++
  	return bo;
  }
  
-@@ -281,6 +302,8 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
- 
- 	ivpu_dbg_bo(vdev, bo, "free");
- 
-+	drm_WARN_ON(&vdev->drm, list_empty(&bo->bo_list_node));
-+
- 	mutex_lock(&vdev->bo_list_lock);
- 	list_del(&bo->bo_list_node);
- 
-@@ -289,7 +312,9 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
- 	drm_WARN_ON(&vdev->drm, ivpu_bo_size(bo) == 0);
- 	drm_WARN_ON(&vdev->drm, bo->base.vaddr);
- 
-+	ivpu_bo_lock(bo);
- 	ivpu_bo_unbind_locked(bo);
-+	ivpu_bo_unlock(bo);
- 	mutex_unlock(&vdev->bo_list_lock);
- 
- 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
-@@ -327,7 +352,7 @@ int ivpu_bo_create_ioctl(struct drm_device *dev, void *data, struct drm_file *fi
- 	if (size == 0)
- 		return -EINVAL;
- 
--	bo = ivpu_bo_alloc(vdev, size, args->flags, file_priv->ctx.id);
-+	bo = ivpu_bo_alloc(vdev, size, args->flags);
- 	if (IS_ERR(bo)) {
- 		ivpu_err(vdev, "Failed to allocate BO: %pe (ctx %u size %llu flags 0x%x)",
- 			 bo, file_priv->ctx.id, args->size, args->flags);
-@@ -361,7 +386,7 @@ ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
- 	drm_WARN_ON(&vdev->drm, !PAGE_ALIGNED(range->end));
- 	drm_WARN_ON(&vdev->drm, !PAGE_ALIGNED(size));
- 
--	bo = ivpu_bo_alloc(vdev, size, flags, IVPU_GLOBAL_CONTEXT_MMU_SSID);
-+	bo = ivpu_bo_alloc(vdev, size, flags);
- 	if (IS_ERR(bo)) {
- 		ivpu_err(vdev, "Failed to allocate BO: %pe (vpu_addr 0x%llx size %llu flags 0x%x)",
- 			 bo, range->start, size, flags);
-@@ -372,7 +397,7 @@ ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
- 	if (ret)
- 		goto err_put;
- 
--	ret = ivpu_bo_pin(bo);
-+	ret = ivpu_bo_bind(bo);
- 	if (ret)
- 		goto err_put;
- 
-diff --git a/drivers/accel/ivpu/ivpu_gem.h b/drivers/accel/ivpu/ivpu_gem.h
-index efca279758c8b..57c9c2db02069 100644
---- a/drivers/accel/ivpu/ivpu_gem.h
-+++ b/drivers/accel/ivpu/ivpu_gem.h
-@@ -24,7 +24,7 @@ struct ivpu_bo {
- 	bool mmu_mapped;
- };
- 
--int ivpu_bo_pin(struct ivpu_bo *bo);
-+int ivpu_bo_bind(struct ivpu_bo *bo);
- void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx);
- 
- struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size);
-diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index 172502b71b9cf..3856d9683ed86 100644
---- a/drivers/accel/ivpu/ivpu_job.c
-+++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -668,7 +668,7 @@ ivpu_job_prepare_bos_for_submit(struct drm_file *file, struct ivpu_job *job, u32
- 
- 		job->bos[i] = to_ivpu_bo(obj);
- 
--		ret = ivpu_bo_pin(job->bos[i]);
-+		ret = ivpu_bo_bind(job->bos[i]);
- 		if (ret)
- 			return ret;
- 	}
 -- 
 2.53.0
 
