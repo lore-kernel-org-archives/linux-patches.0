@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE604392829;
-	Sat, 17 Oct 2026 17:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD412D3225;
+	Sat, 17 Oct 2026 17:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258564; cv=none; b=uNmwoH9D9b6EkPJty6aAiktHRYwGc4PJ3mAZ7QXhe/SDrL9D28su5kVGTihhe/IwuKa42kzv3n21jIo+DV5fyf/HJPNAIY9I5U2i+CZyFfmm69f4/EA8TYJuFfQZK1XttdXNUVH2F4PMw0TFgxB73u506BwCUsn6hOZGXy9HSww=
+	t=1792258569; cv=none; b=d9oj4+Xr4T9Ex3bzclfjpMRIfnXiKDYpmTOGCWMIkCeXNczJj4xiDMNdOpMgztpKbrZZb9Jz4fX77ws9VuSQn72wkr5XiXeAtoxek9feQNzqJJzDkRQzCy7g/+aSMgNCk7KSvHUJ4CIwdVn5/6GUMXV7SqGotUP3apoivMqbNmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258564; c=relaxed/simple;
-	bh=6viGlvnWYWLjVAdvaWrIrQXqxyeuk7E3PBUe6bui5oY=;
+	s=arc-20240116; t=1792258569; c=relaxed/simple;
+	bh=x/M73x+pDZB7yTJiVf6SOcOPuZg+yCzyJZh3fsxV64k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KV84TqNrtNEQRdBtJf9evhlY9FNbVPLv3PvrdebVmLRdRjnYOqu46v/U/1owyUTvs9ppMIwtVNgcgSABOr5EC6s/HziK9WCxoyXBmje+4KatNtQqwI7VNdo3QLITwESOFeWzKhNz4plXX7nw+uYNlOQcjbtBF+Qi5a23ueMREPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBwzl0+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i/sZJQa7sQO3PBjd5kxkibEBbhn+BAEvSs9zKSeXneFMT3t11LWZk0wb0n+uYGnWZy8W4ReC7p5u/XXD61A2dIsQAhIZ5GT9uiH2HQ+kEcv36bR1SmVI9SGhtMizpN5pjiql5ApLZv3dB1XZ/1xsqK1ayGhGxKYg/LB2g5tccFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX+reNHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBwzl0+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD061F000C4;
-	Sat, 17 Oct 2026 17:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX+reNHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F991F000C4;
+	Sat, 17 Oct 2026 17:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258563;
-	bh=aiKwW9RPsZcdklfnhMxVBC/IoKlc+h1Z808nqaoIBHc=;
+	s=korg; t=1792258566;
+	bh=0EeOn5MbTB6VcRhJZfx5/koReYfPOhFXwGArMTpQfY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBwzl0+ECpFfunLa+o4ZLwTRtu+JvZla7VDqWvfmh93b2IlqwTegt/YiKarzgT2Ul
-	 eAZVkHcscIk2eThJQ/pgXdQC+4iCG3Rd8LJUiMpEjsXkGNx48OQOcYmql2KoA2v3vx
-	 Zm3VZXp8A8IhVNjddfyKO4zIahs03FzUy3u5c8GU=
+	b=kX+reNHc+xXi8JPkXKNMMB5mddwGsmnKLzEG3Q9pC9lPsvLdOKUoJnMv3KpjYEJKG
+	 7nct9Xc61avPuIfBpObax/jLCXnqTqh6Cd1fJO5kgM48JhOnm1ibW2lQ22lYGy3Non
+	 Do/YndC3xBwPsVSzRplcpijXBI7POFuEpCfbmIhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0924/1674] wifi: rtw89: pci: validate sequence number of TX release report
-Date: Sat, 17 Oct 2026 17:53:16 +0200
-Message-ID: <20261017160454.851190716@linuxfoundation.org>
+Subject: [PATCH 6.6 0925/1674] team: avoid NETDEV_CHANGEMTU event when unregistering slave
+Date: Sat, 17 Oct 2026 17:53:17 +0200
+Message-ID: <20261017160454.876689939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,73 +55,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 957eda596c7665f2966970fd1dcc35fe299b38e8 ]
+[ Upstream commit bb4c698633c0e19717586a6524a33196cff01a32 ]
 
-Hardware rarely reports abnormal sequence number in TX release report,
-which will access out-of-bounds of wd_ring->pages array, causing NULL
-pointer dereference.
+syzbot is reporting
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 1 PID: 1085 Comm: irq/129-rtw89_p Tainted: G S   U
-             6.1.145-17510-g2f3369c91536 #1 (HASH:69e8 1)
-  Call Trace:
-   <IRQ>
-   rtw89_pci_release_tx+0x18f/0x300 [rtw89_pci (HASH:4c83 2)]
-   rtw89_pci_napi_poll+0xc2/0x190 [rtw89_pci (HASH:4c83 2)]
-   net_rx_action+0xfc/0x460 net/core/dev.c:6578 net/core/dev.c:6645 net/core/dev.c:6759
-   handle_softirqs+0xbe/0x290 kernel/softirq.c:601
-   ? rtw89_pci_interrupt_threadfn+0xc5/0x350 [rtw89_pci (HASH:4c83 2)]
-   __local_bh_enable_ip+0xeb/0x120 kernel/softirq.c:499 kernel/softirq.c:423
-   </IRQ>
-   <TASK>
-   rtw89_pci_interrupt_threadfn+0xf8/0x350 [rtw89_pci (HASH:4c83 2)]
-   ? irq_thread+0xa7/0x340 kernel/irq/manage.c:0
-   irq_thread+0x177/0x340 kernel/irq/manage.c:1205 kernel/irq/manage.c:1314
-   ? thaw_kernel_threads+0xb0/0xb0 kernel/irq/manage.c:1202
-   ? irq_forced_thread_fn+0x80/0x80 kernel/irq/manage.c:1220
-   kthread+0xea/0x110 kernel/kthread.c:376
-   ? synchronize_irq+0x1a0/0x1a0 kernel/irq/manage.c:1287
-   ? kthread_associate_blkcg+0x80/0x80 kernel/kthread.c:331
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
-   </TASK>
+  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 3
+  ref_tracker: netdev@ffff88807dcf8618 has 1/2 users at
+       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
+       netdev_hold include/linux/netdevice.h:4429 [inline]
+       inetdev_init+0x201/0x4e0 net/ipv4/devinet.c:286
+       inetdev_event+0x251/0x1610 net/ipv4/devinet.c:1600
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_mtu net/core/dev.c:2318 [inline]
+       netif_set_mtu_ext+0x5aa/0x800 net/core/dev.c:9886
+       netif_set_mtu+0xd7/0x1b0 net/core/dev.c:9907
+       dev_set_mtu+0x126/0x260 net/core/dev_api.c:248
+       team_port_del+0xb07/0xcb0 drivers/net/team/team_core.c:1333
+       team_del_slave drivers/net/team/team_core.c:1936 [inline]
+       team_device_event+0x207/0x5b0 drivers/net/team/team_core.c:2929
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_extack net/core/dev.c:2281 [inline]
+       call_netdevice_notifiers net/core/dev.c:2295 [inline]
+       __dev_change_net_namespace+0xcb7/0x2050 net/core/dev.c:12592
+       do_setlink+0x2ce/0x4590 net/core/rtnetlink.c:3060
+       rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+       __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+       rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
+       rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
+       netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
+       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+       netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
+       netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
 
-To prevent crash, validate rpp_info.seq before using.
+problem. Ido Schimmel found steps to reproduce
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-2-pkshih@realtek.com
+  ip link add name team1 type team
+  ip link add name dummy1 mtu 1499 master team1 type dummy
+  ip netns add ns1
+  ip link set dev dummy1 netns ns1
+  ip -n ns1 link del dev dummy1
+
+and also found that the same issue was fixed in the bond driver in
+commit f51048c3e07b ("bonding: avoid NETDEV_CHANGEMTU event when
+unregistering slave").
+
+Let's do similar thing for the team driver, with commit ad7c7b2172c3 ("net:
+hold netdev instance lock during sysfs operations") and commit 303a8487a657
+("net: s/__dev_set_mtu/__netif_set_mtu/") also applied.
+
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260224125709.317574-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/team/team_core.c | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index 1a1027dd01d3e..7b0630d5d5283 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -484,11 +484,16 @@ static void rtw89_pci_release_rpp(struct rtw89_dev *rtwdev,
- 	tx_status = le32_get_bits(rpp->dword, RTW89_PCI_RPP_TX_STATUS);
- 	txch = rtw89_core_get_ch_dma(rtwdev, qsel);
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 46e9aec8a0541..91abda19a3be0 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1359,7 +1359,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
  
--	if (txch == RTW89_TXCH_CH12) {
-+	if (unlikely(txch == RTW89_TXCH_CH12)) {
- 		rtw89_warn(rtwdev, "should no fwcmd release report\n");
- 		return;
- 	}
+ static void __team_port_change_port_removed(struct team_port *port);
  
-+	if (unlikely(seq >= RTW89_PCI_TXWD_NUM_MAX)) {
-+		rtw89_warn(rtwdev, "invalid seq %d\n", seq);
-+		return;
-+	}
+-static int team_port_del(struct team *team, struct net_device *port_dev)
++static int team_port_del(struct team *team, struct net_device *port_dev, bool unregister)
+ {
+ 	struct net_device *dev = team->dev;
+ 	struct team_port *port;
+@@ -1397,7 +1397,10 @@ static int team_port_del(struct team *team, struct net_device *port_dev)
+ 	__team_port_change_port_removed(port);
+ 
+ 	team_port_set_orig_dev_addr(port);
+-	dev_set_mtu(port_dev, port->orig.mtu);
++	if (unregister)
++		__dev_set_mtu(port_dev, port->orig.mtu);
++	else
++		dev_set_mtu(port_dev, port->orig.mtu);
+ 	kfree_rcu(port, rcu);
+ 	netdev_info(dev, "Port device %s removed\n", portname);
+ 	__team_compute_features(team);
+@@ -1702,7 +1705,7 @@ static void team_uninit(struct net_device *dev)
+ 
+ 	mutex_lock(&team->lock);
+ 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
+-		team_port_del(team, port->dev);
++		team_port_del(team, port->dev, false);
+ 
+ 	__team_change_mode(team, NULL); /* cleanup */
+ 	__team_options_unregister(team, team_options, ARRAY_SIZE(team_options));
+@@ -2019,7 +2022,29 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 	int err;
+ 
+ 	mutex_lock(&team->lock);
+-	err = team_port_del(team, port_dev);
++	err = team_port_del(team, port_dev, false);
++	mutex_unlock(&team->lock);
 +
- 	tx_ring = &rtwpci->tx_rings[txch];
- 	wd_ring = &tx_ring->wd_ring;
- 	txwd = &wd_ring->pages[seq];
++	if (err)
++		return err;
++
++	if (netif_is_team_master(port_dev)) {
++		lockdep_unregister_key(&team->team_lock_key);
++		lockdep_register_key(&team->team_lock_key);
++		lockdep_set_class(&team->lock, &team->team_lock_key);
++	}
++	netdev_change_features(dev);
++
++	return err;
++}
++
++static int team_del_slave_on_unregister(struct net_device *dev, struct net_device *port_dev)
++{
++	struct team *team = netdev_priv(dev);
++	int err;
++
++	mutex_lock(&team->lock);
++	err = team_port_del(team, port_dev, true);
+ 	mutex_unlock(&team->lock);
+ 
+ 	if (err)
+@@ -3124,7 +3149,7 @@ static int team_device_event(struct notifier_block *unused,
+ 					       !!netif_oper_up(port->dev));
+ 		break;
+ 	case NETDEV_UNREGISTER:
+-		team_del_slave(port->team->dev, dev);
++		team_del_slave_on_unregister(port->team->dev, dev);
+ 		break;
+ 	case NETDEV_FEAT_CHANGE:
+ 		if (!port->team->notifier_ctx) {
 -- 
 2.53.0
 
