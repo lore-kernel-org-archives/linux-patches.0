@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30602391E51;
-	Sat, 17 Oct 2026 18:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759C4CF461;
+	Sat, 17 Oct 2026 18:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260056; cv=none; b=U9aft0HGdnQ3rngMFcZ8ZJ9hmukmCmlu7BB9DBCQAUP6uvCImFedmtSJ+HI1nWm/UoiBnc7yVPT2J686ieKIADoDZsqQGgNLS1XHdPZaLWv7dZqPjzqX4HvKKBiStKIz6PFYBI/rqdtMX7lEsryiae3hLGaPV/AQxIbQoNJQHmE=
+	t=1792260059; cv=none; b=E32Py1Oz26U93HtRcJ5m7st5HFpgFFuAAWXyUFpxMTRKtZn02cTb2yoKnUqOiW5zC++Fsa6XHjiDTctas1JaxTbw2wHc/Ez3B50vOO9umq0kZTnD2Sd8ZlP6aYVZXUNe+8ts2GZZ8GWenFjdo71W9kOI1wVaAC/kqMgWGTu9Uus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260056; c=relaxed/simple;
-	bh=PSsAYk5KpEPlDjbmYJDr0xzMPRJQ/+8Ni2f3Iq0KqG4=;
+	s=arc-20240116; t=1792260059; c=relaxed/simple;
+	bh=QRcEX3Pr6tmPsvDHG9kvX0qOwgPtqZFhOgFzAho+nrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnFSpG0G77/9B5QJzurFDeWqCu6z8jFdB9EDzPAvTLBVLeJJRvWhB9xRvhi2mf0IG2zQ4d4iFiwLD8cM4z2ujaNhYWPj5NXEkCK105ltvObE9BQuNUWmht5fU2Jl0gsZFuo5eRt2TWCt/4q4xmkajgm31F55t5HDxBJsTlFLwYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJeWTgJE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=olxJjgwVoG/HSe9UNmJzxporGMtt7qbt8gdqko0/AdW3Sz4PWOHXj17QUNPcvylmWw6En23e3W2th7AYWqdMhr6ziOb/Rk3UaxvwjxEo0zDp13uaubr8k2UNW2uecKS0tae/EcOThrBa/llYhFW8yLGOxEX3VpHOfNznzaHG+vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oa91+QbB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJeWTgJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3531F000C4;
-	Sat, 17 Oct 2026 18:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa91+QbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9237D1F000C4;
+	Sat, 17 Oct 2026 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260055;
-	bh=o8utehvZ8B+cPUMMrZhkDEuZ7pIDTJYtZr7XopuhtFw=;
+	s=korg; t=1792260058;
+	bh=d1oHQVD5uZQjqfwyG+UQwBALfaO37F6D2onPmko3hOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJeWTgJEPsOjxZVsE3Xy29mFIFTRGGZUOGmAYZSuWeC5pMMLBX970pgda9AG9c6kX
-	 8fSY1avrtsufr5Vr4S3e77G0fy90MEnlFO2dPsid7JbsCpc7SSvPS3r7J7MKoGQ8zg
-	 DfRITSHCKwZFc4NRPTATOUyrgL9pHWo386sNKpjM=
+	b=Oa91+QbBN65VCEzs971LtAhxqBm0LVCylO2pLaSrrAj1GUGjKOpylbcvQ3us7UWQi
+	 fyia+XWLoPFgPvyNWwKG7c3yxT5cuV8nm0iNsNJ8hw0RjPZ33AUvi98aPYRsZTV43K
+	 Jy7AxRkYMhVEX/F3YA/7/KsxNrhMWO65YjHqW0hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com,
 	Filipe Manana <fdmanana@suse.com>,
-	Sun YangKai <sunyangkai@fnnas.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1419/1674] btrfs: check if root is readonly when setting posix acl
-Date: Sat, 17 Oct 2026 18:01:31 +0200
-Message-ID: <20261017160507.602990872@linuxfoundation.org>
+Subject: [PATCH 6.6 1420/1674] btrfs: always wait for ordered extents to avoid OE races
+Date: Sat, 17 Oct 2026 18:01:32 +0200
+Message-ID: <20261017160507.627665084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,51 +53,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun YangKai <sunyangkai@fnnas.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 01c2f41fc441f75b3f9326443372faceb1cb6638 ]
+[ Upstream commit ec78575dde998c21be7e0cb2503b5620f34b6255 ]
 
-For a filesystem which has btrfs read-only property set to true, all
-write operations including acl and xattr should be denied. However, acl
-can still be set even if btrfs ro property is true.
+[BUG]
+Syzbot reported a bug that there can be conflicting OEs for the same
+range:
 
-This happens because no function on the set_acl code path checks the root
-is readonly or not. It was checked in btrfs_setxattr_trans() but got
-removed in commit 353c2ea735e4 ("btrfs: remove redundant readonly root
-check in btrfs_setxattr_trans")
+  BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object alrea[  179.162726][ T6897] BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object already exists)
+  ------------[ cut here ]------------
+  kernel BUG at fs/btrfs/ordered-data.c:264!
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
+  RIP: 0010:btrfs_alloc_ordered_extent+0x943/0xad0
+  Call Trace:
+   <TASK>
+   cow_file_range+0x744/0x12a0
+   fallback_to_cow+0x5ea/0xa00
+   run_delalloc_nocow+0x110c/0x17a0
+   btrfs_run_delalloc_range+0xbe4/0x1c20
+   writepage_delalloc+0x104d/0x1ba0
+   btrfs_writepages+0x1667/0x28b0
+   do_writepages+0x338/0x560
+   filemap_fdatawrite_range+0x1f2/0x300
+   btrfs_fdatawrite_range+0x54/0xf0
+   btrfs_direct_write+0x6a0/0xc30
+   btrfs_do_write_iter+0x329/0x790
+   do_iter_readv_writev+0x624/0x8d0
+   vfs_writev+0x34c/0x990
+   __se_sys_pwritev2+0x17a/0x2a0
+   do_syscall_64+0x174/0x580
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
 
-That commit didn't check if all the callers properly check the root's
-read-only flag. A previous fix is commit b51111271b03 ("btrfs: check if
-root is readonly while setting security xattr").
+[CAUSE]
+Since commit ff66fe666233 ("btrfs: fix incorrect buffered IO fallback
+for append direct writes"), if the direct IO finished short, we will
+revert the isize back to the original one, so that append writes can be
+respected during the buffered fallback.
 
-Always check if the root is read-only before performing the set acl
-operation.
+Normally we rely on lock_and_cleanup_extent_if_need() function during
+buffered writeback to wait for any existing ordered extents.
 
-Fixes: 353c2ea735e4 ("btrfs: remove redundant readonly root check in btrfs_setxattr_trans")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+But that ordered extent waiting only happens if the start_pos is inside
+the isize.
+Since we have reverted the isize during failed direct IO, we will not
+wait for any ordered extents.
+
+This means we can have a race where the direct IO OE is still in the
+tree, finished but not yet removed, then we're inserting the OE for the
+buffered write, causing the above crash.
+
+[FIX]
+Make the OE wait to be unconditional, to handle the reverted isize
+situation.
+
+And since lock_and_cleanup_extent_if_need() now either lock the
+extents or return -EAGAIN, also remove the branches that handles
+no-extent-locked cases, and rename it to remove the "_if_need" suffix.
+
+The following micro benchmark shows the runtime difference for
+btrfs_buffered_write(), doing `xfs_io -f -c "pwrite 0 1m"` workload,
+all values are the average runtime in nano seconds.
+
+      function runtime              |   before    |     after
+ -----------------------------------+-------------+---------------
+ lock_and_cleanup_extent_if_need()  |     58.2    |    183.0
+ btrfs_buffered_write()             |   2115.6    |   2973.3
+
+The overall runtime of btrfs_buffered_write() is still pretty
+tiny (still less than 3 micro seconds), I'd say the extra cost is still
+acceptable.
+
+An alternative to fix this problem is to wait ordered extents during
+iomap_end() where the isize revert is done.
+
+But that solution will break nowait requirement, as if a nowait direct
+IO finished short, we have to wait for the OEs unconditionally or the
+next append buffered IO can still hit the same problem.
+
+So here we have to move the wait cost to buffered write, but at least
+the code is slightly more streamline.
+
+Reported-by: syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=ba2afde329fc27e3f22e
+Fixes: ff66fe666233 ("btrfs: fix incorrect buffered IO fallback for append direct writes")
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Sun YangKai <sunyangkai@fnnas.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/acl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/file.c | 106 ++++++++++++++++++++----------------------------
+ 1 file changed, 44 insertions(+), 62 deletions(-)
 
-diff --git a/fs/btrfs/acl.c b/fs/btrfs/acl.c
-index 7427449a04a3f..eb78685f1c466 100644
---- a/fs/btrfs/acl.c
-+++ b/fs/btrfs/acl.c
-@@ -117,6 +117,9 @@ int btrfs_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
- 	struct inode *inode = d_inode(dentry);
- 	umode_t old_mode = inode->i_mode;
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 4211194c18cf1..fe742200154e8 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -956,70 +956,64 @@ static noinline int prepare_pages(struct inode *inode, struct page **pages,
  
-+	if (btrfs_root_readonly(BTRFS_I(inode)->root))
-+		return -EROFS;
+ /*
+  * This function locks the extent and properly waits for data=ordered extents
+- * to finish before allowing the pages to be modified if need.
++ * to finish before allowing the pages to be modified.
+  *
+  * The return value:
+- * 1 - the extent is locked
+- * 0 - the extent is not locked, and everything is OK
++ * 0 - the extent is locked
+  * -EAGAIN - need re-prepare the pages
+  * the other < 0 number - Something wrong happens
+  */
+ static noinline int
+-lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct page **pages,
+-				size_t num_pages, loff_t pos,
+-				size_t write_bytes,
+-				u64 *lockstart, u64 *lockend, bool nowait,
+-				struct extent_state **cached_state)
++lock_and_cleanup_extent(struct btrfs_inode *inode, struct page **pages,
++			size_t num_pages, loff_t pos,
++			size_t write_bytes,
++			u64 *lockstart, u64 *lockend, bool nowait,
++			struct extent_state **cached_state)
+ {
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
++	struct btrfs_ordered_extent *ordered;
+ 	u64 start_pos;
+ 	u64 last_pos;
+ 	int i;
+-	int ret = 0;
+ 
+ 	start_pos = round_down(pos, fs_info->sectorsize);
+ 	last_pos = round_up(pos + write_bytes, fs_info->sectorsize) - 1;
+ 
+-	if (start_pos < inode->vfs_inode.i_size) {
+-		struct btrfs_ordered_extent *ordered;
+-
+-		if (nowait) {
+-			if (!try_lock_extent(&inode->io_tree, start_pos, last_pos,
+-					     cached_state)) {
+-				for (i = 0; i < num_pages; i++) {
+-					unlock_page(pages[i]);
+-					put_page(pages[i]);
+-					pages[i] = NULL;
+-				}
+-
+-				return -EAGAIN;
+-			}
+-		} else {
+-			lock_extent(&inode->io_tree, start_pos, last_pos, cached_state);
+-		}
+-
+-		ordered = btrfs_lookup_ordered_range(inode, start_pos,
+-						     last_pos - start_pos + 1);
+-		if (ordered &&
+-		    ordered->file_offset + ordered->num_bytes > start_pos &&
+-		    ordered->file_offset <= last_pos) {
+-			unlock_extent(&inode->io_tree, start_pos, last_pos,
+-				      cached_state);
++	if (nowait) {
++		if (!try_lock_extent(&inode->io_tree, start_pos, last_pos,
++				     cached_state)) {
+ 			for (i = 0; i < num_pages; i++) {
+ 				unlock_page(pages[i]);
+ 				put_page(pages[i]);
++				pages[i] = NULL;
+ 			}
+-			btrfs_start_ordered_extent(ordered);
+-			btrfs_put_ordered_extent(ordered);
 +
- 	if (type == ACL_TYPE_ACCESS && acl) {
- 		ret = posix_acl_update_mode(idmap, inode,
- 					    &inode->i_mode, &acl);
+ 			return -EAGAIN;
+ 		}
+-		if (ordered)
+-			btrfs_put_ordered_extent(ordered);
++	} else {
++		lock_extent(&inode->io_tree, start_pos, last_pos, cached_state);
++	}
+ 
+-		*lockstart = start_pos;
+-		*lockend = last_pos;
+-		ret = 1;
++	ordered = btrfs_lookup_ordered_range(inode, start_pos,
++					     last_pos - start_pos + 1);
++	if (ordered &&
++	    ordered->file_offset + ordered->num_bytes > start_pos &&
++	    ordered->file_offset <= last_pos) {
++		unlock_extent(&inode->io_tree, start_pos, last_pos,
++			      cached_state);
++		for (i = 0; i < num_pages; i++) {
++			unlock_page(pages[i]);
++			put_page(pages[i]);
++		}
++		btrfs_start_ordered_extent(ordered);
++		btrfs_put_ordered_extent(ordered);
++		return -EAGAIN;
+ 	}
++	if (ordered)
++		btrfs_put_ordered_extent(ordered);
++
++	*lockstart = start_pos;
++	*lockend = last_pos;
+ 
+ 	/*
+ 	 * We should be called after prepare_pages() which should have locked
+@@ -1028,7 +1022,7 @@ lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct page **pages,
+ 	for (i = 0; i < num_pages; i++)
+ 		WARN_ON(!PageLocked(pages[i]));
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /*
+@@ -1224,7 +1218,6 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
+ 		size_t copied;
+ 		size_t dirty_sectors;
+ 		size_t num_sectors;
+-		int extents_locked;
+ 
+ 		/*
+ 		 * Fault pages before locking them in prepare_pages
+@@ -1308,17 +1301,16 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
+ 			break;
+ 		}
+ 
+-		extents_locked = lock_and_cleanup_extent_if_need(
+-				BTRFS_I(inode), pages,
+-				num_pages, pos, write_bytes, &lockstart,
+-				&lockend, nowait, &cached_state);
+-		if (extents_locked < 0) {
+-			if (!nowait && extents_locked == -EAGAIN)
++		ret = lock_and_cleanup_extent(BTRFS_I(inode), pages,
++					      num_pages, pos, write_bytes,
++					      &lockstart, &lockend, nowait,
++					      &cached_state);
++		if (ret < 0) {
++			if (!nowait && ret == -EAGAIN)
+ 				goto again;
+ 
+ 			btrfs_delalloc_release_extents(BTRFS_I(inode),
+ 						       reserve_bytes);
+-			ret = extents_locked;
+ 			break;
+ 		}
+ 
+@@ -1371,18 +1363,8 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
+ 					dirty_pages, pos, copied,
+ 					&cached_state, only_release_metadata);
+ 
+-		/*
+-		 * If we have not locked the extent range, because the range's
+-		 * start offset is >= i_size, we might still have a non-NULL
+-		 * cached extent state, acquired while marking the extent range
+-		 * as delalloc through btrfs_dirty_pages(). Therefore free any
+-		 * possible cached extent state to avoid a memory leak.
+-		 */
+-		if (extents_locked)
+-			unlock_extent(&BTRFS_I(inode)->io_tree, lockstart,
+-				      lockend, &cached_state);
+-		else
+-			free_extent_state(cached_state);
++		unlock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
++			      &cached_state);
+ 
+ 		btrfs_delalloc_release_extents(BTRFS_I(inode), reserve_bytes);
+ 		if (ret) {
 -- 
 2.53.0
 
