@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD40C3B2FCA;
-	Sat, 17 Oct 2026 17:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0316C3B2FCA;
+	Sat, 17 Oct 2026 17:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258470; cv=none; b=CLWkpTiU1q3Ltm/eNOrSHSgkKzIY7Y5+C4j8wylJTr+nsWQAMhMXmlnPMV1Vh46BR1BwnWPs7ZNPkF5QsX3NtClvhhCG0ARZ2FKUt3AHaVKszfIjwo4NE9PA72mWhdhx5ZdINAG5SDZxvp0bvBn91+Nd9DbHjujjMNsJ232E7BE=
+	t=1792258474; cv=none; b=Y2B/dv1DIn3kAERxfQ1f9W5zvfagUxvg7d8OJ8sYO5jmjch/z3aJIx6U2H3PN9QcEV0S3/FKpiSNJvjqlr2xpMHujxnWG8S9NfQfqhjKrgMQlXF1cHbwu9SFGeiFB/UEbLaiYhCD/S8CwaeIpBExZ9gjGkKRX0ZOGtaEuNuOV/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258470; c=relaxed/simple;
-	bh=CWbbas2t2ls1ysZrGTnO3Ba/LlEgagsOz0c9sphvZgc=;
+	s=arc-20240116; t=1792258474; c=relaxed/simple;
+	bh=+kSUQ2KQy6TYLgUNfM9G+kp1fhzs3pStywokwBv7Vo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAHLI2akHvPN27xRZIckSOxeaYi7G04ldwACJEaqfKTzWLNIBmXNmhbnDU3RQCZdyu8BO/9eUHPCYF3lTOVzR/MWJYMsJEh+YRyHHGGsCRu1WYbqVwcK85OXWmVwFmYntS5eOyDrik+pDGJse/NTOSCwmfGuCYX5EYYrfuivuhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7BLWMJD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q6mw1d8k5AxbmL9tfUK0MiWn+Cl1CqZPn53xoSiVvIxJ6fXYz3qQdKtzqMOKhNW/1erCwEyn2+UpamMDAYPqU86zBwmcUxbBz5k7hD/jMIAwu6nCg+wEQou08Ez1wEALwxhSw6j6Y9JdvOqY3jmPUaD3NFgyXge691PkPA7I61M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l56TEZOo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7BLWMJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BBB1F000C4;
-	Sat, 17 Oct 2026 17:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l56TEZOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC991F000C4;
+	Sat, 17 Oct 2026 17:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258469;
-	bh=mAXTBGydqq0JV7UaaswqGYxzor4pkgQAqOC+36FiMg8=;
+	s=korg; t=1792258472;
+	bh=PVEHtPqjEO4Lof9ii1Abc1pLo5ycYprlNQDiKAoDmic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7BLWMJDQJQGnbCXJtf7aC8wt+zBdy+gTxwEnDwIZpjdTQmoXCZIXvkx+R7m6y105
-	 eWVIMGNKF30xVEnhcYQaWvTAx6qNXvxJFbbKwEDVTOEKOnQfNEA1JBk8msqF5yvWGI
-	 AfurwVIansgvRuJpsM658arUKMgj8gm6wOJ5MoZM=
+	b=l56TEZOoG3aRjwTBcDebzx+q+H81xLxZAOXN4JMmWC00E1jmXwa/+vGUI+etHTzSL
+	 WpXa4zOSciYxBafTlE+qNQ04Wtm+3WAQeomYda+I51eW1abL41jpXRx+EeyRHT1PE7
+	 Ud98X0PZScdRF4wj5s7/xw+LhgNfD+BfWJ0j0Nso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Harin Lee <me@harin.net>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0896/1674] ALSA: ctxfi: Add hw parameter to daio_mgr_dao_init()
-Date: Sat, 17 Oct 2026 17:52:48 +0200
-Message-ID: <20261017160454.128327119@linuxfoundation.org>
+Subject: [PATCH 6.6 0897/1674] ALSA: ctxfi: Use explicit output flag for DAIO resources
+Date: Sat, 17 Oct 2026 17:52:49 +0200
+Message-ID: <20261017160454.153003979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,77 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Harin Lee <me@harin.net>
 
-[ Upstream commit 5ebd054272718334c543998a6d0b77a9846c16d9 ]
+[ Upstream commit 9bb003a1f98b11b80238d522778115ad07355149 ]
 
-Add a hw parameter to the daio_mgr_dao_init() function to provide
-access to model-specific information. This is necessary for proper
-configuration of S/PDIF and I2S output ports on different hardware
-variants.
+Replace the index-based type check with an explicit output flag in
+struct daio and struct daio_desc.
+
+This allows handling DAIO resource types correctly regardless of their
+index. This is necessary for hardware variants where resource types do
+not follow a sequential order.
 
 Signed-off-by: Harin Lee <me@harin.net>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251124180501.2760421-2-me@harin.net
+Link: https://patch.msgid.link/20251124180501.2760421-4-me@harin.net
 Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctdaio.c     | 2 +-
- sound/pci/ctxfi/cthardware.h | 2 +-
- sound/pci/ctxfi/cthw20k1.c   | 2 +-
- sound/pci/ctxfi/cthw20k2.c   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ sound/pci/ctxfi/ctatc.c  |  3 ++-
+ sound/pci/ctxfi/ctdaio.c | 14 +++++++-------
+ sound/pci/ctxfi/ctdaio.h |  2 ++
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
+index 939539af68f63..e20f4a3ec454a 100644
+--- a/sound/pci/ctxfi/ctatc.c
++++ b/sound/pci/ctxfi/ctatc.c
+@@ -1169,7 +1169,7 @@ static int atc_release_resources(struct ct_atc *atc)
+ 		daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
+ 		for (i = 0; i < atc->n_daio; i++) {
+ 			daio = atc->daios[i];
+-			if (daio->type < LINEIM) {
++			if (daio->output) {
+ 				dao = container_of(daio, struct dao, daio);
+ 				dao->ops->clear_left_input(dao);
+ 				dao->ops->clear_right_input(dao);
+@@ -1399,6 +1399,7 @@ static int atc_get_resources(struct ct_atc *atc)
+ 	for (i = 0, atc->n_daio = 0; i < num_daios; i++) {
+ 		da_desc.type = (atc->model != CTSB073X) ? i :
+ 			     ((i == SPDIFIO) ? SPDIFI1 : i);
++		da_desc.output = i < LINEIM;
+ 		err = daio_mgr->get_daio(daio_mgr, &da_desc,
+ 					(struct daio **)&atc->daios[i]);
+ 		if (err) {
 diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index 4e4c780bfa9d3..ea2914c7736ea 100644
+index ea2914c7736ea..de06e8243c137 100644
 --- a/sound/pci/ctxfi/ctdaio.c
 +++ b/sound/pci/ctxfi/ctdaio.c
-@@ -413,7 +413,7 @@ static int dao_rsc_init(struct dao *dao,
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
+@@ -18,8 +18,6 @@
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
  
- 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
--	hw->daio_mgr_dao_init(mgr->mgr.ctrl_blk,
-+	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
- 			daio_device_index(dao->daio.type, hw), conf);
- 	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
- 			daio_device_index(dao->daio.type, hw));
-diff --git a/sound/pci/ctxfi/cthardware.h b/sound/pci/ctxfi/cthardware.h
-index 2875cec83b8f2..d29b4e5b3fcc4 100644
---- a/sound/pci/ctxfi/cthardware.h
-+++ b/sound/pci/ctxfi/cthardware.h
-@@ -167,7 +167,7 @@ struct hw {
- 	int (*daio_mgr_dsb_dai)(void *blk, unsigned int idx);
- 	int (*daio_mgr_enb_dao)(void *blk, unsigned int idx);
- 	int (*daio_mgr_dsb_dao)(void *blk, unsigned int idx);
--	int (*daio_mgr_dao_init)(void *blk, unsigned int idx,
-+	int (*daio_mgr_dao_init)(struct hw *hw, void *blk, unsigned int idx,
- 						unsigned int conf);
- 	int (*daio_mgr_set_imaparc)(void *blk, unsigned int slot);
- 	int (*daio_mgr_set_imapnxt)(void *blk, unsigned int next);
-diff --git a/sound/pci/ctxfi/cthw20k1.c b/sound/pci/ctxfi/cthw20k1.c
-index 9edbf5d8c3c70..7b41e1ffda082 100644
---- a/sound/pci/ctxfi/cthw20k1.c
-+++ b/sound/pci/ctxfi/cthw20k1.c
-@@ -1031,7 +1031,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
+-#define DAIO_OUT_MAX		SPDIFOO
+-
+ struct daio_usage {
+ 	unsigned short data;
+ };
+@@ -352,7 +350,7 @@ static int daio_rsc_init(struct daio *daio,
+ 		goto error1;
+ 
+ 	/* Set daio->rscl/r->ops to daio specific ones */
+-	if (desc->type <= DAIO_OUT_MAX) {
++	if (desc->output) {
+ 		daio->rscl.ops = daio->rscr.ops = &daio_out_rsc_ops;
+ 	} else {
+ 		switch (hw->chip_type) {
+@@ -367,6 +365,7 @@ static int daio_rsc_init(struct daio *daio,
+ 		}
+ 	}
+ 	daio->type = desc->type;
++	daio->output = desc->output;
+ 
  	return 0;
+ 
+@@ -456,6 +455,7 @@ static int dao_rsc_reinit(struct dao *dao, const struct dao_desc *desc)
+ 	dsc.type = dao->daio.type;
+ 	dsc.msr = desc->msr;
+ 	dsc.passthru = desc->passthru;
++	dsc.output = dao->daio.output;
+ 	dao_rsc_uninit(dao);
+ 	return dao_rsc_init(dao, &dsc, mgr);
  }
+@@ -542,7 +542,7 @@ static int get_daio_rsc(struct daio_mgr *mgr,
  
--static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
-+static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
+ 	err = -ENOMEM;
+ 	/* Allocate mem for daio resource */
+-	if (desc->type <= DAIO_OUT_MAX) {
++	if (desc->output) {
+ 		struct dao *dao = kzalloc(sizeof(*dao), GFP_KERNEL);
+ 		if (!dao)
+ 			goto error;
+@@ -591,7 +591,7 @@ static int put_daio_rsc(struct daio_mgr *mgr, struct daio *daio)
+ 	daio_mgr_put_rsc(&mgr->mgr, daio->type);
+ 	spin_unlock_irqrestore(&mgr->mgr_lock, flags);
+ 
+-	if (daio->type <= DAIO_OUT_MAX) {
++	if (daio->output) {
+ 		dao_rsc_uninit(container_of(daio, struct dao, daio));
+ 		kfree(container_of(daio, struct dao, daio));
+ 	} else {
+@@ -606,7 +606,7 @@ static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
  {
- 	struct daio_mgr_ctrl_blk *ctl = blk;
+ 	struct hw *hw = mgr->mgr.hw;
  
-diff --git a/sound/pci/ctxfi/cthw20k2.c b/sound/pci/ctxfi/cthw20k2.c
-index 4d970f25a2c6c..e45c655528f51 100644
---- a/sound/pci/ctxfi/cthw20k2.c
-+++ b/sound/pci/ctxfi/cthw20k2.c
-@@ -985,7 +985,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
- 	return 0;
- }
- 
--static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
-+static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
+-	if (DAIO_OUT_MAX >= daio->type) {
++	if (daio->output) {
+ 		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
+ 				daio_device_index(daio->type, hw));
+ 	} else {
+@@ -620,7 +620,7 @@ static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
  {
- 	struct daio_mgr_ctrl_blk *ctl = blk;
+ 	struct hw *hw = mgr->mgr.hw;
  
+-	if (DAIO_OUT_MAX >= daio->type) {
++	if (daio->output) {
+ 		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
+ 				daio_device_index(daio->type, hw));
+ 	} else {
+diff --git a/sound/pci/ctxfi/ctdaio.h b/sound/pci/ctxfi/ctdaio.h
+index bd6310f480139..43a9a6feae1d8 100644
+--- a/sound/pci/ctxfi/ctdaio.h
++++ b/sound/pci/ctxfi/ctdaio.h
+@@ -43,6 +43,7 @@ struct daio {
+ 	struct rsc rscl;	/* Basic resource info for left TX/RX */
+ 	struct rsc rscr;	/* Basic resource info for right TX/RX */
+ 	enum DAIOTYP type;
++	unsigned char output;
+ };
+ 
+ struct dao {
+@@ -91,6 +92,7 @@ struct daio_desc {
+ 	unsigned int type:4;
+ 	unsigned int msr:4;
+ 	unsigned int passthru:1;
++	unsigned int output:1;
+ };
+ 
+ struct daio_mgr {
 -- 
 2.53.0
 
