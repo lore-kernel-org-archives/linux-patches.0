@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471F12D3225;
-	Sat, 17 Oct 2026 17:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD003B6364;
+	Sat, 17 Oct 2026 17:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258366; cv=none; b=mupo2uV0OLySin5VLKaYOppV+PpOXr1kAfJ4RG3VtixbKGPj6tW+Iy/roPK/rY/lxEBow7/HAiO2ahxA5KaZ3bRfzxbYYobJYorcBNpXd5unREdtDN0fmF9EDtzFiu3gzUoPtsitUeX1BtsF5ySHbT8TC/ZlAaVSjDtISQtZEgk=
+	t=1792258369; cv=none; b=C1Bs+S24ddzrfGOUJgANTHu8LLiRz3tWfcFOsqADmN8z+QGOk9pjq2aqrKEDoCQFq5Uxko8hTd0lTdRRDo5loWnYjwc8rAXDfyUBDUH9rNMTSIfnZw0i4f77n5PRr/iJbUNdHiqYkmhzWeFnp/PC7R3CJ+lLY6AVqPzoMRdc7wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258366; c=relaxed/simple;
-	bh=XSKs6lk0GY71Md5+g5YyFHsk5PQJ8EUhXcBxl1KQKtY=;
+	s=arc-20240116; t=1792258369; c=relaxed/simple;
+	bh=3mgjPS22D4JS00vej1Z3iDL7i8H78YyTjugXW8oCdxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TixK7Q4lLy7Op5JPPBwsHtQj6wV1Y4oHl3QXmHxJf+G+YU/f+b2BlcW1dzCd4hh3l3qDnIhFtAuJSn8wnBbLeeVZJ/2IfEs3Lhd/L+oRAdo0QpTSTVuNxCuO0xRmScA7VNj2gK87izlX9E0YUSzlZA4YfvwgSP0J2Cj+J7mwQSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAi85AKF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBgSNnZ7okTmba62tb7RxZPfeHaz0PFfYmZs3OobosYQL3Tg5UGqH3CI9BxcVUmojvmhJ1reaZt54OoehhEaWcBrG7oQ2SjuWsqUiYDj2/OoEbxG0KfIkTvJEFduTfhZlUs+9I//PFsgTgC0E3MP+D/e/H5u24XO2hqpjWk2fLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yP114/sM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAi85AKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A222A1F000C4;
-	Sat, 17 Oct 2026 17:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yP114/sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5941F000C4;
+	Sat, 17 Oct 2026 17:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258365;
-	bh=mlQxHRXJN0X7VgfUUhT6gJNz83rXu+jHJ5KNclEepLM=;
+	s=korg; t=1792258368;
+	bh=WzVWEES+1KdIoFTgdkEVsZTJ+v7qH93wfN7yahzcq1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAi85AKFrmdJnxmJ5dkz3S+D9JB2Q3C9pjuqELsitSNAGeAvq/LuppvPsRby/pV/L
-	 mx07yirpcLZCy7lztFFnq/ZDXDlvkIsmdJykt/dSPaqyYOqM93aVHJDUWwGtfipp+s
-	 Idcal1RDl90nUt4ADTotWPFD/7vs6AoaqfyKCHWk=
+	b=yP114/sM8BwMF+ny5wNVF5osMTGZaVVG7aLWr5xSReCySLoDNGnTBGZrVce0xwn/d
+	 S5JwR2NJaa88fsvdy4huQCU0RDjJDQqRoBnGob04LU7zEQiVF0tXI53v/EqfYUko9c
+	 lOi2KVWrvlPihMQYW9tjekYCR1X5JYVe6KuSrE/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0860/1674] net: add xmit recursion limit to tunnel xmit functions
-Date: Sat, 17 Oct 2026 17:52:12 +0200
-Message-ID: <20261017160453.193526501@linuxfoundation.org>
+Subject: [PATCH 6.6 0861/1674] cxl/mbox: validate payload size before accessing contents in cxl_payload_from_user_allowed()
+Date: Sat, 17 Oct 2026 17:52:13 +0200
+Message-ID: <20261017160453.219307906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,169 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 6f1a9140ecda3baba3d945b9a6155af4268aafc4 ]
+[ Upstream commit 60b5d1f68338aff2c5af0113f04aefa7169c50c2 ]
 
-Tunnel xmit functions (iptunnel_xmit, ip6tunnel_xmit) lack their own
-recursion limit. When a bond device in broadcast mode has GRE tap
-interfaces as slaves, and those GRE tunnels route back through the
-bond, multicast/broadcast traffic triggers infinite recursion between
-bond_xmit_broadcast() and ip_tunnel_xmit()/ip6_tnl_xmit(), causing
-kernel stack overflow.
+cxl_payload_from_user_allowed() casts and dereferences the input
+payload without first verifying its size. When a raw mailbox command
+is sent with an undersized payload (ie: 1 byte for CXL_MBOX_OP_CLEAR_LOG,
+which expects a 16-byte UUID), uuid_equal() reads past the allocated buffer,
+triggering a KASAN splat:
 
-The existing XMIT_RECURSION_LIMIT (8) in the no-qdisc path is not
-sufficient because tunnel recursion involves route lookups and full IP
-output, consuming much more stack per level. Use a lower limit of 4
-(IP_TUNNEL_RECURSION_LIMIT) to prevent overflow.
+BUG: KASAN: slab-out-of-bounds in memcmp+0x176/0x1d0 lib/string.c:683
+Read of size 8 at addr ffff88810130f5c0 by task syz.1.62/2258
 
-Add recursion detection using dev_xmit_recursion helpers directly in
-iptunnel_xmit() and ip6tunnel_xmit() to cover all IPv4/IPv6 tunnel
-paths including UDP encapsulated tunnels (VXLAN, Geneve, etc.).
+CPU: 2 UID: 0 PID: 2258 Comm: syz.1.62 Not tainted 6.19.0-dirty #3 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xab/0xe0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xce/0x650 mm/kasan/report.c:482
+ kasan_report+0xce/0x100 mm/kasan/report.c:595
+ memcmp+0x176/0x1d0 lib/string.c:683
+ uuid_equal include/linux/uuid.h:73 [inline]
+ cxl_payload_from_user_allowed drivers/cxl/core/mbox.c:345 [inline]
+ cxl_mbox_cmd_ctor drivers/cxl/core/mbox.c:368 [inline]
+ cxl_validate_cmd_from_user drivers/cxl/core/mbox.c:522 [inline]
+ cxl_send_cmd+0x9c0/0xb50 drivers/cxl/core/mbox.c:643
+ __cxl_memdev_ioctl drivers/cxl/core/memdev.c:698 [inline]
+ cxl_memdev_ioctl+0x14f/0x190 drivers/cxl/core/memdev.c:713
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xa8/0x330 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fdaf331ba79
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fdaf1d77038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fdaf3585fa0 RCX: 00007fdaf331ba79
+RDX: 00002000000001c0 RSI: 00000000c030ce02 RDI: 0000000000000003
+RBP: 00007fdaf33749df R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fdaf3586038 R14: 00007fdaf3585fa0 R15: 00007ffced2af768
+ </TASK>
 
-Move dev_xmit_recursion helpers from net/core/dev.h to public header
-include/linux/netdevice.h so they can be used by tunnel code.
+Add 'in_size' parameter to cxl_payload_from_user_allowed() and validate
+the payload is large enough.
 
- BUG: KASAN: stack-out-of-bounds in blake2s.constprop.0+0xe7/0x160
- Write of size 32 at addr ffff88810033fed0 by task kworker/0:1/11
- Workqueue: mld mld_ifc_work
- Call Trace:
-  <TASK>
-  __build_flow_key.constprop.0 (net/ipv4/route.c:515)
-  ip_rt_update_pmtu (net/ipv4/route.c:1073)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:84)
-  ip_tunnel_xmit (net/ipv4/ip_tunnel.c:847)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  ip_finish_output2 (net/ipv4/ip_output.c:237)
-  ip_output (net/ipv4/ip_output.c:438)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:86)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  ip_finish_output2 (net/ipv4/ip_output.c:237)
-  ip_output (net/ipv4/ip_output.c:438)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:86)
-  ip_tunnel_xmit (net/ipv4/ip_tunnel.c:847)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  mld_sendpack
-  mld_ifc_work
-  process_one_work
-  worker_thread
-  </TASK>
-
-Fixes: 745e20f1b626 ("net: add a recursion limit in xmit path")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260306160133.3852900-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6179045ccc0c ("cxl/mbox: Block immediate mode in SET_PARTITION_INFO command")
+Fixes: 206f9fa9d555 ("cxl/mbox: Add Clear Log mailbox command")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260220001618.963490-2-dave@stgolabs.net
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip6_tunnel.h  | 12 ++++++++++++
- include/net/ip_tunnels.h  |  7 +++++++
- net/ipv4/ip_tunnel_core.c | 13 +++++++++++++
- 3 files changed, 32 insertions(+)
+ drivers/cxl/core/mbox.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/ip6_tunnel.h b/include/net/ip6_tunnel.h
-index 74b369bddf49e..b3453ee4523a4 100644
---- a/include/net/ip6_tunnel.h
-+++ b/include/net/ip6_tunnel.h
-@@ -156,6 +156,16 @@ static inline void ip6tunnel_xmit(struct sock *sk, struct sk_buff *skb,
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 059e95e086205..d18d9188b577d 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -306,6 +306,7 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
+  * cxl_payload_from_user_allowed() - Check contents of in_payload.
+  * @opcode: The mailbox command opcode.
+  * @payload_in: Pointer to the input payload passed in from user space.
++ * @in_size: Size of @payload_in in bytes.
+  *
+  * Return:
+  *  * true	- payload_in passes check for @opcode.
+@@ -320,12 +321,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
+  *
+  * The specific checks are determined by the opcode.
+  */
+-static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
++static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in,
++					  size_t in_size)
  {
- 	int pkt_len, err;
+ 	switch (opcode) {
+ 	case CXL_MBOX_OP_SET_PARTITION_INFO: {
+ 		struct cxl_mbox_set_partition_info *pi = payload_in;
  
-+	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
-+		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
-+				     dev->name);
-+		DEV_STATS_INC(dev, tx_errors);
-+		kfree_skb(skb);
-+		return;
-+	}
-+
-+	dev_xmit_recursion_inc();
-+
- 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
- 	pkt_len = skb->len - skb_inner_network_offset(skb);
- 	err = ip6_local_out(dev_net(skb_dst(skb)->dev), sk, skb);
-@@ -165,6 +175,8 @@ static inline void ip6tunnel_xmit(struct sock *sk, struct sk_buff *skb,
- 			pkt_len = -1;
- 		iptunnel_xmit_stats(dev, pkt_len);
- 	}
-+
-+	dev_xmit_recursion_dec();
- }
- #endif
- #endif
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 1243ec414bcd9..e32e7cbe99167 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -24,6 +24,13 @@
- #include <net/ip6_route.h>
- #endif
++		if (in_size < sizeof(*pi))
++			return false;
+ 		if (pi->flags & CXL_SET_PARTITION_IMMEDIATE_FLAG)
+ 			return false;
+ 		break;
+@@ -351,7 +355,8 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox,
+ 		if (IS_ERR(mbox->payload_in))
+ 			return PTR_ERR(mbox->payload_in);
  
-+/* Recursion limit for tunnel xmit to detect routing loops.
-+ * Unlike XMIT_RECURSION_LIMIT (8) used in the no-qdisc path, tunnel
-+ * recursion involves route lookups and full IP output, consuming much
-+ * more stack per level, so a lower limit is needed.
-+ */
-+#define IP_TUNNEL_RECURSION_LIMIT	4
-+
- /* Keep error state on tunnel for 30 sec */
- #define IPTUNNEL_ERR_TIMEO	(30*HZ)
- 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 3a1ab7ab171c3..87933ed7d9041 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -57,6 +57,17 @@ void iptunnel_xmit(struct sock *sk, struct rtable *rt, struct sk_buff *skb,
- 	struct iphdr *iph;
- 	int err;
- 
-+	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
-+		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
-+				     dev->name);
-+		DEV_STATS_INC(dev, tx_errors);
-+		ip_rt_put(rt);
-+		kfree_skb(skb);
-+		return;
-+	}
-+
-+	dev_xmit_recursion_inc();
-+
- 	skb_scrub_packet(skb, xnet);
- 
- 	skb_clear_hash_if_not_l4(skb);
-@@ -86,6 +97,8 @@ void iptunnel_xmit(struct sock *sk, struct rtable *rt, struct sk_buff *skb,
- 			pkt_len = 0;
- 		iptunnel_xmit_stats(dev, pkt_len);
- 	}
-+
-+	dev_xmit_recursion_dec();
- }
- EXPORT_SYMBOL_GPL(iptunnel_xmit);
- 
+-		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in)) {
++		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in,
++						  in_size)) {
+ 			dev_dbg(mds->cxlds.dev, "%s: input payload not allowed\n",
+ 				cxl_mem_opcode_to_name(opcode));
+ 			kvfree(mbox->payload_in);
 -- 
 2.53.0
 
