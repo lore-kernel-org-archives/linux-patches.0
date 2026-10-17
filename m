@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E448A3CB2F6;
-	Sat, 17 Oct 2026 18:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C1F3CB546;
+	Sat, 17 Oct 2026 18:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260109; cv=none; b=dVHMQY1a2N3ffQ87aNrzngJYW44bj1hkBPdbEj+unFCTqnoP1urbqzMXFe2mZO4Au+xOtbfrl6QGMkwXtFgcehVGA5mjXvI9QEmO8RUSsapQKgbq+J8lGgw9jjpzu+Mdy1eJLSkbSj7bFBKwxzO7oeeXRKtbzKseNxRhw6y3JPY=
+	t=1792260112; cv=none; b=JuInsRvSfis/1uCFwbBrA+FyI1IAhgYUqLIeeIS0H/MEYnFoo1FghV1n+b1feUyVLRz12pUmPL2CyB4Nw0EofvO2qLRwp5dVdo7UgyTFd2AdZ6zyDR4EyaU3wUQuodg2KTjXr9I6tQdVKjTZMR/eIP9OLu4Uwtq+75nozUxRx/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260109; c=relaxed/simple;
-	bh=SpS62p15BOYRzKLtogbnGEsfi7Zn1Yj87m/gBOnVBUA=;
+	s=arc-20240116; t=1792260112; c=relaxed/simple;
+	bh=ps0L8/MZsDAJcFUf6wnBv7UD+BId5F5+uNxEAakDGGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjBOrpoygq6ADw8MSjrUCihpo6O3EXl0rEaDQnaOmSR+Xo2p9aP5+p0HL7oeygHk5rxJTdh+64cgp6+V5xNGOwx/kFYW5UI7y2wZghGbIOLuuVO96QILYkr/PX5iW4XARFurvHao0STOSa0pVeA10HVN4em+JdwXCbx8Jmerw0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEqGoIaD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WMwIj6KDNPh2rlyExK+bUHvk3T2WHgXSCb6Z9qt3V3DbmyD9j3pO+QVFI0Um33n3VZDXyY/dYKT4KacTgvpgaUh6vwo/Rtrb7H3ykcZJVDnSCF5PaBt8bUi8eZyIbuUiH3e7GvF0w38qPCI6FGr4Tm+wr9mPHydNd19BIXSrSTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qL3Xeznf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEqGoIaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3318D1F000C4;
-	Sat, 17 Oct 2026 18:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qL3Xeznf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344161F000C4;
+	Sat, 17 Oct 2026 18:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260107;
-	bh=Y0UsbM4rB1g6StOLWCEGRNf5gm+dY5R+k5qpbs9W1bk=;
+	s=korg; t=1792260110;
+	bh=3cBHTYLtgeysVZitdya5ngkQg9UKBiwnJCMJ0+5XCn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEqGoIaDl7MEXLED3MhcOs565SWMgEXK16ogfKMVYMu1aC68oGyrIrNMbn9fa71ZB
-	 GH2SLWBdDeChkNmkZVXsxU9j9/jC0eJqIlTSjN8Cdhw5Ky0Gqc+4Z+cCsvGcGHE/QM
-	 oaqFIqEV8e0yKK1bMdyL7qpywbuhshGDHpXzrgn8=
+	b=qL3XeznfW+01nJBhhisCtgOEFxR9uV4VDzl/lC0dXRRgMwJ1MlwxkfaobkPmYst72
+	 A8xEcDE1jNSC/AQ2KvfBJiLniMb3935HXaWDe7b1kKZEkcC8On8orTjh8s5yIOdmep
+	 rT0sWD9r6hbDDVz1yAEKPFxnSTn5DMMYxwKhvfH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Bastien Nocera <hadess@hadess.net>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1436/1674] HID: logitech-hidpp: Fix FF device cleanup on init failure
-Date: Sat, 17 Oct 2026 18:01:48 +0200
-Message-ID: <20261017160508.041763983@linuxfoundation.org>
+Subject: [PATCH 6.6 1410/1674] nvmet: fix max_qid race between configfs and controller allocation
+Date: Sat, 17 Oct 2026 18:01:22 +0200
+Message-ID: <20261017160507.371395162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,75 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit dd5be4d9ce2dfc4d4a4527ef7d31d21a78e3cdac ]
+[ Upstream commit f1a8846e06388113dfdbb89dee005083fa9afdf9 ]
 
-hidpp_ff_init() creates the input force-feedback device with
-input_ff_create(), then allocates the HID++ FF private data,
-effect ID array, and workqueue.
+The function nvmet_subsys_attr_qid_max_store() can race against
+nvmet_alloc_ctrl() when a subsystem's max_qid limit is modified.
 
-If any of those allocations fail after input_ff_create() succeeds,
-the function returns an error without destroying the FF device.
-Add an unwind path that frees the private allocations made by
-hidpp_ff_init() and calls input_ff_destroy() for failures after
-input_ff_create() succeeds.
+Suppose max_qid is currently 64. If nvmet_alloc_ctrl() executes:
+ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
+and at this exact point, a userspace process changes max_qid to 128,
+nvmet_subsys_attr_qid_max_store() will set the new max_qid value. It
+attempts to delete active controllers to force a reconnect, but the
+new controller won't be deleted because it hasn't been added to the
+subsys->ctrls list yet.
 
-Fixes: ff21a635dd1a ("HID: logitech-hidpp: Force feedback support for the Logitech G920")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+nvmet_alloc_ctrl() then proceeds and adds the new controller to the
+subsys->ctrls list. Later, when nvmet_install_queue() is called, it
+will see max_qid set to 128, but the memory allocated for sqs is only
+sized for 64 entries. This results in a KASAN out-of-bounds warning
+and potential memory corruptions.
+
+Fix this by protecting the queue allocations and list insertion in
+nvmet_alloc_ctrl() with down_read(&nvmet_config_sem). Because
+nvmet_subsys_attr_qid_max_store() acquires down_write(&nvmet_config_sem)
+to modify the attribute, this safely prevents the configfs writer from
+modifying max_qid during controller creation.
+
+Copy the max_qid from the subsystem to the controller's structure
+during the allocation; ctrl->max_qid never changes as long as the
+controller remains in LIVE state, so this will prevent similar race
+conditions.
+
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Reported-by: syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/nvme/target/admin-cmd.c   |  8 +++---
+ drivers/nvme/target/core.c        | 41 ++++++++++++++++++-------------
+ drivers/nvme/target/fabrics-cmd.c |  2 +-
+ drivers/nvme/target/nvmet.h       |  6 +++++
+ 4 files changed, 35 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 2d902a328189e..88b4027236cdf 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -2879,18 +2879,19 @@ static int hidpp_ff_init(struct hidpp_device *hidpp,
- 	 * ownership to FF core
- 	 */
- 	data = kmemdup(data, sizeof(*data), GFP_KERNEL);
--	if (!data)
--		return -ENOMEM;
-+	if (!data) {
-+		error = -ENOMEM;
-+		goto err_destroy_ff;
-+	}
- 	data->effect_ids = kcalloc(num_slots, sizeof(int), GFP_KERNEL);
- 	if (!data->effect_ids) {
--		kfree(data);
--		return -ENOMEM;
-+		error = -ENOMEM;
-+		goto err_free_data;
- 	}
- 	data->wq = create_singlethread_workqueue("hidpp-ff-sendqueue");
- 	if (!data->wq) {
--		kfree(data->effect_ids);
--		kfree(data);
--		return -ENOMEM;
-+		error = -ENOMEM;
-+		goto err_free_effect_ids;
- 	}
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 0b045fa35e2fb..c974beefa766b 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -818,7 +818,7 @@ u16 nvmet_set_feat_async_event(struct nvmet_req *req, u32 mask)
  
- 	data->hidpp = hidpp;
-@@ -2920,6 +2921,14 @@ static int hidpp_ff_init(struct hidpp_device *hidpp,
- 		 version);
+ void nvmet_execute_set_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u32 cdw11 = le32_to_cpu(req->cmd->common.cdw11);
+ 	u16 status = 0;
+@@ -837,7 +837,7 @@ void nvmet_execute_set_features(struct nvmet_req *req)
+ 			break;
+ 		}
+ 		nvmet_set_result(req,
+-			(subsys->max_qid - 1) | ((subsys->max_qid - 1) << 16));
++			(ctrl->max_qid - 1) | ((ctrl->max_qid - 1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		status = nvmet_set_feat_kato(req);
+@@ -892,7 +892,7 @@ void nvmet_get_feat_async_event(struct nvmet_req *req)
  
- 	return 0;
+ void nvmet_execute_get_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u16 status = 0;
+ 
+@@ -929,7 +929,7 @@ void nvmet_execute_get_features(struct nvmet_req *req)
+ 		break;
+ 	case NVME_FEAT_NUM_QUEUES:
+ 		nvmet_set_result(req,
+-			(subsys->max_qid-1) | ((subsys->max_qid-1) << 16));
++			(ctrl->max_qid-1) | ((ctrl->max_qid-1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		nvmet_get_feat_kato(req);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index f9709a81ed620..8e0da771fc1cb 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1471,7 +1471,25 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	if (!ctrl->changed_ns_list)
+ 		goto out_free_ctrl;
+ 
+-	ctrl->sqs = kcalloc(subsys->max_qid + 1,
++	/*
++	 * Discovery controllers may use some arbitrary high value
++	 * in order to cleanup stale discovery sessions
++	 */
++	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
++		kato = NVMET_DISC_KATO_MS;
 +
-+err_free_effect_ids:
-+	kfree(data->effect_ids);
-+err_free_data:
-+	kfree(data);
-+err_destroy_ff:
-+	input_ff_destroy(dev);
-+	return error;
++	/* keep-alive timeout in seconds */
++	ctrl->kato = DIV_ROUND_UP(kato, 1000);
++
++	ctrl->err_counter = 0;
++	spin_lock_init(&ctrl->error_lock);
++
++	down_read(&nvmet_config_sem);
++	mutex_lock(&subsys->lock);
++
++	ctrl->max_qid = subsys->max_qid;
++
++	ctrl->sqs = kcalloc(ctrl->max_qid + 1,
+ 			sizeof(struct nvmet_sq *),
+ 			GFP_KERNEL);
+ 	if (!ctrl->sqs)
+@@ -1489,25 +1507,12 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	}
+ 	ctrl->cntlid = ret;
+ 
+-	/*
+-	 * Discovery controllers may use some arbitrary high value
+-	 * in order to cleanup stale discovery sessions
+-	 */
+-	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
+-		kato = NVMET_DISC_KATO_MS;
+-
+-	/* keep-alive timeout in seconds */
+-	ctrl->kato = DIV_ROUND_UP(kato, 1000);
+-
+-	ctrl->err_counter = 0;
+-	spin_lock_init(&ctrl->error_lock);
+-
+-	nvmet_start_keep_alive_timer(ctrl);
+-
+-	mutex_lock(&subsys->lock);
+ 	list_add_tail(&ctrl->subsys_entry, &subsys->ctrls);
+ 	nvmet_setup_p2p_ns_map(ctrl, req);
+ 	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
++
++	nvmet_start_keep_alive_timer(ctrl);
+ 
+ 	*ctrlp = ctrl;
+ 	return 0;
+@@ -1515,6 +1520,8 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ out_free_sqs:
+ 	kfree(ctrl->sqs);
+ out_free_changed_ns_list:
++	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
+ 	kfree(ctrl->changed_ns_list);
+ out_free_ctrl:
+ 	kfree(ctrl);
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 6c882ca588bd9..7807cee08790b 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -351,7 +351,7 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 		goto out;
+ 	}
+ 
+-	if (unlikely(qid > ctrl->subsys->max_qid)) {
++	if (unlikely(qid > ctrl->max_qid)) {
+ 		pr_warn("invalid queue id (%d)\n", qid);
+ 		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index f9a3c7a6a484e..2189e5a5985bf 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -191,6 +191,7 @@ struct nvmet_ctrl {
+ 
+ 	uuid_t			hostid;
+ 	u16			cntlid;
++	u16			max_qid;
+ 	u32			kato;
+ 
+ 	struct nvmet_port	*port;
+@@ -620,6 +621,11 @@ static inline struct nvmet_subsys *nvmet_req_subsys(struct nvmet_req *req)
+ 	return req->sq->ctrl->subsys;
  }
  
- /* ************************************************************************** */
++static inline struct nvmet_ctrl *nvmet_req_ctrl(struct nvmet_req *req)
++{
++	return req->sq->ctrl;
++}
++
+ static inline bool nvmet_is_disc_subsys(struct nvmet_subsys *subsys)
+ {
+     return subsys->type != NVME_NQN_NVME;
 -- 
 2.53.0
 
