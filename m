@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4D03A7F4D;
-	Sat, 17 Oct 2026 18:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8A2DF126;
+	Sat, 17 Oct 2026 18:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260647; cv=none; b=mi3vpCbZ8XfHfgO+2mybvO8S0hXpssHdq9eZDP7rnHUins8IERCVLnGmHVfGcIakdELtOinxjjM/5bHPIlQO37Dqy8zosyY+V7CoUDmTUqHR00vfPklA03a4i9gV98yogWwVGZoc4kcebX+Y8K58SOZuiI47zFdEXWh3Qetfnfg=
+	t=1792260651; cv=none; b=MQlj0d5/dXB3qyXdQbkOGPWWEFJCtS5bLRlYMpFwNIZCfO136neYmo9gqWe4ck9B5PrHUmX2caT9lbusVLUXSyqKWeVt/I0qQmeM5L/F1UzIJw4k1HrxdAdIYLKydwnedLuUKBMC/NGbIlBS72P1uWAL2YoSaIklsrDEsc7qas4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260647; c=relaxed/simple;
-	bh=3t+irYfsW64kJZfAGz/6SUJHiq/+gPR+S/Oc5RPVDY4=;
+	s=arc-20240116; t=1792260651; c=relaxed/simple;
+	bh=PKERXLQutmzrhWsWYeKaghS/E60FWSb6S1v+SaXS+CA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K28bvPh9sMkDsHE6dXURVcEHGbnDSYWzkPbtU6+QyX3VUFLETrSg0J/8H1z/nn3qvXOyax8VolT4qFc/La+tNKtJ8zZyRoc/lKvQYfFPQvaooMoW9AfBRRjgb8zW7smvUF/fomepbovL63zPYKLPxAfjCeiygx9aQWHTSgDq164=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYYw71ot; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ADDBO5A2mBdFhqnPp2GiAxilatl0Sh1ZiGpUX9LD/CIJmv7jSPd8LgbJev82Po+80RDJQmHitAjdNp5azpqEIfB6Bh21F6u2Aayr7vAh10DM6IOs2alrDLrHQ9yB7ct9qoMUfRxVlZFw7kefmo7rjUkn3eD8OV1XVhl/HHHxik0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GZZTPfr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYYw71ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CF01F000C4;
-	Sat, 17 Oct 2026 18:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GZZTPfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCB21F000C4;
+	Sat, 17 Oct 2026 18:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260646;
-	bh=SGizIoPANE1X+1qgRWCiRfw56eFHClUtVX/1k+KpLbw=;
+	s=korg; t=1792260650;
+	bh=4ZFhM6iJH9Y8pF4fgWsmEFhe1RJiWc7SIUMHB3+zqGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYYw71otWixeA0yWCCVg1NfU19S/i1nHjDT9O/snPuPuWP6W+2UGBw2QgeEdGWdxk
-	 bTQ/KumnN5oyS5k6gJQen4dkuoBzabbWuiUZW5xFW7vVlCI6f5PBMxvVj+hFUJp8ZO
-	 pJ5wuffOXzZYQENfURr1ekBaPEMM+iDFxS8IZ4gI=
+	b=2GZZTPfrf+FEVfslUtsmZmT00rEX9hccvH5hA+orSnZyl8lk3h4lMUWnt+N0LjysN
+	 /CMxNGGyoiy7XHlcQuTjef12VWKCP5zEFBIhrHh/fFPMYn1tJYu4hu5JZkRebr1NCr
+	 WQ5buMP4TpfiqnrdDEEHSOrvK3np8zWaDmvBtu0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com,
+	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1613/1674] vxlan: initialize _md in vxlan_xmit_one()
-Date: Sat, 17 Oct 2026 18:04:45 +0200
-Message-ID: <20261017160512.487395375@linuxfoundation.org>
+Subject: [PATCH 6.6 1614/1674] Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()
+Date: Sat, 17 Oct 2026 18:04:46 +0200
+Message-ID: <20261017160512.512820051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,70 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
 
-[ Upstream commit be83178bfc44588f6e3adb827ed874c683193466 ]
+[ Upstream commit 9b851b09b392da68bd715601f10a5adb2d8d19b8 ]
 
-If a VXLAN device is configured with both VXLAN_F_COLLECT_METADATA and
-VXLAN_F_GBP, and a packet is transmitted through it using an external
-ip_tunnel_info that lacks the IP_TUNNEL_VXLAN_OPT_BIT flag, md is left
-pointing to the uninitialized _md stack variable:
+A NULL pointer dereference in klist_put() occurs when a child device (such
+as a BNEP network device in bnep_session) is concurrently being
+unregistered while hci_conn_del_sysfs() reparents child devices.
 
-                if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
-                        if (info->options_len < sizeof(*md))
-                                goto drop;
-                        md = ip_tunnel_info_opts(info);
-                }
+This is caused by a race condition between hci_conn_del_sysfs() and
+concurrent child device unregistration (e.g. bnep_session calling
+unregister_netdev()). During device unregistration, device_del() snapshots
+a non-NULL parent pointer. Concurrently, hci_conn_del_sysfs() finds the
+child device using device_find_any_child() and calls device_move() to
+reparent it to NULL, which removes the node from its parent's klist and
+clears knode_parent. Subsequently, device_del() calls
+klist_del(&dev->p->knode_parent) using the stale parent snapshot, causing
+klist_put() to dereference knode_klist(n)->put on an already removed node,
+resulting in a NULL pointer dereference.
 
-Because IP_TUNNEL_VXLAN_OPT_BIT is not set, md is not updated and remains
-pointing to _md. Later, vxlan_build_skb() is called with md, which
-eventually calls vxlan_build_gbp_hdr():
+This race was introduced by commit 27aabf27fd01 ("Bluetooth: fix
+use-after-free in device_for_each_child()"), which replaced
+device_find_child(..., __match_tty) with device_find_any_child() in
+hci_conn_del_sysfs(). That change was intended to avoid a use-after-free
+where conn->dev outlived its parent hdev->dev when child devices held
+references to conn->dev, because conn->dev only held a reference to
+hdev->dev while registered in sysfs.
 
-        if (vxflags & VXLAN_F_GBP)
-                vxlan_build_gbp_hdr(vxh, md);
+Fix the issue properly by taking an explicit reference to the parent device
+with get_device(&hdev->dev) in hci_conn_init_sysfs() and dropping it with
+put_device(parent) in bt_link_release() when the conn device is freed. This
+ensures that hdev->dev remains valid for the entire lifecycle of conn->dev,
+resolving the underlying use-after-free. With the parent reference held
+properly, restore the __match_tty filter in hci_conn_del_sysfs() so that
+device_move() is only invoked on persistent RFCOMM TTY devices as
+originally intended, eliminating the race condition with unregistering
+network devices.
 
-Inside vxlan_build_gbp_hdr(), md->gbp is read:
-
-        if (!md->gbp)
-                return;
-        gbp = (struct vxlanhdr_gbp *)vxh;
-        ...
-        if (md->gbp & VXLAN_GBP_DONT_LEARN)
-                gbp->dont_learn = 1;
-
-If the stack contains garbage, this causes:
-1) VXLAN_HF_GBP flag to be spuriously set in the VXLAN header.
-2) gbp->dont_learn and gbp->policy_applied to be set from stack bits.
-3) gbp->policy_id to receive 16 bits of uninitialized kernel stack data,
-   leaking it onto the wire.
-
-Fix this by zero-initializing _md. If IP_TUNNEL_VXLAN_OPT_BIT is not
-present, md->gbp remains 0, and vxlan_build_gbp_hdr() returns early
-without modifying the VXLAN header.
-
-Fixes: ee122c79d422 ("vxlan: Flow based tunneling")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260906180111.1973188-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 27aabf27fd01 ("Bluetooth: fix use-after-free in device_for_each_child()")
+Assisted-by: Gemini:gemini-3.7-flash syzbot
+Reported-by: syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6df45dd3d03e1a9aca96
+Link: https://syzkaller.appspot.com/ai_job?id=f1c0e740-db21-40af-a9ff-84db0fd8b8bd
+Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sysfs.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 93940ea5cf9c8..355337d428e52 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2487,7 +2487,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
- 	const struct iphdr *old_iph = ip_hdr(skb);
- 	union vxlan_addr *dst;
- 	union vxlan_addr remote_ip, local_ip;
--	struct vxlan_metadata _md;
-+	struct vxlan_metadata _md = {};
- 	struct vxlan_metadata *md = &_md;
- 	unsigned int pkt_len = skb->len;
- 	__be16 src_port = 0, dst_port;
+diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
+index 60350c6723cb7..feb4f1302b375 100644
+--- a/net/bluetooth/hci_sysfs.c
++++ b/net/bluetooth/hci_sysfs.c
+@@ -13,7 +13,10 @@ static const struct class bt_class = {
+ static void bt_link_release(struct device *dev)
+ {
+ 	struct hci_conn *conn = to_hci_conn(dev);
++	struct device *parent = dev->parent;
++
+ 	kfree(conn);
++	put_device(parent);
+ }
+ 
+ static const struct device_type bt_link = {
+@@ -21,6 +24,16 @@ static const struct device_type bt_link = {
+ 	.release = bt_link_release,
+ };
+ 
++/*
++ * The rfcomm tty device will possibly retain even when conn
++ * is down, and sysfs doesn't support move zombie device,
++ * so we should move the device before conn device is destroyed.
++ */
++static int __match_tty(struct device *dev, void *data)
++{
++	return !strncmp(dev_name(dev), "rfcomm", 6);
++}
++
+ void hci_conn_init_sysfs(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -29,7 +42,7 @@ void hci_conn_init_sysfs(struct hci_conn *conn)
+ 
+ 	conn->dev.type = &bt_link;
+ 	conn->dev.class = &bt_class;
+-	conn->dev.parent = &hdev->dev;
++	conn->dev.parent = get_device(&hdev->dev);
+ 
+ 	device_initialize(&conn->dev);
+ }
+@@ -69,7 +82,7 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
+ 	while (1) {
+ 		struct device *dev;
+ 
+-		dev = device_find_any_child(&conn->dev);
++		dev = device_find_child(&conn->dev, NULL, __match_tty);
+ 		if (!dev)
+ 			break;
+ 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
 -- 
 2.53.0
 
