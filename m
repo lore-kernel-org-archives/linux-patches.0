@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764113ACF0E;
-	Sat, 17 Oct 2026 16:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B293AEB29;
+	Sat, 17 Oct 2026 16:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255558; cv=none; b=oHWrzp/i3kRktZzmJjo+sx3g8Jtjlq60yhk8Ulozq/YKXf8htljn/jUplEloXmcYBUzndvvbMAlCjLteulnm3qh7TdtKS6ZveC5Ov/U6Do1agtttL48Z1Kli2vB6LUZ34NuUk0Maou/sUcrs5DcVIG1Cyh+iHhAYo0qEvpnG5tY=
+	t=1792255559; cv=none; b=tRicQL8hp8eojcQSn3KqezHybvYzByZ/7NUpLxtOsgTPR3xGO6UGWbg29cGLJVoxo4Wf5aWXsjd8WgrP6RIY9Xtiy5OZ7Xq7ZBB8HJHCkehvoa3e7Qsr0k53005hD7QE6ZPLtv54BusS8rh7paIhbXFNLj02n5buZEyL/9lZbq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255558; c=relaxed/simple;
-	bh=iWzqJFFqau2kTWGbnaKTQJ0d028kbyknphcFxYoMlYQ=;
+	s=arc-20240116; t=1792255559; c=relaxed/simple;
+	bh=nMp1Ajigw+fP5WiQ+o85SIi6l/YaR3jZJ66JtPudCU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3Ybq3i0TVu+2dTRcaAm4EZYt0fR8RLHRfMFaaTTVGBsjIuyI5iKai+/iY9UGsicvkn64Xj8w0CdM39FS5oOkc5/q0mu12pSU6eOy7JfmAyU9L+sdySmmVLAijDPg2v6efga1nhTjyrLEqr7Z9BG437CZk99ZVTI7tYVGIkTG2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8RRhzqB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=osgyEBNgqqxPDDHtLVR5mujx8XUxaPD9h4+1ZXfEvvz5uL/zGQ/nbVrs1Un57gYgdqh+uBwaWAZxutPypYTvgZHOcZeoB+tvtsLb2Mn2pRB97GhMT9xZKVdpwhzfM4moZYn4rKNi8+ECipyZTqUl6A05FgvrBA3nbHDfR6Lj+bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sa+EBAvw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8RRhzqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831BD1F000C4;
-	Sat, 17 Oct 2026 16:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sa+EBAvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D71F000C6;
+	Sat, 17 Oct 2026 16:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255555;
-	bh=8530wyc9y1KuqjkFu83E08SrcyL2IAx6C4hj+k/GilU=;
+	s=korg; t=1792255558;
+	bh=Dkej6Y2XIulXsm3FaY/O4RQAKLDeRAfvCsqKa3UbXgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8RRhzqB6EvbhSQUuEwQT5nTcC1J+VzYszGTLki268szba+ymjYYRA3ka6YE/MHuU
-	 fnhDPDfXqtuczJcnnVPIcQunC0tVM6EFEqASL++2atxTLmU+Z/c/YNvNjY4UM8OpKO
-	 4eExJTl/Wm9t8Z5b0oZy+p9PSQiZKQthHekVFTQ8=
+	b=sa+EBAvwtA85V5wqDRX/uTNe3SzwqzKkU/1ucK0/Ow1endV9gDkdCmlD6GQhUXw79
+	 rW7stjYyxDEUg0A56KUEeBHjnuf0ZkFtI8vsF/lVSBhDikixV81crZDLoWYTmVO1Bb
+	 M9htQCix7f7QAMR+TT3/QXn1IOXh1IZK8Tn3BEwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>,
-	Shukai Ni <shukai.ni@kuleuven.be>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 815/869] dm-integrity: replace forgeable discard filler with a keyed sector marker
-Date: Sat, 17 Oct 2026 18:00:56 +0200
-Message-ID: <20261017160057.787412037@linuxfoundation.org>
+Subject: [PATCH 6.12 816/869] perf/x86/intel/uncore: Fix uncore_box ref/unref ordering
+Date: Sat, 17 Oct 2026 18:00:57 +0200
+Message-ID: <20261017160057.811105650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,357 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shukai Ni <shukai.ni@kuleuven.be>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 68c5c42567bc462139128968ebbfadd0aefff519 ]
+[ Upstream commit 174f0582e38abe03b88e15f04bfe58490f88cb19 ]
 
-The discard-block check in dm_integrity_rw_tag() treats a stored tag
-of all 0xf6 bytes (DISCARD_FILLER) as proof a block was discarded and
-skips HMAC verification. allow_discards is only accepted in
-dm-integrity's standalone mode. An attacker with raw write access to
-the backing device, but without the integrity key, can stamp any block
-with an all-0xf6 tag and have it served as authentic.
+In uncore_event_cpu_online(), uncore_box_ref() was called before
+uncore_change_context().  uncore_box_ref() gates on box->cpu >= 0,
+but box->cpu is still -1 at that point because uncore_change_context()
+has not run yet.  As a result, the box is never initialized on the
+first CPU to come online in a die, leaving it permanently
+uninitialized in the single-CPU-per-die case.
 
-Add a new "allow_discards_keyed" target argument that marks discarded
-blocks with a keyed checksum of (salt || sector) instead, computed by
-integrity_discard_checksum().
+Thus, box->refcnt is one count below the true value, and in the CPU
+offline path, the box will be torn down on the second-to-last CPU.
 
-Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
-Co-developed-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
-Signed-off-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
-Signed-off-by: Shukai Ni <shukai.ni@kuleuven.be>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+In uncore_event_cpu_offline(), uncore_box_unref() was called after
+uncore_change_context(), so box->cpu is already -1 when the collector
+CPU goes offline, which prevents it from tearing down the box.
+
+Fix by swapping the call order in both paths so that
+uncore_box_{ref,unref}() runs at the point where box->cpu reflects
+the correct context.
+
+Move allocate_boxes() out of uncore_box_ref() to enable this
+reordering.
+
+Fixes: c74443d92f68 ("perf/x86/uncore: Support per PMU cpumask")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260611160033.66760-8-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/device-mapper/dm-ima.rst      |   7 +-
- .../device-mapper/dm-integrity.rst            |  13 +++
- drivers/md/dm-integrity.c                     | 110 +++++++++++++++---
- 3 files changed, 114 insertions(+), 16 deletions(-)
+ arch/x86/events/intel/uncore.c | 46 +++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/admin-guide/device-mapper/dm-ima.rst b/Documentation/admin-guide/device-mapper/dm-ima.rst
-index a4aa50a828e00..2a3b50ffbee4e 100644
---- a/Documentation/admin-guide/device-mapper/dm-ima.rst
-+++ b/Documentation/admin-guide/device-mapper/dm-ima.rst
-@@ -424,7 +424,8 @@ section above) has the following data format for 'integrity' target.
- 
-  target_attributes := <target_name> "," <target_version> "," <dev_name> "," <start>
-                       <tag_size> "," <mode> "," [<meta_device> ","] [<block_size> ","] <recalculate> ","
--                      <allow_discards> "," <fix_padding> "," <fix_hmac> "," <legacy_recalculate> ","
-+                      <allow_discards> "," <allow_discards_keyed> "," <fix_padding> "," <fix_hmac> ","
-+                      <legacy_recalculate> ","
-                       <journal_sectors> "," <interleave_sectors> "," <buffer_sectors> ";"
- 
-  target_name := "target_name=integrity"
-@@ -438,6 +439,7 @@ section above) has the following data format for 'integrity' target.
-  block_size := "block_size=" <N>
-  recalculate := "recalculate=" <yes_no>
-  allow_discards := "allow_discards=" <yes_no>
-+ allow_discards_keyed := "allow_discards_keyed=" <yes_no>
-  fix_padding := "fix_padding=" <yes_no>
-  fix_hmac := "fix_hmac=" <yes_no>
-  legacy_recalculate := "legacy_recalculate=" <yes_no>
-@@ -455,7 +457,8 @@ section above) has the following data format for 'integrity' target.
-  dm_version=4.45.0;
-  name=integrity1,uuid=,major=253,minor=1,minor_count=1,num_targets=1;
-  target_index=0,target_begin=0,target_len=7856,target_name=integrity,target_version=1.10.0,
-- dev_name=253:0,start=0,tag_size=32,mode=J,recalculate=n,allow_discards=n,fix_padding=n,
-+ dev_name=253:0,start=0,tag_size=32,mode=J,recalculate=n,allow_discards=n,
-+ allow_discards_keyed=n,fix_padding=n,
-  fix_hmac=n,legacy_recalculate=n,journal_sectors=88,interleave_sectors=32768,buffer_sectors=128;
- 
- 
-diff --git a/Documentation/admin-guide/device-mapper/dm-integrity.rst b/Documentation/admin-guide/device-mapper/dm-integrity.rst
-index d8a5f14d0e3c4..38fe5c70603be 100644
---- a/Documentation/admin-guide/device-mapper/dm-integrity.rst
-+++ b/Documentation/admin-guide/device-mapper/dm-integrity.rst
-@@ -185,6 +185,19 @@ allow_discards
- 	Allow block discard requests (a.k.a. TRIM) for the integrity device.
- 	Discards are only allowed to devices using internal hash.
- 
-+	A discarded block is marked with a constant filler tag that anyone
-+	with raw write access to the backing device can forge without the
-+	key. Use allow_discards_keyed instead on new volumes.
-+
-+allow_discards_keyed
-+	Like allow_discards, but marks a discarded block with a keyed
-+	checksum of the sector number, HMAC_key(salt || sector), instead of
-+	the constant filler tag, so it can't be forged without the
-+	integrity key.
-+
-+	Not compatible with volumes that already have discarded blocks
-+	marked the old way; only use on a freshly formatted volume.
-+
- fix_padding
- 	Use a smaller padding of the tag area that is more
- 	space-efficient. If this option is not present, large padding is
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index e43892d1619db..513c6d5fd74e1 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -65,6 +65,7 @@
- #define SB_VERSION_4			4
- #define SB_VERSION_5			5
- #define SB_VERSION_6			6
-+#define SB_VERSION_7			7
- #define SB_SECTORS			8
- #define MAX_SECTORS_PER_BLOCK		8
- 
-@@ -90,6 +91,7 @@ struct superblock {
- #define SB_FLAG_FIXED_PADDING		0x8
- #define SB_FLAG_FIXED_HMAC		0x10
- #define SB_FLAG_INLINE			0x20
-+#define SB_FLAG_DISCARD_KEYED		0x40
- 
- #define	JOURNAL_ENTRY_ROUNDUP		8
- 
-@@ -275,6 +277,7 @@ struct dm_integrity_c {
- 	bool recalculate_flag;
- 	bool reset_recalculate_flag;
- 	bool discard;
-+	bool discard_keyed;
- 	bool fix_padding;
- 	bool fix_hmac;
- 	bool legacy_recalculate;
-@@ -475,7 +478,9 @@ static void wraparound_section(struct dm_integrity_c *ic, unsigned int *sec_ptr)
- 
- static void sb_set_version(struct dm_integrity_c *ic)
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index 2736815e651c7..2cc80848e3188 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1535,9 +1535,15 @@ static int uncore_event_cpu_offline(unsigned int cpu)
  {
--	if (ic->sb->flags & cpu_to_le32(SB_FLAG_INLINE))
-+	if (ic->sb->flags & cpu_to_le32(SB_FLAG_DISCARD_KEYED))
-+		ic->sb->version = SB_VERSION_7;
-+	else if (ic->sb->flags & cpu_to_le32(SB_FLAG_INLINE))
- 		ic->sb->version = SB_VERSION_6;
- 	else if (ic->sb->flags & cpu_to_le32(SB_FLAG_FIXED_HMAC))
- 		ic->sb->version = SB_VERSION_5;
-@@ -1406,7 +1411,7 @@ static int dm_integrity_rw_tag(struct dm_integrity_c *ic, unsigned char *tag, se
- {
- 	unsigned int hash_offset = 0;
- 	unsigned char mismatch_hash = 0;
--	unsigned char mismatch_filler = !ic->discard;
-+	unsigned char mismatch_filler = !ic->discard || ic->discard_keyed;
+ 	int die, target;
  
- 	do {
- 		unsigned char *data, *dp;
-@@ -1458,7 +1463,7 @@ static int dm_integrity_rw_tag(struct dm_integrity_c *ic, unsigned char *tag, se
- 						}
- 						hash_offset = 0;
- 						mismatch_hash = 0;
--						mismatch_filler = !ic->discard;
-+						mismatch_filler = !ic->discard || ic->discard_keyed;
- 					}
- 				}
- 			}
-@@ -1662,10 +1667,12 @@ static void integrity_sector_checksum(struct dm_integrity_c *ic, sector_t sector
- 		goto failed;
- 	}
++	/* Clear the references */
++	die = topology_logical_die_id(cpu);
++	uncore_box_unref(uncore_msr_uncores, die);
++	uncore_box_unref(uncore_mmio_uncores, die);
++
+ 	/* Check if exiting cpu is used for collecting uncore events */
+ 	if (!cpumask_test_and_clear_cpu(cpu, &uncore_cpu_mask))
+-		goto unref;
++		return 0;
++
+ 	/* Find a new cpu to collect uncore events */
+ 	target = cpumask_any_but(topology_die_cpumask(cpu), cpu);
  
--	r = crypto_shash_update(req, data, ic->sectors_per_block << SECTOR_SHIFT);
--	if (unlikely(r < 0)) {
--		dm_integrity_io_error(ic, "crypto_shash_update", r);
--		goto failed;
-+	if (likely(data)) {
-+		r = crypto_shash_update(req, data, ic->sectors_per_block << SECTOR_SHIFT);
-+		if (unlikely(r < 0)) {
-+			dm_integrity_io_error(ic, "crypto_shash_update", r);
-+			goto failed;
-+		}
- 	}
- 
- 	r = crypto_shash_final(req, result);
-@@ -1685,6 +1692,53 @@ static void integrity_sector_checksum(struct dm_integrity_c *ic, sector_t sector
- 	get_random_bytes(result, ic->tag_size);
+@@ -1550,16 +1556,10 @@ static int uncore_event_cpu_offline(unsigned int cpu)
+ 	uncore_change_context(uncore_msr_uncores, cpu, target);
+ 	uncore_change_context(uncore_mmio_uncores, cpu, target);
+ 	uncore_change_context(uncore_pci_uncores, cpu, target);
+-
+-unref:
+-	/* Clear the references */
+-	die = topology_logical_die_id(cpu);
+-	uncore_box_unref(uncore_msr_uncores, die);
+-	uncore_box_unref(uncore_mmio_uncores, die);
+ 	return 0;
  }
  
-+/*
-+ * Authenticated marker for a discarded block: HMAC_key(salt || sector), with
-+ * no data payload. Because a real data tag's input always covers a full
-+ * block, its length differs from this marker's, so the two can never
-+ * collide structurally, regardless of block content.
-+ */
-+static void integrity_discard_checksum(struct dm_integrity_c *ic, sector_t sector, char *result)
-+{
-+	integrity_sector_checksum(ic, sector, NULL, result);
-+}
-+
-+static void integrity_discard_fill_tags(struct dm_integrity_c *ic, unsigned char *checksums,
-+					sector_t *sector, unsigned int blocks)
-+{
-+	char digest[MAX_T(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
-+	unsigned int i;
-+
-+	for (i = 0; i < blocks; i++) {
-+		integrity_discard_checksum(ic, *sector, digest);
-+		memcpy(checksums + i * ic->tag_size, digest, ic->tag_size);
-+		*sector += ic->sectors_per_block;
-+	}
-+}
-+
-+static int integrity_recheck_verify_tag(struct dm_integrity_io *dio, char *checksum,
-+					char *on_disk_tag, sector_t logical_sector)
-+{
-+	struct dm_integrity_c *ic = dio->ic;
-+	int r;
-+
-+	if (!ic->discard_keyed)
-+		return dm_integrity_rw_tag(ic, checksum, &dio->metadata_block,
-+					   &dio->metadata_offset, ic->tag_size, TAG_CMP);
-+
-+	r = dm_integrity_rw_tag(ic, on_disk_tag, &dio->metadata_block,
-+				&dio->metadata_offset, ic->tag_size, TAG_READ);
-+	if (unlikely(r))
-+		return r;
-+
-+	r = crypto_memneq(on_disk_tag, checksum, ic->tag_size);
-+	if (unlikely(r)) {
-+		integrity_discard_checksum(ic, logical_sector, checksum);
-+		r = crypto_memneq(on_disk_tag, checksum, ic->tag_size);
-+	}
-+	return r;
-+}
-+
- static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checksum)
+-static int allocate_boxes(struct intel_uncore_type **types,
++static void allocate_boxes(struct intel_uncore_type **types,
+ 			 unsigned int die, unsigned int cpu)
  {
- 	struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
-@@ -1709,6 +1763,7 @@ static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checks
- 			sector_t alignment;
- 			char *mem;
- 			char *buffer = page_to_virt(page);
-+			char on_disk_tag[MAX_T(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
- 			int r;
- 			struct dm_io_request io_req;
- 			struct dm_io_region io_loc;
-@@ -1736,8 +1791,8 @@ static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checks
- 			}
- 
- 			integrity_sector_checksum(ic, logical_sector, buffer, checksum);
--			r = dm_integrity_rw_tag(ic, checksum, &dio->metadata_block,
--						&dio->metadata_offset, ic->tag_size, TAG_CMP);
-+			r = integrity_recheck_verify_tag(dio, checksum, on_disk_tag,
-+							 logical_sector);
- 			if (r) {
- 				if (r > 0) {
- 					DMERR_LIMIT("%pg: Checksum failed at sector 0x%llx",
-@@ -1803,13 +1858,18 @@ static void integrity_metadata(struct work_struct *w)
- 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
- 			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
- 			unsigned int max_blocks = max_size / ic->tag_size;
-+			sector_t sector = dio->range.logical_sector;
- 
--			memset(checksums, DISCARD_FILLER, max_size);
-+			if (!ic->discard_keyed)
-+				memset(checksums, DISCARD_FILLER, max_size);
- 
- 			while (bi_size) {
- 				unsigned int this_step_blocks = bi_size >> (SECTOR_SHIFT + ic->sb->log2_sectors_per_block);
- 
- 				this_step_blocks = min(this_step_blocks, max_blocks);
-+				if (ic->discard_keyed)
-+					integrity_discard_fill_tags(ic, checksums, &sector,
-+								    this_step_blocks);
- 				r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
- 							this_step_blocks * ic->tag_size, TAG_WRITE);
- 				if (unlikely(r)) {
-@@ -3658,6 +3718,8 @@ static void dm_integrity_resume(struct dm_target *ti)
- 	ic->wrote_to_journal = false;
- 
- 	flags = ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING);
-+	if (ic->discard_keyed)
-+		flags |= cpu_to_le32(SB_FLAG_DISCARD_KEYED);
- 	r = sync_rw_sb(ic, REQ_OP_READ);
- 	if (r)
- 		dm_integrity_io_error(ic, "reading superblock", r);
-@@ -3805,7 +3867,8 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
- 		arg_count += ic->sectors_per_block != 1;
- 		arg_count += !!(ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING));
- 		arg_count += ic->reset_recalculate_flag;
--		arg_count += ic->discard;
-+		arg_count += ic->discard && !ic->discard_keyed;
-+		arg_count += ic->discard_keyed;
- 		arg_count += ic->mode == 'J';
- 		arg_count += ic->mode == 'J';
- 		arg_count += ic->mode == 'B';
-@@ -3826,8 +3889,10 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
- 			DMEMIT(" recalculate");
- 		if (ic->reset_recalculate_flag)
- 			DMEMIT(" reset_recalculate");
--		if (ic->discard)
-+		if (ic->discard && !ic->discard_keyed)
- 			DMEMIT(" allow_discards");
-+		if (ic->discard_keyed)
-+			DMEMIT(" allow_discards_keyed");
- 		DMEMIT(" journal_sectors:%u", ic->initial_sectors - SB_SECTORS);
- 		DMEMIT(" interleave_sectors:%u", 1U << ic->sb->log2_interleave_sectors);
- 		DMEMIT(" buffer_sectors:%u", 1U << ic->log2_buffer_sectors);
-@@ -3876,6 +3941,7 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
- 		DMEMIT(",recalculate=%c", (ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING)) ?
- 		       'y' : 'n');
- 		DMEMIT(",allow_discards=%c", ic->discard ? 'y' : 'n');
-+		DMEMIT(",allow_discards_keyed=%c", ic->discard_keyed ? 'y' : 'n');
- 		DMEMIT(",fix_padding=%c",
- 		       ((ic->sb->flags & cpu_to_le32(SB_FLAG_FIXED_PADDING)) != 0) ? 'y' : 'n');
- 		DMEMIT(",fix_hmac=%c",
-@@ -4037,6 +4103,9 @@ static int initialize_superblock(struct dm_integrity_c *ic,
- 		get_random_bytes(ic->sb->salt, SALT_SIZE);
+ 	struct intel_uncore_box *box, *tmp;
+@@ -1588,14 +1588,13 @@ static int allocate_boxes(struct intel_uncore_type **types,
+ 		list_del_init(&box->active_list);
+ 		box->pmu->boxes[die] = box;
  	}
+-	return 0;
++	return;
  
-+	if (ic->discard_keyed)
-+		ic->sb->flags |= cpu_to_le32(SB_FLAG_DISCARD_KEYED);
+ cleanup:
+ 	list_for_each_entry_safe(box, tmp, &allocated, active_list) {
+ 		list_del_init(&box->active_list);
+ 		kfree(box);
+ 	}
+-	return -ENOMEM;
+ }
+ 
+ static int uncore_box_ref(struct intel_uncore_type **types,
+@@ -1604,11 +1603,7 @@ static int uncore_box_ref(struct intel_uncore_type **types,
+ 	struct intel_uncore_type *type;
+ 	struct intel_uncore_pmu *pmu;
+ 	struct intel_uncore_box *box;
+-	int i, ret;
+-
+-	ret = allocate_boxes(types, id, cpu);
+-	if (ret)
+-		return ret;
++	int i;
+ 
+ 	for (; *types; types++) {
+ 		type = *types;
+@@ -1624,27 +1619,26 @@ static int uncore_box_ref(struct intel_uncore_type **types,
+ 
+ static int uncore_event_cpu_online(unsigned int cpu)
+ {
+-	int die, target, msr_ret, mmio_ret;
++	int die, target;
+ 
+ 	die = topology_logical_die_id(cpu);
+-	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
+-	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
++	allocate_boxes(uncore_msr_uncores, die, cpu);
++	allocate_boxes(uncore_mmio_uncores, die, cpu);
+ 
+ 	/*
+ 	 * Check if there is an online cpu in the package
+ 	 * which collects uncore events already.
+ 	 */
+ 	target = cpumask_any_and(&uncore_cpu_mask, topology_die_cpumask(cpu));
+-	if (target < nr_cpu_ids)
+-		return 0;
+-
+-	cpumask_set_cpu(cpu, &uncore_cpu_mask);
+-
+-	if (!msr_ret)
++	if (target >= nr_cpu_ids) {
++		cpumask_set_cpu(cpu, &uncore_cpu_mask);
+ 		uncore_change_context(uncore_msr_uncores, -1, cpu);
+-	if (!mmio_ret)
+ 		uncore_change_context(uncore_mmio_uncores, -1, cpu);
+-	uncore_change_context(uncore_pci_uncores, -1, cpu);
++		uncore_change_context(uncore_pci_uncores, -1, cpu);
++	}
 +
- 	if (!ic->meta_dev) {
- 		if (ic->fix_padding)
- 			ic->sb->flags |= cpu_to_le32(SB_FLAG_FIXED_PADDING);
-@@ -4673,6 +4742,9 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 			ic->reset_recalculate_flag = true;
- 		} else if (!strcmp(opt_string, "allow_discards")) {
- 			ic->discard = true;
-+		} else if (!strcmp(opt_string, "allow_discards_keyed")) {
-+			ic->discard = true;
-+			ic->discard_keyed = true;
- 		} else if (!strcmp(opt_string, "fix_padding")) {
- 			ic->fix_padding = true;
- 		} else if (!strcmp(opt_string, "fix_hmac")) {
-@@ -4791,6 +4863,11 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 		ti->error = "Discard can be only used with internal hash";
- 		goto bad;
- 	}
-+	if (ic->discard_keyed && !ic->internal_hash_alg.key) {
-+		r = -EINVAL;
-+		ti->error = "Keyed discard can only be used with keyed internal hash";
-+		goto bad;
-+	}
++	uncore_box_ref(uncore_msr_uncores, die, cpu);
++	uncore_box_ref(uncore_mmio_uncores, die, cpu);
+ 	return 0;
+ }
  
- 	ic->autocommit_jiffies = msecs_to_jiffies(sync_msec);
- 	ic->autocommit_msec = sync_msec;
-@@ -4917,7 +4994,7 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 			should_write_sb = true;
- 	}
- 
--	if (!ic->sb->version || ic->sb->version > SB_VERSION_6) {
-+	if (!ic->sb->version || ic->sb->version > SB_VERSION_7) {
- 		r = -EINVAL;
- 		ti->error = "Unknown version";
- 		goto bad;
-@@ -4965,6 +5042,11 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 			goto bad;
- 		}
- 	}
-+	if (!ic->discard_keyed && (ic->sb->flags & cpu_to_le32(SB_FLAG_DISCARD_KEYED))) {
-+		r = -EINVAL;
-+		ti->error = "Keyed discard cannot be disabled once enabled";
-+		goto bad;
-+	}
- 	if (!!(ic->sb->flags & cpu_to_le32(SB_FLAG_HAVE_JOURNAL_MAC)) != !!ic->journal_mac_alg.alg_string) {
- 		r = -EINVAL;
- 		ti->error = "Journal mac mismatch";
-@@ -5260,7 +5342,7 @@ static void dm_integrity_dtr(struct dm_target *ti)
- 
- static struct target_type integrity_target = {
- 	.name			= "integrity",
--	.version		= {1, 13, 0},
-+	.version		= {1, 14, 0},
- 	.module			= THIS_MODULE,
- 	.features		= DM_TARGET_SINGLETON | DM_TARGET_INTEGRITY,
- 	.ctr			= dm_integrity_ctr,
 -- 
 2.53.0
 
