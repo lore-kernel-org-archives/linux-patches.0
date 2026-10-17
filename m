@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D0B3AE713;
-	Sat, 17 Oct 2026 16:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C113A7F41;
+	Sat, 17 Oct 2026 16:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256307; cv=none; b=YtQnAGpBjJr5dOH4s4oJfeRDP6h93mE5gNyqBt4yrvbjWIk2gmJQF8likxLnWjC2bYDwEmwhSeW7rHhqos/6bQjFjEVLEy46+5OyD7w3RNz79Y93uWm0+SPBPsIK4izOMB48/NVlMbllGVdyJ1T14xsfbURBbMFqatq3jmkSWqM=
+	t=1792256310; cv=none; b=mrI2r3p1THzveSPhTsGix4F5eEKnr11/fvYL/fZdQwJK9szd4Ud/2AFHm78uBK/sSp/NI76Xd/n2psytADQT0B08z8DWgC/kkevgE2ONqUIk0nzQas0A859VwKPpgQs3mj4NzAQAYqnrztWeotrsIzChFx47vjFprqfJyn8jod8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256307; c=relaxed/simple;
-	bh=wOUwf0LDu2dfkiGsRmaHzl6bIzu4h9RLlqfa496P/UU=;
+	s=arc-20240116; t=1792256310; c=relaxed/simple;
+	bh=ptdxzQ4cmoD3k55P+OOwmJR84iwGNbNXrKY88zYao3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OtajAHC4ehvU0tmSrLdVKa0haXnHFSrgUZYPgkxVEZlCZGljMDJTEJ9dUByTBvBVNV3nZ76VcXAhGcEhyaevw/Upz3BT9NWc8LupXIxXQ7gdubeJFs5lT47fJmtOorrbWFmCEKZoVf9CDjxJquSW5DLUleTifc6XWFU1RNqBpl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSmKRDPd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QinluL/0AJqtq4zF3x0jni3lhCymAbqcZMDuPdoB9u6kEGFX+LUL6tYGxmesZWngmL+Y3Sbja/Su+bW5GAy0Jw2bNoK4ChUkZfCz8uyjLIU+1t3kdsZ69NpJ6asEOjYrpeG2jSaa15sMSFOtHkTIGYTWGJ4E6IdXt2Us1R3cus8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c618/WNn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSmKRDPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C54C1F000C4;
-	Sat, 17 Oct 2026 16:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c618/WNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C14C1F000C4;
+	Sat, 17 Oct 2026 16:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256306;
-	bh=oEcEHV+ykZENb4DEFcLAt4P5/upaEUpDJYA2qhwCQxY=;
+	s=korg; t=1792256309;
+	bh=X7OQXZUdIAE0IIu5l0zXfiif9TBgx9qdFZe8TyGRDh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cSmKRDPdTeJV7QvIhHppy5xyypslD2Qn+n1gWW4x89vmTKQ1awQS1rKGzQmdILKCQ
-	 FtV0SDIpS+OmhPdc4ZyIE9FXzqw/NP3Ed7vyXxa4QuA4CHIfEuLx9MDw0fY/5XZXVT
-	 Jx+5lLB3dEud67DiKartzmEu8aXkEPkTa9jOjPvs=
+	b=c618/WNnVEc+pXhPFZ7DaulC3OlynZim2RFbhozKcZCR15Nj8p2j+MLxyea6zjjBa
+	 h6lL3w8eueixb21CLELTZTBiIuvt5NL4Ul76XiT85uY6odr9edv1NdkRbOT1jQ6eI6
+	 djmvDRuIBYXZnGW+iv2zxVT+YM47ZNXY7TCHpVUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0192/1674] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
-Date: Sat, 17 Oct 2026 17:41:04 +0200
-Message-ID: <20261017160436.082616013@linuxfoundation.org>
+Subject: [PATCH 6.6 0193/1674] wifi: wfx: validate MIB read length before copying to caller
+Date: Sat, 17 Oct 2026 17:41:05 +0200
+Message-ID: <20261017160436.107221406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
+[ Upstream commit ce67ebe9d8629776ce38e6995ae72fb903c828db ]
 
-The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
-DRC_0. Its shift and max are right for the field, only the register is
-wrong.
+wfx_hif_read_mib() copies reply->length bytes from the firmware
+response into the caller-provided buffer without checking that
+reply->length does not exceed val_len. A firmware response with
+a length field larger than expected overruns the caller buffer and
+reads past the end of the reply allocation.
 
-Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
-Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
-Writing either one moves the other, and the quick release threshold is
-never reached at all.
+Replace the dead -ENOMEM check with an active validation that
+reply->length fits within val_len before the memcpy.
 
-The six fields of DRC_1 tile it exactly, so there is nowhere else the
-threshold could live. Point the control at DRC_1.
-
-Found by a sweep for two controls claiming the same bits of one
-register. No board with this codec was to hand, the register map is
-the driver's own wm8903.h.
-
-Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f95a29d40782 ("staging: wfx: add HIF commands helpers")
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Link: https://patch.msgid.link/AS8P251MB000155034FC391A2A54B9803C8BD2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8903.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/silabs/wfx/hif_tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
-index 84ae1102ac883..1c6b22d78f57d 100644
---- a/sound/soc/codecs/wm8903.c
-+++ b/sound/soc/codecs/wm8903.c
-@@ -677,7 +677,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
- SOC_ENUM("DRC FF Delay", drc_ff_delay),
- SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
- SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
--SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
-+SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
- SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
- SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
- SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
+diff --git a/drivers/net/wireless/silabs/wfx/hif_tx.c b/drivers/net/wireless/silabs/wfx/hif_tx.c
+index 9402503fbde3c..852406fc7f3c6 100644
+--- a/drivers/net/wireless/silabs/wfx/hif_tx.c
++++ b/drivers/net/wireless/silabs/wfx/hif_tx.c
+@@ -189,9 +189,11 @@ int wfx_hif_read_mib(struct wfx_dev *wdev, int vif_id, u16 mib_id, void *val, si
+ 		dev_warn(wdev->dev, "%s: confirmation mismatch request\n", __func__);
+ 		ret = -EIO;
+ 	}
+-	if (ret == -ENOMEM)
++	if (!ret && le16_to_cpu(reply->length) > val_len) {
+ 		dev_err(wdev->dev, "buffer is too small to receive %s (%zu < %d)\n",
+ 			wfx_get_mib_name(mib_id), val_len, le16_to_cpu(reply->length));
++		ret = -EIO;
++	}
+ 	if (!ret)
+ 		memcpy(val, &reply->mib_data, le16_to_cpu(reply->length));
+ 	else
 -- 
 2.53.0
 
