@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90A235E93B;
-	Sat, 17 Oct 2026 18:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B44392C3D;
+	Sat, 17 Oct 2026 18:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260334; cv=none; b=KudtJL7mLFYSUSuMk6LEpKr12k7p86yuM0H0OdgaZ78naKugdBGVQ9ACulbhvyBTQqyuB+rv4zWgyhYkp5rUpV8crpPOlFvOxVFtK/wHVgAoueTCB928ldJa1OpRQ1emnfsG27qZr76qHyirqZ6scwv+EAo+Ed1iGPjCbcLtOCk=
+	t=1792260337; cv=none; b=ZTH4mpy0iPPY4P4Ak1YKI8YhPRSbL0a2XWl9Fr+A0+gpfDEpES6FRbFoFW94o3zfV8I2hPmu3men3mM3KjmmEx84DPfsa629sAyn7fTCCg4kVPO3zLCNXXF4M1vbIxI77Q67raqFwpOC7V7yWWG3eqUaH1dfI0fI4K3U3+ke2eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260334; c=relaxed/simple;
-	bh=QRZoO7/OO3TYgEyQPS/ephvMvfHSz4s9Ul54tXi5iJI=;
+	s=arc-20240116; t=1792260337; c=relaxed/simple;
+	bh=3Dyoi8EW7HxITAGMwU68o8efJs1Z/lLq5qLiokfbQbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCN/sTJIcbaBMBbd/Z33tYgpf78D1ggJdgWMgWgfZxEztDnJiiO0VJnJ5ysFYGo23OeedKfjSlJDcHp+7g0SglZ50f3IlOY9J9yi3iBCRJhgPCucb0lxp97eFycfX6B5czq9wTI4j4kuBONcdLKHtI3oS+vpV4O9wQPLiOc9lr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHyd1Hrp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=s48n3KsmVOmiL5Aww+Q0YnvGOx0KNm9nlBXl/0V4otoTcRUNjhHphC8AXteM/4iHYLTnTaS/yfadu5enGnkK0DjOcZWtiO8cBQJqvwfq3ny7ODQghW+Cr+LJEcJEa5y0TNrzDY3tl8JWtW1NNwkIKbFFq14a0SRo4BiJluZdC3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvVH1Weg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHyd1Hrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0BF1F000C4;
-	Sat, 17 Oct 2026 18:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvVH1Weg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3071F000C4;
+	Sat, 17 Oct 2026 18:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260332;
-	bh=Ih8qo/22f3AzUDey8QArJBSFRaQyLQkUeZLGhK5EVG0=;
+	s=korg; t=1792260335;
+	bh=roUirZpXmLO7Qn/IkuZbY/hP2CkU36WlFlHF+kX+iBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHyd1HrpfGN7GHuPscmPayRj/zSn8LncSQo0D8UUQdIVMWrin6yxV0adZzxl5jZWs
-	 BxUJMuPnGTnb0F83kyE1KyhMpVnVDAVTA51X9yA0JyQ53VM6XvoEObDfUFi51PQw8b
-	 VBFmmnU1A+gtV/iwWgug5wZxCcyUXWmTaVZxzZ7o=
+	b=rvVH1Weg1q58XNL1NBPnPsSrfuEFVcGsoS9CKt6fxq/0B/xEsMHQ8SqdrFkLKFd1z
+	 M2xdbuekPZ1iS8TIGS4/jNo+6f8+AKDsv2i6F+/+DVMi4P4ZNm+p0lskP9kcfqHEQk
+	 iYDOyGlnXuen5KPHEmlJovO7fPOwmqIyjtcxJD0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Gou Hao <gouhao@uniontech.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1511/1674] ACPI: bus: Introduce acpi_bus_get_primary_device()
-Date: Sat, 17 Oct 2026 18:03:03 +0200
-Message-ID: <20261017160509.911243681@linuxfoundation.org>
+Subject: [PATCH 6.6 1512/1674] powerpc/xive: add error return value to xive_smp_probe()
+Date: Sat, 17 Oct 2026 18:03:04 +0200
+Message-ID: <20261017160509.935037831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,144 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 72530e1f72b0515a73fd88292254d04fecf03649 ]
+[ Upstream commit ab5ae5dceb86614f6c9e7488f91b652000edfdc5 ]
 
-The function used for obtaining the first "physical" device for which
-the given ACPI one is the ACPI companion, acpi_get_first_physical_node(),
-may return a stale device pointer (mostly in theory) because
-acpi_unbind_one() may run as a whole after dropping the ACPI device's
-physical_node_lock in acpi_get_first_physical_node() and before it
-returns.  The last reference to the "physical" device may be dropped
-then before the pointer to it is returned to the caller.
+xive_smp_probe() calls xive_init_ipis() which can fail, but its
+return value is currently ignored.  Change xive_smp_probe() to
+return int so that errors can be propagated to callers.
 
-If that happens and the acpi_get_first_physical_node() caller invokes
-get_device() on the pointer obtained from it, which is done by the
-majority of its callers, a use-after-free will occur.
+This is a preparatory patch for the next one.
 
-To prepare for addressing this problem, introduce a new function for
-getting the first "physical" device associated with the given ACPI one
-(the "primary physical device") that will also reference count the
-device in question before returning a pointer to it.
+No functional change yet; the return value is always 0 at this point.
 
-Make that new function and acpi_get_first_physical_node() share the
-physical node list lookup code.
-
-No intentional functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2843318.mvXUDI8C0e@rafael.j.wysocki
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: Wentao Guan <guanwentao@uniontech.com>
+Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727104215.184786-3-gouhao@uniontech.com
+Stable-dep-of: 411a3c016e7a ("powerpc/xive: propagate IPI init errors to prevent use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c      | 54 +++++++++++++++++++++++++++++------------
- include/acpi/acpi_bus.h |  6 +++++
- 2 files changed, 44 insertions(+), 16 deletions(-)
+ arch/powerpc/include/asm/xive.h   | 4 ++--
+ arch/powerpc/sysdev/xive/common.c | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index 9d2301b75898a..a21bc540d8368 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -703,30 +703,52 @@ static int __init acpi_setup_sb_notify_handler(void)
-                              Device Matching
-    -------------------------------------------------------------------------- */
+diff --git a/arch/powerpc/include/asm/xive.h b/arch/powerpc/include/asm/xive.h
+index 92930b0b5d0e1..8ac7c1d3564fc 100644
+--- a/arch/powerpc/include/asm/xive.h
++++ b/arch/powerpc/include/asm/xive.h
+@@ -91,7 +91,7 @@ static inline bool xive_enabled(void) { return __xive_enabled; }
  
-+
-+static struct device *primary_physical_device(struct acpi_device *adev)
-+{
-+	struct acpi_device_physical_node *pn;
-+
-+	pn = list_first_entry_or_null(&adev->physical_node_list,
-+				      struct acpi_device_physical_node, node);
-+	if (pn)
-+		return pn->dev;
-+
-+	return NULL;
-+}
-+
- /**
-- * acpi_get_first_physical_node - Get first physical node of an ACPI device
-+ * acpi_bus_get_primary_device - Get first physical device for a given ACPI one
-+ * @adev: ACPI device to get the first physical device for.
-+ *
-+ * Find the first physical device for which @adev is the ACPI companion and
-+ * reference count it if present.
-+ *
-+ * Return: Pointer to the first physical counterpart of @adev or NULL if there
-+ * are none.  Callers are responsible for invoking put_device() on the returned
-+ * device.
-+ */
-+struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
-+{
-+	if (!adev)
-+		return NULL;
-+
-+	guard(mutex)(&adev->physical_node_lock);
-+
-+	return get_device(primary_physical_device(adev));
-+}
-+EXPORT_SYMBOL_GPL(acpi_bus_get_primary_device);
-+
-+/**
-+ * acpi_get_first_physical_node - Find first physical node of an ACPI device
-  * @adev:	ACPI device in question
-  *
-  * Return: First physical node of ACPI device @adev
-  */
- struct device *acpi_get_first_physical_node(struct acpi_device *adev)
+ bool xive_spapr_init(void);
+ bool xive_native_init(void);
+-void xive_smp_probe(void);
++int xive_smp_probe(void);
+ int  xive_smp_prepare_cpu(unsigned int cpu);
+ void xive_smp_setup_cpu(void);
+ void xive_smp_disable_cpu(void);
+@@ -154,7 +154,7 @@ static inline bool xive_enabled(void) { return false; }
+ 
+ static inline bool xive_spapr_init(void) { return false; }
+ static inline bool xive_native_init(void) { return false; }
+-static inline void xive_smp_probe(void) { }
++static inline int xive_smp_probe(void) { return -EINVAL; }
+ static inline int  xive_smp_prepare_cpu(unsigned int cpu) { return -EINVAL; }
+ static inline void xive_smp_setup_cpu(void) { }
+ static inline void xive_smp_disable_cpu(void) { }
+diff --git a/arch/powerpc/sysdev/xive/common.c b/arch/powerpc/sysdev/xive/common.c
+index a289cb97c1d7b..5f6a05380e955 100644
+--- a/arch/powerpc/sysdev/xive/common.c
++++ b/arch/powerpc/sysdev/xive/common.c
+@@ -1270,7 +1270,7 @@ noinstr static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
+ 	xive_ops->put_ipi(cpu, xc);
+ }
+ 
+-void __init xive_smp_probe(void)
++int __init xive_smp_probe(void)
  {
--	struct mutex *physical_node_lock = &adev->physical_node_lock;
--	struct device *phys_dev;
--
--	mutex_lock(physical_node_lock);
--	if (list_empty(&adev->physical_node_list)) {
--		phys_dev = NULL;
--	} else {
--		const struct acpi_device_physical_node *node;
-+	guard(mutex)(&adev->physical_node_lock);
+ 	smp_ops->cause_ipi = xive_cause_ipi;
  
--		node = list_first_entry(&adev->physical_node_list,
--					struct acpi_device_physical_node, node);
--
--		phys_dev = node->dev;
--	}
--	mutex_unlock(physical_node_lock);
--	return phys_dev;
-+	return primary_physical_device(adev);
- }
- EXPORT_SYMBOL_GPL(acpi_get_first_physical_node);
+@@ -1279,6 +1279,8 @@ void __init xive_smp_probe(void)
  
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index fea9ff235f074..36d5a61d04e98 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -568,6 +568,7 @@ void acpi_bus_unregister_driver(struct acpi_driver *driver);
- int acpi_bus_scan(acpi_handle handle);
- void acpi_bus_trim(struct acpi_device *start);
- acpi_status acpi_bus_get_ejd(acpi_handle handle, acpi_handle * ejd);
-+struct device *acpi_bus_get_primary_device(struct acpi_device *adev);
- int acpi_match_device_ids(struct acpi_device *device,
- 			  const struct acpi_device_id *ids);
- void acpi_set_modalias(struct acpi_device *adev, const char *default_id,
-@@ -821,6 +822,11 @@ static inline void acpi_put_acpi_dev(struct acpi_device *adev)
- }
- #else	/* CONFIG_ACPI */
- 
-+static inline struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
-+{
-+	return NULL;
-+}
+ 	/* Allocate and setup IPI for the boot CPU */
+ 	xive_setup_cpu_ipi(smp_processor_id());
 +
- static inline int register_acpi_bus_type(void *bus) { return 0; }
- static inline int unregister_acpi_bus_type(void *bus) { return 0; }
++	return 0;
+ }
  
+ #endif /* CONFIG_SMP */
 -- 
 2.53.0
 
