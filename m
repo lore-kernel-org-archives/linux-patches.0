@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF032D3225;
-	Sat, 17 Oct 2026 17:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79032392836;
+	Sat, 17 Oct 2026 17:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257762; cv=none; b=g0WLQgpbdp29b+WVthrpQzQIeUShg1wRnWklHiY7xZvZ2LT+QP0svaWF/80IuUiudihRHQyntKIlYfrsNh5YGN1XcDR4FCZd+CE9JbDforYSkjGayeuu4EPZ8DV2jfpGPCiD3iuTWfMjEGC1fh7EpvMDihONFoL6OL2p6kqfdM4=
+	t=1792257765; cv=none; b=CzVEU0Mg5E9V6idPNwWng4OATy46pWu+N/U9awXNMaXmmnuq85bc/5eUW1tsN16knWzFuSN4dgPAPDlmObV8U8OvKIF5FAho60PQ6ckNGJ4FLs7wix+LGqvm8/0+Kvq+E3JETVI0cv0OIjipk5pIXp1v4FpZOUlnW+0DfcCsyus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257762; c=relaxed/simple;
-	bh=AxoEAyCbllA8gFZ295PrjJ4AS71zu/dT2jAWLyydAZU=;
+	s=arc-20240116; t=1792257765; c=relaxed/simple;
+	bh=bm+kc3+TkrO965sa2xmbontuZhPQ86P4ubmJF1GFnlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0o1ADpJ+N4jLStQwhkgvZrlH9Q4AgOLDs7ijeR6VC+0o61nAiTQwvk/4eLyCRAsNtIFRIu6EyrfRzXRokUqWg7SsNnXbQUk+Pr8qZt9JQlmUrVZ3uKFhtM2IbUAulfTc2SA1dZLR8NH3P1yEnEWTg4PpUIvEYM8mLfs53zfKyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFOSygp4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lx4wRHNGQUtKbsrnJ9TLmx0qp8WEzqZo2IFsbBBnPNC5q4BBfECpI4pmfwoPPGgj//fOl8xsW4yiRTUMeBPLHRsQw65T814/91EV5XHE2ufLEkfBVOqKsjkRhK+LPoWzJQAGWeTDS8UEDBVU9wOwE2fdydU7Kcq2pa/xBAJhhbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQzlP2zO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFOSygp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0141F000C4;
-	Sat, 17 Oct 2026 17:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQzlP2zO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD9A1F000C4;
+	Sat, 17 Oct 2026 17:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257761;
-	bh=+AEUMo93vX1HigjSdB31X+cLDqS/iuByV/rpOi/2xTU=;
+	s=korg; t=1792257764;
+	bh=N0LvLdRUgwjLkP3d+WEAt9VMj/NX/CfvW+Cli14xeaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JFOSygp4PcoZj0g3mNvCoUiELwjZ1J+1hAXbjL4qCEexVo0D1W3wCSGxNhbXbk4oU
-	 s/y0L2A3ukOclkSPrtiwKL1G/oc77IKT81+4sCpB0NrRExiR/a/2l/rwC8IsQaDYgM
-	 4kXyiLFc5OyObFtYv58Mv1avMa8jdecbSu1dzWkU=
+	b=UQzlP2zOZhn1MCYwLww17rm8KSSPt+zxbyFpehv1izVqwpTrwRsFXrN6nEa8aO8Jj
+	 JLAuY2WbwrBnImG9dRiFKm3I8M+WvMU/fczHsjQCMy5hm6AoJJfbfApPMI/unWMXSO
+	 MKnQhPhv5o487FNV09wYoxHhJQUABdQkqT/OCM/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
+	Josh Don <joshdon@google.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0620/1674] sched/deadline: Fix task_struct reference leak
-Date: Sat, 17 Oct 2026 17:48:12 +0200
-Message-ID: <20261017160446.992068963@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Madadi Vineeth Reddy <vineethr@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 6.6 0621/1674] sched: fix warning in sched_setaffinity
+Date: Sat, 17 Oct 2026 17:48:13 +0200
+Message-ID: <20261017160447.017048748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,68 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Josh Don <joshdon@google.com>
 
-[ Upstream commit b58652db66c910c2245f5bee7deca41c12d707b9 ]
+[ Upstream commit 70ee7947a29029736a1a06c73a48ff37674a851b ]
 
-During the execution of the following stress test with linux-rt:
+Commit 8f9ea86fdf99b added some logic to sched_setaffinity that included
+a WARN when a per-task affinity assignment races with a cpuset update.
 
-stress-ng --cyclic 30 --timeout 30 --minimize --quiet
+Specifically, we can have a race where a cpuset update results in the
+task affinity no longer being a subset of the cpuset. That's fine; we
+have a fallback to instead use the cpuset mask. However, we have a WARN
+set up that will trigger if the cpuset mask has no overlap at all with
+the requested task affinity. This shouldn't be a warning condition; its
+trivial to create this condition.
 
-kmemleak frequently reported a memory leak concerning the task_struct:
+Reproduced the warning by the following setup:
 
-unreferenced object 0xffff8881305b8000 (size 16136):
-  comm "stress-ng", pid 614, jiffies 4294883961 (age 286.412s)
-  object hex dump (first 32 bytes):
-    02 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00  .@..............
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  debug hex dump (first 16 bytes):
-    53 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00  S...............
-  backtrace:
-    [<00000000046b6790>] dup_task_struct+0x30/0x540
-    [<00000000c5ca0f0b>] copy_process+0x3d9/0x50e0
-    [<00000000ced59777>] kernel_clone+0xb0/0x770
-    [<00000000a50befdc>] __do_sys_clone+0xb6/0xf0
-    [<000000001dbf2008>] do_syscall_64+0x5d/0xf0
-    [<00000000552900ff>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
+- $PID inside a cpuset cgroup
+- another thread repeatedly switching the cpuset cpus from 1-2 to just 1
+- another thread repeatedly setting the $PID affinity (via taskset) to 2
 
-The issue occurs in start_dl_timer(), which increments the task_struct
-reference count and sets a timer. The timer callback, dl_task_timer,
-is supposed to decrement the reference count upon expiration. However,
-if enqueue_task_dl() is called before the timer expires and cancels it,
-the reference count is not decremented, leading to the leak.
-
-This patch fixes the reference leak by ensuring the task_struct
-reference count is properly decremented when the timer is canceled.
-
-Fixes: feff2e65efd8 ("sched/deadline: Unthrottle PI boosted threads while enqueuing")
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Fixes: 8f9ea86fdf99b ("sched: Always preserve the user requested cpumask")
+Signed-off-by: Josh Don <joshdon@google.com>
+Acked-and-tested-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lore.kernel.org/r/20240620125618.11419-1-wander@redhat.com
+Acked-by: Waiman Long <longman@redhat.com>
+Tested-by: Madadi Vineeth Reddy <vineethr@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20241111182738.1832953-1-joshdon@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 91459b664014d..4546d15419c2b 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1727,8 +1727,12 @@ static void enqueue_task_dl(struct rq *rq, struct task_struct *p, int flags)
- 			 * The replenish timer needs to be canceled. No
- 			 * problem if it fires concurrently: boosted threads
- 			 * are ignored in dl_task_timer().
-+			 *
-+			 * If the timer callback was running (hrtimer_try_to_cancel == -1),
-+			 * it will eventually call put_task_struct().
- 			 */
--			hrtimer_try_to_cancel(&p->dl.dl_timer);
-+			if (hrtimer_try_to_cancel(&p->dl.dl_timer) == 1)
-+				put_task_struct(p);
- 			p->dl.dl_throttled = 0;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 797b81dcf69ab..ed3fcf41bb0f4 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8346,7 +8346,7 @@ __sched_setaffinity(struct task_struct *p, struct affinity_context *ctx)
+ 			bool empty = !cpumask_and(new_mask, new_mask,
+ 						  ctx->user_mask);
+ 
+-			if (WARN_ON_ONCE(empty))
++			if (empty)
+ 				cpumask_copy(new_mask, cpus_allowed);
  		}
- 	} else if (!dl_prio(p->normal_prio)) {
+ 		__set_cpus_allowed_ptr(p, ctx);
 -- 
 2.53.0
 
