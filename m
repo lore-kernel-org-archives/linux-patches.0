@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2328938F233;
-	Sat, 17 Oct 2026 17:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072C0385D7B;
+	Sat, 17 Oct 2026 17:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258927; cv=none; b=ooRJxGLOMpyZhkHuJeggzlNLpdtoJSQxk93pwQhBnar/RfAo/KzcS1R9fVI6NWnJQ4LgCXEPLU8foAxG1oCQoIIwJpfbxUB8w0y8ztle3mFPNSOha4qBZZe2nIMksAiWo5ZA6XRN+uLQJAtS+1OBfxfpwJmJwCGfTGCh+DMoT5I=
+	t=1792258930; cv=none; b=ItACv1TIyZX+f9QQ5PzyNoChZaEm0qJz24PCmInyQMmWLvPd4IaH3eQjwEUoBpr8aZEJ1vNP86OTHS9xGtqJ9ULG0RSwZu4at3DdyUpFKwGucTKAwbzeXCaLPSvX7tVXrT5hdhHGIv2oTCTGXQybub1uQvext/9GmNpsnVO2g/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258927; c=relaxed/simple;
-	bh=fDKwilzksJdpu+EaYBtQwyd0gH3e2HivqCUY9dHrVC0=;
+	s=arc-20240116; t=1792258930; c=relaxed/simple;
+	bh=vVJ0bDuCPZlaRfuBQvK5cn7Wap4NNxyzrPpv0br8boQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rajMnpYReBv2P+zMtcyehYcTz+nPdjvnK4orL4UVTlhhFd4Q+ACxnrYZMwY/Fe5hqWZLfXh2RtIUi5LzE7uZ1j1l65Oh6DDl8FaqnpJItqONGrLBRIRd8atdQnHT8C91Wzjk/CTn35VPsdTz0GovMUFAmc4sxmL7dqebaSCTol8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoxa9ksu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OO/SX52Plj4y9ysJEu4gRS30xQV8jEXlBqmt86n5hG0MAXFpscGayBIt/x4TRATSHwFDYx6ZjHNnZsXK4qsGbwT5FBfhoGH/LQkv5KSskrHxvRYcdafUuWMTSf9bdHGNd5wZd5zFzVScarwKhIhtYFLd+xIKBHKc5sp6YkyCLa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sieo+4Li; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoxa9ksu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F8D1F000C4;
-	Sat, 17 Oct 2026 17:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sieo+4Li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7FF1F000C4;
+	Sat, 17 Oct 2026 17:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258926;
-	bh=v2X2SylKDGYG9uQtMH4ID31bHKeWSkDpDZzGBsjvSOo=;
+	s=korg; t=1792258928;
+	bh=YuukhLQfLtkNjqroqAIzd2/SmczIxoNmHqAnK4iPYzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoxa9ksuDVyZlxsphyRoCRovaRQfsdwl8dnAsjqUhur8bTXqQoyxKz76e5D0UA+lU
-	 mbUOGaceNfjZxv30eGamx5+rn/VonNXq+GaiPVQLCbgcS0JrwCpLDzuR2fsSpd28BY
-	 7wGcFvCunKo0M4/BpyyfIYOzFHf11QBSZQdgnHs4=
+	b=Sieo+4LisoQy9bkU5bUk4IIiDBbIUTBciIDqnz+w9CX+zBbBAex3dUgtsAcxnchvr
+	 88KX9JOK5mEyP9dFQQCJ4GR6ZelIsRcV+aF5CNvWwuMpJYcGXsTH/zuvNExiaaiM7s
+	 xQJY642glTvetO4IPbKhwfaLaObT8+e1Xhrbt81g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1044/1674] hwmon: (lm90) Stop work before releasing hwmon device
-Date: Sat, 17 Oct 2026 17:55:16 +0200
-Message-ID: <20261017160457.934003396@linuxfoundation.org>
+Subject: [PATCH 6.6 1045/1674] netfilter: bridge: eb_tables: close module init race
+Date: Sat, 17 Oct 2026 17:55:17 +0200
+Message-ID: <20261017160457.958398835@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,106 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit b09a45601094c7f4ec4db8090b825fa61e169d93 ]
+[ Upstream commit 27414ff1b287ea9a2a11675149ec28e05539f3cc ]
 
-Sashiko reports:
+sashiko reports for unrelated patch:
+ Does the core ebtables initialization in ebtables.c suffer from a similar race?
+ Once nf_register_sockopt() completes, the sockopts are exposed globally.
 
-In lm90_probe(), the devm action to cancel the alert_work and report_work
-(lm90_restore_conf) is registered in lm90_init_client() before
-devm_hwmon_device_register_with_info() is called.
+sockopt has to be registered last, just like in ip/ip6/arptables.
 
-Because devm executes cleanup actions in reverse order during module
-unbind or probe failure, the hwmon device is unregistered and freed first.
-
-If lm90_alert_work() or lm90_report_alarms() runs in the window between
-the hwmon device being freed and the delayed works being cancelled,
-lm90_update_alarms() will dereference the freed data->hwmon_dev here.
-
-Fix the problem by canceling the workers separately after registering
-the hwmon device and before registering the interrupt handler. This ensures
-that the workers are canceled after interrupts are disabled and before
-the hwmon device is released. Add "shutdown" flag to indicate that device
-shutdown is in progress to prevent workers from being re-armed.
-
-Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5b53951cfc85 ("netfilter: ebtables: use net_generic infra")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm90.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ net/bridge/netfilter/ebtables.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
-index 7be9874b3dfb1..96a10b9875f0e 100644
---- a/drivers/hwmon/lm90.c
-+++ b/drivers/hwmon/lm90.c
-@@ -695,6 +695,7 @@ struct lm90_data {
- 	struct mutex update_lock;
- 	struct delayed_work alert_work;
- 	struct work_struct report_work;
-+	bool shutdown;		/* true if shutting down */
- 	bool valid;		/* true if register values are valid */
- 	bool alarms_valid;	/* true if status register values are valid */
- 	unsigned long last_updated; /* in jiffies */
-@@ -1113,6 +1114,9 @@ static void lm90_report_alarms(struct work_struct *work)
- 
- static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index 32e73f04d5b17..ca6f0b7710823 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -2607,19 +2607,20 @@ static int __init ebtables_init(void)
  {
-+	if (data->shutdown)
-+		return 0;
+ 	int ret;
+ 
+-	ret = xt_register_target(&ebt_standard_target);
++	ret = register_pernet_subsys(&ebt_net_ops);
+ 	if (ret < 0)
+ 		return ret;
+-	ret = nf_register_sockopt(&ebt_sockopts);
 +
- 	if (force || !data->alarms_valid ||
- 	    time_after(jiffies, data->alarms_updated + msecs_to_jiffies(data->update_interval))) {
- 		struct i2c_client *client = data->client;
-@@ -2558,15 +2562,23 @@ static void lm90_restore_conf(void *_data)
- 	struct lm90_data *data = _data;
- 	struct i2c_client *client = data->client;
++	ret = xt_register_target(&ebt_standard_target);
+ 	if (ret < 0) {
+-		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
+ 	}
  
--	cancel_delayed_work_sync(&data->alert_work);
--	cancel_work_sync(&data->report_work);
--
- 	/* Restore initial configuration */
- 	if (data->flags & LM90_HAVE_CONVRATE)
- 		lm90_write_convrate(data, data->convrate_orig);
- 	lm90_write_reg(client, LM90_REG_CONFIG1, data->config_orig);
- }
+-	ret = register_pernet_subsys(&ebt_net_ops);
++	ret = nf_register_sockopt(&ebt_sockopts);
+ 	if (ret < 0) {
+-		nf_unregister_sockopt(&ebt_sockopts);
+ 		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
+ 	}
  
-+static void lm90_stop_work(void *_data)
-+{
-+	struct lm90_data *data = _data;
-+
-+	mutex_lock(&data->update_lock);
-+	data->shutdown = true;
-+	mutex_unlock(&data->update_lock);
-+	cancel_delayed_work_sync(&data->alert_work);
-+	cancel_work_sync(&data->report_work);
-+}
-+
- static int lm90_init_client(struct i2c_client *client, struct lm90_data *data)
- {
- 	struct device_node *np = client->dev.of_node;
-@@ -2899,6 +2911,10 @@ static int lm90_probe(struct i2c_client *client)
- 
- 	data->hwmon_dev = hwmon_dev;
- 
-+	err = devm_add_action_or_reset(&client->dev, lm90_stop_work, data);
-+	if (err)
-+		return err;
-+
- 	if (client->irq) {
- 		dev_dbg(dev, "IRQ: %d\n", client->irq);
- 		err = devm_request_threaded_irq(dev, client->irq,
-@@ -2927,7 +2943,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 		 */
- 		struct lm90_data *data = i2c_get_clientdata(client);
- 
--		if ((data->flags & LM90_HAVE_BROKEN_ALERT) &&
-+		if (!data->shutdown && (data->flags & LM90_HAVE_BROKEN_ALERT) &&
- 		    (data->current_alarms & data->alert_alarms)) {
- 			if (!(data->config & 0x80)) {
- 				dev_dbg(&client->dev, "Disabling ALERT#\n");
 -- 
 2.53.0
 
