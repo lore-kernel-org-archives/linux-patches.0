@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6533A1E92;
-	Sat, 17 Oct 2026 17:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3103C0A1E;
+	Sat, 17 Oct 2026 17:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258825; cv=none; b=cxCDUcd3icznm0BEpZ7s4s4lP+huCb7oWsFZYhY5E0QnrmlbJANekbabKE1W4bpK3Kb1I9RNzk8+l8ZAG3T6ba/Np82657kwqWlR58LLFQTEOmzOrs2/kFJQ/Yaw75o3iwA6xKmTQ1jIOnVIaiOj0PDt1l3npZM8GJsiFYB8llQ=
+	t=1792258828; cv=none; b=WN/YYQ1qzft64vACwdkmvoQyDPF/aViuEwGbHWOGaPet6iJYaCftmCcUTTpnoioZmwugKsNz/WWVYs7X5/HWVVonR2TBHdDFNpqoXCdVUStsgjwqdvBE7vz0ahKlYD7jWvChG+CX7a4eIYgH2j0yrd5co1S6ZrT8s9STbC5Od84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258825; c=relaxed/simple;
-	bh=7ONjm31v4++RkYRCamRkORUvI+WrVrSoeLGbZ4kF3e8=;
+	s=arc-20240116; t=1792258828; c=relaxed/simple;
+	bh=XH73iGTXyFYNFu2QCjtM0x7cPEtxgXwGGvDVicyYYQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7PPMcRAdOzMcjm77v5TMFCVcDQg5uJkAfm8tcft2eFJNfCkQKc2hX6j/N/9PKg53litoAKvRD5ju7FXH+2a3ML1CqiO/k+N8bohbaEXx7e1h9rKt7+vxqbgIcO4z51OdpXWReuh9ymbET+9PNeaumPTNiNeqnS6bGkaT/V03B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kasd3x1/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WcArrwMKltFxbkVGimOyZ4KFMe1k7ct1UY1k3AyPhTE5Pm8AMpsmSghwe3ujH6hz63hlHL4oRM+733vAhSNcgPRo8jOHwEYUy0mOiXOHSOS8nCnv8KzqlPVNin0U20nnPsOlrNMv1Io1dseetPmSn+OPGnOxHYagl02p2/FGiGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csTYoD2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kasd3x1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD41F000C4;
-	Sat, 17 Oct 2026 17:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csTYoD2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AB61F000C4;
+	Sat, 17 Oct 2026 17:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258824;
-	bh=1Pq1HlcW0Mxywfe6QBno1SKeGbEMl/C0x5HVToFfVXs=;
+	s=korg; t=1792258827;
+	bh=F3AQ6Tf/JZOCqqa+QCsME0ixxLaWyPBkToD6Tw1Kl+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kasd3x1/iGlk0GZ6SJoXTJn+trs+5X/vfqbaskWHvysnn+u7MRI85zaqx+p8m3+bv
-	 nHiR/UAxsycIFeJf7R1uZ+aaLSk0J0f+FpR6OsHGI4RCNaGb9Wt6IKJeEG67Sb3Obc
-	 /I2hM43L04C6CNsSY4WRlKxfvJCGyKVO5KnO8DnY=
+	b=csTYoD2DcwhNXSdwVEXCrGu9nViIz9q/2bToft5hp0PiZ7hZD4cv2BosNQR/I4+KM
+	 dUjrcj0X4pmMUk/KsluUtN/SGHZivUQOAfvCF0gnmkXaAjG++31lfLkupOHVhxj/qE
+	 p9KIxwN2YYrYmoFwZ+skYsnUvTCGQVlvId9r0HtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1010/1674] nvmem: Move of_nvmem_layout_get_container() in another header
-Date: Sat, 17 Oct 2026 17:54:42 +0200
-Message-ID: <20261017160457.056389649@linuxfoundation.org>
+Subject: [PATCH 6.6 0975/1674] iio: frequency: admv1013: fix NULL pointer dereference on str
+Date: Sat, 17 Oct 2026 17:54:07 +0200
+Message-ID: <20261017160456.151709240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,114 +48,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 4a1a40233b4a9fc159a5c7a27dc34c5c7bc5be55 ]
+[ Upstream commit aac0a51b16700b403a55b67ba495de021db78763 ]
 
-nvmem-consumer.h is included by consumer devices, extracting data from
-NVMEM devices whereas nvmem-provider.h is included by devices providing
-NVMEM content.
+When device_property_read_string() fails, str is left uninitialized
+but the code falls through to strcmp(str, ...), dereferencing a garbage
+pointer. Replace manual read/strcmp with
+device_property_match_property_string() and consolidate the SE mode
+enums into a single sequential enum, mapping to hardware register
+values via a switch consistent with other bitfields in the driver.
 
-The only users of of_nvmem_layout_get_container() outside of the core
-are layout drivers, so better move its prototype to nvmem-provider.h.
+Several cleanup patches have been applied to this driver recently so
+this will need a manual backport.
 
-While we do so, we also move the kdoc associated with the function to
-the header rather than the .c file.
-
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231215111536.316972-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 5b6b6fc49189 ("nvmem: core: fix use-after-free bugs in error paths")
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c           |  8 --------
- include/linux/nvmem-consumer.h |  7 -------
- include/linux/nvmem-provider.h | 21 +++++++++++++++++++++
- 3 files changed, 21 insertions(+), 15 deletions(-)
+ drivers/iio/frequency/admv1013.c | 65 ++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index 5b819bbd451af..a4ae058ea12c5 100644
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -838,14 +838,6 @@ static int nvmem_add_cells_from_layout(struct nvmem_device *nvmem)
+diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
+index 222e641a6aa97..8b521f371e87c 100644
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -85,9 +85,9 @@ enum {
+ };
+ 
+ enum {
+-	ADMV1013_SE_MODE_POS = 6,
+-	ADMV1013_SE_MODE_NEG = 9,
+-	ADMV1013_SE_MODE_DIFF = 12
++	ADMV1013_SE_MODE_POS,
++	ADMV1013_SE_MODE_NEG,
++	ADMV1013_SE_MODE_DIFF,
+ };
+ 
+ struct admv1013_state {
+@@ -470,10 +470,23 @@ static int admv1013_init(struct admv1013_state *st, int vcm_uv)
+ 	if (ret)
+ 		return ret;
+ 
+-	data = FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, st->quad_se_mode);
++	switch (st->quad_se_mode) {
++	case ADMV1013_SE_MODE_POS:
++		data = 6;
++		break;
++	case ADMV1013_SE_MODE_NEG:
++		data = 9;
++		break;
++	case ADMV1013_SE_MODE_DIFF:
++		data = 12;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	ret = __admv1013_spi_update_bits(st, ADMV1013_REG_QUAD,
+-					 ADMV1013_QUAD_SE_MODE_MSK, data);
++					 ADMV1013_QUAD_SE_MODE_MSK,
++					 FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, data));
+ 	if (ret)
+ 		return ret;
+ 
+@@ -514,37 +527,33 @@ static void admv1013_powerdown(void *data)
+ 	admv1013_spi_update_bits(data, ADMV1013_REG_ENABLE, enable_reg_msk, enable_reg);
  }
  
- #if IS_ENABLED(CONFIG_OF)
--/**
-- * of_nvmem_layout_get_container() - Get OF node to layout container.
-- *
-- * @nvmem: nvmem device.
-- *
-- * Return: a node pointer with refcount incremented or NULL if no
-- * container exists. Use of_node_put() on it when done.
-- */
- struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem)
++static const char * const admv1013_input_modes[] = {
++	[ADMV1013_IQ_MODE] = "iq",
++	[ADMV1013_IF_MODE] = "if",
++};
++
++static const char * const admv1013_quad_se_modes[] = {
++	[ADMV1013_SE_MODE_POS] = "se-pos",
++	[ADMV1013_SE_MODE_NEG] = "se-neg",
++	[ADMV1013_SE_MODE_DIFF] = "diff",
++};
++
+ static int admv1013_properties_parse(struct admv1013_state *st)
  {
- 	return of_get_child_by_name(nvmem->dev.of_node, "nvmem-layout");
-diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
-index 526025561df19..39959d9d4465e 100644
---- a/include/linux/nvmem-consumer.h
-+++ b/include/linux/nvmem-consumer.h
-@@ -242,7 +242,6 @@ struct nvmem_cell *of_nvmem_cell_get(struct device_node *np,
- 				     const char *id);
- struct nvmem_device *of_nvmem_device_get(struct device_node *np,
- 					 const char *name);
--struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem);
- #else
- static inline struct nvmem_cell *of_nvmem_cell_get(struct device_node *np,
- 						   const char *id)
-@@ -255,12 +254,6 @@ static inline struct nvmem_device *of_nvmem_device_get(struct device_node *np,
- {
- 	return ERR_PTR(-EOPNOTSUPP);
- }
+ 	int ret;
+-	const char *str;
+ 	struct device *dev = &st->spi->dev;
+ 
+ 	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
+ 
+-	ret = device_property_read_string(dev, "adi,input-mode", &str);
+-	if (ret)
+-		st->input_mode = ADMV1013_IQ_MODE;
 -
--static inline struct device_node *
--of_nvmem_layout_get_container(struct nvmem_device *nvmem)
--{
--	return NULL;
--}
- #endif /* CONFIG_NVMEM && CONFIG_OF */
+-	if (!strcmp(str, "iq"))
+-		st->input_mode = ADMV1013_IQ_MODE;
+-	else if (!strcmp(str, "if"))
+-		st->input_mode = ADMV1013_IF_MODE;
+-	else
+-		return -EINVAL;
++	ret = device_property_match_property_string(dev, "adi,input-mode",
++						    admv1013_input_modes,
++						    ARRAY_SIZE(admv1013_input_modes));
++	st->input_mode = ret >= 0 ? ret : ADMV1013_IQ_MODE;
  
- #endif  /* ifndef _LINUX_NVMEM_CONSUMER_H */
-diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
-index 9a015e4d428cc..f00fc4949abef 100644
---- a/include/linux/nvmem-provider.h
-+++ b/include/linux/nvmem-provider.h
-@@ -243,6 +243,27 @@ nvmem_layout_get_match_data(struct nvmem_device *nvmem,
+-	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
+-	if (ret)
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-
+-	if (!strcmp(str, "diff"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-	else if (!strcmp(str, "se-pos"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_POS;
+-	else if (!strcmp(str, "se-neg"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_NEG;
+-	else
+-		return -EINVAL;
++	ret = device_property_match_property_string(dev, "adi,quad-se-mode",
++						    admv1013_quad_se_modes,
++						    ARRAY_SIZE(admv1013_quad_se_modes));
++	st->quad_se_mode = ret >= 0 ? ret : ADMV1013_SE_MODE_DIFF;
  
- #endif /* CONFIG_NVMEM */
- 
-+#if IS_ENABLED(CONFIG_NVMEM) && IS_ENABLED(CONFIG_OF)
-+
-+/**
-+ * of_nvmem_layout_get_container() - Get OF node of layout container
-+ *
-+ * @nvmem: nvmem device
-+ *
-+ * Return: a node pointer with refcount incremented or NULL if no
-+ * container exists. Use of_node_put() on it when done.
-+ */
-+struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem);
-+
-+#else  /* CONFIG_NVMEM && CONFIG_OF */
-+
-+static inline struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem)
-+{
-+	return NULL;
-+}
-+
-+#endif /* CONFIG_NVMEM && CONFIG_OF */
-+
- #define module_nvmem_layout_driver(__layout_driver)		\
- 	module_driver(__layout_driver, nvmem_layout_register,	\
- 		      nvmem_layout_unregister)
+ 	ret = devm_regulator_bulk_get_enable(dev,
+ 					     ARRAY_SIZE(admv1013_vcc_regs),
 -- 
 2.53.0
 
