@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACBD3AFB07;
-	Sat, 17 Oct 2026 16:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893E33AF666;
+	Sat, 17 Oct 2026 16:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256196; cv=none; b=TtgZ282bleBMjbsdx4JVeR6SHuWHb0HPB6s7Z93Ysc3oq+EhgWOTDRjt5ZvitbCnnrwKlCHIN2M2jtaoqetaLiqs5AmxeA9YZK+OsWzNY8aPVXNQmEhTzWB5eFt8iRzqX6u/guEV+QFIdwsTjN7gyQ3OEqs2zGu7ZIdop+S5BRk=
+	t=1792256199; cv=none; b=skzitiY0Mq+lwAzg4WRhDcK+Jj/0b3rxyZCu0sCM2g9ccYMMeiSGJvJMXZ+NexOn8A3+apm4XattXTuZw92zQ87by0EcxJ+46hg8rs1F2VBU1EGGUAWqkrH1NXSOMjNDriGyO7h5HfwnIrJlHRyzNQb1RqYjtdHV1wMSzTfy2fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256196; c=relaxed/simple;
-	bh=eUG0jNZLanl+14104K3vorU23ssQDJ9IDiAPkSOpvhY=;
+	s=arc-20240116; t=1792256199; c=relaxed/simple;
+	bh=r/RodcWZ7ngZfFE+rla1vs42M5cvDMpMSdc/c4INZ7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR2/N8QDgzgKtbbgTuvXw/u6XahBGetvVmwhCAJkl3q9tnT2fHOB3uSzCLQWOu5pRdqTAxnr54LwGeVsaf3hpw0o+Pr37mygxWxrUPyQy7p0m6dvPDwWa+8x3fwVk3jAN8XbBpdcb0VPlOahYqtJimUIgyrLckGg012/9lsWbGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzxmwzOk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RQMXOjcQMEN9k7OahI6n4Q1THcAsGeqKgx1OORnzfvcSqOX4O7nGws2E+Jnpuj6EV0UTmy+zx16OWDpgW9iearcRliBd9KYcfgPyRWR9KPD8yTlQNMjLpqdlwSQM8/ffJpmsALquNggrNvtU33rEcA3EgMm+gjHkZ5ZIm8c+LBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC+aq3B6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzxmwzOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0298B1F000C4;
-	Sat, 17 Oct 2026 16:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC+aq3B6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31641F000C4;
+	Sat, 17 Oct 2026 16:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256195;
-	bh=krge7mAQULBSfJEL8FXs6AAOCVqm2INIui8lDdc6qbc=;
+	s=korg; t=1792256198;
+	bh=ArdYkQU8ITeuFL7ubPbwMewCRFMRQNZphLUAKF0bB3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DzxmwzOkxzTNHQQiVI+LaJSJSLWMLdaPPvbi29Azc6UhG00acDUCvEXpbhfIrEMVO
-	 EjlM6rYwqht1xqklRgkoNSmH2xCzVUlyQzm1in5qsH9vLfKhq2rAxjbhmpPwH3xRLi
-	 2AMiyK48aiMR10D8Yj+eFzBZ1m/T8EIH0p8l+jTg=
+	b=HC+aq3B6d0z2W5ifVengBnJ+dY2Y3I/gdFhqOB7poJGZN8kEHdf13UCDGppN4HNVb
+	 w4gBD/EwcrhQGgE3aX8dOqKjsuo0gBaKt+d8TTMA+sUNoZ04HucpCJP2HAGCsy3dCe
+	 r3cyzbIDKKM2Ye/JhEd972b+F51kCfGdO1jr/0H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tibor Harcsa <silurust@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0154/1674] Bluetooth: btusb: Add IMC Networks QCA9377 to quirks table
-Date: Sat, 17 Oct 2026 17:40:26 +0200
-Message-ID: <20261017160435.117232111@linuxfoundation.org>
+Subject: [PATCH 6.6 0155/1674] HID: core: remove #ifdef CONFIG_PM from hid_driver
+Date: Sat, 17 Oct 2026 17:40:27 +0200
+Message-ID: <20261017160435.142976413@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,69 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tibor Harcsa <silurust@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit dc16388d45ecbd3be0d8c9424dbbaa2c81806578 ]
+[ Upstream commit df8b030d82dd1224881acb4e778fa06c4824f72b ]
 
-Add the USB ID (13d3:3503) for the IMC Networks Qualcomm Atheros
-QCA9377 Bluetooth controller to the btusb quirks table. This device
-requires Qualcomm Rome firmware and wideband speech support to function
-properly; otherwise, BLE scanning fails with HCI unexpected event
-opcode 0x2005 errors.
+Allow HID drivers to pass ->suspend, ->resume and ->reset_resume via
+pm_ptr().
+Through the usage of pm_ptr() the CONFIG_PM-dependent code will always be
+compiled, protecting against bitrot.
+The linker will then garbage-collect the unused function avoiding any overhead.
 
-The device reports the following in /sys/kernel/debug/usb/devices:
+The only overhead in the final kernel image and at runtime are a few
+extra bytes in 'struct hid_driver'.
 
-P:  Vendor=13d3 ProdID=3503 Rev= 0.01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+The same approach is chosen by 'struct usb_driver' and other subsystems.
 
-Signed-off-by: Tibor Harcsa <silurust@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20231012-hid-pm_ptr-v1-1-0a71531ca93b@weissschuh.net
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/hid.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ced60cd806fbd..95becfdb0d2e9 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -305,6 +305,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3503), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* QCA WCN6855 chipset */
- 	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index f560ae891d7e3..55c7061be2690 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -869,11 +869,11 @@ struct hid_driver {
+ 	void (*feature_mapping)(struct hid_device *hdev,
+ 			struct hid_field *field,
+ 			struct hid_usage *usage);
+-#ifdef CONFIG_PM
++
+ 	int (*suspend)(struct hid_device *hdev, pm_message_t message);
+ 	int (*resume)(struct hid_device *hdev);
+ 	int (*reset_resume)(struct hid_device *hdev);
+-#endif
++
+ /* private: */
+ 	struct device_driver driver;
+ };
 -- 
 2.53.0
 
