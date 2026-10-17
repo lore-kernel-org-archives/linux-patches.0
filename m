@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314033C1984;
-	Sat, 17 Oct 2026 17:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00A3BB665;
+	Sat, 17 Oct 2026 17:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257306; cv=none; b=clO60DTSYj54QEnbpBn58IYOQAwgNgMHtICV3PT4W8I3TqS1sVtHsFaH25nIK0w1fOFsabPv0+nCz5a7l+pbcqgOEyNR6HOtyC8wEG5E2hmRa5w9jzZg3Qnq9U8UDcKiz9T2+8IU78qacPn0c8AjxF89Iojk2Yl56WyMEB889/g=
+	t=1792257309; cv=none; b=HjKj1Ngs8wNL25sC4A8DyZyH9CHTF0QTbcooyFutCIEPezXecD7UW89CnMXs241CPtHVBJHgzg1jkgwjOFUcwlpnFJjMB9Jat5wk9kXhA/lIX5nW8q7JnI+6WNMtoPEE5wCDsfHKaliPyHQelwFJbWx92dmWwEgmMdDZ6KnwUI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257306; c=relaxed/simple;
-	bh=7Ubo86kwdIUoWmucdxkOE47FXTl5XnubMraWU6iXqpk=;
+	s=arc-20240116; t=1792257309; c=relaxed/simple;
+	bh=454Nr3t8W6sqjdHigra3JXc7DDuLBnNSzECRbl/pMSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtumJDVClZiD6SOXMoT2WHGbsIN8iwA3Z+e26SfzyBKBfKd5ns5sx18VYDK5XkZyTioh6Sbv/lwa+DSVDApgpYvy+4gHdSgJTyPDJUGtS36AU9syBk2VVVT6aasdx0CSkghMpjQM20Ujh+++lkb5bMLyNcjNhHDi7+C2qjQDH8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJiRrVbr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+Zz8zi/Y1tGswSZEVVas+1vGk5+nN5ReQ+ynZLC483V0yfleRnuexc5Io8N5BuMlKtTCbcOz2YYhL1dc+Pc1tjg2JBxQUTlknELjYtfV19/xxC7pRAaG9eERgev9A8WxYzgXQfyYE57k0uaD+tKAas/ZNGF6qVoMqvy4/GOBns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY4LQQJK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJiRrVbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA641F000C6;
-	Sat, 17 Oct 2026 17:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY4LQQJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9987A1F000C4;
+	Sat, 17 Oct 2026 17:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257305;
-	bh=9zRQhIx9f4iNgHTEUgGo9WO947x2wsfs+RBF2Sma3+Y=;
+	s=korg; t=1792257308;
+	bh=p2win/wFMXpvg23W65bcbfZyYz09YG29qF8cI91KoaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WJiRrVbrNYHRMhWOxBv2KKZCUahQIzvdFq199sLexD3ZKtATi7qXEM1FfPzADnFJb
-	 4YtZ7SCE5OCCDYmOTHeu4Ee99qXZPNo8RLeLg7XQTMo1yH2kTcb29u5wPRDJK7nKAU
-	 hQ0vImGYGLqRPxo8ODy1uRQQXOyGXbR2RYncdGjY=
+	b=YY4LQQJKZyfDDrxTddw4XJ+AIXgkH7e1RQI8J8zqwIJYn+DnSeV+b5oVNr3OlPraO
+	 6QvMy9eHaXGIVZxUeWrE88BxPUfNXxCwRVokSqTezXG9zUeo4XwIvBLfbl5/mwmeAy
+	 2wj2SR9IPbyllsYWfWd7oNAi6rlhS2Wa6imp01cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0516/1674] Bluetooth: hci_sock: Serialize dead-device detachment
-Date: Sat, 17 Oct 2026 17:46:28 +0200
-Message-ID: <20261017160444.349807769@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0481/1674] tipc: hold a reference to nodes found by link name
+Date: Sat, 17 Oct 2026 17:45:53 +0200
+Message-ID: <20261017160443.459571879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,62 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 381a0925c556a8d91a80a9b9e3e86651d60ffee3 upstream.
+commit 17e73bae400f6a434dc006e3bee92c94cf781954 upstream.
 
-Rebinding an HCI socket after its controller is unregistered can race
-monitor control replay and crash the kernel. hci_sock_bind() clears
-hci_pi(sk)->hdev and drops the device reference under only the socket
-lock, whereas send_monitor_control_replay() holds hci_sk_list.lock for
-reading.
+tipc_node_find_by_name() returns a node after dropping its RCU read lock
+without taking a reference.  The LINK_SET, LINK_GET and LINK_RESET_STATS
+handlers then lock and access the node, racing with timer-driven cleanup of
+a down peer.  Generic netlink serialization does not exclude the node
+timer.
 
-Replay can observe a non-NULL hdev, then bind can clear it and drop the
-last reference before create_monitor_ctrl_open() reads hdev->id. This
-can cause a NULL pointer dereference if the pointer is reloaded, or a
-use-after-free if the old pointer is retained.
+The following interleaving can leave a handler using a freed node:
 
-The kernel reported:
+  CPU 0: find the node under RCU and release the node read lock
+  CPU 1: tipc_node_timeout() clears the links and unlinks the down node
+  CPU 1: drop the list and timer references, queuing tipc_node_free()
+  CPU 0: leave the RCU read-side critical section
+  CPU 1: complete the grace period and free the node
+  CPU 0: acquire the node lock through the stale pointer
 
-  KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
-  RIP: 0010:create_monitor_ctrl_open+0x579/0x800
+LINK_SET also uses the node's media address after releasing the node lock,
+when passing queued packets to tipc_bearer_xmit().
+
+KASAN on v7.3-rc5 reported:
+
+  BUG: KASAN: slab-use-after-free in _raw_read_lock_bh
+  Write of size 4 at addr ffff88807e06f008 by task poc/92
   Call Trace:
-   hci_sock_bind+0xd96/0x1190
-   __sys_bind+0x166/0x200
-   __x64_sys_bind+0x6d/0xb0
-   do_syscall_64+0xdd/0x4a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   _raw_read_lock_bh                 kernel/locking/spinlock.c:287
+   tipc_nl_node_set_link             net/tipc/node.c:2475
+   genl_family_rcv_msg_doit          net/netlink/genetlink.c:1114
+   genl_rcv_msg                      net/netlink/genetlink.c:1209
+   netlink_rcv_skb                   net/netlink/af_netlink.c:2575
 
-The same missing serialization lets hci_send_to_sock() select a socket
-for the old device and queue its frame after bind has detached the socket
-or installed a new binding.
+  Allocated by task 0:
+   tipc_node_create                  net/tipc/node.c:539
+   tipc_node_check_dest              net/tipc/node.c:1196
+   tipc_disc_rcv                     net/tipc/discover.c:252
 
-Take hci_sk_list.lock for writing when clearing the device pointer and
-resetting the socket state. This waits for existing replay and delivery
-readers to finish before detachment and prevents later readers from
-using the old binding. Keep hci_dev_put() outside the critical section
-because the final device release can sleep.
+  Freed by task 92:
+   kfree                             mm/slub.c:6801
+   rcu_core                          kernel/rcu/tree.c:2919
 
-Fixes: e04480920d1e ("Bluetooth: defer cleanup of resources in hci_unregister_dev()")
+  Last potentially related work creation:
+   __call_rcu_common.constprop.0     kernel/rcu/tree.c:3181
+   tipc_node_timeout                 net/tipc/node.c:814
+
+Acquire a reference to the selected node with kref_get_unless_zero() before
+leaving RCU, returning NULL if the node has already been released.  Release
+that reference on every caller exit after the last node access, including
+transmission in LINK_SET.  Keep the existing link lookup order and locking
+so concurrent link removal still takes the existing error paths.
+
+Fixes: 6a939f365bdb ("tipc: Auto removal of peer down node instance")
 Cc: stable@vger.kernel.org
-Assisted-by: GPT-6 Astra
 Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://patch.msgid.link/20260928161246.1895273-1-nicoyip.dev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sock.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/tipc/node.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -1218,8 +1218,10 @@ static int hci_sock_bind(struct socket *
- 	 */
- 	hdev = hci_pi(sk)->hdev;
- 	if (hdev && hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
-+		write_lock(&hci_sk_list.lock);
- 		hci_pi(sk)->hdev = NULL;
- 		sk->sk_state = BT_OPEN;
-+		write_unlock(&hci_sk_list.lock);
- 		hci_dev_put(hdev);
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -2421,8 +2421,11 @@ static struct tipc_node *tipc_node_find_
+ 			}
+ 		}
+ 		tipc_node_read_unlock(n);
+-		if (found_node)
++		if (found_node) {
++			if (!kref_get_unless_zero(&found_node->kref))
++				found_node = NULL;
+ 			break;
++		}
  	}
- 	hdev = NULL;
+ 	rcu_read_unlock();
+ 
+@@ -2507,6 +2510,7 @@ out:
+ 	tipc_node_read_unlock(node);
+ 	tipc_bearer_xmit(net, bearer_id, &xmitq, &node->links[bearer_id].maddr,
+ 			 NULL);
++	tipc_node_put(node);
+ 	return res;
+ }
+ 
+@@ -2558,12 +2562,14 @@ int tipc_nl_node_get_link(struct sk_buff
+ 		link = node->links[bearer_id].link;
+ 		if (!link) {
+ 			tipc_node_read_unlock(node);
++			tipc_node_put(node);
+ 			err = -EINVAL;
+ 			goto err_free;
+ 		}
+ 
+ 		err = __tipc_nl_add_link(net, &msg, link, 0);
+ 		tipc_node_read_unlock(node);
++		tipc_node_put(node);
+ 		if (err)
+ 			goto err_free;
+ 	}
+@@ -2634,11 +2640,13 @@ int tipc_nl_node_reset_link_stats(struct
+ 	if (!link) {
+ 		spin_unlock_bh(&le->lock);
+ 		tipc_node_read_unlock(node);
++		tipc_node_put(node);
+ 		return -EINVAL;
+ 	}
+ 	tipc_link_reset_stats(link);
+ 	spin_unlock_bh(&le->lock);
+ 	tipc_node_read_unlock(node);
++	tipc_node_put(node);
+ 	return 0;
+ }
+ 
 
 
