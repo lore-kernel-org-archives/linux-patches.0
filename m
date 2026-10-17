@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D571D3A48E4;
-	Sat, 17 Oct 2026 17:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FCD391E51;
+	Sat, 17 Oct 2026 17:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256738; cv=none; b=ZybLx7vWKMgmdNTJIwhE3tAcrm9WD3bXplGLhZZjCQv2mH3gsMFePrPgZffqLb05CPZN0rbaiS8xTGmPKk8OP51Y8LVEPPMDMOCK7fN+Pe4jWgU3925PdxYP12uJcso/SJOcfynwbQvUuKr/JttDwjR5iXtm+A3+pgVWVW7TAoI=
+	t=1792256740; cv=none; b=ivz96zI92itoFQ0MWUQ8qd5ELDeDtzTjRCtxd9R47Sy+BEIkLSLEbdED+9dLmHLelf3moXOKlP18LepxohC1ITbfA/9DCgzB0kRl6qJpVPSwsLRVtkfLgwqBN9wXlvRn8J8jCjp3U6ieE1s0w4y5ctivhrGsM8l0Hb9UNijvc08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256738; c=relaxed/simple;
-	bh=m+F4EJt7aAdSaSyBbcVUl+Aq/Pr1mTLCiTiUJoqBbbQ=;
+	s=arc-20240116; t=1792256740; c=relaxed/simple;
+	bh=SBfc5s3z9/lzEd/hUCfVdUW7xHYiXXRKgtms0LLUa5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXeIxD1TiT5Yj353Wr0Ai1PJUWttSldwrpVjnYoElSyrLo+q3jWOKVXFBw0Ylb02vjq02p0VDPkELxU/nvkOpNWhxpGx237NVgR7l5fRgfaZgY7UyRAQVv30wKy74ADRdnO7mUrucuZkGJg61+vuGG0xrBmXImvWjY9aSKQMK2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml2uMN84; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hM3Ks8d28v/VzD4dwmS4CtkkCS3I3XqACWMlQtUGaCZ73lo1tetfAYUi/nr9+WljE7M1BmBD0HBgDEdavTYuaSCnRYVQUBxiTLAdqdvVuJsOLtMVURCgSeJXU3aN9Cxayw7rzi8qYEFqKAOx5dU1GJsAHYHDiDiBBDCLCc81AeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+KDavyd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml2uMN84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D211F000C4;
-	Sat, 17 Oct 2026 17:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+KDavyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC04F1F000C4;
+	Sat, 17 Oct 2026 17:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256736;
-	bh=+PjmbEF4S5XkFQFrHL8f+DwMG/PgMTHSq87KpJ2Y9e4=;
+	s=korg; t=1792256739;
+	bh=YhNg3DtUxbC3IBCpQ4wxcxkGPFnAgSPY17giSDkr9HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ml2uMN84XBxYcJnvXqA4faD7HsnEtH+ZvNTdG5J5q6a15t+9y7hh5D7iQ53kzSL8R
-	 a1cZBK7KhTBcAognNb9pPi6ZuYmvnoNDmBk9Q+d8Q1vnXM9U7hEdb2I0h3DvIGf/yj
-	 v0OOzLMjzewrNLDQVwhib3w/IFaEVJXMIWs5CLPU=
+	b=G+KDavydQlnfIjL0Gh7CbMYeNut2qeFWFRHifl0KfpNXYf9l7XvxQ8FBo6h8NOLD9
+	 f5mwDGHx4DVtdu6io42kMbz3f4nfYoXSEcGI7omYWuvROVlpsik/7q7DpDYQPV2i79
+	 dEQQ2XIPtzhbBm2NHXOt1BYQOaphZ0xjf4FKXws8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0334/1674] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
-Date: Sat, 17 Oct 2026 17:43:26 +0200
-Message-ID: <20261017160439.701433076@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0299/1674] Bluetooth: hci_core: Serialize fragmented ISO packet queueing
+Date: Sat, 17 Oct 2026 17:42:51 +0200
+Message-ID: <20261017160438.794837438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,53 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 upstream.
+commit 1a572db43c057566771b485598ad2e66cb390821 upstream.
 
-The invalidHandle, swapfile, oplock_break_cancelled, offload,
-and status_file_deleted fields are stored in the same bitfield byte
-in struct cifsFileInfo, but are updated in different code paths that
-may run simultaneously, and are protected by different locks.  Since
-bitfield assignments generate byte-level read-modify-write operations,
-a modification to one flag can overwrite a concurrent modification to
-another flag.
+The fragmented path in hci_queue_iso() calls __skb_queue_tail() without
+holding conn->data_q.lock. The socket lock serializes senders, but the
+transmit worker can concurrently remove packets from this queue using
+skb_dequeue().
 
-To avoid these races, convert these flags from a bitfield to
-separate bool fields.
+After an insertion saves the old tail pointer, hci_sched_iso() can dequeue
+that packet and pass it to the driver. The driver can free the packet
+before the insertion resumes and writes to the old tail's next pointer,
+causing a use-after-free. Concurrent updates can also corrupt the queue.
 
-Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
-Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
-Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
-Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
-Fixes: 173217bd73365 ("smb3: retrying on failed server close")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_send_iso+0xc7d/0xe10
+  Call Trace:
+   hci_send_iso+0xc7d/0xe10
+   iso_sock_sendmsg+0x710/0x900
+   __sys_sendto+0x34a/0x3a0
+
+  Allocated by task 86:
+   __alloc_skb+0xdd/0x820
+   alloc_skb_with_frags+0x7e/0x770
+   sock_alloc_send_pskb+0x67a/0x820
+   bt_skb_sendmsg.constprop.0+0xc0/0x6c0
+   iso_sock_sendmsg+0x44e/0x900
+
+  Freed by task 90:
+   kmem_cache_free+0xcb/0x3d0
+   vhci_read+0x33f/0x4d0
+   vfs_read+0x177/0xa20
+
+Hold the queue lock across the entire fragment batch, as hci_queue_acl()
+does, to serialize insertion against dequeue while preserving fragment
+ordering.
+
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1417,11 +1417,11 @@ struct cifsFileInfo {
- 	struct dentry *dentry;
- 	struct tcon_link *tlink;
- 	unsigned int f_flags;
--	bool invalidHandle:1;	/* file closed via session abend */
--	bool swapfile:1;
--	bool oplock_break_cancelled:1;
--	bool status_file_deleted:1; /* file has been deleted */
--	bool offload:1; /* offload final part of _put to a wq */
-+	bool invalidHandle;	/* file closed via session abend */
-+	bool swapfile;
-+	bool oplock_break_cancelled;
-+	bool status_file_deleted; /* file has been deleted */
-+	bool offload; /* offload final part of _put to a wq */
- 	__u16 oplock_epoch; /* epoch from the lease break */
- 	__u32 oplock_level; /* oplock/lease level from the lease break */
- 	int count;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3296,6 +3296,8 @@ static void hci_queue_iso(struct hci_con
+ 
+ 		skb_shinfo(skb)->frag_list = NULL;
+ 
++		spin_lock_bh(&queue->lock);
++
+ 		__skb_queue_tail(queue, skb);
+ 
+ 		do {
+@@ -3310,6 +3312,8 @@ static void hci_queue_iso(struct hci_con
+ 
+ 			__skb_queue_tail(queue, skb);
+ 		} while (list);
++
++		spin_unlock_bh(&queue->lock);
+ 	}
+ }
+ 
 
 
