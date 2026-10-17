@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF4736AB6B;
-	Sat, 17 Oct 2026 16:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5154CF477;
+	Sat, 17 Oct 2026 16:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253732; cv=none; b=ZWpPdpN0MfRnzAWI+xyGzD8JrpqqO1iboehAe3h9qEmGQziJ86nFJLpQBVK0xcRWxGyWcD5ecLV2ZrYODR3a1vGg2ayLG8GvZleR0PyhB1smDGIs/sflS+q3MBUONC4wQFw4hBMfoOVNeC2aU77eisECARDvA7kkg6B6IwRTXA4=
+	t=1792253735; cv=none; b=H854Yu5ao8qunlKFHZcKm3sKZA3Rwqt1socAZ9TsNwZ1UosUd0Wc5mepB0OyHPW+G+RqD1ESyXhTq9vTEZQpu21sm4Uqsr1M3Kn0qu2ud1fNHhUTyLSulfuKjvuWq+3tzARtfEri5xDdlkfM40H85EoMIk89zeTr98K5HY6fa/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253732; c=relaxed/simple;
-	bh=tK0EiyIwqsOXwiEVTnCcGMKPP+rknh5Jpfx0aaWMYJk=;
+	s=arc-20240116; t=1792253735; c=relaxed/simple;
+	bh=Qz+qScvpt7VuZESXUg/HB3m//H1EYq7DmrCjYH33ByM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEipdWfnDaQubqVofR/aJs4+Y5HHMkwwvrGe0K+44/mqNK1sv5x/W6SiNRR89UWqt/V6Te2Bx3lwcJZGIrYfWEu213G13uvXE1m8lDdmbb/J+NfCUBK4pnJ5em7tyAVGruXcf6PAuOHod5Z3zTziCJotAWps0fUnZvMgmQjLbAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Biq1JfTP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ato6H2vMGOA9LkAIC603xDNv7WOakhP+qwP2qlPAJ0WrrUwBfTfeeA/FYXyAC6KriiQJfqGA7HhG8xNlshwvlB6bAi83rsbJ7U8VXNoq1sr38KhZG7EomK5LiPZmbSd/TCSSBKEW5xPuT6FPar+67uhHk3r3tpQ/LQVz+5Cf4D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FLFxnsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Biq1JfTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC4E1F000C4;
-	Sat, 17 Oct 2026 16:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FLFxnsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801881F000C4;
+	Sat, 17 Oct 2026 16:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253731;
-	bh=pQeulsOfrdjjXdlHzzXewvDT1aJqH/a4gKtk70v4lCM=;
+	s=korg; t=1792253734;
+	bh=izaddMsn68m9lcldrF4p61prjLLF6KPLNU/Sg4fbpp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Biq1JfTPRMu/r10M0wBefUuASK/1L2zzCYV5Eyn/FiteTe/1bn5fSAjOhEYhIYNZ6
-	 1gamVtFoSODaYjoCNE+7s74IuzwqrtVFMbajZzeaiRXruguW1MQLlOFRmtQHYjNaDl
-	 04pT7bnb6DdDI+BhK+uZRK4QRUm1p7cqcj7EWE2c=
+	b=0FLFxnswp77qEFxLogzhNfdwYxeQ2CEWc9FHmq+NsiugZ6uKpRYaj6bLiPGz9RmMY
+	 ah06lp9APFXO7rq405CJI80eibgeFbHntjxQHKi6aCfG9PqqcSXwNfStHlpXn9Focm
+	 gDrc60F+OgHNufu17PXJAUYvZtxXwYOkygydOzc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Mat Martineau <martineau@kernel.org>,
+	Li Xiasong <lixiasong1@huawei.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 215/869] mptcp: add eat_recv_skb helper
-Date: Sat, 17 Oct 2026 17:50:56 +0200
-Message-ID: <20261017160042.564193175@linuxfoundation.org>
+Subject: [PATCH 6.12 216/869] mptcp: fix soft lockup in mptcp_recvmsg()
+Date: Sat, 17 Oct 2026 17:50:57 +0200
+Message-ID: <20261017160042.591215144@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,64 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit 436510df0cafb1bc36f12e92e0e76599be28d8f4 ]
+[ Upstream commit 5dd8025a49c268ab6b94d978532af3ad341132a7 ]
 
-This patch extracts the free skb related code in __mptcp_recvmsg_mskq()
-into a new helper mptcp_eat_recv_skb().
+syzbot reported a soft lockup in mptcp_recvmsg() [0].
 
-This new helper will be used in the next patch.
+When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
+removed from the sk_receive_queue. This causes sk_wait_data() to always
+find available data and never perform actual waiting, leading to a soft
+lockup.
 
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260130-net-next-mptcp-splice-v2-1-31332ba70d7f@kernel.org
+Fix this by adding a 'last' parameter to track the last peeked skb.
+This allows sk_wait_data() to make informed waiting decisions and prevent
+infinite loops when MSG_PEEK is used.
+
+[0]:
+watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
+Modules linked in:
+CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:sk_wait_data+0x15/0x190
+Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
+RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
+RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
+RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
+RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
+R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
+R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
+FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
+ inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
+ sock_recvmsg+0x94/0xc0 net/socket.c:1100
+ __sys_recvfrom+0xb2/0x130 net/socket.c:2256
+ __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
+ do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
+RIP: 0033:0x7f6e386a4a1d
+Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
+RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
+RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
+RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
+RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
+R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+
+Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5dd8025a49c2 ("mptcp: fix soft lockup in mptcp_recvmsg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/mptcp/protocol.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 894fbda97f45f..21a5991ae0f59 100644
+index 21a5991ae0f59..e1ebf398ba9ec 100644
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -1964,6 +1964,17 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 
- static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied);
- 
-+static void mptcp_eat_recv_skb(struct sock *sk, struct sk_buff *skb)
-+{
-+	/* avoid the indirect call, we know the destructor is sock_rfree */
-+	skb->destructor = NULL;
-+	skb->sk = NULL;
-+	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
-+	sk_mem_uncharge(sk, skb->truesize);
-+	__skb_unlink(skb, &sk->sk_receive_queue);
-+	skb_attempt_defer_free(skb);
-+}
-+
- static int __mptcp_recvmsg_mskq(struct sock *sk,
+@@ -1979,7 +1979,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
  				struct msghdr *msg,
  				size_t len, int flags, int copied_total,
-@@ -2020,13 +2031,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
- 				break;
+ 				struct scm_timestamping_internal *tss,
+-				int *cmsg_flags)
++				int *cmsg_flags, struct sk_buff **last)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct sk_buff *skb, *tmp;
+@@ -1996,6 +1996,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
+ 			/* skip already peeked skbs */
+ 			if (total_data_len + data_len <= copied_total) {
+ 				total_data_len += data_len;
++				*last = skb;
+ 				continue;
  			}
  
--			/* avoid the indirect call, we know the destructor is sock_rfree */
--			skb->destructor = NULL;
--			skb->sk = NULL;
--			atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
--			sk_mem_uncharge(sk, skb->truesize);
--			__skb_unlink(skb, &sk->sk_receive_queue);
--			skb_attempt_defer_free(skb);
-+			mptcp_eat_recv_skb(sk, skb);
+@@ -2032,6 +2033,8 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
+ 			}
+ 
+ 			mptcp_eat_recv_skb(sk, skb);
++		} else {
++			*last = skb;
  		}
  
  		if (copied >= len)
+@@ -2230,10 +2233,12 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		cmsg_flags = MPTCP_CMSG_INQ;
+ 
+ 	while (copied < len) {
++		struct sk_buff *last = NULL;
+ 		int err, bytes_read;
+ 
+ 		bytes_read = __mptcp_recvmsg_mskq(sk, msg, len - copied, flags,
+-						  copied, &tss, &cmsg_flags);
++						  copied, &tss, &cmsg_flags,
++						  &last);
+ 		if (unlikely(bytes_read < 0)) {
+ 			if (!copied)
+ 				copied = bytes_read;
+@@ -2291,7 +2296,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 
+ 		pr_debug("block timeout %ld\n", timeo);
+ 		mptcp_cleanup_rbuf(msk, copied);
+-		err = sk_wait_data(sk, &timeo, NULL);
++		err = sk_wait_data(sk, &timeo, last);
+ 		if (err < 0) {
+ 			copied = copied ? : err;
+ 			goto out_err;
 -- 
 2.53.0
 
