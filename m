@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665733C0630;
-	Sat, 17 Oct 2026 17:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FDB36CE19;
+	Sat, 17 Oct 2026 17:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258251; cv=none; b=FpT1I+s/R2xaQmxYD8DGrLFdn4Al0eTAYis4pO+6c7g8WqCgnxoogJKhBov15UlDied2qnxu8gouq16AdWRZeo49nlcZ7LeqIT1LZfuMWMINdSdS3X3chzuhwegmMFlGVQH/F0VUZDxXH6DrTp0BRJfmE4TxymH6G7czFrYlrX8=
+	t=1792258254; cv=none; b=REi+r5MxubUeXuLarCz5SNup/KU1pr+G+LbjLv/+LzZc8tl293eXqNDD7YP0mWbKssh+TeehLos+ZyxxTiDk0a/VeEJEUU+xZ5KM8ung3aI91mmrAEhkyN1pboUbAYXgaCw5wEd0ZHq4pdMoHpC5sJfkXZpiDb4W5gw08hC1kJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258251; c=relaxed/simple;
-	bh=xkaaNO5irvuLFE4aSmY7l5Oth4etFefEvcWF0r1CxZM=;
+	s=arc-20240116; t=1792258254; c=relaxed/simple;
+	bh=N0f4FE2SjTCmIRco0KJKVDKdLJkW6ezD9+Fq5/HdUw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBP/oZG2Hm9AzE8CygvBmjSb8ZZWXxYvhgRyWo5Mmqq3W4znJcBAXgg1osZJIC1pjvVFPCgopnU923KbCpdfhJIAre06piSMD97E06Y4Ahw8+y7f9752RzzZh2WYWw0zGyvmcNSY3VRuzSXba3+Ys812aK0xnmUfXCVoH/tbQUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVRLeQms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/pXQJN3GEAdEjJ8ab+I7+ijmayzZSZFxQ+hPu5S488vNcZ6PgwtUe13xz1GYCvgzN6SvnZa4tyl2DLDPy2Fr+YBoyhsjSs74WTnnUbQJv+KF7bZmbzNIxq060d3H92YadX4GBKoD5xQubM1QKeCRorzxspUME0fFAoljVxNZQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCK3aIyd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVRLeQms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B219E1F000C4;
-	Sat, 17 Oct 2026 17:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCK3aIyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DA01F000C4;
+	Sat, 17 Oct 2026 17:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258250;
-	bh=6qmUgTAbh4J6+1HwaOxQeBAOmAgc430uM4IdqIlWGdA=;
+	s=korg; t=1792258253;
+	bh=BITMzxxh/hIofNSx7UBaiwgNlwXkH3dGseCOWkcdVD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xVRLeQmshDOZ1dwOLD2P7FuqLuEmiQ/9GRlbbBWgMjfH9EUCRe/nPZn+WhLzFE/XT
-	 qG/QDnAm9nC8bdrX/Dtf1f+yP3irGpxaah3YVuI2NiucTxF87dbUZbX2Q9dU+2gdjV
-	 F0BC0vSFtFVDZuh4zMSrKwoxfYoA80CR5fsAT59A=
+	b=WCK3aIyd6dSZL+1DKEd7fNLKwOFyNBVWiHDrKulM+oNbcNNgvAJIcFYqtI0EGS6tM
+	 ISEmA7NmMXt3vAqxtSA8aDjnGe7asqNTciJGf7lYFvLQ7xRCUUwhNrfdJDAMOZ+Mgl
+	 RlHeFGrdXHOZMnJjk6pATqS37y3L9pa7fGNPTT0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Guo <quic_cang@quicinc.com>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0822/1674] scsi: ufs: qcom : Refactor phy_power_on/off calls
-Date: Sat, 17 Oct 2026 17:51:34 +0200
-Message-ID: <20261017160452.227184867@linuxfoundation.org>
+Subject: [PATCH 6.6 0823/1674] scsi: ufs: ufs-qcom: Fix UFS OCP issue during UFS power down (PC=3)
+Date: Sat, 17 Oct 2026 17:51:35 +0200
+Message-ID: <20261017160452.252247567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,141 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
+From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 
-[ Upstream commit 77d2fa54a94574f767d5fb296b6b8e011eba0c8e ]
+[ Upstream commit 5127be409c6c3815c4a7d8f6d88043e44f9b9543 ]
 
-Commit 3f6d1767b1a0 ("phy: ufs-qcom: Refactor all init steps into
-phy_poweron") moved the phy_power_on/off from ufs_qcom_setup_clocks
-to suspend/resume func.
+According to UFS specifications, the power-off sequence for a UFS device
+includes:
 
-To have a better power saving, remove the phy_power_on/off calls from
-resume/suspend path and put them back to ufs_qcom_setup_clocks, so that
-PHY regulators & clks can be turned on/off along with UFS's clocks.
+ - Sending an SSU command with Power_Condition=3 and await a response.
 
-Since phy phy_power_on is separated out from phy calibrate, make
-separate calls to phy_power_on calls from ufs qcom driver.
+ - Asserting RST_N low.
 
-Co-developed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Link: https://lore.kernel.org/r/20250526153821.7918-11-quic_nitirawa@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 5127be409c6c ("scsi: ufs: ufs-qcom: Fix UFS OCP issue during UFS power down (PC=3)")
+ - Turning off REF_CLK.
+
+ - Turning off VCC.
+
+ - Turning off VCCQ/VCCQ2.
+
+As part of ufs shutdown, after the SSU command completion, asserting
+hardware reset (HWRST) triggers the device firmware to wake up and
+execute its reset routine. This routine initializes hardware blocks and
+takes a few milliseconds to complete. During this time, the ICCQ draws a
+large current.
+
+This large ICCQ current may cause issues for the regulator which is
+supplying power to UFS, because the turn off request from UFS driver to
+the regulator framework will be immediately followed by low power
+mode(LPM) request by regulator framework. This is done by framework
+because UFS which is the only client is requesting for disable. So if
+the rail is still in the process of shutting down while ICCQ exceeds LPM
+current thresholds, and LPM mode is activated in hardware during this
+state, it may trigger an overcurrent protection (OCP) fault in the
+regulator.
+
+To prevent this, a 10ms delay is added after asserting HWRST. This
+allows the reset operation to complete while power rails remain active
+and in high-power mode.
+
+Currently there is no way for Host to query whether the reset is
+completed or not and hence this the delay is based on experiments with
+Qualcomm UFS controllers across multiple UFS vendors.
+
+Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251012173828.9880-1-nitin.rawat@oss.qualcomm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 58 +++++++++++++++++--------------------
- 1 file changed, 27 insertions(+), 31 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c94824c999ccd..c9bd44ef64870 100644
+index c9bd44ef64870..d639df475bcab 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -731,26 +731,17 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- 	enum ufs_notify_change_status status)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	struct phy *phy = host->generic_phy;
+@@ -740,8 +740,21 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
  
- 	if (status == PRE_CHANGE)
- 		return 0;
  
--	if (ufs_qcom_is_link_off(hba)) {
--		/*
--		 * Disable the tx/rx lane symbol clocks before PHY is
--		 * powered down as the PLL source should be disabled
--		 * after downstream clocks are disabled.
--		 */
-+	if (!ufs_qcom_is_link_active(hba))
- 		ufs_qcom_disable_lane_clks(host);
--		phy_power_off(phy);
- 
--		/* reset the connected UFS device during power down */
--		ufs_qcom_device_reset_ctrl(hba, true);
- 
--	} else if (!ufs_qcom_is_link_active(hba)) {
--		ufs_qcom_disable_lane_clks(host);
--	}
-+	/* reset the connected UFS device during power down */
-+	if (ufs_qcom_is_link_off(hba) && host->device_reset)
-+		ufs_qcom_device_reset_ctrl(hba, true);
+ 	/* reset the connected UFS device during power down */
+-	if (ufs_qcom_is_link_off(hba) && host->device_reset)
++	if (ufs_qcom_is_link_off(hba) && host->device_reset) {
+ 		ufs_qcom_device_reset_ctrl(hba, true);
++		/*
++		 * After sending the SSU command, asserting the rst_n
++		 * line causes the device firmware to wake up and
++		 * execute its reset routine.
++		 *
++		 * During this process, the device may draw current
++		 * beyond the permissible limit for low-power mode (LPM).
++		 * A 10ms delay, based on experimental observations,
++		 * allows the UFS device to complete its hardware reset
++		 * before transitioning the power rail to LPM.
++		 */
++		usleep_range(10000, 11000);
++	}
  
  	return ufs_qcom_ice_suspend(host);
  }
-@@ -758,26 +749,11 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	struct phy *phy = host->generic_phy;
- 	int err;
- 
--	if (ufs_qcom_is_link_off(hba)) {
--		err = phy_power_on(phy);
--		if (err) {
--			dev_err(hba->dev, "%s: failed PHY power on: %d\n",
--				__func__, err);
--			return err;
--		}
--
--		err = ufs_qcom_enable_lane_clks(host);
--		if (err)
--			return err;
--
--	} else if (!ufs_qcom_is_link_active(hba)) {
--		err = ufs_qcom_enable_lane_clks(host);
--		if (err)
--			return err;
--	}
-+	err = ufs_qcom_enable_lane_clks(host);
-+	if (err)
-+		return err;
- 
- 	return ufs_qcom_ice_resume(host);
- }
-@@ -1065,12 +1041,20 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
-  * @on: If true, enable clocks else disable them.
-  * @status: PRE_CHANGE or POST_CHANGE notify
-  *
-+ * There are certain clocks which comes from the PHY so it needs
-+ * to be managed together along with controller clocks which also
-+ * provides a better power saving. Hence keep phy_power_off/on calls
-+ * in ufs_qcom_setup_clocks, so that PHY's regulators & clks can be
-+ * turned on/off along with UFS's clocks.
-+ *
-  * Return: 0 on success, non-zero on failure.
-  */
- static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 				 enum ufs_notify_change_status status)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct phy *phy = host->generic_phy;
-+	int err;
- 
- 	/*
- 	 * In case ufs_qcom_init() is not yet done, simply ignore.
-@@ -1089,10 +1073,22 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 				/* disable device ref_clk */
- 				ufs_qcom_dev_ref_clk_ctrl(host, false);
- 			}
-+
-+			err = phy_power_off(phy);
-+			if (err) {
-+				dev_err(hba->dev, "phy power off failed, ret=%d\n", err);
-+				return err;
-+			}
- 		}
- 		break;
- 	case POST_CHANGE:
- 		if (on) {
-+			err = phy_power_on(phy);
-+			if (err) {
-+				dev_err(hba->dev, "phy power on failed, ret = %d\n", err);
-+				return err;
-+			}
-+
- 			/* enable the device ref clock for HS mode*/
- 			if (ufshcd_is_hs_mode(&hba->pwr_info))
- 				ufs_qcom_dev_ref_clk_ctrl(host, true);
 -- 
 2.53.0
 
