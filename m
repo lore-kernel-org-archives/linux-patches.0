@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20A82D3225;
-	Sat, 17 Oct 2026 17:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23001F16B;
+	Sat, 17 Oct 2026 17:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258603; cv=none; b=LFPh/wKrMytpqfI8/h+tlzMGjldDVxcrv6Vc4fxSbnH/P7vt7flJKq7UQ44+7T0SvkvMawrUbYzFk3XqsQyCR1KFktYrLsoKXgaKVoOu6Z/xJYG2Ncqze+8eNj0YrpoRgffETkg+cDHjCcrCrghYo6Sj0ETaQf+MpLanirD9lHc=
+	t=1792258606; cv=none; b=UUXXZsKKvUlEwgb09jYE1rbPnyNYMuvRRAGcDPPKhvSFSh/dNU/08uAy7bs7YCTfoesa6o4HIK4u7ViN3W74P9Uz22LvFaKI/5wRoTtyI9DUrJrglEDUJ6DN/Q3ciDe3e/qih9F+6Ize/3id8SFxWDTz85nma9n9dTDifp1oXao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258603; c=relaxed/simple;
-	bh=6MBmobUqs6TyFitwM/dwExeSyFq3XWuSd4Hcaskz1WI=;
+	s=arc-20240116; t=1792258606; c=relaxed/simple;
+	bh=6Cp5qPEul56tTyteHfcF+rAqsU/umWc9vjdDM0Q8JsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMv3kgtNOZGEpknUmPKvGkRxHlzTCJ8W1oMBWvUK51p9+/PMjW5IrCpb72gcySNgqHV6FpLy0REfftPtOtJpm8pE5ePbv5z87vWxbgpI77H62CfLW/4aYkvovmDfZKsvdqEN70fV4pLpwfvNs41yoZ9GS99qcyzuv1vX6Vr28gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRwYLzMX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fmz87M9MVLYLolUsR+Zb3NSaRC1aiVDvfWU1+V4QsXl1iTncsiV/lQ9lH/aasw4r/IBc/Ib70B679jJJ76bZ3/I6MEgbVP+fXAXHKN5lv95PrqFb0fY2xhv9o3yR5O6y7MHxNHzQslE5UKchagkNGcnpsoNVgccQNUpAI9IGuZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncMFmYiV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRwYLzMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B11F000C4;
-	Sat, 17 Oct 2026 17:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncMFmYiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA6B1F000C4;
+	Sat, 17 Oct 2026 17:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258602;
-	bh=QBct6eMyAchb2eLXMDKIZt21lJ2SjLTAJeTO5q+njbo=;
+	s=korg; t=1792258605;
+	bh=OsGu47Ip6A5RP/3sYCiXN00njQ6Vh30mmHMopBWliZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRwYLzMX6+zdRg1r0jbkFVB8SwCGSd65Uov3k0swOGbkKXhxAOd7DUgv0PuT1nRo9
-	 WPi5viPBAe1kxvD4awTtmNxCc9z9mx/FloenmjWV7yf+gdn8xtuI3dB3wcwSTpzBkg
-	 U7TU95cun2klkqNMyXg9T4gAFqs5t9YcPp6X9wgk=
+	b=ncMFmYiVu8Yoj7Jc/xtLY3M/7n3G3KfFVuGrwR+o/lQu9cBBN6L90XXIjQtlcCBTI
+	 0hi8hqUtQHa9IjAwAZ9TJAIVrS88nLSMXftWDF5ksLvM5i5bB2JLS4UE0XCH9B6ai0
+	 ptWqyBtk1l9Q1Q/USq9V/H9PO/Vh4qXldTeOCRao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Amery Hung <ameryhung@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0940/1674] ASoC: amd: acp-mach-common: Add missing error check for clock acquisition
-Date: Sat, 17 Oct 2026 17:53:32 +0200
-Message-ID: <20261017160455.261617446@linuxfoundation.org>
+Subject: [PATCH 6.6 0941/1674] net/mlx5e: RX, Fix XDP multi-buf frag counting for legacy RQ
+Date: Sat, 17 Oct 2026 17:53:33 +0200
+Message-ID: <20261017160455.289083049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,65 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 30c64fb9839949f085c8eb55b979cbd8a4c51f00 ]
+[ Upstream commit a6413e6f6c9d9bb9833324cb3753582f7bc0f2fa ]
 
-The acp_card_rt5682_init() and acp_card_rt5682s_init() functions did not
-check the return values of clk_get(). This could lead to a kernel crash
-when the invalid pointers are later dereferenced by clock core
-functions.
+XDP multi-buf programs can modify the layout of the XDP buffer when the
+program calls bpf_xdp_pull_data() or bpf_xdp_adjust_tail(). The
+referenced commit in the fixes tag corrected the assumption in the mlx5
+driver that the XDP buffer layout doesn't change during a program
+execution. However, this fix introduced another issue: the dropped
+fragments still need to be counted on the driver side to avoid page
+fragment reference counting issues.
 
-Fix this by:
-1. Changing clk_get() to the device-managed devm_clk_get().
-2. Adding IS_ERR() checks immediately after each clock acquisition.
+Such issue can be observed with the
+test_xdp_native_adjst_tail_shrnk_data selftest when using a payload of
+3600 and shrinking by 256 bytes (an upcoming selftest patch): the last
+fragment gets released by the XDP code but doesn't get tracked by the
+driver. This results in a negative pp_ref_count during page release and
+the following splat:
 
-Fixes: 8b7256266848 ("ASoC: amd: acp: Add support for RT5682-VS codec")
-Fixes: d4c750f2c7d4 ("ASoC: amd: acp: Add generic machine driver support for ACP cards")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260310044327.2582018-1-nichen@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  WARNING: include/net/page_pool/helpers.h:297 at mlx5e_page_release_fragmented.isra.0+0x4a/0x50 [mlx5_core], CPU#12: ip/3137
+  Modules linked in: [...]
+  CPU: 12 UID: 0 PID: 3137 Comm: ip Not tainted 6.19.0-rc3+ #12 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  RIP: 0010:mlx5e_page_release_fragmented.isra.0+0x4a/0x50 [mlx5_core]
+  [...]
+  Call Trace:
+   <TASK>
+   mlx5e_dealloc_rx_wqe+0xcb/0x1a0 [mlx5_core]
+   mlx5e_free_rx_descs+0x7f/0x110 [mlx5_core]
+   mlx5e_close_rq+0x50/0x60 [mlx5_core]
+   mlx5e_close_queues+0x36/0x2c0 [mlx5_core]
+   mlx5e_close_channel+0x1c/0x50 [mlx5_core]
+   mlx5e_close_channels+0x45/0x80 [mlx5_core]
+   mlx5e_safe_switch_params+0x1a5/0x230 [mlx5_core]
+   mlx5e_change_mtu+0xf3/0x2f0 [mlx5_core]
+   netif_set_mtu_ext+0xf1/0x230
+   do_setlink.isra.0+0x219/0x1180
+   rtnl_newlink+0x79f/0xb60
+   rtnetlink_rcv_msg+0x213/0x3a0
+   netlink_rcv_skb+0x48/0xf0
+   netlink_unicast+0x24a/0x350
+   netlink_sendmsg+0x1ee/0x410
+   __sock_sendmsg+0x38/0x60
+   ____sys_sendmsg+0x232/0x280
+   ___sys_sendmsg+0x78/0xb0
+   __sys_sendmsg+0x5f/0xb0
+   [...]
+   do_syscall_64+0x57/0xc50
+
+This patch fixes the issue by doing page frag counting on all the
+original XDP buffer fragments for all relevant XDP actions (XDP_TX ,
+XDP_REDIRECT and XDP_PASS). This is basically reverting to the original
+counting before the commit in the fixes tag.
+
+As frag_page is still pointing to the original tail, the nr_frags
+parameter to xdp_update_skb_frags_info() needs to be calculated
+in a different way to reflect the new nr_frags.
+
+Fixes: afd5ba577c10 ("net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://patch.msgid.link/20260305142634.1813208-6-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-mach-common.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-mach-common.c b/sound/soc/amd/acp/acp-mach-common.c
-index fc4e91535578b..ecfabdda2fd0f 100644
---- a/sound/soc/amd/acp/acp-mach-common.c
-+++ b/sound/soc/amd/acp/acp-mach-common.c
-@@ -126,8 +126,13 @@ static int acp_card_rt5682_init(struct snd_soc_pcm_runtime *rtd)
- 	if (drvdata->hs_codec_id != RT5682)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index e11e07f7f3550..f4ae2b53a9b9a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -1738,6 +1738,7 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 	struct skb_shared_info *sinfo;
+ 	u32 frag_consumed_bytes;
+ 	struct bpf_prog *prog;
++	u8 nr_frags_free = 0;
+ 	struct sk_buff *skb;
+ 	dma_addr_t addr;
+ 	u32 truesize;
+@@ -1780,15 +1781,13 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
  
--	drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
--	drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
-+	drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
-+	if (IS_ERR(drvdata->wclk))
-+		return PTR_ERR(drvdata->wclk);
-+
-+	drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
-+	if (IS_ERR(drvdata->bclk))
-+		return PTR_ERR(drvdata->bclk);
+ 	prog = rcu_dereference(rq->xdp_prog);
+ 	if (prog) {
+-		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
++		u8 old_nr_frags = sinfo->nr_frags;
  
- 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682_widgets,
- 					ARRAY_SIZE(rt5682_widgets));
-@@ -352,8 +357,13 @@ static int acp_card_rt5682s_init(struct snd_soc_pcm_runtime *rtd)
- 		return -EINVAL;
+ 		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT,
+ 						 rq->flags)) {
+ 				struct mlx5e_wqe_frag_info *pwi;
  
- 	if (!drvdata->soc_mclk) {
--		drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
--		drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
-+		drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
-+		if (IS_ERR(drvdata->wclk))
-+			return PTR_ERR(drvdata->wclk);
-+
-+		drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
-+		if (IS_ERR(drvdata->bclk))
-+			return PTR_ERR(drvdata->bclk);
+-				wi -= old_nr_frags - sinfo->nr_frags;
+-
+ 				for (pwi = head_wi; pwi < wi; pwi++)
+ 					pwi->frag_page->frags++;
+ 			}
+@@ -1796,10 +1795,8 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 		}
+ 
+ 		nr_frags_free = old_nr_frags - sinfo->nr_frags;
+-		if (unlikely(nr_frags_free)) {
+-			wi -= nr_frags_free;
++		if (unlikely(nr_frags_free))
+ 			truesize -= nr_frags_free * frag_info->frag_stride;
+-		}
  	}
  
- 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682s_widgets,
+ 	skb = mlx5e_build_linear_skb(
+@@ -1815,7 +1812,8 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 
+ 	if (xdp_buff_has_frags(&mxbuf->xdp)) {
+ 		/* sinfo->nr_frags is reset by build_skb, calculate again. */
+-		xdp_update_skb_shared_info(skb, wi - head_wi - 1,
++		xdp_update_skb_shared_info(skb,
++					   wi - head_wi - nr_frags_free - 1,
+ 					   sinfo->xdp_frags_size, truesize,
+ 					   xdp_buff_is_frag_pfmemalloc(
+ 						&mxbuf->xdp));
 -- 
 2.53.0
 
