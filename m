@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC4D38F658;
-	Sat, 17 Oct 2026 16:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8914CF489;
+	Sat, 17 Oct 2026 16:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254545; cv=none; b=XWheFj9dQhc6Pcw+mm2MSb2EQuieRhUVoYlWQfdPxhadWGVrTOXXN8VGnYHpYmLTSi8tsJ37IxZTzRMA1vJicrtNAWbsow/YgxzS3eEfKboieAO6ys6yXoep7jqn8CwXkn4PSAJhT007PwDtcMbo2JdBmQAPlfY9vbchhIuEp/w=
+	t=1792254548; cv=none; b=k3JG+6mkumPDEH3CRl1JYatGIA2MOKtAFaGY7/SGmBbvHWLxEfpCrvLGG3sklEAx0fVrlrhHM2yycMOMcizPsCmp/evpIgWGOEJFnQ60Dhs0PPOeeL/Y9snMRgPRW2WC39vwkXQMnXn/sHEP4A8M/3EpKnoslPNdoLUZnhaMj6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254545; c=relaxed/simple;
-	bh=iZsLers+Po8EaKLz1Q3zVYEgwrJZj9wbfoWpK1LT+NE=;
+	s=arc-20240116; t=1792254548; c=relaxed/simple;
+	bh=roHXha1e3f4pCy5NajxQSzRbBytgu865nMZauJkIqMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n29mp4Zssn8rejKx6NaWfGuSUlWGCLw9//I8TFg64LmKFHx6x/CyFtxLJEGQNck2EF0oZlElfCCtjfUBHFfqw6WWE8rDzTbogv87rpIYJvT3JvthFYe+LlutBGXQdy6g+nHxvHPifOHrcgrKpb59nnoT2FdwY3xexDZ3URUuqb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeqLDtqK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R/4GmHnPayKd6qEzEf4aUug1wFrg8hjBLQB3KopS6dh2Dr8ZaiDUQJZ1ieWzp4AUwFudlLY40uN8wjExTBX+hOAEUig3A7/hQDLvJhpKysrPohLb8iV1+uDdIfO3VEbqBJKtkSv/DRWQ3cMMPZ6d9jr5Hjga2mjCQSEM0yRN8MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOYKNZjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeqLDtqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075A41F000C4;
-	Sat, 17 Oct 2026 16:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOYKNZjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1036E1F000C4;
+	Sat, 17 Oct 2026 16:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254543;
-	bh=vcErriRBE0lAw4sycYvXkQBlz+mn09P1nwn54lTPVPE=;
+	s=korg; t=1792254546;
+	bh=27WkH0W36Wj24nsmpMRekywaliCI+lKVgzOC3YKpHUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AeqLDtqKZEU4kU0+2ObRrX2YyA4R/gFme4QUbXUWOn87GzyHg7E79RmRBTtFRQCKV
-	 uMsFyLkcwnBb6YUqzMSy6wFcJGalOXQGkVg4c6kSQLvY8OXcH1xgukJ+qWn7PhMq3a
-	 v3eFPtEpAx+izWm6Xo71Zkpqti/OnXuNVMornUxU=
+	b=WOYKNZjC339FMwmK4c/zKB0FXsrlfvh7aj5iKqx5h1YJLDE/iJOPLWTTy0isMVQiH
+	 qXga6poBf115IZi8Q9CNsMqEg8DJ7Jz3WM4OqqGUb7OE5eyKA/F3VCcg1CZSmnBuJR
+	 F3V5faa3XL60+cNwvs6lUxVvkPVaYulYeY/lQxy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Holger Dengler <dengler@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 483/869] s390/ap/zcrypt: Rework AP message buffer allocation
-Date: Sat, 17 Oct 2026 17:55:24 +0200
-Message-ID: <20261017160049.503469823@linuxfoundation.org>
+Subject: [PATCH 6.12 484/869] s390/ap: Introduce ap message buffer pool
+Date: Sat, 17 Oct 2026 17:55:25 +0200
+Message-ID: <20261017160049.528604244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,384 +54,223 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 57db62a130ce69e6f3a870cf1119d8f860391f97 ]
+[ Upstream commit dcc160b3a090b1ffa0710ed72ae325be37298c0e ]
 
-Slight rework on the way how AP message buffers are allocated.
-Instead of having multiple places with kmalloc() calls all
-the AP message buffers are now allocated and freed on exactly
-one place: ap_init_apmsg() allocates the current AP bus max
-limit of ap_max_msg_size (defaults to 12KB). The AP message
-buffer is then freed in ap_release_apmsg().
+There is a need for a do-not-allocate-memory path through the AP bus
+layer. The pkey layer may be triggered via the in-kernel interface
+from a protected key crypto algorithm (namely PAES) to convert a
+secure key into a protected key. This happens in a workqueue context,
+so sleeping is allowed but memory allocations causing IO operations
+are not permitted.
+
+To accomplish this, an AP message memory pool with pre-allocated space
+is established. When ap_init_apmsg() with use_mempool set to true is
+called, instead of kmalloc() the ap message buffer is allocated from
+the ap_msg_pool. This pool only holds a limited amount of buffers:
+ap_msg_pool_min_items with the item size AP_DEFAULT_MAX_MSG_SIZE and
+exactly one of these items (if available) is returned if
+ap_init_apmsg() with the use_mempool arg set to true is called. When
+this pool is exhausted and use_mempool is set true, ap_init_apmsg()
+returns -ENOMEM without any attempt to allocate memory and the caller
+has to deal with that.
+
+Default values for this mempool of ap messages is:
+ * Each buffer is 12KB (that is the default AP bus size
+   and all the urgent messages should fit into this space).
+ * Minimum items held in the pool is 8. This value is adjustable
+   via module parameter ap.msgpool_min_items.
+
+The zcrypt layer may use this flag to indicate to the ap bus that the
+processing path for this message should not allocate memory but should
+use pre-allocated memory buffer instead.  This is to prevent deadlocks
+with crypto and io for example with encrypted swap volumes.
 
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250424133619.16495-3-freude@linux.ibm.com
+Link: https://lore.kernel.org/r/20250424133619.16495-4-freude@linux.ibm.com
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Stable-dep-of: e935cd525af4 ("s390/zcrypt: Close speculative mem read possibility")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/ap_bus.c           | 26 +++++++++++++
- drivers/s390/crypto/ap_bus.h           | 21 +----------
- drivers/s390/crypto/zcrypt_api.c       | 51 +++++++++++++++-----------
- drivers/s390/crypto/zcrypt_msgtype50.c | 20 ++++++----
- drivers/s390/crypto/zcrypt_msgtype6.c  | 35 +++++++++---------
- 5 files changed, 87 insertions(+), 66 deletions(-)
+ drivers/s390/crypto/ap_bus.c     | 54 ++++++++++++++++++++++++++++++--
+ drivers/s390/crypto/ap_bus.h     |  3 +-
+ drivers/s390/crypto/zcrypt_api.c | 10 +++---
+ 3 files changed, 58 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
-index e7068016a9868..64fed5dbc80f3 100644
+index 64fed5dbc80f3..4cd88c90c6a8c 100644
 --- a/drivers/s390/crypto/ap_bus.c
 +++ b/drivers/s390/crypto/ap_bus.c
-@@ -546,6 +546,32 @@ static void ap_poll_thread_stop(void)
- #define is_card_dev(x) ((x)->parent == ap_root_device)
- #define is_queue_dev(x) ((x)->parent != ap_root_device)
+@@ -40,6 +40,7 @@
+ #include <linux/module.h>
+ #include <asm/uv.h>
+ #include <asm/chsc.h>
++#include <linux/mempool.h>
+ 
+ #include "ap_bus.h"
+ #include "ap_debug.h"
+@@ -101,6 +102,27 @@ static struct ap_config_info *const ap_qci_info_old = &qci[1];
+  */
+ debug_info_t *ap_dbf_info;
  
 +/*
-+ * ap_init_apmsg() - Initialize ap_message.
++ * There is a need for a do-not-allocate-memory path through the AP bus
++ * layer. The pkey layer may be triggered via the in-kernel interface from
++ * a protected key crypto algorithm (namely PAES) to convert a secure key
++ * into a protected key. This happens in a workqueue context, so sleeping
++ * is allowed but memory allocations causing IO operations are not permitted.
++ * To accomplish this, an AP message memory pool with pre-allocated space
++ * is established. When ap_init_apmsg() with use_mempool set to true is
++ * called, instead of kmalloc() the ap message buffer is allocated from
++ * the ap_msg_pool. This pool only holds a limited amount of buffers:
++ * ap_msg_pool_min_items with the item size AP_DEFAULT_MAX_MSG_SIZE and
++ * exactly one of these items (if available) is returned if ap_init_apmsg()
++ * with the use_mempool arg set to true is called. When this pool is exhausted
++ * and use_mempool is set true, ap_init_apmsg() returns -ENOMEM without
++ * any attempt to allocate memory and the caller has to deal with that.
 + */
-+int ap_init_apmsg(struct ap_message *ap_msg)
-+{
-+	unsigned int maxmsgsize = atomic_read(&ap_max_msg_size);
++static mempool_t *ap_msg_pool;
++static unsigned int ap_msg_pool_min_items = 8;
++module_param_named(msgpool_min_items, ap_msg_pool_min_items, uint, 0440);
++MODULE_PARM_DESC(msgpool_min_items, "AP message pool minimal items");
 +
-+	memset(ap_msg, 0, sizeof(*ap_msg));
-+	ap_msg->msg = kmalloc(maxmsgsize, GFP_KERNEL);
-+	if (!ap_msg->msg)
-+		return -ENOMEM;
-+	ap_msg->bufsize = maxmsgsize;
+ /*
+  * AP bus rescan related things.
+  */
+@@ -549,11 +571,22 @@ static void ap_poll_thread_stop(void)
+ /*
+  * ap_init_apmsg() - Initialize ap_message.
+  */
+-int ap_init_apmsg(struct ap_message *ap_msg)
++int ap_init_apmsg(struct ap_message *ap_msg, bool use_mempool)
+ {
+-	unsigned int maxmsgsize = atomic_read(&ap_max_msg_size);
++	unsigned int maxmsgsize;
+ 
+ 	memset(ap_msg, 0, sizeof(*ap_msg));
 +
-+	return 0;
-+}
-+EXPORT_SYMBOL(ap_init_apmsg);
++	if (use_mempool) {
++		ap_msg->msg = mempool_alloc_preallocated(ap_msg_pool);
++		if (!ap_msg->msg)
++			return -ENOMEM;
++		ap_msg->bufsize = AP_DEFAULT_MAX_MSG_SIZE;
++		ap_msg->flags |= AP_MSG_FLAG_MEMPOOL;
++		return 0;
++	}
 +
-+/*
-+ * ap_release_apmsg() - Release ap_message.
-+ */
-+void ap_release_apmsg(struct ap_message *ap_msg)
-+{
-+	kfree_sensitive(ap_msg->msg);
-+}
-+EXPORT_SYMBOL(ap_release_apmsg);
++	maxmsgsize = atomic_read(&ap_max_msg_size);
+ 	ap_msg->msg = kmalloc(maxmsgsize, GFP_KERNEL);
+ 	if (!ap_msg->msg)
+ 		return -ENOMEM;
+@@ -568,7 +601,12 @@ EXPORT_SYMBOL(ap_init_apmsg);
+  */
+ void ap_release_apmsg(struct ap_message *ap_msg)
+ {
+-	kfree_sensitive(ap_msg->msg);
++	if (ap_msg->flags & AP_MSG_FLAG_MEMPOOL) {
++		memzero_explicit(ap_msg->msg, ap_msg->bufsize);
++		mempool_free(ap_msg->msg, ap_msg_pool);
++	} else {
++		kfree_sensitive(ap_msg->msg);
++	}
+ }
+ EXPORT_SYMBOL(ap_release_apmsg);
+ 
+@@ -2457,6 +2495,14 @@ static int __init ap_module_init(void)
+ 	/* init ap_queue hashtable */
+ 	hash_init(ap_queues);
+ 
++	/* create ap msg buffer memory pool */
++	ap_msg_pool = mempool_create_kmalloc_pool(ap_msg_pool_min_items,
++						  AP_DEFAULT_MAX_MSG_SIZE);
++	if (!ap_msg_pool) {
++		rc = -ENOMEM;
++		goto out;
++	}
 +
- /**
-  * ap_bus_match()
-  * @dev: Pointer to device
+ 	/* set up the AP permissions (ioctls, ap and aq masks) */
+ 	ap_perms_init();
+ 
+@@ -2503,6 +2549,7 @@ static int __init ap_module_init(void)
+ out_bus:
+ 	bus_unregister(&ap_bus_type);
+ out:
++	mempool_destroy(ap_msg_pool);
+ 	ap_debug_exit();
+ 	return rc;
+ }
+@@ -2513,6 +2560,7 @@ static void __exit ap_module_exit(void)
+ 	ap_irq_exit();
+ 	root_device_unregister(ap_root_device);
+ 	bus_unregister(&ap_bus_type);
++	mempool_destroy(ap_msg_pool);
+ 	ap_debug_exit();
+ }
+ 
 diff --git a/drivers/s390/crypto/ap_bus.h b/drivers/s390/crypto/ap_bus.h
-index deef76c06f9a9..8b7cdd58a4ca4 100644
+index 8b7cdd58a4ca4..675bc6959d578 100644
 --- a/drivers/s390/crypto/ap_bus.h
 +++ b/drivers/s390/crypto/ap_bus.h
-@@ -237,25 +237,8 @@ struct ap_message {
+@@ -236,8 +236,9 @@ struct ap_message {
+ #define AP_MSG_FLAG_SPECIAL  0x0001	/* flag msg as 'special' with NQAP */
  #define AP_MSG_FLAG_USAGE    0x0002	/* CCA, EP11: usage (no admin) msg */
  #define AP_MSG_FLAG_ADMIN    0x0004	/* CCA, EP11: admin (=control) msg */
++#define AP_MSG_FLAG_MEMPOOL  0x0008 /* ap msg buffer allocated via mempool */
  
--/**
-- * ap_init_message() - Initialize ap_message.
-- * Initialize a message before using. Otherwise this might result in
-- * unexpected behaviour.
-- */
--static inline void ap_init_message(struct ap_message *ap_msg)
--{
--	memset(ap_msg, 0, sizeof(*ap_msg));
--}
--
--/**
-- * ap_release_message() - Release ap_message.
-- * Releases all memory used internal within the ap_message struct
-- * Currently this is the message and private field.
-- */
--static inline void ap_release_message(struct ap_message *ap_msg)
--{
--	kfree_sensitive(ap_msg->msg);
--}
-+int ap_init_apmsg(struct ap_message *ap_msg);
-+void ap_release_apmsg(struct ap_message *ap_msg);
+-int ap_init_apmsg(struct ap_message *ap_msg);
++int ap_init_apmsg(struct ap_message *ap_msg, bool use_mempool);
+ void ap_release_apmsg(struct ap_message *ap_msg);
  
  enum ap_sm_wait ap_sm_event(struct ap_queue *aq, enum ap_sm_event event);
- enum ap_sm_wait ap_sm_event_loop(struct ap_queue *aq, enum ap_sm_event event);
 diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index 6bfebc3ef0a76..543f1dfe1a105 100644
+index 543f1dfe1a105..11f9793282b27 100644
 --- a/drivers/s390/crypto/zcrypt_api.c
 +++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -642,16 +642,17 @@ static long zcrypt_rsa_modexpo(struct ap_perms *perms,
- 	struct zcrypt_queue *zq, *pref_zq;
- 	struct ap_message ap_msg;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code;
--	int cpen, qpen, qid = 0, rc = -ENODEV;
-+	unsigned int func_code = 0;
-+	int cpen, qpen, qid = 0, rc;
- 	struct module *mod;
+@@ -648,7 +648,7 @@ static long zcrypt_rsa_modexpo(struct ap_perms *perms,
  
  	trace_s390_zcrypt_req(mex, TP_ICARSAMODEXPO);
  
--	ap_init_message(&ap_msg);
-+	rc = ap_init_apmsg(&ap_msg);
-+	if (rc)
-+		goto out;
- 
- 	if (mex->outputdatalength < mex->inputdatalength) {
--		func_code = 0;
- 		rc = -EINVAL;
+-	rc = ap_init_apmsg(&ap_msg);
++	rc = ap_init_apmsg(&ap_msg, false);
+ 	if (rc)
  		goto out;
- 	}
-@@ -728,7 +729,7 @@ static long zcrypt_rsa_modexpo(struct ap_perms *perms,
- 	spin_unlock(&zcrypt_list_lock);
  
- out:
--	ap_release_message(&ap_msg);
-+	ap_release_apmsg(&ap_msg);
- 	if (tr) {
- 		tr->last_rc = rc;
- 		tr->last_qid = qid;
-@@ -746,16 +747,17 @@ static long zcrypt_rsa_crt(struct ap_perms *perms,
- 	struct zcrypt_queue *zq, *pref_zq;
- 	struct ap_message ap_msg;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code;
--	int cpen, qpen, qid = 0, rc = -ENODEV;
-+	unsigned int func_code = 0;
-+	int cpen, qpen, qid = 0, rc;
- 	struct module *mod;
+@@ -753,7 +753,7 @@ static long zcrypt_rsa_crt(struct ap_perms *perms,
  
  	trace_s390_zcrypt_req(crt, TP_ICARSACRT);
  
--	ap_init_message(&ap_msg);
-+	rc = ap_init_apmsg(&ap_msg);
-+	if (rc)
-+		goto out;
- 
- 	if (crt->outputdatalength < crt->inputdatalength) {
--		func_code = 0;
- 		rc = -EINVAL;
+-	rc = ap_init_apmsg(&ap_msg);
++	rc = ap_init_apmsg(&ap_msg, false);
+ 	if (rc)
  		goto out;
- 	}
-@@ -832,7 +834,7 @@ static long zcrypt_rsa_crt(struct ap_perms *perms,
- 	spin_unlock(&zcrypt_list_lock);
  
- out:
--	ap_release_message(&ap_msg);
-+	ap_release_apmsg(&ap_msg);
- 	if (tr) {
- 		tr->last_rc = rc;
- 		tr->last_qid = qid;
-@@ -850,15 +852,18 @@ static long _zcrypt_send_cprb(bool userspace, struct ap_perms *perms,
- 	struct zcrypt_queue *zq, *pref_zq;
- 	struct ap_message ap_msg;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code;
-+	unsigned int func_code = 0;
- 	unsigned short *domain, tdom;
--	int cpen, qpen, qid = 0, rc = -ENODEV;
-+	int cpen, qpen, qid = 0, rc;
- 	struct module *mod;
- 
- 	trace_s390_zcrypt_req(xcrb, TB_ZSECSENDCPRB);
+@@ -861,7 +861,7 @@ static long _zcrypt_send_cprb(bool userspace, struct ap_perms *perms,
  
  	xcrb->status = 0;
--	ap_init_message(&ap_msg);
-+
-+	rc = ap_init_apmsg(&ap_msg);
-+	if (rc)
-+		goto out;
  
- 	rc = prep_cca_ap_msg(userspace, xcrb, &ap_msg, &func_code, &domain);
+-	rc = ap_init_apmsg(&ap_msg);
++	rc = ap_init_apmsg(&ap_msg, false);
  	if (rc)
-@@ -962,7 +967,7 @@ static long _zcrypt_send_cprb(bool userspace, struct ap_perms *perms,
- 	spin_unlock(&zcrypt_list_lock);
+ 		goto out;
  
- out:
--	ap_release_message(&ap_msg);
-+	ap_release_apmsg(&ap_msg);
- 	if (tr) {
- 		tr->last_rc = rc;
- 		tr->last_qid = qid;
-@@ -1033,14 +1038,16 @@ static long _zcrypt_send_ep11_cprb(bool userspace, struct ap_perms *perms,
- 	struct ep11_target_dev *targets;
- 	unsigned short target_num;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code, domain;
-+	unsigned int func_code = 0, domain;
- 	struct ap_message ap_msg;
--	int cpen, qpen, qid = 0, rc = -ENODEV;
-+	int cpen, qpen, qid = 0, rc;
- 	struct module *mod;
+@@ -1045,7 +1045,7 @@ static long _zcrypt_send_ep11_cprb(bool userspace, struct ap_perms *perms,
  
  	trace_s390_zcrypt_req(xcrb, TP_ZSENDEP11CPRB);
  
--	ap_init_message(&ap_msg);
-+	rc = ap_init_apmsg(&ap_msg);
-+	if (rc)
-+		goto out;
+-	rc = ap_init_apmsg(&ap_msg);
++	rc = ap_init_apmsg(&ap_msg, false);
+ 	if (rc)
+ 		goto out;
  
- 	target_num = (unsigned short)xcrb->targets_num;
- 
-@@ -1164,7 +1171,7 @@ static long _zcrypt_send_ep11_cprb(bool userspace, struct ap_perms *perms,
- out_free:
- 	kfree(targets);
- out:
--	ap_release_message(&ap_msg);
-+	ap_release_apmsg(&ap_msg);
- 	if (tr) {
- 		tr->last_rc = rc;
- 		tr->last_qid = qid;
-@@ -1204,7 +1211,7 @@ static long zcrypt_rng(char *buffer)
- 	struct zcrypt_card *zc, *pref_zc;
- 	struct zcrypt_queue *zq, *pref_zq;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code;
-+	unsigned int func_code = 0;
- 	struct ap_message ap_msg;
- 	unsigned int domain;
- 	int qid = 0, rc = -ENODEV;
-@@ -1212,7 +1219,9 @@ static long zcrypt_rng(char *buffer)
+@@ -1219,7 +1219,7 @@ static long zcrypt_rng(char *buffer)
  
  	trace_s390_zcrypt_req(buffer, TP_HWRNGCPRB);
  
--	ap_init_message(&ap_msg);
-+	rc = ap_init_apmsg(&ap_msg);
-+	if (rc)
-+		goto out;
- 	rc = prep_rng_ap_msg(&ap_msg, &func_code, &domain);
+-	rc = ap_init_apmsg(&ap_msg);
++	rc = ap_init_apmsg(&ap_msg, false);
  	if (rc)
  		goto out;
-@@ -1258,7 +1267,7 @@ static long zcrypt_rng(char *buffer)
- 	spin_unlock(&zcrypt_list_lock);
- 
- out:
--	ap_release_message(&ap_msg);
-+	ap_release_apmsg(&ap_msg);
- 	trace_s390_zcrypt_rep(buffer, func_code, rc,
- 			      AP_QID_CARD(qid), AP_QID_QUEUE(qid));
- 	return rc;
-diff --git a/drivers/s390/crypto/zcrypt_msgtype50.c b/drivers/s390/crypto/zcrypt_msgtype50.c
-index 47c401f5409b3..fc0a2a053dc22 100644
---- a/drivers/s390/crypto/zcrypt_msgtype50.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype50.c
-@@ -449,6 +449,10 @@ static atomic_t zcrypt_step = ATOMIC_INIT(0);
-  * @zq: pointer to zcrypt_queue structure that identifies the
-  *	CEXxA device to the request distributor
-  * @mex: pointer to the modexpo request buffer
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  */
- static long zcrypt_msgtype50_modexpo(struct zcrypt_queue *zq,
- 				     struct ica_rsa_modexpo *mex,
-@@ -456,10 +460,8 @@ static long zcrypt_msgtype50_modexpo(struct zcrypt_queue *zq,
- {
- 	int rc;
- 
--	ap_msg->bufsize = MSGTYPE50_CRB3_MAX_MSG_SIZE;
--	ap_msg->msg = kmalloc(ap_msg->bufsize, GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
-+	if (ap_msg->bufsize < MSGTYPE50_CRB3_MAX_MSG_SIZE)
-+		return -EMSGSIZE;
- 	ap_msg->receive = zcrypt_msgtype50_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 		atomic_inc_return(&zcrypt_step);
-@@ -496,6 +498,10 @@ static long zcrypt_msgtype50_modexpo(struct zcrypt_queue *zq,
-  * @zq: pointer to zcrypt_queue structure that identifies the
-  *	CEXxA device to the request distributor
-  * @crt: pointer to the modexpoc_crt request buffer
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  */
- static long zcrypt_msgtype50_modexpo_crt(struct zcrypt_queue *zq,
- 					 struct ica_rsa_modexpo_crt *crt,
-@@ -503,10 +509,8 @@ static long zcrypt_msgtype50_modexpo_crt(struct zcrypt_queue *zq,
- {
- 	int rc;
- 
--	ap_msg->bufsize = MSGTYPE50_CRB3_MAX_MSG_SIZE;
--	ap_msg->msg = kmalloc(ap_msg->bufsize, GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
-+	if (ap_msg->bufsize < MSGTYPE50_CRB3_MAX_MSG_SIZE)
-+		return -EMSGSIZE;
- 	ap_msg->receive = zcrypt_msgtype50_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 		atomic_inc_return(&zcrypt_step);
-diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
-index 09ef91af1e2af..9cefbb30960fd 100644
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -1050,9 +1050,10 @@ static long zcrypt_msgtype6_modexpo_crt(struct zcrypt_queue *zq,
-  * Prepare a CCA AP msg: fetch the required data from userspace,
-  * prepare the AP msg, fill some info into the ap_message struct,
-  * extract some data from the CPRB and give back to the caller.
-- * This function allocates memory and needs an ap_msg prepared
-- * by the caller with ap_init_message(). Also the caller has to
-- * make sure ap_release_message() is always called even on failure.
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  */
- int prep_cca_ap_msg(bool userspace, struct ica_xcRB *xcrb,
- 		    struct ap_message *ap_msg,
-@@ -1060,10 +1061,6 @@ int prep_cca_ap_msg(bool userspace, struct ica_xcRB *xcrb,
- {
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 
--	ap_msg->bufsize = atomic_read(&ap_max_msg_size);
--	ap_msg->msg = kmalloc(ap_msg->bufsize, GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
- 	ap_msg->receive = zcrypt_msgtype6_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 				atomic_inc_return(&zcrypt_step);
-@@ -1143,9 +1140,10 @@ static long zcrypt_msgtype6_send_cprb(bool userspace, struct zcrypt_queue *zq,
-  * Prepare an EP11 AP msg: fetch the required data from userspace,
-  * prepare the AP msg, fill some info into the ap_message struct,
-  * extract some data from the CPRB and give back to the caller.
-- * This function allocates memory and needs an ap_msg prepared
-- * by the caller with ap_init_message(). Also the caller has to
-- * make sure ap_release_message() is always called even on failure.
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  */
- int prep_ep11_ap_msg(bool userspace, struct ep11_urb *xcrb,
- 		     struct ap_message *ap_msg,
-@@ -1153,10 +1151,6 @@ int prep_ep11_ap_msg(bool userspace, struct ep11_urb *xcrb,
- {
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 
--	ap_msg->bufsize = atomic_read(&ap_max_msg_size);
--	ap_msg->msg = kmalloc(ap_msg->bufsize, GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
- 	ap_msg->receive = zcrypt_msgtype6_receive_ep11;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 				atomic_inc_return(&zcrypt_step);
-@@ -1257,15 +1251,20 @@ static long zcrypt_msgtype6_send_ep11_cprb(bool userspace, struct zcrypt_queue *
- 	return rc;
- }
- 
-+/*
-+ * Prepare a CEXXC get random request ap message.
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_max_msg_size is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-+ */
- int prep_rng_ap_msg(struct ap_message *ap_msg, int *func_code,
- 		    unsigned int *domain)
- {
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 
--	ap_msg->bufsize = AP_DEFAULT_MAX_MSG_SIZE;
--	ap_msg->msg = kmalloc(ap_msg->bufsize, GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
-+	if (ap_msg->bufsize < AP_DEFAULT_MAX_MSG_SIZE)
-+		return -EMSGSIZE;
- 	ap_msg->receive = zcrypt_msgtype6_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 				atomic_inc_return(&zcrypt_step);
+ 	rc = prep_rng_ap_msg(&ap_msg, &func_code, &domain);
 -- 
 2.53.0
 
