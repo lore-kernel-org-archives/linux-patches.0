@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD9392829;
-	Sat, 17 Oct 2026 17:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0263A7F54;
+	Sat, 17 Oct 2026 17:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258631; cv=none; b=gwE0IOAhsSz1lwcHP9KPYybIsAXjQGxvSeifkAfdOHRz1M4NjdrKclmKE4LEDg0GzBlzJxe4FxJTWOQTO3q/lfwqOAB8Uh+e5a6kDISG4El7D6bSb0rD+hPKeAsUdhovv3Btd0TjmRjH1xd/ha7mSUltYwhykh06vZkm7J3p79Q=
+	t=1792258635; cv=none; b=elqt/H/KFEIuS+Ul+9p3vjQTeZUYNVds8f/T9AG6uW/hoS7jk0KcIh2RDsQgiSUghbX7G+1zv6hdqFBYK5e52GjlTdAtOei5GDBKSBULtp2W3rwfYY/1/RnJ+hgATsgiuus7kYP5cHKPSP2ScM614sprQCcNk0oKdLWwMd2G7RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258631; c=relaxed/simple;
-	bh=aQfFuN6PRt/yZVzMYsdARtFew5MH+d3ZAQIKvTBUuRE=;
+	s=arc-20240116; t=1792258635; c=relaxed/simple;
+	bh=fDPT7Tg3SSeueP/p9o/zDjhRN9TlGRKMcm7mvRQY4Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6iK5RPYsbV3M0UmfkaR9QShYMX045TuYFslj6gZtM7TtMrXJ0OsmIE05p2F0PUqscz0Q48hAu2Jve2w3hpmIafFIAOsf23rNkbjJPUZy6HcqHlUe3kkRLRpHxL4PQZa8y6yKxoBFIFXtuo9g8YAk8D2DWIe91KhD1nDNZHpKFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1/3vAvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uCD7eGN+Esx9whv9sVXIkevjAwq81DAnNuw27k5qiQQeArHcnjm9B2cqH0VBPMGrYEE619hn9ckyLIyye4Qfs+9/A29Z/zZ5CfCYxYRpXQJrMVU67a8Q7EAcCItUFTiVM8vcdLDD0onr834rQk9FabP1co2MvcnluA6uZkVS6ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPPwO0bA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1/3vAvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61FCB1F000C4;
-	Sat, 17 Oct 2026 17:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPPwO0bA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A251F000C4;
+	Sat, 17 Oct 2026 17:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258630;
-	bh=EJUVxg6AU4HR+6imiev2E2VzWkhvPFEtJA+v6WMqHW4=;
+	s=korg; t=1792258634;
+	bh=+X7WaYUXqP9s8M148jVoOBiIieyj+2qvyeiQC4RVh6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1/3vAvto7QL53WtIA/l52FyW+U3bAqgoZzFcb1waKjdsitX99fnDoFrixr2lTEUU
-	 noH5KIyjFMZpFVyrjKyakUm6mgO8HvCHTfCtrcNvIwBvPdsH5VObfH2EayDB86ahuC
-	 jYrm4IitOBFpPpTmrXqJ1EsYRmk/hDd+07kfze1Q=
+	b=BPPwO0bAs17W6JfKvURmeI+JHtKri0apSdEU2XCciv/d0V+r1JqdEqidc2BIxRb1+
+	 DK9joOtupzM3CiIsq5wT9kg3ZjVLTEUa8KqzluYV9/l9WilgaRzxT468rsW8uIs0v4
+	 CbFUQCJszTlF8Dt9f6O0iIw9amrPIlCNvJId+BD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Dmytro Maluka <dmaluka@chromium.org>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com,
+	Brian Witte <brianwitte@mailfence.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0948/1674] iommu/vt-d: Clear Present bit before tearing down PASID entry
-Date: Sat, 17 Oct 2026 17:53:40 +0200
-Message-ID: <20261017160455.465891593@linuxfoundation.org>
+Subject: [PATCH 6.6 0949/1674] netfilter: nf_tables: revert commit_mutex usage in reset path
+Date: Sat, 17 Oct 2026 17:53:41 +0200
+Message-ID: <20261017160455.490171215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,97 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Brian Witte <brianwitte@mailfence.com>
 
-[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
+[ Upstream commit 7f261bb906bf527c4a6e2a646e2d5f3679f2a8bc ]
 
-The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
-bytes). When tearing down an entry, the current implementation zeros the
-entire 64-byte structure immediately using multiple 64-bit writes.
+It causes circular lock dependency between commit_mutex, nfnl_subsys_ipset
+and nlk_cb_mutex when nft reset, ipset list, and iptables-nft with '-m set'
+rule run at the same time.
 
-Since the IOMMU hardware may fetch these 64 bytes using multiple
-internal transactions (e.g., four 128-bit bursts), updating or zeroing
-the entire entry while it is active (P=1) risks a "torn" read. If a
-hardware fetch occurs simultaneously with the CPU zeroing the entry, the
-hardware could observe an inconsistent state, leading to unpredictable
-behavior or spurious faults.
+Previous patches made it safe to run individual reset handlers concurrently
+so commit_mutex is no longer required to prevent this.
 
-Follow the "Guidance to Software for Invalidations" in the VT-d spec
-(Section 6.5.3.3) by implementing the recommended ownership handshake:
-
-1. Clear only the 'Present' (P) bit of the PASID entry.
-2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
-   before proceeding.
-3. Execute the required invalidation sequence (PASID cache, IOTLB, and
-   Device-TLB flush) to ensure the hardware has released all cached
-   references.
-4. Only after the flushes are complete, zero out the remaining fields
-   of the PASID entry.
-
-Also, add a dma_wmb() in pasid_set_present() to ensure that all other
-fields of the PASID entry are visible to the hardware before the Present
-bit is set.
-
-Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
+Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
+Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
+Link: https://lore.kernel.org/all/aUh_3mVRV8OrGsVo@strlen.de/
+Reported-by: <syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ff16b505ec9152e5f448
+Signed-off-by: Brian Witte <brianwitte@mailfence.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 73 +++++++----------------------------
+ 1 file changed, 13 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 99589ac3b96bc..5ce46fddcb0ba 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -351,9 +351,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
-  */
- static inline void pasid_set_present(struct pasid_entry *pe)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 9c533c0776806..ecdbb0d7a6c4c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7950,19 +7950,6 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return skb->len;
+ }
+ 
+-static int nf_tables_dumpreset_obj(struct sk_buff *skb,
+-				   struct netlink_callback *cb)
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
+-	int ret;
+-
+-	mutex_lock(&nft_net->commit_mutex);
+-	ret = nf_tables_dump_obj(skb, cb);
+-	mutex_unlock(&nft_net->commit_mutex);
+-
+-	return ret;
+-}
+-
+ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
  {
-+	dma_wmb();
- 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
+ 	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
+@@ -7979,16 +7966,10 @@ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
+ 	if (nla[NFTA_OBJ_TYPE])
+ 		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
+ 
+-	return 0;
+-}
+-
+-static int nf_tables_dumpreset_obj_start(struct netlink_callback *cb)
+-{
+-	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
++	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
++		ctx->reset = true;
+ 
+-	ctx->reset = true;
+-
+-	return nf_tables_dump_obj_start(cb);
++	return 0;
  }
  
-+/*
-+ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
-+ * This initiates the transition of the entry's ownership from hardware
-+ * to software. The caller is responsible for fulfilling the invalidation
-+ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
-+ * Software for Invalidations).
-+ */
-+static inline void pasid_clear_present(struct pasid_entry *pe)
-+{
-+	pasid_set_bits(&pe->val[0], 1 << 0, 0);
-+	dma_wmb();
-+}
+ static int nf_tables_dump_obj_done(struct netlink_callback *cb)
+@@ -8050,42 +8031,16 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
+ static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 			    const struct nlattr * const nla[])
+ {
+-	u32 portid = NETLINK_CB(skb).portid;
+-	struct sk_buff *skb2;
+-
+-	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+-		struct netlink_dump_control c = {
+-			.start = nf_tables_dump_obj_start,
+-			.dump = nf_tables_dump_obj,
+-			.done = nf_tables_dump_obj_done,
+-			.module = THIS_MODULE,
+-			.data = (void *)nla,
+-		};
+-
+-		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	}
+-
+-	skb2 = nf_tables_getobj_single(portid, info, nla, false);
+-	if (IS_ERR(skb2))
+-		return PTR_ERR(skb2);
+-
+-	return nfnetlink_unicast(skb2, info->net, portid);
+-}
+-
+-static int nf_tables_getobj_reset(struct sk_buff *skb,
+-				  const struct nfnl_info *info,
+-				  const struct nlattr * const nla[])
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(info->net);
+ 	u32 portid = NETLINK_CB(skb).portid;
+ 	struct net *net = info->net;
+ 	struct sk_buff *skb2;
++	bool reset = false;
+ 	char *buf;
+ 
+ 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+ 		struct netlink_dump_control c = {
+-			.start = nf_tables_dumpreset_obj_start,
+-			.dump = nf_tables_dumpreset_obj,
++			.start = nf_tables_dump_obj_start,
++			.dump = nf_tables_dump_obj,
+ 			.done = nf_tables_dump_obj_done,
+ 			.module = THIS_MODULE,
+ 			.data = (void *)nla,
+@@ -8094,18 +8049,16 @@ static int nf_tables_getobj_reset(struct sk_buff *skb,
+ 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+ 	}
+ 
+-	if (!try_module_get(THIS_MODULE))
+-		return -EINVAL;
+-	rcu_read_unlock();
+-	mutex_lock(&nft_net->commit_mutex);
+-	skb2 = nf_tables_getobj_single(portid, info, nla, true);
+-	mutex_unlock(&nft_net->commit_mutex);
+-	rcu_read_lock();
+-	module_put(THIS_MODULE);
++	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
++		reset = true;
+ 
++	skb2 = nf_tables_getobj_single(portid, info, nla, reset);
+ 	if (IS_ERR(skb2))
+ 		return PTR_ERR(skb2);
+ 
++	if (!reset)
++		return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
 +
- /*
-  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
-  * entry.
-@@ -463,7 +477,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
- 
- 	did = pasid_get_domain_id(pte);
- 	pgtt = pasid_pte_get_pgtt(pte);
--	intel_pasid_clear_entry(dev, pasid, fault_ignore);
-+	pasid_clear_present(pte);
- 	spin_unlock(&iommu->lock);
- 
- 	if (!ecap_coherent(iommu->ecap))
-@@ -479,6 +493,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
- 	/* Device IOTLB doesn't need to be flushed in caching mode. */
- 	if (!cap_caching_mode(iommu->cap))
- 		devtlb_invalidation_with_pasid(iommu, dev, pasid);
-+
-+	intel_pasid_clear_entry(dev, pasid, fault_ignore);
-+	if (!ecap_coherent(iommu->ecap))
-+		clflush_cache_range(pte, sizeof(*pte));
- }
- 
- /*
+ 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
+ 			nla_len(nla[NFTA_OBJ_TABLE]),
+ 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
+@@ -9413,7 +9366,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
+ 		.policy		= nft_obj_policy,
+ 	},
+ 	[NFT_MSG_GETOBJ_RESET] = {
+-		.call		= nf_tables_getobj_reset,
++		.call		= nf_tables_getobj,
+ 		.type		= NFNL_CB_RCU,
+ 		.attr_count	= NFTA_OBJ_MAX,
+ 		.policy		= nft_obj_policy,
 -- 
 2.53.0
 
