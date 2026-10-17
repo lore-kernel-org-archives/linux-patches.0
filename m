@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B3B382F25;
-	Sat, 17 Oct 2026 16:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C490360745;
+	Sat, 17 Oct 2026 16:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253281; cv=none; b=snj4FxF6wVjhbyrOCI0Nrx9pjjSEaNJGiKo161CEHtu+hC9v24mhzf2O4En+wDpIQ+jbhipi61tq5tOh+zbPsLSJ9NGySsuAWelEsXo8H+Ah67LsSBlBAnk5W15cEZuMlwOBvKD89LEczvXal/Hn1U1HekcydNGrrwACWpAuASk=
+	t=1792253282; cv=none; b=fTQq3gRWdqePKg7HDL7CNVx8OO5e/7RobGv7jrpHAD0cpaGbCsVu4DjiM5hn0DQhMLhUuQai3pIzQgJNiYGn31xYdr+vyfXDtNmAJiwzPaE4dVQ4CThXfEJB4IqIV85Cle/XTKFqMMPB4MXqN/2DDtDkx/gfr3q413LQ9/kV5t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253281; c=relaxed/simple;
-	bh=WYUcBhnJlFjQRvL/elKu5iRofMaYl54/db0GwxEtX+4=;
+	s=arc-20240116; t=1792253282; c=relaxed/simple;
+	bh=/AdnSSk+xu0oRjJE7cgbw94/wOLQMU+l/xiQ/1ysTJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRqM0RomLF40SqP3cbDyYyMTucvJ7BBH4TGdgGmSBE8nSTvcT4CI0+0QEuEGDnfOvf9nvFA2GiDjVAL2v/YraY4Cp0HM+vxQNgYHuOmiw47D2B0sC6R5pN3wJaDHGk3SaCTqRo8IHJHWcoCarB+BTmrl12VTsCk8uw3kDO3zyh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c3VmJKJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b4pHIO/R7nsojJk7qVd+IKHzp9FzKmwjiT0urUteUCJoZmNXZ73d9Ai2whS2T+caMb10TGPYJ+VghlFZ4vVG3OhsUp1Mct91ipHuLgK1TgPMPoYDJuzeOB3fXUu4Zsp90M9o4080evG2u8Mm75wNPtoWla36qZIJ80SdvgkQFK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY0dJmBS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c3VmJKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203381F000C5;
-	Sat, 17 Oct 2026 16:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY0dJmBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4510C1F000C4;
+	Sat, 17 Oct 2026 16:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253277;
-	bh=jzW0inC6dezCt570oA1EWoQdbwkKe/4IC84a5nDnkZ8=;
+	s=korg; t=1792253280;
+	bh=Ipz17hy+1vQs8KPjRHe9ezukjRNB2+ImZQHuPZjCffY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1c3VmJKJa+MrrY26PtxLr5T2ZtzQjpHJ/pUt6g2TIES8Mn/9d9aXnISkVO95wq8q3
-	 ECsrzXvoDI+0M2pz1iJIXwhSsjkMxZZFs+Nl2ovbytuvc/dkiM8dD7HQaH2gMJmWHM
-	 zNxtUr5nMRZmW2zkX1ej7zPZWTI4wbCA9AdCouds=
+	b=uY0dJmBSiUm1/OWYmj2oxpYqAcP+jJv5qbz2JI20s1Ydn3KsHJ5SPKwgkJgaSJwYX
+	 KPWkWuBBHqPzRhOl7KE9EDQ2NbIxme8Z3WGqmVMx7hLXArSFNTO4qBznniZ7EXr1Vi
+	 /Jk5acmWygeES2SqJWMwQmWRTC9uFM8yAEaYeTX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+2cf741c3005abc20@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alap Mohan <mohaalap@meta.com>,
+	Joonwoo Park <joonwoo@meta.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/869] net: team: stop reusing skb after queue override
-Date: Sat, 17 Oct 2026 17:47:44 +0200
-Message-ID: <20261017160037.604052658@linuxfoundation.org>
+Subject: [PATCH 6.12 024/869] sched_ext: Fix CPU hotplug hang when a dying CPUs tasks sit in the BPF scheduler
+Date: Sat, 17 Oct 2026 17:47:45 +0200
+Message-ID: <20261017160037.630441368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,84 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit b7454f1940c5e6d92e753853c476a769e452f30a ]
+[ Upstream commit d35a535d3e3e71f92a051d94e415f43612c4edfc ]
 
-A nonzero dev_queue_xmit() result does not return ownership of the skb.
-When an override port's qdisc drops it, the queue override helper used to
-try another port or the mode transmit op with the freed skb.
+A CPU going down has to empty its own rq. Its hotplug thread waits in
+sched_cpu_wait_empty() until nothing else is left, and the only thing that
+wakes it is balance_push(), which runs from __schedule() on the dying CPU
+and pushes off the migratable tasks the CPU picks.
 
-Return the handoff decision separately from transmit success. Select only
-the first override port under RCU and stop after handing it the skb,
-regardless of the lower transmit result. Keep the existing success and
-drop accounting.
+sched_ext breaks this. A task sitting on a user DSQ or held by the BPF
+scheduler is still counted on its rq, but an inactive CPU no longer calls
+ops.dispatch() and can't pull the task back. The dying CPU goes idle with
+the task still counted, and one of two things happens:
 
-  BUG: KASAN: slab-use-after-free in sk_skb_reason_drop
-  Write of size 4 by task poc/5040
-  sk_skb_reason_drop (net/core/skbuff.c:1240)
-  dev_kfree_skb_any_reason (net/core/dev.c:3470)
-  ab_transmit (drivers/net/team/team_mode_activebackup.c:49)
-  team_xmit (drivers/net/team/team_core.c:1849)
-  __dev_direct_xmit (net/core/dev.c:4934)
-  Freed by task 5040:
-  __tcf_kfree_skb_list (net/sched/sch_generic.c:43)
-  __dev_queue_xmit (net/core/dev.c:4831)
-  team_xmit (drivers/net/team/team_core.c:1846)
-  Kernel panic - not syncing: KASAN: panic_on_warn set ...
+- Another CPU consumes the task. The rq empties without a __schedule() on
+  the dying CPU, so the hotplug thread is never woken and cpu_down() hangs
+  holding cpu_hotplug_lock.
+- The task is affine only to the dying CPU. Nothing can move it, and the
+  offline stalls until the watchdog ejects the BPF scheduler.
 
-Cc: stable@vger.kernel.org
-Fixes: 8ff5105a2b9d ("team: add support for queue override by setting queue_id for port")
-Reported-by: <co+2cf741c3005abc20@bugs.sh>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261001182326.572045-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When the rq goes offline, re-enqueue every task on it that isn't already on
+the local DSQ. An enqueue on an offline rq lands on the local DSQ, so the
+dying CPU itself picks the tasks and balance_push() pushes them off, the
+same as for the other sched classes. From then on no sched_ext path on
+another CPU can pull a task off the rq.
+
+ops.dispatch() currently stops as soon as the CPU goes inactive, and CPU
+hotplug then waits for an RCU grace period before taking the rq offline. A
+BPF-held task affine only to the dying CPU and preempted inside an RCU
+read-side critical section would block that grace period, and the rq would
+never go offline. Test SCX_RQ_ONLINE directly so that ops.dispatch() keeps
+running until the rq goes offline. Only the dying CPU's own hotplug thread
+clears the flag during teardown, and task_can_run_on_remote_rq() still keeps
+other rqs' tasks off the CPU.
+
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Fixes: 991ef53a4832 ("sched_ext: Make scx_rq_online() also test cpu_active() in addition to SCX_RQ_ONLINE")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Alap Mohan <mohaalap@meta.com>
+Reported-by: Joonwoo Park <joonwoo@meta.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ sashal: Replaced guard(sched_change) with the existing sched_deq_and_put_task() and sched_enq_and_set_task() helper pair. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ kernel/sched/ext.c | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 29d903de77da0..0cdcff2537c8f 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -821,7 +821,8 @@ static struct list_head *__team_get_qom_list(struct team *team, u16 queue_id)
- /*
-  * note: already called with rcu_read_lock
-  */
--static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb)
-+static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb,
-+					 bool *tx_success)
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 3a1983ef278fc..39dc9d3cfc079 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2113,8 +2113,8 @@ static void set_task_runnable(struct rq *rq, struct task_struct *p)
+ 	}
+ 
+ 	/*
+-	 * list_add_tail() must be used. scx_ops_bypass() depends on tasks being
+-	 * appened to the runnable_list.
++	 * list_add_tail() must be used. scx_ops_bypass() and rq_offline_scx()
++	 * depend on tasks being appended to the runnable_list.
+ 	 */
+ 	list_add_tail(&p->scx.runnable_node, &rq->scx.runnable_list);
+ }
+@@ -2823,7 +2823,14 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 	if (consume_global_dsq(rq))
+ 		goto has_tasks;
+ 
+-	if (!SCX_HAS_OP(dispatch) || scx_rq_bypassing(rq) || !scx_rq_online(rq))
++	/*
++	 * scx_rq_online() can't be used. Its cpu_active() test goes false
++	 * before CPU hotplug waits for an RCU grace period, and
++	 * rq_offline_scx() moves this CPU's tasks to the local DSQ only after
++	 * the wait. The grace period can depend on those tasks running.
++	 */
++	if (!SCX_HAS_OP(dispatch) || scx_rq_bypassing(rq) ||
++	    !(rq->scx.flags & SCX_RQ_ONLINE))
+ 		goto no_tasks;
+ 
+ 	dspc->rq = rq;
+@@ -3514,7 +3521,27 @@ static void rq_online_scx(struct rq *rq)
+ 
+ static void rq_offline_scx(struct rq *rq)
  {
- 	struct list_head *qom_list;
- 	struct team_port *port;
-@@ -829,11 +830,11 @@ static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb)
- 	if (!team->queue_override_enabled || !skb->queue_mapping)
- 		return false;
- 	qom_list = __team_get_qom_list(team, skb->queue_mapping);
--	list_for_each_entry_rcu(port, qom_list, qom_list) {
--		if (!team_dev_queue_xmit(team, port, skb))
--			return true;
--	}
--	return false;
-+	port = list_first_or_null_rcu(qom_list, struct team_port, qom_list);
-+	if (!port)
-+		return false;
-+	*tx_success = !team_dev_queue_xmit(team, port, skb);
-+	return true;
++	struct task_struct *p, *n;
++
+ 	rq->scx.flags &= ~SCX_RQ_ONLINE;
++
++	/* sched domain rebuilds call rq_offline with the CPU staying alive */
++	if (cpu_active(cpu_of(rq)))
++		return;
++
++	/*
++	 * An offline CPU no longer calls ops.dispatch(). Re-enqueue its tasks
++	 * onto the local DSQ so that they run here and balance_push() moves
++	 * them off.
++	 */
++	list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list, scx.runnable_node) {
++		struct sched_enq_and_set_ctx ctx;
++
++		if (p->scx.dsq == &rq->scx.local_dsq)
++			continue;
++		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK, &ctx);
++		sched_enq_and_set_task(&ctx);
++	}
  }
  
- static void __team_queue_override_port_del(struct team *team,
-@@ -1753,8 +1754,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
- 	bool tx_success;
- 	unsigned int len = skb->len;
- 
--	tx_success = team_queue_override_transmit(team, skb);
--	if (!tx_success)
-+	if (!team_queue_override_transmit(team, skb, &tx_success))
- 		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
- 	if (tx_success) {
- 		struct team_pcpu_stats *pcpu_stats;
+ #else	/* CONFIG_SMP */
 -- 
 2.53.0
 
