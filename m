@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4742E2E8DEB;
-	Sat, 17 Oct 2026 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F93F17BED0;
+	Sat, 17 Oct 2026 16:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255772; cv=none; b=JhBXr1bmgwQvl2lcFuxv7rQrhvfWCSkQPVwpp0hl2zEe2/vsYWyHBoTctzwPXN9kgPcfc2GsB+getVRsUqCD3m4JhHzaN+IHm/tu4ufyBJ+CdXTvY5M6gV2ygI92NFGT8HTz8/rAspyec0CxCGo1qz+yOsklCHodFiQnPXdR9Ec=
+	t=1792255775; cv=none; b=qvCZtJGSibT4vkgJCyepwDfCCv8GqpUNhFOqFlEbzqtCgq1sKMtLYkpgpph53bQFLODXQy527BpZas4+Z0K1DydvUSt3DuJzDJaSFTRm1WgsnxhN2EtFDwENzThktPwX95PZPGfGFaqqc8c1VaILZIqqCPh9OzX22P/Hlbrbeb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255772; c=relaxed/simple;
-	bh=pvipZwBzVKEvzjdy1L7EqRAQ8uOi8KcuYSm27A0duzA=;
+	s=arc-20240116; t=1792255775; c=relaxed/simple;
+	bh=cqykaW1fWzmM0pbpzSRdrlM5SGP3YxorRh4uZChwMZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpRxO1sghf4IHqZChhUhU6JgeihxIqRAb56cxA1GvZK3NxkKLaeVdiM/96y2kFeGVh7avcELB8pZ2J4H2U8kheRj7gxvLnNvAxcG9Zcoqj+Qx6MCOT07XApcdTT2qBQcyyDOo6mR5Q5NGHsi/I9fGpbnrU8lys7nvfBoNHRbL/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBxc193M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NEc0Hiz85Wfy9x2GmHSyCBA7FA41bzMj7uKnA4rX4XsfsJuIlw3obhFKGENUWfFLyyNhYIZ8OGCY1y8CccfsJkdKZ/aKhHBTaMjJSc84kXQhZPb3hYvyVfJCNk5Ns0SdT/TKUx9YngrZ2/zsRbKMKESjMYrwAJy5CEVc9XcPWgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7U0uYAX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBxc193M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A251F000C4;
-	Sat, 17 Oct 2026 16:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7U0uYAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794C81F000C4;
+	Sat, 17 Oct 2026 16:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255770;
-	bh=pJpKGHhsX1L2dRYs66S04bAM6IGOlJnBN/n7vGp1BDo=;
+	s=korg; t=1792255774;
+	bh=CbjF+23wK5KzylsH8SrVIO6y1MY5mNhuQer9qPO/7Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tBxc193MegYTM4nxZyh5UjvRaMIY806Aaw24gwJ6/oaQBgkaaPpvy562CuQRknFmd
-	 fy3lU7ZVn09yO42gleeK6f0F22sF1IO62sagqIjH9csYgq1nAz+9cyseKgi6d0S0DO
-	 2SKKkjIzrmPl9Ktvr0TwXb0JqwRnNDSKVpJRigqU=
+	b=t7U0uYAXIAu4hOf9PKQH6seeyjHpoS4SBQ9QVmZh14yJxm12YrGXDfmiU0tmXp6t9
+	 PWU17bAPcYNUvZBLzSGhOwbr4hZoNkmXXmCWKP1nY3nx1d14FNv1Z7DY+vHlp57+6u
+	 hKoDxfcbWrmwc9rgx+Lo8955DBLhhR3IF/p0x4yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0017/1674] ocfs2: validate directory-index entry counts when reading metadata
-Date: Sat, 17 Oct 2026 17:38:09 +0200
-Message-ID: <20261017160431.583837339@linuxfoundation.org>
+Subject: [PATCH 6.6 0018/1674] wifi: rtl8xxxu: fix use-after-free from rx_urb_wq on stop
+Date: Sat, 17 Oct 2026 17:38:10 +0200
+Message-ID: <20261017160431.609317114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -59,126 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit bc70726ddad53c7e9a9a85915bf2415b0d4f42f9 ]
+[ Upstream commit 6c080026ecc17eecb103f8927c64ea73a74bb818 ]
 
-ocfs2_validate_dx_leaf() and ocfs2_validate_dx_root() check the ECC and
-signature of an indexed-directory block before it reaches higher-level
-callers, but neither validator bounds the ocfs2_dx_entry_list counts
-against the capacity of the block that holds them.
+rtl8xxxu arms rx_urb_wq from the RX completion path:
+rtl8xxxu_rx_complete() hands the URB to rtl8xxxu_queue_rx_urb(), which
+queues it on rx_urb_pending_list and, once the list grows past
+RTL8XXXU_RX_URB_PENDING_WATER, schedules rx_urb_wq.  The worker
+rtl8xxxu_rx_urb_work() drains rx_urb_pending_list, recovers priv through
+container_of, and resubmits each URB through rtl8xxxu_submit_rx_urb(),
+which anchors it on rx_anchor and dereferences priv->udev.
 
-ocfs2_dx_dir_search() then walks
+rtl8xxxu_stop() cancels the sibling work items (c2hcmd_work, ra_watchdog,
+update_beacon_work) but never cancels rx_urb_wq, so a worker armed during
+the last burst of RX traffic can run rtl8xxxu_rx_urb_work() after
+rtl8xxxu_disconnect() has called ieee80211_free_hw(), which frees priv,
+producing a use-after-free.  The window opens under active RX traffic
+(pending count above the watermark) followed by a disconnect.
 
-	for (i = 0; i < le16_to_cpu(entry_list->de_num_used); i++)
-		dx_entry = &entry_list->de_entries[i];
+There are two teardown races to close:
 
-over de_num_used entries with no bounds check.  entry_list is either
-dx_leaf->dl_list (from ocfs2_read_dx_leaf) or, for an inline root,
-dx_root->dr_entries.  A crafted on-disk image can set de_num_used (and
-de_count, which is the __counted_by_le() bound of de_entries) to 0xffff
-and make the walk read far past the end of the 4KB metadata block, giving
-a slab out-of-bounds read reachable from any path lookup, stat() or open()
-on an indexed directory once the image is mounted.
+  * rtl8xxxu_queue_rx_urb() decided whether to enqueue under rx_urb_lock
+    but called schedule_work() after dropping the lock.  A completion
+    that observed shutdown == false and released the lock could then call
+    schedule_work() after rtl8xxxu_stop() had set shutdown and
+    cancel_work_sync() had already returned, arming the worker to run
+    after the teardown.  Move schedule_work() under the same !shutdown
+    branch so the arming decision is atomic with the shutdown check.
 
-Commit 775c17386a6f ("ocfs2: validate dx_root extent list fields during
-block read") already bounds dr_list for the non-inline dx_root, but left
-the inline dr_entries path and the dx_leaf dl_list unchecked.  Add the
-same read-time validation for both entry lists: de_count must equal the
-capacity of the block (ocfs2_dx_entries_per_leaf()/per_root()) and
-de_num_used must not exceed de_count, rejecting corrupted metadata with
--EFSCORRUPTED before ocfs2_dx_dir_search() can walk an out-of-range entry
-array.
+  * rtl8xxxu_rx_urb_work() anchors every URB it drained back onto
+    rx_anchor through rtl8xxxu_submit_rx_urb().  A worker still running
+    when usb_kill_anchored_urbs(&priv->rx_anchor) returned would submit a
+    URB that escaped the kill.  In rtl8xxxu_stop(), call
+    cancel_work_sync(&priv->rx_urb_wq) before the kill so the worker is
+    drained first.
 
-de_count is always written as exactly the block capacity when a leaf or
-inline root is formatted, so the equality check does not reject any valid
-image.
+After priv->shutdown is set under rx_urb_lock, completions can no longer
+queue rx_urb_wq. cancel_work_sync() then drains the last queued or running
+worker, and the following usb_kill_anchored_urbs() kills the URBs it may
+have submitted.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+rtl8xxxu_disconnect() is covered because ieee80211_unregister_hw()
+guarantees .stop() runs for a live interface before ieee80211_free_hw()
+frees priv.  The probe error path needs no cancel: rx_urb_wq is
+INIT_WORK()'d there but cannot have been scheduled, since no URB is
+submitted before ieee80211_register_hw() succeeds.
 
-Link: https://lore.kernel.org/20260713205625.92391-1-doruk@0sec.ai
-Fixes: 9b7895efac90 ("ocfs2: Add a name indexed b-tree to directory inodes")
-Fixes: 4ed8a6bb083b ("ocfs2: Store dir index records inline")
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This bug was found by static analysis.
+
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260630033117.3377-1-fanwu01@zju.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dir.c | 45 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ocfs2/dir.c b/fs/ocfs2/dir.c
-index 895d3d367b63c..906c59783713f 100644
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -611,6 +611,28 @@ static int ocfs2_validate_dx_root(struct super_block *sb,
- 					  le16_to_cpu(el->l_count));
- 			goto bail;
- 		}
-+	} else {
-+		struct ocfs2_dx_entry_list *dl_list = &dx_root->dr_entries;
-+
-+		if (le16_to_cpu(dl_list->de_count) !=
-+		    ocfs2_dx_entries_per_root(sb)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_count %u (expected %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_count),
-+					  ocfs2_dx_entries_per_root(sb));
-+			goto bail;
-+		}
-+
-+		if (le16_to_cpu(dl_list->de_num_used) >
-+		    le16_to_cpu(dl_list->de_count)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_num_used %u (de_count %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_num_used),
-+					  le16_to_cpu(dl_list->de_count));
-+			goto bail;
-+		}
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 5a57ffb53acee..bbaebdd821c8d 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -5829,14 +5829,19 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
+ {
+ 	struct sk_buff *skb;
+ 	unsigned long flags;
+-	int pending = 0;
+ 
+ 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
+ 
+ 	if (!priv->shutdown) {
+ 		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
+ 		priv->rx_urb_pending_count++;
+-		pending = priv->rx_urb_pending_count;
++		/*
++		 * Arm the worker under rx_urb_lock so this is atomic with the
++		 * shutdown check: moving it out of the lock would let a
++		 * completion arm the work after rtl8xxxu_stop() canceled it.
++		 */
++		if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
++			schedule_work(&priv->rx_urb_wq);
+ 	} else {
+ 		skb = (struct sk_buff *)rx_urb->urb.context;
+ 		dev_kfree_skb_irq(skb);
+@@ -5844,9 +5849,6 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
  	}
  
- bail:
-@@ -650,10 +672,25 @@ static int ocfs2_validate_dx_leaf(struct super_block *sb,
- 		return ret;
- 	}
- 
--	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf)) {
--		ret = ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
--				  7, dx_leaf->dl_signature);
--	}
-+	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf))
-+		return ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
-+				   7, dx_leaf->dl_signature);
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_count) !=
-+	    ocfs2_dx_entries_per_leaf(sb))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_count %u (expected %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count),
-+				   ocfs2_dx_entries_per_leaf(sb));
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_num_used) >
-+	    le16_to_cpu(dx_leaf->dl_list.de_count))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_num_used %u (de_count %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_num_used),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count));
- 
- 	return ret;
+ 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
+-
+-	if (pending > RTL8XXXU_RX_URB_PENDING_WATER)
+-		schedule_work(&priv->rx_urb_wq);
  }
+ 
+ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
+@@ -7281,6 +7283,13 @@ static void rtl8xxxu_stop(struct ieee80211_hw *hw)
+ 	priv->shutdown = true;
+ 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
+ 
++	/*
++	 * Cancel before killing rx_anchor: the worker re-anchors every URB
++	 * it drained via rtl8xxxu_submit_rx_urb(), so a worker still running
++	 * after the kill could submit a URB that escapes it.
++	 */
++	cancel_work_sync(&priv->rx_urb_wq);
++
+ 	usb_kill_anchored_urbs(&priv->rx_anchor);
+ 	usb_kill_anchored_urbs(&priv->tx_anchor);
+ 	if (priv->usb_interrupts)
 -- 
 2.53.0
 
