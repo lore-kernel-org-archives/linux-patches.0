@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0B3905EB;
-	Sat, 17 Oct 2026 16:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3087E3905EB;
+	Sat, 17 Oct 2026 16:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254467; cv=none; b=EeHlEn3s5RKAKvTdbZNPETBNpsINEcKkIAmRQ1ziOihXXAeR9XS09n2gYyT7zwChMNS41Ns+ET0fwHYjGKu5UDHo65E38bOPVO7uU8I2vWOBt0igEKSzSSJkZzPiC4FPzAIBp+VIJfsQcd0z6zoT3eyyohYzFYvs93BieZUDZr4=
+	t=1792254470; cv=none; b=Qnj+OlmQPaWAq85Uv7Ne8zRBirs+sHAn3XDDrPILCDHz826db4kMdZXw+oPuulzyXuQY93YJGrHEi/Wephu/7RMHCsX+tReGaRZxD3pJWeEdh+fXx5nmvFnbFgar26/Ke3G6a/d3gpj8DYNXnwU9P8907P/pRe8dn9eHji4Leys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254467; c=relaxed/simple;
-	bh=9V6Og64V8KXws5HsRn5rsEwl9GxV/lh8dKkt/wFwuIU=;
+	s=arc-20240116; t=1792254470; c=relaxed/simple;
+	bh=l+MHU1oMM4FqG2NErjPXiYuVxOZJZucJWb7RU8F/hpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6mEkHxnZv5c2ZyCoeRvihkAQwcHl2pQ/7XWGC7IQ4qZkxjKn/O/LIG2qTeClwZBSLa4Sf4bByan1cnR7eUfxNKaJnxElAELKHm8v5frmPjzG+KKUKb0+tFE+tjB4ImAvSsilzjkl+7v7ExKJJKWAGYzr8d9sEcsxrQy0W4Zs7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQfHEcIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Kin9SrHi7V7ykA4zqTvjUC7YjLDQwKb0aKAaJluZG91mm/rJJRMVX2cTtDPtLJMwKBEhSqwrVvPXYFVKAgPbjeJTM/obhHJ1jsr73FEJ6KewY6j6LuUX7FcV5UWyjolMzDSrxvmrcx+5FJk237Kb5jJqrJn3vpkUuSQ0vJmwPuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeXijv83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQfHEcIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9E1F000C4;
-	Sat, 17 Oct 2026 16:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeXijv83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896071F000C5;
+	Sat, 17 Oct 2026 16:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254466;
-	bh=dMCdDWvFWaBC2cowUttiZ0rLCuW9mWEcUFpvvKf2DWs=;
+	s=korg; t=1792254469;
+	bh=Qa00cH8hiSTLMcKSNboIbZuYH4qJmIChUImPu/Vfi/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mQfHEcIjzAwvIBmYuBpUmwbiQ+43QJiUkdyyyXdx6anqHiUw2y21QMfyA39mQti+v
-	 M4jn5gPtd4jPtn2CRm111CFd6qR3tXydul5VpDnY767pIux0gSWKISuez4Fl9O67IF
-	 EXEOr89Zxhs6HYSlq9TNaUpUcevW5B0ndXpTHpUw=
+	b=FeXijv83UjcHc5JxGudEmevHAeS41QXQAGVW+Q1fZX70RD/VOWGoKZyqnJD9o/7RA
+	 2GyqDiXta70et+E2czG+QBU7ILDVDD+HpFC30mF89gqz/lN7FrEylQhX+lutkkeYd1
+	 DxZXQdbPvLP0ReteS8E676ez+NOHzOvk/8Lw7K3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 455/869] RDMA/irdma: Replace waitqueue and flag with completion
-Date: Sat, 17 Oct 2026 17:54:56 +0200
-Message-ID: <20261017160048.803641326@linuxfoundation.org>
+Subject: [PATCH 6.12 456/869] RDMA/bnxt_re: Avoid repeated requests to allocate WC pages
+Date: Sat, 17 Oct 2026 17:54:57 +0200
+Message-ID: <20261017160048.827925167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,125 +46,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit d9c8c45e6d2f438a3c8e643ae78b59454fa0fadd ]
+[ Upstream commit 441baa79043431807115fd030d7d0bb14ed441a0 ]
 
-The driver previously used a waitqueue along with an explicit
-request_done flag, but without proper barriers around request_done.
+Applications can request multiple WC pages for the same ucontext.
+As of now, only 1 WC page per ucontext is supported. Add a lock to
+avoid concurrent access and a check to fail repeated requests.
+Also, if the mmap entry insert fails for the WC, free the Doorbell
+page index mapped for the WC page.
 
-An earlier patch by Gui-Dong Han <hanguidong02@gmail.com> attempted
-to fix this by adding the missing memory barriers. Rather than
-adding the barriers, this patch replaces the waitqueue+flag with
-a completion, which is designed for this exact purpose.
-
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
-Link: https://patch.msgid.link/r/20260616155601.1081448-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Fixes: eee6268421a2 ("RDMA/bnxt_re: Move the UAPI methods to a dedicated file")
+Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
+Link: https://patch.msgid.link/r/20260615224751.232802-12-selvin.xavier@broadcom.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c    |  7 +++----
- drivers/infiniband/hw/irdma/main.h  |  3 +--
- drivers/infiniband/hw/irdma/utils.c | 12 +++++-------
- 3 files changed, 9 insertions(+), 13 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 34 +++++++++++++++++++-----
+ drivers/infiniband/hw/bnxt_re/ib_verbs.h |  1 +
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index ad50b77282f8a..c1e5bcf6ab604 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -1001,9 +1001,9 @@ static int irdma_create_cqp(struct irdma_pci_f *rf)
- 	INIT_LIST_HEAD(&cqp->cqp_avail_reqs);
- 	INIT_LIST_HEAD(&cqp->cqp_pending_reqs);
- 
--	/* init the waitqueue of the cqp_requests and add them to the list */
-+	/* init the completion of the cqp_requests and add them to the list */
- 	for (i = 0; i < sqsize; i++) {
--		init_waitqueue_head(&cqp->cqp_requests[i].waitq);
-+		init_completion(&cqp->cqp_requests[i].comp);
- 		list_add_tail(&cqp->cqp_requests[i].list, &cqp->cqp_avail_reqs);
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 467bdfea6c92c..339e9be2e8f24 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4237,6 +4237,7 @@ int bnxt_re_alloc_ucontext(struct ib_ucontext *ctx, struct ib_udata *udata)
+ 		goto fail;
  	}
- 	init_waitqueue_head(&cqp->remove_wq);
-@@ -2103,8 +2103,7 @@ void irdma_cqp_ce_handler(struct irdma_pci_f *rf, struct irdma_sc_cq *cq)
- 			cqp_request->compl_info.error = info.error;
+ 	spin_lock_init(&uctx->sh_lock);
++	mutex_init(&uctx->wcdpi_lock);
  
- 			if (cqp_request->waiting) {
--				WRITE_ONCE(cqp_request->request_done, true);
--				wake_up(&cqp_request->waitq);
-+				complete_all(&cqp_request->comp);
- 				irdma_put_cqp_request(&rf->cqp, cqp_request);
- 			} else {
- 				if (cqp_request->callback_fcn)
-diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
-index e5dc43442dff7..47b95efd51cea 100644
---- a/drivers/infiniband/hw/irdma/main.h
-+++ b/drivers/infiniband/hw/irdma/main.h
-@@ -155,13 +155,12 @@ struct irdma_cqp_compl_info {
+ 	resp.comp_mask = BNXT_RE_UCNTX_CMASK_HAVE_CCTX;
+ 	chip_met_rev_num = rdev->chip_ctx->chip_num;
+@@ -4453,14 +4454,23 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_ALLOC_PAGE)(struct uverbs_attr_bundle *
  
- struct irdma_cqp_request {
- 	struct cqp_cmds_info info;
--	wait_queue_head_t waitq;
-+	struct completion comp;
- 	struct list_head list;
- 	refcount_t refcnt;
- 	void (*callback_fcn)(struct irdma_cqp_request *cqp_request);
- 	void *param;
- 	struct irdma_cqp_compl_info compl_info;
--	bool request_done; /* READ/WRITE_ONCE macros operate on it */
- 	bool waiting:1;
- 	bool dynamic:1;
- };
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 45c3f82887eff..1a73e1b740745 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -445,7 +445,7 @@ struct irdma_cqp_request *irdma_alloc_and_get_cqp_request(struct irdma_cqp *cqp,
- 		if (cqp_request) {
- 			cqp_request->dynamic = true;
- 			if (wait)
--				init_waitqueue_head(&cqp_request->waitq);
-+				init_completion(&cqp_request->comp);
+ 	switch (alloc_type) {
+ 	case BNXT_RE_ALLOC_WC_PAGE:
+-		if (cctx->modes.db_push)  {
++		if (cctx->modes.db_push) {
++			mutex_lock(&uctx->wcdpi_lock);
++			/* already allocated — one WC page per context */
++			if (uctx->wcdpi.dbr) {
++				mutex_unlock(&uctx->wcdpi_lock);
++				return -EEXIST;
++			}
+ 			if (bnxt_qplib_alloc_dpi(&rdev->qplib_res, &uctx->wcdpi,
+-						 uctx, BNXT_QPLIB_DPI_TYPE_WC))
++						 uctx, BNXT_QPLIB_DPI_TYPE_WC)) {
++				mutex_unlock(&uctx->wcdpi_lock);
+ 				return -ENOMEM;
++			}
+ 			length = PAGE_SIZE;
+ 			dpi = uctx->wcdpi.dpi;
+ 			addr = (u64)uctx->wcdpi.umdbr;
+ 			mmap_flag = BNXT_RE_MMAP_WC_DB;
++			mutex_unlock(&uctx->wcdpi_lock);
+ 		} else {
+ 			return -EINVAL;
  		}
+@@ -4483,8 +4493,15 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_ALLOC_PAGE)(struct uverbs_attr_bundle *
  	}
- 	if (!cqp_request) {
-@@ -482,7 +482,7 @@ void irdma_free_cqp_request(struct irdma_cqp *cqp,
- 	if (cqp_request->dynamic) {
- 		kfree(cqp_request);
- 	} else {
--		WRITE_ONCE(cqp_request->request_done, false);
-+		reinit_completion(&cqp_request->comp);
- 		cqp_request->callback_fcn = NULL;
- 		cqp_request->waiting = false;
  
-@@ -516,8 +516,7 @@ irdma_free_pending_cqp_request(struct irdma_cqp *cqp,
- {
- 	if (cqp_request->waiting) {
- 		cqp_request->compl_info.error = true;
--		WRITE_ONCE(cqp_request->request_done, true);
--		wake_up(&cqp_request->waitq);
-+		complete_all(&cqp_request->comp);
- 	}
- 	wait_event_timeout(cqp->remove_wq,
- 			   refcount_read(&cqp_request->refcnt) == 1, 1000);
-@@ -571,9 +570,8 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
- 	cqp_timeout.compl_cqp_cmds = atomic64_read(&rf->sc_dev.cqp->completed_ops);
- 	do {
- 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
--		if (wait_event_timeout(cqp_request->waitq,
--				       READ_ONCE(cqp_request->request_done),
--				       msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
-+		if (wait_for_completion_timeout(&cqp_request->comp,
-+					msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
- 			break;
+ 	entry = bnxt_re_mmap_entry_insert(uctx, addr, mmap_flag, &mmap_offset);
+-	if (!entry)
++	if (!entry) {
++		if (mmap_flag == BNXT_RE_MMAP_WC_DB) {
++			mutex_lock(&uctx->wcdpi_lock);
++			bnxt_qplib_dealloc_dpi(&rdev->qplib_res, &uctx->wcdpi);
++			uctx->wcdpi.dbr = NULL;
++			mutex_unlock(&uctx->wcdpi_lock);
++		}
+ 		return -ENOMEM;
++	}
  
- 		irdma_check_cqp_progress(&cqp_timeout, &rf->sc_dev);
+ 	uobj->object = entry;
+ 	uverbs_finalize_uobj_create(attrs, BNXT_RE_ALLOC_PAGE_HANDLE);
+@@ -4515,11 +4532,16 @@ static int alloc_page_obj_cleanup(struct ib_uobject *uobject,
+ 
+ 	switch (entry->mmap_flag) {
+ 	case BNXT_RE_MMAP_WC_DB:
+-		if (uctx && uctx->wcdpi.dbr) {
++		if (uctx) {
+ 			struct bnxt_re_dev *rdev = uctx->rdev;
+ 
+-			bnxt_qplib_dealloc_dpi(&rdev->qplib_res, &uctx->wcdpi);
+-			uctx->wcdpi.dbr = NULL;
++			mutex_lock(&uctx->wcdpi_lock);
++			if (uctx->wcdpi.dbr) {
++				bnxt_qplib_dealloc_dpi(&rdev->qplib_res,
++						       &uctx->wcdpi);
++				uctx->wcdpi.dbr = NULL;
++			}
++			mutex_unlock(&uctx->wcdpi_lock);
+ 		}
+ 		break;
+ 	case BNXT_RE_MMAP_DBR_BAR:
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.h b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+index 9cd8f770d1b27..b01b685ee70f6 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+@@ -141,6 +141,7 @@ struct bnxt_re_ucontext {
+ 	struct bnxt_re_dev	*rdev;
+ 	struct bnxt_qplib_dpi	dpi;
+ 	struct bnxt_qplib_dpi   wcdpi;
++	struct mutex		wcdpi_lock;	/* serialises WC DPI alloc/free */
+ 	void			*shpg;
+ 	spinlock_t		sh_lock;	/* protect shpg */
+ 	struct rdma_user_mmap_entry *shpage_mmap;
 -- 
 2.53.0
 
