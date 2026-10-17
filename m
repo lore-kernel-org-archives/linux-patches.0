@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F97B3B9616;
-	Sat, 17 Oct 2026 17:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6611F3C0601;
+	Sat, 17 Oct 2026 17:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258381; cv=none; b=Kjkpv8evOMbFh54+ySMXf0VRZC1oDcjQuxwbYOUgV74frIg38aGA3WBtXsVuNSOnEieCpN/wrxXS02mAi0rc64R3caflzmaiqwJTFoQktSVSjrZZfMgytVFuyjHVbDXsC6AzP829l7drclqw5e4kf8cGOQ/1s9hKDqcW/uL/3CY=
+	t=1792258384; cv=none; b=soSK+U6Yac7qN7eqhM9QouB5ccsCnhIrSkK9aaagRx2ZVFRTLEiXCaSJ4eCmPWii+wDS8xzWjFCyXRP4sv3rI0tEOamLMdftmaTurjebqa1uj9lPbBbCIJ+5Jg6FdQj5hK+G4vl+Gic2PYj2HMNQCDH8aMZFzHgC8GdcXWmy9sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258381; c=relaxed/simple;
-	bh=6c6k1S6oYFGWHoYrsv5IRT86V9tv9I4+XlWUCMfsCHg=;
+	s=arc-20240116; t=1792258384; c=relaxed/simple;
+	bh=vYry0dLdfOLjFvD0+cYFp5psKo2QAGgdDZutKOiOkaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sM0HVWqjyxMl/srqfswLx91vsobmEKTz0UTFxAYR5zWhGwrFzkuXmI7/z0361uLGWe5wcukgAqfYpa5Uj9VMhHHjw3rWgtAxcCRg/D+AGdj8eLXylv504+MCw5z6IfxaFp7wfTSzBo3f6teL54lSC94oImQ7UlnVMw/65hxa5Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTeDsaWC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hqg7FHF10/2ENwky/u//7Zorw+8blO8qylJ7tKriqPIShGzazq86VlUrwLhrBiaIvBHhrd5LIzhKryfUfcsB5KSk+aiZSJ195L9ZQ5vt6clZN+BDujE/63b4Sc1pnEQhw3THA6mK1EcktZ8ITw8+HZmhcEqCkRQoF1vaI/dqlyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo/eRVNP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTeDsaWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EA81F000C5;
-	Sat, 17 Oct 2026 17:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo/eRVNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A895D1F000C6;
+	Sat, 17 Oct 2026 17:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258380;
-	bh=VMoV3Nd+crTw9iJqiMGI8CkYr2QYDBEgR9bYt6hFbJU=;
+	s=korg; t=1792258383;
+	bh=LxrkoEi1aDJbfP90aOEjh46LzBUyWnhTUIrlcAr0C5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KTeDsaWCK9PGvP/kSAG8UWdvtXPMxuLahRsqBCslff77BcMtpL+LGN8HNt5L/fETw
-	 f9IHoh3zhdi+j0HcJVQkKl3CH1VXfGS1z8Aq2rP4gvyy8JsipLnRUTnxWJhOctruN4
-	 uvnk2/910yyfPzZ0KkMS20xaD9ojZ+Mk2RrZ1fk0=
+	b=Yo/eRVNPKdVp8PGNuRdWnj68pZcvPwLaUmNio2Pc4cgYopiibae8mRRSLCAOlQ0qi
+	 YqksqGUam6VvQcgiOuq8E+/1g6VoERazm4m9h57KcYko4wsQEhEcmrsga1EjMsQRUC
+	 p3t2C1EJUtr9leGlTRngINYAXicGRbqIPOhR9XYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
+	Fuad Tabba <tabba@google.com>,
+	Will Deacon <will@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0865/1674] bpf, arm64: Enable the inline of bpf_kptr_xchg()
-Date: Sat, 17 Oct 2026 17:52:17 +0200
-Message-ID: <20261017160453.317231713@linuxfoundation.org>
+Subject: [PATCH 6.6 0866/1674] bpf, arm64: Force 8-byte alignment for JIT buffer to prevent atomic tearing
+Date: Sat, 17 Oct 2026 17:52:18 +0200
+Message-ID: <20261017160453.343123376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,40 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 18a45f12d746c06b7361b0cce59cf8e8b9e38da6 ]
+[ Upstream commit ef06fd16d48704eac868441d98d4ef083d8f3d07 ]
 
-ARM64 bpf jit satisfies the following two conditions:
-1) support BPF_XCHG() on pointer-sized word.
-2) the implementation of xchg is the same as atomic_xchg() on
-   pointer-sized words. Both of these two functions use arch_xchg() to
-   implement the exchange.
+struct bpf_plt contains a u64 target field. Currently, the BPF JIT
+allocator requests an alignment of 4 bytes (sizeof(u32)) for the JIT
+buffer.
 
-So enable the inline of bpf_kptr_xchg() for arm64 bpf jit.
+Because the base address of the JIT buffer can be 4-byte aligned (e.g.,
+ending in 0x4 or 0xc), the relative padding logic in build_plt() fails
+to ensure that target lands on an 8-byte boundary.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20240119102529.99581-2-houtao@huaweicloud.com
+This leads to two issues:
+1. UBSAN reports misaligned-access warnings when dereferencing the
+   structure.
+2. More critically, target is updated concurrently via WRITE_ONCE() in
+   bpf_arch_text_poke() while the JIT'd code executes ldr. On arm64,
+   64-bit loads/stores are only guaranteed to be single-copy atomic if
+   they are 64-bit aligned. A misaligned target risks a torn read,
+   causing the JIT to jump to a corrupted address.
+
+Fix this by increasing the allocation alignment requirement to 8 bytes
+(sizeof(u64)) in bpf_jit_binary_pack_alloc(). This anchors the base of
+the JIT buffer to an 8-byte boundary, allowing the relative padding math
+in build_plt() to correctly align the target field.
+
+Fixes: b2ad54e1533e ("bpf, arm64: Implement bpf_arch_text_poke() for arm64")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20260226075525.233321-1-tabba@google.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: ef06fd16d487 ("bpf, arm64: Force 8-byte alignment for JIT buffer to prevent atomic tearing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index c66fe02acc605..1fcdb129ada8a 100644
+index 1fcdb129ada8a..f562060a50c4e 100644
 --- a/arch/arm64/net/bpf_jit_comp.c
 +++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -2364,3 +2364,8 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 
- 	return ret;
- }
-+
-+bool bpf_jit_supports_ptr_xchg(void)
-+{
-+	return true;
-+}
+@@ -1648,7 +1648,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 	extable_offset = round_up(prog_size + PLT_TARGET_SIZE, extable_align);
+ 	image_size = extable_offset + extable_size;
+ 	header = bpf_jit_binary_alloc(image_size, &image_ptr,
+-				      sizeof(u32), jit_fill_hole);
++				      sizeof(u64), jit_fill_hole);
+ 	if (header == NULL) {
+ 		prog = orig_prog;
+ 		goto out_off;
 -- 
 2.53.0
 
