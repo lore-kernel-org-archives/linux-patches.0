@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA55E255E43;
-	Sat, 17 Oct 2026 17:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD543A900B;
+	Sat, 17 Oct 2026 17:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256995; cv=none; b=Ri8lH62i2ehfOFMcmjEGY7uPUJ0VEnMxVmpxZ8X5f1cobLJi2bMVuuAbtosGng1jPVa69R0wQmOMIJCNYU/G9wlwmJN5/ff/NBMvyD74Rvh7im1N6fZeD/wKMde66saBZuubqmJvLQEngurJqsEALfWsxXazSZrGeqO9VkDih0k=
+	t=1792256999; cv=none; b=sZrMVAy3IlDglkpli+TshwjBJ5SQefjHm07uP17BjlOAUzuv2/wAfatRYop4TVYVqU+j4fNChQYdtTErUc7EH5ZqsH9dhuH1R+1R5MfAVJwNkygckQP7DMYdU4zDnY4R4FC+B+sZC6oZEkoTx131zWDyHReuy0wNMxLiTo5JP2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256995; c=relaxed/simple;
-	bh=dqT+vXB0/bU4C8cZOL4olw4DhzwFlxwF/v9/RNR4fUw=;
+	s=arc-20240116; t=1792256999; c=relaxed/simple;
+	bh=3f7g/zk56rdIiYArv43cMOiveym0sAZTvaQqiAxIRZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iW0+/qCTC9Z34ZePtMJ4HcfAe0q6mAjiJjqv1v7MxMBxzwPenjQf4i1Md9ytJ9KYcAW+apdQYAV4eDustjg92eJ1DNLaZZRCYbF4vuxrDvl1F3O4oe9jwOCXM9oYb5ELYOG/4CXB7VO6Om11FavVbzBkBDzZVLpVnshproCiO+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTWP1Z1M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5UspSCYBXHS+6xZLr6dErzkCHcGGcI2GwjUzHEWku32AlRMITGr0QMSt9Z6tDgI0tKwCW09NmjrMmE4X5F6EejKqqDqohgvmStHQqvJ1cHEUhI1nKy2OsYRQvNg8gWa6Da9TefwInEqfF0i++Hgo+AJxWyKdHB4InIRU54GP2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQit0g54; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTWP1Z1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9481F000C4;
-	Sat, 17 Oct 2026 17:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQit0g54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C2F1F000C4;
+	Sat, 17 Oct 2026 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256994;
-	bh=gCVPxatTRX3znotYLLB26KlyUQ5OkcnCjhokuSH+PJQ=;
+	s=korg; t=1792256997;
+	bh=4N4uKuVflvqG3McaY0IirLcqViqv91DCa6oUROc0wVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTWP1Z1M9ABS8NnxAwewkb8UC1mpPwI2CTUf5MlOQrmQbzoYb80HFHTJK3yKpu+0w
-	 CLuwOX8r0dnAcpi0lko1IKIkUmMMJLDCiqvnOwszHW5xNbMlnBV6IiVIT8fRnaw/pQ
-	 XewAgjVm9Ds0aaV/jY4/dos5rqObT52EQhnDrlqM=
+	b=jQit0g54IYe3qZMkYLdWTL941KGfS4STxWxFfR1SHOJ2938p4EGrx06ryF9m7zPsn
+	 PYJthXrCrWE2ec2QeVvxEX3cromCMz+WV/iuY0OxxBnutbDrlsIWVhPctarkLhDyPi
+	 zG7yFugvr3axRz/03tGxd04nyA7VE8mVMOH01mz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0417/1674] ASoC: SOF: topology: Parse DAI type token for dspless mode
-Date: Sat, 17 Oct 2026 17:44:49 +0200
-Message-ID: <20261017160441.834094799@linuxfoundation.org>
+Subject: [PATCH 6.6 0418/1674] ASoC: SOF: ipc4-topology: Harden loops for looking up ALH copiers
+Date: Sat, 17 Oct 2026 17:44:50 +0200
+Message-ID: <20261017160441.858878346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -48,93 +50,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit f9618ff105a0f6f5a6beed3edc557ea6a7d26df6 ]
+[ Upstream commit 6fd60136d256b3b948333ebdb3835f41a95ab7ef ]
 
-Starting with LunarLake, the dspless mode can handle SoundWire/ALH,
-DMIC and SSPs, so we need to identify the dai type from topology.
+Other, non DAI copier widgets could have the same  stream name (sname) as
+the ALH copier and in that case the copier->data is NULL, no alh_data is
+attached, which could lead to NULL pointer dereference.
+We could check for this NULL pointer in sof_ipc4_prepare_copier_module()
+and avoid the crash, but a similar loop in sof_ipc4_widget_setup_comp_dai()
+will miscalculate the ALH device count, causing broken audio.
 
-[ Backport to 6.6.y: 6.6.y still uses a stack-allocated snd_sof_dai in
-  the dspless topology path; parse the DAI type into that existing object
-  before connecting it. ]
+The correct fix is to harden the matching logic by making sure that the
+1. widget is a DAI widget - so dai = w->private is valid
+2. the dai (and thus the copier) is ALH copier
 
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+[ Backport to 6.6.y: Apply both widget-kind and ALH-type predicates to
+  the target loops; the newer node_type local is absent and unused by
+  this implementation. ]
+
+Fixes: a150345aa758 ("ASoC: SOF: ipc4-topology: add SoundWire/ALH aggregation support")
+Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Link: https://github.com/thesofproject/sof/pull/9652
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://msgid.link/r/20240213101247.28887-12-peter.ujfalusi@linux.intel.com
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250206084642.14988-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c |  1 +
- sound/soc/sof/sof-audio.h     |  1 +
- sound/soc/sof/topology.c      | 11 +++++++++++
- 3 files changed, 13 insertions(+)
+ sound/soc/sof/ipc4-topology.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index 39e4f0fdd5e45..18096aefce13f 100644
+index 18096aefce13f..8911c075251ca 100644
 --- a/sound/soc/sof/ipc4-topology.c
 +++ b/sound/soc/sof/ipc4-topology.c
-@@ -534,6 +534,7 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
- 	dev_dbg(scomp->dev, "dai %s node_type %u dai_type %u dai_index %d\n", swidget->widget->name,
- 		node_type, ipc4_copier->dai_type, ipc4_copier->dai_index);
+@@ -577,10 +577,16 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
+ 		}
  
-+	dai->type = ipc4_copier->dai_type;
- 	ipc4_copier->data.gtw_cfg.node_id = SOF_IPC4_NODE_TYPE(node_type);
- 
- 	pipe_widget = swidget->spipe->pipe_widget;
-diff --git a/sound/soc/sof/sof-audio.h b/sound/soc/sof/sof-audio.h
-index 7620596ead07d..13b9026ffd4de 100644
---- a/sound/soc/sof/sof-audio.h
-+++ b/sound/soc/sof/sof-audio.h
-@@ -514,6 +514,7 @@ struct snd_sof_route {
- struct snd_sof_dai {
- 	struct snd_soc_component *scomp;
- 	const char *name;
-+	u32 type;
- 
- 	int number_configs;
- 	int current_config;
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index 7eb8eb35b137c..011095722a80b 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -2364,7 +2364,10 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
- 				    struct snd_soc_tplg_dapm_widget *tw)
- {
- 	if (WIDGET_IS_DAI(w->id)) {
-+		static const struct sof_topology_token dai_tokens[] = {
-+			{SOF_TKN_DAI_TYPE, SND_SOC_TPLG_TUPLE_TYPE_STRING, get_token_dai_type, 0}};
- 		struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
-+		struct snd_soc_tplg_private *priv = &tw->priv;
- 		struct snd_sof_widget *swidget;
- 		struct snd_sof_dai dai;
- 		int ret;
-@@ -2375,6 +2378,14 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
- 
- 		memset(&dai, 0, sizeof(dai));
- 
-+		ret = sof_parse_tokens(scomp, &dai.type, dai_tokens, ARRAY_SIZE(dai_tokens),
-+				       priv->array, le32_to_cpu(priv->size));
-+		if (ret < 0) {
-+			dev_err(scomp->dev, "Failed to parse DAI tokens for %s\n", tw->name);
-+			kfree(swidget);
-+			return ret;
-+		}
+ 		list_for_each_entry(w, &sdev->widget_list, list) {
+-			if (w->widget->sname &&
++			struct snd_sof_dai *alh_dai;
 +
- 		ret = sof_connect_dai_widget(scomp, w, tw, &dai);
- 		if (ret) {
- 			kfree(swidget);
++			if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 			    strcmp(w->widget->sname, swidget->widget->sname))
+ 				continue;
+ 
++			alh_dai = w->private;
++			if (alh_dai->type != SOF_DAI_INTEL_ALH)
++				continue;
++
+ 			blob->alh_cfg.device_count++;
+ 		}
+ 
+@@ -1692,11 +1698,13 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
+ 			 */
+ 			i = 0;
+ 			list_for_each_entry(w, &sdev->widget_list, list) {
+-				if (w->widget->sname &&
++				if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 				    strcmp(w->widget->sname, swidget->widget->sname))
+ 					continue;
+ 
+ 				dai = w->private;
++				if (dai->type != SOF_DAI_INTEL_ALH)
++					continue;
+ 				alh_copier = (struct sof_ipc4_copier *)dai->private;
+ 				alh_data = &alh_copier->data;
+ 				blob->alh_cfg.mapping[i].device = alh_data->gtw_cfg.node_id;
 -- 
 2.53.0
 
