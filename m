@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892533BAD95;
-	Sat, 17 Oct 2026 17:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F643A900B;
+	Sat, 17 Oct 2026 17:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257268; cv=none; b=pGQvWDqFTCqXKF+BzkKHuQzI5P68cmlgla7HVD+9aCAXxjV2+HHbSvsG9UJhNGMf3yRfPFST/DgDZLSHFoH7Nib6YhU/nkr4YBjUQH18wJOBAi1BHMWHvjjE444ZQrHDVVBDHkIpwWcZoNdPhVSn09HFvwoMvyX2a45JYaMTl4k=
+	t=1792257271; cv=none; b=m1PUXOnU0JCravaAfoEqqT1CwzIKF7gGqmqHQF8TDNYzAe1r9vWuSTvr6b+9Qh0u7fUgwCRDR2u1xD7pn0DAupEqPHnZ3tpCdQCrytB+ZaFgDF6G24LO0iH7PbmDmc7rM8iR4S8Mf4u43V4GFCMstqMmh4agR044uxwthPFatiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257268; c=relaxed/simple;
-	bh=RoS3JDePKc+V5oOFRFl3jk84MLNLSfw1vqn1jvS75Xg=;
+	s=arc-20240116; t=1792257271; c=relaxed/simple;
+	bh=YjwCn93TYuIrmeiIGyi9sLmKS8xGmyAQZ8GvBrns4Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XwtzHElj/kII+9eKAgVpTf+vTHSuSieXJ01gQsiqhKtSpeVcwmGaeYFrAvYzOOw8IWDpDHrFAiY3J7nxg3MSBHl2dLoOlMGHVkbzULlrwbCKzDq4HY1SBT6SqQCSqmUbGuX6usPuiZJkczN0bd63CJTeW6FoA3HehGSI1XyuXEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFk17CMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P0JMwRbdSXfxiiQg0dS8q73bP552RTjRAXXAYqohH5jBYlf067miTbSRceEEgPcGbGLHfC8lJQ8WCkmER53Tw4OwAzS16bNJAeOzO7vyES2f4WqCGBSzbtdE4QRVpHeoetjXLfsxeEmjWz+GNSSm6Sv+teIWMqGhA+pW0EPUojc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7EgcqQW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFk17CMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F721F000C4;
-	Sat, 17 Oct 2026 17:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7EgcqQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C9C1F000C4;
+	Sat, 17 Oct 2026 17:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257267;
-	bh=PytmFzwHsSpicXVr0i7hqIM0p23WAdnVN+GQp0Q5n00=;
+	s=korg; t=1792257270;
+	bh=Mpp8EBT+vamnCyKFHUnTqg5wcjJbX5nJ7VBViQBR6Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFk17CMhldTTPz7YP28fuJJrs6qsZZaOP+7/c0HZHVXL+D5Vyo1XWhiLPYdxdoP8T
-	 QL39O7Bk2k2qocaMUsBsnYOmYqlsP8tHF0KtdmHrxOUVS8Sar+J8xqXFJ6CrcKkly/
-	 jXlWIu2QFBX6lc0j/qJoZI2nKpE+Ikg4WMe1VBQk=
+	b=K7EgcqQWOybEf/a/YpfJYdjBO2UkliB0KB0h9pAVHuzgV3FlukC6e92NaxwMi4rTq
+	 GG2OqmcieBfkSsItIJdOo93gLMGeNzSFzzD/xBv9Pm9i36Njk4sNvQIyp7ariT3dcp
+	 X1xD7uRy3ufNwXVFm2FNsjGVkkRRRqVpLDvEnpDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredrik Nyberg <fredrik.nyberg@volvocars.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0505/1674] net: usb: ax88179_178a: fix rx frame length for non-last packets
-Date: Sat, 17 Oct 2026 17:46:17 +0200
-Message-ID: <20261017160444.070232819@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Karl Bonde Torp <k.torp@samsung.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 0506/1674] nvme: fix swapped ZRASF zone state values for full and read only
+Date: Sat, 17 Oct 2026 17:46:18 +0200
+Message-ID: <20261017160444.096334331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,54 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
+From: Karl Bonde Torp <k.torp@samsung.com>
 
-commit 9b6c20f788472d2042717a3c2f1bc60b2b77083e upstream.
+commit 564e46d9f6e87912effa03f123d37a511d520f09 upstream.
 
-Commit 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about
-skb->truesize") replaced skb_clone() with a copy into a new skb for
-every packet of a bulk-in transfer except the last one. The copy skips
-the 2-byte IP alignment pseudo header but still copies pkt_len bytes,
-and pkt_len includes that header. Each of these frames is therefore
-delivered with two extra trailing bytes: the 0xeeee pseudo header of
-the next slot when the frame ends on an 8-byte boundary, or slot
-padding otherwise. The last packet is still trimmed to pkt_len - 2.
+The Zone Management Receive command Zone Receive Action Specific (ZRASF)
+reporting option values for the Full and Read Only zone states are swapped
+compared to the NVM Express Zoned Namespace Command Set Specification,
+Revision 1.5, Figure 35:
 
-IPv4 and IPv6 trim the extra bytes, so most traffic is unaffected.
-Anything that relies on the frame length is not. MACsec takes the ICV
-from the last 16 bytes and drops every such frame as InPktsNotValid. In
-our setup that was 0.2-1.2% of received MACsec frames, depending on how
-many frames shared a transfer, including service discovery multicast.
+- 5h lists the zones in the ZSF:Full state.
+- 6h lists the zones in the ZSRO:Read Only state.
 
-Allocate and copy pkt_len - 2 bytes, like the last-packet path.
+The nvmet ZNS backend uses these constants to map the ZRASF value received
+from the host to a block layer zone condition when filtering zones in
+Report Zones. Because of the swap, a host asking for full zones was given
+the read only zones, and a host asking for read only zones was given the
+full zones.
 
-Fixes: 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about skb->truesize")
+Swap the values of NVME_ZRASF_ZONE_STATE_FULL and
+NVME_ZRASF_ZONE_STATE_READONLY to match the specification.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261002-ax88179-rx-len-v1-1-f01a2a295079@volvocars.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Karl Bonde Torp <k.torp@samsung.com>
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ax88179_178a.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/nvme.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1461,11 +1461,11 @@ static int ax88179_rx_fixup(struct usbne
- 			return 1;
- 		}
- 
--		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
-+		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len - 2);
- 		if (!ax_skb)
- 			return 0;
--		skb_put(ax_skb, pkt_len);
--		memcpy(ax_skb->data, skb->data + 2, pkt_len);
-+		skb_put(ax_skb, pkt_len - 2);
-+		memcpy(ax_skb->data, skb->data + 2, pkt_len - 2);
- 
- 		ax88179_rx_checksum(ax_skb, pkt_hdr);
- 		usbnet_skb_return(dev, ax_skb);
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1099,8 +1099,8 @@ enum {
+ 	NVME_ZRASF_ZONE_STATE_IMP_OPEN	= 0x02,
+ 	NVME_ZRASF_ZONE_STATE_EXP_OPEN	= 0x03,
+ 	NVME_ZRASF_ZONE_STATE_CLOSED	= 0x04,
+-	NVME_ZRASF_ZONE_STATE_READONLY	= 0x05,
+-	NVME_ZRASF_ZONE_STATE_FULL	= 0x06,
++	NVME_ZRASF_ZONE_STATE_FULL	= 0x05,
++	NVME_ZRASF_ZONE_STATE_READONLY	= 0x06,
+ 	NVME_ZRASF_ZONE_STATE_OFFLINE	= 0x07,
+ 	NVME_REPORT_ZONE_PARTIAL	= 1,
+ };
 
 
