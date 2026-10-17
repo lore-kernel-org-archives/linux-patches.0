@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A8A36B93B;
-	Sat, 17 Oct 2026 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB32C026C;
+	Sat, 17 Oct 2026 16:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254220; cv=none; b=eYcO7z7FKO2tQK0KM9LR6VM/tg2Az24vhBSXyz6cH9wGHdCLC9VEqH4oFrmGWbSezAax03Y0x5lO7pJIOcVGoEKaw4wQcMbWxJshzz8meuq8Utz53A9KlwpqPY/NLIL8QOyWo7rayU5sYhkNehXvEezPsdfhvtSfeI/PmisIJPg=
+	t=1792254224; cv=none; b=PHbEgRPm7aBb+6An/57b2BIe0Jz4IurCoKL5dljYyELdP9s6T7ncad5eixMVVeaK4vdHoelF284dIbZf1DAEWPmLoP601lc2ywB6xRZHUzo+KvzcKoTRXNOvOE8v6qE1+zFYfGMvBA5SofHG5n+R595mifL/O3TZcyB5ONI3cdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254220; c=relaxed/simple;
-	bh=O9bBGB2xdjPruNj2nwlmdhjmbAQIVdmGXaw3euhtjIw=;
+	s=arc-20240116; t=1792254224; c=relaxed/simple;
+	bh=LT2ApSvJaczARvmYcZ6pAbFs6kBO8WUYrPe/0EfmN70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pl0CYEOfbdXR0P22BpEBQNYErEoNtsfOIMgc1Jz5ta2qwzeDHAopZYTncM8Ne+qUunxsiqEjBEzFn0UkZbSr7Mzq5c4K9xSuRqkJDqqG7VIF+5VQuccazEcBPD+hi+KvmtfRgz4n0sE5OP2QSuq/NKYgg/0kMwnHC7xfAgMUxLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdrXwn9c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vb3e24Zq+BTJCZaYZTZKcBSmU+EZssaXS+acUGpAzxluxK2n7WarEL6f68fTtSJuS8H26u//Pg0SZ75H67z4+SBQYXf0b9pYVbUM2QkdGDwljEOB5MFOejZLsALVL0E9Ons3qBEaLahMzGRPug5XTCQSY1LrBg54Z9UUt2PZe+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9Pryudk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdrXwn9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105EC1F000C4;
-	Sat, 17 Oct 2026 16:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9Pryudk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297171F000C4;
+	Sat, 17 Oct 2026 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254219;
-	bh=7gdFN4s9KJiLoYwEl2LvLGNOTg5IOopgJob4RR43nNg=;
+	s=korg; t=1792254222;
+	bh=tT/GbIGxWzAXvjk3e6pZn2pDnTNzKoLVrN/tMxhYBWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdrXwn9cI8bxNvDHlH55QWnVaZapq1+Hg8QG0ZnhV7GDTJaKpcDoQQCH0GFySJygS
-	 uszOrVG/67WxXdKBioT/+3n4e3dobyYhzX7iuLOYtK7uHYQz6u5/mM9yMy5KrmXaYS
-	 SqZBddnM1X7B0w6zYCxJ0PIKgBneQvJD11c4TFJI=
+	b=e9Pryudkc/9aJQwEMXTVwi8svGj5/jgOil0cooJHH8s4P8mXQpdZEOAGgQsUEyubC
+	 ItYPg75Xu11gNGPfjFwhFuySJeLLGC4VKnLsm3Lip8OzxlATQw65pmOyoJdByAbUVa
+	 G2xNP1g+83KOWOjF4hW+usS/2NnoFHaeRQ3KmHpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	Kai Huang <kai.huang@intel.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 338/869] fbdev: omap2: fix inconsistent lock returns in omapfb_mmap
-Date: Sat, 17 Oct 2026 17:52:59 +0200
-Message-ID: <20261017160045.747700201@linuxfoundation.org>
+Subject: [PATCH 6.12 374/869] KVM: x86: Move update_cr8_intercept() to lapic.c
+Date: Sat, 17 Oct 2026 17:53:35 +0200
+Message-ID: <20261017160046.702945243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,40 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 98cf7df6e0844f7076df1db690c1ede9d69b61ff ]
+[ Upstream commit c7722e5e1daeeabbd9f969554d52bb7158120b27 ]
 
-Fix the warning about inconsistent returns for '&rg->lock' in
-omapfb_mmap() function. The warning arises because the error path
-uses 'ofbi->region' while the normal path uses 'rg'.
+Move update_cr8_intercept() to lapic.c so that it's globally visible
+in anticipation of extracting most of the register-specific code out of
+x86.c and into a new compilation unit.  Opportunistically prefix the
+helper kvm_lapic_ to make its role/scope more obvious.
 
-smatch warnings:
-drivers/video/fbdev/omap2/omapfb/omapfb-main.c:1126 omapfb_mmap()
-warn: inconsistent returns '&rg->lock'.
+No functional change intended.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: 7958e67375aa ("fbdev: omap2: fix use-after-free in omapfb_mmap")
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260529222223.870923-14-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: bb365a506b1e ("KVM: x86: Unconditionally recompute CR8 intercept on PPR update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap2/omapfb/omapfb-main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/lapic.c | 26 ++++++++++++++++++++++++++
+ arch/x86/kvm/lapic.h |  1 +
+ arch/x86/kvm/regs.c  |  2 +-
+ arch/x86/kvm/x86.c   | 31 ++-----------------------------
+ arch/x86/kvm/x86.h   |  1 -
+ 5 files changed, 30 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-index 211f23648686c..79688c2cc6d68 100644
---- a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-+++ b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-@@ -1121,7 +1121,7 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
- 	return 0;
- 
- error:
--	omapfb_put_mem_region(ofbi->region);
-+	omapfb_put_mem_region(rg);
- 
- 	return r;
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 58af5b4b7bdbd..574111144a903 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2608,6 +2608,32 @@ u64 kvm_lapic_get_cr8(struct kvm_vcpu *vcpu)
+ 	return (tpr & 0xf0) >> 4;
  }
+ 
++void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu)
++{
++	int max_irr, tpr;
++
++	if (!kvm_x86_ops.update_cr8_intercept)
++		return;
++
++	if (!lapic_in_kernel(vcpu))
++		return;
++
++	if (vcpu->arch.apic->apicv_active)
++		return;
++
++	if (!vcpu->arch.apic->vapic_addr)
++		max_irr = kvm_lapic_find_highest_irr(vcpu);
++	else
++		max_irr = -1;
++
++	if (max_irr != -1)
++		max_irr >>= 4;
++
++	tpr = kvm_lapic_get_cr8(vcpu);
++
++	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
++}
++
+ static void __kvm_apic_set_base(struct kvm_vcpu *vcpu, u64 value)
+ {
+ 	u64 old_value = vcpu->arch.apic_base;
+diff --git a/arch/x86/kvm/lapic.h b/arch/x86/kvm/lapic.h
+index 99c07ee76e02d..a0668b0b1d36b 100644
+--- a/arch/x86/kvm/lapic.h
++++ b/arch/x86/kvm/lapic.h
+@@ -94,6 +94,7 @@ int kvm_apic_accept_events(struct kvm_vcpu *vcpu);
+ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event);
+ u64 kvm_lapic_get_cr8(struct kvm_vcpu *vcpu);
+ void kvm_lapic_set_tpr(struct kvm_vcpu *vcpu, unsigned long cr8);
++void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu);
+ void kvm_lapic_set_eoi(struct kvm_vcpu *vcpu);
+ void kvm_recalculate_apic_map(struct kvm *kvm);
+ void kvm_apic_set_version(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
+index 5001fe33c7f28..6d71bdb9f72c8 100644
+--- a/arch/x86/kvm/regs.c
++++ b/arch/x86/kvm/regs.c
+@@ -621,7 +621,7 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
+ 	kvm_set_segment(vcpu, &sregs->tr, VCPU_SREG_TR);
+ 	kvm_set_segment(vcpu, &sregs->ldt, VCPU_SREG_LDTR);
+ 
+-	update_cr8_intercept(vcpu);
++	kvm_lapic_update_cr8_intercept(vcpu);
+ 
+ 	/* Older userspace won't unhalt the vcpu on reset. */
+ 	if (kvm_vcpu_is_bsp(vcpu) && kvm_rip_read(vcpu) == 0xfff0 &&
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 65f5a18824266..796bca8b9a865 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4697,7 +4697,7 @@ static int kvm_vcpu_ioctl_set_lapic(struct kvm_vcpu *vcpu,
+ 	r = kvm_apic_set_state(vcpu, s);
+ 	if (r)
+ 		return r;
+-	update_cr8_intercept(vcpu);
++	kvm_lapic_update_cr8_intercept(vcpu);
+ 
+ 	return 0;
+ }
+@@ -9765,33 +9765,6 @@ static void post_kvm_run_save(struct kvm_vcpu *vcpu)
+ 		kvm_run->flags |= KVM_RUN_X86_GUEST_MODE;
+ }
+ 
+-void update_cr8_intercept(struct kvm_vcpu *vcpu)
+-{
+-	int max_irr, tpr;
+-
+-	if (!kvm_x86_ops.update_cr8_intercept)
+-		return;
+-
+-	if (!lapic_in_kernel(vcpu))
+-		return;
+-
+-	if (vcpu->arch.apic->apicv_active)
+-		return;
+-
+-	if (!vcpu->arch.apic->vapic_addr)
+-		max_irr = kvm_lapic_find_highest_irr(vcpu);
+-	else
+-		max_irr = -1;
+-
+-	if (max_irr != -1)
+-		max_irr >>= 4;
+-
+-	tpr = kvm_lapic_get_cr8(vcpu);
+-
+-	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
+-}
+-
+-
+ int kvm_check_nested_events(struct kvm_vcpu *vcpu)
+ {
+ 	if (kvm_test_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
+@@ -10494,7 +10467,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 			kvm_x86_call(enable_irq_window)(vcpu);
+ 
+ 		if (kvm_lapic_enabled(vcpu)) {
+-			update_cr8_intercept(vcpu);
++			kvm_lapic_update_cr8_intercept(vcpu);
+ 			kvm_lapic_sync_to_vapic(vcpu);
+ 		}
+ 	}
+diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
+index abab4bd96d0ac..75dc2219c51c5 100644
+--- a/arch/x86/kvm/x86.h
++++ b/arch/x86/kvm/x86.h
+@@ -641,6 +641,5 @@ int kvm_vcpu_ioctl_x86_set_debugregs(struct kvm_vcpu *vcpu,
+ 				     struct kvm_debugregs *dbgregs);
+ void kvm_invalidate_pcid(struct kvm_vcpu *vcpu, unsigned long pcid);
+ void kvm_handle_exception_payload_quirk(struct kvm_vcpu *vcpu);
+-void update_cr8_intercept(struct kvm_vcpu *vcpu);
+ 
+ #endif
 -- 
 2.53.0
 
