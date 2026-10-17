@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE9D3AA9D8;
-	Sat, 17 Oct 2026 16:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C70E339365;
+	Sat, 17 Oct 2026 16:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253616; cv=none; b=IqVCs+DP0GI5/TUQ5Iez4FfugH+CPOLdF5DdJdk1he7CicM+Tw+2wfgjcVPWvBHN1KiBH1QzLKQzmZygqTfMV+UQk7Nnk+kLPhPpfiMmx8ql3Zu/tiNgIlJqveeUmRQiHUNGJAFWpkursRimj01CPiCYW0EokN9gqbQECDZZpfg=
+	t=1792253619; cv=none; b=BIx3SP58o89/mvBVgXPSKAZpJnRJki+lFJ7I8BQAkfA18NRxBC1Lty1952fOn0UzR2OfVXYKCARRQP9TMX80PszGz7cw81Ih+ymOxmLYrVcKHqcjNEMa64v3qgaU3l8J/p8FH+PyLrD/vulb0kk+IFMv6oZU0AVmXGdg6k+5B6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253616; c=relaxed/simple;
-	bh=iGDLiCZNlXTn7uPB5/vyv6/5om6MQe8wJIoJOTamKt4=;
+	s=arc-20240116; t=1792253619; c=relaxed/simple;
+	bh=6W8b2RR68dirvqL26OKgvPlWiOmjuYhgaVsUov82+34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szSCgrMpWTxlQa/9sSzPPnEnEAaGMFPDPymtwaad5O/kK81CL5oHg/z/BB9z19zEOmaIixqxpkRr9MsosOcqP1g/rNvfkdB718CuHUVrJBiYl0sV2lg40ujaqw5feFlMgcNrQ11aQ8Ly3VAQf3JXR/0/trH+BnfztRgGIEgfgtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yeh/jM06; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jP3ffvHG0muksBtnsx+DXZfV7XFrSREr4PhSipn9VKgsLhurvh/3VDoA7Ad5ftW5SFQ/DRsZPebC1gNyg47pYxmUfzNGc5omQBOzLWc145zTXP0GJ+oTwzyaj7QR9rPZnFB9dK0TwBDrVwPL6rOZnNzstPy+OujYjlTe2JPw7tM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRVGOraU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yeh/jM06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB3E1F000C4;
-	Sat, 17 Oct 2026 16:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRVGOraU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC451F000C6;
+	Sat, 17 Oct 2026 16:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253607;
-	bh=FXga8nPyqFu0sz/WkwlWG9ni24qzeY7GM8fF8JJ5xjY=;
+	s=korg; t=1792253616;
+	bh=s4PJUOw5WVMAQB5jnU/J2pt4ua+PMX62qewetnq1kMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yeh/jM06pkzt+BfgQH00S42D2uXc34AZaWxPWHXhTPzTqUSsGsOVdNgkU3Bc7mlAE
-	 oVzhB0askVHLCTzIfrdP2X0RCi7mAofw8dQWgsv+m5jbry2vG1r4JbK2ZZZ0KuY0HC
-	 a/zFjPS82GqlL3t7Cx4uEwMtbj0QRi6xFPMRvxP4=
+	b=jRVGOraUm1G+LqlBvsoWq9D1s/C8v2q+N3ClBCy+WHoWJdIgjsvg4Dqs+cMa8xwlD
+	 yFRxKDWvvdBS1ofGTJyVbUqHm7b6HlTW5XBy++W0ioIQqtAUNg1iJbLYLCFMWUPCgD
+	 xCi2n10nmdNS0iP2LIA3Nwku77UJXw51hLq0FYRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Vivek Kumar <iamvivekkumar@google.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/869] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
-Date: Sat, 17 Oct 2026 17:50:15 +0200
-Message-ID: <20261017160041.514057535@linuxfoundation.org>
+Subject: [PATCH 6.12 177/869] idpf: fix error handling in the init_task on load
+Date: Sat, 17 Oct 2026 17:50:18 +0200
+Message-ID: <20261017160041.592896119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,106 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
+[ Upstream commit 4d792219fe6f891b5b557a607ac8a0a14eda6e38 ]
 
-issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
-xmit_frame together with its xmit_buf from the driver's fixed-size
-management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
-is handed to dump_mgntframe(), which transfers ownership and eventually
-returns both objects to their pools (the frame and, for beacons, the buf
-in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
-path).
+If the init_task fails during a driver load, we end up without vports and
+netdevs, effectively failing the entire process. In that state a
+subsequent reset will result in a crash as the service task attempts to
+access uninitialized resources. Following trace is from an error in the
+init_task where the CREATE_VPORT (op 501) is rejected by the FW:
 
-Several error/edge paths return early after a successful
-alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
-transferred and neither object is freed:
+[40922.763136] idpf 0000:83:00.0: Device HW Reset initiated
+[40924.449797] idpf 0000:83:00.0: Transaction failed (op 501)
+[40958.148190] idpf 0000:83:00.0: HW reset detected
+[40958.161202] BUG: kernel NULL pointer dereference, address: 00000000000000a8
+...
+[40958.168094] Workqueue: idpf-0000:83:00.0-vc_event idpf_vc_event_task [idpf]
+[40958.168865] RIP: 0010:idpf_vc_event_task+0x9b/0x350 [idpf]
+...
+[40958.177932] Call Trace:
+[40958.178491]  <TASK>
+[40958.179040]  process_one_work+0x226/0x6d0
+[40958.179609]  worker_thread+0x19e/0x340
+[40958.180158]  ? __pfx_worker_thread+0x10/0x10
+[40958.180702]  kthread+0x10f/0x250
+[40958.181238]  ? __pfx_kthread+0x10/0x10
+[40958.181774]  ret_from_fork+0x251/0x2b0
+[40958.182307]  ? __pfx_kthread+0x10/0x10
+[40958.182834]  ret_from_fork_asm+0x1a/0x30
+[40958.183370]  </TASK>
 
-  - issue_beacon(): beacon larger than 512 bytes
-  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
-  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
-  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+Fix the error handling in the init_task to make sure the service and
+mailbox tasks are disabled if the error happens during load. These are
+started in idpf_vc_core_init(), which spawns the init_task and has no way
+of knowing if it failed. If the error happens on reset, following
+successful driver load, the tasks can still run, as that will allow the
+netdevs to attempt recovery through another reset. Stop the PTP callbacks
+either way as those will be restarted by the call to idpf_vc_core_init()
+during a successful reset.
 
-Because alloc_mgtxmitframe() removes the frame and buf from their free
-lists (list_del_init) without placing them on any pending list, an
-orphaned pair is on no list and referenced by nobody, so it is only
-reclaimed at driver teardown. Repeated hits progressively exhaust the
-management-TX pools until alloc_mgtxmitframe() returns NULL and the
-interface can no longer send beacons or probe/assoc responses.
-
-Free the frame and buffer on these paths, matching the existing correct
-error handling in issue_assocreq().
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
+Reported-by: Vivek Kumar <iamvivekkumar@google.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index 22c29d1955f5b..740868a156dcd 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -2258,8 +2258,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 36777ca10f32a..b7da39ba06169 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1624,10 +1624,9 @@ void idpf_init_task(struct work_struct *work)
+ 		set_bit(IDPF_VPORT_REG_NETDEV, vport_config->flags);
+ 	}
  
- 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
- 
--	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
-+	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
+-	/* As all the required vports are created, clear the reset flag
+-	 * unconditionally here in case we were in reset and the link was down.
+-	 */
++	/* Clear the reset and load bits as all vports are created */
+ 	clear_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
++	clear_bit(IDPF_HR_DRV_LOAD, adapter->flags);
+ 	/* Start the statistics task now */
+ 	queue_delayed_work(adapter->stats_wq, &adapter->stats_task,
+ 			   msecs_to_jiffies(10 * (pdev->devfn & 0x07)));
+@@ -1641,6 +1640,14 @@ void idpf_init_task(struct work_struct *work)
+ 				idpf_vport_dealloc(adapter->vports[index]);
+ 		}
+ 	}
++	/* Cleanup after vc_core_init, which has no way of knowing the
++	 * init task failed on driver load.
++	 */
++	if (test_and_clear_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
++		cancel_delayed_work_sync(&adapter->serv_task);
++		cancel_delayed_work_sync(&adapter->mbx_task);
 +	}
++
+ 	clear_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
+ }
  
- 	pattrib->last_txcmdsz = pattrib->pktlen;
+@@ -1790,7 +1797,7 @@ static void idpf_init_hard_reset(struct idpf_adapter *adapter)
+ 	dev_info(dev, "Device HW Reset initiated\n");
  
-@@ -2322,8 +2325,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 	pframe += pattrib->hdrlen;
- 
- 
--	if (cur_network->ie_length > MAX_IE_SZ)
-+	if (cur_network->ie_length > MAX_IE_SZ) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
- 
- 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
- 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
-@@ -2370,8 +2376,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
- 
- 			buf = rtw_zmalloc(MAX_IE_SZ);
--			if (!buf)
-+			if (!buf) {
-+				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+				rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 				return;
-+			}
- 
- 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
- 				(pframe-ies)-_FIXED_IE_LENGTH_);
-@@ -2764,10 +2773,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
- 
- 	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
- 	pmlmeext->mgnt_seq++;
--	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
-+	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
- 		SetFrameSubType(pwlanhdr, pkt_type);
--	else
-+	} else {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
- 
- 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
- 	pattrib->pktlen += pattrib->hdrlen;
+ 	/* Prepare for reset */
+-	if (test_and_clear_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
++	if (test_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
+ 		reg_ops->trigger_reset(adapter, IDPF_HR_DRV_LOAD);
+ 	} else if (test_and_clear_bit(IDPF_HR_FUNC_RESET, adapter->flags)) {
+ 		bool is_reset = idpf_is_reset_detected(adapter);
 -- 
 2.53.0
 
