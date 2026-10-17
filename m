@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5584A3905EB;
-	Sat, 17 Oct 2026 16:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063C022F767;
+	Sat, 17 Oct 2026 16:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254508; cv=none; b=KUrWaOIvj6G5tQb89jSoSQ88wRdMmO1khrNmcdiqaJ2SmU+YlYhwCVUidJpR/axO9fTTXiEepefRu/kTM6FG4ObGicWT8t+4xxVYSJ6cD3p4taaBVaQAJ3J1bwDwIot1llrptlRQlXFWv6HMakVUqF+wwtVHBgoPG/ay6gykDVw=
+	t=1792254512; cv=none; b=Ek1W/cG587zOfAVpXuCR0z+HbI/vGg5g3LtafDpEFrbgA+wwydfiD+AON/JW9Xzc5LOIMRBqyI7u+244zEMnvgo2BUtBU0pIVtCmATzVCWcO4RRHEAvz6e2rozmBDApUXz41aqXlS1U/Ze0fibR+597wmSa9AcrU2BQQ3Zh8kgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254508; c=relaxed/simple;
-	bh=T/5geJE9R5f0JDviuLrKvZZ6pShdf8jN8p3PEK9gL50=;
+	s=arc-20240116; t=1792254512; c=relaxed/simple;
+	bh=P+tNR0mwVcSPLTSj05d5RzexAvf70GGBgAvZlxpAfAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP69lJa2vAUKwObHxCiTXml0CQ+rF+JeRbBWyCy+7sl3FtfqAKquu/NmYqATDyNEljk9fA1EvbWwpIkeg+joUMJcjiZ2CO02uCVrouB+0EtiCJYI6fZJbLSPvOmmLNwL0STgxMoB0MJwadoLAkenuNXjrlwGLSdZNXvVF4jWF2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNRha2rV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lLKnRa7s5z+zTJJFBEk0SC3tVWWJfQqGuebLNUFnm2bcMgYzu/DFaGLHMLPFfb8jGFi8nsw1Gg05qGMIonFCs7kU6gvDlPVBDeKzCGnFHeKX3kKfvMTjz/NI8N4orgGDgqTrQJQu7AQSXuQD/q6LEIL2+VVFaUo+Gjh1YDr49ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qner6ZiE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNRha2rV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC38F1F000C4;
-	Sat, 17 Oct 2026 16:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qner6ZiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D4D1F000C4;
+	Sat, 17 Oct 2026 16:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254507;
-	bh=6dCnzzJ0lbqjm7P9+dQ+wOtdZjgQxU+/N3abGFmNXfo=;
+	s=korg; t=1792254510;
+	bh=Pk38Yw873Mntv9wUbeFl/aD6OGzmDwIP36Klw4XAVSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNRha2rV62yCbynpoZ0rHnrgeqqUNBoA2QV+pxYKDPwYDC8wnxvymTNee5c1Tn0h8
-	 ITVR50nB8YGQe1AMCv4Wosm6ndvkqcQWIs5ZlRaGm3vN8kSvx2piurvgDBiQTcbWLf
-	 Mu4SY22pUf3FPjXgAo7NONbWr/pKVdGHYrWUaeGA=
+	b=qner6ZiEdXyqQ+mqA051XS6Z0VwktNeHqSL+IXRhndbkWPetMz2f34TwocBAF5nNm
+	 mrwcwmEBGoC3Q/hySIJYqoDYySKmM6JnWtDv9iWfq1qAPzyeHbOL2wh/jWCu7LMs/I
+	 nd8UMi++y3daCj+7YfItecQvawnY4+upEUps7oos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 430/869] ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec
-Date: Sat, 17 Oct 2026 17:54:31 +0200
-Message-ID: <20261017160048.167309911@linuxfoundation.org>
+Subject: [PATCH 6.12 431/869] KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling
+Date: Sat, 17 Oct 2026 17:54:32 +0200
+Message-ID: <20261017160048.192944692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -59,90 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 452a8467be8143747292218212671deeb186d2ae ]
+[ Upstream commit 7258770e5814f15e8308ebda82ac9acf6964ba8e ]
 
-[BUG]
-On-disk corruption setting l_next_free_rec to 0 in an inode's embedded
-extent list triggers a UBSAN panic on the next write to that file.
+Hyunwoo Kim reports some really bad races should the following
+situation occur:
 
-[CAUSE]
-ocfs2_sum_rightmost_rec() computes
-i = le16_to_cpu(el->l_next_free_rec) - 1
-and accesses el->l_recs[i] without validating i. When l_next_free_rec
-is 0, i becomes -1; when l_next_free_rec exceeds l_count, i falls
-past the end of the array. Either case violates the
-__counted_by_le(l_count) annotation on l_recs[] and triggers UBSAN.
+- LPI-I is pending in vcpu-B's AP list
+- vcpu-A writes to vcpu-B's RD to disable its LPIs
+- vcpu-C moves I from B to C
 
-[FIX]
-Validate the inode's embedded extent list when the inode is read, in
-ocfs2_validate_inode_block(): l_count must be non-zero and no larger
-than the inode block can hold, and l_next_free_rec must not exceed
-l_count. A corrupt list is rejected at read time, before the b-tree
-code can index l_recs[] out of bounds.
+If the last two race nicely enough, vgic_prune_ap_list() can drop
+the irq and AP list locks, reacquire them, and in the interval
+the irq has been freed. UAF follows.
 
-Link: https://lore.kernel.org/ain_780qc0P4ypNd@dev
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Reported-by: syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=be16e33db01e6644db7a
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The fix is two-fold:
+
+- Before dropping the irq and ap_list locks, take a reference on
+  the irq
+
+- Do not try to handle migration of the pending bit: there is no
+  expectation that this state is retained, as per the architecture
+
+With that, we're sure that the interrupt is still around, and we
+safely remove it from the AP list as it has no target at this
+stage (unless another interrupt fires, but that's another story).
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Tested-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/r/ailsCnyoS82r_QRz@v4bel
+Link: https://patch.msgid.link/20260615181625.3029352-1-maz@kernel.org
+Fixes: 5dd4b924e390a ("KVM: arm/arm64: vgic: Add refcounting for IRQs")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/arm64/kvm/vgic/vgic.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 03a3fc96e534f..4f7b03f34a4c0 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1609,6 +1609,38 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		goto bail;
- 	}
+diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+index 497b7af5caa4d..967d8111642cf 100644
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -144,6 +144,7 @@ void vgic_flush_pending_lpis(struct kvm_vcpu *vcpu)
+ 	list_for_each_entry_safe(irq, tmp, &vgic_cpu->ap_list_head, ap_list) {
+ 		if (irq->intid >= VGIC_MIN_LPI) {
+ 			raw_spin_lock(&irq->irq_lock);
++			irq->pending_latch = false;
+ 			list_del(&irq->ap_list);
+ 			irq->vcpu = NULL;
+ 			raw_spin_unlock(&irq->irq_lock);
+@@ -661,7 +662,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+ 			continue;
+ 		}
  
-+	if (ocfs2_dinode_has_extents(di)) {
-+		struct ocfs2_extent_list *el = &di->id2.i_list;
-+		u16 count = le16_to_cpu(el->l_count);
-+		u16 next_free = le16_to_cpu(el->l_next_free_rec);
-+
-+		if (count == 0) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_count is zero\n",
-+					 (unsigned long long)bh->b_blocknr);
-+			goto bail;
-+		}
+-		/* This interrupt looks like it has to be migrated. */
 +		/*
-+		 * The exact capacity depends on i_xattr_inline_size, another
-+		 * unvalidated on-disk field. Inline xattrs only shrink the
-+		 * list, so the no-xattr maximum is a safe upper bound that a
-+		 * valid l_count never exceeds.
++		 * This interrupt looks like it has to be migrated,
++		 * make sure it is kept alive while locks are dropped.
 +		 */
-+		if (count > ocfs2_extent_recs_per_inode(sb)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_count %u exceeds max %u\n",
-+					 (unsigned long long)bh->b_blocknr, count,
-+					 ocfs2_extent_recs_per_inode(sb));
-+			goto bail;
-+		}
-+		if (next_free > count) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_next_free_rec %u exceeds l_count %u\n",
-+					 (unsigned long long)bh->b_blocknr, next_free, count);
-+			goto bail;
-+		}
-+	}
-+
- 	rc = 0;
++		vgic_get_irq_kref(irq);
  
- bail:
+ 		raw_spin_unlock(&irq->irq_lock);
+ 		raw_spin_unlock(&vgic_cpu->ap_list_lock);
+@@ -706,6 +711,8 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+ 		raw_spin_unlock(&vcpuB->arch.vgic_cpu.ap_list_lock);
+ 		raw_spin_unlock(&vcpuA->arch.vgic_cpu.ap_list_lock);
+ 
++		vgic_put_irq(vcpu->kvm, irq);
++
+ 		if (target_vcpu_needs_kick) {
+ 			kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
+ 			kvm_vcpu_kick(target_vcpu);
 -- 
 2.53.0
 
