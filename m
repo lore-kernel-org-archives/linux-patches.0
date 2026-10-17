@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8635C1BC;
-	Sat, 17 Oct 2026 16:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4026A35C1BC;
+	Sat, 17 Oct 2026 16:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253820; cv=none; b=r/w/ikiFtv4I5hYyYVlbSYeg8rHGmmoy0RGF4O/pLXVDMwiIMpSqSjCDikbjgATX3bEN1ukzVKuoPUvG/VR/Q/AEY002Dhy73R9+4SUi7zvks1S0NeF21c+BovOX0y3jb3emPO+0d5uToQvQC/GrXj5lMurCwFW6fB+v7Y/iE98=
+	t=1792253822; cv=none; b=OMt+L7UWVICWn6I88WtO9xJtIN6jTVcVaKvguGtKSMRli5nblDpW9esVq5fpA0wfEWV8KZYvAsElV+CEVBRvc9j0EkHfUu7obkdLKtsORIdGVycfZz/Urrwzxrkzns8NcMSmKYqDAcXUjJOuWr3GpLlbp2Bxk9ZQRxtNckEEgx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253820; c=relaxed/simple;
-	bh=fMdMWUybbVv3VtpgaiIFsgpAO4JRvBEdNIv6RarpRaw=;
+	s=arc-20240116; t=1792253822; c=relaxed/simple;
+	bh=3GU9lxImVo/aFCDSS3SXrZK1VxER7W//R/P8bA3ARPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZevvtXglZ4Xy098NRHMduOPqNriUH49AMQYoKmXE4o20CEcVFh8K1K01y0j7T+LE761tN9yijG9Ev3+mvo2evsViHyb11B5XHTem0ToTSh0U8VzEXqhTNgrRovw7DtrajNt6W09/mFbD2zQb/xFB0ELS0DzZzH/2rJ2J1C0Wms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RACaEC8o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eYDy8XZMCohC+3ASvkfU2+zN0tWyjyavwbQrs4v1wz9AXIKAjSDlSoU792MDJ1t2Y/mgCqtD4XgXOfI1tly7Te3BoVww9pnsrXlB/kWN6w7bqTSxIFhkilnWES5ffXkw3z7RcN/q8D+AJndqaL0Gk+viSXvmBTPVqz4x/lLvgiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrcwV/Do; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RACaEC8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B46F1F000C4;
-	Sat, 17 Oct 2026 16:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrcwV/Do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1011F000C4;
+	Sat, 17 Oct 2026 16:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253818;
-	bh=ti2y8AHhDPr/gRHqMp3hiMpVqEkx+rqXptlx0j4n5Xw=;
+	s=korg; t=1792253821;
+	bh=5ShFhOttLEPtpBytHn1/l866QrIDJQZCQeBugro1ADQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RACaEC8ocuwF2smIXqxcZryfCgaCr4ktrgyfpj8mOgFXMfn1Jyp7EuIHDzAJDJPzM
-	 +0BMwLBwgWEXwgc8ZNz1Kl8ThOvy4PJ+Bhdz5nsJt90+qIyGIAAGXxH4Xcqe6V5NF5
-	 /XvQ2n92qyxvtF0GyW3KVz8idyTLTAinQ9/jJXR4=
+	b=LrcwV/DoCPLLwB4L9LpmKiYw1Pc+0na/sExhs11djLUR/PNNg1sivHjqmE5aGwRCq
+	 ZjhK9EgWr0QT8BddWuROllR3rwhQxADWy5xQQpXf+M17/nbiOMCyMojnEJ0hSymbbP
+	 HQz6VxlQYU/mJsNaxEefXO53xbtN1VAJt109FeAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yihan Zhu <yihan.zhu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 241/869] ksmbd: fix signededness bug in smb_direct_prepare_negotiation()
-Date: Sat, 17 Oct 2026 17:51:22 +0200
-Message-ID: <20261017160043.236525895@linuxfoundation.org>
+Subject: [PATCH 6.12 242/869] drm/amd/display: Adjust PHY FSM transition to TX_EN-to-PLL_ON for TMDS on DCN35
+Date: Sat, 17 Oct 2026 17:51:23 +0200
+Message-ID: <20261017160043.264607348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,49 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 6b4f875aac344cdd52a1f34cc70ed2f874a65757 ]
+[ Upstream commit 75372d75a4e23783583998ed99d5009d555850da ]
 
-smb_direct_prepare_negotiation() casts an unsigned __u32 value
-from sp->max_recv_size and req->preferred_send_size to a signed
-int before computing min_t(int, ...). A maliciously provided
-preferred_send_size of 0x80000000 will return as smaller than
-max_recv_size, and then be used to set the maximum allowed
-alowed receive size for the next message.
+[Why]
+A backport of the change made for DCN401 that addresses an issue where
+we turn off the PHY PLL when disabling TMDS output, which causes the
+OTG to remain stuck.
 
-By sending a second message with a large value (>1420 bytes)
-the attacker can then achieve a heap buffer overflow.
+The OTG being stuck can lead to a hang in the DCHVM's ability to ACK
+invalidations when it thinks the HUBP is still on but it's not receiving
+global sync.
 
-This fix replaces min_t(int, ...) with min_t(u32)
+The transition to PLL_ON needs to be atomic as there's no guarantee
+that the thread isn't pre-empted or is able to complete before the
+IOMMU watchdog times out.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[How]
+Backport the implementation from dcn401 back to dcn35.
+
+There's a functional difference in when the eDP output is disabled in
+dcn401 code so we don't want to utilize it directly.
+
+Reviewed-by: Yihan Zhu <yihan.zhu@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../amd/display/dc/hwss/dcn35/dcn35_hwseq.c   | 52 +++++++++++++++++++
+ .../amd/display/dc/hwss/dcn35/dcn35_hwseq.h   |  4 ++
+ .../amd/display/dc/hwss/dcn35/dcn35_init.c    |  2 +-
+ 3 files changed, 57 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 3976009596d99..585617595727b 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -1977,9 +1977,9 @@ static int smb_direct_prepare(struct ksmbd_transport *t)
- 		goto out;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+index c739e5b2c5595..0745980483898 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -1617,3 +1617,55 @@ bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx)
  
- 	req = (struct smb_direct_negotiate_req *)recvmsg->packet;
--	st->max_recv_size = min_t(int, st->max_recv_size,
-+	st->max_recv_size = min_t(u32, st->max_recv_size,
- 				  le32_to_cpu(req->preferred_send_size));
--	st->max_send_size = min_t(int, st->max_send_size,
-+	st->max_send_size = min_t(u32, st->max_send_size,
- 				  le32_to_cpu(req->max_receive_size));
- 	st->max_fragmented_send_size =
- 		le32_to_cpu(req->max_fragmented_size);
+ 	return false;
+ }
++
++static void disable_link_output_symclk_on_tx_off(struct dc_link *link, enum dp_link_encoding link_encoding)
++{
++	struct dc *dc = link->ctx->dc;
++	struct pipe_ctx *pipe_ctx = NULL;
++	uint8_t i;
++
++	for (i = 0; i < MAX_PIPES; i++) {
++		pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[i];
++		if (pipe_ctx->stream && pipe_ctx->stream->link == link && pipe_ctx->top_pipe == NULL) {
++			pipe_ctx->clock_source->funcs->program_pix_clk(
++					pipe_ctx->clock_source,
++					&pipe_ctx->stream_res.pix_clk_params,
++					link_encoding,
++					&pipe_ctx->pll_settings);
++			break;
++		}
++	}
++}
++
++void dcn35_disable_link_output(struct dc_link *link,
++		const struct link_resource *link_res,
++		enum signal_type signal)
++{
++	struct dc *dc = link->ctx->dc;
++	const struct link_hwss *link_hwss = get_link_hwss(link, link_res);
++	struct dmcu *dmcu = dc->res_pool->dmcu;
++
++	if (signal == SIGNAL_TYPE_EDP &&
++			link->dc->hwss.edp_backlight_control &&
++			!link->skip_implict_edp_power_control)
++		link->dc->hwss.edp_backlight_control(link, false);
++	else if (dmcu != NULL && dmcu->funcs->lock_phy)
++		dmcu->funcs->lock_phy(dmcu);
++
++	if (dc_is_tmds_signal(signal) && link->phy_state.symclk_ref_cnts.otg > 0) {
++		disable_link_output_symclk_on_tx_off(link, DP_UNKNOWN_ENCODING);
++		link->phy_state.symclk_state = SYMCLK_ON_TX_OFF;
++	} else {
++		link_hwss->disable_link_output(link, link_res, signal);
++		link->phy_state.symclk_state = SYMCLK_OFF_TX_OFF;
++	}
++	/*
++	 * Add the logic to extract BOTH power up and power down sequences
++	 * from enable/disable link output and only call edp panel control
++	 * in enable_link_dp and disable_link_dp once.
++	 */
++	if (dmcu != NULL && dmcu->funcs->unlock_phy)
++		dmcu->funcs->unlock_phy(dmcu);
++
++	dc->link_srv->dp_trace_source_sequence(link, DPCD_SOURCE_SEQ_AFTER_DISABLE_LINK_PHY);
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
+index e27b3609020ff..45e762f99119f 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
+@@ -99,4 +99,8 @@ void dcn35_set_long_vblank(struct pipe_ctx **pipe_ctx,
+ 
+ bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx);
+ 
++void dcn35_disable_link_output(struct dc_link *link,
++		const struct link_resource *link_res,
++		enum signal_type signal);
++
+ #endif /* __DC_HWSS_DCN35_H__ */
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
+index 2bbf1fef94fd2..e34f292f5c41a 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
+@@ -107,7 +107,7 @@ static const struct hw_sequencer_funcs dcn35_funcs = {
+ 	.enable_lvds_link_output = dce110_enable_lvds_link_output,
+ 	.enable_tmds_link_output = dce110_enable_tmds_link_output,
+ 	.enable_dp_link_output = dce110_enable_dp_link_output,
+-	.disable_link_output = dcn32_disable_link_output,
++	.disable_link_output = dcn35_disable_link_output,
+ 	.z10_restore = dcn35_z10_restore,
+ 	.z10_save_init = dcn31_z10_save_init,
+ 	.set_disp_pattern_generator = dcn30_set_disp_pattern_generator,
 -- 
 2.53.0
 
