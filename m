@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E749460;
-	Sat, 17 Oct 2026 17:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682DD3BFE2D;
+	Sat, 17 Oct 2026 17:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258852; cv=none; b=LrzbcFQXUAZEQcd/1PM1dQ4GseXZazpf8/5MpaKVtM2NvN+Gnz1iG/pK34VibVd8Qq5wXuydVYT9eIL1uN1NnjU2jHvTylcpcgQRQxyaK3A0/fkVBL6NAP+/d5NVkhkvVGlnGrWlbBu+NNa2VKAsyJKWrejQ5ldm7T5l4BP2ulE=
+	t=1792258855; cv=none; b=A4+0HjkBMIkyULXvuTKLNa0WAvVbNfjtgzZeXXl7aS5vCh3mcPvxcg0YTFaSoy0lzDK0L8/E72kWFIXlB8jpn4D3jSl4lPnUlkKxki+2X6JjfNfJeIbjTtoM62uvtqb7wMK7GKQ/w8zF53/zi+7z08xaO0gOj2QnjRGOUyBiRA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258852; c=relaxed/simple;
-	bh=VdpoZ5eyQ7/e2TCURPjhZiM92a35mNROWjQU2XJluSE=;
+	s=arc-20240116; t=1792258855; c=relaxed/simple;
+	bh=6IBGJUvAfxz2OzUaEet0o8VjbxUK1YcEX9CDNfO7AFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMu0R4tmarwZ2H/j8bfrmDqFEUDMS/Y2tzBta1n83CC+Vo8vtFrZLx3Z+Y4USRyX0A8b+ZS56Z9fgZZ5AesD5+pKIiMGJ6hrqthQNzcWY1SAPnJlMQ6WYeLjdoKNaAM/IC032bRvU/YrDT6Gx86ivyvhlKwfvYR+YdnRuk268Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpOmZQfe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/Z68JzHlWzRp02uEefko/QvhHFFvwkOuMBZ3ybKdi/QwLwlUyJaUOr3jTHtQTDRa3fYh3OX/EjHs/j1sAzI3y5lkZ8y+L8Kd0chv/S0/IkTMCmdTLspPIt3Q3QY92ukJsgiTf5kIek6RyyNRr/EkPwBy02tbkugMdJ86BEx+CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+4dDwdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpOmZQfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE4A1F000C4;
-	Sat, 17 Oct 2026 17:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+4dDwdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B887E1F000C4;
+	Sat, 17 Oct 2026 17:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258851;
-	bh=i+wgrccMdMeyOUMpPXLw6fOIbxRd7dytqMfvDXMhVU8=;
+	s=korg; t=1792258854;
+	bh=pLdUIRkr7bPJ6QaQzSh6R+8M7BiHVNe0vGmUqfFd0/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpOmZQfetSLqXywgpz44/Azt/0TaEzoam1tpqPr3Hnui93qVL0s2secCYt99BRq2M
-	 NULkTf6mib89E5RgIyTSjIP8v2KL6GCMPpCwrusZwuCB3rDCcD+pLW3F0wx5TQbf0R
-	 g7LonnDbHSBJg3U9Q9xAfYPip5f2Mn167AXEjz5o=
+	b=m+4dDwdzwmPRr3N6v9KmzennF5jBB7rQhXMMW6VbvIgC82/pJj2mtKNiBta7wKvFS
+	 kp4HIuzCkjzSZWS4AP54lFB/xRod5kK6h4Es4+g65gsrF2YxzeBsU1u8nYU+BIoxjO
+	 Yfm5N7iRTzGiVGPuKr+1VFS8KjxFHIELAY7qiYuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Junhao He <hejunhao3@h-partners.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0980/1674] tap: fix stack info leak in tap_ioctl() SIOCGIFHWADDR
-Date: Sat, 17 Oct 2026 17:54:12 +0200
-Message-ID: <20261017160456.279805552@linuxfoundation.org>
+Subject: [PATCH 6.6 0971/1674] coresight: tmc-etr: Fix race condition between sysfs and perf mode
+Date: Sat, 17 Oct 2026 17:54:03 +0200
+Message-ID: <20261017160456.049088005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,45 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit bddc09212c24934643bd44fc794748d2bbb3b6cd ]
+[ Upstream commit e6e43e82c79c97917cbe356c07e8a6f3f982ab53 ]
 
-In the SIOCGIFHWADDR path, tap_ioctl() copies 16 bytes of an
-uninitialised on-stack struct sockaddr_storage to userspace via
-ifr_hwaddr, but netif_get_mac_address() only writes sa_family and
-dev->addr_len (6 for Ethernet) bytes, leaving sa_data[6..13] uninitialised.
+When trying to run perf and sysfs mode simultaneously, the WARN_ON()
+in tmc_etr_enable_hw() is triggered sometimes:
 
-Those 8 trailing bytes leak kernel stack contents; SIOCGIFHWADDR on a
-macvtap chardev returns kernel .text and direct-map pointers, defeating
-KASLR.
+ WARNING: CPU: 42 PID: 3911571 at drivers/hwtracing/coresight/coresight-tmc-etr.c:1060 tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc]
+ [..snip..]
+ Call trace:
+  tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc] (P)
+  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc] (L)
+  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc]
+  coresight_enable_path+0x1c8/0x218 [coresight]
+  coresight_enable_sysfs+0xa4/0x228 [coresight]
+  enable_source_store+0x58/0xa8 [coresight]
+  dev_attr_store+0x20/0x40
+  sysfs_kf_write+0x4c/0x68
+  kernfs_fop_write_iter+0x120/0x1b8
+  vfs_write+0x2c8/0x388
+  ksys_write+0x74/0x108
+  __arm64_sys_write+0x24/0x38
+  el0_svc_common.constprop.0+0x64/0x148
+  do_el0_svc+0x24/0x38
+  el0_svc+0x3c/0x130
+  el0t_64_sync_handler+0xc8/0xd0
+  el0t_64_sync+0x1ac/0x1b0
+ ---[ end trace 0000000000000000 ]---
 
-Initialise ss at declaration.
+Since the enablement of sysfs mode is separeted into two critical regions,
+one for sysfs buffer allocation and another for hardware enablement, it's
+possible to race with the perf mode. Fix this by double check whether
+the perf mode's been used before enabling the hardware in sysfs mode.
 
-Fixes: 3b23a32a6321 ("net: fix dev_ifsioc_locked() race condition")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260520075736.3415676-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ mode:
+   [sysfs mode]                   [perf mode]
+   tmc_etr_get_sysfs_buffer()
+     spin_lock(&drvdata->spinlock)
+     [sysfs buffer allocation]
+     spin_unlock(&drvdata->spinlock)
+                                  spin_lock(&drvdata->spinlock)
+                                  tmc_etr_enable_hw()
+                                    drvdata->etr_buf = etr_perf->etr_buf
+                                  spin_unlock(&drvdata->spinlock)
+   spin_lock(&drvdata->spinlock)
+   tmc_etr_enable_hw()
+     WARN_ON(drvdata->etr_buf) // WARN sicne etr_buf initialized at
+                                  the perf side
+   spin_unlock(&drvdata->spinlock)
+
+With this fix, we retain the check for CS_MODE_PERF in get_etr_sysfs_buf.
+This ensures we verify whether the perf mode's already running before we
+actually allocate the buffer. Then we can save the time of
+allocating/freeing the sysfs buffer if race with the perf mode.
+
+Fixes: 296b01fd106e ("coresight: Refactor out buffer allocation function for ETR")
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Junhao He <hejunhao3@h-partners.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260121101543.2017014-3-wangyushan12@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 5f01c875e49ee..40aea069c3ad3 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -1015,7 +1015,7 @@ static long tap_ioctl(struct file *file, unsigned int cmd,
- 	unsigned int __user *up = argp;
- 	unsigned short u;
- 	int __user *sp = argp;
--	struct sockaddr sa;
-+	struct sockaddr sa = {};
- 	int s;
- 	int ret;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index e9b8a396e4ba8..f8e59cf69b93d 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -1212,6 +1212,15 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
  
+ 	spin_lock_irqsave(&drvdata->spinlock, flags);
+ 
++	/*
++	 * Since the sysfs buffer allocation and the hardware enablement is not
++	 * in the same critical region, it's possible to race with the perf.
++	 */
++	if (drvdata->mode == CS_MODE_PERF) {
++		spin_unlock_irqrestore(&drvdata->spinlock, flags);
++		return -EBUSY;
++	}
++
+ 	/*
+ 	 * In sysFS mode we can have multiple writers per sink.  Since this
+ 	 * sink is already enabled no memory is needed and the HW need not be
 -- 
 2.53.0
 
