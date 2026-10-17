@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1B3394785;
-	Sat, 17 Oct 2026 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0363ACEE0;
+	Sat, 17 Oct 2026 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256205; cv=none; b=Lazzyv22XaGo5jiQd20JOYyvQPctLf1K7Z2Z5xW5VcZ6Fmveyu3/LUnDNlTCKYl2xghrdOkje75A77s0QM1FniNtLPrn5F2wzUTyhBbY6Y5HBb2EC/owwd5F9iVBWIzCcu6DKRFYHukmYb7UVNMcZv8gcpqeBO50x6IusxdpRPE=
+	t=1792256208; cv=none; b=CMDNqcrhQp3dcOSUkt2A1sDzP2Vmk7j+nzsUCXAWodk5d151rlLwcIgsCcj76D54O3FzP0KBTHKhZqAmDgzJDbBpaWXExgve8dwaZFpix4f4YW42efMr77z6p0om8nPOjMVr9TAUcxnr/joU0cV9i24Mlk02mfaz3bYl53bKuwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256205; c=relaxed/simple;
-	bh=xmnjwWTbFc9YUK21CqJAL+BunstMu9ZBVtascjRBY74=;
+	s=arc-20240116; t=1792256208; c=relaxed/simple;
+	bh=YcQjTqYefTFSahPjroO+NZ3unbkS3Y9cQulzxqS1FLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qio5BHloBqLcropPzG/WsDLZ51wBhVEV+3ge/klmWcfaBKXr0sku9wTN1HWBc8Oo94HROhu8XWoT+ahCX6VGI5zS33qraXXVTUC8cWJ/3TLqSnK0ko8dWmaW14c4AzMQbUHrBc4EKWFwsITyfyL1cYL9IGN6YYvrWfcqejFx1Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HK3v/uw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TQ+ajrQ3nrSmefrdpo76QbKocLbnlZv+os/Byk6yGsA3c7ZAqpdCih6nmeVzGz75ovjZrK2qUO/etUqUj0Bq9mrHPfkCfSKwDEL2ucCcnV0g5pKzLN4IZIQXcsg42UV3ZiIE85ldZBF78/C6Inkol6m8Vx9DuuWbwWel4eWtsNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUUeuA3q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HK3v/uw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127B41F000C4;
-	Sat, 17 Oct 2026 16:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUUeuA3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357EA1F000C4;
+	Sat, 17 Oct 2026 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256204;
-	bh=J0eJtVxXZ2fptjSFmtzsk7t2QAC3Qblj2UOBI7kK3pY=;
+	s=korg; t=1792256207;
+	bh=mW4FkFuSdux2RAIRqOGKPOZIwupaoCqyLpRDt6jLLZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1HK3v/uwxi1jTRPMVEwBoho75FATM0HMTwfTLss6rlXpJQmsB6OxVJiUsNr70OlSx
-	 emp6M96YbXLS1tyyzm61DCuomxqOxJNYu0XXHu3vGG5vtb3o3MQevhHtkmyvbGNAx0
-	 J7B2U60A5d+ZrDh1anW2KJfO5cV6t6uJjQxeYPvQ=
+	b=AUUeuA3qMs/uF7VLRRZhvbfgcMInISB5w6OVFTur2U+LmVt2+8A/rLcRNfpuQk5ok
+	 YDW1Wlf9SQ3EZ7JwmUOL45qyUXgkcynI/Wl4t48zISr+1nzunW74J1Tu5BuED2u8Ds
+	 c4dTJWHxeS2JKJXCmEv166ooTOsDKjEdLNQ9uuiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0157/1674] HID: alps: unregister DualPoint Stick input device on remove
-Date: Sat, 17 Oct 2026 17:40:29 +0200
-Message-ID: <20261017160435.189788724@linuxfoundation.org>
+Subject: [PATCH 6.6 0158/1674] smb/client: use stack-allocated smb2_file_all_info in smb3_query_mf_symlink()
+Date: Sat, 17 Oct 2026 17:40:30 +0200
+Message-ID: <20261017160435.214655420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,67 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit aa9dde93e05a837645fdfd577eea71f0733f0694 ]
+[ Upstream commit fc8789bb57e625e5f32ac57ca2e7d3e7b7fda225 ]
 
-alps_input_configured() allocates a second input device ("DualPoint
-Stick") with input_allocate_device() and registers it, but the
-alps_driver struct has no .remove handler and input2 is not tracked in
-hdev->inputs.  The default remove path (hid_hw_stop -> hidinput_disconnect)
-only iterates hdev->inputs, so input2 is never unregistered and leaks
-on every device removal.
+SMB2_open() only fills the fixed fields, so a stack-allocated
+smb2_file_all_info is sufficient here.
 
-Add a .remove handler that stops the device first (preventing URB
-callbacks from touching input2 during teardown) and then unregisters
-input2.
-
-Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 566820af017e ("smb: client: close handle after create-context parsing failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-alps.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/smb/client/link.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hid/hid-alps.c b/drivers/hid/hid-alps.c
-index 35df84426196c..25da180175007 100644
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -825,6 +825,24 @@ static int alps_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	return 0;
+diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
+index 007da0a699cb0..e1b23e7bd1b61 100644
+--- a/fs/smb/client/link.c
++++ b/fs/smb/client/link.c
+@@ -343,7 +343,7 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 	int buf_type = CIFS_NO_BUFFER;
+ 	__le16 *utf16_path;
+ 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
+-	struct smb2_file_all_info *pfile_info = NULL;
++	struct smb2_file_all_info file_info = {};
+ 
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+@@ -359,20 +359,12 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 	if (utf16_path == NULL)
+ 		return -ENOMEM;
+ 
+-	pfile_info = kzalloc(sizeof(struct smb2_file_all_info) + PATH_MAX * 2,
+-			     GFP_KERNEL);
+-
+-	if (pfile_info == NULL) {
+-		kfree(utf16_path);
+-		return  -ENOMEM;
+-	}
+-
+-	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, pfile_info, NULL,
++	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, &file_info, NULL,
+ 		       NULL, NULL);
+ 	if (rc)
+ 		goto qmf_out_open_fail;
+ 
+-	if (pfile_info->EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
++	if (file_info.EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
+ 		/* it's not a symlink */
+ 		rc = -ENOENT; /* Is there a better rc to return? */
+ 		goto qmf_out;
+@@ -390,7 +382,6 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 	SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
+ qmf_out_open_fail:
+ 	kfree(utf16_path);
+-	kfree(pfile_info);
+ 	return rc;
  }
  
-+static void alps_remove(struct hid_device *hdev)
-+{
-+	struct alps_dev *data = hid_get_drvdata(hdev);
-+
-+	/*
-+	 * input2 ("DualPoint Stick") is allocated separately and is not
-+	 * tracked in hdev->inputs, so the default remove path
-+	 * (hid_hw_stop -> hidinput_disconnect) does not unregister it.
-+	 *
-+	 * Stop the device first so that no URB callback can touch input2
-+	 * while it is being unregistered, then drop it explicitly.
-+	 */
-+	hid_hw_stop(hdev);
-+
-+	if (data->input2)
-+		input_unregister_device(data->input2);
-+}
-+
- static const struct hid_device_id alps_id[] = {
- 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_ANY,
- 		USB_VENDOR_ID_ALPS_JP, HID_DEVICE_ID_ALPS_U1_DUAL) },
-@@ -847,6 +865,7 @@ static struct hid_driver alps_driver = {
- 	.input_configured	= alps_input_configured,
- 	.resume			= pm_ptr(alps_post_resume),
- 	.reset_resume		= pm_ptr(alps_post_reset),
-+	.remove			= alps_remove,
- };
- 
- module_hid_driver(alps_driver);
 -- 
 2.53.0
 
