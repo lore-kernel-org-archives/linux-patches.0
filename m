@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41723AAF67;
-	Sat, 17 Oct 2026 16:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56133AAF43;
+	Sat, 17 Oct 2026 16:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255061; cv=none; b=VistD3WRv39bKFPyXlR8blG0SZKNGzVxjFlKbupcFrMQLx0JJfv4eTiE12Gf8j2h5Eeb9XM1uLT4p63W5fSNuj7hq6O+fXkB0SBecOz+Rpv6ASQE3IV9Rj4R+bh0dck+JvC4XogVx1KIujft+KhKGpLogwGfxZhKGRnC4g1fcpk=
+	t=1792255064; cv=none; b=HqWXpVoaYekNbfwvG2iSey5mFWRofYJxdGLuy1znuikm5A+xr2gCA3V8P/1AoC8JGZtmEwlZwFHXTmEAX698BBD/EaZcjNpH3GApMcg4JVuYCZyK15sM9RJrWXXK7inPZu0B45AEAAEvD12g/7k3msfTyAPVljonwzH0fsau7UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255061; c=relaxed/simple;
-	bh=t5LpzYpIp0VE7fcXFE2VIjGeu/m7/0/WdUEhwlhux4A=;
+	s=arc-20240116; t=1792255064; c=relaxed/simple;
+	bh=lDmXF3CsVzembjgiUVuVIiUOBdpJDqAFhBP8hkBY5Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cM+QPlje1jb+UIHsq9wLKtLjzGApTgGyrVqNIxU+SkO8FgzQ9n3IYOIvjUvfPLfs3UgOKNE6RGJPBP+ZDQwcEdZcHYKL1ZM2WysOxWAdaegmcEd07E1mYxbuJ7TTBhDIxRCzL7N7xjQdG8WkVYoBE1TjgdOe2Y+rI4JIKI/Nch4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Di/1iEiX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=br7dMSmreuQmZG+egRC5KaU+C+eqXQ3bjjZfHox49N0kc3ioeo4qTQNy9VUmurjaZ7UzA2f4T1GRGN+/7OD9ZSsXrQoDUp6Mf7CpLflh2FOVIfb+1vFmeB/vbF13fXd2ekRdc2E8Kl6EsLFMQ82xWSXouIUMWjZoLG23xjE/p/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoKDY6zA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Di/1iEiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDCF1F000C4;
-	Sat, 17 Oct 2026 16:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoKDY6zA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B151F000C4;
+	Sat, 17 Oct 2026 16:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255060;
-	bh=cmVN+lFtU4Yi94o/d9LoJd+sd2yibUt70U/lNVgYXG8=;
+	s=korg; t=1792255063;
+	bh=B3FMZBzYvG5WRZlV3Gs0zd6aspuuarkgF6ayA0eNSMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Di/1iEiXWq7t26T40RIDg3wdaoKYhYnqMfe3pWfrGpcXOPnO2dtVJZao38eAl5tQT
-	 FPeeoeM5kHmbzrYiuynUaAEa8skehhc7Fm7YHMzMQcnkGIEad2QGx4OLFvu3qC1xSY
-	 0bcFAY1pEYlIgcXn7Z42pg6VSRqY4ivBVbK6jTC4=
+	b=CoKDY6zAEBibIMLj24SOsJyqYsD8ti99Az/F2Xsu2x7g8jPYnPCyCkw1nvRwwZZlC
+	 8jKw3WOVjq/tiN/rf/EBwOfq5XfGN/9Wqs8eu/09oTbLqwP+AbXSJeEP//bqKGwLfR
+	 5GlD+iXTBSzTmPEh9LA1X15+i88c8HzTDcfKsCw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	"ChiaHsuan (Tom) Chung" <chiahsuan.chung@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 650/869] coresight: etm4x: missing cscfg_csdev_disable_active_config() in perf enable
-Date: Sat, 17 Oct 2026 17:58:11 +0200
-Message-ID: <20261017160053.672693810@linuxfoundation.org>
+Subject: [PATCH 6.12 651/869] drm/amd/display: disable replay when crc source is enabled
+Date: Sat, 17 Oct 2026 17:58:12 +0200
+Message-ID: <20261017160053.696622960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,122 +54,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Ray Wu <ray.wu@amd.com>
 
-[ Upstream commit 0a47f0be6557b4a851addd430383a4dc7ee08752 ]
+[ Upstream commit a036db3953140d5c2816b056aa3e73b8e98d9bc0 ]
 
-In the perf enable path, there are missing cases where
-cscfg_csdev_disable_active_config() is not called:
+[Why]
+IGT CRC tests fail on replay panels due to invalid CRC values
+captured when replay is active.
 
-  - Branch broadcast is selected but not supported by the hardware
-  - etm4_enable_hw() fails
+[How]
+- Disable replay when CRC source is enabled; set flag to
+  prevent unexpected re-enable
+- Reset flag when CRC source is disabled to allow replay
 
-This can lead to a leak of config_desc->active_cnt.
-Fix this by properly calling cscfg_csdev_disable_active_config()
-in these error paths.
-
-Fixes: 810ac401db1f ("coresight: etm4x: Add complex configuration handlers to etmv4")
-Suggested-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260725113645.57519-6-yeoreum.yun@arm.com
+Reviewed-by: ChiaHsuan (Tom) Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 261e0fe4e2c9 ("drm/amd/display: Resize MST HDCP per-connector arrays to 32")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 46 +++++++++++--------
- 1 file changed, 28 insertions(+), 18 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  1 +
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 25 ++++++++++++++++---
+ .../amd/display/amdgpu_dm/amdgpu_dm_replay.c  |  7 ++++++
+ 3 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index e69ee4ccc2658..9127bc0255528 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -698,8 +698,7 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct etmv4_config *config = &drvdata->config;
- 	struct perf_event_attr *attr = &event->attr;
--	unsigned long cfg_hash;
--	int preset, cc_threshold;
-+	int cc_threshold;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 9682c190e9524..e447ab49cf3ca 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -732,6 +732,7 @@ struct amdgpu_dm_connector {
  
- 	/* Clear configuration from previous run */
- 	memset(config, 0, sizeof(struct etmv4_config));
-@@ -774,20 +773,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 		/* bit[12], Return stack enable bit */
- 		config->cfg |= TRCCONFIGR_RS;
+ 	int sr_skip_count;
+ 	bool disallow_edp_enter_psr;
++	bool disallow_edp_enter_replay;
  
--	/*
--	 * Set any selected configuration and preset.
--	 *
--	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
--	 * in the perf attributes defined in coresight-etm-perf.c.
--	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
--	 * A zero configid means no configuration active, preset = 0 means no preset selected.
--	 */
--	if (attr->config2 & GENMASK_ULL(63, 32)) {
--		cfg_hash = (u32)(attr->config2 >> 32);
--		preset = attr->config & 0xF;
--		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
--	}
--
- 	/* branch broadcast - enable if selected and supported */
- 	if (attr->config & BIT(ETM_OPT_BRANCH_BROADCAST)) {
- 		if (!drvdata->trcbb) {
-@@ -810,8 +795,10 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 			    struct perf_event *event,
- 			    struct coresight_trace_id_map *id_map)
+ 	/* Record progress status of mst*/
+ 	uint8_t mst_status;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+index 41812081418e3..b4a769216d609 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+@@ -31,6 +31,7 @@
+ #include "dc.h"
+ #include "amdgpu_securedisplay.h"
+ #include "amdgpu_dm_psr.h"
++#include "amdgpu_dm_replay.h"
+ 
+ static const char *const pipe_crc_sources[] = {
+ 	"none",
+@@ -216,6 +217,7 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
  {
--	int ret = 0, trace_id;
-+	int ret = 0, trace_id, preset;
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+	struct perf_event_attr *attr = &event->attr;
-+	unsigned long cfg_hash = 0;
+ 	struct amdgpu_device *adev = drm_to_adev(crtc->dev);
+ 	struct dc_stream_state *stream_state = dm_crtc_state->stream;
++	struct amdgpu_dm_connector *aconnector = NULL;
+ 	bool enable = amdgpu_dm_is_valid_crc_source(source);
+ 	int ret = 0;
  
- 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id())) {
- 		ret = -EINVAL;
-@@ -823,6 +810,22 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 	if (ret)
- 		goto out;
+@@ -223,11 +225,22 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
+ 	if (!stream_state)
+ 		return -EINVAL;
  
-+	/*
-+	 * Set any selected configuration and preset.
-+	 *
-+	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
-+	 * in the perf attributes defined in coresight-etm-perf.c.
-+	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
-+	 * A zero configid means no configuration active, preset = 0 means no preset selected.
-+	 */
-+	if (attr->config2 & GENMASK_ULL(63, 32)) {
-+		cfg_hash = (u32)(attr->config2 >> 32);
-+		preset = attr->config & 0xF;
-+		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
-+		if (ret)
-+			goto out;
++	/* Get connector from stream */
++	aconnector = (struct amdgpu_dm_connector *)stream_state->dm_stream_context;
++
+ 	mutex_lock(&adev->dm.dc_lock);
+ 
+-	/* For PSR1, check that the panel has exited PSR */
+-	if (stream_state->link->psr_settings.psr_version < DC_PSR_VERSION_SU_1)
+-		amdgpu_dm_psr_wait_disable(stream_state);
++
++	if (enable) {
++		/* For PSR1, check that the panel has exited PSR */
++		if (stream_state->link->psr_settings.psr_version < DC_PSR_VERSION_SU_1)
++			amdgpu_dm_psr_wait_disable(stream_state);
++
++		/* Set flag to disallow enter replay when CRC source is enabled */
++		if (aconnector)
++			aconnector->disallow_edp_enter_replay = true;
++		amdgpu_dm_replay_disable(stream_state);
++	}
+ 
+ 	/* Enable or disable CRTC CRC generation */
+ 	if (dm_is_crc_source_crtc(source) || source == AMDGPU_DM_PIPE_CRC_SOURCE_NONE) {
+@@ -250,6 +263,12 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
+ 					    DYN_EXPANSION_AUTO);
+ 	}
+ 
++	if (!enable) {
++		/* Clear flag to allow enter replay when CRC source is disabled */
++		if (aconnector)
++			aconnector->disallow_edp_enter_replay = false;
 +	}
 +
- 	/*
- 	 * perf allocates cpu ids as part of _setup_aux() - device needs to use
- 	 * the allocated ID. This reads the current version without allocation.
-@@ -836,13 +839,20 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 		dev_err(&drvdata->csdev->dev, "Failed to set trace ID for %s on CPU%d\n",
- 			dev_name(&drvdata->csdev->dev), drvdata->cpu);
- 		ret = -EINVAL;
--		goto out;
-+		goto err_cfg;
- 	}
- 	drvdata->trcid = (u8)trace_id;
+ unlock:
+ 	mutex_unlock(&adev->dm.dc_lock);
  
- 	/* And enable it */
- 	ret = etm4_enable_hw(drvdata);
-+	if (ret)
-+		goto err_cfg;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
+index 41f07f13a7b57..7db927dcfe8d2 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
+@@ -153,10 +153,17 @@ bool amdgpu_dm_replay_enable(struct dc_stream_state *stream, bool wait)
+ {
+ 	bool replay_active = true;
+ 	struct dc_link *link = NULL;
++	struct amdgpu_dm_connector *aconnector = NULL;
+ 
+ 	if (stream == NULL)
+ 		return false;
+ 
++	/* Check if replay is disabled by connector flag */
++	aconnector = (struct amdgpu_dm_connector *)stream->dm_stream_context;
++	if (!aconnector || aconnector->disallow_edp_enter_replay) {
++		return false;
++	}
 +
-+	return 0;
+ 	link = stream->link;
  
-+err_cfg:
-+	if (cfg_hash)
-+		cscfg_csdev_disable_active_config(csdev);
- out:
- 	return ret;
- }
+ 	if (link) {
 -- 
 2.53.0
 
