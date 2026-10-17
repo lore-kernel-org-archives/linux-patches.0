@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88438F233;
-	Sat, 17 Oct 2026 17:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39653A5E7D;
+	Sat, 17 Oct 2026 17:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258591; cv=none; b=pe08SMY18UEyIYYsXqUqHy53WPWLleyAjdNwcrEYGQOKAFzMisoeUFDJD4b3P7wjo+6nGZSBx/fn87hsPHUMRhKyb6vAe+jNzokAhrvMM0z6+8K5d92Oq2qY8j2LxVmaiOVMcA/nF+M6aWehiQVCBmbf3g3gWt/8HBxtUupBZh8=
+	t=1792258594; cv=none; b=RCiu6qkuenmAnPu2B7VQH4sWfLpQ5LJjPnzDh3JIjyrqqD7xA3e/ZjdRV2HfCspGy9V7/y6PGvZLjJRqYKpTvtC0glWEECF3QF5XQwZmP/L3jahL4SiCPGonyoTEh77polZHON7CPA54v9Af2YLRcKQhmKMi9ZjmhfTJM60JAUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258591; c=relaxed/simple;
-	bh=uUBn+w6hwrW7Br19pnDkj+9V0zbq751yGc7hCcOUpIM=;
+	s=arc-20240116; t=1792258594; c=relaxed/simple;
+	bh=jGrA54A93dycmqsH0uFoMTf7RhXh95vOjzG0XzsEj4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezEWYRGU0GZE76KzhWxKp3pByk7dUVk7MW94TIrneUSPtKe+jtsV84stXqrSi5l/UUzu8fZ62NGqS8rS9nU9CiKfKr6ffZOFtzG6Gsvq7pjiWffnGX/vcpAx0XA4Tje62k6oC2KlhKeIWm5oBwa1RChuuS86PxxQnl7db8B9z9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZDqvz9M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sF/T0BPPSl2K/XJXraS2HMhTV2Lv5MBnUBwgtwUgvPr2DrhgxsQOKU9Hx720htE2XgoSz98JIw1fMT/l++f/6CAiB0S9ZN0Z2S1Q1MJt67TfOaKlPRFcsJve1cECndQtA6vsClYAThQngUGxP5rjONIx1vYuB5tgwJ51nv2DTBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLd2xqQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZDqvz9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E1A1F000C4;
-	Sat, 17 Oct 2026 17:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLd2xqQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16AF1F000C4;
+	Sat, 17 Oct 2026 17:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258590;
-	bh=3LSIOFEnZ3/i2AthCIEk1Y2m2iKxGYUUV16vv61pD9Q=;
+	s=korg; t=1792258593;
+	bh=Jlegu+RUFR6zIk5acfreGwP0exKtgMOjVxhQoOKHzpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZDqvz9MkCybXkb3ueKbQwjRhwgAbXrnZsCKMeRrRq3lLwd+0Shi17KgRTZA+UPnO
-	 aqI+SDUmXG/lyiUE5B+A3+q8rMx6fnjBZQTGQ8HdbrB5kXG2asyB/3O3K7cSfR3LwO
-	 kzgW12XTvp3uGbD15qtaMmwgTvV14JEst86NwPlw=
+	b=WLd2xqQg2mJAYgTTKo0VRsiEDcz67BOMjTnGpo4VNgPBVuyKzZWuolqOVEUDsQZE1
+	 ReSduOIsgC+AR2XXzgyruA2YOtJ+oA6gG8jp8N7L7Xq54y30vvF48zGHREEnBuRfrd
+	 6KcZo0WAeFDULomIfH54hRHUiSt7bt4l4LuktTeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0928/1674] 9p/xen: protect xen_9pfs_front_free against concurrent calls
-Date: Sat, 17 Oct 2026 17:53:20 +0200
-Message-ID: <20261017160454.954283154@linuxfoundation.org>
+Subject: [PATCH 6.6 0937/1674] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
+Date: Sat, 17 Oct 2026 17:53:29 +0200
+Message-ID: <20261017160455.181057505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,192 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit ce8ded2e61f47747e31eeefb44dc24a2160a7e32 ]
+[ Upstream commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 ]
 
-The xenwatch thread can race with other back-end change notifications
-and call xen_9pfs_front_free() twice, hitting the observed general
-protection fault due to a double-free. Guard the teardown path so only
-one caller can release the front-end state at a time, preventing the
-crash.
+The logic used to abort the DMA ring contains several flaws:
 
-This is a fix for the following double-free:
+ 1. The driver unconditionally issues a ring abort even when the ring has
+    already stopped.
+ 2. The completion used to wait for abort completion is never
+    re-initialized, resulting in incorrect wait behavior.
+ 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
+    resets hardware ring pointers and disrupts the controller state.
+ 4. If the ring is already stopped, the abort operation should be
+    considered successful without attempting further action.
 
-[   27.052347] Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] SMP DEBUG_PAGEALLOC NOPTI
-[   27.052357] CPU: 0 UID: 0 PID: 32 Comm: xenwatch Not tainted 6.18.0-02087-g51ab33fc0a8b-dirty #60 PREEMPT(none)
-[   27.052363] RIP: e030:xen_9pfs_front_free+0x1d/0x150
-[   27.052368] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 41 55 41 54 55 48 89 fd 48 c7 c7 48 d0 92 85 53 e8 cb cb 05 00 48 8b 45 08 48 8b 55 00 <48> 3b 28 0f 85 f9 28 35 fe 48 3b 6a 08 0f 85 ef 28 35 fe 48 89 42
-[   27.052377] RSP: e02b:ffffc9004016fdd0 EFLAGS: 00010246
-[   27.052381] RAX: 6b6b6b6b6b6b6b6b RBX: ffff88800d66e400 RCX: 0000000000000000
-[   27.052385] RDX: 6b6b6b6b6b6b6b6b RSI: 0000000000000000 RDI: 0000000000000000
-[   27.052389] RBP: ffff88800a887040 R08: 0000000000000000 R09: 0000000000000000
-[   27.052393] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888009e46b68
-[   27.052397] R13: 0000000000000200 R14: 0000000000000000 R15: ffff88800a887040
-[   27.052404] FS:  0000000000000000(0000) GS:ffff88808ca57000(0000) knlGS:0000000000000000
-[   27.052408] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   27.052412] CR2: 00007f9714004360 CR3: 0000000004834000 CR4: 0000000000050660
-[   27.052418] Call Trace:
-[   27.052420]  <TASK>
-[   27.052422]  xen_9pfs_front_changed+0x5d5/0x720
-[   27.052426]  ? xenbus_otherend_changed+0x72/0x140
-[   27.052430]  ? __pfx_xenwatch_thread+0x10/0x10
-[   27.052434]  xenwatch_thread+0x94/0x1c0
-[   27.052438]  ? __pfx_autoremove_wake_function+0x10/0x10
-[   27.052442]  kthread+0xf8/0x240
-[   27.052445]  ? __pfx_kthread+0x10/0x10
-[   27.052449]  ? __pfx_kthread+0x10/0x10
-[   27.052452]  ret_from_fork+0x16b/0x1a0
-[   27.052456]  ? __pfx_kthread+0x10/0x10
-[   27.052459]  ret_from_fork_asm+0x1a/0x30
-[   27.052463]  </TASK>
-[   27.052465] Modules linked in:
-[   27.052471] ---[ end trace 0000000000000000 ]---
+Fix the abort handling by checking whether the ring is running before
+issuing an abort, re-initializing the completion when needed, ensuring that
+RING_CTRL_ENABLE remains asserted during abort, and treating an already
+stopped ring as a successful condition.
 
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Message-ID: <20260129230348.2390470-1-stefano.stabellini@amd.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 85 ++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 6387ee924a2d6..7709be0fa5417 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -275,45 +275,52 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
- {
- 	int i, j;
- 
--	write_lock(&xen_9pfs_lock);
--	list_del(&priv->list);
--	write_unlock(&xen_9pfs_lock);
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 2cf4974fffa75..7b13508ccca66 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -448,16 +448,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
+ 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
+ 	unsigned int i;
+ 	bool did_unqueue = false;
 -
--	for (i = 0; i < priv->num_rings; i++) {
--		struct xen_9pfs_dataring *ring = &priv->rings[i];
--
--		cancel_work_sync(&ring->work);
--
--		if (!priv->rings[i].intf)
--			break;
--		if (priv->rings[i].irq > 0)
--			unbind_from_irqhandler(priv->rings[i].irq, ring);
--		if (priv->rings[i].data.in) {
--			for (j = 0;
--			     j < (1 << priv->rings[i].intf->ring_order);
--			     j++) {
--				grant_ref_t ref;
--
--				ref = priv->rings[i].intf->ref[j];
--				gnttab_end_foreign_access(ref, NULL);
--			}
--			free_pages_exact(priv->rings[i].data.in,
-+	if (priv->rings) {
-+		for (i = 0; i < priv->num_rings; i++) {
-+			struct xen_9pfs_dataring *ring = &priv->rings[i];
+-	/* stop the ring */
+-	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
+-	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
+-		/*
+-		 * We're deep in it if ever this condition is ever met.
+-		 * Hardware might still be writing to memory, etc.
+-		 */
+-		dev_crit(&hci->master.dev, "unable to abort the ring\n");
+-		WARN_ON(1);
++	u32 ring_status;
 +
-+			cancel_work_sync(&ring->work);
-+
-+			if (!priv->rings[i].intf)
-+				break;
-+			if (priv->rings[i].irq > 0)
-+				unbind_from_irqhandler(priv->rings[i].irq, ring);
-+			if (priv->rings[i].data.in) {
-+				for (j = 0;
-+				     j < (1 << priv->rings[i].intf->ring_order);
-+				     j++) {
-+					grant_ref_t ref;
-+
-+					ref = priv->rings[i].intf->ref[j];
-+					gnttab_end_foreign_access(ref, NULL);
-+				}
-+				free_pages_exact(priv->rings[i].data.in,
- 				   1UL << (priv->rings[i].intf->ring_order +
- 					   XEN_PAGE_SHIFT));
-+			}
-+			gnttab_end_foreign_access(priv->rings[i].ref, NULL);
-+			free_page((unsigned long)priv->rings[i].intf);
- 		}
--		gnttab_end_foreign_access(priv->rings[i].ref, NULL);
--		free_page((unsigned long)priv->rings[i].intf);
-+		kfree(priv->rings);
- 	}
--	kfree(priv->rings);
- 	kfree(priv->tag);
- 	kfree(priv);
- }
- 
- static void xen_9pfs_front_remove(struct xenbus_device *dev)
- {
--	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
-+	struct xen_9pfs_front_priv *priv;
- 
-+	write_lock(&xen_9pfs_lock);
-+	priv = dev_get_drvdata(&dev->dev);
-+	if (priv == NULL) {
-+		write_unlock(&xen_9pfs_lock);
-+		return;
-+	}
- 	dev_set_drvdata(&dev->dev, NULL);
-+	list_del(&priv->list);
-+	write_unlock(&xen_9pfs_lock);
-+
- 	xen_9pfs_front_free(priv);
- }
- 
-@@ -380,7 +387,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- {
- 	int ret, i;
- 	struct xenbus_transaction xbt;
--	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
-+	struct xen_9pfs_front_priv *priv;
- 	char *versions, *v;
- 	unsigned int max_rings, max_ring_order, len = 0;
- 
-@@ -408,6 +415,10 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- 	if (p9_xen_trans.maxsize > XEN_FLEX_RING_SIZE(max_ring_order))
- 		p9_xen_trans.maxsize = XEN_FLEX_RING_SIZE(max_ring_order) / 2;
- 
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+	priv->dev = dev;
- 	priv->num_rings = XEN_9PFS_NUM_RINGS;
- 	priv->rings = kcalloc(priv->num_rings, sizeof(*priv->rings),
- 			      GFP_KERNEL);
-@@ -466,6 +477,11 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- 		goto error;
++	ring_status = rh_reg_read(RING_STATUS);
++	if (ring_status & RING_STATUS_RUNNING) {
++		/* stop the ring */
++		reinit_completion(&rh->op_done);
++		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
++		wait_for_completion_timeout(&rh->op_done, HZ);
++		ring_status = rh_reg_read(RING_STATUS);
++		if (ring_status & RING_STATUS_RUNNING) {
++			/*
++			 * We're deep in it if ever this condition is ever met.
++			 * Hardware might still be writing to memory, etc.
++			 */
++			dev_crit(&hci->master.dev, "unable to abort the ring\n");
++			WARN_ON(1);
++		}
  	}
  
-+	write_lock(&xen_9pfs_lock);
-+	dev_set_drvdata(&dev->dev, priv);
-+	list_add_tail(&priv->list, &xen_9pfs_devs);
-+	write_unlock(&xen_9pfs_lock);
-+
- 	xenbus_switch_state(dev, XenbusStateInitialised);
- 	return 0;
- 
-@@ -480,19 +496,6 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
- static int xen_9pfs_front_probe(struct xenbus_device *dev,
- 				const struct xenbus_device_id *id)
- {
--	struct xen_9pfs_front_priv *priv = NULL;
--
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	priv->dev = dev;
--	dev_set_drvdata(&dev->dev, priv);
--
--	write_lock(&xen_9pfs_lock);
--	list_add_tail(&priv->list, &xen_9pfs_devs);
--	write_unlock(&xen_9pfs_lock);
--
- 	return 0;
- }
- 
+ 	for (i = 0; i < n; i++) {
 -- 
 2.53.0
 
