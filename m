@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5154CF477;
-	Sat, 17 Oct 2026 16:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182FF4CF477;
+	Sat, 17 Oct 2026 16:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253735; cv=none; b=H854Yu5ao8qunlKFHZcKm3sKZA3Rwqt1socAZ9TsNwZ1UosUd0Wc5mepB0OyHPW+G+RqD1ESyXhTq9vTEZQpu21sm4Uqsr1M3Kn0qu2ud1fNHhUTyLSulfuKjvuWq+3tzARtfEri5xDdlkfM40H85EoMIk89zeTr98K5HY6fa/0=
+	t=1792253738; cv=none; b=pK9Bpti/HWfVIzUfPKrMrTSazX41ULx4GLm85oQHhUEQT9hKfN3zDkDApsCS0dTS3f6xE7EH+97pCBNhyxLH6CBdN91kEbervfQN909sc576AgkU2IIikIfF8jGFOxKh9f/+Ofin5aIZicC4gA88mruiS3GRgPWMzUYhKf68VCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253735; c=relaxed/simple;
-	bh=Qz+qScvpt7VuZESXUg/HB3m//H1EYq7DmrCjYH33ByM=;
+	s=arc-20240116; t=1792253738; c=relaxed/simple;
+	bh=KtTVz0njUR6/zXXTW03YvNI7RquJyTTQ0IeANIulUP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ato6H2vMGOA9LkAIC603xDNv7WOakhP+qwP2qlPAJ0WrrUwBfTfeeA/FYXyAC6KriiQJfqGA7HhG8xNlshwvlB6bAi83rsbJ7U8VXNoq1sr38KhZG7EomK5LiPZmbSd/TCSSBKEW5xPuT6FPar+67uhHk3r3tpQ/LQVz+5Cf4D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FLFxnsw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kblcIEpSoMZ3V3uLuRqJLw626m6agE0Gt8v6Mpj3RwhJFoznSjI+YTFGw3te+jrvnsAVl+V4wdEKP2MFpPWsC+O8OboHDXXbezZvUaWeU4r0BJ7DZcZoUbn0CB0uh8FUBsjWfDgpwtFr0IFI111xbe84pQyydYZ7M7tvNwO3ysA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqovKFbw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FLFxnsw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801881F000C4;
-	Sat, 17 Oct 2026 16:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqovKFbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE901F000C4;
+	Sat, 17 Oct 2026 16:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253734;
-	bh=izaddMsn68m9lcldrF4p61prjLLF6KPLNU/Sg4fbpp4=;
+	s=korg; t=1792253737;
+	bh=B3R0LcRYT+98w/+9Fg3X8+g84Poh14+RGdBA8rr+EiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FLFxnswp77qEFxLogzhNfdwYxeQ2CEWc9FHmq+NsiugZ6uKpRYaj6bLiPGz9RmMY
-	 ah06lp9APFXO7rq405CJI80eibgeFbHntjxQHKi6aCfG9PqqcSXwNfStHlpXn9Focm
-	 gDrc60F+OgHNufu17PXJAUYvZtxXwYOkygydOzc4=
+	b=RqovKFbwOSgH+XZQOmllNnrrlpNx74DnwjWmwa1+kRqX8gvmyCCRmQ82nlwapMLs4
+	 7PZ12jrGxF8b8MvBHi0tzltrbtdfP8GkdhXdcK6/K20m0nKhlUdXXs0+dfRAlfmj2M
+	 3FXN75HvXi3HUXo5eZ24JTEUbqOOPGudQ7bolr/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 216/869] mptcp: fix soft lockup in mptcp_recvmsg()
-Date: Sat, 17 Oct 2026 17:50:57 +0200
-Message-ID: <20261017160042.591215144@linuxfoundation.org>
+Subject: [PATCH 6.12 217/869] bnxt_en: Update firmware interface spec to 1.10.3.85
+Date: Sat, 17 Oct 2026 17:50:58 +0200
+Message-ID: <20261017160042.616540874@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,119 +53,348 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 5dd8025a49c268ab6b94d978532af3ad341132a7 ]
+[ Upstream commit ff00bcc9ecccf4a1ce3a06eb38a9b4592f870f80 ]
 
-syzbot reported a soft lockup in mptcp_recvmsg() [0].
+The major change is the new firmware command to flush the FW debug
+logs to the host backing store context memory buffers.
 
-When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
-removed from the sk_receive_queue. This causes sk_wait_data() to always
-find available data and never perform actual waiting, leading to a soft
-lockup.
-
-Fix this by adding a 'last' parameter to track the last peeked skb.
-This allows sk_wait_data() to make informed waiting decisions and prevent
-infinite loops when MSG_PEEK is used.
-
-[0]:
-watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
-Modules linked in:
-CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:sk_wait_data+0x15/0x190
-Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
-RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
-RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
-R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
-R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
-FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
- inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
- sock_recvmsg+0x94/0xc0 net/socket.c:1100
- __sys_recvfrom+0xb2/0x130 net/socket.c:2256
- __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
- do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
-RIP: 0033:0x7f6e386a4a1d
-Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
-RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
-RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
-RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
-R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
+Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20241115151438.550106-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4ee937107d52 ("bnxt_en: set backing store type from query type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h | 173 ++++++++++++++----
+ 1 file changed, 136 insertions(+), 37 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 21a5991ae0f59..e1ebf398ba9ec 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1979,7 +1979,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
- 				struct msghdr *msg,
- 				size_t len, int flags, int copied_total,
- 				struct scm_timestamping_internal *tss,
--				int *cmsg_flags)
-+				int *cmsg_flags, struct sk_buff **last)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	struct sk_buff *skb, *tmp;
-@@ -1996,6 +1996,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
- 			/* skip already peeked skbs */
- 			if (total_data_len + data_len <= copied_total) {
- 				total_data_len += data_len;
-+				*last = skb;
- 				continue;
- 			}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
+index f8ef6f1a1964e..5f8de16343788 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
+@@ -42,6 +42,10 @@ struct hwrm_resp_hdr {
+ #define TLV_TYPE_MODIFY_ROCE_CC_GEN1             0x5UL
+ #define TLV_TYPE_QUERY_ROCE_CC_GEN2              0x6UL
+ #define TLV_TYPE_MODIFY_ROCE_CC_GEN2             0x7UL
++#define TLV_TYPE_QUERY_ROCE_CC_GEN1_EXT          0x8UL
++#define TLV_TYPE_MODIFY_ROCE_CC_GEN1_EXT         0x9UL
++#define TLV_TYPE_QUERY_ROCE_CC_GEN2_EXT          0xaUL
++#define TLV_TYPE_MODIFY_ROCE_CC_GEN2_EXT         0xbUL
+ #define TLV_TYPE_ENGINE_CKV_ALIAS_ECC_PUBLIC_KEY 0x8001UL
+ #define TLV_TYPE_ENGINE_CKV_IV                   0x8003UL
+ #define TLV_TYPE_ENGINE_CKV_AUTH_TAG             0x8004UL
+@@ -509,6 +513,7 @@ struct cmd_nums {
+ 	#define HWRM_TFC_IF_TBL_GET                       0x399UL
+ 	#define HWRM_TFC_TBL_SCOPE_CONFIG_GET             0x39aUL
+ 	#define HWRM_TFC_RESC_USAGE_QUERY                 0x39bUL
++	#define HWRM_TFC_GLOBAL_ID_FREE                   0x39cUL
+ 	#define HWRM_SV                                   0x400UL
+ 	#define HWRM_DBG_SERDES_TEST                      0xff0eUL
+ 	#define HWRM_DBG_LOG_BUFFER_FLUSH                 0xff0fUL
+@@ -624,8 +629,8 @@ struct hwrm_err_output {
+ #define HWRM_VERSION_MAJOR 1
+ #define HWRM_VERSION_MINOR 10
+ #define HWRM_VERSION_UPDATE 3
+-#define HWRM_VERSION_RSVD 68
+-#define HWRM_VERSION_STR "1.10.3.68"
++#define HWRM_VERSION_RSVD 85
++#define HWRM_VERSION_STR "1.10.3.85"
  
-@@ -2032,6 +2033,8 @@ static int __mptcp_recvmsg_mskq(struct sock *sk,
- 			}
+ /* hwrm_ver_get_input (size:192b/24B) */
+ struct hwrm_ver_get_input {
+@@ -1302,6 +1307,43 @@ struct hwrm_async_event_cmpl_error_report {
+ 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_EVENT_DATA1_ERROR_TYPE_SFT 0
+ };
  
- 			mptcp_eat_recv_skb(sk, skb);
-+		} else {
-+			*last = skb;
- 		}
++/* hwrm_async_event_cmpl_dbg_buf_producer (size:128b/16B) */
++struct hwrm_async_event_cmpl_dbg_buf_producer {
++	__le16	type;
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_MASK            0x3fUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_SFT             0
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_HWRM_ASYNC_EVENT  0x2eUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_LAST             ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_HWRM_ASYNC_EVENT
++	__le16	event_id;
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_DBG_BUF_PRODUCER 0x4cUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_LAST            ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_DBG_BUF_PRODUCER
++	__le32	event_data2;
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA2_CURR_OFF_MASK 0xffffffffUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA2_CURR_OFF_SFT 0
++	u8	opaque_v;
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_V          0x1UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_OPAQUE_MASK 0xfeUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_OPAQUE_SFT 1
++	u8	timestamp_lo;
++	__le16	timestamp_hi;
++	__le32	event_data1;
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_MASK               0xffffUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SFT                0
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SRT_TRACE            0x0UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SRT2_TRACE           0x1UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CRT_TRACE            0x2UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CRT2_TRACE           0x3UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_RIGP0_TRACE          0x4UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_L2_HWRM_TRACE        0x5UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_ROCE_HWRM_TRACE      0x6UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA0_TRACE            0x7UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA1_TRACE            0x8UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA2_TRACE            0x9UL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_RIGP1_TRACE          0xaUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_AFM_KONG_HWRM_TRACE  0xbUL
++	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_LAST                ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_AFM_KONG_HWRM_TRACE
++};
++
+ /* hwrm_async_event_cmpl_hwrm_error (size:128b/16B) */
+ struct hwrm_async_event_cmpl_hwrm_error {
+ 	__le16	type;
+@@ -1864,7 +1906,10 @@ struct hwrm_func_qcaps_output {
+ 	__le32	roce_vf_max_gid;
+ 	__le32	flags_ext3;
+ 	#define FUNC_QCAPS_RESP_FLAGS_EXT3_RM_RSV_WHILE_ALLOC_CAP     0x1UL
+-	u8	unused_3[7];
++	#define FUNC_QCAPS_RESP_FLAGS_EXT3_REQUIRE_L2_FILTER          0x2UL
++	#define FUNC_QCAPS_RESP_FLAGS_EXT3_MAX_ROCE_VFS_SUPPORTED     0x4UL
++	__le16	max_roce_vfs;
++	u8	unused_3[5];
+ 	u8	valid;
+ };
  
- 		if (copied >= len)
-@@ -2230,10 +2233,12 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		cmsg_flags = MPTCP_CMSG_INQ;
+@@ -2253,17 +2298,18 @@ struct hwrm_func_cfg_input {
+ 	#define FUNC_CFG_REQ_FLAGS2_KTLS_KEY_CTX_ASSETS_TEST     0x1UL
+ 	#define FUNC_CFG_REQ_FLAGS2_QUIC_KEY_CTX_ASSETS_TEST     0x2UL
+ 	__le32	enables2;
+-	#define FUNC_CFG_REQ_ENABLES2_KDNET                   0x1UL
+-	#define FUNC_CFG_REQ_ENABLES2_DB_PAGE_SIZE            0x2UL
+-	#define FUNC_CFG_REQ_ENABLES2_QUIC_TX_KEY_CTXS        0x4UL
+-	#define FUNC_CFG_REQ_ENABLES2_QUIC_RX_KEY_CTXS        0x8UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_AV_PER_VF      0x10UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_CQ_PER_VF      0x20UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_MRW_PER_VF     0x40UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_QP_PER_VF      0x80UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_SRQ_PER_VF     0x100UL
+-	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_GID_PER_VF     0x200UL
+-	#define FUNC_CFG_REQ_ENABLES2_XID_PARTITION_CFG       0x400UL
++	#define FUNC_CFG_REQ_ENABLES2_KDNET                    0x1UL
++	#define FUNC_CFG_REQ_ENABLES2_DB_PAGE_SIZE             0x2UL
++	#define FUNC_CFG_REQ_ENABLES2_QUIC_TX_KEY_CTXS         0x4UL
++	#define FUNC_CFG_REQ_ENABLES2_QUIC_RX_KEY_CTXS         0x8UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_AV_PER_VF       0x10UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_CQ_PER_VF       0x20UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_MRW_PER_VF      0x40UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_QP_PER_VF       0x80UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_SRQ_PER_VF      0x100UL
++	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_GID_PER_VF      0x200UL
++	#define FUNC_CFG_REQ_ENABLES2_XID_PARTITION_CFG        0x400UL
++	#define FUNC_CFG_REQ_ENABLES2_PHYSICAL_SLOT_NUMBER     0x800UL
+ 	u8	port_kdnet_mode;
+ 	#define FUNC_CFG_REQ_PORT_KDNET_MODE_DISABLED 0x0UL
+ 	#define FUNC_CFG_REQ_PORT_KDNET_MODE_ENABLED  0x1UL
+@@ -2281,7 +2327,7 @@ struct hwrm_func_cfg_input {
+ 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_2MB   0x9UL
+ 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_4MB   0xaUL
+ 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_LAST FUNC_CFG_REQ_DB_PAGE_SIZE_4MB
+-	u8	unused_1[2];
++	__le16	physical_slot_number;
+ 	__le32	num_ktls_tx_key_ctxs;
+ 	__le32	num_ktls_rx_key_ctxs;
+ 	__le32	num_quic_tx_key_ctxs;
+@@ -3683,7 +3729,7 @@ struct hwrm_func_ptp_ext_qcfg_output {
+ 	u8	valid;
+ };
  
- 	while (copied < len) {
-+		struct sk_buff *last = NULL;
- 		int err, bytes_read;
+-/* hwrm_func_backing_store_cfg_v2_input (size:448b/56B) */
++/* hwrm_func_backing_store_cfg_v2_input (size:512b/64B) */
+ struct hwrm_func_backing_store_cfg_v2_input {
+ 	__le16	req_type;
+ 	__le16	cmpl_ring;
+@@ -3721,6 +3767,7 @@ struct hwrm_func_backing_store_cfg_v2_input {
+ 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_CA1_TRACE           0x27UL
+ 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_CA2_TRACE           0x28UL
+ 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
++	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
+ 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_INVALID             0xffffUL
+ 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_INVALID
+ 	__le16	instance;
+@@ -3752,6 +3799,9 @@ struct hwrm_func_backing_store_cfg_v2_input {
+ 	__le32	split_entry_1;
+ 	__le32	split_entry_2;
+ 	__le32	split_entry_3;
++	__le32	enables;
++	#define FUNC_BACKING_STORE_CFG_V2_REQ_ENABLES_NEXT_BS_OFFSET     0x1UL
++	__le32	next_bs_offset;
+ };
  
- 		bytes_read = __mptcp_recvmsg_mskq(sk, msg, len - copied, flags,
--						  copied, &tss, &cmsg_flags);
-+						  copied, &tss, &cmsg_flags,
-+						  &last);
- 		if (unlikely(bytes_read < 0)) {
- 			if (!copied)
- 				copied = bytes_read;
-@@ -2291,7 +2296,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ /* hwrm_func_backing_store_cfg_v2_output (size:128b/16B) */
+@@ -3802,6 +3852,7 @@ struct hwrm_func_backing_store_qcfg_v2_input {
+ 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_CA1_TRACE           0x27UL
+ 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_CA2_TRACE           0x28UL
+ 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
++	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
+ 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_INVALID             0xffffUL
+ 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_INVALID
+ 	__le16	instance;
+@@ -3963,6 +4014,7 @@ struct hwrm_func_backing_store_qcaps_v2_input {
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA1_TRACE           0x27UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA2_TRACE           0x28UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
++	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_INVALID             0xffffUL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_INVALID
+ 	u8	rsvd[6];
+@@ -4005,6 +4057,7 @@ struct hwrm_func_backing_store_qcaps_v2_output {
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_CA1_TRACE           0x27UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_CA2_TRACE           0x28UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_RIGP1_TRACE         0x29UL
++	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_INVALID             0xffffUL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_LAST               FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_INVALID
+ 	__le16	entry_size;
+@@ -4014,6 +4067,8 @@ struct hwrm_func_backing_store_qcaps_v2_output {
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_DRIVER_MANAGED_MEMORY           0x4UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_ROCE_QP_PSEUDO_STATIC_ALLOC     0x8UL
+ 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_FW_DBG_TRACE                    0x10UL
++	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_FW_BIN_DBG_TRACE                0x20UL
++	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_NEXT_BS_OFFSET                  0x40UL
+ 	__le32	instance_bit_map;
+ 	u8	ctx_init_value;
+ 	u8	ctx_init_offset;
+@@ -4034,7 +4089,8 @@ struct hwrm_func_backing_store_qcaps_v2_output {
+ 	__le32	split_entry_1;
+ 	__le32	split_entry_2;
+ 	__le32	split_entry_3;
+-	u8	rsvd3[3];
++	__le16	max_instance_count;
++	u8	rsvd3;
+ 	u8	valid;
+ };
  
- 		pr_debug("block timeout %ld\n", timeo);
- 		mptcp_cleanup_rbuf(msk, copied);
--		err = sk_wait_data(sk, &timeo, NULL);
-+		err = sk_wait_data(sk, &timeo, last);
- 		if (err < 0) {
- 			copied = copied ? : err;
- 			goto out_err;
+@@ -4535,11 +4591,12 @@ struct hwrm_port_phy_qcfg_output {
+ 	#define PORT_PHY_QCFG_RESP_PHY_TYPE_800G_BASEDR8     0x3dUL
+ 	#define PORT_PHY_QCFG_RESP_PHY_TYPE_LAST            PORT_PHY_QCFG_RESP_PHY_TYPE_800G_BASEDR8
+ 	u8	media_type;
+-	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_UNKNOWN 0x0UL
+-	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_TP      0x1UL
+-	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_DAC     0x2UL
+-	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE   0x3UL
+-	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_LAST   PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_UNKNOWN   0x0UL
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_TP        0x1UL
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_DAC       0x2UL
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE     0x3UL
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_BACKPLANE 0x4UL
++	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_LAST     PORT_PHY_QCFG_RESP_MEDIA_TYPE_BACKPLANE
+ 	u8	xcvr_pkg_type;
+ 	#define PORT_PHY_QCFG_RESP_XCVR_PKG_TYPE_XCVR_INTERNAL 0x1UL
+ 	#define PORT_PHY_QCFG_RESP_XCVR_PKG_TYPE_XCVR_EXTERNAL 0x2UL
+@@ -4654,7 +4711,8 @@ struct hwrm_port_phy_qcfg_output {
+ 	#define PORT_PHY_QCFG_RESP_LINK_PARTNER_PAM4_ADV_SPEEDS_100GB     0x2UL
+ 	#define PORT_PHY_QCFG_RESP_LINK_PARTNER_PAM4_ADV_SPEEDS_200GB     0x4UL
+ 	u8	link_down_reason;
+-	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_RF     0x1UL
++	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_RF                      0x1UL
++	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_OTP_SPEED_VIOLATION     0x2UL
+ 	__le16	support_speeds2;
+ 	#define PORT_PHY_QCFG_RESP_SUPPORT_SPEEDS2_1GB                0x1UL
+ 	#define PORT_PHY_QCFG_RESP_SUPPORT_SPEEDS2_10GB               0x2UL
+@@ -9241,20 +9299,22 @@ struct hwrm_fw_set_time_output {
+ /* hwrm_struct_hdr (size:128b/16B) */
+ struct hwrm_struct_hdr {
+ 	__le16	struct_id;
+-	#define STRUCT_HDR_STRUCT_ID_LLDP_CFG           0x41bUL
+-	#define STRUCT_HDR_STRUCT_ID_DCBX_ETS           0x41dUL
+-	#define STRUCT_HDR_STRUCT_ID_DCBX_PFC           0x41fUL
+-	#define STRUCT_HDR_STRUCT_ID_DCBX_APP           0x421UL
+-	#define STRUCT_HDR_STRUCT_ID_DCBX_FEATURE_STATE 0x422UL
+-	#define STRUCT_HDR_STRUCT_ID_LLDP_GENERIC       0x424UL
+-	#define STRUCT_HDR_STRUCT_ID_LLDP_DEVICE        0x426UL
+-	#define STRUCT_HDR_STRUCT_ID_POWER_BKUP         0x427UL
+-	#define STRUCT_HDR_STRUCT_ID_PEER_MMAP          0x429UL
+-	#define STRUCT_HDR_STRUCT_ID_AFM_OPAQUE         0x1UL
+-	#define STRUCT_HDR_STRUCT_ID_PORT_DESCRIPTION   0xaUL
+-	#define STRUCT_HDR_STRUCT_ID_RSS_V2             0x64UL
+-	#define STRUCT_HDR_STRUCT_ID_MSIX_PER_VF        0xc8UL
+-	#define STRUCT_HDR_STRUCT_ID_LAST              STRUCT_HDR_STRUCT_ID_MSIX_PER_VF
++	#define STRUCT_HDR_STRUCT_ID_LLDP_CFG              0x41bUL
++	#define STRUCT_HDR_STRUCT_ID_DCBX_ETS              0x41dUL
++	#define STRUCT_HDR_STRUCT_ID_DCBX_PFC              0x41fUL
++	#define STRUCT_HDR_STRUCT_ID_DCBX_APP              0x421UL
++	#define STRUCT_HDR_STRUCT_ID_DCBX_FEATURE_STATE    0x422UL
++	#define STRUCT_HDR_STRUCT_ID_LLDP_GENERIC          0x424UL
++	#define STRUCT_HDR_STRUCT_ID_LLDP_DEVICE           0x426UL
++	#define STRUCT_HDR_STRUCT_ID_POWER_BKUP            0x427UL
++	#define STRUCT_HDR_STRUCT_ID_PEER_MMAP             0x429UL
++	#define STRUCT_HDR_STRUCT_ID_AFM_OPAQUE            0x1UL
++	#define STRUCT_HDR_STRUCT_ID_PORT_DESCRIPTION      0xaUL
++	#define STRUCT_HDR_STRUCT_ID_RSS_V2                0x64UL
++	#define STRUCT_HDR_STRUCT_ID_MSIX_PER_VF           0xc8UL
++	#define STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_COUNT 0x12cUL
++	#define STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_BOUND 0x12dUL
++	#define STRUCT_HDR_STRUCT_ID_LAST                 STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_BOUND
+ 	__le16	len;
+ 	u8	version;
+ 	u8	count;
+@@ -9756,6 +9816,7 @@ struct hwrm_dbg_qcaps_output {
+ 	#define DBG_QCAPS_RESP_FLAGS_COREDUMP_HOST_DDR         0x10UL
+ 	#define DBG_QCAPS_RESP_FLAGS_COREDUMP_HOST_CAPTURE     0x20UL
+ 	#define DBG_QCAPS_RESP_FLAGS_PTRACE                    0x40UL
++	#define DBG_QCAPS_RESP_FLAGS_REG_ACCESS_RESTRICTED     0x80UL
+ 	u8	unused_1[3];
+ 	u8	valid;
+ };
+@@ -9996,6 +10057,43 @@ struct hwrm_dbg_ring_info_get_output {
+ 	u8	valid;
+ };
+ 
++/* hwrm_dbg_log_buffer_flush_input (size:192b/24B) */
++struct hwrm_dbg_log_buffer_flush_input {
++	__le16	req_type;
++	__le16	cmpl_ring;
++	__le16	seq_id;
++	__le16	target_id;
++	__le64	resp_addr;
++	__le16	type;
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_SRT_TRACE           0x0UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_SRT2_TRACE          0x1UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CRT_TRACE           0x2UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CRT2_TRACE          0x3UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP0_TRACE         0x4UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_L2_HWRM_TRACE       0x5UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ROCE_HWRM_TRACE     0x6UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA0_TRACE           0x7UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA1_TRACE           0x8UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA2_TRACE           0x9UL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP1_TRACE         0xaUL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE 0xbUL
++	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_LAST               DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE
++	u8	unused_1[2];
++	__le32	flags;
++	#define DBG_LOG_BUFFER_FLUSH_REQ_FLAGS_FLUSH_ALL_BUFFERS     0x1UL
++};
++
++/* hwrm_dbg_log_buffer_flush_output (size:128b/16B) */
++struct hwrm_dbg_log_buffer_flush_output {
++	__le16	error_code;
++	__le16	req_type;
++	__le16	seq_id;
++	__le16	resp_len;
++	__le32	current_buffer_offset;
++	u8	unused_1[3];
++	u8	valid;
++};
++
+ /* hwrm_nvm_read_input (size:320b/40B) */
+ struct hwrm_nvm_read_input {
+ 	__le16	req_type;
+@@ -10080,6 +10178,7 @@ struct hwrm_nvm_write_input {
+ 	#define NVM_WRITE_REQ_FLAGS_KEEP_ORIG_ACTIVE_IMG     0x1UL
+ 	#define NVM_WRITE_REQ_FLAGS_BATCH_MODE               0x2UL
+ 	#define NVM_WRITE_REQ_FLAGS_BATCH_LAST               0x4UL
++	#define NVM_WRITE_REQ_FLAGS_SKIP_CRID_CHECK          0x8UL
+ 	__le32	dir_item_length;
+ 	__le32	offset;
+ 	__le32	len;
 -- 
 2.53.0
 
