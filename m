@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8313876BA;
-	Sat, 17 Oct 2026 16:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338682C026C;
+	Sat, 17 Oct 2026 16:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254566; cv=none; b=szuVL8uQ09q5XN/1wuI0SQA8O2sbdaOczgp3k72GMvk59tastXMhiVXm4IcvtI3JULnNE+sIpzHw42MhNBMrvU+dLG63z5zWVWvF6V4a2PpCGEgDZZCY5sp70T5ReUWg1A5sxFdhCRdFBdYqbiTna6l49gPzy5wtprC0oQg9UHs=
+	t=1792254569; cv=none; b=a1M3yOlelDZIWmfoukjFERRybsokWTRbwlw55ql07XFZUHBOLxaXkNYqGQjkpWBYHKQv3ObbmBusUzQS2PWjYtVVW+GwCZpribUQVMol3xRBUaX6cZvb6Mo5WbVxt+Bj+PFhLAI2qWNe8wZk4FujuO9B0Sy186MsxH2slRSriyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254566; c=relaxed/simple;
-	bh=BacTj4VXZmriXWhpj9HcgiYZQqnkzg2SORHnecNSJA8=;
+	s=arc-20240116; t=1792254569; c=relaxed/simple;
+	bh=8i8N3sUlyMzm2Nk/eGLwIP78yShmaQf6Pdqw+HVKyeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndD3HPeip9lTKFTtdJH2fOFYUx/Gx74JIMGY91yeay/dn9s4sZLvaPUK9J1qUZTW3RJwuxYZoGy7HTDo+yCWD2wLJeqkHfEbh42B12+Kd0/+YxYaPYcqezzjDhsxwzgZdZFodWvWnPi90zd3yh3iCLhfKwpk1C7xbWClaumuL30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBWmoDJj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zyh2oO24bga/Hr4RbdBlLv+ALZgBxMkS1Pz8Q5ywT9i+Fny3NRPbFUimkgP3LCl3yJMiENi8tszm4FJv2/pIlat3mLj/4C3WtaIWfhLhKoUjAYp7JY/NMUlUHOhKs9fnB6Yfcl1fT2Tzt3wV3G/RVLX4hLMbbfbE4B7p2GjOAt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9BqLF/9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBWmoDJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A40C1F000C4;
-	Sat, 17 Oct 2026 16:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9BqLF/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA9B1F000C4;
+	Sat, 17 Oct 2026 16:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254564;
-	bh=j3jDOBdtDkmtAtuayvTOgOwD4PRii8bf+X2EnvZb248=;
+	s=korg; t=1792254567;
+	bh=SoLW1JHOPMaHl8DwykumUg2WyRWuPsDvrupKiDLF56E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBWmoDJjfB0D0AOKh3jZi6kkB4rzUD38Le9dAITbeSN3mF1f3+zG/3nWVI/2Dw09h
-	 3pm+/Y+quEMtjiR7n+YNp06NwbFZRLgQFP+59YMEGp8Xr/N/wQStsQbIO2FlmJTOQp
-	 iKIwEERao0MY/ScRpSl8AlBll4kwQkrvsUlmWczQ=
+	b=v9BqLF/9Vy4CZjgMHfYvGL3Wi9b7ECg79VW2xOAFPT5/xFps7f5N27Wv0dHwCOTCm
+	 eo5JGOJLEf4oRcgHjtcTgHerO8Ojpm5ULfNNe9qCtO84xbw0xPYB5GZHSCu2RNUtCu
+	 wAjJ9EPRfilXFYajmn9iifPTBs1xSqwOfXjWF20o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Rahul Chandelkar <rc@rexion.ai>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 489/869] afs: Fix UAF when sending a message
-Date: Sat, 17 Oct 2026 17:55:30 +0200
-Message-ID: <20261017160049.650478861@linuxfoundation.org>
+Subject: [PATCH 6.12 490/869] dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister
+Date: Sat, 17 Oct 2026 17:55:31 +0200
+Message-ID: <20261017160049.678368673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,102 +53,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-[ Upstream commit 4af1ec68d54b3871155914d584fb10669c41a861 ]
+[ Upstream commit a10ea943356b9d70c5616a0a06f6fa97cfdaccb1 ]
 
-In afs_make_call(), there's a race with async call reception and
-destruction.  If a call is dispatched that doesn't have call->write_iter
-set (used to specify the data content for FS.StoreData), then the first
-rxrpc_kernel_send_data() will not set MSG_MORE in the msghdr.
+dibs_lo_attach_dmb(), dibs_lo_detach_dmb() and dibs_lo_unregister_dmb()
+look up the dmb_node under dmb_ht_lock, drop the lock and only then
+operate on the node's refcount. Nothing keeps the node alive across
+that window: __dibs_lo_unregister_dmb() removes the node from the hash
+table under the write lock and immediately frees it.
 
-Once rxrpc_send_data() queues the last request packet, the response could
-come in at any time and cause the call to be completed and put.  However,
-afs_make_call() will look at the call again to see it ->write_iter should
-be handled - something it's only allowed to do if it has its own ref on the
-call.  Whilst this is the case for synchronous calls, it isn't true for
-async calls such as FS.FetchData.
+A concurrent final put can therefore free the node between the lookup
+and the refcount operation:
 
-There's also a potential UAF in afs_make_call() in the event that an
-asynchronous call is being sent, but the call fails in some way (e.g. it
-gets aborted from the server).  The problem there is that afs_make_call()
-tries to abort a call if the rxrpc send fails, but the asynchronous
-notification from rxrpc may have caused the afs_call to be torn down.
+CPU0 (attach)                     CPU1 (owner unregisters)
 
-generic/650 plays games with randomly taking CPUs offline, and can
-interject a significant delay such that the call is deallocated before
-afs_make_call() gets to check call->write_iter - and a UAF ensues (caught
-by KASAN).
+read_lock_bh(&dmb_ht_lock)
+find dmb_node (refcnt == 1)
+read_unlock_bh(&dmb_ht_lock)
+                                  refcount_dec_and_test() 1 -> 0
+                                  write_lock_bh(&dmb_ht_lock)
+                                  hash_del(&dmb_node->list)
+                                  write_unlock_bh(&dmb_ht_lock)
+                                  kfree(dmb_node)
+refcount_inc_not_zero(&dmb_node->refcnt)  <-- use-after-free
 
-   BUG: KASAN: slab-use-after-free in afs_make_call+0x1c90/0x2210 [kafs]
-   Read of size 8 at addr ffff888035e050e8 by task fsstress/1409
+The same window exists for the refcount_dec_and_test() calls in the
+detach and unregister paths.
 
-Fix this by making afs_make_op_call() give the op->call its own ref rather
-than transferring the caller's ref to it and then dropping the ref when
-afs_make_call() returns.
+Close the race structurally by making hash table membership and the
+refcount transitions atomic with respect to each other:
 
-This also means that the afs_make_call() func never loses its ref on the
-call now.
+- Perform the final refcount_dec_and_test() and hash_del() in a single
+  dmb_ht_lock write-side critical section, in both the unregister and
+  the detach path. Freeing the node still happens after the lock is
+  dropped, which is safe because a node whose refcount reached zero has
+  left the hash table and can no longer be found.
 
-Fixes: eddf51f2bb2c ("afs: Make {Y,}FS.FetchData an asynchronous operation")
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Link: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260723113452.566619-4-dhowells@redhat.com
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+- This establishes the invariant that any node found in the hash table
+  holds at least one reference, and that the final reference can only
+  be dropped under the write lock. dibs_lo_attach_dmb() can thus take
+  its reference with a plain refcount_inc() while still holding the
+  read lock; refcount_inc_not_zero() is no longer needed.
+
+__dibs_lo_unregister_dmb() no longer touches the hash table and is
+renamed to dibs_lo_free_dmb() accordingly.
+
+Note: commit cc21191b584c ("dibs: Move data path to dibs layer") moved
+the code to its current location; the race was introduced earlier by
+commit c3a910f2380f ("net/smc: implement DMB-merged operations of
+loopback-ism").
+
+Tested SMC-D via ISM and dibs loopback.
+
+Cc: stable@vger.kernel.org
+Fixes: c3a910f2380f ("net/smc: implement DMB-merged operations of loopback-ism")
+Reported-by: Rahul Chandelkar <rc@rexion.ai>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260727093530.968834-1-hidayath@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/internal.h | 4 +++-
- fs/afs/rxrpc.c    | 4 ++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ net/smc/smc_loopback.c | 45 +++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index beaedbb3a01ce..a1090863ea465 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -1336,6 +1336,7 @@ extern int __net_init afs_open_socket(struct afs_net *);
- extern void __net_exit afs_close_socket(struct afs_net *);
- extern void afs_charge_preallocation(struct work_struct *);
- extern void afs_put_call(struct afs_call *);
-+extern struct afs_call *afs_get_call(struct afs_call *call, enum afs_call_trace why);
- void afs_deferred_put_call(struct afs_call *call);
- void afs_make_call(struct afs_call *call, gfp_t gfp);
- void afs_wait_for_call_to_complete(struct afs_call *call);
-@@ -1362,7 +1363,7 @@ static inline void afs_make_op_call(struct afs_operation *op, struct afs_call *c
- {
- 	struct afs_addr_list *alist = op->estate->addresses;
- 
--	op->call	= call;
-+	op->call	= afs_get_call(call, afs_call_trace_get);
- 	op->type	= call->type;
- 	call->op	= op;
- 	call->key	= op->key;
-@@ -1370,6 +1371,7 @@ static inline void afs_make_op_call(struct afs_operation *op, struct afs_call *c
- 	call->peer	= rxrpc_kernel_get_peer(alist->addrs[op->addr_index].peer);
- 	call->service_id = op->server->service_id;
- 	afs_make_call(call, gfp);
-+	afs_put_call(call);
+diff --git a/net/smc/smc_loopback.c b/net/smc/smc_loopback.c
+index 0bf9e4075f033..cb72ff920578a 100644
+--- a/net/smc/smc_loopback.c
++++ b/net/smc/smc_loopback.c
+@@ -117,14 +117,9 @@ static int smc_lo_register_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb,
+ 	return rc;
  }
  
- static inline void afs_extract_begin(struct afs_call *call, void *buf, size_t size)
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index c35c2332c5b72..12bafd03fd59a 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -247,8 +247,8 @@ void afs_deferred_put_call(struct afs_call *call)
- 		schedule_work(&call->free_work);
+-static void __smc_lo_unregister_dmb(struct smc_lo_dev *ldev,
+-				    struct smc_lo_dmb_node *dmb_node)
++static void smc_lo_free_dmb(struct smc_lo_dev *ldev,
++			    struct smc_lo_dmb_node *dmb_node)
+ {
+-	/* remove dmb from hash table */
+-	write_lock_bh(&ldev->dmb_ht_lock);
+-	hash_del(&dmb_node->list);
+-	write_unlock_bh(&ldev->dmb_ht_lock);
+-
+ 	clear_bit(dmb_node->sba_idx, ldev->sba_idx_mask);
+ 	folio_put(virt_to_folio(dmb_node->cpu_addr));
+ 	kfree(dmb_node);
+@@ -137,9 +132,10 @@ static int smc_lo_unregister_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
+ {
+ 	struct smc_lo_dmb_node *dmb_node = NULL, *tmp_node;
+ 	struct smc_lo_dev *ldev = smcd->priv;
++	bool last;
+ 
+ 	/* find dmb from hash table */
+-	read_lock_bh(&ldev->dmb_ht_lock);
++	write_lock_bh(&ldev->dmb_ht_lock);
+ 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, dmb->dmb_tok) {
+ 		if (tmp_node->token == dmb->dmb_tok) {
+ 			dmb_node = tmp_node;
+@@ -147,13 +143,16 @@ static int smc_lo_unregister_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
+ 		}
+ 	}
+ 	if (!dmb_node) {
+-		read_unlock_bh(&ldev->dmb_ht_lock);
++		write_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
+ 	}
+-	read_unlock_bh(&ldev->dmb_ht_lock);
++	last = refcount_dec_and_test(&dmb_node->refcnt);
++	if (last)
++		hash_del(&dmb_node->list);
++	write_unlock_bh(&ldev->dmb_ht_lock);
+ 
+-	if (refcount_dec_and_test(&dmb_node->refcnt))
+-		__smc_lo_unregister_dmb(ldev, dmb_node);
++	if (last)
++		smc_lo_free_dmb(ldev, dmb_node);
+ 	return 0;
  }
  
--static struct afs_call *afs_get_call(struct afs_call *call,
--				     enum afs_call_trace why)
-+struct afs_call *afs_get_call(struct afs_call *call,
-+			      enum afs_call_trace why)
+@@ -179,14 +178,9 @@ static int smc_lo_attach_dmb(struct smcd_dev *smcd, struct smcd_dmb *dmb)
+ 		read_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
+ 	}
++	refcount_inc(&dmb_node->refcnt);
+ 	read_unlock_bh(&ldev->dmb_ht_lock);
+ 
+-	if (!refcount_inc_not_zero(&dmb_node->refcnt))
+-		/* the dmb is being unregistered, but has
+-		 * not been removed from the hash table.
+-		 */
+-		return -EINVAL;
+-
+ 	/* provide dmb information */
+ 	dmb->sba_idx = dmb_node->sba_idx;
+ 	dmb->dmb_tok = dmb_node->token;
+@@ -200,9 +194,10 @@ static int smc_lo_detach_dmb(struct smcd_dev *smcd, u64 token)
  {
- 	int r;
+ 	struct smc_lo_dmb_node *dmb_node = NULL, *tmp_node;
+ 	struct smc_lo_dev *ldev = smcd->priv;
++	bool last;
+ 
+ 	/* find dmb_node according to dmb->dmb_tok */
+-	read_lock_bh(&ldev->dmb_ht_lock);
++	write_lock_bh(&ldev->dmb_ht_lock);
+ 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, token) {
+ 		if (tmp_node->token == token) {
+ 			dmb_node = tmp_node;
+@@ -210,13 +205,17 @@ static int smc_lo_detach_dmb(struct smcd_dev *smcd, u64 token)
+ 		}
+ 	}
+ 	if (!dmb_node) {
+-		read_unlock_bh(&ldev->dmb_ht_lock);
++		write_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
+ 	}
+-	read_unlock_bh(&ldev->dmb_ht_lock);
++	last = refcount_dec_and_test(&dmb_node->refcnt);
++	if (last)
++		hash_del(&dmb_node->list);
++	write_unlock_bh(&ldev->dmb_ht_lock);
++
++	if (last)
++		smc_lo_free_dmb(ldev, dmb_node);
+ 
+-	if (refcount_dec_and_test(&dmb_node->refcnt))
+-		__smc_lo_unregister_dmb(ldev, dmb_node);
+ 	return 0;
+ }
  
 -- 
 2.53.0
