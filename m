@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902BF3ADBA4;
-	Sat, 17 Oct 2026 17:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691803B19BA;
+	Sat, 17 Oct 2026 17:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259046; cv=none; b=P4znUnc8IN/RzKpGuwObbs2anCx5e4Pb0z82584F6IuhZNaqzrF49tPmiFUcpGPxnAuuLgnDyRv5miBpGOMEW470N/40XUtspMwGZxK1zqSL74DMTjLZtJ2B2bvo1vJxSRPxy30TTij9qfxb+XCwKY8Y0GGKhf8oia8FAJzIUwY=
+	t=1792259049; cv=none; b=Hd2etbJGyS6T5/Ot5K/eGM3bMRt9qD6EjM3hZcRIx682zz2Z/+vJuUq0fnWZePdeEPSnFyNVfBgbX56klpnMaJWktAAOU3p4VXsOvhxbgQAHxBtP2S2VhQeVmMQEXuxP+Gd3XDMmoK7eNyDrswG3EQh2/Qa6c+UJ+IxIg/m70sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259046; c=relaxed/simple;
-	bh=isDlOL/w00EeO8jNhTqpKvYMiGtN1dFNZbGv3CS+b+Q=;
+	s=arc-20240116; t=1792259049; c=relaxed/simple;
+	bh=iDq6/U+1inhWvsWIAN3UWvODMxC/jzZGIt6iROj5Lyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MDOpJk3YaALGQWuEUEV6wrylRiyu0GoDFg7UMD8RK8zRgA5upoydFMBlic+9cn+ltBs/Xu8Rx5YwdLLjy+wAYcVasRXFlfuVuWzjy9vGl5lkkhJkK6TIONzPZhKssU4HYuLZH6Oyro4BSdmBaQLq9xOM/humqbIExRzVLhucheg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04mbvjmR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MmkUaYZK3jFfBol53FVCefImkwYIgUrAgm9NX07qlJEVzPgmBiBLS3mVZO72OxwTaTYcduheY+JiNekkA/stDOqB5S/CZWs1xLvRdVm1HOl1bz2+AxyAi+akq90QnYeQivgnhE0LOs4H4fLI8CxCp2QRsV/3RwJV86+OcphLOR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWi07Y9h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04mbvjmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F68E1F000C4;
-	Sat, 17 Oct 2026 17:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWi07Y9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F5E1F000C5;
+	Sat, 17 Oct 2026 17:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259045;
-	bh=5ZpMGpLW2NQOPcML0nFHVdlNhXywBk93namZ5RqZmvo=;
+	s=korg; t=1792259048;
+	bh=d/Se/vqut9/GLOiQOqsRQdPCHqxGWYjE3yYxqQ4gzq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=04mbvjmRNOFr3Z2yG2aVIaidw4Sqy/H5FllX0Nl34bMEw5FPn5LNmn1FbHChOg9xB
-	 elWv29LPG69A/ktglIH+T5sbHkKwOy397ZmQggHsUo7BwlviHbI7zQUmjVDTbNTZ9H
-	 GHC9ltKWx0aunTDxUezzM4IVCkyFFkvyt5DU5zXU=
+	b=eWi07Y9h6av5686+ly0sZKq41LPtytbuYyrP3G2xx/aCxIYrnFef0UPPPIbjAw0hm
+	 v99rz9xq8uJxfSabE3LqbJBYrrjFGkAeUqPe+ZNoHDdGfHF5kWL2FPyGlM89ZuZ5i/
+	 8avnsztYVD5ATTyMrzxfOLGT19YmZKsMJqFgx5R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Chengming Gui <Jack.Gui@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1084/1674] drm/amdgpu: Fix context pstate override handling
-Date: Sat, 17 Oct 2026 17:55:56 +0200
-Message-ID: <20261017160458.951390262@linuxfoundation.org>
+Subject: [PATCH 6.6 1085/1674] net/mlx5: Fix MCIA register buffer overflow on 32 dword reads
+Date: Sat, 17 Oct 2026 17:55:57 +0200
+Message-ID: <20261017160458.979165407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,171 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit c1dc4ccb82c9e56325d8e7514ca4c90bd1efb351 ]
+[ Upstream commit 11c057d23465c7a5817a7284c896d19d54c0b616 ]
 
-There are several problems in the context pstate handling code.
+The MCIA register can return up to 32 dwords (128 bytes) when the device
+advertises the mcia_32dwords capability, but struct
+mlx5_ifc_mcia_reg_bits only defines dword_0..11, leaving room for just
+12 dwords (48 bytes) of data.
 
-The most serious ones are potential use-after-free and NULL pointer
-dereferences at context initialization time. Both are due
-amdgpu_ctx_init() not holding the adev->pm.stable_pstate_ctx_lock, which
-is otherwise used from both sysfs and the context code itself for
-modifying and clearing the stored context pointer.
+mlx5_query_mcia() clamps the read size to mlx5_mcia_max_bytes() and then
+memcpy()s that many bytes out of the register, potentially reading past
+the end of the 'out' buffer. On kernels built with FORTIFY_SOURCE this
+is caught as a buffer overflow while reading the module EEPROM via
+ethtool:
 
-Second issue is that context fini can trample over the pstate
-configuration set via sysfs. This is due the restore state
-(ctx->stable_pstate) being saved at context init time, and not if, or when
-the context actually changes the pstate. As the context exits it will
-therefore incorrectly restore to what was set before the sysfs override
-was requested.
+  detected buffer overflow in memcpy
+  kernel BUG at lib/string_helpers.c:1048!
+  RIP: 0010:fortify_panic+0x13/0x20
+  Call Trace:
+   mlx5_query_mcia.isra.0+0x200/0x210 [mlx5_core]
+   mlx5_query_module_eeprom_by_page+0x4a/0xa0 [mlx5_core]
+   mlx5e_get_module_eeprom_by_page+0xbb/0x120 [mlx5_core]
+   eeprom_prepare_data+0xf3/0x170
+   ethnl_default_doit+0xf1/0x3b0
 
-The simplest fix is to drastically simplify how the state is tracked, by
-clearly defining the points at which pstate ownership is taken and
-released, and to handle all transitions under the correct lock.
+Extend the mcia_reg layout to 32 dwords.
 
-Instead of at context init time, the previous state is saved only at the
-point the context overrides the current state, and is restored on context
-exit only if the context is still the owner of the current override state.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: 79610d304133 ("drm/amdgpu: fix pstate setting issue")
-Cc: Chengming Gui <Jack.Gui@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1b5e413713c0a93bc1818394d0ce49aaad21bd27)
-Cc: <stable@vger.kernel.org> # v6.1+
+Fixes: 271907ee2f29 ("net/mlx5: Query the maximum MCIA register read size from firmware")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260717072338.1240582-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 71 +++++++++++++++----------
- 1 file changed, 42 insertions(+), 29 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/port.c |  4 ++--
+ include/linux/mlx5/mlx5_ifc.h                  | 13 +------------
+ 2 files changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-index cf8804fa7e971..afcc157adc126 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -320,7 +320,6 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
- 			   struct drm_file *filp, struct amdgpu_ctx *ctx)
- {
- 	struct amdgpu_fpriv *fpriv = filp->driver_priv;
--	u32 current_stable_pstate;
- 	int r;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index a5622b44385eb..ec739b2f0adac 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -316,7 +316,7 @@ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
+ 			      status);
+ 		return -EIO;
+ 	}
+-	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
++	ptr = MLX5_ADDR_OF(mcia_reg, out, dwords);
  
- 	r = amdgpu_ctx_priority_permit(filp, priority);
-@@ -338,37 +337,22 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
- 	ctx->generation = amdgpu_vm_generation(mgr->adev, &fpriv->vm);
- 	ctx->init_priority = priority;
- 	ctx->override_priority = AMDGPU_CTX_PRIORITY_UNSET;
--
--	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
--	if (r)
--		return r;
--
--	if (mgr->adev->pm.stable_pstate_ctx)
--		ctx->stable_pstate = mgr->adev->pm.stable_pstate_ctx->stable_pstate;
--	else
--		ctx->stable_pstate = current_stable_pstate;
-+	ctx->stable_pstate = AMDGPU_CTX_STABLE_PSTATE_NONE;
+ 	*module_id = ptr[0];
  
- 	ctx->ctx_mgr = &(fpriv->ctx_mgr);
- 	return 0;
- }
- 
--static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
--					u32 stable_pstate)
-+static int __amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
-+					  u32 stable_pstate)
- {
- 	struct amdgpu_device *adev = ctx->mgr->adev;
- 	enum amd_dpm_forced_level level;
-+	struct amdgpu_ctx *current_ctx;
- 	u32 current_stable_pstate;
--	int r;
-+	int r = 0;
- 
--	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
--	if (adev->pm.stable_pstate_ctx && adev->pm.stable_pstate_ctx != ctx) {
--		r = -EBUSY;
--		goto done;
--	}
--
--	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
--	if (r || (stable_pstate == current_stable_pstate))
--		goto done;
-+	lockdep_assert_held(&adev->pm.stable_pstate_ctx_lock);
- 
- 	switch (stable_pstate) {
- 	case AMDGPU_CTX_STABLE_PSTATE_NONE:
-@@ -387,17 +371,41 @@ static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
- 		level = AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
- 		break;
- 	default:
--		r = -EINVAL;
--		goto done;
-+		return -EINVAL;
+@@ -401,7 +401,7 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+ 		return -EIO;
  	}
  
-+	current_ctx = adev->pm.stable_pstate_ctx;
-+	if (current_ctx && current_ctx != ctx)
-+		return -EBUSY;
-+
-+	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
-+	if (r || current_stable_pstate == stable_pstate)
-+		return r;
-+
- 	r = amdgpu_dpm_force_performance_level(adev, level);
-+	if (r)
-+		return r;
+-	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
++	ptr = MLX5_ADDR_OF(mcia_reg, out, dwords);
+ 	memcpy(data, ptr, size);
  
--	if (level == AMD_DPM_FORCED_LEVEL_AUTO)
--		adev->pm.stable_pstate_ctx = NULL;
--	else
-+	if (!current_ctx) {
- 		adev->pm.stable_pstate_ctx = ctx;
--done:
-+		/*
-+		 * Serialized by context taking ownership for the first time
-+		 * while holding adev->pm.stable_pstate_ctx_lock).
-+		 */
-+		WRITE_ONCE(ctx->stable_pstate, current_stable_pstate);
-+	}
-+
-+	return 0;
-+}
-+
-+static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
-+					u32 stable_pstate)
-+{
-+	struct amdgpu_device *adev = ctx->mgr->adev;
-+	int r;
-+
-+	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
-+	r = __amdgpu_ctx_set_stable_pstate(ctx, stable_pstate);
- 	mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
+ 	return size;
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index c59fd31719a13..573461c9dced5 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -11320,18 +11320,7 @@ struct mlx5_ifc_mcia_reg_bits {
  
- 	return r;
-@@ -423,7 +431,12 @@ static void amdgpu_ctx_fini(struct kref *ref)
- 	}
+ 	u8         reserved_at_60[0x20];
  
- 	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--		amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
-+		mutex_lock(&adev->pm.stable_pstate_ctx_lock);
-+		if (adev->pm.stable_pstate_ctx == ctx) {
-+			__amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
-+			adev->pm.stable_pstate_ctx = NULL;
-+		}
-+		mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
- 		drm_dev_exit(idx);
- 	}
+-	u8         dword_0[0x20];
+-	u8         dword_1[0x20];
+-	u8         dword_2[0x20];
+-	u8         dword_3[0x20];
+-	u8         dword_4[0x20];
+-	u8         dword_5[0x20];
+-	u8         dword_6[0x20];
+-	u8         dword_7[0x20];
+-	u8         dword_8[0x20];
+-	u8         dword_9[0x20];
+-	u8         dword_10[0x20];
+-	u8         dword_11[0x20];
++	u8         dwords[0x400];
+ };
  
+ struct mlx5_ifc_dcbx_param_bits {
 -- 
 2.53.0
 
