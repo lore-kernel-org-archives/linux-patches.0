@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A55439CCE6;
-	Sat, 17 Oct 2026 16:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA78394785;
+	Sat, 17 Oct 2026 16:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253377; cv=none; b=pQA3cDJo16rn6ZlRUHGUotGBPu/UT2zxyUkBfy8DgUi/EDEeRaoRjKd2U6MISWszIch9XptO5iLt+6b048uX8WQh0V1hjOG1fbB/M5wGUDqOFARCNW2B4MvZIF0umk8rRxuvClvY1QXKaqh1t6C5AhHLwqLC6gO0QFKZJJmeVG8=
+	t=1792253381; cv=none; b=BO9qvu95EFcuawuqULuNnT1cEthRkmbZAgCsaFSWDg5T+7GLl+G6FsZMdPaQ93ozZ+r3A509JE6FQ8E/ynPaD7ue+UnScx8VP2jDLE4PS6sfcOUVp7G4vogDOeQXfc/3oJ9slO9ozvf8kQWoNZplHzhOr59Y/eVLRnBEGC877co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253377; c=relaxed/simple;
-	bh=W/Eyz8xvw03w7CtNUte4yIB9R17EitilXEJuV4KpkDo=;
+	s=arc-20240116; t=1792253381; c=relaxed/simple;
+	bh=uZdfBfghK6SqUvMRUGQcaxK7G3o+fdWTNw2C4r0gIKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVaRUjchunW3MDu9gLFCCHju4jt82nuP57RpPJQgzyHHU9H/dihk/gz9CbVOTAFmkI+WqjZY/ZNpD45goolvloqtmIOstKANMmbJIq0yrNlzHy/jMO15YATLp/CS1MP2ro8x4gvhDR9eCLutnRlGwCIHMF9ZKZYKPxfMRLa9E/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYFF5ito; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/jkQqEZOrEfUWFbtxooIVwaJNFip42Fre00Vp4Z367403+ZGqpj+X8sF70D6xxvIElBLllb4pGfNWuxAHA+yRAzOqUsCeDWjPQ0qe95B+dW9qVX9zPcpKEWhe1N1CHwaiU+vXHfIfqwDyREfo4KvSBvPPyBzxAhsJExgeLMYek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOO8/NUM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYFF5ito"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77141F000C4;
-	Sat, 17 Oct 2026 16:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOO8/NUM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FE91F000C6;
+	Sat, 17 Oct 2026 16:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253376;
-	bh=PrObECrG9eyOfG7/JeFEQHr4/NbU86sRcu6SVmjbeY0=;
+	s=korg; t=1792253379;
+	bh=6Bk9bg+9KfDCz/T5rqR6p9f6aeSj4xpfmmyxKjKJPjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CYFF5itoLjOza2UtSnkoW3Pl5Zt53Str1mVtWAT7HwS5X6eEN5w8zYJV8zQBNjB+p
-	 9eDUayXmSqtuz5Iqr7k9qoicdeIs4R6H//cEJ/tmXfNsf28GVul1nnVPE8auquKUTP
-	 tVBVUZKixOribUIdioLTW4kjxinCMQlWGYEiNyQA=
+	b=dOO8/NUMtLp49/V+rTB/OAQGLGdXRXE75IVidoCW589CAxTw134OXh9ckLGauNGtH
+	 Zxou1msIDlWQXkuBySZEe1o5ES/emLy7bf7XTYWrd7vx5dkpUIGotxyhl6sIY5Y003
+	 AsAHNC3/T/81X8OmoQXbepDl1pdxLaMZ41GLrf2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/869] drm/rockchip: vop2: Consistently use dev_err_probe()
-Date: Sat, 17 Oct 2026 17:48:58 +0200
-Message-ID: <20261017160039.524498585@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Michael Riesch <michael.riesch@wolfvision.net>
+Subject: [PATCH 6.12 098/869] drm/rockchip: vop2: Register the primary plane and overlay plane separately
+Date: Sat, 17 Oct 2026 17:48:59 +0200
+Message-ID: <20261017160039.549064572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,186 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit b06d1ef3355571383cdb463cf0195b7a02efdfbf ]
+[ Upstream commit 6fd4f8a26a21dd2075cfcc7eae3b9d440d886571 ]
 
-Replace drm_err() calls in vop2_bind() and vop2_create_crtcs() with
-dev_err_probe(), to simplify error handling and improve consistency.
+In the upcoming VOP of rk3576, a Window cannot attach to all Video Ports,
+so make sure all VP find it's suitable primary plane, then register the
+remain windows as overlay plane will make code easier.
 
-Additionally, ensure the already existing dev_err_probe() invocations
-pass drm->dev instead of dev as their first argument, so that we get the
-actual reason in case of -EPROBE_DEFER errors:
-
-  platform display-subsystem: deferred probe pending: (reason unknown)
-    vs.
-  platform display-subsystem: deferred probe pending: rockchip-drm: <actual reason>
-
-While at it, add the missing '\n' to some of the message strings.
-
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Michael Riesch <michael.riesch@wolfvision.net> # on RK3568
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250223-vop2-hdmi1-disp-modes-v2-2-f4cec5e06fbe@collabora.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250303034436.192400-2-andyshrk@163.com
 Stable-dep-of: f9f68bf1d0ef ("drm/rockchip: vop2: fail cleanly if missing a primary plane for a video-port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 83 +++++++++-----------
- 1 file changed, 37 insertions(+), 46 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 97 ++++++++++++--------
+ 1 file changed, 59 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 42521bd2ac16f..3654e74191adf 100644
+index 3654e74191adf..b3dcb387fb972 100644
 --- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
 +++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -2806,10 +2806,9 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+@@ -2764,22 +2764,29 @@ static int vop2_plane_init(struct vop2 *vop2, struct vop2_win *win,
+ 	return 0;
+ }
  
- 		snprintf(dclk_name, sizeof(dclk_name), "dclk_vp%d", vp->id);
- 		vp->dclk = devm_clk_get(vop2->dev, dclk_name);
--		if (IS_ERR(vp->dclk)) {
--			drm_err(vop2->drm, "failed to get %s\n", dclk_name);
--			return PTR_ERR(vp->dclk);
--		}
-+		if (IS_ERR(vp->dclk))
-+			return dev_err_probe(drm->dev, PTR_ERR(vp->dclk),
-+					     "failed to get %s\n", dclk_name);
- 
- 		np = of_graph_get_remote_node(dev->of_node, i, -1);
- 		if (!np) {
-@@ -2819,11 +2818,9 @@ static int vop2_create_crtcs(struct vop2 *vop2)
- 		of_node_put(np);
- 
- 		port = of_graph_get_port_by_id(dev->of_node, i);
--		if (!port) {
--			drm_err(vop2->drm, "no port node found for video_port%d\n", i);
--			return -ENOENT;
--		}
+-static struct vop2_video_port *find_vp_without_primary(struct vop2 *vop2)
++/*
++ * On RK3566 these windows don't have an independent
++ * framebuffer. They can only share/mirror the framebuffer
++ * with smart0, esmart0 and cluster0 respectively.
++ * And RK3566 share the same vop version with Rk3568, so we
++ * need to use soc_id for identification here.
++ */
++static bool vop2_is_mirror_win(struct vop2_win *win)
+ {
+-	int i;
 -
-+		if (!port)
-+			return dev_err_probe(drm->dev, -ENOENT,
-+					     "no port node found for video_port%d\n", i);
- 		vp->crtc.port = port;
- 		nvps++;
- 	}
-@@ -2863,11 +2860,9 @@ static int vop2_create_crtcs(struct vop2 *vop2)
- 			possible_crtcs = (1 << nvps) - 1;
+-	for (i = 0; i < vop2->data->nr_vps; i++) {
+-		struct vop2_video_port *vp = &vop2->vps[i];
+-
+-		if (!vp->crtc.port)
+-			continue;
+-		if (vp->primary_plane)
+-			continue;
++	struct vop2 *vop2 = win->vop2;
  
- 		ret = vop2_plane_init(vop2, win, possible_crtcs);
--		if (ret) {
--			drm_err(vop2->drm, "failed to init plane %s: %d\n",
--				win->data->name, ret);
--			return ret;
--		}
-+		if (ret)
-+			return dev_err_probe(drm->dev, ret, "failed to init plane %s\n",
-+					     win->data->name);
+-		return vp;
++	if (vop2->data->soc_id == 3566) {
++		switch (win->data->phys_id) {
++		case ROCKCHIP_VOP2_SMART1:
++		case ROCKCHIP_VOP2_ESMART1:
++		case ROCKCHIP_VOP2_CLUSTER1:
++			return true;
++		default:
++			return false;
++		}
++	} else {
++		return false;
  	}
+-
+-	return NULL;
+ }
+ 
+ static int vop2_create_crtcs(struct vop2 *vop2)
+@@ -2790,7 +2797,9 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+ 	struct drm_plane *plane;
+ 	struct device_node *port;
+ 	struct vop2_video_port *vp;
+-	int i, nvp, nvps = 0;
++	struct vop2_win *win;
++	u32 possible_crtcs;
++	int i, j, nvp, nvps = 0;
+ 	int ret;
  
  	for (i = 0; i < vop2_data->nr_vps; i++) {
-@@ -2881,10 +2876,9 @@ static int vop2_create_crtcs(struct vop2 *vop2)
- 		ret = drm_crtc_init_with_planes(drm, &vp->crtc, plane, NULL,
- 						&vop2_crtc_funcs,
- 						"video_port%d", vp->id);
--		if (ret) {
--			drm_err(vop2->drm, "crtc init for video_port%d failed\n", i);
--			return ret;
+@@ -2826,42 +2835,54 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+ 	}
+ 
+ 	nvp = 0;
+-	for (i = 0; i < vop2->registered_num_wins; i++) {
+-		struct vop2_win *win = &vop2->win[i];
+-		u32 possible_crtcs = 0;
++	/* Register a primary plane for every crtc */
++	for (i = 0; i < vop2_data->nr_vps; i++) {
++		vp = &vop2->vps[i];
+ 
+-		if (vop2->data->soc_id == 3566) {
+-			/*
+-			 * On RK3566 these windows don't have an independent
+-			 * framebuffer. They share the framebuffer with smart0,
+-			 * esmart0 and cluster0 respectively.
+-			 */
+-			switch (win->data->phys_id) {
+-			case ROCKCHIP_VOP2_SMART1:
+-			case ROCKCHIP_VOP2_ESMART1:
+-			case ROCKCHIP_VOP2_CLUSTER1:
++		if (!vp->crtc.port)
++			continue;
++
++		for (j = 0; j < vop2->registered_num_wins; j++) {
++			win = &vop2->win[j];
++
++			/* Aready registered as primary plane */
++			if (win->base.type == DRM_PLANE_TYPE_PRIMARY)
+ 				continue;
+-			}
 -		}
-+		if (ret)
-+			return dev_err_probe(drm->dev, ret,
-+					     "crtc init for video_port%d failed\n", i);
  
- 		drm_crtc_helper_add(&vp->crtc, &vop2_crtc_helper_funcs);
+-		if (win->type == DRM_PLANE_TYPE_PRIMARY) {
+-			vp = find_vp_without_primary(vop2);
+-			if (vp) {
++			if (vop2_is_mirror_win(win))
++				continue;
++
++			if (win->type == DRM_PLANE_TYPE_PRIMARY) {
+ 				possible_crtcs = BIT(nvp);
+ 				vp->primary_plane = win;
++				ret = vop2_plane_init(vop2, win, possible_crtcs);
++				if (ret)
++					return dev_err_probe(drm->dev, ret,
++							     "failed to init primary plane %s\n",
++							     win->data->name);
+ 				nvp++;
+-			} else {
+-				/* change the unused primary window to overlay window */
+-				win->type = DRM_PLANE_TYPE_OVERLAY;
++				break;
+ 			}
+ 		}
++	}
++
++	/* Register all unused window as overlay plane */
++	for (i = 0; i < vop2->registered_num_wins; i++) {
++		win = &vop2->win[i];
++
++		/* Aready registered as primary plane */
++		if (win->base.type == DRM_PLANE_TYPE_PRIMARY)
++			continue;
++
++		if (vop2_is_mirror_win(win))
++			continue;
  
-@@ -3206,10 +3200,9 @@ static int vop2_bind(struct device *dev, struct device *master, void *data)
- 	dev_set_drvdata(dev, vop2);
+-		if (win->type == DRM_PLANE_TYPE_OVERLAY)
+-			possible_crtcs = (1 << nvps) - 1;
++		win->type = DRM_PLANE_TYPE_OVERLAY;
  
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "vop");
--	if (!res) {
--		drm_err(vop2->drm, "failed to get vop2 register byname\n");
--		return -EINVAL;
--	}
-+	if (!res)
-+		return dev_err_probe(drm->dev, -EINVAL,
-+				     "failed to get vop2 register byname\n");
- 
- 	vop2->regs = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(vop2->regs))
-@@ -3233,56 +3226,54 @@ static int vop2_bind(struct device *dev, struct device *master, void *data)
- 	if (vop2_data->feature & VOP2_FEATURE_HAS_SYS_GRF) {
- 		vop2->sys_grf = syscon_regmap_lookup_by_phandle(dev->of_node, "rockchip,grf");
- 		if (IS_ERR(vop2->sys_grf))
--			return dev_err_probe(dev, PTR_ERR(vop2->sys_grf), "cannot get sys_grf");
-+			return dev_err_probe(drm->dev, PTR_ERR(vop2->sys_grf),
-+					     "cannot get sys_grf\n");
++		possible_crtcs = (1 << nvps) - 1;
+ 		ret = vop2_plane_init(vop2, win, possible_crtcs);
+ 		if (ret)
+-			return dev_err_probe(drm->dev, ret, "failed to init plane %s\n",
++			return dev_err_probe(drm->dev, ret, "failed to init overlay plane %s\n",
+ 					     win->data->name);
  	}
- 
- 	if (vop2_data->feature & VOP2_FEATURE_HAS_VOP_GRF) {
- 		vop2->vop_grf = syscon_regmap_lookup_by_phandle(dev->of_node, "rockchip,vop-grf");
- 		if (IS_ERR(vop2->vop_grf))
--			return dev_err_probe(dev, PTR_ERR(vop2->vop_grf), "cannot get vop_grf");
-+			return dev_err_probe(drm->dev, PTR_ERR(vop2->vop_grf),
-+					     "cannot get vop_grf\n");
- 	}
- 
- 	if (vop2_data->feature & VOP2_FEATURE_HAS_VO1_GRF) {
- 		vop2->vo1_grf = syscon_regmap_lookup_by_phandle(dev->of_node, "rockchip,vo1-grf");
- 		if (IS_ERR(vop2->vo1_grf))
--			return dev_err_probe(dev, PTR_ERR(vop2->vo1_grf), "cannot get vo1_grf");
-+			return dev_err_probe(drm->dev, PTR_ERR(vop2->vo1_grf),
-+					     "cannot get vo1_grf\n");
- 	}
- 
- 	if (vop2_data->feature & VOP2_FEATURE_HAS_SYS_PMU) {
- 		vop2->sys_pmu = syscon_regmap_lookup_by_phandle(dev->of_node, "rockchip,pmu");
- 		if (IS_ERR(vop2->sys_pmu))
--			return dev_err_probe(dev, PTR_ERR(vop2->sys_pmu), "cannot get sys_pmu");
-+			return dev_err_probe(drm->dev, PTR_ERR(vop2->sys_pmu),
-+					     "cannot get sys_pmu\n");
- 	}
- 
- 	vop2->hclk = devm_clk_get(vop2->dev, "hclk");
--	if (IS_ERR(vop2->hclk)) {
--		drm_err(vop2->drm, "failed to get hclk source\n");
--		return PTR_ERR(vop2->hclk);
--	}
-+	if (IS_ERR(vop2->hclk))
-+		return dev_err_probe(drm->dev, PTR_ERR(vop2->hclk),
-+				     "failed to get hclk source\n");
- 
- 	vop2->aclk = devm_clk_get(vop2->dev, "aclk");
--	if (IS_ERR(vop2->aclk)) {
--		drm_err(vop2->drm, "failed to get aclk source\n");
--		return PTR_ERR(vop2->aclk);
--	}
-+	if (IS_ERR(vop2->aclk))
-+		return dev_err_probe(drm->dev, PTR_ERR(vop2->aclk),
-+				     "failed to get aclk source\n");
- 
- 	vop2->pclk = devm_clk_get_optional(vop2->dev, "pclk_vop");
--	if (IS_ERR(vop2->pclk)) {
--		drm_err(vop2->drm, "failed to get pclk source\n");
--		return PTR_ERR(vop2->pclk);
--	}
-+	if (IS_ERR(vop2->pclk))
-+		return dev_err_probe(drm->dev, PTR_ERR(vop2->pclk),
-+				     "failed to get pclk source\n");
- 
- 	vop2->pll_hdmiphy0 = devm_clk_get_optional(vop2->dev, "pll_hdmiphy0");
--	if (IS_ERR(vop2->pll_hdmiphy0)) {
--		drm_err(vop2->drm, "failed to get pll_hdmiphy0\n");
--		return PTR_ERR(vop2->pll_hdmiphy0);
--	}
-+	if (IS_ERR(vop2->pll_hdmiphy0))
-+		return dev_err_probe(drm->dev, PTR_ERR(vop2->pll_hdmiphy0),
-+				     "failed to get pll_hdmiphy0\n");
- 
- 	vop2->irq = platform_get_irq(pdev, 0);
--	if (vop2->irq < 0) {
--		drm_err(vop2->drm, "cannot find irq for vop2\n");
--		return vop2->irq;
--	}
-+	if (vop2->irq < 0)
-+		return dev_err_probe(drm->dev, vop2->irq, "cannot find irq for vop2\n");
- 
- 	mutex_init(&vop2->vop2_lock);
  
 -- 
 2.53.0
