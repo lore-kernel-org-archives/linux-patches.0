@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADC7377A92;
-	Sat, 17 Oct 2026 16:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4795938654F;
+	Sat, 17 Oct 2026 16:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253813; cv=none; b=iu0Q7TYBspTA+pg2MTt4EACeqHurciBRMdG08YPAS1oiEfy3FOSbO6bofLnPVhwWYegfJsE1cDYFGLRrKycX4qMsnodf6mBNNjZ/vtLwK8ez8CezbDyxkonGuVwlATND4ROX6sVXCLOnfnevcrXDYRm9Kvv4Tb7qtdZmRCbL6K4=
+	t=1792253816; cv=none; b=Dth4NsOsuo/oqXsswsQTPnZdICdP93Lov+WBi0Q3yvHTsm+kGgb/+LVqhX74W3nbu3waUiqrskswu4JVmHiJC5xvU7uiguoFQnRmeuRZZ/XfC2q307CAAZY9bApsXr4PLIZ83ntzhsdREXymQmZUS8BTaW1ZOFlOovdpgT/UPfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253813; c=relaxed/simple;
-	bh=fbEehDjnpR42XxVkRmE+bEFfx55NqoR6grMZl5JJ6Vc=;
+	s=arc-20240116; t=1792253816; c=relaxed/simple;
+	bh=vWhImizEagXuaZG+7iD8osrrHBQoijdHN0g70rd8KPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDDC+YdqMP4EAyjtUn4Ng+e9pQCRxdWtUv71DvOc59kaKbiGd/Db9BavxbhNsLMALKl0n0Wu07xC7B296ympu7/Wc0zmR8ybjZUgRuTeBrMuNJ7vSJmHW79N4cxgdGQZmI+2n+P06TYEJ34ROYU0FEE0lkt9CzYe0lUtos2w5eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkiLJauA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VLsedCI2epV0YpCvOnb6ezRxoqbV5GcOyUI208LuimwNVW25MywdFLmkwCtVsMH0x/9KbxMhC+YW1xM1FuwsAqele/4yy7F9YDt1pfupli/1Td1VjYnL31AGYQXZpXzu0nizbJcp8dq3LYMF3O87lf13Hr14KehrDQFPi1J94ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdWQX413; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkiLJauA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04D21F000C4;
-	Sat, 17 Oct 2026 16:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdWQX413"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9149C1F000C4;
+	Sat, 17 Oct 2026 16:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253812;
-	bh=Dts8UbYzCICPB/FfbBBBWPZWDOkWaRCVy5gAR74YY5c=;
+	s=korg; t=1792253815;
+	bh=hguJJk9R3ebUwGOULIhSnCvcOTkB3prYpXjOZMqu6pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkiLJauAuvSrryMe3mv7d5Jyac+hFFmq7xO4uPHIYvKILaOk6eRr8H9HWc2q7mrU9
-	 z8y5xeFT2PT+/WkbTlMGsU/z3EW3Jft6m+OdI8Io+WK0Qgr3XAWM/xmb7zGZ1tjTPp
-	 UQFJfyGS8RP5ZsRicQQQujdWO4VKaK/KcHMJDMAg=
+	b=WdWQX413nlck1wu6DNRcMj9xnaCMpY0YEhgRSEmOaeND31BBGODYLBTnnN955r3Fe
+	 frvXkuRBP9nkgUtFM31wWkPPcSb0wPJNZBouAtxOK25c3ig7K3TiJrtADTDm7GAsiE
+	 YISl2dxc2OQl7PVMnU5BmG0N8i79hyGVWBHpz3mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/869] ALSA: ctxfi: Use explicit output flag for DAIO resources
-Date: Sat, 17 Oct 2026 17:50:45 +0200
-Message-ID: <20261017160042.285878268@linuxfoundation.org>
+Subject: [PATCH 6.12 240/869] wifi: iwlwifi: fix 22000 series SMEM parsing
+Date: Sat, 17 Oct 2026 17:51:21 +0200
+Message-ID: <20261017160043.208698410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,143 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9bb003a1f98b11b80238d522778115ad07355149 ]
+[ Upstream commit 58192b9ce09b0f0f86e2036683bd542130b91a98 ]
 
-Replace the index-based type check with an explicit output flag in
-struct daio and struct daio_desc.
+If the firmware were to report three LMACs (which doesn't
+exist in hardware) then using "fwrt->smem_cfg.lmac[2]" is
+an overrun of the array. Reject such and use IWL_FW_CHECK
+instead of WARN_ON in this function.
 
-This allows handling DAIO resource types correctly regardless of their
-index. This is necessary for hardware variants where resource types do
-not follow a sequential order.
-
-Signed-off-by: Harin Lee <me@harin.net>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251124180501.2760421-4-me@harin.net
-Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110150012.16e8c2d70c26.Iadfcc1aedf43c5175b3f0757bea5aa232454f1ac@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctatc.c  |  3 ++-
- sound/pci/ctxfi/ctdaio.c | 14 +++++++-------
- sound/pci/ctxfi/ctdaio.h |  2 ++
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/smem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
-index 74eecc9ebd846..fa70c4504db5f 100644
---- a/sound/pci/ctxfi/ctatc.c
-+++ b/sound/pci/ctxfi/ctatc.c
-@@ -1166,7 +1166,7 @@ static int atc_release_resources(struct ct_atc *atc)
- 		daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
- 		for (i = 0; i < atc->n_daio; i++) {
- 			daio = atc->daios[i];
--			if (daio->type < LINEIM) {
-+			if (daio->output) {
- 				dao = container_of(daio, struct dao, daio);
- 				dao->ops->clear_left_input(dao);
- 				dao->ops->clear_right_input(dao);
-@@ -1396,6 +1396,7 @@ static int atc_get_resources(struct ct_atc *atc)
- 	for (i = 0, atc->n_daio = 0; i < num_daios; i++) {
- 		da_desc.type = (atc->model != CTSB073X) ? i :
- 			     ((i == SPDIFIO) ? SPDIFI1 : i);
-+		da_desc.output = i < LINEIM;
- 		err = daio_mgr->get_daio(daio_mgr, &da_desc,
- 					(struct daio **)&atc->daios[i]);
- 		if (err) {
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index b20c10196579d..143dd0979cc9a 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -18,8 +18,6 @@
- #include <linux/slab.h>
- #include <linux/kernel.h>
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/smem.c b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+index 3f1272014dafb..50ebc81a3748c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/smem.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+@@ -6,6 +6,7 @@
+  */
+ #include "iwl-drv.h"
+ #include "runtime.h"
++#include "dbg.h"
+ #include "fw/api/commands.h"
  
--#define DAIO_OUT_MAX		SPDIFOO
--
- struct daio_usage {
- 	unsigned short data;
- };
-@@ -352,7 +350,7 @@ static int daio_rsc_init(struct daio *daio,
- 		goto error1;
+ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+@@ -17,7 +18,9 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+ 	u8 api_ver = iwl_fw_lookup_notif_ver(fwrt->fw, SYSTEM_GROUP,
+ 					     SHARED_MEM_CFG_CMD, 0);
  
- 	/* Set daio->rscl/r->ops to daio specific ones */
--	if (desc->type <= DAIO_OUT_MAX) {
-+	if (desc->output) {
- 		daio->rscl.ops = daio->rscr.ops = &daio_out_rsc_ops;
- 	} else {
- 		switch (hw->chip_type) {
-@@ -367,6 +365,7 @@ static int daio_rsc_init(struct daio *daio,
- 		}
- 	}
- 	daio->type = desc->type;
-+	daio->output = desc->output;
+-	if (WARN_ON(lmac_num > ARRAY_SIZE(mem_cfg->lmac_smem)))
++	/* Note: notification has 3 entries, but we only expect 2 */
++	if (IWL_FW_CHECK(fwrt, lmac_num > ARRAY_SIZE(fwrt->smem_cfg.lmac),
++			 "FW advertises %d LMACs\n", lmac_num))
+ 		return;
  
- 	return 0;
- 
-@@ -456,6 +455,7 @@ static int dao_rsc_reinit(struct dao *dao, const struct dao_desc *desc)
- 	dsc.type = dao->daio.type;
- 	dsc.msr = desc->msr;
- 	dsc.passthru = desc->passthru;
-+	dsc.output = dao->daio.output;
- 	dao_rsc_uninit(dao);
- 	return dao_rsc_init(dao, &dsc, mgr);
- }
-@@ -542,7 +542,7 @@ static int get_daio_rsc(struct daio_mgr *mgr,
- 
- 	err = -ENOMEM;
- 	/* Allocate mem for daio resource */
--	if (desc->type <= DAIO_OUT_MAX) {
-+	if (desc->output) {
- 		struct dao *dao = kzalloc(sizeof(*dao), GFP_KERNEL);
- 		if (!dao)
- 			goto error;
-@@ -591,7 +591,7 @@ static int put_daio_rsc(struct daio_mgr *mgr, struct daio *daio)
- 	daio_mgr_put_rsc(&mgr->mgr, daio->type);
- 	spin_unlock_irqrestore(&mgr->mgr_lock, flags);
- 
--	if (daio->type <= DAIO_OUT_MAX) {
-+	if (daio->output) {
- 		dao_rsc_uninit(container_of(daio, struct dao, daio));
- 		kfree(container_of(daio, struct dao, daio));
- 	} else {
-@@ -606,7 +606,7 @@ static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
- 
--	if (DAIO_OUT_MAX >= daio->type) {
-+	if (daio->output) {
- 		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
- 				daio_device_index(daio->type, hw));
- 	} else {
-@@ -620,7 +620,7 @@ static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
- 
--	if (DAIO_OUT_MAX >= daio->type) {
-+	if (daio->output) {
- 		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
- 				daio_device_index(daio->type, hw));
- 	} else {
-diff --git a/sound/pci/ctxfi/ctdaio.h b/sound/pci/ctxfi/ctdaio.h
-index 15147fe5f74a0..b337da2de8b50 100644
---- a/sound/pci/ctxfi/ctdaio.h
-+++ b/sound/pci/ctxfi/ctdaio.h
-@@ -43,6 +43,7 @@ struct daio {
- 	struct rsc rscl;	/* Basic resource info for left TX/RX */
- 	struct rsc rscr;	/* Basic resource info for right TX/RX */
- 	enum DAIOTYP type;
-+	unsigned char output;
- };
- 
- struct dao {
-@@ -91,6 +92,7 @@ struct daio_desc {
- 	unsigned int type:4;
- 	unsigned int msr:4;
- 	unsigned int passthru:1;
-+	unsigned int output:1;
- };
- 
- struct daio_mgr {
+ 	fwrt->smem_cfg.num_lmacs = lmac_num;
 -- 
 2.53.0
 
