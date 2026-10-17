@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCC83A6418;
-	Sat, 17 Oct 2026 16:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3715D277026;
+	Sat, 17 Oct 2026 16:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255802; cv=none; b=eVpACabPgbQvz/HTAWRJxDt+uqHylr/hYuOC8EVFtpgctXX6Yq9m3k2NB7y3aLs4NtwawlhAdGrakXfIcQ7FWZ23nfBI47l81x8WAQgXtig3WjVBMQtrrcZck5bRmhaSWfPA2Gve+x2f1gAhkABkosdS8rd7lyP/FMCT0cIdYZQ=
+	t=1792255805; cv=none; b=usIJoELiazRovEHxovR88lHfbG3EYzmnsVDsPhHQXKJcVsjoqFCO3bUPkQV8jBuaLnhbkYE5Ma3As/x+8pI2SXJRx+13bm7icVaVCsLI+kD3n67CILV7bpzp882qkXND4HEnSLKCP3MVYQZpUPvPxaZKp961PwENP9lWgnpg6LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255802; c=relaxed/simple;
-	bh=TKElsfhiIxHvViE99RnzwD3REIQtyAJKbXiFw/aBnKo=;
+	s=arc-20240116; t=1792255805; c=relaxed/simple;
+	bh=NTpLwQCcOwHGaQhECja8yEWJxKJXoddaxnePKFR3nxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVX2/+rVWUegiuzoS+3vwU9iRUoaBQ7/7teuw4Reafk27LYIabKdeCMiMko3rgz3qQ6R7tRW7ZSMcrHyLxwE+zjOvAVr2Evlb9zP4hNwECqT6VjwH6jWu1maQmn84WClZxDq3WQ//KYXL6M4l4pblQoLdUay7gbGQ5QqItizO4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbKMOGxZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ot0Qnr7MhuwiIgGWLG+oGlBesqErunW/xxkb+aC/AzVpP1SBCGfXBe+cySiVA/ORNt3SuDUfb4njJknaPNDNHZ5zhLxkDXXUoAEoeh6Zc6JmQmyG4xaWMopp36MJbaYBaA0quvtzzB4RJTyX9bf5lPUvPaIkg8Wxi8WwekY8q/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGl1O+eP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbKMOGxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23D61F000C4;
-	Sat, 17 Oct 2026 16:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGl1O+eP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0D51F000C4;
+	Sat, 17 Oct 2026 16:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255801;
-	bh=Ta5fXssCBSXPqiaFDX7tgwLGzpsb6O6yBgvy0OG7sm8=;
+	s=korg; t=1792255804;
+	bh=qdJJfy3hQya1iv7XfQSpj+l2APrjno5EfzSucBVBgqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbKMOGxZ1b5evdYSqy125GhaEqS2EDuBTXYvaaPL6wGCj/j6e/dsEDDMaJMXe5xJH
-	 IzCJV+zxZjIohnYEF4svYnXPxUPavnj/YZKynw9T4Hh6FZKnMTwTcg994Vvx4Vp9PP
-	 nIzc8AV0iV+TiGodT7F4N6exCgHan6Tv5RZJQlh8=
+	b=QGl1O+ePNO2PNotVi7k3hKhTs/6bXVKa16vAvPJuZ7/PmYthD/2duFUtRH9JD/jPy
+	 JJJSOr8ZZ2d4/BPX/K8EycxRh1ZgmIzJ3lhMZLTSEEHIz2wU6J0BvuRrwylKGRJpuQ
+	 QoiMRDtWYIKfn0y9FWr7ZsV0ovncs6eugkMYBwUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Itzko <itzko@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0006/1674] net: ena: Add validation for completion descriptors consistency
-Date: Sat, 17 Oct 2026 17:37:58 +0200
-Message-ID: <20261017160431.303965509@linuxfoundation.org>
+Subject: [PATCH 6.6 0007/1674] x86/CPU/AMD: Clear virtualized VMLOAD/VMSAVE on Zen4 client
+Date: Sat, 17 Oct 2026 17:37:59 +0200
+Message-ID: <20261017160431.329676991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,139 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arinzon <darinzon@amazon.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit b37b98a3a0c1198bafe8c2d9ce0bc845b4e7a9a7 ]
+[ Upstream commit a5ca1dc46a6b610dd4627d8b633d6c84f9724ef0 ]
 
-Validate that `first` flag is set only for the first
-descriptor in multi-buffer packets.
-In case of an invalid descriptor, a reset will occur.
-A new reset reason for RX data corruption has been added.
+A number of Zen4 client SoCs advertise the ability to use virtualized
+VMLOAD/VMSAVE, but using these instructions is reported to be a cause
+of a random host reboot.
 
-Signed-off-by: Shahar Itzko <itzko@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240512134637.25299-4-darinzon@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+These instructions aren't intended to be advertised on Zen4 client
+so clear the capability.
+
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219009
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_eth_com.c | 37 ++++++++++++++-----
- drivers/net/ethernet/amazon/ena/ena_netdev.c  |  2 +
- .../net/ethernet/amazon/ena/ena_regs_defs.h   |  1 +
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_eth_com.c b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-index 933e619b3a313..4c6e07aa4bbb5 100644
---- a/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-@@ -229,30 +229,43 @@ static struct ena_eth_io_rx_cdesc_base *
- 		idx * io_cq->cdesc_entry_size_in_bytes);
- }
- 
--static u16 ena_com_cdesc_rx_pkt_get(struct ena_com_io_cq *io_cq,
--					   u16 *first_cdesc_idx)
-+static int ena_com_cdesc_rx_pkt_get(struct ena_com_io_cq *io_cq,
-+				    u16 *first_cdesc_idx,
-+				    u16 *num_descs)
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index a2313fa8a0729..955da4c2385fa 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1196,6 +1196,17 @@ static void init_amd_zen3(struct cpuinfo_x86 *c)
+ static void init_amd_zen4(struct cpuinfo_x86 *c)
  {
-+	u16 count = io_cq->cur_rx_pkt_cdesc_count, head_masked;
- 	struct ena_eth_io_rx_cdesc_base *cdesc;
--	u16 count = 0, head_masked;
- 	u32 last = 0;
- 
- 	do {
-+		u32 status;
+ 	init_amd_zen_common();
 +
- 		cdesc = ena_com_get_next_rx_cdesc(io_cq);
- 		if (!cdesc)
- 			break;
-+		status = READ_ONCE(cdesc->status);
- 
- 		ena_com_cq_inc_head(io_cq);
-+		if (unlikely((status & ENA_ETH_IO_RX_CDESC_BASE_FIRST_MASK) >>
-+		    ENA_ETH_IO_RX_CDESC_BASE_FIRST_SHIFT && count != 0)) {
-+			struct ena_com_dev *dev = ena_com_io_cq_to_ena_dev(io_cq);
-+
-+			netdev_err(dev->net_device,
-+				   "First bit is on in descriptor #%d on q_id: %d, req_id: %u\n",
-+				   count, io_cq->qid, cdesc->req_id);
-+			return -EFAULT;
-+		}
- 		count++;
--		last = (READ_ONCE(cdesc->status) & ENA_ETH_IO_RX_CDESC_BASE_LAST_MASK) >>
--		       ENA_ETH_IO_RX_CDESC_BASE_LAST_SHIFT;
-+		last = (status & ENA_ETH_IO_RX_CDESC_BASE_LAST_MASK) >>
-+			ENA_ETH_IO_RX_CDESC_BASE_LAST_SHIFT;
- 	} while (!last);
- 
- 	if (last) {
- 		*first_cdesc_idx = io_cq->cur_rx_pkt_cdesc_start_idx;
--		count += io_cq->cur_rx_pkt_cdesc_count;
- 
- 		head_masked = io_cq->head & (io_cq->q_depth - 1);
- 
-+		*num_descs = count;
- 		io_cq->cur_rx_pkt_cdesc_count = 0;
- 		io_cq->cur_rx_pkt_cdesc_start_idx = head_masked;
- 
-@@ -260,11 +273,11 @@ static u16 ena_com_cdesc_rx_pkt_get(struct ena_com_io_cq *io_cq,
- 			   "ENA q_id: %d packets were completed. first desc idx %u descs# %d\n",
- 			   io_cq->qid, *first_cdesc_idx, count);
- 	} else {
--		io_cq->cur_rx_pkt_cdesc_count += count;
--		count = 0;
-+		io_cq->cur_rx_pkt_cdesc_count = count;
-+		*num_descs = 0;
- 	}
- 
--	return count;
-+	return 0;
++	/*
++	 * These Zen4 SoCs advertise support for virtualized VMLOAD/VMSAVE
++	 * in some BIOS versions but they can lead to random host reboots.
++	 */
++	switch (c->x86_model) {
++	case 0x18 ... 0x1f:
++	case 0x60 ... 0x7f:
++		clear_cpu_cap(c, X86_FEATURE_V_VMSAVE_VMLOAD);
++		break;
++	}
  }
  
- static int ena_com_create_meta(struct ena_com_io_sq *io_sq,
-@@ -539,10 +552,14 @@ int ena_com_rx_pkt(struct ena_com_io_cq *io_cq,
- 	u16 cdesc_idx = 0;
- 	u16 nb_hw_desc;
- 	u16 i = 0;
-+	int rc;
- 
- 	WARN(io_cq->direction != ENA_COM_IO_QUEUE_DIRECTION_RX, "wrong Q type");
- 
--	nb_hw_desc = ena_com_cdesc_rx_pkt_get(io_cq, &cdesc_idx);
-+	rc = ena_com_cdesc_rx_pkt_get(io_cq, &cdesc_idx, &nb_hw_desc);
-+	if (unlikely(rc != 0))
-+		return -EFAULT;
-+
- 	if (nb_hw_desc == 0) {
- 		ena_rx_ctx->descs = nb_hw_desc;
- 		return 0;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 4d7446bb66b77..60d8d2d99af14 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1335,6 +1335,8 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 	if (rc == -ENOSPC) {
- 		ena_increase_stat(&rx_ring->rx_stats.bad_desc_num, 1, &rx_ring->syncp);
- 		ena_reset_device(adapter, ENA_REGS_RESET_TOO_MANY_RX_DESCS);
-+	} else if (rc == -EFAULT) {
-+		ena_reset_device(adapter, ENA_REGS_RESET_RX_DESCRIPTOR_MALFORMED);
- 	} else {
- 		ena_increase_stat(&rx_ring->rx_stats.bad_req_id, 1,
- 				  &rx_ring->syncp);
-diff --git a/drivers/net/ethernet/amazon/ena/ena_regs_defs.h b/drivers/net/ethernet/amazon/ena/ena_regs_defs.h
-index 1e007a41a5256..23466d62fbc5c 100644
---- a/drivers/net/ethernet/amazon/ena/ena_regs_defs.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_regs_defs.h
-@@ -21,6 +21,7 @@ enum ena_regs_reset_reason_types {
- 	ENA_REGS_RESET_USER_TRIGGER                 = 12,
- 	ENA_REGS_RESET_GENERIC                      = 13,
- 	ENA_REGS_RESET_MISS_INTERRUPT               = 14,
-+	ENA_REGS_RESET_RX_DESCRIPTOR_MALFORMED	    = 16,
- };
- 
- /* ena_registers offsets */
+ static void init_amd_zen5(struct cpuinfo_x86 *c)
 -- 
 2.53.0
 
