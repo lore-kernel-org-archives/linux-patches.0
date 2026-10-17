@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0877B36CE19;
-	Sat, 17 Oct 2026 17:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7D3B9927;
+	Sat, 17 Oct 2026 17:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257467; cv=none; b=Sgj4MsGF68p+PmZJKyKHNSGdNblsNvsw4WJcj+Vetwvf15CfHmK+WsGKYQM3pjE7+NEKelOqoUpOxshq7NXndg1zki3jM31UsnZxz+ZxmBH+nNjQPlT4H9gZIfGFfO+ZBa5CFhS3CjxyxTOGf9PwCgueXlJsYieoau1AzGk8k8I=
+	t=1792257470; cv=none; b=YIFPaGFKGL9mxVi9GJfaBA3eRcA1U4afKotVwSGkMSoQPfODqi/19e/AOmljMxh+8m/3mm8jPYzxoiMRNbk+pudK0My5FTOHsU9sxmzS6IcewihtkXHgyS8W8K2gIdCx8NUKPysQanHEaP9+T8ZfcMyVJfeejOfP3cpYeYvMKdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257467; c=relaxed/simple;
-	bh=pCPeLvqBDiPn0KGdx1a8B4oJoRbjTvYUMrZQ+/d+xZM=;
+	s=arc-20240116; t=1792257470; c=relaxed/simple;
+	bh=cKHUnsMz8ZwY0CuhhYNNMoSsNJkYIrOaTgIoCVZvWz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiPK5tIQ/Wq7mrlzz5Dcnn7awbh+UhOwOxaHpLnYnPQHYklRwSHuLqA+lCXSkgvJRiT3olU+rlySlilV0Dry064Gc9RhKaRZS4iLn8DNTE09kRuMA7VRvPktX3TioxyRmEUuDyU7G9n++zRWxZfoge21JSuKSDYE2kXo2/z/ER8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJ2s6GKA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pPQrm/2B4xPAwW8lVXtm3qpemHmJtXVLKoHgv16RKFbNYSKg0awRjmK9Zf0GXelSq5nxFLJppmPDpmIsfyYVzcjwteu+YZepuj8N8QxF2GhrP5ERG/lXt3oip+oHXiGwyfm7AyhubPoALLkpvkhwO+jV2VDx9AFsfkONt6ZoGAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGyzzoir; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJ2s6GKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FBE1F000C4;
-	Sat, 17 Oct 2026 17:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGyzzoir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721291F000C4;
+	Sat, 17 Oct 2026 17:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257465;
-	bh=43NiaWjxy7/TIHYo0edktLr7R2bRNyZnufWwmyZhdZQ=;
+	s=korg; t=1792257469;
+	bh=wBVJm+Lrcxw2qK4u1HBAfKs3/nxsSsXZlzV3kKJxmM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LJ2s6GKApxk3qZM2ooVdX01nqozjVTuRIgNeqfHcL25JE51P3MbA12eK9ETmCD3XR
-	 4JyKkDz6uK6Ds+I4M6aDf9OA1wsgLwMrfiJKQRoiRTxagN5e8qO9aimcm/y7LA6qC4
-	 QHs8Gj2U4ahVGpsMZbi9HG3Mn9nRH5P40G/ql4L0=
+	b=HGyzzoirYp8EnshZBIlUt2An40U/DSC6rV9kJ/RqO3stSZFjKfGsCYSLjISZrXa07
+	 p+M0PifmwOFqoJYWY9xySd2AtP05Z8H4e2N7CwJrLkaLAKPK9oZESMUKL9pMXJUS1F
+	 f6b3PtPIxqQvhsb1ghaSSxxNVcxMoYffecr4ysF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0566/1674] HID: steam: Refactor registration
-Date: Sat, 17 Oct 2026 17:47:18 +0200
-Message-ID: <20261017160445.621075018@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Sunpeng Li <sunpeng.li@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>
+Subject: [PATCH 6.6 0527/1674] drm/amdgpu: serialize vblank counter reads against GPU reset
+Date: Sat, 17 Oct 2026 17:46:39 +0200
+Message-ID: <20261017160444.633197448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,155 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-[ Upstream commit 6f9b740c31ba7e061b2ebb330d9a3d63f1358f29 ]
+commit 1a6023edfbb5673f55fab6348f135fb3b1428ea5 upstream.
 
-This refactors and simplifies the registration/unregistration flow. Since
-we now only perform registration when the client isn't opened anymore, the
-logic for handling that can be removed, and the rest of the function
-streamlined.
+The vblank counter callback reads display registers and scanout
+position without holding reset_domain->sem. During GPU recovery,
+display commit work can call the callback while reset owns the
+semaphore for writing. The hardware access then triggers the
+lockdep_assert_held() in amdgpu_device_skip_hw_access() and sets
+TAINT_WARN when lockdep is enabled.
 
-We also remove the previous assumption that we have a serial number to show
-we're registered, replacing it with a single purpose boolean.
+Try to acquire the reset semaphore for reading before accessing the
+hardware, and hold it across the counter and scanout-position reads.
+If reset is already in progress, return DRM's cached software vblank
+count instead. This avoids blocking behind reset and avoids accessing
+display hardware while it is being reset.
 
-In a previous refactor the code for unregistering a battery if later
-registration steps failed was accidentally left out. As a result, a
-lingering power_supply object could get left over after the steam object
-was torn down. This is also fixed here.
+The cached count is less accurate than the hardware count, but is
+used only when reset prevents a safe hardware read. This addresses
+the reset-time warning from this vblank path; it does not suppress or
+fix unrelated lockdep warnings.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[Lee: Omit steam_get_attributes() and coalesce_rumble_work cancellation
-      as a0fbd9437d7d and 1d4549fd1115 are not present]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Sunpeng Li <sunpeng.li@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Sunpeng Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 51a4359f7431a4be5e42803c8bdaf7e0e5be2934)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-steam.c | 70 +++++++++++++++++++----------------------
- 1 file changed, 32 insertions(+), 38 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index df176a722061b..06c2fcd134ce0 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -300,6 +300,7 @@ struct steam_device {
- 	unsigned long quirks;
- 	struct work_struct work_connect;
- 	bool connected;
-+	bool registered;
- 	char serial_no[STEAM_SERIAL_LEN + 1];
- 	struct power_supply_desc battery_desc;
- 	struct power_supply __rcu *battery;
-@@ -953,9 +954,6 @@ static void steam_battery_unregister(struct steam_device *steam)
- static int steam_register(struct steam_device *steam)
- {
- 	int ret;
--	unsigned long client_opened;
--	unsigned long flags;
--	bool do_add;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -30,6 +30,7 @@
+ #include <drm/amdgpu_drm.h>
+ #include <drm/drm_drv.h>
+ #include <drm/drm_fb_helper.h>
++#include <drm/drm_vblank.h>
+ #include "amdgpu_uvd.h"
+ #include "amdgpu_vce.h"
+ #include "atom.h"
+@@ -1404,6 +1405,9 @@ u32 amdgpu_get_vblank_counter_kms(struct
+ 		DRM_ERROR("Invalid crtc %u\n", pipe);
+ 		return -EINVAL;
+ 	}
++	if (!down_read_trylock(&adev->reset_domain->sem))
++		return drm_crtc_vblank_count(crtc);
++
  
- 	/*
- 	 * This function can be called several times in a row with the
-@@ -963,60 +961,56 @@ static int steam_register(struct steam_device *steam)
- 	 * another client send a get_connection_status command, for example.
- 	 * The battery and serial number are set just once per device.
- 	 */
--	if (!steam->serial_no[0]) {
--		/*
--		 * Unlikely, but getting the serial could fail, and it is not so
--		 * important, so make up a serial number and go on.
--		 */
--		if (steam_get_serial(steam) < 0)
--			strscpy(steam->serial_no, "XXXXXXXXXX",
--					sizeof(steam->serial_no));
-+	if (steam->registered)
-+		return 0;
+ 	/* The hw increments its frame counter at start of vsync, not at start
+ 	 * of vblank, as is required by DRM core vblank counter handling.
+@@ -1449,6 +1453,7 @@ u32 amdgpu_get_vblank_counter_kms(struct
+ 		DRM_DEBUG_VBL("NULL mode info! Returned count may be wrong.\n");
+ 	}
  
--		hid_info(steam->hdev, "Steam Controller '%s' connected",
--				steam->serial_no);
-+	/*
-+	 * Unlikely, but getting the serial could fail, and it is not so
-+	 * important, so make up a serial number and go on.
-+	 */
-+	if (steam_get_serial(steam) < 0 || !steam->serial_no[0])
-+		strscpy(steam->serial_no, "XXXXXXXXXX",
-+				sizeof(steam->serial_no));
- 
--		/* ignore battery errors, we can live without it */
--		if (steam->quirks & STEAM_QUIRK_WIRELESS)
--			steam_battery_register(steam);
-+	hid_info(steam->hdev, "Steam Controller '%s' connected",
-+			steam->serial_no);
- 
--		do_add = true;
--	}
-+	/* ignore battery errors, we can live without it */
-+	if (steam->quirks & STEAM_QUIRK_WIRELESS)
-+		steam_battery_register(steam);
- 
--	spin_lock_irqsave(&steam->lock, flags);
--	client_opened = steam->client_opened;
--	spin_unlock_irqrestore(&steam->lock, flags);
--
--	if (!client_opened) {
--		steam_set_lizard_mode(steam, lizard_mode);
--		ret = steam_input_register(steam);
--		if (ret != 0)
--			goto steam_register_input_fail;
--		ret = steam_sensors_register(steam);
--		if (ret != 0)
--			goto steam_register_sensors_fail;
--	}
-+	steam_set_lizard_mode(steam, lizard_mode);
-+	ret = steam_input_register(steam);
-+	if (ret != 0)
-+		goto steam_register_input_fail;
-+	ret = steam_sensors_register(steam);
-+	if (ret != 0)
-+		goto steam_register_sensors_fail;
- 
--	if (do_add) {
--		mutex_lock(&steam_devices_lock);
--		if (list_empty(&steam->list))
--			list_add(&steam->list, &steam_devices);
--		mutex_unlock(&steam_devices_lock);
--	}
-+	steam->registered = true;
-+	mutex_lock(&steam_devices_lock);
-+	if (list_empty(&steam->list))
-+		list_add(&steam->list, &steam_devices);
-+	mutex_unlock(&steam_devices_lock);
- 	return 0;
- 
- steam_register_sensors_fail:
- 	steam_input_unregister(steam);
- steam_register_input_fail:
-+	steam_battery_unregister(steam);
-+	cancel_work_sync(&steam->rumble_work);
-+	cancel_delayed_work_sync(&steam->mode_switch);
- 	return ret;
++	up_read(&adev->reset_domain->sem);
+ 	return count;
  }
  
- static void steam_unregister(struct steam_device *steam)
- {
--	if (!steam->serial_no[0])
-+	if (!steam->registered)
- 		return;
- 
- 	hid_info(steam->hdev, "Steam Controller '%s' disconnected",
- 			steam->serial_no);
-+	steam->registered = false;
- 	steam_battery_unregister(steam);
- 	steam_sensors_unregister(steam);
- 	steam_input_unregister(steam);
--- 
-2.53.0
-
 
 
