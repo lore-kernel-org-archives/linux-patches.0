@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3A83AFCF4;
-	Sat, 17 Oct 2026 16:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9EF3AEF36;
+	Sat, 17 Oct 2026 16:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255294; cv=none; b=NvvzONUvj/YJ2UqN95WlwIK12dhFByPvG0N9Tfoo270RYfMtwlLMIDqPU7VulUZ+UGDBVGOyooc1iBpOCJPmOLAZM9Mhghp5b4RQSaM20BnE4pDjeEzWIM7tmVbUHe1sNpfyaUxaMliMDh8cqr8VaN0SZvNEEcOMtXbtsh+p2gM=
+	t=1792255297; cv=none; b=fc/M2trcCvo9zOsC4qcqSUrL1rGba4c+ZZmdcGBO6eCIg5qu7Y1qXGs0d7937rc4ljPzay6q5sTNU9cnfDOlKilZEcMASnSfghrqYQ5X7PsufdoKVx6VL5k9YtslMbW6I6SPn2NuBSn2GICqd1dHGS4+Y95YHdrbfDwhgUQFosY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255294; c=relaxed/simple;
-	bh=8VL/kgQwaIzY8bYbNQ2wOe8iWe3INE9jPmDL3s1YEyo=;
+	s=arc-20240116; t=1792255297; c=relaxed/simple;
+	bh=D/JGBY2rnfEB5xpRlzBGhxYp2bDILPZEEpk0TbvDt1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scr7Jzs+wEceyrrulzqxOYtTaSoZuxz5ZKsvb/LJaCbESxt9HGRD7XMY/JwK5MOHu9M0OpmOtGR8R/a7XMH3T4NDgSB9qTAUtPt51U92r/4FYC5Fa2WDBv0sc9a9LxUURVmOPZtkh/yJSbktd9wL3mU8XqFHYqtqopP1DNqChwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMLLCAlw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TjMDqefWppMJ/aWqV51Tz19JXhMkFYPJ6Y7ow9ZX4PdF4v9ASmO4OnKwKiqQ2pDpZ/ipK2fb6gYNXAD/kIkjCbyJ2FQ6kUuT7zFNUXun6TeEsvNtb9nyTI3XopId0WqvlF55ayVCAsYMEk9hvYJOVA2rjoIJC85IBItnzwsaFnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ostyw9UI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMLLCAlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E201F000C5;
-	Sat, 17 Oct 2026 16:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ostyw9UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDA61F000C4;
+	Sat, 17 Oct 2026 16:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255293;
-	bh=o3K7E6Mgs79ZD9E6NlBRyDo3RkLeEs1QFRZhWYlTepo=;
+	s=korg; t=1792255296;
+	bh=cGVJKAGiD6EvwkNNJuKwLOHmzdaN7kVay6LbeeiCUdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gMLLCAlwwOymHHHcP4gvgoqJm0vnBOY3gIsZAAstXtjft2xIotz7cW3ejQ+pKrivX
-	 NHFpF7Jco4v6brY/Zle8G7z3gbdkmdAOAsZmiBReP9Sw2+yq+L7YhntBxf9aOzs6uZ
-	 aA7clmami8Uj8Ak+FgrTkgIEQ90Uou4sqLnLWaAE=
+	b=ostyw9UIc8vsF8Cro2xOvGjSAQ6XF7xMixQrnDFgaOby7zDJsyyvLrZKSraT0bL6M
+	 CTDgrFaN4wo4ddWwTz+3csentYuHAYvNhDqcUPRPPBUAyoaiF63dzYYGGPMF231AA7
+	 qE7ZWlFDQUDg9bMhSBOEZ7hJOjxitMKD/alv5cB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 728/869] wifi: iwlwifi: simplify nested if checks
-Date: Sat, 17 Oct 2026 17:59:29 +0200
-Message-ID: <20261017160055.615549141@linuxfoundation.org>
+Subject: [PATCH 6.12 729/869] wifi: iwlwifi: mvm: fix P2P-Device binding handling
+Date: Sat, 17 Oct 2026 17:59:30 +0200
+Message-ID: <20261017160055.639711993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,81 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 63a59880ec116cebb8a01ead28b1b23c3846ebb9 ]
+[ Upstream commit b74e377cad9271950c57472867c469e4b5b2ff0c ]
 
-In the absence of (an) else clause(s), "if (a) if (b)" is
-equivalent to "if (a && b)", so simplify the code a bit.
+Our binding handling for P2P-Device can run into the following
+scenario, as observed by our testing:
 
+ - a station interface is connected on some channel
+ - the P2P-Device does a remain-on-channel (ROC) on that channel
+ - the ROC ends, and the P2P-Device is removed from the binding,
+   but the phy_ctxt pointer is left around as a PHY cache so we
+   don't need to recalibrate to the channel again and again in
+   case it's not shared
+ - a binding update by the station interface, even a removal,
+   will re-add the P2P-Device to the binding
+ - the P2P-Device is removed, which removes the PHY context, but
+   it's still in the binding so the firmware crashes
+
+Since the P2P device is removed from the binding and only re-
+added by unrelated code, but we want to keep the phy_ctxt around
+as a cache for future ROC usage, fix it by adding a boolean that
+indicates whether or not the P2P-Device should be added to the
+binding, and handle that in the binding iterator. That way, the
+station interface cannot re-add the P2P-Device to the binding
+when that isn't active.
+
+Assisted-by: Github Copilot:claude-opus-4-6
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260527230313.07f94335ae06.I384238b0859343c4a9a9dda20682be1aad89cc9d@changeid
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250102161730.7ddc9cb1ea50.If18bd94706d6c821e34c38a4704bf85dca6207b2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: b74e377cad92 ("wifi: iwlwifi: mvm: fix P2P-Device binding handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/binding.c     | 7 +++----
- drivers/net/wireless/intel/iwlwifi/mvm/link.c        | 5 ++---
- drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c | 6 +++---
- 3 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/binding.c    |  5 ++++-
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c   | 12 +++++++++++-
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h        |  3 +++
+ drivers/net/wireless/intel/iwlwifi/mvm/time-event.c |  3 ++-
+ 4 files changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/binding.c b/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
-index 458b97930059e..58e9a940024db 100644
+index 58e9a940024db..0812522edea0d 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
 @@ -2,7 +2,7 @@
  /*
   * Copyright (C) 2012-2014, 2020 Intel Corporation
   * Copyright (C) 2016 Intel Deutschland GmbH
-- * Copyright (C) 2022 Intel Corporation
-+ * Copyright (C) 2022, 2024 Intel Corporation
+- * Copyright (C) 2022, 2024 Intel Corporation
++ * Copyright (C) 2022, 2024, 2026 Intel Corporation
   */
  #include <net/mac80211.h>
  #include "fw-api.h"
-@@ -158,9 +158,8 @@ int iwl_mvm_binding_remove_vif(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
- 	ret = iwl_mvm_binding_update(mvm, vif, mvmvif->deflink.phy_ctxt,
- 				     false);
- 
--	if (!ret)
--		if (iwl_mvm_sf_update(mvm, vif, true))
--			IWL_ERR(mvm, "Failed to update SF state\n");
-+	if (!ret && iwl_mvm_sf_update(mvm, vif, true))
-+		IWL_ERR(mvm, "Failed to update SF state\n");
- 
- 	return ret;
- }
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/link.c b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-index 2b06521680020..e886200924bdf 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-@@ -410,9 +410,8 @@ int iwl_mvm_remove_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 
- 	ret = iwl_mvm_link_cmd_send(mvm, &cmd, FW_CTXT_ACTION_REMOVE);
- 
--	if (!ret)
--		if (iwl_mvm_sf_update(mvm, vif, true))
--			IWL_ERR(mvm, "Failed to update SF state\n");
-+	if (!ret && iwl_mvm_sf_update(mvm, vif, true))
-+		IWL_ERR(mvm, "Failed to update SF state\n");
- 
- 	return ret;
- }
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-index 8903a5692dfbb..a822448ad5ea5 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-@@ -139,9 +139,9 @@ void _iwl_trans_pcie_gen2_stop_device(struct iwl_trans *trans)
- 	if (trans_pcie->is_down)
+@@ -76,6 +76,9 @@ static void iwl_mvm_iface_iterator(void *_data, u8 *mac,
+ 	if (vif == data->ignore_vif)
  		return;
  
--	if (trans->state >= IWL_TRANS_FW_STARTED)
--		if (trans_pcie->fw_reset_handshake)
--			iwl_trans_pcie_fw_reset_handshake(trans);
-+	if (trans->state >= IWL_TRANS_FW_STARTED &&
-+	    trans_pcie->fw_reset_handshake)
-+		iwl_trans_pcie_fw_reset_handshake(trans);
++	if (vif->type == NL80211_IFTYPE_P2P_DEVICE && !mvmvif->p2p_in_binding)
++		return;
++
+ 	if (mvmvif->deflink.phy_ctxt != data->phyctxt)
+ 		return;
  
- 	trans_pcie->is_down = true;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 6ac4215677057..91d0d2dfef893 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1098,6 +1098,7 @@ static void iwl_mvm_cleanup_iterator(void *data, u8 *mac,
+ 	spin_unlock_bh(&mvm->time_event_lock);
  
+ 	mvmvif->roc_activity = ROC_NUM_ACTIVITIES;
++	mvmvif->p2p_in_binding = false;
+ 
+ 	mvmvif->bf_enabled = false;
+ 	mvmvif->ba_enabled = false;
+@@ -4786,6 +4787,7 @@ static int iwl_mvm_add_aux_sta_for_hs20(struct iwl_mvm *mvm, u32 lmac_id)
+ 
+ static int iwl_mvm_roc_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ {
++	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+ 	int ret;
+ 
+ 	lockdep_assert_held(&mvm->mutex);
+@@ -4794,10 +4796,18 @@ static int iwl_mvm_roc_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ 	if (WARN(ret, "Failed binding P2P_DEVICE\n"))
+ 		return ret;
+ 
++	mvmvif->p2p_in_binding = true;
++
+ 	/* The station and queue allocation must be done only after the binding
+ 	 * is done, as otherwise the FW might incorrectly configure its state.
+ 	 */
+-	return iwl_mvm_add_p2p_bcast_sta(mvm, vif);
++	ret = iwl_mvm_add_p2p_bcast_sta(mvm, vif);
++	if (ret) {
++		iwl_mvm_binding_remove_vif(mvm, vif);
++		mvmvif->p2p_in_binding = false;
++	}
++
++	return ret;
+ }
+ 
+ static int iwl_mvm_roc(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index 67d188409ca31..4e1dbfb3705e3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -454,6 +454,8 @@ struct iwl_mvm_esr_exit {
+  * @unblock_esr_tpt_wk: work for unblocking EMLSR when tpt is high enough.
+  * @roc_activity: currently running ROC activity for this vif (or
+  *	ROC_NUM_ACTIVITIES if no activity is running).
++ * @p2p_in_binding: indicates that this P2P-Device interface should be
++ *	added to the binding, i.e. is running ROC right now
+  * @session_prot_connection_loss: the connection was lost due to session
+  *	protection ending without receiving a beacon, so we need to now
+  *	protect the deauth separately
+@@ -565,6 +567,7 @@ struct iwl_mvm_vif {
+ 	struct iwl_mvm_time_event_data time_event_data;
+ 	struct iwl_mvm_time_event_data hs_time_event_data;
+ 	enum iwl_roc_activity roc_activity;
++	bool p2p_in_binding;
+ 
+ 	/* TCP Checksum Offload */
+ 	netdev_features_t features;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+index c0b58e4a4cc1c..bdd05062824d6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2024, 2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2017 Intel Deutschland GmbH
+  */
+@@ -90,6 +90,7 @@ static void iwl_mvm_cleanup_roc(struct iwl_mvm *mvm)
+ 			} else {
+ 				iwl_mvm_rm_p2p_bcast_sta(mvm, vif);
+ 				iwl_mvm_binding_remove_vif(mvm, vif);
++				mvmvif->p2p_in_binding = false;
+ 			}
+ 
+ 			/* Do not remove the PHY context as removing and adding
 -- 
 2.53.0
 
