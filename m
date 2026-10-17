@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E0736CE19;
-	Sat, 17 Oct 2026 16:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94003391E6D;
+	Sat, 17 Oct 2026 16:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254984; cv=none; b=FEe0nvuSGiZ8rS/Wwl2lrAG5bz5uKYn87MyO7aTUu/h7poCPmwy2gslVPHFouqIhejuveKH+MBAysXqhu437Di7Og5THCb57hOZCI9td9ByZQOOm0GkxNxSWn1QbVaYI6tCCohjc4lbsfUuB5jF/9xBkozqzPH+KiqLSKzDI9dg=
+	t=1792254986; cv=none; b=iVfHL9DrI1r4JFS2aDgGsiLow+fue3y7MXXSDu/TtGO9KA/5i/wq46vpIbGktPhQnNBX47qvONe4pTCz5+ltjEVb/9zM+BEyrtuG6LxUK4C6xzVS4BVRwcmOCGkwHPlgShloC3rqxTLut1rPXyub+a7Ld0OKVZh0uGRpzGlTeEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254984; c=relaxed/simple;
-	bh=RAmgT5YE1/+I25pXDOyBCx3LAjnjgdXzrlTg3VIRSBk=;
+	s=arc-20240116; t=1792254986; c=relaxed/simple;
+	bh=Zf/cJAa+d4NzZwipzUqCkePC84B4D3kwMtJXOfyKxds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8J9tg8iJI9d4jPi27nJgImWZOXDXnug9usWehUAYvrfSlcXz3BM2DEZdu/QW9OGRWSKC+NI/LY0Ck3Bn2SAgVxkGPWLDQswsW5g2qq79j0RFKRRe/mPtlyMMqzu0H8DM5WBgRSupsR0uc/IvputWwGLSbkdNF8AS5RkNKt1oSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht/f4vqu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSyxYLHhnx703H5edHdjLge2o0LtfNXMHa/tI2fdsDXdbQZz2/fd17vHGxC4TUYoaLj4h94VF2P8kL6KVl5FIx7hkS9ydO8JXBKLAMC8v4RbNdgrsN11WB+9rjd8t4WYUL24hr3o/rncmwzxxRQp42Dmm+WTmDZpPHKV5X3hudk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVTi7Vcq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht/f4vqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078B51F000C4;
-	Sat, 17 Oct 2026 16:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVTi7Vcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95AA1F000C4;
+	Sat, 17 Oct 2026 16:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254982;
-	bh=+xjZyIybYfres4UN9bNCQz5rI5ygrhWp8Q/DG1X6RY0=;
+	s=korg; t=1792254985;
+	bh=kSF6dF0+fkUkSQmTdJBeXbTOLjeRScqu2Bg/sRM3/YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ht/f4vquT4QRgWGI+iGG0jaGHMYOiQBvffJl7EOI+RRrdKcbotK1IrNRFQ9lXIU0G
-	 c6kErX2Coxr/BhKuLOwXzh9KIrqy///kANuWpD9/LeuOuLWViiIAWoreI9rJJh2hHe
-	 IxwHPL8SCWRmftJ1foA/vnGreIXWK8J6Rr9Lwu1Y=
+	b=nVTi7Vcqd1NQA2wue89teZYinrrchqskYhVDHVXboDrVHZEdHRwsWJpdIIPDuYRro
+	 1ZY6B0+bMroOynLJujzvj+J7+yTNY3Y8wqpyuaU0K+2Fdb24hs+CxBmE/eebTvnlGA
+	 Zco4rnwnI5xN0viUKRYjWgA4st1Vl20K9M/WGhpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Petricek <mp@petricek.net>,
-	John Johansen <john.johansen@canonical.com>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 626/869] apparmor: fix deadlock in complain-mode change_hat
-Date: Sat, 17 Oct 2026 17:57:47 +0200
-Message-ID: <20261017160053.078620442@linuxfoundation.org>
+Subject: [PATCH 6.12 627/869] blk-cgroup: delay freeing policy data after rcu grace period
+Date: Sat, 17 Oct 2026 17:57:48 +0200
+Message-ID: <20261017160053.103070612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,284 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 4ec11f14d1d6fdda787d991b142537be7841d395 ]
+[ Upstream commit 0af3fedb8c8ed3c07b4f76927bd7fc88f6f82efb ]
 
-The use of change_hat when in complain mode can cause a deadlock
-when the hat doesn't exist and a new learning profile is created
-for the missing profile. This is because change_hat() has taken
-the lock to search the hat list and creating the new learning
-profile needs to take the lock to add it to the list.
+Currently blkcg_print_blkgs() must hold RCU to iterate blkgs from a
+blkcg, and prfill() must hold queue_lock to prevent policy data from
+being freed by policy deactivation. As a consequence, queue_lock has to
+be nested under RCU from blkcg_print_blkgs().
 
->From the bug report:
+Delay freeing policy data until after an RCU grace period so prfill() can
+be protected by RCU alone.
 
-Originally found in 7.0.0 in LTS ubuntu 26.04 with pam_apparmor + su
-in complain mode set to change hats.  Then verified in newest
-available vanilla kernel I've compiled to see if still present:
-
-7.2-rc7 vanilla -> affected
-
-checked also some other kernels:
-6.18.44 vanilla -> affected
-6.12.95 with debian patches -> unaffected
-
-On systems without bug (for example 6.12.95 debian) it just prints:
-
-aa_change_hat rc=0
-
-On systems with bug, the executable always hangs, prints nothing and
-becomes unkillable.  (And once stuck this way, it will cause any
-further hat changes to also cause the changing process to get stuck)
-
-Then in syslog you can find hint about cause:
-
-kernel: INFO: task hat:3409 blocked for more than 483 seconds.
-kernel:       Not tainted 7.2.0-rc7 #1
-kernel: "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-kernel: task:hat             state:D stack:0     pid:3409  tgid:3409  ppid:2605   task_flags:0x400000 flags:0x00080800
-kernel: Call Trace:
-kernel:  <TASK>
-kernel:  __schedule+0x48f/0xfe0
-kernel:  schedule+0x27/0xa0
-kernel:  schedule_preempt_disabled+0x15/0x30
-kernel:  __mutex_lock.constprop.0+0x569/0xa10
-kernel:  aa_new_learning_profile+0x15f/0x210
-kernel:  build_change_hat+0x19f/0x3b0
-kernel:  change_hat.isra.0+0x5dd/0xd60
-kernel:  aa_change_hat+0x2f3/0x710
-kernel:  aa_setprocattr_changehat+0x121/0x1f0
-kernel:  do_setattr+0x28c/0x340
-kernel:  apparmor_setselfattr+0x20/0x50
-kernel:  security_setselfattr+0xf6/0x110
-kernel:  __x64_sys_lsm_set_self_attr+0x53/0x90
-kernel:  do_syscall_64+0xdd/0x5e0
-kernel:  ? __mod_memcg_lruvec_state+0xfd/0x260
-kernel:  ? lruvec_stat_mod_folio+0x8d/0xd0
-kernel:  ? __folio_mod_stat+0x2d/0x90
-kernel:  ? map_anon_folio_pte_nopf+0xd1/0x1f0
-kernel:  ? do_anonymous_page+0x184/0xa10
-kernel:  ? __handle_mm_fault+0x805/0x870
-kernel:  ? count_memcg_events+0xef/0x230
-kernel:  ? handle_mm_fault+0x1f0/0x2f0
-kernel:  ? do_user_addr_fault+0x2bb/0x7b0
-kernel:  ? do_syscall_64+0x94/0x5e0
-kernel:  ? exc_page_fault+0x75/0x160
-kernel:  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-kernel: RIP: 0033:0x7f815e134c8d
-kernel: RSP: 002b:00007fff6df94ea8 EFLAGS: 00000246 ORIG_RAX: 00000000000001cc
-kernel: RAX: ffffffffffffffda RBX: 0000556d8c81d040 RCX: 00007f815e134c8d
-kernel: RDX: 0000000000000046 RSI: 0000556d8c81d040 RDI: 0000000000000064
-kernel: RBP: 00007fff6df94ef0 R08: 00007f815e212ac8 R09: 000000000000000c
-kernel: R10: 0000000000000000 R11: 0000000000000246 R12: 0000556d8c81d010
-kernel: R13: 0000000000000026 R14: 0000000000000046 R15: 0000000000000064
-kernel:  </TASK>
-kernel: INFO: task hat:3409 is blocked on a mutex likely owned by task hat:3409.
-
-To fix the issue, lift the locking out of the core of
-aa_new_learning_profile(), introduce a wrapper function that takes the
-lock where needed, and have build_change_hat() call the core function
-that no longer takes the lock.
-
-In addition fix 4 other issues introduced by commit
-32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
-- aa_get_profile_rcu() was replaced-by: aa_get_profile without the
-  accompanying rcu_dereference_protected()
-- an extra aa_get_label(label) was introduced at the start of
-  change_hat() without an accompanying aa_put_label() causing a
-  reference count leak.
-- a reference count leak was introduced in the label_is_stale(label)
-  case, where the newest profile would be leaked instead of the
-  label passed to the function.
-- a potential UAF when the lookup walks up the tree with new_ns != ns
-  the new label reference is put, and then used for the next lookup.
-  The mutex_lock, will block replacement, and removal in the locked
-  ns. However there are two cases where putting the reference can
-  result in the label being freed even with the lock held.
-
-  1. the label does not have a list reference (possible for temporary
-     or special profiles) in which case the put can trigger the
-     cleanup.
-  2. the new label reference is in a different namespace, which does
-     not have a lock held on it. This extends case 1 to also include
-     replacement, and removal that could be occurring in the namespace
-     new is in.
-
-Reported-by: Martin Petricek <mp@petricek.net>
-Link: https://lists.ubuntu.com/archives/apparmor/2026-August/014907.html
-Fixes: 32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/e20e5d984b41a026d61851966bed35eb094c4bff.1780621988.git.yukuai@fygo.io
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 97cb95d21488 ("blk-iocost: clear delay state when freeing policy data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/domain.c         | 25 +++++++++++++++++--------
- security/apparmor/include/policy.h |  3 +++
- security/apparmor/policy.c         | 22 +++++++++++++++++-----
- 3 files changed, 37 insertions(+), 13 deletions(-)
+ block/bfq-cgroup.c    |  9 ++++++++-
+ block/blk-cgroup.h    |  2 ++
+ block/blk-iocost.c    | 14 ++++++++++++--
+ block/blk-iolatency.c | 10 +++++++++-
+ block/blk-throttle.c  | 13 +++++++++++--
+ 5 files changed, 42 insertions(+), 6 deletions(-)
 
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index ced513197ed5e..91879bda56b9a 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -1036,8 +1036,8 @@ static struct aa_label *build_change_hat(const struct cred *subj_cred,
- 	if (!hat) {
- 		error = -ENOENT;
- 		if (COMPLAIN_MODE(profile)) {
--			hat = aa_new_learning_profile(profile, true, name,
--						      GFP_KERNEL);
-+			hat = __aa_new_learning_profile(profile, true, name,
-+							GFP_KERNEL);
- 			if (!hat) {
- 				info = "failed null profile create";
- 				error = -ENOMEM;
-@@ -1075,6 +1075,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 	bool sibling = false;
- 	const char *name, *info = NULL;
- 	int i, error;
-+	bool needput = false;
- 
- 	AA_BUG(!label);
- 	AA_BUG(!hats);
-@@ -1087,7 +1088,6 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 	 * the profiles and label, we can rely on the namespaces being live
- 	 * and avoid incrementing their refcounts while grabbing the lock.
- 	 */
--	label = aa_get_label(label);
- 	ns = labels_ns(label);
- 
- retry:
-@@ -1095,15 +1095,19 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 	if (label_is_stale(label)) {
- 		new = aa_get_newest_label(label);
- 		new_ns = labels_ns(new);
-+
-+		if (needput)
-+			/* aa_put_label() is safe to call when under lock */
-+			aa_put_label(label);
-+		label = new;
-+		needput = true;
-+		/* check if replaced with label in parent ns, and lock there */
- 		if (new_ns != ns) {
--			aa_put_label(new);
- 			mutex_unlock(&ns->lock);
- 			ns = new_ns;
--			label = new;
-+			/* retry will bottom out at the root of the tree */
- 			goto retry;
- 		}
--		aa_put_label(label);
--		label = new;
- 	}
- 
- 	if (PROFILE_IS_HAT(labels_profile(label)))
-@@ -1114,7 +1118,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 		name = hats[i];
- 		label_for_each_in_ns(it, labels_ns(label), label, profile) {
- 			if (sibling && PROFILE_IS_HAT(profile)) {
--				root = aa_get_profile(profile->parent);
-+				root = aa_get_profile(rcu_dereference_protected(profile->parent,
-+						      mutex_is_locked(&ns->lock)));
- 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
- 				root = aa_get_profile(profile);
- 			} else {	/* conflicting change type */
-@@ -1175,6 +1180,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 		}
- 	}
- 	mutex_unlock(&ns->lock);
-+	if (needput)
-+		aa_put_label(label);
- 	return ERR_PTR(error);
- 
- build:
-@@ -1188,6 +1195,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
- 		goto fail;
- 	} /* else if (IS_ERR) build_change_hat has logged error so return new */
- 	mutex_unlock(&ns->lock);
-+	if (needput)
-+		aa_put_label(label);
- 	return new;
+diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
+index 6a75fe1c7a5c0..2e7cfaac7b214 100644
+--- a/block/bfq-cgroup.c
++++ b/block/bfq-cgroup.c
+@@ -548,14 +548,21 @@ static void bfq_pd_init(struct blkg_policy_data *pd)
+ 	bfqg->rq_pos_tree = RB_ROOT;
  }
  
-diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
-index dbd6af6034f19..e85824c90f430 100644
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -258,6 +258,9 @@ struct aa_profile *aa_alloc_profile(const char *name, struct aa_proxy *proxy,
- 				    gfp_t gfp);
- struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
- 				 gfp_t gfp);
-+struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
-+					     bool hat, const char *base,
-+					     gfp_t gfp);
- struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
- 					   const char *base, gfp_t gfp);
- void aa_free_profile(struct aa_profile *profile);
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index da39bd937c2a4..b3a602c9c23d7 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -667,7 +667,7 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
- }
- 
- /**
-- * aa_new_learning_profile - create or find a null-X learning profile
-+ * __aa_new_learning_profile - create or find a null-X learning profile
-  * @parent: profile that caused this profile to be created (NOT NULL)
-  * @hat: true if the null- learning profile is a hat
-  * @base: name to base the null profile off of
-@@ -684,14 +684,16 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
-  *
-  * Returns: new refcounted profile else NULL on failure
-  */
--struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
--					   const char *base, gfp_t gfp)
-+struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
-+					     bool hat, const char *base,
-+					     gfp_t gfp)
+-static void bfq_pd_free(struct blkg_policy_data *pd)
++static void bfqg_release(struct rcu_head *rcu)
  {
- 	struct aa_profile *p, *profile;
- 	const char *bname;
- 	char *name = NULL;
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct bfq_group *bfqg = pd_to_bfqg(pd);
  
- 	AA_BUG(!parent);
-+	AA_BUG(!mutex_is_locked(&parent->ns->lock));
- 
- 	if (base) {
- 		name = kmalloc(strlen(parent->base.hname) + 8 + strlen(base),
-@@ -723,7 +725,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
- 	if (hat)
- 		profile->label.flags |= FLAG_HAT;
- 
--	mutex_lock_nested(&profile->ns->lock, profile->ns->level);
- 	p = __find_child(&parent->base.profiles, bname);
- 	if (p) {
- 		aa_free_profile(profile);
-@@ -731,7 +732,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
- 	} else {
- 		__add_profile(&parent->base.profiles, profile);
- 	}
--	mutex_unlock(&profile->ns->lock);
- 
- 	/* refcount released by caller */
- out:
-@@ -745,6 +745,18 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
- 	return NULL;
+ 	bfqg_stats_exit(&bfqg->stats);
+ 	bfqg_put(bfqg);
  }
  
-+struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
-+					   const char *base, gfp_t gfp)
++static void bfq_pd_free(struct blkg_policy_data *pd)
 +{
-+	struct aa_profile *profile;
-+
-+	mutex_lock_nested(&parent->ns->lock, parent->ns->level);
-+	profile = __aa_new_learning_profile(parent, hat, base, gfp);
-+	mutex_unlock(&parent->ns->lock);
-+
-+	return profile;
++	call_rcu(&pd->rcu_head, bfqg_release);
 +}
 +
- /**
-  * replacement_allowed - test to see if replacement is allowed
-  * @profile: profile to test if it can be replaced  (MAYBE NULL)
+ static void bfq_pd_reset_stats(struct blkg_policy_data *pd)
+ {
+ 	struct bfq_group *bfqg = pd_to_bfqg(pd);
+diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
+index 112bf11d0fadd..270e58e5f38af 100644
+--- a/block/blk-cgroup.h
++++ b/block/blk-cgroup.h
+@@ -140,6 +140,8 @@ struct blkg_policy_data {
+ 	struct blkcg_gq			*blkg;
+ 	int				plid;
+ 	bool				online;
++
++	struct rcu_head			rcu_head;
+ };
+ 
+ /*
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 61a347f504d73..b48f9c63ca063 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -3019,6 +3019,16 @@ static void ioc_pd_init(struct blkg_policy_data *pd)
+ 	spin_unlock_irqrestore(&ioc->lock, flags);
+ }
+ 
++static void iocg_release(struct rcu_head *rcu)
++{
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
++	struct ioc_gq *iocg = pd_to_iocg(pd);
++
++	free_percpu(iocg->pcpu_stat);
++	kfree(iocg);
++}
++
+ static void ioc_pd_free(struct blkg_policy_data *pd)
+ {
+ 	struct ioc_gq *iocg = pd_to_iocg(pd);
+@@ -3043,8 +3053,8 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
+ 
+ 		hrtimer_cancel(&iocg->waitq_timer);
+ 	}
+-	free_percpu(iocg->pcpu_stat);
+-	kfree(iocg);
++
++	call_rcu(&pd->rcu_head, iocg_release);
+ }
+ 
+ static void ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index ebb522788d978..49141c7fbcaa2 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -1031,13 +1031,21 @@ static void iolatency_pd_offline(struct blkg_policy_data *pd)
+ 	iolatency_clear_scaling(blkg);
+ }
+ 
+-static void iolatency_pd_free(struct blkg_policy_data *pd)
++static void iolat_release(struct rcu_head *rcu)
+ {
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct iolatency_grp *iolat = pd_to_lat(pd);
++
+ 	free_percpu(iolat->stats);
+ 	kfree(iolat);
+ }
+ 
++static void iolatency_pd_free(struct blkg_policy_data *pd)
++{
++	call_rcu(&pd->rcu_head, iolat_release);
++}
++
+ static struct cftype iolatency_files[] = {
+ 	{
+ 		.name = "latency",
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index bdf363868ac03..7a29eeb7b6957 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -327,16 +327,25 @@ static void throtl_pd_online(struct blkg_policy_data *pd)
+ 	tg_update_has_rules(tg);
+ }
+ 
+-static void throtl_pd_free(struct blkg_policy_data *pd)
++static void tg_release(struct rcu_head *rcu)
+ {
++	struct blkg_policy_data *pd =
++		container_of(rcu, struct blkg_policy_data, rcu_head);
+ 	struct throtl_grp *tg = pd_to_tg(pd);
+ 
+-	del_timer_sync(&tg->service_queue.pending_timer);
+ 	blkg_rwstat_exit(&tg->stat_bytes);
+ 	blkg_rwstat_exit(&tg->stat_ios);
+ 	kfree(tg);
+ }
+ 
++static void throtl_pd_free(struct blkg_policy_data *pd)
++{
++	struct throtl_grp *tg = pd_to_tg(pd);
++
++	del_timer_sync(&tg->service_queue.pending_timer);
++	call_rcu(&pd->rcu_head, tg_release);
++}
++
+ static struct throtl_grp *
+ throtl_rb_first(struct throtl_service_queue *parent_sq)
+ {
 -- 
 2.53.0
 
