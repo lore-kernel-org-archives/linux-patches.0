@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73353921FB;
-	Sat, 17 Oct 2026 17:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3F138AC99;
+	Sat, 17 Oct 2026 17:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257827; cv=none; b=diK+xSSx9y5V8OMNacOSHwd1j0Lkyggd3TglaHTt9A2dClRRh8D6V3fuvYNL3xmT7jKDONxDKiAkbllSH4ZwS+hsl/nANhIffuhTpLSouAMIC0I2PyxlPQKolW3/N1jhjUidHvSdUQwx1xrHSJHJKKrUyFQrBB71JgdJqyyH5QI=
+	t=1792257830; cv=none; b=gkqJI24u3gNzzsCXWjt9P1uUKFCgpd+U+DE8LpUql3qKpPIJc6b6OwiIhBENPRI2szXAInDR4KdlrmMGc0Cw5nXDKbg9w/DgXr3bHwinYIQf7MQgs6rX/s0Gjqz0XSRtZ3wTpUjV2osOYTczJnnJD5VisbMC9avxu8+DIkyHlTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257827; c=relaxed/simple;
-	bh=0WygJcoW++htciPpjU3QB9nxe0OpeybdnYvGSeH0WYk=;
+	s=arc-20240116; t=1792257830; c=relaxed/simple;
+	bh=gNQue9JdC6rP8xlpqvbZrRz58I/XL6tEAHkv4bhGXtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GvF71FHM9ae7S9BZW2h3xA7we3CwaGwB9uKJjs0qp25/+LUCUnIcQ/Tmh2Zk5O81rR3BUQgkxYOT7S9pD7nrP+67k0GkUKiC1TIKRWHiVC6IbNSdF4BJRSe215xbXGNAS9et4JjcjyMIVOZpu0juGFxetb7z/+tXBU67Kv3F0Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P93cMi+K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OnA00NrcqMTY7qKo/dA2xLYTt2RKlms/stSNFW2oTIY5LuJEH70XD10F0lETX4gWX5PXas3oMb0dxUA4rT/o3cpXcoUzSAr/4OJF2NHWwxW8GGM4eu9T2tf2HSgDLJ4GwTBpnOMZxwaql88kOayYL4RdfRiTntlu74NJgbRPFYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYSjcieA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P93cMi+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F25B1F000C4;
-	Sat, 17 Oct 2026 17:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYSjcieA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348FD1F000C4;
+	Sat, 17 Oct 2026 17:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257826;
-	bh=wepirYdPQcs/kpw2NeZMiutqPGj5z5gv5MCtTND1U0o=;
+	s=korg; t=1792257829;
+	bh=6AvHM/70dlU076B/iUOqzJ59W65TVn2bqPl8vYgHFJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P93cMi+K09719XgfYbIMqT31+wR7sKwoApu4T2mlJamCD/FHXJM7KIf2oh3YeVwDm
-	 ZSYblxcByenQxSp7f1Rj7E98Vc9mIkMrvGze7wv9m67bC9UELA3jTN+3MsmCAPoCD7
-	 UFp0rEhzdYiAtfF8b3HQWgdyW08F53j6CaKZNVPg=
+	b=JYSjcieAXonf6umaCKhfx+BP/mIckhp5T+N7CWLYPNCAhMyJmRBDmaKW+d8XgmDJp
+	 VRHJO6HW57bDcO8H2FyegDunxrXiVidJdWHxolsgmUEe5cuVF8eo61D+vJLrqFLb26
+	 /0AC5lewHD9aTbGctCq3SnvGpgNfp9550AmXAq/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Hou Tao <houtao1@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0683/1674] bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT
-Date: Sat, 17 Oct 2026 17:49:15 +0200
-Message-ID: <20261017160448.641453234@linuxfoundation.org>
+Subject: [PATCH 6.6 0684/1674] RDMA/bnxt_re: Fix the page details for the srq created by kernel consumers
+Date: Sat, 17 Oct 2026 17:49:16 +0200
+Message-ID: <20261017160448.665169615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,138 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 58f038e6d209d2dd862fcf5de55407855856794d ]
+[ Upstream commit b66535356a4834a234f99e16a97eb51f2c6c5a7d ]
 
-During the update procedure, when overwrite element in a pre-allocated
-htab, the freeing of old_element is protected by the bucket lock. The
-reason why the bucket lock is necessary is that the old_element has
-already been stashed in htab->extra_elems after alloc_htab_elem()
-returns. If freeing the old_element after the bucket lock is unlocked,
-the stashed element may be reused by concurrent update procedure and the
-freeing of old_element will run concurrently with the reuse of the
-old_element. However, the invocation of check_and_free_fields() may
-acquire a spin-lock which violates the lockdep rule because its caller
-has already held a raw-spin-lock (bucket lock). The following warning
-will be reported when such race happens:
+While using nvme target with use_srq on, below kernel panic is noticed.
 
-  BUG: scheduling while atomic: test_progs/676/0x00000003
-  3 locks held by test_progs/676:
-  #0: ffffffff864b0240 (rcu_read_lock_trace){....}-{0:0}, at: bpf_prog_test_run_syscall+0x2c0/0x830
-  #1: ffff88810e961188 (&htab->lockdep_key){....}-{2:2}, at: htab_map_update_elem+0x306/0x1500
-  #2: ffff8881f4eac1b8 (&base->softirq_expiry_lock){....}-{2:2}, at: hrtimer_cancel_wait_running+0xe9/0x1b0
-  Modules linked in: bpf_testmod(O)
-  Preemption disabled at:
-  [<ffffffff817837a3>] htab_map_update_elem+0x293/0x1500
-  CPU: 0 UID: 0 PID: 676 Comm: test_progs Tainted: G ... 6.12.0+ #11
-  Tainted: [W]=WARN, [O]=OOT_MODULE
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)...
-  Call Trace:
-  <TASK>
-  dump_stack_lvl+0x57/0x70
-  dump_stack+0x10/0x20
-  __schedule_bug+0x120/0x170
-  __schedule+0x300c/0x4800
-  schedule_rtlock+0x37/0x60
-  rtlock_slowlock_locked+0x6d9/0x54c0
-  rt_spin_lock+0x168/0x230
-  hrtimer_cancel_wait_running+0xe9/0x1b0
-  hrtimer_cancel+0x24/0x30
-  bpf_timer_delete_work+0x1d/0x40
-  bpf_timer_cancel_and_free+0x5e/0x80
-  bpf_obj_free_fields+0x262/0x4a0
-  check_and_free_fields+0x1d0/0x280
-  htab_map_update_elem+0x7fc/0x1500
-  bpf_prog_9f90bc20768e0cb9_overwrite_cb+0x3f/0x43
-  bpf_prog_ea601c4649694dbd_overwrite_timer+0x5d/0x7e
-  bpf_prog_test_run_syscall+0x322/0x830
-  __sys_bpf+0x135d/0x3ca0
-  __x64_sys_bpf+0x75/0xb0
-  x64_sys_call+0x1b5/0xa10
-  do_syscall_64+0x3b/0xc0
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  ...
-  </TASK>
+[  549.698111] bnxt_en 0000:41:00.0 enp65s0np0: FEC autoneg off encoding: Clause 91 RS(544,514)
+[  566.393619] Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+..
+[  566.393799]  <TASK>
+[  566.393807]  ? __die_body+0x1a/0x60
+[  566.393823]  ? die+0x38/0x60
+[  566.393835]  ? do_trap+0xe4/0x110
+[  566.393847]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393867]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393881]  ? do_error_trap+0x7c/0x120
+[  566.393890]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393911]  ? exc_divide_error+0x34/0x50
+[  566.393923]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393939]  ? asm_exc_divide_error+0x16/0x20
+[  566.393966]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393997]  bnxt_qplib_create_srq+0xc9/0x340 [bnxt_re]
+[  566.394040]  bnxt_re_create_srq+0x335/0x3b0 [bnxt_re]
+[  566.394057]  ? srso_return_thunk+0x5/0x5f
+[  566.394068]  ? __init_swait_queue_head+0x4a/0x60
+[  566.394090]  ib_create_srq_user+0xa7/0x150 [ib_core]
+[  566.394147]  nvmet_rdma_queue_connect+0x7d0/0xbe0 [nvmet_rdma]
+[  566.394174]  ? lock_release+0x22c/0x3f0
+[  566.394187]  ? srso_return_thunk+0x5/0x5f
 
-It seems feasible to break the reuse and refill of per-cpu extra_elems
-into two independent parts: reuse the per-cpu extra_elems with bucket
-lock being held and refill the old_element as per-cpu extra_elems after
-the bucket lock is unlocked. However, it will make the concurrent
-overwrite procedures on the same CPU return unexpected -E2BIG error when
-the map is full.
+Page size and shift info is set only for the user space SRQs.
+Set page size and page shift for kernel space SRQs also.
 
-Therefore, the patch fixes the lock problem by breaking the cancelling
-of bpf_timer into two steps for PREEMPT_RT:
-1) use hrtimer_try_to_cancel() and check its return value
-2) if the timer is running, use hrtimer_cancel() through a kworker to
-   cancel it again
-Considering that the current implementation of hrtimer_cancel() will try
-to acquire a being held softirq_expiry_lock when the current timer is
-running, these steps above are reasonable. However, it also has
-downside. When the timer is running, the cancelling of the timer is
-delayed when releasing the last map uref. The delay is also fixable
-(e.g., break the cancelling of bpf timer into two parts: one part in
-locked scope, another one in unlocked scope), it can be revised later if
-necessary.
-
-It is a bit hard to decide the right fix tag. One reason is that the
-problem depends on PREEMPT_RT which is enabled in v6.12. Considering the
-softirq_expiry_lock lock exists since v5.4 and bpf_timer is introduced
-in v5.15, the bpf_timer commit is used in the fixes tag and an extra
-depends-on tag is added to state the dependency on PREEMPT_RT.
-
-Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
-Depends-on: v6.12+ with PREEMPT_RT enabled
-Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Closes: https://lore.kernel.org/bpf/20241106084527.4gPrMnHt@linutronix.de
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Link: https://lore.kernel.org/r/20250117101816.2101857-5-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1740237621-29291-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 1fa140915b0c0..41b0fb7243e38 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1533,10 +1533,24 @@ void bpf_timer_cancel_and_free(void *val)
- 	 * To avoid these issues, punt to workqueue context when we are in a
- 	 * timer callback.
- 	 */
--	if (this_cpu_read(hrtimer_running))
-+	if (this_cpu_read(hrtimer_running)) {
- 		queue_work(system_unbound_wq, &t->cb.delete_work);
--	else
-+		return;
-+	}
-+
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
-+		/* If the timer is running on other CPU, also use a kworker to
-+		 * wait for the completion of the timer instead of trying to
-+		 * acquire a sleepable lock in hrtimer_cancel() to wait for its
-+		 * completion.
-+		 */
-+		if (hrtimer_try_to_cancel(&t->timer) >= 0)
-+			kfree_rcu(t, cb.rcu);
-+		else
-+			queue_work(system_unbound_wq, &t->cb.delete_work);
-+	} else {
- 		bpf_timer_delete_work(&t->cb.delete_work);
-+	}
- }
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 7d6c296da3b6e..9ea0c2b352a68 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1775,6 +1775,8 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 	srq->qplib_srq.threshold = srq_init_attr->attr.srq_limit;
+ 	srq->srq_limit = srq_init_attr->attr.srq_limit;
+ 	srq->qplib_srq.eventq_hw_ring_id = rdev->nq[0].ring_id;
++	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
++	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
+ 	nq = &rdev->nq[0];
  
- BPF_CALL_2(bpf_kptr_xchg, void *, map_value, void *, ptr)
+ 	if (udata) {
 -- 
 2.53.0
 
