@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A6F9460;
-	Sat, 17 Oct 2026 17:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB38F3B19BA;
+	Sat, 17 Oct 2026 17:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258745; cv=none; b=cJOThj85Y/it+xRKa9uO3c/kFvHvCMk00FIfhNju/PQPSjX0nJrTlndulSPPauxAh/LJD1l/libO7UbhU/p0juspFWDFothXaBe1/sz2PNOmgQxqaIhot++n1On9JbYYZO2+tqpPucdbS0FcgIFnfuX4OHURCVEIuPTWodBf7WU=
+	t=1792258748; cv=none; b=KVGLJTk7S/1r863HTr9IEDSO2w2gSJiOuACBy2JtPvV9DhD7icp5qcUxp3uXsmqIJvQf9MzRjhdwwBI5ZmvyONcMrd4Tx0b1FlWbfnoYZv1h5yh/dUKg55kTWC6QOuz9IASh/hQMpKqXwCOjf1d0/rIrcU3AF+RGt4SNcVvCUMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258745; c=relaxed/simple;
-	bh=P4eFABvVNrvvMWUxtj7PuPFHG4NO2hV8tdT6n5K2r6M=;
+	s=arc-20240116; t=1792258748; c=relaxed/simple;
+	bh=KxVKSALWMbaYt6NF06KnWtCfAne0LD6yxvNwqb8Pdmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fldXOtIt0f6WRjIPouGyjwSF+PptW01uGtFkDaVtNYlie6WbkYhpePI8LKJThEQ4OXlbTevBRiY6Zhx7JieAB0FCYW4cykuBfIgJA2a1d3nD4WtsnWetiz1tB5cfxSjE3c5w8PIJBofTZ+yhGB2ig+5Ast506PNH54OeVdZKStg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNhc6ZNT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hasx1UWkRIlS78Oe2Wld9cl9IgpFyH+mTdc46Pmbj/7a0gPq6tCCio56mfyzqBcW/30WUVfdM2dTlIJG5n0rwhoin7QJHXujMZ0UWbpzJAHqs6UfYvIWttVWcBFQfvc+ISRekHseo/dNvKNAc1gtykzSoxJYR8Q165CK4hY99nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWjBaGjk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNhc6ZNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B221F000C4;
-	Sat, 17 Oct 2026 17:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWjBaGjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD9C1F000C4;
+	Sat, 17 Oct 2026 17:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258744;
-	bh=qvtXe+UuGYr+ONaLgRuECrkDRYZKFZ2pSj0mM0kfSss=;
+	s=korg; t=1792258747;
+	bh=5otqdH4uSxYWs6ayiqDC6NYznMkUX2m8FjRiVuHXCWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uNhc6ZNTgJ3zVfYe906xUBO0J0H1AHVC388mZo+f15UnG6wvtvnfNwJWADbnfReur
-	 KH5mtR+TtLgf/2YhuoRcUAAueryL0H59tH/ZzHOdKcy+guITcCAqr4yuPseelkhyVU
-	 JibRE86NRwnKKPDXpM6hJ4FryAyitsxpaSTXYMd0=
+	b=NWjBaGjkr+wLtXDZfWrLV7f2Igl2g7TvRlSjn2Hoxfz10bEtUfys4uINSrRsHMPU9
+	 W3RmT5mQ4YALPLnUvIMPMbl391APfW7MnIAQQUF9Udv/tH0kFDKwK2mDNhaTNjmIDp
+	 JAsBSwqncYJWOG1xWKNXWAnUDzT4tVdxrGjQDENk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Jianan Huang <huangjianan@xiaomi.com>,
+	Sheng Yong <shengyong1@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0986/1674] f2fs: fix data loss caused by incorrect use of nat_entry flag
-Date: Sat, 17 Oct 2026 17:54:18 +0200
-Message-ID: <20261017160456.430469064@linuxfoundation.org>
+Subject: [PATCH 6.6 0987/1674] f2fs: avoid reading already updated pages during GC
+Date: Sat, 17 Oct 2026 17:54:19 +0200
+Message-ID: <20261017160456.454127703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,69 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Jianan Huang <huangjianan@xiaomi.com>
 
-[ Upstream commit 238e14eb7226f883b72caccd2d37bf5707df066b ]
+[ Upstream commit 570e2ccc7cb35fe720106964e65060602d3d2ac4 ]
 
-Data loss can occur when fsync is performed on a newly created file
-(before any checkpoint has been written) concurrently with a checkpoint
-operation. The scenario is as follows:
+We found the following issue during fuzz testing:
 
-create & write & fsync 'file A'                 write checkpoint
-- f2fs_do_sync_file // inline inode
- - f2fs_write_inode // inode folio is dirty
-                                                - f2fs_write_checkpoint
-                                                 - f2fs_flush_merged_writes
-                                                 - f2fs_sync_node_pages
-                                                 - f2fs_flush_nat_entries
- - f2fs_fsync_node_pages // no dirty node
- - f2fs_need_inode_block_update // return false
- SPO and lost 'file A'
+page: refcount:3 mapcount:0 mapping:00000000b6e89c65 index:0x18b2dc pfn:0x161ba9
+memcg:f8ffff800e269c00
+aops:f2fs_meta_aops ino:2
+flags: 0x52880000000080a9(locked|waiters|uptodate|lru|private|zone=1|kasantag=0x4a)
+raw: 52880000000080a9 fffffffec6e17588 fffffffec0ccc088 a7ffff8067063618
+raw: 000000000018b2dc 0000000000000009 00000003ffffffff f8ffff800e269c00
+page dumped because: VM_BUG_ON_FOLIO(folio_test_uptodate(folio))
+page_owner tracks the page as allocated
+ post_alloc_hook+0x58c/0x5ec
+ prep_new_page+0x34/0x284
+ get_page_from_freelist+0x2dcc/0x2e8c
+ __alloc_pages_noprof+0x280/0x76c
+ __folio_alloc_noprof+0x18/0xac
+ __filemap_get_folio+0x6bc/0xdc4
+ pagecache_get_page+0x3c/0x104
+ do_garbage_collect+0x5c78/0x77a4
+ f2fs_gc+0xd74/0x25f0
+ gc_thread_func+0xb28/0x2930
+ kthread+0x464/0x5d8
+ ret_from_fork+0x10/0x20
+------------[ cut here ]------------
+kernel BUG at mm/filemap.c:1563!
+ folio_end_read+0x140/0x168
+ f2fs_finish_read_bio+0x5c4/0xb80
+ f2fs_read_end_io+0x64c/0x708
+ bio_endio+0x85c/0x8c0
+ blk_update_request+0x690/0x127c
+ scsi_end_request+0x9c/0xb8c
+ scsi_io_completion+0xf0/0x250
+ scsi_finish_command+0x430/0x45c
+ scsi_complete+0x178/0x6d4
+ blk_mq_complete_request+0xcc/0x104
+ scsi_done_internal+0x214/0x454
+ scsi_done+0x24/0x34
 
-f2fs_flush_nat_entries() sets the IS_CHECKPOINTED and HAS_LAST_FSYNC
-flags for the nat_entry, but this does not mean that the checkpoint has
-actually completed successfully. However, f2fs_need_inode_block_update()
-checks these flags and incorrectly assumes that the checkpoint has
-finished.
+which is similar to the problem reported by syzbot:
+https://syzkaller.appspot.com/bug?extid=3686758660f980b402dc
 
-The root cause is that the semantics of IS_CHECKPOINTED and
-HAS_LAST_FSYNC are only guaranteed after the checkpoint write fully
-completes.
+This case is consistent with the description in commit 9bf1a3f
+("f2fs: avoid GC causing encrypted file corrupted"):
+Page 1 is moved from blkaddr A to blkaddr B by move_data_block, and after
+being written it is marked as uptodate. Then, Page 1 is moved from blkaddr
+B to blkaddr C, VM_BUG_ON_FOLIO was triggered in the endio initiated by
+ra_data_block.
 
-This patch modifies f2fs_need_inode_block_update() to acquire the
-sbi->node_write lock before reading the nat_entry flags, ensuring that
-once IS_CHECKPOINTED and HAS_LAST_FSYNC are observed to be set, the
-checkpoint operation has already completed.
+There is no need to read Page 1 again from blkaddr B, since it has already
+been updated. Therefore, avoid initiating I/O in this case.
 
-Fixes: e05df3b115e7 ("f2fs: add node operations")
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Fixes: 6aa58d8ad20a ("f2fs: readahead encrypted block during GC")
+Signed-off-by: Jianan Huang <huangjianan@xiaomi.com>
+Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/gc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index d9021bfee5cf0..c6da0daece881 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -419,6 +419,7 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
- 	struct nat_entry *e;
- 	bool need_update = true;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index d8e247cb60a25..b8dd61cf584c9 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1181,7 +1181,7 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
+ 		.encrypted_page = NULL,
+ 		.in_list = 0,
+ 	};
+-	int err;
++	int err = 0;
  
-+	f2fs_down_read(&sbi->node_write);
- 	f2fs_down_read(&nm_i->nat_tree_lock);
- 	e = __lookup_nat_cache(nm_i, ino);
- 	if (e && get_nat_flag(e, HAS_LAST_FSYNC) &&
-@@ -426,6 +427,7 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
- 			 get_nat_flag(e, HAS_FSYNCED_INODE)))
- 		need_update = false;
- 	f2fs_up_read(&nm_i->nat_tree_lock);
-+	f2fs_up_read(&sbi->node_write);
- 	return need_update;
- }
+ 	f2fs_down_read(&F2FS_I(inode)->i_sem);
+ 	if (f2fs_is_cow_file(inode)) {
+@@ -1248,6 +1248,9 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
+ 		goto put_page;
+ 	}
  
++	if (PageUptodate(fio.encrypted_page))
++		goto put_encrypted_page;
++
+ 	err = f2fs_submit_page_bio(&fio);
+ 	if (err)
+ 		goto put_encrypted_page;
 -- 
 2.53.0
 
