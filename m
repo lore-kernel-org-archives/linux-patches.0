@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB48E394470;
-	Sat, 17 Oct 2026 17:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F23AE198;
+	Sat, 17 Oct 2026 17:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257365; cv=none; b=oS3UDk0lpNpUA47GliokE4ajai3/XuVORdNv41u9XnAEeRAG+aSERLBydN+3+SqdtYWuzUJWh2zFwxpS/tMTPDqBHRbhqL26WiPjzH7WsXVHsh1VaGrdm3K9aPDGKQylAX8ieR65mFR7xpShzoj0ZLzCrDEq6DmmeJZgEvKK+Bc=
+	t=1792257368; cv=none; b=YBHADUBTS6xBHaU4QUIIy4U/dV4rtWYQg05ekbzLIxeUx9az5ko9JxiNzOq8nAQsduHw367kX8Srkw6mdLcWXGqaAOsy1YNLp8JSh+o73bzOkONWF7kN/Ryz4AxYQSRFtL4uiuE8swW33vjhoxD2K+eqhQhMckfW6Se8ZXvoy0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257365; c=relaxed/simple;
-	bh=GqP0X+HhxtD2nFkVBtNxE+h44g1FLW0vk6jNP80ZW8E=;
+	s=arc-20240116; t=1792257368; c=relaxed/simple;
+	bh=nXC/Ayx3RBNOWWNZqymkf80mRFMfqwCRx+V1GCbyJ6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSLW/17iZrMXEnEMB0xsQ1sxjrJUCdlLjEadffs13v4n1+1ojK3FHM1WK1MXdlwyZ1Dy0Zq9ibcA0gXP90giwaq19LHqyKw1/Om1sbZaSn6gbgtiLBxYG+WNt6hhYUt8JNts9xskwbpO9gZ0CzZYvtVqEKBHncjxdVy82yUS0pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHzXC5D1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sihYRnMahlGYtBfRlCo3Ouoea1NlSI4tjn/BJrOKyFQR4Ot2TGLLda/rihYek4iSJLE0K6KaqIYTmoIctbroph6PoELkU3c3i3VlrAf0tkAmntrloAhcaa0oKP08LsNExVarpjkQxWPWcYCzOQd7WVVLK5+fmAQb7/5cdE5/A98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8fE9dtT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHzXC5D1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0347F1F000C4;
-	Sat, 17 Oct 2026 17:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8fE9dtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2020C1F000C4;
+	Sat, 17 Oct 2026 17:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257364;
-	bh=Swf5YFz9iEX8n2RJ+TIlCU6b2aKxqDcnl420llij1F4=;
+	s=korg; t=1792257367;
+	bh=rXyPTf9sA7REI8RSuQOwl6bMI3cUKtdLal6m4OM/uy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHzXC5D1QZmvoJoc/K+CfkZTYQ5bdGOlhlrI41HSpPlIwLGn5CALBM8ftefl7q1WU
-	 SpM4SVhhCuQBnqx4KZ7mK3+D++JztWgHJf3RsaOUn2IgVz1q1mB1BY2jwxCRyuMjiW
-	 uvdMllW71jQ/9QzvYftIyxL1QRJxbLzmXSTG7yLY=
+	b=U8fE9dtTh0KhZIzuIZv/6OkwtKgMc6wYKCANpetLB9HCqI+2nule2PbS0A65W+48P
+	 EGuEOd4VZSJKrsQo1Mcr85GsE5TK/8XC1PZ2hGR8p0Kai0msDkUem9IPhS47tJY3K4
+	 EB1cVJzKR4gx3xju6Dth20hoVd1hE60UrvYmNClU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0537/1674] gpio: exar: initialize the ID before registering its cleanup
-Date: Sat, 17 Oct 2026 17:46:49 +0200
-Message-ID: <20261017160444.886642332@linuxfoundation.org>
+Subject: [PATCH 6.6 0538/1674] drm/aspeed: Balance the display clock enable on teardown
+Date: Sat, 17 Oct 2026 17:46:50 +0200
+Message-ID: <20261017160444.912500606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,51 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 4d69e74034b208588636ecc177e0dd43a7696af3 ]
+[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
 
-devm_add_action_or_reset() invokes the cleanup action immediately when
-registering the action fails.  gpio_exar_probe() currently stores the
-allocated ID in exar_gpio only after registering the action, so that
-failure makes exar_devm_ida_free() release ID 0.  If the allocated ID is
-nonzero, this leaks that ID and can free ID 0 belonging to another device.
+aspeed_gfx_load() enables the display clock without checking the return
+value and never disables it on probe failure or removal. devm_clk_get()
+only releases the clock reference, leaving the enable unbalanced.
 
-Store the ID before registering the cleanup action so both the immediate
-failure path and normal device teardown release the correct allocation.
+Use devm_clk_get_enabled() to handle enable failures and automatically
+disable and unprepare the clock on probe failure or removal.
 
-Fixes: 5300ebb695fa ("gpio: exar: use devm action for freeing the IDA and drop remove()")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/179070265834.12871.48183786512201899.idr-bug-79@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-exar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-exar.c b/drivers/gpio/gpio-exar.c
-index d5909a4f0433c..e526fdee4c43b 100644
---- a/drivers/gpio/gpio-exar.c
-+++ b/drivers/gpio/gpio-exar.c
-@@ -197,6 +197,7 @@ static int gpio_exar_probe(struct platform_device *pdev)
- 	index = ida_alloc(&ida_index, GFP_KERNEL);
- 	if (index < 0)
- 		return index;
-+	exar_gpio->index = index;
+diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+index 78122b35a0cbb..68d425f8e2a3d 100644
+--- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
++++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+@@ -193,13 +193,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
+ 	}
+ 	reset_control_deassert(priv->rst);
  
- 	ret = devm_add_action_or_reset(dev, exar_devm_ida_free, exar_gpio);
- 	if (ret)
-@@ -212,7 +213,6 @@ static int gpio_exar_probe(struct platform_device *pdev)
- 	exar_gpio->gpio_chip.set = exar_set_value;
- 	exar_gpio->gpio_chip.base = -1;
- 	exar_gpio->gpio_chip.ngpio = ngpios;
--	exar_gpio->index = index;
- 	exar_gpio->first_pin = first_pin;
+-	priv->clk = devm_clk_get(drm->dev, NULL);
++	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
+ 	if (IS_ERR(priv->clk)) {
+ 		dev_err(&pdev->dev,
+-			"missing or invalid clk device tree entry");
++			"failed to get and enable clock\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	clk_prepare_enable(priv->clk);
  
- 	ret = devm_gpiochip_add_data(dev, &exar_gpio->gpio_chip, exar_gpio);
+ 	/* Sanitize control registers */
+ 	writel(0, priv->base + CRT_CTRL1);
 -- 
 2.53.0
 
