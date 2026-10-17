@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3591E520A;
-	Sat, 17 Oct 2026 16:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46102342532;
+	Sat, 17 Oct 2026 16:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253113; cv=none; b=YTgaz5qE0R5b2MAy/wdVL5RBQIRw9uGX1NhN0aifHxp+Sa+NbO8t77pzJWY1haIsY0mwQb8DHsvSkprZeU3Z1VbPVVb5+Ukrj3jcRO5IL7CoDfKRt4SOi5fuJoeoRF5jx13CUEWsb0FG6pGtqh1n46EhE90ez948SvyasoBB11o=
+	t=1792253117; cv=none; b=kCE4LX7AReXz8AEcfPqbAb1l0UeF+6nznYCd7U6kdo9IbH7NluW96EDpN3ce2LWkAQewyjusGwR8xAIocpn52kkOqld94NEkNy4i4yrEVK2epT9WZv/gv/dASmaV50BThxbvSR654hb+ZOU7nt+hVL63DUZTK7mCEjdBgL+BG6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253113; c=relaxed/simple;
-	bh=3SsO1hXoNdVhqIZHODk2CQ+ZWhdXU28lmW0/qaJGNTs=;
+	s=arc-20240116; t=1792253117; c=relaxed/simple;
+	bh=UI/1fSaZTwa/iFPeM2xmZYXkKlmnWjrmelWkC79lKEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlPv/VnW/vD9NWefJx1CnG74LUWX02bTv96PYJKSrY21wXSRSRK8Ot5LH+6ZTJSUuR4PRIdKeRtlQpGEvybkgxqP8+WOP8H+AQ39RX4WUhmVnWBiY/HZnSCDRwFSJHL997R3M9c5TCUKeytPqsW6DqcWqrdQl89DK/+J8L+IuqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNa4cWao; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ePuPBRiokA0c1S3/thV53b6G/sn/n4qcOn2RCu1cB80CLoDW5Pcd/yyZ7h1Ldl4yARZX1Nl4g2ezBiaqDL8uQJHUO3oS+PrLG0djAb0o8IP+JXPN+BV+/us5+jPKOVjXmZ9qwz7qkYotsCouLMGxt0qP2aupWN8YAbLtpd7vzBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZf1BC7+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNa4cWao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA8F1F000C4;
-	Sat, 17 Oct 2026 16:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZf1BC7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AB11F000C4;
+	Sat, 17 Oct 2026 16:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253112;
-	bh=k7IXN+box1J0xA1pRTSjTHIlycxvhDa482JLxb1mMUc=;
+	s=korg; t=1792253116;
+	bh=dNEZqfk6vvmOWoxRHa3ox1tBPQEupdi8NxDbWe5dws8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TNa4cWaoQ7HsLBRavywUdYVrWfLOx3iVJQxz4EZt+GwXG0LJdYlVUciujzWB7KcFX
-	 rNzDjNRrD86nS87HVHoBQt2q4Ti0EBcvyO6RpwrYL/le2fgCvXudWxoXTXEO9DC9b5
-	 z8hnh2xgJkFlZVAjh+B8BA2Ag3TZC/CSwG4aKI6w=
+	b=nZf1BC7+/E52vXHT/buP5/KqIZ9rYaW3I76BHl3Un6Pb2Mz/AgPhMi+3PVjT1xUNr
+	 k06ENjgqRFw/T904p7bIYv7hx2CjwWs6P2LjwfTp70cXp6NFTEWnbeza338UzfN06m
+	 e78+wp3AYGnSiXkkyANEH/nd1NDwJTCKOIA4RekY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <aaron.ma@canonical.com>,
-	mrh@frame.work,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Alexander F <superveridical@gmail.com>,
-	Francis DB <francisdb@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/869] drm/amd: Create a device link between APU display and XHCI devices
-Date: Sat, 17 Oct 2026 17:47:36 +0200
-Message-ID: <20261017160037.399021278@linuxfoundation.org>
+Subject: [PATCH 6.12 016/869] ata: libata-scsi: do not lose CHECK CONDITION for failed ATAPI commands
+Date: Sat, 17 Oct 2026 17:47:37 +0200
+Message-ID: <20261017160037.426110443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,179 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 75c8746b9d0a0317d8a58aa0efa2ff2f7359908b ]
+[ Upstream commit bc8ce2cea5f77c4bd1a5184705e300e83546c0c4 ]
 
-Some AMD APU multi-function devices expose an integrated USB xHCI
-controller. In some circumstances (such as larger VRAM), the PM core
-can resume can fail when the xHCI controller is resuming in parallel
-with the GPU/display function.
+Since commit 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands
+on time out"), atapi_qc_complete() sets SAM_STAT_CHECK_CONDITION for a
+failed command only if cmd->result is zero, so that the DID_TIME_OUT or
+DID_REQUEUE host byte of a terminated command is preserved.
 
-On affected systems, the xHCI controller can complete pci_pm_resume
-and start resuming USB devices while the GPU is still in its much
-longer resume path. This race condition leads to USB device resume
-failures followed by:
+However, cmd->result can also be non-zero for a regular failed ATAPI
+command completed through libata EH: ata_eh_analyze_tf() calls
+ata_eh_decide_disposition(), that is, scsi_check_sense(), on the sense
+data obtained with REQUEST SENSE, and scsi_check_sense() sets the SCSI
+midlayer internal byte of the result for some sense codes, e.g.
+SCSIML_STAT_TGT_FAILURE for ILLEGAL REQUEST with ASC 0x20 (INVALID
+COMMAND OPERATION CODE) or 0x24 (INVALID FIELD IN CDB), or
+SCSIML_STAT_MED_ERROR for MEDIUM ERROR with ASC 0x11 (UNRECOVERED READ
+ERROR). For such commands, atapi_qc_complete() keeps the result as is and
+the command completes with a GOOD status byte, even though it failed and
+valid sense data is available.
 
-  xhci_hcd ...: xHCI host not responding to stop endpoint command
-  xhci_hcd ...: HC died; cleaning up
+As a result, passthrough users see these failed ATAPI commands as
+successful. For example, with the emulated IDE CD-ROM drive of QEMU and
+no medium loaded, a PLAY AUDIO MSF command issued with SG_IO completes
+with status 0x00 (and no DRIVER_SENSE) instead of 0x02 (CHECK CONDITION)
+with sense key ILLEGAL REQUEST, ASC/ASCQ 0x20/0x00, and the CDROM ioctls
+CDROMPLAYTRKIND, CDROMSUBCHNL, CDROMPAUSE, CDROMRESUME, CDROMPLAYMSF and
+CDROM_GET_MCN return 0 instead of -ENOMEDIUM or -EOPNOTSUPP.
 
-Create a device link from any xHCI controller sharing the same PCIe
-root port as the APU display function. The link uses DL_FLAG_STATELESS
-and DL_FLAG_PM_RUNTIME to ensure the GPU completes its resume before
-the xHCI controller begins resuming USB devices.
+Fix this by setting the status byte to SAM_STAT_CHECK_CONDITION whenever
+the host byte is not set. Use set_status_byte() rather than overwriting
+the whole result, so that the SCSI midlayer internal byte set by
+scsi_check_sense() is preserved, as ata_scsi_qc_complete() already does
+for ATA commands.
 
-This device link is done specifically in amdgpu so that if the
-platform firmware has been modified such that this issue doesn't happen
-the version can be detected and the workaround skipped.
-
-Suggested-by: Aaron Ma <aaron.ma@canonical.com>
-Reported-by: mrh@frame.work
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221073
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Alexander F <superveridical@gmail.com>
-Tested-by: Francis DB <francisdb@gmail.com>
-Link: https://patch.msgid.link/20260713195313.1739762-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 07c93d7eeb0d990bc1b8e3b1eafa464bc9feee97)
+Fixes: 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands on time out")
 Cc: stable@vger.kernel.org
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260929164135.266708-1-hengyul@cs.unc.edu
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[ sashal: adapted completion handling to use ata_qc_done() with an immediate return ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c     | 12 +++++
- drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h | 10 +++++
- .../drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c  | 45 +++++++++++++++++++
- 3 files changed, 67 insertions(+)
+ drivers/ata/libata-scsi.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-index bc5d3758fbf67..7fb81496aac70 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -1247,6 +1247,14 @@ static bool smu_is_workload_profile_available(struct smu_context *smu,
- 	return smu->workload_map && smu->workload_map[profile].valid_mapping;
- }
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index d2777255129c5..d4f6d82fd9085 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3030,8 +3030,14 @@ static void atapi_qc_complete(struct ata_queued_cmd *qc)
+ 		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
+ 			qc->dev->sdev->locked = 0;
  
-+static int smu_set_power_dep(struct smu_context *smu, bool enable)
-+{
-+	if (!smu->ppt_funcs->set_power_dep)
-+		return 0;
-+
-+	return smu->ppt_funcs->set_power_dep(smu, enable);
-+}
-+
- static int smu_sw_init(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
-@@ -1312,6 +1320,8 @@ static int smu_sw_init(void *handle)
- 	if (!smu->ppt_funcs->get_fan_control_mode)
- 		smu->adev->pm.no_fan = true;
- 
-+	smu_set_power_dep(smu, true);
-+
- 	return 0;
- }
- 
-@@ -1334,6 +1344,8 @@ static int smu_sw_fini(void *handle)
- 
- 	smu_fini_microcode(smu);
- 
-+	smu_set_power_dep(smu, false);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-index 2b8a18ce25d94..0145aff45c385 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-@@ -566,6 +566,9 @@ struct smu_context {
- 	bool pm_enabled;
- 	bool is_apu;
- 
-+	/* Power dependency link from an integrated xHCI controller to the GPU */
-+	struct device_link		*usb_power_link;
-+
- 	uint32_t smc_driver_if_version;
- 	uint32_t smc_fw_if_version;
- 	uint32_t smc_fw_version;
-@@ -1445,6 +1448,13 @@ struct pptable_funcs {
- 	 */
- 	int (*set_wbrf_exclusion_ranges)(struct smu_context *smu,
- 					struct freq_band_range *exclusion_ranges);
-+	/**
-+	 * @set_power_dep: Create or destroy a power dependency link
-+	 * from an integrated xHCI controller to the GPU so that the GPU is
-+	 * resumed before the USB controller during PM resume. @enable is true
-+	 * to create the link and false to tear it down.
-+	 */
-+	int (*set_power_dep)(struct smu_context *smu, bool enable);
- };
- 
- typedef enum {
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-index 3fdca8a5816bd..a710106d28809 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-@@ -1641,6 +1641,50 @@ static int smu_v14_0_common_set_mall_enable(struct smu_context *smu)
- 	return ret;
- }
- 
-+/*
-+ * Link any xHCI controller sharing the GPU's PCIe root port as a consumer
-+ * of the GPU so the GPU resumes first, avoiding an xHCI resume race.
-+ */
-+static int smu_v14_0_0_set_power_dep(struct smu_context *smu, bool enable)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+	struct pci_dev *gpu_pdev = adev->pdev;
-+	struct pci_dev *root_port, *usb_pdev = NULL;
-+	struct device_link *link;
-+
-+	if (!enable) {
-+		if (smu->usb_power_link) {
-+			device_link_del(smu->usb_power_link);
-+			smu->usb_power_link = NULL;
-+		}
-+		return 0;
-+	}
-+
-+	root_port = pcie_find_root_port(gpu_pdev);
-+	while ((usb_pdev = pci_get_class(PCI_CLASS_SERIAL_USB_XHCI, usb_pdev))) {
-+		struct pci_dev *usb_root;
-+
-+		usb_root = pcie_find_root_port(usb_pdev);
-+		if (usb_root != root_port)
-+			continue;
-+
-+		/* Create device link: USB (consumer) depends on GPU (supplier) */
-+		link = device_link_add(&usb_pdev->dev, &gpu_pdev->dev,
-+				       DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME);
-+		if (link) {
-+			smu->usb_power_link = link;
-+			drm_info(adev_to_drm(adev), "USB controller %s D0 power state depends on %s\n",
-+				 pci_name(usb_pdev), pci_name(gpu_pdev));
-+			/* Only create one link for the first USB controller found */
-+			break;
-+		}
-+	}
-+
-+	pci_dev_put(usb_pdev);
-+
-+	return 0;
-+}
-+
- static const struct pptable_funcs smu_v14_0_0_ppt_funcs = {
- 	.check_fw_status = smu_v14_0_check_fw_status,
- 	.check_fw_version = smu_v14_0_check_fw_version,
-@@ -1673,6 +1717,7 @@ static const struct pptable_funcs smu_v14_0_0_ppt_funcs = {
- 	.dpm_set_umsch_mm_enable = smu_v14_0_0_set_umsch_mm_enable,
- 	.get_dpm_clock_table = smu_v14_0_common_get_dpm_table,
- 	.set_mall_enable = smu_v14_0_common_set_mall_enable,
-+	.set_power_dep = smu_v14_0_0_set_power_dep,
- };
- 
- static void smu_v14_0_0_set_smu_mailbox_registers(struct smu_context *smu)
+-		if (!cmd->result)
+-			cmd->result = SAM_STAT_CHECK_CONDITION;
++		/*
++		 * Report CHECK CONDITION unless the command was terminated
++		 * with a host byte set. Only set the status byte, so that the
++		 * SCSI midlayer internal byte, which scsi_check_sense() may
++		 * have set from the sense data, is preserved.
++		 */
++		if (get_host_byte(cmd) == DID_OK)
++			set_status_byte(cmd, SAM_STAT_CHECK_CONDITION);
+ 		ata_qc_done(qc);
+ 		return;
+ 	}
 -- 
 2.53.0
 
