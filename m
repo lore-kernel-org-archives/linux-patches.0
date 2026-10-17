@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D162B1419A4;
-	Sat, 17 Oct 2026 16:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6F33C3C0E;
+	Sat, 17 Oct 2026 16:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255418; cv=none; b=aRAFGureM0nCMtkoO/B9jAheAmnwiZgpcHehBELUTlUk4fBbK+YmGEH0aYAetua4uh+XPJn5KJHeD59kuYiR2Me5sgWTZtRZq1xqUtBotjo9NaSyJcGPe774sIUliQv5Ze+eoLBTTEvqGD4hFTpWjNLP9Kk9uriXdGN1sUTiHLY=
+	t=1792255422; cv=none; b=foh6yGFzCQUCZedLG5I0MMsqpMH5F3BAjaF63wo6JM541HTObfo1Zk97WK0KwHaczfv17BKuz8KyIaUOXotjsMd/nV6vw1jJkHdelpzxbngbz93DwanKhUjhvFELXQAdMp9+yivVD1WWX4/8L2fQRLCwsA3ufcMzexD4XWVnQHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255418; c=relaxed/simple;
-	bh=0V5xH9Jrlekug4lIvBbJ4uW2RxP2kKEn2Bady756P8Y=;
+	s=arc-20240116; t=1792255422; c=relaxed/simple;
+	bh=Rh2GpcT4XfHWuFshS8oCzifYDqYmp+axFlkIAATkLrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yku+Ef1B6NELdO75emDuRUJ2RyDCMc6tJTLLErA49K6O/sTFwmfhtgU6DPFIO6X692OjziAyYUoQgvPAQOemo8oKrAgN6bc0l3LYJvN+nY64YYdHL65cxSH5s5PSwSv7TDDT+QV099dozZdgO31ZbNiqqYlEbVHNifvrnDop6wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfOQhbtY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HNyPVN9Gp12jtTujwmE35dQyfmCSvDuOe6dEYiTFlbH9Ru7ZpQuHcKAQFKH1IIF80DHmTK7KfvCmuNSHj/sOQUcbD15eoDD9BGJ8O7A/WepKqwCVYkPGkpD11zYgBSjKVSOOHqgvq7dbEKlyTTR26gDDMiidyI9Uax8GvFze8tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkUP/P6f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfOQhbtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D411F000C4;
-	Sat, 17 Oct 2026 16:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkUP/P6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452141F000C4;
+	Sat, 17 Oct 2026 16:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255416;
-	bh=ULs0X1dfb82r7uvIf9z1d8x1Ey1FWt7WyUvix77/+qs=;
+	s=korg; t=1792255419;
+	bh=GqvUJaMWvR/W+BGrkoLHQcZ1TZJitciiVB52NvT8icQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfOQhbtYwhQk6zAW+tmyOCXHOrSBwkjcWmz8xPHsWO5uXnjjlhIi1XteRLYDcC7pm
-	 LljQ5L93ETpyIUBGrmSZ284l+FtwGRQPk0cvV6JVzNAG1Wy1s28l4tfQH6pkrfw7mO
-	 r2J83qq3WnBy8TlCge3CmpqoNNJO3Q/0y26unmdU=
+	b=VkUP/P6fx+eKyW7PbGNzry4WSFUupuge8Gqop8XVU6ZckCj/YAoxsPehb2wAcYoa4
+	 sbOvNLIpCDiI/u8+JI+PAXEjT/1iDXEejh+fLhNYHM62RbsHOV7VLy4Hc83UjN377v
+	 o3mfhs9GKEdp+ZC+4F+vmoYJdzAserPS4H3musgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com,
+	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 769/869] net/mlx5e: Move representor vnic reporter to eswitch devlink port
-Date: Sat, 17 Oct 2026 18:00:10 +0200
-Message-ID: <20261017160056.638327003@linuxfoundation.org>
+Subject: [PATCH 6.12 770/869] Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()
+Date: Sat, 17 Oct 2026 18:00:11 +0200
+Message-ID: <20261017160056.661975980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,236 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
 
-[ Upstream commit 7f26a5e8040b4957ef4dbdfcde6cc7ba2db53937 ]
+[ Upstream commit 9b851b09b392da68bd715601f10a5adb2d8d19b8 ]
 
-The representor vnic devlink health reporter is created and destroyed
-along the representor netdev (un)load path, which is not serialized by
-the devlink instance lock. Destroying the reporter from there triggers
-a devl_assert_locked() splat on driver unbind:
-  WARNING: net/devlink/core.c:259 at devl_assert_locked+0x54/0x70, CPU#2: bash/3758
-  Modules linked in: mlx5_vdpa vringh vdpa mlx5_ib mlx5_fwctl mlx5_core ...
-  CPU: 2 UID: 0 PID: 3758 Comm: bash Tainted: G        W           6.19.0+ #1 PREEMPT
-  Tainted: [W]=WARN
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), ...
-  RIP: 0010:devl_assert_locked+0x54/0x70
-  Call Trace:
-   <TASK>
-   devl_health_reporter_destroy+0x3a/0x1b0
-   mlx5e_vport_rep_unload+0x12d/0x2b0 [mlx5_core]
-   mlx5_eswitch_unregister_vport_reps+0x1b8/0x220 [mlx5_core]
-   ? __esw_offloads_unload_rep+0x190/0x190 [mlx5_core]
-   ? kernfs_remove_by_name_ns+0xc3/0xf0
-   device_release_driver_internal+0x3b2/0x560
-   unbind_store+0xce/0xf0
+A NULL pointer dereference in klist_put() occurs when a child device (such
+as a BNEP network device in bnep_session) is concurrently being
+unregistered while hci_conn_del_sysfs() reparents child devices.
 
-Move the reporter's lifecycle to the eswitch devlink port (un)register
-paths, which are already serialized by the devlink instance lock, and
-store the handle on mlx5_devlink_port. Use the port's mlx5_vport as the
-reporter priv since the diagnose callback only needs a device handle and
-a vport number, and mlx5_vport carries both and is initialized before
-any representor driver probes.
+This is caused by a race condition between hci_conn_del_sysfs() and
+concurrent child device unregistration (e.g. bnep_session calling
+unregister_netdev()). During device unregistration, device_del() snapshots
+a non-NULL parent pointer. Concurrently, hci_conn_del_sysfs() finds the
+child device using device_find_any_child() and calls device_move() to
+reparent it to NULL, which removes the node from its parent's klist and
+clears knode_parent. Subsequently, device_del() calls
+klist_del(&dev->p->knode_parent) using the stale parent snapshot, causing
+klist_put() to dereference knode_klist(n)->put on an already removed node,
+resulting in a NULL pointer dereference.
 
-Fixes: cf14af140a5a ("net/mlx5e: Add vnic devlink health reporter to representors")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260906090700.3761260-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This race was introduced by commit 27aabf27fd01 ("Bluetooth: fix
+use-after-free in device_for_each_child()"), which replaced
+device_find_child(..., __match_tty) with device_find_any_child() in
+hci_conn_del_sysfs(). That change was intended to avoid a use-after-free
+where conn->dev outlived its parent hdev->dev when child devices held
+references to conn->dev, because conn->dev only held a reference to
+hdev->dev while registered in sysfs.
+
+Fix the issue properly by taking an explicit reference to the parent device
+with get_device(&hdev->dev) in hci_conn_init_sysfs() and dropping it with
+put_device(parent) in bt_link_release() when the conn device is freed. This
+ensures that hdev->dev remains valid for the entire lifecycle of conn->dev,
+resolving the underlying use-after-free. With the parent reference held
+properly, restore the __match_tty filter in hci_conn_del_sysfs() so that
+device_move() is only invoked on persistent RFCOMM TTY devices as
+originally intended, eliminating the race condition with unregistering
+network devices.
+
+Fixes: 27aabf27fd01 ("Bluetooth: fix use-after-free in device_for_each_child()")
+Assisted-by: Gemini:gemini-3.7-flash syzbot
+Reported-by: syzbot+6df45dd3d03e1a9aca96@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6df45dd3d03e1a9aca96
+Link: https://syzkaller.appspot.com/ai_job?id=f1c0e740-db21-40af-a9ff-84db0fd8b8bd
+Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 52 +------------------
- .../net/ethernet/mellanox/mlx5/core/en_rep.h  |  1 -
- .../mellanox/mlx5/core/esw/devlink_port.c     | 36 +++++++++++++
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
- 4 files changed, 38 insertions(+), 52 deletions(-)
+ net/bluetooth/hci_sysfs.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 763b264721af1..82ef5d252161e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -56,7 +56,6 @@
- #include "lib/vxlan.h"
- #define CREATE_TRACE_POINTS
- #include "diag/en_rep_tracepoint.h"
--#include "diag/reporter_vnic.h"
- #include "en_accel/ipsec.h"
- #include "en/tc/int_port.h"
- #include "en/ptp.h"
-@@ -1412,51 +1411,6 @@ static unsigned int mlx5e_ul_rep_stats_grps_num(struct mlx5e_priv *priv)
- 	return ARRAY_SIZE(mlx5e_ul_rep_stats_grps);
+diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
+index 60350c6723cb7..feb4f1302b375 100644
+--- a/net/bluetooth/hci_sysfs.c
++++ b/net/bluetooth/hci_sysfs.c
+@@ -13,7 +13,10 @@ static const struct class bt_class = {
+ static void bt_link_release(struct device *dev)
+ {
+ 	struct hci_conn *conn = to_hci_conn(dev);
++	struct device *parent = dev->parent;
++
+ 	kfree(conn);
++	put_device(parent);
  }
  
--static int
--mlx5e_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
--				 struct devlink_fmsg *fmsg,
--				 struct netlink_ext_ack *extack)
--{
--	struct mlx5e_rep_priv *rpriv = devlink_health_reporter_priv(reporter);
--	struct mlx5_eswitch_rep *rep = rpriv->rep;
--
--	mlx5_reporter_vnic_diagnose_counters(rep->esw->dev, fmsg, rep->vport,
--					     true);
--	return 0;
--}
--
--static const struct devlink_health_reporter_ops mlx5_rep_vnic_reporter_ops = {
--	.name = "vnic",
--	.diagnose = mlx5e_rep_vnic_reporter_diagnose,
--};
--
--static void mlx5e_rep_vnic_reporter_create(struct mlx5e_priv *priv,
--					   struct devlink_port *dl_port)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--	struct devlink_health_reporter *reporter;
--
--	reporter = devl_port_health_reporter_create(dl_port,
--						    &mlx5_rep_vnic_reporter_ops,
--						    0, rpriv);
--	if (IS_ERR(reporter)) {
--		mlx5_core_err(priv->mdev,
--			      "Failed to create representor vnic reporter, err = %ld\n",
--			      PTR_ERR(reporter));
--		return;
--	}
--
--	rpriv->rep_vnic_reporter = reporter;
--}
--
--static void mlx5e_rep_vnic_reporter_destroy(struct mlx5e_priv *priv)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--
--	if (!IS_ERR_OR_NULL(rpriv->rep_vnic_reporter))
--		devl_health_reporter_destroy(rpriv->rep_vnic_reporter);
--}
--
- static const struct mlx5e_profile mlx5e_rep_profile = {
- 	.init			= mlx5e_init_rep,
- 	.cleanup		= mlx5e_cleanup_rep,
-@@ -1580,10 +1534,8 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 
- 	dl_port = mlx5_esw_offloads_devlink_port(dev->priv.eswitch,
- 						 rpriv->rep->vport);
--	if (!IS_ERR(dl_port)) {
-+	if (!IS_ERR(dl_port))
- 		SET_NETDEV_DEVLINK_PORT(netdev, dl_port);
--		mlx5e_rep_vnic_reporter_create(priv, dl_port);
--	}
- 
- 	err = register_netdev(netdev);
- 	if (err) {
-@@ -1596,7 +1548,6 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 	return 0;
- 
- err_detach_netdev:
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(netdev_priv(netdev));
- err_cleanup_profile:
- 	priv->profile->cleanup(priv);
-@@ -1654,7 +1605,6 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
- 	}
- 
- 	unregister_netdev(netdev);
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(priv);
- 	priv->profile->cleanup(priv);
- 	mlx5e_destroy_netdev(netdev);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-index 70640fa1ad7bc..bcd7b4e814d06 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-@@ -118,7 +118,6 @@ struct mlx5e_rep_priv {
- 	struct rtnl_link_stats64 prev_vf_vport_stats;
- 	struct mlx5_flow_handle *send_to_vport_meta_rule;
- 	struct rhashtable tc_ht;
--	struct devlink_health_reporter *rep_vnic_reporter;
+ static const struct device_type bt_link = {
+@@ -21,6 +24,16 @@ static const struct device_type bt_link = {
+ 	.release = bt_link_release,
  };
  
- static inline
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-index b0c97648ffc71..9283b7c46e50c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-@@ -3,6 +3,26 @@
- 
- #include <linux/mlx5/driver.h>
- #include "eswitch.h"
-+#include "diag/reporter_vnic.h"
-+
-+static int
-+mlx5_esw_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
-+				    struct devlink_fmsg *fmsg,
-+				    struct netlink_ext_ack *extack)
++/*
++ * The rfcomm tty device will possibly retain even when conn
++ * is down, and sysfs doesn't support move zombie device,
++ * so we should move the device before conn device is destroyed.
++ */
++static int __match_tty(struct device *dev, void *data)
 +{
-+	struct mlx5_vport *vport = devlink_health_reporter_priv(reporter);
-+
-+	mlx5_reporter_vnic_diagnose_counters(vport->dev, fmsg, vport->vport,
-+					     true);
-+
-+	return 0;
++	return !strncmp(dev_name(dev), "rfcomm", 6);
 +}
 +
-+static const
-+struct devlink_health_reporter_ops mlx5_esw_rep_vnic_reporter_ops = {
-+	.name = "vnic",
-+	.diagnose = mlx5_esw_rep_vnic_reporter_diagnose,
-+};
- 
- static void
- mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
-@@ -153,6 +173,7 @@ static const struct devlink_port_ops mlx5_esw_dl_sf_port_ops = {
- 
- int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
+ void hci_conn_init_sysfs(struct hci_conn *conn)
  {
-+	struct devlink_health_reporter *reporter;
- 	struct mlx5_core_dev *dev = esw->dev;
- 	const struct devlink_port_ops *ops;
- 	struct mlx5_devlink_port *dl_port;
-@@ -182,6 +203,16 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
- 	if (err)
- 		goto rate_err;
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -29,7 +42,7 @@ void hci_conn_init_sysfs(struct hci_conn *conn)
  
-+	reporter = devl_port_health_reporter_create(
-+		&dl_port->dl_port, &mlx5_esw_rep_vnic_reporter_ops,
-+		0, vport);
-+	if (IS_ERR(reporter))
-+		mlx5_core_err(dev,
-+			      "Failed to create vnic health reporter for vport %d: %ld\n",
-+			      vport_num, PTR_ERR(reporter));
-+	else
-+		dl_port->vnic_reporter = reporter;
-+
- 	return 0;
+ 	conn->dev.type = &bt_link;
+ 	conn->dev.class = &bt_class;
+-	conn->dev.parent = &hdev->dev;
++	conn->dev.parent = get_device(&hdev->dev);
  
- rate_err:
-@@ -197,6 +228,11 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, struct
- 		return;
- 	dl_port = vport->dl_port;
+ 	device_initialize(&conn->dev);
+ }
+@@ -69,7 +82,7 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
+ 	while (1) {
+ 		struct device *dev;
  
-+	if (dl_port->vnic_reporter) {
-+		devl_health_reporter_destroy(dl_port->vnic_reporter);
-+		dl_port->vnic_reporter = NULL;
-+	}
-+
- 	mlx5_esw_qos_vport_update_group(esw, vport, NULL, NULL);
- 	devl_rate_leaf_destroy(&dl_port->dl_port);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 63c2b36ce967b..af25da01181d8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -179,6 +179,7 @@ struct mlx5_vport;
- struct mlx5_devlink_port {
- 	struct devlink_port dl_port;
- 	struct mlx5_vport *vport;
-+	struct devlink_health_reporter *vnic_reporter;
- };
- 
- static inline void mlx5_devlink_port_init(struct mlx5_devlink_port *dl_port,
+-		dev = device_find_any_child(&conn->dev);
++		dev = device_find_child(&conn->dev, NULL, __match_tty);
+ 		if (!dev)
+ 			break;
+ 		device_move(dev, NULL, DPM_ORDER_DEV_LAST);
 -- 
 2.53.0
 
