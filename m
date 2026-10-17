@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908BA391E74;
-	Sat, 17 Oct 2026 16:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34101419A4;
+	Sat, 17 Oct 2026 16:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254638; cv=none; b=aEkRIbB1vhIZtxgmxwY9XomlUY30Wk3/Q93PjGs1nFTVglx4wDD6Pab8FttWz8PGXBupljfr8wPx0iU23JzN3umjvo+K2hKbqu0cLvBb5bpzcCrj06p+xejRgXY2E0Jb5dksuoC4tY++sTMQRY4ItZyK2gzVrm8PaEWy3TgnlKs=
+	t=1792254642; cv=none; b=gN2To2bbAuATQWye0U2dRNNGa8Z/whvwUhFVKZ1KEPhe+GAk2Lnv5ASKHxM/F7VwRpX4hTt23tvCxY1UdmwoZhBrOA5EHrSMJwLd4JB9X8pgERrNAgpUSTuzWI48XJx8JMVytwqZ1MGxhKgXRguwLaM6hG7uRSfuzd96w1A16mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254638; c=relaxed/simple;
-	bh=PwsfmWhMaeo3p9ZkxMCJdaezl1NW3MATUOtCcMOvSyc=;
+	s=arc-20240116; t=1792254642; c=relaxed/simple;
+	bh=iqoar4LU1fSMTm/eRQKZEE+FrwRFMEtwoiKNFMrCt9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJOKxusIq8lN/sjk2REoLW37oRA1TKj31BJEGMk4weal6u21OrbmOxRWRqzzLSFP1lQKMkaUnLc31dqK39vqe35XRnIuKhjgXSbfPYj81cw1r1RL8dFaTuCHuOq9u8gpwRJW/tRbqVEfgP1UDMMeazL8eEpAfewJjYaPyQwSjKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHdlWOmb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tMlVdu2W7dDbXbNwS6IJ3LPW4cz37eb//ndXSdQQ92MBzqGnW1oagfp3Gi4hMoF/OPxELGKrRSP4ZhKLLKVy5OHITutCDkbA+Z0BEb4npl+9MtZs1L5t8i1nxXCiLB/8cGc18e356zlEEdwHUwSFQdV59BuGKOcVa0wxqd85nA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7ZlUC0e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHdlWOmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28791F000C4;
-	Sat, 17 Oct 2026 16:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7ZlUC0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C994C1F000C4;
+	Sat, 17 Oct 2026 16:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254637;
-	bh=cezJoaJJZRsXILfVs0Fi2f0IbyvaILEv7dRB23jOGOw=;
+	s=korg; t=1792254640;
+	bh=mOgXwe+QstgN+Q7khRFfrJIcdnwQRS64aioeEofw+Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nHdlWOmbtVIExmOGKGRt/DRwIyO8PHM5R1Xow+66jxJDiOiul7M5rn8a27XbLbCxX
-	 PhpiRH/A0A8gXcU7py6rX2HRHv6Pv+100i1tMgXxg4HSr8Zagvb0bazXFUMQuGqGHf
-	 6Qe65gnyA38ZwgApkIJw2DFi9emrScQiR0hOfMmA=
+	b=P7ZlUC0eCPoOsYOaoYzIESPEtKCjdFpMIrHaPKNWHX3wNSa6iVtlriTnv13z1YZvw
+	 Hc4zwD9lP+aCHff08JBND6QAca+4TtZQ4vBAU3lViGRdBtOcXdasLooWhTJLIrtNjY
+	 dSncLpu4GPHvrEVqVDcEzWU4xHDSI/S5GVeaUdG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 511/869] hwmon: (pmbus) Fix type confusion in notification logic
-Date: Sat, 17 Oct 2026 17:55:52 +0200
-Message-ID: <20261017160050.203677767@linuxfoundation.org>
+Subject: [PATCH 6.12 471/869] ocfs2: validate fast symlink target during inode read
+Date: Sat, 17 Oct 2026 17:55:12 +0200
+Message-ID: <20261017160049.202524592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,232 +59,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 59bd68ab05a8f9c9a60b6ec44682084184803ff4 ]
+[ Upstream commit e234973f286ed2e8961a24561ec91594ec3e3ff8 ]
 
-Sashiko reports:
+ocfs2_validate_inode_block() already rejects several inconsistent
+self-contained dinodes before they are exposed to the rest of the
+filesystem.  Fast symlinks need the same treatment.
 
-At the start of the loop in pmbus_notify(), the code unconditionally casts
-every attribute to a struct sensor_device_attribute:
+A zero-cluster symlink is treated as a fast symlink and later read through
+page_get_link() and ocfs2_fast_symlink_read_folio().  That path uses
+strnlen() on the inline payload and then copies len + 1 bytes into the
+folio.  If a corrupt dinode stores an i_size that does not fit the inline
+area or omits the terminating NUL at i_size, that copy reads past the end
+of the inode block buffer.
 
-drivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {
-    for (i = 0; i < data->num_attributes; i++) {
-        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
-        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-        int index = attr->index;
-...
-}
+Reject zero-cluster symlink dinodes whose i_size exceeds the inline
+fast-symlink capacity or whose inline payload is not NUL-terminated
+exactly at i_size when the inode block is validated.  This keeps malformed
+fast symlinks from reaching the read path.
 
-However, data->group.attrs can contain other types like struct
-pmbus_samples_reg or struct pmbus_sensor, which only embed a base
-struct device_attribute.
+Validation reproduced this kernel report:
+KASAN use-after-free in ocfs2_fast_symlink_read_folio+0x12c/0x1f0
+RIP: 0033:0x7f5c6d859aa7
+Read of size 3905
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  ocfs2_fast_symlink_read_folio+0x12c/0x1f0 (fs/ocfs2/inode.c:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x19f/0x330 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  kasan_check_range+0x105/0x1b0 (?:?)
+  __asan_memcpy+0x23/0x60 (?:?)
+  filemap_read_folio+0x27/0xe0 (?:?)
+  filemap_read_folio+0x35/0xe0 (?:?)
+  do_read_cache_folio+0x138/0x230 (?:?)
+  __page_get_link+0x26/0x110 (?:?)
+  page_get_link+0x2e/0x70 (?:?)
+  vfs_readlink+0x15e/0x250 (?:?)
+  touch_atime+0x4d/0x370 (?:?)
+  do_readlinkat+0x186/0x200 (?:?)
+  do_user_addr_fault+0x65a/0x890 (?:?)
+  __x64_sys_readlink+0x46/0x60 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
 
-If da is a struct pmbus_samples_reg, dev_attr is the last member. Casting
-it to struct sensor_device_attribute and reading the index field appears
-to access memory past the end of the allocation, which might trigger a
-slab-out-of-bounds read.
-
-Additionally, if da is a struct pmbus_sensor, casting it causes the index
-field to overlap with the page, phase, and reg fields. Could this produce
-a garbage mask on little-endian systems that spuriously matches the target
-reg, page, and flags during an alert?
-
-Fix the problem by using struct sensor_device_attr in struct pmbus_sensor
-and struct pmbus_label. Since those attributes never trigger a
-notification, set the value of attr->index to -1 for them. Use this value
-to distinguish from boolean attributes which _can_ trigger a notification
-and use the index field to encode mask, page, and register values.
-
-Fixes: f469bde9afd1 ("hwmon: (pmbus/core) Notify hwmon events")
-Cc: Vincent Jardin <vjardin@free.fr>
-Tested-by: Vincent Jardin <vjardin@free.fr>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/20260528151230.361127-1-rollkingzzc@gmail.com
+Fixes: ea022dfb3c2a ("ocfs: simplify symlink handling")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Gui-Dong Han <2045gemini@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 61 +++++++++++++++++++-------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ fs/ocfs2/inode.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 5061717389dbd..ea79cff0e8d0d 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -35,7 +35,7 @@
- struct pmbus_sensor {
- 	struct pmbus_sensor *next;
- 	char name[PMBUS_NAME_SIZE];	/* sysfs sensor name */
--	struct device_attribute attribute;
-+	struct sensor_device_attribute attribute;
- 	u8 page;		/* page number */
- 	u8 phase;		/* phase number, 0xff for all phases */
- 	u16 reg;		/* register */
-@@ -58,7 +58,7 @@ struct pmbus_boolean {
- 
- struct pmbus_label {
- 	char name[PMBUS_NAME_SIZE];	/* sysfs label name */
--	struct device_attribute attribute;
-+	struct sensor_device_attribute attribute;
- 	char label[PMBUS_NAME_SIZE];	/* label */
- };
- #define to_pmbus_label(_attr) \
-@@ -1238,7 +1238,8 @@ static ssize_t pmbus_show_sensor(struct device *dev,
- 				 struct device_attribute *devattr, char *buf)
- {
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 	ssize_t ret;
- 
-@@ -1258,7 +1259,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
- {
- 	struct i2c_client *client = to_i2c_client(dev->parent);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
--	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
- 	ssize_t rv = count;
- 	s64 val;
- 	int ret;
-@@ -1281,7 +1283,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
- static ssize_t pmbus_show_label(struct device *dev,
- 				struct device_attribute *da, char *buf)
- {
--	struct pmbus_label *label = to_pmbus_label(da);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-+	struct pmbus_label *label = to_pmbus_label(attr);
- 
- 	return sysfs_emit(buf, "%s\n", label->label);
- }
-@@ -1434,8 +1437,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 					     bool update, bool readonly,
- 					     bool writeonly, bool convert)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_sensor *sensor;
--	struct device_attribute *a;
- 
- 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
- 	if (!sensor)
-@@ -1459,12 +1462,11 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 	sensor->update = update;
- 	sensor->convert = convert;
- 	sensor->data = -ENODATA;
--	pmbus_dev_attr_init(a, sensor->name,
--			    readonly ? 0444 : 0644,
--			    writeonly ? pmbus_show_zero : pmbus_show_sensor,
--			    pmbus_set_sensor);
-+	pmbus_attr_init(a, sensor->name, readonly ? 0444 : 0644,
-+			writeonly ? pmbus_show_zero : pmbus_show_sensor,
-+			pmbus_set_sensor, -1);
- 
--	if (pmbus_add_attribute(data, &a->attr))
-+	if (pmbus_add_attribute(data, &a->dev_attr.attr))
- 		return NULL;
- 
- 	sensor->next = data->sensors;
-@@ -1481,8 +1483,8 @@ static int pmbus_add_label(struct pmbus_data *data,
- 			   const char *name, int seq,
- 			   const char *lstring, int index, int phase)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_label *label;
--	struct device_attribute *a;
- 
- 	label = devm_kzalloc(data->dev, sizeof(*label), GFP_KERNEL);
- 	if (!label)
-@@ -1507,8 +1509,8 @@ static int pmbus_add_label(struct pmbus_data *data,
- 				 lstring, index, phase);
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 4f7b03f34a4c0..dd486c74ab9d1 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1585,6 +1585,29 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
  	}
  
--	pmbus_dev_attr_init(a, label->name, 0444, pmbus_show_label, NULL);
--	return pmbus_add_attribute(data, &a->attr);
-+	pmbus_attr_init(a, label->name, 0444, pmbus_show_label, NULL, -1);
-+	return pmbus_add_attribute(data, &a->dev_attr.attr);
- }
- 
- /*
-@@ -2396,7 +2398,7 @@ struct pmbus_samples_attr {
- struct pmbus_samples_reg {
- 	int page;
- 	struct pmbus_samples_attr *attr;
--	struct device_attribute dev_attr;
-+	struct sensor_device_attribute attribute;
- };
- 
- static struct pmbus_samples_attr pmbus_samples_registers[] = {
-@@ -2418,14 +2420,15 @@ static struct pmbus_samples_attr pmbus_samples_registers[] = {
- 	}
- };
- 
--#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, dev_attr)
-+#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, attribute)
- 
- static ssize_t pmbus_show_samples(struct device *dev,
- 				  struct device_attribute *devattr, char *buf)
- {
- 	int val;
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_samples_reg *reg = to_samples_reg(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 
- 	mutex_lock(&data->update_lock);
-@@ -2444,7 +2447,8 @@ static ssize_t pmbus_set_samples(struct device *dev,
- 	int ret;
- 	long val;
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_samples_reg *reg = to_samples_reg(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 
- 	if (kstrtol(buf, 0, &val) < 0)
-@@ -2460,6 +2464,7 @@ static ssize_t pmbus_set_samples(struct device *dev,
- static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
- 				  struct pmbus_samples_attr *attr)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_samples_reg *reg;
- 
- 	reg = devm_kzalloc(data->dev, sizeof(*reg), GFP_KERNEL);
-@@ -2469,10 +2474,12 @@ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
- 	reg->attr = attr;
- 	reg->page = page;
- 
--	pmbus_dev_attr_init(&reg->dev_attr, attr->name, 0644,
--			    pmbus_show_samples, pmbus_set_samples);
-+	a = &reg->attribute;
++	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
++	    !le32_to_cpu(di->i_clusters)) {
++		int max_inline = ocfs2_fast_symlink_chars(sb);
++		u64 i_size = le64_to_cpu(di->i_size);
 +
-+	pmbus_attr_init(a, attr->name, 0644,
-+			pmbus_show_samples, pmbus_set_samples, -1);
- 
--	return pmbus_add_attribute(data, &reg->dev_attr.attr);
-+	return pmbus_add_attribute(data, &a->dev_attr.attr);
- }
- 
- static int pmbus_add_samples_attributes(struct i2c_client *client,
-@@ -2941,9 +2948,15 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
- 		struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
- 		struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
- 		int index = attr->index;
--		u16 smask = pb_index_to_mask(index);
--		u8 spage = pb_index_to_page(index);
--		u16 sreg = pb_index_to_reg(index);
-+		u16 smask, sreg;
-+		u8 spage;
++		if (i_size >= max_inline) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink i_size %llu exceeds max %d\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size,
++					 max_inline - 1);
++			goto bail;
++		}
 +
-+		if (index == -1)
-+			continue;
++		if (strnlen((char *)di->id2.i_symlink, i_size + 1) != i_size) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink is not NUL-terminated at i_size %llu\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size);
++			goto bail;
++		}
++	}
 +
-+		smask = pb_index_to_mask(index);
-+		spage = pb_index_to_page(index);
-+		sreg = pb_index_to_reg(index);
+ 	if (le32_to_cpu(di->i_flags) & OCFS2_CHAIN_FL) {
+ 		struct ocfs2_chain_list *cl = &di->id2.i_chain;
  
- 		if (reg == sreg && page == spage && (smask & flags)) {
- 			dev_dbg(data->dev, "sysfs notify: %s", da->attr.name);
 -- 
 2.53.0
 
