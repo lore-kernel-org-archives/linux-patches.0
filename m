@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691803B19BA;
-	Sat, 17 Oct 2026 17:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FBD3B19BA;
+	Sat, 17 Oct 2026 17:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259049; cv=none; b=Hd2etbJGyS6T5/Ot5K/eGM3bMRt9qD6EjM3hZcRIx682zz2Z/+vJuUq0fnWZePdeEPSnFyNVfBgbX56klpnMaJWktAAOU3p4VXsOvhxbgQAHxBtP2S2VhQeVmMQEXuxP+Gd3XDMmoK7eNyDrswG3EQh2/Qa6c+UJ+IxIg/m70sQ=
+	t=1792259052; cv=none; b=or9dSGCmHD+enEEOIi9G1ZM0R0PkDoLdHTsUO16vVeuA8/K74ghbKQ9I4Ux6HSG3fcDn6YOMHyCnE2PmTPGbOxBKoW6DFym461PCedzE2BXEOS8bIZUc1n00Q6KYfbc5uhF1RxMzrRP6Gn+tfRaplUn2t4Rs6/QvzCatOpLTdAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259049; c=relaxed/simple;
-	bh=iDq6/U+1inhWvsWIAN3UWvODMxC/jzZGIt6iROj5Lyo=;
+	s=arc-20240116; t=1792259052; c=relaxed/simple;
+	bh=LoYvWOLrXzz5hd89o54zW2N4Q4cK/pqcbvkb6c4s5Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmkUaYZK3jFfBol53FVCefImkwYIgUrAgm9NX07qlJEVzPgmBiBLS3mVZO72OxwTaTYcduheY+JiNekkA/stDOqB5S/CZWs1xLvRdVm1HOl1bz2+AxyAi+akq90QnYeQivgnhE0LOs4H4fLI8CxCp2QRsV/3RwJV86+OcphLOR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWi07Y9h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m+pji2u2z20Z80T+mn1Mb6ShC+5MajSLqvy9n6Q3GkvYEN5V8oXCPiH1YOh516/6kYR5ugXeUC/FifAhQTz2s0+k1JAu95tFgidfL9AW1Is7bV3fqBFVf0YDr6i7WMYKkbTFJQklG6bA7wSGXDRITJQnlr6lBmKxRO42OuKBe3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FA02mM1n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWi07Y9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F5E1F000C5;
-	Sat, 17 Oct 2026 17:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FA02mM1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8F11F000C4;
+	Sat, 17 Oct 2026 17:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259048;
-	bh=d/Se/vqut9/GLOiQOqsRQdPCHqxGWYjE3yYxqQ4gzq0=;
+	s=korg; t=1792259051;
+	bh=YdjFM7gBW7/sE14PktFKZXzi6jTM8q9bg4QlH5qs/lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWi07Y9h6av5686+ly0sZKq41LPtytbuYyrP3G2xx/aCxIYrnFef0UPPPIbjAw0hm
-	 v99rz9xq8uJxfSabE3LqbJBYrrjFGkAeUqPe+ZNoHDdGfHF5kWL2FPyGlM89ZuZ5i/
-	 8avnsztYVD5ATTyMrzxfOLGT19YmZKsMJqFgx5R0=
+	b=FA02mM1n/LWymAYEca3D1zTnp37IZxm8iVdvbD3HpqSVKEH5H9VaCVDjNJcbmTaHF
+	 AawYXJ9UZ1rtojpOuaqnscP7IwDxyYAeidjGWAU4Q4Q2Vu5YC8TkokImiIzJWWq8hv
+	 1ee44zftMmZWyT0VR7zGVNBxcBSrGvU4l7QmXNlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gregor Herburger <gregor.herburger@linutronix.de>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1085/1674] net/mlx5: Fix MCIA register buffer overflow on 32 dword reads
-Date: Sat, 17 Oct 2026 17:55:57 +0200
-Message-ID: <20261017160458.979165407@linuxfoundation.org>
+Subject: [PATCH 6.6 1086/1674] drm/vc4: hvs/v3d: Fix null dereference in unbind
+Date: Sat, 17 Oct 2026 17:55:58 +0200
+Message-ID: <20261017160459.004938906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,97 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Gregor Herburger <gregor.herburger@linutronix.de>
 
-[ Upstream commit 11c057d23465c7a5817a7284c896d19d54c0b616 ]
+[ Upstream commit 7dc3680b7ffe01add3e9299fde8471d2dd53a8ae ]
 
-The MCIA register can return up to 32 dwords (128 bytes) when the device
-advertises the mcia_32dwords capability, but struct
-mlx5_ifc_mcia_reg_bits only defines dword_0..11, leaving room for just
-12 dwords (48 bytes) of data.
+The hvs and v3d drivers use dev_get_drvdata(master) in their unbind
+functions. Since the vc4-drm gets removed before its dependent drivers
+(vc4_hvs/vc4_v3d) the vc4_hvs_unbind/vc4_v3d_unbind functions try to
+get drvdata of its master and fails with a null dereference error.
 
-mlx5_query_mcia() clamps the read size to mlx5_mcia_max_bytes() and then
-memcpy()s that many bytes out of the register, potentially reading past
-the end of the 'out' buffer. On kernels built with FORTIFY_SOURCE this
-is caught as a buffer overflow while reading the module EEPROM via
-ethtool:
+Use the data pointer passed to the unbind functions directly instead of
+dev_get_drvdata(master). This avoids using potentially freed memory.
 
-  detected buffer overflow in memcpy
-  kernel BUG at lib/string_helpers.c:1048!
-  RIP: 0010:fortify_panic+0x13/0x20
-  Call Trace:
-   mlx5_query_mcia.isra.0+0x200/0x210 [mlx5_core]
-   mlx5_query_module_eeprom_by_page+0x4a/0xa0 [mlx5_core]
-   mlx5e_get_module_eeprom_by_page+0xbb/0x120 [mlx5_core]
-   eeprom_prepare_data+0xf3/0x170
-   ethnl_default_doit+0xf1/0x3b0
-
-Extend the mcia_reg layout to 32 dwords.
-
-Fixes: 271907ee2f29 ("net/mlx5: Query the maximum MCIA register read size from firmware")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260717072338.1240582-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d3f5168a0810 ("drm/vc4: Bind and initialize the V3D engine.")
+Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
+Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
+Link: https://patch.msgid.link/20260721-rpi-vc4-fix-v2-1-b813dcd01dc7@linutronix.de
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/port.c |  4 ++--
- include/linux/mlx5/mlx5_ifc.h                  | 13 +------------
- 2 files changed, 3 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
+ drivers/gpu/drm/vc4/vc4_v3d.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-index a5622b44385eb..ec739b2f0adac 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-@@ -316,7 +316,7 @@ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
- 			      status);
- 		return -EIO;
- 	}
--	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
-+	ptr = MLX5_ADDR_OF(mcia_reg, out, dwords);
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index bea1b3d35cdd3..4e74617e493e0 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -1045,7 +1045,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+ static void vc4_hvs_unbind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+-	struct drm_device *drm = dev_get_drvdata(master);
++	struct drm_device *drm = data;
+ 	struct vc4_dev *vc4 = to_vc4_dev(drm);
+ 	struct vc4_hvs *hvs = vc4->hvs;
+ 	struct drm_mm_node *node, *next;
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 12d091ae07d67..39f37b921ae5f 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -505,7 +505,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
+ static void vc4_v3d_unbind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+-	struct drm_device *drm = dev_get_drvdata(master);
++	struct drm_device *drm = data;
+ 	struct vc4_dev *vc4 = to_vc4_dev(drm);
  
- 	*module_id = ptr[0];
- 
-@@ -401,7 +401,7 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
- 		return -EIO;
- 	}
- 
--	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
-+	ptr = MLX5_ADDR_OF(mcia_reg, out, dwords);
- 	memcpy(data, ptr, size);
- 
- 	return size;
-diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index c59fd31719a13..573461c9dced5 100644
---- a/include/linux/mlx5/mlx5_ifc.h
-+++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -11320,18 +11320,7 @@ struct mlx5_ifc_mcia_reg_bits {
- 
- 	u8         reserved_at_60[0x20];
- 
--	u8         dword_0[0x20];
--	u8         dword_1[0x20];
--	u8         dword_2[0x20];
--	u8         dword_3[0x20];
--	u8         dword_4[0x20];
--	u8         dword_5[0x20];
--	u8         dword_6[0x20];
--	u8         dword_7[0x20];
--	u8         dword_8[0x20];
--	u8         dword_9[0x20];
--	u8         dword_10[0x20];
--	u8         dword_11[0x20];
-+	u8         dwords[0x400];
- };
- 
- struct mlx5_ifc_dcbx_param_bits {
+ 	/* A straggler vc4_reset() re-enables the interrupt. */
 -- 
 2.53.0
 
