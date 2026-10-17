@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AAE9460;
-	Sat, 17 Oct 2026 17:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C99C385D7B;
+	Sat, 17 Oct 2026 17:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258864; cv=none; b=FGsw0FCDSUqiLTnnbEt6th6lutKpuSGdxtV+AQqhx9rFDuldqAy9eHOdzSC8ZEJyMOeVBlq7PTPj4MlyIIl8Uo+OQyBZh9G2+6Xk74UI/jPpq8duy6LO47s5pJoMhIv8nauUS3KoWzuibstaP9uMD8t6DtYkVHWNt+glLwz5XZ4=
+	t=1792258867; cv=none; b=uKqcxGH46j8jmoCXhdliYCKMB31T33NHLBl3OyJyQqzj9tuCFFgv+vQGhXuf3Spo/7dRIX/vdvIJ534hmo21YlHNXRj93q1790O4yHLaNhLSj/zuSHN9fguhG6xQ7vUS43ZMO5iXnA3Qe2TDvQrqmwsq5T8WIivjN7VYuKl7zLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258864; c=relaxed/simple;
-	bh=Tg4TbNCxm1fOOZIJyxuKKskAFn73yt7XTa2Wlx6hBUI=;
+	s=arc-20240116; t=1792258867; c=relaxed/simple;
+	bh=tMW1F+sFLZxksCo1x41bqRm4r69KPqXmY1EFDhxM90Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GRsSGbEjpMnksYMaABBY+yOgGOzSB9fI/PLuKQ8IoSI48CyLSt4Y+YH8lMNwOnLHmGZfzZX+xjMi7vdTIbXbv6eZLKsXVqv79J6jtjBZXfujwjq6gJE0yCUjg7nBWlgYpdXFTV5PR9m3fWc9YS+cvDKUocDXcBBqzCOY4AqqA3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsXBxoDX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtSN0N928hVHYymlXCdd8mU+xm8hvtyI+OBmCPsIhfqnaOeRRc7M48m+PBqJtkeHMu5RqscD9iRIHbKFSW6LmE3kOmIddZ9sQwbBz/KrT7SJ6qnZ4S20CnuTnW11eQxjjcauc33fmyGkFThIqoGgXg7+EjbBZESYvizZfNd6hUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLNs76a6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsXBxoDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E101F000C4;
-	Sat, 17 Oct 2026 17:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLNs76a6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0FF1F000C4;
+	Sat, 17 Oct 2026 17:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258863;
-	bh=fiw6IZfQTHxkP3WFzXVR11obyBY3iazlUO5Yivv5O/Y=;
+	s=korg; t=1792258866;
+	bh=UHKbSyCaNbTwITcuo+Dity6MnnoLU6nyhEUsumOspd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsXBxoDXcNUeARUGrLlRchHyKC2He8NImtfhUULYNTUpJ9WAUMWMA5RDBdX1nXon1
-	 e7J5SJ75P53W9kD30JVVg/9WuwMrY0F5yYBF9hAOwIlgix4RPUV8Gd1QEWorJXK51v
-	 SOVAFdAly5h64N4f1ITrcfHwFQWG/m1wRwnloE60=
+	b=oLNs76a6guZlR7W8JEICV3CLvLTLWyw2gsjMCA1wtAWSizMlZOVQiUwuBH2Qtd5Rk
+	 t1spURGNhK6TsbHh/jkCXwTXWRy2KlqByTiBzplJCQtNwaanFd1sog9KVI47MR+4Xl
+	 pMuDdaZxMTa6oio/LiP3puP2Wy+sVzXUW2mXimT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+706f5eb79044e686c794@syzkaller.appspotmail.com,
-	Remi Denis-Courmont <courmisch@gmail.com>,
-	Morduan Zang <zhangdandan@uniontech.com>,
-	zhanjun <zhanjun@uniontech.com>,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1025/1674] net: phonet: do not BUG_ON() in pn_socket_autobind() on failed bind
-Date: Sat, 17 Oct 2026 17:54:57 +0200
-Message-ID: <20261017160457.443715118@linuxfoundation.org>
+Subject: [PATCH 6.6 1026/1674] net: mana: Guard mana_remove against double invocation
+Date: Sat, 17 Oct 2026 17:54:58 +0200
+Message-ID: <20261017160457.469673185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -49,86 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Morduan Zang <zhangdandan@uniontech.com>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit 5b0c911bcdbd982f7748d11c0b39ec5808eae2de ]
+[ Upstream commit 50271d7ec95144d26808025b508f463780517d3c ]
 
-syzbot reported a kernel BUG triggered from pn_socket_sendmsg() via
-pn_socket_autobind():
+If PM resume fails (e.g., mana_attach() returns an error), mana_probe()
+calls mana_remove(), which tears down the device and sets
+gd->gdma_context = NULL and gd->driver_data = NULL.
 
-  kernel BUG at net/phonet/socket.c:213!
-  RIP: 0010:pn_socket_autobind net/phonet/socket.c:213 [inline]
-  RIP: 0010:pn_socket_sendmsg+0x240/0x250 net/phonet/socket.c:421
-  Call Trace:
-   sock_sendmsg_nosec+0x112/0x150 net/socket.c:797
-   __sock_sendmsg net/socket.c:812 [inline]
-   __sys_sendto+0x402/0x590 net/socket.c:2280
-   ...
+However, a failed resume callback does not automatically unbind the
+driver. When the device is eventually unbound, mana_remove() is invoked
+a second time. Without a NULL check, it dereferences gc->dev with
+gc == NULL, causing a kernel panic.
 
-pn_socket_autobind() calls pn_socket_bind() with port 0 and, on
--EINVAL, assumes the socket was already bound and asserts that the
-port is non-zero:
+Add an early return if gdma_context or driver_data is NULL so the second
+invocation is harmless. Move the dev = gc->dev assignment after the
+guard so it cannot dereference NULL.
 
-  err = pn_socket_bind(sock, ..., sizeof(struct sockaddr_pn));
-  if (err != -EINVAL)
-          return err;
-  BUG_ON(!pn_port(pn_sk(sock->sk)->sobject));
-  return 0; /* socket was already bound */
-
-However pn_socket_bind() also returns -EINVAL when sk->sk_state is not
-TCP_CLOSE, even when the socket has never been bound and pn_port() is
-still 0.  In that case the BUG_ON() fires and panics the kernel from a
-user-triggerable path.
-
-Treat the "bind returned -EINVAL but pn_port() is still 0" case as a
-regular error and propagate -EINVAL to the caller instead of crashing.
-Existing callers already translate a non-zero return from
-pn_socket_autobind() into -ENOBUFS/-EAGAIN, so returning -EINVAL here
-only changes behaviour from panic to a normal errno.
-
-Fixes: ba113a94b750 ("Phonet: common socket glue")
-Reported-by: syzbot+706f5eb79044e686c794@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=706f5eb79044e686c794
-Suggested-by: Remi Denis-Courmont <courmisch@gmail.com>
-Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
-Signed-off-by: zhanjun <zhanjun@uniontech.com>
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Link: https://patch.msgid.link/87A8960A2045AF3C+20260423010557.138124-1-zhangdandan@uniontech.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 635096a86edb ("net: mana: Support hibernation and kexec")
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260420124741.1056179-4-ernis@linux.microsoft.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/socket.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/phonet/socket.c b/net/phonet/socket.c
-index 1018340d89a7d..0b93de85802c9 100644
---- a/net/phonet/socket.c
-+++ b/net/phonet/socket.c
-@@ -208,9 +208,15 @@ static int pn_socket_autobind(struct socket *sock)
- 	sa.spn_family = AF_PHONET;
- 	err = pn_socket_bind(sock, (struct sockaddr *)&sa,
- 				sizeof(struct sockaddr_pn));
--	if (err != -EINVAL)
-+	/*
-+	 * pn_socket_bind() also returns -EINVAL when sk_state != TCP_CLOSE
-+	 * without a prior bind, so -EINVAL alone is not sufficient to infer
-+	 * that the socket was already bound.  Only treat it as "already
-+	 * bound" when the port is non-zero; otherwise propagate the error
-+	 * instead of crashing the kernel.
-+	 */
-+	if (err != -EINVAL || unlikely(!pn_port(pn_sk(sock->sk)->sobject)))
- 		return err;
--	BUG_ON(!pn_port(pn_sk(sock->sk)->sobject));
- 	return 0; /* socket was already bound */
- }
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 5ec3396200384..d4a37341534d1 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2921,11 +2921,16 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
+ {
+ 	struct gdma_context *gc = gd->gdma_context;
+ 	struct mana_context *ac = gd->driver_data;
+-	struct device *dev = gc->dev;
++	struct device *dev;
+ 	struct net_device *ndev;
+ 	int err;
+ 	int i;
  
++	if (!gc || !ac)
++		return;
++
++	dev = gc->dev;
++
+ 	/* adev currently doesn't support suspending, always remove it */
+ 	if (gd->adev)
+ 		remove_adev(gd);
 -- 
 2.53.0
 
