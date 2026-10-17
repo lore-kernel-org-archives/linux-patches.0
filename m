@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019D0397929;
-	Sat, 17 Oct 2026 16:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EF936B93B;
+	Sat, 17 Oct 2026 16:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254236; cv=none; b=YQmlkIvUhl3Nk19W+IwleZ98gerlEZtAo/BroTFh12IMpVne9YPNTHUsWmVmwGVSENvfN/Z01ELSy/RV2nSiZgNmIADsD8jNX9p45VYsTgSFRuKtQTNpp8kXFapbo7OE3BhHiQ0F78IYeXUTy+MdGF5h6bHrVV6/s81mKpNszpI=
+	t=1792254239; cv=none; b=AHBrqXZELiECCw+QUPYLxXYqS+pvnoFZdZP3mAQZ8c/vPpxqfttzHxzfiVKR3P1IJ+BIg+6zd1KizfVq6gHUlyhcpIqb2MZ0+tLwGr7SEcUu9TC58VXeK8D6ohkzPdZgUfAzETN64ox870MMIUoirm4SAGhE7qeM78rDl0E33P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254236; c=relaxed/simple;
-	bh=lzhmRn8yU5I/WBZr0ETPU4Djsx33sLnJqUoH4UObe04=;
+	s=arc-20240116; t=1792254239; c=relaxed/simple;
+	bh=84MRIFOoprrhTNrSrou/wCiPwyzd59++v+jcWDinAwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltdJPT8CeumougJc9LPcRIBlMC33riKaYkTLQuiorvKfthve7WBN4mcpV/fde5QTmalQqCZV0FORuFV1L5zyGYkVvc7f7QQee+MdXn8KoN5pF8yRhkS7hLof2j0uwI7AOXgYbr/MniKed8XCnh5GpAE9R9BTC3i97W2PU2cBukA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnjujgkN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sq8eEf6tdTbwjJ7qNktwaZbEzd9ACjyi6PjiXF3X+yckfLh8WAtmcYfZCfFFxMOSYnjbH5Gem4SduumN+XVKkXl8k5Yos9bScqhFdQPkpPa2vs+lkP95ECpYVaugXoL89X6riIf61zK5L9/Pz31zJdy/amDpIE8/YTT52GAFR58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ur82x814; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnjujgkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA531F000C4;
-	Sat, 17 Oct 2026 16:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ur82x814"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DEAA1F000C4;
+	Sat, 17 Oct 2026 16:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254234;
-	bh=p+BFmkqZ/CsYDsn5XdV0RkXwDIILqVaCUtddNDbA9f4=;
+	s=korg; t=1792254238;
+	bh=eCdySsr3JPZ2NxMFhxNm0kN/Mk3MA451VGzZDHGqruQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RnjujgkNPxwqjye+F2glIrXGOg+8e5Cw5JdHgt/W3BMtGdMsZF3EwOSRERwAFexy3
-	 QZWgIzDvG7TBDp/qbTokox1bVH/F+WzMG4CoBLb1ITTLtn+03ppVKZoItLhE7b4Cgs
-	 TijhpeW5NT4WeMYAPLNo3m44lMRfC3YHrbhasNLU=
+	b=ur82x814PbrG6pYHgrY/CxqCspLREMZ6B5h/o2lj/OdPYfRcKHHsupgy3dd8zbqHU
+	 y8BmL0gMdNszq5u3ER60cMltlbMd9OXLqtLiXEXyzXDRTOj5TrZxeXz1bsKSHTIS1V
+	 9CDly8HwiNNieJycw8o/atc9F8ttjp1sSQ6aZjzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	Mikhail Lobanov <m.lobanov@rosa.ru>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 339/869] fbdev: omap2: fix use-after-free in omapfb_mmap
-Date: Sat, 17 Oct 2026 17:53:00 +0200
-Message-ID: <20261017160045.773923053@linuxfoundation.org>
+Subject: [PATCH 6.12 340/869] f2fs: read COW data with the original inode during atomic write
+Date: Sat, 17 Oct 2026 17:53:01 +0200
+Message-ID: <20261017160045.799487056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,77 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Mikhail Lobanov <m.lobanov@rosa.ru>
 
-[ Upstream commit 7958e67375aa111522086286bba13cfc0816ce8d ]
+[ Upstream commit a41075acde0124d2f8a5f563068a5d63e8ffd57b ]
 
-omapfb_mmap() has a race condition with OMAPFB_SETUP_PLANE ioctl that
-can lead to use-after-free:
+When updating an atomic-write file, f2fs_write_begin() may read the
+previously written data back from the COW inode:
+prepare_atomic_write_begin() locates the block in the COW inode and sets
+use_cow, and the read bio is then built with the COW inode:
 
-The fb_mmap() entry point holds mm_lock but not lock (fb_info->lock),
-while ioctl handlers like OMAPFB_SETUP_PLANE hold lock but not mm_lock.
-This allows concurrent execution.
+	f2fs_submit_page_read(use_cow ? F2FS_I(inode)->cow_inode : inode,
+			      ...);
 
-In omapfb_mmap():
-1. rg = omapfb_get_mem_region(ofbi->region);      // Get old region ref
-2. start = omapfb_get_region_paddr(ofbi);          // Read from NEW region
-3. len = fix->smem_len;                             // Read from NEW region
-4. vm_iomap_memory(vma, start, len);               // Map NEW region memory
-5. atomic_inc(&rg->map_count);                      // Increment OLD region!
+and f2fs_grab_read_bio() decides whether to schedule fs-layer decryption
+(STEP_DECRYPT) for the bio based on that inode via
+fscrypt_inode_uses_fs_layer_crypto().
 
-Concurrently, OMAPFB_SETUP_PLANE can:
-- Reassign ofbi->region = new_rg
-- Update fix->smem_len
-- OMAPFB_SETUP_MEM then checks NEW region's map_count (0!) and frees it
+However, the folio being filled belongs to the original inode
+(folio->mapping->host == inode), and the data stored in the COW block was
+encrypted (or left as plaintext) using the original inode's context, not
+the COW inode's -- see f2fs_encrypt_one_page(), which keys off
+fio->page->mapping->host.  fscrypt_decrypt_pagecache_blocks() likewise
+operates on folio->mapping->host.
 
-This leaves userspace with a mapping to freed physical memory.
+The COW inode is created as a tmpfile in the parent directory and inherits
+its encryption policy from there.  With test_dummy_encryption the newly
+created COW inode gets the dummy policy and becomes encrypted, while a
+pre-existing regular file -- created before the policy applied, e.g.
+already present in the on-disk image -- stays unencrypted.  The read
+path then sets STEP_DECRYPT based on the encrypted COW inode and calls
+fscrypt_decrypt_pagecache_blocks() on a folio whose host (the unencrypted
+original inode) has a NULL ->i_crypt_info, dereferencing it:
 
-The fix is to read all required values (start, len) from the same
-region reference (rg) that will have its map_count incremented,
-preventing the region from being freed while still mapped.
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  RIP: 0010:fscrypt_decrypt_pagecache_blocks+0xa0/0x310
+  Workqueue: f2fs_post_read_wq f2fs_post_read_work
+  Call Trace:
+   fscrypt_decrypt_bio+0x1eb/0x340
+   f2fs_post_read_work+0xba/0x140
+   process_one_work+0x91c/0x1a40
+   worker_thread+0x677/0xe90
+   kthread+0x2bc/0x3a0
 
+The COW inode is only needed to locate the on-disk block, and that block
+address is already resolved into @blkaddr by prepare_atomic_write_begin()
+via __find_data_block(cow_inode, ...); f2fs_submit_page_read() then reads
+from that physical @blkaddr directly, so the inode argument only selects
+the post-read crypto context, not which block is fetched.  Reading with
+@inode therefore returns the same (latest, not-yet-committed) COW data,
+while making both the fs-layer decryption decision and the inline crypto
+path use the correct (original inode's) key.
+
+With the COW inode no longer used at the read site, the use_cow flag has no
+remaining consumer; drop it from f2fs_write_begin() and
+prepare_atomic_write_begin().
+
+Fixes: 591fc34e1f98 ("f2fs: use cow inode data when updating atomic write")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap2/omapfb/omapfb-main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-index 79688c2cc6d68..2b99a58ad6758 100644
---- a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-+++ b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
-@@ -1099,7 +1099,11 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index f8154a431fc96..4bbaae47b184e 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3593,7 +3593,7 @@ static int __reserve_data_block(struct inode *inode, pgoff_t index,
  
- 	rg = omapfb_get_mem_region(ofbi->region);
+ static int prepare_atomic_write_begin(struct f2fs_sb_info *sbi,
+ 			struct folio *folio, loff_t pos, unsigned int len,
+-			block_t *blk_addr, bool *node_changed, bool *use_cow)
++			block_t *blk_addr, bool *node_changed)
+ {
+ 	struct inode *inode = folio->mapping->host;
+ 	struct inode *cow_inode = F2FS_I(inode)->cow_inode;
+@@ -3608,14 +3608,14 @@ static int prepare_atomic_write_begin(struct f2fs_sb_info *sbi,
  
--	start = omapfb_get_region_paddr(ofbi);
-+	if (ofbi->rotation_type == OMAP_DSS_ROT_VRFB)
-+		start = rg->vrfb.paddr[0];
-+	else
-+		start = rg->paddr;
+ 	/* Look for the block in COW inode first */
+ 	err = __find_data_block(cow_inode, index, blk_addr);
+-	if (err) {
++	if (err)
+ 		return err;
+-	} else if (__is_valid_data_blkaddr(*blk_addr)) {
+-		*use_cow = true;
 +
- 	len = fix->smem_len;
- 
- 	DBG("user mmap region start %lx, len %d, off %lx\n", start, len,
-@@ -1109,6 +1113,8 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
- 	vma->vm_ops = &mmap_user_ops;
- 	vma->vm_private_data = rg;
- 
-+	atomic_inc(&rg->map_count);
++	if (__is_valid_data_blkaddr(*blk_addr))
+ 		return 0;
+-	} else if (*blk_addr == NEW_ADDR) {
 +
- 	r = vm_iomap_memory(vma, start, len);
- 	if (r)
- 		goto error;
-@@ -1121,6 +1127,7 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
- 	return 0;
++	if (*blk_addr == NEW_ADDR)
+ 		cow_has_reserved_block = true;
+-	}
  
- error:
-+	atomic_dec(&rg->map_count);
- 	omapfb_put_mem_region(rg);
+ 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
+ 		goto reserve_block;
+@@ -3648,7 +3648,6 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
+ 	struct folio *folio;
+ 	pgoff_t index = pos >> PAGE_SHIFT;
+ 	bool need_balance = false;
+-	bool use_cow = false;
+ 	block_t blkaddr = NULL_ADDR;
+ 	int err = 0;
  
- 	return r;
+@@ -3710,7 +3709,7 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
+ 
+ 	if (f2fs_is_atomic_file(inode))
+ 		err = prepare_atomic_write_begin(sbi, folio, pos, len,
+-					&blkaddr, &need_balance, &use_cow);
++					&blkaddr, &need_balance);
+ 	else
+ 		err = prepare_write_begin(sbi, folio, pos, len,
+ 					&blkaddr, &need_balance);
+@@ -3750,9 +3749,15 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
+ 			err = -EFSCORRUPTED;
+ 			goto put_folio;
+ 		}
+-		err = f2fs_submit_page_read(use_cow ?
+-				F2FS_I(inode)->cow_inode : inode,
+-				folio, blkaddr, 0, true);
++		/*
++		 * Although the block may be stored in the COW inode, the folio
++		 * belongs to @inode and its data was encrypted (or not) using
++		 * @inode's context (see f2fs_encrypt_one_page()).  Read with
++		 * @inode so the post-read decryption decision matches the
++		 * folio's owner; otherwise an unencrypted @inode whose COW inode
++		 * is encrypted hits a NULL ->i_crypt_info on decryption.
++		 */
++		err = f2fs_submit_page_read(inode, folio, blkaddr, 0, true);
+ 		if (err)
+ 			goto put_folio;
+ 
 -- 
 2.53.0
 
