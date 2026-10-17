@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3D23B95E4;
-	Sat, 17 Oct 2026 17:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0194C391E51;
+	Sat, 17 Oct 2026 17:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257040; cv=none; b=ghIdEUINRuxwnSn+nGDXYePztl/AQuoH+IcHlcZiQ6PFCxqoRwNZzdgNde1hDEZ7KtO56f7u0tM4idyaCLzqSg0OOxib5qFcewLb6jouY7B+GnhWQuiHWP0KHxf8uVKmOBpL2PUWiC0Y2kOR/lZ3112cEDKIHzE+1HnYc5fz5rI=
+	t=1792257043; cv=none; b=iVjXDOKz0l1/1YS+Q5P8vf9irptey9IsZ/H2d8Eq4JoY64s34LxKGNv8OxyywdWtF/YHVrGlvTo3Zp+7WGFHQLZEsEScjy8VbMGU2Q/lMH4Pts3Aeqq3+CX1y3nkFXnINLMwlPiNQ9yCfsAQcV/u/sey4F1+fpAQ84GTUhO71QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257040; c=relaxed/simple;
-	bh=9vfAApinIyHrkl+YedU50l2T08AquHLefcGRJBLj/rM=;
+	s=arc-20240116; t=1792257043; c=relaxed/simple;
+	bh=tzAzZ/W6YrFAquxGlUDRsnuKClYdlpqd/4C7Xlb9JBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raP0D43K4icoP2m0gsg/8D+ObwJpm+mZkibONun30ovEF+TSSnpU48sii8tWDX2J7xab9tpYKrUE201JpwNLJJgFxmjkK145sQtbWc3uvcLn5Y1Cc/QD0zWff69gCjYLQ8MoQ2Sqo9dnaUHEhHZUGuGgE3LSPNr447dk5VRb5DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgMh6Rbs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YJPdcwzs/kKCRZRS9UHxL0HEPjFt26gSrotCSobpYpTEYZnjo5+3KJ7QSbf5BOzIvq7B/C4lIeYOspWIJy2oeaDc5O5CuSsQBW6v7dZRdhWw7NcGY72HWagWwvCoI6xMbQQlHYBZOdUJgna6lsxLP14Je7BAMfZ2wR+w+rLsLGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0nGiIHX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgMh6Rbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332BB1F000C4;
-	Sat, 17 Oct 2026 17:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0nGiIHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4E31F000C4;
+	Sat, 17 Oct 2026 17:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257038;
-	bh=2Rv+2cGL9Knk3jJmQkv/9cwfOeqVDCRq4C4/EiVyJHM=;
+	s=korg; t=1792257041;
+	bh=JRdTxaZA58uwpIHCR9Kh1lM3uyoBFLPFElIwitudchs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AgMh6RbsL2fWWTciN282CGz7b38B+OkFFuBJyIBmkKMdLip4pKaWzshHx5+/CLSa/
-	 OqQ4Aa0KTy0iPYXLWGHBSz21AqtbkdhWbLd8ZpnDRYIMYuhalLtogSGemoqSezeajB
-	 GGmsjkqFK7u/zpk2yCkhXPlXOR1uk3ugI98F1en8=
+	b=h0nGiIHXAiJ/bUFQjE4HOLQ2f9ZeHbLRGxAJSes9wSj7PlWd18ijPdAbYWC7G2OG1
+	 j7AyiMR/R/p50jeAXIBdjt0+iH0wz434skAxJ7NFD9OkzeiCvn3pI7fZmOSsSsiunX
+	 TEgDHpC4GXJbB8f0FLkOGTuMHKuVvYzw++rj1ULc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Alexandru Ardelean <aardelean@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0430/1674] wifi: mac80211: count only matching reservations in reserved switch
-Date: Sat, 17 Oct 2026 17:45:02 +0200
-Message-ID: <20261017160442.163082283@linuxfoundation.org>
+Subject: [PATCH 6.6 0431/1674] iio: core: add accessors masklength
+Date: Sat, 17 Oct 2026 17:45:03 +0200
+Message-ID: <20261017160442.189330082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,120 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 437f3727b4fd715266c296435c116288f82666fd ]
+[ Upstream commit de79583ffe794663c53b77f97be814522d4edc4f ]
 
-ieee80211_vif_use_reserved_switch() validates a replacement by counting
-assigned links on ctx->replace_ctx and treating reservations too
-broadly. A link can still be assigned to the old channel context while
-holding a reservation that belongs to a different replacement
-operation.
+'masklength' is supposed to be an IIO private member. However, drivers
+(often in trigger handlers) need to access it to iterate over the
+enabled channels for example (there are other reasons). Hence, a couple
+of new accessors are being added:
 
-That can make the current replacement appear complete too early. If
-another link finalizes first, the function can free the
-WILL_BE_REPLACED chanctx while the unmatched link and driver still use
-it, leading to a use-after-free in later beacon generation.
+ * iio_for_each_active_channel() - Iterates over the active channels;
+ * iio_get_masklength() - Get length of the channels mask.
 
-Require an in-place reservation to point at the current replacement
-context, and require the reserved and assigned contexts to be the
-matching replacement pair, before counting or moving the link.
+The goal of these new accessors is to annotate 'masklength' as private
+as soon as all drivers accessing it are converted to use the new
+helpers.
 
-Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/4b6c4b8648ab1920c38a40be32c0b1a2797b4ac6.1785726007.git.zhilinz@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Adapted channel-context iterators to direct link-list traversal. ]
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Reviewed-by: Alexandru Ardelean <aardelean@baylibre.com>
+Link: https://patch.msgid.link/20240702-dev-iio-masklength-private-v1-1-98193bf536a6@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Implement the masklength getter as a single-evaluation macro with an
+unsigned result so that no new functions are introduced. Retain the
+active-channel iterator and convert the MAX30102 interrupt handler to the
+getter, providing the context required by the subsequent interrupt fix.
+Omit the unrelated scan-type helper from the surrounding upstream context.
+
+Stable-dep-of: f0ea4824deeb ("iio: health: max30102: fix NULL dereference in interrupt handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/iio/health/max30102.c |  2 +-
+ include/linux/iio/iio.h       | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index 85875ed7536f8..29a6ad65c9a8b 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -1394,7 +1394,8 @@ ieee80211_link_use_reserved_assign(struct ieee80211_link_data *link)
+diff --git a/drivers/iio/health/max30102.c b/drivers/iio/health/max30102.c
+index 37e619827e8a1..43c16fcdeae19 100644
+--- a/drivers/iio/health/max30102.c
++++ b/drivers/iio/health/max30102.c
+@@ -293,7 +293,7 @@ static irqreturn_t max30102_interrupt_handler(int irq, void *private)
+ 	struct iio_dev *indio_dev = private;
+ 	struct max30102_data *data = iio_priv(indio_dev);
+ 	unsigned int measurements = bitmap_weight(indio_dev->active_scan_mask,
+-						  indio_dev->masklength);
++						  iio_get_masklength(indio_dev));
+ 	int ret, cnt = 0;
+ 
+ 	mutex_lock(&data->lock);
+diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
+index 202e55b0a28b2..3da7f2331cc60 100644
+--- a/include/linux/iio/iio.h
++++ b/include/linux/iio/iio.h
+@@ -756,6 +756,21 @@ static inline struct dentry *iio_get_debugfs_dentry(struct iio_dev *indio_dev)
  }
+ #endif
  
- static bool
--ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
-+ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link,
-+					struct ieee80211_chanctx *ctx)
- {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
- 	struct ieee80211_chanctx *old_ctx, *new_ctx;
-@@ -1404,6 +1405,9 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
- 	new_ctx = link->reserved_chanctx;
- 	old_ctx = ieee80211_link_get_chanctx(link);
- 
-+	if (new_ctx != ctx)
-+		return false;
++/**
++ * iio_get_masklength - Get length of the channels mask
++ * @indio_dev: the IIO device to get the masklength for
++ */
++#define iio_get_masklength(indio_dev) ((unsigned int)(indio_dev)->masklength)
 +
- 	if (!old_ctx)
- 		return false;
- 
-@@ -1416,6 +1420,12 @@ ieee80211_link_has_in_place_reservation(struct ieee80211_link_data *link)
- 	if (new_ctx->replace_state != IEEE80211_CHANCTX_REPLACES_OTHER)
- 		return false;
- 
-+	if (new_ctx->replace_ctx != old_ctx)
-+		return false;
++/**
++ * iio_for_each_active_channel - Iterated over active channels
++ * @indio_dev: the IIO device
++ * @chan: Holds the index of the enabled channel
++ */
++#define iio_for_each_active_channel(indio_dev, chan) \
++	for_each_set_bit((chan), (indio_dev)->active_scan_mask, \
++			 iio_get_masklength(indio_dev))
 +
-+	if (old_ctx->replace_ctx != new_ctx)
-+		return false;
-+
- 	return true;
- }
+ ssize_t iio_format_value(char *buf, unsigned int type, int size, int *vals);
  
-@@ -1465,7 +1475,7 @@ static int ieee80211_chsw_switch_vifs(struct ieee80211_local *local,
- 
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			old_ctx = ieee80211_link_get_chanctx(link);
-@@ -1574,7 +1584,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		list_for_each_entry(link, &ctx->replace_ctx->assigned_links,
- 				    assigned_chanctx_list) {
- 			n_assigned++;
--			if (link->reserved_chanctx) {
-+			if (ieee80211_link_has_in_place_reservation(link, ctx)) {
- 				n_reserved++;
- 				if (link->reserved_ready)
- 					n_ready++;
-@@ -1595,7 +1605,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		ctx->conf.radar_enabled = false;
- 		list_for_each_entry(link, &ctx->reserved_links,
- 				    reserved_chanctx_list) {
--			if (ieee80211_link_has_in_place_reservation(link) &&
-+			if (ieee80211_link_has_in_place_reservation(link, ctx) &&
- 			    !link->reserved_ready)
- 				return -EAGAIN;
- 
-@@ -1669,7 +1679,7 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 			struct ieee80211_bss_conf *link_conf = link->conf;
- 			u64 changed = 0;
- 
--			if (!ieee80211_link_has_in_place_reservation(link))
-+			if (!ieee80211_link_has_in_place_reservation(link, ctx))
- 				continue;
- 
- 			rcu_assign_pointer(link_conf->chanctx_conf,
-@@ -1722,7 +1732,8 @@ static int ieee80211_vif_use_reserved_switch(struct ieee80211_local *local)
- 		 */
- 		list_for_each_entry_safe(link, link_tmp, &ctx->reserved_links,
- 					 reserved_chanctx_list) {
--			if (WARN_ON(ieee80211_link_has_in_place_reservation(link)))
-+			if (WARN_ON(ieee80211_link_has_in_place_reservation(link,
-+									    ctx)))
- 				continue;
- 
- 			if (WARN_ON(link->reserved_chanctx != ctx))
+ int iio_str_to_fixpoint(const char *str, int fract_mult, int *integer,
 -- 
 2.53.0
 
