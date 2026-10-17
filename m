@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB112C026C;
-	Sat, 17 Oct 2026 16:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1BF39F18A;
+	Sat, 17 Oct 2026 16:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254479; cv=none; b=EU7WcDoCaXi0OfchFRmtzhxRSHR1TWcHkZRRosWy8LrVefrK7YRYO2SdFa/yhAsMy7xPcsMU58Io92UbIQMUJGS11NoYZPvZi3G3/qrruTe5q9rBHWoO4JgrXkDPtCNJWaZC675pj9ZrMZ/XLptvQrlc4i7ZvDt6XibEHeXNtM0=
+	t=1792254482; cv=none; b=BTqoMXzG1D361dxFqyOrXw8Y9A1n0CvDYRFS+FhTLi8CYnQopSQ6b1rl218sq9AhXBDcGJZs06z5DVx5c7SR/304mN20yNketQLMYed+dXexqDe5ZCF3b4FvsK/XW1byRZ487l3uS3pYiEWi7X/sQ4kjBav88ORCulqbLJ3KPe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254479; c=relaxed/simple;
-	bh=/hF8qPr3zcEzJAkKixANKsGQcWM6JRKCsq94mcKdCqY=;
+	s=arc-20240116; t=1792254482; c=relaxed/simple;
+	bh=0fpRjgENVzRShw5MhVylh3iawLPDEwEgjbYSyd66eYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVrfuqkH5PtV5qIyEsbWu5ZL31dNr65E39BT4Eitcq14Ggi5VLdxEbS+IVbM3/tFNSoVLLEwysmKl4wjz1FrrrQQ7A/PE+Sk+GxgO4opyHkcDHkS+RsqTj8WnnvvB77n9fXlnZl1snTWEdEVpB2TtRlmsALGtuArZTKyNRXVnpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMdwUltQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ly3JUQZKlVBcPrD58HJE7j8InApRme1M1+fnodtRJ/yNoSTJBiN96bnqi/lX4dN/+LtusqZqWZpyLvJ/n8va60B+vfuQcvF4unj09NPni4SJbQkNL4FsX0zuTNXwTyJ8LY6bimBLZv56vqGUJ3O0uPsXHthnunnPyaFyO5ROVKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVBOZYfB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMdwUltQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818EA1F000C4;
-	Sat, 17 Oct 2026 16:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVBOZYfB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A859E1F000C4;
+	Sat, 17 Oct 2026 16:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254478;
-	bh=vphrWCwn/MeOXVO0eneWRT95tKZmaZbJBKMa+ZTD/9w=;
+	s=korg; t=1792254481;
+	bh=5mKtPKdiaKRadAhoYrsWW3aPbpJ+hvueXi7JwKd4RWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMdwUltQmIqsdboRM9drCEu6eYw6aPckSVyIuQeNuaRMzCXlKwX3rjYE5roXiAmrt
-	 LoN/Fc9sIo58TwYJQYQXExYfOk8i+AXmYRlP4ANGK9z7kSza2n2CwS756GdvR2Cuou
-	 ihjgCcVkQ/LeV5NznsNh66mvrWX4Ti2Xr/zd1RvQ=
+	b=EVBOZYfBIIP+ix/t0Wqb17KdvZUSvMTfTz/SH8Zj9gWm5owP6eDCaDUqahXIZWGNR
+	 v7Qew8O+9PPLuuROMPMH1ztrlCpG3MfD5kltUk8+x4whg4TVi/FebAu+cvotmYBX3t
+	 a+wAd8i6b6Y4XpauMrnKow4jonuyQmnaqWQQo3+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	kernel test robot <lkp@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 459/869] RDMA/bnxt_re: Fix budget handling of notification queue
-Date: Sat, 17 Oct 2026 17:55:00 +0200
-Message-ID: <20261017160048.904133069@linuxfoundation.org>
+Subject: [PATCH 6.12 460/869] RDMA/bnxt_re: Remove unusable nq variable
+Date: Sat, 17 Oct 2026 17:55:01 +0200
+Message-ID: <20261017160048.927089003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,27 +52,28 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 6b395d31146a3fae775823ea8570a37b922f6685 ]
+[ Upstream commit ffc59e32c67e599cc473d6427a4aa584399d5b3c ]
 
-The cited commit in Fixes tag introduced a bug which can cause hang
-of completion queue processing because of notification queue budget
-goes to zero.
+Remove nq variable from bnxt_re_create_srq() and bnxt_re_destroy_srq()
+as it generates the following compilation warnings:
 
-Found while doing nfs over rdma mount and umount.
-Below message is noticed because of the existing bug.
+>> drivers/infiniband/hw/bnxt_re/ib_verbs.c:1777:24: warning: variable
+'nq' set but not used [-Wunused-but-set-variable]
+    1777 |         struct bnxt_qplib_nq *nq = NULL;
+         |                               ^
+   drivers/infiniband/hw/bnxt_re/ib_verbs.c:1828:24: warning: variable
+'nq' set but not used [-Wunused-but-set-variable]
+    1828 |         struct bnxt_qplib_nq *nq = NULL;
+         |                               ^
+   2 warnings generated.
 
-kernel: cm_destroy_id_wait_timeout: cm_id=00000000ff6c6cc6 timed out. state 11 -> 0, refcnt=1
-
-Fix to handle this issue -
-Driver will not change nq->budget upon create and destroy of cq and srq
-rdma resources.
-
-Fixes: cb97b377a135 ("RDMA/bnxt_re: Refurbish CQ to NQ hash calculation")
-Link: https://patch.msgid.link/r/20250324040935.90182-1-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 6b395d31146a ("RDMA/bnxt_re: Fix budget handling of notification queue")
+Link: https://patch.msgid.link/r/8a4343e217d7d1c0a5a786b785c4ac57cb72a2a0.1744288299.git.leonro@nvidia.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202504091055.CzgXnk4C-lkp@intel.com/
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: 131e2918b9b0 ("RDMA/bnxt_re: Free SRQ toggle page after firmware teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -81,35 +82,36 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 deletions(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 324825ecf6b2c..7a17088186cb7 100644
+index 7a17088186cb7..d2c3038aad69d 100644
 --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
 +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1733,8 +1733,6 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
- 	bnxt_qplib_destroy_srq(&rdev->qplib_res, qplib_srq);
- 	ib_umem_release(srq->umem);
- 	atomic_dec(&rdev->stats.res.srq_count);
--	if (nq)
--		nq->budget--;
- 	return 0;
- }
+@@ -1722,10 +1722,7 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
+ 					       ib_srq);
+ 	struct bnxt_re_dev *rdev = srq->rdev;
+ 	struct bnxt_qplib_srq *qplib_srq = &srq->qplib_srq;
+-	struct bnxt_qplib_nq *nq = NULL;
  
-@@ -1856,8 +1854,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 			goto fail;
- 		}
- 	}
--	if (nq)
--		nq->budget++;
- 	active_srqs = atomic_inc_return(&rdev->stats.res.srq_count);
- 	if (active_srqs > rdev->stats.res.srq_watermark)
- 		rdev->stats.res.srq_watermark = active_srqs;
-@@ -2995,7 +2991,6 @@ int bnxt_re_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
- 	ib_umem_release(cq->umem);
+-	if (qplib_srq->cq)
+-		nq = qplib_srq->cq->nq;
+ 	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT) {
+ 		free_page((unsigned long)srq->uctx_srq_page);
+ 		hash_del(&srq->hash_entry);
+@@ -1773,7 +1770,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 		       struct ib_udata *udata)
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+-	struct bnxt_qplib_nq *nq = NULL;
+ 	struct bnxt_re_ucontext *uctx;
+ 	struct bnxt_re_dev *rdev;
+ 	struct bnxt_re_srq *srq;
+@@ -1819,7 +1815,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 	srq->qplib_srq.eventq_hw_ring_id = rdev->nqr->nq[0].ring_id;
+ 	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
+ 	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
+-	nq = &rdev->nqr->nq[0];
  
- 	atomic_dec(&rdev->stats.res.cq_count);
--	nq->budget--;
- 	kfree(cq->cql);
- 	return 0;
- }
+ 	if (udata) {
+ 		rc = bnxt_re_init_user_srq(rdev, pd, srq, udata);
 -- 
 2.53.0
 
