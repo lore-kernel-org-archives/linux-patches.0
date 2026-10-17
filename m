@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E003A1E92;
-	Sat, 17 Oct 2026 17:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88438F233;
+	Sat, 17 Oct 2026 17:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258588; cv=none; b=vFmWkXHREVcmpOZS+Ae1T+N6/6EXhdCgTblEdoICfabCEJ2sVaXULNQHZ0J2YoUIaV1EGDCUeth2iKCZKNLBlHR3AHzWWmN5pwLk4jFFR/+KRfoMw2+p6qHtyLOqBePEu3sI+E8snugT/6nqY2KxjCY2VrFDyX2Ot3/pgE2beVQ=
+	t=1792258591; cv=none; b=pe08SMY18UEyIYYsXqUqHy53WPWLleyAjdNwcrEYGQOKAFzMisoeUFDJD4b3P7wjo+6nGZSBx/fn87hsPHUMRhKyb6vAe+jNzokAhrvMM0z6+8K5d92Oq2qY8j2LxVmaiOVMcA/nF+M6aWehiQVCBmbf3g3gWt/8HBxtUupBZh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258588; c=relaxed/simple;
-	bh=lNaMpqjPhM9iangWLPeshPupTUrhdxSoW2EsbvxvaKA=;
+	s=arc-20240116; t=1792258591; c=relaxed/simple;
+	bh=uUBn+w6hwrW7Br19pnDkj+9V0zbq751yGc7hCcOUpIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iA7zFkjX/+rK1UwB8nGiGTQcrWi253J1ukW+EEp4rdggoyQscvCYlCSKykLIwlExh1tYemHJXmtY4G73BozIavF38Mxq01L35XEWpjCA416qHmRn1hovGG4wwyCvp4Fk7Q0PANT0aToRenRml4Nn7pdoYw1DitzmAS2fuPUZdU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDvbaPeA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ezEWYRGU0GZE76KzhWxKp3pByk7dUVk7MW94TIrneUSPtKe+jtsV84stXqrSi5l/UUzu8fZ62NGqS8rS9nU9CiKfKr6ffZOFtzG6Gsvq7pjiWffnGX/vcpAx0XA4Tje62k6oC2KlhKeIWm5oBwa1RChuuS86PxxQnl7db8B9z9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZDqvz9M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDvbaPeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27311F000C4;
-	Sat, 17 Oct 2026 17:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZDqvz9M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E1A1F000C4;
+	Sat, 17 Oct 2026 17:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258587;
-	bh=KC1B7JeSMqyaSqYRKBJ6PU4NJMGFFDcHLhU5+xIp32I=;
+	s=korg; t=1792258590;
+	bh=3LSIOFEnZ3/i2AthCIEk1Y2m2iKxGYUUV16vv61pD9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDvbaPeARmgXmd79+eQu9Y0+QsaeP3Q1f57KikeDbGqfeCI4f0m1+0sK0P5LMhO8S
-	 FPzP3DwO18eH6GG26lGkgA8Cr+BRDpI0F0/XutxarjxFzKcxku3C6sDPlFbbZR4rD8
-	 VbyUibn/E3TSbjPhnG330ypYkm2/G/FTl2Nd+N2c=
+	b=YZDqvz9MkCybXkb3ueKbQwjRhwgAbXrnZsCKMeRrRq3lLwd+0Shi17KgRTZA+UPnO
+	 aqI+SDUmXG/lyiUE5B+A3+q8rMx6fnjBZQTGQ8HdbrB5kXG2asyB/3O3K7cSfR3LwO
+	 kzgW12XTvp3uGbD15qtaMmwgTvV14JEst86NwPlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0883/1674] rxrpc: proc: size address buffers for %pISpc output
-Date: Sat, 17 Oct 2026 17:52:35 +0200
-Message-ID: <20261017160453.779393037@linuxfoundation.org>
+Subject: [PATCH 6.6 0928/1674] 9p/xen: protect xen_9pfs_front_free against concurrent calls
+Date: Sat, 17 Oct 2026 17:53:20 +0200
+Message-ID: <20261017160454.954283154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,147 +51,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-[ Upstream commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 ]
+[ Upstream commit ce8ded2e61f47747e31eeefb44dc24a2160a7e32 ]
 
-The AF_RXRPC procfs helpers format local and remote socket addresses into
-fixed 50-byte stack buffers with "%pISpc".
+The xenwatch thread can race with other back-end change notifications
+and call xen_9pfs_front_free() twice, hitting the observed general
+protection fault due to a double-free. Guard the teardown path so only
+one caller can release the front-end state at a time, preventing the
+crash.
 
-That is too small for the longest current-tree IPv6-with-port form the
-formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
-dotted-quad tail not only for v4mapped addresses, but also for ISATAP
-addresses via ipv6_addr_is_isatap().
+This is a fix for the following double-free:
 
-As a result, a case such as
+[   27.052347] Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] SMP DEBUG_PAGEALLOC NOPTI
+[   27.052357] CPU: 0 UID: 0 PID: 32 Comm: xenwatch Not tainted 6.18.0-02087-g51ab33fc0a8b-dirty #60 PREEMPT(none)
+[   27.052363] RIP: e030:xen_9pfs_front_free+0x1d/0x150
+[   27.052368] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 41 55 41 54 55 48 89 fd 48 c7 c7 48 d0 92 85 53 e8 cb cb 05 00 48 8b 45 08 48 8b 55 00 <48> 3b 28 0f 85 f9 28 35 fe 48 3b 6a 08 0f 85 ef 28 35 fe 48 89 42
+[   27.052377] RSP: e02b:ffffc9004016fdd0 EFLAGS: 00010246
+[   27.052381] RAX: 6b6b6b6b6b6b6b6b RBX: ffff88800d66e400 RCX: 0000000000000000
+[   27.052385] RDX: 6b6b6b6b6b6b6b6b RSI: 0000000000000000 RDI: 0000000000000000
+[   27.052389] RBP: ffff88800a887040 R08: 0000000000000000 R09: 0000000000000000
+[   27.052393] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888009e46b68
+[   27.052397] R13: 0000000000000200 R14: 0000000000000000 R15: ffff88800a887040
+[   27.052404] FS:  0000000000000000(0000) GS:ffff88808ca57000(0000) knlGS:0000000000000000
+[   27.052408] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   27.052412] CR2: 00007f9714004360 CR3: 0000000004834000 CR4: 0000000000050660
+[   27.052418] Call Trace:
+[   27.052420]  <TASK>
+[   27.052422]  xen_9pfs_front_changed+0x5d5/0x720
+[   27.052426]  ? xenbus_otherend_changed+0x72/0x140
+[   27.052430]  ? __pfx_xenwatch_thread+0x10/0x10
+[   27.052434]  xenwatch_thread+0x94/0x1c0
+[   27.052438]  ? __pfx_autoremove_wake_function+0x10/0x10
+[   27.052442]  kthread+0xf8/0x240
+[   27.052445]  ? __pfx_kthread+0x10/0x10
+[   27.052449]  ? __pfx_kthread+0x10/0x10
+[   27.052452]  ret_from_fork+0x16b/0x1a0
+[   27.052456]  ? __pfx_kthread+0x10/0x10
+[   27.052459]  ret_from_fork_asm+0x1a/0x30
+[   27.052463]  </TASK>
+[   27.052465] Modules linked in:
+[   27.052471] ---[ end trace 0000000000000000 ]---
 
-  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
-
-is possible with the current formatter. That is 50 visible characters, so
-51 bytes including the trailing NUL, which does not fit in the existing
-char[50] buffers used by net/rxrpc/proc.c.
-
-Size the buffers from the formatter's maximum textual form and switch the
-call sites to scnprintf().
-
-Changes since v1:
-- correct the changelog to cite the actual maximum current-tree case
-  explicitly
-- frame the proof around the ISATAP formatting path instead of the earlier
-  mapped-v4 example
-
-Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Message-ID: <20260129230348.2390470-1-stefano.stabellini@amd.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/proc.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ net/9p/trans_xen.c | 85 ++++++++++++++++++++++++----------------------
+ 1 file changed, 44 insertions(+), 41 deletions(-)
 
-diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
-index 55a95f064df08..f698796976c50 100644
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -10,6 +10,10 @@
- #include <net/af_rxrpc.h>
- #include "ar-internal.h"
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 6387ee924a2d6..7709be0fa5417 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -275,45 +275,52 @@ static void xen_9pfs_front_free(struct xen_9pfs_front_priv *priv)
+ {
+ 	int i, j;
  
-+#define RXRPC_PROC_ADDRBUF_SIZE \
-+	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
-+	 sizeof(":12345"))
+-	write_lock(&xen_9pfs_lock);
+-	list_del(&priv->list);
+-	write_unlock(&xen_9pfs_lock);
+-
+-	for (i = 0; i < priv->num_rings; i++) {
+-		struct xen_9pfs_dataring *ring = &priv->rings[i];
+-
+-		cancel_work_sync(&ring->work);
+-
+-		if (!priv->rings[i].intf)
+-			break;
+-		if (priv->rings[i].irq > 0)
+-			unbind_from_irqhandler(priv->rings[i].irq, ring);
+-		if (priv->rings[i].data.in) {
+-			for (j = 0;
+-			     j < (1 << priv->rings[i].intf->ring_order);
+-			     j++) {
+-				grant_ref_t ref;
+-
+-				ref = priv->rings[i].intf->ref[j];
+-				gnttab_end_foreign_access(ref, NULL);
+-			}
+-			free_pages_exact(priv->rings[i].data.in,
++	if (priv->rings) {
++		for (i = 0; i < priv->num_rings; i++) {
++			struct xen_9pfs_dataring *ring = &priv->rings[i];
 +
- static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
- 	[RXRPC_CONN_UNUSED]			= "Unused  ",
- 	[RXRPC_CONN_CLIENT_UNSECURED]		= "ClUnsec ",
-@@ -54,7 +58,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 	enum rxrpc_call_state state;
- 	unsigned long timeout = 0;
- 	rxrpc_seq_t acks_hard_ack;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
++			cancel_work_sync(&ring->work);
++
++			if (!priv->rings[i].intf)
++				break;
++			if (priv->rings[i].irq > 0)
++				unbind_from_irqhandler(priv->rings[i].irq, ring);
++			if (priv->rings[i].data.in) {
++				for (j = 0;
++				     j < (1 << priv->rings[i].intf->ring_order);
++				     j++) {
++					grant_ref_t ref;
++
++					ref = priv->rings[i].intf->ref[j];
++					gnttab_end_foreign_access(ref, NULL);
++				}
++				free_pages_exact(priv->rings[i].data.in,
+ 				   1UL << (priv->rings[i].intf->ring_order +
+ 					   XEN_PAGE_SHIFT));
++			}
++			gnttab_end_foreign_access(priv->rings[i].ref, NULL);
++			free_page((unsigned long)priv->rings[i].intf);
+ 		}
+-		gnttab_end_foreign_access(priv->rings[i].ref, NULL);
+-		free_page((unsigned long)priv->rings[i].intf);
++		kfree(priv->rings);
+ 	}
+-	kfree(priv->rings);
+ 	kfree(priv->tag);
+ 	kfree(priv);
+ }
  
- 	if (v == &rxnet->calls) {
- 		seq_puts(seq,
-@@ -69,11 +73,11 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
+ static void xen_9pfs_front_remove(struct xenbus_device *dev)
+ {
+-	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
++	struct xen_9pfs_front_priv *priv;
  
- 	local = call->local;
- 	if (local)
--		sprintf(lbuff, "%pISpc", &local->srx.transport);
-+		scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 	else
- 		strcpy(lbuff, "no_local");
++	write_lock(&xen_9pfs_lock);
++	priv = dev_get_drvdata(&dev->dev);
++	if (priv == NULL) {
++		write_unlock(&xen_9pfs_lock);
++		return;
++	}
+ 	dev_set_drvdata(&dev->dev, NULL);
++	list_del(&priv->list);
++	write_unlock(&xen_9pfs_lock);
++
+ 	xen_9pfs_front_free(priv);
+ }
  
--	sprintf(rbuff, "%pISpc", &call->dest_srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &call->dest_srx.transport);
+@@ -380,7 +387,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ {
+ 	int ret, i;
+ 	struct xenbus_transaction xbt;
+-	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
++	struct xen_9pfs_front_priv *priv;
+ 	char *versions, *v;
+ 	unsigned int max_rings, max_ring_order, len = 0;
  
- 	state = rxrpc_call_state(call);
- 	if (state != RXRPC_CALL_SERVER_PREALLOC) {
-@@ -144,7 +148,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 	struct rxrpc_connection *conn;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	const char *state;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+@@ -408,6 +415,10 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ 	if (p9_xen_trans.maxsize > XEN_FLEX_RING_SIZE(max_ring_order))
+ 		p9_xen_trans.maxsize = XEN_FLEX_RING_SIZE(max_ring_order) / 2;
  
- 	if (v == &rxnet->conn_proc_list) {
- 		seq_puts(seq,
-@@ -163,8 +167,8 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 		goto print;
++	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++	priv->dev = dev;
+ 	priv->num_rings = XEN_9PFS_NUM_RINGS;
+ 	priv->rings = kcalloc(priv->num_rings, sizeof(*priv->rings),
+ 			      GFP_KERNEL);
+@@ -466,6 +477,11 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ 		goto error;
  	}
  
--	sprintf(lbuff, "%pISpc", &conn->local->srx.transport);
--	sprintf(rbuff, "%pISpc", &conn->peer->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->local->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->peer->srx.transport);
- print:
- 	state = rxrpc_is_conn_aborted(conn) ?
- 		rxrpc_call_completions[conn->completion] :
-@@ -205,7 +209,7 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
++	write_lock(&xen_9pfs_lock);
++	dev_set_drvdata(&dev->dev, priv);
++	list_add_tail(&priv->list, &xen_9pfs_devs);
++	write_unlock(&xen_9pfs_lock);
++
+ 	xenbus_switch_state(dev, XenbusStateInitialised);
+ 	return 0;
+ 
+@@ -480,19 +496,6 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ static int xen_9pfs_front_probe(struct xenbus_device *dev,
+ 				const struct xenbus_device_id *id)
  {
- 	struct rxrpc_peer *peer;
- 	time64_t now;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+-	struct xen_9pfs_front_priv *priv = NULL;
+-
+-	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+-	if (!priv)
+-		return -ENOMEM;
+-
+-	priv->dev = dev;
+-	dev_set_drvdata(&dev->dev, priv);
+-
+-	write_lock(&xen_9pfs_lock);
+-	list_add_tail(&priv->list, &xen_9pfs_devs);
+-	write_unlock(&xen_9pfs_lock);
+-
+ 	return 0;
+ }
  
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -218,9 +222,9 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- 
- 	peer = list_entry(v, struct rxrpc_peer, hash_link);
- 
--	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
- 
--	sprintf(rbuff, "%pISpc", &peer->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
- 
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
-@@ -330,7 +334,7 @@ const struct seq_operations rxrpc_peer_seq_ops = {
- static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_local *local;
--	char lbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -341,7 +345,7 @@ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- 
- 	local = hlist_entry(v, struct rxrpc_local, link);
- 
--	sprintf(lbuff, "%pISpc", &local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %3u %3u %3u\n",
 -- 
 2.53.0
 
