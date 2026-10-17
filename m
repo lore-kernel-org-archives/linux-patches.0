@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA4636B93B;
-	Sat, 17 Oct 2026 16:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA4036B93B;
+	Sat, 17 Oct 2026 16:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254473; cv=none; b=uXOQDHDg7GerY0Bnndc7YKUjkZmRz/mWekl5AQ2Y5RtLUlNju0y+teOOY3AB0BQJBt+JMv96ZyOTQ1gxzH3TUtHgPKlJbXArY0JV0K0H8vqbG2MWrwS3F7svQtJuJ8IKJWUX4srbliQ0f3q8Af0qdUEVishpW8PmfRjJVUs/xM0=
+	t=1792254476; cv=none; b=FAAsI1CEYS7sCD/ubjWyOwyLNT7kUwu4EA7Y00BepYRWfCZVZVfwzGQwEMYmhTnUGp3F7TalxzhPcmu9uHCQMoI22hP4nRXrn163SYrdVpWY5r4MarOZdNJGszQjA3Uh8Q5OhtP+xCwXq0BO8iekDQ5lx2jiBGXPVKdqG4CQ9uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254473; c=relaxed/simple;
-	bh=WYBsI8dYenDZ+PkgfGwY7hxc/fdJ0JPjUqCwa3O+OYE=;
+	s=arc-20240116; t=1792254476; c=relaxed/simple;
+	bh=LCGW+Q2jOY3OGQaLN1quEkSoLJ13QC8sjzgbyBhT2L0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2qD6a3olrYKZbNsGBhm6r7zBiPY71ukJyDR2BfNbECjBb7yhxyg+TB6Nbc/RburNW5R82/aesUoOX0omy0ipE7ApuoJctUky2AW6uMoX9+y7Xs65mK3djAWRiLYqA8pTQasSEvU3+sNCJUyjgJQvhB8FeEpkxEkzA7+9BkJ5o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0d5R/rxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EA3FwcWJPp70kny8V8wej2JYY5wae6nLHKUC2mOSxirgkTSm7pNVH7AicUi17kezcmh2gY4015Dt9/7kY9kNQReq2xICnFjVhP7phUaueNnWfm4BNkT/j37oq5gK0nfC8ZlKFzx9jFHb/ltZFGMYYNM8HnpjHaFTiQr/S0FKMpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wulCE1GS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0d5R/rxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729521F000C4;
-	Sat, 17 Oct 2026 16:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wulCE1GS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8433D1F000C4;
+	Sat, 17 Oct 2026 16:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254472;
-	bh=QbxGuMoibOMVIOTbiVecuHryVk6PJ69qgECAibOdQ0A=;
+	s=korg; t=1792254475;
+	bh=FNJkaZ7zfvyyqDmwzM11bmf3f1E6vvABRYVdppyygzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0d5R/rxq6a22Xiy1PDV1qNrEQKvFMWUjLvwovpVtklSZlXm4O4j2psTIjVGhvB51X
-	 Q51fMiloDyl2jt5BJO93yu2jjvZVu+/+BtMrI7KwyabqaMTqfyNhg9WJ6FlX8/zD0o
-	 JWYr31XiZuBW/iC1mL00Jn+fTQLN0Zbdvi5rTMGI=
+	b=wulCE1GSSNkUMMkB60BttD4VZZg27EI+V8f8BLQEAx3jZkblyaluh9GDYn7CJM6p6
+	 nDcTIY7mIuvZrts5znsDyHxfL1wh1p+BXyFfU6mYPah8/zihYelnPKUddEkySKfRYI
+	 PIJ8Y3CsqF/K/R4eidm4XVBhvAe4PsEvc555bOSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 457/869] RDMA/bnxt_re: Add a max slot check for SQ
-Date: Sat, 17 Oct 2026 17:54:58 +0200
-Message-ID: <20261017160048.853909485@linuxfoundation.org>
+Subject: [PATCH 6.12 458/869] RDMA/bnxt_re: Free CQ toggle page after firmware teardown
+Date: Sat, 17 Oct 2026 17:54:59 +0200
+Message-ID: <20261017160048.877982429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,50 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit dc95931b7e1326dacae547874bf38c092e5960d8 ]
+[ Upstream commit bb45e06f9914ca64ac95341a80a0c20bb8dd46a9 ]
 
-The variable WQE mode must be validated against
-the maximum slots supported by HW. The max supported
-value is 64K. Adding a max and min check and fail if user
-supplied value is more than the max supported and zero.
+Free the toggle page only after firmware teardown completes so that
+an NQ interrupt arriving during bnxt_qplib_destroy_cq() won't write
+the toggle value to an already-freed page. Move free_page() after
+bnxt_qplib_destroy_cq.
 
-Fixes: d8ea645d6984 ("RDMA/bnxt_re: Handle variable WQE support for user applications")
-Link: https://patch.msgid.link/r/20260615224751.232802-10-selvin.xavier@broadcom.com
-Reviewed-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
+Fixes: e275919d9669 ("RDMA/bnxt_re: Share a page to expose per CQ info with userspace")
+Link: https://patch.msgid.link/r/20260615224751.232802-4-selvin.xavier@broadcom.com
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 3 +++
- drivers/infiniband/hw/bnxt_re/qplib_sp.h | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 339e9be2e8f24..86de1d9bca6b2 100644
+index 86de1d9bca6b2..324825ecf6b2c 100644
 --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
 +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1402,6 +1402,9 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
- 	}
- 	qplqp->type = (u8)qptype;
- 	qplqp->wqe_mode = bnxt_re_is_var_size_supported(rdev, uctx);
-+	if (uctx && qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_VARIABLE &&
-+	    (!ureq->sq_slots || ureq->sq_slots > BNXT_RE_MAX_SQ_SLOTS))
-+		return -EINVAL;
- 	if (init_attr->qp_type == IB_QPT_RC) {
- 		qplqp->max_rd_atomic = dev_attr->max_qp_rd_atom;
- 		qplqp->max_dest_rd_atomic = dev_attr->max_qp_init_rd_atom;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index fcfef5cbb38d4..92f3131a9a829 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -357,6 +357,7 @@ int bnxt_qplib_modify_cc(struct bnxt_qplib_res *res,
- #define BNXT_VAR_MAX_SLOT_ALIGN 256
- #define BNXT_VAR_MAX_SGE        13
- #define BNXT_RE_MAX_RQ_WQES     65536
-+#define BNXT_RE_MAX_SQ_SLOTS    65536
+@@ -2987,11 +2987,11 @@ int bnxt_re_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
+ 	nq = cq->qplib_cq.nq;
+ 	cctx = rdev->chip_ctx;
  
- #define BNXT_STATIC_MAX_SGE	6
+-	if (cctx->modes.toggle_bits & BNXT_QPLIB_CQ_TOGGLE_BIT) {
+-		free_page((unsigned long)cq->uctx_cq_page);
++	if (cctx->modes.toggle_bits & BNXT_QPLIB_CQ_TOGGLE_BIT)
+ 		hash_del(&cq->hash_entry);
+-	}
+ 	bnxt_qplib_destroy_cq(&rdev->qplib_res, &cq->qplib_cq);
++	if (cctx->modes.toggle_bits & BNXT_QPLIB_CQ_TOGGLE_BIT)
++		free_page((unsigned long)cq->uctx_cq_page);
+ 	ib_umem_release(cq->umem);
  
+ 	atomic_dec(&rdev->stats.res.cq_count);
 -- 
 2.53.0
 
