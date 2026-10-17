@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D5B280331;
-	Sat, 17 Oct 2026 17:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13493AF66D;
+	Sat, 17 Oct 2026 17:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256668; cv=none; b=Du3WK2xQSR8Iyw/nYObAqBPuySeEpjPC8BawsTmcECbLwl/Yp4cjQzI+ngoMRIGgtsrTqfyNpWTReplRSRq3HKqfnuA+DFXrK65YmVwT5T2uKLo1ycSkdJjKBux7EFr6QoxtDD4BwVFtpL2gHTrG4UvTef/weqt/s1c+kS8igzY=
+	t=1792256671; cv=none; b=Yrjkro1MtaHyS+A1vEFt9fFUt9rubhjQ7WTq7XRja+2/E39SW9C/IogTCuygaJzXVGoeKh+bEBStfoduSWJ+GbkkYgQ/DrTFnWwSPN8RvV8uSTelkwbAUiz++iWQEvl3KJh/cHKV7xOprEjs1xik2FeKx7PvZhtEY/VjYM3McHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256668; c=relaxed/simple;
-	bh=E9ZT6C11+0XZVGkhjIrEckczGCdvvbZPkfyD6KxgxDA=;
+	s=arc-20240116; t=1792256671; c=relaxed/simple;
+	bh=iP9i1P6aTIkbJoNIbomueJkNOwzLj9H7xQKtqsCaG78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcjRvrkAEXa5ZLqPNYiKk+C1jDfXadfO2DysXz8Wvejl8+KzVMx8SbZ/WbB0iN400sQwKKhOKqSmwUW1blJdYicAxvg35mFHO1iOd8nYF/njkGPo3/u1GMo673mRRRQRH1xP8bcEDaRlvv/FKweooPT6jl3Jsfw/m7wtoXYY5rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDmlzHT9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uhKHrp6DTSzozPsyQp3m1gAh8EQ1PmlTk6nwi9og/4pdfJEk5lpCx7kgtlnNh5V+eZTokwetmTzsBS6T6FCPboF4yJbZu31Fw4LB/wYQY8EnbAytm8ZKuzsfR3ES3wqzJlwzzkCt8vv1sbhhY1DhWE2hgVHJ2/FW57Acm8vQrwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1qXlD2H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDmlzHT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276E1F000C4;
-	Sat, 17 Oct 2026 17:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1qXlD2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA171F000C4;
+	Sat, 17 Oct 2026 17:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256667;
-	bh=ZW9uopkEmemBo+jKTfFtqzUIBvdQq8QknS/kHf8QDuM=;
+	s=korg; t=1792256670;
+	bh=kBh3s9cR1z1csm1TkLEu3Pk+v3ykYaJJaYHgZ/n4M+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDmlzHT9FYj3NcfHrr+K10sdQoDW3TFsJFVlAEqi/gB+cJLdBTT9UIAQ8PFGijNbd
-	 mSoL9JdSuoWhFnaG8tcKmjRWIi4G73wsiqpwKzvINp4WbmuiD2BlLHRos2Uw4RtbUT
-	 HaS1r3PixQ48fSqx1Yw3+1q+hc9fBw+nU+58Emnk=
+	b=X1qXlD2HOXuobyj1XJ/rCpFeWBYkTIjS+dMbHsLy3sRKFO4JUKy9QzRVBfkRgXYgz
+	 sNjOelCKfWBx5d3RVtqYf1gyDvWkluozPo+zrQtR09jWPRoJdIOETvKT4j0QeuK4RN
+	 m8e04TfmaGqQY4fDjYMZiK9Qnyg2wCzFvuaY4DHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0313/1674] wifi: iwlegacy: 3945: free EEPROM data on remove
-Date: Sat, 17 Oct 2026 17:43:05 +0200
-Message-ID: <20261017160439.154032151@linuxfoundation.org>
+Subject: [PATCH 6.6 0314/1674] wifi: mac80211: drain PS delivery work during station teardown
+Date: Sat, 17 Oct 2026 17:43:06 +0200
+Message-ID: <20261017160439.180152742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,42 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit f8ebe286394c0bbb4a6dbacb182a34ab6376922d upstream.
+commit 67a9e80c3ca20c9044cd6ee72cd6278dd19b5023 upstream.
 
-il3945_pci_probe() calls il_eeprom_init(), which allocates memory for
-the EEPROM data. The probe failure paths release this allocation with
-il_eeprom_free(), but the remove path does not free it after a
-successful probe.
+Removing an AP or mesh station can notify the driver and wake TXQs after
+the station has already been removed from the driver, and can update
+num_sta_ps and the power-save queues after station cleanup has purged
+them.
 
-As a result, the EEPROM data is leaked when the PCI device is removed.
+sta_deliver_ps_frames() tests sta->dead only before it starts delivery. A
+worker that passes that test can be delayed while teardown sets sta->dead
+and removes the station from the driver; when it resumes it still runs the
+full delivery.
 
-Free the EEPROM data in il3945_pci_remove() before releasing the
-mac80211 hardware structure.
+The existing cancel_work_sync() sits near the end of
+__cleanup_single_sta(), after the final driver state transition and after
+PS accounting and queue purging, so it drains the worker only once the
+state it has to protect has already changed. Before commit d34ba2168a3c
+("mac80211: don't delay station destruction") cleanup was deferred
+through the same ordered workqueue as the delivery work, which kept the
+two ordered.
 
-This issue was found by manual code inspection.
+Cancel the work after setting sta->dead and before moving the driver
+state, and move the existing cancellation to the start of
+__cleanup_single_sta(). The first drain closes the driver-lifetime window;
+driver callbacks during the remaining state transitions can still queue
+drv_deliver_wk through ieee80211_sta_block_awake(), so retain the second
+drain at the start of __cleanup_single_sta(). That drain also covers
+insertion failures, which reach cleanup without setting sta->dead.
 
-Fixes: 073d3f5f1b3b ("iwlwifi: changing EEPROM layout handling")
+Fixes: d34ba2168a3c ("mac80211: don't delay station destruction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260916073736.2952028-1-lgs201920130244@gmail.com
+Assisted-by: LLM sparse smatch coccinelle kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113735.31029-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlegacy/3945-mac.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/sta_info.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-@@ -3840,6 +3840,7 @@ il3945_pci_remove(struct pci_dev *pdev)
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -122,6 +122,8 @@ static void __cleanup_single_sta(struct
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ps_data *ps;
  
- 	il_free_channel_map(il);
- 	il_free_geos(il);
-+	il_eeprom_free(il);
- 	kfree(il->scan_cmd);
- 	dev_kfree_skb(il->beacon_skb);
- 	ieee80211_free_hw(il->hw);
++	cancel_work_sync(&sta->drv_deliver_wk);
++
+ 	if (test_sta_flag(sta, WLAN_STA_PS_STA) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DRIVER) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DELIVER)) {
+@@ -160,8 +162,6 @@ static void __cleanup_single_sta(struct
+ 	if (ieee80211_vif_is_mesh(&sdata->vif))
+ 		mesh_sta_cleanup(sta);
+ 
+-	cancel_work_sync(&sta->drv_deliver_wk);
+-
+ 	/*
+ 	 * Destroy aggregation state here. It would be nice to wait for the
+ 	 * driver to finish aggregation stop and then clean up, but for now
+@@ -1466,6 +1466,8 @@ static void __sta_info_destroy_part2(str
+ 
+ 	sta->dead = true;
+ 
++	cancel_work_sync(&sta->drv_deliver_wk);
++
+ 	local->num_sta--;
+ 	local->sta_generation++;
+ 
 
 
