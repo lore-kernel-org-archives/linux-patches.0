@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649AE3B0AF0;
-	Sat, 17 Oct 2026 16:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248B136CE19;
+	Sat, 17 Oct 2026 16:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255991; cv=none; b=U3BpOa4u6uQEeT0cZ+RulCyCB6MdrNum1jll7y1M6HNbCH0bZbyY2Wsw4CYtOaNildaikP8G6AHBPmykBvY61/akc8YBbsC+a/U4sFn90EEsFHMpL259UJIrFdYrNkr1QyhzaoEyDPOmGhZiTojjpY6EDLMGblB/BsmDK40sQ2s=
+	t=1792255994; cv=none; b=TNMkmFgP/2RnzEpMeyUGmWD0UWz+wckLPf2dHwRZvAA5C951ZiAIqmKfV5en2fUwutQWY5HN2xajFx3ERVhWcsJpw3IuLh8/H0sGSjazzEhau2oUFp2hmVHZ3yQPTDI1BYupJHkSJn3C54d5YYFEB8j8Fz7E8HJRqmuBlJGJiGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255991; c=relaxed/simple;
-	bh=ttNTox4frV4kuiTJMMslBklgjHJYnwZeB08YysbM2UY=;
+	s=arc-20240116; t=1792255994; c=relaxed/simple;
+	bh=OCnQX6C1j1FTFmKWCFaIED42AIAdDfjfBPJMDxx+L30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLkr9VDuLDrRib5upmlj7hF73mNcPnWnIwDW31dYtM6EczVUQYBFW1zz24ApccfhQSYJiHrN4vheCx8ty6zTYs4tdA9QFa+/paWpZ2hhJ2gEET0jE87AyASSo5rpgKF7WY6umOIJB6rFWkkJ8c8wGOlEy89YWtiTtgK/seVsSPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1ugb7XS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kja3Ku9x8folvfGYls9d4sIJgguvlEaIbjWSAnOmog6+66T+Rq3ANIzGtkGTeQ0yoWk71/K+xN5Q1XgKlnW4e8REwlteMMXZ9fYOXVegegzsJhgUIktkNT5KczuP2LL7Nid7d0Y39NdlO0hdRr46IsLswStoXOBFo7BsjvCXMq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cd7RIIfC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1ugb7XS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CC71F000C4;
-	Sat, 17 Oct 2026 16:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cd7RIIfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8891F000C4;
+	Sat, 17 Oct 2026 16:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255990;
-	bh=G0IeNDEV4ZefU4/M6GZilR+3OsD6JVkb96iCtzbFdsQ=;
+	s=korg; t=1792255993;
+	bh=UG8h/mW3UdC3XN0MBZwTZUZDKwH88siEju1bL4NOa3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1ugb7XSmygUhf4tIZIZN1gPYGGzYSUh7bfnMVrFFo1DrpCcW3qJ45oreYJayfGj7
-	 KngSIWyvvLfhWTgFFWUlE3YYBECW8/zonoiKnWS82Vbs1nTHx4q21uS3U20T+/PrJl
-	 hzptLXnNf6kkrAoHLqdlo3vsdpnpczzhjC6+m4vc=
+	b=cd7RIIfCXZkBGGz3P3Vl/1FXBrWZt5Eg5mdSoi5eANv3MKuVZRj9svOSDgpJK3v8X
+	 F5K5+2Wz2POdHPWn3fIkjpbVwnEB5+5FQsIJSGZkLApn8juTdW7i0d3BcL8BzE5ZFE
+	 R2kdqa4blKOteqWJwd6+TEz7HPM4z4/DvEpFiXMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	syzbot+f12658786a4153df5113@syzkaller.appspotmail.com,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Li Xinhai <lixinhai.lxh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0088/1674] clk: qcom: Fix test_ctl_hi field for DEFAULT_EVO PLLs
-Date: Sat, 17 Oct 2026 17:39:20 +0200
-Message-ID: <20261017160433.397472775@linuxfoundation.org>
+Subject: [PATCH 6.6 0089/1674] mm/mremap: reset unfaulted VMA page offset for MREMAP_DONTUNMAP
+Date: Sat, 17 Oct 2026 17:39:21 +0200
+Message-ID: <20261017160433.424328676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,95 +58,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imran Shaik <imran.shaik@oss.qualcomm.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 830ead322c39c99bf972425b3c35323ec56c29de ]
+[ Upstream commit 35b0fb391b0df57383bc15985bb769f4555c97ba ]
 
-CLK_ALPHA_PLL_TYPE_DEFAULT_EVO type PLLs do not have the PLL_TEST_CTL_U1
-register, so clk_alpha_pll_configure() does not program test_ctl_hi1_val
-for this PLL type.
+Uniquely an mremap() invocation using the MREMAP_DONTUNMAP flag can reset
+a faulted VMA into an unfaulted one.
 
-The GCC PLL configurations for QCM2290, Shikra and SM6115 wrongly use
-test_ctl_hi1_val instead of test_ctl_hi_val, deviating from the hardware
-recommended settings. Fix them to use test_ctl_hi_val.
+It does so after the page tables have been moved to the copied VMA with
+MREMAP_DONTUNMAP leaving the old VMA in place which is naturally unfaulted
+as the page tables it had are no longer present.
 
-Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
-Fixes: 01cf3e27824d ("clk: qcom: Add Global clock controller support on Qualcomm Shikra SoC")
-Fixes: e88c533d8a2a ("clk: qcom: gcc-sm6115: Add missing PLL config properties")
-Cc: stable@vger.kernel.org
-Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260729-pll-test-ctrl-fixup-v1-1-246d79589380@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-[ Omitted gcc-shikra.c changes because the driver is absent from the target branch. ]
+However, in doing so, it violates the invariant that the anonymous page
+offset of an unfaulted VMA is vma->vm_start >> PAGE_SHIFT.
+
+This is because a VMA may have been faulted in, mremap()'d (causing a
+delta between its page offset and vma->vm_start >> PAGE_SHIFT), and then
+mremap()'d again with MREMAP_DONTUNMAP resulting in the unfaulting.
+
+This condition is a violation of a fundamental assumption in mm, but now
+also triggers an assert in assert_sane_pgoff() which explicitly checks for
+this condition.
+
+Correct it by resetting the VMA's page offset at the point of completing
+the MREMAP_DONTUNMAP operation.
+
+Link: https://lore.kernel.org/20260825-fix-mremap-dontunmap-pgoff-v1-1-39a40b2c98b3@kernel.org
+Fixes: 1583aa278f5f ("mm: mremap: unlink anon_vmas when mremap with MREMAP_DONTUNMAP success")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a87853b.ae6ddae5.3da009.0023.GAE@google.com/
+Tested-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Li Xinhai <lixinhai.lxh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted dontunmap_complete() changes to move_vma() using direct vm_pgoff assignment instead of unavailable helpers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcm2290.c | 6 +++---
- drivers/clk/qcom/gcc-sm6115.c  | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ mm/mremap.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
-index 7b9c978f92332..fc56996e4c419 100644
---- a/drivers/clk/qcom/gcc-qcm2290.c
-+++ b/drivers/clk/qcom/gcc-qcm2290.c
-@@ -116,7 +116,7 @@ static const struct alpha_pll_config gpll10_config = {
- 	.vco_mask = GENMASK(21, 20),
- 	.main_output_mask = BIT(0),
- 	.config_ctl_val = 0x4001055B,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- };
+diff --git a/mm/mremap.c b/mm/mremap.c
+index d458ef218a372..d35f603c9738e 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -714,8 +714,18 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		 * table has been moved.
+ 		 */
+ 		if (new_vma != vma && vma->vm_start == old_addr &&
+-			vma->vm_end == (old_addr + old_len))
++			vma->vm_end == (old_addr + old_len)) {
++			const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
++
+ 			unlink_anon_vmas(vma);
++			/*
++			 * The VMA is now unfaulted and it is an invariant that
++			 * unfaulted anonymous VMAs have page offset equal to
++			 * vma->vm_start >> PAGE_SHIFT.
++			 */
++			if (vma_is_anonymous(vma) && !vma->vm_file)
++				vma->vm_pgoff = pgoff_unfaulted;
++		}
  
- static struct clk_alpha_pll gpll10 = {
-@@ -148,7 +148,7 @@ static const struct alpha_pll_config gpll11_config = {
- 	.vco_mask = GENMASK(21, 20),
- 	.main_output_mask = BIT(0),
- 	.config_ctl_val = 0x4001055B,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- };
- 
- static struct clk_alpha_pll gpll11 = {
-@@ -309,7 +309,7 @@ static const struct alpha_pll_config gpll8_config = {
- 	.post_div_val = 0x1 << 8,
- 	.post_div_mask = GENMASK(11, 8),
- 	.config_ctl_val = 0x4001055B,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- };
- 
- static struct clk_alpha_pll gpll8 = {
-diff --git a/drivers/clk/qcom/gcc-sm6115.c b/drivers/clk/qcom/gcc-sm6115.c
-index 13e521cd42596..ad3abb3aa6388 100644
---- a/drivers/clk/qcom/gcc-sm6115.c
-+++ b/drivers/clk/qcom/gcc-sm6115.c
-@@ -120,7 +120,7 @@ static const struct alpha_pll_config gpll10_config = {
- 	.vco_mask = GENMASK(21, 20),
- 	.main_output_mask = BIT(0),
- 	.config_ctl_val = 0x4001055b,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- 	.test_ctl_hi_mask = 0x1,
- };
- 
-@@ -173,7 +173,7 @@ static const struct alpha_pll_config gpll11_config = {
- 	.vco_val = 0x2 << 20,
- 	.vco_mask = GENMASK(21, 20),
- 	.config_ctl_val = 0x4001055b,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- 	.test_ctl_hi_mask = 0x1,
- };
- 
-@@ -367,7 +367,7 @@ static const struct alpha_pll_config gpll8_config = {
- 	.post_div_val = 0x1 << 8,
- 	.post_div_mask = GENMASK(11, 8),
- 	.config_ctl_val = 0x4001055b,
--	.test_ctl_hi1_val = 0x1,
-+	.test_ctl_hi_val = 0x1,
- 	.test_ctl_hi_mask = 0x1,
- };
- 
+ 		/* Because we won't unmap we don't need to touch locked_vm */
+ 		return new_addr;
 -- 
 2.53.0
 
