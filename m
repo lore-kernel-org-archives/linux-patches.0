@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537F4374E60;
-	Sat, 17 Oct 2026 17:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E5F39934B;
+	Sat, 17 Oct 2026 17:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257890; cv=none; b=Pf2LtWIfhjl4QA2jzuSNC0nOOpEJgeiv/AXe8xgzaeUmPVJZwD6Kn5Sir9vL1i/DFIWXUOWcYj/l2qeSCASJEkJEDUPCJYpgIru78X42XCLQk/40uJ13yvF4YIJjtwFV9jCcK58M5yQ0dflxJmzBd2VnpyQKfugkvvHcRT0U0Yc=
+	t=1792257893; cv=none; b=XOsmHICcoLQbJZZLy+8Fz7QDR/px7/uPbSM3nCMKVG2WmuaymR3zAWMX2WCFf9TPd/aVW9i6z+B0l3m+3RmkW6QH1nkHPwLllfDbGOVKgdZzToXTpWPrrepQTUSPULBG0oKHYsIEM1c/OakzKhW1K3o7tOahSYQFSUszMoTt8eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257890; c=relaxed/simple;
-	bh=JIyjoG9bGeYSYymEx/lI4XtAl0bf3H9rLAWVeCQVdDY=;
+	s=arc-20240116; t=1792257893; c=relaxed/simple;
+	bh=pmG2hkK36vm7t7dQBeBmsYxsvgF4EnrPouNq8LACmRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLiI9jCNKi3K7h9+NC/e656rHaPoje051MeVKvO7A3MNYggozs693ElWMo/JV+HF9f46OJZbF6EX8QcSQ2Yr3zzPUQNRXyUREhvMf3Kb2qP2Ahg7XPisCryiZhXzlb2MfgrlfLhZmaIOfickOd9SmoDpQuPLJA9uUyZWduDUeCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Zy9UsY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PJbjwA22Gh5ZylgqVcd8qC2emSMco4DjNwzJ2qqvDHb1NuL51KiCQqccgXd26QAFFpPnG26Su0kzjZTXtRkYXe70IETToPhOYFcuBg/dZYFKNQ1cu1pa2ev8AQjVQiV6nJ+/HhhJPpBbfebBgnM8L9i6DYIMUWiEGift4FA12nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWS94ZQZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Zy9UsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931D81F000C4;
-	Sat, 17 Oct 2026 17:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWS94ZQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DF41F000C4;
+	Sat, 17 Oct 2026 17:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257889;
-	bh=LOw2vyL354tVZbO3aY9/r60fP2gR+bGapibGhUrtpKI=;
+	s=korg; t=1792257892;
+	bh=OaAtxvv4xKMBXujzU5AwJofARxzSH3ScTVeGAYBO9pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7Zy9UsYV7iS8dBj/DVHEikXtD1Fm85tbiditHkXYX6k8YccI+0plqhhPL7xLlMGe
-	 ocjz5BBVrVBznontyFYm7PzdKePIo2Ltn/FvGMmG5Vm0FYHwXbp9BaFoBL5nkMl2i2
-	 eF3slWBNrvcMPHYQ7eCcoSgv7S3B+auLlHUUcZWA=
+	b=pWS94ZQZcO2arzwwKx5wOnwjI/dOQTAMIU0oDfESZtxAcKBNHbuers+7al2EdhqZf
+	 NtcEnbw8VmlMCVNabp4R5PUwpGbVLL/Hqsw3HdzL23ze0AgR6BvyGhYY6ALNDriy4x
+	 6z+upVekqJkKe5Xw3ukUcBEDZ3TgCZP+tCl4nz6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Prusakowski <jprusakowski@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Huan Yang <link@vivo.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0701/1674] f2fs: fix potential deadloop in prepare_compress_overwrite()
-Date: Sat, 17 Oct 2026 17:49:33 +0200
-Message-ID: <20261017160449.098406343@linuxfoundation.org>
+Subject: [PATCH 6.6 0662/1674] udmabuf: change folios array from kmalloc to kvmalloc
+Date: Sat, 17 Oct 2026 17:48:54 +0200
+Message-ID: <20261017160448.103529879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,111 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Huan Yang <link@vivo.com>
 
-[ Upstream commit 3147ee567dd9004a49826ddeaf0a4b12865d4409 ]
+[ Upstream commit 1c0844c6184e658064e14c4335885785ad3bf84b ]
 
-Jan Prusakowski reported a kernel hang issue as below:
+When PAGE_SIZE 4096, MAX_PAGE_ORDER 10, 64bit machine,
+page_alloc only support 4MB.
+If above this, trigger this warn and return NULL.
 
-When running xfstests on linux-next kernel (6.14.0-rc3, 6.12) I
-encountered a problem in generic/475 test where fsstress process
-gets blocked in __f2fs_write_data_pages() and the test hangs.
-The options I used are:
+udmabuf can change size limit, if change it to 3072(3GB), and then alloc
+3GB udmabuf, will fail create.
 
-MKFS_OPTIONS  -- -O compression -O extra_attr -O project_quota -O quota /dev/vdc
-MOUNT_OPTIONS -- -o acl,user_xattr -o discard,compress_extension=* /dev/vdc /vdc
+[ 4080.876581] ------------[ cut here ]------------
+[ 4080.876843] WARNING: CPU: 3 PID: 2015 at mm/page_alloc.c:4556 __alloc_pages+0x2c8/0x350
+[ 4080.878839] RIP: 0010:__alloc_pages+0x2c8/0x350
+[ 4080.879470] Call Trace:
+[ 4080.879473]  <TASK>
+[ 4080.879473]  ? __alloc_pages+0x2c8/0x350
+[ 4080.879475]  ? __warn.cold+0x8e/0xe8
+[ 4080.880647]  ? __alloc_pages+0x2c8/0x350
+[ 4080.880909]  ? report_bug+0xff/0x140
+[ 4080.881175]  ? handle_bug+0x3c/0x80
+[ 4080.881556]  ? exc_invalid_op+0x17/0x70
+[ 4080.881559]  ? asm_exc_invalid_op+0x1a/0x20
+[ 4080.882077]  ? udmabuf_create+0x131/0x400
 
-INFO: task kworker/u8:0:11 blocked for more than 122 seconds.
-      Not tainted 6.14.0-rc3-xfstests-lockdep #1
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/u8:0    state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208160 flags:0x00004000
-Workqueue: writeback wb_workfn (flush-253:0)
-Call Trace:
- <TASK>
- __schedule+0x309/0x8e0
- schedule+0x3a/0x100
- schedule_preempt_disabled+0x15/0x30
- __mutex_lock+0x59a/0xdb0
- __f2fs_write_data_pages+0x3ac/0x400
- do_writepages+0xe8/0x290
- __writeback_single_inode+0x5c/0x360
- writeback_sb_inodes+0x22f/0x570
- wb_writeback+0xb0/0x410
- wb_do_writeback+0x47/0x2f0
- wb_workfn+0x5a/0x1c0
- process_one_work+0x223/0x5b0
- worker_thread+0x1d5/0x3c0
- kthread+0xfd/0x230
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+Because MAX_PAGE_ORDER, kmalloc can max alloc 4096 * (1 << 10), 4MB
+memory, each array entry is pointer(8byte), so can save 524288 pages(2GB).
 
-The root cause is: once generic/475 starts toload error table to dm
-device, f2fs_prepare_compress_overwrite() will loop reading compressed
-cluster pages due to IO error, meanwhile it has held .writepages lock,
-it can block all other writeback tasks.
+Further more, costly order(order 3) may not be guaranteed that it can be
+applied for, due to fragmentation.
 
-Let's fix this issue w/ below changes:
-- add f2fs_handle_page_eio() in prepare_compress_overwrite() to
-detect IO error.
-- detect cp_error earler in f2fs_read_multi_pages().
+This patch change udmabuf array use kvmalloc_array, this can fallback
+alloc into vmalloc, which can guarantee allocation for any size and does
+not affect the performance of kmalloc allocations.
 
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Reported-by: Jan Prusakowski <jprusakowski@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Huan Yang <link@vivo.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240918025238.2957823-3-link@vivo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c |  1 +
- fs/f2fs/data.c     | 10 ++++++----
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/dma-buf/udmabuf.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index c9758fe396a52..7a7e6f8e6970e 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1114,6 +1114,7 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
- 		f2fs_compress_ctx_add_page(cc, page);
+diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+index cdb6c30352ae5..12d49793b0f2d 100644
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -146,7 +146,7 @@ static void release_udmabuf(struct dma_buf *buf)
  
- 		if (!PageUptodate(page)) {
-+			f2fs_handle_page_eio(sbi, page_folio(page), DATA);
- release_and_retry:
- 			f2fs_put_rpages(cc);
- 			f2fs_unlock_rpages(cc, i + 1);
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index d068111436d79..5c47b0eed887d 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2216,6 +2216,12 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
- 	int i;
- 	int ret = 0;
+ 	for (pg = 0; pg < ubuf->pagecount; pg++)
+ 		put_page(ubuf->pages[pg]);
+-	kfree(ubuf->pages);
++	kvfree(ubuf->pages);
+ 	kfree(ubuf);
+ }
  
-+	if (unlikely(f2fs_cp_error(sbi))) {
-+		ret = -EIO;
-+		from_dnode = false;
-+		goto out_put_dnode;
-+	}
-+
- 	f2fs_bug_on(sbi, f2fs_cluster_is_empty(cc));
+@@ -233,8 +233,8 @@ static long udmabuf_create(struct miscdevice *device,
+ 	if (!ubuf->pagecount)
+ 		goto err;
  
- 	last_block_in_file = bytes_to_blks(inode,
-@@ -2256,10 +2262,6 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
- 	if (ret)
- 		goto out;
- 
--	if (unlikely(f2fs_cp_error(sbi))) {
--		ret = -EIO;
--		goto out_put_dnode;
--	}
- 	f2fs_bug_on(sbi, dn.data_blkaddr != COMPRESS_ADDR);
- 
- skip_reading_dnode:
+-	ubuf->pages = kmalloc_array(ubuf->pagecount, sizeof(*ubuf->pages),
+-				    GFP_KERNEL);
++	ubuf->pages = kvmalloc_array(ubuf->pagecount, sizeof(*ubuf->pages),
++				     GFP_KERNEL);
+ 	if (!ubuf->pages) {
+ 		ret = -ENOMEM;
+ 		goto err;
+@@ -292,7 +292,7 @@ static long udmabuf_create(struct miscdevice *device,
+ 		put_page(ubuf->pages[--pgbuf]);
+ 	if (memfd)
+ 		fput(memfd);
+-	kfree(ubuf->pages);
++	kvfree(ubuf->pages);
+ 	kfree(ubuf);
+ 	return ret;
+ }
 -- 
 2.53.0
 
