@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894EE3BB69B;
-	Sat, 17 Oct 2026 17:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98923BB133;
+	Sat, 17 Oct 2026 17:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257243; cv=none; b=JBysivzccxsyBP+rbi7lUXvGjAWTwjfTCbU6DZRH9WQe9fClrIoA2xuBHdCnYBY0mbWc8XQbkIrLIyGzI7mg6fafF0GvuEIOINU1pUMWu+9f3WdOMRxX+Zl0N6uwWkY6f9V5+baygdXfkEZD69rnbGE9/fyDq0bFC1l/Ju3F+3w=
+	t=1792257246; cv=none; b=sd7unhRYQHque72btNlUTLyM/3NYRGYxWA30nSyVJDVtwicQUz2XegCXGQ4b/vS548AqN7RU5Pbo5YxGwTyeFOm9hUpwy0O8wX5OkmG+VTBPJXGi57gs+MF9J8Z7Xuyg+xQlI9VxRQBuprUfKHIQC2ydUXto20V8mH1lavVtZkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257243; c=relaxed/simple;
-	bh=M5nACWHpK5dpbeGEHA0NZvQD7o+e6MmbUcS70frdojk=;
+	s=arc-20240116; t=1792257246; c=relaxed/simple;
+	bh=3cdztheoG79YKzpkk99sOcffwkF4EjA/efh928hIB6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5RxgcMbqdqOPC6aaYnmYlYxad4uAQHIs7q8x6hsL6Etx/tJkRw7EW+oO9mMEOVQRu3E19aG3apc6/DtZwGl8CEyhcGDw2y8gUVCEYCcVCWPYyqjDq2YaFNmgtwC7LWL1VDVzjFO1f8BAKb76AZx6TNtbKiyhYFNH3InCN1KW5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arOq4rSR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LBnsJxHSzUdX5LpZf/3nGSv58wh7B7eiBnjZsbdPzPoqA9NlTGV2Q3SD4dB8l1L+LlqzYgMAhnL2rRYT37H+YwLVqD6hHZwwAWaDq3ng4HibzwZ8kghPMREQoSg8XobbrTQPt5GkTTQQVmYyTl3T2KOgI+AAEHflTjU9C94iuh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4InbDaM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arOq4rSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66441F000C5;
-	Sat, 17 Oct 2026 17:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4InbDaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021551F000C4;
+	Sat, 17 Oct 2026 17:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257242;
-	bh=68RYVDepoJkx+Yl4fhdCiSBHXK0FCNjk3alW/MWYepU=;
+	s=korg; t=1792257245;
+	bh=gLcpkJwlTD5okwP08L38T2fwLukqT8lWhIUhjTqRap8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arOq4rSRKGvj9WERLMvUxcNNz6nppyk3qqxOSrnHX5rvIyJ/POnP+Xu01ccpMl391
-	 A/Mylvejw3Am8nhFgAx+E6FR0wpEtt1zBDsHB/xeFiNHomJ8XQB2QNa9C+StA/3ZDG
-	 xNkmXOgsIS0K5N7eSNNpcRlA+aYu+ZIuxezST/Ws=
+	b=l4InbDaMNwXYavMeiNkwfNB/apxafJmBAacKG8VjXYLPofcxL8MU4A66Le8zwvGi3
+	 nc0V5ktemOw3l8SZqRdLY10aBxksxuybZER2N0X6+lyWbuDSDTKhMlcZnweWzhg7Zg
+	 nEgh+dluiZ6UXDtB5lCe0FdmwY477PpNgkQrKM2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guangshuo Li <lgs201920130244@gmail.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0497/1674] mmc: cavium-octeon: destroy slot platform devices on remove
-Date: Sat, 17 Oct 2026 17:46:09 +0200
-Message-ID: <20261017160443.873192747@linuxfoundation.org>
+Subject: [PATCH 6.6 0498/1674] mmc: cavium-thunderx: destroy slot platform devices on remove
+Date: Sat, 17 Oct 2026 17:46:10 +0200
+Message-ID: <20261017160443.898528666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 0f4d4424fc1d651ec3fa63a0a8060ba9087eb0ec upstream.
+commit 29ee8cf18a21b02cd0b2e35f741b61cd1fe3e14e upstream.
 
-octeon_mmc_probe() creates host->slot_pdev[i] with
-of_platform_device_create(), while octeon_mmc_remove() does not destroy
+thunder_mmc_probe() creates host->slot_pdev[i] with
+of_platform_device_create(), while thunder_mmc_remove() does not destroy
 the child platform devices.
 
 The probe failure path removes each MMC slot and destroys its associated
 platform device, but the normal remove path only removes the MMC slot.
 As a result, the child platform devices remain registered after the
-Octeon MMC controller is removed.
+ThunderX MMC controller is removed.
 
 Destroy each slot platform device during removal after cleaning up the
-corresponding MMC slot, matching the probe failure cleanup path.
+corresponding MMC slot, matching the probe failure cleanup path. Keep an
+extra device reference around of_platform_device_destroy() as done in
+the existing error path.
 
 This issue was found by manual code inspection.
 
-Fixes: 01d95843335c ("mmc: cavium: Add MMC support for Octeon SOCs.")
+Fixes: 166bac38c3c56 ("mmc: cavium: Add MMC PCI driver for ThunderX SOCs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/cavium-octeon.c |    5 ++++-
+ drivers/mmc/host/cavium-thunderx.c |    5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/cavium-octeon.c
-+++ b/drivers/mmc/host/cavium-octeon.c
-@@ -302,9 +302,12 @@ static void octeon_mmc_remove(struct pla
+--- a/drivers/mmc/host/cavium-thunderx.c
++++ b/drivers/mmc/host/cavium-thunderx.c
+@@ -174,9 +174,12 @@ static void thunder_mmc_remove(struct pc
  	u64 dma_cfg;
  	int i;
  
