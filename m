@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101593B961B;
-	Sat, 17 Oct 2026 17:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581A635E93B;
+	Sat, 17 Oct 2026 17:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257200; cv=none; b=Wt1Owtm3JhtIIlhIGynJR88dq2QP25F03jKvKKzcZ8qZTJsEtnurPB5UpHRu6Q4/D36fNFY98Zrkm3RxaRT6hYRRtLMdBfGI3M44KDSyRKe4w35whrnw7n/7RPABTAW0ANwOmhDtpL20pBi3VBsgwAcswTpZAQfj70ptyn+A1bE=
+	t=1792257203; cv=none; b=Vac7L4Z94CfcoddZqyfKGw0er+PuhkL5EX/YOCAFlqBfLCnyEvyAZazSjKvMBYnoWTx8bNDaDMOoNUPd10wr6u/c+LNXnRkVMYszYKirLzKQhkxiL+FhM69xXa4M2KlaQM00SNIsxNB2zLw2qt4ybE7kRdia1+yYSSRpJEQQ7tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257200; c=relaxed/simple;
-	bh=gg702beErS/KNJBSPVX2ihA/vZ2IrNhAOhPigHX9IW4=;
+	s=arc-20240116; t=1792257203; c=relaxed/simple;
+	bh=2V5PzzoQpjooAC1RuF7g2JvfWBgDTtwpeDSCWeUiMdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmslB14KRsnQB9q5ggyuzPFRSw1hR8Rdy/wmD9fzzGYv+abdD3P4StAL2Pta5MuRMYbMrYcpzIKwLRPe3dfiDOK7nLMGDWFtes+vKVzGLBtFDz6D1zOukQ7YCPPsZSXs/QkiVSawfzZDbI/PzwuDq+ixkEmvIelvyHgWjB6Erlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDiJnlEe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LdMTYONOuKK1MvCikoWYdcSYVnmHxkOhvYByCstMWD9ObN3pMli4aXvgTQ346PPuDM0kxGR//ZECO79vl8PnHrWqTwqFlOaSbHOzTvkicUsiNHEvaGt8xmOIwbiDBhKjMOC27QDWFOpt73JA3Yi3wM784Idu3vfwWOyS5iiJFB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGqai293; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDiJnlEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510D91F000C4;
-	Sat, 17 Oct 2026 17:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGqai293"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731581F000C4;
+	Sat, 17 Oct 2026 17:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257198;
-	bh=pnyG9yCG2wb+/CNBSuJ91KNo/UMMaXPU6I7IlaHYUbw=;
+	s=korg; t=1792257202;
+	bh=mVs88NZ4P4BtVFsmn0oAD4O3yueH5WeuPy+cApg5vgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDiJnlEeF1I8WndOORnVPfnQlw3csmNRLXJ7UOR4kePO/KDhNYQf6GilUYkDTqEdb
-	 jtosRN7D4Dc83jUJFDFkgon8T6OYNkbtwNcPxin1z2yb4o1dczieFrZgvQyibzreTc
-	 KR1GxnT9HNuA07ILYPhfulKQgaqivkPuTS8LnTik=
+	b=LGqai293nyRi3yGDrn9z3SkZ3D7M0EWOdmSTpJcshyjrfAj1RZdPoDgCaS+SPe0OH
+	 71pFFUz8WSlAGNTXmRdmFgCMz0wDSnmRrjAer9IE/rAVoOWMm6okhC3Sg/4iBN86OM
+	 p5ibt/M3YMGC/ZcUWLozBM1di6HM07VsJL4YgFZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Marco Chen <marcochen.dev@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0441/1674] wifi: mac80211: Add sta pointer sanity check in ieee80211_8023_xmit()
-Date: Sat, 17 Oct 2026 17:45:13 +0200
-Message-ID: <20261017160442.441854227@linuxfoundation.org>
+Subject: [PATCH 6.6 0432/1674] iio: health: max30102: fix NULL dereference in interrupt handler
+Date: Sat, 17 Oct 2026 17:45:04 +0200
+Message-ID: <20261017160442.213643181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,67 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Marco Chen <marcochen.dev@gmail.com>
 
-[ Upstream commit 303f11fda2fa4c6f7aa86b8fa54aaee5e1ef181b ]
+[ Upstream commit f0ea4824deebf21dacfbe397c4b0a5fd3e745a8d ]
 
-Currently ieee80211_8023_xmit() accesses the sta pointer without any
-sanity check, assuming that only unicast packets for an authorized
-station are processed. But the sta pointer could become NULL when
-a framework to support 802.3 offload for the multicast packets is
-added in the follow-up patches. Add the valid sta pointer sanity
-check to avoid the invalid pointer access.
+The interrupt is requested in max30102_probe() and stays enabled
+for the lifetime of the device, but indio_dev->active_scan_mask is only
+valid while a buffer is enabled. When an interrupt arrives while no
+buffer is enabled, the handler dereferences the NULL active_scan_mask:
 
-This aligns with some of the subordinate functions called by
-ieee80211_8023_xmit() that already NULL-check 'sta' such as
-ieee80211_select_queue() and ieee80211_aggr_check().
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Call trace:
+   __bitmap_weight+0x64/0x98 (P)
+   max30102_interrupt_handler+0x48/0x160 [max30102]
 
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260604162403.1563729-2-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 4febc02cd02f ("wifi: mac80211: set info->band for 802.3 encap offload frames")
+Call max30102_fifo_count() at the top of the handler and return early
+unless it reports a FIFO sample is ready. Because FIFO_RDY is the only
+interrupt source enabled in max30102_chip_init(), an invocation of
+max30102_interrupt_handler() without the FIFO_RDY interrupt status bit
+set carries no data to read and can return before touching
+active_scan_mask. A negative return from max30102_fifo_count()
+indicates a failed interrupt status read and is treated the same way.
+
+Fixes: 90579b69e94b ("iio: health: max30102: Add MAX30105 support")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Marco Chen <marcochen.dev@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/iio/health/max30102.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index e5bd558c9ae51..931acf3bb6da1 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4623,7 +4623,7 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/iio/health/max30102.c b/drivers/iio/health/max30102.c
+index 43c16fcdeae19..9419cc62a2a4d 100644
+--- a/drivers/iio/health/max30102.c
++++ b/drivers/iio/health/max30102.c
+@@ -292,9 +292,15 @@ static irqreturn_t max30102_interrupt_handler(int irq, void *private)
  {
- 	struct ieee80211_tx_info *info;
- 	struct ieee80211_local *local = sdata->local;
--	struct tid_ampdu_tx *tid_tx;
-+	struct tid_ampdu_tx *tid_tx = NULL;
- 	struct sk_buff *seg, *next;
- 	unsigned int skbs = 0, len = 0;
- 	u16 queue;
-@@ -4643,7 +4643,9 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 	ieee80211_aggr_check(sdata, sta, skb);
- 
- 	tid = skb->priority & IEEE80211_QOS_CTL_TAG1D_MASK;
--	tid_tx = rcu_dereference(sta->ampdu_mlme.tid_tx[tid]);
+ 	struct iio_dev *indio_dev = private;
+ 	struct max30102_data *data = iio_priv(indio_dev);
+-	unsigned int measurements = bitmap_weight(indio_dev->active_scan_mask,
+-						  iio_get_masklength(indio_dev));
+-	int ret, cnt = 0;
++	unsigned int measurements;
++	int ret, cnt;
 +
-+	if (sta)
-+		tid_tx = rcu_dereference(sta->ampdu_mlme.tid_tx[tid]);
- 	if (tid_tx) {
- 		if (!test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
- 			/* fall back to non-offload slow path */
-@@ -4692,8 +4694,11 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 	}
- 
- 	dev_sw_netstats_tx_add(dev, skbs, len);
--	sta->deflink.tx_stats.packets[queue] += skbs;
--	sta->deflink.tx_stats.bytes[queue] += len;
++	cnt = max30102_fifo_count(data);
++	if (cnt <= 0)
++		return IRQ_HANDLED;
 +
-+	if (sta) {
-+		sta->deflink.tx_stats.packets[queue] += skbs;
-+		sta->deflink.tx_stats.bytes[queue] += len;
-+	}
++	measurements = bitmap_weight(indio_dev->active_scan_mask,
++				     iio_get_masklength(indio_dev));
  
- 	ieee80211_tpt_led_trig_tx(local, len);
+ 	mutex_lock(&data->lock);
  
 -- 
 2.53.0
