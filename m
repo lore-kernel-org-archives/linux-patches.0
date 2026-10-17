@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF5117BED0;
-	Sat, 17 Oct 2026 16:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B7817BED0;
+	Sat, 17 Oct 2026 16:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253892; cv=none; b=WpN8U7l6wx/gnJVcaGuJYH4jihRv/86CuMkihSHAQOp2eAZouwXkAi6xFv4UShJJACRUGIBdChrD3Vqo8UoPFqFexGE6YQ7fwl2qPe6GjYTFasmiJHKVLJIy2y1yaiB8CqdzhlZpPB7uBi2xuXU/w08mIgr5UPiAx255Dpn9ZuQ=
+	t=1792253895; cv=none; b=Tf00/qVfEkGUu4RAcFzOlK3BsfZbTH7+ttD9eAgV5y+aI5tjMjiaqWMCu2Ig9+1JisA7TOdFvQzAZQ2YsQqHzus3dplP/SQ62T1udPHL8ftDwzLwz3XWeHFqzLKKOdI3nJGW7IYcoDQS/sYDAaZBbXrHdMFoKvfIIyFULvn68UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253892; c=relaxed/simple;
-	bh=3/QlevLowUIHhZaOt35AwXMogSFvjh3vyuH3NddElVw=;
+	s=arc-20240116; t=1792253895; c=relaxed/simple;
+	bh=fAtl7tFLQRd0IUXGHrxw6x7RQ+/mFEeHnh1qZudXejU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/CoDKOdaCXGXvXqbUBeD1rohrjKXqhvsKVETcaZoq1DxU1uetT+T9pam3+q8zNjRKIi++qepBwLd8PK9QT/z9fydy4UvQcMwexiRcPNHiVGXT7OJdRiFgbW2RnvNqPiB/1fhzAaGNKtJ59H/bJllTZb/U6eZ46EnnxfvmOKhxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UIHexZu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JkV6vMEvGV4i4UpP9LddVJJfvyPlHxmfhBOQwVGOo4jgPNpR+tKapGjAmYfV9usBuUPe4ndB5/MNL4Y12d6tPVCRTN1ecf1uGUymy0YtzaXb4VqS+lCnZ74JT9uYLZBJUFwZf6e5Q98CSRCibrVjui36ZImdn7tY1woRXS3Wv/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl2bn19p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UIHexZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBBB1F000C4;
-	Sat, 17 Oct 2026 16:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl2bn19p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7AD1F000C4;
+	Sat, 17 Oct 2026 16:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253891;
-	bh=PFblnY/dGNwC6VcmwrQsFW5ZJLjpSeSwJ3noCI2qhr0=;
+	s=korg; t=1792253894;
+	bh=CLF7nwJ9A7Rptxvoqp5nweBQ6blFXTu1cGykZCXItwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UIHexZuhh+llBOljG/5BNFuKVQO8ywpQeT4H9Cor2AALnYVzSS8R5h4wxqAbpv5z
-	 3mF3QwtJ5UCCNpyGrV+2gpPIf+jsVLuv4r5AIQC7Q4hecgFQAhOk+S7Vk7h53zQ1I/
-	 wTVaTyR4xFrOhVs62236nk2Ib0aBU/E++7469Y20=
+	b=yl2bn19pX+BnkaugJJtxGeTxDJo1lhl79Me2bDg0UOwnvIw5Ot653l+DVRdQ4HnAL
+	 R7vmOLqRs+97GQ3MPVqqPyS5REdcQxA4YqCMui6A4Z4IEsObn0iIJoJNXGmdd2DHcb
+	 dtGvwtFI9IoXMiDUafQfCBfyyZr5XHM5MtV8kgyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Miaoqian Lin <linmq006@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/869] rxrpc: kdoc: Update function descriptions and add link from rxrpc.rst
-Date: Sat, 17 Oct 2026 17:51:48 +0200
-Message-ID: <20261017160043.909364706@linuxfoundation.org>
+Subject: [PATCH 6.12 268/869] rxrpc, afs: Fix missing error pointer check after rxrpc_kernel_lookup_peer()
+Date: Sat, 17 Oct 2026 17:51:49 +0200
+Message-ID: <20261017160043.937833938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,270 +55,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 28a79fc9b03e4ed89b65e5300091e7ed55e13192 ]
+[ Upstream commit 4245a79003adf30e67f8e9060915bd05cb31d142 ]
 
-Update the kerneldoc function descriptions to add "Return:" sections for
-AF_RXRPC exported functions that have return values to stop the kdoc
-builder from throwing warnings.
+rxrpc_kernel_lookup_peer() can also return error pointers in addition to
+NULL, so just checking for NULL is not sufficient.
 
-Also add links from the rxrpc.rst API doc to add a function API reference
-at the end.  (Note that the API doc really needs updating, but that's
-beyond this patchset).
+Fix this by:
 
+ (1) Changing rxrpc_kernel_lookup_peer() to return -ENOMEM rather than NULL
+     on allocation failure.
+
+ (2) Making the callers in afs use IS_ERR() and PTR_ERR() to pass on the
+     error code returned.
+
+Fixes: 72904d7b9bfb ("rxrpc, afs: Allow afs to pin rxrpc_peer objects")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Co-developed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250411095303.2316168-2-dhowells@redhat.com
+Link: https://patch.msgid.link/368272.1772713861@warthog.procyon.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4245a79003ad ("rxrpc, afs: Fix missing error pointer check after rxrpc_kernel_lookup_peer()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/rxrpc.rst | 11 +++++++++++
- net/rxrpc/af_rxrpc.c               | 21 +++++++++++++++++----
- net/rxrpc/key.c                    |  2 ++
- net/rxrpc/peer_object.c            | 22 ++++++++++++++++++----
- net/rxrpc/recvmsg.c                | 12 ++++++------
- net/rxrpc/sendmsg.c                |  7 +++++--
- net/rxrpc/server_key.c             |  2 ++
- 7 files changed, 61 insertions(+), 16 deletions(-)
+ fs/afs/addr_list.c   | 8 ++++----
+ net/rxrpc/af_rxrpc.c | 8 +++++---
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/networking/rxrpc.rst b/Documentation/networking/rxrpc.rst
-index e807e18ba32ac..2680abd1cb269 100644
---- a/Documentation/networking/rxrpc.rst
-+++ b/Documentation/networking/rxrpc.rst
-@@ -1172,3 +1172,14 @@ adjusted through sysctls in /proc/net/rxrpc/:
-      header plus exactly 1412 bytes of data.  The terminal packet must contain
-      a four byte header plus any amount of data.  In any event, a jumbo packet
-      may not exceed rxrpc_rx_mtu in size.
-+
-+
-+API Function Reference
-+======================
-+
-+.. kernel-doc:: net/rxrpc/af_rxrpc.c
-+.. kernel-doc:: net/rxrpc/key.c
-+.. kernel-doc:: net/rxrpc/peer_object.c
-+.. kernel-doc:: net/rxrpc/recvmsg.c
-+.. kernel-doc:: net/rxrpc/sendmsg.c
-+.. kernel-doc:: net/rxrpc/server_key.c
+diff --git a/fs/afs/addr_list.c b/fs/afs/addr_list.c
+index f2361a1351076..48d68f5aa7b43 100644
+--- a/fs/afs/addr_list.c
++++ b/fs/afs/addr_list.c
+@@ -298,8 +298,8 @@ int afs_merge_fs_addr4(struct afs_net *net, struct afs_addr_list *alist,
+ 	srx.transport.sin.sin_addr.s_addr = xdr;
+ 
+ 	peer = rxrpc_kernel_lookup_peer(net->socket, &srx, GFP_KERNEL);
+-	if (!peer)
+-		return -ENOMEM;
++	if (IS_ERR(peer))
++		return PTR_ERR(peer);
+ 
+ 	for (i = 0; i < alist->nr_ipv4; i++) {
+ 		if (peer == alist->addrs[i].peer) {
+@@ -342,8 +342,8 @@ int afs_merge_fs_addr6(struct afs_net *net, struct afs_addr_list *alist,
+ 	memcpy(&srx.transport.sin6.sin6_addr, xdr, 16);
+ 
+ 	peer = rxrpc_kernel_lookup_peer(net->socket, &srx, GFP_KERNEL);
+-	if (!peer)
+-		return -ENOMEM;
++	if (IS_ERR(peer))
++		return PTR_ERR(peer);
+ 
+ 	for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
+ 		if (peer == alist->addrs[i].peer) {
 diff --git a/net/rxrpc/af_rxrpc.c b/net/rxrpc/af_rxrpc.c
-index ec4fe6af218f0..edb5a94110783 100644
+index edb5a94110783..0d86c7c37754a 100644
 --- a/net/rxrpc/af_rxrpc.c
 +++ b/net/rxrpc/af_rxrpc.c
-@@ -265,7 +265,10 @@ static int rxrpc_listen(struct socket *sock, int backlog)
-  * @gfp: Allocation flags
-  *
+@@ -267,12 +267,13 @@ static int rxrpc_listen(struct socket *sock, int backlog)
   * Lookup or create a remote transport endpoint record for the specified
-- * address and return it with a ref held.
-+ * address.
-+ *
-+ * Return: The peer record found with a reference, %NULL if no record is found
-+ * or a negative error code if the address is invalid or unsupported.
+  * address.
+  *
+- * Return: The peer record found with a reference, %NULL if no record is found
+- * or a negative error code if the address is invalid or unsupported.
++ * Return: The peer record found with a reference or a negative error code if
++ * the address is invalid or unsupported.
   */
  struct rxrpc_peer *rxrpc_kernel_lookup_peer(struct socket *sock,
  					    struct sockaddr_rxrpc *srx, gfp_t gfp)
-@@ -283,9 +286,11 @@ EXPORT_SYMBOL(rxrpc_kernel_lookup_peer);
+ {
++	struct rxrpc_peer *peer;
+ 	struct rxrpc_sock *rx = rxrpc_sk(sock->sk);
+ 	int ret;
  
- /**
-  * rxrpc_kernel_get_peer - Get a reference on a peer
-- * @peer: The peer to get a reference on.
-+ * @peer: The peer to get a reference on (may be NULL).
-+ *
-+ * Get a reference for a remote peer record (if not NULL).
-  *
-- * Get a record for the remote peer in a call.
-+ * Return: The @peer argument.
-  */
- struct rxrpc_peer *rxrpc_kernel_get_peer(struct rxrpc_peer *peer)
- {
-@@ -296,6 +301,8 @@ EXPORT_SYMBOL(rxrpc_kernel_get_peer);
- /**
-  * rxrpc_kernel_put_peer - Allow a kernel app to drop a peer reference
-  * @peer: The peer to drop a ref on
-+ *
-+ * Drop a reference on a peer record.
-  */
- void rxrpc_kernel_put_peer(struct rxrpc_peer *peer)
- {
-@@ -320,10 +327,12 @@ EXPORT_SYMBOL(rxrpc_kernel_put_peer);
-  *
-  * Allow a kernel service to begin a call on the nominated socket.  This just
-  * sets up all the internal tracking structures and allocates connection and
-- * call IDs as appropriate.  The call to be used is returned.
-+ * call IDs as appropriate.
-  *
-  * The default socket destination address and security may be overridden by
-  * supplying @srx and @key.
-+ *
-+ * Return: The new call or an error code.
-  */
- struct rxrpc_call *rxrpc_kernel_begin_call(struct socket *sock,
- 					   struct rxrpc_peer *peer,
-@@ -437,6 +446,8 @@ EXPORT_SYMBOL(rxrpc_kernel_put_call);
-  *
-  * Allow a kernel service to find out whether a call is still alive - whether
-  * it has completed successfully and all received data has been consumed.
-+ *
-+ * Return: %true if the call is still ongoing and %false if it has completed.
-  */
- bool rxrpc_kernel_check_life(const struct socket *sock,
- 			     const struct rxrpc_call *call)
-@@ -456,6 +467,8 @@ EXPORT_SYMBOL(rxrpc_kernel_check_life);
-  *
-  * Allow a kernel service to retrieve the epoch value from a service call to
-  * see if the client at the other end rebooted.
-+ *
-+ * Return: The epoch of the call's connection.
-  */
- u32 rxrpc_kernel_get_epoch(struct socket *sock, struct rxrpc_call *call)
- {
-diff --git a/net/rxrpc/key.c b/net/rxrpc/key.c
-index 73659197edffa..1dbf7851f0fcf 100644
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -536,6 +536,8 @@ EXPORT_SYMBOL(rxrpc_get_server_data_key);
-  *
-  * Generate a null RxRPC key that can be used to indicate anonymous security is
-  * required for a particular domain.
-+ *
-+ * Return: The new key or a negative error code.
-  */
- struct key *rxrpc_get_null_key(const char *keyname)
- {
-diff --git a/net/rxrpc/peer_object.c b/net/rxrpc/peer_object.c
-index 3af39fc67d34b..e329be68434d9 100644
---- a/net/rxrpc/peer_object.c
-+++ b/net/rxrpc/peer_object.c
-@@ -463,6 +463,8 @@ void rxrpc_destroy_all_peers(struct rxrpc_net *rxnet)
-  * @call: The call to query
-  *
-  * Get a record for the remote peer in a call.
-+ *
-+ * Return: The call's peer record.
-  */
- struct rxrpc_peer *rxrpc_kernel_get_call_peer(struct socket *sock, struct rxrpc_call *call)
- {
-@@ -474,7 +476,9 @@ EXPORT_SYMBOL(rxrpc_kernel_get_call_peer);
-  * rxrpc_kernel_get_srtt - Get a call's peer smoothed RTT
-  * @peer: The peer to query
-  *
-- * Get the call's peer smoothed RTT in uS or UINT_MAX if we have no samples.
-+ * Get the call's peer smoothed RTT.
-+ *
-+ * Return: The RTT in uS or %UINT_MAX if we have no samples.
-  */
- unsigned int rxrpc_kernel_get_srtt(const struct rxrpc_peer *peer)
- {
-@@ -487,7 +491,10 @@ EXPORT_SYMBOL(rxrpc_kernel_get_srtt);
-  * @peer: The peer to query
-  *
-  * Get a pointer to the address from a peer record.  The caller is responsible
-- * for making sure that the address is not deallocated.
-+ * for making sure that the address is not deallocated.  A fake address will be
-+ * substituted if %peer in NULL.
-+ *
-+ * Return: The rxrpc address record or a fake record.
-  */
- const struct sockaddr_rxrpc *rxrpc_kernel_remote_srx(const struct rxrpc_peer *peer)
- {
-@@ -500,7 +507,10 @@ EXPORT_SYMBOL(rxrpc_kernel_remote_srx);
-  * @peer: The peer to query
-  *
-  * Get a pointer to the transport address from a peer record.  The caller is
-- * responsible for making sure that the address is not deallocated.
-+ * responsible for making sure that the address is not deallocated.  A fake
-+ * address will be substituted if %peer in NULL.
-+ *
-+ * Return: The transport address record or a fake record.
-  */
- const struct sockaddr *rxrpc_kernel_remote_addr(const struct rxrpc_peer *peer)
- {
-@@ -515,7 +525,9 @@ EXPORT_SYMBOL(rxrpc_kernel_remote_addr);
-  * @app_data: The data to set
-  *
-  * Set the app-specific data on a peer.  AF_RXRPC makes no effort to retain
-- * anything the data might refer to.  The previous app_data is returned.
-+ * anything the data might refer to.
-+ *
-+ * Return: The previous app_data.
-  */
- unsigned long rxrpc_kernel_set_peer_data(struct rxrpc_peer *peer, unsigned long app_data)
- {
-@@ -528,6 +540,8 @@ EXPORT_SYMBOL(rxrpc_kernel_set_peer_data);
-  * @peer: The peer to query
-  *
-  * Retrieve the app-specific data from a peer.
-+ *
-+ * Return: The peer's app data.
-  */
- unsigned long rxrpc_kernel_get_peer_data(const struct rxrpc_peer *peer)
- {
-diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
-index beb0eb426592a..bb140d7005c7c 100644
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -546,14 +546,14 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
-  * @_service: Where to store the actual service ID (may be upgraded)
-  *
-  * Allow a kernel service to receive data and pick up information about the
-- * state of a call.  Returns 0 if got what was asked for and there's more
-- * available, 1 if we got what was asked for and we're at the end of the data
-- * and -EAGAIN if we need more data.
-+ * state of a call.  Note that *@_abort should also be initialised to %0.
-  *
-- * Note that we may return -EAGAIN to drain empty packets at the end of the
-- * data, even if we've already copied over the requested data.
-+ * Note that we may return %-EAGAIN to drain empty packets at the end
-+ * of the data, even if we've already copied over the requested data.
-  *
-- * *_abort should also be initialised to 0.
-+ * Return: %0 if got what was asked for and there's more available, %1
-+ * if we got what was asked for and we're at the end of the data and
-+ * %-EAGAIN if we need more data.
-  */
- int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct iov_iter *iter, size_t *_len,
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index 1d8065468e90a..c9b85848e825b 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -745,6 +745,8 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
-  * appropriate to sending data.  No control data should be supplied in @msg,
-  * nor should an address be supplied.  MSG_MORE should be flagged if there's
-  * more data to come, otherwise this data will end the transmission phase.
-+ *
-+ * Return: %0 if successful and a negative error code otherwise.
-  */
- int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
-@@ -780,8 +782,9 @@ EXPORT_SYMBOL(rxrpc_kernel_send_data);
-  * @error: Local error value
-  * @why: Indication as to why.
-  *
-- * Allow a kernel service to abort a call, if it's still in an abortable state
-- * and return true if the call was aborted, false if it was already complete.
-+ * Allow a kernel service to abort a call if it's still in an abortable state.
-+ *
-+ * Return: %true if the call was aborted, %false if it was already complete.
-  */
- bool rxrpc_kernel_abort_call(struct socket *sock, struct rxrpc_call *call,
- 			     u32 abort_code, int error, enum rxrpc_abort_reason why)
-diff --git a/net/rxrpc/server_key.c b/net/rxrpc/server_key.c
-index 9d95a6055b707..7501fc7b38b85 100644
---- a/net/rxrpc/server_key.c
-+++ b/net/rxrpc/server_key.c
-@@ -155,6 +155,8 @@ int rxrpc_server_keyring(struct rxrpc_sock *rx, sockptr_t optval, int optlen)
-  *
-  * Set the server security keyring on an rxrpc socket.  This is used to provide
-  * the encryption keys for a kernel service.
-+ *
-+ * Return: %0 if successful and a negative error code otherwise.
-  */
- int rxrpc_sock_set_security_keyring(struct sock *sk, struct key *keyring)
- {
+@@ -280,7 +281,8 @@ struct rxrpc_peer *rxrpc_kernel_lookup_peer(struct socket *sock,
+ 	if (ret < 0)
+ 		return ERR_PTR(ret);
+ 
+-	return rxrpc_lookup_peer(rx->local, srx, gfp);
++	peer = rxrpc_lookup_peer(rx->local, srx, gfp);
++	return peer ?: ERR_PTR(-ENOMEM);
+ }
+ EXPORT_SYMBOL(rxrpc_kernel_lookup_peer);
+ 
 -- 
 2.53.0
 
