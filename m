@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BBD17BED0;
-	Sat, 17 Oct 2026 16:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1C218787A;
+	Sat, 17 Oct 2026 16:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255757; cv=none; b=KgM5aHsZIirCbmQhctvcVEVPHasLywjSaZqqKTIgkqjrnS+K4shnXSslA15D9E/8gclp8VC73mDn/qI7cBKMP3pYKnYJx200g+4hSo99tx+NtCVaBZ7QjUqQcsYAvZ7BMClUEgMpx/MqnDirHScnxccExi+xGB5JNVkkVElDGyk=
+	t=1792255760; cv=none; b=SBV2SxatcNItGMcwdKWdEyjAiVR30WtaN15hc0+1KjKB6cUGYxZ9ScvudGrAm5eyL7YxF3ZFyOeg/wHkCztaA2U4o8TH4Q9c3K0miCXoiq6VOH7a35F4Vt6qY7/h9NKFnwmwSUKTYXqUblEplmqT22mpEDS4zqfrpyWah+oGqEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255757; c=relaxed/simple;
-	bh=7+TvqrRSWGUD2W2fjYzEotXkqNwaQJsXSaEwt6djt9g=;
+	s=arc-20240116; t=1792255760; c=relaxed/simple;
+	bh=04OiL7Skt3UtSOcPrNR1HaEidnqnc43ODrlL3strWik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1If3NNGvdGLq0Af/VvOUejqy0Qskh8OiSqlOy1SiC9PiyEVPK1N3CSiXUbcm1OLHk2jBlbGPOfuDUVUX1rdA/sxUnmZy1zSUB560hSDXu5owHKmfUIlDvtcx9nC7Ulpt8Ypv4yx2lEjCNUUPmWDfwvplKmtapgxuuW8Q19YZ0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U30R1yEl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U0WA7hNUCt4285bXeAf7BMyCI8XuHPnr4iJBsJMpclNEXSXijUy1xDMa/0la//b7wibPgpPYYAn/72DQu4hphHYWqzamLhQ1OM46y+6HtZ8r3EZaFqBtNEKNq+hNAKqgD4a5uP3BuIqitmRbAZ0aDZPLTFmSY1Wm1u7wgS0Wpck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZsD6gh+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U30R1yEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D881F000C4;
-	Sat, 17 Oct 2026 16:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZsD6gh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91C61F000C4;
+	Sat, 17 Oct 2026 16:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255756;
-	bh=XvEymw2iSAzYsCC+6EzcVUoJOpFuJa1zySX2I586yu0=;
+	s=korg; t=1792255759;
+	bh=LaAhrH9UetlHisZ0fVN5dO5HYvI4XshAdpENymLOT4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U30R1yElWeyeSpCnn6tUL+SIl4t/j70nTW7QSlAz58Yt+jaBGFC9GpkodgjklSLPr
-	 lazthkAiz8WYHEprWQZelQp5JHJv9pKvFhiAffbelFwa3gzdlNbZQ7C+CA773QxDGt
-	 NI9+CSRHwTi4gkmz/61azFxfyoSULISGK8eYzgF8=
+	b=PZsD6gh+n3FjwUmMxMfNS+99IJWa99bTklHKmhqNAq622m2rIGP003tT7qjO6De53
+	 AsNqgDV+dVLBt4dKGxy+hakZMjk1qpxgJXMyLvvDRfbJXH3JVkOlRC1l9BLL71YzvX
+	 fRVbMj5k64h2kUUeqdT83g/ucsQO6OB+0+bZjtc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Shen Yongchao <grayhat@foxmail.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0012/1674] ceph: properly decrypt filenames in vmalloc() buffers
-Date: Sat, 17 Oct 2026 17:38:04 +0200
-Message-ID: <20261017160431.453992788@linuxfoundation.org>
+Subject: [PATCH 6.6 0013/1674] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
+Date: Sat, 17 Oct 2026 17:38:05 +0200
+Message-ID: <20261017160431.481808351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,161 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit e939fc6a7bd969a58a150b7f188c1047138403e3 ]
+[ Upstream commit 6343c1da561962688f203362d80d6a3bfa39fa1b ]
 
-The fscrypt subsystem uses the scatterlist crypto API, inheriting its
-requirement that any buffers are in the linear mapping region. However,
-the messenger client uses kvmalloc() to create buffers for messages,
-which will occasionally place those buffers in the vmalloc() region when
-physical memory fragmentation doesn't permit a large enough kmalloc().
-The various callers of ceph_fname_to_usr() directly pass (slices of) raw
-messages from the MDS without considering that the messages may be in
-vmalloc() buffers, resulting in oopses especially on non-x86 platforms
-(see 'Closes:' for more details and a reproducer).
+coalesce_t2() computes data pointers directly from server-supplied
+DataOffset fields with no validation against buffer bounds:
 
-Make ceph_fname_to_usr() explicitly tolerant of vmalloc()-allocated
-fname->ctext, fname->name, and/or oname->name buffers, using `tname`
-(which, when non-null, must be a linear address; when null, is briefly
-allocated as necessary) as a bounce buffer to avoid passing any
-inappropriate addresses to fscrypt_fname_disk_to_usr().
+  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+  data_area_of_tgt += total_in_tgt;
+  ...
+  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
 
-Additionally change parse_reply_info_readdir() -- the only function to
-supply its own `tname` -- to follow the new "tname must never come from
-vmalloc()" rule by passing NULL when the message is not in the linear
-region. Though this causes a per-dentry kmalloc()+kfree(), this overhead
-exists only when processing the minority of messages that spill into
-vmalloc(). My (crude) testing puts this at only about 1 in 8,000 readdir
-messages. Still, if the overhead proves unreasonable in the future, it
-is easy enough to mitigate: a future change could allocate a bounce
-buffer in parse_reply_info_readdir() and use that as `tname` instead.
+A small DataOffset can push a pointer below the actual byte area,
+overwriting header fields; a large one can push it past the buffer
+end, causing out-of-bounds heap reads (source) or writes (target).
+The BCC overflow guard does not prevent this: BCC reflects how much
+data is present, while DataOffset controls where in the buffer it
+starts.
 
-Cc: stable@vger.kernel.org # 888d33b208bd: ceph: pass fscrypt `tname` buffers directly
+The "validate target area" comment present since the function was
+first written in 2005 was a placeholder that was never implemented.
+
+Add lower- and upper-bound checks for both data pointers before the
+memcpy, and before any target header fields are modified.
+
+Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
 Cc: stable@vger.kernel.org
-Fixes: 457117f077c6 ("ceph: add helpers for converting names for userland presentation")
-Closes: https://lore.kernel.org/ceph-devel/20260415034020.11530-1-CFSworks@gmail.com/
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ adapted raw tname buffer accesses to the legacy tname->name interface ]
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ transplanted the bounds validation to coalesce_t2() in smb1ops.c due to code relocation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/crypto.c     | 46 +++++++++++++++++++++++++++++++++++---------
- fs/ceph/mds_client.c |  8 ++++++--
- 2 files changed, 43 insertions(+), 11 deletions(-)
+ fs/smb/client/smb1ops.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
-index 42b066729d97c..29ec2f705a504 100644
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -369,6 +369,11 @@ int ceph_encode_encrypted_fname(struct inode *parent, struct dentry *dentry,
-  * Otherwise, base64 decode the string, and then ask fscrypt to format it
-  * for userland presentation.
-  *
-+ * Though the fscrypt/crypto subsystems broadly expect all buffers to be in the
-+ * linear-mapped region, this function slightly relaxes those requirements:
-+ * fname->ctext, fname->name, and oname->name may be vmalloc(), but not
-+ * tname->name.
-+ *
-  * Returns 0 on success or negative error code on error.
-  */
- int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
-@@ -376,11 +381,15 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
- {
- 	struct inode *dir = fname->dir;
- 	struct fscrypt_str _tname = FSTR_INIT(NULL, 0);
-+	struct fscrypt_str _oname;
- 	struct fscrypt_str iname;
- 	char *name = fname->name;
- 	int name_len = fname->name_len;
- 	int ret;
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index 6acadfcbadc8e..ef71c0eb8704a 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -325,12 +325,31 @@ coalesce_t2(char *second_buf, struct smb_hdr *target_hdr)
+ 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
  
-+	if (WARN_ON_ONCE(tname && is_vmalloc_addr(tname->name)))
-+		return -EIO;
-+
- 	/* Sanity check that the resulting name will fit in the buffer */
- 	if (fname->name_len > NAME_MAX || fname->ctext_len > NAME_MAX)
- 		return -EIO;
-@@ -421,16 +430,19 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
- 		goto out_inode;
- 	}
+-	/* validate target area */
+ 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
  
-+	if ((!tname || !tname->name) &&
-+	    (fname->ctext_len == 0 ||
-+	     unlikely(is_vmalloc_addr(fname->ctext)) ||
-+	     unlikely(is_vmalloc_addr(oname->name)))) {
-+		ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
-+		if (ret)
-+			goto out_inode;
-+		tname = &_tname;
+ 	data_area_of_tgt += total_in_tgt;
+ 
++	/*
++	 * DataOffset fields are server-supplied and not validated against
++	 * buffer bounds; check both data pointers before mutating the
++	 * target header.
++	 */
++	if (data_area_of_tgt < (char *)target_hdr +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_tgt + total_in_src >
++	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
++		return -EPROTO;
++	}
++	if (data_area_of_src < second_buf +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_src + total_in_src >
++	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
++		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
++		return -EPROTO;
 +	}
 +
- 	if (fname->ctext_len == 0) {
- 		int declen;
- 
--		if (!tname) {
--			ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
--			if (ret)
--				goto out_inode;
--			tname = &_tname;
--		}
--
- 		declen = ceph_base64_decode(name, name_len, tname->name);
- 		if (declen <= 0) {
- 			ret = -EIO;
-@@ -438,13 +450,29 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
- 		}
- 		iname.name = tname->name;
- 		iname.len = declen;
-+	} else if (unlikely(is_vmalloc_addr(fname->ctext))) {
-+		memcpy(tname->name, fname->ctext, fname->ctext_len);
-+
-+		iname.name = tname->name;
-+		iname.len = fname->ctext_len;
- 	} else {
- 		iname.name = fname->ctext;
- 		iname.len = fname->ctext_len;
- 	}
- 
--	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, oname);
--	if (!ret && (dir != fname->dir)) {
-+	_oname.name = unlikely(is_vmalloc_addr(oname->name)) ?
-+			tname->name : oname->name;
-+	_oname.len = oname->len;
-+
-+	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, &_oname);
-+	if (ret)
-+		goto out;
-+
-+	if (unlikely(is_vmalloc_addr(oname->name)))
-+		memcpy(oname->name, _oname.name, _oname.len);
-+	oname->len = _oname.len;
-+
-+	if (dir != fname->dir) {
- 		char tmp_buf[CEPH_BASE64_CHARS(NAME_MAX)];
- 
- 		name_len = snprintf(tmp_buf, sizeof(tmp_buf), "_%.*s_%ld",
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index b49f304170479..4a1f2483192de 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -495,9 +495,13 @@ static int parse_reply_info_readdir(void **p, void *end,
- 			 * to do the base64_decode in-place. It's
- 			 * safe because the decoded string should
- 			 * always be shorter, which is 3/4 of origin
--			 * string.
-+			 * string. If this message was allocated with
-+			 * vmalloc() (happens, but rarely), leave it
-+			 * NULL and let ceph_fname_to_usr() allocate
-+			 * suitable temporary working space instead.
- 			 */
--			tname.name = _name;
-+			if (likely(!is_vmalloc_addr(_name)))
-+				tname.name = _name;
- 
- 			/*
- 			 * Set oname to _name too, and this will be
+ 	total_in_tgt += total_in_src;
+ 	/* is the result too big for the field? */
+ 	if (total_in_tgt > USHRT_MAX) {
 -- 
 2.53.0
 
