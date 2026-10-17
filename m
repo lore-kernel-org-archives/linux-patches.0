@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A19438424C;
-	Sat, 17 Oct 2026 17:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89239391E51;
+	Sat, 17 Oct 2026 17:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257027; cv=none; b=aEiJf7Ibt7xE5tWaNOerPveWPPnH1cw0Vyim/+CpG3ZDuLwgfBqv2gXPd7HT2RmJgI4bWnIYn3WEI8dyIXgQuKdoyp0cV01wmEN02sGmnrC7uY1TxWGfDHICTxdHNTttWO1wCxBLTFPxBQsrxtJf66y3ocXBOmKbe04r0H4CUXg=
+	t=1792257030; cv=none; b=EUbtpNuxuOTUKzTe/BKcgJx7NCNI3Y3mXiE0ILrVGaRiRg9HLo9BV9bq9gonhNQLKtzTBTMvgVW3rSC5/cWfDvnLW+lDiDf8rXqZoMmA9ULHnrmDskpc0y0S69HDhj2njaO7myzDR2eSFLHQ3svlCEI8UVQwMt41lg92ybq0r7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257027; c=relaxed/simple;
-	bh=7KcFgDeOrORh7T8mJ2Ia+kSDR4TuR4UQef3l7P4hOFg=;
+	s=arc-20240116; t=1792257030; c=relaxed/simple;
+	bh=lIwO/4qGNpWEUnEMZaZSo1nxsvs0C19mWwCue4b3TNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMNWMXk3Awmucp0J7zdf7+pKVWQNjjxjT/dKbp54gngOzoFT+FajXokLWeKJgqCuoU2+DfCtyJct7SAzDkyAt+P6uTyrfHaD90D+GX9z5LH1GS5QdeWkkDLarhYdA5eMtOdLfoBeuVH2e4pL0pimgl19rauM2wrKzT8lOF5pnic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbaoGM0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=miRXR1K0JFdGqdt93O7FflulZ9W5SvCS6ooGAOHqt7EuqNPoKSwZFdC1STVXwwuXGinV7NwP45SPgvl1oSt/QGrheLjbv8BZKIMj27tGogeeWC/Nm14XPWaeFg4BshX5T08oQtyPtqmc1ATeW+W64+rNl+QRj0BZsq1HAlkk5DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbsWg+yj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbaoGM0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31B11F000C4;
-	Sat, 17 Oct 2026 17:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbsWg+yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9631F000C4;
+	Sat, 17 Oct 2026 17:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257026;
-	bh=MaesOHtQDp6UBpJ7EMCe0ArTRISt7UL9a1ScDemagTs=;
+	s=korg; t=1792257029;
+	bh=349+q5EZoEgNIh4kPdy/752JwUqepBGvSGG17YYP4hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbaoGM0keAh8MQAlLtYe6lLxPtFLbfJf8F7hTDaW+v5hokpUhNKxBP//cVez7N3vw
-	 0qre2Iby4UpwapIswo+TyfXVr3eBln/pIxgNesNRRzLJ2JOs6pcXYbGhbKa7WZfbGt
-	 ZS+cwjtqfR4Nrj7UWu2R0C5mPJKqYFXSkYW8CL4w=
+	b=rbsWg+yjBtSsiFSkUhPgJHiu/8QRI0hTRdSz3oDjw0scufkItR2j95OZsuzFcyJBQ
+	 uVm2BM+CES7++hUOOPWE2Gga3Wi5ziXH2gJeKKUfAt2l9/KZbDhWCNQm8DK1UPFctR
+	 U3+Vvf1/VUl442oReQm3K7uYt0NtxQRFkpZ0MGNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0426/1674] gpio: rockchip: fix generic IRQ chip leak on remove
-Date: Sat, 17 Oct 2026 17:44:58 +0200
-Message-ID: <20261017160442.063030254@linuxfoundation.org>
+Subject: [PATCH 6.6 0427/1674] jbd2: check need_resched() when skipping busy checkpoint buffers
+Date: Sat, 17 Oct 2026 17:44:59 +0200
+Message-ID: <20261017160442.087842835@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,58 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 1c1e0fc88d6ef65bf15d517853251f75ab9d18c3 ]
+[ Upstream commit f213e12ff5c9590b1034ae8da0e6d09665c772d0 ]
 
-The driver allocates domain generic chips using
-irq_alloc_domain_generic_chips() during probe. However, on driver
-remove/teardown, the generic chips are not automatically freed when the
-IRQ domain is removed because the domain flags do not include
-IRQ_DOMAIN_FLAG_DESTROY_GC.
+journal_shrink_one_cp_list() skips busy checkpoint buffers when called
+with JBD2_SHRINK_BUSY_SKIP.  The continue statement on this path also
+skips the need_resched() check at the end of the loop body.
 
-This causes both the domain generic chips structure and the associated
-generic chips to be leaked. Additionally, the generic chips remain on
-the global gc_list and may later be visited by generic IRQ chip suspend,
-resume, or shutdown callbacks after the GPIO bank has been removed,
-potentially resulting in a use-after-free and kernel crash.
+Consequently, when a checkpoint list contains mostly busy buffers, the
+shrinker can walk the entire list while holding journal->j_list_lock,
+even when a reschedule has been requested.  Large checkpoint lists under
+memory pressure can therefore cause long lock hold times and leave other
+CPUs spinning on j_list_lock, resulting in soft lockups or RCU stalls.
 
-Fix the resource leak by explicitly calling
-irq_domain_remove_generic_chips() before removing the IRQ domain in
-rockchip_gpio_remove().
+Route the busy-buffer path through the need_resched() check so that the
+shrinker can release j_list_lock and reschedule promptly, restoring
+parity with the clean-buffer path, which already checks need_resched().
+This does not change which checkpoint buffers are eligible for removal.
 
-[ Backport to 6.6.y: Use the upstream teardown helper on 6.6. Defer 6.1
-  because irq_domain_remove_generic_chips() is absent and needs a
-  prerequisite or reviewed target-native cleanup. ]
+[ Backport to 6.6.y: Use this tree's older shrink_type enumerator names
+  while routing busy buffers through the existing reschedule check. ]
 
-Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260607230504.35392-2-scardracs@disroot.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260713102229.1598812-2-max.kellermann@ionos.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-rockchip.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/jbd2/checkpoint.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
-index e0e4f3ed5fdd4..86cf3cbcdb403 100644
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -786,8 +786,10 @@ static int rockchip_gpio_remove(struct platform_device *pdev)
- 	struct rockchip_pin_bank *bank = platform_get_drvdata(pdev);
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index 32ed28cfb3a0b..e8a7186eb8c36 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -391,7 +391,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+ 			ret = jbd2_journal_try_remove_checkpoint(jh);
+ 			if (ret < 0) {
+ 				if (type == SHRINK_BUSY_SKIP)
+-					continue;
++					goto next;
+ 				break;
+ 			}
+ 		}
+@@ -402,6 +402,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+ 			break;
+ 		}
  
- 	irq_set_chained_handler_and_data(bank->irq, NULL, NULL);
--	if (bank->domain)
-+	if (bank->domain) {
-+		irq_domain_remove_generic_chips(bank->domain);
- 		irq_domain_remove(bank->domain);
-+	}
- 	gpiochip_remove(&bank->gpio_chip);
- 
- 	return 0;
++next:
+ 		if (need_resched())
+ 			break;
+ 	} while (jh != last_jh);
 -- 
 2.53.0
 
