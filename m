@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FABC3B2FD8;
-	Sat, 17 Oct 2026 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F5C3B8412;
+	Sat, 17 Oct 2026 17:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256411; cv=none; b=MCOtiTfpgXvxiS5uwypJFoilJcIQzsbEPD6y70q9UZVYVU7HXcUzkmClqlqYZCvaPCW0GA+4KW99/z/zzhZ/llVYhJ94Itrv55rymcrC3ghAo6NEZfDdJepI7Rz1IEaLvTOIG5rddSdL8QCH7Wrd/F/2IYOO+aEVYYdpMHfbAuQ=
+	t=1792256414; cv=none; b=ntijfFpvIjSQsDJ/gHu5WGQ8nSeZw29aawvv6mrSLyQXfi7VI1Gbk9GSpOOUfp5GXH9SXMYPRqvOF8jNlyYKh3RQTXadyBbjBJ+rZVqmSSkxnMaW78PXKMhVtVYopndEczgtxijNeq+QvVVJTfCTcIX+uI5bEMhZeGP/VgzE1t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256411; c=relaxed/simple;
-	bh=78quB/bCRG5/dsxWvxsXHUTNJ+eefx+3RfI41io0uyA=;
+	s=arc-20240116; t=1792256414; c=relaxed/simple;
+	bh=HW32jj5UeL4UmQZ+o8fVbf0mhkem6LSOCf6RXRi7gKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixTfnQy+Y/WgocH+fLFzgbbEPk5lbzRBWE4oNTZTmMTvT3JQHTzRRDRLKZrG2pz+C15ylm9Tqc2Lbk/ByYnNcH9NWcyOxkaCwrVgIgZS8YThHvNL0q03WZK23HGnxjdPR8TCnXgB6NAp3+16RrO2DddVwYZ4tj1B4b/yWF2D5cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGmNa0Sl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGVvoUPUHmD/WZjLSdNefmnc+0Y6qg6wppTB5Nrn+zzQUMt+5efsXC5IYbg7vT9Oue42o7jfZvyYWMQrE1rNLGPumrhfHvkBdoUcnPdwkLKTh5rlIBnnnTWXFYvF1y7ci0max8w5g50CBFIcDwgTAahrTWR3e1f0J5v7ltwHrqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEaFboiz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGmNa0Sl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F8A1F000C4;
-	Sat, 17 Oct 2026 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEaFboiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22DA1F000C4;
+	Sat, 17 Oct 2026 17:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256410;
-	bh=lI4c0gGKqturqCbl7eDaPNEGVwmmpoR0nPwJvmuPv1U=;
+	s=korg; t=1792256413;
+	bh=BPVSrBH+TEi6t2J6mz4kmKWvzYtcykUMSc/plH8NaW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGmNa0SlS10W0kkTeGhasSB9Hy2ajiVhOkMvvHr/9KQHzZDgxSc4jFiuquajNgrSs
-	 17ii0ZItw08W8cFeJ6p/yfyOo4AVW21ns8doxN+Bq4ioURYDvGdomaT6Deyp1gCjLH
-	 rhW+snzdqYGW/N9FGzfPFN+cTK50gitqkFz3lWd4=
+	b=hEaFboizz2Q5Lt+AEiZ3HpSXHesPn0LEKEOvUNgym4TaWzhckZ04H6RDwZ1nAddZo
+	 a3OVWsh5RnMK0k0MtZ9p/2disp3kabngpEfJfzBb+WAqEhrR0xBaeRvS4TnVG8Vldp
+	 x/LYw0GHHxKCACY665m7Tu7XelctN1vCNld/rnFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Quentin Freimanis <quentin@q-lab.dev>,
+	Simon Horman <horms@kernel.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0227/1674] net: microchip: vcap: stop scanning after deleting key field
-Date: Sat, 17 Oct 2026 17:41:39 +0200
-Message-ID: <20261017160436.968902145@linuxfoundation.org>
+Subject: [PATCH 6.6 0228/1674] net: sparx5: make ports inherit the switch base mac address type
+Date: Sat, 17 Oct 2026 17:41:40 +0200
+Message-ID: <20261017160436.992936841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,49 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Quentin Freimanis <quentin@q-lab.dev>
 
-[ Upstream commit 99b43ede9e355ba35244cc9470bf1819774ce39d ]
+[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
 
-The only call outside the KUnit tests is in
-sparx5_tc_add_rule_copy(), which passes a fixed key list with no
-duplicate entries. Therefore, the potential double-free is not
-currently reachable in tree.
+When the switch uses a random base MAC address it does not mark each
+port's address as random:
 
-However, vcap_filter_rule_keys() is exported and does not require its
-key list entries to be unique. If a future or external caller supplies
-the same key at another position that the inner loop visits, it calls
-list_del() and kfree() a second time on the freed field, leading to a
-potential double-free.
+  $ dmesg | grep "MAC addr"
+  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
+  $ cat /sys/class/net/eth0/addr_assign_type
+  0
 
-Break the inner loop after removing a matching field. The outer safe
-list traversal continues to process the remaining rule fields.
+0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
 
-Fixes: 465a38a269e9 ("net: microchip: sparx5: Support for copying and modifying rules in the API")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/all/ahs-lCAXXikkaHky@stanley.mountain/
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+With a random MAC reported as NET_ADDR_PERM, systemd's
+MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
+gets a new IP address every boot and a static reservation can't be used.
+Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
+address derived from the interface name and machine-id.
+
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/vcap/vcap_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api.c b/drivers/net/ethernet/microchip/vcap/vcap_api.c
-index 07437c94d474f..8891e814840d4 100644
---- a/drivers/net/ethernet/microchip/vcap/vcap_api.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api.c
-@@ -3512,8 +3512,8 @@ int vcap_filter_rule_keys(struct vcap_rule *rule,
- 				if (key == keylist[idx]) {
- 					list_del(&ckf->ctrl.list);
- 					kfree(ckf);
--					idx++;
- 					err = 0;
-+					break;
- 				}
- 		}
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index 98bee953234ba..524601201b6f3 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -843,6 +843,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+ 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
+ 		eth_random_addr(sparx5->base_mac);
+ 		sparx5->base_mac[5] = 0;
++		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
  	}
+ 
+ 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+index 316fed5f27355..40a3e9c62cfdc 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+@@ -257,6 +257,7 @@ struct sparx5 {
+ 	struct notifier_block switchdev_blocking_nb;
+ 	/* Switch state */
+ 	u8 base_mac[ETH_ALEN];
++	u8 base_mac_assign_type;
+ 	/* Associated bridge device (when bridged) */
+ 	struct net_device *hw_bridge_dev;
+ 	/* Bridged interfaces */
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+index 705a004b324fd..62025aba558cd 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+@@ -281,6 +281,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
+ 	ndev->ethtool_ops = &sparx5_ethtool_ops;
+ 
+ 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
++	ndev->addr_assign_type = sparx5->base_mac_assign_type;
+ 
+ 	return ndev;
+ }
 -- 
 2.53.0
 
