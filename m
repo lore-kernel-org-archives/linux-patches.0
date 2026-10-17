@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345547404E;
-	Sat, 17 Oct 2026 16:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F337404E;
+	Sat, 17 Oct 2026 16:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254828; cv=none; b=PRLgh9sqgbTmA1a6Dxjr2Xo7ABVO6YQatQ3fXJwjZ6tbcy3I3RQKvNX/bwxJajeoUJlaG8NFMZtD4AdfI2hn9xcWyxxztTGGbdyNfurv5qLWvDaFSz++Ieh1zcAx+DOrUkGRja6MXdLVS01w1xj6TnBcM508hjILhsgX0p3L1pc=
+	t=1792254831; cv=none; b=HeD45+bR59dbiedayPFcSkoEOiJgiCZcA2dyiJRweEHZuwzosJdYj+5x/xAMVqkQ8C2ytBxedQhYSefU/iwEXzzwZaUer5rCy7l5ged2lh34BDpcvbvYHLeFrpcxkL4/TJTd+r2ME7AfFbynzhhxjuYu3Umx6xA3tW1XVhIF3VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254828; c=relaxed/simple;
-	bh=TB/m5nMCfpBSDfHgBUobA0COspoR3N6eL77nZnS9rHQ=;
+	s=arc-20240116; t=1792254831; c=relaxed/simple;
+	bh=BYfjwRPGGQHumeNPDHpaRe9BYb0oKH2Or43nFOcyvao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ol0pUefxg4dh9q1/qIAgmY9dkp9xTHevWT8i4jStmmt4Li69/4jjx42eVGSNP9jvFpbq5P0rprGiZSBwQMHDXc9xrd8gvkVEUtMkYVtFIAHyvu2Gbqv93LiXUjCfVtCsdwH1iJeJBbqyCwKqROwmoHCAkZ/hxtn9Q2v2A5hy5Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIBSEXri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u52NDrtxWP3VBKUm31SqJ0j4OHFISDh4hQvJblevnrWfzWU9F5h/9oOL699/X9ihRvDxGWG3g8FyPUtndeTAW9cUBETIS9rXe3nrPd5XhBnN5ATHxv5Y0m8mWE0yV90nRwuhZmzZY9SR4A9e6IXrmr8N3+HykGDeKSSOLbJSkGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L72Gh0Os; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIBSEXri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B971F000C4;
-	Sat, 17 Oct 2026 16:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L72Gh0Os"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1C31F000C4;
+	Sat, 17 Oct 2026 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254827;
-	bh=O39xDbSQEeBQ1K5lPXHOoUiT6892Isx7t44vmkrYiQI=;
+	s=korg; t=1792254830;
+	bh=NlHfTbj8+iZYWCERJPPvf8z66oLk1IMqpHfm1Zs+I7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vIBSEXriIixiWSLKIJUCnkurVSI1Eg9qEGrd5bG5DLCbH6ilG8K4rZQfmBKRdurzx
-	 N4YHGGmyQ8UWuwsCeVkPfnVgTng6sa8ULngEbF7++CJljEa1MMTaWrLurLJ/fIbmKi
-	 QzHoEYXWZu3WYb+X7wnI9ZxvyyVAbjJXXHTHKINs=
+	b=L72Gh0OsGKTCz16JPEcIHlQQ2mArV4RHD2EQobBt39tywqDc58PKRyMuBHowJhr19
+	 3qG8dR+MYjan8/k1655LbKbnvdf9UPYDmf3unoSNdRoSIAj/c8ZCzvOpoxta7pKVkl
+	 yIqEumVJXZzNQrZ1JlE+fWAagcaDuDBo47l2oaZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Xu <weixugc@google.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Jan Alexander Steffens <heftig@archlinux.org>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 576/869] mm/mglru: reset page lru tier bits when activating
-Date: Sat, 17 Oct 2026 17:56:57 +0200
-Message-ID: <20261017160051.829328794@linuxfoundation.org>
+Subject: [PATCH 6.12 559/869] net: tap: fix wrong transport_header when sending VLAN-tagged frame
+Date: Sat, 17 Oct 2026 17:56:40 +0200
+Message-ID: <20261017160051.412277255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,128 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Xu <weixugc@google.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit f1001f3d3b6868998cab73d10fda1a5c99ddf963 ]
+[ Upstream commit cbb35cbe8db268fefe34c23df15348cf99025298 ]
 
-When a folio is activated, lru_gen_add_folio() moves the folio to the
-youngest generation.  But unlike folio_update_gen()/folio_inc_gen(),
-lru_gen_add_folio() doesn't reset the folio lru tier bits (LRU_REFS_MASK |
-LRU_REFS_FLAGS).  This inconsistency can affect how pages are aged via
-folio_mark_accessed() (e.g.  fd accesses), though no user visible impact
-related to this has been detected yet.
+In tap_get_user_xdp(), when processing a VLAN-tagged frame (e.g.
+ETH_P_8021Q), skb_set_network_header() is called first to advance
+network_header past the VLAN tag to the inner protocol header.
+skb_probe_transport_header() is then called with skb->protocol still
+set to ETH_P_8021Q, while nhoff (derived from skb_network_offset())
+already points past the VLAN tag to the inner protocol header.
 
-Note that lru_gen_add_folio() cannot clear PG_workingset if the activation
-is due to workingset refault, otherwise PSI accounting will be skipped.
-So fix lru_gen_add_folio() to clear the lru tier bits other than
-PG_workingset when activating a folio, and also clear all the lru tier
-bits when a folio is activated via folio_activate() in
-lru_gen_look_around().
+In __skb_flow_dissect(), proto is initialized to ETH_P_8021Q and nhoff
+points past the VLAN tag. When the dissector hits case ETH_P_8021Q, it
+reads a struct vlan_hdr at the current nhoff via __skb_header_pointer(),
+but that offset contains the inner protocol header (e.g. an IP header).
+The bytes are misinterpreted as a VLAN header, yielding a garbage
+encapsulated EtherType that matches no known protocol. The dissector
+returns false, so skb_probe_transport_header() never calls
+skb_set_transport_header(), leaving transport_header at its uninitialized
+sentinel value (~0U).
 
-Link: https://lkml.kernel.org/r/20241017181528.3358821-1-weixugc@google.com
-Fixes: 018ee47f1489 ("mm: multi-gen LRU: exploit locality in rmap")
-Signed-off-by: Wei Xu <weixugc@google.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jan Alexander Steffens <heftig@archlinux.org>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: f7e698e326b2 ("mm/mglru: fix and remove redundant unevictable folio handling")
+Move skb_set_network_header() to after skb_probe_transport_header(). At
+the time skb_probe_transport_header() is called, network_header still
+points to the VLAN header (offset ETH_HLEN), so nhoff is correct and the
+flow dissector can parse the VLAN header, extract the inner EtherType,
+and advance nhoff to the inner protocol header, allowing transport_header
+to be set correctly.
+
+Fixes: 8c76e77f9069 ("tap: call skb_probe_transport_header after setting skb->dev")
+Assisted-by: WChat:claude-opus-4-8
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260807063405.688780-3-wei.fang@oss.nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm_inline.h | 15 ++++++++++++++-
- include/linux/mmzone.h    |  2 ++
- mm/vmscan.c               |  8 ++++----
- 3 files changed, 20 insertions(+), 5 deletions(-)
+ drivers/net/tap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index f4fe593c1400e..622dfe2545d79 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -155,6 +155,11 @@ static inline int folio_lru_refs(struct folio *folio)
- 	return ((flags & LRU_REFS_MASK) >> LRU_REFS_PGOFF) + workingset;
- }
- 
-+static inline void folio_clear_lru_refs(struct folio *folio)
-+{
-+	set_mask_bits(&folio->flags, LRU_REFS_MASK | LRU_REFS_FLAGS, 0);
-+}
-+
- static inline int folio_lru_gen(struct folio *folio)
- {
- 	unsigned long flags = READ_ONCE(folio->flags);
-@@ -222,6 +227,7 @@ static inline bool lru_gen_add_folio(struct lruvec *lruvec, struct folio *folio,
- {
- 	unsigned long seq;
- 	unsigned long flags;
-+	unsigned long mask;
- 	int gen = folio_lru_gen(folio);
- 	int type = folio_is_file_lru(folio);
- 	int zone = folio_zonenum(folio);
-@@ -257,7 +263,14 @@ static inline bool lru_gen_add_folio(struct lruvec *lruvec, struct folio *folio,
- 	gen = lru_gen_from_seq(seq);
- 	flags = (gen + 1UL) << LRU_GEN_PGOFF;
- 	/* see the comment on MIN_NR_GENS about PG_active */
--	set_mask_bits(&folio->flags, LRU_GEN_MASK | BIT(PG_active), flags);
-+	mask = LRU_GEN_MASK;
-+	/*
-+	 * Don't clear PG_workingset here because it can affect PSI accounting
-+	 * if the activation is due to workingset refault.
-+	 */
-+	if (folio_test_active(folio))
-+		mask |= LRU_REFS_MASK | BIT(PG_referenced) | BIT(PG_active);
-+	set_mask_bits(&folio->flags, mask, flags);
- 
- 	lru_gen_update_size(lruvec, folio, -1, gen);
- 	/* for folio_rotate_reclaimable() */
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 8f932c4350fcb..9d52485541529 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -403,6 +403,8 @@ enum {
- 	NR_LRU_GEN_CAPS
- };
- 
-+#define LRU_REFS_FLAGS		(BIT(PG_referenced) | BIT(PG_workingset))
-+
- #define MIN_LRU_BATCH		BITS_PER_LONG
- #define MAX_LRU_BATCH		(MIN_LRU_BATCH * 64)
- 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 4c13524afaaaf..460943a562c92 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2625,8 +2625,6 @@ static bool should_clear_pmd_young(void)
-  *                          shorthand helpers
-  ******************************************************************************/
- 
--#define LRU_REFS_FLAGS	(BIT(PG_referenced) | BIT(PG_workingset))
--
- #define DEFINE_MAX_SEQ(lruvec)						\
- 	unsigned long max_seq = READ_ONCE((lruvec)->lrugen.max_seq)
- 
-@@ -4157,8 +4155,10 @@ bool lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
- 		old_gen = folio_lru_gen(folio);
- 		if (old_gen < 0)
- 			folio_set_referenced(folio);
--		else if (old_gen != new_gen)
-+		else if (old_gen != new_gen) {
-+			folio_clear_lru_refs(folio);
- 			folio_activate(folio);
-+		}
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index d5a1ab9b2a37d..fcc9d135c5fc2 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1208,12 +1208,13 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 		}
  	}
  
- 	arch_leave_lazy_mmu_mode();
-@@ -4400,7 +4400,7 @@ static bool isolate_folio(struct lruvec *lruvec, struct folio *folio, struct sca
++	skb_probe_transport_header(skb);
++
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (eth_type_vlan(skb->protocol) &&
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
  
- 	/* see the comment on MAX_NR_TIERS */
- 	if (!folio_test_referenced(folio))
--		set_mask_bits(&folio->flags, LRU_REFS_MASK | LRU_REFS_FLAGS, 0);
-+		folio_clear_lru_refs(folio);
+-	skb_probe_transport_header(skb);
+ 	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
  
- 	/* for shrink_folio_list() */
- 	folio_clear_reclaim(folio);
 -- 
 2.53.0
 
