@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B7817BED0;
-	Sat, 17 Oct 2026 16:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4741035C1BC;
+	Sat, 17 Oct 2026 16:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253895; cv=none; b=Tf00/qVfEkGUu4RAcFzOlK3BsfZbTH7+ttD9eAgV5y+aI5tjMjiaqWMCu2Ig9+1JisA7TOdFvQzAZQ2YsQqHzus3dplP/SQ62T1udPHL8ftDwzLwz3XWeHFqzLKKOdI3nJGW7IYcoDQS/sYDAaZBbXrHdMFoKvfIIyFULvn68UY=
+	t=1792253898; cv=none; b=ax8l2y4IUNA7b7bMbJ5VucQRowIPJWr3HoX1lvSsTr8FgBSi1vK1yKDSBrphOuxAudkswEGYxBgoV16NN0Txy0+Bm9Z6b8Bl30HRyL3ttf0Fj7Sn4+9KHg+16JSUGz9hfrmnWW7aLP6mOd7VqKG55R6ZZvhxpk7Jui5Cu9jueBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253895; c=relaxed/simple;
-	bh=fAtl7tFLQRd0IUXGHrxw6x7RQ+/mFEeHnh1qZudXejU=;
+	s=arc-20240116; t=1792253898; c=relaxed/simple;
+	bh=YL2/3+sQUdhqSV3l++erEfQLjnDs6ybU7/Zd5vv36J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkV6vMEvGV4i4UpP9LddVJJfvyPlHxmfhBOQwVGOo4jgPNpR+tKapGjAmYfV9usBuUPe4ndB5/MNL4Y12d6tPVCRTN1ecf1uGUymy0YtzaXb4VqS+lCnZ74JT9uYLZBJUFwZf6e5Q98CSRCibrVjui36ZImdn7tY1woRXS3Wv/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl2bn19p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HHA+208l6ysOtzEuDrLcwGXWQnWVBN4XMMoSiTS/PBTA2wfxnWgBWqt9irWmMsHz8Zft0tvuzUbCqI8TOHhr6J1wTHM2tWIoJokhBX1EOgqBKjNpi43bQPldfNwwrLjs6O8f1dre+JzrvK80F8x1JPMMepBNI3XByfc++dGi7lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAq+C5aE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl2bn19p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7AD1F000C4;
-	Sat, 17 Oct 2026 16:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAq+C5aE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE601F000C4;
+	Sat, 17 Oct 2026 16:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253894;
-	bh=CLF7nwJ9A7Rptxvoqp5nweBQ6blFXTu1cGykZCXItwc=;
+	s=korg; t=1792253897;
+	bh=8aV8hPe3HVXU/iillp1N9X/gX6fPc++n6qvhzJzcw30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yl2bn19pX+BnkaugJJtxGeTxDJo1lhl79Me2bDg0UOwnvIw5Ot653l+DVRdQ4HnAL
-	 R7vmOLqRs+97GQ3MPVqqPyS5REdcQxA4YqCMui6A4Z4IEsObn0iIJoJNXGmdd2DHcb
-	 dtGvwtFI9IoXMiDUafQfCBfyyZr5XHM5MtV8kgyM=
+	b=YAq+C5aExruXgUX7l//TqOPHEi7ShopSwDCSs76pcqbZ39EP5y6hIf/U+AFQM1uBG
+	 Xsrk+v0SQgmkviEG4R3egnOWvnqHVYcQebCeJjKTe23OzmpPK6K4jIGIsVXxRcOO3Y
+	 a64T7nyVUE5ZnkXOKoaF30yif0qUTx0aqtzCWGdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Amery Hung <ameryhung@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 268/869] rxrpc, afs: Fix missing error pointer check after rxrpc_kernel_lookup_peer()
-Date: Sat, 17 Oct 2026 17:51:49 +0200
-Message-ID: <20261017160043.937833938@linuxfoundation.org>
+Subject: [PATCH 6.12 269/869] net/mlx5e: RX, Fix XDP multi-buf frag counting for legacy RQ
+Date: Sat, 17 Oct 2026 17:51:50 +0200
+Message-ID: <20261017160043.963743116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,92 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 4245a79003adf30e67f8e9060915bd05cb31d142 ]
+[ Upstream commit a6413e6f6c9d9bb9833324cb3753582f7bc0f2fa ]
 
-rxrpc_kernel_lookup_peer() can also return error pointers in addition to
-NULL, so just checking for NULL is not sufficient.
+XDP multi-buf programs can modify the layout of the XDP buffer when the
+program calls bpf_xdp_pull_data() or bpf_xdp_adjust_tail(). The
+referenced commit in the fixes tag corrected the assumption in the mlx5
+driver that the XDP buffer layout doesn't change during a program
+execution. However, this fix introduced another issue: the dropped
+fragments still need to be counted on the driver side to avoid page
+fragment reference counting issues.
 
-Fix this by:
+Such issue can be observed with the
+test_xdp_native_adjst_tail_shrnk_data selftest when using a payload of
+3600 and shrinking by 256 bytes (an upcoming selftest patch): the last
+fragment gets released by the XDP code but doesn't get tracked by the
+driver. This results in a negative pp_ref_count during page release and
+the following splat:
 
- (1) Changing rxrpc_kernel_lookup_peer() to return -ENOMEM rather than NULL
-     on allocation failure.
+  WARNING: include/net/page_pool/helpers.h:297 at mlx5e_page_release_fragmented.isra.0+0x4a/0x50 [mlx5_core], CPU#12: ip/3137
+  Modules linked in: [...]
+  CPU: 12 UID: 0 PID: 3137 Comm: ip Not tainted 6.19.0-rc3+ #12 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  RIP: 0010:mlx5e_page_release_fragmented.isra.0+0x4a/0x50 [mlx5_core]
+  [...]
+  Call Trace:
+   <TASK>
+   mlx5e_dealloc_rx_wqe+0xcb/0x1a0 [mlx5_core]
+   mlx5e_free_rx_descs+0x7f/0x110 [mlx5_core]
+   mlx5e_close_rq+0x50/0x60 [mlx5_core]
+   mlx5e_close_queues+0x36/0x2c0 [mlx5_core]
+   mlx5e_close_channel+0x1c/0x50 [mlx5_core]
+   mlx5e_close_channels+0x45/0x80 [mlx5_core]
+   mlx5e_safe_switch_params+0x1a5/0x230 [mlx5_core]
+   mlx5e_change_mtu+0xf3/0x2f0 [mlx5_core]
+   netif_set_mtu_ext+0xf1/0x230
+   do_setlink.isra.0+0x219/0x1180
+   rtnl_newlink+0x79f/0xb60
+   rtnetlink_rcv_msg+0x213/0x3a0
+   netlink_rcv_skb+0x48/0xf0
+   netlink_unicast+0x24a/0x350
+   netlink_sendmsg+0x1ee/0x410
+   __sock_sendmsg+0x38/0x60
+   ____sys_sendmsg+0x232/0x280
+   ___sys_sendmsg+0x78/0xb0
+   __sys_sendmsg+0x5f/0xb0
+   [...]
+   do_syscall_64+0x57/0xc50
 
- (2) Making the callers in afs use IS_ERR() and PTR_ERR() to pass on the
-     error code returned.
+This patch fixes the issue by doing page frag counting on all the
+original XDP buffer fragments for all relevant XDP actions (XDP_TX ,
+XDP_REDIRECT and XDP_PASS). This is basically reverting to the original
+counting before the commit in the fixes tag.
 
-Fixes: 72904d7b9bfb ("rxrpc, afs: Allow afs to pin rxrpc_peer objects")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Co-developed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/368272.1772713861@warthog.procyon.org.uk
+As frag_page is still pointing to the original tail, the nr_frags
+parameter to xdp_update_skb_frags_info() needs to be calculated
+in a different way to reflect the new nr_frags.
+
+Fixes: afd5ba577c10 ("net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://patch.msgid.link/20260305142634.1813208-6-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/addr_list.c   | 8 ++++----
- net/rxrpc/af_rxrpc.c | 8 +++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/afs/addr_list.c b/fs/afs/addr_list.c
-index f2361a1351076..48d68f5aa7b43 100644
---- a/fs/afs/addr_list.c
-+++ b/fs/afs/addr_list.c
-@@ -298,8 +298,8 @@ int afs_merge_fs_addr4(struct afs_net *net, struct afs_addr_list *alist,
- 	srx.transport.sin.sin_addr.s_addr = xdr;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 3fb3d9299528d..148cc8445afab 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -1732,6 +1732,7 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 	struct skb_shared_info *sinfo;
+ 	u32 frag_consumed_bytes;
+ 	struct bpf_prog *prog;
++	u8 nr_frags_free = 0;
+ 	struct sk_buff *skb;
+ 	dma_addr_t addr;
+ 	u32 truesize;
+@@ -1774,15 +1775,13 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
  
- 	peer = rxrpc_kernel_lookup_peer(net->socket, &srx, GFP_KERNEL);
--	if (!peer)
--		return -ENOMEM;
-+	if (IS_ERR(peer))
-+		return PTR_ERR(peer);
+ 	prog = rcu_dereference(rq->xdp_prog);
+ 	if (prog) {
+-		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
++		u8 old_nr_frags = sinfo->nr_frags;
  
- 	for (i = 0; i < alist->nr_ipv4; i++) {
- 		if (peer == alist->addrs[i].peer) {
-@@ -342,8 +342,8 @@ int afs_merge_fs_addr6(struct afs_net *net, struct afs_addr_list *alist,
- 	memcpy(&srx.transport.sin6.sin6_addr, xdr, 16);
+ 		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT,
+ 						 rq->flags)) {
+ 				struct mlx5e_wqe_frag_info *pwi;
  
- 	peer = rxrpc_kernel_lookup_peer(net->socket, &srx, GFP_KERNEL);
--	if (!peer)
--		return -ENOMEM;
-+	if (IS_ERR(peer))
-+		return PTR_ERR(peer);
+-				wi -= old_nr_frags - sinfo->nr_frags;
+-
+ 				for (pwi = head_wi; pwi < wi; pwi++)
+ 					pwi->frag_page->frags++;
+ 			}
+@@ -1790,10 +1789,8 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 		}
  
- 	for (i = alist->nr_ipv4; i < alist->nr_addrs; i++) {
- 		if (peer == alist->addrs[i].peer) {
-diff --git a/net/rxrpc/af_rxrpc.c b/net/rxrpc/af_rxrpc.c
-index edb5a94110783..0d86c7c37754a 100644
---- a/net/rxrpc/af_rxrpc.c
-+++ b/net/rxrpc/af_rxrpc.c
-@@ -267,12 +267,13 @@ static int rxrpc_listen(struct socket *sock, int backlog)
-  * Lookup or create a remote transport endpoint record for the specified
-  * address.
-  *
-- * Return: The peer record found with a reference, %NULL if no record is found
-- * or a negative error code if the address is invalid or unsupported.
-+ * Return: The peer record found with a reference or a negative error code if
-+ * the address is invalid or unsupported.
-  */
- struct rxrpc_peer *rxrpc_kernel_lookup_peer(struct socket *sock,
- 					    struct sockaddr_rxrpc *srx, gfp_t gfp)
- {
-+	struct rxrpc_peer *peer;
- 	struct rxrpc_sock *rx = rxrpc_sk(sock->sk);
- 	int ret;
+ 		nr_frags_free = old_nr_frags - sinfo->nr_frags;
+-		if (unlikely(nr_frags_free)) {
+-			wi -= nr_frags_free;
++		if (unlikely(nr_frags_free))
+ 			truesize -= nr_frags_free * frag_info->frag_stride;
+-		}
+ 	}
  
-@@ -280,7 +281,8 @@ struct rxrpc_peer *rxrpc_kernel_lookup_peer(struct socket *sock,
- 	if (ret < 0)
- 		return ERR_PTR(ret);
+ 	skb = mlx5e_build_linear_skb(
+@@ -1809,7 +1806,7 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
  
--	return rxrpc_lookup_peer(rx->local, srx, gfp);
-+	peer = rxrpc_lookup_peer(rx->local, srx, gfp);
-+	return peer ?: ERR_PTR(-ENOMEM);
- }
- EXPORT_SYMBOL(rxrpc_kernel_lookup_peer);
- 
+ 	if (xdp_buff_has_frags(&mxbuf->xdp)) {
+ 		/* sinfo->nr_frags is reset by build_skb, calculate again. */
+-		xdp_update_skb_shared_info(skb, wi - head_wi - 1,
++		xdp_update_skb_shared_info(skb, wi - head_wi - nr_frags_free - 1,
+ 					   sinfo->xdp_frags_size, truesize,
+ 					   xdp_buff_is_frag_pfmemalloc(
+ 						&mxbuf->xdp));
 -- 
 2.53.0
 
