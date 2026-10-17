@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461E93A1E92;
-	Sat, 17 Oct 2026 17:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC073A1A58;
+	Sat, 17 Oct 2026 17:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259968; cv=none; b=J4FX6/e2vZO4Yj7fAyvE4SVOVjb15nr5a5stNfh4Lz55l5GRsZvdtpOmbr+0Rot+m2M2RWjVPJ0aN3dN2AXNwYs+VSz5HGm7ZsG5Hv2GR9s9snZS0yz2+oB1xG3Mr4NVmfqMQ4V+FsohWorbE1wxvTx6emltUvPxte4zROLsmaw=
+	t=1792259971; cv=none; b=uVwUlHhTaBKAjf4gZk4CNj2KVh8jNWoflNRYmIKiIML4WJL3xqoLo2IlzYMPqqnjh71DzhtmvX3dvMgQZHVPv2+/5h2zBVApmJ6mT7Dsh7JjvqJb3Ws9VSpLeS+HncPgN+JS3d/fvvHy0Db+wh6toa4tCMrhI/gxeALY8U8BKS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259968; c=relaxed/simple;
-	bh=hGaLwtEgDB28SPQzvnONIGjRCeTPXSNonzxvo2rsiuw=;
+	s=arc-20240116; t=1792259971; c=relaxed/simple;
+	bh=nirvm+az+xvcrgsuFD3DoubF7QXzsdpLlckJtZHc8bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YexDYhRB9ccwqw0NGrGyG4kzCq5fMiNGo1YvRM7fontyYnkhABWkwwEeBHunNM7xiJ6CzLradZfJPvIkJYI2q3wg3Bq2MqUSSxpKVCvELV7g+7NLPFmkuH7XrXpwMW93xbCEwmd3+wxMbozZzT0Gwcuh9yuaHdSeXqoOIpWEfS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+9mJaQo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gf4IVTNLobc85coTyNooyRQ0dMnucrOYcVUGF5pqleliMD7gLKukXMVlnbR+enw0ayZcQ7kG+S4wJaKY5GFZS/QPJBtcj32wzKxK2AtO7fhT03eP9c7r/WB+8bi78vk5as8tJZOuyI2uP9AiLylp2AT65I89TfeHpJtRihpaVeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYetzixi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+9mJaQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468BA1F000C4;
-	Sat, 17 Oct 2026 17:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYetzixi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471271F000C4;
+	Sat, 17 Oct 2026 17:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259966;
-	bh=MMWwRH02X/5XLp8O8tsPp0viuTElIXzqZBtkKDKzhXw=;
+	s=korg; t=1792259969;
+	bh=X9hIYzrrwrTSPoPYob4pYeq6tayI0BHzKqxJMdciBao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+9mJaQoR1B9YtieKxeSEEaUkM4LFNxUTlwDIJhnWeBcqoCjfbSi8mfUMuvPQLpVy
-	 pgzCpNBz2clML8Po6v9LiPBof4Ff1sUsips6i6dtWHckzuQGsrRPf9dxO/xGOHxzKq
-	 fUeQ9au6EPvsi6MvSE3jy9DMXjPVZpV6aM4mmluQ=
+	b=zYetzixiTtFFrYV4Chyhfq8P2pQRDTgFNQlWL/Clr0lg4BF0nF/pt5+IaE0mc9jqE
+	 HYt1sbljG4qz0+IrJVB4eSoWIkcAjc1EYrdQhmI6NWCjIWf35IDuWRL3ahJMaG812n
+	 h6TfBTW2TvCLSrGkvLTRlK9q977M0GcaY8lyUVWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com,
-	Michal Luczaj <mhal@rbox.co>,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1389/1674] vsock: dont check the listeners sk_err in vsock_accept()
-Date: Sat, 17 Oct 2026 18:01:01 +0200
-Message-ID: <20261017160506.821807971@linuxfoundation.org>
+Subject: [PATCH 6.6 1390/1674] filelock: add some new helper functions
+Date: Sat, 17 Oct 2026 18:01:02 +0200
+Message-ID: <20261017160506.847858239@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,84 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit b8c899cf5e7be29840a172c183dedd8d3e7a0287 ]
+[ Upstream commit 75cabec0111b7ccb140d917cc9c481e845cc3498 ]
 
-Syzbot reported an issue which can be reproduced with these steps:
-	r0 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	bind(r0, {VMADDR_CID_ANY, PORT})
-	connect(r0, {VMADDR_CID_LOCAL, PORT}) -> -1, EPROTO (self-connect)
-	listen(r0, backlog)                   -> 0
-	r1 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	connect(r1, {VMADDR_CID_LOCAL, PORT}) -> 0
-	accept(r0)                            -> -1, EPROTO (stale sk_err)
+In later patches we're going to embed some common fields into a new
+structure inside struct file_lock. Smooth the transition by adding some
+new helper functions, and converting the core file locking code to use
+them.
 
-Basically, it creates a socket (r0) and triggers a self-connect after
-binding it. This self-connect fails with EPROTO because it loops back
-to r0 while the socket is still in the TCP_SYN_SENT state, causing it
-to be incorrectly dispatched to the connecting-client path. The
-unexpected packet type encountered there sets sk_err to EPROTO.
-
-After that, it invokes a listen() call on the same socket. This
-listen() call succeeds because the kernel's listening path never
-inspects or clears sk_err. Then, a new socket (r1) is created as a
-normal client and connects to r0. However, vsock_accept() rejects this
-incoming connection because the listener's sk_err still holds the
-EPROTO error from the earlier failed self-connect.
-
-This rejection causes the child socket created for r1's connection to
-never be freed on virtio or hyperv transports; only the VMCI transport
-implements pending_work to revisit and clean up a rejected socket.
-
-For a non-blocking connect(), vsock_connect() may return -EINPROGRESS
-immediately, and vsock_connect_timeout() can later set sk->sk_err
-asynchronously.
-
-Since no vsock transport ever sets sk_err on a socket while it is in
-TCP_LISTEN state, checking it in vsock_accept() serves no purpose and
-only carries forward errors left behind by earlier, unrelated
-connection attempts on the same socket. Remove the checks so accept()
-no longer rejects valid incoming connections because of a stale
-error, which also avoids the resource leak described above.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1b2c9c4a0f8708082678
-Suggested-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260813173024.2362935-2-phind.uet@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20240131-flsplit-v3-4-c6129007ee8d@kernel.org
+Reviewed-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 468e458ffde9 ("NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/locks.c               | 18 ++++++++--------
+ include/linux/filelock.h | 44 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 9 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 1392fcde77764..6b7bdd6166c06 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1649,8 +1649,7 @@ static int vsock_accept(struct socket *sock, struct socket *newsock, int flags,
- 	timeout = sock_rcvtimeo(listener, flags & O_NONBLOCK);
- 	prepare_to_wait(sk_sleep(listener), &wait, TASK_INTERRUPTIBLE);
+diff --git a/fs/locks.c b/fs/locks.c
+index 19e9fcd1d4ca5..90ec12e0f4f98 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -675,7 +675,7 @@ static void __locks_wake_up_blocks(struct file_lock *blocker)
+ 		if (waiter->fl_lmops && waiter->fl_lmops->lm_notify)
+ 			waiter->fl_lmops->lm_notify(waiter);
+ 		else
+-			wake_up(&waiter->fl_wait);
++			locks_wake_up(waiter);
  
--	while ((connected = vsock_dequeue_accept(listener)) == NULL &&
--	       listener->sk_err == 0) {
-+	while ((connected = vsock_dequeue_accept(listener)) == NULL) {
- 		release_sock(listener);
- 		timeout = schedule_timeout(timeout);
- 		finish_wait(sk_sleep(listener), &wait);
-@@ -1668,9 +1667,6 @@ static int vsock_accept(struct socket *sock, struct socket *newsock, int flags,
+ 		/*
+ 		 * The setting of fl_blocker to NULL marks the "done"
+@@ -842,9 +842,9 @@ locks_delete_lock_ctx(struct file_lock *fl, struct list_head *dispose)
+ static bool locks_conflict(struct file_lock *caller_fl,
+ 			   struct file_lock *sys_fl)
+ {
+-	if (sys_fl->fl_type == F_WRLCK)
++	if (lock_is_write(sys_fl))
+ 		return true;
+-	if (caller_fl->fl_type == F_WRLCK)
++	if (lock_is_write(caller_fl))
+ 		return true;
+ 	return false;
+ }
+@@ -875,7 +875,7 @@ static bool posix_test_locks_conflict(struct file_lock *caller_fl,
+ 				      struct file_lock *sys_fl)
+ {
+ 	/* F_UNLCK checks any locks on the same fd. */
+-	if (caller_fl->fl_type == F_UNLCK) {
++	if (lock_is_unlock(caller_fl)) {
+ 		if (!posix_same_owner(caller_fl, sys_fl))
+ 			return false;
+ 		return locks_overlap(caller_fl, sys_fl);
+@@ -1056,7 +1056,7 @@ static int flock_lock_inode(struct inode *inode, struct file_lock *request)
+ 		break;
  	}
- 	finish_wait(sk_sleep(listener), &wait);
  
--	if (listener->sk_err)
--		err = -listener->sk_err;
--
- 	if (connected) {
- 		sk_acceptq_removed(listener);
+-	if (request->fl_type == F_UNLCK) {
++	if (lock_is_unlock(request)) {
+ 		if ((request->fl_flags & FL_EXISTS) && !found)
+ 			error = -ENOENT;
+ 		goto out;
+@@ -1108,7 +1108,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
  
+ 	ctx = locks_get_lock_context(inode, request->fl_type);
+ 	if (!ctx)
+-		return (request->fl_type == F_UNLCK) ? 0 : -ENOMEM;
++		return lock_is_unlock(request) ? 0 : -ENOMEM;
+ 
+ 	/*
+ 	 * We may need two file_lock structures for this operation,
+@@ -1229,7 +1229,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+ 				continue;
+ 			if (fl->fl_start > request->fl_end)
+ 				break;
+-			if (request->fl_type == F_UNLCK)
++			if (lock_is_unlock(request))
+ 				added = true;
+ 			if (fl->fl_start < request->fl_start)
+ 				left = fl;
+@@ -1280,7 +1280,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+ 
+ 	error = 0;
+ 	if (!added) {
+-		if (request->fl_type == F_UNLCK) {
++		if (lock_is_unlock(request)) {
+ 			if (request->fl_flags & FL_EXISTS)
+ 				error = -ENOENT;
+ 			goto out;
+@@ -1609,7 +1609,7 @@ void lease_get_mtime(struct inode *inode, struct timespec64 *time)
+ 		spin_lock(&ctx->flc_lock);
+ 		fl = list_first_entry_or_null(&ctx->flc_lease,
+ 					      struct file_lock, fl_list);
+-		if (fl && (fl->fl_type == F_WRLCK))
++		if (fl && lock_is_write(fl))
+ 			has_lease = true;
+ 		spin_unlock(&ctx->flc_lock);
+ 	}
+diff --git a/include/linux/filelock.h b/include/linux/filelock.h
+index 03fdaae58de42..4ae068f1522c0 100644
+--- a/include/linux/filelock.h
++++ b/include/linux/filelock.h
+@@ -167,6 +167,29 @@ int fcntl_setlk64(unsigned int, struct file *, unsigned int,
+ int fcntl_setlease(unsigned int fd, struct file *filp, int arg);
+ int fcntl_getlease(struct file *filp);
+ 
++static inline bool lock_is_unlock(struct file_lock *fl)
++{
++	return fl->fl_type == F_UNLCK;
++}
++
++static inline bool lock_is_read(struct file_lock *fl)
++{
++	return fl->fl_type == F_RDLCK;
++}
++
++static inline bool lock_is_write(struct file_lock *fl)
++{
++	return fl->fl_type == F_WRLCK;
++}
++
++static inline void locks_wake_up(struct file_lock *fl)
++{
++	wake_up(&fl->fl_wait);
++}
++
++/* for walking lists of file_locks linked by fl_list */
++#define for_each_file_lock(_fl, _head)	list_for_each_entry(_fl, _head, fl_list)
++
+ /* fs/locks.c */
+ void locks_free_lock_context(struct inode *inode);
+ void locks_free_lock(struct file_lock *fl);
+@@ -243,6 +266,27 @@ static inline int fcntl_getlease(struct file *filp)
+ 	return F_UNLCK;
+ }
+ 
++static inline bool lock_is_unlock(struct file_lock *fl)
++{
++	return false;
++}
++
++static inline bool lock_is_read(struct file_lock *fl)
++{
++	return false;
++}
++
++static inline bool lock_is_write(struct file_lock *fl)
++{
++	return false;
++}
++
++static inline void locks_wake_up(struct file_lock *fl)
++{
++}
++
++#define for_each_file_lock(_fl, _head)	while(false)
++
+ static inline void
+ locks_free_lock_context(struct inode *inode)
+ {
 -- 
 2.53.0
 
