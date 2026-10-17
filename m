@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B367404E;
-	Sat, 17 Oct 2026 16:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E8337DEBE;
+	Sat, 17 Oct 2026 16:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254762; cv=none; b=c383/wRCp8G77asf7/lLhJf2L5xwKriczRAUOjftjq6Q8QMNzIgRQJiLs67WjPnff2m1x9DYjmoUnoI5P6JVnbe1hiwkxztqxI3dm7hfWx3A+4wxaw6sb6zXKV0FAFq69MaX8bhvsA2S+FVfpqE+SUosWOfvWNSNR3lmqfqbr1g=
+	t=1792254765; cv=none; b=gMfbeR0dp1w+vLsGtpEurZHx9C/OaYrmKVt8VouteSVHdhchQhIAwpsowv03AqtbXECoues61WUMjagGoVRLjn40ddF0E8Taa7DRzVBj4lpmxAMkfAKgKQgg0/m4VvqgZn5dZpV9IBmVIPGvxYsc1jkE0IAMaBvxnNd9icZyL4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254762; c=relaxed/simple;
-	bh=8P3YckJgsPLJAp/BNG35kquTH8vCQxa7hyiQ5M3eifU=;
+	s=arc-20240116; t=1792254765; c=relaxed/simple;
+	bh=gNaqXsM2r49UTC0fTF2OpXVbvyMJi4Two81Fad4wHqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgnF+57Yv49oDCyI48LNrvCMbsc2pC2dtZYhGVnyjH0jWZWEW3ZhNlSoyGIPD/axLdey1vLq1x1CDI/1gf+t29apNcHIlVIj8O81G3wOEudHsZOUPBNtRF6AWoup4d6QsUX6PKFIrC6SUqqiywk6HzYUedCMyjEx2QCKw7qcBfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tElPAYm4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DT801BffA27FEPZNX5p82VcGTI0MohxqIZ2zkoB4il37Bbil2qJAy1vznTCrQEgBlpebJKO9zhfIl/THKMfdbSkas/8hAYvkV+aZFSYNPpTXcgE5sMrUS0nQqZ1uXEhdp/HjDsEmlVteSAPaWulI6HnhqMTB7ZqSZ0AzKr0YIkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXq0Ea1A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tElPAYm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8E41F000C4;
-	Sat, 17 Oct 2026 16:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXq0Ea1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8921F000C4;
+	Sat, 17 Oct 2026 16:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254761;
-	bh=7ZwFQy+hvNr24IDWZLE3bsbagck7SZ3/LYN31K8QrOo=;
+	s=korg; t=1792254764;
+	bh=WsAhID+si5wqAIpMgVRe3uIvvTsQWBHqzNy/DczNFcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tElPAYm43AYpOtL+MNK/T3HK7THolhLx53seQmXRJeTKj6XVynXnTRUAM3jRr2qzz
-	 wVtgJvHwh9+fTUsLRxXaCyCJJ2c++kwdwCBJ1FEu3XO+QTxIGzxWr09Z3oTv9s5yM+
-	 dEVzbzFlF82IsHitqNT02cvrKUyIFufasCGAm+8k=
+	b=zXq0Ea1AXERfqgmyKtlET8fi9CEjSAs7NSsOp5fC3BceGSPbLmP66soC9sy9bWP3z
+	 3+L08G2g6wDv1vldJNl7od5D1Lp6KoYLVcMHONZ55skxfaMH5vOGXQEmAGc6k6SooD
+	 WW/yPcQunk0MkrKjlgX02bASUg9w3MYOipRjsrds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan KS <karthiproffesional@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 516/869] soc: aspeed: lpc-snoop: Fix usercopy overflow in snoop_file_read
-Date: Sat, 17 Oct 2026 17:55:57 +0200
-Message-ID: <20261017160050.328352526@linuxfoundation.org>
+Subject: [PATCH 6.12 552/869] Bluetooth: ISO: zero the sockaddr before returning it in getname
+Date: Sat, 17 Oct 2026 17:56:33 +0200
+Message-ID: <20261017160051.238605142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,120 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan KS <karthiproffesional@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 1acef6d85bfd98bd9dfe1f08bffa397a4dda8a6f ]
+[ Upstream commit 884cf2cc957da7ac178a0e6c6c69ddfec0481cc8 ]
 
-put_fifo_with_discard() acts as both producer and consumer on the kfifo:
-it calls kfifo_skip() (advances out) and kfifo_put() (advances in) from
-the IRQ handler without synchronizing with snoop_file_read(), which also
-consumes via kfifo_to_user(). On SMP systems this concurrent access can
-leave (in - out) larger than the ring buffer, so __kfifo_to_user()'s clamp
-to (in - out) is ineffective and kfifo_copy_to_user() can attempt a
-copy_to_user() past the kmalloc-2k backing store:
+iso_sock_getname() fills a struct sockaddr_iso in place and returns its
+size without clearing it first, so bytes it does not write are copied to
+user space from the kernel stack. The getsockname(2) and getpeername(2)
+paths both run through do_getsockname(), which hands getname() an
+uninitialized sockaddr_storage on the stack and copies back up to the
+number of bytes getname() returns, so the driver has to initialize every
+byte it accounts for.
 
-  usercopy: Kernel memory exposure attempt detected from SLUB object
-  'kmalloc-2k' (offset 0, size 2049)!
-  kernel BUG at mm/usercopy.c!
-  Call trace:
-   usercopy_abort
-   __check_heap_object
-   __check_object_size
-   kfifo_copy_to_user
-   __kfifo_to_user
-   snoop_file_read
-   vfs_read
+Two ranges are left uninitialized:
 
-Serialize kfifo access with a per-channel spinlock shared between the
-IRQ handler (producer) and the file reader (consumer).  Annotate @fifo
-with __guarded_by(&lock) and opt the driver into context analysis so the
-compiler enforces that all fifo access holds the lock.
+  - struct sockaddr_iso is 10 bytes but only 9 are written (family,
+    iso_bdaddr, iso_bdaddr_type), leaking the trailing pad byte on every
+    call.
 
-Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
-Signed-off-by: Karthikeyan KS <karthiproffesional@gmail.com>
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+  - for a broadcast peer (BIS_LINK or PA_LINK) the returned length grows
+    by sizeof(struct sockaddr_iso_bc), but only bc_sid, bc_num_bis and
+    bc_bis are filled; bc_bdaddr and bc_bdaddr_type, the first 7 bytes of
+    that structure, are never written.
+
+An unprivileged process can open a BTPROTO_ISO socket and reach the pad
+leak with getsockname(); the broadcast leak needs an established BIS/PA
+connection. l2cap and rfcomm already memset their sockaddr in getname
+for the same reason; do the same here.
+
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Fixes: 0a766a0affb5 ("Bluetooth: ISO: Fix getpeername not returning sockaddr_iso_bc fields")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 31 ++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index fc3a2c41cc107..35f58eb0f134c 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -11,6 +11,7 @@
-  */
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index eafa22468e5f0..98261072aa050 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1397,6 +1397,7 @@ static int iso_sock_getname(struct socket *sock, struct sockaddr *addr,
  
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/interrupt.h>
- #include <linux/fs.h>
-@@ -59,6 +60,7 @@ struct aspeed_lpc_snoop_model_data {
+ 	BT_DBG("sock %p, sk %p", sock, sk);
  
- struct aspeed_lpc_snoop_channel {
- 	bool enabled;
-+	spinlock_t		lock;
- 	struct kfifo		fifo;
- 	wait_queue_head_t	wq;
- 	struct miscdevice	miscdev;
-@@ -82,6 +84,7 @@ static ssize_t snoop_file_read(struct file *file, char __user *buffer,
- 				size_t count, loff_t *ppos)
- {
- 	struct aspeed_lpc_snoop_channel *chan = snoop_file_to_chan(file);
-+	u8 *buf __free(kfree) = NULL;
- 	unsigned int copied;
- 	int ret = 0;
++	memset(sa, 0, sizeof(struct sockaddr_iso));
+ 	addr->sa_family = AF_BLUETOOTH;
  
-@@ -93,9 +96,16 @@ static ssize_t snoop_file_read(struct file *file, char __user *buffer,
- 		if (ret == -ERESTARTSYS)
- 			return -EINTR;
- 	}
--	ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
--	if (ret)
--		return ret;
-+
-+	count = min_t(size_t, count, SNOOP_FIFO_SIZE);
-+
-+	buf = kmalloc(count, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	copied = kfifo_out_spinlocked(&chan->fifo, buf, count, &chan->lock);
-+	if (copied && copy_to_user(buffer, buf, copied))
-+		return -EFAULT;
- 
- 	return copied;
- }
-@@ -119,11 +129,13 @@ static const struct file_operations snoop_fops = {
- /* Save a byte to a FIFO and discard the oldest byte if FIFO is full */
- static void put_fifo_with_discard(struct aspeed_lpc_snoop_channel *chan, u8 val)
- {
--	if (!kfifo_initialized(&chan->fifo))
--		return;
--	if (kfifo_is_full(&chan->fifo))
--		kfifo_skip(&chan->fifo);
--	kfifo_put(&chan->fifo, val);
-+	scoped_guard(spinlock, &chan->lock) {
-+		if (!kfifo_initialized(&chan->fifo))
-+			return;
-+		if (kfifo_is_full(&chan->fifo))
-+			kfifo_skip(&chan->fifo);
-+		kfifo_put(&chan->fifo, val);
-+	}
- 	wake_up_interruptible(&chan->wq);
- }
- 
-@@ -292,6 +304,9 @@ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
- 	if (!lpc_snoop)
- 		return -ENOMEM;
- 
-+	spin_lock_init(&lpc_snoop->chan[0].lock);
-+	spin_lock_init(&lpc_snoop->chan[1].lock);
-+
- 	np = pdev->dev.parent->of_node;
- 	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
- 	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
+ 	if (peer) {
 -- 
 2.53.0
 
