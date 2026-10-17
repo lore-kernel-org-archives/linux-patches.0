@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CD51DFDA1;
-	Sat, 17 Oct 2026 17:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3744C3C061D;
+	Sat, 17 Oct 2026 17:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259380; cv=none; b=M67r3o5mM7BC9L5GmIOBd2KhHCGJzZJm4PvfEKqpCyLp0ROr1dZXwZ3Wg5XIlw6tC1hme4gyVZr5oGuBoQluy0hL00kEfYW+C9D4pc5nUluuCRxh69HIn5nIY2SZV84k3QgIdTs+Q/4QHk1xSRXCvTZ9tqXmEu8pBMYJ0Xazhi4=
+	t=1792259382; cv=none; b=EmCXwAMXgiwbiCEKEkl1KN4JGSo7tnjLsydXut/4GyyrHafGR6+8FLw7OyHi8UR+I6klVL8/TMBRiYMqPlaOa7REms7I6X5m9vxi8qgIHL1pdILlmykknqMV4nwNVE0EztPsQbd/ywPGQQalj6VXz7N4j6hJMkzmEWXrWByj+iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259380; c=relaxed/simple;
-	bh=eDvRINfnPQVw2BI2+ehKiAHnVwBWcHY+2E+fVP3byPY=;
+	s=arc-20240116; t=1792259382; c=relaxed/simple;
+	bh=lJUETxIDv5rfHIVAuJjmCPepN+kfPL0+1Vc8d5Hn1X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBPkOhwOkyIqWef3PoUjnt3qnSiPParRuL2I/v0EbHjFX+3z90SZV3tUO4J/VrC7u/xjverU6HZbtNg+Y8QF2jEIPNipI3lGlpzRbTtiznX5HeTwGRyaIYZY4cjTBR7Oh4xxBMFPcJyKuzDsmV9HbTZiIJt1oAxFRJBDC0a3blU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXDKNIBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SCAve5sLlpatLHfDXo0xfK+7uX4vEELKT9jgs+anKRk87NAVpwiw/LyHCqexthbKrvg/MI/EhWU5VKDN+s6aaSeXh+ci1JOu+3vSkpJvPqWg50DhuzKbcXD2Bx0OCNCAcFw9H3HcfT6i9O1+XWSIKdKdeg9tncEec6VETr7pQxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWKzlYa8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXDKNIBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC881F000C4;
-	Sat, 17 Oct 2026 17:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWKzlYa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854EA1F000C5;
+	Sat, 17 Oct 2026 17:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259378;
-	bh=HE+NBAIl24xDnivozoTgUUhd6JJdvNP/8ye4r2IEXcE=;
+	s=korg; t=1792259381;
+	bh=GGuoFZfuI3lhrn38U75DazhgizF0bbXx9+6I/QO6pTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXDKNIBSIizl3Dd4jttHR6nnnt8isRPGRpO66OMb7KW6YiTxtHLNyKl1tO1SsgXoT
-	 WA7moraT/ZQ0iB1BGr9fA4QYF4gHM/0DdfvPKsPI8pvR7aECKxDc3ck9ZnI8V1U2Wl
-	 EFDUgvZGZX0SJwbdLQT5YqCla1xq3FQ9ic1fukbk=
+	b=BWKzlYa8FMJ+QXTLqyrlt/lLRNrVV5G/Z1/RjmpGHXY3PFX91gQ4mT/3EqEZyfFYe
+	 tF9YMJW0/0eVP69BFrbAgVWwkAov9s3uktfATp14nztncQd59Yw+ETA3oHUCWLfe/y
+	 yXcNTPst63keNi2LNAFRBSNGTcsAajaY74aIdYrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1153/1674] ALSA: seq: fifo: Use guard() for locking
-Date: Sat, 17 Oct 2026 17:57:05 +0200
-Message-ID: <20261017160500.743234315@linuxfoundation.org>
+Subject: [PATCH 6.6 1144/1674] md/raid10: Handle bio_split() errors
+Date: Sat, 17 Oct 2026 17:56:56 +0200
+Message-ID: <20261017160500.519593442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,140 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 68f014a58b6540847b0939a9a4023ed6eb834608 ]
+[ Upstream commit 4cf58d9529097328b669e3c8693ed21e3a041903 ]
 
-We can simplify the code gracefully with new guard() macro and co for
-automatic cleanup of locks.
+Add proper bio_split() error handling. For any error, call
+raid_end_bio_io() and return. Except for discard, where we end the bio
+directly.
 
-Only the code refactoring, and no functional changes.
-
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240227085306.9764-13-tiwai@suse.de
-Stable-dep-of: e546128291f8 ("ALSA: seq: avoid stale FIFO cells during resize")
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241111112150.3756529-7-john.g.garry@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: e045d6ed33f8 ("md/raid10: fix writes_pending leak on write request failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_fifo.c | 55 +++++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 31 deletions(-)
+ drivers/md/raid10.c | 47 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
-index f8e02e98709ab..3a10b081f129c 100644
---- a/sound/core/seq/seq_fifo.c
-+++ b/sound/core/seq/seq_fifo.c
-@@ -88,12 +88,11 @@ void snd_seq_fifo_clear(struct snd_seq_fifo *f)
- 	atomic_set(&f->overflow, 0);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index d055365f91302..b47b55c2f5bfe 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1174,6 +1174,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	int slot = r10_bio->read_slot;
+ 	struct md_rdev *err_rdev = NULL;
+ 	gfp_t gfp = GFP_NOIO;
++	int error;
  
- 	snd_use_lock_sync(&f->use_lock);
--	spin_lock_irq(&f->lock);
-+	guard(spinlock_irq)(&f->lock);
- 	/* drain the fifo */
- 	while ((cell = fifo_cell_out(f)) != NULL) {
- 		snd_seq_cell_free(cell);
- 	}
--	spin_unlock_irq(&f->lock);
+ 	if (slot >= 0 && r10_bio->devs[slot].rdev) {
+ 		/*
+@@ -1226,6 +1227,10 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	if (max_sectors < bio_sectors(bio)) {
+ 		struct bio *split = bio_split(bio, max_sectors,
+ 					      gfp, &conf->bio_split);
++		if (IS_ERR(split)) {
++			error = PTR_ERR(split);
++			goto err_handle;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		submit_bio_noacct(bio);
+@@ -1258,6 +1263,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	                              r10_bio->sector);
+ 	submit_bio_noacct(read_bio);
+ 	return;
++err_handle:
++	atomic_dec(&rdev->nr_pending);
++	bio->bi_status = errno_to_blk_status(error);
++	set_bit(R10BIO_Uptodate, &r10_bio->state);
++	raid_end_bio_io(r10_bio);
  }
  
- 
-@@ -102,7 +101,6 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
- 			  struct snd_seq_event *event)
+ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
+@@ -1398,9 +1408,10 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 				 struct r10bio *r10_bio)
  {
- 	struct snd_seq_event_cell *cell;
--	unsigned long flags;
- 	int err;
+ 	struct r10conf *conf = mddev->private;
+-	int i;
++	int i, k;
+ 	sector_t sectors;
+ 	int max_sectors;
++	int error;
  
- 	if (snd_BUG_ON(!f))
-@@ -118,15 +116,15 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 	if ((mddev_is_clustered(mddev) &&
+ 	     md_cluster_ops->area_resyncing(mddev, WRITE,
+@@ -1526,6 +1537,10 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 	if (r10_bio->sectors < bio_sectors(bio)) {
+ 		struct bio *split = bio_split(bio, r10_bio->sectors,
+ 					      GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			error = PTR_ERR(split);
++			goto err_handle;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		submit_bio_noacct(bio);
+@@ -1545,6 +1560,26 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 			raid10_write_one_disk(mddev, r10_bio, bio, true, i);
  	}
- 		
- 	/* append new cells to fifo */
--	spin_lock_irqsave(&f->lock, flags);
--	if (f->tail != NULL)
--		f->tail->next = cell;
--	f->tail = cell;
--	if (f->head == NULL)
--		f->head = cell;
--	cell->next = NULL;
--	f->cells++;
--	spin_unlock_irqrestore(&f->lock, flags);
-+	scoped_guard(spinlock_irqsave, &f->lock) {
-+		if (f->tail != NULL)
-+			f->tail->next = cell;
-+		f->tail = cell;
-+		if (f->head == NULL)
-+			f->head = cell;
-+		cell->next = NULL;
-+		f->cells++;
+ 	one_write_done(r10_bio);
++	return;
++err_handle:
++	for (k = 0;  k < i; k++) {
++		int d = r10_bio->devs[k].devnum;
++		struct md_rdev *rdev = conf->mirrors[d].rdev;
++		struct md_rdev *rrdev = conf->mirrors[d].replacement;
++
++		if (r10_bio->devs[k].bio) {
++			rdev_dec_pending(rdev, mddev);
++			r10_bio->devs[k].bio = NULL;
++		}
++		if (r10_bio->devs[k].repl_bio) {
++			rdev_dec_pending(rrdev, mddev);
++			r10_bio->devs[k].repl_bio = NULL;
++		}
 +	}
- 
- 	/* wakeup client */
- 	if (waitqueue_active(&f->input_sleep))
-@@ -199,16 +197,13 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
- void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
- 			       struct snd_seq_event_cell *cell)
- {
--	unsigned long flags;
--
- 	if (cell) {
--		spin_lock_irqsave(&f->lock, flags);
-+		guard(spinlock_irqsave)(&f->lock);
- 		cell->next = f->head;
- 		f->head = cell;
- 		if (!f->tail)
- 			f->tail = cell;
- 		f->cells++;
--		spin_unlock_irqrestore(&f->lock, flags);
- 	}
++
++	bio->bi_status = errno_to_blk_status(error);
++	set_bit(R10BIO_Uptodate, &r10_bio->state);
++	raid_end_bio_io(r10_bio);
  }
  
-@@ -239,17 +234,17 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
- 		return -ENOMEM;
- 	}
- 
--	spin_lock_irq(&f->lock);
--	/* remember old pool */
--	oldpool = f->pool;
--	oldhead = f->head;
--	/* exchange pools */
--	f->pool = newpool;
--	f->head = NULL;
--	f->tail = NULL;
--	f->cells = 0;
--	/* NOTE: overflow flag is not cleared */
--	spin_unlock_irq(&f->lock);
-+	scoped_guard(spinlock_irq, &f->lock) {
-+		/* remember old pool */
-+		oldpool = f->pool;
-+		oldhead = f->head;
-+		/* exchange pools */
-+		f->pool = newpool;
-+		f->head = NULL;
-+		f->tail = NULL;
-+		f->cells = 0;
-+		/* NOTE: overflow flag is not cleared */
-+	}
- 
- 	/* close the old pool and wait until all users are gone */
- 	snd_seq_pool_mark_closing(oldpool);
-@@ -268,16 +263,14 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
- /* get the number of unused cells safely */
- int snd_seq_fifo_unused_cells(struct snd_seq_fifo *f)
- {
--	unsigned long flags;
- 	int cells;
- 
- 	if (!f)
- 		return 0;
- 
- 	snd_use_lock_use(&f->use_lock);
--	spin_lock_irqsave(&f->lock, flags);
--	cells = snd_seq_unused_cells(f->pool);
--	spin_unlock_irqrestore(&f->lock, flags);
-+	scoped_guard(spinlock_irqsave, &f->lock)
-+		cells = snd_seq_unused_cells(f->pool);
- 	snd_use_lock_free(&f->use_lock);
- 	return cells;
- }
+ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
+@@ -1695,6 +1730,11 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	if (remainder) {
+ 		split_size = stripe_size - remainder;
+ 		split = bio_split(bio, split_size, GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++			bio_endio(bio);
++			return 0;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		/* Resend the fist split part */
+@@ -1705,6 +1745,11 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	if (remainder) {
+ 		split_size = bio_sectors(bio) - remainder;
+ 		split = bio_split(bio, split_size, GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++			bio_endio(bio);
++			return 0;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		/* Resend the second split part */
 -- 
 2.53.0
 
