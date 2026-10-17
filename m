@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1307D3A0E85;
-	Sat, 17 Oct 2026 16:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1653A0E85;
+	Sat, 17 Oct 2026 16:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255145; cv=none; b=j8wwY3SzMotqFpn4GmqRrHoq4foQ5itOa8rwNhwmv6DuOdXLd4LhlnJBl1eoB7UtLUNvE2fOa+YF3SUZ+bzSfNd1dB2P3dVCJWjKRybxH5huhmAyL9EHwM1x3nD0R3se5MtuC/voYuVFm+KY+SvNiI8dQXVafKhjgyE8xh4/76w=
+	t=1792255148; cv=none; b=VsGyIqVV9ba/U18Mc2DkQqJFk0U0oAEUSGm0O1K8Hd8g38eNDgwLeYsdhUR2d52VMOBni382L+hQNQpKnRKmDmqc1Qeex9Ycly/imSsJGQz/s8MwZQl7V3HDhDiNPeU18th3RaiTGN8wF7w9HGndXSMg0ARkoTjMhc+qlYCb/KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255145; c=relaxed/simple;
-	bh=bEGrByd/PySgmtsY+kgoKWcMU6NW/ozL/CCUkT432gk=;
+	s=arc-20240116; t=1792255148; c=relaxed/simple;
+	bh=xreMNOYhdq8eSGbYcV5ipbbqWZ37LmPNJP6C309x2mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdE/wO1hZ6RIYd6bpISLMUyNNd7hlTUs9iHMOJ361tX9Z3Yt0Ys1IjiV6pIMIelSCrhmE7nIvftDrHvBaPxjMRTqUX44fTDCohUg7/0IuXxIHBRCokcxn/cJgkdC4jwY+Smh9kp0uuzbo+kSNhW0OCk4F5/o2IRTzNOj8RDt5c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuKZUiyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=plDu2IgIDPdu3BE1KS1uFN6ch8aBmMliimra5M2DwJT5a/UAjrApDpK7a4t9esBt91tfxhZcZ7HtynGZ66shex2Y6Z2fzHiM5wUPG7EiebguzcRmys3QjJyghicGb9wpW8IJyXhbzEaqZJo7/gbu78h1bFg+KHxPJNlnVHD/G9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+hVeJE1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuKZUiyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B12B1F000C6;
-	Sat, 17 Oct 2026 16:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+hVeJE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510161F000C4;
+	Sat, 17 Oct 2026 16:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255143;
-	bh=sVS4+qU4LX71avK4eIetVzump6c2rGR0I48iVNwzX24=;
+	s=korg; t=1792255146;
+	bh=yHDv32fEEUNglSPz1JSQX1boguMcoGt3xLKIUgPCxDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZuKZUiyrktqvN/gT646BskHIYZcRFVk3W+OXYY0KhZqwDUTpKkYRhaNyyyg4jfFPb
-	 8gjojse7pABaCYuC7DjYVyC+tIwJkACKVuEiIUOdqCcVSpR4IoAeW2vKSzrtBKKq4P
-	 zNtuQSmruZNHre269V1fW6sbHnzSyXNeaDEpXmYg=
+	b=k+hVeJE1jRIjpqq7pfl/yqX9pBvT3a4pzjSHb4itPmVkVvVT7A3pVss+ROL/wuLyd
+	 +pbxTu43rlbQ2ORX03XDwhVKGxkzjhCS8sG1ldr+4bgk0OG1s06HdshiXXE0oHcTuC
+	 tlYjDJ1ZZfXRMnAq+uTzdsSkQvKYwDBTqiTjZoes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-hardening@vger.kernel.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 679/869] wifi: ath12k: fix overreads in ath12k_wmi_process_csa_switch_count_event()
-Date: Sat, 17 Oct 2026 17:58:40 +0200
-Message-ID: <20261017160054.389242232@linuxfoundation.org>
+Subject: [PATCH 6.12 680/869] drm/i915: rename range_overflows_end() to range_end_overflows()
+Date: Sat, 17 Oct 2026 17:58:41 +0200
+Message-ID: <20261017160054.413278656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,95 +48,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 878654eb78c6aa0ff585baf1376567c775ca28ec ]
+[ Upstream commit 1e4c85167cf672312a178b2af0b058add77e448b ]
 
-There is no policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT, so
-the parse infrastructure does not enforce a minimum length for the event
-struct. Additionally, the num_vdevs field is taken directly from firmware
-and used as a loop bound over the vdev_ids array without checking that it
-fits within the TLV payload. Either condition can cause an out-of-bounds
-read.
+Rename range_overflows_end() to range_end_overflows(), along with the _t
+variant.
 
-Add a TLV policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT so
-the parse infrastructure enforces a minimum length for the fixed-size event
-struct. Add a helper ath12k_wmi_tlv_data_len() to recover the payload
-length of a parsed TLV from the header preceding its data pointer. Use it
-in ath12k_wmi_process_csa_switch_count_event() to bound num_vdevs before
-the loop.
+It's all rather subjective, but I think range_end_overflows() reads
+better.
 
-Compile tested only.
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260724-ath12k_wmi_process_csa_switch_count_event-cleanup-v2-1-02a45d7246c0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-hardening@vger.kernel.org
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+Link: https://lore.kernel.org/r/20250829174601.2163064-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Stable-dep-of: 985f5e12f3cd ("drm/panthor: Add vm_bind region with kbo range overlap check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_fbc.c | 4 ++--
+ drivers/gpu/drm/i915/gt/intel_rc6.c      | 2 +-
+ drivers/gpu/drm/i915/i915_utils.h        | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 598a69f9e6df0..ca359eecb42a9 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -171,6 +171,8 @@ static const struct ath12k_wmi_tlv_policy ath12k_wmi_tlv_policies[] = {
- 		.min_len = sizeof(struct ath12k_wmi_p2p_noa_info) },
- 	[WMI_TAG_P2P_NOA_EVENT] = {
- 		.min_len = sizeof(struct wmi_p2p_noa_event) },
-+	[WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT] = {
-+		.min_len = sizeof(struct ath12k_wmi_pdev_csa_event) },
- };
+diff --git a/drivers/gpu/drm/i915/display/intel_fbc.c b/drivers/gpu/drm/i915/display/intel_fbc.c
+index 7cb1a9cfa20f4..809b477f907e3 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbc.c
++++ b/drivers/gpu/drm/i915/display/intel_fbc.c
+@@ -378,11 +378,11 @@ static void i8xx_fbc_program_cfb(struct intel_fbc *fbc)
+ 	struct drm_i915_private *i915 = to_i915(display->drm);
  
- static __le32 ath12k_wmi_tlv_hdr(u32 cmd, u32 len)
-@@ -384,6 +386,13 @@ ath12k_wmi_tlv_parse_alloc(struct ath12k_base *ab,
- 	return tb;
- }
+ 	drm_WARN_ON(display->drm,
+-		    range_overflows_end_t(u64, i915_gem_stolen_area_address(i915),
++		    range_end_overflows_t(u64, i915_gem_stolen_area_address(i915),
+ 					  i915_gem_stolen_node_offset(&fbc->compressed_fb),
+ 					  U32_MAX));
+ 	drm_WARN_ON(display->drm,
+-		    range_overflows_end_t(u64, i915_gem_stolen_area_address(i915),
++		    range_end_overflows_t(u64, i915_gem_stolen_area_address(i915),
+ 					  i915_gem_stolen_node_offset(&fbc->compressed_llb),
+ 					  U32_MAX));
+ 	intel_de_write(i915, FBC_CFB_BASE,
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index 9ca42589da4da..bf38cc5fe8729 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -341,7 +341,7 @@ static int vlv_rc6_init(struct intel_rc6 *rc6)
+ 		return PTR_ERR(pctx);
+ 	}
  
-+static u32 ath12k_wmi_tlv_data_len(const void *data)
-+{
-+	const struct wmi_tlv *tlv = (const struct wmi_tlv *)data - 1;
-+
-+	return le32_get_bits(tlv->header, WMI_TLV_LEN);
-+}
-+
- static int ath12k_wmi_cmd_send_nowait(struct ath12k_wmi_pdev *wmi, struct sk_buff *skb,
- 				      u32 cmd_id)
- {
-@@ -6735,6 +6744,8 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
- 					  const struct ath12k_wmi_pdev_csa_event *ev,
- 					  const u32 *vdev_ids)
- {
-+	u32 vdev_ids_len = ath12k_wmi_tlv_data_len(vdev_ids);
-+	u32 num_vdevs = le32_to_cpu(ev->num_vdevs);
- 	int i;
- 	struct ath12k_vif *arvif;
+-	GEM_BUG_ON(range_overflows_end_t(u64,
++	GEM_BUG_ON(range_end_overflows_t(u64,
+ 					 i915->dsm.stolen.start,
+ 					 pctx->stolen->start,
+ 					 U32_MAX));
+diff --git a/drivers/gpu/drm/i915/i915_utils.h b/drivers/gpu/drm/i915/i915_utils.h
+index 71bdc89bd6215..61e561d6996d6 100644
+--- a/drivers/gpu/drm/i915/i915_utils.h
++++ b/drivers/gpu/drm/i915/i915_utils.h
+@@ -81,7 +81,7 @@ bool i915_error_injected(void);
+ #define range_overflows_t(type, start, size, max) \
+ 	range_overflows((type)(start), (type)(size), (type)(max))
  
-@@ -6742,8 +6753,14 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
- 	if (ev->current_switch_count)
- 		return;
+-#define range_overflows_end(start, size, max) ({ \
++#define range_end_overflows(start, size, max) ({ \
+ 	typeof(start) start__ = (start); \
+ 	typeof(size) size__ = (size); \
+ 	typeof(max) max__ = (max); \
+@@ -90,8 +90,8 @@ bool i915_error_injected(void);
+ 	start__ > max__ || size__ > max__ - start__; \
+ })
  
-+	if (num_vdevs > vdev_ids_len / sizeof(*vdev_ids)) {
-+		ath12k_warn(ab, "csa switch count num_vdevs %u exceeds tlv array length %u\n",
-+			    num_vdevs, vdev_ids_len);
-+		return;
-+	}
-+
- 	rcu_read_lock();
--	for (i = 0; i < le32_to_cpu(ev->num_vdevs); i++) {
-+	for (i = 0; i < num_vdevs; i++) {
- 		arvif = ath12k_mac_get_arvif_by_vdev_id(ab, vdev_ids[i]);
+-#define range_overflows_end_t(type, start, size, max) \
+-	range_overflows_end((type)(start), (type)(size), (type)(max))
++#define range_end_overflows_t(type, start, size, max) \
++	range_end_overflows((type)(start), (type)(size), (type)(max))
  
- 		if (!arvif) {
+ #define ptr_mask_bits(ptr, n) ({					\
+ 	unsigned long __v = (unsigned long)(ptr);			\
 -- 
 2.53.0
 
