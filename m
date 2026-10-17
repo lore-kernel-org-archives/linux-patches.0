@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FD735E93B;
-	Sat, 17 Oct 2026 17:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8839635E93B;
+	Sat, 17 Oct 2026 17:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258351; cv=none; b=tHtqZ+ZS5zLCvmh+X5tzT8CW+uhAfpr0ns8vyDeODiNMvlwsMPo5Rpv6U6ZkxX4M8tG9xhHAGbGYBt1+pfsWTzlsMkm2eDiDlmQ0DhPemP9qrzvtGiTtYQ7sCDESCOyByCFliia3ybGVF00SvcG/39x9Qk+bpR3lFjpWW0mgUDA=
+	t=1792258354; cv=none; b=BzM+WWiFRKTAiiFVgrt44sqL8hydO1kniDn8WslvF6WQ+Q4/fE8Xe0ejL0sxotLcEt14OCWYr0cYqEnd2TBZoWN9hSi5YM94DqAf3zeuf/kDsA1D4VXAs2Vu4S//pz9Lk2Gamssgm43YlXkROws/zbnGOg1zGbpFUU1mGJVdcik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258351; c=relaxed/simple;
-	bh=y74ztpvA3M/GtXETmrDtAXLNTyUGCmVpFWU2pWWtWS0=;
+	s=arc-20240116; t=1792258354; c=relaxed/simple;
+	bh=5jFJy2ooZ4iGn/gDvlpXGNfQT/L3tddfpz7/FuyqbfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8oFFeAK36pqiozZrzm7Zit2Ron5k1wnpSoDL1+d3fLrL5RPMJqVMTTOfTMJxxhmoP+iyMLh8gRTtw2lIKtXzGynRvNqEEb77HD4A+CCCGy2hrZRw4an0AShlq7W9hRGq1shEckzLxQKmr0WQ755UND250d6Z/BLMHB3i+QMK4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUeiY8c0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qX+wEjemdNoq8oQaLWSgCIvj/oVeUhk9WxBx0XgbvBB7KrzN4kApGUTkVzxAqWO20TgkLD0kWnez90Rrl+8raJ4Ms5dlBwDJjJhkHP13AOMsZ20slYeoiiK79uLxE5s84n3FdqxwygNTpBSwijsIPOoS0vqJyDjPcDj/GPAEno8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEusocH+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUeiY8c0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CF61F000C4;
-	Sat, 17 Oct 2026 17:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEusocH+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98C91F000C4;
+	Sat, 17 Oct 2026 17:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258350;
-	bh=LEJhjPWulKKxEhdUgm549Eqa825nczXRWKRwDYRBKW8=;
+	s=korg; t=1792258353;
+	bh=F00rZ5tClf69s8Kv4nBPkkCES+KyXJBKuzEI7v1pbFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RUeiY8c09RErvRFZd16zOwvetR1WxRqm+THrp2NWW1jE8JGHQ+xcPojedhYe4qZRB
-	 plYTm7lETjHAAD3FdU7bTzqVsgwnzubUP1k16wVIlNmhwfaMhs+HfseeIR6qgucK2k
-	 d2wY39tPrOiu5wZhwootr+JkDPO5Z4keBHHwYY7E=
+	b=fEusocH+CzJFB3kkl3stuNXXZDBesqElsqliIJZNd2GoMq2CAdEAz3IvB/fHUnQTd
+	 A7OCdRt4lP7mZj+bewOeeyh3EfIlXAo4kkzlJ0kegzImLR9C1vmNaAp//LXFaZU1B4
+	 6PPDXtKQANmM8Tx5/QF5oWF0aoq2Q4vIx5kzGPvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0856/1674] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
-Date: Sat, 17 Oct 2026 17:52:08 +0200
-Message-ID: <20261017160453.094749063@linuxfoundation.org>
+Subject: [PATCH 6.6 0857/1674] btrfs: reject new transactions if the fs is fully read-only
+Date: Sat, 17 Oct 2026 17:52:09 +0200
+Message-ID: <20261017160453.118564860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,67 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
+[ Upstream commit 1972f44c189c8aacde308fa9284e474c1a5cbd9f ]
 
-During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
-temporarily inaccessible via PCIe. Any attempt to access MMIO registers
-during this window (e.g., from interrupt handlers or other driver threads)
-can result in uncompleted PCIe transactions, leading to NMI panics or
-system hangs.
+[BUG]
+There is a bug report where a heavily fuzzed fs is mounted with all
+rescue mount options, which leads to the following warnings during
+unmount:
 
-To prevent this, set the `no_hw_access` flag to true immediately after
-triggering the reset. This signals other driver components to skip
-register accesses while the device is offline.
+  BTRFS: Transaction aborted (error -22)
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 9758 Comm: repro.out Not tainted
+  6.19.0-rc5-00002-gb71e635feefc #7 PREEMPT(full)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:find_free_extent_update_loop fs/btrfs/extent-tree.c:4208 [inline]
+  RIP: 0010:find_free_extent+0x52f0/0x5d20 fs/btrfs/extent-tree.c:4611
+  Call Trace:
+   <TASK>
+   btrfs_reserve_extent+0x2cd/0x790 fs/btrfs/extent-tree.c:4705
+   btrfs_alloc_tree_block+0x1e1/0x10e0 fs/btrfs/extent-tree.c:5157
+   btrfs_force_cow_block+0x578/0x2410 fs/btrfs/ctree.c:517
+   btrfs_cow_block+0x3c4/0xa80 fs/btrfs/ctree.c:708
+   btrfs_search_slot+0xcad/0x2b50 fs/btrfs/ctree.c:2130
+   btrfs_truncate_inode_items+0x45d/0x2350 fs/btrfs/inode-item.c:499
+   btrfs_evict_inode+0x923/0xe70 fs/btrfs/inode.c:5628
+   evict+0x5f4/0xae0 fs/inode.c:837
+   __dentry_kill+0x209/0x660 fs/dcache.c:670
+   finish_dput+0xc9/0x480 fs/dcache.c:879
+   shrink_dcache_for_umount+0xa0/0x170 fs/dcache.c:1661
+   generic_shutdown_super+0x67/0x2c0 fs/super.c:621
+   kill_anon_super+0x3b/0x70 fs/super.c:1289
+   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2127
+   deactivate_locked_super+0xbc/0x130 fs/super.c:474
+   cleanup_mnt+0x425/0x4c0 fs/namespace.c:1318
+   task_work_run+0x1d4/0x260 kernel/task_work.c:233
+   exit_task_work include/linux/task_work.h:40 [inline]
+   do_exit+0x694/0x22f0 kernel/exit.c:971
+   do_group_exit+0x21c/0x2d0 kernel/exit.c:1112
+   __do_sys_exit_group kernel/exit.c:1123 [inline]
+   __se_sys_exit_group kernel/exit.c:1121 [inline]
+   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1121
+   x64_sys_call+0x2210/0x2210 arch/x86/include/generated/asm/syscalls_64.h:232
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe8/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x44f639
+  Code: Unable to access opcode bytes at 0x44f60f.
+  RSP: 002b:00007ffc15c4e088 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+  RAX: ffffffffffffffda RBX: 00000000004c32f0 RCX: 000000000044f639
+  RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
+  RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004c32f0
+  R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+   </TASK>
 
-A memory barrier `smp_mb()` is added to ensure the flag update is
-globally visible to all cores before the driver enters the sleep/wait
-state.
+Since rescue mount options will mark the full fs read-only, there should
+be no new transaction triggered.
 
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
+But during unmount we will evict all inodes, which can trigger a new
+transaction, and triggers warnings on a heavily corrupted fs.
+
+[CAUSE]
+Btrfs allows new transaction even on a read-only fs, this is to allow
+log replay happen even on read-only mounts, just like what ext4/xfs do.
+
+However with rescue mount options, the fs is fully read-only and cannot
+be remounted read-write, thus in that case we should also reject any new
+transactions.
+
+[FIX]
+If we find the fs has rescue mount options, we should treat the fs as
+error, so that no new transaction can be started.
+
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CANypQFYw8Nt8stgbhoycFojOoUmt+BoZ-z8WJOZVxcogDdwm=Q@mail.gmail.com/
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c | 13 +++++++++++++
+ fs/btrfs/fs.h      |  6 ++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 427fb7d897a16..ddce6df7eaf53 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4867,6 +4867,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
- 	if (ret)
- 		goto mode1_reset_failed;
- 
-+	/* enable mmio access after mode 1 reset completed */
-+	adev->no_hw_access = false;
-+
- 	amdgpu_device_load_pci_state(adev->pdev);
- 	ret = amdgpu_psp_wait_for_bootloader(adev);
- 	if (ret)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index fe6c42a736d08..7d9470778a991 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2449,8 +2449,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
- 		break;
- 	}
- 
--	if (!ret)
-+	if (!ret) {
-+		/* disable mmio access while doing mode 1 reset*/
-+		smu->adev->no_hw_access = true;
-+		/* ensure no_hw_access is globally visible before any MMIO */
-+		smp_mb();
- 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
-+	}
- 
- 	return ret;
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index adf649ec60beb..d2f9c5be175ea 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3155,6 +3155,15 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
+ 	return 0;
  }
+ 
++static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
++{
++	if (!sb_rdonly(fs_info->sb))
++		return false;
++	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
++		return true;
++	return false;
++}
++
+ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
+ 		      char *options)
+ {
+@@ -3298,6 +3307,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	if (ret)
+ 		goto fail_alloc;
+ 
++	/* If the fs has any rescue options, no transaction is allowed. */
++	if (fs_is_full_ro(fs_info))
++		WRITE_ONCE(fs_info->fs_error, -EROFS);
++
+ 	ret = btrfs_check_features(fs_info, !sb_rdonly(sb));
+ 	if (ret < 0)
+ 		goto fail_alloc;
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index b8b9ce8921baf..415f867dd1252 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -186,6 +186,12 @@ enum {
+ 	BTRFS_MOUNT_NODISCARD			= (1UL << 31),
+ };
+ 
++/* These mount options require a full read-only fs, no new transaction is allowed. */
++#define BTRFS_MOUNT_FULL_RO_MASK		\
++	(BTRFS_MOUNT_NOLOGREPLAY |		\
++	 BTRFS_MOUNT_IGNOREBADROOTS |		\
++	 BTRFS_MOUNT_IGNOREDATACSUMS)
++
+ /*
+  * Compat flags that we support.  If any incompat flags are set other than the
+  * ones specified below then we will fail to mount
 -- 
 2.53.0
 
