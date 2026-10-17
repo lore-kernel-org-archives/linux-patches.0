@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BF03B8124;
-	Sat, 17 Oct 2026 17:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE9C3B1EC8;
+	Sat, 17 Oct 2026 17:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257695; cv=none; b=oeAPIxOYdKbXkI8j0MtLwWPoVF84X5DOtweFBNc/O2kBdQUYerL2Ht+NVTbCVEPZnEjGVEQJRBh13BWX+pnGOFSP+lpYIOg7wP0OY1ELhQFchPa9JQLLuEawjuxyxh2dgxR/1B6NpMSQ+mnFbZnZSnCZtf4BfO5wfrk/iG2vFzI=
+	t=1792257700; cv=none; b=JEOlDPsfgLBCFvKIZ6pbtpEjyFwPo0LUHjbz6oHE/GsbcZ1cEUNj/j2Nu7WFxSwW0Xlu9JG5sju8RzPKgaMxqWr27kcRfUrC8hOrW6QHosr4QaI227+0e6jIIMz1Y4bG8+HSnCtM/SFOT6Y2AiqrOFeb5/FaJyOAYfXiuCy/i1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257695; c=relaxed/simple;
-	bh=VBLnDz8hKY9v8WHLBFojVWLd7MoQxBbP1MznYwNICuM=;
+	s=arc-20240116; t=1792257700; c=relaxed/simple;
+	bh=25c64mTDCID30yV/z1+ajtRjugqovMHnSgx2WXT+uRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmMm2R1sQgBLx+xgaE4VF+m6r8c3miUB95j5o4fOBR+smHpKmK4eI/iBFDZ9d8ESPIYBEkCMgOy9KVVwj2p6DcCSW23E3hTmXLxIMtlribIXEfiFa5VAogoxWaYXJdwQKOSalrKHc9qbkBqFGKTxixu587/gqYxXIuvaN7aC8m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n39ms+6m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iWGb3KNz2f2CB9bIDJTO7LkcwECA5XiL84iKZMvk+NLrMFcJLvZjI0Fpf4hs+c5sVWFeqqnVnuHNcgYrMQHpwjr3WYCJ2dtAX/Q5LnjY+f0YdoNrS4Hwa23YEWN7xPTgwv5YP9GmJkuyHm6xWFcFd4LYDCM6mW/BwT5z6CScuYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX+CZ/Hg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n39ms+6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD2A1F000C4;
-	Sat, 17 Oct 2026 17:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX+CZ/Hg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EFF1F000C4;
+	Sat, 17 Oct 2026 17:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257694;
-	bh=qb9JRiLC4M+mIf3g8DcEp46Wjdbzg7mj8HjMDuLetXE=;
+	s=korg; t=1792257697;
+	bh=RvHDNSV3NBzOKCeV+KMmRP6Np76rbD6ebvbFvlsSEy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n39ms+6m1OdSOAAQ5GeKAXYXSbAu57DRwu+P+iuwmjVqRf39LQWZfCWePSNeWLSFo
-	 Xv4GKCpCd6ks/DKKdBNRs9qUl2RgxNrrEi3B50bFc72j8D8I8NfFHRyZGT0NEbdRJ3
-	 bebcz+iim0ekmbyCaf3BbKwluiKXxjW9Gvfywrs8=
+	b=XX+CZ/HgfxlaIo6mTXntdLNd1E9kSCKolaso0h3GLt+E1jyaLWc6EzzqkfO00M3kp
+	 f+GvMKTHM9bU0eFZ+HbwtmMczswr8E6xmjFmDvqh3q2+vowrWHxQHX55qg+mLlA9zI
+	 qx04FrlVNPB0gXrr4KBYzEeKmscgRPk8sgZ/HtDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0641/1674] scsi: lpfc: Protect vport fc_nodes list with an explicit spin lock
-Date: Sat, 17 Oct 2026 17:48:33 +0200
-Message-ID: <20261017160447.550591485@linuxfoundation.org>
+Subject: [PATCH 6.6 0615/1674] drm/msm/dpu: shift IRQ indices by 1
+Date: Sat, 17 Oct 2026 17:48:07 +0200
+Message-ID: <20261017160446.864321761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,467 +51,1142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 9bb36777d0a2a22f11264c36f91a2682bfedb9d4 ]
+[ Upstream commit 5a9d50150c2cd2dcc72729c14a0035b234c0a4cc ]
 
-In attempt to reduce the amount of unnecessary shost_lock acquisitions in
-the lpfc driver, replace shost_lock with an explicit fc_nodes_list_lock
-spinlock when accessing vport->fc_nodes lists.  Although vport memory
-region is owned by shost->hostdata, it is driver private memory and an
-explicit fc_nodes list lock for fc_nodes list mutations is more appropriate
-than locking the entire shost.
+In order to simplify IRQ declarations, shift IRQ indices by 1. This
+makes 0 the 'no IRQ' value. Thanks to this change, we do no longer have
+to explicitly set the 'no interrupt' fields in catalog structures.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240131185112.149731-14-justintee8345@gmail.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: ede596b1434b ("scsi: lpfc: Handle mailbox timeouts in lpfc_get_sfp_info")
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/550938/
+Link: https://lore.kernel.org/r/20230802100426.4184892-9-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Stable-dep-of: 45284ff733e4 ("drm/msm/dpu: Add mutex lock in control vblank irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc.h         |  1 +
- drivers/scsi/lpfc/lpfc_attr.c    | 35 +++++++++++-----------
- drivers/scsi/lpfc/lpfc_ct.c      |  7 ++---
- drivers/scsi/lpfc/lpfc_debugfs.c | 12 ++++----
- drivers/scsi/lpfc/lpfc_hbadisc.c | 50 ++++++++++++++++----------------
- drivers/scsi/lpfc/lpfc_init.c    |  2 +-
- 6 files changed, 53 insertions(+), 54 deletions(-)
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  4 --
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  4 --
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  8 ----
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 10 -----
+ .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |  3 --
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  8 ----
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  3 --
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 -
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  3 --
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 -
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  1 -
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  8 ----
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  6 ---
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 13 -------
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    | 12 ------
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 12 ------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h  |  6 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  9 +----
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 14 +++----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 39 +++++++++++--------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  6 +--
+ 22 files changed, 39 insertions(+), 136 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
-index 979222fe4b68a..51b251eb857a6 100644
---- a/drivers/scsi/lpfc/lpfc.h
-+++ b/drivers/scsi/lpfc/lpfc.h
-@@ -587,6 +587,7 @@ struct lpfc_vport {
- #define FC_CT_RPRT_DEFER	0x20	 /* Defer issuing FDMI RPRT */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+index a857ce8e385fc..1b874b101952b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+@@ -232,7 +232,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.prog_fetch_lines_worst_case = 21,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x280,
+@@ -241,7 +240,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.prog_fetch_lines_worst_case = 21,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x6b000, .len = 0x280,
+@@ -250,7 +248,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.prog_fetch_lines_worst_case = 21,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x6b800, .len = 0x280,
+@@ -258,7 +255,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.prog_fetch_lines_worst_case = 21,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
  
- 	struct list_head fc_nodes;
-+	spinlock_t fc_nodes_list_lock; /* spinlock for fc_nodes list */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 3749c014870d3..eb37557a6b1d7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -248,7 +248,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x280,
+@@ -257,7 +256,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x6b000, .len = 0x280,
+@@ -266,7 +264,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x6b800, .len = 0x280,
+@@ -275,7 +272,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
  
- 	/* Keep counters for the number of entries in each list. */
- 	atomic_t fc_plogi_cnt;
-diff --git a/drivers/scsi/lpfc/lpfc_attr.c b/drivers/scsi/lpfc/lpfc_attr.c
-index b937a7bc25792..ec4fcdc912a51 100644
---- a/drivers/scsi/lpfc/lpfc_attr.c
-+++ b/drivers/scsi/lpfc/lpfc_attr.c
-@@ -344,6 +344,7 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
- 	struct lpfc_fc4_ctrl_stat *cstat;
- 	uint64_t data1, data2, data3;
- 	uint64_t totin, totout, tot;
-+	unsigned long iflags;
- 	char *statep;
- 	int i;
- 	int len = 0;
-@@ -543,7 +544,7 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
- 	if (strlcat(buf, tmp, PAGE_SIZE) >= PAGE_SIZE)
- 		goto buffer_done;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+index 76b668f36477a..3bd9483392bd2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+@@ -222,7 +222,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -230,7 +229,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x71000, .len = 0xd4,
+@@ -238,7 +236,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x71800, .len = 0xd4,
+@@ -246,7 +243,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x72000, .len = 0xd4,
+@@ -254,7 +250,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x72800, .len = 0xd4,
+@@ -262,7 +257,6 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	},
+ };
  
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
+@@ -309,7 +303,6 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2bc,
+@@ -339,7 +332,6 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
  
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		nrport = NULL;
-@@ -617,7 +618,7 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
- 		if (strlcat(buf, tmp, PAGE_SIZE) >= PAGE_SIZE)
- 			goto unlock_buf_done;
- 	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index b77ecec50733b..3d524584eb41c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -221,7 +221,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -229,7 +228,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x71000, .len = 0xd4,
+@@ -237,7 +235,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x71800, .len = 0xd4,
+@@ -245,7 +242,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x72000, .len = 0xd4,
+@@ -253,7 +249,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x72800, .len = 0xd4,
+@@ -261,7 +256,6 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	},
+ };
  
- 	if (!lport)
- 		goto buffer_done;
-@@ -681,7 +682,7 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
- 	goto buffer_done;
+@@ -316,7 +310,6 @@ static const struct dpu_intf_cfg sc8180x_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2bc,
+@@ -348,7 +341,6 @@ static const struct dpu_intf_cfg sc8180x_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_4", .id = INTF_4,
+ 		.base = 0x6c000, .len = 0x280,
+@@ -358,7 +350,6 @@ static const struct dpu_intf_cfg sc8180x_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_5", .id = INTF_5,
+ 		.base = 0x6c800, .len = 0x280,
+@@ -368,7 +359,6 @@ static const struct dpu_intf_cfg sc8180x_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
  
-  unlock_buf_done:
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+index 2491eed10039f..cec7af6667dc9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+@@ -129,7 +129,6 @@ static const struct dpu_pingpong_cfg sm6125_pp[] = {
+ 		.merge_3d = 0,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -137,7 +136,6 @@ static const struct dpu_pingpong_cfg sm6125_pp[] = {
+ 		.merge_3d = 0,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	},
+ };
  
-  buffer_done:
- 	len = strnlen(buf, PAGE_SIZE);
-@@ -3770,15 +3771,14 @@ lpfc_nodev_tmo_init(struct lpfc_vport *vport, int val)
- static void
- lpfc_update_rport_devloss_tmo(struct lpfc_vport *vport)
+@@ -151,7 +149,6 @@ static const struct dpu_intf_cfg sm6125_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2c0,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+index a38fb057ceda6..ef66c0649bc5b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+@@ -221,7 +221,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -229,7 +228,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x71000, .len = 0xd4,
+@@ -237,7 +235,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x71800, .len = 0xd4,
+@@ -245,7 +242,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x72000, .len = 0xd4,
+@@ -253,7 +249,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x72800, .len = 0xd4,
+@@ -261,7 +256,6 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -308,7 +302,6 @@ static const struct dpu_intf_cfg sm8250_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2c0,
+@@ -338,7 +331,6 @@ static const struct dpu_intf_cfg sm8250_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index 69d3f7e5e095b..9bfa15e4e6451 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -120,7 +120,6 @@ static const struct dpu_pingpong_cfg sc7180_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -128,7 +127,6 @@ static const struct dpu_pingpong_cfg sc7180_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -142,7 +140,6 @@ static const struct dpu_intf_cfg sc7180_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2c0,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+index 7e6000167ef02..57ce14c18defb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+@@ -83,7 +83,6 @@ static const struct dpu_pingpong_cfg sm6115_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+index cf5db6f296bd8..62db84bd15f24 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+@@ -128,7 +128,6 @@ static struct dpu_pingpong_cfg sm6350_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+@@ -136,7 +135,6 @@ static struct dpu_pingpong_cfg sm6350_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -158,7 +156,6 @@ static const struct dpu_intf_cfg sm6350_intf[] = {
+ 		.prog_fetch_lines_worst_case = 35,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x6a800, .len = 0x2c0,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+index 87a03aa165540..fb36fba5171cf 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+@@ -82,7 +82,6 @@ static const struct dpu_pingpong_cfg qcm2290_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+index a327e21c90fbc..5a3aad364c789 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+@@ -85,7 +85,6 @@ static const struct dpu_pingpong_cfg sm6375_pp[] = {
+ 		.sblk = &sdm845_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+index e2f181077d11e..d619185cfd7cc 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+@@ -221,7 +221,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x6a000, .len = 0,
+@@ -229,7 +228,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+@@ -237,7 +235,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+@@ -245,7 +242,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x6d000, .len = 0,
+@@ -253,7 +249,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x6e000, .len = 0,
+@@ -261,7 +256,6 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -332,7 +326,6 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x2c4,
+@@ -362,7 +355,6 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index cbaca4bf2864a..72c559fffbc21 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -132,7 +132,6 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x6a000, .len = 0,
+@@ -140,7 +139,6 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = 0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+@@ -148,7 +146,6 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+@@ -156,7 +153,6 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -202,7 +198,6 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x2c4,
+@@ -222,7 +217,6 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+index ff9adb8000acd..4c0528794e7a7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+@@ -221,7 +221,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x6a000, .len = 0,
+@@ -229,7 +228,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+@@ -237,7 +235,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+@@ -245,7 +242,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x6d000, .len = 0,
+@@ -253,7 +249,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x6e000, .len = 0,
+@@ -261,7 +256,6 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -328,7 +322,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+@@ -358,7 +351,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_4", .id = INTF_4,
+ 		.base = 0x38000, .len = 0x280,
+@@ -368,7 +360,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_5", .id = INTF_5,
+ 		.base = 0x39000, .len = 0x280,
+@@ -378,7 +369,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_6", .id = INTF_6,
+ 		.base = 0x3a000, .len = 0x280,
+@@ -388,7 +378,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_7", .id = INTF_7,
+ 		.base = 0x3b000, .len = 0x280,
+@@ -398,7 +387,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_8", .id = INTF_8,
+ 		.base = 0x3c000, .len = 0x280,
+@@ -408,7 +396,6 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+index 72a1726371cae..a9227f80ec31c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+@@ -222,7 +222,6 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x6a000, .len = 0,
+@@ -230,7 +229,6 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+@@ -238,7 +236,6 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+@@ -246,7 +243,6 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x6d000, .len = 0,
+@@ -254,7 +250,6 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x6e000, .len = 0,
+@@ -262,23 +257,18 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_6", .id = PINGPONG_6,
+ 		.base = 0x65800, .len = 0,
+ 		.features = BIT(DPU_PINGPONG_DITHER),
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_3,
+-		.intr_done = -1,
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_7", .id = PINGPONG_7,
+ 		.base = 0x65c00, .len = 0,
+ 		.features = BIT(DPU_PINGPONG_DITHER),
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_3,
+-		.intr_done = -1,
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -352,7 +342,6 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+@@ -382,7 +371,6 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+index 69b238ed01b98..ab8cdc1bdc09a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+@@ -238,7 +238,6 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x6a000, .len = 0,
+@@ -246,7 +245,6 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_0,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x6b000, .len = 0,
+@@ -254,7 +252,6 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x6c000, .len = 0,
+@@ -262,7 +259,6 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_1,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_4", .id = PINGPONG_4,
+ 		.base = 0x6d000, .len = 0,
+@@ -270,7 +266,6 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_5", .id = PINGPONG_5,
+ 		.base = 0x6e000, .len = 0,
+@@ -278,23 +273,18 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_2,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_6", .id = PINGPONG_6,
+ 		.base = 0x66000, .len = 0,
+ 		.features = BIT(DPU_PINGPONG_DITHER),
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_3,
+-		.intr_done = -1,
+-		.intr_rdptr = -1,
+ 	}, {
+ 		.name = "pingpong_7", .id = PINGPONG_7,
+ 		.base = 0x66400, .len = 0,
+ 		.features = BIT(DPU_PINGPONG_DITHER),
+ 		.sblk = &sc7280_pp_sblk,
+ 		.merge_3d = MERGE_3D_3,
+-		.intr_done = -1,
+-		.intr_rdptr = -1,
+ 	},
+ };
+ 
+@@ -353,7 +343,6 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+-		.intr_tear_rd_ptr = -1,
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+@@ -383,7 +372,6 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 		.prog_fetch_lines_worst_case = 24,
+ 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+-		.intr_tear_rd_ptr = -1,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
+index ba06312cbb163..7c286bafb948d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
+@@ -37,7 +37,7 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms);
+  */
+ u32 dpu_core_irq_read(
+ 		struct dpu_kms *dpu_kms,
+-		int irq_idx);
++		unsigned int irq_idx);
+ 
+ /**
+  * dpu_core_irq_register_callback - For registering callback function on IRQ
+@@ -52,7 +52,7 @@ u32 dpu_core_irq_read(
+  */
+ int dpu_core_irq_register_callback(
+ 		struct dpu_kms *dpu_kms,
+-		int irq_idx,
++		unsigned int irq_idx,
+ 		void (*irq_cb)(void *arg),
+ 		void *irq_arg);
+ 
+@@ -67,7 +67,7 @@ int dpu_core_irq_register_callback(
+  */
+ int dpu_core_irq_unregister_callback(
+ 		struct dpu_kms *dpu_kms,
+-		int irq_idx);
++		unsigned int irq_idx);
+ 
+ /**
+  * dpu_debugfs_core_irq_init - register core irq debugfs
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 99cccde5d2216..8c630615ed928 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -360,7 +360,7 @@ static int dpu_encoder_helper_wait_event_timeout(int32_t drm_id,
+ 		u32 irq_idx, struct dpu_encoder_wait_info *info);
+ 
+ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
+-		int irq_idx,
++		unsigned int irq_idx,
+ 		void (*func)(void *arg),
+ 		struct dpu_encoder_wait_info *wait_info)
  {
--	struct Scsi_Host  *shost;
- 	struct lpfc_nodelist  *ndlp;
-+	unsigned long iflags;
- #if (IS_ENABLED(CONFIG_NVME_FC))
- 	struct lpfc_nvme_rport *rport;
- 	struct nvme_fc_remote_port *remoteport = NULL;
- #endif
+@@ -1551,7 +1551,7 @@ void dpu_encoder_helper_trigger_start(struct dpu_encoder_phys *phys_enc)
  
--	shost = lpfc_shost_from_vport(vport);
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		if (ndlp->rport)
- 			ndlp->rport->dev_loss_tmo = vport->cfg_devloss_tmo;
-@@ -3793,7 +3793,7 @@ lpfc_update_rport_devloss_tmo(struct lpfc_vport *vport)
- 						       vport->cfg_devloss_tmo);
- #endif
- 	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+ static int dpu_encoder_helper_wait_event_timeout(
+ 		int32_t drm_id,
+-		u32 irq_idx,
++		unsigned int irq_idx,
+ 		struct dpu_encoder_wait_info *info)
+ {
+ 	int rc = 0;
+@@ -2532,8 +2532,6 @@ unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc)
+ void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
+ 			  struct dpu_enc_phys_init_params *p)
+ {
+-	int i;
+-
+ 	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+ 	phys_enc->hw_intf = p->hw_intf;
+ 	phys_enc->hw_wb = p->hw_wb;
+@@ -2543,9 +2541,6 @@ void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
+ 	phys_enc->enc_spinlock = p->enc_spinlock;
+ 	phys_enc->enable_state = DPU_ENC_DISABLED;
+ 
+-	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+-		phys_enc->irq[i] = -EINVAL;
+-
+ 	atomic_set(&phys_enc->vblank_refcount, 0);
+ 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+ 	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+index 57a3598f2a303..ddfed280597d8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+@@ -192,7 +192,7 @@ struct dpu_encoder_phys {
+ 	atomic_t pending_ctlstart_cnt;
+ 	atomic_t pending_kickoff_cnt;
+ 	wait_queue_head_t pending_kickoff_wq;
+-	int irq[INTR_IDX_MAX];
++	unsigned int irq[INTR_IDX_MAX];
+ 	bool has_intf_te;
+ };
+ 
+@@ -365,7 +365,7 @@ void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
+  * @Return: 0 or -ERROR
+  */
+ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
+-		int irq,
++		unsigned int irq,
+ 		void (*func)(void *arg),
+ 		struct dpu_encoder_wait_info *wait_info);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 3f82d84bd1c90..5a33b5a42727d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -495,7 +495,7 @@ struct dpu_mdp_cfg {
+  */
+ struct dpu_ctl_cfg {
+ 	DPU_HW_BLK_INFO;
+-	s32 intr_start;
++	unsigned int intr_start;
+ };
+ 
+ /**
+@@ -558,8 +558,8 @@ struct dpu_dspp_cfg  {
+ struct dpu_pingpong_cfg  {
+ 	DPU_HW_BLK_INFO;
+ 	u32 merge_3d;
+-	s32 intr_done;
+-	s32 intr_rdptr;
++	unsigned int intr_done;
++	unsigned int intr_rdptr;
+ 	const struct dpu_pingpong_sub_blks *sblk;
+ };
+ 
+@@ -606,9 +606,9 @@ struct dpu_intf_cfg  {
+ 	u32 type;   /* interface type*/
+ 	u32 controller_id;
+ 	u32 prog_fetch_lines_worst_case;
+-	s32 intr_underrun;
+-	s32 intr_vsync;
+-	s32 intr_tear_rd_ptr;
++	unsigned int intr_underrun;
++	unsigned int intr_vsync;
++	unsigned int intr_tear_rd_ptr;
+ };
+ 
+ /**
+@@ -627,7 +627,7 @@ struct dpu_wb_cfg {
+ 	u8 vbif_idx;
+ 	u32 maxlinewidth;
+ 	u32 xin_id;
+-	s32 intr_wb_done;
++	unsigned int intr_wb_done;
+ 	const u32 *format_list;
+ 	u32 num_formats;
+ 	enum dpu_clk_ctrl_type clk_ctrl;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index c8d7929ce5232..6e1c4d684d2e2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -199,15 +199,15 @@ static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
+ 
+ #define DPU_IRQ_MASK(irq_idx)	(BIT(DPU_IRQ_BIT(irq_idx)))
+ 
+-static inline bool dpu_core_irq_is_valid(int irq_idx)
++static inline bool dpu_core_irq_is_valid(unsigned int irq_idx)
+ {
+-	return irq_idx >= 0 && irq_idx < DPU_NUM_IRQS;
++	return irq_idx && irq_idx <= DPU_NUM_IRQS;
+ }
+ 
+ static inline struct dpu_hw_intr_entry *dpu_core_irq_get_entry(struct dpu_hw_intr *intr,
+-							       int irq_idx)
++							       unsigned int irq_idx)
+ {
+-	return &intr->irq_tbl[irq_idx];
++	return &intr->irq_tbl[irq_idx - 1];
  }
  
  /**
-@@ -3979,8 +3979,8 @@ lpfc_vport_param_init(tgt_queue_depth, LPFC_MAX_TGT_QDEPTH,
- static int
- lpfc_tgt_queue_depth_set(struct lpfc_vport *vport, uint val)
+@@ -215,7 +215,7 @@ static inline struct dpu_hw_intr_entry *dpu_core_irq_get_entry(struct dpu_hw_int
+  * @dpu_kms:		Pointer to DPU's KMS structure
+  * @irq_idx:		interrupt index
+  */
+-static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
++static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, unsigned int irq_idx)
  {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
- 	struct lpfc_nodelist *ndlp;
-+	unsigned long iflags;
+ 	struct dpu_hw_intr_entry *irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, irq_idx);
  
- 	if (!lpfc_rangecheck(val, LPFC_MIN_TGT_QDEPTH, LPFC_MAX_TGT_QDEPTH))
- 		return -EINVAL;
-@@ -3988,14 +3988,13 @@ lpfc_tgt_queue_depth_set(struct lpfc_vport *vport, uint val)
- 	if (val == vport->cfg_tgt_queue_depth)
- 		return 0;
+@@ -240,7 +240,7 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
+ 	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+ 	struct dpu_hw_intr *intr = dpu_kms->hw_intr;
+ 	int reg_idx;
+-	int irq_idx;
++	unsigned int irq_idx;
+ 	u32 irq_status;
+ 	u32 enable_mask;
+ 	int bit;
+@@ -296,7 +296,8 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
+ 	return IRQ_HANDLED;
+ }
  
--	spin_lock_irq(shost->host_lock);
- 	vport->cfg_tgt_queue_depth = val;
- 
- 	/* Next loop thru nodelist and change cmd_qdepth */
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp)
- 		ndlp->cmd_qdepth = vport->cfg_tgt_queue_depth;
--
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+-static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
++static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr,
++					 unsigned int irq_idx)
+ {
+ 	int reg_idx;
+ 	const struct dpu_intr_reg *reg;
+@@ -351,7 +352,8 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
  	return 0;
  }
  
-@@ -5241,8 +5240,8 @@ lpfc_vport_param_show(max_scsicmpl_time);
- static int
- lpfc_max_scsicmpl_time_set(struct lpfc_vport *vport, int val)
+-static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
++static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr,
++					  unsigned int irq_idx)
  {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
- 	struct lpfc_nodelist *ndlp, *next_ndlp;
-+	unsigned long iflags;
+ 	int reg_idx;
+ 	const struct dpu_intr_reg *reg;
+@@ -438,7 +440,8 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+ 	wmb();
+ }
  
- 	if (val == vport->cfg_max_scsicmpl_time)
- 		return 0;
-@@ -5250,13 +5249,13 @@ lpfc_max_scsicmpl_time_set(struct lpfc_vport *vport, int val)
- 		return -EINVAL;
- 	vport->cfg_max_scsicmpl_time = val;
+-u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
++u32 dpu_core_irq_read(struct dpu_kms *dpu_kms,
++		      unsigned int irq_idx)
+ {
+ 	struct dpu_hw_intr *intr = dpu_kms->hw_intr;
+ 	int reg_idx;
+@@ -502,7 +505,7 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
  
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
- 		if (ndlp->nlp_state == NLP_STE_UNUSED_NODE)
- 			continue;
- 		ndlp->cmd_qdepth = vport->cfg_tgt_queue_depth;
+ 		intr->irq_mask |= BIT(MDP_INTFn_INTR(intf->id));
+ 
+-		if (intf->intr_tear_rd_ptr != -1)
++		if (intf->intr_tear_rd_ptr)
+ 			intr->irq_mask |= BIT(DPU_IRQ_REG(intf->intr_tear_rd_ptr));
  	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+ 
+@@ -516,9 +519,10 @@ void dpu_hw_intr_destroy(struct dpu_hw_intr *intr)
+ 	kfree(intr);
+ }
+ 
+-int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+-		void (*irq_cb)(void *arg),
+-		void *irq_arg)
++int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms,
++				   unsigned int irq_idx,
++				   void (*irq_cb)(void *arg),
++				   void *irq_arg)
+ {
+ 	struct dpu_hw_intr_entry *irq_entry;
+ 	unsigned long irq_flags;
+@@ -565,7 +569,8 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
  	return 0;
  }
- lpfc_vport_param_store(max_scsicmpl_time);
-@@ -6858,17 +6857,19 @@ lpfc_get_node_by_target(struct scsi_target *starget)
- 	struct Scsi_Host  *shost = dev_to_shost(starget->dev.parent);
- 	struct lpfc_vport *vport = (struct lpfc_vport *) shost->hostdata;
- 	struct lpfc_nodelist *ndlp;
-+	unsigned long iflags;
  
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	/* Search for this, mapped, target ID */
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		if (ndlp->nlp_state == NLP_STE_MAPPED_NODE &&
- 		    starget->id == ndlp->nlp_sid) {
--			spin_unlock_irq(shost->host_lock);
-+			spin_unlock_irqrestore(&vport->fc_nodes_list_lock,
-+					       iflags);
- 			return ndlp;
- 		}
- 	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 	return NULL;
- }
- 
-diff --git a/drivers/scsi/lpfc/lpfc_ct.c b/drivers/scsi/lpfc/lpfc_ct.c
-index 3f5d8c1a9913a..aa2157b3bba21 100644
---- a/drivers/scsi/lpfc/lpfc_ct.c
-+++ b/drivers/scsi/lpfc/lpfc_ct.c
-@@ -1865,11 +1865,10 @@ static uint32_t
- lpfc_find_map_node(struct lpfc_vport *vport)
+-int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx)
++int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms,
++				     unsigned int irq_idx)
  {
- 	struct lpfc_nodelist *ndlp, *next_ndlp;
--	struct Scsi_Host  *shost;
-+	unsigned long iflags;
- 	uint32_t cnt = 0;
+ 	struct dpu_hw_intr_entry *irq_entry;
+ 	unsigned long irq_flags;
+@@ -608,7 +613,7 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+ 	int i, irq_count;
+ 	void *cb;
  
--	shost = lpfc_shost_from_vport(vport);
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
- 		if (ndlp->nlp_type & NLP_FABRIC)
- 			continue;
-@@ -1877,7 +1876,7 @@ lpfc_find_map_node(struct lpfc_vport *vport)
- 		    (ndlp->nlp_state == NLP_STE_UNMAPPED_NODE))
- 			cnt++;
+-	for (i = 0; i < DPU_NUM_IRQS; i++) {
++	for (i = 1; i <= DPU_NUM_IRQS; i++) {
+ 		spin_lock_irqsave(&dpu_kms->hw_intr->irq_lock, irq_flags);
+ 		irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, i);
+ 		irq_count = atomic_read(&irq_entry->count);
+@@ -644,7 +649,7 @@ void dpu_core_irq_preinstall(struct msm_kms *kms)
+ 	dpu_disable_all_irqs(dpu_kms);
+ 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ 
+-	for (i = 0; i < DPU_NUM_IRQS; i++) {
++	for (i = 1; i <= DPU_NUM_IRQS; i++) {
+ 		irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, i);
+ 		atomic_set(&irq_entry->count, 0);
  	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 	return cnt;
- }
- 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
-index 6b6c964e8076e..e7da5d562f48c 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.c
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.c
-@@ -806,10 +806,10 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- {
- 	int len = 0;
- 	int i, iocnt, outio, cnt;
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
- 	struct lpfc_hba  *phba = vport->phba;
- 	struct lpfc_nodelist *ndlp;
- 	unsigned char *statep;
-+	unsigned long iflags;
- 	struct nvme_fc_local_port *localport;
- 	struct nvme_fc_remote_port *nrport = NULL;
- 	struct lpfc_nvme_rport *rport;
-@@ -818,7 +818,7 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- 	outio = 0;
- 
- 	len += scnprintf(buf+len, size-len, "\nFCP Nodelist Entries ...\n");
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		iocnt = 0;
- 		if (!cnt) {
-@@ -908,7 +908,7 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- 					 ndlp->nlp_defer_did);
- 		len +=  scnprintf(buf+len, size-len, "\n");
- 	}
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 
- 	len += scnprintf(buf + len, size - len,
- 			"\nOutstanding IO x%x\n",  outio);
-@@ -940,8 +940,6 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- 	if (!localport)
- 		goto out_exit;
- 
--	spin_lock_irq(shost->host_lock);
--
- 	/* Port state is only one of two values for now. */
- 	if (localport->port_id)
- 		statep = "ONLINE";
-@@ -953,6 +951,7 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- 			localport->port_id, statep);
- 
- 	len += scnprintf(buf + len, size - len, "\tRport List:\n");
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		/* local short-hand pointer. */
- 		spin_lock(&ndlp->lock);
-@@ -1006,8 +1005,7 @@ lpfc_debugfs_nodelist_data(struct lpfc_vport *vport, char *buf, int size)
- 		/* Terminate the string. */
- 		len +=  scnprintf(buf + len, size - len, "\n");
- 	}
--
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
-  out_exit:
- 	return len;
- }
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 6d466845e5ada..ef255f05dc785 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -4860,10 +4860,10 @@ void
- lpfc_nlp_set_state(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- 		   int state)
- {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
- 	int  old_state = ndlp->nlp_state;
- 	int node_dropped = ndlp->nlp_flag & NLP_DROPPED;
- 	char name1[16], name2[16];
-+	unsigned long iflags;
- 
- 	lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE,
- 			 "0904 NPort state transition x%06x, %s -> %s\n",
-@@ -4890,9 +4890,9 @@ lpfc_nlp_set_state(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- 	}
- 
- 	if (list_empty(&ndlp->nlp_listp)) {
--		spin_lock_irq(shost->host_lock);
-+		spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 		list_add_tail(&ndlp->nlp_listp, &vport->fc_nodes);
--		spin_unlock_irq(shost->host_lock);
-+		spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 	} else if (old_state)
- 		lpfc_nlp_counters(vport, old_state, -1);
- 
-@@ -4904,26 +4904,26 @@ lpfc_nlp_set_state(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- void
- lpfc_enqueue_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
- {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
-+	unsigned long iflags;
- 
- 	if (list_empty(&ndlp->nlp_listp)) {
--		spin_lock_irq(shost->host_lock);
-+		spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 		list_add_tail(&ndlp->nlp_listp, &vport->fc_nodes);
--		spin_unlock_irq(shost->host_lock);
-+		spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 	}
- }
- 
- void
- lpfc_dequeue_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
- {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
-+	unsigned long iflags;
- 
- 	lpfc_cancel_retry_delay_tmo(vport, ndlp);
- 	if (ndlp->nlp_state && !list_empty(&ndlp->nlp_listp))
- 		lpfc_nlp_counters(vport, ndlp->nlp_state, -1);
--	spin_lock_irq(shost->host_lock);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
- 	list_del_init(&ndlp->nlp_listp);
--	spin_unlock_irq(shost->host_lock);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
- 	lpfc_nlp_state_cleanup(vport, ndlp, ndlp->nlp_state,
- 				NLP_STE_UNUSED_NODE);
- }
-@@ -5421,8 +5421,8 @@ lpfc_unreg_hba_rpis(struct lpfc_hba *phba)
- {
- 	struct lpfc_vport **vports;
- 	struct lpfc_nodelist *ndlp;
--	struct Scsi_Host *shost;
- 	int i;
-+	unsigned long iflags;
- 
- 	vports = lpfc_create_vport_work_array(phba);
- 	if (!vports) {
-@@ -5431,17 +5431,18 @@ lpfc_unreg_hba_rpis(struct lpfc_hba *phba)
+@@ -660,7 +665,7 @@ void dpu_core_irq_uninstall(struct msm_kms *kms)
  		return;
- 	}
- 	for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
--		shost = lpfc_shost_from_vport(vports[i]);
--		spin_lock_irq(shost->host_lock);
-+		spin_lock_irqsave(&vports[i]->fc_nodes_list_lock, iflags);
- 		list_for_each_entry(ndlp, &vports[i]->fc_nodes, nlp_listp) {
- 			if (ndlp->nlp_flag & NLP_RPI_REGISTERED) {
- 				/* The mempool_alloc might sleep */
--				spin_unlock_irq(shost->host_lock);
-+				spin_unlock_irqrestore(&vports[i]->fc_nodes_list_lock,
-+						       iflags);
- 				lpfc_unreg_rpi(vports[i], ndlp);
--				spin_lock_irq(shost->host_lock);
-+				spin_lock_irqsave(&vports[i]->fc_nodes_list_lock,
-+						  iflags);
- 			}
- 		}
--		spin_unlock_irq(shost->host_lock);
-+		spin_unlock_irqrestore(&vports[i]->fc_nodes_list_lock, iflags);
- 	}
- 	lpfc_destroy_vport_work_array(phba, vports);
- }
-@@ -5690,12 +5691,11 @@ lpfc_findnode_did(struct lpfc_vport *vport, uint32_t did)
- struct lpfc_nodelist *
- lpfc_findnode_mapped(struct lpfc_vport *vport)
- {
--	struct Scsi_Host *shost = lpfc_shost_from_vport(vport);
- 	struct lpfc_nodelist *ndlp;
- 	uint32_t data1;
- 	unsigned long iflags;
  
--	spin_lock_irqsave(shost->host_lock, iflags);
-+	spin_lock_irqsave(&vport->fc_nodes_list_lock, iflags);
+ 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+-	for (i = 0; i < DPU_NUM_IRQS; i++) {
++	for (i = 1; i <= DPU_NUM_IRQS; i++) {
+ 		irq_entry = dpu_core_irq_get_entry(dpu_kms->hw_intr, i);
+ 		if (irq_entry->cb)
+ 			DPU_ERROR("IRQ=[%d, %d] still enabled/registered\n",
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+index 9df5d6e737a11..53a21ebc57e8b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+@@ -36,9 +36,9 @@ enum dpu_hw_intr_reg {
  
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
- 		if (ndlp->nlp_state == NLP_STE_UNMAPPED_NODE ||
-@@ -5704,7 +5704,8 @@ lpfc_findnode_mapped(struct lpfc_vport *vport)
- 				 ((uint32_t)ndlp->nlp_xri << 16) |
- 				 ((uint32_t)ndlp->nlp_type << 8) |
- 				 ((uint32_t)ndlp->nlp_rpi & 0xff));
--			spin_unlock_irqrestore(shost->host_lock, iflags);
-+			spin_unlock_irqrestore(&vport->fc_nodes_list_lock,
-+					       iflags);
- 			lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE,
- 					 "2025 FIND node DID "
- 					 "Data: x%px x%x x%x x%x x%px\n",
-@@ -5714,7 +5715,7 @@ lpfc_findnode_mapped(struct lpfc_vport *vport)
- 			return ndlp;
- 		}
- 	}
--	spin_unlock_irqrestore(shost->host_lock, iflags);
-+	spin_unlock_irqrestore(&vport->fc_nodes_list_lock, iflags);
+ #define MDP_INTFn_INTR(intf)	(MDP_INTF0_INTR + (intf - INTF_0))
  
- 	/* FIND node did <did> NOT FOUND */
- 	lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE,
-@@ -6757,7 +6758,7 @@ lpfc_fcf_inuse(struct lpfc_hba *phba)
- 	struct lpfc_vport **vports;
- 	int i, ret = 0;
- 	struct lpfc_nodelist *ndlp;
--	struct Scsi_Host  *shost;
-+	unsigned long iflags;
+-#define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
+-#define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
+-#define DPU_IRQ_BIT(irq_idx)	(irq_idx % 32)
++#define DPU_IRQ_IDX(reg_idx, offset)	(1 + reg_idx * 32 + offset)
++#define DPU_IRQ_REG(irq_idx)	((irq_idx - 1) / 32)
++#define DPU_IRQ_BIT(irq_idx)	((irq_idx - 1) % 32)
  
- 	vports = lpfc_create_vport_work_array(phba);
- 
-@@ -6766,8 +6767,6 @@ lpfc_fcf_inuse(struct lpfc_hba *phba)
- 		return 1;
- 
- 	for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
--		shost = lpfc_shost_from_vport(vports[i]);
--		spin_lock_irq(shost->host_lock);
- 		/*
- 		 * IF the CVL_RCVD bit is not set then we have sent the
- 		 * flogi.
-@@ -6775,15 +6774,16 @@ lpfc_fcf_inuse(struct lpfc_hba *phba)
- 		 * unreg the fcf.
- 		 */
- 		if (!(vports[i]->fc_flag & FC_VPORT_CVL_RCVD)) {
--			spin_unlock_irq(shost->host_lock);
- 			ret =  1;
- 			goto out;
- 		}
-+		spin_lock_irqsave(&vports[i]->fc_nodes_list_lock, iflags);
- 		list_for_each_entry(ndlp, &vports[i]->fc_nodes, nlp_listp) {
- 			if (ndlp->rport &&
- 			  (ndlp->rport->roles & FC_RPORT_ROLE_FCP_TARGET)) {
- 				ret = 1;
--				spin_unlock_irq(shost->host_lock);
-+				spin_unlock_irqrestore(&vports[i]->fc_nodes_list_lock,
-+						       iflags);
- 				goto out;
- 			} else if (ndlp->nlp_flag & NLP_RPI_REGISTERED) {
- 				ret = 1;
-@@ -6795,7 +6795,7 @@ lpfc_fcf_inuse(struct lpfc_hba *phba)
- 						ndlp->nlp_flag);
- 			}
- 		}
--		spin_unlock_irq(shost->host_lock);
-+		spin_unlock_irqrestore(&vports[i]->fc_nodes_list_lock, iflags);
- 	}
- out:
- 	lpfc_destroy_vport_work_array(phba, vports);
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index be5ca727d9935..fec76b90c91ab 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -3821,7 +3821,6 @@ lpfc_offline_prep(struct lpfc_hba *phba, int mbx_action)
- 			vports[i]->fc_flag &= ~FC_VFI_REGISTERED;
- 			spin_unlock_irq(shost->host_lock);
- 
--			shost =	lpfc_shost_from_vport(vports[i]);
- 			list_for_each_entry_safe(ndlp, next_ndlp,
- 						 &vports[i]->fc_nodes,
- 						 nlp_listp) {
-@@ -4825,6 +4824,7 @@ lpfc_create_port(struct lpfc_hba *phba, int instance, struct device *dev)
- 
- 	/* Initialize all internally managed lists. */
- 	INIT_LIST_HEAD(&vport->fc_nodes);
-+	spin_lock_init(&vport->fc_nodes_list_lock);
- 	INIT_LIST_HEAD(&vport->rcv_buffer_list);
- 	spin_lock_init(&vport->work_port_lock);
+ #define DPU_NUM_IRQS		(MDP_INTR_MAX * 32)
  
 -- 
 2.53.0
