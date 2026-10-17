@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB32C026C;
-	Sat, 17 Oct 2026 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175CC2C026C;
+	Sat, 17 Oct 2026 16:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254224; cv=none; b=PHbEgRPm7aBb+6An/57b2BIe0Jz4IurCoKL5dljYyELdP9s6T7ncad5eixMVVeaK4vdHoelF284dIbZf1DAEWPmLoP601lc2ywB6xRZHUzo+KvzcKoTRXNOvOE8v6qE1+zFYfGMvBA5SofHG5n+R595mifL/O3TZcyB5ONI3cdg=
+	t=1792254227; cv=none; b=t4iiH1O3+iHOAdCt0BgvulT+6KRVtGfQrp3w07uXwXE9EAXAwRm1DBE5OB40s3ft72x+x7LSEMPKOCfoUTginvrUzviO2HM0TXKzU2Ll2wb96mo64+6umvVSbZ3fI0gR3G3LNIhIxrDLOfKyti3m9sFMk/hAbSOXgeeCf09qA4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254224; c=relaxed/simple;
-	bh=LT2ApSvJaczARvmYcZ6pAbFs6kBO8WUYrPe/0EfmN70=;
+	s=arc-20240116; t=1792254227; c=relaxed/simple;
+	bh=s85u5DQAPL/iOWDT/s8rixTf6SX7vlsUS95pqYaTu20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vb3e24Zq+BTJCZaYZTZKcBSmU+EZssaXS+acUGpAzxluxK2n7WarEL6f68fTtSJuS8H26u//Pg0SZ75H67z4+SBQYXf0b9pYVbUM2QkdGDwljEOB5MFOejZLsALVL0E9Ons3qBEaLahMzGRPug5XTCQSY1LrBg54Z9UUt2PZe+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9Pryudk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sLkBoDkezTtT6nGcJVdfBjdmN1d+Cj7YoIAYFDYmVQLoqaOYwLw/YyyMueziVQMIhaxX7c02AGelU0veqhO95Yeo6wJuCsat1yFuFeeNXy9IxMBo3KJK3IIWIz4Dvi0rQwSdjUHAf7BdkAUtTRw4+2+XdvIy5ZH1e2F/ipVFHDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPjYmogW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9Pryudk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297171F000C4;
-	Sat, 17 Oct 2026 16:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPjYmogW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B32A1F000C4;
+	Sat, 17 Oct 2026 16:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254222;
-	bh=tT/GbIGxWzAXvjk3e6pZn2pDnTNzKoLVrN/tMxhYBWs=;
+	s=korg; t=1792254225;
+	bh=NKGtS5byiDp9+1CT8Aebx952QkS4RDl4PAwqXictqpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9Pryudkc/9aJQwEMXTVwi8svGj5/jgOil0cooJHH8s4P8mXQpdZEOAGgQsUEyubC
-	 ItYPg75Xu11gNGPfjFwhFuySJeLLGC4VKnLsm3Lip8OzxlATQw65pmOyoJdByAbUVa
-	 G2xNP1g+83KOWOjF4hW+usS/2NnoFHaeRQ3KmHpA=
+	b=YPjYmogWZUTV7YgMrHULgB7ya999aW7FzSWbT95griwEsipHSsQKQ8muice7vnTr8
+	 ZmZ2HLd7OaS825s/GE/GC6JgddxndqY3hjSEM95JkaZpwFnjHl0bWQkpxr3210y/5R
+	 BYCHXzJXvnofgT95Gqk7g/t9XqVSTdLdZVAYfkCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Yosry Ahmed <yosry@kernel.org>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
 	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 374/869] KVM: x86: Move update_cr8_intercept() to lapic.c
-Date: Sat, 17 Oct 2026 17:53:35 +0200
-Message-ID: <20261017160046.702945243@linuxfoundation.org>
+Subject: [PATCH 6.12 375/869] KVM: x86: Unconditionally recompute CR8 intercept on PPR update
+Date: Sat, 17 Oct 2026 17:53:36 +0200
+Message-ID: <20261017160046.729382750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,166 +47,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Carlos López <clopez@suse.de>
 
-[ Upstream commit c7722e5e1daeeabbd9f969554d52bb7158120b27 ]
+[ Upstream commit bb365a506b1e6fb050c0fceaad354fe395385ef0 ]
 
-Move update_cr8_intercept() to lapic.c so that it's globally visible
-in anticipation of extracting most of the register-specific code out of
-x86.c and into a new compilation unit.  Opportunistically prefix the
-helper kvm_lapic_ to make its role/scope more obvious.
+The TPR_THRESHOLD field in the VMCS is used by VMX to induce VM exits
+when the guest's virtual TPR falls under the specified threshold,
+allowing KVM to inject previously masked interrupts.
 
-No functional change intended.
+KVM handles these VM exits in handle_tpr_below_threshold().
+Commit eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
+optimized this function by calling apic_update_ppr() instead of raising
+KVM_REQ_EVENT. apic_update_ppr() then raises KVM_REQ_EVENT if there is
+a pending, deliverable interrupt.
 
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260529222223.870923-14-seanjc@google.com
+However, if there are no new interrupts pending, apic_update_ppr() does
+not issue the request. Thus, kvm_lapic_update_cr8_intercept() and
+vmx_update_cr8_intercept() are not called before VM entry, which results
+in a high, stale TPR_THRESHOLD. This is problematic due to the following
+sentence in 28.2.1.1 "VM-Execution Control Fields" in the SDM:
+
+  The following check is performed if the “use TPR shadow” VM-execution
+  control is 1 and the “virtualize APIC accesses” and “virtual-interrupt
+  delivery” VM-execution controls are both 0: the value of bits 3:0 of
+  the TPR threshold VM-execution control field should not be greater
+  than the value of bits 7:4 of VTPR.
+
+This error condition is typically not observed when KVM runs on a bare
+metal system because modern processors support APICv, which enables
+virtual-interrupt delivery, and which KVM uses when possible. This
+causes the processor to no longer generate TPR-below-threshold exits
+and to no longer check TPR_THRESHOLD on entry. However, when running
+on older platforms, or under nested virtualization on a hypervisor that
+does not support virtual-interrupt delivery and enforces this check
+(like Hyper-V) this can cause a VM entry failure with hardware error
+0x7, as seen in [1].
+
+Call kvm_lapic_update_cr8_intercept() if apic_update_ppr() does not
+find a deliverable interrupt (and thus does not raise KVM_REQ_EVENT).
+Remove calls to kvm_lapic_update_cr8_intercept() on paths that end up in
+apic_update_ppr(), as they now become redundant. This ensures that any
+path that updates the guest's PPR also figures out if KVM needs to wait
+for a TPR change (using TPR_THRESHOLD on VMX or CR8 intercepts on SVM).
+
+Link: https://github.com/coconut-svsm/svsm/issues/1081 [1]
+Tested-by: Stefano Garzarella <sgarzare@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
+Signed-off-by: Carlos López <clopez@suse.de>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: bb365a506b1e ("KVM: x86: Unconditionally recompute CR8 intercept on PPR update")
+Message-ID: <20260618174347.1981064-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/lapic.c | 26 ++++++++++++++++++++++++++
- arch/x86/kvm/lapic.h |  1 +
- arch/x86/kvm/regs.c  |  2 +-
- arch/x86/kvm/x86.c   | 31 ++-----------------------------
- arch/x86/kvm/x86.h   |  1 -
- 5 files changed, 30 insertions(+), 31 deletions(-)
+ arch/x86/kvm/lapic.c | 2 ++
+ arch/x86/kvm/regs.c  | 4 +---
+ arch/x86/kvm/x86.c   | 1 -
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index 58af5b4b7bdbd..574111144a903 100644
+index 574111144a903..6e6d00b3c042b 100644
 --- a/arch/x86/kvm/lapic.c
 +++ b/arch/x86/kvm/lapic.c
-@@ -2608,6 +2608,32 @@ u64 kvm_lapic_get_cr8(struct kvm_vcpu *vcpu)
- 	return (tpr & 0xf0) >> 4;
+@@ -994,6 +994,8 @@ static void apic_update_ppr(struct kvm_lapic *apic)
+ 	if (__apic_update_ppr(apic, &ppr) &&
+ 	    apic_has_interrupt_for_ppr(apic, ppr) != -1)
+ 		kvm_make_request(KVM_REQ_EVENT, apic->vcpu);
++	else
++		kvm_lapic_update_cr8_intercept(apic->vcpu);
  }
  
-+void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu)
-+{
-+	int max_irr, tpr;
-+
-+	if (!kvm_x86_ops.update_cr8_intercept)
-+		return;
-+
-+	if (!lapic_in_kernel(vcpu))
-+		return;
-+
-+	if (vcpu->arch.apic->apicv_active)
-+		return;
-+
-+	if (!vcpu->arch.apic->vapic_addr)
-+		max_irr = kvm_lapic_find_highest_irr(vcpu);
-+	else
-+		max_irr = -1;
-+
-+	if (max_irr != -1)
-+		max_irr >>= 4;
-+
-+	tpr = kvm_lapic_get_cr8(vcpu);
-+
-+	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
-+}
-+
- static void __kvm_apic_set_base(struct kvm_vcpu *vcpu, u64 value)
- {
- 	u64 old_value = vcpu->arch.apic_base;
-diff --git a/arch/x86/kvm/lapic.h b/arch/x86/kvm/lapic.h
-index 99c07ee76e02d..a0668b0b1d36b 100644
---- a/arch/x86/kvm/lapic.h
-+++ b/arch/x86/kvm/lapic.h
-@@ -94,6 +94,7 @@ int kvm_apic_accept_events(struct kvm_vcpu *vcpu);
- void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event);
- u64 kvm_lapic_get_cr8(struct kvm_vcpu *vcpu);
- void kvm_lapic_set_tpr(struct kvm_vcpu *vcpu, unsigned long cr8);
-+void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu);
- void kvm_lapic_set_eoi(struct kvm_vcpu *vcpu);
- void kvm_recalculate_apic_map(struct kvm *kvm);
- void kvm_apic_set_version(struct kvm_vcpu *vcpu);
+ void kvm_apic_update_ppr(struct kvm_vcpu *vcpu)
 diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
-index 5001fe33c7f28..6d71bdb9f72c8 100644
+index 6d71bdb9f72c8..49afacc9b0990 100644
 --- a/arch/x86/kvm/regs.c
 +++ b/arch/x86/kvm/regs.c
-@@ -621,7 +621,7 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
+@@ -591,8 +591,6 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
+ 	kvm_register_mark_dirty(vcpu, VCPU_EXREG_CR3);
+ 	kvm_x86_call(post_set_cr3)(vcpu, sregs->cr3);
+ 
+-	kvm_set_cr8(vcpu, sregs->cr8);
+-
+ 	*mmu_reset_needed |= vcpu->arch.efer != sregs->efer;
+ 	kvm_x86_call(set_efer)(vcpu, sregs->efer);
+ 
+@@ -621,7 +619,7 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
  	kvm_set_segment(vcpu, &sregs->tr, VCPU_SREG_TR);
  	kvm_set_segment(vcpu, &sregs->ldt, VCPU_SREG_LDTR);
  
--	update_cr8_intercept(vcpu);
-+	kvm_lapic_update_cr8_intercept(vcpu);
+-	kvm_lapic_update_cr8_intercept(vcpu);
++	kvm_set_cr8(vcpu, sregs->cr8);
  
  	/* Older userspace won't unhalt the vcpu on reset. */
  	if (kvm_vcpu_is_bsp(vcpu) && kvm_rip_read(vcpu) == 0xfff0 &&
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 65f5a18824266..796bca8b9a865 100644
+index 796bca8b9a865..23696631599ac 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -4697,7 +4697,7 @@ static int kvm_vcpu_ioctl_set_lapic(struct kvm_vcpu *vcpu,
+@@ -4697,7 +4697,6 @@ static int kvm_vcpu_ioctl_set_lapic(struct kvm_vcpu *vcpu,
  	r = kvm_apic_set_state(vcpu, s);
  	if (r)
  		return r;
--	update_cr8_intercept(vcpu);
-+	kvm_lapic_update_cr8_intercept(vcpu);
+-	kvm_lapic_update_cr8_intercept(vcpu);
  
  	return 0;
  }
-@@ -9765,33 +9765,6 @@ static void post_kvm_run_save(struct kvm_vcpu *vcpu)
- 		kvm_run->flags |= KVM_RUN_X86_GUEST_MODE;
- }
- 
--void update_cr8_intercept(struct kvm_vcpu *vcpu)
--{
--	int max_irr, tpr;
--
--	if (!kvm_x86_ops.update_cr8_intercept)
--		return;
--
--	if (!lapic_in_kernel(vcpu))
--		return;
--
--	if (vcpu->arch.apic->apicv_active)
--		return;
--
--	if (!vcpu->arch.apic->vapic_addr)
--		max_irr = kvm_lapic_find_highest_irr(vcpu);
--	else
--		max_irr = -1;
--
--	if (max_irr != -1)
--		max_irr >>= 4;
--
--	tpr = kvm_lapic_get_cr8(vcpu);
--
--	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
--}
--
--
- int kvm_check_nested_events(struct kvm_vcpu *vcpu)
- {
- 	if (kvm_test_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
-@@ -10494,7 +10467,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 			kvm_x86_call(enable_irq_window)(vcpu);
- 
- 		if (kvm_lapic_enabled(vcpu)) {
--			update_cr8_intercept(vcpu);
-+			kvm_lapic_update_cr8_intercept(vcpu);
- 			kvm_lapic_sync_to_vapic(vcpu);
- 		}
- 	}
-diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
-index abab4bd96d0ac..75dc2219c51c5 100644
---- a/arch/x86/kvm/x86.h
-+++ b/arch/x86/kvm/x86.h
-@@ -641,6 +641,5 @@ int kvm_vcpu_ioctl_x86_set_debugregs(struct kvm_vcpu *vcpu,
- 				     struct kvm_debugregs *dbgregs);
- void kvm_invalidate_pcid(struct kvm_vcpu *vcpu, unsigned long pcid);
- void kvm_handle_exception_payload_quirk(struct kvm_vcpu *vcpu);
--void update_cr8_intercept(struct kvm_vcpu *vcpu);
- 
- #endif
 -- 
 2.53.0
 
