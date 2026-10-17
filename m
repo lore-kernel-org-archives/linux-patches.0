@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5A2E8DEB;
-	Sat, 17 Oct 2026 16:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8968370ACE;
+	Sat, 17 Oct 2026 16:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253365; cv=none; b=jw+zQvWGGtqqvg3KWtF+pEyB7CbawkbN8QNK1nYn3pNX3ipIAp0ckzv0bvpcENJ/iLbgJO14nKPs3TcfTNKMRzMGQnheo8AToRooScyxzT+OFnko55fr4RxsKss1vUytpCBJHI4tT2DlqnFwZ66DtBsF+ZPR9oFIJDje9bzTiIQ=
+	t=1792253368; cv=none; b=Hn1fJwafdTndAPAmKAEsmLTLrpQV8MuSoCaLNTwyrmZxbc2v5KI5M1Wl788yrm6Z570c13pC311j700PY/kJe+TkjL/9nrT+dm0bOXAmSCqjOpbMvSj2CDz+3U/JLdM06hulbk5mjHwPi0XBMR1Ym8ykvu4cOC9FmC/4dqqLljc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253365; c=relaxed/simple;
-	bh=rUwkqplKHbOhwy4m0s2LQbwhyWPfu+B7EasRJqq0BVU=;
+	s=arc-20240116; t=1792253368; c=relaxed/simple;
+	bh=jLjvkKgYzr/6faVKEaDgX4WfiLmGBMS+6XLE/VS1FCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8lFJLagrzw8ZsSdqGBR/lTawH8YQRvjPbeg2Kmo0HTMIeZlndxguRhXSBRZa5rvqgBQC73tqzD9xVK5AyP2yGE5aLWiwZhYcok5RsnMvfT3IihSPWi/vw+g4F7lUthQGfuOAsdCAv9ADgjQYafDJVYqRnCQ1bxbn2Fq6MZJb10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PA3wjQfz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAPqYFQiyRmA0d0D9r7j7JT7pDGb5KWGkoSBoLDd19cHEQ0iRCBGrhb+3/O+R5nT5cJquawMQDvCbe0ynijeJJcK8bLkj+yTxqzSBmGjB481260p9FbZH8Iq3M5lmvOXLaBGtWcCESWQ4s75dQ3bpF5aWlOd3Fa+//87HQN94Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tK+nt7mF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PA3wjQfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B001F000C4;
-	Sat, 17 Oct 2026 16:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tK+nt7mF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D430A1F000C5;
+	Sat, 17 Oct 2026 16:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253364;
-	bh=euTGCZWOJKhTPfR2YLyoyCAH4guQhEqymyWvLFT/3F8=;
+	s=korg; t=1792253367;
+	bh=2c53FjLPkuh7y7FBQAvxd1KyRU1dIobjCJh0TQ0h4JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PA3wjQfzkV0fgqVtWpTfMHd6W/2ZPCrzDD2GrpeQ7f541XjW2+uAwhviCh5Ku5CkF
-	 qga1hQkZXperAgQFyOwXweoh9RU7VAHyNTDZJanvELNEMM0dMpb86JB/W/LXvPiVHV
-	 PotztwJj6FOZSNdLq815aLhoF/22VeCraz6eFCQI=
+	b=tK+nt7mFx8F5nuewjz8+aRt2ST+zNBDb7BsG0x3l6owDhsJFsXaPpr4HzRkVItapo
+	 ahT56Wzlwa6kxS8OWo3A2Y9dd3LHlUUIe15TabGVW9RmYfK+FJLtKPKpHnys9vWJDW
+	 87dRceLogC8rm9EHilfbYLD8jURJu42PQP7r3tqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Will Deacon <will@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/869] perf/dwc_pcie: fix duplicate pci_dev devices
-Date: Sat, 17 Oct 2026 17:48:28 +0200
-Message-ID: <20261017160038.742725546@linuxfoundation.org>
+Subject: [PATCH 6.12 094/869] s390/mm: Fix in_atomic() handling in do_secure_storage_access()
+Date: Sat, 17 Oct 2026 17:48:55 +0200
+Message-ID: <20261017160039.447394421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,77 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 7f35b429802a8065aa61e2a3f567089649f4d98e ]
+[ Upstream commit 11709abccf93b08adde95ef313c300b0d4bc28f1 ]
 
-During platform_device_register, wrongly using struct device
-pci_dev as platform_data caused a kmemdup copy of pci_dev. Worse
-still, accessing the duplicated device leads to list corruption as its
-mutex content (e.g., list, magic) remains the same as the original.
+Kernel user spaces accesses to not exported pages in atomic context
+incorrectly try to resolve the page fault.
+With debug options enabled call traces like this can be seen:
 
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250220121716.50324-3-cuiyunhui@bytedance.com
-Signed-off-by: Will Deacon <will@kernel.org>
+BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1523
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 419074, name: qemu-system-s39
+preempt_count: 1, expected: 0
+RCU nest depth: 0, expected: 0
+INFO: lockdep is turned off.
+Preemption disabled at:
+[<00000383ea47cfa2>] copy_page_from_iter_atomic+0xa2/0x8a0
+CPU: 12 UID: 0 PID: 419074 Comm: qemu-system-s39
+Tainted: G        W           6.16.0-20250531.rc0.git0.69b3a602feac.63.fc42.s390x+debug #1 PREEMPT
+Tainted: [W]=WARN
+Hardware name: IBM 3931 A01 703 (LPAR)
+Call Trace:
+ [<00000383e990d282>] dump_stack_lvl+0xa2/0xe8
+ [<00000383e99bf152>] __might_resched+0x292/0x2d0
+ [<00000383eaa7c374>] down_read+0x34/0x2d0
+ [<00000383e99432f8>] do_secure_storage_access+0x108/0x360
+ [<00000383eaa724b0>] __do_pgm_check+0x130/0x220
+ [<00000383eaa842e4>] pgm_check_handler+0x114/0x160
+ [<00000383ea47d028>] copy_page_from_iter_atomic+0x128/0x8a0
+([<00000383ea47d016>] copy_page_from_iter_atomic+0x116/0x8a0)
+ [<00000383e9c45eae>] generic_perform_write+0x16e/0x310
+ [<00000383e9eb87f4>] ext4_buffered_write_iter+0x84/0x160
+ [<00000383e9da0de4>] vfs_write+0x1c4/0x460
+ [<00000383e9da123c>] ksys_write+0x7c/0x100
+ [<00000383eaa7284e>] __do_syscall+0x15e/0x280
+ [<00000383eaa8417e>] system_call+0x6e/0x90
+INFO: lockdep is turned off.
+
+It is not allowed to take the mmap_lock while in atomic context. Therefore
+handle such a secure storage access fault as if the accessed page is not
+mapped: the uaccess function will return -EFAULT, and the caller has to
+deal with this. Usually this means that the access is retried in process
+context, which allows to resolve the page fault (or in this case export the
+page).
+
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250603134936.1314139-1-hca@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/dwc_pcie_pmu.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/s390/mm/fault.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
-index 9687083c42fbc..bde0a0a06cff5 100644
---- a/drivers/perf/dwc_pcie_pmu.c
-+++ b/drivers/perf/dwc_pcie_pmu.c
-@@ -564,9 +564,7 @@ static int dwc_pcie_register_dev(struct pci_dev *pdev)
- 	u32 sbdf;
- 
- 	sbdf = (pci_domain_nr(pdev->bus) << 16) | PCI_DEVID(pdev->bus->number, pdev->devfn);
--	plat_dev = platform_device_register_data(NULL, "dwc_pcie_pmu", sbdf,
--						 pdev, sizeof(*pdev));
--
-+	plat_dev = platform_device_register_simple("dwc_pcie_pmu", sbdf, NULL, 0);
- 	if (IS_ERR(plat_dev))
- 		return PTR_ERR(plat_dev);
- 
-@@ -615,18 +613,26 @@ static struct notifier_block dwc_pcie_pmu_nb = {
- 
- static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
- {
--	struct pci_dev *pdev = plat_dev->dev.platform_data;
-+	struct pci_dev *pdev;
- 	struct dwc_pcie_pmu *pcie_pmu;
- 	char *name;
- 	u32 sbdf;
- 	u16 vsec;
- 	int ret;
- 
-+	sbdf = plat_dev->id;
-+	pdev = pci_get_domain_bus_and_slot(sbdf >> 16, PCI_BUS_NUM(sbdf & 0xffff),
-+					   sbdf & 0xff);
-+	if (!pdev) {
-+		pr_err("No pdev found for the sbdf 0x%x\n", sbdf);
-+		return -ENODEV;
-+	}
-+
- 	vsec = dwc_pcie_des_cap(pdev);
- 	if (!vsec)
- 		return -ENODEV;
- 
--	sbdf = plat_dev->id;
-+	pci_dev_put(pdev);
- 	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", sbdf);
- 	if (!name)
- 		return -ENOMEM;
-@@ -641,7 +647,7 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
- 	pcie_pmu->on_cpu = -1;
- 	pcie_pmu->pmu = (struct pmu){
- 		.name		= name,
--		.parent		= &pdev->dev,
-+		.parent		= &plat_dev->dev,
- 		.module		= THIS_MODULE,
- 		.attr_groups	= dwc_pcie_attr_groups,
- 		.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
+diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
+index 93ae097ef0e08..f907e916aa20d 100644
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -448,6 +448,8 @@ void do_secure_storage_access(struct pt_regs *regs)
+ 		if (rc)
+ 			BUG();
+ 	} else {
++		if (faulthandler_disabled())
++			return handle_fault_error_nolock(regs, 0);
+ 		mm = current->mm;
+ 		mmap_read_lock(mm);
+ 		vma = find_vma(mm, addr);
 -- 
 2.53.0
 
