@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD8018D62A;
-	Sat, 17 Oct 2026 17:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D813B774F;
+	Sat, 17 Oct 2026 17:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258052; cv=none; b=GLAQCMj4vulvMvh/s2OQvg20q84HsiSJAJHz1HTmqYXGHnMw8Toqr1Eln/i1zS+0fZuz942lFdH3JRwmi0jmZQnvYUYLSh8NUHULX0AUZKFoqvZ1NqnxOUpFQ3J+bXqBtzFQN1Zzh3NBNqjqydAyaWxC/yjgsArU5W4LmCea87s=
+	t=1792258055; cv=none; b=FY2+SsKU/9Q6jF1+AVwT6H4/8bjktI0LJjSvPX17svDX+GjNv8SSEpZpcIl48SdcKvq/3VnJTwkPK2eJ3Ad0R1BlDUoI0DpCq2Adv4sbuAhgSM0QUpSB/wzSZnx9ELdyQkRKC2r6hTxLBFvGm5w2XPSOqoevfYIYQOJwPasG7ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258052; c=relaxed/simple;
-	bh=kKF5DIygPauw72YFWuwuMq4MVCkdjhcTat1jyn53JSU=;
+	s=arc-20240116; t=1792258055; c=relaxed/simple;
+	bh=YsdIwxQL+snCnn8kTY253iZmdganlPUjSLJkVaPdnJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPjQ+99DrYWri4J6skzKPQEt3bWD4jA1QBtYaUOXpgD7FVRRgzgnTQ0sMugWHStMAVgkbGutFcTqvvHEJat7tjldf5SvuOwEqYEZ6Kf5d9qpIhCo7viiNTLUrPc4Dhul3XJbGXb7ntFj5o3MTM2rRftO8Uy3Qc4Z/oH8+Zy+rQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=if1khYDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0CjD6CChsPkHXvU9b4zbjSzqLI1ochFLaDz6BWvvI2YLvZCK5/XyNAlCHGtMyy6RQbloe7auFNGoe69ywjuPwPbSqtSdhgZApcv4cjxkMCfSWCV72iXo/jZdMo1mtopHq0Z2Qs/jnl+m7ySNOcAHdPwZAhfOBPx/psBTgstIuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvXLC6+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="if1khYDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5BB1F000C5;
-	Sat, 17 Oct 2026 17:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvXLC6+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEBF1F000C4;
+	Sat, 17 Oct 2026 17:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258051;
-	bh=R4pUud7rKnSLm5rmjsqSLo2vQGpu9jp8bRcGplDrMTM=;
+	s=korg; t=1792258054;
+	bh=/HQ2qyrj8CQzukk7vn11lx9WIhphiuKSm7LbbgGjJ7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=if1khYDTBsDjsaG0HlSojvUjhk5lz+JTfyLYsxoeKabVv9XAMR/UQisGbgy7FhSS4
-	 boxIg3RYHAfcWMDrUYHdKLMOyyguP+iGj0U+Z1RjdCfvsvIeNiaQZY0Fo/0QdfkI/V
-	 m/zxDe0v4YZVoM2gb9VusdCy9ErWnZ36WmU+Qu/A=
+	b=rvXLC6+J3i5DQiAbpwoAimtK4lEgKo+ZV3JbevuZXAa0tMzZZ8i5uZLwQwLjpMeA/
+	 HB54Xy1SMZFiV9Es+3ZCu/Nnjkp5B3H4/87FCJgSf7YNeglxUOGJd5A2vjCpLlgbPx
+	 piB2sBRSmxennNXXNdKSdRnyPOoDrWdz7NPOB7Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Wen Gong <quic_wgong@quicinc.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0711/1674] wifi: ath12k: refactor DP Rxdma ring structure
-Date: Sat, 17 Oct 2026 17:49:43 +0200
-Message-ID: <20261017160449.356668407@linuxfoundation.org>
+Subject: [PATCH 6.6 0702/1674] wifi: ath11k: add support to select 6 GHz regulatory type
+Date: Sat, 17 Oct 2026 17:49:34 +0200
+Message-ID: <20261017160449.122794932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,274 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit 9f1eebf0454dc97512cdd74b9be38330734a0f86 ]
+[ Upstream commit e3d373ec4f02bf41379d91707e3e3f2a46464cd7 ]
 
-Currently data path Rxdma ring structure store the IDR buffer and lock.
-These IDR handling is needed only for SW cookie conversion and not
-needed for HW cookie conversion. REO Rxdma ring use the HW cookie
-conversion and monitor Rxdma ring use the SW cookie conversion.
-Since idr not needed for REO Rxdma ring, remove the IDR data entity
-from the data path Rxdma ring structure. Introduce the new data path ring
-structure for monitor rxmda rings since it need IDR data entity.
+There are 3 types of regulatory rules for AP mode and 6 type for
+station mode. Add wmi_vdev_type and ieee80211_ap_reg_power to
+select the exact reg rules.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00125-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231111043934.20485-5-quic_periyasa@quicinc.com
-Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
+Link: https://msgid.link/20231218085844.2658-2-quic_bqiang@quicinc.com
+Stable-dep-of: 933ab187e679 ("wifi: ath11k: update channel list in reg notifier instead reg worker")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.h     | 13 ++++--
- drivers/net/wireless/ath/ath12k/dp_mon.c | 12 ++---
- drivers/net/wireless/ath/ath12k/dp_mon.h |  4 +-
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 56 ++++++++++++------------
- 4 files changed, 46 insertions(+), 39 deletions(-)
+ drivers/net/wireless/ath/ath11k/reg.c | 70 +++++++++++++++++++++------
+ drivers/net/wireless/ath/ath11k/reg.h |  6 ++-
+ drivers/net/wireless/ath/ath11k/wmi.c |  3 +-
+ 3 files changed, 62 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 284032db0b98d..7a4d342380ee7 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef ATH12K_DP_H
-@@ -31,7 +31,7 @@ struct dp_srng {
- 	u32 ring_id;
- };
- 
--struct dp_rxdma_ring {
-+struct dp_rxdma_mon_ring {
- 	struct dp_srng refill_buf_ring;
- 	struct idr bufs_idr;
- 	/* Protects bufs_idr */
-@@ -39,6 +39,11 @@ struct dp_rxdma_ring {
- 	int bufs_max;
- };
- 
-+struct dp_rxdma_ring {
-+	struct dp_srng refill_buf_ring;
-+	int bufs_max;
-+};
-+
- #define ATH12K_TX_COMPL_NEXT(x)	(((x) + 1) % DP_TX_COMP_RING_SIZE)
- 
- struct dp_tx_ring {
-@@ -353,8 +358,8 @@ struct ath12k_dp {
- 	struct dp_rxdma_ring rx_refill_buf_ring;
- 	struct dp_srng rx_mac_buf_ring[MAX_RXDMA_PER_PDEV];
- 	struct dp_srng rxdma_err_dst_ring[MAX_RXDMA_PER_PDEV];
--	struct dp_rxdma_ring rxdma_mon_buf_ring;
--	struct dp_rxdma_ring tx_mon_buf_ring;
-+	struct dp_rxdma_mon_ring rxdma_mon_buf_ring;
-+	struct dp_rxdma_mon_ring tx_mon_buf_ring;
- 	struct ath12k_reo_q_addr_lut reoq_lut;
- };
- 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 97f068b0ae7f1..470835587df9e 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "dp_mon.h"
-@@ -797,7 +797,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		/* TODO: add msdu start parsing logic */
- 		break;
- 	case HAL_MON_BUF_ADDR: {
--		struct dp_rxdma_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
-+		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
- 		struct dp_mon_packet_info *packet_info =
- 			(struct dp_mon_packet_info *)tlv_data;
- 		int buf_id = u32_get_bits(packet_info->cookie,
-@@ -1261,7 +1261,7 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
+diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/wireless/ath/ath11k/reg.c
+index c9e8bbc4896f3..72b0eb588c06e 100644
+--- a/drivers/net/wireless/ath/ath11k/reg.c
++++ b/drivers/net/wireless/ath/ath11k/reg.c
+@@ -608,25 +608,68 @@ ath11k_reg_update_weather_radar_band(struct ath11k_base *ab,
+ 	*rule_idx = i;
  }
  
- int ath12k_dp_mon_buf_replenish(struct ath12k_base *ab,
--				struct dp_rxdma_ring *buf_ring,
-+				struct dp_rxdma_mon_ring *buf_ring,
- 				int req_entries)
- {
- 	struct hal_mon_buf_ring *mon_buf;
-@@ -1904,7 +1904,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_MON_BUF_ADDR: {
--		struct dp_rxdma_ring *buf_ring = &ab->dp.tx_mon_buf_ring;
-+		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.tx_mon_buf_ring;
- 		struct dp_mon_packet_info *packet_info =
- 			(struct dp_mon_packet_info *)tlv_data;
- 		int buf_id = u32_get_bits(packet_info->cookie,
-@@ -2069,7 +2069,7 @@ int ath12k_dp_mon_srng_process(struct ath12k *ar, int mac_id, int *budget,
- 	struct ath12k_skb_rxcb *rxcb;
- 	struct dp_srng *mon_dst_ring;
- 	struct hal_srng *srng;
--	struct dp_rxdma_ring *buf_ring;
-+	struct dp_rxdma_mon_ring *buf_ring;
- 	u64 cookie;
- 	u32 ppdu_id;
- 	int num_buffs_reaped = 0, srng_id, buf_id;
-@@ -2482,7 +2482,7 @@ int ath12k_dp_mon_rx_process_stats(struct ath12k *ar, int mac_id,
- 	struct ath12k_skb_rxcb *rxcb;
- 	struct dp_srng *mon_dst_ring;
- 	struct hal_srng *srng;
--	struct dp_rxdma_ring *buf_ring;
-+	struct dp_rxdma_mon_ring *buf_ring;
- 	struct ath12k_sta *arsta = NULL;
- 	struct ath12k_peer *peer;
- 	u64 cookie;
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.h b/drivers/net/wireless/ath/ath12k/dp_mon.h
-index c18c385798a11..fb9e9c176ce57 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.h
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef ATH12K_DP_MON_H
-@@ -80,7 +80,7 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
- 				  int mac_id, struct sk_buff *skb,
- 				  struct napi_struct *napi);
- int ath12k_dp_mon_buf_replenish(struct ath12k_base *ab,
--				struct dp_rxdma_ring *buf_ring,
-+				struct dp_rxdma_mon_ring *buf_ring,
- 				int req_entries);
- int ath12k_dp_mon_srng_process(struct ath12k *ar, int mac_id,
- 			       int *budget, enum dp_monitor_mode monitor_mode,
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 427641ffa968f..02e93f1627b95 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -364,8 +364,8 @@ int ath12k_dp_rx_bufs_replenish(struct ath12k_base *ab,
- 	return req_entries - num_remain;
- }
- 
--static int ath12k_dp_rxdma_buf_ring_free(struct ath12k_base *ab,
--					 struct dp_rxdma_ring *rx_ring)
-+static int ath12k_dp_rxdma_mon_buf_ring_free(struct ath12k_base *ab,
-+					     struct dp_rxdma_mon_ring *rx_ring)
- {
- 	struct sk_buff *skb;
- 	int buf_id;
-@@ -390,44 +390,49 @@ static int ath12k_dp_rxdma_buf_ring_free(struct ath12k_base *ab,
- static int ath12k_dp_rxdma_buf_free(struct ath12k_base *ab)
- {
- 	struct ath12k_dp *dp = &ab->dp;
--	struct dp_rxdma_ring *rx_ring = &dp->rx_refill_buf_ring;
- 
--	ath12k_dp_rxdma_buf_ring_free(ab, rx_ring);
-+	ath12k_dp_rxdma_mon_buf_ring_free(ab, &dp->rxdma_mon_buf_ring);
-+
-+	ath12k_dp_rxdma_mon_buf_ring_free(ab, &dp->tx_mon_buf_ring);
-+
-+	return 0;
++enum wmi_reg_6ghz_ap_type
++ath11k_reg_ap_pwr_convert(enum ieee80211_ap_reg_power power_type)
++{
++	switch (power_type) {
++	case IEEE80211_REG_LPI_AP:
++		return WMI_REG_INDOOR_AP;
++	case IEEE80211_REG_SP_AP:
++		return WMI_REG_STANDARD_POWER_AP;
++	case IEEE80211_REG_VLP_AP:
++		return WMI_REG_VERY_LOW_POWER_AP;
++	default:
++		return WMI_REG_MAX_AP_TYPE;
++	}
 +}
 +
-+static int ath12k_dp_rxdma_mon_ring_buf_setup(struct ath12k_base *ab,
-+					      struct dp_rxdma_mon_ring *rx_ring,
-+					      u32 ringtype)
-+{
-+	int num_entries;
- 
--	rx_ring = &dp->rxdma_mon_buf_ring;
--	ath12k_dp_rxdma_buf_ring_free(ab, rx_ring);
-+	num_entries = rx_ring->refill_buf_ring.size /
-+		ath12k_hal_srng_get_entrysize(ab, ringtype);
- 
--	rx_ring = &dp->tx_mon_buf_ring;
--	ath12k_dp_rxdma_buf_ring_free(ab, rx_ring);
-+	rx_ring->bufs_max = num_entries;
-+	ath12k_dp_mon_buf_replenish(ab, rx_ring, num_entries);
- 
- 	return 0;
- }
- 
- static int ath12k_dp_rxdma_ring_buf_setup(struct ath12k_base *ab,
--					  struct dp_rxdma_ring *rx_ring,
--					  u32 ringtype)
-+					  struct dp_rxdma_ring *rx_ring)
+ struct ieee80211_regdomain *
+ ath11k_reg_build_regd(struct ath11k_base *ab,
+-		      struct cur_regulatory_info *reg_info, bool intersect)
++		      struct cur_regulatory_info *reg_info, bool intersect,
++		      enum wmi_vdev_type vdev_type,
++		      enum ieee80211_ap_reg_power power_type)
  {
- 	int num_entries;
+ 	struct ieee80211_regdomain *tmp_regd, *default_regd, *new_regd = NULL;
+-	struct cur_reg_rule *reg_rule;
++	struct cur_reg_rule *reg_rule, *reg_rule_6ghz;
+ 	u8 i = 0, j = 0, k = 0;
+ 	u8 num_rules;
+ 	u16 max_bw;
+-	u32 flags;
++	u32 flags, reg_6ghz_number, max_bw_6ghz;
+ 	char alpha2[3];
  
- 	num_entries = rx_ring->refill_buf_ring.size /
--		ath12k_hal_srng_get_entrysize(ab, ringtype);
-+		ath12k_hal_srng_get_entrysize(ab, HAL_RXDMA_BUF);
+ 	num_rules = reg_info->num_5ghz_reg_rules + reg_info->num_2ghz_reg_rules;
  
- 	rx_ring->bufs_max = num_entries;
--	if ((ringtype == HAL_RXDMA_MONITOR_BUF) || (ringtype == HAL_TX_MONITOR_BUF))
--		ath12k_dp_mon_buf_replenish(ab, rx_ring, num_entries);
--	else
--		ath12k_dp_rx_bufs_replenish(ab, rx_ring, num_entries);
-+	ath12k_dp_rx_bufs_replenish(ab, rx_ring, num_entries);
+-	/* FIXME: Currently taking reg rules for 6 GHz only from Indoor AP mode list.
+-	 * This can be updated after complete 6 GHz regulatory support is added.
+-	 */
+-	if (reg_info->is_ext_reg_event)
+-		num_rules += reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP];
++	if (reg_info->is_ext_reg_event) {
++		if (vdev_type == WMI_VDEV_TYPE_STA) {
++			enum wmi_reg_6ghz_ap_type ap_type;
 +
- 	return 0;
- }
++			ap_type = ath11k_reg_ap_pwr_convert(power_type);
++
++			if (ap_type == WMI_REG_MAX_AP_TYPE)
++				ap_type = WMI_REG_INDOOR_AP;
++
++			reg_6ghz_number = reg_info->num_6ghz_rules_client
++					[ap_type][WMI_REG_DEFAULT_CLIENT];
++
++			if (reg_6ghz_number == 0) {
++				ap_type = WMI_REG_INDOOR_AP;
++				reg_6ghz_number = reg_info->num_6ghz_rules_client
++						[ap_type][WMI_REG_DEFAULT_CLIENT];
++			}
++
++			reg_rule_6ghz = reg_info->reg_rules_6ghz_client_ptr
++					[ap_type][WMI_REG_DEFAULT_CLIENT];
++			max_bw_6ghz = reg_info->max_bw_6ghz_client
++					[ap_type][WMI_REG_DEFAULT_CLIENT];
++		} else {
++			reg_6ghz_number = reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP];
++			reg_rule_6ghz =
++				reg_info->reg_rules_6ghz_ap_ptr[WMI_REG_INDOOR_AP];
++			max_bw_6ghz = reg_info->max_bw_6ghz_ap[WMI_REG_INDOOR_AP];
++		}
++
++		num_rules += reg_6ghz_number;
++	}
  
- static int ath12k_dp_rxdma_buf_setup(struct ath12k_base *ab)
- {
- 	struct ath12k_dp *dp = &ab->dp;
--	struct dp_rxdma_ring *rx_ring = &dp->rx_refill_buf_ring;
- 	int ret;
+ 	if (!num_rules)
+ 		goto ret;
+@@ -673,13 +716,10 @@ ath11k_reg_build_regd(struct ath11k_base *ab,
+ 			 * per other BW rule flags we pass from here
+ 			 */
+ 			flags = NL80211_RRF_AUTO_BW;
+-		} else if (reg_info->is_ext_reg_event &&
+-			   reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP] &&
+-			   (k < reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP])) {
+-			reg_rule = reg_info->reg_rules_6ghz_ap_ptr[WMI_REG_INDOOR_AP] +
+-				   k++;
+-			max_bw = min_t(u16, reg_rule->max_bw,
+-				       reg_info->max_bw_6ghz_ap[WMI_REG_INDOOR_AP]);
++		} else if (reg_info->is_ext_reg_event && reg_6ghz_number &&
++			   k < reg_6ghz_number) {
++			reg_rule = reg_rule_6ghz + k++;
++			max_bw = min_t(u16, reg_rule->max_bw, max_bw_6ghz);
+ 			flags = NL80211_RRF_AUTO_BW;
+ 		} else {
+ 			break;
+diff --git a/drivers/net/wireless/ath/ath11k/reg.h b/drivers/net/wireless/ath/ath11k/reg.h
+index d873b9cf7fc4f..30fce1411d1ff 100644
+--- a/drivers/net/wireless/ath/ath11k/reg.h
++++ b/drivers/net/wireless/ath/ath11k/reg.h
+@@ -31,7 +31,11 @@ void ath11k_reg_free(struct ath11k_base *ab);
+ void ath11k_regd_update_work(struct work_struct *work);
+ struct ieee80211_regdomain *
+ ath11k_reg_build_regd(struct ath11k_base *ab,
+-		      struct cur_regulatory_info *reg_info, bool intersect);
++		      struct cur_regulatory_info *reg_info, bool intersect,
++		      enum wmi_vdev_type vdev_type,
++		      enum ieee80211_ap_reg_power power_type);
+ int ath11k_regd_update(struct ath11k *ar);
+ int ath11k_reg_update_chan_list(struct ath11k *ar, bool wait);
++enum wmi_reg_6ghz_ap_type
++ath11k_reg_ap_pwr_convert(enum ieee80211_ap_reg_power power_type);
+ #endif
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 4db48d02a8f34..f3879a552e1f5 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -7171,7 +7171,8 @@ static int ath11k_reg_chan_list_event(struct ath11k_base *ab,
+ 	    !ath11k_reg_is_world_alpha((char *)reg_info->alpha2))
+ 		intersect = true;
  
--	ret = ath12k_dp_rxdma_ring_buf_setup(ab, rx_ring,
--					     HAL_RXDMA_BUF);
-+	ret = ath12k_dp_rxdma_ring_buf_setup(ab, &dp->rx_refill_buf_ring);
- 	if (ret) {
- 		ath12k_warn(ab,
- 			    "failed to setup HAL_RXDMA_BUF\n");
-@@ -435,18 +440,18 @@ static int ath12k_dp_rxdma_buf_setup(struct ath12k_base *ab)
- 	}
- 
- 	if (ab->hw_params->rxdma1_enable) {
--		rx_ring = &dp->rxdma_mon_buf_ring;
--		ret = ath12k_dp_rxdma_ring_buf_setup(ab, rx_ring,
--						     HAL_RXDMA_MONITOR_BUF);
-+		ret = ath12k_dp_rxdma_mon_ring_buf_setup(ab,
-+							 &dp->rxdma_mon_buf_ring,
-+							 HAL_RXDMA_MONITOR_BUF);
- 		if (ret) {
- 			ath12k_warn(ab,
- 				    "failed to setup HAL_RXDMA_MONITOR_BUF\n");
- 			return ret;
- 		}
- 
--		rx_ring = &dp->tx_mon_buf_ring;
--		ret = ath12k_dp_rxdma_ring_buf_setup(ab, rx_ring,
--						     HAL_TX_MONITOR_BUF);
-+		ret = ath12k_dp_rxdma_mon_ring_buf_setup(ab,
-+							 &dp->tx_mon_buf_ring,
-+							 HAL_TX_MONITOR_BUF);
- 		if (ret) {
- 			ath12k_warn(ab,
- 				    "failed to setup HAL_TX_MONITOR_BUF\n");
-@@ -4122,9 +4127,6 @@ int ath12k_dp_rx_alloc(struct ath12k_base *ab)
- 	struct ath12k_dp *dp = &ab->dp;
- 	int i, ret;
- 
--	idr_init(&dp->rx_refill_buf_ring.bufs_idr);
--	spin_lock_init(&dp->rx_refill_buf_ring.idr_lock);
--
- 	idr_init(&dp->rxdma_mon_buf_ring.bufs_idr);
- 	spin_lock_init(&dp->rxdma_mon_buf_ring.idr_lock);
- 
+-	regd = ath11k_reg_build_regd(ab, reg_info, intersect);
++	regd = ath11k_reg_build_regd(ab, reg_info, intersect,
++				     WMI_VDEV_TYPE_AP, IEEE80211_REG_LPI_AP);
+ 	if (!regd) {
+ 		ath11k_warn(ab, "failed to build regd from reg_info\n");
+ 		goto fallback;
 -- 
 2.53.0
 
