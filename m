@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD5338330E;
-	Sat, 17 Oct 2026 15:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52063563E1;
+	Sat, 17 Oct 2026 15:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252553; cv=none; b=p2kFJ4bA7V5AoCCerZVSxaPOROYN8fBgAs7wIU3DIJLdcr3mJXMlc/+2rK07+ruoFxbjjHHEBQRP5+Wd1L9GNuDiYAcoofcujTWRmvP2htdxIRaoBOL3cNaJ5tvfldPL59GQL2mBwsowfdVRkt2SU2jZ9Bzdb3YLhYgigE7F/tU=
+	t=1792252554; cv=none; b=pHMSXY9Lan/dNb2SkLJxWyZ+KWb8oUiSWrqhfkFT8OvdCnVQdzXZ7kKGKSSqR8wsiVnzHdbwMqjoWsK/WT+cASmpHI7I+94QpC5Gd+dyS8ew6E4HOIgQy268IL9J0RtFNJOJ1N2DRELJikzH/dlTRb59a/ESVg9aCqZMK7LAfco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252553; c=relaxed/simple;
-	bh=LZF0x1VGZR/D1SgC92+S//jahPyEoRXtcRVFWQArqVY=;
+	s=arc-20240116; t=1792252554; c=relaxed/simple;
+	bh=j6goRb/EsaemX+m1lW3DgDHRjQzBetko9yx/PPdtPJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRPe0WFv8ZOlaHQYUVxqHYAP1NgkKxMMKwTXOlN5it3ZMU1O3teg5fqs+4fC2KS00XYlBEhvQlP9tAsv24zqYDAycNrhIEio3GrtYSY6CJ4hr4qMNG2b+de0nZQHtMbVWqDV8H1fB2exMX7v1V34t5jFYaUpRj7+x6XjG+JYY0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g06vlrka; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jGt9QVievEI9jw8LOW9m6oJb6+Eyb2x6ZZRE01S6BQzwxSrSAepZHWDmblXCeJJkIMm/xtU+ni3W8MCGtI9QbkbgH+QnKSfQao/0tYTUBuWgKrpJHONrmur4brJd1PmbrHiyl5IcEW5qwn9RkJsDAIpzur9eBWBGPz995pLZh14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/rQ35fm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g06vlrka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4311F000C5;
-	Sat, 17 Oct 2026 15:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/rQ35fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BAD1F000C6;
+	Sat, 17 Oct 2026 15:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252550;
-	bh=bTo91Q30fXrGgJcguK9tZ8dgnRmbxvApDO3em8ILuZE=;
+	s=korg; t=1792252553;
+	bh=voM1JAPGgbUsOxSPoyINJlBw6Raba+I7O7yLJBGDJeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g06vlrkaRSUzWyZVnKyEHv6Zjau/7r2DXa2SAmnzOXOek3MxFgK6CeXjyURTimsBr
-	 1K5MzgNDdDlgGPM4SjeivZq2YMMqJOKiHLFpN2ySPKktdWKpy2zbdJ0E14pMFPPyHP
-	 dztJ382Vjg7Fa5esIdzAr/jK58AKj60s7Uu+tb9A=
+	b=m/rQ35fmeDdFB1BqhQMFeazGwCruVsP8/huwEbg/5s1ZpJCl1qcoGafhU80eYwXat
+	 O/OGm6935vZsjypRnDep4h490WTK9p6OWjeDd+AEu5gXdbukg+NHPxjxuuNoMlJREP
+	 n6FEfRJGJtsHSinD3JcAlRCzdOYrq6KC/jMz+A/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 02/52] usb: gadget: f_hid: Add missing error code
-Date: Sat, 17 Oct 2026 17:54:03 +0200
-Message-ID: <20261017155104.920101962@linuxfoundation.org>
+Subject: [PATCH 6.18 03/52] RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables
+Date: Sat, 17 Oct 2026 17:54:04 +0200
+Message-ID: <20261017155104.951570962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -52,45 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 2c863dbbeac7b919d4634ad886978a6731916de3 ]
+[ Upstream commit 00baeade709fb66da647e8327e8398bb532e30f7 ]
 
-Currently in cdev_alloc() error path no error code is assigned.
+Locked QP and CQ lookups from EQ interrupts can deadlock with
+create-path XArray updates. If an interrupt arrives while the create
+path holds the plain xa_lock, the lookup spins forever trying to
+acquire the same lock.
 
-Assign error code '-ENOMEM'.
+Use IRQ-safe XArray helpers for all QP and CQ create-path updates,
+including the GSI QP store and error paths. Initialize both arrays with
+XA_FLAGS_LOCK_IRQ so sleeping allocations preserve interrupt state.
 
-Detected by Smatch:
-drivers/usb/gadget/function/f_hid.c:1291 hidg_bind()
-warn: missing error code 'status'
-
-Fixes: 81ebd43cc0d6d ("usb: gadget: f_hid: don't call cdev_init while cdev in use")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
-Link: https://patch.msgid.link/20260402180008.64233-1-ethantidmore06@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 98df2aee1459 ("RDMA/erdma: Hold CQ references when processing EQ events")
+Fixes: a52eeff32024 ("RDMA/erdma: Hold QP references for AE and CM processing")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://patch.msgid.link/20260828030344.88021-1-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/erdma/erdma_main.c  |  4 ++--
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 18 +++++++++---------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index ee59e6516187c..4fe9c38dd2cab 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1279,8 +1279,10 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
+index f35b30235018b..f76da01a1d1fe 100644
+--- a/drivers/infiniband/hw/erdma/erdma_main.c
++++ b/drivers/infiniband/hw/erdma/erdma_main.c
+@@ -573,8 +573,8 @@ static int erdma_ib_device_add(struct pci_dev *pdev)
+ 	INIT_LIST_HEAD(&dev->cep_list);
  
- 	/* create char device */
- 	hidg->cdev = cdev_alloc();
--	if (!hidg->cdev)
-+	if (!hidg->cdev) {
-+		status = -ENOMEM;
- 		goto fail_free_all;
-+	}
- 	hidg->cdev->ops = &f_hidg_fops;
+ 	spin_lock_init(&dev->lock);
+-	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1);
+-	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1);
++	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
++	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
+ 	dev->next_alloc_cqn = 1;
+ 	dev->next_alloc_qpn = 1;
  
- 	status = cdev_device_add(hidg->cdev, &hidg->dev);
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index fdd67756f3bc3..6feac67d84721 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -1019,15 +1019,15 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	init_completion(&qp->safe_free);
+ 
+ 	if (qp->ibqp.qp_type == IB_QPT_GSI) {
+-		old_entry = xa_store(&dev->qp_xa, 1, qp, GFP_KERNEL);
++		old_entry = xa_store_irq(&dev->qp_xa, 1, qp, GFP_KERNEL);
+ 		if (xa_is_err(old_entry))
+ 			ret = xa_err(old_entry);
+ 		else
+ 			qp->ibqp.qp_num = 1;
+ 	} else {
+-		ret = xa_alloc_cyclic(&dev->qp_xa, &qp->ibqp.qp_num, qp,
+-				      XA_LIMIT(1, dev->attrs.max_qp - 1),
+-				      &dev->next_alloc_qpn, GFP_KERNEL);
++		ret = xa_alloc_cyclic_irq(&dev->qp_xa, &qp->ibqp.qp_num, qp,
++					  XA_LIMIT(1, dev->attrs.max_qp - 1),
++					  &dev->next_alloc_qpn, GFP_KERNEL);
+ 	}
+ 
+ 	if (ret < 0) {
+@@ -1090,7 +1090,7 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	else
+ 		free_kernel_qp(qp);
+ err_out_xa:
+-	xa_erase(&dev->qp_xa, QP_ID(qp));
++	xa_erase_irq(&dev->qp_xa, QP_ID(qp));
+ err_out:
+ 	return ret;
+ }
+@@ -1994,9 +1994,9 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	refcount_set(&cq->refcount, 1);
+ 	init_completion(&cq->free);
+ 
+-	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
+-			      XA_LIMIT(1, dev->attrs.max_cq - 1),
+-			      &dev->next_alloc_cqn, GFP_KERNEL);
++	ret = xa_alloc_cyclic_irq(&dev->cq_xa, &cq->cqn, cq,
++				  XA_LIMIT(1, dev->attrs.max_cq - 1),
++				  &dev->next_alloc_cqn, GFP_KERNEL);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -2044,7 +2044,7 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	}
+ 
+ err_out_xa:
+-	xa_erase(&dev->cq_xa, cq->cqn);
++	xa_erase_irq(&dev->cq_xa, cq->cqn);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
