@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D066238654F;
-	Sat, 17 Oct 2026 16:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36DD3AFAE3;
+	Sat, 17 Oct 2026 16:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256170; cv=none; b=JtmTk7ge7/C3P2gdX2dGw67ixMoT0//grUPzZ4IXgttjtPQi4/RUyltndq07US4VwZIhCJQ/8NIi8e4P+7sOgJhppzW7ZggYHi1CRP/UmFcxc4SVaQZqOHch2CefMc4c3MvtzCIRaE5iwOvL7+aYk00fMbBNlfIOdwdspwQ0w5c=
+	t=1792256174; cv=none; b=I301xXen4KI5dJbJS7IXhdnn8sjuCAlChwT1FfbwyH7clBberH5BvwKLQ1qW3IbivztH4Umj32EI3wfdrXnrSsob89PgVEMbAicB2TKW371P78PF1WcpeB3Ow22rBUCxpa/zZvMIMkmrnQRxgKR/80CdGlF77FeTRpacfIcDjVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256170; c=relaxed/simple;
-	bh=i76IbE/uV04ImAlj7rqUe3dzvzjw3Fq4Y9twthEpSiQ=;
+	s=arc-20240116; t=1792256174; c=relaxed/simple;
+	bh=tVNbuUL4236vbLLhqqO9P6ftE1pxMHG4uohAYwRzXmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GibDlyMiSsCujejYU6sTC2/0Mt4BsQ91GFNJQRzuNosmtiSELY70iukafN4pi/w9PDgNz9pVA2efzSrDUbaSgPF4dbnG4cl7KsZT1m4S/Rzht1bQ2u1etdlWRPoEDnIL73zL+4GktgkcYhDUwU8uwTMXrfs27kCKGzoqm/4j2TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzEbC7Tj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VfpsmNme1nwgOZ4Rk10VRaFf15xzTVt0pcvpRvcMaoNdHYl+mo4q1fUZKS8987/1e4yhrT+yRndmGIHyR2/lErLRlah+zZXq5RdxbuEKcn6yV6tm+JT3QtBjdkUIkwtWZX8BoBMl80xGxyCcLQOVrOqh0S1yvQwytD2ruOIqy/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o37jFkNr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzEbC7Tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331271F000C4;
-	Sat, 17 Oct 2026 16:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o37jFkNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389B31F000C4;
+	Sat, 17 Oct 2026 16:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256169;
-	bh=iFxSnye4dC/gK6j5MZUZ7RVRmXxXU6Wn8vW2OFHvxSQ=;
+	s=korg; t=1792256172;
+	bh=oxPcq+Kc3PxYF5d+0KVlWivT/HH8glb7Hk+l+xB105A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzEbC7TjqeXANIo7Bbuq98BaO9ZkUWDEwSiBs4ZVrQs+zowmIzsU2YOWQhrrmiObW
-	 GAE9JchO+rXIEhWXTyc8W9NVGvveDs4rXIxrht5ceRBfSdstLKah7UOzVRzmCvCcnN
-	 4oWQ3p4leRtU2IePH7kirQPXNt13mqrhLHwWb/TM=
+	b=o37jFkNrljP2yx/HmKk8ENOUErRheuELj0uZypBhOujcYO9x6+vMl6pDAMw2JA/1G
+	 iTS5Fo86cDeveSZgY+5m4JG4pOiOmbb2QW+5hJF+4fclx1J/uMSHKGZIBhvctVCPIU
+	 psjDFkpNNTI5CJNoaxYn5Mx+biOx4nhmUKDwvmGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0147/1674] netfilter: nf_tables: skip expired catchall elements on insert and delete
-Date: Sat, 17 Oct 2026 17:40:19 +0200
-Message-ID: <20261017160434.934235634@linuxfoundation.org>
+Subject: [PATCH 6.6 0148/1674] perf/x86/intel: Update event constraints and cache_extra_regsfor ADL
+Date: Sat, 17 Oct 2026 17:40:20 +0200
+Message-ID: <20261017160434.958603940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,81 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 70194dc37670bd08e44b471389861cc01bd3a3c9 ]
+[ Upstream commit 4ef863352bcde482d65722ed721c3fd3967a67d6 ]
 
-nft_setelem_catchall_insert() looks up duplicates with
-nft_set_elem_active() only, while nft_set_catchall_lookup() and the
-dump path additionally skip expired elements.
+Update perf hard-coded event constraints and cache_extra_regs[] for
+Alderlake according to the latest ADL perfmon events (V1.39).
 
-Once a catchall element with a timeout expires, this predicate drift
-makes it invisible to userspace dumps, yet it still blocks
-re-insertion: with NLM_F_EXCL the request fails with -EEXIST, and
-without it the request reports success but silently inserts nothing.
-The stale entry only goes away when the (user-tunable) gc interval
-elapses, so the catchall rule may silently stop matching for an
-arbitrarily long time after its first expiration.
+One important note is that ADL has differences on the L3/node related
+OCR events although it shares same uarch with SPR server, e.g.,
+ADL has different extra MSR values and no node events. So some variants
+of structures and functions are introduced to reflect these
+differences, like adl_glc_hw_cache_event_ids[],
+adl_glc_hw_cache_extra_regs[] and intel_pmu_init_glc_hybrid(), etc.
 
-The delete path shows the same drift: nft_setelem_catchall_deactivate()
-picks the first active-next entry in the catchall list, so with an
-expired entry still pending GC it retires the stale entry instead of
-the fresh one, and it deactivates an element that userspace no longer
-sees instead of failing with -ENOENT.
+Please note these changes would temporarily impact other platforms like
+MTL/ARL-U which shares hard-coded event structures, but it would be
+fixed soon in subsequent patches.
 
-Align both walks with the lookup and dump predicates: only an element
-that is active and not expired counts as a duplicate or delete
-candidate, using the per-netns timestamp taken at transaction start,
-in line with the set backend .insert/.deactivate and catchall GC sync
-paths.
+ADL perfmon events:
+https://github.com/intel/perfmon/blob/main/ADL/events/alderlake_goldencove_core.json
+https://github.com/intel/perfmon/blob/main/ADL/events/alderlake_gracemont_core.json
 
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Cc: stable@vger.kernel.org
-Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260515061143.338553-5-dapeng1.mi@linux.intel.com
+
+Backport dependency preparation for Linux 6.6:
+
+Retain the Gracemont store-latency counter mask update from 0xf to
+0x3f. Drop the unrelated cache tables, offcore register masks and PMU
+initialization changes: they depend on newer refactoring and are not
+needed by target 89dc568e8c0be60e05e5fcd0b528c79077d7b84b.
+
+Prepare that target's existing latency path by renaming the ADL helper
+and callback to __grt_latency_data() and grt_latency_data(), updating
+all callers and the declaration. These are existing functions, not new
+ones. Guard the hybrid-only warning with is_hybrid(), retaining the
+6.6 cpu_type field and existing data-source mask.
+
+Include only the two hybrid load/store latency constraint macros from
+608f6976c3097, preserving the hybrid decoder dispatch while making the
+target's explicit direction flags available. Leave the actual direction
+correction to the target commit.
+
+Stable-dep-of: 89dc568e8c0b ("perf/x86/intel: Fix GRT PEBS load/store direction for latency events, to fix sample classification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |  4 ++--
+ arch/x86/events/intel/ds.c   | 23 ++++++++++++-----------
+ arch/x86/events/perf_event.h | 10 +++++++++-
+ 3 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 41b1aa95bc6f0..9c533c0776806 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6557,11 +6557,14 @@ static int nft_setelem_catchall_insert(const struct net *net,
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 508053d378ae5..01895323c85b3 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -6390,7 +6390,7 @@ __init int intel_pmu_init(void)
+ 		x86_pmu.flags |= PMU_FL_INSTR_LATENCY;
+ 
+ 		intel_pmu_pebs_data_source_grt();
+-		x86_pmu.pebs_latency_data = adl_latency_data_small;
++		x86_pmu.pebs_latency_data = grt_latency_data;
+ 		x86_pmu.get_event_constraints = tnt_get_event_constraints;
+ 		x86_pmu.limit_period = spr_limit_period;
+ 		td_attr = tnt_events_attrs;
+@@ -6810,7 +6810,7 @@ __init int intel_pmu_init(void)
+ 		x86_pmu.flags |= PMU_FL_NO_HT_SHARING;
+ 		x86_pmu.flags |= PMU_FL_INSTR_LATENCY;
+ 		x86_pmu.lbr_pt_coexist = true;
+-		x86_pmu.pebs_latency_data = adl_latency_data_small;
++		x86_pmu.pebs_latency_data = grt_latency_data;
+ 		x86_pmu.num_topdown_events = 8;
+ 		static_call_update(intel_pmu_update_topdown_event,
+ 				   &adl_update_topdown_event);
+diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
+index 0c8c0e50262f1..c452ce0531e46 100644
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -256,12 +256,13 @@ static inline void pebs_set_tlb_lock(u64 *val, bool tlb, bool lock)
+ }
+ 
+ /* Retrieve the latency data for e-core of ADL */
+-static u64 __adl_latency_data_small(struct perf_event *event, u64 status,
+-				     u8 dse, bool tlb, bool lock, bool blk)
++static u64 __grt_latency_data(struct perf_event *event, u64 status,
++			       u8 dse, bool tlb, bool lock, bool blk)
  {
- 	struct nft_set_elem_catchall *catchall;
- 	u8 genmask = nft_genmask_next(net);
-+	u64 tstamp = nft_net_tstamp(net);
- 	struct nft_set_ext *ext;
+ 	u64 val;
  
- 	list_for_each_entry(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (nft_set_elem_active(ext, genmask)) {
-+		if (nft_set_elem_active(ext, genmask) &&
-+		    !__nft_set_elem_expired(ext, tstamp) &&
-+		    !nft_set_elem_is_dead(ext)) {
- 			*priv = catchall->elem;
- 			return -EEXIST;
- 		}
-@@ -6622,11 +6625,14 @@ static int nft_setelem_catchall_deactivate(const struct net *net,
- 					   struct nft_set_elem *elem)
+-	WARN_ON_ONCE(hybrid_pmu(event->pmu)->cpu_type == hybrid_big);
++	WARN_ON_ONCE(is_hybrid() &&
++		     hybrid_pmu(event->pmu)->cpu_type == hybrid_big);
+ 
+ 	dse &= PERF_PEBS_DATA_SOURCE_MASK;
+ 	val = hybrid_var(event->pmu, pebs_data_source)[dse];
+@@ -276,15 +277,15 @@ static u64 __adl_latency_data_small(struct perf_event *event, u64 status,
+ 	return val;
+ }
+ 
+-u64 adl_latency_data_small(struct perf_event *event, u64 status)
++u64 grt_latency_data(struct perf_event *event, u64 status)
  {
- 	struct nft_set_elem_catchall *catchall;
-+	u64 tstamp = nft_net_tstamp(net);
- 	struct nft_set_ext *ext;
+ 	union intel_x86_pebs_dse dse;
  
- 	list_for_each_entry(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_is_active_next(net, ext))
-+		if (!nft_is_active_next(net, ext) ||
-+		    __nft_set_elem_expired(ext, tstamp) ||
-+		    nft_set_elem_is_dead(ext))
- 			continue;
+ 	dse.val = status;
  
- 		kfree(elem->priv);
+-	return __adl_latency_data_small(event, status, dse.ld_dse,
+-					dse.ld_locked, dse.ld_stlb_miss,
+-					dse.ld_data_blk);
++	return __grt_latency_data(event, status, dse.ld_dse,
++				  dse.ld_locked, dse.ld_stlb_miss,
++				  dse.ld_data_blk);
+ }
+ 
+ /* Retrieve the latency data for e-core of MTL */
+@@ -294,9 +295,9 @@ u64 mtl_latency_data_small(struct perf_event *event, u64 status)
+ 
+ 	dse.val = status;
+ 
+-	return __adl_latency_data_small(event, status, dse.mtl_dse,
+-					dse.mtl_stlb_miss, dse.mtl_locked,
+-					dse.mtl_fwd_blk);
++	return __grt_latency_data(event, status, dse.mtl_dse,
++				  dse.mtl_stlb_miss, dse.mtl_locked,
++				  dse.mtl_fwd_blk);
+ }
+ 
+ static u64 load_latency_data(struct perf_event *event, u64 status)
+@@ -892,7 +893,7 @@ struct event_constraint intel_glm_pebs_event_constraints[] = {
+ struct event_constraint intel_grt_pebs_event_constraints[] = {
+ 	/* Allow all events as PEBS with no flags */
+ 	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
+-	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0xf),
++	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0x3f),
+ 	EVENT_CONSTRAINT_END
+ };
+ 
+diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
+index 06a3ad387bb16..e1508306ed509 100644
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -470,6 +470,14 @@ struct cpu_hw_events {
+ 	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
+ 			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID)
+ 
++#define INTEL_HYBRID_LDLAT_CONSTRAINT(c, n)	\
++	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
++			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID|PERF_X86_EVENT_PEBS_LD_HSW)
++
++#define INTEL_HYBRID_STLAT_CONSTRAINT(c, n)	\
++	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
++			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID|PERF_X86_EVENT_PEBS_ST_HSW)
++
+ /* Event constraint, but match on all event flags too. */
+ #define INTEL_FLAGS_EVENT_CONSTRAINT(c, n) \
+ 	EVENT_CONSTRAINT(c, n, ARCH_PERFMON_EVENTSEL_EVENT|X86_ALL_EVENT_FLAGS)
+@@ -1502,7 +1510,7 @@ void intel_pmu_disable_bts(void);
+ 
+ int intel_pmu_drain_bts_buffer(void);
+ 
+-u64 adl_latency_data_small(struct perf_event *event, u64 status);
++u64 grt_latency_data(struct perf_event *event, u64 status);
+ 
+ u64 mtl_latency_data_small(struct perf_event *event, u64 status);
+ 
 -- 
 2.53.0
 
