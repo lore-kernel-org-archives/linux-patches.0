@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD663515CE;
-	Sat, 17 Oct 2026 17:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C34D374E60;
+	Sat, 17 Oct 2026 17:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257881; cv=none; b=KSNBXwIVvDvvCIvi7Zq0uSzA39luhw4sGxqjJvlHVII8kZpM2L5ZM5I9XtG53KwxIoJDxA3RxJ0aHK8kOQja632BfjAjVu4rYDfzdEqzDCbT8UtS13jo0Vnq7/R9u64a/FLRJkPbnEGmzKsMajtgRGtfEc6JBNfrxzHT5xxgg08=
+	t=1792257884; cv=none; b=Cela77XSQ2QFJzvgRL15x+OHBpH0wVEp0vJoqnwp3urrwZqsq1+TnO4I+Jon2FHIOUajmsQ5t6R2SRvshwxLbtViO4JSDmu89T34advTsD8zR7YJYvdMbxb3JhOYJNH5HLqnWUKUddw35NrMvCs9cbVO8ZYf737aFZgjol0181c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257881; c=relaxed/simple;
-	bh=Ife3BqrW+VE/5E+E+ClWcm83XeCqD+Q5e4YZV/kMRJQ=;
+	s=arc-20240116; t=1792257884; c=relaxed/simple;
+	bh=LSw827rWrXrj54zCPmQSz8+KL4k/BDxp+A6vXhtYEoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQ9kqJQLLThmwdn1XAon+lSyaS5H1E535BPzTkBBYOEoOqygghToWZn6g6lIBkZ8eCpmtrZ+mQYvdc9tAdEi6eMXuK6n2vdS6kzZZvCoh4STfoBYrWuE1Ngw39eCPvI94imlgs4wiI9A5afYbT2yy35icNU+qt9Pw6WiUIXVJoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlNBLlun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TScjtTg3S/oSmgjUe8dePOZnSYray+/4azfiO8QfBq+0+lZA++jyB8nimPFEbH/pOCoWGuuLmmtCK9x/qEUsw6dFwXhR37o50S59BJZh0E1ntpZaKx9qK7EqN5rzmdm7rQJrccIHYq7UkqBRTrRCsfX8+vMdgOYfW+9F60AoJXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLgS4IxI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlNBLlun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9921F000C4;
-	Sat, 17 Oct 2026 17:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLgS4IxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593C41F000C4;
+	Sat, 17 Oct 2026 17:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257879;
-	bh=u3OPYEaVHMiQ6ZRmxLAQ6fBW2hbZMw8tjw6jBTEXbaA=;
+	s=korg; t=1792257882;
+	bh=kSCeWBkMSXef++ZGHFnw/u7JikRHbLGdir/Kf8lSefc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YlNBLlunZdvfPgLVdPeopudYRLujAxZRpRs0+Z2uhEsYq97VCFzAU+eoxAiOktRol
-	 azsiydGjuP2xzKenB5bnrmdgrOnJ0YRBUr4Xj0ckBbEKPa6E617B3z2S682vulSmkf
-	 eLYVjnSQ61tVo1gVEi8Vrjhp17OEUfZPwU+SIaHE=
+	b=VLgS4IxI7I2cwjA7ldgv8jGr4Qrz3tjZAlbq9l9N11hzAS786174DMg2CCkiN+LQ0
+	 eYyxRwT8yvVZ8XMgBOBjx71jMS22V+R4I66mEX8NBUBfDs2r7PBRVEIkqOkmcOCIyd
+	 YipRu6b0EtzvoTe96oQzD5sg52WRae0gB6ZZqBV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Kumar <maheshkumar657g@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0698/1674] ext4: avoid journaling sb update on error if journal is destroying
-Date: Sat, 17 Oct 2026 17:49:30 +0200
-Message-ID: <20261017160449.020029874@linuxfoundation.org>
+Subject: [PATCH 6.6 0699/1674] btrfs: fix block group refcount race in btrfs_create_pending_block_groups()
+Date: Sat, 17 Oct 2026 17:49:31 +0200
+Message-ID: <20261017160449.045605593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,171 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit ce2f26e73783b4a7c46a86e3af5b5c8de0971790 ]
+[ Upstream commit 2d8e5168d48a91e7a802d3003e72afb4304bebfa ]
 
-Presently we always BUG_ON if trying to start a transaction on a journal marked
-with JBD2_UNMOUNT, since this should never happen. However, while ltp running
-stress tests, it was observed that in case of some error handling paths, it is
-possible for update_super_work to start a transaction after the journal is
-destroyed eg:
+Block group creation is done in two phases, which results in a slightly
+unintuitive property: a block group can be allocated/deallocated from
+after btrfs_make_block_group() adds it to the space_info with
+btrfs_add_bg_to_space_info(), but before creation is completely completed
+in btrfs_create_pending_block_groups(). As a result, it is possible for a
+block group to go unused and have 'btrfs_mark_bg_unused' called on it
+concurrently with 'btrfs_create_pending_block_groups'. This causes a
+number of issues, which were fixed with the block group flag
+'BLOCK_GROUP_FLAG_NEW'.
 
-(umount)
-ext4_kill_sb
-  kill_block_super
-    generic_shutdown_super
-      sync_filesystem /* commits all txns */
-      evict_inodes
-        /* might start a new txn */
-      ext4_put_super
-	flush_work(&sbi->s_sb_upd_work) /* flush the workqueue */
-        jbd2_journal_destroy
-          journal_kill_thread
-            journal->j_flags |= JBD2_UNMOUNT;
-          jbd2_journal_commit_transaction
-            jbd2_journal_get_descriptor_buffer
-              jbd2_journal_bmap
-                ext4_journal_bmap
-                  ext4_map_blocks
-                    ...
-                    ext4_inode_error
-                      ext4_handle_error
-                        schedule_work(&sbi->s_sb_upd_work)
+However, this fix is not quite complete. Since it does not use the
+unused_bg_lock, it is possible for the following race to occur:
 
-                                               /* work queue kicks in */
-                                               update_super_work
-                                                 jbd2_journal_start
-                                                   start_this_handle
-                                                     BUG_ON(journal->j_flags &
-                                                            JBD2_UNMOUNT)
+btrfs_create_pending_block_groups            btrfs_mark_bg_unused
+                                           if list_empty // false
+        list_del_init
+        clear_bit
+                                           else if (test_bit) // true
+                                                list_move_tail
 
-Hence, introduce a new mount flag to indicate journal is destroying and only do
-a journaled (and deferred) update of sb if this flag is not set. Otherwise, just
-fallback to an un-journaled commit.
+And we get into the exact same broken ref count and invalid new_bgs
+state for transaction cleanup that BLOCK_GROUP_FLAG_NEW was designed to
+prevent.
 
-Further, in the journal destroy path, we have the following sequence:
+The broken refcount aspect will result in a warning like:
 
-  1. Set mount flag indicating journal is destroying
-  2. force a commit and wait for it
-  3. flush pending sb updates
+  [1272.943527] refcount_t: underflow; use-after-free.
+  [1272.943967] WARNING: CPU: 1 PID: 61 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
+  [1272.944731] Modules linked in: btrfs virtio_net xor zstd_compress raid6_pq null_blk [last unloaded: btrfs]
+  [1272.945550] CPU: 1 UID: 0 PID: 61 Comm: kworker/u32:1 Kdump: loaded Tainted: G        W          6.14.0-rc5+ #108
+  [1272.946368] Tainted: [W]=WARN
+  [1272.946585] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  [1272.947273] Workqueue: btrfs_discard btrfs_discard_workfn [btrfs]
+  [1272.947788] RIP: 0010:refcount_warn_saturate+0xba/0x110
+  [1272.949532] RSP: 0018:ffffbf1200247df0 EFLAGS: 00010282
+  [1272.949901] RAX: 0000000000000000 RBX: ffffa14b00e3f800 RCX: 0000000000000000
+  [1272.950437] RDX: 0000000000000000 RSI: ffffbf1200247c78 RDI: 00000000ffffdfff
+  [1272.950986] RBP: ffffa14b00dc2860 R08: 00000000ffffdfff R09: ffffffff90526268
+  [1272.951512] R10: ffffffff904762c0 R11: 0000000063666572 R12: ffffa14b00dc28c0
+  [1272.952024] R13: 0000000000000000 R14: ffffa14b00dc2868 R15: 000001285dcd12c0
+  [1272.952850] FS:  0000000000000000(0000) GS:ffffa14d33c40000(0000) knlGS:0000000000000000
+  [1272.953458] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [1272.953931] CR2: 00007f838cbda000 CR3: 000000010104e000 CR4: 00000000000006f0
+  [1272.954474] Call Trace:
+  [1272.954655]  <TASK>
+  [1272.954812]  ? refcount_warn_saturate+0xba/0x110
+  [1272.955173]  ? __warn.cold+0x93/0xd7
+  [1272.955487]  ? refcount_warn_saturate+0xba/0x110
+  [1272.955816]  ? report_bug+0xe7/0x120
+  [1272.956103]  ? handle_bug+0x53/0x90
+  [1272.956424]  ? exc_invalid_op+0x13/0x60
+  [1272.956700]  ? asm_exc_invalid_op+0x16/0x20
+  [1272.957011]  ? refcount_warn_saturate+0xba/0x110
+  [1272.957399]  btrfs_discard_cancel_work.cold+0x26/0x2b [btrfs]
+  [1272.957853]  btrfs_put_block_group.cold+0x5d/0x8e [btrfs]
+  [1272.958289]  btrfs_discard_workfn+0x194/0x380 [btrfs]
+  [1272.958729]  process_one_work+0x130/0x290
+  [1272.959026]  worker_thread+0x2ea/0x420
+  [1272.959335]  ? __pfx_worker_thread+0x10/0x10
+  [1272.959644]  kthread+0xd7/0x1c0
+  [1272.959872]  ? __pfx_kthread+0x10/0x10
+  [1272.960172]  ret_from_fork+0x30/0x50
+  [1272.960474]  ? __pfx_kthread+0x10/0x10
+  [1272.960745]  ret_from_fork_asm+0x1a/0x30
+  [1272.961035]  </TASK>
+  [1272.961238] ---[ end trace 0000000000000000 ]---
 
-This sequence is important as it ensures that, after this point, there is no sb
-update that might be journaled so it is safe to update the sb outside the
-journal. (To avoid race discussed in 2d01ddc86606)
+Though we have seen them in the async discard workfn as well. It is
+most likely to happen after a relocation finishes which cancels discard,
+tears down the block group, etc.
 
-Also, we don't need a similar check in ext4_grp_locked_error since it is only
-called from mballoc and AFAICT it would be always valid to schedule work here.
+Fix this fully by taking the lock around the list_del_init + clear_bit
+so that the two are done atomically.
 
-Fixes: 2d01ddc86606 ("ext4: save error info to sb through journal if available")
-Reported-by: Mahesh Kumar <maheshkumar657g@gmail.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/9613c465d6ff00cd315602f99283d5f24018c3f7.1742279837.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 0657b20c5a76 ("btrfs: fix use-after-free of new block group that became unused")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h      |  3 ++-
- fs/ext4/ext4_jbd2.h | 15 +++++++++++++++
- fs/ext4/super.c     | 16 ++++++++--------
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ fs/btrfs/block-group.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 387509da86a2a..d167cfb05dfc0 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1816,7 +1816,8 @@ static inline int ext4_valid_inum(struct super_block *sb, unsigned long ino)
-  */
- enum {
- 	EXT4_MF_MNTDIR_SAMPLED,
--	EXT4_MF_FC_INELIGIBLE	/* Fast commit ineligible */
-+	EXT4_MF_FC_INELIGIBLE,	/* Fast commit ineligible */
-+	EXT4_MF_JOURNAL_DESTROY	/* Journal is in process of destroying */
- };
- 
- static inline void ext4_set_mount_flag(struct super_block *sb, int bit)
-diff --git a/fs/ext4/ext4_jbd2.h b/fs/ext4/ext4_jbd2.h
-index 930778e507cc4..ada46189b0860 100644
---- a/fs/ext4/ext4_jbd2.h
-+++ b/fs/ext4/ext4_jbd2.h
-@@ -521,6 +521,21 @@ static inline int ext4_journal_destroy(struct ext4_sb_info *sbi, journal_t *jour
- {
- 	int err = 0;
- 
-+	/*
-+	 * At this point only two things can be operating on the journal.
-+	 * JBD2 thread performing transaction commit and s_sb_upd_work
-+	 * issuing sb update through the journal. Once we set
-+	 * EXT4_JOURNAL_DESTROY, new ext4_handle_error() calls will not
-+	 * queue s_sb_upd_work and ext4_force_commit() makes sure any
-+	 * ext4_handle_error() calls from the running transaction commit are
-+	 * finished. Hence no new s_sb_upd_work can be queued after we
-+	 * flush it here.
-+	 */
-+	ext4_set_mount_flag(sbi->s_sb, EXT4_MF_JOURNAL_DESTROY);
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 705724089f755..b93b4ec042272 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2800,8 +2800,11 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
+ 		/* Already aborted the transaction if it failed. */
+ next:
+ 		btrfs_delayed_refs_rsv_release(fs_info, 1);
 +
-+	ext4_force_commit(sbi->s_sb);
-+	flush_work(&sbi->s_sb_upd_work);
-+
- 	err = jbd2_journal_destroy(journal);
- 	sbi->s_journal = NULL;
- 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 32ee4c317583a..5d3b14744eeb0 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -728,9 +728,13 @@ static void ext4_handle_error(struct super_block *sb, bool force_ro, int error,
- 		 * In case the fs should keep running, we need to writeout
- 		 * superblock through the journal. Due to lock ordering
- 		 * constraints, it may not be safe to do it right here so we
--		 * defer superblock flushing to a workqueue.
-+		 * defer superblock flushing to a workqueue. We just need to be
-+		 * careful when the journal is already shutting down. If we get
-+		 * here in that case, just update the sb directly as the last
-+		 * transaction won't commit anyway.
- 		 */
--		if (continue_fs && journal)
-+		if (continue_fs && journal &&
-+		    !ext4_test_mount_flag(sb, EXT4_MF_JOURNAL_DESTROY))
- 			schedule_work(&EXT4_SB(sb)->s_sb_upd_work);
- 		else
- 			ext4_commit_super(sb);
-@@ -1311,7 +1315,6 @@ static void ext4_put_super(struct super_block *sb)
- 	ext4_unregister_li_request(sb);
- 	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
- 
--	flush_work(&sbi->s_sb_upd_work);
- 	destroy_workqueue(sbi->rsv_conversion_wq);
- 	ext4_release_orphan_info(sb);
- 
-@@ -1321,7 +1324,8 @@ static void ext4_put_super(struct super_block *sb)
- 		if ((err < 0) && !aborted) {
- 			ext4_abort(sb, -err, "Couldn't clean up the journal");
- 		}
--	}
-+	} else
-+		flush_work(&sbi->s_sb_upd_work);
- 
- 	ext4_es_unregister_shrinker(sbi);
- 	timer_shutdown_sync(&sbi->s_err_report);
-@@ -4992,8 +4996,6 @@ static int ext4_load_and_init_journal(struct super_block *sb,
- 	return 0;
- 
- out:
--	/* flush s_sb_upd_work before destroying the journal. */
--	flush_work(&sbi->s_sb_upd_work);
- 	ext4_journal_destroy(sbi, sbi->s_journal);
- 	return -EINVAL;
- }
-@@ -5682,8 +5684,6 @@ failed_mount8: __maybe_unused
- 	sbi->s_ea_block_cache = NULL;
- 
- 	if (sbi->s_journal) {
--		/* flush s_sb_upd_work before journal destroy. */
--		flush_work(&sbi->s_sb_upd_work);
- 		ext4_journal_destroy(sbi, sbi->s_journal);
++		spin_lock(&fs_info->unused_bgs_lock);
+ 		list_del_init(&block_group->bg_list);
+ 		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
++		spin_unlock(&fs_info->unused_bgs_lock);
  	}
- failed_mount3a:
+ 	btrfs_trans_release_chunk_metadata(trans);
+ }
 -- 
 2.53.0
 
