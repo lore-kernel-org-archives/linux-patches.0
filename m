@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6799A35C1BC;
-	Sat, 17 Oct 2026 16:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDB536AB6B;
+	Sat, 17 Oct 2026 16:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253907; cv=none; b=WTHZwgZDhwXCCokyHJEM4jBvqwPAYFfgyAWqfQtJ2Nl6UxcLlmNrrTNmcrb56yqzlCxpMsRoBifuNlUF+KAEQUj+nT9coU+VtS0qP9KPnj0xRj5xD+x1LpD2FGuyXejUpxrOuc/oUNKoSp+QZNJw+upa3V4ZF0Gi7tGtdJqi34k=
+	t=1792253910; cv=none; b=YAzqUWlTGv0CfjKoYbbH0WwDrPVA9k0HggY4CMp6BYaOiA75xGxVopPc2DFSPPqa3LcBjC1Mmx1Bq1nHNj0/kULy+/0ZT+DRe3wwuPAu4+Tv/kJ1YT4+5l8/l/0M6+XuSuERckMt8DUssDCOMaugtxAcAFa9XaxPtWFCPtUsyqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253907; c=relaxed/simple;
-	bh=rZ2jCnQj8zQ1CAhOC9XWeDSy7yQEGeJguhrfaa6cjkg=;
+	s=arc-20240116; t=1792253910; c=relaxed/simple;
+	bh=/6AiLk6buboP4Smq0KyiqefaYlUq1nuvXo/8yuP3hAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYplKYClBWSH+J1PU6hD8qXlrzHZteMjurF1ryeuFUaXIR2GWtJN+hdmn/irTuIpiE0+VJFVPE3uYRh3DJhwLH4elyXqRHq9m7csY3HT2T1gwTr7rJrMU7y7yA8kKOmAlpsSeMyIyQ1F1QQm1GypBYIKdEmDC6XQF94ENx2p+PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrHbtjhL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PloRfAypPJrVOryE1aa68zt286hpFE/lYh1+bYMkgtfXe4y6g43M6SFiWApl8WgWMO5WBPc6OMsgKDtSfKSpUUHN55xJa6iQ3aCvoA8Mx0ZL1QEPSJ8YgeJkits6z5Bn5DreYoMa5QzkqoqjuBvCABhn9COKiSjfHpU0Is/B/cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e24hTBGG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrHbtjhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35F31F000C4;
-	Sat, 17 Oct 2026 16:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e24hTBGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBD61F000C4;
+	Sat, 17 Oct 2026 16:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253906;
-	bh=upB3XXscFaJ/05d/rSIFJFnPjwumWuFRpJb3mTq1x2A=;
+	s=korg; t=1792253909;
+	bh=SaxAxsJIoURBX17u4Ik3tnla0KGTh2TFAhke5KJpMAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrHbtjhLHlQ3RL69TXanjTFTFEso3AAXsxmCaiSJmJ3plls/BopW66ZaePCKhp0MV
-	 BvK9k4qOI20kHgCO6OwjTQuDsJnM02qoKJg1/HQhmqyq+2SlTxaafJJAR0lbuTu9ro
-	 klCT+PJfEZYdFWLiG2XO1Ietd5d3fmkPAxgWNTtc=
+	b=e24hTBGGGcEUpwKkq/B5ZBjxEaklrIEyL/X9PdZSRe1mOJx4lwrzS/BLwz/YwLAlC
+	 CwMSu9WOh9Oh2cK2IzSVgoVj/myoBR0xjgY4WJVhDno9Moz64zPypHgU5SrMymlf7U
+	 mMqzHOIu8G2F0jhI7dGmJzAvg9STCQ0q7a7nhrlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Gonnet <ggonnet.linux@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/869] bpf: Fix tcx/netkit detach permissions when prog fd isnt given
-Date: Sat, 17 Oct 2026 17:51:53 +0200
-Message-ID: <20261017160044.042880565@linuxfoundation.org>
+Subject: [PATCH 6.12 246/869] team: avoid NETDEV_CHANGEMTU event when unregistering slave
+Date: Sat, 17 Oct 2026 17:51:27 +0200
+Message-ID: <20261017160043.366224265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,86 +55,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Gonnet <ggonnet.linux@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit ae23bc81ddf7c17b663c4ed1b21e35527b0a7131 ]
+[ Upstream commit bb4c698633c0e19717586a6524a33196cff01a32 ]
 
-This commit fixes a security issue where BPF_PROG_DETACH on tcx or
-netkit devices could be executed by any user when no program fd was
-provided, bypassing permission checks. The fix adds a capability
-check for CAP_NET_ADMIN or CAP_SYS_ADMIN in this case.
+syzbot is reporting
 
-Fixes: e420bed02507 ("bpf: Add fd-based tcx multi-prog infra with link support")
-Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
-Link: https://lore.kernel.org/r/20260127160200.10395-1-ggonnet.linux@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 3
+  ref_tracker: netdev@ffff88807dcf8618 has 1/2 users at
+       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
+       netdev_hold include/linux/netdevice.h:4429 [inline]
+       inetdev_init+0x201/0x4e0 net/ipv4/devinet.c:286
+       inetdev_event+0x251/0x1610 net/ipv4/devinet.c:1600
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_mtu net/core/dev.c:2318 [inline]
+       netif_set_mtu_ext+0x5aa/0x800 net/core/dev.c:9886
+       netif_set_mtu+0xd7/0x1b0 net/core/dev.c:9907
+       dev_set_mtu+0x126/0x260 net/core/dev_api.c:248
+       team_port_del+0xb07/0xcb0 drivers/net/team/team_core.c:1333
+       team_del_slave drivers/net/team/team_core.c:1936 [inline]
+       team_device_event+0x207/0x5b0 drivers/net/team/team_core.c:2929
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_extack net/core/dev.c:2281 [inline]
+       call_netdevice_notifiers net/core/dev.c:2295 [inline]
+       __dev_change_net_namespace+0xcb7/0x2050 net/core/dev.c:12592
+       do_setlink+0x2ce/0x4590 net/core/rtnetlink.c:3060
+       rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+       __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+       rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
+       rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
+       netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
+       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+       netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
+       netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
+
+problem. Ido Schimmel found steps to reproduce
+
+  ip link add name team1 type team
+  ip link add name dummy1 mtu 1499 master team1 type dummy
+  ip netns add ns1
+  ip link set dev dummy1 netns ns1
+  ip -n ns1 link del dev dummy1
+
+and also found that the same issue was fixed in the bond driver in
+commit f51048c3e07b ("bonding: avoid NETDEV_CHANGEMTU event when
+unregistering slave").
+
+Let's do similar thing for the team driver, with commit ad7c7b2172c3 ("net:
+hold netdev instance lock during sysfs operations") and commit 303a8487a657
+("net: s/__dev_set_mtu/__netif_set_mtu/") also applied.
+
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260224125709.317574-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h       |  5 +++++
- include/linux/bpf_mprog.h | 10 ++++++++++
- kernel/bpf/syscall.c      |  7 ++-----
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ drivers/net/team/team_core.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index a63fd54ac6b4f..8bdb4ba4df7ee 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2999,6 +2999,11 @@ static inline void bpf_dynptr_set_rdonly(struct bpf_dynptr_kern *ptr)
- }
- #endif /* CONFIG_BPF_SYSCALL */
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 0cdcff2537c8f..a83f996f0f2e7 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1365,7 +1365,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
  
-+static inline bool bpf_net_capable(void)
-+{
-+	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
-+}
-+
- static __always_inline int
- bpf_probe_read_kernel_common(void *dst, u32 size, const void *unsafe_ptr)
+ static void __team_port_change_port_removed(struct team_port *port);
+ 
+-static int team_port_del(struct team *team, struct net_device *port_dev)
++static int team_port_del(struct team *team, struct net_device *port_dev, bool unregister)
  {
-diff --git a/include/linux/bpf_mprog.h b/include/linux/bpf_mprog.h
-index 929225f7b0959..0b9f4caeeb0a3 100644
---- a/include/linux/bpf_mprog.h
-+++ b/include/linux/bpf_mprog.h
-@@ -340,4 +340,14 @@ static inline bool bpf_mprog_supported(enum bpf_prog_type type)
- 		return false;
- 	}
- }
-+
-+static inline bool bpf_mprog_detach_empty(enum bpf_prog_type type)
-+{
-+	switch (type) {
-+	case BPF_PROG_TYPE_SCHED_CLS:
-+		return bpf_net_capable();
-+	default:
-+		return false;
-+	}
-+}
- #endif /* __BPF_MPROG_H */
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 857285a48d433..43081a7fb283a 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1206,11 +1206,6 @@ static int map_check_btf(struct bpf_map *map, struct bpf_token *token,
- 	return ret;
+ 	struct net_device *dev = team->dev;
+ 	struct team_port *port;
+@@ -1403,7 +1403,10 @@ static int team_port_del(struct team *team, struct net_device *port_dev)
+ 	__team_port_change_port_removed(port);
+ 
+ 	team_port_set_orig_dev_addr(port);
+-	dev_set_mtu(port_dev, port->orig.mtu);
++	if (unregister)
++		__dev_set_mtu(port_dev, port->orig.mtu);
++	else
++		dev_set_mtu(port_dev, port->orig.mtu);
+ 	kfree_rcu(port, rcu);
+ 	netdev_info(dev, "Port device %s removed\n", portname);
+ 	__team_compute_features(team);
+@@ -1708,7 +1711,7 @@ static void team_uninit(struct net_device *dev)
+ 
+ 	mutex_lock(&team->lock);
+ 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
+-		team_port_del(team, port->dev);
++		team_port_del(team, port->dev, false);
+ 
+ 	__team_change_mode(team, NULL); /* cleanup */
+ 	__team_options_unregister(team, team_options, ARRAY_SIZE(team_options));
+@@ -2019,13 +2022,14 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
+ 	return err;
  }
  
--static bool bpf_net_capable(void)
--{
--	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
--}
--
- #define BPF_MAP_CREATE_LAST_FIELD map_token_fd
- /* called via syscall */
- static int map_create(union bpf_attr *attr)
-@@ -4177,6 +4172,8 @@ static int bpf_prog_detach(const union bpf_attr *attr)
- 			prog = bpf_prog_get_type(attr->attach_bpf_fd, ptype);
- 			if (IS_ERR(prog))
- 				return PTR_ERR(prog);
-+		} else if (!bpf_mprog_detach_empty(ptype)) {
-+			return -EPERM;
- 		}
- 	} else if (is_cgroup_prog_type(ptype, 0, false)) {
- 		if (attr->attach_flags || attr->relative_fd)
+-static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
++static int __team_del_slave(struct net_device *dev, struct net_device *port_dev,
++			    bool unregister)
+ {
+ 	struct team *team = netdev_priv(dev);
+ 	int err;
+ 
+ 	mutex_lock(&team->lock);
+-	err = team_port_del(team, port_dev);
++	err = team_port_del(team, port_dev, unregister);
+ 	mutex_unlock(&team->lock);
+ 
+ 	if (err)
+@@ -2041,6 +2045,16 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 	return err;
+ }
+ 
++static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
++{
++	return __team_del_slave(dev, port_dev, false);
++}
++
++static int team_del_slave_on_unregister(struct net_device *dev, struct net_device *port_dev)
++{
++	return __team_del_slave(dev, port_dev, true);
++}
++
+ static netdev_features_t team_fix_features(struct net_device *dev,
+ 					   netdev_features_t features)
+ {
+@@ -3082,7 +3096,7 @@ static int team_device_event(struct notifier_block *unused,
+ 					       !!netif_oper_up(port->dev));
+ 		break;
+ 	case NETDEV_UNREGISTER:
+-		team_del_slave(port->team->dev, dev);
++		team_del_slave_on_unregister(port->team->dev, dev);
+ 		break;
+ 	case NETDEV_FEAT_CHANGE:
+ 		if (!port->team->notifier_ctx) {
 -- 
 2.53.0
 
