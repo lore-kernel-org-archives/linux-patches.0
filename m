@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93023B2FCA;
-	Sat, 17 Oct 2026 17:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE862E266C;
+	Sat, 17 Oct 2026 17:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258464; cv=none; b=n+Qt6Cxym2hQXAdojJ2jqaPZ2IbxJfn0dS4VVZ6NUlytiRP9R/TVRWx5zbv0zmNvZxHmzE2GxtQfIBrYK09MCIqwt3n6l1jD/BBotIdWitqGp6o+GGtXJDSrWkx0nC4i8AHcdtel+QAmd/fX+NVXmQKbQNFlM/JTrVCtm4DIf1A=
+	t=1792258468; cv=none; b=qkqEBz9lRGrqorxJ8yzzyMdryt7nHJokmrMYiMoMal3/iAj0FsGbARltdK+Zws6PXgO4SjBGbXGfxBCW7WbsDAr1g2cflLF4RVhMSSDIQQ7ziudQD4OkFvsNZlD2iTnaS5ssi8wAkNvFGQDJFzBoD4Je66wEZ+7yWQy48EHLZXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258464; c=relaxed/simple;
-	bh=hOqSmpjJ3icdvafCb93HQLU5S/E4PKrYCoBdqf830+Q=;
+	s=arc-20240116; t=1792258468; c=relaxed/simple;
+	bh=aq6WYkpOEp9wk6NBycHi+qqHBhgg1rd4VU82xhZweGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q6WU7lHL7nUPGlxaIL2XeHtz9ZD//7OrFJvnocNUicS/BA06PEx1hMmAG9hZMHCzfhaiDSnFlhAK/QmleFI29PAdfPFvZN+wIhaJxJ9MI6BHtjHqxeDogKgd2OmskD4ehZIyecTI9m2AT0DpNis/vVltgtwMZM7etKB/vWOsZWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6kJNZKY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eZD+9QZ2xTiyLdETR3aCS6KLPxJIS+BGDU7dUfl70y1C0MrlXq2mZ0cMt6c5PJhikbVclrI23GRT323rPL1BoeFurMyfmquFWL1mbOrl9ZMUW3vHvuABEegVfBXpZu6QOjemPOq3WxMFupBuG1zvDUqsV7dsmExqwYNkTKRBZLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKSwQZcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6kJNZKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200521F000C4;
-	Sat, 17 Oct 2026 17:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKSwQZcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4423C1F000C4;
+	Sat, 17 Oct 2026 17:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258463;
-	bh=ep59H79bEbD143ctLrTD4lZKu6cFX6ZdT458hbT45L4=;
+	s=korg; t=1792258466;
+	bh=IstoYmB0QMrv/gnR0tvl+YIbr3x3rh7zCj8lP30O+mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6kJNZKYrgugJziD4RZoyoylkVuKaP/OzSI/vKy3qxrI4eeL6P9ispS0Tvp+64bm0
-	 Ou5P/qtD4AuAyaEtF4FiJ6DeeEGyHNOBd9RbQG7eDX8LmjKdw/zTDYPHVTsQ2/16+3
-	 YHReFWzNwkKZpFOcMLOU+STNOUDiIUGJbhqf0v8k=
+	b=zKSwQZcHC5gipR1y4y0spKUXWhq4jU31t5QhBL7QqWJ7UjXHgyUbBwpRbIfElaR/4
+	 tOz5tjx2BAhRo+LXmdxoaF5GoMyEJu2tket6vNnThUxuWoFjhvrdDEOofb6TcduU6w
+	 3pF7G9MJqV4qW+5EHYLuhrTqb2C4Ews7wbZlESZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Oleh Konko <security@1seal.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0894/1674] drm/i915/dsi: Dont do DSC horizontal timing adjustments in command mode
-Date: Sat, 17 Oct 2026 17:52:46 +0200
-Message-ID: <20261017160454.079120945@linuxfoundation.org>
+Subject: [PATCH 6.6 0895/1674] Bluetooth: hci_event: move wake reason storage into validated event handlers
+Date: Sat, 17 Oct 2026 17:52:47 +0200
+Message-ID: <20261017160454.103697166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,66 +45,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Oleh Konko <security@1seal.org>
 
-[ Upstream commit 4dfce79e098915d8e5fc2b9e1d980bc3251dd32c ]
+[ Upstream commit 2b2bf47cd75518c36fa2d41380e4a40641cc89cd ]
 
-Stop adjusting the horizontal timing values based on the
-compression ratio in command mode. Bspec seems to be telling
-us to do this only in video mode, and this is also how the
-Windows driver does things.
+hci_store_wake_reason() is called from hci_event_packet() immediately
+after stripping the HCI event header but before hci_event_func()
+enforces the per-event minimum payload length from hci_ev_table.
+This means a short HCI event frame can reach bacpy() before any bounds
+check runs.
 
-This should also fix a div-by-zero on some machines because
-the adjusted htotal ends up being so small that we end up with
-line_time_us==0 when trying to determine the vtotal value in
-command mode.
+Rather than duplicating skb parsing and per-event length checks inside
+hci_store_wake_reason(), move wake-address storage into the individual
+event handlers after their existing event-length validation has
+succeeded. Convert hci_store_wake_reason() into a small helper that only
+stores an already-validated bdaddr while the caller holds hci_dev_lock().
+Use the same helper after hci_event_func() with a NULL address to
+preserve the existing unexpected-wake fallback semantics when no
+validated event handler records a wake address.
 
-Note that this doesn't actually make the display on the
-Huawei Matebook E work, but at least the kernel no longer
-explodes when the driver loads.
+Annotate the helper with __must_hold(&hdev->lock) and add
+lockdep_assert_held(&hdev->lock) so future call paths keep the lock
+contract explicit.
 
+Call the helper from hci_conn_request_evt(), hci_conn_complete_evt(),
+hci_sync_conn_complete_evt(), le_conn_complete_evt(),
+hci_le_adv_report_evt(), hci_le_ext_adv_report_evt(),
+hci_le_direct_adv_report_evt(), hci_le_pa_sync_established_evt(), and
+hci_le_past_received_evt().
+
+Fixes: 2f20216c1d6f ("Bluetooth: Emit controller suspend and resume events")
 Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12045
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260326111814.9800-2-ville.syrjala@linux.intel.com
-Fixes: 53693f02d80e ("drm/i915/dsi: account for DSC in horizontal timings")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 0b475e91ecc2313207196c6d7fd5c53e1a878525)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Oleh Konko <security@1seal.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c | 93 ++++++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/icl_dsi.c b/drivers/gpu/drm/i915/display/icl_dsi.c
-index 0a0efeeb790e2..1b11df1814f41 100644
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -859,7 +859,7 @@ gen11_dsi_set_transcoder_timings(struct intel_encoder *encoder,
- 	 * non-compressed link speeds, and simplifies down to the ratio between
- 	 * compressed and non-compressed bpp.
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index d5f2be8783902..4c3fd5631c64e 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -81,6 +81,10 @@ static void *hci_le_ev_skb_pull(struct hci_dev *hdev, struct sk_buff *skb,
+ 	return data;
+ }
+ 
++static void hci_store_wake_reason(struct hci_dev *hdev,
++				  const bdaddr_t *bdaddr, u8 addr_type)
++	__must_hold(&hdev->lock);
++
+ static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
+ 				struct sk_buff *skb)
+ {
+@@ -3058,6 +3062,7 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
+ 
+ 	/* Check for existing connection:
+ 	 *
+@@ -3232,6 +3237,10 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 
+ 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
+ 
++	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
++	hci_dev_unlock(hdev);
++
+ 	/* Reject incoming connection from device with same BD ADDR against
+ 	 * CVE-2020-26555
  	 */
--	if (crtc_state->dsc.compression_enable) {
-+	if (is_vid_mode(intel_dsi) && crtc_state->dsc.compression_enable) {
- 		mul = crtc_state->dsc.compressed_bpp;
- 		div = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
- 	}
-@@ -1458,7 +1458,7 @@ static void gen11_dsi_get_timings(struct intel_encoder *encoder,
- 	struct drm_display_mode *adjusted_mode =
- 					&pipe_config->hw.adjusted_mode;
+@@ -4951,6 +4960,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
  
--	if (pipe_config->dsc.compressed_bpp) {
-+	if (is_vid_mode(intel_dsi) && pipe_config->dsc.compressed_bpp) {
- 		int div = pipe_config->dsc.compressed_bpp;
- 		int mul = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
  
+ 	conn = hci_conn_hash_lookup_ba(hdev, ev->link_type, &ev->bdaddr);
+ 	if (!conn) {
+@@ -5652,6 +5662,7 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+ 	u8 addr_type;
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, bdaddr, bdaddr_type);
+ 
+ 	/* Advertising stops when a connection is created. On a failed
+ 	 * connection it keeps running, so leave the state bit alone.
+@@ -6270,6 +6281,8 @@ static void hci_le_adv_report_evt(struct hci_dev *hdev, void *data,
+ 					info->length + 1))
+ 			break;
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		if (info->length <= max_adv_len(hdev)) {
+ 			rssi = info->data[info->length];
+ 			process_adv_report(hdev, info->type, &info->bdaddr,
+@@ -6357,6 +6370,8 @@ static void hci_le_ext_adv_report_evt(struct hci_dev *hdev, void *data,
+ 					info->length))
+ 			break;
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		evt_type = __le16_to_cpu(info->type) & LE_EXT_ADV_EVT_TYPE_MASK;
+ 		legacy_evt_type = ext_evt_type_to_legacy(hdev, evt_type);
+ 		if (legacy_evt_type != LE_ADV_INVALID) {
+@@ -6392,6 +6407,7 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
+ 
+ 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+ 
+@@ -6649,6 +6665,8 @@ static void hci_le_direct_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	for (i = 0; i < ev->num; i++) {
+ 		struct hci_ev_le_direct_adv_info *info = &ev->info[i];
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		process_adv_report(hdev, info->type, &info->bdaddr,
+ 				   info->bdaddr_type, &info->direct_addr,
+ 				   info->direct_addr_type, info->rssi, NULL, 0,
+@@ -7240,73 +7258,29 @@ static bool hci_get_cmd_complete(struct hci_dev *hdev, u16 opcode,
+ 	return true;
+ }
+ 
+-static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
+-				  struct sk_buff *skb)
++static void hci_store_wake_reason(struct hci_dev *hdev,
++				  const bdaddr_t *bdaddr, u8 addr_type)
++	__must_hold(&hdev->lock)
+ {
+-	struct hci_ev_le_advertising_info *adv;
+-	struct hci_ev_le_direct_adv_info *direct_adv;
+-	struct hci_ev_le_ext_adv_info *ext_adv;
+-	const struct hci_ev_conn_complete *conn_complete = (void *)skb->data;
+-	const struct hci_ev_conn_request *conn_request = (void *)skb->data;
+-
+-	hci_dev_lock(hdev);
++	lockdep_assert_held(&hdev->lock);
+ 
+ 	/* If we are currently suspended and this is the first BT event seen,
+ 	 * save the wake reason associated with the event.
+ 	 */
+ 	if (!hdev->suspended || hdev->wake_reason)
+-		goto unlock;
++		return;
++
++	if (!bdaddr) {
++		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
++		return;
++	}
+ 
+ 	/* Default to remote wake. Values for wake_reason are documented in the
+ 	 * Bluez mgmt api docs.
+ 	 */
+ 	hdev->wake_reason = MGMT_WAKE_REASON_REMOTE_WAKE;
+-
+-	/* Once configured for remote wakeup, we should only wake up for
+-	 * reconnections. It's useful to see which device is waking us up so
+-	 * keep track of the bdaddr of the connection event that woke us up.
+-	 */
+-	if (event == HCI_EV_CONN_REQUEST) {
+-		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
+-		hdev->wake_addr_type = BDADDR_BREDR;
+-	} else if (event == HCI_EV_CONN_COMPLETE) {
+-		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
+-		hdev->wake_addr_type = BDADDR_BREDR;
+-	} else if (event == HCI_EV_LE_META) {
+-		struct hci_ev_le_meta *le_ev = (void *)skb->data;
+-		u8 subevent = le_ev->subevent;
+-		u8 *ptr = &skb->data[sizeof(*le_ev)];
+-		u8 num_reports = *ptr;
+-
+-		if ((subevent == HCI_EV_LE_ADVERTISING_REPORT ||
+-		     subevent == HCI_EV_LE_DIRECT_ADV_REPORT ||
+-		     subevent == HCI_EV_LE_EXT_ADV_REPORT) &&
+-		    num_reports) {
+-			adv = (void *)(ptr + 1);
+-			direct_adv = (void *)(ptr + 1);
+-			ext_adv = (void *)(ptr + 1);
+-
+-			switch (subevent) {
+-			case HCI_EV_LE_ADVERTISING_REPORT:
+-				bacpy(&hdev->wake_addr, &adv->bdaddr);
+-				hdev->wake_addr_type = adv->bdaddr_type;
+-				break;
+-			case HCI_EV_LE_DIRECT_ADV_REPORT:
+-				bacpy(&hdev->wake_addr, &direct_adv->bdaddr);
+-				hdev->wake_addr_type = direct_adv->bdaddr_type;
+-				break;
+-			case HCI_EV_LE_EXT_ADV_REPORT:
+-				bacpy(&hdev->wake_addr, &ext_adv->bdaddr);
+-				hdev->wake_addr_type = ext_adv->bdaddr_type;
+-				break;
+-			}
+-		}
+-	} else {
+-		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
+-	}
+-
+-unlock:
+-	hci_dev_unlock(hdev);
++	bacpy(&hdev->wake_addr, bdaddr);
++	hdev->wake_addr_type = addr_type;
+ }
+ 
+ #define HCI_EV_VL(_op, _func, _min_len, _max_len) \
+@@ -7551,14 +7525,15 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 	skb_pull(skb, HCI_EVENT_HDR_SIZE);
+ 
+-	/* Store wake reason if we're suspended */
+-	hci_store_wake_reason(hdev, event, skb);
+-
+ 	bt_dev_dbg(hdev, "event 0x%2.2x", event);
+ 
+ 	hci_event_func(hdev, event, skb, &opcode, &status, &req_complete,
+ 		       &req_complete_skb);
+ 
++	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, NULL, 0);
++	hci_dev_unlock(hdev);
++
+ 	if (req_complete) {
+ 		req_complete(hdev, status, opcode);
+ 	} else if (req_complete_skb) {
 -- 
 2.53.0
 
