@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED603A1E92;
-	Sat, 17 Oct 2026 17:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3AC3BD64B;
+	Sat, 17 Oct 2026 17:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259917; cv=none; b=qJW+zfbJRYi9bN1orIX11KEKbAVmXdEoYaH2h3FnqDse3kx/0x/vBZfCIGVYLjn/PkTBlJ6TxcC7TzH19RETMwU9vFSdvtJFlbKjbjUgAP4mACkEiVoOSkQ2oyjL/CKn6nrhKpzL5zV3ksqQjFrqGoEFF+UBSNowYVebR2ttE0A=
+	t=1792259919; cv=none; b=LbTxUdqAaUhnMG598bZS2DwjXDKF5JiAxrUIXFW/RgvDQH9c79ORW9ZIXNEJ7wqWQ8b3X9TiwI3y/kHCqr61kyLVjRN5VFREI49lrvqPfHaucyObe5OtIQODDNrGz6YEkeSy/ACrMkp/Ugn5K+JIkmKnA7/OSJn98C+CO8LgKiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259917; c=relaxed/simple;
-	bh=gbEik2bspSkc83CwPcl1Jom/lPZE3WbQ2yzg4SCcllA=;
+	s=arc-20240116; t=1792259919; c=relaxed/simple;
+	bh=4+wxSpFNvLTtDPjzJWh71VapAxQwpzml6wUbyVMlgQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmZGPxgj+EeLyYcaYtLLv167iUrWZyTCHJktv/aoE/+dNYJNy038RSBH1O9J1yIpejkGzFv+RO90IZvoS4PGTvl5Z+2Lgi0YZku7Wj6f6xpkR9Oh2ohbnrlE/jtioXjAWziVbxDCDBwEB2e7wPM6kUqtcdZuXmH7yRvEJrAimVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg2MMOJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iDpR/YJ3+FQqaK1cH8D1WI7EfKf9Zt45HxowcZLQxRVYKJ9ZKdo4OKPe1vrsVGj2D7w/rdl90uVs2HJVPqz/4L9kBJknG4jOGX3cTPpE7iSxI6rR4EJvfYcvdqyNqIddauYLTag3B/XzMDQSciLhqnwvJ9TbuvVV+FUOBpqGTzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypcLPtQu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg2MMOJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7268C1F000C4;
-	Sat, 17 Oct 2026 17:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypcLPtQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA521F000C5;
+	Sat, 17 Oct 2026 17:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259915;
-	bh=3k1LNaaoF12MwEma5XsUHhLjwH0LL11iVq9t67KEnaE=;
+	s=korg; t=1792259918;
+	bh=ESLG0hx8j+5WCkMlJmQTsT6kLGU1y55WYmi4ht3vffg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lg2MMOJSjrqkmIxclplV81N8lOiFhenUNxY3xjBxE8xzZNikwn2TKL4bFouIBpQG4
-	 De4yGPAwQFV41Ai36nQ8JNmPWr7UrG7yg5mzoKU4KVgtneoWWKNpOP2DJyg/QjV4Vg
-	 IZSeopXW/SYtGoKpnx+XYKcFYsarF4J13vZI6si4=
+	b=ypcLPtQua7YPQobcW/yJpy5By7UKsu8H6K81foforIIZwQ+OnN738+4oGJL0TwMOO
+	 qjXq3ENfxuIfRH6w86FRhY4rV61odbb3+HZeaoZP6AAVOGeXFkU5rfUvGBJQNJF8/t
+	 1q7xV+2YAiWY3EC2K2WHTTc/OZZFA9FdgJKkdYPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1373/1674] net/sched: fq: add overflow bounds to quantum and initial quantum
-Date: Sat, 17 Oct 2026 18:00:45 +0200
-Message-ID: <20261017160506.404405614@linuxfoundation.org>
+Subject: [PATCH 6.6 1374/1674] net/sched: act_ife: Only operate on Ethernet frames
+Date: Sat, 17 Oct 2026 18:00:46 +0200
+Message-ID: <20261017160506.430951477@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,59 +53,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 709f34f7c28dc4dd6c40343d101850f11e172312 ]
+[ Upstream commit 5b483f7791b079bb97d411f1066652ff659207ff ]
 
-fq_init() computes quantum = 2 * psched_mtu() and initial_quantum = 10 *
-psched_mtu() with no overflow check. A device with a huge MTU (e.g. dummy
-with max_mtu == 0 accepting MTU 2147483634) makes psched_mtu() return
-0x80000000; the 2 * and 10 * multiplications wrap to 0 in 32-bit
-arithmetic, so q->quantum == 0. Then in fq_dequeue() the credit-refill
-loop adds 0 to f->credit (which stays <= 0) and goto begin loops
-forever under the qdisc lock, creating a soft lockup.
+act_ife encapsulates/decapsulates the original Ethernet header and uses
+skb->dev->hard_header_len as the length of that header. That is only
+correct for Ethernet devices: on a device where hard_header_len does not
+match the L2 header that was actually pulled (PPP reports PPP_HDRLEN
+while nothing is stripped on ingress), the ingress skb_push()/skb_pull()
+use the wrong length and can hit skb_under_panic when headroom is tight.
 
-Clamp psched_mtu() to [1, 1 << 20] before multiplying so the product
-cannot wrap, then cap the result at 1 << 20, matching the bound already
-enforced on TCA_FQ_QUANTUM in fq_change().
+IFE is Ethernet-only by design - it builds an outer ethhdr, rewrites
+h_source/h_dest/h_proto, and calls eth_type_trans() on decode - so
+instead of trying to make the offsets work for arbitrary link types,
+simply drop packets that do not carry an Ethernet header.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) is large enough that 2 * psched_mtu() wraps (e.g. a
-dummy device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+Checking skb->dev->type alone is not enough. We have to cater for a
+corner case where mirred can redirect an skb from a non-Ethernet device
+to an Ethernet one, and skb->dev then says nothing about the framing the
+skb actually has: an skb redirected from ppp0 reaches the target's ingress
+hook with mac_len 0 and no Ethernet header at all. So at ingress also
+require mac_len to be ETH_HLEN. On egress mac_len is not maintained, so
+the device type is all we have; a bogus redirect there yields a malformed
+frame rather than an out-of-bounds push, and it would be malformed with or
+without IFE.
 
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
+That corner case is not theoretical - redirecting from ppp0 into a veth
+that has an ife encode action on its ingress hook panics without this
+patch:
+
+  skbuff: skb_under_panic: len:98 put:14 head:ffff88800e410000
+          data:ffff88800e40fff5 tail:0x57 end:0x640 dev:veth3
+  kernel BUG at net/core/skbuff.c:214!
+  Call Trace:
+   skb_push (net/core/skbuff.c:224 net/core/skbuff.c:2657)
+   tcf_ife_act (net/sched/act_ife.c:829 net/sched/act_ife.c:874)
+   tc_run (net/core/dev.c:4463)
+   netif_receive_skb (net/core/dev.c:6463 net/core/dev.c:6522)
+   tcf_mirred_to_dev (net/sched/act_mirred.c:248 net/sched/act_mirred.c:328)
+   tcf_mirred_act (net/sched/act_mirred.c:489)
+   tc_run (net/core/dev.c:4463)
+   process_backlog (net/core/dev.c:6728)
+
+With Ethernet framing guaranteed, use ETH_HLEN instead of
+hard_header_len.
+
+Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
 Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-2-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260821164031.32824-1-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ife/ife.c       | 14 +++++++-------
+ net/sched/act_ife.c | 32 ++++++++++++++++++++++++++++----
+ 2 files changed, 35 insertions(+), 11 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index a99950d8baa1b..edabe21ef3038 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -940,12 +940,14 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
- 		   struct netlink_ext_ack *extack)
- {
- 	struct fq_sched_data *q = qdisc_priv(sch);
-+	u32 mtu;
- 	int err;
+diff --git a/net/ife/ife.c b/net/ife/ife.c
+index 7a75947a31e31..2ddf725d3389e 100644
+--- a/net/ife/ife.c
++++ b/net/ife/ife.c
+@@ -37,7 +37,7 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
+ 	 * where ORIGDATA = original ethernet header ...
+ 	 */
+ 	int hdrm = metalen + IFE_METAHDRLEN;
+-	int total_push = hdrm + skb->dev->hard_header_len;
++	int total_push = hdrm + ETH_HLEN;
+ 	struct ifeheadr *ifehdr;
+ 	struct ethhdr *iethh;	/* inner ether header */
+ 	int skboff = 0;
+@@ -50,9 +50,9 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
+ 	iethh = (struct ethhdr *) skb->data;
  
- 	sch->limit		= 10000;
- 	q->flow_plimit		= 100;
--	q->quantum		= 2 * psched_mtu(qdisc_dev(sch));
--	q->initial_quantum	= 10 * psched_mtu(qdisc_dev(sch));
-+	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
-+	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
-+	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
- 	q->flow_refill_delay	= msecs_to_jiffies(40);
- 	q->flow_max_rate	= ~0UL;
- 	q->time_next_delayed_flow = ~0ULL;
+ 	__skb_push(skb, total_push);
+-	memcpy(skb->data, iethh, skb->dev->hard_header_len);
++	memcpy(skb->data, iethh, ETH_HLEN);
+ 	skb_reset_mac_header(skb);
+-	skboff += skb->dev->hard_header_len;
++	skboff += ETH_HLEN;
+ 
+ 	/* total metadata length */
+ 	ifehdr = (struct ifeheadr *) (skb->data + skboff);
+@@ -69,12 +69,12 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
+ 	int total_pull;
+ 	u16 ifehdrln;
+ 
+-	if (!pskb_may_pull(skb, skb->dev->hard_header_len + IFE_METAHDRLEN))
++	if (!pskb_may_pull(skb, ETH_HLEN + IFE_METAHDRLEN))
+ 		return NULL;
+ 
+-	ifehdr = (struct ifeheadr *) (skb->data + skb->dev->hard_header_len);
++	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
+ 	ifehdrln = ntohs(ifehdr->metalen);
+-	total_pull = skb->dev->hard_header_len + ifehdrln;
++	total_pull = ETH_HLEN + ifehdrln;
+ 
+ 	if (unlikely(ifehdrln < 2))
+ 		return NULL;
+@@ -82,7 +82,7 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
+ 	if (unlikely(!pskb_may_pull(skb, total_pull + ETH_HLEN)))
+ 		return NULL;
+ 
+-	ifehdr = (struct ifeheadr *)(skb->data + skb->dev->hard_header_len);
++	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
+ 	skb_set_mac_header(skb, total_pull);
+ 	__skb_pull(skb, total_pull);
+ 	*metalen = ifehdrln - IFE_METAHDRLEN;
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index bf772401b1f41..3adcd507c6eef 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -28,6 +28,7 @@
+ #include <uapi/linux/tc_act/tc_ife.h>
+ #include <net/tc_act/tc_ife.h>
+ #include <linux/etherdevice.h>
++#include <linux/if_arp.h>
+ #include <net/ife.h>
+ #include <net/tc_wrapper.h>
+ 
+@@ -723,7 +724,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 	tcf_lastuse_update(&ife->tcf_tm);
+ 
+ 	if (skb_at_tc_ingress(skb))
+-		skb_push(skb, skb->dev->hard_header_len);
++		skb_push(skb, ETH_HLEN);
+ 
+ 	tlv_data = ife_decode(skb, &metalen);
+ 	if (unlikely(!tlv_data)) {
+@@ -795,7 +796,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	   where ORIGDATA = original ethernet header ...
+ 	 */
+ 	u16 metalen = ife_get_sz(skb, p);
+-	int hdrm = metalen + skb->dev->hard_header_len + IFE_METAHDRLEN;
++	int hdrm = metalen + ETH_HLEN + IFE_METAHDRLEN;
+ 	unsigned int skboff = 0;
+ 	int new_len = skb->len + hdrm;
+ 	bool exceed_mtu = false;
+@@ -826,7 +827,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	}
+ 
+ 	if (skb_at_tc_ingress(skb))
+-		skb_push(skb, skb->dev->hard_header_len);
++		skb_push(skb, ETH_HLEN);
+ 
+ 	ife_meta = ife_encode(skb, metalen);
+ 	if (!ife_meta)
+@@ -856,11 +857,27 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	oethh->h_proto = htons(p->eth_type);
+ 
+ 	if (skb_at_tc_ingress(skb))
+-		skb_pull(skb, skb->dev->hard_header_len);
++		skb_pull(skb, ETH_HLEN);
+ 
+ 	return action;
+ }
+ 
++/* IFE encapsulates the original Ethernet header and, on decode, expects to
++ * find one, so it can only ever work on skbs that carry one. Loopback carries
++ * Ethernet header as well, so it qualifies here.
++ * At ingress, also verify that the L2 header about to be pushed back really
++ * is an Ethernet header because the skb could've been redirected with mirred
++ * from a non-Ethernet device.
++ */
++static bool tcf_ife_is_eth_skb(const struct sk_buff *skb)
++{
++	if (skb->dev->type != ARPHRD_ETHER &&
++	    skb->dev->type != ARPHRD_LOOPBACK)
++		return false;
++
++	return !skb_at_tc_ingress(skb) || skb->mac_len == ETH_HLEN;
++}
++
+ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 				  const struct tc_action *a,
+ 				  struct tcf_result *res)
+@@ -869,6 +886,13 @@ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 	struct tcf_ife_params *p;
+ 	int ret;
+ 
++	if (unlikely(!tcf_ife_is_eth_skb(skb))) {
++		bstats_update(this_cpu_ptr(ife->common.cpu_bstats), skb);
++		tcf_lastuse_update(&ife->tcf_tm);
++		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
++		return TC_ACT_SHOT;
++	}
++
+ 	p = rcu_dereference_bh(ife->params);
+ 	if (p->flags & IFE_ENCODE) {
+ 		ret = tcf_ife_encode(skb, a, res, p);
 -- 
 2.53.0
 
